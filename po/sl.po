@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-02-15 23:44+0000\n"
-"PO-Revision-Date: 2007-10-08 15:22+0100\n"
+"PO-Revision-Date: 2007-10-21 11:23+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -3376,7 +3376,7 @@ msgid "Toggle _Quick Mask"
 msgstr "Vključi/izključi _hitro masko"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:1033
+#: ../app/display/gimpdisplayshell.c:1032
 msgid "Toggle Quick Mask"
 msgstr "Vključi/izključi hitro masko"
 
@@ -3418,7 +3418,7 @@ msgstr "_Izberi"
 
 #: ../app/actions/select-actions.c:50
 msgid "select|_All"
-msgstr "izberi|_Vse"
+msgstr "_Vse"
 
 #: ../app/actions/select-actions.c:51
 msgid "Select everything"
@@ -3426,7 +3426,7 @@ msgstr "Izberi vse"
 
 #: ../app/actions/select-actions.c:56
 msgid "select|_None"
-msgstr "izberi|_Nič"
+msgstr "_Nič"
 
 #: ../app/actions/select-actions.c:57
 msgid "Dismiss the selection"
@@ -4046,7 +4046,7 @@ msgid "Path to Selection"
 msgstr "Pot v izbor"
 
 #: ../app/actions/vectors-commands.c:369
-#: ../app/tools/gimpvectoroptions.c:198
+#: ../app/tools/gimpvectoroptions.c:199
 #: ../app/tools/gimpvectortool.c:1908
 #: ../app/vectors/gimpvectors.c:199
 msgid "Stroke Path"
@@ -4543,11 +4543,11 @@ msgstr "Zamenjaj"
 msgid "Anti erase"
 msgstr "Razveljavi brisanje"
 
-#: ../app/base/tile-swap.c:543
+#: ../app/base/tile-swap.c:544
 msgid "Unable to open swap file. GIMP has run out of memory and cannot use the swap file. Some parts of your images may be corrupted. Try to save your work using different filenames, restart GIMP and check the location of the swap directory in your Preferences."
 msgstr "Izmenjalne datoteke ni mogoče odpreti. GIMP-u je zmanjkalo pomnilnika, zato izmenjalna datoteka ni uporabna. Nekateri deli slike bodo morda okvarjeni. Poskusite shraniti svoje delo pod drugimi imeni datotek, ponovno zagnati GIMP-a in preveriti nastavitve izmenjalne datoteke v svojih nastavitvah."
 
-#: ../app/base/tile-swap.c:558
+#: ../app/base/tile-swap.c:559
 #, c-format
 msgid "Failed to resize swap file: %s"
 msgstr "Izmenjalni datoteki ni mogoče spremeniti velikosti: %s"
@@ -5630,7 +5630,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Neveljaven niz UTF-8 v datoteki čopičev '%s'."
 
 #: ../app/core/gimpbrush-load.c:283
-#: ../app/core/gimpitem.c:505
+#: ../app/core/gimpitem.c:504
 #: ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
 #: ../app/tools/gimpvectortool.c:296
@@ -5701,15 +5701,15 @@ msgstr "Usodna napaka pri razčlenjevanju datoteke čopičev '%s': Datoteka je o
 
 #: ../app/core/gimpchannel-select.c:58
 msgid "command|Rectangle Select"
-msgstr "command|Pravokotni izbor"
+msgstr "Pravokotni izbor"
 
 #: ../app/core/gimpchannel-select.c:109
 msgid "command|Ellipse Select"
-msgstr "command|Eliptični izbor"
+msgstr "Eliptični izbor"
 
 #: ../app/core/gimpchannel-select.c:163
 msgid "command|Rounded Rectangle Select"
-msgstr "command|Zaobljeni pravokotni izbor"
+msgstr "Zaobljeni pravokotni izbor"
 
 #: ../app/core/gimpchannel-select.c:432
 msgid "Alpha to Selection"
@@ -5723,12 +5723,12 @@ msgstr "Kanal %s v izbor"
 #: ../app/core/gimpchannel-select.c:518
 #: ../app/tools/gimpfuzzyselecttool.c:78
 msgid "command|Fuzzy Select"
-msgstr "command|Mehki izbor"
+msgstr "Mehki izbor"
 
 #: ../app/core/gimpchannel-select.c:565
 #: ../app/tools/gimpbycolorselecttool.c:80
 msgid "command|Select by Color"
-msgstr "command|Izberite po barvi"
+msgstr "Izberite po barvi"
 
 #: ../app/core/gimpchannel.c:257
 msgid "Channel"
@@ -5874,7 +5874,7 @@ msgstr "Za ta postopek vzorci niso na voljo."
 
 #: ../app/core/gimpdrawable-bucket-fill.c:280
 msgid "command|Bucket Fill"
-msgstr "command|Zapolni s kanglico"
+msgstr "Zapolni s kanglico"
 
 #: ../app/core/gimpdrawable-desaturate.c:97
 #: ../app/dialogs/desaturate-dialog.c:63
@@ -5903,7 +5903,7 @@ msgstr "Ravni"
 msgid "Offset Drawable"
 msgstr "Zamakni risano"
 
-#: ../app/core/gimpdrawable-stroke.c:321
+#: ../app/core/gimpdrawable-stroke.c:320
 msgid "Render Stroke"
 msgstr "Upodobi potezo"
 
@@ -5911,13 +5911,13 @@ msgstr "Upodobi potezo"
 #: ../app/core/gimpdrawable-transform.c:617
 #: ../app/tools/gimpfliptool.c:112
 msgid "command|Flip"
-msgstr "command|Prezrcali"
+msgstr "Prezrcali"
 
 #. Start a transform undo group
 #: ../app/core/gimpdrawable-transform.c:701
 #: ../app/tools/gimprotatetool.c:113
 msgid "command|Rotate"
-msgstr "command|Zasukaj"
+msgstr "Zasukaj"
 
 #: ../app/core/gimpdrawable-transform.c:824
 #: ../app/core/gimplayer.c:251
@@ -6001,7 +6001,7 @@ msgstr "Vodoravni zamik prve črte v mreži. Lahko je negativen."
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr "Navpični zamik prve črte mreže. Lahko je tudi negativen."
 
-#: ../app/core/gimpimage-arrange.c:139
+#: ../app/core/gimpimage-arrange.c:143
 msgid "Arrange Objects"
 msgstr "Razporedi predmete"
 
@@ -6043,7 +6043,7 @@ msgstr "Pretvarjanje slike v indeksirano (3. korak)"
 
 #: ../app/core/gimpimage-crop.c:126
 msgid "command|Crop Image"
-msgstr "command|Obreži sliko"
+msgstr "Obreži sliko"
 
 #: ../app/core/gimpimage-crop.c:129
 #: ../app/core/gimpimage-resize.c:90
@@ -6321,16 +6321,16 @@ msgstr[3] "%d plasti"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Sličice za predogled '%s' ni mogoče odpreti: %s"
 
-#: ../app/core/gimpitem.c:1133
+#: ../app/core/gimpitem.c:1132
 msgid "Attach Parasite"
 msgstr "Pripni zajedalca"
 
-#: ../app/core/gimpitem.c:1143
+#: ../app/core/gimpitem.c:1142
 msgid "Attach Parasite to Item"
 msgstr "Elementu pripni zajedalca"
 
-#: ../app/core/gimpitem.c:1185
-#: ../app/core/gimpitem.c:1192
+#: ../app/core/gimpitem.c:1184
+#: ../app/core/gimpitem.c:1191
 msgid "Remove Parasite from Item"
 msgstr "Odstrani zajedalca z elementa"
 
@@ -6646,7 +6646,7 @@ msgstr "odstotkov"
 
 #: ../app/core/gimpunit.c:71
 msgid "plural|percent"
-msgstr "plural|odstotkov"
+msgstr "odstotkov"
 
 #: ../app/dialogs/about-dialog.c:127
 msgid "Visit the GIMP website"
@@ -6920,7 +6920,7 @@ msgstr "Komentar"
 
 #: ../app/dialogs/image-scale-dialog.c:109
 msgid "dialog-title|Scale Image"
-msgstr "dialog-title|Spremeni merilo slike"
+msgstr "Spremeni merilo slike"
 
 #: ../app/dialogs/image-scale-dialog.c:203
 msgid "Confirm Scaling"
@@ -6971,13 +6971,11 @@ msgstr "_Ime plasti:"
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:134
 #: ../app/tools/gimpmeasuretool.c:1056
-#: ../app/tools/gimprectangleoptions.c:995
 msgid "Width:"
 msgstr "Širina:"
 
 #: ../app/dialogs/layer-options-dialog.c:140
 #: ../app/tools/gimpmeasuretool.c:1084
-#: ../app/tools/gimprectangleoptions.c:1008
 msgid "Height:"
 msgstr "Višina:"
 
@@ -8185,20 +8183,28 @@ msgstr "Pogled s sukanjem"
 msgid "Switch to Move tool"
 msgstr "Preklopi na orodje Premakni"
 
+#: ../app/display/display-enums.c:115
+msgid "quality|Low"
+msgstr "Nizka"
+
+#: ../app/display/display-enums.c:116
+msgid "quality|High"
+msgstr "Visoka"
+
 #: ../app/display/gimpdisplay-handlers.c:155
 #, c-format
 msgid "Image saved to '%s'"
 msgstr "Slika shranjena v '%s'"
 
-#: ../app/display/gimpdisplayshell.c:895
+#: ../app/display/gimpdisplayshell.c:894
 msgid "Access the image menu"
 msgstr "Dostopi do menija slike"
 
-#: ../app/display/gimpdisplayshell.c:1004
+#: ../app/display/gimpdisplayshell.c:1003
 msgid "Zoom image when window size changes"
 msgstr "Prilagodi povečavo slike ob spremenjeni velikosti okna"
 
-#: ../app/display/gimpdisplayshell.c:1054
+#: ../app/display/gimpdisplayshell.c:1053
 msgid "Navigate the image display"
 msgstr "Krmari po prikazu slike"
 
@@ -8438,7 +8444,7 @@ msgstr "Svinčnik"
 
 #: ../app/paint/gimpperspectiveclone.c:95
 #: ../app/paint/paint-enums.c:52
-#: ../app/tools/gimpperspectiveclonetool.c:120
+#: ../app/tools/gimpperspectiveclonetool.c:127
 msgid "Perspective Clone"
 msgstr "Kloniranje v perspektivi"
 
@@ -8456,8 +8462,8 @@ msgid "Set a source image first."
 msgstr "Najprej nastavite izvorno sliko."
 
 #: ../app/paint/paint-enums.c:51
-msgid "Modify Perspective Plane"
-msgstr "Spremeni ravnino perspektive"
+msgid "Modify Perspective"
+msgstr "Spremeni perspektivo"
 
 #: ../app/paint/paint-enums.c:82
 msgid "Aligned"
@@ -8821,76 +8827,104 @@ msgstr "Mera:"
 msgid "Pressure:"
 msgstr "Pritisk:"
 
-#: ../app/tools/gimpaligntool.c:120
-#: ../app/tools/gimpaligntool.c:581
+#: ../app/tools/gimpaligntool.c:134
+#: ../app/tools/gimpaligntool.c:752
 msgid "Align"
 msgstr "Poravnaj"
 
-#: ../app/tools/gimpaligntool.c:121
+#: ../app/tools/gimpaligntool.c:135
 msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "Orodje poravnave: poravnajte ali razporedite plasti in druge predmete"
 
-#: ../app/tools/gimpaligntool.c:122
+#: ../app/tools/gimpaligntool.c:136
 msgid "_Align"
 msgstr "Pora_vnaj"
 
-#: ../app/tools/gimpaligntool.c:593
+#: ../app/tools/gimpaligntool.c:585
+msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
+msgstr "Kliknite na plast, pot ali vodilo ali pa kliknite-povlecite za izbor več plasti"
+
+#: ../app/tools/gimpaligntool.c:594
+msgid "Click to pick this layer as first item"
+msgstr "Kliknite za izbor te plasti kot prve"
+
+#: ../app/tools/gimpaligntool.c:602
+msgid "Click to add this layer to the list"
+msgstr "Kliknite za dodajanje te plasti na seznam"
+
+#: ../app/tools/gimpaligntool.c:606
+msgid "Click to pick this guide as first item"
+msgstr "Kliknite za izbor tega vodila kot prvega"
+
+#: ../app/tools/gimpaligntool.c:614
+msgid "Click to add this guide to the list"
+msgstr "Kliknite za dodajanje tega vodila na seznam"
+
+#: ../app/tools/gimpaligntool.c:618
+msgid "Click to pick this path as first item"
+msgstr "Kliknite za izbor te poti kot prve"
+
+#: ../app/tools/gimpaligntool.c:626
+msgid "Click to add this path to the list"
+msgstr "Kliknite za dodajanje te poti na seznam"
+
+#: ../app/tools/gimpaligntool.c:764
 msgid "Relative to:"
 msgstr "Relativno glede na:"
 
-#: ../app/tools/gimpaligntool.c:611
+#: ../app/tools/gimpaligntool.c:782
 msgid "Align left edge of target"
 msgstr "Poravnaj levi rob izbora"
 
-#: ../app/tools/gimpaligntool.c:617
+#: ../app/tools/gimpaligntool.c:788
 msgid "Align center of target"
 msgstr "Poravnaj središčno na tarčo"
 
-#: ../app/tools/gimpaligntool.c:623
+#: ../app/tools/gimpaligntool.c:794
 msgid "Align right edge of target"
 msgstr "Poravnaj desni rob izbora"
 
-#: ../app/tools/gimpaligntool.c:633
+#: ../app/tools/gimpaligntool.c:804
 msgid "Align top edge of target"
 msgstr "Poravnaj gornji rob izbora"
 
-#: ../app/tools/gimpaligntool.c:639
+#: ../app/tools/gimpaligntool.c:810
 msgid "Align middle of target"
 msgstr "Poravnaj sredinsko na tarčo"
 
-#: ../app/tools/gimpaligntool.c:645
+#: ../app/tools/gimpaligntool.c:816
 msgid "Align bottom of target"
 msgstr "Poravnaj na dno tarče"
 
-#: ../app/tools/gimpaligntool.c:649
+#: ../app/tools/gimpaligntool.c:820
 msgid "Distribute"
 msgstr "Porazdeli"
 
-#: ../app/tools/gimpaligntool.c:663
+#: ../app/tools/gimpaligntool.c:834
 msgid "Distribute left edges of targets"
 msgstr "Porazdeli leve robove izbora"
 
-#: ../app/tools/gimpaligntool.c:670
+#: ../app/tools/gimpaligntool.c:841
 msgid "Distribute horizontal centers of targets"
 msgstr "Porazdeli vodoravna središča izbora"
 
-#: ../app/tools/gimpaligntool.c:677
+#: ../app/tools/gimpaligntool.c:848
 msgid "Distribute right edges of targets"
 msgstr "Porazdeli desne robove izbora"
 
-#: ../app/tools/gimpaligntool.c:687
+#: ../app/tools/gimpaligntool.c:858
 msgid "Distribute top edges of targets"
 msgstr "Porazdeli zgornje robove izbora"
 
-#: ../app/tools/gimpaligntool.c:694
+#: ../app/tools/gimpaligntool.c:865
 msgid "Distribute vertical centers of targets"
 msgstr "Porazdeli navpična središča izbora"
 
-#: ../app/tools/gimpaligntool.c:700
+#: ../app/tools/gimpaligntool.c:871
 msgid "Distribute bottoms of targets"
 msgstr "Enakomerno porazdeli dno tarče"
 
-#: ../app/tools/gimpaligntool.c:708
+#: ../app/tools/gimpaligntool.c:879
 #: ../app/tools/gimpblendoptions.c:212
 msgid "Offset:"
 msgstr "Odmik:"
@@ -8915,7 +8949,7 @@ msgstr "Največja globina:"
 
 #: ../app/tools/gimpblendoptions.c:262
 #: ../app/tools/gimpbucketfilloptions.c:287
-#: ../app/tools/gimpselectionoptions.c:426
+#: ../app/tools/gimpselectionoptions.c:416
 msgid "Threshold:"
 msgstr "Prag:"
 
@@ -9004,7 +9038,6 @@ msgid "Fill similar colors"
 msgstr "Napolni s podobnimi barvami"
 
 #: ../app/tools/gimpbucketfilloptions.c:253
-#: ../app/tools/gimpselectionoptions.c:398
 msgid "Finding Similar Colors"
 msgstr "Iskanje podobnih barv"
 
@@ -9016,8 +9049,8 @@ msgstr "Zapolni prosojna območja"
 #: ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160
 #: ../app/tools/gimphealtool.c:99
-#: ../app/tools/gimpperspectiveclonetool.c:903
-#: ../app/tools/gimpselectionoptions.c:414
+#: ../app/tools/gimpperspectiveclonetool.c:965
+#: ../app/tools/gimpselectionoptions.c:404
 msgid "Sample merged"
 msgstr "Vzorči spojeno"
 
@@ -9073,13 +9106,13 @@ msgid "Click to set a new clone source"
 msgstr "Kliknite za določitev novega vira kloniranja"
 
 #: ../app/tools/gimpclonetool.c:109
-#: ../app/tools/gimpperspectiveclonetool.c:898
+#: ../app/tools/gimpperspectiveclonetool.c:960
 msgid "Source"
 msgstr "Vir"
 
 #: ../app/tools/gimpclonetool.c:128
 #: ../app/tools/gimphealtool.c:111
-#: ../app/tools/gimpperspectiveclonetool.c:917
+#: ../app/tools/gimpperspectiveclonetool.c:979
 msgid "Alignment:"
 msgstr "Poravnava:"
 
@@ -9421,7 +9454,7 @@ msgid "Type  (%s)"
 msgstr "Vrsta  (%s)"
 
 #: ../app/tools/gimpdodgeburntool.c:214
-#: ../app/tools/gimpperspectiveclonetool.c:890
+#: ../app/tools/gimpperspectiveclonetool.c:952
 msgid "Mode"
 msgstr "Način"
 
@@ -9590,7 +9623,7 @@ msgstr "Nariše grob krog okoli predmeta za izluščenje"
 
 #: ../app/tools/gimpforegroundselecttool.c:744
 msgid "command|Foreground Select"
-msgstr "command|Izbor ospredja"
+msgstr "Izbor ospredja"
 
 #: ../app/tools/gimpfreeselecttool.c:98
 msgid "Free Select Tool: Select a hand-drawn region"
@@ -9602,7 +9635,7 @@ msgstr "_Prosto izbiranje"
 
 #: ../app/tools/gimpfreeselecttool.c:312
 msgid "command|Free Select"
-msgstr "command|Prosti izbor"
+msgstr "Prosti izbor"
 
 #: ../app/tools/gimpfuzzyselecttool.c:63
 msgid "Fuzzy Select"
@@ -9731,7 +9764,8 @@ msgstr "Prilagoditev"
 
 #: ../app/tools/gimpinkoptions-gui.c:68
 #: ../app/tools/gimpinkoptions-gui.c:93
-#: ../app/tools/gimptextoptions.c:435
+#: ../app/tools/gimprectangleoptions.c:1019
+#: ../app/tools/gimptextoptions.c:436
 msgid "Size:"
 msgstr "Velikost:"
 
@@ -10104,15 +10138,15 @@ msgstr "Orodje Svinčnik: Grobo robato slikanje z uporabo čopiča"
 msgid "Pe_ncil"
 msgstr "Svi_nčnik"
 
-#: ../app/tools/gimpperspectiveclonetool.c:121
+#: ../app/tools/gimpperspectiveclonetool.c:128
 msgid "Perspective Clone Tool: Clone from an image source after applying a perspective transformation"
 msgstr "Orodje Kloniranje v perspektivi: Klonirajte iz slikovnega vira ob upoštevanju transformacije perspektive"
 
-#: ../app/tools/gimpperspectiveclonetool.c:123
+#: ../app/tools/gimpperspectiveclonetool.c:130
 msgid "_Perspective Clone"
 msgstr "Kloniranje v _perspektivi"
 
-#: ../app/tools/gimpperspectiveclonetool.c:645
+#: ../app/tools/gimpperspectiveclonetool.c:701
 msgid "Ctrl-Click to set a clone source"
 msgstr "Ctrl-klik za nastavitev vira kloniranja"
 
@@ -10126,7 +10160,7 @@ msgstr "_Perspektiva"
 
 #: ../app/tools/gimpperspectivetool.c:97
 msgid "command|Perspective"
-msgstr "command|Perspektiva"
+msgstr "Perspektiva"
 
 #: ../app/tools/gimpperspectivetool.c:98
 msgid "Perspective transformation"
@@ -10156,36 +10190,37 @@ msgstr "Posterizacija ne deluje na indeksiranih plasteh."
 msgid "Posterize _levels:"
 msgstr "_Ravni posterizacije:"
 
-#: ../app/tools/gimprectangleoptions.c:116
+#: ../app/tools/gimprectangleoptions.c:112
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Ob krčenju izbora uporabi vse vidne plasti"
 
-#: ../app/tools/gimprectangleoptions.c:804
+#. Current, as in what is currently in use.
+#: ../app/tools/gimprectangleoptions.c:775
+msgid "Current"
+msgstr "Trenutna"
+
+#: ../app/tools/gimprectangleoptions.c:853
 msgid "Expand from center"
 msgstr "Razširi iz središča"
 
-#: ../app/tools/gimprectangleoptions.c:823
+#: ../app/tools/gimprectangleoptions.c:876
 msgid "Fixed:"
 msgstr "Nespremenljivo:"
 
-#: ../app/tools/gimprectangleoptions.c:956
+#: ../app/tools/gimprectangleoptions.c:1009
+msgid "Position:"
+msgstr "Položaj:"
+
+#: ../app/tools/gimprectangleoptions.c:1027
 msgid "Highlight"
 msgstr "Posvetli"
 
-#: ../app/tools/gimprectangleoptions.c:974
-msgid "X:"
-msgstr "X:"
-
-#: ../app/tools/gimprectangleoptions.c:983
-msgid "Y:"
-msgstr "Y:"
-
 #. Auto Shrink
-#: ../app/tools/gimprectangleoptions.c:1022
-msgid "Auto Shrink Selection"
-msgstr "Samodejno pomanjšaj izbor"
+#: ../app/tools/gimprectangleoptions.c:1037
+msgid "Auto Shrink"
+msgstr "Samodejno pomanjšaj"
 
-#: ../app/tools/gimprectangleoptions.c:1030
+#: ../app/tools/gimprectangleoptions.c:1044
 msgid "Shrink merged"
 msgstr "Pomanjšaj spojeno"
 
@@ -10252,7 +10287,7 @@ msgstr "_Spremeni merilo"
 
 #: ../app/tools/gimpscaletool.c:106
 msgid "command|Scale"
-msgstr "command|Spremeni merilo"
+msgstr "Spremeni merilo"
 
 #: ../app/tools/gimpselectionoptions.c:103
 msgid "Smooth edges"
@@ -10267,7 +10302,7 @@ msgid "Base selection on all visible layers"
 msgstr "Temelji izbiro na vseh vidnih plasteh"
 
 #: ../app/tools/gimpselectionoptions.c:349
-#: ../app/tools/gimptextoptions.c:456
+#: ../app/tools/gimptextoptions.c:457
 msgid "Antialiasing"
 msgstr "Glajenje robov"
 
@@ -10276,14 +10311,14 @@ msgid "Feather edges"
 msgstr "Operjeni robovi"
 
 #: ../app/tools/gimpselectionoptions.c:384
-msgid "Show interactive boundary"
-msgstr "Pokaži interaktivno mejo"
+msgid "Interactive boundary"
+msgstr "Interaktivna meja"
 
-#: ../app/tools/gimpselectionoptions.c:408
+#: ../app/tools/gimpselectionoptions.c:398
 msgid "Select transparent areas"
 msgstr "Izberi prosojna področja"
 
-#: ../app/tools/gimpselectionoptions.c:433
+#: ../app/tools/gimpselectionoptions.c:423
 msgid "Select by:"
 msgstr "Izbor po:"
 
@@ -10337,7 +10372,7 @@ msgstr "_Nagni"
 
 #: ../app/tools/gimpsheartool.c:109
 msgid "command|Shear"
-msgstr "command|Nagni"
+msgstr "Nagni"
 
 #: ../app/tools/gimpsheartool.c:133
 msgid "Shear magnitude _X:"
@@ -10383,35 +10418,36 @@ msgstr "Prilagodi razmik vrstic"
 msgid "Adjust letter spacing"
 msgstr "Prilagodi razmik črk"
 
-#: ../app/tools/gimptextoptions.c:428
+#: ../app/tools/gimptextoptions.c:429
 msgid "Font:"
 msgstr "Pisava:"
 
-#: ../app/tools/gimptextoptions.c:440
+#: ../app/tools/gimptextoptions.c:441
 msgid "Hinting"
 msgstr "Namigovanje"
 
-#: ../app/tools/gimptextoptions.c:447
+#: ../app/tools/gimptextoptions.c:448
 msgid "Force auto-hinter"
 msgstr "Vsili samodejni namig"
 
-#: ../app/tools/gimptextoptions.c:462
+#: ../app/tools/gimptextoptions.c:465
 msgid "Text Color"
 msgstr "Barva besedila"
 
-#: ../app/tools/gimptextoptions.c:467
+#: ../app/tools/gimptextoptions.c:470
 msgid "Color:"
 msgstr "Barva;"
 
-#: ../app/tools/gimptextoptions.c:472
+#: ../app/tools/gimptextoptions.c:476
 msgid "Justify:"
 msgstr "Poravnava:"
 
-#: ../app/tools/gimptextoptions.c:491
-msgid "Create Path from Text"
-msgstr "Ustvari pot iz besedila"
-
+#. Create a path from the current text
 #: ../app/tools/gimptextoptions.c:498
+msgid "Path from Text"
+msgstr "Pot iz besedila"
+
+#: ../app/tools/gimptextoptions.c:505
 msgid "Text along Path"
 msgstr "Besedilo vzdolž poti"
 
@@ -10470,24 +10506,25 @@ msgstr "Transformiraj:"
 msgid "Direction"
 msgstr "Smer"
 
-#: ../app/tools/gimptransformoptions.c:264
+#. the interpolation menu
+#: ../app/tools/gimptransformoptions.c:260
 msgid "Interpolation:"
 msgstr "Interpolacija:"
 
-#: ../app/tools/gimptransformoptions.c:277
+#: ../app/tools/gimptransformoptions.c:273
 msgid "Clipping:"
 msgstr "Odrezanost:"
 
-#: ../app/tools/gimptransformoptions.c:295
+#: ../app/tools/gimptransformoptions.c:291
 msgid "Preview:"
 msgstr "Predogled:"
 
-#: ../app/tools/gimptransformoptions.c:336
+#: ../app/tools/gimptransformoptions.c:332
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 stopinj  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:340
+#: ../app/tools/gimptransformoptions.c:336
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Ohrani razmerje stranic (%s)"
@@ -10529,9 +10566,10 @@ msgstr ""
 "%s  Odštej\n"
 "%s  Presekaj"
 
-#: ../app/tools/gimpvectoroptions.c:188
-msgid "Create Selection from Path"
-msgstr "Ustvari izbiro iz poti"
+#. Create a selection from the current path
+#: ../app/tools/gimpvectoroptions.c:189
+msgid "Selection from Path"
+msgstr "Izbor iz poti"
 
 #: ../app/tools/gimpvectortool.c:161
 msgid "Paths Tool: Create and edit paths"
@@ -10819,7 +10857,7 @@ msgid "Name"
 msgstr "Ime"
 
 #: ../app/widgets/gimpactionview.c:497
-#: ../app/widgets/gimpactionview.c:697
+#: ../app/widgets/gimpactionview.c:701
 msgid "Changing shortcut failed."
 msgstr "Sprememba bližnjice ni uspela."
 
@@ -10831,21 +10869,21 @@ msgstr "Bližnjice so si nasprotujoče"
 msgid "_Reassign shortcut"
 msgstr "_Prerazporedi bližnjico"
 
-#: ../app/widgets/gimpactionview.c:556
+#: ../app/widgets/gimpactionview.c:560
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "Bližnjica \"%s\" je že zasedena s \"%s\" iz skupine \"%s\"."
 
-#: ../app/widgets/gimpactionview.c:560
+#: ../app/widgets/gimpactionview.c:564
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "Z novo določitvijo bližnjice boste le-to odstranili od \"%s\"."
 
-#: ../app/widgets/gimpactionview.c:633
+#: ../app/widgets/gimpactionview.c:637
 msgid "Invalid shortcut."
 msgstr "Neveljavna bližnjica."
 
-#: ../app/widgets/gimpactionview.c:721
+#: ../app/widgets/gimpactionview.c:725
 msgid "Removing shortcut failed."
 msgstr "Odstranjevanje bližnjice ni uspelo."
 
@@ -11002,6 +11040,10 @@ msgstr "Barvni indeks:"
 #: ../app/widgets/gimpcolormapeditor.c:216
 msgid "HTML notation:"
 msgstr "Notacija HTML:"
+
+#: ../app/widgets/gimpcolorselectorpalette.c:59
+msgid "Palette"
+msgstr "Paleta"
 
 #: ../app/widgets/gimpcontainerpopup.c:534
 msgid "Smaller Previews"
@@ -11701,31 +11743,31 @@ msgstr "%d ppi"
 msgid "Line width:"
 msgstr "Širina črte:"
 
-#: ../app/widgets/gimpstrokeeditor.c:201
+#: ../app/widgets/gimpstrokeeditor.c:202
 msgid "_Line Style"
 msgstr "Slog _črte"
 
-#: ../app/widgets/gimpstrokeeditor.c:220
+#: ../app/widgets/gimpstrokeeditor.c:221
 msgid "_Cap style:"
 msgstr "Slog _zaključkov:"
 
-#: ../app/widgets/gimpstrokeeditor.c:226
+#: ../app/widgets/gimpstrokeeditor.c:227
 msgid "_Join style:"
 msgstr "_Slog stikališča:"
 
-#: ../app/widgets/gimpstrokeeditor.c:231
+#: ../app/widgets/gimpstrokeeditor.c:232
 msgid "_Miter limit:"
 msgstr "Meja _sredice:"
 
-#: ../app/widgets/gimpstrokeeditor.c:238
+#: ../app/widgets/gimpstrokeeditor.c:239
 msgid "Dash pattern:"
 msgstr "Črtkani vzorec:"
 
-#: ../app/widgets/gimpstrokeeditor.c:301
+#: ../app/widgets/gimpstrokeeditor.c:302
 msgid "Dash _preset:"
 msgstr "Prednastavitev _črtkane črte:"
 
-#: ../app/widgets/gimpstrokeeditor.c:322
+#: ../app/widgets/gimpstrokeeditor.c:323
 msgid "_Antialiasing"
 msgstr "_Glajenje robov"
 
@@ -11904,15 +11946,15 @@ msgstr "Odpri pogovorno okno za izbor vzorca"
 msgid "Open the gradient selection dialog"
 msgstr "Odpri pogovorno okno za izbor preliva"
 
-#: ../app/widgets/gimpviewablebox.c:219
+#: ../app/widgets/gimpviewablebox.c:224
 msgid "Reverse"
 msgstr "Obrnjeno"
 
-#: ../app/widgets/gimpviewablebox.c:298
+#: ../app/widgets/gimpviewablebox.c:306
 msgid "Open the palette selection dialog"
 msgstr "Odpri pogovorno okno za ozbiro palete"
 
-#: ../app/widgets/gimpviewablebox.c:356
+#: ../app/widgets/gimpviewablebox.c:364
 msgid "Open the font selection dialog"
 msgstr "Odpri pogovorno okno za izbiro pisave"
 
