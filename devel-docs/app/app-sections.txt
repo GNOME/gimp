@@ -3271,6 +3271,7 @@ GIMP_ALIGN_OPTIONS_GET_CLASS
 <FILE>gimpaligntool</FILE>
 <TITLE>GimpAlignTool</TITLE>
 GimpAlignTool
+GimpAlignToolFunction
 gimp_align_tool_register
 ALIGN_TOOL_NUM_BUTTONS
 <SUBSECTION Standard>
