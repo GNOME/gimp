@@ -34,8 +34,8 @@
 
 2007-10-21  Simon Budig  <simon@gimp.org>
 
-	* plg-ins/script-fu/scheme-wrapper.c: Add comment regarding
-	  the safe-foreign issue.
+	* plug-ins/script-fu/scheme-wrapper.c: Add comment regarding
+	the safe-foreign issue.
 
 2007-10-21  Kevin Cozens  <kcozens@cvs.gnome.org>
 
