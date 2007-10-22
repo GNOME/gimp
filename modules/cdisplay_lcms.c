@@ -201,12 +201,16 @@ cdisplay_lcms_profile_get_info (cmsHPROFILE   profile,
 {
   if (profile)
     {
-      *name = cmsTakeProductName (profile);
-      if (! g_utf8_validate (*name, -1, NULL))
+      *name = cmsTakeProductDesc (profile);
+
+      if (! *name)
+        *name = cmsTakeProductName (profile);
+
+      if (*name && ! g_utf8_validate (*name, -1, NULL))
         *name = _("(invalid UTF-8 string)");
 
       *info = cmsTakeProductInfo (profile);
-      if (! g_utf8_validate (*info, -1, NULL))
+      if (*name && ! g_utf8_validate (*info, -1, NULL))
         *info = NULL;
     }
   else
@@ -251,6 +255,7 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
                                  FALSE);
 
   label = gtk_label_new (NULL);
+  gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
   g_object_set_data (G_OBJECT (lcms), "rgb-profile", label);
   cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
                                  _("Image profile:"),
@@ -258,6 +263,7 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   cdisplay_lcms_update_profile_label (lcms, "rgb-profile");
 
   label = gtk_label_new (NULL);
+  gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
   g_object_set_data (G_OBJECT (lcms), "display-profile", label);
   cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
                                  _("Monitor profile:"),
@@ -265,6 +271,7 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   cdisplay_lcms_update_profile_label (lcms, "display-profile");
 
   label = gtk_label_new (NULL);
+  gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
   g_object_set_data (G_OBJECT (lcms), "printer-profile", label);
   cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
                                  _("Print simulation profile:"),
@@ -557,7 +564,6 @@ cdisplay_lcms_attach_labelled (GtkTable    *table,
 {
   GtkWidget *label;
   GtkWidget *ebox = NULL;
-  GtkWidget *hbox;
 
   label = g_object_new (GTK_TYPE_LABEL,
                         "label",  text,
@@ -568,8 +574,7 @@ cdisplay_lcms_attach_labelled (GtkTable    *table,
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
-  gtk_table_attach (table, label, 0, 1, row, row + 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   if (tooltip)
@@ -582,17 +587,15 @@ cdisplay_lcms_attach_labelled (GtkTable    *table,
       g_object_set_data (G_OBJECT (label), "tooltip-widget", ebox);
     }
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  if (GTK_IS_LABEL (widget))
+    gtk_misc_set_alignment (GTK_MISC (widget), 0.0, 0.5);
 
   if (ebox)
-    gtk_container_add (GTK_CONTAINER (ebox), hbox);
+    gtk_container_add (GTK_CONTAINER (ebox), widget);
   else
-    gtk_table_attach (table, hbox, 1, 2, row, row + 1,
+    gtk_table_attach (table, widget, 1, 2, row, row + 1,
                       GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
 
-  gtk_widget_show (hbox);
-
-  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
   gtk_widget_show (widget);
 }
 

@@ -1,3 +1,7 @@
+2007-10-22  Sven Neumann  <sven@gimp.org>
+
+	* modules/cdisplay_lcms.c: improved display of profiles.
+
 2007-10-22  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/jpeg/jpegqual.c (quant_info): Updated table for Adobe
