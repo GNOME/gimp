@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-07 23:48+0200\n"
-"PO-Revision-Date: 2007-10-07 23:52+0200\n"
+"POT-Creation-Date: 2007-10-22 09:01+0200\n"
+"PO-Revision-Date: 2007-10-22 09:08+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1363,11 +1363,11 @@ msgstr "Trasforma i colori in scala di grigi"
 
 #: ../app/actions/drawable-actions.c:51
 msgid "_Equalize"
-msgstr "_Equalizzazione"
+msgstr "_Equalizza"
 
 #: ../app/actions/drawable-actions.c:52
 msgid "Automatic contrast enhancement"
-msgstr "Aumento del contrasto automatico"
+msgstr "Aumento automatico del contrasto"
 
 #: ../app/actions/drawable-actions.c:57
 msgid "In_vert"
@@ -1383,7 +1383,7 @@ msgstr "_Bilanciamento del bianco"
 
 #: ../app/actions/drawable-actions.c:64
 msgid "Automatic white balance correction"
-msgstr "Correzione del bilanciamento del bianco automatica"
+msgstr "Correzione automatica del bilanciamento del bianco"
 
 #: ../app/actions/drawable-actions.c:69
 msgid "_Offset..."
@@ -3339,7 +3339,7 @@ msgid "Toggle _Quick Mask"
 msgstr "Commuta maschera _veloce"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:1033
+#: ../app/display/gimpdisplayshell.c:1032
 msgid "Toggle Quick Mask"
 msgstr "Commuta maschera veloce"
 
@@ -3381,7 +3381,7 @@ msgstr "_Seleziona"
 
 #: ../app/actions/select-actions.c:50
 msgid "select|_All"
-msgstr "_Tutto"
+msgstr "select|_Tutto"
 
 #: ../app/actions/select-actions.c:51
 msgid "Select everything"
@@ -3389,7 +3389,7 @@ msgstr "Seleziona tutto"
 
 #: ../app/actions/select-actions.c:56
 msgid "select|_None"
-msgstr "_Niente"
+msgstr "select|_Niente"
 
 #: ../app/actions/select-actions.c:57
 msgid "Dismiss the selection"
@@ -3989,7 +3989,7 @@ msgstr "Nuove opzioni tracciato"
 msgid "Path to Selection"
 msgstr "Tracciato a selezione"
 
-#: ../app/actions/vectors-commands.c:369 ../app/tools/gimpvectoroptions.c:198
+#: ../app/actions/vectors-commands.c:369 ../app/tools/gimpvectoroptions.c:199
 #: ../app/tools/gimpvectortool.c:1908 ../app/vectors/gimpvectors.c:199
 msgid "Stroke Path"
 msgstr "Delinea tracciato"
@@ -4477,7 +4477,7 @@ msgstr "Rimpiazza"
 msgid "Anti erase"
 msgstr "Anti cancella"
 
-#: ../app/base/tile-swap.c:543
+#: ../app/base/tile-swap.c:544
 msgid ""
 "Unable to open swap file. GIMP has run out of memory and cannot use the swap "
 "file. Some parts of your images may be corrupted. Try to save your work "
@@ -4490,7 +4490,7 @@ msgstr ""
 "differente, quindi riavviare Gimp e controllare la posizione della cartella "
 "del file di scambio nelle preferenze."
 
-#: ../app/base/tile-swap.c:558
+#: ../app/base/tile-swap.c:559
 #, c-format
 msgid "Failed to resize swap file: %s"
 msgstr "Impossibile ridimensionare il file di scambio: %s"
@@ -5791,7 +5791,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Stringa UTF-8 non valida nel file pennello '%s'."
 
-#: ../app/core/gimpbrush-load.c:283 ../app/core/gimpitem.c:505
+#: ../app/core/gimpbrush-load.c:283 ../app/core/gimpitem.c:504
 #: ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
 #: ../app/tools/gimpvectortool.c:296
@@ -6047,7 +6047,7 @@ msgstr "Desaturazione"
 
 #: ../app/core/gimpdrawable-equalize.c:77
 msgid "Equalize"
-msgstr "Equalizzazione"
+msgstr "Equalizza"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:138
 msgid "Foreground Extraction"
@@ -6066,7 +6066,7 @@ msgstr "Livelli"
 msgid "Offset Drawable"
 msgstr "Impostazione disegnabile"
 
-#: ../app/core/gimpdrawable-stroke.c:321
+#: ../app/core/gimpdrawable-stroke.c:320
 msgid "Render Stroke"
 msgstr "Disegna il delineato"
 
@@ -6174,7 +6174,7 @@ msgstr ""
 "Scostamento verticale della prima linea della griglia; dev'essere un numero "
 "negativo."
 
-#: ../app/core/gimpimage-arrange.c:139
+#: ../app/core/gimpimage-arrange.c:143
 msgid "Arrange Objects"
 msgstr "Disponi oggetti"
 
@@ -6482,15 +6482,15 @@ msgstr[1] "%d livelli"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Impossibile aprire la miniatura '%s': %s."
 
-#: ../app/core/gimpitem.c:1133
+#: ../app/core/gimpitem.c:1132
 msgid "Attach Parasite"
 msgstr "Allega parasite"
 
-#: ../app/core/gimpitem.c:1143
+#: ../app/core/gimpitem.c:1142
 msgid "Attach Parasite to Item"
 msgstr "Allega parasite all'elemento"
 
-#: ../app/core/gimpitem.c:1185 ../app/core/gimpitem.c:1192
+#: ../app/core/gimpitem.c:1184 ../app/core/gimpitem.c:1191
 msgid "Remove Parasite from Item"
 msgstr "Rimuovi parasite dall'elemento"
 
@@ -6825,7 +6825,7 @@ msgstr "percento"
 
 #: ../app/core/gimpunit.c:71
 msgid "plural|percent"
-msgstr "percento"
+msgstr "plural|percento"
 
 #: ../app/dialogs/about-dialog.c:127
 msgid "Visit the GIMP website"
@@ -7114,7 +7114,7 @@ msgstr "Commento"
 
 #: ../app/dialogs/image-scale-dialog.c:109
 msgid "dialog-title|Scale Image"
-msgstr "Ridimensionamento immagine"
+msgstr "dialog-title|Ridimensionamento immagine"
 
 #: ../app/dialogs/image-scale-dialog.c:203
 msgid "Confirm Scaling"
@@ -7178,13 +7178,12 @@ msgstr "_Nome livello:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:134
-#: ../app/tools/gimpmeasuretool.c:1056 ../app/tools/gimprectangleoptions.c:995
+#: ../app/tools/gimpmeasuretool.c:1056
 msgid "Width:"
 msgstr "Larghezza:"
 
 #: ../app/dialogs/layer-options-dialog.c:140
 #: ../app/tools/gimpmeasuretool.c:1084
-#: ../app/tools/gimprectangleoptions.c:1008
 msgid "Height:"
 msgstr "Altezza:"
 
@@ -8401,20 +8400,28 @@ msgstr "Sposta l'area visualizzata"
 msgid "Switch to Move tool"
 msgstr "Passa allo strumento spostamento"
 
+#: ../app/display/display-enums.c:115
+msgid "quality|Low"
+msgstr "quality|bassa"
+
+#: ../app/display/display-enums.c:116
+msgid "quality|High"
+msgstr "quality|alta"
+
 #: ../app/display/gimpdisplay-handlers.c:155
 #, c-format
 msgid "Image saved to '%s'"
 msgstr "Immagine salvata su \"%s\""
 
-#: ../app/display/gimpdisplayshell.c:895
+#: ../app/display/gimpdisplayshell.c:894
 msgid "Access the image menu"
 msgstr "Accedi al menu immagine"
 
-#: ../app/display/gimpdisplayshell.c:1004
+#: ../app/display/gimpdisplayshell.c:1003
 msgid "Zoom image when window size changes"
 msgstr "Zooma l'immagine quando cambia la dimensione della finestra"
 
-#: ../app/display/gimpdisplayshell.c:1054
+#: ../app/display/gimpdisplayshell.c:1053
 msgid "Navigate the image display"
 msgstr "Naviga nella finestra immagine"
 
@@ -8660,7 +8667,7 @@ msgid "Pencil"
 msgstr "Matita"
 
 #: ../app/paint/gimpperspectiveclone.c:95 ../app/paint/paint-enums.c:52
-#: ../app/tools/gimpperspectiveclonetool.c:120
+#: ../app/tools/gimpperspectiveclonetool.c:127
 msgid "Perspective Clone"
 msgstr "Clona in prospettiva"
 
@@ -8677,8 +8684,8 @@ msgid "Set a source image first."
 msgstr "Prima è necessario impostare un'immagine sorgente."
 
 #: ../app/paint/paint-enums.c:51
-msgid "Modify Perspective Plane"
-msgstr "Modifica il piano della prospettiva"
+msgid "Modify Perspective"
+msgstr "Modifica prospettiva"
 
 #: ../app/paint/paint-enums.c:82
 msgid "Aligned"
@@ -9074,75 +9081,105 @@ msgstr "Ammontare:"
 msgid "Pressure:"
 msgstr "Pressione:"
 
-#: ../app/tools/gimpaligntool.c:120 ../app/tools/gimpaligntool.c:581
+#: ../app/tools/gimpaligntool.c:134 ../app/tools/gimpaligntool.c:752
 msgid "Align"
 msgstr "Allinea"
 
-#: ../app/tools/gimpaligntool.c:121
+#: ../app/tools/gimpaligntool.c:135
 msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "Strumento allinea: allinea o dispone i livelli ed altri oggetti"
 
-#: ../app/tools/gimpaligntool.c:122
+#: ../app/tools/gimpaligntool.c:136
 msgid "_Align"
 msgstr "_Allinea"
 
-#: ../app/tools/gimpaligntool.c:593
+#: ../app/tools/gimpaligntool.c:585
+msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
+msgstr ""
+"Fare clic su un livello, tracciato o guida oppure trascinare per prelevare "
+"più livelli"
+
+#: ../app/tools/gimpaligntool.c:594
+msgid "Click to pick this layer as first item"
+msgstr "Fare clic per prendere questo livello come prima voce"
+
+#: ../app/tools/gimpaligntool.c:602
+msgid "Click to add this layer to the list"
+msgstr "Fare clic per aggiungere questo livello alla lista"
+
+#: ../app/tools/gimpaligntool.c:606
+msgid "Click to pick this guide as first item"
+msgstr "Fare clic per prendere questa guida come prima voce"
+
+#: ../app/tools/gimpaligntool.c:614
+msgid "Click to add this guide to the list"
+msgstr "Fare clic per aggiungere questa guida alla lista"
+
+#: ../app/tools/gimpaligntool.c:618
+msgid "Click to pick this path as first item"
+msgstr "Fare clic per prendere questo tracciato come prima voce"
+
+#: ../app/tools/gimpaligntool.c:626
+msgid "Click to add this path to the list"
+msgstr "Fare clic per aggiungere questo tracciato alla lista"
+
+#: ../app/tools/gimpaligntool.c:764
 msgid "Relative to:"
 msgstr "Relativo a:"
 
-#: ../app/tools/gimpaligntool.c:611
+#: ../app/tools/gimpaligntool.c:782
 msgid "Align left edge of target"
 msgstr "Allinea al bordo sinistro dell'oggetto"
 
-#: ../app/tools/gimpaligntool.c:617
+#: ../app/tools/gimpaligntool.c:788
 msgid "Align center of target"
 msgstr "Allinea al centro dell'oggetto"
 
-#: ../app/tools/gimpaligntool.c:623
+#: ../app/tools/gimpaligntool.c:794
 msgid "Align right edge of target"
 msgstr "Allinea al bordo destro dell'oggetto"
 
-#: ../app/tools/gimpaligntool.c:633
+#: ../app/tools/gimpaligntool.c:804
 msgid "Align top edge of target"
 msgstr "Allinea alla cima dell'oggetto"
 
-#: ../app/tools/gimpaligntool.c:639
+#: ../app/tools/gimpaligntool.c:810
 msgid "Align middle of target"
 msgstr "Allinea alla mediana dell'oggetto"
 
-#: ../app/tools/gimpaligntool.c:645
+#: ../app/tools/gimpaligntool.c:816
 msgid "Align bottom of target"
 msgstr "Allinea al fondo dell'oggetto"
 
-#: ../app/tools/gimpaligntool.c:649
+#: ../app/tools/gimpaligntool.c:820
 msgid "Distribute"
 msgstr "Distribuisci"
 
-#: ../app/tools/gimpaligntool.c:663
+#: ../app/tools/gimpaligntool.c:834
 msgid "Distribute left edges of targets"
 msgstr "Distribuisci i bordi sinistri degli oggetti"
 
-#: ../app/tools/gimpaligntool.c:670
+#: ../app/tools/gimpaligntool.c:841
 msgid "Distribute horizontal centers of targets"
 msgstr "Distribuisci i centri orizzontali degli oggetti"
 
-#: ../app/tools/gimpaligntool.c:677
+#: ../app/tools/gimpaligntool.c:848
 msgid "Distribute right edges of targets"
 msgstr "Distribuisci i bordi destri degli oggetti"
 
-#: ../app/tools/gimpaligntool.c:687
+#: ../app/tools/gimpaligntool.c:858
 msgid "Distribute top edges of targets"
 msgstr "Distribuisci i bordi in cima degli oggetti"
 
-#: ../app/tools/gimpaligntool.c:694
+#: ../app/tools/gimpaligntool.c:865
 msgid "Distribute vertical centers of targets"
 msgstr "Distribuisci i centri verticali degli oggetti"
 
-#: ../app/tools/gimpaligntool.c:700
+#: ../app/tools/gimpaligntool.c:871
 msgid "Distribute bottoms of targets"
 msgstr "Distribuisci i fondi degli oggetti"
 
-#: ../app/tools/gimpaligntool.c:708 ../app/tools/gimpblendoptions.c:212
+#: ../app/tools/gimpaligntool.c:879 ../app/tools/gimpblendoptions.c:212
 msgid "Offset:"
 msgstr "Scostamento:"
 
@@ -9164,7 +9201,7 @@ msgstr "Definizione max:"
 
 #: ../app/tools/gimpblendoptions.c:262
 #: ../app/tools/gimpbucketfilloptions.c:287
-#: ../app/tools/gimpselectionoptions.c:426
+#: ../app/tools/gimpselectionoptions.c:416
 msgid "Threshold:"
 msgstr "Soglia:"
 
@@ -9253,7 +9290,6 @@ msgid "Fill similar colors"
 msgstr "Riempi i colori simili"
 
 #: ../app/tools/gimpbucketfilloptions.c:253
-#: ../app/tools/gimpselectionoptions.c:398
 msgid "Finding Similar Colors"
 msgstr "Trova colori simili"
 
@@ -9263,8 +9299,8 @@ msgstr "Riempi aree trasparenti"
 
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160 ../app/tools/gimphealtool.c:99
-#: ../app/tools/gimpperspectiveclonetool.c:903
-#: ../app/tools/gimpselectionoptions.c:414
+#: ../app/tools/gimpperspectiveclonetool.c:965
+#: ../app/tools/gimpselectionoptions.c:404
 msgid "Sample merged"
 msgstr "Campionamento diffuso"
 
@@ -9321,12 +9357,12 @@ msgid "Click to set a new clone source"
 msgstr "Fare clic per impostare una nuova sorgente per la duplicazione"
 
 #: ../app/tools/gimpclonetool.c:109
-#: ../app/tools/gimpperspectiveclonetool.c:898
+#: ../app/tools/gimpperspectiveclonetool.c:960
 msgid "Source"
 msgstr "Sorgente"
 
 #: ../app/tools/gimpclonetool.c:128 ../app/tools/gimphealtool.c:111
-#: ../app/tools/gimpperspectiveclonetool.c:917
+#: ../app/tools/gimpperspectiveclonetool.c:979
 msgid "Alignment:"
 msgstr "Allineamento:"
 
@@ -9664,7 +9700,7 @@ msgid "Type  (%s)"
 msgstr "Tipo  (%s)"
 
 #: ../app/tools/gimpdodgeburntool.c:214
-#: ../app/tools/gimpperspectiveclonetool.c:890
+#: ../app/tools/gimpperspectiveclonetool.c:952
 msgid "Mode"
 msgstr "Modalità"
 
@@ -9857,7 +9893,7 @@ msgstr "A mano _libera"
 
 #: ../app/tools/gimpfreeselecttool.c:312
 msgid "command|Free Select"
-msgstr "A mano libera"
+msgstr "command|A mano libera"
 
 #: ../app/tools/gimpfuzzyselecttool.c:63
 msgid "Fuzzy Select"
@@ -9986,7 +10022,7 @@ msgid "Adjustment"
 msgstr "Regolazione"
 
 #: ../app/tools/gimpinkoptions-gui.c:68 ../app/tools/gimpinkoptions-gui.c:93
-#: ../app/tools/gimptextoptions.c:435
+#: ../app/tools/gimprectangleoptions.c:1019 ../app/tools/gimptextoptions.c:436
 msgid "Size:"
 msgstr "Dimensione:"
 
@@ -10124,7 +10160,7 @@ msgstr "Livelli di uscita"
 
 #: ../app/tools/gimplevelstool.c:608
 msgid "Adjust levels automatically"
-msgstr "Regola livelli automaticamente"
+msgstr "Regola automaticamente i livelli"
 
 #: ../app/tools/gimpmagnifyoptions.c:167
 msgid "Auto-resize window"
@@ -10146,7 +10182,7 @@ msgstr "Strumento zoom: regola l'ingrandimento delle immagini"
 
 #: ../app/tools/gimpmagnifytool.c:88
 msgid "tool|_Zoom"
-msgstr "_Zoom"
+msgstr "tool|_Zoom"
 
 #: ../app/tools/gimpmeasureoptions.c:124
 msgid "Use info window"
@@ -10223,7 +10259,7 @@ msgstr "Sposta:"
 
 #: ../app/tools/gimpmovetool.c:125
 msgid "tool|Move"
-msgstr "Sposta"
+msgstr "tool|Sposta"
 
 #: ../app/tools/gimpmovetool.c:126
 msgid "Move Tool: Move layers, selections, and other objects"
@@ -10353,7 +10389,7 @@ msgstr "Strumento matita: dipinge a tratti secchi con un effetto a matita"
 msgid "Pe_ncil"
 msgstr "_Matita"
 
-#: ../app/tools/gimpperspectiveclonetool.c:121
+#: ../app/tools/gimpperspectiveclonetool.c:128
 msgid ""
 "Perspective Clone Tool: Clone from an image source after applying a "
 "perspective transformation"
@@ -10361,11 +10397,11 @@ msgstr ""
 "Strumento clona in prospettiva: duplica un'immagine proveniente da una "
 "sorgente dopo aver applicato una trasformazione prospettica"
 
-#: ../app/tools/gimpperspectiveclonetool.c:123
+#: ../app/tools/gimpperspectiveclonetool.c:130
 msgid "_Perspective Clone"
 msgstr "Clona in _prospettiva"
 
-#: ../app/tools/gimpperspectiveclonetool.c:645
+#: ../app/tools/gimpperspectiveclonetool.c:701
 msgid "Ctrl-Click to set a clone source"
 msgstr "Ctrl-clic per impostare una sorgente per la duplicazione"
 
@@ -10411,36 +10447,37 @@ msgstr "Posterizzazione non possibile su livelli indicizzati."
 msgid "Posterize _levels:"
 msgstr "_Livelli di posterizzazione:"
 
-#: ../app/tools/gimprectangleoptions.c:116
+#: ../app/tools/gimprectangleoptions.c:112
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Usa tutti i livelli visibili quando si riduce la selezione"
 
-#: ../app/tools/gimprectangleoptions.c:804
+#. Current, as in what is currently in use.
+#: ../app/tools/gimprectangleoptions.c:775
+msgid "Current"
+msgstr "Corrente"
+
+#: ../app/tools/gimprectangleoptions.c:853
 msgid "Expand from center"
 msgstr "Espandi dal centro"
 
-#: ../app/tools/gimprectangleoptions.c:823
+#: ../app/tools/gimprectangleoptions.c:876
 msgid "Fixed:"
 msgstr "Fisso:"
 
-#: ../app/tools/gimprectangleoptions.c:956
+#: ../app/tools/gimprectangleoptions.c:1009
+msgid "Position:"
+msgstr "Posizione:"
+
+#: ../app/tools/gimprectangleoptions.c:1027
 msgid "Highlight"
 msgstr "Evidenzia"
 
-#: ../app/tools/gimprectangleoptions.c:974
-msgid "X:"
-msgstr "X:"
-
-#: ../app/tools/gimprectangleoptions.c:983
-msgid "Y:"
-msgstr "Y:"
-
 #. Auto Shrink
-#: ../app/tools/gimprectangleoptions.c:1022
-msgid "Auto Shrink Selection"
-msgstr "Auto riduzione della selezione"
+#: ../app/tools/gimprectangleoptions.c:1037
+msgid "Auto Shrink"
+msgstr "Auto riduzione"
 
-#: ../app/tools/gimprectangleoptions.c:1030
+#: ../app/tools/gimprectangleoptions.c:1044
 msgid "Shrink merged"
 msgstr "Riduzione diffusa"
 
@@ -10521,7 +10558,7 @@ msgstr "Permetti la selezione di aree completamente trasparenti"
 msgid "Base selection on all visible layers"
 msgstr "Basa la selezione su tutti i livelli visibili"
 
-#: ../app/tools/gimpselectionoptions.c:349 ../app/tools/gimptextoptions.c:456
+#: ../app/tools/gimpselectionoptions.c:349 ../app/tools/gimptextoptions.c:457
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
@@ -10530,14 +10567,14 @@ msgid "Feather edges"
 msgstr "Margini sfumati"
 
 #: ../app/tools/gimpselectionoptions.c:384
-msgid "Show interactive boundary"
-msgstr "Mostra margini interattivi"
+msgid "Interactive boundary"
+msgstr "Margini interattivi"
 
-#: ../app/tools/gimpselectionoptions.c:408
+#: ../app/tools/gimpselectionoptions.c:398
 msgid "Select transparent areas"
 msgstr "Seleziona aree trasparenti"
 
-#: ../app/tools/gimpselectionoptions.c:433
+#: ../app/tools/gimpselectionoptions.c:423
 msgid "Select by:"
 msgstr "Selezione per:"
 
@@ -10644,35 +10681,36 @@ msgstr "Regola la spaziatura righe"
 msgid "Adjust letter spacing"
 msgstr "Regola la spaziatura caratteri"
 
-#: ../app/tools/gimptextoptions.c:428
+#: ../app/tools/gimptextoptions.c:429
 msgid "Font:"
 msgstr "Caratteri:"
 
-#: ../app/tools/gimptextoptions.c:440
+#: ../app/tools/gimptextoptions.c:441
 msgid "Hinting"
 msgstr "Hinting"
 
-#: ../app/tools/gimptextoptions.c:447
+#: ../app/tools/gimptextoptions.c:448
 msgid "Force auto-hinter"
 msgstr "Forza l'auto-hinter"
 
-#: ../app/tools/gimptextoptions.c:462
+#: ../app/tools/gimptextoptions.c:465
 msgid "Text Color"
 msgstr "Colore del testo"
 
-#: ../app/tools/gimptextoptions.c:467
+#: ../app/tools/gimptextoptions.c:470
 msgid "Color:"
 msgstr "Colore:"
 
-#: ../app/tools/gimptextoptions.c:472
+#: ../app/tools/gimptextoptions.c:476
 msgid "Justify:"
 msgstr "Giustifica:"
 
-#: ../app/tools/gimptextoptions.c:491
-msgid "Create Path from Text"
-msgstr "Crea tracciato dal testo"
-
+#. Create a path from the current text
 #: ../app/tools/gimptextoptions.c:498
+msgid "Path from Text"
+msgstr "Tracciato dal testo"
+
+#: ../app/tools/gimptextoptions.c:505
 msgid "Text along Path"
 msgstr "Testo lungo il tracciato"
 
@@ -10725,7 +10763,7 @@ msgstr "La soglia non agisce su livelli indicizzati."
 
 #: ../app/tools/gimpthresholdtool.c:237
 msgid "Automatically adjust to optimal binarization threshold"
-msgstr "Regolazione automatica della soglia di binarizzazione automatica"
+msgstr "Ottimizzazione automatica della soglia di binarizzazione"
 
 #: ../app/tools/gimptransformoptions.c:249
 msgid "Transform:"
@@ -10735,24 +10773,25 @@ msgstr "Trasforma:"
 msgid "Direction"
 msgstr "Direzione"
 
-#: ../app/tools/gimptransformoptions.c:264
+#. the interpolation menu
+#: ../app/tools/gimptransformoptions.c:260
 msgid "Interpolation:"
 msgstr "Interpolazione:"
 
-#: ../app/tools/gimptransformoptions.c:277
+#: ../app/tools/gimptransformoptions.c:273
 msgid "Clipping:"
 msgstr "Ritaglio:"
 
-#: ../app/tools/gimptransformoptions.c:295
+#: ../app/tools/gimptransformoptions.c:291
 msgid "Preview:"
 msgstr "Anteprima:"
 
-#: ../app/tools/gimptransformoptions.c:336
+#: ../app/tools/gimptransformoptions.c:332
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 gradi  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:340
+#: ../app/tools/gimptransformoptions.c:336
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Mantieni l'aspetto  (%s)"
@@ -10794,9 +10833,10 @@ msgstr ""
 "%s  Sottrai\n"
 "%s  Interseca"
 
-#: ../app/tools/gimpvectoroptions.c:188
-msgid "Create Selection from Path"
-msgstr "Crea selezione dal tracciato"
+#. Create a selection from the current path
+#: ../app/tools/gimpvectoroptions.c:189
+msgid "Selection from Path"
+msgstr "Selezione dal tracciato"
 
 #: ../app/tools/gimpvectortool.c:161
 msgid "Paths Tool: Create and edit paths"
@@ -11074,7 +11114,7 @@ msgstr "Scorciatoia"
 msgid "Name"
 msgstr "Nome"
 
-#: ../app/widgets/gimpactionview.c:497 ../app/widgets/gimpactionview.c:697
+#: ../app/widgets/gimpactionview.c:497 ../app/widgets/gimpactionview.c:701
 msgid "Changing shortcut failed."
 msgstr "Fallito il cambiamento della scorciatoia."
 
@@ -11086,22 +11126,22 @@ msgstr "Scorciatoie in conflitto"
 msgid "_Reassign shortcut"
 msgstr "_Riassegna scorciatoia"
 
-#: ../app/widgets/gimpactionview.c:556
+#: ../app/widgets/gimpactionview.c:560
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr ""
 "La scorciatoia \"%s\" è già stata assegnata a \"%s\" per il gruppo \"%s\"."
 
-#: ../app/widgets/gimpactionview.c:560
+#: ../app/widgets/gimpactionview.c:564
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "La riassegnazione della scorciatoia causerà la rimozione da \"%s\"."
 
-#: ../app/widgets/gimpactionview.c:633
+#: ../app/widgets/gimpactionview.c:637
 msgid "Invalid shortcut."
 msgstr "Scorciatoia non valida."
 
-#: ../app/widgets/gimpactionview.c:721
+#: ../app/widgets/gimpactionview.c:725
 msgid "Removing shortcut failed."
 msgstr "Fallita la rimozione della scorciatoia"
 
@@ -11253,6 +11293,10 @@ msgstr "Indice dei colori:"
 #: ../app/widgets/gimpcolormapeditor.c:216
 msgid "HTML notation:"
 msgstr "Notazione HTML:"
+
+#: ../app/widgets/gimpcolorselectorpalette.c:59
+msgid "Palette"
+msgstr "Tavolozza"
 
 #: ../app/widgets/gimpcontainerpopup.c:534
 msgid "Smaller Previews"
@@ -11965,31 +12009,31 @@ msgstr "%d ppi"
 msgid "Line width:"
 msgstr "Spessore linea:"
 
-#: ../app/widgets/gimpstrokeeditor.c:201
+#: ../app/widgets/gimpstrokeeditor.c:202
 msgid "_Line Style"
 msgstr "Stile _linea"
 
-#: ../app/widgets/gimpstrokeeditor.c:220
+#: ../app/widgets/gimpstrokeeditor.c:221
 msgid "_Cap style:"
 msgstr "Stile _capo:"
 
-#: ../app/widgets/gimpstrokeeditor.c:226
+#: ../app/widgets/gimpstrokeeditor.c:227
 msgid "_Join style:"
 msgstr "Stile _giunzione:"
 
-#: ../app/widgets/gimpstrokeeditor.c:231
+#: ../app/widgets/gimpstrokeeditor.c:232
 msgid "_Miter limit:"
 msgstr "Li_mite spigolo:"
 
-#: ../app/widgets/gimpstrokeeditor.c:238
+#: ../app/widgets/gimpstrokeeditor.c:239
 msgid "Dash pattern:"
 msgstr "Modello tratteggio:"
 
-#: ../app/widgets/gimpstrokeeditor.c:301
+#: ../app/widgets/gimpstrokeeditor.c:302
 msgid "Dash _preset:"
 msgstr "_Preimpostazione tratteggio:"
 
-#: ../app/widgets/gimpstrokeeditor.c:322
+#: ../app/widgets/gimpstrokeeditor.c:323
 msgid "_Antialiasing"
 msgstr "_Antialiasing"
 
@@ -12173,15 +12217,15 @@ msgstr "Apri la finestra di selezione pattern"
 msgid "Open the gradient selection dialog"
 msgstr "Apri la finestra di selezione gradiente"
 
-#: ../app/widgets/gimpviewablebox.c:219
+#: ../app/widgets/gimpviewablebox.c:224
 msgid "Reverse"
 msgstr "Inverso"
 
-#: ../app/widgets/gimpviewablebox.c:298
+#: ../app/widgets/gimpviewablebox.c:306
 msgid "Open the palette selection dialog"
 msgstr "Apri la finestra di selezione tavolozza"
 
-#: ../app/widgets/gimpviewablebox.c:356
+#: ../app/widgets/gimpviewablebox.c:364
 msgid "Open the font selection dialog"
 msgstr "Apri la finestra della selezione caratteri"
 
@@ -12409,3 +12453,12 @@ msgstr "Controlla che gli strumenti siano visibili!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Impossibile eseguire \"%s\": %s"
+
+#~ msgid "X:"
+#~ msgstr "X:"
+
+#~ msgid "Y:"
+#~ msgstr "Y:"
+
+#~ msgid "Create Selection from Path"
+#~ msgstr "Crea selezione dal tracciato"
