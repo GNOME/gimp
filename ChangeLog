@@ -1,3 +1,8 @@
+2007-10-22  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/jpeg/jpegqual.c (quant_info): Updated table for Adobe
+	products.  Thanks to Bart for the sample files.
+
 2007-10-21  Simon Budig  <simon@gimp.org>
 
         * plg-ins/script-fu/scheme-wrapper.c: Add comment regarding
