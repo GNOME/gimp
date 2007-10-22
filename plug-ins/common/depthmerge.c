@@ -137,7 +137,7 @@ static void util_fillReducedBuffer (guchar       *dest,
 static void util_convertColorspace (guchar       *dest,
                                     gint          destBPP,
                                     gboolean      destHasAlpha,
-                                    guchar       *source,
+                                    const guchar *source,
                                     gint          sourceBPP,
                                     gboolean      sourceHasAlpha,
                                     gint          length);
@@ -1095,13 +1095,13 @@ util_fillReducedBuffer (guchar       *dest,
    likes gray and rgb best, of course.  Others will be creatively mutilated,
    and even rgb->gray is pretty bad */
 static void
-util_convertColorspace (guchar   *dest,
-                        gint      destBPP,
-                        gboolean  destHasAlpha,
-                        guchar   *source,
-                        gint      sourceBPP,
-                        gboolean  sourceHasAlpha,
-                        gint      length)
+util_convertColorspace (guchar       *dest,
+                        gint          destBPP,
+                        gboolean      destHasAlpha,
+                        const guchar *source,
+                        gint          sourceBPP,
+                        gboolean      sourceHasAlpha,
+                        gint          length)
 {
   gint i, j;
   gint sourcePos, destPos;
@@ -1185,8 +1185,7 @@ util_convertColorspace (guchar   *dest,
                i < length;
                i++, destPos += destBPP, sourcePos += sourceBPP)
             {
-              for (i = 0; i < length; i++)
-                dest[destPos] = source[sourcePos];
+              dest[destPos] = source[sourcePos];
             }
         }
       else

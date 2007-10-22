@@ -1,5 +1,10 @@
 2007-10-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/depthmerge.c (util_convertColorspace): fixed
+	bogus for-loop.
+
+2007-10-22  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimppaintoptions-gui.c: changed aspect ratio of the
 	wrap-box used for the "Pressure sensitivity" controls to make them
 	fit better into the tool-options.
