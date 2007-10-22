@@ -7,45 +7,45 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-18 11:43+0100\n"
-"PO-Revision-Date: 2007-04-18 12:23-0000\n"
+"POT-Creation-Date: 2007-10-22 21:41+0100\n"
+"PO-Revision-Date: 2007-10-22 23:20+0100\n"
 "Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:143
-#: ../plug-ins/script-fu/script-fu-console.c:210
+#: ../plug-ins/script-fu/script-fu-console.c:133
+#: ../plug-ins/script-fu/script-fu-console.c:200
 msgid "Script-Fu Console"
 msgstr "وحدة تحكم سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-console.c:206
+#: ../plug-ins/script-fu/script-fu-console.c:196
 msgid "Welcome to TinyScheme"
 msgstr "مرحباً في المخطط المصغر"
 
-#: ../plug-ins/script-fu/script-fu-console.c:212
+#: ../plug-ins/script-fu/script-fu-console.c:202
 msgid "Interactive Scheme Development"
 msgstr "تطوير المخطط التفاعلي"
 
-#: ../plug-ins/script-fu/script-fu-console.c:248
+#: ../plug-ins/script-fu/script-fu-console.c:238
 msgid "_Browse..."
 msgstr "_استعراض..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:310
+#: ../plug-ins/script-fu/script-fu-console.c:296
 msgid "Save Script-Fu Console Output"
 msgstr "حفظ خرج وحدة تحكم سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-console.c:357
+#: ../plug-ins/script-fu/script-fu-console.c:343
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "تعذر فتح '%s' للكتابة: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:386
+#: ../plug-ins/script-fu/script-fu-console.c:372
 msgid "Script-Fu Procedure Browser"
 msgstr "مستعرض أجراءات سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-console.c:711
+#: ../plug-ins/script-fu/script-fu-console.c:716
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "نمط سكربت-فو التقييمي يسمح فقط بالاستدعاءات غير التفاعلية"
 
@@ -58,57 +58,51 @@ msgstr "سكربت-فو لا يمكنه إجراء أكثر من سكربت في
 msgid "You are already running the \"%s\" script."
 msgstr "أنت تشغل حالياً السكربت \"%s\"."
 
-#. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:216
-#: ../plug-ins/script-fu/script-fu-interface.c:219
-msgid "/Script-Fu/"
-msgstr "/سكربت-فو/"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: ../plug-ins/script-fu/script-fu-interface.c:238
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "سكربت-فو: %s"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:299
+#: ../plug-ins/script-fu/script-fu-interface.c:300
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:347
+#: ../plug-ins/script-fu/script-fu-interface.c:348
 msgid "Script-Fu Color Selection"
 msgstr "اختيار لون سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:459
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu File Selection"
 msgstr "اختيار ملف سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:463
 msgid "Script-Fu Folder Selection"
 msgstr "اختيار مجلد سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:474
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Font Selection"
 msgstr "اختيار خط سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:482
+#: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Palette Selection"
 msgstr "اختيار لوحة ألوان سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:491
+#: ../plug-ins/script-fu/script-fu-interface.c:492
 msgid "Script-Fu Pattern Selection"
 msgstr "اختيار نموذج سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:500
+#: ../plug-ins/script-fu/script-fu-interface.c:501
 msgid "Script-Fu Gradient Selection"
 msgstr "تحديد تدرج الألوان في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:509
+#: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
 msgstr "اختيار فرشاة سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:664
+#: ../plug-ins/script-fu/script-fu-scripts.c:658
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -121,19 +115,19 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:711
+#: ../plug-ins/script-fu/script-fu-server.c:712
 msgid "Script-Fu Server Options"
 msgstr "خيارات سيرفر سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-server.c:716
+#: ../plug-ins/script-fu/script-fu-server.c:717
 msgid "_Start Server"
 msgstr "ا_بدأ السيرفر"
 
-#: ../plug-ins/script-fu/script-fu-server.c:744
+#: ../plug-ins/script-fu/script-fu-server.c:745
 msgid "Server port:"
 msgstr "منفذ الإنصات:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:750
+#: ../plug-ins/script-fu/script-fu-server.c:751
 msgid "Server logfile:"
 msgstr "سجل السيرفر:"
 
@@ -153,115 +147,115 @@ msgstr "سيرفر لعمليات سكربت-فو البعيدة"
 msgid "_Start Server..."
 msgstr "اب_دأ الخادم..."
 
-#: ../plug-ins/script-fu/script-fu.c:300
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
 msgstr "_GIMP على الخط"
 
-#: ../plug-ins/script-fu/script-fu.c:301
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
 msgstr "د_ليل المستخدم"
 
-#: ../plug-ins/script-fu/script-fu.c:304
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
 msgstr "_سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Buttons"
 msgstr "الأ_زرار"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:309
 msgid "_Logos"
 msgstr "ال_شعارات"
 
-#: ../plug-ins/script-fu/script-fu.c:310
+#: ../plug-ins/script-fu/script-fu.c:311
 msgid "_Misc"
 msgstr "إ_عدادات مختلفة"
 
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Patterns"
 msgstr "الن_ماذج"
 
-#: ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "اخ_تبار"
 
-#: ../plug-ins/script-fu/script-fu.c:316
-msgid "_Utils"
-msgstr "أد_وات مساعدة"
+#: ../plug-ins/script-fu/script-fu.c:317
+msgid "_Utilities"
+msgstr "أد_وات"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Web Page Themes"
 msgstr "_سمات صفحات الويب"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Alien Glow"
 msgstr "تو_هج مغاير"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Beveled Pattern"
 msgstr "نموذج ال_زاوية المنحرفة"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:325
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:327
+#: ../plug-ins/script-fu/script-fu.c:328
 msgid "Alpha to _Logo"
 msgstr "ألفا إلى ش_عار"
 
-#: ../plug-ins/script-fu/script-fu.c:329
+#: ../plug-ins/script-fu/script-fu.c:330
 msgid "An_imation"
 msgstr "_رسوم متحركة"
 
-#: ../plug-ins/script-fu/script-fu.c:331
+#: ../plug-ins/script-fu/script-fu.c:332
 msgid "_Animators"
 msgstr "_ال_محركات"
 
-#: ../plug-ins/script-fu/script-fu.c:333
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Artistic"
 msgstr "_فني"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:336
 msgid "_Blur"
 msgstr "_غشاوة"
 
-#: ../plug-ins/script-fu/script-fu.c:337
+#: ../plug-ins/script-fu/script-fu.c:338
 msgid "_Decor"
 msgstr "ز_خرفة"
 
-#: ../plug-ins/script-fu/script-fu.c:339
+#: ../plug-ins/script-fu/script-fu.c:340
 msgid "_Effects"
 msgstr "مؤ_ثرات"
 
-#: ../plug-ins/script-fu/script-fu.c:341
+#: ../plug-ins/script-fu/script-fu.c:342
 msgid "En_hance"
 msgstr "ز_يادة"
 
-#: ../plug-ins/script-fu/script-fu.c:343
+#: ../plug-ins/script-fu/script-fu.c:344
 msgid "_Light and Shadow"
 msgstr "ال_ضوء والظل"
 
-#: ../plug-ins/script-fu/script-fu.c:345
+#: ../plug-ins/script-fu/script-fu.c:346
 msgid "S_hadow"
 msgstr "ال_ظل"
 
-#: ../plug-ins/script-fu/script-fu.c:347
+#: ../plug-ins/script-fu/script-fu.c:348
 msgid "_Render"
 msgstr "ت_صيير"
 
-#: ../plug-ins/script-fu/script-fu.c:349
+#: ../plug-ins/script-fu/script-fu.c:350
 msgid "_Alchemy"
 msgstr "_خيميائي"
 
-#: ../plug-ins/script-fu/script-fu.c:352
+#: ../plug-ins/script-fu/script-fu.c:353
 msgid "Re-read all available Script-Fu scripts"
 msgstr "إعادة قراءة سكربتات سكربت-فو المتاحة"
 
-#: ../plug-ins/script-fu/script-fu.c:357
+#: ../plug-ins/script-fu/script-fu.c:358
 msgid "_Refresh Scripts"
 msgstr "تحديث السكرب_تات"
 
-#: ../plug-ins/script-fu/script-fu.c:380
+#: ../plug-ins/script-fu/script-fu.c:381
 msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
 msgstr "لا يمكنك استخدام \"إنعاش السكربتات\" حينما يكون صندوق الحوار مفتوحاً.  رجاءً أغلق جميع نوافذ سكربت-فو ثم حاول ثانية."
 
@@ -580,7 +574,7 @@ msgstr "تسطيح الصورة"
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 msgid "Glow color"
@@ -944,36 +938,32 @@ msgid "B_urn-In..."
 msgstr "_حرق..."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
-msgid ""
-"Burn-In: Needs two layers in total!\\n"
-"A foreground text layer with transparency and a background layer."
-msgstr ""
-"الحرق: يحتاج طبقتين!\\n"
-"الطبقة الأمامية عبارة عن نص مع شفافية وطبقة الخلفية."
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Corona width"
 msgstr "عرض الوهج"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Create intermediate layers to produce an animated 'burn-in' transition between two layers"
 msgstr "إنشاء طبقات وسيطة لإنتاج عملية حرق تحريكية بين طبقتين"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Fadeout"
 msgstr "زوال لون الأطراف"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout width"
 msgstr "مقدار زوال لون الأطراف"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 msgid "Prepare for GIF"
 msgstr "التحضير لـ GIF"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Speed (pixels/frame)"
 msgstr "السرعة (بكسل في المشهد)"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+msgid "The Burn-In script needs two layers in total. A foreground layer with transparency and a background layer."
+msgstr "الحرق يحتاج طبقتين. الطبقة الأمامية مع شفافية وطبقة الخلفية."
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "Color 1"
@@ -1223,12 +1213,8 @@ msgid "Add realistic looking coffee stains to the image"
 msgstr "إضافة بقع قهوة حقيقية إلى الصورة"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
-msgid ""
-"Darken only\\n"
-"(Better, but only for images with a lot of white)"
-msgstr ""
-"تغميق فقط\\n"
-"(أفضل فقط للصور التي تحوي الكثير من البياض)"
+msgid "Darken only"
+msgstr "غامق فقط"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -1275,10 +1261,6 @@ msgstr "أنشئ شعاراً معدنياً مع الانعكاسات والظ�
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 msgid "Effect size (pixels)"
 msgstr "حجم التأثيرات (بالبكسل)"
-
-#: ../plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "This procedure is deprecated! use \\'gimp-edit-copy-visible\\' instead."
-msgstr "هذا الإجراء لم يعد مستخدماً! استخدم \\'القائمة تحرير-الخيار نسخ مرئي\\' بدلاً عنه."
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "Background image"
@@ -1415,42 +1397,6 @@ msgstr "صفوف/أعمدة"
 msgid "_Erase Every Other Row..."
 msgstr "_محو كل الصفوف الأخرى..."
 
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:1
-msgid "Apply generated layermask"
-msgstr "تطبيق قناع الطبقة المولد"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:2
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
-msgid "Border size"
-msgstr "حجم الحدود"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:3
-msgid "Clear unselected maskarea"
-msgstr "حذف مساحة القناع غير المحددة"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:4
-msgid "Create a layermask that fades the edges of the selected region (or alpha)"
-msgstr "إنشاء قناع طبقة يحذف ألوان حواف المنطقة المحددة (أو ألفا)"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:6
-#, no-c-format
-msgid "Fade from %"
-msgstr "حذف ألوان الحواف من %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:8
-#, no-c-format
-msgid "Fade to %"
-msgstr "حذف ألوان الحواف إلى %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:9
-msgid "Use growing selection"
-msgstr "استخدام اختيار النمو"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:10
-msgid "_Fade to Layer Mask..."
-msgstr "ح_ذف ألوان الحواف في قناع الطبقة..."
-
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "Create an image filled with a Land Pattern"
 msgstr "أنشئ صورة مملوءة بنموذج الأرض"
@@ -1556,6 +1502,11 @@ msgstr "أضف ظلاً"
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 msgid "Blur border"
 msgstr "حدود الغشاوة"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
+msgid "Border size"
+msgstr "حجم الحدود"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
@@ -2069,6 +2020,11 @@ msgstr "_فرشاة جديدة..."
 msgid "Paste the clipboard contents into a new brush"
 msgstr "لصق محتويات الحافظة في فرشاة جديدة"
 
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
+msgid "There is no image data in the clipboard to paste."
+msgstr "لا توجد صورة في الحافظة للصق."
+
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
 msgid "New _Pattern..."
 msgstr "نمو_ذج جديد..."
@@ -2255,6 +2211,18 @@ msgstr "تدوير زوايا صورة وإضافة ظل ساقط وخلفية �
 msgid "_Round Corners..."
 msgstr "زوايا _دائرية..."
 
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr "غير خارطة الألوان للصورة للألوان المحددة في اللوحة."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
+msgid "Palette"
+msgstr "لوحة ألوان"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
+msgid "Se_t Colormap..."
+msgstr "_حدد خارطة الألوان"
+
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Convert a selection to a brush"
 msgstr "تحويل المحدد إلى الفرشاة"
@@ -2293,10 +2261,6 @@ msgid "Round the corners of the current selection"
 msgstr "تدوير زوايا التحديد الحالي"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
-msgid "Round the corners of the current selection (deprecated, use Rounded Rectangle)"
-msgstr "تدوير زوايا التحديد الحالي (ملغاة حالياً، استخدم تدوير المستطيلات)"
-
-#: ../plug-ins/script-fu/scripts/selection-round.scm.h:6
 msgid "Rounded R_ectangle..."
 msgstr "تدوير الم_ستطيلات..."
 
@@ -2857,6 +2821,34 @@ msgstr "إعتام التمييز اللوني"
 msgid "_Xach-Effect..."
 msgstr "تأثير-_Xach..."
 
+#~ msgid "/Script-Fu/"
+#~ msgstr "/سكربت-فو/"
+#~ msgid "Darken only\\n(Better, but only for images with a lot of white)"
+#~ msgstr "تغميق فقط\\n(أفضل فقط للصور التي تحوي الكثير من البياض)"
+#~ msgid ""
+#~ "This procedure is deprecated! use \\'gimp-edit-copy-visible\\' instead."
+#~ msgstr ""
+#~ "هذا الإجراء لم يعد مستخدماً! استخدم \\'القائمة تحرير-الخيار نسخ مرئي\\' "
+#~ "بدلاً عنه."
+#~ msgid "Apply generated layermask"
+#~ msgstr "تطبيق قناع الطبقة المولد"
+#~ msgid "Clear unselected maskarea"
+#~ msgstr "حذف مساحة القناع غير المحددة"
+#~ msgid ""
+#~ "Create a layermask that fades the edges of the selected region (or alpha)"
+#~ msgstr "إنشاء قناع طبقة يحذف ألوان حواف المنطقة المحددة (أو ألفا)"
+#~ msgid "Fade from %"
+#~ msgstr "حذف ألوان الحواف من %"
+#~ msgid "Fade to %"
+#~ msgstr "حذف ألوان الحواف إلى %"
+#~ msgid "Use growing selection"
+#~ msgstr "استخدام اختيار النمو"
+#~ msgid "_Fade to Layer Mask..."
+#~ msgstr "ح_ذف ألوان الحواف في قناع الطبقة..."
+#~ msgid ""
+#~ "Round the corners of the current selection (deprecated, use Rounded "
+#~ "Rectangle)"
+#~ msgstr "تدوير زوايا التحديد الحالي (ملغاة حالياً، استخدم تدوير المستطيلات)"
 #~ msgid "<Toolbox>/Xtns/Languages/Script-Fu"
 #~ msgstr "<Toolbox>/Xtns/Languages/سكربت-فو"
 #~ msgid "Script Progress"
