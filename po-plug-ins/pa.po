@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD.pa\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-20 15:26+0100\n"
-"PO-Revision-Date: 2007-10-22 18:47+0530\n"
+"PO-Revision-Date: 2007-10-22 21:00+0530\n"
 "Last-Translator: Amanpreet Singh Alam <aalam@users.sf.net>\n"
 "Language-Team: Panjabi <punjabi-l10n@users.sf.net>\n"
 "MIME-Version: 1.0\n"
@@ -7537,11 +7537,11 @@ msgstr ""
 
 #: ../plug-ins/common/sparkle.c:498
 msgid "_Preserve luminosity"
-msgstr ""
+msgstr "ਲੂਮਿਨਸਟੀ ਰੱਖੋ(_P)"
 
 #: ../plug-ins/common/sparkle.c:505
 msgid "Should the luminosity be preserved?"
-msgstr ""
+msgstr "ਕੀ ਲੂਮਿਨਸਟੀ ਸੁਰੱਖਿਅਤ ਰੱਖਣੀ ਹੈ?"
 
 #: ../plug-ins/common/sparkle.c:514
 msgid "In_verse"
@@ -7557,7 +7557,7 @@ msgstr "ਬਾਰਡਰ ਸ਼ਾਮਲ ਕਰੋ(_d)"
 
 #: ../plug-ins/common/sparkle.c:535
 msgid "Draw a border of spikes around the image"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਦੁਆਲੇ ਸਪਾਇਕ ਦਾ ਬਾਰਡਰ ਬਣਾਓ"
 
 #: ../plug-ins/common/sparkle.c:549
 msgid "_Natural color"
@@ -7598,7 +7598,7 @@ msgstr "ਸੰਗਮਰਮਰ"
 
 #: ../plug-ins/common/spheredesigner.c:294
 msgid "Lizard"
-msgstr ""
+msgstr "ਲੀਜ਼ਾਰਡ"
 
 #: ../plug-ins/common/spheredesigner.c:295
 msgid "Phong"
@@ -7681,7 +7681,7 @@ msgstr "ਸਕੇਲ:"
 
 #: ../plug-ins/common/spheredesigner.c:2763
 msgid "Turbulence:"
-msgstr ""
+msgstr "ਟਰਬੁਲੈਨਸ:"
 
 #: ../plug-ins/common/spheredesigner.c:2770
 msgid "Amount:"
@@ -7989,7 +7989,7 @@ msgstr "ਤਲ ਖੱਬੇ ਤੋਂ ਸ਼ੁਰੂਆਤ(_i)"
 
 #: ../plug-ins/common/threshold_alpha.c:85
 msgid "Make transparency all-or-nothing"
-msgstr ""
+msgstr "ਸਭ-ਜਾਂ-ਕੁਝ ਨਹੀਂ ਟਰਾਂਸਪੇਰੈਂਸੀ ਬਣਾਓ"
 
 #: ../plug-ins/common/threshold_alpha.c:90
 msgid "_Threshold Alpha..."
@@ -8040,12 +8040,17 @@ msgid ""
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
+"ਚੇਤਾਵਨੀ:\n"
+"ਚਿੱਤਰ, ਜੋ ਤੁਸੀਂ ਲੋਡ ਕਰ ਰਹੇ ਹੋ, 16 ਬਿੱਟ ਪ੍ਰਤੀ ਚੈਨਲ ਨਾਲ ਹੈ। ਜੈਮਪ ਕੇਵਲ 8 ਬਿੱਟ ਲਈ ਹੈਂਡਲ ਕਰਨ ਜੋਗਾ "
+"ਹੈ, ਸੋ ਇਹ ਤੁਹਾਡੇ ਵਾਸਤੇ ਬਦਲਿਆ ਜਾਵੇਗਾ। ਇਹ ਬਦਲਾਅ ਕਰਕੇ ਜਾਣਕਾਰੀ ਗੁਆਚ ਜਾਵੇਗੀ।"
 
 #: ../plug-ins/common/tiff-save.c:873
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
+"TIFF ਫਾਰਮੈਟ ਕੇਵਲ 7ਬਿੱਟ ASCII ਇੰਕੋਡਿੰਗ ਵਿੱਚ ਹੀ ਟਿੱਪਣੀਆਂ\n"
+"ਸੰਭਾਲ ਸਕਦਾ ਹੈ। ਕੋਈ ਟਿੱਪਣੀ ਨਹੀਂ ਸੰਭਾਲੀ ਗਈ ਹੈ।"
 
 #: ../plug-ins/common/tiff-save.c:1047
 msgid "Save as TIFF"
@@ -8070,7 +8075,7 @@ msgstr "ਪੈਕ ਬਿੱਟ(_P)"
 
 #: ../plug-ins/common/tiff-save.c:1076
 msgid "_Deflate"
-msgstr ""
+msgstr "ਡਿਫਲਾਟ(_D)"
 
 #: ../plug-ins/common/tiff-save.c:1077
 msgid "_JPEG"
@@ -8086,7 +8091,7 @@ msgstr "CCITT ਗਰੁੱਪ _4 ਫੈਕਸ"
 
 #: ../plug-ins/common/tiff-save.c:1101
 msgid "Save _color values from transparent pixels"
-msgstr ""
+msgstr "ਟਰਾਂਸਪੇਰਟ ਪਿਕਸਲਾਂ ਤੋਂ ਕਲਰ ਮੁੱਲ ਸੰਭਾਲੋ(_c)"
 
 #: ../plug-ins/common/tiff-save.c:1117 ../plug-ins/common/xbm.c:1227
 msgid "Comment:"
@@ -8094,7 +8099,7 @@ msgstr "ਟਿੱਪਣੀ:"
 
 #: ../plug-ins/common/tile.c:101
 msgid "Create an array of copies of the image"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਦੀਆਂ ਕਾਪੀਆਂ ਦੀ ਲੜੀ ਬਣਾਓ"
 
 #: ../plug-ins/common/tile.c:111
 msgid "_Tile..."
@@ -8123,7 +8128,7 @@ msgstr ""
 
 #: ../plug-ins/common/tileit.c:220
 msgid "_Small Tiles..."
-msgstr ""
+msgstr "ਛੋਟੀਆਂ ਟਾਇਲਾਂ(_S)..."
 
 #: ../plug-ins/common/tileit.c:262
 msgid "Region selected for filter is empty."
@@ -8411,7 +8416,7 @@ msgstr "ਹੋਰ ਕਾਲਾ(ਛੋਟਾ ਮੁੱਲ)(_k)"
 
 #: ../plug-ins/common/vpropagate.c:195
 msgid "_Middle value to peaks"
-msgstr ""
+msgstr "ਪੀਕ ਲਈ ਮਿਡਲ ਮੁੱਲ(_M)"
 
 #: ../plug-ins/common/vpropagate.c:198
 msgid "_Foreground to peaks"
@@ -8427,7 +8432,7 @@ msgstr "ਕੇਵਲ ਬੈਕਗਰਾਊਂਡ(_a)"
 
 #: ../plug-ins/common/vpropagate.c:207
 msgid "Mor_e opaque"
-msgstr ""
+msgstr "ਹੋਰ ਧੁੰਦਲਾ(_e)"
 
 #: ../plug-ins/common/vpropagate.c:210
 msgid "More t_ransparent"
@@ -8439,7 +8444,7 @@ msgstr ""
 
 #: ../plug-ins/common/vpropagate.c:238
 msgid "_Value Propagate..."
-msgstr ""
+msgstr "ਮੁੱਲ ਪਰੋਪਾਗੇਟ(_V)..."
 
 #: ../plug-ins/common/vpropagate.c:245
 msgid "Shrink darker areas of the image"
@@ -8459,12 +8464,12 @@ msgstr "ਡਿਲੇਟ(_D)"
 
 #: ../plug-ins/common/vpropagate.c:473 ../plug-ins/common/vpropagate.c:1063
 msgid "Value Propagate"
-msgstr ""
+msgstr "ਮੁੱਲ ਪਰੋਪਾਗੇਟ"
 
 #. Parameter settings
 #: ../plug-ins/common/vpropagate.c:1128
 msgid "Propagate"
-msgstr ""
+msgstr "ਪਰੋਪਾਗੇਟ"
 
 #: ../plug-ins/common/vpropagate.c:1141
 msgid "Lower t_hreshold:"
@@ -8476,7 +8481,7 @@ msgstr "ਅੱਪਰ ਥਰਿੱਸ਼ਹੋਲਡ (_U):"
 
 #: ../plug-ins/common/vpropagate.c:1165
 msgid "_Propagating rate:"
-msgstr ""
+msgstr "ਪਰੋਪਾਗੇਟਿੰਗ ਰੇਟ(_P):"
 
 #: ../plug-ins/common/vpropagate.c:1176
 msgid "To l_eft"
@@ -8496,11 +8501,11 @@ msgstr "ਤਲ(_b)"
 
 #: ../plug-ins/common/vpropagate.c:1194
 msgid "Propagating _alpha channel"
-msgstr ""
+msgstr "ਪਰੋਪਾਗੇਟਿੰਗ ਐਲਫ਼ਾ ਚੈਨਲ(_a)"
 
 #: ../plug-ins/common/vpropagate.c:1205
 msgid "Propagating value channel"
-msgstr ""
+msgstr "ਪਰੋਪਾਗੇਟਿੰਗ ਮੁੱਲ ਚੈਨਲ"
 
 #: ../plug-ins/common/warp.c:233
 msgid "Twist or smear image in many different ways"
@@ -8683,7 +8688,7 @@ msgstr ""
 
 #: ../plug-ins/common/whirlpinch.c:138
 msgid "Distort an image by whirling and pinching"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਨੂੰ ਵਿਰਲ ਅਤੇ ਪਿੰਚਿੰਗ ਰਾਹੀਂ ਡਿਸਟਾਰਟਰ ਕਰੋ"
 
 #: ../plug-ins/common/whirlpinch.c:149
 msgid "W_hirl and Pinch..."
@@ -8691,7 +8696,7 @@ msgstr "ਵਰਲ ਅਤੇ ਪਿੰਚ(_h)..."
 
 #: ../plug-ins/common/whirlpinch.c:193
 msgid "Region affected by plug-in is empty"
-msgstr ""
+msgstr "ਪਲੱਗਇਨ ਰਾਹੀਂ ਪਰਭਾਵਿਤ ਖੇਤਰ ਖਾਲੀ ਹੈ"
 
 #: ../plug-ins/common/whirlpinch.c:341
 msgid "Whirling and pinching"
@@ -8765,7 +8770,7 @@ msgstr "ਲੀਡਿੰਗ(_e)"
 
 #: ../plug-ins/common/wind.c:963
 msgid "Tr_ailing"
-msgstr ""
+msgstr "ਟਰੇਲਇੰਗ(_a)"
 
 #: ../plug-ins/common/wind.c:964
 msgid "Bot_h"
@@ -9107,11 +9112,11 @@ msgstr "ਸੈਂਪਲ ਡੈਂਸਟੀ(_d):"
 
 #: ../plug-ins/flame/flame.c:1110
 msgid "Spa_tial oversample:"
-msgstr ""
+msgstr "ਸਪਾਟਿਲ ਓਵਰ-ਸੈਂਪਲ(_t):"
 
 #: ../plug-ins/flame/flame.c:1121
 msgid "Spatial _filter radius:"
-msgstr ""
+msgstr "ਸਪਾਟਿਲ ਫਿਲਟਰ ਰੇਡੀਅਸ(_f):"
 
 #: ../plug-ins/flame/flame.c:1140
 msgid "Color_map:"
@@ -9875,11 +9880,11 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:204
 msgid "Drop shadow"
-msgstr "ਡਰਾਪ ਛਾਂ"
+msgstr "ਡਰਾਪ ਸ਼ੈਡੋ"
 
 #: ../plug-ins/gimpressionist/general.c:209
 msgid "Adds a shadow effect to each brush stroke"
-msgstr ""
+msgstr "ਹਰੇਕ ਬੁਰਸ਼ ਸਟਰੋਕ ਨਾਲ ਇੱਕ ਸ਼ੈਡੋ ਪਰਭਾਵ ਸ਼ਾਮਲ ਕਰੋ"
 
 #: ../plug-ins/gimpressionist/general.c:222
 msgid "Edge darken:"
@@ -9903,19 +9908,19 @@ msgstr "ਛਾਂ ਡੂੰਘਾਈ:"
 
 #: ../plug-ins/gimpressionist/general.c:244
 msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr ""
+msgstr "ਡਰਾਪ ਸ਼ੈਡੋ ਦੀ ਡੂੰਘਾਈ, ਜਿਵੇਂ ਕਿ ਆਬਜੈਕਟ ਤੋਂ ਕਿੰਨਾ ਕੁ ਦੂਰ ਹੋਵੇ"
 
 #: ../plug-ins/gimpressionist/general.c:249
 msgid "Shadow blur:"
-msgstr ""
+msgstr "ਸ਼ੈਡੋ ਬਲਰ:"
 
 #: ../plug-ins/gimpressionist/general.c:253
 msgid "How much to blur the drop shadow"
-msgstr ""
+msgstr "ਡਰਾਪ ਸ਼ੈਡੋ ਨੂੰ ਕਿੰਨਾ ਬਲਰ ਕਰਨਾ ਹੈ"
 
 #: ../plug-ins/gimpressionist/general.c:258
 msgid "Deviation threshold:"
-msgstr ""
+msgstr "ਡੇਵੀਏਸ਼ਨ ਥਰੈਸ਼ਹੋਲਡ:"
 
 #: ../plug-ins/gimpressionist/general.c:262
 msgid "A bailout-value for adaptive selections"
@@ -9955,7 +9960,7 @@ msgstr "ਸ਼ੁਰੂ ਕੋਣ:"
 
 #: ../plug-ins/gimpressionist/orientation.c:104
 msgid "The starting angle of the first brush to create"
-msgstr ""
+msgstr "ਬਣਾਉਣ ਲਈ ਪਹਿਲੇ ਬੁਰਸ਼ ਦਾ ਸ਼ੁਰੂਆਤੀ ਕੋਣ"
 
 #: ../plug-ins/gimpressionist/orientation.c:112
 msgid "Angle span:"
@@ -10152,7 +10157,7 @@ msgstr "ਓਵਰ-ਲੇ(_v)"
 
 #: ../plug-ins/gimpressionist/paper.c:164
 msgid "Applies the paper as it is (without embossing it)"
-msgstr ""
+msgstr "ਪੇਪਰ ਉੱਤੇ ਇੰਝ ਹੀ ਲਾਗੂ ਕਰੋ (ਬਿਨਾਂ ਇਹ ਮੋਰੜੇ-ਤੋੜੇ)"
 
 #: ../plug-ins/gimpressionist/paper.c:180
 msgid "Specifies the scale of the texture (in percent of original file)"
