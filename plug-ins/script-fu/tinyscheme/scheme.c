@@ -1719,6 +1719,10 @@ static pointer readstrexp(scheme *sc) {
       case '1':
       case '2':
       case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
         state=st_oct1;
         c1=g_unichar_digit_value(c);
         break;
@@ -1766,15 +1770,16 @@ static pointer readstrexp(scheme *sc) {
     case st_oct2:   /* State when handling third octal digit */
       if (!g_unichar_isdigit(c) || g_unichar_digit_value(c) > 7)
       {
-        if (state==st_oct1)
-           return sc->F;
-
         *p++=c1;
         backchar(sc, c);
         state=st_ok;
       }
       else
       {
+        /* Is value of three character octal too big for a byte? */
+        if (state==st_oct2 && c1 >= 32)
+          return sc->F;
+
         c1=(c1<<3)+g_unichar_digit_value(c);
 
         if (state == st_oct1)
