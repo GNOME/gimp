@@ -1017,49 +1017,55 @@ plugin_do_non_asupsample (void)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   gpointer      pr;
-  guchar       *src_row;
-  guchar       *dest_row;
-  guchar       *src;
-  guchar       *dest;
-  gint          row, col;
-  gint          x, y;
-  gint          b;
+  gint          width, height;
   gint          progress, max_progress;
-  guchar        src_pix[4];
-  guchar        dest_pix[4];
+
+  width  = dinfo.x2 - dinfo.x1;
+  height = dinfo.y2 - dinfo.y1;
 
   progress = 0;
-  max_progress = (dinfo.x2 - dinfo.x1) * (dinfo.y2 - dinfo.y1);
+  max_progress = width * height;
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
-                       dinfo.x1, dinfo.y1, dinfo.x2, dinfo.y2, FALSE, FALSE);
+                       dinfo.x1, dinfo.y1, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       dinfo.x1, dinfo.y1, dinfo.x2, dinfo.y2, TRUE, TRUE);
+                       dinfo.x1, dinfo.y1, width, height, TRUE, TRUE);
 
   for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
        pr != NULL; pr = gimp_pixel_rgns_process (pr))
     {
-      src_row  = src_rgn.data;
-      dest_row = dest_rgn.data;
+      const guchar *src_row  = src_rgn.data;
+      guchar       *dest_row = dest_rgn.data;
+      gint          row, y;
 
       for (row = 0, y = src_rgn.y; row < src_rgn.h; row++, y++)
         {
-          src = src_row;
-          dest = dest_row;
+          const guchar *src  = src_row;
+          guchar       *dest = dest_row;
+          gint          col, x;
 
           for (col = 0, x = src_rgn.x; col < src_rgn.w; col++, x++)
             {
+              guchar  src_pix[4];
+              guchar  dest_pix[4];
+              gint    b;
+
               for (b = 0; b < 3; b++)
                 src_pix[b] = dinfo.is_color ? src[b] : src[0];
+
               src_pix[3] = dinfo.has_alpha ? src[src_rgn.bpp - 1] : OPAQUE;
 
               calc_gflare_pix (dest_pix, x, y, src_pix);
 
               if (dinfo.is_color)
-                for (b = 0; b < 3; b++)
-                  dest[b] = dest_pix[b];
+                {
+                  for (b = 0; b < 3; b++)
+                    dest[b] = dest_pix[b];
+                }
               else
-                dest[0] = LUMINOSITY (dest_pix);
+                {
+                  dest[0] = LUMINOSITY (dest_pix);
+                }
 
               if (dinfo.has_alpha)
                 dest[src_rgn.bpp - 1] = dest_pix[3];
@@ -1067,9 +1073,11 @@ plugin_do_non_asupsample (void)
               src  += src_rgn.bpp;
               dest += dest_rgn.bpp;
             }
+
           src_row  += src_rgn.rowstride;
           dest_row += dest_rgn.rowstride;
         }
+
       /* Update progress */
       progress += src_rgn.w * src_rgn.h;
       gimp_progress_update ((double) progress / (double) max_progress);
