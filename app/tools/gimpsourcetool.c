@@ -103,6 +103,7 @@ gimp_source_tool_class_init (GimpSourceToolClass *klass)
 static void
 gimp_source_tool_init (GimpSourceTool *source)
 {
+  source->show_source_outline = TRUE;
 }
 
 static gboolean
@@ -231,10 +232,22 @@ gimp_source_tool_modifier_key (GimpTool        *tool,
 
   if (options->use_source && key == GDK_CONTROL_MASK)
     {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
       if (press)
-        paint_tool->status = source_tool->status_set_source;
+        {
+          paint_tool->status = source_tool->status_set_source;
+
+          source_tool->show_source_outline = FALSE;
+        }
       else
-        paint_tool->status = source_tool->status_paint;
+        {
+          paint_tool->status = source_tool->status_paint;
+
+          source_tool->show_source_outline = TRUE;
+        }
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
 
   GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
@@ -363,9 +376,10 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
 
       gimp_item_offsets (GIMP_ITEM (source->src_drawable), &off_x, &off_y);
 
-      gimp_brush_tool_draw_brush (GIMP_BRUSH_TOOL (source_tool),
-                                  source_tool->src_x + off_x,
-                                  source_tool->src_y + off_y);
+      if (source_tool->show_source_outline)
+        gimp_brush_tool_draw_brush (GIMP_BRUSH_TOOL (source_tool),
+                                    source_tool->src_x + off_x,
+                                    source_tool->src_y + off_y);
 
       gimp_draw_tool_draw_handle (draw_tool,
                                   GIMP_HANDLE_CROSS,

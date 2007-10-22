@@ -1,5 +1,10 @@
 2007-10-22  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpsourcetool.[ch]: don't draw the source brush
+	outline while selecting a new source location (bug #488839).
+
+2007-10-22  Sven Neumann  <sven@gimp.org>
+
 	* modules/cdisplay_lcms.c: improved display of profiles.
 
 2007-10-22  Raphaël Quinet  <raphael@gimp.org>

@@ -44,6 +44,8 @@ struct _GimpSourceTool
   gint           src_x;
   gint           src_y;
 
+  gboolean       show_source_outline;
+
   const gchar   *status_paint;
   const gchar   *status_set_source;
   const gchar   *status_set_source_ctrl;
