@@ -1,3 +1,10 @@
+2007-10-23  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/jpeg/jpegqual.c: Added hash value for all known
+	quantization tables in order to detect transposed tables from
+	rotated images or bad matches coming from different tables with
+	the same sum.
+
 2007-10-22  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/depthmerge.c (util_convertColorspace): fixed
