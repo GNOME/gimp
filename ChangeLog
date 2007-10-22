@@ -1,5 +1,9 @@
 2007-10-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gflare/gflare.c: formatting.
+
+2007-10-22  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpsourcetool.[ch]: don't draw the source brush
 	outline while selecting a new source location (bug #488839).
 
