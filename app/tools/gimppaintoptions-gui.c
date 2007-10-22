@@ -239,7 +239,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
       gtk_widget_show (inner_frame);
 
       wbox = gtk_hwrap_box_new (FALSE);
-      gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (wbox), 7);
+      gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (wbox), 4);
       gtk_container_add (GTK_CONTAINER (inner_frame), wbox);
       gtk_widget_show (wbox);
     }
