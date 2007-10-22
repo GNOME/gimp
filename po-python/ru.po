@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp python trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-25 22:49+0400\n"
-"PO-Revision-Date: 2007-09-23 22:14+0300\n"
+"POT-Creation-Date: 2007-10-22 23:36+0400\n"
+"PO-Revision-Date: 2007-10-16 05:33+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -133,31 +133,31 @@ msgstr "Интерактивная консоль для разработки н
 msgid "_Console"
 msgstr "_Консоль"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+#: ../plug-ins/pygimp/plug-ins/foggify.py:52
 msgid "Add a layer of fog"
 msgstr "Добавить слой тумана"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pygimp/plug-ins/foggify.py:57
 msgid "_Fog..."
 msgstr "_Туман..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
 msgid "_Layer name"
 msgstr "_Имя слоя"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
 msgid "Clouds"
 msgstr "Облака"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Fog color"
 msgstr "_Цвет тумана"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "_Turbulence"
 msgstr "Т_урбулентность"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
 msgid "Op_acity"
 msgstr "_Непрозрачность"
 
@@ -186,7 +186,7 @@ msgstr "Отсортировать цвета в палитре"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
 msgid "_Sort Palette..."
-msgstr "Сортировка _палитры..."
+msgstr "Отсортировать _палитру..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
 msgid "Color _model"
