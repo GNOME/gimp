@@ -7,13 +7,14 @@
 # Amanpreet Singh Brar <amanpreetalam@yahoo.com>, 2005.
 # ASB <aalam@users.sf.net>, 2007.
 # A S Alam <aalam@users.sf.net>, 2007.
+# Amanpreet Singh Alam <aalam@users.sf.net>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD.pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-19 04:07+0100\n"
-"PO-Revision-Date: 2007-10-20 16:49+0530\n"
-"Last-Translator: A S Alam <aalam@users.sf.net>\n"
+"POT-Creation-Date: 2007-10-20 15:26+0100\n"
+"PO-Revision-Date: 2007-10-22 18:47+0530\n"
+"Last-Translator: Amanpreet Singh Alam <aalam@users.sf.net>\n"
 "Language-Team: Panjabi <punjabi-l10n@users.sf.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3300,8 +3301,8 @@ msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
 msgstr ""
-"ਫਾਰਗਰਾਊਂਡ ਰੰਗ ਵਿੱਚ ਪਿਕਸਲ ਸਭ ਆਉਟਪੁੱਟ ਚਿੱਤਰਾਂ ਵਿੱਚ ਕਾਲੇ ਆਉਣਗੇ।  ਇਹ ਕਰੋਪ ਮਾਰਕ ਦੇ ਤੌਰ "
-"ਉੱਤੇ ਵਰਤੇ ਜਾ ਸਕਦੇ ਹਨ, ਜੋ ਕਿ ਸਭ ਚੈਨਲਾਂ ਉੱਤੇ ਵੇਖਾਉਣੇ ਹਨ।"
+"ਫਾਰਗਰਾਊਂਡ ਰੰਗ ਵਿੱਚ ਪਿਕਸਲ ਸਭ ਆਉਟਪੁੱਟ ਚਿੱਤਰਾਂ ਵਿੱਚ ਕਾਲੇ ਆਉਣਗੇ।  ਇਹ ਕਰੋਪ ਮਾਰਕ ਦੇ ਤੌਰ ਉੱਤੇ ਵਰਤੇ "
+"ਜਾ ਸਕਦੇ ਹਨ, ਜੋ ਕਿ ਸਭ ਚੈਨਲਾਂ ਉੱਤੇ ਵੇਖਾਉਣੇ ਹਨ।"
 
 #: ../plug-ins/common/deinterlace.c:91
 msgid "Fix images where every other row is missing"
@@ -4260,7 +4261,9 @@ msgstr "ਫਰੇਮ %d (%d%s)"
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
 "play or re-save perfectly."
-msgstr "GIF: ਗ਼ੈਰ-ਡੌਕੂਮੈਂਟ GIF ਕੰਪੋਜ਼ਿਟ ਟਾਈਪ %d ਹੈਂਡਲ ਨਹੀਂ ਕੀਤੀ ਹੈ।  ਸ਼ਾਇਦ ਐਨੀਮੇਸ਼ਨ ਠੀਕ ਤਰ੍ਹਾਂ ਚੱਲੇ ਜਾਂ ਮੁੜ-ਸੰਭਾਲੀ ਜਾ ਸਕੇ।"
+msgstr ""
+"GIF: ਗ਼ੈਰ-ਡੌਕੂਮੈਂਟ GIF ਕੰਪੋਜ਼ਿਟ ਟਾਈਪ %d ਹੈਂਡਲ ਨਹੀਂ ਕੀਤੀ ਹੈ।  ਸ਼ਾਇਦ ਐਨੀਮੇਸ਼ਨ ਠੀਕ ਤਰ੍ਹਾਂ ਚੱਲੇ ਜਾਂ "
+"ਮੁੜ-ਸੰਭਾਲੀ ਜਾ ਸਕੇ।"
 
 #: ../plug-ins/common/gif-save.c:683
 msgid "Couldn't simply reduce colors further. Saving as opaque."
@@ -4285,8 +4288,8 @@ msgid ""
 "The image you are trying to save as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr ""
-"ਚਿੱਤਰ, ਜਿਸ ਨੂੰ ਤੁਸੀਂ ਇੱਕ GIF ਵਾਂਗ ਸੰਭਾਲਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰ ਰਹੇ ਹੋ, ਵਿੱਚ ਲੇਅਰਾਂ ਹਨ, ਜੋ ਕਿ "
-"ਚਿੱਤਰ ਦੇ ਅਸਲੀ ਬਾਰਡਰ ਤੋਂ ਵੱਧ ਹਨ।"
+"ਚਿੱਤਰ, ਜਿਸ ਨੂੰ ਤੁਸੀਂ ਇੱਕ GIF ਵਾਂਗ ਸੰਭਾਲਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰ ਰਹੇ ਹੋ, ਵਿੱਚ ਲੇਅਰਾਂ ਹਨ, ਜੋ ਕਿ ਚਿੱਤਰ ਦੇ "
+"ਅਸਲੀ ਬਾਰਡਰ ਤੋਂ ਵੱਧ ਹਨ।"
 
 #: ../plug-ins/common/gif-save.c:1192
 msgid ""
@@ -4591,8 +4594,8 @@ msgid ""
 "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
 msgstr ""
-"ਜੇ ਚੋਣ ਕੀਤੀ ਤਾਂ GTM ਇੱਕ ਪੂਰਾ HTML ਡੌਕੂਮੈਂਟ ਇੱਕ ਸਿਰਫ਼ ਟੇਬਲ HTML ਦੀ ਬਜਾਏ <HTML>, "
-"<BODY> ਟੈਗਾਂ ਆਦਿ ਨਾਲ ਬਣਾਏਗਾ।"
+"ਜੇ ਚੋਣ ਕੀਤੀ ਤਾਂ GTM ਇੱਕ ਪੂਰਾ HTML ਡੌਕੂਮੈਂਟ ਇੱਕ ਸਿਰਫ਼ ਟੇਬਲ HTML ਦੀ ਬਜਾਏ <HTML>, <BODY> "
+"ਟੈਗਾਂ ਆਦਿ ਨਾਲ ਬਣਾਏਗਾ।"
 
 #. HTML Table Creation Options
 #: ../plug-ins/common/gtm.c:471
@@ -4608,6 +4611,8 @@ msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
 msgstr ""
+"ਜੇ ਚੋਣ ਕੀਤੀ ਗਈ ਤਾਂ GTM ROWSPAN ਅਤੇ COLSPAN ਮੁੱਲ ਨਾਲ ਇੱਕ ਵੱਡੇ ਸੈੱਲ ਨਾਲ ਰਲਦੇ ਰੰਗਦਾਰ ਬਲਾਕ "
+"ਦੇ ਕਿਸੇ ਚਤੁਰਭੁਜ ਸ਼ੈਕਸ਼ਨ ਨਾਲ ਬਦਲ ਦੇਵੇਗਾ।"
 
 #: ../plug-ins/common/gtm.c:494
 msgid "Co_mpress TD tags"
@@ -4619,6 +4624,8 @@ msgid ""
 "and the cellcontent.  This is only necessary for pixel level positioning "
 "control."
 msgstr ""
+"ਇਹ ਟੈਗ ਚੁਣਨ ਨਾਲ GTM TD ਟੈਗ ਅਤੇ ਸੈੱਲ-ਸਮੱਗਰੀ ਵਿੱਚ ਕੋਈ ਸਫੈਦ ਥਾਂ ਨਹੀਂ ਛੱਡੇਗਾ। ਇਹ ਸਿਰਫ਼ "
+"ਪਿਕਸਲ ਲੈਵਲ ਸਥਿਤੀ ਕੰਟਰੋਲ ਲਈ ਹੀ ਲੋੜੀਦਾ ਹੈ।"
 
 #: ../plug-ins/common/gtm.c:510
 msgid "C_aption"
@@ -4679,15 +4686,15 @@ msgstr "ਸੈਲ-ਸਪੇਸਿੰਗ ਦੀ ਮਾਤਰਾ ਹੈ।"
 
 #: ../plug-ins/common/guillotine.c:69
 msgid "Slice the image into subimages using guides"
-msgstr ""
+msgstr "ਚਿੱਤਰਾਂ ਨੂੰ ਸਬ-ਚਿੱਤਰਾਂ ਨੂੰ ਗਾਈਡਾਂ ਨਾਲ ਤਿਆਰ ਕਰੋ"
 
 #: ../plug-ins/common/guillotine.c:74
 msgid "_Guillotine"
-msgstr ""
+msgstr "ਗੁਇੱਲੂਟਿਨ(_G)"
 
 #: ../plug-ins/common/guillotine.c:106
 msgid "Guillotine"
-msgstr ""
+msgstr "ਗੁਇੱਲੂਟਿਨ"
 
 #: ../plug-ins/common/header.c:77
 msgid "C source code header"
@@ -4981,7 +4988,7 @@ msgstr "ਡਿਫਾਲਟ RGB ਵਰਕਿੰਗ ਸਪੇਸ"
 
 #: ../plug-ins/common/lcms.c:766
 msgid "Data attached as 'icc-profile' does not appear to be an ICC color profile"
-msgstr ""
+msgstr "'icc-profile' ਵਾਂਗ ਅਟੈੱਚ ਡਾਟਾ ਇੱਕ ICC ਕਲਰ ਪਰੋਫਾਇਲ ਨਹੀਂ ਜਾਪਦਾ ਹੈ।"
 
 #: ../plug-ins/common/lcms.c:817
 #, c-format
@@ -4997,17 +5004,17 @@ msgstr "'%s' ਤੋਂ '%s' ਬਦਲਿਆ ਜਾ ਰਿਹਾ ਹੈ"
 #: ../plug-ins/common/lcms.c:1122
 #, c-format
 msgid "Could not load ICC profile from '%s'"
-msgstr ""
+msgstr "'%s' ਤੋਂ ICC ਪਰੋਫਾਇਲ ਨਹੀਂ ਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ"
 
 #: ../plug-ins/common/lcms.c:1144
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
-msgstr ""
+msgstr "ਚਿੱਤਰ '%s' ਇੱਕ ਇੰਮਬੈੱਡ ਕਲਰ ਪਰੋਫਾਇਲ ਹੈ:"
 
 #: ../plug-ins/common/lcms.c:1188
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
-msgstr ""
+msgstr "ਕੀ ਚਿੱਤਰ ਨੂੰ RGB ਵਰਕਿੰਗ ਸਪੇਸ (%s) ਵਿੱਚ ਬਦਲਣਾ ਹੈ?"
 
 #: ../plug-ins/common/lcms.c:1219
 msgid "Convert to RGB working space?"
@@ -5068,7 +5075,7 @@ msgstr "ਜਾਰੀ"
 
 #: ../plug-ins/common/lcms.c:1510
 msgid "_Rendering Intent:"
-msgstr ""
+msgstr "ਰੈਡਰਿੰਗ ਇੰਟੈਂਟ(_R):"
 
 #: ../plug-ins/common/lcms.c:1526
 msgid "_Black Point Compensation"
@@ -5076,11 +5083,11 @@ msgstr "ਬਲੈਕ ਪੁਆਇੰਟ ਪੂਰਤੀ(_B)"
 
 #: ../plug-ins/common/lcms.c:1567
 msgid "Destination profile is not for RGB color space."
-msgstr ""
+msgstr "RGB ਕਲਰ ਸਪੇਸ ਲਈ ਟਿਕਾਣਾ ਪਰੋਫਾਇਲ ਨਹੀਂ ਹੈ।"
 
 #: ../plug-ins/common/lens.c:115
 msgid "Corrects lens distortion"
-msgstr ""
+msgstr "ਲੈਨਜ਼ ਡਿਸਟਾਰਸ਼ਨ ਠੀਕ ਕਰੋ"
 
 #: ../plug-ins/common/lens.c:120
 msgid "Lens Distortion..."
@@ -5144,11 +5151,11 @@ msgstr "ਗਰੇਂਡੀਐਂਟ(_G)"
 
 #: ../plug-ins/common/lic.c:691
 msgid "Convolve"
-msgstr ""
+msgstr "ਕੋਨਵੋਲਵੀ"
 
 #: ../plug-ins/common/lic.c:696
 msgid "_With white noise"
-msgstr ""
+msgstr "ਸਫੈਦ ਨੋਵਾਇਸ ਨਾਲ(_W)"
 
 #: ../plug-ins/common/lic.c:697
 msgid "W_ith source image"
@@ -5164,11 +5171,11 @@ msgstr "ਫਿਲਟਰ ਲੰਬਾਈ(_F):"
 
 #: ../plug-ins/common/lic.c:736
 msgid "_Noise magnitude:"
-msgstr ""
+msgstr "ਨੋਵਾਇਸ ਮੈਗਨੀਟਿਊਡ(_N):"
 
 #: ../plug-ins/common/lic.c:745
 msgid "In_tegration steps:"
-msgstr ""
+msgstr "ਐਟੀਗਰੇਸ਼ਨ ਸਟੈਪ(_t):"
 
 #: ../plug-ins/common/lic.c:754
 msgid "_Minimum value:"
@@ -5180,11 +5187,11 @@ msgstr "ਵੱਧੋ-ਵੱਧ ਮੁੱਲ(_a):"
 
 #: ../plug-ins/common/lic.c:809
 msgid "Special effects that nobody understands"
-msgstr ""
+msgstr "ਖਾਸ ਪਰਭਾਵ, ਜੋ ਕਿ ਕੋਈ ਹੋਰ ਸਮਝ ਨਾ ਸਕੇ"
 
 #: ../plug-ins/common/lic.c:814
 msgid "_Van Gogh (LIC)..."
-msgstr "_Van Gogh (LIC)..."
+msgstr "ਵੇਨ ਗੋਘ (LIC)(_V)..."
 
 #: ../plug-ins/common/mail.c:259
 msgid "Email the image"
@@ -5221,7 +5228,7 @@ msgstr "_Uuencode"
 
 #: ../plug-ins/common/mail.c:595
 msgid "_Recipient:"
-msgstr "ਪਰਾਪਤ ਕਰਤਾ(_R):"
+msgstr "ਪ੍ਰਾਪਤ ਕਰਤਾ(_R):"
 
 #: ../plug-ins/common/mail.c:609
 msgid "_Sender:"
@@ -5237,7 +5244,7 @@ msgstr "ਟਿੱਪਣੀ(_e):"
 
 #: ../plug-ins/common/mail.c:741
 msgid "some sort of error with the file extension or lack thereof"
-msgstr ""
+msgstr "ਫਾਇਲ ਇਕਸਟੇਸ਼ਨ ਨਾਲ ਗਲਤੀ ਹੈ ਜਾਂ ਹੈ ਹੀ ਨਹੀਂ ਹੈ"
 
 #: ../plug-ins/common/mail.c:903
 #, c-format
@@ -5262,7 +5269,7 @@ msgstr "ਦੂਜਾ ਟਿਕਾਣਾ ਰੰਗ"
 
 #: ../plug-ins/common/mapcolor.c:143
 msgid "Map colors sending foreground to black, background to white"
-msgstr ""
+msgstr "ਮੈਪ ਕਲਰ ਫਾਰਗਰਾਊਂਡ ਲਈ ਕਾਲਾ, ਬੈਕਗਰਾਊਂਡ ਲਈ ਸਫੈਦ ਭੇਜਦਾ ਹੈ"
 
 #: ../plug-ins/common/mapcolor.c:151
 msgid "Adjust _Foreground & Background"
@@ -5270,11 +5277,11 @@ msgstr "ਫਾਰਗਰਾਊਂਡ ਅਤੇ ਬੈਕਗਰਾਊਂਡ ਅਡ
 
 #: ../plug-ins/common/mapcolor.c:160
 msgid "Map color range specified by two colors to another range"
-msgstr ""
+msgstr "ਮੈਪ ਕਲਰ ਰੇਜ਼ ਹੋਰ ਰੇਜ਼ ਦੇ ਦੋ ਰੰਗਾਂ ਰਾਹੀਂ ਦਿੱਤੀ ਗਈ"
 
 #: ../plug-ins/common/mapcolor.c:168
 msgid "Color Range _Mapping..."
-msgstr ""
+msgstr "ਕਲਰ ਰੇਜ਼ ਮੈਪਿੰਗ(_M)..."
 
 #: ../plug-ins/common/mapcolor.c:214 ../plug-ins/common/mapcolor.c:526
 msgid "Cannot operate on gray or indexed color images."
@@ -5298,7 +5305,7 @@ msgstr "ਸਰੋਤ ਰੰਗ ਸੀਮਾ"
 
 #: ../plug-ins/common/mapcolor.c:384
 msgid "Destination Color Range"
-msgstr ""
+msgstr "ਟਿਕਾਣਾ ਕਲਰ ਰੇਜ਼"
 
 #. spinbutton 2
 #: ../plug-ins/common/mapcolor.c:424 ../plug-ins/gfli/gfli.c:849
@@ -5309,15 +5316,15 @@ msgstr "ਵੱਲ:"
 
 #: ../plug-ins/common/max_rgb.c:90
 msgid "Reduce image to pure red, green, and blue"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਨੂੰ ਲਾਲ, ਹਰਾ ਅਤੇ ਨੀਲਾ ਲਈ ਘਟਾਓ"
 
 #: ../plug-ins/common/max_rgb.c:95
 msgid "Maxim_um RGB..."
-msgstr ""
+msgstr "ਵੱਧੋ-ਵੱਧ RGB(_u)..."
 
 #: ../plug-ins/common/max_rgb.c:134 ../plug-ins/common/scatter_hsv.c:158
 msgid "Can only operate on RGB drawables."
-msgstr ""
+msgstr "ਕੇਵਲ RGB ਡਰਾਅਯੋਗ ਉੱਤੇ ਹੀ ਓਪਰੇਟ ਕਰ ਸਕਦਾ ਹੈ।"
 
 #: ../plug-ins/common/max_rgb.c:234
 msgid "Max RGB"
@@ -5329,31 +5336,31 @@ msgstr "ਵੱਧੋ-ਵੱਧ RGB ਮੁੱਲ"
 
 #: ../plug-ins/common/max_rgb.c:291
 msgid "_Hold the maximal channels"
-msgstr ""
+msgstr "ਵੱਧੋ-ਵੱਧ ਚੈਨਲ ਹੋਲਡ ਕਰੋ(_H)"
 
 #: ../plug-ins/common/max_rgb.c:294
 msgid "Ho_ld the minimal channels"
-msgstr ""
+msgstr "ਘੱਟੋ-ਘੱਟ ਚੈਨਲ ਹੋਲਡ ਕਰੋ(_l)"
 
 #: ../plug-ins/common/mblur.c:157 ../plug-ins/common/mblur.c:171
 msgid "Simulate movement using directional blur"
-msgstr ""
+msgstr "ਦਿਸ਼ਾਵੀ ਬਲਰ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਹਿਲਾਉਣ ਦੀ ਨਕਲ ਕਰੋ"
 
 #: ../plug-ins/common/mblur.c:164 ../plug-ins/common/mblur.c:177
 msgid "_Motion Blur..."
-msgstr ""
+msgstr "ਗਤੀ ਬਲਰ(_M)..."
 
 #: ../plug-ins/common/mblur.c:910
 msgid "Motion blurring"
-msgstr ""
+msgstr "ਗਤੀ ਬਲਰ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
 #: ../plug-ins/common/mblur.c:1012
 msgid "Motion Blur"
-msgstr "ਗਤੀ ਧੱਬਾ"
+msgstr "ਗਤੀ ਬਲਰ"
 
 #: ../plug-ins/common/mblur.c:1045
 msgid "Blur Type"
-msgstr ""
+msgstr "ਬਲਰ ਟਾਈਪ"
 
 #: ../plug-ins/common/mblur.c:1049
 msgid "_Linear"
@@ -5369,15 +5376,15 @@ msgstr "ਜ਼ੂਮ(_Z)"
 
 #: ../plug-ins/common/mblur.c:1058
 msgid "Blur Center"
-msgstr ""
+msgstr "ਬਲਰ ਸੈਂਟਰ"
 
 #: ../plug-ins/common/mblur.c:1101
 msgid "Blur _outward"
-msgstr ""
+msgstr "ਬਲਰ ਆਉਟਵਰਡ(_o)"
 
 #: ../plug-ins/common/mblur.c:1114
 msgid "Blur Parameters"
-msgstr ""
+msgstr "ਬਲਰ ਪੈਰਾਮੀਟਰ"
 
 #: ../plug-ins/common/mblur.c:1138 ../plug-ins/common/newsprint.c:1001
 msgid "_Angle:"
@@ -5387,7 +5394,7 @@ msgstr "ਕੋਣ(_A):"
 #. * transparency & just use the full palette
 #: ../plug-ins/common/mng.c:499 ../plug-ins/common/png.c:1734
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr ""
+msgstr "ਲੂਜ਼ਲਿਸਲੀ ਟਰਾਂਸਪਰੇਸੀ ਨਾਲ ਸੰਭਾਲਿਆ ਕੀਤਾ ਜਾ ਸਕਿਆ, ਇਸ ਦੀ ਬਜਾਏ ਧੁੰਦਲਾਪਨ ਨਾਲ ਸੰਭਾਲਿਆ"
 
 #: ../plug-ins/common/mng.c:1319
 msgid "Save as MNG"
@@ -5463,7 +5470,7 @@ msgstr "PNG ਕੰਪਰੈੱਸ ਲੈਵਲ:"
 
 #: ../plug-ins/common/mng.c:1462 ../plug-ins/common/png.c:1881
 msgid "Choose a high compression level for small file size"
-msgstr ""
+msgstr "ਇੱਕ ਛੋਟੇ ਫਾਇਲ ਆਕਾਰ ਲਈ ਇੱਕ ਉੱਚ ਕੰਪਰੈਸ਼ਨ ਲੈਵਲ ਚੁਣੋ।"
 
 #: ../plug-ins/common/mng.c:1476
 msgid "JPEG compression quality:"
@@ -5529,7 +5536,7 @@ msgstr "ਤਿਕੋਣਾਂ"
 
 #: ../plug-ins/common/mosaic.c:641
 msgid "_Tiling primitives:"
-msgstr ""
+msgstr "ਟਿਲਿੰਗ ਪਰਿਮਿਟਵੀਸ(_T):"
 
 #: ../plug-ins/common/mosaic.c:649
 msgid "Tile _size:"
@@ -5541,7 +5548,7 @@ msgstr "ਟਾਇਲ ਫਾਸਲਾ(_e):"
 
 #: ../plug-ins/common/mosaic.c:686
 msgid "Tile _neatness:"
-msgstr ""
+msgstr "ਟਾਇਲ ਸਫ਼ਾਈ(_n):"
 
 #: ../plug-ins/common/mosaic.c:699
 msgid "Light _direction:"
@@ -5557,7 +5564,7 @@ msgstr "ਕਲਰ ਔਸਤ(_l)"
 
 #: ../plug-ins/common/mosaic.c:753
 msgid "Allo_w tile splitting"
-msgstr ""
+msgstr "ਟਾਇਲ ਵੰਡਣਾ ਮਨਜ਼ਰ(_w)"
 
 #: ../plug-ins/common/mosaic.c:766
 msgid "_Pitted surfaces"
@@ -5573,7 +5580,7 @@ msgstr "ਹੋਰ ਪੁਆਇੰਟ ਜੋੜਨ ਲਈ ਅਸਮਰੱਥ ਹ�
 
 #: ../plug-ins/common/neon.c:134
 msgid "Simulate the glowing boundary of a neon light"
-msgstr ""
+msgstr "ਇੱਕ ਨੀਆਨ ਲਾਈਟ ਦੀ ਚਮਕਦੀ ਬਾਊਂਡਰੀ ਵਾਂਗ ਬਣਾਓ"
 
 #: ../plug-ins/common/neon.c:139
 msgid "_Neon..."
@@ -5605,7 +5612,7 @@ msgstr "ਹੀਰਾ"
 
 #: ../plug-ins/common/newsprint.c:153
 msgid "PS Square (Euclidean Dot)"
-msgstr ""
+msgstr "PS ਵਰਗ (ਈਲਿਡਿਨ ਡਾਟ)"
 
 #: ../plug-ins/common/newsprint.c:162
 msgid "PS Diamond"
@@ -5613,7 +5620,7 @@ msgstr "PS ਹੀਰਾ"
 
 #: ../plug-ins/common/newsprint.c:332
 msgid "_Grey"
-msgstr "ਸਲੇਟੀ(_G)"
+msgstr "ਗਰੇ(_G)"
 
 #: ../plug-ins/common/newsprint.c:345
 msgid "R_ed"
@@ -5621,7 +5628,7 @@ msgstr "ਲਾਲ(_e)"
 
 #: ../plug-ins/common/newsprint.c:374
 msgid "C_yan"
-msgstr ""
+msgstr "ਕਯਾਨ(_y)"
 
 #: ../plug-ins/common/newsprint.c:382
 msgid "Magen_ta"
@@ -5633,11 +5640,11 @@ msgstr "ਪੀਲਾ(_Y)"
 
 #: ../plug-ins/common/newsprint.c:411
 msgid "Luminance"
-msgstr ""
+msgstr "ਲੂਮਿਨਸ"
 
 #: ../plug-ins/common/newsprint.c:517
 msgid "Halftone the image to give newspaper-like effect"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਨੂੰ ਅਖ਼ਬਾਰ ਵਾਂਗ ਪਰਭਾਵ ਦੇਣ ਲਈ ਹਾਫ਼-ਟੋਨ ਵਰਤੋਂ"
 
 #: ../plug-ins/common/newsprint.c:526
 msgid "Newsprin_t..."
@@ -5679,7 +5686,7 @@ msgstr "ਕਾਲਾ ਪੁਲਆਉਟ(_l) (%):"
 
 #: ../plug-ins/common/newsprint.c:1339
 msgid "Separate to:"
-msgstr ""
+msgstr "ਵੱਖ ਕਰੋ:"
 
 #: ../plug-ins/common/newsprint.c:1343
 msgid "_RGB"
@@ -5699,7 +5706,7 @@ msgstr "ਚੈਨਲ ਤਾਲਾਬੰਦ(_L)"
 
 #: ../plug-ins/common/newsprint.c:1415
 msgid "_Factory Defaults"
-msgstr "ਫੈਕਟਰੀ ਮੂਲ(_F)"
+msgstr "ਫੈਕਟਰੀ ਡਿਫਾਲਟ(_F)"
 
 #. anti-alias control
 #: ../plug-ins/common/newsprint.c:1441 ../plug-ins/gfig/gfig-dialog.c:1256
@@ -5712,7 +5719,7 @@ msgstr "ਓਵਰ-ਸੈਂਪਲ(_v):"
 
 #: ../plug-ins/common/nlfilt.c:118
 msgid "Nonlinear swiss army knife filter"
-msgstr ""
+msgstr "ਗ਼ੈਰ-ਲੀਨੀਅਰ ਸਵਿਸ ਆਰਮੀ ਚਾਕੂ ਫਿਲਟਰ"
 
 #: ../plug-ins/common/nlfilt.c:124
 msgid "_NL Filter..."
@@ -5728,11 +5735,11 @@ msgstr "ਫਿਲਟਰ"
 
 #: ../plug-ins/common/nlfilt.c:1047
 msgid "_Alpha trimmed mean"
-msgstr ""
+msgstr "ਐਲਫ਼ਾ ਵੰਡਿਆ ਮੱਧ(_A)"
 
 #: ../plug-ins/common/nlfilt.c:1049
 msgid "Op_timal estimation"
-msgstr ""
+msgstr "ਅਨੁਕੂਲ ਅੰਦਾਜ਼ਾ(_t)"
 
 #: ../plug-ins/common/nlfilt.c:1051
 msgid "_Edge enhancement"
@@ -5744,7 +5751,7 @@ msgstr "ਐਲਫ਼ਾ(_l):"
 
 #: ../plug-ins/common/noisify.c:144
 msgid "Distort colors by random amounts"
-msgstr ""
+msgstr "ਰੈਂਡਮ ਮਾਤਰਾ ਰਾਹੀਂ ਡਿਸਟਾਰਸ਼ਨ ਰੰਗ"
 
 #: ../plug-ins/common/noisify.c:154
 msgid "_RGB Noise..."
@@ -5764,11 +5771,11 @@ msgstr "ਕੋਰਲੇਸ਼ਨ ਨੋਵਾਇਸ(_r)"
 
 #: ../plug-ins/common/noisify.c:496
 msgid "_Independent RGB"
-msgstr ""
+msgstr "ਗ਼ੈਰ-ਨਿਰਭਰ RGB(_I)"
 
 #: ../plug-ins/common/noisify.c:520 ../plug-ins/common/noisify.c:524
 msgid "_Gray:"
-msgstr "ਸਲੇਟੀ(_G):"
+msgstr "ਗਰੇ(_G):"
 
 #: ../plug-ins/common/noisify.c:550
 #, c-format
@@ -5777,7 +5784,7 @@ msgstr "ਚੈਨਲ #%d:"
 
 #: ../plug-ins/common/normalize.c:80
 msgid "Stretch brightness values to cover the full range"
-msgstr ""
+msgstr "ਚਮਕ ਮੁੱਲ ਨੂੰ ਪੂਰੀ ਰੇਜ਼ ਨੂੰ ਕਲਰ ਵਾਸਤੇ ਵਧਾਓ"
 
 #: ../plug-ins/common/normalize.c:126
 msgid "Normalizing"
@@ -5817,7 +5824,7 @@ msgstr "ਨੋਵਾ ਦਾ ਸੈਂਟਰ"
 
 #: ../plug-ins/common/oilify.c:119 ../plug-ins/common/oilify.c:134
 msgid "Smear colors to simulate an oil painting"
-msgstr ""
+msgstr "ਤੇਲ-ਪੇਟਿੰਗ ਵਰਗਾ ਬਣਾਉਣ ਲਈ ਸਮੀਰ ਰੰਗ"
 
 #: ../plug-ins/common/oilify.c:125
 msgid "Oili_fy..."
@@ -5829,7 +5836,7 @@ msgstr "ਤੇਲ ਪੇਟਿੰਗ"
 
 #: ../plug-ins/common/oilify.c:777
 msgid "Oilify"
-msgstr ""
+msgstr "ਓਅਲਫਾਈ"
 
 #: ../plug-ins/common/oilify.c:815
 msgid "_Mask size:"
@@ -5840,25 +5847,25 @@ msgstr "ਮਾਸਕ ਆਕਾਰ(_M):"
 #.
 #: ../plug-ins/common/oilify.c:830
 msgid "Use m_ask-size map:"
-msgstr ""
+msgstr "ਮਾਲਕ-ਆਕਾਰ ਮੈਪ ਵਰਤੋਂ(_a):"
 
 #: ../plug-ins/common/oilify.c:867 ../plug-ins/common/sinus.c:922
 msgid "_Exponent:"
-msgstr ""
+msgstr "ਐਕਸਪੋਨੈੱਟ(_E):"
 
 #.
 #. * Exponent map check button
 #.
 #: ../plug-ins/common/oilify.c:882
 msgid "Use e_xponent map:"
-msgstr ""
+msgstr "ਐਕਸਪੋਨੈੱਟ ਮੈਪ ਵਰਤੋਂ(_x):"
 
 #.
 #. * Intensity algorithm check button
 #.
 #: ../plug-ins/common/oilify.c:918
 msgid "_Use intensity algorithm"
-msgstr ""
+msgstr "ਐਂਟੈਨਸਟੀ ਐਲਗੋਰਥਿਮ ਵਰਤੋਂ(_U)"
 
 #: ../plug-ins/common/papertile.c:243 ../plug-ins/common/papertile.c:556
 msgid "Paper Tile"
@@ -5870,7 +5877,7 @@ msgstr "ਭਾਗ"
 
 #: ../plug-ins/common/papertile.c:319
 msgid "Fractional Pixels"
-msgstr ""
+msgstr "ਫਰੈਕਸ਼ਨਲ ਪਿਕਸਲ"
 
 #: ../plug-ins/common/papertile.c:324
 msgid "_Background"
@@ -5902,7 +5909,7 @@ msgstr "ਪਾਸਿਓ ਸਮੇਟੋ(_W)"
 
 #: ../plug-ins/common/papertile.c:379
 msgid "Background Type"
-msgstr "ਬੈਕਗਰਾਊਂਡ ਟਾਇਪ"
+msgstr "ਬੈਕਗਰਾਊਂਡ ਟਾਈਪ"
 
 #: ../plug-ins/common/papertile.c:386
 msgid "I_nverted image"
@@ -5930,7 +5937,7 @@ msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ"
 
 #: ../plug-ins/common/papertile.c:846
 msgid "Cut image into paper tiles, and slide them"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਨੂੰ ਪੇਪਰ ਟਾਇਲਾਂ ਵਾਂਗ ਕੱਟੋ ਅਤੇ ਉਨ੍ਹਾਂ ਦੀਆਂ ਸਲਾਈਡ ਬਣਾਓ"
 
 #: ../plug-ins/common/papertile.c:851
 msgid "September 31, 1999"
@@ -5969,11 +5976,11 @@ msgstr "'%s' ਇੱਕ PCX ਫਾਇਲ ਨਹੀਂ ਹੈ"
 
 #: ../plug-ins/common/pcx.c:386
 msgid "Invalid number of bytes per line in PCX header"
-msgstr ""
+msgstr "PCX ਹੈੱਡਰ ਵਿੱਚ ਪ੍ਰਤੀ ਲਾਈਨ ਗਲਤ ਬਾਈਟਾਂ ਦੀ ਗਿਣਤੀ ਹੈ"
 
 #: ../plug-ins/common/pcx.c:434
 msgid "Unusual PCX flavour, giving up"
-msgstr ""
+msgstr "ਗਲਤ PCX ਰੂਪ, ਛੱਡਿਆ ਜਾ ਰਿਹਾ ਹੈ"
 
 #: ../plug-ins/common/pcx.c:655
 #, c-format
@@ -5988,12 +5995,12 @@ msgstr "ਗਲਤ Y ਆਫਸੈੱਟ: %d"
 #: ../plug-ins/common/pcx.c:667
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
-msgstr ""
+msgstr "ਸੱਜਾ ਬਾਰਡਰ ਬਾਊਂਡ ਤੋਂ ਬਾਹਰ ਹੈ (%d < ਤੋਂ ਘੱਟ): %d"
 
 #: ../plug-ins/common/pcx.c:674
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
-msgstr ""
+msgstr "ਤਲ ਬਾਰਡਰ ਬਾਊਂਡ ਤੋਂ ਬਾਹਰ ਹੈ (%d < ਤੋਂ ਘੱਟ): %d"
 
 #: ../plug-ins/common/pcx.c:730
 #, c-format
@@ -6002,7 +6009,7 @@ msgstr "'%s' ਫਾਇਲ ਲਿਖਣ ਲਈ ਫੇਲ੍ਹ: %s"
 
 #: ../plug-ins/common/photocopy.c:153
 msgid "Simulate color distortion produced by a copy machine"
-msgstr ""
+msgstr "ਇੱਕ ਕਾਪੀ ਮਸ਼ੀਨ ਰਾਹੀਂ ਤਿਆਰ ਰੰਗ ਡਿਸਟਾਰਸ਼ਨ ਵਾਂਗ ਕਰੋ"
 
 #: ../plug-ins/common/photocopy.c:158
 msgid "_Photocopy..."
@@ -6027,11 +6034,11 @@ msgstr "ਫੀਸਦੀ ਸਫ਼ੇਦ(_w):"
 
 #: ../plug-ins/common/pix.c:140 ../plug-ins/common/pix.c:157
 msgid "Alias Pix image"
-msgstr ""
+msgstr "ਈਅਲਸ ਪਿਕਸ ਚਿੱਤਰ"
 
 #: ../plug-ins/common/pixelize.c:164
 msgid "Simplify image into an array of solid-colored squares"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਨੂੰ ਗੂੜਾ-ਰੰਗ ਵਰਗਾਂ ਦੀ ਲੜੀ ਵਿੱਚ ਰੱਖੋ"
 
 #: ../plug-ins/common/pixelize.c:171
 msgid "_Pixelize..."
@@ -6055,7 +6062,7 @@ msgstr "ਪਿਕਸਲ ਉਚਾਈ(_h):"
 
 #: ../plug-ins/common/plasma.c:176
 msgid "Create a random plasma texture"
-msgstr ""
+msgstr "ਇੱਕ ਰੈਂਡਮ ਪਲਾਜ਼ਮਾ ਟੈਕਸਟ ਬਣਾਓ"
 
 #: ../plug-ins/common/plasma.c:181
 msgid "_Plasma..."
@@ -6071,7 +6078,7 @@ msgstr "ਰਲਵੀਂ ਸੀਡ(_s):"
 
 #: ../plug-ins/common/plasma.c:347
 msgid "T_urbulence:"
-msgstr ""
+msgstr "ਟਰਬੁਲੈਨਸ(_u):"
 
 #: ../plug-ins/common/plugin-browser.c:134
 msgid "Display information about plug-ins"
@@ -6163,7 +6170,7 @@ msgstr "PNG ਫਾਇਲ '%s' ਵਿੱਚ ਅਣਜਾਣ ਰੰਗ ਮਾਡ�
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
-msgstr ""
+msgstr "PNG ਫਾਇਲ ਇੱਕ ਆਫਸੈੱਟ ਦਿੰਦੀ ਹੈ, ਜੋ ਕਿ ਇੱਕ ਲੇਅਰ ਨੂੰ ਚਿੱਤਰ ਤੋਂ ਬਾਹਰ ਕਰ ਰਹੀ ਹੈ।"
 
 #: ../plug-ins/common/png.c:1229
 #, c-format
@@ -6176,7 +6183,7 @@ msgstr "PNG ਵਾਂਗ ਸੰਭਾਲੋ"
 
 #: ../plug-ins/common/png.c:1790
 msgid "_Interlacing (Adam7)"
-msgstr ""
+msgstr "ਇੰਟਰਲੇਸਿੰਗ (Adam7)(_I)"
 
 #: ../plug-ins/common/png.c:1801
 msgid "Save _background color"
@@ -6204,7 +6211,7 @@ msgstr "ਟਿੱਪਣੀ ਸੰਭਾਲੋ(_n)"
 
 #: ../plug-ins/common/png.c:1863
 msgid "Save color _values from transparent pixels"
-msgstr ""
+msgstr "ਟਰਾਂਸਪਰੇਸੀ ਪਿਕਸਲਾਂ ਤੋਂ ਰੰਗ ਮੁੱਲ ਸੰਭਾਲੋ(_v)"
 
 #: ../plug-ins/common/png.c:1877
 msgid "Co_mpression level:"
@@ -6242,7 +6249,7 @@ msgstr "PPM ਚਿੱਤਰ"
 #: ../plug-ins/common/pnm.c:544 ../plug-ins/common/pnm.c:555
 #: ../plug-ins/common/pnm.c:631 ../plug-ins/common/pnm.c:697
 msgid "Premature end of file."
-msgstr ""
+msgstr "ਫਾਇਲ ਦਾ ਅੰਤ ਅਚਾਨਕ ਹੈ।"
 
 #: ../plug-ins/common/pnm.c:515
 msgid "Invalid file."
@@ -6325,7 +6332,7 @@ msgstr "ਬੈਕਵਰਡ ਮੈਪ(_M)"
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
-msgstr ""
+msgstr "ਜੇ ਚੋਣ ਕੀਤੀ ਤਾਂ ਮੈਪਿੰਗ ਸੱਜੇ ਪਾਸਿਓ ਸ਼ੁਰੂ ਨਹੀਂ ਕੀਤੀ ਜਾਵੇਗੀ, ਨਾ ਕਿ ਖੱਬੇ ਪਾਸਿਓ।"
 
 #: ../plug-ins/common/polar.c:674
 msgid "Map from _top"
@@ -6336,6 +6343,8 @@ msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
 msgstr ""
+"ਜੇ ਚੋਣ ਨਾ ਕੀਤੀ ਤਾਂ ਮੈਪਿੰਗ ਨੂੰ ਤਲ ਕਤਾਰ ਨੂੰ ਮੱਧ ਵਿੱਚ ਅਤੇ ਉੱਤੇ ਕਤਾਰ ਨੂੰ ਬਾਹਰ ਰੱਖੇਗੀ।  ਜੇ ਚੋਣ ਕੀਤੀ ਗਈ "
+"ਤਾਂ ਇਸ ਦੇ ਉਲਟ ਕੀਤਾ ਜਾਵੇਗਾ।"
 
 #: ../plug-ins/common/polar.c:692
 msgid "To _polar"
@@ -6349,7 +6358,7 @@ msgstr ""
 
 #: ../plug-ins/common/poppler.c:285
 msgid "Portable Document Format"
-msgstr "ਪੋਰਟੇਬਲ ਡਾਕੂਮਿੰਟ ਫਾਰਮੈਟ(PDF)"
+msgstr "ਪੋਰਟੇਬਲ ਡੌਕੂਮੈਂਟ ਫਾਰਮੈਟ(PDF)"
 
 #: ../plug-ins/common/poppler.c:606
 #, c-format
@@ -6568,15 +6577,15 @@ msgstr "ਝਲਕ ਅਕਾਰ(_s):"
 
 #: ../plug-ins/common/procedure-browser.c:83
 msgid "List available procedures in the PDB"
-msgstr ""
+msgstr "PDB ਵਿੱਚ ਉਪਲੱਬਧ ਪਰੋਸੀਜ਼ਰ ਦੀ ਲਿਸਟ"
 
 #: ../plug-ins/common/procedure-browser.c:88
 msgid "Procedure _Browser"
-msgstr ""
+msgstr "ਪਰੋਸੀਜ਼ਰ ਬਰਾਊਜ਼ਰ(_B)"
 
 #: ../plug-ins/common/procedure-browser.c:126
 msgid "Procedure Browser"
-msgstr ""
+msgstr "ਪਰੋਸੀਜ਼ਰ ਬਰਾਊਜ਼ਰ"
 
 #: ../plug-ins/common/psd-load.c:527
 msgid "Invalid UTF-8 string in PSD file"
@@ -6699,19 +6708,19 @@ msgstr "ਰਲਵਾਂ ਸਲੁਰ"
 
 #: ../plug-ins/common/randomize.c:200
 msgid "Completely randomize a fraction of pixels"
-msgstr ""
+msgstr "ਪਿਕਸਲਾਂ ਦੀ ਫਰੈਕਸ਼ਨ ਪੂਰੀ ਤਰ੍ਹਾਂ ਰੈਂਡਮਾਈਜ਼ ਕਰੋ"
 
 #: ../plug-ins/common/randomize.c:202
 msgid "Randomly interchange some pixels with neighbors"
-msgstr ""
+msgstr "ਗੁਆਂਢੀ ਨਾਲ ਕੁਝ ਪਿਕਸਲ ਰੈਂਡਮ ਤੌਰ ਉੱਤੇ ਇੰਟਰਚੇਜ਼ ਕਰੋ"
 
 #: ../plug-ins/common/randomize.c:204
 msgid "Randomly slide some pixels downward (similar to melting)"
-msgstr ""
+msgstr "ਕੁਝ ਪਿਕਸਲ ਹੇਠਾਂ ਨੂੰ ਰਲਵੇਂ ਤੌਰ ਉੱਤੇ ਸਕਰਾਓ (ਪਿਘਲਦੇ ਰੂਪ ਵਿੱਚ)"
 
 #: ../plug-ins/common/randomize.c:231
 msgid "_Hurl..."
-msgstr ""
+msgstr "ਹੁਰਲ(_H).."
 
 #: ../plug-ins/common/randomize.c:243
 msgid "_Pick..."
@@ -6723,7 +6732,7 @@ msgstr "ਸਲੁਰ(_S)..."
 
 #: ../plug-ins/common/randomize.c:744 ../plug-ins/common/snoise.c:601
 msgid "_Random seed:"
-msgstr "ਰਲਵੀਂ ਸੀਡ(_R):"
+msgstr "ਰੈਂਡਮ ਸੀਡ(_R):"
 
 #: ../plug-ins/common/randomize.c:753
 msgid "R_andomization (%):"
@@ -6823,7 +6832,7 @@ msgstr "ਇੰਡੈਕਸਡ ਪੈਲਅਟ ਟਾਇਪ"
 
 #: ../plug-ins/common/redeye.c:107
 msgid "Remove the red eye effect caused by camera flashes"
-msgstr ""
+msgstr "ਕੈਮਰਾ ਫਲੈਸ਼ ਨਾਲ ਆਇਆ ਲਾਲ ਅੱਖ ਪਰਭਾਵ ਹਟਾਓ"
 
 #: ../plug-ins/common/redeye.c:118
 msgid "_Red Eye Removal..."
@@ -6839,7 +6848,7 @@ msgstr "ਹਟਾਉਣ ਵਾਸਤੇ ਰੈੱਡ ਆਈ ਰੰਗ ਥਰੈ�
 
 #: ../plug-ins/common/redeye.c:184
 msgid "Manually selecting the eyes may improve the results."
-msgstr ""
+msgstr "ਖੁਦ ਲਾਲ ਪਰਭਾਵ ਚੁਣਨ ਨਾਲ ਚੰਗੇ ਨਤੀਜੇ ਆ ਸਕਦੇ ਹਨ।"
 
 #: ../plug-ins/common/redeye.c:317
 msgid "Removing red eye"
@@ -6847,19 +6856,19 @@ msgstr "ਰੈੱਡ ਆਈ ਹਟਾਇਆ ਜਾ ਰਿਹਾ ਹੈ"
 
 #: ../plug-ins/common/retinex.c:156
 msgid "Enhance contrast using the Retinex method"
-msgstr ""
+msgstr "ਰੀਟਿਨੈਕਸ ਢੰਗ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਕਨਟਰਾਸਟ ਇਹਾਂਸ ਕਰੋ"
 
 #: ../plug-ins/common/retinex.c:166
 msgid "Retine_x..."
-msgstr "Retine_x..."
+msgstr "ਰੀਟਿਨੈਕਸ(_x)..."
 
 #: ../plug-ins/common/retinex.c:250
 msgid "Retinex"
-msgstr "Retinex"
+msgstr "ਰੀਟਿਨੈਕਸ"
 
 #: ../plug-ins/common/retinex.c:289
 msgid "Retinex Image Enhancement"
-msgstr ""
+msgstr "ਰੀਟਿਨੈਕਸ ਚਿੱਤਰ ਇੰਹਾਂਸਮੈਂਟ"
 
 #: ../plug-ins/common/retinex.c:318
 msgid "Level"
@@ -6891,11 +6900,11 @@ msgstr "ਡਾਨੈਮਿਕ(_D):"
 
 #: ../plug-ins/common/retinex.c:654
 msgid "Retinex: filtering"
-msgstr "Retinex: ਫਿਲਟਰਿੰਗ"
+msgstr "ਰੀਟਿਨੈਕਸ: ਫਿਲਟਰਿੰਗ"
 
 #: ../plug-ins/common/ripple.c:127
 msgid "Displace pixels in a ripple pattern"
-msgstr ""
+msgstr "ਰਿਪਲ ਪੈਟਰਨ ਵਿੱਚ ਡਿਸਪਲੇਸ ਪਿਕਸਲ"
 
 #: ../plug-ins/common/ripple.c:134
 msgid "_Ripple..."
@@ -6911,7 +6920,7 @@ msgstr "ਰਿਪਲੀ"
 
 #: ../plug-ins/common/ripple.c:523
 msgid "_Retain tilability"
-msgstr ""
+msgstr "ਟਾਇਬਿਲਟੀ ਲਵੋ(_R)"
 
 #. Edges toggle box
 #: ../plug-ins/common/ripple.c:557
@@ -6925,7 +6934,7 @@ msgstr "ਖਾਲੀ(_B)"
 #. Wave toggle box
 #: ../plug-ins/common/ripple.c:585
 msgid "Wave Type"
-msgstr "ਤਰੰਗ ਟਾਈਪ"
+msgstr "ਵੇਵ ਟਾਈਪ"
 
 #: ../plug-ins/common/ripple.c:589
 msgid "Saw_tooth"
@@ -6957,7 +6966,7 @@ msgstr "ਅਫਸੋਸ ਹੈ ਪਰ ਚੈਨਲ ਅਤੇ ਮਾਸਕ ਘੁ
 
 #: ../plug-ins/common/rotate.c:437
 msgid "Rotating"
-msgstr "ਘੁੰਮਾਇਆ ਜਾ ਰਿਹਾ ਹੈ..."
+msgstr "ਘੁੰਮਾਇਆ ਜਾ ਰਿਹਾ ਹੈ"
 
 #: ../plug-ins/common/sample_colorize.c:298
 msgid "Colorize image using a sample image as a guide"
@@ -7043,7 +7052,7 @@ msgstr "ਕਲਰਾਈਜ਼ੇਸ਼ਨ ਰੀਮੈਪ"
 
 #: ../plug-ins/common/scatter_hsv.c:103
 msgid "Randomize hue/saturation/value independently"
-msgstr ""
+msgstr "ਰੈਂਡਮਾਈਜ਼ ਆਭਾ/ਸੰਤ੍ਰਿਪਤ/ਮੁੱਲ ਗ਼ੈਰ-ਨਿਰਭਰ"
 
 #: ../plug-ins/common/scatter_hsv.c:108
 msgid "HSV Noise..."
@@ -7138,19 +7147,19 @@ msgstr "ਸਕਿੰਟ"
 
 #: ../plug-ins/common/sel_gauss.c:104
 msgid "Blur neighboring pixels, but only in low-contrast areas"
-msgstr ""
+msgstr "ਗੁਆਂਢੀ ਪਿਕਸ ਬਲਰ ਕਰੋ, ਪਰ ਕੇਵਲ ਘੱਟ-ਕਨਟਰਾਸਟ ਏਰੀਏ ਵਿੱਚ ਹੀ"
 
 #: ../plug-ins/common/sel_gauss.c:115
 msgid "_Selective Gaussian Blur..."
-msgstr ""
+msgstr "ਚੋਣਵਾਂ ਗੱਸੀਆਨ ਬਲਰ(_S)..."
 
 #: ../plug-ins/common/sel_gauss.c:195 ../plug-ins/common/sel_gauss.c:232
 msgid "Selective Gaussian Blur"
-msgstr ""
+msgstr "ਚੋਣਵਾਂ ਗੱਸੀਆਨ ਬਲਰ"
 
 #: ../plug-ins/common/sel_gauss.c:271
 msgid "_Blur radius:"
-msgstr ""
+msgstr "ਬਲਰ ਰੇਡੀਅਸ(_B):"
 
 #: ../plug-ins/common/sel_gauss.c:281
 msgid "_Max. delta:"
@@ -7158,19 +7167,19 @@ msgstr "ਵੱਧੋ-ਵੱਧ ਡੈਲਟਾ(_M):"
 
 #: ../plug-ins/common/semiflatten.c:68
 msgid "Replace partial transparency with the current background color"
-msgstr ""
+msgstr "ਮੌਜੂਦਾ ਬੈਕਗਰਾਊਂਡ ਰੰਗ ਨਾਲ ਅਧੂਰੀ ਪਾਰਦਰਸ਼ਤਾ ਬਦਲੋ"
 
 #: ../plug-ins/common/semiflatten.c:75
 msgid "_Semi-Flatten"
-msgstr ""
+msgstr "ਸੈਮੀ-ਫਲੈਟਨ(_S)"
 
 #: ../plug-ins/common/semiflatten.c:118
 msgid "Semi-Flattening"
-msgstr ""
+msgstr "ਸੈਮੀ-ਫਲੈਟਨ"
 
 #: ../plug-ins/common/sharpen.c:113
 msgid "Make image sharper (less powerful than Unsharp Mask)"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਸ਼ਾਰਪਨਰ ਬਣਾਓ (ਅਣ-ਸ਼ਾਰਪ ਮਾਸਕ ਤੋਂ ਘੱਟ ਪਾਵਰਫੁੱਲ)"
 
 #: ../plug-ins/common/sharpen.c:120
 msgid "_Sharpen..."
@@ -7185,11 +7194,11 @@ msgstr "ਸ਼ਾਰਪਨਿੰਗ"
 
 #: ../plug-ins/common/sharpen.c:476
 msgid "Sharpen"
-msgstr "ਉਘੜਵਾਂ"
+msgstr "ਸ਼ਾਰਪਨ"
 
 #: ../plug-ins/common/shift.c:101
 msgid "Shift each row of pixels by a random amount"
-msgstr ""
+msgstr "ਹਰੇਕ ਕਤਾਰ ਦੇ ਪਿਕਸਲ ਨੂੰ ਇੱਕ ਰੈਂਡਮ ਮਾਤਰਾ ਨਾਲ ਸਿਫ਼ਟ ਕਰੋ"
 
 #: ../plug-ins/common/shift.c:108
 msgid "_Shift..."
@@ -7217,7 +7226,7 @@ msgstr "ਸਿਫ਼ਟ ਮਾਤਰਾ(_a):"
 
 #: ../plug-ins/common/sinus.c:186
 msgid "Generate complex sinusoidal textures"
-msgstr ""
+msgstr "ਕੰਪੈਕਸ ਸਾਇਨੋਸਡਲ ਟੈਕਸਟ ਬਣਾਓ"
 
 #: ../plug-ins/common/sinus.c:191
 msgid "_Sinus..."
@@ -7225,13 +7234,13 @@ msgstr "ਸਾਇਸ(_S)..."
 
 #: ../plug-ins/common/sinus.c:284
 msgid "Sinus: rendering"
-msgstr ""
+msgstr "ਸਾਇਸ: ਰੈਡਰਿੰਗ"
 
 #. Create Main window with a vbox
 #. ==============================
 #: ../plug-ins/common/sinus.c:648
 msgid "Sinus"
-msgstr ""
+msgstr "ਸਾਇਸ"
 
 #: ../plug-ins/common/sinus.c:690
 msgid "Drawing Settings"
@@ -7313,7 +7322,7 @@ msgstr "ਦੂਜਾ ਰੰਗ(_e):"
 
 #: ../plug-ins/common/sinus.c:895
 msgid "Blend Settings"
-msgstr ""
+msgstr "ਬਲੈੱਡ ਸੈਟਿੰਗ"
 
 #: ../plug-ins/common/sinus.c:908
 msgid "L_inear"
@@ -7325,11 +7334,11 @@ msgstr "ਬਾਈਲੀਨੀਅਰ(_n)"
 
 #: ../plug-ins/common/sinus.c:910
 msgid "Sin_usoidal"
-msgstr ""
+msgstr "ਸਾਇਨੋਸੀਡਲ(_u)"
 
 #: ../plug-ins/common/sinus.c:932
 msgid "_Blend"
-msgstr "ਬਲੈਂਡ(_B)"
+msgstr "ਬਲੈੱਡ(_B)"
 
 #: ../plug-ins/common/sinus.c:1049
 msgid "Do _preview"
@@ -7345,7 +7354,7 @@ msgstr "ਸਮੂਥ ਪੈਲਅਟ(_t)..."
 
 #: ../plug-ins/common/smooth_palette.c:179
 msgid "Deriving smooth palette"
-msgstr ""
+msgstr "ਡਿਰੀਵਿੰਗ ਸਮੂਥ ਪੈਲਅਟ"
 
 #: ../plug-ins/common/smooth_palette.c:412
 msgid "Smooth Palette"
@@ -7357,16 +7366,16 @@ msgstr "ਖੋਜ ਡੂੰਘਾਈ(_S):"
 
 #: ../plug-ins/common/snoise.c:176
 msgid "Create a random cloud-like texture"
-msgstr ""
+msgstr "ਇੱਕ ਰੈਂਡਮ ਬੱਦਲ ਵਰਗਾ ਟੈਕਸਟ ਬਣਾਓ"
 
 #: ../plug-ins/common/snoise.c:182
 msgid "_Solid Noise..."
-msgstr ""
+msgstr "ਗੂੜੀ ਨੋਵਾਇਸ(_S)..."
 
 #. Dialog initialization
 #: ../plug-ins/common/snoise.c:315 ../plug-ins/common/snoise.c:563
 msgid "Solid Noise"
-msgstr ""
+msgstr "ਗੂੜਾ ਨੋਵਾਇਸ"
 
 #: ../plug-ins/common/snoise.c:614
 msgid "_Detail:"
@@ -7375,12 +7384,12 @@ msgstr "ਵੇਰਵਾ(_D):"
 #. Turbulent
 #: ../plug-ins/common/snoise.c:624
 msgid "T_urbulent"
-msgstr ""
+msgstr "ਟਰਬੁਲੈਨਟ(_u)"
 
 #. Tilable
 #: ../plug-ins/common/snoise.c:638
 msgid "T_ilable"
-msgstr ""
+msgstr "ਟਾਇਲੇਬਲ(_i)"
 
 #: ../plug-ins/common/snoise.c:653
 msgid "_X size:"
@@ -10035,8 +10044,8 @@ msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
-"ਵੈਕਟਰ-ਖੇਤਰ: ਖੱਬੇ-ਕਲਿੱਕ ਨਾਲ ਚੁਣਿਆ ਵੈਕਟਰ ਹਿਲਾਓ, ਸੱਜੇ-ਕਲਿੱਕ ਨਾਲ ਮਾਊਂਸ ਵੱਲ ਪੁਆਇੰਟ ਕਰੋ, "
-"ਮਿਡਲ-ਕਲਿੱਕ ਨਾਲ ਨਵਾਂ ਵੈਕਟਰ ਸ਼ਾਮਲ ਕਰੋ।"
+"ਵੈਕਟਰ-ਖੇਤਰ: ਖੱਬੇ-ਕਲਿੱਕ ਨਾਲ ਚੁਣਿਆ ਵੈਕਟਰ ਹਿਲਾਓ, ਸੱਜੇ-ਕਲਿੱਕ ਨਾਲ ਮਾਊਂਸ ਵੱਲ ਪੁਆਇੰਟ ਕਰੋ, ਮਿਡਲ-"
+"ਕਲਿੱਕ ਨਾਲ ਨਵਾਂ ਵੈਕਟਰ ਸ਼ਾਮਲ ਕਰੋ।"
 
 #: ../plug-ins/gimpressionist/orientmap.c:572
 #: ../plug-ins/gimpressionist/sizemap.c:441
@@ -10315,8 +10324,8 @@ msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
-"smvector-ਖੇਤਰ: ਚੁਣੇ smvector ਨੂੰ ਹਿਲਾਉਣ ਲਈ ਖੱਬਾ-ਕਲਿੱਕ, ਮਾਊਸ ਵੱਲ ਪੁਆਇੰਟ ਕਰਨ ਲਈ "
-"ਸੱਜਾ-ਕਲਿੱਕ, ਨਵੇਂ smvector ਲਈ ਮਿਡਲ-ਕਲਿੱਕ ਕਰੋ।"
+"smvector-ਖੇਤਰ: ਚੁਣੇ smvector ਨੂੰ ਹਿਲਾਉਣ ਲਈ ਖੱਬਾ-ਕਲਿੱਕ, ਮਾਊਸ ਵੱਲ ਪੁਆਇੰਟ ਕਰਨ ਲਈ ਸੱਜਾ-"
+"ਕਲਿੱਕ, ਨਵੇਂ smvector ਲਈ ਮਿਡਲ-ਕਲਿੱਕ ਕਰੋ।"
 
 #: ../plug-ins/gimpressionist/sizemap.c:463
 msgid "Select previous smvector"
@@ -11412,8 +11421,8 @@ msgid ""
 "settings (quantization tables), enable this option to get almost the same "
 "quality and file size."
 msgstr ""
-"ਜੇ ਅਸਲੀ ਚਿੱਤਰ ਨੂੰ ਇੱਕ JPEG ਫਾਇਲ ਤੋਂ ਗ਼ੈਰ-ਸਟੈਂਡਰਡ ਕੁਆਲਟੀ ਸੈਟਿੰਗ (ਕੁਆਂਟੀਜੇਸ਼ਨ ਟੇਬਲ) ਰਾਹੀਂ ਲੋਡ "
-"ਕੀਤਾ ਗਿਆ ਸੀ, ਤਾਂ ਇਹ ਚੋਣ ਨੂੰ ਲਗਭਗ ਉਹੀ ਕੁਆਲਟੀ ਅਤੇ ਫਾਇਲ ਆਕਾਰ ਲੈਣ ਲਈ ਯੋਗ ਕਰੋ।"
+"ਜੇ ਅਸਲੀ ਚਿੱਤਰ ਨੂੰ ਇੱਕ JPEG ਫਾਇਲ ਤੋਂ ਗ਼ੈਰ-ਸਟੈਂਡਰਡ ਕੁਆਲਟੀ ਸੈਟਿੰਗ (ਕੁਆਂਟੀਜੇਸ਼ਨ ਟੇਬਲ) ਰਾਹੀਂ ਲੋਡ ਕੀਤਾ "
+"ਗਿਆ ਸੀ, ਤਾਂ ਇਹ ਚੋਣ ਨੂੰ ਲਗਭਗ ਉਹੀ ਕੁਆਲਟੀ ਅਤੇ ਫਾਇਲ ਆਕਾਰ ਲੈਣ ਲਈ ਯੋਗ ਕਰੋ।"
 
 #. Subsampling
 #: ../plug-ins/jpeg/jpeg-save.c:1077
@@ -11990,8 +11999,8 @@ msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
 msgstr ""
-"ਵੱਡੇ ਆਈਕਾਨ ਅਤੇ ਕੰਪਰੈਸ਼ਨ ਸਭ ਪਰੋਗਰਾਮਾਂ ਵਲੋਂ ਸਹਾਇਕ ਨਹੀਂ ਹਨ। ਪੁਰਾਣੇ ਪਰੋਗਰਾਮ ਸ਼ਾਇਦ ਇਹ "
-"ਫਾਇਲ ਠੀਕ ਤਰ੍ਹਾਂ ਨਾ ਖੋਲ੍ਹ ਸਕਣ।"
+"ਵੱਡੇ ਆਈਕਾਨ ਅਤੇ ਕੰਪਰੈਸ਼ਨ ਸਭ ਪਰੋਗਰਾਮਾਂ ਵਲੋਂ ਸਹਾਇਕ ਨਹੀਂ ਹਨ। ਪੁਰਾਣੇ ਪਰੋਗਰਾਮ ਸ਼ਾਇਦ ਇਹ ਫਾਇਲ ਠੀਕ "
+"ਤਰ੍ਹਾਂ ਨਾ ਖੋਲ੍ਹ ਸਕਣ।"
 
 #: ../plug-ins/winicon/icodialog.c:178
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
