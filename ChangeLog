@@ -1,3 +1,8 @@
+2007-10-24  Sven Neumann  <sven@gimp.org>
+            Michael Natterer  <mitch@gimp.org>
+
+	* Made 2.4.0 release.
+
 2007-10-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-combine.c: move variable to local scope.

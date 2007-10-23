@@ -254,6 +254,8 @@
 #     (display-profile-from-gdk yes)
 #     (display-rendering-intent perceptual)
 #     (simulation-rendering-intent perceptual)
+#     (simulation-gamut-check no)
+#     (out-of-gamut-color (color-rgb 0.501961 0.501961 0.501961))
 #     (display-module "CdisplayLcms"))
 
 # How to handle embedded color profiles when opening a file.  Possible values
@@ -478,6 +480,11 @@
 # of 0.0 to 1.0.
 # 
 # (xor-color (color-rgb 0.501961 1.000000 0.501961))
+
+# There's a tradeoff between speed and quality of the zoomed-out display. 
+# Possible values are low and high.
+# 
+# (zoom-quality high)
 
 # Tools such as fuzzy-select and bucket fill find regions based on a
 # seed-fill algorithm.  The seed fill starts at the initially selected pixel
