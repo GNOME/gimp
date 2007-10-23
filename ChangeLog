@@ -1,3 +1,15 @@
+2007-10-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/pixel-region.c (pixel_region_resize): when resizing,
+	don't advance the "data" pointer of regions of contiguous data. I
+	should have made this change along with my pixel region cleanup of
+	2005-09-03 which sanitized pixel regions of contiguous data.
+	Fixes bug #489229.
+
+	* libgimp/gimppixelrgn.c (gimp_pixel_rgn_resize): remove the same
+	code here (the removed code was dead since this function refuses
+	to be called on pixel regions without a drawable).
+
 2007-10-23  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-combine.c: formatting.

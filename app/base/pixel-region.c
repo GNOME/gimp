@@ -123,12 +123,6 @@ pixel_region_resize (PixelRegion *PR,
                      gint         w,
                      gint         h)
 {
-  /*  If the data is non-null, data is contiguous--need to advance  */
-  if (PR->data != NULL)
-    PR->data += ((y - PR->y) * PR->rowstride +
-                 (x - PR->x) * PR->bytes);
-
-  /*  update sizes for both contiguous and tiled regions  */
   PR->x = x;
   PR->y = y;
   PR->w = w;

@@ -159,12 +159,6 @@ gimp_pixel_rgn_resize (GimpPixelRgn *pr,
   g_return_if_fail (x >= 0 && x + width  <= pr->drawable->width);
   g_return_if_fail (y >= 0 && y + height <= pr->drawable->height);
 
-  /*  If the data is non-null, data is contiguous--need to advance  */
-  if (pr->data != NULL)
-    pr->data += ((y - pr->y) * pr->rowstride +
-                 (x - pr->x) * pr->bpp);
-
-  /*  update sizes for both contiguous and tiled regions  */
   pr->x = x;
   pr->y = y;
   pr->w = width;
