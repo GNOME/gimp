@@ -401,9 +401,9 @@ find_three_point_rectangle (Rectangle *r,
       intersect_x (a, i1, i2, &i3))
     add_rectangle (points, r, i3, i3, i1, i2);
 
-  if ( intersect_y (c, d,  a,  &i1) &&
-       intersect_x (b, c,  i1, &i2) &&
-       intersect_y (a, i1, i2, &i3))
+  if (intersect_y (c, d,  a,  &i1) &&
+      intersect_x (b, c,  i1, &i2) &&
+      intersect_y (a, i1, i2, &i3))
     add_rectangle (points, r, i3, i3, i1, i2);
 }
 

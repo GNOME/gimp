@@ -50,7 +50,7 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
   GimpChannel     *mask;
   gint             x1, y1, x2, y2;
   gint             offset_x, offset_y;
-  PixelRegion      src1PR, destPR, maskPR;
+  PixelRegion      src1PR, destPR;
   CombinationMode  operation;
   gboolean         active_components[MAX_CHANNELS];
 
@@ -153,6 +153,8 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
 
   if (mask)
     {
+      PixelRegion maskPR;
+
       pixel_region_init (&maskPR,
                          gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                          x1 + offset_x,
