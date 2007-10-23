@@ -40,17 +40,17 @@
 #define PR_BX_BRDR         4
 #define MARGIN             4
 
-#define RANGE_ADJUST_MASK GDK_EXPOSURE_MASK | \
-                          GDK_ENTER_NOTIFY_MASK | \
-                          GDK_BUTTON_PRESS_MASK | \
-                          GDK_BUTTON_RELEASE_MASK | \
-                          GDK_BUTTON1_MOTION_MASK | \
-                          GDK_POINTER_MOTION_HINT_MASK
+#define RANGE_ADJUST_MASK (GDK_EXPOSURE_MASK       | \
+                           GDK_ENTER_NOTIFY_MASK   | \
+                           GDK_BUTTON_PRESS_MASK   | \
+                           GDK_BUTTON_RELEASE_MASK | \
+                           GDK_BUTTON1_MOTION_MASK | \
+                           GDK_POINTER_MOTION_HINT_MASK)
 
 
 typedef struct
 {
-  gint run;
+  gboolean run;
 } fpInterface;
 
 typedef struct
@@ -158,7 +158,7 @@ static void           update_current_fp           (gint           change_what,
 static void           fp_create_nudge             (gint          *adj_array);
 
 static gboolean       fp_dialog                   (void);
-static void           fp_advanced_dialog          (void);
+static void           fp_advanced_dialog          (GtkWidget     *parent);
 
 static void           fp_selection_made           (GtkWidget     *widget,
                                                    gpointer       data);
@@ -178,21 +178,21 @@ static void           fp_init_filter_packs        (void);
 
 static void           fp_drag                     (GtkWidget     *button);
 static void           fp_preview_scale_update     (GtkAdjustment *adjustment,
-                                                   gdouble        *scale_val);
+                                                   gdouble       *scale_val);
 
 static void           fp                          (GimpDrawable  *drawable);
 static GtkWidget *    fp_create_bna               (void);
 static GtkWidget *    fp_create_rough             (void);
 static GtkWidget *    fp_create_range             (void);
-static GtkWidget *    fp_create_circle_palette    (void);
-static GtkWidget *    fp_create_lnd               (void);
+static GtkWidget *    fp_create_circle_palette    (GtkWidget     *parent);
+static GtkWidget *    fp_create_lnd               (GtkWidget     *parent);
 static GtkWidget *    fp_create_show              (void);
-static GtkWidget *    fp_create_msnls             (void);
+static GtkWidget *    fp_create_msnls             (GtkWidget     *parent);
 static GtkWidget *    fp_create_pixels_select_by  (void);
 static void           update_range_labels         (void);
 static gboolean       fp_range_change_events      (GtkWidget     *widget,
                                                    GdkEvent      *event,
-                                                   FPValues     *current);
+                                                   FPValues      *current);
 
 static void           fp_create_preview           (GtkWidget    **preview,
                                                    GtkWidget    **frame,
@@ -557,7 +557,7 @@ sub_dialog_destroy (GtkWidget *dialog,
 }
 
 static GtkWidget *
-fp_create_circle_palette (void)
+fp_create_circle_palette (GtkWidget *parent)
 {
   GtkWidget *table;
   GtkWidget *rVbox, *rFrame;
@@ -574,6 +574,7 @@ fp_create_circle_palette (void)
   gimp_help_connect (win, gimp_standard_help_func, PLUG_IN_PROC, NULL);
 
   gtk_window_set_title (GTK_WINDOW (win), _("Hue Variations"));
+  gtk_window_set_transient_for (GTK_WINDOW (win), GTK_WINDOW (parent));
 
   g_signal_connect (win, "delete-event",
                     G_CALLBACK (sub_dialog_destroy),
@@ -718,7 +719,7 @@ fp_create_control (void)
 }
 
 static GtkWidget *
-fp_create_lnd (void)
+fp_create_lnd (GtkWidget *parent)
 {
   GtkWidget *table, *lighterFrame, *middleFrame, *darkerFrame;
   GtkWidget *lighterVbox, *middleVbox, *darkerVbox;
@@ -729,6 +730,7 @@ fp_create_lnd (void)
   gimp_help_connect (win, gimp_standard_help_func, PLUG_IN_PROC, NULL);
 
   gtk_window_set_title (GTK_WINDOW (win), _("Value Variations"));
+  gtk_window_set_transient_for (GTK_WINDOW (win), GTK_WINDOW (parent));
 
   g_signal_connect (win, "delete-event",
                     G_CALLBACK (sub_dialog_destroy),
@@ -762,7 +764,7 @@ fp_create_lnd (void)
 }
 
 static GtkWidget *
-fp_create_msnls (void)
+fp_create_msnls (GtkWidget *parent)
 {
   GtkWidget *table, *lessFrame, *middleFrame, *moreFrame;
   GtkWidget *lessVbox, *middleVbox, *moreVbox;
@@ -773,6 +775,7 @@ fp_create_msnls (void)
   gimp_help_connect (win, gimp_standard_help_func, PLUG_IN_PROC, NULL);
 
   gtk_window_set_title (GTK_WINDOW (win), _("Saturation Variations"));
+  gtk_window_set_transient_for (GTK_WINDOW (win), GTK_WINDOW (parent));
 
   g_signal_connect (win, "delete-event",
                     G_CALLBACK (sub_dialog_destroy),
@@ -1239,17 +1242,17 @@ fp_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  fp_advanced_dialog ();
+  fp_advanced_dialog (dlg);
 
-  fp_frames.bna          = bna          = fp_create_bna();
-  fp_frames.rough        = rough        = fp_create_rough();
-  fp_frames.range        = range        = fp_create_range();
-  fp_frames.palette      = palette      = fp_create_circle_palette();
-  fp_frames.lnd          = lnd          = fp_create_lnd();
-  fp_frames.show         = show         = fp_create_show();
-  fp_frames.satur        = satur        = fp_create_msnls();
-  fp_frames.pixelsBy     = pixelsBy     = fp_create_pixels_select_by();
-                           control      = fp_create_control();
+  fp_frames.bna          = bna          = fp_create_bna ();
+  fp_frames.rough        = rough        = fp_create_rough ();
+  fp_frames.range        = range        = fp_create_range ();
+  fp_frames.palette      = palette      = fp_create_circle_palette (dlg);
+  fp_frames.lnd          = lnd          = fp_create_lnd (dlg);
+  fp_frames.show         = show         = fp_create_show ();
+  fp_frames.satur        = satur        = fp_create_msnls (dlg);
+  fp_frames.pixelsBy     = pixelsBy     = fp_create_pixels_select_by ();
+                           control      = fp_create_control ();
   /********************************************************************/
   /********************   PUT EVERYTHING TOGETHER    ******************/
 
@@ -1329,11 +1332,11 @@ fp_preview_scale_update (GtkAdjustment *adjustment,
 }
 
 static void
-fp_advanced_dialog (void)
+fp_advanced_dialog (GtkWidget *parent)
 {
-  gchar     *rangeNames[] = { N_("Shadows:"),
-                              N_("Midtones:"),
-                              N_("Highlights:") };
+  const gchar *rangeNames[] = { N_("Shadows:"),
+                                N_("Midtones:"),
+                                N_("Highlights:") };
   GtkWidget *frame, *mainvbox;
   GtkObject *smoothnessData;
   GtkWidget *graphFrame, *table, *scale;
@@ -1346,6 +1349,7 @@ fp_advanced_dialog (void)
 
   gtk_window_set_title (GTK_WINDOW (AW.window),
                         _("Advanced Filter Pack Options"));
+  gtk_window_set_transient_for (GTK_WINDOW (AW.window), GTK_WINDOW (parent));
 
   g_signal_connect (AW.window, "delete-event",
                     G_CALLBACK (sub_dialog_destroy),

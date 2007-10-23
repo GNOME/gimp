@@ -1,3 +1,8 @@
+2007-10-23  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/fp.c: made preview windows transient to the
+	plug-in dialog.
+
 2007-10-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/pixel-region.c (pixel_region_resize): when resizing,
