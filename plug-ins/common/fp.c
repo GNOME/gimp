@@ -121,11 +121,10 @@ typedef struct
   FPIntensity   intensity_range;
   gint          value_by;
   gint          selection_only;
-  gboolean      real_time;
   guchar        offset;
   guchar        visible_frames;
   guchar        cutoff[INTENSITIES];
-  gint          touched[JUDGE_BY];
+  gboolean      touched[JUDGE_BY];
   gint          red_adjust[JUDGE_BY][256];
   gint          blue_adjust[JUDGE_BY][256];
   gint          green_adjust[JUDGE_BY][256];
@@ -176,7 +175,6 @@ static void           fp_redraw_all_windows       (void);
 static void           fp_refresh_previews         (gint           which);
 static void           fp_init_filter_packs        (void);
 
-static void           fp_drag                     (GtkWidget     *button);
 static void           fp_preview_scale_update     (GtkAdjustment *adjustment,
                                                    gdouble       *scale_val);
 
@@ -202,12 +200,6 @@ static void           fp_create_preview           (GtkWidget    **preview,
 static void           fp_create_table_entry      (GtkWidget     **box,
                                                   GtkWidget      *smaller_frame,
                                                   const gchar    *description);
-
-static void           fp_checkbutton_in_box      (GtkWidget      *vbox,
-                                                  const gchar    *label,
-                                                  GtkSignalFunc   func,
-                                                  gpointer        data,
-                                                  gboolean        clicked);
 
 static void         fp_frames_checkbutton_in_box (GtkWidget      *vbox,
                                                   const gchar    *label,
@@ -278,17 +270,16 @@ static ReducedImage *reduced;
 
 static FPValues fpvals =
 {
-  .25,                /* Initial Roughness */
-  .6,                 /* Initial Degree of Aliasing */
-  80,                 /* Initial preview size */
-  MIDTONES,           /* Initial Range */
-  BY_VAL,             /* Initial God knows what */
-  TRUE,               /* Selection Only */
-  TRUE,               /* Real Time */
-  0,                  /* Offset */
-  0,                  /* Visible frames */
-  {32,224,255},       /* cutoffs */
-  {0,0,0}             /* touched */
+  .25,                    /* Initial Roughness */
+  .6,                     /* Initial Degree of Aliasing */
+  80,                     /* Initial preview size */
+  MIDTONES,               /* Initial Range */
+  BY_VAL,                 /* Initial God knows what */
+  TRUE,                   /* Selection Only */
+  0,                      /* Offset */
+  0,                      /* Visible frames */
+  { 32, 224, 255 },       /* cutoffs */
+  { FALSE, FALSE, FALSE } /* touched */
 };
 
 static GimpDrawable *drawable;
@@ -675,8 +666,8 @@ fp_create_range (void)
                                     G_CALLBACK (fp_change_current_range),
                                     &fpvals.intensity_range, fpvals.intensity_range,
 
-                                    _("Sha_dows"),  SHADOWS, NULL,
-                                    _("_Midtones"), MIDTONES, NULL,
+                                    _("Sha_dows"),    SHADOWS,    NULL,
+                                    _("_Midtones"),   MIDTONES,   NULL,
                                     _("H_ighlights"), HIGHLIGHTS, NULL,
 
                                     NULL);
@@ -895,26 +886,6 @@ fp_create_preview (GtkWidget **preview,
 }
 
 static void
-fp_checkbutton_in_box (GtkWidget     *vbox,
-                       const gchar   *label,
-                       GtkSignalFunc  function,
-                       gpointer       data,
-                       gboolean       clicked)
-{
-  GtkWidget *button;
-
-  button = gtk_check_button_new_with_mnemonic (label);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (function),
-                    data);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), clicked);
-}
-
-static void
 fp_frames_checkbutton_in_box (GtkWidget     *vbox,
                               const gchar   *label,
                               GtkSignalFunc  function,
@@ -1077,7 +1048,7 @@ static void
 fp_selection_made (GtkWidget *widget,
                    gpointer   data)
 {
-  fpvals.touched[fpvals.value_by] = 1;
+  fpvals.touched[fpvals.value_by] = TRUE;
 
   if (data == (gpointer) hue_red)
     {
@@ -1180,7 +1151,7 @@ fp_response (GtkWidget *widget,
 
 static void
 fp_scale_update (GtkAdjustment *adjustment,
-                 gdouble        *scale_val)
+                 gdouble       *scale_val)
 {
   static gdouble prevValue = 0.25;
 
@@ -1190,8 +1161,10 @@ fp_scale_update (GtkAdjustment *adjustment,
     {
       fp_create_nudge (nudgeArray);
       fp_refresh_previews (fpvals.visible_frames);
+
       if (AW.window != NULL && GTK_WIDGET_VISIBLE (AW.window))
         fp_create_smoothness_graph (AW.aliasing_preview);
+
       prevValue = adjustment->value;
     }
 }
@@ -1295,35 +1268,6 @@ fp_dialog (void)
 /***********************************************************/
 
 static void
-fp_drag (GtkWidget *button)
-{
-  static gboolean notFirstTime = FALSE;
-
-  if (! notFirstTime)
-    return;
-
-  notFirstTime = TRUE;
-
-  if (GTK_TOGGLE_BUTTON (button)->active)
-    {
-      fpvals.real_time=TRUE;
-      gtk_range_set_update_policy (GTK_RANGE (fp_widgets.roughness_scale),0);
-      gtk_range_set_update_policy (GTK_RANGE (fp_widgets.aliasing_scale),0);
-      gtk_range_set_update_policy (GTK_RANGE (fp_widgets.preview_size_scale),0);
-    }
-  else
-    {
-      fpvals.real_time=FALSE;
-      gtk_range_set_update_policy (GTK_RANGE (fp_widgets.roughness_scale),
-                                   GTK_UPDATE_DELAYED);
-      gtk_range_set_update_policy (GTK_RANGE (fp_widgets.aliasing_scale),
-                                   GTK_UPDATE_DELAYED);
-      gtk_range_set_update_policy (GTK_RANGE (fp_widgets.preview_size_scale),
-                                   GTK_UPDATE_DELAYED);
-    }
-}
-
-static void
 fp_preview_scale_update (GtkAdjustment *adjustment,
                          gdouble        *scale_val)
 {
@@ -1337,11 +1281,12 @@ fp_advanced_dialog (GtkWidget *parent)
   const gchar *rangeNames[] = { N_("Shadows:"),
                                 N_("Midtones:"),
                                 N_("Highlights:") };
-  GtkWidget *frame, *mainvbox;
+  GtkWidget *frame, *hbox;
   GtkObject *smoothnessData;
-  GtkWidget *graphFrame, *table, *scale;
-  GtkWidget *vbox, *label, *labelTable, *alignment, *inner_vbox;
-  gint i;
+  GtkWidget *graphFrame, *scale;
+  GtkWidget *vbox, *label, *labelTable, *alignment;
+  GtkWidget *inner_vbox, *innermost_vbox;
+  gint       i;
 
   AW.window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
@@ -1355,49 +1300,49 @@ fp_advanced_dialog (GtkWidget *parent)
                     G_CALLBACK (sub_dialog_destroy),
                     NULL);
 
-  mainvbox = gtk_hbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (mainvbox), 12);
-  gtk_container_add (GTK_CONTAINER (AW.window), mainvbox);
-  gtk_widget_show (mainvbox);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+  gtk_container_add (GTK_CONTAINER (AW.window), hbox);
+  gtk_widget_show (hbox);
 
-  frame = gimp_frame_new (_("Smoothness of Aliasing"));
-  gtk_box_pack_start (GTK_BOX (mainvbox), frame, TRUE, TRUE, 0);
+  frame = gimp_frame_new (_("Affected Range"));
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (3, 1, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   graphFrame = gtk_aspect_frame_new (NULL, 0.5, 0.5, 1, TRUE);
   gtk_frame_set_shadow_type (GTK_FRAME (graphFrame), GTK_SHADOW_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (graphFrame),0);
+  gtk_container_set_border_width (GTK_CONTAINER (graphFrame), 0);
+  gtk_box_pack_start (GTK_BOX (vbox), graphFrame, FALSE, FALSE, 0);
   gtk_widget_show (graphFrame);
-  gtk_table_attach (GTK_TABLE (table), graphFrame, 0, 1, 0, 1,
-                    GTK_EXPAND, 0, 0, 0);
-
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (graphFrame), vbox);
-  gtk_widget_show (vbox);
-
-  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start_defaults (GTK_BOX (vbox), alignment);
-  gtk_widget_show (alignment);
 
   inner_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (alignment), inner_vbox);
+  gtk_container_add (GTK_CONTAINER (graphFrame), inner_vbox);
   gtk_widget_show (inner_vbox);
+
+  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_box_pack_start_defaults (GTK_BOX (inner_vbox), alignment);
+  gtk_widget_show (alignment);
+
+  innermost_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (alignment), innermost_vbox);
+  gtk_widget_show (innermost_vbox);
 
   AW.aliasing_preview = gimp_preview_area_new ();
   gtk_widget_set_size_request (AW.aliasing_preview, 256, MAX_ROUGHNESS);
-  gtk_box_pack_start (GTK_BOX (inner_vbox), AW.aliasing_preview, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (innermost_vbox),
+                      AW.aliasing_preview, TRUE, TRUE, 0);
   gtk_widget_show (AW.aliasing_preview);
 
   fp_create_smoothness_graph (AW.aliasing_preview);
 
   AW.range_preview = gimp_preview_area_new ();
   gtk_widget_set_size_request (AW.range_preview, 256, RANGE_HEIGHT);
-  gtk_box_pack_start(GTK_BOX (inner_vbox), AW.range_preview, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX (innermost_vbox),
+                     AW.range_preview, TRUE, TRUE, 0);
   gtk_widget_show (AW.range_preview);
 
   fp_range_preview_spill (AW.range_preview, fpvals.value_by);
@@ -1405,22 +1350,8 @@ fp_advanced_dialog (GtkWidget *parent)
   labelTable = gtk_table_new (3, 4, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (labelTable), 6);
   gtk_table_set_row_spacings (GTK_TABLE (labelTable), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), labelTable, FALSE, FALSE, 0);
   gtk_widget_show (labelTable);
-  gtk_table_attach (GTK_TABLE (table), labelTable, 0, 1, 1, 2,
-                    GTK_EXPAND, 0, 0, 0);
-
-  for (i = 0; i < 12; i++)
-    {
-      label = fp_widgets.range_label[i] = gtk_label_new ("-");
-      if (!(i % 4))
-        {
-          gtk_label_set_text (GTK_LABEL(label), gettext (rangeNames[i/4]));
-          gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-        }
-      gtk_widget_show (label);
-      gtk_table_attach (GTK_TABLE (labelTable), label, i%4, i%4+1, i/4, i/4+1,
-                        GTK_EXPAND | GTK_FILL, 0, 0, 0);
-    }
 
   /************************************************************/
 
@@ -1428,7 +1359,7 @@ fp_advanced_dialog (GtkWidget *parent)
   gtk_widget_set_size_request (AW.aliasing_graph,
                                2 * MARGIN + 256,
                                RANGE_HEIGHT);
-  gtk_box_pack_start (GTK_BOX (vbox), AW.aliasing_graph, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (inner_vbox), AW.aliasing_graph, TRUE, TRUE, 0);
   gtk_widget_show (AW.aliasing_graph);
   gtk_widget_set_events (AW.aliasing_graph, RANGE_ADJUST_MASK);
 
@@ -1437,6 +1368,24 @@ fp_advanced_dialog (GtkWidget *parent)
                     &fpvals);
 
   /************************************************************/
+
+  for (i = 0; i < 12; i++)
+    {
+      label = fp_widgets.range_label[i] = gtk_label_new ("-");
+
+      if (!(i % 4))
+        {
+          gtk_label_set_text (GTK_LABEL(label), gettext (rangeNames[i/4]));
+          gimp_label_set_attributes (GTK_LABEL (label),
+                                     PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                                     -1);
+          gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+        }
+
+      gtk_widget_show (label);
+      gtk_table_attach (GTK_TABLE (labelTable), label, i%4, i%4+1, i/4, i/4+1,
+                        GTK_EXPAND | GTK_FILL, 0, 0, 0);
+    }
 
   smoothnessData = gtk_adjustment_new (fpvals.aliasing,
                                        0, 1.0, 0.05, 0.01, 0.0);
@@ -1447,8 +1396,7 @@ fp_advanced_dialog (GtkWidget *parent)
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 0, 1, 2, 3,
-                    0, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   g_signal_connect (smoothnessData, "value-changed",
@@ -1457,16 +1405,13 @@ fp_advanced_dialog (GtkWidget *parent)
 
   /******************* MISC OPTIONS ***************************/
 
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (mainvbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  fp_checkbutton_in_box (vbox, _("Preview as You Drag"),
-                         GTK_SIGNAL_FUNC (fp_drag),
-                         NULL, TRUE);
-
   frame = gimp_frame_new (_("Preview Size"));
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   smoothnessData = gtk_adjustment_new (fpvals.preview_size,
                                        50, MAX_PREVIEW_SIZE,
@@ -1474,7 +1419,7 @@ fp_advanced_dialog (GtkWidget *parent)
 
   fp_widgets.preview_size_scale = scale =
     gtk_hscale_new (GTK_ADJUSTMENT (smoothnessData));
-  gtk_container_add (GTK_CONTAINER (frame), scale);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_set_size_request (scale, 100, -1);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
@@ -1486,6 +1431,8 @@ fp_advanced_dialog (GtkWidget *parent)
                     &fpvals.preview_size);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+
+  update_range_labels ();
 }
 
 static void
@@ -1578,23 +1525,13 @@ fp_range_change_events (GtkWidget *widget,
 
       draw_it (NULL);
 
-      if (fpvals.real_time)
-        {
-          fp_range_preview_spill (AW.range_preview, fpvals.value_by);
-          update_range_labels ();
-          fp_create_smoothness_graph (AW.aliasing_preview);
-          fp_refresh_previews (fpvals.visible_frames);
-        }
+      fp_range_preview_spill (AW.range_preview, fpvals.value_by);
+      update_range_labels ();
+      fp_create_smoothness_graph (AW.aliasing_preview);
       break;
 
     case GDK_BUTTON_RELEASE:
-      if (!fpvals.real_time)
-        {
-          fp_range_preview_spill (AW.range_preview, fpvals.value_by);
-          update_range_labels ();
-          fp_create_smoothness_graph (AW.aliasing_preview);
-          fp_refresh_previews (fpvals.visible_frames);
-        }
+      fp_refresh_previews (fpvals.visible_frames);
       break;
 
     case GDK_MOTION_NOTIFY:
@@ -1606,13 +1543,9 @@ fp_range_change_events (GtkWidget *widget,
           slider_erase (AW.aliasing_graph->window, *new);
           *new = x;
           draw_it (NULL);
-          if (fpvals.real_time)
-            {
-              fp_range_preview_spill (AW.range_preview, fpvals.value_by);
-              update_range_labels ();
-              fp_create_smoothness_graph (AW.aliasing_preview);
-              fp_refresh_previews (fpvals.visible_frames);
-            }
+          fp_range_preview_spill (AW.range_preview, fpvals.value_by);
+          update_range_labels ();
+          fp_create_smoothness_graph (AW.aliasing_preview);
         }
       break;
 
@@ -1626,9 +1559,9 @@ fp_range_change_events (GtkWidget *widget,
 static void
 update_range_labels (void)
 {
-  gchar buffer[3];
+  gchar buffer[4];
 
-  gtk_label_set_text (GTK_LABEL(fp_widgets.range_label[1]),"0");
+  gtk_label_set_text (GTK_LABEL(fp_widgets.range_label[1]), "0");
 
   g_snprintf (buffer, sizeof (buffer), "%d", fpvals.cutoff[SHADOWS]);
   gtk_label_set_text (GTK_LABEL (fp_widgets.range_label[3]), buffer);
@@ -1645,6 +1578,7 @@ static void
 fp_init_filter_packs (void)
 {
   gint i, j;
+
   for (i = 0; i < 256; i++)
     for (j = BY_HUE; j < JUDGE_BY; j++)
       {
@@ -1831,17 +1765,19 @@ fp_render_preview (GtkWidget *preview,
               /*DO SATURATION FIRST*/
               if (change_what != NONEATALL)
                 {
+                  gint adjust = partial * fpvals.sat_adjust[JudgeBy][Inten];
+
                   if (M != m)
                     {
                       for (k = 0; k < 3; k++)
                         if (backupP[k] == M)
-                          P[k] = MAX (P[k] +
-                                      partial * fpvals.sat_adjust[JudgeBy][Inten],
-                                      middle);
+                          {
+                            P[k] = MAX (P[k] + adjust, middle);
+                          }
                         else if (backupP[k] == m)
-                          P[k] = MIN (P[k] -
-                                      partial * fpvals.sat_adjust[JudgeBy][Inten],
-                                      middle);
+                          {
+                            P[k] = MIN (P[k] - adjust, middle);
+                          }
                     }
 
                   P[0]  += partial * fpvals.red_adjust[JudgeBy][Inten];
@@ -1864,15 +1800,21 @@ fp_render_preview (GtkWidget *preview,
 
             case SATURATION:
               for (JudgeBy = BY_HUE; JudgeBy < JUDGE_BY; JudgeBy++)
-                for (k = 0; k < 3; k++)
-                  if (M != m)
-                    {
-                      if (backupP[k] == M)
-                        P[k] = MAX (P[k] + partial * tempSat[JudgeBy][Inten],
-                                    middle);
-                      else if (backupP[k] == m)
-                        P[k] = MIN (P[k]- partial * tempSat[JudgeBy][Inten],
-                                    middle);
+                {
+                  gint adjust = partial * tempSat[JudgeBy][Inten];
+
+                  for (k = 0; k < 3; k++)
+                    if (M != m)
+                      {
+                        if (backupP[k] == M)
+                          {
+                            P[k] = MAX (P[k] + adjust, middle);
+                          }
+                        else if (backupP[k] == m)
+                          {
+                            P[k] = MIN (P[k] - adjust, middle);
+                          }
+                      }
                 }
               break;
 
@@ -1886,9 +1828,9 @@ fp_render_preview (GtkWidget *preview,
               break;
             }
 
-          a[(i * RW + j) * 4 + 0] = CLAMP0255(P[0]);
-          a[(i * RW + j) * 4 + 1] = CLAMP0255(P[1]);
-          a[(i * RW + j) * 4 + 2] = CLAMP0255(P[2]);
+          a[(i * RW + j) * 4 + 0] = CLAMP0255 (P[0]);
+          a[(i * RW + j) * 4 + 1] = CLAMP0255 (P[1]);
+          a[(i * RW + j) * 4 + 2] = CLAMP0255 (P[2]);
 
           if (bytes == 4)
             a[(i * RW + j) * 4 + 3] = reduced->rgb[i * RW * bytes + j * bytes + 3];
@@ -1959,37 +1901,50 @@ fp_create_smoothness_graph (GtkWidget *preview)
   for (i = 0; i < MAX_ROUGHNESS; i++)
     {
       gint coor = MAX_ROUGHNESS - i;
-      for (j = 0; j < 256; j++) {
-        data[3 * (i * 256 + j) + 0] = 255;
-        data[3 * (i * 256 + j) + 1] = 255;
-        data[3 * (i * 256 + j) + 2] = 255;
-        if (!(i % (MAX_ROUGHNESS / 4))) {
-          data[3 * (i * 256 + j) + 0] = 255;
-          data[3 * (i * 256 + j) + 1] = 128;
-          data[3 * (i * 256 + j) + 2] = 128;
-        }
-        if (!((j + 1) % 32)) {
-          data[3 * (i * 256 + j) + 0] = 255;
-          data[3 * (i * 256 + j) + 1] = 128;
-          data[3 * (i * 256 + j) + 2] = 128;
-        }
-        toBeBlack = FALSE;
-        if (nArray[j] == coor)
-          toBeBlack = TRUE;
 
-        if (j < 255) {
-          gint jump = abs (nArray[j] - nArray[j+1]);
-          if (abs (coor - nArray[j]) < jump  &&
-              abs (coor - nArray[j + 1]) < jump)
+      for (j = 0; j < 256; j++)
+        {
+          data[3 * (i * 256 + j) + 0] = 255;
+          data[3 * (i * 256 + j) + 1] = 255;
+          data[3 * (i * 256 + j) + 2] = 255;
+
+          if (!(i % (MAX_ROUGHNESS / 4)))
+            {
+              data[3 * (i * 256 + j) + 0] = 255;
+              data[3 * (i * 256 + j) + 1] = 128;
+              data[3 * (i * 256 + j) + 2] = 128;
+            }
+
+          if (!((j + 1) % 32))
+            {
+              data[3 * (i * 256 + j) + 0] = 255;
+              data[3 * (i * 256 + j) + 1] = 128;
+              data[3 * (i * 256 + j) + 2] = 128;
+            }
+
+          toBeBlack = FALSE;
+
+          if (nArray[j] == coor)
             toBeBlack = TRUE;
+
+          if (j < 255)
+            {
+              gint jump = abs (nArray[j] - nArray[j+1]);
+
+              if (abs (coor - nArray[j]) < jump  &&
+                  abs (coor - nArray[j + 1]) < jump)
+                toBeBlack = TRUE;
+            }
+
+          if (toBeBlack)
+            {
+              data[3 * (i * 256 + j) + 0] = 0;
+              data[3 * (i * 256 + j) + 1] = 0;
+              data[3 * (i * 256 + j) + 2] = 0;
+            }
         }
-        if (toBeBlack) {
-          data[3 * (i * 256 + j) + 0] = 0;
-          data[3 * (i * 256 + j) + 1] = 0;
-          data[3 * (i * 256 + j) + 2] = 0;
-        }
-      }
     }
+
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
                           0, 0, 256, MAX_ROUGHNESS,
                           GIMP_RGB_IMAGE,
@@ -2042,7 +1997,7 @@ fp_range_preview_spill (GtkWidget *preview,
                 case BY_SAT:
                   gimp_hsv_set (&hsv,
                                 0.5,
-                                ((j-(gint)fpvals.offset+256)%256) / 255.0,
+                                ((j - (gint) fpvals.offset + 256) % 256) / 255.0,
                                 0.5);
                   gimp_hsv_to_rgb (&hsv, &rgb);
                   gimp_rgb_get_uchar (&rgb,
@@ -2054,6 +2009,7 @@ fp_range_preview_spill (GtkWidget *preview,
             }
         }
     }
+
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
                           0, 0, 256, RANGE_HEIGHT,
                           GIMP_RGB_IMAGE,
@@ -2090,7 +2046,7 @@ static void
 fp_preview_size_allocate (GtkWidget     *widget,
                           GtkAllocation *allocation)
 {
-  gint  which   = fpvals.visible_frames;
+  gint which = fpvals.visible_frames;
 
   if (widget == origPreview)
     fp_render_preview (origPreview, NONEATALL, 0);

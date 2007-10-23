@@ -1,7 +1,7 @@
 2007-10-23  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/fp.c: made preview windows transient to the
-	plug-in dialog.
+	plug-in dialog. Simplified "Advanced Options" dialog.
 
 2007-10-23  Michael Natterer  <mitch@gimp.org>
 
