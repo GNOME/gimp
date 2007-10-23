@@ -1,13 +1,5 @@
-The GNU Image Manipulation Program Version 2.4
+ The GNU Image Manipulation Program Version 2.4
 ----------------------------------------------
-
-This is a release candidate for GIMP 2.4, the new stable version of
-GIMP. Please realize that this is not yet the 2.4.0 release. This
-release candidate should be feature complete and pretty close to what
-you will get with 2.4.0. But there might still be bugs and even some
-minor changes pending in some places. If you need to get work done,
-please stick to the stable version, GIMP 2.2 until GIMP 2.4 is
-released.
 
 GIMP 2.4 replaces earlier GIMP 2.x versions. It is advised that you
 uninstall them before installing GIMP 2.4. If you want to keep your

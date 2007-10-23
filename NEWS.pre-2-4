@@ -1,0 +1,570 @@
+                   ------------------------------ 
+                   GNU Image Manipulation Program
+                         Development Branch
+                   ------------------------------
+
+This used to be the development branch that lead to GIMP 2.4.
+
+
+Changes in GIMP 2.4.0
+=====================
+
+- further improved the rectangle select and crop tools
+- allow to mark out-of-gamut colors when doing a soft proof
+- bug fixes
+
+
+Changes in GIMP 2.4.0-rc3
+=========================
+
+- use the new format for storing recently used files
+- added conversion options to the color profile conversion plug-in
+- allow to disable the toolbox menu on all platforms
+- further improved handling of the JPEG settings
+- switch tabs when hovering over them
+- added a PDB function to remove the alpha channel from a layer
+- plug-in previews remember the state of the Preview checkbox (bug #478657)
+- allow to grow the image/layer using the Crop tool
+- bug fixes
+
+
+Changes in GIMP 2.4.0-rc2
+=========================
+
+- more improvements and bug fixes in the rectangle tools
+- antialias the display for zoom levels between 100% and 200%
+- fix zoomed-out display problems
+- improve handling of JPEG settings
+- fix script-fu error reporting
+- on OS X, get rid of menubars in windows and use the global menubar
+- fix plug-ins using GimpZoomPreview
+- throw properly catchable exceptions from foreign script-fu function
+  (like PDB wrappers)
+- bug fixes
+
+
+Changes in GIMP 2.4.0-rc1
+=========================
+
+- further improvement to the Print plug-in
+- completed the color management functionality for 2.4
+- store JPEG setting with the image and use them when saving as JPEG
+- further improved the rectangle tools, in particular handling of the
+  fixed aspect ratio
+- added color profile selector widget
+- further improved the display quality for zoomed-out views
+
+
+Changes in GIMP 2.3.19
+======================
+
+- support long layer names in PSD files
+- improved EXIF handling in the JPEG file plug-in
+- added control for the playback speed in the Animation Playback plug-in
+- avoid needless image preview invalidation
+- allow to edit the image comment in the Image Properties dialog
+- further improved rectangle tools
+- made JPEG save parameters user-configurable
+- avoid color conversions between identical ICC color profiles
+- improved Print plug-in
+- improved loading and saving of indexed TGA images
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.18
+======================
+
+- temporarily show the hidden image statusbar while the progress is active
+- added support for loading .abr v6 Photoshop brushes
+- improved usability of color scales
+- improved display quality of zoomed-out image view
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.17
+======================
+
+- improved import of multi-page TIFF files
+- reduced rounding errors in Blur routines (core and plug-ins)
+- further improved parameter checks in the PDB
+- added support for loading .abr v2 Photoshop brushes
+- improved border behavior of the Blur tool
+- show the brush outline at the Clone tool's source position
+- added libgimpbase API to retrieve the user's Pictures folder
+- add a shortcut to the user's Pictures folder to the file-chooser dialog
+- improved the quality of the Motion Blur filter
+- save paths in TIFF files
+- let the Screenshot plug-in name the new layer after the window
+- use memory slices to reduce memory fragmentation
+- some code cleanup
+- lots of bug fixes
+
+
+Changes in GIMP 2.3.16
+======================
+
+- make the XOR color configurable as a workaround for broken drivers
+- allow to assign keyboard shortcuts to procedures without menu entry
+- allow to configure the height of the preview area in data editors
+- improved file detection in TGA plug-in
+- improved brush scaling code, now also scales up
+- converted standard pixmap brushes to parametric ones
+- improved zoom tool behavior
+- D-Bus methods now have a return value indicating success or failure
+- added more menu tooltips
+- allow procedures to request the display ID they are being called from
+- depend on GTK+ >= 2.10.6 and use some of the new functions in GTK+ 2.10
+- allow filename passed on the command-line to be opened as new images
+- various optimizations
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.15
+======================
+
+- added keyboard control to rectangle tools and improved their tool options
+- improved console handling on Win32
+- support large XCF files (> 2GB) on Win32 also
+- cleanup of the internal undo system
+- ask before overwriting files, not only for image files
+- added "Revert Zoom" functionality
+- added GimpStringComboBox widget to libgimpwidgets
+- added HAL support for hotplug of Linux Input devices
+- added support for shaped windows to the Screenshot plug-in
+- improved handling of incomplete PNG files
+- categorize contributors into active and inactive
+- added controller module for DirectInput controllers on Win32
+- speed up transform tools
+- improved tool cancellation framework
+- fixed Select -> Border behaviour and added option for 'sticky image edges'
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.14
+======================
+
+- added actions to control brush spacing
+- polished appearance of image window
+- scale the brush's spacing when scaling the brush
+- save tool presets when they are changed
+- improved handling of vectors in the Python bindings
+- allow for auto-cropping the result of the transform tools
+- added GimpRatioEntry widget and use it in the rectangle tool options
+- added functions to transform between preview and image coordinates
+- added PDB functions to validate display, drawable, image and vectors IDs
+- added HSL color model to Decompose and Compose plug-ins
+- further improved status bar messages for tools
+- on systems with D-Bus build gimp-remote functionality into gimp executable
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.13
+======================
+
+- show information about embedded color profiles in Image Properties dialog
+- allow to apply color profiles on load (still work in progress)
+- new vectors PDB API to replace the old path API
+- added "Auntie Alias" plug-in for antialiasing on lineart
+- added Edit->Fade operation
+- added Rounded Corners option to Rectangle Select tool
+- improved WinIcon plug-in (now loads and saves 24 bit and Vista icons)
+- merged gimp-tiny-fu; replaces Script-Fu Scheme interpreter with TinyScheme
+- remember unit and interpolation type in scale and resize dialogs
+- changed default interpolation type to Cubic
+- show comment in Image Properties dialog
+- when loading in image as layers, don't merge the layers
+- added experimental palette color selector module
+- don't save thumbnails that don't match the image
+- increased tool handle sizes for better usability
+- implemented brush scaling from the tool options (only downscaling yet)
+- import paths embedded into TIFF files
+- support vectors in the Script-Fu and Python-Fu user interfaces
+- added PDB functions to retrieve position of layers/channels/vectors
+- added side pane with table of contents to the Help Browser
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.12
+======================
+
+- merged the Perspective Clone tool
+- allow to pan the image view using the Space bar
+- show a thumbnail in the "Rotate JPEG?" query dialog
+- added file information to the Image Properties dialog
+- more work on the new selection tools
+- give immidiate feedback when tool modifier keys are pressed
+- added Lens Distortion plug-in
+- internationalize Python binding and Python plug-ins
+- improved internal message infrastructure, use the statusbar for warnings
+- added an URL loader backend based on libcurl
+- build a color-managed CMYK color selector if lcms is available
+- localize Script-Fu procedure descriptions
+- lots of user interface polishing
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.11
+======================
+
+- depend on newer versions of glib, gtk+ and pango and use some of the new
+  features in these libraries
+- made Ctrl-P the default shortcut for Print
+- show progress when loading/saving XCF files
+- added support for 16/32 bit bitmaps and alpha channel to the BMP plug-in
+- if possible, detect the number of CPUs
+- allow to disable the build of the Script-Fu extension
+- many improvements to the Python bindings and the pygimp user interface
+- made message dialogs transient for the progress window
+- added PDB API for creating a selection from vectors
+- further improved status bar messages for tools
+- derive ByColorSelect and FuzzySelect tools from a common base class
+- finer control over select-by-color functionality
+- minor optimizations in the drawing code
+- abstract brush outline drawing into the common base class GimpBrushTool
+- store sample points in XCF files
+- added extended PDB API for selection procedures
+- added convenience API to libgimp that creates a layer from a GdkPixbuf
+- added midpoint handles to Scale tool for scaling with fixed width or height
+- let color picker tools select a matching color in the Palette Editor
+- allow to use foreground and background color in gradients
+- added first draft of a new Healing Brush tool
+- abstract clone tool functionality into the common base class GimpSourceTool
+- improvements to the new selection tools
+- don't wake up the gimp every so often
+- added GimpHintBox widget to libgimpwidgets
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.10
+======================
+
+- added support for a registration color in the Decompose plug-in
+- the Align tool now also aligns to guides
+- allow use of CSS color notation in Script-Fu
+- more work on the new selection tools
+- let Fractal Explorer work on grayscale and give it a larger preview
+- speed up Value Invert plug-in
+- added strong undo/redo functions bound to Shift-Ctrl-[ZY]
+- use radio items for the image mode menu
+- applied Tango style on the default iconset
+- added plug-in for colormap manipulation
+- allow plug-ins to register in Layers, Channels, Vectors and Colormap dialog
+- added load plug-in to open desktop links
+- removed print plug-ins and started work on a replacement using the 
+  new GTK+ Print API
+- added replacements for gimp_foo_select widgets, akin to GimpFontSelectButton
+- introduced translation context to a number of colliding strings
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.9
+=====================
+
+- better interpolation for "smooth" curves in the Curve tool
+- added an Auto button to the Threshold tool that picks a suitable value
+- simplified user installation, only display a dialog in case of an error
+- added Red Eye Removal plug-in
+- added thumbnail loader to GIF load plug-in
+- declared even more data as const
+- refactoring of the PDB and plug-in management code
+- allow Merge to work on a single layer
+- added a way to remove all keyboard shortcuts from the Preferences dialog
+- added menu items for "Text to Path", "Text along Path" and "Text to
+  Selection"
+- allow to initialize a new layer mask with any of the image's channels
+- added clipboard brush and clipboard pattern
+- added scripts to sort color palettes
+- swap meanings of "dilate" and	"erode" which have been wrong for a long time
+- show Clone tool source location while painting
+- use GtkFileChooserButton in place of GimpFileEntry
+- added script to reverse the order of layers
+- added "Sample merged" and "Selected Pixels only" options to Palette import
+- added actions to select palette and colormap colors
+- new environment variable to control which batch interpreter to use
+- give plug-ins access to the CPU detection so that they can use MMX code
+- speed up Selective Gaussian Blur plug-in
+- improved tool cursors, added edge resizing cursors
+- improved behaviour of new selection tools
+- allow to reset all gimprc values from the Preferences dialog
+- optionally show guides in the Crop tool
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.8
+=====================
+
+- added new tile primitive Triangle to Mosaic plug-in
+- speed up Gaussian Blur plug-in
+- suppress redundant progress updates from plug-ins
+- changed some gimprc and sessionrc default values (window hints,
+  fullscreen mode)
+- do not focus transform tool dialogs on map
+- renamed Magnify tool to Zoom tool and added some missing tool shortcuts
+- added a submenu with recently used plug-ins to the Filters menu
+- fixed look-up table used for Contrast adjustments
+- improved the user interface of the Animation Playback plug-in
+- added framework for describing menu entries in the statusbar
+- added lots of helpful blurbs to procedures and core actions
+- remove color from the Watercolor selector if Shift is being pressed
+- ported PDB internals to GParamSpec and GValue
+- speedup and UI improvements for the SIOX tool
+- added parasite getters and settors for vectors
+- made PSD load and save plug-ins 64bit clean
+- some string review
+- ported ellipse select tool to the new rectangle tool
+- added basic support for layer masks to the PSD save plug-in
+- avoid relocations by declaring more data as const
+- new application icons in more sizes and as a SVG
+- provide script-specific samples instead of hard-coding "Aa" for font preview
+- build the Screenshot plug-in on all platforms
+- allow to discard invisible layers when merging visible layers
+- nicer output from gimp-procedural-db-dump
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.7
+=====================
+
+- depend on GTK+ 2.8, use some of the new features
+- removed workarounds for problems in GTK+ 2.6
+- moved Align Visible Layers to the Image menu
+- started to add a new vectors PDB API
+- make it more obvious that docks can be rearranged by drag and drop
+- modified the behaviour of the Tab key
+- added --license command-line option
+- improved dither matrix for RGB->Indexed conversion
+- added PDB API to stroke with any paint method
+- gave some plug-ins more sensible names
+- keep settings of brush/pattern/font/... button popups across sessions
+- reduced number of memory allocations by declaring some strings as static
+- some improvements to the plug-in preview widgets
+- added links to important topics in the user manual
+- let the configure script display a summary of options
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.6
+=====================
+
+- even faster application startup
+- binary relocatibility on Linux by means of binreloc
+- be more verbose when being asked for it
+- select color index when picking from an indexed drawable
+- allow to migrate windows between displays
+- mouse-wheel scrolling and zooming in plug-in previews
+- added keyboard shortcuts ([ and ]) for changing the brush radius
+- improved Oilify plug-in
+- made the IWarp plug-in preview resizeable
+- added alignment mode for cloning from a fixed location source
+- completed core/ui separation of paint tools and paint methods
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.5
+=====================
+
+- optionally add jitter to paint strokes
+- implemented Snap to Path
+- added PDB API to access the Image Grid
+- ease access to Keyboard Shortcuts editor
+- optimizations to the Tile Cache and Undo/Redo implementations
+- more work on the Buffer PDB API
+- bug fixes to the new zoomable plug-in previews
+- optimization of the SIOX algorithm
+- menu reorganisation in the Toolbox menu
+- export "Open As Layer" to the PDB as file-load-layer
+- added keyboard control for the Curves tool
+- load and save embedded ICC profiles from/to PNG images
+- improved appearance of some tool icons on dark background
+- added PDB API to get and set path visibility
+- let data editors follow the active brush, palette and gradient (optional)
+- some rearrangements in the new toplevel Colors menu
+- speed up reloading of data files
+- allow to copy the location of data files to the clipboard
+- allow to disable saving of the document history in the preferences
+- slightly faster application startup
+- more use of ngettext for plural forms
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.4
+=====================
+
+- allow plug-ins and scripts to register menu entries in the <Brushes>,
+  <Gradients>, <Palettes>, <Patterns> and <Fonts> menus
+- replaced Selection to Brush/Pattern scripts with scripts that paste
+  a new brush/pattern from the content of the clipboard
+- allow to easily close all opened images
+- added a first version of a Print plug-in using libgnomeprint
+- improved Sphere Designer plug-in
+- improved Compose plug-in
+- added a zoomable preview widget for plug-ins
+- implement copy and paste of paths as SVG 
+- use new stock icons introduced with GTK+ 2.6
+- allow to zoom in/out using the +/- keys on the numerical keypad
+- make it easier to drop dockables below the toolbox
+- set plug-in dialogs transient to the window they have been called from
+- added PDB function to obtain handles to the image and progress windows
+- export named buffers to the PDB
+- easier access to the popup menu in empty container views
+- use ngettext for plural forms
+- implement "Sample Merged" for the Clone tool
+- various Win32 fixes
+- fixed capitalization for better HIG compliance
+- use a descriptive verb instead of "OK" as button label in most dialogs
+- redone About dialog to be more informative
+- take the default unit from the locale settings
+- moved color-related tools and plug-ins to a new toplevel Colors menu
+- let the gnomevfs plug-in use GNOME authentication manager if available
+- rewritten Crop tool (work in progress)
+- added page selector to the Postscript Import plug-in
+- added preview to Checkerboard and Threshold Alpha plug-ins
+- more PDB procedure and parameter name canonicalization
+- touched up new path tool cursors and added one for the Join operation
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.3
+=====================
+
+- improved new GimpPageSelector widget
+- minor improvements to the Procedure and Plug-In browsers
+- set alternative button order in some places that were missed earlier
+- added SIOX algorithm for foreground extraction
+- fixed most gcc 4.0 warnings
+- improved Cursor view and Sample Points functionality
+- prepared code and UI for more layer lock types
+- added new PDF import plug-in based on libpoppler
+- undeprecated and improved palette editor, added cursor navigation
+- show more information in the Image Properties dialog
+- added prototype of SIOX foreground selection tool
+- fixed build of MMX code on gcc 4.0
+- moved procedure browser to libgimpwidgets as GimpProcBrowserDialog
+- canonicalize PDB procedure and parameter names
+- use the coefficients from the sRGB spec when calculating luminance
+- allow to remove alpha channel from a layer
+- added more different cursors for the paths tool
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.2
+=====================
+
+- more standard way of dealing with translation of the startup tips
+- allow to use the selected font in the text tool's text editor
+- some minor UI changes for HIG compliance
+- redid the framework that deals with installing desktop files
+- started to reorganize menus, mainly plug-ins and scripts
+- renamed "Scatter RGB" and "Scatter HSV" to "RGB Noise" and "HSV Noise"
+- allow to clear the document history
+- don't normalize the result in the Laplace plug-in (bug #306874)
+- ported FractalExplorer GUI to GtkTreeView, getting rid of the last
+  XPM icons that were being used
+- added an option to Motion Blur to blur outwards
+- added support for the proposed ICC Profiles In X Specification
+- added new widget GimpEnumLabel to libgimpwidgets
+- let the lcms display filter module show information about the used
+  color profiles
+- improved drawing of the brush outline
+- fixed build of Python language binding on Win32
+- allow plug-ins to access the user's color management configuration
+- added new widget GimpPageSelector to libgimpwidgets
+- reenabled the Debug menu
+- load and save ICC color profiles from/to JPEG images
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.1
+=====================
+
+- allow to copy and paste SVG between GIMP and other applications
+- added a utility for testing and debugging clipboard operations
+- more work on the new vectors PDB API
+- made screen edges active in the image display in fullscreen mode
+- made file and color selection dialogs transient to their parent windows
+- moved browser widget from Procedure Browser plug-in to libgimpwidgets
+- allow more search types in the Procedure Browser
+- reduced size of the Colors dockable by moving the hex entry down
+- added object properties to GimpColorArea and GimpColorButton
+- changed default for RGB->Indexed conversion to not to any dithering
+- allow to paste a new image using Ctrl-V on the toolbox
+- show previews of dash presets in Stroke Options dialog
+- Escape key cancels the window selection in the Screenshot plug-in
+- allow to operate the Brightness Contrast tool by clicking and dragging
+  on the canvas
+- improved Sample Points dockable
+- added first draft of new align tool
+- turned image and drawable combo boxes in libgimpui into real widgets
+- further improved Python bindings
+- nicer DND icons for viewables
+- allow to hide the button-bar found at the bottom of most dockables
+- turned font selection in libgimpui into a real widget
+- added support for BMP files with alpha channel (RGBA)
+- bug fixes and code cleanup
+
+
+Changes in GIMP 2.3.0
+=====================
+
+- added Recompose plug-in
+- added rectangle tool in GFig plug-in
+- improved palette editor color DND
+- improved EXIF handling in JPEG plug-in
+- smoother autoscrolling in image display
+- added Snap to Canvas Border and Snap to Path (yet unimplemented)
+- added previews to Mosaic, Pixelize and Sparkle plug-ins
+- added Lanczos interpolation method
+- added Open as Image menu entries to brushes and patterns dialogs
+- improved drag-n-drop of drawables within GIMP
+- added a prototype of a new rectangular select tool
+- moved a bunch of enums from core into libgimpbase
+- moved GimpConfig functionality from core into libgimpconfig
+- moved GimpEnumStore and GimpEnumComboBox to libgimpwidgets
+- moved convenience constructors for property views to libgimpwidgets
+- ported ImageMap plug-in to action based menus.
+- first steps towards color management
+- use GOptionContext for command-line parsing
+- added a gnome-vfs backend for the uri plug-in (former url plug-in)
+- prepared code for accessing remote files in the file-chooser
+- let all dialogs obey the gtk-alternative-button-order setting
+- extended GimpProgress PDB API
+- improved file type handling in file save dialog
+- resurrected threaded pixel processor and enable it by default
+- parallelized a few more internal functions
+- speed up gradient dithering
+- improved PSD save plug-in
+- improved Python bindings
+- allow to resize layers with the image
+- allow to control letter spacing in the text tool
+- added path-on-path functionality, use it to implement Text on Path
+- improved gradient editor
+- allow to import paths from a string
+- ported all code to gstdio wrappers
+- added infrastructure for color sample points
+- added first draft of a metadata editor plug-in
+- speed up burn compositing function
+- added Altivec versions of some compositing functions
+- added PDB API to control the number of columns in a palette
+- allow to control hue overlap in Hue-Saturation tool
+- added a PDB API to register menu branches
+- added missing mnemonics
+- improved Screenshot plug-in
+- allow to drag brushes/patterns/gradients... to the selectors in Script-Fu
+- allow to save images by dragging them to a filemanager that supports the
+  XDS protocol
+- optimizations in the Color Deficiency display filter
+- transfer the clipboard content to a clipboard manager on exit
+- moved cursor info out of the Info window into a dockable
+- moved remaining bits of the Info Window to a new Image Properties dialog
+- build and install gimp-console by default
+- allow to drag and drop image data into GIMP
+- use the statusbar more to display hints and info about the tool state
+- resurrected --no-data functionality
+- zoom to the cursor position instead of the display center
+- some improvements to the Helpbrowser plug-in
+- load PS brushes in the .abr format
+- allow to choose between different algorithms for Desaturate
+- added thumbnail loader to Winicon plug-in
+- improved configuration of input controllers
+- added an option to make the dock windows transient to the active image display
+- lots of code cleanup and bug-fixes
