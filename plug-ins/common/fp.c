@@ -1430,8 +1430,6 @@ fp_advanced_dialog (GtkWidget *parent)
                     G_CALLBACK (fp_preview_scale_update),
                     &fpvals.preview_size);
 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-
   update_range_labels ();
 }
 
