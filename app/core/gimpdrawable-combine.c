@@ -81,10 +81,10 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
   /*  get the layer offsets  */
   gimp_item_offsets (item, &offset_x, &offset_y);
 
-  /*  make sure the image application coordinates are within image bounds  */
-  x1 = CLAMP (x, 0, gimp_item_width  (item));
-  y1 = CLAMP (y, 0, gimp_item_height (item));
-  x2 = CLAMP (x + src2PR->w, 0, gimp_item_width  (item));
+  /*  make sure the image application coordinates are within drawable bounds  */
+  x1 = CLAMP (x,             0, gimp_item_width (item));
+  y1 = CLAMP (y,             0, gimp_item_height (item));
+  x2 = CLAMP (x + src2PR->w, 0, gimp_item_width (item));
   y2 = CLAMP (y + src2PR->h, 0, gimp_item_height (item));
 
   if (mask)
@@ -93,10 +93,14 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      x1 = CLAMP (x1, -offset_x, gimp_item_width  (GIMP_ITEM (mask))-offset_x);
-      y1 = CLAMP (y1, -offset_y, gimp_item_height (GIMP_ITEM (mask))-offset_y);
-      x2 = CLAMP (x2, -offset_x, gimp_item_width  (GIMP_ITEM (mask))-offset_x);
-      y2 = CLAMP (y2, -offset_y, gimp_item_height (GIMP_ITEM (mask))-offset_y);
+      x1 = CLAMP (x1,
+                  - offset_x, gimp_item_width  (GIMP_ITEM (mask)) - offset_x);
+      y1 = CLAMP (y1,
+                  - offset_y, gimp_item_height (GIMP_ITEM (mask)) - offset_y);
+      x2 = CLAMP (x2,
+                  - offset_x, gimp_item_width  (GIMP_ITEM (mask)) - offset_x);
+      y2 = CLAMP (y2,
+                  - offset_y, gimp_item_height (GIMP_ITEM (mask)) - offset_y);
     }
 
   /*  If the calling procedure specified an undo step...  */
@@ -104,7 +108,8 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
     {
       GimpDrawableUndo *undo;
 
-      gimp_drawable_push_undo (drawable, undo_desc, x1, y1, x2, y2, NULL, FALSE);
+      gimp_drawable_push_undo (drawable,
+                               undo_desc, x1, y1, x2, y2, NULL, FALSE);
 
       undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
 
@@ -139,6 +144,7 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
   else
     pixel_region_init (&src1PR, gimp_drawable_get_tiles (drawable),
                        x1, y1, (x2 - x1), (y2 - y1), FALSE);
+
   pixel_region_init (&destPR, gimp_drawable_get_tiles (drawable),
                      x1, y1, (x2 - x1), (y2 - y1), TRUE);
   pixel_region_resize (src2PR,
@@ -147,18 +153,10 @@ gimp_drawable_real_apply_region (GimpDrawable         *drawable,
 
   if (mask)
     {
-      gint mx, my;
-
-      /*  configure the mask pixel region
-       *  don't use x1 and y1 because they are in layer
-       *  coordinate system.  Need mask coordinate system
-       */
-      mx = x1 + offset_x;
-      my = y1 + offset_y;
-
       pixel_region_init (&maskPR,
                          gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                         mx, my,
+                         x1 + offset_x,
+                         y1 + offset_y,
                          (x2 - x1), (y2 - y1),
                          FALSE);
 
@@ -230,9 +228,9 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
   /*  get the layer offsets  */
   gimp_item_offsets (item, &offset_x, &offset_y);
 
-  /*  make sure the image application coordinates are within image bounds  */
-  x1 = CLAMP (x, 0, gimp_item_width (item));
-  y1 = CLAMP (y, 0, gimp_item_height (item));
+  /*  make sure the image application coordinates are within drawable bounds  */
+  x1 = CLAMP (x, 0,             gimp_item_width (item));
+  y1 = CLAMP (y, 0,             gimp_item_height (item));
   x2 = CLAMP (x + src2PR->w, 0, gimp_item_width (item));
   y2 = CLAMP (y + src2PR->h, 0, gimp_item_height (item));
 
@@ -242,10 +240,14 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      x1 = CLAMP (x1, -offset_x, gimp_item_width  (GIMP_ITEM (mask))-offset_x);
-      y1 = CLAMP (y1, -offset_y, gimp_item_height (GIMP_ITEM (mask))-offset_y);
-      x2 = CLAMP (x2, -offset_x, gimp_item_width  (GIMP_ITEM (mask))-offset_x);
-      y2 = CLAMP (y2, -offset_y, gimp_item_height (GIMP_ITEM (mask))-offset_y);
+      x1 = CLAMP (x1,
+                  - offset_x, gimp_item_width  (GIMP_ITEM (mask)) - offset_x);
+      y1 = CLAMP (y1,
+                  - offset_y, gimp_item_height (GIMP_ITEM (mask)) - offset_y);
+      x2 = CLAMP (x2,
+                  - offset_x, gimp_item_width  (GIMP_ITEM (mask)) - offset_x);
+      y2 = CLAMP (y2,
+                  - offset_y, gimp_item_height (GIMP_ITEM (mask)) - offset_y);
     }
 
   /*  If the calling procedure specified an undo step...  */
@@ -267,18 +269,11 @@ gimp_drawable_real_replace_region (GimpDrawable *drawable,
     {
       PixelRegion  mask2PR, tempPR;
       guchar      *temp_data;
-      gint         mx, my;
-
-      /*  configure the mask pixel region
-       *  don't use x1 and y1 because they are in layer
-       *  coordinate system.  Need mask coordinate system
-       */
-      mx = x1 + offset_x;
-      my = y1 + offset_y;
 
       pixel_region_init (&mask2PR,
                          gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
-                         mx, my,
+                         x1 + offset_x,
+                         y1 + offset_y,
                          (x2 - x1), (y2 - y1),
                          FALSE);
 
