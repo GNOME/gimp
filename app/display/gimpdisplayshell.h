@@ -26,8 +26,8 @@
 
 
 /* Apply to a float the same rounding mode used in the renderer */
-#define  PROJ_ROUND(coord)   ((gint) (coord))
-#define  PROJ_ROUND64(coord) ((gint64) (coord))
+#define  PROJ_ROUND(coord)   ((gint) ((coord) + 0.5))
+#define  PROJ_ROUND64(coord) ((gint64) ((coord) + 0.5))
 
 /* finding the effective screen resolution (double) */
 #define  SCREEN_XRES(s)   ((s)->dot_for_dot ? \

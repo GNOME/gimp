@@ -1,3 +1,8 @@
+2007-10-24  Simon Budig  <simon@gimp.org>
+
+        * app/display/gimpdisplayshell.h: change the PROJ_ROUND macro
+	to do proper rounding. Seems to work well.
+
 2007-10-24  Sven Neumann  <sven@gimp.org>
             Michael Natterer  <mitch@gimp.org>
 
