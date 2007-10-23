@@ -24,6 +24,7 @@
 #include "config.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -282,8 +283,8 @@ static FPValues fpvals =
   { FALSE, FALSE, FALSE } /* touched */
 };
 
-static GimpDrawable *drawable;
-static GimpDrawable *mask;
+static GimpDrawable *drawable = NULL;
+static GimpDrawable *mask     = NULL;
 
 static void      query  (void);
 static void      run    (const gchar      *name,
@@ -353,7 +354,11 @@ run (const gchar      *name,
   fp_init_filter_packs();
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
-  mask = gimp_drawable_get (gimp_image_get_selection (param[1].data.d_image));
+
+  if (gimp_selection_is_empty (param[1].data.d_image))
+    mask = NULL;
+  else
+    mask = gimp_drawable_get (gimp_image_get_selection (param[1].data.d_image));
 
   switch (run_mode)
     {
@@ -403,13 +408,17 @@ run (const gchar      *name,
 
           gimp_displays_flush ();
         }
-      else status = GIMP_PDB_EXECUTION_ERROR;
+      else
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
-  values[0].data.d_status = status;
+  gimp_drawable_detach (drawable);
+  if (mask)
+    gimp_drawable_detach (mask);
 
-  if (status == GIMP_PDB_SUCCESS)
-    gimp_drawable_detach (drawable);
+  values[0].data.d_status = status;
 }
 
 static void
@@ -1187,7 +1196,7 @@ fp_dialog (void)
                              fpvals.preview_size,
                              fpvals.selection_only);
 
-  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   dlg = gimp_dialog_new (_("Filter Pack Simulation"), PLUG_IN_BINARY,
                          NULL, 0,
@@ -1654,18 +1663,28 @@ fp_reduce_image (GimpDrawable *drawable,
   tempHSV  = g_new (gdouble, RW * RH * bytes);
   tempmask = g_new (guchar, RW * RH);
 
-  gimp_pixel_rgn_init (&srcPR, drawable, x, y, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&srcMask, mask, x, y, width, height, FALSE, FALSE);
-
   src_row      = g_new (guchar, width * bytes);
-  src_mask_row = g_new (guchar, width * bytes);
+  src_mask_row = g_new (guchar, width);
+
+  gimp_pixel_rgn_init (&srcPR, drawable, x, y, width, height, FALSE, FALSE);
+
+  if (mask)
+    {
+      gimp_pixel_rgn_init (&srcMask, mask, x, y, width, height, FALSE, FALSE);
+    }
+  else
+    {
+      memset (src_mask_row, 255, width);
+    }
 
   for (i = 0; i < RH; i++)
     {
       whichrow = (gdouble) i * (gdouble) height / (gdouble) RH;
 
       gimp_pixel_rgn_get_row (&srcPR, src_row, x, y + whichrow, width);
-      gimp_pixel_rgn_get_row (&srcMask, src_mask_row, x, y + whichrow, width);
+
+      if (mask)
+        gimp_pixel_rgn_get_row (&srcMask, src_mask_row, x, y + whichrow, width);
 
       for (j = 0; j < RW; j++)
         {
@@ -1689,8 +1708,10 @@ fp_reduce_image (GimpDrawable *drawable,
           tempHSV[i * RW * bytes + j * bytes + 2] = hsv.v;
 
           if (bytes == 4)
-            tempRGB[i * RW * bytes + j * bytes + 3] =
-              src_row[whichcol * bytes + 3];
+            {
+              tempRGB[i * RW * bytes + j * bytes + 3] =
+                src_row[whichcol * bytes + 3];
+            }
         }
     }
 
@@ -1778,9 +1799,9 @@ fp_render_preview (GtkWidget *preview,
                           }
                     }
 
-                  P[0]  += partial * fpvals.red_adjust[JudgeBy][Inten];
-                  P[1]  += partial * fpvals.green_adjust[JudgeBy][Inten];
-                  P[2]  += partial * fpvals.blue_adjust[JudgeBy][Inten];
+                  P[0] += partial * fpvals.red_adjust[JudgeBy][Inten];
+                  P[1] += partial * fpvals.green_adjust[JudgeBy][Inten];
+                  P[2] += partial * fpvals.blue_adjust[JudgeBy][Inten];
                 }
             }
 
@@ -1791,9 +1812,9 @@ fp_render_preview (GtkWidget *preview,
           switch (change_what)
             {
             case HUE:
-              P[0]  += colorSign[RED][change_which]   * nudge;
-              P[1]  += colorSign[GREEN][change_which] * nudge;
-              P[2]  += colorSign[BLUE][change_which]  * nudge;
+              P[0] += colorSign[RED][change_which]   * nudge;
+              P[1] += colorSign[GREEN][change_which] * nudge;
+              P[2] += colorSign[BLUE][change_which]  * nudge;
               break;
 
             case SATURATION:
@@ -1817,9 +1838,9 @@ fp_render_preview (GtkWidget *preview,
               break;
 
             case VALUE:
-              P[0]  += change_which * nudge;
-              P[1]  += change_which * nudge;
-              P[2]  += change_which * nudge;
+              P[0] += change_which * nudge;
+              P[1] += change_which * nudge;
+              P[2] += change_which * nudge;
               break;
 
             default:
