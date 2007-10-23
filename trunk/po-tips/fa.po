@@ -1,0 +1,389 @@
+# Persian Translation of gimp-tips.
+# Copyright (C) 2007 Sharif FarsiWeb, Inc.
+# This file is distributed under the same license as the GIMP package.
+# Meelad Zakaria <meelad@farsiweb.info>, 2007.
+# Farzad Ghanei <farzad@farsiweb.info>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-tips VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-05-05 03:35+0100\n"
+"PO-Revision-Date: 2007-04-25 13:32+0330\n"
+"Last-Translator: Meelad Zakaria <meelad@farsiweb.info>\n"
+"Language-Team: Persian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../data/tips/gimp-tips.xml.in.h:1
+#, fuzzy
+msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
+msgstr "<big>به برنامهٔ گیمپ خوش آمدید!</big>"
+
+#: ../data/tips/gimp-tips.xml.in.h:2
+#, fuzzy
+msgid ""
+"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
+"color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
+"with the eyedropper tool sets the background color instead of the foreground "
+"color."
+msgstr ""
+"با ابزار سطل رنگ <tt>مهار</tt>-کلیک کنید تا به جای رنگ پیش‌زمینه با رنگ "
+"پس‌زمینه رنگ‌آمیزی کنید."
+
+#: ../data/tips/gimp-tips.xml.in.h:3
+#, fuzzy
+msgid ""
+"<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
+"toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
+"mask's preview in the Layers dialog toggles viewing the mask directly."
+msgstr ""
+"<tt>مهار</tt>-کلیک کردن روی پیش‌نمایش نقاب در محاورهٔ لایه‌ها، تأثیر نقاب شبکه "
+"را تغییر می‌دهد."
+
+#: ../data/tips/gimp-tips.xml.in.h:4
+msgid ""
+"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
+"degree angles."
+msgstr ""
+"با نگاه داشتن <tt>مهار</tt> هنگام استفاده از ابزار چرخش، زاوایا به ضرائب ۱۵ "
+"درجه‌ای محدود می‌شوند."
+
+#: ../data/tips/gimp-tips.xml.in.h:5
+msgid ""
+"<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
+"but that one. <tt>Shift</tt>-click again to show all layers."
+msgstr ""
+"روی شمایل چشم در محاورهٔ لایه‌ها <tt>تبدیل</tt>-کلیک کنید تا همهٔ لایه‌ها غیر از "
+"همان لایه مخفی شوند. برای نمایش دوبارهٔ همهٔ لایه‌ها دوباره <tt>Shift</tt>-کلیک "
+"کنید."
+
+#: ../data/tips/gimp-tips.xml.in.h:6
+msgid ""
+"A floating selection must be anchored to a new layer or to the last active "
+"layer before doing other operations on the image. Click on the &quot;New "
+"Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
+"use the menus to do the same."
+msgstr ""
+"انتخاب‌های شناور را باید به یک لایهٔ جدید یا آخرین لایهٔ فعال لنگر کرد تا بتوان "
+"عملیات دیگری روی تصویر انجام داد. روی دکمه‌ٔ «لایهٔ جدید» یا «لنگر کردن لایه» "
+"در محاورهٔ لایه‌ها کلیک کنید، یا با استفاده از منوها این کار را انجام دهید."
+
+#: ../data/tips/gimp-tips.xml.in.h:7
+#, fuzzy
+msgid ""
+"After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
+"dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
+"selecting a menu item, and pressing the desired key combination. If &quot;"
+"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
+"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
+"shortcuts."
+msgstr ""
+"پس از آن که «میان‌برهای پویای صفحه‌کلید» را در محاورهٔ ترجیحات به‌کار انداختید، "
+"می‌توانید مقادیر جدیدی به کلیدهای میان‌بر تخصیص دهید. این کار را با بالا آوردن "
+"منو، انتخاب یک مورد منو و فشردن دنبالهٔ کلیدهای مورد نظر انجام دهید. اگر "
+"«ذخیرهٔ میانبرهای صفحه‌کلید» روشن باشد، این مقادیر هنگامی که از گیمپ خارج شوید "
+"ذخیره خواهند شد."
+
+#: ../data/tips/gimp-tips.xml.in.h:8
+msgid ""
+"Click and drag on a ruler to place a guide on an image. All dragged "
+"selections will snap to the guides. You can remove guides by dragging them "
+"off the image with the Move tool."
+msgstr ""
+"روی یک خط‌کش کلیک کنید، نشانگر را بکشید و روی تصویر رها کنید تا یک خط راهنما "
+"روی تصویر قرار گیرد. همهٔ انتخاب‌هایی که کشیده می‌شوند، به خطوط راهنما می‌چسبند. "
+"برای حذف کردن خطوط راهنما می‌توانید آنها را با ابزار جابه‌جایی از تصویر بیرون "
+"بکشید."
+
+#: ../data/tips/gimp-tips.xml.in.h:9
+#, fuzzy
+msgid ""
+"GIMP allows you to undo most changes to the image, so feel free to "
+"experiment."
+msgstr ""
+"گیمپ اجازه می‌دهد بیشتر تغییرات روی تصویر را برگردانید، بنابراین با خیال راحت "
+"همه چیز را آزمایش کنید."
+
+#: ../data/tips/gimp-tips.xml.in.h:10
+#, fuzzy
+msgid ""
+"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"bz2</tt>, if you have bzip2 installed) to the filename and your image will "
+"be saved compressed. Of course loading compressed images works too."
+msgstr ""
+"گیمپ پرونده‌های فشردهٔ gzip را مستقیماً پشتیبانی می‌کند. کافی است پسوند <tt>.gz</"
+"tt> (یا اگر bzip2 نصب کرده‌اید،  <tt>.bz2</tt>) را به نام پرونده اضافه کنید، "
+"تا تصویرتان به صورت فشرده ذخیره شود. البته بار کردن تصاویر فشرده هم ممکن است."
+
+#: ../data/tips/gimp-tips.xml.in.h:11
+#, fuzzy
+msgid ""
+"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"slides or filters, such that looking through them you see a composite of "
+"their contents."
+msgstr ""
+"گیمپ برای سازمان دادن به تصاویر شما از لایه‌ها استفاده می‌کند. این لایه‌ها شبیه "
+"یک دسته اسلاید یا صافی هستند، طوری که وقتی از میان همهٔ آنها نگاه کنید، "
+"ترکیبی از محتویات آنها را می‌بینید."
+
+#: ../data/tips/gimp-tips.xml.in.h:12
+msgid ""
+"If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
+"layer doesn't have an alpha-channel. You can add an alpha-channel using "
+"Layer→Transparency→Add Alpha Channel."
+msgstr ""
+"وقتی نام لایه‌ای در محاورهٔ‌ لایه‌ها <b>سیاه</b> نشان داده می‌شود، لایه کانال "
+"آلفا ندارد. می‌توانید با استفاده از لایه←شفافیت←اضافه کردن کانال آلفا آن را "
+"اصلاح کنید."
+
+#: ../data/tips/gimp-tips.xml.in.h:13
+#, fuzzy
+msgid ""
+"If some of your scanned photos do not look colorful enough, you can easily "
+"improve their tonal range with the &quot;Auto&quot; button in the Levels "
+"tool (Colors→Levels). If there are any color casts, you can correct them "
+"with the Curves tool (Colors→Curves)."
+msgstr ""
+"اگر بعضی از تصاویر پویش شده به نظرتان به قدر کافی رنگ ندارند، می‌توانید با "
+"دکمهٔ «خودکار» در ابزار سطوح رنگ (لایه←رنگ‌ها←سطوح)، محدوده‌ٔ رنگی آن را بهبود "
+"دهید. اگر رنگی ریختگی داشت، می‌توانید با استفاده از ابزار منحنی "
+"(لایه←رنگ‌ها←منحنی) آن را تصحیح کنید."
+
+#: ../data/tips/gimp-tips.xml.in.h:14
+#, fuzzy
+msgid ""
+"If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
+"their current settings. You can use the Paintbrush in gradient mode or even "
+"the Eraser or the Smudge tool."
+msgstr ""
+"اگر خواستید مسیری را قلم‌ضربه کاری کنید (ویرایش←قلم‌ضربه کاری مسیر )، می‌توانید "
+"از ابزارهای نقاشی با تنظیمات جاری‌شان استفاده کنید. می‌توانید از قلم‌مو در حالت "
+"طیف، یا حتی از پاک‌کن یا ابزار دست‌مالی استفاده کنید."
+
+#: ../data/tips/gimp-tips.xml.in.h:15
+#, fuzzy
+msgid ""
+"If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
+"window to toggle the visibility of the toolbox and other dialogs."
+msgstr ""
+"اگر صفحهٔ نمایش شما خیلی شلوغ شده، می‌توانید در پنجرهٔ یک تصویر <tt>جهش</tt> را "
+"بزنید تا جعبه‌ابزار و بقیهٔ محاوره‌ها را مرئی یا نامرئی کنید."
+
+#: ../data/tips/gimp-tips.xml.in.h:16
+#, fuzzy
+msgid ""
+"Most plug-ins work on the current layer of the current image. In some cases, "
+"you will have to merge all layers (Image→Flatten Image) if you want the plug-"
+"in to work on the whole image."
+msgstr ""
+"بیشتر متصل‌شونده‌ها بر روی لایهٔ فعلی تصویر فعلی کار می‌کنند. در برخی موارد باید "
+"تمام لایه‌ها را با هم ادغام کنید (تصویر←مسطح کردن تصویر) اگر که می‌خواهید "
+"متصل‌شونده‌ای روی تمام تصویر کار کند."
+
+#: ../data/tips/gimp-tips.xml.in.h:17
+#, fuzzy
+msgid ""
+"Not all effects can be applied to all kinds of images. This is indicated by "
+"a grayed-out menu-entry. You may need to change the image mode to RGB "
+"(Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha "
+"Channel) or flatten it (Image→Flatten Image)."
+msgstr ""
+"هر جلوه‌ای را نمی‌توان بر همهٔ انواع تصاویر اعمال کرد. این مسئله توسط یک مورد "
+"منوی خاکستری شده نشان داده می‌شود. ممکن است نیاز باشد که حالت یک تصویر را به "
+"RGB تغییر دهید(تصویر←حالت←RGB)، یک کانال آلفا اضافه کنید (لایه←شفافیت←اضافه "
+"کردن کانال آلفا)، یا آن را مسطح کنید (تصویر←مسطح کردن تصویر)."
+
+#: ../data/tips/gimp-tips.xml.in.h:18
+msgid ""
+"Pressing and holding the <tt>Shift</tt> key before making a selection allows "
+"you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
+"tt> before making a selection subtracts from the current one."
+msgstr ""
+"فشاردادن و پایین نگه‌داشتن دکمهٔ <tt>تبدیل</tt> پیش از یک انتخاب جدید، این "
+"امکان را به شما می‌دهد که انتخاب خود را به انتخاب کنونی اضافه کنید به جای "
+"آن‌که آن را جایگزین کنید. با استفاده از <tt>مهار</tt> پیش از یک انتخاب، آن را "
+"از انتخاب کنونی تفریق می‌کند."
+
+#: ../data/tips/gimp-tips.xml.in.h:19
+msgid ""
+"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
+"ellipse select. To place a circle precisely, drag horizontal and vertical "
+"guides tangent to the circle you want to select, place your cursor at the "
+"intersection of the guides, and the resulting selection will just touch the "
+"guides."
+msgstr ""
+"برای ایجاد یک انتخاب دایره‌ای شکل، هنگام انتخاب بیضوی دکمهٔ <tt>تبدیل</tt> را "
+"نگاه دارید. برای جاگذاری دقیق دایرهٔ دقیق، خطوط راهنمای افقی و عمودی را "
+"بردارید و جایی بگذارید که مماس بر دایره‌ای که می‌خواهید انتخاب کنید باشند؛ "
+"نشانگر خود را در محل تلاقی خطوط راهنما قرار دهید، به این ترتیب انتخاب نهایی "
+"دقیقاً با خطوط راهنما مماس خواهد بود."
+
+#: ../data/tips/gimp-tips.xml.in.h:20
+#, fuzzy
+msgid ""
+"When you save an image to work on it again later, try using XCF, GIMP's "
+"native file format (use the file extension <tt>.xcf</tt>). This preserves "
+"the layers and every aspect of your work-in-progress. Once a project is "
+"completed, you can save it as JPEG, PNG, GIF, ..."
+msgstr ""
+"هنگامی که می‌خواهید یک تصویر را ذخیره کنید که بعدها روی آن کار کنید، از قالب "
+"<tt>.xcf</tt> قالب اصلی گیمپ استفاده کنید (از پسوند پروندهٔ <tt>.‎xcf</tt> "
+"استفاده کنید) این کار لایه‌ها و تمام مراحل کاری شما را ذخیره می‌کند. هنگامی که "
+"پروژه‌ای تکمیل شد، می‌توانید آن را به صورت ‏JPEG، ‏PNG، ‏GIF و ... ذخیره کنید."
+
+#: ../data/tips/gimp-tips.xml.in.h:21
+#, fuzzy
+msgid ""
+"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
+"the window move, your window manager uses the <tt>Alt</tt> key already."
+msgstr ""
+"می‌توانید یک انتخاب را با استفاده از <tt>دگرساز</tt>-کشیدن و رها کردن، حرکت "
+"دهید و یا تنظیم کنید. اگر این کار پنجره را حرکت می‌دهد، سیستم مدیریت پنجره‌های "
+"سیستم‌عامل شما هم از دکمهٔ <tt>دگرساز</tt> استفاده می‌کند. همزمان کلید "
+"<tt>تبدیل</tt> را نیز فشار دهید."
+
+#: ../data/tips/gimp-tips.xml.in.h:22
+msgid ""
+"You can create and edit complex selections using the Path tool. The Paths "
+"dialog allows you to work on multiple paths and to convert them to "
+"selections."
+msgstr ""
+"می‌توانید با استفاده از ابزار مسیر، انتخاب‌های پیچیده‌ ایجاد کنید و آنها را "
+"تغییر دهید. محاورهٔ مسیرها به شما امکان کار روی چند مسیر و تبدیل آنها به "
+"انتخاب را می‌دهد."
+
+#: ../data/tips/gimp-tips.xml.in.h:23
+msgid ""
+"You can drag a layer from the Layers dialog and drop it onto the toolbox. "
+"This will create a new image containing only that layer."
+msgstr ""
+"می‌توانید یک لایه را از محاورهٔ لایه‌ها بکشید و آن را روی جعبه‌ابزار رها کنید. "
+"این کار یک تصویر جدید، شامل تنها همان لایه ایجاد می‌کند."
+
+#: ../data/tips/gimp-tips.xml.in.h:24
+#, fuzzy
+msgid ""
+"You can drag and drop many things in GIMP. For example, dragging a color "
+"from the toolbox or from a color palette and dropping it into an image will "
+"fill the current selection with that color."
+msgstr ""
+"در گیمپ خیلی چیزها را می‌شود برداشت و جابه‌جا کرد. به عنوان مثال، برداشتن یک "
+"رنگ از جعبه‌ابزار یا تخته‌رنگ و انداختن آن روی تصویر، انتخاب فعلی را با همان "
+"رنگ، رنگ‌آمیزی می‌کند."
+
+#: ../data/tips/gimp-tips.xml.in.h:25
+#, fuzzy
+msgid ""
+"You can draw simple squares or circles using Edit→Stroke Selection. It "
+"strokes the edge of your current selection. More complex shapes can be drawn "
+"using the Path tool or with Filters→Render→Gfig."
+msgstr ""
+"با استفاده از ویرایش←قلم‌ضربه‌کاری انتخاب می‌توانید مربع یا دایره‌های ساده "
+"بکشید. این کار لبهٔ انتخاب فعلی شما را با قلم‌ضربهٔ انتخابی رسم می‌کند. شکل‌های "
+"پیچیده‌تر را می‌توان با استفاده از ابزار مسیر یا توسط صافی‌ها←رسم←GFig کشید."
+
+#: ../data/tips/gimp-tips.xml.in.h:26
+msgid ""
+"You can get context-sensitive help for most of the GIMP's features by "
+"pressing the F1 key at any time. This also works inside the menus."
+msgstr ""
+"برای بیشتر امکانات گیمپ می‌توانید در هر زمان با فشردن کلید F1 از راهنمای حساس "
+"به زمینه استفاده کنید. این قابلیت داخل منوها هم کار می‌کند."
+
+#: ../data/tips/gimp-tips.xml.in.h:27
+msgid ""
+"You can perform many layer operations by right-clicking on the text label of "
+"a layer in the Layers dialog."
+msgstr ""
+"بسیاری از عملیات لایه‌ها را می‌توانید با راست‌کلیک کردن روی برچسب متنی یک لایه "
+"در محاورهٔ لایه‌ها انجام دهید."
+
+#: ../data/tips/gimp-tips.xml.in.h:28
+#, fuzzy
+msgid ""
+"You can save a selection to a channel (Select→Save to Channel) and then "
+"modify this channel with any paint tools. Using the buttons in the Channels "
+"dialog, you can toggle the visibility of this new channel or convert it to a "
+"selection."
+msgstr ""
+"می‌توانید انتخاب‌ها را در یک کانال ذخیره کنید (انتخاب←ذخیره در کانال) و بعد "
+"این کانال را با هر ابزار نقاشی تغییر دهید. با استفاده از دکمه‌های محاورهٔ "
+"کانال‌ها، می‌توانید مرئی یا نامرئی بودن این کانال جدید را تغییر دهید یا آن را "
+"به یک انتخاب تبدیل کنید."
+
+#: ../data/tips/gimp-tips.xml.in.h:29
+#, fuzzy
+msgid ""
+"You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
+"image (if your window manager doesn't trap those keys...)."
+msgstr ""
+"می‌توانید با استفاده از <tt>مهار</tt>-<tt>جهش</tt> بین تمام لایه‌های یک تصویر "
+"گردش کنید (اگر سیستم مدیریت پنجرهٔ سیستم‌عامل شما این کلیدها را دریافت نکند)."
+
+#: ../data/tips/gimp-tips.xml.in.h:30
+#, fuzzy
+msgid ""
+"You can use the middle mouse button to pan around the image (or optionally "
+"hold <tt>Spacebar</tt> while you move the mouse)."
+msgstr ""
+"اگر تصویر از پنجرهٔ نمایش بزرگ‌تر باشد، می‌توانید از دکمهٔ وسط موشی برای حرکت در "
+"سطح تصویر استفاده کنید."
+
+#: ../data/tips/gimp-tips.xml.in.h:31
+msgid ""
+"You can use the paint tools to change the selection. Click on the &quot;"
+"Quick Mask&quot; button at the bottom left of an image window. Change your "
+"selection by painting in the image and click on the button again to convert "
+"it back to a normal selection."
+msgstr ""
+"برای تغییر انتخاب می‌توانید از ابزارهای نقاشی استفاده کنید. روی دکمهٔ «نقاب "
+"فوری» در قسمت پایین سمت چپ پنجرهٔ یک تصویر کلیک کنید. با نقاشی کردن روی "
+"تصویر، انتخاب خود را تغییر دهید و دوباره روی این دکمه کلیک کنید تا آن را به "
+"یک انتخاب عادی برگردانید."
+
+#~ msgid ""
+#~ "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog "
+#~ "toggles viewing the mask directly."
+#~ msgstr ""
+#~ "<tt>دگرساز</tt>-کلیک کردن روی پیش‌نمایش نقاب لایه در محاورهٔ لایه‌ها، نمایش "
+#~ "مستقیم نقاب را فعال/غیر فعال می‌کند."
+
+#~ msgid ""
+#~ "The layer named &quot;Background&quot; is special because it lacks "
+#~ "transparency. This prevents you from moving the layer up in the stack. "
+#~ "You may add transparency to it by right-clicking in the Layers dialog and "
+#~ "selecting &quot;Add Alpha Channel&quot;."
+#~ msgstr ""
+#~ "لایهٔ با نام «پیش‌زمینه» یک لایهٔ ویژه است چون شفافیت ندارد. این ویژگی باعث "
+#~ "می‌شود که شما تنوانید این لایه را در پشتهٔ لایه‌ها بالاتر ببرید. می‌توانید با "
+#~ "راست کلیک کردن روی محاورهٔ لایه‌ها و انتخاب «اضافه کردن کانال آلفا»، شفافیت "
+#~ "را به این لایه اضافه کنید."
+
+#~ msgid ""
+#~ "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</"
+#~ "tt>-click will draw a straight line from your last drawing point to your "
+#~ "current cursor position. If you also press <tt>Ctrl</tt>, the line will "
+#~ "be constrained to 15 degree angles."
+#~ msgstr ""
+#~ "هنگام استفاده از یک ابزار نقاشی (قلم‌مو، قلم رنگ‌پاش، یا مداد) <tt>تبدیل</"
+#~ "tt>-کلیک کردن، یک خط مستقیم از آخرین نقطهٔ رسم شده تا محل فعلی نشان‌گر موشی "
+#~ "شما رسم می‌کند. اگر <tt>مهار</tt> را نیز فشار دهید، این خط به زوایای مضرب "
+#~ "۱۵ درجه محدود می‌شود."
+
+#~ msgid ""
+#~ "You can adjust the selection range for fuzzy select by clicking and "
+#~ "dragging left and right."
+#~ msgstr ""
+#~ "می‌توانید بازهٔ انتخابی برای ابزار انتخاب مبهم را با کلیک کردن و کشیدن و "
+#~ "رها کردن به سمت چپ یا راست، تنظیم کنید."
+
+#~ msgid ""
+#~ "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while "
+#~ "you are making a selection in order to constrain it to a square or a "
+#~ "circle, or to have it centered on its starting point."
+#~ msgstr ""
+#~ "هنگامی که در حین انتخاب کردن هستید، می‌توانید کلیدهای <tt>تبدیل</tt> و "
+#~ "<tt>مهار</tt> فشار دهید یا رها کنید تا انتخاب را به یک مربع یا دایره "
+#~ "محدود کنید، یا مرکز انتخاب را بر نقطهٔ شروع قرار دهید."

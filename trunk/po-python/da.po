@@ -1,0 +1,47 @@
+# Danish translation of GIMP python.
+# Copyright (C) 2000, 01, 02, 04 Free Software Foundation, Inc.
+# Birger Langkjer <birger.langkjer@image.dk>, 2000.
+# Keld Simonsen <keld@dkuug.dk>, 2000.
+# Ole Laursen <olau@hardworking.dk>, 2001, 02, 04.
+#
+# Se ../po/da.po for en konventionsliste til hele Gimp'en.
+#
+# Konventioner:
+#
+#   script -> program
+#   utils -> værktøjer
+#   web page themes -> hjemmesidetemaer
+#   DB Browser -> proceduredatabase (browser er overflødigt)
+#
+# Bemærk at en hel del af oversættelserne af programnavnene optræder i to
+# sammenhænge og derfor skal synkroniseres.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GIMP python\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2004-02-10 21:40+0100\n"
+"Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
+"Language-Team: Danish <dansk@klid.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr "Python-konsol"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#, fuzzy
+msgid "_Browse..."
+msgstr "Gennemse..."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#, fuzzy
+msgid "Gimp-Python Console"
+msgstr "Python-konsol"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""

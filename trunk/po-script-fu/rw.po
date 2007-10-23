@@ -1,0 +1,2816 @@
+# translation of gimp-script-fu to Kinyarwanda.
+# Copyright (C) 2005 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gimp-script-fu package.
+# Steve Murphy <murf@e-tools.com>, 2005
+# Steve performed initial rough translation from compendium built from translations provided by the following translators:
+# Philibert Ndandali  <ndandali@yahoo.fr>, 2005.
+# Viateur MUGENZI <muvia1@yahoo.fr>, 2005.
+# Noëlla Mupole <s24211045@tuks.co.za>, 2005.
+# Carole Karema <karemacarole@hotmail.com>, 2005.
+# JEAN BAPTISTE NGENDAHAYO <ngenda_denis@yahoo.co.uk>, 2005.
+# Augustin KIBERWA  <akiberwa@yahoo.co.uk>, 2005.
+# Donatien NSENGIYUMVA <ndonatienuk@yahoo.co.uk>, 2005..
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-script-fu HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-04-01 13:05-0700\n"
+"PO-Revision-Date: 2005-03-31 20:55-0700\n"
+"Last-Translator: Steve Murphy <murf@e-tools.com>\n"
+"Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"ULL NAME <EMAIL@ADDRESS>\n"
+
+#: plug-ins/script-fu/script-fu-console.c:119
+#: plug-ins/script-fu/script-fu-text-console.c:67
+#, fuzzy
+msgid "Script-Fu console mode allows only interactive invocation"
+msgstr "Ubwoko Biganira"
+
+#: plug-ins/script-fu/script-fu-console.c:146
+msgid "Script-Fu Console"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-console.c:173
+msgid "SIOD Output"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-console.c:239
+msgid "Current Command"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-console.c:257
+#, fuzzy
+msgid "_Browse..."
+msgstr "Gushakisha..."
+
+#: plug-ins/script-fu/script-fu-console.c:538
+#, fuzzy
+msgid "Script-Fu evaluate mode allows only noninteractive invocation"
+msgstr "Suzuma Ubwoko"
+
+#: plug-ins/script-fu/script-fu-interface.c:175
+#, fuzzy
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr "Inyandikoporogaramu ku i Igihe"
+
+#: plug-ins/script-fu/script-fu-interface.c:177
+#, fuzzy, c-format
+msgid "You are already running the \"%s\" script."
+msgstr "i IYANDIKA"
+
+#. strip the first part of the menupath if it contains _("/Script-Fu/")
+#: plug-ins/script-fu/script-fu-interface.c:200
+#: plug-ins/script-fu/script-fu-interface.c:202
+msgid "/Script-Fu/"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-interface.c:215
+#, c-format
+msgid "Script-Fu: %s"
+msgstr ""
+
+#. the script arguments frame
+#: plug-ins/script-fu/script-fu-interface.c:259
+msgid "Script Arguments"
+msgstr ""
+
+# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
+# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
+# #-#-#-#-#  dbaccess.pot (PACKAGE VERSION)  #-#-#-#-#
+#. we add a colon after the label;
+#. some languages want an extra space here
+#: plug-ins/script-fu/script-fu-interface.c:290
+#, fuzzy, c-format
+msgid "%s:"
+msgstr "%s:"
+
+#: plug-ins/script-fu/script-fu-interface.c:333
+msgid "Script-Fu Color Selection"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-interface.c:436
+#, fuzzy
+msgid "Script-Fu File Selection"
+msgstr "Idosiye"
+
+#: plug-ins/script-fu/script-fu-interface.c:440
+msgid "Script-Fu Folder Selection"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-interface.c:452
+msgid "Script-Fu Font Selection"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-interface.c:459
+msgid "Script-Fu Palette Selection"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-interface.c:467
+msgid "Script-fu Pattern Selection"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-interface.c:474
+msgid "Script-Fu Gradient Selection"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-interface.c:482
+msgid "Script-Fu Brush Selection"
+msgstr ""
+
+#. the script progress frame
+#: plug-ins/script-fu/script-fu-interface.c:549
+msgid "Script Progress"
+msgstr ""
+
+# #-#-#-#-#  sw.pot (PACKAGE VERSION)  #-#-#-#-#
+# sw/source\ui\app\app.src:STR_FMT_STD.text
+# #-#-#-#-#  sw.pot (PACKAGE VERSION)  #-#-#-#-#
+# sw/source\ui\fmtui\fmtui.src:STR_FMT_STD.text
+# #-#-#-#-#  sw.pot (PACKAGE VERSION)  #-#-#-#-#
+# sw/source\ui\misc\outline.src:TP_OUTLINE_NUM.ST_NO_COLL.text
+#: plug-ins/script-fu/script-fu-interface.c:557
+msgid "(none)"
+msgstr "(ntacyo)"
+
+# shell/source\win32\shlxthandler\shlxthdl.lng:%AUTHOR_COLON%.text
+#: plug-ins/script-fu/script-fu-interface.c:1083
+#: plug-ins/dbbrowser/gimpprocview.c:198
+msgid "Author:"
+msgstr "Umwanditsi:"
+
+#: plug-ins/script-fu/script-fu-interface.c:1090
+#: plug-ins/dbbrowser/gimpprocview.c:220
+#, fuzzy
+msgid "Copyright:"
+msgstr "Uburenganzira bw'umuhimbyi"
+
+#: plug-ins/script-fu/script-fu-interface.c:1097
+#: plug-ins/dbbrowser/gimpprocview.c:209
+msgid "Date:"
+msgstr "Itariki:"
+
+#: plug-ins/script-fu/script-fu-interface.c:1106
+msgid "Image Types:"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-scripts.c:660
+#, c-format
+msgid ""
+"Error while executing\n"
+"%s\n"
+"%s"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-server.c:648
+msgid "Script-Fu Server Options"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-server.c:676
+msgid "Server Port:"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-server.c:682
+msgid "Server Logfile:"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:116
+msgid "Script-Fu _Console"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:123 plug-ins/script-fu/script-fu.c:152
+#: plug-ins/script-fu/script-fu.c:330
+msgid "<Toolbox>/Xtns/Script-Fu"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:145
+#, fuzzy
+msgid "_Start Server..."
+msgstr "Gutangira"
+
+#: plug-ins/script-fu/script-fu.c:271
+msgid "_Script-Fu"
+msgstr ""
+
+# sfx2/source\toolbox\tbxcust.src:RID_USERDEFBMP.GB_FUNCTION.text
+#: plug-ins/script-fu/script-fu.c:273
+#, fuzzy
+msgid "_Buttons"
+msgstr "Utubuto"
+
+#: plug-ins/script-fu/script-fu.c:275
+msgid "_Logos"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:277
+msgid "Make Br_ush"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:279
+msgid "_Misc"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:281
+msgid "_Patterns"
+msgstr ""
+
+# sc/source\ui\src\scfuncs.src:RID_SC_FUNCTION_DESCRIPTIONS1.SC_OPCODE_IF.2.text
+#: plug-ins/script-fu/script-fu.c:283
+#, fuzzy
+msgid "_Test"
+msgstr "Igerageza"
+
+#: plug-ins/script-fu/script-fu.c:285 plug-ins/script-fu/script-fu.c:314
+msgid "_Utils"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:287
+msgid "_Web Page Themes"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:289
+msgid "_Alien Glow"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:291
+msgid "_Beveled Pattern"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:293
+msgid "_Classic.Gimp.Org"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:296
+msgid "S_cript-Fu"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:298
+msgid "_Alchemy"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:300
+#, fuzzy
+msgid "Alpha to _Logo"
+msgstr "Kuri"
+
+#: plug-ins/script-fu/script-fu.c:302
+msgid "A_nimators"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:304
+msgid "_Decor"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:306
+msgid "_Render"
+msgstr ""
+
+# filter/source\pdf\impdialog.src:RID_PDF_EXPORT_DLG.RB_SELECTION.text
+#: plug-ins/script-fu/script-fu.c:308
+#, fuzzy
+msgid "_Selection"
+msgstr "Ihitamo"
+
+#: plug-ins/script-fu/script-fu.c:310
+#, fuzzy
+msgid "S_hadow"
+msgstr "Igicucu"
+
+#: plug-ins/script-fu/script-fu.c:312
+msgid "Stencil _Ops"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:322
+msgid "_Refresh Scripts"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:128
+#: plug-ins/dbbrowser/gimpprocbrowser.c:142
+msgid "Procedure Browser"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:132
+#: plug-ins/dbbrowser/gimpprocbrowser.c:146
+#, fuzzy
+msgid "Search by _Name"
+msgstr "ku"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:133
+#: plug-ins/dbbrowser/gimpprocbrowser.c:147
+#, fuzzy
+msgid "Search by _Blurb"
+msgstr "ku"
+
+# #-#-#-#-#  so3.pot (PACKAGE VERSION)  #-#-#-#-#
+# so3/src\svuidlg.src:MD_INSERT_OLEOBJECT.BTN_FILEPATH.text
+# #-#-#-#-#  so3.pot (PACKAGE VERSION)  #-#-#-#-#
+# so3/src\svuidlg.src:MD_INSERT_OBJECT_APPLET.BTN_CLASS.text
+#: plug-ins/dbbrowser/gimpprocbrowser.c:224
+#, fuzzy
+msgid "_Search:"
+msgstr "Gushakisha..."
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:386
+#, fuzzy
+msgid "Searching by name - please wait"
+msgstr "ku Izina: Tegereza"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:410
+#, fuzzy
+msgid "Searching by blurb - please wait"
+msgstr "ku Tegereza"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:421
+#, fuzzy
+msgid "Searching - please wait"
+msgstr "Tegereza"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:428
+#, fuzzy
+msgid "1 Procedure"
+msgstr "1."
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:430
+#, c-format
+msgid "%d Procedures"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:476
+msgid "No matches"
+msgstr ""
+
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\dialog\grfflt.src:RID_SVX_GRFFILTER_DLG_MOSAIC.FL_PARAMETER.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\dialog\grfflt.src:RID_SVX_GRFFILTER_DLG_SOLARIZE.FL_PARAMETER.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\dialog\grfflt.src:RID_SVX_GRFFILTER_DLG_SEPIA.FL_PARAMETER.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\dialog\grfflt.src:RID_SVX_GRFFILTER_DLG_POSTER.FL_PARAMETER.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\dialog\grfflt.src:RID_SVX_GRFFILTER_DLG_EMBOSS.FL_PARAMETER.text
+#: plug-ins/dbbrowser/gimpprocview.c:133
+msgid "Parameters"
+msgstr "Ibigenga"
+
+#: plug-ins/dbbrowser/gimpprocview.c:146
+msgid "Return Values"
+msgstr ""
+
+# svx/source\form\fmstring.src:RID_STR_TAG.text
+#: plug-ins/dbbrowser/gimpprocview.c:159
+msgid "Additional Information"
+msgstr "Ibisobanuro Nyongera"
+
+#: plug-ins/dbbrowser/gimpprocview.c:319
+msgid "Internal GIMP procedure"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:320
+msgid "GIMP Plug-In"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:321
+msgid "GIMP Extension"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:322
+msgid "Temporary Procedure"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:1
+msgid "3D _Outline..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:2
+#, fuzzy
+msgid "Bumpmap (alpha layer) blur radius"
+msgstr "Alufa Akugara Akarambararo"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:3
+#: plug-ins/script-fu/scripts/glossy.scm.h:5
+#, fuzzy
+msgid "Default bumpmap settings"
+msgstr "Amagenamiterere"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:2
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:9
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:4
+#: plug-ins/script-fu/scripts/chalk.scm.h:3
+#: plug-ins/script-fu/scripts/chip-away.scm.h:6
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:3
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:5
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:3
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+#: plug-ins/script-fu/scripts/glossy.scm.h:6
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:3
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:4
+#: plug-ins/script-fu/scripts/news-text.scm.h:6
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:2
+#: plug-ins/script-fu/scripts/slide.scm.h:1
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
+#: plug-ins/script-fu/scripts/speed-text.scm.h:4
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
+#: plug-ins/script-fu/scripts/text-circle.scm.h:3
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:4
+#: plug-ins/script-fu/scripts/title-header.scm.h:1
+msgid "Font"
+msgstr "Intego-nyuguti"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:10
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:5
+#: plug-ins/script-fu/scripts/chalk.scm.h:4
+#: plug-ins/script-fu/scripts/chip-away.scm.h:7
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:4
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:6
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+#: plug-ins/script-fu/scripts/glossy.scm.h:7
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:5
+#: plug-ins/script-fu/scripts/news-text.scm.h:7
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:3
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/speed-text.scm.h:5
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
+#: plug-ins/script-fu/scripts/text-circle.scm.h:4
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:5
+#: plug-ins/script-fu/scripts/title-header.scm.h:2
+#, fuzzy
+msgid "Font size (pixels)"
+msgstr "Ingano Pigiseli"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:6
+#, fuzzy
+msgid "Outline blur radius"
+msgstr "Akarambararo"
+
+# svx/source\tbxctrls\tbcontrl.src:RID_SVXSTR_FILLPATTERN.text
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
+#: plug-ins/script-fu/scripts/chip-away.scm.h:11
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:9
+msgid "Pattern"
+msgstr "Umutako"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:8
+#: plug-ins/script-fu/scripts/glossy.scm.h:15
+#: plug-ins/script-fu/scripts/round-corners.scm.h:5
+#, fuzzy
+msgid "Shadow X offset"
+msgstr "Nta- boneza"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:9
+#: plug-ins/script-fu/scripts/glossy.scm.h:16
+#: plug-ins/script-fu/scripts/round-corners.scm.h:6
+#, fuzzy
+msgid "Shadow Y offset"
+msgstr "Nta- boneza"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#, fuzzy
+msgid "Shadow blur radius"
+msgstr "Akarambararo"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:11
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:15
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:7
+#: plug-ins/script-fu/scripts/chalk.scm.h:5
+#: plug-ins/script-fu/scripts/chip-away.scm.h:12
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:9
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:13
+#: plug-ins/script-fu/scripts/glossy.scm.h:17
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:6
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:8
+#: plug-ins/script-fu/scripts/news-text.scm.h:9
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:12
+#: plug-ins/script-fu/scripts/slide.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
+#: plug-ins/script-fu/scripts/speed-text.scm.h:7
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:7
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
+#: plug-ins/script-fu/scripts/text-circle.scm.h:7
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:12
+#: plug-ins/script-fu/scripts/title-header.scm.h:4
+msgid "Text"
+msgstr "Umwandiko"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
+msgid "3_D Truchet..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:2
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:1
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+#: plug-ins/script-fu/scripts/chalk.scm.h:1
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:1
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+#: plug-ins/script-fu/scripts/glossy.scm.h:1
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
+#: plug-ins/script-fu/scripts/image-structure.scm.h:2
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:1
+#: plug-ins/script-fu/scripts/news-text.scm.h:1
+#: plug-ins/script-fu/scripts/speed-text.scm.h:1
+#: plug-ins/script-fu/scripts/sphere.scm.h:1
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
+#: plug-ins/script-fu/scripts/swirltile.scm.h:2
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:1
+#: plug-ins/script-fu/scripts/truchet.scm.h:1
+msgid "Background color"
+msgstr "Ibara rya mbuganyuma"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
+#: plug-ins/script-fu/scripts/truchet.scm.h:2
+#, fuzzy
+msgid "Block size"
+msgstr "Ingano"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:4
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:5
+#, fuzzy
+msgid "End blend"
+msgstr "Impera"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
+#: plug-ins/script-fu/scripts/truchet.scm.h:4
+#, fuzzy
+msgid "Number of X tiles"
+msgstr "Bya"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:6
+#: plug-ins/script-fu/scripts/truchet.scm.h:5
+#, fuzzy
+msgid "Number of Y tiles"
+msgstr "Bya"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:14
+#, fuzzy
+msgid "Start blend"
+msgstr "Gutangira"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:8
+msgid "Supersample"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:9
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:3
+#: plug-ins/script-fu/scripts/truchet.scm.h:7
+msgid "Thickness"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:1
+msgid "Add B_evel..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:2
+#: plug-ins/script-fu/scripts/chip-away.scm.h:10
+#, fuzzy
+msgid "Keep bump layer"
+msgstr "Akugara"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:4
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
+#: plug-ins/script-fu/scripts/old-photo.scm.h:5
+#: plug-ins/script-fu/scripts/round-corners.scm.h:7
+#: plug-ins/script-fu/scripts/slide.scm.h:5
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
+#, fuzzy
+msgid "Work on copy"
+msgstr "ku Gukoporora"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:1
+msgid "Add _Border..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:2
+#, fuzzy
+msgid "Border X size"
+msgstr "Ingano"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:3
+#, fuzzy
+msgid "Border Y size"
+msgstr "Ingano"
+
+# svx/source\tbxctrls\tbcontrl.src:RID_SVXSTR_FRAME_COLOR.text
+#: plug-ins/script-fu/scripts/addborder.scm.h:4
+#, fuzzy
+msgid "Border color"
+msgstr "Ibara ry'urubibi"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:5
+#, fuzzy
+msgid "Delta value on color"
+msgstr "Agaciro ku Ibara"
+
+# sc/source\ui\src\optdlg.src:RID_SCPAGE_LAYOUT.LB_ALIGN.1.text
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+msgid "Down"
+msgstr "Hasi"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+#: plug-ins/script-fu/scripts/camo.scm.h:4
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
+#, fuzzy
+msgid "Flatten image"
+msgstr "Ishusho"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:6
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#, fuzzy
+msgid "Glow color"
+msgstr "Ibara"
+
+# sc/source\ui\src\optdlg.src:RID_SCPAGE_LAYOUT.LB_ALIGN.4.text
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+msgid "Left"
+msgstr "Ibumoso"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
+msgid "Orientation"
+msgstr "Icyerekezo"
+
+# sc/source\ui\src\optdlg.src:RID_SCPAGE_LAYOUT.LB_ALIGN.2.text
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
+msgid "Right"
+msgstr "Iburyo"
+
+# #-#-#-#-#  goodies.pot (PACKAGE VERSION)  #-#-#-#-#
+# goodies/source\filter.vcl\eos2met\dlgeos2.src:DLG_EXPORT_EMET.GRP_SIZE.text
+# #-#-#-#-#  goodies.pot (PACKAGE VERSION)  #-#-#-#-#
+# goodies/source\filter.vcl\epict\dlgepct.src:DLG_EXPORT_EPCT.GRP_SIZE.text
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
+#: plug-ins/script-fu/scripts/lava.scm.h:6
+msgid "Size"
+msgstr "Ingano"
+
+# sc/source\ui\src\optdlg.src:RID_SCPAGE_LAYOUT.LB_ALIGN.3.text
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+msgid "Up"
+msgstr "Hejuru"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
+#, fuzzy
+msgid "_Arrow..."
+msgstr "Akambi"
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
+#, fuzzy
+msgid "Bar height"
+msgstr "Ubuhagarike"
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+#, fuzzy
+msgid "Bar length"
+msgstr "Uburebure"
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
+msgid "_Hrule..."
+msgstr ""
+
+# svx/source\svdraw\svdstr.src:STR_ItemValMEASURE_RADIUS.text
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/text-circle.scm.h:5
+#: plug-ins/script-fu/scripts/tileblur.scm.h:6
+msgid "Radius"
+msgstr "Akarambararo"
+
+# svx/source\dialog\numpages.src:RID_SVXPAGE_NUM_OPTIONS.LB_FMT.8.text
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#, fuzzy
+msgid "_Bullet..."
+msgstr "Akamenyetso"
+
+# basctl/source\basicide\tbxctl.src:RID_TOOLBOX.SID_INSERT_PUSHBUTTON.text
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
+#, fuzzy
+msgid "B_utton..."
+msgstr "Akabuto"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
+#, fuzzy
+msgid "Glow radius"
+msgstr "Akarambararo"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:5
+#, fuzzy
+msgid "Padding"
+msgstr "Wuzuza:"
+
+# 6204
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:16
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:12
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:14
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
+#: plug-ins/script-fu/scripts/news-text.scm.h:10
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:13
+#: plug-ins/script-fu/scripts/speed-text.scm.h:8
+msgid "Text color"
+msgstr "ibara ry'amagambo"
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
+msgid "Alien _Glow..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
+#, fuzzy
+msgid "Glow size (pixels * 4)"
+msgstr "Ingano Pigiseli 4."
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
+msgid "Alien _Neon..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+msgid "Fade away"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
+#, fuzzy
+msgid "Number of bands"
+msgstr "Bya"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
+#, fuzzy
+msgid "Width of bands"
+msgstr "Bya"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
+#, fuzzy
+msgid "Width of gaps"
+msgstr "Bya"
+
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:6
+msgid "_Basic I..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:1
+msgid "B_asic II..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:1
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:1
+#, fuzzy
+msgid "Bevel width"
+msgstr "Ubugari"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#, fuzzy
+msgid "Lower-right color"
+msgstr "Iburyo: Ibara"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:10
+msgid "Pressed"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:7
+msgid "Simple _Beveled Button..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:10
+#, fuzzy
+msgid "Upper-left color"
+msgstr "Ibumoso: Ibara"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+msgid "Diameter"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
+#, fuzzy
+msgid "Transparent background"
+msgstr "Mbuganyuma"
+
+# sw/source\ui\docvw\access.src:STR_ACCESS_HEADING_NAME.text
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#, fuzzy
+msgid "H_eading..."
+msgstr "Umutwe"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:3
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:3
+#: plug-ins/script-fu/scripts/swirltile.scm.h:6
+msgid "Height"
+msgstr "Ubuhagarike"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:4
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#: plug-ins/script-fu/scripts/swirltile.scm.h:10
+msgid "Width"
+msgstr "Ubugari"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:1
+#, fuzzy
+msgid "Intermediate frames"
+msgstr "Amakadiri"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:2
+msgid "Looped"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:3
+#, fuzzy
+msgid "Max. blur radius"
+msgstr "Akarambararo"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:4
+msgid "_Blend..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:2
+msgid "Blen_ded..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:3
+#, fuzzy
+msgid "Blend mode"
+msgstr "Ubwoko"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:4
+#, fuzzy
+msgid "Custom Gradient"
+msgstr "Kugena"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:6
+msgid "FG-BG-HSV"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:7
+msgid "FG-BG-RGB"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:8
+msgid "FG-Transparent"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:11
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:5
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
+#: plug-ins/script-fu/scripts/land.scm.h:2
+#: plug-ins/script-fu/scripts/lava.scm.h:1
+#: plug-ins/script-fu/scripts/rendermap.scm.h:3
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+msgid "Gradient"
+msgstr "Ikizamuko"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:12
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:6
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#: plug-ins/script-fu/scripts/rendermap.scm.h:4
+#: plug-ins/script-fu/scripts/title-header.scm.h:3
+#, fuzzy
+msgid "Gradient reverse"
+msgstr "Ihindurakerekezo"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:13
+#, fuzzy
+msgid "Offset (pixels)"
+msgstr "Pigiseli"
+
+# svx/sdi\svxslots.src:SID_BACKGROUND_COLOR.text
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
+msgid "Background Color"
+msgstr "Ibara rya mbuganyuma"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+msgid "Bo_vination..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+msgid "Spots density X"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+msgid "Spots density Y"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
+msgid "Add glowing"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+msgid "After glow"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
+msgid "B_urn-In..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
+#, fuzzy
+msgid "Burn-In: Need two layers in total!"
+msgstr "in Igiteranyo"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
+#, fuzzy
+msgid "Corona width"
+msgstr "Ubugari"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+msgid "Fadeout"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#, fuzzy
+msgid "Fadeout width"
+msgstr "Ubugari"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#, fuzzy
+msgid "Prepare for GIF"
+msgstr "kugirango"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+#, fuzzy
+msgid "Speed (pixels/frame)"
+msgstr "Pigiseli Ikadiri"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:1
+#, fuzzy
+msgid "Color 1"
+msgstr "1."
+
+#: plug-ins/script-fu/scripts/camo.scm.h:2
+#, fuzzy
+msgid "Color 2"
+msgstr "2."
+
+#: plug-ins/script-fu/scripts/camo.scm.h:3
+#, fuzzy
+msgid "Color 3"
+msgstr "3."
+
+#: plug-ins/script-fu/scripts/camo.scm.h:5
+#: plug-ins/script-fu/scripts/rendermap.scm.h:5
+msgid "Granularity"
+msgstr ""
+
+# svx/source\dialog\grfpage.src:RID_SVXPAGE_GRFCROP.FL_SIZE.text
+#: plug-ins/script-fu/scripts/camo.scm.h:6
+#: plug-ins/script-fu/scripts/rendermap.scm.h:6
+msgid "Image size"
+msgstr "Ingano y'ishusho"
+
+# svx/sdi\svxslots.src:SID_GRFFILTER_SMOOTH.text
+#: plug-ins/script-fu/scripts/camo.scm.h:7
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:2
+msgid "Smooth"
+msgstr "Kunoza"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:8
+msgid "_Camouflage..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:1
+msgid "C_arve-It..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:2
+#, fuzzy
+msgid "Carve white areas"
+msgstr "Umweru Ubuso"
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:3
+#, fuzzy
+msgid "Image to carve"
+msgstr "Kuri"
+
+# wizards/source\webwizard\webwizar.src:WEBDIALOG_+_6.text
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:1
+msgid "Background Image"
+msgstr "Ishusho rya mbuganyuma"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:2
+#, fuzzy
+msgid "Carve raised text"
+msgstr "Umwandiko"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:3
+msgid "Carved..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:6
+#, fuzzy
+msgid "Padding around text"
+msgstr "Umwandiko"
+
+#: plug-ins/script-fu/scripts/chalk.scm.h:2
+#, fuzzy
+msgid "Chalk color"
+msgstr "Ibara"
+
+#: plug-ins/script-fu/scripts/chalk.scm.h:6
+msgid "_Chalk..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:1
+#, fuzzy
+msgid "Blur amount"
+msgstr "Igiteranyo"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:2
+msgid "Chip Awa_y..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:3
+#, fuzzy
+msgid "Chip amount"
+msgstr "Igiteranyo"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:4
+#, fuzzy
+msgid "Drop shadow"
+msgstr "Igicucu"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:5
+#, fuzzy
+msgid "Fill BG with pattern"
+msgstr "Na: Ishusho"
+
+# officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.Effect.Invert.text
+#: plug-ins/script-fu/scripts/chip-away.scm.h:8
+msgid "Invert"
+msgstr "Gucurika"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:9
+#, fuzzy
+msgid "Keep background"
+msgstr "Mbuganyuma"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:1
+msgid "C_hrome-It..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:2
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
+msgid "Chrome balance"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
+#, fuzzy
+msgid "Chrome factor"
+msgstr "Umubarwa"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
+msgid "Chrome lightness"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
+#, fuzzy
+msgid "Chrome saturation"
+msgstr "Ubwuzurane"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:6
+#, fuzzy
+msgid "Chrome white areas"
+msgstr "Umweru Ubuso"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+msgid "Environment map"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
+msgid "Highlight balance"
+msgstr ""
+
+# svx/source\engine3d\float3d.src:RID_SVXFLOAT_3D.LB_MAT_FAVORITES.4.text
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#, fuzzy
+msgid "C_hrome..."
+msgstr "korome"
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+#, fuzzy
+msgid "Offsets (pixels * 2)"
+msgstr "Pigiseli 2."
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:1
+msgid "Circuit seed"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:2
+#: plug-ins/script-fu/scripts/lava.scm.h:2
+#: plug-ins/script-fu/scripts/predator.scm.h:2
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:10
+#, fuzzy
+msgid "Keep selection"
+msgstr "Ihitamo"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:3
+#, fuzzy
+msgid "No background (only for separate layer)"
+msgstr "Mbuganyuma kugirango Akugara"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:4
+#, fuzzy
+msgid "Oilify mask size"
+msgstr "Ingano"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:5
+#: plug-ins/script-fu/scripts/lava.scm.h:5
+#: plug-ins/script-fu/scripts/predator.scm.h:5
+#, fuzzy
+msgid "Separate layer"
+msgstr "Akugara"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:6
+msgid "_Circuit..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:1
+#: plug-ins/script-fu/scripts/swirltile.scm.h:1
+msgid "Azimuth"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:2
+msgid "Blur X"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:3
+msgid "Blur Y"
+msgstr ""
+
+# 1617
+#: plug-ins/script-fu/scripts/clothify.scm.h:4
+#: plug-ins/script-fu/scripts/swirltile.scm.h:4
+msgid "Depth"
+msgstr "Ubujyakuzimu"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:5
+#: plug-ins/script-fu/scripts/swirltile.scm.h:5
+msgid "Elevation"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:6
+msgid "_Clothify..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:1
+#, fuzzy
+msgid ""
+"Darken only\n"
+"(Better, but only for images with alot of white)"
+msgstr "kugirango Ishusho Na: Bya Umweru"
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:2
+msgid "Stains"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:3
+msgid "_Coffee Stain..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:2
+msgid "Comic Boo_k..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#, fuzzy
+msgid "Outline color"
+msgstr "Ibara"
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:8
+#: plug-ins/script-fu/scripts/glossy.scm.h:10
+#, fuzzy
+msgid "Outline size"
+msgstr "Ingano"
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
+msgid "Cool _Metal..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
+#, fuzzy
+msgid "Effect size (pixels)"
+msgstr "Ingano Pigiseli"
+
+# wizards/source\formwizard\dbwizres.src:RID_DB_FORM_WIZARD_START_+_55.text
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
+msgid "Background image"
+msgstr "Ishusho mbuganyuma"
+
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
+msgid "Crystal..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:1
+#, fuzzy
+msgid "Granularity (1 is low)"
+msgstr "1. ni Byo hasi"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:3
+#, fuzzy
+msgid "Smooth horizontally"
+msgstr "Mu buryo Butambitse"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:4
+#, fuzzy
+msgid "Smooth vertically"
+msgstr "Mu buryo buhagaze"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:5
+msgid "Spread"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:6
+#, fuzzy
+msgid "Threshold (bigger 1<-->255 smaller)"
+msgstr "1. Gitoya"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:7
+msgid "_Distress Selection..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
+msgid "Allow resizing"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
+#: plug-ins/script-fu/scripts/news-text.scm.h:2
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
+#: plug-ins/script-fu/scripts/round-corners.scm.h:3
+#: plug-ins/script-fu/scripts/swirltile.scm.h:3
+#, fuzzy
+msgid "Blur radius"
+msgstr "Akarambararo"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Calc.xcs:....Layout.Line.GridLineColor.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Impress.xcs:....Misc.Preview..0.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Impress.xcs:....Print.Other.Quality..0.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Draw.xcs:....Misc.Preview..0.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Draw.xcs:....Print.Other.Quality..0.text
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:3
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
+msgid "Color"
+msgstr "Ibara"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:7
+msgid "Offset X"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+msgid "Offset Y"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:6
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
+msgid "Opacity"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
+msgid "_Drop-Shadow..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:1
+msgid "Columns"
+msgstr "Inkingi"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:2
+msgid "Erase"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:3
+#, fuzzy
+msgid "Erase/fill"
+msgstr "Kuzuza"
+
+# sc/source\core\src\compiler.src:RID_SC_FUNCTION_NAMES.SC_OPCODE_EVEN.text
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:4
+#, fuzzy
+msgid "Even"
+msgstr "ATARIIGIHARWE"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:5
+#, fuzzy
+msgid "Even/odd"
+msgstr "IGIHARWE"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:6
+#, fuzzy
+msgid "Fill with BG"
+msgstr "Na:"
+
+# sc/source\core\src\compiler.src:RID_SC_FUNCTION_NAMES.SC_OPCODE_ODD.text
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:7
+#, fuzzy
+msgid "Odd"
+msgstr "IGIHARWE"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....Label.Format.Row.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Writer.xcs:....BusinessCard.Format.Row.text
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:8
+msgid "Rows"
+msgstr "Imbariro"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:9
+msgid "Rows/cols"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:10
+#, fuzzy
+msgid "_Erase every other Row..."
+msgstr "buri Ikindi"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:1
+msgid "Apply generated layermask"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:2
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
+#: plug-ins/script-fu/scripts/old-photo.scm.h:1
+#, fuzzy
+msgid "Border size"
+msgstr "Ingano"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:3
+msgid "Clear unselected maskarea"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:5
+#, fuzzy, no-c-format
+msgid "Fade from %"
+msgstr "Bivuye"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:7
+#, fuzzy, no-c-format
+msgid "Fade to   %"
+msgstr "Kuri"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:8
+#, fuzzy
+msgid "Use growing selection"
+msgstr "Ihitamo"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:9
+msgid "_Fade Outline..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:1
+#: plug-ins/script-fu/scripts/land.scm.h:1
+#, fuzzy
+msgid "Detail level"
+msgstr "urwego"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:2
+#: plug-ins/script-fu/scripts/land.scm.h:3
+#, fuzzy
+msgid "Image height"
+msgstr "Ubuhagarike"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:3
+#: plug-ins/script-fu/scripts/land.scm.h:4
+#, fuzzy
+msgid "Image width"
+msgstr "Ubugari"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:4
+#: plug-ins/script-fu/scripts/land.scm.h:6
+msgid "Random seed"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:5
+#: plug-ins/script-fu/scripts/land.scm.h:7
+msgid "Scale X"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:6
+#: plug-ins/script-fu/scripts/land.scm.h:8
+msgid "Scale Y"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:7
+msgid "_Flatland..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:1
+#, fuzzy
+msgid "Active colors"
+msgstr "Amabara"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:2
+#, fuzzy
+msgid "Black on white"
+msgstr "ku Umweru"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:3
+#, fuzzy
+msgid "Font _size (pixels)"
+msgstr "Ingano Pigiseli"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:4
+#, fuzzy
+msgid "Use font _name as text"
+msgstr "Intego- nyuguti Izina: Nka Umwandiko"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:5
+#, fuzzy
+msgid "_Border (pixels)"
+msgstr "Pigiseli"
+
+# svx/source\options\optcolor.src:RID_SVXPAGE_COLORCONFIG.FL_COLORSCHEME.text
+#: plug-ins/script-fu/scripts/font-map.scm.h:6
+#, fuzzy
+msgid "_Color scheme"
+msgstr "Igishusho cy'ibara"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:7
+msgid "_Filter (regexp)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:8
+msgid "_Font Map..."
+msgstr ""
+
+# sc/source\ui\src\miscdlgs.src:RID_SCDLG_CHARTCOLROW.6.text
+#: plug-ins/script-fu/scripts/font-map.scm.h:9
+#, fuzzy
+msgid "_Labels"
+msgstr "Uturango"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:10
+#, fuzzy
+msgid "_Text"
+msgstr "Umwandiko"
+
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:6
+msgid "_Frosty..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
+#, fuzzy
+msgid "Add shadow"
+msgstr "Igicucu"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
+#, fuzzy
+msgid "Blur border"
+msgstr "Imbibi"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
+#, fuzzy
+msgid "Granularity (1 is Low)"
+msgstr "1. ni"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:8
+#, fuzzy, no-c-format
+msgid "Shadow weight (%)"
+msgstr "Uburemere"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
+msgid "_Fuzzy Border..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
+msgid "Autocrop"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
+#, fuzzy
+msgid "Dark color"
+msgstr "Ibara"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:5
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:8
+#, fuzzy
+msgid "Highlight color"
+msgstr "Garagaza ibara"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+#, fuzzy
+msgid "Index image"
+msgstr "Ishusho"
+
+# officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Vectorize.ColorCount.text
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:6
+msgid "Number of colors"
+msgstr "Umubare w'amabara"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
+#, fuzzy
+msgid "Remove background"
+msgstr "Mbuganyuma"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
+#, fuzzy
+msgid "Select-by-color threshold"
+msgstr "ku Ibara"
+
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\svdraw\svdstr.src:STR_ItemNam_SHADOWCOLOR.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\svdraw\svdstr.src:SIP_SA_SHADOWCOLOR.text
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:10
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:11
+msgid "Shadow color"
+msgstr "Ibara ry'igicucu"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:13
+msgid "_Big Header..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:14
+msgid "_Small Header..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:12
+msgid "T_ube Sub-Button Label..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:15
+msgid "Tub_e Sub-Sub-Button Label..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
+msgid "_General Tube Labels..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:17
+msgid "_Tube Button Label..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:2
+#, fuzzy
+msgid "Blend gradient (Text)"
+msgstr "Ikizamuko"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:3
+#, fuzzy
+msgid "Blend gradient (outline)"
+msgstr "Ikizamuko Imbata"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:4
+#, fuzzy
+msgid "Blend gradient (text)"
+msgstr "Ikizamuko Umwandiko"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:8
+msgid "Glo_ssy..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:9
+#, fuzzy
+msgid "Outline gradient reverse"
+msgstr "Ikizamuko Ihindurakerekezo"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:11
+#, fuzzy
+msgid "Pattern (outline)"
+msgstr "Imbata"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:12
+msgid "Pattern (overlay)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:13
+#, fuzzy
+msgid "Pattern (text)"
+msgstr "Umwandiko"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:14
+#: plug-ins/script-fu/scripts/sphere.scm.h:4
+msgid "Shadow"
+msgstr "Igicucu"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:18
+#, fuzzy
+msgid "Text gradient reverse"
+msgstr "Ikizamuko Ihindurakerekezo"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:19
+#, fuzzy
+msgid "Use pattern for outline instead of gradient"
+msgstr "Ishusho kugirango Imbata Bya Ikizamuko"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:20
+#, fuzzy
+msgid "Use pattern for text instead of gradient"
+msgstr "Ishusho kugirango Umwandiko Bya Ikizamuko"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:21
+#, fuzzy
+msgid "Use pattern overlay"
+msgstr "Ishusho"
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
+#, fuzzy
+msgid "Effect size (pixels * 3)"
+msgstr "Ingano Pigiseli 3."
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:5
+msgid "Glo_wing Hot..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
+#, fuzzy
+msgid "Bevel height (Sharpness)"
+msgstr "Ubuhagarike"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
+#, fuzzy
+msgid "Bevel height (sharpness)"
+msgstr "Ubuhagarike Ubukana"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:2
+#, fuzzy
+msgid "Border size (pixels)"
+msgstr "Ingano Pigiseli"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+msgid "Gradient Beve_l..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
+#, fuzzy
+msgid "Custom _Gradient..."
+msgstr "Kugena"
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:1
+msgid "X divisions"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:2
+msgid "Y divisions"
+msgstr ""
+
+# #-#-#-#-#  offmgr.pot (PACKAGE VERSION)  #-#-#-#-#
+# offmgr/source\offapp\dialog\treeopt.src:RID_OFADLG_OPTIONS_TREE_PAGES.SID_SW_EDITOPTIONS.5.text
+# #-#-#-#-#  offmgr.pot (PACKAGE VERSION)  #-#-#-#-#
+# offmgr/source\offapp\dialog\treeopt.src:RID_OFADLG_OPTIONS_TREE_PAGES.SID_SW_ONLINEOPTIONS.4.text
+# #-#-#-#-#  offmgr.pot (PACKAGE VERSION)  #-#-#-#-#
+# offmgr/source\offapp\dialog\treeopt.src:RID_OFADLG_OPTIONS_TREE_PAGES.SID_SC_EDITOPTIONS.8.text
+# #-#-#-#-#  offmgr.pot (PACKAGE VERSION)  #-#-#-#-#
+# offmgr/source\offapp\dialog\treeopt.src:RID_OFADLG_OPTIONS_TREE_PAGES.SID_SD_EDITOPTIONS.4.text
+# #-#-#-#-#  offmgr.pot (PACKAGE VERSION)  #-#-#-#-#
+# offmgr/source\offapp\dialog\treeopt.src:RID_OFADLG_OPTIONS_TREE_PAGES.SID_SD_GRAPHIC_OPTIONS.4.text
+#: plug-ins/script-fu/scripts/grid-system.scm.h:3
+#, fuzzy
+msgid "_Grid..."
+msgstr "Urusobetudirishya"
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
+#, fuzzy
+msgid "Creates four Guides around the bounding box of the current selection."
+msgstr "i Agasanduku Bya i KIGEZWEHO Ihitamo"
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
+#, fuzzy
+msgid "New Guides from _Selection"
+msgstr "Bivuye"
+
+# #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
+# sc/source\ui\src\miscdlgs.src:RID_SCDLG_FILLSERIES.FL_DIRECTION.text
+# #-#-#-#-#  sc.pot (PACKAGE VERSION)  #-#-#-#-#
+# sc/source\ui\src\sortdlg.src:RID_SCPAGE_SORT_OPTIONS.FL_DIRECTION.text
+#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
+#: plug-ins/script-fu/scripts/guides-new.scm.h:1
+msgid "Direction"
+msgstr "Icyerekezo"
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
+#: plug-ins/script-fu/scripts/guides-new.scm.h:2
+msgid "Horizontal"
+msgstr "Bitambitse"
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
+#, fuzzy
+msgid "New Guide (by _Percent)..."
+msgstr "ku"
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:5
+#, fuzzy, no-c-format
+msgid "Position (in %)"
+msgstr "in"
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
+#: plug-ins/script-fu/scripts/guides-new.scm.h:4
+msgid "Vertical"
+msgstr "Bihagaritse"
+
+#: plug-ins/script-fu/scripts/guides-new.scm.h:3
+msgid "New _Guide..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
+#, fuzzy
+msgid "_Remove all Guides"
+msgstr "Byose"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
+msgid "BG opacity"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
+msgid "Draw _HSV Graph..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:3
+#, fuzzy
+msgid "End X"
+msgstr "Impera"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:4
+#, fuzzy
+msgid "End Y"
+msgstr "Impera"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:5
+#, fuzzy
+msgid "From top-left to bottom-right"
+msgstr "Hejuru: Ibumoso: Kuri Hasi: Iburyo:"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:6
+#, fuzzy
+msgid "Graph scale"
+msgstr "Gupima"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:7
+#, fuzzy
+msgid "Start X"
+msgstr "Gutangira"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:8
+#, fuzzy
+msgid "Start Y"
+msgstr "Gutangira"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
+#, fuzzy
+msgid "Use selection bounds instead of belows"
+msgstr "Ihitamo Bya"
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
+#, fuzzy
+msgid "Frame color"
+msgstr "Ibara"
+
+# sfx2/source\view\view.src:STR_FRAMESIZE.text
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
+#, fuzzy
+msgid "Frame size"
+msgstr "Ingano y'Ikadiri"
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
+msgid "Imigre-_26..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:1
+#, fuzzy
+msgid "Apply layer mask (or discard)"
+msgstr "Akugara Cyangwa Kwanga"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:3
+#, fuzzy
+msgid "Create new image"
+msgstr "Gishya Ishusho"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:4
+#, fuzzy
+msgid "Insert layer names"
+msgstr "Akugara Amazina"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:5
+#, fuzzy
+msgid "Make new background"
+msgstr "Gishya Mbuganyuma"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:6
+#, fuzzy
+msgid "Outer border"
+msgstr "Imbibi"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:7
+#, fuzzy
+msgid "Pad color"
+msgstr "Ibara"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:8
+msgid "Pad opacity"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:9
+#, fuzzy
+msgid "Padding for transparent regions"
+msgstr "kugirango Bibonerana"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:10
+#, fuzzy
+msgid "Shear length"
+msgstr "Uburebure"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:11
+msgid "Show Image _Structure..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:12
+#, fuzzy
+msgid "Space between layers"
+msgstr "hagati"
+
+#: plug-ins/script-fu/scripts/land.scm.h:5
+#, fuzzy
+msgid "Land height"
+msgstr "Ubuhagarike"
+
+#: plug-ins/script-fu/scripts/land.scm.h:9
+#, fuzzy
+msgid "Sea depth"
+msgstr "Ubujyakuzimu"
+
+#: plug-ins/script-fu/scripts/land.scm.h:10
+msgid "_Land..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/lava.scm.h:3
+#: plug-ins/script-fu/scripts/swirltile.scm.h:7
+msgid "Roughness"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/lava.scm.h:4
+msgid "Seed"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/lava.scm.h:7
+#, fuzzy
+msgid "Use current gradient"
+msgstr "KIGEZWEHO Ikizamuko"
+
+#: plug-ins/script-fu/scripts/lava.scm.h:8
+msgid "_Lava..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:1
+msgid "Line _Nova..."
+msgstr ""
+
+# sch/source\ui\dlg\diagrtyp.src:DLG_DIAGRAM_TYPE.FT_NUM_OF_LINES.text
+#: plug-ins/script-fu/scripts/line-nova.scm.h:2
+#, fuzzy
+msgid "Number of lines"
+msgstr "Umubare w'imirongo"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:3
+#, fuzzy
+msgid "Offset radius"
+msgstr "Akarambararo"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:4
+msgid "Randomness"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:5
+#, fuzzy
+msgid "Sharpness (degrees)"
+msgstr "Dogere"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:1
+msgid "Elli_ptical, Feathered..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:2
+msgid "Feathering"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
+msgid "Name"
+msgstr "Izina"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:5
+msgid "Re_ctangular, Feathered..."
+msgstr ""
+
+# #-#-#-#-#  starmath.pot (PACKAGE VERSION)  #-#-#-#-#
+# starmath/sdi\smslots.src:SID_DISTANCE.text
+# #-#-#-#-#  starmath.pot (PACKAGE VERSION)  #-#-#-#-#
+# starmath/source\smres.src:RID_DISTANCEDIALOG.1.1.text
+# #-#-#-#-#  starmath.pot (PACKAGE VERSION)  #-#-#-#-#
+# starmath/source\smres.src:RID_DISTANCEDIALOG.text
+# #-#-#-#-#  starmath.pot (PACKAGE VERSION)  #-#-#-#-#
+# starmath/source\smres.src:RID_DISTANCEMENU.WORKARROUND_1.text
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:6
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+msgid "Spacing"
+msgstr "Gutandukanya"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:8
+msgid "_Elliptical..."
+msgstr ""
+
+# svx/source\dialog\tabarea.src:RID_SVXPAGE_GRADIENT.LB_GRADIENT_TYPES.6.text
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:9
+#, fuzzy
+msgid "_Rectangular..."
+msgstr "Cy'urukiramende"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:2
+#, fuzzy
+msgid "Create shadow"
+msgstr "Igicucu"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:3
+#, fuzzy
+msgid "Effect size (pixels * 5)"
+msgstr "Ingano Pigiseli 5"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:7
+msgid "N_eon..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:3
+#, fuzzy
+msgid "Cell size (pixels)"
+msgstr "Ingano Pigiseli"
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:5
+#: plug-ins/script-fu/scripts/speed-text.scm.h:3
+#, no-c-format
+msgid "Density (%)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:8
+msgid "Newsprint Te_xt..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/old-photo.scm.h:2
+msgid "Defocus"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/old-photo.scm.h:3
+msgid "Mottle"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/old-photo.scm.h:4
+msgid "Sepia"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/old-photo.scm.h:6
+msgid "_Old Photo..."
+msgstr ""
+
+# officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.Color.RotationAngle.text
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
+msgid "Angle"
+msgstr "Imfuruka"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+msgid "Interpolation"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+#, fuzzy
+msgid "Relative distance of horizon"
+msgstr "Intera Bya"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+#, fuzzy
+msgid "Relative length of shadow"
+msgstr "Uburebure Bya Igicucu"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+#, fuzzy
+msgid "_Perspective..."
+msgstr "Imirebere"
+
+#: plug-ins/script-fu/scripts/predator.scm.h:1
+#, fuzzy
+msgid "Edge amount"
+msgstr "Igiteranyo"
+
+#: plug-ins/script-fu/scripts/predator.scm.h:3
+#, fuzzy
+msgid "Pixel amount"
+msgstr "Igiteranyo"
+
+#: plug-ins/script-fu/scripts/predator.scm.h:4
+msgid "Pixelize"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/predator.scm.h:6
+msgid "_Predator..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:4
+#, fuzzy
+msgid "Lower color"
+msgstr "Ibara"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:5
+#, fuzzy
+msgid "Lower color (active)"
+msgstr "Ibara Gikora"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:6
+msgid "Not pressed"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:7
+#, fuzzy
+msgid "Not pressed (active)"
+msgstr "Gikora"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:8
+msgid "Padding X"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:9
+msgid "Padding Y"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:11
+msgid "Round ratio"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:14
+#, fuzzy
+msgid "Text color (active)"
+msgstr "Ibara Gikora"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:15
+#, fuzzy
+msgid "Upper color"
+msgstr "Ibara"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:16
+#, fuzzy
+msgid "Upper color (active)"
+msgstr "Ibara Gikora"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:17
+msgid "_Round Button..."
+msgstr ""
+
+# 548
+#: plug-ins/script-fu/scripts/rendermap.scm.h:1
+msgid "Behavior"
+msgstr "imyitwarire"
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:2
+#, fuzzy
+msgid "Detail in Middle"
+msgstr "in"
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:7
+msgid "Render _Map..."
+msgstr ""
+
+# #-#-#-#-#  sch.pot (PACKAGE VERSION)  #-#-#-#-#
+# sch/source\ui\dlg\attrib3.src:TP_ALIGNMENT.RBT_SIDEBYSIDE.text
+# #-#-#-#-#  sch.pot (PACKAGE VERSION)  #-#-#-#-#
+# sch/source\ui\dlg\tplabel.src:TP_AXIS_LABEL.RB_AXIS_LABEL_SIDEBYSIDE.text
+#: plug-ins/script-fu/scripts/rendermap.scm.h:8
+#, fuzzy
+msgid "Tile"
+msgstr "Agakaro"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
+msgid "Black"
+msgstr "Umukara"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
+#, fuzzy
+msgid "Edge behavior"
+msgstr "imyitwarire"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:3
+#, fuzzy
+msgid "Number of frames"
+msgstr "Bya Amakadiri"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
+msgid "Rippling strength"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
+msgid "Smear"
+msgstr ""
+
+# #-#-#-#-#  sw.pot (PACKAGE VERSION)  #-#-#-#-#
+# sw/source\ui\fmtui\tmpdlg.src:DLG_TEMPLATE_3.1.TP_FRM_WRAP.text
+# #-#-#-#-#  sw.pot (PACKAGE VERSION)  #-#-#-#-#
+# sw/source\ui\frmdlg\frmpage.src:DLG_FRM_STD.1.TP_FRM_WRAP.text
+# #-#-#-#-#  sw.pot (PACKAGE VERSION)  #-#-#-#-#
+# sw/source\ui\frmdlg\frmpage.src:DLG_FRM_GRF.1.TP_FRM_WRAP.text
+# #-#-#-#-#  sw.pot (PACKAGE VERSION)  #-#-#-#-#
+# sw/source\ui\frmdlg\frmpage.src:DLG_FRM_OLE.1.TP_FRM_WRAP.text
+# #-#-#-#-#  sw.pot (PACKAGE VERSION)  #-#-#-#-#
+# sw/source\ui\frmdlg\frmui.src:STR_FRMUI_WRAP.text
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
+msgid "Wrap"
+msgstr "Gufunika"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
+msgid "_Rippling..."
+msgstr ""
+
+# sw/source\ui\docvw\docvw.src:MN_READONLY_POPUP.MN_READONLY_BACKGROUNDTOGALLERY.text
+#: plug-ins/script-fu/scripts/round-corners.scm.h:1
+#, fuzzy
+msgid "Add background"
+msgstr "Kongeramo imbuganyuma"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:2
+#, fuzzy
+msgid "Add drop-shadow"
+msgstr "Igicucu"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:4
+#, fuzzy
+msgid "Edge radius"
+msgstr "Akarambararo"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:8
+msgid "_Round Corners..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
+#, fuzzy
+msgid "Brush name"
+msgstr "Izina:"
+
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+msgid "File name"
+msgstr "Izina ry'idosiye"
+
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
+msgid "To _Brush..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-image.scm.h:1
+msgid "To _Image"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+msgid "Filename"
+msgstr "Izina ry'idosiye"
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
+#, fuzzy
+msgid "Pattern name"
+msgstr "Izina:"
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
+msgid "To _Pattern..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/selection-round.scm.h:1
+msgid "Concave"
+msgstr ""
+
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\dialog\test.src:RID_SVXPAGE_SLANT.FT_RADIUS.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\dialog\transfrm.src:RID_SVXPAGE_SLANT.FT_RADIUS.text
+#: plug-ins/script-fu/scripts/selection-round.scm.h:3
+#, fuzzy, no-c-format
+msgid "Radius (%)"
+msgstr "Akarambararo"
+
+# svx/source\svdraw\svdstr.src:STR_ObjNameSingulRECTRND.text
+#: plug-ins/script-fu/scripts/selection-round.scm.h:4
+#, fuzzy
+msgid "Rounded R_ectangle..."
+msgstr "Urukiramende rwiburungushuye"
+
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\accessibility\accessibility.src:RID_SVXSTR_A11Y_TEXT_COLOR.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\form\fmstring.src:RID_STR_TEXTCOLOR.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\items\svxitems.src:RID_SVXITEMS_EXTRAS_CHARCOLOR.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\items\svxitems.src:RID_ATTR_CHAR_COLOR.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\options\optcolor.src:RID_SVXPAGE_COLORCONFIG.CT_COLORCONFIG.WN_SCROLL.FT_FONTCOLOR.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\svdraw\svdstr.src:SIP_EE_CHAR_COLOR.text
+#: plug-ins/script-fu/scripts/slide.scm.h:2
+msgid "Font color"
+msgstr "Ibara ry'Umukono"
+
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.Color.Grayscale.text
+# #-#-#-#-#  officecfg.pot (PACKAGE VERSION)  #-#-#-#-#
+# officecfg/registry\schema\org\openoffice\Office\Common.xcs:....Image.Color.PosterColor.text
+#: plug-ins/script-fu/scripts/slide.scm.h:3
+msgid "Number"
+msgstr "Umubare"
+
+#: plug-ins/script-fu/scripts/slide.scm.h:6
+#, fuzzy
+msgid "_Slide..."
+msgstr "Igice"
+
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
+msgid "SOTA Chrome..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/speed-text.scm.h:6
+msgid "Speed Text..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:2
+#, fuzzy
+msgid "Lighting (degrees)"
+msgstr "Dogere"
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:3
+#, fuzzy
+msgid "Radius (pixels)"
+msgstr "Pigiseli"
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:5
+#, fuzzy
+msgid "Sphere color"
+msgstr "Ibara"
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:6
+#, fuzzy
+msgid "_Sphere..."
+msgstr "Umubumbe"
+
+# svx/source\svdraw\svdstr.src:STR_ObjNamePluralFrame.text
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
+msgid "Frames"
+msgstr "Amakadiri"
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
+#, fuzzy
+msgid "Index to n colors (0 = remain RGB)"
+msgstr "Kuri N Amabara 0"
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+#, fuzzy
+msgid "Turn from left to right"
+msgstr "Bivuye Ibumoso: Kuri Iburyo:"
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
+msgid "_Spinning Globe..."
+msgstr ""
+
+# 111
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+msgid "Airbrush"
+msgstr "uburoso mvubura"
+
+# svx/source\items\svxitems.src:RID_ATTR_BRUSH.text
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
+msgid "Brush"
+msgstr "Uburoso"
+
+# starmath/source\smres.src:RID_TOOLBOXWINDOW.6.RID_CIRCLEX.text
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
+msgid "Circle"
+msgstr "Uruziga"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
+#, fuzzy
+msgid "Color method"
+msgstr "Uburyo"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
+#, fuzzy
+msgid ""
+"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
+"netword.com/*spyrogimp"
+msgstr "Na Ibisobanuro ku HTTP com"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+msgid "Epitrochoid"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
+msgid "Frame"
+msgstr "Ikadiri"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
+msgid "Gradient: Loop Sawtooth"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
+msgid "Gradient: Loop Triangle"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
+msgid "Hexagon"
+msgstr "Ikinyampande16"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
+msgid "Hole ratio"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
+msgid "Inner teeth"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
+msgid "Lissajous"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
+#, fuzzy
+msgid "Margin (pixels)"
+msgstr "Pigiseli"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
+msgid "Outer teeth"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
+msgid "Pencil"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
+msgid "Pentagon"
+msgstr "Ikinyampande5"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
+#, fuzzy
+msgid "Polygon: 10 sides"
+msgstr "10"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
+#, fuzzy
+msgid "Polygon: 7 sides"
+msgstr "7"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
+#, fuzzy
+msgid "Polygon: 8 sides"
+msgstr "8"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
+#, fuzzy
+msgid "Polygon: 9 sides"
+msgstr "9"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+msgid "Shape"
+msgstr "Imisusire"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+msgid "Solid Color"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+msgid "Spyrograph"
+msgstr ""
+
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/sdi\svxslots.src:SID_DRAW_SQUARE.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\dialog\sdstring.src:RID_SVXSTR_SQUARE.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\dialog\sdstring.src:RID_SVXSTR_LEND10.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\dialog\tabarea.src:RID_SVXPAGE_TRANSPARENCE.LB_TRGR_GRADIENT_TYPES.6.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\dialog\tabarea.src:RID_SVXPAGE_GRADIENT.LB_GRADIENT_TYPES.5.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\svdraw\svdstr.src:STR_ObjNameSingulQUAD.text
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+msgid "Square"
+msgstr "kare"
+
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\svdraw\svdstr.src:STR_ItemNam_STARTANGLE.text
+# #-#-#-#-#  svx.pot (PACKAGE VERSION)  #-#-#-#-#
+# svx/source\svdraw\svdstr.src:SIP_SA_CIRCSTARTANGLE.text
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+#: plug-ins/script-fu/scripts/text-circle.scm.h:6
+msgid "Start angle"
+msgstr "Gutangiza imfuruka"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+msgid "Tool"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+msgid "Triangle"
+msgstr ""
+
+# filter/source\xsltdialog\xmlfilterdialogstrings.src:STR_COLUMN_HEADER_TYPE.text
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:31
+msgid "Type"
+msgstr "Ubwoko"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:32
+msgid "_Spyrogimp..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
+#, fuzzy
+msgid "Burst color"
+msgstr "Ibara"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:3
+#, fuzzy
+msgid "Effect size (pixels * 30)"
+msgstr "Ingano Pigiseli"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:6
+msgid "Starb_urst..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
+#, fuzzy
+msgid "Effect size (pixels * 4)"
+msgstr "Ingano Pigiseli 4."
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+msgid "Sta_rscape..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/swirltile.scm.h:8
+msgid "Swirl-_Tile..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/swirltile.scm.h:9
+#, fuzzy
+msgid "Whirl amount"
+msgstr "Igiteranyo"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
+#, fuzzy
+msgid "Number of times to whirl"
+msgstr "Bya Times Kuri"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
+#, fuzzy
+msgid "Quarter size"
+msgstr "Ingano"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
+#, fuzzy
+msgid "Whirl angle"
+msgstr "Imfuruka"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
+msgid "_Swirly..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
+#, fuzzy
+msgid "Base color"
+msgstr "Base Ibara"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
+msgid "Edge only"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
+#, fuzzy
+msgid "Edge width"
+msgstr "Ubugari"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
+#, fuzzy
+msgid "Hit rate"
+msgstr "Igipimo"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
+msgid "_Particle Trace..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:1
+msgid "Antialias"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:2
+#, fuzzy
+msgid "Fill angle"
+msgstr "Imfuruka"
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:8
+msgid "Text C_ircle..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:3
+msgid "Ending blend"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:6
+msgid "Hexagons"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:7
+#, fuzzy
+msgid "Mosaic tile type"
+msgstr "Agakaro Ubwoko"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:8
+msgid "Octagons"
+msgstr ""
+
+# svx/source\svdraw\svdstr.src:STR_ObjNamePluralQUAD.text
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:10
+msgid "Squares"
+msgstr "kare"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:11
+msgid "Starting blend"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:13
+#, fuzzy
+msgid "Text pattern"
+msgstr "Ishusho"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:14
+msgid "_Textured..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:1
+#, fuzzy
+msgid "Blur horizontally"
+msgstr "Mu buryo Butambitse"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:2
+#, fuzzy
+msgid "Blur type"
+msgstr "Ubwoko"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:3
+#, fuzzy
+msgid "Blur vertically"
+msgstr "Mu buryo buhagaze"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:4
+msgid "IIR"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:5
+msgid "RLE"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:7
+msgid "_Tileable Blur..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/title-header.scm.h:5
+msgid "Web Title Header..."
+msgstr ""
+
+# svx/source\dialog\tabarea.src:RID_SVXPAGE_BITMAP.FT_COLOR.text
+#: plug-ins/script-fu/scripts/truchet.scm.h:3
+#, fuzzy
+msgid "Foreground color"
+msgstr "Ibara rya mbugambanza"
+
+#: plug-ins/script-fu/scripts/truchet.scm.h:6
+msgid "T_ruchet..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
+msgid "Mask opacity"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
+#, fuzzy
+msgid "Mask size"
+msgstr "Ingano"
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
+msgid "_Unsharp Mask..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:1
+msgid "Amplitude"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:2
+#, fuzzy
+msgid "Invert direction"
+msgstr "Icyerekezo"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:4
+msgid "Wavelength"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:5
+msgid "_Waves..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm.h:1
+#, fuzzy
+msgid "Ribbon spacing"
+msgstr "Isigamwanya"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:2
+#, fuzzy
+msgid "Ribbon width"
+msgstr "Ubugari"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:3
+msgid "Shadow darkness"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm.h:4
+#, fuzzy
+msgid "Shadow depth"
+msgstr "Ubujyakuzimu"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:5
+msgid "Thread density"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm.h:6
+#, fuzzy
+msgid "Thread intensity"
+msgstr "Imbaraga"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:7
+#, fuzzy
+msgid "Thread length"
+msgstr "Uburebure"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:8
+msgid "_Weave..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:1
+#, fuzzy
+msgid "Plug-in _Registry"
+msgstr "in"
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:2
+msgid "_Developer Web Site"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:3
+msgid "_Main Web Site"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:1
+#, fuzzy
+msgid "Drop shadow X offset"
+msgstr "Igicucu Nta- boneza"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:2
+#, fuzzy
+msgid "Drop shadow Y offset"
+msgstr "Igicucu Nta- boneza"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:3
+#, fuzzy
+msgid "Drop shadow blur radius"
+msgstr "Igicucu Akarambararo"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:4
+#, fuzzy
+msgid "Drop shadow color"
+msgstr "Igicucu Ibara"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:5
+#, fuzzy
+msgid "Drop shadow opacity"
+msgstr "Igicucu"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:6
+#, fuzzy
+msgid "Highlight X offset"
+msgstr "Nta- boneza"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:7
+#, fuzzy
+msgid "Highlight Y offset"
+msgstr "Nta- boneza"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:9
+msgid "Highlight opacity"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:11
+msgid "_Xach-Effect..."
+msgstr ""

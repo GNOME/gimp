@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<book id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <bookinfo>
+    <title>GIMP Thumbnail Library Reference Manual</title>
+    <releaseinfo>
+      for GIMP <xi:include href="version" parse="text"/>
+    </releaseinfo>
+  </bookinfo>
+
+  <part id="libgimpthumb">
+    <title>GIMP Thumbnail Library</title>
+    <xi:include href="xml/gimpthumbnail.xml" />
+    <xi:include href="xml/gimpthumb-utils.xml" />
+    <xi:include href="xml/gimpthumb-enums.xml" />
+    <xi:include href="xml/gimpthumb-error.xml" />
+  </part>
+
+  <index id="libgimpthumb-index">
+    <title>Index</title>
+  </index>
+  <index role="GIMP 2.2" id="libgimpthumb-index-new-in-2-2">
+    <title>Index of new symbols in GIMP 2.2</title>
+  </index>
+  <index role="GIMP 2.4" id="libgimpthumb-index-new-in-2-4">
+    <title>Index of new symbols in GIMP 2.4</title>
+  </index>
+  <index role="deprecated" id="libgimpthumb-index-deprecated">
+    <title>Index of deprecated symbols</title>
+  </index>
+
+</book>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
+
+<ui>
+  <popup action="palette-editor-popup">
+    <menuitem action="palette-editor-edit-color" />
+    <menuitem action="palette-editor-new-color-fg" />
+    <menuitem action="palette-editor-new-color-bg" />
+    <menuitem action="palette-editor-delete-color" />
+    <separator />
+    <menuitem action="palette-editor-zoom-out" />
+    <menuitem action="palette-editor-zoom-in" />
+    <menuitem action="palette-editor-zoom-all" />
+    <separator />
+    <menuitem action="palette-editor-edit-active" />
+  </popup>
+</ui>

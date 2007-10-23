@@ -1,0 +1,51 @@
+includes.txt
+============
+
+The include policy for the files in app/ is as follows:
+
+Each subdirectory has a <module>-types.h file which defines the type
+space known to this module. All .c files in the directory include this
+(and only this) <module>-types.h file.  <foo>-types.h files from other
+modules are included from the <module>-types.h file only. This way
+<module>-types.h becomes the only place where the namespace known to a
+module is defined.
+
+
+***** .h files *****
+
+No .h file includes anything, with two exceptions:
+
+- objects include their immediate parent class
+- if the header uses stuff like time_t (or off_t), it includes
+  <time.h> (or <sys/types.h>). This only applies to system stuff!
+
+
+***** .c files *****
+
+The include order of all .c files of a module is as follows:
+
+/* example of a .c file from app/core */
+
+#include "config.h"             /* alyways and first                         */
+
+#include <glib.h>               /* *only* needed if the file needs stuff     */
+                                /* like G_OS_WIN32 for conditional inclusion */
+                                /* of system headers                         */
+
+#include <system headers>       /* like <stdio.h>                            */
+
+#include <glib-object.h>
+
+#include "libgimpfoo/gimpfoo.h" /* as needed, e.g. "libgimpbase/gimpbase.h"  */
+#include "libgimpbar/gimpbar.h"
+
+#include "core-types.h"         /* and _no_ other foo-types.h file           */
+
+#include "base/foo.h"           /* files from modules below this one         */
+#include "base/bar.h"
+
+#include "gimp.h"               /* files from this module                    */
+#include "gimpimage.h"
+#include "gimpwhatever.h"
+
+#include "gimp-intl.h"          /* if needed, *must* be the last include     */

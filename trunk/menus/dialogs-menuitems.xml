@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menuitems>
+  <menuitem action="dialogs-tool-options" />
+  <menuitem action="dialogs-device-status" />
+  <separator />
+  <menuitem action="dialogs-layers" />
+  <menuitem action="dialogs-channels" />
+  <menuitem action="dialogs-vectors" />
+  <menuitem action="dialogs-indexed-palette" />
+  <menuitem action="dialogs-histogram" />
+  <menuitem action="dialogs-selection-editor" />
+  <menuitem action="dialogs-navigation" />
+  <menuitem action="dialogs-undo-history" />
+  <menuitem action="dialogs-cursor" />
+  <menuitem action="dialogs-sample-points" />
+  <separator />
+  <menuitem action="dialogs-colors" />
+  <menuitem action="dialogs-brushes" />
+  <menuitem action="dialogs-patterns" />
+  <menuitem action="dialogs-gradients" />
+  <menuitem action="dialogs-palettes" />
+  <menuitem action="dialogs-fonts" />
+  <menuitem action="dialogs-buffers" />
+  <separator />
+  <menuitem action="dialogs-images" />
+  <menuitem action="dialogs-document-history" />
+  <menuitem action="dialogs-templates" />
+  <menuitem action="dialogs-tools" />
+  <menuitem action="dialogs-error-console" />
+</menuitems>

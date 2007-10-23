@@ -1,0 +1,298 @@
+
+PARASITE REGISTRY - 2007-10-18
+=================
+
+This document is designed for the convenience of GIMP developers.
+It does not need to concern users.
+
+>>>> If your plugin or script writes parasites, please
+>>>> amend this file in SVN or submit patches to
+>>>> gimp-developer@scam.xcf.berkeley.edu
+
+
+------------------------------------------------------------------
+*** NAMESPACE
+
+Plug-in-specific data should be prefixed by the plug-in function name and
+a slash, i.e. private data of plug_in_displace should be named like:
+
+plug_in_displace/data1
+plug_in_displace/data2
+etc.
+
+Global data follows no strict rules.
+
+------------------------------------------------------------------
+*** KNOWN PREFIXES:
+
+"tiff"    : The standard GIMP TIFF plugin
+"jpeg"    : The standard GIMP JPEG plugin
+"png"     : The standard GIMP PNG plugin
+"gimp"    : For common and standard parasites
+
+------------------------------------------------------------------
+*** KNOWN GLOBAL PARASITES:
+
+"jpeg-save-defaults" (GLOBAL, PERSISTENT)
+        Default save parameters used by the JPEG plug-in.
+
+"png-save-defaults" (GLOBAL, PERSISTENT)
+        Default save parameters used by the PNG plug-in.
+
+"<plug-in>/_fu_data" (GLOBAL, IMAGE, DRAWABLE, PERSISTENT)
+        The Gimp::Fu module (Perl) might store the arguments of the
+        last plug-in invocation. It is usually attached to images,
+        but might also be found globally. The data format is either
+        pure character data (Data::Dumper) or a serialized data
+        stream created by Storable::nfreeze.
+
+"exif-orientation-rotate" (GLOBAL, PERSISTENT)
+        Whether a load plug-in should automatically rotate the image
+        according to the orientation specified in the EXIF data. This
+        has values "yes" or "no". If the parasite is not set, the
+        plug-in should ask the user what to do. This parasite may be
+        removed in a future version (assuming always yes).
+
+------------------------------------------------------------------
+*** KNOWN IMAGE PARASITES:
+
+"gimp-comment" (IMAGE, PERSISTENT)
+        Standard GIF-style image comments.  This parasite should be
+        human-readable text in UTF-8 encoding.  A trailing \0 might
+        be included and is not part of the comment.  Note that image
+        comments may also be present in the "gimp-metadata" parasite.
+
+"gimp-brush-name" (IMAGE, PERSISTENT)
+        A string in UTF-8 encoding specifying the name of a GIMP brush.
+        Currently, the gbr plug-in uses this parasite when loading and
+        saving .gbr files. A trailing \0 might be included and is not
+        part of the name.
+
+"gimp-brush-pipe-parameters" (IMAGE, PERSISTENT)
+	This is all very preliminary:
+
+	A string, containing parameters describing how an brush pipe
+	should be used. The contents is a space-separated list of
+	keywords and values. The keyword and value are separated by a
+	colon.
+
+	This parasite is currently attached to an image by the psp
+	plug-in when it loads a .tub file (Paint Shop Pro picture
+	tube). It is used (first attached with values asked from the
+	user, if nonexistent) by the gpb plug-in when it saves a .gih
+	file. The .gih file contains the same text in it.
+
+	The keywords are:
+	ncells: the number of brushes in the brush pipe
+	step: the default spacing for the pipe
+	dim: the dimension of the pipe. The number of cells
+		in the pipe should be equal to the product
+		of the ranks of each dimension.
+	cols: number of columns in each layer of the image,
+		to be used when editing the pipe as a GIMP image
+	rows: ditto for rows. Note that the number of columns and rows
+		not necessarily are identical to the ranks of the
+		dimensions of a pipe, but in the case of two-
+		and three-dimensional pipes, it probably is.
+	rank0, rank1, ...: (one for each dimension): the index range
+		for that dimension
+	placement: "default", "constant" or "random". "constant" means
+		use the spacing in the first brush in the pipe.
+		"random" means perturb that with some suitable
+		random number function. (Hmm, would it be overdoing it
+		if the pipe also could specify what random function
+		and its parameters...?)
+	sel0, sel1, ...: "default", "random", "incremental", "angular",
+		"pressure", "velocity", and whatever else suitable we might
+		think of ;-) Determines how one index from each dimension is
+		selected (until we have pinpointed the brush to use).
+
+"gimp-image-grid" (IMAGE, PERSISTENT)
+        The GimpGrid object serialized to a string. Saved as parasite
+        to keep the XCF files backwards compatible. Although gimp-1.2
+        does not know how to handle the image grid, it keeps the grid
+        information intact.
+
+"gimp-pattern-name" (IMAGE, PERSISTENT)
+        A string in UTF-8 encoding specifying the name of a GIMP pattern.
+        Currently, the pat plug-in uses this parasite when loading and
+        saving .pat files. A trailing \0 might be included and is not
+        part of the name.
+
+"tiff-save-options" (IMAGE)
+        The TiffSaveVals structure from the TIFF plugin.
+
+"jpeg-save-options" (IMAGE)
+        The JpegSaveVals structure from the JPEG plugin.
+
+"jpeg-exif-data" (IMAGE) (deprecated)
+        The ExifData structure serialized into a uchar* blob from
+        libexif. This is deprecated in favor of "exif-data".
+
+"jpeg-original-settings" (IMAGE, PERSISTENT)
+	The settings found in the original JPEG image: quality (IJG),
+	color space, component subsampling and quantization tables.
+	These can be reused when saving the image in order to minimize
+	quantization losses and keep the same size/quality ratio.
+
+"gamma" (IMAGE, PERSISTENT)
+	The original gamma this image was created/saved. For JPEG; this is
+        always one, for PNG it's usually taken from the image data. GIMP
+        might use and modify this. The format is an ascii string with the
+        gamma exponent as a flotingpoint value.
+
+        Example: for sRGB images this might contain "0.45454545"
+
+"chromaticity" (IMAGE, PERSISTENT)
+	This parasite contains 8 floatingpoint values (ascii, seperated by
+        whitespace) specifying the x and y coordinates of the whitepoint, the
+        red, green and blue primaries, in this order.
+
+        Example: for sRGB images this might contain
+        "0.3127 0.329 0.64 0.33 0.3 0.6 0.15 0.06"
+         wx     wy    rx   ry   gx  gy  bx   by
+ 
+"rendering-intent" (IMAGE, PERSISTENT)
+	This specifies the rendering intent of the image. It's a value
+        between 0 and 3, again in ascii:
+
+        0 - perceptual			(e.g. for photographs)
+        1 - relative colorimetric	(e.g. for logos)
+        2 - saturation-preserving	(e.g. for business charts)
+        3 - absolute colorimetric
+
+"hot-spot" (IMAGE, PERSISTENT)
+	Use this parasite to store an image's "hot spot". Currently
+	used by the XBM plugin to store mouse cursor hot spots.
+
+	Example: a hot spot at coordinates (5,5) is stored as "5 5"
+
+"exif-data" (IMAGE, PERSISTENT)
+        The ExifData structure serialized into a character array by
+        libexif (using exif_data_save_data). If a "gimp-metadata"
+        parasite is present, it should take precedence over this one.
+
+"gimp-metadata" (IMAGE, PERSISTENT)
+	The metadata associated with the image, serialized as one XMP
+	packet.  This metadata includes the contents of any XMP, EXIF
+	and IPTC blocks from the original image, as well as
+	user-specified values such as image comment, copyright,
+	license, etc.
+
+"icc-profile" (IMAGE, PERSISTENT | UNDOABLE)
+	This contains an ICC profile describing the color space the
+	image was produced in. TIFF images stored in PhotoShop do 
+	oftentimes contain embedded profiles. An experimental color
+	manager exists to use this parasite, and it will be used
+	for interchange between TIFF and PNG (identical profiles)
+
+"icc-profile-name" (IMAGE, PERSISTENT | UNDOABLE)
+        The profile name is a convenient name for referring to the
+        profile. It is for example used in the PNG file format.  The
+        name must be stored in UTF-8 encoding. If a file format uses
+        a different character encoding, it must be converted to UTF-8
+        for use as a parasite.
+
+"decompose-data" (IMAGE, NONPERSISTENT) 
+        Starting with GIMP 2.3, this is added to images produced by
+        the decompose plug-in, and contains information necessary to
+        recompose the original source RGB layer from the resulting
+        grayscale layers.  It is ascii; a typical example would be
+        "source=2 type=RGBA 4 5 6 7".  This means that layer 2 was
+        decomposed in RGBA mode, giving rise to layers 4, 5, 6, and 7.
+
+------------------------------------------------------------------
+*** KNOWN LAYER/DRAWABLE PARASITES:
+
+"gimp-text-layer" (LAYER, PERSISTENT)
+        The associated GimpText object serialized to a string. For
+        convenience the string is terminated by a trailing '\0'.
+        The idea of using a parasite for text layers is to keep the XCF
+        files backward compatible. Although gimp-1.2 doesn't know how
+        to handle the text layer, it keeps the parasite intact.
+
+"gfig" (LAYER, PERSISTENT)
+        As of GIMP 2.2, the gfig plug-in creates its own layers, and
+        stores a representation of the figure as a layer parasite.
+        The parasite contains a GFig save file, in an ascii format.
+        If gfig is started while the active layer contains a "gfig"
+        parasite, the contents of the parasite are loaded at startup.
+
+
+------------------------------------------------------------------
+*** PARASITE FORMAT:
+
+The parasite data format is not rigidly specified. For non-persistant
+parasites you are entirely free, as the parasite data does not survive the
+current gimp session. If you need persistant data, you basically have to
+choose between the following alternatives (also, having some standard for
+non-persistant data might be fine as well):
+
+- Cook your own binary data format
+  
+  You can invent your own data format. This means that you will either
+  loose totally (consider endian-ness or version-ness issues) or you will
+  get yourself into deep trouble to get it "right" in all cases.
+
+- Use character (string) data
+
+  Obvious to perl people but less so to C programmers: just sprintf your
+  data into a string (e.g. "SIZE 100x200 XRES 300 YRES 300") and store
+  that in the parasite, and later sscanf it again. This often solves most
+  of the problems you might encounter, makes for easier debugging and
+  more robustness (consider the case when you add more entries to your
+  persistant data: older plug-ins might be able to read the relevant
+  parts and your application can detect missing fields easily). The
+  drawback is that your data is likely to be larger than a compact binary
+  representation would be. Not much a problem for most applications,
+  though.
+
+  You could also use one parasite per field you store, i.e. foo-size,
+  foo-offset-x, foo-offset-y etc...
+
+- Use the libgimpconfig serialize functions
+
+  This is a special case of the previous one, using the convenience
+  functions provided by libgimpconfig.  If you are not concerned about
+  the size of the string representation of your data, you can use
+  gimp_config_serialize_to_string() and other functions to easily
+  convert your data to/from a character string.
+
+- Obsolete: Use the libgimp serialize functions
+
+  NOTE: libgimp/gserialize.[ch] has been excluded from the build since
+        gimp-1.2. This decision was made since noone seemed to use it so
+        far. The files can still be pulled out of SVN, so if you decide
+        to use them, you will have to include a copy into your plugin
+        source or resurrect the functionality in libgimp.
+
+  Look at the stuff in libgimp/gserialize.h. These functions allow for
+  relatively easy serializing/deserializing of structs. The advantages
+  are that the gimp-developers have already taken care of endian-ness
+  issues and other hazzles. The drawback is that you might encounter
+  problems when you want to extend your structures later, as you have to
+  be prepared for images saved with parasites form a very old version of
+  your plug-in, and the gserialize functions do not handle different data
+  formats nicely itself.
+
+  One way out around this is to prefix your data with a version identifier
+  (remember to use a guchar, i.e. something without endian-ness problems).
+  Remember to skip it before deserializing.
+
+  Another very easy way is to add a version tag to your parasite name,
+  i.e. "foo-bar-v1", "foo-bar-v2". Your plug-in could then check for older
+  versions and act accordingly and/or attach the new parasite or both the
+  new and the old version of your data.
+
+  The gserialize stuff also makes it possible to just append more fields
+  (i.e. more gserialized structs) to your data. You could check the length
+  of the parasite data ("anything left?") to decide wether to decode more
+  fields. Here's some example:
+
+  data = parasite_data(p);
+  size = parasite_data_size(p);
+  length = gdeserialize(...);
+  tlength += length;
+  data += length;
+  if (tlength != size)
+    gdeserialize the next one, etc.

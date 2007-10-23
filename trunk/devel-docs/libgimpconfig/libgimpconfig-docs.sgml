@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<book id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <bookinfo>
+    <title>GIMP Config Library Reference Manual</title>
+    <releaseinfo>
+      for GIMP <xi:include href="version" parse="text"/>
+    </releaseinfo>
+  </bookinfo>
+
+  <part id="libgimpconfig">
+    <title>GIMP Config Library</title>
+
+    <chapter id="libgimpconfig-hierarchy">
+      <title>Object Hierarchy</title>
+      <xi:include href="xml/tree_index.sgml" />
+    </chapter>    
+
+    <xi:include href="xml/gimpconfig-iface.xml" />
+    <xi:include href="xml/gimpconfig-deserialize.xml" />
+    <xi:include href="xml/gimpconfig-serialize.xml" />
+    <xi:include href="xml/gimpconfig-error.xml" />
+    <xi:include href="xml/gimpconfig-params.xml" />
+    <xi:include href="xml/gimpconfig-path.xml" />
+    <xi:include href="xml/gimpconfig-utils.xml" />
+    <xi:include href="xml/gimpconfigwriter.xml" />
+    <xi:include href="xml/gimpscanner.xml" />
+    <xi:include href="xml/gimpcolorconfig.xml" />
+  </part>
+
+  <index id="libgimpconfig-index">
+    <title>Index</title>
+  </index>
+  <index role="GIMP 2.4" id="libgimpconfig-index-new-in-2-4">
+    <title>Index of new symbols in GIMP 2.4</title>
+  </index>
+  <index role="deprecated" id="libgimpconfig-index-deprecated">
+    <title>Index of deprecated symbols</title>
+  </index>
+
+</book>

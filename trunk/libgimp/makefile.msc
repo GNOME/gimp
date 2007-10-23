@@ -1,0 +1,214 @@
+## Makefile for building the GIMP DLLs and LIBs with Microsoft C.
+## Use: nmake -f makefile.msc
+
+TOP = ..\..
+!INCLUDE $(TOP)\glib\build\win32\make.msc 
+!INCLUDE ..\gimpdefs.msc
+
+################################################################
+
+# Nothing much configurable below
+
+INCLUDES = -I.. 
+DEFINES = -DGIMPDIR=\"$(GIMPDIR)\"
+DEPCFLAGS = $(INTL_CFLAGS) $(GLIB_CFLAGS) $(GTK2_CFLAGS) 
+DEPLIBS = $(GLIB_LIBS) $(INTL_LIBS) 
+
+# CFLAGS = $(GLIB_CFLAGS) 
+
+!IFNDEF DEBUG
+# Debug Release!
+OPTIMIZE = -Zi -MD
+!ENDIF
+
+all : \
+	..\config.h \
+	gimpenums.c \
+	gimpuimarshal.c \
+	gimp-$(GIMP_VER).dll \
+	gimpui-$(GIMP_VER).dll
+
+..\config.h : ..\config.h.win32
+	copy ..\config.h.win32 ..\config.h
+
+install : all
+	$(INSTALL) gimp-$(GIMP_VER).dll $(BIN)
+	$(INSTALL) gimpui-$(GIMP_VER).dll $(BIN)
+
+PDB_WRAPPERS_O = \
+	gimpbrush_pdb.obj \
+	gimpbrushes_pdb.obj \
+	gimpbrushselect_pdb.obj \
+	gimpbuffer_pdb.obj \
+	gimpchannel_pdb.obj \
+	gimpcolor_pdb.obj \
+	gimpcontext_pdb.obj \
+	gimpconvert_pdb.obj \
+	gimpdisplay_pdb.obj \
+	gimpdrawable_pdb.obj \
+	gimpdrawabletransform_pdb.obj \
+	gimpedit_pdb.obj \
+	gimpfileops_pdb.obj \
+	gimpfloatingsel_pdb.obj \
+	gimpfonts_pdb.obj \
+	gimpfontselect_pdb.obj \
+	gimpgimprc_pdb.obj \
+	gimpgradient_pdb.obj \
+	gimpgradients_pdb.obj \
+	gimpgradientselect_pdb.obj \
+	gimpgrid_pdb.obj \
+	gimpguides_pdb.obj \
+	gimphelp_pdb.obj \
+	gimpimage_pdb.obj \
+	gimplayer_pdb.obj \
+	gimpmessage_pdb.obj \
+	gimpmisc_pdb.obj \
+	gimppainttools_pdb.obj \
+	gimppalette_pdb.obj \
+	gimppalettes_pdb.obj \
+	gimppaletteselect_pdb.obj \
+	gimpparasite_pdb.obj \
+	gimppaths_pdb.obj \
+	gimppattern_pdb.obj \
+	gimppatterns_pdb.obj \
+	gimppatternselect_pdb.obj \
+	gimpplugin_pdb.obj \
+	gimpproceduraldb_pdb.obj \
+	gimpprogress_pdb.obj \
+	gimpselection_pdb.obj \
+	gimpselectiontools_pdb.obj \
+	gimptexttool_pdb.obj \
+	gimptransformtools_pdb.obj \
+	gimpundo_pdb.obj \
+	gimpunit_pdb.obj \
+	gimpvectors_pdb.obj \
+
+
+gimp_OBJECTS = \
+	gimp.obj \
+	gimpenums.obj \
+	$(PDB_WRAPPERS_O) \
+	gimpbrushes.obj \
+	gimpbrushselect.obj \
+	gimpchannel.obj \
+	gimpdrawable.obj \
+	gimpfontselect.obj \
+	gimpgimprc.obj \
+	gimpgradients.obj \
+	gimpgradientselect.obj \
+	gimpimage.obj \
+	gimplayer.obj \
+	gimppalette.obj \
+	gimppalettes.obj \
+	gimppaletteselect.obj \
+	gimppatterns.obj \
+	gimppatternselect.obj \
+	gimppixelfetcher.obj \
+	gimppixelrgn.obj \
+	gimpplugin.obj \
+	gimpproceduraldb.obj \
+	gimpprogress.obj \
+	gimpregioniterator.obj \
+	gimpselection.obj \
+	gimptile.obj \
+	gimpunitcache.obj \
+
+#?	gimpprotocol.obj \
+
+gimpenums.c: gimpenums.h gimpenums.c.tail
+	perl ..\tools\gimp-mkenums \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"gimpenums.h\"" \
+		--fprod "\n/* enumerations from \"@filename@\" */" \
+		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
+		--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
+		--vtail "    { 0, NULL, NULL }\n  };\n" \
+		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
+		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ }," \
+		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n \
+ if (! type)\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n   \
+     gimp_type_set_translation_domain (type, GETTEXT_PACKAGE \"-libgimp\");\n \
+     gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
+	gimpenums.h > xgen-cec
+	type gimpenums.c.tail >> xgen-cec
+	copy xgen-cec gimpenums.c
+	del xgen-cec
+
+gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
+	$(CC) $(CFLAGS) -LD -Fegimp-$(GIMP_VER).dll $(gimp_OBJECTS) $(DEPLIBS) \
+	..\libgimpconfig\gimpconfig-$(GIMP_VER).lib \
+	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
+	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
+	$(LDFLAGS) user32.lib /def:gimp.def
+
+# Pass -DLIBGIMP_COMPILATION when compiling gimp.c
+
+gimp.obj : gimp.c
+	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimp.c
+
+gimpui_OBJECTS = \
+	gimpaspectpreview.obj \
+	gimpbrushmenu.obj \
+	gimpbrushselectbutton.obj \
+	gimpdrawablepreview.obj \
+	gimpexport.obj \
+	gimpfontmenu.obj \
+	gimpfontselect_pdb.obj \
+	gimpfontselectbutton.obj \
+	gimpgradientmenu.obj \
+	gimpgradientselectbutton.obj \
+	gimpimagecombobox.obj \
+	gimpitemcombobox.obj \
+	gimpmenu.obj \
+	gimppalettemenu.obj \
+	gimppaletteselectbutton.obj \
+	gimppatternmenu.obj \
+	gimppatternselectbutton.obj \
+	gimppixbuf.obj \
+	gimpprocbrowserdialog.obj \
+	gimpprocview.obj \
+	gimpprogressbar.obj \
+	gimpselectbutton.obj \
+	gimpui.obj \
+	gimpuimarshal.obj \
+	gimpzoompreview.obj \
+
+gimpuimarshal.h : gimpuimarshal.list
+	$(GLIB)\gobject\glib-genmarshal --prefix=_gimpui_marshal gimpuimarshal.list --header >gimpuimarshal.h
+
+gimpuimarshal.c : gimpuimarshal.list gimpuimarshal.h
+	$(GLIB)\gobject\glib-genmarshal --prefix=_gimpui_marshal gimpuimarshal.list --body >gimpuimarshal.c
+
+
+gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
+	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) \
+	gimp-$(GIMP_VER).lib ..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
+	..\libgimpmodule\gimpmodule-$(GIMP_VER).lib \
+	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
+	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
+	$(GTK2_LIBS) $(INTL_LIBS) $(DEPLIBS) $(LDFLAGS) /def:gimpui.def
+
+# gimpwidgets only for gimp_dialog_new
+
+gimpmenu.obj : gimpmenu.c
+	$(CC) $(CFLAGS) -GD -c gimpmenu.c
+
+gimpbrushmenu.obj : gimpbrushmenu.c
+	$(CC) $(CFLAGS) -GD -c gimpbrushmenu.c
+
+gimpgradientmenu.obj : gimpgradientmenu.c
+	$(CC) $(CFLAGS) -GD -c gimpgradientmenu.c
+
+gimppatternmenu.obj : gimppatternmenu.c
+	$(CC) $(CFLAGS) -GD -c gimppatternmenu.c
+
+# General rule for compiling, used by the objects that don't go into
+# gimp-$(GIMP_VER).dll. 
+.c.obj:
+	$(CC) $(CFLAGS) -c $<
+
+clean::
+	del *.exe
+	del *.obj
+	del *.exp
+	del *.err
+	del *.map

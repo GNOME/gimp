@@ -1,0 +1,11 @@
+Gimp Pixmap Brush File Format
+
+**********************************************
+* THIS FORMAT IS OBSOLETE AND SHOULD GO AWAY *
+**********************************************
+
+The current format for gpb files, the pixmap
+brush format is very simple. What it essentially
+boils down to is a greyscale gbr (gimp brush) and
+a rgb pat (gimp pattern) concatented into the same file.
+

@@ -1,0 +1,53 @@
+<!-- ##### SECTION Title ##### -->
+gimpparasiteio
+
+<!-- ##### SECTION Short_Description ##### -->
+Utility functions to (de)serialize certain C structures to/from #GimpParasite's.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Utility functions to (de)serialize certain C structures to/from #GimpParasite's.
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+#GimpParasite
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### MACRO GIMP_PIXPIPE_MAXDIM ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION gimp_pixpipe_params_init ##### -->
+<para>
+
+</para>
+
+@params: 
+
+
+<!-- ##### FUNCTION gimp_pixpipe_params_parse ##### -->
+<para>
+
+</para>
+
+@parameters: 
+@params: 
+
+
+<!-- ##### FUNCTION gimp_pixpipe_params_build ##### -->
+<para>
+
+</para>
+
+@params: 
+@Returns: 
+
+

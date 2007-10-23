@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ui xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <menubar-and-popup action-name="image">
+
+    <menu action="file-menu" name="File">
+      <placeholder name="New">
+        <menuitem action="image-new-from-image" />
+      </placeholder>
+      <placeholder name="Open">
+        <menuitem action="file-open" />
+        <menuitem action="file-open-as-layers" />
+        <menuitem action="file-open-location" />
+      </placeholder>
+      <menu action="file-open-recent-menu" name="Open Recent">
+        <placeholder name="Files" />
+        <separator />
+        <menuitem action="dialogs-document-history" />
+      </menu>
+      <menu action="file-acquire-menu" name="Acquire" />
+      <separator />
+      <placeholder name="Save">
+	<menuitem action="file-save" />
+	<menuitem action="file-save-as" />
+	<menuitem action="file-save-a-copy" />
+	<menuitem action="file-save-as-template" />
+      </placeholder>
+      <menuitem action="file-revert" />
+      <separator />
+      <placeholder name="Send" />
+      <separator />
+      <placeholder name="Info" />
+      <separator />
+      <menuitem action="view-close" />
+      <menuitem action="file-close-all" />
+      <menuitem action="file-quit" />
+    </menu>
+
+<!-- Context
+
+    <menu action="context-menu" name="Context">
+      <menu action="context-colors-menu" name="Colors">
+        <menuitem action="context-colors-default" />
+        <menuitem action="context-colors-swap" />
+      </menu>
+      <menu action="context-opacity-menu" name="Opacity">
+        <menuitem action="context-opacity-transparent" />
+        <menuitem action="context-opacity-opaque" />
+        <menuitem action="context-opacity-decrease" />
+        <menuitem action="context-opacity-increase" />
+        <menuitem action="context-opacity-decrease-skip" />
+        <menuitem action="context-opacity-increase-skip" />
+      </menu>
+      <menu action="context-paint-mode-menu" name="Paint Mode">
+        <menuitem action="context-paint-mode-first" />
+        <menuitem action="context-paint-mode-last" />
+        <menuitem action="context-paint-mode-previous" />
+        <menuitem action="context-paint-mode-next" />
+      </menu>
+      <menu action="context-tool-menu" name="Tool">
+        <menuitem action="context-tool-select-first" />
+        <menuitem action="context-tool-select-last" />
+        <menuitem action="context-tool-select-previous" />
+        <menuitem action="context-tool-select-next" />
+      </menu>
+      <separator />
+      <menu action="context-brush-menu" name="Brush">
+        <menuitem action="context-brush-select-first" />
+        <menuitem action="context-brush-select-last" />
+        <menuitem action="context-brush-select-previous" />
+        <menuitem action="context-brush-select-next" />
+	<separator />
+        <menu action="context-brush-shape-menu" name="Shape">
+          <menuitem action="context-brush-shape-circle" />
+          <menuitem action="context-brush-shape-square" />
+          <menuitem action="context-brush-shape-diamond" />
+        </menu>
+        <menu action="context-brush-radius-menu" name="Radius">
+          <menuitem action="context-brush-radius-minimum" />
+          <menuitem action="context-brush-radius-maximum" />
+          <menuitem action="context-brush-radius-decrease" />
+          <menuitem action="context-brush-radius-increase" />
+          <menuitem action="context-brush-radius-decrease-skip" />
+          <menuitem action="context-brush-radius-increase-skip" />
+        </menu>
+        <menu action="context-brush-spikes-menu" name="Spikes">
+          <menuitem action="context-brush-spikes-minimum" />
+          <menuitem action="context-brush-spikes-maximum" />
+          <menuitem action="context-brush-spikes-decrease" />
+          <menuitem action="context-brush-spikes-increase" />
+          <menuitem action="context-brush-spikes-decrease-skip" />
+          <menuitem action="context-brush-spikes-increase-skip" />
+        </menu>
+        <menu action="context-brush-hardness-menu" name="Hardness">
+          <menuitem action="context-brush-hardness-minimum" />
+          <menuitem action="context-brush-hardness-maximum" />
+          <menuitem action="context-brush-hardness-decrease" />
+          <menuitem action="context-brush-hardness-increase" />
+          <menuitem action="context-brush-hardness-decrease-skip" />
+          <menuitem action="context-brush-hardness-increase-skip" />
+        </menu>
+        <menu action="context-brush-aspect-menu" name="Aspect">
+          <menuitem action="context-brush-aspect-minimum" />
+          <menuitem action="context-brush-aspect-maximum" />
+          <menuitem action="context-brush-aspect-decrease" />
+          <menuitem action="context-brush-aspect-increase" />
+          <menuitem action="context-brush-aspect-decrease-skip" />
+          <menuitem action="context-brush-aspect-increase-skip" />
+        </menu>
+        <menu action="context-brush-angle-menu" name="Angle">
+          <menuitem action="context-brush-angle-minimum" />
+          <menuitem action="context-brush-angle-maximum" />
+          <menuitem action="context-brush-angle-decrease" />
+          <menuitem action="context-brush-angle-increase" />
+          <menuitem action="context-brush-angle-decrease-skip" />
+          <menuitem action="context-brush-angle-increase-skip" />
+        </menu>
+      </menu>
+      <menu action="context-pattern-menu" name="Pattern">
+        <menuitem action="context-pattern-select-first" />
+        <menuitem action="context-pattern-select-last" />
+        <menuitem action="context-pattern-select-previous" />
+        <menuitem action="context-pattern-select-next" />
+      </menu>
+      <menu action="context-palette-menu" name="Palette">
+        <menuitem action="context-palette-select-first" />
+        <menuitem action="context-palette-select-last" />
+        <menuitem action="context-palette-select-previous" />
+        <menuitem action="context-palette-select-next" />
+      </menu>
+      <menu action="context-gradient-menu" name="Gradient">
+        <menuitem action="context-gradient-select-first" />
+        <menuitem action="context-gradient-select-last" />
+        <menuitem action="context-gradient-select-previous" />
+        <menuitem action="context-gradient-select-next" />
+      </menu>
+      <menu action="context-font-menu" name="Font">
+        <menuitem action="context-font-select-first" />
+        <menuitem action="context-font-select-last" />
+        <menuitem action="context-font-select-previous" />
+        <menuitem action="context-font-select-next" />
+      </menu>
+    </menu>
+
+-->
+
+    <menu action="edit-menu" name="Edit">
+      <placeholder name="Undo">
+        <menuitem action="edit-undo" />
+        <menuitem action="edit-redo" />
+        <menuitem action="edit-fade" />
+        <menuitem action="dialogs-undo-history" />
+      </placeholder>
+      <separator />
+      <placeholder name="Cut">
+	<menuitem action="edit-cut" />
+      </placeholder>
+      <placeholder name="Copy">
+	<menuitem action="edit-copy" />
+	<menuitem action="edit-copy-visible" />
+      </placeholder>
+      <placeholder name="Paste">
+	<menuitem action="edit-paste" />
+	<menuitem action="edit-paste-into" />
+      </placeholder>
+      <menu action="edit-paste-as-menu" name="Paste as">
+	<menuitem action="edit-paste-as-new-short" />
+      </menu>
+      <menu action="edit-buffer-menu" name="Buffer">
+        <menuitem action="edit-named-cut" />
+	<menuitem action="edit-named-copy" />
+	<menuitem action="edit-named-copy-visible" />
+	<menuitem action="edit-named-paste" />
+      </menu>
+      <separator />
+      <placeholder name="Clear">
+        <menuitem action="edit-clear" />
+      </placeholder>
+      <placeholder name="Fill">
+        <menuitem action="edit-fill-fg" />
+        <menuitem action="edit-fill-bg" />
+        <menuitem action="edit-fill-pattern" />
+      </placeholder>
+      <placeholder name="Stroke">
+        <menuitem action="select-stroke" />
+        <menuitem action="vectors-stroke" />
+      </placeholder>
+      <separator />
+      <placeholder name="Preferences">
+        <menuitem action="dialogs-preferences" />      
+        <menuitem action="dialogs-keyboard-shortcuts" />
+      </placeholder>
+      <separator />
+    </menu>
+
+    <menu action="select-menu" name="Select">
+      <menuitem action="select-all" />
+      <menuitem action="select-none" />
+      <menuitem action="select-invert" />
+      <menuitem action="select-float" />
+      <menuitem action="tools-by-color-select-short" />
+      <menuitem action="vectors-selection-from-vectors" />
+      <menuitem action="dialogs-selection-editor" />
+      <separator />
+      <placeholder name="Modify">
+        <menuitem action="select-feather" />
+        <menuitem action="select-sharpen" />
+        <menuitem action="select-shrink" />
+        <menuitem action="select-grow" />
+        <menuitem action="select-border" />
+      </placeholder>
+      <separator />
+      <menuitem action="quick-mask-toggle" />
+      <menuitem action="select-save" />
+      <menuitem action="vectors-selection-to-vectors-short" />
+      <separator />
+    </menu>
+
+    <menu action="view-menu" name="View">
+      <menuitem action="view-new" />
+      <menuitem action="view-dot-for-dot" />
+      <menu action="view-zoom-menu" name="Zoom">
+        <menuitem action="view-zoom-revert" />
+        <menuitem action="view-zoom-out" />
+        <menuitem action="view-zoom-in" />
+        <menuitem action="view-zoom-fit-in" />
+        <menuitem action="view-zoom-fit-to" />
+        <separator />
+        <menuitem action="view-zoom-16-1" />
+        <menuitem action="view-zoom-8-1" />
+        <menuitem action="view-zoom-4-1" />
+        <menuitem action="view-zoom-2-1" />
+        <menuitem action="view-zoom-1-1" />
+        <menuitem action="view-zoom-1-2" />
+        <menuitem action="view-zoom-1-4" />
+        <menuitem action="view-zoom-1-8" />
+        <menuitem action="view-zoom-1-16" />
+	<separator />
+        <menuitem action="view-zoom-other" />
+      </menu>
+      <separator />
+      <menuitem action="view-shrink-wrap" />
+      <menuitem action="view-fullscreen" />
+      <menu action="view-move-to-screen-menu" name="Move to Screen">
+        <menuitem action="view-open-display" />
+        <separator />
+      </menu>
+      <separator />
+      <menuitem action="view-navigation-window" />
+      <menuitem action="view-display-filters" />
+      <separator />
+      <menuitem action="view-show-selection" />
+      <menuitem action="view-show-layer-boundary" />
+      <menuitem action="view-show-guides" />
+      <menuitem action="view-show-grid" />
+      <menuitem action="view-show-sample-points" />
+      <separator />
+      <menuitem action="view-snap-to-guides" />
+      <menuitem action="view-snap-to-grid" />
+      <menuitem action="view-snap-to-canvas" />
+      <menuitem action="view-snap-to-vectors" />
+      <separator />
+      <menu action="view-padding-color-menu" name="Padding color">
+        <menuitem action="view-padding-color-theme" />
+        <menuitem action="view-padding-color-light-check" />
+        <menuitem action="view-padding-color-dark-check" />
+        <menuitem action="view-padding-color-custom" />
+        <separator />
+        <menuitem action="view-padding-color-prefs" />
+      </menu>
+      <menuitem action="view-show-menubar" />
+      <menuitem action="view-show-rulers" />
+      <menuitem action="view-show-scrollbars" />
+      <menuitem action="view-show-statusbar" />
+      <separator />
+    </menu>
+
+    <menu action="image-menu" name="Image">
+      <placeholder name="New">
+        <menuitem action="image-duplicate" />
+      </placeholder>
+      <menu action="image-mode-menu" name="Mode">
+        <menuitem action="image-convert-rgb" />
+        <menuitem action="image-convert-grayscale" />
+        <menuitem action="image-convert-indexed" />
+	<separator />
+	<placeholder name="Color Profile" />
+	<separator />
+      </menu>
+      <menu action="image-transform-menu" name="Transform">
+        <placeholder name="Flip">
+          <menuitem action="image-flip-horizontal" />
+          <menuitem action="image-flip-vertical" />
+        </placeholder>
+	<separator />
+        <placeholder name="Rotate">
+          <menuitem action="image-rotate-90" />
+          <menuitem action="image-rotate-270" />
+          <menuitem action="image-rotate-180" />
+        </placeholder>
+	<separator />
+      </menu>
+      <separator />
+      <placeholder name="Resize">
+        <menuitem action="image-resize" />
+        <menuitem action="image-resize-to-layers" />
+        <menuitem action="image-resize-to-selection" />
+        <menuitem action="image-print-size" />
+      </placeholder>
+      <placeholder name="Scale">
+        <menuitem action="image-scale" />
+      </placeholder>
+      <separator />
+      <placeholder name="Crop">
+        <menuitem action="image-crop" />
+      </placeholder>
+      <separator />
+      <placeholder name="Structure">
+        <menuitem action="image-merge-layers" />
+        <menuitem action="image-flatten" />
+      </placeholder>
+      <placeholder name="Arrange" />
+      <separator />
+      <menu action="image-guides-menu" name="Guides">
+      </menu>
+      <menuitem action="image-configure-grid" />
+      <menuitem action="image-properties" />
+      <separator />
+    </menu>
+
+    <menu action="layers-menu" name="Layer">
+      <placeholder name="New">
+        <menuitem action="layers-new" />
+        <menuitem action="layers-duplicate" />
+      </placeholder>
+      <placeholder name="Structure">
+        <menuitem action="layers-anchor" />
+        <menuitem action="layers-merge-down" />
+        <menuitem action="layers-delete" />
+      </placeholder>
+      <separator />
+      <placeholder name="Text">
+        <menuitem action="layers-text-discard" />
+        <menuitem action="layers-text-to-vectors" />
+        <menuitem action="layers-text-along-vectors" />
+        <menu action="layers-text-to-selection-menu">
+          <menuitem action="layers-text-selection-replace" />
+	  <menuitem action="layers-text-selection-add" />
+	  <menuitem action="layers-text-selection-subtract" />
+	  <menuitem action="layers-text-selection-intersect" />
+        </menu>
+      </placeholder>
+      <separator />
+      <menu action="layers-stack-menu" name="Stack">
+        <placeholder name="Select">
+          <menuitem action="layers-select-previous" />
+          <menuitem action="layers-select-next" />
+          <menuitem action="layers-select-top" />
+          <menuitem action="layers-select-bottom" />
+        </placeholder>
+	<separator />
+        <placeholder name="Position">
+          <menuitem action="layers-raise" />
+          <menuitem action="layers-lower" />
+          <menuitem action="layers-raise-to-top" />
+          <menuitem action="layers-lower-to-bottom" />
+        </placeholder>
+        <separator />
+      </menu>
+      <menu action="layers-mask-menu" name="Mask">
+        <placeholder name="Modify">
+          <menuitem action="layers-mask-add" />
+          <menuitem action="layers-mask-apply" />
+          <menuitem action="layers-mask-delete" />
+        </placeholder>
+	<separator />
+        <placeholder name="Properties">
+          <menuitem action="layers-mask-show" />
+          <menuitem action="layers-mask-edit" />
+          <menuitem action="layers-mask-disable" />
+        </placeholder>
+	<separator />
+        <placeholder name="Selection">
+          <menuitem action="layers-mask-selection-replace" />
+          <menuitem action="layers-mask-selection-add" />
+          <menuitem action="layers-mask-selection-subtract" />
+          <menuitem action="layers-mask-selection-intersect" />
+        </placeholder>
+        <separator />
+      </menu>
+      <menu action="layers-transparency-menu" name="Transparency">
+        <placeholder name="Modify">
+          <menuitem action="layers-alpha-add" />
+          <menuitem action="layers-alpha-remove" />
+        </placeholder>
+	<separator />
+        <placeholder name="Selection">
+          <menuitem action="layers-alpha-selection-replace" />
+	  <menuitem action="layers-alpha-selection-add" />
+	  <menuitem action="layers-alpha-selection-subtract" />
+	  <menuitem action="layers-alpha-selection-intersect" />
+        </placeholder>
+	<separator />
+      </menu>
+      <menu action="layers-transform-menu" name="Transform">
+        <placeholder name="Flip">
+          <menuitem action="drawable-flip-horizontal" />
+          <menuitem action="drawable-flip-vertical" />
+        </placeholder>
+	<separator />
+        <placeholder name="Rotate">
+          <menuitem action="drawable-rotate-90" />
+          <menuitem action="drawable-rotate-270" />
+          <menuitem action="drawable-rotate-180" />
+          <menuitem action="tools-rotate-arbitrary" />
+        </placeholder>
+	<separator />
+        <menuitem action="drawable-offset" />
+      </menu>
+
+<!-- Layer Properties
+
+      <menu action="layers-properties-menu" name="Properties">
+        <menuitem action="layers-edit-attributes" />
+        <menu action="layers-opacity-menu" name="Opacity">
+          <menuitem action="layers-opacity-transparent" />
+          <menuitem action="layers-opacity-opaque" />
+          <menuitem action="layers-opacity-decrease" />
+          <menuitem action="layers-opacity-increase" />
+        </menu>
+        <menu action="layers-mode-menu" name="Layer Mode">
+          <menuitem action="layers-mode-first" />
+          <menuitem action="layers-mode-last" />
+          <menuitem action="layers-mode-previous" />
+          <menuitem action="layers-mode-next" />
+        </menu>
+        <menuitem action="drawable-visible" />
+        <menuitem action="drawable-linked" />
+        <menuitem action="layers-lock-alpha" />
+      </menu>
+
+-->
+
+      <separator />
+      <placeholder name="Resize">
+        <menuitem action="layers-resize" />
+        <menuitem action="layers-resize-to-image" />
+      </placeholder>
+      <placeholder name="Scale">
+        <menuitem action="layers-scale" />
+      </placeholder>
+      <placeholder name="Crop">
+        <menuitem action="layers-crop" />
+      </placeholder>
+      <separator />
+    </menu>
+
+    <menu action="colors-menu" name="Colors">
+      <menuitem action="tools-color-balance" />
+      <menuitem action="tools-hue-saturation" />
+      <menuitem action="tools-colorize" />
+      <menuitem action="tools-brightness-contrast" />
+      <menuitem action="tools-threshold" />
+      <menuitem action="tools-levels" />
+      <menuitem action="tools-curves" />
+      <menuitem action="tools-posterize" />
+      <separator />
+      <menuitem action="drawable-desaturate" />
+      <placeholder name="Invert">
+        <menuitem action="drawable-invert" />
+      </placeholder>
+      <separator />
+      <menu action="colors-auto-menu" name="Auto">
+        <menuitem action="drawable-equalize" />
+        <menuitem action="drawable-levels-stretch" />
+      </menu>
+      <menu action="colors-components-menu" name="Components" />
+      <menu action="colors-map-menu" name="Map">
+        <placeholder name="Colormap" />
+        <separator />
+      </menu>
+      <menu action="colors-info-menu" name="Info">
+        <menuitem action="dialogs-histogram" />
+      </menu>
+      <separator />
+      <placeholder name="Modify" />
+    </menu>
+
+    <menu action="tools-menu" name="Tools">
+      <menu action="tools-select-menu" name="Selection Tools">
+	<menuitem action="tools-rect-select" />
+	<menuitem action="tools-ellipse-select" />
+	<menuitem action="tools-free-select" />
+	<menuitem action="tools-foreground-select" />
+	<menuitem action="tools-fuzzy-select" />
+	<menuitem action="tools-by-color-select" />
+	<menuitem action="tools-iscissors" />
+      </menu>
+      <menu action="tools-paint-menu" name="Paint Tools">
+	<menuitem action="tools-bucket-fill" />
+	<menuitem action="tools-blend" />
+	<menuitem action="tools-pencil" />
+	<menuitem action="tools-paintbrush" />
+	<menuitem action="tools-eraser" />
+	<menuitem action="tools-airbrush" />
+	<menuitem action="tools-ink" />
+	<menuitem action="tools-clone" />
+	<menuitem action="tools-heal" />
+	<menuitem action="tools-perspective-clone" />
+	<menuitem action="tools-convolve" />
+	<menuitem action="tools-smudge" />
+	<menuitem action="tools-dodge-burn" />
+      </menu>
+      <menu action="tools-transform-menu" name="Transform Tools">
+	<menuitem action="tools-align" />
+	<menuitem action="tools-move" />
+	<menuitem action="tools-crop" />
+	<menuitem action="tools-rotate" />
+	<menuitem action="tools-scale" />
+	<menuitem action="tools-shear" />
+	<menuitem action="tools-perspective" />
+	<menuitem action="tools-flip" />
+      </menu>
+      <menu action="tools-color-menu" name="Color Tools">
+	<menuitem action="tools-color-balance" />
+	<menuitem action="tools-hue-saturation" />
+	<menuitem action="tools-colorize" />
+	<menuitem action="tools-brightness-contrast" />
+	<menuitem action="tools-threshold" />
+	<menuitem action="tools-levels" />
+	<menuitem action="tools-curves" />
+	<menuitem action="tools-posterize" />
+      </menu>
+      <menuitem action="tools-vector" />
+      <menuitem action="tools-color-picker" />
+      <menuitem action="tools-zoom" />
+      <menuitem action="tools-measure" />
+      <menuitem action="tools-text" />
+      <separator />
+      <menuitem action="dialogs-toolbox" />
+      <menuitem action="context-colors-default" />
+      <menuitem action="context-colors-swap" />
+    </menu>
+
+    <menu action="dialogs-menu" name="Dialogs">
+      <menu action="dialogs-new-dock-menu" name="Create New Dock">
+	<menuitem action="dialogs-new-dock-lcp" />
+	<menuitem action="dialogs-new-dock-data" />
+	<menuitem action="dialogs-new-dock-stuff" />
+      </menu>
+      <xi:include href="dialogs-menuitems.xml" />
+    </menu>
+
+    <menu action="plug-in-menu" name="Filters">
+      <menuitem action="plug-in-repeat" />
+      <menuitem action="plug-in-reshow" />
+      <menu action="plug-in-recent-menu" name="Recently Used">
+        <placeholder name="Plug-Ins" />
+      </menu>
+      <menuitem action="plug-in-reset-all" />
+      <separator />
+      <menu action="plug-in-blur-menu" name="Blur" />
+      <menu action="plug-in-enhance-menu" name="Enhance" />
+      <menu action="plug-in-distorts-menu" name="Distorts" />
+      <menu action="plug-in-light-shadow-menu" name="Light and Shadow">
+        <placeholder name="Light" />
+	<separator />
+        <placeholder name="Shadow" />
+	<separator />
+        <placeholder name="Glass" />
+      </menu>
+      <menu action="plug-in-noise-menu" name="Noise" />
+      <menu action="plug-in-edge-detect-menu" name="Edge-Detect" />
+      <menu action="plug-in-generic-menu" name="Generic" />
+      <menu action="plug-in-combine-menu" name="Combine" />
+      <separator />
+      <menu action="plug-in-artistic-menu" name="Artistic" />
+      <menu action="plug-in-map-menu" name="Map" />
+      <menu action="plug-in-render-menu" name="Render">
+	<menu action="plug-in-render-clouds-menu" name="Clouds" />
+	<menu action="plug-in-render-nature-menu" name="Nature" />
+	<menu action="plug-in-render-pattern-menu" name="Pattern" />
+	<separator />
+      </menu>
+      <menu action="plug-in-web-menu" name="Web" />
+      <menu action="plug-in-animation-menu" name="Animation" >
+        <placeholder name="Animators" />
+	<separator />
+      </menu>
+      <separator />
+    </menu>
+
+    <menu action="extensions-menu" name="Xtns">
+      <placeholder name="Extensions">
+	<menuitem action="dialogs-module-dialog"/>
+      </placeholder>
+      <placeholder name="Languages"/>
+      <separator/>
+    </menu>
+
+    <menu action="help-menu" name="Help">
+      <menuitem action="help-help" />
+      <menuitem action="help-context-help" />
+      <menuitem action="dialogs-tips" />
+      <menuitem action="dialogs-about" />
+      <separator />
+    </menu>
+
+  </menubar-and-popup>
+
+</ui>

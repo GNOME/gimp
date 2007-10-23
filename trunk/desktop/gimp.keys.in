@@ -1,0 +1,25 @@
+# also image/x-bmp
+image/bmp
+image/g3fax
+image/gif
+image/jpeg
+# also image/x-png
+image/png
+image/tiff
+# also image/bmp
+image/x-bmp
+image/x-compressed-xcf
+image/x-pcx
+# also image/png
+image/x-png
+image/x-portable-anymap
+image/x-portable-bitmap
+image/x-portable-graymap
+image/x-portable-pixmap
+image/x-psd
+image/x-sun-raster
+image/x-tga
+image/x-xbitmap
+image/x-xcf
+image/x-xpixmap
+image/x-xwindowdump

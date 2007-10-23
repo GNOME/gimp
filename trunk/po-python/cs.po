@@ -1,0 +1,316 @@
+# translation of cs.po to Czech
+# translation of cs.po to
+# Czech translation of GIMP python
+# Copyright (C) 2001,2003, 2006, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2004, 2005 Miloslav Trmac <mitr@volny.cz>
+#
+# Stanislav Brabec <utx@penguin.cz>, 2000-2001.
+# Michal Bukovjan <bukm@centrum.cz>, 2003.
+# Miloslav Trmac <mitr@volny.cz>, 2003 - 2005.
+# Jakub Friedl <jfriedl@suse.cz>, 2006, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: cs\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-08-10 17:14+0200\n"
+"PO-Revision-Date: 2007-08-17 18:50+0200\n"
+"Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: ../plug-ins/pygimp/gimpfu.py:380
+msgid "Missing exception information"
+msgstr "Chybějící informace o výjimce"
+
+#: ../plug-ins/pygimp/gimpfu.py:389
+#, python-format
+msgid "An error occured running %s"
+msgstr "Při běhu %s došlo k chybě"
+
+#: ../plug-ins/pygimp/gimpfu.py:400
+msgid "_More Information"
+msgstr "_Více informací"
+
+#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
+#: ../plug-ins/pygimp/gimpfu.py:524
+msgid "No"
+msgstr "Ne"
+
+#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
+msgid "Yes"
+msgstr "Ano"
+
+#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
+msgid "Python-Fu File Selection"
+msgstr "Výběr souboru Python-Fu"
+
+#: ../plug-ins/pygimp/gimpfu.py:569
+msgid "Python-Fu Folder Selection"
+msgstr "Výběr složky Python-Fu"
+
+#: ../plug-ins/pygimp/gimpfu.py:659
+#, python-format
+msgid "Invalid input for '%s'"
+msgstr "Neplatný vstup pro '%s'"
+
+#: ../plug-ins/pygimp/gimpui.py:175
+msgid "Python-Fu Color Selection"
+msgstr "Výběr barev Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+msgid "Saving as colored XHTML"
+msgstr "Ukládání jako barevné XHTML"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+msgid "Save as colored XHTML"
+msgstr "Uložit jako barevné XHTML"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+msgid "Colored XHTML"
+msgstr "Barevné XHTML"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+msgid "Character _source"
+msgstr "Zdroj _znaku"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+msgid "Source code"
+msgstr "Zdrojový kód"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+msgid "Text file"
+msgstr "Textový soubor"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+msgid "Entry box"
+msgstr "Vstupní pole"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+msgid "_File to read or characters to use"
+msgstr "_Soubor ke čtení nebo znaky k použití"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+msgid "Fo_nt size in pixels"
+msgstr "_Velikost písma v pixelech"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
+msgid "_Write a separate CSS file"
+msgstr "_Zapsat oddělený CSS soubor"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
+msgid "Python Console"
+msgstr "Konzole Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
+msgid "_Browse..."
+msgstr "_Procházet..."
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
+msgid "Python Procedure Browser"
+msgstr "Prohlížeč procedur Pythonu"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Nelze otevřít '%s' pro zápis: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Nelze zapisovat do '%s': %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
+msgid "Save Python-Fu Console Output"
+msgstr "Uložit výstup konzole Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
+msgid "Interactive Gimp-Python interpreter"
+msgstr "Interaktivní interpretr Gimp-Pythonu"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
+msgid "_Console"
+msgstr "_Konzole"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+msgid "Add a layer of fog"
+msgstr "Přidat vrstvu mlhy"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+msgid "_Fog..."
+msgstr "_Mlha..."
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+msgid "_Layer name"
+msgstr "Jméno _vrstvy"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+msgid "Clouds"
+msgstr "Mraky"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+msgid "_Fog color"
+msgstr "Barva _mlhy"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+msgid "_Turbulence"
+msgstr "_Turbulence"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+msgid "Op_acity"
+msgstr "_Krytí"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+msgid "Offset the colors in a palette"
+msgstr "Posunout barvy v paletě"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+msgid "_Offset Palette..."
+msgstr "P_osunout paletu..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+msgid "Palette"
+msgstr "Paleta"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
+msgid "Off_set"
+msgstr "Po_sun"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+msgid "Sort the colors in a palette"
+msgstr "Třídit barvy v paletě"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+msgid "_Sort Palette..."
+msgstr "_Třídit paletu..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+msgid "Color _model"
+msgstr "Barevný _model"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "RGB"
+msgstr "RGB"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+msgid "HSV"
+msgstr "HSV"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+msgid "Channel to _sort"
+msgstr "Kanál k _setřídění"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+msgid "Red or Hue"
+msgstr "Červená nebo odstín"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+msgid "Green or Saturation"
+msgstr "Zelená nebo sytost"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+msgid "Blue or Value"
+msgstr "Modrá nebo hodnota"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+msgid "_Ascending"
+msgstr "_Vzestupně"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "Vytvořit opakující se přechod z barev palety"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
+msgid "Palette to _Repeating Gradient"
+msgstr "Paleta do _opakujícího se přechodu"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
+msgid "Create a gradient using colors from the palette"
+msgstr "Vytvořit přechod pomocí barev z palety"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
+msgid "Palette to _Gradient"
+msgstr "Paleta do _přechodu"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
+msgid "Slice"
+msgstr "Rozřezat"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr "Rozřeže obrázek podle vodítek, vytvoří dílčí obrázky a kód tabulky v HTML"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
+msgid "_Slice..."
+msgstr "_Rozřezat..."
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+msgid "Path for HTML export"
+msgstr "Cesta pro export HTML"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+msgid "Filename for export"
+msgstr "Jméno souboru pro export"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+msgid "Image name prefix"
+msgstr "Předpona jména obrázku"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+msgid "Image format"
+msgstr "Formát obrázku"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+msgid "Separate image folder"
+msgstr "Oddělená složka pro obrázky"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+msgid "Folder for image export"
+msgstr "Složka pro export obrázku"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Space between table elements"
+msgstr "Prostor mezi prvky tabulky"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+msgid "Javascript for onmouseover and clicked"
+msgstr "Javascript při přejetí myší a kliknutí"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+msgid "Skip animation for table caps"
+msgstr "Vynechat animaci záhlaví tabulky"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+msgid "Add a drop shadow to a layer, and optionally bevel it"
+msgstr "Přidat vrstvě stín a volitelně jej zkosit"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+msgid "_Drop Shadow and Bevel..."
+msgstr "_Vržený stín a zkosení..."
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+msgid "_Shadow blur"
+msgstr "Rozostření _stínu"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+msgid "_Bevel"
+msgstr "_Zkosení"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+msgid "_Drop shadow"
+msgstr "_Vržený stín"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+msgid "Drop shadow _X displacement"
+msgstr "_X posun vrženého stínu"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
+msgid "Drop shadow _Y displacement"
+msgstr "_Y posun vrženého stínu"
+

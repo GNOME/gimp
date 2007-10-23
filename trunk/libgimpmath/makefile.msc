@@ -1,0 +1,39 @@
+## Makefile for building the GIMP DLLs and LIBs with Microsoft C.
+## Use: nmake -f makefile.msc
+
+TOP = ..\..
+PRJ_TOP = ..
+!include $(TOP)\glib\build\win32\make.msc
+
+!INCLUDE $(PRJ_TOP)\gimpdefs.msc
+PKG_VER = $(GIMP_VER)
+
+################################################################
+
+# Nothing much configurable below
+
+INCLUDES = -I.. 
+# DEFINES = -DG_LOG_DOMAIN=\"LibGimpMath\"
+DEPCFLAGS = \
+	-FImsvc_recommended_pragmas.h \
+	$(GLIB_CFLAGS)
+DEPLIBS = $(GLIB_LIBS)
+
+all : \
+	..\config.h \
+	gimpmath-$(GIMP_VER).dll
+
+..\config.h : ..\config.h.win32
+	copy ..\config.h.win32 ..\config.h
+
+install : all
+	$(INSTALL) gimpmath-$(GIMP_VER).dll $(BIN)
+
+OBJECTS = \
+	gimpmatrix.obj \
+	gimpmd5.obj \
+	gimpvector.obj \
+
+gimpmath-$(GIMP_VER).dll : $(OBJECTS) gimpmath.def
+	$(CC) $(CFLAGS) -LD -Fegimpmath-$(GIMP_VER).dll $(OBJECTS) $(DEPLIBS) $(LDFLAGS) user32.lib /def:gimpmath.def
+

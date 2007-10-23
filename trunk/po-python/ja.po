@@ -1,0 +1,37 @@
+# GIMP Python Japanese message catalog
+# Copyright (C) 2000,2003 Free Software Foundation, Inc.
+# Shirasaki Yasuhiro <yasuhiro@gnome.gr.jp>, 2000
+# Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2000
+# KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003.
+# Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2003.
+# Tadashi Jokagi <elf2000@users.sourceforge.net>, 2005.
+# OKANO Takayoshi <kano@na.rim.or.jp>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-python HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2005-10-26 23:00+0900\n"
+"Last-Translator: OKANO Takayoshi <kano@na.rim.or.jp>\n"
+"Language-Team: Japanese <translation@gnome.gr.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr "Python コンソール"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+msgid "_Browse..."
+msgstr "参照(_B)..."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#, fuzzy
+msgid "Gimp-Python Console"
+msgstr "Python コンソール"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""

@@ -1,0 +1,807 @@
+
+            The GNU Image Manipulation Program Version 1.3
+                          A Colorspace Odyssey
+
+
+GIMP 1.3 used to be the development branch of The GIMP. Here's where
+the development took place on the road to GIMP version 2.0. This file
+lists the changes for each release in this development cycle.
+
+
+Bugs fixed in GIMP 2.0.0
+========================
+- 137766: compress text undo steps (Sven)
+- 137876: set a default height for dock windows (Sven, Simon)
+- 137502: check for buggy intltool versions (Raphael)
+- 137930: portability fix for Solaris (Sven)
+- 137968: workaround GIOChannel misfeature on win32 (Tor)
+- 137957: bugfix in floating selection code (Sven, Mitch)
+- 136868: fixed alien glow arrow script (Simon)
+
+
+Bugs fixed in GIMP 2.0rc1
+=========================
+- 136124: count animation frames starting with 1 (Simon)
+- 122519: allow to share paint options between tools (Mitch)
+- 136227: allow to toggle the histogram scale from the tool dialogs (Sven)
+- 136303: fixed translation of preview widget (Sven)
+- 136321: fixed bug in Plasma plug-in (Sven)
+- 136371: fixed a crash caused by gimp_query_boolean_box (Sven)
+- 119905: configurable undo preview size (Sven)
+- 136524: fixed Shadow Bevel script (Yosh)
+- 136535: enable i18n in SVG plug-in (Yuheng Xie, Sven)
+- 136081: allow to use the webbrowser to access help (Brix, Sven)
+- 128588: resurrected Save button in input devices dialog (Simon)
+- 136489: added boolean return values to gimp_edit_[cut|copy] (Mitch)
+- 136706: added missing i18n in IfsCompose plug-in (Sven)
+- 136713: added missing i18n in ImageMap plug-in (Sven)
+- 131965: cancel tools instead of resetting when image becomes dirty (Mitch)
+- 12253:  only cancel tool operation if tool is active on the image that
+          is becoming dirty (Mitch)
+- 136343: fixed wrong function prototypes (Mitch)
+- 136636: workaround a GDK problem on win32 (Mitch)
+- 136747: fixed problem in gimp-print configure check (Yosh)
+- 136850: fixed crash when toggling tool preview (Sven)
+- 136937: allow translation of tool-option menus (Sven)
+- 136645: fixed crash when dropping pattern on a text layer (Sven)
+- 136907: fixed off-by-one error in gimp_pixel_fetcher_get_pixel() (Simon)
+- 73610:  improvements to Script-Fu error reporting (Kevin Cozen)
+- 136702: made supersampling in transform tools optional (Raphael, Mitch)
+- 118356: keep the font size fixed when changing the unit (Sven)
+- 136623: don't set the text color on modified text layers (Sven)
+- 135023: show mask state on unselected layers also (Simon)
+- 137076: don't discard session info for dialogs hidden with Tab (Mitch)
+- 124176: use a counter to track undo_[freeze|thaw] (Simon)
+- 128833: don't make tool dialogs transient to the image window (Sven)
+- 64835:  on startup test if a swap file can be created (Simon, Raphael)
+- 136909, 137242, 81479: update the menus when a plug-in finished (Simon)
+- 137435: fixed sort order in plug-in menus for broken locales (Simon)
+- 137529: don't crash on invalid brush hoses (Simon)
+- 136996: search help pages in the users locale (Sven)
+- 137151: make accelerators work in gtk+-2.4 if there's no menubar (Mitch)
+- 136623, 136645: properly handle modifications to text layers (Sven)
+- 130985, 120021: implemented text undo (Sven)
+- 137612: improve tooltips for GimpScaleEntry (Sven)
+- 137737: show all user interface elements in the Jigsaw plug-in (Sven)
+- 137753: added a shortcut for the Path tool (Simon)
+- 137754: added a menu entry and shortcut for "Path to Selection" (Simon)
+- 137170: fixed crash with floating selections on quick-mask (Simon, Sven)
+- 137786: duplicate the text when duplicating a text layer (Sven)
+- 137566: fixed off-by-one errors on the canvas (Pedro)
+
+Other contributions: 
+  Jakub Steiner, Eric Pierce
+
+
+Bugs fixed in GIMP 2.0pre4
+==========================
+- 128825: Improved misleading debug output and hide it in the stable branch
+          (Raphael)
+- 133467: Fixed autoshrink selection (Mitch)
+- 131634: Fixed text-circle script-fu (David Odin)
+- 133532: Quit the imagemap plug-in when it is finished (Sven)
+- 133456: Disallow editing of data objects which have no save functionality
+          (Mitch)
+- 113142: Don't attempt to render the display out of bounds (Mitch)
+- 133763: Fix use of EXEEXT in tiff checks (Yosh)
+- 131044: Attempt to read layer names from TIFF files (Pablo d'Angelo)
+- 133490: Fixed handling of missing pluginrc file (Sven)
+- 121074: Suppress some harmless warnings in the stable branch (Sven)
+- 132351: Fixed harmless iscissors tool warnings (Sven)
+- 97999:  Indicate progress when scaling a drawable (Sven)
+- 133244: Fixed crash in Curve Bend plug-in (Wolfgang Hofer)
+- 133818: Added a runtime check for fontconfig >= 2.2.0 (Mitch)
+- 130636: Fixed undo handling in Add Bevel script (Simon)
+- 133067: Connect the text tool font with the global font selector (Sven)
+- 133958: Made color values in color picker selectable (Mariano Suárez-Alvarez)
+- 125283: Have configure warn when gimp-print is older than 4.2.6 (Sven)
+- 112012: Use default preview if none can be generated (Mitch)
+- 124969: Improve text tool logic (Sven)
+- 121033: Ensure that non-indexed images cannot have a colormap (Mitch)
+- 132356: Curves tool trapped the mouse (Mitch)
+- 123321: UTF-8 and zero-size layer bug (Adam Moss, Daniel Rogers, Piotr 
+          Krysiuk)
+- 134274: Behave correctly for edit and delete functions for data files (Mitch)
+- 134285: Improve snap behaviour for grid and guides (Simon)
+- 134274: Fix data file initialisation routine (Mitch)
+- 134423: Fix GIF plug-in when used without display (Sven)
+- 134419: Fix undo button behaviour in GFig plug-in (Sven)
+- 134562: Ensure tile cache cannot write to freed memory (Mitch)
+- 134512: Exclude undo stack from size of memory in an image when scaling 
+          (Sven)
+- 134694: Fix bug in Preferences (Mitch)
+- 134410: Make drawing of straight lines better for fuzzy brushes (Simon)
+- 125303: Remove per-channel gray point picker from levels dialog (Dave 
+          Neary)
+- 134752: Improve clipboard buffer detection between different images in 
+          the same GIMP instance (Mitch)
+- 122049: Validate numerical input in pygimp plug-ins, and fix the Sphere 
+          plug-in (Dave Neary, Florian Traverse)
+- 130568: Mostly fix Van Gogh (LIC) plug-in (Simon)
+- 70673:  Let Curves and Levels widgets scale with the dialog (Sven)
+- 135059: Remember the preview setting for all ImageMap tools (Sven)
+- 135630: Don't make the resolution calibration dialog modal (Sven, Pedro)
+- 133266: Saner max. value for the blend tool's supersampling (Sven, Pedro)
+- 135866: Fix displacement handling in bumpmap plug-in (Pedro, Joao)
+- 135994: Fix offsets when scaling or resizing vectors (Simon)
+- 133453: Experiments with global shortcuts (Mitch, Simon)
+
+Other contributions: 
+  Manish Singh, Michael Natterer, Sven Neumann, Henrik Brix Andersen,
+  Jakub Steiner, Simon Budig
+
+
+Bugs fixed in GIMP 2.0pre3
+==========================
+- 127451: Anchor floating selection when creating a text layer (Mitch)
+- 50649:  Allow to call script-fu scripts from plug-ins (Mitch)
+- 132617: Improved gimp-remote behaviour (Sven)
+- 132036: Fixed issues with libart scan conversion (Simon)
+- 132041: Made info window not grab the focus (Mitch)
+- 132077: Redraw layer boundary when using transform tools (Mitch)
+- 132089: Flip tool misbehaviours (Mitch)
+- 132032: User interface issues with Plugin Details (David Odin)
+- 132145: Use default values when stroking from the PDB (Mitch)
+- 132162: Anchoring a floating selection on a channel (Mitch)
+- 132271: Mosaic filter on selections (Simon)
+- 132322: gimp-levels on grayscale images (Mitch)
+- 132329: Info window doesn't show inital values (Shlomi Fish)
+- 118084: Info window not updated in automatic mode (Shlomi Fish)
+- 132495: Positioning of glyphs that extend the logical rectangle (Sven)
+- 108659: Use g_spawn in postscript plug-in (Peter Kirchgessner)
+- 132508: Problems with path tool in Edit mode (Simon)
+- 132504: Fixed unsharp mask script (Mitch)
+- 132595: Don't draw the selection if it's hidden (Sven)
+- 132027: Crash in gimpressionist (Sven)
+- 132596: Use default values for color DND (Mitch)
+- 132493: Tuned Comic Logo script (Pedro Gimeno)
+- 132649: Allow to fill the whole selection using bucket-fill (Mitch)
+- 131902: Improved handling of missing tags in TIFF loader (Andrey Kiselev)
+- 93806:  Validate script-fu input (Yosh)
+- 132214: Differentiate writable and readonly data directories (Mitch)
+- 131964: Zoom ratio problem (Simon)
+- 132969: Set help-id for tool on tool options dock (Mitch)
+- 132999: Make assembler code PIC safe (Yosh)
+- 119878: Use the same keyboard shortcuts in all GIMP windows
+          (except the toolbox window) (Mitch)
+- 131975 & 
+- 132297: Disable some warnings while loading TIFFs (Raphael)
+- 129529: Add a "randomize" toggle to random number widget (Dave Neary)
+- 133099: Duplicate PDB entries problem (Mitch)
+- 133122: Disallow renaming of layer masks and some floating selections (Mitch)
+- 130118: Allow non-UTF8 characters in the GIMP home directory (Mitch)
+- 122026: Workaround a bug in gdk_draw_segments() (David Odin)
+- 133280: Remove deleted scripts from the menu (Mitch)
+- 133270: Replace deprecated enum values in scripts (Kevin Cozens)
+- 133180: Sort menu entries for save and load procedures (Mitch)
+- 131563: Use percentages for zoom ratios (Simon, Sven)
+
+Other contributions:
+  Manish Singh, Tor Lillqvist, Jakub Steiner, Michael Natterer,
+  Sven Neumann, Kevin Cozens
+
+
+Bugs fixed in GIMP 2.0pre2
+==========================
+- 130828: Compile error with gcc 2.95 (Adrian Bunk)
+- 35335:  Curve tool doesn't conserve black (Simon)
+- 130866: Remove multiple PNG entries in file type dropdown (Brix)
+- 106991: Add mnemonics for all menu items (finished by Mitch)
+- 130869: Add smaller image templates (Dave Neary)
+- 130916: Handle multiline texts better (Mitch)
+- 120424: Add dirty flag to default image title (Brix)
+- 130912: Fix rounding errors in JPEG plug-in (keith@goatman.me.uk)
+- 131016: Add support for layer offsets in multipage tiff loading (Pablo
+          d'Angelo)
+- 124073: Modify behaviour of zoom tool to avoid funny fractions (Dave Neary, 
+          Simon)
+- 131088: fix select-to-pattern script-fu (Mitch)
+- 82478:  Fix zoom handling in fractal explorer (Pedro Gimeno)
+- 115793: Make thumbnail preview of indexed images match display (Pedro Gimeno)
+- 130471: Handle RGBA images correctly in the CEL plug-in (Dov Grobgeld)
+- 131109: Remove EMX specific code (Sven)
+- 130118: Handle GIMP2_DIRECTORY with non-UTF-8 characters correctly (Tor 
+          Lillqvist, Sven)
+- 82465:  Make preview match image when image is greyscale (Sven)
+- 92586:  Force SF_IMAGE value to reflect the selected image (Sven)
+- 116765: Fix selection artifacts while moving selections (Pedro Gimeno, Mitch)
+- 131215: Only call bind_textdomain_codeset when available (Reinhard Geissler)
+- 125141: Resolve API issues with GimpPixelFetcher and GimpRegionIterator 
+          (David Odin, Maurits Rijk)
+- 109078: Fix histogram for graylevel images (Pedro Gimeno, Mitch)
+- 131146: Fix drag & drop of patterns to layer masks (Dave Neary, Mitch) 
+- 128112: Use a better error message if help files are not present (Mitch)
+- 78732:  Don't paste outside the visible screen, if possible (Mitch)
+- 131561: Make "Condensed" fonts available for use (Manish Singh)
+- 71922:  Fix SuperNova preview for Alpha channel (David Odin)
+- 82464:  Fix SuperNova preview for greyscale images (David Odin)
+- 121966: Fix SuperNova plug-in (David Odin)
+- 110610: Allow user to choose file formats even if the current image type is 
+          not supported by them (Pedro Gimeno)
+- 131980: Fix crash in crop tool (David Odin, Sven)
+- 131030: Allow saving data without pre-multiplying by alpha channel in tiff 
+          plug-in (Pablo d'Angelo, Dave Neary)
+- 125864: Guides behave correctly when spacing is set to 1px (Brix)
+- 131721: Fix handling of alpha channels across undo steps (Mitch)
+- 128025: Fix behaviour when there is a floating selection (Mitch)
+- 131076: Make fuzzy select tool respect alpha channel in indexed mode (Mitch)
+- 131779: Improve indexed scaling dialog (Mitch)
+- 127673: Overlapping widgets in gradient editor (Mitch)
+
+Other contributions:
+  David Odin, Manish Singh, Simon Budig, Michael Natterer, Sven Neumann,
+  Tor Lillqvist, Henrik Brix Andersen
+
+
+Overview of Changes in GIMP 2.0pre1
+===================================
+- Persistent user preferences for PNG save [Yosh]
+- Replaced old "About" dialog [Simon]
+- Allow removal of text attributes from text layer [Sven]
+- Add optimisation option to png (clear transparent pixels) [Joao]
+- Add POSIX shared memory implementation, and use it on MacOS X [Yosh]
+- Dashed selection and path stroking [Simon]
+- Grey picker in Levels dialog conserves lightness [Bolsh]
+- Created a library for handling thumbnails [Sven]
+- Support for multipage TIFFs [Andrey Kiselev]
+- Added a channel mixer plug-in [Martin Guldahl, Yosh]
+- PDB cleanup and compatibility mode [Mitch]
+- Cleaned up libgimp API [David Odin]
+- Lots of bug fixes
+
+Other contributors:
+  Adam Moss, Jakub Steiner, Helvetix Victorinox, Pedro Gimeno, Adrian 
+  Bunk, Abel Cheung, Maurits Rijk, Ville Pätsi, Marco Munari, Shlomi 
+  Fish, Jakub Steiner, Raphaël Quinet, David Gowers, Michael Schumacher
+
+
+Overview of Changes in GIMP 1.3.23
+==================================
+- Color proof display filter using ICC profiles written by Banlu Kemiyatorn
+- New gimprc options to work around window management problems [Sven, Brix]
+- Fixes for using GIMP on Xinerama setups [Sven]
+- Numerous libgimp* API cleanups [Mitch, Sven]
+- Theme switching in the preferences dialog [Mitch]
+- Added a small theme [Mitch]
+- Cleanup and unification of message strings [Mitch]
+- 64bit clean libgimp API [Yosh]
+- New plug-in color selector using color-selector modules [Mitch]
+- GimpCanvas drawing abstraction [Sven]
+- Added DICOM file plug-in by Dov Grobgeld
+- Imported new WMF plug-in from libwmf2 [Sven, Mitch]
+- A session name can be given on the command-line [Sven]
+- Allow to move image windows and docks between screens [Mitch, Sven] 
+- Fixed multi-head issues [Mitch]
+- Allow to merge visible paths [Simon]
+- Redone GimpDialog API [Mitch]
+- Load GIMP brush format version 3 [Sven]
+- Allow to use GIMP without any fonts [Sven]
+- Improved animoptimize plug-in [Raphaël]
+- Lots of bug fixes
+
+Other contributors:
+  Ville Pätsi, Eric Pierce, Tor Lillqvist, Henrik Brix Andersen,
+  Manish Singh, Dom Lachowicz, Francis James Franklin, Dave Neary,
+  Maurits Rijk, Joao S. O. Bueno, Michael Schumacher, Daniel Rogers,
+  Hans Breuer, Jakub Steiner
+
+
+Overview of Changes in GIMP 1.3.22
+==================================
+- Made GIMP compile and work with gtk+-2.3 [Yosh]
+- Replaced histogram tool with a histogram dialog [Sven] 
+- Multi-head safety [Sven, Yosh]
+- Changes for future compatibility of text layers [Sven]
+- Histogram scale configurable for all tools and defaults to linear [Sven]
+- Better default settings
+- Completed configurability of normal and fullscreen view [Sven, Bolsh]
+- GimpConfig cleanups and improvements [Mitch, Sven]
+- Allow to configure the default grid in your gimprc [Brix]
+- Improved session handling; store more settings like the position of
+  dock panes and the selected page in the dockbook [Mitch]
+- Auto-scrolling for DND in list views [Mitch]
+- Refresh rendering of paint strokes more often [Mitch]
+- Refactored handling of modifier keys for tools [Mitch]
+- Changed the redo shortcut to Ctrl-Y [Sven]
+- Numerous plug-in cleanups [Maurits, Bolsh] 
+- Code documentation [Bolsh, Helvetix, Sven, Mitch]
+- Lots of bug fixes
+
+Other contributors:
+  Ville Pätsi, Simon Budig, Tor Lillqvist, Pedro Gimeno, Seth Burgess,
+  Jakub Steiner, David Odin, Ed Halley, Wolfgang Hofer, Vesa Halttunen
+
+
+Overview of Changes in GIMP 1.3.21
+==================================
+- Allow to save tool options as named presets [Mitch].
+- Stroke paths using libart [Simon, Bolsh, Mitch, Sven, Ville]
+- Better looking and more accessible dockables [Mitch, Sven]
+- Fixes for right-to-left rendering [Sven, Mitch]
+- Rewritten webbroswer plug-in [Brix]
+- Much improved path tool [Simon, Mitch]
+- Export GIMP paths to SVG [Sven, Simon]
+- Import SVG paths as GIMP paths [Sven, Simon]
+- Added SVG file plug-in from librsvg and improved it [Sven]
+- Store new vectors in XCF [Simon, Mitch]
+- Allow to toggle visibility of paths in path list [Mitch]
+- Move tool now also moves paths [Mitch]
+- Some progress towards gimp-console, a gtk-less GIMP for batch mode [Mitch]
+- Improved Decompose/Compose plug-ins [Alexey Dyachenko, Sven]
+- More SIMD compositing code [Helvetix]
+- Right mouse buttons now also cancels paint operations [Mitch]
+- More internal code cleanup and documentation [Mitch, Sven]
+- Documented libgimpmath [DindinX]
+- Lots of bug fixes
+
+Other contributors:
+  Adam D. Moss, Dom Lachowicz, Manish Singh, Jakub Steiner,
+  Christian Neumair, Seth Burgess, Maurits Rijk, David Necas,
+  Tor Lillqvist, Ville Pätsi, Morten Eriksen, Pedro Gimeno
+
+
+Overview of Changes in GIMP 1.3.20
+==================================
+- Improved documentation of the app directory [Mitch, Sven]
+- Image update optimizations [Mitch]
+- font-map script improvements [Sven]
+- PDB API to access fonts [Sven]
+- Portability fixes for x86-64 [Yosh]
+- Enabled SSE and SSE2 compositing code [Helvetix]
+- GimpSelection class added [Mitch]
+- Pullout parameter added to RGB->CMYK conversions [Sven] 
+- Basic framework for future help system in place [Mitch]
+- Screenshot plug-in rewritten [Brix]
+- Font list updates on the fly [Yosh]
+- Generic interface for stroking selections and paths [Mitch]
+- Further improvements to the path tool [Simon]
+- Remove libgck from public API [Mitch]
+- Lots of bug fixes
+
+Other contributors: 
+  Maurits Rijk, Ville Pätsi, Larry Ewing, Dmitry G. Mastrukov,
+  Pedro Gimeno, Raphaël Quinet, S. Mukund, Andy Wallis, Carl Adams,
+  Tino Schwarz, Tor Lillqvist, Emmet Caulfield, Guillermo S. Romero,
+  Dave Neary, Wolfgang Hofer
+
+
+Overview of Changes in GIMP 1.3.19
+==================================
+- Migration towards new gimp-help system [Mitch]
+- Deletion of anchor points on a path [Simon]
+- Path stroke moving [Simon]
+- Path stroke splitting by deleting an edge (Ctrl-click while in 
+  Delete mode) [Simon]
+- Drag path edges modifies curve [Simon]
+- DInsertion of points on path edges [Simon]
+- Joining two stroke paths is possible (Shift-Ctrl-Alt-Click on
+  the second end-point) [Simon]
+- Polygonal paths [Simon]
+- Improved new composite functions and enabled them by default [Helvetix]
+- UTF-8 validate all strings coming in from the PDB [Yosh, Mitch]
+- Paint-core improvements and bug-fixes [Jay Cox]
+- Added more mnemonics [Brix]
+- Lots of bug fixes
+
+Other contributors:
+  Adam D. Moss, Tor Lillqvist, Jakub Steiner, Alan Horkan,
+  Avi Bercovich, S. Mukund, Maurits Rijk, Guillermo S. Romero,
+  Seth Burgess, Wolfgang Hofer, Ville Pätsi, Sven Neumann
+
+
+Overview of Changes in GIMP 1.3.18
+==================================
+- Made a bunch of improvements to the path tool [Simon]
+- Added lots of mnemonnics for plug-ins [Brix]
+- Build fixes for Win32 [Hans, Tor]
+- Improvements to the grid [Brix]
+- Improved compiler checks for MMX code [Helvetix, Sven]
+- Allow patent-free compression for GIF [Cameron]
+- Add several edge detection algorithms to the edge tool [Bolsh]
+- Fixed handle leak in plug-ins on Win32 [Tor]
+- Changed default quality for jpegs [Raphaël]
+- Add changing opacity via cursor keys [Simon]
+- Fix text tool outlines [Mitch]
+- Serialize/deserialize documentation [Sven]
+- Colourcube analysis plug-in added [Yosh]
+- Lots of code clean-up in displayshell [Mitch]
+- Camp organisation [Sven, Mitch]
+- Added a working gimp.spec for building RPMs [drc]
+- Lots of bug fixes
+
+Other contributors:
+  Maurits Rijk, Raphaël Quinet, Adam Moss
+
+
+Overview of Changes in GIMP 1.3.17
+==================================
+- Made the text tool optionally create a path [Sven, Mitch]
+- Added the ability to reverse gradients to the blend tool [Mitch]
+- Added dithering to the blend tool [Alastair M. Robinson]
+- Changed all(?) GIMP-1.4 references to GIMP-2.0 [Sven]
+- Allow to transform paths using the transform tools [Mitch]
+- Added a simple CMYK color selector [Sven]
+- Added naive RGB <-> CMYK conversion routines [Sven]
+- Generalized paint tools [Mitch]
+- Finally a brush-shaped cursor for all paint tools [Mitch]
+- Started to integrate new composite functions [Helvetix]
+- Made the style for dockable tabs configurable [Mitch]
+- Some preparations for text transformations [Sven]
+- Store grid settings in XCF [Brix]
+- Redone assembly checks and run-time checks for CPU features [Sven]
+- Added lots of mnemonics to the menus [Jimmac]
+- Support for comments in PNG files [Sven]
+- Constified the libgimp API and adapted all plug-ins [Yosh, Sven]
+- Cleaned up the brush/font/gradient/pattern selector API [Mitch]
+- Support for patterns with alpha channel [Bolsh]
+- Lots of bug fixes
+
+Other contributors:
+  Eric Pierce, Joao S. O. Bueno, Tor Lillqvist, Damien Carbery,
+  Maurits Rijk
+
+
+Overview of Changes in GIMP 1.3.16
+==================================
+- Vector tool improvements [Simon]
+- Import GDynText layers [Sven]
+- Save and load text layers to/from XCF files [Sven]
+- Added the ability to show a grid over the canvas [Brix]
+- Keep EXIF data in JPEG files using libexif [Bolsh]
+- Changed a couple of gimprc defaults [Bolsh]
+- Updated PS keybindings (ps-menurc) [Eric Pierce]
+- Clarified the semantics of EXTENSION and PLUGIN [Mitch]
+- Updates to the Win32 build system [Hans]
+- Improved brush/pattern/font/gradient selectors in libgimp [Sven]
+- Improved handling of transparency in GIF files [Adam]
+- Cleaned up and improved the message dialogs and error console [Mitch]
+- Added a sample sessionrc [Sven]
+- Lots of bug fixes
+
+Other contributors:
+  Yohei Honda, Elad Shahar, Dave Neary, Jakub Steiner
+
+
+Overview of Changes in GIMP 1.3.15
+==================================
+
+- Removed color correction tools from toolbox again [Sven]
+- Factored out color-picking code into a GimpColorTool class [Sven]
+- Updates to the Win32 build system [Tor Lillqvist, Hans Breuer]
+- Removed the need for special casing for some platforms [Yosh, Sven]
+- Added item rotation (90, 180, 270 degrees) [Sven, Mitch]
+- Load old paths as new vector objects [Mitch]
+- Apply transformations to linked items [Mitch]
+- Generalized item transformations [Mitch]
+- Improved session managment [Mitch]
+- Speed up fonts query [Yosh]
+- Backed out pluggable tools [Sven]
+- Lots of bug fixes
+
+Other contributors:
+  Branko Collin, Pedro Gimeno, Dave Neary, Raphaël Quinet, Maurits Rijk,
+  Adam D. Moss, Jakub Steiner
+
+
+Overview of Changes in GIMP 1.3.14
+==================================
+
+- Better resampling for the transform tools [OEyvind Kolaas]
+- Added MNG save plug-in [S. Mukund]
+- Added framework for image templates [Mitch]
+- Vector tool improvements [Simon]
+- Improved look and feel if layer previews are disabled [Mitch, Sven, Jimmac]
+- Keyboard navigation for grid views [Sven]
+- List and grid views for fonts [Mitch, Sven]
+- Some text tool improvements [Sven]
+- Moved gimp-gap into it's own CVS module [Yosh, Sven]
+- More icons in even more sizes [Jimmac, Mitch, Sven]
+- I18n header cleanup [Sven]
+- Lots of bug fixes
+
+Other contributors:
+  Pedro Gimeno, Owen, Raphaël Quinet
+
+
+Overview of Changes in GIMP 1.3.13
+==================================
+
+- New tree-view based popup to select brushes, gradients and such [Mitch]
+- Added color pickers to levels tool for easier color correction [Sven]
+- Allow to create channels from an image's color component [Sven, Mitch]
+- Added a full-screen mode for the image window [Sven, Mitch]
+- Added a simple config file writer to GimpConfig [Sven]
+- Moved gimp-perl into it's own CVS module [Yosh]
+- Migrated all core dialogs from GtkList to GtkTreeView [Mitch]
+- Refactored the GimpDisplayShell update/draw code [Mitch, Sven]
+- Rewrote the Undo History as a GimpDockable [Mitch]
+- Lots of bug fixes
+
+Other contributors:
+  Sunil Mohan Adapa, Tor Lillqvist, Jay Cox, Dave Neary, Michael J. Hammel,
+  Toralf Lund, Raphaël Quinet, Hans Breuer, Tuomas Kuosmanen, David Necas,
+  Jakub Steiner, Simon Budig
+
+
+Overview of Changes in GIMP 1.3.12
+==================================
+
+- Improved and cleaned up undo system [Mitch]
+- Added hooks for plug-in debugging [Yosh]
+- Redesigned the tool options code [Mitch]
+- Converted the API reference to DocBook XML [Sven]
+- Lots of text tool changes [Sven]
+- Factored common code out of a number of plug-ins [Maurits]
+- Cleaned up and improved the code that handles the plug-ins [Mitch]
+- Finished colorblindness display filter using the algorithm contributed
+  by Alex Wade and Robert Dougherty. 
+- Updated the gimprc man-page, or actually, wrote a tool that does it [Sven]
+- Improved the code that handles all the menus [Mitch]
+- Added new PSD save plug-in [Bolsh]
+- Added back SphereDesigner plug-in [Sven]
+- More plug-ins cleaned up [Maurits, Sven]
+- Reorganized startup code [Yosh]
+- Portability fixes for 64bit platforms [Yosh, Sven]
+- Handle large swap files (>2GB) [Sven]
+- Updates to the Win32 build system [Tor Lillqvist, Hans Breuer]
+- More work on the vectors tool [Simon, Mitch]
+- Lots of bug fixes
+
+Other contributors:
+  Garry R. Osgood, Jakub Steiner, Simon Budig, Henrik Brix Andersen,
+  Akkana, Carol Spears, Seth Burgess, Nathan Summers, David Necas,
+  Cameron Gregory, Larry Ewing
+
+
+Overview of Changes in GIMP 1.3.11
+==================================
+
+- Allow to stroke bezier curves with the vectors tool [Simon]
+- Added a first draft of a display filter that simulates
+  color-deficient vision [Mitch, Sven]
+- Added an optional menubar per display [Mitch]
+- Added PDB functions needed by GAP [Wolfgang Hofer, Sven]
+- Updated the Win32 build system [Tor Lillqvist, Hans Breuer]
+- Factored common code out of a number of plug-ins [Maurits]
+- Use g_rand* functions whereever random numbers are needed [Bolsh] 
+- GimpPressionist plug-in cleaned up [Maurits]
+- Finally landed the new gimprc code based on GimpConfig [Sven, Mitch]
+- Added widgets for views on object properties [Mitch]
+- Reimplemented the preferences dialog using GimpConfig [Mitch]
+- Transform tool cleanup [Mitch]
+- Modify the environment of plug-ins according to files installed with the
+  plug-ins. Allows to install Python modules into the GIMP tree. [Yosh]
+- Start plug-ins using g_spawn_async() [Yosh]
+- Lots of bug fixes.
+
+Other contributors:
+  Jim Meyer, Jakub Steiner, Guillermo S. Romero, Henrik Brix Andersen,
+  Nathan Summers, Jeroen Lamain
+
+
+Overview of Changes in GIMP 1.3.10
+==================================
+
+- Text tool can load text files now [Sven]
+- Some unfinished work on the imagemap tools and related widgets [Sven]
+- Undeprecated ink tool [Bolsh, Sven]
+- Slightly tweaked the look and feel of the toolbox [Mitch, Sven]
+- Ported module loading to GTypeModule [Mitch]
+- Resurrected the water color selector [Mitch]
+- Reworked module browser [Mitch]
+- Moved generic datafile loading to LibGimpBase [Mitch]
+- Added GimpColorScale widget [Mitch, Sven]
+- Added GimpPickButton widget [Mitch]
+- Added a color selector dock [Mitch]
+- Added new layer modes (Softlight, Grain Extract, Grain Merge) [UnNamed]
+- Included Gimp-Python with the tarball (try --enable-python)
+- Lots of bug fixes
+
+Other contributors:
+  Maurits Rijk, Michael Niedermayer, Garry R. Osgood, David Necas,
+  Toby Smith, Raphaël Quinet, Dave Neary, Jim Meyer
+
+
+Overview of Changes in GIMP 1.3.9
+=================================
+
+- Some minor improvements to the text tool [Sven]
+- Started to cleanup DND code [Mitch]
+- Added GimpViewableDialog [Mitch]
+- Improved UI of color adjustment tools [Mitch]
+- Added new icons [Jimmac, Mitch]
+- Added GimpSelectionEditor, a view on the current selection [Mitch]
+- Improved imagemap plug-in [Maurits]
+- GUI cleanups [Mitch, Sven, Maurits]
+- Build fixes [Hans, Yosh, Sven]
+- Lots of bug fixes
+
+Other contributors:
+  James Henstridge, Dave Neary, Simon Budig
+
+
+Overview of Changes in GIMP 1.3.8
+=================================
+
+- Lots of plug-ins cleaned up and improved [Maurits]
+- More work on the help browser [Sven]
+- Core code cleanup [Mitch, Sven]
+- Improved icons [Jimmac]
+- Fixed permissions of shared memory segments
+- Build fixes [Yosh, Sven]
+- Bug fixes
+
+Other contributors:
+  Dave Neary, Zbigniew Chyla, Simon Budig
+
+
+Overview of Changes in GIMP 1.3.7
+=================================
+
+- Build fixes
+- Bug fixes
+
+
+Overview of Changes in GIMP 1.3.6
+=================================
+
+- Support tile cache > 4GB on machines with 64bit long integers [Sven]
+- Added support for large files (> 2GB) [Sven]
+- Cleaned up configure, updated to autoconf-2.52 [Sven]
+- Temporary switch to the Move tool when Space is pressed [Mitch]
+- More cleanup of display code [Mitch]
+- Added mnemonics to lots of plug-ins and fixed some bugs [Maurits Rijk]
+- Added new PDB function gimp_image_get_name and corrected behaviour of
+  gimp_image_get_filename [Yosh, Sven]
+- Navigation dialog redone as a dockable [Mitch]
+- Updated print plug-in to new version and depend on libgimpprint [Sven]
+- Generalized and improved the new config framework; use it for parasites,
+  documents and devices  [Mitch, Sven]
+- Started to port the help browser to GtkHtml2 [Sven]
+- Finished implementation of the Thumbnail Managing Standard [Mitch, Sven]
+- Improved Open dialog using the new thumbnails [Mitch, Sven]
+- Use UTF-8 encoded URIs where we used to use filenames [Mitch]
+- Plug-in fixes [Iccii]
+- Added shortcuts to crop layer or image to selection boundary [Mitch]
+- Changes for build on Win32 [Tor Lillqvist, Hans Breuer]
+- Started framework for tools loaded as modules or plug-ins [Nathan]
+- Lots of bugfixes
+- More stuff not mentioned here (see the ChangeLog)
+
+Other contributors:
+  Zbigniew Chyla, OEyvind Kolaas, Nick Lamb, David Monniaux, Raphaël Quinet,
+  Jakub Steiner, Simon Budig
+
+
+Overview of Changes in GIMP 1.3.5
+=================================
+
+- Improved tool options and made them dockable [Mitch]
+- Cleanup of brush, gradient, pattern and palette PDB functions [Mitch]
+- Autogenerate libgimp/gimp_pdb.h [Yosh]
+- Converted the toolbox to a dock [Mitch]
+- Resurrected display filter modules [Mitch]
+- Plug-in code cleanup (colorify) [Maurits Rijk]
+- New menu icons [Jimmac, Mitch]
+- New widgets to choose from enum values [Sven]
+- Enum cleanups [Yosh, Sven]
+- Resizeable docks [Mitch]
+- Parse unitrc and document history using GScanner [Mitch] 
+- Fixes for build on Win32 [Hans]
+- Treeviewified user installation dialog [Yosh]
+- Bugfixes
+- More stuff not mentioned here (see the ChangeLog)
+
+Other Contributors:
+  Rebecca Walter, Tuomas Kuosmanen, Marcel Telka
+
+
+Overview of Changes in GIMP 1.3.4
+=================================
+
+- Improved image status bar and image title [Mitch]
+- Updated thumbnail code according to changes in proposed standard [Sven]
+- Implemented init_proc in plug-ins [Nathan]
+- Allow to choose interpolation for individual transformations [Mitch]
+- More framework for tool plug-ins, landed a first tool [Nathan]
+- Started core/UI separation for the paint tools [Mitch]
+- Win32 fixes [Hans Breuer]
+- Plug-in code cleanups (aa, colortoalpha, glasstile, guillotine, vinvert,
+  pagecurl) [Maurits Rijk, Sven]
+- I18n changes, we now use glib-gettextize and intltoolize [Sven]
+- New layer mask initialization modes [Mitch]
+- Colorpicker, Transform tool and PDB fixes [Mitch]
+- Factored out paint code from the paint tools [Mitch]
+- New vectors infrastructure [Simon]
+- First draft of a new vectors tool [Simon, Mitch]
+- Scanline conversion (Path to selection etc.) changed to use libart [Simon]
+- Undo cleanups [Mitch]
+- Changed tips file format to XML [Sven]
+- Added desktop file for GNOME-2 [Sven]
+- Added GimpItem class to generalize core code even further [Mitch]
+- Improved preferences dialog [Mitch, Sven, Jimmac]
+- New tool icons [Jimmac]
+- Editor widgets for brushes, gradients and palettes [Mitch]
+- Revival of the API reference [Sven]
+- Bugfixes
+- More stuff not mentioned here (see the ChangeLog)
+
+Other Contributors:
+  Manish Singh, Rebecca Walter, Guillermo S. Romero
+
+
+Overview of Changes in GIMP 1.3.3
+=================================
+
+- Most of the code is free of deprecated GTK+ calls now [Mitch, Yosh, Sven]
+- More use of stock icons [Sven, Mitch]
+- New RGB->Indexed quantizer [Adam]
+- Framework for pluggable tools [Nathan]
+- More tool system cleanups [Mitch]
+- Improved image status bar [Mitch]
+- GimpObjects now know their memory footprint [Mitch]
+- GimpUnit cleanup [Sven]
+- Message proofreading [Bex]
+- configure.in should work with autoconf-2.5 [Raja R Harinath]
+- Bugfixes
+- More stuff not mentioned here (see the ChangeLog)
+
+Other Contributors:
+  Simon Budig
+
+
+Overview of Changes in GIMP 1.3.2
+=================================
+
+- Cleanup of display and tools [Mitch]
+- Improvements to tools UI [Mitch]
+- Reenabled brush pipes [Mitch]
+- Started to reorganize menus [Mitch]
+- Cleanup of internal enums [Sven]
+- New config file framework (yet unused) [Sven]
+- Fixes to the Undo and PixelRegion code [Kelly]
+- Optimization and cleanup of the paint-funcs [Daniel]
+- Message proofreading [Bex]
+- Most stuff compiles with -DGTK_DISABLE_DEPRECATED [Mitch]
+- More stuff not mentioned here (see the ChangeLog)
+
+Other Contributors:
+  Guillermo S. Romero, David Neary, David Odin, Roger Leigh, 
+  Ville Pätsi.
+
+
+Overview of Changes in GIMP 1.3.1
+=================================
+
+- Follow GTK+-2.0 and Pango API changes [Yosh, Mitch, Sven]
+- Added Color Erase paint mode [Simon Budig]
+- Proofreading of messages [Rebecca Walter]
+- Improvements to container views [Mitch]
+- Improved tool options [Mitch]
+- Made --no-interface mode work without calling gtk_init() [Mitch]
+- Reworked paint_funcs [Daniel Egger] 
+- Added SF-DIRNAME script-fu parameter [Matteo Nastasi]
+- Lots of internal cleanups [Mitch, Sven]
+- More stuff not mentioned here (see the ChangeLog)
+
+Other Contributors:
+  Guillermo S. Romero, David Neary
+
+
+Overview of Changes in GIMP 1.3.0
+=================================
+
+- Ported almost everything to the GTK+-2.0 API. Check the file INSTALL
+  to learn what libraries we require in detail.
+- Cleaned up the core a lot. The app directory is now broken up into
+  subdirectories that define subsystems with defined dependencies.
+- Seperated GUI from core functionality in almost all places.
+- The core object system does not depend on GTK+ any more.
+- Rewrote large parts of the user interface in a more generic way.
+- Started to rewrite the text tool (completely broken at the moment)
+- Lots of changes in the tool system. All paint tool PDB wrappers are
+  broken at the moment.
+- Split up libgimp and libgimpui in a bunch of smaller utility
+  libraries for plug-ins and the core.
+- Removed GIMP 1.0 compatibility wrappers.
+- Lots of stuff not mentioned here. See the file ChangeLog for more info.

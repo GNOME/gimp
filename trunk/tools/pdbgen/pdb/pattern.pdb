@@ -1,0 +1,127 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub pattern_get_info {
+    $blurb = 'Retrieve information about the specified pattern.';
+
+    $help = <<'HELP';
+This procedure retrieves information about the specified pattern.
+This includes the pattern extents (width and height).
+HELP
+
+    &mitch_pdb_misc('2004', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The pattern name.' }
+    );
+
+    @outargs = (
+	{ name => 'width', type => 'int32', void_ret => 1,
+          desc => "The pattern width" },
+	{ name => 'height', type => 'int32',
+          desc => "The pattern height" },
+	{ name => 'bpp', type => 'int32',
+          desc => "The pattern bpp" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPattern *pattern = (GimpPattern *)
+    gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
+
+  if (pattern)
+    {
+      width  = pattern->mask->width;
+      height = pattern->mask->height;
+      bpp    = pattern->mask->bytes;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub pattern_get_pixels {
+    $blurb = <<'BLURB';
+Retrieve information about the specified pattern (including pixels).
+BLURB
+
+    $help = <<'HELP';
+This procedure retrieves information about the specified. This
+includes the pattern extents (width and height), its bpp and its pixel
+data.
+HELP
+
+    &mitch_pdb_misc('2004', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The pattern name.' }
+    );
+
+    @outargs = (
+	{ name => 'width', type => 'int32', void_ret => 1,
+          desc => "The pattern width" },
+	{ name => 'height', type => 'int32',
+          desc => "The pattern height" },
+	{ name => 'bpp', type => 'int32',
+          desc => "The pattern bpp" },
+        { name => 'color_bytes', type => 'int8array',
+	  desc => 'The pattern data.',
+          array => { desc => 'Number of pattern bytes' } }
+    );
+    
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPattern *pattern = (GimpPattern *)
+    gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
+
+  if (pattern)
+    {
+      width           = pattern->mask->width;
+      height          = pattern->mask->height;
+      bpp             = pattern->mask->bytes;
+      num_color_bytes = pattern->mask->height * pattern->mask->width *
+	                pattern->mask->bytes;
+      color_bytes     = g_memdup (temp_buf_data (pattern->mask),
+                                  num_color_bytes);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+@headers = qw(<string.h> "base/temp-buf.h" "core/gimp.h"
+              "core/gimpcontext.h" "core/gimplist.h"
+              "core/gimpdatafactory.h" "core/gimppattern.h" );
+
+@procs = qw(pattern_get_info pattern_get_pixels);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Pattern';
+
+1;

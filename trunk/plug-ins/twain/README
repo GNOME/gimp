@@ -1,0 +1,93 @@
+TWAIN Plug-in
+Copyright (C) 1999 Craig Setera
+Craig Setera <setera@home.com>
+03/31/1999
+
+Updated for Mac OS X support
+Brion Vibber <brion@pobox.com>
+07/22/2004
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+Based on (at least) the following plug-ins:
+Screenshot
+GIF
+Randomize
+
+Any suggestions, bug-reports or patches are welcome.
+ 
+This plug-in interfaces to the TWAIN support library in order
+to capture images from TWAIN devices directly into GIMP images.
+The plug-in is capable of acquiring the following type of
+images:
+ - B/W (1 bit images translated to grayscale B/W)
+ - Grayscale up to 16 bits per pixel
+ - RGB up to 16 bits per sample (24, 30, 36, etc.)
+ - Paletted images (both Gray and RGB)
+
+Prerequisites:
+ Should compile and run on both Win32 and Mac OS X 10.3 (possibly
+ also on 10.2).
+
+Known problems:
+
+ - Multiple image transfers will hang the plug-in.  The current
+   configuration compiles with a maximum of single image transfers.
+ - On Mac OS X, canceling doesn't always close things out fully.
+ - Epson TWAIN driver on Mac OS X crashes the plugin when scanning.
+ 
+Debugging:
+ There are two different versions of the program included, a standard
+ version and a version built for debugging.  The debugging version is
+ a special version capable of capturing the TWAIN datasource data to
+ a file for later processing.  This feature can be used to create a data
+ dump that can be sent to me if for some reason the plug-in fails for
+ your TWAIN datasource.  The function of the plug-in is controlled by
+ the name of the executable file.  The plug-in should be placed in your
+ plug-ins directory and named as follows:
+
+twain.exe - This is the standard (non-debugging) version.  This file will
+  not behave differently if renamed.  This version is intended to be used
+  unless your TWAIN datasource has some problem.
+
+gtwain.exe - This is the debugging version of the program shipped along.
+  If this program is used as named, it will behave the same as "twain.exe"
+  except that the file C:\twain.log will be written.  This file is a text
+  file with very little information available for debugging.
+
+dtwain.exe - Renaming "gtwain.exe" to "dtwain.exe" in your plug-ins directory
+  will change the behavior of the plug-in.  The menu option will be registered
+  as "TWAIN Acquire (Dump)..." and will cause the TWAIN acquire operation to
+  be dumped to the file "C:\twaincap.bin".  This file contains all of the data
+  necessary to recreate the capture on another system (such as my machine).  The
+  image will not be displayed, as it might cause the plug-in to crash making
+  the data useless.  Instead, a message will be displayed that the image
+  information was dumped to a file.
+
+rtwain.exe - Renaming "gtwain.exe" to "rtwain.exe" in your plug-ins directory
+  will change the behavior of the plug-in.  The menu option will be registered
+  as "TWAIN Acquire (Read)..." and will cause the TWAIN acquire operation to
+  read a previously dumped (using dtwain.exe) TWAIN acquire from 
+  "C:\twaincap.bin".
+
+If you find that you are unable to capture data from you datasource (the plug-in
+crashes or the image is wrong), please capture data using the following steps:
+
+1) Copy gtwain.exe to your plug-ins directory as "dtwain.exe".
+2) Run GIMP.
+3) Choose Xtns->TWAIN Acquire (Dump)...
+4) Choose the datasource settings that are causing problems.
+5) Choose a *SMALL* sample image.
+6) Zip up "C:\twaincap.bin" and "C:\twain.log" and send them to me.

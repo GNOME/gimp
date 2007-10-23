@@ -1,0 +1,350 @@
+.TH GIMP 1 "Januar 23 2007" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+
+.SH NAME
+gimp - an image manipulation and paint program.
+
+
+.SH SYNOPSIS
+.B gimp
+[\-h] [\-\-help] [\-\-help-all] [\-\-help-gtk] [-v] [\-\-version]
+[\-\-license] [\-\-verbose] [\-n] [\-\-new\-instance] [\-a] [\-\-as\-new]
+[\-i] [\-\-no\-interface] [\-d] [\-\-no\-data] [\-f] [\-\-no\-fonts]
+[\-s] [\-\-no\-splash]  [\-\-no\-shm] [\-\-no\-cpu\-accel]
+[\-\-display \fIdisplay\fP] [\-\-session \fI<name>\fP]
+[\-g] [\-\-gimprc \fI<gimprc>\fP] [\-\-system\-gimprc \fI<gimprc>\fP]
+[\-\-dump\-gimprc\fP] [\-\-console\-messages] [\-\-debug\-handlers]
+[\-\-stack\-trace\-mode \fI<mode>\fP] [\-\-pdb\-compat\-mode \fI<mode>\fP]
+[\-\-batch\-interpreter \fI<procedure>\fP] [\-b] [\-\-batch \fI<command>\fP]
+[\fIfilename\fP] ...
+
+
+.SH DESCRIPTION
+.PP
+GIMP is the \fIGNU Image Manipulation Program\fP. It is used to edit
+and manipulate images. It can load and save a variety of image formats
+and can be used to convert between formats.
+.PP
+GIMP can also be used as a paint program. It features a set of drawing
+and painting tools such as airbrush, clone, pencil, and paint
+brush. Painting and drawing tools can be applied to an image with a
+variety of paint modes.  It also offers an extensive array of
+selection tools like rectangle, ellipse, fuzzy select, bezier select,
+intelligent scissors, and select by color.
+.PP
+GIMP offers a variety of plug-ins that perform a variety of image
+manipulations.  Examples include bumpmap, edge detect, gaussian blur,
+and many others. In addition, GIMP has several scripting extension
+which allow for advanced non-interactive processing and creation of
+images.
+.PP
+GIMP ships with a second binary called \fIgimp-console\fP. This binary
+is a console-only version and behaves as if \fIgimp\fP was called with
+the \-\-no\-interface command\-line option.
+.PP
+On platforms with the D-Bus message bus system, GIMP will by default check
+if an instance is already running in this user session. If it detects that,
+it will pass all filenames given on the command-line to the already running
+GIMP instance and quit. 
+
+
+.SH OPTIONS
+.l
+GIMP accepts the following options:
+.TP 8
+.B  \-h, \-\-help
+Show GIMP command\-line options.
+.TP 8
+.B  \-\-help\-all
+Show all command\-line options.
+.TP 8
+.B  \-\-help-gtk
+Show GTK+ command\-line options.
+.TP 8
+.B \-v, \-\-version
+Output version information and exit.
+.TP 8
+.B \-\-license
+Output license information and exit.
+.TP 8
+.B \-\-verbose
+Be verbose and create information on standard output.
+.TP 8
+.B \-n, \-\-new\-instance
+Do not attempt to reuse an already running GIMP instance. Always start a
+new one.
+.TP 8
+.B \-a, \-\-as\-new
+Open filenames passed on the command-line as new images, don't set the
+filename on them.
+.TP 8
+.B \-i, \-\-no\-interface
+Run without a user interface.
+.TP 8
+.B \-d, \-\-no\-data
+Do not load patterns, gradients, palettes, or brushes. Often useful
+in non-interactive situations where startup time is to be minimized.
+.TP 8
+.B \-f, \-\-no\-fonts
+Do not load any fonts. No text functionality will be available if this
+option is used.
+.TP 8
+.B \-\-display \fIdisplay\fP
+Use the designated X display.
+.TP 8
+.B \-s, \-\-no\-splash
+Do not show the splash screen.
+.TP 8
+.B \-\-no\-shm
+Do not use shared memory between GIMP and its plug-ins.
+Instead of using shared memory, GIMP will send the data via pipe. This
+will result in slower performance than using shared memory.
+.TP 8
+.B \-\-no\-cpu\-accel
+Do not use CPU accelerations such as MMX or SSE even if GIMP detects
+that your CPU provides this functionality.
+.TP 8
+.B \-\-session \fI<name>\fP
+Use a different sessionrc for this GIMP session. The given session
+name is appended to the default sessionrc filename.
+.TP 8
+.B \-g, \-\-gimprc \fI<gimprc>\fP
+Use an alternative gimprc instead of the default one. Useful in
+cases where plug-in paths or machine specs may be different.
+.TP 8
+.B \-\-system\-gimprc \fI<gimprc>\fP
+Use an alternate system gimprc file.
+.TP 8
+.B \-\-dump\-gimprc
+Output a gimprc file with default settings.
+.TP 8
+.B \-\-debug\-handlers
+Enable debugging signal handlers.
+.TP 8
+.B \-c, \-\-console\-messages
+Do not popup dialog boxes on errors or warnings. Print the messages on
+the console instead.
+.TP 8
+.B \-\-stack\-trace\-mode \fI{never|query|always}\fP
+If a stack-trace should be generated in case of fatal signals.
+.TP 8
+.B \-\-pdb\-compat\-mode \fI{off|on|warn}\fP
+If the PDB should provide aliases for deprecated functions.
+.TP 8
+.B \-\-batch-interpreter \fI<procedure>\fP
+Specifies the procedure to use to process batch events. The default is
+to let Script-Fu evaluate the commands.
+.TP 8
+.B \-b, \-\-batch \fI<command>\fP
+Execute \fI<command>\fP non-interactively. This option may appear
+multiple times.  The \fI<command>\fP is passed to the batch
+interpreter. When \fI<command>\fP is \fB-\fP the commands are read
+from standard input.
+
+
+.SH ENVIRONMENT
+GIMP respects a number of environment variables.
+.PP
+.TP 8
+.B DISPLAY
+to get the default host and display number.
+.TP 8
+.B GIMP2_DIRECTORY
+to get the name of the personal GIMP directory. If unset @gimpdir@ is
+used.  If this is an absolute path, it is used as is.  If it is a
+relative path, it is taken to be a subdirectory of the home directory.
+.TP 8
+.B GIMP2_DATADIR
+to get the base location for data files such as brushes and patterns.
+If unset @gimpdatadir@ is used.
+.TP 8
+.B GIMP2_LOCALEDIR
+to get the base location for translations. If unset @gimplocaledir@
+is used.
+.TP 8
+.B GIMP2_PLUGINDIR
+to get the base location for plug-ins and modules. If unset
+@gimpplugindir@ is used.
+.TP 8
+.B GIMP2_SYSCONFDIR
+to get the location of configuration files. If unset @gimpsysconfdir@
+is used.
+
+On Linux GIMP can be compiled with support for binary relocatibility.
+This will cause data, plug-ins and configuration files to be searched
+relative to the location of the gimp executable file unless overridden
+by the environment variables mentioned above.
+
+
+.SH FILES
+GIMP's data files are stored in @gimpdatadir@, where ${datarootdir}
+is set on install, but is typically /usr/share. GIMP's system-wide
+configuration files are stored in @gimpsysconfdir@, where ${prefix}
+is typically /usr.
+
+Most GIMP configuration is read in from the user's init file,
+\fB$HOME\fP/@gimpdir@/gimprc. The system wide equivalent is in
+@sysconfdir@/gimprc. The system wide file is parsed
+first and the user gimprc can override the system settings.
+@sysconfdir@/gimprc_user is the default gimprc
+placed in users' home directories the first time GIMP is run.
+
+\fB$HOME\fP/@gimpdir@/devicerc - holds settings for input devices
+together with the tool, colors, brush, pattern and gradient
+associated to that device.
+
+\fB$HOME\fP/@gimpdir@/documents - lists all images that have been
+opened or saved using GIMP.
+
+\fB$HOME\fP/@gimpdir@/gtkrc - users set of GIMP-specific GTK config
+settings. Options such as widget color and fonts sizes can be set
+here.
+
+@gimpsysconfdir@/gtkrc - sytem wide default set of GIMP-specific GTK+
+config settings.
+
+\fB$HOME\fP/@gimpdir@/menurc - user's set of keybindings.
+
+\fB$HOME\fP/@gimpdir@/parasiterc - Stores all persistent GIMP
+parasites. This file will be rewritten every time you quit GIMP.
+
+\fB$HOME\fP/@gimpdir@/sessionrc - This file takes session-specific
+info (that is info, you want to keep between two GIMP sessions). You
+are not supposed to edit it manually, but of course you can do. This
+file will be entirely rewritten every time you quit GIMP. If this
+file isn't found, defaults are used.
+
+\fB$HOME\fP/@gimpdir@/templaterc - Image templates are kept in this
+file. New images can conveniently created from these templates. If
+this file isn't found, defaults are used.
+
+@gimpsysconfdir@/unitrc - default user unit database. It contains the
+unit definitions for centimeters, meters, feet, yards, typographic
+points and typographic picas and is placed in users home directories
+the first time GIMP is ran. If this file isn't found, defaults are
+used.
+
+\fB$HOME\fP/@gimpdir@/unitrc - This file contains your user unit
+database. You can modify this list with the unit editor. You are not
+supposed to edit it manually, but of course you can do.  This file
+will be entirely rewritten every time you quit GIMP.
+
+\fB$HOME\fP/@gimpdir@/plug-ins - location of user installed plug-ins.
+
+\fB$HOME\fP/@gimpdir@/pluginrc - plug-in initialization values are
+stored here. This file is parsed on startup and regenerated if need
+be.
+
+\fB$HOME\fP/@gimpdir@/modules - location of user installed modules.
+
+\fB$HOME\fP/@gimpdir@/tmp - default location that GIMP uses as
+temporary space.
+
+@gimpdatadir@/brushes - system wide brush files.
+
+\fB$HOME\fP/@gimpdir@/brushes - user created and installed brush
+files. These files are in the .gbr, .gih or .vbr file formats.
+
+\fB$HOME\fP/@gimpdir@/curves - Curve profiles and presets as saved from
+the Curves tool.
+
+\fB$HOME\fP/@gimpdir@/gimpressionist - Presets and user created brushes
+and papers are stored here.
+
+\fB$HOME\fP/@gimpdir@/levels - Level profiles and presets as saved from
+the Levels tool.
+
+@gimpdatadir@/palettes - the system wide palette files.
+
+\fB$HOME\fP/@gimpdir@/palettes - user created and modified palette
+files. This files are in the .gpl format.
+
+@gimpdatadir@/patterns - basic set of patterns for use in GIMP.
+
+\fB$HOME\fP/@gimpdir@/patterns - user created and installed gimp
+pattern files. This files are in the .pat format.
+
+@gimpdatadir@/gradients - standard system wide set of gradient files.
+
+\fB$HOME\fP/@gimpdir@/gradients - user created and installed gradient
+files.
+
+@gimpdatadir@/scripts - system wide directory of scripts
+used in Script-Fu and other scripting extensions.
+
+\fB$HOME\fP/@gimpdir@/scripts - user created and installed scripts.
+
+@gimpdatadir@/gflares - system wide directory used by the gflare
+plug-in.
+
+\fB$HOME\fP/@gimpdir@/gflares - user created and installed gflare
+files.
+
+@gimpdatadir@/gfig - system wide directory used by the gfig plug-in.
+
+\fB$HOME\fP/@gimpdir@/gfig - user created and installed gfig files.
+
+@gimpdatadir@/images/gimp\-splash.png - the default image used for the
+GIMP splash screen.
+
+@gimpdatadir@/images/gimp\-logo.png - image used in the GIMP about
+dialog.
+
+@gimpdatadir@/tips/gimp\-tips.xml - tips as displayed in the "Tip of
+the Day" dialog box.
+
+
+.SH SPLASH IMAGES
+GIMP comes with a default image for the splash screen but it allows
+system administrators and users to customize the splash screen by
+providing other images. The image to be used with the splash screen is
+chosen as follows:
+
+.IP 1.
+GIMP tries to load a random splash screen from the directory
+\fB$HOME\fP/@gimpdir@/splashes.
+.IP 2.
+It then falls back to using \fB$HOME\fP/@gimpdir@/gimp\-splash.png.
+.IP 3.
+If the user didn't install any custom splash images, a random image is
+picked from @gimpdatadir@/splashes.
+.IP 4.
+As a last resort, GIMP uses the default splash image located at
+@gimpdatadir@/images/gimp\-splash.png.
+
+
+.SH SUGGESTIONS AND BUG REPORTS
+Any bugs found should be reported to the online bug-tracking system
+available on the web at http://bugzilla.gnome.org/. Before reporting
+bugs, please check to see if the bug has already been reported.
+
+When reporting GIMP bugs, it is important to include a reliable way to
+reproduce the bug, version number of GIMP (and probably GTK), OS name
+and version, and any relevant hardware specs. If a bug is causing a
+crash, it is very useful if a stack trace can be provided. And of
+course, patches to rectify the bug are even better.
+
+
+.SH OTHER INFO
+The canonical place to find GIMP info is at http://www.gimp.org/.
+Here you can find links to just about many other GIMP sites,
+tutorials, data sets, mailing list archives, and more.
+
+There is also a GIMP User Manual available at http://docs.gimp.org/
+that goes into much more detail about the interactive use of GIMP.
+
+The latest version of GIMP and the GTK+ libs is always available at
+ftp://ftp.gimp.org/.
+
+
+.SH AUTHORS
+Spencer Kimball, Peter Mattis and the GIMP Development Team.
+
+With patches, fixes, plug-ins, extensions, scripts, translations,
+documentation and more from lots and lots of people all over the
+world.
+
+
+.SH "SEE ALSO"
+.BR gimprc (5),
+.BR gimptool (1),
+.BR gimp\-remote (1)

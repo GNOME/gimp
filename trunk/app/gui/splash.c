@@ -1,0 +1,551 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <stdlib.h>
+
+#include <gtk/gtk.h>
+
+#include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
+#include "libgimpcolor/gimpcolor.h"
+
+#include "gui-types.h"
+
+#include "splash.h"
+
+#include "gimp-intl.h"
+
+
+/*  #define STARTUP_TIMER 1  */
+
+
+typedef struct
+{
+  GtkWidget      *window;
+  GtkWidget      *area;
+  gint            width;
+  gint            height;
+  GtkWidget      *progress;
+  GdkGC          *gc;
+  PangoLayout    *upper;
+  gint            upper_x;
+  gint            upper_y;
+  PangoLayout    *lower;
+  gint            lower_x;
+  gint            lower_y;
+#ifdef STARTUP_TIMER
+  GTimer         *timer;
+  gdouble         last_time;
+  gchar          *text1;
+  gchar          *text2;
+#endif
+} GimpSplash;
+
+static GimpSplash *splash = NULL;
+
+
+static void        splash_map                 (void);
+static void        splash_position_layouts    (GimpSplash     *splash,
+                                               const gchar    *text1,
+                                               const gchar    *text2,
+                                               GdkRectangle   *area);
+static gboolean    splash_area_expose         (GtkWidget      *widget,
+                                               GdkEventExpose *event,
+                                               GimpSplash     *splash);
+static void        splash_rectangle_union     (GdkRectangle   *dest,
+                                               PangoRectangle *pango_rect,
+                                               gint            offset_x,
+                                               gint            offset_y);
+static gboolean    splash_average_text_area   (GimpSplash     *splash,
+                                               GdkPixbuf      *pixbuf,
+                                               GdkColor       *color);
+
+static GdkPixbufAnimation * splash_image_load          (gboolean     be_verbose);
+static GdkPixbufAnimation * splash_image_pick_from_dir (const gchar *dirname,
+                                                        gboolean     be_verbose);
+
+#ifdef STARTUP_TIMER
+static void        splash_timer_elapsed       (const gchar    *text1,
+                                               const gchar    *text2,
+                                               gdouble         percentage);
+#endif
+
+
+/*  public functions  */
+
+void
+splash_create (gboolean be_verbose)
+{
+  GtkWidget          *frame;
+  GtkWidget          *vbox;
+  GdkPixbufAnimation *pixbuf;
+  GdkScreen          *screen;
+  PangoAttrList      *attrs;
+  PangoAttribute     *attr;
+  GdkGCValues         values;
+
+  g_return_if_fail (splash == NULL);
+
+  pixbuf = splash_image_load (be_verbose);
+
+  if (! pixbuf)
+    return;
+
+  splash = g_slice_new0 (GimpSplash);
+
+  splash->window =
+    g_object_new (GTK_TYPE_WINDOW,
+                  "type",            GTK_WINDOW_TOPLEVEL,
+                  "type-hint",       GDK_WINDOW_TYPE_HINT_SPLASHSCREEN,
+                  "title",           _("GIMP Startup"),
+                  "role",            "gimp-startup",
+                  "window-position", GTK_WIN_POS_CENTER,
+                  "resizable",       FALSE,
+                  NULL);
+
+  g_signal_connect_swapped (splash->window, "delete-event",
+                            G_CALLBACK (exit),
+                            GINT_TO_POINTER (0));
+
+  /* we don't want the splash screen to send the startup notification */
+  gtk_window_set_auto_startup_notification (FALSE);
+  g_signal_connect (splash->window, "map",
+                    G_CALLBACK (splash_map),
+                    NULL);
+
+  screen = gtk_widget_get_screen (splash->window);
+
+  splash->width  = MIN (gdk_pixbuf_animation_get_width (pixbuf),
+                        gdk_screen_get_width (screen));
+  splash->height = MIN (gdk_pixbuf_animation_get_height (pixbuf),
+                        gdk_screen_get_height (screen));
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+  gtk_container_add (GTK_CONTAINER (splash->window), frame);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  /*  If the splash image is static, we use a drawing area and set the
+   *  image as back pixmap, otherwise a GtkImage is being used.
+   */
+  if (gdk_pixbuf_animation_is_static_image (pixbuf))
+    {
+      splash->area = gtk_drawing_area_new ();
+    }
+  else
+    {
+      splash->area = gtk_image_new_from_animation (pixbuf);
+    }
+
+  gtk_box_pack_start_defaults (GTK_BOX (vbox), splash->area);
+  gtk_widget_show (splash->area);
+
+  gtk_widget_set_size_request (splash->area, splash->width, splash->height);
+
+  /*  create the pango layouts  */
+  splash->upper = gtk_widget_create_pango_layout (splash->area, "");
+  splash->lower = gtk_widget_create_pango_layout (splash->area, "");
+
+  attrs = pango_attr_list_new ();
+  attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
+
+  pango_layout_set_attributes (splash->upper, attrs);
+  pango_attr_list_unref (attrs);
+
+  /*  this sets the initial layout positions  */
+  splash_position_layouts (splash, "", "", NULL);
+
+  splash_average_text_area (splash,
+                            gdk_pixbuf_animation_get_static_image (pixbuf),
+                            &values.foreground);
+
+  gtk_widget_realize (splash->area);
+  splash->gc = gdk_gc_new_with_values (splash->area->window, &values,
+                                       GDK_GC_FOREGROUND);
+
+  if (gdk_pixbuf_animation_is_static_image (pixbuf))
+    {
+      GdkPixmap *pixmap = gdk_pixmap_new (splash->area->window,
+					  splash->width, splash->height, -1);
+
+      gdk_draw_pixbuf (pixmap, splash->gc,
+		       gdk_pixbuf_animation_get_static_image (pixbuf),
+		       0, 0, 0, 0, splash->width, splash->height,
+		       GDK_RGB_DITHER_NORMAL, 0, 0);
+      gdk_window_set_back_pixmap (splash->area->window, pixmap, FALSE);
+      g_object_unref (pixmap);
+    }
+
+  g_object_unref (pixbuf);
+
+  g_signal_connect_after (splash->area, "expose-event",
+			  G_CALLBACK (splash_area_expose),
+			  splash);
+
+  /*  add a progress bar  */
+  splash->progress = gtk_progress_bar_new ();
+  gtk_box_pack_end (GTK_BOX (vbox), splash->progress, FALSE, FALSE, 0);
+  gtk_widget_show (splash->progress);
+
+  gtk_widget_show_now (splash->window);
+
+#ifdef STARTUP_TIMER
+  splash->timer = g_timer_new ();
+#endif
+}
+
+void
+splash_destroy (void)
+{
+  if (! splash)
+    return;
+
+  gtk_widget_destroy (splash->window);
+
+  g_object_unref (splash->gc);
+  g_object_unref (splash->upper);
+  g_object_unref (splash->lower);
+
+#ifdef STARTUP_TIMER
+  g_timer_destroy (splash->timer);
+  g_free (splash->text1);
+  g_free (splash->text2);
+#endif
+
+  g_slice_free (GimpSplash, splash);
+  splash = NULL;
+}
+
+void
+splash_update (const gchar *text1,
+               const gchar *text2,
+               gdouble      percentage)
+{
+  GdkRectangle expose = { 0, 0, 0, 0 };
+
+  g_return_if_fail (percentage >= 0.0 && percentage <= 1.0);
+
+  if (! splash)
+    return;
+
+#ifdef STARTUP_TIMER
+  splash_timer_elapsed (text1, text2, percentage);
+#endif
+
+  splash_position_layouts (splash, text1, text2, &expose);
+
+  if (expose.width > 0 && expose.height > 0)
+    gtk_widget_queue_draw_area (splash->area,
+                                expose.x, expose.y,
+                                expose.width, expose.height);
+
+  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (splash->progress),
+                                 percentage);
+
+  while (gtk_events_pending ())
+    gtk_main_iteration ();
+}
+
+
+/*  private functions  */
+
+static gboolean
+splash_area_expose (GtkWidget      *widget,
+                    GdkEventExpose *event,
+                    GimpSplash     *splash)
+{
+  gdk_gc_set_clip_region (splash->gc, event->region);
+
+  gdk_draw_layout (widget->window, splash->gc,
+                   splash->upper_x, splash->upper_y, splash->upper);
+
+  gdk_draw_layout (widget->window, splash->gc,
+                   splash->lower_x, splash->lower_y, splash->lower);
+
+  return FALSE;
+}
+
+static void
+splash_map (void)
+{
+  /*  Reenable startup notification after the splash has been shown
+   *  so that the next window that is mapped sends the notification.
+   */
+   gtk_window_set_auto_startup_notification (TRUE);
+}
+
+/* area returns the union of the previous and new ink rectangles */
+static void
+splash_position_layouts (GimpSplash   *splash,
+                         const gchar  *text1,
+                         const gchar  *text2,
+                         GdkRectangle *area)
+{
+  PangoRectangle  ink;
+  PangoRectangle  logical;
+
+  if (text1)
+    {
+      pango_layout_get_pixel_extents (splash->upper, &ink, NULL);
+
+      if (area)
+        splash_rectangle_union (area, &ink, splash->upper_x, splash->upper_y);
+
+      pango_layout_set_text (splash->upper, text1, -1);
+      pango_layout_get_pixel_extents (splash->upper, &ink, &logical);
+
+      splash->upper_x = (splash->width - logical.width) / 2;
+      splash->upper_y = splash->height - (2 * logical.height + 6);
+
+      if (area)
+        splash_rectangle_union (area, &ink, splash->upper_x, splash->upper_y);
+    }
+
+  if (text2)
+    {
+      pango_layout_get_pixel_extents (splash->lower, &ink, NULL);
+
+      if (area)
+        splash_rectangle_union (area, &ink, splash->lower_x, splash->lower_y);
+
+      pango_layout_set_text (splash->lower, text2, -1);
+      pango_layout_get_pixel_extents (splash->lower, &ink, &logical);
+
+      splash->lower_x = (splash->width - logical.width) / 2;
+      splash->lower_y = splash->height - (logical.height + 6);
+
+      if (area)
+        splash_rectangle_union (area, &ink, splash->lower_x, splash->lower_y);
+    }
+}
+
+static void
+splash_rectangle_union (GdkRectangle   *dest,
+                        PangoRectangle *pango_rect,
+                        gint            offset_x,
+                        gint            offset_y)
+{
+  GdkRectangle  rect;
+
+  rect.x      = pango_rect->x + offset_x;
+  rect.y      = pango_rect->y + offset_y;
+  rect.width  = pango_rect->width;
+  rect.height = pango_rect->height;
+
+  if (dest->width > 0 && dest->height > 0)
+    gdk_rectangle_union (dest, &rect, dest);
+  else
+    *dest = rect;
+}
+
+/* This function chooses a gray value for the text color, based on
+ * the average luminance of the text area of the splash image.
+ */
+static gboolean
+splash_average_text_area (GimpSplash *splash,
+                          GdkPixbuf  *pixbuf,
+                          GdkColor   *color)
+{
+  const guchar *pixels;
+  gint          rowstride;
+  gint          channels;
+  gint          luminance = 0;
+  guint         sum[3]    = { 0, 0, 0 };
+  GdkRectangle  image     = { 0, 0, 0, 0 };
+  GdkRectangle  area      = { 0, 0, 0, 0 };
+
+  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), FALSE);
+  g_return_val_if_fail (gdk_pixbuf_get_bits_per_sample (pixbuf) == 8, FALSE);
+
+  image.width  = gdk_pixbuf_get_width (pixbuf);
+  image.height = gdk_pixbuf_get_height (pixbuf);
+  rowstride    = gdk_pixbuf_get_rowstride (pixbuf);
+  channels     = gdk_pixbuf_get_n_channels (pixbuf);
+  pixels       = gdk_pixbuf_get_pixels (pixbuf);
+
+  splash_position_layouts (splash, "Short text", "Somewhat longer text", &area);
+  splash_position_layouts (splash, "", "", NULL);
+
+  if (gdk_rectangle_intersect (&image, &area, &area))
+    {
+      const gint count = area.width * area.height;
+      gint       x, y;
+
+      pixels += area.x * channels;
+      pixels += area.y * rowstride;
+
+      for (y = 0; y < area.height; y++)
+        {
+          const guchar *src = pixels;
+
+          for (x = 0; x < area.width; x++)
+            {
+              sum[0] += src[0];
+              sum[1] += src[1];
+              sum[2] += src[2];
+
+              src += channels;
+            }
+
+          pixels += rowstride;
+        }
+
+      luminance = GIMP_RGB_LUMINANCE (sum[0] / count,
+                                      sum[1] / count,
+                                      sum[2] / count);
+
+      luminance = CLAMP0255 (luminance > 127 ?
+                             luminance - 223 : luminance + 223);
+
+    }
+
+  color->red = color->green = color->blue = (luminance << 8 | luminance);
+
+  return gdk_colormap_alloc_color (gtk_widget_get_colormap (splash->area),
+                                   color, FALSE, TRUE);
+}
+
+static GdkPixbufAnimation *
+splash_image_load (gboolean be_verbose)
+{
+  GdkPixbufAnimation *pixbuf;
+  gchar              *filename;
+
+  filename = gimp_personal_rc_file ("gimp-splash.png");
+
+  if (be_verbose)
+    g_printerr ("Trying splash '%s' ... ", filename);
+
+  pixbuf = gdk_pixbuf_animation_new_from_file (filename, NULL);
+  g_free (filename);
+
+  if (be_verbose)
+    g_printerr (pixbuf ? "OK\n" : "failed\n");
+
+  if (pixbuf)
+    return pixbuf;
+
+  filename = gimp_personal_rc_file ("splashes");
+  pixbuf = splash_image_pick_from_dir (filename, be_verbose);
+  g_free (filename);
+
+  if (pixbuf)
+    return pixbuf;
+
+  filename = g_build_filename (gimp_data_directory (),
+                               "images", "gimp-splash.png", NULL);
+
+  if (be_verbose)
+    g_printerr ("Trying splash '%s' ... ", filename);
+
+  pixbuf = gdk_pixbuf_animation_new_from_file (filename, NULL);
+  g_free (filename);
+
+  if (be_verbose)
+    g_printerr (pixbuf ? "OK\n" : "failed\n");
+
+  if (pixbuf)
+    return pixbuf;
+
+  filename = g_build_filename (gimp_data_directory (), "splashes", NULL);
+  pixbuf = splash_image_pick_from_dir (filename, be_verbose);
+  g_free (filename);
+
+  return pixbuf;
+}
+
+static GdkPixbufAnimation *
+splash_image_pick_from_dir (const gchar *dirname,
+                            gboolean     be_verbose)
+{
+  GdkPixbufAnimation *pixbuf = NULL;
+  GDir               *dir    = g_dir_open (dirname, 0, NULL);
+
+  if (dir)
+    {
+      const gchar *entry;
+      GList       *splashes = NULL;
+
+      while ((entry = g_dir_read_name (dir)))
+        splashes = g_list_prepend (splashes, g_strdup (entry));
+
+      g_dir_close (dir);
+
+      if (splashes)
+        {
+          gint32  i        = g_random_int_range (0, g_list_length (splashes));
+          gchar  *filename = g_build_filename (dirname,
+                                               g_list_nth_data (splashes, i),
+                                               NULL);
+
+          if (be_verbose)
+            g_printerr ("Trying splash '%s' ... ", filename);
+
+          pixbuf = gdk_pixbuf_animation_new_from_file (filename, NULL);
+          g_free (filename);
+
+          if (be_verbose)
+            g_printerr (pixbuf ? "OK\n" : "failed\n");
+
+          g_list_foreach (splashes, (GFunc) g_free, NULL);
+          g_list_free (splashes);
+        }
+    }
+
+  return pixbuf;
+}
+
+#ifdef STARTUP_TIMER
+static void
+splash_timer_elapsed (const gchar *text1,
+                      const gchar *text2,
+                      gdouble      percentage)
+{
+  gdouble elapsed = g_timer_elapsed (splash->timer, NULL);
+
+  if (text1)
+    {
+      g_free (splash->text1);
+      splash->text1 = g_strdup (text1);
+    }
+
+  if (text2)
+    {
+      g_free (splash->text2);
+      splash->text2 = g_strdup (text2);
+    }
+
+  g_printerr ("%8g  %8g  -  %s %g%%  -  %s\n",
+              elapsed,
+              elapsed - splash->last_time,
+              splash->text1 ? splash->text1 : "",
+              percentage * 100.0,
+              splash->text2 ? splash->text2 : "");
+
+  splash->last_time = elapsed;
+}
+#endif

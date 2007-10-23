@@ -1,0 +1,156 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1998-2003 Manish Singh <yosh@gimp.org>
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# Boilerplate PDB stuff
+
+sub std_pdb_misc {
+    $author = $copyright = 'Spencer Kimball & Peter Mattis';
+    $date   = '1995-1996';
+}
+
+sub contrib_pdb_misc {
+    my $a = shift;
+    my $e = shift;
+    my $d = shift;
+    my $s = shift;
+
+    if ($e eq '') {
+        $author = "$a";
+    } else {
+	$author = "$a <$e>";
+    }
+
+    $copyright = "$a";
+    $date = "$d";
+
+    if ($s) {
+	$since = "$s";
+    }
+}
+
+sub adam_pdb_misc {
+    contrib_pdb_misc('Adam D. Moss', '', @_);
+}
+
+sub adrian_pdb_misc {
+    contrib_pdb_misc('Adrian Likins', 'adrian@gimp.org', @_);
+}
+
+sub andy_pdb_misc {
+    contrib_pdb_misc('Andy Thomas', '', @_);
+}
+
+sub austin_pdb_misc {
+    contrib_pdb_misc('Austin Donnelly', '', @_);
+}
+
+sub bill_pdb_misc {
+    contrib_pdb_misc('Bill Skaggs', 'weskaggs@primate.ucdavis.edu', @_);
+}
+
+sub david_pdb_misc {
+    contrib_pdb_misc('David Gowers', '', @_);
+}
+
+sub federico_pdb_misc {
+    contrib_pdb_misc('Federico Mena Quintero', '', @_);
+}
+
+sub jay_pdb_misc {
+    contrib_pdb_misc('Jay Cox', '', @_);
+}
+
+sub joao_pdb_misc {
+    contrib_pdb_misc('Jo\xc3\xa3o S. O. Bueno Calligaris', '', @_);
+}
+
+sub josh_pdb_misc {
+    contrib_pdb_misc('Josh MacDonald', '', @_);
+}
+
+sub kevins_pdb_misc {
+    contrib_pdb_misc('Kevin Sookocheff', '', @_);
+}
+
+sub larry_pdb_misc {
+    contrib_pdb_misc('Larry Ewing', '', @_);
+}
+
+sub marc_pdb_misc {
+    contrib_pdb_misc('Marc Lehmann', '', @_);
+}
+
+sub martin_pdb_misc {
+    contrib_pdb_misc('Martin Nordholts', '', @_);
+}
+
+sub mitch_pdb_misc {
+    contrib_pdb_misc('Michael Natterer', 'mitch@gimp.org', @_);
+}
+
+sub neo_pdb_misc {
+    contrib_pdb_misc('Sven Neumann', 'sven@gimp.org', @_);
+}
+
+sub nick_pdb_misc {
+    contrib_pdb_misc('Nick Lamb', '', @_);
+}
+
+sub raphael_pdb_misc {
+    contrib_pdb_misc('Rapha\xc3\xabl Quinet', 'raphael@gimp.org', @_);
+}
+
+sub rock_pdb_misc {
+    contrib_pdb_misc('Nathan Summers', 'rock@gimp.org', @_);
+}
+
+sub seth_pdb_misc {
+    contrib_pdb_misc('Seth Burgess', '', @_);
+}
+
+sub shlomi_pdb_misc {
+    contrib_pdb_misc('Shlomi Fish', 'shlomif@iglu.org.il', @_);
+}
+
+sub simon_pdb_misc {
+    contrib_pdb_misc('Simon Budig', '', @_);
+}
+
+sub sylvain_pdb_misc {
+    contrib_pdb_misc('Sylvain Foret', '', @_);
+}
+
+sub wolfgang_pdb_misc {
+    contrib_pdb_misc('Wolfgang Hofer', '', @_);
+}
+
+sub yosh_pdb_misc {
+    contrib_pdb_misc('Manish Singh', '', @_);
+}
+
+sub std_pdb_deprecated {
+    if (@_) {
+        $blurb = $help = "This procedure is deprecated! Use '@_' instead.";
+        $deprecated = "@_";
+    } else {
+        $blurb = $help = "This procedure is deprecated!";
+        $deprecated = "NONE";
+    }
+    $author = $copyright = $date = '';
+}
+
+1;

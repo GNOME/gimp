@@ -1,0 +1,17 @@
+EXPORTS
+	gimp_module_db_get_load_inhibit
+	gimp_module_db_get_type
+	gimp_module_db_load
+	gimp_module_db_new
+	gimp_module_db_refresh
+	gimp_module_db_set_load_inhibit
+	gimp_module_get_type
+	gimp_module_info_copy
+	gimp_module_info_free
+	gimp_module_info_new
+	gimp_module_modified
+	gimp_module_new
+	gimp_module_query_module
+	gimp_module_register_enum
+	gimp_module_set_load_inhibit
+	gimp_module_state_name

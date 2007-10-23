@@ -1,0 +1,18 @@
+
+The MapObject plug-in "todo"-list:
+=================================
+
+* Interactive positioning of directional light
+* Rotation by mouse (doesn't work correctly yet and is disabled).
+* Faster mapping code
+* Multiple light-sources
+* More objects?
+* Presets (including save/load)
+* Gray-scale/channels support
+* Documentation
+* Autoconf/automake stuff?
+
+If there's anything you would like to add, feel free
+to send me any suggestions for new stuff or improvements.
+
+Tom

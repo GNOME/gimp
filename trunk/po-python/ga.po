@@ -1,0 +1,35 @@
+# Irish Translations for gimp po script fu 
+# Copyright (C) 2000,2004 Free Software Foundation, Inc.
+# Seán Ó Ceallaigh <s_oceallaigh@yahoo.com>, 2000.
+# Alastair McKinstry <mckinstry@computer.org>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-python HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2004-01-20 0740+0000\n"
+"Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
+"Language-Team: Gaeilge <gaeilge-a@listserv.heanet.ie>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+#, fuzzy
+msgid "Python Console"
+msgstr "Python: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#, fuzzy
+msgid "_Browse..."
+msgstr "Brábhsáil...."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#, fuzzy
+msgid "Gimp-Python Console"
+msgstr "Python: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""

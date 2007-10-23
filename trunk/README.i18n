@@ -1,0 +1,234 @@
+This document exists to document the important things to care
+for because of locale support. It is aimed at developers and
+translators. If you are a translator, you can skip the first
+sections, but you definitely want to read sections 5 - 9.
+
+ Table of Contents
+
+   1. Why localisation?
+   2. How
+   3. Deep inside ...
+   4. Some magic ...
+   5. Tools and how to use them
+   6. Gimp is different
+   7. Adding additional textdomains
+   8. Tip of the Day messages
+   9. How to contribute
+  10. And more ?
+
+
+1. Why localisation?
+
+ Many persons from many countries start to get used to Linux.
+ Unfortunately not everyone is able to understand English. But
+ even those people sometimes like to use good and free software
+ without using a dictionary to get the unknown words.
+ So why not simply localise the software to make it available to
+ the mass which isn't wholly English native? Of course this also
+ eases the migration from PhotoX to GIMP. :))
+
+2. How?
+
+ GNU provides a very nice package called gettext. This one offers
+ the possibility to translate chosen messages from the native language
+ of the program into that one of the users if a necessary catalog is
+ provided. Gettext therefore provides some easy tools to create and
+ maintain such catalogs and a few functions which can be called by the
+ program to enable automatic translation at runtime. The program gets
+ linked to the gettext library or glibc2 which already provides that
+ functionality and everything is fine.
+
+3. Deep inside...
+
+ GIMP provides header files called gimpintl.h and stdplugins-intl.h in
+ the libgimp directory which check whether gettext is available on the
+ system which GIMP is compiled on and will deactivate language support
+ if it's not.
+
+ If the gettext system is there it will declare 3 functions which will be
+ described below.
+
+3.1 _() [more correctly: char * _( char * )]
+
+ This one is a macro for the function gettext(). You can wrap any text
+ with it that is allowed to be a return value of a function. If you
+ use it then libintl will try to translate it into the native language
+ of the user according to his/her environmental settings.
+ The gettext() function will do a lookup in the hashed catalog which
+ contains all the translated texts.
+
+ - If it is found a pointer to the string will be returned to the caller.
+ - If not, the caller will receive a pointer to the original string.
+
+ This way it is ensured that there isn't any harm caused to the program
+ if no useful catalog is installed.
+
+ Please note that it is important to use _() directly (and not gettext())
+ for simple messages because of reasons that will be mentioned below.
+
+ NOTE: I know some of the developer like short functions like _() but
+ for a better source understanding I suggest to use it consistently only
+ for text (like _("That's text!")) and not for variables (like _(text)).
+ Use gettext(text) instead.
+
+
+3.2 N_() [more correctly: const char * ( const char * ) ]
+
+ This one is a macro for the function gettext_noop(). As you can see
+ and guess it doesn't really do anything in the programm i.e. it is a
+ dummy macro but nevertheless important. As it isn't possible to call
+ functions in a structure as seen here:
+
+ struct blurb
+ {
+  _("This won't work\n");
+ }
+
+ you have to do it in some other way. In GIMP such structures are
+ often used to create menus or similar things very simply. Here you
+ have to use the dummy to allow the generation of the template catalog
+ which will be described below. This one doesn't do anything but it
+ marks the text as important to the xgettext extractor.
+
+ The text has to be translated manually with the next function.
+
+3.3 gettext()
+
+ This function is the same as that macro in 3.1. But there is one big
+ difference: The _()'s and N_()'s are the only expressions which get
+ parsed by the template generator.
+ If you have strings that should be translated but are unfortunately
+ in a structure you have to do that on your own which means that you
+ have to parse the fields with the messages in a loop and translate
+ the texts with this gettext() function.
+
+ Please note that it may be necessary to free or allocate memory in
+ this case!
+
+4. Some magic...
+
+ As you have seen we only did the programming part until now but this
+ isn't all by far. To use catalogs we'll have to create them. Now
+ there are 3 different files which are importart:
+
+ gimp.pot:
+
+ This one is the so called template. It contains the messages which
+ are extracted from the sources and empty fields which have to get
+ filled by the author. It is used to start a new catalog or to update
+ the an already available one.
+
+ The Makefile will automatically call the program gettext which will
+ extract all messages that are wrapped by a _() or a N_() (but NOT
+ gettext()) and concat them to this template.
+
+ [language].po:
+
+ This file has to be an edited gimp.pot and contains the original
+ messages plus the translated ones. This file will be delivered
+ together with GIMP and is the base for the final catalog.
+
+ [language].mo:
+
+ This file is a compiled version of [language.po] which will be
+ automatically compiled by the Makefile system and installed in the
+ locale directory of the system. It contains everything that the .po
+ file contains except not translated messages, comments and other
+ overhead. For maximum speed it is also hashed to allow gettext a
+ faster search.
+
+5. Tools and how to use them
+
+ As mentioned the to be translated strings are extracted directly from
+ the source and written to the template.
+
+ I guess many of you will now ask if it is necessary to add new
+ strings directly to the template or if there's a tool to achieve
+ that. I think I can calm down those of you who fear lots of had work
+ just to update the language files. There's a program called msgmerge
+ which will add all strings that are in the template but not in the
+ uncompiled catalog to it. Msgmerge does this job very nicely and also
+ tries to use some kind of fuzzy logic method for already translated
+ strings for possible reduction of translators work: If an original
+ string seems similar to a new one and it already has a translation,
+ it will be taken over to the new catalog together with a remark that
+this one may not necessarily fit.
+
+6. Gimp is different
+
+ Gimp is a complex application which has a bunch of scripts and
+ plug-ins that all want to be internationalized. Therefore there is
+ not one catalog but many. For a full translation of GIMP's UI,
+ you will have to add translations for the following catalogs:
+
+   po/gimp20.po                       --  the core
+   po-libgimp/gimp20-libgimp.pot      --  the libgimp library
+   po-python/gimp20-python.pot        --  the pygimp plug-ins
+   po-plugins/gimp20-std-plugins.pot  --  the C plug-ins
+   po-script-fu/gimp20-script-fu.pot  --  the script-fu scripts
+   po-tips/gimp20-tips.pot            --  the startup tips
+
+ If you are looking for the translations of gimp-perl, please note that
+ gimp-perl has been moved into it's own Subversion module called
+ gimp-perl.
+
+ The version of GIMP you are holding in your hand uses GTK+-2.0. 
+ GTK+-2.0 requires that all strings are UTF-8 encoded. Therefore to
+ make internationalisation work, po files need to be UTF-8 encoded. If
+ your editor doesn't support UTF-8, you need to convert it to an
+ encoding your editor can handle and convert it back to UTF-8 before
+ commiting your changes back. The gnome-i18n module in Subversion has
+ some scripts that help with this task, but it can also easily done
+ using iconv.
+
+7. Adding additional textdomains
+
+ Third-party plug-ins (plug-ins that are not distributed with The
+ GIMP) can't have their messages in the gimp-std-plugins textdomain.
+ We have therefore provided a mechanism that allows plug-ins to
+ install their own message catalogs and tell GIMP to bind to that
+ textdomain. This is necessary so that GIMP can correctly translate
+ the menu paths the plug-in registers. Basically the plug-in has to
+ call gimp_plugin_domain_add() or gimp_domain_plugin_add_with_path()
+ before it registers any functions. Have a look at the script-fu
+ plug-in to see how this is done in detail.
+
+8. Tip of the Day messages
+
+ In addition to message catalogs Gimp provides a file with tips that
+ are displayed in a Tip of The Day window. This file is in XML format
+ and can be found in the tips directory. The english tips messages are
+ extracted from gimp-tips.xml.in so translators can use the usual
+ tools to create a <lang>.po file that holds the translations. All
+ translations are then merged into gimp-tips.xml with language
+ identifiers taken from the po filename.
+
+ GIMP needs to know what language it should select from gimp-tips.xml.
+ Therefore, there's the special message "tips-locale:C" in the main
+ message catalog that needs to be translated correctly. For a german
+ translation of the tips this would look like this:
+
+ #: app/gui/tips-parser.c:158
+ msgid "tips-locale:C"
+ msgstr "tips-locale:de"
+
+9. How to contribute
+
+ Any help with translations is appreciated. If you want to help,
+ please get in contact with the people from the GNOME Translation
+ Project who coordinate all translation efforts in the GNOME
+ Subversion tree. They have a nice web-page at
+	http://developer.gnome.org/projects/gtp/.
+
+10. And more?
+
+ We hope we mentioned everything that is worth it and hope that this
+ document will clarify some things. If it doesn't please write us a
+ mail. This text of course contains errors, so if you find one tell
+ us...
+
+
+Happy Gimping.
+	Daniel Egger
+	Sven Neumann
+

@@ -1,0 +1,21 @@
+For pre-built binary packages of GLib, GTK etc, see
+http://www.gimp.org/win32/downloads.html . No pre-built GIMP 1.3
+packages, though.
+
+Building GIMP on Win32
+======================
+
+There are two ways to build GIMP on Win32:
+
+1) Use the autoconf-generated configure script, and the resulting
+Makefiles (which use libtool and gcc to do the compilation). I use
+this myself.
+
+2) Use the Microsoft compiler, cl and Make, nmake. Say nmake -f
+makefile.msc in various directories. These makefiles are maintained by
+Hans Breuer <hans@breuer.org>. They presumably will not generate the
+same name DLLs and import libraries as the autoconfiscated libtool
+build does, nor necesarily use the same named GLib, GTK etc import
+libraries as those distributed from the web site mentioned above.
+
+--Tor Lillqvist <tml@iki.fi>

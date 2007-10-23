@@ -1,0 +1,352 @@
+# Persian translation of GIMP UI.
+# Copyright (C) 2007 Sharif FarsiWeb, Inc.
+# This file is distributed under the same license as the GIMP package.
+# Meelad Zakaria <meelad@farsiweb.info>, 2007.
+# Farzad Ghanei <farzad@farsiweb.info>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GIMP UI VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-05-05 03:36+0100\n"
+"PO-Revision-Date: 2007-04-25 19:03+0330\n"
+"Last-Translator: Meelad Zakaria <meelad@farsiweb.info>\n"
+"Language-Team: Persian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../plug-ins/pygimp/gimpfu.py:335
+#, fuzzy
+msgid "Missing exception information"
+msgstr "دور ریختن اطلاعات متنی"
+
+#: ../plug-ins/pygimp/gimpfu.py:344
+#, fuzzy, python-format
+msgid "An error occured running %s"
+msgstr "خطا در اجرای «%s»"
+
+#: ../plug-ins/pygimp/gimpfu.py:355
+#, fuzzy
+msgid "_More Information"
+msgstr "اطلاعات نشانگر"
+
+#: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
+#: ../plug-ins/pygimp/gimpfu.py:479
+#, fuzzy
+msgid "No"
+msgstr "هیچ"
+
+#: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
+msgid "Yes"
+msgstr ""
+
+#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
+#, fuzzy
+msgid "Python-Fu File Selection"
+msgstr "مسیر به انتخاب"
+
+#: ../plug-ins/pygimp/gimpfu.py:528
+#, fuzzy
+msgid "Python-Fu Folder Selection"
+msgstr "مسیر به انتخاب"
+
+#: ../plug-ins/pygimp/gimpfu.py:618
+#, fuzzy, python-format
+msgid "Invalid input for '%s'"
+msgstr ""
+"\n"
+"گزینهٔ نامعتبر «%s»\n"
+
+#: ../plug-ins/pygimp/gimpui.py:175
+#, fuzzy
+msgid "Python-Fu Color Selection"
+msgstr "مسیر به انتخاب"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+#, fuzzy
+msgid "Saving as colored XHTML"
+msgstr "از ذخیره کردن صرف نظر شد"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+#, fuzzy
+msgid "Save as colored XHTML"
+msgstr "_ذخیره کردن رنگ سمت چپ در"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+msgid "Colored XHTML"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
+#, fuzzy
+msgid "Character _source"
+msgstr "مبدأ الگو"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
+#, fuzzy
+msgid "Source code"
+msgstr "مبدأ"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:194
+#, fuzzy
+msgid "Text file"
+msgstr "متن تغییر یافت"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+msgid "Entry box"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+msgid "_File to read or characters to use"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+msgid "Fo_nt size in pixels"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+msgid "_Write a separate CSS file"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
+#, fuzzy
+msgid "Python Console"
+msgstr "پیشانهٔ خطا"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
+#, fuzzy
+msgid "_Browse..."
+msgstr "انبسا_ط..."
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
+#, fuzzy
+msgid "Python Procedure Browser"
+msgstr "رویه‌های داخلی"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "باز کردن «‎%s» برای نوشتن ممکن نیست: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
+#, fuzzy, python-format
+msgid "Could not write to '%s': %s"
+msgstr "نمی‌توان «‎%s» را حذف کرد: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
+msgid "Save Python-Fu Console Output"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
+msgid "Interactive Gimp-Python interpreter"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
+#, fuzzy
+msgid "_Console"
+msgstr "در هم پیچاندن"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+#, fuzzy
+msgid "Add a layer of fog"
+msgstr "اضافه کردن لایه"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#, fuzzy
+msgid "_Fog..."
+msgstr "_محو شدن..."
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+#, fuzzy
+msgid "_Layer name"
+msgstr "_نام لایه:"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+#, fuzzy
+msgid "Clouds"
+msgstr "_ابرها"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:60
+#, fuzzy
+msgid "_Fog color"
+msgstr "رنگ پی_ش‌زمینه"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+msgid "_Turbulence"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#, fuzzy
+msgid "Op_acity"
+msgstr "شفافیت"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+#, fuzzy
+msgid "Offset the colors in a palette"
+msgstr "_حذف رنگ‌های استفاده نشده از تخته‌رنگ نهایی"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+#, fuzzy
+msgid "_Offset Palette..."
+msgstr "_ویرایش تخته‌رنگ..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+msgid "Palette"
+msgstr "تخته‌رنگ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
+#, fuzzy
+msgid "Off_set"
+msgstr "جا‌به‌جایی"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+#, fuzzy
+msgid "Sort the colors in a palette"
+msgstr "_حذف رنگ‌های استفاده نشده از تخته‌رنگ نهایی"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+#, fuzzy
+msgid "_Sort Palette..."
+msgstr "_وارد کردن تخته‌رنگ..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+#, fuzzy
+msgid "Color _model"
+msgstr "_حالت مکان‌نما:"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "RGB"
+msgstr "‏RGB"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+msgid "HSV"
+msgstr "‏HSV"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+#, fuzzy
+msgid "Channel to _sort"
+msgstr "رنگ کانال"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+msgid "Red or Hue"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+#, fuzzy
+msgid "Green or Saturation"
+msgstr "غلظت"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+#, fuzzy
+msgid "Blue or Value"
+msgstr "مه‌آلودگی / وضوح"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+msgid "_Ascending"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
+msgid "Create a repeating gradient using colors from the palette"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
+msgid "Palette to _Repeating Gradient"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
+#, fuzzy
+msgid "Create a gradient using colors from the palette"
+msgstr "_حذف رنگ‌های استفاده نشده از تخته‌رنگ نهایی"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
+#, fuzzy
+msgid "Palette to _Gradient"
+msgstr "حذف طیف"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
+#, fuzzy
+msgid "Slice"
+msgstr "اندازه"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
+#, fuzzy
+msgid "_Slice..."
+msgstr "اندازه‌_گیری..."
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:430
+msgid "Path for HTML export"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+msgid "Filename for export"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+#, fuzzy
+msgid "Image name prefix"
+msgstr "تصویر + توری"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#, fuzzy
+msgid "Image format"
+msgstr "اطلاعات تصویر"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#, fuzzy
+msgid "Separate image folder"
+msgstr "اول یک تصویر مبدأ مشخص کنید."
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+msgid "Folder for image export"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+msgid "Space between table elements"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Javascript for onmouseover and clicked"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+msgid "Skip animation for table caps"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+msgid "Add a drop shadow to a layer, and optionally bevel it"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+msgid "_Drop Shadow and Bevel..."
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
+#, fuzzy
+msgid "_Shadow blur"
+msgstr "سایه‌ها"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
+#, fuzzy
+msgid "_Bevel"
+msgstr "لبهٔ پخ"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+msgid "_Drop shadow"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+msgid "Drop shadow _X displacement"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+msgid "Drop shadow _Y displacement"
+msgstr ""
+

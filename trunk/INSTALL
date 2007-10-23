@@ -1,0 +1,397 @@
+Installation instructions for GIMP 2.4
+--------------------------------------
+
+There are some basic steps to building and installing GIMP.
+
+GIMP 2.4 replaces earlier GIMP 2.x versions. It is advised that you
+uninstall them before installing GIMP 2.4. If you want to keep your
+older GIMP 2.x installation in parallel to GIMP 2.4, you have to
+choose a separate prefix which is not in your default library search
+path.
+
+GIMP 2.x is fully backward compatible to GIMP 2.0. Plug-ins and
+scripts written for GIMP 2.0 will continue to work and don't need to
+be changed nor recompiled to be used with GIMP 2.x.
+
+The most important part is to make sure the requirements for a build
+are fulfilled.  We depend on a number of tools and libraries which are
+listed below. For libraries this means you need to also have the
+header files installed.
+
+  ******************************************************************
+  * Unless you are experienced with building software from source, *
+  * you should not attempt to build all these libraries yourself!  *
+  * We suggest that you check if your distributor has development  *
+  * packages of them and use these instead.                        *
+  ******************************************************************
+
+  1. You need to have installed a recent version of pkg-config available
+     from http://www.freedesktop.org/software/pkgconfig/.  
+
+  2. You need to have installed GTK+ version 2.10.13 or newer.  GIMP
+     needs an even more recent version of GLib (>= 2.12.3).  It also
+     wants Pango (>= 1.12.2).  Sources for these can be grabbed from
+     ftp://ftp.gtk.org/.
+
+  3. We require PangoFT2, a Pango backend that uses FreeType2. Make
+     sure you have FreeType2 and fontconfig installed before you
+     compile Pango.  FreeType2 can be downloaded from
+     http://www.freetype.org/.  Fontconfig from
+     http://freedesktop.org/fontconfig/.  GIMP depends on freetype2
+     being newer than version 2.1.7 and fontconfig 2.2.0 or newer.
+     Older versions are known to have bugs that seriously affect
+     stability of GIMP.
+
+  4. We use libart2. Grab the module libart_lgpl out of GNOME SVN or
+     fetch the tarball from
+     ftp://ftp.gnome.org/pub/gnome/sources/libart_lgpl/
+
+  5. We use dbus-glib if available. Grab it from
+     http://dbus.freedesktop.org/releases/dbus-glib/
+
+  6. You may want to install other third party libraries or programs
+     that are needed for some of the available plugins. We recommend
+     to check that the following libraries are installed: libpng,
+     libjpeg, libpoppler, libtiff, gtkhtml-2, libmng, librsvg, libwmf.
+
+  7. The Python extension requires Python development headers to be
+     present. You will also need PyGTK and the respective development
+     headers.
+
+  8. Configure GIMP by running the `configure' script. You may want
+     to pass some options to it, see below.
+
+  9. Build GIMP by running `make'. The use of GNU make is recommended.
+     If you need to tweak the build to make it work with other flavours
+     of make, we'd appreciate if you'd send us a patch with the changes.
+
+ 10. Install GIMP by running `make install'. In order to avoid clashes
+     with other versions of GIMP, we install a binary called gimp-2.4.
+     By default there's also a link created so that you can type 'gimp'
+     to start gimp-2.4.
+
+Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries 
+lying around on your system, otherwise configure may fail to find the 
+new ones.
+
+
+Generic instructions for configuring and compiling auto-configured
+packages are included below. Here is an illustration of commands that
+might be used to build and install GIMP. The actual configuration,
+compilation and installation output is not shown.
+
+  % tar xvfz gimp-2.4.x.tar.gz   # unpack the sources
+  % cd gimp-2.4.x                # change to the toplevel directory
+  % ./configure                  # run the `configure' script
+  % make                         # build GIMP
+  % make install                 # install GIMP
+
+
+The `configure' script examines your system, and adapts GIMP to run on
+it. The script has many options, some of which are described in the
+generic instructions included at the end of this file. All of the
+options can be listed using the command `./configure --help'. There
+are several special options the GIMP `configure' script recognizes.
+These are:
+
+  --enable-shared and --disable-shared.  This option affects whether
+     shared libraries will be built or not. Shared libraries provide
+     for much smaller executables. The default is to enable shared
+     libraries. Disabling shared libraries is almost never a good idea.
+
+  --enable-debug and --disable-debug.  This option causes the build
+     process to compile with debugging enabled. If debugging is
+     disabled, GIMP will instead be compiled with optimizations turned
+     on. The default is for debugging to be disabled. NOTE: This
+     option is intended primarily as a convenience for developers.
+
+  --enable-profile and --disable-profile. This options causes the build
+     process to compile with execution profiling enabled. The default is
+     for profiling to be disabled. NOTE: This option is intended primarily
+     as a convenience for developers.
+
+  --enable-ansi and --disable-ansi.  This option causes stricter
+     ANSI C checking to be performed when compiling with GCC. The
+     default is for strict checking to be disabled. NOTE: This option
+     is intended primarily as a convenience for developers.
+
+  --enable-gimpdir=DIR.  This option changes the default directory
+     GIMP uses to search for its configuration files from ~/.gimp-2.4 
+     (the directory .gimp-2.4 in the users home directory) to DIR.
+
+  --enable-binreloc.  When compiled for Linux with this option enabled,
+     GIMP will be binary relocatable.  Plug-ins and data files will
+     be searched relative to the gimp binary instead of in the paths
+     defined at compile time.
+ 
+  --with-shm=[none|sysv|posix|auto].  This option allows you to specify
+     how image data is transported between the core and plug-ins. Usually
+     the best way to do this is detected automatically.
+
+  --without-libtiff, --without-libjpeg, --without-libpng.  configure
+     will bail out if libtiff, libjpeg or libpng can not be found. You
+     better fix the underlying problem and install these libraries with
+     their header files. If you absolutely want to compile GIMP without
+     support for TIFF, JPEG or PNG you need to explicitely disable
+     them using the options given above.
+ 
+  --without-exif.  If libexif is available, the JPEG plug-in will use
+     it to keep EXIF data in your JPEG files intact.  If this is
+     causing any trouble at compile-time, you can build --without-exif.
+     Get libexif from http://www.sourceforge.net/projects/libexif.
+
+  --without-mng, --without-aa.  The MNG plug-in needs libmng and
+     configure checks for its presense. If for some reason you don't
+     want to build the MNG plug-in even though the library is installed,
+     use --without-mng to disable it expliticely. The same switch exists
+     for aalib, use --without-aa if you run into problems.
+
+  --without-gtkhtml2.  If for some reason you don't want to build the 
+     helpbrowser plug-in, you can use --without-gtkhtml2 to disable 
+     it explicitly.
+
+  --without-svg.  If for some reason you want to build GIMP without 
+     SVG support, you can build --without-svg.
+
+  --without-lcms.  If for some reason you want to build GIMP without
+     using lcms for color support, you can build with --without-lcms.
+
+  --without-poppler.  If for some reason you don't want to build the PDF
+     import plug-in that uses libpoppler, you can use --without-poppler.
+
+  --without-print.  If for some reason you don't want to build the Print
+     plug-in based on the GtkPrint API, you can build with --without-print.
+
+  --without-gnomevfs.  If you don't want to use gnomevfs to access remote
+     files, you can pass --without-gnomevfs to the configure script.
+
+  --without-libcurl.  If you don't want to use libcurl to access remote
+     files, you can pass --without-gnomevfs to the configure script.
+
+  --without-alsa.  If you don't want to compile ALSA support into the
+     MIDI input controller module, you can use the --without-alsa option.
+
+  --without-linux-input.  If you don't want to compile the Linux Input
+     controller module, you can use the --without-linux-input option.
+
+  --without-dbus.  If you want to build without D-Bus support, you can
+     pass --without-dbus to the configure script.
+
+  --with-gif-compression=[lzw|rle|none].  Allows to tune the compression
+     algorithm used by the GIF plug-in. If you are afraid of Unisys' LZW
+     patent (which should have expired in most countries by now), you
+     can go for simple run-length encoding or even configure the plug-in
+     to create uncompressed GIFs.
+
+  --enable-gtk-doc.  This option controls whether the libgimp API
+     references will be created using gtk-doc. The HTML pages are 
+     included in a standard tarball, so you will only need this if you
+     are building from SVN.
+
+  --with-html-dir=PATH.  This option allows to specify where the
+     libgimp API reference should be installed. You might want to modify
+     the path so it points to the place where glib and gtk+ installled
+     their API references so that the libgimp reference can link to
+     them.
+
+  --disable-mp. This option allows you to disable support for multiple
+     processors. It is enabled by default.
+
+  --with-sendmail=[PATH]. This option is used to tell GIMP where to find
+     the sendmail command. Normally this options don't have to be used
+     because configure tries to find it in the usual places.
+
+  --with-desktop-dir=[PATH]. This option specifies where to install
+     desktop files. These files are used by desktop environments that
+     comply to the specs published at freedesktop.org. The default
+     value ${prefix}/share should be fine if your desktop environment
+     is installed in the same prefix as gimp. No files are installed
+     if you call configure with --without-desktop-dir.
+
+  --disable-default-binary. Use this option if you don't want to make
+     gimp-2.4 the default gimp installation. Otherwise a link called
+     gimp pointing to the gimp-2.4 executable will be installed.
+
+  --disable-gimp-console.  Use this option if you don't want the
+     gimp-console binary to be built in addition to the standard binary.
+     gimp-console is useful for command-line batch mode or as a server.
+
+  --disable-python.  If for some reason you don't want to build the
+     Python based pygimp plug-in, you can use --disable-python.
+
+  --without-script-fu.  If for some reason you don't want to build the
+     Script-Fu plug-in, you can use --without-script-fu.
+
+
+The `make' command builds several things:
+ - A bunch of public libraries in the directories starting with 'libgimp'.
+ - The plug-in programs in the 'plug-ins' directory.
+ - Some modules in the 'modules' subdirectory.
+ - The main GIMP program 'gimp-2.4' in `app'.
+
+The `make install' commands installs the gimp header files associated 
+with the libgimp libraries, the plug-ins, some data files and the GIMP 
+executable. After running `make install' and assuming the build process 
+was successful you should be able to run `gimp'.
+
+
+When ./configure fails
+======================
+
+'configure' uses pkg-config, a tool that replaces the old foo-config
+scripts. The most recent version is available from 
+	http://www.freedesktop.org/software/pkgconfig/
+
+'configure' tries to compile and run a short GTK+ program. There are
+several reasons why this might fail:
+
+* pkg-config could not find the file 'gtk+-2.0.pc' that gets installed 
+  with GTK. (This file is used to get information about where GTK+ is
+  installed.)
+
+  Fix: Either make sure that this file is in the path where pkg-config 
+  looks for it (try 'pkg-config --debug' or add the location of 
+  gtk+-2.0.pc to the environment variable PKG_CONFIG_PATH before running 
+  configure.
+
+* Libraries you installed are not found when you attempt to start gimp.
+  The details of how to fix this problem will depend on the system:
+
+  On Linux and other systems using ELF libraries, add the directory to
+  holding the library to /etc/ld.so.conf or to the environment variable
+  LD_LIBRARY_PATH, and run 'ldconfig'.
+
+  On other systems, it may be necessary to encode this path
+  into the executable, by setting the LDFLAGS environment variable
+  before running configure. For example:
+
+    LDFLAGS="-R/home/joe/lib" ./configure
+  or
+    LDFLAGS="-Wl,-rpath -Wl,/home/joe/lib" ./configure
+
+* An old version of the GTK+ libraries was found instead of 
+  your newly installed version. This commonly happens if a
+  binary package of GTK+ was previously installed on your system,
+  and you later compiled GTK+ from source.
+
+  Fix: Remove the old libraries and include files.  If you are afraid
+  that removing the old libraries may break other packages supplied by
+  your distributor, you can try installing GLib, GTK+ and other
+  libraries in a different prefix after setting the environment
+  variable PKG_CONFIG_LIBDIR to point to lib/pkgconfig/ in that new
+  prefix so that it does not try to read the *.pc files from the
+  default directory (/usr/lib/pkgconfig).  However, removing the old
+  packages is often the easier solution.
+
+A detailed log of the ./configure output is written to the file
+config.log. This may help diagnose problems.
+
+
+When ./configure fails on plug-ins
+==================================
+
+There are some GIMP plug-ins that need additional third-party libraries 
+installed on your system. For example to compile the plug-ins that load 
+and save JPEG, PNG or TIFF files you need the related libraries and header 
+files installed, otherwise you'll get a message that plugin xyz will not 
+be built.
+
+If you are sure that those libraries are correctly installed, but configure
+fails to detect them, the following might help:
+
+Set your LDFLAGS environment variable to look for the library in a certain
+place, e.g. if you are working in a bash shell you would say:
+      export LDFLAGS="-L<path_to_library> -L<path_to_another_one>"
+before you run configure.
+
+Set your CPPFLAGS environment variable to look for the header file in a
+certain place, e.g. if you are working in a bash shell you would say:
+      export CPPFLAGS="-I<path_to_header_file> -I<path_to_another_one>"
+before you run configure.
+
+
+      Generic Instructions for Building Auto-Configured Packages
+      ==========================================================
+
+
+To compile this package:
+
+1.  Configure the package for your system.  In the directory that this
+file is in, type `./configure'.  If you're using `csh' on an old
+version of System V, you might need to type `sh configure' instead to
+prevent `csh' from trying to execute `configure' itself.
+
+The `configure' shell script attempts to guess correct values for
+various system-dependent variables used during compilation, and
+creates the Makefile(s) (one in each subdirectory of the source
+directory).  In some packages it creates a C header file containing
+system-dependent definitions.  It also creates a file `config.status'
+that you can run in the future to recreate the current configuration.
+Running `configure' takes a minute or two.
+
+To compile the package in a different directory from the one
+containing the source code, you must use GNU make.  `cd' to the
+directory where you want the object files and executables to go and
+run `configure' with the option `--srcdir=DIR', where DIR is the
+directory that contains the source code.  Using this option is
+actually unnecessary if the source code is in the parent directory of
+the one in which you are compiling; `configure' automatically checks
+for the source code in `..' if it does not find it in the current
+directory.
+
+By default, `make install' will install the package's files in
+/usr/local/bin, /usr/local/lib, /usr/local/man, etc.  You can specify
+an installation prefix other than /usr/local by giving `configure' the
+option `--prefix=PATH'.
+
+You can specify separate installation prefixes for machine-specific
+files and machine-independent files.  If you give `configure' the
+option `--exec-prefix=PATH', the package will use PATH as the prefix
+for installing programs and libraries.  Normally, all files are
+installed using the same prefix.
+
+`configure' ignores any other arguments that you give it.
+
+If your system requires unusual options for compilation or linking
+that `configure' doesn't know about, you can give `configure' initial
+values for some variables by setting them in the environment.  In
+Bourne-compatible shells, you can do that on the command line like
+this:
+        CC='gcc -traditional' DEFS=-D_POSIX_SOURCE ./configure
+
+The `make' variables that you might want to override with environment
+variables when running `configure' are:
+
+(For these variables, any value given in the environment overrides the
+value that `configure' would choose:)
+CC              C compiler program.
+                Default is `cc', or `gcc' if `gcc' is in your PATH.
+INSTALL         Program to use to install files.
+                Default is `install' if you have it, `cp' otherwise.
+INCLUDEDIR      Directory for `configure' to search for include files.
+                Default is /usr/include.
+
+(For these variables, any value given in the environment is added to
+the value that `configure' chooses:)
+DEFS            Configuration options, in the form '-Dfoo -Dbar ...'
+LIBS            Libraries to link with, in the form '-lfoo -lbar ...'
+
+If you need to do unusual things to compile the package, we encourage
+you to teach `configure' how to do them and mail the diffs to the
+address given in the README so we can include them in the next
+release.
+
+2.  Type `make' to compile the package.
+
+3.  Type `make install' to install programs, data files, and
+documentation.
+
+4.  You can remove the program binaries and object files from the
+source directory by typing `make clean'.  To also remove the
+Makefile(s), the header file containing system-dependent definitions
+(if the package uses one), and `config.status' (all the files that
+`configure' created), type `make distclean'.
+
+The file `configure.in' is used as a template to create `configure' by
+a program called `autoconf'.  You will only need it if you want to
+regenerate `configure' using a newer version of `autoconf'.

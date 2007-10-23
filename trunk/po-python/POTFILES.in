@@ -1,0 +1,16 @@
+# Files from the Gimp distribution which have already been
+# marked to allow runtime translation of messages
+
+[encoding: UTF-8]
+
+plug-ins/pygimp/gimpfu.py
+plug-ins/pygimp/gimpui.py
+
+plug-ins/pygimp/plug-ins/colorxhtml.py
+plug-ins/pygimp/plug-ins/gimpcons.py
+plug-ins/pygimp/plug-ins/foggify.py
+plug-ins/pygimp/plug-ins/palette-offset.py
+plug-ins/pygimp/plug-ins/palette-sort.py
+plug-ins/pygimp/plug-ins/palette-to-gradient.py
+plug-ins/pygimp/plug-ins/py-slice.py
+plug-ins/pygimp/plug-ins/shadow_bevel.py

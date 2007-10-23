@@ -1,0 +1,326 @@
+#! /bin/sh
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+exec_prefix_set=no
+
+bindir=@bindir@
+sbindir=@sbindir@
+libexecdir=@libexecdir@
+datarootdir=@datarootdir@
+datadir=@datadir@
+sysconfdir=@sysconfdir@
+sharedstatedir=@sharedstatedir@
+localstatedir=@localstatedir@
+libdir=@libdir@
+infodir=@infodir@
+mandir=@mandir@
+includedir=@includedir@
+
+gimpplugindir=@gimpplugindir@
+gimpdatadir=@gimpdatadir@
+
+rt_libs=@RT_LIBS@
+
+usage()
+{
+  cat <<EOF
+Usage: gimptool-2.0 [OPTION]...
+
+General options:
+  --help                  print this message
+  --quiet, --silent       don't echo build commands
+  --version               print the version of GIMP associated with this script
+  -n, --just-print, --dry-run, --recon
+                          don't actually run any commands; just print them
+Developer options:
+  --cflags                print the compiler flags that are necessary to
+                          compile a plug-in
+  --libs                  print the linker flags that are necessary to link a
+                          plug-in
+  --prefix=PREFIX         use PREFIX instead of the installation prefix that
+                          GIMP was built when computing the output for --cflags
+                          and --libs
+  --exec-prefix=PREFIX    use PREFIX instead of the installation exec prefix
+                          that GIMP was built when computing the output for
+                          --cflags and --libs
+
+Installation directory options:
+  --prefix --exec-prefix --bindir --sbindir --libexecdir --datadir --sysconfdir
+  --sharedstatedir --localstatedir --libdir --infodir --mandir --includedir
+  --gimpplugindir --gimpdatadir
+
+The --cflags and --libs options can be appended with -noui to get appropriate
+settings for plug-ins which do not use GTK+.
+
+User options:
+  --build plug-in.c               build a plug-in from a source file
+  --install plug-in.c             same as --build, but installs the built
+                                  plug-in as well
+  --install-bin plug-in           install a compiled plug-in
+  --install-script script.scm     install a script-fu script
+
+  --uninstall-bin plug-in         remove a plug-in again
+  --uninstall-script plug-in      remove a script-fu script
+
+The --install and --uninstall options have "admin" counterparts (with
+prefix --install-admin instead of --install) that can be used instead to
+install/uninstall a plug-in or script in the site directory instead of a
+user directory.
+
+For plug-ins which do not use GTK+, the --build and --install options can be
+appended with -noui for appropriate settings. For plug-ins that use GTK+ but
+not libgimpui, append -nogimpui.
+
+All binary build and install options can be appended with -strip to discard
+debugging information.
+EOF
+
+  exit $1
+}
+
+noarg="\
+Error: Need a plug-in source file to build"
+
+notfound="\
+Error: Couldn't find file to build/install/uninstall"
+
+quiet=no
+donothing=no
+
+if test $# -eq 0; then
+  usage 1
+fi
+
+if test x${PKG_CONFIG+set} != xset ; then
+  PKG_CONFIG=pkg-config
+fi
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.7; then
+  :
+else
+  echo "*** pkg-config is required but wasn't found or is too old ***" 1>&2
+  exit 1
+fi
+
+if test x${INSTALL+set} != xset ; then
+  INSTALL='@INSTALL@'
+  if test "$INSTALL" = "./install-sh -c"; then
+    mydirname=`echo $0 | sed -e 's#\(.*\)/[^/].*$#\1#'`
+    INSTALL="$mydirname/gimpinstall"
+  fi
+fi
+
+if test x${CC+set} != xset ; then
+  cc='@CC@'
+else
+  cc="$CC"
+fi
+
+if test x${CFLAGS+set} != xset ; then
+  cflags='@CFLAGS@'
+else
+  cflags="$CFLAGS"
+fi
+
+if test x${LDFLAGS+set} != xset ; then
+  ldflags='@LDFLAGS@'
+else
+  ldflags="$LDFLAGS"
+fi
+
+if test x${LIBS+set} != xset ; then
+  libs=""
+else
+  libs="$LIBS"
+fi
+
+while test $# -gt 0; do
+  case "$1" in
+  -*=*) optarg=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
+  *) optarg= ;;
+  esac
+
+  case $1 in
+    --version)
+      echo @GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.@GIMP_MICRO_VERSION@
+      exit 0
+      ;;
+    --help)
+      usage 0
+      ;;
+    --quiet | --silent)
+      quiet=yes
+      ;;
+    -n | --just-print | --dry-run | --recon)
+      donothing=yes
+      ;;
+    --prefix=*)
+      prefix=$optarg
+      if test $exec_prefix_set = no ; then
+        exec_prefix=$optarg
+      fi
+      ;;
+    --prefix)
+      echo $prefix
+      ;;
+    --exec-prefix=*)
+      exec_prefix=$optarg
+      exec_prefix_set=yes
+      ;;
+    --exec-prefix)
+      echo $exec_prefix
+      ;;
+    --*dir)
+      dirname=\$`echo $1 | sed -e 's,^--,,'`
+      dirname=`eval echo $dirname`
+      test -z "$dirname" && exit 1
+      echo $dirname
+      exit 0
+      ;;
+    --cflags)
+      $PKG_CONFIG --cflags gimpui-2.0
+      ;;
+    --cflags-noui)
+      $PKG_CONFIG --cflags gimp-2.0
+      ;;
+    --cflags-nogimpui)
+      $PKG_CONFIG --cflags gimp-2.0 gtk+-2.0
+      ;;
+    --libs)
+      $PKG_CONFIG --libs gimpui-2.0
+      ;;
+    --libs-noui)
+      $PKG_CONFIG --libs gimp-2.0
+      ;;
+    --libs-nogimpui)
+      $PKG_CONFIG --libs gimp-2.0 gtk+-2.0
+      ;;
+    --install-bin | --install-admin-bin \
+    | --install-bin-strip | --install-admin-bin-strip \
+    | --install-script | --install-admin-script \
+    | --uninstall-bin | --uninstall-admin-bin \
+    | --uninstall-script | --uninstall-admin-script )
+      case $1 in
+        --*install-bin)
+          install_cmd="@INSTALL_PROGRAM@"
+          install_dir="$HOME/@gimpdir@/plug-ins"
+          ;;
+        --install-bin-strip)
+          install_cmd="@INSTALL_PROGRAM@ -s"
+          install_dir="$HOME/@gimpdir@/plug-ins"
+          ;;
+        --*install-admin-bin)
+          install_cmd="@INSTALL_PROGRAM@"
+          install_dir="$gimpplugindir/plug-ins"
+          ;;
+        --install-admin-bin-strip)
+          install_cmd="@INSTALL_PROGRAM@ -s"
+          install_dir="$gimpplugindir/plug-ins"
+          ;;
+        --*install-script)
+          install_cmd="@INSTALL_DATA@"
+          install_dir="$HOME/@gimpdir@/scripts"
+          ;;
+        --*install-admin-script)
+          install_cmd="@INSTALL_DATA@"
+          install_dir="$gimpdatadir/scripts"
+          ;;
+      esac
+      case $1 in
+        --uninstall-* )
+          shift
+          if test "x$1" != "x"; then
+            dest=`echo $1 | sed -e 's#.*/\([^/].*\)$#\1#'`
+            if test -f "$DESTDIR$install_dir/$dest"; then
+              cmd="rm -f $DESTDIR$install_dir/$dest"
+              test $quiet = "yes" || echo $cmd
+              test $donothing = "yes" || exec $cmd
+            else
+              echo "${notfound}" 1>&2
+              exit 1
+            fi  
+          else
+            echo "${noarg}" 1>&2
+            exit 1
+          fi
+          ;;
+        *)
+          shift
+          if test "x$1" != "x"; then
+            if test -r "$1"; then
+              cmd="@INSTALL_PROGRAM@ -d $DESTDIR$install_dir"
+              test $quiet = "yes" || echo $cmd
+              test $donothing = "yes" || $cmd
+              dest=`echo $1 | sed -e 's#.*/\([^/].*\)$#\1#'`
+              cmd="$install_cmd $1 $DESTDIR$install_dir/$dest"
+              test $quiet = "yes" || echo $cmd
+              test $donothing = "yes" || exec $cmd
+            else
+              echo "${notfound}" 1>&2
+              exit 1
+            fi  
+          else
+            echo "${noarg}" 1>&2
+            exit 1
+          fi
+        ;;
+      esac
+      ;;
+    --build | --install | --install-admin | --build-strip | --install-strip \
+    | --install-admin-strip | --build-nogimpui | --install-nogimpui \
+    | --install-admin-nogimpui | --build-nogimpui-strip \
+    | --install-nogimpui-strip | --install-admin-nogimpui-strip \
+    | --build-noui | --install-noui | --install-admin-noui \
+    | --build-noui-strip | --install-noui-strip | --install-admin-noui-strip)
+      opt=`echo $1 | sed 's/-strip$//'`
+      if test "x$opt" != "x$1" ; then
+        cflags=`echo $cflags | sed -e 's/-g //g' -e 's/ -g//g'`
+      fi
+      case $opt in
+        --build | --build-noui | --build-nogimpui)
+          install_dir=. ;;
+        --install | --install-noui | --install-nogimpui)
+          install_dir="$HOME/@gimpdir@/plug-ins" ;;
+        --install-admin | --install-admin-noui | --install-admin-nogimpui)
+          install_dir="$gimpplugindir/plug-ins" ;;
+      esac
+      noui=`echo $opt | sed 's/^.*\(noui\)$/\1/'`
+      nogimpui=`echo $opt | sed 's/^.*\(nogimpui\)$/\1/'`
+      if test "$noui" = "noui" ; then
+        gimp_cflags=`$0 --cflags-noui`
+        gimp_libs=`$0 --libs-noui`
+      elif test "$nogimpui" = "nogimpui" ; then
+        gimp_cflags=`$0 --cflags-nogimpui`
+        gimp_libs=`$0 --libs-nogimpui`
+      else
+        gimp_cflags=`$0 --cflags`
+        gimp_libs=`$0 --libs`
+      fi
+      shift
+      if test "x$1" != "x"; then
+        if test -r "$1"; then
+          if test "$install_dir" != "."; then
+            cmd="@INSTALL_PROGRAM@ -d $DESTDIR$install_dir"
+            test $quiet = "yes" || echo $cmd
+            test $donothing = "yes" || $cmd
+          fi
+          dest=`echo $1 | sed -e 's#.*/\([^/].*\)$#\1#' -e 's/\.[^.]*$//'`
+          cmd="$cc $cflags $gimp_cflags -o $install_dir/$dest $1 $ldflags $gimp_libs $libs"
+          test $quiet = "yes" || echo $cmd
+          test $donothing = "yes" || exec $cmd
+        else
+          echo "${notfound}" 1>&2
+          exit 1
+        fi  
+      else
+        echo "${noarg}" 1>&2
+        exit 1
+      fi
+      ;;
+    *)
+      usage 1
+      ;;
+  esac
+  shift
+done

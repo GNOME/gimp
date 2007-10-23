@@ -1,0 +1,3686 @@
+;; -*- scheme -*-
+; object definitions ...
+(define-object Browser
+  (in-module "Gimp")
+  (parent "GtkHPaned")
+  (c-name "GimpBrowser")
+  (gtype-id "GIMP_TYPE_BROWSER")
+)
+
+(define-object Button
+  (in-module "Gimp")
+  (parent "GtkButton")
+  (c-name "GimpButton")
+  (gtype-id "GIMP_TYPE_BUTTON")
+)
+
+(define-object CellRendererColor
+  (in-module "Gimp")
+  (parent "GtkCellRenderer")
+  (c-name "GimpCellRendererColor")
+  (gtype-id "GIMP_TYPE_CELL_RENDERER_COLOR")
+)
+
+(define-object CellRendererToggle
+  (in-module "Gimp")
+  (parent "GtkCellRendererToggle")
+  (c-name "GimpCellRendererToggle")
+  (gtype-id "GIMP_TYPE_CELL_RENDERER_TOGGLE")
+)
+
+(define-object ChainButton
+  (in-module "Gimp")
+  (parent "GtkTable")
+  (c-name "GimpChainButton")
+  (gtype-id "GIMP_TYPE_CHAIN_BUTTON")
+)
+
+(define-object ColorArea
+  (in-module "Gimp")
+  (parent "GtkDrawingArea")
+  (c-name "GimpColorArea")
+  (gtype-id "GIMP_TYPE_COLOR_AREA")
+)
+
+(define-object ColorButton
+  (in-module "Gimp")
+  (parent "GimpButton")
+  (c-name "GimpColorButton")
+  (gtype-id "GIMP_TYPE_COLOR_BUTTON")
+)
+
+(define-object ColorDisplay
+  (in-module "Gimp")
+  (parent "GObject")
+  (c-name "GimpColorDisplay")
+  (gtype-id "GIMP_TYPE_COLOR_DISPLAY")
+)
+
+(define-object ColorDisplayStack
+  (in-module "Gimp")
+  (parent "GObject")
+  (c-name "GimpColorDisplayStack")
+  (gtype-id "GIMP_TYPE_COLOR_DISPLAY_STACK")
+)
+
+(define-object ColorHexEntry
+  (in-module "Gimp")
+  (parent "GtkEntry")
+  (c-name "GimpColorHexEntry")
+  (gtype-id "GIMP_TYPE_COLOR_HEX_ENTRY")
+)
+
+(define-object ColorScale
+  (in-module "Gimp")
+  (parent "GtkScale")
+  (c-name "GimpColorScale")
+  (gtype-id "GIMP_TYPE_COLOR_SCALE")
+)
+
+(define-object ColorSelection
+  (in-module "Gimp")
+  (parent "GtkVBox")
+  (c-name "GimpColorSelection")
+  (gtype-id "GIMP_TYPE_COLOR_SELECTION")
+)
+
+(define-object ColorSelector
+  (in-module "Gimp")
+  (parent "GtkVBox")
+  (c-name "GimpColorSelector")
+  (gtype-id "GIMP_TYPE_COLOR_SELECTOR")
+)
+
+(define-object ColorNotebook
+  (in-module "Gimp")
+  (parent "GimpColorSelector")
+  (c-name "GimpColorNotebook")
+  (gtype-id "GIMP_TYPE_COLOR_NOTEBOOK")
+)
+
+(define-object Dialog
+  (in-module "Gimp")
+  (parent "GtkDialog")
+  (c-name "GimpDialog")
+  (gtype-id "GIMP_TYPE_DIALOG")
+)
+
+(define-object EnumLabel
+  (in-module "Gimp")
+  (parent "GtkLabel")
+  (c-name "GimpEnumLabel")
+  (gtype-id "GIMP_TYPE_ENUM_LABEL")
+)
+
+(define-object Frame
+  (in-module "Gimp")
+  (parent "GtkFrame")
+  (c-name "GimpFrame")
+  (gtype-id "GIMP_TYPE_FRAME")
+)
+
+(define-object HintBox
+  (in-module "Gimp")
+  (parent "GtkHBox")
+  (c-name "GimpHintBox")
+  (gtype-id "GIMP_TYPE_HINT_BOX")
+)
+
+(define-object IntComboBox
+  (in-module "Gimp")
+  (parent "GtkComboBox")
+  (c-name "GimpIntComboBox")
+  (gtype-id "GIMP_TYPE_INT_COMBO_BOX")
+)
+
+(define-object EnumComboBox
+  (in-module "Gimp")
+  (parent "GimpIntComboBox")
+  (c-name "GimpEnumComboBox")
+  (gtype-id "GIMP_TYPE_ENUM_COMBO_BOX")
+)
+
+(define-object IntStore
+  (in-module "Gimp")
+  (parent "GtkListStore")
+  (c-name "GimpIntStore")
+  (gtype-id "GIMP_TYPE_INT_STORE")
+)
+
+(define-object EnumStore
+  (in-module "Gimp")
+  (parent "GimpIntStore")
+  (c-name "GimpEnumStore")
+  (gtype-id "GIMP_TYPE_ENUM_STORE")
+)
+
+(define-object MemsizeEntry
+  (in-module "Gimp")
+  (parent "GtkHBox")
+  (c-name "GimpMemsizeEntry")
+  (gtype-id "GIMP_TYPE_MEMSIZE_ENTRY")
+)
+
+(define-object OffsetArea
+  (in-module "Gimp")
+  (parent "GtkDrawingArea")
+  (c-name "GimpOffsetArea")
+  (gtype-id "GIMP_TYPE_OFFSET_AREA")
+)
+
+(define-object PageSelector
+  (in-module "Gimp")
+  (parent "GtkVBox")
+  (c-name "GimpPageSelector")
+  (gtype-id "GIMP_TYPE_PAGE_SELECTOR")
+)
+
+(define-object PathEditor
+  (in-module "Gimp")
+  (parent "GtkVBox")
+  (c-name "GimpPathEditor")
+  (gtype-id "GIMP_TYPE_PATH_EDITOR")
+)
+
+(define-object PickButton
+  (in-module "Gimp")
+  (parent "GtkButton")
+  (c-name "GimpPickButton")
+  (gtype-id "GIMP_TYPE_PICK_BUTTON")
+)
+
+(define-object Preview
+  (in-module "Gimp")
+  (parent "GtkVBox")
+  (c-name "GimpPreview")
+  (gtype-id "GIMP_TYPE_PREVIEW")
+)
+
+(define-object AspectPreview
+  (in-module "Gimp")
+  (parent "GimpPreview")
+  (c-name "GimpAspectPreview")
+  (gtype-id "GIMP_TYPE_ASPECT_PREVIEW")
+)
+
+(define-object PreviewArea
+  (in-module "Gimp")
+  (parent "GtkDrawingArea")
+  (c-name "GimpPreviewArea")
+  (gtype-id "GIMP_TYPE_PREVIEW_AREA")
+)
+
+(define-object ProcBrowserDialog
+  (in-module "Gimp")
+  (parent "GimpDialog")
+  (c-name "GimpProcBrowserDialog")
+  (gtype-id "GIMP_TYPE_PROC_BROWSER_DIALOG")
+)
+
+(define-object ProgressBar
+  (in-module "Gimp")
+  (parent "GtkProgressBar")
+  (c-name "GimpProgressBar")
+  (gtype-id "GIMP_TYPE_PROGRESS_BAR")
+)
+
+(define-object ScrolledPreview
+  (in-module "Gimp")
+  (parent "GimpPreview")
+  (c-name "GimpScrolledPreview")
+  (gtype-id "GIMP_TYPE_SCROLLED_PREVIEW")
+)
+
+(define-object DrawablePreview
+  (in-module "Gimp")
+  (parent "GimpScrolledPreview")
+  (c-name "GimpDrawablePreview")
+  (gtype-id "GIMP_TYPE_DRAWABLE_PREVIEW")
+)
+
+(define-object SelectButton
+  (in-module "Gimp")
+  (parent "GtkHBox")
+  (c-name "GimpSelectButton")
+  (gtype-id "GIMP_TYPE_SELECT_BUTTON")
+)
+
+(define-object PatternSelectButton
+  (in-module "Gimp")
+  (parent "GimpSelectButton")
+  (c-name "GimpPatternSelectButton")
+  (gtype-id "GIMP_TYPE_PATTERN_SELECT_BUTTON")
+)
+
+(define-object PaletteSelectButton
+  (in-module "Gimp")
+  (parent "GimpSelectButton")
+  (c-name "GimpPaletteSelectButton")
+  (gtype-id "GIMP_TYPE_PALETTE_SELECT_BUTTON")
+)
+
+(define-object GradientSelectButton
+  (in-module "Gimp")
+  (parent "GimpSelectButton")
+  (c-name "GimpGradientSelectButton")
+  (gtype-id "GIMP_TYPE_GRADIENT_SELECT_BUTTON")
+)
+
+(define-object FontSelectButton
+  (in-module "Gimp")
+  (parent "GimpSelectButton")
+  (c-name "GimpFontSelectButton")
+  (gtype-id "GIMP_TYPE_FONT_SELECT_BUTTON")
+)
+
+(define-object BrushSelectButton
+  (in-module "Gimp")
+  (parent "GimpSelectButton")
+  (c-name "GimpBrushSelectButton")
+  (gtype-id "GIMP_TYPE_BRUSH_SELECT_BUTTON")
+)
+
+(define-object SizeEntry
+  (in-module "Gimp")
+  (parent "GtkTable")
+  (c-name "GimpSizeEntry")
+  (gtype-id "GIMP_TYPE_SIZE_ENTRY")
+)
+
+(define-object UnitMenu
+  (in-module "Gimp")
+  (parent "GtkOptionMenu")
+  (c-name "GimpUnitMenu")
+  (gtype-id "GIMP_TYPE_UNIT_MENU")
+)
+
+(define-object ZoomModel
+  (in-module "Gimp")
+  (parent "GObject")
+  (c-name "GimpZoomModel")
+  (gtype-id "GIMP_TYPE_ZOOM_MODEL")
+)
+
+(define-object ZoomPreview
+  (in-module "Gimp")
+  (parent "GimpScrolledPreview")
+  (c-name "GimpZoomPreview")
+  (gtype-id "GIMP_TYPE_ZOOM_PREVIEW")
+)
+
+(define-object DrawableComboBox
+  (in-module "Gimp")
+  (parent "GimpIntComboBox")
+  (c-name "GimpDrawableComboBox")
+  (gtype-id "GIMP_TYPE_DRAWABLE_COMBO_BOX")
+)
+
+(define-object ChannelComboBox
+  (in-module "Gimp")
+  (parent "GimpIntComboBox")
+  (c-name "GimpChannelComboBox")
+  (gtype-id "GIMP_TYPE_CHANNEL_COMBO_BOX")
+)
+
+(define-object LayerComboBox
+  (in-module "Gimp")
+  (parent "GimpIntComboBox")
+  (c-name "GimpLayerComboBox")
+  (gtype-id "GIMP_TYPE_LAYER_COMBO_BOX")
+)
+
+(define-object VectorsComboBox
+  (in-module "Gimp")
+  (parent "GimpIntComboBox")
+  (c-name "GimpVectorsComboBox")
+  (gtype-id "GIMP_TYPE_VECTORS_COMBO_BOX")
+)
+
+(define-object ImageComboBox
+  (in-module "Gimp")
+  (parent "GimpIntComboBox")
+  (c-name "GimpImageComboBox")
+  (gtype-id "GIMP_TYPE_IMAGE_COMBO_BOX")
+)
+
+;; Enumerations and flags ...
+
+(define-enum ChainPosition
+  (in-module "Gimp")
+  (c-name "GimpChainPosition")
+  (gtype-id "GIMP_TYPE_CHAIN_POSITION")
+  (values
+    '("top" "GIMP_CHAIN_TOP")
+    '("left" "GIMP_CHAIN_LEFT")
+    '("bottom" "GIMP_CHAIN_BOTTOM")
+    '("right" "GIMP_CHAIN_RIGHT")
+  )
+)
+
+(define-enum ColorAreaType
+  (in-module "Gimp")
+  (c-name "GimpColorAreaType")
+  (gtype-id "GIMP_TYPE_COLOR_AREA_TYPE")
+  (values
+    '("flat" "GIMP_COLOR_AREA_FLAT")
+    '("small-checks" "GIMP_COLOR_AREA_SMALL_CHECKS")
+    '("large-checks" "GIMP_COLOR_AREA_LARGE_CHECKS")
+  )
+)
+
+(define-enum ColorSelectorChannel
+  (in-module "Gimp")
+  (c-name "GimpColorSelectorChannel")
+  (gtype-id "GIMP_TYPE_COLOR_SELECTOR_CHANNEL")
+  (values
+    '("hue" "GIMP_COLOR_SELECTOR_HUE")
+    '("saturation" "GIMP_COLOR_SELECTOR_SATURATION")
+    '("value" "GIMP_COLOR_SELECTOR_VALUE")
+    '("red" "GIMP_COLOR_SELECTOR_RED")
+    '("green" "GIMP_COLOR_SELECTOR_GREEN")
+    '("blue" "GIMP_COLOR_SELECTOR_BLUE")
+    '("alpha" "GIMP_COLOR_SELECTOR_ALPHA")
+  )
+)
+
+(define-enum PageSelectorTarget
+  (in-module "Gimp")
+  (c-name "GimpPageSelectorTarget")
+  (gtype-id "GIMP_TYPE_PAGE_SELECTOR_TARGET")
+  (values
+    '("layers" "GIMP_PAGE_SELECTOR_TARGET_LAYERS")
+    '("images" "GIMP_PAGE_SELECTOR_TARGET_IMAGES")
+  )
+)
+
+(define-enum SizeEntryUpdatePolicy
+  (in-module "Gimp")
+  (c-name "GimpSizeEntryUpdatePolicy")
+  (gtype-id "GIMP_TYPE_SIZE_ENTRY_UPDATE_POLICY")
+  (values
+    '("none" "GIMP_SIZE_ENTRY_UPDATE_NONE")
+    '("size" "GIMP_SIZE_ENTRY_UPDATE_SIZE")
+    '("resolution" "GIMP_SIZE_ENTRY_UPDATE_RESOLUTION")
+  )
+)
+
+(define-enum ZoomType
+  (in-module "Gimp")
+  (c-name "GimpZoomType")
+  (gtype-id "GIMP_TYPE_ZOOM_TYPE")
+  (values
+    '("in" "GIMP_ZOOM_IN")
+    '("out" "GIMP_ZOOM_OUT")
+    '("in-more" "GIMP_ZOOM_IN_MORE")
+    '("out-more" "GIMP_ZOOM_OUT_MORE")
+    '("in-max" "GIMP_ZOOM_IN_MAX")
+    '("out-max" "GIMP_ZOOM_OUT_MAX")
+    '("to" "GIMP_ZOOM_TO")
+  )
+)
+
+
+;; From ../../libgimpwidgets/gimpbrowser.h
+
+(define-function gimp_browser_get_type
+  (c-name "gimp_browser_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_browser_new
+  (c-name "gimp_browser_new")
+  (is-constructor-of "GimpBrowser")
+  (return-type "GtkWidget*")
+)
+
+(define-method add_search_types
+  (of-object "GimpBrowser")
+  (c-name "gimp_browser_add_search_types")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "first_type_label")
+    '("gint" "first_type_id")
+  )
+  (varargs #t)
+)
+
+(define-method set_widget
+  (of-object "GimpBrowser")
+  (c-name "gimp_browser_set_widget")
+  (return-type "none")
+  (parameters
+    '("GtkWidget*" "widget")
+  )
+)
+
+(define-method show_message
+  (of-object "GimpBrowser")
+  (c-name "gimp_browser_show_message")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "message")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpbutton.h
+
+(define-function gimp_button_get_type
+  (c-name "gimp_button_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_button_new
+  (c-name "gimp_button_new")
+  (is-constructor-of "GimpButton")
+  (return-type "GtkWidget*")
+)
+
+(define-method extended_clicked
+  (of-object "GimpButton")
+  (c-name "gimp_button_extended_clicked")
+  (return-type "none")
+  (parameters
+    '("GdkModifierType" "state")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpcellrenderercolor.h
+
+(define-function gimp_cell_renderer_color_get_type
+  (c-name "gimp_cell_renderer_color_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_cell_renderer_color_new
+  (c-name "gimp_cell_renderer_color_new")
+  (is-constructor-of "GimpCellRendererColor")
+  (return-type "GtkCellRenderer*")
+)
+
+
+
+;; From ../../libgimpwidgets/gimpcellrenderertoggle.h
+
+(define-function gimp_cell_renderer_toggle_get_type
+  (c-name "gimp_cell_renderer_toggle_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_cell_renderer_toggle_new
+  (c-name "gimp_cell_renderer_toggle_new")
+  (is-constructor-of "GimpCellRendererToggle")
+  (return-type "GtkCellRenderer*")
+  (properties
+    '("stock-id" (argname "stock_id") (optional))
+  )
+)
+
+(define-method clicked
+  (of-object "GimpCellRendererToggle")
+  (c-name "gimp_cell_renderer_toggle_clicked")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "path")
+    '("GdkModifierType" "state")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpchainbutton.h
+
+(define-function gimp_chain_button_get_type
+  (c-name "gimp_chain_button_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_chain_button_new
+  (c-name "gimp_chain_button_new")
+  (is-constructor-of "GimpChainButton")
+  (return-type "GtkWidget*")
+  (properties
+    '("position")
+  )
+)
+
+(define-method set_active
+  (of-object "GimpChainButton")
+  (c-name "gimp_chain_button_set_active")
+  (return-type "none")
+  (parameters
+    '("gboolean" "active")
+  )
+)
+
+(define-method get_active
+  (of-object "GimpChainButton")
+  (c-name "gimp_chain_button_get_active")
+  (return-type "gboolean")
+)
+
+
+
+;; From ../../libgimpwidgets/gimpcolorarea.h
+
+(define-function gimp_color_area_get_type
+  (c-name "gimp_color_area_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_color_area_new
+  (c-name "gimp_color_area_new")
+  (is-constructor-of "GimpColorArea")
+  (return-type "GtkWidget*")
+  (properties
+    '("color" (argname "color") (optional))
+    '("type" (argname "type") (optional))
+    '("drag-mask" (argname "drag_mask") (optional))
+  )
+)
+
+(define-method set_color
+  (of-object "GimpColorArea")
+  (c-name "gimp_color_area_set_color")
+  (return-type "none")
+  (parameters
+    '("const-GimpRGB*" "color")
+  )
+)
+
+(define-method get_color
+  (of-object "GimpColorArea")
+  (c-name "gimp_color_area_get_color")
+  (return-type "none")
+  (parameters
+    '("GimpRGB*" "color")
+  )
+)
+
+(define-method has_alpha
+  (of-object "GimpColorArea")
+  (c-name "gimp_color_area_has_alpha")
+  (return-type "gboolean")
+)
+
+(define-method set_type
+  (of-object "GimpColorArea")
+  (c-name "gimp_color_area_set_type")
+  (return-type "none")
+  (parameters
+    '("GimpColorAreaType" "type")
+  )
+)
+
+(define-method set_draw_border
+  (of-object "GimpColorArea")
+  (c-name "gimp_color_area_set_draw_border")
+  (return-type "none")
+  (parameters
+    '("gboolean" "draw_border")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpcolorbutton.h
+
+(define-function gimp_color_button_get_type
+  (c-name "gimp_color_button_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_color_button_new
+  (c-name "gimp_color_button_new")
+  (is-constructor-of "GimpColorButton")
+  (return-type "GtkWidget*")
+  (properties
+    '("title" (optional))
+    '("width" (optional))
+    '("height" (optional))
+    '("color" (optional))
+    '("type" (optional))
+  )
+)
+
+(define-method set_color
+  (of-object "GimpColorButton")
+  (c-name "gimp_color_button_set_color")
+  (return-type "none")
+  (parameters
+    '("const-GimpRGB*" "color")
+  )
+)
+
+(define-method get_color
+  (of-object "GimpColorButton")
+  (c-name "gimp_color_button_get_color")
+  (return-type "none")
+  (parameters
+    '("GimpRGB*" "color")
+  )
+)
+
+(define-method has_alpha
+  (of-object "GimpColorButton")
+  (c-name "gimp_color_button_has_alpha")
+  (return-type "gboolean")
+)
+
+(define-method set_type
+  (of-object "GimpColorButton")
+  (c-name "gimp_color_button_set_type")
+  (return-type "none")
+  (parameters
+    '("GimpColorAreaType" "type")
+  )
+)
+
+(define-method get_update
+  (of-object "GimpColorButton")
+  (c-name "gimp_color_button_get_update")
+  (return-type "gboolean")
+)
+
+(define-method set_update
+  (of-object "GimpColorButton")
+  (c-name "gimp_color_button_set_update")
+  (return-type "none")
+  (parameters
+    '("gboolean" "continuous")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpcolordisplay.h
+
+(define-function gimp_color_display_get_type
+  (c-name "gimp_color_display_get_type")
+  (return-type "GType")
+)
+
+(define-method clone
+  (of-object "GimpColorDisplay")
+  (c-name "gimp_color_display_clone")
+  (return-type "GimpColorDisplay*")
+)
+
+(define-method convert
+  (of-object "GimpColorDisplay")
+  (c-name "gimp_color_display_convert")
+  (return-type "none")
+  (parameters
+    '("guchar*" "buf")
+    '("gint" "width")
+    '("gint" "height")
+    '("gint" "bpp")
+    '("gint" "bpl")
+  )
+)
+
+(define-method load_state
+  (of-object "GimpColorDisplay")
+  (c-name "gimp_color_display_load_state")
+  (return-type "none")
+  (parameters
+    '("GimpParasite*" "state")
+  )
+)
+
+(define-method save_state
+  (of-object "GimpColorDisplay")
+  (c-name "gimp_color_display_save_state")
+  (return-type "GimpParasite*")
+)
+
+(define-method configure
+  (of-object "GimpColorDisplay")
+  (c-name "gimp_color_display_configure")
+  (return-type "GtkWidget*")
+)
+
+(define-method configure_reset
+  (of-object "GimpColorDisplay")
+  (c-name "gimp_color_display_configure_reset")
+  (return-type "none")
+)
+
+(define-method changed
+  (of-object "GimpColorDisplay")
+  (c-name "gimp_color_display_changed")
+  (return-type "none")
+)
+
+(define-method set_enabled
+  (of-object "GimpColorDisplay")
+  (c-name "gimp_color_display_set_enabled")
+  (return-type "none")
+  (parameters
+    '("gboolean" "enabled")
+  )
+)
+
+(define-method get_enabled
+  (of-object "GimpColorDisplay")
+  (c-name "gimp_color_display_get_enabled")
+  (return-type "gboolean")
+)
+
+
+
+;; From ../../libgimpwidgets/gimpcolordisplaystack.h
+
+(define-function gimp_color_display_stack_get_type
+  (c-name "gimp_color_display_stack_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_color_display_stack_new
+  (c-name "gimp_color_display_stack_new")
+  (is-constructor-of "GimpColorDisplayStack")
+  (return-type "GimpColorDisplayStack*")
+)
+
+(define-method clone
+  (of-object "GimpColorDisplayStack")
+  (c-name "gimp_color_display_stack_clone")
+  (return-type "GimpColorDisplayStack*")
+)
+
+(define-method changed
+  (of-object "GimpColorDisplayStack")
+  (c-name "gimp_color_display_stack_changed")
+  (return-type "none")
+)
+
+(define-method add
+  (of-object "GimpColorDisplayStack")
+  (c-name "gimp_color_display_stack_add")
+  (return-type "none")
+  (parameters
+    '("GimpColorDisplay*" "display")
+  )
+)
+
+(define-method remove
+  (of-object "GimpColorDisplayStack")
+  (c-name "gimp_color_display_stack_remove")
+  (return-type "none")
+  (parameters
+    '("GimpColorDisplay*" "display")
+  )
+)
+
+(define-method reorder_up
+  (of-object "GimpColorDisplayStack")
+  (c-name "gimp_color_display_stack_reorder_up")
+  (return-type "none")
+  (parameters
+    '("GimpColorDisplay*" "display")
+  )
+)
+
+(define-method reorder_down
+  (of-object "GimpColorDisplayStack")
+  (c-name "gimp_color_display_stack_reorder_down")
+  (return-type "none")
+  (parameters
+    '("GimpColorDisplay*" "display")
+  )
+)
+
+(define-method convert
+  (of-object "GimpColorDisplayStack")
+  (c-name "gimp_color_display_stack_convert")
+  (return-type "none")
+  (parameters
+    '("guchar*" "buf")
+    '("gint" "width")
+    '("gint" "height")
+    '("gint" "bpp")
+    '("gint" "bpl")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpcolorhexentry.h
+
+(define-function gimp_color_hex_entry_get_type
+  (c-name "gimp_color_hex_entry_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_color_hex_entry_new
+  (c-name "gimp_color_hex_entry_new")
+  (is-constructor-of "GimpColorHexEntry")
+  (return-type "GtkWidget*")
+)
+
+(define-method set_color
+  (of-object "GimpColorHexEntry")
+  (c-name "gimp_color_hex_entry_set_color")
+  (return-type "none")
+  (parameters
+    '("const-GimpRGB*" "color")
+  )
+)
+
+(define-method get_color
+  (of-object "GimpColorHexEntry")
+  (c-name "gimp_color_hex_entry_get_color")
+  (return-type "none")
+  (parameters
+    '("GimpRGB*" "color")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpcolornotebook.h
+
+(define-function gimp_color_notebook_get_type
+  (c-name "gimp_color_notebook_get_type")
+  (return-type "GType")
+)
+
+(define-method set_has_page
+  (of-object "GimpColorNotebook")
+  (c-name "gimp_color_notebook_set_has_page")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GType" "page_type")
+    '("gboolean" "has_page")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpcolorscale.h
+
+(define-function gimp_color_scale_get_type
+  (c-name "gimp_color_scale_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_color_scale_new
+  (c-name "gimp_color_scale_new")
+  (is-constructor-of "GimpColorScale")
+  (return-type "GtkWidget*")
+  (properties
+    '("orientation")
+    '("channel")
+  )
+)
+
+(define-method set_channel
+  (of-object "GimpColorScale")
+  (c-name "gimp_color_scale_set_channel")
+  (return-type "none")
+  (parameters
+    '("GimpColorSelectorChannel" "channel")
+  )
+)
+
+(define-method set_color
+  (of-object "GimpColorScale")
+  (c-name "gimp_color_scale_set_color")
+  (return-type "none")
+  (parameters
+    '("const-GimpRGB*" "rgb")
+    '("const-GimpHSV*" "hsv")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpcolorscales.h
+
+(define-function gimp_color_scales_get_type
+  (c-name "gimp_color_scales_get_type")
+  (return-type "GType")
+)
+
+
+
+;; From ../../libgimpwidgets/gimpcolorselect.h
+
+(define-function gimp_color_select_get_type
+  (c-name "gimp_color_select_get_type")
+  (return-type "GType")
+)
+
+
+
+;; From ../../libgimpwidgets/gimpcolorselection.h
+
+(define-function gimp_color_selection_get_type
+  (c-name "gimp_color_selection_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_color_selection_new
+  (c-name "gimp_color_selection_new")
+  (is-constructor-of "GimpColorSelection")
+  (return-type "GtkWidget*")
+)
+
+(define-method set_show_alpha
+  (of-object "GimpColorSelection")
+  (c-name "gimp_color_selection_set_show_alpha")
+  (return-type "none")
+  (parameters
+    '("gboolean" "show_alpha")
+  )
+)
+
+(define-method get_show_alpha
+  (of-object "GimpColorSelection")
+  (c-name "gimp_color_selection_get_show_alpha")
+  (return-type "gboolean")
+)
+
+(define-method set_color
+  (of-object "GimpColorSelection")
+  (c-name "gimp_color_selection_set_color")
+  (return-type "none")
+  (parameters
+    '("const-GimpRGB*" "color")
+  )
+)
+
+(define-method get_color
+  (of-object "GimpColorSelection")
+  (c-name "gimp_color_selection_get_color")
+  (return-type "none")
+  (parameters
+    '("GimpRGB*" "color")
+  )
+)
+
+(define-method set_old_color
+  (of-object "GimpColorSelection")
+  (c-name "gimp_color_selection_set_old_color")
+  (return-type "none")
+  (parameters
+    '("const-GimpRGB*" "color")
+  )
+)
+
+(define-method get_old_color
+  (of-object "GimpColorSelection")
+  (c-name "gimp_color_selection_get_old_color")
+  (return-type "none")
+  (parameters
+    '("GimpRGB*" "color")
+  )
+)
+
+(define-method reset
+  (of-object "GimpColorSelection")
+  (c-name "gimp_color_selection_reset")
+  (return-type "none")
+)
+
+(define-method color_changed
+  (of-object "GimpColorSelection")
+  (c-name "gimp_color_selection_color_changed")
+  (return-type "none")
+)
+
+
+
+;; From ../../libgimpwidgets/gimpcolorselector.h
+
+(define-function gimp_color_selector_get_type
+  (c-name "gimp_color_selector_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_color_selector_new
+  (c-name "gimp_color_selector_new")
+  (is-constructor-of "GimpColorSelector")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GType" "selector_type")
+    '("const-GimpRGB*" "rgb")
+    '("const-GimpHSV*" "hsv")
+    '("GimpColorSelectorChannel" "channel")
+  )
+)
+
+(define-method set_toggles_visible
+  (of-object "GimpColorSelector")
+  (c-name "gimp_color_selector_set_toggles_visible")
+  (return-type "none")
+  (parameters
+    '("gboolean" "visible")
+  )
+)
+
+(define-method set_toggles_sensitive
+  (of-object "GimpColorSelector")
+  (c-name "gimp_color_selector_set_toggles_sensitive")
+  (return-type "none")
+  (parameters
+    '("gboolean" "sensitive")
+  )
+)
+
+(define-method set_show_alpha
+  (of-object "GimpColorSelector")
+  (c-name "gimp_color_selector_set_show_alpha")
+  (return-type "none")
+  (parameters
+    '("gboolean" "show_alpha")
+  )
+)
+
+(define-method set_color
+  (of-object "GimpColorSelector")
+  (c-name "gimp_color_selector_set_color")
+  (return-type "none")
+  (parameters
+    '("const-GimpRGB*" "rgb")
+    '("const-GimpHSV*" "hsv")
+  )
+)
+
+(define-method set_channel
+  (of-object "GimpColorSelector")
+  (c-name "gimp_color_selector_set_channel")
+  (return-type "none")
+  (parameters
+    '("GimpColorSelectorChannel" "channel")
+  )
+)
+
+(define-method color_changed
+  (of-object "GimpColorSelector")
+  (c-name "gimp_color_selector_color_changed")
+  (return-type "none")
+)
+
+(define-method channel_changed
+  (of-object "GimpColorSelector")
+  (c-name "gimp_color_selector_channel_changed")
+  (return-type "none")
+)
+
+
+
+;; From ../../libgimpwidgets/gimpdialog.h
+
+(define-function gimp_dialog_get_type
+  (c-name "gimp_dialog_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_dialog_new
+  (c-name "gimp_dialog_new")
+  (is-constructor-of "GimpDialog")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "title")
+    '("const-gchar*" "role")
+    '("GtkWidget*" "parent")
+    '("GtkDialogFlags" "flags")
+    '("GimpHelpFunc" "help_func")
+    '("const-gchar*" "help_id")
+  )
+  (varargs #t)
+)
+
+(define-function gimp_dialog_new_valist
+  (c-name "gimp_dialog_new_valist")
+  (is-constructor-of "GimpDialog")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "title")
+    '("const-gchar*" "role")
+    '("GtkWidget*" "parent")
+    '("GtkDialogFlags" "flags")
+    '("GimpHelpFunc" "help_func")
+    '("const-gchar*" "help_id")
+    '("va_list" "args")
+  )
+)
+
+(define-method add_button
+  (of-object "GimpDialog")
+  (c-name "gimp_dialog_add_button")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "button_text")
+    '("gint" "response_id")
+  )
+)
+
+(define-method add_buttons
+  (of-object "GimpDialog")
+  (c-name "gimp_dialog_add_buttons")
+  (return-type "none")
+  (varargs #t)
+)
+
+(define-method add_buttons_valist
+  (of-object "GimpDialog")
+  (c-name "gimp_dialog_add_buttons_valist")
+  (return-type "none")
+  (parameters
+    '("va_list" "args")
+  )
+)
+
+(define-method run
+  (of-object "GimpDialog")
+  (c-name "gimp_dialog_run")
+  (return-type "gint")
+)
+
+(define-function gimp_dialogs_show_help_button
+  (c-name "gimp_dialogs_show_help_button")
+  (return-type "none")
+  (parameters
+    '("gboolean" "show")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpenumcombobox.h
+
+(define-function gimp_enum_combo_box_get_type
+  (c-name "gimp_enum_combo_box_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_enum_combo_box_new
+  (c-name "gimp_enum_combo_box_new")
+  (is-constructor-of "GimpEnumComboBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GType" "enum_type")
+  )
+)
+
+(define-function gimp_enum_combo_box_new_with_model
+  (c-name "gimp_enum_combo_box_new_with_model")
+  (is-constructor-of "GimpEnumComboBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GimpEnumStore*" "enum_store")
+  )
+)
+
+(define-method set_stock_prefix
+  (of-object "GimpEnumComboBox")
+  (c-name "gimp_enum_combo_box_set_stock_prefix")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "stock_prefix")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpenumlabel.h
+
+(define-function gimp_enum_label_get_type
+  (c-name "gimp_enum_label_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_enum_label_new
+  (c-name "gimp_enum_label_new")
+  (is-constructor-of "GimpEnumLabel")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GType" "enum_type")
+    '("gint" "value")
+  )
+)
+
+(define-method set_value
+  (of-object "GimpEnumLabel")
+  (c-name "gimp_enum_label_set_value")
+  (return-type "none")
+  (parameters
+    '("gint" "value")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpenumstore.h
+
+(define-function gimp_enum_store_get_type
+  (c-name "gimp_enum_store_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_enum_store_new
+  (c-name "gimp_enum_store_new")
+  (is-constructor-of "GimpEnumStore")
+  (return-type "GtkListStore*")
+  (parameters
+    '("GType" "enum_type")
+  )
+)
+
+(define-function gimp_enum_store_new_with_range
+  (c-name "gimp_enum_store_new_with_range")
+  (is-constructor-of "GimpEnumStore")
+  (return-type "GtkListStore*")
+  (parameters
+    '("GType" "enum_type")
+    '("gint" "minimum")
+    '("gint" "maximum")
+  )
+)
+
+(define-function gimp_enum_store_new_with_values
+  (c-name "gimp_enum_store_new_with_values")
+  (is-constructor-of "GimpEnumStore")
+  (return-type "GtkListStore*")
+  (parameters
+    '("GType" "enum_type")
+    '("gint" "n_values")
+  )
+  (varargs #t)
+)
+
+(define-function gimp_enum_store_new_with_values_valist
+  (c-name "gimp_enum_store_new_with_values_valist")
+  (is-constructor-of "GimpEnumStore")
+  (return-type "GtkListStore*")
+  (parameters
+    '("GType" "enum_type")
+    '("gint" "n_values")
+    '("va_list" "args")
+  )
+)
+
+(define-method set_stock_prefix
+  (of-object "GimpEnumStore")
+  (c-name "gimp_enum_store_set_stock_prefix")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "stock_prefix")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpenumwidgets.h
+
+(define-function gimp_enum_radio_box_new
+  (c-name "gimp_enum_radio_box_new")
+  (is-constructor-of "GimpEnumRadioBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GType" "enum_type")
+    '("GCallback" "callback")
+    '("gpointer" "callback_data")
+    '("GtkWidget**" "first_button")
+  )
+)
+
+(define-function gimp_enum_radio_box_new_with_range
+  (c-name "gimp_enum_radio_box_new_with_range")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GType" "enum_type")
+    '("gint" "minimum")
+    '("gint" "maximum")
+    '("GCallback" "callback")
+    '("gpointer" "callback_data")
+    '("GtkWidget**" "first_button")
+  )
+)
+
+(define-function gimp_enum_radio_frame_new
+  (c-name "gimp_enum_radio_frame_new")
+  (is-constructor-of "GimpEnumRadioFrame")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GType" "enum_type")
+    '("GtkWidget*" "label_widget")
+    '("GCallback" "callback")
+    '("gpointer" "callback_data")
+    '("GtkWidget**" "first_button")
+  )
+)
+
+(define-function gimp_enum_radio_frame_new_with_range
+  (c-name "gimp_enum_radio_frame_new_with_range")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GType" "enum_type")
+    '("gint" "minimum")
+    '("gint" "maximum")
+    '("GtkWidget*" "label_widget")
+    '("GCallback" "callback")
+    '("gpointer" "callback_data")
+    '("GtkWidget**" "first_button")
+  )
+)
+
+(define-function gimp_enum_stock_box_new
+  (c-name "gimp_enum_stock_box_new")
+  (is-constructor-of "GimpEnumStockBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GType" "enum_type")
+    '("const-gchar*" "stock_prefix")
+    '("GtkIconSize" "icon_size")
+    '("GCallback" "callback")
+    '("gpointer" "callback_data")
+    '("GtkWidget**" "first_button")
+  )
+)
+
+(define-function gimp_enum_stock_box_new_with_range
+  (c-name "gimp_enum_stock_box_new_with_range")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GType" "enum_type")
+    '("gint" "minimum")
+    '("gint" "maximum")
+    '("const-gchar*" "stock_prefix")
+    '("GtkIconSize" "icon_size")
+    '("GCallback" "callback")
+    '("gpointer" "callback_data")
+    '("GtkWidget**" "first_button")
+  )
+)
+
+(define-function gimp_enum_stock_box_set_child_padding
+  (c-name "gimp_enum_stock_box_set_child_padding")
+  (return-type "none")
+  (parameters
+    '("GtkWidget*" "stock_box")
+    '("gint" "xpad")
+    '("gint" "ypad")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpframe.h
+
+(define-function gimp_frame_get_type
+  (c-name "gimp_frame_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_frame_new
+  (c-name "gimp_frame_new")
+  (is-constructor-of "GimpFrame")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "label")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpintcombobox.h
+
+(define-function gimp_int_combo_box_get_type
+  (c-name "gimp_int_combo_box_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_int_combo_box_new
+  (c-name "gimp_int_combo_box_new")
+  (is-constructor-of "GimpIntComboBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "first_label")
+    '("gint" "first_value")
+  )
+  (varargs #t)
+)
+
+(define-function gimp_int_combo_box_new_valist
+  (c-name "gimp_int_combo_box_new_valist")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "first_label")
+    '("gint" "first_value")
+    '("va_list" "values")
+  )
+)
+
+(define-function gimp_int_combo_box_new_array
+  (c-name "gimp_int_combo_box_new_array")
+  (return-type "GtkWidget*")
+  (parameters
+    '("gint" "n_values")
+    '("const-gchar*[]" "labels")
+  )
+)
+
+(define-method prepend
+  (of-object "GimpIntComboBox")
+  (c-name "gimp_int_combo_box_prepend")
+  (return-type "none")
+  (parameters
+  )
+  (varargs #t)
+)
+
+(define-method append
+  (of-object "GimpIntComboBox")
+  (c-name "gimp_int_combo_box_append")
+  (return-type "none")
+  (parameters
+  )
+  (varargs #t)
+)
+
+(define-method set_active
+  (of-object "GimpIntComboBox")
+  (c-name "gimp_int_combo_box_set_active")
+  (return-type "gboolean")
+  (parameters
+    '("gint" "value")
+  )
+)
+
+(define-method get_active
+  (of-object "GimpIntComboBox")
+  (c-name "gimp_int_combo_box_get_active")
+  (return-type "gboolean")
+  (parameters
+    '("gint*" "value")
+  )
+)
+
+(define-method connect
+  (of-object "GimpIntComboBox")
+  (c-name "gimp_int_combo_box_connect")
+  (return-type "gulong")
+  (parameters
+    '("gint" "value")
+    '("GCallback" "callback")
+    '("gpointer" "data")
+  )
+)
+
+(define-method set_sensitivity
+  (of-object "GimpIntComboBox")
+  (c-name "gimp_int_combo_box_set_sensitivity")
+  (return-type "none")
+  (parameters
+    '("GimpIntSensitivityFunc" "func")
+    '("gpointer" "data")
+    '("GDestroyNotify" "destroy")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimphintbox.h
+
+(define-function gimp_hint_box_get_type
+  (c-name "gimp_hint_box_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_hint_box_new
+  (c-name "gimp_hint_box_new")
+  (is-constructor-of "GimpHintBox")
+  (return-type "GtkWidget*")
+  (properties
+    '("hint") ("stock-id" (optional))
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpintstore.h
+
+(define-function gimp_int_store_get_type
+  (c-name "gimp_int_store_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_int_store_new
+  (c-name "gimp_int_store_new")
+  (is-constructor-of "GimpIntStore")
+  (return-type "GtkListStore*")
+)
+
+(define-function gimp_int_store_lookup_by_value
+  (c-name "gimp_int_store_lookup_by_value")
+  (return-type "gboolean")
+  (parameters
+    '("GtkTreeModel*" "model")
+    '("gint" "value")
+    '("GtkTreeIter*" "iter")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpmemsizeentry.h
+
+(define-function gimp_memsize_entry_get_type
+  (c-name "gimp_memsize_entry_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_memsize_entry_new
+  (c-name "gimp_memsize_entry_new")
+  (is-constructor-of "GimpMemsizeEntry")
+  (return-type "GtkWidget*")
+  (parameters
+    '("guint64" "value")
+    '("guint64" "lower")
+    '("guint64" "upper")
+  )
+)
+
+(define-method set_value
+  (of-object "GimpMemsizeEntry")
+  (c-name "gimp_memsize_entry_set_value")
+  (return-type "none")
+  (parameters
+    '("guint64" "value")
+  )
+)
+
+(define-method get_value
+  (of-object "GimpMemsizeEntry")
+  (c-name "gimp_memsize_entry_get_value")
+  (return-type "guint64")
+)
+
+
+
+;; From ../../libgimpwidgets/gimpoffsetarea.h
+
+(define-function gimp_offset_area_get_type
+  (c-name "gimp_offset_area_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_offset_area_new
+  (c-name "gimp_offset_area_new")
+  (is-constructor-of "GimpOffsetArea")
+  (return-type "GtkWidget*")
+  (parameters
+    '("gint" "orig_width")
+    '("gint" "orig_height")
+  )
+)
+
+(define-method set_pixbuf
+  (of-object "GimpOffsetArea")
+  (c-name "gimp_offset_area_set_pixbuf")
+  (return-type "none")
+  (parameters
+    '("GdkPixbuf*" "pixbuf")
+  )
+)
+
+(define-method set_size
+  (of-object "GimpOffsetArea")
+  (c-name "gimp_offset_area_set_size")
+  (return-type "none")
+  (parameters
+    '("gint" "width")
+    '("gint" "height")
+  )
+)
+
+(define-method set_offsets
+  (of-object "GimpOffsetArea")
+  (c-name "gimp_offset_area_set_offsets")
+  (return-type "none")
+  (parameters
+    '("gint" "offset_x")
+    '("gint" "offset_y")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimppageselector.h
+
+(define-function gimp_page_selector_get_type
+  (c-name "gimp_page_selector_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_page_selector_new
+  (c-name "gimp_page_selector_new")
+  (is-constructor-of "GimpPageSelector")
+  (return-type "GtkWidget*")
+)
+
+(define-method set_n_pages
+  (of-object "GimpPageSelector")
+  (c-name "gimp_page_selector_set_n_pages")
+  (return-type "none")
+  (parameters
+    '("gint" "n_pages")
+  )
+)
+
+(define-method get_n_pages
+  (of-object "GimpPageSelector")
+  (c-name "gimp_page_selector_get_n_pages")
+  (return-type "gint")
+)
+
+(define-method set_target
+  (of-object "GimpPageSelector")
+  (c-name "gimp_page_selector_set_target")
+  (return-type "none")
+  (parameters
+    '("GimpPageSelectorTarget" "target")
+  )
+)
+
+(define-method get_target
+  (of-object "GimpPageSelector")
+  (c-name "gimp_page_selector_get_target")
+  (return-type "GimpPageSelectorTarget")
+)
+
+(define-method set_page_thumbnail
+  (of-object "GimpPageSelector")
+  (c-name "gimp_page_selector_set_page_thumbnail")
+  (return-type "none")
+  (parameters
+    '("gint" "page_no")
+    '("GdkPixbuf*" "thumbnail")
+  )
+)
+
+(define-method get_page_thumbnail
+  (of-object "GimpPageSelector")
+  (c-name "gimp_page_selector_get_page_thumbnail")
+  (return-type "GdkPixbuf*")
+  (parameters
+    '("gint" "page_no")
+  )
+)
+
+(define-method set_page_label
+  (of-object "GimpPageSelector")
+  (c-name "gimp_page_selector_set_page_label")
+  (return-type "none")
+  (parameters
+    '("gint" "page_no")
+    '("const-gchar*" "label")
+  )
+)
+
+(define-method get_page_label
+  (of-object "GimpPageSelector")
+  (c-name "gimp_page_selector_get_page_label")
+  (return-type "gchar*")
+  (parameters
+    '("gint" "page_no")
+  )
+)
+
+(define-method select_all
+  (of-object "GimpPageSelector")
+  (c-name "gimp_page_selector_select_all")
+  (return-type "none")
+)
+
+(define-method unselect_all
+  (of-object "GimpPageSelector")
+  (c-name "gimp_page_selector_unselect_all")
+  (return-type "none")
+)
+
+(define-method select_page
+  (of-object "GimpPageSelector")
+  (c-name "gimp_page_selector_select_page")
+  (return-type "none")
+  (parameters
+    '("gint" "page_no")
+  )
+)
+
+(define-method unselect_page
+  (of-object "GimpPageSelector")
+  (c-name "gimp_page_selector_unselect_page")
+  (return-type "none")
+  (parameters
+    '("gint" "page_no")
+  )
+)
+
+(define-method page_is_selected
+  (of-object "GimpPageSelector")
+  (c-name "gimp_page_selector_page_is_selected")
+  (return-type "gboolean")
+  (parameters
+    '("gint" "page_no")
+  )
+)
+
+(define-method get_selected_pages
+  (of-object "GimpPageSelector")
+  (c-name "gimp_page_selector_get_selected_pages")
+  (return-type "gint*")
+  (parameters
+    '("gint*" "n_selected_pages")
+  )
+)
+
+(define-method select_range
+  (of-object "GimpPageSelector")
+  (c-name "gimp_page_selector_select_range")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "range")
+  )
+)
+
+(define-method get_selected_range
+  (of-object "GimpPageSelector")
+  (c-name "gimp_page_selector_get_selected_range")
+  (return-type "gchar*")
+)
+
+
+
+;; From ../../libgimpwidgets/gimppatheditor.h
+
+(define-function gimp_path_editor_get_type
+  (c-name "gimp_path_editor_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_path_editor_new
+  (c-name "gimp_path_editor_new")
+  (is-constructor-of "GimpPathEditor")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "title")
+    '("const-gchar*" "path")
+  )
+)
+
+(define-method get_path
+  (of-object "GimpPathEditor")
+  (c-name "gimp_path_editor_get_path")
+  (return-type "gchar*")
+)
+
+(define-method set_path
+  (of-object "GimpPathEditor")
+  (c-name "gimp_path_editor_set_path")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "path")
+  )
+)
+
+(define-method get_writable_path
+  (of-object "GimpPathEditor")
+  (c-name "gimp_path_editor_get_writable_path")
+  (return-type "gchar*")
+)
+
+(define-method set_writable_path
+  (of-object "GimpPathEditor")
+  (c-name "gimp_path_editor_set_writable_path")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "path")
+  )
+)
+
+(define-method get_dir_writable
+  (of-object "GimpPathEditor")
+  (c-name "gimp_path_editor_get_dir_writable")
+  (return-type "gboolean")
+  (parameters
+    '("const-gchar*" "directory")
+  )
+)
+
+(define-method set_dir_writable
+  (of-object "GimpPathEditor")
+  (c-name "gimp_path_editor_set_dir_writable")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "directory")
+    '("gboolean" "writable")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimppickbutton.h
+
+(define-function gimp_pick_button_get_type
+  (c-name "gimp_pick_button_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_pick_button_new
+  (c-name "gimp_pick_button_new")
+  (is-constructor-of "GimpPickButton")
+  (return-type "GtkWidget*")
+)
+
+
+
+;; From ../../libgimpwidgets/gimppreview.h
+
+(define-function gimp_preview_get_type
+  (c-name "gimp_preview_get_type")
+  (return-type "GType")
+)
+
+(define-method set_update
+  (of-object "GimpPreview")
+  (c-name "gimp_preview_set_update")
+  (return-type "none")
+  (parameters
+    '("gboolean" "update")
+  )
+)
+
+(define-method get_update
+  (of-object "GimpPreview")
+  (c-name "gimp_preview_get_update")
+  (return-type "gboolean")
+)
+
+(define-method set_bounds
+  (of-object "GimpPreview")
+  (c-name "gimp_preview_set_bounds")
+  (return-type "none")
+  (parameters
+    '("gint" "xmin")
+    '("gint" "ymin")
+    '("gint" "xmax")
+    '("gint" "ymax")
+  )
+)
+
+(define-method get_position
+  (of-object "GimpPreview")
+  (c-name "gimp_preview_get_position")
+  (return-type "none")
+  (parameters
+    '("gint*" "x")
+    '("gint*" "y")
+  )
+)
+
+(define-method get_size
+  (of-object "GimpPreview")
+  (c-name "gimp_preview_get_size")
+  (return-type "none")
+  (parameters
+    '("gint*" "width")
+    '("gint*" "height")
+  )
+)
+
+(define-method get_area
+  (of-object "GimpPreview")
+  (c-name "gimp_preview_get_area")
+  (return-type "GtkWidget*")
+)
+
+(define-method draw
+  (of-object "GimpPreview")
+  (c-name "gimp_preview_draw")
+  (return-type "none")
+)
+
+(define-method draw_buffer
+  (of-object "GimpPreview")
+  (c-name "gimp_preview_draw_buffer")
+  (return-type "none")
+  (parameters
+    '("const-guchar*" "buffer")
+    '("gint" "rowstride")
+  )
+)
+
+(define-method invalidate
+  (of-object "GimpPreview")
+  (c-name "gimp_preview_invalidate")
+  (return-type "none")
+)
+
+(define-method set_default_cursor
+  (of-object "GimpPreview")
+  (c-name "gimp_preview_set_default_cursor")
+  (return-type "none")
+  (parameters
+    '("GdkCursor*" "cursor")
+  )
+)
+
+(define-method get_controls
+  (of-object "GimpPreview")
+  (c-name "gimp_preview_get_controls")
+  (return-type "GtkWidget*")
+)
+
+
+
+;; From ../../libgimpwidgets/gimppreviewarea.h
+
+(define-function gimp_preview_area_get_type
+  (c-name "gimp_preview_area_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_preview_area_new
+  (c-name "gimp_preview_area_new")
+  (is-constructor-of "GimpPreviewArea")
+  (return-type "GtkWidget*")
+)
+
+(define-method draw
+  (of-object "GimpPreviewArea")
+  (c-name "gimp_preview_area_draw")
+  (return-type "none")
+  (parameters
+    '("gint" "x")
+    '("gint" "y")
+    '("gint" "width")
+    '("gint" "height")
+    '("GimpImageType" "type")
+    '("const-guchar*" "buf")
+    '("gint" "rowstride")
+  )
+)
+
+(define-method blend
+  (of-object "GimpPreviewArea")
+  (c-name "gimp_preview_area_blend")
+  (return-type "none")
+  (parameters
+    '("gint" "x")
+    '("gint" "y")
+    '("gint" "width")
+    '("gint" "height")
+    '("GimpImageType" "type")
+    '("const-guchar*" "buf1")
+    '("gint" "rowstride1")
+    '("const-guchar*" "buf2")
+    '("gint" "rowstride2")
+    '("guchar" "opacity")
+  )
+)
+
+(define-method mask
+  (of-object "GimpPreviewArea")
+  (c-name "gimp_preview_area_mask")
+  (return-type "none")
+  (parameters
+    '("gint" "x")
+    '("gint" "y")
+    '("gint" "width")
+    '("gint" "height")
+    '("GimpImageType" "type")
+    '("const-guchar*" "buf1")
+    '("gint" "rowstride1")
+    '("const-guchar*" "buf2")
+    '("gint" "rowstride2")
+    '("const-guchar*" "mask")
+    '("gint" "rowstride_mask")
+  )
+)
+
+(define-method fill
+  (of-object "GimpPreviewArea")
+  (c-name "gimp_preview_area_fill")
+  (return-type "none")
+  (parameters
+    '("gint" "x")
+    '("gint" "y")
+    '("gint" "width")
+    '("gint" "height")
+    '("guchar" "red")
+    '("guchar" "green")
+    '("guchar" "blue")
+  )
+)
+
+(define-method set_offsets
+  (of-object "GimpPreviewArea")
+  (c-name "gimp_preview_area_set_offsets")
+  (return-type "none")
+  (parameters
+    '("gint" "x")
+    '("gint" "y")
+  )
+)
+
+(define-method set_colormap
+  (of-object "GimpPreviewArea")
+  (c-name "gimp_preview_area_set_colormap")
+  (return-type "none")
+  (parameters
+    '("const-guchar*" "colormap")
+    '("gint" "num_colors")
+  )
+)
+
+(define-method set_max_size
+  (of-object "GimpPreviewArea")
+  (c-name "gimp_preview_area_set_max_size")
+  (return-type "none")
+  (parameters
+    '("gint" "width")
+    '("gint" "height")
+  )
+)
+
+(define-method menu_popup
+  (of-object "GimpPreviewArea")
+  (c-name "gimp_preview_area_menu_popup")
+  (return-type "none")
+  (parameters
+    '("GdkEventButton*" "event")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimppropwidgets.h
+
+(define-function gimp_prop_check_button_new
+  (c-name "gimp_prop_check_button_new")
+  (is-constructor-of "GimpPropCheckButton")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("const-gchar*" "label")
+  )
+)
+
+(define-function gimp_prop_boolean_combo_box_new
+  (c-name "gimp_prop_boolean_combo_box_new")
+  (is-constructor-of "GimpPropBooleanComboBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("const-gchar*" "true_text")
+    '("const-gchar*" "false_text")
+  )
+)
+
+(define-function gimp_prop_boolean_radio_frame_new
+  (c-name "gimp_prop_boolean_radio_frame_new")
+  (is-constructor-of "GimpPropBooleanRadioFrame")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("const-gchar*" "title")
+    '("const-gchar*" "true_text")
+    '("const-gchar*" "false_text")
+  )
+)
+
+(define-function gimp_prop_expander_new
+  (c-name "gimp_prop_expander_new")
+  (is-constructor-of "GimpPropExpander")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("const-gchar*" "label")
+  )
+)
+
+(define-function gimp_prop_int_combo_box_new
+  (c-name "gimp_prop_int_combo_box_new")
+  (is-constructor-of "GimpPropIntComboBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("GimpIntStore*" "store")
+  )
+)
+
+(define-function gimp_prop_enum_combo_box_new
+  (c-name "gimp_prop_enum_combo_box_new")
+  (is-constructor-of "GimpPropEnumComboBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("gint" "minimum")
+    '("gint" "maximum")
+  )
+)
+
+(define-function gimp_prop_enum_check_button_new
+  (c-name "gimp_prop_enum_check_button_new")
+  (is-constructor-of "GimpPropEnumCheckButton")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("const-gchar*" "label")
+    '("gint" "false_value")
+    '("gint" "true_value")
+  )
+)
+
+(define-function gimp_prop_enum_radio_frame_new
+  (c-name "gimp_prop_enum_radio_frame_new")
+  (is-constructor-of "GimpPropEnumRadioFrame")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("const-gchar*" "title")
+    '("gint" "minimum")
+    '("gint" "maximum")
+  )
+)
+
+(define-function gimp_prop_enum_radio_box_new
+  (c-name "gimp_prop_enum_radio_box_new")
+  (is-constructor-of "GimpPropEnumRadioBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("gint" "minimum")
+    '("gint" "maximum")
+  )
+)
+
+(define-function gimp_prop_enum_stock_box_new
+  (c-name "gimp_prop_enum_stock_box_new")
+  (is-constructor-of "GimpPropEnumStockBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("const-gchar*" "stock_prefix")
+    '("gint" "minimum")
+    '("gint" "maximum")
+  )
+)
+
+(define-function gimp_prop_enum_label_new
+  (c-name "gimp_prop_enum_label_new")
+  (is-constructor-of "GimpPropEnumLabel")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+  )
+)
+
+(define-function gimp_prop_spin_button_new
+  (c-name "gimp_prop_spin_button_new")
+  (is-constructor-of "GimpPropSpinButton")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("gdouble" "step_increment")
+    '("gdouble" "page_increment")
+    '("gint" "digits")
+  )
+)
+
+(define-function gimp_prop_hscale_new
+  (c-name "gimp_prop_hscale_new")
+  (is-constructor-of "GimpPropHscale")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("gdouble" "step_increment")
+    '("gdouble" "page_increment")
+    '("gint" "digits")
+  )
+)
+
+(define-function gimp_prop_scale_entry_new
+  (c-name "gimp_prop_scale_entry_new")
+  (is-constructor-of "GimpPropScaleEntry")
+  (return-type "GtkObject*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("GtkTable*" "table")
+    '("gint" "column")
+    '("gint" "row")
+    '("const-gchar*" "label")
+    '("gdouble" "step_increment")
+    '("gdouble" "page_increment")
+    '("gint" "digits")
+    '("gboolean" "limit_scale")
+    '("gdouble" "lower_limit")
+    '("gdouble" "upper_limit")
+  )
+)
+
+(define-function gimp_prop_opacity_entry_new
+  (c-name "gimp_prop_opacity_entry_new")
+  (is-constructor-of "GimpPropOpacityEntry")
+  (return-type "GtkObject*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("GtkTable*" "table")
+    '("gint" "column")
+    '("gint" "row")
+    '("const-gchar*" "label")
+  )
+)
+
+(define-function gimp_prop_memsize_entry_new
+  (c-name "gimp_prop_memsize_entry_new")
+  (is-constructor-of "GimpPropMemsizeEntry")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+  )
+)
+
+(define-function gimp_prop_label_new
+  (c-name "gimp_prop_label_new")
+  (is-constructor-of "GimpPropLabel")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+  )
+)
+
+(define-function gimp_prop_entry_new
+  (c-name "gimp_prop_entry_new")
+  (is-constructor-of "GimpPropEntry")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("gint" "max_len")
+  )
+)
+
+(define-function gimp_prop_text_buffer_new
+  (c-name "gimp_prop_text_buffer_new")
+  (is-constructor-of "GimpPropTextBuffer")
+  (return-type "GtkTextBuffer*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("gint" "max_len")
+  )
+)
+
+(define-function gimp_prop_file_entry_new
+  (c-name "gimp_prop_file_entry_new")
+  (is-constructor-of "GimpPropFileEntry")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("const-gchar*" "filesel_title")
+    '("gboolean" "dir_only")
+    '("gboolean" "check_valid")
+  )
+)
+
+(define-function gimp_prop_path_editor_new
+  (c-name "gimp_prop_path_editor_new")
+  (is-constructor-of "GimpPropPathEditor")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "path_property_name")
+    '("const-gchar*" "writable_property_name")
+    '("const-gchar*" "filesel_title")
+  )
+)
+
+(define-function gimp_prop_file_chooser_button_new
+  (c-name "gimp_prop_file_chooser_button_new")
+  (is-constructor-of "GimpPropFileChooserButton")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("const-gchar*" "title")
+    '("GtkFileChooserAction" "action")
+  )
+)
+
+(define-function gimp_prop_size_entry_new
+  (c-name "gimp_prop_size_entry_new")
+  (is-constructor-of "GimpPropSizeEntry")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("const-gchar*" "unit_property_name")
+    '("const-gchar*" "unit_format")
+    '("GimpSizeEntryUpdatePolicy" "update_policy")
+    '("gdouble" "resolution")
+  )
+)
+
+(define-function gimp_prop_coordinates_new
+  (c-name "gimp_prop_coordinates_new")
+  (is-constructor-of "GimpPropCoordinates")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "x_property_name")
+    '("const-gchar*" "y_property_name")
+    '("const-gchar*" "unit_property_name")
+    '("const-gchar*" "unit_format")
+    '("GimpSizeEntryUpdatePolicy" "update_policy")
+    '("gdouble" "xresolution")
+    '("gdouble" "yresolution")
+    '("gboolean" "has_chainbutton")
+  )
+)
+
+(define-function gimp_prop_coordinates_connect
+  (c-name "gimp_prop_coordinates_connect")
+  (return-type "gboolean")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "x_property_name")
+    '("const-gchar*" "y_property_name")
+    '("const-gchar*" "unit_property_name")
+    '("GtkWidget*" "sizeentry")
+    '("GtkWidget*" "chainbutton")
+    '("gdouble" "xresolution")
+    '("gdouble" "yresolution")
+  )
+)
+
+(define-function gimp_prop_color_area_new
+  (c-name "gimp_prop_color_area_new")
+  (is-constructor-of "GimpPropColorArea")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("gint" "width")
+    '("gint" "height")
+    '("GimpColorAreaType" "type")
+  )
+)
+
+(define-function gimp_prop_unit_menu_new
+  (c-name "gimp_prop_unit_menu_new")
+  (is-constructor-of "GimpPropUnitMenu")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("const-gchar*" "unit_format")
+  )
+)
+
+(define-function gimp_prop_stock_image_new
+  (c-name "gimp_prop_stock_image_new")
+  (is-constructor-of "GimpPropStockImage")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GObject*" "config")
+    '("const-gchar*" "property_name")
+    '("GtkIconSize" "icon_size")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpquerybox.h
+
+(define-function gimp_query_string_box
+  (c-name "gimp_query_string_box")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "title")
+    '("GtkWidget*" "parent")
+    '("GimpHelpFunc" "help_func")
+    '("const-gchar*" "help_id")
+    '("const-gchar*" "message")
+    '("const-gchar*" "initial")
+    '("GObject*" "object")
+    '("const-gchar*" "signal")
+    '("GimpQueryStringCallback" "callback")
+    '("gpointer" "data")
+  )
+)
+
+(define-function gimp_query_int_box
+  (c-name "gimp_query_int_box")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "title")
+    '("GtkWidget*" "parent")
+    '("GimpHelpFunc" "help_func")
+    '("const-gchar*" "help_id")
+    '("const-gchar*" "message")
+    '("gint" "initial")
+    '("gint" "lower")
+    '("gint" "upper")
+    '("GObject*" "object")
+    '("const-gchar*" "signal")
+    '("GimpQueryIntCallback" "callback")
+    '("gpointer" "data")
+  )
+)
+
+(define-function gimp_query_double_box
+  (c-name "gimp_query_double_box")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "title")
+    '("GtkWidget*" "parent")
+    '("GimpHelpFunc" "help_func")
+    '("const-gchar*" "help_id")
+    '("const-gchar*" "message")
+    '("gdouble" "initial")
+    '("gdouble" "lower")
+    '("gdouble" "upper")
+    '("gint" "digits")
+    '("GObject*" "object")
+    '("const-gchar*" "signal")
+    '("GimpQueryDoubleCallback" "callback")
+    '("gpointer" "data")
+  )
+)
+
+(define-function gimp_query_size_box
+  (c-name "gimp_query_size_box")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "title")
+    '("GtkWidget*" "parent")
+    '("GimpHelpFunc" "help_func")
+    '("const-gchar*" "help_id")
+    '("const-gchar*" "message")
+    '("gdouble" "initial")
+    '("gdouble" "lower")
+    '("gdouble" "upper")
+    '("gint" "digits")
+    '("GimpUnit" "unit")
+    '("gdouble" "resolution")
+    '("gboolean" "dot_for_dot")
+    '("GObject*" "object")
+    '("const-gchar*" "signal")
+    '("GimpQuerySizeCallback" "callback")
+    '("gpointer" "data")
+  )
+)
+
+(define-function gimp_query_boolean_box
+  (c-name "gimp_query_boolean_box")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "title")
+    '("GtkWidget*" "parent")
+    '("GimpHelpFunc" "help_func")
+    '("const-gchar*" "help_id")
+    '("const-gchar*" "stock_id")
+    '("const-gchar*" "message")
+    '("const-gchar*" "true_button")
+    '("const-gchar*" "false_button")
+    '("GObject*" "object")
+    '("const-gchar*" "signal")
+    '("GimpQueryBooleanCallback" "callback")
+    '("gpointer" "data")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpscrolledpreview.h
+
+(define-function gimp_scrolled_preview_get_type
+  (c-name "gimp_scrolled_preview_get_type")
+  (return-type "GType")
+)
+
+(define-method set_position
+  (of-object "GimpScrolledPreview")
+  (c-name "gimp_scrolled_preview_set_position")
+  (return-type "none")
+  (parameters
+    '("gint" "x")
+    '("gint" "y")
+  )
+)
+
+(define-method set_policy
+  (of-object "GimpScrolledPreview")
+  (c-name "gimp_scrolled_preview_set_policy")
+  (return-type "none")
+  (parameters
+    '("GtkPolicyType" "hscrollbar_policy")
+    '("GtkPolicyType" "vscrollbar_policy")
+  )
+)
+
+(define-method freeze
+  (of-object "GimpScrolledPreview")
+  (c-name "gimp_scrolled_preview_freeze")
+  (return-type "none")
+)
+
+(define-method thaw
+  (of-object "GimpScrolledPreview")
+  (c-name "gimp_scrolled_preview_thaw")
+  (return-type "none")
+)
+
+
+
+;; From ../../libgimpwidgets/gimpsizeentry.h
+
+(define-function gimp_size_entry_get_type
+  (c-name "gimp_size_entry_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_size_entry_new
+  (c-name "gimp_size_entry_new")
+  (is-constructor-of "GimpSizeEntry")
+  (return-type "GtkWidget*")
+  (parameters
+    '("gint" "number_of_fields")
+    '("GimpUnit" "unit")
+    '("const-gchar*" "unit_format")
+    '("gboolean" "menu_show_pixels")
+    '("gboolean" "menu_show_percent")
+    '("gboolean" "show_refval")
+    '("gint" "spinbutton_width")
+    '("GimpSizeEntryUpdatePolicy" "update_policy")
+  )
+)
+
+(define-method add_field
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_add_field")
+  (return-type "none")
+  (parameters
+    '("GtkSpinButton*" "value_spinbutton")
+    '("GtkSpinButton*" "refval_spinbutton")
+  )
+)
+
+(define-method attach_label
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_attach_label")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "text")
+    '("gint" "row")
+    '("gint" "column")
+    '("gfloat" "alignment")
+  )
+)
+
+(define-method set_resolution
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_set_resolution")
+  (return-type "none")
+  (parameters
+    '("gint" "field")
+    '("gdouble" "resolution")
+    '("gboolean" "keep_size")
+  )
+)
+
+(define-method set_size
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_set_size")
+  (return-type "none")
+  (parameters
+    '("gint" "field")
+    '("gdouble" "lower")
+    '("gdouble" "upper")
+  )
+)
+
+(define-method set_value_boundaries
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_set_value_boundaries")
+  (return-type "none")
+  (parameters
+    '("gint" "field")
+    '("gdouble" "lower")
+    '("gdouble" "upper")
+  )
+)
+
+(define-method get_value
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_get_value")
+  (return-type "gdouble")
+  (parameters
+    '("gint" "field")
+  )
+)
+
+(define-method set_value
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_set_value")
+  (return-type "none")
+  (parameters
+    '("gint" "field")
+    '("gdouble" "value")
+  )
+)
+
+(define-method set_refval_boundaries
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_set_refval_boundaries")
+  (return-type "none")
+  (parameters
+    '("gint" "field")
+    '("gdouble" "lower")
+    '("gdouble" "upper")
+  )
+)
+
+(define-method set_refval_digits
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_set_refval_digits")
+  (return-type "none")
+  (parameters
+    '("gint" "field")
+    '("gint" "digits")
+  )
+)
+
+(define-method get_refval
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_get_refval")
+  (return-type "gdouble")
+  (parameters
+    '("gint" "field")
+  )
+)
+
+(define-method set_refval
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_set_refval")
+  (return-type "none")
+  (parameters
+    '("gint" "field")
+    '("gdouble" "refval")
+  )
+)
+
+(define-method get_unit
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_get_unit")
+  (return-type "GimpUnit")
+)
+
+(define-method set_unit
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_set_unit")
+  (return-type "none")
+  (parameters
+    '("GimpUnit" "unit")
+  )
+)
+
+(define-method show_unit_menu
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_show_unit_menu")
+  (return-type "none")
+  (parameters
+    '("gboolean" "show")
+  )
+)
+
+(define-method set_pixel_digits
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_set_pixel_digits")
+  (return-type "none")
+  (parameters
+    '("gint" "digits")
+  )
+)
+
+(define-method grab_focus
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_grab_focus")
+  (return-type "none")
+)
+
+(define-method set_activates_default
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_set_activates_default")
+  (return-type "none")
+  (parameters
+    '("gboolean" "setting")
+  )
+)
+
+(define-method get_help_widget
+  (of-object "GimpSizeEntry")
+  (c-name "gimp_size_entry_get_help_widget")
+  (return-type "GtkWidget*")
+  (parameters
+    '("gint" "field")
+  )
+)
+
+
+
+;; From ../../libgimpwidgets/gimpunitmenu.h
+
+(define-function gimp_unit_menu_get_type
+  (c-name "gimp_unit_menu_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_unit_menu_new
+  (c-name "gimp_unit_menu_new")
+  (is-constructor-of "GimpUnitMenu")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "format")
+    '("GimpUnit" "unit")
+    '("gboolean" "show_pixels")
+    '("gboolean" "show_percent")
+    '("gboolean" "show_custom")
+  )
+)
+
+(define-method set_unit
+  (of-object "GimpUnitMenu")
+  (c-name "gimp_unit_menu_set_unit")
+  (return-type "none")
+  (parameters
+    '("GimpUnit" "unit")
+  )
+)
+
+(define-method get_unit
+  (of-object "GimpUnitMenu")
+  (c-name "gimp_unit_menu_get_unit")
+  (return-type "GimpUnit")
+)
+
+(define-method set_pixel_digits
+  (of-object "GimpUnitMenu")
+  (c-name "gimp_unit_menu_set_pixel_digits")
+  (return-type "none")
+  (parameters
+    '("gint" "digits")
+  )
+)
+
+(define-method get_pixel_digits
+  (of-object "GimpUnitMenu")
+  (c-name "gimp_unit_menu_get_pixel_digits")
+  (return-type "gint")
+)
+
+
+
+;; From ../../libgimpwidgets/gimpwidgets.h
+
+(define-function gimp_int_radio_group_new
+  (c-name "gimp_int_radio_group_new")
+  (is-constructor-of "GimpIntRadioGroup")
+  (return-type "GtkWidget*")
+  (parameters
+    '("gboolean" "in_frame")
+    '("const-gchar*" "frame_title")
+    '("GCallback" "radio_button_callback")
+    '("gpointer" "radio_button_callback_data")
+    '("gint" "initial")
+  )
+  (varargs #t)
+)
+
+(define-function gimp_int_radio_group_set_active
+  (c-name "gimp_int_radio_group_set_active")
+  (return-type "none")
+  (parameters
+    '("GtkRadioButton*" "radio_button")
+    '("gint" "item_data")
+  )
+)
+
+(define-function gimp_radio_group_new
+  (c-name "gimp_radio_group_new")
+  (is-constructor-of "GimpRadioGroup")
+  (return-type "GtkWidget*")
+  (parameters
+    '("gboolean" "in_frame")
+    '("const-gchar*" "frame_title")
+  )
+  (varargs #t)
+)
+
+(define-function gimp_radio_group_new2
+  (c-name "gimp_radio_group_new2")
+  (return-type "GtkWidget*")
+  (parameters
+    '("gboolean" "in_frame")
+    '("const-gchar*" "frame_title")
+    '("GCallback" "radio_button_callback")
+    '("gpointer" "radio_button_callback_data")
+    '("gpointer" "initial")
+  )
+  (varargs #t)
+)
+
+(define-function gimp_radio_group_set_active
+  (c-name "gimp_radio_group_set_active")
+  (return-type "none")
+  (parameters
+    '("GtkRadioButton*" "radio_button")
+    '("gpointer" "item_data")
+  )
+)
+
+(define-function gimp_spin_button_new
+  (c-name "gimp_spin_button_new")
+  (is-constructor-of "GimpSpinButton")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GtkObject**" "adjustment")
+    '("gdouble" "value")
+    '("gdouble" "lower")
+    '("gdouble" "upper")
+    '("gdouble" "step_increment")
+    '("gdouble" "page_increment")
+    '("gdouble" "page_size")
+    '("gdouble" "climb_rate")
+    '("guint" "digits")
+  )
+)
+
+(define-function gimp_scale_entry_new
+  (c-name "gimp_scale_entry_new")
+  (is-constructor-of "GimpScaleEntry")
+  (return-type "GtkObject*")
+  (parameters
+    '("GtkTable*" "table")
+    '("gint" "column")
+    '("gint" "row")
+    '("const-gchar*" "text")
+    '("gint" "scale_width")
+    '("gint" "spinbutton_width")
+    '("gdouble" "value")
+    '("gdouble" "lower")
+    '("gdouble" "upper")
+    '("gdouble" "step_increment")
+    '("gdouble" "page_increment")
+    '("guint" "digits")
+    '("gboolean" "constrain")
+    '("gdouble" "unconstrained_lower")
+    '("gdouble" "unconstrained_upper")
+    '("const-gchar*" "tooltip")
+    '("const-gchar*" "help_id")
+  )
+)
+
+(define-function gimp_color_scale_entry_new
+  (c-name "gimp_color_scale_entry_new")
+  (is-constructor-of "GimpColorScaleEntry")
+  (return-type "GtkObject*")
+  (parameters
+    '("GtkTable*" "table")
+    '("gint" "column")
+    '("gint" "row")
+    '("const-gchar*" "text")
+    '("gint" "scale_width")
+    '("gint" "spinbutton_width")
+    '("gdouble" "value")
+    '("gdouble" "lower")
+    '("gdouble" "upper")
+    '("gdouble" "step_increment")
+    '("gdouble" "page_increment")
+    '("guint" "digits")
+    '("const-gchar*" "tooltip")
+    '("const-gchar*" "help_id")
+  )
+)
+
+(define-function gimp_scale_entry_set_sensitive
+  (c-name "gimp_scale_entry_set_sensitive")
+  (return-type "none")
+  (parameters
+    '("GtkObject*" "adjustment")
+    '("gboolean" "sensitive")
+  )
+)
+
+(define-function gimp_scale_entry_set_logarithmic
+  (c-name "gimp_scale_entry_set_logarithmic")
+  (return-type "none")
+  (parameters
+    '("GtkObject*" "adjustment")
+    '("gboolean" "logarithmic")
+  )
+)
+
+(define-function gimp_scale_entry_get_logarithmic
+  (c-name "gimp_scale_entry_get_logarithmic")
+  (return-type "gboolean")
+  (parameters
+    '("GtkObject*" "adjustment")
+  )
+)
+
+(define-function gimp_random_seed_new
+  (c-name "gimp_random_seed_new")
+  (is-constructor-of "GimpRandomSeed")
+  (return-type "GtkWidget*")
+  (parameters
+    '("guint32*" "seed")
+    '("gboolean*" "random_seed")
+  )
+)
+
+(define-function gimp_coordinates_new
+  (c-name "gimp_coordinates_new")
+  (is-constructor-of "GimpCoordinates")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GimpUnit" "unit")
+    '("const-gchar*" "unit_format")
+    '("gboolean" "menu_show_pixels")
+    '("gboolean" "menu_show_percent")
+    '("gint" "spinbutton_width")
+    '("GimpSizeEntryUpdatePolicy" "update_policy")
+    '("gboolean" "chainbutton_active")
+    '("gboolean" "chain_constrains_ratio")
+    '("const-gchar*" "xlabel")
+    '("gdouble" "x")
+    '("gdouble" "xres")
+    '("gdouble" "lower_boundary_x")
+    '("gdouble" "upper_boundary_x")
+    '("gdouble" "xsize_0")
+    '("gdouble" "xsize_100")
+    '("const-gchar*" "ylabel")
+    '("gdouble" "y")
+    '("gdouble" "yres")
+    '("gdouble" "lower_boundary_y")
+    '("gdouble" "upper_boundary_y")
+    '("gdouble" "ysize_0")
+  )
+)
+
+(define-function gimp_toggle_button_sensitive_update
+  (c-name "gimp_toggle_button_sensitive_update")
+  (return-type "none")
+  (parameters
+    '("GtkToggleButton*" "toggle_button")
+  )
+)
+
+(define-function gimp_toggle_button_update
+  (c-name "gimp_toggle_button_update")
+  (return-type "none")
+  (parameters
+    '("GtkWidget*" "widget")
+    '("gpointer" "data")
+  )
+)
+
+(define-function gimp_radio_button_update
+  (c-name "gimp_radio_button_update")
+  (return-type "none")
+  (parameters
+    '("GtkWidget*" "widget")
+    '("gpointer" "data")
+  )
+)
+
+(define-function gimp_int_adjustment_update
+  (c-name "gimp_int_adjustment_update")
+  (return-type "none")
+  (parameters
+    '("GtkAdjustment*" "adjustment")
+    '("gpointer" "data")
+  )
+)
+
+(define-function gimp_uint_adjustment_update
+  (c-name "gimp_uint_adjustment_update")
+  (return-type "none")
+  (parameters
+    '("GtkAdjustment*" "adjustment")
+    '("gpointer" "data")
+  )
+)
+
+(define-function gimp_float_adjustment_update
+  (c-name "gimp_float_adjustment_update")
+  (return-type "none")
+  (parameters
+    '("GtkAdjustment*" "adjustment")
+    '("gpointer" "data")
+  )
+)
+
+(define-function gimp_double_adjustment_update
+  (c-name "gimp_double_adjustment_update")
+  (return-type "none")
+  (parameters
+    '("GtkAdjustment*" "adjustment")
+    '("gpointer" "data")
+  )
+)
+
+(define-function gimp_unit_menu_update
+  (c-name "gimp_unit_menu_update")
+  (return-type "none")
+  (parameters
+    '("GtkWidget*" "widget")
+    '("gpointer" "data")
+  )
+)
+
+(define-function gimp_table_attach_aligned
+  (c-name "gimp_table_attach_aligned")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GtkTable*" "table")
+    '("gint" "column")
+    '("gint" "row")
+    '("const-gchar*" "label_text")
+    '("gfloat" "xalign")
+    '("gfloat" "yalign")
+    '("GtkWidget*" "widget")
+    '("gint" "colspan")
+    '("gboolean" "left_align")
+  )
+)
+
+(define-function gimp_label_set_attributes
+  (c-name "gimp_label_set_attributes")
+  (return-type "none")
+  (parameters
+    '("GtkLabel*" "label")
+  )
+  (varargs #t)
+)
+
+
+
+;; From ../../libgimpwidgets/gimpwidgetsenums.h
+
+(define-function gimp_chain_position_get_type
+  (c-name "gimp_chain_position_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_color_area_type_get_type
+  (c-name "gimp_color_area_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_color_selector_channel_get_type
+  (c-name "gimp_color_selector_channel_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_page_selector_target_get_type
+  (c-name "gimp_page_selector_target_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_size_entry_update_policy_get_type
+  (c-name "gimp_size_entry_update_policy_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_zoom_type_get_type
+  (c-name "gimp_zoom_type_get_type")
+  (return-type "GType")
+)
+
+
+
+;; From ../../libgimpwidgets/gimpzoommodel.h
+
+(define-function gimp_zoom_model_get_type
+  (c-name "gimp_zoom_model_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_zoom_model_new
+  (c-name "gimp_zoom_model_new")
+  (is-constructor-of "GimpZoomModel")
+  (return-type "GimpZoomModel*")
+)
+
+(define-method set_range
+  (of-object "GimpZoomModel")
+  (c-name "gimp_zoom_model_set_range")
+  (return-type "none")
+  (parameters
+    '("gdouble" "min")
+    '("gdouble" "max")
+  )
+)
+
+(define-method zoom
+  (of-object "GimpZoomModel")
+  (c-name "gimp_zoom_model_zoom")
+  (return-type "none")
+  (parameters
+    '("GimpZoomType" "zoom_type")
+    '("gdouble" "scale")
+  )
+)
+
+(define-method get_factor
+  (of-object "GimpZoomModel")
+  (c-name "gimp_zoom_model_get_factor")
+  (return-type "gdouble")
+)
+
+(define-method get_fraction
+  (of-object "GimpZoomModel")
+  (c-name "gimp_zoom_model_get_fraction")
+  (return-type "none")
+  (parameters
+    '("gint*" "numerator")
+    '("gint*" "denominator")
+  )
+)
+
+(define-function gimp_zoom_button_new
+  (c-name "gimp_zoom_button_new")
+  (is-constructor-of "GimpZoomButton")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GimpZoomModel*" "model")
+    '("GimpZoomType" "zoom_type")
+    '("GtkIconSize" "icon_size")
+  )
+)
+
+(define-function gimp_zoom_model_zoom_step
+  (c-name "gimp_zoom_model_zoom_step")
+  (return-type "gdouble")
+  (parameters
+    '("GimpZoomType" "zoom_type")
+    '("gdouble" "scale")
+  )
+)
+
+
+
+;; From ../../libgimp/gimpaspectpreview.h
+
+(define-function gimp_aspect_preview_get_type
+  (c-name "gimp_aspect_preview_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_aspect_preview_new
+  (c-name "gimp_aspect_preview_new")
+  (is-constructor-of "GimpAspectPreview")
+  (return-type "GtkWidget*")
+  (properties
+    '("drawable")
+  )
+)
+
+
+
+;; From ../../libgimp/gimpdrawablepreview.h
+
+(define-function gimp_drawable_preview_get_type
+  (c-name "gimp_drawable_preview_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_drawable_preview_new
+  (c-name "gimp_drawable_preview_new")
+  (is-constructor-of "GimpDrawablePreview")
+  (return-type "GtkWidget*")
+  (properties
+    '("drawable")
+  )
+)
+
+(define-method get_drawable
+  (of-object "GimpDrawablePreview")
+  (c-name "gimp_drawable_preview_get_drawable")
+  (return-type "GimpDrawable*")
+)
+
+(define-method draw_region
+  (of-object "GimpDrawablePreview")
+  (c-name "gimp_drawable_preview_draw_region")
+  (return-type "none")
+  (parameters
+    '("const-GimpPixelRgn*" "region")
+  )
+)
+
+
+
+;; From ../../libgimp/gimpprocbrowserdialog.h
+
+(define-function gimp_proc_browser_dialog_get_type
+  (c-name "gimp_proc_browser_dialog_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_proc_browser_dialog_new
+  (c-name "gimp_proc_browser_dialog_new")
+  (is-constructor-of "GimpProcBrowserDialog")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "title")
+    '("const-gchar*" "role")
+    '("GimpHelpFunc" "help_func")
+    '("const-gchar*" "help_id")
+  )
+  (varargs #t)
+)
+
+(define-method get_selected
+  (of-object "GimpProcBrowserDialog")
+  (c-name "gimp_proc_browser_dialog_get_selected")
+  (return-type "gchar*")
+)
+
+
+
+;; From ../../libgimp/gimpprocview.h
+
+(define-function gimp_proc_view_new
+  (c-name "gimp_proc_view_new")
+  (is-constructor-of "GimpProcView")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "name")
+    '("const-gchar*" "menu_path")
+    '("const-gchar*" "blurb")
+    '("const-gchar*" "help")
+    '("const-gchar*" "author")
+    '("const-gchar*" "copyright")
+    '("const-gchar*" "date")
+    '("GimpPDBProcType" "type")
+    '("gint" "n_params")
+    '("gint" "n_return_vals")
+    '("GimpParamDef*" "params")
+    '("GimpParamDef*" "return_vals")
+  )
+)
+
+
+
+;; From ../../libgimp/gimpprogressbar.h
+
+(define-function gimp_progress_bar_get_type
+  (c-name "gimp_progress_bar_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_progress_bar_new
+  (c-name "gimp_progress_bar_new")
+  (is-constructor-of "GimpProgressBar")
+  (return-type "GtkWidget*")
+)
+
+
+
+;; From ../../libgimp/gimpdrawablecombobox.h
+
+(define-function gimp_drawable_combo_box_get_type
+  (c-name "gimp_drawable_combo_box_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_channel_combo_box_get_type
+  (c-name "gimp_channel_combo_box_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_layer_combo_box_get_type
+  (c-name "gimp_layer_combo_box_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_vectors_combo_box_get_type
+  (c-name "gimp_vectors_combo_box_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_drawable_combo_box_new
+  (c-name "gimp_drawable_combo_box_new")
+  (is-constructor-of "GimpDrawableComboBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GimpDrawableConstraintFunc" "constraint")
+    '("gpointer" "data")
+  )
+)
+
+(define-function gimp_channel_combo_box_new
+  (c-name "gimp_channel_combo_box_new")
+  (is-constructor-of "GimpChannelComboBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GimpDrawableConstraintFunc" "constraint")
+    '("gpointer" "data")
+  )
+)
+
+(define-function gimp_layer_combo_box_new
+  (c-name "gimp_layer_combo_box_new")
+  (is-constructor-of "GimpLayerComboBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GimpDrawableConstraintFunc" "constraint")
+    '("gpointer" "data")
+  )
+)
+
+(define-function gimp_vectors_combo_box_new
+  (c-name "gimp_vectors_combo_box_new")
+  (is-constructor-of "GimpVectorsComboBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GimpVectorsConstraintFunc" "constraint")
+    '("gpointer" "data")
+  )
+)
+
+
+
+;; From ../../libgimp/gimpimagecombobox.h
+
+(define-function gimp_image_combo_box_get_type
+  (c-name "gimp_image_combo_box_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_image_combo_box_new
+  (c-name "gimp_image_combo_box_new")
+  (is-constructor-of "GimpImageComboBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GimpImageConstraintFunc" "constraint")
+    '("gpointer" "data")
+  )
+)
+
+
+
+;; From ../../libgimp/gimpbrushselectbutton.h
+
+(define-function gimp_brush_select_button_get_type
+  (c-name "gimp_brush_select_button_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_brush_select_button_new
+  (c-name "gimp_brush_select_button_new")
+  (is-constructor-of "GimpBrushSelectButton")
+  (return-type "GtkWidget*")
+  (properties
+    '("title" (argname "title") (optional))
+    '("brush-name" (argname "brush_name") (optional))
+    '("brush-opacity" (argname "opacity") (optional))
+    '("brush-spacing" (argname "spacing") (optional))
+    '("brush-paint-mode" (argname "paint_mode") (optional))
+  )
+)
+
+(define-method get_brush
+  (of-object "GimpBrushSelectButton")
+  (c-name "gimp_brush_select_button_get_brush")
+  (return-type "const-gchar*")
+  (parameters
+    '("gdouble*" "opacity")
+    '("gint*" "spacing")
+    '("GimpLayerModeEffects*" "paint_mode")
+  )
+)
+
+(define-method set_brush
+  (of-object "GimpBrushSelectButton")
+  (c-name "gimp_brush_select_button_set_brush")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "brush_name")
+    '("gdouble" "opacity")
+    '("gint" "spacing")
+    '("GimpLayerModeEffects" "paint_mode")
+  )
+)
+
+
+
+;; From ../../libgimp/gimpfontselectbutton.h
+
+(define-function gimp_font_select_button_get_type
+  (c-name "gimp_font_select_button_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_font_select_button_new
+  (c-name "gimp_font_select_button_new")
+  (is-constructor-of "GimpFontSelectButton")
+  (return-type "GtkWidget*")
+  (properties
+    '("title" (argname "title") (optional))
+    '("font-name" (argname "font_name") (optional))
+  )
+)
+
+(define-method get_font
+  (of-object "GimpFontSelectButton")
+  (c-name "gimp_font_select_button_get_font")
+  (return-type "const-gchar*")
+)
+
+(define-method set_font
+  (of-object "GimpFontSelectButton")
+  (c-name "gimp_font_select_button_set_font")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "font_name")
+  )
+)
+
+
+
+;; From ../../libgimp/gimpgradientselectbutton.h
+
+(define-function gimp_gradient_select_button_get_type
+  (c-name "gimp_gradient_select_button_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_gradient_select_button_new
+  (c-name "gimp_gradient_select_button_new")
+  (is-constructor-of "GimpGradientSelectButton")
+  (return-type "GtkWidget*")
+  (properties
+    '("title" (argname "title") (optional))
+    '("gradient-name" (argname "gradient_name") (optional))
+  )
+)
+
+(define-method get_gradient
+  (of-object "GimpGradientSelectButton")
+  (c-name "gimp_gradient_select_button_get_gradient")
+  (return-type "const-gchar*")
+)
+
+(define-method set_gradient
+  (of-object "GimpGradientSelectButton")
+  (c-name "gimp_gradient_select_button_set_gradient")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "gradient_name")
+  )
+)
+
+
+
+;; From ../../libgimp/gimppaletteselectbutton.h
+
+(define-function gimp_palette_select_button_get_type
+  (c-name "gimp_palette_select_button_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_palette_select_button_new
+  (c-name "gimp_palette_select_button_new")
+  (is-constructor-of "GimpPaletteSelectButton")
+  (return-type "GtkWidget*")
+  (properties
+    '("title" (argname "title") (optional))
+    '("palette-name" (argname "palette_name") (optional))
+  )
+)
+
+(define-method get_palette
+  (of-object "GimpPaletteSelectButton")
+  (c-name "gimp_palette_select_button_get_palette")
+  (return-type "const-gchar*")
+)
+
+(define-method set_palette
+  (of-object "GimpPaletteSelectButton")
+  (c-name "gimp_palette_select_button_set_palette")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "palette_name")
+  )
+)
+
+
+
+;; From ../../libgimp/gimppatternselectbutton.h
+
+(define-function gimp_pattern_select_button_get_type
+  (c-name "gimp_pattern_select_button_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_pattern_select_button_new
+  (c-name "gimp_pattern_select_button_new")
+  (is-constructor-of "GimpPatternSelectButton")
+  (return-type "GtkWidget*")
+  (properties
+    '("title" (argname "title") (optional))
+    '("pattern-name" (argname "pattern_name") (optional))
+  )
+)
+
+(define-method get_pattern
+  (of-object "GimpPatternSelectButton")
+  (c-name "gimp_pattern_select_button_get_pattern")
+  (return-type "const-gchar*")
+)
+
+(define-method set_pattern
+  (of-object "GimpPatternSelectButton")
+  (c-name "gimp_pattern_select_button_set_pattern")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "pattern_name")
+  )
+)
+
+
+
+;; From ../../libgimp/gimpselectbutton.h
+
+(define-function gimp_select_button_get_type
+  (c-name "gimp_select_button_get_type")
+  (return-type "GType")
+)
+
+(define-method close_popup
+  (of-object "GimpSelectButton")
+  (c-name "gimp_select_button_close_popup")
+  (return-type "none")
+)
+
+
+
+;; From ../../libgimp/gimpui.h
+
+(define-method set_transient
+  (of-object "GimpDialog")
+  (c-name "gimp_window_set_transient")
+  (return-type "none")
+)
+
+
+
+;; From ../../libgimp/gimpzoompreview.h
+
+(define-function gimp_zoom_preview_get_type
+  (c-name "gimp_zoom_preview_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_zoom_preview_new
+  (c-name "gimp_zoom_preview_new")
+  (is-constructor-of "GimpZoomPreview")
+  (return-type "GtkWidget*")
+  (properties
+    '("drawable")
+  )
+)
+
+(define-method get_source
+  (of-object "GimpZoomPreview")
+  (c-name "gimp_zoom_preview_get_source")
+  (return-type "guchar*")
+  (parameters
+    '("gint*" "width")
+    '("gint*" "height")
+    '("gint*" "bpp")
+  )
+)
+
+(define-method get_drawable
+  (of-object "GimpZoomPreview")
+  (c-name "gimp_zoom_preview_get_drawable")
+  (return-type "GimpDrawable*")
+)
+
+(define-method get_factor
+  (of-object "GimpZoomPreview")
+  (c-name "gimp_zoom_preview_get_factor")
+  (return-type "gdouble")
+)
+
+

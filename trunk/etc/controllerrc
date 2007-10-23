@@ -1,0 +1,68 @@
+# GIMP controllerrc
+
+(GimpControllerInfo "Main Mouse Wheel"
+    (enabled yes)
+    (debug-events no)
+    (controller "GimpControllerWheel")
+    (mapping
+        (map "scroll-up-alt"                 "context-opacity-increase-skip")
+        (map "scroll-down-alt"               "context-opacity-decrease-skip")
+        (map "scroll-up-control-alt"         "context-gradient-select-next")
+        (map "scroll-down-control-alt"       "context-gradient-select-previous")
+        (map "scroll-up-shift-alt"           "context-pattern-select-next")
+        (map "scroll-down-shift-alt"         "context-pattern-select-previous")
+        (map "scroll-up-shift-control"       "context-brush-select-next")
+        (map "scroll-down-shift-control"     "context-brush-select-previous")
+        (map "scroll-up-shift-control-alt"   "context-font-select-next")
+        (map "scroll-down-shift-control-alt" "context-font-select-previous")))
+
+(GimpControllerInfo "Main Keyboard"
+    (enabled yes)
+    (debug-events no)
+    (controller "GimpControllerKeyboard")
+    (mapping
+        (map "key-up"            "view-scroll-up")
+        (map "key-down"          "view-scroll-down")
+        (map "key-left"          "view-scroll-left")
+        (map "key-right"         "view-scroll-right")
+        (map "key-up-shift"      "view-scroll-page-up")
+        (map "key-down-shift"    "view-scroll-page-down")
+        (map "key-left-shift"    "view-scroll-page-left")
+        (map "key-right-shift"   "view-scroll-page-right")
+        (map "key-up-control"    "view-scroll-top-border")
+        (map "key-down-control"  "view-scroll-bottom-border")
+        (map "key-left-control"  "view-scroll-left-border")
+        (map "key-right-control" "view-scroll-right-border")
+        (map "key-up-alt"        "context-opacity-increase-skip")
+        (map "key-down-alt"      "context-opacity-decrease-skip")
+        (map "key-left-alt"      "context-opacity-decrease")
+        (map "key-right-alt"     "context-opacity-increase")))
+
+# (GimpControllerInfo "Linux Input Example"
+#    (enabled yes)
+#    (debug-events no)
+#    (controller "ControllerLinuxInput"
+#        (device "/dev/input/event2"))
+#    (mapping
+#        (map "wheel-turn-left"  "context-brush-radius-decrease")
+#        (map "wheel-turn-right" "context-brush-radius-increase")))
+
+# (GimpControllerInfo "Midi Example"
+#    (enabled yes)
+#    (debug-events no)
+#    (controller "ControllerMidi"
+#        (device "/dev/midi01")
+#        (channel 0))
+#    (mapping
+#        (map "controller-000" "context-foreground-red-set")
+#        (map "controller-001" "context-foreground-green-set")
+#        (map "controller-002" "context-foreground-blue-set")
+#        (map "controller-004" "context-background-red-set")
+#        (map "controller-005" "context-background-green-set")
+#        (map "controller-006" "context-background-blue-set")
+#        (map "controller-008" "context-brush-radius-set")
+#        (map "controller-009" "context-brush-hardness-set")
+#        (map "controller-010" "context-brush-aspect-set")
+#        (map "controller-011" "context-brush-angle-set")))
+
+# end of controllerrc

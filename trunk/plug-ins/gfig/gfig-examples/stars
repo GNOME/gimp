@@ -1,0 +1,44 @@
+GFIG Version 0.1
+Name: First\040gfig
+Version: 0.000000
+ObjCount: 4
+<OPTIONS>
+GridSpacing: 30
+GridType: RECT_GRID
+DrawGrid: FALSE
+Snap2Grid: FALSE
+LockOnGrid: FALSE
+ShowControl: TRUE
+</OPTIONS>
+<STAR>
+80 70
+80 130
+80 90
+<EXTRA>
+6
+</EXTRA>
+</STAR>
+<STAR>
+200 70
+200 130
+200 90
+<EXTRA>
+6
+</EXTRA>
+</STAR>
+<STAR>
+200 190
+200 250
+200 210
+<EXTRA>
+6
+</EXTRA>
+</STAR>
+<STAR>
+80 190
+80 250
+80 210
+<EXTRA>
+6
+</EXTRA>
+</STAR>

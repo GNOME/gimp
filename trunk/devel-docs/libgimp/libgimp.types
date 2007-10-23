@@ -1,0 +1,21 @@
+
+#include <gtk/gtk.h>
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
+gimp_aspect_preview_get_type
+gimp_brush_select_button_get_type
+gimp_channel_combo_box_get_type
+gimp_drawable_combo_box_get_type
+gimp_drawable_preview_get_type
+gimp_font_select_button_get_type
+gimp_gradient_select_button_get_type
+gimp_image_combo_box_get_type
+gimp_layer_combo_box_get_type
+gimp_palette_select_button_get_type
+gimp_pattern_select_button_get_type
+gimp_proc_browser_dialog_get_type
+gimp_progress_bar_get_type
+gimp_select_button_get_type
+gimp_vectors_combo_box_get_type
+gimp_zoom_preview_get_type

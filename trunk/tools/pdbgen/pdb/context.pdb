@@ -1,0 +1,742 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub pdb_misc {
+   $author = 'Michael Natterer <mitch@gimp.org> & Sven Neumann <sven@gimp.org>';
+   $copyright = 'Michael Natterer & Sven Neumann';
+   $date = '2004';
+   $since = '2.2';
+}
+
+sub context_push {
+    $blurb = 'Pushes a context to the top of the plug-in\'s context stack.';
+
+    $help = <<'HELP';
+This procedure creates a new context by copying the current context. This
+copy becomes the new current context for the calling plug-in until it is
+popped again using gimp_context_pop().
+HELP
+
+    &pdb_misc;
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    success = gimp_plug_in_context_push (plug_in);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_pop {
+    $blurb = 'Pops the topmost context from the plug-in\'s context stack.';
+
+    $help = <<'HELP';
+This procedure removes the topmost context from the plug-in's context
+stack.  The context that was active before the corresponding call to
+gimp_context_push() becomes the new current context of the plug-in.
+HELP
+
+    &pdb_misc;
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    success = gimp_plug_in_context_pop (plug_in);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_get_paint_method {
+    $blurb = 'Retrieve the currently active paint method.';
+
+    $help = <<'HELP';
+This procedure returns the name of the currently active paint method.
+HELP
+
+    &mitch_pdb_misc('2005', '2.4');
+
+    @outargs = (
+	{ name  => 'name', type  => 'string',
+	  desc  => 'The name of the active paint method' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPaintInfo *paint_info = gimp_context_get_paint_info (context);
+
+  if (paint_info)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (paint_info)));
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_set_paint_method {
+    $blurb = 'Set the specified paint method as the active paint method.';
+
+    $help = <<'HELP';
+This procedure allows the active paint method to be set by specifying
+its name.  The name is simply a string which corresponds to one of the
+names of the available paint methods. If there is no matching method
+found, this procedure will return an error.  Otherwise, the specified
+method becomes active and will be used in all subsequent paint
+operations.
+HELP
+
+    &mitch_pdb_misc('2005', '2.4');
+
+    @inargs = (
+        { name => 'name', type => 'string',
+          desc => 'The name of the paint method' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPaintInfo *paint_info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimp->paint_info_list, name);
+
+  if (paint_info)
+    gimp_context_set_paint_info (context, paint_info);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_list_paint_methods {
+    $blurb = 'Lists the available paint methods.';
+
+    $help = <<'HELP';
+This procedure lists the names of the available paint methods. Any
+of the results can be used for gimp_context_set_paint_method().
+HELP
+
+    &simon_pdb_misc('2007', '2.4');
+
+    @outargs = (
+        { name => 'paint_methods', type => 'stringarray', void_ret => 1,
+          desc => 'The names of the available paint methods',
+          array => { desc => 'The number of the available paint methods' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  paint_methods = gimp_container_get_name_array (gimp->paint_info_list,
+                                                 &num_paint_methods);
+}
+CODE
+    );
+}
+
+
+sub context_get_foreground {
+    $blurb = "Get the current GIMP foreground color.";
+
+    $help = <<'HELP';
+This procedure returns the current GIMP foreground color. The foreground
+color is used in a variety of tools such as paint tools, blending, and bucket
+fill.
+HELP
+
+    &pdb_misc;
+
+    @outargs = (
+        { name => 'foreground', type => 'color', void_ret => 1,
+          desc => 'The foreground color' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_context_get_foreground (context, &foreground);
+  gimp_rgb_set_alpha (&foreground, 1.0);
+}
+CODE
+    );
+}
+
+sub context_set_foreground {
+    $blurb = "Set the current GIMP foreground color.";
+
+    $help = <<'HELP';
+This procedure sets the current GIMP foreground color. After this is set,
+operations which use foreground such as paint tools, blending, and bucket fill
+will use the new value.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        { name => 'foreground', type => 'color', void_ret => 1,
+          desc => 'The foreground color' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_rgb_set_alpha (&foreground, 1.0);
+  gimp_context_set_foreground (context, &foreground);
+}
+CODE
+    );
+}
+
+sub context_get_background {
+    $blurb = "Get the current GIMP background color.";
+
+    $help = <<'HELP';
+This procedure returns the current GIMP background color. The background
+color is used in a variety of tools such as blending, erasing (with non-alpha
+images), and image filling.
+HELP
+
+    &pdb_misc;
+
+    @outargs = (
+        { name => 'background', type => 'color', void_ret => 1,
+          desc => 'The background color' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_context_get_background (context, &background);
+  gimp_rgb_set_alpha (&background, 1.0);
+}
+CODE
+    );
+}
+
+sub context_set_background {
+    $blurb = "Set the current GIMP background color.";
+
+    $help = <<'HELP';
+This procedure sets the current GIMP background color. After this is set,
+operations which use background such as blending, filling images, clearing,
+and erasing (in non-alpha images) will use the new value.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        { name => 'background', type => 'color', void_ret => 1,
+          desc => 'The background color' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_rgb_set_alpha (&background, 1.0);
+  gimp_context_set_background (context, &background);
+}
+CODE
+    );
+}
+
+sub context_set_default_colors {
+    $blurb = <<'BLURB';
+Set the current GIMP foreground and background colors to black and white.
+BLURB
+
+    $help = <<'HELP';
+This procedure sets the current GIMP foreground and background colors to their
+initial default values, black and white.
+HELP
+
+    &pdb_misc;
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_context_set_default_colors (context);
+}
+CODE
+    );
+}
+
+sub context_swap_colors {
+    $blurb = 'Swap the current GIMP foreground and background colors.';
+
+    $help = <<'HELP';
+This procedure swaps the current GIMP foreground and background colors, so that
+the new foreground color becomes the old background color and vice versa.
+HELP
+
+    &pdb_misc;
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_context_swap_colors (context);
+}
+CODE
+    );
+}
+
+sub context_get_opacity {
+    $blurb = 'Get the opacity.';
+
+    $help = <<'HELP';
+This procedure returns the opacity setting. The return
+value is a floating point number between 0 and 100.
+HELP
+
+    &pdb_misc;
+
+    @outargs = (
+        { name => 'opacity', type => '0 <= float <= 100',
+          desc => 'The opacity' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  opacity = gimp_context_get_opacity (context) * 100.0;
+}
+CODE
+    );
+}
+
+sub context_set_opacity {
+    $blurb = 'Set the opacity.';
+
+    $help = <<'HELP';
+This procedure modifies the opacity setting. The value
+should be a floating point number between 0 and 100.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        { name => 'opacity', type => '0 <= float <= 100',
+          desc => 'The opacity' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_context_set_opacity (context, opacity / 100.0);
+}
+CODE
+    );
+}
+
+sub context_get_paint_mode {
+    $blurb = 'Get the paint mode.';
+
+    $help = <<'HELP';
+This procedure returns the paint-mode setting. The return value
+is an integer which corresponds to the values listed in the argument
+description.
+HELP
+
+    &pdb_misc;
+
+    @outargs = (
+        { name => 'paint_mode', type => 'enum GimpLayerModeEffects',
+          desc => 'The paint mode' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  paint_mode = gimp_context_get_paint_mode (context);
+}
+CODE
+    );
+}
+
+sub context_set_paint_mode {
+    $blurb = 'Set the paint mode.';
+
+    $help = <<'HELP';
+This procedure modifies the paint_mode setting.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        { name => 'paint_mode', type => 'enum GimpLayerModeEffects',
+          desc => 'The paint mode' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_context_set_paint_mode (context, paint_mode);
+}
+CODE
+    );
+}
+
+sub context_get_brush {
+    $blurb = 'Retrieve the currently active brush.';
+
+    $help = <<'HELP';
+This procedure returns the name of the currently active brush.
+All paint operations and stroke operations use this brush to control
+the application of paint to the image.
+HELP
+
+    &pdb_misc;
+
+    @outargs = (
+	{ name  => 'name', type  => 'string',
+	  desc  => 'The name of the active brush' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpBrush *brush = gimp_context_get_brush (context);
+
+  if (brush)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)));
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_set_brush {
+    $blurb = 'Set the specified brush as the active brush.';
+
+    $help = <<'HELP';
+This procedure allows the active brush to be set by specifying its name.
+The name is simply a string which corresponds to one of the names of the
+installed brushes. If there is no matching brush found, this procedure will
+return an error.  Otherwise, the specified brush becomes active and will be
+used in all subsequent paint operations.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        { name => 'name', type => 'string',
+          desc => 'The name of the brush' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpBrush *brush = (GimpBrush *)
+    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+
+  if (brush)
+    gimp_context_set_brush (context, brush);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_get_pattern {
+    $blurb = 'Retrieve the currently active pattern.';
+
+    $help = <<'HELP';
+This procedure returns name of the the currently active pattern.
+All clone and bucket-fill operations with patterns will use this
+pattern to control the application of paint to the image.
+HELP
+
+    &pdb_misc;
+
+    @outargs = (
+	{ name  => 'name', type  => 'string',
+	  desc  => 'The name of the active pattern' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPattern *pattern = gimp_context_get_pattern (context);
+
+  if (pattern)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (pattern)));
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_set_pattern {
+    $blurb = 'Set the specified pattern as the active pattern.';
+
+    $help = <<'HELP';
+This procedure allows the active pattern to be set by specifying its name.
+The name is simply a string which corresponds to one of the names of the
+installed patterns. If there is no matching pattern found, this procedure will
+return an error. Otherwise, the specified pattern becomes active and will be
+used in all subsequent paint operations.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        { name => 'name', type => 'string',
+          desc => 'The name of the pattern' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPattern *pattern = (GimpPattern *)
+    gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
+
+  if (pattern)
+    gimp_context_set_pattern (context, pattern);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_get_gradient {
+    $blurb = 'Retrieve the currently active gradient.';
+
+    $help = <<'HELP';
+This procedure returns the name of the currently active gradient.
+HELP
+
+    &pdb_misc;
+
+    @outargs = (
+	{ name  => 'name', type  => 'string',
+	  desc  => 'The name of the active gradient' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpGradient *gradient = gimp_context_get_gradient (context);
+
+  if (gradient)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (gradient)));
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_set_gradient {
+    $blurb = 'Sets the specified gradient as the active gradient.';
+
+    $help = <<'HELP';
+This procedure lets you set the specified gradient as the active or "current"
+one. The name is simply a string which corresponds to one of the loaded
+gradients. If no matching gradient is found, this
+procedure will return an error. Otherwise, the specified gradient will become
+active and will be used for subsequent custom gradient operations.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the gradient' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient *gradient = (GimpGradient *)
+    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+
+  if (gradient)
+    gimp_context_set_gradient (context, gradient);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_get_palette {
+    $blurb = 'Retrieve the currently active palette.';
+
+    $help = <<'HELP';
+This procedure returns the name of the the currently active palette.
+HELP
+
+    &pdb_misc;
+
+    @outargs = (
+	{ name  => 'name', type  => 'string',
+	  desc  => 'The name of the active palette' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPalette *palette = gimp_context_get_palette (context);
+
+  if (palette)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (palette)));
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_set_palette {
+    $blurb = 'Set the specified palette as the active palette.';
+
+    $help = <<'HELP';
+This procedure allows the active palette to be set by specifying its name.
+The name is simply a string which corresponds to one of the names of the
+installed palettes. If no matching palette is found, this procedure will
+return an error. Otherwise, the specified palette becomes active and will be
+used in all subsequent palette operations.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the palette' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPalette *palette = (GimpPalette *)
+    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+
+  if (palette)
+    gimp_context_set_palette (context, palette);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_get_font {
+    $blurb = 'Retrieve the currently active font.';
+
+    $help = <<'HELP';
+This procedure returns the name of the currently active font.
+HELP
+
+    &pdb_misc;
+
+    @outargs = (
+	{ name  => 'name', type  => 'string',
+	  desc  => 'The name of the active font' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpFont *font = gimp_context_get_font (context);
+
+  if (font)
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (font)));
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_set_font {
+    $blurb = 'Set the specified font as the active font.';
+
+    $help = <<'HELP';
+This procedure allows the active font to be set by specifying its name.
+The name is simply a string which corresponds to one of the names of the
+installed fonts. If no matching font is found, this procedure will
+return an error. Otherwise, the specified font becomes active and will be
+used in all subsequent font operations.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the font' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpFont *font = (GimpFont *)
+    gimp_container_get_child_by_name (gimp->fonts, name);
+
+  if (font)
+    gimp_context_set_font (context, font);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+@headers = qw("core/gimp.h"
+              "core/gimpcontainer.h"
+              "core/gimpcontext.h"
+              "core/gimpdatafactory.h"
+              "plug-in/gimpplugin.h"
+              "plug-in/gimpplugin-context.h"
+              "plug-in/gimppluginmanager.h");
+
+@procs = qw(context_push context_pop
+            context_get_paint_method context_set_paint_method
+            context_list_paint_methods
+            context_get_foreground context_set_foreground
+            context_get_background context_set_background
+            context_set_default_colors context_swap_colors
+            context_get_opacity context_set_opacity
+            context_get_paint_mode context_set_paint_mode
+            context_get_brush context_set_brush
+            context_get_pattern context_set_pattern
+            context_get_gradient context_set_gradient
+            context_get_palette context_set_palette
+            context_get_font context_set_font);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Context';
+
+1;

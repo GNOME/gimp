@@ -1,0 +1,61 @@
+<!-- ##### SECTION Title ##### -->
+gimpdatafiles
+
+<!-- ##### SECTION Short_Description ##### -->
+Functions to handle GIMP data files.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Functions to handle GIMP data files.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GimpDatafileData ##### -->
+<para>
+
+</para>
+
+@filename: 
+@dirname: 
+@basename: 
+@atime: 
+@mtime: 
+@ctime: 
+
+<!-- ##### USER_FUNCTION GimpDatafileLoaderFunc ##### -->
+<para>
+
+</para>
+
+@file_data: 
+@user_data: 
+
+
+<!-- ##### FUNCTION gimp_datafiles_check_extension ##### -->
+<para>
+
+</para>
+
+@filename: 
+@extension: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_datafiles_read_directories ##### -->
+<para>
+
+</para>
+
+@path_str: 
+@flags: 
+@loader_func: 
+@user_data: 
+
+

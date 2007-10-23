@@ -1,0 +1,76 @@
+What is this?
+-------------
+
+This is the beginning of an editor for metadata.  It is far from
+complete yet.
+
+Current status
+--------------
+- It does not read metadata, except if there is an XMP block in the
+  image file.
+- It does not write metadata, it can only export XMP into a separate
+  file.
+- It does not edit metadata, except for some very limited editing of
+  basic scalar types (strings, integers, ...).  It is currently not
+  possible to add new properties using the editor (but this can be
+  done via the PDB call plug_in_metadata_set_simple()).
+- Basically, the current code is only useful for viewing some XMP
+  metadata if the image file contains an XMP block.  The import/export
+  functions are also supposed to work.  Import merges, so it is
+  possible for example to import a license file such as the XMP files
+  from Creative Commons in order to apply a license to an image.
+- The metadata is saved in a persistent parasite that is overwritten
+  after each call.  Caution: the editor should not be open while you
+  are trying to test some of the PDB calls, otherwise you would
+  discard all changes as soon as you press OK.  This is a problem that
+  cannot be solved easily as long as the metadata editor is a plug-in.
+
+How to find test images?
+------------------------
+
+The easiest way is to try a Google search for "<?xpacket".  This is
+the marker that is used at the beginning of XMP packets.  Many images
+or PDF files are incorrectly served as text/plain and therefore
+indexed by Google as text files.  By looking for XMP tags such as
+"<?xpacket", it is possible to find a large number of files containing
+XMP metadata.
+
+Work in progress:
+-----------------
+- improve XMP code generation (xmp-gen.c) - currently, some structured
+  property types are not written back to the buffer, so the round-trip
+  decode/encode can silently discard some properties
+- add tabs for easy editing of metadata, connect them to the tree
+- fix the conversion to/from EXIF (exif-parse.c, exif-gen.c)
+- register PDB functions correctly (for setting/getting metadata)
+- update the JPEG plug-in
+
+Near future:
+- add custom callbacks for editing in the tree, validate entries, ...
+- smarter display of rational values, closed sets, ...
+- improve the layout of the various tabs
+
+Not-so-near future:
+- move some of this stuff into the core
+
+-------------------------------------------------------------------------------
+Files modified (2004-08-24):
+  configure.in                    (added /plug-ins/metadata/Makefile)
+  menus/image-menu.xml.in         (added placeholder "<Image>/File/Info")
+  plug-ins/Makefile.am            (added "metadata" in SUBDIRS)
+  plug-ins/common/jpeg.c          (changed to get/set metadata through PDB)
+New files:
+  plug-ins/metadata/Makefile.am   (generates Makefile.in to get a Makefile)
+  plug-ins/metadata/metadata.c    (main part: registers the plug-in, etc.)
+  plug-ins/metadata/interface.h
+  plug-ins/metadata/interface.c   (user interface: widgets and callbacks)
+  plug-ins/metadata/xmp-model.h
+  plug-ins/metadata/xmp-model.c   (model for the treeview, list of XMP schemas)
+  plug-ins/metadata/xmp-parse.h
+  plug-ins/metadata/xmp-parse.c   (simple parser for XMP metadata)
+  plug-ins/metadata/xmp-gen.h
+  plug-ins/metadata/xmp-gen.c     (generates XMP metadata from the tree model)
+  plug-ins/metadata/exif-parse.h
+  plug-ins/metadata/exif-parse.c  (converts EXIF into the XMP tree model)
+  plug-ins/metadata/exif-gen.h
+  plug-ins/metadata/exif-gen.c    (generates EXIF metadata from the tree model)

@@ -1,0 +1,38 @@
+GFIG Version 0.1
+Name: square\040sprial
+Version: 0.000000
+ObjCount: 2
+<OPTIONS>
+GridSpacing: 30
+GridType: RECT_GRID
+DrawGrid: FALSE
+Snap2Grid: FALSE
+LockOnGrid: FALSE
+ShowControl: TRUE
+</OPTIONS>
+<LINE>
+30 20
+230 20
+230 230
+50 230
+50 40
+210 40
+210 210
+70 210
+70 60
+190 60
+190 190
+90 190
+90 80
+170 80
+170 170
+110 170
+110 100
+150 100
+150 150
+130 150
+</LINE>
+<LINE>
+130 150
+130 120
+</LINE>

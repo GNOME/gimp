@@ -1,0 +1,101 @@
+Some mostly unfinished docs are here.
+
+-Yosh
+
+PDBGEN
+------------------
+
+What is this?
+It's a tool to automate much of the drudge work of making PDB interfaces
+to GIMP internals. Right now, it generates PDB description records,
+argument marshallers (with sanity checking) for the app side, as well
+as libgimp wrappers for C plugins. It's written so that extending it
+to provide support for CORBA and other languages suited to static
+autogeneration.
+
+How to invoke pdbgen from the command line:
+Change into the ./tools/pdbgen directory
+  $ ./pdbgen.pl DIRNAME
+where DIRNAME is either "lib" or "app", depending on which set of
+files you want to generate.  The files are written to ./app or ./lib
+in the ./tools/pdbgen directory.  Up to you to diff the file you
+changed and when you're happy copy it into the actual ./app/ or ./lib/
+directory where it gets built.
+
+Anatomy of a PDB descriptor:
+PDB descriptors are Perl code. You define a subroutine, which corresponds
+to the PDB function you want to create. You then fill certain special
+variables to fully describe all the information pdbgen needs to generate
+code. Since it's perl, you can do practically whatever perl lets you
+do to help you do this. However, at the simplest level, you don't need
+to know perl at all to make PDB descriptors.
+
+Annotated description:
+For example, we will look at gimp_display_new, specified in gdisplay.pdb.
+
+sub display_new { 
+
+We start with the name of our PDB function (not including the "gimp_" prefix).
+
+    $blurb = 'Create a new display for the specified image.';
+
+This directly corresponds to the "blurb" field in the ProcRecord.
+
+    $help = <<'HELP';
+Creates a new display for the specified image. If the image already has a
+display, another is added. Multiple displays are handled transparently by the
+GIMP. The newly created display is returned and can be subsequently destroyed
+with a call to 'gimp-display-delete'. This procedure only makes sense for use
+with the GIMP UI.
+HELP
+
+This is the help field. Notice because it is a long string, we used HERE
+document syntax to split it over multiple lines. Any extra whitespace
+in $blurb or $help, including newlines, is automatically stripped, so you
+don't have to worry about that.
+
+    &std_pdb_misc;
+
+This is the "author", "copyright", and "date" fields. Since S&P are quite
+common, they get a special shortcut which fills these in for you. Stuff
+like this is defined in stddefs.pdb.
+
+    @inargs = ( &std_image_arg );
+
+You specify arguments in a list. Again, your basic image is very common,
+so it gets a shortcut.
+
+    @outargs = (
+        { name => 'display', type => 'display',
+          desc => 'The new display', alias => 'gdisp', init => 1 }
+    );
+
+This is a real argument. It has a name, type, description at a minumum.
+"alias" lets you use the alias name in your invoker code, but the real
+name is still shown in the ProcRecord. This is useful not only as a
+shorthand, but for grabbing variables defined somewhere else (or constants),
+in conjunction with the "no_declare" flag. "init" simply says initialize
+this variable to a dummy value (in this case to placate gcc warnings)
+
+    %invoke = (
+        headers => [ qw("gdisplay.h") ],
+
+These are the headers needed for the functions you call.
+
+        vars => [ 'guint scale = 0x101' ],
+
+Extra variables can be put here for your invoker.
+
+        code => <<'CODE'
+{
+  if (gimage->layers == NULL)
+    success = FALSE;
+  else
+    success = ((gdisp = gdisplay_new (gimage, scale)) != NULL);
+}
+CODE
+
+The actual invoker code. Since it's a multiline block, we put curly braces
+in the beginning.
+
+

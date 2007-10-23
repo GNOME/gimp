@@ -1,0 +1,31 @@
+<!-- DTD for GtkUIManager files, copied from the documentation -->
+
+<!ELEMENT ui          (menubar|toolbar|popup|accelerator)* >
+<!ELEMENT menubar     (menuitem|separator|placeholder|menu)* >
+<!ELEMENT menu        (menuitem|separator|placeholder|menu)* >
+<!ELEMENT popup       (menuitem|separator|placeholder|menu)* >
+<!ELEMENT toolbar     (toolitem|separator|placeholder)* >
+<!ELEMENT placeholder (menuitem|toolitem|separator|placeholder|menu)* >
+<!ELEMENT menuitem     EMPTY >
+<!ELEMENT toolitem     EMPTY >
+<!ELEMENT separator    EMPTY >
+<!ELEMENT accelerator  EMPTY >
+<!ATTLIST menubar      name         CDATA #IMPLIED
+                       action       CDATA #IMPLIED >
+<!ATTLIST toolbar      name         CDATA #IMPLIED
+                       action       CDATA #IMPLIED >
+<!ATTLIST popup        name         CDATA #IMPLIED
+                       action       CDATA #IMPLIED >
+<!ATTLIST placeholder  name         CDATA #IMPLIED
+                       action       CDATA #IMPLIED >
+<!ATTLIST menu         name         CDATA #IMPLIED
+                       action       CDATA #REQUIRED
+                       position (top|bot) #IMPLIED >
+<!ATTLIST menuitem     name         CDATA #IMPLIED
+                       action       CDATA #REQUIRED
+                       position (top|bot) #IMPLIED >
+<!ATTLIST toolitem     name         CDATA #IMPLIED
+                       action       CDATA #REQUIRED
+                       position (top|bot) #IMPLIED >
+<!ATTLIST accelerator  name         CDATA #IMPLIED
+                       action       CDATA #REQUIRED >

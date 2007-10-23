@@ -1,0 +1,123 @@
+PACKAGE = appactions
+TOP = ..\..\..
+PRJ_TOP = ..\..
+!include $(TOP)\glib\build\win32\make.msc
+
+!INCLUDE $(PRJ_TOP)\gimpdefs.msc
+PKG_VER = $(GIMP_VER)
+
+INCLUDES = \
+	-FImsvc_recommended_pragmas.h \
+	-I$(PRJ_TOP) \
+	-I$(PRJ_TOP)/app \
+	$(GTK2_CFLAGS) \
+
+DEFINES = \
+	-DGIMP_COMPILATION \
+	-DG_LOG_DOMAIN=\"Gimp-Actions\"
+
+all : \
+	$(PRJ_TOP)\config.h \
+	$(PACKAGE).lib \
+!IFDEF DLLGIMP
+	$(PACKAGE)-$(PKG_VER).dll
+!ENDIF
+
+OBJECTS = \
+	actions.obj \
+	brush-editor-actions.obj \
+	brushes-actions.obj \
+	buffers-actions.obj \
+	buffers-commands.obj \
+	channels-actions.obj \
+	channels-commands.obj \
+	context-actions.obj \
+	context-commands.obj \
+	colormap-actions.obj \
+	colormap-commands.obj \
+	cursor-info-actions.obj \
+	cursor-info-commands.obj \
+	data-commands.obj \
+	data-editor-commands.obj \
+	debug-actions.obj \
+	debug-commands.obj \
+	dialogs-actions.obj \
+	dialogs-commands.obj \
+	dock-actions.obj \
+	dock-commands.obj \
+	dockable-actions.obj \
+	dockable-commands.obj \
+	documents-actions.obj \
+	documents-commands.obj \
+	drawable-actions.obj \
+	drawable-commands.obj \
+	edit-actions.obj \
+	edit-commands.obj \
+	error-console-actions.obj \
+	error-console-commands.obj \
+	file-actions.obj \
+	file-commands.obj \
+	fonts-actions.obj \
+	fonts-commands.obj \
+	gradient-editor-actions.obj \
+	gradient-editor-commands.obj \
+	gradients-actions.obj \
+	gradients-commands.obj \
+	help-actions.obj \
+	help-commands.obj \
+	image-actions.obj \
+	image-commands.obj \
+	images-actions.obj \
+	images-commands.obj \
+	layers-actions.obj \
+	layers-commands.obj \
+	palette-editor-actions.obj \
+	palette-editor-commands.obj \
+	palettes-actions.obj \
+	palettes-commands.obj \
+	patterns-actions.obj \
+	plug-in-actions.obj \
+	plug-in-commands.obj \
+	quick-mask-actions.obj \
+	quick-mask-commands.obj \
+	sample-points-actions.obj \
+	sample-points-commands.obj \
+	select-actions.obj \
+	select-commands.obj \
+	templates-actions.obj \
+	templates-commands.obj \
+	text-editor-actions.obj \
+	text-editor-commands.obj \
+	tool-options-actions.obj \
+	tool-options-commands.obj \
+	tools-actions.obj \
+	tools-commands.obj \
+	vectors-actions.obj \
+	vectors-commands.obj \
+	view-actions.obj \
+	view-commands.obj \
+	window-actions.obj \
+	window-commands.obj \
+
+
+$(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32
+	copy $(PRJ_TOP)\config.h.win32 $(PRJ_TOP)\config.h
+
+RESOURCE = $(PACKAGE).res
+
+$(PACKAGE).lib : $(OBJECTS)
+	lib /out:$(PACKAGE).lib $(OBJECTS)
+
+$(PACKAGE)-$(PKG_VER).dll : $(OBJECTS) $(PACKAGE).def
+	$(CC) $(CFLAGS) -LD -Fe$(PACKAGE)-$(PKG_VER).dll $(OBJECTS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:$(PACKAGE).def
+
+$(PACKAGE).exe : $(OBJECTS) $(PACKAGE).def $(PACKAGE).res
+	$(CC) $(CFLAGS) -Fe$(PACKAGE).exe $(PACKAGE).res $(OBJECTS) $(PKG_LINK) \
+	user32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS) /def:$(PACKAGE).def
+
+gimpcore-$(PKG_VER).dll : $(DLLOBJS) gimpcore.def
+	$(CC) $(CFLAGS) -LD -Fegimpcore-$(PKG_VER).dll $(DLLOBJS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:gimpcore.def
+
+.c.obj :
+	$(CC) $(CFLAGS) -GD -c $(PKG_CFLAGS) $<
+

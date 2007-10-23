@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<para role="gallery" xml:base="visual-index.xml">
+
+  <link linkend="GimpButton">
+    <inlinegraphic fileref="gimp-button.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpChainButton">
+    <inlinegraphic fileref="gimp-chain-button.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpColorArea">
+    <inlinegraphic fileref="gimp-color-area.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpColorButton">
+    <inlinegraphic fileref="gimp-color-button.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpColorHexEntry">
+    <inlinegraphic fileref="gimp-color-hex-entry.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpColorScale">
+    <inlinegraphic fileref="gimp-color-scale.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpColorSelection">
+    <inlinegraphic fileref="gimp-color-selection.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpColorProfileComboBox">
+    <inlinegraphic fileref="gimp-color-profile-combo-box.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpDialog">
+    <inlinegraphic fileref="gimp-dialog.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpEnumComboBox">
+    <inlinegraphic fileref="gimp-enum-combo-box.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpFileEntry">
+    <inlinegraphic fileref="gimp-file-entry.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpFrame">
+    <inlinegraphic fileref="gimp-frame.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpIntComboBox">
+    <inlinegraphic fileref="gimp-int-combo-box.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpMemsizeEntry">
+    <inlinegraphic fileref="gimp-memsize-entry.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpNumberPairEntry">
+    <inlinegraphic fileref="gimp-number-pair-entry.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpOffsetArea">
+    <inlinegraphic fileref="gimp-offset-area.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpPageSelector">
+    <inlinegraphic fileref="gimp-page-selector.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpPathEditor">
+    <inlinegraphic fileref="gimp-path-editor.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpPickButton">
+    <inlinegraphic fileref="gimp-pick-button.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpPreviewArea">
+    <inlinegraphic fileref="gimp-preview-area.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpStringComboBox">
+    <inlinegraphic fileref="gimp-string-combo-box.png" format="PNG"></inlinegraphic>
+  </link>
+  <link linkend="GimpUnitMenu">
+    <inlinegraphic fileref="gimp-unit-menu.png" format="PNG"></inlinegraphic>
+  </link>
+</para>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ui xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <menubar action="toolbox-menubar">
+
+    <menu action="file-menu" name="File">
+      <placeholder name="New">
+        <menuitem action="image-new" />
+      </placeholder>
+      <placeholder name="Open">
+        <menuitem action="file-open" />
+        <menuitem action="file-open-location" />
+      </placeholder>
+      <menu action="file-open-recent-menu" name="Open Recent">
+        <placeholder name="Files" />
+        <separator />
+        <menuitem action="dialogs-document-history" />
+      </menu>
+      <menu action="file-acquire-menu" name="Acquire">
+        <menuitem action="edit-paste-as-new" />
+      </menu>
+      <separator />
+      <placeholder name="Preferences">
+	<menuitem action="dialogs-preferences" />
+	<menuitem action="dialogs-keyboard-shortcuts" />
+      </placeholder>
+      <menu action="dialogs-menu" name="Dialogs">
+        <menu action="dialogs-new-dock-menu" name="Create New Dock">
+          <menuitem action="dialogs-new-dock-lcp" />
+          <menuitem action="dialogs-new-dock-data" />
+          <menuitem action="dialogs-new-dock-stuff" />
+        </menu>
+        <xi:include href="dialogs-menuitems.xml" />
+      </menu>
+
+<!--  The debug-menu is automatically excluded for stable releases  -->
+      <menu action="debug-menu" name="Debug">
+        <menuitem action="debug-mem-profile" />
+        <menuitem action="debug-dump-items" />
+        <menuitem action="debug-dump-managers" />
+        <menuitem action="debug-dump-attached-data" />
+      </menu>
+
+      <separator />
+      <menuitem action="file-close-all" />
+      <menuitem action="file-quit" />
+    </menu>
+
+    <menu action="extensions-menu" name="Xtns">
+      <placeholder name="Extensions">
+	<menuitem action="dialogs-module-dialog" />
+      </placeholder>
+      <placeholder name="Languages" />
+      <separator />
+    </menu>
+
+    <menu action="help-menu" name="Help">
+      <menuitem action="help-help" />
+      <menuitem action="help-context-help" />
+      <menuitem action="dialogs-tips" />
+      <menuitem action="dialogs-about" />
+      <separator />
+    </menu>
+
+  </menubar>
+
+  <accelerator action="edit-paste"/>
+
+</ui>

@@ -1,0 +1,199 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub image_convert_rgb {
+    $blurb = 'Convert specified image to RGB color';
+
+    $help = <<'HELP';
+This procedure converts the specified image to RGB color. This process
+requires an image in RGB or Indexed color mode. No image content is lost
+in this process aside from the colormap for an indexed image.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_image_base_type (image) != GIMP_RGB)
+    gimp_image_convert (image, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL, NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_convert_grayscale {
+    $blurb = 'Convert specified image to grayscale (256 intensity levels)';
+
+    $help = <<'HELP';
+This procedure converts the specified image to grayscale with 8 bits
+per pixel (256 intensity levels). This process requires an image in RGB
+or Indexed color mode.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_image_base_type (image) != GIMP_GRAY)
+    gimp_image_convert (image, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL, NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_convert_indexed {
+    $blurb = 'Convert specified image to and Indexed image';
+
+    $help = <<'HELP';
+This procedure converts the specified image to 'indexed' color. This
+process requires an image in RGB or Grayscale mode. The 'palette_type'
+specifies what kind of palette to use, A type of '0' means to use an
+optimal palette of 'num_cols' generated from the colors in the
+image. A type of '1' means to re-use the previous palette (not
+currently implemented). A type of '2' means to use the so-called
+WWW-optimized palette. Type '3' means to use only black and white
+colors. A type of '4' means to use a palette from the gimp palettes
+directories.  The 'dither type' specifies what kind of dithering to
+use.  '0' means no dithering, '1' means standard Floyd-Steinberg error
+diffusion, '2' means Floyd-Steinberg error diffusion with reduced
+bleeding, '3' means dithering based on pixel location ('Fixed'
+dithering).
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'dither_type', type => 'enum GimpConvertDitherType',
+	  desc => 'The dither type to use' },
+	{ name => 'palette_type', type => 'enum GimpConvertPaletteType',
+	  desc => 'The type of palette to use' },
+	{ name => 'num_cols', type => 'int32',
+	  desc => 'The number of colors to quantize to, ignored unless
+		   (palette_type == GIMP_MAKE_PALETTE)' },
+	{ name => 'alpha_dither', type => 'boolean',
+	  desc => 'Dither transparency to fake partial opacity' },
+	{ name => 'remove_unused', type => 'boolean',
+	  desc => 'Remove unused or duplicate color entries from final
+		   palette, ignored if (palette_type == GIMP_MAKE_PALETTE)' },
+	{ name => 'palette', type => 'string',
+	  desc => 'The name of the custom palette to use, ignored unless
+		   (palette_type == GIMP_CUSTOM_PALETTE)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPalette *pal = NULL;
+
+  if (gimp_image_base_type (image) != GIMP_INDEXED)
+    {
+      switch (palette_type)
+	{
+	case GIMP_MAKE_PALETTE:
+	  if (num_cols < 1 || num_cols > MAXNUMCOLORS)
+	    success = FALSE;
+	  break;
+
+	case GIMP_CUSTOM_PALETTE:
+          pal = (GimpPalette *)
+            gimp_container_get_child_by_name (gimp->palette_factory->container,
+                                              palette);
+	  if (pal == NULL)
+	    success = FALSE;
+	  break;
+
+	default:
+          break;
+	}
+    }
+  else
+    success = FALSE;
+
+  if (success)
+    gimp_image_convert (image, GIMP_INDEXED, num_cols, dither_type,
+		        alpha_dither, remove_unused, palette_type, pal,
+                        NULL);
+}
+CODE
+    );
+}
+
+sub image_convert_set_dither_matrix {
+    $blurb = 'Set dither matrix for conversion to indexed';
+
+    $help = <<'HELP';
+This procedure sets the dither matrix used when converting images to INDEXED mode with 
+positional dithering. 
+HELP
+
+    &david_pdb_misc('2006', '2.4');
+
+    @inargs = (
+	{ name => 'width', type => 'int32',
+	  desc => 'Width of the matrix (0 to reset to default matrix)' },
+	{ name => 'height', type => 'int32',
+	  desc => 'Height of the matrix (0 to reset to default matrix)' },
+	{ name => 'matrix', type => 'int8array',
+	  desc => 'The matrix -- all values must be >= 1',
+	  array => { name => 'matrix_length', type => '1 <= int32 <= 1024',
+                     desc => "The length of 'matrix'" }
+	  },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+    gimp_image_convert_set_dither_matrix (width, height, (guchar *) matrix);
+}
+CODE
+    );
+}
+
+@headers = qw("core/gimp.h" "core/gimpcontainer.h" "core/gimpdatafactory.h"
+              "core/gimpimage.h" "core/gimpimage-convert.h"
+              "core/gimppalette.h");
+
+@procs = qw(image_convert_rgb
+            image_convert_grayscale
+            image_convert_indexed
+            image_convert_set_dither_matrix);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Convert';
+
+1;

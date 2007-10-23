@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
+
+<ui>
+  <popup action="channels-popup">
+    <menuitem action="channels-edit-attributes" />
+    <separator />
+    <menuitem action="channels-new" />
+    <menuitem action="channels-raise" />
+    <menuitem action="channels-lower" />
+    <menuitem action="channels-duplicate" />
+    <menuitem action="channels-delete" />
+    <separator />
+    <menuitem action="channels-selection-replace" />
+    <menuitem action="channels-selection-add" />
+    <menuitem action="channels-selection-subtract" />
+    <menuitem action="channels-selection-intersect" />
+    <separator />
+  </popup>
+</ui>

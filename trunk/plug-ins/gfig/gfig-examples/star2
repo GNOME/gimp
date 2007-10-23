@@ -1,0 +1,61 @@
+GFIG Version 0.1
+Name: Another\040star
+Version: 0.000000
+ObjCount: 7
+<OPTIONS>
+GridSpacing: 30
+GridType: RECT_GRID
+DrawGrid: FALSE
+Snap2Grid: FALSE
+LockOnGrid: FALSE
+ShowControl: TRUE
+</OPTIONS>
+<POLY>
+128 128
+164 190
+<EXTRA>
+6
+</EXTRA>
+</POLY>
+<POLY>
+128 43
+163 63
+<EXTRA>
+3
+</EXTRA>
+</POLY>
+<POLY>
+203 170
+238 190
+<EXTRA>
+3
+</EXTRA>
+</POLY>
+<POLY>
+54 170
+89 190
+<EXTRA>
+3
+</EXTRA>
+</POLY>
+<POLY>
+202 85
+237 65
+<EXTRA>
+3
+</EXTRA>
+</POLY>
+<POLY>
+54 85
+89 65
+<EXTRA>
+3
+</EXTRA>
+</POLY>
+<POLY>
+128 213
+163 193
+<EXTRA>
+3
+</EXTRA>
+</POLY>

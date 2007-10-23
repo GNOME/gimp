@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
+
+<ui>
+  <popup action="layers-popup">
+    <menuitem action="layers-text-tool" />
+    <menuitem action="layers-edit-attributes" />
+    <separator />
+    <menuitem action="layers-new" />
+<!--
+    <menuitem action="layers-raise" />
+    <menuitem action="layers-raise-to-top" />
+    <menuitem action="layers-lower" />
+    <menuitem action="layers-lower-to-bottom" />
+ -->
+    <menuitem action="layers-duplicate" />
+    <menuitem action="layers-anchor" />
+    <menuitem action="layers-merge-down" />
+    <menuitem action="layers-delete" />
+    <separator />
+    <menuitem action="layers-text-discard" />
+    <menuitem action="layers-text-to-vectors" />
+    <menuitem action="layers-text-along-vectors" />
+    <menuitem action="layers-text-selection-replace" />
+    <separator />
+    <menuitem action="layers-resize" />
+    <menuitem action="layers-resize-to-image" />
+    <menuitem action="layers-scale" />
+    <separator />
+    <menuitem action="layers-mask-add" />
+    <menuitem action="layers-mask-apply" />
+    <menuitem action="layers-mask-delete" />
+    <separator />
+    <menuitem action="layers-mask-show" />
+    <menuitem action="layers-mask-edit" />
+    <menuitem action="layers-mask-disable" />
+    <menuitem action="layers-mask-selection-replace" />
+    <separator />
+    <menuitem action="layers-alpha-add" />
+    <menuitem action="layers-alpha-remove" />
+    <menuitem action="layers-alpha-selection-replace" />
+    <separator />
+    <menuitem action="layers-merge-layers" />
+    <menuitem action="layers-flatten-image" />
+    <separator />
+  </popup>
+</ui>

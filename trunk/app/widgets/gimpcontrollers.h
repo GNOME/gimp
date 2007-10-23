@@ -1,0 +1,39 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * gimpcontrollers.h
+ * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
+#ifndef __GIMP_CONTROLLERS_H__
+#define __GIMP_CONTROLLERS_H__
+
+
+void             gimp_controllers_init           (Gimp          *gimp);
+void             gimp_controllers_exit           (Gimp          *gimp);
+
+void             gimp_controllers_restore        (Gimp          *gimp,
+                                                  GimpUIManager *ui_manager);
+void             gimp_controllers_save           (Gimp          *gimp);
+
+GimpContainer  * gimp_controllers_get_list       (Gimp          *gimp);
+GimpUIManager  * gimp_controllers_get_ui_manager (Gimp          *gimp);
+GimpController * gimp_controllers_get_wheel      (Gimp          *gimp);
+GimpController * gimp_controllers_get_keyboard   (Gimp          *gimp);
+
+
+#endif /* __GIMP_CONTROLLERS_H__ */

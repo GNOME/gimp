@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<book id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <bookinfo>
+    <title>GIMP Module Library Reference Manual</title>
+    <releaseinfo>
+      for GIMP <xi:include href="version" parse="text"/>
+    </releaseinfo>
+  </bookinfo>
+
+  <part id="libgimpmodule">
+    <title>GIMP Module Library</title>
+    <xi:include href="xml/gimpmodule.xml" />
+    <xi:include href="xml/gimpmoduledb.xml" />
+  </part>
+
+  <index id="libgimpmodule-index">
+    <title>Index</title>
+  </index>
+  <index role="GIMP 2.2" id="libgimpmodule-index-new-in-2-2">
+    <title>Index of new symbols in GIMP 2.2</title>
+  </index>
+  <index role="GIMP 2.4" id="libgimpmodule-index-new-in-2-4">
+    <title>Index of new symbols in GIMP 2.4</title>
+  </index>
+  <index role="deprecated" id="libgimpmodule-index-deprecated">
+    <title>Index of deprecated symbols</title>
+  </index>
+
+</book>

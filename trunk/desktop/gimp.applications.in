@@ -1,0 +1,9 @@
+gimp
+	command=@GIMP_COMMAND@
+	name=GNU Image Manipulation Program
+	can_open_multiple_files=true
+	expects_uris=non-file
+	requires_terminal=false
+	supported_uri_schemes=file,http,ftp
+	mime_types=image/bmp,image/g3fax,image/gif,image/jpeg,image/png,image/tiff,image/x-bmp,image/x-compressed-xcf,image/x-pcx,image/x-png,image/x-portable-anymap,image/x-portable-bitmap,image/x-portable-graymap,image/x-portable-pixmap,image/x-psd,image/x-sun-raster,image/x-tga,image/x-xbitmap,image/x-xcf,image/x-xpixmap,image/x-xwindowdump
+

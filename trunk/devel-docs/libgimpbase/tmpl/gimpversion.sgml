@@ -1,0 +1,92 @@
+<!-- ##### SECTION Title ##### -->
+gimpversion
+
+<!-- ##### SECTION Short_Description ##### -->
+Macros and constants useful for determining GIMP's version number and
+capabilities.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Macros and constants useful for determining GIMP's version number and
+capabilities.
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### MACRO GIMP_MAJOR_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_MINOR_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_MICRO_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_API_VERSION ##### -->
+<para>
+Since: GIMP 2.2
+</para>
+
+
+
+<!-- ##### MACRO GIMP_CHECK_VERSION ##### -->
+<para>
+
+</para>
+
+@major: 
+@minor: 
+@micro: 
+
+
+<!-- ##### MACRO GIMPVAR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### VARIABLE gimp_major_version ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### VARIABLE gimp_minor_version ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### VARIABLE gimp_micro_version ##### -->
+<para>
+
+</para>
+
+

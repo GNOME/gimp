@@ -1,0 +1,14 @@
+This directory contains a version of TinyScheme which has been modified
+to support UTF-8 coded strings. The strings stored in a data cell are
+expected to be in UTF-8 format. This allows the continued use of gchar
+pointers to pass around the strings. Processing the strings will require
+conversion to unicode at times depending on the specific operation that
+needs to be done on the UTF-8 coded strings.
+
+The string length value stored in a data cell is the length in bytes of that
+string including the terminating NUL.
+
+Routines that want a string length for a UTF-8 coded string will be passed
+the number of characters and not the number of bytes. If the number of bytes
+is needed, the normal call to strlen() will work.
+

@@ -1,0 +1,73 @@
+A quick overview of the undo system
+-----------------------------------
+
+Actions on the image by the user are pushed onto an undo stack.  Each
+action object includes all the information needed to undo or redo an
+operation, plus an UndoType.  The type can be converted to text to
+show to the user.  Actions may be run forwards (UndoState == REDO) or
+backwards (UndoState == UNDO).  As the action is run, it swaps the
+image's current state and the recorded state.  A run action is moved
+from the undo stack to the redo stack (or vice-versa if UndoState ==
+REDO).  Pushing something onto the undo stack causes the redo stack to
+be cleared, since the actions on the redo stack may depend on the
+image being in a particular state (eg consider: layer add, rename,
+undo rename, layer delete.  If the redo stack weren't cleared on undo,
+then there would still be a "rename" operation on the redo stack which
+could be run on a non-existent layer.  Bad news.)
+
+Undo groups
+-----------
+In order to group many basic operations together into a more useful
+whole, code can push group start and end markers.  A group is treated
+as a single action for the purposes of the undo and redo user
+commands.  It is legal to nest groups, in which case the outermost
+group is the only user-visible one.
+
+Groups boundaries used to be implemented by pushing a NULL pointer on
+the undo (or redo) stack.  Now they are a special action which has the
+"group_boundary" bit set.  This allows the group boundaries to include
+the undo type associated with the whole group.  The individual actions
+need to preserve their own undo type since the undo_free_* functions
+sometimes need to know which action is being freed.
+
+Undo events
+-----------
+Images emit UNDO_EVENT signals, to say that the user has performed an
+undo or redo action on that image.  This allows interested parties to
+track image mutation actions.  So far, only the undo history dialog
+uses this feature.  The other way to discover the undo status of an
+image is to use the iterator functions undo_map_over_undo_stack() and
+undo_map_over_redo_stack().  These call your function on each action
+(or group) on the stack.  There is also undo_get_undo_name() and
+undo_get_redo_name() to peek at the top items on each stack.  This
+could be used (eg) to change the undo/redo menu strings to something
+more meaningful, but currently lack synchronisation.
+
+Dirtying images
+---------------
+NOTE about the gimage->dirty counter:
+  If 0, then the image is clean (ie, copy on disk is the same as the one 
+      in memory).
+  If positive, then that's the number of dirtying operations done
+      on the image since the last save.
+  If negative, then user has hit undo and gone back in time prior
+      to the saved copy.  Hitting redo will eventually come back to
+      the saved copy.
+  The image is dirty (ie, needs saving) if counter is non-zero.
+  If the counter is around 10000, this is due to undo-ing back
+  before a saved version, then mutating the image (thus destroying
+  the redo stack).  Once this has happened, it's impossible to get
+  the image back to the state on disk, since the redo info has been
+  freed.  See undo.c for the gorey details.
+
+NEVER CALL gimp_image_dirty() directly!
+
+If your code has just dirtied the image, push an undo instead.
+Failing that, push the trivial undo which tells the user the
+command is not undoable: undo_push_cantundo() (But really, it would
+be best to push a proper undo).  If you just dirty the image
+without pushing an undo then the dirty count is increased, but
+popping that many undo actions won't lead to a clean image.
+
+Austin
+
