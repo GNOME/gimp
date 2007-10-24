@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-06 13:38+0200\n"
-"PO-Revision-Date: 2007-10-06 13:37+0200\n"
+"POT-Creation-Date: 2007-10-24 18:17+0200\n"
+"PO-Revision-Date: 2007-10-24 18:19+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -29,8 +29,8 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Pinselauswahl"
 
-#: ../libgimp/gimpbrushselectbutton.c:911
-#: ../libgimp/gimppatternselectbutton.c:712
+#: ../libgimp/gimpbrushselectbutton.c:913
+#: ../libgimp/gimppatternselectbutton.c:714
 msgid "_Browse..."
 msgstr "_Durchsuchen …"
 
@@ -629,7 +629,7 @@ msgstr "Konstant"
 msgid "Incremental"
 msgstr "Steigernd"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:214
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:218
 msgid "None"
 msgstr "Keine"
 
@@ -766,7 +766,8 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:408
+#: ../modules/cdisplay_lcms.c:210 ../modules/colorsel_cmyk_lcms.c:408
+#: ../modules/colorsel_cmyk_lcms.c:414
 msgid "(invalid UTF-8 string)"
 msgstr "(Ungültige UTF-8-Zeichenkette)"
 
@@ -835,7 +836,7 @@ msgstr "Keine Farbverwaltung"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:25
 msgid "Color managed display"
-msgstr "Bildschirm mit Farbverwaltung"
+msgstr "Farbkorrigierte Darstellung"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:26
 msgid "Print simulation"
@@ -1377,7 +1378,7 @@ msgstr "ICC-Farbprofil-Filter für farbverwaltete Bildschirme"
 msgid "Color Management"
 msgstr "Farbverwaltung"
 
-#: ../modules/cdisplay_lcms.c:235
+#: ../modules/cdisplay_lcms.c:239
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1385,19 +1386,19 @@ msgstr ""
 "Dieser Filter entnimmt seine Konfiguration dem Abschnitt »Farbverwaltung« im "
 "Einstellungsdialog."
 
-#: ../modules/cdisplay_lcms.c:249
+#: ../modules/cdisplay_lcms.c:253
 msgid "Mode of operation:"
 msgstr "Arbeitsmodus:"
 
-#: ../modules/cdisplay_lcms.c:256
+#: ../modules/cdisplay_lcms.c:261
 msgid "Image profile:"
 msgstr "Bildprofil:"
 
-#: ../modules/cdisplay_lcms.c:263
+#: ../modules/cdisplay_lcms.c:269
 msgid "Monitor profile:"
 msgstr "Monitor-Profil:"
 
-#: ../modules/cdisplay_lcms.c:270
+#: ../modules/cdisplay_lcms.c:277
 msgid "Print simulation profile:"
 msgstr "Drucksimulationsprofil:"
 
@@ -1495,7 +1496,7 @@ msgstr "CMYK-Farbwähler (mittels Farbprofil)"
 msgid "Profile: (none)"
 msgstr "Profil: (keines)"
 
-#: ../modules/colorsel_cmyk_lcms.c:410
+#: ../modules/colorsel_cmyk_lcms.c:417
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
