@@ -6,16 +6,14 @@
 # Linas Vasiliauskas <linasv@centras.lt>, 2004.
 # Giedrius Naudžiūnas <gimpng@gmail.com>, 2004-2005.
 # Žygimantas Beručka <zygis@gnome.org>, 2004-2007.
-# 
-#  Take me down to the Paradise City,
-#  where the grass is green and the girls are pretty!
+#
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-15 19:15+0300\n"
-"PO-Revision-Date: 2007-10-15 19:18+0300\n"
+"POT-Creation-Date: 2007-10-23 02:37+0300\n"
+"PO-Revision-Date: 2007-10-23 20:14+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -197,7 +195,7 @@ msgid ""
 "Make sure a proper setup for your display environment exists."
 msgstr ""
 "GIMP nepavyko inicializuoti grafinės naudotojo sąsajos.\n"
-"Įsitikinkite, ar teisingai sukonfigūruota Jūsų ekrano aplinka."
+"Įsitikinkite, kad jūsų ekrano aplinka tinkamai sukonfigūruota."
 
 #: ../app/main.c:437
 msgid "GIMP output. Type any character to close this window."
@@ -219,7 +217,7 @@ msgstr "%s versija %s"
 
 #: ../app/main.c:782
 msgid "Another GIMP instance is already running."
-msgstr "Jau veikia kita GIMP kopija."
+msgstr "Jau paleista kita GIMP kopija."
 
 #: ../app/sanity.c:216
 #, c-format
@@ -446,11 +444,11 @@ msgstr "Naujas teptukas"
 
 #: ../app/actions/brushes-actions.c:59
 msgid "D_uplicate Brush"
-msgstr "Pa_daryti teptuko kopiją"
+msgstr "S_ukurti teptuko kopiją"
 
 #: ../app/actions/brushes-actions.c:60
 msgid "Duplicate brush"
-msgstr "Padaryti teptuko kopiją"
+msgstr "Sukurti teptuko kopiją"
 
 #: ../app/actions/brushes-actions.c:65
 msgid "Copy Brush _Location"
@@ -462,11 +460,11 @@ msgstr "Kopijuoti teptuko failo vietą į atmintinę"
 
 #: ../app/actions/brushes-actions.c:71
 msgid "_Delete Brush"
-msgstr "_Pašalinti teptuką"
+msgstr "_Ištrinti teptuką"
 
 #: ../app/actions/brushes-actions.c:72
 msgid "Delete brush"
-msgstr "Pašalinti teptuką"
+msgstr "Ištrinti teptuką"
 
 #: ../app/actions/brushes-actions.c:77
 msgid "_Refresh Brushes"
@@ -550,7 +548,7 @@ msgstr "Sukurti naują kanalą su paskutinėmis naudotomis reikšmėmis"
 
 #: ../app/actions/channels-actions.c:66
 msgid "D_uplicate Channel"
-msgstr "_Padaryti kanalo kopiją"
+msgstr "_Sukurti kanalo kopiją"
 
 #: ../app/actions/channels-actions.c:67
 msgid "Create a duplicate of this channel and add it to the image"
@@ -843,7 +841,7 @@ msgstr ""
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:770
 #: ../app/pdb/image_cmds.c:1995 ../app/widgets/gimpdnd-xds.c:98
 msgid "Untitled"
-msgstr "Bevardis"
+msgstr "Nepavadinta"
 
 #: ../app/actions/data-commands.c:231
 msgid "Delete Object"
@@ -942,7 +940,7 @@ msgstr "Atverti kontūrų dialogą"
 
 #: ../app/actions/dialogs-actions.c:99
 msgid "Color_map"
-msgstr "Ga_ma"
+msgstr "Spalvų ga_ma"
 
 #: ../app/actions/dialogs-actions.c:100
 msgid "Open the colormap dialog"
@@ -1371,7 +1369,7 @@ msgstr "_Baltumo balansas"
 
 #: ../app/actions/drawable-actions.c:64
 msgid "Automatic white balance correction"
-msgstr "Automatinis baltumo balanso pakoregavimas"
+msgstr "Automatinis baltumo balanso koregavimas"
 
 #: ../app/actions/drawable-actions.c:69
 msgid "_Offset..."
@@ -1944,11 +1942,11 @@ msgstr "Šriftų meniu"
 
 #: ../app/actions/fonts-actions.c:48
 msgid "_Rescan Font List"
-msgstr "_Perskanuoti šriftų sąrašą"
+msgstr "_Perskenuoti šriftų sąrašą"
 
 #: ../app/actions/fonts-actions.c:49
 msgid "Rescan font list"
-msgstr "Perskanuoti šriftų sąrašą"
+msgstr "Perskenuoti šriftų sąrašą"
 
 #: ../app/actions/gradient-editor-actions.c:46
 msgid "Gradient Editor Menu"
@@ -1988,11 +1986,11 @@ msgstr "_Dešiniojo galinio taško spalva..."
 
 #: ../app/actions/gradient-editor-actions.c:112
 msgid "Ble_nd Endpoints' Colors"
-msgstr "Suli_eti galinių taškų spalvas"
+msgstr "Sumaiš_yti galinių taškų spalvas"
 
 #: ../app/actions/gradient-editor-actions.c:117
 msgid "Blend Endpoints' Opacit_y"
-msgstr "Sulieti galinių taškų nepermat_omumą"
+msgstr "Sumaišyti galinių taškų nepermat_omumą"
 
 #: ../app/actions/gradient-editor-actions.c:125
 msgid "Edit Active Gradient"
@@ -2146,12 +2144,12 @@ msgstr "Iš_trinti segmentą"
 # Nesu tikra.
 #: ../app/actions/gradient-editor-actions.c:788
 msgid "Re-_center Segment's Midpoint"
-msgstr "Atnaujinti se_gmento vidurio taškų vietas"
+msgstr "Percentruoti se_gmento vidurio taškus"
 
 # Nesu tikra.
 #: ../app/actions/gradient-editor-actions.c:790
 msgid "Re-distribute _Handles in Segment"
-msgstr "Perskirstyti _valdiklius segmente"
+msgstr "Perskirstyti _rankenėles segmente"
 
 #: ../app/actions/gradient-editor-actions.c:795
 msgid "_Blending Function for Selection"
@@ -2209,23 +2207,23 @@ msgstr "Gradiento segmento dešiniojo galinio taško spalva"
 
 #: ../app/actions/gradient-editor-commands.c:453
 msgid "Replicate Segment"
-msgstr "Padauginti segmentą"
+msgstr "Kopijuoti segmentą"
 
 #: ../app/actions/gradient-editor-commands.c:454
 msgid "Replicate Gradient Segment"
-msgstr "Padauginti gradiento segmentą"
+msgstr "Kopijuoti gradiento segmentą"
 
 #: ../app/actions/gradient-editor-commands.c:458
 msgid "Replicate Selection"
-msgstr "Padauginti pažymėjimą"
+msgstr "Kopijuoti pažymėjimą"
 
 #: ../app/actions/gradient-editor-commands.c:459
 msgid "Replicate Gradient Selection"
-msgstr "Padauginti gradiento pažymėjimą"
+msgstr "Kopijuoti gradiento pažymėjimą"
 
 #: ../app/actions/gradient-editor-commands.c:472
 msgid "Replicate"
-msgstr "Padauginti"
+msgstr "Kopijuoti"
 
 #: ../app/actions/gradient-editor-commands.c:492
 msgid ""
@@ -2233,7 +2231,7 @@ msgid ""
 "to replicate the selected segment."
 msgstr ""
 "Pasirinkite kiek kartų norite\n"
-"padauginti pažymėtą segmentą."
+"kopijuoti pažymėtą segmentą."
 
 #: ../app/actions/gradient-editor-commands.c:495
 msgid ""
@@ -2241,7 +2239,7 @@ msgid ""
 "to replicate the selection."
 msgstr ""
 "Pasirinkite kiek kartų norite\n"
-"padauginti pažymėjimą."
+"kopijuoti pažymėjimą."
 
 #: ../app/actions/gradient-editor-commands.c:554
 msgid "Split Segment Uniformly"
@@ -2297,7 +2295,7 @@ msgstr "D_ublikuoti gradientą"
 
 #: ../app/actions/gradients-actions.c:55
 msgid "Duplicate gradient"
-msgstr "Padaryti gradiento kopiją"
+msgstr "Sukurti gradiento kopiją"
 
 #: ../app/actions/gradients-actions.c:60
 msgid "Copy Gradient _Location"
@@ -2463,7 +2461,7 @@ msgstr "Apkirpti paveikslėlį iki pažymėtos srities ribų"
 
 #: ../app/actions/image-actions.c:120
 msgid "_Duplicate"
-msgstr "_Padaryti kopiją"
+msgstr "_Sukurti kopiją"
 
 #: ../app/actions/image-actions.c:121
 msgid "Create a duplicate of this image"
@@ -2569,11 +2567,11 @@ msgstr "Sukama"
 
 #: ../app/actions/image-commands.c:420 ../app/actions/layers-commands.c:599
 msgid "Cannot crop because the current selection is empty."
-msgstr "Nepavyko iškirpti, nes pasirinktas regionas tuščias."
+msgstr "Nepavyko apkirpti, kadangi dabartinis pažymėjimas yra tuščias."
 
 #: ../app/actions/image-commands.c:613
 msgid "Change Print Size"
-msgstr "Keisti spausdinimo dydį"
+msgstr "Keisti spaudinio dydį"
 
 #: ../app/actions/image-commands.c:650 ../app/core/gimpimage-scale.c:77
 msgid "Scale Image"
@@ -2594,19 +2592,19 @@ msgstr "Paveikslėlių meniu"
 
 #: ../app/actions/images-actions.c:47
 msgid "_Raise Views"
-msgstr "_Pakelti vaizdus"
+msgstr "_Iškelti rodinius"
 
 #: ../app/actions/images-actions.c:48
 msgid "Raise this image's displays"
-msgstr "Pakelti šio paveikslėlio vaizdus"
+msgstr "Iškelti šio paveikslėlio rodinius"
 
 #: ../app/actions/images-actions.c:53 ../app/actions/view-actions.c:75
 msgid "_New View"
-msgstr "_Naujas vaizdas"
+msgstr "_Naujas rodinys"
 
 #: ../app/actions/images-actions.c:54
 msgid "Create a new display for this image"
-msgstr "Sukurti naują paveikslėlio langą"
+msgstr "Sukurti naują šio paveikslėlio rodinį"
 
 #: ../app/actions/images-actions.c:59
 msgid "_Delete Image"
@@ -2622,7 +2620,7 @@ msgstr "Sluoksnių meniu"
 
 #: ../app/actions/layers-actions.c:51
 msgid "_Layer"
-msgstr "_Sluoksniai"
+msgstr "_Sluoksnis"
 
 #: ../app/actions/layers-actions.c:52
 msgid "Stac_k"
@@ -2650,7 +2648,7 @@ msgstr "Sluoksnio _veiksena"
 
 #: ../app/actions/layers-actions.c:62
 msgid "Te_xt Tool"
-msgstr "Te_ksto įrankiai"
+msgstr "Te_ksto įrankis"
 
 #: ../app/actions/layers-actions.c:63
 msgid "Activate the text tool on this text layer"
@@ -3204,7 +3202,7 @@ msgstr "Keisti raštus"
 
 #: ../app/actions/plug-in-actions.c:83
 msgid "Filte_rs"
-msgstr "_Filtrai"
+msgstr "Filt_rai"
 
 #: ../app/actions/plug-in-actions.c:84
 msgid "Recently Used"
@@ -3835,7 +3833,7 @@ msgstr "D_ublikuoti kontūrą"
 
 #: ../app/actions/vectors-actions.c:72
 msgid "Duplicate path"
-msgstr "Padaryti kontūro kopiją"
+msgstr "Sukurti kontūro kopiją"
 
 #: ../app/actions/vectors-actions.c:77
 msgid "_Delete Path"
@@ -3979,7 +3977,7 @@ msgstr "Naujo kontūro savybės"
 msgid "Path to Selection"
 msgstr "Paversti kontūrą į pažymėtą sritį"
 
-#: ../app/actions/vectors-commands.c:369 ../app/tools/gimpvectoroptions.c:198
+#: ../app/actions/vectors-commands.c:369 ../app/tools/gimpvectoroptions.c:199
 #: ../app/tools/gimpvectortool.c:1908 ../app/vectors/gimpvectors.c:199
 msgid "Stroke Path"
 msgstr "Apvesti kontūrą"
@@ -4038,7 +4036,7 @@ msgstr "Atkurti ankstesnį mastelio lygį"
 
 #: ../app/actions/view-actions.c:105
 msgid "Na_vigation Window"
-msgstr "Na_vigacijos langas"
+msgstr "Ž_valgymo langas"
 
 #: ../app/actions/view-actions.c:106
 msgid "Show an overview window for this image"
@@ -5170,7 +5168,7 @@ msgstr "Kvadratinis"
 
 #: ../app/core/core-enums.c:404
 msgid "Custom"
-msgstr "Pasirinkta"
+msgstr "Pasirinktinė"
 
 #: ../app/core/core-enums.c:405
 msgid "Line"
@@ -5182,7 +5180,7 @@ msgstr "Ilgi brūkšneliai"
 
 #: ../app/core/core-enums.c:407
 msgid "Medium dashes"
-msgstr "Viduiniai brūkšneliai"
+msgstr "Vidutiniai brūkšneliai"
 
 #: ../app/core/core-enums.c:408
 msgid "Short dashes"
@@ -5290,7 +5288,7 @@ msgstr "Rodyti kaip sąrašą"
 
 #: ../app/core/core-enums.c:608
 msgid "View as grid"
-msgstr "Rodyti kaip groteles"
+msgstr "Rodyti kaip tinklelį"
 
 #: ../app/core/core-enums.c:670
 msgid "No thumbnails"
@@ -5416,7 +5414,7 @@ msgstr "Plaukiojantis pažymėjimas"
 
 #: ../app/core/core-enums.c:876
 msgid "Anchor floating selection"
-msgstr "Prikabinti plaukiojantį pažymėjimą"
+msgstr "Pritvirtinti plaukiojantį pažymėjimą"
 
 #: ../app/core/core-enums.c:877
 msgid "Remove floating selection"
@@ -6030,8 +6028,9 @@ msgid "Levels"
 msgstr "Lygiai"
 
 #: ../app/core/gimpdrawable-offset.c:316
+#, fuzzy
 msgid "Offset Drawable"
-msgstr ""
+msgstr "Paslinkti piešimo sritį"
 
 #: ../app/core/gimpdrawable-stroke.c:320
 #, fuzzy
@@ -6136,7 +6135,7 @@ msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr ""
 "Vertikalus pirmos tinklelio linijos poslinkis. Jis gali būti ir neigiamas."
 
-#: ../app/core/gimpimage-arrange.c:139
+#: ../app/core/gimpimage-arrange.c:143
 msgid "Arrange Objects"
 msgstr "Išdėstyti objektus"
 
@@ -6730,13 +6729,13 @@ msgstr "Fonas"
 #. pseudo unit
 #: ../app/core/gimpunit.c:56
 msgid "pixel"
-msgstr "taškelis"
+msgstr "pikselis"
 
 #: ../app/core/gimpunit.c:56 ../app/tools/gimpmeasuretool.c:868
 #: ../app/tools/gimpmeasuretool.c:1011 ../app/tools/gimpmeasuretool.c:1067
 #: ../app/tools/gimpmeasuretool.c:1095 ../app/tools/gimppainttool.c:602
 msgid "pixels"
-msgstr "taškeliai"
+msgstr "pikseliai"
 
 #. standard units
 #: ../app/core/gimpunit.c:59
@@ -7303,7 +7302,7 @@ msgstr "Sujungtas _mėginys"
 
 #: ../app/dialogs/palette-import-dialog.c:253
 msgid "_Selected Pixels only"
-msgstr "_Tik pasirinkti taškeliai"
+msgstr "_Tik pasirinkti pikseliai"
 
 #: ../app/dialogs/palette-import-dialog.c:265
 msgid "Palette _file"
@@ -8139,7 +8138,7 @@ msgstr "_Y raiška:"
 #: ../app/widgets/gimptemplateeditor.c:308
 #, c-format
 msgid "pixels/%a"
-msgstr "taškeliai/%a"
+msgstr "pikseliai/%a"
 
 #: ../app/dialogs/quit-dialog.c:106
 msgid "Quit GIMP"
@@ -8659,8 +8658,8 @@ msgid "Set a source image first."
 msgstr "Iš pradžių pasirinkite šaltinio paveikslėlį."
 
 #: ../app/paint/paint-enums.c:51
-msgid "Modify Perspective Plane"
-msgstr "Keisti perspektyvos plokštumą"
+msgid "Modify Perspective"
+msgstr "Keisti perspektyvą"
 
 #: ../app/paint/paint-enums.c:82
 msgid "Aligned"
@@ -8957,8 +8956,8 @@ msgid ""
 "Pack my box with\n"
 "five dozen liquor jugs."
 msgstr ""
-"ĄąBbCcČčDdEeĘęĖėFfGgHhIiYyJjKk\n"
-"LlMmNnOoPpRrSsŠšTtUuŲųŪūVvZzŽž"
+"Įlinkdama fechtuotojo špaga\n"
+"sublykčiojusi pragręžė apvalų arbūzą"
 
 #: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:706
 msgid "Add Text Layer"
@@ -9048,105 +9047,105 @@ msgstr "Greitis:"
 msgid "Pressure:"
 msgstr "Slėgis:"
 
-#: ../app/tools/gimpaligntool.c:132 ../app/tools/gimpaligntool.c:734
+#: ../app/tools/gimpaligntool.c:134 ../app/tools/gimpaligntool.c:752
 msgid "Align"
 msgstr "Lygiuoti"
 
-#: ../app/tools/gimpaligntool.c:133
+#: ../app/tools/gimpaligntool.c:135
 msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "Lygiavimo įrankis: Lygiuoti sluoksnius ir kitus objektus"
 
-#: ../app/tools/gimpaligntool.c:134
+#: ../app/tools/gimpaligntool.c:136
 msgid "_Align"
 msgstr "_Lygiuoti"
 
-#: ../app/tools/gimpaligntool.c:583
+#: ../app/tools/gimpaligntool.c:585
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
-"Spustelėkite sluoksnį, kontūrą arba gairę, arba spustelėkite ir vilkite, "
-"kad pasirinktumėte kelis sluoksnius"
+"Spustelėkite sluoksnį, kontūrą arba gairę, arba spustelėkite ir vilkite, kad "
+"pasirinktumėte kelis sluoksnius"
 
-#: ../app/tools/gimpaligntool.c:592
+#: ../app/tools/gimpaligntool.c:594
 msgid "Click to pick this layer as first item"
 msgstr "Spustelėkite norėdami pasirinkti šį sluoksnį kaip pirmą elementą"
 
-#: ../app/tools/gimpaligntool.c:600
+#: ../app/tools/gimpaligntool.c:602
 msgid "Click to add this layer to the list"
 msgstr "Spustelėkite norėdami įtraukti šį sluoksnį į sąrašą"
 
-#: ../app/tools/gimpaligntool.c:604
+#: ../app/tools/gimpaligntool.c:606
 msgid "Click to pick this guide as first item"
 msgstr "Spustelėkite norėdami pasirinkti šią gairę kaip pirmą elementą"
 
-#: ../app/tools/gimpaligntool.c:612
+#: ../app/tools/gimpaligntool.c:614
 msgid "Click to add this guide to the list"
 msgstr "Spustelėkite norėdami įtraukti šią gairę į sąrašą"
 
-#: ../app/tools/gimpaligntool.c:616
+#: ../app/tools/gimpaligntool.c:618
 msgid "Click to pick this path as first item"
 msgstr "Spustelėkite norėdami pasirinkti šį kontūrą kaip pirmą elementą"
 
-#: ../app/tools/gimpaligntool.c:624
+#: ../app/tools/gimpaligntool.c:626
 msgid "Click to add this path to the list"
 msgstr "Spustelėkite norėdami įtraukti šį kontūrą į sąrašą"
 
-#: ../app/tools/gimpaligntool.c:746
+#: ../app/tools/gimpaligntool.c:764
 msgid "Relative to:"
 msgstr "Atžvilgiu:"
 
-#: ../app/tools/gimpaligntool.c:764
+#: ../app/tools/gimpaligntool.c:782
 msgid "Align left edge of target"
 msgstr "Lygiuoti taikinio kairįjį kraštą"
 
-#: ../app/tools/gimpaligntool.c:770
+#: ../app/tools/gimpaligntool.c:788
 msgid "Align center of target"
 msgstr "Lygiuoti taikinio centrą"
 
-#: ../app/tools/gimpaligntool.c:776
+#: ../app/tools/gimpaligntool.c:794
 msgid "Align right edge of target"
 msgstr "Lygiuoti taikinio dešinįjį kraštą"
 
-#: ../app/tools/gimpaligntool.c:786
+#: ../app/tools/gimpaligntool.c:804
 msgid "Align top edge of target"
 msgstr "Lygiuoti taikinio viršutinįjį kraštą"
 
-#: ../app/tools/gimpaligntool.c:792
+#: ../app/tools/gimpaligntool.c:810
 msgid "Align middle of target"
 msgstr "Lygiuoti taikinio vidurį"
 
-#: ../app/tools/gimpaligntool.c:798
+#: ../app/tools/gimpaligntool.c:816
 msgid "Align bottom of target"
 msgstr "Lygiuoti taikinio apačią"
 
-#: ../app/tools/gimpaligntool.c:802
+#: ../app/tools/gimpaligntool.c:820
 msgid "Distribute"
 msgstr "Paskirstyti"
 
-#: ../app/tools/gimpaligntool.c:816
+#: ../app/tools/gimpaligntool.c:834
 msgid "Distribute left edges of targets"
 msgstr "Paskirstyti taikinių kairiuosius kraštus"
 
-#: ../app/tools/gimpaligntool.c:823
+#: ../app/tools/gimpaligntool.c:841
 msgid "Distribute horizontal centers of targets"
 msgstr "Paskirstyti taikinių horizontalius centrus"
 
-#: ../app/tools/gimpaligntool.c:830
+#: ../app/tools/gimpaligntool.c:848
 msgid "Distribute right edges of targets"
 msgstr "Paskirstyti taikinių dešiniuosius kraštus"
 
-#: ../app/tools/gimpaligntool.c:840
+#: ../app/tools/gimpaligntool.c:858
 msgid "Distribute top edges of targets"
 msgstr "Paskirstyti taikinių viršutinius kraštus"
 
-#: ../app/tools/gimpaligntool.c:847
+#: ../app/tools/gimpaligntool.c:865
 msgid "Distribute vertical centers of targets"
 msgstr "Paskirstyti taikinių vertikalius centrus"
 
-#: ../app/tools/gimpaligntool.c:853
+#: ../app/tools/gimpaligntool.c:871
 msgid "Distribute bottoms of targets"
 msgstr "Paskirstyti taikinių apačias"
 
-#: ../app/tools/gimpaligntool.c:861 ../app/tools/gimpblendoptions.c:212
+#: ../app/tools/gimpaligntool.c:879 ../app/tools/gimpblendoptions.c:212
 msgid "Offset:"
 msgstr "Poslinkis:"
 
@@ -9168,7 +9167,7 @@ msgstr "Maksimalus gylis:"
 
 #: ../app/tools/gimpblendoptions.c:262
 #: ../app/tools/gimpbucketfilloptions.c:287
-#: ../app/tools/gimpselectionoptions.c:426
+#: ../app/tools/gimpselectionoptions.c:416
 msgid "Threshold:"
 msgstr "Slenkstis:"
 
@@ -9258,7 +9257,6 @@ msgid "Fill similar colors"
 msgstr "Užpildyti panašias spalvas"
 
 #: ../app/tools/gimpbucketfilloptions.c:253
-#: ../app/tools/gimpselectionoptions.c:398
 msgid "Finding Similar Colors"
 msgstr "Panašių spalvų paieška"
 
@@ -9269,7 +9267,7 @@ msgstr "Užpildyti permatomas sritis"
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpperspectiveclonetool.c:965
-#: ../app/tools/gimpselectionoptions.c:414
+#: ../app/tools/gimpselectionoptions.c:404
 msgid "Sample merged"
 msgstr "Sujungtas mėginys"
 
@@ -9997,7 +9995,7 @@ msgid "Adjustment"
 msgstr "Reguliavimas"
 
 #: ../app/tools/gimpinkoptions-gui.c:68 ../app/tools/gimpinkoptions-gui.c:93
-#: ../app/tools/gimptextoptions.c:435
+#: ../app/tools/gimprectangleoptions.c:1019 ../app/tools/gimptextoptions.c:436
 msgid "Size:"
 msgstr "Dydis:"
 
@@ -10430,43 +10428,33 @@ msgstr "Spalvų kiekio sumažinimo _lygiai:"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Mažinant pažymėjimą naudoti visus matomus sluoksnius"
 
-#: ../app/tools/gimprectangleoptions.c:757
+#. Current, as in what is currently in use.
+#: ../app/tools/gimprectangleoptions.c:775
 msgid "Current"
 msgstr "Dabartinis"
 
-#: ../app/tools/gimprectangleoptions.c:779
+#: ../app/tools/gimprectangleoptions.c:853
 msgid "Expand from center"
 msgstr "Išplėsti nuo centro"
 
-#: ../app/tools/gimprectangleoptions.c:802
+#: ../app/tools/gimprectangleoptions.c:876
 msgid "Fixed:"
 msgstr "Fiksuota:"
 
-#: ../app/tools/gimprectangleoptions.c:933
+#: ../app/tools/gimprectangleoptions.c:1009
+msgid "Position:"
+msgstr "Vieta:"
+
+#: ../app/tools/gimprectangleoptions.c:1027
 msgid "Highlight"
 msgstr "Paryškinti"
 
-#: ../app/tools/gimprectangleoptions.c:950
-msgid "X:"
-msgstr "X:"
+#. Auto Shrink
+#: ../app/tools/gimprectangleoptions.c:1037
+msgid "Auto Shrink"
+msgstr "Automatiškai sumažinti"
 
-#: ../app/tools/gimprectangleoptions.c:958
-msgid "Y:"
-msgstr "Y:"
-
-#: ../app/tools/gimprectangleoptions.c:969
-msgid "W:"
-msgstr "P:"
-
-#: ../app/tools/gimprectangleoptions.c:983
-msgid "H:"
-msgstr "A:"
-
-#: ../app/tools/gimprectangleoptions.c:994
-msgid "Auto Shrink Selection"
-msgstr "Automatiškai sumažinti pažymėjimą"
-
-#: ../app/tools/gimprectangleoptions.c:1001
+#: ../app/tools/gimprectangleoptions.c:1044
 msgid "Shrink merged"
 msgstr "Sumažinti sujungtus"
 
@@ -10546,7 +10534,7 @@ msgstr "Leisti pasirinkti visiškai permatomus regionus"
 msgid "Base selection on all visible layers"
 msgstr "Pasirinkti visuose matomuose sluoksniuose"
 
-#: ../app/tools/gimpselectionoptions.c:349 ../app/tools/gimptextoptions.c:456
+#: ../app/tools/gimpselectionoptions.c:349 ../app/tools/gimptextoptions.c:457
 msgid "Antialiasing"
 msgstr "Glotninimas"
 
@@ -10555,14 +10543,14 @@ msgid "Feather edges"
 msgstr "Išlieti kraštus"
 
 #: ../app/tools/gimpselectionoptions.c:384
-msgid "Show interactive boundary"
-msgstr "Rodyti interaktyvias ribas"
+msgid "Interactive boundary"
+msgstr "Interaktyvios ribos"
 
-#: ../app/tools/gimpselectionoptions.c:408
+#: ../app/tools/gimpselectionoptions.c:398
 msgid "Select transparent areas"
 msgstr "Pažymėti permatomas sritis"
 
-#: ../app/tools/gimpselectionoptions.c:433
+#: ../app/tools/gimpselectionoptions.c:423
 msgid "Select by:"
 msgstr "Pažymėti pagal:"
 
@@ -10672,35 +10660,36 @@ msgstr "Keisti tarpus tarp eilučių"
 msgid "Adjust letter spacing"
 msgstr "Keisti tarpus tarp raidžių"
 
-#: ../app/tools/gimptextoptions.c:428
+#: ../app/tools/gimptextoptions.c:429
 msgid "Font:"
 msgstr "Šriftas:"
 
-#: ../app/tools/gimptextoptions.c:440
+#: ../app/tools/gimptextoptions.c:441
 msgid "Hinting"
 msgstr "Patarinėjimas"
 
-#: ../app/tools/gimptextoptions.c:447
+#: ../app/tools/gimptextoptions.c:448
 msgid "Force auto-hinter"
 msgstr "Priverstinis autopatarinėjimas"
 
-#: ../app/tools/gimptextoptions.c:462
+#: ../app/tools/gimptextoptions.c:465
 msgid "Text Color"
 msgstr "Teksto spalva"
 
-#: ../app/tools/gimptextoptions.c:467
+#: ../app/tools/gimptextoptions.c:470
 msgid "Color:"
 msgstr "Spalva:"
 
-#: ../app/tools/gimptextoptions.c:472
+#: ../app/tools/gimptextoptions.c:476
 msgid "Justify:"
 msgstr "Lygiavimas:"
 
-#: ../app/tools/gimptextoptions.c:491
-msgid "Create Path from Text"
-msgstr "Iš teksto sukurti kontūrą"
-
+#. Create a path from the current text
 #: ../app/tools/gimptextoptions.c:498
+msgid "Path from Text"
+msgstr "Kontūras iš teksto"
+
+#: ../app/tools/gimptextoptions.c:505
 msgid "Text along Path"
 msgstr "Tekstas šalia kontūro"
 
@@ -10766,24 +10755,25 @@ msgstr "Transformuoti:"
 msgid "Direction"
 msgstr "Kryptis"
 
-#: ../app/tools/gimptransformoptions.c:264
+#. the interpolation menu
+#: ../app/tools/gimptransformoptions.c:260
 msgid "Interpolation:"
 msgstr "Interpoliacija:"
 
-#: ../app/tools/gimptransformoptions.c:277
+#: ../app/tools/gimptransformoptions.c:273
 msgid "Clipping:"
 msgstr "Apkirpimas:"
 
-#: ../app/tools/gimptransformoptions.c:295
+#: ../app/tools/gimptransformoptions.c:291
 msgid "Preview:"
 msgstr "Peržiūra:"
 
-#: ../app/tools/gimptransformoptions.c:336
+#: ../app/tools/gimptransformoptions.c:332
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 laipsnių  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:340
+#: ../app/tools/gimptransformoptions.c:336
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Išlaikyti proporciją  (%s)"
@@ -10825,9 +10815,10 @@ msgstr ""
 "%s  Atimti\n"
 "%s  Susikirsti"
 
-#: ../app/tools/gimpvectoroptions.c:188
-msgid "Create Selection from Path"
-msgstr "Sukurti pažymėjimą iš kontūro"
+#. Create a selection from the current path
+#: ../app/tools/gimpvectoroptions.c:189
+msgid "Selection from Path"
+msgstr "Pažymėjimas iš kontūro"
 
 #: ../app/tools/gimpvectortool.c:161
 msgid "Paths Tool: Create and edit paths"
@@ -10843,23 +10834,23 @@ msgstr "Pridėti brūkšnį"
 
 #: ../app/tools/gimpvectortool.c:338
 msgid "Add Anchor"
-msgstr "Pridėti inkarą"
+msgstr "Pridėti prieraišą"
 
 #: ../app/tools/gimpvectortool.c:361
 msgid "Insert Anchor"
-msgstr "Įterpti inkarą"
+msgstr "Įterpti prieraišą"
 
 #: ../app/tools/gimpvectortool.c:390
 msgid "Drag Handle"
-msgstr "Tempti rankeną"
+msgstr "Tempti rankenėlę"
 
 #: ../app/tools/gimpvectortool.c:419
 msgid "Drag Anchor"
-msgstr "Tempti inkarą"
+msgstr "Tempti prieraišą"
 
 #: ../app/tools/gimpvectortool.c:436
 msgid "Drag Anchors"
-msgstr "Tempti inkarus"
+msgstr "Tempti prieraišus"
 
 #: ../app/tools/gimpvectortool.c:456
 msgid "Drag Curve"
@@ -10879,7 +10870,7 @@ msgstr "Konvertuoti kraštą"
 
 #: ../app/tools/gimpvectortool.c:554
 msgid "Delete Anchor"
-msgstr "Ištrinti inkarą"
+msgstr "Ištrinti prieraišą"
 
 #: ../app/tools/gimpvectortool.c:576
 msgid "Delete Segment"
@@ -10887,7 +10878,7 @@ msgstr "Ištrinti segmentą"
 
 #: ../app/tools/gimpvectortool.c:787
 msgid "Move Anchors"
-msgstr "Perkelti inkarus"
+msgstr "Perkelti prieraišus"
 
 #: ../app/tools/gimpvectortool.c:1145
 msgid "Click to pick path to edit"
@@ -10904,15 +10895,15 @@ msgstr "Spustelėkite norėdami sukurti naują kontūro komponentą"
 #: ../app/tools/gimpvectortool.c:1154
 msgid "Click or Click-Drag to create a new anchor"
 msgstr ""
-"Spustelėkite arba spustelėkite ir vilkite norėdami sukurti naują inkarą"
+"Spustelėkite arba spustelėkite ir vilkite norėdami sukurti naują prieraišą"
 
 #: ../app/tools/gimpvectortool.c:1163 ../app/tools/gimpvectortool.c:1170
 msgid "Click-Drag to move the anchor around"
-msgstr "Spustelėkite ir tempkite norėdami galite perkelti inkarą"
+msgstr "Spustelėkite ir tempkite norėdami galite perkelti prieraišą"
 
 #: ../app/tools/gimpvectortool.c:1173 ../app/tools/gimpvectortool.c:1184
 msgid "Click-Drag to move the anchors around"
-msgstr "Spustelėkite ir tempkite norėdami perkelti inkarus"
+msgstr "Spustelėkite ir tempkite norėdami perkelti prieraišus"
 
 #: ../app/tools/gimpvectortool.c:1176
 msgid "Click-Drag to move the handle around"
@@ -10937,15 +10928,16 @@ msgstr "Spustelėkite ir tempkite norėdami perkelti kontūrą"
 
 #: ../app/tools/gimpvectortool.c:1206
 msgid "Click-Drag to insert an anchor on the path"
-msgstr "Spustelėkite ir tempkite norėdami įterpti į kontūrą inkarą"
+msgstr "Spustelėkite ir tempkite norėdami kontūre įterpti prieraišą"
 
 #: ../app/tools/gimpvectortool.c:1213
 msgid "Click to delete this anchor"
-msgstr "Spustelėkite norėdami ištrinti šį inkarą"
+msgstr "Spustelėkite norėdami ištrinti šį prieraišą"
 
 #: ../app/tools/gimpvectortool.c:1216
 msgid "Click to connect this anchor with the selected endpoint"
-msgstr "Spustelėkite norėdami sujungti šį inkarą su pasirinktu pabaigos tašku"
+msgstr ""
+"Spustelėkite norėdami sujungti šį prieraišą su pasirinktu pabaigos tašku"
 
 #: ../app/tools/gimpvectortool.c:1220
 msgid "Click to open up the path"
@@ -10957,7 +10949,7 @@ msgstr "Spustelėkite norėdami padaryti šį mazgą kampuotu"
 
 #: ../app/tools/gimpvectortool.c:1729
 msgid "Delete Anchors"
-msgstr "Ištrinti inkarus"
+msgstr "Ištrinti prieraišus"
 
 #: ../app/tools/gimpvectortool.c:1902
 msgid "There is no active layer or channel to stroke to"
@@ -11139,7 +11131,7 @@ msgstr "Nepavyko pašalinti kombinacijos."
 
 #: ../app/widgets/gimpbrusheditor.c:169
 msgid "Spikes:"
-msgstr "Spygliai:"
+msgstr "Smaigaliai:"
 
 #: ../app/widgets/gimpbrusheditor.c:182
 msgid "Hardness:"
@@ -11280,11 +11272,15 @@ msgstr "nėra"
 
 #: ../app/widgets/gimpcolormapeditor.c:206
 msgid "Color index:"
-msgstr "Spalvos rodyklė:"
+msgstr "Spalvos indeksas:"
 
 #: ../app/widgets/gimpcolormapeditor.c:216
 msgid "HTML notation:"
 msgstr "HTML žymėjimas:"
+
+#: ../app/widgets/gimpcolorselectorpalette.c:59
+msgid "Palette"
+msgstr "Paletė"
 
 #: ../app/widgets/gimpcontainerpopup.c:534
 msgid "Smaller Previews"
@@ -12204,15 +12200,15 @@ msgstr "Atverti raštų pasirinkimo dialogą"
 msgid "Open the gradient selection dialog"
 msgstr "Atverti gradientų pasirinkimo dialogą"
 
-#: ../app/widgets/gimpviewablebox.c:219
+#: ../app/widgets/gimpviewablebox.c:224
 msgid "Reverse"
 msgstr "Atvirkščiai"
 
-#: ../app/widgets/gimpviewablebox.c:298
+#: ../app/widgets/gimpviewablebox.c:306
 msgid "Open the palette selection dialog"
 msgstr "Atverti palečių pasirinkimo dialogą"
 
-#: ../app/widgets/gimpviewablebox.c:356
+#: ../app/widgets/gimpviewablebox.c:364
 msgid "Open the font selection dialog"
 msgstr "Atverti šriftų pasirinkimo dialogą"
 
@@ -12438,3 +12434,18 @@ msgstr "Įsitikinkite, kad įrankinė matoma!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Nepavyko paleisti „%s“: %s"
+
+#~ msgid "X:"
+#~ msgstr "X:"
+
+#~ msgid "Y:"
+#~ msgstr "Y:"
+
+#~ msgid "W:"
+#~ msgstr "P:"
+
+#~ msgid "H:"
+#~ msgstr "A:"
+
+#~ msgid "Create Selection from Path"
+#~ msgstr "Sukurti pažymėjimą iš kontūro"
