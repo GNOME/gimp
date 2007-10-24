@@ -1,3 +1,9 @@
+2007-10-24  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* Makefile.am: Applied patch from Stanislav Brabec which adds
+	NEWS.pre-2-4, ChangeLog.pre-2-2 and ChangeLog.pre-2-4 to EXTRA_DIST.
+	Fixes bug #489813.
+
 2007-10-24  Simon Budig  <simon@gimp.org>
 
         * app/display/gimpdisplayshell.h: change the PROJ_ROUND macro

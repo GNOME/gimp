@@ -54,12 +54,15 @@ EXTRA_DIST = \
 	ChangeLog.pre-1-0	\
 	ChangeLog.pre-1-2	\
 	ChangeLog.pre-2-0	\
+	ChangeLog.pre-2-2	\
+	ChangeLog.pre-2-4	\
 	HACKING			\
 	INSTALL			\
 	LICENSE			\
 	NEWS			\
 	NEWS.pre-2-0		\
 	NEWS.pre-2-2		\
+	NEWS.pre-2-4		\
 	README			\
 	README.i18n		\
 	README.win32		\
