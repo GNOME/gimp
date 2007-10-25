@@ -1,3 +1,10 @@
+2007-10-25  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme-private.h
+	* plug-ins/script-fu/tinyscheme/scheme.c:
+	Allow a maximum of two calls to backchar() needed by the "case '.'"
+	part of the switch statement in token(). Fixes bug #490198.
+
 2007-10-25  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c: Aligned static function

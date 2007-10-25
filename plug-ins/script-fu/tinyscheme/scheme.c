@@ -1560,10 +1560,7 @@ static gunichar inchar(scheme *sc) {
   if(pt->kind&port_file)
   {
     if (sc->bc_flag)
-    {
-      sc->bc_flag = 0;
-      c = sc->backchar;
-    }
+      c = sc->backchar[--sc->bc_flag];
     else
       c=basic_inchar(pt);
   }
@@ -1590,8 +1587,8 @@ static void backchar(scheme *sc, gunichar c) {
   charlen = g_unichar_to_utf8(c, NULL);
   pt=sc->inport->_object._port;
   if(pt->kind&port_file) {
-      sc->backchar = c;
-      sc->bc_flag = 1;
+    if (sc->bc_flag < 2)
+      sc->backchar[sc->bc_flag++] = c;
   } else {
     if(pt->rep.string.curr!=pt->rep.string.start) {
       if(pt->rep.string.curr-pt->rep.string.start >= charlen)
