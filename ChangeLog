@@ -1,3 +1,8 @@
+2007-10-25  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c: Tiny cosmetic change on the
+	ClampedSide enum definition.
+
 2007-10-25  Sven Neumann  <sven@gimp.org>
 
 	* tools/Makefile.am

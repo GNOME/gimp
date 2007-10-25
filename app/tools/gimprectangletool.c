@@ -67,10 +67,10 @@ enum
 typedef enum
 {
   CLAMPED_NONE   = 0,
-  CLAMPED_LEFT   = (1 << 0),
-  CLAMPED_RIGHT  = (1 << 1),
-  CLAMPED_TOP    = (1 << 2),
-  CLAMPED_BOTTOM = (1 << 3)
+  CLAMPED_LEFT   = 1 << 0,
+  CLAMPED_RIGHT  = 1 << 1,
+  CLAMPED_TOP    = 1 << 2,
+  CLAMPED_BOTTOM = 1 << 3
 } ClampedSide;
 
 typedef enum
