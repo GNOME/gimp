@@ -1,3 +1,9 @@
+2007-10-25  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: made all tests consistently use
+	'test "x$foo" = xbar' instead of 5 variants of which some were
+	broken. Spotted by Peter Breitenlohner, fixes bug #490068.
+
 2007-10-25  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.4.1 (interface age 1).
