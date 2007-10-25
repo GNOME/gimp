@@ -617,8 +617,6 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   proc->mtime                 = time (NULL);
   proc->installed_during_init = (plug_in->call_mode == GIMP_PLUG_IN_CALL_INIT);
 
-  gimp_plug_in_procedure_set_image_types (proc, proc_install->image_types);
-
   gimp_object_take_name (GIMP_OBJECT (procedure), canonical);
   gimp_procedure_set_strings (procedure,
                               proc_install->name,
@@ -628,6 +626,8 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
                               proc_install->copyright,
                               proc_install->date,
                               NULL);
+
+  gimp_plug_in_procedure_set_image_types (proc, proc_install->image_types);
 
   for (i = 0; i < proc_install->nparams; i++)
     {

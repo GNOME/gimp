@@ -1,5 +1,11 @@
 2007-10-25  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_proc_install):
+	set the procedure name before parsing the image types.
+	Fixes bug #490055.
+
+2007-10-25  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpcanvas.c (gimp_canvas_gc_new): use INVERT
 	instead of XOR if the xor-color is configured as white.
 
