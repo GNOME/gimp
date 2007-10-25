@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-26 21:43+0200\n"
-"PO-Revision-Date: 2007-09-25 22:10+0200\n"
+"POT-Creation-Date: 2007-10-25 15:33+0200\n"
+"PO-Revision-Date: 2007-10-12 10:12+0200\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,8 +25,8 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Selecció del pinzell"
 
-#: ../libgimp/gimpbrushselectbutton.c:911
-#: ../libgimp/gimppatternselectbutton.c:712
+#: ../libgimp/gimpbrushselectbutton.c:913
+#: ../libgimp/gimppatternselectbutton.c:714
 msgid "_Browse..."
 msgstr "_Navega..."
 
@@ -615,7 +615,7 @@ msgstr "Lineal"
 
 #: ../libgimpbase/gimpbaseenums.c:564
 msgid "Cubic"
-msgstr "Cúbic"
+msgstr "Cúbica"
 
 #: ../libgimpbase/gimpbaseenums.c:565
 msgid "Sinc (Lanczos3)"
@@ -629,7 +629,7 @@ msgstr "Constant"
 msgid "Incremental"
 msgstr "Incremental"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:214
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:218
 msgid "None"
 msgstr "Cap"
 
@@ -766,19 +766,20 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:407
+#: ../modules/cdisplay_lcms.c:210 ../modules/colorsel_cmyk_lcms.c:408
+#: ../modules/colorsel_cmyk_lcms.c:414
 msgid "(invalid UTF-8 string)"
 msgstr "(la cadena de text UTF-8 no és vàlida)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:40
+#: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "Mode of operation for color management."
 msgstr "Mode d'operació per a la gestió del color."
 
-#: ../libgimpconfig/gimpcolorconfig.c:42
+#: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "The color profile of your (primary) monitor."
 msgstr "El perfil de color del vostre monitor (primari)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:44
+#: ../libgimpconfig/gimpcolorconfig.c:46
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -788,29 +789,39 @@ msgstr ""
 "sistema. El perfil configurat del monitor només es faria servir com a última "
 "opció."
 
-#: ../libgimpconfig/gimpcolorconfig.c:48
+#: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The default RGB working space color profile."
 msgstr "El perfil de color RGB predeterminat de l'espai de treball."
 
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "El perfil de color CMYK emprat per convertir entre RGB i CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr "El perfil de color emprat per simular una versió impresa (softproof)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "Sets how colors are mapped for your display."
 msgstr "Estableix com estan mapejats els colors en la vostra pantalla."
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
 msgstr ""
 "Estableix com es converteixen els colors RGB de l'espai de treball al "
 "dispositiu de simulació d'impressió."
+
+#: ../libgimpconfig/gimpcolorconfig.c:61
+msgid ""
+"When enabled, the print simulation will mark colors which can not be "
+"represented in the target color space."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:64
+msgid "The color to use for marking colors which are out of gamut."
+msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -1362,7 +1373,7 @@ msgstr ""
 msgid "Color Management"
 msgstr "Gestió del color"
 
-#: ../modules/cdisplay_lcms.c:235
+#: ../modules/cdisplay_lcms.c:239
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1370,19 +1381,19 @@ msgstr ""
 "Aquest filtre pren la seva configuració de la secció de «Gestió de color» en "
 "el diàleg de «Preferències»."
 
-#: ../modules/cdisplay_lcms.c:249
+#: ../modules/cdisplay_lcms.c:253
 msgid "Mode of operation:"
 msgstr "Mode d'operació:"
 
-#: ../modules/cdisplay_lcms.c:256
+#: ../modules/cdisplay_lcms.c:261
 msgid "Image profile:"
 msgstr "Perfil d'imatge:"
 
-#: ../modules/cdisplay_lcms.c:263
+#: ../modules/cdisplay_lcms.c:269
 msgid "Monitor profile:"
 msgstr "Perfil del monitor:"
 
-#: ../modules/cdisplay_lcms.c:270
+#: ../modules/cdisplay_lcms.c:277
 msgid "Print simulation profile:"
 msgstr "Perfil de simulació d'impressió:"
 
@@ -1474,11 +1485,11 @@ msgstr "El percentatge de negre a treure de les tintes acolorides."
 msgid "CMYK color selector (using color profile)"
 msgstr "Selecció de color CMYK (utilitzant un perfil de color)"
 
-#: ../modules/colorsel_cmyk_lcms.c:396
+#: ../modules/colorsel_cmyk_lcms.c:397
 msgid "Profile: (none)"
 msgstr "Perfil: (cap)"
 
-#: ../modules/colorsel_cmyk_lcms.c:409
+#: ../modules/colorsel_cmyk_lcms.c:417
 #, c-format
 msgid "Profile: %s"
 msgstr "Perfil: %s"
