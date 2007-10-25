@@ -342,7 +342,7 @@ MAIN ()
 static void
 query (void)
 {
-  static const GimpParamDef args[] =
+  static GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image1",       "First input image" },
@@ -350,7 +350,7 @@ query (void)
     { GIMP_PDB_IMAGE,    "image2",       "Second input image" },
     { GIMP_PDB_IMAGE,    "image3",       "Third input image" },
     { GIMP_PDB_IMAGE,    "image4",       "Fourth input image" },
-    { GIMP_PDB_STRING,   "compose-type", "What to compose: RGB, RGBA, HSV, HSL, CMY, CMYK" }
+    { GIMP_PDB_STRING,   "compose-type", NULL }
   };
 
   static const GimpParamDef return_vals[] =
@@ -358,7 +358,7 @@ query (void)
     { GIMP_PDB_IMAGE, "new_image", "Output image" }
   };
 
-  static const GimpParamDef drw_args[] =
+  static GimpParamDef drw_args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",     "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image1",       "First input image (not used)" },
@@ -366,7 +366,7 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable2",    "Second input drawable" },
     { GIMP_PDB_DRAWABLE, "drawable3",    "Third input drawable" },
     { GIMP_PDB_DRAWABLE, "drawable4",    "Fourth input drawable" },
-    { GIMP_PDB_STRING,   "compose-type", "What to compose: RGB, RGBA, HSV, HSL, CMY, CMYK" }
+    { GIMP_PDB_STRING,   "compose-type", NULL }
   };
 
   static const GimpParamDef drw_return_vals[] =
@@ -380,6 +380,25 @@ query (void)
     { GIMP_PDB_IMAGE,    "image",    "Image to recompose from" },
     { GIMP_PDB_DRAWABLE, "drawable", "Not used" },
   };
+
+  GString *type_desc;
+  int i;
+
+  type_desc = g_string_new ("What to compose: ");
+  g_string_append_c (type_desc, '"');
+  g_string_append (type_desc, compose_dsc[0].compose_type);
+  g_string_append_c (type_desc, '"');
+
+  for (i = 1; i < G_N_ELEMENTS (compose_dsc); i++)
+    {
+      g_string_append (type_desc, ", ");
+      g_string_append_c (type_desc, '"');
+      g_string_append (type_desc, compose_dsc[i].compose_type);
+      g_string_append_c (type_desc, '"');
+    }
+
+  args[6].description = type_desc->str;
+  drw_args[6].description = type_desc->str;
 
   gimp_install_procedure (COMPOSE_PROC,
 			  N_("Create an image using multiple gray images as color channels"),
@@ -427,6 +446,8 @@ query (void)
 			  recompose_args, NULL);
 
   gimp_plugin_menu_register (RECOMPOSE_PROC, "<Image>/Colors/Components");
+
+  g_string_free (type_desc, TRUE);
 }
 
 

@@ -1,3 +1,9 @@
+2007-10-24  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/compose.c
+	* plug-ins/common/decompose.c: generate PDB docs from the same
+	source as the UI.
+
 2007-10-24  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* Makefile.am: Applied patch from Stanislav Brabec which adds

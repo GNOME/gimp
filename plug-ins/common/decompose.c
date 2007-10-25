@@ -274,12 +274,12 @@ MAIN ()
 static void
 query (void)
 {
-  static const GimpParamDef args[] =
+  static GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",       "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",          "Input image (unused)"         },
     { GIMP_PDB_DRAWABLE, "drawable",       "Input drawable"               },
-    { GIMP_PDB_STRING,   "decompose-type", "What to decompose: RGB, Red, Green, Blue, RGBA, Red, Green, Blue, Alpha, HSV, Hue, Saturation, Value, CMY, Cyan, Magenta, Yellow, CMYK, Cyan_K, Magenta_K, Yellow_K, Alpha, LAB" },
+    { GIMP_PDB_STRING,   "decompose-type", NULL                           },
     { GIMP_PDB_INT32,    "layers-mode",    "Create channels as layers in a single image" }
   };
   static const GimpParamDef return_vals[] =
@@ -289,6 +289,24 @@ query (void)
     { GIMP_PDB_IMAGE, "new-image", "Output gray image (N/A for single channel extract)" },
     { GIMP_PDB_IMAGE, "new-image", "Output gray image (N/A for single channel extract)" }
   };
+
+  GString *type_desc;
+  int i;
+
+  type_desc = g_string_new ("What to decompose: ");
+  g_string_append_c (type_desc, '"');
+  g_string_append (type_desc, extract[0].type);
+  g_string_append_c (type_desc, '"');
+
+  for (i = 1; i < G_N_ELEMENTS (extract); i++)
+    {
+      g_string_append (type_desc, ", ");
+      g_string_append_c (type_desc, '"');
+      g_string_append (type_desc, extract[i].type);
+      g_string_append_c (type_desc, '"');
+    }
+
+  args[3].description = type_desc->str;
 
   gimp_install_procedure (PLUG_IN_PROC,
 			  N_("Decompose an image into separate colorspace components"),
@@ -323,6 +341,8 @@ query (void)
 			  args, return_vals);
 
   gimp_plugin_menu_register (PLUG_IN_PROC_REG, "<Image>/Colors/Components");
+
+  g_string_free (type_desc, TRUE);
 }
 
 static void
