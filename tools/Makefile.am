@@ -16,7 +16,10 @@ EXTRA_PROGRAMS = \
 	gimp-remote-2.4	\
 	kernelgen
 
-gimp_remote_2_4_SOURCES = gimp-remote.c
+gimp_remote_2_4_SOURCES = \
+	gimp-remote.c	\
+	gimp-remote.h	\
+	gimp-remote-x11.c
 
 gimp_remote_2_4_LDADD = \
 	$(GTK_LIBS)	\

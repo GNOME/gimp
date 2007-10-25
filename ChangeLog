@@ -1,3 +1,10 @@
+2007-10-25  Sven Neumann  <sven@gimp.org>
+
+	* tools/Makefile.am
+	* tools/gimp-remote.[ch]
+	* tools/gimp-remote-x11.c: split gimp-remote into common and X11
+	specific code.
+
 2007-10-25  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: made all tests consistently use
