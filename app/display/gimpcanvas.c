@@ -262,6 +262,23 @@ gimp_canvas_unrealize (GtkWidget *widget)
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
+/* Returns: %TRUE if the XOR color is not white */
+static gboolean
+gimp_canvas_get_xor_color (GimpCanvas *canvas,
+                           GdkColor   *color)
+{
+  GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (canvas->gimp->config);
+  guchar             r, g, b;
+
+  gimp_rgb_get_uchar (&config->xor_color, &r, &g, &b);
+
+  color->red   = (r << 8) | r;
+  color->green = (g << 8) | g;
+  color->blue  = (b << 8) | b;
+
+  return (r != 255 || g != 255 || b != 255);
+}
+
 static GdkGC *
 gimp_canvas_gc_new (GimpCanvas      *canvas,
                     GimpCanvasStyle  style)
@@ -269,8 +286,8 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
   GdkGC           *gc;
   GdkGCValues      values;
   GdkGCValuesMask  mask = 0;
-  GdkColor         fg;
-  GdkColor         bg;
+  GdkColor         fg   = { 0, 0, 0, 0 };
+  GdkColor         bg   = { 0, 0, 0, 0 };
 
   if (! GTK_WIDGET_REALIZED (canvas))
     return NULL;
@@ -296,7 +313,12 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
 
     case GIMP_CANVAS_STYLE_XOR:
       mask |= GDK_GC_FUNCTION | GDK_GC_CAP_STYLE | GDK_GC_JOIN_STYLE;
-      values.function   = GDK_XOR;
+
+      if (gimp_canvas_get_xor_color (canvas, &fg))
+        values.function = GDK_XOR;
+      else
+        values.function = GDK_INVERT;
+
       values.cap_style  = GDK_CAP_NOT_LAST;
       values.join_style = GDK_JOIN_MITER;
       break;
@@ -325,10 +347,6 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
       gdk_gc_set_dashes (gc, 0, &one, 1);
     }
 
-  bg.red   = 0x0;
-  bg.green = 0x0;
-  bg.blue  = 0x0;
-
   switch (style)
     {
     default:
@@ -337,16 +355,6 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
     case GIMP_CANVAS_STYLE_XOR_DOTTED:
     case GIMP_CANVAS_STYLE_XOR_DASHED:
     case GIMP_CANVAS_STYLE_XOR:
-      {
-        GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (canvas->gimp->config);
-        guchar             r, g, b;
-
-        gimp_rgb_get_uchar (&config->xor_color, &r, &g, &b);
-
-        fg.red   = (r << 8) | r;
-        fg.green = (g << 8) | g;
-        fg.blue  = (b << 8) | b;
-      }
       break;
 
     case GIMP_CANVAS_STYLE_WHITE:
