@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-12 03:24+0200\n"
-"PO-Revision-Date: 2006-10-15 15:53-0400\n"
+"POT-Creation-Date: 2007-10-05 09:22+0100\n"
+"PO-Revision-Date: 2007-10-24 23:27+0300\n"
 "Last-Translator: Olle Niit <olle@paalalinn.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -19,10 +19,19 @@ msgstr ""
 "X-Generator: Emacs\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: ../libgimp/gimpbrushselectbutton.c:170
+msgid "Brush Selection"
+msgstr "Pintsli valik"
+
+#: ../libgimp/gimpbrushselectbutton.c:911
+#: ../libgimp/gimppatternselectbutton.c:712
+msgid "_Browse..."
+msgstr "_Sirvi..."
+
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
-msgid "%s can't handle layers"
-msgstr "%s ei oska kihtidega midagi peale hakata"
+msgid "%s plug-in can't handle layers"
+msgstr "%s pistik ei oska kihtidega midagi peale hakata"
 
 #: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
@@ -31,14 +40,13 @@ msgstr "Ühenda nähtavad kihid"
 
 #: ../libgimp/gimpexport.c:226
 #, c-format
-msgid "%s can't handle layer offsets, size or opacity"
-msgstr ""
-"%s ei oska midagi peale hakata kihi nihkega, suurusega või läbipaistmatusega"
+msgid "%s plug-in can't handle layer offsets, size or opacity"
+msgstr "%s pistik ei oska midagi peale hakata kihi nihkega, suurusega või läbipaistmatusega"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
-msgid "%s can only handle layers as animation frames"
-msgstr "%s oskab kihte töödelda ainult kui animeeritud kaadreid"
+msgid "%s plug-in can only handle layers as animation frames"
+msgstr "%s pistik oskab kihte töödelda ainult kui animatsiooni kaadreid"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -51,13 +59,13 @@ msgstr "Ühenda kõik kihid"
 
 #: ../libgimp/gimpexport.c:262
 #, c-format
-msgid "%s can't handle transparency"
-msgstr "%s ei oska läbipaistvusega midagi peale hakata"
+msgid "%s plug-in can't handle transparency"
+msgstr "%s pistik ei oska läbipaistvusega midagi peale hakata"
 
 #: ../libgimp/gimpexport.c:271
 #, c-format
-msgid "%s can't handle layer masks"
-msgstr "%s ei oska kihi maskiga midagi peale hakata"
+msgid "%s plug-in can't handle layer masks"
+msgstr "%s pistik ei oska kihi maskiga midagi peale hakata"
 
 #: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
@@ -65,8 +73,8 @@ msgstr "Rakenda kihi maskid"
 
 #: ../libgimp/gimpexport.c:280
 #, c-format
-msgid "%s can only handle RGB images"
-msgstr "%s oskab töödelda ainult RGB pilte"
+msgid "%s plug-in can only handle RGB images"
+msgstr "%s pistik oskab töödelda ainult RGB pilte"
 
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
@@ -75,8 +83,8 @@ msgstr "Muuda RGB-ks"
 
 #: ../libgimp/gimpexport.c:289
 #, c-format
-msgid "%s can only handle grayscale images"
-msgstr "%s oskab töödelfa ainult halltoonides pilte"
+msgid "%s plug-in can only handle grayscale images"
+msgstr "%s pistik oskab töödelda ainult halltoonides pilte"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
@@ -85,8 +93,8 @@ msgstr "Muuda halltoonideks"
 
 #: ../libgimp/gimpexport.c:298
 #, c-format
-msgid "%s can only handle indexed images"
-msgstr "%s oskab töödelda ainult indekseeritud pilte"
+msgid "%s plug-in can only handle indexed images"
+msgstr "%s pistik oskab töödelda ainult indekseeritud pilte"
 
 #: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
@@ -99,8 +107,8 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:308
 #, c-format
-msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s oskab töödelda ainult bittraster (kaks värvi) indekseeritud pilte"
+msgid "%s plug-in can only handle bitmap (two color) indexed images"
+msgstr "%s pistik oskab töödelda ainult bittraster (kaks värvi) indekseeritud pilte"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -112,23 +120,23 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:318
 #, c-format
-msgid "%s can only handle RGB or grayscale images"
-msgstr "%s oskab töödelda ainult RGB või halltoonides pilte"
+msgid "%s plug-in can only handle RGB or grayscale images"
+msgstr "%s pistik oskab töödelda ainult RGB või halltoonides pilte"
 
 #: ../libgimp/gimpexport.c:327
 #, c-format
-msgid "%s can only handle RGB or indexed images"
-msgstr "%s oskab töödelda ainult RGB või indekseeritud pilte"
+msgid "%s plug-in  can only handle RGB or indexed images"
+msgstr "%s pistik oskab töödelda ainult RGB või indekseeritud pilte"
 
 #: ../libgimp/gimpexport.c:337
 #, c-format
-msgid "%s can only handle grayscale or indexed images"
-msgstr "%s oskab töödelda ainult halltoonides või indekseeritud pilte"
+msgid "%s plug-in can only handle grayscale or indexed images"
+msgstr "%s pistik oskab töödelda ainult halltoonides või indekseeritud pilte"
 
 #: ../libgimp/gimpexport.c:348
 #, c-format
-msgid "%s needs an alpha channel"
-msgstr "%s vajab alfakanalit"
+msgid "%s plug-in needs an alpha channel"
+msgstr "%s pistik vajab alfakanalit"
 
 #: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
@@ -195,9 +203,21 @@ msgstr "Fondi valimine"
 msgid "Sans"
 msgstr "Sans"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
+#: ../libgimp/gimpgradientselectbutton.c:148
+msgid "Gradient Selection"
+msgstr "Spektrikomplekti valimine"
+
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
 msgid "(Empty)"
 msgstr "(Tühi)"
+
+#: ../libgimp/gimppaletteselectbutton.c:130
+msgid "Palette Selection"
+msgstr "Värvipaleti valimine"
+
+#: ../libgimp/gimppatternselectbutton.c:156
+msgid "Pattern Selection"
+msgstr "Mustri valimine"
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
@@ -336,7 +356,7 @@ msgstr "_Halltoonides koopia kihist"
 
 #: ../libgimpbase/gimpbaseenums.c:33
 msgid "C_hannel"
-msgstr ""
+msgstr "_Kanal"
 
 #: ../libgimpbase/gimpbaseenums.c:63
 msgid "FG to BG (RGB)"
@@ -382,15 +402,15 @@ msgstr "Asenda olemasolev valik"
 msgid "Intersect with the current selection"
 msgstr "Valituks osutub kahe valiku ühisosa"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Red"
 msgstr "Punane"
 
-#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Green"
 msgstr "Roheline"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Blue"
 msgstr "Sinine"
 
@@ -402,7 +422,7 @@ msgstr "Hall"
 msgid "Indexed"
 msgstr "Indekseeritud"
 
-#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -443,11 +463,11 @@ msgid "Black only"
 msgstr "Ainult must"
 
 #: ../libgimpbase/gimpbaseenums.c:263
-msgid "Image source"
+msgid "Image"
 msgstr "Pilt"
 
 #: ../libgimpbase/gimpbaseenums.c:264
-msgid "Pattern source"
+msgid "Pattern"
 msgstr "Muster"
 
 #: ../libgimpbase/gimpbaseenums.c:293
@@ -472,7 +492,7 @@ msgstr "Tumenda"
 
 #: ../libgimpbase/gimpbaseenums.c:388
 msgid "gradient|Linear"
-msgstr ""
+msgstr "Lineaarne"
 
 #: ../libgimpbase/gimpbaseenums.c:389
 msgid "Bi-linear"
@@ -482,7 +502,7 @@ msgstr "Bi-lineaarne"
 msgid "Radial"
 msgstr "Radiaalne"
 
-#: ../libgimpbase/gimpbaseenums.c:391
+#: ../libgimpbase/gimpbaseenums.c:391 ../libgimpwidgets/gimpwidgetsenums.c:24
 msgid "Square"
 msgstr "Ruut"
 
@@ -532,7 +552,7 @@ msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:433
 msgid "Solid"
-msgstr ""
+msgstr "Ühtlane"
 
 #: ../libgimpbase/gimpbaseenums.c:462
 msgid "Stock ID"
@@ -587,8 +607,8 @@ msgid "Cubic"
 msgstr "Kuubik"
 
 #: ../libgimpbase/gimpbaseenums.c:565
-msgid "Lanczos"
-msgstr "Lanczos"
+msgid "Sinc (Lanczos3)"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -598,7 +618,7 @@ msgstr "Muutumatu"
 msgid "Incremental"
 msgstr "Suurenev"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:258
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:214
 msgid "None"
 msgstr "Puudub"
 
@@ -612,15 +632,15 @@ msgstr "Kolmnurkne laine"
 
 #: ../libgimpbase/gimpbaseenums.c:654
 msgid "Run interactively"
-msgstr ""
+msgstr "Jooksuta interaktiivselt"
 
 #: ../libgimpbase/gimpbaseenums.c:655
 msgid "Run non-interactively"
-msgstr ""
+msgstr "Jooksuta mitte-interaktiivselt"
 
 #: ../libgimpbase/gimpbaseenums.c:656
 msgid "Run with last used values"
-msgstr ""
+msgstr "Jooksuta viimati kasutatud väärtustega"
 
 #: ../libgimpbase/gimpbaseenums.c:684
 msgid "Pixels"
@@ -643,26 +663,42 @@ msgid "Highlights"
 msgstr "Heledaimad"
 
 #: ../libgimpbase/gimpbaseenums.c:744
-msgid "Forward"
-msgstr "Edasi"
+msgid "Normal (Forward)"
+msgstr "Normaalne (Edasi)"
 
 #: ../libgimpbase/gimpbaseenums.c:745
-msgid "Backward"
-msgstr "Tagasi"
+msgid "Corrective (Backward)"
+msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:848
+#: ../libgimpbase/gimpbaseenums.c:775
+msgid "Adjust"
+msgstr "Reguleeri"
+
+#: ../libgimpbase/gimpbaseenums.c:776
+msgid "Clip"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:777
+msgid "Crop to result"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:778
+msgid "Crop with aspect"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:881
 msgid "Internal GIMP procedure"
 msgstr "Sisemine GIMP'i potseduur"
 
-#: ../libgimpbase/gimpbaseenums.c:849
+#: ../libgimpbase/gimpbaseenums.c:882
 msgid "GIMP Plug-In"
 msgstr "GIMP'i pistik"
 
-#: ../libgimpbase/gimpbaseenums.c:850
+#: ../libgimpbase/gimpbaseenums.c:883
 msgid "GIMP Extension"
 msgstr "GIMP'i laiendus"
 
-#: ../libgimpbase/gimpbaseenums.c:851
+#: ../libgimpbase/gimpbaseenums.c:884
 msgid "Temporary Procedure"
 msgstr "Ajutine protseduur"
 
@@ -719,48 +755,56 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:250
+#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:408
 msgid "(invalid UTF-8 string)"
 msgstr "(vigane UTF-8 tekstilõik)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:40
+#: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "Mode of operation for color management."
 msgstr "Värvihalduse töörežiim"
 
-#: ../libgimpconfig/gimpcolorconfig.c:42
+#: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "The color profile of your (primary) monitor."
 msgstr "Sinu (primaarse) monitori värviprofiil."
 
-#: ../libgimpconfig/gimpcolorconfig.c:44
+#: ../libgimpconfig/gimpcolorconfig.c:46
 msgid ""
-"When enabled, the GIMP will try to use the display color profile from the "
-"windowing system. The configured monitor profile is then only used as a "
+"When enabled, GIMP will try to use the display color profile from the "
+"windowing system.  The configured monitor profile is then only used as a "
 "fallback."
-msgstr ""
-"Kui lubatud, püüab GIMP kasutada graafilise keskkonna  värviprofiili. "
-"Häälestatud monitori profiili kasutatakse ainult siis kui eelnimetatu "
-"ebaõnnestub."
-
-#: ../libgimpconfig/gimpcolorconfig.c:48
-msgid "The default RGB workspace color profile."
-msgstr "Seab vaikimisi RGB töötsooni värviprofiili."
+msgstr "Kui lubatud, püüab GIMP kasutada graafilise keskkonna värviprofiili. Häälestatud monitori profiili kasutatakse ainult siis kui eelnimetatu ebaõnnestub."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
-msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr "Seab CMYK värviprofiili teisendamiseks RGB ja CMYK vahel."
+msgid "The default RGB working space color profile."
+msgstr "Vaikimisi RGB tööruumi värviprofiil."
 
 #: ../libgimpconfig/gimpcolorconfig.c:52
-msgid "The color profile used for simulating a printed version (softproof)."
-msgstr "Värviprofiili kasutatakse trükiversiooni simuleerimiseks (softproof)."
+msgid "The CMYK color profile used to convert between RGB and CMYK."
+msgstr "CMYK värviprofiil, mida kasutatakse teisendamiseks RGB ja CMYK vahel."
 
 #: ../libgimpconfig/gimpcolorconfig.c:54
+msgid "The color profile used for simulating a printed version (softproof)."
+msgstr "Trükiversiooni simuleerimiseks kasutatav värviprofiil (softproof)."
+
+#: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "Sets how colors are mapped for your display."
 msgstr "Määrab kuidas värvid vastendatakse sinu ekraani järgi."
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
-"Sets how colors are converted from workspace to the print simulation device."
+"Sets how colors are converted from RGB working space to the print simulation "
+"device."
 msgstr "Määrab kuidas värvid teisendatakse töötsoonist trükiteesklusseadmele."
+
+#: ../libgimpconfig/gimpcolorconfig.c:61
+msgid ""
+"When enabled, the print simulation will mark colors which can not be "
+"represented in the target color space."
+msgstr "Kui lubatud, märgib trükiteesklus ära värvid, mida ei saa siht-värviruumis trükkida."
+
+#: ../libgimpconfig/gimpcolorconfig.c:64
+msgid "The color to use for marking colors which are out of gamut."
+msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -784,72 +828,67 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
 msgid "intent|Saturation"
-msgstr "intent|Küllastatus"
+msgstr "Küllastatus"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:88
-msgid "Ask"
-msgstr "Küsi"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:89
-msgid "Use embedded profile"
-msgstr "Kasuta manusprofiili"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:90
-msgid "Convert to RGB workspace"
-msgstr "Teisenda RGB töötsooniks"
-
-#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#: ../libgimpconfig/gimpconfig-deserialize.c:97
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "võetud %s väärtus ei ole korrektne URF-8 tekstilõik"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:426
+#: ../libgimpconfig/gimpconfig-deserialize.c:436
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "võetud loogikamuutuja %s puhul eeldati 'yes' või 'no' aga saadi '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:500
+#: ../libgimpconfig/gimpconfig-deserialize.c:510
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "vigane väärtus '%s' muutujas %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:515
+#: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "vigane väärtus '%ld' muutujas %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:584
+#: ../libgimpconfig/gimpconfig-deserialize.c:594
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "töödeldes muutujat '%s': %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:453
-#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpconfig-iface.c:454
+#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
+#: ../libgimpwidgets/gimpcolorprofilestore.c:654
 msgid "fatal parse error"
 msgstr "saatuslik süntaksiviga"
 
-#: ../libgimpconfig/gimpconfig-path.c:376
+#: ../libgimpconfig/gimpconfig-path.c:377
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Ei saanud ${%s} lahti pakkida"
 
-#: ../libgimpconfig/gimpconfigwriter.c:135
+#: ../libgimpconfig/gimpconfigwriter.c:78
+#: ../libgimpconfig/gimpconfigwriter.c:693
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr "Ei saanud '%s' kirjutada: %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:136
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Ei suutnud luua ajutist faili '%s'-le: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:148
+#: ../libgimpconfig/gimpconfigwriter.c:149
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Ei saanud '%s' kirjutamiseks avada: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:667
+#: ../libgimpconfig/gimpconfigwriter.c:674
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -858,7 +897,7 @@ msgstr ""
 "Viga '%s' ajutise faili kirjutamisel: %s\n"
 "Algset faili ei puudutatud."
 
-#: ../libgimpconfig/gimpconfigwriter.c:675
+#: ../libgimpconfig/gimpconfigwriter.c:682
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -867,12 +906,7 @@ msgstr ""
 "Viga '%s' ajutise faili kirjutamisel: %s\n"
 "Faili ei loodud."
 
-#: ../libgimpconfig/gimpconfigwriter.c:686
-#, c-format
-msgid "Error writing to '%s': %s"
-msgstr "Ei saanud '%s' kirjutada: %s"
-
-#: ../libgimpconfig/gimpconfigwriter.c:704
+#: ../libgimpconfig/gimpconfigwriter.c:711
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Ei suutnud '%s' luua: %s"
@@ -886,26 +920,26 @@ msgstr "vigane UTF-8 tekstilõik"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Viga failist '%s' andmete sõelumisel, rida %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:152 ../libgimpmodule/gimpmodule.c:170
-#: ../libgimpmodule/gimpmodule.c:279 ../libgimpmodule/gimpmodule.c:306
-#: ../libgimpmodule/gimpmodule.c:417
+#: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
+#: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
+#: ../libgimpmodule/gimpmodule.c:418
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Mooduli '%s' laadimisel tekkis viga: %s"
 
-#: ../libgimpmodule/gimpmodule.c:374
+#: ../libgimpmodule/gimpmodule.c:375
 msgid "Module error"
 msgstr "Moodul on vigane"
 
-#: ../libgimpmodule/gimpmodule.c:375
+#: ../libgimpmodule/gimpmodule.c:376
 msgid "Loaded"
 msgstr "Laaditud"
 
-#: ../libgimpmodule/gimpmodule.c:376
+#: ../libgimpmodule/gimpmodule.c:377
 msgid "Load failed"
 msgstr "Laadimine ei õnnestunud"
 
-#: ../libgimpmodule/gimpmodule.c:377
+#: ../libgimpmodule/gimpmodule.c:378
 msgid "Not loaded"
 msgstr "Ei ole laaditud"
 
@@ -923,7 +957,11 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Ei suutnud luua pisipildikataloogi '%s'."
 
-#: ../libgimpthumb/gimpthumbnail.c:889
+#: ../libgimpthumb/gimpthumbnail.c:498
+msgid "Thumbnail contains no Thumb::URI tag"
+msgstr ""
+
+#: ../libgimpthumb/gimpthumbnail.c:898
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Ei suutnud luua pisipilti %s-le: %s"
@@ -948,6 +986,14 @@ msgstr "_Must"
 msgid "_White"
 msgstr "_Valge"
 
+#: ../libgimpwidgets/gimpcolorprofilestore.c:144
+msgid "Select color profile from disk..."
+msgstr "Vali värviprofiil kettalt..."
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:280
+msgid "profile|None"
+msgstr "Puudub"
+
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
 msgstr "Tasakaal"
@@ -964,7 +1010,9 @@ msgstr "Vana:"
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
-msgstr "16nd värviesitus nagu HTML ja CSS kasutab. See sisend on nõus ka CSS värvinimedega."
+msgstr ""
+"16nd värviesitus nagu HTML ja CSS kasutab. See sisend on nõus ka CSS "
+"värvinimedega."
 
 #: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
@@ -986,15 +1034,15 @@ msgstr "Vali kaust"
 msgid "Select File"
 msgstr "Vali fail"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:202
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Kilobytes"
 msgstr "Kilobaiti"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:203
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Megabytes"
 msgstr "Megabaiti"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:206
 msgid "Gigabytes"
 msgstr "Gigabaiti"
 
@@ -1061,22 +1109,17 @@ msgstr "Kontrolli suurust"
 msgid "Check Style"
 msgstr "Kontrolli stiili"
 
-#. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:265
+#. toggle button to (de)activate the instant preview
+#: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "_Eelvaade"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1869
+#: ../libgimpwidgets/gimppropwidgets.c:1901
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "See tekstisisestusväli on piiratud %d tähemärgiga."
 msgstr[1] "See tekstisisestusväli on piiratud %d tähemärgiga."
-
-#: ../libgimpwidgets/gimpresolutionentry.c:382
-#, c-format
-msgid "pixels/%s"
-msgstr "Piksleid/%s"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -1135,8 +1178,8 @@ msgid "_Scale"
 msgstr "_Vii mõõtu"
 
 #: ../libgimpwidgets/gimpstock.c:295
-msgid "Crop"
-msgstr "Kärbi"
+msgid "Cr_op"
+msgstr "_Kärbi"
 
 #: ../libgimpwidgets/gimpstock.c:314
 msgid "_Transform"
@@ -1150,19 +1193,19 @@ msgstr "_Pööra"
 msgid "_Shear"
 msgstr "_Lõika"
 
-#: ../libgimpwidgets/gimpunitmenu.c:267
+#: ../libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr "Rohkem..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:577
+#: ../libgimpwidgets/gimpunitmenu.c:581
 msgid "Unit Selection"
 msgstr "Ühiku valimine"
 
-#: ../libgimpwidgets/gimpunitmenu.c:625
+#: ../libgimpwidgets/gimpunitmenu.c:629
 msgid "Unit"
 msgstr "Ühik"
 
-#: ../libgimpwidgets/gimpunitmenu.c:629
+#: ../libgimpwidgets/gimpunitmenu.c:633
 msgid "Factor"
 msgstr "Faktor"
 
@@ -1186,59 +1229,67 @@ msgstr "Seemnega juhusliku arvu generaator väljamõeldud juhusliku arvuga"
 msgid "_Randomize"
 msgstr "_Juhuslik"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:25
+msgid "Portrait"
+msgstr "Portree"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:26
+msgid "Landscape"
+msgstr "Maastik"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "_H"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "Hue"
 msgstr "Värvus"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "_S"
 msgstr "_S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "Saturation"
 msgstr "Küllastatus"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "_V"
 msgstr "_V"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "Value"
 msgstr "Väärtus"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "_R"
 msgstr "_R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "_G"
 msgstr "_G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "_B"
 msgstr "_B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "_A"
 msgstr "_A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpwidgets/gimpwidgetsenums.c:157
 msgid "Layers"
 msgstr "Kihte"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpwidgets/gimpwidgetsenums.c:158
 msgid "Images"
 msgstr "Pilte"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:186
+#: ../libgimpwidgets/gimpwidgetsenums.c:217
 msgid "Zoom in"
 msgstr "Suurendus"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:187
+#: ../libgimpwidgets/gimpwidgetsenums.c:218
 msgid "Zoom out"
 msgstr "Vähendus"
 
@@ -1258,11 +1309,11 @@ msgstr "Tritanopia (tundetu sinise suhtes)"
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Värvivaeguse simulatsiooni filter (Brettel-Vienot-Mollon algoritm)"
 
-#: ../modules/cdisplay_colorblind.c:290
+#: ../modules/cdisplay_colorblind.c:292
 msgid "Color Deficient Vision"
 msgstr "Värvivaeguse nägemus"
 
-#: ../modules/cdisplay_colorblind.c:505
+#: ../modules/cdisplay_colorblind.c:507
 msgid "Color _deficiency type:"
 msgstr "_Värvivaeguse tüüp:"
 
@@ -1290,58 +1341,66 @@ msgstr "Kontrastsus"
 msgid "Contrast c_ycles:"
 msgstr "Kontrastsuse _kordus:"
 
-#: ../modules/cdisplay_lcms.c:107
+#: ../modules/cdisplay_lcms.c:105
 msgid "Color management display filter using ICC color profiles"
 msgstr "Värvihalduse ekraanifilter kasutab ICC värviprofiile"
 
-#: ../modules/cdisplay_lcms.c:175
+#: ../modules/cdisplay_lcms.c:166
 msgid "Color Management"
 msgstr "Värvihaldus"
 
-#: ../modules/cdisplay_lcms.c:281
+#: ../modules/cdisplay_lcms.c:235
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
 "See filter võtab oma häälestuse Häälestuse dialoogi Värvihalduse lõigust."
 
-#: ../modules/cdisplay_lcms.c:295
+#: ../modules/cdisplay_lcms.c:249
 msgid "Mode of operation:"
 msgstr "Töörežiim:"
 
-#: ../modules/cdisplay_lcms.c:306
-msgid "RGB workspace profile:"
-msgstr "RGB töötsooni värviprofiil:"
+#: ../modules/cdisplay_lcms.c:256
+msgid "Image profile:"
+msgstr "Pildi profiil:"
 
-#: ../modules/cdisplay_lcms.c:316
+#: ../modules/cdisplay_lcms.c:263
 msgid "Monitor profile:"
 msgstr "Monitori profiil:"
 
-#: ../modules/cdisplay_lcms.c:326
+#: ../modules/cdisplay_lcms.c:270
 msgid "Print simulation profile:"
 msgstr "Trükkimise teesklemise profiil:"
 
-#: ../modules/cdisplay_proof.c:102
+#: ../modules/cdisplay_proof.c:103
 msgid "Color proof filter using ICC color profile"
 msgstr "Värviprofiili filter kasutab ICC värviprofiile"
 
-#: ../modules/cdisplay_proof.c:179
+#: ../modules/cdisplay_proof.c:180
 msgid "Color Proof"
 msgstr "Värviprofiil"
 
-#: ../modules/cdisplay_proof.c:306
-msgid "_Intent:"
-msgstr ""
-
-#: ../modules/cdisplay_proof.c:310
+#: ../modules/cdisplay_proof.c:340
 msgid "Choose an ICC Color Profile"
 msgstr "Vali ICC värviprofiil"
 
-#: ../modules/cdisplay_proof.c:313
+#: ../modules/cdisplay_proof.c:367
+msgid "All files (*.*)"
+msgstr "Kõik failid (*.*)"
+
+#: ../modules/cdisplay_proof.c:372
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "ICC värviprofiil (*.icc, *.icm)"
+
+#: ../modules/cdisplay_proof.c:430
 msgid "_Profile:"
 msgstr "_Profiil:"
 
-#: ../modules/cdisplay_proof.c:318
+#: ../modules/cdisplay_proof.c:436
+msgid "_Intent:"
+msgstr ""
+
+#: ../modules/cdisplay_proof.c:441
 msgid "_Black Point Compensation"
 msgstr "_Musta punkti kompensatsioon"
 
@@ -1349,43 +1408,43 @@ msgstr "_Musta punkti kompensatsioon"
 msgid "CMYK color selector"
 msgstr "CMYK värvi valija"
 
-#: ../modules/colorsel_cmyk.c:130
+#: ../modules/colorsel_cmyk.c:130 ../modules/colorsel_cmyk_lcms.c:154
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/colorsel_cmyk.c:148
+#: ../modules/colorsel_cmyk.c:148 ../modules/colorsel_cmyk_lcms.c:171
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/colorsel_cmyk.c:150
+#: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:173
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/colorsel_cmyk.c:152
+#: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:175
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/colorsel_cmyk.c:154
+#: ../modules/colorsel_cmyk.c:154 ../modules/colorsel_cmyk_lcms.c:177
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/colorsel_cmyk.c:158
+#: ../modules/colorsel_cmyk.c:158 ../modules/colorsel_cmyk_lcms.c:181
 msgid "Cyan"
 msgstr "Tsüaan"
 
-#: ../modules/colorsel_cmyk.c:159
+#: ../modules/colorsel_cmyk.c:159 ../modules/colorsel_cmyk_lcms.c:182
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../modules/colorsel_cmyk.c:160
+#: ../modules/colorsel_cmyk.c:160 ../modules/colorsel_cmyk_lcms.c:183
 msgid "Yellow"
 msgstr "Kollane"
 
-#: ../modules/colorsel_cmyk.c:161
+#: ../modules/colorsel_cmyk.c:161 ../modules/colorsel_cmyk_lcms.c:184
 msgid "Black"
 msgstr "Must"
 
@@ -1396,6 +1455,19 @@ msgstr ""
 #: ../modules/colorsel_cmyk.c:212
 msgid "The percentage of black to pull out of the colored inks."
 msgstr ""
+
+#: ../modules/colorsel_cmyk_lcms.c:91
+msgid "CMYK color selector (using color profile)"
+msgstr "CMYK värvide valija (kasutab värviprofiile)"
+
+#: ../modules/colorsel_cmyk_lcms.c:397
+msgid "Profile: (none)"
+msgstr "Profiil: (puudub)"
+
+#: ../modules/colorsel_cmyk_lcms.c:410
+#, c-format
+msgid "Profile: %s"
+msgstr "Profiil: %s"
 
 #: ../modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
@@ -1417,203 +1489,370 @@ msgstr "Vesivärv"
 msgid "Pressure"
 msgstr "Surve"
 
-#: ../modules/controller_linux_input.c:56
+#: ../modules/controller_linux_input.c:58
 msgid "Button 0"
 msgstr "Nupp 0"
 
-#: ../modules/controller_linux_input.c:57
+#: ../modules/controller_linux_input.c:59
 msgid "Button 1"
 msgstr "Nupp 1"
 
-#: ../modules/controller_linux_input.c:58
+#: ../modules/controller_linux_input.c:60
 msgid "Button 2"
 msgstr "Nupp 2"
 
-#: ../modules/controller_linux_input.c:59
+#: ../modules/controller_linux_input.c:61
 msgid "Button 3"
 msgstr "Nupp 3"
 
-#: ../modules/controller_linux_input.c:60
+#: ../modules/controller_linux_input.c:62
 msgid "Button 4"
 msgstr "Nupp 4"
 
-#: ../modules/controller_linux_input.c:61
+#: ../modules/controller_linux_input.c:63
 msgid "Button 5"
 msgstr "Nupp 5"
 
-#: ../modules/controller_linux_input.c:62
+#: ../modules/controller_linux_input.c:64
 msgid "Button 6"
 msgstr "Nupp 6"
 
-#: ../modules/controller_linux_input.c:63
+#: ../modules/controller_linux_input.c:65
 msgid "Button 7"
 msgstr "Nupp 7"
 
-#: ../modules/controller_linux_input.c:64
+#: ../modules/controller_linux_input.c:66
 msgid "Button 8"
 msgstr "Nupp 8"
 
-#: ../modules/controller_linux_input.c:65
+#: ../modules/controller_linux_input.c:67
 msgid "Button 9"
 msgstr "Nupp 9"
 
-#: ../modules/controller_linux_input.c:66
+#: ../modules/controller_linux_input.c:68
 msgid "Button Mouse"
 msgstr ""
 
-#: ../modules/controller_linux_input.c:67
-msgid "Button Left"
-msgstr ""
-
-#: ../modules/controller_linux_input.c:68
-msgid "Button Right"
-msgstr ""
-
 #: ../modules/controller_linux_input.c:69
-msgid "Button Middle"
-msgstr ""
+msgid "Button Left"
+msgstr "Nupp Vasak"
 
 #: ../modules/controller_linux_input.c:70
+msgid "Button Right"
+msgstr "Nupp Parem"
+
+#: ../modules/controller_linux_input.c:71
+msgid "Button Middle"
+msgstr "Nupp Keskmine"
+
+#: ../modules/controller_linux_input.c:72
 msgid "Button Side"
 msgstr ""
 
-#: ../modules/controller_linux_input.c:71
+#: ../modules/controller_linux_input.c:73
 msgid "Button Extra"
 msgstr ""
 
-#: ../modules/controller_linux_input.c:72
-#: ../modules/controller_linux_input.c:73
+#: ../modules/controller_linux_input.c:74
 msgid "Button Forward"
-msgstr "Edasi nupp"
+msgstr "Nupp Edasi"
 
 #: ../modules/controller_linux_input.c:75
-msgid "Button Wheel"
+msgid "Button Back"
+msgstr "Nupp Tagasi"
+
+#: ../modules/controller_linux_input.c:76
+msgid "Button Task"
 msgstr ""
 
 #: ../modules/controller_linux_input.c:78
-msgid "Button Gear Down"
-msgstr ""
+msgid "Button Wheel"
+msgstr "Nupp Ratas"
 
 #: ../modules/controller_linux_input.c:81
+msgid "Button Gear Down"
+msgstr "Nupp Käik alla"
+
+#: ../modules/controller_linux_input.c:84
 msgid "Button Gear Up"
+msgstr "Nupp Käik üles"
+
+#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_dx_dinput.c:469
+msgid "X Move Left"
+msgstr "X liiguta vasakule"
+
+#: ../modules/controller_linux_input.c:91
+#: ../modules/controller_dx_dinput.c:472
+msgid "X Move Right"
+msgstr "X liiguta paremale"
+
+#: ../modules/controller_linux_input.c:92
+msgid "Y Move Forward"
+msgstr "Y liiguta edasi"
+
+#: ../modules/controller_linux_input.c:93
+msgid "Y Move Back"
+msgstr "Y liiguta tagasi"
+
+#: ../modules/controller_linux_input.c:94
+#: ../modules/controller_dx_dinput.c:487
+msgid "Z Move Up"
+msgstr "Z liiguta üles"
+
+#: ../modules/controller_linux_input.c:95
+#: ../modules/controller_dx_dinput.c:490
+msgid "Z Move Down"
+msgstr "Z liiguta alla"
+
+#: ../modules/controller_linux_input.c:97
+msgid "X Axis Tilt Forward"
 msgstr ""
 
-#: ../modules/controller_linux_input.c:87
-msgid "Wheel Turn Left"
+#: ../modules/controller_linux_input.c:98
+msgid "X Axis Tilt Back"
 msgstr ""
 
-#: ../modules/controller_linux_input.c:88
-msgid "Wheel Turn Right"
+#: ../modules/controller_linux_input.c:99
+#: ../modules/controller_dx_dinput.c:505
+msgid "Y Axis Tilt Right"
 msgstr ""
 
-#: ../modules/controller_linux_input.c:89
+#: ../modules/controller_linux_input.c:100
+#: ../modules/controller_dx_dinput.c:508
+msgid "Y Axis Tilt Left"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:101
+#: ../modules/controller_dx_dinput.c:514
+msgid "Z Axis Turn Left"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:102
+#: ../modules/controller_dx_dinput.c:517
+msgid "Z Axis Turn Right"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:104
+msgid "Horiz. Wheel Turn Back"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:105
+msgid "Horiz. Wheel Turn Forward"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:106
 msgid "Dial Turn Left"
 msgstr ""
 
-#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_linux_input.c:107
 msgid "Dial Turn Right"
 msgstr ""
 
-#: ../modules/controller_linux_input.c:154
+#: ../modules/controller_linux_input.c:108
+msgid "Wheel Turn Left"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:109
+msgid "Wheel Turn Right"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:179
 msgid "Linux input event controller"
 msgstr ""
 
-#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:246
+#: ../modules/controller_linux_input.c:249
+#: ../modules/controller_dx_dinput.c:227 ../modules/controller_midi.c:245
 msgid "Device:"
 msgstr "Seade:"
 
-#: ../modules/controller_linux_input.c:223
+#: ../modules/controller_linux_input.c:250
 msgid "The name of the device to read Linux Input events from."
 msgstr ""
 
-#: ../modules/controller_linux_input.c:227
+#: ../modules/controller_linux_input.c:261
 msgid "Linux Input"
 msgstr "Linuxi sisend"
 
-#: ../modules/controller_linux_input.c:352
+#: ../modules/controller_linux_input.c:539
 msgid "Linux Input Events"
 msgstr "Linuxi sisendi sündmused"
 
-#: ../modules/controller_linux_input.c:373 ../modules/controller_midi.c:483
-#: ../modules/controller_midi.c:509
+#: ../modules/controller_linux_input.c:551
+#: ../modules/controller_dx_dinput.c:1122 ../modules/controller_midi.c:533
+msgid "No device configured"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:577 ../modules/controller_midi.c:482
+#: ../modules/controller_midi.c:508
 #, c-format
 msgid "Reading from %s"
 msgstr ""
 
-#: ../modules/controller_linux_input.c:389
-#: ../modules/controller_linux_input.c:432 ../modules/controller_midi.c:465
-#: ../modules/controller_midi.c:526 ../modules/controller_midi.c:597
+#: ../modules/controller_linux_input.c:595
+#: ../modules/controller_linux_input.c:649 ../modules/controller_midi.c:464
+#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
 #, c-format
 msgid "Device not available: %s"
 msgstr "Seade ei ole kättesaadav: %s"
 
-#: ../modules/controller_linux_input.c:397 ../modules/controller_midi.c:534
-msgid "No device configured"
-msgstr ""
+#: ../modules/controller_linux_input.c:614
+#: ../modules/controller_dx_dinput.c:1147
+msgid "Device not available"
+msgstr "Seade ei ole kättesaadav"
 
-#: ../modules/controller_linux_input.c:441 ../modules/controller_midi.c:606
+#: ../modules/controller_linux_input.c:658 ../modules/controller_midi.c:605
 msgid "End of file"
 msgstr "Faili lõpp"
 
-#: ../modules/controller_midi.c:168
+#: ../modules/controller_dx_dinput.c:157
+msgid "DirectX DirectInput event controller"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:228
+msgid "The device to read DirectInput events from."
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:237
+msgid "DirectX DirectInput"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:446
+#, c-format
+msgid "Button %d"
+msgstr "Nupp %d"
+
+#: ../modules/controller_dx_dinput.c:449
+#, c-format
+msgid "Button %d Press"
+msgstr "Nupp %d Vajuta"
+
+#: ../modules/controller_dx_dinput.c:452
+#, c-format
+msgid "Button %d Release"
+msgstr "Nupp %d Vabasta"
+
+#: ../modules/controller_dx_dinput.c:478
+msgid "Y Move Away"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:481
+msgid "Y Move Near"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:496
+msgid "X Axis Tilt Away"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:499
+msgid "X Axis Tilt Near"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:528
+#, c-format
+msgid "Slider %d Increase"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:531
+#, c-format
+msgid "Slider %d Decrease"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:541
+#, c-format
+msgid "POV %d X View"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:544
+#, c-format
+msgid "POV %d Y View"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:547
+#, c-format
+msgid "POV %d Return"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:1111
+msgid "DirectInput Events"
+msgstr ""
+
+#: ../modules/controller_midi.c:167
 msgid "MIDI event controller"
 msgstr ""
 
-#: ../modules/controller_midi.c:237
+#: ../modules/controller_midi.c:236
 msgid "The name of the device to read MIDI events from."
 msgstr ""
 
-#: ../modules/controller_midi.c:240
+#: ../modules/controller_midi.c:239
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr ""
 
-#: ../modules/controller_midi.c:255
+#: ../modules/controller_midi.c:254
 msgid "Channel:"
 msgstr "Kanal:"
 
-#: ../modules/controller_midi.c:256
+#: ../modules/controller_midi.c:255
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
 msgstr ""
 
-#: ../modules/controller_midi.c:260
+#: ../modules/controller_midi.c:259
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:384
+#: ../modules/controller_midi.c:383
 #, c-format
 msgid "Note %02x on"
 msgstr ""
 
-#: ../modules/controller_midi.c:387
+#: ../modules/controller_midi.c:386
 #, c-format
 msgid "Note %02x off"
 msgstr ""
 
-#: ../modules/controller_midi.c:390
+#: ../modules/controller_midi.c:389
 #, c-format
 msgid "Controller %03d"
-msgstr ""
+msgstr "Sisendseade %03d"
 
-#: ../modules/controller_midi.c:437
+#: ../modules/controller_midi.c:436
 msgid "MIDI Events"
 msgstr "MIDI sündmused"
 
-#~ msgid "Brush Selection"
-#~ msgstr "Pintsli valik"
+#: ../modules/controller_midi.c:454
+msgid "GIMP"
+msgstr "GIMP"
 
-#~ msgid "_Browse..."
-#~ msgstr "_Sirvi..."
+#: ../modules/controller_midi.c:456
+msgid "GIMP MIDI Input Controller"
+msgstr "GIMP MIDI sisendseade"
 
-#~ msgid "Gradient Selection"
-#~ msgstr "Spektrikomplekti valimine"
+#~ msgid "Image source"
+#~ msgstr "Pilt"
 
-#~ msgid "Palette Selection"
-#~ msgstr "Värvipaleti valimine"
+#~ msgid "Pattern source"
+#~ msgstr "Muster"
 
-#~ msgid "Pattern Selection"
-#~ msgstr "Mustri valimine"
+#~ msgid "Backward"
+#~ msgstr "Tagasi"
+
+#~ msgid "Ask"
+#~ msgstr "Küsi"
+
+#~ msgid "Use embedded profile"
+#~ msgstr "Kasuta manusprofiili"
+
+#~ msgid "Convert to RGB workspace"
+#~ msgstr "Teisenda RGB töötsooniks"
+
+#~ msgid "pixels/%s"
+#~ msgstr "Piksleid/%s"
+
+#~ msgid "RGB workspace profile:"
+#~ msgstr "RGB töötsooni värviprofiil:"
 
 #~ msgid "Linear"
 #~ msgstr "Lineaarne"
