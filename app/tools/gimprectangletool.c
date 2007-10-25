@@ -165,105 +165,100 @@ struct _GimpRectangleToolPrivate
 };
 
 
-static void gimp_rectangle_tool_iface_base_init     (GimpRectangleToolInterface *iface);
+static void          gimp_rectangle_tool_iface_base_init      (GimpRectangleToolInterface *iface);
 
 static GimpRectangleToolPrivate *
-                gimp_rectangle_tool_get_private     (GimpRectangleTool *rectangle);
+                     gimp_rectangle_tool_get_private          (GimpRectangleTool       *rectangle);
 
-/*  Rectangle helper functions  */
-static void     gimp_rectangle_tool_start           (GimpRectangleTool *rectangle,
-                                                     GimpDisplay       *display);
-static void     gimp_rectangle_tool_halt            (GimpRectangleTool *rectangle);
-static void     gimp_rectangle_tool_draw_guides     (GimpDrawTool      *draw_tool);
+static void          gimp_rectangle_tool_start                (GimpRectangleTool       *rectangle,
+                                                               GimpDisplay             *display);
+static void          gimp_rectangle_tool_halt                 (GimpRectangleTool       *rectangle);
+static void          gimp_rectangle_tool_draw_guides          (GimpDrawTool            *draw_tool);
 
-/*  Rectangle dialog functions  */
-static void     gimp_rectangle_tool_update_options  (GimpRectangleTool *rectangle,
-                                                     GimpDisplay       *display);
+static void          gimp_rectangle_tool_update_options       (GimpRectangleTool        *rectangle,
+                                                               GimpDisplay              *display);
 
-static void     gimp_rectangle_tool_options_notify  (GimpRectangleOptions *options,
-                                                     GParamSpec         *pspec,
-                                                     GimpRectangleTool  *rectangle);
-static void gimp_rectangle_tool_shell_scrolled      (GimpDisplayShell   *options,
-                                                     GimpRectangleTool  *rectangle);
+static void          gimp_rectangle_tool_options_notify       (GimpRectangleOptions     *options,
+                                                               GParamSpec               *pspec,
+                                                               GimpRectangleTool        *rectangle);
+static void          gimp_rectangle_tool_shell_scrolled       (GimpDisplayShell         *options,
+                                                               GimpRectangleTool        *rectangle);
 
-static void     gimp_rectangle_tool_check_function  (GimpRectangleTool *rectangle);
+static void          gimp_rectangle_tool_check_function       (GimpRectangleTool        *rectangle);
 
-static void gimp_rectangle_tool_rectangle_changed   (GimpRectangleTool *rectangle);
+static void          gimp_rectangle_tool_rectangle_changed    (GimpRectangleTool        *rectangle);
 
-static void     gimp_rectangle_tool_auto_shrink     (GimpRectangleTool *rectangle);
+static void          gimp_rectangle_tool_auto_shrink          (GimpRectangleTool        *rectangle);
 
 
-static GtkAnchorType gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private);
+static GtkAnchorType gimp_rectangle_tool_get_anchor           (GimpRectangleToolPrivate *private);
 
-static void gimp_rectangle_tool_update_highlight    (GimpRectangleTool  *rectangle);
+static void          gimp_rectangle_tool_update_highlight     (GimpRectangleTool        *rectangle);
 
-static void gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool  *rectangle);
+static void          gimp_rectangle_tool_update_handle_sizes  (GimpRectangleTool        *rectangle);
 
-static gboolean gimp_rectangle_tool_scale_has_changed
-                                                    (GimpRectangleTool  *rectangle_tool);
+static gboolean      gimp_rectangle_tool_scale_has_changed    (GimpRectangleTool        *rectangle_tool);
 
-static void gimp_rectangle_tool_get_other_side      (GimpRectangleTool  *rectangle_tool,
-                                                     const gchar       **other_x,
-                                                     const gchar       **other_y);
-static void gimp_rectangle_tool_get_other_side_coord
-                                                    (GimpRectangleTool  *rectangle_tool,
-                                                     gint               *other_side_x,
-                                                     gint               *other_side_y);
-static void gimp_rectangle_tool_set_other_side_coord
-                                                    (GimpRectangleTool  *rectangle_tool,
-                                                     gint                other_side_x,
-                                                     gint                other_side_y);
+static void          gimp_rectangle_tool_get_other_side       (GimpRectangleTool        *rectangle_tool,
+                                                               const gchar             **other_x,
+                                                               const gchar             **other_y);
+static void          gimp_rectangle_tool_get_other_side_coord (GimpRectangleTool        *rectangle_tool,
+                                                               gint                     *other_side_x,
+                                                               gint                     *other_side_y);
+static void          gimp_rectangle_tool_set_other_side_coord (GimpRectangleTool        *rectangle_tool,
+                                                               gint                      other_side_x,
+                                                               gint                      other_side_y);
 
-static void gimp_rectangle_tool_apply_coord         (GimpRectangleTool      *rectangle_tool,
-                                                     gint                    coord_x,
-                                                     gint                    coord_y);
+static void          gimp_rectangle_tool_apply_coord          (GimpRectangleTool        *rectangle_tool,
+                                                               gint                      coord_x,
+                                                               gint                      coord_y);
 
-static void gimp_rectangle_tool_clamp               (GimpRectangleTool      *rectangle_tool,
-                                                     ClampedSide            *clamped_sides,
-                                                     GimpRectangleConstraint constraint,
-                                                     gboolean                symmetrically);
-static void gimp_rectangle_tool_clamp_width         (GimpRectangleTool      *rectangle_tool,
-                                                     ClampedSide            *clamped_sides,
-                                                     GimpRectangleConstraint constraint,
-                                                     gboolean                symmetrically);
-static void gimp_rectangle_tool_clamp_height        (GimpRectangleTool      *rectangle_tool,
-                                                     ClampedSide            *clamped_sides,
-                                                     GimpRectangleConstraint constraint,
-                                                     gboolean                symmetrically);
+static void          gimp_rectangle_tool_clamp                (GimpRectangleTool        *rectangle_tool,
+                                                               ClampedSide              *clamped_sides,
+                                                               GimpRectangleConstraint   constraint,
+                                                               gboolean                  symmetrically);
+static void          gimp_rectangle_tool_clamp_width          (GimpRectangleTool        *rectangle_tool,
+                                                               ClampedSide              *clamped_sides,
+                                                               GimpRectangleConstraint   constraint,
+                                                               gboolean                  symmetrically);
+static void          gimp_rectangle_tool_clamp_height         (GimpRectangleTool        *rectangle_tool,
+                                                               ClampedSide              *clamped_sides,
+                                                               GimpRectangleConstraint   constraint,
+                                                               gboolean                  symmetrically);
 
-static void gimp_rectangle_tool_keep_inside         (GimpRectangleTool      *rectangle_tool,
-                                                     GimpRectangleConstraint constraint);
-static void gimp_rectangle_tool_keep_inside_horizontally
-                                                    (GimpRectangleTool      *rectangle_tool,
-                                                     GimpRectangleConstraint constraint);
-static void gimp_rectangle_tool_keep_inside_vertically
-                                                    (GimpRectangleTool      *rectangle_tool,
-                                                     GimpRectangleConstraint constraint);
+static void          gimp_rectangle_tool_keep_inside          (GimpRectangleTool        *rectangle_tool,
+                                                               GimpRectangleConstraint   constraint);
+static void          gimp_rectangle_tool_keep_inside_horizontally
+                                                              (GimpRectangleTool        *rectangle_tool,
+                                                               GimpRectangleConstraint   constraint);
+static void          gimp_rectangle_tool_keep_inside_vertically
+                                                              (GimpRectangleTool        *rectangle_tool,
+                                                               GimpRectangleConstraint   constraint);
 
-static void gimp_rectangle_tool_apply_fixed_width   (GimpRectangleTool      *rectangle_tool,
-                                                     GimpRectangleConstraint constraint,
-                                                     gint                    width);
-static void gimp_rectangle_tool_apply_fixed_height  (GimpRectangleTool      *rectangle_tool,
-                                                     GimpRectangleConstraint constraint,
-                                                     gint                    height);
+static void          gimp_rectangle_tool_apply_fixed_width    (GimpRectangleTool        *rectangle_tool,
+                                                               GimpRectangleConstraint   constraint,
+                                                               gint                      width);
+static void          gimp_rectangle_tool_apply_fixed_height   (GimpRectangleTool        *rectangle_tool,
+                                                               GimpRectangleConstraint   constraint,
+                                                               gint                      height);
 
-static void gimp_rectangle_tool_apply_aspect        (GimpRectangleTool      *rectangle_tool,
-                                                     gdouble                 aspect,
-                                                     gint                    clamped_sides);
+static void          gimp_rectangle_tool_apply_aspect         (GimpRectangleTool        *rectangle_tool,
+                                                               gdouble                   aspect,
+                                                               gint                      clamped_sides);
 
-static void gimp_rectangle_tool_update_with_coord   (GimpRectangleTool       *rectangle_tool,
-                                                     gint                    new_x,
-                                                     gint                    new_y);
+static void          gimp_rectangle_tool_update_with_coord    (GimpRectangleTool        *rectangle_tool,
+                                                               gint                      new_x,
+                                                               gint                      new_y);
 
-static void gimp_rectangle_tool_get_constraints     (GimpRectangleTool      *rectangle_tool,
-                                                     gint                   *min_x,
-                                                     gint                   *min_y,
-                                                     gint                   *max_x,
-                                                     gint                   *max_y,
-                                                     GimpRectangleConstraint constraint);
+static void          gimp_rectangle_tool_get_constraints      (GimpRectangleTool        *rectangle_tool,
+                                                               gint                     *min_x,
+                                                               gint                     *min_y,
+                                                               gint                     *max_x,
+                                                               gint                     *max_y,
+                                                               GimpRectangleConstraint   constraint);
 
-static void gimp_rectangle_tool_handle_general_clamping
-                                                    (GimpRectangleTool      *rectangle_tool);
+static void          gimp_rectangle_tool_handle_general_clamping
+                                                              (GimpRectangleTool        *rectangle_tool);
 
 
 static guint gimp_rectangle_tool_signals[LAST_SIGNAL] = { 0 };

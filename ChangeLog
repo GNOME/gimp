@@ -1,5 +1,10 @@
 2007-10-25  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangletool.c: Aligned static function
+	prototypes.
+
+2007-10-25  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangletool.c: Tiny cosmetic change on the
 	ClampedSide enum definition.
 
