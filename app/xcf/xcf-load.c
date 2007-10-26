@@ -39,6 +39,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpgrid.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-colormap.h"
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-sample-points.h"
@@ -317,7 +318,7 @@ xcf_load_image_props (XcfInfo   *info,
                               "Substituting grayscale map."));
               info->cp +=
                 xcf_read_int32 (info->fp, (guint32 *) &image->num_cols, 1);
-              image->cmap = g_new (guchar, image->num_cols * 3);
+              image->cmap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
               if (!xcf_seek_pos (info, info->cp + image->num_cols, NULL))
                 return FALSE;
 
@@ -332,7 +333,7 @@ xcf_load_image_props (XcfInfo   *info,
             {
               info->cp +=
                 xcf_read_int32 (info->fp, (guint32 *) &image->num_cols, 1);
-              image->cmap = g_new (guchar, image->num_cols * 3);
+              image->cmap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
               info->cp +=
                 xcf_read_int8 (info->fp,
                                (guint8 *) image->cmap, image->num_cols * 3);

@@ -1,3 +1,9 @@
+2007-10-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/xcf/xcf-load.c (xcf_load_image_props): never allocate
+	image->cmap smaller than GIMP_IMAGE_COLORMAP_SIZE.
+	Fixes bug #490048.
+
 2007-10-26  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimphistogrameditor.c
