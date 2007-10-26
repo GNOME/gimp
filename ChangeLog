@@ -1,3 +1,13 @@
+2007-10-26  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_oper_update):
+	Use new helper functions to decide if the cursor is on a
+	handle (or outside of the rectangle + handle bounds) to ease the
+	introduction of having handles on the outside of the pending
+	rectangle.
+	(gimp_rectangle_tool_coord_outside)
+	(gimp_rectangle_tool_coord_on_handle): New helper functions.
+
 2007-10-26  Sven Neumann  <sven@gimp.org>
 
 	* app/pdb/gimpprocedure.c (gimp_procedure_validate_args): don't pass
