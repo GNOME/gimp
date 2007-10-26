@@ -118,7 +118,7 @@ gimp_text_class_init (GimpTextClass *klass)
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
                                    "font-size", NULL,
-                                   0.0, 8192.0, 18.0,
+                                   0.0, 8192.0, 24.0,
                                    GIMP_PARAM_STATIC_STRINGS);
   /*
    *  We use the name "font-size-unit" for backward compatibility.

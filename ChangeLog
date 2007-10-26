@@ -1,3 +1,7 @@
+2007-10-26  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptext.c: increased default font size to 24.
+
 2007-10-26  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c (struct GimpRectangleToolPrivate):
