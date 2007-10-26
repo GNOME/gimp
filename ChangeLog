@@ -1,5 +1,11 @@
 2007-10-26  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangletool.c (struct GimpRectangleToolPrivate):
+	Renamed handle_[wh] to corner_handle_[wh] since that are the
+	appropriate names.
+
+2007-10-26  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_oper_update):
 	Use new helper functions to decide if the cursor is on a
 	handle (or outside of the rectangle + handle bounds) to ease the

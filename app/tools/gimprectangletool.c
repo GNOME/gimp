@@ -136,8 +136,8 @@ struct _GimpRectangleToolPrivate
   gint                    lasty;
 
   /* Width and height of corner handles. */
-  gint                    handle_w;
-  gint                    handle_h;
+  gint                    corner_handle_w;
+  gint                    corner_handle_h;
 
   /* Width and height of side handles. */
   gint                    top_and_bottom_handle_w;
@@ -1615,26 +1615,26 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
       gimp_draw_tool_draw_corner (draw_tool, FALSE,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
-                                  private->handle_w,
-                                  private->handle_h,
+                                  private->corner_handle_w,
+                                  private->corner_handle_h,
                                   GTK_ANCHOR_NORTH_WEST, FALSE);
       gimp_draw_tool_draw_corner (draw_tool, FALSE,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
-                                  private->handle_w,
-                                  private->handle_h,
+                                  private->corner_handle_w,
+                                  private->corner_handle_h,
                                   GTK_ANCHOR_NORTH_EAST, FALSE);
       gimp_draw_tool_draw_corner (draw_tool, FALSE,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
-                                  private->handle_w,
-                                  private->handle_h,
+                                  private->corner_handle_w,
+                                  private->corner_handle_h,
                                   GTK_ANCHOR_SOUTH_WEST, FALSE);
       gimp_draw_tool_draw_corner (draw_tool, FALSE,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
-                                  private->handle_w,
-                                  private->handle_h,
+                                  private->corner_handle_w,
+                                  private->corner_handle_h,
                                   GTK_ANCHOR_SOUTH_EAST, FALSE);
       break;
 
@@ -1645,7 +1645,7 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
                                   private->x1, private->y1,
                                   private->x2, private->y2,
                                   private->top_and_bottom_handle_w,
-                                  private->handle_h,
+                                  private->corner_handle_h,
                                   gimp_rectangle_tool_get_anchor (private),
                                   FALSE);
       break;
@@ -1656,7 +1656,7 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
                                   ! gimp_tool_control_is_active (tool->control),
                                   private->x1, private->y1,
                                   private->x2, private->y2,
-                                  private->handle_w,
+                                  private->corner_handle_w,
                                   private->left_and_right_handle_h,
                                   gimp_rectangle_tool_get_anchor (private),
                                   FALSE);
@@ -1667,8 +1667,8 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
                                   ! gimp_tool_control_is_active (tool->control),
                                   private->x1, private->y1,
                                   private->x2, private->y2,
-                                  private->handle_w,
-                                  private->handle_h,
+                                  private->corner_handle_w,
+                                  private->corner_handle_h,
                                   gimp_rectangle_tool_get_anchor (private),
                                   FALSE);
       break;
@@ -1802,21 +1802,21 @@ gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool *rectangle)
 
   /* Calculate and clamp corner handle size. */
 
-  private->handle_w = visible_rectangle_width  / 4;
-  private->handle_h = visible_rectangle_height / 4;
+  private->corner_handle_w = visible_rectangle_width  / 4;
+  private->corner_handle_h = visible_rectangle_height / 4;
 
-  private->handle_w = CLAMP (private->handle_w,
-                             MIN_HANDLE_SIZE,
-                             MAX_HANDLE_SIZE);
-  private->handle_h = CLAMP (private->handle_h,
-                             MIN_HANDLE_SIZE,
-                             MAX_HANDLE_SIZE);
+  private->corner_handle_w = CLAMP (private->corner_handle_w,
+                                    MIN_HANDLE_SIZE,
+                                    MAX_HANDLE_SIZE);
+  private->corner_handle_h = CLAMP (private->corner_handle_h,
+                                    MIN_HANDLE_SIZE,
+                                    MAX_HANDLE_SIZE);
 
 
   /* Calculate and clamp side handle size. */
 
-  private->top_and_bottom_handle_w = rectangle_width  - 3 * private->handle_w;
-  private->left_and_right_handle_h = rectangle_height - 3 * private->handle_h;
+  private->top_and_bottom_handle_w = rectangle_width  - 3 * private->corner_handle_w;
+  private->left_and_right_handle_h = rectangle_height - 3 * private->corner_handle_h;
 
   private->top_and_bottom_handle_w = CLAMP (private->top_and_bottom_handle_w,
                                             MIN_HANDLE_SIZE,
@@ -2469,42 +2469,42 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rectangle_tool,
     case GTK_ANCHOR_NORTH_WEST:
       handle_x      = private->x1;
       handle_y      = private->y1;
-      handle_width  = private->handle_w;
-      handle_height = private->handle_h;
+      handle_width  = private->corner_handle_w;
+      handle_height = private->corner_handle_h;
       break;
 
     case GTK_ANCHOR_SOUTH_EAST:
       handle_x      = private->x2;
       handle_y      = private->y2;
-      handle_width  = private->handle_w;
-      handle_height = private->handle_h;
+      handle_width  = private->corner_handle_w;
+      handle_height = private->corner_handle_h;
       break;
 
     case GTK_ANCHOR_NORTH_EAST:
       handle_x      = private->x2;
       handle_y      = private->y1;
-      handle_width  = private->handle_w;
-      handle_height = private->handle_h;
+      handle_width  = private->corner_handle_w;
+      handle_height = private->corner_handle_h;
       break;
 
     case GTK_ANCHOR_SOUTH_WEST:
       handle_x      = private->x1;
       handle_y      = private->y2;
-      handle_width  = private->handle_w;
-      handle_height = private->handle_h;
+      handle_width  = private->corner_handle_w;
+      handle_height = private->corner_handle_h;
       break;
 
     case GTK_ANCHOR_WEST:
       handle_x      = private->x1;
       handle_y      = private->y1 + h / 2;
-      handle_width  = private->handle_w;
+      handle_width  = private->corner_handle_w;
       handle_height = private->left_and_right_handle_h;
       break;
 
     case GTK_ANCHOR_EAST:
       handle_x      = private->x2;
       handle_y      = private->y1 + h / 2;
-      handle_width  = private->handle_w;
+      handle_width  = private->corner_handle_w;
       handle_height = private->left_and_right_handle_h;
       break;
 
@@ -2512,21 +2512,21 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rectangle_tool,
       handle_x      = private->x1 + w / 2;
       handle_y      = private->y1;
       handle_width  = private->top_and_bottom_handle_w;
-      handle_height = private->handle_h;
+      handle_height = private->corner_handle_h;
       break;
 
     case GTK_ANCHOR_SOUTH:
       handle_x      = private->x1 + w / 2;
       handle_y      = private->y2;
       handle_width  = private->top_and_bottom_handle_w;
-      handle_height = private->handle_h;
+      handle_height = private->corner_handle_h;
       break;
 
     case GTK_ANCHOR_CENTER:
       handle_x      = private->x1 + w / 2;
       handle_y      = private->y1 + h / 2;
-      handle_width  = tw - private->handle_w * 2;
-      handle_height = th - private->handle_h * 2;
+      handle_width  = tw - private->corner_handle_w * 2;
+      handle_height = th - private->corner_handle_h * 2;
       break;
     }
 
