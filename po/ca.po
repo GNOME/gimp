@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-25 15:31+0200\n"
-"PO-Revision-Date: 2007-10-20 00:22+0200\n"
+"POT-Creation-Date: 2007-10-26 12:41+0200\n"
+"PO-Revision-Date: 2007-10-25 23:31+0200\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -93,7 +93,7 @@ msgstr ""
 "L'intèrpret d'ordres «%s» no està disponible. El mode d'ordres està "
 "desactivat."
 
-#: ../app/main.c:154 ../tools/gimp-remote.c:79
+#: ../app/main.c:154 ../tools/gimp-remote.c:60
 msgid "Show version information and exit"
 msgstr "Mostra informació de la versió i surt"
 
@@ -212,7 +212,7 @@ msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "Sortida del GIMP. Podeu minimitzar aquesta finestra, però no la podeu tancar."
 
-#: ../app/main.c:557 ../tools/gimp-remote.c:323
+#: ../app/main.c:557 ../tools/gimp-remote.c:95
 #, c-format
 msgid "%s version %s"
 msgstr "%s versió %s"
@@ -7959,7 +7959,7 @@ msgstr "_Mode d'operació:"
 
 #: ../app/dialogs/preferences-dialog.c:2463
 msgid "_Try to use the system monitor profile"
-msgstr ""
+msgstr "_Prova d'utilitzar el perfil de monitor del sistema"
 
 #: ../app/dialogs/preferences-dialog.c:2473
 msgid "_Display rendering intent:"
@@ -7971,12 +7971,11 @@ msgstr "P_seudoprova de renderitzat:"
 
 #: ../app/dialogs/preferences-dialog.c:2495
 msgid "Mark out of gamut colors"
-msgstr ""
+msgstr "Marca els colors de la gamma"
 
 #: ../app/dialogs/preferences-dialog.c:2500
-#, fuzzy
 msgid "Select Warning Color"
-msgstr "Selecciona un color"
+msgstr "Selecciona un color càlid"
 
 #: ../app/dialogs/preferences-dialog.c:2513
 msgid "File Open behaviour:"
@@ -8439,14 +8438,12 @@ msgid "Switch to Move tool"
 msgstr "Commuta l'eina de moure"
 
 #: ../app/display/display-enums.c:115
-#, fuzzy
 msgid "quality|Low"
-msgstr "Qualitat"
+msgstr "Baixa"
 
 #: ../app/display/display-enums.c:116
-#, fuzzy
 msgid "quality|High"
-msgstr "Qualitat"
+msgstr "Alta"
 
 #: ../app/display/gimpdisplay-handlers.c:155
 #, c-format
@@ -8728,9 +8725,8 @@ msgid "Set a source image first."
 msgstr "Indiqueu primer la imatge origen."
 
 #: ../app/paint/paint-enums.c:51
-#, fuzzy
 msgid "Modify Perspective"
-msgstr "Modifica el pla de perspectiva"
+msgstr "Modifica la perspectiva"
 
 #: ../app/paint/paint-enums.c:82
 msgid "Aligned"
@@ -9151,36 +9147,32 @@ msgstr "_Alinea"
 #: ../app/tools/gimpaligntool.c:585
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
+"Cliqueu la capa, el camí o la guia o cliqueu i arrossegueu per a agafar "
+"diverses capes"
 
 #: ../app/tools/gimpaligntool.c:594
-#, fuzzy
 msgid "Click to pick this layer as first item"
-msgstr "Cliqueu al camí per editar-lo"
+msgstr "Cliqueu aquesta capa com a primer element"
 
 #: ../app/tools/gimpaligntool.c:602
-#, fuzzy
 msgid "Click to add this layer to the list"
-msgstr "Cliqueu en qualsevol imatge per a afegir el color a la paleta"
+msgstr "Cliqueu aquesta capa per a afegir-la a la llista"
 
 #: ../app/tools/gimpaligntool.c:606
-#, fuzzy
 msgid "Click to pick this guide as first item"
-msgstr "Cliqueu al camí per editar-lo"
+msgstr "Cliqueu aquesta guia com a primer element"
 
 #: ../app/tools/gimpaligntool.c:614
-#, fuzzy
 msgid "Click to add this guide to the list"
-msgstr "Cliqueu per a aclarir la línia"
+msgstr "Cliqueu aquesta guia per a afegir-la a la llista"
 
 #: ../app/tools/gimpaligntool.c:618
-#, fuzzy
 msgid "Click to pick this path as first item"
-msgstr "Cliqueu al camí per editar-lo"
+msgstr "Cliqueu aquest camí com a primer element"
 
 #: ../app/tools/gimpaligntool.c:626
-#, fuzzy
 msgid "Click to add this path to the list"
-msgstr "Cliqueu al camí per editar-lo"
+msgstr "Cliqueu aquest camí per a afegir-lo a la llista"
 
 #: ../app/tools/gimpaligntool.c:764
 msgid "Relative to:"
@@ -10532,9 +10524,8 @@ msgstr "Utilitza totes les capes visibles per a encongir la selecció"
 
 #. Current, as in what is currently in use.
 #: ../app/tools/gimprectangleoptions.c:775
-#, fuzzy
 msgid "Current"
-msgstr "Format actual"
+msgstr "Actual"
 
 #: ../app/tools/gimprectangleoptions.c:853
 msgid "Expand from center"
@@ -10545,9 +10536,8 @@ msgid "Fixed:"
 msgstr "Fixat:"
 
 #: ../app/tools/gimprectangleoptions.c:1009
-#, fuzzy
 msgid "Position:"
-msgstr "Posicionat"
+msgstr "Posició:"
 
 #: ../app/tools/gimprectangleoptions.c:1027
 msgid "Highlight"
@@ -10555,9 +10545,8 @@ msgstr "Ressaltat"
 
 #. Auto Shrink
 #: ../app/tools/gimprectangleoptions.c:1037
-#, fuzzy
 msgid "Auto Shrink"
-msgstr "Encongeix la selecció"
+msgstr "Encongeix automàtic"
 
 #: ../app/tools/gimprectangleoptions.c:1044
 msgid "Shrink merged"
@@ -10580,7 +10569,7 @@ msgstr "Eina Selecció rectangular: selecciona una regió rectangular"
 msgid "_Rectangle Select"
 msgstr "Selecció _rectangular"
 
-#: ../app/tools/gimprectangletool.c:1031 ../app/tools/gimprectangletool.c:1939
+#: ../app/tools/gimprectangletool.c:1026 ../app/tools/gimprectangletool.c:1934
 msgid "Rectangle: "
 msgstr "Rectangle: "
 
@@ -10650,9 +10639,8 @@ msgid "Feather edges"
 msgstr "Arrodoneix les vores"
 
 #: ../app/tools/gimpselectionoptions.c:384
-#, fuzzy
 msgid "Interactive boundary"
-msgstr "Mostra la vora interactivament"
+msgstr "Vora interactiva"
 
 #: ../app/tools/gimpselectionoptions.c:398
 msgid "Select transparent areas"
@@ -10793,9 +10781,8 @@ msgstr "Justifica:"
 
 #. Create a path from the current text
 #: ../app/tools/gimptextoptions.c:498
-#, fuzzy
 msgid "Path from Text"
-msgstr "Crea un camí a partir d'un text"
+msgstr "Camí a partir d'un text"
 
 #: ../app/tools/gimptextoptions.c:505
 msgid "Text along Path"
@@ -10924,9 +10911,8 @@ msgstr ""
 
 #. Create a selection from the current path
 #: ../app/tools/gimpvectoroptions.c:189
-#, fuzzy
 msgid "Selection from Path"
-msgstr "Se_lecció a camí"
+msgstr "Selecció a partir d'un camí"
 
 #: ../app/tools/gimpvectortool.c:161
 msgid "Paths Tool: Create and edit paths"
@@ -10990,7 +10976,7 @@ msgstr "Mou els vèrtexs"
 
 #: ../app/tools/gimpvectortool.c:1145
 msgid "Click to pick path to edit"
-msgstr "Cliqueu al camí per editar-lo"
+msgstr "Cliqueu el camí per editar-lo"
 
 #: ../app/tools/gimpvectortool.c:1148
 msgid "Click to create a new path"
@@ -11388,9 +11374,8 @@ msgstr "Notació HTML:"
 
 #  initialize the list of gimp palettes
 #: ../app/widgets/gimpcolorselectorpalette.c:59
-#, fuzzy
 msgid "Palette"
-msgstr "Paletes"
+msgstr "Paleta"
 
 #: ../app/widgets/gimpcontainerpopup.c:534
 msgid "Smaller Previews"
@@ -12452,7 +12437,7 @@ msgstr "Finestra flotant"
 msgid "Keep above"
 msgstr "Sempre per sobre"
 
-#: ../app/xcf/xcf-load.c:274
+#: ../app/xcf/xcf-load.c:275
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -12460,7 +12445,7 @@ msgstr ""
 "Aquest fitxer XCF està malmès! S'ha intentat llegir el màxim que s'ha pogut, "
 "però està incomplet."
 
-#: ../app/xcf/xcf-load.c:283
+#: ../app/xcf/xcf-load.c:284
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -12468,7 +12453,7 @@ msgstr ""
 "Aquest fitxer XCF està malmès! Ni tan sols s'ha pogut salvar cap informació "
 "parcial de la imatge."
 
-#: ../app/xcf/xcf-load.c:315
+#: ../app/xcf/xcf-load.c:316
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -12527,51 +12512,19 @@ msgstr "Creeu imatges i editeu fotografies"
 msgid "Image Editor"
 msgstr "Editor d'imatges"
 
-#: ../tools/gimp-remote.c:84
+#: ../tools/gimp-remote.c:65
 msgid "Use a running GIMP only, never start a new one"
 msgstr "Empra una instància en execució del GIMP. No n'iniciïs cap de nova"
 
-#: ../tools/gimp-remote.c:89
+#: ../tools/gimp-remote.c:70
 msgid "Only check if GIMP is running, then quit"
 msgstr "Comprova si s'està executant el GIMP i surt"
 
-#: ../tools/gimp-remote.c:94
+#: ../tools/gimp-remote.c:76
 msgid "Print X window ID of GIMP toolbox window, then quit"
 msgstr ""
 "Mostra l'ID de la finestra X de la caixa d'eines del GIMP, després surt"
 
-#: ../tools/gimp-remote.c:99
+#: ../tools/gimp-remote.c:82
 msgid "Start GIMP without showing the startup window"
 msgstr "Inicia el GIMP sense mostrar la finestra d'inici"
-
-#: ../tools/gimp-remote.c:205
-msgid "Could not connect to GIMP."
-msgstr "No es pot connectar al GIMP."
-
-#: ../tools/gimp-remote.c:206
-msgid "Make sure that the Toolbox is visible!"
-msgstr "Assegureu-vos que la caixa d'eines és visible"
-
-#. if execv and execvp return, there was an error
-#: ../tools/gimp-remote.c:307
-#, c-format
-msgid "Couldn't start '%s': %s"
-msgstr "No s'ha pogut iniciar «%s»: %s"
-
-#~ msgid "_Try to obtain the monitor profile from the windowing system"
-#~ msgstr "Prova d'ob_tenir el perfil del monitor a partir del servidor X"
-
-#~ msgid "X:"
-#~ msgstr "X:"
-
-#~ msgid "Y:"
-#~ msgstr "Y:"
-
-#~ msgid "Create Selection from Path"
-#~ msgstr "Converteix el camí en una selecció"
-
-#~ msgid "keyboard label|Space"
-#~ msgstr "Espai"
-
-#~ msgid "keyboard label|Backslash"
-#~ msgstr "Barra invertida"

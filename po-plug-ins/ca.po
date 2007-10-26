@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-25 15:34+0200\n"
-"PO-Revision-Date: 2007-10-16 22:46+0200\n"
+"POT-Creation-Date: 2007-10-26 12:45+0200\n"
+"PO-Revision-Date: 2007-10-25 23:35+0200\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -12289,9 +12289,8 @@ msgstr ""
 "(El SGI no ho permet)"
 
 #: ../plug-ins/twain/twain.c:87
-#, fuzzy
 msgid "Capture an image from a TWAIN datasource"
-msgstr "Crea una imatge a partir d'una àrea de la pantalla"
+msgstr "Captura una imatge de la font de dades TWAIN"
 
 #: ../plug-ins/twain/twain.c:354
 msgid "_Scanner/Camera..."
@@ -12563,14 +12562,3 @@ msgstr "Error: no s'ha pogut llegir el fitxer de propietats XJT «%s»."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: el fitxer de propietats XJT «%s» està buit."
-
-# era: msgstr "Opcions avançades de filtratge del paquet:"
-#~ msgid "Smoothness of Aliasing"
-#~ msgstr "Intentsitat del suavitzat"
-
-# era: msgstr "Suavitat de la contrarèplica"
-#~ msgid "Preview as You Drag"
-#~ msgstr "Previsualitza mentre arrossegueu"
-
-#~ msgid "Scatter HSV"
-#~ msgstr "Dispersió HSV"
