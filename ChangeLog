@@ -1,8 +1,23 @@
+2007-10-26  Sven Neumann  <sven@gimp.org>
+
+	Reenabled update of the histogram while doing color corrections
+	(bug 490182):
+
+	* app/core/gimpviewable.[ch]: added new methods preview_freeze()
+	and preview_thaw().
+
+	* app/core/gimpimagemap.c
+	(gimp_image_map_new): freeze the drawable preview.
+	(gimp_image_map_dispose): thaw the  drawable preview.
+	(gimp_image_map_do): update the drawable, not the image.
+
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_response): no
+	need to invalidate the drawable preview any longer.
+
 2007-10-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/xcf/xcf-load.c (xcf_load_image_props): never allocate
-	image->cmap smaller than GIMP_IMAGE_COLORMAP_SIZE.
-	Fixes bug #490048.
+	image->cmap smaller than GIMP_IMAGE_COLORMAP_SIZE. Fixes bug #490048.
 
 2007-10-26  Sven Neumann  <sven@gimp.org>
 

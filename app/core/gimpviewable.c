@@ -163,7 +163,8 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 static void
 gimp_viewable_init (GimpViewable *viewable)
 {
-  viewable->stock_id = NULL;
+  viewable->stock_id     = NULL;
+  viewable->freeze_count = 0;
 }
 
 static void
@@ -398,7 +399,8 @@ gimp_viewable_invalidate_preview (GimpViewable *viewable)
 {
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  g_signal_emit (viewable, viewable_signals[INVALIDATE_PREVIEW], 0);
+  if (viewable->freeze_count == 0)
+    g_signal_emit (viewable, viewable_signals[INVALIDATE_PREVIEW], 0);
 }
 
 /**
@@ -1041,4 +1043,24 @@ gimp_viewable_set_stock_id (GimpViewable *viewable,
     }
 
   g_object_notify (G_OBJECT (viewable), "stock-id");
+}
+
+void
+gimp_viewable_preview_freeze (GimpViewable *viewable)
+{
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  viewable->freeze_count++;
+}
+
+void
+gimp_viewable_preview_thaw (GimpViewable *viewable)
+{
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+  g_return_if_fail (viewable->freeze_count > 0);
+
+  viewable->freeze_count--;
+
+  if (viewable->freeze_count == 0)
+    gimp_viewable_invalidate_preview (viewable);
 }

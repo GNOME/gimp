@@ -1931,6 +1931,8 @@ gimp_viewable_get_dummy_pixbuf
 gimp_viewable_get_description
 gimp_viewable_get_stock_id
 gimp_viewable_set_stock_id
+gimp_viewable_preview_freeze
+gimp_viewable_preview_thaw
 <SUBSECTION Standard>
 GimpViewableClass
 GIMP_VIEWABLE

@@ -1,10 +1,14 @@
+2007-10-26  Sven Neumann  <sven@gimp.org>
+
+	* app/app-sections.txt: updated.
+
 2007-10-25  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am: pass options to gtkdoc-fixref.
 
 2007-10-22  Sven Neumann  <sven@gimp.org>
 
-	* devel-docs/app/app-sections.txt: updated.
+	* app/app-sections.txt: updated.
 
 2007-10-18  Raphaël Quinet  <raphael@gimp.org>
 

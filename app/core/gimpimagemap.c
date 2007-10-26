@@ -33,6 +33,7 @@
 #include "gimpimagemap.h"
 #include "gimpmarshal.h"
 #include "gimppickable.h"
+#include "gimpviewable.h"
 
 
 enum
@@ -63,6 +64,7 @@ struct _GimpImageMap
 
 static void   gimp_image_map_pickable_iface_init (GimpPickableInterface *iface);
 
+static void            gimp_image_map_dispose        (GObject      *object);
 static void            gimp_image_map_finalize       (GObject      *object);
 
 static GimpImage     * gimp_image_map_get_image      (GimpPickable *pickable);
@@ -100,6 +102,7 @@ gimp_image_map_class_init (GimpImageMapClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  object_class->dispose  = gimp_image_map_dispose;
   object_class->finalize = gimp_image_map_finalize;
 }
 
@@ -128,6 +131,17 @@ gimp_image_map_init (GimpImageMap *image_map)
 }
 
 static void
+gimp_image_map_dispose (GObject *object)
+{
+  GimpImageMap *image_map = GIMP_IMAGE_MAP (object);
+
+  if (image_map->drawable)
+    gimp_viewable_preview_thaw (GIMP_VIEWABLE (image_map->drawable));
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_image_map_finalize (GObject *object)
 {
   GimpImageMap *image_map = GIMP_IMAGE_MAP (object);
@@ -151,6 +165,12 @@ gimp_image_map_finalize (GObject *object)
 
       pixel_regions_process_stop (image_map->PRI);
       image_map->PRI = NULL;
+    }
+
+  if (image_map->drawable)
+    {
+      g_object_unref (image_map->drawable);
+      image_map->drawable = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -243,8 +263,10 @@ gimp_image_map_new (GimpDrawable *drawable,
 
   image_map = g_object_new (GIMP_TYPE_IMAGE_MAP, NULL);
 
-  image_map->drawable  = drawable;
+  image_map->drawable  = g_object_ref (drawable);
   image_map->undo_desc = g_strdup (undo_desc);
+
+  gimp_viewable_preview_freeze (GIMP_VIEWABLE (drawable));
 
   return image_map;
 }
@@ -474,7 +496,6 @@ static gboolean
 gimp_image_map_do (GimpImageMap *image_map)
 {
   GimpImage *image;
-  gint       off_x, off_y;
   gint       i;
 
   if (! gimp_item_is_attached (GIMP_ITEM (image_map->drawable)))
@@ -485,8 +506,6 @@ gimp_image_map_do (GimpImageMap *image_map)
     }
 
   image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
-
-  gimp_item_offsets (GIMP_ITEM (image_map->drawable), &off_x, &off_y);
 
   /*  Process up to 16 tiles in one go. This reduces the overhead
    *  caused by updating the display while the imagemap is being
@@ -525,11 +544,7 @@ gimp_image_map_do (GimpImageMap *image_map)
                                   NULL,
                                   x, y);
 
-      /*  Update the image -- It is important to call gimp_image_update()
-       *  instead of gimp_drawable_update() because we don't want the
-       *  drawable preview to be constantly invalidated
-       */
-      gimp_image_update (image, x + off_x, y + off_y, w, h);
+      gimp_drawable_update (image_map->drawable, x, y, w, h);
 
       image_map->PRI = pixel_regions_process (image_map->PRI);
 
