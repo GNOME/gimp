@@ -43,26 +43,26 @@
 #include "gimp-intl.h"
 
 
-static void    gimp_histogram_editor_docked_iface_init (GimpDockedInterface *iface);
+static void     gimp_histogram_editor_docked_iface_init (GimpDockedInterface *iface);
 
-static void    gimp_histogram_editor_set_aux_info (GimpDocked          *docked,
-                                                   GList               *aux_info);
-static GList * gimp_histogram_editor_get_aux_info (GimpDocked          *docked);
+static void     gimp_histogram_editor_set_aux_info  (GimpDocked          *docked,
+                                                     GList               *aux_info);
+static GList  * gimp_histogram_editor_get_aux_info  (GimpDocked          *docked);
 
-static void  gimp_histogram_editor_set_image      (GimpImageEditor     *editor,
-                                                   GimpImage           *image);
-static void  gimp_histogram_editor_layer_changed  (GimpImage           *image,
-                                                   GimpHistogramEditor *editor);
-static void  gimp_histogram_editor_update         (GimpHistogramEditor *editor);
+static void     gimp_histogram_editor_set_image     (GimpImageEditor     *editor,
+                                                     GimpImage           *image);
+static void     gimp_histogram_editor_layer_changed (GimpImage           *image,
+                                                     GimpHistogramEditor *editor);
+static void     gimp_histogram_editor_update        (GimpHistogramEditor *editor);
 
-static gboolean gimp_histogram_editor_idle_update (GimpHistogramEditor *editor);
-static gboolean gimp_histogram_menu_sensitivity   (gint                 value,
-                                                   gpointer             data);
-static void  gimp_histogram_editor_menu_update    (GimpHistogramEditor *editor);
-static void  gimp_histogram_editor_name_update    (GimpHistogramEditor *editor);
-static void  gimp_histogram_editor_info_update    (GimpHistogramEditor *editor);
+static gboolean gimp_histogram_editor_idle_update   (GimpHistogramEditor *editor);
+static gboolean gimp_histogram_menu_sensitivity     (gint                 value,
+                                                     gpointer             data);
+static void     gimp_histogram_editor_menu_update   (GimpHistogramEditor *editor);
+static void     gimp_histogram_editor_name_update   (GimpHistogramEditor *editor);
+static void     gimp_histogram_editor_info_update   (GimpHistogramEditor *editor);
 
-static gboolean gimp_histogram_view_expose        (GimpHistogramEditor *editor);
+static gboolean gimp_histogram_view_expose          (GimpHistogramEditor *editor);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpHistogramEditor, gimp_histogram_editor,
@@ -317,7 +317,7 @@ gimp_histogram_editor_layer_changed (GimpImage           *image,
 
   if (editor->drawable)
     {
-      g_signal_connect_object (editor->drawable, "invalidate-preview",
+      g_signal_connect_object (editor->drawable, "update",
                                G_CALLBACK (gimp_histogram_editor_update),
                                editor, G_CONNECT_SWAPPED);
       g_signal_connect_object (editor->drawable, "alpha-changed",

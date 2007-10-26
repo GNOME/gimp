@@ -1,3 +1,9 @@
+2007-10-26  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphistogrameditor.c
+	(gimp_histogram_editor_layer_changed): connect to
+	GimpDrawable::update instead of GimpViewable::invalidate-preview.
+
 2007-10-25  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme-private.h
