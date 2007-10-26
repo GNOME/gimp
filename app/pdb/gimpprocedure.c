@@ -607,6 +607,11 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                 }
               else
                 {
+                  const gchar *value = g_value_get_string (&string_value);
+
+                  if (value == NULL)
+                    value = "(null)";
+
                   if (return_vals)
                     {
                       gimp_message (gimp, G_OBJECT (progress),
@@ -616,7 +621,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                                       "(#%d, type %s). "
                                       "This value is out of range."),
                                     gimp_object_get_name (GIMP_OBJECT (procedure)),
-                                    g_value_get_string (&string_value),
+                                    value,
                                     g_param_spec_get_name (pspec),
                                     i + 1, g_type_name (spec_type));
                     }
@@ -629,7 +634,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                                       "(#%d, type %s). "
                                       "This value is out of range."),
                                     gimp_object_get_name (GIMP_OBJECT (procedure)),
-                                    g_value_get_string (&string_value),
+                                    value,
                                     g_param_spec_get_name (pspec),
                                     i + 1, g_type_name (spec_type));
                     }

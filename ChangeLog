@@ -1,7 +1,12 @@
 2007-10-26  Sven Neumann  <sven@gimp.org>
 
+	* app/pdb/gimpprocedure.c (gimp_procedure_validate_args): don't pass
+	NULL strings to gimp_message(). Fixes bug #490617.
+
+2007-10-26  Sven Neumann  <sven@gimp.org>
+
 	Reenabled update of the histogram while doing color corrections
-	(bug 490182):
+	(bug #490182):
 
 	* app/core/gimpviewable.[ch]: added new methods preview_freeze()
 	and preview_thaw().
