@@ -250,30 +250,14 @@ gimp_toplevel_directory (void)
     gchar *filename;
     gchar *sep1, *sep2;
 
-    if (G_WIN32_HAVE_WIDECHAR_API ())
-      {
-        wchar_t w_filename[MAX_PATH];
+    wchar_t w_filename[MAX_PATH];
 
-        if (GetModuleFileNameW (NULL,
-                                w_filename, G_N_ELEMENTS (w_filename)) == 0)
-          g_error ("GetModuleFilenameW failed");
+    if (GetModuleFileNameW (NULL, w_filename, G_N_ELEMENTS (w_filename)) == 0)
+      g_error ("GetModuleFilenameW failed");
 
-        filename = g_utf16_to_utf8 (w_filename, -1, NULL, NULL, NULL);
-        if (filename == NULL)
-          g_error ("Converting module filename to UTF-8 failed");
-      }
-    else
-      {
-        gchar cp_filename[MAX_PATH];
-
-        if (GetModuleFileNameA (NULL,
-                                cp_filename, G_N_ELEMENTS (cp_filename)) == 0)
-          g_error ("GetModuleFilenameA failed");
-
-        filename = g_locale_to_utf8 (cp_filename, -1, NULL, NULL, NULL);
-        if (filename == NULL)
-          g_error ("Converting module filename to UTF-8 failed");
-      }
+    filename = g_utf16_to_utf8 (w_filename, -1, NULL, NULL, NULL);
+    if (filename == NULL)
+      g_error ("Converting module filename to UTF-8 failed");
 
     /* If the executable file name is of the format
      * <foobar>\bin\*.exe or
@@ -359,8 +343,11 @@ gimp_data_directory (void)
  *
  * The returned string is owned by GIMP and must not be modified or
  * freed. The returned string is in the encoding used for filenames by
- * GLib, which isn't necessarily UTF-8. (On Windows it always is
- * UTF-8.)
+ * the C library, which isn't necessarily UTF-8. (On Windows, unlike
+ * the other similar functions here, the return value from this
+ * function is in the system codepage, never in UTF-8. It can thus be
+ * passed directly to the bindtextdomain() function from libintl which
+ * does not handle UTF-8.)
  *
  * Returns: The top directory for GIMP locale files.
  */
@@ -375,6 +362,11 @@ gimp_locale_directory (void)
 
       gimp_locale_dir = gimp_env_get_dir ("GIMP2_LOCALEDIR", tmp);
       g_free (tmp);
+#ifdef G_OS_WIN32
+      tmp = g_locale_from_utf8 (gimp_locale_dir, -1, NULL, NULL, NULL);
+      g_free (gimp_locale_dir);
+      gimp_locale_dir = tmp;
+#endif
     }
 
   return gimp_locale_dir;
