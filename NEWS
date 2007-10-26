@@ -1,6 +1,20 @@
                    ------------------------------ 
                    GNU Image Manipulation Program
+                         2.4  Stable Branch
                    ------------------------------
 
-This is the stable branch of GIMP.
+This is the stable branch of GIMP. No new features are being added
+here, just bug-fixes.
 
+
+Changes in GIMP 2.4.1
+=====================
+
+- fixed a minor display rendering problem
+- improved the workaround for broken graphics card drivers (bug #421466)
+- fixed a crash with broken scripts (bug #490055)
+- fixed potential syntax error in configure script (bug #490068)
+- fixed parsing of floating point numbers in Script-Fu (bug #490198)
+- fixed potential crash when converting an indexed image to RGB (bug #490048)
+- update the histogram while doing color corrections (bug #490182)
+- translation updates
