@@ -1,5 +1,10 @@
 2007-10-27  Sven Neumann  <sven@gimp.org>
 
+	* libgimpconfig/gimpscanner.c (gimp_scanner_parse_color):
+	initialize GimpRGB, just to be sure.
+
+2007-10-27  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-handlers.c: removed code that syncs
 	the padding color with the default values set in the preferences.
 	Fixes bug #490785.

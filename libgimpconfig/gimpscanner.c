@@ -401,7 +401,7 @@ gimp_scanner_parse_color (GScanner *scanner,
   guint      scope_id;
   guint      old_scope_id;
   GTokenType token;
-  GimpRGB    color;
+  GimpRGB    color = { 0.0, 0.0, 0.0, 1.0 };
 
   scope_id = g_quark_from_static_string ("gimp_scanner_parse_color");
   old_scope_id = g_scanner_set_scope (scanner, scope_id);
@@ -432,7 +432,7 @@ gimp_scanner_parse_color (GScanner *scanner,
 
         case G_TOKEN_SYMBOL:
           {
-            gdouble  col[4] = { 0.0, 0.0, 0.0, 1.0 };
+            gdouble  col[4]     = { 0.0, 0.0, 0.0, 1.0 };
             gint     n_channels = 4;
             gboolean is_hsv     = FALSE;
             gint     i;
