@@ -878,6 +878,8 @@ gimp_text_buffer_load (GtkTextBuffer  *buffer,
     g_message (_("Invalid UTF-8 data in file '%s'."),
                gimp_filename_to_utf8 (filename));
 
+  fclose (file);
+
   return TRUE;
 }
 

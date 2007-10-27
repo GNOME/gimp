@@ -1,5 +1,10 @@
 2007-10-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpwidgets-utils.c (gimp_text_buffer_load): close
+	the file handle.
+
+2007-10-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpmemsize.c (string_to_memsize): don't just crash
 	right away if the impossible happens.
 
