@@ -1,5 +1,10 @@
 2007-10-27  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpmemsize.c (string_to_memsize): don't just crash
+	right away if the impossible happens.
+
+2007-10-27  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/preferences-dialog.c (prefs_resolution_source_callback):
 	g_object_get_data() should always return a size-entry here. Return
 	with a warning if it doesn't.

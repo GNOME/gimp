@@ -244,10 +244,14 @@ string_to_memsize (const GValue *src_value,
 
   str = g_value_get_string (src_value);
 
-  if (! str || ! gimp_memsize_deserialize (str, &memsize))
-    g_warning ("Can't convert string to GimpMemsize.");
-
-  g_value_set_uint64 (dest_value, memsize);
+  if (str && gimp_memsize_deserialize (str, &memsize))
+    {
+      g_value_set_uint64 (dest_value, memsize);
+    }
+  else
+    {
+      g_warning ("Can't convert string to GimpMemsize.");
+    }
 }
 
 
