@@ -17,8 +17,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* $Id$ */
-
 /*
  * The pnm reading and writing code was written from scratch by Erik Nygren
  * (nygren@mit.edu) based on the specifications in the man pages and
@@ -108,7 +106,7 @@ typedef struct _PNMRowInfo
 /* Save info  */
 typedef struct
 {
-  gint  raw;  /*  raw or ascii  */
+  gint  raw;            /*  raw or ascii  */
 } PNMSaveVals;
 
 #define BUFLEN 512              /* The input buffer size for data returned
@@ -145,56 +143,56 @@ static void   pnm_load_rawpbm          (PNMScanner   *scan,
                                         PNMInfo      *info,
                                         GimpPixelRgn *pixel_rgn);
 
-static void   pnmsaverow_ascii         (PNMRowInfo *ri,
-                                        guchar     *data);
-static void   pnmsaverow_raw           (PNMRowInfo *ri,
-                                        guchar     *data);
-static void   pnmsaverow_raw_pbm       (PNMRowInfo *ri,
-                                        guchar     *data);
-static void   pnmsaverow_ascii_pbm     (PNMRowInfo *ri,
-                                        guchar     *data);
-static void   pnmsaverow_ascii_indexed (PNMRowInfo *ri,
-                                        guchar     *data);
-static void   pnmsaverow_raw_indexed   (PNMRowInfo *ri,
-                                        guchar     *data);
+static void   pnmsaverow_ascii         (PNMRowInfo   *ri,
+                                        const guchar *data);
+static void   pnmsaverow_raw           (PNMRowInfo   *ri,
+                                        const guchar *data);
+static void   pnmsaverow_raw_pbm       (PNMRowInfo   *ri,
+                                        const guchar *data);
+static void   pnmsaverow_ascii_pbm     (PNMRowInfo   *ri,
+                                        const guchar *data);
+static void   pnmsaverow_ascii_indexed (PNMRowInfo   *ri,
+                                        const guchar *data);
+static void   pnmsaverow_raw_indexed   (PNMRowInfo   *ri,
+                                        const guchar *data);
 
-static void   pnmscanner_destroy       (PNMScanner *s);
-static void   pnmscanner_createbuffer  (PNMScanner *s,
-                                        gint        bufsize);
-static void   pnmscanner_getchar       (PNMScanner *s);
-static void   pnmscanner_eatwhitespace (PNMScanner *s);
-static void   pnmscanner_gettoken      (PNMScanner *s,
-                                        gchar      *buf,
-                                        gint        bufsize);
-static void   pnmscanner_getsmalltoken (PNMScanner *s,
-                                        gchar      *buf);
+static void   pnmscanner_destroy       (PNMScanner   *s);
+static void   pnmscanner_createbuffer  (PNMScanner   *s,
+                                        gint          bufsize);
+static void   pnmscanner_getchar       (PNMScanner   *s);
+static void   pnmscanner_eatwhitespace (PNMScanner   *s);
+static void   pnmscanner_gettoken      (PNMScanner   *s,
+                                        gchar        *buf,
+                                        gint          bufsize);
+static void   pnmscanner_getsmalltoken (PNMScanner   *s,
+                                        gchar        *buf);
 
-static PNMScanner * pnmscanner_create  (gint        fd);
+static PNMScanner * pnmscanner_create  (gint          fd);
 
 
 #define pnmscanner_eof(s) ((s)->eof)
-#define pnmscanner_fd(s) ((s)->fd)
+#define pnmscanner_fd(s)  ((s)->fd)
 
 /* Checks for a fatal error */
 #define CHECK_FOR_ERROR(predicate, jmpbuf, errmsg) \
         if ((predicate)) \
-        { g_message ((errmsg)); longjmp((jmpbuf),1); }
+        { g_message ((errmsg)); longjmp ((jmpbuf), 1); }
 
-static struct struct_pnm_types
+static const struct struct_pnm_types
 {
-  gchar   name;
-  gint    np;
-  gint    asciibody;
-  gint    maxval;
+  gchar name;
+  gint  np;
+  gint  asciibody;
+  gint  maxval;
   void (* loader) (PNMScanner *, struct _PNMInfo *, GimpPixelRgn *pixel_rgn);
 } pnm_types[] =
 {
-  { '1', 0, 1,   1, pnm_load_ascii },  /* ASCII PBM */
-  { '2', 1, 1, 255, pnm_load_ascii },  /* ASCII PGM */
-  { '3', 3, 1, 255, pnm_load_ascii },  /* ASCII PPM */
-  { '4', 0, 0,   1, pnm_load_rawpbm }, /* RAW   PBM */
-  { '5', 1, 0, 255, pnm_load_raw },    /* RAW   PGM */
-  { '6', 3, 0, 255, pnm_load_raw },    /* RAW   PPM */
+  { '1', 0, 1,   1, pnm_load_ascii  },  /* ASCII PBM */
+  { '2', 1, 1, 255, pnm_load_ascii  },  /* ASCII PGM */
+  { '3', 3, 1, 255, pnm_load_ascii  },  /* ASCII PPM */
+  { '4', 0, 0,   1, pnm_load_rawpbm },  /* RAW   PBM */
+  { '5', 1, 0, 255, pnm_load_raw    },  /* RAW   PGM */
+  { '6', 3, 0, 255, pnm_load_raw    },  /* RAW   PPM */
   {  0 , 0, 0,   0, NULL}
 };
 
@@ -497,14 +495,17 @@ load_image (const gchar *filename)
       /* If we get here, we had a problem reading the file */
       if (scan)
         pnmscanner_destroy (scan);
+
       close (fd);
       g_free (pnminfo);
+
       if (image_ID != -1)
         gimp_image_delete (image_ID);
+
       return -1;
     }
 
-  if (!(scan = pnmscanner_create (fd)))
+  if (! (scan = pnmscanner_create (fd)))
     longjmp (pnminfo->jmpbuf, 1);
 
   /* Get magic number */
@@ -527,7 +528,7 @@ load_image (const gchar *filename)
   if (!pnminfo->loader)
     {
       g_message (_("File not in a supported format."));
-      longjmp (pnminfo->jmpbuf,1);
+      longjmp (pnminfo->jmpbuf, 1);
     }
 
   pnmscanner_gettoken (scan, buf, BUFLEN);
@@ -569,7 +570,8 @@ load_image (const gchar *filename)
 
   layer_ID = gimp_layer_new (image_ID, _("Background"),
                              pnminfo->xres, pnminfo->yres,
-                             (pnminfo->np >= 3) ? GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE,
+                             (pnminfo->np >= 3 ?
+                              GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE),
                              100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
@@ -660,6 +662,7 @@ pnm_load_ascii (PNMScanner   *scan,
 
       gimp_progress_update ((double) y / (double) info->yres);
       gimp_pixel_rgn_set_rect (pixel_rgn, data, 0, y, info->xres, scanlines);
+
       y += scanlines;
     }
 
@@ -691,8 +694,8 @@ pnm_load_raw (PNMScanner   *scan,
 
       for (i = 0; i < scanlines; i++)
         {
-          CHECK_FOR_ERROR ((info->xres*info->np
-                            != read(fd, d, info->xres*info->np)),
+          CHECK_FOR_ERROR ((info->xres * info->np
+                            != read (fd, d, info->xres * info->np)),
                            info->jmpbuf,
                            _("Premature end of file."));
 
@@ -746,7 +749,7 @@ pnm_load_rawpbm (PNMScanner   *scan,
 
       for (i = 0; i < scanlines; i++)
         {
-          CHECK_FOR_ERROR ((rowlen != read(fd, buf, rowlen)),
+          CHECK_FOR_ERROR ((rowlen != read (fd, buf, rowlen)),
                            info->jmpbuf, _("Error reading file."));
           bufpos = 0;
           curbyte = buf[0];
@@ -775,12 +778,12 @@ pnm_load_rawpbm (PNMScanner   *scan,
 
 /* Writes out mono raw rows */
 static void
-pnmsaverow_raw_pbm (PNMRowInfo *ri,
-                   guchar     *data)
+pnmsaverow_raw_pbm (PNMRowInfo   *ri,
+                    const guchar *data)
 {
   gint    b, i, p = 0;
-  gchar  *rbcur = ri->rowbuf;
-  gint32  len = (int)ceil ((double)(ri->xres)/8.0);
+  gchar  *rbcur   = ri->rowbuf;
+  gint32  len     = (gint) ceil ((gdouble) (ri->xres) / 8.0);
 
   for (b = 0; b < len; b++) /* each output byte */
     {
@@ -802,8 +805,8 @@ pnmsaverow_raw_pbm (PNMRowInfo *ri,
 
 /* Writes out mono ascii rows */
 static void
-pnmsaverow_ascii_pbm (PNMRowInfo *ri,
-                      guchar     *data)
+pnmsaverow_ascii_pbm (PNMRowInfo   *ri,
+                      const guchar *data)
 {
   static gint  line_len = 0;  /* ascii pbm lines must be <= 70 chars long */
   gint32       len = 0;
@@ -836,16 +839,16 @@ pnmsaverow_ascii_pbm (PNMRowInfo *ri,
 
 /* Writes out RGB and greyscale raw rows */
 static void
-pnmsaverow_raw (PNMRowInfo *ri,
-                guchar     *data)
+pnmsaverow_raw (PNMRowInfo   *ri,
+                const guchar *data)
 {
-  write (ri->fd, data, ri->xres*ri->np);
+  write (ri->fd, data, ri->xres * ri->np);
 }
 
 /* Writes out indexed raw rows */
 static void
-pnmsaverow_raw_indexed (PNMRowInfo *ri,
-                        guchar     *data)
+pnmsaverow_raw_indexed (PNMRowInfo   *ri,
+                        const guchar *data)
 {
   gint   i;
   gchar *rbcur = ri->rowbuf;
@@ -862,25 +865,25 @@ pnmsaverow_raw_indexed (PNMRowInfo *ri,
 
 /* Writes out RGB and greyscale ascii rows */
 static void
-pnmsaverow_ascii (PNMRowInfo *ri,
-                  guchar     *data)
+pnmsaverow_ascii (PNMRowInfo   *ri,
+                  const guchar *data)
 {
   gint   i;
   gchar *rbcur = ri->rowbuf;
 
   for (i = 0; i < ri->xres*ri->np; i++)
     {
-      sprintf ((char *) rbcur,"%d\n", 0xff & *(data++));
+      sprintf ((gchar *) rbcur,"%d\n", 0xff & *(data++));
       rbcur += strlen (rbcur);
     }
 
-  write (ri->fd, ri->rowbuf, strlen ((char *) ri->rowbuf));
+  write (ri->fd, ri->rowbuf, strlen ((gchar *) ri->rowbuf));
 }
 
 /* Writes out RGB and greyscale ascii rows */
 static void
-pnmsaverow_ascii_indexed (PNMRowInfo *ri,
-                          guchar     *data)
+pnmsaverow_ascii_indexed (PNMRowInfo   *ri,
+                          const guchar *data)
 {
   gint   i;
   gchar *rbcur = ri->rowbuf;
@@ -908,7 +911,7 @@ save_image (const gchar *filename,
   GimpDrawable  *drawable;
   GimpImageType  drawable_type;
   PNMRowInfo     rowinfo;
-  void (*saverow) (PNMRowInfo *, guchar *) = NULL;
+  void (*saverow) (PNMRowInfo *, const guchar *) = NULL;
   guchar         red[256];
   guchar         grn[256];
   guchar         blu[256];
@@ -1033,9 +1036,9 @@ save_image (const gchar *filename,
 
   if (drawable_type == GIMP_INDEXED_IMAGE && !pbm)
     {
-      gint    i;
       guchar *cmap;
       gint    colors;
+      gint    i;
 
       cmap = gimp_image_get_colormap (image_ID, &colors);
 
@@ -1066,10 +1069,11 @@ save_image (const gchar *filename,
   write (fd, buf, strlen(buf));
 
   rowbuf = g_new (gchar, rowbufsize + 1);
-  rowinfo.fd = fd;
+
+  rowinfo.fd     = fd;
   rowinfo.rowbuf = rowbuf;
-  rowinfo.xres = xres;
-  rowinfo.np = np;
+  rowinfo.xres   = xres;
+  rowinfo.np     = np;
 
   d = NULL; /* only to please the compiler */
 
@@ -1164,9 +1168,11 @@ pnmscanner_create (gint fd)
   PNMScanner *s;
 
   s = g_new (PNMScanner, 1);
-  s->fd = fd;
+
+  s->fd    = fd;
   s->inbuf = NULL;
-  s->eof = !read (s->fd, &(s->cur), 1);
+  s->eof   = !read (s->fd, &(s->cur), 1);
+
   return s;
 }
 
@@ -1178,6 +1184,7 @@ pnmscanner_destroy (PNMScanner *s)
 {
   if (s->inbuf)
     g_free (s->inbuf);
+
   g_free (s);
 }
 
@@ -1188,9 +1195,9 @@ static void
 pnmscanner_createbuffer (PNMScanner *s,
                          gint        bufsize)
 {
-  s->inbuf = g_new (gchar, bufsize);
-  s->inbufsize = bufsize;
-  s->inbufpos = 0;
+  s->inbuf          = g_new (gchar, bufsize);
+  s->inbufsize      = bufsize;
+  s->inbufpos       = 0;
   s->inbufvalidsize = read (s->fd, s->inbuf, bufsize);
 }
 
@@ -1202,9 +1209,10 @@ pnmscanner_gettoken (PNMScanner *s,
                      gchar      *buf,
                      gint        bufsize)
 {
-  int ctr=0;
+  gint ctr = 0;
 
   pnmscanner_eatwhitespace (s);
+
   while (! s->eof                   &&
          ! g_ascii_isspace (s->cur) &&
          (s->cur != '#')            &&
@@ -1213,6 +1221,7 @@ pnmscanner_gettoken (PNMScanner *s,
       buf[ctr++] = s->cur;
       pnmscanner_getchar (s);
     }
+
   buf[ctr] = '\0';
 }
 
@@ -1224,6 +1233,7 @@ pnmscanner_getsmalltoken (PNMScanner *s,
                           gchar      *buf)
 {
   pnmscanner_eatwhitespace (s);
+
   if (!(s->eof) && !g_ascii_isspace (s->cur) && (s->cur != '#'))
     {
       *buf = s->cur;
@@ -1240,17 +1250,21 @@ pnmscanner_getchar (PNMScanner *s)
   if (s->inbuf)
     {
       s->cur = s->inbuf[s->inbufpos++];
+
       if (s->inbufpos >= s->inbufvalidsize)
         {
           if (s->inbufpos > s->inbufvalidsize)
             s->eof = 1;
           else
             s->inbufvalidsize = read (s->fd, s->inbuf, s->inbufsize);
+
           s->inbufpos = 0;
         }
     }
   else
-    s->eof = !read (s->fd, &(s->cur), 1);
+    {
+      s->eof = !read (s->fd, &(s->cur), 1);
+    }
 }
 
 /* pnmscanner_eatwhitespace ---
@@ -1260,7 +1274,7 @@ pnmscanner_getchar (PNMScanner *s)
 static void
 pnmscanner_eatwhitespace (PNMScanner *s)
 {
-  int state = 0;
+  gint state = 0;
 
   while (!(s->eof) && (state != -1))
     {
@@ -1270,12 +1284,16 @@ pnmscanner_eatwhitespace (PNMScanner *s)
           if (s->cur == '#')
             {
               state = 1;  /* goto comment */
-              pnmscanner_getchar(s);
+              pnmscanner_getchar (s);
             }
           else if (!g_ascii_isspace (s->cur))
-            state = -1;
+            {
+              state = -1;
+            }
           else
-            pnmscanner_getchar (s);
+            {
+              pnmscanner_getchar (s);
+            }
           break;
 
         case 1:  /* in comment */

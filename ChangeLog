@@ -1,5 +1,9 @@
 2007-10-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/pnm.c: formatting.
+
+2007-10-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mkgen.pl: set the svn:ignore property instead of
 	writing a .cvsignore file.
 
