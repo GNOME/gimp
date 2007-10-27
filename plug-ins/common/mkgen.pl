@@ -7,8 +7,10 @@ require 'util.pl';
 *write_file = \&Gimp::CodeGen::util::write_file;
 *FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
 
+$ignorefile = ".svnignore";
+
 $outmk = "Makefile.am$FILE_EXT";
-$outignore = ".cvsignore$FILE_EXT";
+$outignore = "$ignorefile$FILE_EXT";
 open MK, "> $outmk";
 open IGNORE, "> $outignore";
 
@@ -177,3 +179,6 @@ close IGNORE;
 
 &write_file($outmk);
 &write_file($outignore);
+
+system ("svn", "propset", "-F", $ignorefile, "svn:ignore", ".");
+unlink $ignorefile;
