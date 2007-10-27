@@ -440,4 +440,4 @@ plug-ins/script-fu/script-fu-scripts.c
 plug-ins/script-fu/script-fu-server.c
 plug-ins/script-fu/script-fu.c
 tools/gimp-remote.c
-
+tools/gimp-remote-x11.c

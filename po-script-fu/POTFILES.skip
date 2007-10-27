@@ -698,3 +698,4 @@ plug-ins/winicon/main.c
 plug-ins/winsnap/winsnap.c
 plug-ins/xjt/xjt.c
 tools/gimp-remote.c
+tools/gimp-remote-x11.c
