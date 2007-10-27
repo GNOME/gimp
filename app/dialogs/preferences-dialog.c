@@ -446,11 +446,11 @@ prefs_resolution_source_callback (GtkWidget *widget,
     {
       GimpSizeEntry *entry = g_object_get_data (G_OBJECT (widget),
                                                 "monitor_resolution_sizeentry");
-      if (entry)
-        {
-          xres = gimp_size_entry_get_refval (entry, 0);
-          yres = gimp_size_entry_get_refval (entry, 1);
-        }
+
+      g_return_if_fail (GIMP_IS_SIZE_ENTRY (entry));
+
+      xres = gimp_size_entry_get_refval (entry, 0);
+      yres = gimp_size_entry_get_refval (entry, 1);
     }
 
   g_object_set (config,

@@ -1,5 +1,11 @@
 2007-10-27  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/preferences-dialog.c (prefs_resolution_source_callback):
+	g_object_get_data() should always return a size-entry here. Return
+	with a warning if it doesn't.
+
+2007-10-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/gimpscanner.c (gimp_scanner_parse_color):
 	initialize GimpRGB, just to be sure.
 
