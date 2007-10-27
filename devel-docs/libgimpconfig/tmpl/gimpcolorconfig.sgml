@@ -22,6 +22,17 @@ GimpColorConfig
 
 </para>
 
+@mode: 
+@rgb_profile: 
+@cmyk_profile: 
+@display_profile: 
+@display_profile_from_gdk: 
+@printer_profile: 
+@display_intent: 
+@simulation_intent: 
+@display_module: 
+@simulation_gamut_check: 
+@out_of_gamut_color: 
 
 <!-- ##### ARG GimpColorConfig:cmyk-profile ##### -->
 <para>

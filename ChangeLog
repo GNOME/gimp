@@ -1,3 +1,9 @@
+2007-10-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimpconfig/gimpcolorconfig.h (struct _GimpColorConfig):
+	declared the fields as public so that they show up in the API
+	documentation.
+
 2007-10-27  Hans Breuer  <hans@breuer.org>
 
 	* app/base/makefile.msc app/file/makefile.msc app/gimpcore.def

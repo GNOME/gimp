@@ -37,6 +37,7 @@ struct _GimpColorConfig
 {
   GObject                     parent_instance;
 
+  /*< public >*/
   GimpColorManagementMode     mode;
   gchar                      *rgb_profile;
   gchar                      *cmyk_profile;
@@ -51,6 +52,7 @@ struct _GimpColorConfig
   gboolean                    simulation_gamut_check;
   GimpRGB                     out_of_gamut_color;
 
+  /*< private >*/
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);
   void (* _gimp_reserved2) (void);
