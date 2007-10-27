@@ -1,3 +1,9 @@
+2007-10-28  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpscrolledpreview.c
+	(gimp_scrolled_preview_nav_button_press): use small-checks for the
+	navigation popup and inherit the check-type from the preview.
+
 2007-10-27  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpwidgets-utils.c (gimp_text_buffer_load): close

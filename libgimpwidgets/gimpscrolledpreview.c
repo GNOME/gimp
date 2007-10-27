@@ -566,7 +566,11 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
       gtk_container_add (GTK_CONTAINER (outer), inner);
       gtk_widget_show (inner);
 
-      area = gimp_preview_area_new ();
+      area = g_object_new (GIMP_TYPE_PREVIEW_AREA,
+                           "check-size", GIMP_CHECK_SIZE_SMALL_CHECKS,
+                           "check-type", GIMP_PREVIEW_AREA (gimp_preview->area)->check_type,
+                           NULL);
+
       gtk_container_add (GTK_CONTAINER (inner), area);
 
       g_signal_connect (area, "realize",
