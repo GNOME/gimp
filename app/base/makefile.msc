@@ -41,6 +41,7 @@ OBJECTS = \
 	tile-manager-crop.obj \
 	tile-manager-preview.obj \
 	tile-pyramid.obj \
+	tile-rowhints.obj \
 	tile-swap.obj \
 
 INCLUDES = \

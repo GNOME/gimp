@@ -49,7 +49,6 @@ OBJECTS = \
 	gimpcolorscales.obj \
 	gimpcolorselect.obj \
 	gimpcolorselection.obj \
-	gimpcolordisplaystack.obj \
 	gimpcolorselector.obj \
 	gimpcontroller.obj \
 	gimpdialog.obj \

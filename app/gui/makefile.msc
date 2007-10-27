@@ -45,7 +45,8 @@ INCLUDES = \
 	-I$(includedir)
 
 DEFINES = \
-	-DG_LOG_DOMAIN=\"Gimp-GUI\"
+	-DG_LOG_DOMAIN=\"Gimp-GUI\" \
+	-DGIMP_COMMAND=\"gimp.exe\"
 
 all : \
 	$(PRJ_TOP)\config.h \

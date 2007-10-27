@@ -13,8 +13,6 @@ OBJECTS = \
 	file-procedure.obj \
 	file-save.obj \
 	file-utils.obj \
-	gimprecentitem.obj \
-	gimprecentlist.obj \
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \

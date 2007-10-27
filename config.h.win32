@@ -186,3 +186,6 @@
 
 /* Define if you have the i library (-li).  */
 /* #undef HAVE_LIBI */
+
+/* File + Xtns at the toolbox, only *not* on OSX */
+#define ENABLE_TOOLBOX_MENU 1

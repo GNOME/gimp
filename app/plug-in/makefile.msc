@@ -44,6 +44,7 @@ OBJECTS = \
 	\
 	plug-in-enums.obj \
 	plug-in-icc-profile.obj \
+	plug-in-menu-path.obj \
 	plug-in-params.obj \
 	plug-in-rc.obj
 

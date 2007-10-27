@@ -1,3 +1,11 @@
+2007-10-27  Hans Breuer  <hans@breuer.org>
+
+	* app/base/makefile.msc app/file/makefile.msc app/gimpcore.def
+	  app/gui/makefile.msc app/plug-in/makefile.msc
+	  libgimpwidgets/makefile.msc : updated msvc build
+	* config.h.win32 : add ENABLE_TOOLBOX_MENU, it should only
+	vanish on Mac OSX (Quartz build)
+
 2007-10-27  Tor Lillqvist  <tml@novell.com>
 
 	* libgimpbase/gimpenv.c (gimp_toplevel_directory): Drop the Win9x
