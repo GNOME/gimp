@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-12 20:40+0200\n"
-"PO-Revision-Date: 2007-09-12 20:41+0100\n"
+"PO-Revision-Date: 2007-10-27 20:58+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -2765,7 +2765,7 @@ msgstr "_Grundläggande koncept"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
 msgid "_Developer Web Site"
-msgstr "_Sajt för utvecklare"
+msgstr "Webbplats för _utvecklare"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
 msgid "_Main Web Site"
@@ -2777,11 +2777,11 @@ msgstr "_Förbered dina bilder för webben"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
 msgid "_User Manual Web Site"
-msgstr "_Webbplats för användarhandbok"
+msgstr "Webbplats för _användarhandbok"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
 msgid "_Working with Digital Camera Photos"
-msgstr "_Arbeta med digitala kamerafoton"
+msgstr "Arbeta med digital_kamerabilder"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
