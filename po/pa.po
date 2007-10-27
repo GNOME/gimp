@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: gimp.HEAD.pa\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-19 03:45+0100\n"
-"PO-Revision-Date: 2007-10-22 22:29+0530\n"
+"PO-Revision-Date: 2007-10-27 22:35+0530\n"
 "Last-Translator: Amanpreet Singh Alam <aalam@users.sf.net>\n"
 "Language-Team: Panjabi <punjabi-l10n@users.sf.net>\n"
 "MIME-Version: 1.0\n"
@@ -63,7 +63,7 @@ msgstr ""
 "\n"
 "ਜੈਮਪ ਨੂੰ ਇਹ ਮੰਨ ਕੇ ਵੰਡਿਆਂ ਜਾ ਰਿਹਾ ਹੈ ਕਿ ਇਹ ਫਾਇਦਮੰਦ ਰਹੇਗਾ,ਪਰ ਇਸ ਦੀ ਕੋਈ ਵਾਰੰਟੀ ਨਹੀਂ ਲਈ ਜਾ "
 "ਰਹੀ ਹੈ, ਕਿਸ ਖਾਸ ਕੰਮ ਲਈ ਅਨੁਕੂਲ ਹੋਣ ਜਾਂਠੀਕ ਤਰ੍ਹਾ ਕੰਮ ਕਰਨ ਦੀ ਵੀ ਕੋਈ ਗਾਰਟੀ ਨਹੀਂ ਹੈ। ਹੋਰ ਵੇਰਵੇ "
-"ਲਈ ਗਨੂ ਜਰਨਲਪਬਲਿਕ ਲਾਇਸੈਂਸ ਨੂੰ ਪੜ੍ਹੋ।\n"
+"ਲਈ ਗਨੂ ਜਰਨਲ ਪਬਲਿਕ ਲਾਇਸੈਂਸ ਨੂੰ ਪੜ੍ਹੋ।\n"
 "\n"
 "ਜੈਮਪ ਨਾਲ ਤੁਸੀਂ ਗਨੂ ਜਰਨਲ ਪਬਲਿਕ ਲਾਇਸੈਂਸ ਦੀ ਨਕਲ ਪਰਾਪਤ ਕਰੋਗੇ, ਜੇਕਰ ਤੁਹਾਨੂੰਨਹੀਂ ਮਿਲੀ ਹੈ ਤਾਂ ਫਰੀ "
 "ਸਾਫਟਵਅਰ ਫਾਊਂਨਡੇਸ਼ਨ, 51 ਫਰਾਕਲਿਨ ਸਟਰੀਟ, ਪੰਜਵੀ ਮੰਜ਼ਲ,ਬਸਟਨ, ਐਮ ਏ 02110-1301, ਅਮਰੀਕਾ ਨੂੰ "
@@ -4550,12 +4550,18 @@ msgid ""
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
 msgstr ""
+"ਟੂਲ, ਜਿਵੇਂ ਕਿ ਫਜ਼ੀ-ਚੋਣ ਅਤੇ ਬਾਲਟੀ ਭਰੋ, ਖੇਤਰ ਲੱਭਣ ਵਾਸਤੇ ਸੀਡ-ਫਿਲ ਐਲਗੋਰਿਥਮ ਵਰਤਦੇ ਹਨ। "
+"ਸੀਡ ਫਿਲ ਸ਼ੁਰੂ ਸਮੇਂ ਚੁਣੇ ਪਿਕਸਲਾਂ ਨਾਲ ਸ਼ੁਰੂ ਹੁੰਦਾ ਹੈ ਅਤੇ ਸਭ ਦਿਸ਼ਾਵਾਂ ਵਿੱਚ ਉੱਦੋਂ ਤੱਕ ਚੱਲਦਾ ਹੈ, "
+"ਜਦੋਂ ਤੱਕ ਕਿ ਪਿਕਸਲ ਦੀ ਇੰਟੈਂਸਟੀ ਅਸਲੀ ਪਿਕਸਲ ਦੀ ਇੰਟੈਂਸਟੀ ਤੋਂ ਇੱਕ ਦਿੱਤੇ ਥਰੈਸ਼ਹੋਲਡ ਤੱਕ ਵੱਧ "
+"ਨਹੀਂ ਜਾਂਦੀ ਹੈ। ਇਹ ਮੁੱਲ ਡਿਫਾਲਟ ਥਰੈਸ਼ਹੋਲਡ ਦਿੰਦਾ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:92
 msgid ""
 "The window type hint that is set on dock windows. This may affect the way "
 "your window manager decorates and handles dock windows."
 msgstr ""
+"ਵਿੰਡੋ ਟਾਈਪ ਹਿੰਟ, ਜੋ ਕਿ ਡੌਕ ਵਿੰਡੋ ਉੱਤੇ ਸੈੱਟ ਕੀਤਾ ਜਾਂਦਾ ਹੈ। ਇਹ ਤੁਹਾਡੇ ਵਿੰਡੋ ਮੈਨੇਜਰ ਵਲੋਂ "
+"ਸਜਾਵਟ ਅਤੇ ਡੌਕ ਵਿੰਡੋਜ਼ ਹੈਡਲ ਕਰਨ ਦੇ ਢੰਗ ਨੂੰ ਪਰਭਾਵਿਤ ਕਰ ਸਕਦਾ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:123
 msgid "When enabled, the selected brush will be used for all tools."
@@ -4593,7 +4599,7 @@ msgstr "ਇੱਕ ਪ੍ਰਾਈਵੇਟ ਰੰਗ-ਮੈਪ ਇੰਸਟਾ�
 
 #: ../app/config/gimprc-blurbs.h:167
 msgid "Sets the level of interpolation used for scaling and other transformations."
-msgstr ""
+msgstr "ਸਕੇਲਿੰਗ ਅਤੇ ਹੋਰ ਟਰਾਂਸਫਰਮੇਸ਼ਨ ਲਈ ਵਰਤਣ ਵਾਸਤੇ ਇੰਟਰਪੋਲਟੇਸ਼ਣ ਦਾ ਲੈਵਲ ਸੈੱਟ ਕਰੋ।"
 
 #: ../app/config/gimprc-blurbs.h:174
 msgid "How many recently opened image filenames to keep on the File menu."
@@ -4603,7 +4609,7 @@ msgstr "ਫਾਇਲ ਮੇਨੂ-ਲਿਸਟ ਵਿੱਚ ਕਿੰਨੇ ਤ�
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
-msgstr ""
+msgstr "ਚੋਣ ਆਉਟਲਾਈਨ ਵਿੱਚ ਮਾਰਚ ਕਰਦੀਆਂ ਕੀੜੀਆਂ ਦੀ ਗਤੀ। ਇਹ ਮੁੱਲ ਮਿਲੀਸਕਿੰਟ ਵਿੱਚ ਹੈ (ਘੱਟ ਟਾਈਮ ਦਾ ਮਤਲਬ ਹੈ ਕਿ ਤੇਜ਼ ਮਾਰਚ ਕਰਨਾ)।"
 
 #: ../app/config/gimprc-blurbs.h:181
 msgid ""
@@ -4629,6 +4635,8 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
+"ਮਾਨੀਟਰ ਦਾ ਹਰੀਜ਼ੱਟਲ ਰੈਜ਼ੋਲੂਸ਼ਨ ਸੈੱਟ ਕਰਦਾ ਹੈ, ਡਾਟ ਪ੍ਰਤੀ ਇੰਚ। ਜੇ 0 ਸੈੱਟ ਕੀਤਾ ਤਾਂ, X ਸਰਵਰ ਦੋਵੇਂ ਹਰੀਜ਼ੱਟਲ ਅਤੇ ਵਰਟੀਕਲ ਰੈਜ਼ੋਲੂਸ਼ਨ "
+"ਜਾਣਕਾਰੀ ਲਈ ਫੋਰਸ ਕਰੇਗਾ।"
 
 #: ../app/config/gimprc-blurbs.h:203
 msgid ""
@@ -4636,18 +4644,22 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
+"ਮਾਨੀਟਰ ਦਾ ਵਰਟੀਕਲ ਰੈਜ਼ੋਲੂਸ਼ਨ ਸੈੱਟ ਕਰਦਾ ਹੈ, ਡਾਟ ਪ੍ਰਤੀ ਇੰਚ। ਜੇ 0 ਸੈੱਟ ਕੀਤਾ ਤਾਂ, X ਸਰਵਰ ਦੋਵੇਂ ਹਰੀਜ਼ੱਟਲ ਅਤੇ ਵਰਟੀਕਲ ਰੈਜ਼ੋਲੂਸ਼ਨ "
+"ਜਾਣਕਾਰੀ ਲਈ ਫੋਰਸ ਕਰੇਗਾ।"
 
 #: ../app/config/gimprc-blurbs.h:208
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
 msgstr ""
+"ਜਦੋਂ ਇਹ ਯੋਗ ਕੀਤਾ ਤਾਂ ਮੂਵ ਟੂਲ ਸੋਧੀ ਲੇਅਰ ਜਾਂ ਪਾਥ ਨੂੰ ਐਕਟਿਵ ਸੈੱਟ ਕਰੇਗਾ।  ਇਸ ਨੂੰ ਪੁਰਾਣੇ "
+"ਵਰਜਨਾਂ ਵਿੱਚ ਡਿਫਾਲਟ ਵਰਤਿਆ ਜਾਂਦਾ ਸੀ।"
 
 #: ../app/config/gimprc-blurbs.h:212
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
-msgstr ""
+msgstr "ਚਿੱਤਰ ਵਿੰਡੋ ਦੇ ਹੇਠਲੇ ਸੱਜੇ ਕੋਨੇ ਵਿੱਚ ਉਪਲੱਬਧ ਨੇਵੀਗੇਸ਼ਨ ਝਲਕ ਦਾ ਆਕਾਰ ਸੈੱਟ ਕਰਦਾ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:216
 msgid "Sets how many processors GIMP should try to use simultaneously."
@@ -4661,6 +4673,10 @@ msgid ""
 "Perversely, on some X servers enabling this option results in faster "
 "painting."
 msgstr ""
+"ਜਦੋਂ ਯੋਗ ਕੀਤਾ ਤਾਂ, X ਸਰਵਰ ਹਰੇਕ ਮੋਸ਼ਨ ਈਵੈਂਟ ਉੱਤੇ ਮਾਊਂਸ ਦੀ ਮੌਜੂਦਾ ਸਥਿਤੀ ਬਾਰੇ ਪਤਾ ਕਰੇਗਾ, "
+"ਨਾ ਕਿ ਸਥਿਤੀ ਹਿੰਟ ਉੱਤੇ ਨਿਰਭਰ ਕਰੇਗਾ। ਇਸ ਦਾ ਮਤਲਬ ਹੈ ਕਿ ਵੱਡੇ ਬੁਰਸ਼ਾਂ ਨਾਲ ਪੇਂਟ ਕਰਨ ਸਮੇਂ "
+"ਵੱਧ ਸ਼ੁੱਧਤਾ ਰਹੇਗੀ, ਪਰ ਇਹ ਹੌਲੀ ਹੈ। ਉਲਟ ਰੂਪ ਵਿੱਚ, ਕੁਝ X ਸਰਵਰ ਇਹ ਚੋਣ ਕਰਨ ਨਾਲ ਤੇਜ਼ ਪੇਂਟ "
+"ਕਰਨ ਦਿੰਦੇ ਹਨ।"
 
 #: ../app/config/gimprc-blurbs.h:245
 msgid ""
@@ -4722,7 +4738,7 @@ msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
 "by pressing F1."
-msgstr ""
+msgstr "ਜਦੋਂ ਵੋਗ ਕੀਤਾ ਤਾਂ ਡਾਈਲਾਗ ਇੱਕ ਮੱਦਦ ਬਟਨ ਵੇਖਾਏਗਾ, ਜੋ ਕਿ ਸਬੰਧਿਤ ਮੱਦਦ ਪੇਜ਼ ਲਈ ਅਸੈੱਸ ਦੇਵੇਗਾ। ਬਿਨਾਂ ਇਸ ਬਟਨ ਦੇ, ਮੱਦਦ ਪੇਜ਼ ਨੂੰ F1 ਦਬਾ ਕੇ ਵੀ ਵਰਤਿਆ ਜਾ ਸਕਦਾ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:290
 msgid ""
@@ -4734,55 +4750,55 @@ msgstr "ਜਦੋਂ ਯੋਗ ਕੀਤਾ ਗਿਆ ਤਾਂ ਮਾਊਂਸ 
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
-msgstr ""
+msgstr "ਜਦੋਂ ਯੋਗ ਕੀਤਾ ਤਾਂ, ਮੇਨੂ-ਬਾਰ ਵੇਖਾਉਣਾ ਡਿਫਾਲਟ ਹੀ ਯੋਗ ਹੋਵੇਗਾ। ਇਸ ਨੂੰ \"ਵੇਖੋ->ਮੇਨੂ ਬਾਰ ਵੇਖੋ\" ਨਾਲ ਵੀ ਯੋਗ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:298
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
-msgstr ""
+msgstr "ਜਦੋਂ ਯੋਗ ਕੀਤਾ ਤਾਂ, ਰੂਲਰ ਵੇਖਾਉਣਾ ਡਿਫਾਲਟ ਹੀ ਯੋਗ ਹੋਵੇਗਾ। ਇਸ ਨੂੰ \"ਵੇਖੋ->ਰੂਲਰ ਵੇਖੋ\" ਨਾਲ ਵੀ ਯੋਗ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:302
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
-msgstr ""
+msgstr "ਜਦੋਂ ਯੋਗ ਕੀਤਾ ਤਾਂ, ਸਕਰੋਲਬਾਰ ਵੇਖਾਉਣਾ ਡਿਫਾਲਟ ਹੀ ਯੋਗ ਹੋਵੇਗਾ। ਇਸ ਨੂੰ \"ਵੇਖੋ->ਸਕਰੋਲਬਾਰ\" ਨਾਲ ਵੀ ਯੋਗ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:306
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
-msgstr ""
+msgstr "ਜਦੋਂ ਯੋਗ ਕੀਤਾ ਤਾਂ, ਹਾਲਤ-ਪੱਟੀ ਨੂੰ ਵੇਖਾਉਣਾ ਡਿਫਾਲਟ ਹੀ ਯੋਗ ਹੋਵੇਗਾ। ਇਸ ਨੂੰ \"ਵੇਖੋ->ਹਾਲਤ ਪੱਟੀ ਵੇਖੋ\" ਨਾਲ ਵੀ ਯੋਗ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:310
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
-msgstr ""
+msgstr "ਜਦੋਂ ਯੋਗ ਕੀਤਾ ਤਾਂ, ਚੋਣ ਵੇਖਾਉਣਾ ਡਿਫਾਲਟ ਹੀ ਯੋਗ ਹੋਵੇਗਾ। ਇਸ ਨੂੰ \"ਵੇਖੋ->ਚੋਣ ਵੇਖੋ\" ਨਾਲ ਵੀ ਯੋਗ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:314
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
-msgstr ""
+msgstr "ਜਦੋਂ ਯੋਗ ਕੀਤਾ ਤਾਂ, ਲੇਅਰ ਬਾਊਂਡਰੀ ਵੇਖਾਉਣਾ ਡਿਫਾਲਟ ਹੀ ਯੋਗ ਹੋਵੇਗਾ। ਇਸ ਨੂੰ \"ਵੇਖੋ->ਬਾਊਂਡਰੀ ਵੇਖੋ\" ਨਾਲ ਵੀ ਯੋਗ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:318
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
-msgstr ""
+msgstr "ਜਦੋਂ ਯੋਗ ਕੀਤਾ ਤਾਂ, ਗਾਈਡਾਂ ਵੇਖਾਉਣਾ ਡਿਫਾਲਟ ਹੀ ਯੋਗ ਹੋਵੇਗਾ। ਇਸ ਨੂੰ \"ਵੇਖੋ->ਗਾਈਡ ਵੇਖੋ\" ਨਾਲ ਵੀ ਯੋਗ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:322
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
-msgstr ""
+msgstr "ਜਦੋਂ ਯੋਗ ਕੀਤਾ ਤਾਂ, ਗਰਿੱਡ ਡਿਫਾਲਟ ਹੀ ਯੋਗ ਹੋਵੇਗਾ। ਇਸ ਨੂੰ \"ਵੇਖੋ->ਗਰਿੱਡ ਵੇਖੋ\" ਨਾਲ ਵੀ ਯੋਗ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:326
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
-msgstr ""
+msgstr "ਜਦੋਂ ਯੋਗ ਕੀਤਾ ਤਾਂ, ਸੈਂਪਲ ਪੁਆਇੰਟ ਡਿਫਾਲਟ ਹੀ ਯੋਗ ਹੋਵੇਗਾ। ਇਸ ਨੂੰ \"ਵੇਖੋ-> ਸੈਂਪਲ ਪੁਆਇੰਟ ਵੇਖੋ\" ਨਾਲ ਵੀ ਯੋਗ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:330
 msgid "Enable displaying a handy GIMP tip on startup."
@@ -4805,6 +4821,12 @@ msgid ""
 "file is created on a folder that is mounted over NFS.  For these reasons, it "
 "may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
+"ਸਵੈਪ ਫਾਇਲ ਟਿਕਾਣਾ ਸੈੱਟ ਕਰੋ। ਜੈਮਪ ਇੱਕ ਟਾਇਲ ਅਧਾਰਿਤ ਮੈਮੋਰੀ ਜਾਰੀ ਸਕੀਮ ਵਰਤਦਾ ਹੈ। "
+"ਸਵੈਪ ਫਾਇਲ ਨੂੰ ਡਿਸਕ ਉੱਤੇ ਤੇਜ਼ੀ ਅਤੇ ਸੌਖੀ ਤਰ੍ਹਾਂ ਸਵੈਪ ਫਾਇਲ ਲਿਖਣ ਅਤੇ ਪੜ੍ਹਨ ਲਈ ਵਰਤੀ ਜਾਂਦੀ ਹੈ। "
+"ਧਿਆਨ ਰੱਖੋ ਕਿ ਜੇ ਜੈਮਪ ਵੱਡੇ ਚਿੱਤਰ ਵਰਤੇਗਾ ਤਾਂ ਸਵੈਪ ਫਾਇਲ ਬੜੀ ਤੇਜ਼ੀ ਨਾਲ ਵੱਡੀ ਹੋ ਸਕਦੀ ਹੈ। "
+"ਇਸ ਤੋਂ ਇਲਾਵਾ ਧਿਆਨ ਰੱਖੋ ਕਿ NFS ਰਾਹੀਂ ਮਾਊਂਟ ਡਾਇਰੈਕਟਰੀ ਕੀਤੀ ਡਾਇਰੈਕਟਰੀ ਉੱਤੇ ਸਵੈਪ ਬਣਾਈ "
+"ਜਾਵੇ ਤਾਂ ਚੀਜ਼ਾਂ ਗੰਭੀਰ ਹੱਦ ਤੱਕ ਹੌਲੀ ਹੋ ਸਕਦੀਆਂ ਹਨ। ਇਸ ਕਾਰਨ ਕਰਕੇ, "
+"ਆਪਣੀ ਸਵੈਪ ਫਾਇਲ \"/tmp\" ਵਿੱਚ ਰੱਖਣਾ ਠੀਕ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:348
 msgid "When enabled, menus can be torn off."
@@ -4822,6 +4844,8 @@ msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
 msgstr ""
+"ਜਦੋਂ ਯੋਗ ਕੀਤਾ ਤਾਂ ਤੁਸੀਂ ਮੇਨੂ ਆਈਟਮ ਆਈਟਮ ਹਾਈਲਾਈਟ ਹੋਣ ਦੌਰਾਨ ਇੱਕ ਸਵਿੱਚ ਕੰਬੀਨੇਸ਼ਨ "
+"ਦੇ ਕੇ ਮੇਨੂ ਆਈਟਮ ਲਈ ਕੀਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਬਦਲ ਸਕਦੇ ਹੋ।"
 
 #: ../app/config/gimprc-blurbs.h:361
 msgid "Save changed keyboard shortcuts when GIMP exits."
@@ -4838,6 +4862,9 @@ msgid ""
 "files are likely to remain, so it is best if this folder not be one that is "
 "shared by other users."
 msgstr ""
+"ਆਰਜ਼ੀ ਸਟੋਰੇਜ਼ ਡਾਇਰੈਕਟਰੀ ਸੈੱਟ ਕਰਦੀ ਹੈ। ਜੈਮਪ ਦੇ ਚੱਲਣ ਦੌਰਾਨ ਫਾਇਲਾਂ ਇੱਥੇ ਦਿਸਣਗੀਆਂ। "
+"ਜੈਮਪ ਬੰਦ ਕਰਨ ਬਾਅਦ ਬਹੁਤੀਆਂ ਫਾਇਲਾਂ ਖਤਮ ਹੋ ਜਾਣਗੀਆਂ, ਪਰ ਕੁਝ ਫਾਇਲਾਂ ਬਾਕੀ ਰਹਿ ਸਕਦੀਆਂ "
+"ਹਨ, ਇਸਕਰਕੇ ਇਹ ਚੰਗਾ ਹੈ ਜੇ ਇਸ ਨੂੰ ਹੋਰ ਯੂਜ਼ਰਾਂ ਵਲੋਂ ਸ਼ੇਅਰ ਨਾ ਕੀਤਾ ਜਾਵੇ।"
 
 #: ../app/config/gimprc-blurbs.h:379
 msgid "Sets the size of the thumbnail shown in the Open dialog."
@@ -4864,6 +4891,8 @@ msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
 msgstr ""
+"ਵਿੰਡੋ ਟਾਈਪ ਹਿੰਟ, ਜੋ ਕਿ ਟੂਲਬਾਕਸ ਉੱਤੇ ਸੈੱਟ ਹੁੰਦਾ ਹੈ। ਇਹ ਪਰਭਾਵਿਤ ਕਰ ਸਕਦੀ ਹੈ ਕਿ ਤੁਹਾਡਾ "
+"ਵਿੰਡੋ ਮੈਨੇਜਰ ਸਜਾਵਟ ਅਤੇ ਟੂਲਬਾਕਸ ਵਿੰਡੋ ਨੂੰ ਕਿਵੇਂ ਹੈੱਡਲ ਕਰਦਾ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:400
 msgid "Sets the manner in which transparency is displayed in images."
@@ -4886,6 +4915,8 @@ msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
 msgstr ""
+"ਵਾਪਸ ਲੈਣ ਲਈ ਓਪਰੇਸ਼ਨਾਂ ਦੀ ਘੱਟੋ-ਘੱਟ ਗਿਣਤੀ ਸੈੱਟ ਕਰਦੀ ਹੈ। ਹੋਰ ਵਾਪਸੀ ਲੈਵਲ ਵੀ ਰੱਖੇ ਜਾਂਦੇ ਹਨ, "
+"ਜਦੋਂ ਤੱਕ ਕਿ ਵਾਪਸੀ ਸਾਈਜ਼ ਲਿਮਟ ਨਹੀਂ ਅੱਪੜ ਜਾਂਦੀ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:414
 msgid ""
@@ -4893,6 +4924,9 @@ msgid ""
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 msgstr ""
+"ਮੈਮੋਰੀ ਲਈ ਉਤਲੀ ਲਿਮਟ ਸੈੱਟ ਕਰਦੀ ਹੈ ਜੋ ਕਿ ਵਾਪਸੀ ਸਟੈਕ ਵਿੱਚ ਓਪਰੇਸ਼ਨ ਰੱਖਣ ਵਾਸਤੇ "
+"ਪ੍ਰਤੀ ਚਿੱਤਰ ਲਈ ਵਰਤੀ ਜਾਂਦੀ ਹੈ। ਇਸ ਸੈਟਿੰਗ ਤੋਂ ਇਲਾਵਾ, ਜਿੰਨੇ ਵੀ ਵਾਪਸੀ-ਲੈਵਲ ਸੰਰਚਿਤ ਹਨ, "
+"ਉਹ ਤਾਂ ਵਾਪਸ ਲਏ ਹੀ ਜਾ ਸਕਦੇ ਹਨ।"
 
 #: ../app/config/gimprc-blurbs.h:419
 msgid "Sets the size of the previews in the Undo History."
@@ -4910,6 +4944,9 @@ msgid ""
 "contains '%s' it will be replaced with the URL, else the URL will be "
 "appended to the command with a space separating the two."
 msgstr ""
+"ਬਾਹਰੀ ਵੈੱਬ ਬਰਾਊਜ਼ਰ ਵਰਤਣ ਲਈ ਸੈੱਟ ਕਰਦੀ ਹ।  ਇਸ ਇੱਕ ਅਸਲ ਪਾਥ ਹੈ ਜਾਂ  ਯੂਜ਼ਰ ਦੇ ਪਾਥ "
+"(PATH) ਵਿੱਚ ਖੋਜ ਲਈ ਇੱਕ ਚੱਲਣਯੋਗ ਨਾਂ ਹੈ। ਜੇ ਕਮਾਂਡ ਵਿੱਚ '%s' ਹੋਵੇ ਤਾਂ ਇਸ ਨੂੰ URL ਨਾਲ "
+"ਬਦਲਿਆ ਜਾਵੇਗਾ, ਨਹੀਂ ਤਾਂ URL ਨੂੰ ਕਮਾਂਡ ਨਾਲ ਦੋ ਖਾਲੀ ਸਪੇਸ ਛੱਡ ਕੇ ਜੋੜਿਆ ਜਾਵੇਗਾ।"
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:134
 #: ../app/core/gimp-units.c:164 ../app/gui/session.c:160
@@ -6307,6 +6344,8 @@ msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
 msgstr ""
+"ਫਲੋਟਿੰਗ ਚੋਣ ਤੋਂ ਇੱਕ ਨਵੀਂ ਲੇਅਰ ਨਹੀਂ ਬਣਾਈ ਜਾ ਸਕਦੀ ਹੈ, ਕਿਉਂਕਿ ਇਹ ਇੱਕ ਲੇਅਰ ਮਾਸਕ ਜਾਂ ਚੈਨਲ "
+"ਨਾਲ ਸਬੰਧਿਤ ਹੈ।"
 
 #: ../app/core/gimplayer-floating-sel.c:218
 msgid "Floating Selection to Layer"
@@ -6531,7 +6570,7 @@ msgstr ""
 
 #: ../app/core/gimptemplate.c:119
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
-msgstr ""
+msgstr "ਜਦੋਂ ਡਾਟ-ਲਈ-ਡਾਟ ਮੋਡ ਨਾ ਹੋਵੇ ਤਾਂ ਕਾਰਡੀਨੇਟ ਵੇਖਾਉਣ ਲਈ ਵਰਤੇ ਯੂਨਿਟ ਹਨ।"
 
 #: ../app/core/gimptemplate.c:126
 msgid "The horizontal image resolution."
@@ -7279,7 +7318,7 @@ msgstr "ਵੱਧੋ-ਵੱਧ ਵਾਪਸੀ ਮੈਮੋਰੀ(_m):"
 
 #: ../app/dialogs/preferences-dialog.c:1577
 msgid "Tile cache _size:"
-msgstr "ਟਾਇਲ ਕੈਚੇ ਆਕਾਰ(_s):"
+msgstr "ਟਾਇਲ ਕੈਸ਼ ਆਕਾਰ(_s):"
 
 #: ../app/dialogs/preferences-dialog.c:1580
 msgid "Maximum _new image size:"
@@ -7347,7 +7386,7 @@ msgstr "ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ"
 
 #: ../app/dialogs/preferences-dialog.c:1655
 msgid "Show menu _mnemonics (access keys)"
-msgstr ""
+msgstr "ਮੇਨੂ ਨੀਮੋਨਿਸ ਵੇਖੋ (ਅਸੈੱਸ ਸਵਿਚਾਂ)(_m)"
 
 #: ../app/dialogs/preferences-dialog.c:1658
 msgid "_Use dynamic keyboard shortcuts"
@@ -8909,7 +8948,7 @@ msgstr "ਰਪੀਟ:"
 
 #: ../app/tools/gimpblendoptions.c:247
 msgid "Adaptive supersampling"
-msgstr ""
+msgstr "ਐਡਪਟਿਵ ਸੁਪਰ-ਸੈਪਲਿੰਗ"
 
 #: ../app/tools/gimpblendoptions.c:255
 msgid "Max depth:"
@@ -8949,7 +8988,7 @@ msgstr "ਮਿਲਾਵਟ:"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:103
 msgid "Brightness/Contrast Tool: Adjust brightness and contrast"
-msgstr ""
+msgstr "ਚਮਕ/ਕਨਟਰਾਸਟ ਟੂਲ: ਚਮਕ ਅਤੇ ਕਨਟਰਾਸਟ ਅਡਜੱਸਟ ਕਰੋ"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:104
 msgid "B_rightness-Contrast..."
@@ -8969,7 +9008,7 @@ msgstr "ਚਮਕੀਲਾਪਨ(_B):"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:301
 msgid "Con_trast:"
-msgstr ""
+msgstr "ਕਾਨਟਰਾਸਟ(_t):"
 
 #: ../app/tools/gimpbucketfilloptions.c:100
 msgid "Allow completely transparent regions to be filled"
@@ -9368,7 +9407,7 @@ msgstr "ਡੋਡਗੀ / ਬਰਨ"
 
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
-msgstr ""
+msgstr "ਡੋਡਗੀ / ਬਰਨ ਟੂਲ: ਇੱਕ ਬੁਰਸ਼ ਨਾਲ ਚੋਣਵੀਂ ਰੋਸ਼ਨੀ ਜਾਂ ਹਨੇਰਾ"
 
 #: ../app/tools/gimpdodgeburntool.c:75
 msgid "Dod_ge / Burn"
@@ -9376,11 +9415,11 @@ msgstr "ਡੋਡਗੀ / ਬਰਨ (_g)"
 
 #: ../app/tools/gimpdodgeburntool.c:173
 msgid "Click to dodge"
-msgstr ""
+msgstr "ਡੋਡਗੀ ਲਈ ਕਲਿੱਕ ਕਰੋ"
 
 #: ../app/tools/gimpdodgeburntool.c:174
 msgid "Click to dodge the line"
-msgstr ""
+msgstr "ਲਾਈਨ ਡੋਡਗ ਲਈ ਕਲਿੱਕ ਕਰੋ"
 
 #: ../app/tools/gimpdodgeburntool.c:175
 #, c-format
@@ -9398,7 +9437,7 @@ msgstr "ਲਾਈਨ ਬਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ"
 #: ../app/tools/gimpdodgeburntool.c:181
 #, c-format
 msgid "%s to dodge"
-msgstr ""
+msgstr "%s ਲਈ ਡੋਡਗੀ"
 
 #. the type (dodge or burn)
 #: ../app/tools/gimpdodgeburntool.c:202
@@ -9418,7 +9457,7 @@ msgstr "ਪੱਖ:"
 #: ../app/tools/gimpeditselectiontool.c:194
 #: ../app/tools/gimpeditselectiontool.c:1105
 msgid "Move Floating Selection"
-msgstr ""
+msgstr "ਫਲੋਟਿੰਗ ਚੋਣ ਹਿਲਾਓ"
 
 #: ../app/tools/gimpeditselectiontool.c:396
 #: ../app/tools/gimpeditselectiontool.c:664
@@ -9431,7 +9470,7 @@ msgstr "ਅੰਡਾਕਾਰ ਚੋਣ"
 
 #: ../app/tools/gimpellipseselecttool.c:69
 msgid "Ellipse Select Tool: Select an elliptical region"
-msgstr ""
+msgstr "ਅੰਡਾਕਾਰ ਚੋਣ ਟੂਲ: ਇੱਕ ਅੰਡਾਕਾਰ ਖੇਤਰ ਚੁਣੋ"
 
 #: ../app/tools/gimpellipseselecttool.c:70
 msgid "_Ellipse Select"
@@ -9439,7 +9478,7 @@ msgstr "ਅੰਡਾਕਾਰ ਚੋਣ(_E)"
 
 #: ../app/tools/gimperasertool.c:67
 msgid "Eraser Tool: Erase to background or transparency using a brush"
-msgstr ""
+msgstr "ਹਟਾਉਣ ਟੂਲ: ਬੈਕਗਰਾਊਂਡ ਜਾਂ ਟਰਾਸਪਰੇਸੀ ਇੱਕ ਬੁਰਸ਼ ਨਾਲ ਸਾਫ਼ ਕਰੋ"
 
 #: ../app/tools/gimperasertool.c:68
 msgid "_Eraser"
@@ -9480,7 +9519,7 @@ msgstr "ਫਲਿਪ"
 
 #: ../app/tools/gimpfliptool.c:78
 msgid "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
-msgstr ""
+msgstr "ਫਲਿਪ ਟੂਲ: ਲੇਅਰ, ਚੋਣ ਜਾਂ ਪਾਥ ਹਰੀਜਟਲ ਜਾਂ ਵਰਟੀਕਲ ਉਲਟ ਕਰੋ"
 
 #: ../app/tools/gimpfliptool.c:80
 msgid "_Flip"
@@ -9582,7 +9621,7 @@ msgstr "ਫਾਰਗਰਾਊਂਡ ਚੋਣ"
 
 #: ../app/tools/gimpfreeselecttool.c:98
 msgid "Free Select Tool: Select a hand-drawn region"
-msgstr ""
+msgstr "ਫਰੀ ਚੋਣ ਟੂਲ: ਇੱਕ ਹੱਥ ਨਾਲ ਖੇਤਰ ਚੁਣੋ"
 
 #: ../app/tools/gimpfreeselecttool.c:99
 msgid "_Free Select"
@@ -9631,7 +9670,7 @@ msgstr "ਹਿਸਟਰੋਗਰਾਮ ਸਕੇਲ"
 
 #: ../app/tools/gimphuesaturationtool.c:113
 msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
-msgstr ""
+msgstr "ਆਭਾ-ਸੰਤ੍ਰਿਪਤਾ ਟੂਲ: ਆਭਾ, ਸੰਤ੍ਰਿਪਤਾ ਅਤੇ ਰੋਸ਼ਨੀ ਅਡਜੱਸਟ ਕਰੋ"
 
 #: ../app/tools/gimphuesaturationtool.c:114
 msgid "Hue-_Saturation..."
@@ -9643,7 +9682,7 @@ msgstr "ਆਭਾ / ਲਾਈਟਨੈੱਸ / ਸੰਤ੍ਰਿਪਤ ਅਡ�
 
 #: ../app/tools/gimphuesaturationtool.c:173
 msgid "Hue-Saturation operates only on RGB color layers."
-msgstr ""
+msgstr "ਆਭਾ-ਸੰਤ੍ਰਿਪਤਾ ਕੇਵਲ RGB ਰੰਗ ਲੇਅਰ ਉੱਤੇ ਓਪਰੇਟ ਕਰਦਾ ਹੈ।"
 
 #: ../app/tools/gimphuesaturationtool.c:229
 msgid "M_aster"
@@ -10327,29 +10366,29 @@ msgstr "ਸ਼ੀਅਰ ਮੈਗੀਟਿਊਡ  _Y:"
 
 #: ../app/tools/gimpsmudgetool.c:54
 msgid "Smudge Tool: Smudge selectively using a brush"
-msgstr ""
+msgstr "ਸਮਅੱਜ ਟੂਲ: ਇੱਕ ਬੁਰਸ਼ ਨਾਲ ਚੁਣੇ ਸਮਅੱਜ ਕਰੋ"
 
 #: ../app/tools/gimpsmudgetool.c:55
 msgid "_Smudge"
-msgstr "ਧੁੰਦਲਾ ਦੇਓ(_S)"
+msgstr "ਸਮਅੱਜ (_S)"
 
 #: ../app/tools/gimpsmudgetool.c:74
 msgid "Click to smudge"
-msgstr ""
+msgstr "ਸਮਅੱਜ ਲਈ ਕਲਿੱਕ ਕਰੋ"
 
 #: ../app/tools/gimpsmudgetool.c:75
 msgid "Click to smudge the line"
-msgstr ""
+msgstr "ਲਾਈਨ ਸਮਅੱਜ ਲਈ ਕਲਿੱਕ ਕਰੋ"
 
 #: ../app/tools/gimptextoptions.c:114
 msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
-msgstr ""
+msgstr "ਹਿੰਟਿੰਗ ਛੋਟੇ ਆਕਾਰਾਂ ਲਈ ਇੱਕ ਕਰਿਸਪ ਬਿੱਟਮੈਪ ਬਣਉਣ ਵਾਸਤੇ ਫੋਂਟ-ਆਉਟਲਾਈਨ ਵਾਸਤੇ ਚੇਤਾਵਨੀ ਦਿੰਦੀ ਹੈ।"
 
 #: ../app/tools/gimptextoptions.c:121
 msgid ""
 "If available, hints from the font are used but you may prefer to always use "
 "the automatic hinter"
-msgstr ""
+msgstr "ਜੇ ਉਪਲੱਬਧ ਹੈ ਤਾਂ, ਫੋਂਟ ਤੋਂ ਹਿੰਟ ਵਰਤੇ ਜਾਂਦੇ ਹਨ, ਪਰ ਤੁਸੀਂ ਹਮੇਸ਼ਾਂ ਆਟੋਮੈਟਿਕ ਹਿੰਟਰ ਵਰਤਣਾ ਪਸੰਦ ਕਰੋਗੇ।"
 
 #: ../app/tools/gimptextoptions.c:146
 msgid "Indentation of the first line"
@@ -10361,7 +10400,7 @@ msgstr "ਲਾਈਨ ਫਾਸਲਾ ਅਡਜੱਸਟ ਕਰੋ"
 
 #: ../app/tools/gimptextoptions.c:158
 msgid "Adjust letter spacing"
-msgstr ""
+msgstr "ਅੱਖਰ ਸਪੇਸਿੰਗ ਅਡਜੱਸਟ ਕਰੋ"
 
 #: ../app/tools/gimptextoptions.c:429
 msgid "Font:"
@@ -10420,6 +10459,10 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
+"ਲੇਅਰ, ਜੋ ਤੁਸੀਂ ਚੁਣੀ ਹੈ, ਇੱਕ ਟੈਕਸਟ ਲੇਅਰ ਹੈ, ਪਰ ਇਸ ਨੂੰ ਹੋਰ ਟੂਲਾਂ ਨਾਲ ਬਦਲਿਆ ਗਿਆ ਹੈ। "
+"ਟੈਕਸਟ ਟੂਲ ਨਾਲ ਇਹ ਲੇਅਰ ਸੋਧਣ ਨਾਲ ਇਹ ਬਦਲਾਅ ਖਤਮ ਹੋ ਜਾਣਗੇ।\n"
+"\n"
+"ਤੁਸੀਂ ਲੇਅਰ ਨੂੰ ਸੋਧ ਸਕਦੇ ਹੋ ਜਾਂ ਇਸ ਦੇ ਟੈਕਸਟ ਗੁਣਾਂ ਤੋਂ ਇੱਕ ਨਵੀ ਲੇਅਰ ਬਣਾ ਸਕਦੇ ਹੋ। \t"
 
 #: ../app/tools/gimpthresholdtool.c:83
 msgid "Threshold Tool: Reduce image to two colors using a threshold"
@@ -10592,19 +10635,19 @@ msgstr "ਇੱਕ ਨਵਾਂ ਐਂਕਰ ਬਣਾਉਣ ਲਈ ਕਲਿੱ�
 
 #: ../app/tools/gimpvectortool.c:1163 ../app/tools/gimpvectortool.c:1170
 msgid "Click-Drag to move the anchor around"
-msgstr ""
+msgstr "ਐਂਕਰ ਦੁਆਲੇ ਹਿਲਾਉਣ ਲਈ ਕਲਿੱਕ-ਡਰੋਪ ਕਰੋ"
 
 #: ../app/tools/gimpvectortool.c:1173 ../app/tools/gimpvectortool.c:1184
 msgid "Click-Drag to move the anchors around"
-msgstr ""
+msgstr "ਐਂਕਰ ਹਿਲਾਉਣ ਲਈ ਕਲਿੱਕ-ਡਰੋਪ ਕਰੋ"
 
 #: ../app/tools/gimpvectortool.c:1176
 msgid "Click-Drag to move the handle around"
-msgstr ""
+msgstr "ਹੈਂਡਲ ਆਲੇ ਦੁਆਲੇ ਹਿਲਾਉਣ ਲਈ ਕਲਿੱਕ-ਡਰੋਪ ਕਰੋ"
 
 #: ../app/tools/gimpvectortool.c:1189
 msgid "Click-Drag to change the shape of the curve"
-msgstr ""
+msgstr "ਕਰਵ ਦੀ ਸ਼ੇਪ ਬਦਲਣ ਲਈ ਕਲਿੱਕ-ਡਰੋਪ ਕਰੋ"
 
 #: ../app/tools/gimpvectortool.c:1192
 #, c-format
@@ -10613,15 +10656,15 @@ msgstr "%s: ਸਮਮਿਤੀ"
 
 #: ../app/tools/gimpvectortool.c:1196
 msgid "Click-Drag to move the component around"
-msgstr ""
+msgstr "ਭਾਗ ਦੁਆਲੇ ਹਿਲਾਉਣ ਲਈ ਕਲਿੱਕ-ਡਰੋਪ ਕਰੋ"
 
 #: ../app/tools/gimpvectortool.c:1203
 msgid "Click-Drag to move the path around"
-msgstr ""
+msgstr "ਪਾਥ ਦੁਆਲੇ ਹਿਲਾਉਣ ਲਈ ਕਲਿੱਕ-ਡਰੋਪ ਕਰੋ"
 
 #: ../app/tools/gimpvectortool.c:1206
 msgid "Click-Drag to insert an anchor on the path"
-msgstr ""
+msgstr "ਇੱਕ ਐਂਕਰ ਨੂੰ ਪਾਥ ਉੱਤੇ ਸ਼ਾਮਲ ਕਰਨ ਲਈ ਕਲਿੱਕ-ਡਰੋਪ ਕਰੋ"
 
 #: ../app/tools/gimpvectortool.c:1213
 msgid "Click to delete this anchor"
@@ -10629,7 +10672,7 @@ msgstr "ਇਸ ਐਂਕਰ ਨੂੰ ਹਟਾਉਣ ਲਈ ਦਬਾਓ"
 
 #: ../app/tools/gimpvectortool.c:1216
 msgid "Click to connect this anchor with the selected endpoint"
-msgstr ""
+msgstr "ਇਹ ਐਂਕਰ ਨੂੰ ਚੁਣੇ ਐਂ-ਪੁਆਇੰਟ ਵਿੱਚ ਕੁਨੈਕਟ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ"
 
 #: ../app/tools/gimpvectortool.c:1220
 msgid "Click to open up the path"
@@ -10637,7 +10680,7 @@ msgstr "ਮਾਰਗ ਖੋਲ੍ਹਣ ਲਈ ਦਬਾਓ"
 
 #: ../app/tools/gimpvectortool.c:1223
 msgid "Click to make this node angular"
-msgstr ""
+msgstr "ਇਹ ਨੋਡ ਕੋਣੀ ਬਣਾਉਣ ਲਈ ਕਲਿੱਕ ਕਰੋ"
 
 #: ../app/tools/gimpvectortool.c:1729
 msgid "Delete Anchors"
@@ -10805,12 +10848,12 @@ msgstr "ਸ਼ਾਰਟਕੱਟ ਮੁੜ-ਜਾਰੀ(_R)"
 #: ../app/widgets/gimpactionview.c:560
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
-msgstr ""
+msgstr "ਸ਼ਾਰਟਕੱਟ \"%s\" ਪਹਿਲਾਂ ਹੀ \"%s\" ਰਾਹੀਂ \"%s\" ਗਰੁੱਪ ਨੇ ਲੈ ਲਿਆ ਹੈ।"
 
 #: ../app/widgets/gimpactionview.c:564
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
-msgstr ""
+msgstr "ਮੁੜ-ਜਾਰੀ ਕਰਨ ਨਾਲ ਸ਼ਾਰਟਕੱਟ ਨੂੰ \"%s\" ਤੋਂ ਹਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।"
 
 #: ../app/widgets/gimpactionview.c:637
 msgid "Invalid shortcut."
@@ -11104,12 +11147,12 @@ msgstr "ਚੁਣਿਆ ਕੰਟਰੋਲਰ ਹੇਠਾਂ ਭੇਜੋ"
 #: ../app/widgets/gimpcontrollerlist.c:428
 #, c-format
 msgid "Add '%s' to the list of active controllers"
-msgstr ""
+msgstr "'%s' ਨੂੰ ਐਕਟਿਵ ਕੰਟਰੋਲਰਾਂ ਦੀ ਲਿਸਟ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ"
 
 #: ../app/widgets/gimpcontrollerlist.c:479
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
-msgstr ""
+msgstr "'%s' ਨੂੰ ਐਕਟਿਵ ਕੰਟਰੋਲਰਾਂ ਦੀ ਲਿਸਟ ਵਿੱਚੋਂ ਹਟਾਓ"
 
 #: ../app/widgets/gimpcontrollerlist.c:512
 msgid ""
@@ -11302,7 +11345,7 @@ msgstr "ਕਈ ਗਲਤੀਆਂ ਲੱਭੀਆਂ ਹਨ!"
 
 #: ../app/widgets/gimperrordialog.c:152
 msgid "Messages are redirected to stderr."
-msgstr ""
+msgstr "ਸੁਨੇਹੇ stderr ਉੱਤੇ ਭੇਜੇ ਗਏ।"
 
 #: ../app/widgets/gimperrordialog.c:171
 #, c-format
@@ -11495,7 +11538,7 @@ msgstr "ਗਿਣਤੀ:"
 
 #: ../app/widgets/gimphistogrameditor.c:103
 msgid "Percentile:"
-msgstr ""
+msgstr "ਪ੍ਰਤੀਸ਼ਤਤਾ:"
 
 #: ../app/widgets/gimphistogrameditor.c:120
 msgid "Channel:"
@@ -12011,7 +12054,7 @@ msgstr ""
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
-msgstr ""
+msgstr "ਇਹ XCF ਫਾਇਲ ਨਿਕਾਰ ਹੋ ਗਈ ਹੈ! ਮੈਂ ਇਸ ਤੋਂ ਅੱਧਾ-ਪਚੱਦਾ ਚਿੱਤਰ ਡਾਟਾ ਵੀ ਨਹੀਂ ਲੈ ਸਕਿਆ।"
 
 #: ../app/xcf/xcf-load.c:315
 msgid ""
