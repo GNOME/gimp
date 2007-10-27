@@ -602,11 +602,12 @@ pnm_load_ascii (PNMScanner   *scan,
                 PNMInfo      *info,
                 GimpPixelRgn *pixel_rgn)
 {
-  guchar *data, *d;
-  gint    x, y, i, b;
-  gint    start, end, scanlines;
-  gint    np;
-  gchar   buf[BUFLEN];
+  guchar   *data, *d;
+  gint      x, y, i, b;
+  gint      start, end, scanlines;
+  gint      np;
+  gchar     buf[BUFLEN];
+  gboolean  aborted = FALSE;
 
   np = (info->np) ? (info->np) : 1;
   /* No overflow as long as gimp_tile_height() < 2730 = 2^(31 - 18) / 3 */
@@ -615,12 +616,14 @@ pnm_load_ascii (PNMScanner   *scan,
   /* Buffer reads to increase performance */
   pnmscanner_createbuffer (scan, 4096);
 
-  for (y = 0; y < info->yres; )
+  for (y = 0; y < info->yres; y += scanlines)
     {
       start = y;
-      end = y + gimp_tile_height ();
-      end = MIN (end, info->yres);
+      end   = y + gimp_tile_height ();
+      end   = MIN (end, info->yres);
+
       scanlines = end - start;
+
       d = data;
 
       for (i = 0; i < scanlines; i++)
@@ -628,9 +631,22 @@ pnm_load_ascii (PNMScanner   *scan,
           {
             for (b = 0; b < np; b++)
               {
-                /* Truncated files will just have all 0's at the end of the images */
+                if (aborted)
+                  {
+                    d[b] = 0;
+                    continue;
+                  }
+
+                /* Truncated files will just have all 0's
+                   at the end of the images */
                 if (pnmscanner_eof (scan))
-                  g_message (_("Premature end of file."));
+                  {
+                    g_message (_("Premature end of file."));
+                    aborted = TRUE;
+
+                    d[b] = 0;
+                    continue;
+                  }
 
                 if (info->np)
                   pnmscanner_gettoken (scan, buf, BUFLEN);
@@ -662,8 +678,6 @@ pnm_load_ascii (PNMScanner   *scan,
 
       gimp_progress_update ((double) y / (double) info->yres);
       gimp_pixel_rgn_set_rect (pixel_rgn, data, 0, y, info->xres, scanlines);
-
-      y += scanlines;
     }
 
   gimp_progress_update (1.0);

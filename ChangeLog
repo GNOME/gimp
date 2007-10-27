@@ -1,6 +1,12 @@
 2007-10-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/pnm.c (pnm_load_ascii): fixed handling of
+	truncated ascii files.
+
+2007-10-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/pnm.c: formatting.
+	(pnm_load_ascii): 
 
 2007-10-27  Sven Neumann  <sven@gimp.org>
 
