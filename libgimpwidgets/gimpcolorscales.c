@@ -267,7 +267,7 @@ gimp_color_scales_set_channel (GimpColorSelector        *selector,
 {
   GimpColorScales *scales = GIMP_COLOR_SCALES (selector);
 
-  if (channel >= 0 && channel <= 7)
+  if (channel >= 0 && channel < 7)
     {
       g_signal_handlers_block_by_func (scales->toggles[channel],
                                        gimp_color_scales_toggle_update,

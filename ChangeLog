@@ -1,5 +1,10 @@
 2007-10-28  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolorscales.c (gimp_color_scales_set_channel):
+	fixed range check.
+
+2007-10-28  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpscrolledpreview.c
 	(gimp_scrolled_preview_nav_button_press): use small-checks for the
 	navigation popup and inherit the check-type from the preview.
