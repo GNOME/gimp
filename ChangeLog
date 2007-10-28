@@ -1,5 +1,10 @@
 2007-10-28  Sven Neumann  <sven@gimp.org>
 
+	* app/pdb/gimppdb.c (gimp_pdb_execute_procedure_by_name): also
+	call va_end() in the error cases.
+
+2007-10-28  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorscales.c (gimp_color_scales_set_channel):
 	fixed range check.
 

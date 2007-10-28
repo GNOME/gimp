@@ -407,6 +407,8 @@ gimp_pdb_execute_procedure_by_name (GimpPDB      *pdb,
           return_vals = gimp_procedure_get_return_values (procedure, FALSE);
           g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
 
+          va_end (va_args);
+
           return return_vals;
         }
 
@@ -421,6 +423,8 @@ gimp_pdb_execute_procedure_by_name (GimpPDB      *pdb,
 
           return_vals = gimp_procedure_get_return_values (procedure, FALSE);
           g_value_set_enum (return_vals->values, GIMP_PDB_CALLING_ERROR);
+
+          va_end (va_args);
 
           return return_vals;
         }
