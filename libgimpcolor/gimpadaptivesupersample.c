@@ -253,6 +253,9 @@ gimp_adaptive_supersample_area (gint              x1,
   GimpSampleType **block;                       /* Sample block matrix */
   gulong           num_samples;
 
+  g_return_val_if_fail (render_func != NULL, 0);
+  g_return_val_if_fail (put_pixel_func != NULL, 0);
+
   /* Initialize color */
 
   gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);

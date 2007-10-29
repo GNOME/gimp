@@ -1,5 +1,11 @@
 2007-10-29  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/gimpadaptivesupersample.c
+	(gimp_adaptive_supersample_area): return with a warning if called
+	with NULL render_func or put_pixel_func.
+
+2007-10-29  Sven Neumann  <sven@gimp.org>
+
 	Fix bug #491272 (no cursor drawn for small brush sizes):
 
 	* app/tools/gimpbrushtool.[ch]
