@@ -1,3 +1,8 @@
+2007-10-29  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_coord_on_handle):
+	initialize variables to suppress a compiler warning.
+
 2007-10-28  Sven Neumann  <sven@gimp.org>
 
 	* app/pdb/gimppdb.c (gimp_pdb_execute_procedure_by_name): also

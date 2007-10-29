@@ -2450,10 +2450,10 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rectangle_tool,
   gint                      h;
   gint                      tw;
   gint                      th;
-  gint                      handle_x;
-  gint                      handle_y;
-  gint                      handle_width;
-  gint                      handle_height;
+  gint                      handle_x      = 0;
+  gint                      handle_y      = 0;
+  gint                      handle_width  = 0;
+  gint                      handle_height = 0;
 
   private   = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle_tool);
   tool      = GIMP_TOOL (rectangle_tool);
