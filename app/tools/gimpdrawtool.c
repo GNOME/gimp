@@ -581,9 +581,9 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
                                    &tx2, &ty2,
                                    use_offsets);
 
-  tx1 = CLAMP (tx1, -1, shell->disp_width + 1);
+  tx1 = CLAMP (tx1, -1, shell->disp_width  + 1);
   ty1 = CLAMP (ty1, -1, shell->disp_height + 1);
-  tx2 = CLAMP (tx2, -1, shell->disp_width + 1);
+  tx2 = CLAMP (tx2, -1, shell->disp_width  + 1);
   ty2 = CLAMP (ty2, -1, shell->disp_height + 1);
 
   tx2 -= tx1;
@@ -766,11 +766,15 @@ gimp_draw_tool_draw_cross_by_anchor (GimpDrawTool  *draw_tool,
                                   &tx, &ty);
 
   gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx), PROJ_ROUND (ty) - (height >> 1),
-                         PROJ_ROUND (tx), PROJ_ROUND (ty) + (height >> 1));
+                         PROJ_ROUND (tx),
+                         PROJ_ROUND (ty) - (height >> 1),
+                         PROJ_ROUND (tx),
+                         PROJ_ROUND (ty) + ((height + 1) >> 1));
   gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx) - (width >> 1), PROJ_ROUND (ty),
-                         PROJ_ROUND (tx) + (width >> 1), PROJ_ROUND (ty));
+                         PROJ_ROUND (tx) - (width >> 1),
+                         PROJ_ROUND (ty),
+                         PROJ_ROUND (tx) + ((width + 1) >> 1),
+                         PROJ_ROUND (ty));
 }
 
 void

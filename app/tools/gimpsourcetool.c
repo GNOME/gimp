@@ -379,7 +379,8 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
       if (source_tool->show_source_outline)
         gimp_brush_tool_draw_brush (GIMP_BRUSH_TOOL (source_tool),
                                     source_tool->src_x + off_x,
-                                    source_tool->src_y + off_y);
+                                    source_tool->src_y + off_y,
+                                    FALSE);
 
       gimp_draw_tool_draw_handle (draw_tool,
                                   GIMP_HANDLE_CROSS,

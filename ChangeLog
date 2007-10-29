@@ -1,5 +1,22 @@
 2007-10-29  Sven Neumann  <sven@gimp.org>
 
+	Fix bug #491272 (no cursor drawn for small brush sizes):
+
+	* app/tools/gimpbrushtool.[ch]
+	(gimp_brush_tool_draw_brush): don't draw the brush outline if it
+	becomes too small. Instead draw a small cross, but only if
+	"draw_fallback" was passed as TRUE.
+	(gimp_brush_tool_draw_brush): pass TRUE for "draw_fallback" if
+	cursor drawing is disabled for the paint tools.
+
+	* app/tools/gimpsourcetool.c (gimp_source_tool_draw): pass FALSE
+	for "draw_fallback".
+
+	* app/tools/gimpdrawtool.c (gimp_draw_tool_draw_cross_by_anchor):
+	draw a symmetric cross for odd handle sizes.
+
+2007-10-29  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_coord_on_handle):
 	initialize variables to suppress a compiler warning.
 

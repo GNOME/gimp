@@ -35,6 +35,7 @@
 #include "paint/gimppaintoptions.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpbrushtool.h"
 #include "gimptoolcontrol.h"
@@ -259,26 +260,28 @@ gimp_brush_tool_draw (GimpDrawTool *draw_tool)
     return;
 
   gimp_brush_tool_draw_brush (brush_tool,
-                              brush_tool->brush_x, brush_tool->brush_y);
+                              brush_tool->brush_x, brush_tool->brush_y,
+                              ! brush_tool->show_cursor);
 }
 
 void
 gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
                             gdouble        x,
-                            gdouble        y)
+                            gdouble        y,
+                            gboolean       draw_fallback)
 {
   GimpDrawTool     *draw_tool;
   GimpBrushCore    *brush_core;
-  GimpPaintOptions *paint_options;
+  GimpPaintOptions *options;
 
   g_return_if_fail (GIMP_IS_BRUSH_TOOL (brush_tool));
 
   if (! brush_tool->draw_brush)
     return;
 
-  draw_tool     = GIMP_DRAW_TOOL (brush_tool);
-  brush_core    = GIMP_BRUSH_CORE (GIMP_PAINT_TOOL (brush_tool)->core);
-  paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (brush_tool);
+  draw_tool  = GIMP_DRAW_TOOL (brush_tool);
+  brush_core = GIMP_BRUSH_CORE (GIMP_PAINT_TOOL (brush_tool)->core);
+  options    = GIMP_PAINT_TOOL_GET_OPTIONS (brush_tool);
 
   /*  don't create the segments for the purpose of undrawing (if we
    *  don't have the segments, we can hardly have drawn them before)
@@ -286,33 +289,46 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
   if (! brush_core->brush_bound_segs && brush_core->main_brush &&
       ! gimp_draw_tool_is_drawn (draw_tool))
     {
-      gimp_brush_core_create_bound_segs (brush_core, paint_options);
+      gimp_brush_core_create_bound_segs (brush_core, options);
     }
 
   if (brush_core->brush_bound_segs)
     {
-      x -= ((gdouble) brush_core->brush_bound_width  / 2.0);
-      y -= ((gdouble) brush_core->brush_bound_height / 2.0);
+      GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+      gdouble           width  = (gdouble) brush_core->brush_bound_width;
+      gdouble           height = (gdouble) brush_core->brush_bound_height;
 
-      if (gimp_paint_options_get_brush_mode (paint_options) == GIMP_BRUSH_HARD)
+      /*  don't draw the boundary if it becomes too small  */
+      if (SCALEX (shell, width) > 4 && SCALEY (shell, height) > 4)
         {
+          x -= width  / 2.0;
+          y -= height / 2.0;
+
+          if (gimp_paint_options_get_brush_mode (options) == GIMP_BRUSH_HARD)
+            {
 #define EPSILON 0.000001
-
-          /*  Add EPSILON before rounding since e.g.
-           *  (5.0 - 0.5) may end up at (4.499999999....)
-           *  due to floating point fnords
-           */
-          x = RINT (x + EPSILON);
-          y = RINT (y + EPSILON);
-
+              /*  Add EPSILON before rounding since e.g.
+               *  (5.0 - 0.5) may end up at (4.499999999....)
+               *  due to floating point fnords
+               */
+              x = RINT (x + EPSILON);
+              y = RINT (y + EPSILON);
 #undef EPSILON
-        }
+            }
 
-      gimp_draw_tool_draw_boundary (draw_tool,
-                                    brush_core->brush_bound_segs,
-                                    brush_core->n_brush_bound_segs,
-                                    x, y,
-                                    FALSE);
+          gimp_draw_tool_draw_boundary (draw_tool,
+                                        brush_core->brush_bound_segs,
+                                        brush_core->n_brush_bound_segs,
+                                        x, y,
+                                        FALSE);
+        }
+      else if (draw_fallback)
+        {
+          gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_CROSS,
+                                      x, y,
+                                      5, 5, GTK_ANCHOR_CENTER,
+                                      FALSE);
+        }
     }
 }
 
