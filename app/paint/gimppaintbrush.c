@@ -169,7 +169,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                     area->bytes);
     }
 
-  if (pressure_options->opacity)
+  if (paint_core->use_pressure && pressure_options->opacity)
     opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
   /* finally, let the brush core paste the colored area on the canvas */

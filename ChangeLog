@@ -1,7 +1,18 @@
 2007-10-30  Sven Neumann  <sven@gimp.org>
 
+	Fix drawing of straight lines using the Shift key and a tablet
+	(bug #164240):
+
+	* app/tools/gimppainttool.c (gimp_paint_tool_button_press): set
+	use_pressure to FALSE when drawing a straight line.
+
+	* app/paint/gimppaintbrush.c (_gimp_paintbrush_motion): respect
+	the use_pressure flag.
+
+2007-10-30  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c (box_filter): reduce
-	rounding errors. Fixed bug #491503.
+	rounding errors. Fixes bug #491503.
 
 	* app/base/tile-pyramid.c (tile_pyramid_write_quarter): reduce
 	rounding errors.

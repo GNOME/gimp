@@ -338,10 +338,12 @@ gimp_paint_tool_button_press (GimpTool        *tool,
        */
       gboolean hard;
 
-      core->start_coords = core->last_coords;
-
       hard = (gimp_paint_options_get_brush_mode (paint_options) ==
               GIMP_BRUSH_HARD);
+
+      core->start_coords = core->last_coords;
+      core->use_pressure = FALSE;
+
       gimp_paint_tool_round_line (core, hard, state);
     }
 
