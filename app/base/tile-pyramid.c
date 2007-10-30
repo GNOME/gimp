@@ -452,7 +452,7 @@ tile_pyramid_write_quarter (Tile *dest,
                              src1[0] * src1[1] +
                              src2[0] * src2[1] +
                              src3[0] * src3[1]) / a);
-                  dst[1] = a >> 2;
+                  dst[1] = (a + 2) >> 2;
                   break;
                 }
 
@@ -512,7 +512,7 @@ tile_pyramid_write_quarter (Tile *dest,
                              src1[2] * src1[3] +
                              src2[2] * src2[3] +
                              src3[2] * src3[3]) / a);
-                  dst[3] = a >> 2;
+                  dst[3] = (a + 2) >> 2;
                   break;
                 }
 

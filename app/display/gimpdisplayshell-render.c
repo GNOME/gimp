@@ -730,7 +730,7 @@ box_filter (const guint    left_weight,
                               ) / a) & 0xff;
                 }
 
-              dest[ALPHA] = a / sum;
+              dest[ALPHA] = (a + (sum >> 1) + (sum >> 2)) / sum;
             }
           else
             {
@@ -784,7 +784,7 @@ box_filter (const guint    left_weight,
                               ) / a) & 0xff;
                 }
 
-              dest[ALPHA] = a / sum;
+              dest[ALPHA] = (a + (sum >> 1) + (sum >> 2)) / sum;
             }
           else
             {

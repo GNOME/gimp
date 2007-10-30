@@ -1,3 +1,11 @@
+2007-10-30  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c (box_filter): reduce
+	rounding errors. Fixed bug #491503.
+
+	* app/base/tile-pyramid.c (tile_pyramid_write_quarter): reduce
+	rounding errors.
+
 2007-10-29  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/gimpadaptivesupersample.c
