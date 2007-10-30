@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-19 03:44+0100\n"
-"PO-Revision-Date: 2007-10-11 14:03+0300\n"
+"PO-Revision-Date: 2007-10-30 09:32+0200\n"
 "Last-Translator: Olle Niit <olle@paalalinn.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -538,7 +538,7 @@ msgstr "Tööta koopiaga"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:1
 msgid "Add _Border..."
-msgstr "Lisa _raam..."
+msgstr "Lisa ääri_s..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Add a border around an image"
@@ -546,15 +546,15 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:3
 msgid "Border X size"
-msgstr "X raami suurus"
+msgstr "X äärise suurus"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border Y size"
-msgstr "Y raami suurus"
+msgstr "Y äärise suurus"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:5
 msgid "Border color"
-msgstr "Raami värv"
+msgstr "Äärise värv"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:6
 msgid "Delta value on color"
@@ -1438,7 +1438,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
 msgid "Border size"
-msgstr ""
+msgstr "Äärise suurus"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:3
 msgid "Clear unselected maskarea"
@@ -1532,7 +1532,7 @@ msgstr "Kasuta fondi_nime tekstina"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:7
 msgid "_Border (pixels)"
-msgstr "_Raam (pikslit)"
+msgstr "Ääri_s (pikslit)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:8
 msgid "_Color scheme"
@@ -1574,7 +1574,7 @@ msgstr "Lisa vari"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 msgid "Blur border"
-msgstr "Udusta raam"
+msgstr "Udusta ääris"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
@@ -1768,7 +1768,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
 msgid "Border size (pixels)"
-msgstr "Raami suurus (pikslites)"
+msgstr "Äärise suurus (pikslites)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 msgid "Create a logo with a shiny look and beveled edges"
