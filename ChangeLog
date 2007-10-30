@@ -1,5 +1,10 @@
 2007-10-30  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-handlers.c: reverted change that
+	was made for bug #490785.
+
+2007-10-30  Sven Neumann  <sven@gimp.org>
+
 	Fix drawing of straight lines using the Shift key and a tablet
 	(bug #164240):
 
