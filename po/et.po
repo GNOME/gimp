@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp_et\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-21 04:20+0100\n"
-"PO-Revision-Date: 2007-10-15 02:10+0300\n"
+"PO-Revision-Date: 2007-10-30 09:21+0200\n"
 "Last-Translator: Olle Niit <olle@paalalinn.com>\n"
 "Language-Team: estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -1492,7 +1492,7 @@ msgstr "_Läbipaistvus..."
 
 #: ../app/actions/edit-actions.c:103
 msgid "Modify paint mode and opacity of the last pixel manipulation"
-msgstr ""
+msgstr "Muuda viimase pikslite manipuleerimise värvirežiimi ja läbipaistvust"
 
 #: ../app/actions/edit-actions.c:108
 msgid "Cu_t"
@@ -1929,11 +1929,11 @@ msgstr "Vasaku värvi tüüp"
 
 #: ../app/actions/gradient-editor-actions.c:52
 msgid "_Load Left Color From"
-msgstr ""
+msgstr "_Lae vasak värv"
 
 #: ../app/actions/gradient-editor-actions.c:54
 msgid "_Save Left Color To"
-msgstr ""
+msgstr "_Salvesta vasak värv"
 
 #: ../app/actions/gradient-editor-actions.c:57
 msgid "Right Color Type"
@@ -1941,11 +1941,11 @@ msgstr "Parema värvi tüüp"
 
 #: ../app/actions/gradient-editor-actions.c:59
 msgid "Load Right Color Fr_om"
-msgstr ""
+msgstr "Lae _parem värv"
 
 #: ../app/actions/gradient-editor-actions.c:61
 msgid "Sa_ve Right Color To"
-msgstr ""
+msgstr "Sal_vesta parem värv"
 
 #: ../app/actions/gradient-editor-actions.c:67
 msgid "L_eft Endpoint's Color..."
@@ -3398,11 +3398,11 @@ msgstr "Muuda valitud ala suuremaks"
 
 #: ../app/actions/select-actions.c:98
 msgid "Bo_rder..."
-msgstr "_Raami..."
+msgstr "Ää_ris..."
 
 #: ../app/actions/select-actions.c:99
 msgid "Replace the selection by its border"
-msgstr "Asenda valitud ala selle raamiga"
+msgstr "Asenda valitud ala selle äärisega"
 
 #: ../app/actions/select-actions.c:104
 msgid "Save to _Channel"
@@ -3446,7 +3446,7 @@ msgstr "Kahanda valitud ala servi"
 
 #: ../app/actions/select-commands.c:186
 msgid "_Shrink from image border"
-msgstr "Kahanda pildi piiri_st"
+msgstr "Kahanda pildi äärise_st"
 
 #: ../app/actions/select-commands.c:207 ../app/core/gimpselection.c:176
 msgid "Grow Selection"
@@ -3458,11 +3458,11 @@ msgstr "Kasvata valitud ala servi"
 
 #: ../app/actions/select-commands.c:231 ../app/core/gimpselection.c:175
 msgid "Border Selection"
-msgstr "Raami valimine"
+msgstr "Äärise valimine"
 
 #: ../app/actions/select-commands.c:235
 msgid "Border selection by"
-msgstr "Raami suurus"
+msgstr "Äärise valimine"
 
 #. Feather button
 #: ../app/actions/select-commands.c:245
@@ -4047,7 +4047,7 @@ msgstr "Näita kihi _raami"
 
 #: ../app/actions/view-actions.c:147
 msgid "Draw a border around the active layer"
-msgstr "Joonista raam ümber aktiivse kihi"
+msgstr "Joonista ääris ümber aktiivse kihi"
 
 #: ../app/actions/view-actions.c:153
 msgid "Show _Guides"
@@ -5786,7 +5786,7 @@ msgstr "Pööra kanal pahupidi"
 
 #: ../app/core/gimpchannel.c:292
 msgid "Border Channel"
-msgstr "Raami kanal"
+msgstr "Äärise kanal"
 
 #: ../app/core/gimpchannel.c:293
 msgid "Grow Channel"
