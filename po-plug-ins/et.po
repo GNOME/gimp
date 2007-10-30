@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-25 22:07+0100\n"
-"PO-Revision-Date: 2007-10-11 12:11+0300\n"
+"PO-Revision-Date: 2007-10-30 09:28+0200\n"
 "Last-Translator: Olle Niit <olle@paalalinn.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -2101,7 +2101,7 @@ msgstr ""
 
 #: ../plug-ins/common/autocrop.c:85
 msgid "Remove empty borders from the image"
-msgstr ""
+msgstr "Eemalda pildilt tühjad äärised"
 
 #: ../plug-ins/common/autocrop.c:90
 msgid "Autocrop Imag_e"
@@ -2109,7 +2109,7 @@ msgstr "Pildi automaatkärb_e"
 
 #: ../plug-ins/common/autocrop.c:99
 msgid "Remove empty borders from the layer"
-msgstr ""
+msgstr "Eemalda kihilt tühjad äärised"
 
 #: ../plug-ins/common/autocrop.c:104
 msgid "Autocrop Lay_er"
@@ -2209,7 +2209,7 @@ msgstr ""
 
 #: ../plug-ins/common/borderaverage.c:372
 msgid "Border Size"
-msgstr ""
+msgstr "Äärise suurus"
 
 #: ../plug-ins/common/borderaverage.c:380
 msgid "_Thickness:"
@@ -2867,7 +2867,7 @@ msgstr ""
 
 #: ../plug-ins/common/convmatrix.c:1112
 msgid "Border"
-msgstr "Raam"
+msgstr "Ääris"
 
 #: ../plug-ins/common/convmatrix.c:1139
 msgid "Channels"
@@ -4634,7 +4634,7 @@ msgstr "Tabeli omadused"
 
 #: ../plug-ins/common/gtm.c:569
 msgid "_Border:"
-msgstr ""
+msgstr "Ääri_s:"
 
 #: ../plug-ins/common/gtm.c:573
 msgid "The number of pixels in the table border."
@@ -7457,7 +7457,7 @@ msgstr ""
 
 #: ../plug-ins/common/sparkle.c:531
 msgid "A_dd border"
-msgstr "_Lisa raam"
+msgstr "_Lisa ääris"
 
 #: ../plug-ins/common/sparkle.c:537
 msgid "Draw a border of spikes around the image"
@@ -10553,19 +10553,19 @@ msgstr "Lisa veel abijooni"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:177
 msgid "L_eft border"
-msgstr "_Vasak raam"
+msgstr "_Vasak ääris"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:181
 msgid "_Right border"
-msgstr "_Parem raam"
+msgstr "_Parem ääris"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:185
 msgid "_Upper border"
-msgstr "Ü_lemine raam"
+msgstr "Ü_lemine ääris"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:189
 msgid "Lo_wer border"
-msgstr "_Alumine raam"
+msgstr "_Alumine ääris"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:197
 msgid "_Base URL:"
