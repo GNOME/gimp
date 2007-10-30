@@ -256,8 +256,6 @@ gimp_display_shell_render (GimpDisplayShell *shell,
       info.alpha = render_image_init_alpha (opacity * 255.999);
     }
 
-
-
   /* Setup RenderInfo for rendering a GimpProjection level. */
   {
     TileManager *src_tiles;
@@ -272,16 +270,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
     gimp_display_shell_render_info_scale (&info, shell, src_tiles, level);
   }
 
-  /* Currently, only RGBA and GRAYA projection types are used - the rest
-   * are in case of future need.  -- austin, 28th Nov 1998.
-   *
-   * I retired them before they reach the age of 9 years unused...
-   *                              -- simon,  23rd Sep 2007.
-   */
+  /* Currently, only RGBA and GRAYA projection types are used. */
   type = gimp_projection_get_image_type (projection);
-
-  if (G_UNLIKELY (type != GIMP_RGBA_IMAGE && type != GIMP_GRAYA_IMAGE))
-    g_warning ("using untested projection type %d", type);
 
   switch (type)
     {
@@ -292,7 +282,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
         render_image_gray_a (&info);
         break;
       default:
-        g_printerr ("gimp_display_shell_render: unsupported projection type\n");
+        g_warning ("%s: unsupported projection type (%d)", G_STRFUNC, type);
         g_assert_not_reached ();
     }
 
@@ -686,7 +676,7 @@ box_filter (const guint    left_weight,
             const gint     bpp)
 {
   const guint sum = ((left_weight + center_weight + right_weight) *
-                     (top_weight + middle_weight + bottom_weight)) >> 8;
+                     (top_weight + middle_weight + bottom_weight)) >> 4;
 
   switch (bpp)
     {
@@ -695,15 +685,15 @@ box_filter (const guint    left_weight,
         {
           guint factors[9] =
             {
-              (src[1][ALPHA] * top_weight)    >> 8,
-              (src[4][ALPHA] * middle_weight) >> 8,
-              (src[7][ALPHA] * bottom_weight) >> 8,
-              (src[2][ALPHA] * top_weight)    >> 8,
-              (src[5][ALPHA] * middle_weight) >> 8,
-              (src[8][ALPHA] * bottom_weight) >> 8,
-              (src[0][ALPHA] * top_weight)    >> 8,
-              (src[3][ALPHA] * middle_weight) >> 8,
-              (src[6][ALPHA] * bottom_weight) >> 8
+              (src[1][ALPHA] * top_weight)    >> 4,
+              (src[4][ALPHA] * middle_weight) >> 4,
+              (src[7][ALPHA] * bottom_weight) >> 4,
+              (src[2][ALPHA] * top_weight)    >> 4,
+              (src[5][ALPHA] * middle_weight) >> 4,
+              (src[8][ALPHA] * bottom_weight) >> 4,
+              (src[0][ALPHA] * top_weight)    >> 4,
+              (src[3][ALPHA] * middle_weight) >> 4,
+              (src[6][ALPHA] * bottom_weight) >> 4
             };
 
           guint a = (center_weight * (factors[0] + factors[1] + factors[2]) +
@@ -730,7 +720,7 @@ box_filter (const guint    left_weight,
                               ) / a) & 0xff;
                 }
 
-              dest[ALPHA] = (a + (sum >> 1) + (sum >> 2)) / sum;
+              dest[ALPHA] = (a + (sum >> 1)) / sum;
             }
           else
             {
@@ -749,15 +739,15 @@ box_filter (const guint    left_weight,
         {
           guint factors[9] =
             {
-              (src[1][ALPHA] * top_weight)    >> 8,
-              (src[4][ALPHA] * middle_weight) >> 8,
-              (src[7][ALPHA] * bottom_weight) >> 8,
-              (src[2][ALPHA] * top_weight)    >> 8,
-              (src[5][ALPHA] * middle_weight) >> 8,
-              (src[8][ALPHA] * bottom_weight) >> 8,
-              (src[0][ALPHA] * top_weight)    >> 8,
-              (src[3][ALPHA] * middle_weight) >> 8,
-              (src[6][ALPHA] * bottom_weight) >> 8
+              (src[1][ALPHA] * top_weight)    >> 4,
+              (src[4][ALPHA] * middle_weight) >> 4,
+              (src[7][ALPHA] * bottom_weight) >> 4,
+              (src[2][ALPHA] * top_weight)    >> 4,
+              (src[5][ALPHA] * middle_weight) >> 4,
+              (src[8][ALPHA] * bottom_weight) >> 4,
+              (src[0][ALPHA] * top_weight)    >> 4,
+              (src[3][ALPHA] * middle_weight) >> 4,
+              (src[6][ALPHA] * bottom_weight) >> 4
             };
 
           guint a = (center_weight * (factors[0] + factors[1] + factors[2]) +
@@ -784,7 +774,7 @@ box_filter (const guint    left_weight,
                               ) / a) & 0xff;
                 }
 
-              dest[ALPHA] = (a + (sum >> 1) + (sum >> 2)) / sum;
+              dest[ALPHA] = (a + (sum >> 1)) / sum;
             }
           else
             {

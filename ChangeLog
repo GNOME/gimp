@@ -1,3 +1,10 @@
+2007-10-30  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c (box_filter): shift only
+	by 4 bits instead of 8. Should still keep us from overflowing 32
+	bit integers but reduces the rounding error and seems to really
+	fix bug #491503.
+
 2007-10-30  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangleselecttool.c
