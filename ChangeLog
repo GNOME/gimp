@@ -1,3 +1,10 @@
+2007-10-30  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangleselecttool.c
+	(gimp_rect_select_tool_round_corners_notify): Update the selection
+	when Rounded corners is toggled or the radius is changed as
+	discussed in bug #418284.
+
 2007-10-30  Michael Natterer  <mitch@gimp.org>
 
 	* modules/cdisplay_lcms.c: applied patch from Sven Neumann and

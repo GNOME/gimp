@@ -811,10 +811,15 @@ gimp_rect_select_tool_round_corners_notify (GimpRectSelectOptions *options,
                                             GParamSpec            *pspec,
                                             GimpRectSelectTool    *rect_sel)
 {
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (rect_sel));
+  GimpDrawTool      *draw_tool = GIMP_DRAW_TOOL (rect_sel);
+  GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (rect_sel);
+
+  gimp_draw_tool_pause (draw_tool);
 
   rect_sel->round_corners = options->round_corners;
   rect_sel->corner_radius = options->corner_radius;
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (rect_sel));
+  gimp_rect_select_tool_rectangle_changed (rect_tool);
+
+  gimp_draw_tool_resume (draw_tool);
 }
