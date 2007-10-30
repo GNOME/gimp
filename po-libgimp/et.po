@@ -1,17 +1,19 @@
 # Gimp'i eesti keele tõlge.
 # Estonian translation of Gimp.
 #
+# Copyright (C) 2006, 2007 The GNOME Project.
 # Copyright (C) 2001-2005 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Gimp package.
 #
-# Olle Niit <olle@paalalinn.com>, 2005.
+# Olle Niit <olle@paalalinn.com>, 2005-2007
+# Priit Laes <amd@store20.com>, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-05 09:22+0100\n"
-"PO-Revision-Date: 2007-10-24 23:27+0300\n"
-"Last-Translator: Olle Niit <olle@paalalinn.com>\n"
+"POT-Creation-Date: 2007-10-25 16:28+0100\n"
+"PO-Revision-Date: 2007-10-30 23:27+0300\n"
+"Last-Translator: Priit Laes <amd@store20.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,8 +25,8 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Pintsli valik"
 
-#: ../libgimp/gimpbrushselectbutton.c:911
-#: ../libgimp/gimppatternselectbutton.c:712
+#: ../libgimp/gimpbrushselectbutton.c:913
+#: ../libgimp/gimppatternselectbutton.c:714
 msgid "_Browse..."
 msgstr "_Sirvi..."
 
@@ -41,7 +43,9 @@ msgstr "Ühenda nähtavad kihid"
 #: ../libgimp/gimpexport.c:226
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "%s pistik ei oska midagi peale hakata kihi nihkega, suurusega või läbipaistmatusega"
+msgstr ""
+"%s pistik ei oska midagi peale hakata kihi nihkega, suurusega või "
+"läbipaistmatusega"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
@@ -108,7 +112,8 @@ msgstr ""
 #: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "%s pistik oskab töödelda ainult bittraster (kaks värvi) indekseeritud pilte"
+msgstr ""
+"%s pistik oskab töödelda ainult bittraster (kaks värvi) indekseeritud pilte"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -596,11 +601,11 @@ msgstr "Indekseeritud-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:562
 msgid "interpolation|None"
-msgstr "interpolatsioon|Puudub"
+msgstr "Puudub"
 
 #: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|Linear"
-msgstr "internpolatsioon|Lineaarne"
+msgstr "Lineaarne"
 
 #: ../libgimpbase/gimpbaseenums.c:564
 msgid "Cubic"
@@ -608,7 +613,7 @@ msgstr "Kuubik"
 
 #: ../libgimpbase/gimpbaseenums.c:565
 msgid "Sinc (Lanczos3)"
-msgstr ""
+msgstr "Sinc (Lanczos3 algoritm)"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -618,7 +623,7 @@ msgstr "Muutumatu"
 msgid "Incremental"
 msgstr "Suurenev"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:214
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:218
 msgid "None"
 msgstr "Puudub"
 
@@ -755,7 +760,8 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:408
+#: ../modules/cdisplay_lcms.c:210 ../modules/colorsel_cmyk_lcms.c:408
+#: ../modules/colorsel_cmyk_lcms.c:414
 msgid "(invalid UTF-8 string)"
 msgstr "(vigane UTF-8 tekstilõik)"
 
@@ -772,7 +778,10 @@ msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
-msgstr "Kui lubatud, püüab GIMP kasutada graafilise keskkonna värviprofiili. Häälestatud monitori profiili kasutatakse ainult siis kui eelnimetatu ebaõnnestub."
+msgstr ""
+"Kui lubatud, püüab GIMP kasutada graafilise keskkonna värviprofiili. "
+"Häälestatud monitori profiili kasutatakse ainult siis kui eelnimetatu "
+"ebaõnnestub."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The default RGB working space color profile."
@@ -800,7 +809,9 @@ msgstr "Määrab kuidas värvid teisendatakse töötsoonist trükiteesklusseadme
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
-msgstr "Kui lubatud, märgib trükiteesklus ära värvid, mida ei saa siht-värviruumis trükkida."
+msgstr ""
+"Kui lubatud, märgib trükiteesklus ära värvid, mida ei saa siht-värviruumis "
+"trükkida."
 
 #: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color to use for marking colors which are out of gamut."
@@ -1349,26 +1360,26 @@ msgstr "Värvihalduse ekraanifilter kasutab ICC värviprofiile"
 msgid "Color Management"
 msgstr "Värvihaldus"
 
-#: ../modules/cdisplay_lcms.c:235
+#: ../modules/cdisplay_lcms.c:239
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
 "See filter võtab oma häälestuse Häälestuse dialoogi Värvihalduse lõigust."
 
-#: ../modules/cdisplay_lcms.c:249
+#: ../modules/cdisplay_lcms.c:253
 msgid "Mode of operation:"
 msgstr "Töörežiim:"
 
-#: ../modules/cdisplay_lcms.c:256
+#: ../modules/cdisplay_lcms.c:261
 msgid "Image profile:"
 msgstr "Pildi profiil:"
 
-#: ../modules/cdisplay_lcms.c:263
+#: ../modules/cdisplay_lcms.c:269
 msgid "Monitor profile:"
 msgstr "Monitori profiil:"
 
-#: ../modules/cdisplay_lcms.c:270
+#: ../modules/cdisplay_lcms.c:277
 msgid "Print simulation profile:"
 msgstr "Trükkimise teesklemise profiil:"
 
@@ -1464,7 +1475,7 @@ msgstr "CMYK värvide valija (kasutab värviprofiile)"
 msgid "Profile: (none)"
 msgstr "Profiil: (puudub)"
 
-#: ../modules/colorsel_cmyk_lcms.c:410
+#: ../modules/colorsel_cmyk_lcms.c:417
 #, c-format
 msgid "Profile: %s"
 msgstr "Profiil: %s"
