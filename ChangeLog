@@ -1,3 +1,9 @@
+2007-10-30  Michael Natterer  <mitch@gimp.org>
+
+	* modules/cdisplay_lcms.c: applied patch from Sven Neumann and
+	Marianne Gagnon which adds support for getting the system monitor
+	profile on OS/X. Fixes bug #488170.
+
 2007-10-30  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-handlers.c: reverted change that

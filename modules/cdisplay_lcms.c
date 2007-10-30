@@ -34,6 +34,12 @@
 
 #include <gtk/gtk.h>
 
+#ifdef GDK_WINDOWING_QUARTZ
+#include <Carbon/Carbon.h>
+#include <ApplicationServices/ApplicationServices.h>
+#include <CoreServices/CoreServices.h>
+#endif
+
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
@@ -104,7 +110,7 @@ static const GimpModuleInfo cdisplay_lcms_info =
   GIMP_MODULE_ABI_VERSION,
   N_("Color management display filter using ICC color profiles"),
   "Sven Neumann",
-  "v0.2",
+  "v0.3",
   "(c) 2005 - 2007, released under the GPL",
   "2005 - 2007"
 };
@@ -469,6 +475,54 @@ cdisplay_lcms_get_screen (CdisplayLcms *lcms,
   return screen;
 }
 
+
+#ifdef GDK_WINDOWING_QUARTZ
+
+typedef struct
+{
+  guchar *data;
+  gsize   len;
+} ProfileTransfer;
+
+enum
+{
+  openReadSpool  = 1,  /* start read data process         */
+  openWriteSpool = 2,  /* start write data process        */
+  readSpool      = 3,  /* read specified number of bytes  */
+  writeSpool     = 4,  /* write specified number of bytes */
+  closeSpool     = 5   /* complete data transfer process  */
+};
+
+static OSErr
+lcms_cdisplay_lcms_flatten_profile (SInt32  command,
+                                    SInt32 *size,
+                                    void   *data,
+                                    void   *refCon)
+{
+  ProfileTransfer *transfer = refCon;
+
+  switch (command)
+    {
+    case openWriteSpool:
+      g_return_val_if_fail (transfer->data == NULL && transfer->len == 0, -1);
+      break;
+
+    case writeSpool:
+      transfer->data = g_realloc (transfer->data, transfer->len + *size);
+      memcpy (transfer->data + transfer->len, data, *size);
+      transfer->len += *size;
+      break;
+
+    default:
+      break;
+    }
+
+  return 0;
+}
+
+#endif /* GDK_WINDOWING_QUARTZ */
+
+
 static cmsHPROFILE
 cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
 {
@@ -511,7 +565,29 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
 #elif defined GDK_WINDOWING_QUARTZ
   if (config->display_profile_from_gdk)
     {
-      /* FIXME: implement */
+      CMProfileRef  prof    = NULL;
+      gint          monitor = 0;
+
+      cdisplay_lcms_get_screen (lcms, &monitor);
+
+      CMGetProfileByAVID (monitor, &prof);
+
+      if (prof)
+        {
+          ProfileTransfer transfer = { NULL, 0 };
+          Boolean         foo;
+
+          CMFlattenProfile (prof, 0,
+                            lcms_cdisplay_lcms_flatten_profile, &transfer,
+                            &foo);
+          CMCloseProfile (prof);
+
+          if (transfer.data)
+            {
+              profile = cmsOpenProfileFromMem (transfer.data, transfer.len);
+              g_free (transfer.data);
+            }
+        }
     }
 
 #elif defined G_OS_WIN32
