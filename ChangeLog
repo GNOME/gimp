@@ -1,3 +1,9 @@
+2007-10-31  Tor Lillqvist  <tml@novell.com>
+
+	* README.win32: Remove. This kind of information belongs in the
+	wiki.
+	* Makefile.am (EXTRA_DIST): Drop from here, too.
+
 2007-10-31  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/Makefile.am

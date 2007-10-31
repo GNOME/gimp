@@ -65,7 +65,6 @@ EXTRA_DIST = \
 	NEWS.pre-2-4		\
 	README			\
 	README.i18n		\
-	README.win32		\
 	authors.dtd		\
 	authors.xml		\
 	authors.xsl		\
