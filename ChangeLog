@@ -1,5 +1,9 @@
 2007-10-31  Sven Neumann  <sven@gimp.org>
 
+	* README: somehow a leading space sneaked in here; removed it.
+
+2007-10-31  Sven Neumann  <sven@gimp.org>
+
 	Merged from trunk:
 
 	* app/tools/gimprectangletool.c
