@@ -353,10 +353,7 @@ gimp_draw_tool_set_transform (GimpDrawTool *draw_tool,
     }
 
   if (transform)
-    {
-      draw_tool->transform = g_slice_new (GimpMatrix3);
-      memcpy (draw_tool->transform, transform, sizeof (GimpMatrix3));
-    }
+    draw_tool->transform = g_slice_dup (GimpMatrix3, transform);
 
   gimp_draw_tool_resume (draw_tool);
 }
