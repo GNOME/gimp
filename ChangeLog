@@ -1,5 +1,14 @@
 2007-10-31  Sven Neumann  <sven@gimp.org>
 
+	Merged from trunk:
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_get_constraints): set all return values also
+	when bailing out early to avoid valgrind warnings about
+	uninitialized memory.
+
+2007-10-31  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: bumped version to 2.4.2 (interface age 2).
 
 2007-10-31  Sven Neumann  <sven@gimp.org>

@@ -3657,24 +3657,23 @@ gimp_rectangle_tool_get_constraints (GimpRectangleTool       *rectangle_tool,
                                      gint                    *max_y,
                                      GimpRectangleConstraint  constraint)
 {
-  GimpTool                    *tool;
-  gint                         min_x_dummy;
-  gint                         min_y_dummy;
-  gint                         max_x_dummy;
-  gint                         max_y_dummy;
+  GimpTool *tool = GIMP_TOOL (rectangle_tool);
+  gint      min_x_dummy;
+  gint      min_y_dummy;
+  gint      max_x_dummy;
+  gint      max_y_dummy;
 
-  if (min_x == NULL)
-    min_x = &min_x_dummy;
-  if (min_y == NULL)
-    min_y = &min_y_dummy;
-  if (max_x == NULL)
-    max_x = &max_x_dummy;
-  if (max_y == NULL)
-    max_y = &max_y_dummy;
+  if (! min_x) min_x = &min_x_dummy;
+  if (! min_y) min_y = &min_y_dummy;
+  if (! max_x) max_x = &max_x_dummy;
+  if (! max_y) max_y = &max_y_dummy;
 
-  tool = GIMP_TOOL (rectangle_tool);
+  *min_x = 0;
+  *min_y = 0;
+  *max_x = 0;
+  *max_y = 0;
 
-  if (tool->display == NULL)
+  if (! tool->display)
     return;
 
   switch (constraint)
