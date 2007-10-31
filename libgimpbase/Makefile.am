@@ -114,9 +114,7 @@ libgimpbase_sources = \
 	gimputils.h            	\
 	gimpwin32-io.h		\
 	gimpwire.c		\
-	gimpwire.h		\
-	xdg-user-dir.c		\
-	xdg-user-dir.h
+	gimpwire.h
 
 libgimpbase_built_sources = \
 	gimpbaseenums.c
@@ -188,7 +186,7 @@ CLEANFILES = $(EXTRA_PROGRAMS) $(gen_sources)
 
 $(srcdir)/gimpbaseenums.c: $(srcdir)/gimpbaseenums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
-		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"gimpbasetypes.h\"\n#include \"libgimp/libgimp-intl.h\"" \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#undef GIMP_DISABLE_DEPRECATED\n#include \"gimpbasetypes.h\"\n#include \"libgimp/libgimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
 		--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \

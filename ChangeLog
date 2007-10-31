@@ -1,5 +1,21 @@
 2007-10-31  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpbase/Makefile.am
+	* libgimpbase/xdg-user-dir.[ch]: removed.
+
+	* libgimpbase/gimpbaseenums.[ch]: deprecate enum GimpUserDirectory.
+
+	* libgimpbase/gimpenv.[ch]: deprecate gimp_user_directory() and make
+	the implementation call g_get_user_special_dir().
+
+	* libgimp/Makefile.am: #undef GIMP_DISABLE_DEPRECATED in gimpenums.c
+
+	* app/widgets/gimpfiledialog.c: use g_get_user_special_dir() instead.
+
+	* plug-ins/pygimp/gimpmodule.c: #undef GIMP_DISABLE_DEPRECATED.
+
+2007-10-31  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in
 	* app/Makefile.am
 	* tools/Makefile.am: bump some more hardcoded 2.4 to 2.5

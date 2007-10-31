@@ -3,6 +3,7 @@
 
 #include "config.h"
 #include <glib-object.h>
+#undef GIMP_DISABLE_DEPRECATED
 #include "gimpbasetypes.h"
 #include "libgimp/libgimp-intl.h"
 

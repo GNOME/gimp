@@ -335,7 +335,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
       g_object_set_data (G_OBJECT (dialog), "gimp-dialog-help-button", button);
     }
 
-  pictures = gimp_user_directory (GIMP_USER_DIRECTORY_PICTURES);
+  pictures = g_get_user_special_dir (G_USER_DIRECTORY_PICTURES);
 
   if (pictures)
     gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),

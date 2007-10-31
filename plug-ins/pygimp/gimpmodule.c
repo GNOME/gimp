@@ -21,6 +21,7 @@
 #  include <config.h>
 #endif
 
+#undef GIMP_DISABLE_DEPRECATED
 #include "pygimp.h"
 
 #include "pygimpcolor-api.h"
