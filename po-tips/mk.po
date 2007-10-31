@@ -1,18 +1,19 @@
-# translation of gimp-tips.HEAD.po to Blagoj
+# translation of gimp-tips.HEAD.po to
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
 # Vladimir Stefanov <vladoboss@mt.net.mk>, 2005.
 # Арангел Ангов <ufo@linux.net.mk>, 2005.
 # Blagoj <kapsarovb@on.net.mk>, 2007.
+# Marko <mark0d0da@gmail.com>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-07 03:44+0100\n"
-"PO-Revision-Date: 2007-07-04 18:55+0200\n"
-"Last-Translator: Blagoj <kapsarovb@on.net.mk>\n"
-"Language-Team: Blagoj <en@li.org>\n"
+"POT-Creation-Date: 2007-08-30 17:19+0100\n"
+"PO-Revision-Date: 2007-10-27 17:54-0700\n"
+"Last-Translator: Marko <mark0d0da@gmail.com>\n"
+"Language-Team:  <mk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -29,9 +30,9 @@ msgid ""
 "with the eyedropper tool sets the background color instead of the foreground "
 "color."
 msgstr ""
-"<tt>Ctrl</tt>- и клик со алатката Пополнување со боја, ќе може да ја користите бојата "
-"на позадината наместо бојата на предниот план. Со пипетата кога избирате боја, избирате "
-"од позадината не од бојата на предниот план. "
+"<tt>Ctrl</tt>- и клик со алатката Пополнување со боја, ќе може да ја "
+"користите бојата на позадината наместо бојата на предниот план. Со пипетата "
+"кога избирате боја, избирате од позадината не од бојата на предниот план. "
 
 #: ../data/tips/gimp-tips.xml.in.h:3
 msgid ""
@@ -39,9 +40,10 @@ msgid ""
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
 "mask's preview in the Layers dialog toggles viewing the mask directly."
 msgstr ""
-"<tt>Ctrl</tt>- и клик на прегледот на маската на слојот, во дијалогот за слоеви "
-"го префрла ефектот на маската на слојот. <tt>Alt</tt> и клик на прегледот на "
-"маската на слојот во дијалојот за слоеви го менува видикот директно на маската."
+"<tt>Ctrl</tt>- и клик на прегледот на маската на слојот, во дијалогот за "
+"слоеви го префрла ефектот на маската на слојот. <tt>Alt</tt> и клик на "
+"прегледот на маската на слојот во дијалојот за слоеви го менува видикот "
+"директно на маската."
 
 #: ../data/tips/gimp-tips.xml.in.h:4
 msgid ""
@@ -85,9 +87,9 @@ msgstr ""
 "Одкога ќе ги овозможите &quot;Динамичните кратенки на тастатурата&quot; во "
 "дијалогот за Параметри, можете повторно да ги примените копчињата за "
 "кратенки. Ќе го направите тоа со кликање на менито, избирање на ставка од "
-"менито, притискање на посакуваната комбинација од копчиња. Ако е "
-"овозоможено &quot;Зачувај ги кратенките на тастатурата&quout;, поврзувањето "
-"на копчињата се зачувани кога ќе го напуштите ГИМП-от."
+"менито, притискање на посакуваната комбинација од копчиња. Ако е овозоможено "
+"&quot;Зачувај ги кратенките на тастатурата&quout;, поврзувањето на копчињата "
+"се зачувани кога ќе го напуштите ГИМП-от."
 
 #: ../data/tips/gimp-tips.xml.in.h:8
 msgid ""
@@ -134,9 +136,9 @@ msgid ""
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
 "Layer→Transparency→Add Alpha Channel."
 msgstr ""
-"Ако е прикажано името на слојот во дијалогот за слоеви со <b>задебелени</b> букви, "
-"тој слој нема алфа-канал. Можете да додадете алфа-канал со користење на Слој-"
-"&quote;Провидност-&quote;Додај алфа канал."
+"Ако е прикажано името на слојот во дијалогот за слоеви со <b>задебелени</b> "
+"букви, тој слој нема алфа-канал. Можете да додадете алфа-канал со користење "
+"на Слој-&quote;Провидност-&quote;Додај алфа канал."
 
 #: ../data/tips/gimp-tips.xml.in.h:13
 msgid ""
@@ -145,11 +147,10 @@ msgid ""
 "tool (Colors→Levels). If there are any color casts, you can correct them "
 "with the Curves tool (Colors→Curves)."
 msgstr ""
-"Ако некои од вашите скенирани фотографии немаат доволно боја, "
-"можете лесно да го поправите нивниот тоналитет на бои со &quot;Авто&quot; "
-"копчето во алатката Слоеви (Слој-&gt;Бои-&gt;Слоеви). Ако има било какво "
-"претопување на некои бои, можете да ги поправите со алатката Криви (Слој-&gt;Бои-"
-"&gt;Криви)."
+"Ако некои од вашите скенирани фотографии немаат доволно боја, можете лесно "
+"да го поправите нивниот тоналитет на бои со &quot;Авто&quot; копчето во "
+"алатката Слоеви (Слој-&gt;Бои-&gt;Слоеви). Ако има било какво претопување на "
+"некои бои, можете да ги поправите со алатката Криви (Слој-&gt;Бои-&gt;Криви)."
 
 #: ../data/tips/gimp-tips.xml.in.h:14
 msgid ""
@@ -159,8 +160,8 @@ msgid ""
 msgstr ""
 "Ако исцртате патека (Уреди-&gt;Исцртај патека), можат да се користат "
 "алатките за цртање со нивните тековни поставки. Можете да ја користите "
-"Четката за цртање во режим на нијансирање или дури и Бришачот или алатката за "
-"флеки."
+"Четката за цртање во режим на нијансирање или дури и Бришачот или алатката "
+"за флеки."
 
 #: ../data/tips/gimp-tips.xml.in.h:15
 msgid ""
@@ -168,8 +169,8 @@ msgid ""
 "window to toggle the visibility of the toolbox and other dialogs."
 msgstr ""
 "Ако вашиот екран е пренатрупан, можете да го притиснете копчето <tt>Tab</tt> "
-"во прозорецот на сликата служи да ги скрие/прикаже "
-"алатниците или другите дијалози."
+"во прозорецот на сликата служи да ги скрие/прикаже алатниците или другите "
+"дијалози."
 
 #: ../data/tips/gimp-tips.xml.in.h:16
 msgid ""
@@ -233,11 +234,13 @@ msgstr ""
 #: ../data/tips/gimp-tips.xml.in.h:21
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
-"the window move, your window manager uses the <tt>Alt</tt> key already."
+"the window move, your window manager uses the <tt>Alt</tt> key already. Most "
+"window managers can be configured to ignore the <tt>Alt</tt> key or to use "
+"the <tt>Super</tt> key (or \"Windows logo\") instead."
 msgstr ""
 "Можете да ја прилагодите или поместите селекцијата со користење на <tt>Alt</"
-"tt>-повлечи. Ако ова прави да се поместува прозорецот, акцијата веќе го "
-"користи копчето <tt>Alt</tt>."
+"tt>-повлечи. Ако ова прави да се поместува прозорецот, вашиот менаџер за прозорци веќе ги користи <tt>Alt</tt>"
+"копчињата. Повеќето менаџери за прозорци можат да се конфигурираат да ја игнорираат <tt>Alt</tt> комбинацијата или да ја користат <tt>Super</tt> key (or \"Windows лого\")."
 
 #: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
@@ -321,8 +324,9 @@ msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
 msgstr ""
-"Можете ка го користите средното копче од глушецот да се движите околу сликата "
-"(или по можност држете притиснато <tt>Space</tt> додека го движите глушецот)"
+"Можете ка го користите средното копче од глушецот да се движите околу "
+"сликата (или по можност држете притиснато <tt>Space</tt> додека го движите "
+"глушецот)"
 
 #: ../data/tips/gimp-tips.xml.in.h:31
 msgid ""
