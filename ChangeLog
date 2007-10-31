@@ -1,3 +1,9 @@
+2007-10-31  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in
+	* app/Makefile.am
+	* tools/Makefile.am: bump some more hardcoded 2.4 to 2.5
+
 2007-10-31  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-close.c

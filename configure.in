@@ -17,20 +17,20 @@ m4_define([gimp_binary_age],
           [m4_eval(100 * gimp_minor_version + gimp_micro_version)])
 
 # For overriding the version string. Comment out if not needed.
-# m4_define([gimp_version], [2.4.0])
+# m4_define([gimp_version], [2.5.0])
 
 # This is the X.Y used in -lgimp-X.Y
 m4_define([gimp_api_version], [2.0])
 
 # Versions used for apps, plugins, tools, pkg-config files, and data,
 # as well as global and user prefs
-m4_define([gimp_app_version], [2.4])
+m4_define([gimp_app_version], [2.5])
 m4_define([gimp_plugin_version], [2.0])
 m4_define([gimp_tool_version], [2.0])
 m4_define([gimp_pkgconfig_version], [2.0])
 m4_define([gimp_data_version], [2.0])
 m4_define([gimp_sysconf_version], [2.0])
-m4_define([gimp_user_version], [2.4])
+m4_define([gimp_user_version], [2.5])
 
 m4_define([gimp_unstable],
           m4_if(m4_eval(gimp_minor_version % 2), [1], [yes], [no]))
