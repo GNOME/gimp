@@ -28,6 +28,9 @@
   <index role="GIMP 2.4" id="libgimpthumb-index-new-in-2-4">
     <title>Index of new symbols in GIMP 2.4</title>
   </index>
+  <index role="GIMP 2.6" id="libgimpthumb-index-new-in-2-6">
+    <title>Index of new symbols in GIMP 2.6</title>
+  </index>
   <index role="deprecated" id="libgimpthumb-index-deprecated">
     <title>Index of deprecated symbols</title>
   </index>

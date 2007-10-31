@@ -1,3 +1,14 @@
+2007-10-31  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/libgimpcolor-docs.sgml
+	* libgimpthumb/libgimpthumb-docs.sgml
+	* libgimpmodule/libgimpmodule-docs.sgml
+	* libgimpmath/libgimpmath-docs.sgml
+	* libgimpconfig/libgimpconfig-docs.sgml
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpbase/libgimpbase-docs.sgml: added "Index of new symbols
+	in GIMP 2.6".
+
 2007-10-26  Sven Neumann  <sven@gimp.org>
 
 	* app/app-sections.txt: updated.
