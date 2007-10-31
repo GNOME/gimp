@@ -1,4 +1,4 @@
-# translation of gimp-python.HEAD.po to Blagoj
+# translation of gimp-python.HEAD.po to
 # Macedonian translation of gimp
 # Courtesy of mkde team (http://mkde.sourceforge.net/) -- 2004.
 #
@@ -11,50 +11,51 @@
 # Vladimir Stefanov <vladoboss@gmail.com>, 2006.
 # Jovan Naumovski <jovan@lugola.net>, 2006.
 # Blagoj <kapsarovb@on.net.mk>, 2007.
+# Marko <mark0d0da@gmail.com>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-09 03:35+0000\n"
-"PO-Revision-Date: 2007-06-15 02:58+0200\n"
-"Last-Translator: Blagoj <kapsarovb@on.net.mk>\n"
-"Language-Team: Blagoj <en@li.org>\n"
+"POT-Creation-Date: 2007-06-15 03:41+0100\n"
+"PO-Revision-Date: 2007-10-27 18:09-0700\n"
+"Last-Translator: Marko <mark0d0da@gmail.com>\n"
+"Language-Team:  <mk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:335
+#: ../plug-ins/pygimp/gimpfu.py:380
 msgid "Missing exception information"
 msgstr "Недостига инфорамција за исклучок"
 
-#: ../plug-ins/pygimp/gimpfu.py:344
+#: ../plug-ins/pygimp/gimpfu.py:389
 #, python-format
 msgid "An error occured running %s"
 msgstr "Грешка се случи при работа %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:355
+#: ../plug-ins/pygimp/gimpfu.py:400
 msgid "_More Information"
 msgstr "Пове_ќе информации"
 
-#: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
-#: ../plug-ins/pygimp/gimpfu.py:479
+#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
+#: ../plug-ins/pygimp/gimpfu.py:524
 msgid "No"
 msgstr "Не"
 
-#: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
+#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
 msgid "Yes"
 msgstr "Да"
 
-#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
 msgstr "Pythоn-Fu избор на датотека"
 
-#: ../plug-ins/pygimp/gimpfu.py:528
+#: ../plug-ins/pygimp/gimpfu.py:569
 msgid "Python-Fu Folder Selection"
 msgstr "Pythоn-Fu избор на директориум"
 
-#: ../plug-ins/pygimp/gimpfu.py:618
+#: ../plug-ins/pygimp/gimpfu.py:659
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Неточно внесено за %s"
@@ -75,32 +76,31 @@ msgstr "Зачувај како обоен XHTML"
 msgid "Colored XHTML"
 msgstr "Обоен XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
 msgid "Character _source"
 msgstr "_Јадро на знакот"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
 msgid "Source code"
 msgstr "Изворен код"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:194
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Text file"
 msgstr "Текст датотека"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
-#, fuzzy
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Entry box"
-msgstr "Влезна кутија"
+msgstr "Кутија за внес"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "_File to read or characters to use"
 msgstr "_Датотека за вчитување или знак за употреба"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "Fo_nt size in pixels"
 msgstr "Големина на _фонт во пиксели"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
 msgid "_Write a separate CSS file"
 msgstr "_Напиши надворешна CSS датотека"
 
@@ -127,9 +127,8 @@ msgid "Could not write to '%s': %s"
 msgstr "Неможе да запише во %s:%s"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
-#, fuzzy
 msgid "Save Python-Fu Console Output"
-msgstr "Зачувај Python-Fu со конзолен излез"
+msgstr "Зачувај го конзолниот излез на Python-Fu"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
 msgid "Interactive Gimp-Python interpreter"
@@ -147,23 +146,23 @@ msgstr "Додади слој, магла"
 msgid "_Fog..."
 msgstr "Маг_ла..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "_Layer name"
 msgstr "_Име на слој"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "Clouds"
 msgstr "Облаци"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:60
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
 msgid "_Fog color"
 msgstr "_Боја на маглата"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Turbulence"
 msgstr "_Турбуленција"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "Op_acity"
 msgstr "Провид_ност"
 
@@ -254,40 +253,39 @@ msgstr "Ја сече сликата по водичите, создава сл�
 msgid "_Slice..."
 msgstr "Исе_чок..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:430
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "Path for HTML export"
 msgstr "Пат за HTML изнесување"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
 msgid "Filename for export"
 msgstr "Име на датотека за изнесување"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
 msgid "Image name prefix"
 msgstr "Префикс на име на слика"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
 msgid "Image format"
 msgstr "Тип на слика"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Separate image folder"
 msgstr "Издвои го директориумот со слики"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Folder for image export"
 msgstr "Директориум за изнесување слики"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Space between table elements"
 msgstr "Простор помеѓу елементи на табела"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
-#, fuzzy
-msgid "Javascript for onmouseover and clicked"
-msgstr "Javascript за глушец преку и кликнато"
-
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+msgid "Javascript for onmouseover and clicked"
+msgstr "Javascript за дејство кликнување и одбирање"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Skip animation for table caps"
 msgstr "Скокни анимирање за наслови во табелата"
 
@@ -299,23 +297,23 @@ msgstr "Додади сенка на слојот и по можност пла�
 msgid "_Drop Shadow and Bevel..."
 msgstr "С_енка и пластификација..."
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 msgid "_Shadow blur"
 msgstr "Матност на_ сенка"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 msgid "_Bevel"
 msgstr "Пласти_фикација"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "_Drop shadow"
 msgstr "С_енка"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _X displacement"
 msgstr "Сенка по X поместување"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
 msgid "Drop shadow _Y displacement"
 msgstr "Сенка по Y поместување"
 
