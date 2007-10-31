@@ -1,4 +1,4 @@
-# translation of gimp-libgimp.HEAD.po to Blagoj
+# translation of gimp-libgimp.HEAD.po to
 # Macedonian translation of gimp-libgimp
 # Courtesy of mkde team (http://mkde.sourceforge.net/) -- 2004.
 #
@@ -11,14 +11,15 @@
 # Vladimir Stefanov <vladoboss@gmail.com>, 2006.
 # Jovan Naumovski <jovan@lugola.net>, 2006.
 # Blagoj <kapsarovb@on.net.mk>, 2007.
+# Marko <mark0d0da@gmail.com>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-08 03:37+0100\n"
-"PO-Revision-Date: 2007-06-16 01:18+0200\n"
-"Last-Translator: Blagoj <kapsarovb@on.net.mk>\n"
-"Language-Team: Blagoj <en@li.org>\n"
+"POT-Creation-Date: 2007-10-05 09:22+0100\n"
+"PO-Revision-Date: 2007-10-27 17:44-0700\n"
+"Last-Translator: Marko <mark0d0da@gmail.com>\n"
+"Language-Team:  <mk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -47,7 +48,9 @@ msgstr "Спој ги видливите слоеви"
 #: ../libgimp/gimpexport.c:226
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "%s додатокот неможе да го сработи израмнувањето, големината и провидноста на слоевите"
+msgstr ""
+"%s додатокот неможе да го сработи израмнувањето, големината и провидноста на "
+"слоевите"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
@@ -626,7 +629,7 @@ msgstr "Константно"
 msgid "Incremental"
 msgstr "Инкрементално"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:267
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:214
 msgid "None"
 msgstr "Ништо"
 
@@ -765,49 +768,61 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:259
+#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:408
 msgid "(invalid UTF-8 string)"
 msgstr "(неисправна UTF-8 нишка)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:40
+#: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "Mode of operation for color management."
 msgstr "Режим на операцијата за управување со бои."
 
-#: ../libgimpconfig/gimpcolorconfig.c:42
+#: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "The color profile of your (primary) monitor."
 msgstr "Профил на бои на вашиот (примарен) монитор."
 
-#: ../libgimpconfig/gimpcolorconfig.c:44
+#: ../libgimpconfig/gimpcolorconfig.c:46
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
 "Кога е овозможено, GIMP ќе проба да го користи профилот за приказ на бои од "
-"системот за прозорци. Конфигурираниот профил на боја од мониторот тогаш се користи "
-"како резерва."
+"системот за прозорци. Конфигурираниот профил на боја од мониторот тогаш се "
+"користи како резерва."
 
-#: ../libgimpconfig/gimpcolorconfig.c:48
+#: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The default RGB working space color profile."
 msgstr "Основен RGB профил на бои за работна површина."
 
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "CMYK профил на бои користен за префрлање помеѓу RGB и CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr "Профил на бои користен за симулирање на печатената верзија (softproof)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "Sets how colors are mapped for your display."
 msgstr "Подесува како се боите мапирани за вашиот приказ."
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
-msgstr "Подесува како боите се претворени од RGB работна површина до уредот за симулирање печат."
+msgstr ""
+"Подесува како боите се претворени од RGB работна површина до уредот за "
+"симулирање печат."
+
+#: ../libgimpconfig/gimpcolorconfig.c:61
+msgid ""
+"When enabled, the print simulation will mark colors which can not be "
+"represented in the target color space."
+msgstr "Кога е вклучена, симулацијата за печатење ќе ги означи боите кои не можат да се прикажат во одбраното поле на бои."
+
+#: ../libgimpconfig/gimpcolorconfig.c:64
+msgid "The color to use for marking colors which are out of gamut."
+msgstr "Бојата која ќе се користи за обележување на бои кои се надвор од опсег."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -839,30 +854,30 @@ msgstr "Заситеност"
 msgid "Absolute colorimetric"
 msgstr "Апсолутно колориметриски"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:96
+#: ../libgimpconfig/gimpconfig-deserialize.c:97
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "вредноста за изразот %s не е исправен UTF-8 збор"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:427
+#: ../libgimpconfig/gimpconfig-deserialize.c:436
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "очекуваниот одговор од типот „да“ или „не“ за логичкиот израз  %s, добиен ' %"
 "s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:501
+#: ../libgimpconfig/gimpconfig-deserialize.c:510
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "неисправна вредност „%s“ за  %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:516
+#: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "неисправна вредност „%ld“ за изразот %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:585
+#: ../libgimpconfig/gimpconfig-deserialize.c:594
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "при обработка на изразот „%s“: %s"
@@ -870,6 +885,7 @@ msgstr "при обработка на изразот „%s“: %s"
 #: ../libgimpconfig/gimpconfig-iface.c:454
 #: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
+#: ../libgimpwidgets/gimpcolorprofilestore.c:654
 msgid "fatal parse error"
 msgstr "фатална грешка при раздвојувањето"
 
@@ -878,17 +894,23 @@ msgstr "фатална грешка при раздвојувањето"
 msgid "Cannot expand ${%s}"
 msgstr "Не можам да го раширам ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:135
+#: ../libgimpconfig/gimpconfigwriter.c:78
+#: ../libgimpconfig/gimpconfigwriter.c:693
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr "Грешка при запишувањето во „%s“: %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:136
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Не успеав да направам привремена датотека за „%s“: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:148
+#: ../libgimpconfig/gimpconfigwriter.c:149
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Неможев да го отворам „%s“ за пишување: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:667
+#: ../libgimpconfig/gimpconfigwriter.c:674
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -897,7 +919,7 @@ msgstr ""
 "Грешка при запишувањето во привремената датотека за „%s“: %s\n"
 "Оригиналната датотека не е дирана."
 
-#: ../libgimpconfig/gimpconfigwriter.c:675
+#: ../libgimpconfig/gimpconfigwriter.c:682
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -906,12 +928,7 @@ msgstr ""
 "Грешка при запишувањето во привремената датотека за „%s“: %s\n"
 "Датотека не е  направена."
 
-#: ../libgimpconfig/gimpconfigwriter.c:686
-#, c-format
-msgid "Error writing to '%s': %s"
-msgstr "Грешка при запишувањето во „%s“: %s"
-
-#: ../libgimpconfig/gimpconfigwriter.c:704
+#: ../libgimpconfig/gimpconfigwriter.c:711
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Не можев да направам „%s“: %s"
@@ -991,6 +1008,14 @@ msgstr "_Црна"
 #: ../libgimpwidgets/gimpcolorbutton.c:130
 msgid "_White"
 msgstr "Б_ела"
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:144
+msgid "Select color profile from disk..."
+msgstr "Избери профил на боја од диск..."
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:280
+msgid "profile|None"
+msgstr "профил|Нема"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
@@ -1109,7 +1134,7 @@ msgstr "Провери големина"
 msgid "Check Style"
 msgstr "Провери стил"
 
-#. toggle button to (des)activate the instant preview
+#. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "Пре_глед"
@@ -1198,15 +1223,15 @@ msgstr "_Дели"
 msgid "More..."
 msgstr "Уште..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:577
+#: ../libgimpwidgets/gimpunitmenu.c:581
 msgid "Unit Selection"
 msgstr "Избор на единица"
 
-#: ../libgimpwidgets/gimpunitmenu.c:626
+#: ../libgimpwidgets/gimpunitmenu.c:629
 msgid "Unit"
 msgstr "Единица"
 
-#: ../libgimpwidgets/gimpunitmenu.c:630
+#: ../libgimpwidgets/gimpunitmenu.c:633
 msgid "Factor"
 msgstr "Фактор"
 
@@ -1342,15 +1367,15 @@ msgstr "Контраст"
 msgid "Contrast c_ycles:"
 msgstr "_Циклуси на контрастот:"
 
-#: ../modules/cdisplay_lcms.c:116
+#: ../modules/cdisplay_lcms.c:105
 msgid "Color management display filter using ICC color profiles"
 msgstr "Филтер на управувањето на бои која користи ICC профили на боја"
 
-#: ../modules/cdisplay_lcms.c:184
+#: ../modules/cdisplay_lcms.c:166
 msgid "Color Management"
 msgstr "Управување со бои"
 
-#: ../modules/cdisplay_lcms.c:288
+#: ../modules/cdisplay_lcms.c:235
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1358,43 +1383,51 @@ msgstr ""
 "Овој филтер ги зема конфигурациите од секцијата за управување со бои во "
 "дијалогот за преференции."
 
-#: ../modules/cdisplay_lcms.c:302
+#: ../modules/cdisplay_lcms.c:249
 msgid "Mode of operation:"
 msgstr "Режим на операции:"
 
-#: ../modules/cdisplay_lcms.c:309
-msgid "RGB working space profile:"
-msgstr "Простор со RGB профил  на бои :"
+#: ../modules/cdisplay_lcms.c:256
+msgid "Image profile:"
+msgstr "Профил на слика"
 
-#: ../modules/cdisplay_lcms.c:316
+#: ../modules/cdisplay_lcms.c:263
 msgid "Monitor profile:"
 msgstr "Профил на мониторот:"
 
-#: ../modules/cdisplay_lcms.c:323
+#: ../modules/cdisplay_lcms.c:270
 msgid "Print simulation profile:"
 msgstr "Профил на симулирање на печатење:"
 
-#: ../modules/cdisplay_proof.c:102
+#: ../modules/cdisplay_proof.c:103
 msgid "Color proof filter using ICC color profile"
 msgstr "Филтер на пробата во боји која користи ICC профил на боја"
 
-#: ../modules/cdisplay_proof.c:179
+#: ../modules/cdisplay_proof.c:180
 msgid "Color Proof"
 msgstr "Проба во боја"
 
-#: ../modules/cdisplay_proof.c:306
-msgid "_Intent:"
-msgstr "_Намера:"
-
-#: ../modules/cdisplay_proof.c:310
+#: ../modules/cdisplay_proof.c:340
 msgid "Choose an ICC Color Profile"
 msgstr "Изберете ICC профил на боја"
 
-#: ../modules/cdisplay_proof.c:313
+#: ../modules/cdisplay_proof.c:367
+msgid "All files (*.*)"
+msgstr "Сите датотеки (*.*)"
+
+#: ../modules/cdisplay_proof.c:372
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "ICC профил на боја (*.icc, *.icm)"
+
+#: ../modules/cdisplay_proof.c:430
 msgid "_Profile:"
 msgstr "_Профил:"
 
-#: ../modules/cdisplay_proof.c:318
+#: ../modules/cdisplay_proof.c:436
+msgid "_Intent:"
+msgstr "_Намера:"
+
+#: ../modules/cdisplay_proof.c:441
 msgid "_Black Point Compensation"
 msgstr "Замена за _црну точка"
 
@@ -1402,43 +1435,43 @@ msgstr "Замена за _црну точка"
 msgid "CMYK color selector"
 msgstr "Избор на CMYK боја"
 
-#: ../modules/colorsel_cmyk.c:130
+#: ../modules/colorsel_cmyk.c:130 ../modules/colorsel_cmyk_lcms.c:154
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/colorsel_cmyk.c:148
+#: ../modules/colorsel_cmyk.c:148 ../modules/colorsel_cmyk_lcms.c:171
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/colorsel_cmyk.c:150
+#: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:173
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/colorsel_cmyk.c:152
+#: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:175
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/colorsel_cmyk.c:154
+#: ../modules/colorsel_cmyk.c:154 ../modules/colorsel_cmyk_lcms.c:177
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/colorsel_cmyk.c:158
+#: ../modules/colorsel_cmyk.c:158 ../modules/colorsel_cmyk_lcms.c:181
 msgid "Cyan"
 msgstr "Цијан"
 
-#: ../modules/colorsel_cmyk.c:159
+#: ../modules/colorsel_cmyk.c:159 ../modules/colorsel_cmyk_lcms.c:182
 msgid "Magenta"
 msgstr "Магента"
 
-#: ../modules/colorsel_cmyk.c:160
+#: ../modules/colorsel_cmyk.c:160 ../modules/colorsel_cmyk_lcms.c:183
 msgid "Yellow"
 msgstr "Жолта"
 
-#: ../modules/colorsel_cmyk.c:161
+#: ../modules/colorsel_cmyk.c:161 ../modules/colorsel_cmyk_lcms.c:184
 msgid "Black"
 msgstr "Црна"
 
@@ -1449,6 +1482,19 @@ msgstr "Из_влекување на црна:"
 #: ../modules/colorsel_cmyk.c:212
 msgid "The percentage of black to pull out of the colored inks."
 msgstr "Процент на црна боја која треба да се извлече од обоените мастила."
+
+#: ../modules/colorsel_cmyk_lcms.c:91
+msgid "CMYK color selector (using color profile)"
+msgstr "CMYK одбирач на бои (кој користи профил на бојата)"
+
+#: ../modules/colorsel_cmyk_lcms.c:397
+msgid "Profile: (none)"
+msgstr "Профил: (нема)"
+
+#: ../modules/colorsel_cmyk_lcms.c:410
+#, c-format
+msgid "Profile: %s"
+msgstr "Профил: %s"
 
 #: ../modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
