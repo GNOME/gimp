@@ -275,13 +275,10 @@ retinex_dialog (GimpDrawable *drawable)
   GtkWidget *dialog;
   GtkWidget *main_vbox;
   GtkWidget *preview;
-  GtkWidget *uniform;
-  GtkWidget *low;
-  GtkWidget *high;
   GtkWidget *table;
-  GtkWidget *scrollbar;
+  GtkWidget *combo;
+  GtkWidget *scale;
   GtkObject *adj;
-  GtkWidget *frame;
   gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
@@ -315,45 +312,36 @@ retinex_dialog (GimpDrawable *drawable)
                             G_CALLBACK (retinex),
                             drawable);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Level"),
-                                    G_CALLBACK (gimp_radio_button_update),
-                                    &rvals.scales_mode, rvals.scales_mode,
-
-                                    _("_Uniform"),
-                                    filter_uniform, &uniform,
-                                    _("_Low"),
-                                    filter_low, &low,
-                                    _("_High"),
-                                    filter_high, &high,
-
-                                    NULL);
-
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  g_signal_connect_swapped (uniform, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-  g_signal_connect_swapped (low, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-  g_signal_connect_swapped (high, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
-  table = gtk_table_new (3, 3, FALSE);
+  table = gtk_table_new (4, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
+
+  combo = gimp_int_combo_box_new (_("Uniform"), filter_uniform,
+                                  _("Low"),     filter_low,
+                                  _("High"),    filter_high,
+                                  NULL);
+
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), rvals.scales_mode,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &rvals.scales_mode);
+  g_signal_connect_swapped (combo, "changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("_Level:"), 0.0, 0.5,
+                             combo, 2, FALSE);
+  gtk_widget_show (combo);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                               _("_Scale:"), SCALE_WIDTH, ENTRY_WIDTH,
                               rvals.scale,
                               MIN_GAUSSIAN_SCALE, MAX_GAUSSIAN_SCALE, 1, 1, 0,
                               TRUE, 0, 0, NULL, NULL);
-  scrollbar = GIMP_SCALE_ENTRY_SCALE (adj);
-  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_DISCONTINUOUS);
+  scale = GIMP_SCALE_ENTRY_SCALE (adj);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DISCONTINUOUS);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -363,12 +351,12 @@ retinex_dialog (GimpDrawable *drawable)
                             preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                              _("_Scale division:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              _("Scale _division:"), SCALE_WIDTH, ENTRY_WIDTH,
                               rvals.nscales,
                               0, MAX_RETINEX_SCALES, 1, 1, 0,
                               TRUE, 0, 0, NULL, NULL);
-  scrollbar = GIMP_SCALE_ENTRY_SCALE (adj);
-  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_DISCONTINUOUS);
+  scale = GIMP_SCALE_ENTRY_SCALE (adj);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DISCONTINUOUS);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -378,11 +366,11 @@ retinex_dialog (GimpDrawable *drawable)
                             preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-                              _("_Dynamic:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              _("Dy_namic:"), SCALE_WIDTH, ENTRY_WIDTH,
                               rvals.cvar, 0, 4, 0.1, 0.1, 1,
                               TRUE, 0, 0, NULL, NULL);
-  scrollbar = GIMP_SCALE_ENTRY_SCALE (adj);
-  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_DISCONTINUOUS);
+  scale = GIMP_SCALE_ENTRY_SCALE (adj);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DISCONTINUOUS);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_float_adjustment_update),
