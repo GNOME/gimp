@@ -1,5 +1,9 @@
 2007-10-31  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: bumped version to 2.4.2 (interface age 2).
+
+2007-10-31  Sven Neumann  <sven@gimp.org>
+
 	* Made 2.4.1 release.
 
 2007-10-30  Sven Neumann  <sven@gimp.org>
