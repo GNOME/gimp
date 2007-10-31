@@ -1,4 +1,4 @@
-# translation of gimp-script-fu.HEAD.mk.po to Macedonian
+# translation of gimp-script-fu.HEAD.po to
 # Macedonian translation of gimp
 # Courtesy of mkde team (http://mkde.sourceforge.net/) -- 2004.
 #
@@ -11,50 +11,51 @@
 # Vladimir Stefanov <vladoboss@gmail.com>, 2006.
 # Jovan Naumovski <jovan@lugola.net>, 2006, 2007.
 # Blagoj <kapsarovb@on.net.mk>, 2007.
+# Marko <mark0d0da@gmail.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu.HEAD.mk\n"
+"Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-02 03:39+0100\n"
-"PO-Revision-Date: 2007-06-26 15:42+0200\n"
-"Last-Translator: Jovan Naumovski <jovan@lugola.net>\n"
-"Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
+"POT-Creation-Date: 2007-09-12 04:18+0100\n"
+"PO-Revision-Date: 2007-10-27 17:40-0700\n"
+"Last-Translator: Marko <mark0d0da@gmail.com>\n"
+"Language-Team:  <mk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:144
-#: ../plug-ins/script-fu/script-fu-console.c:213
+#: ../plug-ins/script-fu/script-fu-console.c:135
+#: ../plug-ins/script-fu/script-fu-console.c:202
 msgid "Script-Fu Console"
 msgstr "Script-Fu Конзола"
 
-#: ../plug-ins/script-fu/script-fu-console.c:209
+#: ../plug-ins/script-fu/script-fu-console.c:198
 msgid "Welcome to TinyScheme"
 msgstr "Добредојде во Малата Шема"
 
-#: ../plug-ins/script-fu/script-fu-console.c:215
+#: ../plug-ins/script-fu/script-fu-console.c:204
 msgid "Interactive Scheme Development"
 msgstr "Интерактивно развивање на шема"
 
-#: ../plug-ins/script-fu/script-fu-console.c:251
+#: ../plug-ins/script-fu/script-fu-console.c:240
 msgid "_Browse..."
 msgstr "_Прелистај..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:313
+#: ../plug-ins/script-fu/script-fu-console.c:300
 msgid "Save Script-Fu Console Output"
 msgstr "Script-Fu Конзолен излез"
 
-#: ../plug-ins/script-fu/script-fu-console.c:360
+#: ../plug-ins/script-fu/script-fu-console.c:347
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Неможе да го отвори %s за запис: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:389
+#: ../plug-ins/script-fu/script-fu-console.c:376
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu прелистувач на процедури"
 
-#: ../plug-ins/script-fu/script-fu-console.c:723
+#: ../plug-ins/script-fu/script-fu-console.c:719
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu режимот за проверката е дозволува само не-интерактивен повик"
 
@@ -113,7 +114,7 @@ msgstr "Script-Fu избор на Градиент"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu избор на четка"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:664
+#: ../plug-ins/script-fu/script-fu-scripts.c:658
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -157,115 +158,115 @@ msgstr "Сервер за далечно работење со Script-Fu"
 msgid "_Start Server..."
 msgstr "_Подигни сервер..."
 
-#: ../plug-ins/script-fu/script-fu.c:301
+#: ../plug-ins/script-fu/script-fu.c:298
 msgid "_GIMP Online"
 msgstr "_ГИМП на интернет"
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:299
 msgid "_User Manual"
 msgstr "_Упатство за корисникот"
 
-#: ../plug-ins/script-fu/script-fu.c:305
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:307
+#: ../plug-ins/script-fu/script-fu.c:304
 msgid "_Buttons"
 msgstr "Коп_чиња"
 
-#: ../plug-ins/script-fu/script-fu.c:309
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Logos"
 msgstr "_Логоа"
 
-#: ../plug-ins/script-fu/script-fu.c:311
+#: ../plug-ins/script-fu/script-fu.c:308
 msgid "_Misc"
 msgstr "_Разно"
 
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:310
 msgid "_Patterns"
 msgstr "_Шаблони"
 
-#: ../plug-ins/script-fu/script-fu.c:315
+#: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Test"
 msgstr "_Тест"
 
-#: ../plug-ins/script-fu/script-fu.c:317
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Utilities"
 msgstr "_Можности"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: ../plug-ins/script-fu/script-fu.c:316
 msgid "_Web Page Themes"
 msgstr "Теми за _веб страни"
 
-#: ../plug-ins/script-fu/script-fu.c:321
+#: ../plug-ins/script-fu/script-fu.c:318
 msgid "_Alien Glow"
 msgstr "Вонземјанско _светло"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+#: ../plug-ins/script-fu/script-fu.c:320
 msgid "_Beveled Pattern"
 msgstr "_Закосен шаблон"
 
-#: ../plug-ins/script-fu/script-fu.c:325
+#: ../plug-ins/script-fu/script-fu.c:322
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:328
+#: ../plug-ins/script-fu/script-fu.c:325
 msgid "Alpha to _Logo"
 msgstr "Алфа на _лого"
 
-#: ../plug-ins/script-fu/script-fu.c:330
+#: ../plug-ins/script-fu/script-fu.c:327
 msgid "An_imation"
 msgstr "Анимаци_ја"
 
-#: ../plug-ins/script-fu/script-fu.c:332
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "_Animators"
 msgstr "Анимирач_и"
 
-#: ../plug-ins/script-fu/script-fu.c:334
+#: ../plug-ins/script-fu/script-fu.c:331
 msgid "_Artistic"
 msgstr "Уметни_чки"
 
-#: ../plug-ins/script-fu/script-fu.c:336
+#: ../plug-ins/script-fu/script-fu.c:333
 msgid "_Blur"
 msgstr "_Заматување"
 
-#: ../plug-ins/script-fu/script-fu.c:338
+#: ../plug-ins/script-fu/script-fu.c:335
 msgid "_Decor"
 msgstr "_Декор"
 
-#: ../plug-ins/script-fu/script-fu.c:340
+#: ../plug-ins/script-fu/script-fu.c:337
 msgid "_Effects"
 msgstr "Е_фекти"
 
-#: ../plug-ins/script-fu/script-fu.c:342
+#: ../plug-ins/script-fu/script-fu.c:339
 msgid "En_hance"
 msgstr "Појачува_ње"
 
-#: ../plug-ins/script-fu/script-fu.c:344
+#: ../plug-ins/script-fu/script-fu.c:341
 msgid "_Light and Shadow"
 msgstr "Све_тло и сенка"
 
-#: ../plug-ins/script-fu/script-fu.c:346
+#: ../plug-ins/script-fu/script-fu.c:343
 msgid "S_hadow"
 msgstr "С_енка"
 
-#: ../plug-ins/script-fu/script-fu.c:348
+#: ../plug-ins/script-fu/script-fu.c:345
 msgid "_Render"
 msgstr "_Исцртување"
 
-#: ../plug-ins/script-fu/script-fu.c:350
+#: ../plug-ins/script-fu/script-fu.c:347
 msgid "_Alchemy"
 msgstr "Ал_хемија"
 
-#: ../plug-ins/script-fu/script-fu.c:353
+#: ../plug-ins/script-fu/script-fu.c:350
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Повторно вчитај ги сите достапни Script-Fu скрипти"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:355
 msgid "_Refresh Scripts"
 msgstr "_Освежи скрипти"
 
-#: ../plug-ins/script-fu/script-fu.c:381
+#: ../plug-ins/script-fu/script-fu.c:378
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -376,7 +377,9 @@ msgstr "Радиус на заматување на скицата"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
 msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
-msgstr "Направи контура од избраниот регион (или alpha) со парче за текстура и додај сенка"
+msgstr ""
+"Направи контура од избраниот регион (или alpha) со парче за текстура и додај "
+"сенка"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -589,7 +592,7 @@ msgstr "Рамна Слика"
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 msgid "Glow color"
@@ -848,7 +851,9 @@ msgstr "Анимација со бленда ефект и се потребни
 msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
-msgstr "Создај напреднати слоеви, што ќе имаат бленда ефект врз позадината, како анимација"
+msgstr ""
+"Создај напреднати слоеви, што ќе имаат бленда ефект врз позадината, како "
+"анимација"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Intermediate frames"
@@ -871,8 +876,8 @@ msgid ""
 "Add blended backgrounds, highlights, and shadows to the selected region (or "
 "alpha)"
 msgstr ""
-"Додај позадини со бленда ефект, центри на интерес и сенки на избраниот "
-" регион (или alpha)"
+"Додај позадини со бленда ефект, центри на интерес и сенки на избраниот  "
+"регион (или alpha)"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
@@ -963,18 +968,10 @@ msgid "B_urn-In..."
 msgstr "Ис_печи..."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
-msgid ""
-"Burn-In: Needs two layers in total!\n"
-"A foreground text layer with transparency and a background layer."
-msgstr ""
-"Изрежи-во: Потребни се два слоја во целина!\n"
-"Најгорниот слој со провидност и слој со позадина."
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Corona width"
 msgstr "Ширина на короната"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
@@ -982,21 +979,29 @@ msgstr ""
 "Создај напредни слоеви за да креираш анимација 'изрежи-во',со транзиција "
 "помеѓу два слоја"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Fadeout"
 msgstr "Исчезнување"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout width"
 msgstr "Ширина на исчезнувањето"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 msgid "Prepare for GIF"
 msgstr "Припреми за GIF"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Speed (pixels/frame)"
 msgstr "Брзина (точки/слики)"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
+msgstr ""
+"На Изрежи-во: скриптата потребни и се два слоја во целина!\n"
+"Најгорниот слој со провидност и слој со позадина."
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "Color 1"
@@ -1061,9 +1066,7 @@ msgstr "Изрезбарено..."
 msgid ""
 "Create a logo with text raised above or carved in to the specified "
 "background image"
-msgstr ""
-"Создај лого со текст најнапред или искривен по"
-"постоечката позадина"
+msgstr "Создај лого со текст најнапред или искривен попостоечката позадина"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
@@ -1126,8 +1129,8 @@ msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr ""
-"Додај хрома ефект во избраниот регион (или alpha) употребувајки "
-"специално нијансирање "
+"Додај хрома ефект во избраниот регион (или alpha) употребувајки специално "
+"нијансирање "
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
@@ -1254,12 +1257,8 @@ msgid "Add realistic looking coffee stains to the image"
 msgstr "Додај реалени флеки од кафе, на сликата"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
-msgid ""
-"Darken only\n"
-"(Better, but only for images with a lot of white)"
-msgstr ""
-"Само темно\n"
-"(Подобро, но само за слики со многу бела боја)"
+msgid "Darken only"
+msgstr "Само затемни"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -1273,9 +1272,7 @@ msgstr "Дамка од ка_фе..."
 msgid ""
 "Add a comic-book effect to the selected region (or alpha) by outlining and "
 "filling with a gradient"
-msgstr ""
-"Додај стрип ефект на избраниот регион (или alpha) со "
-"нијансирање и контура"
+msgstr "Додај стрип ефект на избраниот регион (или alpha) со нијансирање и контура"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
@@ -1299,8 +1296,8 @@ msgid ""
 "Add a metallic effect to the selected region (or alpha) with reflections and "
 "perspective shadows"
 msgstr ""
-"Додај металик ефект на избраниот регион (или alpha) со рефлексии "
-"и сенка во перспектива"
+"Додај металик ефект на избраниот регион (или alpha) со рефлексии и сенка во "
+"перспектива"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
@@ -1321,9 +1318,7 @@ msgstr "Слика на позадина"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 msgid "Create a logo with a crystal/gel effect displacing the image underneath"
-msgstr ""
-"Создај лого со кристален/гел ефект измрдувајки ја сликата "
-"под него"
+msgstr "Создај лого со кристален/гел ефект измрдувајки ја сликата под него"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
@@ -1452,49 +1447,9 @@ msgstr "Редови/Колони"
 msgid "_Erase Every Other Row..."
 msgstr "_Избриши го секој друг ред..."
 
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:1
-msgid "Apply generated layermask"
-msgstr "Примени ја генерираната маска на слојот"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:2
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
-msgid "Border size"
-msgstr "Големина на работ"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:3
-msgid "Clear unselected maskarea"
-msgstr "Исчисти го не-селектираното подрачје на маската"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:4
-msgid "Create a layermask that fades the edges of the selected region (or alpha)"
-msgstr ""
-"Создај слој-маска што му опаѓа видливоста по краевите "
-"на избраниот регион (или alpha)"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:6
-#, no-c-format
-msgid "Fade from %"
-msgstr "Исчезнување од %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:8
-#, no-c-format
-msgid "Fade to %"
-msgstr "Исчезнување во %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:9
-msgid "Use growing selection"
-msgstr "Користи растечка селекција"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:10
-msgid "_Fade to Layer Mask..."
-msgstr "_Исчезни во маска на слојот..."
-
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "Create an image filled with a Land Pattern"
-msgstr ""
-"Создај слика пополнета со повторувачка "
-"текстура од земја"
+msgstr "Создај слика пополнета со повторувачка текстура од земја"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:2
 #: ../plug-ins/script-fu/scripts/land.scm.h:2
@@ -1541,8 +1496,8 @@ msgstr "Црно на бело"
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
-"Создај слика исполнета со преглед на фонтови што "
-"претставуваат филтер на фонтот"
+"Создај слика исполнета со преглед на фонтови што претставуваат филтер на "
+"фонтот"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
 msgid "Font _size (pixels)"
@@ -1580,9 +1535,7 @@ msgstr "_Текст"
 msgid ""
 "Add a frost effect to the selected region (or alpha) with an added drop "
 "shadow"
-msgstr ""
-"Додај замрзнат ефект на избраниот регион (или alpha) "
-"со додадок сенка"
+msgstr "Додај замрзнат ефект на избраниот регион (или alpha) со додадок сенка"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
@@ -1603,6 +1556,11 @@ msgstr "Додај сенка"
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 msgid "Blur border"
 msgstr "Замати го работ"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
+msgid "Border size"
+msgstr "Големина на работ"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
@@ -1675,7 +1633,9 @@ msgstr "_Мало заглавие..."
 msgid ""
 "Create an image of a Tube Button Label Header using the gimp.org webpage "
 "theme"
-msgstr "Создај слика од Tube копче за наптис на заглавје со користење на темата од gimp.org"
+msgstr ""
+"Создај слика од Tube копче за наптис на заглавје со користење на темата од "
+"gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
@@ -1685,17 +1645,13 @@ msgstr "Создај слика од таканареченото туба ко�
 msgid ""
 "Create an image of a second level Tube Button Label using the gimp.org "
 "webpage theme"
-msgstr ""
-"Создај слика од второстепено туба копче употребувајки "
-"gimp.org веб тема"
+msgstr "Создај слика од второстепено туба копче употребувајки gimp.org веб тема"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
 msgid ""
 "Create an image of a third level Tube Button Label using the gimp.org "
 "webpage theme"
-msgstr ""
-"Создај слика од третостепено туба копче  употребувајки "
-"gimp.org веб тема"
+msgstr "Создај слика од третостепено туба копче  употребувајки gimp.org веб тема"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
@@ -1718,8 +1674,8 @@ msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
 "alpha)"
 msgstr ""
-"Додај нијанса, повторувачка текстура и релјефна површина на "
-"избраниот регион (или alpha)"
+"Додај нијанса, повторувачка текстура и релјефна површина на избраниот регион "
+"(или alpha)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1825,7 +1781,9 @@ msgstr "Сопствена ни_јанса..."
 msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
-msgstr "Нацртај мрежа со параметри според точката X и Y, употребувајки ја активната четка"
+msgstr ""
+"Нацртај мрежа со параметри според точката X и Y, употребувајки ја активната "
+"четка"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X divisions"
@@ -1845,7 +1803,9 @@ msgstr "Нови водичи од _селекцијата"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "Add a guide at the position specified as a percentage of the image size"
-msgstr "Додај помошен водич на позицијата позната како процент од големината на сликата"
+msgstr ""
+"Додај помошен водич на позицијата позната како процент од големината на "
+"сликата"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:2
@@ -2130,16 +2090,12 @@ msgstr "Нова _четка..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
 msgid "Paste the clipboard contents into a new brush"
-msgstr ""
-"Вметни ја содржината од таблата со исечоци "
-"во нов тип четка"
+msgstr "Вметни ја содржината од таблата со исечоци во нов тип четка"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
 msgid "There is no image data in the clipboard to paste."
-msgstr ""
-"Нема слика како податок во таблата со исечоци "
-"за вметнување"
+msgstr "Нема слика како податок во таблата со исечоци за вметнување"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
 msgid "New _Pattern..."
@@ -2147,9 +2103,7 @@ msgstr "Нов _шаблон..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
 msgid "Paste the clipboard contents into a new pattern"
-msgstr ""
-"Вметни ја содржината на табла со исечоци "
-"во нов шаблон"
+msgstr "Вметни ја содржината на табла со исечоци во нов шаблон"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:4
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
@@ -2202,9 +2156,7 @@ msgstr "_Грабливец..."
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:2
 msgid "Create images, each containing an oval button graphic"
-msgstr ""
-"Создај слики, така што секоја ќе содржи "
-"овален тип копче"
+msgstr "Создај слики, така што секоја ќе содржи овален тип копче"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:5
 msgid "Lower color"
@@ -2256,9 +2208,7 @@ msgstr "Однесување"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Create an image filled with an Earth-like map pattern"
-msgstr ""
-"Создај слика исполнета со шаблон од мапа "
-"како на Земјата"
+msgstr "Создај слика исполнета со шаблон од мапа како на Земјата"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
 msgid "Detail in Middle"
@@ -2712,8 +2662,8 @@ msgid ""
 "Fill the selected region (or alpha) with a texture and add highlights, "
 "shadows, and a mosaic background"
 msgstr ""
-"Исполни го избраниот регион со текстура и додај центри на интерес, "
-"сенки и мозаична позадина"
+"Исполни го избраниот регион со текстура и додај центри на интерес, сенки и "
+"мозаична позадина"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2749,9 +2699,7 @@ msgstr "Хоризонтално заматување"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur the edges of an image so the result tiles seamlessly"
-msgstr ""
-"Замати ги рабовите на сликата, така што ќе изгледа"
-"како испрекинати цигли"
+msgstr "Замати ги рабовите на сликата, така што ќе изгледакако испрекинати цигли"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur type"
@@ -2828,8 +2776,8 @@ msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
-"Создај нов слој исполнет со брановидни ефекти што ќе биде употребен "
-"како покривка на релјефна мапа"
+"Создај нов слој исполнет со брановидни ефекти што ќе биде употребен како "
+"покривка на релјефна мапа"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
