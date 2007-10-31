@@ -1,5 +1,10 @@
 2007-10-31  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-close.c
+	(gimp_display_shell_close_dialog): use g_timeout_source_new_seconds().
+
+2007-10-31  Sven Neumann  <sven@gimp.org>
+
 	* INSTALL
 	* README
 	* NEWS: updated for 2.5.

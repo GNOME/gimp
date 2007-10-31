@@ -173,7 +173,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
                            G_OBJECT (box));
 
   /*  update every 10 seconds  */
-  source = g_timeout_source_new (10 * 1000);
+  source = g_timeout_source_new_seconds (10);
   g_source_set_closure (source, closure);
   g_source_attach (source, NULL);
   g_source_unref (source);
