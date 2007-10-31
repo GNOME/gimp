@@ -17,5 +17,12 @@ Changes in GIMP 2.4.1
 - fixed parsing of floating point numbers in Script-Fu (bug #490198)
 - fixed potential crash when converting an indexed image to RGB (bug #490048)
 - update the histogram while doing color corrections (bug #490182)
-- fixed another crash with broken plug-ins (bug #490617).
-- translation updates
+- fixed another crash with broken plug-ins (bug #490617)
+- fixed problems on Win32 when GIMP is installed into a non-ASCII path
+- fixed handling of truncated ASCII PNM files (bug #490827)
+- make sure that there's always a cursor, even for small brushes (bug #491272)
+- fixed line-drawing with a tablet and the Shift key (bug #164240)
+- added code to use the system monitor profile on OS X (bug #488170)
+- show changes to the rounded corners in the Rectangle Select tool (bug #418284)
+- reduced rounding errors in the display render routines (bug #490785)
+- translation updates (ca, de, et, lt, mk, pa, sv)
