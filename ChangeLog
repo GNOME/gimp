@@ -1,3 +1,8 @@
+2007-10-31  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp-user-install.c: improved detection of old gimp
+	user directories and handle migration from 2.4.
+
 2007-10-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpparamspecs.[ch] (GimpParamSpecString): remove
