@@ -1918,6 +1918,8 @@ scatter_hsv_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
+screenshot_CFLAGS = $(XFIXES_CFLAGS)
+
 screenshot_SOURCES = \
 	screenshot.c
 

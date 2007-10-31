@@ -898,12 +898,14 @@ GIMP_COMMAND='gimp-gimp_app_version'
 
 dnl Check if building for GTK+-X11
 gdk_target=`$PKG_CONFIG --variable=target gtk+-2.0`
+
 if test "$gdk_target" = x11; then
-   dnl screenshot plug-in needs to link to X11 explicitely
-   LIBSCREENSHOT="$X_LIBS -lX11"
 
    dnl doc-shooter is X11 specific
    DOC_SHOOTER=doc-shooter
+
+   dnl screenshot plug-in needs to link to X11 explicitely
+   LIBSCREENSHOT="$X_LIBS -lX11"
 
    gimp_save_CFLAGS="$CFLAGS"
    gimp_save_LDFLAGS="$LDFLAGS"
@@ -932,6 +934,13 @@ if test "$gdk_target" = x11; then
 
    CFLAGS="$gimp_save_CFLAGS"
    LDFLAGS="$gimp_save_LDFLAGS"
+
+   dnl check for the XFixes extension
+   PKG_CHECK_MODULES(XFIXES, xfixes,
+      AC_DEFINE(HAVE_XFIXES, 1,
+                [Define to 1 to if the XFIXES X extension is available])
+      LIBSCREENSHOT="$LIBSCREENSHOT $XFIXES_LIBS")
+
 else
    enable_gimp_remote="no (building for $gdk_target)"
 fi

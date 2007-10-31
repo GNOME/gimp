@@ -39,11 +39,15 @@
 
 #ifdef HAVE_X11_EXTENSIONS_SHAPE_H
 #include <X11/extensions/shape.h>
-#endif /* HAVE_X11_EXTENSIONS_SHAPE_H */
+#endif
 
 #ifdef HAVE_X11_XMU_WINUTIL_H
 #include <X11/Xmu/WinUtil.h>
-#endif /* HAVE_X11_XMU_WINUTIL_H */
+#endif
+
+#ifdef HAVE_XFIXES
+#include <X11/extensions/Xfixes.h>
+#endif
 
 #elif defined(GDK_WINDOWING_WIN32)
 #include <windows.h>
@@ -163,6 +167,7 @@ typedef struct
   gint       y1;
   gint       x2;
   gint       y2;
+  gboolean   show_cursor;
 } ScreenshotValues;
 
 static ScreenshotValues shootvals =
@@ -174,7 +179,8 @@ static ScreenshotValues shootvals =
   0,            /* coords of region dragged out by pointer */
   0,
   0,
-  0
+  0,
+  FALSE
 };
 
 
@@ -810,6 +816,79 @@ create_image (GdkPixbuf   *pixbuf,
   return image;
 }
 
+static void
+add_cursor_image (gint32      image,
+                  GdkDisplay *display)
+{
+#ifdef HAVE_XFIXES
+  XFixesCursorImage *cursor;
+  GimpDrawable      *drawable;
+  GimpPixelRgn       rgn;
+  gpointer           pr;
+  gint32             layer;
+  gint32             active;
+
+  cursor = XFixesGetCursorImage (GDK_DISPLAY_XDISPLAY (display));
+
+  if (!cursor)
+    return;
+
+  active = gimp_image_get_active_layer (image);
+
+  layer = gimp_layer_new (image, _("Mouse Pointer"),
+                          cursor->width, cursor->height,
+                          GIMP_RGBA_IMAGE, 100.0, GIMP_NORMAL_MODE);
+
+  drawable = gimp_drawable_get (layer);
+
+  gimp_pixel_rgn_init (&rgn, drawable,
+                       0, 0, drawable->width, drawable->height, TRUE, FALSE);
+
+  for (pr = gimp_pixel_rgns_register (1, &rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
+    {
+      const gulong *src  = cursor->pixels + rgn.y * cursor->width + rgn.x;
+      guchar       *dest = rgn.data;
+      gint          x, y;
+
+      for (y = 0; y < rgn.h; y++)
+        {
+          const gulong *s = src;
+          guchar       *d = dest;
+
+          for (x = 0; x < rgn.w; x++)
+            {
+              /*  the cursor pixels are pre-multiplied ARGB  */
+              guint a = (*s >> 24) & 0xff;
+              guint r = (*s >> 16) & 0xff;
+              guint g = (*s >> 8)  & 0xff;
+              guint b = (*s >> 0)  & 0xff;
+
+              d[0] = a ? (r * 255) / a : r;
+              d[1] = a ? (g * 255) / a : g;
+              d[2] = a ? (b * 255) / a : b;
+              d[3] = a;
+
+              s++;
+              d += 4;
+            }
+
+          src  += cursor->width;
+          dest += rgn.rowstride;
+        }
+    }
+
+  gimp_drawable_detach (drawable);
+
+  gimp_image_add_layer (image, layer, -1);
+  gimp_layer_set_offsets (layer,
+                          cursor->x - cursor->xhot, cursor->y - cursor->yhot);
+
+  gimp_image_set_active_layer (image, active);
+#endif
+}
+
 
 /* The main Screenshot function */
 
@@ -883,7 +962,6 @@ shoot (GdkScreen *screen)
                                              0, 0, rect.width, rect.height);
 
   gdk_display_beep (display);
-  gdk_flush ();
 
   if (! screenshot)
     {
@@ -909,6 +987,12 @@ shoot (GdkScreen *screen)
     gdk_region_destroy (shape);
 
   g_free (name);
+
+  /* FIXME: Some time might have passed until we get here.
+   *        The cursor image should be grabbed together with the screenshot.
+   */
+  if (shootvals.shoot_type == SHOOT_ROOT && shootvals.show_cursor)
+    add_cursor_image (image, display);
 
   return image;
 }
@@ -1030,8 +1114,6 @@ shoot_dialog (GdkScreen **screen)
 					       _("Take a screenshot of "
                                                  "a single _window"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                shootvals.shoot_type == SHOOT_WINDOW);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -1043,7 +1125,7 @@ shoot_dialog (GdkScreen **screen)
                     notebook);
 
 #ifdef HAVE_X11_XMU_WINUTIL_H
-
+  /*  window decorations  */
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
@@ -1061,14 +1143,14 @@ shoot_dialog (GdkScreen **screen)
 
 #endif /* HAVE_X11_XMU_WINUTIL_H */
 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                shootvals.shoot_type == SHOOT_WINDOW);
 
   /*  whole screen  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
 					       _("Take a screenshot of "
                                                  "the entire _screen"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                shootvals.shoot_type == SHOOT_ROOT);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -1078,6 +1160,30 @@ shoot_dialog (GdkScreen **screen)
   g_signal_connect (button, "toggled",
                     G_CALLBACK (shoot_radio_button_toggled),
                     notebook);
+
+#ifdef HAVE_XFIXES
+  /*  mouse pointer  */
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  toggle = gtk_check_button_new_with_mnemonic (_("Include _mouse pointer"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                shootvals.show_cursor);
+  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 24);
+  gtk_widget_show (toggle);
+
+  gtk_widget_set_sensitive (toggle, FALSE);
+  g_object_set_data (G_OBJECT (button), "set_sensitive", toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &shootvals.show_cursor);
+
+#endif
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                shootvals.shoot_type == SHOOT_ROOT);
 
   /*  dragged region  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,

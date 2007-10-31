@@ -1,5 +1,16 @@
 2007-10-31  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: check for the XFIXES extension.
+
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/Makefile.am: use XFIXES_CFLAGS for compiling the
+	screenshot plug-in.
+
+	* plug-ins/common/screenshot.c: optionally add the mouse cursor
+	image on an extra layer. Work in progress... (bug #490779).
+
+2007-10-31  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: bumped version to 2.5.0.
 
 	Created branch gimp-2-4 for bug-fixes in the stable 2.4 series.

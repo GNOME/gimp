@@ -108,7 +108,7 @@
     'rotate' => {},
     'sample_colorize' => { ui => 1 },
     'scatter_hsv' => { ui => 1 },
-    'screenshot' => { ui => 1, optional => 1 },
+    'screenshot' => { ui => 1, optional => 1, cflags => XFIXES_CFLAGS },
     'sel_gauss' => { ui => 1, cflags => 'MMX_EXTRA_CFLAGS' },
     'semiflatten' => {},
     'sharpen' => { ui => 1 },
