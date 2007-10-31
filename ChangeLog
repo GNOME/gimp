@@ -1,3 +1,9 @@
+2007-10-31  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* README
+	* NEWS: updated for 2.5.
+
 2007-10-31  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: depend on glib 2.14.1
