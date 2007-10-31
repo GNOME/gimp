@@ -312,6 +312,8 @@ static void       gimp_param_string_init       (GParamSpec      *pspec);
 static gboolean   gimp_param_string_validate   (GParamSpec      *pspec,
                                                 GValue          *value);
 
+static GParamSpecClass * gimp_param_string_parent_class = NULL;
+
 GType
 gimp_param_string_get_type (void)
 {
@@ -340,6 +342,8 @@ gimp_param_string_get_type (void)
 static void
 gimp_param_string_class_init (GParamSpecClass *klass)
 {
+  gimp_param_string_parent_class = g_type_class_peek_parent (klass);
+
   klass->value_type     = G_TYPE_STRING;
   klass->value_validate = gimp_param_string_validate;
 }
@@ -349,8 +353,9 @@ gimp_param_string_init (GParamSpec *pspec)
 {
   GimpParamSpecString *sspec = GIMP_PARAM_SPEC_STRING (pspec);
 
+  G_PARAM_SPEC_STRING (pspec)->ensure_non_null = TRUE;
+
   sspec->allow_non_utf8 = FALSE;
-  sspec->null_ok        = FALSE;
   sspec->non_empty      = FALSE;
 }
 
@@ -361,9 +366,8 @@ gimp_param_string_validate (GParamSpec *pspec,
   GimpParamSpecString *sspec  = GIMP_PARAM_SPEC_STRING (pspec);
   gchar               *string = value->data[0].v_pointer;
 
-#ifdef __GNUC__
-#warning FIXME: use GParamSpecString::ensure_non_null and chain up once we depend on glib 2.12.12 or newer
-#endif
+  if (gimp_param_string_parent_class->value_validate (pspec, value))
+    return TRUE;
 
   if (string)
     {
@@ -397,12 +401,6 @@ gimp_param_string_validate (GParamSpec *pspec,
           return TRUE;
         }
     }
-  else if (! sspec->null_ok)
-    {
-      value->data[1].v_uint &= ~G_VALUE_NOCOPY_CONTENTS;
-      value->data[0].v_pointer = g_strdup ("");
-      return TRUE;
-    }
   else if (sspec->non_empty)
     {
       value->data[1].v_uint &= ~G_VALUE_NOCOPY_CONTENTS;
@@ -435,8 +433,9 @@ gimp_param_spec_string (const gchar *name,
       g_free (G_PARAM_SPEC_STRING (sspec)->default_value);
       G_PARAM_SPEC_STRING (sspec)->default_value = g_strdup (default_value);
 
+      G_PARAM_SPEC_STRING (sspec)->ensure_non_null = null_ok ? FALSE : TRUE;
+
       sspec->allow_non_utf8 = allow_non_utf8 ? TRUE : FALSE;
-      sspec->null_ok        = null_ok        ? TRUE : FALSE;
       sspec->non_empty      = non_empty      ? TRUE : FALSE;
     }
 

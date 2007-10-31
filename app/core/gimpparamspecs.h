@@ -152,7 +152,6 @@ struct _GimpParamSpecString
   GParamSpecString parent_instance;
 
   guint            allow_non_utf8 : 1;
-  guint            null_ok        : 1;
   guint            non_empty      : 1;
 };
 

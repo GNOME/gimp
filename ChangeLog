@@ -1,3 +1,9 @@
+2007-10-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpparamspecs.[ch] (GimpParamSpecString): remove
+	member "null_ok" and use GParamSpecString's "ensure_non_null"
+	instead.
+
 2007-10-31  Tor Lillqvist  <tml@novell.com>
 
 	* README.win32: Remove. This kind of information belongs in the
