@@ -238,22 +238,67 @@ gimp_dash_editor_expose (GtkWidget      *widget,
                          GdkEventExpose *event)
 {
   GimpDashEditor *editor = GIMP_DASH_EDITOR (widget);
-  gint            x, index, w, h;
+  cairo_t        *cr     = gdk_cairo_create (widget->window);
+  gint            x;
+  gint            w, h;
 
   update_blocksize (editor);
 
-  /*  Draw the background  */
-  gdk_draw_rectangle (widget->window,
-                      widget->style->base_gc[GTK_STATE_NORMAL], TRUE,
-                      0, 0,
-                      widget->allocation.width,
-                      widget->allocation.height);
+  gdk_cairo_rectangle (cr, &event->area);
+  cairo_clip (cr);
+
+  /*  draw the background  */
+
+  gdk_cairo_set_source_color (cr, &widget->style->base[GTK_STATE_NORMAL]);
+  cairo_paint (cr);
 
   w = editor->block_width;
   h = editor->block_height;
 
   editor->x0 = (widget->allocation.width - w * editor->n_segments) / 2;
   editor->y0 = (widget->allocation.height - h) / 2;
+
+  /*  draw the dash segments  */
+
+  x = editor->x0 % w;
+
+  if (x > 0)
+    x -= w;
+
+  for (; x < editor->x0; x += w)
+    {
+      gint index = dash_x_to_index (editor, x);
+
+      if (editor->segments[index])
+        cairo_rectangle (cr, x, editor->y0, w, h);
+    }
+
+  gdk_cairo_set_source_color (cr, &widget->style->text_aa[GTK_STATE_NORMAL]);
+  cairo_fill (cr);
+
+  for (; x < editor->x0 + editor->n_segments * w; x += w)
+    {
+      gint index = dash_x_to_index (editor, x);
+
+      if (editor->segments[index])
+        cairo_rectangle (cr, x, editor->y0, w, h);
+    }
+
+  gdk_cairo_set_source_color (cr, &widget->style->text[GTK_STATE_NORMAL]);
+  cairo_fill (cr);
+
+  for (; x < widget->allocation.width + w; x += w)
+    {
+      gint index = dash_x_to_index (editor, x);
+
+      if (editor->segments[index])
+        cairo_rectangle (cr, x, editor->y0, w, h);
+    }
+
+  gdk_cairo_set_source_color (cr, &widget->style->text_aa[GTK_STATE_NORMAL]);
+  cairo_fill (cr);
+
+  /*  draw rulers  */
 
   x = editor->x0 % w;
 
@@ -262,59 +307,34 @@ gimp_dash_editor_expose (GtkWidget      *widget,
 
   for (; x < widget->allocation.width + w; x += w)
     {
-      index = dash_x_to_index (editor, x);
+      gint index = dash_x_to_index (editor, x);
 
-      if (x < editor->x0 || x >= editor->x0 + editor->n_segments * w)
+      if (editor->n_segments % 4 == 0 &&
+          (index + 1) % (editor->n_segments / 4) == 0)
         {
-          if (editor->segments[index])
-            {
-              gdk_draw_rectangle (widget->window,
-                                  widget->style->text_aa_gc[GTK_STATE_NORMAL],
-                                  TRUE,
-                                  x, editor->y0,
-                                  w, h);
-            }
+          cairo_move_to (cr, x + w - 0.5, editor->y0 - 2);
+          cairo_line_to (cr, x + w - 0.5, editor->y0 + h + 2);
+        }
+      else if (index % 2 == 1)
+        {
+          cairo_move_to (cr, x + w - 0.5, editor->y0 + 1);
+          cairo_line_to (cr, x + w - 0.5, editor->y0 + h - 1);
         }
       else
         {
-          if (editor->segments[index])
-            {
-              gdk_draw_rectangle (widget->window,
-                                  widget->style->text_gc[GTK_STATE_NORMAL],
-                                  TRUE,
-                                  x, editor->y0,
-                                  w, h);
-            }
-
-          if (editor->n_segments % 4 == 0 &&
-              (index + 1) % (editor->n_segments / 4) == 0)
-            {
-              gdk_draw_line (widget->window,
-                             widget->style->text_aa_gc[GTK_STATE_NORMAL],
-                             x + w - 1, editor->y0 - 2,
-                             x + w - 1, editor->y0 + h + 1);
-            }
-          else if (index % 2 == 1)
-            {
-              gdk_draw_line (widget->window,
-                             widget->style->text_aa_gc[GTK_STATE_NORMAL],
-                             x + w - 1, editor->y0 + 1,
-                             x + w - 1, editor->y0 + h - 2);
-            }
-          else
-            {
-              gdk_draw_line (widget->window,
-                             widget->style->text_aa_gc[GTK_STATE_NORMAL],
-                             x + w - 1, editor->y0 + h / 2 - 1,
-                             x + w - 1, editor->y0 + h / 2);
-            }
+          cairo_move_to (cr, x + w - 0.5, editor->y0 + h / 2 - 1);
+          cairo_line_to (cr, x + w - 0.5, editor->y0 + h / 2 + 1);
         }
     }
 
-  gdk_draw_line (widget->window,
-                 widget->style->text_aa_gc[GTK_STATE_NORMAL],
-                 editor->x0 - 1, editor->y0 - 1,
-                 editor->x0 - 1, editor->y0 + h);
+  cairo_move_to (cr, editor->x0 - 0.5, editor->y0 - 1);
+  cairo_move_to (cr, editor->x0 - 0.5, editor->y0 + h);
+
+  gdk_cairo_set_source_color (cr, &widget->style->text_aa[GTK_STATE_NORMAL]);
+  cairo_set_line_width (cr, 1.0);
+  cairo_stroke (cr);
+
+  cairo_destroy (cr);
 
   return FALSE;
 }

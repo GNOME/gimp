@@ -1,5 +1,10 @@
 2007-11-01  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdasheditor.c (gimp_dash_editor_expose): draw
+	using Cairo.
+
+2007-11-01  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcellrendererdashes.c
 	(gimp_cell_renderer_dashes_render): draw using Cairo.
 
