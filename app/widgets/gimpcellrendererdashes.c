@@ -192,6 +192,7 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
 {
   GimpCellRendererDashes *dashes = GIMP_CELL_RENDERER_DASHES (cell);
   GtkStateType            state;
+  cairo_t                *cr;
   gint                    width;
   gint                    x, y;
 
@@ -222,25 +223,27 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
   y = cell_area->y + (cell_area->height - DASHES_HEIGHT) / 2;
   width = cell_area->width - 2 * cell->xpad;
 
+  cr = gdk_cairo_create (GDK_DRAWABLE (window));
+
+  gdk_cairo_rectangle (cr, expose_area);
+  cairo_clip (cr);
+
   for (x = 0; x < width + BLOCK_WIDTH; x += BLOCK_WIDTH)
     {
       guint index = ((guint) x / BLOCK_WIDTH) % N_SEGMENTS;
 
       if (dashes->segments[index])
         {
-          GdkRectangle  rect;
+          cairo_rectangle (cr,
+                           cell_area->x + cell->xpad + x, y,
+                           MIN (BLOCK_WIDTH, width - x), DASHES_HEIGHT);
 
-          rect.x      = cell_area->x + cell->xpad + x;
-          rect.y      = y;
-          rect.width  = MIN (BLOCK_WIDTH, width - x);
-          rect.height = DASHES_HEIGHT;
-
-          gdk_rectangle_intersect (&rect, expose_area, &rect);
-          gdk_draw_rectangle (widget->window,
-                              widget->style->text_gc[state], TRUE,
-                              rect.x, rect.y, rect.width, rect.height);
+          gdk_cairo_set_source_color (cr, &widget->style->text[state]);
+          cairo_fill (cr);
         }
     }
+
+  cairo_destroy (cr);
 }
 
 GtkCellRenderer *
