@@ -829,33 +829,6 @@ fi
 AC_SUBST(SYMPREFIX)
 
 
-##################################
-# Check for regex support in glibc
-##################################
-
-AC_MSG_CHECKING(checking for regex in glibc)
-AC_TRY_RUN([
-#include <features.h>
-#include <stdio.h>
-#include <regex.h>
-int main()
-{
-#if __GLIBC__ >= 2
-  return (0);
-#else
-  return (1);
-#endif
-}], AC_DEFINE(HAVE_GLIBC_REGEX, 1,
-              [Define to 1 if glibc has regex support.])
-    have_glibc_regex=yes
-    AC_MSG_RESULT(yes),
-    AC_MSG_RESULT(no),
-    AC_MSG_RESULT(assuming no))
-AM_CONDITIONAL(HAVE_GLIBC_REGEX, test "x$have_glibc_regex" = xyes)
-
-AC_SUBST(HAVE_GLIBC_REGEX)
-
-
 ############################
 # Check for select and fdset
 ############################
@@ -1887,7 +1860,6 @@ AC_CONFIG_FILES([
 gimptool-win32.c
 tools/Makefile
 tools/pdbgen/Makefile
-regexrepl/Makefile
 libgimp/Makefile
 libgimpbase/Makefile
 libgimpconfig/Makefile

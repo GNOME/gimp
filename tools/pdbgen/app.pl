@@ -729,19 +729,7 @@ GPL
 		}
 	    }
 
-            if ($_ eq '"regexrepl/regex.h"') {
-		$headers .= "\n";
-		$headers .= "#ifdef HAVE_GLIBC_REGEX\n";
-		$headers .= "#include <regex.h>\n";
-		$headers .= "#else\n";
-	    }
-
 	    $headers .= "#include $_\n";
-
-            if ($_ eq '"regexrepl/regex.h"') {
-		$headers .= "#endif\n";
-		$nl = 1;
-	    }
 
 	    if ($_ eq '<unistd.h>') {
 		$headers .= "#endif\n";

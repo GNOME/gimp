@@ -22,12 +22,6 @@
 
 #include <string.h>
 
-#ifdef HAVE_GLIBC_REGEX
-#include <regex.h>
-#else
-#include "regexrepl/regex.h"
-#endif
-
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -39,11 +33,11 @@
 #include "gimppluginprocedure.h"
 
 
-static int
-match_strings (regex_t *preg,
-               gchar   *a)
+static gboolean
+match_string (GRegex *regex,
+              gchar  *string)
 {
-  return regexec (preg, a, 0, NULL, 0);
+  return g_regex_match (regex, string, 0, NULL);
 }
 
 gint
@@ -60,7 +54,7 @@ gimp_plug_in_manager_query (GimpPlugInManager   *manager,
   GSList  *list;
   GSList  *matched     = NULL;
   gint     i           = 0;
-  regex_t  sregex;
+  GRegex  *sregex      = NULL;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), 0);
   g_return_val_if_fail (menu_strs != NULL, 0);
@@ -80,8 +74,13 @@ gimp_plug_in_manager_query (GimpPlugInManager   *manager,
   if (search_str && ! strlen (search_str))
     search_str = NULL;
 
-  if (search_str && regcomp (&sregex, search_str, REG_ICASE))
-    return 0;
+  if (search_str)
+    {
+      sregex = g_regex_new (search_str, G_REGEX_CASELESS | G_REGEX_OPTIMIZE, 0,
+                            NULL);
+      if (! sregex)
+        return 0;
+    }
 
   /* count number of plugin entries, then allocate arrays of correct size
    * where we can store the strings.
@@ -111,7 +110,7 @@ gimp_plug_in_manager_query (GimpPlugInManager   *manager,
 
           name = gimp_strip_uline (name);
 
-          if (! search_str || ! match_strings (&sregex, name))
+          if (! search_str || match_string (sregex, name))
             {
               num_plugins++;
               matched = g_slist_prepend (matched, proc);
@@ -156,8 +155,8 @@ gimp_plug_in_manager_query (GimpPlugInManager   *manager,
 
   g_slist_free (matched);
 
-  if (search_str)
-    regfree (&sregex);
+  if (sregex)
+    g_regex_unref (sregex);
 
   return num_plugins;
 }

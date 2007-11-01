@@ -25,12 +25,6 @@
 
 #include <glib-object.h>
 
-#ifdef HAVE_GLIBC_REGEX
-#include <regex.h>
-#else
-#include "regexrepl/regex.h"
-#endif
-
 #include "core-types.h"
 
 #include "gimpcontainer.h"
@@ -101,10 +95,9 @@ gimp_container_filter (const GimpContainer  *container,
 
 static gboolean
 gimp_object_filter_by_name (const GimpObject *object,
-                            const regex_t    *regex)
+                            const GRegex     *regex)
 {
-  return (regexec (regex,
-                   gimp_object_get_name (object), 0, NULL, 0) != REG_NOMATCH);
+  return g_regex_match (regex, gimp_object_get_name (object), 0, NULL);
 }
 
 /**
@@ -124,38 +117,24 @@ gimp_container_filter_by_name (const GimpContainer  *container,
                                GError              **error)
 {
   GimpContainer *result;
-  gint           ret;
-  regex_t        regex;
+  GRegex        *regex;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (regexp != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  ret = regcomp (&regex, regexp, REG_EXTENDED | REG_ICASE | REG_NOSUB);
-  if (ret)
-    {
-      gsize  error_len;
-      gchar *error_buf;
+  regex = g_regex_new (regexp, G_REGEX_CASELESS | G_REGEX_OPTIMIZE, 0,
+                       error);
 
-      error_len = regerror (ret, &regex, NULL, 0);
-      error_buf = g_new (gchar, error_len);
-
-      regerror (ret, &regex, error_buf, error_len);
-
-      g_set_error (error, 0, 0, error_buf);
-
-      g_free (error_buf);
-      regfree (&regex);
-
-      return NULL;
-    }
+  if (! regex)
+    return NULL;
 
   result =
     gimp_container_filter (container,
                            (GimpObjectFilterFunc) gimp_object_filter_by_name,
-                           &regex);
+                           regex);
 
-  regfree (&regex);
+  g_regex_unref (regex);
 
   return result;
 }

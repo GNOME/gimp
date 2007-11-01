@@ -1,3 +1,21 @@
+2007-11-01  Manish Singh  <yosh@gimp.org>
+
+	* app/core/gimpcontainer-filter.c
+	* app/pdb/gimppdb-query.c
+	* app/plug-in/gimppluginmanager-query.c: replace usage of POSIX
+	regex API with GRegex.
+
+	* configure.in: remove check for regex support in glibc.
+
+	* app/Makefile.am
+	* plug-ins/script-fu/Makefile.am: remove REGEXREPL references.
+
+	* tools/pdbgen/app.pl: remove code that references HAVE_GLIBC_REGEX.
+
+	* regexrepl/*
+	* makefile.msc
+	* Makefile.am: remove regexrepl directory.
+
 2007-10-31  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-user-install.c: improved detection of old gimp

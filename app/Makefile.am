@@ -61,13 +61,6 @@ EXTRA_DIST = \
 	fileicon.ico	\
 	wilber.ico
 
-
-if HAVE_GLIBC_REGEX
-REGEXREPL =
-else
-REGEXREPL = $(top_builddir)/regexrepl/libregex.a
-endif
-
 if OS_WIN32
 mwindows = -mwindows
 endif

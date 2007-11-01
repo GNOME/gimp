@@ -3,7 +3,6 @@
 SUBDIRS = \
 	m4macros	\
 	tools		\
-	regexrepl	\
 	cursors		\
 	themes		\
 	po		\

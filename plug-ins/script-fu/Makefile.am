@@ -52,12 +52,6 @@ script_fu_SOURCES = \
 	scheme-wrapper.c		\
 	scheme-wrapper.h
 
-if HAVE_GLIBC_REGEX
-REGEXREPL =
-else
-REGEXREPL = $(top_builddir)/regexrepl/libregex.a
-endif
-
 LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
