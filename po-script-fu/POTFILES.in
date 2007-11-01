@@ -63,7 +63,6 @@ plug-ins/script-fu/scripts/guides-from-selection.scm
 plug-ins/script-fu/scripts/guides-new-percent.scm
 plug-ins/script-fu/scripts/guides-new.scm
 plug-ins/script-fu/scripts/guides-remove-all.scm
-plug-ins/script-fu/scripts/hsv-graph.scm
 plug-ins/script-fu/scripts/i26-gunya2.scm
 plug-ins/script-fu/scripts/land.scm
 plug-ins/script-fu/scripts/lava.scm

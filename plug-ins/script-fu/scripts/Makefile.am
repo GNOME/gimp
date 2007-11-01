@@ -62,7 +62,6 @@ scripts = \
 	guides-new.scm			\
 	guides-new-percent.scm		\
 	guides-remove-all.scm		\
-	hsv-graph.scm			\
 	i26-gunya2.scm			\
 	land.scm			\
 	lava.scm			\

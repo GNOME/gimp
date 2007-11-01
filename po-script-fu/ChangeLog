@@ -1,3 +1,7 @@
+2007-11-01  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed hsv-graph.scm.
+
 2007-10-30  Priit Laes  <plaes@svn.gnome.org>
 
 	* et.po: Translation updated by Olle Niit.
