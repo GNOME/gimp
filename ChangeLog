@@ -1,3 +1,11 @@
+2007-11-01  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/script-fu/scripts/Makefile.am (scripts):
+	* plug-ins/script-fu/scripts/hsv-graph.scm: removed this script.
+	Fixes bug #491311.
+
 2007-10-31  Sven Neumann  <sven@gimp.org>
 
 	* README: somehow a leading space sneaked in here; removed it.
