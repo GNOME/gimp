@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-26 12:41+0200\n"
-"PO-Revision-Date: 2007-10-25 23:31+0200\n"
+"POT-Creation-Date: 2007-11-01 11:04+0100\n"
+"PO-Revision-Date: 2007-10-27 12:12+0200\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -65,7 +65,7 @@ msgstr ""
 "\n"
 "Heu d'haver rebut una còpia de la llicència GNU General Public License "
 "juntament amb el programa GIMP; si no és així, escriviu a la Free Software "
-"Foundation,  Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
 #: ../app/app.c:209
 #, c-format
@@ -1344,7 +1344,7 @@ msgstr "Suprimeix els fitxers i_nexistents"
 # Abreujada un mica (XC)
 #: ../app/actions/documents-actions.c:95
 msgid "Remove dangling entries"
-msgstr "Suprimeix  de la llista de fitxers recents els que ja no existeixin"
+msgstr "Suprimeix de la llista de fitxers recents els que ja no existeixin"
 
 #: ../app/actions/documents-commands.c:187
 msgid "Clear Document History"
@@ -2622,13 +2622,14 @@ msgstr "Escalat"
 msgid "Images Menu"
 msgstr "Menú de les imatges obertes"
 
+# Quim: raise views desminimitza totes les finestres vista d'una imatge determinada, veure diàleg imatges
 #: ../app/actions/images-actions.c:47
 msgid "_Raise Views"
-msgstr "_Mostra la imatge"
+msgstr "_Mostra totes les vistes"
 
 #: ../app/actions/images-actions.c:48
 msgid "Raise this image's displays"
-msgstr "Porta aquesta imatge al primer pla"
+msgstr "Mostra totes les finestres de la imatge"
 
 #: ../app/actions/images-actions.c:53 ../app/actions/view-actions.c:75
 msgid "_New View"
@@ -2636,7 +2637,7 @@ msgstr "_Nova vista"
 
 #: ../app/actions/images-actions.c:54
 msgid "Create a new display for this image"
-msgstr "Crea una nova finestra d'aquesta imatge"
+msgstr "Crea una finestra nova d'aquesta imatge"
 
 #: ../app/actions/images-actions.c:59
 msgid "_Delete Image"
@@ -3486,7 +3487,7 @@ msgstr "Desa en un _canal"
 
 #: ../app/actions/select-actions.c:105
 msgid "Save the selection to a channel"
-msgstr "Desa la selecció en un  canal"
+msgstr "Desa la selecció en un canal"
 
 #: ../app/actions/select-actions.c:110
 msgid "_Stroke Selection..."
@@ -3578,7 +3579,7 @@ msgstr "_Crea una imatge com la plantilla..."
 
 #: ../app/actions/templates-actions.c:47
 msgid "Create a new image from the selected template"
-msgstr "Crea una nova imatge a partir de la plantilla seleccionada"
+msgstr "Crea una imatge nova a partir de la plantilla seleccionada"
 
 #: ../app/actions/templates-actions.c:52
 msgid "_New Template..."
@@ -3679,7 +3680,7 @@ msgstr "Obre fitxer de text (UTF-8)"
 #: ../app/core/gimppalette-load.c:76 ../app/core/gimppalette-load.c:271
 #: ../app/core/gimppalette-load.c:315 ../app/core/gimppalette-load.c:369
 #: ../app/core/gimppalette-load.c:457 ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpimagemaptool.c:588 ../app/xcf/xcf.c:323
+#: ../app/tools/gimpimagemaptool.c:586 ../app/xcf/xcf.c:323
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "No s'ha pogut obrir «%s» per a lectura: %s"
@@ -4015,7 +4016,7 @@ msgstr "Nou camí"
 
 #: ../app/actions/vectors-commands.c:169
 msgid "New Path Options"
-msgstr "Opcions del nou camí"
+msgstr "Opcions del camí nou"
 
 #: ../app/actions/vectors-commands.c:297 ../app/pdb/paths_cmds.c:612
 #: ../app/pdb/vectors_cmds.c:1115
@@ -4530,7 +4531,7 @@ msgstr "No s'ha pogut canviar la mida del fitxer d'intercanvi: %s"
 #: ../app/config/gimpconfig-file.c:68 ../app/core/gimpbrushgenerated-save.c:63
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:145
 #: ../app/core/gimppalette-save.c:56 ../app/gui/themes.c:239
-#: ../app/tools/gimpimagemaptool.c:587 ../app/vectors/gimpvectors-export.c:83
+#: ../app/tools/gimpimagemaptool.c:585 ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:401
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -4541,7 +4542,7 @@ msgstr "No s'ha pogut obrir «%s» en escriure: %s"
 msgid "Error writing '%s': %s"
 msgstr "S'ha produït un error en escriure «%s»: %s"
 
-#: ../app/config/gimpconfig-file.c:90 ../app/tools/gimpimagemaptool.c:620
+#: ../app/config/gimpconfig-file.c:90 ../app/tools/gimpimagemaptool.c:618
 #, c-format
 msgid "Error reading '%s': %s"
 msgstr "S'ha produït un error en llegir «%s»: %s"
@@ -4967,7 +4968,7 @@ msgid ""
 "may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
 "Defineix la ubicació del fitxer d'intercanvi. El GIMP fa servir un esquema "
-"de memòria  paginada. El fitxer d'intercanvi s'empra per intercanviar les "
+"de memòria paginada. El fitxer d'intercanvi s'empra per intercanviar les "
 "pàgines de memòria amb el disc d'una manera ràpida i senzilla. Quan trieu la "
 "ubicació tingueu en compte que el fitxer d'intercanvi pot créixer molt si "
 "editeu imatges grans amb el GIMP. També, si el fitxer d'intercanvi es troba "
@@ -5101,7 +5102,7 @@ msgid ""
 msgstr ""
 "Defineix el navegador web extern a utilitzar. Pot ser un camí absolut o el "
 "nom d'un executable a cercar en el camí d'usuari. Si l'ordre conté «%s» es "
-"reemplaçarà amb l'URL; sino l'URL s'afegirà a l'ordre amb un espai de "
+"reemplaçarà amb l'URL; si no l'URL s'afegirà a l'ordre amb un espai de "
 "separació."
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:134
@@ -6801,7 +6802,7 @@ msgstr "píxel"
 
 #: ../app/core/gimpunit.c:56 ../app/tools/gimpmeasuretool.c:868
 #: ../app/tools/gimpmeasuretool.c:1011 ../app/tools/gimpmeasuretool.c:1067
-#: ../app/tools/gimpmeasuretool.c:1095 ../app/tools/gimppainttool.c:602
+#: ../app/tools/gimpmeasuretool.c:1095 ../app/tools/gimppainttool.c:604
 msgid "pixels"
 msgstr "píxels"
 
@@ -7451,7 +7452,7 @@ msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
-"La configuració de la finestra recuperarà els valors per defecte  la propera "
+"La configuració de la finestra recuperarà els valors per defecte la propera "
 "vegada que inicieu el GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:678
@@ -7975,7 +7976,7 @@ msgstr "Marca els colors de la gamma"
 
 #: ../app/dialogs/preferences-dialog.c:2500
 msgid "Select Warning Color"
-msgstr "Selecciona un color càlid"
+msgstr "Selecciona un color d'avís"
 
 #: ../app/dialogs/preferences-dialog.c:2513
 msgid "File Open behaviour:"
@@ -8883,7 +8884,7 @@ msgstr ""
 "Segurament un connector està intentant treballar amb una imatge que ja no "
 "existeix."
 
-#: ../app/pdb/gimpprocedure.c:614
+#: ../app/pdb/gimpprocedure.c:619
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -8892,7 +8893,7 @@ msgstr ""
 "La funció «%s» ha retornat «%s» com a valor de retorn «%s» (núm. %d, de "
 "tipus %s). Aquest valor no és permès."
 
-#: ../app/pdb/gimpprocedure.c:627
+#: ../app/pdb/gimpprocedure.c:632
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
@@ -9269,7 +9270,7 @@ msgstr "_Degradat"
 msgid "Blend does not operate on indexed layers."
 msgstr "L'eina degradat no funciona en capes indexades."
 
-#: ../app/tools/gimpblendtool.c:399 ../app/tools/gimppainttool.c:593
+#: ../app/tools/gimpblendtool.c:399 ../app/tools/gimppainttool.c:595
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s per a angles restringits"
@@ -9544,11 +9545,11 @@ msgstr "Capturador de c_olor"
 msgid "Click in any image to view its color"
 msgstr "Cliqueu en qualsevol imatge per a veure'n els colors"
 
-#: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:496
+#: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:498
 msgid "Click in any image to pick the foreground color"
 msgstr "Cliqueu en qualsevol imatge per a definir el color del primer pla"
 
-#: ../app/tools/gimpcolorpickertool.c:257 ../app/tools/gimppainttool.c:502
+#: ../app/tools/gimpcolorpickertool.c:257 ../app/tools/gimppainttool.c:504
 msgid "Click in any image to pick the background color"
 msgstr "Cliqueu en qualsevol imatge per a definir el color de fons"
 
@@ -9618,7 +9619,7 @@ msgstr "%s per a difuminar"
 #: ../app/tools/gimpconvolvetool.c:199
 #, c-format
 msgid "Convolve Type  (%s)"
-msgstr "Estil de la gota  (%s)"
+msgstr "Estil de la gota (%s)"
 
 #: ../app/tools/gimpcropoptions.c:148
 msgid "Current layer only"
@@ -9861,7 +9862,7 @@ msgstr ""
 
 #: ../app/tools/gimpforegroundselectoptions.c:107
 msgid "Sensitivity for brightness component"
-msgstr "Sensibilitat a la brillantor"
+msgstr "Sensibilitat a la component brillantor"
 
 #: ../app/tools/gimpforegroundselectoptions.c:112
 msgid "Sensitivity for red/green component"
@@ -10073,7 +10074,7 @@ msgstr "Carrega ràpid"
 msgid "Quick Save"
 msgstr "Desa ràpid"
 
-#: ../app/tools/gimpimagemaptool.c:611
+#: ../app/tools/gimpimagemaptool.c:609
 #, c-format
 msgid "Settings saved to '%s'"
 msgstr "Preferències desades a «%s»"
@@ -10439,7 +10440,7 @@ msgstr "Cliqueu per a pintar una línia"
 msgid "%s to pick a color"
 msgstr "%s per a capturar un color"
 
-#: ../app/tools/gimppainttool.c:645
+#: ../app/tools/gimppainttool.c:647
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s per a una línia recta"
@@ -10569,7 +10570,7 @@ msgstr "Eina Selecció rectangular: selecciona una regió rectangular"
 msgid "_Rectangle Select"
 msgstr "Selecció _rectangular"
 
-#: ../app/tools/gimprectangletool.c:1026 ../app/tools/gimprectangletool.c:1934
+#: ../app/tools/gimprectangletool.c:1032 ../app/tools/gimprectangletool.c:1880
 msgid "Rectangle: "
 msgstr "Rectangle: "
 
@@ -10976,7 +10977,7 @@ msgstr "Mou els vèrtexs"
 
 #: ../app/tools/gimpvectortool.c:1145
 msgid "Click to pick path to edit"
-msgstr "Cliqueu el camí per editar-lo"
+msgstr "Cliqueu el camí per a editar-lo"
 
 #: ../app/tools/gimpvectortool.c:1148
 msgid "Click to create a new path"
@@ -12528,3 +12529,17 @@ msgstr ""
 #: ../tools/gimp-remote.c:82
 msgid "Start GIMP without showing the startup window"
 msgstr "Inicia el GIMP sense mostrar la finestra d'inici"
+
+#: ../tools/gimp-remote-x11.c:67
+msgid "Could not connect to GIMP."
+msgstr "No s'ha pogut connectar al GIMP."
+
+#: ../tools/gimp-remote-x11.c:68
+msgid "Make sure that the Toolbox is visible!"
+msgstr "Assegureu-vos que la caixa d'eines és visible."
+
+#. if execv and execvp return, there was an error
+#: ../tools/gimp-remote-x11.c:248
+#, c-format
+msgid "Couldn't start '%s': %s"
+msgstr "No s'ha pogut iniciar «%s»: %s"

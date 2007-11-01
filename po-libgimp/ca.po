@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-26 12:43+0200\n"
-"PO-Revision-Date: 2007-10-25 23:33+0200\n"
+"POT-Creation-Date: 2007-11-01 11:05+0100\n"
+"PO-Revision-Date: 2007-10-27 12:09+0200\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -629,7 +629,7 @@ msgstr "Constant"
 msgid "Incremental"
 msgstr "Incremental"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:218
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:224
 msgid "None"
 msgstr "Cap"
 
@@ -766,7 +766,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:210 ../modules/colorsel_cmyk_lcms.c:408
+#: ../modules/cdisplay_lcms.c:216 ../modules/colorsel_cmyk_lcms.c:408
 #: ../modules/colorsel_cmyk_lcms.c:414
 msgid "(invalid UTF-8 string)"
 msgstr "(la cadena de text UTF-8 no és vàlida)"
@@ -819,7 +819,7 @@ msgid ""
 "represented in the target color space."
 msgstr ""
 "Si es marca l'opció, la simulació d'impressió mostrarà els colors que no es "
-"poden representar correctament en l'espai de colors destinació."
+"poden representar correctament en l'espai de colors de destinació."
 
 #: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color to use for marking colors which are out of gamut."
@@ -1366,16 +1366,16 @@ msgstr "Contrast"
 msgid "Contrast c_ycles:"
 msgstr "C_icles de contrast:"
 
-#: ../modules/cdisplay_lcms.c:105
+#: ../modules/cdisplay_lcms.c:111
 msgid "Color management display filter using ICC color profiles"
 msgstr ""
 "Filtre de gestió de color de pantalles que fa servir perfils de color ICC"
 
-#: ../modules/cdisplay_lcms.c:166
+#: ../modules/cdisplay_lcms.c:172
 msgid "Color Management"
 msgstr "Gestió del color"
 
-#: ../modules/cdisplay_lcms.c:239
+#: ../modules/cdisplay_lcms.c:245
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1383,19 +1383,19 @@ msgstr ""
 "Aquest filtre pren la seva configuració de la secció de «Gestió de color» en "
 "el diàleg de «Preferències»."
 
-#: ../modules/cdisplay_lcms.c:253
+#: ../modules/cdisplay_lcms.c:259
 msgid "Mode of operation:"
 msgstr "Mode d'operació:"
 
-#: ../modules/cdisplay_lcms.c:261
+#: ../modules/cdisplay_lcms.c:267
 msgid "Image profile:"
 msgstr "Perfil d'imatge:"
 
-#: ../modules/cdisplay_lcms.c:269
+#: ../modules/cdisplay_lcms.c:275
 msgid "Monitor profile:"
 msgstr "Perfil del monitor:"
 
-#: ../modules/cdisplay_lcms.c:277
+#: ../modules/cdisplay_lcms.c:283
 msgid "Print simulation profile:"
 msgstr "Perfil de simulació d'impressió:"
 
