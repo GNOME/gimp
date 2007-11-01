@@ -1,3 +1,7 @@
+2007-11-01  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed hsv-graph.scm.
+
 2007-10-31  Jovan Naumovski  <jovan@lugola.net>
 
 	* mk.po: Updated Macedonian translation.
