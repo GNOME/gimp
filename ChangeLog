@@ -1,5 +1,11 @@
 2007-11-01  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpviewrenderer.c (gimp_view_renderer_draw):
+	removed code that draws a diagonal line across a renderer without
+	context. Emit a warning instead; this shouldn't happen any longer.
+
+2007-11-01  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdasheditor.c (gimp_dash_editor_expose): draw
 	using Cairo.
 

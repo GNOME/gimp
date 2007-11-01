@@ -601,6 +601,9 @@ gimp_view_renderer_draw (GimpViewRenderer   *renderer,
   if (! GTK_WIDGET_DRAWABLE (widget))
     return;
 
+  if (G_UNLIKELY (renderer->context == NULL))
+    g_warning ("%s: renderer->context is NULL", G_STRFUNC);
+
   if (renderer->viewable)
     {
       GIMP_VIEW_RENDERER_GET_CLASS (renderer)->draw (renderer,
@@ -646,27 +649,6 @@ gimp_view_renderer_draw (GimpViewRenderer   *renderer,
                             rect.y + i,
                             rect.width  - 2 * i - 1,
                             rect.height - 2 * i - 1);
-    }
-
-  if (! renderer->context)
-    {
-      GdkRectangle rect;
-
-      rect.width  = renderer->width  + 2 * renderer->border_width;
-      rect.height = renderer->height + 2 * renderer->border_width;
-      rect.x      = draw_area->x + (draw_area->width  - rect.width)  / 2;
-      rect.y      = draw_area->y + (draw_area->height - rect.height) / 2;
-
-      if (! renderer->gc)
-        renderer->gc = gimp_view_renderer_create_gc (renderer,
-                                                     window, widget);
-
-      gdk_draw_line (window,
-                     renderer->gc,
-                     rect.x,
-                     rect.y,
-                     rect.x + rect.width  - 1,
-                     rect.y + rect.height - 1);
     }
 }
 
