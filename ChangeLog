@@ -1,3 +1,14 @@
+2007-11-01  Tor Lillqvist  <tml@novell.com>
+
+	* app/base/base-utils.c
+	* app/base/base-utils.h: New files, with just one function so far,
+	get_number_of_processors(). Include implementation also for Win32.
+
+	* app/base/Makefile.am (libappbase_a_SOURCES): Add new files.
+
+	* app/config/gimpbaseconfig.c (gimp_base_config_class_init): Use
+	get_number_of_processors().
+
 2007-11-01  Manish Singh  <yosh@gimp.org>
 
 	* app/core/gimpcontainer-filter.c
