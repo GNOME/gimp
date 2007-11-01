@@ -245,7 +245,7 @@ gimp_scrolled_preview_area_realize (GtkWidget           *widget,
 
   g_return_if_fail (preview->cursor_move == NULL);
 
-  preview->cursor_move = gdk_cursor_new_for_display (display, GDK_FLEUR);
+  preview->cursor_move = gdk_cursor_new_for_display (display, GDK_HAND1);
 }
 
 static void
@@ -373,6 +373,7 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
 {
   GimpScrolledPreviewPrivate *priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
   GdkEventButton             *button_event = (GdkEventButton *) event;
+  GdkCursor                  *cursor;
 
   switch (event->type)
     {
@@ -381,12 +382,26 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
         {
         case 1:
         case 2:
-          gtk_widget_get_pointer (area, &priv->drag_x, &priv->drag_y);
+          cursor = gdk_cursor_new_for_display (gtk_widget_get_display (area),
+                                               GDK_FLEUR);
 
-          priv->drag_xoff = GIMP_PREVIEW (preview)->xoff;
-          priv->drag_yoff = GIMP_PREVIEW (preview)->yoff;
-          priv->in_drag   = TRUE;
-          gtk_grab_add (area);
+          if (gdk_pointer_grab (area->window, TRUE,
+                                GDK_BUTTON_RELEASE_MASK |
+                                GDK_BUTTON_MOTION_MASK  |
+                                GDK_POINTER_MOTION_HINT_MASK,
+                                NULL, cursor,
+                                gdk_event_get_time (event)) == GDK_GRAB_SUCCESS)
+            {
+              gtk_widget_get_pointer (area, &priv->drag_x, &priv->drag_y);
+
+              priv->drag_xoff = GIMP_PREVIEW (preview)->xoff;
+              priv->drag_yoff = GIMP_PREVIEW (preview)->yoff;
+              priv->in_drag   = TRUE;
+              gtk_grab_add (area);
+            }
+
+          gdk_cursor_unref (cursor);
+
           break;
 
         case 3:
@@ -398,6 +413,9 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
       if (priv->in_drag &&
           (button_event->button == 1 || button_event->button == 2))
         {
+          gdk_display_pointer_ungrab (gtk_widget_get_display (area),
+                                      gdk_event_get_time (event));
+
           gtk_grab_remove (area);
           priv->in_drag = FALSE;
         }

@@ -1,3 +1,8 @@
+2007-11-01  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpscrolledpreview.c: changed move cursor to
+	GDK_HAND1 and switch to GDK_FLEUR while the mouse button is down.
+
 2007-11-01  Tor Lillqvist  <tml@novell.com>
 
 	* app/base/base-utils.c
