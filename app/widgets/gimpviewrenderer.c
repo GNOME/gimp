@@ -3,6 +3,7 @@
  *
  * gimpviewrenderer.c
  * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2007 Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +39,7 @@
 #include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
+#include "gimpcairo-utils.h"
 #include "gimprender.h"
 #include "gimpviewrenderer.h"
 #include "gimpviewrenderer-utils.h"
@@ -68,9 +70,20 @@ static void      gimp_view_renderer_real_render      (GimpViewRenderer   *render
 
 static void      gimp_view_renderer_size_changed     (GimpViewRenderer   *renderer,
                                                       GimpViewable       *viewable);
-static GdkGC   * gimp_view_renderer_create_gc        (GimpViewRenderer   *renderer,
-                                                      GdkWindow          *window,
+static cairo_pattern_t *
+                 gimp_view_renderer_create_pattern   (GimpViewRenderer   *renderer,
                                                       GtkWidget          *widget);
+
+static void      gimp_view_render_to_buffer          (TempBuf    *temp_buf,
+                                                      gint        channel,
+                                                      GimpViewBG  inside_bg,
+                                                      GimpViewBG  outside_bg,
+                                                      guchar     *dest_buffer,
+                                                      gint        dest_width,
+                                                      gint        dest_height,
+                                                      gint        dest_rowstride,
+                                                      gint        dest_bytes);
+
 
 
 G_DEFINE_TYPE (GimpViewRenderer, gimp_view_renderer, G_TYPE_OBJECT)
@@ -136,7 +149,8 @@ gimp_view_renderer_init (GimpViewRenderer *renderer)
 
   renderer->border_type   = GIMP_VIEW_BORDER_BLACK;
   renderer->border_color  = black_color;
-  renderer->gc            = NULL;
+
+  renderer->pattern       = NULL;
 
   renderer->buffer        = NULL;
   renderer->rowstride     = 0;
@@ -189,10 +203,10 @@ gimp_view_renderer_finalize (GObject *object)
       renderer->bg_stock_id = NULL;
     }
 
-  if (renderer->gc)
+  if (renderer->pattern)
     {
-      g_object_unref (renderer->gc);
-      renderer->gc = NULL;
+      cairo_pattern_destroy (renderer->pattern);
+      renderer->pattern = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -225,7 +239,7 @@ gimp_view_renderer_new (GimpContext *context,
                         GType        viewable_type,
                         gint         size,
                         gint         border_width,
-                        gboolean    is_popup)
+                        gboolean     is_popup)
 {
   GimpViewRenderer *renderer;
 
@@ -484,14 +498,6 @@ gimp_view_renderer_set_border_color (GimpViewRenderer *renderer,
     {
       renderer->border_color = *color;
 
-      if (renderer->gc)
-        {
-          GdkColor gdk_color;
-
-          gimp_rgb_get_gdk_color (&renderer->border_color, &gdk_color);
-          gdk_gc_set_rgb_fg_color (renderer->gc, &gdk_color);
-        }
-
       gimp_view_renderer_update_idle (renderer);
     }
 }
@@ -507,22 +513,10 @@ gimp_view_renderer_set_background (GimpViewRenderer *renderer,
 
   renderer->bg_stock_id = g_strdup (stock_id);
 
-  if (renderer->gc)
+  if (renderer->pattern)
     {
-      g_object_unref (renderer->gc);
-      renderer->gc = NULL;
-    }
-}
-
-void
-gimp_view_renderer_unrealize (GimpViewRenderer *renderer)
-{
-  g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
-
-  if (renderer->gc)
-    {
-      g_object_unref (renderer->gc);
-      renderer->gc = NULL;
+      g_object_unref (renderer->pattern);
+      renderer->pattern = NULL;
     }
 }
 
@@ -629,26 +623,21 @@ gimp_view_renderer_draw (GimpViewRenderer   *renderer,
 
   if (renderer->border_width > 0)
     {
-      GdkRectangle rect;
-      gint         i;
+      cairo_t *cr     = gdk_cairo_create (window);
+      gint     width  = renderer->width  + renderer->border_width;
+      gint     height = renderer->height + renderer->border_width;
 
-      rect.width  = renderer->width  + 2 * renderer->border_width;
-      rect.height = renderer->height + 2 * renderer->border_width;
-      rect.x      = draw_area->x + (draw_area->width  - rect.width)  / 2;
-      rect.y      = draw_area->y + (draw_area->height - rect.height) / 2;
+      cairo_set_line_width (cr, renderer->border_width);
+      cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
+      gimp_cairo_set_source_color (cr, &renderer->border_color);
 
-      if (! renderer->gc)
-        renderer->gc = gimp_view_renderer_create_gc (renderer,
-                                                     window, widget);
+      cairo_translate (cr,
+                       draw_area->x + (draw_area->width  - width)  / 2,
+                       draw_area->y + (draw_area->height - height) / 2);
+      cairo_rectangle (cr, 0, 0, width, height);
+      cairo_stroke (cr);
 
-      for (i = 0; i < renderer->border_width; i++)
-        gdk_draw_rectangle (window,
-                            renderer->gc,
-                            FALSE,
-                            rect.x + i,
-                            rect.y + i,
-                            rect.width  - 2 * i - 1,
-                            rect.height - 2 * i - 1);
+      cairo_destroy (cr);
     }
 }
 
@@ -691,7 +680,6 @@ gimp_view_renderer_real_draw (GimpViewRenderer   *renderer,
                               const GdkRectangle *draw_area,
                               const GdkRectangle *expose_area)
 {
-  GdkRectangle rect;
   GdkRectangle render_rect;
 
   if (renderer->needs_render)
@@ -699,46 +687,42 @@ gimp_view_renderer_real_draw (GimpViewRenderer   *renderer,
 
   if (renderer->pixbuf)
     {
-      if (renderer->bg_stock_id)
-        {
-          if (!renderer->gc)
-            renderer->gc = gimp_view_renderer_create_gc (renderer,
-                                                         window, widget);
-
-          if (gdk_rectangle_intersect ((GdkRectangle *) draw_area,
-                                       (GdkRectangle *) expose_area,
-                                       &render_rect))
-            {
-              gdk_draw_rectangle (GDK_DRAWABLE (window), renderer->gc,
-                                  TRUE,
-                                  render_rect.x,     render_rect.y,
-                                  render_rect.width, render_rect.height);
-            }
-        }
-
-      rect.width  = gdk_pixbuf_get_width  (renderer->pixbuf);
-      rect.height = gdk_pixbuf_get_height (renderer->pixbuf);
-      rect.x      = draw_area->x + (draw_area->width  - rect.width)  / 2;
-      rect.y      = draw_area->y + (draw_area->height - rect.height) / 2;
-
-      if (gdk_rectangle_intersect (&rect, (GdkRectangle *) expose_area,
+      if (gdk_rectangle_intersect ((GdkRectangle *) draw_area,
+                                   (GdkRectangle *) expose_area,
                                    &render_rect))
         {
-          gdk_draw_pixbuf (GDK_DRAWABLE (window),
-                           widget->style->bg_gc[widget->state],
-                           renderer->pixbuf,
-                           render_rect.x - rect.x,
-                           render_rect.y - rect.y,
-                           render_rect.x,
-                           render_rect.y,
-                           render_rect.width,
-                           render_rect.height,
-                           GDK_RGB_DITHER_NORMAL,
-                           0, 0);
-        }
+          cairo_t *cr     = gdk_cairo_create (window);
+          gint     width  = gdk_pixbuf_get_width  (renderer->pixbuf);
+          gint     height = gdk_pixbuf_get_height (renderer->pixbuf);
+
+          gdk_cairo_rectangle (cr, &render_rect);
+          cairo_clip (cr);
+
+          if (renderer->bg_stock_id)
+            {
+              if (! renderer->pattern)
+                renderer->pattern = gimp_view_renderer_create_pattern (renderer,
+                                                                       widget);
+
+              cairo_set_source (cr, renderer->pattern);
+              cairo_paint (cr);
+            }
+
+          cairo_translate (cr,
+                           draw_area->x + (draw_area->width  - width)  / 2,
+                           draw_area->y + (draw_area->height - height) / 2);
+
+          gdk_cairo_set_source_pixbuf (cr, renderer->pixbuf, 0, 0);
+          cairo_rectangle (cr, 0, 0, width, height);
+          cairo_fill (cr);
+
+          cairo_destroy (cr);
+       }
     }
   else if (renderer->buffer)
     {
+      GdkRectangle rect;
+
       rect.width  = renderer->width;
       rect.height = renderer->height;
       rect.x      = draw_area->x + (draw_area->width  - rect.width)  / 2;
@@ -922,7 +906,7 @@ gimp_view_renderer_render_buffer (GimpViewRenderer *renderer,
   renderer->needs_render = FALSE;
 }
 
-void
+static void
 gimp_view_render_to_buffer (TempBuf    *temp_buf,
                             gint        channel,
                             GimpViewBG  inside_bg,
@@ -1124,72 +1108,65 @@ gimp_view_renderer_render_pixbuf (GimpViewRenderer *renderer,
   renderer->needs_render = FALSE;
 }
 
-static GdkGC *
-gimp_view_renderer_create_gc (GimpViewRenderer *renderer,
-                              GdkWindow        *window,
-                              GtkWidget        *widget)
+static cairo_pattern_t *
+gimp_view_renderer_create_pattern (GimpViewRenderer *renderer,
+                                   GtkWidget        *widget)
 {
-  GdkGC           *gc;
-  GdkPixmap       *pixmap = NULL;
-  GdkColormap     *colormap;
-  GdkGCValues      values;
-  GdkGCValuesMask  mask;
-
-  gimp_rgb_get_gdk_color (&renderer->border_color, &values.foreground);
-
-  colormap = gdk_drawable_get_colormap (window);
-  gdk_rgb_find_color (colormap, &values.foreground);
-
-  mask = GDK_GC_FOREGROUND;
+  cairo_pattern_t *pattern = NULL;
 
   if (renderer->bg_stock_id)
     {
-      GdkPixbuf *pixbuf;
-
-      pixbuf = gtk_widget_render_icon (widget,
-                                       renderer->bg_stock_id,
-                                       GTK_ICON_SIZE_DIALOG, NULL);
+      GdkPixbuf *pixbuf = gtk_widget_render_icon (widget,
+                                                  renderer->bg_stock_id,
+                                                  GTK_ICON_SIZE_DIALOG, NULL);
 
       if (pixbuf)
         {
-          gint         width;
-          gint         height;
+          cairo_surface_t *surface;
+          guchar          *dest;
+          const guchar    *src    = gdk_pixbuf_get_pixels (pixbuf);
+          gint             width  = gdk_pixbuf_get_width (pixbuf);
+          gint             height = gdk_pixbuf_get_height (pixbuf);
+          gint             bpp    = gdk_pixbuf_get_n_channels (pixbuf);
+          gint             y;
 
-          width  = gdk_pixbuf_get_width (pixbuf);
-          height = gdk_pixbuf_get_height (pixbuf);
+          /* this sucks, there should be a simpler way to do this */
 
-          pixmap = gdk_pixmap_new (window, width, height,
-                                   gdk_colormap_get_visual (colormap)->depth);
-          gdk_drawable_set_colormap (pixmap, colormap);
+          surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
+                                                width, height);
 
-          gdk_draw_rectangle (pixmap, widget->style->white_gc,
-                              TRUE,
-                              0, 0, width, height);
+          dest = cairo_image_surface_get_data (surface);
 
-          gdk_draw_pixbuf (pixmap, widget->style->white_gc,
-                           pixbuf, 0, 0,
-                           0, 0, width, height,
-                           GDK_RGB_DITHER_NORMAL, 0, 0);
+          for (y = 0; y < height; y++)
+            {
+              const guchar *s = src;
+              guchar       *d = dest;
+              gint          w = width;
+
+              while (w--)
+                {
+                  /* this only works correctly for pixbufs w/o alpha channel */
+                  d[0] = 0xFF;
+                  d[1] = s[0];
+                  d[2] = s[1];
+                  d[3] = s[2];
+
+                  s += bpp;
+                  d += 4;
+                }
+
+              src  += gdk_pixbuf_get_rowstride (pixbuf);
+              dest += cairo_image_surface_get_stride (surface);
+            }
 
           g_object_unref (pixbuf);
-        }
 
-      if (pixmap)
-        {
-          values.fill        = GDK_TILED;
-          values.tile        = pixmap;
-          values.ts_x_origin = 0;
-          values.ts_y_origin = 0;
+          pattern = cairo_pattern_create_for_surface (surface);
+          cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
 
-          mask |= (GDK_GC_FILL |
-                   GDK_GC_TILE | GDK_GC_TS_X_ORIGIN | GDK_GC_TS_Y_ORIGIN);
+          cairo_surface_destroy (surface);
         }
     }
 
-  gc = gdk_gc_new_with_values (GDK_DRAWABLE (window), &values, mask);
-
-  if (pixmap)
-    g_object_unref (pixmap);
-
-  return gc;
+  return pattern;
 }

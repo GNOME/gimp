@@ -66,7 +66,6 @@ static GObject * gimp_layer_tree_view_constructor (GType                type,
                                                    GObjectConstructParam *params);
 static void   gimp_layer_tree_view_finalize       (GObject             *object);
 
-static void   gimp_layer_tree_view_unrealize      (GtkWidget           *widget);
 static void   gimp_layer_tree_view_style_set      (GtkWidget           *widget,
                                                    GtkStyle            *prev_style);
 
@@ -174,20 +173,17 @@ static GimpContainerViewInterface *parent_view_iface = NULL;
 static void
 gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
 {
-  GObjectClass               *object_class;
-  GtkWidgetClass             *widget_class;
+  GObjectClass               *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass             *widget_class = GTK_WIDGET_CLASS (klass);
   GimpContainerTreeViewClass *tree_view_class;
   GimpItemTreeViewClass      *item_view_class;
 
-  object_class    = G_OBJECT_CLASS (klass);
-  widget_class    = GTK_WIDGET_CLASS (klass);
   tree_view_class = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
   item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
   object_class->constructor = gimp_layer_tree_view_constructor;
   object_class->finalize    = gimp_layer_tree_view_finalize;
 
-  widget_class->unrealize   = gimp_layer_tree_view_unrealize;
   widget_class->style_set   = gimp_layer_tree_view_style_set;
 
   tree_view_class->drop_possible   = gimp_layer_tree_view_drop_possible;
@@ -422,34 +418,6 @@ gimp_layer_tree_view_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-gimp_layer_tree_view_unrealize (GtkWidget *widget)
-{
-  GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (widget);
-  GimpLayerTreeView     *layer_view = GIMP_LAYER_TREE_VIEW (widget);
-  GtkTreeIter            iter;
-  gboolean               iter_valid;
-
-  for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model, &iter);
-       iter_valid;
-       iter_valid = gtk_tree_model_iter_next (tree_view->model, &iter))
-    {
-      GimpViewRenderer *renderer;
-
-      gtk_tree_model_get (tree_view->model, &iter,
-                          layer_view->model_column_mask, &renderer,
-                          -1);
-
-      if (renderer)
-        {
-          gimp_view_renderer_unrealize (renderer);
-          g_object_unref (renderer);
-        }
-    }
-
-  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 static void

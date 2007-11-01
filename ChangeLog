@@ -1,3 +1,21 @@
+2007-11-02  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpcairo-utils.[ch]: new files holding Cairo
+	utility functions.
+
+	* app/widgets/gimpviewrenderer.[ch]: ported partly to Cairo drawing.
+
+	* app/widgets/gimpcomponenteditor.c
+	* app/widgets/gimpcontainercombobox.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpview.c: removed calls to
+	gimp_view_renderer_unrealize() which are not needed anymore
+	because we don't allocate a GC in the renderer any longer.
+
+	* app/widgets/gimpcellrendererdashes.c: removed a redundant cast.
+
 2007-11-01  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpviewrenderer.c (gimp_view_renderer_draw):

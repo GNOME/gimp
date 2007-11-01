@@ -36,6 +36,8 @@ libappwidgets_a_sources = \
 	gimpbrushselect.h		\
 	gimpbufferview.c		\
 	gimpbufferview.h		\
+	gimpcairo-utils.c		\
+	gimpcairo-utils.h		\
 	gimpcellrendererdashes.c	\
 	gimpcellrendererdashes.h	\
 	gimpcellrendererviewable.c	\

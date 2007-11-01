@@ -51,8 +51,6 @@ enum
 };
 
 
-static void gimp_component_editor_unrealize         (GtkWidget           *widget);
-
 static void gimp_component_editor_set_image         (GimpImageEditor     *editor,
                                                      GimpImage           *image);
 
@@ -97,10 +95,7 @@ G_DEFINE_TYPE (GimpComponentEditor, gimp_component_editor,
 static void
 gimp_component_editor_class_init (GimpComponentEditorClass *klass)
 {
-  GtkWidgetClass       *widget_class       = GTK_WIDGET_CLASS (klass);
   GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
-
-  widget_class->unrealize       = gimp_component_editor_unrealize;
 
   image_editor_class->set_image = gimp_component_editor_set_image;
 }
@@ -172,30 +167,6 @@ gimp_component_editor_init (GimpComponentEditor *editor)
   gimp_dnd_component_source_add (GTK_WIDGET (editor->view),
                                  gimp_component_editor_drag_component,
                                  editor);
-}
-
-static void
-gimp_component_editor_unrealize (GtkWidget *widget)
-{
-  GimpComponentEditor *editor = GIMP_COMPONENT_EDITOR (widget);
-  GtkTreeIter          iter;
-  gboolean             iter_valid;
-
-  for (iter_valid = gtk_tree_model_get_iter_first (editor->model, &iter);
-       iter_valid;
-       iter_valid = gtk_tree_model_iter_next (editor->model, &iter))
-    {
-      GimpViewRenderer *renderer;
-
-      gtk_tree_model_get (editor->model, &iter,
-                          COLUMN_RENDERER, &renderer,
-                          -1);
-
-      gimp_view_renderer_unrealize (renderer);
-      g_object_unref (renderer);
-    }
-
-  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 static void

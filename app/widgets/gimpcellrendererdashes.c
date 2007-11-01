@@ -223,7 +223,7 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
   y = cell_area->y + (cell_area->height - DASHES_HEIGHT) / 2;
   width = cell_area->width - 2 * cell->xpad;
 
-  cr = gdk_cairo_create (GDK_DRAWABLE (window));
+  cr = gdk_cairo_create (window);
 
   gdk_cairo_rectangle (cr, expose_area);
   cairo_clip (cr);

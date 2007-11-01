@@ -53,9 +53,10 @@ struct _GimpViewRenderer
 
   GimpViewBorderType  border_type;
   GimpRGB             border_color;
-  GdkGC              *gc;
 
   /*< private >*/
+  cairo_pattern_t    *pattern;
+
   guchar             *buffer;
   gint                rowstride;
   gint                bytes;
@@ -128,8 +129,6 @@ void   gimp_view_renderer_set_border_color (GimpViewRenderer   *renderer,
 void   gimp_view_renderer_set_background   (GimpViewRenderer   *renderer,
                                             const gchar        *stock_id);
 
-void   gimp_view_renderer_unrealize        (GimpViewRenderer   *renderer);
-
 void   gimp_view_renderer_invalidate       (GimpViewRenderer   *renderer);
 void   gimp_view_renderer_update           (GimpViewRenderer   *renderer);
 void   gimp_view_renderer_update_idle      (GimpViewRenderer   *renderer);
@@ -157,18 +156,6 @@ void   gimp_view_renderer_render_buffer         (GimpViewRenderer *renderer,
 void    gimp_view_renderer_render_pixbuf        (GimpViewRenderer *renderer,
                                                  GdkPixbuf        *pixbuf);
 
-
-/*  general purpose temp_buf to buffer projection function  */
-
-void   gimp_view_render_to_buffer          (TempBuf    *temp_buf,
-                                            gint        channel,
-                                            GimpViewBG  inside_bg,
-                                            GimpViewBG  outside_bg,
-                                            guchar     *dest_buffer,
-                                            gint        dest_width,
-                                            gint        dest_height,
-                                            gint        dest_rowstride,
-                                            gint        dest_bytes);
 
 
 #endif /* __GIMP_VIEW_RENDERER_H__ */
