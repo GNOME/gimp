@@ -237,11 +237,11 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
           cairo_rectangle (cr,
                            cell_area->x + cell->xpad + x, y,
                            MIN (BLOCK_WIDTH, width - x), DASHES_HEIGHT);
-
-          gdk_cairo_set_source_color (cr, &widget->style->text[state]);
-          cairo_fill (cr);
         }
     }
+
+  gdk_cairo_set_source_color (cr, &widget->style->text[state]);
+  cairo_fill (cr);
 
   cairo_destroy (cr);
 }
