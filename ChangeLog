@@ -1,5 +1,10 @@
 2007-11-02  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcairo-utils.c (gimp_cairo_set_source_color):
+	also use the color's alpha channel. Added gtk-doc documentation.
+
+2007-11-02  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/gimpcairo-utils.[ch]: new files holding Cairo
 	utility functions.

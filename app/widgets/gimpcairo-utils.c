@@ -21,18 +21,26 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <cairo.h>
+#include <glib-object.h>
 
 #include "libgimpcolor/gimpcolor.h"
 
 #include "gimpcairo-utils.h"
 
 
+/**
+ * gimp_cairo_set_source_color:
+ * @cr:    Cairo context
+ * @color: GimpRGB color
+ *
+ * Sets the source pattern within @cr to the color described by @color.
+ *
+ * This function calls cairo_set_source_rgba() for you.
+ **/
 void
 gimp_cairo_set_source_color (cairo_t *cr,
                              GimpRGB *color)
 {
-  cairo_set_source_rgb (cr, color->r, color->g, color->b);
+  cairo_set_source_rgba (cr, color->r, color->g, color->b, color->a);
 }
-
-
