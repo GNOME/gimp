@@ -63,6 +63,8 @@ gimp_cairo_create_surface_from_pixbuf (GdkPixbuf *pixbuf)
   const guchar    *src;
   gint             width;
   gint             height;
+  gint             src_stride;
+  gint             dest_stride;
   gint             y;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
@@ -85,8 +87,11 @@ gimp_cairo_create_surface_from_pixbuf (GdkPixbuf *pixbuf)
 
   surface = cairo_image_surface_create (format, width, height);
 
-  src  = gdk_pixbuf_get_pixels (pixbuf);
-  dest = cairo_image_surface_get_data (surface);
+  src         = gdk_pixbuf_get_pixels (pixbuf);
+  src_stride  = gdk_pixbuf_get_rowstride (pixbuf);
+
+  dest        = cairo_image_surface_get_data (surface);
+  dest_stride = cairo_image_surface_get_stride (surface);
 
   switch (format)
     {
@@ -113,8 +118,8 @@ gimp_cairo_create_surface_from_pixbuf (GdkPixbuf *pixbuf)
               d += 4;
             }
 
-          src  += gdk_pixbuf_get_rowstride (pixbuf);
-          dest += cairo_image_surface_get_stride (surface);
+          src  += src_stride;
+          dest += dest_stride;
         }
       break;
 
@@ -148,8 +153,8 @@ gimp_cairo_create_surface_from_pixbuf (GdkPixbuf *pixbuf)
 
 #undef MULT
 
-          src  += gdk_pixbuf_get_rowstride (pixbuf);
-          dest += cairo_image_surface_get_stride (surface);
+          src  += src_stride;
+          dest += dest_stride;
         }
       break;
 
