@@ -1,5 +1,12 @@
 2007-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimphistogramview.[ch]: added API to set the
+	selected point.
+
+	* app/tools/gimpcurvestool.c: use it.
+
+2007-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpcurve.[ch]: added API to modify free-form curves
 	and properties to listen to curve changes.
 

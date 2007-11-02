@@ -96,6 +96,8 @@ void            gimp_histogram_view_set_curve     (GimpHistogramView    *view,
                                                    GimpCurve            *curve);
 GimpCurve     * gimp_histogram_view_get_curve     (GimpHistogramView    *view);
 
+void            gimp_histogram_view_set_selected  (GimpHistogramView    *view,
+                                                   gint                  selected);
 void            gimp_histogram_view_set_xpos      (GimpHistogramView    *view,
                                                    gint                  x);
 void            gimp_histogram_view_set_cusor     (GimpHistogramView    *view,

@@ -816,6 +816,17 @@ gimp_histogram_view_get_curve (GimpHistogramView *view)
 }
 
 void
+gimp_histogram_view_set_selected (GimpHistogramView *view,
+                                  gint               selected)
+{
+  g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
+
+  view->selected = selected;
+
+  gtk_widget_queue_draw (GTK_WIDGET (view));
+}
+
+void
 gimp_histogram_view_set_xpos (GimpHistogramView *view,
                               gint               x)
 {
