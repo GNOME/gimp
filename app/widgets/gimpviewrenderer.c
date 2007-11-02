@@ -1123,41 +1123,8 @@ gimp_view_renderer_create_pattern (GimpViewRenderer *renderer,
       if (pixbuf)
         {
           cairo_surface_t *surface;
-          guchar          *dest;
-          const guchar    *src    = gdk_pixbuf_get_pixels (pixbuf);
-          gint             width  = gdk_pixbuf_get_width (pixbuf);
-          gint             height = gdk_pixbuf_get_height (pixbuf);
-          gint             bpp    = gdk_pixbuf_get_n_channels (pixbuf);
-          gint             y;
 
-          /* this sucks, there should be a simpler way to do this */
-
-          surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
-                                                width, height);
-
-          dest = cairo_image_surface_get_data (surface);
-
-          for (y = 0; y < height; y++)
-            {
-              const guchar *s = src;
-              guchar       *d = dest;
-              gint          w = width;
-
-              while (w--)
-                {
-                  /* this only works correctly for pixbufs w/o alpha channel */
-                  d[0] = 0xFF;
-                  d[1] = s[0];
-                  d[2] = s[1];
-                  d[3] = s[2];
-
-                  s += bpp;
-                  d += 4;
-                }
-
-              src  += gdk_pixbuf_get_rowstride (pixbuf);
-              dest += cairo_image_surface_get_stride (surface);
-            }
+          surface = gimp_cairo_create_surface_from_pixbuf (pixbuf);
 
           g_object_unref (pixbuf);
 

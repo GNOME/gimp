@@ -22,7 +22,7 @@
 #include "config.h"
 
 #include <cairo.h>
-#include <glib-object.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpcolor/gimpcolor.h"
 
@@ -43,4 +43,119 @@ gimp_cairo_set_source_color (cairo_t *cr,
                              GimpRGB *color)
 {
   cairo_set_source_rgba (cr, color->r, color->g, color->b, color->a);
+}
+
+/**
+ * gimp_cairo_create_surface_from_pixbuf:
+ * @pixbuf: a GdkPixbuf
+ *
+ * Create a Cairo image surface from a GdkPixbuf.
+ *
+ * You should avoid calling this function as there are probably more
+ * efficient ways of achieving the result you are looking for.
+ **/
+cairo_surface_t *
+gimp_cairo_create_surface_from_pixbuf (GdkPixbuf *pixbuf)
+{
+  cairo_surface_t *surface;
+  cairo_format_t   format;
+  guchar          *dest;
+  const guchar    *src;
+  gint             width;
+  gint             height;
+  gint             y;
+
+  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
+
+  width  = gdk_pixbuf_get_width (pixbuf);
+  height = gdk_pixbuf_get_height (pixbuf);
+
+  switch (gdk_pixbuf_get_n_channels (pixbuf))
+    {
+    case 3:
+      format = CAIRO_FORMAT_RGB24;
+      break;
+    case 4:
+      format = CAIRO_FORMAT_ARGB32;
+      break;
+    default:
+      g_assert_not_reached ();
+      break;
+    }
+
+  surface = cairo_image_surface_create (format, width, height);
+
+  src  = gdk_pixbuf_get_pixels (pixbuf);
+  dest = cairo_image_surface_get_data (surface);
+
+  switch (format)
+    {
+    case CAIRO_FORMAT_RGB24:
+      for (y = 0; y < height; y++)
+        {
+          const guchar *s = src;
+          guchar       *d = dest;
+          gint          w = width;
+
+          while (w--)
+            {
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+	      d[0] = s[2];
+	      d[1] = s[1];
+	      d[2] = s[0];
+#else
+	      d[1] = s[0];
+	      d[2] = s[1];
+	      d[3] = s[2];
+#endif
+
+              s += 3;
+              d += 4;
+            }
+
+          src  += gdk_pixbuf_get_rowstride (pixbuf);
+          dest += cairo_image_surface_get_stride (surface);
+        }
+      break;
+
+    case CAIRO_FORMAT_ARGB32:
+      for (y = 0; y < height; y++)
+        {
+          const guchar *s = src;
+          guchar       *d = dest;
+          gint          w = width;
+	  guint         t1, t2, t3;
+
+#define MULT(d,c,a,t) \
+   G_STMT_START { t = c * a + 0x7f; d = ((t >> 8) + t) >> 8; } G_STMT_END
+
+          while (w--)
+            {
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+	      MULT (d[0], s[2], s[3], t1);
+	      MULT (d[1], s[1], s[3], t2);
+	      MULT (d[2], s[0], s[3], t3);
+	      d[3] = s[3];
+#else
+	      d[0] = s[3];
+	      MULT (d[1], s[0], s[3], t1);
+	      MULT (d[2], s[1], s[3], t2);
+	      MULT (d[3], s[2], s[3], t3);
+#endif
+              s += 4;
+              d += 4;
+            }
+
+#undef MULT
+
+          src  += gdk_pixbuf_get_rowstride (pixbuf);
+          dest += cairo_image_surface_get_stride (surface);
+        }
+      break;
+
+    default:
+      break;
+    }
+
+  return surface;
 }

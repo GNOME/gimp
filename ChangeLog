@@ -1,5 +1,13 @@
 2007-11-02  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcairo-utils.[ch]: added utility function to create
+	a Cairo surface from a GdkPixbuf.
+
+	* app/widgets/gimpviewrenderer.c (gimp_view_renderer_create_pattern):
+	use it from here.
+
+2007-11-02  Sven Neumann  <sven@gimp.org>
+
 	* core/gimplist.h: formatting.
 
 2007-11-02  Michael Natterer  <mitch@gimp.org>

@@ -23,8 +23,9 @@
 #define __GIMP_CAIRO_UTILS_H__
 
 
-void  gimp_cairo_set_source_color (cairo_t *cr,
-                                   GimpRGB *color);
+void              gimp_cairo_set_source_color           (cairo_t   *cr,
+                                                         GimpRGB   *color);
+cairo_surface_t * gimp_cairo_create_surface_from_pixbuf (GdkPixbuf *pixbuf);
 
 
 #endif /* __GIMP_CAIRO_UTILS_H__ */
