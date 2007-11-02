@@ -59,12 +59,6 @@ struct _GimpCurvesTool
   GtkWidget            *yrange;
   GtkWidget            *graph;
   GtkWidget            *curve_type;
-
-  gint                  cursor_x;
-  gint                  cursor_y;
-  PangoLayout          *xpos_layout;
-  PangoLayout          *cursor_layout;
-  PangoRectangle        cursor_rect;
 };
 
 struct _GimpCurvesToolClass

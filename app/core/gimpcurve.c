@@ -37,7 +37,9 @@
 enum
 {
   PROP_0,
-  PROP_CURVE_TYPE
+  PROP_CURVE_TYPE,
+  PROP_POINTS,
+  PROP_CURVE
 };
 
 
@@ -119,6 +121,18 @@ gimp_curve_class_init (GimpCurveClass *klass)
                                                       GIMP_CURVE_SMOOTH,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_POINTS,
+                                   g_param_spec_boolean ("points", NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_CURVE,
+                                   g_param_spec_boolean ("curve", NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -149,6 +163,10 @@ gimp_curve_set_property (GObject      *object,
       gimp_curve_set_curve_type (curve, g_value_get_enum (value));
       break;
 
+    case PROP_POINTS:
+    case PROP_CURVE:
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -167,6 +185,10 @@ gimp_curve_get_property (GObject    *object,
     {
     case PROP_CURVE_TYPE:
       g_value_set_enum (value, curve->curve_type);
+      break;
+
+    case PROP_POINTS:
+    case PROP_CURVE:
       break;
 
     default:
@@ -313,9 +335,11 @@ gimp_curve_reset (GimpCurve *curve,
 
   g_object_freeze_notify (G_OBJECT (curve));
 
-  /* g_object_notify (G_OBJECT (curve), "points"); */
-  /* g_object_notify (G_OBJECT (curve), "curve"); */
-  g_object_notify (G_OBJECT (curve), "curve-type");
+  g_object_notify (G_OBJECT (curve), "points");
+  g_object_notify (G_OBJECT (curve), "curve");
+
+  if (reset_type)
+    g_object_notify (G_OBJECT (curve), "curve-type");
 
   g_object_thaw_notify (G_OBJECT (curve));
 }
@@ -328,6 +352,8 @@ gimp_curve_set_curve_type (GimpCurve     *curve,
 
   if (curve->curve_type != curve_type)
     {
+      g_object_freeze_notify (G_OBJECT (curve));
+
       curve->curve_type = curve_type;
 
       if (curve_type == GIMP_CURVE_SMOOTH)
@@ -350,6 +376,9 @@ gimp_curve_set_curve_type (GimpCurve     *curve,
       gimp_curve_calculate (curve);
 
       g_object_notify (G_OBJECT (curve), "curve-type");
+
+      g_object_thaw_notify (G_OBJECT (curve));
+
       gimp_data_dirty (GIMP_DATA (curve));
     }
 }
@@ -401,10 +430,16 @@ gimp_curve_set_point (GimpCurve *curve,
   if (curve->curve_type == GIMP_CURVE_FREE)
     return;
 
+  g_object_freeze_notify (G_OBJECT (curve));
+
   curve->points[point][0] = x;
   curve->points[point][1] = y;
 
+  g_object_notify (G_OBJECT (curve), "points");
+
   gimp_curve_calculate (curve);
+
+  g_object_thaw_notify (G_OBJECT (curve));
 }
 
 void
@@ -417,9 +452,34 @@ gimp_curve_move_point (GimpCurve *curve,
   if (curve->curve_type == GIMP_CURVE_FREE)
     return;
 
+  g_object_freeze_notify (G_OBJECT (curve));
+
   curve->points[point][1] = y;
 
+  g_object_notify (G_OBJECT (curve), "points");
+
   gimp_curve_calculate (curve);
+
+  g_object_thaw_notify (G_OBJECT (curve));
+}
+
+void
+gimp_curve_set_curve (GimpCurve *curve,
+                      gint       x,
+                      gint       y)
+{
+  g_return_if_fail (GIMP_IS_CURVE (curve));
+
+  if (curve->curve_type == GIMP_CURVE_SMOOTH)
+    return;
+
+  g_object_freeze_notify (G_OBJECT (curve));
+
+  curve->curve[x] = y;
+
+  g_object_notify (G_OBJECT (curve), "curve");
+
+  g_object_thaw_notify (G_OBJECT (curve));
 }
 
 void
@@ -480,6 +540,8 @@ gimp_curve_calculate (GimpCurve *curve)
 
           curve->curve[x] = y;
         }
+
+      g_object_notify (G_OBJECT (curve), "curve");
       break;
 
     case GIMP_CURVE_FREE:

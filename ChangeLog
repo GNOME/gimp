@@ -1,3 +1,17 @@
+2007-11-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcurve.[ch]: added API to modify free-form curves
+	and properties to listen to curve changes.
+
+	* app/widgets/gimphistogramview.[ch]: added everything that's
+	needed for rendering a curve with all its color and cursor
+	indicators on top of a histogram. This code will move to a
+	subclass soon.
+
+	* app/tools/gimpcurvestool.[ch]: removed all curve rendering here.
+	Also removed all explicit updating by connecting to curve signals
+	and updating in the callback.
+
 2007-11-02  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcairo-utils.[ch]: added utility function to create

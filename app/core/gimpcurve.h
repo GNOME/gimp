@@ -75,9 +75,14 @@ void            gimp_curve_move_point        (GimpCurve     *curve,
                                               gint           point,
                                               gint           y);
 
+void            gimp_curve_set_curve         (GimpCurve     *curve,
+                                              gint           x,
+                                              gint           y);
+
 void            gimp_curve_get_uchar         (GimpCurve     *curve,
                                               guchar        *dest_array);
 
+/* FIXME: make private */
 void            gimp_curve_calculate         (GimpCurve     *curve);
 
 
