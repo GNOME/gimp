@@ -53,17 +53,17 @@ struct _GimpListClass
 
 GType           gimp_list_get_type      (void) G_GNUC_CONST;
 
-GimpContainer * gimp_list_new           (GType                children_type,
-                                         gboolean             unique_names);
-GimpContainer * gimp_list_new_weak      (GType                children_type,
-                                         gboolean             unique_names);
+GimpContainer * gimp_list_new           (GType         children_type,
+                                         gboolean      unique_names);
+GimpContainer * gimp_list_new_weak      (GType         children_type,
+                                         gboolean      unique_names);
 
-void            gimp_list_reverse       (GimpList            *list);
-void            gimp_list_set_sort_func (GimpList            *list,
-                                         GCompareFunc         sort_func);
-void            gimp_list_sort          (GimpList            *list,
-                                         GCompareFunc         sort_func);
-void            gimp_list_sort_by_name  (GimpList            *list);
+void            gimp_list_reverse       (GimpList     *list);
+void            gimp_list_set_sort_func (GimpList     *list,
+                                         GCompareFunc  sort_func);
+void            gimp_list_sort          (GimpList     *list,
+                                         GCompareFunc  sort_func);
+void            gimp_list_sort_by_name  (GimpList     *list);
 
 
 #endif  /* __GIMP_LIST_H__ */

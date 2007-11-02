@@ -1,3 +1,7 @@
+2007-11-02  Sven Neumann  <sven@gimp.org>
+
+	* core/gimplist.h: formatting.
+
 2007-11-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am
