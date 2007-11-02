@@ -1,3 +1,25 @@
+2007-11-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpcurve-save.[ch]
+	* app/core/gimpcurve-load.[ch]
+	* app/core/gimpcurve.[ch]: new GimpData subclass which keeps a
+	curve as known from the curves tool. Pretty much unfinished, but
+	can do everything that used to be done by base/curves.c and more.
+
+	* app/base/curves.[ch]: stripped down to plain arrays of
+	uchar (the actual curve) and the LUT setup function. All the rest
+	is done by GimpCurve now.
+
+	* app/tools/gimpcurvestool.[ch]: use an array of GimpCurves
+	instead of the old Curves cruft. Use Curves only for the last step
+	of creating the LUT. Pretty much unfinished migration here too.
+
+	* tools/pdbgen/pdb/color.pdb: use a GimpCurve here too.
+
+	* app/pdb/color_cmds.c: regenerated.
+
 2007-11-02  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcairo-utils.c (gimp_cairo_set_source_color):

@@ -16,21 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __CURVES_H__
-#define __CURVES_H__
+#ifndef __GIMP_CURVE_SAVE_H__
+#define __GIMP_CURVE_SAVE_H__
 
 
-struct _Curves
-{
-  guchar curve[5][256];
-};
+/*  don't call this function directly, use gimp_data_save() instead  */
+gboolean   gimp_curve_save (GimpData  *data,
+                            GError   **error);
 
 
-void    curves_init     (Curves *curves);
-gfloat  curves_lut_func (Curves *curves,
-                         gint    nchannels,
-                         gint    channel,
-                         gfloat  value);
-
-
-#endif  /*  __CURVES_H__  */
+#endif /* __GIMP_CURVE_SAVE_H__ */

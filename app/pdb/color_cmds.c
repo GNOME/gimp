@@ -40,6 +40,7 @@
 #include "base/pixel-region.h"
 #include "base/threshold.h"
 #include "core/gimp.h"
+#include "core/gimpcurve.h"
 #include "core/gimpdrawable-desaturate.h"
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-histogram.h"
@@ -394,6 +395,7 @@ curves_spline_invoker (GimpProcedure     *procedure,
           /* The application should occur only within selection bounds */
           if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
             {
+              GimpCurve   *curve;
               Curves       c;
               gint         j;
               PixelRegion  srcPR, destPR;
@@ -408,17 +410,23 @@ curves_spline_invoker (GimpProcedure     *procedure,
 
               curves_init (&c);
 
+              curve = GIMP_CURVE (gimp_curve_new ("curves_spline"));
+
               /*  unset the last point  */
-              c.points[channel][CURVES_NUM_POINTS - 1][0] = -1;
-              c.points[channel][CURVES_NUM_POINTS - 1][1] = -1;
+              curve->points[GIMP_CURVE_NUM_POINTS - 1][0] = -1;
+              curve->points[GIMP_CURVE_NUM_POINTS - 1][1] = -1;
 
               for (j = 0; j < num_points / 2; j++)
                 {
-                  c.points[channel][j][0] = control_pts[j * 2];
-                  c.points[channel][j][1] = control_pts[j * 2 + 1];
+                  curve->points[j][0] = control_pts[j * 2];
+                  curve->points[j][1] = control_pts[j * 2 + 1];
                 }
 
-              curves_calculate_curve (&c, channel);
+              gimp_curve_calculate (curve);
+
+              gimp_curve_get_uchar (curve, c.curve[channel]);
+
+              g_object_unref (curve);
 
               gimp_lut_setup (lut,
                               (GimpLutFunc) curves_lut_func,

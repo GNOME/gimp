@@ -95,6 +95,7 @@ typedef struct _GimpGradient         GimpGradient;
 typedef struct _GimpPattern          GimpPattern;
 typedef struct _GimpPatternClipboard GimpPatternClipboard;
 typedef struct _GimpPalette          GimpPalette;
+typedef struct _GimpCurve            GimpCurve;
 
 
 /*  drawable objects  */

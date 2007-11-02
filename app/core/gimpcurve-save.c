@@ -16,21 +16,44 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __CURVES_H__
-#define __CURVES_H__
+#include "config.h"
+
+#include <errno.h>
+
+#include <glib-object.h>
+#include <glib/gstdio.h>
+
+#include "libgimpbase/gimpbase.h"
+
+#include "core-types.h"
+
+#include "gimpcurve.h"
+#include "gimpcurve-save.h"
+
+#include "gimp-intl.h"
 
 
-struct _Curves
+gboolean
+gimp_curve_save (GimpData  *data,
+                 GError   **error)
 {
-  guchar curve[5][256];
-};
+  GimpCurve *curve = GIMP_CURVE (data);
+  FILE      *file;
 
+  file = g_fopen (data->filename, "wb");
 
-void    curves_init     (Curves *curves);
-gfloat  curves_lut_func (Curves *curves,
-                         gint    nchannels,
-                         gint    channel,
-                         gfloat  value);
+  if (! file)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (data->filename),
+                   g_strerror (errno));
+      return FALSE;
+    }
 
+  /* write  curve */
 
-#endif  /*  __CURVES_H__  */
+  fclose (file);
+
+  return TRUE;
+}

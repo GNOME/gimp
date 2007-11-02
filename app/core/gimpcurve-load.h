@@ -16,21 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __CURVES_H__
-#define __CURVES_H__
+#ifndef __GIMP_CURVE_LOAD_H__
+#define __GIMP_CURVE_LOAD_H__
 
 
-struct _Curves
-{
-  guchar curve[5][256];
-};
+#define GIMP_CURVE_FILE_EXTENSION ".curve"
 
 
-void    curves_init     (Curves *curves);
-gfloat  curves_lut_func (Curves *curves,
-                         gint    nchannels,
-                         gint    channel,
-                         gfloat  value);
+GList * gimp_curve_load (const gchar  *filename,
+                         GError      **error);
 
 
-#endif  /*  __CURVES_H__  */
+#endif /* __GIMP_CURVE_LOAD_H__ */

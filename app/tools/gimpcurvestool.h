@@ -37,7 +37,7 @@ struct _GimpCurvesTool
 {
   GimpImageMapTool      parent_instance;
 
-  Curves               *curves;
+  GimpCurve            *curve[5];
   GimpLut              *lut;
 
   /* dialog */

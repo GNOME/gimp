@@ -90,6 +90,12 @@ libappcore_a_sources = \
 	gimpcontext.h			\
 	gimpcoords.c			\
 	gimpcoords.h			\
+	gimpcurve.c			\
+	gimpcurve.h			\
+	gimpcurve-load.c		\
+	gimpcurve-load.h		\
+	gimpcurve-save.c		\
+	gimpcurve-save.h		\
 	gimpdashpattern.c		\
 	gimpdashpattern.h		\
 	gimpdata.c			\
