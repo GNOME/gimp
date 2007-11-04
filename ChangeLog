@@ -15,7 +15,8 @@
 	* app/widgets/gimprender.c: removed gimp_render_temp_buf; it is
 	not any longer needed.
 
-	* app/core/gimpgradient.c (gimp_gradient_get_preview_size): return
+	* app/core/gimpgradient.c (gimp_gradient_get_preview_size)
+	* app/core/gimppalette.c (gimp_palette_get_preview_size): return
 	an odd preview height to make the border align with the pixel grid.
 
 2007-11-04  Sven Neumann  <sven@gimp.org>
