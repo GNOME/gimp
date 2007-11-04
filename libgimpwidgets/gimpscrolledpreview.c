@@ -424,14 +424,16 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
     case GDK_MOTION_NOTIFY:
       if (priv->in_drag)
         {
-          GtkAdjustment *hadj;
-          GtkAdjustment *vadj;
-          gint           x, y;
+          GdkEventMotion *mevent = (GdkEventMotion *) event;
+          GtkAdjustment  *hadj;
+          GtkAdjustment  *vadj;
+          gint            x, y;
 
           hadj = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
           vadj = gtk_range_get_adjustment (GTK_RANGE (preview->vscr));
 
-          gtk_widget_get_pointer (area, &x, &y);
+          x = mevent->x;
+          y = mevent->y;
 
           x = priv->drag_xoff - (x - priv->drag_x);
           y = priv->drag_yoff - (y - priv->drag_y);
@@ -448,6 +450,8 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
               gimp_preview_draw (GIMP_PREVIEW (preview));
               gimp_preview_invalidate (GIMP_PREVIEW (preview));
             }
+
+          gdk_event_request_motions (mevent);
         }
       break;
 
@@ -696,18 +700,16 @@ gimp_scrolled_preview_nav_popup_event (GtkWidget           *widget,
 
     case GDK_MOTION_NOTIFY:
       {
-        GtkAdjustment *hadj;
-        GtkAdjustment *vadj;
-        gint           cx, cy;
-        gdouble        x, y;
+        GdkEventMotion *mevent = (GdkEventMotion *) event;
+        GtkAdjustment  *hadj;
+        GtkAdjustment  *vadj;
+        gdouble         x, y;
 
         hadj = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
         vadj = gtk_range_get_adjustment (GTK_RANGE (preview->vscr));
 
-        gtk_widget_get_pointer (widget, &cx, &cy);
-
-        x = cx * (hadj->upper - hadj->lower) / widget->allocation.width;
-        y = cy * (vadj->upper - vadj->lower) / widget->allocation.height;
+        x = mevent->x * (hadj->upper - hadj->lower) / widget->allocation.width;
+        y = mevent->y * (vadj->upper - vadj->lower) / widget->allocation.height;
 
         x += hadj->lower - hadj->page_size / 2;
         y += vadj->lower - vadj->page_size / 2;
@@ -721,6 +723,8 @@ gimp_scrolled_preview_nav_popup_event (GtkWidget           *widget,
 
         gtk_widget_queue_draw (widget);
         gdk_window_process_updates (widget->window, FALSE);
+
+        gdk_event_request_motions (mevent);
       }
       break;
 
