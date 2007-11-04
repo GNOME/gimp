@@ -61,28 +61,26 @@ static void      gimp_view_renderer_real_set_context (GimpViewRenderer   *render
                                                       GimpContext        *context);
 static void      gimp_view_renderer_real_invalidate  (GimpViewRenderer   *renderer);
 static void      gimp_view_renderer_real_draw        (GimpViewRenderer   *renderer,
-                                                      GdkWindow          *window,
                                                       GtkWidget          *widget,
-                                                      const GdkRectangle *draw_area,
-                                                      const GdkRectangle *expose_area);
+                                                      cairo_t            *cr,
+                                                      const GdkRectangle *draw_area);
 static void      gimp_view_renderer_real_render      (GimpViewRenderer   *renderer,
                                                       GtkWidget          *widget);
 
 static void      gimp_view_renderer_size_changed     (GimpViewRenderer   *renderer,
                                                       GimpViewable       *viewable);
+
 static cairo_pattern_t *
                  gimp_view_renderer_create_pattern   (GimpViewRenderer   *renderer,
                                                       GtkWidget          *widget);
 
-static void      gimp_view_render_to_buffer          (TempBuf    *temp_buf,
-                                                      gint        channel,
-                                                      GimpViewBG  inside_bg,
-                                                      GimpViewBG  outside_bg,
-                                                      guchar     *dest_buffer,
-                                                      gint        dest_width,
-                                                      gint        dest_height,
-                                                      gint        dest_rowstride,
-                                                      gint        dest_bytes);
+static void      gimp_view_render_to_surface         (TempBuf            *temp_buf,
+                                                      gint                channel,
+                                                      GimpViewBG          inside_bg,
+                                                      GimpViewBG          outside_bg,
+                                                      cairo_surface_t    *surface,
+                                                      gint                dest_width,
+                                                      gint                dest_height);
 
 
 
@@ -150,12 +148,8 @@ gimp_view_renderer_init (GimpViewRenderer *renderer)
   renderer->border_type   = GIMP_VIEW_BORDER_BLACK;
   renderer->border_color  = black_color;
 
+  renderer->surface       = NULL;
   renderer->pattern       = NULL;
-
-  renderer->buffer        = NULL;
-  renderer->rowstride     = 0;
-  renderer->bytes         = 3;
-
   renderer->pixbuf        = NULL;
   renderer->bg_stock_id   = NULL;
 
@@ -185,10 +179,16 @@ gimp_view_renderer_finalize (GObject *object)
 {
   GimpViewRenderer *renderer = GIMP_VIEW_RENDERER (object);
 
-  if (renderer->buffer)
+  if (renderer->pattern)
     {
-      g_free (renderer->buffer);
-      renderer->buffer = NULL;
+      cairo_pattern_destroy (renderer->pattern);
+      renderer->pattern = NULL;
+    }
+
+  if (renderer->surface)
+    {
+      cairo_surface_destroy (renderer->surface);
+      renderer->surface = NULL;
     }
 
   if (renderer->pixbuf)
@@ -201,12 +201,6 @@ gimp_view_renderer_finalize (GObject *object)
     {
       g_free (renderer->bg_stock_id);
       renderer->bg_stock_id = NULL;
-    }
-
-  if (renderer->pattern)
-    {
-      cairo_pattern_destroy (renderer->pattern);
-      renderer->pattern = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -318,10 +312,10 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
   if (viewable == renderer->viewable)
     return;
 
-  if (renderer->buffer)
+  if (renderer->surface)
     {
-      g_free (renderer->buffer);
-      renderer->buffer = NULL;
+      cairo_surface_destroy (renderer->surface);
+      renderer->surface = NULL;
     }
 
   if (renderer->pixbuf)
@@ -378,7 +372,8 @@ gimp_view_renderer_set_size (GimpViewRenderer *renderer,
                              gint              view_size,
                              gint              border_width)
 {
-  gint width, height;
+  gint width;
+  gint height;
 
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
   g_return_if_fail (view_size >  0 &&
@@ -427,12 +422,10 @@ gimp_view_renderer_set_size_full (GimpViewRenderer *renderer,
       renderer->height       = height;
       renderer->border_width = border_width;
 
-      renderer->rowstride = (renderer->width * renderer->bytes + 3) & ~3;
-
-      if (renderer->buffer)
+      if (renderer->surface)
         {
-          g_free (renderer->buffer);
-          renderer->buffer = NULL;
+          cairo_surface_destroy (renderer->surface);
+          renderer->surface = NULL;
         }
 
       if (renderer->viewable)
@@ -586,24 +579,35 @@ gimp_view_renderer_draw (GimpViewRenderer   *renderer,
                          const GdkRectangle *draw_area,
                          const GdkRectangle *expose_area)
 {
+  cairo_t      *cr;
+  GdkRectangle  render_rect;
+
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
   g_return_if_fail (GDK_IS_WINDOW (window));
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (draw_area != NULL);
   g_return_if_fail (expose_area != NULL);
 
+  if (G_UNLIKELY (renderer->context == NULL))
+    g_warning ("%s: renderer->context is NULL", G_STRFUNC);
+
   if (! GTK_WIDGET_DRAWABLE (widget))
     return;
 
-  if (G_UNLIKELY (renderer->context == NULL))
-    g_warning ("%s: renderer->context is NULL", G_STRFUNC);
+  if (! gdk_rectangle_intersect ((GdkRectangle *) draw_area,
+                                 (GdkRectangle *) expose_area,
+                                 &render_rect))
+    return;
+
+  cr = gdk_cairo_create (window);
+
+  gdk_cairo_rectangle (cr, &render_rect);
+  cairo_clip (cr);
 
   if (renderer->viewable)
     {
       GIMP_VIEW_RENDERER_GET_CLASS (renderer)->draw (renderer,
-                                                     window, widget,
-                                                     draw_area,
-                                                     expose_area);
+                                                     widget, cr, draw_area);
     }
   else
     {
@@ -617,28 +621,27 @@ gimp_view_renderer_draw (GimpViewRenderer   *renderer,
 
       g_type_class_unref (viewable_class);
 
-      gimp_view_renderer_real_draw (renderer,
-                                    window, widget, draw_area, expose_area);
+      gimp_view_renderer_real_draw (renderer, widget, cr, draw_area);
     }
 
   if (renderer->border_width > 0)
     {
-      cairo_t *cr     = gdk_cairo_create (window);
-      gint     width  = renderer->width  + renderer->border_width;
-      gint     height = renderer->height + renderer->border_width;
+      gint    width  = renderer->width  + renderer->border_width;
+      gint    height = renderer->height + renderer->border_width;
+      gdouble x, y;
 
       cairo_set_line_width (cr, renderer->border_width);
       cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
       gimp_cairo_set_source_color (cr, &renderer->border_color);
 
-      cairo_translate (cr,
-                       draw_area->x + (draw_area->width  - width)  / 2,
-                       draw_area->y + (draw_area->height - height) / 2);
-      cairo_rectangle (cr, 0, 0, width, height);
-      cairo_stroke (cr);
+      x = draw_area->x + (draw_area->width  - width)  / 2.0;
+      y = draw_area->y + (draw_area->height - height) / 2.0;
 
-      cairo_destroy (cr);
+      cairo_rectangle (cr, x, y, width, height);
+      cairo_stroke (cr);
     }
+
+  cairo_destroy (cr);
 }
 
 
@@ -675,80 +678,48 @@ gimp_view_renderer_real_invalidate (GimpViewRenderer *renderer)
 
 static void
 gimp_view_renderer_real_draw (GimpViewRenderer   *renderer,
-                              GdkWindow          *window,
                               GtkWidget          *widget,
-                              const GdkRectangle *draw_area,
-                              const GdkRectangle *expose_area)
+                              cairo_t            *cr,
+                              const GdkRectangle *draw_area)
 {
-  GdkRectangle render_rect;
-
   if (renderer->needs_render)
     GIMP_VIEW_RENDERER_GET_CLASS (renderer)->render (renderer, widget);
 
   if (renderer->pixbuf)
     {
-      if (gdk_rectangle_intersect ((GdkRectangle *) draw_area,
-                                   (GdkRectangle *) expose_area,
-                                   &render_rect))
+      gint  width  = gdk_pixbuf_get_width  (renderer->pixbuf);
+      gint  height = gdk_pixbuf_get_height (renderer->pixbuf);
+      gint  x, y;
+
+      if (renderer->bg_stock_id)
         {
-          cairo_t *cr     = gdk_cairo_create (window);
-          gint     width  = gdk_pixbuf_get_width  (renderer->pixbuf);
-          gint     height = gdk_pixbuf_get_height (renderer->pixbuf);
+          if (! renderer->pattern)
+            renderer->pattern = gimp_view_renderer_create_pattern (renderer,
+                                                                   widget);
 
-          gdk_cairo_rectangle (cr, &render_rect);
-          cairo_clip (cr);
-
-          if (renderer->bg_stock_id)
-            {
-              if (! renderer->pattern)
-                renderer->pattern = gimp_view_renderer_create_pattern (renderer,
-                                                                       widget);
-
-              cairo_set_source (cr, renderer->pattern);
-              cairo_paint (cr);
-            }
-
-          cairo_translate (cr,
-                           draw_area->x + (draw_area->width  - width)  / 2,
-                           draw_area->y + (draw_area->height - height) / 2);
-
-          gdk_cairo_set_source_pixbuf (cr, renderer->pixbuf, 0, 0);
-          cairo_rectangle (cr, 0, 0, width, height);
-          cairo_fill (cr);
-
-          cairo_destroy (cr);
-       }
-    }
-  else if (renderer->buffer)
-    {
-      GdkRectangle rect;
-
-      rect.width  = renderer->width;
-      rect.height = renderer->height;
-      rect.x      = draw_area->x + (draw_area->width  - rect.width)  / 2;
-      rect.y      = draw_area->y + (draw_area->height - rect.height) / 2;
-
-      if (gdk_rectangle_intersect (&rect, (GdkRectangle *) expose_area,
-                                   &render_rect))
-        {
-          guchar *buf;
-
-          buf = (renderer->buffer +
-                 (render_rect.y - rect.y) * renderer->rowstride +
-                 (render_rect.x - rect.x) * renderer->bytes);
-
-          gdk_draw_rgb_image_dithalign (window,
-                                        widget->style->black_gc,
-                                        render_rect.x,
-                                        render_rect.y,
-                                        render_rect.width,
-                                        render_rect.height,
-                                        GDK_RGB_DITHER_NORMAL,
-                                        buf,
-                                        renderer->rowstride,
-                                        expose_area->x - draw_area->x,
-                                        expose_area->y - draw_area->y);
+          cairo_set_source (cr, renderer->pattern);
+          cairo_paint (cr);
         }
+
+      x = draw_area->x + (draw_area->width  - width)  / 2;
+      y = draw_area->y + (draw_area->height - height) / 2;
+
+      gdk_cairo_set_source_pixbuf (cr, renderer->pixbuf, x, y);
+      cairo_rectangle (cr, x, y, width, height);
+      cairo_fill (cr);
+    }
+  else if (renderer->surface)
+    {
+      gint  width  = renderer->width;
+      gint  height = renderer->height;
+      gint  x, y;
+
+      x = draw_area->x + (draw_area->width  - width)  / 2;
+      y = draw_area->y + (draw_area->height - height) / 2;
+
+      cairo_set_source_surface (cr, renderer->surface, x, y);
+      cairo_rectangle (cr, x, y, width, height);
+      cairo_fill (cr);
     }
 }
 
@@ -776,7 +747,7 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
                                         renderer->height);
   if (temp_buf)
     {
-      gimp_view_renderer_default_render_buffer (renderer, widget, temp_buf);
+      gimp_view_renderer_default_render_surface (renderer, widget, temp_buf);
       return;
     }
 
@@ -799,9 +770,9 @@ gimp_view_renderer_size_changed (GimpViewRenderer *renderer,
 /*  protected functions  */
 
 void
-gimp_view_renderer_default_render_buffer (GimpViewRenderer *renderer,
-                                          GtkWidget        *widget,
-                                          TempBuf          *temp_buf)
+gimp_view_renderer_default_render_surface (GimpViewRenderer *renderer,
+                                           GtkWidget        *widget,
+                                           TempBuf          *temp_buf)
 {
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
   g_return_if_fail (GTK_IS_WIDGET (widget));
@@ -813,9 +784,9 @@ gimp_view_renderer_default_render_buffer (GimpViewRenderer *renderer,
   if (temp_buf->height < renderer->height)
     temp_buf->y = (renderer->height - temp_buf->height) / 2;
 
-  gimp_view_renderer_render_buffer (renderer, temp_buf, -1,
-                                    GIMP_VIEW_BG_CHECKS,
-                                    GIMP_VIEW_BG_WHITE);
+  gimp_view_renderer_render_surface (renderer, temp_buf, -1,
+                                     GIMP_VIEW_BG_CHECKS,
+                                     GIMP_VIEW_BG_WHITE);
 }
 
 void
@@ -836,10 +807,10 @@ gimp_view_renderer_default_render_stock (GimpViewRenderer *renderer,
       renderer->pixbuf = NULL;
     }
 
-  if (renderer->buffer)
+  if (renderer->surface)
     {
-      g_free (renderer->buffer);
-      renderer->buffer = NULL;
+      cairo_surface_destroy (renderer->surface);
+      renderer->surface = NULL;
     }
 
   icon_size = gimp_get_icon_size (widget, stock_id, GTK_ICON_SIZE_INVALID,
@@ -878,11 +849,11 @@ gimp_view_renderer_default_render_stock (GimpViewRenderer *renderer,
 }
 
 void
-gimp_view_renderer_render_buffer (GimpViewRenderer *renderer,
-                                  TempBuf          *temp_buf,
-                                  gint              channel,
-                                  GimpViewBG        inside_bg,
-                                  GimpViewBG        outside_bg)
+gimp_view_renderer_render_surface (GimpViewRenderer *renderer,
+                                   TempBuf          *temp_buf,
+                                   gint              channel,
+                                   GimpViewBG        inside_bg,
+                                   GimpViewBG        outside_bg)
 {
   if (renderer->pixbuf)
     {
@@ -890,40 +861,39 @@ gimp_view_renderer_render_buffer (GimpViewRenderer *renderer,
       renderer->pixbuf = NULL;
     }
 
-  if (! renderer->buffer)
-    renderer->buffer = g_new0 (guchar, renderer->height * renderer->rowstride);
+  if (! renderer->surface)
+    renderer->surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
+                                                    renderer->width,
+                                                    renderer->height);
 
-  gimp_view_render_to_buffer (temp_buf,
-                              channel,
-                              inside_bg,
-                              outside_bg,
-                              renderer->buffer,
-                              renderer->width,
-                              renderer->height,
-                              renderer->rowstride,
-                              renderer->bytes);
+  gimp_view_render_to_surface (temp_buf,
+                               channel,
+                               inside_bg,
+                               outside_bg,
+                               renderer->surface,
+                               renderer->width,
+                               renderer->height);
 
   renderer->needs_render = FALSE;
 }
 
 static void
-gimp_view_render_to_buffer (TempBuf    *temp_buf,
-                            gint        channel,
-                            GimpViewBG  inside_bg,
-                            GimpViewBG  outside_bg,
-                            guchar     *dest_buffer,
-                            gint        dest_width,
-                            gint        dest_height,
-                            gint        dest_rowstride,
-                            gint        dest_bytes)
+gimp_view_render_to_surface (TempBuf         *temp_buf,
+                             gint             channel,
+                             GimpViewBG       inside_bg,
+                             GimpViewBG       outside_bg,
+                             cairo_surface_t *surface,
+                             gint             dest_width,
+                             gint             dest_height)
 {
-  const guchar *src, *s;
-  guchar       *cb;
-  guchar       *pad_buf;
-  gint          a;
-  gint          i, j, b;
-  gint          x1, y1, x2, y2;
+  const guchar *src;
+  const guchar *pad_buf;
+  guchar       *dest;
+  gint          i, j;
+  gint          x1, y1;
+  gint          x2, y2;
   gint          rowstride;
+  gint          dest_stride;
   gboolean      color;
   gboolean      has_alpha;
   gboolean      render_composite;
@@ -931,10 +901,12 @@ gimp_view_render_to_buffer (TempBuf    *temp_buf,
   gint          green_component;
   gint          blue_component;
   gint          alpha_component;
-  gint          offset;
 
   g_return_if_fail (temp_buf != NULL);
-  g_return_if_fail (dest_buffer != NULL);
+  g_return_if_fail (surface != NULL);
+
+  dest        = cairo_image_surface_get_data (surface);
+  dest_stride = cairo_image_surface_get_stride (surface);
 
   /*  Here are the different cases this functions handles correctly:
    *  1)  Offset temp_buf which does not necessarily cover full image area
@@ -998,6 +970,10 @@ gimp_view_render_to_buffer (TempBuf    *temp_buf,
 
   for (i = 0; i < dest_height; i++)
     {
+      guchar       *d = dest;
+      const guchar *cb;
+      gint          offset;
+
       if (i & 0x4)
         {
           offset = 4;
@@ -1014,77 +990,116 @@ gimp_view_render_to_buffer (TempBuf    *temp_buf,
        */
       if (i >= y1 && i < y2)
         {
+          const guchar *s = src;
+
           /*  Handle the leading transparency  */
-          for (j = 0; j < x1; j++)
-            for (b = 0; b < dest_bytes; b++)
-              gimp_render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
+          for (j = 0; j < x1; j++, d += 4, cb += 3)
+            {
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+	      d[0] = cb[2];
+	      d[1] = cb[1];
+	      d[2] = cb[0];
+#else
+	      d[1] = cb[0];
+	      d[2] = cb[1];
+	      d[3] = cb[2];
+#endif
+            }
 
           /*  The stuff in the middle  */
-          s = src;
-          for (j = x1; j < x2; j++)
+          for (j = x1; j < x2; j++, d += 4, s += temp_buf->bytes)
             {
               if (has_alpha && render_composite)
                 {
-                  a = s[alpha_component] << 8;
+                  const guint a = s[alpha_component] << 8;
 
                   if (inside_bg == GIMP_VIEW_BG_CHECKS)
                     {
                       if ((j + offset) & 0x4)
                         {
-                          gimp_render_temp_buf[j * 3 + 0] =
-                            gimp_render_blend_dark_check [(a | s[red_component])];
-                          gimp_render_temp_buf[j * 3 + 1] =
-                            gimp_render_blend_dark_check [(a | s[green_component])];
-                          gimp_render_temp_buf[j * 3 + 2] =
-                            gimp_render_blend_dark_check [(a | s[blue_component])];
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+                          d[0] = gimp_render_blend_dark_check [(a | s[blue_component])];
+                          d[1] = gimp_render_blend_dark_check [(a | s[green_component])];
+                          d[2] = gimp_render_blend_dark_check [(a | s[red_component])];
+#else
+                          d[1] = gimp_render_blend_dark_check [(a | s[red_component])];
+                          d[2] = gimp_render_blend_dark_check [(a | s[green_component])];
+                          d[3] = gimp_render_blend_dark_check [(a | s[blue_component])];
+#endif
                         }
                       else
                         {
-                          gimp_render_temp_buf[j * 3 + 0] =
-                            gimp_render_blend_light_check [(a | s[red_component])];
-                          gimp_render_temp_buf[j * 3 + 1] =
-                            gimp_render_blend_light_check [(a | s[green_component])];
-                          gimp_render_temp_buf[j * 3 + 2] =
-                            gimp_render_blend_light_check [(a | s[blue_component])];
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+                          d[0] = gimp_render_blend_light_check [(a | s[blue_component])];
+                          d[1] = gimp_render_blend_light_check [(a | s[green_component])];
+                          d[2] = gimp_render_blend_light_check [(a | s[red_component])];
+#else
+                          d[1] = gimp_render_blend_light_check [(a | s[red_component])];
+                          d[2] = gimp_render_blend_light_check [(a | s[green_component])];
+                          d[3] = gimp_render_blend_light_check [(a | s[blue_component])];
+#endif
                         }
                     }
                   else /* GIMP_VIEW_BG_WHITE */
                     {
-                      gimp_render_temp_buf[j * 3 + 0] =
-                        gimp_render_blend_white [(a | s[red_component])];
-                      gimp_render_temp_buf[j * 3 + 1] =
-                        gimp_render_blend_white [(a | s[green_component])];
-                      gimp_render_temp_buf[j * 3 + 2] =
-                        gimp_render_blend_white [(a | s[blue_component])];
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+                          d[0] = gimp_render_blend_white [(a | s[blue_component])];
+                          d[1] = gimp_render_blend_white [(a | s[green_component])];
+                          d[2] = gimp_render_blend_white [(a | s[red_component])];
+#else
+                          d[1] = gimp_render_blend_white [(a | s[red_component])];
+                          d[2] = gimp_render_blend_white [(a | s[green_component])];
+                          d[3] = gimp_render_blend_white [(a | s[blue_component])];
+#endif
                     }
                 }
               else
                 {
-                  gimp_render_temp_buf[j * 3 + 0] = s[red_component];
-                  gimp_render_temp_buf[j * 3 + 1] = s[green_component];
-                  gimp_render_temp_buf[j * 3 + 2] = s[blue_component];
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+                  d[0] = s[blue_component];
+                  d[1] = s[green_component];
+                  d[2] = s[red_component];
+#else
+                  d[1] = s[red_component];
+                  d[2] = s[green_component];
+                  d[3] = s[blue_component];
+#endif
                 }
-
-              s += temp_buf->bytes;
             }
 
           /*  Handle the trailing transparency  */
-          for (j = x2; j < dest_width; j++)
-            for (b = 0; b < dest_bytes; b++)
-              gimp_render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
+          for (j = x2; j < dest_width; j++, d+= 4, cb += 3)
+            {
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+	      d[0] = cb[2];
+	      d[1] = cb[1];
+	      d[2] = cb[0];
+#else
+	      d[1] = cb[0];
+	      d[2] = cb[1];
+	      d[3] = cb[2];
+#endif
+            }
 
           src += rowstride;
         }
       else
         {
-          for (j = 0; j < dest_width; j++)
-            for (b = 0; b < dest_bytes; b++)
-              gimp_render_temp_buf[j * dest_bytes + b] = cb[j * 3 + b];
+          for (j = 0; j < dest_width; j++, d+= 4, cb += 3)
+            {
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+	      d[0] = cb[2];
+	      d[1] = cb[1];
+	      d[2] = cb[0];
+#else
+	      d[1] = cb[0];
+	      d[2] = cb[1];
+	      d[3] = cb[2];
+#endif
+            }
         }
 
-      memcpy (dest_buffer + i * dest_rowstride,
-              gimp_render_temp_buf,
-              dest_width * dest_bytes);
+      dest += dest_stride;
     }
 }
 
@@ -1092,10 +1107,10 @@ void
 gimp_view_renderer_render_pixbuf (GimpViewRenderer *renderer,
                                   GdkPixbuf        *pixbuf)
 {
-  if (renderer->buffer)
+  if (renderer->surface)
     {
-      g_free (renderer->buffer);
-      renderer->buffer = NULL;
+      cairo_surface_destroy (renderer->surface);
+      renderer->surface = NULL;
     }
 
   g_object_ref (pixbuf);

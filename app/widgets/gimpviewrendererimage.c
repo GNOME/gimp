@@ -141,10 +141,10 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
             component_index =
               gimp_image_get_component_index (image, rendererimage->channel);
 
-          gimp_view_renderer_render_buffer (renderer, render_buf,
-                                            component_index,
-                                            GIMP_VIEW_BG_CHECKS,
-                                            GIMP_VIEW_BG_WHITE);
+          gimp_view_renderer_render_surface (renderer, render_buf,
+                                             component_index,
+                                             GIMP_VIEW_BG_CHECKS,
+                                             GIMP_VIEW_BG_WHITE);
 
           temp_buf_free (render_buf);
 

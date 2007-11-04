@@ -151,7 +151,7 @@ gimp_gradient_get_preview_size (GimpViewable *viewable,
                                 gint         *height)
 {
   *width  = size;
-  *height = size / 2;
+  *height = 1 + size / 2;
 }
 
 static gboolean

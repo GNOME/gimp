@@ -27,7 +27,6 @@
 extern guchar *gimp_render_check_buf;
 extern guchar *gimp_render_empty_buf;
 extern guchar *gimp_render_white_buf;
-extern guchar *gimp_render_temp_buf;
 
 extern guchar *gimp_render_blend_dark_check;
 extern guchar *gimp_render_blend_light_check;

@@ -54,12 +54,11 @@ struct _GimpViewRenderer
   GimpViewBorderType  border_type;
   GimpRGB             border_color;
 
+  /*< protected >*/
+  cairo_surface_t    *surface;
+
   /*< private >*/
   cairo_pattern_t    *pattern;
-
-  guchar             *buffer;
-  gint                rowstride;
-  gint                bytes;
   GdkPixbuf          *pixbuf;
   gchar              *bg_stock_id;
 
@@ -86,10 +85,9 @@ struct _GimpViewRendererClass
                         GimpContext        *context);
   void (* invalidate)  (GimpViewRenderer   *renderer);
   void (* draw)        (GimpViewRenderer   *renderer,
-                        GdkWindow          *window,
                         GtkWidget          *widget,
-                        const GdkRectangle *draw_area,
-                        const GdkRectangle *expose_area);
+                        cairo_t            *cr,
+                        const GdkRectangle *draw_area);
   void (* render)      (GimpViewRenderer   *renderer,
                         GtkWidget          *widget);
 };
@@ -142,19 +140,20 @@ void   gimp_view_renderer_draw             (GimpViewRenderer   *renderer,
 
 /*  protected  */
 
-void   gimp_view_renderer_default_render_buffer (GimpViewRenderer *renderer,
-                                                 GtkWidget        *widget,
-                                                 TempBuf          *temp_buf);
-void   gimp_view_renderer_default_render_stock  (GimpViewRenderer *renderer,
-                                                 GtkWidget        *widget,
-                                                 const gchar      *stock_id);
-void   gimp_view_renderer_render_buffer         (GimpViewRenderer *renderer,
-                                                 TempBuf          *temp_buf,
-                                                 gint              channel,
-                                                 GimpViewBG        inside_bg,
-                                                 GimpViewBG        outside_bg);
-void    gimp_view_renderer_render_pixbuf        (GimpViewRenderer *renderer,
-                                                 GdkPixbuf        *pixbuf);
+void   gimp_view_renderer_default_render_surface (GimpViewRenderer *renderer,
+                                                  GtkWidget        *widget,
+                                                  TempBuf          *temp_buf);
+void   gimp_view_renderer_default_render_stock   (GimpViewRenderer *renderer,
+                                                  GtkWidget        *widget,
+                                                  const gchar      *stock_id);
+void   gimp_view_renderer_render_surface         (GimpViewRenderer *renderer,
+                                                  TempBuf          *temp_buf,
+                                                  gint              channel,
+                                                  GimpViewBG        inside_bg,
+                                                  GimpViewBG        outside_bg);
+
+void   gimp_view_renderer_render_pixbuf          (GimpViewRenderer *renderer,
+                                                  GdkPixbuf        *pixbuf);
 
 
 

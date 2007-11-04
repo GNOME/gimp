@@ -41,7 +41,6 @@ static void   gimp_render_setup_notify (gpointer    config,
 guchar *gimp_render_check_buf         = NULL;
 guchar *gimp_render_empty_buf         = NULL;
 guchar *gimp_render_white_buf         = NULL;
-guchar *gimp_render_temp_buf          = NULL;
 
 guchar *gimp_render_blend_dark_check  = NULL;
 guchar *gimp_render_blend_light_check = NULL;
@@ -104,12 +103,6 @@ gimp_render_exit (Gimp *gimp)
       g_free (gimp_render_white_buf);
       gimp_render_white_buf = NULL;
     }
-
-  if (gimp_render_temp_buf)
-    {
-      g_free (gimp_render_temp_buf);
-      gimp_render_temp_buf = NULL;
-    }
 }
 
 
@@ -149,7 +142,6 @@ gimp_render_setup_notify (gpointer    config,
   g_free (gimp_render_check_buf);
   g_free (gimp_render_empty_buf);
   g_free (gimp_render_white_buf);
-  g_free (gimp_render_temp_buf);
 
 #define BUF_SIZE (MAX (GIMP_RENDER_BUF_WIDTH, \
                        GIMP_VIEWABLE_MAX_PREVIEW_SIZE) + 4)
@@ -157,7 +149,6 @@ gimp_render_setup_notify (gpointer    config,
   gimp_render_check_buf = g_new  (guchar, BUF_SIZE * 3);
   gimp_render_empty_buf = g_new0 (guchar, BUF_SIZE * 3);
   gimp_render_white_buf = g_new  (guchar, BUF_SIZE * 3);
-  gimp_render_temp_buf  = g_new  (guchar, BUF_SIZE * 3);
 
   /*  calculate check buffer for previews  */
 

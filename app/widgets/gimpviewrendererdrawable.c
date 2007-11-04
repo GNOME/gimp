@@ -210,9 +210,9 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
             render_buf->y = (height - view_height) / 2;
         }
 
-      gimp_view_renderer_render_buffer (renderer, render_buf, -1,
-                                        GIMP_VIEW_BG_CHECKS,
-                                        GIMP_VIEW_BG_CHECKS);
+      gimp_view_renderer_render_surface (renderer, render_buf, -1,
+                                         GIMP_VIEW_BG_CHECKS,
+                                         GIMP_VIEW_BG_CHECKS);
 
       temp_buf_free (render_buf);
     }

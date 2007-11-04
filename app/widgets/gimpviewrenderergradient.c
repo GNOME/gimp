@@ -183,20 +183,17 @@ static void
 gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
                                     GtkWidget        *widget)
 {
-  GimpViewRendererGradient *rendergrad;
-  GimpGradient             *gradient;
-  GimpGradientSegment      *seg = NULL;
+  GimpViewRendererGradient *rendergrad = GIMP_VIEW_RENDERER_GRADIENT (renderer);
+  GimpGradient             *gradient   = GIMP_GRADIENT (renderer->viewable);
+  GimpGradientSegment      *seg        = NULL;
   guchar                   *even;
   guchar                   *odd;
-  guchar                   *buf;
+  guchar                   *dest;
+  gint                      dest_stride;
   gint                      x;
   gint                      y;
   gdouble                   dx, cur_x;
   GimpRGB                   color;
-
-  rendergrad = GIMP_VIEW_RENDERER_GRADIENT (renderer);
-
-  gradient = GIMP_GRADIENT (renderer->viewable);
 
   if (renderer->width != rendergrad->width)
     {
@@ -206,8 +203,8 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
       if (rendergrad->odd)
         g_free (rendergrad->odd);
 
-      rendergrad->even = g_new (guchar, renderer->rowstride);
-      rendergrad->odd  = g_new (guchar, renderer->rowstride);
+      rendergrad->even = g_new (guchar, 4 * renderer->width);
+      rendergrad->odd  = g_new (guchar, 4 * renderer->width);
 
       rendergrad->width = renderer->width;
     }
@@ -218,7 +215,7 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
   dx    = (rendergrad->right - rendergrad->left) / (renderer->width - 1);
   cur_x = rendergrad->left;
 
-  for (x = 0; x < renderer->width; x++)
+  for (x = 0; x < renderer->width; x++, even += 4, odd += 4)
     {
       guchar r, g, b, a;
 
@@ -230,39 +227,66 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
 
       if (x & 0x4)
         {
-          *even++ = gimp_render_blend_dark_check[(a << 8) | r];
-          *even++ = gimp_render_blend_dark_check[(a << 8) | g];
-          *even++ = gimp_render_blend_dark_check[(a << 8) | b];
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+          even[0] = gimp_render_blend_dark_check[(a << 8) | b];
+          even[1] = gimp_render_blend_dark_check[(a << 8) | g];
+          even[2] = gimp_render_blend_dark_check[(a << 8) | r];
+#else
+          even[1] = gimp_render_blend_dark_check[(a << 8) | r];
+          even[2] = gimp_render_blend_dark_check[(a << 8) | g];
+          even[3] = gimp_render_blend_dark_check[(a << 8) | b];
+#endif
 
-          *odd++ = gimp_render_blend_light_check[(a << 8) | r];
-          *odd++ = gimp_render_blend_light_check[(a << 8) | g];
-          *odd++ = gimp_render_blend_light_check[(a << 8) | b];
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+          odd[0] = gimp_render_blend_light_check[(a << 8) | b];
+          odd[1] = gimp_render_blend_light_check[(a << 8) | g];
+          odd[2] = gimp_render_blend_light_check[(a << 8) | r];
+#else
+          odd[1] = gimp_render_blend_light_check[(a << 8) | r];
+          odd[2] = gimp_render_blend_light_check[(a << 8) | g];
+          odd[3] = gimp_render_blend_light_check[(a << 8) | b];
+#endif
         }
       else
         {
-          *even++ = gimp_render_blend_light_check[(a << 8) | r];
-          *even++ = gimp_render_blend_light_check[(a << 8) | g];
-          *even++ = gimp_render_blend_light_check[(a << 8) | b];
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+          even[0] = gimp_render_blend_light_check[(a << 8) | b];
+          even[1] = gimp_render_blend_light_check[(a << 8) | g];
+          even[2] = gimp_render_blend_light_check[(a << 8) | r];
+#else
+          even[1] = gimp_render_blend_light_check[(a << 8) | r];
+          even[2] = gimp_render_blend_light_check[(a << 8) | g];
+          even[3] = gimp_render_blend_light_check[(a << 8) | b];
+#endif
 
-          *odd++ = gimp_render_blend_dark_check[(a << 8) | r];
-          *odd++ = gimp_render_blend_dark_check[(a << 8) | g];
-          *odd++ = gimp_render_blend_dark_check[(a << 8) | b];
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+          odd[0] = gimp_render_blend_dark_check[(a << 8) | b];
+          odd[1] = gimp_render_blend_dark_check[(a << 8) | g];
+          odd[2] = gimp_render_blend_dark_check[(a << 8) | r];
+#else
+          odd[1] = gimp_render_blend_dark_check[(a << 8) | r];
+          odd[2] = gimp_render_blend_dark_check[(a << 8) | g];
+          odd[3] = gimp_render_blend_dark_check[(a << 8) | b];
+#endif
         }
     }
 
-  if (! renderer->buffer)
-    renderer->buffer = g_new (guchar, renderer->height * renderer->rowstride);
+  if (! renderer->surface)
+    renderer->surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
+                                                    renderer->width,
+                                                    renderer->height);
 
-  buf = renderer->buffer;
+  dest        = cairo_image_surface_get_data (renderer->surface);
+  dest_stride = cairo_image_surface_get_stride (renderer->surface);
 
   for (y = 0; y < renderer->height; y++)
     {
       if (y & 0x4)
-        memcpy (buf, rendergrad->even, renderer->rowstride);
+        memcpy (dest, rendergrad->even, renderer->width * 4);
       else
-        memcpy (buf, rendergrad->odd,  renderer->rowstride);
+        memcpy (dest, rendergrad->odd,  renderer->width * 4);
 
-      buf += renderer->rowstride;
+      dest += dest_stride;
     }
 
   renderer->needs_render = FALSE;

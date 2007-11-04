@@ -1,5 +1,25 @@
 2007-11-04  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpviewrenderer.[ch]: replaced the RGB buffer with
+	a Cairo surface.
+
+	* app/widgets/gimpviewrendererbuffer.c
+	* app/widgets/gimpviewrendererbrush.c
+	* app/widgets/gimpviewrendererdrawable.c
+	* app/widgets/gimpviewrenderergradient.c
+	* app/widgets/gimpviewrendererimage.c
+	* app/widgets/gimpviewrendererpalette.c
+	* app/widgets/gimpviewrenderervectors.c: changed accordingly. There
+	are some loose ends here that will be fixed over the next days.
+
+	* app/widgets/gimprender.c: removed gimp_render_temp_buf; it is
+	not any longer needed.
+
+	* app/core/gimpgradient.c (gimp_gradient_get_preview_size): return
+	an odd preview height to make the border align with the pixel grid.
+
+2007-11-04  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimplevelstool.c (levels_input_area_event): minor cleanup.
 
 2007-11-04  Martin Nordholts  <martinn@svn.gnome.org>

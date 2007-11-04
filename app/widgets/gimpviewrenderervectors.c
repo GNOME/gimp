@@ -39,10 +39,9 @@
 
 
 static void   gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
-                                               GdkWindow          *window,
                                                GtkWidget          *widget,
-                                               const GdkRectangle *draw_area,
-                                               const GdkRectangle *expose_area);
+                                               cairo_t            *cr,
+                                               const GdkRectangle *draw_area);
 
 
 G_DEFINE_TYPE (GimpViewRendererVectors, gimp_view_renderer_vectors,
@@ -66,51 +65,46 @@ gimp_view_renderer_vectors_init (GimpViewRendererVectors *renderer)
 
 static void
 gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
-                                 GdkWindow          *window,
                                  GtkWidget          *widget,
-                                 const GdkRectangle *draw_area,
-                                 const GdkRectangle *expose_area)
+                                 cairo_t            *cr,
+                                 const GdkRectangle *draw_area)
 {
-  GimpVectors  *vectors;
+  GimpVectors  *vectors = GIMP_VECTORS (renderer->viewable);
   GimpStroke   *stroke;
-  GdkRectangle  rect, area;
-  gdouble       xscale, yscale;
+  gdouble       xscale;
+  gdouble       yscale;
+  gint          x, y;
 
-  rect.width  = renderer->width;
-  rect.height = renderer->height;
-  rect.x      = draw_area->x + (draw_area->width  - rect.width)  / 2;
-  rect.y      = draw_area->y + (draw_area->height - rect.height) / 2;
+  gdk_cairo_set_source_color (cr, &widget->style->white);
 
-  if (! gdk_rectangle_intersect (&rect, (GdkRectangle *) expose_area, &area))
-    return;
+  x = draw_area->x + (draw_area->width  - renderer->width)  / 2;
+  y = draw_area->y + (draw_area->height - renderer->height) / 2;
 
-  gdk_draw_rectangle (window, widget->style->white_gc, TRUE,
-                      area.x, area.y, area.width, area.height);
+  cairo_rectangle (cr, x, y, renderer->width, renderer->height);
+  cairo_fill (cr);
 
-  vectors = GIMP_VECTORS (renderer->viewable);
+  /*  FIXME: port vector previews to Cairo  */
 
-  xscale = (gdouble) GIMP_ITEM (vectors)->width  / (gdouble) rect.width;
-  yscale = (gdouble) GIMP_ITEM (vectors)->height / (gdouble) rect.height;
-
-  gdk_gc_set_clip_rectangle (widget->style->black_gc, &area);
+  xscale = (gdouble) GIMP_ITEM (vectors)->width  / (gdouble) renderer->width;
+  yscale = (gdouble) GIMP_ITEM (vectors)->height / (gdouble) renderer->height;
 
   for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
        stroke != NULL;
        stroke = gimp_vectors_stroke_get_next (vectors, stroke))
     {
-      GArray   *coordinates;
-      GdkPoint *points;
-      gint      i;
+      GArray *coordinates;
 
       coordinates = gimp_stroke_interpolate (stroke,
                                              MIN (xscale, yscale) / 2,
                                              NULL);
-      if (!coordinates)
+      if (! coordinates)
         continue;
 
+#if 0
       if (coordinates->len > 0)
         {
-          points = g_new (GdkPoint, coordinates->len);
+          GdkPoint *points = g_new (GdkPoint, coordinates->len);
+          gint      i;
 
           for (i = 0; i < coordinates->len; i++)
             {
@@ -127,9 +121,8 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
 
           g_free (points);
         }
+#endif
 
       g_array_free (coordinates, TRUE);
     }
-
-  gdk_gc_set_clip_rectangle (widget->style->black_gc, NULL);
 }
