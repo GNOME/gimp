@@ -1,5 +1,11 @@
 2007-11-04  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangletool.c: Consistently use the name
+	`rect_tool' instead of `rectangle' or `rectangle_tool' for
+	pointers to GimpRectangleTool.
+
+2007-11-04  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Put GimpRectangleTool handles on the outside of the rectangle when
 	it has a small width or height. Some polishing left to do but the
 	base functionality works nicely.
