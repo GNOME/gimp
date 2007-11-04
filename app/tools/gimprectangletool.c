@@ -156,6 +156,9 @@ struct _GimpRectangleToolPrivate
    */
   gboolean                narrow_mode;
 
+  /* True when the rectangle is being rubber banded. */
+  gboolean                rubber_banding;
+
   /* For what scale the handle sizes is calculated. We must cache this so that
    * we can differentiate between when the tool is resumed because of zoom level
    * just has changed or because the highlight has just been updated.
@@ -213,6 +216,8 @@ static gboolean      gimp_rectangle_tool_coord_on_handle      (GimpRectangleTool
 static GtkAnchorType gimp_rectangle_tool_get_anchor           (GimpRectangleToolPrivate *private);
 
 static void          gimp_rectangle_tool_update_highlight     (GimpRectangleTool        *rect_tool);
+
+static gboolean      gimp_rectangle_tool_rubber_banding_func  (GimpRectangleTool        *rect_tool);
 
 static void          gimp_rectangle_tool_update_handle_sizes  (GimpRectangleTool        *rect_tool);
 
@@ -902,6 +907,11 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
       private->other_side_y = other_side_y;
     }
 
+  /* Is the rectangle being rubber-banded? */
+  private->rubber_banding = gimp_rectangle_tool_rubber_banding_func (rect_tool);
+
+  gimp_rectangle_tool_update_highlight (rect_tool);
+
   gimp_tool_control_activate (tool->control);
 
   gimp_draw_tool_resume (draw_tool);
@@ -978,6 +988,9 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
 
   gimp_tool_control_set_snap_offsets (tool->control, 0, 0, 0, 0);
 
+  /* On button release, we are not rubber-banding the rectangle any longer. */
+  private->rubber_banding = FALSE;
+
   gimp_rectangle_tool_update_highlight (rect_tool);
   gimp_rectangle_tool_update_handle_sizes (rect_tool);
 
@@ -1033,8 +1046,12 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
                                          current_x,
                                          current_y);
 
-  /* Update the highlight. */
-  gimp_rectangle_tool_update_highlight (rect_tool);
+  /* Update the highlight, but only if it is not being
+   * rubber-banded. If it is being rubber-banded, the highlight is not
+   * shown anyway.
+   */
+  if (! gimp_rectangle_tool_rubber_banding_func (rect_tool))
+    gimp_rectangle_tool_update_highlight (rect_tool);
 
   if (private->function != RECT_MOVING &&
       private->function != RECT_EXECUTING)
@@ -2672,10 +2689,16 @@ gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private)
 static void
 gimp_rectangle_tool_update_highlight (GimpRectangleTool *rect_tool)
 {
-  GimpTool             *tool    = GIMP_TOOL (rect_tool);
-  GimpRectangleOptions *options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
-  GimpDisplayShell     *shell;
-  gboolean              highlight = FALSE;
+  GimpRectangleToolPrivate *private;
+  GimpTool                 *tool;
+  GimpRectangleOptions     *options;
+  GimpDisplayShell         *shell;
+  gboolean                  highlight;
+
+  tool      = GIMP_TOOL (rect_tool);
+  options   = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
+  private   = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
+  highlight = FALSE;
 
   if (! tool->display)
     return;
@@ -2684,7 +2707,12 @@ gimp_rectangle_tool_update_highlight (GimpRectangleTool *rect_tool)
 
   g_object_get (options, "highlight", &highlight, NULL);
 
-  if (highlight)
+  /* Don't show the highlight when the mouse is down. */
+  if (! highlight || private->rubber_banding)
+    {
+      gimp_display_shell_set_highlight (shell, NULL);
+    }
+  else
     {
       GimpRectangleToolPrivate *private;
       GdkRectangle              rect;
@@ -2698,10 +2726,43 @@ gimp_rectangle_tool_update_highlight (GimpRectangleTool *rect_tool)
 
       gimp_display_shell_set_highlight (shell, &rect);
     }
-  else
+}
+
+/**
+ * gimp_rectangle_tool_rubber_banding_func:
+ *
+ * Returns: %TRUE if the current function is a rubber-banding
+ *          function.
+ */
+static gboolean
+gimp_rectangle_tool_rubber_banding_func (GimpRectangleTool *rect_tool)
+{
+  GimpRectangleToolPrivate *private;
+  gboolean                  rubber_banding_func;
+
+  rubber_banding_func = FALSE;
+  private             = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
+
+  switch (private->function)
     {
-      gimp_display_shell_set_highlight (shell, NULL);
+      case RECT_CREATING:
+      case RECT_RESIZING_LEFT:
+      case RECT_RESIZING_RIGHT:
+      case RECT_RESIZING_TOP:
+      case RECT_RESIZING_BOTTOM:
+      case RECT_RESIZING_UPPER_LEFT:
+      case RECT_RESIZING_UPPER_RIGHT:
+      case RECT_RESIZING_LOWER_LEFT:
+      case RECT_RESIZING_LOWER_RIGHT:
+        rubber_banding_func = TRUE;
+        break;
+
+      default:
+        rubber_banding_func = FALSE;
+        break;
     }
+
+  return rubber_banding_func;
 }
 
 /**

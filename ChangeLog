@@ -1,3 +1,16 @@
+2007-11-04  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Do not do shell darkening while GimpRectangleTool rectangles are
+	being rubber-banded.
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_button_press)
+	(gimp_rectangle_tool_button_release): Maintain a variable keeping
+	track of if the rectangle is being rubber banded or not.
+	(gimp_rectangle_tool_update_highlight): Do not set a shell
+	highligt if the rectangle is being rubber-banded.
+	(gimp_rectangle_tool_rubber_banding_func): New helper function.
+
 2007-11-04  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpviewrendererbrush.c: implement
