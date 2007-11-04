@@ -1,3 +1,19 @@
+2007-11-04  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Put GimpRectangleTool handles on the outside of the rectangle when
+	it has a small width or height. Some polishing left to do but the
+	base functionality works nicely.
+
+	* app/tools/gimpdrawtool.[ch] (gimp_draw_tool_draw_corner): Add a
+	put_outside boolean parameter that if true draws the handles on
+	the outside of the rectangle.
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_update_handle_sizes)
+	(gimp_rectangle_tool_coord_on_handle)
+	(gimp_rectangle_tool_draw): Take into account if the rectangle is
+	in narrow-mode or not.
+
 2007-11-04  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpgradienteditor.c

@@ -59,8 +59,15 @@ enum
 /*  speed of key movement  */
 #define ARROW_VELOCITY   25
 
-#define MAX_HANDLE_SIZE  50
-#define MIN_HANDLE_SIZE   6
+/* When visible rectangle width/height goes below this, use
+ * narrow-mode.
+ */
+#define NARROW_MODE_THRESHOLD   18
+
+#define MAX_HANDLE_SIZE         50
+#define MIN_HANDLE_SIZE         6
+#define NARROW_MODE_HANDLE_SIZE 15
+
 
 #define SQRT5   2.236067977
 
@@ -142,6 +149,12 @@ struct _GimpRectangleToolPrivate
   /* Width and height of side handles. */
   gint                    top_and_bottom_handle_w;
   gint                    left_and_right_handle_h;
+
+  /* Wether or not the rectangle is in a 'narrow situation' i.e. it is
+   * too small for reasonable sized handle to be inside. In this case
+   * we put handles on the outside.
+   */
+  gboolean                narrow_mode;
 
   /* For what scale the handle sizes is calculated. We must cache this so that
    * we can differentiate between when the tool is resumed because of zoom level
@@ -769,6 +782,9 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
                     NULL);
 
       gimp_rectangle_tool_update_handle_sizes (rectangle);
+
+      /* Created rectangles should not be started in narrow-mode */
+      private->narrow_mode = FALSE;
 
       gimp_tool_control_set_snap_offsets (tool->control, 0, 0, 0, 0);
       break;
@@ -1615,25 +1631,25 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
 
     case RECT_DEAD:
     case RECT_CREATING:
-      gimp_draw_tool_draw_corner (draw_tool, FALSE,
+      gimp_draw_tool_draw_corner (draw_tool, FALSE, private->narrow_mode,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
                                   private->corner_handle_w,
                                   private->corner_handle_h,
                                   GTK_ANCHOR_NORTH_WEST, FALSE);
-      gimp_draw_tool_draw_corner (draw_tool, FALSE,
+      gimp_draw_tool_draw_corner (draw_tool, FALSE, private->narrow_mode,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
                                   private->corner_handle_w,
                                   private->corner_handle_h,
                                   GTK_ANCHOR_NORTH_EAST, FALSE);
-      gimp_draw_tool_draw_corner (draw_tool, FALSE,
+      gimp_draw_tool_draw_corner (draw_tool, FALSE, private->narrow_mode,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
                                   private->corner_handle_w,
                                   private->corner_handle_h,
                                   GTK_ANCHOR_SOUTH_WEST, FALSE);
-      gimp_draw_tool_draw_corner (draw_tool, FALSE,
+      gimp_draw_tool_draw_corner (draw_tool, FALSE, private->narrow_mode,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
                                   private->corner_handle_w,
@@ -1645,6 +1661,7 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
     case RECT_RESIZING_BOTTOM:
       gimp_draw_tool_draw_corner (draw_tool,
                                   ! gimp_tool_control_is_active (tool->control),
+                                  private->narrow_mode,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
                                   private->top_and_bottom_handle_w,
@@ -1657,6 +1674,7 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
     case RECT_RESIZING_RIGHT:
       gimp_draw_tool_draw_corner (draw_tool,
                                   ! gimp_tool_control_is_active (tool->control),
+                                  private->narrow_mode,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
                                   private->corner_handle_w,
@@ -1668,6 +1686,7 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
     default:
       gimp_draw_tool_draw_corner (draw_tool,
                                   ! gimp_tool_control_is_active (tool->control),
+                                  private->narrow_mode,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
                                   private->corner_handle_w,
@@ -1793,34 +1812,72 @@ gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool *rectangle)
                               NULL, NULL,
                               &visible_rectangle_width,
                               &visible_rectangle_height);
+
+    /* Determine if we are in narrow-mode or not. */
+    private->narrow_mode = visible_rectangle_width  < NARROW_MODE_THRESHOLD ||
+                           visible_rectangle_height < NARROW_MODE_THRESHOLD;
+
   }
 
+  if (private->narrow_mode)
+    {
+      /* Corner handles always have the same (on-screen) size in
+       * narrow-mode.
+       */
+      private->corner_handle_w = NARROW_MODE_HANDLE_SIZE;
+      private->corner_handle_h = NARROW_MODE_HANDLE_SIZE;
 
-  /* Calculate and clamp corner handle size. */
+      if (rectangle_width < NARROW_MODE_THRESHOLD)
+        {
+          private->top_and_bottom_handle_w = rectangle_width - 2;
+        }
+      else
+        {
+          private->top_and_bottom_handle_w = rectangle_width - 2 * NARROW_MODE_HANDLE_SIZE;
+        }
 
-  private->corner_handle_w = visible_rectangle_width  / 4;
-  private->corner_handle_h = visible_rectangle_height / 4;
+      if (rectangle_height < NARROW_MODE_THRESHOLD)
+        {
+          private->left_and_right_handle_h = rectangle_height - 2;
+        }
+      else
+        {
+          private->left_and_right_handle_h = rectangle_height - 2 * NARROW_MODE_HANDLE_SIZE;
+        }
 
-  private->corner_handle_w = CLAMP (private->corner_handle_w,
-                                    MIN_HANDLE_SIZE,
-                                    MAX_HANDLE_SIZE);
-  private->corner_handle_h = CLAMP (private->corner_handle_h,
-                                    MIN_HANDLE_SIZE,
-                                    MAX_HANDLE_SIZE);
+      private->top_and_bottom_handle_w = CLAMP (private->top_and_bottom_handle_w,
+                                                MIN (rectangle_width - 2, NARROW_MODE_HANDLE_SIZE),
+                                                G_MAXINT);
+      private->left_and_right_handle_h = CLAMP (private->left_and_right_handle_h,
+                                                MIN (rectangle_height - 2, NARROW_MODE_HANDLE_SIZE),
+                                                G_MAXINT);
+    }
+  else
+    {
+      /* Calculate and clamp corner handle size. */
 
+      private->corner_handle_w = visible_rectangle_width  / 4;
+      private->corner_handle_h = visible_rectangle_height / 4;
 
-  /* Calculate and clamp side handle size. */
+      private->corner_handle_w = CLAMP (private->corner_handle_w,
+                                        MIN_HANDLE_SIZE,
+                                        MAX_HANDLE_SIZE);
+      private->corner_handle_h = CLAMP (private->corner_handle_h,
+                                        MIN_HANDLE_SIZE,
+                                        MAX_HANDLE_SIZE);
 
-  private->top_and_bottom_handle_w = rectangle_width  - 3 * private->corner_handle_w;
-  private->left_and_right_handle_h = rectangle_height - 3 * private->corner_handle_h;
+      /* Calculate and clamp side handle size. */
 
-  private->top_and_bottom_handle_w = CLAMP (private->top_and_bottom_handle_w,
-                                            MIN_HANDLE_SIZE,
-                                            G_MAXINT);
-  private->left_and_right_handle_h = CLAMP (private->left_and_right_handle_h,
-                                            MIN_HANDLE_SIZE,
-                                            G_MAXINT);
+      private->top_and_bottom_handle_w = rectangle_width  - 3 * private->corner_handle_w;
+      private->left_and_right_handle_h = rectangle_height - 3 * private->corner_handle_h;
 
+      private->top_and_bottom_handle_w = CLAMP (private->top_and_bottom_handle_w,
+                                                MIN_HANDLE_SIZE,
+                                                G_MAXINT);
+      private->left_and_right_handle_h = CLAMP (private->left_and_right_handle_h,
+                                                MIN_HANDLE_SIZE,
+                                                G_MAXINT);
+    }
 
   /* Keep track of when we need to calculate handle sizes because of a display
    * shell change.
@@ -1858,9 +1915,12 @@ gimp_rectangle_tool_start (GimpRectangleTool *rectangle,
 {
   GimpTool                    *tool = GIMP_TOOL (rectangle);
   GimpRectangleOptionsPrivate *options_private;
+  GimpRectangleToolPrivate    *private;
 
   options_private =
     GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (gimp_tool_get_options (tool));
+
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
 
   tool->display = display;
 
@@ -2413,13 +2473,24 @@ gimp_rectangle_tool_coord_outside (GimpRectangleTool *rectangle_tool,
                                    GimpCoords        *coord)
 {
   GimpRectangleToolPrivate *private;
+  GimpDisplayShell         *shell;
+  gboolean                  narrow_mode;
+  gint                      x1, y1;
+  gint                      x2, y2;
 
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle_tool);
+  private     = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle_tool);
+  narrow_mode = private->narrow_mode;
+  shell       = GIMP_DISPLAY_SHELL (GIMP_TOOL (rectangle_tool)->display->shell);
 
-  return coord->x < private->x1 ||
-         coord->x > private->x2 ||
-         coord->y < private->y1 ||
-         coord->y > private->y2;
+  x1 = private->x1 - (narrow_mode ? private->corner_handle_w / shell->scale_x : 0);
+  x2 = private->x2 + (narrow_mode ? private->corner_handle_w / shell->scale_x : 0);
+  y1 = private->y1 - (narrow_mode ? private->corner_handle_h / shell->scale_y : 0);
+  y2 = private->y2 + (narrow_mode ? private->corner_handle_h / shell->scale_y : 0);
+
+  return coord->x < x1 ||
+         coord->x > x2 ||
+         coord->y < y1 ||
+         coord->y > y2;
 }
 
 /**
@@ -2434,23 +2505,18 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rectangle_tool,
                                      GtkAnchorType      anchor)
 {
   GimpTool                 *tool      = GIMP_TOOL (rectangle_tool);
-  GimpRectangleToolPrivate *private   = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
   GimpDrawTool             *draw_tool = GIMP_DRAW_TOOL (tool);
-  GimpDisplayShell         *shell;
-  gint                      w;
-  gint                      h;
-  gint                      tw;
-  gint                      th;
-  gint                      handle_x      = 0;
-  gint                      handle_y      = 0;
-  gint                      handle_width  = 0;
-  gint                      handle_height = 0;
+  GimpDisplayShell         *shell     = GIMP_DISPLAY_SHELL (tool->display->shell);
+  GimpRectangleToolPrivate *private   = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
 
-  shell = GIMP_DISPLAY_SHELL (tool->display->shell);
-  w     = private->x2 - private->x1;
-  h     = private->y2 - private->y1;
-  tw    = w * shell->scale_x;
-  th    = h * shell->scale_y;
+  gint rect_w            = private->x2 - private->x1;
+  gint rect_h            = private->y2 - private->y1;
+  gint handle_x          = 0;
+  gint handle_y          = 0;
+  gint handle_width      = 0;
+  gint handle_height     = 0;
+  gint narrow_mode_x_dir = 0;
+  gint narrow_mode_y_dir = 0;
 
   switch (anchor)
     {
@@ -2459,6 +2525,9 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rectangle_tool,
       handle_y      = private->y1;
       handle_width  = private->corner_handle_w;
       handle_height = private->corner_handle_h;
+
+      narrow_mode_x_dir = -1;
+      narrow_mode_y_dir = -1;
       break;
 
     case GTK_ANCHOR_SOUTH_EAST:
@@ -2466,6 +2535,9 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rectangle_tool,
       handle_y      = private->y2;
       handle_width  = private->corner_handle_w;
       handle_height = private->corner_handle_h;
+
+      narrow_mode_x_dir =  1;
+      narrow_mode_y_dir =  1;
       break;
 
     case GTK_ANCHOR_NORTH_EAST:
@@ -2473,6 +2545,9 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rectangle_tool,
       handle_y      = private->y1;
       handle_width  = private->corner_handle_w;
       handle_height = private->corner_handle_h;
+
+      narrow_mode_x_dir =  1;
+      narrow_mode_y_dir = -1;
       break;
 
     case GTK_ANCHOR_SOUTH_WEST:
@@ -2480,42 +2555,75 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rectangle_tool,
       handle_y      = private->y2;
       handle_width  = private->corner_handle_w;
       handle_height = private->corner_handle_h;
+
+      narrow_mode_x_dir = -1;
+      narrow_mode_y_dir =  1;
       break;
 
     case GTK_ANCHOR_WEST:
       handle_x      = private->x1;
-      handle_y      = private->y1 + h / 2;
+      handle_y      = private->y1 + rect_h / 2;
       handle_width  = private->corner_handle_w;
       handle_height = private->left_and_right_handle_h;
+
+      narrow_mode_x_dir = -1;
+      narrow_mode_y_dir =  0;
       break;
 
     case GTK_ANCHOR_EAST:
       handle_x      = private->x2;
-      handle_y      = private->y1 + h / 2;
+      handle_y      = private->y1 + rect_h / 2;
       handle_width  = private->corner_handle_w;
       handle_height = private->left_and_right_handle_h;
+
+      narrow_mode_x_dir =  1;
+      narrow_mode_y_dir =  0;
       break;
 
     case GTK_ANCHOR_NORTH:
-      handle_x      = private->x1 + w / 2;
+      handle_x      = private->x1 + rect_w / 2;
       handle_y      = private->y1;
       handle_width  = private->top_and_bottom_handle_w;
       handle_height = private->corner_handle_h;
+
+      narrow_mode_x_dir =  0;
+      narrow_mode_y_dir = -1;
       break;
 
     case GTK_ANCHOR_SOUTH:
-      handle_x      = private->x1 + w / 2;
+      handle_x      = private->x1 + rect_w / 2;
       handle_y      = private->y2;
       handle_width  = private->top_and_bottom_handle_w;
       handle_height = private->corner_handle_h;
+
+      narrow_mode_x_dir =  0;
+      narrow_mode_y_dir =  1;
       break;
 
     case GTK_ANCHOR_CENTER:
-      handle_x      = private->x1 + w / 2;
-      handle_y      = private->y1 + h / 2;
-      handle_width  = tw - private->corner_handle_w * 2;
-      handle_height = th - private->corner_handle_h * 2;
+      handle_x      = private->x1 + rect_w / 2;
+      handle_y      = private->y1 + rect_h / 2;
+
+      if (private->narrow_mode)
+        {
+          handle_width  = rect_w * shell->scale_x;
+          handle_height = rect_h * shell->scale_y;
+        }
+      else
+        {
+          handle_width  = rect_w * shell->scale_x - private->corner_handle_w * 2;
+          handle_height = rect_h * shell->scale_y - private->corner_handle_h * 2;
+        }
+
+      narrow_mode_x_dir =  0;
+      narrow_mode_y_dir =  0;
       break;
+    }
+
+  if (private->narrow_mode)
+    {
+      handle_x += narrow_mode_x_dir * handle_width  / shell->scale_x;
+      handle_y += narrow_mode_y_dir * handle_height / shell->scale_y;
     }
 
   return gimp_draw_tool_on_handle (draw_tool, shell->display,
