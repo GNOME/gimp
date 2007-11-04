@@ -49,7 +49,7 @@
 #include "widgets/gimpcolorbar.h"
 #include "widgets/gimpcursor.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimphistogramview.h"
+#include "widgets/gimpcurveview.h"
 
 #include "display/gimpdisplay.h"
 
@@ -273,8 +273,8 @@ gimp_curves_tool_initialize (GimpTool     *tool,
   gimp_drawable_calculate_histogram (drawable, c_tool->hist);
   gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (c_tool->graph),
                                      c_tool->hist);
-  gimp_histogram_view_set_curve (GIMP_HISTOGRAM_VIEW (c_tool->graph),
-                                 c_tool->curve[c_tool->channel]);
+  gimp_curve_view_set_curve (GIMP_CURVE_VIEW (c_tool->graph),
+                             c_tool->curve[c_tool->channel]);
 
   return TRUE;
 }
@@ -297,8 +297,8 @@ gimp_curves_tool_button_release (GimpTool              *tool,
         gimp_curve_get_closest_point (curve,
                                       c_tool->col_value[c_tool->channel]);
 
-      gimp_histogram_view_set_selected (GIMP_HISTOGRAM_VIEW (c_tool->graph),
-                                        c_tool->selected);
+      gimp_curve_view_set_selected (GIMP_CURVE_VIEW (c_tool->graph),
+                                    c_tool->selected);
 
       gimp_curve_set_point (curve,
                             c_tool->selected,
@@ -317,8 +317,8 @@ gimp_curves_tool_button_release (GimpTool              *tool,
             gimp_curve_get_closest_point (curve,
                                           c_tool->col_value[i]);
 
-          gimp_histogram_view_set_selected (GIMP_HISTOGRAM_VIEW (c_tool->graph),
-                                            c_tool->selected);
+          gimp_curve_view_set_selected (GIMP_CURVE_VIEW (c_tool->graph),
+                                        c_tool->selected);
 
           gimp_curve_set_point (curve,
                                 c_tool->selected,
@@ -405,8 +405,8 @@ gimp_curves_tool_color_picked (GimpColorTool      *color_tool,
   else
     channel = (tool->channel == 1) ? GIMP_HISTOGRAM_ALPHA : GIMP_HISTOGRAM_VALUE;
 
-  gimp_histogram_view_set_xpos (GIMP_HISTOGRAM_VIEW (tool->graph),
-                                tool->col_value[channel]);
+  gimp_curve_view_set_xpos (GIMP_CURVE_VIEW (tool->graph),
+                            tool->col_value[channel]);
 }
 
 static gboolean
@@ -429,8 +429,7 @@ curves_key_press (GimpCurvesTool *tool,
             {
               tool->selected = i;
 
-              gimp_histogram_view_set_selected (GIMP_HISTOGRAM_VIEW (tool->graph),
-                                                i);
+              gimp_curve_view_set_selected (GIMP_CURVE_VIEW (tool->graph), i);
 
               return TRUE;
             }
@@ -444,8 +443,7 @@ curves_key_press (GimpCurvesTool *tool,
             {
               tool->selected = i;
 
-              gimp_histogram_view_set_selected (GIMP_HISTOGRAM_VIEW (tool->graph),
-                                                i);
+              gimp_curve_view_set_selected (GIMP_CURVE_VIEW (tool->graph), i);
 
               return TRUE;
             }
@@ -601,16 +599,10 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (frame);
 
-  tool->graph = gimp_histogram_view_new (FALSE);
+  tool->graph = gimp_curve_view_new ();
   gtk_widget_set_size_request (tool->graph,
                                GRAPH_SIZE + RADIUS * 2,
                                GRAPH_SIZE + RADIUS * 2);
-  GTK_WIDGET_SET_FLAGS (tool->graph, GTK_CAN_FOCUS);
-  gtk_widget_add_events (tool->graph, (GDK_BUTTON_PRESS_MASK   |
-                                       GDK_BUTTON_RELEASE_MASK |
-                                       GDK_POINTER_MOTION_MASK |
-                                       GDK_KEY_PRESS_MASK      |
-                                       GDK_LEAVE_NOTIFY_MASK));
   g_object_set (tool->graph,
                 "border-width", RADIUS,
                 "subdivisions", 1,
@@ -858,8 +850,8 @@ curves_channel_callback (GtkWidget      *widget,
       tool->channel = value;
       gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->graph),
                                        tool->channel);
-      gimp_histogram_view_set_xpos (GIMP_HISTOGRAM_VIEW (tool->graph),
-                                    tool->col_value[tool->channel]);
+      gimp_curve_view_set_xpos (GIMP_CURVE_VIEW (tool->graph),
+                                tool->col_value[tool->channel]);
 
       gimp_color_bar_set_channel (GIMP_COLOR_BAR (tool->yrange), tool->channel);
 
@@ -867,8 +859,8 @@ curves_channel_callback (GtkWidget      *widget,
       if (! tool->color)
         tool->channel = (tool->channel == GIMP_HISTOGRAM_ALPHA) ? 1 : 0;
 
-      gimp_histogram_view_set_curve (GIMP_HISTOGRAM_VIEW (tool->graph),
-                                     tool->curve[tool->channel]);
+      gimp_curve_view_set_curve (GIMP_CURVE_VIEW (tool->graph),
+                                 tool->curve[tool->channel]);
 
       gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (tool->curve_type),
                                        tool->curve[tool->channel]->curve_type);
@@ -1014,8 +1006,8 @@ curves_graph_events (GtkWidget      *widget,
 
             tool->selected = closest_point;
 
-            gimp_histogram_view_set_selected (GIMP_HISTOGRAM_VIEW (tool->graph),
-                                              closest_point);
+            gimp_curve_view_set_selected (GIMP_CURVE_VIEW (tool->graph),
+                                          closest_point);
 
             gimp_curve_set_point (curve, tool->selected, x, 255 - y);
 
@@ -1027,8 +1019,7 @@ curves_graph_events (GtkWidget      *widget,
             tool->selected = x;
             tool->last     = y;
 
-            gimp_histogram_view_set_selected (GIMP_HISTOGRAM_VIEW (tool->graph),
-                                              x);
+            gimp_curve_view_set_selected (GIMP_CURVE_VIEW (tool->graph), x);
             break;
           }
 
@@ -1081,8 +1072,8 @@ curves_graph_events (GtkWidget      *widget,
                       {
                         tool->selected = closest_point;
 
-                        gimp_histogram_view_set_selected (GIMP_HISTOGRAM_VIEW (tool->graph),
-                                                          closest_point);
+                        gimp_curve_view_set_selected (GIMP_CURVE_VIEW (tool->graph),
+                                                      closest_point);
                       }
 
                     gimp_curve_set_point (curve, tool->selected, x, 255 - y);
@@ -1122,8 +1113,7 @@ curves_graph_events (GtkWidget      *widget,
                 tool->selected = x;
                 tool->last     = y;
 
-                gimp_histogram_view_set_selected (GIMP_HISTOGRAM_VIEW (tool->graph),
-                                                  x);
+                gimp_curve_view_set_selected (GIMP_CURVE_VIEW (tool->graph), x);
               }
 
             if (mevent->state & GDK_BUTTON1_MASK)
@@ -1136,8 +1126,7 @@ curves_graph_events (GtkWidget      *widget,
 
         curves_set_cursor (tool, new_cursor);
 
-        gimp_histogram_view_set_cusor (GIMP_HISTOGRAM_VIEW (tool->graph),
-                                       x, y);
+        gimp_curve_view_set_cusor (GIMP_CURVE_VIEW (tool->graph), x, y);
 
         gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
       }
@@ -1152,8 +1141,7 @@ curves_graph_events (GtkWidget      *widget,
       break;
 
     case GDK_LEAVE_NOTIFY:
-      gimp_histogram_view_set_cusor (GIMP_HISTOGRAM_VIEW (tool->graph),
-                                     -1, -1);
+      gimp_curve_view_set_cusor (GIMP_CURVE_VIEW (tool->graph), -1, -1);
       return TRUE;
 
     default:

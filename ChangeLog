@@ -1,3 +1,14 @@
+2007-11-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpcurveview.[ch]: new GimpHistogramView subclass
+	which does all the curve stuff.
+
+	* app/widgets/gimphistorgramview.[ch]: removed all curve code again.
+
+	* app/tools/gimpcurvestool.c: changed accordingly.
+
 2007-11-04  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolorselect.c

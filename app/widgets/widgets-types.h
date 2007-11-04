@@ -157,6 +157,7 @@ typedef struct _GimpColorFrame               GimpColorFrame;
 typedef struct _GimpColorPanel               GimpColorPanel;
 typedef struct _GimpControllerEditor         GimpControllerEditor;
 typedef struct _GimpControllerList           GimpControllerList;
+typedef struct _GimpCurveView                GimpCurveView;
 typedef struct _GimpDashEditor               GimpDashEditor;
 typedef struct _GimpFgBgEditor               GimpFgBgEditor;
 typedef struct _GimpFgBgView                 GimpFgBgView;

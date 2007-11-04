@@ -45,23 +45,13 @@ struct _GimpHistogramView
 
   gint                   border_width;
   gint                   subdivisions;
-
-  /* to be moved to a GimpCursorView subclass */
-  GimpCurve             *curve;
-  gint                   selected;
-
-  gint                   xpos;
-  PangoLayout           *xpos_layout;
-
-  gint                   cursor_x;
-  gint                   cursor_y;
-  PangoLayout           *cursor_layout;
-  PangoRectangle         cursor_rect;
 };
 
 struct _GimpHistogramViewClass
 {
   GtkDrawingAreaClass  parent_class;
+
+  gboolean             light_histogram;
 
   void (* range_changed) (GimpHistogramView *view,
                           gint               start,
@@ -91,18 +81,6 @@ void            gimp_histogram_view_set_range     (GimpHistogramView    *view,
 void            gimp_histogram_view_get_range     (GimpHistogramView    *view,
                                                    gint                 *start,
                                                    gint                 *end);
-
-void            gimp_histogram_view_set_curve     (GimpHistogramView    *view,
-                                                   GimpCurve            *curve);
-GimpCurve     * gimp_histogram_view_get_curve     (GimpHistogramView    *view);
-
-void            gimp_histogram_view_set_selected  (GimpHistogramView    *view,
-                                                   gint                  selected);
-void            gimp_histogram_view_set_xpos      (GimpHistogramView    *view,
-                                                   gint                  x);
-void            gimp_histogram_view_set_cusor     (GimpHistogramView    *view,
-                                                   gint                  x,
-                                                   gint                  y);
 
 
 #endif /* __GIMP_HISTOGRAM_VIEW_H__ */
