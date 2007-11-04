@@ -1039,27 +1039,27 @@ levels_input_area_event (GtkWidget      *widget,
                          GdkEvent       *event,
                          GimpLevelsTool *tool)
 {
-  GdkEventButton *bevent;
-  GdkEventMotion *mevent;
-  gint            x, distance;
-  gint            i;
-  gboolean        update = FALSE;
+  gint  width;
+  gint  border;
+  gint  x;
 
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
-      bevent = (GdkEventButton *) event;
+      {
+        GdkEventButton *bevent   = (GdkEventButton *) event;
+        gint            distance = G_MAXINT;
+        gint            i;
 
-      distance = G_MAXINT;
-      for (i = 0; i < 3; i++)
-        if (fabs (bevent->x - tool->slider_pos[i]) < distance)
-          {
-            tool->active_slider = i;
-            distance = fabs (bevent->x - tool->slider_pos[i]);
-          }
+        for (i = 0; i < 3; i++)
+          if (fabs (bevent->x - tool->slider_pos[i]) < distance)
+            {
+              tool->active_slider = i;
+              distance = fabs (bevent->x - tool->slider_pos[i]);
+            }
 
-      x = bevent->x;
-      update = TRUE;
+        x = bevent->x;
+      }
       break;
 
     case GDK_BUTTON_RELEASE:
@@ -1077,30 +1077,27 @@ levels_input_area_event (GtkWidget      *widget,
         }
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
-      break;
+      return FALSE;
 
     case GDK_MOTION_NOTIFY:
-      mevent = (GdkEventMotion *) event;
-      gdk_window_get_pointer (widget->window, &x, NULL, NULL);
-      update = TRUE;
+      {
+        GdkEventMotion *mevent = (GdkEventMotion *) event;
+
+        x = mevent->x;
+      }
       break;
 
     default:
-      break;
+      return FALSE;
     }
 
-  if (update)
+  g_object_get (tool->hist_view, "border-width", &border, NULL);
+
+  width = widget->allocation.width - 2 * border;
+
+  if (width > 0)
     {
       gdouble  delta, mid, tmp;
-      gint     width;
-      gint     border;
-
-      g_object_get (tool->hist_view, "border-width", &border, NULL);
-
-      width = widget->allocation.width - 2 * border;
-
-      if (width < 1)
-        return FALSE;
 
       switch (tool->active_slider)
         {
@@ -1194,7 +1191,6 @@ levels_output_area_event (GtkWidget      *widget,
                           GimpLevelsTool *tool)
 {
   GdkEventButton *bevent;
-  GdkEventMotion *mevent;
   gint            x, distance;
   gint            i;
   gboolean        update = FALSE;
@@ -1231,7 +1227,6 @@ levels_output_area_event (GtkWidget      *widget,
       break;
 
     case GDK_MOTION_NOTIFY:
-      mevent = (GdkEventMotion *) event;
       gdk_window_get_pointer (widget->window, &x, NULL, NULL);
       update = TRUE;
       break;

@@ -1,3 +1,7 @@
+2007-11-04  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimplevelstool.c (levels_input_area_event): minor cleanup.
+
 2007-11-04  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c: Consistently use the name
