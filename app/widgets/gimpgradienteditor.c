@@ -844,7 +844,6 @@ view_events (GtkWidget          *widget,
              GimpGradientEditor *editor)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
-  gint            x, y;
 
   if (! data_editor->data)
     return TRUE;
@@ -859,11 +858,9 @@ view_events (GtkWidget          *widget,
       {
         GdkEventMotion *mevent = (GdkEventMotion *) event;
 
-        gtk_widget_get_pointer (data_editor->view, &x, &y);
-
-        if (x != editor->view_last_x)
+        if (mevent->x != editor->view_last_x)
           {
-            editor->view_last_x = x;
+            editor->view_last_x = mevent->x;
 
             if (editor->view_button_down)
               {
@@ -871,13 +868,15 @@ view_events (GtkWidget          *widget,
                                  (mevent->state & GDK_CONTROL_MASK) ?
                                  GIMP_COLOR_PICK_MODE_BACKGROUND :
                                  GIMP_COLOR_PICK_MODE_FOREGROUND,
-                                 x);
+                                 mevent->x);
               }
             else
               {
-                view_set_hint (editor, x);
+                view_set_hint (editor, mevent->x);
               }
           }
+
+        gdk_event_request_motions (mevent);
       }
       break;
 
@@ -885,19 +884,17 @@ view_events (GtkWidget          *widget,
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
 
-        gtk_widget_get_pointer (data_editor->view, &x, &y);
-
         switch (bevent->button)
           {
           case 1:
-            editor->view_last_x = x;
+            editor->view_last_x      = bevent->x;
             editor->view_button_down = TRUE;
 
             view_pick_color (editor,
                              (bevent->state & GDK_CONTROL_MASK) ?
                              GIMP_COLOR_PICK_MODE_BACKGROUND :
                              GIMP_COLOR_PICK_MODE_FOREGROUND,
-                             x);
+                             bevent->x);
             break;
 
           case 3:
@@ -961,16 +958,14 @@ view_events (GtkWidget          *widget,
         {
           GdkEventButton *bevent = (GdkEventButton *) event;
 
-          gtk_widget_get_pointer (data_editor->view, &x, &y);
-
-          editor->view_last_x = x;
+          editor->view_last_x      = bevent->x;
           editor->view_button_down = FALSE;
 
           view_pick_color (editor,
                            (bevent->state & GDK_CONTROL_MASK) ?
                            GIMP_COLOR_PICK_MODE_BACKGROUND :
                            GIMP_COLOR_PICK_MODE_FOREGROUND,
-                           x);
+                           bevent->x);
           break;
         }
       break;
@@ -1069,14 +1064,6 @@ view_pick_color (GimpGradientEditor *editor,
 
 /***** Gradient control functions *****/
 
-/* *** WARNING *** WARNING *** WARNING ***
- *
- * All the event-handling code for the gradient control widget is
- * extremely hairy.  You are not expected to understand it.  If you
- * find bugs, mail me unless you are very brave and you want to fix
- * them yourself ;-)
- */
-
 static gboolean
 control_events (GtkWidget          *widget,
                 GdkEvent           *event,
@@ -1084,8 +1071,6 @@ control_events (GtkWidget          *widget,
 {
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
-  gint                 x, y;
-  guint32              time;
 
   if (! GIMP_DATA_EDITOR (editor)->data)
     return TRUE;
@@ -1107,13 +1092,12 @@ control_events (GtkWidget          *widget,
         {
           GdkEventButton *bevent = (GdkEventButton *) event;
 
-          gtk_widget_get_pointer (editor->control, &x, &y);
-
-          editor->control_last_x     = x;
+          editor->control_last_x     = bevent->x;
           editor->control_click_time = bevent->time;
 
           control_button_press (editor,
-                                x, y, bevent->button, bevent->state);
+                                bevent->x, bevent->y,
+                                bevent->button, bevent->state);
 
           if (editor->control_drag_mode != GRAD_DRAG_NONE)
             {
@@ -1159,75 +1143,82 @@ control_events (GtkWidget          *widget,
       break;
 
     case GDK_BUTTON_RELEASE:
-      gradient_editor_set_hint (editor, NULL, NULL, NULL, NULL);
+      {
+        GdkEventButton *bevent = (GdkEventButton *) event;
 
-      if (editor->control_drag_mode != GRAD_DRAG_NONE)
-        {
-          if (GIMP_DATA_EDITOR (editor)->data_editable)
-            {
-              if (! editor->instant_update)
-                gimp_data_thaw (GIMP_DATA (gradient));
+        gradient_editor_set_hint (editor, NULL, NULL, NULL, NULL);
 
-              g_signal_handlers_unblock_by_func (gradient,
-                                                 gimp_gradient_editor_gradient_dirty,
-                                                 editor);
-            }
+        if (editor->control_drag_mode != GRAD_DRAG_NONE)
+          {
+            if (GIMP_DATA_EDITOR (editor)->data_editable)
+              {
+                if (! editor->instant_update)
+                  gimp_data_thaw (GIMP_DATA (gradient));
 
-          gtk_grab_remove (widget);
+                g_signal_handlers_unblock_by_func (gradient,
+                                                   gimp_gradient_editor_gradient_dirty,
+                                                   editor);
+              }
 
-          gtk_widget_get_pointer (editor->control, &x, &y);
+            gtk_grab_remove (widget);
 
-          time = ((GdkEventButton *) event)->time;
+            if ((bevent->time - editor->control_click_time) >= GRAD_MOVE_TIME)
+              {
+                /* stuff was done in motion */
+              }
+            else if ((editor->control_drag_mode == GRAD_DRAG_MIDDLE) ||
+                     (editor->control_drag_mode == GRAD_DRAG_ALL))
+              {
+                seg = editor->control_drag_segment;
 
-          if ((time - editor->control_click_time) >= GRAD_MOVE_TIME)
-            {
-              /* stuff was done in motion */
-            }
-          else if ((editor->control_drag_mode == GRAD_DRAG_MIDDLE) ||
-                   (editor->control_drag_mode == GRAD_DRAG_ALL))
-            {
-              seg = editor->control_drag_segment;
+                if ((editor->control_drag_mode == GRAD_DRAG_ALL) &&
+                    editor->control_compress)
+                  {
+                    control_extend_selection (editor, seg,
+                                              control_calc_g_pos (editor,
+                                                                  bevent->x));
+                  }
+                else
+                  {
+                    control_select_single_segment (editor, seg);
+                  }
 
-              if ((editor->control_drag_mode == GRAD_DRAG_ALL) &&
-                  editor->control_compress)
-                control_extend_selection (editor, seg,
-                                          control_calc_g_pos (editor,
-                                                              x));
-              else
-                control_select_single_segment (editor, seg);
+                gimp_gradient_editor_update (editor);
+              }
 
-              gimp_gradient_editor_update (editor);
-            }
+            editor->control_drag_mode = GRAD_DRAG_NONE;
+            editor->control_compress  = FALSE;
 
-          editor->control_drag_mode = GRAD_DRAG_NONE;
-          editor->control_compress  = FALSE;
-
-          control_do_hint (editor, x, y);
-        }
+            control_do_hint (editor, bevent->x, bevent->y);
+          }
+      }
       break;
 
     case GDK_MOTION_NOTIFY:
-      gtk_widget_get_pointer (editor->control, &x, &y);
+      {
+        GdkEventMotion *mevent = (GdkEventMotion *) event;
 
-      if (x != editor->control_last_x)
-        {
-          editor->control_last_x = x;
+        if (mevent->x != editor->control_last_x)
+          {
+            editor->control_last_x = mevent->x;
 
-          if (GIMP_DATA_EDITOR (editor)->data_editable &&
-              editor->control_drag_mode != GRAD_DRAG_NONE)
-            {
-              time = ((GdkEventButton *) event)->time;
+            if (GIMP_DATA_EDITOR (editor)->data_editable &&
+                editor->control_drag_mode != GRAD_DRAG_NONE)
+              {
 
-              if ((time - editor->control_click_time) >= GRAD_MOVE_TIME)
-                control_motion (editor, gradient, x);
-            }
-          else
-            {
-              gimp_gradient_editor_update (editor);
+                if ((mevent->time - editor->control_click_time) >= GRAD_MOVE_TIME)
+                  control_motion (editor, gradient, mevent->x);
+              }
+            else
+              {
+                gimp_gradient_editor_update (editor);
 
-              control_do_hint (editor, x, y);
-            }
-        }
+                control_do_hint (editor, mevent->x, mevent->y);
+              }
+          }
+
+        gdk_event_request_motions (mevent);
+      }
       break;
 
     default:

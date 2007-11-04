@@ -1,3 +1,9 @@
+2007-11-04  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimpnavigationview.c: use
+	gdk_event_request_motions() to handle motion hint events.
+
 2007-11-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/Makefile.am

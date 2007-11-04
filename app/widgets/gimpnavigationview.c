@@ -387,15 +387,11 @@ gimp_navigation_view_motion_notify (GtkWidget      *widget,
 {
   GimpNavigationView *nav_view = GIMP_NAVIGATION_VIEW (widget);
   GimpView           *view     = GIMP_VIEW (widget);
-  gint                tx, ty;
-  GdkModifierType     mask;
 
   if (! nav_view->has_grab)
     {
+      GdkDisplay *display = gtk_widget_get_display (widget);
       GdkCursor  *cursor;
-      GdkDisplay *display;
-
-      display = gtk_widget_get_display (widget);
 
       if (nav_view->p_x == 0 &&
           nav_view->p_y == 0 &&
@@ -423,12 +419,11 @@ gimp_navigation_view_motion_notify (GtkWidget      *widget,
       return FALSE;
     }
 
-  gdk_window_get_pointer (view->event_window, &tx, &ty, &mask);
+  gimp_navigation_view_move_to (nav_view,
+                                mevent->x - nav_view->motion_offset_x,
+                                mevent->y - nav_view->motion_offset_y);
 
-  tx -= nav_view->motion_offset_x;
-  ty -= nav_view->motion_offset_y;
-
-  gimp_navigation_view_move_to (nav_view, tx, ty);
+  gdk_event_request_motions (mevent);
 
   return TRUE;
 }
