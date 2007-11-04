@@ -1,3 +1,11 @@
+2007-11-04  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* configure.in: bumped required version of GTK+ to 2.12.0.
+
+	* app/sanity.c (sanity_check_glib)
+	* app/gui/gui.c (gui_sanity_check): updated sanity checks. 
+
 2007-11-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimphistogramview.[ch]: added API to set the
