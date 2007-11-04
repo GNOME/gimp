@@ -33,11 +33,15 @@
 #include "gimpviewrendererbrush.h"
 
 
-static void   gimp_view_renderer_brush_finalize   (GObject          *object);
-static void   gimp_view_renderer_brush_render     (GimpViewRenderer *renderer,
-                                                   GtkWidget        *widget);
+static void   gimp_view_renderer_brush_finalize (GObject            *object);
+static void   gimp_view_renderer_brush_render   (GimpViewRenderer   *renderer,
+                                                 GtkWidget          *widget);
+static void   gimp_view_renderer_brush_draw     (GimpViewRenderer   *renderer,
+                                                 GtkWidget          *widget,
+                                                 cairo_t            *cr,
+                                                 const GdkRectangle *area);
 
-static gboolean gimp_view_renderer_brush_render_timeout (gpointer  data);
+static gboolean gimp_view_renderer_brush_render_timeout (gpointer    data);
 
 
 G_DEFINE_TYPE (GimpViewRendererBrush, gimp_view_renderer_brush,
@@ -55,6 +59,7 @@ gimp_view_renderer_brush_class_init (GimpViewRendererBrushClass *klass)
   object_class->finalize = gimp_view_renderer_brush_finalize;
 
   renderer_class->render = gimp_view_renderer_brush_render;
+  renderer_class->draw   = gimp_view_renderer_brush_draw;
 }
 
 static void
@@ -84,16 +89,12 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
 {
   GimpViewRendererBrush *renderbrush = GIMP_VIEW_RENDERER_BRUSH (renderer);
   TempBuf               *temp_buf;
-  gint                   brush_width;
-  gint                   brush_height;
 
   if (renderbrush->pipe_timeout_id)
     {
       g_source_remove (renderbrush->pipe_timeout_id);
       renderbrush->pipe_timeout_id = 0;
     }
-
-  gimp_viewable_get_size (renderer->viewable, &brush_width, &brush_height);
 
   temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
                                             renderer->context,
@@ -130,160 +131,6 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
                                      GIMP_VIEW_BG_WHITE);
 
   temp_buf_free (temp_buf);
-
-  /*  FIXME:  port brush indicator drawing to Cairo  */
-
-#if 0
-
-#define INDICATOR_WIDTH  7
-#define INDICATOR_HEIGHT 7
-
-  if (renderer->width  >= INDICATOR_WIDTH  * 2 &&
-      renderer->height >= INDICATOR_HEIGHT * 2 &&
-      (renderer->width  < brush_width          ||
-       renderer->height < brush_height         ||
-       GIMP_IS_BRUSH_PIPE (renderer->viewable) ||
-       GIMP_IS_BRUSH_GENERATED (renderer->viewable)))
-    {
-#define WHT { 255, 255, 255 }
-#define BLK {   0,   0,   0 }
-#define RED { 255, 127, 127 }
-#define BLU { 127, 150, 255 }
-
-      static const guchar scale_indicator_bits[7][7][3] =
-      {
-        { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
-        { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
-        { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
-        { WHT, BLK, BLK, BLK, BLK, BLK, WHT },
-        { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
-        { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
-        { WHT, WHT, WHT, WHT, WHT, WHT, WHT }
-      };
-
-      static const guchar scale_pipe_indicator_bits[7][7][3] =
-      {
-        { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
-        { WHT, WHT, WHT, BLK, WHT, WHT, RED },
-        { WHT, WHT, WHT, BLK, WHT, RED, RED },
-        { WHT, BLK, BLK, BLK, BLK, BLK, RED },
-        { WHT, WHT, WHT, BLK, RED, RED, RED },
-        { WHT, WHT, RED, BLK, RED, RED, RED },
-        { WHT, RED, RED, RED, RED, RED, RED }
-      };
-
-      static const guchar pipe_indicator_bits[7][7][3] =
-      {
-        { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
-        { WHT, WHT, WHT, WHT, WHT, WHT, RED },
-        { WHT, WHT, WHT, WHT, WHT, RED, RED },
-        { WHT, WHT, WHT, WHT, RED, RED, RED },
-        { WHT, WHT, WHT, RED, RED, RED, RED },
-        { WHT, WHT, RED, RED, RED, RED, RED },
-        { WHT, RED, RED, RED, RED, RED, RED }
-      };
-
-      static const guchar scale_genbrush_indicator_bits[7][7][3] =
-      {
-        { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
-        { WHT, WHT, WHT, BLK, WHT, WHT, BLU },
-        { WHT, WHT, WHT, BLK, WHT, BLU, BLU },
-        { WHT, BLK, BLK, BLK, BLK, BLK, BLU },
-        { WHT, WHT, WHT, BLK, WHT, BLU, BLU },
-        { WHT, WHT, BLU, BLK, BLU, BLU, BLU },
-        { WHT, WHT, BLU, BLU, BLU, BLU, BLU }
-      };
-
-      static const guchar genbrush_indicator_bits[7][7][3] =
-      {
-        { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
-        { WHT, WHT, WHT, WHT, WHT, WHT, BLU },
-        { WHT, WHT, WHT, WHT, WHT, BLU, BLU },
-        { WHT, WHT, WHT, WHT, BLU, BLU, BLU },
-        { WHT, WHT, WHT, BLU, BLU, BLU, BLU },
-        { WHT, WHT, BLU, BLU, BLU, BLU, BLU },
-        { WHT, BLU, BLU, BLU, BLU, BLU, BLU }
-      };
-
-#undef WHT
-#undef BLK
-#undef RED
-#undef BLU
-
-      guchar   *buf;
-      guchar   *b;
-      gint      x, y;
-      gint      offset_x;
-      gint      offset_y;
-      gboolean  alpha;
-      gboolean  pipe;
-      gboolean  genbrush;
-      gboolean  scale;
-
-      offset_x = renderer->width  - INDICATOR_WIDTH;
-      offset_y = renderer->height - INDICATOR_HEIGHT;
-
-      buf = renderer->buffer + (offset_y * renderer->rowstride +
-                                offset_x * renderer->bytes);
-
-      pipe     = GIMP_IS_BRUSH_PIPE (renderer->viewable);
-      genbrush = GIMP_IS_BRUSH_GENERATED (renderer->viewable);
-      scale    = (renderer->width  < brush_width ||
-                  renderer->height < brush_height);
-      alpha    = (renderer->bytes == 4);
-
-      for (y = 0; y < INDICATOR_HEIGHT; y++)
-        {
-          b = buf;
-
-          for (x = 0; x < INDICATOR_WIDTH; x++)
-            {
-              if (scale)
-                {
-                  if (pipe)
-                    {
-                      *b++ = scale_pipe_indicator_bits[y][x][0];
-                      *b++ = scale_pipe_indicator_bits[y][x][1];
-                      *b++ = scale_pipe_indicator_bits[y][x][2];
-                    }
-                  else if (genbrush)
-                    {
-                      *b++ = scale_genbrush_indicator_bits[y][x][0];
-                      *b++ = scale_genbrush_indicator_bits[y][x][1];
-                      *b++ = scale_genbrush_indicator_bits[y][x][2];
-                    }
-                  else
-                    {
-                      *b++ = scale_indicator_bits[y][x][0];
-                      *b++ = scale_indicator_bits[y][x][1];
-                      *b++ = scale_indicator_bits[y][x][2];
-                    }
-                }
-              else if (pipe)
-                {
-                  *b++ = pipe_indicator_bits[y][x][0];
-                  *b++ = pipe_indicator_bits[y][x][1];
-                  *b++ = pipe_indicator_bits[y][x][2];
-                }
-              else if (genbrush)
-                {
-                  *b++ = genbrush_indicator_bits[y][x][0];
-                  *b++ = genbrush_indicator_bits[y][x][1];
-                  *b++ = genbrush_indicator_bits[y][x][2];
-                }
-
-              if (alpha)
-                *b++ = 255;
-            }
-
-          buf += renderer->rowstride;
-        }
-    }
-
-#undef INDICATOR_WIDTH
-#undef INDICATOR_HEIGHT
-
-#endif
 }
 
 static gboolean
@@ -333,4 +180,62 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
   gimp_view_renderer_update (renderer);
 
   return TRUE;
+}
+
+static void
+gimp_view_renderer_brush_draw (GimpViewRenderer   *renderer,
+                               GtkWidget          *widget,
+                               cairo_t            *cr,
+                               const GdkRectangle *area)
+{
+  GIMP_VIEW_RENDERER_CLASS (parent_class)->draw (renderer, widget, cr, area);
+
+#define INDICATOR_WIDTH  7
+#define INDICATOR_HEIGHT 7
+
+  if (renderer->width  >= INDICATOR_WIDTH  * 2 &&
+      renderer->height >= INDICATOR_HEIGHT * 2)
+    {
+      gboolean  pipe      = GIMP_IS_BRUSH_PIPE (renderer->viewable);
+      gboolean  generated = GIMP_IS_BRUSH_GENERATED (renderer->viewable);
+      gint      brush_width;
+      gint      brush_height;
+
+      if (generated || pipe)
+        {
+          cairo_move_to (cr, area->x + area->width, area->y + area->height);
+          cairo_rel_line_to (cr, - INDICATOR_WIDTH, 0);
+          cairo_rel_line_to (cr, INDICATOR_WIDTH, - INDICATOR_HEIGHT);
+          cairo_rel_line_to (cr, 0, INDICATOR_HEIGHT);
+
+          if (pipe)
+            cairo_set_source_rgb (cr, 1.0, 0.5, 0.5);
+          else
+            cairo_set_source_rgb (cr, 0.5, 0.6, 1.0);
+
+          cairo_fill (cr);
+        }
+
+      gimp_viewable_get_size (renderer->viewable, &brush_width, &brush_height);
+
+      if (renderer->width  < brush_width || renderer->height < brush_height)
+        {
+          cairo_move_to (cr,
+                         area->x + area->width  - INDICATOR_WIDTH + 1,
+                         area->y + area->height - INDICATOR_HEIGHT / 2.0);
+          cairo_rel_line_to (cr, INDICATOR_WIDTH - 2, 0);
+
+          cairo_move_to (cr,
+                         area->x + area->width  - INDICATOR_WIDTH / 2.0,
+                         area->y + area->height - INDICATOR_HEIGHT + 1);
+          cairo_rel_line_to (cr, 0, INDICATOR_WIDTH - 2);
+
+          cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+          cairo_set_line_width (cr, 1);
+          cairo_stroke (cr);
+        }
+    }
+
+#undef INDICATOR_WIDTH
+#undef INDICATOR_HEIGHT
 }

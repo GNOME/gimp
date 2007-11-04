@@ -1,5 +1,13 @@
 2007-11-04  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpviewrendererbrush.c: implement
+	GimpViewRenderer::draw and draw the overlays with Cairo.
+
+	* app/widgets/gimpviewrenderer.[ch]
+	* app/widgets/gimpviewrenderervectors.c: minor cleanups.
+
+2007-11-04  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpviewrenderer.[ch]: replaced the RGB buffer with
 	a Cairo surface.
 

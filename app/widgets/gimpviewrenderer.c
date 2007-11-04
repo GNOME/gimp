@@ -680,7 +680,7 @@ static void
 gimp_view_renderer_real_draw (GimpViewRenderer   *renderer,
                               GtkWidget          *widget,
                               cairo_t            *cr,
-                              const GdkRectangle *draw_area)
+                              const GdkRectangle *area)
 {
   if (renderer->needs_render)
     GIMP_VIEW_RENDERER_GET_CLASS (renderer)->render (renderer, widget);
@@ -701,8 +701,8 @@ gimp_view_renderer_real_draw (GimpViewRenderer   *renderer,
           cairo_paint (cr);
         }
 
-      x = draw_area->x + (draw_area->width  - width)  / 2;
-      y = draw_area->y + (draw_area->height - height) / 2;
+      x = area->x + (area->width  - width)  / 2;
+      y = area->y + (area->height - height) / 2;
 
       gdk_cairo_set_source_pixbuf (cr, renderer->pixbuf, x, y);
       cairo_rectangle (cr, x, y, width, height);
@@ -714,8 +714,8 @@ gimp_view_renderer_real_draw (GimpViewRenderer   *renderer,
       gint  height = renderer->height;
       gint  x, y;
 
-      x = draw_area->x + (draw_area->width  - width)  / 2;
-      y = draw_area->y + (draw_area->height - height) / 2;
+      x = area->x + (area->width  - width)  / 2;
+      y = area->y + (area->height - height) / 2;
 
       cairo_set_source_surface (cr, renderer->surface, x, y);
       cairo_rectangle (cr, x, y, width, height);

@@ -87,7 +87,7 @@ struct _GimpViewRendererClass
   void (* draw)        (GimpViewRenderer   *renderer,
                         GtkWidget          *widget,
                         cairo_t            *cr,
-                        const GdkRectangle *draw_area);
+                        const GdkRectangle *area);
   void (* render)      (GimpViewRenderer   *renderer,
                         GtkWidget          *widget);
 };

@@ -41,7 +41,7 @@
 static void   gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
                                                GtkWidget          *widget,
                                                cairo_t            *cr,
-                                               const GdkRectangle *draw_area);
+                                               const GdkRectangle *area);
 
 
 G_DEFINE_TYPE (GimpViewRendererVectors, gimp_view_renderer_vectors,
@@ -67,7 +67,7 @@ static void
 gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
                                  GtkWidget          *widget,
                                  cairo_t            *cr,
-                                 const GdkRectangle *draw_area)
+                                 const GdkRectangle *area)
 {
   GimpVectors  *vectors = GIMP_VECTORS (renderer->viewable);
   GimpStroke   *stroke;
@@ -77,8 +77,8 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
 
   gdk_cairo_set_source_color (cr, &widget->style->white);
 
-  x = draw_area->x + (draw_area->width  - renderer->width)  / 2;
-  y = draw_area->y + (draw_area->height - renderer->height) / 2;
+  x = area->x + (area->width  - renderer->width)  / 2;
+  y = area->y + (area->height - renderer->height) / 2;
 
   cairo_rectangle (cr, x, y, renderer->width, renderer->height);
   cairo_fill (cr);
