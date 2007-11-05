@@ -32,6 +32,7 @@
 
 #include "core/gimppalette.h"
 
+#include "gimpcairo-utils.h"
 #include "gimpviewrendererpalette.h"
 
 
@@ -178,27 +179,11 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
 
               if (renderpal->draw_grid && (x % renderpal->cell_width) == 0)
                 {
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-                  d[0] = 0;
-                  d[1] = 0;
-                  d[2] = 0;
-#else
-                  d[1] = 0;
-                  d[2] = 0;
-                  d[3] = 0;
-#endif
+                  GIMP_CAIRO_RGB24_SET_PIXEL (d, 0, 0, 0);
                 }
               else
                 {
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-                  d[0] = b;
-                  d[1] = g;
-                  d[2] = r;
-#else
-                  d[1] = r;
-                  d[2] = g;
-                  d[3] = b;
-#endif
+                  GIMP_CAIRO_RGB24_SET_PIXEL (d, r, g, b);
                 }
             }
         }

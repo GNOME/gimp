@@ -995,15 +995,7 @@ gimp_view_render_to_surface (TempBuf         *temp_buf,
           /*  Handle the leading transparency  */
           for (j = 0; j < x1; j++, d += 4, cb += 3)
             {
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-	      d[0] = cb[2];
-	      d[1] = cb[1];
-	      d[2] = cb[0];
-#else
-	      d[1] = cb[0];
-	      d[2] = cb[1];
-	      d[3] = cb[2];
-#endif
+              GIMP_CAIRO_RGB24_SET_PIXEL (d, cb[0], cb[1], cb[2]);
             }
 
           /*  The stuff in the middle  */
@@ -1017,68 +1009,40 @@ gimp_view_render_to_surface (TempBuf         *temp_buf,
                     {
                       if ((j + offset) & 0x4)
                         {
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-                          d[0] = gimp_render_blend_dark_check [(a | s[blue_component])];
-                          d[1] = gimp_render_blend_dark_check [(a | s[green_component])];
-                          d[2] = gimp_render_blend_dark_check [(a | s[red_component])];
-#else
-                          d[1] = gimp_render_blend_dark_check [(a | s[red_component])];
-                          d[2] = gimp_render_blend_dark_check [(a | s[green_component])];
-                          d[3] = gimp_render_blend_dark_check [(a | s[blue_component])];
-#endif
+                          GIMP_CAIRO_RGB24_SET_PIXEL (d,
+                                                      gimp_render_blend_dark_check [a | s[red_component]],
+                                                      gimp_render_blend_dark_check [a | s[green_component]],
+                                                      gimp_render_blend_dark_check [a | s[blue_component]]);
                         }
                       else
                         {
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-                          d[0] = gimp_render_blend_light_check [(a | s[blue_component])];
-                          d[1] = gimp_render_blend_light_check [(a | s[green_component])];
-                          d[2] = gimp_render_blend_light_check [(a | s[red_component])];
-#else
-                          d[1] = gimp_render_blend_light_check [(a | s[red_component])];
-                          d[2] = gimp_render_blend_light_check [(a | s[green_component])];
-                          d[3] = gimp_render_blend_light_check [(a | s[blue_component])];
-#endif
+                          GIMP_CAIRO_RGB24_SET_PIXEL (d,
+                                                      gimp_render_blend_light_check [a | s[red_component]],
+                                                      gimp_render_blend_light_check [a | s[green_component]],
+                                                      gimp_render_blend_light_check [a | s[blue_component]]);
                         }
                     }
                   else /* GIMP_VIEW_BG_WHITE */
                     {
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-                          d[0] = gimp_render_blend_white [(a | s[blue_component])];
-                          d[1] = gimp_render_blend_white [(a | s[green_component])];
-                          d[2] = gimp_render_blend_white [(a | s[red_component])];
-#else
-                          d[1] = gimp_render_blend_white [(a | s[red_component])];
-                          d[2] = gimp_render_blend_white [(a | s[green_component])];
-                          d[3] = gimp_render_blend_white [(a | s[blue_component])];
-#endif
+                      GIMP_CAIRO_RGB24_SET_PIXEL (d,
+                                                  gimp_render_blend_white [a | s[red_component]],
+                                                  gimp_render_blend_white [a | s[green_component]],
+                                                  gimp_render_blend_white [a | s[blue_component]]);
                     }
                 }
               else
                 {
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-                  d[0] = s[blue_component];
-                  d[1] = s[green_component];
-                  d[2] = s[red_component];
-#else
-                  d[1] = s[red_component];
-                  d[2] = s[green_component];
-                  d[3] = s[blue_component];
-#endif
+                  GIMP_CAIRO_RGB24_SET_PIXEL (d,
+                                              s[red_component],
+                                              s[green_component],
+                                              s[blue_component]);
                 }
             }
 
           /*  Handle the trailing transparency  */
           for (j = x2; j < dest_width; j++, d+= 4, cb += 3)
             {
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-	      d[0] = cb[2];
-	      d[1] = cb[1];
-	      d[2] = cb[0];
-#else
-	      d[1] = cb[0];
-	      d[2] = cb[1];
-	      d[3] = cb[2];
-#endif
+              GIMP_CAIRO_RGB24_SET_PIXEL (d, cb[0], cb[1], cb[2]);
             }
 
           src += rowstride;
@@ -1087,15 +1051,7 @@ gimp_view_render_to_surface (TempBuf         *temp_buf,
         {
           for (j = 0; j < dest_width; j++, d+= 4, cb += 3)
             {
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-	      d[0] = cb[2];
-	      d[1] = cb[1];
-	      d[2] = cb[0];
-#else
-	      d[1] = cb[0];
-	      d[2] = cb[1];
-	      d[3] = cb[2];
-#endif
+              GIMP_CAIRO_RGB24_SET_PIXEL (d, cb[0], cb[1], cb[2]);
             }
         }
 

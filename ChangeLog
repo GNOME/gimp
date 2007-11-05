@@ -1,3 +1,13 @@
+2007-11-05  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcairo-utils.h: introduced macros to set a single
+	pixel in a Cairo surface without having to worry about endianness.
+
+	* app/widgets/gimpcairo-utils.c
+	* app/widgets/gimpviewrenderer.c
+	* app/widgets/gimpviewrenderergradient.c
+	* app/widgets/gimpviewrendererpalette.c: use the new macros.
+
 2007-11-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcurveview.c (gimp_curve_view_expose): port to

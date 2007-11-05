@@ -104,15 +104,7 @@ gimp_cairo_create_surface_from_pixbuf (GdkPixbuf *pixbuf)
 
           while (w--)
             {
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-	      d[0] = s[2];
-	      d[1] = s[1];
-	      d[2] = s[0];
-#else
-	      d[1] = s[0];
-	      d[2] = s[1];
-	      d[3] = s[2];
-#endif
+              GIMP_CAIRO_RGB24_SET_PIXEL (d, s[0], s[1], s[2]);
 
               s += 3;
               d += 4;
@@ -129,29 +121,14 @@ gimp_cairo_create_surface_from_pixbuf (GdkPixbuf *pixbuf)
           const guchar *s = src;
           guchar       *d = dest;
           gint          w = width;
-	  guint         t1, t2, t3;
-
-#define MULT(d,c,a,t) \
-   G_STMT_START { t = c * a + 0x7f; d = ((t >> 8) + t) >> 8; } G_STMT_END
 
           while (w--)
             {
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-	      MULT (d[0], s[2], s[3], t1);
-	      MULT (d[1], s[1], s[3], t2);
-	      MULT (d[2], s[0], s[3], t3);
-	      d[3] = s[3];
-#else
-	      d[0] = s[3];
-	      MULT (d[1], s[0], s[3], t1);
-	      MULT (d[2], s[1], s[3], t2);
-	      MULT (d[3], s[2], s[3], t3);
-#endif
+              GIMP_CAIRO_ARGB32_SET_PIXEL (d, s[0], s[1], s[2], s[3]);
+
               s += 4;
               d += 4;
             }
-
-#undef MULT
 
           src  += src_stride;
           dest += dest_stride;

@@ -32,6 +32,7 @@
 
 #include "core/gimpgradient.h"
 
+#include "gimpcairo-utils.h"
 #include "gimprender.h"
 #include "gimpviewrenderergradient.h"
 
@@ -227,47 +228,25 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
 
       if (x & 0x4)
         {
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-          even[0] = gimp_render_blend_dark_check[(a << 8) | b];
-          even[1] = gimp_render_blend_dark_check[(a << 8) | g];
-          even[2] = gimp_render_blend_dark_check[(a << 8) | r];
-#else
-          even[1] = gimp_render_blend_dark_check[(a << 8) | r];
-          even[2] = gimp_render_blend_dark_check[(a << 8) | g];
-          even[3] = gimp_render_blend_dark_check[(a << 8) | b];
-#endif
-
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-          odd[0] = gimp_render_blend_light_check[(a << 8) | b];
-          odd[1] = gimp_render_blend_light_check[(a << 8) | g];
-          odd[2] = gimp_render_blend_light_check[(a << 8) | r];
-#else
-          odd[1] = gimp_render_blend_light_check[(a << 8) | r];
-          odd[2] = gimp_render_blend_light_check[(a << 8) | g];
-          odd[3] = gimp_render_blend_light_check[(a << 8) | b];
-#endif
+          GIMP_CAIRO_RGB24_SET_PIXEL (even,
+                                      gimp_render_blend_dark_check[(a << 8) | r],
+                                      gimp_render_blend_dark_check[(a << 8) | g],
+                                      gimp_render_blend_dark_check[(a << 8) | b]);
+          GIMP_CAIRO_RGB24_SET_PIXEL (odd,
+                                      gimp_render_blend_light_check[(a << 8) | r],
+                                      gimp_render_blend_light_check[(a << 8) | g],
+                                      gimp_render_blend_light_check[(a << 8) | b]);
         }
       else
         {
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-          even[0] = gimp_render_blend_light_check[(a << 8) | b];
-          even[1] = gimp_render_blend_light_check[(a << 8) | g];
-          even[2] = gimp_render_blend_light_check[(a << 8) | r];
-#else
-          even[1] = gimp_render_blend_light_check[(a << 8) | r];
-          even[2] = gimp_render_blend_light_check[(a << 8) | g];
-          even[3] = gimp_render_blend_light_check[(a << 8) | b];
-#endif
-
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-          odd[0] = gimp_render_blend_dark_check[(a << 8) | b];
-          odd[1] = gimp_render_blend_dark_check[(a << 8) | g];
-          odd[2] = gimp_render_blend_dark_check[(a << 8) | r];
-#else
-          odd[1] = gimp_render_blend_dark_check[(a << 8) | r];
-          odd[2] = gimp_render_blend_dark_check[(a << 8) | g];
-          odd[3] = gimp_render_blend_dark_check[(a << 8) | b];
-#endif
+          GIMP_CAIRO_RGB24_SET_PIXEL (even,
+                                      gimp_render_blend_light_check[(a << 8) | r],
+                                      gimp_render_blend_light_check[(a << 8) | g],
+                                      gimp_render_blend_light_check[(a << 8) | b]);
+          GIMP_CAIRO_RGB24_SET_PIXEL (odd,
+                                      gimp_render_blend_dark_check[(a << 8) | r],
+                                      gimp_render_blend_dark_check[(a << 8) | g],
+                                      gimp_render_blend_dark_check[(a << 8) | b]);
         }
     }
 
