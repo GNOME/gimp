@@ -1,3 +1,10 @@
+2007-11-05  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c: also don't show the shell
+	highlight when a rectangle is being moved. Achieved through
+	slightly modifying code logic and renaming variables and functions
+	a bit.
+
 2007-11-05  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpgradienteditor.[ch]: use Cairo to draw the controls.

@@ -156,8 +156,10 @@ struct _GimpRectangleToolPrivate
    */
   gboolean                narrow_mode;
 
-  /* True when the rectangle is being rubber banded. */
-  gboolean                rubber_banding;
+  /* True when the rectangle is being adjusted (moved or
+   * rubber-banded).
+   */
+  gboolean                rect_adjusting;
 
   /* For what scale the handle sizes is calculated. We must cache this so that
    * we can differentiate between when the tool is resumed because of zoom level
@@ -217,7 +219,7 @@ static GtkAnchorType gimp_rectangle_tool_get_anchor           (GimpRectangleTool
 
 static void          gimp_rectangle_tool_update_highlight     (GimpRectangleTool        *rect_tool);
 
-static gboolean      gimp_rectangle_tool_rubber_banding_func  (GimpRectangleTool        *rect_tool);
+static gboolean      gimp_rectangle_tool_rect_adjusting_func  (GimpRectangleTool        *rect_tool);
 
 static void          gimp_rectangle_tool_update_handle_sizes  (GimpRectangleTool        *rect_tool);
 
@@ -908,7 +910,7 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
     }
 
   /* Is the rectangle being rubber-banded? */
-  private->rubber_banding = gimp_rectangle_tool_rubber_banding_func (rect_tool);
+  private->rect_adjusting = gimp_rectangle_tool_rect_adjusting_func (rect_tool);
 
   gimp_rectangle_tool_update_highlight (rect_tool);
 
@@ -989,7 +991,7 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
   gimp_tool_control_set_snap_offsets (tool->control, 0, 0, 0, 0);
 
   /* On button release, we are not rubber-banding the rectangle any longer. */
-  private->rubber_banding = FALSE;
+  private->rect_adjusting = FALSE;
 
   gimp_rectangle_tool_update_highlight (rect_tool);
   gimp_rectangle_tool_update_handle_sizes (rect_tool);
@@ -1046,11 +1048,10 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
                                          current_x,
                                          current_y);
 
-  /* Update the highlight, but only if it is not being
-   * rubber-banded. If it is being rubber-banded, the highlight is not
-   * shown anyway.
+  /* Update the highlight, but only if it is not being adjusted. If it
+   * is not being adjusted, the highlight is not shown anyway.
    */
-  if (! gimp_rectangle_tool_rubber_banding_func (rect_tool))
+  if (gimp_rectangle_tool_rect_adjusting_func (rect_tool))
     gimp_rectangle_tool_update_highlight (rect_tool);
 
   if (private->function != RECT_MOVING &&
@@ -2708,7 +2709,7 @@ gimp_rectangle_tool_update_highlight (GimpRectangleTool *rect_tool)
   g_object_get (options, "highlight", &highlight, NULL);
 
   /* Don't show the highlight when the mouse is down. */
-  if (! highlight || private->rubber_banding)
+  if (! highlight || private->rect_adjusting)
     {
       gimp_display_shell_set_highlight (shell, NULL);
     }
@@ -2729,22 +2730,23 @@ gimp_rectangle_tool_update_highlight (GimpRectangleTool *rect_tool)
 }
 
 /**
- * gimp_rectangle_tool_rubber_banding_func:
+ * gimp_rectangle_tool_rect_adjusting_func:
  *
- * Returns: %TRUE if the current function is a rubber-banding
+ * Returns: %TRUE if the current function is a rectangle adjusting
  *          function.
  */
 static gboolean
-gimp_rectangle_tool_rubber_banding_func (GimpRectangleTool *rect_tool)
+gimp_rectangle_tool_rect_adjusting_func (GimpRectangleTool *rect_tool)
 {
   GimpRectangleToolPrivate *private;
-  gboolean                  rubber_banding_func;
+  gboolean                  rect_adjusting_func;
 
-  rubber_banding_func = FALSE;
+  rect_adjusting_func = FALSE;
   private             = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
 
   switch (private->function)
     {
+      case RECT_MOVING:
       case RECT_CREATING:
       case RECT_RESIZING_LEFT:
       case RECT_RESIZING_RIGHT:
@@ -2754,15 +2756,17 @@ gimp_rectangle_tool_rubber_banding_func (GimpRectangleTool *rect_tool)
       case RECT_RESIZING_UPPER_RIGHT:
       case RECT_RESIZING_LOWER_LEFT:
       case RECT_RESIZING_LOWER_RIGHT:
-        rubber_banding_func = TRUE;
+        rect_adjusting_func = TRUE;
         break;
 
+      case RECT_INACTIVE:
+      case RECT_DEAD:
       default:
-        rubber_banding_func = FALSE;
+        rect_adjusting_func = FALSE;
         break;
     }
 
-  return rubber_banding_func;
+  return rect_adjusting_func;
 }
 
 /**
