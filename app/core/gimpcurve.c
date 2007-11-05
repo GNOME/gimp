@@ -76,9 +76,12 @@ static TempBuf  * gimp_curve_get_new_preview  (GimpViewable  *viewable,
                                                gint           height);
 static gchar    * gimp_curve_get_description  (GimpViewable  *viewable,
                                                gchar        **tooltip);
+
+static void       gimp_curve_dirty            (GimpData      *data);
 static gchar    * gimp_curve_get_extension    (GimpData      *data);
 static GimpData * gimp_curve_duplicate        (GimpData      *data);
 
+static void       gimp_curve_calculate        (GimpCurve     *curve);
 static void       gimp_curve_plot             (GimpCurve     *curve,
                                                gint           p1,
                                                gint           p2,
@@ -111,6 +114,7 @@ gimp_curve_class_init (GimpCurveClass *klass)
   viewable_class->get_new_preview  = gimp_curve_get_new_preview;
   viewable_class->get_description  = gimp_curve_get_description;
 
+  data_class->dirty                = gimp_curve_dirty;
   data_class->save                 = gimp_curve_save;
   data_class->get_extension        = gimp_curve_get_extension;
   data_class->duplicate            = gimp_curve_duplicate;
@@ -256,6 +260,13 @@ gimp_curve_get_description (GimpViewable  *viewable,
   return g_strdup_printf ("%s", GIMP_OBJECT (curve)->name);
 }
 
+static void
+gimp_curve_dirty (GimpData *data)
+{
+  gimp_curve_calculate (GIMP_CURVE (data));
+
+  GIMP_DATA_CLASS (parent_class)->dirty (data);
+}
 
 static gchar *
 gimp_curve_get_extension (GimpData *data)
@@ -342,6 +353,8 @@ gimp_curve_reset (GimpCurve *curve,
     g_object_notify (G_OBJECT (curve), "curve-type");
 
   g_object_thaw_notify (G_OBJECT (curve));
+
+  gimp_data_dirty (GIMP_DATA (curve));
 }
 
 void
@@ -371,9 +384,9 @@ gimp_curve_set_curve_type (GimpCurve     *curve,
               curve->points[i * 2][0] = index;
               curve->points[i * 2][1] = curve->curve[index];
             }
-        }
 
-      gimp_curve_calculate (curve);
+          g_object_notify (G_OBJECT (curve), "points");
+        }
 
       g_object_notify (G_OBJECT (curve), "curve-type");
 
@@ -437,9 +450,9 @@ gimp_curve_set_point (GimpCurve *curve,
 
   g_object_notify (G_OBJECT (curve), "points");
 
-  gimp_curve_calculate (curve);
-
   g_object_thaw_notify (G_OBJECT (curve));
+
+  gimp_data_dirty (GIMP_DATA (curve));
 }
 
 void
@@ -458,9 +471,9 @@ gimp_curve_move_point (GimpCurve *curve,
 
   g_object_notify (G_OBJECT (curve), "points");
 
-  gimp_curve_calculate (curve);
-
   g_object_thaw_notify (G_OBJECT (curve));
+
+  gimp_data_dirty (GIMP_DATA (curve));
 }
 
 void
@@ -480,6 +493,8 @@ gimp_curve_set_curve (GimpCurve *curve,
   g_object_notify (G_OBJECT (curve), "curve");
 
   g_object_thaw_notify (G_OBJECT (curve));
+
+  gimp_data_dirty (GIMP_DATA (curve));
 }
 
 void
@@ -495,13 +510,16 @@ gimp_curve_get_uchar (GimpCurve *curve,
 
 /*  private functions  */
 
-void
+static void
 gimp_curve_calculate (GimpCurve *curve)
 {
   gint i;
   gint points[GIMP_CURVE_NUM_POINTS];
   gint num_pts;
   gint p1, p2, p3, p4;
+
+  if (GIMP_DATA (curve)->freeze_count > 0)
+    return;
 
   switch (curve->curve_type)
     {

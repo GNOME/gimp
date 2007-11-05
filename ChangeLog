@@ -1,3 +1,17 @@
+2007-11-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcurve.[ch]: don't recalculate the curve if the data
+	object is frozen. Recalculate on thaw instead. Made
+	gimp_curve_calculate() private and emit some GimpData::dirty
+	signals where appropriate.
+
+	* app/tools/gimpcurvestool.c
+	* app/widgets/gimpcurveview.c
+	* tools/pdbgen/pdb/color.pdb: changed accodingly (connect to "dirty"
+	instead of "notify" and added some freeze/thaw where approproate).
+
+	* app/pdb/color_cmds.c: regenerated.
+
 2007-11-05  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagemap.c (gimp_image_map_clear): update the

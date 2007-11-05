@@ -96,7 +96,6 @@ static gboolean gimp_curves_tool_settings_save  (GimpImageMapTool     *image_map
                                                  gpointer              fp);
 
 static void     curves_curve_callback           (GimpCurve            *curve,
-                                                 const GParamSpec     *pspec,
                                                  GimpCurvesTool       *tool);
 static void     curves_channel_callback         (GtkWidget            *widget,
                                                  GimpCurvesTool       *tool);
@@ -177,7 +176,7 @@ gimp_curves_tool_init (GimpCurvesTool *tool)
     {
       tool->curve[i] = GIMP_CURVE (gimp_curve_new ("curves tool"));
 
-      g_signal_connect_object (tool->curve[i], "notify::curve",
+      g_signal_connect_object (tool->curve[i], "dirty",
                                G_CALLBACK (curves_curve_callback),
                                tool, 0);
     }
@@ -652,15 +651,14 @@ gimp_curves_tool_settings_load (GimpImageMapTool  *image_map_tool,
     {
       GimpCurve *curve = tool->curve[i];
 
-      curve->curve_type = GIMP_CURVE_SMOOTH;
+      gimp_data_freeze (GIMP_DATA (curve));
+
+      gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
 
       for (j = 0; j < GIMP_CURVE_NUM_POINTS; j++)
-        {
-          curve->points[j][0] = index[i][j];
-          curve->points[j][1] = value[i][j];
-        }
+        gimp_curve_set_point (curve, j, index[i][j], value[i][j]);
 
-      gimp_curve_calculate (curve);
+      gimp_data_thaw (GIMP_DATA (curve));
     }
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (tool->curve_type),
@@ -710,9 +708,8 @@ gimp_curves_tool_settings_save (GimpImageMapTool *image_map_tool,
 }
 
 static void
-curves_curve_callback (GimpCurve        *curve,
-                       const GParamSpec *pspec,
-                       GimpCurvesTool   *tool)
+curves_curve_callback (GimpCurve      *curve,
+                       GimpCurvesTool *tool)
 {
   if (curve != tool->curve[tool->channel])
     return;
@@ -779,7 +776,7 @@ curves_channel_callback (GtkWidget      *widget,
       gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (tool->curve_type),
                                        tool->curve[tool->channel]->curve_type);
 
-      curves_curve_callback (tool->curve[tool->channel], NULL, tool);
+      curves_curve_callback (tool->curve[tool->channel], tool);
     }
 }
 

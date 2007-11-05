@@ -44,7 +44,6 @@ struct _GimpCurve
 
   gint           points[GIMP_CURVE_NUM_POINTS][2];
   guchar         curve[256];
-
 };
 
 struct _GimpCurveClass
@@ -81,9 +80,6 @@ void            gimp_curve_set_curve         (GimpCurve     *curve,
 
 void            gimp_curve_get_uchar         (GimpCurve     *curve,
                                               guchar        *dest_array);
-
-/* FIXME: make private */
-void            gimp_curve_calculate         (GimpCurve     *curve);
 
 
 #endif /* __GIMP_CURVE_H__ */

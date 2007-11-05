@@ -457,17 +457,17 @@ HELP
 
           curve = GIMP_CURVE (gimp_curve_new ("curves_spline"));
 
+          gimp_data_freeze (GIMP_DATA (curve));
+
           /*  unset the last point  */
-          curve->points[GIMP_CURVE_NUM_POINTS - 1][0] = -1;
-          curve->points[GIMP_CURVE_NUM_POINTS - 1][1] = -1;
+          gimp_curve_set_point (curve, GIMP_CURVE_NUM_POINTS - 1, -1, -1);
 
           for (j = 0; j < num_points / 2; j++)
-            {
-              curve->points[j][0] = control_pts[j * 2];
-              curve->points[j][1] = control_pts[j * 2 + 1];
-            }
+            gimp_curve_set_point (curve, j,
+                                  control_pts[j * 2],
+                                  control_pts[j * 2 + 1]);
 
-          gimp_curve_calculate (curve);
+          gimp_data_thaw (GIMP_DATA (curve));
 
           gimp_curve_get_uchar (curve, c.curve[channel]);
 

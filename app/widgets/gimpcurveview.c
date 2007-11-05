@@ -428,6 +428,8 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
         {
           new_cursor = GDK_TCROSS;
 
+          gimp_data_freeze (GIMP_DATA (curve));
+
           gimp_curve_set_point (curve, view->selected, -1, -1);
 
           if (x > view->leftmost && x < view->rightmost)
@@ -438,6 +440,8 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
 
               gimp_curve_set_point (curve, view->selected, x, 255 - y);
             }
+
+          gimp_data_thaw (GIMP_DATA (curve));
         }
       break;
 
@@ -463,9 +467,13 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
 
           if (x2 != x1)
             {
+              gimp_data_freeze (GIMP_DATA (curve));
+
               for (i = x1; i <= x2; i++)
                 gimp_curve_set_curve (curve, i,
                                       255 - (y1 + ((y2 - y1) * (i - x1)) / (x2 - x1)));
+
+              gimp_data_thaw (GIMP_DATA (curve));
             }
           else
             {
@@ -587,16 +595,10 @@ gimp_curve_view_new (void)
 }
 
 static void
-gimp_curve_view_curve_notify (GimpCurve        *curve,
-                              const GParamSpec *pspec,
-                              GimpCurveView    *view)
+gimp_curve_view_curve_dirty (GimpCurve     *curve,
+                             GimpCurveView *view)
 {
-  if (! strcmp (pspec->name, "curve-type") ||
-      ! strcmp (pspec->name, "points")     ||
-      ! strcmp (pspec->name, "curve"))
-    {
-      gtk_widget_queue_draw (GTK_WIDGET (view));
-    }
+  gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
 void
@@ -612,7 +614,7 @@ gimp_curve_view_set_curve (GimpCurveView *view,
   if (view->curve)
     {
       g_signal_handlers_disconnect_by_func (view->curve,
-                                            gimp_curve_view_curve_notify,
+                                            gimp_curve_view_curve_dirty,
                                             view);
       g_object_unref (view->curve);
     }
@@ -622,8 +624,8 @@ gimp_curve_view_set_curve (GimpCurveView *view,
   if (view->curve)
     {
       g_object_ref (view->curve);
-      g_signal_connect (view->curve, "notify",
-                        G_CALLBACK (gimp_curve_view_curve_notify),
+      g_signal_connect (view->curve, "dirty",
+                        G_CALLBACK (gimp_curve_view_curve_dirty),
                         view);
     }
 }
