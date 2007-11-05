@@ -38,7 +38,14 @@ struct _GimpCurveView
   GimpHistogramView  parent_instance;
 
   GimpCurve         *curve;
+
   gint               selected;
+  gint               last;
+  gint               leftmost;
+  gint               rightmost;
+  gboolean           grabbed;
+
+  GdkCursorType      cursor_type;
 
   gint               xpos;
   PangoLayout       *xpos_layout;
@@ -67,7 +74,7 @@ void        gimp_curve_view_set_selected (GimpCurveView *view,
                                           gint           selected);
 void        gimp_curve_view_set_xpos     (GimpCurveView *view,
                                           gint           x);
-void        gimp_curve_view_set_cusor    (GimpCurveView *view,
+void        gimp_curve_view_set_cursor   (GimpCurveView *view,
                                           gint           x,
                                           gint           y);
 

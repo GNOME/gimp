@@ -45,12 +45,7 @@ struct _GimpCurvesTool
   gboolean              alpha;
   GimpHistogramChannel  channel;
 
-  gint                  selected;
-  gint                  last;
-  gint                  leftmost;
-  gint                  rightmost;
   gint                  col_value[5];
-  gboolean              grabbed;
 
   GimpHistogram        *hist;
 

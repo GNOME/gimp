@@ -21,6 +21,7 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpmath/gimpmath.h"
 
@@ -32,35 +33,21 @@
 #include "gimpcurveview.h"
 
 
-enum
-{
-  PROP_0,
-  PROP_CHANNEL,
-  PROP_SCALE,
-  PROP_BORDER_WIDTH,
-  PROP_SUBDIVISIONS
-};
+static void       gimp_curve_view_finalize       (GObject          *object);
+static void       gimp_curve_view_dispose        (GObject          *object);
 
-
-static void       gimp_curve_view_finalize       (GObject        *object);
-static void       gimp_curve_view_dispose        (GObject        *object);
-static void       gimp_curve_view_set_property   (GObject        *object,
-                                                  guint           property_id,
-                                                  const GValue   *value,
-                                                  GParamSpec     *pspec);
-static void       gimp_curve_view_get_property   (GObject        *object,
-                                                  guint           property_id,
-                                                  GValue         *value,
-                                                  GParamSpec     *pspec);
-
-static gboolean   gimp_curve_view_expose         (GtkWidget      *widget,
-                                                  GdkEventExpose *event);
-static gboolean   gimp_curve_view_button_press   (GtkWidget      *widget,
-                                                  GdkEventButton *bevent);
-static gboolean   gimp_curve_view_button_release (GtkWidget      *widget,
-                                                  GdkEventButton *bevent);
-static gboolean   gimp_curve_view_motion_notify  (GtkWidget      *widget,
-                                                  GdkEventMotion *bevent);
+static gboolean   gimp_curve_view_expose         (GtkWidget        *widget,
+                                                  GdkEventExpose   *event);
+static gboolean   gimp_curve_view_button_press   (GtkWidget        *widget,
+                                                  GdkEventButton   *bevent);
+static gboolean   gimp_curve_view_button_release (GtkWidget        *widget,
+                                                  GdkEventButton   *bevent);
+static gboolean   gimp_curve_view_motion_notify  (GtkWidget        *widget,
+                                                  GdkEventMotion   *bevent);
+static gboolean   gimp_curve_view_leave_notify   (GtkWidget        *widget,
+                                                  GdkEventCrossing *cevent);
+static gboolean   gimp_curve_view_key_press      (GtkWidget        *widget,
+                                                  GdkEventKey      *kevent);
 
 
 G_DEFINE_TYPE (GimpCurveView, gimp_curve_view,
@@ -76,58 +63,29 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
   GtkWidgetClass         *widget_class = GTK_WIDGET_CLASS (klass);
   GimpHistogramViewClass *hist_class   = GIMP_HISTOGRAM_VIEW_CLASS (klass);
 
-  object_class->finalize     = gimp_curve_view_finalize;
-  object_class->dispose      = gimp_curve_view_dispose;
-  object_class->get_property = gimp_curve_view_get_property;
-  object_class->set_property = gimp_curve_view_set_property;
+  object_class->finalize             = gimp_curve_view_finalize;
+  object_class->dispose              = gimp_curve_view_dispose;
 
   widget_class->expose_event         = gimp_curve_view_expose;
   widget_class->button_press_event   = gimp_curve_view_button_press;
   widget_class->button_release_event = gimp_curve_view_button_release;
   widget_class->motion_notify_event  = gimp_curve_view_motion_notify;
+  widget_class->leave_notify_event   = gimp_curve_view_leave_notify;
+  widget_class->key_press_event      = gimp_curve_view_key_press;
 
-  hist_class->light_histogram = TRUE;
-
-#if 0
-  g_object_class_install_property (object_class, PROP_CHANNEL,
-                                   g_param_spec_enum ("curve-channel",
-                                                      NULL, NULL,
-                                                      GIMP_TYPE_CURVE_CHANNEL,
-                                                      GIMP_CURVE_VALUE,
-                                                      GIMP_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_SCALE,
-                                   g_param_spec_enum ("curve-scale",
-                                                      NULL, NULL,
-                                                      GIMP_TYPE_CURVE_SCALE,
-                                                      GIMP_CURVE_SCALE_LINEAR,
-                                                      GIMP_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_BORDER_WIDTH,
-                                   g_param_spec_int ("border-width", NULL, NULL,
-                                                     0, 32, 1,
-                                                     GIMP_PARAM_READWRITE |
-                                                     G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_SUBDIVISIONS,
-                                   g_param_spec_int ("subdivisions",
-                                                     NULL, NULL,
-                                                     1, 64, 5,
-                                                     GIMP_PARAM_READWRITE |
-                                                     G_PARAM_CONSTRUCT));
-#endif
+  hist_class->light_histogram        = TRUE;
 }
 
 static void
 gimp_curve_view_init (GimpCurveView *view)
 {
-  view->curve     = NULL;
-  view->selected  = 0;
-  view->xpos      = -1;
-  view->cursor_x  = -1;
-  view->cursor_y  = -1;
+  view->curve       = NULL;
+  view->selected    = 0;
+  view->last        = 0;
+  view->cursor_type = -1;
+  view->xpos        = -1;
+  view->cursor_x    = -1;
+  view->cursor_y    = -1;
 
   GTK_WIDGET_SET_FLAGS (view, GTK_CAN_FOCUS);
 
@@ -167,38 +125,6 @@ gimp_curve_view_dispose (GObject *object)
   gimp_curve_view_set_curve (view, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
-static void
-gimp_curve_view_set_property (GObject      *object,
-                              guint         property_id,
-                              const GValue *value,
-                              GParamSpec   *pspec)
-{
-  GimpCurveView *view = GIMP_CURVE_VIEW (object);
-
-  switch (property_id)
-    {
-   default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_curve_view_get_property (GObject      *object,
-                              guint         property_id,
-                              GValue       *value,
-                              GParamSpec   *pspec)
-{
-  GimpCurveView *view = GIMP_CURVE_VIEW (object);
-
-  switch (property_id)
-    {
-   default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
 }
 
 static gboolean
@@ -358,13 +284,90 @@ gimp_curve_view_expose (GtkWidget      *widget,
   return FALSE;
 }
 
+static void
+set_cursor (GimpCurveView *view,
+            GdkCursorType  new_cursor)
+{
+  if (new_cursor != view->cursor_type)
+    {
+      GdkDisplay *display = gtk_widget_get_display (GTK_WIDGET (view));
+      GdkCursor  *cursor  = gdk_cursor_new_for_display (display, new_cursor);
+
+      gdk_window_set_cursor (GTK_WIDGET (view)->window, cursor);
+      gdk_cursor_unref (cursor);
+
+      view->cursor_type = new_cursor;
+    }
+}
+
 static gboolean
 gimp_curve_view_button_press (GtkWidget      *widget,
                               GdkEventButton *bevent)
 {
-  GimpCurveView *view = GIMP_CURVE_VIEW (widget);
+  GimpCurveView *view  = GIMP_CURVE_VIEW (widget);
+  GimpCurve     *curve = view->curve;
+  gint           border;
+  gint           width, height;
+  gint           x, y;
+  gint           closest_point;
+  gint           i;
 
-  return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
+  if (! curve || bevent->button != 1)
+    return TRUE;
+
+  border = GIMP_HISTOGRAM_VIEW (view)->border_width;
+  width  = widget->allocation.width  - 2 * border;
+  height = widget->allocation.height - 2 * border;
+
+  x = ROUND (((gdouble) (bevent->x - border) / (gdouble) width)  * 255.0);
+  y = ROUND (((gdouble) (bevent->y - border) / (gdouble) height) * 255.0);
+
+  x = CLAMP0255 (x);
+  y = CLAMP0255 (y);
+
+  closest_point = gimp_curve_get_closest_point (curve, x);
+
+  view->grabbed = TRUE;
+
+  set_cursor (view, GDK_TCROSS);
+
+  switch (curve->curve_type)
+    {
+    case GIMP_CURVE_SMOOTH:
+      /*  determine the leftmost and rightmost points  */
+      view->leftmost = -1;
+      for (i = closest_point - 1; i >= 0; i--)
+        if (curve->points[i][0] != -1)
+          {
+            view->leftmost = curve->points[i][0];
+            break;
+          }
+
+      view->rightmost = 256;
+      for (i = closest_point + 1; i < GIMP_CURVE_NUM_POINTS; i++)
+        if (curve->points[i][0] != -1)
+          {
+            view->rightmost = curve->points[i][0];
+            break;
+          }
+
+      gimp_curve_view_set_selected (view, closest_point);
+
+      gimp_curve_set_point (curve, view->selected, x, 255 - y);
+      break;
+
+    case GIMP_CURVE_FREE:
+      gimp_curve_view_set_selected (view, x);
+      view->last = y;
+
+      gimp_curve_set_curve (curve, x, 255 - y);
+      break;
+    }
+
+  if (! GTK_WIDGET_HAS_FOCUS (widget))
+    gtk_widget_grab_focus (widget);
+
+  return TRUE;
 }
 
 static gboolean
@@ -373,16 +376,201 @@ gimp_curve_view_button_release (GtkWidget      *widget,
 {
   GimpCurveView *view = GIMP_CURVE_VIEW (widget);
 
-  return GTK_WIDGET_CLASS (parent_class)->button_release_event (widget, bevent);
+  if (bevent->button != 1)
+    return TRUE;
+
+  view->grabbed = FALSE;
+
+  set_cursor (view, GDK_FLEUR);
+
+  return TRUE;
 }
 
 static gboolean
 gimp_curve_view_motion_notify (GtkWidget      *widget,
                                GdkEventMotion *mevent)
 {
+  GimpCurveView  *view       = GIMP_CURVE_VIEW (widget);
+  GimpCurve      *curve      = view->curve;
+  GimpCursorType  new_cursor = GDK_X_CURSOR;
+  gint            border;
+  gint            width, height;
+  gint            x, y;
+  gint            closest_point;
+  gint            i;
+
+  if (! curve)
+    return TRUE;
+
+  border = GIMP_HISTOGRAM_VIEW (view)->border_width;
+  width  = widget->allocation.width  - 2 * border;
+  height = widget->allocation.height - 2 * border;
+
+  x = ROUND (((gdouble) (mevent->x - border) / (gdouble) width)  * 255.0);
+  y = ROUND (((gdouble) (mevent->y - border) / (gdouble) height) * 255.0);
+
+  x = CLAMP0255 (x);
+  y = CLAMP0255 (y);
+
+  closest_point = gimp_curve_get_closest_point (curve, x);
+
+  switch (curve->curve_type)
+    {
+    case GIMP_CURVE_SMOOTH:
+      if (! view->grabbed) /*  If no point is grabbed...  */
+        {
+          if (curve->points[closest_point][0] != -1)
+            new_cursor = GDK_FLEUR;
+          else
+            new_cursor = GDK_TCROSS;
+        }
+      else /*  Else, drag the grabbed point  */
+        {
+          new_cursor = GDK_TCROSS;
+
+          gimp_curve_set_point (curve, view->selected, -1, -1);
+
+          if (x > view->leftmost && x < view->rightmost)
+            {
+              closest_point = (x + 8) / 16;
+              if (curve->points[closest_point][0] == -1)
+                gimp_curve_view_set_selected (view, closest_point);
+
+              gimp_curve_set_point (curve, view->selected, x, 255 - y);
+            }
+        }
+      break;
+
+    case GIMP_CURVE_FREE:
+      if (view->grabbed)
+        {
+          gint x1, x2, y1, y2;
+
+          if (view->selected > x)
+            {
+              x1 = x;
+              x2 = view->selected;
+              y1 = y;
+              y2 = view->last;
+            }
+          else
+            {
+              x1 = view->selected;
+              x2 = x;
+              y1 = view->last;
+              y2 = y;
+            }
+
+          if (x2 != x1)
+            {
+              for (i = x1; i <= x2; i++)
+                gimp_curve_set_curve (curve, i,
+                                      255 - (y1 + ((y2 - y1) * (i - x1)) / (x2 - x1)));
+            }
+          else
+            {
+              gimp_curve_set_curve (curve, x, 255 - y);
+            }
+
+          gimp_curve_view_set_selected (view, x);
+          view->last = y;
+        }
+
+      if (mevent->state & GDK_BUTTON1_MASK)
+        new_cursor = GDK_TCROSS;
+      else
+        new_cursor = GDK_PENCIL;
+
+      break;
+    }
+
+  set_cursor (view, new_cursor);
+
+  gimp_curve_view_set_cursor (view, x, y);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_curve_view_leave_notify (GtkWidget        *widget,
+                              GdkEventCrossing *cevent)
+{
   GimpCurveView *view = GIMP_CURVE_VIEW (widget);
 
-  return GTK_WIDGET_CLASS (parent_class)->motion_notify_event (widget, mevent);
+  gimp_curve_view_set_cursor (view, -1, -1);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_curve_view_key_press (GtkWidget   *widget,
+                           GdkEventKey *kevent)
+{
+  GimpCurveView *view   = GIMP_CURVE_VIEW (widget);
+  GimpCurve     *curve  = view->curve;
+  gint           i      = view->selected;
+  gint           y      = curve->points[i][1];
+  gboolean       retval = FALSE;
+
+  if (view->grabbed || ! curve || curve->curve_type == GIMP_CURVE_FREE)
+    return FALSE;
+
+  switch (kevent->keyval)
+    {
+    case GDK_Left:
+      for (i = i - 1; i >= 0 && ! retval; i--)
+        {
+          if (curve->points[i][0] != -1)
+            {
+              gimp_curve_view_set_selected (view, i);
+
+              retval = TRUE;
+            }
+        }
+      break;
+
+    case GDK_Right:
+      for (i = i + 1; i < GIMP_CURVE_NUM_POINTS && ! retval; i++)
+        {
+          if (curve->points[i][0] != -1)
+            {
+              gimp_curve_view_set_selected (view, i);
+
+              retval = TRUE;
+            }
+        }
+      break;
+
+    case GDK_Up:
+      if (y < 255)
+        {
+          y = y + (kevent->state & GDK_SHIFT_MASK ? 16 : 1);
+
+          gimp_curve_move_point (curve, i, CLAMP0255 (y));
+
+          retval = TRUE;
+        }
+      break;
+
+    case GDK_Down:
+      if (y > 0)
+        {
+          y = y - (kevent->state & GDK_SHIFT_MASK ? 16 : 1);
+
+          gimp_curve_move_point (curve, i, CLAMP0255 (y));
+
+          retval = TRUE;
+        }
+      break;
+
+    default:
+      break;
+    }
+
+  if (retval)
+    set_cursor (view, GDK_TCROSS);
+
+  return retval;
 }
 
 GtkWidget *
@@ -471,9 +659,9 @@ gimp_curve_view_set_xpos (GimpCurveView *view,
 }
 
 void
-gimp_curve_view_set_cusor (GimpCurveView *view,
-                           gint           x,
-                           gint           y)
+gimp_curve_view_set_cursor (GimpCurveView *view,
+                            gint           x,
+                            gint           y)
 {
   g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
 
