@@ -1,3 +1,9 @@
+2007-11-05  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagemap.c (gimp_image_map_clear): update the
+	drawable, not the image. This change was missing in the fix for
+	bug #490182. Fixes bug #493639.
+
 2007-11-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcurveview.[ch]: added event handling and

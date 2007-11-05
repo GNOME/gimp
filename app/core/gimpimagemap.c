@@ -456,20 +456,9 @@ gimp_image_map_clear (GimpImageMap *image_map)
         }
       else
         {
-          GimpImage *image;
-          gint       off_x, off_y;
-
           copy_region (&srcPR, &destPR);
 
-          image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
-
-          gimp_item_offsets (GIMP_ITEM (image_map->drawable), &off_x, &off_y);
-
-          /*  Update the image -- It is important to call gimp_image_update()
-           *  instead of gimp_drawable_update() because we don't want the
-           *  drawable preview to be constantly invalidated
-           */
-          gimp_image_update (image, x + off_x, y + off_y, width, height);
+          gimp_drawable_update (image_map->drawable, x, y, width, height);
         }
 
       /*  Free the undo_tiles tile manager  */
