@@ -1,5 +1,14 @@
 2007-11-05  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/image.pdb: create a libgimp C wrapper for
+	gimp-image-get-vectors-by-tattoo; this function was accidentally
+	forgotten in the 2.4 libgimp API.
+
+	* app/pdb/image_cmds.c
+	* libgimp/gimpimage_pdb.[ch]: regenerated.
+
+2007-11-05  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcairo-utils.h: introduced macros to set a single
 	pixel in a Cairo surface without having to worry about endianness.
 

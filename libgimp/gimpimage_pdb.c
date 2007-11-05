@@ -2688,3 +2688,39 @@ gimp_image_get_channel_by_tattoo (gint32 image_ID,
 
   return channel_ID;
 }
+
+/**
+ * gimp_image_get_vectors_by_tattoo:
+ * @image_ID: The image.
+ * @tattoo: The tattoo of the vectors to find.
+ *
+ * Find a vectors with a given tattoo in an image.
+ *
+ * This procedure returns the vectors with the given tattoo in the
+ * specified image.
+ *
+ * Returns: The vectors with the specified tattoo.
+ *
+ * Since: GIMP 2.6
+ */
+gint32
+gimp_image_get_vectors_by_tattoo (gint32 image_ID,
+                                  gint   tattoo)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 vectors_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-image-get-vectors-by-tattoo",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, tattoo,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    vectors_ID = return_vals[1].data.d_vectors;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return vectors_ID;
+}

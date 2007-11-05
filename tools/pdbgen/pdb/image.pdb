@@ -2434,7 +2434,7 @@ sub image_get_vectors_by_tattoo {
 This procedure returns the vectors with the given tattoo in the specified image.
 HELP
 
-    &jay_pdb_misc('1998');
+    &simon_pdb_misc('2005', '2.6');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -2597,7 +2597,7 @@ CODE
             image_get_channel_by_tattoo
             image_get_vectors_by_tattoo);
 
-%exports = (app => [@procs], lib => [@procs[0..45,48..74]]);
+%exports = (app => [@procs], lib => [@procs[0..45,48..75]]);
 
 $desc = 'Image';
 

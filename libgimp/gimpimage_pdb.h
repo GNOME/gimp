@@ -181,6 +181,8 @@ gint32                   gimp_image_get_layer_by_tattoo      (gint32            
                                                               gint                  tattoo);
 gint32                   gimp_image_get_channel_by_tattoo    (gint32                image_ID,
                                                               gint                  tattoo);
+gint32                   gimp_image_get_vectors_by_tattoo    (gint32                image_ID,
+                                                              gint                  tattoo);
 
 
 G_END_DECLS

@@ -4640,9 +4640,9 @@ register_image_procs (GimpPDB *pdb)
                                      "gimp-image-get-vectors-by-tattoo",
                                      "Find a vectors with a given tattoo in an image.",
                                      "This procedure returns the vectors with the given tattoo in the specified image.",
-                                     "Jay Cox",
-                                     "Jay Cox",
-                                     "1998",
+                                     "Simon Budig",
+                                     "Simon Budig",
+                                     "2005",
                                      NULL);
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
