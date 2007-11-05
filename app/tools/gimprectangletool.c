@@ -1021,10 +1021,12 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
   options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
-  /*  This is the only case when the motion events should be ignored --
-   *  we're just waiting for the button release event to execute.
+  /* Motion events should be ignored when we're just waiting for the
+   * button release event to execute or if the user has grabbed a dead
+   * area of the rectangle.
    */
-  if (private->function == RECT_EXECUTING)
+  if (private->function == RECT_EXECUTING ||
+      private->function == RECT_DEAD)
     return;
 
   current_x = ROUND (coords->x);

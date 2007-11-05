@@ -1,5 +1,11 @@
 2007-11-05  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_motion): Bail
+	out early if the rectangle function is RECT_DEAD. This prevents
+	flickering.
+
+2007-11-05  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangletool.c: also don't show the shell
 	highlight when a rectangle is being moved. Achieved through
 	slightly modifying code logic and renaming variables and functions
