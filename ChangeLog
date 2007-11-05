@@ -1,5 +1,10 @@
 2007-11-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcurveview.c (gimp_curve_view_expose): port to
+	Cairo.
+
+2007-11-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpcurve.[ch]: don't recalculate the curve if the data
 	object is frozen. Recalculate on thaw instead. Made
 	gimp_curve_calculate() private and emit some GimpData::dirty
