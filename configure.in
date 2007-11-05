@@ -912,7 +912,8 @@ if test "$gdk_target" = x11; then
    PKG_CHECK_MODULES(XFIXES, xfixes,
       AC_DEFINE(HAVE_XFIXES, 1,
                 [Define to 1 to if the XFIXES X extension is available])
-      LIBSCREENSHOT="$LIBSCREENSHOT $XFIXES_LIBS", )
+      LIBSCREENSHOT="$LIBSCREENSHOT $XFIXES_LIBS",
+      AC_MSG_RESULT([no]))
 
 else
    enable_gimp_remote="no (building for $gdk_target)"
