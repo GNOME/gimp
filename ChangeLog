@@ -1,5 +1,9 @@
 2007-11-05  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpgradienteditor.[ch]: use Cairo to draw the controls.
+
+2007-11-05  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: don't bail out if the XFixes extension is not
 	available.
 

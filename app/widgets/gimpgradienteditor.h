@@ -75,7 +75,6 @@ struct _GimpGradientEditor
   gboolean        view_button_down;
 
   /*  Gradient control  */
-  GdkPixmap              *control_pixmap;
   GimpGradientSegment    *control_drag_segment; /* Segment which is being dragged */
   GimpGradientSegment    *control_sel_l;        /* Left segment of selection */
   GimpGradientSegment    *control_sel_r;        /* Right segment of selection */
