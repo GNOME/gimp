@@ -1,3 +1,9 @@
+2007-11-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcurveview.c (gimp_curve_view_expose): translate
+	by 0.5,0.5 instead of adding 0.5 to all coordinates (we always
+	want to draw on pixel centers here). Some cleanup.
+
 2007-11-05  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_motion): Bail

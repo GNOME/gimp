@@ -131,7 +131,8 @@ static gboolean
 gimp_curve_view_expose (GtkWidget      *widget,
                         GdkEventExpose *event)
 {
-  GimpCurveView *view = GIMP_CURVE_VIEW (widget);
+  GimpCurveView *view  = GIMP_CURVE_VIEW (widget);
+  GtkStyle      *style = widget->style;
   cairo_t       *cr;
   gint           border;
   gint           width, height;
@@ -152,39 +153,40 @@ gimp_curve_view_expose (GtkWidget      *widget,
   gdk_cairo_region (cr, event->region);
   cairo_clip (cr);
 
+  cairo_translate (cr, 0.5, 0.5);
   cairo_set_line_width (cr, 1);
 
-  gdk_cairo_set_source_color (cr, &widget->style->dark[GTK_STATE_NORMAL]);
+  gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_NORMAL]);
 
   /*  Draw the grid lines  */
   for (i = 1; i < 4; i++)
     {
       cairo_move_to (cr,
-                     border + 0.5,
-                     border + 0.5 + i * (height / 4));
+                     border,
+                     border + i * (height / 4));
       cairo_line_to (cr,
-                     border + 0.5 + width - 1,
-                     border + 0.5 + i * (height / 4));
+                     border + width - 1,
+                     border + i * (height / 4));
 
       cairo_move_to (cr,
-                     border + 0.5 + i * (width / 4),
-                     border + 0.5);
+                     border + i * (width / 4),
+                     border);
       cairo_line_to (cr,
-                     border + 0.5 + i * (width / 4),
-                     border + 0.5 + height - 1);
+                     border + i * (width / 4),
+                     border + height - 1);
     }
 
   cairo_stroke (cr);
 
   /*  Draw the curve  */
-  gdk_cairo_set_source_color (cr, &widget->style->text[GTK_STATE_NORMAL]);
+  gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
 
   x = 0;
   y = 255 - view->curve->curve[x];
 
   cairo_move_to (cr,
-                 border + 0.5 + (gdouble) width  * x / 256.0,
-                 border + 0.5 + (gdouble) height * y / 256.0);
+                 border + (gdouble) width  * x / 256.0,
+                 border + (gdouble) height * y / 256.0);
 
   for (i = 0; i < 256; i++)
     {
@@ -192,8 +194,8 @@ gimp_curve_view_expose (GtkWidget      *widget,
       y = 255 - view->curve->curve[x];
 
       cairo_line_to (cr,
-                     border + 0.5 + (gdouble) width  * x / 256.0,
-                     border + 0.5 + (gdouble) height * y / 256.0);
+                     border + (gdouble) width  * x / 256.0,
+                     border + (gdouble) height * y / 256.0);
     }
 
   cairo_stroke (cr);
@@ -210,11 +212,11 @@ gimp_curve_view_expose (GtkWidget      *widget,
           y = 255 - view->curve->points[i][1];
 
           cairo_move_to (cr,
-                         border + 0.5 + (gdouble) width  * x / 256.0,
-                         border + 0.5 + (gdouble) height * y / 256.0);
+                         border + (gdouble) width  * x / 256.0,
+                         border + (gdouble) height * y / 256.0);
           cairo_arc (cr,
-                     border + 0.5 + (gdouble) width  * x / 256.0,
-                     border + 0.5 + (gdouble) height * y / 256.0,
+                     border + (gdouble) width  * x / 256.0,
+                     border + (gdouble) height * y / 256.0,
                      border,
                      0, 2 * G_PI);
 
@@ -222,17 +224,17 @@ gimp_curve_view_expose (GtkWidget      *widget,
             {
               cairo_fill (cr);
 
-              gdk_cairo_set_source_color (cr, &widget->style->base[GTK_STATE_NORMAL]);
+              gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
 
               cairo_arc (cr,
-                         border + 0.5 + (gdouble) width  * x / 256.0,
-                         border + 0.5 + (gdouble) height * y / 256.0,
+                         border + (gdouble) width  * x / 256.0,
+                         border + (gdouble) height * y / 256.0,
                          border - 2,
                          0, 2 * G_PI);
 
               cairo_fill (cr);
 
-              gdk_cairo_set_source_color (cr, &widget->style->text[GTK_STATE_NORMAL]);
+              gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
             }
         }
 
@@ -243,17 +245,15 @@ gimp_curve_view_expose (GtkWidget      *widget,
     {
       gchar buf[32];
 
-      gdk_cairo_set_source_color (cr, &widget->style->text[GTK_STATE_NORMAL]);
+      gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
 
       /* draw the color line */
       cairo_move_to (cr,
-                     border + 0.5 +
-                     ROUND ((gdouble) width * view->xpos / 256.0),
-                     border + 0.5);
+                     border + ROUND ((gdouble) width * view->xpos / 256.0),
+                     border);
       cairo_line_to (cr,
-                     border + 0.5 +
-                     ROUND ((gdouble) width * view->xpos / 256.0),
-                     border + 0.5 + height - 1);
+                     border + ROUND ((gdouble) width * view->xpos / 256.0),
+                     border + height - 1);
       cairo_stroke (cr);
 
       /* and xpos indicator */
@@ -266,14 +266,14 @@ gimp_curve_view_expose (GtkWidget      *widget,
 
       pango_layout_get_pixel_size (view->xpos_layout, &x, &y);
 
-      if ((view->xpos + border) < 127)
-        x = border + 4;
+      if (view->xpos < 127)
+        x = border;
       else
-        x = -(x + 2);
+        x = -(x + border);
 
       cairo_move_to (cr,
-                     border + 0.5 + (gdouble) width * view->xpos / 256.0 + x,
-                     border + 0.5 + height - y - 2);
+                     border + (gdouble) width * view->xpos / 256.0 + x,
+                     border + height - border - y);
       pango_cairo_show_layout (cr, view->xpos_layout);
       cairo_fill (cr);
     }
@@ -293,24 +293,24 @@ gimp_curve_view_expose (GtkWidget      *widget,
                                           NULL, &view->cursor_rect);
         }
 
-      x = border * 2 + 2;
-      y = border * 2 + 2;
+      x = border * 2;
+      y = border * 2;
       w = view->cursor_rect.width  + 4;
       h = view->cursor_rect.height + 4;
 
-      gdk_cairo_set_source_color (cr, &widget->style->base[GTK_STATE_NORMAL]);
-      cairo_rectangle (cr, x + 0.5, y + 0.5, w + 1, h + 1);
+      gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
+      cairo_rectangle (cr, x, y, w + 1, h + 1);
       cairo_fill (cr);
 
-      gdk_cairo_set_source_color (cr, &widget->style->text[GTK_STATE_NORMAL]);
-      cairo_rectangle (cr, x + 0.5, y + 0.5, w + 1, h + 1);
+      gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
+      cairo_rectangle (cr, x, y, w + 1, h + 1);
       cairo_stroke (cr);
 
       g_snprintf (buf, sizeof (buf), "x:%3d y:%3d",
                   view->cursor_x, 255 - view->cursor_y);
       pango_layout_set_text (view->cursor_layout, buf, -1);
 
-      cairo_move_to (cr, x + 2 + 0.5, y + 2 + 0.5);
+      cairo_move_to (cr, x + 2, y + 2);
       pango_cairo_show_layout (cr, view->cursor_layout);
       cairo_fill (cr);
     }
