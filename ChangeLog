@@ -1,3 +1,11 @@
+2007-11-05  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/core/gimpimagemap.c (gimp_image_map_clear): update the
+	drawable, not the image. This change was missing in the fix for
+	bug #490182. Fixes bug #493639.
+
 2007-11-01  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
