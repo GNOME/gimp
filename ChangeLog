@@ -1,5 +1,10 @@
 2007-11-05  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: don't bail out if the XFixes extension is not
+	available.
+
+2007-11-05  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/image.pdb: create a libgimp C wrapper for
 	gimp-image-get-vectors-by-tattoo; this function was accidentally
 	forgotten in the 2.4 libgimp API.
