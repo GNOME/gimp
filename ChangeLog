@@ -1,3 +1,12 @@
+2007-11-06  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_update_handle_sizes): don't use any dead
+	areas in narrow-mode, and enter narrow-mode earlier.
+
+	* app/tools/gimpdrawtool.c (gimp_draw_tool_draw_corner): adjusted
+	to always draw side handles in narrow mode without dead areas.
+
 2007-11-06  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: remove check for putenv().

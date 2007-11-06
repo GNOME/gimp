@@ -895,7 +895,7 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
   tw = tx2 - tx1;
   th = ty2 - ty1;
 
-  if (! put_outside && (tw <= width || th <= height) ||
+  if ((! put_outside && (tw <= width || th <= height)) ||
       width <= 2 || height <= 2)
     return;
 
@@ -1169,26 +1169,9 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
       if (put_outside)
         {
           gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx1 + top_and_bottom_handle_x_offset,
+                                      tx1 + top_and_bottom_handle_x_offset + 1,
                                       ty1 - height + 2,
-                                      width - 1, height - 3);
-
-          /* Don't draw the extra inside-lines if the side handle fills
-           * the side completely by itself.
-           */
-          if (top_and_bottom_handle_x_offset > 1)
-            {
-              gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                     tx1 + top_and_bottom_handle_x_offset + 1,
-                                     ty1 - height + 3,
-                                     tx1 + top_and_bottom_handle_x_offset + 1,
-                                     ty1 - 1);
-              gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                     tx1 + top_and_bottom_handle_x_offset + width - 2,
-                                     ty1 - height + 3,
-                                     tx1 + top_and_bottom_handle_x_offset + width - 2,
-                                     ty1 - 1);
-            }
+                                      width - 3, height - 3);
         }
       else
         {
@@ -1213,22 +1196,9 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
       if (put_outside)
         {
           gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx1 + top_and_bottom_handle_x_offset,
+                                      tx1 + top_and_bottom_handle_x_offset + 1,
                                       ty2,
-                                      width - 1, height - 3);
-          if (top_and_bottom_handle_x_offset > 1)
-            {
-              gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                     tx1 + top_and_bottom_handle_x_offset + 1,
-                                     ty2 + 1,
-                                     tx1 + top_and_bottom_handle_x_offset + 1,
-                                     ty2 + height - 3);
-              gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                     tx1 + top_and_bottom_handle_x_offset + width - 2,
-                                     ty2 + 1,
-                                     tx1 + top_and_bottom_handle_x_offset + width - 2,
-                                     ty2 + height - 3);
-            }
+                                      width - 3, height - 3);
         }
       else
         {
@@ -1254,22 +1224,8 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
         {
           gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
                                       tx1 - width + 2,
-                                      ty1 + left_and_right_handle_y_offset,
-                                      width - 3, height - 1);
-
-          if (left_and_right_handle_y_offset > 1)
-            {
-              gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                     tx1 - width + 3,
-                                     ty1 + left_and_right_handle_y_offset + 1,
-                                     tx1 - 1,
-                                     ty1 + left_and_right_handle_y_offset + 1);
-              gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                     tx1 - width + 3,
-                                     ty1 + left_and_right_handle_y_offset + height - 2,
-                                     tx1 - 1,
-                                     ty1 + left_and_right_handle_y_offset + height - 2);
-            }
+                                      ty1 + left_and_right_handle_y_offset + 1,
+                                      width - 3, height - 3);
         }
       else
         {
@@ -1295,22 +1251,8 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
         {
           gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
                                       tx2,
-                                      ty1 + left_and_right_handle_y_offset,
-                                      width - 3, height - 1);
-
-          if (left_and_right_handle_y_offset > 1)
-            {
-              gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                     tx2 + 1,
-                                     ty1 + left_and_right_handle_y_offset + 1,
-                                     tx2 + width - 3,
-                                     ty1 + left_and_right_handle_y_offset + 1);
-              gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                     tx2 + 1,
-                                     ty1 + left_and_right_handle_y_offset + height - 2,
-                                     tx2 + width - 3,
-                                     ty1 + left_and_right_handle_y_offset + height - 2);
-            }
+                                      ty1 + left_and_right_handle_y_offset + 1,
+                                      width - 3, height - 3);
         }
       else
         {

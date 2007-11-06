@@ -59,14 +59,10 @@ enum
 /*  speed of key movement  */
 #define ARROW_VELOCITY   25
 
-/* When visible rectangle width/height goes below this, use
- * narrow-mode.
- */
-#define NARROW_MODE_THRESHOLD   18
-
 #define MAX_HANDLE_SIZE         50
-#define MIN_HANDLE_SIZE         6
+#define MIN_HANDLE_SIZE         15
 #define NARROW_MODE_HANDLE_SIZE 15
+#define NARROW_MODE_THRESHOLD   45
 
 
 #define SQRT5   2.236067977
@@ -1847,29 +1843,13 @@ gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool *rect_tool)
       private->corner_handle_w = NARROW_MODE_HANDLE_SIZE;
       private->corner_handle_h = NARROW_MODE_HANDLE_SIZE;
 
-      if (rectangle_width < NARROW_MODE_THRESHOLD)
-        {
-          private->top_and_bottom_handle_w = rectangle_width - 2;
-        }
-      else
-        {
-          private->top_and_bottom_handle_w = rectangle_width - 2 * NARROW_MODE_HANDLE_SIZE;
-        }
-
-      if (rectangle_height < NARROW_MODE_THRESHOLD)
-        {
-          private->left_and_right_handle_h = rectangle_height - 2;
-        }
-      else
-        {
-          private->left_and_right_handle_h = rectangle_height - 2 * NARROW_MODE_HANDLE_SIZE;
-        }
-
-      private->top_and_bottom_handle_w = CLAMP (private->top_and_bottom_handle_w,
-                                                MIN (rectangle_width - 2, NARROW_MODE_HANDLE_SIZE),
+      private->top_and_bottom_handle_w = CLAMP (rectangle_width,
+                                                MIN (rectangle_width - 2,
+                                                     NARROW_MODE_HANDLE_SIZE),
                                                 G_MAXINT);
-      private->left_and_right_handle_h = CLAMP (private->left_and_right_handle_h,
-                                                MIN (rectangle_height - 2, NARROW_MODE_HANDLE_SIZE),
+      private->left_and_right_handle_h = CLAMP (rectangle_height,
+                                                MIN (rectangle_height - 2,
+                                                     NARROW_MODE_HANDLE_SIZE),
                                                 G_MAXINT);
     }
   else
