@@ -188,7 +188,9 @@ sub plugin_menu_branch_register {
     $blurb = "Register a sub-menu.";
 
     $help = <<HELP;
-This procedure installs an sub-menu which does not belong to any procedure.
+This procedure installs a sub-menu which does not belong to any procedure.
+The menu-name should be the untranslated menu label. GIMP will look up the
+translation in the textdomain registered for the plug-in.
 HELP
 
     &mitch_pdb_misc('2005', '2.4');

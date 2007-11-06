@@ -451,7 +451,7 @@ register_plug_in_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-plugin-menu-branch-register",
                                      "Register a sub-menu.",
-                                     "This procedure installs an sub-menu which does not belong to any procedure.",
+                                     "This procedure installs a sub-menu which does not belong to any procedure. The menu-name should be the untranslated menu label. GIMP will look up the translation in the textdomain registered for the plug-in.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2005",

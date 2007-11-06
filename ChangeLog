@@ -1,3 +1,13 @@
+2007-11-06  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* tools/pdbgen/pdb/plug_in.pdb: improved documentation for
+	gimp-plugin-menu-register.
+
+	* app/pdb/plug_in_cmds.c
+	* libgimp/gimpplugin_pdb.c: regenerated.
+
 2007-11-05  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
