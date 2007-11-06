@@ -1,3 +1,7 @@
+2007-11-06  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpblobeditor.c: ported to Cairo drawing.
+
 2007-11-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcurveview.c (gimp_curve_view_expose): translate

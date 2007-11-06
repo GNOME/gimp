@@ -59,6 +59,7 @@ static gboolean  gimp_blob_editor_motion_notify  (GtkWidget      *widget,
 static void      gimp_blob_editor_get_handle     (GimpBlobEditor *editor,
                                                   GdkRectangle   *rect);
 static void      gimp_blob_editor_draw_blob      (GimpBlobEditor *editor,
+                                                  cairo_t        *cr,
                                                   gdouble         xc,
                                                   gdouble         yc,
                                                   gdouble         radius);
@@ -187,6 +188,7 @@ gimp_blob_editor_expose (GtkWidget      *widget,
                          GdkEventExpose *event)
 {
   GimpBlobEditor *editor = GIMP_BLOB_EDITOR (widget);
+  cairo_t        *cr;
   GdkRectangle    rect;
   gint            r0;
 
@@ -195,23 +197,25 @@ gimp_blob_editor_expose (GtkWidget      *widget,
   if (r0 < 2)
     return TRUE;
 
-  gimp_blob_editor_draw_blob (editor,
-                              widget->allocation.width  / 2,
-                              widget->allocation.height / 2,
+  cr = gdk_cairo_create (widget->window);
+
+  gimp_blob_editor_draw_blob (editor, cr,
+                              widget->allocation.width  / 2.0,
+                              widget->allocation.height / 2.0,
                               0.9 * r0);
 
   gimp_blob_editor_get_handle (editor, &rect);
 
-  gdk_draw_rectangle (widget->window,
-                      widget->style->bg_gc[widget->state],
-                      TRUE,        /* filled */
-                      rect.x,     rect.y,
-                      rect.width, rect.height);
-  gtk_paint_shadow (widget->style, widget->window, widget->state,
-                    GTK_SHADOW_OUT,
-                    NULL, widget, NULL,
-                    rect.x, rect.y,
-                    rect.width, rect.height);
+  cairo_rectangle (cr,
+                   rect.x + 0.5, rect.y + 0.5, rect.width - 1, rect.width - 1);
+  gdk_cairo_set_source_color (cr, &widget->style->light[widget->state]);
+  cairo_fill_preserve (cr);
+
+  gdk_cairo_set_source_color (cr, &widget->style->dark[widget->state]);
+  cairo_set_line_width (cr, 1);
+  cairo_stroke (cr);
+
+  cairo_destroy (cr);
 
   return TRUE;
 }
@@ -225,8 +229,8 @@ gimp_blob_editor_button_press (GtkWidget      *widget,
 
   gimp_blob_editor_get_handle (editor, &rect);
 
-  if ((event->x >= rect.x) && (event->x-rect.x < rect.width) &&
-      (event->y >= rect.y) && (event->y-rect.y < rect.height))
+  if ((event->x >= rect.x) && (event->x - rect.x < rect.width) &&
+      (event->y >= rect.y) && (event->y - rect.y < rect.height))
     {
       editor->active = TRUE;
     }
@@ -309,14 +313,15 @@ gimp_blob_editor_get_handle (GimpBlobEditor *editor,
 
 static void
 gimp_blob_editor_draw_blob (GimpBlobEditor *editor,
+                            cairo_t        *cr,
                             gdouble         xc,
                             gdouble         yc,
                             gdouble         radius)
 {
-  GtkWidget *widget  = GTK_WIDGET (editor);
-  Blob     *blob;
-  BlobFunc  function = blob_ellipse;
-  gint      i;
+  GtkWidget *widget   = GTK_WIDGET (editor);
+  Blob      *blob;
+  BlobFunc   function = blob_ellipse;
+  gint       i;
 
   switch (editor->type)
     {
@@ -333,18 +338,40 @@ gimp_blob_editor_draw_blob (GimpBlobEditor *editor,
       break;
     }
 
-  blob = function (xc, yc,
-                   radius * cos (editor->angle),
-                   radius * sin (editor->angle),
+  /*  to get a nice antialiased outline, render the blob at double size  */
+  blob = function (2.0 * xc, 2.0 * yc,
+                   2.0 * radius * cos (editor->angle),
+                   2.0 * radius * sin (editor->angle),
                    (- (radius / editor->aspect) * sin (editor->angle)),
                    (  (radius / editor->aspect) * cos (editor->angle)));
 
   for (i = 0; i < blob->height; i++)
     if (blob->data[i].left <= blob->data[i].right)
-      gdk_draw_line (widget->window,
-                     widget->style->fg_gc[widget->state],
-                     blob->data[i].left,      i + blob->y,
-                     blob->data[i].right + 1, i + blob->y);
+      {
+        cairo_move_to (cr, blob->data[i].left / 2.0, (blob->y + i) / 2.0);
+        break;
+      }
+
+  for (i = i + 1; i < blob->height; i++)
+    {
+      if (blob->data[i].left > blob->data[i].right)
+        break;
+
+      cairo_line_to (cr, blob->data[i].left / 2.0, (blob->y + i) / 2.0);
+    }
+
+  for (i = i - 1; i >= 0; i--)
+    {
+      if (blob->data[i].left > blob->data[i].right)
+        break;
+
+      cairo_line_to (cr, blob->data[i].right / 2.0, (blob->y + i) / 2.0);
+    }
+
+  cairo_close_path (cr);
 
   g_free (blob);
+
+  gdk_cairo_set_source_color (cr, &widget->style->fg[widget->state]);
+  cairo_fill (cr);
 }
