@@ -1,6 +1,5 @@
 #include "config.h"
 
-#include <stdlib.h>
 #include <string.h>
 
 #include <glib-object.h>
@@ -74,7 +73,7 @@ main (int argc, char *argv[])
 
   srand (314159);
 
-  putenv ("GIMP_COMPOSITE=0x1");
+  g_setenv ("GIMP_COMPOSITE", "0x1", TRUE);
 
   iterations = 10;
   n_pixels = 8388625;

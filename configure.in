@@ -381,7 +381,7 @@ AC_FUNC_VPRINTF
 AC_FUNC_ALLOCA
 
 dnl check some more funcs
-AC_CHECK_FUNCS(difftime putenv mmap)
+AC_CHECK_FUNCS(difftime mmap)
 
 AM_BINRELOC
 

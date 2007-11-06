@@ -1,3 +1,17 @@
+2007-11-06  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: remove check for putenv().
+
+	* app/composite/gimp-composite-3dnow-test.c
+	* app/composite/gimp-composite-altivec-test.c
+	* app/composite/gimp-composite-mmx-test.c
+	* app/composite/gimp-composite-sse-test.c
+	* app/composite/gimp-composite-sse2-test.c
+	* app/composite/gimp-composite-vis-test.c
+	* libgimp/gimpui.c
+	* plug-ins/uri/uri-backend-wget.c
+	* tools/gimp-remote-x11.c: use g_setenv() instead of putenv().
+
 2007-11-06  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/plug_in.pdb: improved documentation for

@@ -24,8 +24,8 @@
 
 #include "config.h"
 
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 #include <errno.h>
 
 #ifdef HAVE_UNISTD_H
@@ -163,7 +163,7 @@ gimp_remote_launch (GdkScreen   *screen,
   gint          i;
 
   if (startup_id)
-    putenv (g_strdup_printf ("DESKTOP_STARTUP_ID=%s", startup_id));
+    g_setenv ("DESKTOP_STARTUP_ID", startup_id, TRUE);
 
   if (file_list->len > 0)
     file_list = g_string_prepend (file_list, "\n");

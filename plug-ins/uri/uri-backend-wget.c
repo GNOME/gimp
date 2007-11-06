@@ -20,7 +20,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
@@ -113,12 +112,10 @@ uri_backend_load_image (const gchar  *uri,
       dup (p[1]);
       close (p[1]);
 
-#ifdef HAVE_PUTENV
       /* produce deterministic output */
-      putenv ("LANGUAGE=C");
-      putenv ("LC_ALL=C");
-      putenv ("LANG=C");
-#endif
+      g_setenv ("LANGUAGE", "C", TRUE);
+      g_setenv ("LC_ALL", "C", TRUE);
+      g_setenv ("LANG", "C", TRUE);
 
       g_snprintf (timeout_str, sizeof (timeout_str), "%d", TIMEOUT);
 

@@ -19,8 +19,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpmodule/gimpmodule.h"
@@ -83,12 +81,10 @@ gimp_ui_init (const gchar *prog_name,
   if (display_name)
     {
 #if defined (GDK_WINDOWING_X11)
-      const gchar var_name[] = "DISPLAY";
+      g_setenv ("DISPLAY", display_name, TRUE);
 #else
-      const gchar var_name[] = "GDK_DISPLAY";
+      g_setenv ("GDK_DISPLAY", display_name, TRUE);
 #endif
-
-      putenv (g_strdup_printf ("%s=%s", var_name, display_name));
     }
 
   gtk_init (NULL, NULL);
