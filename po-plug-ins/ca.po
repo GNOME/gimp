@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-01 10:52+0100\n"
-"PO-Revision-Date: 2007-10-27 12:10+0200\n"
+"POT-Creation-Date: 2007-11-08 00:42+0100\n"
+"PO-Revision-Date: 2007-11-07 21:58+0100\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -12302,7 +12302,7 @@ msgstr "Captura una imatge a partir de la font de dades TWAIN"
 
 #: ../plug-ins/twain/twain.c:354
 msgid "_Scanner/Camera..."
-msgstr "E_scàner/càmara..."
+msgstr "E_scàner/càmera..."
 
 #. Initialize our progress dialog
 #: ../plug-ins/twain/twain.c:489
@@ -12317,7 +12317,7 @@ msgstr "S'està descarregant el %s de les dades de la imatge..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:163
 #: ../plug-ins/uri/uri-backend-libcurl.c:133
-#: ../plug-ins/uri/uri-backend-wget.c:348
+#: ../plug-ins/uri/uri-backend-wget.c:345
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "S'ha descarregat el %s de les dades de la imatge"
@@ -12334,7 +12334,7 @@ msgstr "S'ha enviat el %s de les dades de la imatge"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:252
 #: ../plug-ins/uri/uri-backend-libcurl.c:155
-#: ../plug-ins/uri/uri-backend-wget.c:197
+#: ../plug-ins/uri/uri-backend-wget.c:194
 msgid "Connecting to server"
 msgstr "S'està connectant al servidor"
 
@@ -12367,17 +12367,17 @@ msgid "Opening '%s' for reading resulted in HTTP response code: %d"
 msgstr ""
 "Quan s'estava mirant de llegir «%s» s'ha rebut un codi de resposta HTTP: %d"
 
-#: ../plug-ins/uri/uri-backend-wget.c:164
-#: ../plug-ins/uri/uri-backend-wget.c:184
-#: ../plug-ins/uri/uri-backend-wget.c:203
-#: ../plug-ins/uri/uri-backend-wget.c:226
-#: ../plug-ins/uri/uri-backend-wget.c:255
+#: ../plug-ins/uri/uri-backend-wget.c:161
+#: ../plug-ins/uri/uri-backend-wget.c:181
+#: ../plug-ins/uri/uri-backend-wget.c:200
+#: ../plug-ins/uri/uri-backend-wget.c:223
+#: ../plug-ins/uri/uri-backend-wget.c:252
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
 msgstr "wget ha retornat un error amb l'URI «%s»"
 
 #. The third line is "Connecting to..."
-#: ../plug-ins/uri/uri-backend-wget.c:192
+#: ../plug-ins/uri/uri-backend-wget.c:189
 #, c-format
 msgid "(timeout is %d second)"
 msgid_plural "(timeout is %d seconds)"
@@ -12397,22 +12397,22 @@ msgstr[1] "(cronòmetre: %d segons)"
 #  -1  assume fsel is not available (and not attached to any drawable)
 #  -1  assume there is no floating selection
 #. The fourth line is either the network request or an error
-#: ../plug-ins/uri/uri-backend-wget.c:221
+#: ../plug-ins/uri/uri-backend-wget.c:218
 msgid "Opening URI"
 msgstr "S'està obrint l'URI"
 
-#: ../plug-ins/uri/uri-backend-wget.c:232
-#: ../plug-ins/uri/uri-backend-wget.c:265
+#: ../plug-ins/uri/uri-backend-wget.c:229
+#: ../plug-ins/uri/uri-backend-wget.c:262
 #, c-format
 msgid "A network error occurred: %s"
 msgstr "S'ha produït un error de xarxa: %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:305
+#: ../plug-ins/uri/uri-backend-wget.c:302
 #, c-format
 msgid "Downloading %s of image data"
 msgstr "S'està descarregant el %s de les dades de la imatge"
 
-#: ../plug-ins/uri/uri-backend-wget.c:310
+#: ../plug-ins/uri/uri-backend-wget.c:307
 msgid "Downloading unknown amount of image data"
 msgstr "S'estan descarregant dades d'imatge de mida indeterminada"
 

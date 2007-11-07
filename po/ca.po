@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-01 10:38+0100\n"
-"PO-Revision-Date: 2007-10-27 12:12+0200\n"
+"POT-Creation-Date: 2007-11-08 00:40+0100\n"
+"PO-Revision-Date: 2007-11-07 19:30+0100\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -328,7 +328,7 @@ msgid "Fonts"
 msgstr "Tipus de lletra"
 
 #: ../app/actions/actions.c:150 ../app/dialogs/dialogs.c:219
-#: ../app/widgets/gimpgradienteditor.c:275
+#: ../app/widgets/gimpgradienteditor.c:276
 msgid "Gradient Editor"
 msgstr "Editor de degradats"
 
@@ -681,7 +681,7 @@ msgstr "Color del nou canal"
 #: ../app/actions/channels-commands.c:243
 #: ../app/display/gimpdisplayshell-dnd.c:497
 #: ../app/widgets/gimpchanneltreeview.c:249
-#: ../app/widgets/gimplayertreeview.c:806 ../app/widgets/gimptoolbox-dnd.c:308
+#: ../app/widgets/gimplayertreeview.c:774 ../app/widgets/gimptoolbox-dnd.c:308
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Còpia del canal %s"
@@ -835,7 +835,7 @@ msgstr "Mostra fusionada"
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:451
-#: ../app/widgets/gimplayertreeview.c:763 ../app/widgets/gimptoolbox-dnd.c:158
+#: ../app/widgets/gimplayertreeview.c:731 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:896
 #, c-format
 msgid ""
@@ -3017,7 +3017,7 @@ msgstr "Edita els atributs de la capa"
 #: ../app/actions/layers-commands.c:239 ../app/actions/layers-commands.c:241
 #: ../app/actions/layers-commands.c:298 ../app/actions/layers-commands.c:302
 #: ../app/widgets/gimpdrawabletreeview.c:326
-#: ../app/widgets/gimplayertreeview.c:868
+#: ../app/widgets/gimplayertreeview.c:836
 msgid "New Layer"
 msgstr "Nova capa"
 
@@ -8520,12 +8520,12 @@ msgid "Drop New Path"
 msgstr "Elimina el camí nou"
 
 #: ../app/display/gimpdisplayshell-dnd.c:441
-#: ../app/widgets/gimplayertreeview.c:752
+#: ../app/widgets/gimplayertreeview.c:720
 msgid "Drop layers"
 msgstr "Elimina les capes"
 
 #: ../app/display/gimpdisplayshell-dnd.c:538
-#: ../app/widgets/gimplayertreeview.c:834 ../app/widgets/gimptoolbox-dnd.c:356
+#: ../app/widgets/gimplayertreeview.c:802 ../app/widgets/gimptoolbox-dnd.c:356
 msgid "Dropped Buffer"
 msgstr "Objecte eliminat del porta-retalls del GIMP"
 
@@ -8753,33 +8753,33 @@ msgstr "Ressalta"
 msgid "Combine Masks"
 msgstr "Combina la màscara"
 
-#: ../app/pdb/color_cmds.c:102 ../app/tools/gimpbrightnesscontrasttool.c:102
+#: ../app/pdb/color_cmds.c:103 ../app/tools/gimpbrightnesscontrasttool.c:102
 msgid "Brightness-Contrast"
 msgstr "Brillantor-contrast"
 
 # Quim: posterize = reduir el num colors
-#: ../app/pdb/color_cmds.c:249 ../app/tools/gimpposterizetool.c:77
+#: ../app/pdb/color_cmds.c:250 ../app/tools/gimpposterizetool.c:77
 msgid "Posterize"
 msgstr "Redueix el nombre de colors"
 
-#: ../app/pdb/color_cmds.c:439 ../app/pdb/color_cmds.c:516
-#: ../app/tools/gimpcurvestool.c:150
+#: ../app/pdb/color_cmds.c:447 ../app/pdb/color_cmds.c:524
+#: ../app/tools/gimpcurvestool.c:128
 msgid "Curves"
 msgstr "Corbes de color"
 
-#: ../app/pdb/color_cmds.c:581 ../app/tools/gimpcolorbalancetool.c:92
+#: ../app/pdb/color_cmds.c:589 ../app/tools/gimpcolorbalancetool.c:92
 msgid "Color Balance"
 msgstr "Balanç de color"
 
-#: ../app/pdb/color_cmds.c:640 ../app/tools/gimpcolorizetool.c:90
+#: ../app/pdb/color_cmds.c:648 ../app/tools/gimpcolorizetool.c:90
 msgid "Colorize"
 msgstr "To-Saturació bàsic"
 
-#: ../app/pdb/color_cmds.c:773 ../app/tools/gimphuesaturationtool.c:112
+#: ../app/pdb/color_cmds.c:781 ../app/tools/gimphuesaturationtool.c:112
 msgid "Hue-Saturation"
 msgstr "To-Saturació avançat"
 
-#: ../app/pdb/color_cmds.c:827 ../app/tools/gimpthresholdtool.c:82
+#: ../app/pdb/color_cmds.c:835 ../app/tools/gimpthresholdtool.c:82
 msgid "Threshold"
 msgstr "Només blanc i negre"
 
@@ -9645,71 +9645,71 @@ msgstr "Es_capça"
 msgid "Click or press Enter to crop"
 msgstr "Cliqueu o premeu la tecla de retorn per a escapçar"
 
-#: ../app/tools/gimpcurvestool.c:151
+#: ../app/tools/gimpcurvestool.c:129
 msgid "Curves Tool: Adjust color curves"
 msgstr "L'eina Corbes de color: ajusta les corbes de color"
 
-#: ../app/tools/gimpcurvestool.c:152
+#: ../app/tools/gimpcurvestool.c:130
 msgid "_Curves..."
 msgstr "_Corbes de color..."
 
-#: ../app/tools/gimpcurvestool.c:178
+#: ../app/tools/gimpcurvestool.c:156
 msgid "Adjust Color Curves"
 msgstr "Ajusta els colors definint una corba de transformació per a cada canal"
 
-#: ../app/tools/gimpcurvestool.c:180
+#: ../app/tools/gimpcurvestool.c:158
 msgid "Load Curves"
 msgstr "Carrega les corbes"
 
-#: ../app/tools/gimpcurvestool.c:181
+#: ../app/tools/gimpcurvestool.c:159
 msgid "Load curves settings from file"
 msgstr "Carrega els paràmetres de les corbes del fitxer"
 
-#: ../app/tools/gimpcurvestool.c:182
+#: ../app/tools/gimpcurvestool.c:160
 msgid "Save Curves"
 msgstr "Desa les corbes"
 
-#: ../app/tools/gimpcurvestool.c:183
+#: ../app/tools/gimpcurvestool.c:161
 msgid "Save curves settings to file"
 msgstr "Desa els paràmetres de les corbes al fitxer"
 
-#: ../app/tools/gimpcurvestool.c:253
+#: ../app/tools/gimpcurvestool.c:226
 #, c-format
 msgid "Curves does not operate on indexed layers."
 msgstr "L'eina Corbes de color no funciona en capes indexades."
 
-#: ../app/tools/gimpcurvestool.c:355
+#: ../app/tools/gimpcurvestool.c:348
 msgid "Click to add a control point"
 msgstr "Cliqueu per a afegir un punt de control"
 
-#: ../app/tools/gimpcurvestool.c:360
+#: ../app/tools/gimpcurvestool.c:353
 msgid "Click to add control points to all channels"
 msgstr "Cliqueu per a afegir un punt de control a tots els canals"
 
-#: ../app/tools/gimpcurvestool.c:555 ../app/tools/gimplevelstool.c:365
+#: ../app/tools/gimpcurvestool.c:450 ../app/tools/gimplevelstool.c:365
 msgid "Cha_nnel:"
 msgstr "Ca_nal:"
 
-#: ../app/tools/gimpcurvestool.c:577 ../app/tools/gimplevelstool.c:387
+#: ../app/tools/gimpcurvestool.c:472 ../app/tools/gimplevelstool.c:387
 msgid "R_eset Channel"
 msgstr "_Inicialitza el canal"
 
 #. Horizontal button box for load / save
-#: ../app/tools/gimpcurvestool.c:681 ../app/tools/gimplevelstool.c:581
+#: ../app/tools/gimpcurvestool.c:561 ../app/tools/gimplevelstool.c:581
 msgid "All Channels"
 msgstr "Tots els canals"
 
 #. The radio box for selecting the curve type
-#: ../app/tools/gimpcurvestool.c:699
+#: ../app/tools/gimpcurvestool.c:579
 msgid "Curve Type"
 msgstr "Tipus de corba"
 
-#: ../app/tools/gimpcurvestool.c:753 ../app/tools/gimplevelstool.c:672
+#: ../app/tools/gimpcurvestool.c:630
 #, c-format
-msgid "not a GIMP Levels file"
-msgstr "no és un fitxer de nivells del GIMP "
+msgid "not a GIMP Curves file"
+msgstr "no és un fitxer de corbes del GIMP"
 
-#: ../app/tools/gimpcurvestool.c:767 ../app/tools/gimplevelstool.c:711
+#: ../app/tools/gimpcurvestool.c:644 ../app/tools/gimplevelstool.c:711
 #, c-format
 msgid "parse error"
 msgstr "Error en l'anàlisi del fitxer"
@@ -10226,6 +10226,11 @@ msgstr "Nivells de sortida"
 msgid "Adjust levels automatically"
 msgstr "Ajust automàtic dels nivells"
 
+#: ../app/tools/gimplevelstool.c:672
+#, c-format
+msgid "not a GIMP Levels file"
+msgstr "no és un fitxer de nivells del GIMP "
+
 #: ../app/tools/gimpmagnifyoptions.c:167
 msgid "Auto-resize window"
 msgstr "Redimensiona la finestra"
@@ -10355,12 +10360,12 @@ msgstr "_Pinzell"
 
 #: ../app/tools/gimppaintoptions-gui.c:99
 #: ../app/tools/gimpselectionoptions.c:341
-#: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:273
+#: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:269
 msgid "Mode:"
 msgstr "Mode:"
 
 #: ../app/tools/gimppaintoptions-gui.c:114
-#: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:288
+#: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:284
 msgid "Opacity:"
 msgstr "Opacitat:"
 
@@ -10570,7 +10575,7 @@ msgstr "Eina Selecció rectangular: selecciona una regió rectangular"
 msgid "_Rectangle Select"
 msgstr "Selecció _rectangular"
 
-#: ../app/tools/gimprectangletool.c:1035 ../app/tools/gimprectangletool.c:1876
+#: ../app/tools/gimprectangletool.c:1067 ../app/tools/gimprectangletool.c:1936
 msgid "Rectangle: "
 msgstr "Rectangle: "
 
@@ -11762,88 +11767,88 @@ msgid "Extensions"
 msgstr "Extensions"
 
 #. Instant update toggle
-#: ../app/widgets/gimpgradienteditor.c:410
+#: ../app/widgets/gimpgradienteditor.c:414
 msgid "Instant update"
 msgstr "Actualització immediata"
 
-#: ../app/widgets/gimpgradienteditor.c:785
+#: ../app/widgets/gimpgradienteditor.c:775
 #, c-format
 msgid "Zoom factor: %d:1"
 msgstr "Factor d'ampliació: %d:1"
 
-#: ../app/widgets/gimpgradienteditor.c:788
+#: ../app/widgets/gimpgradienteditor.c:778
 #, c-format
 msgid "Displaying [%0.4f, %0.4f]"
 msgstr "S'està visualitzant [%0.4f, %0.4f]"
 
-#: ../app/widgets/gimpgradienteditor.c:1008
+#: ../app/widgets/gimpgradienteditor.c:993
 #, c-format
 msgid "Position: %0.4f"
 msgstr "Posició: %0.4f"
 
-#: ../app/widgets/gimpgradienteditor.c:1009
+#: ../app/widgets/gimpgradienteditor.c:994
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:1011
+#: ../app/widgets/gimpgradienteditor.c:996
 #, c-format
 msgid "HSV (%0.1f, %0.1f, %0.1f)"
 msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 
-#: ../app/widgets/gimpgradienteditor.c:1013
+#: ../app/widgets/gimpgradienteditor.c:998
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
 msgstr "Lluminositat: %0.1f    Opacitat: %0.3f"
 
-#: ../app/widgets/gimpgradienteditor.c:1044
+#: ../app/widgets/gimpgradienteditor.c:1029
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: ../app/widgets/gimpgradienteditor.c:1055
+#: ../app/widgets/gimpgradienteditor.c:1040
 msgid "Foreground color set to:"
 msgstr "Color de primer pla definit:"
 
-#: ../app/widgets/gimpgradienteditor.c:1062
+#: ../app/widgets/gimpgradienteditor.c:1047
 msgid "Background color set to:"
 msgstr "Color de fons definit:"
 
-#: ../app/widgets/gimpgradienteditor.c:1273
-#: ../app/widgets/gimpgradienteditor.c:1339
+#: ../app/widgets/gimpgradienteditor.c:1276
+#: ../app/widgets/gimpgradienteditor.c:1342
 #, c-format
 msgid "%s%sDrag: move & compress"
 msgstr "%s%sArrossega: mou i comprimeix"
 
-#: ../app/widgets/gimpgradienteditor.c:1279
+#: ../app/widgets/gimpgradienteditor.c:1282
 msgid "Drag: move"
 msgstr "Arrossega: mou"
 
-#: ../app/widgets/gimpgradienteditor.c:1286
-#: ../app/widgets/gimpgradienteditor.c:1300
-#: ../app/widgets/gimpgradienteditor.c:1314
-#: ../app/widgets/gimpgradienteditor.c:1336
+#: ../app/widgets/gimpgradienteditor.c:1289
+#: ../app/widgets/gimpgradienteditor.c:1303
+#: ../app/widgets/gimpgradienteditor.c:1317
+#: ../app/widgets/gimpgradienteditor.c:1339
 #, c-format
 msgid "%s%sClick: extend selection"
 msgstr "%s%sClic: estendre la selecció"
 
-#: ../app/widgets/gimpgradienteditor.c:1292
-#: ../app/widgets/gimpgradienteditor.c:1306
+#: ../app/widgets/gimpgradienteditor.c:1295
+#: ../app/widgets/gimpgradienteditor.c:1309
 msgid "Click: select"
 msgstr "Clic: selecciona"
 
-#: ../app/widgets/gimpgradienteditor.c:1320
-#: ../app/widgets/gimpgradienteditor.c:1344
+#: ../app/widgets/gimpgradienteditor.c:1323
+#: ../app/widgets/gimpgradienteditor.c:1347
 msgid "Click: select    Drag: move"
 msgstr "Clic: selecciona   Arrossega: mou"
 
-#: ../app/widgets/gimpgradienteditor.c:1559
-#: ../app/widgets/gimpgradienteditor.c:1567
+#: ../app/widgets/gimpgradienteditor.c:1562
+#: ../app/widgets/gimpgradienteditor.c:1570
 #, c-format
 msgid "Handle position: %0.4f"
 msgstr "Posició de la nansa: %0.4f"
 
-#: ../app/widgets/gimpgradienteditor.c:1584
+#: ../app/widgets/gimpgradienteditor.c:1587
 #, c-format
 msgid "Distance: %0.4f"
 msgstr "Distància: %0.4f"
@@ -12010,19 +12015,19 @@ msgstr "Element visible exclusivament"
 msgid "Set Item Exclusive Linked"
 msgstr "Element cadenat exclusivament"
 
-#: ../app/widgets/gimplayertreeview.c:222
+#: ../app/widgets/gimplayertreeview.c:218
 msgid "Reorder Layer"
 msgstr "Reordena la capa"
 
-#: ../app/widgets/gimplayertreeview.c:310
+#: ../app/widgets/gimplayertreeview.c:306
 msgid "Lock alpha channel"
 msgstr "Bloqueja el canal alfa"
 
-#: ../app/widgets/gimplayertreeview.c:322
+#: ../app/widgets/gimplayertreeview.c:318
 msgid "Lock:"
 msgstr "Bloqueja:"
 
-#: ../app/widgets/gimplayertreeview.c:874
+#: ../app/widgets/gimplayertreeview.c:842
 msgid "Empty Layer"
 msgstr "Capa buida"
 
