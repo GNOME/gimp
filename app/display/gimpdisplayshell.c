@@ -604,7 +604,7 @@ gimp_display_shell_show_tooltip (GimpUIManager    *manager,
                                  GimpDisplayShell *shell)
 {
   gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "menu-tooltip",
-                       tooltip);
+                       "%s", tooltip);
 }
 
 static void

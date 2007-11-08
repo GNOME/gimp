@@ -1,3 +1,12 @@
+2007-11-08  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_show_tooltip):
+	don't directly pass a message to gimp_statusbar_push(), it expects
+	a format string and printf-like varargs. Fixes the crash reported
+	in bug #492718.
+
 2007-11-06  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
