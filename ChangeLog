@@ -1,3 +1,9 @@
+2007-11-08  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpstatusbar.c (gimp_statusbar_vprintf): also cut
+	the message at a '\r' character. Fixes the remaining aspect of
+	bug #492718.
+
 2007-11-08  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpenums.c.tail: replaced by generated version.
