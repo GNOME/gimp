@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-18 12:12+0200\n"
+"POT-Creation-Date: 2007-11-08 12:38+0100\n"
 "PO-Revision-Date: 2007-10-18 12:11+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -91,7 +91,7 @@ msgstr "Ingen satstolkare angiven, använder standardtolkaren \"%s\".\n"
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "Satstolkaren \"%s\" är inte tillgänglig. Satsläge inaktiverat."
 
-#: ../app/main.c:154 ../tools/gimp-remote.c:79
+#: ../app/main.c:154 ../tools/gimp-remote.c:60
 msgid "Show version information and exit"
 msgstr "Visa versionsinformation och avsluta"
 
@@ -206,7 +206,7 @@ msgstr "(Tryck på en tangent för att stänga fönstret)\n"
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP-utdata. Du kan minimera det här fönstret men stäng det inte."
 
-#: ../app/main.c:557 ../tools/gimp-remote.c:323
+#: ../app/main.c:557 ../tools/gimp-remote.c:95
 #, c-format
 msgid "%s version %s"
 msgstr "%s version %s"
@@ -3623,7 +3623,7 @@ msgstr "Öppna textfil (UTF-8)"
 #: ../app/core/gimppalette-load.c:76 ../app/core/gimppalette-load.c:271
 #: ../app/core/gimppalette-load.c:315 ../app/core/gimppalette-load.c:369
 #: ../app/core/gimppalette-load.c:457 ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpimagemaptool.c:588 ../app/xcf/xcf.c:323
+#: ../app/tools/gimpimagemaptool.c:586 ../app/xcf/xcf.c:323
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Kunde inte öppna \"%s\" för läsning: %s"
@@ -4472,7 +4472,7 @@ msgstr "Misslyckades med att ändra storlek på växlingsfil: %s"
 #: ../app/config/gimpconfig-file.c:68 ../app/core/gimpbrushgenerated-save.c:63
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:145
 #: ../app/core/gimppalette-save.c:56 ../app/gui/themes.c:239
-#: ../app/tools/gimpimagemaptool.c:587 ../app/vectors/gimpvectors-export.c:83
+#: ../app/tools/gimpimagemaptool.c:585 ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:401
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -4483,7 +4483,7 @@ msgstr "Kunde inte öppna \"%s\" för skrivning: %s"
 msgid "Error writing '%s': %s"
 msgstr "Fel vid skrivning av \"%s\": %s"
 
-#: ../app/config/gimpconfig-file.c:90 ../app/tools/gimpimagemaptool.c:620
+#: ../app/config/gimpconfig-file.c:90 ../app/tools/gimpimagemaptool.c:618
 #, c-format
 msgid "Error reading '%s': %s"
 msgstr "Fel vid läsning av \"%s\": %s"
@@ -6705,7 +6705,7 @@ msgstr "bildpunkt"
 
 #: ../app/core/gimpunit.c:56 ../app/tools/gimpmeasuretool.c:868
 #: ../app/tools/gimpmeasuretool.c:1011 ../app/tools/gimpmeasuretool.c:1067
-#: ../app/tools/gimpmeasuretool.c:1095 ../app/tools/gimppainttool.c:602
+#: ../app/tools/gimpmeasuretool.c:1095 ../app/tools/gimppainttool.c:604
 msgid "pixels"
 msgstr "bildpunkter"
 
@@ -8774,7 +8774,7 @@ msgstr ""
 "Antagligen en insticksmodul som försöker att arbeta på en bild som inte "
 "finns längre."
 
-#: ../app/pdb/gimpprocedure.c:614
+#: ../app/pdb/gimpprocedure.c:619
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -8783,7 +8783,7 @@ msgstr ""
 "Proceduren \"%s\" returnerade \"%s\" som svarsvärde \"%s\" (nr. %d, typ %s). "
 "Det här värdet är utanför intervallet."
 
-#: ../app/pdb/gimpprocedure.c:627
+#: ../app/pdb/gimpprocedure.c:632
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
@@ -9145,7 +9145,7 @@ msgstr "Färgto_ning"
 msgid "Blend does not operate on indexed layers."
 msgstr "Toning fungerar inte på indexerade lager."
 
-#: ../app/tools/gimpblendtool.c:399 ../app/tools/gimppainttool.c:593
+#: ../app/tools/gimpblendtool.c:399 ../app/tools/gimppainttool.c:595
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s för begränsade vinklar"
@@ -9415,11 +9415,11 @@ msgstr "F_ärghämtare"
 msgid "Click in any image to view its color"
 msgstr "Klicka i en bild för att visa dess färg"
 
-#: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:496
+#: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:498
 msgid "Click in any image to pick the foreground color"
 msgstr "Klicka i en bild för att välja förgrundsfärgen"
 
-#: ../app/tools/gimpcolorpickertool.c:257 ../app/tools/gimppainttool.c:502
+#: ../app/tools/gimpcolorpickertool.c:257 ../app/tools/gimppainttool.c:504
 msgid "Click in any image to pick the background color"
 msgstr "Klicka i en bild för att välja bakgrundsfärgen"
 
@@ -9935,7 +9935,7 @@ msgstr "Snabbinläsning"
 msgid "Quick Save"
 msgstr "Snabbsparande"
 
-#: ../app/tools/gimpimagemaptool.c:611
+#: ../app/tools/gimpimagemaptool.c:609
 #, c-format
 msgid "Settings saved to '%s'"
 msgstr "Inställningar sparade till \"%s\""
@@ -10300,7 +10300,7 @@ msgstr "Klicka för att rita linjen"
 msgid "%s to pick a color"
 msgstr "%s för att välja en färg"
 
-#: ../app/tools/gimppainttool.c:645
+#: ../app/tools/gimppainttool.c:647
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s för en rak linje"
@@ -10421,7 +10421,7 @@ msgstr "Rektangelmarkeringsverktyg: Markera en rektangulär region"
 msgid "_Rectangle Select"
 msgstr "_Rekt. markering"
 
-#: ../app/tools/gimprectangletool.c:1031 ../app/tools/gimprectangletool.c:1939
+#: ../app/tools/gimprectangletool.c:1032 ../app/tools/gimprectangletool.c:1880
 msgid "Rectangle: "
 msgstr "Rektangel: "
 
@@ -12014,7 +12014,7 @@ msgstr ""
 
 #: ../app/widgets/gimpthumbbox.c:347
 msgid "Pr_eview"
-msgstr "Förhan_dsgranska"
+msgstr "Förhan_dsvisning"
 
 #: ../app/widgets/gimpthumbbox.c:402 ../app/widgets/gimpthumbbox.c:466
 msgid "No selection"
@@ -12270,7 +12270,7 @@ msgstr "Verktygsfönster"
 msgid "Keep above"
 msgstr "Behåll ovanpå"
 
-#: ../app/xcf/xcf-load.c:274
+#: ../app/xcf/xcf-load.c:275
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -12278,7 +12278,7 @@ msgstr ""
 "Den här XCF-filen är skadad!  Jag har läst in så mycket jag kan av den men "
 "den är ofullständig."
 
-#: ../app/xcf/xcf-load.c:283
+#: ../app/xcf/xcf-load.c:284
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -12286,7 +12286,7 @@ msgstr ""
 "Den här XCF-filen är skadad!  Jag kunde inte ens rädda någon del av dess "
 "bilddata."
 
-#: ../app/xcf/xcf-load.c:315
+#: ../app/xcf/xcf-load.c:316
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -12344,35 +12344,39 @@ msgstr "Skapa bilder och redigera fotografier"
 msgid "Image Editor"
 msgstr "Bildredigerare"
 
-#: ../tools/gimp-remote.c:84
+#: ../tools/gimp-remote.c:65
 msgid "Use a running GIMP only, never start a new one"
 msgstr "Använd endast en GIMP-instans som körs, starta aldrig en ny"
 
-#: ../tools/gimp-remote.c:89
+#: ../tools/gimp-remote.c:70
 msgid "Only check if GIMP is running, then quit"
 msgstr "Kontrollera endast om GIMP körs, avsluta sedan"
 
-#: ../tools/gimp-remote.c:94
+#: ../tools/gimp-remote.c:76
 msgid "Print X window ID of GIMP toolbox window, then quit"
 msgstr "Skriv ut X-fönstrets id för GIMP:s verktygslådefönster, avsluta sedan"
 
-#: ../tools/gimp-remote.c:99
+#: ../tools/gimp-remote.c:82
 msgid "Start GIMP without showing the startup window"
 msgstr "Starta GIMP utan att visa uppstartsfönstret"
 
-#: ../tools/gimp-remote.c:205
+#: ../tools/gimp-remote-x11.c:67
 msgid "Could not connect to GIMP."
 msgstr "Kunde inte ansluta till GIMP."
 
-#: ../tools/gimp-remote.c:206
+#: ../tools/gimp-remote-x11.c:68
 msgid "Make sure that the Toolbox is visible!"
 msgstr "Försäkra dig om att verktygslådan är synlig!"
 
 #. if execv and execvp return, there was an error
-#: ../tools/gimp-remote.c:307
+#: ../tools/gimp-remote-x11.c:248
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Kunde inte starta \"%s\": %s"
+
+#, fuzzy
+#~ msgid "not a GIMP Curves file"
+#~ msgstr "inte en GIMP-nivåfil"
 
 #~ msgid "X:"
 #~ msgstr "X:"
