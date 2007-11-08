@@ -1970,7 +1970,7 @@ gimp_image_clean_all (GimpImage *image)
   image->dirty      = 0;
   image->dirty_time = 0;
 
-  g_signal_emit (image, gimp_image_signals[CLEAN], 0);
+  g_signal_emit (image, gimp_image_signals[CLEAN], 0, GIMP_DIRTY_ALL);
 }
 
 /**
