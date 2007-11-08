@@ -2,6 +2,14 @@
 
 	Merged from trunk:
 
+	* app/display/gimpstatusbar.c (gimp_statusbar_vprintf): also cut
+	the message at a '\r' character. Fixes the remaining aspect of
+	bug #492718.
+
+2007-11-08  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_show_tooltip):
 	don't directly pass a message to gimp_statusbar_push(), it expects
 	a format string and printf-like varargs. Fixes the crash reported

@@ -1171,6 +1171,10 @@ gimp_statusbar_vprintf (const gchar *format,
   message = g_strdup_vprintf (format, args);
 
   /*  guard us from multi-line strings  */
+  newline = strchr (message, '\r');
+  if (newline)
+    *newline = '\0';
+
   newline = strchr (message, '\n');
   if (newline)
     *newline = '\0';
