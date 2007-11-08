@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-28 14:35+0200\n"
+"POT-Creation-Date: 2007-11-08 12:41+0100\n"
 "PO-Revision-Date: 2007-08-01 08:25+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -30,19 +30,16 @@ msgstr "Ett fel inträffade när %s kördes"
 msgid "_More Information"
 msgstr "_Mer information"
 
-#: ../plug-ins/pygimp/gimpfu.py:506
-#: ../plug-ins/pygimp/gimpfu.py:518
+#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
 #: ../plug-ins/pygimp/gimpfu.py:524
 msgid "No"
 msgstr "Nej"
 
-#: ../plug-ins/pygimp/gimpfu.py:516
-#: ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
 msgid "Yes"
 msgstr "Ja"
 
-#: ../plug-ins/pygimp/gimpfu.py:558
-#: ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu filväljare"
 
@@ -133,31 +130,31 @@ msgstr "Interaktiv Gimp-Python-tolkare"
 msgid "_Console"
 msgstr "_Konsoll"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+#: ../plug-ins/pygimp/plug-ins/foggify.py:52
 msgid "Add a layer of fog"
 msgstr "Lägg till ett lager av dimma"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pygimp/plug-ins/foggify.py:57
 msgid "_Fog..."
 msgstr "_Dimma..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
 msgid "_Layer name"
 msgstr "_Lagernamn"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
 msgid "Clouds"
 msgstr "Moln"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Fog color"
 msgstr "Färg_ på dimma"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "_Turbulence"
 msgstr "_Turbulens"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
 msgid "Op_acity"
 msgstr "Op_acitet"
 
@@ -242,7 +239,8 @@ msgstr "Skär"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Skär en bild längs dess hjälplinjer, skapar bilder och en HTML-tabellsnutt"
+msgstr ""
+"Skär en bild längs dess hjälplinjer, skapar bilder och en HTML-tabellsnutt"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
@@ -286,7 +284,8 @@ msgstr "Hoppa över animering för tabelltexter"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "Lägg till en skuggkastning till ett lager, och eventuellt fasa dess kanter"
+msgstr ""
+"Lägg till en skuggkastning till ett lager, och eventuellt fasa dess kanter"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
 msgid "_Drop Shadow and Bevel..."
@@ -315,4 +314,3 @@ msgstr "_Y-förskjutning för skuggkastning"
 #, fuzzy
 #~ msgid "Gimp-Python Console"
 #~ msgstr "Python-konsoll"
-
