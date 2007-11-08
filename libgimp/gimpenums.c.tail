@@ -1,4 +1,3 @@
-#undef GIMP_DISABLE_DEPRECATED
 
 typedef GType (* GimpGetTypeFunc) (void);
 
