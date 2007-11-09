@@ -421,7 +421,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
       cairo_push_group (cr);
 
       gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
-      cairo_rectangle (cr, x, y, w + 1, h + 1);
+      cairo_rectangle (cr, x - 0.5, y + 0.5, w, h);
       cairo_fill_preserve (cr);
 
       cairo_set_line_width (cr, 6);
