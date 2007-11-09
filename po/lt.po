@@ -13,13 +13,13 @@ msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-11-07 19:30+0200\n"
-"PO-Revision-Date: 2007-11-07 19:30+0200\n"
+"PO-Revision-Date: 2007-11-09 15:05+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);"
 
 #: ../app/about.h:24
 msgid "GIMP"
@@ -1281,7 +1281,7 @@ msgstr "Kopijuoti paveikslėlio _vietą"
 
 #: ../app/actions/documents-actions.c:65
 msgid "Copy image location to clipboard"
-msgstr "Kopijuoti paveikslėlio vietą į podėlį"
+msgstr "Kopijuoti paveikslėlio vietą į iškarpinę"
 
 #: ../app/actions/documents-actions.c:70
 msgid "Remove _Entry"
@@ -1376,7 +1376,7 @@ msgstr "_Poslinkis..."
 
 #: ../app/actions/drawable-actions.c:70
 msgid "Shift the pixels, optionally wrapping them at the borders"
-msgstr "Pakelti taškelius, pageidaujant apibrėžiant juos ties rėmeliais"
+msgstr "Pakelti pikselius, pageidaujant apibrėžiant juos ties rėmeliais"
 
 #: ../app/actions/drawable-actions.c:78 ../app/actions/vectors-actions.c:153
 msgid "_Linked"
@@ -1514,7 +1514,7 @@ msgstr "Iš_blukinti..."
 #: ../app/actions/edit-actions.c:103
 msgid "Modify paint mode and opacity of the last pixel manipulation"
 msgstr ""
-"Keisti paskutiniojo taškelio manipuliavimo piešimo veikseną ir nepermatomumą"
+"Keisti paskutiniojo pikselių manipuliavimo piešimo veikseną ir nepermatomumą"
 
 #: ../app/actions/edit-actions.c:108
 msgid "Cu_t"
@@ -1522,7 +1522,7 @@ msgstr "_Iškirpti"
 
 #: ../app/actions/edit-actions.c:109
 msgid "Move the selected pixels to the clipboard"
-msgstr "Perkelti pažymėtus taškus į podėlį"
+msgstr "Perkelti pažymėtus pikselius į iškarpinę"
 
 #: ../app/actions/edit-actions.c:114
 msgid "_Copy"
@@ -1530,7 +1530,7 @@ msgstr "_Kopijuoti"
 
 #: ../app/actions/edit-actions.c:115
 msgid "Copy the selected pixels to the clipboard"
-msgstr "Kopijuoti pasirinktus taškus į podėlį"
+msgstr "Kopijuoti pažymėtus pikselius į iškarpinę"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:120
@@ -1539,7 +1539,7 @@ msgstr "Kopijuoti _matomą"
 
 #: ../app/actions/edit-actions.c:121
 msgid "Copy the selected region to the clipboard"
-msgstr "Kopijuoti pasirinktą regioną į podėlį"
+msgstr "Kopijuoti pasirinktą regioną į iškarpinę"
 
 #: ../app/actions/edit-actions.c:126
 msgid "_Paste"
@@ -1547,7 +1547,7 @@ msgstr "Į_dėti"
 
 #: ../app/actions/edit-actions.c:127
 msgid "Paste the content of the clipboard"
-msgstr "Įdėti podėlio turinį"
+msgstr "Įdėti iškarpinės turinį"
 
 #: ../app/actions/edit-actions.c:132
 msgid "Paste _Into"
@@ -1555,7 +1555,7 @@ msgstr "Įdėt_i į vidų"
 
 #: ../app/actions/edit-actions.c:133
 msgid "Paste the content of the clipboard into the current selection"
-msgstr "Įdėti podėlio turinį į šiuo metu pasirinktą sritį"
+msgstr "Įdėti iškarpinės turinį į šiuo metu pasirinktą sritį"
 
 #: ../app/actions/edit-actions.c:138
 msgid "Paste as New"
@@ -1563,7 +1563,7 @@ msgstr "Įdėti kaip naują"
 
 #: ../app/actions/edit-actions.c:139 ../app/actions/edit-actions.c:145
 msgid "Create a new image from the content of the clipboard"
-msgstr "Sukurti naują paveikslėlį iš podėlio turinio"
+msgstr "Sukurti naują paveikslėlį iš iškarpinės turinio"
 
 #: ../app/actions/edit-actions.c:144
 msgid "_New Image"
@@ -1575,7 +1575,7 @@ msgstr "_Iškirpti pavadintą..."
 
 #: ../app/actions/edit-actions.c:151
 msgid "Move the selected pixels to a named buffer"
-msgstr "Perkelti pažymėtus taškelius į pavadintą buferį"
+msgstr "Perkelti pažymėtus pikselius į pavadintą buferį"
 
 #: ../app/actions/edit-actions.c:156
 msgid "_Copy Named..."
@@ -1583,7 +1583,7 @@ msgstr "_Kopijuoti pavadintą..."
 
 #: ../app/actions/edit-actions.c:157
 msgid "Copy the selected pixels to a named buffer"
-msgstr "Kopijuoti pasirinktus taškelius į pavadintą buferį"
+msgstr "Kopijuoti pasirinktus pikselius į pavadintą buferį"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:162
@@ -1608,7 +1608,7 @@ msgstr "Iš_valyti"
 
 #: ../app/actions/edit-actions.c:175
 msgid "Clear the selected pixels"
-msgstr "Išvalyti pasirinktus taškelius"
+msgstr "Išvalyti pažymėtus pikselius"
 
 #: ../app/actions/edit-actions.c:183
 msgid "Fill with _FG Color"
@@ -1837,17 +1837,16 @@ msgstr "Išsaugoti _kaip..."
 
 #: ../app/actions/file-actions.c:121
 msgid "Save this image with a different name"
-msgstr "Išsaugoti šį paveikslėlį kitų pavadinimu"
+msgstr "Išsaugoti šį paveikslėlį kitu vardu"
 
 #: ../app/actions/file-actions.c:126
 msgid "Save a Cop_y..."
-msgstr "Išsaugoti kaip k_opiją..."
+msgstr "Išsaugoti k_opiją..."
 
 #: ../app/actions/file-actions.c:127
 msgid "Save this image with a different name, but keep its current name"
 msgstr ""
-"Išsaugoti šį paveikslėlį kitu pavadinimu, tačiau palikti dabartinį jo "
-"pavadinimą"
+"Išsaugoti šį paveikslėlį kitu vardu, tačiau palikti dabartinį jo vardą"
 
 #: ../app/actions/file-actions.c:132
 msgid "Save and Close..."
@@ -2412,7 +2411,7 @@ msgstr "Sukurti naują paveikslėlį"
 
 #: ../app/actions/image-actions.c:84
 msgid "Can_vas Size..."
-msgstr "Pa_veikslėlio ribų dydis..."
+msgstr "Matomosios srities _dydis..."
 
 #: ../app/actions/image-actions.c:85
 msgid "Adjust the image dimensions"
@@ -2420,23 +2419,23 @@ msgstr "Koreguoti paveikslėlio matmenis"
 
 #: ../app/actions/image-actions.c:90
 msgid "F_it Canvas to Layers"
-msgstr "S_utalpinti piešimo erdvę sluoksniuose"
+msgstr "Pr_itaikyti matomąją sritį prie sluoksnių"
 
 #: ../app/actions/image-actions.c:91
 msgid "Resize the image to enclose all layers"
-msgstr "Keisti paveikslėlio dydį siekiant apimti visus sluoksnius"
+msgstr "Pakeisti paveikslėlio dydį, kad jis apimtų visus sluoksnius"
 
 #: ../app/actions/image-actions.c:96
 msgid "F_it Canvas to Selection"
-msgstr "S_utalpinti piešimo erdvę pažymėjime"
+msgstr "Pr_itaikyti matomąją sritį prie pažymėjimo"
 
 #: ../app/actions/image-actions.c:97
 msgid "Resize the image to the extents of the selection"
-msgstr "Keisti paveikslėlio dydį iki pažymėtos srities dydžio"
+msgstr "Pakeisti paveikslėlio dydį iki pažymėtos srities dydžio"
 
 #: ../app/actions/image-actions.c:102
 msgid "_Print Size..."
-msgstr "_Spausdinimo dydis..."
+msgstr "Spau_dinio dydis..."
 
 #: ../app/actions/image-actions.c:103
 msgid "Adjust the print resolution"
@@ -2476,7 +2475,7 @@ msgstr "Sujungti visus matomus sluoksnius į vieną sluoksnį"
 
 #: ../app/actions/image-actions.c:132 ../app/actions/layers-actions.c:140
 msgid "_Flatten Image"
-msgstr "_Suploti paveikslėlį"
+msgstr "S_uploti paveikslėlį"
 
 #: ../app/actions/image-actions.c:133 ../app/actions/layers-actions.c:141
 msgid "Merge all layers into one and remove transparency"
@@ -2484,7 +2483,7 @@ msgstr "Sujungti visus sluoksnius į vieną ir pašalinti permatomumą"
 
 #: ../app/actions/image-actions.c:138
 msgid "Configure G_rid..."
-msgstr "Tinklelio konfigū_ravimas..."
+msgstr "Konfigū_ruoti tinklelį..."
 
 #: ../app/actions/image-actions.c:139
 msgid "Configure the grid for this image"
@@ -2540,7 +2539,7 @@ msgstr "Pasukti paveikslėlį 90 laipsnių į kairę"
 
 #: ../app/actions/image-commands.c:247
 msgid "Set Image Canvas Size"
-msgstr "Nustatyti piešimo erdvės dydį"
+msgstr "Nustatyti paveikslėlio matomosios srities dydį"
 
 #: ../app/actions/image-commands.c:273 ../app/actions/image-commands.c:294
 #: ../app/actions/image-commands.c:571
@@ -2549,7 +2548,7 @@ msgstr "Keičiamas dydis"
 
 #: ../app/actions/image-commands.c:318
 msgid "Set Image Print Resolution"
-msgstr "Nurodyti paveikslėlio spausdinimo raišką"
+msgstr "Nustatyti paveikslėlio spausdinimo raišką"
 
 #: ../app/actions/image-commands.c:374
 #: ../app/pdb/drawable_transform_cmds.c:144
@@ -3265,11 +3264,11 @@ msgstr "An_imacija"
 
 #: ../app/actions/plug-in-actions.c:103
 msgid "Reset all _Filters"
-msgstr "Atšaukti visus _filtrus"
+msgstr "Atstatyti visus _filtrus"
 
 #: ../app/actions/plug-in-actions.c:104
 msgid "Reset all plug-ins to their default settings"
-msgstr "Atkurti visų įskiepių numatytuosius parametrus"
+msgstr "Atstatyti visų įskiepių numatytuosius parametrus"
 
 #: ../app/actions/plug-in-actions.c:112
 msgid "Re_peat Last"
@@ -3308,7 +3307,7 @@ msgstr "Vėl parodyti paskutinį"
 
 #: ../app/actions/plug-in-commands.c:262
 msgid "Reset all Filters"
-msgstr "Atšaukti visus filtrus"
+msgstr "Atstatyti visus filtrus"
 
 #: ../app/actions/plug-in-commands.c:281
 msgid "Do you really want to reset all filters to default values?"
@@ -3316,7 +3315,7 @@ msgstr "Ar tikrai norite atstatyti visus filtrus į numatytąsias reikšmes?"
 
 #: ../app/actions/quick-mask-actions.c:42
 msgid "Quick Mask Menu"
-msgstr "Greitų kaukių meniu"
+msgstr "Greitos kaukės meniu"
 
 #: ../app/actions/quick-mask-actions.c:46
 msgid "_Configure Color and Opacity..."
@@ -4063,7 +4062,7 @@ msgstr "_Taškas į tašką"
 
 #: ../app/actions/view-actions.c:133
 msgid "A pixel on the screen represents an image pixel"
-msgstr "Taškas ekrane atitinka paveikslėlio tašką"
+msgstr "Pikselis ekrane atitinka paveikslėlio pikselį"
 
 #: ../app/actions/view-actions.c:139
 msgid "Show _Selection"
@@ -4127,7 +4126,7 @@ msgstr "Kibti prie _piešimo erdvės kraštų"
 
 #: ../app/actions/view-actions.c:189
 msgid "Tool operations snap to the canvas edges"
-msgstr "Naudojamas įrankis kimba prie piešimo erdvės kraštų"
+msgstr "Naudojamas įrankis kimba prie matomosios srities kraštų"
 
 #: ../app/actions/view-actions.c:195
 msgid "Snap t_o Active Path"
@@ -4530,7 +4529,7 @@ msgid ""
 "Sets the canvas padding color used if the padding mode is set to custom "
 "color."
 msgstr ""
-"Nustato piešimo ribų užpildo spalvą, naudojamą, jei užpildo veiksena "
+"Nustato matomosios srities užpildo spalvą, naudojamą, jei užpildo veiksena "
 "nustatyta į pasirinktinę spalvą."
 
 #: ../app/config/gimprc-blurbs.h:27
@@ -4547,7 +4546,7 @@ msgstr "Prieš užveriant neišsaugotą paveikslėlį paklausti patvirtinimo."
 
 #: ../app/config/gimprc-blurbs.h:39
 msgid "Sets the pixel format to use for mouse pointers."
-msgstr "Nustato pelės žymikliams naudotina taškų formatą."
+msgstr "Nustato pelės žymikliams naudotina pikselių formatą."
 
 #: ../app/config/gimprc-blurbs.h:42
 msgid "Sets the type of mouse pointers to use."
@@ -4567,13 +4566,13 @@ msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
 msgstr ""
-"Kai įjungta, tai užtikrins, kad kiekvienas paveikslėlio taškas bus "
-"priskiriamas taškui ekrane."
+"Kai įjungta, kiekvienas paveikslėlio pikselis bus priskiriamas pikseliui "
+"ekrane."
 
 #: ../app/config/gimprc-blurbs.h:75
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
-"Tai yra atstumas taškais kur aktyvuojamas kibumas prie gairių ir tinklelio."
+"Tai atstumas pikseliais, kur aktyvuojamas kibumas prie gairių ir tinklelio."
 
 #: ../app/config/gimprc-blurbs.h:79
 msgid ""
@@ -4585,7 +4584,7 @@ msgid ""
 msgstr ""
 "Tokie įrankiai kaip neaiškus pažymėjimas ir užpildymas randa regionus pagal "
 "sėklų-užpildymo algoritmą. Sėklų užpildymas prasideda pradžioje pasirinktame "
-"taškelyje ir plečiasi į visas kryptis kol taškelio sodrumo skirtumas nuo "
+"pikselyje ir plečiasi į visas kryptis, kol pikselio sodrumo skirtumas nuo "
 "originalaus neviršija nurodyto slenksčio. Ši reikšmė nurodo numatytąjį "
 "slenkstį."
 
@@ -4975,7 +4974,7 @@ msgid ""
 "images that wouldn't fit into memory otherwise.  If you have a lot of RAM, "
 "you may want to set this to a higher value."
 msgstr ""
-"Kai taškelių duomenų kiekis viršija šią ribą, programa GIMP pradės įkelinėti "
+"Kai pikselių duomenų kiekis viršija šią ribą, programa GIMP pradės įkelinėti "
 "išklotines į diską. Tai žymiai lėčiau, tačiau šitaip įmanoma dirbti su "
 "paveikslėliais, kurie netelpa atmintinėje. Jeigu turite daug operatyviosios "
 "atmintinės, galite nustatyti šią reikšmę į didesnę."
@@ -5071,7 +5070,7 @@ msgstr "Floyd-Steinberg (sumažintas spalvų nublukimas)"
 
 #: ../app/core/core-enums.c:56
 msgid "Positioned"
-msgstr ""
+msgstr "Nustatytos padėties"
 
 #: ../app/core/core-enums.c:85
 msgid "Generate optimum palette"
@@ -5079,7 +5078,7 @@ msgstr "Sugeneruoti optimalią paletę"
 
 #: ../app/core/core-enums.c:86
 msgid "Use web-optimized palette"
-msgstr "Naudoti internetui optimizuotą paletę"
+msgstr "Naudoti žiniatinkliui optimizuotą paletę"
 
 #: ../app/core/core-enums.c:87
 msgid "Use black and white (1-bit) palette"
@@ -5087,7 +5086,7 @@ msgstr "Naudoti juodą ir baltą (1 bito) paletę"
 
 #: ../app/core/core-enums.c:88
 msgid "Use custom palette"
-msgstr "Naudoti papildomą paletę"
+msgstr "Naudoti pasirinktinę paletę"
 
 #: ../app/core/core-enums.c:211
 msgid "First item"
@@ -5138,7 +5137,7 @@ msgstr "Apvesti linija"
 
 #: ../app/core/core-enums.c:280
 msgid "Stroke with a paint tool"
-msgstr "Apvesti su piešimo įrankiu"
+msgstr "Apvesti piešimo įrankiu"
 
 #: ../app/core/core-enums.c:307
 msgid "Solid color"
@@ -6425,9 +6424,9 @@ msgstr "(Peržiūra gali būti pasenusi)"
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
-msgstr[0] "%d × %d taško"
-msgstr[1] "%d × %d taškų"
-msgstr[2] "%d × %d taškų"
+msgstr[0] "%d × %d pikselio"
+msgstr[1] "%d × %d pikselių"
+msgstr[2] "%d × %d pikselių"
 
 #: ../app/core/gimpimagefile.c:647 ../app/display/gimpdisplayshell-title.c:318
 #, c-format
@@ -6825,7 +6824,7 @@ msgstr "K_onvertuoti"
 
 #: ../app/dialogs/convert-dialog.c:189
 msgid "_Maximum number of colors:"
-msgstr "_Maksimalus spalvų skaičius:"
+msgstr "_Didžiausias galimas spalvų skaičius:"
 
 #: ../app/dialogs/convert-dialog.c:216
 msgid "_Remove unused colors from colormap"
@@ -7012,11 +7011,11 @@ msgstr "Išplėstas kiek reikia"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:98
 msgid "Clipped to image"
-msgstr "Prisegtas prie paveikslėlio"
+msgstr "Apkirptas iki paveikslėlio"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:101
 msgid "Clipped to bottom layer"
-msgstr "Prisegtas prie apatinio sluoksnio"
+msgstr "Apkirptas iki apatinio sluoksnio"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:109
 msgid "_Discard invisible layers"
@@ -7823,7 +7822,7 @@ msgstr "Vaizduoklio skiriamoji geba"
 #: ../app/widgets/gimpcursorview.c:124 ../app/widgets/gimpgrideditor.c:261
 #: ../app/widgets/gimpgrideditor.c:293
 msgid "Pixels"
-msgstr "Taškų"
+msgstr "Pikselių"
 
 #: ../app/dialogs/preferences-dialog.c:2322
 #: ../app/widgets/gimpimagepropview.c:469
@@ -8108,7 +8107,7 @@ msgstr "Nurodykite temų aplanką"
 
 #: ../app/dialogs/print-size-dialog.c:138
 msgid "Print Size"
-msgstr "Spausdinimo dydis"
+msgstr "Spaudinio dydis"
 
 #  the image size labels
 #. the image size labels
@@ -8169,7 +8168,7 @@ msgstr "_Atsisakyti pakeitimų"
 
 #: ../app/dialogs/resize-dialog.c:119
 msgid "Canvas Size"
-msgstr "Piešimo erdvės dydis"
+msgstr "Matomosios srities dydis"
 
 #: ../app/dialogs/resize-dialog.c:130 ../app/dialogs/scale-dialog.c:109
 msgid "Layer Size"
@@ -9444,7 +9443,7 @@ msgstr "Spalvų parinkiklis"
 
 #: ../app/tools/gimpcolorpickertool.c:97
 msgid "Color Picker Tool: Set colors from image pixels"
-msgstr "Spalvų parinkimo įrankis: pasirinkti spalvas iš paveikslėlio taškelių"
+msgstr "Spalvų parinkimo įrankis: nustatyti spalvas iš paveikslėlio pikselių"
 
 #: ../app/tools/gimpcolorpickertool.c:98
 msgid "C_olor Picker"
@@ -10587,11 +10586,11 @@ msgstr "Spustelėkite ir tempkite norėdami perkelti pažymėtos srities kaukę"
 
 #: ../app/tools/gimpselectiontool.c:300
 msgid "Click-Drag to move the selected pixels"
-msgstr "Spustelėkite ir tempkite norėdami perkelti pažymėtus taškelius"
+msgstr "Spustelėkite ir tempkite norėdami perkelti pažymėtus pikselius"
 
 #: ../app/tools/gimpselectiontool.c:304
 msgid "Click-Drag to move a copy of the selected pixels"
-msgstr "Spustelėkite ir tempkite norėdami perkelti pažymėtų taškelių kopiją"
+msgstr "Spustelėkite ir tempkite norėdami perkelti pažymėtų pikselių kopiją"
 
 #: ../app/tools/gimpselectiontool.c:308
 msgid "Click to anchor the floating selection"
@@ -11779,7 +11778,7 @@ msgstr "_Fono spalva:"
 
 #: ../app/widgets/gimpgrideditor.c:236
 msgid "Spacing"
-msgstr "Tarpai"
+msgstr "Intervalas"
 
 #: ../app/widgets/gimphelp.c:193
 msgid "Help browser not found"
@@ -11844,7 +11843,7 @@ msgstr "Taškų matmenys:"
 
 #: ../app/widgets/gimpimagepropview.c:124
 msgid "Print size:"
-msgstr "Spausdinimo dydis:"
+msgstr "Spaudinio dydis:"
 
 #: ../app/widgets/gimpimagepropview.c:127
 msgid "Resolution:"
@@ -11852,11 +11851,11 @@ msgstr "Raiška:"
 
 #: ../app/widgets/gimpimagepropview.c:130
 msgid "Color space:"
-msgstr "Spalvų gama:"
+msgstr "Spalvų erdvė:"
 
 #: ../app/widgets/gimpimagepropview.c:135
 msgid "File Name:"
-msgstr "Failo pavadinimas:"
+msgstr "Failo vardas:"
 
 #: ../app/widgets/gimpimagepropview.c:141
 msgid "File Size:"
@@ -11880,7 +11879,7 @@ msgstr "Pakartojami žingsniai:"
 
 #: ../app/widgets/gimpimagepropview.c:160
 msgid "Number of pixels:"
-msgstr "Taškelių skaičius:"
+msgstr "Pikselių skaičius:"
 
 #: ../app/widgets/gimpimagepropview.c:163
 msgid "Number of layers:"
@@ -11897,7 +11896,7 @@ msgstr "Kontūrų skaičius:"
 #: ../app/widgets/gimpimagepropview.c:464
 #, c-format
 msgid "pixels/%s"
-msgstr "taškai/%s"
+msgstr "pikseliai/%s"
 
 #: ../app/widgets/gimpimagepropview.c:466
 #, c-format
@@ -12035,7 +12034,7 @@ msgstr "_Sudėtingesnės parinktys"
 
 #: ../app/widgets/gimptemplateeditor.c:362
 msgid "Color _space:"
-msgstr "_Gama:"
+msgstr "_Spalvų erdvė:"
 
 #: ../app/widgets/gimptemplateeditor.c:370
 msgid "_Fill with:"
@@ -12247,7 +12246,7 @@ msgstr "Priekinis planas"
 
 #: ../app/widgets/widgets-enums.c:83
 msgid "Pixel"
-msgstr "Taškeliai"
+msgstr "Pikselis"
 
 #: ../app/widgets/widgets-enums.c:85
 msgid "HSV"
