@@ -1,5 +1,10 @@
 2007-11-09  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcurveview.c: draw the selected point filled and
+	outlines for the unselected points.
+
+2007-11-09  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcurveview.c (gimp_curve_view_expose): draw the
 	center grid lines slightly stronger than the other grid lines.
 

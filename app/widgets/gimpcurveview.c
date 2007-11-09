@@ -214,7 +214,7 @@ gimp_curve_view_draw_grid (GimpCurveView *view,
 
   for (i = 1; i < view->grid_rows; i++)
     {
-      gint y = i * (height / view->grid_rows);
+      gint y = i * height / view->grid_rows;
 
       if ((view->grid_rows % 2) == 0 && (i == view->grid_rows / 2))
         continue;
@@ -225,7 +225,7 @@ gimp_curve_view_draw_grid (GimpCurveView *view,
 
   for (i = 1; i < view->grid_columns; i++)
     {
-      gint x = i * (width / view->grid_columns);
+      gint x = i * width / view->grid_columns;
 
       if ((view->grid_columns % 2) == 0 && (i == view->grid_columns / 2))
         continue;
@@ -255,6 +255,32 @@ gimp_curve_view_draw_grid (GimpCurveView *view,
 
   cairo_set_line_width (cr, 1.0);
   cairo_stroke (cr);
+}
+
+static void
+gimp_curve_view_draw_point (GimpCurveView *view,
+                            cairo_t       *cr,
+                            gint           i,
+                            gint           width,
+                            gint           height,
+                            gint           border)
+{
+  gint x, y;
+
+  x = view->curve->points[i][0];
+  if (x < 0)
+    return;
+
+  y = 255 - view->curve->points[i][1];
+
+  cairo_move_to (cr,
+                 border + (gdouble) width  * x / 256.0,
+                 border + (gdouble) height * y / 256.0);
+  cairo_arc (cr,
+             border + (gdouble) width  * x / 256.0,
+             border + (gdouble) height * y / 256.0,
+             3,
+             0, 2 * G_PI);
 }
 
 static gboolean
@@ -314,43 +340,26 @@ gimp_curve_view_expose (GtkWidget      *widget,
 
   if (view->curve->curve_type == GIMP_CURVE_SMOOTH)
     {
-      /*  Draw the points  */
+      gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
+
+      /*  Draw the unselected points  */
       for (i = 0; i < GIMP_CURVE_NUM_POINTS; i++)
         {
-          x = view->curve->points[i][0];
-          if (x < 0)
+          if (i == view->selected)
             continue;
 
-          y = 255 - view->curve->points[i][1];
-
-          cairo_move_to (cr,
-                         border + (gdouble) width  * x / 256.0,
-                         border + (gdouble) height * y / 256.0);
-          cairo_arc (cr,
-                     border + (gdouble) width  * x / 256.0,
-                     border + (gdouble) height * y / 256.0,
-                     border,
-                     0, 2 * G_PI);
-
-          if (i == view->selected)
-            {
-              cairo_fill (cr);
-
-              gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
-
-              cairo_arc (cr,
-                         border + (gdouble) width  * x / 256.0,
-                         border + (gdouble) height * y / 256.0,
-                         border - 2,
-                         0, 2 * G_PI);
-
-              cairo_fill (cr);
-
-              gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
-            }
+          gimp_curve_view_draw_point (view, cr, i, width, height, border);
         }
 
-      cairo_fill (cr);
+      cairo_stroke (cr);
+
+      /*  Draw the selected point  */
+      if (view->selected != -1)
+        {
+          gimp_curve_view_draw_point (view, cr, view->selected,
+                                      width, height, border);
+          cairo_fill (cr);
+       }
     }
 
   if (view->xpos >= 0)
@@ -394,7 +403,6 @@ gimp_curve_view_expose (GtkWidget      *widget,
       view->cursor_y >= 0 && view->cursor_y <= 255)
     {
       gchar buf[32];
-      gint  x, y;
       gint  w, h;
 
       if (! view->cursor_layout)
