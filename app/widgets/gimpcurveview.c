@@ -200,6 +200,63 @@ gimp_curve_view_get_property (GObject    *object,
     }
 }
 
+static void
+gimp_curve_view_draw_grid (GimpCurveView *view,
+                           GtkStyle      *style,
+                           cairo_t       *cr,
+                           gint           width,
+                           gint           height,
+                           gint           border)
+{
+  gint i;
+
+  gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_NORMAL]);
+
+  for (i = 1; i < view->grid_rows; i++)
+    {
+      gint y = i * (height / view->grid_rows);
+
+      if ((view->grid_rows % 2) == 0 && (i == view->grid_rows / 2))
+        continue;
+
+      cairo_move_to (cr, border,             border + y);
+      cairo_line_to (cr, border + width - 1, border + y);
+    }
+
+  for (i = 1; i < view->grid_columns; i++)
+    {
+      gint x = i * (width / view->grid_columns);
+
+      if ((view->grid_columns % 2) == 0 && (i == view->grid_columns / 2))
+        continue;
+
+      cairo_move_to (cr, border + x, border);
+      cairo_line_to (cr, border + x, border + height - 1);
+    }
+
+  cairo_set_line_width (cr, 0.6);
+  cairo_stroke (cr);
+
+  if ((view->grid_rows % 2) == 0)
+    {
+      gint y = height / 2;
+
+      cairo_move_to (cr, border,             border + y);
+      cairo_line_to (cr, border + width - 1, border + y);
+    }
+
+  if ((view->grid_columns % 2) == 0)
+    {
+      gint x = width / 2;
+
+      cairo_move_to (cr, border + x, border);
+      cairo_line_to (cr, border + x, border + height - 1);
+    }
+
+  cairo_set_line_width (cr, 1.0);
+  cairo_stroke (cr);
+}
+
 static gboolean
 gimp_curve_view_expose (GtkWidget      *widget,
                         GdkEventExpose *event)
@@ -208,7 +265,8 @@ gimp_curve_view_expose (GtkWidget      *widget,
   GtkStyle      *style = widget->style;
   cairo_t       *cr;
   gint           border;
-  gint           width, height;
+  gint           width;
+  gint           height;
   gint           x, y;
   gint           i;
 
@@ -228,29 +286,9 @@ gimp_curve_view_expose (GtkWidget      *widget,
   cairo_clip (cr);
 
   cairo_translate (cr, 0.5, 0.5);
-  cairo_set_line_width (cr, 1);
-
-  gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_NORMAL]);
 
   /*  Draw the grid lines  */
-  for (i = 1; i < view->grid_rows; i++)
-    {
-      gint y = i * (height / view->grid_rows);
-
-      cairo_move_to (cr, border,             border + y);
-      cairo_line_to (cr, border + width - 1, border + y);
-    }
-
-
-  for (i = 1; i < view->grid_columns; i++)
-    {
-      gint x = i * (width / view->grid_columns);
-
-      cairo_move_to (cr, border + x, border);
-      cairo_line_to (cr, border + x, border + height - 1);
-    }
-
-  cairo_stroke (cr);
+  gimp_curve_view_draw_grid (view, style, cr, width, height, border);
 
   /*  Draw the curve  */
   gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);

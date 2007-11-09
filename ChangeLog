@@ -1,6 +1,11 @@
 2007-11-09  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcurveview.c (gimp_curve_view_expose): draw the
+	center grid lines slightly stronger than the other grid lines.
+
+2007-11-09  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcurveview.c (gimp_curve_view_expose): draw the
 	cursor position using a translucent overlay.
 
 2007-11-09  Sven Neumann  <sven@gimp.org>
