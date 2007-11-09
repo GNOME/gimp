@@ -525,32 +525,35 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
                                    GimpHelpItem   *item,
                                    GimpHelpLocale *locale)
 {
-  gchar **indices;
-  gint    i;
 
 #if 0
   g_printerr ("%s: processing %s (parent %s)\n",
-              G_STRFUNC, item->title, item->parent ? item->parent : "NULL");
+              G_STRFUNC,
+              item->title  ? item->title  : "NULL",
+              item->parent ? item->parent : "NULL");
 #endif
 
-  indices = g_strsplit (item->title, ".", -1);
-
-  for (i = 0; i < 5; i++)
+  if (item->title)
     {
-      if (! indices[i])
-        break;
+      gchar **indices = g_strsplit (item->title, ".", -1);
+      gint    i;
 
-      item->index += atoi (indices[i]) << (8 * (5 - i));
+      for (i = 0; i < 5; i++)
+        {
+          if (! indices[i])
+            break;
+
+          item->index += atoi (indices[i]) << (8 * (5 - i));
+        }
+
+      g_strfreev (indices);
     }
-
-  g_strfreev (indices);
 
   if (item->parent && strlen (item->parent))
     {
       GimpHelpItem *parent;
 
-      parent = g_hash_table_lookup (locale->help_id_mapping,
-                                    item->parent);
+      parent = g_hash_table_lookup (locale->help_id_mapping, item->parent);
 
       if (parent)
         parent->children = g_list_prepend (parent->children, item);
@@ -660,9 +663,7 @@ browser_dialog_make_index (GimpHelpDomain *domain,
 void
 browser_dialog_goto_index (const gchar *ref)
 {
-  GtkTreeIter *iter;
-
-  iter = g_hash_table_lookup (uri_hash_table, ref);
+  GtkTreeIter *iter = g_hash_table_lookup (uri_hash_table, ref);
 
   if (iter)
     {
