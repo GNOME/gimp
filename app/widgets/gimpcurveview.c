@@ -33,8 +33,24 @@
 #include "gimpcurveview.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_GRID_ROWS,
+  PROP_GRID_COLUMNS
+};
+
+
 static void       gimp_curve_view_finalize       (GObject          *object);
 static void       gimp_curve_view_dispose        (GObject          *object);
+static void       gimp_curve_view_set_property   (GObject          *object,
+                                                  guint             property_id,
+                                                  const GValue     *value,
+                                                  GParamSpec       *pspec);
+static void       gimp_curve_view_get_property   (GObject          *object,
+                                                  guint             property_id,
+                                                  GValue           *value,
+                                                  GParamSpec       *pspec);
 
 static gboolean   gimp_curve_view_expose         (GtkWidget        *widget,
                                                   GdkEventExpose   *event);
@@ -65,6 +81,8 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
 
   object_class->finalize             = gimp_curve_view_finalize;
   object_class->dispose              = gimp_curve_view_dispose;
+  object_class->set_property         = gimp_curve_view_set_property;
+  object_class->get_property         = gimp_curve_view_get_property;
 
   widget_class->expose_event         = gimp_curve_view_expose;
   widget_class->button_press_event   = gimp_curve_view_button_press;
@@ -74,6 +92,17 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
   widget_class->key_press_event      = gimp_curve_view_key_press;
 
   hist_class->light_histogram        = TRUE;
+
+  g_object_class_install_property (object_class, PROP_GRID_ROWS,
+                                   g_param_spec_int ("grid-rows", NULL, NULL,
+                                                     0, 100, 8,
+                                                     GIMP_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_GRID_COLUMNS,
+                                   g_param_spec_int ("grid-columns", NULL, NULL,
+                                                     0, 100, 8,
+                                                     GIMP_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -127,6 +156,50 @@ gimp_curve_view_dispose (GObject *object)
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
+static void
+gimp_curve_view_set_property   (GObject      *object,
+                                guint         property_id,
+                                const GValue *value,
+                                GParamSpec   *pspec)
+{
+  GimpCurveView *view = GIMP_CURVE_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_GRID_ROWS:
+      view->grid_rows = g_value_get_int (value);
+      break;
+    case PROP_GRID_COLUMNS:
+      view->grid_columns = g_value_get_int (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_curve_view_get_property (GObject    *object,
+                              guint       property_id,
+                              GValue     *value,
+                              GParamSpec *pspec)
+{
+  GimpCurveView *view = GIMP_CURVE_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_GRID_ROWS:
+      g_value_set_int (value, view->grid_rows);
+      break;
+    case PROP_GRID_COLUMNS:
+      g_value_set_int (value, view->grid_columns);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
 static gboolean
 gimp_curve_view_expose (GtkWidget      *widget,
                         GdkEventExpose *event)
@@ -145,6 +218,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
     return FALSE;
 
   border = GIMP_HISTOGRAM_VIEW (view)->border_width;
+
   width  = widget->allocation.width  - 2 * border;
   height = widget->allocation.height - 2 * border;
 
@@ -159,21 +233,21 @@ gimp_curve_view_expose (GtkWidget      *widget,
   gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_NORMAL]);
 
   /*  Draw the grid lines  */
-  for (i = 1; i < 4; i++)
+  for (i = 1; i < view->grid_rows; i++)
     {
-      cairo_move_to (cr,
-                     border,
-                     border + i * (height / 4));
-      cairo_line_to (cr,
-                     border + width - 1,
-                     border + i * (height / 4));
+      gint y = i * (height / view->grid_rows);
 
-      cairo_move_to (cr,
-                     border + i * (width / 4),
-                     border);
-      cairo_line_to (cr,
-                     border + i * (width / 4),
-                     border + height - 1);
+      cairo_move_to (cr, border,             border + y);
+      cairo_line_to (cr, border + width - 1, border + y);
+    }
+
+
+  for (i = 1; i < view->grid_columns; i++)
+    {
+      gint x = i * (width / view->grid_columns);
+
+      cairo_move_to (cr, border + x, border);
+      cairo_line_to (cr, border + x, border + height - 1);
     }
 
   cairo_stroke (cr);

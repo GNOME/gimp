@@ -39,6 +39,9 @@ struct _GimpCurveView
 
   GimpCurve         *curve;
 
+  gint               grid_rows;
+  gint               grid_columns;
+
   gint               selected;
   gint               last;
   gint               leftmost;

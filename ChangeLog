@@ -1,3 +1,9 @@
+2007-11-09  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcurveview.[ch]: added construct-only properties
+	to control the number of grid rows and columns. Increased the
+	default values to 8.
+
 2007-11-09  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimphelpui.[ch]: use the new tooltip API instead
