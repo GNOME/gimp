@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP (libgimp) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-11 01:29+0300\n"
-"PO-Revision-Date: 2007-10-11 01:31+0300\n"
+"POT-Creation-Date: 2007-11-09 15:12+0200\n"
+"PO-Revision-Date: 2007-11-09 01:42+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Teptuko pasirinkimas"
 
-#: ../libgimp/gimpbrushselectbutton.c:911
-#: ../libgimp/gimppatternselectbutton.c:712
+#: ../libgimp/gimpbrushselectbutton.c:913
+#: ../libgimp/gimppatternselectbutton.c:714
 msgid "_Browse..."
 msgstr "_Naršyti..."
 
@@ -556,7 +556,7 @@ msgstr "Brūkšniuota"
 
 #: ../libgimpbase/gimpbaseenums.c:432
 msgid "Double dashed"
-msgstr "Dvigubai brūkšniuota"
+msgstr "Dviguba brūkšniuota"
 
 #: ../libgimpbase/gimpbaseenums.c:433
 msgid "Solid"
@@ -576,7 +576,7 @@ msgstr "Paveikslėlio failas"
 
 #: ../libgimpbase/gimpbaseenums.c:493
 msgid "RGB color"
-msgstr "RGB spalva"
+msgstr "RGB spalvos"
 
 #: ../libgimpbase/gimpbaseenums.c:494 ../libgimpbase/gimpbaseenums.c:529
 msgid "Grayscale"
@@ -626,7 +626,7 @@ msgstr "Konstanta"
 msgid "Incremental"
 msgstr "Didėjantis"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:214
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:224
 msgid "None"
 msgstr "Nėra"
 
@@ -764,7 +764,8 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:408
+#: ../modules/cdisplay_lcms.c:216 ../modules/colorsel_cmyk_lcms.c:408
+#: ../modules/colorsel_cmyk_lcms.c:414
 msgid "(invalid UTF-8 string)"
 msgstr "(nekorektiška UTF-8 eilutė)"
 
@@ -1363,15 +1364,15 @@ msgstr "Kontrastas"
 msgid "Contrast c_ycles:"
 msgstr "Kontrasto c_iklai:"
 
-#: ../modules/cdisplay_lcms.c:105
+#: ../modules/cdisplay_lcms.c:111
 msgid "Color management display filter using ICC color profiles"
 msgstr "Spalvų valdymo ekrano filtras, naudojantis ICC spalvų profilius"
 
-#: ../modules/cdisplay_lcms.c:166
+#: ../modules/cdisplay_lcms.c:172
 msgid "Color Management"
 msgstr "Spalvų valdymas"
 
-#: ../modules/cdisplay_lcms.c:235
+#: ../modules/cdisplay_lcms.c:245
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1379,19 +1380,19 @@ msgstr ""
 "Šis filtras naudoja konfigūraciją, nurodytą Spalvų valdymo sekcijoje, "
 "esančioje Nustatymuose."
 
-#: ../modules/cdisplay_lcms.c:249
+#: ../modules/cdisplay_lcms.c:259
 msgid "Mode of operation:"
 msgstr "Veikimo veiksena:"
 
-#: ../modules/cdisplay_lcms.c:256
+#: ../modules/cdisplay_lcms.c:267
 msgid "Image profile:"
 msgstr "Paveikslėlio profilis:"
 
-#: ../modules/cdisplay_lcms.c:263
+#: ../modules/cdisplay_lcms.c:275
 msgid "Monitor profile:"
 msgstr "Monitoriaus profilis:"
 
-#: ../modules/cdisplay_lcms.c:270
+#: ../modules/cdisplay_lcms.c:283
 msgid "Print simulation profile:"
 msgstr "Spausdinimo simuliavimo profilis:"
 
@@ -1487,7 +1488,7 @@ msgstr "CMYK spalvų parinkiklis (naudojant spalvų profilį)"
 msgid "Profile: (none)"
 msgstr "Profilis: (nėra)"
 
-#: ../modules/colorsel_cmyk_lcms.c:410
+#: ../modules/colorsel_cmyk_lcms.c:417
 #, c-format
 msgid "Profile: %s"
 msgstr "Profilis: %s"
