@@ -459,7 +459,6 @@ create_options_page (void)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *combo;
-  GtkWidget *ebox;
   GtkWidget *toggle;
   GtkWidget *table;
   GtkWidget *spinbutton;
@@ -492,19 +491,14 @@ create_options_page (void)
                                   _("Cylinder"), MAP_CYLINDER,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), mapvals.maptype);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+  gtk_widget_show (combo);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (mapmenu_callback),
                     &mapvals.maptype);
 
-  ebox = gtk_event_box_new ();
-  gtk_container_add (GTK_CONTAINER (ebox), combo);
-  gtk_widget_show (combo);
-
-  gtk_box_pack_start (GTK_BOX (hbox), ebox, TRUE, TRUE, 0);
-  gtk_widget_show (ebox);
-
-  gimp_help_set_help_data (ebox, _("Type of object to map to"), NULL);
+  gimp_help_set_help_data (combo, _("Type of object to map to"), NULL);
 
   toggle = gtk_check_button_new_with_label (_("Transparent background"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -558,13 +552,13 @@ create_options_page (void)
   gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
   gtk_widget_show (toggle);
 
-  gimp_help_set_help_data (toggle,
-			   _("Enable/disable jagged edges removal "
-			     "(antialiasing)"), NULL);
-
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mapvals.antialiasing);
+
+  gimp_help_set_help_data (toggle,
+			   _("Enable/disable jagged edges removal "
+			     "(antialiasing)"), NULL);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -615,7 +609,6 @@ create_light_page (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *combo;
-  GtkWidget *ebox;
   GtkWidget *colorbutton;
   GtkWidget *spinbutton;
   GtkObject *adj;
@@ -638,20 +631,15 @@ create_light_page (void)
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
                                  mapvals.lightsource.type);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Lightsource type:"), 0.0, 0.5,
+			     combo, 1, FALSE);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (lightmenu_callback),
                     &mapvals.lightsource.type);
 
-  ebox = gtk_event_box_new ();
-  gtk_container_add (GTK_CONTAINER (ebox), combo);
-  gtk_widget_show (combo);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Lightsource type:"), 0.0, 0.5,
-			     ebox, 1, FALSE);
-
-  gimp_help_set_help_data (ebox, _("Type of light source to apply"), NULL);
+  gimp_help_set_help_data (combo, _("Type of light source to apply"), NULL);
 
   colorbutton = gimp_color_button_new (_("Select lightsource color"),
 				       64, 16,

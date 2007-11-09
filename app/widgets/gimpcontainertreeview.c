@@ -91,6 +91,12 @@ static void gimp_container_tree_view_selection_changed (GtkTreeSelection      *s
 static gboolean gimp_container_tree_view_button_press (GtkWidget              *widget,
                                                        GdkEventButton         *bevent,
                                                        GimpContainerTreeView  *tree_view);
+static gboolean  gimp_container_tree_view_tooltip     (GtkWidget              *widget,
+                                                       gint                    x,
+                                                       gint                    y,
+                                                       gboolean                keyboard_tip,
+                                                       GtkTooltip             *tooltip,
+                                                       GimpContainerTreeView  *tree_view);
 static void gimp_container_tree_view_renderer_update  (GimpViewRenderer       *renderer,
                                                        GimpContainerTreeView  *tree_view);
 
@@ -196,6 +202,7 @@ gimp_container_tree_view_constructor (GType                  type,
                                   "search-column",   COLUMN_NAME,
                                   "enable-search",   FALSE,
                                   "headers-visible", FALSE,
+                                  "has-tooltip",     TRUE,
                                   NULL);
   g_object_unref (list);
 
@@ -254,6 +261,10 @@ gimp_container_tree_view_constructor (GType                  type,
                     tree_view);
   g_signal_connect (tree_view->view, "drag-data-received",
                     G_CALLBACK (gimp_container_tree_view_drag_data_received),
+                    tree_view);
+
+  g_signal_connect (tree_view->view, "query-tooltip",
+                    G_CALLBACK (gimp_container_tree_view_tooltip),
                     tree_view);
 
   return object;
@@ -1022,6 +1033,54 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
     }
 
   return TRUE;
+}
+
+static gboolean
+gimp_container_tree_view_tooltip (GtkWidget             *widget,
+                                  gint                   x,
+                                  gint                   y,
+                                  gboolean               keyboard_tip,
+                                  GtkTooltip            *tooltip,
+                                  GimpContainerTreeView *tree_view)
+{
+  GimpViewRenderer *renderer;
+  GtkTreeIter       iter;
+  GtkTreePath      *path;
+  gboolean          show_tip = FALSE;
+
+  if (! gtk_tree_view_get_tooltip_context (GTK_TREE_VIEW (widget), &x, &y,
+                                           keyboard_tip,
+                                           NULL, &path, &iter))
+    return FALSE;
+
+  gtk_tree_model_get (tree_view->model, &iter,
+                      COLUMN_RENDERER, &renderer,
+                      -1);
+
+  if (renderer)
+    {
+      gchar *desc;
+      gchar *tip;
+
+      desc = gimp_viewable_get_description (renderer->viewable, &tip);
+
+      if (tip)
+        {
+          gtk_tooltip_set_text (tooltip, tip);
+          gtk_tree_view_set_tooltip_row (GTK_TREE_VIEW (widget), tooltip, path);
+
+          show_tip = TRUE;
+
+          g_free (tip);
+        }
+
+      g_free (desc);
+      g_object_unref (renderer);
+    }
+
+  gtk_tree_path_free (path);
+
+  return show_tip;
 }
 
 static void

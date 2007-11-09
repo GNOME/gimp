@@ -366,7 +366,6 @@ warp_dialog (GimpDrawable *drawable)
   GtkWidget    *spinbutton;
   GtkObject    *adj;
   GtkWidget    *combo;
-  GtkWidget    *ebox;
   GtkSizeGroup *label_group;
   GtkSizeGroup *spin_group;
   GSList       *group = NULL;
@@ -648,19 +647,15 @@ warp_dialog (GimpDrawable *drawable)
   /* ---------  Gradient map menu ----------------  */
 
   combo = gimp_drawable_combo_box_new (warp_map_constrain, drawable);
+  gtk_table_attach (GTK_TABLE (table), combo, 2, 3, 0, 1,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (combo);
+
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.grad_map,
                               G_CALLBACK (gimp_int_combo_box_get_active),
                               &dvals.grad_map);
 
-  ebox = gtk_event_box_new ();
-  gtk_container_add (GTK_CONTAINER (ebox), combo);
-  gtk_widget_show (combo);
-
-  gtk_table_attach (GTK_TABLE (table), ebox, 2, 3, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (ebox);
-
-  gimp_help_set_help_data (ebox, _("Gradient map selection menu"), NULL);
+  gimp_help_set_help_data (combo, _("Gradient map selection menu"), NULL);
 
   /* ---------------------------------------------- */
 
@@ -695,19 +690,15 @@ warp_dialog (GimpDrawable *drawable)
 
   /* ---------  Vector map menu ----------------  */
   combo = gimp_drawable_combo_box_new (warp_map_constrain, drawable);
+  gtk_table_attach (GTK_TABLE (table), combo, 2, 3, 1, 2,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (combo);
+
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.vector_map,
                               G_CALLBACK (gimp_int_combo_box_get_active),
                               &dvals.vector_map);
 
-  ebox = gtk_event_box_new ();
-  gtk_container_add (GTK_CONTAINER (ebox), combo);
-  gtk_widget_show (combo);
-
-  gtk_table_attach (GTK_TABLE (table), ebox, 2, 3, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (ebox);
-
-  gimp_help_set_help_data (ebox,
+  gimp_help_set_help_data (combo,
 			   _("Fixed-direction-vector map selection menu"),
 			   NULL);
 

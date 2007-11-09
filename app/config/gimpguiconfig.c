@@ -150,7 +150,8 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TOOLTIPS,
                                     "show-tooltips", SHOW_TOOLTIPS_BLURB,
                                     TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TEAROFF_MENUS,
                                     "tearoff-menus", TEAROFF_MENUS_BLURB,
                                     TRUE,

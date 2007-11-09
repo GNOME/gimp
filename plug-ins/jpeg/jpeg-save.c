@@ -805,7 +805,6 @@ save_dialog (void)
   GtkWidget     *frame;
   GtkWidget     *toggle;
   GtkWidget     *spinbutton;
-  GtkWidget     *ebox;
   GtkWidget     *label;
   GtkWidget     *combo;
   GtkWidget     *text_view;
@@ -866,20 +865,16 @@ save_dialog (void)
                     G_CALLBACK (make_preview),
                     NULL);
 
-  ebox = gtk_event_box_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, FALSE, 0);
-  gtk_widget_show (ebox);
-
-  gimp_help_set_help_data (ebox,
-                           _("Enable preview to obtain the file size."), NULL);
-
   preview_size = gtk_label_new (_("File size: unknown"));
   gtk_misc_set_alignment (GTK_MISC (preview_size), 0.0, 0.5);
   gimp_label_set_attributes (GTK_LABEL (preview_size),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-  gtk_container_add (GTK_CONTAINER (ebox), preview_size);
+  gtk_box_pack_start (GTK_BOX (vbox), preview_size, FALSE, FALSE, 0);
   gtk_widget_show (preview_size);
+
+  gimp_help_set_help_data (preview_size,
+                           _("Enable preview to obtain the file size."), NULL);
 
   pg.preview = toggle =
     gtk_check_button_new_with_mnemonic (_("Show _preview in image window"));

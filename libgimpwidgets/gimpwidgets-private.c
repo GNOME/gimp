@@ -28,7 +28,6 @@
 
 #include "gimpwidgetstypes.h"
 
-#include "gimphelpui.h"
 #include "gimpstock.h"
 #include "gimpwidgets-private.h"
 
@@ -83,8 +82,6 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
 
   g_list_foreach (icon_list, (GFunc) g_object_unref, NULL);
   g_list_free (icon_list);
-
-  _gimp_help_init ();
 
   gimp_widgets_initialized = TRUE;
 }

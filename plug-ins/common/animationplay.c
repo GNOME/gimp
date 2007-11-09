@@ -569,7 +569,6 @@ build_dialog (GimpImageBaseType  basetype,
   GtkWidget   *vbox;
   GtkWidget   *hbox;
   GtkWidget   *abox;
-  GtkWidget   *ebox;
   GtkToolItem *item;
   GtkAction   *action;
   GdkCursor   *cursor;
@@ -638,12 +637,8 @@ build_dialog (GimpImageBaseType  basetype,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  ebox = gtk_event_box_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), ebox, FALSE, FALSE, 0);
-  gtk_widget_show (ebox);
-
   speedcombo = gtk_combo_box_new_text ();
-  gtk_container_add (GTK_CONTAINER (ebox), speedcombo);
+  gtk_box_pack_start (GTK_BOX (hbox), speedcombo, FALSE, FALSE, 0);
   gtk_widget_show (speedcombo);
 
   for (index = 0; index < 7; index++)
@@ -661,7 +656,7 @@ build_dialog (GimpImageBaseType  basetype,
                     G_CALLBACK (speedcombo_changed),
                     NULL);
 
-  gimp_help_set_help_data (ebox, _("Playback speed"), NULL);
+  gimp_help_set_help_data (speedcombo, _("Playback speed"), NULL);
 
   progress = gtk_progress_bar_new ();
   gtk_box_pack_start (GTK_BOX (hbox), progress, TRUE, TRUE, 0);

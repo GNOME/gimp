@@ -1023,19 +1023,10 @@ prefs_profile_combo_add_tooltip (GtkWidget   *combo,
 
   blurb = g_param_spec_get_blurb (param_spec);
 
-  /*  can't set a tooltip on a combo_box  */
   if (blurb)
-    {
-      GtkWidget *ebox = gtk_event_box_new ();
-
-      gimp_help_set_help_data (ebox,
-                               dgettext (GETTEXT_PACKAGE "-libgimp", blurb),
-                               NULL);
-      gtk_container_add (GTK_CONTAINER (ebox), combo);
-      gtk_widget_show (combo);
-
-      return ebox;
-    }
+    gimp_help_set_help_data (combo,
+                             dgettext (GETTEXT_PACKAGE "-libgimp", blurb),
+                             NULL);
 
   return combo;
 }

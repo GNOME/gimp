@@ -18,11 +18,6 @@
 
 #include "config.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED (GtkTooltips)
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpconfig/gimpconfig.h"
@@ -312,16 +307,18 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
     /*  add modifier keys to the tooltips  */
     for (list = children, i = 0; list; list = list->next, i++)
       {
-        GtkWidget       *button   = list->data;
-        GtkTooltipsData *data     = gtk_tooltips_data_get (button);
-        const gchar     *modifier = gimp_selection_options_get_modifier (i);
+        GtkWidget   *button   = list->data;
+        const gchar *modifier = gimp_selection_options_get_modifier (i);
+        gchar       *tooltip;
 
         if (! modifier)
           continue;
 
-        if (data && data->tip_text)
+        tooltip = gtk_widget_get_tooltip_text (button);
+
+        if (tooltip)
           {
-            gchar *tip = g_strdup_printf ("%s  (%s)", data->tip_text, modifier);
+            gchar *tip = g_strdup_printf ("%s  <b>%s</b>", tooltip, modifier);
 
             gimp_help_set_help_data (button, tip, NULL);
             g_free (tip);

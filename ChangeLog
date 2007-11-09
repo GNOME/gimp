@@ -1,3 +1,38 @@
+2007-11-09  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimphelpui.[ch]: use the new tooltip API instead
+	of the old deprecated one. Removed _gimp_help_init(). Remember
+	whether tooltips are enabled or not in a local variable that can
+	only be altered at startup time and not after. The API now expects
+	markup instead of plain text which might cause warnings and
+	perhaps needs to be changed.
+
+	* libgimpwidgets/gimpwidgets-private.c: don't call _gimp_help_init().
+
+	* app/config/gimpguiconfig.c: made show-tooltips a
+	GIMP_CONFIG_PARAM_RESTART property.
+
+	* app/widgets/gimptoolbox-color-area.c: don't add the tooltip here...
+
+	* app/widgets/gimptoolbox.c: ...but here (as for all other
+	indicators). Also escape '&' properly because we now use markup.
+
+	* app/tools/gimpselectionoptions.c
+	* app/widgets/gimpeditor.c
+	* app/widgets/gimpwidgets-utils.c: print modifiers and
+	shortcuts in bold instead of in ().
+
+	* app/widgets/gimpcontainertreeview.c: show tooltips on rows if
+	gimp_viewable_get_description() returns a tip.
+
+	* app/dialogs/preferences-dialog.c
+	* plug-ins/jpeg/jpeg-save.c
+	* plug-ins/MapObject/mapobject_ui.c
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/warp.c: no need to add event boxes just to have
+	tooltips, the new ones work on all widgets.
+
 2007-11-08  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpstatusbar.c (gimp_statusbar_vprintf): also cut

@@ -999,7 +999,7 @@ gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
           gchar *accel = gtk_accelerator_get_label (accel_key->accel_key,
                                                     accel_key->accel_mods);
 
-          tooltip = g_strdup_printf ("%s  (%s)", orig_tooltip, accel);
+          tooltip = g_strdup_printf ("%s  <b>%s</b>", orig_tooltip, accel);
           g_free (accel);
         }
       else

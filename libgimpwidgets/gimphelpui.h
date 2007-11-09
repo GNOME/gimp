@@ -53,11 +53,7 @@ void   gimp_context_help            (GtkWidget    *widget);
 
 #define GIMP_HELP_ID (gimp_help_id_quark ())
 
-GQuark gimp_help_id_quark          (void) G_GNUC_CONST;
-
-
-/*  only for private use in libgimpwidgets  */
-G_GNUC_INTERNAL void _gimp_help_init (void);
+GQuark gimp_help_id_quark           (void) G_GNUC_CONST;
 
 
 G_END_DECLS

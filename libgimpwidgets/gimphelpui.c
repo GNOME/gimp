@@ -22,11 +22,6 @@
 
 #include "config.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED (GtkTooltips)
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -41,6 +36,12 @@ typedef enum
 {
   GIMP_WIDGET_HELP_TYPE_HELP = 0xff
 } GimpWidgetHelpType;
+
+
+/*  local variables  */
+
+static gboolean tooltips_enabled       = TRUE;
+static gboolean tooltips_enable_called = FALSE;
 
 
 /*  local function prototypes  */
@@ -62,37 +63,7 @@ static gboolean   gimp_context_help_key_press      (GtkWidget      *widget,
 static gboolean   gimp_context_help_idle_show_help (gpointer        data);
 
 
-/*  local variables  */
-
-static GtkTooltips *tool_tips = NULL;
-
-
 /*  public functions  */
-
-/**
- * _gimp_help_init:
- *
- * This function initializes GIMP's help system.
- *
- * Currently it only creates a #GtkTooltips object with gtk_tooltips_new()
- * which will be used by gimp_help_set_help_data().
- *
- * Nota that this function is called automatically by gimp_widgets_init().
- **/
-void
-_gimp_help_init (void)
-{
-  if (tool_tips)
-    {
-      g_warning ("_gimp_help_init() must only be called once!");
-      return;
-    }
-
-  tool_tips = gtk_tooltips_new ();
-
-  /* take ownership of the tooltips */
-  g_object_ref_sink (tool_tips);
-}
 
 /**
  * gimp_help_enable_tooltips:
@@ -102,7 +73,11 @@ _gimp_help_init (void)
 void
 gimp_help_enable_tooltips (void)
 {
-  gtk_tooltips_enable (tool_tips);
+  if (! tooltips_enable_called)
+    {
+      tooltips_enable_called = TRUE;
+      tooltips_enabled       = TRUE;
+    }
 }
 
 /**
@@ -113,7 +88,11 @@ gimp_help_enable_tooltips (void)
 void
 gimp_help_disable_tooltips (void)
 {
-  gtk_tooltips_disable (tool_tips);
+  if (! tooltips_enable_called)
+    {
+      tooltips_enable_called = TRUE;
+      tooltips_enabled       = FALSE;
+    }
 }
 
 /**
@@ -214,10 +193,10 @@ gimp_help_set_help_data (GtkWidget   *widget,
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  gtk_tooltips_set_tip (tool_tips, widget, tooltip, help_id);
+  if (tooltips_enabled)
+    gtk_widget_set_tooltip_markup (widget, tooltip);
 
-  if (! tooltip)
-    g_object_set_qdata (G_OBJECT (widget), GIMP_HELP_ID, (gpointer) help_id);
+  g_object_set_qdata (G_OBJECT (widget), GIMP_HELP_ID, (gpointer) help_id);
 }
 
 /**
@@ -272,19 +251,12 @@ gimp_help_get_help_data (GtkWidget  *widget,
                          GtkWidget **help_widget,
                          gpointer   *ret_data)
 {
-  GtkTooltipsData *tooltips_data;
-  gchar           *help_id   = NULL;
-  gpointer         help_data = NULL;
+  gchar    *help_id   = NULL;
+  gpointer  help_data = NULL;
 
   for (; widget; widget = widget->parent)
     {
-      tooltips_data = gtk_tooltips_data_get (widget);
-
-      if (tooltips_data && tooltips_data->tip_private)
-        help_id = tooltips_data->tip_private;
-      else
-        help_id = g_object_get_qdata (G_OBJECT (widget), GIMP_HELP_ID);
-
+      help_id   = g_object_get_qdata (G_OBJECT (widget), GIMP_HELP_ID);
       help_data = g_object_get_data (G_OBJECT (widget), "gimp-help-data");
 
       if (help_id)
@@ -318,17 +290,10 @@ gimp_help_callback (GtkWidget          *widget,
     case GIMP_WIDGET_HELP_TYPE_HELP:
       if (help_func)
         {
-          GtkTooltipsData *tooltips_data;
-          gchar           *help_id   = NULL;
-          gpointer         help_data = NULL;
+          gchar    *help_id   = NULL;
+          gpointer  help_data = NULL;
 
-          tooltips_data = gtk_tooltips_data_get (widget);
-
-          if (tooltips_data && tooltips_data->tip_private)
-            help_id = tooltips_data->tip_private;
-          else
-            help_id = g_object_get_qdata (G_OBJECT (widget), GIMP_HELP_ID);
-
+          help_id   = g_object_get_qdata (G_OBJECT (widget), GIMP_HELP_ID);
           help_data = g_object_get_data (G_OBJECT (widget), "gimp-help-data");
 
           (* help_func) (help_id, help_data);
