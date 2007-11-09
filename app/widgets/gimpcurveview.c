@@ -367,26 +367,33 @@ gimp_curve_view_expose (GtkWidget      *widget,
                                           NULL, &view->cursor_rect);
         }
 
-      x = border * 2;
-      y = border * 2;
-      w = view->cursor_rect.width  + 4;
-      h = view->cursor_rect.height + 4;
+      x = border * 2 + 3;
+      y = border * 2 + 3;
+      w = view->cursor_rect.width;
+      h = view->cursor_rect.height;
 
-      gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
-      cairo_rectangle (cr, x, y, w + 1, h + 1);
-      cairo_fill (cr);
+      cairo_push_group (cr);
 
       gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
       cairo_rectangle (cr, x, y, w + 1, h + 1);
+      cairo_fill_preserve (cr);
+
+      cairo_set_line_width (cr, 6);
+      cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
       cairo_stroke (cr);
 
       g_snprintf (buf, sizeof (buf), "x:%3d y:%3d",
                   view->cursor_x, 255 - view->cursor_y);
       pango_layout_set_text (view->cursor_layout, buf, -1);
 
-      cairo_move_to (cr, x + 2, y + 2);
+      gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
+
+      cairo_move_to (cr, x, y);
       pango_cairo_show_layout (cr, view->cursor_layout);
       cairo_fill (cr);
+
+      cairo_pop_group_to_source (cr);
+      cairo_paint_with_alpha (cr, 0.6);
     }
 
   cairo_destroy (cr);
