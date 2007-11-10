@@ -308,7 +308,7 @@ static const GimpRadioActionEntry view_zoom_explicit_actions[] =
 
   { "view-zoom-2-1", NULL,
     N_("_2:1  (200%)"), NULL,
-    N_("Zoom 1:1"),
+    N_("Zoom 2:1"),
     20000,
     GIMP_HELP_VIEW_ZOOM_IN },
 

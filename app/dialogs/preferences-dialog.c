@@ -1341,7 +1341,7 @@ prefs_display_options_frame_add (Gimp         *gimp,
 
   g_signal_connect (button, "color-changed",
                     G_CALLBACK (prefs_canvas_padding_color_changed),
-                    gtk_bin_get_child (GTK_BIN (combo)));
+                    combo);
 }
 
 static void
@@ -2362,7 +2362,8 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_widget_show (hbox);
 
   calibrate_button = gtk_button_new_with_mnemonic (_("C_alibrate..."));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (calibrate_button)->child), 4, 0);
+  label = gtk_bin_get_child (GTK_BIN (calibrate_button));
+  gtk_misc_set_padding (GTK_MISC (label), 4, 0);
   gtk_box_pack_start (GTK_BOX (hbox), calibrate_button, FALSE, FALSE, 0);
   gtk_widget_show (calibrate_button);
   gtk_widget_set_sensitive (calibrate_button,

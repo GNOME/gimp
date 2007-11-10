@@ -1,3 +1,11 @@
+2007-11-10  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/view-actions.c (view_zoom_explicit_actions): fixed
+	incorrect tooltip (bug #495564).
+
+	* app/dialogs/preferences-dialog.c (prefs_display_options_frame_add):
+	adapt to the changed return value of gimp_prop_enum_combo_box_new().
+
 2007-11-10  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimppropwidgets.c
