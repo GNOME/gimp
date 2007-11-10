@@ -1,5 +1,11 @@
 2007-11-10  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimppropwidgets.c
+	(gimp_prop_file_chooser_button_*): remove all sorts of workarounds
+	for bugs of GtkFileChooserButton in GTK+ versions prior to 2.12.
+
+2007-11-10  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimppropwidgets.c: remove event boxes that were
 	only there for the old tooltips.
 
