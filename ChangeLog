@@ -1,5 +1,9 @@
 2007-11-10  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppageselector.c: formatting.
+
+2007-11-10  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/view-actions.c (view_zoom_explicit_actions): fixed
 	incorrect tooltip (bug #495564).
 

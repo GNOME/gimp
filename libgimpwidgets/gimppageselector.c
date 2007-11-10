@@ -460,11 +460,7 @@ gimp_page_selector_style_set (GtkWidget *widget,
 GtkWidget *
 gimp_page_selector_new (void)
 {
-  GimpPageSelector *selector;
-
-  selector = g_object_new (GIMP_TYPE_PAGE_SELECTOR, NULL);
-
-  return GTK_WIDGET (selector);
+  return g_object_new (GIMP_TYPE_PAGE_SELECTOR, NULL);
 }
 
 /**
