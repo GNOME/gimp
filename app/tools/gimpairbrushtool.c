@@ -70,9 +70,6 @@ gimp_airbrush_tool_init (GimpAirbrushTool *airbrush)
   GimpTool *tool = GIMP_TOOL (airbrush);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_AIRBRUSH);
-
-  gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (airbrush),
-                                       GIMP_COLOR_PICK_MODE_FOREGROUND);
 }
 
 

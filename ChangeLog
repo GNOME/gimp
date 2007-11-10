@@ -1,3 +1,9 @@
+2007-11-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpairbrushtool.c (gimp_airbrush_tool_init)
+	* app/tools/gimppenciltool.c (gimp_pencil_tool_init): don't enable
+	color picking, it already gets enabled by the parent class.
+
 2007-11-10  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/helpbrowser/dialog.c (browser_dialog_make_index_foreach):
