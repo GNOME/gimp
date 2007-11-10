@@ -1,5 +1,10 @@
 2007-11-10  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/view-actions.c (view_zoom_explicit_actions): fixed
+	incorrect tooltip (bug #495564).
+
+2007-11-10  Sven Neumann  <sven@gimp.org>
+
 	Merged from trunk:
 
 	* plug-ins/helpbrowser/dialog.c (browser_dialog_make_index_foreach):
