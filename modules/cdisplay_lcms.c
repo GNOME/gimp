@@ -72,32 +72,28 @@ struct _CdisplayLcmsClass
 };
 
 
-static GType     cdisplay_lcms_get_type     (GTypeModule       *module);
-static void      cdisplay_lcms_class_init   (CdisplayLcmsClass *klass);
-static void      cdisplay_lcms_init         (CdisplayLcms      *lcms);
-static void      cdisplay_lcms_finalize     (GObject           *object);
+static GType        cdisplay_lcms_get_type     (GTypeModule       *module);
+static void         cdisplay_lcms_class_init   (CdisplayLcmsClass *klass);
+static void         cdisplay_lcms_init         (CdisplayLcms      *lcms);
+static void         cdisplay_lcms_finalize     (GObject           *object);
 
-static GtkWidget * cdisplay_lcms_configure  (GimpColorDisplay  *display);
-static void        cdisplay_lcms_convert    (GimpColorDisplay  *display,
-                                             guchar            *buf,
-                                             gint               width,
-                                             gint               height,
-                                             gint               bpp,
-                                             gint               bpl);
-static void        cdisplay_lcms_changed    (GimpColorDisplay  *display);
+static GtkWidget  * cdisplay_lcms_configure    (GimpColorDisplay  *display);
+static void         cdisplay_lcms_convert      (GimpColorDisplay  *display,
+                                                guchar            *buf,
+                                                gint               width,
+                                                gint               height,
+                                                gint               bpp,
+                                                gint               bpl);
+static void         cdisplay_lcms_changed      (GimpColorDisplay  *display);
 
-static cmsHPROFILE  cdisplay_lcms_get_rgb_profile     (CdisplayLcms *lcms);
-static cmsHPROFILE  cdisplay_lcms_get_display_profile (CdisplayLcms *lcms);
-static cmsHPROFILE  cdisplay_lcms_get_printer_profile (CdisplayLcms *lcms);
+static cmsHPROFILE  cdisplay_lcms_get_rgb_profile      (CdisplayLcms *lcms);
+static cmsHPROFILE  cdisplay_lcms_get_display_profile  (CdisplayLcms *lcms);
+static cmsHPROFILE  cdisplay_lcms_get_printer_profile  (CdisplayLcms *lcms);
 
-static void         cdisplay_lcms_attach_labelled (GtkTable    *table,
-                                                   gint         row,
-                                                   const gchar *text,
-                                                   GtkWidget   *widget,
-                                                   gboolean     tooltip);
-static void         cdisplay_lcms_label_set_text  (GtkLabel    *label,
-                                                   const gchar *text,
-                                                   const gchar *tooltip);
+static void         cdisplay_lcms_attach_labelled      (GtkTable     *table,
+                                                        gint          row,
+                                                        const gchar  *text,
+                                                        GtkWidget    *widget);
 static void         cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
                                                         const gchar  *name);
 static void         cdisplay_lcms_notify_profile       (GObject      *config,
@@ -257,15 +253,14 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
 
   cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
                                  _("Mode of operation:"),
-                                 gimp_prop_enum_label_new (config, "mode"),
-                                 FALSE);
+                                 gimp_prop_enum_label_new (config, "mode"));
 
   label = gtk_label_new (NULL);
   gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
   g_object_set_data (G_OBJECT (lcms), "rgb-profile", label);
   cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
                                  _("Image profile:"),
-                                 label, TRUE);
+                                 label);
   cdisplay_lcms_update_profile_label (lcms, "rgb-profile");
 
   label = gtk_label_new (NULL);
@@ -273,7 +268,7 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   g_object_set_data (G_OBJECT (lcms), "display-profile", label);
   cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
                                  _("Monitor profile:"),
-                                 label, TRUE);
+                                 label);
   cdisplay_lcms_update_profile_label (lcms, "display-profile");
 
   label = gtk_label_new (NULL);
@@ -281,7 +276,7 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   g_object_set_data (G_OBJECT (lcms), "printer-profile", label);
   cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
                                  _("Print simulation profile:"),
-                                 label, TRUE);
+                                 label);
   cdisplay_lcms_update_profile_label (lcms, "printer-profile");
 
   g_signal_connect_object (config, "notify",
@@ -635,11 +630,9 @@ static void
 cdisplay_lcms_attach_labelled (GtkTable    *table,
                                gint         row,
                                const gchar *text,
-                               GtkWidget   *widget,
-                               gboolean     tooltip)
+                               GtkWidget   *widget)
 {
   GtkWidget *label;
-  GtkWidget *ebox = NULL;
 
   label = g_object_new (GTK_TYPE_LABEL,
                         "label",  text,
@@ -653,41 +646,12 @@ cdisplay_lcms_attach_labelled (GtkTable    *table,
   gtk_table_attach (table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  if (tooltip)
-    {
-      ebox = gtk_event_box_new ();
-      gtk_table_attach (table, ebox, 1, 2, row, row + 1,
-                        GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-      gtk_widget_show (ebox);
-
-      g_object_set_data (G_OBJECT (label), "tooltip-widget", ebox);
-    }
-
   if (GTK_IS_LABEL (widget))
     gtk_misc_set_alignment (GTK_MISC (widget), 0.0, 0.5);
 
-  if (ebox)
-    gtk_container_add (GTK_CONTAINER (ebox), widget);
-  else
-    gtk_table_attach (table, widget, 1, 2, row, row + 1,
-                      GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-
+  gtk_table_attach (table, widget, 1, 2, row, row + 1,
+                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (widget);
-}
-
-static void
-cdisplay_lcms_label_set_text (GtkLabel    *label,
-                              const gchar *text,
-                              const gchar *tooltip)
-{
-  GtkWidget *tooltip_widget;
-
-  gtk_label_set_text (label, text);
-
-  tooltip_widget = g_object_get_data (G_OBJECT (label), "tooltip-widget");
-
-  if (tooltip_widget)
-    gimp_help_set_help_data (tooltip_widget, tooltip, NULL);
 }
 
 static void
@@ -722,7 +686,9 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
     }
 
   cdisplay_lcms_profile_get_info (profile, &text, &tooltip);
-  cdisplay_lcms_label_set_text (GTK_LABEL (label), text, tooltip);
+
+  gtk_label_set_text (GTK_LABEL (label), text);
+  gimp_help_set_help_data (label, tooltip, NULL);
 
   if (profile)
     cmsCloseProfile (profile);

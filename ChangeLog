@@ -1,5 +1,13 @@
 2007-11-10  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimppropwidgets.c: remove event boxes that were
+	only there for the old tooltips.
+
+	* modules/cdisplay_lcms.c: ditto. Also remove some code that was
+	only needed because of the event box hack.
+
+2007-11-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpairbrushtool.c (gimp_airbrush_tool_init)
 	* app/tools/gimppenciltool.c (gimp_pencil_tool_init): don't enable
 	color picking, it already gets enabled by the parent class.
