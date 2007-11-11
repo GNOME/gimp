@@ -276,7 +276,7 @@
     ((short)  (make-vector count 0))
     ((byte)   (make-vector count 0))
     ((double) (make-vector count 0.0))
-    ((string) (make-vector count ""))
+    ((string) (vector->list (make-vector count "")))
     (else type)
   )
 )
