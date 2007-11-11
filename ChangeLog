@@ -1,3 +1,15 @@
+2007-11-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.[ch]: Removed
+	gimp_rectangle_tool_get_press_coords() as it doesn't make sense
+	for a rectangle tool interface to provide this functionality.
+	Clients should take care of that themselves. Also adjusted
+	internal code accordingly.
+
+	* app/tools/gimprectangleselecttool.c: Remember the pressed
+	coordinates on _button_press instead of asking GimpRectangleTool
+	about it.
+
 2007-11-11  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: depend on pango 1.18

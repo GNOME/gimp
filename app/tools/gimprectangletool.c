@@ -100,12 +100,6 @@ struct _GimpRectangleToolPrivate
    * during gimp_rectangle_tool_button_press and then only read.
    */
 
-  /* Holds coordinate where button was pressed when rectangle adjustment was
-   * initiated.
-   */
-  gint                    pressx;
-  gint                    pressy;
-
   /* Holds the coordinate that should be used as the "other side" when
    * fixed-center is turned off.
    */
@@ -474,19 +468,6 @@ gimp_rectangle_tool_get_constraint (GimpRectangleTool *tool)
   return private->constraint;
 }
 
-void
-gimp_rectangle_tool_get_press_coords (GimpRectangleTool *rect_tool,
-                                      gint              *pressx_ptr,
-                                      gint              *pressy_ptr)
-{
-  GimpRectangleToolPrivate *private;
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
-
-  *pressx_ptr = private->pressx;
-  *pressy_ptr = private->pressy;
-}
-
 /**
  * gimp_rectangle_tool_pending_size_set:
  * @width_property:  Option property to set to pending rectangle width.
@@ -852,9 +833,6 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
   x += snap_x;
   y += snap_y;
 
-  private->pressx = x;
-  private->pressy = y;
-
   private->lastx  = x;
   private->lasty  = y;
 
@@ -864,8 +842,8 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
    */
   if (private->function == RECT_CREATING)
     {
-      private->center_x_on_fixed_center = private->pressx;
-      private->center_y_on_fixed_center = private->pressy;
+      private->center_x_on_fixed_center = x;
+      private->center_y_on_fixed_center = y;
     }
   else
     {
@@ -880,8 +858,8 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
    */
   if (private->function == RECT_CREATING)
     {
-      private->other_side_x = private->pressx;
-      private->other_side_y = private->pressy;
+      private->other_side_x = x;
+      private->other_side_y = y;
     }
   else
     {

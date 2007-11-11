@@ -20,6 +20,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -67,6 +68,9 @@ typedef struct GimpRectSelectToolPrivate
 
   gboolean           round_corners;
   gdouble            corner_radius;
+
+  gdouble            press_x;
+  gdouble            press_y;
 } GimpRectSelectToolPrivate;
 
 
@@ -219,8 +223,11 @@ gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
                                      GIMP_DIRTY_IMAGE_SIZE |
                                      GIMP_DIRTY_SELECTION);
 
-  priv->undo = NULL;
-  priv->redo = NULL;
+  priv->undo    = NULL;
+  priv->redo    = NULL;
+
+  priv->press_x = 0.0;
+  priv->press_y = 0.0;
 }
 
 static GObject *
@@ -373,6 +380,9 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
     gimp_rectangle_tool_set_function (rectangle, RECT_CREATING);
 
   gimp_rectangle_tool_button_press (tool, coords, time, state, display);
+
+  priv->press_x = coords->x;
+  priv->press_y = coords->y;
 
   /* if we have an existing rectangle in the current display, then
    * we have already "executed", and need to undo at this point,
@@ -703,6 +713,12 @@ gimp_rect_select_tool_execute (GimpRectangleTool *rectangle,
                                gint               w,
                                gint               h)
 {
+  GimpRectSelectTool        *rect_sel_tool;
+  GimpRectSelectToolPrivate *priv;
+
+  rect_sel_tool = GIMP_RECT_SELECT_TOOL (rectangle);
+  priv          = GIMP_RECT_SELECT_TOOL_GET_PRIVATE(rect_sel_tool);
+
   if (w == 0 && h == 0)
     {
       GimpImage   *image     = GIMP_TOOL (rectangle)->display->image;
@@ -717,7 +733,8 @@ gimp_rect_select_tool_execute (GimpRectangleTool *rectangle,
           return TRUE;
         }
 
-      gimp_rectangle_tool_get_press_coords (rectangle, &pressx, &pressy);
+      pressx = ROUND (priv->press_x);
+      pressy = ROUND (priv->press_y);
 
       /*  if the click was inside the marching ants  */
       if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
@@ -754,7 +771,7 @@ gimp_rect_select_tool_execute (GimpRectangleTool *rectangle,
         }
     }
 
-  gimp_rect_select_tool_update_option_defaults (GIMP_RECT_SELECT_TOOL (rectangle),
+  gimp_rect_select_tool_update_option_defaults (rect_sel_tool,
                                                 FALSE);
 
   return TRUE;
