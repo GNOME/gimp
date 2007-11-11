@@ -1,5 +1,11 @@
 2007-11-11  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_update_with_coord): Updated comments to
+	reflect current behaviour.
+
+2007-11-11  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangletool.c: Lessen code bloat by removing
 	code that manages center-[xy] properies of GimpRectangleOptions.
 	Instead use x1, y1 and x2, y2 when working with the rectangle

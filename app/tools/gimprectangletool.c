@@ -3645,25 +3645,24 @@ gimp_rectangle_tool_update_with_coord (GimpRectangleTool *rect_tool,
                                    new_x,
                                    new_y);
 
-  /* Update private->function. The function changes if the user "flips" the
-   * rectangle.
+  /* Update private->function. The function changes if the user
+   * "flips" the rectangle.
    */
   gimp_rectangle_tool_check_function (rect_tool);
 
-  /* E.g. the crop tool will set up clamping always to be used, and this
-   * function handles that.
-   */
+  /* Clamp the rectangle if necessary */
   gimp_rectangle_tool_handle_general_clamping (rect_tool);
 
   /* Calculate what constraint to use when needed. */
   constraint_to_use = gimp_rectangle_tool_get_constraint (rect_tool);
 
-  /* If the rectangle is being moved, we are done already since we should change it's shape then. */
+  /* If the rectangle is being moved, we are done already since we
+   * should not change it's shape then.
+   */
   if (private->function == RECT_MOVING)
     return;
 
   /* Apply the active fixed-rule */
-
   if (gimp_rectangle_options_fixed_rule_active (options,
                                                 GIMP_RECTANGLE_TOOL_FIXED_ASPECT))
     {
@@ -3710,9 +3709,6 @@ gimp_rectangle_tool_update_with_coord (GimpRectangleTool *rect_tool,
                                                 aspect,
                                                 CLAMPED_NONE);
 
-              /* When fixed ratio is used, we always want the
-               * rectangle inside the canvas.
-               */
               gimp_rectangle_tool_keep_inside (rect_tool,
                                                constraint_to_use);
             }
