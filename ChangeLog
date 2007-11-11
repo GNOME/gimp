@@ -1,3 +1,10 @@
+2007-11-11  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: depend on pango 1.18
+
+	* app/text/gimpfontlist.c (gimp_font_list_add_font): remove
+	workaround for old pango appending "Non-Rotated" to font names.
+
 2007-11-11  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangleselecttool.[ch]: Don't expose private

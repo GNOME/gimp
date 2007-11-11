@@ -147,38 +147,27 @@ gimp_font_list_add_font (GimpFontList         *list,
                          PangoContext         *context,
                          PangoFontDescription *desc)
 {
-  GimpFont *font;
-  gchar    *name;
-  gsize     len;
+  gchar *name;
 
   if (! desc)
     return;
 
   name = font_desc_to_string (desc);
 
-  len = strlen (name);
-
-  if (! g_utf8_validate (name, len, NULL))
+  if (g_utf8_validate (name, -1, NULL))
     {
-      g_free (name);
-      return;
+      GimpFont *font;
+
+      font = g_object_new (GIMP_TYPE_FONT,
+                           "name",          name,
+                           "pango-context", context,
+                           NULL);
+
+      gimp_container_add (GIMP_CONTAINER (list), GIMP_OBJECT (font));
+      g_object_unref (font);
     }
 
-#ifdef __GNUC__
-#warning remove this as soon as we depend on Pango 1.16.5
-#endif
-  if (g_str_has_suffix (name, " Not-Rotated"))
-    name[len - strlen (" Not-Rotated")] = '\0';
-
-  font = g_object_new (GIMP_TYPE_FONT,
-                       "name",          name,
-                       "pango-context", context,
-                       NULL);
-
   g_free (name);
-
-  gimp_container_add (GIMP_CONTAINER (list), GIMP_OBJECT (font));
-  g_object_unref (font);
 }
 
 #ifdef USE_FONTCONFIG_DIRECTLY
