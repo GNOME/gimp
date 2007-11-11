@@ -311,24 +311,6 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
                                                                  GIMP_CONFIG_PARAM_FLAGS |
                                                                  GIMP_PARAM_STATIC_STRINGS));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_double ("center-x",
-                                                                NULL, NULL,
-                                                                -GIMP_MAX_IMAGE_SIZE,
-                                                                GIMP_MAX_IMAGE_SIZE,
-                                                                0.0,
-                                                                GIMP_CONFIG_PARAM_FLAGS |
-                                                                GIMP_PARAM_STATIC_STRINGS));
-
-      g_object_interface_install_property (iface,
-                                           g_param_spec_double ("center-y",
-                                                                NULL, NULL,
-                                                                -GIMP_MAX_IMAGE_SIZE,
-                                                                GIMP_MAX_IMAGE_SIZE,
-                                                                0.0,
-                                                                GIMP_PARAM_READWRITE |
-                                                                G_PARAM_CONSTRUCT));
-
       initialized = TRUE;
     }
 }
@@ -475,12 +457,6 @@ gimp_rectangle_options_install_properties (GObjectClass *klass)
   g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER,
                                     "fixed-center");
-  g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X,
-                                    "center-x");
-  g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_CENTER_Y,
-                                    "center-y");
 }
 
 void
@@ -579,12 +555,6 @@ gimp_rectangle_options_set_property (GObject      *object,
 
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER:
       private->fixed_center = g_value_get_boolean (value);
-      break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X:
-      private->center_x = g_value_get_double (value);
-      break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_Y:
-      private->center_y = g_value_get_double (value);
       break;
 
     default:
@@ -689,12 +659,6 @@ gimp_rectangle_options_get_property (GObject      *object,
 
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER:
       g_value_set_boolean (value, private->fixed_center);
-      break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X:
-      g_value_set_double (value, private->center_x);
-      break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_Y:
-      g_value_set_double (value, private->center_y);
       break;
 
     default:

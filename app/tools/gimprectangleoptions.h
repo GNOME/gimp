@@ -52,12 +52,9 @@ typedef enum
   GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_ASPECT,
   GIMP_RECTANGLE_OPTIONS_PROP_USE_STRING_CURRENT,
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_UNIT,
-
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER,
-  GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X,
-  GIMP_RECTANGLE_OPTIONS_PROP_CENTER_Y,
 
-  GIMP_RECTANGLE_OPTIONS_PROP_LAST = GIMP_RECTANGLE_OPTIONS_PROP_CENTER_Y
+  GIMP_RECTANGLE_OPTIONS_PROP_LAST = GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER
 } GimpRectangleOptionsProp;
 
 
@@ -114,16 +111,14 @@ struct _GimpRectangleOptionsPrivate
   gdouble                     default_aspect_denominator;
   gboolean                    overridden_fixed_aspect;
 
+  gboolean                    fixed_center;
+
   /* This gboolean is not part of the actual rectangle tool options,
    * and should be refactored out along with the pointers to widgets.
    */
   gboolean                    use_string_current;
 
   GimpUnit                    fixed_unit;
-
-  gboolean                    fixed_center;
-  gdouble                     center_x;
-  gdouble                     center_y;
 
   /* options gui */
 

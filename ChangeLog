@@ -1,3 +1,13 @@
+2007-11-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c: Lessen code bloat by removing
+	code that manages center-[xy] properies of GimpRectangleOptions.
+	Instead use x1, y1 and x2, y2 when working with the rectangle
+	center.
+
+	* app/tools/gimprectangleoptions.[ch]: Removed "center-x" and
+	"center-y" properties.
+
 2007-11-10  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppageselector.c: formatting.

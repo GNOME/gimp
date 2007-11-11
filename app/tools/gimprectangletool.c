@@ -169,8 +169,6 @@ struct _GimpRectangleToolPrivate
   gint                    saved_y1;
   gint                    saved_x2;
   gint                    saved_y2;
-  gdouble                 saved_center_x;
-  gdouble                 saved_center_y;
 
   gint                    suppress_updates;
 
@@ -766,17 +764,9 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
   private->saved_x2 = private->x2;
   private->saved_y2 = private->y2;
 
-  private->saved_center_x = options_private->center_x;
-  private->saved_center_y = options_private->center_y;
-
   switch (private->function)
     {
     case RECT_CREATING:
-      g_object_set (options,
-                    "center-x", (gdouble) x,
-                    "center-y", (gdouble) y,
-                    NULL);
-
       g_object_set (rect_tool,
                     "x1", x,
                     "y1", y,
@@ -879,8 +869,8 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
     }
   else
     {
-      private->center_x_on_fixed_center = options_private->center_x;
-      private->center_y_on_fixed_center = options_private->center_y;
+      private->center_x_on_fixed_center = (private->x1 + private->x2) / 2;
+      private->center_y_on_fixed_center = (private->y1 + private->y2) / 2;
     }
 
   /* When the user toggles modifier keys, we want to keep track of what
@@ -947,11 +937,6 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
       break;
 
     case GIMP_BUTTON_RELEASE_CANCEL:
-      g_object_set (options,
-                    "center-x", private->saved_center_x,
-                    "center-y", private->saved_center_y,
-                    NULL);
-
       g_object_set (rect_tool,
                     "x1", private->saved_x1,
                     "y1", private->saved_y1,
@@ -1206,11 +1191,6 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
 
       if (options_private->fixed_center)
         {
-          g_object_set (options,
-                        "center-x", (gdouble) private->center_x_on_fixed_center,
-                        "center-y", (gdouble) private->center_y_on_fixed_center,
-                        NULL);
-
           gimp_rectangle_tool_update_with_coord (rect_tool,
                                                  private->lastx,
                                                  private->lasty);
@@ -2086,7 +2066,6 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rect_tool,
   gdouble                   y;
   gdouble                   width;
   gdouble                   height;
-  gdouble                   center_x, center_y;
 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
   options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rect_tool);
@@ -2095,9 +2074,6 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rect_tool,
   y      = private->y1;
   width  = private->x2 - private->x1;
   height = private->y2 - private->y1;
-
-  center_x = (private->x1 + private->x2) / 2.0;
-  center_y = (private->y1 + private->y2) / 2.0;
 
   g_signal_handlers_block_by_func (options,
                                    gimp_rectangle_tool_options_notify,
@@ -2114,11 +2090,6 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rect_tool,
 
   g_object_set (options,
                 "height", height,
-                NULL);
-
-  g_object_set (options,
-                "center-x", center_x,
-                "center-y", center_y,
                 NULL);
 
   g_signal_handlers_unblock_by_func (options,
