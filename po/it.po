@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-22 09:01+0200\n"
-"PO-Revision-Date: 2007-10-22 09:08+0200\n"
+"POT-Creation-Date: 2007-11-11 20:28+0100\n"
+"PO-Revision-Date: 2007-11-11 22:15+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -106,7 +106,7 @@ msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
 "L'interprete batch \"%s\" non è disponibile. Modalità batch disabilitata."
 
-#: ../app/main.c:154 ../tools/gimp-remote.c:79
+#: ../app/main.c:154 ../tools/gimp-remote.c:60
 msgid "Show version information and exit"
 msgstr "Mostra le informazioni sulla versione e esce"
 
@@ -224,7 +224,7 @@ msgstr ""
 "Messaggi di GIMP. È possibile ridurre a icona questa finestra ma non "
 "chiuderla."
 
-#: ../app/main.c:557 ../tools/gimp-remote.c:323
+#: ../app/main.c:557 ../tools/gimp-remote.c:95
 #, c-format
 msgid "%s version %s"
 msgstr "%s versione %s"
@@ -986,7 +986,7 @@ msgstr "Apri la finestra di navigazione"
 
 #: ../app/actions/dialogs-actions.c:123
 msgid "Undo _History"
-msgstr "Cronologia ann_ullamenti"
+msgstr "Cronologia _annullamenti"
 
 #: ../app/actions/dialogs-actions.c:124
 msgid "Open the undo history dialog"
@@ -3647,7 +3647,7 @@ msgstr "Apri file di testo (UTF-8)"
 #: ../app/core/gimppalette-load.c:76 ../app/core/gimppalette-load.c:271
 #: ../app/core/gimppalette-load.c:315 ../app/core/gimppalette-load.c:369
 #: ../app/core/gimppalette-load.c:457 ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpimagemaptool.c:588 ../app/xcf/xcf.c:323
+#: ../app/tools/gimpimagemaptool.c:586 ../app/xcf/xcf.c:323
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossibile aprire \"%s\" in lettura: %s"
@@ -4219,13 +4219,17 @@ msgstr "Zoom 4:1"
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: ../app/actions/view-actions.c:311 ../app/actions/view-actions.c:317
-msgid "Zoom 1:1"
-msgstr "Zoom 1:1"
+#: ../app/actions/view-actions.c:311
+msgid "Zoom 2:1"
+msgstr "Zoom 2:1"
 
 #: ../app/actions/view-actions.c:316
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
+
+#: ../app/actions/view-actions.c:317
+msgid "Zoom 1:1"
+msgstr "Zoom 1:1"
 
 #: ../app/actions/view-actions.c:322
 msgid "1:_2  (50%)"
@@ -4498,7 +4502,7 @@ msgstr "Impossibile ridimensionare il file di scambio: %s"
 #: ../app/config/gimpconfig-file.c:68 ../app/core/gimpbrushgenerated-save.c:63
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:145
 #: ../app/core/gimppalette-save.c:56 ../app/gui/themes.c:239
-#: ../app/tools/gimpimagemaptool.c:587 ../app/vectors/gimpvectors-export.c:83
+#: ../app/tools/gimpimagemaptool.c:585 ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:401
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -4509,7 +4513,7 @@ msgstr "Non è possibile aprire \"%s\" in scrittura: %s"
 msgid "Error writing '%s': %s"
 msgstr "Errore durante la scrittura di \"%s\": %s"
 
-#: ../app/config/gimpconfig-file.c:90 ../app/tools/gimpimagemaptool.c:620
+#: ../app/config/gimpconfig-file.c:90 ../app/tools/gimpimagemaptool.c:618
 #, c-format
 msgid "Error reading '%s': %s"
 msgstr "Errore durante la lettura di \"%s\": %s"
@@ -6781,7 +6785,7 @@ msgstr "pixel"
 
 #: ../app/core/gimpunit.c:56 ../app/tools/gimpmeasuretool.c:868
 #: ../app/tools/gimpmeasuretool.c:1011 ../app/tools/gimpmeasuretool.c:1067
-#: ../app/tools/gimpmeasuretool.c:1095 ../app/tools/gimppainttool.c:602
+#: ../app/tools/gimpmeasuretool.c:1095 ../app/tools/gimppainttool.c:604
 msgid "pixels"
 msgstr "pixel"
 
@@ -8570,6 +8574,7 @@ msgid "Other..."
 msgstr "Altro..."
 
 #: ../app/file/file-open.c:129 ../app/file/file-save.c:111
+#, c-format
 msgid "Not a regular file"
 msgstr "Non è un file regolare"
 
@@ -8584,6 +8589,7 @@ msgid "%s plug-In could not open image"
 msgstr "Il plug-in %s non può aprire l'immagine"
 
 #: ../app/file/file-open.c:474
+#, c-format
 msgid "Image doesn't contain any layers"
 msgstr "L'immagine non contiene nessun livello"
 
@@ -8601,6 +8607,7 @@ msgstr ""
 "riabilitata agendo nella finestra delle preferenze."
 
 #: ../app/file/file-procedure.c:200
+#, c-format
 msgid "Unknown file type"
 msgstr "Tipo file sconosciuto"
 
@@ -8615,6 +8622,7 @@ msgid "'%s:' is not a valid URI scheme"
 msgstr "\"%s:\" non è uno schema URI valido"
 
 #: ../app/file/file-utils.c:88 ../app/file/file-utils.c:122
+#, c-format
 msgid "Invalid character sequence in URI"
 msgstr "Carattere non valido in sequenza URI"
 
@@ -8627,6 +8635,7 @@ msgid "Airbrush"
 msgstr "Aerografo"
 
 #: ../app/paint/gimpbrushcore.c:354
+#, c-format
 msgid "No brushes available for use with this tool."
 msgstr "Nessun pennello disponibile da usare con questo strumento."
 
@@ -8635,6 +8644,7 @@ msgid "Clone"
 msgstr "Duplica"
 
 #: ../app/paint/gimpclone.c:141
+#, c-format
 msgid "No patterns available for use with this tool."
 msgstr "Nessun motivo disponibile con questo strumento."
 
@@ -8655,6 +8665,7 @@ msgid "Heal"
 msgstr "Cerotto"
 
 #: ../app/paint/gimpheal.c:126
+#, c-format
 msgid "Healing does not operate on indexed layers."
 msgstr "Il cerotto non agisce su livelli indicizzati."
 
@@ -8672,6 +8683,7 @@ msgid "Perspective Clone"
 msgstr "Clona in prospettiva"
 
 #: ../app/paint/gimpperspectiveclone.c:160
+#, c-format
 msgid "Perspective Clone does not operate on indexed layers."
 msgstr "Clona in prospettiva non agisce su livelli indicizzati."
 
@@ -8680,6 +8692,7 @@ msgid "Smudge"
 msgstr "Sfumino"
 
 #: ../app/paint/gimpsourcecore.c:227
+#, c-format
 msgid "Set a source image first."
 msgstr "Prima è necessario impostare un'immagine sorgente."
 
@@ -8843,7 +8856,7 @@ msgstr ""
 "s\". Molto probabilmente un plugin sta tentando di lavorare su un'immagine "
 "che non esiste più."
 
-#: ../app/pdb/gimpprocedure.c:614
+#: ../app/pdb/gimpprocedure.c:619
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -8852,7 +8865,7 @@ msgstr ""
 "La procedura \"%s\" ha restituito \"%s\" come valore di ritorno \"%s\" (#%d, "
 "tipo %s). Questo valore è fuori limite."
 
-#: ../app/pdb/gimpprocedure.c:627
+#: ../app/pdb/gimpprocedure.c:632
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
@@ -9215,10 +9228,11 @@ msgid "Blen_d"
 msgstr "S_fumatura"
 
 #: ../app/tools/gimpblendtool.c:163
+#, c-format
 msgid "Blend does not operate on indexed layers."
 msgstr "Sfumatura non agisce su livelli indicizzati."
 
-#: ../app/tools/gimpblendtool.c:399 ../app/tools/gimppainttool.c:593
+#: ../app/tools/gimpblendtool.c:399 ../app/tools/gimppainttool.c:595
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s per gli angoli bloccati"
@@ -9245,6 +9259,7 @@ msgid "Adjust Brightness and Contrast"
 msgstr "Regola luminosità e contrasto"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:169
+#, c-format
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Luminosità e contrasto non operano su livelli indicizzati."
 
@@ -9379,6 +9394,7 @@ msgid "Adjust Color Balance"
 msgstr "Regola il bilanciamento del colore"
 
 #: ../app/tools/gimpcolorbalancetool.c:153
+#, c-format
 msgid "Color Balance operates only on RGB color layers."
 msgstr "Il bilanciamento del colore agisce solo su livelli con colore RGB."
 
@@ -9426,6 +9442,7 @@ msgid "Colorize the Image"
 msgstr "Colora l'immagine"
 
 #: ../app/tools/gimpcolorizetool.c:148
+#, c-format
 msgid "Colorize operates only on RGB color layers."
 msgstr "Colora agisce solo su livelli a colori RGB."
 
@@ -9487,11 +9504,11 @@ msgstr "Prelievo c_olore"
 msgid "Click in any image to view its color"
 msgstr "Fare clic sull'immagine per visualizzare il colore"
 
-#: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:496
+#: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:498
 msgid "Click in any image to pick the foreground color"
 msgstr "Fare clic sull'immagine per prelevare il colore di primo piano"
 
-#: ../app/tools/gimpcolorpickertool.c:257 ../app/tools/gimppainttool.c:502
+#: ../app/tools/gimpcolorpickertool.c:257 ../app/tools/gimppainttool.c:504
 msgid "Click in any image to pick the background color"
 msgstr "Fare clic sull'immagine per prelevare il colore di sfondo"
 
@@ -9616,6 +9633,7 @@ msgid "Save curves settings to file"
 msgstr "Salvataggio impostazioni curve su file"
 
 #: ../app/tools/gimpcurvestool.c:253
+#, c-format
 msgid "Curves does not operate on indexed layers."
 msgstr "Curve non agisce su livelli indicizzati."
 
@@ -9646,10 +9664,12 @@ msgid "Curve Type"
 msgstr "Tipo di curva"
 
 #: ../app/tools/gimpcurvestool.c:753 ../app/tools/gimplevelstool.c:672
+#, c-format
 msgid "not a GIMP Levels file"
 msgstr "non è un file livelli di GIMP"
 
 #: ../app/tools/gimpcurvestool.c:767 ../app/tools/gimplevelstool.c:711
+#, c-format
 msgid "parse error"
 msgstr "errore di analisi"
 
@@ -9948,6 +9968,7 @@ msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Regola tonalità / luminosità / saturazione"
 
 #: ../app/tools/gimphuesaturationtool.c:173
+#, c-format
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Tonalità-saturazione operano solamente su livelli RGB."
 
@@ -10011,7 +10032,7 @@ msgstr "Caricamento veloce"
 msgid "Quick Save"
 msgstr "Salvataggio veloce"
 
-#: ../app/tools/gimpimagemaptool.c:611
+#: ../app/tools/gimpimagemaptool.c:609
 #, c-format
 msgid "Settings saved to '%s'"
 msgstr "Impostazioni salvate su \"%s\""
@@ -10129,6 +10150,7 @@ msgid "Save levels settings to file"
 msgstr "Salva i livelli all'uscita"
 
 #: ../app/tools/gimplevelstool.c:236
+#, c-format
 msgid "Levels does not operate on indexed layers."
 msgstr "Livelli non agisce su livelli indicizzati."
 
@@ -10376,7 +10398,7 @@ msgstr "Fare clic per creare disegnare la riga"
 msgid "%s to pick a color"
 msgstr "%s per prelevare un colore"
 
-#: ../app/tools/gimppainttool.c:645
+#: ../app/tools/gimppainttool.c:647
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s per una riga diritta"
@@ -10440,6 +10462,7 @@ msgid "Posterize (Reduce Number of Colors)"
 msgstr "Posterizzazione (riduzione numero di colori)"
 
 #: ../app/tools/gimpposterizetool.c:140
+#, c-format
 msgid "Posterize does not operate on indexed layers."
 msgstr "Posterizzazione non possibile su livelli indicizzati."
 
@@ -10498,7 +10521,7 @@ msgstr ""
 msgid "_Rectangle Select"
 msgstr "_Rettangolare"
 
-#: ../app/tools/gimprectangletool.c:1031 ../app/tools/gimprectangletool.c:1939
+#: ../app/tools/gimprectangletool.c:1032 ../app/tools/gimprectangletool.c:1880
 msgid "Rectangle: "
 msgstr "Rettangolo: "
 
@@ -10758,6 +10781,7 @@ msgid "Apply Threshold"
 msgstr "Applica soglia"
 
 #: ../app/tools/gimpthresholdtool.c:148
+#, c-format
 msgid "Threshold does not operate on indexed layers."
 msgstr "La soglia non agisce su livelli indicizzati."
 
@@ -11088,6 +11112,7 @@ msgid "No paths found in '%s'"
 msgstr "Nessun tracciato trovato in '%s'"
 
 #: ../app/vectors/gimpvectors-import.c:339
+#, c-format
 msgid "No paths found in the buffer"
 msgstr "Nessun tracciato trovato nel buffer"
 
@@ -11474,6 +11499,7 @@ msgid "Remove Controller '%s'?"
 msgstr "Rimuovere controllore '%s'?"
 
 #: ../app/widgets/gimpcontrollerlist.c:571
+#, c-format
 msgid ""
 "Removing this controller from the list of active controllers will "
 "permanently delete all event mappings you have configured.\n"
@@ -12350,7 +12376,7 @@ msgstr "Finestra utilità"
 msgid "Keep above"
 msgstr "Mantieni sopra"
 
-#: ../app/xcf/xcf-load.c:274
+#: ../app/xcf/xcf-load.c:275
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -12358,7 +12384,7 @@ msgstr ""
 "Questo file XCF è danneggiato! È stato caricato tutto quello che si è "
 "potuto, ma è incompleto."
 
-#: ../app/xcf/xcf-load.c:283
+#: ../app/xcf/xcf-load.c:284
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -12366,7 +12392,7 @@ msgstr ""
 "Questo file XCF è danneggiato! Non è stato possibile ripristinare neanche "
 "una parte di esso."
 
-#: ../app/xcf/xcf-load.c:315
+#: ../app/xcf/xcf-load.c:316
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -12424,41 +12450,32 @@ msgstr "Crea immagini o modifica fotografie"
 msgid "Image Editor"
 msgstr "Editor immagine"
 
-#: ../tools/gimp-remote.c:84
+#: ../tools/gimp-remote.c:65
 msgid "Use a running GIMP only, never start a new one"
 msgstr "Usa sempre il Gimp in esecuzione, non eseguirne un altro"
 
-#: ../tools/gimp-remote.c:89
+#: ../tools/gimp-remote.c:70
 msgid "Only check if GIMP is running, then quit"
 msgstr "Controlla solo se Gimp è in esecuzione e poi esci"
 
-#: ../tools/gimp-remote.c:94
+#: ../tools/gimp-remote.c:76
 msgid "Print X window ID of GIMP toolbox window, then quit"
 msgstr "Stampa l'ID X window della finestra degli strumenti di GIMP e esce"
 
-#: ../tools/gimp-remote.c:99
+#: ../tools/gimp-remote.c:82
 msgid "Start GIMP without showing the startup window"
 msgstr "Esegui gimp senza mostrare la finestra iniziale"
 
-#: ../tools/gimp-remote.c:205
+#: ../tools/gimp-remote-x11.c:67
 msgid "Could not connect to GIMP."
 msgstr "Impossibile connettersi a Gimp"
 
-#: ../tools/gimp-remote.c:206
+#: ../tools/gimp-remote-x11.c:68
 msgid "Make sure that the Toolbox is visible!"
 msgstr "Controlla che gli strumenti siano visibili!"
 
 #. if execv and execvp return, there was an error
-#: ../tools/gimp-remote.c:307
+#: ../tools/gimp-remote-x11.c:248
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Impossibile eseguire \"%s\": %s"
-
-#~ msgid "X:"
-#~ msgstr "X:"
-
-#~ msgid "Y:"
-#~ msgstr "Y:"
-
-#~ msgid "Create Selection from Path"
-#~ msgstr "Crea selezione dal tracciato"
