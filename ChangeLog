@@ -1,5 +1,10 @@
 2007-11-11  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangleselecttool.[ch]: Don't expose private
+	instance members, use g_type_class_add_private() instead.
+
+2007-11-11  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangletool.c
 	(gimp_rectangle_tool_update_with_coord): Updated comments to
 	reflect current behaviour.

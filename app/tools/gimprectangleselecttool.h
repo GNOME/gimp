@@ -40,14 +40,7 @@ struct _GimpRectSelectTool
 {
   GimpSelectionTool  parent_instance;
 
-  GimpChannelOps     operation;            /* remember for use when modifying   */
-  gboolean           use_saved_op;         /* use operation or get from options */
-  gboolean           saved_show_selection; /* used to remember existing value   */
-  GimpUndo          *undo;
-  GimpUndo          *redo;
-
-  gboolean           round_corners;
-  gdouble            corner_radius;
+  gpointer           priv;
 };
 
 struct _GimpRectSelectToolClass
