@@ -373,7 +373,7 @@ gimp_get_default_unit (void)
     }
 #endif
 
-  return GIMP_UNIT_INCH;
+  return GIMP_UNIT_MM;
 }
 
 GParameter *

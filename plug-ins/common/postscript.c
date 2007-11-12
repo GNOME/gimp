@@ -130,20 +130,20 @@ static char dversio[] = "v1.17  19-Sep-2004";
 /* Load info */
 typedef struct
 {
-  guint resolution;        /* resolution (dpi) at which to run ghostscript */
-  guint width, height;     /* desired size (ghostscript may ignore this) */
-  gint  use_bbox;          /* 0: use width/height, 1: try to use BoundingBox */
-  gchar pages[STR_LENGTH]; /* Pages to load (eg.: 1,3,5-7) */
-  gint  pnm_type;          /* 4: pbm, 5: pgm, 6: ppm, 7: automatic */
-  gint  textalpha;         /* antialiasing: 1,2, or 4 TextAlphaBits */
-  gint  graphicsalpha;     /* antialiasing: 1,2, or 4 GraphicsAlphaBits */
+  guint     resolution;        /* resolution (dpi) at which to run ghostscript */
+  guint     width, height;     /* desired size (ghostscript may ignore this) */
+  gboolean  use_bbox;          /* 0: use width/height, 1: try to use BoundingBox */
+  gchar     pages[STR_LENGTH]; /* Pages to load (eg.: 1,3,5-7) */
+  gint      pnm_type;          /* 4: pbm, 5: pgm, 6: ppm, 7: automatic */
+  gint      textalpha;         /* antialiasing: 1,2, or 4 TextAlphaBits */
+  gint      graphicsalpha;     /* antialiasing: 1,2, or 4 GraphicsAlphaBits */
 } PSLoadVals;
 
 static PSLoadVals plvals =
 {
   100,         /* 100 dpi                        */
   826, 1170,   /* default width/height (A4)      */
-  1,           /* try to use BoundingBox         */
+  TRUE,        /* try to use BoundingBox         */
   "1",         /* pages to load                  */
   6,           /* use ppm (colour)               */
   1,           /* dont use text antialiasing     */
@@ -160,27 +160,27 @@ GtkWidget      *ps_height_spinbutton;
 /* Save info  */
 typedef struct
 {
-  gdouble width, height;      /* Size of image */
-  gdouble x_offset, y_offset; /* Offset to image on page */
-  gint    unit_mm;            /* Unit of measure (0: inch, 1: mm) */
-  gint    keep_ratio;         /* Keep aspect ratio */
-  gint    rotate;             /* Rotation (0, 90, 180, 270) */
-  gint    level;              /* PostScript Level */
-  gint    eps;                /* Encapsulated PostScript flag */
-  gint    preview;            /* Preview Flag */
-  gint    preview_size;       /* Preview size */
+  gdouble    width, height;      /* Size of image */
+  gdouble    x_offset, y_offset; /* Offset to image on page */
+  gboolean   unit_mm;            /* Unit of measure (0: inch, 1: mm) */
+  gboolean   keep_ratio;         /* Keep aspect ratio */
+  gint       rotate;             /* Rotation (0, 90, 180, 270) */
+  gint       level;              /* PostScript Level */
+  gboolean   eps;                /* Encapsulated PostScript flag */
+  gboolean   preview;            /* Preview Flag */
+  gint       preview_size;       /* Preview size */
 } PSSaveVals;
 
 static PSSaveVals psvals =
 {
   287.0, 200.0,   /* Image size (A4) */
   5.0, 5.0,       /* Offset */
-  1,              /* Unit is mm */
-  1,              /* Keep edge ratio */
+  TRUE,           /* Unit is mm */
+  TRUE,           /* Keep edge ratio */
   0,              /* Rotate */
   2,              /* PostScript Level */
-  0,              /* Encapsulated PostScript flag */
-  0,              /* Preview flag */
+  FALSE,          /* Encapsulated PostScript flag */
+  FALSE,          /* Preview flag */
   256             /* Preview size */
 };
 
@@ -733,6 +733,7 @@ ps_set_save_size (PSSaveVals *vals,
 
   unit = gimp_image_get_unit (image_ID);
   factor = gimp_unit_get_factor (unit);
+
   if (factor == 0.0254 ||
       factor == 0.254 ||
       factor == 2.54 ||
@@ -746,6 +747,7 @@ ps_set_save_size (PSSaveVals *vals,
       iw *= 25.4;
       ih *= 25.4;
     }
+
   vals->width  = iw;
   vals->height = ih;
 }
@@ -786,7 +788,7 @@ run (const gchar      *name,
           gimp_get_data (LOAD_PS_PROC, &plvals);
 
           if (! load_dialog (param[1].data.d_string,
-                             ! strcmp (name, LOAD_PDF_PROC)))
+                             strcmp (name, LOAD_PDF_PROC) == 0))
             status = GIMP_PDB_CANCEL;
           break;
 
@@ -868,7 +870,7 @@ run (const gchar      *name,
     {
       psvals.eps = strcmp (name, SAVE_PS_PROC);
 
-      image_ID = orig_image_ID = param[1].data.d_int32;
+      image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
       /* eventually export the image */
@@ -920,7 +922,7 @@ run (const gchar      *name,
               psvals.unit_mm      = (param[9].data.d_int32 != 0);
               psvals.keep_ratio   = (param[10].data.d_int32 != 0);
               psvals.rotate       = param[11].data.d_int32;
-              psvals.eps          = param[12].data.d_int32;
+              psvals.eps          = (param[12].data.d_int32 != 0);
               psvals.preview      = (param[13].data.d_int32 != 0);
               psvals.preview_size = param[13].data.d_int32;
               psvals.level        = param[14].data.d_int32;
