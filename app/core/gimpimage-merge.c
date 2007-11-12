@@ -341,7 +341,7 @@ gimp_image_merge_layers (GimpImage     *image,
         {
         case GIMP_EXPAND_AS_NECESSARY:
         case GIMP_CLIP_TO_IMAGE:
-          if (!count)
+          if (! count)
             {
               x1 = off_x;
               y1 = off_y;
@@ -359,6 +359,7 @@ gimp_image_merge_layers (GimpImage     *image,
               if ((off_y + gimp_item_height (GIMP_ITEM (layer))) > y2)
                 y2 = (off_y + gimp_item_height (GIMP_ITEM (layer)));
             }
+
           if (merge_type == GIMP_CLIP_TO_IMAGE)
             {
               x1 = CLAMP (x1, 0, image->width);
@@ -413,7 +414,7 @@ gimp_image_merge_layers (GimpImage     *image,
                                     type,
                                     gimp_object_get_name (GIMP_OBJECT (layer)),
                                     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
-      if (!merge_layer)
+      if (! merge_layer)
         {
           g_warning ("%s: could not allocate merge layer.", G_STRFUNC);
           return NULL;
@@ -430,8 +431,7 @@ gimp_image_merge_layers (GimpImage     *image,
       /*  init the pixel region  */
       pixel_region_init (&src1PR,
                          gimp_drawable_get_tiles (GIMP_DRAWABLE (merge_layer)),
-                         0, 0,
-                         image->width, image->height,
+                         0, 0, (x2 - x1), (y2 - y1),
                          TRUE);
 
       /*  set the region to the background color  */
