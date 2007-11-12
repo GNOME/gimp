@@ -1,3 +1,7 @@
+2007-11-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/sanity.c: added Pango version sanity check.
+
 2007-11-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/tiff-load.c (run): properly handle a failure of

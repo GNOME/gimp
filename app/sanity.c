@@ -20,6 +20,7 @@
 
 #include <glib.h>
 #include <fontconfig/fontconfig.h>
+#include <pango/pango.h>
 #include <pango/pangoft2.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -31,6 +32,7 @@
 
 static gchar * sanity_check_gimp              (void);
 static gchar * sanity_check_glib              (void);
+static gchar * sanity_check_pango             (void);
 static gchar * sanity_check_fontconfig        (void);
 static gchar * sanity_check_freetype          (void);
 static gchar * sanity_check_filename_encoding (void);
@@ -45,6 +47,9 @@ sanity_check (void)
 
   if (! abort_message)
     abort_message = sanity_check_glib ();
+
+  if (! abort_message)
+    abort_message = sanity_check_pango ();
 
   if (! abort_message)
     abort_message = sanity_check_fontconfig ();
@@ -112,6 +117,44 @@ sanity_check_glib (void)
 #undef GLIB_REQUIRED_MAJOR
 #undef GLIB_REQUIRED_MINOR
 #undef GLIB_REQUIRED_MICRO
+
+  return NULL;
+}
+
+static gchar *
+sanity_check_pango (void)
+{
+  gint         pango_major_version = pango_version () / 100 / 100;
+  gint         pango_minor_version = pango_version () / 100 % 100;
+  gint         pango_micro_version = pango_version () % 100;
+  const gchar *mismatch;
+
+#define PANGO_REQUIRED_MAJOR 1
+#define PANGO_REQUIRED_MINOR 18
+#define PANGO_REQUIRED_MICRO 0
+
+  mismatch = pango_version_check (PANGO_REQUIRED_MAJOR,
+                                  PANGO_REQUIRED_MINOR,
+                                  PANGO_REQUIRED_MICRO);
+
+  if (mismatch)
+    {
+      return g_strdup_printf
+        ("%s\n\n"
+         "GIMP requires Pango version %d.%d.%d or later.\n"
+         "Installed Pango version is %d.%d.%d.\n\n"
+         "Somehow you or your software packager managed\n"
+         "to install GIMP with an older Pango version.\n\n"
+         "Please upgrade to Pango version %d.%d.%d or later.",
+         mismatch,
+         PANGO_REQUIRED_MAJOR, PANGO_REQUIRED_MINOR, PANGO_REQUIRED_MICRO,
+         pango_major_version, pango_minor_version, pango_micro_version,
+         PANGO_REQUIRED_MAJOR, PANGO_REQUIRED_MINOR, PANGO_REQUIRED_MICRO);
+    }
+
+#undef PANGO_REQUIRED_MAJOR
+#undef PANGO_REQUIRED_MINOR
+#undef PANGO_REQUIRED_MICRO
 
   return NULL;
 }
