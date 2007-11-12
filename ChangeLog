@@ -1,3 +1,11 @@
+2007-11-12  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): don't
+	crash if gimp_display_shell_filter_new() returns NULL.
+	Fixes bug #495863.
+
 2007-11-11  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/script-fu-compat.init: Return a list
