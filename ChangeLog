@@ -1,3 +1,11 @@
+2007-11-12  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/core/gimpimage-merge.c (gimp_image_merge_layers): corrected
+	the size of the pixel region passed to color_region() in case of
+	an indexed image. Fixes bug #495990.
+
 2007-11-12  Michael Natterer  <mitch@gimp.org>
 
 	Merged from trunk:
