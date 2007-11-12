@@ -1,3 +1,10 @@
+2007-11-12  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/common/tiff-load.c (run): properly handle a failure of
+	TIFFFdOpen() instead of crashing on TIFF files we can't handle.
+
 2007-11-12  Michael Natterer  <mitch@gimp.org>
 
 	Merged from trunk:

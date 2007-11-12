@@ -278,7 +278,7 @@ run (const gchar      *name,
   if (strcmp (name, LOAD_PROC) == 0)
     {
       const gchar *filename = param[1].data.d_string;
-      TIFF        *tif;
+      TIFF        *tif      = NULL;
       gint         fd;
 
       fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
@@ -292,7 +292,10 @@ run (const gchar      *name,
       else
         {
           tif = TIFFFdOpen (fd, filename, "r");
+        }
 
+      if (tif)
+        {
           gimp_get_data (LOAD_PROC, &target);
 
           pages.n_pages = pages.o_pages = TIFFNumberOfDirectories (tif);
@@ -350,11 +353,18 @@ run (const gchar      *name,
                     }
                 }
               else
-                status = GIMP_PDB_CANCEL;
+                {
+                  status = GIMP_PDB_CANCEL;
+                }
             }
 
           TIFFClose (tif);
           close (fd);
+        }
+      else
+        {
+          close (fd);
+          status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
   else
@@ -401,6 +411,7 @@ tiff_error (const gchar *module,
   /* Ignore the errors related to random access and JPEG compression */
   if (! strcmp (fmt, "Compression algorithm does not support random access"))
     return;
+
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
 }
 
