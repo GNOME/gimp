@@ -7,6 +7,20 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Changes in GIMP 2.4.2
+=====================
+
+- removed broken and useless HSV Graph script (bug #491311)
+- update the histogram when a color correction tool is cancelled (bug #493639)
+- fixed a crash with certain plug-in or script descriptions (bug #492718)
+- corrected a tooltip (bug #495564)
+- fixed a crash when GIMP is run without any modules (bug #495863)
+- fixed error handling in the TIFF plug-in
+- fixed a problem with Sample points
+- fixed a crash when merging layers in indexed image (bug #495990)
+- translation updates
+
+
 Changes in GIMP 2.4.1
 =====================
 
