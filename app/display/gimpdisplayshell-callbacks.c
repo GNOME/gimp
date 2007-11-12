@@ -41,6 +41,7 @@
 #include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
 
+#include "tools/gimpimagemaptool.h"
 #include "tools/gimpmovetool.h"
 #include "tools/gimppainttool.h"
 #include "tools/gimptoolcontrol.h"
@@ -1512,6 +1513,7 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
       sample_point = (event->state & GDK_CONTROL_MASK);
 
       if (! ((sample_point && (GIMP_IS_COLOR_TOOL (active_tool) &&
+                               ! GIMP_IS_IMAGE_MAP_TOOL (active_tool) &&
                                ! (GIMP_IS_PAINT_TOOL (active_tool) &&
                                   ! GIMP_PAINT_TOOL (active_tool)->pick_colors)))
 

@@ -1,3 +1,12 @@
+2007-11-12  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_ruler_button_press): don't let
+	GimpImageMapTools move sample points. They fail badly and leave
+	the display in a paused state.
+
 2007-11-12  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
