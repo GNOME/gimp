@@ -1,3 +1,10 @@
+2007-11-13  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-merge.c (gimp_image_merge_layers): when we
+	encounter an unsupported merge operation (merging an opaque
+	indexed layer onto an indexed layer with alpha channel), then add
+	an alpha channel and try again. Fixes bug #496437.
+
 2007-11-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpviewrenderer.c (gimp_view_renderer_draw): use
