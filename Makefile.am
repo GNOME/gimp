@@ -1,5 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
+if OS_WIN32
+gimptool_program = gimptool-@GIMP_TOOL_VERSION@
+else
+gimptool_script = gimptool-@GIMP_TOOL_VERSION@
+endif
+
 SUBDIRS = \
 	m4macros	\
 	tools		\
@@ -29,7 +35,19 @@ SUBDIRS = \
 	devel-docs	\
 	docs
 
-bin_SCRIPTS = gimptool-@GIMP_TOOL_VERSION@ @GIMPINSTALL@
+bin_SCRIPTS = $(gimptool_script) @GIMPINSTALL@
+
+if OS_WIN32
+bin_PROGRAMS = $(gimptool_program)
+
+INCLUDES = \
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)
+
+gimptool_@GIMP_TOOL_VERSION@_LDADD = $(GTK_LIBS)
+
+gimptool_@GIMP_TOOL_VERSION@_SOURCES = gimptool-win32.c
+endif
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = \
