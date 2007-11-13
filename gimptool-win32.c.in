@@ -49,20 +49,6 @@ static gchar *env_libs;
 #endif
 
 #ifdef G_OS_WIN32
-#define IS_EXECUTABLE(mode) 1
-#else
-#define IS_EXECUTABLE(mode) (S_IXUSR & st.st_mode)
-#endif
-
-#ifdef G_OS_WIN32
-#define USE_PKG_CONFIG yep
-#else
-#if defined (GLIB_CHECK_VERSION) && GLIB_CHECK_VERSION (1, 3, 10)
-#define USE_PKG_CONFIG also yep
-#endif
-#endif
-
-#ifdef G_OS_WIN32
 #define COPY win32_command ("copy")
 #define REMOVE win32_command ("del")
 #else
@@ -87,7 +73,12 @@ static struct {
   { "libdir", "@libdir@" },
   { "infodir", "@infodir@" },
   { "mandir", "@mandir@" },
+#if 0
+  /* For --includedir we want the includedir of the developer package,
+   * not an includedir under the runtime installation prefix.
+   */
   { "includedir", "@includedir@" },
+#endif
   { "gimpplugindir", "@gimpplugindir@" },
   { "gimpdatadir", "@gimpdatadir@" }
 };
@@ -108,30 +99,66 @@ win32_command (gchar *command)
 #endif
 
 static gboolean
-starts_with (gchar *string,
-	     gchar *test)
-{
-  return strncmp (string, test, strlen (test)) == 0;
-}
-
-static gboolean
 starts_with_dir (gchar *string,
 		 gchar *test)
 {
-  return starts_with (string, g_strconcat (test, "/", NULL)) ||
+  return g_str_has_prefix (string, g_strconcat (test, "/", NULL)) ||
     strcmp (string, test) == 0;
 }
 
 static gchar *
-get_prefix (gchar slash)
+one_line_output (gchar *program,
+		 gchar *args)
+{
+  gchar *command = g_strconcat (program, " ", args, NULL);
+  FILE *pipe = popen (command, "r");
+  char line[1000];
+
+  if (pipe == NULL)
+    {
+      fprintf (stderr, "Cannot run '%s'\n", command);
+      exit (1);
+    }
+
+  if (fgets (line, sizeof (line), pipe) == NULL)
+    line[0] = '\0';
+
+  if (strlen (line) > 0 && line [strlen (line) - 1] == '\n')
+    line [strlen (line) - 1] = '\0';
+  if (strlen (line) > 0 && line [strlen (line) - 1] == '\r')
+    line [strlen (line) - 1] = '\0';
+
+  pclose (pipe);
+
+  if (strlen (line) == 0)
+    {
+      fprintf (stderr, "No output from '%s'\n", command);
+      exit (1);
+    }
+
+  return g_strdup (line);
+}
+
+static gchar *
+pkg_config (gchar *args)
+{
+  if (msvc_syntax)
+    return one_line_output ("pkg-config --msvc-syntax", args);
+  else
+    return one_line_output ("pkg-config", args);
+}
+
+static gchar *
+get_runtime_prefix (gchar slash)
 {
 #ifdef G_OS_WIN32
-  /* Don't use the build-time @prefix@, but deduce the
-   * installation-time prefix from where gimp.exe can be found.
+
+  /* Don't use the developer package prefix, but deduce the
+   * installation-time prefix from where gimp-x.y.exe can be found.
    */
 
   gchar *path;
-  char *p, *q, *r;
+  char *p, *r;
 
   path = g_find_program_in_path ("gimp-@GIMP_APP_VERSION@.exe");
 
@@ -165,7 +192,8 @@ get_prefix (gchar slash)
   fprintf (stderr, "Cannot determine GIMP @GIMP_APP_VERSION@ installation location\n");
   exit (1);
 #else
-  return "@prefix@";
+  /* On Unix assume the executable package is in the same prefix as the developer stuff */
+  return pkg_config ("--variable=prefix gimp-2.0");
 #endif
 }
 
@@ -180,7 +208,7 @@ get_exec_prefix (gchar slash)
    * but at least in tml's prebuilt stuff it is. If somebody else does
    * it another way, feel free to hack this.
    */
-  return (exec_prefix = get_prefix (slash));
+  return (exec_prefix = get_runtime_prefix (slash));
 #else
   return "@exec_prefix@";
 #endif
@@ -197,7 +225,7 @@ expand_and_munge (gchar *value)
     value = g_strconcat (get_exec_prefix ('/'), value + strlen ("@exec_prefix@"), NULL);
 
   if (starts_with_dir (value, "@prefix@"))
-    value = g_strconcat (get_prefix ('/'), value + strlen ("@prefix@"), NULL);
+    value = g_strconcat (get_runtime_prefix ('/'), value + strlen ("@prefix@"), NULL);
 
   return value;
 }
@@ -214,24 +242,18 @@ find_out_env_flags (void)
   else
     env_cc = "@CC@";
 
-  if (g_strncasecmp (env_cc, "cl", 2) == 0)
+  if (g_ascii_strncasecmp (env_cc, "cl", 2) == 0)
     msvc_syntax = TRUE;
 
   if ((p = getenv ("CFLAGS")) != NULL)
     env_cflags = p;
-  else if (msvc_syntax && g_strncasecmp ("@CC@", "cl", 2) != 0)
-    /* Don't use CFLAGS for wrong compiler... */
-    env_cflags = "";
   else
-    env_cflags = "@CFLAGS@";
+    env_cflags = "";
 
   if ((p = getenv ("LDFLAGS")) != NULL)
     env_ldflags = p;
-  else if (msvc_syntax && g_strncasecmp ("@CC@", "cl", 2) != 0)
-    /* Ditto for LDFLAGS */
-    env_ldflags = "";
   else
-    env_ldflags = "@LDFLAGS@";
+    env_ldflags = "";
 
   if ((p = getenv ("LIBS")) != NULL && *p != '\0')
     env_libs = p;
@@ -243,7 +265,7 @@ static void
 usage (int exit_status)
 {
   printf ("\
-Usage: gimptool [OPTION]...\n\
+Usage: gimptool-2.0 [OPTION]...\n\
 \n\
 General options:\n\
   --help                  print this message\n\
@@ -284,7 +306,7 @@ User options:\n\
 \n\
 The --install and --uninstall options have \"admin\" counterparts (with\n\
 prefix --install-admin instead of --install) that can be used instead to\n\
-install/uninstall a plug-in or script in the site directory instead of a\n\
+install/uninstall a plug-in or script in the machine directory instead of a\n\
 user directory.\n\
 \n\
 For plug-ins which do not use GTK+, the --build and --install options can be\n\
@@ -294,72 +316,21 @@ not libgumpui, append -nogimpui.\n");
 }
   
 static gchar *
-one_line_output (gchar *program,
-		 gchar *args)
+get_includedir (void)
 {
-  FILE *pipe = popen (g_strconcat (program, " ", args, NULL), "r");
-  char line[1000];
-
-  if (pipe == NULL)
-    {
-      fprintf (stderr, "Cannot run %s\n", program);
-      exit (1);
-    }
-
-  fgets (line, sizeof (line), pipe);
-  if (line [strlen (line) - 1] == '\n')
-    line [strlen (line) - 1] = '\0';
-  if (line [strlen (line) - 1] == '\r')
-    line [strlen (line) - 1] = '\0';
-
-  pclose (pipe);
-
-  return g_strdup (line);
+  return pkg_config ("--variable=includedir gimp-2.0");
 }
 
-#ifdef USE_PKG_CONFIG
-
-static gchar *
-pkg_config (gchar *args)
+static void
+do_includedir (void)
 {
-  if (msvc_syntax)
-    return one_line_output ("pkg-config --msvc-syntax", args);
-  else
-    return one_line_output ("pkg-config", args);
-}
-
-#endif
-
-static gchar *
-glib_config (gchar *args)
-{
-#ifdef USE_PKG_CONFIG
-  return pkg_config (g_strconcat (args, " glib-2.0", NULL));
-#else
-  return one_line_output ("glib-config", args);
-#endif
-}
-
-static gchar *
-gtk_config (gchar *args)
-{
-#ifdef USE_PKG_CONFIG
-  return pkg_config (g_strconcat (args, " gtk+-2.0", NULL));
-#else
-  return one_line_output ("gtk-config", args);
-#endif
+  printf ("%s\n", get_includedir ());
 }
 
 static gchar *
 get_cflags (void)
 {
-  gchar *gtk_cflags = gtk_config ("--cflags");
-
-  /* Yes, do use forward slashes here also on Windows. The compilers
-   * accept it, and it means less quoting trouble when using backquoted
-   * invokations of gimptool in Makefiles.
-   */
-  return g_strdup_printf ("-I%s/include/gimp-2.0 %s", get_prefix ('/'), gtk_cflags);
+  return pkg_config ("--cflags gimpui-2.0");
 }
 
 static void
@@ -371,9 +342,7 @@ do_cflags (void)
 static gchar *
 get_cflags_noui (void)
 {
-  gchar *glib_cflags = glib_config ("--cflags");
-
-  return g_strdup_printf ("%s -I%s/include", glib_cflags, get_prefix ('/'));
+  return pkg_config ("--cflags gimp-2.0");
 }
 
 static void
@@ -383,14 +352,21 @@ do_cflags_noui (void)
 }
 
 static gchar *
+get_cflags_nogimpui (void)
+{
+  return pkg_config ("--cflags gimp-2.0 gtk+-2.0");
+}
+
+static void
+do_cflags_nogimpui (void)
+{
+  printf ("%s\n", get_cflags_nogimpui ());
+}
+
+static gchar *
 get_libs (void)
 {
-  gchar *gtk_libs = gtk_config ("--libs");
-
-  if (msvc_syntax)
-    return g_strdup_printf ("/libpath:%s/lib gimpui-@GIMP_API_VERSION@.lib gimpwidgets-@GIMP_API_VERSION@.lib gimp-@GIMP_API_VERSION@.lib gimpcolor-@GIMP_API_VERSION@.lib gimpmath-@GIMP_API_VERSION@.lib gimpbase-@GIMP_API_VERSION@.lib %s", get_prefix ('/'), gtk_libs);
-  else
-    return g_strdup_printf ("-L%s/lib -lgimpui-@GIMP_API_VERSION@ -lgimpwidgets-@GIMP_API_VERSION@ -lgimp-@GIMP_API_VERSION@ -lgimpcolor-@GIMP_API_VERSION@ -lgimpmath-@GIMP_API_VERSION@ -lgimpbase-@GIMP_API_VERSION@ %s", get_prefix ('/'), gtk_libs);
+  return pkg_config ("--libs gimpui-2.0");
 }
 
 static void
@@ -402,18 +378,25 @@ do_libs (void)
 static gchar *
 get_libs_noui (void)
 {
-  gchar *glib_libs = glib_config ("--libs");
-
-  if (msvc_syntax)
-    return g_strdup_printf ("/libpath:%s/lib gimp-@GIMP_API_VERSION@.lib gimpcolor-@GIMP_API_VERSION@.lib gimpmath-@GIMP_API_VERSION@.lib gimpbase-@GIMP_API_VERSION@.lib %s", get_prefix ('/'), glib_libs);
-  else
-    return g_strdup_printf ("-L%s/lib -lgimp-@GIMP_API_VERSION@ -lgimpcolor-@GIMP_API_VERSION@ -lgimpmath-@GIMP_API_VERSION@ -lgimpbase-@GIMP_API_VERSION@ %s", get_prefix ('/'), glib_libs);
+  return pkg_config ("--libs gimp-2.0");
 }
 
 static void
 do_libs_noui (void)
 {
   printf ("%s\n", get_libs_noui ());
+}
+
+static gchar *
+get_libs_nogimpui (void)
+{
+  return pkg_config ("--libs gimp-2.0 gtk+-2.0");
+}
+
+static void
+do_libs_nogimpui (void)
+{
+  printf ("%s\n", get_libs_nogimpui ());
 }
 
 static void
@@ -536,13 +519,13 @@ get_user_plugin_dir (gboolean forward_slashes)
 static void
 do_install (char *what)
 {
-  do_build_2 (get_cflags (), get_libs (), get_user_plugin_dir (TRUE), what);
+  do_build_2 (get_cflags (), get_libs (), get_user_plugin_dir (FALSE), what);
 }
 
 static void
 do_install_noui (char *what)
 {
-  do_build_2 (get_cflags_noui (), get_libs_noui (), get_user_plugin_dir (TRUE), what);
+  do_build_2 (get_cflags_noui (), get_libs_noui (), get_user_plugin_dir (FALSE), what);
 }
 
 static void
@@ -561,26 +544,26 @@ get_sys_plugin_dir (gboolean forward_slashes)
 #endif
 
   return g_strdup_printf ("%s%clib%cgimp%c@GIMP_PLUGIN_VERSION@%cplug-ins",
-			  get_prefix (slash),
+			  get_runtime_prefix (slash),
 			  slash, slash, slash, slash);
 }
 
 static void
 do_install_admin (char *what)
 {
-  do_build_2 (get_cflags (), get_libs (), get_sys_plugin_dir (FALSE), what);
+  do_build_2 (get_cflags (), get_libs (), get_sys_plugin_dir (TRUE), what);
 }
 
 static void
 do_install_admin_noui (char *what)
 {
-  do_build_2 (get_cflags_noui (), get_libs_noui (), get_sys_plugin_dir (FALSE), what);
+  do_build_2 (get_cflags_noui (), get_libs_noui (), get_sys_plugin_dir (TRUE), what);
 }
 
 static void
 do_install_admin_nogimpui (char *what)
 {
-  do_build_2 (get_cflags (), get_libs (), get_sys_plugin_dir (FALSE), what);
+  do_build_2 (get_cflags (), get_libs (), get_sys_plugin_dir (TRUE), what);
 }
 
 static void
@@ -663,7 +646,7 @@ get_sys_script_dir (gboolean forward_slashes)
 #endif
 
   return g_strdup_printf ("%s%cshare%cgimp%c%d.%d%cscripts",
-			  get_prefix (slash),
+			  get_runtime_prefix (slash),
 			  slash, slash, slash,
 			  @GIMP_MAJOR_VERSION@, @GIMP_MINOR_VERSION@,
 			  slash);
@@ -708,9 +691,11 @@ main (int    argc,
 	  strcmp (argv[argi], "--dry-run") == 0 ||
 	  strcmp (argv[argi], "--recon") == 0)
 	dry_run = TRUE;
-      else if (starts_with (argv[argi], "--prefix="))
+      else if (strcmp (argv[argi], "--help") == 0)
+	usage (0);
+      else if (g_str_has_prefix (argv[argi], "--prefix="))
 	prefix = argv[argi] + strlen ("--prefix=");
-      else if (starts_with (argv[argi], "--exec-prefix="))
+      else if (g_str_has_prefix (argv[argi], "--exec-prefix="))
 	exec_prefix = argv[argi] + strlen ("--exec_prefix=");
       else if (strcmp (argv[argi], "--msvc-syntax") == 0)
 	msvc_syntax = TRUE;
@@ -727,8 +712,6 @@ main (int    argc,
 	  break;
       if (i < G_N_ELEMENTS (dirs))
 	printf ("%s\n", expand_and_munge (dirs[i].value));
-      else if (strcmp (argv[argi], "--help") == 0)
-	usage (0);
       else if (strcmp (argv[argi], "--quiet") == 0 ||
 	       strcmp (argv[argi], "--silent") == 0)
 	silent = TRUE;
@@ -742,19 +725,23 @@ main (int    argc,
 	       strcmp (argv[argi], "--dry-run") == 0 ||
 	       strcmp (argv[argi], "--recon") == 0)
 	;			/* Already handled */
+      else if (strcmp (argv[argi], "--includedir") == 0)
+	do_includedir ();
       else if (strcmp (argv[argi], "--cflags") == 0)
 	do_cflags ();
       else if (strcmp (argv[argi], "--cflags-noui") == 0)
 	do_cflags_noui ();
       else if (strcmp (argv[argi], "--cflags-nogimpui") == 0)
-	do_cflags ();
+	do_cflags_nogimpui ();
       else if (strcmp (argv[argi], "--libs") == 0)
 	do_libs ();
       else if (strcmp (argv[argi], "--libs-noui") == 0)
 	do_libs_noui ();
-      else if (starts_with (argv[argi], "--prefix="))
+      else if (strcmp (argv[argi], "--libs-nogimpui") == 0)
+	do_libs_nogimpui ();
+      else if (g_str_has_prefix (argv[argi], "--prefix="))
 	;
-      else if (starts_with (argv[argi], "--exec-prefix="))
+      else if (g_str_has_prefix (argv[argi], "--exec-prefix="))
 	;
       else if (strcmp (argv[argi], "--msvc-syntax") == 0)
 	;

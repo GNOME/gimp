@@ -1,3 +1,7 @@
+2007-11-13  Tor Lillqvist  <tml@novell.com>
+
+	* gimptool-win32.c.in: Some cleanups, more coming.
+
 2007-11-13  Sven Neumann  <sven@gimp.org>
 
 	Fix for bug #494049 (painting doesn't update the histogram):
