@@ -1,5 +1,11 @@
 2007-11-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpviewrenderer.c (gimp_view_renderer_draw): use
+	cairo_save()/cairo_restore() around calling the virtual function
+	instead of restoring the clipping area manually.
+
+2007-11-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpviewrenderervectors.c
 	(gimp_view_renderer_vectors_draw): naive port to Cairo. Somebody
 	should check if this isn't better done with proper curve_to()

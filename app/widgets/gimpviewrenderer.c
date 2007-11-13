@@ -606,8 +606,12 @@ gimp_view_renderer_draw (GimpViewRenderer   *renderer,
 
   if (renderer->viewable)
     {
+      cairo_save (cr);
+
       GIMP_VIEW_RENDERER_GET_CLASS (renderer)->draw (renderer,
                                                      widget, cr, draw_area);
+
+      cairo_restore (cr);
     }
   else
     {
@@ -629,16 +633,6 @@ gimp_view_renderer_draw (GimpViewRenderer   *renderer,
       gint    width  = renderer->width  + renderer->border_width;
       gint    height = renderer->height + renderer->border_width;
       gdouble x, y;
-
-      if (renderer->viewable)
-        {
-          /*  reset clipping because the draw() implementation is
-           *  allowed to do additional clipping
-           */
-          cairo_reset_clip (cr);
-          gdk_cairo_rectangle (cr, &render_rect);
-          cairo_clip (cr);
-        }
 
       cairo_set_line_width (cr, renderer->border_width);
       cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
