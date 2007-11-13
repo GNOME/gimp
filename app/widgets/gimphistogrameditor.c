@@ -346,10 +346,11 @@ gimp_histogram_editor_update (GimpHistogramEditor *editor)
     g_source_remove (editor->idle_id);
 
   editor->idle_id =
-    g_idle_add_full (G_PRIORITY_LOW,
-                     (GSourceFunc) gimp_histogram_editor_idle_update,
-                     editor,
-                     NULL);
+    g_timeout_add_full (G_PRIORITY_LOW,
+                        200,
+                        (GSourceFunc) gimp_histogram_editor_idle_update,
+                        editor,
+                        NULL);
 }
 
 static gboolean
