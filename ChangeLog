@@ -1,10 +1,9 @@
 2007-11-13  Martin Nordholts  <martinn@svn.gnome.org>
 
-	Avoid GimpRectangleTool internals to make use of its public own
-	interface by making gimp_rectangle_tool_get_other_side() work on
-	pointers to members instead of GObject property names.
-
-	* app/tools/gimprectangletool.c
+	* app/tools/gimprectangletool.c: Avoid GimpRectangleTool internals
+	to make use of its own public interface by making
+	gimp_rectangle_tool_get_other_side() work on pointers to members
+	instead of GObject property names.
 	(gimp_rectangle_tool_set_other_side_coord)
 	(gimp_rectangle_tool_get_other_side_coord): Use
 	gimp_rectangle_tool_get_other_side() in the new way.
