@@ -214,8 +214,8 @@ static void          gimp_rectangle_tool_update_handle_sizes  (GimpRectangleTool
 static gboolean      gimp_rectangle_tool_scale_has_changed    (GimpRectangleTool        *rect_tool);
 
 static void          gimp_rectangle_tool_get_other_side       (GimpRectangleTool        *rect_tool,
-                                                               const gchar             **other_x,
-                                                               const gchar             **other_y);
+                                                               gint                    **other_x,
+                                                               gint                    **other_y);
 static void          gimp_rectangle_tool_get_other_side_coord (GimpRectangleTool        *rect_tool,
                                                                gint                     *other_side_x,
                                                                gint                     *other_side_y);
@@ -2702,19 +2702,20 @@ gimp_rectangle_tool_rect_adjusting_func (GimpRectangleTool *rect_tool)
 
 /**
  * gimp_rectangle_tool_get_other_side:
- * @rect_tool:      A #GimpRectangleTool.
- * @other_x:        Pointer to where to set the other-x string.
- * @other_y:        Pointer to where to set the other-y string.
+ * @rect_tool: A #GimpRectangleTool.
+ * @other_x:   Pointer to double of the other-x double.
+ * @other_y:   Pointer to double of the other-y double.
  *
- * Calculates what property variables that hold the coordinates of the opposite
- * side (either the opposite corner or literally the opposite side), based on
- * the current function. The opposite of a corner needs two coordinates, the
- * opposite of a side only needs one.
+ * Calculates pointers to member variables that hold the coordinates
+ * of the opposite side (either the opposite corner or literally the
+ * opposite side), based on the current function. The opposite of a
+ * corner needs two coordinates, the opposite of a side only needs
+ * one.
  */
 static void
 gimp_rectangle_tool_get_other_side (GimpRectangleTool  *rect_tool,
-                                    const gchar       **other_x,
-                                    const gchar       **other_y)
+                                    gint              **other_x,
+                                    gint              **other_y)
 {
   GimpRectangleToolPrivate *private;
 
@@ -2725,13 +2726,13 @@ gimp_rectangle_tool_get_other_side (GimpRectangleTool  *rect_tool,
     case RECT_RESIZING_UPPER_RIGHT:
     case RECT_RESIZING_LOWER_RIGHT:
     case RECT_RESIZING_RIGHT:
-      *other_x = "x1";
+      *other_x = &private->x1;
       break;
 
     case RECT_RESIZING_UPPER_LEFT:
     case RECT_RESIZING_LOWER_LEFT:
     case RECT_RESIZING_LEFT:
-      *other_x = "x2";
+      *other_x = &private->x2;
       break;
 
     case RECT_RESIZING_TOP:
@@ -2746,13 +2747,13 @@ gimp_rectangle_tool_get_other_side (GimpRectangleTool  *rect_tool,
     case RECT_RESIZING_LOWER_RIGHT:
     case RECT_RESIZING_LOWER_LEFT:
     case RECT_RESIZING_BOTTOM:
-      *other_y = "y1";
+      *other_y = &private->y1;
       break;
 
     case RECT_RESIZING_UPPER_RIGHT:
     case RECT_RESIZING_UPPER_LEFT:
     case RECT_RESIZING_TOP:
-      *other_y = "y2";
+      *other_y = &private->y2;
       break;
 
     case RECT_RESIZING_LEFT:
@@ -2768,20 +2769,22 @@ gimp_rectangle_tool_get_other_side_coord (GimpRectangleTool *rect_tool,
                                           gint              *other_side_x,
                                           gint              *other_side_y)
 {
-  const gchar *other_x = NULL;
-  const gchar *other_y = NULL;
+  GimpRectangleToolPrivate *private;
+  gint                     *other_x;
+  gint                     *other_y;
+
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
+
+  other_x = NULL;
+  other_y = NULL;
 
   gimp_rectangle_tool_get_other_side (rect_tool,
                                       &other_x,
                                       &other_y);
   if (other_x)
-    g_object_get (rect_tool,
-                  other_x, other_side_x,
-                  NULL);
+    *other_side_x = *other_x;
   if (other_y)
-    g_object_get (rect_tool,
-                  other_y, other_side_y,
-                  NULL);
+    *other_side_y = *other_y;
 }
 
 static void
@@ -2789,20 +2792,22 @@ gimp_rectangle_tool_set_other_side_coord (GimpRectangleTool *rect_tool,
                                           gint               other_side_x,
                                           gint               other_side_y)
 {
-  const gchar *other_x = NULL;
-  const gchar *other_y = NULL;
+  GimpRectangleToolPrivate *private;
+  gint                     *other_x;
+  gint                     *other_y;
+
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
+
+  other_x = NULL;
+  other_y = NULL;
 
   gimp_rectangle_tool_get_other_side (rect_tool,
                                       &other_x,
                                       &other_y);
   if (other_x)
-    g_object_set (rect_tool,
-                  other_x, other_side_x,
-                  NULL);
+    *other_x = other_side_x;
   if (other_y)
-    g_object_set (rect_tool,
-                  other_y, other_side_y,
-                  NULL);
+    *other_y = other_side_y;
 
   gimp_rectangle_tool_check_function (rect_tool);
 }

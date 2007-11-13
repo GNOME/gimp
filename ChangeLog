@@ -1,5 +1,16 @@
 2007-11-13  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Avoid GimpRectangleTool internals to make use of its public own
+	interface by making gimp_rectangle_tool_get_other_side() work on
+	pointers to members instead of GObject property names.
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_set_other_side_coord)
+	(gimp_rectangle_tool_get_other_side_coord): Use
+	gimp_rectangle_tool_get_other_side() in the new way.
+
+2007-11-13  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Fixed warnings about negative rectangle widths/heights when
 	toggling 'Fixed center' while rubber banding a rectangle.
 
