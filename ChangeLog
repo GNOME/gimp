@@ -1,3 +1,14 @@
+2007-11-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpviewrenderervectors.c
+	(gimp_view_renderer_vectors_draw): naive port to Cairo. Somebody
+	should check if this isn't better done with proper curve_to()
+	drawing using the original vectors data instead of interpolation.
+
+	* app/widgets/gimpviewrenderer.c (gimp_view_renderer_draw): reset
+	clipping before drawing the border because a subclass' draw()
+	might have done additional clipping.
+
 2007-11-13  Tor Lillqvist  <tml@novell.com>
 
 	* gimptool-win32.c.in: Some cleanups, more coming.

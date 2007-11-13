@@ -81,9 +81,11 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
   y = area->y + (area->height - renderer->height) / 2;
 
   cairo_rectangle (cr, x, y, renderer->width, renderer->height);
+  cairo_clip_preserve (cr);
   cairo_fill (cr);
 
-  /*  FIXME: port vector previews to Cairo  */
+  cairo_set_line_width (cr, 1.0);
+  gdk_cairo_set_source_color (cr, &widget->style->black);
 
   xscale = (gdouble) GIMP_ITEM (vectors)->width  / (gdouble) renderer->width;
   yscale = (gdouble) GIMP_ITEM (vectors)->height / (gdouble) renderer->height;
@@ -100,28 +102,27 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
       if (! coordinates)
         continue;
 
-#if 0
       if (coordinates->len > 0)
         {
-          GdkPoint *points = g_new (GdkPoint, coordinates->len);
-          gint      i;
+          GimpCoords *coords = &(g_array_index (coordinates, GimpCoords, 0));
+          gdouble     cx     = x + ROUND (coords->x / xscale);
+          gdouble     cy     = y + ROUND (coords->y / yscale);
+          gint        i;
 
-          for (i = 0; i < coordinates->len; i++)
+          cairo_move_to (cr, cx, cy);
+
+          for (i = 1; i < coordinates->len; i++)
             {
-              GimpCoords *coords;
-
               coords = &(g_array_index (coordinates, GimpCoords, i));
 
-              points[i].x = rect.x + ROUND (coords->x / xscale);
-              points[i].y = rect.y + ROUND (coords->y / yscale);
+              cx = x + ROUND (coords->x / xscale) + 0.5;
+              cy = y + ROUND (coords->y / yscale) + 0.5;
+
+              cairo_line_to (cr, cx, cy);
             }
 
-          gdk_draw_lines (window, widget->style->black_gc,
-                          points, coordinates->len);
-
-          g_free (points);
+          cairo_stroke (cr);
         }
-#endif
 
       g_array_free (coordinates, TRUE);
     }

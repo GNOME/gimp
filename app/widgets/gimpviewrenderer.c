@@ -630,6 +630,16 @@ gimp_view_renderer_draw (GimpViewRenderer   *renderer,
       gint    height = renderer->height + renderer->border_width;
       gdouble x, y;
 
+      if (renderer->viewable)
+        {
+          /*  reset clipping because the draw() implementation is
+           *  allowed to do additional clipping
+           */
+          cairo_reset_clip (cr);
+          gdk_cairo_rectangle (cr, &render_rect);
+          cairo_clip (cr);
+        }
+
       cairo_set_line_width (cr, renderer->border_width);
       cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
       gimp_cairo_set_source_color (cr, &renderer->border_color);
