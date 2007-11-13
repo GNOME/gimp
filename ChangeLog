@@ -1,3 +1,8 @@
+2007-11-13  Tor Lillqvist  <tml@novell.com>
+
+	* gimp-zip.in: Drop the timestamp from the zip file names. Add the
+	.pc files to the developer package.
+
 2007-11-13  Michael Natterer  <mitch@gimp.org>
 
 	Enable brush scaling for smudge (but only before, not while

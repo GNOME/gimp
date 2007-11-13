@@ -3,8 +3,8 @@
 # Build zipfiles for GIMP on Win32: separate runtime and developer
 # packages.
 
-ZIP=/tmp/gimp-@GIMP_VERSION@-`date +%Y%m%d`.zip
-DEVZIP=/tmp/gimp-dev-@GIMP_VERSION@-`date +%Y%m%d`.zip
+ZIP=/tmp/gimp-@GIMP_VERSION@.zip
+DEVZIP=/tmp/gimp-dev-@GIMP_VERSION@.zip
 
 cd @prefix@
 
@@ -63,3 +63,5 @@ lib/gimpwidgets.def
 include/gimp-@GIMP_API_VERSION@
 man/man1/gimptool-@GIMP_TOOL_VERSION@.1
 EOF
+
+zip $DEVZIP lib/pkgconfig/gimp*.pc
