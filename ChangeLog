@@ -1,3 +1,14 @@
+2007-11-13  Sven Neumann  <sven@gimp.org>
+
+	Fix for bug #494049 (painting doesn't update the histogram),
+	merged from trunk:
+
+	* app/paint/gimppaintcore.c: freeze the drawable preview while we
+	are painting. Update the drawable instead of the image.
+
+	* app/widgets/gimphistogrameditor.c: use a short timeout instead
+	of an idle handler to update the histogram.
+
 2007-11-12  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
