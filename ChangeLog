@@ -1,5 +1,14 @@
 2007-11-13  Sven Neumann  <sven@gimp.org>
 
+	Merged from trunk:
+
+	* app/core/gimpimage-merge.c (gimp_image_merge_layers): when we
+	encounter an unsupported merge operation (merging an opaque
+	indexed layer onto an indexed layer with alpha channel), then add
+	an alpha channel and try again. Fixes bug #496437.
+
+2007-11-13  Sven Neumann  <sven@gimp.org>
+
 	Fix for bug #494049 (painting doesn't update the histogram),
 	merged from trunk:
 

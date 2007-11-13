@@ -295,6 +295,16 @@ gimp_image_merge_visible_vectors (GimpImage *image)
 
 /*  private functions  */
 
+static CombinationMode
+gimp_image_merge_layers_get_operation (GimpLayer *dest,
+                                       GimpLayer *src)
+{
+  GimpImageType type  = gimp_drawable_type (GIMP_DRAWABLE (dest));
+  gint          bytes = gimp_drawable_bytes (GIMP_DRAWABLE (src));
+
+  return gimp_image_get_combination_mode (type, bytes);
+}
+
 static GimpLayer *
 gimp_image_merge_layers (GimpImage     *image,
                          GSList        *merge_list,
@@ -442,9 +452,8 @@ gimp_image_merge_layers (GimpImage     *image,
   else
     {
       /*  The final merged layer inherits the name of the bottom most layer
-       *  and the resulting layer has an alpha channel
-       *  whether or not the original did
-       *  Opacity is set to 100% and the MODE is set to normal
+       *  and the resulting layer has an alpha channel whether or not the
+       *  original did. Opacity is set to 100% and the MODE is set to normal.
        */
 
       merge_layer =
@@ -500,9 +509,16 @@ gimp_image_merge_layers (GimpImage     *image,
       /*  determine what sort of operation is being attempted and
        *  if it's actually legal...
        */
-      operation =
-        gimp_image_get_combination_mode (gimp_drawable_type (GIMP_DRAWABLE (merge_layer)),
-                                         gimp_drawable_bytes (GIMP_DRAWABLE (layer)));
+      operation = gimp_image_merge_layers_get_operation (merge_layer, layer);
+
+      if (operation == -1)
+        {
+          gimp_layer_add_alpha (layer);
+
+          /*  try again ...  */
+          operation = gimp_image_merge_layers_get_operation (merge_layer,
+                                                             layer);
+        }
 
       if (operation == -1)
         {
