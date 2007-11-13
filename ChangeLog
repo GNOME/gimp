@@ -10,9 +10,6 @@
 
 2007-11-13  Tor Lillqvist  <tml@novell.com>
 
-	* Makefile.am: Install the gimptool script only on Unix. Build and
-	install the gimptool executable on Windows.
-
 	* gimp-zip.in: Drop the timestamp from the zip file names. Add the
 	.pc files to the developer package.
 
