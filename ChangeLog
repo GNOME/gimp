@@ -1,3 +1,14 @@
+2007-11-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Fixed warnings about negative rectangle widths/heights when
+	toggling 'Fixed center' while rubber banding a rectangle.
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_set_other_side_coord): Finnishing off with a
+	call to gimp_rectangle_tool_check_function() as changing the
+	coordinates of the opposite side might swap the orientation of the
+	rectangle.
+
 2007-11-13  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-merge.c (gimp_image_merge_layers): when we
