@@ -157,7 +157,7 @@ gimp_brush_core_class_init (GimpBrushCoreClass *klass)
   paint_core_class->get_paint_area = gimp_brush_core_get_paint_area;
 
   klass->handles_changing_brush    = FALSE;
-  klass->use_scale                 = TRUE;
+  klass->handles_scaling_brush     = TRUE;
   klass->set_brush                 = gimp_brush_core_real_set_brush;
 }
 
@@ -677,8 +677,10 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
   gint           drawable_width, drawable_height;
   gint           brush_width, brush_height;
 
-  core->scale = gimp_brush_core_calc_brush_scale (core, paint_options,
-                                                  paint_core->cur_coords.pressure);
+  if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_scaling_brush)
+    core->scale = gimp_brush_core_calc_brush_scale (core, paint_options,
+                                                    paint_core->cur_coords.pressure);
+  /* else use scale from start(), we don't support on-the-fly scaling */
 
   gimp_brush_scale_size (core->brush, core->scale,
                          &brush_width, &brush_height);
@@ -766,8 +768,7 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
   g_return_if_fail (core->main_brush != NULL);
   g_return_if_fail (core->brush_bound_segs == NULL);
 
-  if (GIMP_BRUSH_CORE_GET_CLASS (core)->use_scale)
-    scale = paint_options->brush_scale;
+  scale = paint_options->brush_scale;
 
   if (scale > 0.0)
     mask = gimp_brush_scale_mask (core->main_brush, scale);
@@ -909,23 +910,21 @@ gimp_brush_core_calc_brush_scale (GimpBrushCore    *core,
 {
   gdouble scale = 1.0;
 
-  if (GIMP_BRUSH_CORE_GET_CLASS (core)->use_scale)
+  if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_scaling_brush &&
+      GIMP_PAINT_CORE (core)->use_pressure)
     {
-      if (GIMP_PAINT_CORE (core)->use_pressure)
-        {
-          if (paint_options->pressure_options->inverse_size)
-            scale = 1.0 - 0.9 * pressure;
-          else if (paint_options->pressure_options->size)
-            scale = pressure;
+      if (paint_options->pressure_options->inverse_size)
+        scale = 1.0 - 0.9 * pressure;
+      else if (paint_options->pressure_options->size)
+        scale = pressure;
 
-          if (scale < 1 / 256.0)
-            scale = 1 / 16.0;
-          else
-            scale = sqrt (scale);
-        }
-
-      scale *= paint_options->brush_scale;
+      if (scale < 1 / 256.0)
+        scale = 1 / 16.0;
+      else
+        scale = sqrt (scale);
     }
+
+  scale *= paint_options->brush_scale;
 
   return scale;
 }

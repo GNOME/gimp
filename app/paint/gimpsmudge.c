@@ -86,11 +86,11 @@ gimp_smudge_class_init (GimpSmudgeClass *klass)
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
   GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
 
-  object_class->finalize      = gimp_smudge_finalize;
+  object_class->finalize  = gimp_smudge_finalize;
 
-  paint_core_class->paint     = gimp_smudge_paint;
+  paint_core_class->paint = gimp_smudge_paint;
 
-  brush_core_class->use_scale = FALSE;
+  brush_core_class->handles_scaling_brush = FALSE;
 }
 
 static void
@@ -249,13 +249,13 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  /*  Get the unclipped brush coordinates  */
-  gimp_smudge_brush_coords (paint_core, &x, &y, &w, &h);
-
   /*  Get the paint area (Smudge won't scale!)  */
   area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
   if (! area)
     return;
+
+  /*  Get the unclipped brush coordinates  */
+  gimp_smudge_brush_coords (paint_core, &x, &y, &w, &h);
 
   /* srcPR will be the pixels under the current painthit from the drawable */
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
@@ -323,10 +323,15 @@ gimp_smudge_brush_coords (GimpPaintCore *paint_core,
                           gint          *h)
 {
   GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_core);
+  gint           width;
+  gint           height;
+
+  gimp_brush_scale_size (brush_core->brush, brush_core->scale,
+                         &width, &height);
 
   /* Note: these are the brush mask size plus a border of 1 pixel */
-  *x = (gint) paint_core->cur_coords.x - brush_core->brush->mask->width  / 2 - 1;
-  *y = (gint) paint_core->cur_coords.y - brush_core->brush->mask->height / 2 - 1;
-  *w = brush_core->brush->mask->width  + 2;
-  *h = brush_core->brush->mask->height + 2;
+  *x = (gint) paint_core->cur_coords.x - width  / 2 - 1;
+  *y = (gint) paint_core->cur_coords.y - height / 2 - 1;
+  *w = width  + 2;
+  *h = height + 2;
 }

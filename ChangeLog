@@ -1,3 +1,29 @@
+2007-11-13  Michael Natterer  <mitch@gimp.org>
+
+	Enable brush scaling for smudge (but only before, not while
+	painting). Fixes bug #471348.
+
+	* app/paint/gimpbrushcore.[ch] (struct GimpBrushCoreClass): rename
+	member "use_scale" to "handles_scaling_brush".
+
+	(gimp_brush_core_calc_brush_scale): apply pressure scale only if
+	both "handles_scaling_brush" and "use_pressure" are TRUE, and
+	apply the scaling from the options unconditionally.
+
+	(gimp_brush_core_get_paint_area): don't re-fetch core->scale if
+	"handles_scaling_brush" is FALSE to keep the brush from scaling
+	*while* painting.
+
+	(gimp_brush_core_create_bound_segs): use the brush scale from the
+	options unconditionally since that's always used now.
+
+	* app/paint/gimpsmudge.c (gimp_smudge_brush_coords): use
+	gimp_brush_scale_size() to figure the accum_buffer's size instead
+	of using the brush mask's size directly.
+
+	* app/tools/gimppaintoptions-gui.c (gimp_paint_options_gui): show
+	the brush scale controls for all brush tools.
+	
 2007-11-12  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-utils.c (gimp_get_default_unit): return

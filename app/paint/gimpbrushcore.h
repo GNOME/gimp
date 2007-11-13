@@ -91,8 +91,8 @@ struct _GimpBrushCoreClass
   /*  Set for tools that don't mind if the brush changes while painting  */
   gboolean            handles_changing_brush;
 
-  /*  Scale the brush mask depending on pressure  */
-  gboolean            use_scale;
+  /*  Set for tools that don't mind if the brush scales while painting  */
+  gboolean            handles_scaling_brush;
 
   void (* set_brush) (GimpBrushCore *core,
                       GimpBrush     *brush);

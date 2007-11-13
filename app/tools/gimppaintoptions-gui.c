@@ -116,24 +116,20 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   /*  the brush  */
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
+      GtkObject *adj;
+
       button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
                                         "brush-view-type", "brush-view-size");
       gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
                                  _("Brush:"), 0.0, 0.5,
                                  button, 2, FALSE);
 
-      if (tool_type != GIMP_TYPE_SMUDGE_TOOL)
-        {
-          GtkObject *adj;
-
-          adj = gimp_prop_scale_entry_new (config, "brush-scale",
-                                           GTK_TABLE (table), 0, table_row++,
-                                           _("Scale:"),
-                                           0.01, 0.1, 2,
-                                           FALSE, 0.0, 0.0);
-
-          gimp_scale_entry_set_logarithmic (adj, TRUE);
-        }
+      adj = gimp_prop_scale_entry_new (config, "brush-scale",
+                                       GTK_TABLE (table), 0, table_row++,
+                                       _("Scale:"),
+                                       0.01, 0.1, 2,
+                                       FALSE, 0.0, 0.0);
+      gimp_scale_entry_set_logarithmic (adj, TRUE);
     }
 
   /*  the gradient  */
