@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -47,8 +49,6 @@ enum
 };
 
 
-static void     gimp_palette_view_realize        (GtkWidget        *widget);
-static void     gimp_palette_view_unrealize      (GtkWidget        *widget);
 static gboolean gimp_palette_view_expose         (GtkWidget        *widget,
                                                   GdkEventExpose   *eevent);
 static gboolean gimp_palette_view_button_press   (GtkWidget        *widget,
@@ -66,8 +66,6 @@ static GimpPaletteEntry *
                                                   gint             y);
 static void     gimp_palette_view_expose_entry   (GimpPaletteView  *view,
                                                   GimpPaletteEntry *entry);
-static void     gimp_palette_view_draw_selected  (GimpPaletteView  *view,
-                                                  GdkRectangle     *area);
 static void     gimp_palette_view_invalidate     (GimpPalette      *palette,
                                                   GimpPaletteView  *view);
 static void     gimp_palette_view_drag_color     (GtkWidget        *widget,
@@ -145,8 +143,6 @@ gimp_palette_view_class_init (GimpPaletteViewClass *klass)
                   G_TYPE_POINTER,
                   GIMP_TYPE_RGB);
 
-  widget_class->realize            = gimp_palette_view_realize;
-  widget_class->unrealize          = gimp_palette_view_unrealize;
   widget_class->expose_event       = gimp_palette_view_expose;
   widget_class->button_press_event = gimp_palette_view_button_press;
   widget_class->key_press_event    = gimp_palette_view_key_press;
@@ -162,49 +158,74 @@ gimp_palette_view_init (GimpPaletteView *view)
 
   view->selected  = NULL;
   view->dnd_entry = NULL;
-  view->gc        = NULL;
-}
-
-static void
-gimp_palette_view_realize (GtkWidget *widget)
-{
-  GimpPaletteView *view = GIMP_PALETTE_VIEW (widget);
-
-  GTK_WIDGET_CLASS (parent_class)->realize (widget);
-
-  view->gc = gdk_gc_new (widget->window);
-
-  gdk_gc_set_function (view->gc, GDK_INVERT);
-  gdk_gc_set_line_attributes (view->gc, 1,
-                              GDK_LINE_SOLID, GDK_CAP_BUTT, GDK_JOIN_ROUND);
-}
-
-static void
-gimp_palette_view_unrealize (GtkWidget *widget)
-{
-  GimpPaletteView *view = GIMP_PALETTE_VIEW (widget);
-
-  if (view->gc)
-    {
-      g_object_unref (view->gc);
-      view->gc = NULL;
-    }
-
-  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
 static gboolean
 gimp_palette_view_expose (GtkWidget      *widget,
                           GdkEventExpose *eevent)
 {
-  if (GTK_WIDGET_DRAWABLE (widget))
+  GimpPaletteView *pal_view = GIMP_PALETTE_VIEW (widget);
+  GimpView        *view     = GIMP_VIEW (widget);
+
+  if (! GTK_WIDGET_DRAWABLE (widget))
+    return FALSE;
+
+  GTK_WIDGET_CLASS (parent_class)->expose_event (widget, eevent);
+
+  if (view->renderer->viewable && pal_view->selected)
     {
-      GimpPaletteView *view = GIMP_PALETTE_VIEW (widget);
+      GimpViewRendererPalette *renderer;
+      cairo_t                 *cr;
+      gint8                   *dash_list;
+      gint                     row, col;
 
-      GTK_WIDGET_CLASS (parent_class)->expose_event (widget, eevent);
+      renderer = GIMP_VIEW_RENDERER_PALETTE (view->renderer);
 
-      if (view->selected)
-        gimp_palette_view_draw_selected (view, &eevent->area);
+      row = pal_view->selected->position / renderer->columns;
+      col = pal_view->selected->position % renderer->columns;
+
+      cr = gdk_cairo_create (widget->window);
+      gdk_cairo_region (cr, eevent->region);
+      cairo_clip (cr);
+
+      cairo_set_line_width (cr, 1.0);
+      gdk_cairo_set_source_color (cr, &widget->style->base[GTK_STATE_NORMAL]);
+
+      cairo_rectangle (cr,
+                       widget->allocation.x + col * renderer->cell_width  + 0.5,
+                       widget->allocation.y + row * renderer->cell_height + 0.5,
+                       renderer->cell_width,
+                       renderer->cell_height);
+
+      cairo_stroke_preserve (cr);
+
+      gtk_widget_style_get (widget,
+                            "focus-line-pattern", (gchar *) &dash_list,
+                            NULL);
+
+      if (dash_list[0])
+        {
+          /* Taken straight from gtk_default_draw_focus()
+           */
+          gint     n_dashes     = strlen ((const gchar *) dash_list);
+          gdouble *dashes       = g_new (gdouble, n_dashes);
+          gdouble  total_length = 0;
+          gint     i;
+
+          for (i = 0; i < n_dashes; i++)
+            {
+              dashes[i] = dash_list[i];
+              total_length += dash_list[i];
+            }
+
+          gdk_cairo_set_source_color (cr, &widget->style->text[GTK_STATE_NORMAL]);
+          cairo_set_dash (cr, dashes, n_dashes, 0.5);
+          cairo_stroke (cr);
+          g_free (dashes);
+        }
+
+      g_free (dash_list);
+      cairo_destroy (cr);
     }
 
   return FALSE;
@@ -463,38 +484,6 @@ gimp_palette_view_expose_entry (GimpPaletteView  *view,
                               widget->allocation.y + row * renderer->cell_height,
                               renderer->cell_width  + 1,
                               renderer->cell_height + 1);
-}
-
-static void
-gimp_palette_view_draw_selected (GimpPaletteView *pal_view,
-                                 GdkRectangle    *area)
-{
-  GimpView *view = GIMP_VIEW (pal_view);
-
-  if (view->renderer->viewable && pal_view->selected)
-    {
-      GtkWidget               *widget = GTK_WIDGET (view);
-      GimpViewRendererPalette *renderer;
-      gint                     row, col;
-
-      renderer = GIMP_VIEW_RENDERER_PALETTE (view->renderer);
-
-      row = pal_view->selected->position / renderer->columns;
-      col = pal_view->selected->position % renderer->columns;
-
-      if (area)
-        gdk_gc_set_clip_rectangle (pal_view->gc, area);
-
-      gdk_draw_rectangle (widget->window, pal_view->gc,
-                          FALSE,
-                          widget->allocation.x + col * renderer->cell_width,
-                          widget->allocation.y + row * renderer->cell_height,
-                          renderer->cell_width,
-                          renderer->cell_height);
-
-      if (area)
-        gdk_gc_set_clip_rectangle (pal_view->gc, NULL);
-    }
 }
 
 static void

@@ -1,3 +1,7 @@
+2007-11-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppaletteview.[ch]: port to Cairo drawing.
+
 2007-11-13  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c: Avoid GimpRectangleTool internals

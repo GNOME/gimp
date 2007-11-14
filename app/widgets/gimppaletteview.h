@@ -41,7 +41,6 @@ struct _GimpPaletteView
 
   GimpPaletteEntry *selected;
   GimpPaletteEntry *dnd_entry;
-  GdkGC            *gc;
 };
 
 struct _GimpPaletteViewClass
