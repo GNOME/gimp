@@ -42,17 +42,19 @@ enum
 
 /*  local function prototypes  */
 
-static void    gimp_canvas_set_property (GObject         *object,
-                                         guint            property_id,
-                                         const GValue    *value,
-                                         GParamSpec      *pspec);
-static void    gimp_canvas_get_property (GObject         *object,
-                                         guint            property_id,
-                                         GValue          *value,
-                                         GParamSpec      *pspec);
+static void    gimp_canvas_set_property  (GObject         *object,
+                                          guint            property_id,
+                                          const GValue    *value,
+                                          GParamSpec      *pspec);
+static void    gimp_canvas_get_property  (GObject         *object,
+                                          guint            property_id,
+                                          GValue          *value,
+                                          GParamSpec      *pspec);
 
-static void    gimp_canvas_realize      (GtkWidget       *widget);
-static void    gimp_canvas_unrealize    (GtkWidget       *widget);
+static void    gimp_canvas_realize       (GtkWidget       *widget);
+static void    gimp_canvas_unrealize     (GtkWidget       *widget);
+static void    gimp_canvas_style_set     (GtkWidget       *widget,
+                                          GtkStyle        *prev_style);
 
 static GdkGC * gimp_canvas_gc_new       (GimpCanvas      *canvas,
                                          GimpCanvasStyle  style);
@@ -159,6 +161,7 @@ gimp_canvas_class_init (GimpCanvasClass *klass)
 
   widget_class->realize      = gimp_canvas_realize;
   widget_class->unrealize    = gimp_canvas_unrealize;
+  widget_class->style_set    = gimp_canvas_style_set;
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp", NULL, NULL,
@@ -260,6 +263,22 @@ gimp_canvas_unrealize (GtkWidget *widget)
     }
 
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
+}
+
+static void
+gimp_canvas_style_set (GtkWidget *widget,
+                       GtkStyle  *prev_style)
+{
+  GimpCanvas *canvas = GIMP_CANVAS (widget);
+
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  if (canvas->layout)
+    {
+      g_object_unref (canvas->layout);
+      canvas->layout = NULL;
+    }
 }
 
 /* Returns: %TRUE if the XOR color is not white */

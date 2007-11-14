@@ -188,8 +188,8 @@ gimp_palette_view_expose (GtkWidget      *widget,
       gdk_cairo_region (cr, eevent->region);
       cairo_clip (cr);
 
+      cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
       cairo_set_line_width (cr, 1.0);
-      gdk_cairo_set_source_color (cr, &widget->style->base[GTK_STATE_NORMAL]);
 
       cairo_rectangle (cr,
                        widget->allocation.x + col * renderer->cell_width  + 0.5,
@@ -218,10 +218,12 @@ gimp_palette_view_expose (GtkWidget      *widget,
               total_length += dash_list[i];
             }
 
-          gdk_cairo_set_source_color (cr, &widget->style->text[GTK_STATE_NORMAL]);
+          cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
           cairo_set_dash (cr, dashes, n_dashes, 0.5);
-          cairo_stroke (cr);
+
           g_free (dashes);
+
+          cairo_stroke (cr);
         }
 
       g_free (dash_list);

@@ -52,6 +52,8 @@ static void       gimp_curve_view_get_property   (GObject          *object,
                                                   GValue           *value,
                                                   GParamSpec       *pspec);
 
+static void       gimp_curve_view_style_set      (GtkWidget        *widget,
+                                                  GtkStyle         *prev_style);
 static gboolean   gimp_curve_view_expose         (GtkWidget        *widget,
                                                   GdkEventExpose   *event);
 static gboolean   gimp_curve_view_button_press   (GtkWidget        *widget,
@@ -84,6 +86,7 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
   object_class->set_property         = gimp_curve_view_set_property;
   object_class->get_property         = gimp_curve_view_get_property;
 
+  widget_class->style_set            = gimp_curve_view_style_set;
   widget_class->expose_event         = gimp_curve_view_expose;
   widget_class->button_press_event   = gimp_curve_view_button_press;
   widget_class->button_release_event = gimp_curve_view_button_release;
@@ -157,10 +160,10 @@ gimp_curve_view_dispose (GObject *object)
 }
 
 static void
-gimp_curve_view_set_property   (GObject      *object,
-                                guint         property_id,
-                                const GValue *value,
-                                GParamSpec   *pspec)
+gimp_curve_view_set_property (GObject      *object,
+                              guint         property_id,
+                              const GValue *value,
+                              GParamSpec   *pspec)
 {
   GimpCurveView *view = GIMP_CURVE_VIEW (object);
 
@@ -197,6 +200,28 @@ gimp_curve_view_get_property (GObject    *object,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
+    }
+}
+
+static void
+gimp_curve_view_style_set (GtkWidget *widget,
+                           GtkStyle  *prev_style)
+{
+  GimpCurveView *view = GIMP_CURVE_VIEW (widget);
+
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  if (view->xpos_layout)
+    {
+      g_object_unref (view->xpos_layout);
+      view->xpos_layout = NULL;
+    }
+
+  if (view->cursor_layout)
+    {
+      g_object_unref (view->cursor_layout);
+      view->cursor_layout = NULL;
     }
 }
 
@@ -381,10 +406,9 @@ gimp_curve_view_expose (GtkWidget      *widget,
       g_snprintf (buf, sizeof (buf), "x:%d", view->xpos);
 
       if (! view->xpos_layout)
-        view->xpos_layout = gtk_widget_create_pango_layout (widget, buf);
-      else
-        pango_layout_set_text (view->xpos_layout, buf, -1);
+        view->xpos_layout = gtk_widget_create_pango_layout (widget, NULL);
 
+      pango_layout_set_text (view->xpos_layout, buf, -1);
       pango_layout_get_pixel_size (view->xpos_layout, &x, &y);
 
       if (view->xpos < 127)

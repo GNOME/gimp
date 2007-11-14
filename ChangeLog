@@ -1,5 +1,19 @@
 2007-11-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpcanvas.c
+	* app/widgets/gimpcurveview.c: free the cached PangoLayouts in
+	GtkWidget::style_set().
+
+	* app/widgets/gimppaletteview.c: draw the focus rectangle in
+	hardcoded black/white since we also hardcode the grid color to
+	black.
+
+	* app/display/gimpstatusbar.c
+	* app/widgets/gimpdockable.c: small cleanups while reviewing
+	layout code.
+
+2007-11-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcolorframe.[ch]: replaced the number label with
 	a big Cairo-drawn number below the color value labels.
 

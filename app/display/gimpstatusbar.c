@@ -1086,10 +1086,9 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
 
   /* one static layout for all displays should be fine */
   if (! layout)
-    layout = gtk_widget_create_pango_layout (statusbar->cursor_label, text);
-  else
-    pango_layout_set_text (layout, text, -1);
+    layout = gtk_widget_create_pango_layout (statusbar->cursor_label, NULL);
 
+  pango_layout_set_text (layout, text, -1);
   pango_layout_get_pixel_size (layout, &width, NULL);
 
   /*  find out how many pixels the label's parent frame is bigger than
