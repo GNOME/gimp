@@ -1,5 +1,10 @@
 2007-11-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcolorframe.[ch]: replaced the number label with
+	a big Cairo-drawn number below the color value labels.
+
+2007-11-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimppaletteview.[ch]: port to Cairo drawing.
 
 2007-11-13  Martin Nordholts  <martinn@svn.gnome.org>

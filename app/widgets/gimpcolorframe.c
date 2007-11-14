@@ -45,17 +45,24 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_color_frame_get_property  (GObject        *object,
-                                              guint           property_id,
-                                              GValue         *value,
-                                              GParamSpec     *pspec);
-static void   gimp_color_frame_set_property  (GObject        *object,
-                                              guint           property_id,
-                                              const GValue   *value,
-                                              GParamSpec     *pspec);
-static void   gimp_color_frame_menu_callback (GtkWidget      *widget,
-                                              GimpColorFrame *frame);
-static void   gimp_color_frame_update        (GimpColorFrame *frame);
+static void       gimp_color_frame_finalize      (GObject        *object);
+static void       gimp_color_frame_get_property  (GObject        *object,
+                                                  guint           property_id,
+                                                  GValue         *value,
+                                                  GParamSpec     *pspec);
+static void       gimp_color_frame_set_property  (GObject        *object,
+                                                  guint           property_id,
+                                                  const GValue   *value,
+                                                  GParamSpec     *pspec);
+
+static void       gimp_color_frame_style_set     (GtkWidget      *widget,
+                                                  GtkStyle       *prev_style);
+static gboolean   gimp_color_frame_expose        (GtkWidget      *widget,
+                                                  GdkEventExpose *eevent);
+
+static void       gimp_color_frame_menu_callback (GtkWidget      *widget,
+                                                  GimpColorFrame *frame);
+static void       gimp_color_frame_update        (GimpColorFrame *frame);
 
 
 G_DEFINE_TYPE (GimpColorFrame, gimp_color_frame, GIMP_TYPE_FRAME)
@@ -66,10 +73,15 @@ G_DEFINE_TYPE (GimpColorFrame, gimp_color_frame, GIMP_TYPE_FRAME)
 static void
 gimp_color_frame_class_init (GimpColorFrameClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->finalize     = gimp_color_frame_finalize;
   object_class->get_property = gimp_color_frame_get_property;
   object_class->set_property = gimp_color_frame_set_property;
+
+  widget_class->style_set    = gimp_color_frame_style_set;
+  widget_class->expose_event = gimp_color_frame_expose;
 
   g_object_class_install_property (object_class, PROP_MODE,
                                    g_param_spec_enum ("mode",
@@ -102,7 +114,6 @@ gimp_color_frame_init (GimpColorFrame *frame)
 {
   GtkWidget *vbox;
   GtkWidget *vbox2;
-  GtkWidget *hbox;
   gint       i;
 
   frame->sample_valid = FALSE;
@@ -122,17 +133,6 @@ gimp_color_frame_init (GimpColorFrame *frame)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  frame->number_label = gtk_label_new ("0");
-  gimp_label_set_attributes (GTK_LABEL (frame->number_label),
-                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                             -1);
-  gtk_misc_set_alignment (GTK_MISC (frame->number_label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (hbox), frame->number_label, FALSE, FALSE, 0);
-
   frame->color_area =
     g_object_new (GIMP_TYPE_COLOR_AREA,
                   "color",          &frame->color,
@@ -141,8 +141,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
                   "draw-border",    TRUE,
                   "height-request", 20,
                   NULL);
-
-  gtk_box_pack_end (GTK_BOX (hbox), frame->color_area, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame->color_area, FALSE, FALSE, 0);
 
   vbox2 = gtk_vbox_new (TRUE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
@@ -150,6 +149,8 @@ gimp_color_frame_init (GimpColorFrame *frame)
 
   for (i = 0; i < GIMP_COLOR_FRAME_ROWS; i++)
     {
+      GtkWidget *hbox;
+
       hbox = gtk_hbox_new (FALSE, 6);
       gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
@@ -167,6 +168,20 @@ gimp_color_frame_init (GimpColorFrame *frame)
                         FALSE, FALSE, 0);
       gtk_widget_show (frame->value_labels[i]);
     }
+}
+
+static void
+gimp_color_frame_finalize (GObject *object)
+{
+  GimpColorFrame *frame = GIMP_COLOR_FRAME (object);
+
+  if (frame->number_layout)
+    {
+      g_object_unref (frame->number_layout);
+      frame->number_layout = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -233,6 +248,72 @@ gimp_color_frame_set_property (GObject      *object,
     }
 }
 
+static void
+gimp_color_frame_style_set (GtkWidget *widget,
+                            GtkStyle  *prev_style)
+{
+  GimpColorFrame *frame = GIMP_COLOR_FRAME (widget);
+
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  if (frame->number_layout)
+    {
+      g_object_unref (frame->number_layout);
+      frame->number_layout = NULL;
+    }
+}
+
+static gboolean
+gimp_color_frame_expose (GtkWidget      *widget,
+                         GdkEventExpose *eevent)
+{
+  GimpColorFrame *frame = GIMP_COLOR_FRAME (widget);
+
+  if (frame->has_number)
+    {
+      cairo_t *cr;
+      gchar    buf[8];
+      gint     w, h;
+      gdouble  scale;
+
+      cr = gdk_cairo_create (widget->window);
+      gdk_cairo_set_source_color (cr, &widget->style->light[GTK_STATE_NORMAL]);
+
+      g_snprintf (buf, sizeof (buf), "%d", frame->number);
+
+      if (! frame->number_layout)
+        frame->number_layout = gtk_widget_create_pango_layout (widget, NULL);
+
+      pango_layout_set_text (frame->number_layout, buf, -1);
+      pango_layout_get_pixel_size (frame->number_layout, &w, &h);
+
+      scale = ((gdouble) (widget->allocation.height -
+                          frame->menu->allocation.height -
+                          frame->color_area->allocation.height) /
+               (gdouble) h);
+
+      cairo_scale (cr, scale, scale);
+
+      cairo_move_to (cr,
+                     (widget->allocation.x +
+                      widget->allocation.width / 2.0) / scale - w / 2.0,
+                     (widget->allocation.y +
+                      widget->allocation.height / 2.0 +
+                      frame->menu->allocation.height / 2.0 +
+                      frame->color_area->allocation.height / 2.0) / scale - h / 2.0);
+      pango_cairo_show_layout (cr, frame->number_layout);
+      cairo_fill (cr);
+
+      cairo_destroy (cr);
+    }
+
+  return GTK_WIDGET_CLASS (parent_class)->expose_event (widget, eevent);
+}
+
+
+/*  public functions  */
+
 /**
  * gimp_color_frame_new:
  *
@@ -276,7 +357,7 @@ gimp_color_frame_set_has_number (GimpColorFrame *frame,
     {
       frame->has_number = has_number ? TRUE : FALSE;
 
-      g_object_set (frame->number_label, "visible", frame->has_number, NULL);
+      gtk_widget_queue_draw (GTK_WIDGET (frame));
 
       g_object_notify (G_OBJECT (frame), "has-number");
     }
@@ -290,12 +371,9 @@ gimp_color_frame_set_number (GimpColorFrame *frame,
 
   if (number != frame->number)
     {
-      gchar str[8];
-
       frame->number = number;
 
-      g_snprintf (str, sizeof (str), "%d", number);
-      gtk_label_set_text (GTK_LABEL (frame->number_label), str);
+      gtk_widget_queue_draw (GTK_WIDGET (frame));
 
       g_object_notify (G_OBJECT (frame), "number");
     }
