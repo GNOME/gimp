@@ -254,8 +254,8 @@ gimp_curves_tool_initialize (GimpTool     *tool,
     c_tool->channel = (c_tool->channel == GIMP_HISTOGRAM_ALPHA) ? 1 : 0;
 
   gimp_drawable_calculate_histogram (drawable, c_tool->hist);
-  gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (c_tool->graph),
-                                     c_tool->hist);
+  gimp_histogram_view_set_background (GIMP_HISTOGRAM_VIEW (c_tool->graph),
+                                      c_tool->hist);
   gimp_curve_view_set_curve (GIMP_CURVE_VIEW (c_tool->graph),
                              c_tool->curve[c_tool->channel]);
 
