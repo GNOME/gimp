@@ -1,3 +1,7 @@
+2007-11-15  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpcurve-save.c: added sanity checks.
+
 2007-11-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

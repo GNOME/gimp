@@ -37,8 +37,13 @@ gboolean
 gimp_curve_save (GimpData  *data,
                  GError   **error)
 {
-  GimpCurve *curve = GIMP_CURVE (data);
+  GimpCurve *curve;
   FILE      *file;
+
+  g_return_val_if_fail (GIMP_IS_CURVE (data), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  curve = GIMP_CURVE (data);
 
   file = g_fopen (data->filename, "wb");
 
@@ -51,7 +56,7 @@ gimp_curve_save (GimpData  *data,
       return FALSE;
     }
 
-  /* write  curve */
+  /* FIXME: write curve */
 
   fclose (file);
 
