@@ -74,6 +74,7 @@
 #include <conio.h>
 #endif
 
+#include "gimp-log.h"
 #include "gimp-intl.h"
 
 
@@ -298,6 +299,8 @@ main (int    argc,
   gimp_init_malloc ();
 
   gimp_env_init (FALSE);
+
+  gimp_log_init ();
 
   gimp_init_i18n ();
 

@@ -50,6 +50,8 @@ app_sources = \
 	sanity.h	\
 	units.c		\
 	units.h		\
+	gimp-log.c	\
+	gimp-log.h	\
 	gimp-intl.h
 
 gimp_2_5_SOURCES = $(app_sources)

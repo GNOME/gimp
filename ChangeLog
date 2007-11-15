@@ -1,5 +1,16 @@
 2007-11-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/gimp-log.[ch]: new files implementing a log facility which
+	can be enabled using the GIMP_LOG environment variable.
+
+	* app/main.c: initialize it.
+
+	* app/display/gimpdisplayshell-callbacks.c: use it instead of
+	private debugging macros that need to be enabled at compile time.
+
+2007-11-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpviewable.[ch]: add read-only property "frozen" and
 	new API gimp_viewable_preview_is_fozen(). Emit property notifications.
 
@@ -12,7 +23,7 @@
 	* app/tools/gimpcurvestool.c: set the background histogram instead.
 
 	* app/widgets/gimphistogrameditor.[ch]: connect to "notify::frozen"
-	of the drawable and show its histogram at thje freezing point in
+	of the drawable and show its histogram at the freezing point in
 	the background. This way the original histogram is visible while
 	we are doing color corrections.
 
