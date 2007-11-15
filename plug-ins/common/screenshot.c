@@ -491,6 +491,7 @@ select_window_x11 (GdkScreen *screen)
               shootvals.x2 = shootvals.x1 = x_event.xbutton.x_root;
               shootvals.y2 = shootvals.y1 = x_event.xbutton.y_root;
             }
+
           buttons++;
           break;
 
@@ -743,9 +744,11 @@ image_select_shape (gint32     image,
   gdk_region_get_rectangles (shape, &rects, &num_rects);
 
   for (i = 0; i < num_rects; i++)
-    gimp_rect_select (image,
-                      rects[i].x, rects[i].y, rects[i].width, rects[i].height,
-                      GIMP_CHANNEL_OP_ADD, FALSE, 0);
+    {
+      gimp_rect_select (image,
+                        rects[i].x, rects[i].y, rects[i].width, rects[i].height,
+                        GIMP_CHANNEL_OP_ADD, FALSE, 0);
+    }
 
   g_free (rects);
 
@@ -788,6 +791,7 @@ create_image (GdkPixbuf   *pixbuf,
 
       gimp_image_parasite_attach (image, parasite);
       gimp_parasite_free (parasite);
+
       g_free (comment);
     }
 
@@ -800,9 +804,13 @@ create_image (GdkPixbuf   *pixbuf,
   if (shape && ! gdk_region_empty (shape))
     {
       image_select_shape (image, shape);
-      gimp_layer_add_alpha (layer);
-      gimp_edit_clear (layer);
-      gimp_selection_none (image);
+
+      if (! gimp_selection_is_empty (image))
+        {
+          gimp_layer_add_alpha (layer);
+          gimp_edit_clear (layer);
+          gimp_selection_none (image);
+        }
     }
 
   gimp_image_undo_enable (image);

@@ -2,6 +2,14 @@
 
 	Merged from trunk:
 
+	* plug-ins/common/screenshot.c: don't call gimp_edit_clear() if
+	the selection mask is empty after selecting the window shape and
+	inverting that selection. Fixes bug #493182.
+
+2007-11-15  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* plug-ins/common/tiff-save.c (save_image): fixed bug in colormap
 	handling (bug #497103).
 
