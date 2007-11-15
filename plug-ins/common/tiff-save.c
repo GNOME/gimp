@@ -755,9 +755,9 @@ save_image (const gchar *filename,
 
           for (i = 0; i < colors; i++)
             {
-              red[i] = *cmap++ * 65535 / 255;
-              grn[i] = *cmap++ * 65535 / 255;
-              blu[i] = *cmap++ * 65535 / 255;
+              red[i] = cmap[i * 3 + 0] * 65535 / 255;
+              grn[i] = cmap[i * 3 + 1] * 65535 / 255;
+              blu[i] = cmap[i * 3 + 2] * 65535 / 255;
             }
        }
 
@@ -771,7 +771,7 @@ save_image (const gchar *filename,
     case GIMP_INDEXEDA_IMAGE:
       g_message ("TIFF save cannot handle indexed images with alpha channel.");
     default:
-       return FALSE;
+      return FALSE;
     }
 
   if (compression == COMPRESSION_CCITTFAX3 ||
