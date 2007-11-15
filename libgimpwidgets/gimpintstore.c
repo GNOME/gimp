@@ -229,7 +229,7 @@ gimp_int_store_row_inserted (GtkTreeModel *model,
 static void
 gimp_int_store_add_empty (GimpIntStore *store)
 {
-  GtkTreeIter iter;
+  GtkTreeIter iter = { 0, };
 
   g_return_if_fail (store->empty_iter == NULL);
 

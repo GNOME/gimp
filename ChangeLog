@@ -1,5 +1,13 @@
 2007-11-15  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpselectionoptions.c (gimp_selection_options_gui):
+	plugged a memory leak.
+
+	* libgimpwidgets/gimpintstore.c (gimp_int_store_add_empty):
+	initialize the iter to avoid using uninitialized memory.
+
+2007-11-15  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/screenshot.c: don't call gimp_edit_clear() if
 	the selection mask is empty after selecting the window shape and
 	inverting that selection. Fixes bug #493182.

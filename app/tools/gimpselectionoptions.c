@@ -321,7 +321,9 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
             gchar *tip = g_strdup_printf ("%s  <b>%s</b>", tooltip, modifier);
 
             gimp_help_set_help_data (button, tip, NULL);
+
             g_free (tip);
+            g_free (tooltip);
           }
         else
           {
