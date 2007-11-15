@@ -52,16 +52,8 @@
 
 #include "gimpselectiondata.h"
 
+#include "gimp-log.h"
 #include "gimp-intl.h"
-
-
-/* #define DEBUG_DND */
-
-#ifdef DEBUG_DND
-#define D(stmnt) stmnt
-#else
-#define D(stmnt)
-#endif
 
 
 /*  local function prototypes  */
@@ -131,7 +123,7 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
 
   buffer = (const gchar *) selection->data;
 
-  D (g_print ("%s: raw buffer >>%s<<\n", G_STRFUNC, buffer));
+  GIMP_LOG (DND, "raw buffer >>%s<<", buffer);
 
   {
     gchar name_buffer[1024];
@@ -174,8 +166,7 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
       gchar       *uri   = NULL;
       GError      *error = NULL;
 
-      D (g_print ("%s: trying to convert \"%s\" to an uri.\n",
-                  G_STRFUNC, dnd_crap));
+      GIMP_LOG (DND, "trying to convert \"%s\" to an uri", dnd_crap);
 
       filename = g_filename_from_uri (dnd_crap, &hostname, NULL);
 
@@ -668,7 +659,7 @@ gimp_selection_data_get_name (GtkSelectionData *selection)
       return NULL;
     }
 
-  D (g_printerr ("%s: name = '%s'\n", G_STRFUNC, name));
+  GIMP_LOG (DND, "name = '%s'", name);
 
   return name;
 }
@@ -693,8 +684,8 @@ gimp_selection_data_get_object (GtkSelectionData *selection,
     {
       gchar *name = str + name_offset;
 
-      D (g_printerr ("%s: pid = %d, addr = %p, name = '%s'\n",
-                     G_STRFUNC, pid, object_addr, name));
+      GIMP_LOG (DND, "pid = %d, addr = %p, name = '%s'",
+                pid, object_addr, name);
 
       if (additional &&
           strcmp (name, gimp_object_get_name (additional)) == 0 &&

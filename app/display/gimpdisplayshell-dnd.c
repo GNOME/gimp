@@ -56,16 +56,8 @@
 #include "gimpdisplayshell-dnd.h"
 #include "gimpdisplayshell-transform.h"
 
+#include "gimp-log.h"
 #include "gimp-intl.h"
-
-
-/* #define DEBUG_DND */
-
-#ifdef DEBUG_DND
-#define D(stmnt) stmnt
-#else
-#define D(stmnt)
-#endif
 
 
 /*  local function prototypes  */
@@ -193,7 +185,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
   GType             new_type;
   GimpItem         *new_item;
 
-  D (g_print ("drop drawable on canvas\n"));
+  GIMP_LOG (DND, NULL);
 
   if (image->gimp->busy)
     return;
@@ -246,7 +238,7 @@ gimp_display_shell_drop_vectors (GtkWidget    *widget,
   GimpImage        *image = shell->display->image;
   GimpItem         *new_item;
 
-  D (g_print ("drop vectors on canvas\n"));
+  GIMP_LOG (DND, NULL);
 
   if (image->gimp->busy)
     return;
@@ -281,7 +273,7 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
   GimpImage        *image = shell->display->image;
   GError           *error  = NULL;
 
-  D (g_print ("drop SVG on canvas\n"));
+  GIMP_LOG (DND, NULL);
 
   if (image->gimp->busy)
     return;
@@ -349,7 +341,7 @@ gimp_display_shell_drop_pattern (GtkWidget    *widget,
                                  GimpViewable *viewable,
                                  gpointer      data)
 {
-  D (g_print ("drop pattern on canvas\n"));
+  GIMP_LOG (DND, NULL);
 
   if (GIMP_IS_PATTERN (viewable))
     gimp_display_shell_dnd_bucket_fill (GIMP_DISPLAY_SHELL (data),
@@ -364,7 +356,7 @@ gimp_display_shell_drop_color (GtkWidget     *widget,
                                const GimpRGB *color,
                                gpointer       data)
 {
-  D (g_print ("drop color on canvas\n"));
+  GIMP_LOG (DND, NULL);
 
   gimp_display_shell_dnd_bucket_fill (GIMP_DISPLAY_SHELL (data),
                                       GIMP_FG_BUCKET_FILL,
@@ -383,7 +375,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
   GimpBuffer       *buffer;
   gint              x, y, width, height;
 
-  D (g_print ("drop buffer on canvas\n"));
+  GIMP_LOG (DND, NULL);
 
   if (image->gimp->busy)
     return;
@@ -413,7 +405,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
   GimpContext      *context = gimp_get_user_context (image->gimp);
   GList            *list;
 
-  D (g_print ("drop uri list on canvas\n"));
+  GIMP_LOG (DND, NULL);
 
   for (list = uri_list; list; list = g_list_next (list))
     {
@@ -473,7 +465,7 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
   GimpItem         *new_item;
   const gchar      *desc;
 
-  D (g_print ("drop component on canvas\n"));
+  GIMP_LOG (DND, NULL);
 
   if (dest_image->gimp->busy)
     return;
@@ -527,7 +519,7 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
   GimpImage        *image = shell->display->image;
   GimpLayer        *new_layer;
 
-  D (g_print ("drop pixbuf on canvas\n"));
+  GIMP_LOG (DND, NULL);
 
   if (image->gimp->busy)
     return;

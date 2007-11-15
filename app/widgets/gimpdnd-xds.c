@@ -49,14 +49,8 @@
 #include "gimpmessagebox.h"
 #include "gimpmessagedialog.h"
 
+#include "gimp-log.h"
 #include "gimp-intl.h"
-
-
-#ifdef DEBUG_DND
-#define D(stmnt) stmnt
-#else
-#define D(stmnt)
-#endif
 
 
 #define MAX_URI_LEN 4096
@@ -79,7 +73,7 @@ gimp_dnd_xds_source_set (GdkDragContext *context,
   g_return_if_fail (GDK_IS_DRAG_CONTEXT (context));
   g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
 
-  D (g_printerr ("\ngimp_dnd_xds_source_set\n"));
+  GIMP_LOG (DND, NULL);
 
   property = gdk_atom_intern_static_string ("XdndDirectSave0");
 
@@ -131,7 +125,7 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
   g_return_if_fail (GDK_IS_DRAG_CONTEXT (context));
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  D (g_printerr ("\ngimp_dnd_xds_save_image\n"));
+  GIMP_LOG (DND, NULL);
 
   property = gdk_atom_intern_static_string ("XdndDirectSave0");
   type     = gdk_atom_intern_static_string ("text/plain");
