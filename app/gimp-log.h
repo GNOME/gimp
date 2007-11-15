@@ -22,7 +22,8 @@
 
 typedef enum
 {
-  GIMP_LOG_TOOLS = 1 << 0
+  GIMP_LOG_TOOLS = 1 << 0,
+  GIMP_LOG_DND   = 1 << 1
 } GimpLogFlags;
 
 

@@ -35,7 +35,8 @@ gimp_log_init (void)
     {
       const GDebugKey log_keys[] =
       {
-        { "tools", GIMP_LOG_TOOLS }
+        { "tools", GIMP_LOG_TOOLS },
+        { "dnd",   GIMP_LOG_DND   }
       };
 
       gimp_log_flags = g_parse_debug_string (env_log_val,
@@ -51,12 +52,20 @@ gimp_log (const gchar *function,
           const gchar *format,
           ...)
 {
-  va_list  args;
-  gchar   *message;
+  gchar *message;
 
-  va_start (args, format);
-  message = g_strdup_vprintf (format, args);
-  va_end (args);
+  if (format)
+    {
+      va_list args;
+
+      va_start (args, format);
+      message = g_strdup_vprintf (format, args);
+      va_end (args);
+    }
+  else
+    {
+      message = g_strdup ("called");
+    }
 
   g_log (domain, G_LOG_LEVEL_DEBUG,
          "%s(%d): %s", function, line, message);

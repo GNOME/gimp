@@ -1,3 +1,9 @@
+2007-11-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimp-log.[ch]: add DND log domain.
+
+	* app/widgets/gimpdnd.c: use GIMP_LOG().
+
 2007-11-15  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcurve-save.c: added sanity checks.

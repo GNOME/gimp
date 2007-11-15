@@ -45,8 +45,6 @@
 
 #include "vectors/gimpvectors.h"
 
-/*  #define DEBUG_DND  */
-
 #include "gimpdnd.h"
 #include "gimpdnd-xds.h"
 #include "gimppixbuf.h"
@@ -54,18 +52,12 @@
 #include "gimpview.h"
 #include "gimpviewrendererimage.h"
 
+#include "gimp-log.h"
 #include "gimp-intl.h"
 
 
 #define DRAG_PREVIEW_SIZE  GIMP_VIEW_SIZE_LARGE
 #define DRAG_ICON_OFFSET   -8
-
-
-#ifdef DEBUG_DND
-#define D(stmnt) stmnt
-#else
-#define D(stmnt)
-#endif
 
 
 typedef GtkWidget * (* GimpDndGetIconFunc)  (GtkWidget        *widget,
@@ -664,7 +656,7 @@ gimp_dnd_data_drag_begin (GtkWidget      *widget,
   data_type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                                   "gimp-dnd-get-data-type"));
 
-  D (g_printerr ("\ngimp_dnd_data_drag_begin (%d)\n", data_type));
+  GIMP_LOG (DND, "data type %d", data_type);
 
   if (! data_type)
     return;
@@ -721,9 +713,13 @@ static void
 gimp_dnd_data_drag_end (GtkWidget      *widget,
                         GdkDragContext *context)
 {
-  GtkWidget *icon_widget;
+  GimpDndType  data_type;
+  GtkWidget   *icon_widget;
 
-  D (g_printerr ("\ngimp_dnd_data_drag_end\n"));
+  data_type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                  "gimp-dnd-get-data-type"));
+
+  GIMP_LOG (DND, "data type %d", data_type);
 
   icon_widget = g_object_get_data (G_OBJECT (widget), "gimp-dnd-data-widget");
 
@@ -753,7 +749,7 @@ gimp_dnd_data_drag_handle (GtkWidget        *widget,
   gpointer     get_data_data = NULL;
   GimpDndType  data_type;
 
-  D (g_printerr ("\ngimp_dnd_data_drag_handle(%d)\n", info));
+  GIMP_LOG (DND, "data type %d", info);
 
   for (data_type = GIMP_DND_TYPE_NONE + 1;
        data_type <= GIMP_DND_TYPE_LAST;
@@ -763,8 +759,7 @@ gimp_dnd_data_drag_handle (GtkWidget        *widget,
 
       if (dnd_data->target_entry.info == info)
         {
-          D (g_printerr ("gimp_dnd_data_drag_handle(%s)\n",
-                         dnd_data->target_entry.target));
+          GIMP_LOG (DND, "target %s", dnd_data->target_entry.target);
 
           if (dnd_data->get_data_func_name)
             get_data_func = g_object_get_data (G_OBJECT (widget),
@@ -800,7 +795,7 @@ gimp_dnd_data_drop_handle (GtkWidget        *widget,
 {
   GimpDndType data_type;
 
-  D (g_printerr ("\ngimp_dnd_data_drop_handle(%d)\n", info));
+  GIMP_LOG (DND, "data type %d", info);
 
   if (selection_data->length <= 0)
     {
@@ -819,8 +814,7 @@ gimp_dnd_data_drop_handle (GtkWidget        *widget,
           GCallback set_data_func = NULL;
           gpointer  set_data_data = NULL;
 
-          D (g_printerr ("gimp_dnd_data_drop_handle(%s)\n",
-                         dnd_data->target_entry.target));
+          GIMP_LOG (DND, "target %s", dnd_data->target_entry.target);
 
           if (dnd_data->set_data_func_name)
             set_data_func = g_object_get_data (G_OBJECT (widget),
