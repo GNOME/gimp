@@ -1,3 +1,21 @@
+2007-11-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpviewable.[ch]: add read-only property "frozen" and
+	new API gimp_viewable_preview_is_fozen(). Emit property notifications.
+
+	* app/widgets/gimphistogramview.[ch]: add API to show a second
+	histogram in the background. Remove member "light_histogram" from
+	the GimpHistogramViewClass struct.
+
+	* app/widgets/gimpcurveview.c: don't set "light_histogram".
+
+	* app/tools/gimpcurvestool.c: set the background histogram instead.
+
+	* app/widgets/gimphistogrameditor.[ch]: connect to "notify::frozen"
+	of the drawable and show its histogram at thje freezing point in
+	the background. This way the original histogram is visible while
+	we are doing color corrections.
+
 2007-11-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpcanvas.c

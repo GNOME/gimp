@@ -77,9 +77,8 @@ G_DEFINE_TYPE (GimpCurveView, gimp_curve_view,
 static void
 gimp_curve_view_class_init (GimpCurveViewClass *klass)
 {
-  GObjectClass           *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass         *widget_class = GTK_WIDGET_CLASS (klass);
-  GimpHistogramViewClass *hist_class   = GIMP_HISTOGRAM_VIEW_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->finalize             = gimp_curve_view_finalize;
   object_class->dispose              = gimp_curve_view_dispose;
@@ -93,8 +92,6 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
   widget_class->motion_notify_event  = gimp_curve_view_motion_notify;
   widget_class->leave_notify_event   = gimp_curve_view_leave_notify;
   widget_class->key_press_event      = gimp_curve_view_key_press;
-
-  hist_class->light_histogram        = TRUE;
 
   g_object_class_install_property (object_class, PROP_GRID_ROWS,
                                    g_param_spec_int ("grid-rows", NULL, NULL,

@@ -53,6 +53,8 @@ static void     gimp_histogram_editor_set_image     (GimpImageEditor     *editor
                                                      GimpImage           *image);
 static void     gimp_histogram_editor_layer_changed (GimpImage           *image,
                                                      GimpHistogramEditor *editor);
+static void     gimp_histogram_editor_frozen_update (GimpHistogramEditor *editor,
+                                                     const GParamSpec    *pspec);
 static void     gimp_histogram_editor_update        (GimpHistogramEditor *editor);
 
 static gboolean gimp_histogram_editor_idle_update   (GimpHistogramEditor *editor);
@@ -103,11 +105,12 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
       N_("Percentile:")
     };
 
-  editor->drawable  = NULL;
-  editor->histogram = NULL;
-  editor->valid     = FALSE;
-  editor->idle_id   = 0;
-  editor->box       = gimp_histogram_box_new ();
+  editor->drawable     = NULL;
+  editor->histogram    = NULL;
+  editor->bg_histogram = NULL;
+  editor->valid        = FALSE;
+  editor->idle_id      = 0;
+  editor->box          = gimp_histogram_box_new ();
 
   gimp_editor_set_show_name (GIMP_EDITOR (editor), TRUE);
 
@@ -259,9 +262,17 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
         {
           gimp_histogram_free (editor->histogram);
           editor->histogram = NULL;
+
+          gimp_histogram_view_set_histogram (view, NULL);
         }
 
-      gimp_histogram_view_set_histogram (view, NULL);
+      if (editor->bg_histogram)
+        {
+          gimp_histogram_free (editor->bg_histogram);
+          editor->bg_histogram = NULL;
+
+          gimp_histogram_view_set_background (view, NULL);
+        }
     }
 
   GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, image);
@@ -298,6 +309,16 @@ gimp_histogram_editor_layer_changed (GimpImage           *image,
 {
   if (editor->drawable)
     {
+      if (editor->bg_histogram)
+        {
+          GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
+
+          gimp_histogram_free (editor->bg_histogram);
+          editor->bg_histogram = NULL;
+
+          gimp_histogram_view_set_background (view, NULL);
+        }
+
       g_signal_handlers_disconnect_by_func (editor->drawable,
                                             gimp_histogram_editor_name_update,
                                             editor);
@@ -306,6 +327,9 @@ gimp_histogram_editor_layer_changed (GimpImage           *image,
                                             editor);
       g_signal_handlers_disconnect_by_func (editor->drawable,
                                             gimp_histogram_editor_update,
+                                            editor);
+      g_signal_handlers_disconnect_by_func (editor->drawable,
+                                            gimp_histogram_editor_frozen_update,
                                             editor);
       editor->drawable = NULL;
     }
@@ -317,6 +341,9 @@ gimp_histogram_editor_layer_changed (GimpImage           *image,
 
   if (editor->drawable)
     {
+      g_signal_connect_object (editor->drawable, "notify::frozen",
+                               G_CALLBACK (gimp_histogram_editor_frozen_update),
+                               editor, G_CONNECT_SWAPPED);
       g_signal_connect_object (editor->drawable, "update",
                                G_CALLBACK (gimp_histogram_editor_update),
                                editor, G_CONNECT_SWAPPED);
@@ -337,6 +364,33 @@ gimp_histogram_editor_layer_changed (GimpImage           *image,
 
   gimp_histogram_editor_info_update (editor);
   gimp_histogram_editor_name_update (editor);
+}
+
+static void
+gimp_histogram_editor_frozen_update (GimpHistogramEditor *editor,
+                                     const GParamSpec    *pspec)
+{
+  GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
+
+  if (gimp_viewable_preview_is_frozen (GIMP_VIEWABLE (editor->drawable)))
+    {
+      if (! editor->bg_histogram)
+        {
+          editor->bg_histogram = gimp_histogram_new ();
+
+          gimp_drawable_calculate_histogram (editor->drawable,
+                                             editor->bg_histogram);
+
+          gimp_histogram_view_set_background (view, editor->bg_histogram);
+        }
+    }
+  else if (editor->bg_histogram)
+    {
+      gimp_histogram_free (editor->bg_histogram);
+      editor->bg_histogram = NULL;
+
+      gimp_histogram_view_set_background (view, NULL);
+    }
 }
 
 static void

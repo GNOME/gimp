@@ -39,6 +39,7 @@ struct _GimpHistogramEditor
 
   GimpDrawable         *drawable;
   GimpHistogram        *histogram;
+  GimpHistogram        *bg_histogram;
 
   guint                 idle_id;
   gboolean              valid;

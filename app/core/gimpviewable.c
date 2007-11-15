@@ -43,7 +43,8 @@
 enum
 {
   PROP_0,
-  PROP_STOCK_ID
+  PROP_STOCK_ID,
+  PROP_FROZEN
 };
 
 enum
@@ -158,6 +159,12 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_STOCK_ID, "stock-id",
                                    NULL, NULL,
                                    GIMP_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_property (object_class, PROP_FROZEN,
+                                   g_param_spec_boolean ("frozen",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READABLE));
 }
 
 static void
@@ -193,12 +200,16 @@ gimp_viewable_set_property (GObject      *object,
                             const GValue *value,
                             GParamSpec   *pspec)
 {
+  GimpViewable *viewable = GIMP_VIEWABLE (object);
+
   switch (property_id)
     {
     case PROP_STOCK_ID:
-      gimp_viewable_set_stock_id (GIMP_VIEWABLE (object),
-                                  g_value_get_string (value));
+      gimp_viewable_set_stock_id (viewable, g_value_get_string (value));
       break;
+    case PROP_FROZEN:
+      /* read-only, fall through */
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -211,12 +222,17 @@ gimp_viewable_get_property (GObject    *object,
                             GValue     *value,
                             GParamSpec *pspec)
 {
+  GimpViewable *viewable = GIMP_VIEWABLE (object);
+
   switch (property_id)
     {
     case PROP_STOCK_ID:
-      g_value_set_string (value,
-                          gimp_viewable_get_stock_id (GIMP_VIEWABLE (object)));
+      g_value_set_string (value, gimp_viewable_get_stock_id (viewable));
       break;
+    case PROP_FROZEN:
+      g_value_set_boolean (value, gimp_viewable_preview_is_frozen (viewable));
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -1051,6 +1067,9 @@ gimp_viewable_preview_freeze (GimpViewable *viewable)
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
   viewable->freeze_count++;
+
+  if (viewable->freeze_count == 1)
+    g_object_notify (G_OBJECT (viewable), "frozen");
 }
 
 void
@@ -1062,5 +1081,16 @@ gimp_viewable_preview_thaw (GimpViewable *viewable)
   viewable->freeze_count--;
 
   if (viewable->freeze_count == 0)
-    gimp_viewable_invalidate_preview (viewable);
+    {
+      gimp_viewable_invalidate_preview (viewable);
+      g_object_notify (G_OBJECT (viewable), "frozen");
+    }
+}
+
+gboolean
+gimp_viewable_preview_is_frozen (GimpViewable *viewable)
+{
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), FALSE);
+
+  return viewable->freeze_count != 0;
 }
