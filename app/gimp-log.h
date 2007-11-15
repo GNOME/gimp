@@ -28,7 +28,7 @@ typedef enum
 
 #define GIMP_LOG(type, format...) \
         G_STMT_START { \
-        if (gimp_log_flags && GIMP_LOG_##type) \
+        if (gimp_log_flags & GIMP_LOG_##type) \
           gimp_log (G_STRFUNC, __LINE__, #type, format); \
         } G_STMT_END
 
