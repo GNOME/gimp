@@ -74,8 +74,8 @@ brightness_contrast_lut_setup (GimpLut *lut,
   data.brightness = brightness;
   data.contrast   = contrast;
 
-  gimp_lut_setup (lut, (GimpLutFunc) brightness_contrast_lut_func,
-                  (gpointer) &data, n_channels);
+  gimp_lut_setup (lut,
+                  (GimpLutFunc) brightness_contrast_lut_func, &data, n_channels);
 }
 
 GimpLut *
@@ -111,8 +111,7 @@ invert_lut_setup (GimpLut *lut,
 {
   g_return_if_fail (lut != NULL);
 
-  gimp_lut_setup_exact (lut, (GimpLutFunc) invert_lut_func,
-                        NULL , n_channels);
+  gimp_lut_setup_exact (lut, (GimpLutFunc) invert_lut_func, NULL, n_channels);
 }
 
 GimpLut *
@@ -147,8 +146,7 @@ add_lut_setup (GimpLut *lut,
 {
   g_return_if_fail (lut != NULL);
 
-  gimp_lut_setup (lut, (GimpLutFunc) add_lut_func,
-                  (gpointer) &amount, n_channels);
+  gimp_lut_setup (lut, (GimpLutFunc) add_lut_func, &amount, n_channels);
 }
 
 GimpLut *
@@ -184,8 +182,8 @@ intersect_lut_setup (GimpLut *lut,
 {
   g_return_if_fail (lut != NULL);
 
-  gimp_lut_setup_exact (lut, (GimpLutFunc) intersect_lut_func,
-                        (gpointer) &value , n_channels);
+  gimp_lut_setup_exact (lut,
+                        (GimpLutFunc) intersect_lut_func, &value, n_channels);
 }
 
 GimpLut *
@@ -224,8 +222,8 @@ threshold_lut_setup (GimpLut *lut,
 {
   g_return_if_fail (lut != NULL);
 
-  gimp_lut_setup_exact (lut, (GimpLutFunc) threshold_lut_func,
-                        (gpointer) &value , n_channels);
+  gimp_lut_setup_exact (lut,
+                        (GimpLutFunc) threshold_lut_func, &value, n_channels);
 }
 
 GimpLut *
@@ -270,8 +268,8 @@ posterize_lut_setup (GimpLut *lut,
 {
   g_return_if_fail (lut != NULL);
 
-  gimp_lut_setup_exact (lut, (GimpLutFunc) posterize_lut_func,
-                        (gpointer) &levels, n_channels);
+  gimp_lut_setup_exact (lut,
+                        (GimpLutFunc) posterize_lut_func, &levels, n_channels);
 }
 
 GimpLut *
@@ -344,7 +342,7 @@ equalize_lut_setup (GimpLut       *lut,
         {
           desired = i * pixels_per_value;
 
-          while (sum <= desired)
+          while (sum < desired && j < 256)
             {
               j++;
               sum += gimp_histogram_get_channel (hist, k, j + 1);
@@ -360,8 +358,7 @@ equalize_lut_setup (GimpLut       *lut,
         }
     }
 
-  gimp_lut_setup (lut, (GimpLutFunc) equalize_lut_func,
-                  (gpointer) &hlut, n_channels);
+  gimp_lut_setup (lut, (GimpLutFunc) equalize_lut_func, &hlut, n_channels);
 }
 
 GimpLut *

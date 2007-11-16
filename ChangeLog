@@ -2,6 +2,13 @@
 
 	Merged from trunk:
 
+	* app/base/lut-funcs.c (equalize_lut_setup): make sure we don't
+	get stuck in a loop if all pixels are transparent (bug #497291).
+
+2007-11-16  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* libgimpconfig/gimpcolorconfig.c: changed default value for using
 	the system monitor profile. Many users seem to have broken monitor
 	profiles and it's hard to figure out how to fix this (bug #496890).
