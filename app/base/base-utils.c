@@ -25,6 +25,7 @@
 #include <glib.h>
 
 #ifdef G_OS_WIN32
+#define _WIN32_WINNT 0x0500
 #include <windows.h>
 #endif
 
@@ -50,6 +51,25 @@ get_number_of_processors (void)
   GetSystemInfo (&system_info);
 
   retval = system_info.dwNumberOfProcessors;
+#endif
+
+  return retval;
+}
+
+gint 
+get_physical_memory_size_megabytes (void)
+{
+  gint retval = 0;
+
+#ifdef G_OS_UNIX
+  /* ??? */
+#endif
+#ifdef G_OS_WIN32
+  MEMORYSTATUSEX memory_status;
+
+  memory_status.dwLength = sizeof (memory_status);
+  if (GlobalMemoryStatusEx (&memory_status))
+    retval = memory_status.ullTotalPhys / (1024*1024);
 #endif
 
   return retval;

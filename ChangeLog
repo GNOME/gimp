@@ -1,3 +1,10 @@
+2007-11-16  Tor Lillqvist  <tml@novell.com>
+
+	* app/base/base-utils.c
+	* app/base/base-utils.h (get_physical_memory_size_megabytes): New
+	function that Sven asked for. Somebody please fill in Unix
+	implementation(s).
+
 2007-11-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/temp-buf.c
