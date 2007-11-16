@@ -438,49 +438,49 @@ gimp_get_memsize (GimpObject *object,
                                       gui_size);
 
   memsize += gimp_g_object_get_memsize (G_OBJECT (gimp->module_db));
-  memsize += gimp_g_object_get_memsize (G_OBJECT (gimp->plug_in_manager));
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->plug_in_manager),
+                                      gui_size);
 
   memsize += gimp_g_hash_table_get_memsize (gimp->image_table, 0);
   memsize += gimp_g_hash_table_get_memsize (gimp->item_table,  0);
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->displays), gui_size);
 
-  if (gimp->global_buffer)
-    memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->global_buffer),
-                                        gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->global_buffer),
+                                      gui_size);
 
-  memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->named_buffers),
-                                       gui_size) +
-              gimp_object_get_memsize (GIMP_OBJECT (gimp->fonts),
-                                       gui_size) +
-              gimp_object_get_memsize (GIMP_OBJECT (gimp->brush_factory),
-                                       gui_size) +
-              gimp_object_get_memsize (GIMP_OBJECT (gimp->pattern_factory),
-                                       gui_size) +
-              gimp_object_get_memsize (GIMP_OBJECT (gimp->gradient_factory),
-                                       gui_size) +
-              gimp_object_get_memsize (GIMP_OBJECT (gimp->palette_factory),
-                                       gui_size));
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->named_buffers),
+                                      gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->fonts),
+                                      gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->brush_factory),
+                                      gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->pattern_factory),
+                                      gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->gradient_factory),
+                                      gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->palette_factory),
+                                      gui_size);
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->pdb), gui_size);
 
-  memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->tool_info_list),
-                                       gui_size) +
-              gimp_object_get_memsize (GIMP_OBJECT (gimp->standard_tool_info),
-                                       gui_size) +
-              gimp_object_get_memsize (GIMP_OBJECT (gimp->documents),
-                                       gui_size) +
-              gimp_object_get_memsize (GIMP_OBJECT (gimp->templates),
-                                       gui_size) +
-              gimp_object_get_memsize (GIMP_OBJECT (gimp->image_new_last_template),
-                                       gui_size));
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->tool_info_list),
+                                      gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->standard_tool_info),
+                                      gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->documents),
+                                      gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->templates),
+                                      gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->image_new_last_template),
+                                      gui_size);
 
   memsize += gimp_g_list_get_memsize (gimp->context_list, 0);
 
-  memsize += (gimp_object_get_memsize (GIMP_OBJECT (gimp->default_context),
-                                       gui_size) +
-              gimp_object_get_memsize (GIMP_OBJECT (gimp->user_context),
-                                       gui_size));
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->default_context),
+                                      gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->user_context),
+                                      gui_size);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

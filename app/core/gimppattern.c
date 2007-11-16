@@ -105,8 +105,7 @@ gimp_pattern_get_memsize (GimpObject *object,
   GimpPattern *pattern = GIMP_PATTERN (object);
   gint64       memsize = 0;
 
-  if (pattern->mask)
-    memsize += temp_buf_get_memsize (pattern->mask);
+  memsize += temp_buf_get_memsize (pattern->mask);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

@@ -60,37 +60,37 @@
 gint64
 gimp_g_type_instance_get_memsize (GTypeInstance *instance)
 {
-  GTypeQuery type_query;
-  gint64     memsize = 0;
+  if (instance)
+    {
+      GTypeQuery type_query;
 
-  g_return_val_if_fail (instance != NULL, 0);
+      g_type_query (G_TYPE_FROM_INSTANCE (instance), &type_query);
 
-  g_type_query (G_TYPE_FROM_INSTANCE (instance), &type_query);
+      return type_query.instance_size;
+    }
 
-  memsize += type_query.instance_size;
-
-  return memsize;
+  return 0;
 }
 
 gint64
 gimp_g_object_get_memsize (GObject *object)
 {
-  gint64 memsize = 0;
+  if (object)
+    return gimp_g_type_instance_get_memsize ((GTypeInstance *) object);
 
-  g_return_val_if_fail (G_IS_OBJECT (object), 0);
-
-  return memsize + gimp_g_type_instance_get_memsize ((GTypeInstance *) object);
+  return 0;
 }
 
 gint64
 gimp_g_hash_table_get_memsize (GHashTable *hash,
                                gint64      data_size)
 {
-  g_return_val_if_fail (hash != NULL, 0);
+  if (hash)
+    return (2 * sizeof (gint) +
+            5 * sizeof (gpointer) +
+            g_hash_table_size (hash) * (3 * sizeof (gpointer) + data_size));
 
-  return (2 * sizeof (gint) +
-          5 * sizeof (gpointer) +
-          g_hash_table_size (hash) * (3 * sizeof (gpointer) + data_size));
+  return 0;
 }
 
 typedef struct
@@ -118,8 +118,10 @@ gimp_g_hash_table_get_memsize_foreach (GHashTable      *hash,
 {
   HashMemsize memsize;
 
-  g_return_val_if_fail (hash != NULL, 0);
   g_return_val_if_fail (func != NULL, 0);
+
+  if (! hash)
+    return 0;
 
   memsize.func     = func;
   memsize.memsize  = 0;
@@ -182,14 +184,14 @@ gimp_g_list_get_memsize_foreach (GList           *list,
 gint64
 gimp_g_value_get_memsize (GValue *value)
 {
-  gint64 memsize = sizeof (GValue);
+  gint64 memsize = 0;
+
+  if (! value)
+    return 0;
 
   if (G_VALUE_HOLDS_STRING (value))
     {
-      const gchar *str = g_value_get_string (value);
-
-      if (str)
-        memsize += strlen (str) + 1;
+      memsize += gimp_string_get_memsize (g_value_get_string (value));
     }
   else if (G_VALUE_HOLDS_BOXED (value))
     {
@@ -203,11 +205,8 @@ gimp_g_value_get_memsize (GValue *value)
         }
       else if (GIMP_VALUE_HOLDS_PARASITE (value))
         {
-          GimpParasite *parasite = g_value_get_boxed (value);
-
-          if (parasite)
-            memsize += (sizeof (GimpParasite) + parasite->size +
-                        parasite->name ? (strlen (parasite->name) + 1) : 0);
+          memsize += gimp_parasite_get_memsize (g_value_get_boxed (value),
+                                                NULL);
         }
       else if (GIMP_VALUE_HOLDS_ARRAY (value)       ||
                GIMP_VALUE_HOLDS_INT8_ARRAY (value)  ||
@@ -237,7 +236,7 @@ gimp_g_value_get_memsize (GValue *value)
                   memsize += array->length * sizeof (gchar *);
 
                   for (i = 0; i < array->length; i++)
-                    memsize += strlen (tmp[i]) + 1;
+                    memsize += gimp_string_get_memsize (tmp[i]);
                 }
             }
         }
@@ -253,51 +252,48 @@ gimp_g_value_get_memsize (GValue *value)
                   G_STRFUNC, G_VALUE_TYPE_NAME (value));
     }
 
-  return memsize;
+  return memsize + sizeof (GValue);
 }
 
 gint64
 gimp_g_param_spec_get_memsize (GParamSpec *pspec)
 {
-  const gchar *str;
-  gint64       memsize = 0;
+  gint64 memsize = 0;
+
+  if (! pspec)
+    return 0;
 
   if (! (pspec->flags & G_PARAM_STATIC_NAME))
-    {
-      str = g_param_spec_get_name (pspec);
-      if (str)
-        memsize += strlen (str) + 1;
-    }
+    memsize += gimp_string_get_memsize (g_param_spec_get_name (pspec));
 
   if (! (pspec->flags & G_PARAM_STATIC_NICK))
-    {
-      str = g_param_spec_get_nick (pspec);
-      if (str)
-        memsize += strlen (str) + 1;
-    }
+    memsize += gimp_string_get_memsize (g_param_spec_get_nick (pspec));
 
   if (! (pspec->flags & G_PARAM_STATIC_BLURB))
-    {
-      str = g_param_spec_get_blurb (pspec);
-      if (str)
-        memsize += strlen (str) + 1;
-    }
+    memsize += gimp_string_get_memsize (g_param_spec_get_blurb (pspec));
 
   return memsize + gimp_g_type_instance_get_memsize ((GTypeInstance *) pspec);
+}
+
+gint64
+gimp_string_get_memsize (const gchar *string)
+{
+  if (string)
+    return strlen (string) + 1;
+
+  return 0;
 }
 
 gint64
 gimp_parasite_get_memsize (GimpParasite *parasite,
                            gint64       *gui_size)
 {
-  gint64 memsize = 0;
-
   if (parasite)
-    memsize += (sizeof (GimpParasite) +
-                strlen (parasite->name) + 1 +
-                parasite->size);
+    return (sizeof (GimpParasite) +
+            gimp_string_get_memsize (parasite->name) +
+            parasite->size);
 
-  return memsize;
+  return 0;
 }
 
 

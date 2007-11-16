@@ -226,14 +226,11 @@ static gint64
 gimp_text_layer_get_memsize (GimpObject *object,
                              gint64     *gui_size)
 {
-  GimpTextLayer *text_layer;
-  gint64         memsize = 0;
+  GimpTextLayer *text_layer = GIMP_TEXT_LAYER (object);
+  gint64         memsize    = 0;
 
-  text_layer = GIMP_TEXT_LAYER (object);
-
-  if (text_layer->text)
-    memsize += gimp_object_get_memsize (GIMP_OBJECT (text_layer->text),
-                                        gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (text_layer->text),
+                                      gui_size);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

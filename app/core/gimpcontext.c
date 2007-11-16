@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -34,6 +32,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
+#include "gimp-utils.h"
 #include "gimpbrush.h"
 #include "gimpbuffer.h"
 #include "gimpcontainer.h"
@@ -1090,32 +1089,15 @@ gimp_context_get_memsize (GimpObject *object,
   GimpContext *context = GIMP_CONTEXT (object);
   gint64       memsize = 0;
 
-  if (context->tool_name)
-    memsize += strlen (context->tool_name) + 1;
-
-  if (context->paint_name)
-    memsize += strlen (context->paint_name) + 1;
-
-  if (context->brush_name)
-    memsize += strlen (context->brush_name) + 1;
-
-  if (context->pattern_name)
-    memsize += strlen (context->pattern_name) + 1;
-
-  if (context->palette_name)
-    memsize += strlen (context->palette_name) + 1;
-
-  if (context->font_name)
-    memsize += strlen (context->font_name) + 1;
-
-  if (context->buffer_name)
-    memsize += strlen (context->buffer_name) + 1;
-
-  if (context->imagefile_name)
-    memsize += strlen (context->imagefile_name) + 1;
-
-  if (context->template_name)
-    memsize += strlen (context->template_name) + 1;
+  memsize += gimp_string_get_memsize (context->tool_name);
+  memsize += gimp_string_get_memsize (context->paint_name);
+  memsize += gimp_string_get_memsize (context->brush_name);
+  memsize += gimp_string_get_memsize (context->pattern_name);
+  memsize += gimp_string_get_memsize (context->palette_name);
+  memsize += gimp_string_get_memsize (context->font_name);
+  memsize += gimp_string_get_memsize (context->buffer_name);
+  memsize += gimp_string_get_memsize (context->imagefile_name);
+  memsize += gimp_string_get_memsize (context->template_name);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

@@ -19,7 +19,6 @@
 #include "config.h"
 
 #include <stdarg.h>
-#include <string.h>
 #include <sys/types.h>
 
 #include <glib-object.h>
@@ -135,26 +134,13 @@ gimp_procedure_get_memsize (GimpObject *object,
 
   if (! procedure->static_strings)
     {
-      if (procedure->original_name)
-        memsize += strlen (procedure->original_name) + 1;
-
-      if (procedure->blurb)
-        memsize += strlen (procedure->blurb) + 1;
-
-      if (procedure->help)
-        memsize += strlen (procedure->help) + 1;
-
-      if (procedure->author)
-        memsize += strlen (procedure->author) + 1;
-
-      if (procedure->copyright)
-        memsize += strlen (procedure->copyright) + 1;
-
-      if (procedure->date)
-        memsize += strlen (procedure->date) + 1;
-
-      if (procedure->deprecated)
-        memsize += strlen (procedure->deprecated) + 1;
+      memsize += gimp_string_get_memsize (procedure->original_name);
+      memsize += gimp_string_get_memsize (procedure->blurb);
+      memsize += gimp_string_get_memsize (procedure->help);
+      memsize += gimp_string_get_memsize (procedure->author);
+      memsize += gimp_string_get_memsize (procedure->copyright);
+      memsize += gimp_string_get_memsize (procedure->date);
+      memsize += gimp_string_get_memsize (procedure->deprecated);
     }
 
   memsize += procedure->num_args * sizeof (GParamSpec *);

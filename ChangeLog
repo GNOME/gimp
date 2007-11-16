@@ -1,3 +1,45 @@
+2007-11-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/temp-buf.c
+	* app/base/tile-manager.c
+	* app/core/gimpobject.c: accept NULL in all get_memsize() functions.
+
+	* app/core/gimp-utils.[ch]: ditto. Added gimp_string_get_memsize().
+
+	* app/core/gimp.c
+	* app/core/gimpbrush.c
+	* app/core/gimpbuffer.c
+	* app/core/gimpcontainer.c
+	* app/core/gimpcontext.c
+	* app/core/gimpdata.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpdrawablemodundo.c
+	* app/core/gimpdrawableundo.c
+	* app/core/gimpimage.c
+	* app/core/gimpitempropundo.c
+	* app/core/gimplayer.c
+	* app/core/gimpmaskundo.c
+	* app/core/gimppalette.c
+	* app/core/gimpparasitelist.c
+	* app/core/gimppattern.c
+	* app/core/gimppreviewcache.c
+	* app/core/gimpundo.c
+	* app/core/gimpundostack.c
+	* app/core/gimpviewable.c
+	* app/pdb/gimpprocedure.c
+	* app/plug-in/gimpplugindef.c
+	* app/plug-in/gimppluginmanager.c
+	* app/plug-in/gimppluginprocedure.c
+	* app/text/gimptext.c
+	* app/text/gimptextlayer.c
+	* app/text/gimptextundo.c
+	* app/vectors/gimpvectorsmodundo.c: simplify
+	GimpObject::get_memsize() implementations accordingly.
+
+	* app/core/gimpimageundo.c: ditto. Always keep around colormaps in
+	chunks of GIMP_IMAGE_COLORMAP_SIZE to be coonsistent with the
+	other colormap handling code.
+
 2007-11-16  Sven Neumann  <sven@gimp.org>
 
 	* app/base/lut-funcs.c (equalize_lut_setup): make sure we don't

@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <glib-object.h>
 
 #include "plug-in-types.h"
@@ -83,20 +81,11 @@ gimp_plug_in_def_get_memsize (GimpObject *object,
   GimpPlugInDef *plug_in_def = GIMP_PLUG_IN_DEF (object);
   gint64         memsize     = 0;
 
-  if (plug_in_def->prog)
-    memsize += strlen (plug_in_def->prog) + 1;
-
-  if (plug_in_def->locale_domain_name)
-    memsize += strlen (plug_in_def->locale_domain_name) + 1;
-
-  if (plug_in_def->locale_domain_path)
-    memsize += strlen (plug_in_def->locale_domain_path) + 1;
-
-  if (plug_in_def->help_domain_name)
-    memsize += strlen (plug_in_def->help_domain_name) + 1;
-
-  if (plug_in_def->help_domain_uri)
-    memsize += strlen (plug_in_def->help_domain_uri) + 1;
+  memsize += gimp_string_get_memsize (plug_in_def->prog);
+  memsize += gimp_string_get_memsize (plug_in_def->locale_domain_name);
+  memsize += gimp_string_get_memsize (plug_in_def->locale_domain_path);
+  memsize += gimp_string_get_memsize (plug_in_def->help_domain_name);
+  memsize += gimp_string_get_memsize (plug_in_def->help_domain_uri);
 
   memsize += gimp_g_slist_get_memsize (plug_in_def->procedures, 0);
 

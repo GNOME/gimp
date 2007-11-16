@@ -39,6 +39,7 @@
 
 #include "core-types.h"
 
+#include "gimp-utils.h"
 #include "gimpdata.h"
 #include "gimpmarshal.h"
 
@@ -297,8 +298,7 @@ gimp_data_get_memsize (GimpObject *object,
   GimpData *data    = GIMP_DATA (object);
   gint64    memsize = 0;
 
-  if (data->filename)
-    memsize += strlen (data->filename) + 1;
+  memsize += gimp_string_get_memsize (data->filename);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

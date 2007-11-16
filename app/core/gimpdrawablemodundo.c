@@ -100,8 +100,7 @@ gimp_drawable_mod_undo_get_memsize (GimpObject *object,
   GimpDrawableModUndo *drawable_mod_undo = GIMP_DRAWABLE_MOD_UNDO (object);
   gint64               memsize           = 0;
 
-  if (drawable_mod_undo->tiles)
-    memsize += tile_manager_get_memsize (drawable_mod_undo->tiles, FALSE);
+  memsize += tile_manager_get_memsize (drawable_mod_undo->tiles, FALSE);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

@@ -388,7 +388,15 @@ gimp_object_get_memsize (GimpObject *object,
   gint64 my_size     = 0;
   gint64 my_gui_size = 0;
 
-  g_return_val_if_fail (GIMP_IS_OBJECT (object), 0);
+  g_return_val_if_fail (object == NULL || GIMP_IS_OBJECT (object), 0);
+
+  if (! object)
+    {
+      if (gui_size)
+        *gui_size = 0;
+
+      return 0;
+    }
 
 #ifdef DEBUG_MEMSIZE
   if (gimp_debug_memsize)
@@ -461,8 +469,8 @@ gimp_object_real_get_memsize (GimpObject *object,
 {
   gint64 memsize = 0;
 
-  if (object->name && ! object->static_name)
-    memsize += strlen (object->name) + 1;
+  if (! object->static_name)
+    memsize += gimp_string_get_memsize (object->name);
 
   return memsize + gimp_g_object_get_memsize ((GObject *) object);
 }

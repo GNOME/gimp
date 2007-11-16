@@ -156,11 +156,10 @@ gimp_parasite_list_get_memsize (GimpObject *object,
   GimpParasiteList *list    = GIMP_PARASITE_LIST (object);
   gint64            memsize = 0;
 
-  if (list->table)
-    memsize += gimp_g_hash_table_get_memsize_foreach (list->table,
-                                                      (GimpMemsizeFunc)
-                                                      gimp_parasite_get_memsize,
-                                                      gui_size);
+  memsize += gimp_g_hash_table_get_memsize_foreach (list->table,
+                                                    (GimpMemsizeFunc)
+                                                    gimp_parasite_get_memsize,
+                                                    gui_size);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

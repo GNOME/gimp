@@ -373,14 +373,11 @@ temp_buf_data_clear (TempBuf *temp_buf)
 gsize
 temp_buf_get_memsize (TempBuf *temp_buf)
 {
-  gsize memsize = 0;
+  if (temp_buf)
+    return (sizeof (TempBuf) +
+            (gsize) temp_buf->bytes * temp_buf->width * temp_buf->height);
 
-  g_return_val_if_fail (temp_buf != NULL, 0);
-
-  memsize += (sizeof (TempBuf)
-              + (gsize) temp_buf->bytes * temp_buf->width * temp_buf->height);
-
-  return memsize;
+  return 0;
 }
 
 

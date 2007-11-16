@@ -97,9 +97,8 @@ gimp_vectors_mod_undo_get_memsize (GimpObject *object,
   GimpVectorsModUndo *vectors_mod_undo = GIMP_VECTORS_MOD_UNDO (object);
   gint64              memsize          = 0;
 
-  if (vectors_mod_undo->vectors)
-    memsize += gimp_object_get_memsize (GIMP_OBJECT (vectors_mod_undo->vectors),
-                                        gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (vectors_mod_undo->vectors),
+                                      gui_size);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

@@ -249,8 +249,7 @@ gimp_viewable_get_memsize (GimpObject *object,
   temp_buf = g_object_get_qdata (G_OBJECT (object), quark_preview_temp_buf);
   pixbuf   = g_object_get_qdata (G_OBJECT (object), quark_preview_pixbuf);
 
-  if (temp_buf)
-    *gui_size += temp_buf_get_memsize (temp_buf);
+  *gui_size += temp_buf_get_memsize (temp_buf);
 
   if (pixbuf)
     {

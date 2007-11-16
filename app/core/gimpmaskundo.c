@@ -116,8 +116,7 @@ gimp_mask_undo_get_memsize (GimpObject *object,
   GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (object);
   gint64        memsize   = 0;
 
-  if (mask_undo->tiles)
-    memsize += tile_manager_get_memsize (mask_undo->tiles, FALSE);
+  memsize += tile_manager_get_memsize (mask_undo->tiles, FALSE);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

@@ -986,17 +986,14 @@ gimp_image_get_memsize (GimpObject *object,
   if (image->cmap)
     memsize += GIMP_IMAGE_COLORMAP_SIZE;
 
-  if (image->shadow)
-    memsize += tile_manager_get_memsize (image->shadow, FALSE);
+  memsize += tile_manager_get_memsize (image->shadow, FALSE);
 
-  if (image->projection)
-    memsize += gimp_object_get_memsize (GIMP_OBJECT (image->projection),
-                                        gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (image->projection),
+                                      gui_size);
 
   memsize += gimp_g_list_get_memsize (image->guides, sizeof (GimpGuide));
 
-  if (image->grid)
-    memsize += gimp_object_get_memsize (GIMP_OBJECT (image->grid), gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (image->grid), gui_size);
 
   memsize += gimp_g_list_get_memsize (image->sample_points,
                                       sizeof (GimpSamplePoint));
@@ -1010,9 +1007,8 @@ gimp_image_get_memsize (GimpObject *object,
 
   memsize += gimp_g_slist_get_memsize (image->layer_stack, 0);
 
-  if (image->selection_mask)
-    memsize += gimp_object_get_memsize (GIMP_OBJECT (image->selection_mask),
-                                        gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (image->selection_mask),
+                                      gui_size);
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (image->parasites),
                                       gui_size);
@@ -1022,8 +1018,7 @@ gimp_image_get_memsize (GimpObject *object,
   memsize += gimp_object_get_memsize (GIMP_OBJECT (image->redo_stack),
                                       gui_size);
 
-  if (image->preview)
-    *gui_size += temp_buf_get_memsize (image->preview);
+  *gui_size += temp_buf_get_memsize (image->preview);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

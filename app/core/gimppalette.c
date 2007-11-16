@@ -503,8 +503,7 @@ gimp_palette_entry_get_memsize (GimpPaletteEntry *entry,
 {
   gint64 memsize = sizeof (GimpPaletteEntry);
 
-  if (entry->name)
-    memsize += strlen (entry->name) + 1;
+  memsize += gimp_string_get_memsize (entry->name);
 
   return memsize;
 }

@@ -30,6 +30,7 @@
 #include "plug-in-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpparamspecs.h"
 
@@ -157,21 +158,17 @@ gimp_plug_in_procedure_get_memsize (GimpObject *object,
   GList               *list;
   GSList              *slist;
 
-  if (proc->prog)
-    memsize += strlen (proc->prog) + 1;
-
-  if (proc->menu_label)
-    memsize += strlen (proc->menu_label) + 1;
+  memsize += gimp_string_get_memsize (proc->prog);
+  memsize += gimp_string_get_memsize (proc->menu_label);
 
   for (list = proc->menu_paths; list; list = g_list_next (list))
-    memsize += sizeof (GList) + strlen (list->data) + 1;
+    memsize += sizeof (GList) + gimp_string_get_memsize (list->data);
 
   switch (proc->icon_type)
     {
     case GIMP_ICON_TYPE_STOCK_ID:
     case GIMP_ICON_TYPE_IMAGE_FILE:
-      if (proc->icon_data)
-        memsize += strlen ((gchar *) proc->icon_data) + 1;
+      memsize += gimp_string_get_memsize ((gchar *) proc->icon_data);
       break;
 
     case GIMP_ICON_TYPE_INLINE_PIXBUF:
@@ -179,29 +176,20 @@ gimp_plug_in_procedure_get_memsize (GimpObject *object,
       break;
     }
 
-  if (proc->extensions)
-    memsize += strlen (proc->extensions) + 1;
-
-  if (proc->prefixes)
-    memsize += strlen (proc->prefixes) + 1;
-
-  if (proc->magics)
-    memsize += strlen (proc->magics) + 1;
-
-  if (proc->mime_type)
-    memsize += strlen (proc->mime_type) + 1;
-
-  if (proc->thumb_loader)
-    memsize += strlen (proc->thumb_loader) + 1;
+  memsize += gimp_string_get_memsize (proc->extensions);
+  memsize += gimp_string_get_memsize (proc->prefixes);
+  memsize += gimp_string_get_memsize (proc->magics);
+  memsize += gimp_string_get_memsize (proc->mime_type);
+  memsize += gimp_string_get_memsize (proc->thumb_loader);
 
   for (slist = proc->extensions_list; slist; slist = g_slist_next (slist))
-    memsize += sizeof (GSList) + strlen (slist->data) + 1;
+    memsize += sizeof (GSList) + gimp_string_get_memsize (slist->data);
 
   for (slist = proc->prefixes_list; slist; slist = g_slist_next (slist))
-    memsize += sizeof (GSList) + strlen (slist->data) + 1;
+    memsize += sizeof (GSList) + gimp_string_get_memsize (slist->data);
 
   for (slist = proc->magics_list; slist; slist = g_slist_next (slist))
-    memsize += sizeof (GSList) + strlen (slist->data) + 1;
+    memsize += sizeof (GSList) + gimp_string_get_memsize (slist->data);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

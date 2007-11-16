@@ -257,7 +257,7 @@ gimp_plug_in_manager_get_memsize (GimpObject *object,
                                                (GimpMemsizeFunc)
                                                gimp_object_get_memsize,
                                                gui_size);
-  memsize += gimp_g_slist_get_memsize (manager->plug_in_stack, 0 /* FIXME */);
+  memsize += gimp_g_slist_get_memsize (manager->plug_in_stack, 0);
   memsize += gimp_g_slist_get_memsize (manager->history,       0);
 
   memsize += 0; /* FIXME manager->shm */

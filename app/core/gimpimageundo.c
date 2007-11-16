@@ -28,6 +28,7 @@
 
 #include "core-types.h"
 
+#include "gimp-utils.h"
 #include "gimpdrawable.h"
 #include "gimpgrid.h"
 #include "gimpimage.h"
@@ -146,7 +147,7 @@ gimp_image_undo_constructor (GType                  type,
     case GIMP_UNDO_IMAGE_COLORMAP:
       image_undo->num_colors = gimp_image_get_colormap_size (image);
       image_undo->colormap   = g_memdup (gimp_image_get_colormap (image),
-                                         image_undo->num_colors * 3);
+                                         GIMP_IMAGE_COLORMAP_SIZE);
       break;
 
     case GIMP_UNDO_PARASITE_ATTACH:
@@ -223,19 +224,12 @@ gimp_image_undo_get_memsize (GimpObject *object,
   gint64         memsize    = 0;
 
   if (image_undo->colormap)
-    memsize += image_undo->num_colors * 3;
+    memsize += GIMP_IMAGE_COLORMAP_SIZE;
 
-  if (image_undo->grid)
-    memsize += gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid),
-                                        gui_size);
-
-  if (image_undo->parasite_name)
-    memsize += strlen (image_undo->parasite_name) + 1;
-
-  if (image_undo->parasite)
-    memsize += (sizeof (GimpParasite) +
-                strlen (image_undo->parasite->name) + 1 +
-                image_undo->parasite->size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid),
+                                      gui_size);
+  memsize += gimp_string_get_memsize (image_undo->parasite_name);
+  memsize += gimp_parasite_get_memsize (image_undo->parasite, gui_size);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -344,7 +338,7 @@ gimp_image_undo_pop (GimpUndo            *undo,
 
         num_colors = gimp_image_get_colormap_size (image);
         colormap   = g_memdup (gimp_image_get_colormap (image),
-                               num_colors * 3);
+                               GIMP_IMAGE_COLORMAP_SIZE);
 
         gimp_image_set_colormap (image,
                                  image_undo->colormap, image_undo->num_colors,

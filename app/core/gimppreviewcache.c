@@ -283,7 +283,8 @@ gimp_preview_cache_get_memsize (GSList *cache)
   GSList *list;
   gsize   memsize = 0;
 
-  g_return_val_if_fail (cache != NULL, 0);
+  if (! cache)
+    return 0;
 
   for (list = cache; list; list = list->next)
     memsize += sizeof (GSList) + temp_buf_get_memsize ((TempBuf *) list->data);

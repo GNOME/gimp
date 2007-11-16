@@ -280,8 +280,7 @@ gimp_undo_get_memsize (GimpObject *object,
   GimpUndo *undo    = GIMP_UNDO (object);
   gint64    memsize = 0;
 
-  if (undo->preview)
-    *gui_size += temp_buf_get_memsize (undo->preview);
+  *gui_size += temp_buf_get_memsize (undo->preview);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

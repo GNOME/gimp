@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <glib-object.h>
 
 #include "libgimpconfig/gimpconfig.h"
@@ -30,6 +28,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimp-utils.h"
 #include "gimpcontainer.h"
 #include "gimpmarshal.h"
 
@@ -298,7 +297,7 @@ gimp_container_get_memsize (GimpObject *object,
 
       memsize += (sizeof (GList) +
                   sizeof (GimpContainerHandler) +
-                  strlen (handler->signame) + 1);
+                  gimp_string_get_memsize (handler->signame));
     }
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,

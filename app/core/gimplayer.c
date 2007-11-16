@@ -411,12 +411,9 @@ gimp_layer_get_memsize (GimpObject *object,
   GimpLayer *layer   = GIMP_LAYER (object);
   gint64     memsize = 0;
 
-  if (layer->mask)
-    memsize += gimp_object_get_memsize (GIMP_OBJECT (layer->mask), gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (layer->mask), gui_size);
 
-  if (layer->fs.backing_store)
-    *gui_size += tile_manager_get_memsize (layer->fs.backing_store, FALSE);
-
+  *gui_size += tile_manager_get_memsize (layer->fs.backing_store, FALSE);
   *gui_size += layer->fs.num_segs * sizeof (BoundSeg);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,

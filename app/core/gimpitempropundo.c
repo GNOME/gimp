@@ -18,14 +18,13 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
 
+#include "gimp-utils.h"
 #include "gimpitem.h"
 #include "gimpitempropundo.h"
 #include "gimpparasitelist.h"
@@ -191,16 +190,9 @@ gimp_item_prop_undo_get_memsize (GimpObject *object,
   GimpItemPropUndo *item_prop_undo = GIMP_ITEM_PROP_UNDO (object);
   gint64            memsize        = 0;
 
-  if (item_prop_undo->name)
-    memsize += strlen (item_prop_undo->name) + 1;
-
-  if (item_prop_undo->parasite_name)
-    memsize += strlen (item_prop_undo->parasite_name) + 1;
-
-  if (item_prop_undo->parasite)
-    memsize += (sizeof (GimpParasite) +
-                strlen (item_prop_undo->parasite->name) + 1 +
-                item_prop_undo->parasite->size);
+  memsize += gimp_string_get_memsize (item_prop_undo->name);
+  memsize += gimp_string_get_memsize (item_prop_undo->parasite_name);
+  memsize += gimp_parasite_get_memsize (item_prop_undo->parasite, NULL);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
