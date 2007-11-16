@@ -1,3 +1,11 @@
+2007-11-16  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* libgimpconfig/gimpcolorconfig.c: changed default value for using
+	the system monitor profile. Many users seem to have broken monitor
+	profiles and it's hard to figure out how to fix this (bug #496890).
+
 2007-11-15  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:

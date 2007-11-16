@@ -132,7 +132,7 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DISPLAY_PROFILE_FROM_GDK,
                                     "display-profile-from-gdk",
                                     DISPLAY_PROFILE_FROM_GDK_BLURB,
-                                    TRUE,
+                                    FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PRINTER_PROFILE,
                                  "printer-profile", PRINTER_PROFILE_BLURB,
