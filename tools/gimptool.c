@@ -146,10 +146,12 @@ one_line_output (gchar *program,
 static gchar *
 pkg_config (gchar *args)
 {
+#ifdef G_OS_WIN32
   if (msvc_syntax)
     return one_line_output ("pkg-config --msvc-syntax", args);
-  else
-    return one_line_output ("pkg-config", args);
+#endif
+
+  return one_line_output ("pkg-config", args);
 }
 
 static gchar *
@@ -180,14 +182,12 @@ get_runtime_prefix (gchar slash)
 	    {
 	      r[-4] = '\0';
 	      prefix = path;
-#ifdef G_OS_WIN32
 	      if (slash == '/')
 		{
 		  /* Use forward slashes, less quoting trouble in Makefiles */
 		  while ((p = strchr (prefix, '\\')) != NULL)
 		    *p = '/';
 		}
-#endif
 	      return prefix;
 	    }
 	}
@@ -423,8 +423,8 @@ do_build_2 (gchar *cflags,
   gchar *dest_dir;
   gchar *output_flag;
   gchar *dest_exe;
-  gchar *here_comes_linker_flags;
-  gchar *windows_subsystem_flag;
+  gchar *here_comes_linker_flags = "";
+  gchar *windows_subsystem_flag = "";
   gchar *p, *q, *r;
 
   if (install_dir != NULL)
@@ -458,17 +458,18 @@ do_build_2 (gchar *cflags,
   if (msvc_syntax)
     {
       output_flag = "-Fe";
-      here_comes_linker_flags = "-link";
-      windows_subsystem_flag = "-subsystem:windows";
+      here_comes_linker_flags = " -link";
+      windows_subsystem_flag = " -subsystem:windows";
     }
   else
     {
       output_flag = "-o ";
-      here_comes_linker_flags = "";
-      windows_subsystem_flag = "-mwindows";
+#ifdef G_OS_WIN32
+      windows_subsystem_flag = " -mwindows";
+#endif
     }
 
-  cmd = g_strdup_printf ("%s %s %s %s%s%s %s %s %s %s %s %s",
+  cmd = g_strdup_printf ("%s %s %s %s%s%s %s%s %s%s %s %s",
 			 env_cc,
 			 env_cflags,
 			 cflags,
@@ -704,6 +705,14 @@ main (int    argc,
       else if (strcmp (argv[argi], "--msvc-syntax") == 0)
 	msvc_syntax = TRUE;
     }
+
+#ifndef G_OS_WIN32
+  if (msvc_syntax)
+    {
+      fprintf (stderr, "Ignoring --msvc-syntax\n");
+      msvc_syntax = FALSE;
+    }
+#endif
 
   find_out_env_flags ();
 
