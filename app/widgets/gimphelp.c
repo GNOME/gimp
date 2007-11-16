@@ -47,10 +47,8 @@
 #include "gimpmessagebox.h"
 #include "gimpmessagedialog.h"
 
+#include "gimp-log.h"
 #include "gimp-intl.h"
-
-
-/*  #define GIMP_HELP_DEBUG  */
 
 
 typedef struct _GimpIdleHelp GimpIdleHelp;
@@ -127,12 +125,9 @@ gimp_idle_help (GimpIdleHelp *idle_help)
   GimpGuiConfig *config         = GIMP_GUI_CONFIG (idle_help->gimp->config);
   const gchar   *procedure_name = NULL;
 
-#ifdef GIMP_HELP_DEBUG
-  g_printerr ("Help Domain: %s\n",
-              idle_help->help_domain ? idle_help->help_domain : "NULL");
-  g_printerr ("Help ID: %s\n\n",
-              idle_help->help_id     ? idle_help->help_id     : "NULL");
-#endif
+  GIMP_LOG (HELP, "Domain = '%s', ID = '%s'",
+            idle_help->help_domain ? idle_help->help_domain : "NULL",
+            idle_help->help_id     ? idle_help->help_id     : "NULL");
 
   if (config->help_browser == GIMP_HELP_BROWSER_GIMP)
     {
@@ -290,6 +285,12 @@ gimp_help_call (Gimp        *gimp,
     {
       GValueArray *return_vals;
 
+      GIMP_LOG (HELP, "Calling help via %s: %s %s %s",
+                procedure_name,
+                help_domain  ? help_domain  : "(null)",
+                help_locales ? help_locales : "(null)",
+                help_id      ? help_id      : "(null)");
+
       return_vals =
         gimp_pdb_execute_procedure_by_name (gimp->pdb,
                                             gimp_get_user_context (gimp),
@@ -347,13 +348,11 @@ gimp_help_call (Gimp        *gimp,
     {
       GValueArray *return_vals;
 
-#ifdef GIMP_HELP_DEBUG
-      g_printerr ("Calling help via %s: %s %s %s\n",
-                  procedure_name,
-                  help_domain  ? help_domain  : "(null)",
-                  help_locales ? help_locales : "(null)",
-                  help_id      ? help_id      : "(null)");
-#endif
+      GIMP_LOG (HELP, "Calling help via %s: %s %s %s",
+                procedure_name,
+                help_domain  ? help_domain  : "(null)",
+                help_locales ? help_locales : "(null)",
+                help_id      ? help_id      : "(null)");
 
       return_vals =
         gimp_pdb_execute_procedure_by_name (gimp->pdb,
@@ -378,4 +377,3 @@ gimp_help_get_locales (GimpGuiConfig *config)
 
   return g_strjoinv (":", (gchar **) g_get_language_names ());
 }
-

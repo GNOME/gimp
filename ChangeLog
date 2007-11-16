@@ -1,3 +1,10 @@
+2007-11-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimp-log.[ch]: add HELP log domain.
+
+	* app/widgets/gimphelp.c: port debug output to GIMP_LOG() and
+	improve it.
+
 2007-11-16  Tor Lillqvist  <tml@novell.com>
 
 	* app/base/base-utils.c
