@@ -1858,7 +1858,6 @@ _______EOF
 ])
 
 AC_CONFIG_FILES([
-gimptool-win32.c
 tools/Makefile
 tools/pdbgen/Makefile
 libgimp/Makefile

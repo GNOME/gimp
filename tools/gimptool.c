@@ -1,5 +1,5 @@
 /* gimptool in C
- * Copyright (C) 2001--2005 Tor Lillqvist
+ * Copyright (C) 2001--2007 Tor Lillqvist
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,11 @@
  */
 
 /*
- * Gimptool rewritten in C, primarily for Win32, where end-users who might
- * want to build and install a plug-in from source don't necessarily have
- * any Bourne-compatible shell to run the gimptool script in.
+ * Gimptool rewritten in C, originally for Win32, where end-users who
+ * might want to build and install a plug-in from source don't
+ * necessarily have any Bourne-compatible shell to run the gimptool
+ * script in. Later fixed up to replace the gimptool script on all
+ * platforms.
  *
  * Yes, this program leaks dynamically allocated strings without
  * hesitation. So what, it runs only for a minimal time.
@@ -30,6 +32,8 @@
 #include <string.h>
 
 #include <glib.h>
+
+#include "libgimpbase/gimpversion.h"
 
 static gboolean silent = FALSE;
 static gboolean dry_run = FALSE;
@@ -60,27 +64,27 @@ static struct {
   gchar *option;
   gchar *value;
 } dirs[] = {
-  { "prefix", "@prefix@" },
-  { "exec-prefix", "@exec_prefix@" },
-  { "bindir", "@bindir@" },
-  { "sbindir", "@sbindir@" },
-  { "libexecdir", "@libexecdir@" },
-  { "datadir", "@datadir@" },
-  { "datarootdir", "@datarootdir@" },
-  { "sysconfdir", "@sysconfdir@" },
-  { "sharedstatedir", "@sharedstatedir@" },
-  { "localstatedir", "@localstatedir@" },
-  { "libdir", "@libdir@" },
-  { "infodir", "@infodir@" },
-  { "mandir", "@mandir@" },
+  { "prefix", PREFIX },
+  { "exec-prefix", EXEC_PREFIX },
+  { "bindir", BINDIR },
+  { "sbindir", SBINDIR },
+  { "libexecdir", LIBEXECDIR },
+  { "datadir", DATADIR },
+  { "datarootdir", DATAROOTDIR },
+  { "sysconfdir", SYSCONFDIR },
+  { "sharedstatedir", SHAREDSTATEDIR },
+  { "localstatedir", LOCALSTATEDIR },
+  { "libdir", LIBDIR },
+  { "infodir", INFODIR },
+  { "mandir", MANDIR },
 #if 0
   /* For --includedir we want the includedir of the developer package,
    * not an includedir under the runtime installation prefix.
    */
-  { "includedir", "@includedir@" },
+  { "includedir", INCLUDEDIR },
 #endif
-  { "gimpplugindir", "@gimpplugindir@" },
-  { "gimpdatadir", "@gimpdatadir@" }
+  { "gimpplugindir", GIMPPLUGINDIR },
+  { "gimpdatadir", GIMPDATADIR }
 };
 
 #ifdef G_OS_WIN32
@@ -160,7 +164,7 @@ get_runtime_prefix (gchar slash)
   gchar *path;
   char *p, *r;
 
-  path = g_find_program_in_path ("gimp-@GIMP_APP_VERSION@.exe");
+  path = g_find_program_in_path ("gimp-" GIMP_APP_VERSION ".exe");
 
   if (path == NULL)
     path = g_find_program_in_path ("gimp.exe");
@@ -189,7 +193,7 @@ get_runtime_prefix (gchar slash)
 	}
     }
 
-  fprintf (stderr, "Cannot determine GIMP @GIMP_APP_VERSION@ installation location\n");
+  fprintf (stderr, "Cannot determine GIMP " GIMP_APP_VERSION " installation location\n");
   exit (1);
 #else
   /* On Unix assume the executable package is in the same prefix as the developer stuff */
@@ -210,7 +214,7 @@ get_exec_prefix (gchar slash)
    */
   return (exec_prefix = get_runtime_prefix (slash));
 #else
-  return "@exec_prefix@";
+  return EXEC_PREFIX;
 #endif
 }
 
@@ -218,14 +222,14 @@ static gchar *
 expand_and_munge (gchar *value)
 {
   if (starts_with_dir (value, "${prefix}"))
-    value = g_strconcat ("@prefix@", value + strlen ("${prefix}"), NULL);
+    value = g_strconcat (PREFIX, value + strlen ("${prefix}"), NULL);
   else if (starts_with_dir (value, "${exec_prefix}"))
-    value = g_strconcat ("@exec_prefix@", value + strlen ("${exec_prefix}"), NULL);
-  if (starts_with_dir (value, "@exec_prefix@"))
-    value = g_strconcat (get_exec_prefix ('/'), value + strlen ("@exec_prefix@"), NULL);
+    value = g_strconcat (EXEC_PREFIX, value + strlen ("${exec_prefix}"), NULL);
+  if (starts_with_dir (value, EXEC_PREFIX))
+    value = g_strconcat (get_exec_prefix ('/'), value + strlen (EXEC_PREFIX), NULL);
 
-  if (starts_with_dir (value, "@prefix@"))
-    value = g_strconcat (get_runtime_prefix ('/'), value + strlen ("@prefix@"), NULL);
+  if (starts_with_dir (value, PREFIX))
+    value = g_strconcat (get_runtime_prefix ('/'), value + strlen (PREFIX), NULL);
 
   return value;
 }
@@ -240,7 +244,7 @@ find_out_env_flags (void)
   else if (msvc_syntax)
     env_cc = "cl -MD";
   else
-    env_cc = "@CC@";
+    env_cc = CC;
 
   if (g_ascii_strncasecmp (env_cc, "cl", 2) == 0)
     msvc_syntax = TRUE;
@@ -512,7 +516,7 @@ get_user_plugin_dir (gboolean forward_slashes)
   const gchar slash = '/';
 #endif
 
-  return g_strdup_printf ("%s%c@gimpdir@%cplug-ins",
+  return g_strdup_printf ("%s%c" GIMPDIR "%cplug-ins",
 			  g_get_home_dir (), slash, slash);
 }
 
@@ -543,7 +547,7 @@ get_sys_plugin_dir (gboolean forward_slashes)
   const gchar slash = '/';
 #endif
 
-  return g_strdup_printf ("%s%clib%cgimp%c@GIMP_PLUGIN_VERSION@%cplug-ins",
+  return g_strdup_printf ("%s%clib%cgimp%c" GIMP_PLUGIN_VERSION "%cplug-ins",
 			  get_runtime_prefix (slash),
 			  slash, slash, slash, slash);
 }
@@ -626,7 +630,7 @@ get_user_script_dir (gboolean forward_slashes)
   const gchar slash = '/';
 #endif
 
-  return g_strdup_printf ("%s%c@gimpdir@%cscripts",
+  return g_strdup_printf ("%s%c" GIMPDIR "%cscripts",
 			  g_get_home_dir (), slash, slash);
 }
 
@@ -648,7 +652,7 @@ get_sys_script_dir (gboolean forward_slashes)
   return g_strdup_printf ("%s%cshare%cgimp%c%d.%d%cscripts",
 			  get_runtime_prefix (slash),
 			  slash, slash, slash,
-			  @GIMP_MAJOR_VERSION@, @GIMP_MINOR_VERSION@,
+			  GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION,
 			  slash);
 }
 
@@ -717,7 +721,7 @@ main (int    argc,
 	silent = TRUE;
       else if (strcmp (argv[argi], "--version") == 0)
 	{
-	  printf ("%d.%d.%d\n", @GIMP_MAJOR_VERSION@, @GIMP_MINOR_VERSION@, @GIMP_MICRO_VERSION@);
+	  printf ("%d.%d.%d\n", GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION, GIMP_MICRO_VERSION);
 	  exit (0);
 	}
       else if (strcmp (argv[argi], "-n") == 0 ||

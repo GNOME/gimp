@@ -1,3 +1,19 @@
+2007-11-16  Tor Lillqvist  <tml@novell.com>
+
+	Use the gimptool program on Unix, too, instead of the gimptool
+	script.
+
+	* configure.in
+	* Makefile.am: Drop gimptool script and gimptool-win32.c(.in)
+
+	* tools/gimptool.c
+	* tools/Makefile.am: Move gimptool-win32.c.in here and call it
+	just gimptool.c. Build and install on all platforms.
+
+	* tools/gimptool.c: Change accordingly.
+
+	* doc/gimptool.1.in: Document the --msvc-syntax option.
+	
 2007-11-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimp-log.[ch]: add HELP log domain.

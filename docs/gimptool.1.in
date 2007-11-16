@@ -8,7 +8,8 @@ gimptool\-2.0 - script to perform various GIMPy functions
 .B gimptool\-2.0
 [\-\-prefix\fI[=DIR]\fP] [\-\-exec\-prefix\fI[=DIR]\fP] [\-\-version]
 [\-\-help] [\-\-quiet] [\-\-silent] [\-n] [\-\-just-print] [\-\-dry-run]
-[\-\-recon] [\-\-bindir] [\-\-sbindir] [\-\-libexecdir] [\-\-datadir]
+[\-\-recon] [\-\-msvc-syntax]
+[\-\-bindir] [\-\-sbindir] [\-\-libexecdir] [\-\-datadir]
 [\-\-sysconfdir] [\-\-sharedstatedir] [\-\-localstatedir] [-\-libdir]
 [\-\-infodir] [\-\-mandir] [\-\-includedir] [\-\-gimpplugindir]
 [\-\-gimpdatadir] [\-\-libs] [\-\-libs-noui] [\-\-cflags] [\-\-cflags-noi]
@@ -66,6 +67,11 @@ Test mode. Print the commands but don't actually execute them. Same as \-n.
 .TP 8
 .B \-\-recon
 Test mode. Print the commands but don't actually execute them. Same as \-n.
+.TP 8
+.B \-\-msvc-syntax
+Useful on Windows. Outputs the compiler and linker flags in the syntax
+used by Microsoft's toolchain. Passed to the pkg-config command that
+does most of \fIgimptool\-2.0\fP's work.
 .TP 8
 .B \-\-bindir
 Outputs the bindir used to install the \fIGIMP\fP.
