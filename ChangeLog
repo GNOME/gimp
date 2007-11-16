@@ -3,7 +3,8 @@
 	* app/base/base-utils.c
 	* app/base/base-utils.h (get_physical_memory_size_megabytes): New
 	function that Sven asked for. Somebody please fill in Unix
-	implementation(s).
+	implementation(s). Feel free to change the name, change to return
+	as bytes in a gint64, etc.
 
 2007-11-16  Michael Natterer  <mitch@gimp.org>
 
