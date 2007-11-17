@@ -61,7 +61,7 @@ get_physical_memory_size (void)
 {
 #ifdef G_OS_UNIX
 #if defined(HAVE_UNISTD_H) && defined(_SC_PHYS_PAGES) && defined (_SC_PAGE_SIZE)
-  return sysconf (_SC_PHYS_PAGES) * sysconf (_SC_PAGE_SIZE);
+  return (guint64) sysconf (_SC_PHYS_PAGES) * sysconf (_SC_PAGE_SIZE);
 #endif
 #endif
 

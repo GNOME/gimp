@@ -1,5 +1,8 @@
 2007-11-17  Sven Neumann  <sven@gimp.org>
 
+	* app/base/base-utils.c (get_physical_memory_size): added a cast
+	to avoid an integer overflow on 32bit machines.
+
 	* tools/gimptool.c: minor cleanup, hopefully not breaking anything.
 
 2007-11-17  Sven Neumann  <sven@gimp.org>
