@@ -1,3 +1,8 @@
+2007-11-17  Sven Neumann  <sven@gimp.org>
+
+	* app/base/base-utils.[ch]: changed to get_physical_memory_size()
+	and added an implementation for POSIX.2 platforms.
+
 2007-11-17  Tor Lillqvist  <tml@novell.com>
 
 	* tools/gimptool.c: Ignore --msvc-syntax unless on Windows. Put

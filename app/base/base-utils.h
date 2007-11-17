@@ -19,7 +19,9 @@
 #ifndef __BASE_H__
 #define __BASE_H__
 
-gint get_number_of_processors (void);
-gint get_physical_memory_size_megabytes (void);
+
+gint     get_number_of_processors (void);
+guint64  get_physical_memory_size (void);
+
 
 #endif /* __BASE_H__ */

@@ -56,21 +56,23 @@ get_number_of_processors (void)
   return retval;
 }
 
-gint 
-get_physical_memory_size_megabytes (void)
+guint64
+get_physical_memory_size (void)
 {
-  gint retval = 0;
-
 #ifdef G_OS_UNIX
-  /* ??? */
+#if defined(HAVE_UNISTD_H) && defined(_SC_PHYS_PAGES) && defined (_SC_PAGE_SIZE)
+  return sysconf (_SC_PHYS_PAGES) * sysconf (_SC_PAGE_SIZE);
 #endif
+#endif
+
 #ifdef G_OS_WIN32
   MEMORYSTATUSEX memory_status;
 
   memory_status.dwLength = sizeof (memory_status);
+
   if (GlobalMemoryStatusEx (&memory_status))
-    retval = memory_status.ullTotalPhys / (1024*1024);
+    return memory_status.ullTotalPhys;
 #endif
 
-  return retval;
+  return 0;
 }
