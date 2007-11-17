@@ -1,5 +1,5 @@
 /* gimptool in C
- * Copyright (C) 2001--2007 Tor Lillqvist
+ * Copyright (C) 2001-2007 Tor Lillqvist
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,16 +35,18 @@
 
 #include "libgimpbase/gimpversion.h"
 
-static gboolean silent = FALSE;
-static gboolean dry_run = FALSE;
-static gchar *prefix;
-static gchar *exec_prefix;
 
-static gchar *env_cc;
-static gboolean msvc_syntax = FALSE;
-static gchar *env_cflags;
-static gchar *env_ldflags;
-static gchar *env_libs;
+static gboolean  silent  = FALSE;
+static gboolean  dry_run = FALSE;
+static gchar    *prefix;
+static gchar    *exec_prefix;
+
+static gchar    *env_cc;
+static gboolean  msvc_syntax = FALSE;
+static gchar    *env_cflags;
+static gchar    *env_ldflags;
+static gchar    *env_libs;
+
 
 #ifdef G_OS_WIN32
 #define EXEEXT ".exe"
@@ -61,30 +63,30 @@ static gchar *env_libs;
 #endif
 
 static struct {
-  gchar *option;
-  gchar *value;
+  const gchar *option;
+  gchar       *value;
 } dirs[] = {
-  { "prefix", PREFIX },
-  { "exec-prefix", EXEC_PREFIX },
-  { "bindir", BINDIR },
-  { "sbindir", SBINDIR },
-  { "libexecdir", LIBEXECDIR },
-  { "datadir", DATADIR },
-  { "datarootdir", DATAROOTDIR },
-  { "sysconfdir", SYSCONFDIR },
+  { "prefix",         PREFIX         },
+  { "exec-prefix",    EXEC_PREFIX    },
+  { "bindir",         BINDIR         },
+  { "sbindir",        SBINDIR        },
+  { "libexecdir",     LIBEXECDIR     },
+  { "datadir",        DATADIR        },
+  { "datarootdir",    DATAROOTDIR    },
+  { "sysconfdir",     SYSCONFDIR     },
   { "sharedstatedir", SHAREDSTATEDIR },
-  { "localstatedir", LOCALSTATEDIR },
-  { "libdir", LIBDIR },
-  { "infodir", INFODIR },
-  { "mandir", MANDIR },
+  { "localstatedir",  LOCALSTATEDIR  },
+  { "libdir",         LIBDIR         },
+  { "infodir",        INFODIR        },
+  { "mandir",         MANDIR         },
 #if 0
   /* For --includedir we want the includedir of the developer package,
    * not an includedir under the runtime installation prefix.
    */
-  { "includedir", INCLUDEDIR },
+  { "includedir",     INCLUDEDIR     },
 #endif
-  { "gimpplugindir", GIMPPLUGINDIR },
-  { "gimpdatadir", GIMPDATADIR }
+  { "gimpplugindir",  GIMPPLUGINDIR  },
+  { "gimpdatadir",    GIMPDATADIR    }
 };
 
 #ifdef G_OS_WIN32
@@ -115,13 +117,13 @@ one_line_output (gchar *program,
 		 gchar *args)
 {
   gchar *command = g_strconcat (program, " ", args, NULL);
-  FILE *pipe = popen (command, "r");
-  char line[1000];
+  FILE  *pipe    = popen (command, "r");
+  gchar  line[1000];
 
   if (pipe == NULL)
     {
-      fprintf (stderr, "Cannot run '%s'\n", command);
-      exit (1);
+      g_printerr ("Cannot run '%s'\n", command);
+      exit (EXIT_FAILURE);
     }
 
   if (fgets (line, sizeof (line), pipe) == NULL)
@@ -136,8 +138,8 @@ one_line_output (gchar *program,
 
   if (strlen (line) == 0)
     {
-      fprintf (stderr, "No output from '%s'\n", command);
-      exit (1);
+      g_printerr ("No output from '%s'\n", command);
+      exit (EXIT_FAILURE);
     }
 
   return g_strdup (line);
@@ -164,13 +166,13 @@ get_runtime_prefix (gchar slash)
    */
 
   gchar *path;
-  char *p, *r;
+  gchar *p, *r;
 
   path = g_find_program_in_path ("gimp-" GIMP_APP_VERSION ".exe");
 
   if (path == NULL)
     path = g_find_program_in_path ("gimp.exe");
-  
+
   if (path != NULL)
     {
       r = strrchr (path, G_DIR_SEPARATOR);
@@ -193,8 +195,9 @@ get_runtime_prefix (gchar slash)
 	}
     }
 
-  fprintf (stderr, "Cannot determine GIMP " GIMP_APP_VERSION " installation location\n");
-  exit (1);
+  g_printerr ("Cannot determine GIMP " GIMP_APP_VERSION " installation location\n");
+
+  exit (EXIT_FAILURE);
 #else
   /* On Unix assume the executable package is in the same prefix as the developer stuff */
   return pkg_config ("--variable=prefix gimp-2.0");
@@ -268,7 +271,7 @@ find_out_env_flags (void)
 static void
 usage (int exit_status)
 {
-  printf ("\
+  g_print ("\
 Usage: gimptool-2.0 [OPTION]...\n\
 \n\
 General options:\n\
@@ -318,7 +321,7 @@ appended with -noui for appropriate settings. For plug-ins that use GTK+ but\n\
 not libgumpui, append -nogimpui.\n");
   exit (exit_status);
 }
-  
+
 static gchar *
 get_includedir (void)
 {
@@ -328,7 +331,7 @@ get_includedir (void)
 static void
 do_includedir (void)
 {
-  printf ("%s\n", get_includedir ());
+  g_print ("%s\n", get_includedir ());
 }
 
 static gchar *
@@ -340,7 +343,7 @@ get_cflags (void)
 static void
 do_cflags (void)
 {
-  printf ("%s\n", get_cflags ());
+  g_print ("%s\n", get_cflags ());
 }
 
 static gchar *
@@ -352,7 +355,7 @@ get_cflags_noui (void)
 static void
 do_cflags_noui (void)
 {
-  printf ("%s\n", get_cflags_noui ());
+  g_print ("%s\n", get_cflags_noui ());
 }
 
 static gchar *
@@ -364,7 +367,7 @@ get_cflags_nogimpui (void)
 static void
 do_cflags_nogimpui (void)
 {
-  printf ("%s\n", get_cflags_nogimpui ());
+  g_print ("%s\n", get_cflags_nogimpui ());
 }
 
 static gchar *
@@ -376,7 +379,7 @@ get_libs (void)
 static void
 do_libs (void)
 {
-  printf ("%s\n", get_libs ());
+  g_print ("%s\n", get_libs ());
 }
 
 static gchar *
@@ -388,7 +391,7 @@ get_libs_noui (void)
 static void
 do_libs_noui (void)
 {
-  printf ("%s\n", get_libs_noui ());
+  g_print ("%s\n", get_libs_noui ());
 }
 
 static gchar *
@@ -400,14 +403,14 @@ get_libs_nogimpui (void)
 static void
 do_libs_nogimpui (void)
 {
-  printf ("%s\n", get_libs_nogimpui ());
+  g_print ("%s\n", get_libs_nogimpui ());
 }
 
 static void
 maybe_run (gchar *cmd)
 {
   if (!silent)
-    printf ("%s\n", cmd);
+    g_print ("%s\n", cmd);
 
   if (!dry_run)
     system (cmd);
@@ -425,7 +428,7 @@ do_build_2 (gchar *cflags,
   gchar *dest_exe;
   gchar *here_comes_linker_flags = "";
   gchar *windows_subsystem_flag = "";
-  gchar *p, *q, *r;
+  gchar *p, *q;
 
   if (install_dir != NULL)
     dest_dir = g_strconcat (install_dir, "/", NULL);
@@ -435,24 +438,29 @@ do_build_2 (gchar *cflags,
   dest_exe = g_strdup (what);
 
   p = strrchr (dest_exe, '.');
-  if (p == NULL || !(strcmp (p, ".c") == 0 || strcmp (p, ".cc") == 0 || strcmp (p, ".cpp") == 0))
+  if (p == NULL ||
+      !(strcmp (p, ".c")   == 0 ||
+        strcmp (p, ".cc")  == 0 ||
+        strcmp (p, ".cpp") == 0))
     {
-      fprintf (stderr, "plug-in source %s is not a C or C++ file?\n", what);
-      exit (1);
+      g_printerr ("plug-in source %s is not a C or C++ file?\n", what);
+      exit (EXIT_FAILURE);
     }
 
   *p = '\0';
   q = strrchr (dest_exe, G_DIR_SEPARATOR);
 #ifdef G_OS_WIN32
-  r = strrchr (dest_exe, '/');
-  if (r != NULL && (q == NULL || r > q))
-    q = r;
+  {
+    gchar *r = strrchr (dest_exe, '/');
+    if (r != NULL && (q == NULL || r > q))
+      q = r;
+  }
 #endif
   if (q == NULL)
     q = dest_exe;
   else
     q++;
-  
+
   dest_exe = g_strconcat (q, EXEEXT, NULL);
 
   if (msvc_syntax)
@@ -683,7 +691,7 @@ main (int    argc,
   gint i;
 
   if (argc == 1)
-    usage (0);
+    usage (EXIT_SUCCESS);
 
   /* First scan for flags that affect our behaviour globally, but
    * are still allowed late on the command line.
@@ -695,21 +703,31 @@ main (int    argc,
 	  strcmp (argv[argi], "--just-print") == 0 ||
 	  strcmp (argv[argi], "--dry-run") == 0 ||
 	  strcmp (argv[argi], "--recon") == 0)
-	dry_run = TRUE;
+        {
+          dry_run = TRUE;
+        }
       else if (strcmp (argv[argi], "--help") == 0)
-	usage (0);
+        {
+          usage (EXIT_SUCCESS);
+        }
       else if (g_str_has_prefix (argv[argi], "--prefix="))
-	prefix = argv[argi] + strlen ("--prefix=");
+        {
+          prefix = argv[argi] + strlen ("--prefix=");
+        }
       else if (g_str_has_prefix (argv[argi], "--exec-prefix="))
-	exec_prefix = argv[argi] + strlen ("--exec_prefix=");
+        {
+          exec_prefix = argv[argi] + strlen ("--exec_prefix=");
+        }
       else if (strcmp (argv[argi], "--msvc-syntax") == 0)
-	msvc_syntax = TRUE;
+        {
+          msvc_syntax = TRUE;
+        }
     }
 
 #ifndef G_OS_WIN32
   if (msvc_syntax)
     {
-      fprintf (stderr, "Ignoring --msvc-syntax\n");
+      g_printerr ("Ignoring --msvc-syntax\n");
       msvc_syntax = FALSE;
     }
 #endif
@@ -721,17 +739,26 @@ main (int    argc,
   while (++argi < argc)
     {
       for (i = 0; i < G_N_ELEMENTS (dirs); i++)
-	if (strcmp (argv[argi], g_strconcat ("--", dirs[i].option, NULL)) == 0)
-	  break;
+        {
+          if (strcmp (argv[argi],
+                      g_strconcat ("--", dirs[i].option, NULL)) == 0)
+            break;
+        }
+
       if (i < G_N_ELEMENTS (dirs))
-	printf ("%s\n", expand_and_munge (dirs[i].value));
+        {
+          g_print ("%s\n", expand_and_munge (dirs[i].value));
+        }
       else if (strcmp (argv[argi], "--quiet") == 0 ||
-	       strcmp (argv[argi], "--silent") == 0)
-	silent = TRUE;
+               strcmp (argv[argi], "--silent") == 0)
+        {
+          silent = TRUE;
+        }
       else if (strcmp (argv[argi], "--version") == 0)
 	{
-	  printf ("%d.%d.%d\n", GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION, GIMP_MICRO_VERSION);
-	  exit (0);
+	  g_print ("%d.%d.%d\n",
+                   GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION, GIMP_MICRO_VERSION);
+	  exit (EXIT_SUCCESS);
 	}
       else if (strcmp (argv[argi], "-n") == 0 ||
 	       strcmp (argv[argi], "--just-print") == 0 ||
@@ -794,11 +821,12 @@ main (int    argc,
 	do_uninstall_admin_script (argv[++argi]);
       else
 	{
-	  fprintf (stderr, "Unrecognized switch %s\n", argv[argi]);
-	  usage (1);
+	  g_printerr ("Unrecognized switch %s\n", argv[argi]);
+	  usage (EXIT_FAILURE);
 	}
     }
-  exit (0);
+
+  exit (EXIT_SUCCESS);
 }
 /*
  * Local Variables:

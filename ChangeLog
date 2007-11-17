@@ -1,5 +1,9 @@
 2007-11-17  Sven Neumann  <sven@gimp.org>
 
+	* tools/gimptool.c: minor cleanup, hopefully not breaking anything.
+
+2007-11-17  Sven Neumann  <sven@gimp.org>
+
 	* app/base/base-utils.[ch]: changed to get_physical_memory_size()
 	and added an implementation for POSIX.2 platforms.
 
