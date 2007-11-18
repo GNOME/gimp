@@ -1,3 +1,11 @@
+2007-11-19  Tor Lillqvist  <tml@novell.com>
+
+	Merged from trunk:
+
+	* libgimpwidgets/gimpcolorscale.c
+	(gimp_color_scale_render_stipple): Don't write past end of
+	buffer. (#399484)
+
 2007-11-16  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:

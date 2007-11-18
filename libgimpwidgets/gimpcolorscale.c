@@ -754,7 +754,7 @@ gimp_color_scale_render_stipple (GimpColorScale *scale)
     {
       guchar *d = buf + 3 * (y % 2);
 
-      for (x = 0; x < scale->width; x += 2, d += 6)
+      for (x = 0; x < scale->width - (y % 2); x += 2, d += 6)
         {
           d[0] = insensitive[0];
           d[1] = insensitive[1];
