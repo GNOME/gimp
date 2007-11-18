@@ -34,7 +34,7 @@
 2007-11-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimp-log.[ch]: changed to work with different
-	compiler-specific ways of doing macro varargs also cope with no
+	compiler-specific ways of doing macro varargs. Also cope with no
 	macro vararg support at all. Pointed out by Hans Breuer.
 
 2007-11-18  Michael Natterer  <mitch@gimp.org>
