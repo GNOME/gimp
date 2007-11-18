@@ -1,5 +1,11 @@
 2007-11-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimp-log.[ch]: changed to work with different
+	compiler-specific ways of doing macro varargs also cope with no
+	macro vararg support at all. Pointed out by Hans Breuer.
+
+2007-11-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	(gimp_display_shell_canvas_tool_events): improve debug output.
 

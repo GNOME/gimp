@@ -28,11 +28,38 @@ typedef enum
 } GimpLogFlags;
 
 
+#ifdef G_HAVE_ISO_VARARGS
+
+#define GIMP_LOG(type, ...) \
+        G_STMT_START { \
+        if (gimp_log_flags & GIMP_LOG_##type) \
+          gimp_log (G_STRFUNC, __LINE__, #type, __VA_ARGS__); \
+        } G_STMT_END
+
+#elif defined(G_HAVE_GNUC_VARARGS)
+
 #define GIMP_LOG(type, format...) \
         G_STMT_START { \
         if (gimp_log_flags & GIMP_LOG_##type) \
           gimp_log (G_STRFUNC, __LINE__, #type, format); \
         } G_STMT_END
+
+#else /* no varargs macros */
+
+static void
+GIMP_LOG (const gchar *function,
+          gint         line,
+          const gchar *domain,
+          const gchar *format,
+          ...)
+{
+  va_list args;
+  va_start (args, format);
+  gimp_logv (function, line, domain, format, args);
+  va_end (args);
+}
+
+#endif  /* !__GNUC__ */
 
 
 extern GimpLogFlags gimp_log_flags;
@@ -44,6 +71,11 @@ void   gimp_log      (const gchar *function,
                       const gchar *domain,
                       const gchar *format,
                       ...) G_GNUC_PRINTF (4, 5);
+void   gimp_logv     (const gchar *function,
+                      gint         line,
+                      const gchar *domain,
+                      const gchar *format,
+                      va_list      args);
 
 
 #endif /* __GIMP_LOG_H__ */

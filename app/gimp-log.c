@@ -53,20 +53,26 @@ gimp_log (const gchar *function,
           const gchar *format,
           ...)
 {
+  va_list args;
+
+  va_start (args, format);
+  gimp_logv (function, line, domain, format, args);
+  va_end (args);
+}
+
+void
+gimp_logv (const gchar *function,
+           gint         line,
+           const gchar *domain,
+           const gchar *format,
+           va_list      args)
+{
   gchar *message;
 
   if (format)
-    {
-      va_list args;
-
-      va_start (args, format);
-      message = g_strdup_vprintf (format, args);
-      va_end (args);
-    }
+    message = g_strdup_vprintf (format, args);
   else
-    {
-      message = g_strdup ("called");
-    }
+    message = g_strdup ("called");
 
   g_log (domain, G_LOG_LEVEL_DEBUG,
          "%s(%d): %s", function, line, message);
