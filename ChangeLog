@@ -1,3 +1,9 @@
+2007-11-19  Tor Lillqvist  <tml@novell.com>
+
+	* libgimpwidgets/gimpcolorscale.c
+	(gimp_color_scale_render_stipple): Don't write past end of
+	buffer. (#399484)
+
 2007-11-18  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangleselecttool.c: Cosmitics. More strictly
