@@ -1,3 +1,9 @@
+2007-11-18  Sven Neumann  <sven@gimp.org>
+
+	* gimptool-2.0.in: removed.
+
+	* configure.in: removed leftover references to the gimptool script.
+
 2007-11-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimp-log.[ch]: add SAVE_DIALOG log domain.
@@ -25,6 +31,8 @@
 
 	* app/base/base-utils.c (get_physical_memory_size): added a cast
 	to avoid an integer overflow on 32bit machines.
+
+2007-11-17  Sven Neumann  <sven@gimp.org>
 
 	* tools/gimptool.c: minor cleanup, hopefully not breaking anything.
 

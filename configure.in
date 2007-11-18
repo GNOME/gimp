@@ -1996,14 +1996,10 @@ docs/gimp-gimp_app_version.1:docs/gimp.1.in
 docs/gimprc-gimp_app_version.5:docs/gimprc.5.in
 docs/gimptool-gimp_tool_version.1:docs/gimptool.1.in
 docs/gimp-remote-gimp_app_version.1:docs/gimp-remote.1.in
-gimptool-gimp_tool_version:gimptool-2.0.in
 gimp-gimp_pkgconfig_version.pc:gimp.pc.in
 gimpthumb-gimp_pkgconfig_version.pc:gimpthumb.pc.in
 gimpui-gimp_pkgconfig_version.pc:gimpui.pc.in
 )
-
-AC_CONFIG_COMMANDS([chmod-scripts],
-[chmod +x gimptool-gimp_tool_version])
 
 AC_CONFIG_COMMANDS([sed-po-makefiles],
 [sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile
