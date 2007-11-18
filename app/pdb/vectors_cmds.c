@@ -37,6 +37,7 @@
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
 #include "vectors/gimpstroke-new.h"
+#include "vectors/gimpvectors-export.h"
 #include "vectors/gimpvectors-import.h"
 #include "vectors/gimpvectors.h"
 
@@ -1241,6 +1242,89 @@ vectors_import_from_string_invoker (GimpProcedure     *procedure,
       g_value_set_int (&return_vals->values[1], num_vectors);
       gimp_value_take_int32array (&return_vals->values[2], vectors_ids, num_vectors);
     }
+
+  return return_vals;
+}
+
+static GValueArray *
+vectors_export_to_file_invoker (GimpProcedure     *procedure,
+                                Gimp              *gimp,
+                                GimpContext       *context,
+                                GimpProgress      *progress,
+                                const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  const gchar *filename;
+  GimpVectors *vectors;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  filename = g_value_get_string (&args->values[1]);
+  vectors = gimp_value_get_vectors (&args->values[2], gimp);
+
+  if (success)
+    {
+      GError *error = NULL;
+
+      if (vectors != NULL && ! GIMP_IS_VECTORS (vectors))
+        {
+          g_set_error (&error, 0, 0, _("argument is not a valid Vectors object"));
+          success = FALSE;
+        }
+      else
+        success = gimp_vectors_export_file (image, vectors, filename, &error);
+
+      if (! success && error)
+        {
+          g_message (_("Failed to export path: %s"), error->message);
+          g_clear_error (&error);
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+vectors_export_to_string_invoker (GimpProcedure     *procedure,
+                                  Gimp              *gimp,
+                                  GimpContext       *context,
+                                  GimpProgress      *progress,
+                                  const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  GimpVectors *vectors;
+  gchar *string = NULL;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  vectors = gimp_value_get_vectors (&args->values[1], gimp);
+
+  if (success)
+    {
+      GError *error = NULL;
+
+      if (vectors != NULL && ! GIMP_IS_VECTORS (vectors))
+        {
+          g_set_error (&error, 0, 0, _("argument is not a valid Vectors object"));
+          success = FALSE;
+        }
+      else
+        string = gimp_vectors_export_string (image, vectors);
+
+      success = (string != NULL);
+
+      if (! success && error)
+        {
+          g_message (_("Failed to save path as string: %s"), error->message);
+          g_clear_error (&error);
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_take_string (&return_vals->values[1], string);
 
   return return_vals;
 }
@@ -2550,6 +2634,76 @@ register_vectors_procs (GimpPDB *pdb)
                                                                 "vectors ids",
                                                                 "The list of newly created vectors",
                                                                 GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-vectors-export-to-file
+   */
+  procedure = gimp_procedure_new (vectors_export_to_file_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-export-to-file");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-vectors-export-to-file",
+                                     "save a path as an SVG file.",
+                                     "This procedure creates an SVG file to save a Vectors object, that is, a path. The resulting file can be edited using a vector graphics application, or later reloaded into GIMP. If you pass 0 as the 'vectors' argument, then all paths in the image will be exported.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2007",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("filename",
+                                                       "filename",
+                                                       "The name of the SVG file to create.",
+                                                       TRUE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors_id ("vectors",
+                                                           "vectors",
+                                                           "The vectors object to be saved, or 0 for all in the image",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-vectors-export-to-string
+   */
+  procedure = gimp_procedure_new (vectors_export_to_string_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-export-to-string");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-vectors-export-to-string",
+                                     "Save a path as an SVG string.",
+                                     "This procedure works like 'gimp-vectors-export-to-file' but creates a string rather than a file. The contents are a %NUL-terminated string that holds a complete XML document. If you pass 0 as the 'vectors' argument, then all paths in the image will be exported.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2007",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors_id ("vectors",
+                                                           "vectors",
+                                                           "The vectors object to save, or 0 for all in the image",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("string",
+                                                           "string",
+                                                           "A string whose contents are a complete SVG document.",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

@@ -1276,6 +1276,102 @@ CODE
     );
 }
 
+sub vectors_export_to_file {
+    $blurb = 'save a path as an SVG file.';
+
+    $help = <<'HELP';
+This procedure creates an SVG file to save a Vectors object, that is,
+a path.  The resulting file can be edited using a vector graphics
+application, or later reloaded into GIMP.  If you pass 0 as the 'vectors'
+argument, then all paths in the image will be exported.
+HELP
+
+    &bill_pdb_misc('2007', '2.6');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'filename', type => 'string', allow_non_utf8 => 1,
+          non_empty => 1,
+          desc => 'The name of the SVG file to create.' },
+        { name => 'vectors', type => 'vectors', no_validate => 1,
+          desc => 'The vectors object to be saved, or 0 for all in the image' }
+    );
+
+    %invoke = (
+        headers => [ qw("vectors/gimpvectors-export.h") ],
+        code    => <<'CODE'
+{
+  GError *error = NULL;
+
+  if (vectors != NULL && ! GIMP_IS_VECTORS (vectors))
+    {
+      g_set_error (&error, 0, 0, _("argument is not a valid Vectors object"));
+      success = FALSE;
+    }
+  else
+    success = gimp_vectors_export_file (image, vectors, filename, &error);
+
+  if (! success && error)
+    {
+      g_message (_("Failed to export path: %s"), error->message);
+      g_clear_error (&error);
+    }
+}
+CODE
+    );
+}
+
+sub vectors_export_to_string {
+    $blurb = 'Save a path as an SVG string.';
+
+    $help = <<'HELP';
+This procedure works like gimp_vectors_export_to_file() but creates a string
+rather than a file. The contents are a %NUL-terminated string that holds a 
+complete XML document.  If you pass 0 as the 'vectors' argument, then all
+paths in the image will be exported.
+HELP
+
+    &bill_pdb_misc('2007', '2.6');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'vectors', type => 'vectors', no_validate => 1,
+          desc => 'The vectors object to save, or 0 for all in the image' }
+    );
+
+    @outargs = (
+        { name => 'string', type => 'string',
+          desc => 'A string whose contents are a complete SVG document.' }
+    );
+
+    %invoke = (
+        headers => [ qw("vectors/gimpvectors-export.h") ],
+        code    => <<'CODE'
+{
+  GError *error = NULL;
+
+  if (vectors != NULL && ! GIMP_IS_VECTORS (vectors))
+    {
+      g_set_error (&error, 0, 0, _("argument is not a valid Vectors object"));
+      success = FALSE;
+    }
+  else
+    string = gimp_vectors_export_string (image, vectors);
+
+  success = (string != NULL);
+
+  if (! success && error)
+    {
+      g_message (_("Failed to save path as string: %s"), error->message);
+      g_clear_error (&error);
+    }
+}
+CODE
+    );
+}
+
 
 @headers = qw(<string.h> "core/gimp.h" "core/gimplist.h" "core/gimpimage.h"
               "core/gimpchannel-select.h" "vectors/gimpanchor.h"
@@ -1311,7 +1407,9 @@ CODE
             vectors_bezier_stroke_new_ellipse
             vectors_to_selection
             vectors_import_from_file
-            vectors_import_from_string);
+            vectors_import_from_string
+            vectors_export_to_file
+            vectors_export_to_string);
 
 %exports = (app => [@procs], lib => [@procs]);
 

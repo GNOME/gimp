@@ -1,3 +1,14 @@
+2007-11-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* tools/pdbgen/pdb/vectors.pdb:  add code for
+	vectors-export-to-file and vectors-export-to-string, as
+	requested in bug #497159.
+
+	* app/pdb/vectors_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpvectors_pdb.c
+	* libgimp/gimpvectors_pdb.h: rebuilt accordingly.
+
 2007-11-18  Sven Neumann  <sven@gimp.org>
 
 	* gimptool-2.0.in: removed.

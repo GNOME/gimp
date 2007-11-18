@@ -146,6 +146,11 @@ gboolean              gimp_vectors_import_from_string        (gint32            
                                                               gboolean                scale,
                                                               gint                   *num_vectors,
                                                               gint32                **vectors_ids);
+gboolean              gimp_vectors_export_to_file            (gint32                  image_ID,
+                                                              const gchar            *filename,
+                                                              gint32                  vectors_ID);
+gchar*                gimp_vectors_export_to_string          (gint32                  image_ID,
+                                                              gint32                  vectors_ID);
 
 
 G_END_DECLS

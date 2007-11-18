@@ -1363,3 +1363,81 @@ gimp_vectors_import_from_string (gint32        image_ID,
 
   return success;
 }
+
+/**
+ * gimp_vectors_export_to_file:
+ * @image_ID: The image.
+ * @filename: The name of the SVG file to create.
+ * @vectors_ID: The vectors object to be saved, or 0 for all in the image.
+ *
+ * save a path as an SVG file.
+ *
+ * This procedure creates an SVG file to save a Vectors object, that
+ * is, a path. The resulting file can be edited using a vector graphics
+ * application, or later reloaded into GIMP. If you pass 0 as the
+ * 'vectors' argument, then all paths in the image will be exported.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.6
+ */
+gboolean
+gimp_vectors_export_to_file (gint32       image_ID,
+                             const gchar *filename,
+                             gint32       vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-export-to-file",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, filename,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_vectors_export_to_string:
+ * @image_ID: The image.
+ * @vectors_ID: The vectors object to save, or 0 for all in the image.
+ *
+ * Save a path as an SVG string.
+ *
+ * This procedure works like gimp_vectors_export_to_file() but creates
+ * a string rather than a file. The contents are a %NUL-terminated
+ * string that holds a complete XML document. If you pass 0 as the
+ * 'vectors' argument, then all paths in the image will be exported.
+ *
+ * Returns: A string whose contents are a complete SVG document.
+ *
+ * Since: GIMP 2.6
+ */
+gchar *
+gimp_vectors_export_to_string (gint32 image_ID,
+                               gint32 vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *string = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-export-to-string",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    string = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return string;
+}
