@@ -1,5 +1,9 @@
 2007-11-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* libgimp/gimp.def: forgot in previous commit
+	
+2007-11-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* tools/pdbgen/pdb/vectors.pdb:  add code for
 	vectors-export-to-file and vectors-export-to-string, as
 	requested in bug #497159.

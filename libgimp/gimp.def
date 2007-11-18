@@ -623,6 +623,8 @@ EXPORTS
 	gimp_vectors_bezier_stroke_lineto
 	gimp_vectors_bezier_stroke_new_ellipse
 	gimp_vectors_bezier_stroke_new_moveto
+	gimp_vectors_export_to_file
+	gimp_vectors_export_to_string
 	gimp_vectors_get_image
 	gimp_vectors_get_linked
 	gimp_vectors_get_name
