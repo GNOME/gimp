@@ -1,5 +1,11 @@
 2007-11-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimp-log.[ch]: add SAVE_DIALOG log domain.
+
+	* app/dialogs/file-save-dialog: port debug output to GIMP_LOG().
+
+2007-11-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimp-log.[ch]: add DIALOG_FACTORY log domain.
 
 	* app/widgets/gimpdialogfactory.c: port debug output to GIMP_LOG().

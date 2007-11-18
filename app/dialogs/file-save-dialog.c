@@ -49,6 +49,7 @@
 
 #include "file-save-dialog.h"
 
+#include "gimp-log.h"
 #include "gimp-intl.h"
 
 
@@ -218,18 +219,13 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
   /*  first check if the user entered an extension at all  */
   if (! basename_proc)
     {
-#ifdef DEBUG_SPEW
-      g_print ("%s: basename has no valid extension\n",
-               G_STRFUNC);
-#endif
+      GIMP_LOG (SAVE_DIALOG, "basename has no valid extension");
+
       if (! strchr (basename, '.'))
         {
           const gchar *ext = NULL;
 
-#ifdef DEBUG_SPEW
-          g_print ("%s: basename has no '.', trying to add extension\n",
-                   G_STRFUNC);
-#endif
+          GIMP_LOG (SAVE_DIALOG, "basename has no '.', trying to add extension");
 
           if (! save_proc)
             {
@@ -246,10 +242,7 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
               gchar *ext_basename = g_strconcat (basename, ".", ext, NULL);
               gchar *utf8;
 
-#ifdef DEBUG_SPEW
-              g_print ("%s: appending .%s to basename\n",
-                       G_STRFUNC, ext);
-#endif
+              GIMP_LOG (SAVE_DIALOG, "appending .%s to basename", ext);
 
               g_free (uri);
               g_free (basename);
@@ -267,10 +260,9 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
                                                  utf8);
               g_free (utf8);
 
-#ifdef DEBUG_SPEW
-              g_print ("%s: set basename to %s, rerunning response and "
-                       "bailing out\n", G_STRFUNC, basename);
-#endif
+              GIMP_LOG (SAVE_DIALOG,
+                        "set basename to %s, rerunning response and bailing out",
+                        basename);
 
               /*  call the response callback again, so the
                *  overwrite-confirm logic can check the changed uri
@@ -284,10 +276,8 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
             }
           else
             {
-#ifdef DEBUG_SPEW
-              g_print ("%s: save_proc has no extensions, continuing without\n",
-                       G_STRFUNC);
-#endif
+              GIMP_LOG (SAVE_DIALOG,
+                        "save_proc has no extensions, continuing without");
 
               /*  there may be file formats with no extension at all, use
                *  the selected proc in this case.
@@ -300,10 +290,8 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
 
           if (! basename_proc)
             {
-#ifdef DEBUG_SPEW
-              g_print ("%s: unable to figure save_proc, bailing out\n",
-                       G_STRFUNC);
-#endif
+              GIMP_LOG (SAVE_DIALOG,
+                        "unable to figure save_proc, bailing out");
 
               gimp_message (gimp, G_OBJECT (save_dialog), GIMP_MESSAGE_WARNING,
                             _("The given filename does not have any known "
@@ -317,11 +305,9 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
         }
       else if (save_proc && ! save_proc->extensions_list)
         {
-#ifdef DEBUG_SPEW
-          g_print ("%s: basename has '.', but save_proc has no extensions, "
-                   "accepting random extension\n",
-                   G_STRFUNC);
-#endif
+          GIMP_LOG (SAVE_DIALOG,
+                    "basename has '.', but save_proc has no extensions, "
+                    "accepting random extension");
 
           /*  accept any random extension if the file format has
            *  no extensions at all
@@ -336,17 +322,12 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
   /*  then check if the selected format matches the entered extension  */
   if (! save_proc)
     {
-#ifdef DEBUG_SPEW
-      g_print ("%s: no save_proc was selected from the list\n",
-               G_STRFUNC);
-#endif
+      GIMP_LOG (SAVE_DIALOG, "no save_proc was selected from the list");
 
       if (! basename_proc)
         {
-#ifdef DEBUG_SPEW
-          g_print ("%s: basename had no useful extension, bailing out\n",
-                   G_STRFUNC);
-#endif
+          GIMP_LOG (SAVE_DIALOG,
+                    "basename has no useful extension, bailing out");
 
           gimp_message (gimp, G_OBJECT (save_dialog), GIMP_MESSAGE_WARNING,
                         _("The given filename does not have any known "
@@ -358,35 +339,26 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
           return FALSE;
         }
 
-#ifdef DEBUG_SPEW
-      g_print ("%s: use URI's proc '%s' so indirect saving works\n",
-               G_STRFUNC, uri_proc->menu_label ? uri_proc->menu_label : "?");
-#endif
+      GIMP_LOG (SAVE_DIALOG, "use URI's proc '%s' so indirect saving works",
+                uri_proc->menu_label ? uri_proc->menu_label : "<unnamed>");
 
       /*  use the URI's proc if no save proc was selected  */
       save_proc = uri_proc;
     }
   else
     {
-#ifdef DEBUG_SPEW
-      g_print ("%s: save_proc '%s' was selected from the list\n",
-               G_STRFUNC, save_proc->menu_label);
-#endif
+      GIMP_LOG (SAVE_DIALOG, "save_proc '%s' was selected from the list",
+                save_proc->menu_label ? save_proc->menu_label : "<unnamed>");
 
       if (save_proc != basename_proc)
         {
-#ifdef DEBUG_SPEW
-          g_print ("%s: however the basename's proc is '%s'\n",
-                   G_STRFUNC,
-                   basename_proc ? basename_proc->menu_label : "NULL");
-#endif
+          GIMP_LOG (SAVE_DIALOG, "however the basename's proc is '%s'",
+                    basename_proc ? basename_proc->menu_label : "NULL");
 
           if (uri_proc != basename_proc)
             {
-#ifdef DEBUG_SPEW
-              g_print ("%s: that's impossible for remote URIs, bailing out\n",
-                       G_STRFUNC);
-#endif
+              GIMP_LOG (SAVE_DIALOG,
+                        "that's impossible for remote URIs, bailing out");
 
               /*  remote URI  */
 
@@ -402,10 +374,8 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
             }
           else
             {
-#ifdef DEBUG_SPEW
-              g_print ("%s: ask the user if she really wants that filename\n",
-                       G_STRFUNC);
-#endif
+              GIMP_LOG (SAVE_DIALOG,
+                        "ask the user if she really wants that filename");
 
               /*  local URI  */
 
@@ -419,10 +389,9 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
         }
       else if (save_proc != uri_proc)
         {
-#ifdef DEBUG_SPEW
-          g_print ("%s: use URI's proc '%s' so indirect saving works\n",
-                   G_STRFUNC, uri_proc->menu_label);
-#endif
+          GIMP_LOG (SAVE_DIALOG,
+                    "use URI's proc '%s' so indirect saving works",
+                    uri_proc->menu_label ? uri_proc->menu_label : "<unnamed>");
 
           /*  need to use the URI's proc for saving because e.g.
            *  the GIF plug-in can't save a GIF to sftp://

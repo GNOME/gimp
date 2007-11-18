@@ -38,7 +38,8 @@ gimp_log_init (void)
         { "tools",          GIMP_LOG_TOOLS          },
         { "dnd",            GIMP_LOG_DND            },
         { "help",           GIMP_LOG_HELP           },
-        { "dialog-factory", GIMP_LOG_DIALOG_FACTORY }
+        { "dialog-factory", GIMP_LOG_DIALOG_FACTORY },
+        { "save-dialog",    GIMP_LOG_SAVE_DIALOG    }
       };
 
       gimp_log_flags = g_parse_debug_string (env_log_val,
