@@ -1,7 +1,13 @@
+2007-11-18  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangleselecttool.c: Cosmitics. More strictly
+	align static function prototypes and consistently use the name
+	rect_sel_tool for pointers to GimpRectSelectTool.
+
 2007-11-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* libgimp/gimp.def: forgot in previous commit
-	
+
 2007-11-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* tools/pdbgen/pdb/vectors.pdb:  add code for
