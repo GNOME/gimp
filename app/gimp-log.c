@@ -35,9 +35,10 @@ gimp_log_init (void)
     {
       const GDebugKey log_keys[] =
       {
-        { "tools", GIMP_LOG_TOOLS },
-        { "dnd",   GIMP_LOG_DND   },
-        { "help",  GIMP_LOG_HELP  }
+        { "tools",          GIMP_LOG_TOOLS          },
+        { "dnd",            GIMP_LOG_DND            },
+        { "help",           GIMP_LOG_HELP           },
+        { "dialog-factory", GIMP_LOG_DIALOG_FACTORY }
       };
 
       gimp_log_flags = g_parse_debug_string (env_log_val,
