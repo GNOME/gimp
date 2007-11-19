@@ -39,6 +39,7 @@ struct _GimpCurveView
 
   GimpCurve         *curve;
 
+  gboolean           draw_base_line;
   gint               grid_rows;
   gint               grid_columns;
 

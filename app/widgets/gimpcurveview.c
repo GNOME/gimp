@@ -36,6 +36,7 @@
 enum
 {
   PROP_0,
+  PROP_BASE_LINE,
   PROP_GRID_ROWS,
   PROP_GRID_COLUMNS
 };
@@ -93,6 +94,12 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
   widget_class->leave_notify_event   = gimp_curve_view_leave_notify;
   widget_class->key_press_event      = gimp_curve_view_key_press;
 
+  g_object_class_install_property (object_class, PROP_BASE_LINE,
+                                   g_param_spec_boolean ("base-line",
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_GRID_ROWS,
                                    g_param_spec_int ("grid-rows", NULL, NULL,
                                                      0, 100, 8,
@@ -121,6 +128,7 @@ gimp_curve_view_init (GimpCurveView *view)
   gtk_widget_add_events (GTK_WIDGET (view),
                          GDK_BUTTON_PRESS_MASK   |
                          GDK_BUTTON_RELEASE_MASK |
+                         GDK_BUTTON1_MOTION_MASK |
                          GDK_POINTER_MOTION_MASK |
                          GDK_KEY_PRESS_MASK      |
                          GDK_LEAVE_NOTIFY_MASK);
@@ -172,6 +180,9 @@ gimp_curve_view_set_property (GObject      *object,
     case PROP_GRID_COLUMNS:
       view->grid_columns = g_value_get_int (value);
       break;
+    case PROP_BASE_LINE:
+      view->draw_base_line = g_value_get_boolean (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -193,6 +204,9 @@ gimp_curve_view_get_property (GObject    *object,
       break;
     case PROP_GRID_COLUMNS:
       g_value_set_int (value, view->grid_columns);
+      break;
+    case PROP_BASE_LINE:
+      g_value_set_boolean (value, view->draw_base_line);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -254,6 +268,12 @@ gimp_curve_view_draw_grid (GimpCurveView *view,
 
       cairo_move_to (cr, border + x, border);
       cairo_line_to (cr, border + x, border + height - 1);
+    }
+
+  if (view->draw_base_line)
+    {
+      cairo_move_to (cr, border, border + height - 1);
+      cairo_line_to (cr, border + width - 1, border);
     }
 
   cairo_set_line_width (cr, 0.6);
@@ -768,14 +788,7 @@ gimp_curve_view_key_press (GtkWidget   *widget,
 GtkWidget *
 gimp_curve_view_new (void)
 {
-  GtkWidget *view = g_object_new (GIMP_TYPE_CURVE_VIEW, NULL);
-
-  gtk_widget_add_events (view,
-                         GDK_BUTTON_PRESS_MASK   |
-                         GDK_BUTTON_RELEASE_MASK |
-                         GDK_BUTTON1_MOTION_MASK);
-
-  return view;
+  return g_object_new (GIMP_TYPE_CURVE_VIEW, NULL);
 }
 
 static void
