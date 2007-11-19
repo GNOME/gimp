@@ -1,3 +1,8 @@
+2007-11-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcolorbar.c
+	* app/widgets/gimphistogramview.c: cosmetic.
+
 2007-11-19  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcurveview.[ch]: draw a base-line with the grid.

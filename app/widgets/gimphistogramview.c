@@ -108,8 +108,8 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
                   G_TYPE_INT,
                   G_TYPE_INT);
 
-  object_class->get_property = gimp_histogram_view_get_property;
-  object_class->set_property = gimp_histogram_view_set_property;
+  object_class->get_property         = gimp_histogram_view_get_property;
+  object_class->set_property         = gimp_histogram_view_set_property;
 
   widget_class->size_request         = gimp_histogram_view_size_request;
   widget_class->expose_event         = gimp_histogram_view_expose;
@@ -117,7 +117,7 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
   widget_class->button_release_event = gimp_histogram_view_button_release;
   widget_class->motion_notify_event  = gimp_histogram_view_motion_notify;
 
-  klass->range_changed = NULL;
+  klass->range_changed               = NULL;
 
   g_object_class_install_property (object_class, PROP_CHANNEL,
                                    g_param_spec_enum ("histogram-channel",
@@ -184,6 +184,7 @@ gimp_histogram_view_set_property (GObject      *object,
       view->subdivisions = g_value_get_int (value);
       gtk_widget_queue_draw (GTK_WIDGET (view));
       break;
+
    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -212,6 +213,7 @@ gimp_histogram_view_get_property (GObject      *object,
     case PROP_SUBDIVISIONS:
       g_value_set_int (value, view->subdivisions);
       break;
+
    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

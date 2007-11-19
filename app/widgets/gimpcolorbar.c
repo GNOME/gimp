@@ -46,6 +46,10 @@ static void      gimp_color_bar_set_property (GObject        *object,
                                               guint           property_id,
                                               const GValue   *value,
                                               GParamSpec     *pspec);
+static void      gimp_color_bar_get_property (GObject        *object,
+                                              guint           property_id,
+                                              GValue         *value,
+                                              GParamSpec     *pspec);
 
 static gboolean  gimp_color_bar_expose       (GtkWidget      *widget,
                                               GdkEventExpose *event);
@@ -59,36 +63,36 @@ G_DEFINE_TYPE (GimpColorBar, gimp_color_bar, GTK_TYPE_MISC)
 static void
 gimp_color_bar_class_init (GimpColorBarClass *klass)
 {
-  GObjectClass   *object_class;
-  GtkWidgetClass *widget_class;
-  GimpRGB         white = { 1.0, 1.0, 1.0, 1.0 };
-
-  object_class = G_OBJECT_CLASS (klass);
-  widget_class = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GimpRGB         white        = { 1.0, 1.0, 1.0, 1.0 };
 
   object_class->set_property = gimp_color_bar_set_property;
+  object_class->get_property = gimp_color_bar_get_property;
+
+  widget_class->expose_event = gimp_color_bar_expose;
 
   g_object_class_install_property (object_class, PROP_ORIENTATION,
                                    g_param_spec_enum ("orientation",
                                                       NULL, NULL,
                                                       GTK_TYPE_ORIENTATION,
                                                       GTK_ORIENTATION_HORIZONTAL,
-                                                      GIMP_PARAM_WRITABLE |
+                                                      GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_COLOR,
                                    gimp_param_spec_rgb ("color",
                                                         NULL, NULL,
                                                         FALSE, &white,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_ORIENTATION,
                                    g_param_spec_enum ("histogram-channel",
                                                       NULL, NULL,
                                                       GIMP_TYPE_HISTOGRAM_CHANNEL,
                                                       GIMP_HISTOGRAM_VALUE,
                                                       GIMP_PARAM_WRITABLE));
-
-  widget_class->expose_event = gimp_color_bar_expose;
 }
 
 static void
@@ -96,7 +100,7 @@ gimp_color_bar_init (GimpColorBar *bar)
 {
   GTK_WIDGET_SET_FLAGS (bar, GTK_NO_WINDOW);
 
-  bar->orientation  = GTK_ORIENTATION_HORIZONTAL;
+  bar->orientation = GTK_ORIENTATION_HORIZONTAL;
 }
 
 
@@ -119,6 +123,27 @@ gimp_color_bar_set_property (GObject      *object,
     case PROP_CHANNEL:
       gimp_color_bar_set_channel (bar, g_value_get_enum (value));
       break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_color_bar_get_property (GObject    *object,
+                             guint       property_id,
+                             GValue     *value,
+                             GParamSpec *pspec)
+{
+  GimpColorBar *bar = GIMP_COLOR_BAR (object);
+
+  switch (property_id)
+    {
+    case PROP_ORIENTATION:
+      g_value_set_enum (value, bar->orientation);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -188,6 +213,9 @@ gimp_color_bar_expose (GtkWidget      *widget,
 
   return TRUE;
 }
+
+
+/*  public functions  */
 
 /**
  * gimp_color_bar_new:
