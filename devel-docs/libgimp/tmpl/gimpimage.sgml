@@ -670,6 +670,16 @@ and operations involving multiple layers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_get_vectors_by_tattoo ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@tattoo: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_image_get_thumbnail_data ##### -->
 <para>
 

@@ -566,6 +566,7 @@ gimp_image_set_cmap
 gimp_image_get_colormap
 gimp_image_set_colormap
 gimp_image_get_vectors
+gimp_image_get_vectors_by_tattoo
 gimp_image_get_thumbnail_data
 gimp_image_parasite_find
 gimp_image_parasite_list
@@ -892,8 +893,6 @@ gimp_image_undo_thaw
 <SECTION>
 <FILE>gimpvectors</FILE>
 gimp_vectors_new
-gimp_vectors_import_from_file
-gimp_vectors_import_from_string
 gimp_vectors_is_valid
 gimp_vectors_get_strokes
 gimp_vectors_get_image
@@ -907,6 +906,10 @@ gimp_vectors_set_tattoo
 gimp_vectors_set_visible
 gimp_vectors_remove_stroke
 gimp_vectors_to_selection
+gimp_vectors_export_to_file
+gimp_vectors_export_to_string
+gimp_vectors_import_from_file
+gimp_vectors_import_from_string
 gimp_vectors_parasite_attach
 gimp_vectors_parasite_detach
 gimp_vectors_parasite_find
