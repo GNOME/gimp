@@ -1,3 +1,10 @@
+2007-11-20  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	* app/widgets/gimpcontainercombobox.c: set the combo insensitive
+	when it has no items. Fixes bug #498511.
+
 2007-11-20  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
