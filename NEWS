@@ -18,7 +18,16 @@ Changes in GIMP 2.4.2
 - fixed error handling in the TIFF plug-in
 - fixed a problem with Sample points
 - fixed a crash when merging layers in indexed image (bug #495990)
-- translation updates
+- update the histogram when painting (bug #494049)
+- fixed another problem with merge operations on indexed images (bug #496437)
+- fixed crash in TIFF plug-in when saving indexed images (bug #497103)
+- changed defaults so that a system monitor profile is only used when the
+  user explicitely enabled this feature (bug #496890)
+- fixed endless loop when running equalize on transparent areas (bug #497291)
+- fixed heap corruption in GimpColorScale widget that caused a crash in the
+  Compose plug-in (bug #399484)
+- fixed use of background color in Particle Trace script (bug #498282)
+- translation updates (ca, et, it, lt, pt, pt_BR, sr, sv)
 
 
 Changes in GIMP 2.4.1
