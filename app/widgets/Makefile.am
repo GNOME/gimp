@@ -162,6 +162,8 @@ libappwidgets_a_sources = \
 	gimpgradientselect.h		\
 	gimpgrideditor.c		\
 	gimpgrideditor.h		\
+	gimphandlebar.c			\
+	gimphandlebar.h			\
 	gimphelp.c			\
 	gimphelp.h			\
 	gimphelp-ids.h			\

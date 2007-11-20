@@ -1,5 +1,15 @@
 2007-11-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/widgets-types.h
+	* app/widgets/Makefile.am
+	* app/widgets/gimphandlebar.[ch]: new widget implementing the slider
+	bar known from histogram and levels.
+
+	* app/widgets/gimphistogrambox.[ch]: use the new widget. General
+	cleanup and UI streamlining.
+
+2007-11-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcolorbar.c
 	* app/widgets/gimphistogramview.c: cosmetic.
 
