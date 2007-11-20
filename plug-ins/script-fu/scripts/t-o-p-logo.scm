@@ -65,13 +65,11 @@
     (gimp-context-set-brush "Circle Fuzzy (11)")
     (gimp-selection-feather img b-size)
     (gimp-edit-fill shadow-layer BACKGROUND-FILL)
+
     (gimp-selection-none img)
-    (gimp-context-set-background base-color)
+    (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
-    (gimp-selection-load selection)
-    (gimp-context-set-brush "Circle Fuzzy (07)")
-    (gimp-context-set-foreground '(255 255 255))
-    (gimp-selection-none img)
+
     (gimp-drawable-set-visible logo-layer 0)
     (gimp-image-set-active-layer img sparkle-layer)
 
