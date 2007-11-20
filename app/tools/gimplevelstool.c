@@ -42,6 +42,7 @@
 #include "core/gimpimagemap.h"
 
 #include "widgets/gimpcolorbar.h"
+#include "widgets/gimphandlebar.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogramview.h"
 
@@ -62,13 +63,12 @@
 #define INPUT_LEVELS     (1 << 5)
 #define OUTPUT_LEVELS    (1 << 6)
 #define INPUT_SLIDERS    (1 << 7)
-#define OUTPUT_SLIDERS   (1 << 8)
 #define ALL_CHANNELS     (1 << 9)
 #define ALL              0xFFF
 
 #define HISTOGRAM_WIDTH   256
 #define GRADIENT_HEIGHT   12
-#define CONTROL_HEIGHT    8
+#define CONTROL_HEIGHT    10
 
 #define LEVELS_EVENT_MASK  (GDK_BUTTON_PRESS_MASK   | \
                             GDK_BUTTON_RELEASE_MASK | \
@@ -129,13 +129,6 @@ static gint     levels_input_area_event              (GtkWidget      *widget,
                                                       GdkEvent       *event,
                                                       GimpLevelsTool *tool);
 static gboolean levels_input_area_expose             (GtkWidget      *widget,
-                                                      GdkEventExpose *event,
-                                                      GimpLevelsTool *tool);
-
-static gint     levels_output_area_event             (GtkWidget      *widget,
-                                                      GdkEvent       *event,
-                                                      GimpLevelsTool *tool);
-static gboolean levels_output_area_expose            (GtkWidget      *widget,
                                                       GdkEventExpose *event,
                                                       GimpLevelsTool *tool);
 
@@ -526,31 +519,20 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  tool->output_area = gtk_event_box_new ();
-  gtk_widget_set_size_request (tool->output_area, -1,
-                               GRADIENT_HEIGHT + CONTROL_HEIGHT);
-  gtk_widget_add_events (bar, LEVELS_EVENT_MASK);
-  gtk_container_add (GTK_CONTAINER (frame), tool->output_area);
-  gtk_widget_show (tool->output_area);
-
-  g_signal_connect (tool->output_area, "event",
-                    G_CALLBACK (levels_output_area_event),
-                    tool);
-  g_signal_connect_after (tool->output_area, "expose-event",
-                          G_CALLBACK (levels_output_area_expose),
-                          tool);
-
   vbox3 = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (tool->output_area), vbox3);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox3), border);
+  gtk_container_add (GTK_CONTAINER (frame), vbox3);
   gtk_widget_show (vbox3);
 
-  tool->output_bar = g_object_new (GIMP_TYPE_COLOR_BAR,
-                                   "xpad", border,
-                                   "ypad", 0,
-                                   NULL);
+  tool->output_bar = g_object_new (GIMP_TYPE_COLOR_BAR, NULL);
   gtk_widget_set_size_request (tool->output_bar, -1, GRADIENT_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox3), tool->output_bar, FALSE, FALSE, 0);
   gtk_widget_show (tool->output_bar);
+
+  tool->output_sliders = g_object_new (GIMP_TYPE_HANDLE_BAR, NULL);
+  gtk_widget_set_size_request (tool->output_sliders, -1, CONTROL_HEIGHT);
+  gtk_box_pack_start (GTK_BOX (vbox3), tool->output_sliders, FALSE, FALSE, 0);
+  gtk_widget_show (tool->output_sliders);
 
   /*  Horizontal box for levels spin widgets  */
   hbox = gtk_hbox_new (FALSE, 6);
@@ -567,6 +549,9 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (levels_low_output_adjustment_update),
                     tool);
 
+  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->output_sliders), 0,
+                                  tool->low_output);
+
   /*  high output spin  */
   spinbutton = gimp_spin_button_new (&data, 255, 0, 255, 1, 10, 10, 0.5, 0);
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
@@ -577,7 +562,11 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (levels_high_output_adjustment_update),
                     tool);
 
+  gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->output_sliders), 2,
+                                  tool->high_output);
 
+
+  /*  all channels frame  */
   frame = gimp_frame_new (_("All Channels"));
   gtk_box_pack_end (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -852,11 +841,6 @@ levels_update (GimpLevelsTool *tool,
     {
       gtk_widget_queue_draw (tool->input_area);
     }
-
-  if (update & OUTPUT_SLIDERS)
-    {
-      gtk_widget_queue_draw (tool->output_area);
-    }
 }
 
 static void
@@ -918,7 +902,7 @@ levels_menu_sensitivity (gint      value,
 
 static void
 levels_stretch_callback (GtkWidget      *widget,
-                      GimpLevelsTool *tool)
+                         GimpLevelsTool *tool)
 {
   levels_stretch (tool->levels, tool->hist, tool->color);
   levels_update (tool, ALL);
@@ -988,7 +972,7 @@ levels_low_output_adjustment_update (GtkAdjustment  *adjustment,
   if (tool->levels->low_output[tool->channel] != value)
     {
       tool->levels->low_output[tool->channel] = value;
-      levels_update (tool, OUTPUT_LEVELS | OUTPUT_SLIDERS);
+      levels_update (tool, OUTPUT_LEVELS);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
     }
@@ -1003,7 +987,7 @@ levels_high_output_adjustment_update (GtkAdjustment  *adjustment,
   if (tool->levels->high_output[tool->channel] != value)
     {
       tool->levels->high_output[tool->channel] = value;
-      levels_update (tool, OUTPUT_LEVELS | OUTPUT_SLIDERS);
+      levels_update (tool, OUTPUT_LEVELS);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
     }
@@ -1181,126 +1165,6 @@ levels_input_area_expose (GtkWidget      *widget,
                       widget->style->black_gc,
                       widget->style->white_gc,
                       tool->slider_pos[2]);
-
-  return FALSE;
-}
-
-static gboolean
-levels_output_area_event (GtkWidget      *widget,
-                          GdkEvent       *event,
-                          GimpLevelsTool *tool)
-{
-  GdkEventButton *bevent;
-  gint            x, distance;
-  gint            i;
-  gboolean        update = FALSE;
-
-  switch (event->type)
-    {
-    case GDK_BUTTON_PRESS:
-      bevent = (GdkEventButton *) event;
-
-      distance = G_MAXINT;
-      for (i = 3; i < 5; i++)
-        if (fabs (bevent->x - tool->slider_pos[i]) < distance)
-          {
-            tool->active_slider = i;
-            distance = fabs (bevent->x - tool->slider_pos[i]);
-          }
-
-      x = bevent->x;
-      update = TRUE;
-      break;
-
-    case GDK_BUTTON_RELEASE:
-      switch (tool->active_slider)
-        {
-        case 3:  /*  low output  */
-          levels_update (tool, LOW_OUTPUT);
-          break;
-        case 4:  /*  high output  */
-          levels_update (tool, HIGH_OUTPUT);
-          break;
-        }
-
-      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
-      break;
-
-    case GDK_MOTION_NOTIFY:
-      gdk_window_get_pointer (widget->window, &x, NULL, NULL);
-      update = TRUE;
-      break;
-
-    default:
-      break;
-    }
-
-  if (update)
-    {
-      gint  width;
-      gint  border;
-
-      g_object_get (tool->hist_view, "border-width", &border, NULL);
-
-      width = widget->allocation.width - 2 * border;
-
-      if (width < 1)
-        return FALSE;
-
-      switch (tool->active_slider)
-        {
-        case 3:  /*  low output  */
-          tool->levels->low_output[tool->channel] =
-            ((gdouble) (x - border) / (gdouble) width) * 255.0;
-
-          tool->levels->low_output[tool->channel] =
-            CLAMP (tool->levels->low_output[tool->channel], 0, 255);
-          break;
-
-        case 4:  /*  high output  */
-          tool->levels->high_output[tool->channel] =
-            ((gdouble) (x - border) / (gdouble) width) * 255.0;
-
-          tool->levels->high_output[tool->channel] =
-            CLAMP (tool->levels->high_output[tool->channel], 0, 255);
-          break;
-        }
-
-      levels_update (tool, OUTPUT_SLIDERS);
-    }
-
-  return FALSE;
-}
-
-static gboolean
-levels_output_area_expose (GtkWidget      *widget,
-                           GdkEventExpose *event,
-                           GimpLevelsTool *tool)
-{
-  Levels  *levels = tool->levels;
-  gint     width  = widget->allocation.width;
-  gint     border;
-
-  g_object_get (tool->hist_view, "border-width", &border, NULL);
-
-  width -= 2 * border;
-
-  tool->slider_pos[3] = ROUND ((gdouble) width *
-                               levels->low_output[tool->channel] /
-                               256.0) + border;
-
-  tool->slider_pos[4] = ROUND ((gdouble) width *
-                               levels->high_output[tool->channel] /
-                               256.0) + border;
-
-  levels_draw_slider (widget,
-                      widget->style->black_gc,
-                      widget->style->black_gc,
-                      tool->slider_pos[3]);
-  levels_draw_slider (widget,
-                      widget->style->black_gc,
-                      widget->style->white_gc,
-                      tool->slider_pos[4]);
 
   return FALSE;
 }
