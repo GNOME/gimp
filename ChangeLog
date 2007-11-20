@@ -1,3 +1,8 @@
+2007-11-20  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcolorbar.c (gimp_color_bar_expose): added const
+	qualifiers.
+
 2007-11-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/widgets-types.h

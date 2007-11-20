@@ -177,7 +177,7 @@ gimp_color_bar_expose (GtkWidget      *widget,
     case GTK_ORIENTATION_HORIZONTAL:
       for (i = 0, b = buf; i < width; i++, b += 3)
         {
-          guchar *src = bar->buf + 3 * ((i * 256) / width);
+          const guchar *src = bar->buf + 3 * ((i * 256) / width);
 
           b[0] = src[0];
           b[1] = src[1];
@@ -192,8 +192,8 @@ gimp_color_bar_expose (GtkWidget      *widget,
     case GTK_ORIENTATION_VERTICAL:
       for (i = 0, b = buf; i < height; i++, b += 3 * width)
         {
-          guchar *src  = bar->buf + 3 * (255 - ((i * 256) / height));
-          guchar *dest = b;
+          const guchar *src  = bar->buf + 3 * (255 - ((i * 256) / height));
+          guchar       *dest = b;
 
           for (j = 0; j < width; j++, dest += 3)
             {
