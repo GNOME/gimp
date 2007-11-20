@@ -1,20 +1,24 @@
+# Translation of oc.po to Occitan
+# translation of oc.po to Occitan
 # Occitan (post 1500) translation for gimp script-fu.
 # Copyright (c) 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
+#
 # Yannig MARCHEGAY <yannig@marchegay.org>, 2007.
-# 
+# Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 2.3.17\n"
+"Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-29 15:06+0200\n"
-"PO-Revision-Date: 2007-04-26 16:03+0200\n"
-"Last-Translator: Yannig MARCHEGAY <yannig@marchegay.org>\n"
-"Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
+"PO-Revision-Date: 2007-11-20 14:51+0100\n"
+"Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
+"Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:143
 #: ../plug-ins/script-fu/script-fu-console.c:212
@@ -127,14 +131,12 @@ msgid "_Start Server"
 msgstr ""
 
 #: ../plug-ins/script-fu/script-fu-server.c:744
-#, fuzzy
 msgid "Server port:"
-msgstr "Pòrt del servidor :"
+msgstr "Pòrt del servidor&nbsp;:"
 
 #: ../plug-ins/script-fu/script-fu-server.c:750
-#, fuzzy
 msgid "Server logfile:"
-msgstr "Pòrt del servidor :"
+msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:110
 msgid "Interactive console for Script-Fu development"
@@ -166,7 +168,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Buttons"
-msgstr ""
+msgstr "_Botons"
 
 #: ../plug-ins/script-fu/script-fu.c:308
 msgid "_Logos"
@@ -177,14 +179,12 @@ msgid "_Misc"
 msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:312
-#, fuzzy
 msgid "_Patterns"
-msgstr "Motiu"
+msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:314
-#, fuzzy
 msgid "_Test"
-msgstr "_Tèxt"
+msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:316
 msgid "_Utils"
@@ -199,9 +199,8 @@ msgid "_Alien Glow"
 msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:322
-#, fuzzy
 msgid "_Beveled Pattern"
-msgstr "Motiu"
+msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:324
 msgid "_Classic.Gimp.Org"
@@ -221,7 +220,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:333
 msgid "_Artistic"
-msgstr ""
+msgstr "_Artistic"
 
 #: ../plug-ins/script-fu/script-fu.c:335
 msgid "_Blur"
@@ -233,7 +232,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:339
 msgid "_Effects"
-msgstr ""
+msgstr "_Efieches"
 
 #: ../plug-ins/script-fu/script-fu.c:341
 msgid "En_hance"
@@ -370,8 +369,7 @@ msgid "Outline blur radius"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
-msgid ""
-"Outline the selected region (or alpha) with a pattern and add a drop shadow"
+msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
@@ -657,7 +655,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "B_utton..."
-msgstr ""
+msgstr "B_oton..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "Create a button graphic with an eerie glow for web pages"
@@ -1176,8 +1174,7 @@ msgid "Circuit seed"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
-msgid ""
-"Fill the selected region (or alpha) with traces like those on a circuit board"
+msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
@@ -1450,8 +1447,7 @@ msgid "Clear unselected maskarea"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:4
-msgid ""
-"Create a layermask that fades the edges of the selected region (or alpha)"
+msgid "Create a layermask that fades the edges of the selected region (or alpha)"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:6
@@ -1519,8 +1515,7 @@ msgid "Black on white"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
-msgid ""
-"Create an image filled with previews of fonts matching a fontname filter"
+msgid "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
@@ -1852,7 +1847,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
 msgid "Position"
-msgstr ""
+msgstr "Posicion"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "Remove all horizontal and vertical guides"
@@ -1956,8 +1951,7 @@ msgid "_Lava..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
-msgid ""
-"Fill a layer with rays emanating outward from its center using the FG color"
+msgid "Fill a layer with rays emanating outward from its center using the FG color"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
@@ -2078,7 +2072,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:5
 msgid "Sepia"
-msgstr ""
+msgstr "Sepia"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:7
 msgid "_Old Photo..."
@@ -2097,18 +2091,16 @@ msgid "File name"
 msgstr "Nom de fichièr"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:3
-#, fuzzy
 msgid "New _Brush..."
-msgstr "_Examinar..."
+msgstr ""
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
 msgid "Paste the clipboard contents into a new brush"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
-#, fuzzy
 msgid "New _Pattern..."
-msgstr "Motiu"
+msgstr ""
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
 msgid "Paste the clipboard contents into a new pattern"
@@ -2213,7 +2205,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:1
 msgid "Behavior"
-msgstr ""
+msgstr "Compòrtament"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Create an image filled with an Earth-like map pattern"
@@ -2244,8 +2236,7 @@ msgid "Black"
 msgstr "Negre"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
-msgid ""
-"Create a multi-layer image by adding a ripple effect to the current image"
+msgid "Create a multi-layer image by adding a ripple effect to the current image"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
@@ -2286,8 +2277,7 @@ msgid "Edge radius"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
-msgid ""
-"Round the corners of an image and optionally add a drop-shadow and background"
+msgid "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
@@ -2414,8 +2404,7 @@ msgid "_Spinning Globe..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-msgid ""
-"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
@@ -2525,7 +2514,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:30
 msgid "Tool"
-msgstr ""
+msgstr "Esplech"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:31
 msgid "Triangle"
@@ -2644,8 +2633,7 @@ msgid "Antialias"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
-msgid ""
-"Create a logo by rendering the specified text along the perimeter of a circle"
+msgid "Create a logo by rendering the specified text along the perimeter of a circle"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
@@ -2657,8 +2645,7 @@ msgid "Text C_ircle..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
-msgid ""
-"Create a textured logo with highlights, shadows, and a mosaic background"
+msgid "Create a textured logo with highlights, shadows, and a mosaic background"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
@@ -2741,7 +2728,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground color"
-msgstr ""
+msgstr "Color de _fons"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:7
 msgid "T_ruchet..."
@@ -2911,29 +2898,3 @@ msgstr ""
 msgid "_Xach-Effect..."
 msgstr ""
 
-#~ msgid "(none)"
-#~ msgstr "(pas cap)"
-
-#~ msgid "Author:"
-#~ msgstr "Autor :"
-
-#~ msgid "Copyright:"
-#~ msgstr "Copyright :"
-
-#~ msgid "Date:"
-#~ msgstr "Data :"
-
-#~ msgid "_Search:"
-#~ msgstr "_Recèrcar :"
-
-#~ msgid "Parameters"
-#~ msgstr "Paramètres"
-
-#~ msgid "Additional Information"
-#~ msgstr "Informacions suplementàrias"
-
-#~ msgid "None"
-#~ msgstr "Pas cap"
-
-#~ msgid "Filename"
-#~ msgstr "Nom del fichièr"

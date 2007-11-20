@@ -1,21 +1,24 @@
+# translation of oc.po to Occitan
 # Occitan translation for The GIMP.
 # Copyright (C) 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
-# Yannig MARCHEGAY (Kokoyaya)  <yannig@marchegay.org>, 2007.
 #
+# Yannig MARCHEGAY (Kokoyaya)  <yannig@marchegay.org>, 2007.
+# Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.3.17\n"
+"Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-29 13:21+0200\n"
-"PO-Revision-Date: 2007-08-19 19:13+0200\n"
-"Last-Translator: Yannig MARCHEGAY (Kokoyaya) <yannig@marchegay.org>\n"
-"Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
+"PO-Revision-Date: 2007-11-20 14:30+0100\n"
+"Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
+"Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);"
+"Plural-Forms: nplurals=2; plural=(n > 1);X-Generator: KBabel 1.11.4\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../app/about.h:24
 msgid "GIMP"
@@ -242,7 +245,7 @@ msgstr ""
 
 #: ../app/actions/actions.c:120
 msgid "Debug"
-msgstr ""
+msgstr "Débogage"
 
 #: ../app/actions/actions.c:123
 msgid "Dialogs"
@@ -812,8 +815,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:254
 #, c-format
-msgid ""
-"Are you sure you want to remove '%s' from the list and delete it on disk?"
+msgid "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:38
@@ -1074,7 +1076,7 @@ msgstr ""
 
 #: ../app/actions/dialogs-actions.c:236
 msgid "_Tip of the Day"
-msgstr ""
+msgstr "_Astúcia del jorn"
 
 #: ../app/actions/dialogs-actions.c:237
 msgid "Show the tip of the day"
@@ -1130,7 +1132,7 @@ msgstr ""
 
 #: ../app/actions/dockable-actions.c:58
 msgid "_Close Tab"
-msgstr ""
+msgstr "_Tampar l'onglet"
 
 #: ../app/actions/dockable-actions.c:63
 msgid "_Detach Tab"
@@ -1668,7 +1670,7 @@ msgstr ""
 
 #: ../app/actions/error-console-actions.c:50
 msgid "Select _All"
-msgstr "_Tot seleccionar"
+msgstr "Seleccionar un fichièr"
 
 #: ../app/actions/error-console-actions.c:51
 msgid "Select all errors"
@@ -2479,7 +2481,7 @@ msgstr ""
 #: ../app/pdb/drawable_transform_cmds.c:593
 #: ../app/pdb/transform_tools_cmds.c:209 ../app/tools/gimprotatetool.c:114
 msgid "Rotating"
-msgstr ""
+msgstr "Rotacion"
 
 #: ../app/actions/image-commands.c:397 ../app/actions/layers-commands.c:599
 msgid "Cannot crop because the current selection is empty."
@@ -3502,8 +3504,7 @@ msgstr ""
 
 #: ../app/actions/templates-commands.c:247
 #, c-format
-msgid ""
-"Are you sure you want to delete template '%s' from the list and from disk?"
+msgid "Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr ""
 
 #: ../app/actions/text-editor-actions.c:44
@@ -4517,13 +4518,11 @@ msgid ""
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:164
-msgid ""
-"Install a private colormap; might be useful on 8-bit (256 colors) displays."
+msgid "Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:167
-msgid ""
-"Sets the level of interpolation used for scaling and other transformations."
+msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:174
@@ -4621,8 +4620,7 @@ msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:265
-msgid ""
-"Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:269
@@ -4904,7 +4902,7 @@ msgstr ""
 
 #: ../app/core/core-enums.c:247
 msgid "Foreground color"
-msgstr ""
+msgstr "Color de _fons"
 
 #: ../app/core/core-enums.c:248
 msgid "Background color"
@@ -5554,8 +5552,7 @@ msgstr ""
 
 #: ../app/core/gimpbrush-load.c:408
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': unable to decode abr format version %d."
+msgid "Fatal parse error in brush file '%s': unable to decode abr format version %d."
 msgstr ""
 
 #: ../app/core/gimpbrush-load.c:425
@@ -5575,14 +5572,12 @@ msgstr ""
 
 #: ../app/core/gimpbrushgenerated-load.c:104
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
+msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
 msgstr ""
 
 #: ../app/core/gimpbrushgenerated-load.c:150
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
+msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr ""
 
 #: ../app/core/gimpbrushgenerated-load.c:226
@@ -5638,7 +5633,7 @@ msgstr ""
 
 #: ../app/core/gimpchannel.c:257
 msgid "Channel"
-msgstr ""
+msgstr "Canal"
 
 #: ../app/core/gimpchannel.c:258
 msgid "Rename Channel"
@@ -5866,8 +5861,7 @@ msgid "The foreground color of the grid."
 msgstr ""
 
 #: ../app/core/gimpgrid.c:95
-msgid ""
-"The background color of the grid; only used in double dashed line style."
+msgid "The background color of the grid; only used in double dashed line style."
 msgstr ""
 
 #: ../app/core/gimpgrid.c:101
@@ -5879,8 +5873,7 @@ msgid "Vertical spacing of grid lines."
 msgstr ""
 
 #: ../app/core/gimpgrid.c:115
-msgid ""
-"Horizontal offset of the first grid line; this may be a negative number."
+msgid "Horizontal offset of the first grid line; this may be a negative number."
 msgstr ""
 
 #: ../app/core/gimpgrid.c:122
@@ -6368,8 +6361,7 @@ msgstr ""
 
 #: ../app/core/gimppattern-load.c:104
 #, c-format
-msgid ""
-"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
 
 #: ../app/core/gimppattern-load.c:114
@@ -6469,7 +6461,7 @@ msgstr ""
 
 #: ../app/core/gimpunit.c:58
 msgid "inches"
-msgstr ""
+msgstr "Linha"
 
 #: ../app/core/gimpunit.c:59
 msgid "millimeter"
@@ -6713,7 +6705,7 @@ msgstr ""
 
 #: ../app/dialogs/image-merge-layers-dialog.c:71
 msgid "_Merge"
-msgstr ""
+msgstr "_Fusionar"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:90
 msgid "Final, Merged Layer should be:"
@@ -6795,8 +6787,7 @@ msgid ""
 msgstr ""
 
 #: ../app/dialogs/image-scale-dialog.c:250
-msgid ""
-"Scaling the image to the chosen size will shrink some layers completely away."
+msgid "Scaling the image to the chosen size will shrink some layers completely away."
 msgstr ""
 
 #: ../app/dialogs/image-scale-dialog.c:254
@@ -6899,7 +6890,7 @@ msgstr ""
 
 #: ../app/dialogs/module-dialog.c:508
 msgid "Author:"
-msgstr "Autor :"
+msgstr "Ancora"
 
 #: ../app/dialogs/module-dialog.c:509
 msgid "Version:"
@@ -7014,7 +7005,7 @@ msgstr ""
 #. Palette file name entry
 #: ../app/dialogs/palette-import-dialog.c:296
 msgid "Select Palette File"
-msgstr ""
+msgstr "Tot seleccionar"
 
 #. The "Import" frame
 #: ../app/dialogs/palette-import-dialog.c:307
@@ -7191,7 +7182,7 @@ msgstr ""
 #. File Saving
 #: ../app/dialogs/preferences-dialog.c:1500
 msgid "Saving Images"
-msgstr ""
+msgstr "Enregistrar d'imatges"
 
 #: ../app/dialogs/preferences-dialog.c:1503
 msgid "Confirm closing of unsa_ved images"
@@ -7303,7 +7294,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1736
 msgid "Web Browser"
-msgstr ""
+msgstr "Navegaire web"
 
 #: ../app/dialogs/preferences-dialog.c:1740
 msgid "_Web browser to use:"
@@ -7810,12 +7801,12 @@ msgstr "_Nautor :"
 #: ../app/dialogs/print-size-dialog.c:220 ../app/widgets/gimpsizebox.c:266
 #: ../app/widgets/gimptemplateeditor.c:288
 msgid "_X resolution:"
-msgstr ""
+msgstr "Resolucion :"
 
 #: ../app/dialogs/print-size-dialog.c:227 ../app/widgets/gimpsizebox.c:269
 #: ../app/widgets/gimptemplateeditor.c:295
 msgid "_Y resolution:"
-msgstr ""
+msgstr "Resolucion :"
 
 #: ../app/dialogs/print-size-dialog.c:238 ../app/widgets/gimpsizebox.c:262
 #: ../app/widgets/gimptemplateeditor.c:308
@@ -8068,7 +8059,8 @@ msgstr ""
 
 #: ../app/display/gimpdisplayshell-close.c:232
 #, c-format
-msgid "If you don't save the image, changes from the last hour will be lost."
+msgid ""
+"If you don't save the image, changes from the last hour will be lost."
 "If you don't save the image, changes from the last %d hours will be lost."
 msgstr ""
 
@@ -8083,7 +8075,8 @@ msgstr ""
 
 #: ../app/display/gimpdisplayshell-close.c:253
 #, c-format
-msgid "If you don't save the image, changes from the last minute will be lost."
+msgid ""
+"If you don't save the image, changes from the last minute will be lost."
 "If you don't save the image, changes from the last %d minutes will be lost."
 msgstr ""
 
@@ -8438,8 +8431,7 @@ msgid ""
 msgstr ""
 
 #: ../app/pdb/image_cmds.c:2065
-msgid ""
-"Image resolution is out of bounds, using the default resolution instead."
+msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 
 #: ../app/pdb/selection_tools_cmds.c:210 ../app/tools/gimpfreeselecttool.c:97
@@ -8888,7 +8880,7 @@ msgstr "Sorga"
 #: ../app/tools/gimpclonetool.c:128 ../app/tools/gimphealtool.c:111
 #: ../app/tools/gimpperspectiveclonetool.c:910
 msgid "Alignment:"
-msgstr ""
+msgstr "Alinhament :"
 
 #: ../app/tools/gimpcolorbalancetool.c:93
 msgid "Color Balance Tool: Adjust color distribution"
@@ -8960,7 +8952,7 @@ msgstr "Seleccionar una color"
 #: ../app/tools/gimpcolorizetool.c:212
 #: ../app/tools/gimphuesaturationtool.c:366
 msgid "_Hue:"
-msgstr ""
+msgstr "_Blau :"
 
 #: ../app/tools/gimpcolorizetool.c:226
 #: ../app/tools/gimphuesaturationtool.c:402
@@ -8970,7 +8962,7 @@ msgstr "_Saturacion :"
 #: ../app/tools/gimpcolorizetool.c:240
 #: ../app/tools/gimphuesaturationtool.c:384
 msgid "_Lightness:"
-msgstr ""
+msgstr "_Nautor :"
 
 #: ../app/tools/gimpcoloroptions.c:161
 msgid "Sample average"
@@ -9287,8 +9279,7 @@ msgid "Flip"
 msgstr "Coalevar"
 
 #: ../app/tools/gimpfliptool.c:78
-msgid ""
-"Flip Tool: Reverse the layer, selection or path horizontally or vertically"
+msgid "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr ""
 
 #: ../app/tools/gimpfliptool.c:80
@@ -10155,8 +10146,7 @@ msgid "Click to smudge the line"
 msgstr ""
 
 #: ../app/tools/gimptextoptions.c:114
-msgid ""
-"Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 
 #: ../app/tools/gimptextoptions.c:121
@@ -10738,7 +10728,7 @@ msgstr "Jaune :"
 
 #: ../app/widgets/gimpcolorframe.c:498
 msgid "Black:"
-msgstr ""
+msgstr "Nègre :"
 
 #: ../app/widgets/gimpcolorframe.c:518
 msgid "Alpha:"
@@ -11123,7 +11113,7 @@ msgstr "Tipe de fichièr"
 
 #: ../app/widgets/gimpfileprocview.c:199
 msgid "Extensions"
-msgstr ""
+msgstr "Extensions"
 
 #. Instant update toggle
 #: ../app/widgets/gimpgradienteditor.c:410
@@ -11253,8 +11243,7 @@ msgid "Could not find GIMP help browser."
 msgstr ""
 
 #: ../app/widgets/gimphelp.c:195
-msgid ""
-"The GIMP help browser plug-in appears to be missing from your installation."
+msgid "The GIMP help browser plug-in appears to be missing from your installation."
 msgstr ""
 
 #: ../app/widgets/gimphelp.c:229
@@ -11408,8 +11397,7 @@ msgid "Auto"
 msgstr "Auto"
 
 #: ../app/widgets/gimpmenudock.c:170
-msgid ""
-"When enabled the dialog automatically follows the image you are working on."
+msgid "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
 
 #: ../app/widgets/gimpmessagebox.c:437
@@ -11658,7 +11646,7 @@ msgstr ""
 
 #: ../app/widgets/gimpviewablebox.c:219
 msgid "Reverse"
-msgstr ""
+msgstr "mètres"
 
 #: ../app/widgets/gimpviewablebox.c:298
 msgid "Open the palette selection dialog"
@@ -11884,17 +11872,3 @@ msgstr ""
 msgid "Couldn't start '%s': %s"
 msgstr ""
 
-#~ msgid "1:1"
-#~ msgstr "1:1"
-
-#~ msgid "Set"
-#~ msgstr "Definir"
-
-#~ msgid "Portrait"
-#~ msgstr "Retrach"
-
-#~ msgid "Landscape"
-#~ msgstr "Païsatge"
-
-#~ msgid "(This console window will close in ten seconds)\n"
-#~ msgstr "(Cette fenêtre de console se fermera dans dix secondes)\n"

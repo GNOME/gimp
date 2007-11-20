@@ -1,20 +1,25 @@
+# Translation of oc.po to Occitan
+# translation of oc.po to Occitan
 # Occitan (post 1500) translation for gimp
 # Copyright (c) 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
+#
 # Yannig MARCHEGAY <yannig@marchegay.org>, 2007.
-# 
+# Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 2.3.17\n"
+"Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-29 15:10+0200\n"
-"PO-Revision-Date: 2007-04-26 16:02+0200\n"
-"Last-Translator: Yannig MARCHEGAY <yannig@marchegay.org>\n"
-"Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
+"PO-Revision-Date: 2007-11-20 14:53+0100\n"
+"Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
+"Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../libgimp/gimpbrushselectbutton.c:170
 msgid "Brush Selection"
@@ -188,7 +193,7 @@ msgstr "Seleccion de poliça"
 
 #: ../libgimp/gimpfontselectbutton.c:145
 msgid "Sans"
-msgstr ""
+msgstr "Sans"
 
 #: ../libgimp/gimpgradientselectbutton.c:148
 msgid "Gradient Selection"
@@ -208,7 +213,7 @@ msgstr ""
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
-msgstr ""
+msgstr "per nom"
 
 #: ../libgimp/gimpprocbrowserdialog.c:141
 msgid "by description"
@@ -220,7 +225,7 @@ msgstr ""
 
 #: ../libgimp/gimpprocbrowserdialog.c:143
 msgid "by author"
-msgstr ""
+msgstr "per autor"
 
 #: ../libgimp/gimpprocbrowserdialog.c:144
 msgid "by copyright"
@@ -236,7 +241,7 @@ msgstr ""
 
 #: ../libgimp/gimpprocbrowserdialog.c:377
 msgid "Searching"
-msgstr ""
+msgstr "Recèrca"
 
 #: ../libgimp/gimpprocbrowserdialog.c:388
 msgid "Searching by name"
@@ -291,7 +296,7 @@ msgstr ""
 
 #: ../libgimp/gimpprocview.c:143
 msgid "Parameters"
-msgstr ""
+msgstr "Paramètres"
 
 #: ../libgimp/gimpprocview.c:156
 msgid "Return Values"
@@ -299,20 +304,19 @@ msgstr ""
 
 #: ../libgimp/gimpprocview.c:169
 msgid "Additional Information"
-msgstr ""
+msgstr "Informacions suplementàrias"
 
 #: ../libgimp/gimpprocview.c:210
-#, fuzzy
 msgid "Author:"
-msgstr "Ancora"
+msgstr "Autor&nbsp;:"
 
 #: ../libgimp/gimpprocview.c:222
 msgid "Date:"
-msgstr ""
+msgstr "Data :"
 
 #: ../libgimp/gimpprocview.c:234
 msgid "Copyright:"
-msgstr ""
+msgstr "Copyright :"
 
 #: ../libgimp/gimpunitcache.c:57
 msgid "percent"
@@ -335,9 +339,8 @@ msgid "_Transfer layer's alpha channel"
 msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:31
-#, fuzzy
 msgid "_Selection"
-msgstr "Seleccion de poliça"
+msgstr "_Seleccion"
 
 #: ../libgimpbase/gimpbaseenums.c:32
 msgid "_Grayscale copy of layer"
@@ -404,9 +407,8 @@ msgid "Blue"
 msgstr "Blau"
 
 #: ../libgimpbase/gimpbaseenums.c:165
-#, fuzzy
 msgid "Gray"
-msgstr "Escala de grises"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:166 ../libgimpbase/gimpbaseenums.c:531
 msgid "Indexed"
@@ -441,18 +443,16 @@ msgid "Dark checks"
 msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:233
-#, fuzzy
 msgid "White only"
-msgstr "_Blanc"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:234
 msgid "Gray only"
 msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:235
-#, fuzzy
 msgid "Black only"
-msgstr "Negre"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:263
 msgid "Image source"
@@ -464,7 +464,7 @@ msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:293
 msgid "Lightness"
-msgstr ""
+msgstr "Clar"
 
 #: ../libgimpbase/gimpbaseenums.c:294
 msgid "Luminosity"
@@ -472,7 +472,7 @@ msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:295
 msgid "Average"
-msgstr ""
+msgstr "Mejana"
 
 #: ../libgimpbase/gimpbaseenums.c:323
 msgid "Dodge"
@@ -480,7 +480,7 @@ msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:324
 msgid "Burn"
-msgstr ""
+msgstr "Gravar"
 
 #: ../libgimpbase/gimpbaseenums.c:388
 msgid "gradient|Linear"
@@ -496,7 +496,7 @@ msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:391 ../libgimpwidgets/gimpwidgetsenums.c:24
 msgid "Square"
-msgstr ""
+msgstr "Carrat"
 
 #: ../libgimpbase/gimpbaseenums.c:392
 msgid "Conical (sym)"
@@ -556,7 +556,7 @@ msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:464
 msgid "Image file"
-msgstr ""
+msgstr "Fichièr imatge"
 
 #: ../libgimpbase/gimpbaseenums.c:493
 msgid "RGB color"
@@ -603,9 +603,8 @@ msgid "Sinc (Lanczos3)"
 msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:593
-#, fuzzy
 msgid "Constant"
-msgstr "Contrast"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:594
 msgid "Incremental"
@@ -613,16 +612,15 @@ msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:267
 msgid "None"
-msgstr ""
+msgstr "Pas cap"
 
 #: ../libgimpbase/gimpbaseenums.c:624
 msgid "Sawtooth wave"
 msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:625
-#, fuzzy
 msgid "Triangular wave"
-msgstr "Triangle"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:654
 msgid "Run interactively"
@@ -638,11 +636,11 @@ msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:684
 msgid "Pixels"
-msgstr ""
+msgstr "Pixels"
 
 #: ../libgimpbase/gimpbaseenums.c:685
 msgid "Points"
-msgstr ""
+msgstr "Punts"
 
 #: ../libgimpbase/gimpbaseenums.c:714
 msgid "Shadows"
@@ -697,11 +695,11 @@ msgid "Temporary Procedure"
 msgstr ""
 
 #: ../libgimpbase/gimpmemsize.c:180
-#, fuzzy, c-format
+#, c-format
 msgid "%d Byte"
 msgid_plural "%d Bytes"
-msgstr[0] "%d Go"
-msgstr[1] "%d Go"
+msgstr[0] "%d&nbsp;octet"
+msgstr[1] "%d&nbsp;octets"
 
 #: ../libgimpbase/gimpmemsize.c:186
 #, c-format
@@ -811,9 +809,8 @@ msgid "Relative colorimetric"
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#, fuzzy
 msgid "intent|Saturation"
-msgstr "Saturacion"
+msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
@@ -912,7 +909,7 @@ msgstr ""
 
 #: ../libgimpmodule/gimpmodule.c:376
 msgid "Loaded"
-msgstr ""
+msgstr "Cargat"
 
 #: ../libgimpmodule/gimpmodule.c:377
 msgid "Load failed"
@@ -945,7 +942,7 @@ msgstr ""
 
 #: ../libgimpwidgets/gimpbrowser.c:98
 msgid "_Search:"
-msgstr ""
+msgstr "_Recercar :"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:118
 msgid "_Foreground Color"
@@ -965,7 +962,7 @@ msgstr "_Blanc"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
-msgstr ""
+msgstr "Escalas"
 
 #: ../libgimpwidgets/gimpcolorselection.c:210
 msgid "Current:"
@@ -1020,14 +1017,12 @@ msgid "Nothing selected"
 msgstr ""
 
 #: ../libgimpwidgets/gimppageselector.c:287
-#, fuzzy
 msgid "Select _All"
-msgstr "Seleccionar un fichièr"
+msgstr ""
 
 #: ../libgimpwidgets/gimppageselector.c:307
-#, fuzzy
 msgid "Select _range:"
-msgstr "Seleccionar un fichièr"
+msgstr ""
 
 #: ../libgimpwidgets/gimppageselector.c:319
 msgid "Open _pages as"
@@ -1041,7 +1036,7 @@ msgstr ""
 #: ../libgimpwidgets/gimppageselector.c:749
 #, c-format
 msgid "Page %d"
-msgstr ""
+msgstr "Pagina %d"
 
 #: ../libgimpwidgets/gimppageselector.c:1176
 msgid "One page selected"
@@ -1151,9 +1146,8 @@ msgid "_Scale"
 msgstr "_Escala"
 
 #: ../libgimpwidgets/gimpstock.c:295
-#, fuzzy
 msgid "Cr_op"
-msgstr "Rosegar"
+msgstr ""
 
 #: ../libgimpwidgets/gimpstock.c:314
 msgid "_Transform"
@@ -1202,13 +1196,12 @@ msgid "_Randomize"
 msgstr ""
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:25
-#, fuzzy
 msgid "Portrait"
-msgstr "Contrast"
+msgstr ""
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:26
 msgid "Landscape"
-msgstr ""
+msgstr "Païsatge"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "_H"
@@ -1256,7 +1249,7 @@ msgstr ""
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:158
 msgid "Images"
-msgstr ""
+msgstr "Imatges"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:217
 msgid "Zoom in"
@@ -1311,9 +1304,8 @@ msgid "Contrast"
 msgstr "Contrast"
 
 #: ../modules/cdisplay_highcontrast.c:253
-#, fuzzy
 msgid "Contrast c_ycles:"
-msgstr "Contrast"
+msgstr ""
 
 #: ../modules/cdisplay_lcms.c:116
 msgid "Color management display filter using ICC color profiles"
@@ -1363,7 +1355,7 @@ msgstr ""
 
 #: ../modules/cdisplay_proof.c:313
 msgid "_Profile:"
-msgstr ""
+msgstr "_Perfil :"
 
 #: ../modules/cdisplay_proof.c:318
 msgid "_Black Point Compensation"
@@ -1447,15 +1439,15 @@ msgstr ""
 
 #: ../modules/controller_linux_input.c:59
 msgid "Button 1"
-msgstr ""
+msgstr "Boton 1"
 
 #: ../modules/controller_linux_input.c:60
 msgid "Button 2"
-msgstr ""
+msgstr "Boton 2"
 
 #: ../modules/controller_linux_input.c:61
 msgid "Button 3"
-msgstr ""
+msgstr "Boton 3"
 
 #: ../modules/controller_linux_input.c:62
 msgid "Button 4"
@@ -1620,7 +1612,7 @@ msgstr ""
 #: ../modules/controller_linux_input.c:249
 #: ../modules/controller_dx_dinput.c:227 ../modules/controller_midi.c:245
 msgid "Device:"
-msgstr ""
+msgstr "Periferic :"
 
 #: ../modules/controller_linux_input.c:250
 msgid "The name of the device to read Linux Input events from."
@@ -1659,7 +1651,7 @@ msgstr ""
 
 #: ../modules/controller_linux_input.c:658 ../modules/controller_midi.c:605
 msgid "End of file"
-msgstr ""
+msgstr "Fin de fichièr"
 
 #: ../modules/controller_dx_dinput.c:157
 msgid "DirectX DirectInput event controller"
@@ -1741,7 +1733,7 @@ msgstr ""
 
 #: ../modules/controller_midi.c:259
 msgid "MIDI"
-msgstr ""
+msgstr "MIDI"
 
 #: ../modules/controller_midi.c:383
 #, c-format
@@ -1764,8 +1756,9 @@ msgstr ""
 
 #: ../modules/controller_midi.c:454
 msgid "GIMP"
-msgstr ""
+msgstr "GIMP"
 
 #: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr ""
+

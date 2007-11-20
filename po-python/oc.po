@@ -1,20 +1,23 @@
+# translation of oc.po to Occitan
 # Occitan translation of gimp-python.
 # Copyright (C) 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
-# Yannig MARCHEGAY (Kokoyaya)  <yannig@marchegay.org>, 2007.
 #
+# Yannig MARCHEGAY (Kokoyaya)  <yannig@marchegay.org>, 2007.
+# Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python 2.3.17\n"
+"Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-29 15:09+0200\n"
-"PO-Revision-Date: 2007-04-29 15:07+0200\n"
-"Last-Translator: Yannig MARCHEGAY (Kokoyaya)  <yannig@marchegay.org>\n"
+"PO-Revision-Date: 2007-11-20 14:30+0100\n"
+"Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:335
 msgid "Missing exception information"
@@ -32,11 +35,11 @@ msgstr ""
 #: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
 #: ../plug-ins/pygimp/gimpfu.py:479
 msgid "No"
-msgstr ""
+msgstr "Non"
 
 #: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
 msgid "Yes"
-msgstr ""
+msgstr "Òc"
 
 #: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
@@ -101,7 +104,7 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
 msgid "_Browse..."
-msgstr ""
+msgstr "_Examinar..."
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
 msgid "Python Procedure Browser"
@@ -170,7 +173,7 @@ msgstr ""
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette"
-msgstr ""
+msgstr "Paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
 msgid "Off_set"
@@ -307,3 +310,4 @@ msgstr ""
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _Y displacement"
 msgstr ""
+
