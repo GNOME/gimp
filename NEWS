@@ -27,6 +27,7 @@ Changes in GIMP 2.4.2
 - fixed heap corruption in GimpColorScale widget that caused a crash in the
   Compose plug-in (bug #399484)
 - fixed use of background color in Particle Trace script (bug #498282)
+- set the image menu insensitive when there's no image opened (bug #498511)
 - translation updates (ca, et, it, lt, pt, pt_BR, sr, sv)
 
 

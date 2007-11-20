@@ -312,7 +312,7 @@ system colors allocated for GIMP.  This is an integer value.
 .TP
 (color-management
     (mode display)
-    (display-profile-from-gdk yes)
+    (display-profile-from-gdk no)
     (display-rendering-intent perceptual)
     (simulation-rendering-intent perceptual)
     (simulation-gamut-check no)
