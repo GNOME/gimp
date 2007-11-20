@@ -1,5 +1,10 @@
 2007-11-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainercombobox.c: set the combo insensitive
+	when it has no items. Fixes bug #498511.
+
+2007-11-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimplevelstool.[ch]: use a GimpHandleBar widget for
 	the output sliders. Removes a bunch of code already, more to
 	come...
