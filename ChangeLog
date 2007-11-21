@@ -1,3 +1,9 @@
+2007-11-21  Sven Neumann  <sven@gimp.org>
+
+	* HACKING
+	* autogen.sh: dropped support for automake 1.8 and require
+	automake >= 1.9.6. Require libtool 1.5 for all platforms.
+
 2007-11-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainercombobox.c: set the combo insensitive

@@ -5,15 +5,15 @@ to have the following packages (or newer versions) installed:
 
     * GNU autoconf 2.54
         - ftp://ftp.gnu.org/gnu/autoconf/
-    * GNU automake 1.9 (automake 1.8 should also work)
+    * GNU automake 1.9 (automake 1.10 should also work)
         - ftp://ftp.gnu.org/gnu/automake/
-    * GNU libtool 1.4  (libtool 1.5 if you are compiling on Win32)
+    * GNU libtool 1.5
         - ftp://ftp.gnu.org/gnu/libtool/
 
 Fine GNU mirrors are listed at http://www.gnu.org/prep/ftp.html
 Beta software can be found at alpha.gnu.org.
 
-    * pkg-config 0.15.0 (or preferably a newer version)
+    * pkg-config 0.16.0 (or preferably a newer version)
         - http://www.freedesktop.org/software/pkgconfig/
 
     * intltoolize 0.31.1 (or preferably a newer version)

@@ -16,11 +16,10 @@ AUTOMAKE=${AUTOMAKE-automake-1.9}
 LIBTOOLIZE=${LIBTOOLIZE-libtoolize}
 
 AUTOCONF_REQUIRED_VERSION=2.54
-AUTOMAKE_REQUIRED_VERSION=1.8.3
-GLIB_REQUIRED_VERSION=2.2.0
+AUTOMAKE_REQUIRED_VERSION=1.9.6
+GLIB_REQUIRED_VERSION=2.10.0
 INTLTOOL_REQUIRED_VERSION=0.31
-LIBTOOL_REQUIRED_VERSION=1.4
-LIBTOOL_WIN32=1.5
+LIBTOOL_REQUIRED_VERSION=1.5
 
 
 PROJECT="GNU Image Manipulation Program"
@@ -80,16 +79,6 @@ echo "so if anything goes wrong, see the file HACKING for more information..."
 echo
 
 DIE=0
-
-
-OS=`uname -s`
-case $OS in 
-    *YGWIN* | *INGW*)
-	echo "Looks like Win32, you will need libtool $LIBTOOL_WIN32 or newer."
-	echo
-	LIBTOOL_REQUIRED_VERSION=$LIBTOOL_WIN32
-	;;
-esac
 
 
 echo -n "checking for libtool >= $LIBTOOL_REQUIRED_VERSION ... "
@@ -166,9 +155,6 @@ elif (automake-1.10 --version) < /dev/null > /dev/null 2>&1; then
 elif (automake-1.9 --version) < /dev/null > /dev/null 2>&1; then
    AUTOMAKE=automake-1.9
    ACLOCAL=aclocal-1.9
-elif (automake-1.8 --version) < /dev/null > /dev/null 2>&1; then
-   AUTOMAKE=automake-1.8
-   ACLOCAL=aclocal-1.8
 else
     echo
     echo "  You must have automake $AUTOMAKE_REQUIRED_VERSION or newer installed to compile $PROJECT."
