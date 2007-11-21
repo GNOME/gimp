@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-01 11:04+0100\n"
-"PO-Revision-Date: 2007-10-27 12:12+0200\n"
+"POT-Creation-Date: 2007-11-21 10:20+0100\n"
+"PO-Revision-Date: 2007-11-21 06:44+0100\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 
 #: ../app/about.h:24
 msgid "GIMP"
-msgstr "El GIMP"
+msgstr "GIMP"
 
 #: ../app/about.h:27 ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
@@ -143,7 +143,7 @@ msgstr "Utilitza un fitxer sessionrc alternatiu"
 
 #: ../app/main.c:214
 msgid "Use an alternate user gimprc file"
-msgstr "Utilitza un fitxer gimprc del sistema alternatiu"
+msgstr "Utilitza un fitxer gimprc d'ususari alternatiu"
 
 #: ../app/main.c:219
 msgid "Use an alternate system gimprc file"
@@ -1012,7 +1012,7 @@ msgstr "Colo_rs"
 
 #: ../app/actions/dialogs-actions.c:142
 msgid "Open the FG/BG color dialog"
-msgstr "Mostra el diàleg per a seleccionar el color de primer pla i el de fons"
+msgstr "Mostra el diàleg del color del primer pla i del fons"
 
 #: ../app/actions/dialogs-actions.c:147
 msgid "_Brushes"
@@ -1892,7 +1892,7 @@ msgstr "Desa aquesta imatge i tanca'n la finestra"
 #  File Saving
 #: ../app/actions/file-commands.c:247
 msgid "Saving canceled"
-msgstr "L'acció desar s'ha cancel·lat"
+msgstr "S'ha cancel·lat l'acció de desar"
 
 #: ../app/actions/file-commands.c:256 ../app/dialogs/file-save-dialog.c:539
 #: ../app/widgets/gimpdnd-xds.c:179
@@ -2152,7 +2152,7 @@ msgstr "_Tipus de degradat per al segment"
 
 #: ../app/actions/gradient-editor-actions.c:775
 msgid "Coloring _Type for Segment"
-msgstr "_Mapa de colors"
+msgstr "_Tipus de coloració per al segment"
 
 #: ../app/actions/gradient-editor-actions.c:778
 msgid "_Flip Segment"
@@ -2188,7 +2188,7 @@ msgstr "_Tipus de degradat per a la selecció"
 
 #: ../app/actions/gradient-editor-actions.c:797
 msgid "Coloring _Type for Selection"
-msgstr "_Mapa de colors"
+msgstr "Tipus de coloració per a la selecció"
 
 #: ../app/actions/gradient-editor-actions.c:800
 msgid "_Flip Selection"
@@ -2734,7 +2734,7 @@ msgstr "_Apuja la capa"
 
 #: ../app/actions/layers-actions.c:99
 msgid "Raise this layer one step in the layer stack"
-msgstr "Apuja aquesta capa una posició "
+msgstr "Apuja aquesta capa una posició"
 
 #: ../app/actions/layers-actions.c:104
 msgid "Layer to _Top"
@@ -4252,13 +4252,17 @@ msgstr "Ampliació 4:1"
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: ../app/actions/view-actions.c:311 ../app/actions/view-actions.c:317
-msgid "Zoom 1:1"
-msgstr "Ampliació 1:1"
+#: ../app/actions/view-actions.c:311
+msgid "Zoom 2:1"
+msgstr "Ampliació 2:1"
 
 #: ../app/actions/view-actions.c:316
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
+
+#: ../app/actions/view-actions.c:317
+msgid "Zoom 1:1"
+msgstr "Ampliació 1:1"
 
 #: ../app/actions/view-actions.c:322
 msgid "1:_2  (50%)"
@@ -4685,7 +4689,7 @@ msgid ""
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
 "Si es marca l'opció, un cop s'obri un fitxer, mostrarà la imatge sencera "
-"reduint-la si fa falta,en cas contrari la mostra a escala 1:1."
+"reduint-la si fa falta, en cas contrari la mostra a escala 1:1."
 
 #: ../app/config/gimprc-blurbs.h:164
 msgid ""
@@ -4723,7 +4727,9 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:185
 msgid "When enabled, GIMP will show mnemonics in menus."
-msgstr "Si es marca l'opció, el GIMP mostrarà tecles mnemòniques en els menús."
+msgstr ""
+"Si es marca l'opció, el GIMP mostrarà els acceleradors de teclat en els "
+"menús."
 
 #: ../app/config/gimprc-blurbs.h:188
 msgid ""
@@ -5052,7 +5058,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:400
 msgid "Sets the manner in which transparency is displayed in images."
-msgstr "Defineix com es visualitza les parts transparents de les imatges."
+msgstr "Defineix com es visualitzen les parts transparents de les imatges."
 
 #: ../app/config/gimprc-blurbs.h:403
 msgid "Sets the size of the checkerboard used to display transparency."
@@ -5784,20 +5790,17 @@ msgstr "No s'han pogut llegir %d bytes des de «%s»: %s"
 #: ../app/core/gimpbrush-load.c:197
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr ""
-"El fitxer del pinzell «%s» està malament: té una amplada nul·la (Width = 0)."
+msgstr "El fitxer del pinzell «%s» està malament: té una amplada nul·la."
 
 #: ../app/core/gimpbrush-load.c:206
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr ""
-"El fitxer del pinzell «%s» està malament: té una alçada nul·la (Height = 0)."
+msgstr "El fitxer del pinzell «%s» està malament: té una alçada nul·la."
 
 #: ../app/core/gimpbrush-load.c:215
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr ""
-"El fitxer del pinzell «%s» està malament: té una mida nul·la (Bytes = 0)."
+msgstr "El fitxer del pinzell «%s» està malament: té una mida nul·la."
 
 #: ../app/core/gimpbrush-load.c:239
 #, c-format
@@ -5815,7 +5818,8 @@ msgstr ""
 #: ../app/core/gimpbrush-load.c:720
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
-msgstr "El fitxer del pinzell «%s» està malament: el fitxer està tallat."
+msgstr ""
+"El fitxer del pinzell «%s» està malament: manca la part final del fitxer."
 
 #: ../app/core/gimpbrush-load.c:276 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
@@ -6192,18 +6196,18 @@ msgstr "Espaiat vertical de les línies de graella."
 msgid ""
 "Horizontal offset of the first grid line; this may be a negative number."
 msgstr ""
-"Compensació horitzontal de la primera línia de graella; ha de ser un número "
+"Compensació horitzontal de la primera línia de graella; pot ser un número "
 "negatiu."
 
 #: ../app/core/gimpgrid.c:122
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr ""
-"Compensació vertical de la primera línia de graella; ha de ser un número "
+"Compensació vertical de la primera línia de graella; pot ser un número "
 "negatiu."
 
 #: ../app/core/gimpimage-arrange.c:143
 msgid "Arrange Objects"
-msgstr "Arregla els objectes"
+msgstr "Disposa els objectes"
 
 #: ../app/core/gimpimage-colormap.c:63
 msgid "Set Colormap"
@@ -6699,7 +6703,8 @@ msgstr ""
 #: ../app/core/gimppattern-load.c:162
 #, c-format
 msgid "Fatal parse error in pattern file '%s': File appears truncated."
-msgstr "El fitxer del patró «%s» està malament: el fitxer està tallat."
+msgstr ""
+"El fitxer del patró «%s» està malament: manca la part final del fitxer."
 
 #: ../app/core/gimppattern-load.c:104
 #, c-format
@@ -7437,7 +7442,7 @@ msgid ""
 "start GIMP."
 msgstr ""
 "Les dreceres de teclat per defecte es recuperaran la propera vegada que "
-"engegueu el GIMP."
+"inicieu el GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:580
 msgid "Remove all Keyboard Shortcuts"
@@ -8130,7 +8135,7 @@ msgstr "Selecciona carpetes de connectors"
 
 #: ../app/dialogs/preferences-dialog.c:2742
 msgid "Scripts"
-msgstr "Fitxers de seqüència"
+msgstr "Scripts"
 
 #: ../app/dialogs/preferences-dialog.c:2742
 msgid "Script-Fu Folders"
@@ -8302,7 +8307,7 @@ msgstr "Eina de pintar:"
 
 #: ../app/dialogs/tips-dialog.c:90
 msgid "Your GIMP tips file appears to be missing!"
-msgstr "No s'ha pogut trobar el teu fitxer de consells del GIMP!"
+msgstr "No s'ha pogut trobar el vostre fitxer de consells del GIMP!"
 
 #: ../app/dialogs/tips-dialog.c:92
 #, c-format
@@ -8484,8 +8489,7 @@ msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] "Si no deseu la imatge, es perdran els canvis de l'última hora."
-msgstr[1] ""
-"Si no deseu la imatge, es perdran els canvis de les últimes %d hores."
+msgstr[1] "Si no deseu la imatge, es perdran els canvis de fa %d hores."
 
 # El primer %s és "X hores", el segon és "X minuts"
 #: ../app/display/gimpdisplayshell-close.c:242
@@ -8507,7 +8511,7 @@ msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] "Si no deseu la imatge, es perdran els canvis de l'últim minut."
-msgstr[1] "Si no deseu la imatge, es perdran els canvis dels últims %d minuts."
+msgstr[1] "Si no deseu la imatge, es perdran els canvis de fa %d minuts."
 
 #: ../app/display/gimpdisplayshell-dnd.c:217
 #: ../app/display/gimpdisplayshell-dnd.c:500
@@ -9185,7 +9189,7 @@ msgstr "Alinea amb la vora esquerra"
 
 #: ../app/tools/gimpaligntool.c:788
 msgid "Align center of target"
-msgstr "Alinea amb el centre (horitz.)"
+msgstr "Alinea horitzontalment els centres"
 
 #: ../app/tools/gimpaligntool.c:794
 msgid "Align right edge of target"
@@ -9197,7 +9201,7 @@ msgstr "Alinea amb la vora superior"
 
 #: ../app/tools/gimpaligntool.c:810
 msgid "Align middle of target"
-msgstr "Alinea amb el centre (vertic.)"
+msgstr "Alinea verticalment els centres"
 
 #: ../app/tools/gimpaligntool.c:816
 msgid "Align bottom of target"
@@ -9209,7 +9213,7 @@ msgstr "Distribueix"
 
 #: ../app/tools/gimpaligntool.c:834
 msgid "Distribute left edges of targets"
-msgstr "Distribueix per l'esquerra"
+msgstr "Distribueix horitzontalment per la vora esquerra"
 
 #: ../app/tools/gimpaligntool.c:841
 msgid "Distribute horizontal centers of targets"
@@ -9217,19 +9221,19 @@ msgstr "Distribueix horitzontalment els centres"
 
 #: ../app/tools/gimpaligntool.c:848
 msgid "Distribute right edges of targets"
-msgstr "Distribueix per la dreta"
+msgstr "Distribueix horitzontalment per la vora dreta"
 
 #: ../app/tools/gimpaligntool.c:858
 msgid "Distribute top edges of targets"
-msgstr "Distribueix per la part superior"
+msgstr "Distribueix verticalment per la vora superior"
 
 #: ../app/tools/gimpaligntool.c:865
 msgid "Distribute vertical centers of targets"
-msgstr "Distribueix vertic. els centre"
+msgstr "Distribueix verticalment els centres"
 
 #: ../app/tools/gimpaligntool.c:871
 msgid "Distribute bottoms of targets"
-msgstr "Distribueix per la part inferior"
+msgstr "Distribueix verticalment per la vora inferior"
 
 #: ../app/tools/gimpaligntool.c:879 ../app/tools/gimpblendoptions.c:212
 msgid "Offset:"
@@ -9838,7 +9842,7 @@ msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr ""
 "Eina Capgira: capgira, horitzontalment o verticalment, la capa, selecció o "
-"camí "
+"camí"
 
 #: ../app/tools/gimpfliptool.c:80
 msgid "_Flip"
@@ -10813,7 +10817,7 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
-"La capa que heu seleccionat és una capa de text, però ha esta modificada "
+"La capa que heu seleccionat és una capa de text, però ha estat modificada "
 "utilitzant altres eines. Si empreu l'eina de text de nou es perdran aquestes "
 "modificacions.\n"
 "\n"
@@ -11388,7 +11392,7 @@ msgstr "Previsualitzacions més grans"
 
 #: ../app/widgets/gimpcontrollereditor.c:201
 msgid "_Dump events from this controller"
-msgstr "Mostra les incidències _d' aquest controlador"
+msgstr "Mostra les incidències _d'aquest controlador"
 
 #: ../app/widgets/gimpcontrollereditor.c:206
 msgid "_Enable this controller"
@@ -11427,7 +11431,7 @@ msgstr "Selecciona una acció per a l'esdeveniment «%s»"
 
 #: ../app/widgets/gimpcontrollereditor.c:666
 msgid "Select Controller Event Action"
-msgstr "Selecciona l'acció per l'esdeveniment del controlador"
+msgstr "Selecciona l'acció per a l'esdeveniment del controlador"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:70
 #: ../app/widgets/gimpcontrollerkeyboard.c:73
