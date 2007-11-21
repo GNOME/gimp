@@ -1,5 +1,10 @@
 2007-11-21  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpguiconfig.c: use "open %s" as the default
+	web-browser command on Mac OS X.
+
+2007-11-21  Sven Neumann  <sven@gimp.org>
+
 	* HACKING
 	* autogen.sh: dropped support for automake 1.8 and require
 	automake >= 1.9.6. Require libtool 1.5 for all platforms.
