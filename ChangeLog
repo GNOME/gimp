@@ -1,3 +1,9 @@
+2007-11-22  Jakub Steiner <jimmac@ximian.com>
+
+	* data/images/gimp-splash.png: New unstable splash
+	* data/images/gimp-splash-2.4.png: looks like we keep stable
+	splashes around
+
 2007-11-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimplevelstool.[ch]: use a GimpHandleBar also for the
