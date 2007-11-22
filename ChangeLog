@@ -1,3 +1,12 @@
+2007-11-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimplevelstool.[ch]: use a GimpHandleBar also for the
+	input frame, added a second adjustment for gamma and map between
+	the linear and logarithmic gamma values in the adjustment
+	callbacks, get rid of one GtkFrame just as in the histogram
+	dialog. Still not finished since mouse events on the color bars
+	are currently not handled.
+
 2007-11-21  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpguiconfig.c: use "open %s" as the default

@@ -46,26 +46,25 @@ struct _GimpLevelsTool
   gboolean              alpha;
   GimpHistogramChannel  channel;
 
-  gint                  active_slider;
-  gint                  slider_pos[5];
-
   GimpHistogram        *hist;
-  GtkWidget            *hist_view;
-  GtkWidget            *active_picker;
 
+  GtkWidget            *channel_menu;
+
+  GtkWidget            *hist_view;
+
+  GtkWidget            *input_bar;
+  GtkWidget            *input_sliders;
   GtkAdjustment        *low_input;
   GtkAdjustment        *gamma;
+  GtkAdjustment        *gamma_linear;
   GtkAdjustment        *high_input;
-
-  GtkWidget            *input_area;
-  GtkWidget            *input_bar;
-  GtkAdjustment        *low_output;
-  GtkAdjustment        *high_output;
 
   GtkWidget            *output_bar;
   GtkWidget            *output_sliders;
+  GtkAdjustment        *low_output;
+  GtkAdjustment        *high_output;
 
-  GtkWidget            *channel_menu;
+  GtkWidget            *active_picker;
 };
 
 struct _GimpLevelsToolClass
