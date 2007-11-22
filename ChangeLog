@@ -1,3 +1,20 @@
+2007-11-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimphelpui.[ch]: use
+	gtk_widget_set_tooltip_text() from gimp_help_set_help() and added
+	gimp_help_set_help_data_with_markup() for the cases where markup
+	is needed.
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
+	* app/tools/gimpselectionoptions.c
+	* app/widgets/gimpeditor.c
+	* app/widgets/gimpwidgets-utils.c: use the new function where markup
+	in tooltips is being used.
+
+	* app/widgets/gimptoolbox-color-area.c: no need to escape the
+	ampersand any longer.
+
 2007-11-22  Jakub Steiner <jimmac@ximian.com>
 
 	* data/images/gimp-splash.png: New unstable splash

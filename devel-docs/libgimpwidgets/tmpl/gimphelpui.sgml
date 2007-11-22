@@ -97,6 +97,16 @@ Since: GIMP 2.2
 @help_id: 
 
 
+<!-- ##### FUNCTION gimp_help_set_help_data_with_markup ##### -->
+<para>
+
+</para>
+
+@widget: 
+@tooltip: 
+@help_id: 
+
+
 <!-- ##### FUNCTION gimp_context_help ##### -->
 <para>
 

@@ -623,6 +623,7 @@ gimp_help_disable_tooltips
 gimp_standard_help_func
 gimp_help_connect
 gimp_help_set_help_data
+gimp_help_set_help_data_with_markup
 gimp_context_help
 <SUBSECTION Standard>
 gimp_help_id_quark

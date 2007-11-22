@@ -701,7 +701,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
   help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
 
   if (tooltip || help_id)
-    gimp_help_set_help_data (button, tooltip, help_id);
+    gimp_help_set_help_data_with_markup (button, tooltip, help_id);
 
   g_free (tooltip);
 

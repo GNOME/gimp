@@ -194,6 +194,31 @@ gimp_help_set_help_data (GtkWidget   *widget,
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   if (tooltips_enabled)
+    gtk_widget_set_tooltip_text (widget, tooltip);
+
+  g_object_set_qdata (G_OBJECT (widget), GIMP_HELP_ID, (gpointer) help_id);
+}
+
+/**
+ * gimp_help_set_help_data_with_markup:
+ * @widget:  The #GtkWidget you want to set a @tooltip and/or @help_id for.
+ * @tooltip: The markup for this widget's tooltip (or %NULL).
+ * @help_id: The @help_id for the #GtkTipsQuery tooltips inspector.
+ *
+ * Just like gimp_help_set_help_data(), but it allows to pass text which
+ * is marked up with
+ * <link linkend="PangoMarkupFormat">Pango text markup language</link>.
+ *
+ * Since: GIMP 2.6
+ **/
+void
+gimp_help_set_help_data_with_markup (GtkWidget   *widget,
+                                     const gchar *tooltip,
+                                     const gchar *help_id)
+{
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  if (tooltips_enabled)
     gtk_widget_set_tooltip_markup (widget, tooltip);
 
   g_object_set_qdata (G_OBJECT (widget), GIMP_HELP_ID, (gpointer) help_id);

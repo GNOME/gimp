@@ -1007,7 +1007,7 @@ gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
           tooltip = g_strdup (orig_tooltip);
         }
 
-      gimp_help_set_help_data (widget, tooltip, help_id);
+      gimp_help_set_help_data_with_markup (widget, tooltip, help_id);
 
       g_free (tooltip);
       g_free (orig_tooltip);
@@ -1018,9 +1018,7 @@ void
 gimp_widget_set_accel_help (GtkWidget *widget,
                             GtkAction *action)
 {
-  GClosure *accel_closure = NULL;
-
-  accel_closure = gtk_action_get_accel_closure (action);
+  GClosure *accel_closure = gtk_action_get_accel_closure (action);
 
   if (accel_closure)
     {

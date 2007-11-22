@@ -1,3 +1,10 @@
+2007-11-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt: added
+	gimp_help_set_help_data_with_markup.
+
+	* devel-docs/libgimpwidgets/tmpl/gimphelpui.sgml: regenerated.
+
 2007-11-19  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-docs.sgml: added "Index of new symbols in GIMP 2.6".

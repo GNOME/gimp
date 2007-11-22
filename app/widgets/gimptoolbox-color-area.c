@@ -77,7 +77,7 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
                          GDK_LEAVE_NOTIFY_MASK);
 
   gimp_help_set_help_data
-    (color_area, _("Foreground &amp; background colors.\n"
+    (color_area, _("Foreground & background colors.\n"
                    "The black and white squares reset colors.\n"
                    "The arrows swap colors.\n"
                    "Click to open the color selection dialog."), NULL);
