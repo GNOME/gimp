@@ -4,7 +4,7 @@
 	of GtkMisc, but use an input-only window.
 
 	* app/tools/gimplevelstool.c: redirect the events of the color
-	bars to te handle bars. The historgram dialog has this change
+	bars to the handle bars. The histogram dialog has this change
 	already. Functionality should be 100% restored now.
 
 2007-11-22  Sven Neumann  <sven@gimp.org>
