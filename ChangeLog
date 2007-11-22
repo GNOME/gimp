@@ -1,3 +1,12 @@
+2007-11-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcolorbar.[ch]: derive from GtkEventBox instead
+	of GtkMisc, but use an input-only window.
+
+	* app/tools/gimplevelstool.c: redirect the events of the color
+	bars to te handle bars. The historgram dialog has this change
+	already. Functionality should be 100% restored now.
+
 2007-11-22  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimphelpui.[ch]: use

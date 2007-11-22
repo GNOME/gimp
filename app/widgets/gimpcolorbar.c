@@ -55,7 +55,7 @@ static gboolean  gimp_color_bar_expose       (GtkWidget      *widget,
                                               GdkEventExpose *event);
 
 
-G_DEFINE_TYPE (GimpColorBar, gimp_color_bar, GTK_TYPE_MISC)
+G_DEFINE_TYPE (GimpColorBar, gimp_color_bar, GTK_TYPE_EVENT_BOX)
 
 #define parent_class gimp_color_bar_parent_class
 
@@ -98,7 +98,7 @@ gimp_color_bar_class_init (GimpColorBarClass *klass)
 static void
 gimp_color_bar_init (GimpColorBar *bar)
 {
-  GTK_WIDGET_SET_FLAGS (bar, GTK_NO_WINDOW);
+  gtk_event_box_set_visible_window (GTK_EVENT_BOX (bar), FALSE);
 
   bar->orientation = GTK_ORIENTATION_HORIZONTAL;
 }
@@ -161,8 +161,8 @@ gimp_color_bar_expose (GtkWidget      *widget,
   gint          width, height;
   gint          i, j;
 
-  x = GTK_MISC (bar)->xpad;
-  y = GTK_MISC (bar)->ypad;
+  x = GTK_CONTAINER (bar)->border_width;
+  y = GTK_CONTAINER (bar)->border_width;
 
   width  = widget->allocation.width  - 2 * x;
   height = widget->allocation.height - 2 * y;

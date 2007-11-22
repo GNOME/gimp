@@ -428,6 +428,18 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox3), tool->input_sliders, FALSE, FALSE, 0);
   gtk_widget_show (tool->input_sliders);
 
+  g_signal_connect_swapped (tool->input_bar, "button-press-event",
+                            G_CALLBACK (GTK_WIDGET_GET_CLASS (tool->input_sliders)->button_press_event),
+                            tool->input_sliders);
+
+  g_signal_connect_swapped (tool->input_bar, "button-release-event",
+                            G_CALLBACK (GTK_WIDGET_GET_CLASS (tool->input_sliders)->button_release_event),
+                            tool->input_sliders);
+
+  g_signal_connect_swapped (tool->input_bar, "motion-notify-event",
+                            G_CALLBACK (GTK_WIDGET_GET_CLASS (tool->input_sliders)->motion_notify_event),
+                            tool->input_sliders);
+
   /*  Horizontal box for input levels spinbuttons  */
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -525,6 +537,18 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_set_size_request (tool->output_sliders, -1, CONTROL_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox2), tool->output_sliders, FALSE, FALSE, 0);
   gtk_widget_show (tool->output_sliders);
+
+  g_signal_connect_swapped (tool->output_bar, "button-press-event",
+                            G_CALLBACK (GTK_WIDGET_GET_CLASS (tool->output_sliders)->button_press_event),
+                            tool->output_sliders);
+
+  g_signal_connect_swapped (tool->output_bar, "button-release-event",
+                            G_CALLBACK (GTK_WIDGET_GET_CLASS (tool->output_sliders)->button_release_event),
+                            tool->output_sliders);
+
+  g_signal_connect_swapped (tool->output_bar, "motion-notify-event",
+                            G_CALLBACK (GTK_WIDGET_GET_CLASS (tool->output_sliders)->motion_notify_event),
+                            tool->output_sliders);
 
   /*  Horizontal box for levels spin widgets  */
   hbox = gtk_hbox_new (FALSE, 6);
