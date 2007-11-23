@@ -445,7 +445,7 @@ register_procedural_db_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-dump",
                                      "Dumps the current contents of the procedural database",
-                                     "This procedure dumps the contents of the procedural database to the specified file. The file will contain all of the information provided for each registered procedure. This file is in a format appropriate for use with the supplied \"pdb_self_doc.el\" Elisp script, which generates a texinfo document.",
+                                     "This procedure dumps the contents of the procedural database to the specified file. The file will contain all of the information provided for each registered procedure.",
                                      "Spencer Kimball & Josh MacDonald",
                                      "Spencer Kimball & Josh MacDonald & Peter Mattis",
                                      "1995-1996",

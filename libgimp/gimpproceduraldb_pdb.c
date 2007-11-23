@@ -64,9 +64,7 @@ gimp_procedural_db_temp_name (void)
  *
  * This procedure dumps the contents of the procedural database to the
  * specified file. The file will contain all of the information
- * provided for each registered procedure. This file is in a format
- * appropriate for use with the supplied \"pdb_self_doc.el\" Elisp
- * script, which generates a texinfo document.
+ * provided for each registered procedure.
  *
  * Returns: TRUE on success.
  */

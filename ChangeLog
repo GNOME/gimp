@@ -1,3 +1,11 @@
+2007-11-23  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/procedural_db.pdb: removed outdated information
+	from comment.
+
+	* app/pdb/procedural_db_cmds.c
+	* libgimp/gimpproceduraldb_pdb.c: regenerated.
+
 2007-11-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcolorbar.[ch]: derive from GtkEventBox instead
