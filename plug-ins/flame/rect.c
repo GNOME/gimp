@@ -109,29 +109,29 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
    if (field) {
       image_height = spec->cps[0].height / 2;
       if (field == field_odd)
-	 out += nchan * out_width;
+         out += nchan * out_width;
       out_width *= 2;
    } else
       image_height = spec->cps[0].height;
 
    if (1) {
       filter_width = (2.0 * FILTER_CUTOFF * oversample *
-		      spec->cps[0].spatial_filter_radius);
+                      spec->cps[0].spatial_filter_radius);
       /* make sure it has same parity as oversample */
       if ((filter_width ^ oversample) & 1)
-	 filter_width++;
+         filter_width++;
 
       filter = (double *) malloc(sizeof(double) * filter_width * filter_width);
       /* fill in the coefs */
       for (i = 0; i < filter_width; i++)
-	 for (j = 0; j < filter_width; j++) {
-	    double ii = ((2.0 * i + 1.0) / filter_width - 1.0) * FILTER_CUTOFF;
-	    double jj = ((2.0 * j + 1.0) / filter_width - 1.0) * FILTER_CUTOFF;
-	    if (field)
-	       jj *= 2.0;
-	    filter[i + j * filter_width] =
-	       exp(-2.0 * (ii * ii + jj * jj));
-	 }
+         for (j = 0; j < filter_width; j++) {
+            double ii = ((2.0 * i + 1.0) / filter_width - 1.0) * FILTER_CUTOFF;
+            double jj = ((2.0 * j + 1.0) / filter_width - 1.0) * FILTER_CUTOFF;
+            if (field)
+               jj *= 2.0;
+            filter[i + j * filter_width] =
+               exp(-2.0 * (ii * ii + jj * jj));
+         }
 
       normalize_vector(filter, filter_width * filter_width);
    }
@@ -141,9 +141,9 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
       double t;
       /* fill in the coefs */
       for (i = 0; i < nbatches; i++) {
-	 t = temporal_deltas[i] = (2.0 * ((double) i / (nbatches - 1)) - 1.0)
-	    * spec->temporal_filter_radius;
-	 temporal_filter[i] = exp(-2.0 * t * t);
+         t = temporal_deltas[i] = (2.0 * ((double) i / (nbatches - 1)) - 1.0)
+            * spec->temporal_filter_radius;
+         temporal_filter[i] = exp(-2.0 * t * t);
       }
 
       normalize_vector(temporal_filter, nbatches);
@@ -170,15 +170,15 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
      static char *last_block = NULL;
      static int last_block_size = 0;
      int memory_rqd = (sizeof(bucket) * nbuckets +
-		       sizeof(abucket) * nbuckets +
-		       sizeof(point) * SUB_BATCH_SIZE);
+                       sizeof(abucket) * nbuckets +
+                       sizeof(point) * SUB_BATCH_SIZE);
      if (memory_rqd > last_block_size) {
        if (last_block != NULL)
-	  free(last_block);
+          free(last_block);
        last_block = (char *) malloc(memory_rqd);
        if (NULL == last_block) {
-	  fprintf(stderr, "render_rectangle: cannot malloc %d bytes.\n", memory_rqd);
-	  exit(1);
+          fprintf(stderr, "render_rectangle: cannot malloc %d bytes.\n", memory_rqd);
+          exit(1);
        }
        /* else fprintf(stderr, "render_rectangle: mallocked %dMb.\n", Mb); */
 
@@ -201,121 +201,121 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
       interpolate(spec->cps, spec->ncps, batch_time, &cp);
 
       /* compute the colormap entries.  the input colormap is 256 long with
-	 entries from 0 to 1.0 */
+         entries from 0 to 1.0 */
       for (j = 0; j < CMAP_SIZE; j++) {
-	 for (k = 0; k < 3; k++) {
+         for (k = 0; k < 3; k++) {
 #if 1
-	    cmap[j][k] = (int) (cp.cmap[(j * 256) / CMAP_SIZE][k] *
-				cp.white_level);
+            cmap[j][k] = (int) (cp.cmap[(j * 256) / CMAP_SIZE][k] *
+                                cp.white_level);
 #else
-	    /* monochrome if you don't have any cmaps */
-	    cmap[j][k] = cp.white_level;
+            /* monochrome if you don't have any cmaps */
+            cmap[j][k] = cp.white_level;
 #endif
-	 }
-	 cmap[j][3] = cp.white_level;
+         }
+         cmap[j][3] = cp.white_level;
       }
 
       /* compute camera */
       if (1) {
-	double t0, t1, shift = 0.0, corner0, corner1;
-	double scale;
+        double t0, t1, shift = 0.0, corner0, corner1;
+        double scale;
 
-	scale = pow(2.0, cp.zoom);
-	sample_density = cp.sample_density * scale * scale;
+        scale = pow(2.0, cp.zoom);
+        sample_density = cp.sample_density * scale * scale;
 
-	ppux = cp.pixels_per_unit * scale;
-	ppuy = field ? (ppux / 2.0) : ppux;
-	switch (field) {
-	case field_both: shift =  0.0; break;
-	case field_even: shift = -0.5; break;
-	case field_odd:  shift =  0.5; break;
-	}
-	shift = shift / ppux;
-	t0 = (double) gutter_width / (oversample * ppux);
-	t1 = (double) gutter_width / (oversample * ppuy);
-	corner0 = cp.center[0] - image_width / ppux / 2.0;
-	corner1 = cp.center[1] - image_height / ppuy / 2.0;
-	bounds[0] = corner0 - t0;
-	bounds[1] = corner1 - t1 + shift;
-	bounds[2] = corner0 + image_width  / ppux + t0;
-	bounds[3] = corner1 + image_height / ppuy + t1 + shift;
-	size[0] = 1.0 / (bounds[2] - bounds[0]);
-	size[1] = 1.0 / (bounds[3] - bounds[1]);
+        ppux = cp.pixels_per_unit * scale;
+        ppuy = field ? (ppux / 2.0) : ppux;
+        switch (field) {
+        case field_both: shift =  0.0; break;
+        case field_even: shift = -0.5; break;
+        case field_odd:  shift =  0.5; break;
+        }
+        shift = shift / ppux;
+        t0 = (double) gutter_width / (oversample * ppux);
+        t1 = (double) gutter_width / (oversample * ppuy);
+        corner0 = cp.center[0] - image_width / ppux / 2.0;
+        corner1 = cp.center[1] - image_height / ppuy / 2.0;
+        bounds[0] = corner0 - t0;
+        bounds[1] = corner1 - t1 + shift;
+        bounds[2] = corner0 + image_width  / ppux + t0;
+        bounds[3] = corner1 + image_height / ppuy + t1 + shift;
+        size[0] = 1.0 / (bounds[2] - bounds[0]);
+        size[1] = 1.0 / (bounds[3] - bounds[1]);
       }
 
       nsamples = (int) (sample_density * nbuckets /
-			(oversample * oversample));
+                        (oversample * oversample));
 
       batch_size = nsamples / cp.nbatches;
 
       sbc = 0;
       for (sub_batch = 0;
-	   sub_batch < batch_size;
-	   sub_batch += SUB_BATCH_SIZE) {
+           sub_batch < batch_size;
+           sub_batch += SUB_BATCH_SIZE) {
 
-	if (progress && !(sbc++ & 32))
-	  (*progress)(0.5*sub_batch/(double)batch_size);
+        if (progress && (sbc++ % 32) == 0)
+          (*progress)(0.5*sub_batch/(double)batch_size);
 
-	 /* generate a sub_batch_size worth of samples */
-	 points[0][0] = random_uniform11();
-	 points[0][1] = random_uniform11();
-	 points[0][2] = random_uniform01();
-	 iterate(&cp, SUB_BATCH_SIZE, FUSE, points);
+         /* generate a sub_batch_size worth of samples */
+         points[0][0] = random_uniform11();
+         points[0][1] = random_uniform11();
+         points[0][2] = random_uniform01();
+         iterate(&cp, SUB_BATCH_SIZE, FUSE, points);
 
-	 /* merge them into buckets, looking up colors */
-	 for (j = 0; j < SUB_BATCH_SIZE; j++) {
-	    int k, color_index;
-	    double *p = points[j];
-	    bucket *b;
-	    if (p[0] < bounds[0] ||
-		p[1] < bounds[1] ||
-		p[0] > bounds[2] ||
-		p[1] > bounds[3])
-	       continue;
-	    color_index = (int) (p[2] * CMAP_SIZE);
-	    if (color_index < 0) color_index = 0;
-	    else if (color_index > (CMAP_SIZE-1))
-	       color_index = CMAP_SIZE-1;
-	    b = buckets +
-	       (int) (width * (p[0] - bounds[0]) * size[0]) +
-		  width * (int) (height * (p[1] - bounds[1]) * size[1]);
-	    for (k = 0; k < 4; k++)
-	       bump_no_overflow(b[0][k], cmap[color_index][k], short);
-	 }
+         /* merge them into buckets, looking up colors */
+         for (j = 0; j < SUB_BATCH_SIZE; j++) {
+            int k, color_index;
+            double *p = points[j];
+            bucket *b;
+            if (p[0] < bounds[0] ||
+                p[1] < bounds[1] ||
+                p[0] > bounds[2] ||
+                p[1] > bounds[3])
+               continue;
+            color_index = (int) (p[2] * CMAP_SIZE);
+            if (color_index < 0) color_index = 0;
+            else if (color_index > (CMAP_SIZE-1))
+               color_index = CMAP_SIZE-1;
+            b = buckets +
+               (int) (width * (p[0] - bounds[0]) * size[0]) +
+                  width * (int) (height * (p[1] - bounds[1]) * size[1]);
+            for (k = 0; k < 4; k++)
+               bump_no_overflow(b[0][k], cmap[color_index][k], short);
+         }
       }
 
       if (1) {
-	 double k1 =(cp.contrast * cp.brightness *
-		     PREFILTER_WHITE * 268.0 *
-		     temporal_filter[batch_num]) / 256;
-	 double area = image_width * image_height / (ppux * ppuy);
-	 double k2 = (oversample * oversample * nbatches) /
-	    (cp.contrast * area * cp.white_level * sample_density);
+         double k1 =(cp.contrast * cp.brightness *
+                     PREFILTER_WHITE * 268.0 *
+                     temporal_filter[batch_num]) / 256;
+         double area = image_width * image_height / (ppux * ppuy);
+         double k2 = (oversample * oversample * nbatches) /
+            (cp.contrast * area * cp.white_level * sample_density);
 
-	 /* log intensity in hsv space */
-	 for (j = 0; j < height; j++)
-	    for (i = 0; i < width; i++) {
-	       abucket *a = accumulate + i + j * width;
-	       bucket *b = buckets + i + j * width;
-	       double c[4], ls;
-	       c[0] = (double) b[0][0];
-	       c[1] = (double) b[0][1];
-	       c[2] = (double) b[0][2];
-	       c[3] = (double) b[0][3];
-	       if (0.0 == c[3])
-		 continue;
+         /* log intensity in hsv space */
+         for (j = 0; j < height; j++)
+            for (i = 0; i < width; i++) {
+               abucket *a = accumulate + i + j * width;
+               bucket *b = buckets + i + j * width;
+               double c[4], ls;
+               c[0] = (double) b[0][0];
+               c[1] = (double) b[0][1];
+               c[2] = (double) b[0][2];
+               c[3] = (double) b[0][3];
+               if (0.0 == c[3])
+                 continue;
 
-	       ls = (k1 * log(1.0 + c[3] * k2))/c[3];
-	       c[0] *= ls;
-	       c[1] *= ls;
-	       c[2] *= ls;
-	       c[3] *= ls;
+               ls = (k1 * log(1.0 + c[3] * k2))/c[3];
+               c[0] *= ls;
+               c[1] *= ls;
+               c[2] *= ls;
+               c[3] *= ls;
 
-	       bump_no_overflow(a[0][0], c[0] + 0.5, accum_t);
-	       bump_no_overflow(a[0][1], c[1] + 0.5, accum_t);
-	       bump_no_overflow(a[0][2], c[2] + 0.5, accum_t);
-	       bump_no_overflow(a[0][3], c[3] + 0.5, accum_t);
-	    }
+               bump_no_overflow(a[0][0], c[0] + 0.5, accum_t);
+               bump_no_overflow(a[0][1], c[1] + 0.5, accum_t);
+               bump_no_overflow(a[0][2], c[2] + 0.5, accum_t);
+               bump_no_overflow(a[0][3], c[3] + 0.5, accum_t);
+            }
       }
    }
    /*
@@ -327,41 +327,41 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
       double g = 1.0 / spec->cps[0].gamma;
       y = 0;
       for (j = 0; j < image_height; j++) {
-	 if (progress && !(j & 32))
-	   (*progress)(0.5+0.5*j/(double)image_height);
-	 x = 0;
-	 for (i = 0; i < image_width; i++) {
-	    int ii, jj, a;
-	    unsigned char *p;
-	    t[0] = t[1] = t[2] = t[3] = 0.0;
-	    for (ii = 0; ii < filter_width; ii++)
-	       for (jj = 0; jj < filter_width; jj++) {
-		  double k = filter[ii + jj * filter_width];
-		  abucket *a = accumulate + x + ii + (y + jj) * width;
+         if (progress && (j % 32) == 0)
+           (*progress)(0.5+0.5*j/(double)image_height);
+         x = 0;
+         for (i = 0; i < image_width; i++) {
+            int ii, jj, a;
+            unsigned char *p;
+            t[0] = t[1] = t[2] = t[3] = 0.0;
+            for (ii = 0; ii < filter_width; ii++)
+               for (jj = 0; jj < filter_width; jj++) {
+                  double k = filter[ii + jj * filter_width];
+                  abucket *a = accumulate + x + ii + (y + jj) * width;
 
-		  t[0] += k * a[0][0];
-		  t[1] += k * a[0][1];
-		  t[2] += k * a[0][2];
-		  t[3] += k * a[0][3];
-	       }
-	    p = out + nchan * (i + j * out_width);
-	    a = 256.0 * pow((double) t[0] / PREFILTER_WHITE, g) + 0.5;
-	    if (a < 0) a = 0; else if (a > 255) a = 255;
-	    p[0] = a;
-	    a = 256.0 * pow((double) t[1] / PREFILTER_WHITE, g) + 0.5;
-	    if (a < 0) a = 0; else if (a > 255) a = 255;
-	    p[1] = a;
-	    a = 256.0 * pow((double) t[2] / PREFILTER_WHITE, g) + 0.5;
-	    if (a < 0) a = 0; else if (a > 255) a = 255;
-	    p[2] = a;
-	    if (nchan > 3) {
-	      a = 256.0 * pow((double) t[3] / PREFILTER_WHITE, g) + 0.5;
-	      if (a < 0) a = 0; else if (a > 255) a = 255;
-	      p[3] = a;
-	    }
-	    x += oversample;
-	 }
-	 y += oversample;
+                  t[0] += k * a[0][0];
+                  t[1] += k * a[0][1];
+                  t[2] += k * a[0][2];
+                  t[3] += k * a[0][3];
+               }
+            p = out + nchan * (i + j * out_width);
+            a = 256.0 * pow((double) t[0] / PREFILTER_WHITE, g) + 0.5;
+            if (a < 0) a = 0; else if (a > 255) a = 255;
+            p[0] = a;
+            a = 256.0 * pow((double) t[1] / PREFILTER_WHITE, g) + 0.5;
+            if (a < 0) a = 0; else if (a > 255) a = 255;
+            p[1] = a;
+            a = 256.0 * pow((double) t[2] / PREFILTER_WHITE, g) + 0.5;
+            if (a < 0) a = 0; else if (a > 255) a = 255;
+            p[2] = a;
+            if (nchan > 3) {
+              a = 256.0 * pow((double) t[3] / PREFILTER_WHITE, g) + 0.5;
+              if (a < 0) a = 0; else if (a > 255) a = 255;
+              p[3] = a;
+            }
+            x += oversample;
+         }
+         y += oversample;
       }
    }
 
