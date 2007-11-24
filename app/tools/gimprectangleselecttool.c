@@ -354,7 +354,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
 
   priv->saved_show_selection = gimp_display_shell_get_show_selection (shell);
 
-  if (function == RECT_INACTIVE)
+  if (function == GIMP_RECTANGLE_TOOL_INACTIVE)
     {
       GimpDisplay *old_display = tool->display;
       gboolean     edit_started;
@@ -377,7 +377,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
   /* if the shift or ctrl keys are down, we don't want to adjust, we
    * want to create a new rectangle, regardless of pointer loc */
   if (state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK))
-    gimp_rectangle_tool_set_function (rectangle, RECT_CREATING);
+    gimp_rectangle_tool_set_function (rectangle, GIMP_RECTANGLE_TOOL_CREATING);
 
   gimp_rectangle_tool_button_press (tool, coords, time, state, display);
 
@@ -390,7 +390,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
    */
   function = gimp_rectangle_tool_get_function (rectangle);
 
-  if (function == RECT_CREATING)
+  if (function == GIMP_RECTANGLE_TOOL_CREATING)
     {
       priv->use_saved_op = FALSE;
     }
@@ -528,7 +528,7 @@ gimp_rect_select_tool_oper_update (GimpTool        *tool,
 
   function = gimp_rectangle_tool_get_function (GIMP_RECTANGLE_TOOL (tool));
 
-  if (function == RECT_INACTIVE)
+  if (function == GIMP_RECTANGLE_TOOL_INACTIVE)
     GIMP_SELECTION_TOOL (tool)->allow_move = TRUE;
   else
     GIMP_SELECTION_TOOL (tool)->allow_move = FALSE;
@@ -752,7 +752,7 @@ gimp_rect_select_tool_execute (GimpRectangleTool *rectangle,
                             NULL);
             }
 
-          gimp_rectangle_tool_set_function (rectangle, RECT_MOVING);
+          gimp_rectangle_tool_set_function (rectangle, GIMP_RECTANGLE_TOOL_MOVING);
 
           return FALSE;
         }

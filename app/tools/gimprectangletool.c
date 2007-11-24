@@ -767,7 +767,7 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
           gimp_draw_tool_stop (draw_tool);
         }
 
-      gimp_rectangle_tool_set_function (rect_tool, RECT_CREATING);
+      gimp_rectangle_tool_set_function (rect_tool, GIMP_RECTANGLE_TOOL_CREATING);
 
       private->x1 = private->x2 = coords->x;
       private->y1 = private->y2 = coords->y;
@@ -793,7 +793,7 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
   private->lastx = snapped_x;
   private->lasty = snapped_y;
 
-  if (private->function == RECT_CREATING)
+  if (private->function == GIMP_RECTANGLE_TOOL_CREATING)
     {
       private->x1 = private->x2 = snapped_x;
       private->y1 = private->y2 = snapped_y;
@@ -863,7 +863,7 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
 
   gimp_tool_control_halt (tool->control);
 
-  if (private->function == RECT_EXECUTING)
+  if (private->function == GIMP_RECTANGLE_TOOL_EXECUTING)
     gimp_tool_pop_status (tool, display);
 
   switch (release_type)
@@ -888,7 +888,7 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
     case GIMP_BUTTON_RELEASE_CLICK:
 
       /* When a dead area is clicked, don't execute. */
-      if (private->function == RECT_DEAD)
+      if (private->function == GIMP_RECTANGLE_TOOL_DEAD)
         break;
 
       if (gimp_rectangle_tool_execute (rect_tool))
@@ -940,8 +940,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
    * button release event to execute or if the user has grabbed a dead
    * area of the rectangle.
    */
-  if (private->function == RECT_EXECUTING ||
-      private->function == RECT_DEAD)
+  if (private->function == GIMP_RECTANGLE_TOOL_EXECUTING ||
+      private->function == GIMP_RECTANGLE_TOOL_DEAD)
     return;
 
   /* Handle snapping. */
@@ -964,8 +964,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   if (gimp_rectangle_tool_rect_adjusting_func (rect_tool))
     gimp_rectangle_tool_update_highlight (rect_tool);
 
-  if (private->function != RECT_MOVING &&
-      private->function != RECT_EXECUTING)
+  if (private->function != GIMP_RECTANGLE_TOOL_MOVING &&
+      private->function != GIMP_RECTANGLE_TOOL_EXECUTING)
     {
       gdouble pub_x1, pub_y1, pub_x2, pub_y2;
       gint w, h;
@@ -982,9 +982,9 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
                                       _("Rectangle: "), w, " × ", h, NULL);
     }
 
-  if (private->function == RECT_CREATING)
+  if (private->function == GIMP_RECTANGLE_TOOL_CREATING)
     {
-      GimpRectangleFunction function = RECT_CREATING;
+      GimpRectangleFunction function = GIMP_RECTANGLE_TOOL_CREATING;
       gdouble               dx = snapped_x - private->lastx;
       gdouble               dy = snapped_y - private->lasty;
 
@@ -995,26 +995,26 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       if (dx < 0)
         {
           function = dy < 0 ?
-            RECT_RESIZING_UPPER_LEFT :
-            RECT_RESIZING_LOWER_LEFT;
+            GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT :
+            GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT;
         }
       else if (dx > 0)
         {
           function = dy < 0 ?
-            RECT_RESIZING_UPPER_RIGHT :
-            RECT_RESIZING_LOWER_RIGHT;
+            GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT :
+            GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT;
         }
       else if (dy < 0)
         {
           function = dx < 0 ?
-            RECT_RESIZING_UPPER_LEFT :
-            RECT_RESIZING_UPPER_RIGHT;
+            GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT :
+            GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT;
         }
       else if (dy > 0)
         {
           function = dx < 0 ?
-            RECT_RESIZING_LOWER_LEFT :
-            RECT_RESIZING_LOWER_RIGHT;
+            GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT :
+            GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT;
         }
 
       gimp_rectangle_tool_set_function (rect_tool, function);
@@ -1037,7 +1037,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
                                               private->x2 - private->x1,
                                               private->y2 - private->y1);
 
-          gimp_rectangle_tool_set_function (rect_tool, RECT_MOVING);
+          gimp_rectangle_tool_set_function (rect_tool, GIMP_RECTANGLE_TOOL_MOVING);
         }
     }
 
@@ -1185,23 +1185,23 @@ gimp_rectangle_tool_check_function (GimpRectangleTool *rect_tool)
       swap_doubles (&private->x1, &private->x2);
       switch (function)
         {
-          case RECT_RESIZING_UPPER_LEFT:
-            function = RECT_RESIZING_UPPER_RIGHT;
+          case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
+            function = GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT;
             break;
-          case RECT_RESIZING_UPPER_RIGHT:
-            function = RECT_RESIZING_UPPER_LEFT;
+          case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
+            function = GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT;
             break;
-          case RECT_RESIZING_LOWER_LEFT:
-            function = RECT_RESIZING_LOWER_RIGHT;
+          case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
+            function = GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT;
             break;
-          case RECT_RESIZING_LOWER_RIGHT:
-            function = RECT_RESIZING_LOWER_LEFT;
+          case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
+            function = GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT;
             break;
-          case RECT_RESIZING_LEFT:
-            function = RECT_RESIZING_RIGHT;
+          case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
+            function = GIMP_RECTANGLE_TOOL_RESIZING_RIGHT;
             break;
-          case RECT_RESIZING_RIGHT:
-            function = RECT_RESIZING_LEFT;
+          case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
+            function = GIMP_RECTANGLE_TOOL_RESIZING_LEFT;
             break;
           /* avoid annoying warnings about unhandled enums */
           default:
@@ -1214,23 +1214,23 @@ gimp_rectangle_tool_check_function (GimpRectangleTool *rect_tool)
       swap_doubles (&private->y1, &private->y2);
       switch (function)
         {
-          case RECT_RESIZING_UPPER_LEFT:
-           function = RECT_RESIZING_LOWER_LEFT;
+          case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
+           function = GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT;
             break;
-          case RECT_RESIZING_UPPER_RIGHT:
-            function = RECT_RESIZING_LOWER_RIGHT;
+          case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
+            function = GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT;
             break;
-          case RECT_RESIZING_LOWER_LEFT:
-            function = RECT_RESIZING_UPPER_LEFT;
+          case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
+            function = GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT;
             break;
-          case RECT_RESIZING_LOWER_RIGHT:
-            function = RECT_RESIZING_UPPER_RIGHT;
+          case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
+            function = GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT;
             break;
-          case RECT_RESIZING_TOP:
-            function = RECT_RESIZING_BOTTOM;
+          case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
+            function = GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM;
             break;
-          case RECT_RESIZING_BOTTOM:
-            function = RECT_RESIZING_TOP;
+          case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
+            function = GIMP_RECTANGLE_TOOL_RESIZING_TOP;
             break;
           default:
             break;
@@ -1303,44 +1303,44 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
   /*  Resize the rectangle if the mouse is over a handle, otherwise move it  */
   switch (private->function)
     {
-    case RECT_MOVING:
-    case RECT_RESIZING_UPPER_LEFT:
+    case GIMP_RECTANGLE_TOOL_MOVING:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
       new_x = private->x1 + dx;
       new_y = private->y1 + dy;
       private->lastx = new_x;
       private->lasty = new_y;
       break;
-    case RECT_RESIZING_UPPER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
       new_x = private->x2 + dx;
       new_y = private->y1 + dy;
       private->lastx = new_x;
       private->lasty = new_y;
       break;
-    case RECT_RESIZING_LOWER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
       new_x = private->x1 + dx;
       new_y = private->y2 + dy;
       private->lastx = new_x;
       private->lasty = new_y;
       break;
-    case RECT_RESIZING_LOWER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
       new_x = private->x2 + dx;
       new_y = private->y2 + dy;
       private->lastx = new_x;
       private->lasty = new_y;
       break;
-    case RECT_RESIZING_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
       new_x = private->x1 + dx;
       private->lastx = new_x;
       break;
-    case RECT_RESIZING_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
       new_x = private->x2 + dx;
       private->lastx = new_x;
       break;
-    case RECT_RESIZING_TOP:
+    case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
       new_y = private->y1 + dy;
       private->lasty = new_y;
       break;
-    case RECT_RESIZING_BOTTOM:
+    case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
       new_y = private->y2 + dy;
       private->lasty = new_y;
       break;
@@ -1406,65 +1406,65 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
       /* The cursor is outside of the rectangle, clicking should
        * create a new rectangle.
        */
-      function = RECT_CREATING;
+      function = GIMP_RECTANGLE_TOOL_CREATING;
     }
   else if (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                 coords,
                                                 GTK_ANCHOR_NORTH_WEST))
     {
-      function = RECT_RESIZING_UPPER_LEFT;
+      function = GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT;
     }
   else if (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                 coords,
                                                 GTK_ANCHOR_SOUTH_EAST))
     {
-      function = RECT_RESIZING_LOWER_RIGHT;
+      function = GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT;
     }
   else if  (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                  coords,
                                                  GTK_ANCHOR_NORTH_EAST))
     {
-      function = RECT_RESIZING_UPPER_RIGHT;
+      function = GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT;
     }
   else if (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                 coords,
                                                 GTK_ANCHOR_SOUTH_WEST))
     {
-      function = RECT_RESIZING_LOWER_LEFT;
+      function = GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT;
     }
   else if (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                 coords,
                                                 GTK_ANCHOR_WEST))
     {
-      function = RECT_RESIZING_LEFT;
+      function = GIMP_RECTANGLE_TOOL_RESIZING_LEFT;
     }
   else if (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                 coords,
                                                 GTK_ANCHOR_EAST))
     {
-      function = RECT_RESIZING_RIGHT;
+      function = GIMP_RECTANGLE_TOOL_RESIZING_RIGHT;
     }
   else if (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                 coords,
                                                 GTK_ANCHOR_NORTH))
     {
-      function = RECT_RESIZING_TOP;
+      function = GIMP_RECTANGLE_TOOL_RESIZING_TOP;
     }
   else if (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                 coords,
                                                 GTK_ANCHOR_SOUTH))
     {
-      function = RECT_RESIZING_BOTTOM;
+      function = GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM;
     }
   else if (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                 coords,
                                                 GTK_ANCHOR_CENTER))
     {
-      function = RECT_MOVING;
+      function = GIMP_RECTANGLE_TOOL_MOVING;
     }
   else
     {
-      function = RECT_DEAD;
+      function = GIMP_RECTANGLE_TOOL_DEAD;
     }
 
   gimp_rectangle_tool_set_function (GIMP_RECTANGLE_TOOL (tool), function);
@@ -1489,34 +1489,34 @@ gimp_rectangle_tool_cursor_update (GimpTool        *tool,
     {
       switch (private->function)
         {
-        case RECT_CREATING:
+        case GIMP_RECTANGLE_TOOL_CREATING:
           cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
           break;
-        case RECT_MOVING:
+        case GIMP_RECTANGLE_TOOL_MOVING:
           cursor = GIMP_CURSOR_MOVE;
           break;
-        case RECT_RESIZING_UPPER_LEFT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
           cursor = GIMP_CURSOR_CORNER_TOP_LEFT;
           break;
-        case RECT_RESIZING_UPPER_RIGHT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
           cursor = GIMP_CURSOR_CORNER_TOP_RIGHT;
           break;
-        case RECT_RESIZING_LOWER_LEFT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
           cursor = GIMP_CURSOR_CORNER_BOTTOM_LEFT;
           break;
-        case RECT_RESIZING_LOWER_RIGHT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
           cursor = GIMP_CURSOR_CORNER_BOTTOM_RIGHT;
           break;
-        case RECT_RESIZING_LEFT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
           cursor = GIMP_CURSOR_SIDE_LEFT;
           break;
-        case RECT_RESIZING_RIGHT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
           cursor = GIMP_CURSOR_SIDE_RIGHT;
           break;
-        case RECT_RESIZING_TOP:
+        case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
           cursor = GIMP_CURSOR_SIDE_TOP;
           break;
-        case RECT_RESIZING_BOTTOM:
+        case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
           cursor = GIMP_CURSOR_SIDE_BOTTOM;
           break;
 
@@ -1543,7 +1543,7 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
   gimp_rectangle_tool_get_public_rect (GIMP_RECTANGLE_TOOL (draw_tool),
                                        &pub_x1, &pub_y1, &pub_x2, &pub_y2);
 
-  if (private->function == RECT_INACTIVE)
+  if (private->function == GIMP_RECTANGLE_TOOL_INACTIVE)
     return;
 
   gimp_draw_tool_draw_rectangle (draw_tool, FALSE,
@@ -1555,13 +1555,13 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
 
   switch (private->function)
     {
-    case RECT_MOVING:
+    case GIMP_RECTANGLE_TOOL_MOVING:
       if (gimp_tool_control_is_active (tool->control))
         break;
       /* else fallthrough */
 
-    case RECT_DEAD:
-    case RECT_CREATING:
+    case GIMP_RECTANGLE_TOOL_DEAD:
+    case GIMP_RECTANGLE_TOOL_CREATING:
       gimp_draw_tool_draw_corner (draw_tool, FALSE, private->narrow_mode,
                                   pub_x1, pub_y1,
                                   pub_x2, pub_y2,
@@ -1588,8 +1588,8 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
                                   GTK_ANCHOR_SOUTH_EAST, FALSE);
       break;
 
-    case RECT_RESIZING_TOP:
-    case RECT_RESIZING_BOTTOM:
+    case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
+    case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
       gimp_draw_tool_draw_corner (draw_tool,
                                   ! gimp_tool_control_is_active (tool->control),
                                   private->narrow_mode,
@@ -1601,8 +1601,8 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
                                   FALSE);
       break;
 
-    case RECT_RESIZING_LEFT:
-    case RECT_RESIZING_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
       gimp_draw_tool_draw_corner (draw_tool,
                                   ! gimp_tool_control_is_active (tool->control),
                                   private->narrow_mode,
@@ -1941,7 +1941,7 @@ gimp_rectangle_tool_halt (GimpRectangleTool *rect_tool)
   tool->display  = NULL;
   tool->drawable = NULL;
 
-  gimp_rectangle_tool_set_function (rect_tool, RECT_INACTIVE);
+  gimp_rectangle_tool_set_function (rect_tool, GIMP_RECTANGLE_TOOL_INACTIVE);
 
   if (options_private->auto_shrink_button)
     {
@@ -2106,7 +2106,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
     {
       if (private->x1 != options_private->x)
         gimp_rectangle_tool_synthesize_motion (rect_tool,
-                                               RECT_MOVING,
+                                               GIMP_RECTANGLE_TOOL_MOVING,
                                                options_private->x,
                                                private->y1);
     }
@@ -2114,7 +2114,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
     {
       if (private->y1 != options_private->y)
         gimp_rectangle_tool_synthesize_motion (rect_tool,
-                                               RECT_MOVING,
+                                               GIMP_RECTANGLE_TOOL_MOVING,
                                                private->x1,
                                                options_private->y);
     }
@@ -2138,7 +2138,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
             }
 
           gimp_rectangle_tool_synthesize_motion (rect_tool,
-                                                 RECT_RESIZING_RIGHT,
+                                                 GIMP_RECTANGLE_TOOL_RESIZING_RIGHT,
                                                  x2,
                                                  private->y2);
         }
@@ -2163,7 +2163,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
             }
 
           gimp_rectangle_tool_synthesize_motion (rect_tool,
-                                                 RECT_RESIZING_BOTTOM,
+                                                 GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM,
                                                  private->x2,
                                                  y2);
         }
@@ -2192,7 +2192,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
           gdouble y = private->y1;
 
           gimp_rectangle_tool_synthesize_motion (rect_tool,
-                                                 RECT_RESIZING_LOWER_RIGHT,
+                                                 GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT,
                                                  private->x2,
                                                  private->y2);
 
@@ -2250,7 +2250,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
           gdouble new_y2 = private->y1 + private->x2 - private->x1;
 
           gimp_rectangle_tool_synthesize_motion (rect_tool,
-                                                 RECT_RESIZING_LOWER_RIGHT,
+                                                 GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT,
                                                  new_x2,
                                                  new_y2);
         }
@@ -2277,7 +2277,7 @@ gimp_rectangle_tool_shell_scrolled (GimpDisplayShell  *shell,
 GimpRectangleFunction
 gimp_rectangle_tool_get_function (GimpRectangleTool *rect_tool)
 {
-  g_return_val_if_fail (GIMP_IS_RECTANGLE_TOOL (rect_tool), RECT_INACTIVE);
+  g_return_val_if_fail (GIMP_IS_RECTANGLE_TOOL (rect_tool), GIMP_RECTANGLE_TOOL_INACTIVE);
 
   return GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool)->function;
 }
@@ -2561,28 +2561,28 @@ gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private)
 {
   switch (private->function)
     {
-    case RECT_RESIZING_UPPER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
       return GTK_ANCHOR_NORTH_WEST;
 
-    case RECT_RESIZING_UPPER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
       return GTK_ANCHOR_NORTH_EAST;
 
-    case RECT_RESIZING_LOWER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
       return GTK_ANCHOR_SOUTH_WEST;
 
-    case RECT_RESIZING_LOWER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
       return GTK_ANCHOR_SOUTH_EAST;
 
-    case RECT_RESIZING_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
       return GTK_ANCHOR_WEST;
 
-    case RECT_RESIZING_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
       return GTK_ANCHOR_EAST;
 
-    case RECT_RESIZING_TOP:
+    case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
       return GTK_ANCHOR_NORTH;
 
-    case RECT_RESIZING_BOTTOM:
+    case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
       return GTK_ANCHOR_SOUTH;
 
     default:
@@ -2643,21 +2643,21 @@ gimp_rectangle_tool_rect_rubber_banding_func (GimpRectangleTool *rect_tool)
 
   switch (private->function)
     {
-      case RECT_CREATING:
-      case RECT_RESIZING_LEFT:
-      case RECT_RESIZING_RIGHT:
-      case RECT_RESIZING_TOP:
-      case RECT_RESIZING_BOTTOM:
-      case RECT_RESIZING_UPPER_LEFT:
-      case RECT_RESIZING_UPPER_RIGHT:
-      case RECT_RESIZING_LOWER_LEFT:
-      case RECT_RESIZING_LOWER_RIGHT:
+      case GIMP_RECTANGLE_TOOL_CREATING:
+      case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
+      case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
+      case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
+      case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
+      case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
+      case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
+      case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
+      case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
         rect_rubber_banding_func = TRUE;
         break;
 
-      case RECT_MOVING:
-      case RECT_INACTIVE:
-      case RECT_DEAD:
+      case GIMP_RECTANGLE_TOOL_MOVING:
+      case GIMP_RECTANGLE_TOOL_INACTIVE:
+      case GIMP_RECTANGLE_TOOL_DEAD:
       default:
         rect_rubber_banding_func = FALSE;
         break;
@@ -2681,7 +2681,7 @@ gimp_rectangle_tool_rect_adjusting_func (GimpRectangleTool *rect_tool)
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
 
   return (gimp_rectangle_tool_rect_rubber_banding_func (rect_tool) ||
-          private->function == RECT_MOVING);
+          private->function == GIMP_RECTANGLE_TOOL_MOVING);
 }
 
 /**
@@ -2707,20 +2707,20 @@ gimp_rectangle_tool_get_other_side (GimpRectangleTool  *rect_tool,
 
   switch (private->function)
     {
-    case RECT_RESIZING_UPPER_RIGHT:
-    case RECT_RESIZING_LOWER_RIGHT:
-    case RECT_RESIZING_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
       *other_x = &private->x1;
       break;
 
-    case RECT_RESIZING_UPPER_LEFT:
-    case RECT_RESIZING_LOWER_LEFT:
-    case RECT_RESIZING_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
       *other_x = &private->x2;
       break;
 
-    case RECT_RESIZING_TOP:
-    case RECT_RESIZING_BOTTOM:
+    case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
+    case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
     default:
       *other_x = NULL;
       break;
@@ -2728,20 +2728,20 @@ gimp_rectangle_tool_get_other_side (GimpRectangleTool  *rect_tool,
 
   switch (private->function)
     {
-    case RECT_RESIZING_LOWER_RIGHT:
-    case RECT_RESIZING_LOWER_LEFT:
-    case RECT_RESIZING_BOTTOM:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
       *other_y = &private->y1;
       break;
 
-    case RECT_RESIZING_UPPER_RIGHT:
-    case RECT_RESIZING_UPPER_LEFT:
-    case RECT_RESIZING_TOP:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
       *other_y = &private->y2;
       break;
 
-    case RECT_RESIZING_LEFT:
-    case RECT_RESIZING_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
     default:
       *other_y = NULL;
       break;
@@ -2819,10 +2819,10 @@ gimp_rectangle_tool_apply_coord (GimpRectangleTool *rect_tool,
   options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rect_tool);
   options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
-  if (private->function == RECT_INACTIVE)
-    g_warning ("function is RECT_INACTIVE while mouse is moving");
+  if (private->function == GIMP_RECTANGLE_TOOL_INACTIVE)
+    g_warning ("function is GIMP_RECTANGLE_TOOL_INACTIVE while mouse is moving");
 
-  if (private->function == RECT_MOVING)
+  if (private->function == GIMP_RECTANGLE_TOOL_MOVING)
     {
       /* Preserve width and height while moving the grab-point to where the
        * cursor is.
@@ -2842,9 +2842,9 @@ gimp_rectangle_tool_apply_coord (GimpRectangleTool *rect_tool,
 
   switch (private->function)
     {
-    case RECT_RESIZING_UPPER_LEFT:
-    case RECT_RESIZING_LOWER_LEFT:
-    case RECT_RESIZING_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
       private->x1 = coord_x;
 
       if (options_private->fixed_center)
@@ -2852,9 +2852,9 @@ gimp_rectangle_tool_apply_coord (GimpRectangleTool *rect_tool,
 
       break;
 
-    case RECT_RESIZING_UPPER_RIGHT:
-    case RECT_RESIZING_LOWER_RIGHT:
-    case RECT_RESIZING_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
       private->x2 = coord_x;
 
       if (options_private->fixed_center)
@@ -2865,9 +2865,9 @@ gimp_rectangle_tool_apply_coord (GimpRectangleTool *rect_tool,
 
   switch (private->function)
     {
-    case RECT_RESIZING_UPPER_LEFT:
-    case RECT_RESIZING_UPPER_RIGHT:
-    case RECT_RESIZING_TOP:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
       private->y1 = coord_y;
 
       if (options_private->fixed_center)
@@ -2875,9 +2875,9 @@ gimp_rectangle_tool_apply_coord (GimpRectangleTool *rect_tool,
 
       break;
 
-    case RECT_RESIZING_LOWER_LEFT:
-    case RECT_RESIZING_LOWER_RIGHT:
-    case RECT_RESIZING_BOTTOM:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
       private->y2 = coord_y;
 
       if (options_private->fixed_center)
@@ -2906,59 +2906,59 @@ gimp_rectangle_tool_setup_snap_offsets (GimpRectangleTool *rect_tool,
       gimp_tool_control_set_snap_offsets (tool->control, 0, 0, 0, 0);
       break;
 
-    case RECT_RESIZING_UPPER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
       gimp_tool_control_set_snap_offsets (tool->control,
                                           pub_x1 - coords->x,
                                           pub_y1 - coords->y,
                                           0, 0);
       break;
 
-    case RECT_RESIZING_UPPER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
       gimp_tool_control_set_snap_offsets (tool->control,
                                           pub_x2 - coords->x,
                                           pub_y1 - coords->y,
                                           0, 0);
       break;
 
-    case RECT_RESIZING_LOWER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
       gimp_tool_control_set_snap_offsets (tool->control,
                                           pub_x1 - coords->x,
                                           pub_y2 - coords->y,
                                           0, 0);
       break;
 
-    case RECT_RESIZING_LOWER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
       gimp_tool_control_set_snap_offsets (tool->control,
                                           pub_x2 - coords->x,
                                           pub_y2 - coords->y,
                                           0, 0);
       break;
 
-    case RECT_RESIZING_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
       gimp_tool_control_set_snap_offsets (tool->control,
                                           pub_x1 - coords->x, 0,
                                           0, 0);
       break;
 
-    case RECT_RESIZING_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
       gimp_tool_control_set_snap_offsets (tool->control,
                                           pub_x2 - coords->x, 0,
                                           0, 0);
       break;
 
-    case RECT_RESIZING_TOP:
+    case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
       gimp_tool_control_set_snap_offsets (tool->control,
                                           0, pub_y1 - coords->y,
                                           0, 0);
       break;
 
-    case RECT_RESIZING_BOTTOM:
+    case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
       gimp_tool_control_set_snap_offsets (tool->control,
                                           0, pub_y2 - coords->y,
                                           0, 0);
       break;
 
-    case RECT_MOVING:
+    case GIMP_RECTANGLE_TOOL_MOVING:
       gimp_tool_control_set_snap_offsets (tool->control,
                                           pub_x1 - coords->x,
                                           pub_y1 - coords->y,
@@ -3284,9 +3284,9 @@ gimp_rectangle_tool_apply_fixed_width (GimpRectangleTool      *rect_tool,
 
   switch (private->function)
     {
-    case RECT_RESIZING_LOWER_LEFT:
-    case RECT_RESIZING_UPPER_LEFT:
-    case RECT_RESIZING_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
 
       /* We always want to center around fixed_center here, since we want the
        * anchor point to be directly on the opposite side.
@@ -3297,9 +3297,9 @@ gimp_rectangle_tool_apply_fixed_width (GimpRectangleTool      *rect_tool,
 
       break;
 
-    case RECT_RESIZING_LOWER_RIGHT:
-    case RECT_RESIZING_UPPER_RIGHT:
-    case RECT_RESIZING_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
 
       /* We always want to center around fixed_center here, since we want the
        * anchor point to be directly on the opposite side.
@@ -3343,9 +3343,9 @@ gimp_rectangle_tool_apply_fixed_height (GimpRectangleTool      *rect_tool,
 
   switch (private->function)
     {
-    case RECT_RESIZING_UPPER_LEFT:
-    case RECT_RESIZING_UPPER_RIGHT:
-    case RECT_RESIZING_TOP:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
 
       /* We always want to center around fixed_center here, since we want the
        * anchor point to be directly on the opposite side.
@@ -3356,9 +3356,9 @@ gimp_rectangle_tool_apply_fixed_height (GimpRectangleTool      *rect_tool,
 
       break;
 
-    case RECT_RESIZING_LOWER_LEFT:
-    case RECT_RESIZING_LOWER_RIGHT:
-    case RECT_RESIZING_BOTTOM:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
+    case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
 
       /* We always want to center around fixed_center here, since we want the
        * anchor point to be directly on the opposite side.
@@ -3430,12 +3430,12 @@ gimp_rectangle_tool_apply_aspect (GimpRectangleTool *rect_tool,
            */
           switch (private->function)
             {
-            case RECT_RESIZING_LEFT:
-            case RECT_RESIZING_RIGHT:
-            case RECT_RESIZING_UPPER_LEFT:
-            case RECT_RESIZING_UPPER_RIGHT:
-            case RECT_RESIZING_LOWER_LEFT:
-            case RECT_RESIZING_LOWER_RIGHT:
+            case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
+            case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
+            case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
+            case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
+            case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
+            case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
               if (!(clamped_sides & CLAMPED_TOP) &&
                   !(clamped_sides & CLAMPED_BOTTOM))
                 {
@@ -3447,8 +3447,8 @@ gimp_rectangle_tool_apply_aspect (GimpRectangleTool *rect_tool,
                 }
               break;
 
-            case RECT_RESIZING_TOP:
-            case RECT_RESIZING_BOTTOM:
+            case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
+            case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
             default:
               side_to_resize = SIDE_TO_RESIZE_LEFT_AND_RIGHT_SYMMETRICALLY;
               break;
@@ -3462,12 +3462,12 @@ gimp_rectangle_tool_apply_aspect (GimpRectangleTool *rect_tool,
            */
           switch (private->function)
             {
-            case RECT_RESIZING_TOP:
-            case RECT_RESIZING_BOTTOM:
-            case RECT_RESIZING_UPPER_LEFT:
-            case RECT_RESIZING_UPPER_RIGHT:
-            case RECT_RESIZING_LOWER_LEFT:
-            case RECT_RESIZING_LOWER_RIGHT:
+            case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
+            case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
+            case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
+            case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
+            case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
+            case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
               if (!(clamped_sides & CLAMPED_LEFT) &&
                   !(clamped_sides & CLAMPED_RIGHT))
                 {
@@ -3479,8 +3479,8 @@ gimp_rectangle_tool_apply_aspect (GimpRectangleTool *rect_tool,
                 }
               break;
 
-            case RECT_RESIZING_LEFT:
-            case RECT_RESIZING_RIGHT:
+            case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
+            case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
             default:
               side_to_resize = SIDE_TO_RESIZE_TOP_AND_BOTTOM_SYMMETRICALLY;
               break;
@@ -3496,54 +3496,54 @@ gimp_rectangle_tool_apply_aspect (GimpRectangleTool *rect_tool,
        */
       switch (private->function)
         {
-        case RECT_RESIZING_UPPER_LEFT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
           if (!(clamped_sides & CLAMPED_TOP))
             side_to_resize = SIDE_TO_RESIZE_TOP;
           else
             side_to_resize = SIDE_TO_RESIZE_LEFT;
           break;
 
-        case RECT_RESIZING_UPPER_RIGHT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
           if (!(clamped_sides & CLAMPED_TOP))
             side_to_resize = SIDE_TO_RESIZE_TOP;
           else
             side_to_resize = SIDE_TO_RESIZE_RIGHT;
           break;
 
-        case RECT_RESIZING_LOWER_LEFT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
           if (!(clamped_sides & CLAMPED_BOTTOM))
             side_to_resize = SIDE_TO_RESIZE_BOTTOM;
           else
             side_to_resize = SIDE_TO_RESIZE_LEFT;
           break;
 
-        case RECT_RESIZING_LOWER_RIGHT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
           if (!(clamped_sides & CLAMPED_BOTTOM))
             side_to_resize = SIDE_TO_RESIZE_BOTTOM;
           else
             side_to_resize = SIDE_TO_RESIZE_RIGHT;
           break;
 
-        case RECT_RESIZING_LEFT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
           if (!(clamped_sides & CLAMPED_TOP) && !(clamped_sides & CLAMPED_BOTTOM))
             side_to_resize = SIDE_TO_RESIZE_TOP_AND_BOTTOM_SYMMETRICALLY;
           else
             side_to_resize = SIDE_TO_RESIZE_LEFT;
           break;
 
-        case RECT_RESIZING_RIGHT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
           if (!(clamped_sides & CLAMPED_TOP) && !(clamped_sides & CLAMPED_BOTTOM))
             side_to_resize = SIDE_TO_RESIZE_TOP_AND_BOTTOM_SYMMETRICALLY;
           else
             side_to_resize = SIDE_TO_RESIZE_RIGHT;
           break;
 
-        case RECT_RESIZING_BOTTOM:
-        case RECT_RESIZING_TOP:
+        case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
+        case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
           side_to_resize = SIDE_TO_RESIZE_LEFT_AND_RIGHT_SYMMETRICALLY;
           break;
 
-        case RECT_MOVING:
+        case GIMP_RECTANGLE_TOOL_MOVING:
         default:
           if (!(clamped_sides & CLAMPED_BOTTOM))
             side_to_resize = SIDE_TO_RESIZE_BOTTOM;
@@ -3565,54 +3565,54 @@ gimp_rectangle_tool_apply_aspect (GimpRectangleTool *rect_tool,
        */
       switch (private->function)
         {
-        case RECT_RESIZING_UPPER_LEFT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
           if (!(clamped_sides & CLAMPED_LEFT))
             side_to_resize = SIDE_TO_RESIZE_LEFT;
           else
             side_to_resize = SIDE_TO_RESIZE_TOP;
           break;
 
-        case RECT_RESIZING_UPPER_RIGHT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
           if (!(clamped_sides & CLAMPED_RIGHT))
             side_to_resize = SIDE_TO_RESIZE_RIGHT;
           else
             side_to_resize = SIDE_TO_RESIZE_TOP;
           break;
 
-        case RECT_RESIZING_LOWER_LEFT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
           if (!(clamped_sides & CLAMPED_LEFT))
             side_to_resize = SIDE_TO_RESIZE_LEFT;
           else
             side_to_resize = SIDE_TO_RESIZE_BOTTOM;
           break;
 
-        case RECT_RESIZING_LOWER_RIGHT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
           if (!(clamped_sides & CLAMPED_RIGHT))
             side_to_resize = SIDE_TO_RESIZE_RIGHT;
           else
             side_to_resize = SIDE_TO_RESIZE_BOTTOM;
           break;
 
-        case RECT_RESIZING_TOP:
+        case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
           if (!(clamped_sides & CLAMPED_LEFT) && !(clamped_sides & CLAMPED_RIGHT))
             side_to_resize = SIDE_TO_RESIZE_LEFT_AND_RIGHT_SYMMETRICALLY;
           else
             side_to_resize = SIDE_TO_RESIZE_TOP;
           break;
 
-        case RECT_RESIZING_BOTTOM:
+        case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
           if (!(clamped_sides & CLAMPED_LEFT) && !(clamped_sides & CLAMPED_RIGHT))
             side_to_resize = SIDE_TO_RESIZE_LEFT_AND_RIGHT_SYMMETRICALLY;
           else
             side_to_resize = SIDE_TO_RESIZE_BOTTOM;
           break;
 
-        case RECT_RESIZING_LEFT:
-        case RECT_RESIZING_RIGHT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
+        case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
           side_to_resize = SIDE_TO_RESIZE_TOP_AND_BOTTOM_SYMMETRICALLY;
           break;
 
-        case RECT_MOVING:
+        case GIMP_RECTANGLE_TOOL_MOVING:
         default:
           if (!(clamped_sides & CLAMPED_BOTTOM))
             side_to_resize = SIDE_TO_RESIZE_BOTTOM;
@@ -3704,7 +3704,7 @@ gimp_rectangle_tool_update_with_coord (GimpRectangleTool *rect_tool,
    * rectangle adjusting functions since it's shape should not change
    * then.
    */
-  if (private->function != RECT_MOVING)
+  if (private->function != GIMP_RECTANGLE_TOOL_MOVING)
     {
       gimp_rectangle_tool_apply_fixed_rule (rect_tool);
     }
@@ -3747,7 +3747,7 @@ gimp_rectangle_tool_apply_fixed_rule (GimpRectangleTool *rect_tool)
         }
       else
         {
-          if (private->function != RECT_MOVING)
+          if (private->function != GIMP_RECTANGLE_TOOL_MOVING)
             {
               ClampedSide clamped_sides = CLAMPED_NONE;
 
@@ -3898,7 +3898,7 @@ gimp_rectangle_tool_handle_general_clamping (GimpRectangleTool *rect_tool)
   if (constraint == GIMP_RECTANGLE_CONSTRAIN_NONE)
     return;
 
-  if (private->function != RECT_MOVING)
+  if (private->function != GIMP_RECTANGLE_TOOL_MOVING)
     {
       gimp_rectangle_tool_clamp (rect_tool,
                                  NULL,

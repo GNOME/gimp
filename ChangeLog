@@ -1,5 +1,12 @@
 2007-11-24  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangletool.[ch]: Renamed RECT_* identifiers of
+	the GimpRectangleFunction enum to GIMP_RECTANGLE_TOOL_*.
+
+	* app/tools/gimprectangleselecttool.c: Use the new names.
+
+2007-11-24  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangletool.[ch]: Ported the internal
 	representation of the rectangle to gdouble:s instead of
 	gint:s. This solves problems like not being able to swap portrait
