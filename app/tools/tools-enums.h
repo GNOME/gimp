@@ -61,6 +61,17 @@ typedef enum
 } GimpRectangleConstraint;
 
 
+#define GIMP_TYPE_RECTANGLE_PRECISION (gimp_rectangle_precision_get_type ())
+
+GType gimp_rectangle_precision_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_RECTANGLE_PRECISION_INT,
+  GIMP_RECTANGLE_PRECISION_DOUBLE,
+} GimpRectanglePrecision;
+
+
 #define GIMP_TYPE_RECTANGLE_TOOL_FIXED_RULE (gimp_rectangle_tool_fixed_rule_get_type ())
 
 GType gimp_rectangle_tool_fixed_rule_get_type (void) G_GNUC_CONST;

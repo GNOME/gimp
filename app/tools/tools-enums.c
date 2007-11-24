@@ -104,6 +104,34 @@ gimp_rectangle_constraint_get_type (void)
 }
 
 GType
+gimp_rectangle_precision_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_RECTANGLE_PRECISION_INT,    "GIMP_RECTANGLE_PRECISION_INT",    "int" },
+    { GIMP_RECTANGLE_PRECISION_DOUBLE, "GIMP_RECTANGLE_PRECISION_DOUBLE", "double" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_RECTANGLE_PRECISION_INT,    "Integer precision", NULL },
+    { GIMP_RECTANGLE_PRECISION_DOUBLE, "Double precision",  NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpRectanglePrecision", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_rectangle_tool_fixed_rule_get_type (void)
 {
   static const GEnumValue values[] =
