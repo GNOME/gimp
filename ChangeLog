@@ -3,13 +3,14 @@
 	* app/tools/gimprectangletool.[ch]: Ported the internal
 	representation of the rectangle to gdouble:s instead of
 	gint:s. This solves problems like not being able to swap portrait
-	for landscape on very small rectangle and bug #442027, as well as
+	for landscape on very small rectangles and bug #442027, as well as
 	provides a nice base to solve other similar problems when they are
 	discovered. It is possible to choose what precision the
 	GimpRectangleTool:s will appear to have externally through a new
-	GimpRectanglePrecision enum and property, but the gdouble
-	precision mode still requires some work in order to be useful. In
-	the processes quite some refactoring has taken place, mostly
+	GimpRectanglePrecision enum and property, but the gdouble mode
+	still requires some work in order to be useful. Internally the
+	rectangle always is represented using gdouble:s of course. In the
+	processes quite some refactoring has taken place, mostly
 	restructuring code and splitting larger functions into smaller
 	more managable ones.
 	(gimp_rectangle_tool_rect_rubber_banding_func)
