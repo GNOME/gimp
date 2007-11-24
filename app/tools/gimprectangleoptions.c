@@ -164,21 +164,21 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
                                                                 GIMP_PARAM_READWRITE |
                                                                 G_PARAM_CONSTRUCT));
 
-     g_object_interface_install_property (iface,
-                                          gimp_param_spec_unit ("position-unit",
-                                                                NULL, NULL,
-                                                                TRUE, TRUE,
-                                                                GIMP_UNIT_PIXEL,
-                                                                GIMP_PARAM_READWRITE |
-                                                                G_PARAM_CONSTRUCT));
+      g_object_interface_install_property (iface,
+                                           gimp_param_spec_unit ("position-unit",
+                                                                 NULL, NULL,
+                                                                 TRUE, TRUE,
+                                                                 GIMP_UNIT_PIXEL,
+                                                                 GIMP_PARAM_READWRITE |
+                                                                 G_PARAM_CONSTRUCT));
 
-     g_object_interface_install_property (iface,
-                                          gimp_param_spec_unit ("size-unit",
-                                                                NULL, NULL,
-                                                                TRUE, TRUE,
-                                                                GIMP_UNIT_PIXEL,
-                                                                GIMP_PARAM_READWRITE |
-                                                                G_PARAM_CONSTRUCT));
+      g_object_interface_install_property (iface,
+                                           gimp_param_spec_unit ("size-unit",
+                                                                 NULL, NULL,
+                                                                 TRUE, TRUE,
+                                                                 GIMP_UNIT_PIXEL,
+                                                                 GIMP_PARAM_READWRITE |
+                                                                 G_PARAM_CONSTRUCT));
 
       g_object_interface_install_property (iface,
                                            g_param_spec_boolean ("fixed-rule-active",
@@ -296,13 +296,13 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
                                                                  GIMP_PARAM_READWRITE |
                                                                  GIMP_PARAM_STATIC_STRINGS));
 
-     g_object_interface_install_property (iface,
-                                          gimp_param_spec_unit ("fixed-unit",
-                                                                NULL, NULL,
-                                                                TRUE, TRUE,
-                                                                GIMP_UNIT_PIXEL,
-                                                                GIMP_PARAM_READWRITE |
-                                                                G_PARAM_CONSTRUCT));
+      g_object_interface_install_property (iface,
+                                           gimp_param_spec_unit ("fixed-unit",
+                                                                 NULL, NULL,
+                                                                 TRUE, TRUE,
+                                                                 GIMP_UNIT_PIXEL,
+                                                                 GIMP_PARAM_READWRITE |
+                                                                 G_PARAM_CONSTRUCT));
 
       g_object_interface_install_property (iface,
                                            g_param_spec_boolean ("fixed-center",

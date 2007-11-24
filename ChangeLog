@@ -1,5 +1,10 @@
 2007-11-24  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangleoptions.c
+	(gimp_rectangle_options_iface_base_init): Fix indentation.
+
+2007-11-24  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangletool.[ch]: Renamed RECT_* identifiers of
 	the GimpRectangleFunction enum to GIMP_RECTANGLE_TOOL_*.
 
