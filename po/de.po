@@ -10461,12 +10461,12 @@ msgid ""
 "Perspective Clone Tool: Clone from an image source after applying a "
 "perspective transformation"
 msgstr ""
-"Perspektive klonen: Ein Bild nach Anwendung einer perspektivischen "
+"Perspektivisches Klonen: Ein Bild nach Anwendung einer perspektivischen "
 "Transformation kopieren"
 
 #: ../app/tools/gimpperspectiveclonetool.c:130
 msgid "_Perspective Clone"
-msgstr "_Perspektivischer Klon"
+msgstr "_Perspektivisches Klonen"
 
 #: ../app/tools/gimpperspectiveclonetool.c:701
 msgid "Ctrl-Click to set a clone source"
