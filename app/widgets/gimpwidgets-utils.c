@@ -979,13 +979,12 @@ gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
     {
       GtkAction   *action;
       GtkAccelKey *accel_key;
-      gchar       *orig_tooltip;
       gchar       *tooltip;
       const gchar *help_id;
 
       action = g_object_get_data (G_OBJECT (widget), "gimp-accel-action");
 
-      g_object_get (action, "tooltip", &orig_tooltip, NULL);
+      g_object_get (action, "tooltip", &tooltip, NULL);
       help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
 
       accel_key = gtk_accel_group_find (accel_group,
@@ -996,21 +995,23 @@ gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
           accel_key->accel_key &&
           accel_key->accel_flags & GTK_ACCEL_VISIBLE)
         {
-          gchar *accel = gtk_accelerator_get_label (accel_key->accel_key,
-                                                    accel_key->accel_mods);
+          gchar *escaped = g_markup_escape_text (tooltip, -1);
+          gchar *accel   = gtk_accelerator_get_label (accel_key->accel_key,
+                                                      accel_key->accel_mods);
+          gchar *tmp     = g_strdup_printf ("%s  <b>%s</b>", escaped, accel);
 
-          tooltip = g_strdup_printf ("%s  <b>%s</b>", orig_tooltip, accel);
           g_free (accel);
+          g_free (escaped);
+
+          gimp_help_set_help_data_with_markup (widget, tmp, help_id);
+          g_free (tmp);
         }
       else
         {
-          tooltip = g_strdup (orig_tooltip);
+          gimp_help_set_help_data (widget, tooltip, help_id);
         }
 
-      gimp_help_set_help_data_with_markup (widget, tooltip, help_id);
-
       g_free (tooltip);
-      g_free (orig_tooltip);
     }
 }
 
