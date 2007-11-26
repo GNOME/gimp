@@ -71,7 +71,9 @@ static guchar   *wmf_get_pixbuf (const gchar       *filename,
                                  gint              *height);
 static guchar   *wmf_load_file  (const gchar       *filename,
                                  guint             *width,
-                                 guint             *height);
+                                 guint             *height,
+                                 GError           **error);
+
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -866,9 +868,10 @@ wmf_get_pixbuf (const gchar *filename,
 }
 
 static guchar *
-wmf_load_file (const gchar *filename,
-               guint       *width,
-               guint       *height)
+wmf_load_file (const gchar  *filename,
+               guint        *width,
+               guint        *height,
+               GError      **error)
 {
   GMappedFile    *file;
   guchar         *pixels   = NULL;
@@ -884,7 +887,7 @@ wmf_load_file (const gchar *filename,
 
   *width = *height = -1;
 
-  file = g_mapped_file_new (filename, FALSE, NULL);
+  file = g_mapped_file_new (filename, FALSE, error);
   if (! file)
     return NULL;
 
@@ -964,15 +967,26 @@ load_image (const gchar *filename)
   guint         rowstride;
   guint         count = 0;
   guint         done  = 0;
+  GError       *error = NULL;
   gpointer      pr;
 
-  pixels = wmf_load_file (filename, &width, &height);
+  pixels = wmf_load_file (filename, &width, &height, &error);
   rowstride = width * 4;
 
   if (!pixels)
     {
-      g_message (_("Could not open '%s' for reading."),
-                 gimp_filename_to_utf8 (filename));
+      if (error)
+        {
+          g_message (_("Could not open '%s' for reading: %s"),
+                     gimp_filename_to_utf8 (filename), error->message);
+          g_error_free (error);
+        }
+      else
+        {
+          g_message (_("Could not open '%s' for reading"),
+                     gimp_filename_to_utf8 (filename));
+        }
+
       return -1;
     }
 

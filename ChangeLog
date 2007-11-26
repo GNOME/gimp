@@ -1,5 +1,9 @@
 2007-11-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/wmf.c	(load_image): improved error reporting.
+
+2007-11-26  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/wmf.c: avoid filename encoding problems by not
 	using wmf_file_open() but mapping the file into memory with
 	GMappedFile. Fixes bug #499329.
