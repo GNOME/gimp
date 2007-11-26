@@ -1,5 +1,11 @@
 2007-11-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/wmf.c: avoid filename encoding problems by not
+	using wmf_file_open() but mapping the file into memory with
+	GMappedFile. Fixes bug #499329.
+
+2007-11-26  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpblobeditor.c (gimp_blob_editor_draw_blob):
 	corrected rendering of the blob (bug #499281).
 
