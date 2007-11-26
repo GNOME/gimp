@@ -1,3 +1,8 @@
+2007-11-26  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpblobeditor.c (gimp_blob_editor_draw_blob):
+	corrected rendering of the blob (bug #499281).
+
 2007-11-24  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangleoptions.c

@@ -339,9 +339,10 @@ gimp_blob_editor_draw_blob (GimpBlobEditor *editor,
     }
 
   /*  to get a nice antialiased outline, render the blob at double size  */
+  radius *= 2.0;
   blob = function (2.0 * xc, 2.0 * yc,
-                   2.0 * radius * cos (editor->angle),
-                   2.0 * radius * sin (editor->angle),
+                   radius * cos (editor->angle),
+                   radius * sin (editor->angle),
                    (- (radius / editor->aspect) * sin (editor->angle)),
                    (  (radius / editor->aspect) * cos (editor->angle)));
 
