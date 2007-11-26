@@ -281,11 +281,13 @@ run (const gchar      *name,
 
 static GtkWidget *size_label = NULL;
 
+
 /*  This function retrieves the pixel size from a WMF file. */
 static gboolean
 load_wmf_size (const gchar *filename,
                WmfLoadVals *vals)
 {
+  GMappedFile    *file;
   /* the bits we need to decode the WMF via libwmf2's GD layer  */
   wmf_error_t     err;
   gulong          flags;
@@ -293,11 +295,13 @@ load_wmf_size (const gchar *filename,
   wmfAPI         *API   = NULL;
   wmfAPI_Options  api_options;
   wmfD_Rect       bbox;
-  guint           width;
-  guint           height;
+  guint           width   = -1;
+  guint           height  = -1;
   gboolean        success = TRUE;
 
-  width = height = -1;
+  file = g_mapped_file_new (filename, FALSE, NULL);
+  if (! file)
+    return FALSE;
 
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
   api_options.function = wmf_gd_function;
@@ -309,7 +313,9 @@ load_wmf_size (const gchar *filename,
   ddata = WMF_GD_GetData (API);
   ddata->type = wmf_gd_image;
 
-  err = wmf_file_open (API, filename);
+  err = wmf_mem_open (API,
+                      (guchar *) g_mapped_file_get_contents (file),
+                      g_mapped_file_get_length (file));
   if (err != wmf_E_None)
     success = FALSE;
 
@@ -321,6 +327,9 @@ load_wmf_size (const gchar *filename,
                           vals->resolution, vals->resolution);
   if (err != wmf_E_None || width <= 0 || height <= 0)
     success = FALSE;
+
+  wmf_mem_close (API);
+  g_mapped_file_free (file);
 
   if (width < 1 || height < 1)
     {
@@ -521,7 +530,7 @@ load_dialog (const gchar *filename)
   gtk_container_add (GTK_CONTAINER (frame), image);
   gtk_widget_show (image);
 
-  g_signal_connect (image, "size_allocate",
+  g_signal_connect (image, "size-allocate",
                     G_CALLBACK (wmf_preview_callback),
                     pixels);
 
@@ -753,6 +762,7 @@ wmf_get_pixbuf (const gchar *filename,
                 gint        *width,
                 gint        *height)
 {
+  GMappedFile    *file;
   guchar         *pixels   = NULL;
 
   /* the bits we need to decode the WMF via libwmf2's GD layer  */
@@ -766,6 +776,10 @@ wmf_get_pixbuf (const gchar *filename,
   wmfD_Rect       bbox;
   gint           *gd_pixels = NULL;
 
+  file = g_mapped_file_new (filename, FALSE, NULL);
+  if (! file)
+    return NULL;
+
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
   api_options.function = wmf_gd_function;
 
@@ -776,7 +790,9 @@ wmf_get_pixbuf (const gchar *filename,
   ddata = WMF_GD_GetData (API);
   ddata->type = wmf_gd_image;
 
-  err = wmf_file_open (API, filename);
+  err = wmf_mem_open (API,
+                      (guchar *) g_mapped_file_get_contents (file),
+                      g_mapped_file_get_length (file));
   if (err != wmf_E_None)
     goto _wmf_error;
 
@@ -825,8 +841,6 @@ wmf_get_pixbuf (const gchar *filename,
   if (err != wmf_E_None)
     goto _wmf_error;
 
-  wmf_file_close (API);
-
   if (ddata->gd_image != NULL)
     gd_pixels = wmf_gd_image_pixels (ddata->gd_image);
   if (gd_pixels == NULL)
@@ -836,15 +850,17 @@ wmf_get_pixbuf (const gchar *filename,
   if (pixels == NULL)
     goto _wmf_error;
 
-  wmf_api_destroy (API);
-  API = NULL;
-
   *width = ddata->width;
   *height = ddata->height;
 
  _wmf_error:
   if (API)
-    wmf_api_destroy (API);
+    {
+      wmf_mem_close (API);
+      wmf_api_destroy (API);
+    }
+
+  g_mapped_file_free (file);
 
   return pixels;
 }
@@ -854,6 +870,7 @@ wmf_load_file (const gchar *filename,
                guint       *width,
                guint       *height)
 {
+  GMappedFile    *file;
   guchar         *pixels   = NULL;
 
   /* the bits we need to decode the WMF via libwmf2's GD layer  */
@@ -867,6 +884,10 @@ wmf_load_file (const gchar *filename,
 
   *width = *height = -1;
 
+  file = g_mapped_file_new (filename, FALSE, NULL);
+  if (! file)
+    return NULL;
+
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
   api_options.function = wmf_gd_function;
 
@@ -877,7 +898,9 @@ wmf_load_file (const gchar *filename,
   ddata = WMF_GD_GetData (API);
   ddata->type = wmf_gd_image;
 
-  err = wmf_file_open (API, filename);
+  err = wmf_mem_open (API,
+                      (guchar *) g_mapped_file_get_contents (file),
+                      g_mapped_file_get_length (file));
   if (err != wmf_E_None)
     goto _wmf_error;
 
@@ -905,8 +928,6 @@ wmf_load_file (const gchar *filename,
   if (err != wmf_E_None)
     goto _wmf_error;
 
-  wmf_file_close (API);
-
   if (ddata->gd_image != NULL)
     gd_pixels = wmf_gd_image_pixels (ddata->gd_image);
   if (gd_pixels == NULL)
@@ -916,12 +937,14 @@ wmf_load_file (const gchar *filename,
   if (pixels == NULL)
     goto _wmf_error;
 
-  wmf_api_destroy (API);
-  API = NULL;
-
  _wmf_error:
   if (API)
-    wmf_api_destroy (API);
+    {
+      wmf_mem_close (API);
+      wmf_api_destroy (API);
+    }
+
+  g_mapped_file_free (file);
 
   return pixels;
 }
