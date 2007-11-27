@@ -2425,8 +2425,12 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rect_tool,
   GimpTool                 *tool;
   gdouble                   pub_x1, pub_y1, pub_x2, pub_y2;
   gdouble                   rect_w, rect_h;
-  gdouble                   handle_x, handle_y, handle_width, handle_height;
-  gint                      narrow_mode_x_dir, narrow_mode_y_dir;
+  gdouble                   handle_x          = 0;
+  gdouble                   handle_y          = 0;
+  gdouble                   handle_width      = 0;
+  gdouble                   handle_height     = 0;
+  gint                      narrow_mode_x_dir = 0;
+  gint                      narrow_mode_y_dir = 0;
 
   tool      = GIMP_TOOL (rect_tool);
   draw_tool = GIMP_DRAW_TOOL (tool);
