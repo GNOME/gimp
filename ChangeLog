@@ -1,3 +1,9 @@
+2007-11-28  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-transform.c
+	(gimp_drawable_transform_tiles_flip): fixed typo in if condition
+	and added more sanity checks.
+
 2007-11-27  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimprectangletool.c: initialize vars to quiet

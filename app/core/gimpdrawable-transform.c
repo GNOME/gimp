@@ -112,6 +112,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
     }
 
   tile_manager_get_offsets (orig_tiles, &u1, &v1);
+
   u2 = u1 + tile_manager_width (orig_tiles);
   v2 = v1 + tile_manager_height (orig_tiles);
 
@@ -176,6 +177,7 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
   orig_width  = tile_manager_width (orig_tiles);
   orig_height = tile_manager_height (orig_tiles);
   orig_bpp    = tile_manager_bpp (orig_tiles);
+
   tile_manager_get_offsets (orig_tiles, &orig_x, &orig_y);
 
   new_x      = orig_x;
@@ -195,13 +197,14 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
                       (gdouble) orig_height - axis) + axis);
       break;
 
-    default:
+    case GIMP_ORIENTATION_UNKNOWN:
+      g_return_val_if_reached (NULL);
       break;
     }
 
   new_tiles = tile_manager_new (new_width, new_height, orig_bpp);
 
-  if (clip_result && (new_x != orig_y || new_y != orig_y))
+  if (clip_result && (new_x != orig_x || new_y != orig_y))
     {
       guchar bg_color[MAX_CHANNELS];
       gint   clip_x, clip_y;
@@ -245,8 +248,9 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
   if (new_width == 0 && new_height == 0)
     return new_tiles;
 
-  if (flip_type == GIMP_ORIENTATION_HORIZONTAL)
+  switch (flip_type)
     {
+    case GIMP_ORIENTATION_HORIZONTAL:
       for (i = 0; i < orig_width; i++)
         {
           pixel_region_init (&srcPR, orig_tiles,
@@ -257,9 +261,9 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
                              1, new_height, TRUE);
           copy_region (&srcPR, &destPR);
         }
-    }
-  else
-    {
+      break;
+
+    case GIMP_ORIENTATION_VERTICAL:
       for (i = 0; i < orig_height; i++)
         {
           pixel_region_init (&srcPR, orig_tiles,
@@ -270,6 +274,10 @@ gimp_drawable_transform_tiles_flip (GimpDrawable        *drawable,
                              new_width, 1, TRUE);
           copy_region (&srcPR, &destPR);
         }
+      break;
+
+    case GIMP_ORIENTATION_UNKNOWN:
+      break;
     }
 
   return new_tiles;
@@ -339,6 +347,7 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
   orig_width  = tile_manager_width (orig_tiles);
   orig_height = tile_manager_height (orig_tiles);
   orig_bpp    = tile_manager_bpp (orig_tiles);
+
   tile_manager_get_offsets (orig_tiles, &orig_x, &orig_y);
 
   switch (rotate_type)
@@ -371,8 +380,8 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
       break;
 
     default:
-      g_assert_not_reached ();
-      return NULL;
+      g_return_val_if_reached (NULL);
+      break;
     }
 
   if (clip_result && (new_x != orig_x || new_y != orig_y ||
@@ -614,7 +623,8 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /* Start a transform undo group */
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM, Q_("command|Flip"));
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_TRANSFORM, Q_("command|Flip"));
 
   /* Cut/Copy from the specified drawable */
   orig_tiles = gimp_drawable_transform_cut (drawable, context, &new_layer);
@@ -629,6 +639,7 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
           gint width, height;
 
           tile_manager_get_offsets (orig_tiles, &off_x, &off_y);
+
           width  = tile_manager_width  (orig_tiles);
           height = tile_manager_height (orig_tiles);
 
@@ -698,7 +709,8 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   /* Start a transform undo group */
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM, Q_("command|Rotate"));
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_TRANSFORM, Q_("command|Rotate"));
 
   /* Cut/Copy from the specified drawable */
   orig_tiles = gimp_drawable_transform_cut (drawable, context, &new_layer);
@@ -713,6 +725,7 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
           gint width, height;
 
           tile_manager_get_offsets (orig_tiles, &off_x, &off_y);
+
           width  = tile_manager_width  (orig_tiles);
           height = tile_manager_height (orig_tiles);
 
