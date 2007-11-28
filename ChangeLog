@@ -1,3 +1,14 @@
+2007-11-28  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/actions/drawable-commands.c (drawable_flip_cmd_callback):
+	fixed orientation type used for linked items (bug #499161).
+
+	* app/core/gimpdrawable-transform.c
+	(gimp_drawable_transform_tiles_flip): fixed typo in if condition
+	and added more sanity checks.
+
 2007-11-26  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
