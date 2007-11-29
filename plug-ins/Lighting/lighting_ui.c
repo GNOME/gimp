@@ -366,7 +366,6 @@ create_light_page (void)
   GtkWidget *page;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *ebox;
   GtkWidget *button;
   GtkObject *adj;
   GtkWidget *label;
@@ -420,29 +419,30 @@ create_light_page (void)
                             NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (light_type_combo),
                                  mapvals.lightsource[k].type);
+  gtk_table_attach_defaults (GTK_TABLE (table), light_type_combo,
+                             1, 2, 1, 2);
+  gtk_widget_show (light_type_combo);
+
   g_signal_connect (light_type_combo, "changed",
                     G_CALLBACK (apply_settings),
                     NULL);
 
-  ebox = gtk_event_box_new ();
-  gtk_container_add (GTK_CONTAINER (ebox), light_type_combo);
-  gtk_widget_show (ebox);
-  gtk_table_attach_defaults (GTK_TABLE (table),
-                             ebox, 1, 2, 1, 2);
-  gtk_widget_show (light_type_combo);
-  gimp_help_set_help_data (ebox, _("Type of light source to apply"), NULL);
+  gimp_help_set_help_data (light_type_combo,
+                           _("Type of light source to apply"), NULL);
 
   colorbutton = gimp_color_button_new (_("Select lightsource color"),
                                           64, 16,
                                           &mapvals.lightsource[k].color,
                                           GIMP_COLOR_AREA_FLAT);
   gimp_color_button_set_update (GIMP_COLOR_BUTTON (colorbutton), TRUE);
-  g_signal_connect (colorbutton, "color-changed",
-                    G_CALLBACK (apply_settings),
-                    NULL);
   gtk_widget_show (colorbutton);
   gtk_table_attach_defaults (GTK_TABLE (table),
                              colorbutton, 1, 2, 2, 3);
+
+  g_signal_connect (colorbutton, "color-changed",
+                    G_CALLBACK (apply_settings),
+                    NULL);
+
   gimp_help_set_help_data (colorbutton,
                            _("Set light source color"), NULL);
 
@@ -454,9 +454,11 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                                  _("_Intensity:"), 0.0, 0.5,
                                  spin_intensity, 1, TRUE);
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (apply_settings),
                     NULL);
+
   gimp_help_set_help_data (spin_intensity,
                            _("Light intensity"), NULL);
 
@@ -473,9 +475,11 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 2, 1,
                                  _("_X:"), 0.0, 0.5,
                                  spin_pos_x, 1, TRUE);
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (apply_settings),
                     NULL);
+
   gimp_help_set_help_data (spin_pos_x,
                            _("Light source X position in XYZ space"), NULL);
 
@@ -486,9 +490,11 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 2, 2,
                              _("_Y:"), 0.0, 0.5,
                              spin_pos_y, 1, TRUE);
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (apply_settings),
                     NULL);
+
   gimp_help_set_help_data (spin_pos_y,
                            _("Light source Y position in XYZ space"), NULL);
 
@@ -499,9 +505,11 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 2, 3,
                              _("_Z:"), 0.0, 0.5,
                              spin_pos_z, 1, TRUE);
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (apply_settings),
                     NULL);
+
   gimp_help_set_help_data (spin_pos_z,
                            _("Light source Z position in XYZ space"), NULL);
 
@@ -517,9 +525,11 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 4, 1,
                              _("X:"), 0.0, 0.5,
                              spin_dir_x, 1, TRUE);
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (apply_settings),
                     NULL);
+
   gimp_help_set_help_data (spin_dir_x,
                            _("Light source X direction in XYZ space"), NULL);
 
@@ -529,9 +539,11 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 4, 2,
                              _("Y:"), 0.0, 0.5,
                                  spin_dir_y, 1, TRUE);
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (apply_settings),
                     NULL);
+
   gimp_help_set_help_data (spin_dir_y,
                            _("Light source Y direction in XYZ space"), NULL);
 
@@ -541,9 +553,11 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 4, 3,
                              _("Z:"), 0.0, 0.5,
                              spin_dir_z, 1, TRUE);
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (apply_settings),
                     NULL);
+
   gimp_help_set_help_data (spin_dir_z,
                            _("Light source Z direction in XYZ space"),
                            NULL);
@@ -624,21 +638,25 @@ create_material_page (void)
                                      _("_Glowing:"), 0.0, 0.5,
                                      image, 1, FALSE);
   gtk_size_group_add_widget (group, label);
+
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.ambient_int,
                                      0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (spinbutton);
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.ambient_int);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
-  gtk_widget_show (spinbutton);
+
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gimp_help_set_help_data (spinbutton,
                            _("Amount of original color to show where no "
                              "direct light falls"), NULL);
+
   image = gtk_image_new_from_stock (STOCK_INTENSITY_AMBIENT_HIGH,
                                     GTK_ICON_SIZE_BUTTON);
   gtk_table_attach (GTK_TABLE (table), image, 3, 4, 0, 1,
@@ -653,21 +671,25 @@ create_material_page (void)
                                      _("_Bright:"), 0.0, 0.5,
                                      image, 1, FALSE);
   gtk_size_group_add_widget (group, label);
+
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.diffuse_int,
                                      0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (spinbutton);
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.diffuse_int);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
-  gtk_widget_show (spinbutton);
+
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gimp_help_set_help_data (spinbutton,
                            _("Intensity of original color when lit by a light "
                              "source"), NULL);
+
   image = gtk_image_new_from_stock (STOCK_INTENSITY_DIFFUSE_HIGH,
                                     GTK_ICON_SIZE_BUTTON);
   gtk_table_attach (GTK_TABLE (table), image, 3, 4, 1, 2,
@@ -682,21 +704,25 @@ create_material_page (void)
                                      _("_Shiny:"), 0.0, 0.5,
                                      image, 1, FALSE);
   gtk_size_group_add_widget (group, label);
+
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.specular_ref,
                                      0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 2, 3,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (spinbutton);
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.specular_ref);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
-  gtk_widget_show (spinbutton);
+
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gimp_help_set_help_data (spinbutton,
                            _("Controls how intense the highlights will be"),
                            NULL);
+
   image = gtk_image_new_from_stock (STOCK_REFLECTIVITY_SPECULAR_HIGH,
                                     GTK_ICON_SIZE_BUTTON);
   gtk_table_attach (GTK_TABLE (table), image, 3, 4, 2, 3,
@@ -710,21 +736,25 @@ create_material_page (void)
                                      _("_Polished:"), 0.0, 0.5,
                                      image, 1, FALSE);
   gtk_size_group_add_widget (group, label);
+
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.highlight,
                                      0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 3, 4,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (spinbutton);
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.highlight);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
-  gtk_widget_show (spinbutton);
+
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gimp_help_set_help_data (spinbutton,
                            _("Higher values makes the highlights more focused"),
                            NULL);
+
   image = gtk_image_new_from_stock (STOCK_REFLECTIVITY_HIGHLIGHT_HIGH,
                                     GTK_ICON_SIZE_BUTTON);
   gtk_table_attach (GTK_TABLE (table), image, 3, 4, 3, 4,
@@ -735,13 +765,14 @@ create_material_page (void)
   button = gtk_check_button_new_with_mnemonic (_("_Metallic"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 3, 4, 5,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (button);
+
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mapvals.material.metallic);
   g_signal_connect (button, "toggled",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
-  gtk_widget_show (button);
 
   gtk_widget_show (page);
 
@@ -799,6 +830,10 @@ create_bump_page (void)
                               G_CALLBACK (gimp_int_combo_box_get_active),
                               &mapvals.bumpmap_id);
 
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (mapmenu2_callback),
+                    &mapvals.bumpmap_id);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Bumpm_ap image:"), 0.0, 0.5,
                              combo, 1, FALSE);
@@ -847,7 +882,6 @@ create_environment_page (void)
   GtkWidget *table;
   GtkWidget *frame;
   GtkWidget *combo;
-  GtkWidget *ebox;
 
   page = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);
@@ -886,15 +920,11 @@ create_environment_page (void)
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), mapvals.envmap_id,
                               G_CALLBACK (envmap_combo_callback),
                               NULL);
-
-  ebox = gtk_event_box_new ();
-  gtk_container_add (GTK_CONTAINER (ebox), combo);
-  gtk_widget_show (combo);
-
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("En_vironment image:"), 0.0, 0.5,
-                             ebox, 1, FALSE);
-  gimp_help_set_help_data (ebox, _("Environment image to use"), NULL);
+                             combo, 1, FALSE);
+
+  gimp_help_set_help_data (combo, _("Environment image to use"), NULL);
 
   gtk_widget_show (page);
 
