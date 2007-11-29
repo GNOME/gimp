@@ -1,3 +1,11 @@
+2007-11-29  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/core/gimpprojection.c (gimp_projection_idle_render_init):
+	raise the priority of the idle renderer to G_PRIORITY_DEFAULT_IDLE.
+	Should fix bug #499150.
+
 2007-11-28  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
