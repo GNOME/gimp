@@ -1,3 +1,8 @@
+2007-11-29  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/Lighting/lighting_ui.c: make sure to update bumpmap
+	when combo is changed.  Addresses bug #500317.
+	
 2007-11-28  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/drawable-commands.c (drawable_flip_cmd_callback):

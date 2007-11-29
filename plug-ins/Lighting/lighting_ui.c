@@ -830,6 +830,10 @@ create_bump_page (void)
                               G_CALLBACK (gimp_int_combo_box_get_active),
                               &mapvals.bumpmap_id);
 
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (mapmenu2_callback),
+                    &mapvals.bumpmap_id);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Bumpm_ap image:"), 0.0, 0.5,
                              combo, 1, FALSE);
