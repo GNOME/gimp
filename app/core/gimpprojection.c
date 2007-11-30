@@ -546,7 +546,9 @@ gimp_projection_idle_render_init (GimpProjection *proj)
       gimp_projection_idle_render_next_area (proj);
 
       proj->idle_render.idle_id =
-        g_idle_add (gimp_projection_idle_render_callback, proj);
+        g_idle_add_full (G_PRIORITY_HIGH_IDLE,
+                         gimp_projection_idle_render_callback, proj,
+                         NULL);
     }
 }
 
