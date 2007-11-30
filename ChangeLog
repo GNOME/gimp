@@ -1,3 +1,11 @@
+2007-11-30  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/base/tile-manager.c (tile_manager_invalidate_area): if no
+	tiles have been allocated, there's no need to invalidate any.
+	Should fix bug #500178.
+
 2007-11-29  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merged from trunk:

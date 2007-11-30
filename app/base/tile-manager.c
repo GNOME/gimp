@@ -492,6 +492,10 @@ tile_manager_invalidate_area (TileManager *tm,
   gint  i;
   gint  j;
 
+  /*  if no tiles have been allocated, there's no need to invalidate any  */
+  if (! tm->tiles)
+    return;
+
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
       {
