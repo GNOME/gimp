@@ -42,7 +42,7 @@ endif
 
 uninstall-local:
 if ENABLE_GIMP_CONSOLE
-	 rm -f $(DESTDIR)$(mandir)/man1/gimp-console-$(GIMP_APP_VERSION).1
+	rm -f $(DESTDIR)$(mandir)/man1/gimp-console-$(GIMP_APP_VERSION).1
 endif
 if DEFAULT_BINARY
 	@list='$(default_binary_mans)'; \

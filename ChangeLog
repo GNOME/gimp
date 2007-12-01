@@ -1,3 +1,8 @@
+2007-12-01  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* docs/Makefile.am: Applied patch from Jesper de Jong that removes
+	an errant leading space in a command. Fixes bug #500826.
+
 2007-11-30  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpprojection.c (gimp_projection_idle_render_init):
