@@ -1,3 +1,9 @@
+2007-12-01  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpviewable.h: changed GIMP_VIEWABLE_PRIORITY_IDLE to
+	G_PRIORITY_LOW. The reason for the very low priority was to keep
+	it lower than the projection idle renderer.
+
 2007-12-01  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* docs/Makefile.am: Applied patch from Jesper de Jong that removes
