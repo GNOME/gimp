@@ -2,6 +2,13 @@
 
 	Merged from trunk:
 
+	* plug-ins/common/tiff-load.c (load_image): removed pointless and
+	untranslated warning.
+
+2007-12-02  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* plug-ins/jpeg/jpeg-load.c (jpeg_load_resolution): only set the
 	resolution if X_density and Y_density are not zero. Otherwise the
 	default resolution would be used anyway and the user sees an
