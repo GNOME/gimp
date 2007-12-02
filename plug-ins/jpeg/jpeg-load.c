@@ -478,7 +478,7 @@ static void
 jpeg_load_resolution (gint32                         image_ID,
                       struct jpeg_decompress_struct *cinfo)
 {
-  if (cinfo->saw_JFIF_marker)
+  if (cinfo->saw_JFIF_marker && cinfo->X_density != 0 && cinfo->Y_density != 0)
     {
       gdouble xresolution = cinfo->X_density;
       gdouble yresolution = cinfo->Y_density;
@@ -489,10 +489,10 @@ jpeg_load_resolution (gint32                         image_ID,
         case 0: /* unknown -> set the aspect ratio but use the default
                  *  image resolution
                  */
-          if (cinfo->Y_density != 0)
-            asymmetry = xresolution / yresolution;
+          asymmetry = xresolution / yresolution;
 
           gimp_image_get_resolution (image_ID, &xresolution, &yresolution);
+
           xresolution *= asymmetry;
           break;
 
