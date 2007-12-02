@@ -34,11 +34,12 @@
 
 
 static GValueArray *
-fonts_popup_invoker (GimpProcedure     *procedure,
-                     Gimp              *gimp,
-                     GimpContext       *context,
-                     GimpProgress      *progress,
-                     const GValueArray *args)
+fonts_popup_invoker (GimpProcedure      *procedure,
+                     Gimp               *gimp,
+                     GimpContext        *context,
+                     GimpProgress       *progress,
+                     const GValueArray  *args,
+                     GError            **error)
 {
   gboolean success = TRUE;
   const gchar *font_callback;
@@ -63,11 +64,12 @@ fonts_popup_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-fonts_close_popup_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
+fonts_close_popup_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
 {
   gboolean success = TRUE;
   const gchar *font_callback;
@@ -86,11 +88,12 @@ fonts_close_popup_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-fonts_set_popup_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
+fonts_set_popup_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
 {
   gboolean success = TRUE;
   const gchar *font_callback;

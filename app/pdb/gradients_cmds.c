@@ -40,22 +40,24 @@
 
 
 static GValueArray *
-gradients_refresh_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
+gradients_refresh_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
 {
   gimp_data_factory_data_refresh (gimp->gradient_factory);
   return gimp_procedure_get_return_values (procedure, TRUE);
 }
 
 static GValueArray *
-gradients_get_list_invoker (GimpProcedure     *procedure,
-                            Gimp              *gimp,
-                            GimpContext       *context,
-                            GimpProgress      *progress,
-                            const GValueArray *args)
+gradients_get_list_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GValueArray  *args,
+                            GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -83,11 +85,12 @@ gradients_get_list_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-gradients_sample_uniform_invoker (GimpProcedure     *procedure,
-                                  Gimp              *gimp,
-                                  GimpContext       *context,
-                                  GimpProgress      *progress,
-                                  const GValueArray *args)
+gradients_sample_uniform_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GValueArray  *args,
+                                  GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -142,11 +145,12 @@ gradients_sample_uniform_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-gradients_sample_custom_invoker (GimpProcedure     *procedure,
-                                 Gimp              *gimp,
-                                 GimpContext       *context,
-                                 GimpProgress      *progress,
-                                 const GValueArray *args)
+gradients_sample_custom_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GValueArray  *args,
+                                 GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -199,11 +203,12 @@ gradients_sample_custom_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-gradients_get_gradient_data_invoker (GimpProcedure     *procedure,
-                                     Gimp              *gimp,
-                                     GimpContext       *context,
-                                     GimpProgress      *progress,
-                                     const GValueArray *args)
+gradients_get_gradient_data_invoker (GimpProcedure      *procedure,
+                                     Gimp               *gimp,
+                                     GimpContext        *context,
+                                     GimpProgress       *progress,
+                                     const GValueArray  *args,
+                                     GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;

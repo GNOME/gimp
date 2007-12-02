@@ -64,7 +64,8 @@ static void       gimp_brush_select_set_property (GObject         *object,
 static GValueArray *
                   gimp_brush_select_run_callback (GimpPdbDialog   *dialog,
                                                   GimpObject      *object,
-                                                  gboolean         closing);
+                                                  gboolean         closing,
+                                                  GError         **error);
 
 static void   gimp_brush_select_opacity_changed  (GimpContext     *context,
                                                   gdouble          opacity,
@@ -252,9 +253,10 @@ gimp_brush_select_set_property (GObject      *object,
 }
 
 static GValueArray *
-gimp_brush_select_run_callback (GimpPdbDialog *dialog,
-                                GimpObject    *object,
-                                gboolean       closing)
+gimp_brush_select_run_callback (GimpPdbDialog  *dialog,
+                                GimpObject     *object,
+                                gboolean        closing,
+                                GError        **error)
 {
   GimpBrush   *brush = GIMP_BRUSH (object);
   GimpArray   *array;
@@ -269,7 +271,7 @@ gimp_brush_select_run_callback (GimpPdbDialog *dialog,
   return_vals =
     gimp_pdb_execute_procedure_by_name (dialog->pdb,
                                         dialog->caller_context,
-                                        NULL,
+                                        NULL, error,
                                         dialog->callback_name,
                                         G_TYPE_STRING,        object->name,
                                         G_TYPE_DOUBLE,        gimp_context_get_opacity (dialog->context) * 100.0,

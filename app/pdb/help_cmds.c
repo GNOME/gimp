@@ -37,11 +37,12 @@
 
 
 static GValueArray *
-help_invoker (GimpProcedure     *procedure,
-              Gimp              *gimp,
-              GimpContext       *context,
-              GimpProgress      *progress,
-              const GValueArray *args)
+help_invoker (GimpProcedure      *procedure,
+              Gimp               *gimp,
+              GimpContext        *context,
+              GimpProgress       *progress,
+              const GValueArray  *args,
+              GError            **error)
 {
   gboolean success = TRUE;
   const gchar *help_domain;

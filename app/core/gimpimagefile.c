@@ -247,7 +247,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
 
       image = file_open_thumbnail (imagefile->gimp, context, progress,
                                    thumbnail->image_uri, size,
-                                   &mime_type, &width, &height);
+                                   &mime_type, &width, &height, NULL);
 
       if (image)
         {

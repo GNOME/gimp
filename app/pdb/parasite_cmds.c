@@ -39,11 +39,12 @@
 
 
 static GValueArray *
-parasite_find_invoker (GimpProcedure     *procedure,
-                       Gimp              *gimp,
-                       GimpContext       *context,
-                       GimpProgress      *progress,
-                       const GValueArray *args)
+parasite_find_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GValueArray  *args,
+                       GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -69,11 +70,12 @@ parasite_find_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-parasite_attach_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
+parasite_attach_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
 {
   gboolean success = TRUE;
   const GimpParasite *parasite;
@@ -89,11 +91,12 @@ parasite_attach_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-parasite_detach_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
+parasite_detach_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
 {
   gboolean success = TRUE;
   const gchar *name;
@@ -109,11 +112,12 @@ parasite_detach_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-parasite_list_invoker (GimpProcedure     *procedure,
-                       Gimp              *gimp,
-                       GimpContext       *context,
-                       GimpProgress      *progress,
-                       const GValueArray *args)
+parasite_list_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GValueArray  *args,
+                       GError            **error)
 {
   GValueArray *return_vals;
   gint32 num_parasites = 0;
@@ -130,11 +134,12 @@ parasite_list_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-image_parasite_find_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+image_parasite_find_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -162,11 +167,12 @@ image_parasite_find_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-image_parasite_attach_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
+image_parasite_attach_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -184,11 +190,12 @@ image_parasite_attach_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-image_parasite_detach_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
+image_parasite_detach_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -206,11 +213,12 @@ image_parasite_detach_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-image_parasite_list_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+image_parasite_list_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -237,11 +245,12 @@ image_parasite_list_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-drawable_parasite_find_invoker (GimpProcedure     *procedure,
-                                Gimp              *gimp,
-                                GimpContext       *context,
-                                GimpProgress      *progress,
-                                const GValueArray *args)
+drawable_parasite_find_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GValueArray  *args,
+                                GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -270,11 +279,12 @@ drawable_parasite_find_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-drawable_parasite_attach_invoker (GimpProcedure     *procedure,
-                                  Gimp              *gimp,
-                                  GimpContext       *context,
-                                  GimpProgress      *progress,
-                                  const GValueArray *args)
+drawable_parasite_attach_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GValueArray  *args,
+                                  GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -292,11 +302,12 @@ drawable_parasite_attach_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-drawable_parasite_detach_invoker (GimpProcedure     *procedure,
-                                  Gimp              *gimp,
-                                  GimpContext       *context,
-                                  GimpProgress      *progress,
-                                  const GValueArray *args)
+drawable_parasite_detach_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GValueArray  *args,
+                                  GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -314,11 +325,12 @@ drawable_parasite_detach_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-drawable_parasite_list_invoker (GimpProcedure     *procedure,
-                                Gimp              *gimp,
-                                GimpContext       *context,
-                                GimpProgress      *progress,
-                                const GValueArray *args)
+drawable_parasite_list_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GValueArray  *args,
+                                GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -345,11 +357,12 @@ drawable_parasite_list_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_parasite_find_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
+vectors_parasite_find_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -378,11 +391,12 @@ vectors_parasite_find_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_parasite_attach_invoker (GimpProcedure     *procedure,
-                                 Gimp              *gimp,
-                                 GimpContext       *context,
-                                 GimpProgress      *progress,
-                                 const GValueArray *args)
+vectors_parasite_attach_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GValueArray  *args,
+                                 GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -400,11 +414,12 @@ vectors_parasite_attach_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_parasite_detach_invoker (GimpProcedure     *procedure,
-                                 Gimp              *gimp,
-                                 GimpContext       *context,
-                                 GimpProgress      *progress,
-                                 const GValueArray *args)
+vectors_parasite_detach_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GValueArray  *args,
+                                 GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -422,11 +437,12 @@ vectors_parasite_detach_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_parasite_list_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
+vectors_parasite_list_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;

@@ -43,11 +43,12 @@
 
 
 static GValueArray *
-flip_invoker (GimpProcedure     *procedure,
-              Gimp              *gimp,
-              GimpContext       *context,
-              GimpProgress      *progress,
-              const GValueArray *args)
+flip_invoker (GimpProcedure      *procedure,
+              Gimp               *gimp,
+              GimpContext        *context,
+              GimpProgress       *progress,
+              const GValueArray  *args,
+              GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -80,11 +81,12 @@ flip_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-perspective_invoker (GimpProcedure     *procedure,
-                     Gimp              *gimp,
-                     GimpContext       *context,
-                     GimpProgress      *progress,
-                     const GValueArray *args)
+perspective_invoker (GimpProcedure      *procedure,
+                     Gimp               *gimp,
+                     GimpContext        *context,
+                     GimpProgress       *progress,
+                     const GValueArray  *args,
+                     GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -162,11 +164,12 @@ perspective_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-rotate_invoker (GimpProcedure     *procedure,
-                Gimp              *gimp,
-                GimpContext       *context,
-                GimpProgress      *progress,
-                const GValueArray *args)
+rotate_invoker (GimpProcedure      *procedure,
+                Gimp               *gimp,
+                GimpContext        *context,
+                GimpProgress       *progress,
+                const GValueArray  *args,
+                GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -229,11 +232,12 @@ rotate_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-scale_invoker (GimpProcedure     *procedure,
-               Gimp              *gimp,
-               GimpContext       *context,
-               GimpProgress      *progress,
-               const GValueArray *args)
+scale_invoker (GimpProcedure      *procedure,
+               Gimp               *gimp,
+               GimpContext        *context,
+               GimpProgress       *progress,
+               const GValueArray  *args,
+               GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -303,11 +307,12 @@ scale_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-shear_invoker (GimpProcedure     *procedure,
-               Gimp              *gimp,
-               GimpContext       *context,
-               GimpProgress      *progress,
-               const GValueArray *args)
+shear_invoker (GimpProcedure      *procedure,
+               Gimp               *gimp,
+               GimpContext        *context,
+               GimpProgress       *progress,
+               const GValueArray  *args,
+               GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -372,11 +377,12 @@ shear_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-transform_2d_invoker (GimpProcedure     *procedure,
-                      Gimp              *gimp,
-                      GimpContext       *context,
-                      GimpProgress      *progress,
-                      const GValueArray *args)
+transform_2d_invoker (GimpProcedure      *procedure,
+                      Gimp               *gimp,
+                      GimpContext        *context,
+                      GimpProgress       *progress,
+                      const GValueArray  *args,
+                      GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;

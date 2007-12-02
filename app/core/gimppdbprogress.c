@@ -275,7 +275,7 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
       return_vals =
         gimp_pdb_execute_procedure_by_name (progress->pdb,
                                             progress->context,
-                                            NULL,
+                                            NULL, NULL,
                                             progress->callback_name,
                                             GIMP_TYPE_INT32, command,
                                             G_TYPE_STRING,   text,

@@ -35,11 +35,12 @@
 
 
 static GValueArray *
-patterns_popup_invoker (GimpProcedure     *procedure,
-                        Gimp              *gimp,
-                        GimpContext       *context,
-                        GimpProgress      *progress,
-                        const GValueArray *args)
+patterns_popup_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GValueArray  *args,
+                        GError            **error)
 {
   gboolean success = TRUE;
   const gchar *pattern_callback;
@@ -65,11 +66,12 @@ patterns_popup_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-patterns_close_popup_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
+patterns_close_popup_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
 {
   gboolean success = TRUE;
   const gchar *pattern_callback;
@@ -89,11 +91,12 @@ patterns_close_popup_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-patterns_set_popup_invoker (GimpProcedure     *procedure,
-                            Gimp              *gimp,
-                            GimpContext       *context,
-                            GimpProgress      *progress,
-                            const GValueArray *args)
+patterns_set_popup_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GValueArray  *args,
+                            GError            **error)
 {
   gboolean success = TRUE;
   const gchar *pattern_callback;

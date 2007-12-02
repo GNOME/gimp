@@ -44,11 +44,12 @@
 
 
 static GValueArray *
-layer_new_invoker (GimpProcedure     *procedure,
-                   Gimp              *gimp,
-                   GimpContext       *context,
-                   GimpProgress      *progress,
-                   const GValueArray *args)
+layer_new_invoker (GimpProcedure      *procedure,
+                   Gimp               *gimp,
+                   GimpContext        *context,
+                   GimpProgress       *progress,
+                   const GValueArray  *args,
+                   GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -87,11 +88,12 @@ layer_new_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_new_from_drawable_invoker (GimpProcedure     *procedure,
-                                 Gimp              *gimp,
-                                 GimpContext       *context,
-                                 GimpProgress      *progress,
-                                 const GValueArray *args)
+layer_new_from_drawable_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GValueArray  *args,
+                                 GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -132,11 +134,12 @@ layer_new_from_drawable_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_copy_invoker (GimpProcedure     *procedure,
-                    Gimp              *gimp,
-                    GimpContext       *context,
-                    GimpProgress      *progress,
-                    const GValueArray *args)
+layer_copy_invoker (GimpProcedure      *procedure,
+                    Gimp               *gimp,
+                    GimpContext        *context,
+                    GimpProgress       *progress,
+                    const GValueArray  *args,
+                    GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -165,11 +168,12 @@ layer_copy_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_add_alpha_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
+layer_add_alpha_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -185,11 +189,12 @@ layer_add_alpha_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_flatten_invoker (GimpProcedure     *procedure,
-                       Gimp              *gimp,
-                       GimpContext       *context,
-                       GimpProgress      *progress,
-                       const GValueArray *args)
+layer_flatten_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GValueArray  *args,
+                       GError            **error)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -205,11 +210,12 @@ layer_flatten_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_scale_invoker (GimpProcedure     *procedure,
-                     Gimp              *gimp,
-                     GimpContext       *context,
-                     GimpProgress      *progress,
-                     const GValueArray *args)
+layer_scale_invoker (GimpProcedure      *procedure,
+                     Gimp               *gimp,
+                     GimpContext        *context,
+                     GimpProgress       *progress,
+                     const GValueArray  *args,
+                     GError            **error)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -236,11 +242,12 @@ layer_scale_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_resize_invoker (GimpProcedure     *procedure,
-                      Gimp              *gimp,
-                      GimpContext       *context,
-                      GimpProgress      *progress,
-                      const GValueArray *args)
+layer_resize_invoker (GimpProcedure      *procedure,
+                      Gimp               *gimp,
+                      GimpContext        *context,
+                      GimpProgress       *progress,
+                      const GValueArray  *args,
+                      GError            **error)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -268,11 +275,12 @@ layer_resize_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_resize_to_image_size_invoker (GimpProcedure     *procedure,
-                                    Gimp              *gimp,
-                                    GimpContext       *context,
-                                    GimpProgress      *progress,
-                                    const GValueArray *args)
+layer_resize_to_image_size_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GValueArray  *args,
+                                    GError            **error)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -291,11 +299,12 @@ layer_resize_to_image_size_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_translate_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
+layer_translate_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -325,11 +334,12 @@ layer_translate_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_set_offsets_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
+layer_set_offsets_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -362,11 +372,12 @@ layer_set_offsets_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_create_mask_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
+layer_create_mask_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -407,11 +418,12 @@ layer_create_mask_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_get_mask_invoker (GimpProcedure     *procedure,
-                        Gimp              *gimp,
-                        GimpContext       *context,
-                        GimpProgress      *progress,
-                        const GValueArray *args)
+layer_get_mask_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GValueArray  *args,
+                        GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -434,11 +446,12 @@ layer_get_mask_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_from_mask_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
+layer_from_mask_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -461,11 +474,12 @@ layer_from_mask_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_add_mask_invoker (GimpProcedure     *procedure,
-                        Gimp              *gimp,
-                        GimpContext       *context,
-                        GimpProgress      *progress,
-                        const GValueArray *args)
+layer_add_mask_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GValueArray  *args,
+                        GError            **error)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -486,11 +500,12 @@ layer_add_mask_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_remove_mask_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
+layer_remove_mask_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -511,11 +526,12 @@ layer_remove_mask_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_is_floating_sel_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
+layer_is_floating_sel_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -538,11 +554,12 @@ layer_is_floating_sel_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_get_lock_alpha_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
+layer_get_lock_alpha_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -565,11 +582,12 @@ layer_get_lock_alpha_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_set_lock_alpha_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
+layer_set_lock_alpha_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -587,11 +605,12 @@ layer_set_lock_alpha_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_get_apply_mask_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
+layer_get_apply_mask_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -617,11 +636,12 @@ layer_get_apply_mask_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_set_apply_mask_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
+layer_set_apply_mask_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -642,11 +662,12 @@ layer_set_apply_mask_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_get_show_mask_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+layer_get_show_mask_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -672,11 +693,12 @@ layer_get_show_mask_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_set_show_mask_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+layer_set_show_mask_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -697,11 +719,12 @@ layer_set_show_mask_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_get_edit_mask_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+layer_get_edit_mask_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -727,11 +750,12 @@ layer_get_edit_mask_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_set_edit_mask_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+layer_set_edit_mask_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -752,11 +776,12 @@ layer_set_edit_mask_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_get_opacity_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
+layer_get_opacity_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -779,11 +804,12 @@ layer_get_opacity_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_set_opacity_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
+layer_set_opacity_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
@@ -801,11 +827,12 @@ layer_set_opacity_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_get_mode_invoker (GimpProcedure     *procedure,
-                        Gimp              *gimp,
-                        GimpContext       *context,
-                        GimpProgress      *progress,
-                        const GValueArray *args)
+layer_get_mode_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GValueArray  *args,
+                        GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -828,11 +855,12 @@ layer_get_mode_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-layer_set_mode_invoker (GimpProcedure     *procedure,
-                        Gimp              *gimp,
-                        GimpContext       *context,
-                        GimpProgress      *progress,
-                        const GValueArray *args)
+layer_set_mode_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GValueArray  *args,
+                        GError            **error)
 {
   gboolean success = TRUE;
   GimpLayer *layer;

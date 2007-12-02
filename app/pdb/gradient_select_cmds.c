@@ -36,11 +36,12 @@
 
 
 static GValueArray *
-gradients_popup_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
+gradients_popup_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
 {
   gboolean success = TRUE;
   const gchar *gradient_callback;
@@ -72,11 +73,12 @@ gradients_popup_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-gradients_close_popup_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
+gradients_close_popup_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
 {
   gboolean success = TRUE;
   const gchar *gradient_callback;
@@ -96,11 +98,12 @@ gradients_close_popup_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-gradients_set_popup_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+gradients_set_popup_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   gboolean success = TRUE;
   const gchar *gradient_callback;

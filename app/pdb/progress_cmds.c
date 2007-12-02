@@ -37,11 +37,12 @@
 
 
 static GValueArray *
-progress_init_invoker (GimpProcedure     *procedure,
-                       Gimp              *gimp,
-                       GimpContext       *context,
-                       GimpProgress      *progress,
-                       const GValueArray *args)
+progress_init_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GValueArray  *args,
+                       GError            **error)
 {
   gboolean success = TRUE;
   const gchar *message;
@@ -67,11 +68,12 @@ progress_init_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-progress_update_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
+progress_update_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
 {
   gboolean success = TRUE;
   gdouble percentage;
@@ -95,11 +97,12 @@ progress_update_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-progress_pulse_invoker (GimpProcedure     *procedure,
-                        Gimp              *gimp,
-                        GimpContext       *context,
-                        GimpProgress      *progress,
-                        const GValueArray *args)
+progress_pulse_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GValueArray  *args,
+                        GError            **error)
 {
   gboolean success = TRUE;
   GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
@@ -116,11 +119,12 @@ progress_pulse_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-progress_set_text_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
+progress_set_text_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
 {
   gboolean success = TRUE;
   const gchar *message;
@@ -144,11 +148,12 @@ progress_set_text_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-progress_end_invoker (GimpProcedure     *procedure,
-                      Gimp              *gimp,
-                      GimpContext       *context,
-                      GimpProgress      *progress,
-                      const GValueArray *args)
+progress_end_invoker (GimpProcedure      *procedure,
+                      Gimp               *gimp,
+                      GimpContext        *context,
+                      GimpProgress       *progress,
+                      const GValueArray  *args,
+                      GError            **error)
 {
   gboolean success = TRUE;
   GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
@@ -166,11 +171,12 @@ progress_end_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-progress_get_window_handle_invoker (GimpProcedure     *procedure,
-                                    Gimp              *gimp,
-                                    GimpContext       *context,
-                                    GimpProgress      *progress,
-                                    const GValueArray *args)
+progress_get_window_handle_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GValueArray  *args,
+                                    GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -195,11 +201,12 @@ progress_get_window_handle_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-progress_install_invoker (GimpProcedure     *procedure,
-                          Gimp              *gimp,
-                          GimpContext       *context,
-                          GimpProgress      *progress,
-                          const GValueArray *args)
+progress_install_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
 {
   gboolean success = TRUE;
   const gchar *progress_callback;
@@ -220,11 +227,12 @@ progress_install_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-progress_uninstall_invoker (GimpProcedure     *procedure,
-                            Gimp              *gimp,
-                            GimpContext       *context,
-                            GimpProgress      *progress,
-                            const GValueArray *args)
+progress_uninstall_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GValueArray  *args,
+                            GError            **error)
 {
   gboolean success = TRUE;
   const gchar *progress_callback;
@@ -245,11 +253,12 @@ progress_uninstall_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-progress_cancel_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
+progress_cancel_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
 {
   gboolean success = TRUE;
   const gchar *progress_callback;

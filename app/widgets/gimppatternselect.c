@@ -41,13 +41,14 @@
 #include "gimppatternselect.h"
 
 
-static GObject     * gimp_pattern_select_constructor  (GType          type,
-                                                       guint          n_params,
+static GObject     * gimp_pattern_select_constructor  (GType           type,
+                                                       guint           n_params,
                                                        GObjectConstructParam *params);
 
-static GValueArray * gimp_pattern_select_run_callback (GimpPdbDialog *dialog,
-                                                       GimpObject    *object,
-                                                       gboolean       closing);
+static GValueArray * gimp_pattern_select_run_callback (GimpPdbDialog  *dialog,
+                                                       GimpObject     *object,
+                                                       gboolean        closing,
+                                                       GError        **error);
 
 
 G_DEFINE_TYPE (GimpPatternSelect, gimp_pattern_select, GIMP_TYPE_PDB_DIALOG)
@@ -102,9 +103,10 @@ gimp_pattern_select_constructor (GType                  type,
 }
 
 static GValueArray *
-gimp_pattern_select_run_callback (GimpPdbDialog *dialog,
-                                  GimpObject    *object,
-                                  gboolean       closing)
+gimp_pattern_select_run_callback (GimpPdbDialog  *dialog,
+                                  GimpObject     *object,
+                                  gboolean        closing,
+                                  GError        **error)
 {
   GimpPattern *pattern = GIMP_PATTERN (object);
   GimpArray   *array;
@@ -119,7 +121,7 @@ gimp_pattern_select_run_callback (GimpPdbDialog *dialog,
   return_vals =
     gimp_pdb_execute_procedure_by_name (dialog->pdb,
                                         dialog->caller_context,
-                                        NULL,
+                                        NULL, error,
                                         dialog->callback_name,
                                         G_TYPE_STRING,        object->name,
                                         GIMP_TYPE_INT32,      pattern->mask->width,

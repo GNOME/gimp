@@ -1302,21 +1302,7 @@ HELP
         headers => [ qw("vectors/gimpvectors-export.h") ],
         code    => <<'CODE'
 {
-  GError *error = NULL;
-
-  if (vectors != NULL && ! GIMP_IS_VECTORS (vectors))
-    {
-      g_set_error (&error, 0, 0, _("argument is not a valid Vectors object"));
-      success = FALSE;
-    }
-  else
-    success = gimp_vectors_export_file (image, vectors, filename, &error);
-
-  if (! success && error)
-    {
-      g_message (_("Failed to export path: %s"), error->message);
-      g_clear_error (&error);
-    }
+  success = gimp_vectors_export_file (image, vectors, filename, error);
 }
 CODE
     );
@@ -1350,23 +1336,9 @@ HELP
         headers => [ qw("vectors/gimpvectors-export.h") ],
         code    => <<'CODE'
 {
-  GError *error = NULL;
-
-  if (vectors != NULL && ! GIMP_IS_VECTORS (vectors))
-    {
-      g_set_error (&error, 0, 0, _("argument is not a valid Vectors object"));
-      success = FALSE;
-    }
-  else
-    string = gimp_vectors_export_string (image, vectors);
+  string = gimp_vectors_export_string (image, vectors);
 
   success = (string != NULL);
-
-  if (! success && error)
-    {
-      g_message (_("Failed to save path as string: %s"), error->message);
-      g_clear_error (&error);
-    }
 }
 CODE
     );

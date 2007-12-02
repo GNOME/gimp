@@ -48,11 +48,12 @@
 
 
 static GValueArray *
-version_invoker (GimpProcedure     *procedure,
-                 Gimp              *gimp,
-                 GimpContext       *context,
-                 GimpProgress      *progress,
-                 const GValueArray *args)
+version_invoker (GimpProcedure      *procedure,
+                 Gimp               *gimp,
+                 GimpContext        *context,
+                 GimpProgress       *progress,
+                 const GValueArray  *args,
+                 GError            **error)
 {
   GValueArray *return_vals;
   gchar *version = NULL;
@@ -66,11 +67,12 @@ version_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-getpid_invoker (GimpProcedure     *procedure,
-                Gimp              *gimp,
-                GimpContext       *context,
-                GimpProgress      *progress,
-                const GValueArray *args)
+getpid_invoker (GimpProcedure      *procedure,
+                Gimp               *gimp,
+                GimpContext        *context,
+                GimpProgress       *progress,
+                const GValueArray  *args,
+                GError            **error)
 {
   GValueArray *return_vals;
   gint32 pid = 0;
@@ -84,11 +86,12 @@ getpid_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-quit_invoker (GimpProcedure     *procedure,
-              Gimp              *gimp,
-              GimpContext       *context,
-              GimpProgress      *progress,
-              const GValueArray *args)
+quit_invoker (GimpProcedure      *procedure,
+              Gimp               *gimp,
+              GimpContext        *context,
+              GimpProgress       *progress,
+              const GValueArray  *args,
+              GError            **error)
 {
   gboolean success = TRUE;
   gboolean force;

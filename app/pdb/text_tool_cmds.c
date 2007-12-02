@@ -39,11 +39,12 @@
 
 
 static GValueArray *
-text_fontname_invoker (GimpProcedure     *procedure,
-                       Gimp              *gimp,
-                       GimpContext       *context,
-                       GimpProgress      *progress,
-                       const GValueArray *args)
+text_fontname_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GValueArray  *args,
+                       GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -96,11 +97,12 @@ text_fontname_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-text_get_extents_fontname_invoker (GimpProcedure     *procedure,
-                                   Gimp              *gimp,
-                                   GimpContext       *context,
-                                   GimpProgress      *progress,
-                                   const GValueArray *args)
+text_get_extents_fontname_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -143,11 +145,12 @@ text_get_extents_fontname_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-text_invoker (GimpProcedure     *procedure,
-              Gimp              *gimp,
-              GimpContext       *context,
-              GimpProgress      *progress,
-              const GValueArray *args)
+text_invoker (GimpProcedure      *procedure,
+              Gimp               *gimp,
+              GimpContext        *context,
+              GimpProgress       *progress,
+              const GValueArray  *args,
+              GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -214,11 +217,12 @@ text_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-text_get_extents_invoker (GimpProcedure     *procedure,
-                          Gimp              *gimp,
-                          GimpContext       *context,
-                          GimpProgress      *progress,
-                          const GValueArray *args)
+text_get_extents_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;

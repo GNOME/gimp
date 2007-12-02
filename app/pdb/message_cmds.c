@@ -38,11 +38,12 @@
 
 
 static GValueArray *
-message_invoker (GimpProcedure     *procedure,
-                 Gimp              *gimp,
-                 GimpContext       *context,
-                 GimpProgress      *progress,
-                 const GValueArray *args)
+message_invoker (GimpProcedure      *procedure,
+                 Gimp               *gimp,
+                 GimpContext        *context,
+                 GimpProgress       *progress,
+                 const GValueArray  *args,
+                 GError            **error)
 {
   gboolean success = TRUE;
   const gchar *message;
@@ -63,11 +64,12 @@ message_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-message_get_handler_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+message_get_handler_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   GValueArray *return_vals;
   gint32 handler = 0;
@@ -81,11 +83,12 @@ message_get_handler_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-message_set_handler_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+message_set_handler_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   gboolean success = TRUE;
   gint32 handler;

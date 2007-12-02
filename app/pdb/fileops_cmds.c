@@ -47,11 +47,12 @@
 
 
 static GValueArray *
-file_load_invoker (GimpProcedure     *procedure,
-                   Gimp              *gimp,
-                   GimpContext       *context,
-                   GimpProgress      *progress,
-                   const GValueArray *args)
+file_load_invoker (GimpProcedure      *procedure,
+                   Gimp               *gimp,
+                   GimpContext        *context,
+                   GimpProgress       *progress,
+                   const GValueArray  *args,
+                   GError            **error)
 {
   GValueArray         *new_args;
   GValueArray         *return_vals;
@@ -88,7 +89,7 @@ file_load_invoker (GimpProcedure     *procedure,
 
   return_vals =
     gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
-                                             context, progress,
+                                             context, progress, error,
                                              GIMP_OBJECT (proc)->name,
                                              new_args);
 
@@ -109,11 +110,12 @@ file_load_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-file_load_layer_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
+file_load_layer_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -160,11 +162,12 @@ file_load_layer_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-file_load_layers_invoker (GimpProcedure     *procedure,
-                          Gimp              *gimp,
-                          GimpContext       *context,
-                          GimpProgress      *progress,
-                          const GValueArray *args)
+file_load_layers_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -226,11 +229,12 @@ file_load_layers_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-file_save_invoker (GimpProcedure     *procedure,
-                   Gimp              *gimp,
-                   GimpContext       *context,
-                   GimpProgress      *progress,
-                   const GValueArray *args)
+file_save_invoker (GimpProcedure      *procedure,
+                   Gimp               *gimp,
+                   GimpContext        *context,
+                   GimpProgress       *progress,
+                   const GValueArray  *args,
+                   GError            **error)
 {
   GValueArray         *new_args;
   GValueArray         *return_vals;
@@ -265,10 +269,11 @@ file_save_invoker (GimpProcedure     *procedure,
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
       g_value_set_static_string (&new_args->values[i], "");
 
-  return_vals = gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
-                                                         context, progress,
-                                                         GIMP_OBJECT (proc)->name,
-                                                         new_args);
+  return_vals =
+    gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
+                                             context, progress, error,
+                                             GIMP_OBJECT (proc)->name,
+                                             new_args);
 
   g_value_array_free (new_args);
 
@@ -276,11 +281,12 @@ file_save_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-file_load_thumbnail_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+file_load_thumbnail_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -324,11 +330,12 @@ file_load_thumbnail_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-file_save_thumbnail_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+file_save_thumbnail_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -346,11 +353,12 @@ file_save_thumbnail_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-temp_name_invoker (GimpProcedure     *procedure,
-                   Gimp              *gimp,
-                   GimpContext       *context,
-                   GimpProgress      *progress,
-                   const GValueArray *args)
+temp_name_invoker (GimpProcedure      *procedure,
+                   Gimp               *gimp,
+                   GimpContext        *context,
+                   GimpProgress       *progress,
+                   const GValueArray  *args,
+                   GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -373,11 +381,12 @@ temp_name_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-register_magic_load_handler_invoker (GimpProcedure     *procedure,
-                                     Gimp              *gimp,
-                                     GimpContext       *context,
-                                     GimpProgress      *progress,
-                                     const GValueArray *args)
+register_magic_load_handler_invoker (GimpProcedure      *procedure,
+                                     Gimp               *gimp,
+                                     GimpContext        *context,
+                                     GimpProgress       *progress,
+                                     const GValueArray  *args,
+                                     GError            **error)
 {
   gboolean success = TRUE;
   const gchar *procedure_name;
@@ -405,11 +414,12 @@ register_magic_load_handler_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-register_load_handler_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
+register_load_handler_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
 {
   gboolean success = TRUE;
   const gchar *procedure_name;
@@ -435,11 +445,12 @@ register_load_handler_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-register_save_handler_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
+register_save_handler_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
 {
   gboolean success = TRUE;
   const gchar *procedure_name;
@@ -465,11 +476,12 @@ register_save_handler_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-register_file_handler_mime_invoker (GimpProcedure     *procedure,
-                                    Gimp              *gimp,
-                                    GimpContext       *context,
-                                    GimpProgress      *progress,
-                                    const GValueArray *args)
+register_file_handler_mime_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GValueArray  *args,
+                                    GError            **error)
 {
   gboolean success = TRUE;
   const gchar *procedure_name;
@@ -492,11 +504,12 @@ register_file_handler_mime_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-register_thumbnail_loader_invoker (GimpProcedure     *procedure,
-                                   Gimp              *gimp,
-                                   GimpContext       *context,
-                                   GimpProgress      *progress,
-                                   const GValueArray *args)
+register_thumbnail_loader_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
 {
   gboolean success = TRUE;
   const gchar *load_proc;

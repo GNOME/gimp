@@ -46,17 +46,18 @@ enum
 };
 
 
-static GObject     * gimp_gradient_select_constructor  (GType          type,
-                                                        guint          n_params,
+static GObject     * gimp_gradient_select_constructor  (GType           type,
+                                                        guint           n_params,
                                                         GObjectConstructParam *params);
-static void          gimp_gradient_select_set_property (GObject       *object,
-                                                        guint          property_id,
-                                                        const GValue  *value,
-                                                        GParamSpec    *pspec);
+static void          gimp_gradient_select_set_property (GObject        *object,
+                                                        guint           property_id,
+                                                        const GValue   *value,
+                                                        GParamSpec     *pspec);
 
-static GValueArray * gimp_gradient_select_run_callback (GimpPdbDialog *dialog,
-                                                        GimpObject    *object,
-                                                        gboolean       closing);
+static GValueArray * gimp_gradient_select_run_callback (GimpPdbDialog  *dialog,
+                                                        GimpObject     *object,
+                                                        gboolean        closing,
+                                                        GError        **error);
 
 
 G_DEFINE_TYPE (GimpGradientSelect, gimp_gradient_select,
@@ -121,9 +122,10 @@ gimp_gradient_select_constructor (GType                  type,
 }
 
 static GValueArray *
-gimp_gradient_select_run_callback (GimpPdbDialog *dialog,
-                                   GimpObject    *object,
-                                   gboolean       closing)
+gimp_gradient_select_run_callback (GimpPdbDialog  *dialog,
+                                   GimpObject     *object,
+                                   gboolean        closing,
+                                   GError        **error)
 {
   GimpGradient        *gradient = GIMP_GRADIENT (object);
   GimpGradientSegment *seg      = NULL;
@@ -163,7 +165,7 @@ gimp_gradient_select_run_callback (GimpPdbDialog *dialog,
   return_vals =
     gimp_pdb_execute_procedure_by_name (dialog->pdb,
                                         dialog->caller_context,
-                                        NULL,
+                                        NULL, error,
                                         dialog->callback_name,
                                         G_TYPE_STRING,         object->name,
                                         GIMP_TYPE_INT32,       array->length / sizeof (gdouble),

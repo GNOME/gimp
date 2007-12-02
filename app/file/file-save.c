@@ -135,7 +135,7 @@ file_save (GimpImage           *image,
 
   return_vals =
     gimp_pdb_execute_procedure_by_name (image->gimp->pdb,
-                                        context, progress,
+                                        context, progress, error,
                                         GIMP_OBJECT (file_proc)->name,
                                         GIMP_TYPE_INT32,       run_mode,
                                         GIMP_TYPE_IMAGE_ID,    image_ID,
@@ -189,9 +189,12 @@ file_save (GimpImage           *image,
     }
   else if (status != GIMP_PDB_CANCEL)
     {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("%s plug-in could not save image"),
-                   gimp_plug_in_procedure_get_label (file_proc));
+      if (error && *error == NULL)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("%s plug-in could not save image"),
+                       gimp_plug_in_procedure_get_label (file_proc));
+        }
     }
 
   g_object_unref (image);

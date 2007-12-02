@@ -140,7 +140,8 @@ batch_run_cmd (Gimp          *gimp,
 {
   GValueArray *args;
   GValueArray *return_vals;
-  gint         i = 0;
+  GError      *error = NULL;
+  gint         i     = 0;
 
   args = gimp_procedure_get_arguments (procedure);
 
@@ -153,26 +154,45 @@ batch_run_cmd (Gimp          *gimp,
   return_vals =
     gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
                                              gimp_get_user_context (gimp),
-                                             NULL,
+                                             NULL, &error,
                                              proc_name, args);
 
   switch (g_value_get_enum (&return_vals->values[0]))
     {
     case GIMP_PDB_EXECUTION_ERROR:
-      g_printerr ("batch command: experienced an execution error.\n");
+      if (error)
+        {
+          g_printerr ("batch command experienced an execution error: %s\n",
+                      error->message);
+        }
+      else
+        {
+          g_printerr ("batch command experienced an execution error\n");
+        }
       break;
 
     case GIMP_PDB_CALLING_ERROR:
-      g_printerr ("batch command: experienced a calling error.\n");
+      if (error)
+        {
+          g_printerr ("batch command experienced a calling error: %s\n",
+                      error->message);
+        }
+      else
+        {
+          g_printerr ("batch command experienced a calling error\n");
+        }
       break;
 
     case GIMP_PDB_SUCCESS:
-      g_printerr ("batch command: executed successfully.\n");
+      g_printerr ("batch command executed successfully\n");
       break;
     }
 
   g_value_array_free (return_vals);
   g_value_array_free (args);
+
+  if (error)
+    g_error_free (error);
 
   return;
 }

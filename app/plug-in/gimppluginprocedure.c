@@ -49,22 +49,23 @@ enum
 };
 
 
-static void          gimp_plug_in_procedure_finalize    (GObject       *object);
+static void          gimp_plug_in_procedure_finalize    (GObject        *object);
 
-static gint64        gimp_plug_in_procedure_get_memsize (GimpObject    *object,
-                                                         gint64        *gui_size);
+static gint64        gimp_plug_in_procedure_get_memsize (GimpObject     *object,
+                                                         gint64         *gui_size);
 
-static GValueArray * gimp_plug_in_procedure_execute     (GimpProcedure *procedure,
-                                                         Gimp          *gimp,
-                                                         GimpContext   *context,
-                                                         GimpProgress  *progress,
-                                                         GValueArray   *args);
-static void       gimp_plug_in_procedure_execute_async  (GimpProcedure *procedure,
-                                                         Gimp          *gimp,
-                                                         GimpContext   *context,
-                                                         GimpProgress  *progress,
-                                                         GValueArray   *args,
-                                                         GimpObject    *display);
+static GValueArray * gimp_plug_in_procedure_execute     (GimpProcedure  *procedure,
+                                                         Gimp           *gimp,
+                                                         GimpContext    *context,
+                                                         GimpProgress   *progress,
+                                                         GValueArray    *args,
+                                                         GError        **error);
+static void       gimp_plug_in_procedure_execute_async  (GimpProcedure  *procedure,
+                                                         Gimp           *gimp,
+                                                         GimpContext    *context,
+                                                         GimpProgress   *progress,
+                                                         GValueArray    *args,
+                                                         GimpObject     *display);
 
 const gchar * gimp_plug_in_procedure_real_get_progname (const GimpPlugInProcedure *procedure);
 
@@ -196,16 +197,17 @@ gimp_plug_in_procedure_get_memsize (GimpObject *object,
 }
 
 static GValueArray *
-gimp_plug_in_procedure_execute (GimpProcedure *procedure,
-                                Gimp          *gimp,
-                                GimpContext   *context,
-                                GimpProgress  *progress,
-                                GValueArray   *args)
+gimp_plug_in_procedure_execute (GimpProcedure  *procedure,
+                                Gimp           *gimp,
+                                GimpContext    *context,
+                                GimpProgress   *progress,
+                                GValueArray    *args,
+                                GError        **error)
 {
   if (procedure->proc_type == GIMP_INTERNAL)
     return GIMP_PROCEDURE_CLASS (parent_class)->execute (procedure, gimp,
                                                          context, progress,
-                                                         args);
+                                                         args, error);
 
   return gimp_plug_in_manager_call_run (gimp->plug_in_manager,
                                         context, progress,

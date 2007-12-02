@@ -95,11 +95,12 @@ paint_tools_stroke (Gimp             *gimp,
 }
 
 static GValueArray *
-airbrush_invoker (GimpProcedure     *procedure,
-                  Gimp              *gimp,
-                  GimpContext       *context,
-                  GimpProgress      *progress,
-                  const GValueArray *args)
+airbrush_invoker (GimpProcedure      *procedure,
+                  Gimp               *gimp,
+                  GimpContext        *context,
+                  GimpProgress       *progress,
+                  const GValueArray  *args,
+                  GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -138,11 +139,12 @@ airbrush_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-airbrush_default_invoker (GimpProcedure     *procedure,
-                          Gimp              *gimp,
-                          GimpContext       *context,
-                          GimpProgress      *progress,
-                          const GValueArray *args)
+airbrush_default_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -175,11 +177,12 @@ airbrush_default_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-clone_invoker (GimpProcedure     *procedure,
-               Gimp              *gimp,
-               GimpContext       *context,
-               GimpProgress      *progress,
-               const GValueArray *args)
+clone_invoker (GimpProcedure      *procedure,
+               Gimp               *gimp,
+               GimpContext        *context,
+               GimpProgress       *progress,
+               const GValueArray  *args,
+               GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -227,11 +230,12 @@ clone_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-clone_default_invoker (GimpProcedure     *procedure,
-                       Gimp              *gimp,
-                       GimpContext       *context,
-                       GimpProgress      *progress,
-                       const GValueArray *args)
+clone_default_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GValueArray  *args,
+                       GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -264,11 +268,12 @@ clone_default_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-convolve_invoker (GimpProcedure     *procedure,
-                  Gimp              *gimp,
-                  GimpContext       *context,
-                  GimpProgress      *progress,
-                  const GValueArray *args)
+convolve_invoker (GimpProcedure      *procedure,
+                  Gimp               *gimp,
+                  GimpContext        *context,
+                  GimpProgress       *progress,
+                  const GValueArray  *args,
+                  GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -310,11 +315,12 @@ convolve_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-convolve_default_invoker (GimpProcedure     *procedure,
-                          Gimp              *gimp,
-                          GimpContext       *context,
-                          GimpProgress      *progress,
-                          const GValueArray *args)
+convolve_default_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -347,11 +353,12 @@ convolve_default_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-dodgeburn_invoker (GimpProcedure     *procedure,
-                   Gimp              *gimp,
-                   GimpContext       *context,
-                   GimpProgress      *progress,
-                   const GValueArray *args)
+dodgeburn_invoker (GimpProcedure      *procedure,
+                   Gimp               *gimp,
+                   GimpContext        *context,
+                   GimpProgress       *progress,
+                   const GValueArray  *args,
+                   GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -396,11 +403,12 @@ dodgeburn_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-dodgeburn_default_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
+dodgeburn_default_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -433,11 +441,12 @@ dodgeburn_default_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-eraser_invoker (GimpProcedure     *procedure,
-                Gimp              *gimp,
-                GimpContext       *context,
-                GimpProgress      *progress,
-                const GValueArray *args)
+eraser_invoker (GimpProcedure      *procedure,
+                Gimp               *gimp,
+                GimpContext        *context,
+                GimpProgress       *progress,
+                const GValueArray  *args,
+                GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -479,11 +488,12 @@ eraser_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-eraser_default_invoker (GimpProcedure     *procedure,
-                        Gimp              *gimp,
-                        GimpContext       *context,
-                        GimpProgress      *progress,
-                        const GValueArray *args)
+eraser_default_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GValueArray  *args,
+                        GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -516,11 +526,12 @@ eraser_default_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-heal_invoker (GimpProcedure     *procedure,
-              Gimp              *gimp,
-              GimpContext       *context,
-              GimpProgress      *progress,
-              const GValueArray *args)
+heal_invoker (GimpProcedure      *procedure,
+              Gimp               *gimp,
+              GimpContext        *context,
+              GimpProgress       *progress,
+              const GValueArray  *args,
+              GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -562,11 +573,12 @@ heal_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-heal_default_invoker (GimpProcedure     *procedure,
-                      Gimp              *gimp,
-                      GimpContext       *context,
-                      GimpProgress      *progress,
-                      const GValueArray *args)
+heal_default_invoker (GimpProcedure      *procedure,
+                      Gimp               *gimp,
+                      GimpContext        *context,
+                      GimpProgress       *progress,
+                      const GValueArray  *args,
+                      GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -599,11 +611,12 @@ heal_default_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-paintbrush_invoker (GimpProcedure     *procedure,
-                    Gimp              *gimp,
-                    GimpContext       *context,
-                    GimpProgress      *progress,
-                    const GValueArray *args)
+paintbrush_invoker (GimpProcedure      *procedure,
+                    Gimp               *gimp,
+                    GimpContext        *context,
+                    GimpProgress       *progress,
+                    const GValueArray  *args,
+                    GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -650,11 +663,12 @@ paintbrush_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-paintbrush_default_invoker (GimpProcedure     *procedure,
-                            Gimp              *gimp,
-                            GimpContext       *context,
-                            GimpProgress      *progress,
-                            const GValueArray *args)
+paintbrush_default_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GValueArray  *args,
+                            GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -687,11 +701,12 @@ paintbrush_default_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-pencil_invoker (GimpProcedure     *procedure,
-                Gimp              *gimp,
-                GimpContext       *context,
-                GimpProgress      *progress,
-                const GValueArray *args)
+pencil_invoker (GimpProcedure      *procedure,
+                Gimp               *gimp,
+                GimpContext        *context,
+                GimpProgress       *progress,
+                const GValueArray  *args,
+                GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -724,11 +739,12 @@ pencil_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-smudge_invoker (GimpProcedure     *procedure,
-                Gimp              *gimp,
-                GimpContext       *context,
-                GimpProgress      *progress,
-                const GValueArray *args)
+smudge_invoker (GimpProcedure      *procedure,
+                Gimp               *gimp,
+                GimpContext        *context,
+                GimpProgress       *progress,
+                const GValueArray  *args,
+                GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -767,11 +783,12 @@ smudge_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-smudge_default_invoker (GimpProcedure     *procedure,
-                        Gimp              *gimp,
-                        GimpContext       *context,
-                        GimpProgress      *progress,
-                        const GValueArray *args)
+smudge_default_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GValueArray  *args,
+                        GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;

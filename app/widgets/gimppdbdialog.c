@@ -341,8 +341,9 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
       if (gimp_pdb_lookup_procedure (dialog->pdb, dialog->callback_name))
         {
           GValueArray *return_vals;
+          GError      *error = NULL;
 
-          return_vals = klass->run_callback (dialog, object, closing);
+          return_vals = klass->run_callback (dialog, object, closing, &error);
 
           if (g_value_get_enum (&return_vals->values[0]) != GIMP_PDB_SUCCESS)
             {
@@ -352,6 +353,13 @@ gimp_pdb_dialog_run_callback (GimpPdbDialog *dialog,
                               "The corresponding plug-in may have "
                               "crashed."),
                             g_type_name (G_TYPE_FROM_INSTANCE (dialog)));
+            }
+          else if (error)
+            {
+              gimp_message (dialog->context->gimp, G_OBJECT (dialog),
+                            GIMP_MESSAGE_ERROR,
+                            "%s", error->message);
+              g_error_free (error);
             }
 
           g_value_array_free (return_vals);

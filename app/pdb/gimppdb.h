@@ -75,11 +75,13 @@ const gchar   * gimp_pdb_lookup_compat_proc_name        (GimpPDB       *pdb,
 GValueArray   * gimp_pdb_execute_procedure_by_name_args (GimpPDB       *pdb,
                                                          GimpContext   *context,
                                                          GimpProgress  *progress,
+                                                         GError       **error,
                                                          const gchar   *name,
                                                          GValueArray   *args);
 GValueArray   * gimp_pdb_execute_procedure_by_name      (GimpPDB       *pdb,
                                                          GimpContext   *context,
                                                          GimpProgress  *progress,
+                                                         GError       **error,
                                                          const gchar   *name,
                                                          ...);
 

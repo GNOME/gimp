@@ -589,11 +589,12 @@ CODE
 	}
 
 	$out->{code} .= "\nstatic GValueArray *\n";
-	$out->{code} .= "${name}_invoker (GimpProcedure     *procedure,\n";
-	$out->{code} .=  ' ' x length($name) . "          Gimp              *gimp,\n";
-	$out->{code} .=  ' ' x length($name) . "          GimpContext       *context,\n";
-	$out->{code} .=  ' ' x length($name) . "          GimpProgress      *progress,\n";
-	$out->{code} .=  ' ' x length($name) . "          const GValueArray *args)\n{\n";
+	$out->{code} .= "${name}_invoker (GimpProcedure      *procedure,\n";
+	$out->{code} .=  ' ' x length($name) . "          Gimp               *gimp,\n";
+	$out->{code} .=  ' ' x length($name) . "          GimpContext        *context,\n";
+	$out->{code} .=  ' ' x length($name) . "          GimpProgress       *progress,\n";
+	$out->{code} .=  ' ' x length($name) . "          const GValueArray  *args,\n";
+	$out->{code} .=  ' ' x length($name) . "          GError            **error)\n{\n";
 
 	my $code = "";
 

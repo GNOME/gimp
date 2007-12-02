@@ -178,6 +178,7 @@ gimp_help_browser (Gimp *gimp)
       gint          n_domains    = 0;
       gchar       **help_domains = NULL;
       gchar       **help_uris    = NULL;
+      GError       *error        = NULL;
 
       procedure = gimp_pdb_lookup_procedure (gimp->pdb,
                                              "extension-gimp-help-browser");
@@ -209,10 +210,17 @@ gimp_help_browser (Gimp *gimp)
 
       gimp_procedure_execute_async (procedure, gimp,
                                     gimp_get_user_context (gimp),
-                                    NULL, args, NULL);
+                                    NULL, args, NULL, &error);
 
       g_value_array_free (args);
-    }
+
+      if (error)
+        {
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
+          g_error_free (error);
+        }
+     }
 
   /*  Check if the help browser started properly  */
   procedure = gimp_pdb_lookup_procedure (gimp->pdb,
@@ -284,6 +292,7 @@ gimp_help_call (Gimp        *gimp,
   if (! strcmp (procedure_name, "extension-gimp-help-browser-temp"))
     {
       GValueArray *return_vals;
+      GError      *error = NULL;
 
       GIMP_LOG (HELP, "Calling help via %s: %s %s %s",
                 procedure_name,
@@ -294,7 +303,7 @@ gimp_help_call (Gimp        *gimp,
       return_vals =
         gimp_pdb_execute_procedure_by_name (gimp->pdb,
                                             gimp_get_user_context (gimp),
-                                            NULL,
+                                            NULL, &error,
                                             procedure_name,
                                             G_TYPE_STRING, help_domain,
                                             G_TYPE_STRING, help_locales,
@@ -302,6 +311,13 @@ gimp_help_call (Gimp        *gimp,
                                             G_TYPE_NONE);
 
       g_value_array_free (return_vals);
+
+      if (error)
+        {
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
+          g_error_free (error);
+        }
 
       return;
     }
@@ -315,6 +331,7 @@ gimp_help_call (Gimp        *gimp,
       gint          n_domains    = 0;
       gchar       **help_domains = NULL;
       gchar       **help_uris    = NULL;
+      GError       *error        = NULL;
 
       procedure = gimp_pdb_lookup_procedure (gimp->pdb, "extension-gimp-help");
 
@@ -336,9 +353,16 @@ gimp_help_call (Gimp        *gimp,
 
       gimp_procedure_execute_async (procedure, gimp,
                                     gimp_get_user_context (gimp),
-                                    NULL, args, NULL);
+                                    NULL, args, NULL, &error);
 
       g_value_array_free (args);
+
+      if (error)
+        {
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
+          g_error_free (error);
+        }
     }
 
   /*  Check if the help parser started properly  */
@@ -347,6 +371,7 @@ gimp_help_call (Gimp        *gimp,
   if (procedure)
     {
       GValueArray *return_vals;
+      GError      *error = NULL;
 
       GIMP_LOG (HELP, "Calling help via %s: %s %s %s",
                 procedure_name,
@@ -357,7 +382,7 @@ gimp_help_call (Gimp        *gimp,
       return_vals =
         gimp_pdb_execute_procedure_by_name (gimp->pdb,
                                             gimp_get_user_context (gimp),
-                                            NULL,
+                                            NULL, &error,
                                             "extension-gimp-help-temp",
                                             G_TYPE_STRING, procedure_name,
                                             G_TYPE_STRING, help_domain,
@@ -366,6 +391,13 @@ gimp_help_call (Gimp        *gimp,
                                             G_TYPE_NONE);
 
       g_value_array_free (return_vals);
+
+      if (error)
+        {
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
+          g_error_free (error);
+        }
     }
 }
 

@@ -65,6 +65,7 @@ plug_in_icc_profile_apply_rgb (GimpImage     *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   gimp = image->gimp;
 
@@ -84,7 +85,7 @@ plug_in_icc_profile_apply_rgb (GimpImage     *image,
       gboolean                success;
 
       return_vals =
-        gimp_pdb_execute_procedure_by_name (gimp->pdb, context, progress,
+        gimp_pdb_execute_procedure_by_name (gimp->pdb, context, progress, error,
                                             ICC_PROFILE_APPLY_RGB_PROC,
                                             GIMP_TYPE_INT32, run_mode,
                                             GIMP_TYPE_IMAGE_ID,
@@ -106,9 +107,10 @@ plug_in_icc_profile_apply_rgb (GimpImage     *image,
           break;
 
         default:
-          g_set_error (error,
-                       GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_EXECUTION_FAILED,
-                       _("Error running '%s'"), ICC_PROFILE_APPLY_RGB_PROC);
+          if (error && *error == NULL)
+            g_set_error (error,
+                         GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_EXECUTION_FAILED,
+                         _("Error running '%s'"), ICC_PROFILE_APPLY_RGB_PROC);
           success = FALSE;
           break;
         }
@@ -152,6 +154,7 @@ plug_in_icc_profile_info (GimpImage     *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   gimp = image->gimp;
 
@@ -165,7 +168,7 @@ plug_in_icc_profile_info (GimpImage     *image,
       GimpPDBStatusType  status;
 
       return_vals =
-        gimp_pdb_execute_procedure_by_name (gimp->pdb, context, progress,
+        gimp_pdb_execute_procedure_by_name (gimp->pdb, context, progress, error,
                                             ICC_PROFILE_INFO_PROC,
                                             GIMP_TYPE_IMAGE_ID,
                                             gimp_image_get_ID (image),
@@ -180,8 +183,9 @@ plug_in_icc_profile_info (GimpImage     *image,
           break;
 
         default:
-          g_set_error (error, 0, 0,
-                       _("Error running '%s'"), ICC_PROFILE_INFO_PROC);
+          if (error && *error == NULL)
+            g_set_error (error, 0, 0,
+                         _("Error running '%s'"), ICC_PROFILE_INFO_PROC);
           break;
         }
 
@@ -212,6 +216,7 @@ plug_in_icc_profile_file_info (Gimp          *gimp,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   procedure = gimp_pdb_lookup_procedure (gimp->pdb, ICC_PROFILE_FILE_INFO_PROC);
 
@@ -223,7 +228,7 @@ plug_in_icc_profile_file_info (Gimp          *gimp,
       GimpPDBStatusType  status;
 
       return_vals =
-        gimp_pdb_execute_procedure_by_name (gimp->pdb, context, progress,
+        gimp_pdb_execute_procedure_by_name (gimp->pdb, context, progress, error,
                                             ICC_PROFILE_FILE_INFO_PROC,
                                             G_TYPE_STRING, filename,
                                             G_TYPE_NONE);
@@ -237,8 +242,9 @@ plug_in_icc_profile_file_info (Gimp          *gimp,
           break;
 
         default:
-          g_set_error (error, 0, 0,
-                       _("Error running '%s'"), ICC_PROFILE_FILE_INFO_PROC);
+          if (error && *error == NULL)
+            g_set_error (error, 0, 0,
+                         _("Error running '%s'"), ICC_PROFILE_FILE_INFO_PROC);
           break;
         }
 

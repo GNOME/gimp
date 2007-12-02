@@ -42,11 +42,12 @@
 
 
 static GValueArray *
-gimprc_query_invoker (GimpProcedure     *procedure,
-                      Gimp              *gimp,
-                      GimpContext       *context,
-                      GimpProgress      *progress,
-                      const GValueArray *args)
+gimprc_query_invoker (GimpProcedure      *procedure,
+                      Gimp               *gimp,
+                      GimpContext        *context,
+                      GimpProgress       *progress,
+                      const GValueArray  *args,
+                      GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -78,11 +79,12 @@ gimprc_query_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-gimprc_set_invoker (GimpProcedure     *procedure,
-                    Gimp              *gimp,
-                    GimpContext       *context,
-                    GimpProgress      *progress,
-                    const GValueArray *args)
+gimprc_set_invoker (GimpProcedure      *procedure,
+                    Gimp               *gimp,
+                    GimpContext        *context,
+                    GimpProgress       *progress,
+                    const GValueArray  *args,
+                    GError            **error)
 {
   gboolean success = TRUE;
   const gchar *token;
@@ -106,11 +108,12 @@ gimprc_set_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-get_default_comment_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+get_default_comment_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   GValueArray *return_vals;
   gchar *comment = NULL;
@@ -124,11 +127,12 @@ get_default_comment_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-get_default_unit_invoker (GimpProcedure     *procedure,
-                          Gimp              *gimp,
-                          GimpContext       *context,
-                          GimpProgress      *progress,
-                          const GValueArray *args)
+get_default_unit_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
 {
   GValueArray *return_vals;
   GimpUnit unit_id = 0;
@@ -142,11 +146,12 @@ get_default_unit_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-get_monitor_resolution_invoker (GimpProcedure     *procedure,
-                                Gimp              *gimp,
-                                GimpContext       *context,
-                                GimpProgress      *progress,
-                                const GValueArray *args)
+get_monitor_resolution_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GValueArray  *args,
+                                GError            **error)
 {
   GValueArray *return_vals;
   gdouble xres = 0.0;
@@ -164,11 +169,12 @@ get_monitor_resolution_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-get_theme_dir_invoker (GimpProcedure     *procedure,
-                       Gimp              *gimp,
-                       GimpContext       *context,
-                       GimpProgress      *progress,
-                       const GValueArray *args)
+get_theme_dir_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GValueArray  *args,
+                       GError            **error)
 {
   GValueArray *return_vals;
   gchar *theme_dir = NULL;
@@ -182,11 +188,12 @@ get_theme_dir_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-get_color_configuration_invoker (GimpProcedure     *procedure,
-                                 Gimp              *gimp,
-                                 GimpContext       *context,
-                                 GimpProgress      *progress,
-                                 const GValueArray *args)
+get_color_configuration_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GValueArray  *args,
+                                 GError            **error)
 {
   GValueArray *return_vals;
   gchar *config = NULL;
@@ -200,11 +207,12 @@ get_color_configuration_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-get_module_load_inhibit_invoker (GimpProcedure     *procedure,
-                                 Gimp              *gimp,
-                                 GimpContext       *context,
-                                 GimpProgress      *progress,
-                                 const GValueArray *args)
+get_module_load_inhibit_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GValueArray  *args,
+                                 GError            **error)
 {
   GValueArray *return_vals;
   gchar *load_inhibit = NULL;

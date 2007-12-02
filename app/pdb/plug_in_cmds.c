@@ -44,11 +44,12 @@
 
 
 static GValueArray *
-plugins_query_invoker (GimpProcedure     *procedure,
-                       Gimp              *gimp,
-                       GimpContext       *context,
-                       GimpProgress      *progress,
-                       const GValueArray *args)
+plugins_query_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GValueArray  *args,
+                       GError            **error)
 {
   GValueArray *return_vals;
   const gchar *search_string;
@@ -90,11 +91,12 @@ plugins_query_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-plugin_domain_register_invoker (GimpProcedure     *procedure,
-                                Gimp              *gimp,
-                                GimpContext       *context,
-                                GimpProgress      *progress,
-                                const GValueArray *args)
+plugin_domain_register_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GValueArray  *args,
+                                GError            **error)
 {
   gboolean success = TRUE;
   const gchar *domain_name;
@@ -120,11 +122,12 @@ plugin_domain_register_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-plugin_help_register_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
+plugin_help_register_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
 {
   gboolean success = TRUE;
   const gchar *domain_name;
@@ -150,11 +153,12 @@ plugin_help_register_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-plugin_menu_register_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
+plugin_menu_register_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
 {
   gboolean success = TRUE;
   const gchar *procedure_name;
@@ -183,11 +187,12 @@ plugin_menu_register_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-plugin_menu_branch_register_invoker (GimpProcedure     *procedure,
-                                     Gimp              *gimp,
-                                     GimpContext       *context,
-                                     GimpProgress      *progress,
-                                     const GValueArray *args)
+plugin_menu_branch_register_invoker (GimpProcedure      *procedure,
+                                     Gimp               *gimp,
+                                     GimpContext        *context,
+                                     GimpProgress       *progress,
+                                     const GValueArray  *args,
+                                     GError            **error)
 {
   gboolean success = TRUE;
   const gchar *menu_path;
@@ -213,11 +218,12 @@ plugin_menu_branch_register_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-plugin_icon_register_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
+plugin_icon_register_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
 {
   gboolean success = TRUE;
   const gchar *procedure_name;

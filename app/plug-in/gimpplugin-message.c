@@ -47,6 +47,8 @@
 #include "gimptemporaryprocedure.h"
 #include "plug-in-params.h"
 
+#include "gimp-intl.h"
+
 
 /*  local function prototypes  */
 
@@ -351,10 +353,11 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
 {
   GimpPlugInProcFrame *proc_frame;
   gchar               *canonical;
-  const gchar         *proc_name     = NULL;
+  const gchar         *proc_name   = NULL;
   GimpProcedure       *procedure;
-  GValueArray         *args          = NULL;
-  GValueArray         *return_vals   = NULL;
+  GValueArray         *args        = NULL;
+  GValueArray         *return_vals = NULL;
+  GError              *error       = NULL;
 
   canonical = gimp_canonicalize_identifier (proc_run->name);
 
@@ -429,11 +432,23 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
                                                          proc_frame->context_stack->data :
                                                          proc_frame->main_context,
                                                          proc_frame->progress,
+                                                         &error,
                                                          proc_name,
                                                          args);
   gimp_plug_in_manager_plug_in_pop (plug_in->manager);
 
   g_value_array_free (args);
+
+  if (error)
+    {
+      gimp_message (plug_in->manager->gimp, G_OBJECT (proc_frame->progress),
+                    GIMP_MESSAGE_ERROR,
+                    _("PDB calling error for procedure '%s':\n"
+                      "%s"),
+                    canonical, error->message);
+      g_error_free (error);
+    }
+
   g_free (canonical);
 
   /*  Don't bother to send the return value if executing the procedure

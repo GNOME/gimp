@@ -294,19 +294,30 @@ plug_in_procedure_execute (GimpPlugInProcedure *procedure,
                            GValueArray         *args,
                            gint                 n_args)
 {
+  GError *error = NULL;
+
   gimp_value_array_truncate (args, n_args);
 
   /* run the plug-in procedure */
   gimp_procedure_execute_async (GIMP_PROCEDURE (procedure), gimp,
                                 gimp_get_user_context (gimp),
                                 GIMP_PROGRESS (display), args,
-                                GIMP_OBJECT (display));
+                                GIMP_OBJECT (display), &error);
 
-  /* remember only image plug-ins */
-  if (GIMP_PROCEDURE (procedure)->num_args  >= 2  &&
-      GIMP_IS_PARAM_SPEC_IMAGE_ID (GIMP_PROCEDURE (procedure)->args[1]))
+  if (error)
     {
-      gimp_plug_in_manager_history_add (gimp->plug_in_manager, procedure);
+      gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
+                    "%s", error->message);
+      g_error_free (error);
+    }
+  else
+    {
+      /* remember only image plug-ins */
+      if (GIMP_PROCEDURE (procedure)->num_args  >= 2  &&
+          GIMP_IS_PARAM_SPEC_IMAGE_ID (GIMP_PROCEDURE (procedure)->args[1]))
+        {
+          gimp_plug_in_manager_history_add (gimp->plug_in_manager, procedure);
+        }
     }
 }
 

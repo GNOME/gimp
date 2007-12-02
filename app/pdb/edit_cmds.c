@@ -47,11 +47,12 @@
 
 
 static GValueArray *
-edit_cut_invoker (GimpProcedure     *procedure,
-                  Gimp              *gimp,
-                  GimpContext       *context,
-                  GimpProgress      *progress,
-                  const GValueArray *args)
+edit_cut_invoker (GimpProcedure      *procedure,
+                  Gimp               *gimp,
+                  GimpContext        *context,
+                  GimpProgress       *progress,
+                  const GValueArray  *args,
+                  GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -81,11 +82,12 @@ edit_cut_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-edit_copy_invoker (GimpProcedure     *procedure,
-                   Gimp              *gimp,
-                   GimpContext       *context,
-                   GimpProgress      *progress,
-                   const GValueArray *args)
+edit_copy_invoker (GimpProcedure      *procedure,
+                   Gimp               *gimp,
+                   GimpContext        *context,
+                   GimpProgress       *progress,
+                   const GValueArray  *args,
+                   GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -115,11 +117,12 @@ edit_copy_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-edit_copy_visible_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
+edit_copy_visible_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -142,11 +145,12 @@ edit_copy_visible_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-edit_paste_invoker (GimpProcedure     *procedure,
-                    Gimp              *gimp,
-                    GimpContext       *context,
-                    GimpProgress      *progress,
-                    const GValueArray *args)
+edit_paste_invoker (GimpProcedure      *procedure,
+                    Gimp               *gimp,
+                    GimpContext        *context,
+                    GimpProgress       *progress,
+                    const GValueArray  *args,
+                    GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -181,11 +185,12 @@ edit_paste_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-edit_paste_as_new_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
+edit_paste_as_new_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -212,11 +217,12 @@ edit_paste_as_new_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-edit_named_cut_invoker (GimpProcedure     *procedure,
-                        Gimp              *gimp,
-                        GimpContext       *context,
-                        GimpProgress      *progress,
-                        const GValueArray *args)
+edit_named_cut_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GValueArray  *args,
+                        GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -254,11 +260,12 @@ edit_named_cut_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-edit_named_copy_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
+edit_named_copy_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -296,11 +303,12 @@ edit_named_copy_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-edit_named_copy_visible_invoker (GimpProcedure     *procedure,
-                                 Gimp              *gimp,
-                                 GimpContext       *context,
-                                 GimpProgress      *progress,
-                                 const GValueArray *args)
+edit_named_copy_visible_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GValueArray  *args,
+                                 GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -331,11 +339,12 @@ edit_named_copy_visible_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-edit_named_paste_invoker (GimpProcedure     *procedure,
-                          Gimp              *gimp,
-                          GimpContext       *context,
-                          GimpProgress      *progress,
-                          const GValueArray *args)
+edit_named_paste_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -374,11 +383,12 @@ edit_named_paste_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-edit_named_paste_as_new_invoker (GimpProcedure     *procedure,
-                                 Gimp              *gimp,
-                                 GimpContext       *context,
-                                 GimpProgress      *progress,
-                                 const GValueArray *args)
+edit_named_paste_as_new_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GValueArray  *args,
+                                 GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -412,11 +422,12 @@ edit_named_paste_as_new_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-edit_clear_invoker (GimpProcedure     *procedure,
-                    Gimp              *gimp,
-                    GimpContext       *context,
-                    GimpProgress      *progress,
-                    const GValueArray *args)
+edit_clear_invoker (GimpProcedure      *procedure,
+                    Gimp               *gimp,
+                    GimpContext        *context,
+                    GimpProgress       *progress,
+                    const GValueArray  *args,
+                    GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -439,11 +450,12 @@ edit_clear_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-edit_fill_invoker (GimpProcedure     *procedure,
-                   Gimp              *gimp,
-                   GimpContext       *context,
-                   GimpProgress      *progress,
-                   const GValueArray *args)
+edit_fill_invoker (GimpProcedure      *procedure,
+                   Gimp               *gimp,
+                   GimpContext        *context,
+                   GimpProgress       *progress,
+                   const GValueArray  *args,
+                   GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -469,11 +481,12 @@ edit_fill_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-edit_bucket_fill_invoker (GimpProcedure     *procedure,
-                          Gimp              *gimp,
-                          GimpContext       *context,
-                          GimpProgress      *progress,
-                          const GValueArray *args)
+edit_bucket_fill_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -518,11 +531,12 @@ edit_bucket_fill_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-edit_bucket_fill_full_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
+edit_bucket_fill_full_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -571,11 +585,12 @@ edit_bucket_fill_full_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-edit_blend_invoker (GimpProcedure     *procedure,
-                    Gimp              *gimp,
-                    GimpContext       *context,
-                    GimpProgress      *progress,
-                    const GValueArray *args)
+edit_blend_invoker (GimpProcedure      *procedure,
+                    Gimp               *gimp,
+                    GimpContext        *context,
+                    GimpProgress       *progress,
+                    const GValueArray  *args,
+                    GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -651,11 +666,12 @@ edit_blend_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-edit_stroke_invoker (GimpProcedure     *procedure,
-                     Gimp              *gimp,
-                     GimpContext       *context,
-                     GimpProgress      *progress,
-                     const GValueArray *args)
+edit_stroke_invoker (GimpProcedure      *procedure,
+                     Gimp               *gimp,
+                     GimpContext        *context,
+                     GimpProgress       *progress,
+                     const GValueArray  *args,
+                     GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -684,11 +700,12 @@ edit_stroke_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-edit_stroke_vectors_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+edit_stroke_vectors_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;

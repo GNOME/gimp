@@ -36,11 +36,12 @@
 
 
 static GValueArray *
-unit_get_number_of_units_invoker (GimpProcedure     *procedure,
-                                  Gimp              *gimp,
-                                  GimpContext       *context,
-                                  GimpProgress      *progress,
-                                  const GValueArray *args)
+unit_get_number_of_units_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GValueArray  *args,
+                                  GError            **error)
 {
   GValueArray *return_vals;
   gint32 num_units = 0;
@@ -54,11 +55,12 @@ unit_get_number_of_units_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-unit_get_number_of_built_in_units_invoker (GimpProcedure     *procedure,
-                                           Gimp              *gimp,
-                                           GimpContext       *context,
-                                           GimpProgress      *progress,
-                                           const GValueArray *args)
+unit_get_number_of_built_in_units_invoker (GimpProcedure      *procedure,
+                                           Gimp               *gimp,
+                                           GimpContext        *context,
+                                           GimpProgress       *progress,
+                                           const GValueArray  *args,
+                                           GError            **error)
 {
   GValueArray *return_vals;
   gint32 num_units = 0;
@@ -72,11 +74,12 @@ unit_get_number_of_built_in_units_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-unit_new_invoker (GimpProcedure     *procedure,
-                  Gimp              *gimp,
-                  GimpContext       *context,
-                  GimpProgress      *progress,
-                  const GValueArray *args)
+unit_new_invoker (GimpProcedure      *procedure,
+                  Gimp               *gimp,
+                  GimpContext        *context,
+                  GimpProgress       *progress,
+                  const GValueArray  *args,
+                  GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -112,11 +115,12 @@ unit_new_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-unit_get_deletion_flag_invoker (GimpProcedure     *procedure,
-                                Gimp              *gimp,
-                                GimpContext       *context,
-                                GimpProgress      *progress,
-                                const GValueArray *args)
+unit_get_deletion_flag_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GValueArray  *args,
+                                GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -139,11 +143,12 @@ unit_get_deletion_flag_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-unit_set_deletion_flag_invoker (GimpProcedure     *procedure,
-                                Gimp              *gimp,
-                                GimpContext       *context,
-                                GimpProgress      *progress,
-                                const GValueArray *args)
+unit_set_deletion_flag_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GValueArray  *args,
+                                GError            **error)
 {
   gboolean success = TRUE;
   GimpUnit unit_id;
@@ -161,11 +166,12 @@ unit_set_deletion_flag_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-unit_get_identifier_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+unit_get_identifier_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -188,11 +194,12 @@ unit_get_identifier_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-unit_get_factor_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
+unit_get_factor_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -215,11 +222,12 @@ unit_get_factor_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-unit_get_digits_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
+unit_get_digits_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -242,11 +250,12 @@ unit_get_digits_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-unit_get_symbol_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
+unit_get_symbol_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -269,11 +278,12 @@ unit_get_symbol_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-unit_get_abbreviation_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
+unit_get_abbreviation_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -296,11 +306,12 @@ unit_get_abbreviation_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-unit_get_singular_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
+unit_get_singular_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -323,11 +334,12 @@ unit_get_singular_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-unit_get_plural_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
+unit_get_plural_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;

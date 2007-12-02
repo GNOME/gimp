@@ -39,11 +39,12 @@
 
 
 static GValueArray *
-image_convert_rgb_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
+image_convert_rgb_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -62,11 +63,12 @@ image_convert_rgb_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-image_convert_grayscale_invoker (GimpProcedure     *procedure,
-                                 Gimp              *gimp,
-                                 GimpContext       *context,
-                                 GimpProgress      *progress,
-                                 const GValueArray *args)
+image_convert_grayscale_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GValueArray  *args,
+                                 GError            **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -85,11 +87,12 @@ image_convert_grayscale_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-image_convert_indexed_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
+image_convert_indexed_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -146,11 +149,12 @@ image_convert_indexed_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-image_convert_set_dither_matrix_invoker (GimpProcedure     *procedure,
-                                         Gimp              *gimp,
-                                         GimpContext       *context,
-                                         GimpProgress      *progress,
-                                         const GValueArray *args)
+image_convert_set_dither_matrix_invoker (GimpProcedure      *procedure,
+                                         Gimp               *gimp,
+                                         GimpContext        *context,
+                                         GimpProgress       *progress,
+                                         const GValueArray  *args,
+                                         GError            **error)
 {
   gboolean success = TRUE;
   gint32 width;

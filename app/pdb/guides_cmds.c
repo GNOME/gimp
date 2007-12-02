@@ -37,11 +37,12 @@
 
 
 static GValueArray *
-image_add_hguide_invoker (GimpProcedure     *procedure,
-                          Gimp              *gimp,
-                          GimpContext       *context,
-                          GimpProgress      *progress,
-                          const GValueArray *args)
+image_add_hguide_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -74,11 +75,12 @@ image_add_hguide_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-image_add_vguide_invoker (GimpProcedure     *procedure,
-                          Gimp              *gimp,
-                          GimpContext       *context,
-                          GimpProgress      *progress,
-                          const GValueArray *args)
+image_add_vguide_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -111,11 +113,12 @@ image_add_vguide_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-image_delete_guide_invoker (GimpProcedure     *procedure,
-                            Gimp              *gimp,
-                            GimpContext       *context,
-                            GimpProgress      *progress,
-                            const GValueArray *args)
+image_delete_guide_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GValueArray  *args,
+                            GError            **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -138,11 +141,12 @@ image_delete_guide_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-image_find_next_guide_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
+image_find_next_guide_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -170,11 +174,12 @@ image_find_next_guide_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-image_get_guide_orientation_invoker (GimpProcedure     *procedure,
-                                     Gimp              *gimp,
-                                     GimpContext       *context,
-                                     GimpProgress      *progress,
-                                     const GValueArray *args)
+image_get_guide_orientation_invoker (GimpProcedure      *procedure,
+                                     Gimp               *gimp,
+                                     GimpContext        *context,
+                                     GimpProgress       *progress,
+                                     const GValueArray  *args,
+                                     GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -204,11 +209,12 @@ image_get_guide_orientation_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-image_get_guide_position_invoker (GimpProcedure     *procedure,
-                                  Gimp              *gimp,
-                                  GimpContext       *context,
-                                  GimpProgress      *progress,
-                                  const GValueArray *args)
+image_get_guide_position_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GValueArray  *args,
+                                  GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;

@@ -45,11 +45,12 @@
 
 
 static GValueArray *
-vectors_is_valid_invoker (GimpProcedure     *procedure,
-                          Gimp              *gimp,
-                          GimpContext       *context,
-                          GimpProgress      *progress,
-                          const GValueArray *args)
+vectors_is_valid_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
 {
   GValueArray *return_vals;
   GimpVectors *vectors;
@@ -67,11 +68,12 @@ vectors_is_valid_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_new_invoker (GimpProcedure     *procedure,
-                     Gimp              *gimp,
-                     GimpContext       *context,
-                     GimpProgress      *progress,
-                     const GValueArray *args)
+vectors_new_invoker (GimpProcedure      *procedure,
+                     Gimp               *gimp,
+                     GimpContext        *context,
+                     GimpProgress       *progress,
+                     const GValueArray  *args,
+                     GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -96,11 +98,12 @@ vectors_new_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_get_image_invoker (GimpProcedure     *procedure,
-                           Gimp              *gimp,
-                           GimpContext       *context,
-                           GimpProgress      *progress,
-                           const GValueArray *args)
+vectors_get_image_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -123,11 +126,12 @@ vectors_get_image_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_get_name_invoker (GimpProcedure     *procedure,
-                          Gimp              *gimp,
-                          GimpContext       *context,
-                          GimpProgress      *progress,
-                          const GValueArray *args)
+vectors_get_name_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -150,11 +154,12 @@ vectors_get_name_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_set_name_invoker (GimpProcedure     *procedure,
-                          Gimp              *gimp,
-                          GimpContext       *context,
-                          GimpProgress      *progress,
-                          const GValueArray *args)
+vectors_set_name_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -172,11 +177,12 @@ vectors_set_name_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_get_visible_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+vectors_get_visible_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -199,11 +205,12 @@ vectors_get_visible_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_set_visible_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+vectors_set_visible_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -221,11 +228,12 @@ vectors_set_visible_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_get_linked_invoker (GimpProcedure     *procedure,
-                            Gimp              *gimp,
-                            GimpContext       *context,
-                            GimpProgress      *progress,
-                            const GValueArray *args)
+vectors_get_linked_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GValueArray  *args,
+                            GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -248,11 +256,12 @@ vectors_get_linked_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_set_linked_invoker (GimpProcedure     *procedure,
-                            Gimp              *gimp,
-                            GimpContext       *context,
-                            GimpProgress      *progress,
-                            const GValueArray *args)
+vectors_set_linked_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GValueArray  *args,
+                            GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -270,11 +279,12 @@ vectors_set_linked_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_get_tattoo_invoker (GimpProcedure     *procedure,
-                            Gimp              *gimp,
-                            GimpContext       *context,
-                            GimpProgress      *progress,
-                            const GValueArray *args)
+vectors_get_tattoo_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GValueArray  *args,
+                            GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -297,11 +307,12 @@ vectors_get_tattoo_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_set_tattoo_invoker (GimpProcedure     *procedure,
-                            Gimp              *gimp,
-                            GimpContext       *context,
-                            GimpProgress      *progress,
-                            const GValueArray *args)
+vectors_set_tattoo_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GValueArray  *args,
+                            GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -319,11 +330,12 @@ vectors_set_tattoo_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_get_strokes_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+vectors_get_strokes_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -366,11 +378,12 @@ vectors_get_strokes_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_stroke_get_length_invoker (GimpProcedure     *procedure,
-                                   Gimp              *gimp,
-                                   GimpContext       *context,
-                                   GimpProgress      *progress,
-                                   const GValueArray *args)
+vectors_stroke_get_length_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -402,11 +415,12 @@ vectors_stroke_get_length_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_stroke_get_point_at_dist_invoker (GimpProcedure     *procedure,
-                                          Gimp              *gimp,
-                                          GimpContext       *context,
-                                          GimpProgress      *progress,
-                                          const GValueArray *args)
+vectors_stroke_get_point_at_dist_invoker (GimpProcedure      *procedure,
+                                          Gimp               *gimp,
+                                          GimpContext        *context,
+                                          GimpProgress       *progress,
+                                          const GValueArray  *args,
+                                          GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -455,11 +469,12 @@ vectors_stroke_get_point_at_dist_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_remove_stroke_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
+vectors_remove_stroke_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -482,11 +497,12 @@ vectors_remove_stroke_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_stroke_close_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
+vectors_stroke_close_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -509,11 +525,12 @@ vectors_stroke_close_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_stroke_translate_invoker (GimpProcedure     *procedure,
-                                  Gimp              *gimp,
-                                  GimpContext       *context,
-                                  GimpProgress      *progress,
-                                  const GValueArray *args)
+vectors_stroke_translate_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GValueArray  *args,
+                                  GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -540,11 +557,12 @@ vectors_stroke_translate_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_stroke_scale_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
+vectors_stroke_scale_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -571,11 +589,12 @@ vectors_stroke_scale_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_stroke_rotate_invoker (GimpProcedure     *procedure,
-                               Gimp              *gimp,
-                               GimpContext       *context,
-                               GimpProgress      *progress,
-                               const GValueArray *args)
+vectors_stroke_rotate_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -604,11 +623,12 @@ vectors_stroke_rotate_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_stroke_flip_invoker (GimpProcedure     *procedure,
-                             Gimp              *gimp,
-                             GimpContext       *context,
-                             GimpProgress      *progress,
-                             const GValueArray *args)
+vectors_stroke_flip_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -635,11 +655,12 @@ vectors_stroke_flip_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_stroke_flip_free_invoker (GimpProcedure     *procedure,
-                                  Gimp              *gimp,
-                                  GimpContext       *context,
-                                  GimpProgress      *progress,
-                                  const GValueArray *args)
+vectors_stroke_flip_free_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GValueArray  *args,
+                                  GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -670,11 +691,12 @@ vectors_stroke_flip_free_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_stroke_get_points_invoker (GimpProcedure     *procedure,
-                                   Gimp              *gimp,
-                                   GimpContext       *context,
-                                   GimpProgress      *progress,
-                                   const GValueArray *args)
+vectors_stroke_get_points_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -736,11 +758,12 @@ vectors_stroke_get_points_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_stroke_new_from_points_invoker (GimpProcedure     *procedure,
-                                        Gimp              *gimp,
-                                        GimpContext       *context,
-                                        GimpProgress      *progress,
-                                        const GValueArray *args)
+vectors_stroke_new_from_points_invoker (GimpProcedure      *procedure,
+                                        Gimp               *gimp,
+                                        GimpContext        *context,
+                                        GimpProgress       *progress,
+                                        const GValueArray  *args,
+                                        GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -799,11 +822,12 @@ vectors_stroke_new_from_points_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_stroke_interpolate_invoker (GimpProcedure     *procedure,
-                                    Gimp              *gimp,
-                                    GimpContext       *context,
-                                    GimpProgress      *progress,
-                                    const GValueArray *args)
+vectors_stroke_interpolate_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GValueArray  *args,
+                                    GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -862,11 +886,12 @@ vectors_stroke_interpolate_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_bezier_stroke_new_moveto_invoker (GimpProcedure     *procedure,
-                                          Gimp              *gimp,
-                                          GimpContext       *context,
-                                          GimpProgress      *progress,
-                                          const GValueArray *args)
+vectors_bezier_stroke_new_moveto_invoker (GimpProcedure      *procedure,
+                                          Gimp               *gimp,
+                                          GimpContext        *context,
+                                          GimpProgress       *progress,
+                                          const GValueArray  *args,
+                                          GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -901,11 +926,12 @@ vectors_bezier_stroke_new_moveto_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_bezier_stroke_lineto_invoker (GimpProcedure     *procedure,
-                                      Gimp              *gimp,
-                                      GimpContext       *context,
-                                      GimpProgress      *progress,
-                                      const GValueArray *args)
+vectors_bezier_stroke_lineto_invoker (GimpProcedure      *procedure,
+                                      Gimp               *gimp,
+                                      GimpContext        *context,
+                                      GimpProgress       *progress,
+                                      const GValueArray  *args,
+                                      GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -939,11 +965,12 @@ vectors_bezier_stroke_lineto_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_bezier_stroke_conicto_invoker (GimpProcedure     *procedure,
-                                       Gimp              *gimp,
-                                       GimpContext       *context,
-                                       GimpProgress      *progress,
-                                       const GValueArray *args)
+vectors_bezier_stroke_conicto_invoker (GimpProcedure      *procedure,
+                                       Gimp               *gimp,
+                                       GimpContext        *context,
+                                       GimpProgress       *progress,
+                                       const GValueArray  *args,
+                                       GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -985,11 +1012,12 @@ vectors_bezier_stroke_conicto_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_bezier_stroke_cubicto_invoker (GimpProcedure     *procedure,
-                                       Gimp              *gimp,
-                                       GimpContext       *context,
-                                       GimpProgress      *progress,
-                                       const GValueArray *args)
+vectors_bezier_stroke_cubicto_invoker (GimpProcedure      *procedure,
+                                       Gimp               *gimp,
+                                       GimpContext        *context,
+                                       GimpProgress       *progress,
+                                       const GValueArray  *args,
+                                       GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -1039,11 +1067,12 @@ vectors_bezier_stroke_cubicto_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure     *procedure,
-                                           Gimp              *gimp,
-                                           GimpContext       *context,
-                                           GimpProgress      *progress,
-                                           const GValueArray *args)
+vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure      *procedure,
+                                           Gimp               *gimp,
+                                           GimpContext        *context,
+                                           GimpProgress       *progress,
+                                           const GValueArray  *args,
+                                           GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -1084,11 +1113,12 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_to_selection_invoker (GimpProcedure     *procedure,
-                              Gimp              *gimp,
-                              GimpContext       *context,
-                              GimpProgress      *progress,
-                              const GValueArray *args)
+vectors_to_selection_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
 {
   gboolean success = TRUE;
   GimpVectors *vectors;
@@ -1129,11 +1159,12 @@ vectors_to_selection_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_import_from_file_invoker (GimpProcedure     *procedure,
-                                  Gimp              *gimp,
-                                  GimpContext       *context,
-                                  GimpProgress      *progress,
-                                  const GValueArray *args)
+vectors_import_from_file_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GValueArray  *args,
+                                  GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -1187,11 +1218,12 @@ vectors_import_from_file_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_import_from_string_invoker (GimpProcedure     *procedure,
-                                    Gimp              *gimp,
-                                    GimpContext       *context,
-                                    GimpProgress      *progress,
-                                    const GValueArray *args)
+vectors_import_from_string_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GValueArray  *args,
+                                    GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -1247,11 +1279,12 @@ vectors_import_from_string_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-vectors_export_to_file_invoker (GimpProcedure     *procedure,
-                                Gimp              *gimp,
-                                GimpContext       *context,
-                                GimpProgress      *progress,
-                                const GValueArray *args)
+vectors_export_to_file_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GValueArray  *args,
+                                GError            **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
@@ -1264,32 +1297,19 @@ vectors_export_to_file_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      GError *error = NULL;
-
-      if (vectors != NULL && ! GIMP_IS_VECTORS (vectors))
-        {
-          g_set_error (&error, 0, 0, _("argument is not a valid Vectors object"));
-          success = FALSE;
-        }
-      else
-        success = gimp_vectors_export_file (image, vectors, filename, &error);
-
-      if (! success && error)
-        {
-          g_message (_("Failed to export path: %s"), error->message);
-          g_clear_error (&error);
-        }
+      success = gimp_vectors_export_file (image, vectors, filename, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
-vectors_export_to_string_invoker (GimpProcedure     *procedure,
-                                  Gimp              *gimp,
-                                  GimpContext       *context,
-                                  GimpProgress      *progress,
-                                  const GValueArray *args)
+vectors_export_to_string_invoker (GimpProcedure      *procedure,
+                                  Gimp               *gimp,
+                                  GimpContext        *context,
+                                  GimpProgress       *progress,
+                                  const GValueArray  *args,
+                                  GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -1302,23 +1322,9 @@ vectors_export_to_string_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      GError *error = NULL;
-
-      if (vectors != NULL && ! GIMP_IS_VECTORS (vectors))
-        {
-          g_set_error (&error, 0, 0, _("argument is not a valid Vectors object"));
-          success = FALSE;
-        }
-      else
-        string = gimp_vectors_export_string (image, vectors);
+      string = gimp_vectors_export_string (image, vectors);
 
       success = (string != NULL);
-
-      if (! success && error)
-        {
-          g_message (_("Failed to save path as string: %s"), error->message);
-          g_clear_error (&error);
-        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);

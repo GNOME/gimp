@@ -1,5 +1,43 @@
 2007-12-02  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/app.pl: use GError for error reporting in PDB
+	invoker methods.
+
+	* tools/pdbgen/pdb/vectors.pdb: use the GError for the procedures
+	introduced for bug #497159.
+
+	* tools/pdbgen/pdb/fileops.pdb: use the GError from file-load and
+	file-save procedures.
+
+	* app/pdb/*_cmds.c: regenerated.
+
+	* app/pdb/Makefile.am
+
+	* app/pdb/gimppdberror.[ch]: new file introducing the
+	GIMP_PDB_ERROR domain.
+
+	* app/actions/plug-in-commands.c
+	* app/actions/vectors-commands.c
+	* app/batch.c
+	* app/core/gimpimagefile.c
+	* app/core/gimppdbprogress.c
+	* app/file/file-open.[ch]
+	* app/file/file-save.c
+	* app/plug-in/gimpplugin-message.c
+	* app/plug-in/gimppluginmanager-restore.c
+	* app/plug-in/gimppluginprocedure.c
+	* app/plug-in/gimptemporaryprocedure.c
+	* app/plug-in/plug-in-icc-profile.c
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimpfontselect.c
+	* app/widgets/gimpgradientselect.c
+	* app/widgets/gimphelp.c
+	* app/widgets/gimppaletteselect.c
+	* app/widgets/gimppatternselect.c
+	* app/widgets/gimppdbdialog.[ch]: changed accordingly.
+
+2007-12-02  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/tiff-load.c (load_image): removed pointless and
 	untranslated warning.
 

@@ -310,6 +310,7 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   GimpProcedure *procedure;
   GValueArray   *args;
   GimpDisplay   *display;
+  GError        *error = NULL;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
@@ -338,9 +339,16 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   gimp_procedure_execute_async (procedure, image->gimp,
                                 action_data_get_context (data),
                                 GIMP_PROGRESS (display), args,
-                                GIMP_OBJECT (display));
+                                GIMP_OBJECT (display), &error);
 
   g_value_array_free (args);
+
+  if (error)
+    {
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_ERROR,
+                    "%s", error->message);
+      g_error_free (error);
+    }
 }
 
 void

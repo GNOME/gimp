@@ -36,11 +36,12 @@
 
 
 static GValueArray *
-display_is_valid_invoker (GimpProcedure     *procedure,
-                          Gimp              *gimp,
-                          GimpContext       *context,
-                          GimpProgress      *progress,
-                          const GValueArray *args)
+display_is_valid_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
 {
   GValueArray *return_vals;
   GimpObject *display;
@@ -57,11 +58,12 @@ display_is_valid_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-display_new_invoker (GimpProcedure     *procedure,
-                     Gimp              *gimp,
-                     GimpContext       *context,
-                     GimpProgress      *progress,
-                     const GValueArray *args)
+display_new_invoker (GimpProcedure      *procedure,
+                     Gimp               *gimp,
+                     GimpContext        *context,
+                     GimpProgress       *progress,
+                     const GValueArray  *args,
+                     GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -95,11 +97,12 @@ display_new_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-display_delete_invoker (GimpProcedure     *procedure,
-                        Gimp              *gimp,
-                        GimpContext       *context,
-                        GimpProgress      *progress,
-                        const GValueArray *args)
+display_delete_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GValueArray  *args,
+                        GError            **error)
 {
   gboolean success = TRUE;
   GimpObject *display;
@@ -115,11 +118,12 @@ display_delete_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-display_get_window_handle_invoker (GimpProcedure     *procedure,
-                                   Gimp              *gimp,
-                                   GimpContext       *context,
-                                   GimpProgress      *progress,
-                                   const GValueArray *args)
+display_get_window_handle_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -142,22 +146,24 @@ display_get_window_handle_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-displays_flush_invoker (GimpProcedure     *procedure,
-                        Gimp              *gimp,
-                        GimpContext       *context,
-                        GimpProgress      *progress,
-                        const GValueArray *args)
+displays_flush_invoker (GimpProcedure      *procedure,
+                        Gimp               *gimp,
+                        GimpContext        *context,
+                        GimpProgress       *progress,
+                        const GValueArray  *args,
+                        GError            **error)
 {
   gimp_container_foreach (gimp->images, (GFunc) gimp_image_flush, NULL);
   return gimp_procedure_get_return_values (procedure, TRUE);
 }
 
 static GValueArray *
-displays_reconnect_invoker (GimpProcedure     *procedure,
-                            Gimp              *gimp,
-                            GimpContext       *context,
-                            GimpProgress      *progress,
-                            const GValueArray *args)
+displays_reconnect_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GValueArray  *args,
+                            GError            **error)
 {
   gboolean success = TRUE;
   GimpImage *old_image;

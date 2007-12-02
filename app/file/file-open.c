@@ -146,7 +146,7 @@ file_open_image (Gimp                *gimp,
 
   return_vals =
     gimp_pdb_execute_procedure_by_name (gimp->pdb,
-                                        context, progress,
+                                        context, progress, error,
                                         GIMP_OBJECT (file_proc)->name,
                                         GIMP_TYPE_INT32, run_mode,
                                         G_TYPE_STRING,   filename,
@@ -176,18 +176,21 @@ file_open_image (Gimp                *gimp,
         }
       else
         {
-          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("%s plug-in returned SUCCESS but did not "
-                         "return an image"),
-                       gimp_plug_in_procedure_get_label (file_proc));
+          if (error && ! *error)
+            g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                         _("%s plug-in returned SUCCESS but did not "
+                           "return an image"),
+                         gimp_plug_in_procedure_get_label (file_proc));
+
           *status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
   else if (*status != GIMP_PDB_CANCEL)
     {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("%s plug-In could not open image"),
-                   gimp_plug_in_procedure_get_label (file_proc));
+      if (error && ! *error)
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                     _("%s plug-In could not open image"),
+                     gimp_plug_in_procedure_get_label (file_proc));
     }
 
   g_value_array_free (return_vals);
@@ -209,7 +212,8 @@ file_open_thumbnail (Gimp          *gimp,
                      gint           size,
                      const gchar  **mime_type,
                      gint          *image_width,
-                     gint          *image_height)
+                     gint          *image_height,
+                     GError       **error)
 {
   GimpPlugInProcedure *file_proc;
   GimpProcedure       *procedure;
@@ -220,6 +224,7 @@ file_open_thumbnail (Gimp          *gimp,
   g_return_val_if_fail (mime_type != NULL, NULL);
   g_return_val_if_fail (image_width != NULL, NULL);
   g_return_val_if_fail (image_height != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   *image_width  = 0;
   *image_height = 0;
@@ -246,7 +251,7 @@ file_open_thumbnail (Gimp          *gimp,
 
       return_vals =
         gimp_pdb_execute_procedure_by_name (gimp->pdb,
-                                            context, progress,
+                                            context, progress, error,
                                             GIMP_OBJECT (procedure)->name,
                                             G_TYPE_STRING,   filename,
                                             GIMP_TYPE_INT32, size,
