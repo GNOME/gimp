@@ -827,7 +827,6 @@ load_image (const gchar       *filename,
                       {
                       case RESUNIT_NONE:
                         /* ImageMagick writes files with this silly resunit */
-                        g_message ("Warning: resolution units meaningless");
                         break;
 
                       case RESUNIT_INCH:
