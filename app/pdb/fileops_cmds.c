@@ -69,7 +69,7 @@ file_load_invoker (GimpProcedure      *procedure,
     return gimp_procedure_get_return_values (procedure, FALSE);
 
   file_proc =
-    file_procedure_find (gimp->plug_in_manager->load_procs, uri, NULL);
+    file_procedure_find (gimp->plug_in_manager->load_procs, uri, error);
 
   g_free (uri);
 
@@ -139,7 +139,7 @@ file_load_layer_invoker (GimpProcedure      *procedure,
 
           layers = file_open_layers (gimp, context, progress,
                                      image, FALSE,
-                                     uri, run_mode, NULL, &status, NULL);
+                                     uri, run_mode, NULL, &status, error);
 
           if (layers)
             {
@@ -192,7 +192,7 @@ file_load_layers_invoker (GimpProcedure      *procedure,
 
           layers = file_open_layers (gimp, context, progress,
                                      image, FALSE,
-                                     uri, run_mode, NULL, &status, NULL);
+                                     uri, run_mode, NULL, &status, error);
 
           if (layers)
             {
@@ -251,7 +251,7 @@ file_save_invoker (GimpProcedure      *procedure,
     return gimp_procedure_get_return_values (procedure, FALSE);
 
   file_proc =
-    file_procedure_find (gimp->plug_in_manager->save_procs, uri, NULL);
+    file_procedure_find (gimp->plug_in_manager->save_procs, uri, error);
 
   g_free (uri);
 

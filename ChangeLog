@@ -1,3 +1,10 @@
+2007-12-03  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/fileops.pdb: pass the new error down to all
+	file functions which take GError arguments.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
 2007-12-02  Manish Singh  <yosh@gimp.org>
 
 	* app/dialogs/about-dialog.c (about_dialog_load_url): pass NULL
