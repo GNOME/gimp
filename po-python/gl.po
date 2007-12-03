@@ -1,51 +1,52 @@
 # translation of gl.po to Galego
 # Ignacio Casal Quinteiro <icq@cvs.gnome.org>, 2007.
+# imaxin localiza para mancomun.org , <imaxim@imaxin.com>, 2007
+# Mar Castro Pereiro para mancomun.org,  <mariamarcp@gmail.com>, 2007
 msgid ""
 msgstr ""
-"Project-Id-Version: gl\n"
+"Project-Id-Version: python-gl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-15 22:20+0200\n"
-"PO-Revision-Date: 2007-05-15 22:22+0200\n"
-"Last-Translator: Ignacio Casal Quinteiro <icq@cvs.gnome.org>\n"
-"Language-Team: Galego <proxecto@trasno.net>\n"
+"POT-Creation-Date: 2007-12-03 12:32+0100\n"
+"PO-Revision-Date: 2007-11-30 10:02+0100\n"
+"Last-Translator: Mar Castro Pereiro - mancomun.org\n"
+"Language-Team: Galician <mancomun@mancomun.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=( n != 1 )\n"
 
-# (pofilter) untranslated: checks whether a string has been translated at all
-#: ../plug-ins/pygimp/gimpfu.py:378
+#: ../plug-ins/pygimp/gimpfu.py:380
 msgid "Missing exception information"
 msgstr "Falta información da excepción"
 
-#: ../plug-ins/pygimp/gimpfu.py:387
+#: ../plug-ins/pygimp/gimpfu.py:389
 #, python-format
 msgid "An error occured running %s"
 msgstr "Produciuse un erro ao executar %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:398
+#: ../plug-ins/pygimp/gimpfu.py:400
 msgid "_More Information"
 msgstr "_Máis información"
 
-#: ../plug-ins/pygimp/gimpfu.py:504 ../plug-ins/pygimp/gimpfu.py:516
-#: ../plug-ins/pygimp/gimpfu.py:522
+#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
+#: ../plug-ins/pygimp/gimpfu.py:524
 msgid "No"
 msgstr "Non"
 
-#: ../plug-ins/pygimp/gimpfu.py:514 ../plug-ins/pygimp/gimpfu.py:522
+#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
 msgid "Yes"
 msgstr "Si"
 
-#: ../plug-ins/pygimp/gimpfu.py:556 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
-msgstr "Selección de ficheiros de Python-Fu"
+msgstr "Selección do ficheiro de Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:567
+#: ../plug-ins/pygimp/gimpfu.py:569
 msgid "Python-Fu Folder Selection"
-msgstr "Selección de cartafol de Python-Fu"
+msgstr "Selección do cartafol de Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:657
+#: ../plug-ins/pygimp/gimpfu.py:659
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Entrada non válida para '%s'"
@@ -56,19 +57,19 @@ msgstr "Selección de cor de Python-Fu"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
 msgid "Saving as colored XHTML"
-msgstr "Gardar como XHTML non coloreado"
+msgstr "Gardar como XHTML colorado"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
 msgid "Save as colored XHTML"
-msgstr "Gardar como XHTML coloreado"
+msgstr "Gardar como XHTML colorado"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
 msgid "Colored XHTML"
-msgstr "XHTML coloreado"
+msgstr "XHTML colorado"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
 msgid "Character _source"
-msgstr "_Orixe do carácter"
+msgstr "_Fonte do carácter"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
 msgid "Source code"
@@ -84,15 +85,15 @@ msgstr "Caixa de entrada"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "_File to read or characters to use"
-msgstr "_Ficheiro de que ler ou caracteres que usar."
+msgstr "_Ficheiro de lectura ou caracteres a utilizar"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "Fo_nt size in pixels"
-msgstr "Tamaño da le_tra en píxeles"
+msgstr "Tamaño do tipo de l_etra en píxeles"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
 msgid "_Write a separate CSS file"
-msgstr "_Escribir un ficheiro de CSS á parte"
+msgstr "_Escribir un ficheiro CSS separado"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
@@ -100,7 +101,7 @@ msgstr "Consola de Python"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
 msgid "_Browse..."
-msgstr "_Examinar..."
+msgstr "_Explorar..."
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
 msgid "Python Procedure Browser"
@@ -109,50 +110,50 @@ msgstr "Explorador de procedementos Python"
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Non foi posible abrir '%s' para a súa escritura: %s"
+msgstr "Non foi posible abrir '%s' para escribir: %s"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
 #, python-format
 msgid "Could not write to '%s': %s"
-msgstr "Non se puido escribir en '%s': %s"
+msgstr "Non foi posible escribir en '%s': %s"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
 msgid "Save Python-Fu Console Output"
-msgstr "Garda a saída da consola Python-Fu"
+msgstr "Gardar a saída da consola Python-Fu"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
 msgid "Interactive Gimp-Python interpreter"
-msgstr "Intérprete interactivo do Gimp-Python"
+msgstr "Intérprete interactivo de Gimp-Python"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
 msgid "_Console"
 msgstr "_Consola"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+#: ../plug-ins/pygimp/plug-ins/foggify.py:52
 msgid "Add a layer of fog"
 msgstr "Engadir unha capa de néboa"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pygimp/plug-ins/foggify.py:57
 msgid "_Fog..."
 msgstr "_Néboa..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
 msgid "_Layer name"
 msgstr "Nome da _capa"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
 msgid "Clouds"
 msgstr "Nubes"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Fog color"
 msgstr "Cor da _néboa"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "_Turbulence"
 msgstr "_Turbulencia"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
 msgid "Op_acity"
 msgstr "Op_acidade"
 
@@ -173,11 +174,11 @@ msgstr "Paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
 msgid "Off_set"
-msgstr "De_sprazar"
+msgstr "Des_prazamento"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
 msgid "Sort the colors in a palette"
-msgstr "Ordear as cores nunha paleta"
+msgstr "Ordenar as cores nunha paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
 msgid "_Sort Palette..."
@@ -201,7 +202,7 @@ msgstr "Canle para _ordenar"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
-msgstr "Vermello ou ton"
+msgstr "Vermello ou matiz"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
 msgid "Green or Saturation"
@@ -213,7 +214,7 @@ msgstr "Azul ou valor"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
 msgid "_Ascending"
-msgstr "_Ascendente"
+msgstr "_Ascendendo"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
@@ -229,7 +230,7 @@ msgstr "Crear unha gradación usando cores da paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
 msgid "Palette to _Gradient"
-msgstr "Paleta para a _gradación"
+msgstr "Paleta para a gr_adación"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:57
 msgid "Slice"
@@ -247,7 +248,7 @@ msgstr "_Anaco..."
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "Path for HTML export"
-msgstr "Camiño para exportar o HTML"
+msgstr "Camiño para exportar HTML"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:433
 msgid "Filename for export"
@@ -263,7 +264,7 @@ msgstr "Formato da imaxe"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Separate image folder"
-msgstr "Cartafol de imaxes separado"
+msgstr "Separar o cartafol de imaxe"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Folder for image export"
@@ -279,19 +280,19 @@ msgstr "Javascript para cando o rato estea enriba e cando se prema"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Skip animation for table caps"
-msgstr "Saltar a animación para as capitulares da táboa"
+msgstr "Ignorar a animación para a táboa"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "Engadir unha sombra caída á capa e, opcionalmente, biselala"
+msgstr "Engadir unha sombra de proxección á capa e, opcionalmente, biselala"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
 msgid "_Drop Shadow and Bevel..."
-msgstr "_Soltar sombra e bisel..."
+msgstr "_Sombra de proxección e biselar..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 msgid "_Shadow blur"
-msgstr "_Desenfoque de sombra"
+msgstr "_Difuminado de sombra"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 msgid "_Bevel"
@@ -299,13 +300,12 @@ msgstr "_Bisel"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "_Drop shadow"
-msgstr "_Soltar sombra"
+msgstr "_Sombra de proxección"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _X displacement"
-msgstr "Desprazamento en _X da sombra caída"
+msgstr "Desprazamento en _X da sombra de proxección"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
 msgid "Drop shadow _Y displacement"
-msgstr "Desprazamento en _Y da sombra caída"
-
+msgstr "Desprazamento en _Y da sombra de proxección"
