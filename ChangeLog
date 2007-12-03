@@ -1,3 +1,13 @@
+2007-12-02  Manish Singh  <yosh@gimp.org>
+
+	* app/dialogs/about-dialog.c (about_dialog_load_url): pass NULL
+	GError arg to gimp_pdb_execute_procedure_by_name.
+
+	* app/xcf/xcf.c
+	* app/xcf/xcf-load.[ch]
+	* app/xcf/xcf-save.[ch]: throw GErrors from load/save invokers instead
+	of gimp_messages.
+
 2007-12-02  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/app.pl: use GError for error reporting in PDB

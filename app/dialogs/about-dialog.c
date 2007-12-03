@@ -209,7 +209,7 @@ about_dialog_load_url (GtkAboutDialog *dialog,
   GValueArray *return_vals;
 
   return_vals = gimp_pdb_execute_procedure_by_name (context->gimp->pdb,
-                                                    context, NULL,
+                                                    context, NULL, NULL,
                                                     PDB_URL_LOAD,
                                                     G_TYPE_STRING, url,
                                                     G_TYPE_NONE);

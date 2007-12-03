@@ -120,8 +120,9 @@ static gboolean        xcf_load_vector        (XcfInfo      *info,
 
 
 GimpImage *
-xcf_load_image (Gimp    *gimp,
-                XcfInfo *info)
+xcf_load_image (Gimp     *gimp,
+                XcfInfo  *info,
+                GError  **error)
 {
   GimpImage          *image;
   GimpLayer          *layer;
@@ -280,9 +281,9 @@ xcf_load_image (Gimp    *gimp,
   return image;
 
  hard_error:
-  gimp_message (gimp, G_OBJECT (info->progress), GIMP_MESSAGE_ERROR,
-                _("This XCF file is corrupt!  I could not even "
-                  "salvage any partial image data from it."));
+  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+               _("This XCF file is corrupt!  I could not even "
+                 "salvage any partial image data from it."));
 
   g_object_unref (image);
 

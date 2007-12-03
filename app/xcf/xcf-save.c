@@ -156,78 +156,14 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
     }                                                               \
   } G_STMT_END
 
-#define xcf_write_int32_print_error(info, data, count) G_STMT_START { \
-  info->cp += xcf_write_int32 (info->fp, data, count, &error); \
-  if (error)                                                   \
-    {                                                          \
-      gimp_message (info->gimp, G_OBJECT (info->progress),     \
-                    GIMP_MESSAGE_ERROR,                        \
-                    _("Error saving XCF file: %s"),            \
-                    error->message);                           \
-      return FALSE;                                            \
-    }                                                          \
-  } G_STMT_END
-
-#define xcf_write_int8_print_error(info, data, count) G_STMT_START { \
-  info->cp += xcf_write_int8 (info->fp, data, count, &error); \
-  if (error)                                                  \
-    {                                                         \
-      gimp_message (info->gimp, G_OBJECT (info->progress),    \
-                    GIMP_MESSAGE_ERROR,                       \
-                    _("Error saving XCF file: %s"),           \
-                    error->message);                          \
-      return FALSE;                                           \
-    }                                                         \
-  } G_STMT_END
-
-#define xcf_write_float_print_error(info, data, count) G_STMT_START { \
-  info->cp += xcf_write_float (info->fp, data, count, &error); \
-  if (error)                                                   \
-    {                                                          \
-      gimp_message (info->gimp, G_OBJECT (info->progress),     \
-                    GIMP_MESSAGE_ERROR,                        \
-                    _("Error saving XCF file: %s"),            \
-                    error->message);                           \
-      return FALSE;                                            \
-    }                                                          \
-  } G_STMT_END
-
-#define xcf_write_string_print_error(info, data, count) G_STMT_START { \
-  info->cp += xcf_write_string (info->fp, data, count, &error); \
-  if (error)                                                    \
-    {                                                           \
-      gimp_message (info->gimp, G_OBJECT (info->progress),      \
-                    GIMP_MESSAGE_ERROR,                         \
-                    _("Error saving XCF file: %s"),             \
-                    error->message);                            \
-      return FALSE;                                             \
-    }                                                           \
-  } G_STMT_END
-
 #define xcf_write_prop_type_check_error(info, prop_type) G_STMT_START { \
   guint32 _prop_int32 = prop_type;                     \
   xcf_write_int32_check_error (info, &_prop_int32, 1); \
   } G_STMT_END
 
-#define xcf_write_prop_type_print_error(info, prop_type) G_STMT_START { \
-  guint32 _prop_int32 = prop_type;                     \
-  xcf_write_int32_print_error (info, &_prop_int32, 1); \
-  } G_STMT_END
-
 #define xcf_check_error(x) G_STMT_START { \
   if (! (x))                                                  \
     return FALSE;                                             \
-  } G_STMT_END
-
-#define xcf_print_error(info, x) G_STMT_START {               \
-  if (! (x))                                                  \
-    {                                                         \
-      gimp_message (info->gimp, G_OBJECT (info->progress),    \
-                    GIMP_MESSAGE_ERROR,                       \
-                    _("Error saving XCF file: %s"),           \
-                    error->message);                          \
-      return FALSE;                                           \
-    }                                                         \
   } G_STMT_END
 
 #define xcf_progress_update(info) G_STMT_START  \
@@ -276,8 +212,9 @@ xcf_save_choose_format (XcfInfo   *info,
 }
 
 gint
-xcf_save_image (XcfInfo   *info,
-                GimpImage *image)
+xcf_save_image (XcfInfo    *info,
+                GimpImage  *image,
+                GError    **error)
 {
   GimpLayer   *layer;
   GimpLayer   *floating_layer;
@@ -293,7 +230,7 @@ xcf_save_image (XcfInfo   *info,
   gboolean     have_selection;
   gint         t1, t2, t3, t4;
   gchar        version_tag[16];
-  GError      *error = NULL;
+  GError      *tmp_error = NULL;
 
   floating_layer = gimp_image_floating_sel (image);
   if (floating_layer)
@@ -309,14 +246,14 @@ xcf_save_image (XcfInfo   *info,
       strcpy (version_tag, "gimp xcf file");
     }
 
-  xcf_write_int8_print_error  (info, (guint8 *) version_tag, 14);
+  xcf_write_int8_check_error (info, (guint8 *) version_tag, 14);
 
   /* write out the width, height and image type information for the image */
-  xcf_write_int32_print_error (info, (guint32 *) &image->width, 1);
-  xcf_write_int32_print_error (info, (guint32 *) &image->height, 1);
+  xcf_write_int32_check_error (info, (guint32 *) &image->width, 1);
+  xcf_write_int32_check_error (info, (guint32 *) &image->height, 1);
 
   value = image->base_type;
-  xcf_write_int32_print_error (info, &value, 1);
+  xcf_write_int32_check_error (info, &value, 1);
 
   /* determine the number of layers and channels in the image */
   nlayers   = (guint) gimp_container_num_children (image->layers);
@@ -333,7 +270,7 @@ xcf_save_image (XcfInfo   *info,
   /* write the property information for the image.
    */
 
-  xcf_print_error (info, xcf_save_image_props (info, image, &error));
+  xcf_check_error (xcf_save_image_props (info, image, error));
 
   xcf_progress_update (info);
 
@@ -343,9 +280,9 @@ xcf_save_image (XcfInfo   *info,
   saved_pos = info->cp;
 
   /* seek to after the offset lists */
-  xcf_print_error (info, xcf_seek_pos (info,
-                                       info->cp + (nlayers + nchannels + 2) * 4,
-                                       &error));
+  xcf_check_error (xcf_seek_pos (info,
+                                 info->cp + (nlayers + nchannels + 2) * 4,
+                                 error));
 
   for (list = GIMP_LIST (image->layers)->list;
        list;
@@ -359,15 +296,15 @@ xcf_save_image (XcfInfo   *info,
       offset = info->cp;
 
       /* write out the layer. */
-      xcf_print_error (info, xcf_save_layer (info, image, layer, &error));
+      xcf_check_error (xcf_save_layer (info, image, layer, error));
 
       xcf_progress_update (info);
 
       /* seek back to where we are to write out the next
        *  layer offset and write it out.
        */
-      xcf_print_error (info, xcf_seek_pos (info, saved_pos, &error));
-      xcf_write_int32_print_error (info, &offset, 1);
+      xcf_check_error (xcf_seek_pos (info, saved_pos, error));
+      xcf_write_int32_check_error (info, &offset, 1);
 
       /* increment the location we are to write out the
        *  next offset.
@@ -377,17 +314,17 @@ xcf_save_image (XcfInfo   *info,
       /* seek to the end of the file which is where
        *  we will write out the next layer.
        */
-      xcf_print_error (info, xcf_seek_end (info, &error));
+      xcf_check_error (xcf_seek_end (info, error));
     }
 
   /* write out a '0' offset position to indicate the end
    *  of the layer offsets.
    */
   offset = 0;
-  xcf_print_error (info, xcf_seek_pos (info, saved_pos, &error));
-  xcf_write_int32_print_error (info, &offset, 1);
+  xcf_check_error (xcf_seek_pos (info, saved_pos, error));
+  xcf_write_int32_check_error (info, &offset, 1);
   saved_pos = info->cp;
-  xcf_print_error (info, xcf_seek_end (info, &error));
+  xcf_check_error (xcf_seek_end (info, error));
 
   list = GIMP_LIST (image->channels)->list;
 
@@ -411,15 +348,15 @@ xcf_save_image (XcfInfo   *info,
       offset = info->cp;
 
       /* write out the layer. */
-      xcf_print_error (info, xcf_save_channel (info, image, channel, &error));
+      xcf_check_error (xcf_save_channel (info, image, channel, error));
 
       xcf_progress_update (info);
 
       /* seek back to where we are to write out the next
        *  channel offset and write it out.
        */
-      xcf_print_error (info, xcf_seek_pos (info, saved_pos, &error));
-      xcf_write_int32_print_error (info, &offset, 1);
+      xcf_check_error (xcf_seek_pos (info, saved_pos, error));
+      xcf_write_int32_check_error (info, &offset, 1);
 
       /* increment the location we are to write out the
        *  next offset.
@@ -429,15 +366,15 @@ xcf_save_image (XcfInfo   *info,
       /* seek to the end of the file which is where
        *  we will write out the next channel.
        */
-      xcf_print_error (info, xcf_seek_end (info, &error));
+      xcf_check_error (xcf_seek_end (info, error));
     }
 
   /* write out a '0' offset position to indicate the end
    *  of the channel offsets.
    */
   offset = 0;
-  xcf_print_error (info, xcf_seek_pos (info, saved_pos, &error));
-  xcf_write_int32_print_error (info, &offset, 1);
+  xcf_check_error (xcf_seek_pos (info, saved_pos, error));
+  xcf_write_int32_check_error (info, &offset, 1);
   saved_pos = info->cp;
 
   if (floating_layer)

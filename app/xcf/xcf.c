@@ -46,20 +46,23 @@
 #include "gimp-intl.h"
 
 
-typedef GimpImage * GimpXcfLoaderFunc (Gimp    *gimp,
-                                       XcfInfo *info);
+typedef GimpImage * GimpXcfLoaderFunc (Gimp     *gimp,
+                                       XcfInfo  *info,
+                                       GError  **error);
 
 
-static GValueArray * xcf_load_invoker (GimpProcedure     *procedure,
-                                       Gimp              *gimp,
-                                       GimpContext       *context,
-                                       GimpProgress      *progress,
-                                       const GValueArray *args);
-static GValueArray * xcf_save_invoker (GimpProcedure     *procedure,
-                                       Gimp              *gimp,
-                                       GimpContext       *context,
-                                       GimpProgress      *progress,
-                                       const GValueArray *args);
+static GValueArray * xcf_load_invoker (GimpProcedure      *procedure,
+                                       Gimp               *gimp,
+                                       GimpContext        *context,
+                                       GimpProgress       *progress,
+                                       const GValueArray  *args,
+                                       GError            **error);
+static GValueArray * xcf_save_invoker (GimpProcedure      *procedure,
+                                       Gimp               *gimp,
+                                       GimpContext        *context,
+                                       GimpProgress       *progress,
+                                       const GValueArray  *args,
+                                       GError            **error);
 
 
 static GimpXcfLoaderFunc * const xcf_loaders[] =
@@ -226,11 +229,12 @@ xcf_exit (Gimp *gimp)
 }
 
 static GValueArray *
-xcf_load_invoker (GimpProcedure     *procedure,
-                  Gimp              *gimp,
-                  GimpContext       *context,
-                  GimpProgress      *progress,
-                  const GValueArray *args)
+xcf_load_invoker (GimpProcedure      *procedure,
+                  Gimp               *gimp,
+                  GimpContext        *context,
+                  GimpProgress       *progress,
+                  const GValueArray  *args,
+                  GError            **error)
 {
   XcfInfo      info;
   GValueArray *return_vals;
@@ -298,16 +302,16 @@ xcf_load_invoker (GimpProcedure     *procedure,
           if (info.file_version >= 0 &&
               info.file_version < G_N_ELEMENTS (xcf_loaders))
             {
-              image = (*(xcf_loaders[info.file_version])) (gimp, &info);
+              image = (*(xcf_loaders[info.file_version])) (gimp, &info, error);
 
               if (! image)
                 success = FALSE;
             }
           else
             {
-              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-                            _("XCF error: unsupported XCF file version %d "
-                              "encountered"), info.file_version);
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("XCF error: unsupported XCF file version %d "
+                             "encountered"), info.file_version);
               success = FALSE;
             }
         }
@@ -319,9 +323,11 @@ xcf_load_invoker (GimpProcedure     *procedure,
     }
   else
     {
-      gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-                    _("Could not open '%s' for reading: %s"),
-                    gimp_filename_to_utf8 (filename), g_strerror (errno));
+      int save_errno = errno;
+
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (save_errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (save_errno));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
@@ -335,11 +341,12 @@ xcf_load_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
-xcf_save_invoker (GimpProcedure     *procedure,
-                  Gimp              *gimp,
-                  GimpContext       *context,
-                  GimpProgress      *progress,
-                  const GValueArray *args)
+xcf_save_invoker (GimpProcedure      *procedure,
+                  Gimp               *gimp,
+                  GimpContext        *context,
+                  GimpProgress       *progress,
+                  const GValueArray  *args,
+                  GError            **error)
 {
   XcfInfo      info;
   GValueArray *return_vals;
@@ -382,14 +389,25 @@ xcf_save_invoker (GimpProcedure     *procedure,
 
       xcf_save_choose_format (&info, image);
 
-      success = xcf_save_image (&info, image);
+      success = xcf_save_image (&info, image, error);
 
-      if (fclose (info.fp) == EOF)
+      if (success)
         {
-          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-                        _("Error saving XCF file: %s"), g_strerror (errno));
+          if (fclose (info.fp) == EOF)
+            {
+              int save_errno = errno;
 
-          success = FALSE;
+              g_set_error (error, G_FILE_ERROR,
+                           g_file_error_from_errno (save_errno),
+                            _("Error saving XCF file: %s"),
+                           g_strerror (save_errno));
+
+              success = FALSE;
+            }
+        }
+      else
+        {
+          fclose (info.fp);
         }
 
       if (progress)
@@ -397,9 +415,11 @@ xcf_save_invoker (GimpProcedure     *procedure,
     }
   else
     {
-      gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-                    _("Could not open '%s' for writing: %s"),
-                    gimp_filename_to_utf8 (filename), g_strerror (errno));
+      int save_errno = errno;
+
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (save_errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (save_errno));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
