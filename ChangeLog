@@ -1,5 +1,10 @@
 2007-12-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* tools/pdbgen/pdb/image.pdb: pass "error" instead of NULL.
+	* app/pdb/image_cmds.c: regenerated.
+
+2007-12-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* tools/pdbgen/pdb/gradient.pdb
 	* tools/pdbgen/pdb/palette.pdb
 	* tools/pdbgen/pdb/brush.pdb: use the new error arg instead

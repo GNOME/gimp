@@ -2014,11 +2014,11 @@ image_set_filename_invoker (GimpProcedure      *procedure,
   if (success)
     {
       /*  verify that the filename can be converted to UTF-8 and back  */
-      gchar *utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+      gchar *utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, error);
 
       if (utf8)
         {
-          gchar *tmp = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
+          gchar *tmp = g_filename_from_utf8 (utf8, -1, NULL, NULL, error);
 
           if (tmp)
             g_free (tmp);
