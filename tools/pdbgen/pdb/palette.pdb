@@ -172,20 +172,9 @@ sub palette_delete {
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   if (palette && GIMP_DATA (palette)->deletable)
-    {
-      GError *error = NULL;
-
-      success = gimp_data_factory_data_delete (gimp->palette_factory,
-                                               GIMP_DATA (palette),
-                                               TRUE, &error);
-
-      if (! success)
-        {
-          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-                       	"%s", error->message);
-          g_clear_error (&error);
-        }
-    }
+    success = gimp_data_factory_data_delete (gimp->palette_factory,
+                                             GIMP_DATA (palette),
+                                             TRUE, error);
   else
     success = FALSE;
 }

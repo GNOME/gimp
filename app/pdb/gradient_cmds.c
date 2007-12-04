@@ -257,20 +257,9 @@ gradient_delete_invoker (GimpProcedure      *procedure,
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
       if (gradient && GIMP_DATA (gradient)->deletable)
-        {
-          GError *error = NULL;
-
-          success = gimp_data_factory_data_delete (gimp->gradient_factory,
-                                                   GIMP_DATA (gradient),
-                                                   TRUE, &error);
-
-          if (! success)
-            {
-              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-                            "%s", error->message);
-              g_clear_error (&error);
-            }
-        }
+        success = gimp_data_factory_data_delete (gimp->gradient_factory,
+                                                 GIMP_DATA (gradient),
+                                                 TRUE, error);
       else
         success = FALSE;
     }
