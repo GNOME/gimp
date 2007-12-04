@@ -48,8 +48,8 @@ void    gimp_image_item_list_transform (GimpImage              *image,
                                         GimpTransformResize     clip_result,
                                         GimpProgress           *progress);
 
-GList * gimp_image_item_list_get_list  (GimpImage              *image,
-                                        GimpItem               *exclude,
+GList * gimp_image_item_list_get_list  (const GimpImage        *image,
+                                        const GimpItem         *exclude,
                                         GimpItemTypeMask        type,
                                         GimpItemSet             set);
 

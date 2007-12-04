@@ -53,61 +53,68 @@ struct _GimpDrawableClass
   GimpItemClass  parent_class;
 
   /*  signals  */
-  void (* update)                (GimpDrawable         *drawable,
-                                  gint                  x,
-                                  gint                  y,
-                                  gint                  width,
-                                  gint                  height);
-  void (* alpha_changed)         (GimpDrawable         *drawable);
+  void   (* update)                (GimpDrawable         *drawable,
+                                    gint                  x,
+                                    gint                  y,
+                                    gint                  width,
+                                    gint                  height);
+  void   (* alpha_changed)         (GimpDrawable         *drawable);
 
   /*  virtual functions  */
-  void (* invalidate_boundary)   (GimpDrawable         *drawable);
-  void (* get_active_components) (const GimpDrawable   *drawable,
-                                  gboolean             *active);
-  void (* apply_region)          (GimpDrawable         *drawable,
-                                  PixelRegion          *src2PR,
-                                  gboolean              push_undo,
-                                  const gchar          *undo_desc,
-                                  gdouble               opacity,
-                                  GimpLayerModeEffects  mode,
-                                  TileManager          *src1_tiles,
-                                  gint                  x,
-                                  gint                  y);
-  void (* replace_region)        (GimpDrawable         *drawable,
-                                  PixelRegion          *src2PR,
-                                  gboolean              push_undo,
-                                  const gchar          *undo_desc,
-                                  gdouble               opacity,
-                                  PixelRegion          *maskPR,
-                                  gint                  x,
-                                  gint                  y);
-  void (* set_tiles)             (GimpDrawable         *drawable,
-                                  gboolean              push_undo,
-                                  const gchar          *undo_desc,
-                                  TileManager          *tiles,
-                                  GimpImageType         type,
-                                  gint                  offset_x,
-                                  gint                  offset_y);
+  gint64 (* estimate_memsize)      (const GimpDrawable   *drawable,
+                                    gint                  width,
+                                    gint                  height);
+  void   (* invalidate_boundary)   (GimpDrawable         *drawable);
+  void   (* get_active_components) (const GimpDrawable   *drawable,
+                                    gboolean             *active);
+  void   (* apply_region)          (GimpDrawable         *drawable,
+                                    PixelRegion          *src2PR,
+                                    gboolean              push_undo,
+                                    const gchar          *undo_desc,
+                                    gdouble               opacity,
+                                    GimpLayerModeEffects  mode,
+                                    TileManager          *src1_tiles,
+                                    gint                  x,
+                                    gint                  y);
+  void   (* replace_region)        (GimpDrawable         *drawable,
+                                    PixelRegion          *src2PR,
+                                    gboolean              push_undo,
+                                    const gchar          *undo_desc,
+                                    gdouble               opacity,
+                                    PixelRegion          *maskPR,
+                                    gint                  x,
+                                    gint                  y);
+  void   (* set_tiles)             (GimpDrawable         *drawable,
+                                    gboolean              push_undo,
+                                    const gchar          *undo_desc,
+                                    TileManager          *tiles,
+                                    GimpImageType         type,
+                                    gint                  offset_x,
+                                    gint                  offset_y);
 
-  void (* push_undo)             (GimpDrawable         *drawable,
-                                  const gchar          *undo_desc,
-                                  TileManager          *tiles,
-                                  gboolean              sparse,
-                                  gint                  x,
-                                  gint                  y,
-                                  gint                  width,
-                                  gint                  height);
-  void (* swap_pixels)           (GimpDrawable         *drawable,
-                                  TileManager          *tiles,
-                                  gboolean              sparse,
-                                  gint                  x,
-                                  gint                  y,
-                                  gint                  width,
-                                  gint                  height);
+  void   (* push_undo)             (GimpDrawable         *drawable,
+                                    const gchar          *undo_desc,
+                                    TileManager          *tiles,
+                                    gboolean              sparse,
+                                    gint                  x,
+                                    gint                  y,
+                                    gint                  width,
+                                    gint                  height);
+  void   (* swap_pixels)           (GimpDrawable         *drawable,
+                                    TileManager          *tiles,
+                                    gboolean              sparse,
+                                    gint                  x,
+                                    gint                  y,
+                                    gint                  width,
+                                    gint                  height);
 };
 
 
 GType           gimp_drawable_get_type           (void) G_GNUC_CONST;
+
+gint64          gimp_drawable_estimate_memsize   (const GimpDrawable *drawable,
+                                                  gint                width,
+                                                  gint                height);
 
 void            gimp_drawable_configure          (GimpDrawable       *drawable,
                                                   GimpImage          *image,

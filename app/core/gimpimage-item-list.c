@@ -159,8 +159,8 @@ gimp_image_item_list_transform (GimpImage              *image,
  * Return value: The list of items, excluding @exclude.
  **/
 GList *
-gimp_image_item_list_get_list (GimpImage        *image,
-                               GimpItem         *exclude,
+gimp_image_item_list_get_list (const GimpImage  *image,
+                               const GimpItem   *exclude,
                                GimpItemTypeMask  type,
                                GimpItemSet       set)
 {
