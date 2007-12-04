@@ -101,8 +101,8 @@ libcdisplay_proof_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcdisplay_proof_la_LIBADD = $(cdisplay_libadd) $(LIBLCMS)
 
 libcontroller_linux_input_la_SOURCES = \
-	gimpinputdevicestore.c	\
-	gimpinputdevicestore.h	\
+	gimpinputdevicestore-hal.c	\
+	gimpinputdevicestore.h		\
 	controller_linux_input.c
 libcontroller_linux_input_la_CFLAGS = $(DBUS_GLIB_CFLAGS) $(HAL_CFLAGS)
 libcontroller_linux_input_la_LDFLAGS = -avoid-version -module $(no_undefined)
@@ -110,8 +110,8 @@ libcontroller_linux_input_la_LIBADD = \
 	$(controller_libadd) $(DBUS_GLIB_LIBS) $(HAL_LIBS)
 
 libcontroller_dx_dinput_la_SOURCES = \
-	gimpinputdevicestore.c	\
-	gimpinputdevicestore.h	\
+	gimpinputdevicestore-dx.c	\
+	gimpinputdevicestore.h		\
 	controller_dx_dinput.c
 # Use -Wl to avoid libtool lossage
 libcontroller_dx_dinput_la_LDFLAGS = -avoid-version -module $(no_undefined) -Wl,-ldinput8 -Wl,-ldxguid

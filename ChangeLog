@@ -1,3 +1,11 @@
+2007-12-04  Sven Neumann  <sven@gimp.org>
+
+	* modules/Makefile.am
+	* modules/gimpinputdevicestore.c: split into two new files:
+
+	* modules/gimpinputdevicestore-dx.c: DirectX Input implementation
+	* modules/gimpinputdevicestore-hal.c: HAL implementation
+
 2007-12-03  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/fileops.pdb: pass the new error down to all
