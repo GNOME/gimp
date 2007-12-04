@@ -87,7 +87,7 @@ static void       gimp_drawable_scale              (GimpItem          *item,
                                                     gint               new_offset_x,
                                                     gint               new_offset_y,
                                                     GimpInterpolationType interp_type,
-                                                    GimpProgress       *progress);
+                                                    GimpProgress      *progress);
 static void       gimp_drawable_resize             (GimpItem          *item,
                                                     GimpContext       *context,
                                                     gint               new_width,
@@ -108,10 +108,10 @@ static void       gimp_drawable_rotate             (GimpItem          *item,
 static void       gimp_drawable_transform          (GimpItem          *item,
                                                     GimpContext       *context,
                                                     const GimpMatrix3 *matrix,
-                                                    GimpTransformDirection  direction,
-                                                    GimpInterpolationType   interpolation_type,
+                                                    GimpTransformDirection direction,
+                                                    GimpInterpolationType interpolation_type,
                                                     gint               recursion_level,
-                                                    GimpTransformResize     clip_result,
+                                                    GimpTransformResize clip_result,
                                                     GimpProgress      *progress);
 
 static gboolean   gimp_drawable_get_pixel_at       (GimpPickable      *pickable,
@@ -121,6 +121,10 @@ static gboolean   gimp_drawable_get_pixel_at       (GimpPickable      *pickable,
 static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
                                                     gint               x,
                                                     gint               y,
+                                                    gint               width,
+                                                    gint               height);
+
+static gint64  gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
                                                     gint               width,
                                                     gint               height);
 
@@ -206,6 +210,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 
   klass->update                      = gimp_drawable_real_update;
   klass->alpha_changed               = NULL;
+  klass->estimate_memsize            = gimp_drawable_real_estimate_memsize;
   klass->invalidate_boundary         = NULL;
   klass->get_active_components       = NULL;
   klass->apply_region                = gimp_drawable_real_apply_region;
@@ -614,6 +619,14 @@ gimp_drawable_real_update (GimpDrawable *drawable,
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
 }
 
+static gint64
+gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
+                                     gint                width,
+                                     gint                height)
+{
+  return (gint64) gimp_drawable_bytes (drawable) * width * height;
+}
+
 static void
 gimp_drawable_real_set_tiles (GimpDrawable *drawable,
                               gboolean      push_undo,
@@ -759,6 +772,17 @@ gimp_drawable_real_swap_pixels (GimpDrawable *drawable,
 
 
 /*  public functions  */
+
+gint64
+gimp_drawable_estimate_memsize (const GimpDrawable *drawable,
+                                gint                width,
+                                gint                height)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), 0);
+
+  return GIMP_DRAWABLE_GET_CLASS (drawable)->estimate_memsize (drawable,
+                                                               width, height);
+}
 
 void
 gimp_drawable_configure (GimpDrawable  *drawable,

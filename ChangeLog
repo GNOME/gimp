@@ -1,3 +1,22 @@
+2007-12-04  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	* app/core/gimpdrawable.[ch]: added new API
+	gimp_drawable_estimate_memsize() and virtual function
+	GimpDrawable::estimate_memsize() which estimate the memsize of a
+	drawable after scaling/resizing.
+
+	* app/core/gimplayer.c: implement the virtual function and take
+	the layer mask into account.
+
+	* app/core/gimpimage-item-list.[ch] (gimp_image_item_list_get_list):
+	added const qualifiers.
+
+	* app/core/gimpimage-scale.c (gimp_image_scale_check): use the new
+	function to correctly estimate the new size instead of scaling the
+	drawables' memsizes including all constant parts. Fixes bug #329468.
+
 2007-12-02  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:

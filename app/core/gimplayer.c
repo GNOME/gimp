@@ -136,6 +136,10 @@ static void       gimp_layer_transform          (GimpItem           *item,
                                                  gint                recursion_level,
                                                  GimpTransformResize    clip_result,
                                                  GimpProgress       *progress);
+
+static gint64  gimp_layer_estimate_memsize      (const GimpDrawable *drawable,
+                                                 gint                width,
+                                                 gint                height);
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
 static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
                                                  gboolean           *active);
@@ -250,6 +254,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->rotate_desc             = _("Rotate Layer");
   item_class->transform_desc          = _("Transform Layer");
 
+  drawable_class->estimate_memsize      = gimp_layer_estimate_memsize;
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
   drawable_class->get_active_components = gimp_layer_get_active_components;
   drawable_class->set_tiles             = gimp_layer_set_tiles;
@@ -799,6 +804,23 @@ gimp_layer_transform (GimpItem               *item,
                          matrix, direction,
                          interpolation_type, recursion_level,
                          clip_result, progress);
+}
+
+static gint64
+gimp_layer_estimate_memsize (const GimpDrawable *drawable,
+                             gint                width,
+                             gint                height)
+{
+  GimpLayer *layer   = GIMP_LAYER (drawable);
+  gint64     memsize = 0;
+
+  if (layer->mask)
+    memsize += gimp_drawable_estimate_memsize (GIMP_DRAWABLE (layer->mask),
+                                               width, height);
+
+  return memsize + GIMP_DRAWABLE_CLASS (parent_class)->estimate_memsize (drawable,
+                                                                         width,
+                                                                         height);
 }
 
 static void

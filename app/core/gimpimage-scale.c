@@ -28,6 +28,7 @@
 #include "gimpguide.h"
 #include "gimpimage.h"
 #include "gimpimage-guides.h"
+#include "gimpimage-item-list.h"
 #include "gimpimage-sample-points.h"
 #include "gimpimage-scale.h"
 #include "gimpimage-undo.h"
@@ -35,6 +36,7 @@
 #include "gimplayer.h"
 #include "gimplist.h"
 #include "gimpprogress.h"
+#include "gimpprojection.h"
 #include "gimpsamplepoint.h"
 #include "gimpsubprogress.h"
 
@@ -234,9 +236,11 @@ gimp_image_scale_check (const GimpImage *image,
                         gint64           max_memsize,
                         gint64          *new_memsize)
 {
+  GList  *drawables;
   GList  *list;
   gint64  current_size;
   gint64  scalable_size;
+  gint64  scaled_size;
   gint64  undo_size;
   gint64  redo_size;
   gint64  fixed_size;
@@ -248,11 +252,43 @@ gimp_image_scale_check (const GimpImage *image,
   current_size = gimp_object_get_memsize (GIMP_OBJECT (image), NULL);
 
   /*  the part of the image's memsize that scales linearly with the image  */
-  scalable_size =
-    gimp_object_get_memsize (GIMP_OBJECT (image->layers), NULL)         +
-    gimp_object_get_memsize (GIMP_OBJECT (image->channels), NULL)       +
-    gimp_object_get_memsize (GIMP_OBJECT (image->selection_mask), NULL) +
-    gimp_object_get_memsize (GIMP_OBJECT (image->projection), NULL);
+  drawables = gimp_image_item_list_get_list (image, NULL,
+                                             GIMP_ITEM_TYPE_LAYERS |
+                                             GIMP_ITEM_TYPE_CHANNELS,
+                                             GIMP_ITEM_SET_ALL);
+  drawables = g_list_prepend (drawables, image->selection_mask);
+
+  scalable_size = 0;
+  scaled_size   = 0;
+
+  for (list = drawables; list; list = g_list_next (list))
+    {
+      GimpDrawable *drawable = list->data;
+      gdouble       width    = gimp_item_width (GIMP_ITEM (drawable));
+      gdouble       height   = gimp_item_height (GIMP_ITEM (drawable));
+
+      scalable_size +=
+        gimp_drawable_estimate_memsize (drawable,
+                                        width, height);
+
+      scaled_size +=
+        gimp_drawable_estimate_memsize (drawable,
+                                        width * new_width /
+                                        gimp_image_get_width (image),
+                                        height * new_height /
+                                        gimp_image_get_height (image));
+    }
+
+  g_list_free (drawables);
+
+  scalable_size +=
+    gimp_projection_estimate_memsize (gimp_image_base_type (image),
+                                      gimp_image_get_width (image),
+                                      gimp_image_get_height (image));
+
+  scaled_size +=
+    gimp_projection_estimate_memsize (gimp_image_base_type (image),
+                                      new_width, new_height);
 
   undo_size = gimp_object_get_memsize (GIMP_OBJECT (image->undo_stack), NULL);
   redo_size = gimp_object_get_memsize (GIMP_OBJECT (image->redo_stack), NULL);
@@ -261,10 +297,8 @@ gimp_image_scale_check (const GimpImage *image,
   fixed_size = current_size - undo_size - redo_size - scalable_size;
 
   /*  calculate the new size, which is:  */
-  new_size = (fixed_size  +    /*  the fixed part                */
-              scalable_size *  /*  plus the part that scales...  */
-              ((gdouble) new_width  / gimp_image_get_width  (image)) *
-              ((gdouble) new_height / gimp_image_get_height (image)));
+  new_size = (fixed_size +   /*  the fixed part                */
+              scaled_size);  /*  plus the part that scales...  */
 
   *new_memsize = new_size;
 
