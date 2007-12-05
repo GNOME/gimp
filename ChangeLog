@@ -1,3 +1,12 @@
+2007-12-05  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Merged from trunk:
+
+	* app/actions/tool-options-commands.c
+	(tool_options_save_to_cmd_callback)
+	(tool_options_restore_from_cmd_callback): Only care about
+	GIMP_CONFIG_PARAM_SERIALIZE properties, fixes bug #498948.
+
 2007-12-04  Michael Natterer  <mitch@gimp.org>
 
 	Merged from trunk:

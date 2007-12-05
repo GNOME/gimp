@@ -97,7 +97,8 @@ tool_options_save_to_cmd_callback (GtkAction *action,
       gchar *name = g_strdup (gimp_object_get_name (GIMP_OBJECT (options)));
 
       gimp_config_sync (G_OBJECT (tool_info->tool_options),
-                        G_OBJECT (options), 0);
+                        G_OBJECT (options),
+                        GIMP_CONFIG_PARAM_SERIALIZE);
       gimp_object_take_name (GIMP_OBJECT (options), name);
     }
 }
@@ -116,7 +117,8 @@ tool_options_restore_from_cmd_callback (GtkAction *action,
 
   if (options)
     gimp_config_sync (G_OBJECT (options),
-                      G_OBJECT (tool_info->tool_options), 0);
+                      G_OBJECT (tool_info->tool_options),
+                      GIMP_CONFIG_PARAM_SERIALIZE);
 }
 
 void
