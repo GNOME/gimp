@@ -1,3 +1,9 @@
+2007-12-05  Sven Neumann  <sven@gimp.org>
+
+	* modules/gimpinputdevicestore-dx.c
+	* modules/gimpinputdevicestore-hal.c: the code for !HAVE_LIBHAL
+	ended up in the wrong file.
+
 2007-12-05  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb (set_resolution): set the error

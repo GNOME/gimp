@@ -483,34 +483,4 @@ gimp_input_device_store_get_error (GimpInputDeviceStore  *store)
   return store->error ? g_error_copy (store->error) : NULL;
 }
 
-#else
-
-GType gimp_input_device_store_type = G_TYPE_NONE;
-
-GType
-gimp_input_device_store_get_type (GTypeModule *module)
-{
-  return G_TYPE_NONE;
-}
-
-GimpInputDeviceStore *
-gimp_input_device_store_new (void)
-{
-  return NULL;
-}
-
-gchar *
-gimp_input_device_store_get_device_file (GimpInputDeviceStore *store,
-                                         const gchar          *udi)
-{
-  return NULL;
-}
-
-GError *
-gimp_input_device_store_get_error (GimpInputDeviceStore  *store)
-{
-  return NULL;
-}
-
-
 #endif /* HAVE_DX_DINPUT */

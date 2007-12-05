@@ -26,13 +26,14 @@
 
 #include <gtk/gtk.h>
 
+#include "gimpinputdevicestore.h"
+
+
 #ifdef HAVE_LIBHAL
 
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 #include <hal/libhal.h>
-
-#include "gimpinputdevicestore.h"
 
 
 enum
@@ -438,6 +439,35 @@ gimp_input_device_store_get_error (GimpInputDeviceStore  *store)
   g_return_val_if_fail (GIMP_IS_INPUT_DEVICE_STORE (store), NULL);
 
   return store->error ? g_error_copy (store->error) : NULL;
+}
+
+#else /* HAVE_LIBHAL */
+
+GType gimp_input_device_store_type = G_TYPE_NONE;
+
+GType
+gimp_input_device_store_get_type (GTypeModule *module)
+{
+  return G_TYPE_NONE;
+}
+
+GimpInputDeviceStore *
+gimp_input_device_store_new (void)
+{
+  return NULL;
+}
+
+gchar *
+gimp_input_device_store_get_device_file (GimpInputDeviceStore *store,
+                                         const gchar          *udi)
+{
+  return NULL;
+}
+
+GError *
+gimp_input_device_store_get_error (GimpInputDeviceStore  *store)
+{
+  return NULL;
 }
 
 
