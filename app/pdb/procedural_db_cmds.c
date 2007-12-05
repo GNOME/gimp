@@ -114,7 +114,8 @@ procedural_db_query_invoker (GimpProcedure      *procedure,
       success = gimp_pdb_query (gimp->pdb,
                                 name, blurb, help, author,
                                 copyright, date, proc_type,
-                                &num_matches, &procedure_names);
+                                &num_matches, &procedure_names,
+                                error);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
@@ -160,7 +161,8 @@ procedural_db_proc_info_invoker (GimpProcedure      *procedure,
       success = gimp_pdb_proc_info (gimp->pdb, canonical,
                                     &blurb, &help, &author,
                                     &copyright, &date, &ptype,
-                                    &num_args, &num_values);
+                                    &num_args, &num_values,
+                                    error);
       proc_type = ptype;
 
       g_free (canonical);

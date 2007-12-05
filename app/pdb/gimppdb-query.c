@@ -32,6 +32,7 @@
 
 #include "gimppdb.h"
 #include "gimppdb-query.h"
+#include "gimppdberror.h"
 #include "gimp-pdb-compat.h"
 #include "gimpprocedure.h"
 
@@ -144,10 +145,11 @@ gimp_pdb_query (GimpPDB       *pdb,
                 const gchar   *date,
                 const gchar   *proc_type,
                 gint          *num_procs,
-                gchar       ***procs)
+                gchar       ***procs,
+                GError       **error)
 {
-  PDBQuery pdb_query;
-  gboolean success = FALSE;
+  PDBQuery pdb_query = { 0, };
+  gboolean success   = FALSE;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
   g_return_val_if_fail (name != NULL, FALSE);
@@ -159,31 +161,38 @@ gimp_pdb_query (GimpPDB       *pdb,
   g_return_val_if_fail (proc_type != NULL, FALSE);
   g_return_val_if_fail (num_procs != NULL, FALSE);
   g_return_val_if_fail (procs != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   *num_procs = 0;
   *procs     = NULL;
 
-  pdb_query.name_regex = g_regex_new (name, PDB_REGEX_FLAGS, 0, NULL);
+  pdb_query.name_regex = g_regex_new (name, PDB_REGEX_FLAGS, 0, error);
   if (! pdb_query.name_regex)
-    goto cleanup_after_name;
-  pdb_query.blurb_regex = g_regex_new (blurb, PDB_REGEX_FLAGS, 0, NULL);
+    goto cleanup;
+
+  pdb_query.blurb_regex = g_regex_new (blurb, PDB_REGEX_FLAGS, 0, error);
   if (! pdb_query.blurb_regex)
-    goto cleanup_after_blurb;
-  pdb_query.help_regex = g_regex_new (help, PDB_REGEX_FLAGS, 0, NULL);
+    goto cleanup;
+
+  pdb_query.help_regex = g_regex_new (help, PDB_REGEX_FLAGS, 0, error);
   if (! pdb_query.help_regex)
-    goto cleanup_after_help;
-  pdb_query.author_regex = g_regex_new (author, PDB_REGEX_FLAGS, 0, NULL);
+    goto cleanup;
+
+  pdb_query.author_regex = g_regex_new (author, PDB_REGEX_FLAGS, 0, error);
   if (! pdb_query.author_regex)
-    goto cleanup_after_author;
-  pdb_query.copyright_regex = g_regex_new (copyright, PDB_REGEX_FLAGS, 0, NULL);
+    goto cleanup;
+
+  pdb_query.copyright_regex = g_regex_new (copyright, PDB_REGEX_FLAGS, 0, error);
   if (! pdb_query.copyright_regex)
-    goto cleanup_after_copyright;
-  pdb_query.date_regex = g_regex_new (date, PDB_REGEX_FLAGS, 0, NULL);
+    goto cleanup;
+
+  pdb_query.date_regex = g_regex_new (date, PDB_REGEX_FLAGS, 0, error);
   if (! pdb_query.date_regex)
-    goto cleanup_after_date;
-  pdb_query.proc_type_regex = g_regex_new (proc_type, PDB_REGEX_FLAGS, 0, NULL);
+    goto cleanup;
+
+  pdb_query.proc_type_regex = g_regex_new (proc_type, PDB_REGEX_FLAGS, 0, error);
   if (! pdb_query.proc_type_regex)
-    goto cleanup_after_proc_type;
+    goto cleanup;
 
   success = TRUE;
 
@@ -200,20 +209,28 @@ gimp_pdb_query (GimpPDB       *pdb,
   g_hash_table_foreach (pdb->compat_proc_names,
                         gimp_pdb_query_entry, &pdb_query);
 
-  g_regex_unref (pdb_query.proc_type_regex);
-cleanup_after_proc_type:
-  g_regex_unref (pdb_query.date_regex);
-cleanup_after_date:
-  g_regex_unref (pdb_query.copyright_regex);
-cleanup_after_copyright:
-  g_regex_unref (pdb_query.author_regex);
-cleanup_after_author:
-  g_regex_unref (pdb_query.help_regex);
-cleanup_after_help:
-  g_regex_unref (pdb_query.blurb_regex);
-cleanup_after_blurb:
-  g_regex_unref (pdb_query.name_regex);
-cleanup_after_name:
+ cleanup:
+
+  if (pdb_query.proc_type_regex)
+    g_regex_unref (pdb_query.proc_type_regex);
+
+  if (pdb_query.date_regex)
+    g_regex_unref (pdb_query.date_regex);
+
+  if (pdb_query.copyright_regex)
+    g_regex_unref (pdb_query.copyright_regex);
+
+  if (pdb_query.author_regex)
+    g_regex_unref (pdb_query.author_regex);
+
+  if (pdb_query.help_regex)
+    g_regex_unref (pdb_query.help_regex);
+
+  if (pdb_query.blurb_regex)
+    g_regex_unref (pdb_query.blurb_regex);
+
+  if (pdb_query.name_regex)
+    g_regex_unref (pdb_query.name_regex);
 
   if (success)
     {
@@ -234,13 +251,15 @@ gimp_pdb_proc_info (GimpPDB          *pdb,
                     gchar           **date,
                     GimpPDBProcType  *proc_type,
                     gint             *num_args,
-                    gint             *num_values)
+                    gint             *num_values,
+                    GError          **error)
 {
   GimpProcedure *procedure;
   PDBStrings     strings;
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
   g_return_val_if_fail (proc_name != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   procedure = gimp_pdb_lookup_procedure (pdb, proc_name);
 
@@ -276,6 +295,9 @@ gimp_pdb_proc_info (GimpPDB          *pdb,
 
       return TRUE;
     }
+
+  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_PROCEDURE_NOT_FOUND,
+               _("Procedure '%s' not found"), proc_name);
 
   return FALSE;
 }

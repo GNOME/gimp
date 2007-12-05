@@ -31,7 +31,8 @@ gboolean   gimp_pdb_query     (GimpPDB          *pdb,
                                const gchar      *date,
                                const gchar      *proc_type,
                                gint             *num_procs,
-                               gchar          ***procs);
+                               gchar          ***procs,
+                               GError          **error);
 gboolean   gimp_pdb_proc_info (GimpPDB          *pdb,
                                const gchar      *proc_name,
                                gchar           **blurb,
@@ -41,7 +42,8 @@ gboolean   gimp_pdb_proc_info (GimpPDB          *pdb,
                                gchar           **date,
                                GimpPDBProcType  *proc_type,
                                gint             *num_args,
-                               gint             *num_values);
+                               gint             *num_values,
+                               GError          **error);
 
 
 #endif /* __GIMP_PDB_QUERY_H__ */

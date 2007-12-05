@@ -1,5 +1,16 @@
 2007-12-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/gimppdb-query.[ch]: added GError arguments and reduce
+	number of labels: to one by simply checking if the regex exists
+	before unreffing it.
+
+	* tools/pdbgen/pdb/procedural_db.pdb: pass the error to the query
+	functions.
+
+	* app/pdb/procedural_db_cmds.c: regenerated.
+
+2007-12-05  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: disable deprecated API also for the current
 	develoment versions of glib, pango and gtk+, so we can fix new
 	deprecations as soon as they pop up.
