@@ -421,13 +421,13 @@ AM_PATH_GLIB_2_0(glib_required_version, :,
 
 PKG_CHECK_MODULES(GMODULE_NO_EXPORT, gmodule-no-export-2.0)
 
-AC_MSG_CHECKING([if GLib is version 2.15.0 or newer])
-if $PKG_CONFIG --atleast-version=2.15.0 glib-2.0; then
-  have_glib_2_15=yes
+AC_MSG_CHECKING([if GLib is version 2.17.0 or newer])
+if $PKG_CONFIG --atleast-version=2.17.0 glib-2.0; then
+  have_glib_2_17=yes
 else
-  have_glib_2_15=no
+  have_glib_2_17=no
 fi
-AC_MSG_RESULT($have_glib_2_15)
+AC_MSG_RESULT($have_glib_2_17)
 
 dnl Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
 gimp_save_LIBS=$LIBS
@@ -445,13 +445,13 @@ AM_PATH_GTK_2_0(gtk_required_version, :,
   AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.),
   gthread)
 
-AC_MSG_CHECKING([if GTK+ is version 2.13.0 or newer])
-if $PKG_CONFIG --atleast-version=2.13.0 gtk+-2.0; then
-  have_gtk_2_13=yes
+AC_MSG_CHECKING([if GTK+ is version 2.17.0 or newer])
+if $PKG_CONFIG --atleast-version=2.17.0 gtk+-2.0; then
+  have_gtk_2_17=yes
 else
-  have_gtk_2_13=no
+  have_gtk_2_17=no
 fi
-AC_MSG_RESULT($have_gtk_2_13)
+AC_MSG_RESULT($have_gtk_2_17)
 
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= gdk_pixbuf_required_version)
 
@@ -469,13 +469,13 @@ PKG_CHECK_MODULES(PANGOFT2, pangoft2 >= pangoft2_required_version, :,
 *** We require Pango with the optional support for FreeType2 compiled in.
 *** See the file 'INSTALL' for more help.]))
 
-AC_MSG_CHECKING([if Pango is version 1.19.0 or newer])
-if $PKG_CONFIG --atleast-version=1.19.0 pango; then
-  have_pango_1_19=yes
+AC_MSG_CHECKING([if Pango is version 1.21.0 or newer])
+if $PKG_CONFIG --atleast-version=1.21.0 pango; then
+  have_pango_1_21=yes
 else
-  have_pango_1_19=no
+  have_pango_1_21=no
 fi
-AC_MSG_RESULT($have_pango_1_19)
+AC_MSG_RESULT($have_pango_1_21)
 
 gimp_save_CFLAGS=$CFLAGS
 CFLAGS="$PANGOFT2_CFLAGS $CFLAGS"
@@ -1776,15 +1776,15 @@ AC_SUBST(GIMP_MKENUMS)
 
 CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED"
 
-if test "x$have_glib_2_15" != "xyes"; then
+if test "x$have_glib_2_17" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
 fi
 
-if test "x$have_gtk_2_13" != "xyes"; then
+if test "x$have_gtk_2_17" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
 fi
 
-if test "x$have_pango_1_19" != "xyes"; then
+if test "x$have_pango_1_21" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DPANGO_DISABLE_DEPRECATED"
 fi
 

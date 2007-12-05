@@ -1,3 +1,9 @@
+2007-12-05  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: disable deprecated API also for the current
+	develoment versions of glib, pango and gtk+, so we can fix new
+	deprecations as soon as they pop up.
+
 2007-12-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* tools/pdbgen/pdb/image.pdb: pass "error" instead of NULL.
