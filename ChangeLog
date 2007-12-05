@@ -1,5 +1,12 @@
 2007-12-05  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/image.pdb (set_resolution): set the error
+	instead of using gimp_message().
+
+	* app/pdb/image_cmds.c: regenerated.
+
+2007-12-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/gimppdb-query.[ch]: added GError arguments and reduce
 	number of labels: to one by simply checking if the regex exists
 	before unreffing it.

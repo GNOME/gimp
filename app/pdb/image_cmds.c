@@ -54,6 +54,7 @@
 #include "core/gimpselection.h"
 #include "core/gimpunit.h"
 #include "gimp-intl.h"
+#include "gimppdberror.h"
 #include "vectors/gimpvectors.h"
 
 #include "internal_procs.h"
@@ -2126,9 +2127,9 @@ image_set_resolution_invoker (GimpProcedure      *procedure,
           ! FINITE (yresolution) ||
           yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
         {
-          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
-                        _("Image resolution is out of bounds, "
-                          "using the default resolution instead."));
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                       _("Image resolution is out of bounds, "
+                         "using the default resolution instead."));
           success = FALSE;
         }
       else
