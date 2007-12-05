@@ -60,7 +60,7 @@ HELP
 
   uri = file_utils_filename_to_uri (gimp,
                                     g_value_get_string (&args->values[1]),
-                                    NULL);
+                                    error);
 
   if (! uri)
     return gimp_procedure_get_return_values (procedure, FALSE);
@@ -138,7 +138,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gchar *uri = file_utils_filename_to_uri (gimp, filename, NULL);
+  gchar *uri = file_utils_filename_to_uri (gimp, filename, error);
 
   if (uri)
     {
@@ -195,7 +195,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gchar *uri = file_utils_filename_to_uri (gimp, filename, NULL);
+  gchar *uri = file_utils_filename_to_uri (gimp, filename, error);
 
   if (uri)
     {
@@ -273,7 +273,7 @@ HELP
 
   uri = file_utils_filename_to_uri (gimp,
                                     g_value_get_string (&args->values[3]),
-                                    NULL);
+                                    error);
 
   if (! uri)
     return gimp_procedure_get_return_values (procedure, FALSE);

@@ -63,7 +63,7 @@ file_load_invoker (GimpProcedure      *procedure,
 
   uri = file_utils_filename_to_uri (gimp,
                                     g_value_get_string (&args->values[1]),
-                                    NULL);
+                                    error);
 
   if (! uri)
     return gimp_procedure_get_return_values (procedure, FALSE);
@@ -130,7 +130,7 @@ file_load_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gchar *uri = file_utils_filename_to_uri (gimp, filename, NULL);
+      gchar *uri = file_utils_filename_to_uri (gimp, filename, error);
 
       if (uri)
         {
@@ -183,7 +183,7 @@ file_load_layers_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gchar *uri = file_utils_filename_to_uri (gimp, filename, NULL);
+      gchar *uri = file_utils_filename_to_uri (gimp, filename, error);
 
       if (uri)
         {
@@ -245,7 +245,7 @@ file_save_invoker (GimpProcedure      *procedure,
 
   uri = file_utils_filename_to_uri (gimp,
                                     g_value_get_string (&args->values[3]),
-                                    NULL);
+                                    error);
 
   if (! uri)
     return gimp_procedure_get_return_values (procedure, FALSE);
