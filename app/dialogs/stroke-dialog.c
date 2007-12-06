@@ -273,6 +273,7 @@ stroke_dialog_response (GtkWidget  *widget,
       {
         GimpDrawable   *drawable = gimp_image_get_active_drawable (image);
         GimpStrokeDesc *saved_desc;
+        GError         *error    = NULL;
 
         if (! drawable)
           {
@@ -297,7 +298,16 @@ stroke_dialog_response (GtkWidget  *widget,
                                 saved_desc,
                                 (GDestroyNotify) g_object_unref);
 
-        gimp_item_stroke (item, drawable, context, desc, FALSE, NULL);
+        if (! gimp_item_stroke (item, drawable, context, desc, FALSE, NULL,
+                                &error))
+          {
+            gimp_message (context->gimp, G_OBJECT (widget),
+                          GIMP_MESSAGE_WARNING,
+                          error->message);
+            g_clear_error (&error);
+            return;
+          }
+
         gimp_image_flush (image);
       }
       /* fallthrough */

@@ -1,5 +1,32 @@
 2007-12-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintcore-stroke.[ch]: added GError arguments and
+	fixed all functions to abort when the first call to
+	gimp_paint_core_start() fails (it won't succeed either for the
+	next path or whatever segemts).
+
+	* app/core/gimpitem.[ch]: added GError to gimp_item_stroke()
+
+	* app/core/gimpselection.c
+	* app/core/gimpchannel.c
+	* app/vectors/gimpvectors.c: don't gimp_message() in
+	GimpItem::stroke() but set the error.
+
+	* app/dialogs/stroke-dialog.c
+	* app/actions/vectors-commands.c
+	* app/actions/select-commands.c: handle the returned errors.
+
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/paths.pdb
+	* tools/pdbgen/pdb/paint_tools.pdb: pass the error to the stroke
+	functions.
+
+	* app/pdb/paint_tools_cmds.c
+	* app/pdb/edit_cmds.c
+	* app/pdb/paths_cmds.c: regenerated.
+
+2007-12-06  Michael Natterer  <mitch@gimp.org>
+
 	Move some gimp_message() calls where they belong:
 
 	* app/core/gimplayer-floating-sel.[ch]: removed unreachable

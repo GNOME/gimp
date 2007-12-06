@@ -76,7 +76,8 @@ static void       gimp_selection_rotate        (GimpItem        *item,
 static gboolean   gimp_selection_stroke        (GimpItem        *item,
                                                 GimpDrawable    *drawable,
                                                 GimpStrokeDesc  *stroke_desc,
-                                                GimpProgress    *progress);
+                                                GimpProgress    *progress,
+                                                GError         **error);
 
 static void gimp_selection_invalidate_boundary (GimpDrawable    *drawable);
 
@@ -256,10 +257,11 @@ gimp_selection_rotate (GimpItem         *item,
 }
 
 static gboolean
-gimp_selection_stroke (GimpItem       *item,
-                       GimpDrawable   *drawable,
-                       GimpStrokeDesc *stroke_desc,
-                       GimpProgress   *progress)
+gimp_selection_stroke (GimpItem        *item,
+                       GimpDrawable    *drawable,
+                       GimpStrokeDesc  *stroke_desc,
+                       GimpProgress    *progress,
+                       GError         **error)
 {
   GimpSelection  *selection = GIMP_SELECTION (item);
   const BoundSeg *dummy_in;
@@ -273,16 +275,15 @@ gimp_selection_stroke (GimpItem       *item,
                                &num_dummy_in, &num_dummy_out,
                                0, 0, 0, 0))
     {
-      gimp_message (gimp_item_get_image (item)->gimp, G_OBJECT (progress),
-                    GIMP_MESSAGE_WARNING,
-                    _("There is no selection to stroke."));
+      g_set_error (error, 0, 0,
+                   _("There is no selection to stroke."));
       return FALSE;
     }
 
   selection->stroking = TRUE;
 
   retval = GIMP_ITEM_CLASS (parent_class)->stroke (item, drawable, stroke_desc,
-                                                   progress);
+                                                   progress, error);
 
   selection->stroking = FALSE;
 

@@ -336,6 +336,7 @@ select_stroke_last_vals_cmd_callback (GtkAction *action,
   GimpContext    *context;
   GtkWidget      *widget;
   GimpStrokeDesc *desc;
+  GError         *error = NULL;
   return_if_no_image (image, data);
   return_if_no_context (context, data);
   return_if_no_widget (widget, data);
@@ -356,12 +357,19 @@ select_stroke_last_vals_cmd_callback (GtkAction *action,
   else
     desc = gimp_stroke_desc_new (image->gimp, context);
 
-  gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
-                    drawable, context, desc, FALSE, NULL);
+  if (! gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
+                          drawable, context, desc, FALSE, NULL, &error))
+    {
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                    error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
+      gimp_image_flush (image);
+    }
 
   g_object_unref (desc);
-
-  gimp_image_flush (image);
 }
 
 

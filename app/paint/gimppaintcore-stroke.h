@@ -20,22 +20,25 @@
 #define __GIMP_PAINT_CORE_STROKE_H__
 
 
-gboolean   gimp_paint_core_stroke          (GimpPaintCore    *core,
-                                            GimpDrawable     *drawable,
-                                            GimpPaintOptions *paint_options,
-                                            GimpCoords       *strokes,
-                                            gint              n_strokes);
-gboolean   gimp_paint_core_stroke_boundary (GimpPaintCore    *core,
-                                            GimpDrawable     *drawable,
-                                            GimpPaintOptions *paint_options,
-                                            const BoundSeg   *bound_segs,
-                                            gint              n_bound_segs,
-                                            gint              offset_x,
-                                            gint              offset_y);
-gboolean   gimp_paint_core_stroke_vectors  (GimpPaintCore    *core,
-                                            GimpDrawable     *drawable,
-                                            GimpPaintOptions *paint_options,
-                                            GimpVectors      *vectors);
+gboolean   gimp_paint_core_stroke          (GimpPaintCore     *core,
+                                            GimpDrawable      *drawable,
+                                            GimpPaintOptions  *paint_options,
+                                            GimpCoords        *strokes,
+                                            gint               n_strokes,
+                                            GError           **error);
+gboolean   gimp_paint_core_stroke_boundary (GimpPaintCore     *core,
+                                            GimpDrawable      *drawable,
+                                            GimpPaintOptions  *paint_options,
+                                            const BoundSeg    *bound_segs,
+                                            gint               n_bound_segs,
+                                            gint               offset_x,
+                                            gint               offset_y,
+                                            GError           **error);
+gboolean   gimp_paint_core_stroke_vectors  (GimpPaintCore     *core,
+                                            GimpDrawable      *drawable,
+                                            GimpPaintOptions  *paint_options,
+                                            GimpVectors       *vectors,
+                                            GError           **error);
 
 
 #endif  /*  __GIMP_PAINT_CORE_STROKE_H__  */

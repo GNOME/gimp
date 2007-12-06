@@ -1000,12 +1000,13 @@ gimp_item_transform (GimpItem               *item,
 }
 
 gboolean
-gimp_item_stroke (GimpItem       *item,
-                  GimpDrawable   *drawable,
-                  GimpContext    *context,
-                  GimpStrokeDesc *stroke_desc,
-                  gboolean        use_default_values,
-                  GimpProgress   *progress)
+gimp_item_stroke (GimpItem        *item,
+                  GimpDrawable    *drawable,
+                  GimpContext     *context,
+                  GimpStrokeDesc  *stroke_desc,
+                  gboolean         use_default_values,
+                  GimpProgress    *progress,
+                  GError         **error)
 {
   GimpItemClass *item_class;
   gboolean       retval = FALSE;
@@ -1017,6 +1018,7 @@ gimp_item_stroke (GimpItem       *item,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (GIMP_IS_STROKE_DESC (stroke_desc), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   item_class = GIMP_ITEM_GET_CLASS (item);
 
@@ -1029,7 +1031,7 @@ gimp_item_stroke (GimpItem       *item,
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
                                    item_class->stroke_desc);
 
-      retval = item_class->stroke (item, drawable, stroke_desc, progress);
+      retval = item_class->stroke (item, drawable, stroke_desc, progress, error);
 
       gimp_image_undo_group_end (image);
 

@@ -111,7 +111,8 @@ struct _GimpItemClass
   gboolean   (* stroke)       (GimpItem               *item,
                                GimpDrawable           *drawable,
                                GimpStrokeDesc         *stroke_desc,
-                               GimpProgress           *progress);
+                               GimpProgress           *progress,
+                               GError                **error);
 
   const gchar *default_name;
   const gchar *rename_desc;
@@ -215,7 +216,8 @@ gboolean        gimp_item_stroke           (GimpItem           *item,
                                             GimpContext        *context,
                                             GimpStrokeDesc     *stroke_desc,
                                             gboolean            use_default_values,
-                                            GimpProgress       *progress);
+                                            GimpProgress       *progress,
+                                            GError            **error);
 
 gint            gimp_item_get_ID           (GimpItem           *item);
 GimpItem      * gimp_item_get_by_ID        (Gimp               *gimp,

@@ -120,7 +120,8 @@ static void       gimp_channel_transform     (GimpItem         *item,
 static gboolean   gimp_channel_stroke        (GimpItem         *item,
                                               GimpDrawable     *drawable,
                                               GimpStrokeDesc   *stroke_desc,
-                                              GimpProgress     *progress);
+                                              GimpProgress     *progress,
+                                              GError          **error);
 
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (const GimpDrawable *drawable,
@@ -668,10 +669,11 @@ gimp_channel_transform (GimpItem               *item,
 }
 
 static gboolean
-gimp_channel_stroke (GimpItem       *item,
-                     GimpDrawable   *drawable,
-                     GimpStrokeDesc *stroke_desc,
-                     GimpProgress   *progress)
+gimp_channel_stroke (GimpItem        *item,
+                     GimpDrawable    *drawable,
+                     GimpStrokeDesc  *stroke_desc,
+                     GimpProgress    *progress,
+                     GError         **error)
 
 {
   GimpChannel    *channel = GIMP_CHANNEL (item);
@@ -686,9 +688,8 @@ gimp_channel_stroke (GimpItem       *item,
                                &n_segs_in, &n_segs_out,
                                0, 0, 0, 0))
     {
-      gimp_message (gimp_item_get_image (item)->gimp, G_OBJECT (progress),
-                    GIMP_MESSAGE_WARNING,
-                    _("Cannot stroke empty channel."));
+      g_set_error (error, 0, 0,
+                   _("Cannot stroke empty channel."));
       return FALSE;
     }
 
@@ -713,7 +714,8 @@ gimp_channel_stroke (GimpItem       *item,
         retval = gimp_paint_core_stroke_boundary (core, drawable,
                                                   stroke_desc->paint_options,
                                                   segs_in, n_segs_in,
-                                                  offset_x, offset_y);
+                                                  offset_x, offset_y,
+                                                  error);
 
         g_object_unref (core);
       }
