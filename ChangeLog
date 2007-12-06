@@ -1,3 +1,21 @@
+2007-12-06  Michael Natterer  <mitch@gimp.org>
+
+	Move some gimp_message() calls where they belong:
+
+	* app/core/gimplayer-floating-sel.[ch]: removed unreachable
+	gimp_message() in floating_sel_anchor() and added GError parameter
+	to floating_sel_to_layer().
+
+	* app/core/gimplayer.c
+	* app/core/gimpimage-quick-mask.c
+	* app/actions/layers-commands.c: pass NULL or an error as
+	appropriate and show the error message.
+
+	* tools/pdbgen/pdb/floating_sel.pdb: set the error when the passed
+	layer was no floating selection.
+
+	* app/pdb/floating_sel_cmds.c: regenerated.
+
 2007-12-05  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/actions/tool-options-commands.c

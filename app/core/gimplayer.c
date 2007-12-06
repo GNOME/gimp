@@ -645,7 +645,7 @@ gimp_layer_rename (GimpItem    *item,
                                        GIMP_UNDO_GROUP_ITEM_PROPERTIES,
                                        undo_desc);
 
-          floating_sel_to_layer (layer);
+          floating_sel_to_layer (layer, NULL);
         }
     }
 

@@ -125,14 +125,6 @@ floating_sel_anchor (GimpLayer *layer)
 
   image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  if (! gimp_layer_is_floating_sel (layer))
-    {
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                    _("Cannot anchor this layer because "
-                      "it is not a floating selection."));
-      return;
-    }
-
   /*  Start a floating selection anchoring undo  */
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_ANCHOR,
                                _("Anchor Floating Selection"));
@@ -191,26 +183,26 @@ floating_sel_activate_drawable (GimpLayer *layer)
     }
 }
 
-void
-floating_sel_to_layer (GimpLayer *layer)
+gboolean
+floating_sel_to_layer (GimpLayer  *layer,
+                       GError    **error)
 {
   GimpItem  *item;
   GimpImage *image;
 
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-  g_return_if_fail (gimp_layer_is_floating_sel (layer));
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
+  g_return_val_if_fail (gimp_layer_is_floating_sel (layer), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  item = GIMP_ITEM (layer);
-
-  if (! (image = gimp_item_get_image (item)))
-    return;
+  item  = GIMP_ITEM (layer);
+  image = gimp_item_get_image (item);
 
   /*  Check if the floating layer belongs to a channel...  */
   if (GIMP_IS_CHANNEL (layer->fs.drawable))
     {
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                    _("Cannot create a new layer from the floating selection "
-                      "because it belongs to a layer mask or channel."));
+      g_set_error (error, NULL, 0,
+                   _("Cannot create a new layer from the floating selection "
+                     "because it belongs to a layer mask or channel."));
       return;
     }
 

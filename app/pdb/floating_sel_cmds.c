@@ -31,6 +31,8 @@
 #include "core/gimpdrawable.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayer.h"
+#include "gimp-intl.h"
+#include "gimppdberror.h"
 
 #include "internal_procs.h"
 
@@ -51,9 +53,16 @@ floating_sel_remove_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_layer_is_floating_sel (floating_sel))
-        floating_sel_remove (floating_sel);
+        {
+          floating_sel_remove (floating_sel);
+        }
       else
-        success = FALSE;
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                       _("Cannot remove this layer because "
+                         "it is not a floating selection."));
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -75,9 +84,16 @@ floating_sel_anchor_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_layer_is_floating_sel (floating_sel))
-        floating_sel_anchor (floating_sel);
+        {
+          floating_sel_anchor (floating_sel);
+        }
       else
-        success = FALSE;
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                       _("Cannot anchor this layer because "
+                         "it is not a floating selection."));
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -99,9 +115,16 @@ floating_sel_to_layer_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_layer_is_floating_sel (floating_sel))
-        floating_sel_to_layer (floating_sel);
+        {
+          success = floating_sel_to_layer (floating_sel, error);
+        }
       else
-        success = FALSE;
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                       _("Cannot convert this layer to a normal layer because "
+                         "it is not a floating selection."));
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -151,9 +174,16 @@ floating_sel_rigor_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_layer_is_floating_sel (floating_sel))
-        floating_sel_rigor (floating_sel, undo);
+        {
+          floating_sel_rigor (floating_sel, undo);
+        }
       else
-        success = FALSE;
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                       _("Cannot rigor this layer because "
+                         "it is not a floating selection."));
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -177,9 +207,16 @@ floating_sel_relax_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_layer_is_floating_sel (floating_sel))
-        floating_sel_relax (floating_sel, undo);
+        {
+          floating_sel_relax (floating_sel, undo);
+        }
       else
-        success = FALSE;
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                       _("Cannot relax this layer because "
+                         "it is not a floating selection."));
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success);

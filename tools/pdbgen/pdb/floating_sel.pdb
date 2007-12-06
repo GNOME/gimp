@@ -38,9 +38,16 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_layer_is_floating_sel (floating_sel))
-    floating_sel_remove (floating_sel);
+    {
+      floating_sel_remove (floating_sel);
+    }
   else
-    success = FALSE;
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Cannot remove this layer because "
+                     "it is not a floating selection."));
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -68,9 +75,16 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_layer_is_floating_sel (floating_sel))
-    floating_sel_anchor (floating_sel);
+    {
+      floating_sel_anchor (floating_sel);
+    }
   else
-    success = FALSE;
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Cannot anchor this layer because "
+                     "it is not a floating selection."));
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -100,9 +114,16 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_layer_is_floating_sel (floating_sel))
-    floating_sel_to_layer (floating_sel);
+    {
+      success = floating_sel_to_layer (floating_sel, error);
+    }
   else
-    success = FALSE;
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Cannot convert this layer to a normal layer because "
+                     "it is not a floating selection."));
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -154,9 +175,16 @@ sub floating_sel_rigor {
 	code => <<'CODE'
 {
   if (gimp_layer_is_floating_sel (floating_sel))
-    floating_sel_rigor (floating_sel, undo);
+    {
+      floating_sel_rigor (floating_sel, undo);
+    }
   else
-    success = FALSE;
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Cannot rigor this layer because "
+                     "it is not a floating selection."));
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -178,16 +206,25 @@ sub floating_sel_relax {
 	code => <<'CODE'
 {
   if (gimp_layer_is_floating_sel (floating_sel))
-    floating_sel_relax (floating_sel, undo);
+    {
+      floating_sel_relax (floating_sel, undo);
+    }
   else
-    success = FALSE;
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Cannot relax this layer because "
+                     "it is not a floating selection."));
+      success = FALSE;
+    }
 }
 CODE
     );
 }
 
 
-@headers = qw("core/gimplayer-floating-sel.h");
+@headers = qw("core/gimplayer-floating-sel.h"
+              "gimppdberror.h"
+              "gimp-intl.h");
 
 @procs = qw(floating_sel_remove floating_sel_anchor floating_sel_to_layer
 	    floating_sel_attach floating_sel_rigor floating_sel_relax);

@@ -228,7 +228,16 @@ layers_new_cmd_callback (GtkAction *action,
    */
   if ((floating_sel = gimp_image_floating_sel (image)))
     {
-      floating_sel_to_layer (floating_sel);
+      GError *error = NULL;
+
+      if (! floating_sel_to_layer (floating_sel, &error))
+        {
+          gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                        error->message);
+          g_clear_error (&error);
+          return;
+        }
+
       gimp_image_flush (image);
       return;
     }
@@ -256,6 +265,7 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   GimpImage            *image;
+  GtkWidget            *widget;
   GimpLayer            *floating_sel;
   GimpLayer            *new_layer;
   gint                  width, height;
@@ -263,13 +273,23 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
   gdouble               opacity;
   GimpLayerModeEffects  mode;
   return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
 
   /*  If there is a floating selection, the new command transforms
    *  the current fs into a new layer
    */
   if ((floating_sel = gimp_image_floating_sel (image)))
     {
-      floating_sel_to_layer (floating_sel);
+      GError *error = NULL;
+
+      if (! floating_sel_to_layer (floating_sel, &error))
+        {
+          gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                        error->message);
+          g_clear_error (&error);
+          return;
+        }
+
       gimp_image_flush (image);
       return;
     }
