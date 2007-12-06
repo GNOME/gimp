@@ -1,5 +1,15 @@
 2007-12-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable-bucket-fill.[ch]: add GError parameter.
+
+	* app/tools/gimpbucketfilltool.c: handle the returned error.
+
+	* tools/pdbgen/pdb/edit.pdb: pass the error.
+
+	* app/pdb/edit_cmds.c: regenerated.
+
+2007-12-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintcore-stroke.[ch]: added GError arguments and
 	fixed all functions to abort when the first call to
 	gimp_paint_core_start() fails (it won't succeed either for the

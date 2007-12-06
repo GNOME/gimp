@@ -516,12 +516,13 @@ edit_bucket_fill_invoker (GimpProcedure      *procedure,
 
           do_seed_fill = gimp_channel_is_empty (gimp_image_get_mask (image));
 
-          gimp_drawable_bucket_fill (drawable, context, fill_mode,
-                                     paint_mode, opacity / 100.0,
-                                     do_seed_fill,
-                                     FALSE /* don't fill transparent */,
-                                     GIMP_SELECT_CRITERION_COMPOSITE,
-                                     threshold, sample_merged, x, y);
+          success = gimp_drawable_bucket_fill (drawable, context, fill_mode,
+                                               paint_mode, opacity / 100.0,
+                                               do_seed_fill,
+                                               FALSE /* don't fill transparent */,
+                                               GIMP_SELECT_CRITERION_COMPOSITE,
+                                               threshold, sample_merged, x, y,
+                                               error);
         }
       else
         success = FALSE;
@@ -570,12 +571,13 @@ edit_bucket_fill_full_invoker (GimpProcedure      *procedure,
 
           do_seed_fill = gimp_channel_is_empty (gimp_image_get_mask (image));
 
-          gimp_drawable_bucket_fill (drawable, context, fill_mode,
-                                     paint_mode, opacity / 100.0,
-                                     do_seed_fill,
-                                     fill_transparent,
-                                     select_criterion,
-                                     threshold, sample_merged, x, y);
+          success = gimp_drawable_bucket_fill (drawable, context, fill_mode,
+                                               paint_mode, opacity / 100.0,
+                                               do_seed_fill,
+                                               fill_transparent,
+                                               select_criterion,
+                                               threshold, sample_merged, x, y,
+                                               error);
         }
       else
         success = FALSE;

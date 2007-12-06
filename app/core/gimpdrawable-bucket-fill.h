@@ -20,32 +20,33 @@
 #define  __GIMP_DRAWABLE_BUCKET_FILL_H__
 
 
-void   gimp_drawable_bucket_fill      (GimpDrawable        *drawable,
-                                       GimpContext         *context,
-                                       GimpBucketFillMode   fill_mode,
-                                       gint                 paint_mode,
-                                       gdouble              opacity,
-                                       gboolean             do_seed_fill,
-                                       gboolean             fill_transparent,
-                                       GimpSelectCriterion  fill_criterion,
-                                       gdouble              threshold,
-                                       gboolean             sample_merged,
-                                       gdouble              x,
-                                       gdouble              y);
+gboolean   gimp_drawable_bucket_fill      (GimpDrawable         *drawable,
+                                           GimpContext          *context,
+                                           GimpBucketFillMode    fill_mode,
+                                           gint                  paint_mode,
+                                           gdouble               opacity,
+                                           gboolean              do_seed_fill,
+                                           gboolean              fill_transparent,
+                                           GimpSelectCriterion   fill_criterion,
+                                           gdouble               threshold,
+                                           gboolean              sample_merged,
+                                           gdouble               x,
+                                           gdouble               y,
+                                           GError              **error);
 
-void   gimp_drawable_bucket_fill_full (GimpDrawable        *drawable,
-                                       GimpBucketFillMode   fill_mode,
-                                       gint                 paint_mode,
-                                       gdouble              opacity,
-                                       gboolean             do_seed_fill,
-                                       gboolean             fill_transparent,
-                                       GimpSelectCriterion  fill_criterion,
-                                       gdouble              threshold,
-                                       gboolean             sample_merged,
-                                       gdouble              x,
-                                       gdouble              y,
-                                       const GimpRGB       *color,
-                                       GimpPattern         *pattern);
+void       gimp_drawable_bucket_fill_full (GimpDrawable         *drawable,
+                                           GimpBucketFillMode    fill_mode,
+                                           gint                  paint_mode,
+                                           gdouble               opacity,
+                                           gboolean              do_seed_fill,
+                                           gboolean              fill_transparent,
+                                           GimpSelectCriterion   fill_criterion,
+                                           gdouble               threshold,
+                                           gboolean              sample_merged,
+                                           gdouble               x,
+                                           gdouble               y,
+                                           const GimpRGB        *color,
+                                           GimpPattern          *pattern);
 
 
 #endif  /*  __GIMP_DRAWABLE_BUCKET_FILL_H__  */

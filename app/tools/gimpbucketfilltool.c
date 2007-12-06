@@ -24,6 +24,7 @@
 
 #include "tools-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
@@ -128,6 +129,7 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
       GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
       GimpContext  *context  = GIMP_CONTEXT (options);
       gint          x, y;
+      GError       *error    = NULL;
 
       x = coords->x;
       y = coords->y;
@@ -142,19 +144,27 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
           y -= off_y;
         }
 
-      gimp_drawable_bucket_fill (drawable,
-                                 context,
-                                 options->fill_mode,
-                                 gimp_context_get_paint_mode (context),
-                                 gimp_context_get_opacity (context),
-                                 ! options->fill_selection,
-                                 options->fill_transparent,
-                                 options->fill_criterion,
-                                 options->threshold,
-                                 options->sample_merged,
-                                 x, y);
-
-      gimp_image_flush (display->image);
+      if (! gimp_drawable_bucket_fill (drawable,
+                                       context,
+                                       options->fill_mode,
+                                       gimp_context_get_paint_mode (context),
+                                       gimp_context_get_opacity (context),
+                                       ! options->fill_selection,
+                                       options->fill_transparent,
+                                       options->fill_criterion,
+                                       options->threshold,
+                                       options->sample_merged,
+                                       x, y, &error))
+        {
+          gimp_message (display->image->gimp, G_OBJECT (display),
+                        GIMP_MESSAGE_WARNING,
+                        error->message);
+          g_clear_error (&error);
+        }
+      else
+        {
+          gimp_image_flush (display->image);
+        }
     }
 
   GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
