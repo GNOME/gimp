@@ -1,3 +1,10 @@
+2007-12-06  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_set_property): Also update the integer
+	representation of the rect when the GObject properties has been
+	set.
+
 2007-12-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-merge.[ch]

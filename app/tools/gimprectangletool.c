@@ -641,6 +641,8 @@ gimp_rectangle_tool_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+
+  gimp_rectangle_tool_update_int_rect (rect_tool);
 }
 
 void
