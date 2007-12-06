@@ -751,18 +751,19 @@ color_quicksort (const void *c1,
     return 0;
 }
 
-void
-gimp_image_convert (GimpImage              *image,
-                    GimpImageBaseType       new_type,
+gboolean
+gimp_image_convert (GimpImage               *image,
+                    GimpImageBaseType        new_type,
                     /* The following are only used for new_type == GIMP_INDEXED
                      */
-                    gint                    num_cols,
-                    GimpConvertDitherType   dither,
-                    gboolean                alpha_dither,
-                    gboolean                remove_dups,
-                    GimpConvertPaletteType  palette_type,
-                    GimpPalette            *custom_palette,
-                    GimpProgress           *progress)
+                    gint                     num_cols,
+                    GimpConvertDitherType    dither,
+                    gboolean                 alpha_dither,
+                    gboolean                 remove_dups,
+                    GimpConvertPaletteType   palette_type,
+                    GimpPalette             *custom_palette,
+                    GimpProgress            *progress,
+                    GError                 **error)
 {
   QuantizeObj       *quantobj = NULL;
   GimpImageBaseType  old_type;
@@ -770,23 +771,24 @@ gimp_image_convert (GimpImage              *image,
   const gchar       *undo_desc = NULL;
   gint               nth_layer, n_layers;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (new_type != gimp_image_base_type (image));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (new_type != gimp_image_base_type (image), FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (palette_type == GIMP_CUSTOM_PALETTE)
     {
-      g_return_if_fail (custom_palette == NULL ||
-                        GIMP_IS_PALETTE (custom_palette));
+      g_return_val_if_fail (custom_palette == NULL ||
+                            GIMP_IS_PALETTE (custom_palette), FALSE);
 
       if (! custom_palette)
         palette_type = GIMP_MONO_PALETTE;
 
       if (custom_palette->n_colors < 1)
         {
-          gimp_message (image->gimp, G_OBJECT (progress), GIMP_MESSAGE_ERROR,
-                        _("Cannot convert image: palette is empty."));
-          return;
+          g_set_error (error, 0, 0,
+                       _("Cannot convert image: palette is empty."));
+          return FALSE;
         }
     }
 
@@ -1081,6 +1083,8 @@ gimp_image_convert (GimpImage              *image,
   g_object_thaw_notify (G_OBJECT (image));
 
   gimp_unset_busy (image->gimp);
+
+  return TRUE;
 }
 
 

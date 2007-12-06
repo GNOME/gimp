@@ -176,6 +176,7 @@ image_convert_cmd_callback (GtkAction *action,
   GtkWidget         *widget;
   GimpDisplay       *display;
   GimpImageBaseType  value;
+  GError            *error = NULL;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
   return_if_no_display (display, data);
@@ -189,7 +190,14 @@ image_convert_cmd_callback (GtkAction *action,
     {
     case GIMP_RGB:
     case GIMP_GRAY:
-      gimp_image_convert (image, value, 0, 0, FALSE, FALSE, 0, NULL, NULL);
+      if (! gimp_image_convert (image, value, 0, 0, FALSE, FALSE, 0, NULL,
+                                NULL, &error))
+        {
+          gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                        error->message);
+          g_clear_error (&error);
+          return;
+        }
       break;
 
     case GIMP_INDEXED:

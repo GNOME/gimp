@@ -54,7 +54,8 @@ image_convert_rgb_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_image_base_type (image) != GIMP_RGB)
-        gimp_image_convert (image, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL, NULL);
+        success = gimp_image_convert (image, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL,
+                                      NULL, error);
       else
         success = FALSE;
     }
@@ -78,7 +79,8 @@ image_convert_grayscale_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_image_base_type (image) != GIMP_GRAY)
-        gimp_image_convert (image, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL, NULL);
+        success = gimp_image_convert (image, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL,
+                                      NULL, error);
       else
         success = FALSE;
     }
@@ -140,9 +142,9 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
         success = FALSE;
 
       if (success)
-        gimp_image_convert (image, GIMP_INDEXED, num_cols, dither_type,
-                            alpha_dither, remove_unused, palette_type, pal,
-                            NULL);
+        success = gimp_image_convert (image, GIMP_INDEXED, num_cols, dither_type,
+                                      alpha_dither, remove_unused, palette_type, pal,
+                                      NULL, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

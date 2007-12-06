@@ -1,5 +1,18 @@
 2007-12-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-merge.[ch]
+	* app/core/gimpimage-convert.[ch]: added GError parameters.
+
+	* app/dialogs/convert-dialog.c
+	* app/actions/image-commands.c
+	* app/actions/vectors-commands.c: handle the returned error.
+
+	* tools/pdbgen/pdb/convert.pdb: pass the error.
+
+	* app/pdb/convert_cmds.c: regenerated.
+
+2007-12-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable-bucket-fill.[ch]: add GError parameter.
 
 	* app/tools/gimpbucketfilltool.c: handle the returned error.

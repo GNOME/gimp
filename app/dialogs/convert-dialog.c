@@ -280,20 +280,32 @@ convert_dialog_response (GtkWidget     *widget,
   if (response_id == GTK_RESPONSE_OK)
     {
       GimpProgress *progress;
+      GError       *error = NULL;
 
       progress = gimp_progress_start (dialog->progress,
                                       _("Converting to indexed colors"), FALSE);
 
       /*  Convert the image to indexed color  */
-      gimp_image_convert (dialog->image,
-                          GIMP_INDEXED,
-                          dialog->num_colors,
-                          dialog->dither_type,
-                          dialog->alpha_dither,
-                          dialog->remove_dups,
-                          dialog->palette_type,
-                          dialog->custom_palette,
-                          progress);
+      if (! gimp_image_convert (dialog->image,
+                                GIMP_INDEXED,
+                                dialog->num_colors,
+                                dialog->dither_type,
+                                dialog->alpha_dither,
+                                dialog->remove_dups,
+                                dialog->palette_type,
+                                dialog->custom_palette,
+                                progress, &error))
+        {
+          gimp_message (dialog->image->gimp, G_OBJECT (dialog->dialog),
+                        GIMP_MESSAGE_WARNING,
+                        error->message);
+          g_clear_error (&error);
+
+          if (progress)
+            gimp_progress_end (progress);
+
+          return;
+        }
 
       if (progress)
         gimp_progress_end (progress);

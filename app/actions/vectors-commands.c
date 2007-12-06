@@ -275,9 +275,19 @@ vectors_merge_visible_cmd_callback (GtkAction *action,
 {
   GimpImage   *image;
   GimpVectors *vectors;
+  GtkWidget   *widget;
+  GError      *error = NULL;
   return_if_no_vectors (image, vectors, data);
+  return_if_no_widget (widget, data);
 
-  gimp_image_merge_visible_vectors (image);
+  if (! gimp_image_merge_visible_vectors (image, &error))
+    {
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                    error->message);
+      g_clear_error (&error);
+      return;
+    }
+
   gimp_image_flush (image);
 }
 

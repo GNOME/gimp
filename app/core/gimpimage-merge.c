@@ -222,7 +222,8 @@ gimp_image_merge_down (GimpImage     *image,
 /* merging vectors */
 
 GimpVectors *
-gimp_image_merge_visible_vectors (GimpImage *image)
+gimp_image_merge_visible_vectors (GimpImage  *image,
+                                  GError    **error)
 {
   GList       *list           = NULL;
   GSList      *merge_list     = NULL;
@@ -233,6 +234,7 @@ gimp_image_merge_visible_vectors (GimpImage *image)
   gint         pos            = 0;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   for (list = GIMP_LIST (image->vectors)->list;
        list;
@@ -285,9 +287,9 @@ gimp_image_merge_visible_vectors (GimpImage *image)
     }
   else
     {
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                    _("Not enough visible paths for a merge. "
-                      "There must be at least two."));
+      g_set_error (error, 0, 0,
+                   _("Not enough visible paths for a merge. "
+                     "There must be at least two."));
       return NULL;
     }
 }
