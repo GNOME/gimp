@@ -7,6 +7,22 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Changes in GIMP 2.4.3
+=====================
+
+- avoid filename encoding problems in the WMF import plug-in (bug #499329)
+- fixed horizontal flipping of linked layers (bug #499161)
+- raised the priority of the display idle renderer to improve performance
+  on Win32 (bug #499150)
+- fixed a missing update in the Lighting plug-in UI (bug #500317)
+- fixed a potential crash in the projection code (bug #500178)
+- fixed a minor Makefile issue (bug #500826)
+- removed some pointless warnings from the JPEG and TIFF load plug-ins
+- fixed size calculation for the image size warning dialog (bug #329468)
+- fixed loading of tool options for the rectangle tools (bug #498948)
+- translation updates (ca, de, gl, it, lt)
+
+
 Changes in GIMP 2.4.2
 =====================
 
