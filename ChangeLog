@@ -1,5 +1,14 @@
 2007-12-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimp-log.[ch]: renamed log domain TOOLS to TOOL_EVENTS and
+	added domain TOOL_FOCUS.
+
+	* app/display/gimpdisplayshell-callbacks.c: s/TOOLS/TOOL_EVENTS/
+
+	* app/tools/gimptool.c: port focus debug output to GIMP_LOG().
+
+2007-12-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpselection.[ch]: added GErrors to
 	gimp_selection_extract() and gimp_selection_float().
 

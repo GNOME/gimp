@@ -35,7 +35,8 @@ gimp_log_init (void)
     {
       const GDebugKey log_keys[] =
       {
-        { "tools",          GIMP_LOG_TOOLS          },
+        { "tool-events",    GIMP_LOG_TOOL_EVENTS    },
+        { "tool-focus",     GIMP_LOG_TOOL_FOCUS     },
         { "dnd",            GIMP_LOG_DND            },
         { "help",           GIMP_LOG_HELP           },
         { "dialog-factory", GIMP_LOG_DIALOG_FACTORY },

@@ -22,12 +22,13 @@
 
 typedef enum
 {
-  GIMP_LOG_TOOLS          = 1 << 0,
-  GIMP_LOG_DND            = 1 << 1,
-  GIMP_LOG_HELP           = 1 << 2,
-  GIMP_LOG_DIALOG_FACTORY = 1 << 3,
-  GIMP_LOG_SAVE_DIALOG    = 1 << 4,
-  GIMP_LOG_IMAGE_SCALE    = 1 << 5
+  GIMP_LOG_TOOL_EVENTS    = 1 << 0,
+  GIMP_LOG_TOOL_FOCUS     = 1 << 1,
+  GIMP_LOG_DND            = 1 << 2,
+  GIMP_LOG_HELP           = 1 << 3,
+  GIMP_LOG_DIALOG_FACTORY = 1 << 4,
+  GIMP_LOG_SAVE_DIALOG    = 1 << 5,
+  GIMP_LOG_IMAGE_SCALE    = 1 << 6
 } GimpLogFlags;
 
 

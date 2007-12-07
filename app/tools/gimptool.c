@@ -37,6 +37,8 @@
 #include "gimptool.h"
 #include "gimptoolcontrol.h"
 
+#include "gimp-log.h"
+
 
 enum
 {
@@ -624,10 +626,8 @@ gimp_tool_set_focus_display (GimpTool    *tool,
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (display == NULL || GIMP_IS_DISPLAY (display));
 
-#ifdef DEBUG_FOCUS
-  g_printerr ("%s: tool: %p  display: %p  focus_display: %p\n",
-              G_STRFUNC, tool, display, tool->focus_display);
-#endif
+  GIMP_LOG (TOOL_FOCUS, "tool: %p  focus_display: %p  tool->focus_display: %p",
+            tool, display, tool->focus_display);
 
   if (display != tool->focus_display)
     {
@@ -678,10 +678,8 @@ gimp_tool_set_modifier_state (GimpTool        *tool,
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-#ifdef DEBUG_FOCUS
-  g_printerr ("%s: tool: %p  display: %p  focus_display: %p\n",
-              G_STRFUNC, tool, display, tool->focus_display);
-#endif
+  GIMP_LOG (TOOL_FOCUS, "tool: %p  display: %p  tool->focus_display: %p",
+            tool, display, tool->focus_display);
 
   g_return_if_fail (display == tool->focus_display);
 
@@ -731,6 +729,9 @@ gimp_tool_set_active_modifier_state (GimpTool        *tool,
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
+
+  GIMP_LOG (TOOL_FOCUS, "tool: %p  display: %p  tool->focus_display: %p",
+            tool, display, tool->focus_display);
 
   g_return_if_fail (display == tool->focus_display);
 
