@@ -94,18 +94,19 @@ register(
     "Simple sphere with drop shadow",
     "James Henstridge",
     "James Henstridge",
-    "1997-1999",
-    "<Toolbox>/Xtns/Languages/Python-Fu/Test/_Sphere",
+    "1997-1999, 2007",
+    "_Sphere",
     "",
     [
         (PF_INT, "radius", "Radius for sphere", 100),
         (PF_SLIDER, "light", "Light angle", 45, (0,360,1)),
         (PF_TOGGLE, "shadow", "Shadow?", 1),
         (PF_RADIO, "foo", "Test", "foo", (("Foo", "foo"), ("Bar", "bar"))),
-        (PF_COLOR, "bg-color", "Background", (255,255,255)),
-        (PF_COLOR, "sphere-color", "Sphere", (255,0,0))
+        (PF_COLOR, "bg-color", "Background", (1.0, 1.0, 1.0)),
+        (PF_COLOR, "sphere-color", "Sphere", "orange")
     ],
     [],
-    sphere)
+    sphere,
+    menu="<Toolbox>/Xtns/Languages/Python-Fu/Test")
 
 main()

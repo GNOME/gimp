@@ -1,5 +1,12 @@
 2007-12-07  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/gimpui.py (ColorSelector.__init__): accept a
+	string and parse it using gimpcolor.rgb_parse_css().
+
+	* plug-ins/pygimp/plug-ins/sphere.py: show off the new feature.
+
+2007-12-07  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/pygimp/plug-ins/foggify.py: push/pop a context instead
 	of manually restoring the background color.
 
