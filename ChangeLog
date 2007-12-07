@@ -1,3 +1,14 @@
+2007-12-07  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Merged from trunk:
+
+	* app/display/gimpdisplayshell-draw.c: draw grid correctly when
+	non-integer spacing is combined with a large offset.  Fixes
+	bug #502374.
+
+	* app/core/gimpimage-snap.c: make snapping to grid work when
+	coord is less than the grid offset.
+
 2007-12-07  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:

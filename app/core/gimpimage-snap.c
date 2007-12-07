@@ -105,6 +105,9 @@ gimp_image_snap_x (GimpImage *image,
                     "xoffset",  &xoffset,
                     NULL);
 
+      while (xoffset > xspacing)
+        xoffset -= xspacing;
+
       for (i = xoffset; i <= image->width; i += xspacing)
         {
           if (i < 0)
@@ -209,6 +212,9 @@ gimp_image_snap_y (GimpImage *image,
                     "yspacing", &yspacing,
                     "yoffset",  &yoffset,
                     NULL);
+
+      while (yoffset > yspacing)
+        yoffset -= yspacing;
 
       for (i = yoffset; i <= image->height; i += yspacing)
         {
@@ -343,6 +349,12 @@ gimp_image_snap_point (GimpImage *image,
                     "xoffset",  &xoffset,
                     "yoffset",  &yoffset,
                     NULL);
+
+      while (xoffset > xspacing)
+        xoffset -= xspacing;
+
+      while (yoffset > yspacing)
+        yoffset -= yspacing;
 
       for (i = xoffset; i <= image->width; i += xspacing)
         {
