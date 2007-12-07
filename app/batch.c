@@ -72,8 +72,9 @@ batch_run (Gimp         *gimp,
         {
           batch_interpreter = BATCH_DEFAULT_EVAL_PROC;
 
-          g_printerr (_("No batch interpreter specified, using the default "
-                        "'%s'.\n"), batch_interpreter);
+          if (gimp->be_verbose)
+            g_printerr (_("No batch interpreter specified, using the default "
+                          "'%s'.\n"), batch_interpreter);
         }
     }
 
