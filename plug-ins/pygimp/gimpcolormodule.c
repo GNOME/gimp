@@ -45,7 +45,6 @@ pygimp_rgb_parse_name(PyObject *self, PyObject *args, PyObject *kwargs)
 
     rgb.a = 1.0;
     success = gimp_rgb_parse_name(&rgb, name, len);
-    PyMem_Free(name);
 
     if (!success) {
 	PyErr_SetString(PyExc_ValueError, "unable to parse color name");
@@ -70,7 +69,6 @@ pygimp_rgb_parse_hex(PyObject *self, PyObject *args, PyObject *kwargs)
 
     rgb.a = 1.0;
     success = gimp_rgb_parse_hex(&rgb, hex, len);
-    PyMem_Free(hex);
 
     if (!success) {
 	PyErr_SetString(PyExc_ValueError, "unable to parse hex value");

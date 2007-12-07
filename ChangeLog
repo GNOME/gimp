@@ -2,6 +2,13 @@
 
 	Merged from trunk:
 
+	* plug-ins/pygimp/pygimp-colors.c
+	* plug-ins/pygimp/gimpcolormodule.c: removed calls to PyMem_Free().
+
+2007-12-07  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* plug-ins/pygimp/plug-ins/foggify.py: push/pop a context instead
 	of manually restoring the background color.
 
