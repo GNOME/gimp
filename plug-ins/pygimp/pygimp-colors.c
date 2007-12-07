@@ -269,7 +269,6 @@ rgb_parse_name(PyObject *self, PyObject *args, PyObject *kwargs)
         return NULL;
 
     success = gimp_rgb_parse_name(pyg_boxed_get(self, GimpRGB), name, len);
-    PyMem_Free(name);
 
     if (!success) {
 	PyErr_SetString(PyExc_ValueError, "unable to parse color name");
@@ -293,7 +292,6 @@ rgb_parse_hex(PyObject *self, PyObject *args, PyObject *kwargs)
         return NULL;
 
     success = gimp_rgb_parse_hex(pyg_boxed_get(self, GimpRGB), hex, len);
-    PyMem_Free(hex);
 
     if (!success) {
 	PyErr_SetString(PyExc_ValueError, "unable to parse hex value");
@@ -321,8 +319,6 @@ rgb_parse_css(PyObject *self, PyObject *args, PyObject *kwargs)
 	success = gimp_rgba_parse_css(pyg_boxed_get(self, GimpRGB), css, len);
     else
 	success = gimp_rgb_parse_css(pyg_boxed_get(self, GimpRGB), css, len);
-
-    PyMem_Free(css);
 
     if (!success) {
 	PyErr_SetString(PyExc_ValueError, "unable to parse CSS color");

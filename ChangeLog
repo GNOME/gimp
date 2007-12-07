@@ -1,5 +1,10 @@
 2007-12-07  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/pygimp-colors.c
+	* plug-ins/pygimp/gimpcolormodule.c: removed calls to PyMem_Free().
+
+2007-12-07  Sven Neumann  <sven@gimp.org>
+
 	* libgimpcolor/test-color-parser.c: removed unused import.
 
 2007-12-07  Michael Natterer  <mitch@gimp.org>
