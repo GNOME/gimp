@@ -4,7 +4,6 @@
 #include "config.h"
 
 #include <stdlib.h>
-#include <string.h>
 
 #include <glib-object.h>
 
@@ -25,7 +24,7 @@ typedef struct
   const gdouble  a;
 } ColorSample;
 
-static const ColorSample  samples[] =
+static const ColorSample samples[] =
 {
   /* sample                  alpha  fail   red       green     blue     alpha */
 
