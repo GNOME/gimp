@@ -1,5 +1,9 @@
 2007-12-07  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/core/gimpimage-snap.c: fix typo in previous commit.
+
+2007-12-07  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/display/gimpdisplayshell-draw.c: draw grid correctly when
 	non-integer spacing is combined with a large offset.  Fixes
 	bug #502374.

@@ -105,7 +105,7 @@ gimp_image_snap_x (GimpImage *image,
                     "xoffset",  &xoffset,
                     NULL);
 
-      while (xoffset < xspacing)
+      while (xoffset > xspacing)
         xoffset -= xspacing;
 
       for (i = xoffset; i <= image->width; i += xspacing)
