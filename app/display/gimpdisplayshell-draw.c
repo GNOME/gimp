@@ -148,7 +148,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
       gint        x0, x1, x2, x3;
       gint        y0, y1, y2, y3;
       gint        x_real, y_real;
-      gint        x_offset, y_offset;
+      gdouble     x_offset, y_offset;
       gint        width, height;
 
 #define CROSSHAIR 2
