@@ -535,13 +535,21 @@ gimp_edit_extract (GimpImage    *image,
                    gboolean      cut_pixels)
 {
   TileManager *tiles;
+  GError      *error = NULL;
 
   if (cut_pixels)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT, _("Cut"));
 
   /*  Cut/copy the mask portion from the image  */
   tiles = gimp_selection_extract (gimp_image_get_mask (image), pickable,
-                                  context, cut_pixels, FALSE, FALSE);
+                                  context, cut_pixels, FALSE, FALSE, &error);
+
+  if (! tiles)
+    {
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    "%s", error->message);
+      g_clear_error (&error);
+    }
 
   if (cut_pixels)
     gimp_image_undo_group_end (image);

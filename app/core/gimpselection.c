@@ -607,7 +607,8 @@ gimp_selection_extract (GimpChannel  *selection,
                         GimpContext  *context,
                         gboolean      cut_image,
                         gboolean      keep_indexed,
-                        gboolean      add_alpha)
+                        gboolean      add_alpha,
+                        GError      **error)
 {
   GimpImage         *image;
   TileManager       *tiles;
@@ -625,6 +626,7 @@ gimp_selection_extract (GimpChannel  *selection,
   if (GIMP_IS_ITEM (pickable))
     g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (pickable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   image = gimp_pickable_get_image (pickable);
 
@@ -643,9 +645,9 @@ gimp_selection_extract (GimpChannel  *selection,
 
   if (non_empty && ((x1 == x2) || (y1 == y2)))
     {
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                    _("Unable to cut or copy because the "
-                      "selected region is empty."));
+      g_set_error (error, 0, 0,
+                   _("Unable to cut or copy because the "
+                     "selected region is empty."));
       return NULL;
     }
 
@@ -797,12 +799,13 @@ gimp_selection_extract (GimpChannel  *selection,
 }
 
 GimpLayer *
-gimp_selection_float (GimpChannel  *selection,
-                      GimpDrawable *drawable,
-                      GimpContext  *context,
-                      gboolean      cut_image,
-                      gint          off_x,
-                      gint          off_y)
+gimp_selection_float (GimpChannel   *selection,
+                      GimpDrawable  *drawable,
+                      GimpContext   *context,
+                      gboolean       cut_image,
+                      gint           off_x,
+                      gint           off_y,
+                      GError       **error)
 {
   GimpImage   *image;
   GimpLayer   *layer;
@@ -814,13 +817,19 @@ gimp_selection_float (GimpChannel  *selection,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   image = gimp_item_get_image (GIMP_ITEM (selection));
 
   /*  Make sure there is a region to float...  */
   if (! gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) ||
       (x1 == x2 || y1 == y2))
-    return NULL;
+    {
+      g_set_error (error, 0, 0,
+                   _("Cannot float selection because the selected region "
+                     "is empty."));
+      return NULL;
+    }
 
   /*  Start an undo group  */
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_FLOAT,
@@ -828,7 +837,7 @@ gimp_selection_float (GimpChannel  *selection,
 
   /*  Cut or copy the selected region  */
   tiles = gimp_selection_extract (selection, GIMP_PICKABLE (drawable), context,
-                                  cut_image, FALSE, TRUE);
+                                  cut_image, FALSE, TRUE, NULL);
 
   /*  Clear the selection as if we had cut the pixels  */
   if (! cut_image)

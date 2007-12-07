@@ -562,7 +562,9 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
     /* if there has been movement, move the selection  */
     if (edit_select->origx != x || edit_select->origy != y)
       {
-        gint xoffset, yoffset;
+        gint    xoffset;
+        gint    yoffset;
+        GError *error = NULL;
 
         xoffset = x - edit_select->origx;
         yoffset = y - edit_select->origy;
@@ -623,9 +625,13 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
                                         gimp_get_user_context (display->image->gimp),
                                         edit_select->edit_mode ==
                                         GIMP_TRANSLATE_MODE_MASK_TO_LAYER,
-                                        0, 0))
+                                        0, 0, &error))
               {
                 /* no region to float, abort safely */
+                gimp_message (display->image->gimp, G_OBJECT (display),
+                              GIMP_MESSAGE_WARNING,
+                              "%s", error->message);
+                g_clear_error (&error);
                 gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
                 return;

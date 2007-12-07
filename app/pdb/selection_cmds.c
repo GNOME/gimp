@@ -191,7 +191,8 @@ selection_float_invoker (GimpProcedure      *procedure,
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
           layer = gimp_selection_float (gimp_image_get_mask (image),
-                                        drawable, context, TRUE, offx, offy);
+                                        drawable, context, TRUE, offx, offy,
+                                        error);
           if (! layer)
             success = FALSE;
         }

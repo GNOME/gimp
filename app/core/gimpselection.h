@@ -48,27 +48,29 @@ struct _GimpSelectionClass
 
 GType         gimp_selection_get_type   (void) G_GNUC_CONST;
 
-GimpChannel * gimp_selection_new        (GimpImage    *image,
-                                         gint          width,
-                                         gint          height);
+GimpChannel * gimp_selection_new        (GimpImage     *image,
+                                         gint           width,
+                                         gint           height);
 
-void          gimp_selection_load       (GimpChannel  *selection,
-                                         GimpChannel  *channel);
-GimpChannel * gimp_selection_save       (GimpChannel  *selection);
+void          gimp_selection_load       (GimpChannel   *selection,
+                                         GimpChannel   *channel);
+GimpChannel * gimp_selection_save       (GimpChannel   *selection);
 
-TileManager * gimp_selection_extract    (GimpChannel  *selection,
-                                         GimpPickable *pickable,
-                                         GimpContext  *context,
-                                         gboolean      cut_image,
-                                         gboolean      keep_indexed,
-                                         gboolean      add_alpha);
+TileManager * gimp_selection_extract    (GimpChannel   *selection,
+                                         GimpPickable  *pickable,
+                                         GimpContext   *context,
+                                         gboolean       cut_image,
+                                         gboolean       keep_indexed,
+                                         gboolean       add_alpha,
+                                         GError       **error);
 
-GimpLayer   * gimp_selection_float      (GimpChannel  *selection,
-                                         GimpDrawable *drawable,
-                                         GimpContext  *context,
-                                         gboolean      cut_image,
-                                         gint          off_x,
-                                         gint          off_y);
+GimpLayer   * gimp_selection_float      (GimpChannel   *selection,
+                                         GimpDrawable  *drawable,
+                                         GimpContext   *context,
+                                         gboolean       cut_image,
+                                         gint           off_x,
+                                         gint           off_y,
+                                         GError       **error);
 
 
 #endif /* __GIMP_SELECTION_H__ */
