@@ -23,6 +23,8 @@ import time
 gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
 
 def foggify(img, layer, name, colour, turbulence, opacity):
+
+    gimp.context_push()
     img.undo_group_start()
 
     fog = gimp.Layer(img, name, layer.width, layer.height, RGBA_IMAGE,
@@ -30,10 +32,8 @@ def foggify(img, layer, name, colour, turbulence, opacity):
     fog.fill(TRANSPARENT_FILL)
     img.add_layer(fog, 0)
 
-    oldbg = gimp.get_background()
     gimp.set_background(colour)
     pdb.gimp_edit_fill(fog, BACKGROUND_FILL)
-    gimp.set_background(oldbg)
 
     # create a layer mask for the new layer
     mask = fog.create_mask(0)
@@ -46,6 +46,7 @@ def foggify(img, layer, name, colour, turbulence, opacity):
     fog.remove_mask(MASK_APPLY)
 
     img.undo_group_end()
+    gimp.context_pop()
 
 register(
     "python-fu-foggify",
@@ -53,7 +54,7 @@ register(
     "Adds a layer of fog to the image.",
     "James Henstridge",
     "James Henstridge",
-    "1999",
+    "1999,2007",
     N_("_Fog..."),
     "RGB*, GRAY*",
     [

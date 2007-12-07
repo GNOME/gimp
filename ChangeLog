@@ -2,6 +2,13 @@
 
 	Merged from trunk:
 
+	* plug-ins/pygimp/plug-ins/foggify.py: push/pop a context instead
+	of manually restoring the background color.
+
+2007-12-07  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* app/batch.c (batch_run): only show the message about using the
 	default batch interpreter when running in verbose mode.
 
