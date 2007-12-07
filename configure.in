@@ -950,7 +950,7 @@ AC_SUBST(GIMP_COMMAND)
 ###################################
 
 AC_ARG_ENABLE(toolbox-menu,
-              [  --disable-toolbox-menu disable the menu in the toolbox (default=depends on platform)], ,
+              [  --disable-toolbox-menu  disable the menu in the toolbox (default=depends on platform)], ,
   if test "x$gdk_target" = "xquartz"; then
      enable_toolbox_menu=no
   else

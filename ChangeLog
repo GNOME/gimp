@@ -2,6 +2,12 @@
 
 	Merged from trunk:
 
+	* configure.in: fixed indentation of --help output.
+
+2007-12-07  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* plug-ins/pygimp/pygimp-colors.c
 	* plug-ins/pygimp/gimpcolormodule.c: removed calls to PyMem_Free().
 
