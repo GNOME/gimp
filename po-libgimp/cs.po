@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-18 13:41+0200\n"
-"PO-Revision-Date: 2007-09-18 13:40+0200\n"
+"POT-Creation-Date: 2007-12-08 08:33+0100\n"
+"PO-Revision-Date: 2007-12-08 08:34+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,8 +26,8 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Výběr stopy"
 
-#: ../libgimp/gimpbrushselectbutton.c:911
-#: ../libgimp/gimppatternselectbutton.c:712
+#: ../libgimp/gimpbrushselectbutton.c:913
+#: ../libgimp/gimppatternselectbutton.c:714
 msgid "_Browse..."
 msgstr "_Procházet..."
 
@@ -111,8 +111,7 @@ msgstr ""
 #: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr ""
-"Modul %s umí zpracovat pouze bitmapové (dvoubarevné) indexované obrázky"
+msgstr "Modul %s umí zpracovat pouze bitmapové (dvoubarevné) indexované obrázky"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -624,7 +623,7 @@ msgstr "Pevný"
 msgid "Incremental"
 msgstr "Postupný"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:214
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:224
 msgid "None"
 msgstr "Nic"
 
@@ -762,19 +761,20 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:407
+#: ../modules/cdisplay_lcms.c:216 ../modules/colorsel_cmyk_lcms.c:408
+#: ../modules/colorsel_cmyk_lcms.c:414
 msgid "(invalid UTF-8 string)"
 msgstr "(neplatný UTF-8 řetězec)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:40
+#: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "Mode of operation for color management."
 msgstr "Pracovní režim správy barev."
 
-#: ../libgimpconfig/gimpcolorconfig.c:42
+#: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "The color profile of your (primary) monitor."
 msgstr "Profil barev vašeho (primárního) monitoru."
 
-#: ../libgimpconfig/gimpcolorconfig.c:44
+#: ../libgimpconfig/gimpcolorconfig.c:46
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -783,29 +783,41 @@ msgstr ""
 "Je-li povoleno, GIMP se pokusí použít profil barev displeje z okenního "
 "systému. Nastavený profil monitoru se pak používá jen jako záloha."
 
-#: ../libgimpconfig/gimpcolorconfig.c:48
+#: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The default RGB working space color profile."
 msgstr "Implicitní profil barev pracovního prostředí RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "Profil barev CMYK používaný pro převod mezi RGB a CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr "Profil barev používaný pro simulaci tištěné verze (softproof)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "Sets how colors are mapped for your display."
 msgstr "Nastaví, jak se barvy mapují na vašem displeji."
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
 msgstr ""
 "Nastaví, jak se barvy převádí z RGB pracovního prostředí na zařízení "
 "simulace tisku."
+
+#: ../libgimpconfig/gimpcolorconfig.c:61
+msgid ""
+"When enabled, the print simulation will mark colors which can not be "
+"represented in the target color space."
+msgstr ""
+"Je-li povoleno, budou v tiskovém náhledu označeny všechny barvy, "
+"které v cílovém barevném prostoru nelze zobrazit."
+
+#: ../libgimpconfig/gimpcolorconfig.c:64
+msgid "The color to use for marking colors which are out of gamut."
+msgstr "Barva pro označení barev mimo gamut"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -1114,7 +1126,7 @@ msgstr "Zkotrolovat velikost"
 msgid "Check Style"
 msgstr "Zkotrolovat styl"
 
-#. toggle button to (des)activate the instant preview
+#. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "Ná_hled"
@@ -1347,34 +1359,33 @@ msgstr "Kontrast"
 msgid "Contrast c_ycles:"
 msgstr "_Cykly kontrastu:"
 
-#: ../modules/cdisplay_lcms.c:105
+#: ../modules/cdisplay_lcms.c:111
 msgid "Color management display filter using ICC color profiles"
 msgstr "Displej se správou barev používající profily barev ICC"
 
-#: ../modules/cdisplay_lcms.c:166
+#: ../modules/cdisplay_lcms.c:172
 msgid "Color Management"
 msgstr "Správa barev"
 
-#: ../modules/cdisplay_lcms.c:235
+#: ../modules/cdisplay_lcms.c:245
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr ""
-"Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
+msgstr "Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
 
-#: ../modules/cdisplay_lcms.c:249
+#: ../modules/cdisplay_lcms.c:259
 msgid "Mode of operation:"
 msgstr "Pracovní režim:"
 
-#: ../modules/cdisplay_lcms.c:256
+#: ../modules/cdisplay_lcms.c:267
 msgid "Image profile:"
 msgstr "Profil obrázku:"
 
-#: ../modules/cdisplay_lcms.c:263
+#: ../modules/cdisplay_lcms.c:275
 msgid "Monitor profile:"
 msgstr "Profil monitoru:"
 
-#: ../modules/cdisplay_lcms.c:270
+#: ../modules/cdisplay_lcms.c:283
 msgid "Print simulation profile:"
 msgstr "Profil simulace tisku:"
 
@@ -1466,11 +1477,11 @@ msgstr "Procenta černé, kterou vytáhnout z barevných inkoustů."
 msgid "CMYK color selector (using color profile)"
 msgstr "Volič SMYK barev (využívající barevný profil)"
 
-#: ../modules/colorsel_cmyk_lcms.c:396
+#: ../modules/colorsel_cmyk_lcms.c:397
 msgid "Profile: (none)"
 msgstr "Profil: (žádný)"
 
-#: ../modules/colorsel_cmyk_lcms.c:409
+#: ../modules/colorsel_cmyk_lcms.c:417
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
@@ -1837,3 +1848,4 @@ msgstr "GIMP"
 #: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr "Gimpí ovladač vstupu MIDI"
+
