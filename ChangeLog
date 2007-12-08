@@ -1,3 +1,8 @@
+2007-12-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pygimp/gimpfu.py (_run): fixed logic that decides if a
+	dialog should be shown or not.
+
 2007-12-07  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpimage-snap.c: fix typo in previous commit.

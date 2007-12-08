@@ -742,7 +742,7 @@ def _run(proc_name, params):
 
     script_params = _registered_plugins_[proc_name][8] 
 
-    min_args = 1
+    min_args = 0
     if len(params) > 1:
         for i in range(1, len(params)):
             param_type = _obj_mapping[script_params[i - 1][0]]
