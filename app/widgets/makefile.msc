@@ -35,6 +35,7 @@ OBJECTS = \
 	gimpbrushfactoryview.obj \
 	gimpbrushselect.obj \
 	gimpbufferview.obj \
+	gimpcairo-utils.obj \
 	gimpcellrendererdashes.obj \
 	gimpcellrendererviewable.obj \
 	gimpchanneltreeview.obj \
@@ -66,6 +67,7 @@ OBJECTS = \
 	gimpcontrollerwheel.obj \
 	gimpcursor.obj \
 	gimpcursorview.obj \
+	gimpcurveview.obj \
 	gimpdasheditor.obj \
 	gimpdataeditor.obj \
 	gimpdatafactoryview.obj \
@@ -95,6 +97,7 @@ OBJECTS = \
 	gimpgradienteditor.obj \
 	gimpgradientselect.obj \
 	gimpgrideditor.obj \
+	gimphandlebar.obj \
 	gimphelp.obj \
 	gimphistogrambox.obj \
 	gimphistogrameditor.obj \
@@ -214,4 +217,4 @@ $(PACKAGE).exe : $(OBJECTS) $(PACKAGE).def $(PACKAGE).res
 	user32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS) /def:$(PACKAGE).def
 
 .c.obj :
-	$(CC) $(CFLAGS) -GD -c $(PKG_CFLAGS) $<
+	$(CC) $(CFLAGS) -c $(PKG_CFLAGS) $<

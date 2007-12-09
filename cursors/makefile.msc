@@ -69,3 +69,6 @@ CURSOR_LIST = \
 
 gimp-tool-cursors.h : makefile.msc
 	gdk-pixbuf-csource --raw --build-list $(CURSOR_LIST) > gimp-tool-cursors.h
+
+clean :
+	del gimp-tool-cursors.h

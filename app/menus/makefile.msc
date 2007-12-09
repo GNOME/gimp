@@ -52,5 +52,5 @@ gimpcore-$(PKG_VER).dll : $(DLLOBJS) gimpcore.def
 	$(CC) $(CFLAGS) -LD -Fegimpcore-$(PKG_VER).dll $(DLLOBJS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:gimpcore.def
 
 .c.obj :
-	$(CC) $(CFLAGS) -GD -c $(PKG_CFLAGS) $<
+	$(CC) $(CFLAGS) -c $<
 

@@ -110,7 +110,7 @@ gimpwidgetsmarshal.c : gimpwidgetsmarshal.list gimpwidgetsmarshal.h
 
 # questionable dependency between libgimpui/libgimpwidgets
 gimpunit.obj : ..\app\gimpunit.c
-	$(CC) $(CFLAGS) -GD -c ..\app\gimpunit.c
+	$(CC) $(CFLAGS) -c ..\app\gimpunit.c
 
 gimpwidgets-$(GIMP_VER).dll : $(OBJECTS) gimpwidgets.def
 	$(CC) $(CFLAGS) -LD -Fegimpwidgets-$(GIMP_VER).dll $(OBJECTS) \

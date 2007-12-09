@@ -19,6 +19,7 @@ PKG_LINK = \
 OBJECTS = \
 	base.obj \
 	base-enums.obj \
+	base-utils.obj \
 	boundary.obj \
 	color-balance.obj \
 	colorize.obj \
@@ -74,4 +75,4 @@ $(PACKAGE).exe : $(OBJECTS) $(PACKAGE).def $(PACKAGE).res
 	user32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS) /def:$(PACKAGE).def
 
 .c.obj :
-	$(CC) $(CFLAGS) -GD -c $(PKG_CFLAGS) $<
+	$(CC) $(CFLAGS) -c $(PKG_CFLAGS) $<

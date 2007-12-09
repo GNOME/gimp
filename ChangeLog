@@ -1,3 +1,7 @@
+2007-12-09  Hans Breuer  <hans@breuer.org>
+
+	* **/makefile.msc : updated and removed -GD to let msvc9 complain less
+
 2007-12-09  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.[ch]: Added

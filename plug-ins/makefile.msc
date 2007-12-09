@@ -37,9 +37,9 @@ COMMON1 = antialias AlienMap2 ccanalyze CEL channel_mixer CML_explorer align_lay
 COMMON2 = decompose deinterlace depthmerge despeckle destripe dicom diffraction displace dog edge emboss engrave exchange film flarefx fp fractaltrace
 COMMON3 = gauss gbr gee gee_zoom gif_load gif_save gih glasstile glob gqbist gradmap grid gtm guillotine header hot illusion iwarp jigsaw laplace lcms lens lic
 COMMON4 = mapcolor max_rgb mblur mosaic neon newsprint nlfilt noisify normalize nova oilify papertile pat pcx photocopy pix pixelize plasma png pnm polar postscript psd_load psd_save psp randomize raw redeye retinex ripple rotate
-COMMON5 = sample_colorize scatter_hsv screenshot sel_gauss semiflatten sharpen shift sinus smooth_palette snoise sobel softglow sparkle spheredesigner spread struc sunras svg tga threshold_alpha tiff_load tiff_save
-COMMON6 = tile tileit tiler uniteditor unsharp video vinvert vpropagate warp waves webbrowser whirlpinch wind xbm xwd zealouscrop
-COMMON7 = winprint winclipboard wiredebug
+COMMON5 = sample_colorize scatter_hsv screenshot sel_gauss semiflatten sharpen shift sinus smooth_palette snoise sobel softglow sparkle spheredesigner spread struc sunras svg tga threshold_alpha 
+COMMON6 = tiff_load tiff_save tile tileit tiler uniteditor unsharp video vinvert vpropagate warp waves webbrowser whirlpinch wind xbm xwd zealouscrop
+COMMON7 = winprint winclipboard wiredebug 
 
 NOTNOW = wmf 
 
@@ -820,7 +820,7 @@ LINKDEBUG = /debug
 RTL = -MDd
 !ENDIF
 
-CC = cl -nologo -G5 -GF $(OPTIMIZE) $(RTL) -W2 -Zm400
+CC = cl -nologo -GF $(OPTIMIZE) $(RTL) -W2 -Zm400
 
 CFLAGS = -FImsvc_recommended_pragmas.h \
 	-DHAVE_CONFIG_H \

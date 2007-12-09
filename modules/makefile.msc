@@ -97,7 +97,7 @@ cdisplay_proof-$(GIMP_VER).dll : cdisplay_proof.obj
 
 # General rule for building 
 .c.obj:
-	$(CC) $(CFLAGS) $(LCMS_CFLAGS) -GD -c $<
+	$(CC) $(CFLAGS) $(LCMS_CFLAGS) -c $<
 
 clean::
 	del *.dll

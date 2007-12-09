@@ -143,7 +143,7 @@ gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
 # Pass -DLIBGIMP_COMPILATION when compiling gimp.c
 
 gimp.obj : gimp.c
-	$(CC) $(CFLAGS) -GD -c -DLIBGIMP_COMPILATION gimp.c
+	$(CC) $(CFLAGS) -c -DLIBGIMP_COMPILATION gimp.c
 
 gimpui_OBJECTS = \
 	gimpaspectpreview.obj \
@@ -190,16 +190,16 @@ gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
 # gimpwidgets only for gimp_dialog_new
 
 gimpmenu.obj : gimpmenu.c
-	$(CC) $(CFLAGS) -GD -c gimpmenu.c
+	$(CC) $(CFLAGS) -c gimpmenu.c
 
 gimpbrushmenu.obj : gimpbrushmenu.c
-	$(CC) $(CFLAGS) -GD -c gimpbrushmenu.c
+	$(CC) $(CFLAGS) -c gimpbrushmenu.c
 
 gimpgradientmenu.obj : gimpgradientmenu.c
-	$(CC) $(CFLAGS) -GD -c gimpgradientmenu.c
+	$(CC) $(CFLAGS) -c gimpgradientmenu.c
 
 gimppatternmenu.obj : gimppatternmenu.c
-	$(CC) $(CFLAGS) -GD -c gimppatternmenu.c
+	$(CC) $(CFLAGS) -c gimppatternmenu.c
 
 # General rule for compiling, used by the objects that don't go into
 # gimp-$(GIMP_VER).dll. 

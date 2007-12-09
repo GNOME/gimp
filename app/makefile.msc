@@ -39,6 +39,8 @@ GIMP_CORE_OBJECTS = \
 	display/display-enums.obj \
 	display/gimpdisplayoptions.obj \
 	\
+	gimp-log.obj \
+	\
 	base/appbase.lib \
 	composite/appcomposite.lib \
 	config/appconfig.lib \
@@ -54,8 +56,6 @@ GIMP_CORE_OBJECTS = \
 	xcf/xcf.lib \
 
 PKG_LINK = \
-	$(PRJ_TOP)/regexrepl/regexrepl.lib \
-	\
 	$(top_builddir)/libgimpbase/gimpbase-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpcolor/gimpcolor-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpconfig/gimpconfig-$(LT_RELEASE).lib \
@@ -67,9 +67,11 @@ PKG_LINK = \
 	$(GTK2_LIBS) \
 	$(GIMP_THREAD_LIBS) \
 	$(GIMP_MP_LIBS) \
+	$(CAIRO_LIBS) \
 	$(INTL_LIBS) \
 	$(LIBART_LIBS) \
 	$(PANGOWIN32_LIBS) \
+	$(PANGOCAIRO_LIBS) \
 !IFNDEF PANGO_WIN32_EXTENDED
 	$(PANGOFT2_LIBS) \
 	$(FREETYPE2_LIBS) \
@@ -107,7 +109,7 @@ OBJECTS = \
 	display/appdisplay.lib \
 
 app_console.obj : app.c
-	$(CC) $(CFLAGS) -DGIMP_CONSOLE_COMPILATION -GD -c $(PKG_CFLAGS) -Foapp_console.obj app.c
+	$(CC) $(CFLAGS) -DGIMP_CONSOLE_COMPILATION -c -Foapp_console.obj app.c
 
 EXTRA_DIST = \
 	makefile.mingw \
@@ -119,9 +121,7 @@ EXTRA_DIST = \
 	wilber.ico \
 	arch/i386/mmx/detect_mmx.S \
 	arch/i386/mmx/paint_funcs_mmx.S \
-	detect_mmx.S \
-	regexrepl.c \
-	regexrepl.h
+	detect_mmx.S
 
 scriptdata = \
 	
@@ -146,17 +146,18 @@ gimp-core-$(PKG_VER).dll : $(GIMP_CORE_OBJECTS) gimpcore.def
 	$(CC) $(CFLAGS) -LD -Fegimp-core-$(PKG_VER).dll $(GIMP_CORE_OBJECTS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:gimpcore.def
 
 $(PACKAGE)-$(PKG_VER).dll : $(PKG_LINK) $(OBJECTS) $(PACKAGE).def
-	$(CC) $(CFLAGS) -LD -Fe$(PACKAGE)-$(PKG_VER).dll $(OBJECTS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:$(PACKAGE).def
+	$(CC) $(CFLAGS) -LD -Fe$(PACKAGE)-$(PKG_VER).dll $(OBJECTS) $(PKG_LINK) \
+	user32.lib kernel32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:$(PACKAGE).def
 
 gimp-console.exe : $(OBJECTS) app_console.obj $(PACKAGE).res $(PKG_LINK)
 	$(CC) $(CFLAGS) -Fegimp-console.exe $(PACKAGE).res app_console.obj $(OBJECTS) $(PKG_LINK) \
 	gimp-core-$(PKG_VER).lib \
-	user32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS)
+	user32.lib kernel32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS)
 
 $(PACKAGE).exe : $(OBJECTS) app.obj $(PACKAGE).res $(PKG_LINK)
 	$(CC) $(CFLAGS) -Fe$(PACKAGE).exe $(PACKAGE).res app.obj $(OBJECTS) \
 	gimp-core-$(PKG_VER).lib \
-	$(PKG_LINK) user32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS)
+	$(PKG_LINK) user32.lib kernel32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS)
 
 .c.obj :
-	$(CC) $(CFLAGS) -GD -c $(PKG_CFLAGS) $<
+	$(CC) $(CFLAGS) -c $<
