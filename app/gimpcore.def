@@ -24,8 +24,6 @@ EXPORTS
 	colorize_calculate
 	colorize_init
 	convolve_region
-	curves_calculate_curve
-	curves_channel_reset
 	curves_init
 	curves_lut_func
 	file_open_image
@@ -914,3 +912,18 @@ gimp_image_parasite_detach
 gimp_image_get_active_drawable
 
 gimp_image_get_load_proc
+
+gimp_log
+gimp_logv
+gimp_log_flags
+gimp_log_init
+gimp_viewable_preview_is_frozen
+gimp_curve_new
+gimp_curve_get_type
+gimp_curve_reset
+gimp_curve_set_point
+gimp_curve_get_uchar
+gimp_curve_move_point
+gimp_curve_set_curve
+gimp_curve_set_curve_type
+gimp_curve_get_closest_point

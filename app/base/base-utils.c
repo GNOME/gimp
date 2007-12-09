@@ -66,12 +66,21 @@ get_physical_memory_size (void)
 #endif
 
 #ifdef G_OS_WIN32
+# if defined(_MSC_VER) && (_MSC_VER <= 1200)
+  MEMORYSTATUS memory_status;
+  memory_status.dwLength = sizeof (memory_status);
+
+  GlobalMemoryStatus (&memory_status);
+  return memory_status.dwTotalPhys;
+# else
+  /* requires w2k and newer SDK than provided with msvc6 */
   MEMORYSTATUSEX memory_status;
 
   memory_status.dwLength = sizeof (memory_status);
 
   if (GlobalMemoryStatusEx (&memory_status))
     return memory_status.ullTotalPhys;
+# endif
 #endif
 
   return 0;

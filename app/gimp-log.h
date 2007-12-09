@@ -32,6 +32,22 @@ typedef enum
 } GimpLogFlags;
 
 
+extern GimpLogFlags gimp_log_flags;
+
+
+void   gimp_log_init (void);
+void   gimp_log      (const gchar *function,
+                      gint         line,
+                      const gchar *domain,
+                      const gchar *format,
+                      ...) G_GNUC_PRINTF (4, 5);
+void   gimp_logv     (const gchar *function,
+                      gint         line,
+                      const gchar *domain,
+                      const gchar *format,
+                      va_list      args);
+
+
 #ifdef G_HAVE_ISO_VARARGS
 
 #define GIMP_LOG(type, ...) \
@@ -50,36 +66,30 @@ typedef enum
 
 #else /* no varargs macros */
 
+/* need to expand all the short forms to make them known constants at compile time  */
+#define TOOL_EVENTS GIMP_LOG_TOOL_EVENTS
+#define TOOL_FOCUS GIMP_LOG_TOOL_FOCUS
+#define DND GIMP_LOG_DND
+#define HELP GIMP_LOG_HELP
+#define DIALOG_FACTORY GIMP_LOG_DIALOG_FACTORY
+#define SAVE_DIALOG GIMP_LOG_SAVE_DIALOG
+#define IMAGE_SCALE GIMP_LOG_IMAGE_SCALE
+#if 0 /* last resort */
+#  define GIMP_LOG /* nothing => no varargs, no log */
+#endif
+
 static void
-GIMP_LOG (const gchar *function,
-          gint         line,
-          const gchar *domain,
+GIMP_LOG (GimpLogFlags flags,
           const gchar *format,
           ...)
 {
   va_list args;
   va_start (args, format);
-  gimp_logv (function, line, domain, format, args);
+  if (gimp_log_flags & flags)
+    gimp_logv ("", 0, "", format, args);
   va_end (args);
 }
 
 #endif  /* !__GNUC__ */
-
-
-extern GimpLogFlags gimp_log_flags;
-
-
-void   gimp_log_init (void);
-void   gimp_log      (const gchar *function,
-                      gint         line,
-                      const gchar *domain,
-                      const gchar *format,
-                      ...) G_GNUC_PRINTF (4, 5);
-void   gimp_logv     (const gchar *function,
-                      gint         line,
-                      const gchar *domain,
-                      const gchar *format,
-                      va_list      args);
-
 
 #endif /* __GIMP_LOG_H__ */

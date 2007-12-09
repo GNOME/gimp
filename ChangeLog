@@ -1,5 +1,13 @@
 2007-12-09  Hans Breuer  <hans@breuer.org>
 
+	* app/gimp-log.h : an ugly but working variant for no varargs macros
+	
+	* app/base/base-utils.c(get_physical_memory_size) : fallback to
+	GetMemoryStatus() for older compiler/sdk
+	
+	* app/core/gimplayer-floating-sel.c : second argument to g_set_error()
+	is an uint32, not a pointer
+
 	* **/makefile.msc : updated and removed -GD to let msvc9 complain less
 
 2007-12-09  Martin Nordholts  <martinn@svn.gnome.org>

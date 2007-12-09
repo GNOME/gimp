@@ -200,10 +200,10 @@ floating_sel_to_layer (GimpLayer  *layer,
   /*  Check if the floating layer belongs to a channel...  */
   if (GIMP_IS_CHANNEL (layer->fs.drawable))
     {
-      g_set_error (error, NULL, 0,
+      g_set_error (error, 0, 0,
                    _("Cannot create a new layer from the floating selection "
                      "because it belongs to a layer mask or channel."));
-      return;
+      return FALSE;
     }
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_TO_LAYER,
