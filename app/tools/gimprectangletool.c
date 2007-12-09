@@ -111,6 +111,12 @@ struct _GimpRectangleToolPrivate
   gdouble                 center_x_on_fixed_center;
   gdouble                 center_y_on_fixed_center;
 
+  /* True when the rectangle is being adjusted (moved or
+   * rubber-banded).
+   */
+  gboolean                rect_adjusting;
+
+
 
   /* The rest of the members are internal state variables, that is, variables
    * that might change during the manipulation session of the rectangle. Make
@@ -161,11 +167,6 @@ struct _GimpRectangleToolPrivate
    * we put handles on the outside.
    */
   gboolean                narrow_mode;
-
-  /* True when the rectangle is being adjusted (moved or
-   * rubber-banded).
-   */
-  gboolean                rect_adjusting;
 
   /* For what scale the handle sizes is calculated. We must cache this so that
    * we can differentiate between when the tool is resumed because of zoom level
@@ -428,6 +429,18 @@ gimp_rectangle_tool_get_private (GimpRectangleTool *tool)
     }
 
   return private;
+}
+
+/**
+ * gimp_rectangle_tool_init:
+ * @rect_tool:
+ *
+ * Initializes the GimpRectangleTool.
+ **/
+void
+gimp_rectangle_tool_init (GimpRectangleTool *rect_tool)
+{
+  /* No need to initialize anything yet. */
 }
 
 /**

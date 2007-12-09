@@ -210,6 +210,8 @@ gimp_rect_select_tool_init (GimpRectSelectTool *rect_sel_tool)
   GimpTool                  *tool = GIMP_TOOL (rect_sel_tool);
   GimpRectSelectToolPrivate *priv;
 
+  gimp_rectangle_tool_init (GIMP_RECTANGLE_TOOL (rect_sel_tool));
+
   rect_sel_tool->priv = G_TYPE_INSTANCE_GET_PRIVATE (rect_sel_tool,
                                                      GIMP_TYPE_RECT_SELECT_TOOL,
                                                      GimpRectSelectToolPrivate);

@@ -1,3 +1,14 @@
+2007-12-09  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.[ch]: Added
+	gimp_rectangle_tool_init() (and minor code cleanup).
+
+	* app/tools/gimprectangleselecttool.c
+	(gimp_rect_select_tool_init): Call gimp_rectangle_tool_init().
+
+	* app/tools/gimpcroptool.c
+	(gimp_crop_tool_init): Call gimp_rectangle_tool_init().
+
 2007-12-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py (_run): fixed logic that decides if a

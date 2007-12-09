@@ -83,6 +83,7 @@ GType       gimp_rectangle_tool_interface_get_type  (void) G_GNUC_CONST;
 
 void        gimp_rectangle_tool_constructor         (GObject                 *object);
 
+void        gimp_rectangle_tool_init                (GimpRectangleTool       *rect_tool);
 void        gimp_rectangle_tool_control             (GimpTool                *tool,
                                                      GimpToolAction           action,
                                                      GimpDisplay             *display);
