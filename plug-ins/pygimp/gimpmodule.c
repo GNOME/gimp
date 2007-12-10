@@ -830,18 +830,46 @@ pygimp_get_foreground(PyObject *self)
     return pygimp_rgb_new(&rgb);
 }
 
+static gboolean
+pygimp_rgb_from_pyobject(PyObject *object, GimpRGB *color)
+{
+    g_return_val_if_fail(color != NULL, FALSE);
+
+    if (pygimp_rgb_check (object)) {
+        *color = *pyg_boxed_get(object, GimpRGB);
+        return TRUE;
+    }
+    if (PyString_Check (object)) {
+        if (gimp_rgb_parse_css (color, PyString_AsString(object), -1)) {
+            return TRUE;
+        } else {
+            PyErr_Clear();
+            PyErr_SetString(PyExc_TypeError, "unable to parse color string");
+            return FALSE;
+        }
+    }
+
+    PyErr_Clear();
+    PyErr_SetString(PyExc_TypeError, "could not convert to GimpRGB");
+    return FALSE;
+}
+
 static PyObject *
 pygimp_set_background(PyObject *self, PyObject *args)
 {
     PyObject *color;
-    GimpRGB tmprgb, *rgb;
-    int r, g, b;
-    gboolean compat = FALSE;
+    GimpRGB rgb;
 
-    if (!PyArg_ParseTuple(args, "O!:set_background",
-                          PyGimpRGB_Type, &color)) {
+    if (PyArg_ParseTuple(args, "O:set_background", &color)) {
+        if (! pygimp_rgb_from_pyobject (color, &rgb)) {
+            PyErr_Clear();
+            PyArg_ParseTuple(args, "O!:set_background", PyGimpRGB_Type, &color);
+            return NULL;
+        }
+    } else {
+        int r, g, b;
+
         PyErr_Clear();
-        compat = TRUE;
         if (!PyArg_ParseTuple(args, "(iii):set_background", &r, &g, &b)) {
             PyErr_Clear();
             if (!PyArg_ParseTuple(args, "iii:set_background", &r, &g, &b)) {
@@ -851,20 +879,15 @@ pygimp_set_background(PyObject *self, PyObject *args)
                 return NULL;
             }
         }
-    }
 
-    if (compat) {
         r = CLAMP(r, 0, 255);
         g = CLAMP(g, 0, 255);
         b = CLAMP(b, 0, 255);
 
-        gimp_rgb_set_uchar(&tmprgb, r, g, b);
-        rgb = &tmprgb;
-    } else {
-        rgb = pyg_boxed_get(color, GimpRGB);
+        gimp_rgba_set_uchar(&rgb, r, g, b, 255);
     }
 
-    gimp_context_set_background(rgb);
+    gimp_context_set_background(&rgb);
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -874,14 +897,18 @@ static PyObject *
 pygimp_set_foreground(PyObject *self, PyObject *args)
 {
     PyObject *color;
-    GimpRGB tmprgb, *rgb;
-    int r, g, b;
-    gboolean compat = FALSE;
+    GimpRGB rgb;
 
-    if (!PyArg_ParseTuple(args, "O!:set_foreground",
-                          PyGimpRGB_Type, &color)) {
+    if (PyArg_ParseTuple(args, "O:set_foreground", &color)) {
+        if (! pygimp_rgb_from_pyobject (color, &rgb)) {
+            PyErr_Clear();
+            PyArg_ParseTuple(args, "O!:set_foreground", PyGimpRGB_Type, &color);
+            return NULL;
+        }
+    } else {
+        int r, g, b;
+
         PyErr_Clear();
-        compat = TRUE;
         if (!PyArg_ParseTuple(args, "(iii):set_foreground", &r, &g, &b)) {
             PyErr_Clear();
             if (!PyArg_ParseTuple(args, "iii:set_foreground", &r, &g, &b)) {
@@ -891,20 +918,15 @@ pygimp_set_foreground(PyObject *self, PyObject *args)
                 return NULL;
             }
         }
-    }
 
-    if (compat) {
         r = CLAMP(r, 0, 255);
         g = CLAMP(g, 0, 255);
         b = CLAMP(b, 0, 255);
 
-        gimp_rgb_set_uchar(&tmprgb, r, g, b);
-        rgb = &tmprgb;
-    } else {
-        rgb = pyg_boxed_get(color, GimpRGB);
+        gimp_rgba_set_uchar(&rgb, r, g, b, 255);
     }
 
-    gimp_context_set_foreground(rgb);
+    gimp_context_set_foreground(&rgb);
 
     Py_INCREF(Py_None);
     return Py_None;

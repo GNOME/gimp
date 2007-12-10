@@ -1,3 +1,9 @@
+2007-12-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pygimp/gimpmodule.c (pygimp_set_background)
+	(pygimp_set_foreground): allow the use of CSS color names and
+	hexadecimal color notation.
+
 2007-12-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/paint/gimpheal.c: make the healing brush work properly
