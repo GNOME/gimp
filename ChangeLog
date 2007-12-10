@@ -1,3 +1,12 @@
+2007-12-10  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_tool_events): if a device change happens, make
+	sure we update the new active tool's focus display and modifier
+	state. Fixes most of bug #493176.
+
 2007-12-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merged from trunk:

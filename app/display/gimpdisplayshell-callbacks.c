@@ -614,6 +614,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   GimpCoords           image_coords;
   GdkModifierType      state;
   guint32              time;
+  gboolean             device_changed   = FALSE;
   gboolean             return_val       = FALSE;
   gboolean             update_sw_cursor = FALSE;
 
@@ -637,6 +638,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   if (! gimp->busy && gimp_devices_check_change (gimp, event))
     {
       gimp_display_shell_check_device_cursor (shell);
+      device_changed = TRUE;
     }
 
   gimp_display_shell_get_event_coords (shell, event,
@@ -668,6 +670,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         {
           update_sw_cursor = TRUE;
         }
+    }
+
+  /*  If the device (and maybe the tool) has changed, update the new
+   *  tool's state
+   */
+  if (device_changed && GTK_WIDGET_HAS_FOCUS (canvas))
+    {
+      gimp_display_shell_update_focus (shell, &image_coords, state);
     }
 
   switch (event->type)
