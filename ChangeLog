@@ -1,3 +1,10 @@
+2007-12-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Merged from trunk:
+
+	* app/paint/gimpheal.c: make the healing brush work properly
+	when dragged.  Fixes bug #492575.
+
 2007-12-07  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merged from trunk:
