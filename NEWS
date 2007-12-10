@@ -23,6 +23,13 @@ Changes in GIMP 2.4.3
 - translation updates (ca, de, gl, it, lt)
 
 
+Contributors:
+
+   Jesper de Jong, Bill Skaggs, Michael Natterer, Sven Neumann,
+   Martin Nordholts.
+
+
+
 Changes in GIMP 2.4.2
 =====================
 
@@ -47,6 +54,12 @@ Changes in GIMP 2.4.2
 - translation updates (ca, et, it, lt, pt, pt_BR, sr, sv)
 
 
+Contributors:
+
+   Kevin Cozens, Tor Lillqvist, Michael Natterer, Sven Neumann.
+
+
+
 Changes in GIMP 2.4.1
 =====================
 
@@ -66,3 +79,9 @@ Changes in GIMP 2.4.1
 - show changes to the rounded corners in the Rectangle Select tool (bug #418284)
 - reduced rounding errors in the display render routines (bug #490785)
 - translation updates (ca, de, et, lt, mk, pa, sv)
+
+
+Contributors:
+
+   Hans Breuer, Simon Budig, Kevin Cozens, Tor Lillqvist,
+   Michael Natterer, Sven Neumann, Martin Nordholts, Manish Singh.
