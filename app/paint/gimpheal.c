@@ -189,6 +189,8 @@ gimp_heal_divide (PixelRegion *topPR,
   guchar  *b;
   gdouble *r      = result;
 
+  g_assert (topPR->bytes == bottomPR->bytes);
+
   for (i = 0; i < height; i++)
     {
       t = t_data;
@@ -231,6 +233,8 @@ gimp_heal_multiply (gdouble     *first,
   gdouble *f      = first;
   guchar  *s;
   guchar  *r;
+
+  g_assert (secondPR->bytes == resultPR->bytes);
 
   for (i = 0; i < height; i++)
     {
@@ -404,8 +408,13 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   src = temp_buf_new (srcPR->w, srcPR->h,
                       GIMP_IMAGE_TYPE_BYTES (GIMP_IMAGE_TYPE_WITH_ALPHA (src_type)),
                       0, 0, NULL);
+
   pixel_region_init_temp_buf (&tempPR, src, 0, 0, src->width, src->height);
 
+  /*
+   * the effect of the following is to copy the contents of the source
+   * region to the "src" temp-buf, adding an alpha channel if necessary
+   */
   if (GIMP_IMAGE_TYPE_HAS_ALPHA (src_type))
     copy_region (srcPR, &tempPR);
   else
@@ -440,23 +449,9 @@ gimp_heal_motion (GimpSourceCore   *source_core,
    * is perhaps counter-intutitive?
    */
 
-  /* Get the area underneath the cursor */
-  {
-    TempBuf *orig;
-    gint     x1, x2, y1, y2;
-
-    x1 = paint_area->x + paint_area_offset_x;
-    y1 = paint_area->y + paint_area_offset_y;
-    x2 = x1 + paint_area_width;
-    y2 = y1 + paint_area_height;
-
-    /* get the original image data at the cursor location */
-    orig = gimp_paint_core_get_orig_image (paint_core, drawable,
-                                           x1, y1, x2, y2);
-
-    pixel_region_init_temp_buf (&origPR, orig, 0, 0,
-                                paint_area_width, paint_area_height);
-  }
+  pixel_region_init (&origPR, gimp_drawable_get_tiles (drawable),
+                     paint_area->x, paint_area->y,
+                     paint_area->width, paint_area->height, FALSE);
 
   temp = temp_buf_new (origPR.w, origPR.h,
                        gimp_drawable_bytes_with_alpha (drawable),
@@ -484,8 +479,9 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   if ((srcPR->w != tempPR.w) || (srcPR->w != destPR.w) ||
       (srcPR->h != tempPR.h) || (srcPR->h != destPR.h))
     {
-      g_printerr ("%s: Error: Source and destination are not the same size.",
-                  G_STRFUNC);
+      /* this generally means that the source point has hit the edge of the
+         layer, so it is not an error and we should not complain, just
+         don't do anything */
       temp_buf_free (src);
       temp_buf_free (temp);
       return;
@@ -509,7 +505,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                   MIN (opacity, GIMP_OPACITY_OPAQUE),
                                   gimp_context_get_opacity (context),
                                   gimp_paint_options_get_brush_mode (paint_options),
-                                  GIMP_PAINT_CONSTANT);
+                                  GIMP_PAINT_INCREMENTAL);
 
   temp_buf_free (src);
   temp_buf_free (temp);
