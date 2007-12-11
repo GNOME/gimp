@@ -49,12 +49,6 @@
 
 2007-12-11  Sven Neumann  <sven@gimp.org>
 
-	* libgimpbase/gimpwire.c (_gimp_wire_read_string): use g_try_new()
-	so a plug-in can't easily crash the core by sending an invalid
-	string message.
-
-2007-12-11  Sven Neumann  <sven@gimp.org>
-
 	* libgimpbase/gimpwire.c (gimp_wire_register): allocate
 	GimpWireHandler structs using GSlice.
 
