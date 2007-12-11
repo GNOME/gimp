@@ -640,10 +640,13 @@ _gp_config_destroy (GimpWireMessage *msg)
 {
   GPConfig *config = msg->data;
 
-  g_free (config->app_name);
-  g_free (config->wm_class);
-  g_free (config->display_name);
-  g_slice_free (GPConfig, config);
+  if (config)
+    {
+      g_free (config->app_name);
+      g_free (config->wm_class);
+      g_free (config->display_name);
+      g_slice_free (GPConfig, config);
+    }
 }
 
 /*  tile_req  */
@@ -671,6 +674,7 @@ _gp_tile_req_read (GIOChannel      *channel,
 
  cleanup:
   g_slice_free (GPTileReq, tile_req);
+  msg->data = NULL;
 }
 
 static void
@@ -695,7 +699,10 @@ _gp_tile_req_write (GIOChannel      *channel,
 static void
 _gp_tile_req_destroy (GimpWireMessage *msg)
 {
-  g_slice_free (GPTileReq, msg->data);
+  GPTileReq *tile_req = msg->data;
+
+  if (tile_req)
+    g_slice_free (GPTileReq, msg->data);
 }
 
 /*  tile_ack  */
@@ -769,6 +776,7 @@ _gp_tile_data_read (GIOChannel      *channel,
  cleanup:
   g_free (tile_data->data);
   g_slice_free (GPTileData, tile_data);
+  msg->data = NULL;
 }
 
 static void
@@ -817,8 +825,11 @@ _gp_tile_data_destroy (GimpWireMessage *msg)
 {
   GPTileData *tile_data = msg->data;
 
-  g_free (tile_data->data);
-  g_slice_free (GPTileData, tile_data);
+  if  (tile_data)
+    {
+      g_free (tile_data->data);
+      g_slice_free (GPTileData, tile_data);
+    }
 }
 
 /*  proc_run  */
@@ -842,6 +853,7 @@ _gp_proc_run_read (GIOChannel      *channel,
 
  cleanup:
   g_slice_free (GPProcRun, proc_run);
+  msg->data = NULL;
 }
 
 static void
@@ -862,10 +874,13 @@ _gp_proc_run_destroy (GimpWireMessage *msg)
 {
   GPProcRun *proc_run = msg->data;
 
-  gp_params_destroy (proc_run->params, proc_run->nparams);
+  if (proc_run)
+    {
+      gp_params_destroy (proc_run->params, proc_run->nparams);
 
-  g_free (proc_run->name);
-  g_slice_free (GPProcRun, proc_run);
+      g_free (proc_run->name);
+      g_slice_free (GPProcRun, proc_run);
+    }
 }
 
 /*  proc_return  */
@@ -889,6 +904,7 @@ _gp_proc_return_read (GIOChannel      *channel,
 
  cleanup:
   g_slice_free (GPProcReturn, proc_return);
+  msg->data = NULL;
 }
 
 static void
@@ -910,10 +926,13 @@ _gp_proc_return_destroy (GimpWireMessage *msg)
 {
   GPProcReturn *proc_return = msg->data;
 
-  gp_params_destroy (proc_return->params, proc_return->nparams);
+  if (proc_return)
+    {
+      gp_params_destroy (proc_return->params, proc_return->nparams);
 
-  g_free (proc_return->name);
-  g_slice_free (GPProcReturn, proc_return);
+      g_free (proc_return->name);
+      g_slice_free (GPProcReturn, proc_return);
+    }
 }
 
 /*  temp_proc_run  */
@@ -1087,6 +1106,7 @@ _gp_proc_install_read (GIOChannel      *channel,
     }
 
   g_slice_free (GPProcInstall, proc_install);
+  msg->data = NULL;
 }
 
 static void
@@ -1169,32 +1189,36 @@ static void
 _gp_proc_install_destroy (GimpWireMessage *msg)
 {
   GPProcInstall *proc_install = msg->data;
-  gint           i;
 
-  g_free (proc_install->name);
-  g_free (proc_install->blurb);
-  g_free (proc_install->help);
-  g_free (proc_install->author);
-  g_free (proc_install->copyright);
-  g_free (proc_install->date);
-  g_free (proc_install->menu_path);
-  g_free (proc_install->image_types);
-
-  for (i = 0; i < proc_install->nparams; i++)
+  if (proc_install)
     {
-      g_free (proc_install->params[i].name);
-      g_free (proc_install->params[i].description);
-    }
+      gint i;
 
-  for (i = 0; i < proc_install->nreturn_vals; i++)
-    {
-      g_free (proc_install->return_vals[i].name);
-      g_free (proc_install->return_vals[i].description);
-    }
+      g_free (proc_install->name);
+      g_free (proc_install->blurb);
+      g_free (proc_install->help);
+      g_free (proc_install->author);
+      g_free (proc_install->copyright);
+      g_free (proc_install->date);
+      g_free (proc_install->menu_path);
+      g_free (proc_install->image_types);
 
-  g_free (proc_install->params);
-  g_free (proc_install->return_vals);
-  g_slice_free (GPProcInstall, proc_install);
+      for (i = 0; i < proc_install->nparams; i++)
+        {
+          g_free (proc_install->params[i].name);
+          g_free (proc_install->params[i].description);
+        }
+
+      for (i = 0; i < proc_install->nreturn_vals; i++)
+        {
+          g_free (proc_install->return_vals[i].name);
+          g_free (proc_install->return_vals[i].description);
+        }
+
+      g_free (proc_install->params);
+      g_free (proc_install->return_vals);
+      g_slice_free (GPProcInstall, proc_install);
+    }
 }
 
 /*  proc_uninstall  */
@@ -1232,8 +1256,11 @@ _gp_proc_uninstall_destroy (GimpWireMessage *msg)
 {
   GPProcUninstall *proc_uninstall = msg->data;
 
-  g_free (proc_uninstall->name);
-  g_slice_free (GPProcUninstall, proc_uninstall);
+  if (proc_uninstall)
+    {
+      g_free (proc_uninstall->name);
+      g_slice_free (GPProcUninstall, proc_uninstall);
+    }
 }
 
 /*  extension_ack  */

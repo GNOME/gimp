@@ -175,6 +175,8 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
   TileManager     *tm;
   Tile            *tile;
 
+  g_return_if_fail (tile_req != NULL);
+
   if (tile_req->drawable_ID == -1)
     {
       /*  this branch communicates with libgimp/gimptile.c:gimp_tile_put()  */
@@ -359,6 +361,9 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
   GValueArray         *return_vals = NULL;
   GError              *error       = NULL;
 
+  g_return_if_fail (proc_run != NULL);
+  g_return_if_fail (proc_run->name != NULL);
+
   canonical = gimp_canonicalize_identifier (proc_run->name);
 
   proc_frame = gimp_plug_in_get_proc_frame (plug_in);
@@ -485,6 +490,8 @@ gimp_plug_in_handle_proc_return (GimpPlugIn   *plug_in,
 {
   GimpPlugInProcFrame *proc_frame = &plug_in->main_proc_frame;
 
+  g_return_if_fail (proc_return != NULL);
+
   if (proc_frame->main_loop)
     {
       proc_frame->return_vals =
@@ -504,6 +511,8 @@ static void
 gimp_plug_in_handle_temp_proc_return (GimpPlugIn   *plug_in,
                                       GPProcReturn *proc_return)
 {
+  g_return_if_fail (proc_return != NULL);
+
   if (plug_in->temp_proc_frames)
     {
       GimpPlugInProcFrame *proc_frame = plug_in->temp_proc_frames->data;
@@ -539,6 +548,9 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   gchar               *canonical;
   gboolean             valid_utf8  = FALSE;
   gint                 i;
+
+  g_return_if_fail (proc_install != NULL);
+  g_return_if_fail (proc_install->name != NULL);
 
   canonical = gimp_canonicalize_identifier (proc_install->name);
 
@@ -712,6 +724,9 @@ gimp_plug_in_handle_proc_uninstall (GimpPlugIn      *plug_in,
 {
   GimpPlugInProcedure *proc;
   gchar               *canonical;
+
+  g_return_if_fail (proc_uninstall != NULL);
+  g_return_if_fail (proc_uninstall->name != NULL);
 
   canonical = gimp_canonicalize_identifier (proc_uninstall->name);
 

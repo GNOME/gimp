@@ -1,5 +1,20 @@
 2007-12-11  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimpplugin-message.c: added sanity checks to message
+	handlers. This doesn't keep us from crashing on invalid input, but
+	we will at least get some warnings before that happens.
+
+	* libgimpbase/gimpprotocol.c: made the code more robust against
+	errors on the wire protocol level.
+
+2007-12-11  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimpwire.c (_gimp_wire_read_string): use g_try_new()
+	so a plug-in can't easily crash the core by sending an invalid
+	string message.
+
+2007-12-11  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpwire.c (_gimp_wire_read_string): use g_try_new()
 	so a plug-in can't easily crash the core by sending an invalid
 	string message.
