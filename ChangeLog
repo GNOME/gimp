@@ -1,3 +1,9 @@
+2007-12-11  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme.c: Applied changes from
+	official version of TinyScheme which fix is_integer(). See
+	SourceForge bug #1593861.
+
 2007-12-11  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/paint/gimpheal.c:  heal from edge of brush mask
