@@ -1,3 +1,11 @@
+2007-12-11  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	Merged from trunk:
+
+	* plug-ins/script-fu/tinyscheme/scheme.c: Applied changes from
+	official version of TinyScheme which fix is_integer(). See
+	SourceForge bug #1593861.
+
 2007-12-11  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:

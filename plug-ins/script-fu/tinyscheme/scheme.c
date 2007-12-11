@@ -188,6 +188,9 @@ static int num_le(num a, num b);
 static double round_per_R5RS(double x);
 #endif
 static int is_zero_double(double x);
+static INLINE int num_is_integer(pointer p) {
+  return ((p)->_object._number.is_fixnum);
+}
 
 static num num_zero;
 static num num_one;
@@ -207,22 +210,23 @@ INTERFACE static pointer vector_elem(pointer vec, int ielem);
 INTERFACE static pointer set_vector_elem(pointer vec, int ielem, pointer a);
 INTERFACE INLINE int is_number(pointer p)    { return (type(p)==T_NUMBER); }
 INTERFACE INLINE int is_integer(pointer p) {
-  return ((p)->_object._number.is_fixnum);
+  return is_number(p) && ((p)->_object._number.is_fixnum);
 }
+
 INTERFACE INLINE int is_real(pointer p) {
-  return (!(p)->_object._number.is_fixnum);
+  return is_number(p) && (!(p)->_object._number.is_fixnum);
 }
 
 INTERFACE INLINE int is_character(pointer p) { return (type(p)==T_CHARACTER); }
 INTERFACE INLINE int string_length(pointer p) { return strlength(p); }
 INTERFACE INLINE char *string_value(pointer p) { return strvalue(p); }
 INLINE num nvalue(pointer p)       { return ((p)->_object._number); }
-INTERFACE long ivalue(pointer p)      { return (is_integer(p)?(p)->_object._number.value.ivalue:(long)(p)->_object._number.value.rvalue); }
-INTERFACE double rvalue(pointer p)    { return (!is_integer(p)?(p)->_object._number.value.rvalue:(double)(p)->_object._number.value.ivalue); }
+INTERFACE long ivalue(pointer p)      { return (num_is_integer(p)?(p)->_object._number.value.ivalue:(long)(p)->_object._number.value.rvalue); }
+INTERFACE double rvalue(pointer p)    { return (!num_is_integer(p)?(p)->_object._number.value.rvalue:(double)(p)->_object._number.value.ivalue); }
 #define ivalue_unchecked(p)       ((p)->_object._number.value.ivalue)
 #define rvalue_unchecked(p)       ((p)->_object._number.value.rvalue)
-#define set_integer(p)   (p)->_object._number.is_fixnum=1;
-#define set_real(p)      (p)->_object._number.is_fixnum=0;
+#define set_num_integer(p)   (p)->_object._number.is_fixnum=1;
+#define set_num_real(p)      (p)->_object._number.is_fixnum=0;
 INTERFACE  gunichar charvalue(pointer p)  { return (gunichar)ivalue_unchecked(p); }
 
 INTERFACE INLINE int is_port(pointer p)     { return (type(p)==T_PORT); }
@@ -907,7 +911,7 @@ INTERFACE pointer mk_character(scheme *sc, gunichar c) {
 
   typeflag(x) = (T_CHARACTER | T_ATOM);
   ivalue_unchecked(x)= c;
-  set_integer(x);
+  set_num_integer(x);
   return (x);
 }
 
@@ -917,7 +921,7 @@ INTERFACE pointer mk_integer(scheme *sc, long num) {
 
   typeflag(x) = (T_NUMBER | T_ATOM);
   ivalue_unchecked(x)= num;
-  set_integer(x);
+  set_num_integer(x);
   return (x);
 }
 
@@ -926,7 +930,7 @@ INTERFACE pointer mk_real(scheme *sc, double n) {
 
   typeflag(x) = (T_NUMBER | T_ATOM);
   rvalue_unchecked(x)= n;
-  set_real(x);
+  set_num_real(x);
   return (x);
 }
 
@@ -1027,7 +1031,7 @@ INTERFACE static pointer mk_vector(scheme *sc, int len) {
      pointer x=get_consecutive_cells(sc,len/2+len%2+1);
      typeflag(x) = (T_VECTOR | T_ATOM);
      ivalue_unchecked(x)=len;
-     set_integer(x);
+     set_num_integer(x);
      fill_vector(x,sc->NIL);
      return x;
 }
@@ -1959,7 +1963,7 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
           strcpy(p, "#<PORT>");
      } else if (is_number(l)) {
           p = sc->strbuff;
-          if(is_integer(l)) {
+          if(num_is_integer(l)) {
                sprintf(p, "%ld", ivalue_unchecked(l));
           } else {
                g_ascii_formatd (p, sizeof (sc->strbuff), "%.10g",
@@ -3040,7 +3044,7 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
 #if USE_MATH
      case OP_INEX2EX:    /* inexact->exact */
           x=car(sc->args);
-          if(is_integer(x)) {
+          if(num_is_integer(x)) {
                s_return(sc,x);
           } else if(modf(rvalue_unchecked(x),&dd)==0.0) {
                s_return(sc,mk_integer(sc,ivalue(x)));
@@ -4217,11 +4221,9 @@ typedef pointer (*dispatch_func)(scheme *, enum scheme_opcodes);
 
 typedef int (*test_predicate)(pointer);
 static int is_any(pointer p) { return 1;}
-static int is_num_integer(pointer p) {
-  return is_number(p) && ((p)->_object._number.is_fixnum);
-}
+
 static int is_nonneg(pointer p) {
-  return is_num_integer(p) && ivalue(p)>=0;
+  return is_integer(p) && ivalue(p)>=0;
 }
 
 /* Correspond carefully with following defines! */
@@ -4242,8 +4244,8 @@ static struct {
   {is_character, "character"},
   {is_vector, "vector"},
   {is_number, "number"},
-  {is_num_integer, "integer"},
-  {is_nonneg, "non-negative integer"},
+  {is_integer, "integer"},
+  {is_nonneg, "non-negative integer"}
 };
 
 #define TST_NONE 0
@@ -4391,7 +4393,7 @@ static pointer mk_proc(scheme *sc, enum scheme_opcodes op) {
      y = get_cell(sc, sc->NIL, sc->NIL);
      typeflag(y) = (T_PROC | T_ATOM);
      ivalue_unchecked(y) = (long) op;
-     set_integer(y);
+     set_num_integer(y);
      return y;
 }
 
