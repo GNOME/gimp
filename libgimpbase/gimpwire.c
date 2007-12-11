@@ -432,7 +432,13 @@ _gimp_wire_read_string (GIOChannel  *channel,
 
       if (tmp > 0)
         {
-          data[i] = g_new (gchar, tmp);
+          data[i] = g_try_new (gchar, tmp);
+
+          if (! data[i])
+            {
+              g_printerr ("%s: failed to allocate %u bytes\n", G_STRFUNC, tmp);
+              return FALSE;
+            }
 
           if (! _gimp_wire_read_int8 (channel,
                                       (guint8 *) data[i], tmp, user_data))
