@@ -98,6 +98,8 @@ app/core/gimpbrushpipe.c
 app/core/gimpchannel-select.c
 app/core/gimpchannel.c
 app/core/gimpcontext.c
+app/core/gimpcurve-load.c
+app/core/gimpcurve-save.c
 app/core/gimpdata.c
 app/core/gimpdatafactory.c
 app/core/gimpdrawable-blend.c
@@ -235,7 +237,9 @@ app/pdb/color_cmds.c
 app/pdb/drawable_cmds.c
 app/pdb/drawable_transform_cmds.c
 app/pdb/edit_cmds.c
+app/pdb/floating_sel_cmds.c
 app/pdb/gimppdb-query.c
+app/pdb/gimppdb-utils.c
 app/pdb/gimppdb.c
 app/pdb/gimpprocedure.c
 app/pdb/guides_cmds.c
@@ -251,6 +255,7 @@ app/pdb/vectors_cmds.c
 
 app/plug-in/gimpenvirontable.c
 app/plug-in/gimpinterpreterdb.c
+app/plug-in/gimpplugin-message.c
 app/plug-in/gimpplugin.c
 app/plug-in/gimppluginmanager-call.c
 app/plug-in/gimppluginmanager-restore.c
