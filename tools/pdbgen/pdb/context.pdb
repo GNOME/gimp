@@ -117,15 +117,14 @@ HELP
     &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
-        { name => 'name', type => 'string',
+        { name => 'name', type => 'string', non_empty => 1,
           desc => 'The name of the paint method' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPaintInfo *paint_info = (GimpPaintInfo *)
-    gimp_container_get_child_by_name (gimp->paint_info_list, name);
+  GimpPaintInfo *paint_info = gimp_pdb_get_paint_info (gimp, name, error);
 
   if (paint_info)
     gimp_context_set_paint_info (context, paint_info);
@@ -447,15 +446,14 @@ HELP
     &pdb_misc;
 
     @inargs = (
-        { name => 'name', type => 'string',
+        { name => 'name', type => 'string', non_empty => 1,
           desc => 'The name of the brush' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
   if (brush)
     gimp_context_set_brush (context, brush);
@@ -510,15 +508,14 @@ HELP
     &pdb_misc;
 
     @inargs = (
-        { name => 'name', type => 'string',
+        { name => 'name', type => 'string', non_empty => 1,
           desc => 'The name of the pattern' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPattern *pattern = (GimpPattern *)
-    gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
+  GimpPattern *pattern = gimp_pdb_get_pattern (gimp, name, error);
 
   if (pattern)
     gimp_context_set_pattern (context, pattern);
@@ -571,15 +568,14 @@ HELP
     &pdb_misc;
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The name of the gradient' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient *gradient = (GimpGradient *)
-    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
 
   if (gradient)
     gimp_context_set_gradient (context, gradient);
@@ -632,15 +628,14 @@ HELP
     &pdb_misc;
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The name of the palette' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpPalette *palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
 
   if (palette)
     gimp_context_set_palette (context, palette);
@@ -693,15 +688,14 @@ HELP
     &pdb_misc;
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The name of the font' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpFont *font = (GimpFont *)
-    gimp_container_get_child_by_name (gimp->fonts, name);
+  GimpFont *font = gimp_pdb_get_font (gimp, name, error);
 
   if (font)
     gimp_context_set_font (context, font);
@@ -719,7 +713,8 @@ CODE
               "core/gimpdatafactory.h"
               "plug-in/gimpplugin.h"
               "plug-in/gimpplugin-context.h"
-              "plug-in/gimppluginmanager.h");
+              "plug-in/gimppluginmanager.h"
+              "gimppdb-utils.h");
 
 @procs = qw(context_push context_pop
             context_get_paint_method context_set_paint_method

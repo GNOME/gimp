@@ -33,8 +33,8 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
-#include "core/gimplist.h"
 #include "core/gimppattern.h"
+#include "gimppdb-utils.h"
 
 #include "internal_procs.h"
 
@@ -58,8 +58,7 @@ pattern_get_info_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPattern *pattern = (GimpPattern *)
-        gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
+      GimpPattern *pattern = gimp_pdb_get_pattern (gimp, name, error);
 
       if (pattern)
         {
@@ -104,8 +103,7 @@ pattern_get_pixels_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPattern *pattern = (GimpPattern *)
-        gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
+      GimpPattern *pattern = gimp_pdb_get_pattern (gimp, name, error);
 
       if (pattern)
         {
@@ -157,7 +155,7 @@ register_pattern_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The pattern name.",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -198,7 +196,7 @@ register_pattern_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The pattern name.",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,

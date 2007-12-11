@@ -34,7 +34,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpgradient.h"
-#include "core/gimplist.h"
+#include "gimppdb-utils.h"
 
 #include "internal_procs.h"
 
@@ -231,15 +231,9 @@ gradients_get_gradient_data_invoker (GimpProcedure      *procedure,
         sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;
 
       if (name && strlen (name))
-        {
-          gradient = (GimpGradient *)
-            gimp_container_get_child_by_name (gimp->gradient_factory->container,
-                                              name);
-        }
+        gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
       else
-        {
-          gradient = gimp_context_get_gradient (context);
-        }
+        gradient = gimp_context_get_gradient (context);
 
       if (gradient)
         {

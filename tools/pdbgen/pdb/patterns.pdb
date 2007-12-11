@@ -128,15 +128,9 @@ sub patterns_get_pattern_data {
   GimpPattern *pattern;
 
   if (name && strlen (name))
-    {
-      pattern = (GimpPattern *)
-        gimp_container_get_child_by_name (gimp->pattern_factory->container,
-                                          name);
-    }
+    pattern = gimp_pdb_get_pattern (gimp, name, error);
   else
-    {
-      pattern = gimp_context_get_pattern (context);
-    }
+    pattern = gimp_context_get_pattern (context);
 
   if (pattern)
     {
@@ -161,8 +155,8 @@ CODE
               "core/gimp.h"
               "core/gimpcontext.h"
               "core/gimpdatafactory.h"
-              "core/gimplist.h"
-              "core/gimppattern.h");
+              "core/gimppattern.h"
+              "gimppdb-utils.h");
 
 @procs = qw(patterns_refresh patterns_get_list patterns_get_pattern
             patterns_get_pattern_data);

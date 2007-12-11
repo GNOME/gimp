@@ -34,8 +34,8 @@
 #include "core/gimpcontainer-filter.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
-#include "core/gimplist.h"
 #include "core/gimppattern.h"
+#include "gimppdb-utils.h"
 
 #include "internal_procs.h"
 
@@ -147,15 +147,9 @@ patterns_get_pattern_data_invoker (GimpProcedure      *procedure,
       GimpPattern *pattern;
 
       if (name && strlen (name))
-        {
-          pattern = (GimpPattern *)
-            gimp_container_get_child_by_name (gimp->pattern_factory->container,
-                                              name);
-        }
+        pattern = gimp_pdb_get_pattern (gimp, name, error);
       else
-        {
-          pattern = gimp_context_get_pattern (context);
-        }
+        pattern = gimp_context_get_pattern (context);
 
       if (pattern)
         {

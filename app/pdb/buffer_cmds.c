@@ -33,7 +33,7 @@
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer-filter.h"
 #include "core/gimpcontainer.h"
-#include "gimp-intl.h"
+#include "gimppdb-utils.h"
 
 #include "internal_procs.h"
 
@@ -90,8 +90,7 @@ buffer_rename_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBuffer *buffer = (GimpBuffer *)
-        gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+      GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
       if (buffer)
         {
@@ -125,8 +124,7 @@ buffer_delete_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBuffer *buffer = (GimpBuffer *)
-        gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+      GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
       if (buffer)
         success = gimp_container_remove (gimp->named_buffers, GIMP_OBJECT (buffer));
@@ -154,8 +152,7 @@ buffer_get_width_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBuffer *buffer = (GimpBuffer *)
-        gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+      GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
       if (buffer)
         width = gimp_buffer_get_width (buffer);
@@ -188,8 +185,7 @@ buffer_get_height_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBuffer *buffer = (GimpBuffer *)
-        gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+      GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
       if (buffer)
         height = gimp_buffer_get_height (buffer);
@@ -222,8 +218,7 @@ buffer_get_bytes_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBuffer *buffer = (GimpBuffer *)
-        gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+      GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
       if (buffer)
         bytes = gimp_buffer_get_bytes (buffer);
@@ -256,8 +251,7 @@ buffer_get_image_type_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBuffer *buffer = (GimpBuffer *)
-        gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+      GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
       if (buffer)
         image_type = gimp_buffer_get_image_type (buffer);
@@ -329,7 +323,7 @@ register_buffer_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The buffer name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -366,7 +360,7 @@ register_buffer_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The buffer name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -389,7 +383,7 @@ register_buffer_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The buffer name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -418,7 +412,7 @@ register_buffer_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The buffer name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -447,7 +441,7 @@ register_buffer_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The buffer name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -476,7 +470,7 @@ register_buffer_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The buffer name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,

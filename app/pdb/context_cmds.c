@@ -34,6 +34,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
+#include "gimppdb-utils.h"
 #include "plug-in/gimpplugin-context.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
@@ -121,8 +122,7 @@ context_set_paint_method_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *paint_info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, name);
+      GimpPaintInfo *paint_info = gimp_pdb_get_paint_info (gimp, name, error);
 
       if (paint_info)
         gimp_context_set_paint_info (context, paint_info);
@@ -386,8 +386,7 @@ context_set_brush_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
       if (brush)
         gimp_context_set_brush (context, brush);
@@ -440,8 +439,7 @@ context_set_pattern_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPattern *pattern = (GimpPattern *)
-        gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
+      GimpPattern *pattern = gimp_pdb_get_pattern (gimp, name, error);
 
       if (pattern)
         gimp_context_set_pattern (context, pattern);
@@ -494,8 +492,7 @@ context_set_gradient_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpGradient *gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+      GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
 
       if (gradient)
         gimp_context_set_gradient (context, gradient);
@@ -548,8 +545,7 @@ context_set_palette_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPalette *palette = (GimpPalette *)
-        gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
 
       if (palette)
         gimp_context_set_palette (context, palette);
@@ -602,8 +598,7 @@ context_set_font_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpFont *font = (GimpFont *)
-        gimp_container_get_child_by_name (gimp->fonts, name);
+      GimpFont *font = gimp_pdb_get_font (gimp, name, error);
 
       if (font)
         gimp_context_set_font (context, font);
@@ -691,7 +686,7 @@ register_context_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the paint method",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -978,7 +973,7 @@ register_context_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the brush",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1024,7 +1019,7 @@ register_context_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the pattern",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1070,7 +1065,7 @@ register_context_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the gradient",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1116,7 +1111,7 @@ register_context_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the palette",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1162,7 +1157,7 @@ register_context_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the font",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

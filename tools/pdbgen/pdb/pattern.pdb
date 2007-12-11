@@ -28,7 +28,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The pattern name.' }
     );
 
@@ -44,8 +44,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPattern *pattern = (GimpPattern *)
-    gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
+  GimpPattern *pattern = gimp_pdb_get_pattern (gimp, name, error);
 
   if (pattern)
     {
@@ -74,7 +73,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The pattern name.' }
     );
 
@@ -93,8 +92,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPattern *pattern = (GimpPattern *)
-    gimp_container_get_child_by_name (gimp->pattern_factory->container, name);
+  GimpPattern *pattern = gimp_pdb_get_pattern (gimp, name, error);
 
   if (pattern)
     {
@@ -114,9 +112,13 @@ CODE
 }
 
 
-@headers = qw(<string.h> "base/temp-buf.h" "core/gimp.h"
-              "core/gimpcontext.h" "core/gimplist.h"
-              "core/gimpdatafactory.h" "core/gimppattern.h" );
+@headers = qw(<string.h>
+              "base/temp-buf.h"
+              "core/gimp.h"
+              "core/gimpcontext.h"
+              "core/gimpdatafactory.h"
+              "core/gimppattern.h"
+              "gimppdb-utils.h");
 
 @procs = qw(pattern_get_info pattern_get_pixels);
 

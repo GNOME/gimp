@@ -205,15 +205,9 @@ sub gradients_get_gradient_data {
     sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;
 
   if (name && strlen (name))
-    {
-      gradient = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container,
-                                          name);
-    }
+    gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
   else
-    {
-      gradient = gimp_context_get_gradient (context);
-    }
+    gradient = gimp_context_get_gradient (context);
 
   if (gradient)
     {
@@ -257,7 +251,7 @@ CODE
               "core/gimpcontext.h"
               "core/gimpdatafactory.h"
               "core/gimpgradient.h"
-              "core/gimplist.h");
+              "gimppdb-utils.h");
 
 @procs = qw(gradients_refresh gradients_get_list
 	    gradients_sample_uniform gradients_sample_custom

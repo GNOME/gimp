@@ -35,8 +35,8 @@
 #include "core/gimpcontainer-filter.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
-#include "core/gimplist.h"
 #include "core/gimppalette.h"
+#include "gimppdb-utils.h"
 
 #include "internal_procs.h"
 
@@ -144,15 +144,9 @@ palettes_get_palette_entry_invoker (GimpProcedure      *procedure,
       GimpPalette *palette;
 
       if (name && strlen (name))
-        {
-          palette = (GimpPalette *)
-            gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                              name);
-        }
+        palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
       else
-        {
-          palette = gimp_context_get_palette (context);
-        }
+        palette = gimp_context_get_palette (context);
 
       if (palette)
         {

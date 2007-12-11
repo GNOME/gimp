@@ -54,7 +54,7 @@ sub palette_is_editable {
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The palette name' }
     );
 
@@ -66,8 +66,7 @@ sub palette_is_editable {
     %invoke = (
         code => <<'CODE'
 {
-  GimpPalette *palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
 
   if (palette)
     editable = GIMP_DATA (palette)->writable;
@@ -85,20 +84,19 @@ sub palette_duplicate {
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The palette name' }
     );
 
     @outargs = (
-	{ name => 'copy_name', type => 'string',
+	{ name => 'copy_name', type => 'string', non_empty => 1,
 	  desc => "The name of the palette's copy" }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpPalette *palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
 
   if (palette)
     {
@@ -125,7 +123,7 @@ sub palette_rename {
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The palette name' },
         { name => 'new_name', type => 'string', non_empty => 1,
           desc => "The new name of the palette" }
@@ -139,10 +137,9 @@ sub palette_rename {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
 
-  if (palette && GIMP_DATA (palette)->writable)
+  if (palette)
     {
       gimp_object_set_name (GIMP_OBJECT (palette), new_name);
       actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (palette)));
@@ -161,15 +158,14 @@ sub palette_delete {
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The palette name' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
 
   if (palette && GIMP_DATA (palette)->deletable)
     success = gimp_data_factory_data_delete (gimp->palette_factory,
@@ -193,7 +189,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The palette name' }
     );
 
@@ -205,8 +201,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
 
   if (palette)
     num_colors = palette->n_colors;
@@ -227,7 +222,7 @@ HELP
     &neo_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The palette name' }
     );
 
@@ -239,8 +234,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
 
   if (palette)
     num_columns = palette->n_columns;
@@ -262,7 +256,7 @@ HELP
     &neo_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The palette name' },
         { name => 'columns', type => '0 <= int32 <= 64',
           desc => "The new number of columns" }
@@ -271,10 +265,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
 
-  if (palette && GIMP_DATA (palette)->writable)
+  if (palette)
     gimp_palette_set_columns (palette, columns);
   else
     success = FALSE;
@@ -294,7 +287,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The palette name' },
         { name => 'entry_name', type => 'string', null_ok => 1,
           desc => 'The name of the entry' },
@@ -310,10 +303,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
 
-  if (palette && GIMP_DATA (palette)->writable)
+  if (palette)
     {
       GimpPaletteEntry *entry =
         gimp_palette_add_entry (palette, -1, entry_name, &color);
@@ -338,7 +330,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The palette name' },
         { name => 'entry_num', type => 'int32',
           desc => 'The index of the added entry' }
@@ -347,10 +339,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
 
-  if (palette && GIMP_DATA (palette)->writable)
+  if (palette)
     {
       if (entry_num >= 0 && entry_num < palette->n_colors)
         {
@@ -379,7 +370,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The palette name' },
         { name => 'entry_num', type => 'int32',
           desc => 'The entry to retrieve' }
@@ -393,8 +384,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
 
   if (palette)
     {
@@ -425,7 +415,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The palette name' },
         { name => 'entry_num', type => 'int32',
           desc => 'The entry to retrieve' },
@@ -436,10 +426,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
 
-  if (palette && GIMP_DATA (palette)->writable)
+  if (palette)
     {
       if (entry_num >= 0 && entry_num < palette->n_colors)
         {
@@ -470,7 +459,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The palette name' },
         { name => 'entry_num', type => 'int32',
           desc => 'The entry to retrieve' }
@@ -484,8 +473,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
 
   if (palette)
     {
@@ -516,7 +504,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The palette name' },
         { name => 'entry_num', type => 'int32',
           desc => 'The entry to retrieve' },
@@ -527,10 +515,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = (GimpPalette *)
-    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
 
-  if (palette && GIMP_DATA (palette)->writable)
+  if (palette)
     {
       if (entry_num >= 0 && entry_num < palette->n_colors)
         {
@@ -552,8 +539,12 @@ CODE
 }
 
 
-@headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h" "core/gimplist.h"
-              "core/gimpdatafactory.h" "core/gimppalette.h");
+@headers = qw(<string.h>
+              "core/gimp.h"
+              "core/gimpcontext.h"
+              "core/gimpdatafactory.h"
+              "core/gimppalette.h"
+              "gimppdb-utils.h");
 
 @procs = qw(palette_new palette_duplicate palette_rename palette_delete
             palette_is_editable palette_get_info

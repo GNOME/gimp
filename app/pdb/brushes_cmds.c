@@ -35,7 +35,7 @@
 #include "core/gimpcontainer-filter.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
-#include "core/gimplist.h"
+#include "gimppdb-utils.h"
 
 #include "internal_procs.h"
 
@@ -200,14 +200,9 @@ brushes_get_brush_data_invoker (GimpProcedure      *procedure,
       GimpBrush *brush;
 
       if (name && strlen (name))
-        {
-          brush = (GimpBrush *)
-            gimp_container_get_child_by_name (gimp->brush_factory->container, name);
-        }
+        brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
       else
-        {
-          brush = gimp_context_get_brush (context);
-        }
+        brush = gimp_context_get_brush (context);
 
       if (brush)
         {

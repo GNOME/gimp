@@ -31,9 +31,9 @@
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimppaintinfo.h"
+#include "gimppdb-utils.h"
 #include "paint/gimppaintcore-stroke.h"
 #include "paint/gimppaintcore.h"
 #include "paint/gimppaintoptions.h"
@@ -117,12 +117,9 @@ airbrush_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-airbrush");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-airbrush", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -135,6 +132,8 @@ airbrush_invoker (GimpProcedure      *procedure,
                                         "undo-desc", info->blurb,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -159,12 +158,9 @@ airbrush_default_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-airbrush");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-airbrush", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -173,6 +169,8 @@ airbrush_default_invoker (GimpProcedure      *procedure,
                                         "undo-desc", info->blurb,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -205,12 +203,9 @@ clone_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-clone");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-clone", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -226,6 +221,8 @@ clone_invoker (GimpProcedure      *procedure,
                                         "src-y",        src_y,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -250,12 +247,9 @@ clone_default_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-clone");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-clone", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -264,6 +258,8 @@ clone_default_invoker (GimpProcedure      *procedure,
                                         "undo-desc", info->blurb,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -292,12 +288,9 @@ convolve_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-convolve");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-convolve", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -311,6 +304,8 @@ convolve_invoker (GimpProcedure      *procedure,
                                         "undo-desc", info->blurb,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -335,12 +330,9 @@ convolve_default_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-convolve");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-convolve", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -349,6 +341,8 @@ convolve_default_invoker (GimpProcedure      *procedure,
                                         "undo-desc", info->blurb,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -379,12 +373,9 @@ dodgeburn_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-dodge-burn");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-dodge-burn", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -399,6 +390,8 @@ dodgeburn_invoker (GimpProcedure      *procedure,
                                         "undo-desc", info->blurb,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -423,12 +416,9 @@ dodgeburn_default_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-dodge-burn");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-dodge-burn", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -437,6 +427,8 @@ dodgeburn_default_invoker (GimpProcedure      *procedure,
                                         "undo-desc", info->blurb,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -465,12 +457,9 @@ eraser_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-eraser");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-eraser", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -484,6 +473,8 @@ eraser_invoker (GimpProcedure      *procedure,
                                         "undo-desc", info->blurb,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -508,12 +499,9 @@ eraser_default_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-eraser");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-eraser", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -522,6 +510,8 @@ eraser_default_invoker (GimpProcedure      *procedure,
                                         "undo-desc", info->blurb,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -552,12 +542,9 @@ heal_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-heal");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-heal", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -569,6 +556,8 @@ heal_invoker (GimpProcedure      *procedure,
                                         "src-y",        src_y,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -593,12 +582,9 @@ heal_default_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-heal");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-heal", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -607,6 +593,8 @@ heal_default_invoker (GimpProcedure      *procedure,
                                         "undo-desc", info->blurb,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -637,12 +625,9 @@ paintbrush_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-paintbrush");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-paintbrush", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -659,6 +644,8 @@ paintbrush_invoker (GimpProcedure      *procedure,
                                         "undo-desc", info->blurb,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -683,12 +670,9 @@ paintbrush_default_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-paintbrush");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-paintbrush", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -697,6 +681,8 @@ paintbrush_default_invoker (GimpProcedure      *procedure,
                                         "undo-desc", info->blurb,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -721,12 +707,9 @@ pencil_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-pencil");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-pencil", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -735,6 +718,8 @@ pencil_invoker (GimpProcedure      *procedure,
                                         "undo-desc", info->blurb,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -761,12 +746,9 @@ smudge_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-smudge");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-smudge", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -779,6 +761,8 @@ smudge_invoker (GimpProcedure      *procedure,
                                         "undo-desc", info->blurb,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -803,12 +787,9 @@ smudge_default_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPaintInfo *info = (GimpPaintInfo *)
-        gimp_container_get_child_by_name (gimp->paint_info_list, "gimp-smudge");
+      GimpPaintInfo *info = gimp_pdb_get_paint_info (gimp, "gimp-smudge", error);
 
-      success = (info && gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-      if (success)
+      if (info && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
           GimpPaintOptions *options = gimp_paint_options_new (info);
 
@@ -817,6 +798,8 @@ smudge_default_invoker (GimpProcedure      *procedure,
                                         "undo-desc", info->blurb,
                                         NULL);
         }
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success);

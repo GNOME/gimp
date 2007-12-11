@@ -121,15 +121,9 @@ sub palettes_get_palette_entry {
   GimpPalette *palette;
 
   if (name && strlen (name))
-    {
-      palette = (GimpPalette *)
-        gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                          name);
-    }
+    palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
   else
-    {
-      palette = gimp_context_get_palette (context);
-    }
+    palette = gimp_context_get_palette (context);
 
   if (palette)
     {
@@ -156,8 +150,8 @@ CODE
               "core/gimp.h"
               "core/gimpcontext.h"
               "core/gimpdatafactory.h"
-              "core/gimplist.h"
-              "core/gimppalette.h");
+              "core/gimppalette.h"
+              "gimppdb-utils.h");
 
 @procs = qw(palettes_refresh  palettes_get_list
             palettes_get_palette palettes_get_palette_entry);

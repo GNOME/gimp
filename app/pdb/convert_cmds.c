@@ -29,11 +29,9 @@
 #include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpdatafactory.h"
 #include "core/gimpimage-convert.h"
 #include "core/gimpimage.h"
-#include "core/gimppalette.h"
+#include "gimppdb-utils.h"
 
 #include "internal_procs.h"
 
@@ -127,10 +125,8 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
               break;
 
             case GIMP_CUSTOM_PALETTE:
-              pal = (GimpPalette *)
-                gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                                  palette);
-              if (pal == NULL)
+              pal = gimp_pdb_get_palette (gimp, palette, FALSE, error);
+              if (! pal)
                 success = FALSE;
               break;
 

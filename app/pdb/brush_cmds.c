@@ -35,7 +35,7 @@
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
-#include "core/gimplist.h"
+#include "gimppdb-utils.h"
 
 #include "internal_procs.h"
 
@@ -90,8 +90,7 @@ brush_duplicate_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
       if (brush)
         {
@@ -133,8 +132,7 @@ brush_is_generated_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
       if (brush)
         generated = GIMP_IS_BRUSH_GENERATED (brush);
@@ -169,10 +167,9 @@ brush_rename_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, TRUE, error);
 
-      if (brush && GIMP_DATA (brush)->writable)
+      if (brush)
         {
           gimp_object_set_name (GIMP_OBJECT (brush), new_name);
           actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)));
@@ -204,8 +201,7 @@ brush_delete_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
       if (brush && GIMP_DATA (brush)->deletable)
         success = gimp_data_factory_data_delete (gimp->brush_factory,
@@ -235,8 +231,7 @@ brush_is_editable_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
       if (brush)
         editable = GIMP_DATA (brush)->writable;
@@ -272,8 +267,7 @@ brush_get_info_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
       if (brush)
         {
@@ -323,8 +317,7 @@ brush_get_pixels_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
       if (brush)
         {
@@ -382,8 +375,7 @@ brush_get_spacing_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
       if (brush)
         spacing = gimp_brush_get_spacing (brush);
@@ -416,8 +408,7 @@ brush_set_spacing_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, TRUE, error);
 
       if (brush)
         gimp_brush_set_spacing (brush, spacing);
@@ -445,10 +436,9 @@ brush_get_shape_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
 
-      if (GIMP_IS_BRUSH_GENERATED (brush))
+      if (brush)
         shape = GIMP_BRUSH_GENERATED (brush)->shape;
       else
         success = FALSE;
@@ -479,10 +469,9 @@ brush_get_radius_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
 
-      if (GIMP_IS_BRUSH_GENERATED (brush))
+      if (brush)
         radius = GIMP_BRUSH_GENERATED (brush)->radius;
       else
         success = FALSE;
@@ -513,10 +502,9 @@ brush_get_spikes_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
 
-      if (GIMP_IS_BRUSH_GENERATED (brush))
+      if (brush)
         spikes = GIMP_BRUSH_GENERATED (brush)->spikes;
       else
         success = FALSE;
@@ -547,10 +535,9 @@ brush_get_hardness_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
 
-      if (GIMP_IS_BRUSH_GENERATED (brush))
+      if (brush)
         hardness = GIMP_BRUSH_GENERATED (brush)->hardness;
       else
         success = FALSE;
@@ -581,10 +568,9 @@ brush_get_aspect_ratio_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
 
-      if (GIMP_IS_BRUSH_GENERATED (brush))
+      if (brush)
         aspect_ratio = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
       else
         success = FALSE;
@@ -615,10 +601,9 @@ brush_get_angle_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
 
-      if (GIMP_IS_BRUSH_GENERATED (brush))
+      if (brush)
         angle = GIMP_BRUSH_GENERATED (brush)->angle;
       else
         success = FALSE;
@@ -651,10 +636,9 @@ brush_set_shape_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
 
-      if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+      if (brush)
         {
           gimp_brush_generated_set_shape (GIMP_BRUSH_GENERATED (brush),
                                           shape_in);
@@ -691,10 +675,9 @@ brush_set_radius_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
 
-      if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+      if (brush)
         {
           gimp_brush_generated_set_radius (GIMP_BRUSH_GENERATED (brush),
                                            radius_in);
@@ -731,10 +714,9 @@ brush_set_spikes_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
 
-      if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+      if (brush)
         {
           gimp_brush_generated_set_spikes (GIMP_BRUSH_GENERATED (brush),
                                            spikes_in);
@@ -771,10 +753,9 @@ brush_set_hardness_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
 
-      if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+      if (brush)
         {
           gimp_brush_generated_set_hardness (GIMP_BRUSH_GENERATED (brush),
                                              hardness_in);
@@ -811,10 +792,9 @@ brush_set_aspect_ratio_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
 
-      if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+      if (brush)
         {
           gimp_brush_generated_set_aspect_ratio (GIMP_BRUSH_GENERATED (brush),
                                                  aspect_ratio_in);
@@ -851,10 +831,9 @@ brush_set_angle_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBrush *brush = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
 
-      if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+      if (brush)
         {
           gimp_brush_generated_set_angle (GIMP_BRUSH_GENERATED (brush),
                                           angle_in);
@@ -924,7 +903,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -954,7 +933,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -983,7 +962,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1020,7 +999,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1043,7 +1022,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1072,7 +1051,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1119,7 +1098,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1188,7 +1167,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1217,7 +1196,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1246,7 +1225,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1276,7 +1255,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1305,7 +1284,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1334,7 +1313,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1363,7 +1342,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1392,7 +1371,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1421,7 +1400,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1458,7 +1437,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1493,7 +1472,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1528,7 +1507,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1563,7 +1542,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1598,7 +1577,7 @@ register_brush_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name",
-                                                       FALSE, FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

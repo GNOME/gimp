@@ -55,7 +55,7 @@ sub buffer_rename {
     &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
-        { name => 'buffer_name', type => 'string',
+        { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The buffer name' },
         { name => 'new_name', type => 'string', non_empty => 1,
           desc => 'The buffer\'s new name' }
@@ -69,8 +69,7 @@ sub buffer_rename {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBuffer *buffer = (GimpBuffer *)
-    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+  GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
   if (buffer)
     {
@@ -93,15 +92,14 @@ sub buffer_delete {
     $since  = '2.4';
 
     @inargs = (
-        { name => 'buffer_name', type => 'string',
+        { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The buffer name' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBuffer *buffer = (GimpBuffer *)
-    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+  GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
   if (buffer)
     success = gimp_container_remove (gimp->named_buffers, GIMP_OBJECT (buffer));
@@ -119,7 +117,7 @@ sub buffer_get_width {
     &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
-        { name => 'buffer_name', type => 'string',
+        { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The buffer name' }
     );
 
@@ -131,8 +129,7 @@ sub buffer_get_width {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBuffer *buffer = (GimpBuffer *)
-    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+  GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
   if (buffer)
     width = gimp_buffer_get_width (buffer);
@@ -150,7 +147,7 @@ sub buffer_get_height {
     &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
-        { name => 'buffer_name', type => 'string',
+        { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The buffer name' }
     );
 
@@ -162,8 +159,7 @@ sub buffer_get_height {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBuffer *buffer = (GimpBuffer *)
-    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+  GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
   if (buffer)
     height = gimp_buffer_get_height (buffer);
@@ -181,7 +177,7 @@ sub buffer_get_bytes {
     &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
-        { name => 'buffer_name', type => 'string',
+        { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The buffer name' }
     );
 
@@ -193,8 +189,7 @@ sub buffer_get_bytes {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBuffer *buffer = (GimpBuffer *)
-    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+  GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
   if (buffer)
     bytes = gimp_buffer_get_bytes (buffer);
@@ -212,7 +207,7 @@ sub buffer_get_image_type {
     &mitch_pdb_misc('2005', '2.4');
 
     @inargs = (
-        { name => 'buffer_name', type => 'string',
+        { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The buffer name' }
     );
 
@@ -224,8 +219,7 @@ sub buffer_get_image_type {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBuffer *buffer = (GimpBuffer *)
-    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+  GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
   if (buffer)
     image_type = gimp_buffer_get_image_type (buffer);
@@ -237,9 +231,12 @@ CODE
 }
 
 
-@headers = qw(<string.h> "core/gimp.h" "core/gimpbuffer.h"
-              "core/gimpcontainer.h" "core/gimpcontainer-filter.h"
-	      "gimp-intl.h");
+@headers = qw(<string.h>
+              "core/gimp.h"
+              "core/gimpbuffer.h"
+              "core/gimpcontainer.h"
+              "core/gimpcontainer-filter.h"
+	      "gimppdb-utils.h");
 
 @procs = qw(buffers_get_list
             buffer_rename buffer_delete

@@ -54,7 +54,7 @@ sub brush_duplicate {
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' }
     );
 
@@ -66,8 +66,7 @@ sub brush_duplicate {
     %invoke = (
         code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
   if (brush)
     {
@@ -94,7 +93,7 @@ sub brush_is_generated {
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' }
     );
 
@@ -106,8 +105,7 @@ sub brush_is_generated {
     %invoke = (
         code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
   if (brush)
     generated = GIMP_IS_BRUSH_GENERATED (brush);
@@ -125,7 +123,7 @@ sub brush_is_editable {
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' }
     );
 
@@ -137,8 +135,7 @@ sub brush_is_editable {
     %invoke = (
         code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
   if (brush)
     editable = GIMP_DATA (brush)->writable;
@@ -156,7 +153,7 @@ sub brush_rename {
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' },
         { name => 'new_name', type => 'string', non_empty => 1,
           desc => 'The new name of the brush' }
@@ -170,10 +167,9 @@ sub brush_rename {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, TRUE, error);
 
-  if (brush && GIMP_DATA (brush)->writable)
+  if (brush)
     {
       gimp_object_set_name (GIMP_OBJECT (brush), new_name);
       actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)));
@@ -192,15 +188,14 @@ sub brush_delete {
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
   if (brush && GIMP_DATA (brush)->deletable)
     success = gimp_data_factory_data_delete (gimp->brush_factory,
@@ -224,7 +219,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' }
     );
 
@@ -242,8 +237,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
   if (brush)
     {
@@ -270,7 +264,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' }
     );
 
@@ -294,8 +288,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
   if (brush)
     {
@@ -334,7 +327,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' }
     );
 
@@ -346,8 +339,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
 
   if (brush)
     spacing = gimp_brush_get_spacing (brush);
@@ -373,7 +365,7 @@ HELP
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' }
     );
 
@@ -385,10 +377,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush))
+  if (brush)
     shape = GIMP_BRUSH_GENERATED (brush)->shape;
   else
     success = FALSE;
@@ -408,7 +399,7 @@ HELP
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' }
     );
 
@@ -420,10 +411,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush))
+  if (brush)
     radius = GIMP_BRUSH_GENERATED (brush)->radius;
   else
     success = FALSE;
@@ -443,7 +433,7 @@ HELP
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' }
     );
 
@@ -455,10 +445,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush))
+  if (brush)
     spikes = GIMP_BRUSH_GENERATED (brush)->spikes;
   else
     success = FALSE;
@@ -480,7 +469,7 @@ HELP
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' }
     );
 
@@ -492,10 +481,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush))
+  if (brush)
     hardness = GIMP_BRUSH_GENERATED (brush)->hardness;
   else
     success = FALSE;
@@ -515,7 +503,7 @@ HELP
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' }
     );
 
@@ -527,10 +515,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush))
+  if (brush)
     aspect_ratio = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
   else
     success = FALSE;
@@ -550,7 +537,7 @@ HELP
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' }
     );
 
@@ -562,10 +549,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush))
+  if (brush)
     angle = GIMP_BRUSH_GENERATED (brush)->angle;
   else
     success = FALSE;
@@ -585,7 +571,7 @@ HELP
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' },
 	{ name => 'spacing', type => '0 <= int32 <= 1000',
 	  desc => 'The brush spacing' }
@@ -594,8 +580,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, TRUE, error);
 
   if (brush)
     gimp_brush_set_spacing (brush, spacing);
@@ -621,7 +606,7 @@ HELP
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' },
 	{ name => 'shape_in', type => 'enum GimpBrushGeneratedShape',
           desc => 'The brush shape' }
@@ -635,10 +620,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+  if (brush)
     {
       gimp_brush_generated_set_shape (GIMP_BRUSH_GENERATED (brush),
                                       shape_in);
@@ -662,7 +646,7 @@ HELP
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' },
 	{ name => 'radius_in', type => 'float',
           desc => 'The desired brush radius' }
@@ -676,10 +660,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+  if (brush)
     {
       gimp_brush_generated_set_radius (GIMP_BRUSH_GENERATED (brush),
                                        radius_in);
@@ -703,7 +686,7 @@ HELP
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' },
 	{ name => 'spikes_in', type => 'int32',
           desc => 'The desired number of spikes' }
@@ -717,10 +700,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+  if (brush)
     {
       gimp_brush_generated_set_spikes (GIMP_BRUSH_GENERATED (brush),
                                        spikes_in);
@@ -744,7 +726,7 @@ HELP
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' },
 	{ name => 'hardness_in', type => 'float',
           desc => 'The desired brush hardness' }
@@ -758,10 +740,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+  if (brush)
     {
       gimp_brush_generated_set_hardness (GIMP_BRUSH_GENERATED (brush),
                                          hardness_in);
@@ -785,7 +766,7 @@ HELP
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' },
 	{ name => 'aspect_ratio_in', type => 'float',
           desc => 'The desired brush aspect ratio' }
@@ -799,10 +780,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+  if (brush)
     {
       gimp_brush_generated_set_aspect_ratio (GIMP_BRUSH_GENERATED (brush),
                                              aspect_ratio_in);
@@ -826,7 +806,7 @@ HELP
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The brush name' },
 	{ name => 'angle_in', type => 'float',
           desc => 'The desired brush rotation angle' }
@@ -840,10 +820,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = (GimpBrush *)
-    gimp_container_get_child_by_name (gimp->brush_factory->container, name);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
 
-  if (GIMP_IS_BRUSH_GENERATED (brush) && GIMP_DATA (brush)->writable)
+  if (brush)
     {
       gimp_brush_generated_set_angle (GIMP_BRUSH_GENERATED (brush),
                                       angle_in);
@@ -857,10 +836,14 @@ CODE
 }
 
 
-@headers = qw(<string.h> "base/temp-buf.h"
-              "core/gimp.h" "core/gimplist.h" "core/gimpbrush.h"
-              "core/gimpbrushgenerated.h" "core/gimpcontext.h" 
-              "core/gimpdatafactory.h");
+@headers = qw(<string.h>
+              "base/temp-buf.h"
+              "core/gimp.h"
+              "core/gimpbrush.h"
+              "core/gimpbrushgenerated.h"
+              "core/gimpcontext.h" 
+              "core/gimpdatafactory.h"
+              "gimppdb-utils.h");
 
 @procs = qw(brush_new brush_duplicate brush_is_generated 
             brush_rename brush_delete brush_is_editable

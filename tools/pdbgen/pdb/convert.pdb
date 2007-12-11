@@ -131,10 +131,8 @@ HELP
 	  break;
 
 	case GIMP_CUSTOM_PALETTE:
-          pal = (GimpPalette *)
-            gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                              palette);
-	  if (pal == NULL)
+          pal = gimp_pdb_get_palette (gimp, palette, FALSE, error);
+	  if (! pal)
 	    success = FALSE;
 	  break;
 
@@ -185,9 +183,10 @@ CODE
     );
 }
 
-@headers = qw("core/gimp.h" "core/gimpcontainer.h" "core/gimpdatafactory.h"
-              "core/gimpimage.h" "core/gimpimage-convert.h"
-              "core/gimppalette.h");
+@headers = qw("core/gimp.h"
+              "core/gimpimage.h"
+              "core/gimpimage-convert.h"
+              "gimppdb-utils.h");
 
 @procs = qw(image_convert_rgb
             image_convert_grayscale

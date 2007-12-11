@@ -52,7 +52,7 @@ sub gradient_duplicate {
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' }
     );
 
@@ -64,8 +64,7 @@ sub gradient_duplicate {
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient *gradient = (GimpGradient *)
-    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
 
   if (gradient)
     {
@@ -92,7 +91,7 @@ sub gradient_is_editable {
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' }
     );
 
@@ -104,8 +103,7 @@ sub gradient_is_editable {
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient *gradient = (GimpGradient *)
-    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
 
   if (gradient)
     editable = GIMP_DATA (gradient)->writable;
@@ -123,7 +121,7 @@ sub gradient_rename {
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'new_name', type => 'string', non_empty => 1,
           desc => 'The new name of the gradient' }
@@ -137,10 +135,9 @@ sub gradient_rename {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGradient *gradient = (GimpGradient *)
-    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, TRUE, error);
 
-  if (gradient && GIMP_DATA (gradient)->writable)
+  if (gradient)
     {
       gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
       actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (gradient)));
@@ -159,15 +156,14 @@ sub gradient_delete {
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGradient *gradient = (GimpGradient *)
-    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
 
   if (gradient && GIMP_DATA (gradient)->deletable)
     success = gimp_data_factory_data_delete (gimp->gradient_factory,
@@ -195,7 +191,7 @@ HELP
     &federico_pdb_misc('1997', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
 	{ name => 'num_samples', type => '2 <= int32',
 	  desc => 'The number of samples to take' },
@@ -213,8 +209,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGradient *gradient = (GimpGradient *)
-    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
 
   if (gradient)
     {
@@ -264,7 +259,7 @@ HELP
     &federico_pdb_misc('1997', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
 	{ name  => 'positions', type  => 'floatarray',
 	  desc  => 'The list of positions to sample along the gradient',
@@ -284,8 +279,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGradient *gradient = (GimpGradient *)
-    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
 
   if (gradient)
     {
@@ -330,7 +324,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'segment', type => '0 <= int32',
           desc => 'The index of the segment within the gradient' }
@@ -349,7 +343,7 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, segment, &seg);
+  gradient = gradient_get (gimp, name, FALSE, segment, &seg, error);
 
   if (seg)
     {
@@ -374,7 +368,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'segment', type => '0 <= int32',
           desc => 'The index of the segment within the gradient' }
@@ -393,7 +387,7 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, segment, &seg);
+  gradient = gradient_get (gimp, name, FALSE, segment, &seg, error);
 
   if (seg)
     {
@@ -418,7 +412,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'segment', type => '0 <= int32',
           desc => 'The index of the segment within the gradient' },
@@ -434,9 +428,9 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, segment, &seg);
+  gradient = gradient_get (gimp, name, TRUE, segment, &seg, error);
 
-  if (seg && GIMP_DATA (gradient)->writable)
+  if (seg)
     {
       color.a = opacity / 100.0;
       gimp_gradient_segment_set_left_color (gradient, seg, &color);
@@ -459,7 +453,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'segment', type => '0 <= int32',
           desc => 'The index of the segment within the gradient' },
@@ -475,9 +469,9 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, segment, &seg);
+  gradient = gradient_get (gimp, name, TRUE, segment, &seg, error);
 
-  if (seg && GIMP_DATA (gradient)->writable)
+  if (seg)
     {
       color.a = opacity / 100.0;
       gimp_gradient_segment_set_right_color (gradient, seg, &color);
@@ -500,7 +494,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'segment', type => '0 <= int32',
           desc => 'The index of the segment within the gradient' }
@@ -517,7 +511,7 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, segment, &seg);
+  gradient = gradient_get (gimp, name, FALSE, segment, &seg, error);
 
   if (seg)
     {
@@ -541,7 +535,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'segment', type => '0 <= int32',
           desc => 'The index of the segment within the gradient' }
@@ -558,7 +552,7 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, segment, &seg);
+  gradient = gradient_get (gimp, name, FALSE, segment, &seg, error);
 
   if (seg)
     {
@@ -582,7 +576,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'segment', type => '0 <= int32',
           desc => 'The index of the segment within the gradient' }
@@ -599,7 +593,7 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, segment, &seg);
+  gradient = gradient_get (gimp, name, FALSE, segment, &seg, error);
 
   if (seg)
     {
@@ -627,7 +621,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'segment', type => '0 <= int32',
           desc => 'The index of the segment within the gradient' },
@@ -646,9 +640,9 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, segment, &seg);
+  gradient = gradient_get (gimp, name, TRUE, segment, &seg, error);
 
-  if (seg && GIMP_DATA (gradient)->writable)
+  if (seg)
     {
       final_pos = gimp_gradient_segment_set_left_pos (gradient, seg, pos);
     }
@@ -674,7 +668,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'segment', type => '0 <= int32',
           desc => 'The index of the segment within the gradient' },
@@ -693,9 +687,9 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, segment, &seg);
+  gradient = gradient_get (gimp, name, TRUE, segment, &seg, error);
 
-  if (seg && GIMP_DATA (gradient)->writable)
+  if (seg)
     {
       final_pos =
         gimp_gradient_segment_set_right_pos (gradient, seg, pos);
@@ -721,7 +715,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'segment', type => '0 <= int32',
           desc => 'The index of the segment within the gradient' },
@@ -740,9 +734,9 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, segment, &seg);
+  gradient = gradient_get (gimp, name, TRUE, segment, &seg, error);
 
-  if (seg && GIMP_DATA (gradient)->writable)
+  if (seg)
     {
       final_pos =
         gimp_gradient_segment_set_middle_pos (gradient, seg, pos);
@@ -765,7 +759,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'segment', type => '0 <= int32',
           desc => 'The index of the segment within the gradient' }
@@ -783,7 +777,7 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, segment, &seg);
+  gradient = gradient_get (gimp, name, FALSE, segment, &seg, error);
 
   if (seg)
     {
@@ -807,7 +801,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'segment', type => '0 <= int32',
           desc => 'The index of the segment within the gradient' }
@@ -825,7 +819,7 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, segment, &seg);
+  gradient = gradient_get (gimp, name, FALSE, segment, &seg, error);
 
   if (seg)
     {
@@ -849,7 +843,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'start_segment', type => '0 <= int32',
           desc => 'The index of the first segment to operate on' },
@@ -868,9 +862,9 @@ HELP
   GimpGradientSegment *end_seg;
 
   gradient = gradient_get_range (gimp, name, start_segment, end_segment,
-                                 &start_seg, &end_seg);
+                                 &start_seg, &end_seg, error);
 
-  if (start_seg && GIMP_DATA (gradient)->writable)
+  if (start_seg)
     {
       gimp_gradient_segment_range_set_blending_function (gradient,
                                                          start_seg, end_seg,
@@ -894,7 +888,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'start_segment', type => '0 <= int32',
           desc => 'The index of the first segment to operate on' },
@@ -913,9 +907,9 @@ HELP
   GimpGradientSegment *end_seg;
 
   gradient = gradient_get_range (gimp, name, start_segment, end_segment,
-                                 &start_seg, &end_seg);
+                                 &start_seg, &end_seg, error);
 
-  if (start_seg && GIMP_DATA (gradient)->writable)
+  if (start_seg)
     {
       gimp_gradient_segment_range_set_coloring_type (gradient,
                                                      start_seg, end_seg,
@@ -935,7 +929,7 @@ sub gradient_segment_range_flip {
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'start_segment', type => '0 <= int32',
           desc => 'The index of the first segment to operate on' },
@@ -952,9 +946,9 @@ sub gradient_segment_range_flip {
   GimpGradientSegment *end_seg;
 
   gradient = gradient_get_range (gimp, name, start_segment, end_segment,
-                                 &start_seg, &end_seg);
+                                 &start_seg, &end_seg, error);
 
-  if (start_seg && GIMP_DATA (gradient)->writable)
+  if (start_seg)
     {
       gimp_gradient_segment_range_flip (gradient,
                                         start_seg, end_seg,
@@ -979,7 +973,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'start_segment', type => '0 <= int32',
           desc => 'The index of the first segment to operate on' },
@@ -998,7 +992,7 @@ HELP
   GimpGradientSegment *end_seg;
 
   gradient = gradient_get_range (gimp, name, start_segment, end_segment,
-                                 &start_seg, &end_seg);
+                                 &start_seg, &end_seg, error);
 
   if (start_seg && GIMP_DATA (gradient)->writable)
     {
@@ -1024,7 +1018,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'start_segment', type => '0 <= int32',
           desc => 'The index of the first segment to operate on' },
@@ -1041,9 +1035,9 @@ HELP
   GimpGradientSegment *end_seg;
 
   gradient = gradient_get_range (gimp, name, start_segment, end_segment,
-                                 &start_seg, &end_seg);
+                                 &start_seg, &end_seg, error);
 
-  if (start_seg && GIMP_DATA (gradient)->writable)
+  if (start_seg)
     {
       gimp_gradient_segment_range_split_midpoint (gradient, context,
                                                   start_seg, end_seg,
@@ -1067,7 +1061,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'start_segment', type => '0 <= int32',
           desc => 'The index of the first segment to operate on' },
@@ -1086,9 +1080,9 @@ HELP
   GimpGradientSegment *end_seg;
 
   gradient = gradient_get_range (gimp, name, start_segment, end_segment,
-                                 &start_seg, &end_seg);
+                                 &start_seg, &end_seg, error);
 
-  if (start_seg && GIMP_DATA (gradient)->writable)
+  if (start_seg)
     {
       gimp_gradient_segment_range_split_uniform (gradient, context,
                                                  start_seg, end_seg,
@@ -1109,7 +1103,7 @@ sub gradient_segment_range_delete {
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'start_segment', type => '0 <= int32',
           desc => 'The index of the first segment to operate on' },
@@ -1126,9 +1120,9 @@ sub gradient_segment_range_delete {
   GimpGradientSegment *end_seg;
 
   gradient = gradient_get_range (gimp, name, start_segment, end_segment,
-                                 &start_seg, &end_seg);
+                                 &start_seg, &end_seg, error);
 
-  if (start_seg && GIMP_DATA (gradient)->writable)
+  if (start_seg)
     {
       gimp_gradient_segment_range_delete (gradient,
                                           start_seg, end_seg,
@@ -1152,7 +1146,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'start_segment', type => '0 <= int32',
           desc => 'The index of the first segment to operate on' },
@@ -1169,9 +1163,9 @@ HELP
   GimpGradientSegment *end_seg;
 
   gradient = gradient_get_range (gimp, name, start_segment, end_segment,
-                                 &start_seg, &end_seg);
+                                 &start_seg, &end_seg, error);
 
-  if (start_seg && GIMP_DATA (gradient)->writable)
+  if (start_seg)
     {
       gimp_gradient_segment_range_redistribute_handles (gradient,
                                                         start_seg, end_seg);
@@ -1195,7 +1189,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'start_segment', type => '0 <= int32',
           desc => 'The index of the first segment to operate on' },
@@ -1212,9 +1206,9 @@ HELP
   GimpGradientSegment *end_seg;
 
   gradient = gradient_get_range (gimp, name, start_segment, end_segment,
-                                 &start_seg, &end_seg);
+                                 &start_seg, &end_seg, error);
 
-  if (start_seg && GIMP_DATA (gradient)->writable)
+  if (start_seg)
     {
       gimp_gradient_segment_range_blend (gradient,
                                          start_seg, end_seg,
@@ -1241,7 +1235,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'start_segment', type => '0 <= int32',
           desc => 'The index of the first segment to operate on' },
@@ -1258,9 +1252,9 @@ HELP
   GimpGradientSegment *end_seg;
 
   gradient = gradient_get_range (gimp, name, start_segment, end_segment,
-                                 &start_seg, &end_seg);
+                                 &start_seg, &end_seg, error);
 
-  if (start_seg && GIMP_DATA (gradient)->writable)
+  if (start_seg)
     {
       gimp_gradient_segment_range_blend (gradient,
                                          start_seg, end_seg,
@@ -1287,7 +1281,7 @@ HELP
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The gradient name' },
         { name => 'start_segment', type => '0 <= int32',
           desc => 'The index of the first segment to operate on' },
@@ -1313,9 +1307,9 @@ HELP
   GimpGradientSegment *end_seg;
 
   gradient = gradient_get_range (gimp, name, start_segment, end_segment,
-                                 &start_seg, &end_seg);
+                                 &start_seg, &end_seg, error);
 
-  if (start_seg && GIMP_DATA (gradient)->writable)
+  if (start_seg)
     {
       final_delta = gimp_gradient_segment_range_move (gradient,
                                                       start_seg, end_seg,
@@ -1333,11 +1327,12 @@ $extra{app}->{code} = <<'CODE';
 static GimpGradient *
 gradient_get (Gimp                 *gimp,
               const gchar          *name,
+	      gboolean              writable,
               gint                  segment,
-              GimpGradientSegment **seg)
+              GimpGradientSegment **seg,
+	      GError              **error)
 {
-  GimpGradient *gradient = (GimpGradient *)
-    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, writable, error);
 
   *seg = NULL;
 
@@ -1353,10 +1348,10 @@ gradient_get_range (Gimp                 *gimp,
                     gint                  start_segment,
                     gint                  end_segment,
                     GimpGradientSegment **start_seg,
-                    GimpGradientSegment **end_seg)
+                    GimpGradientSegment **end_seg,
+		    GError              **error)
 {
-  GimpGradient *gradient = (GimpGradient *)
-    gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, TRUE, error);
 
   *start_seg = NULL;
   *end_seg   = NULL;
@@ -1380,9 +1375,12 @@ gradient_get_range (Gimp                 *gimp,
 CODE
 
 
-@headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h"
-              "core/gimpgradient.h" "core/gimpcontainer.h"
-              "core/gimpdatafactory.h" "core/gimplist.h");
+@headers = qw(<string.h>
+              "core/gimp.h"
+              "core/gimpcontext.h"
+              "core/gimpgradient.h"
+              "core/gimpdatafactory.h"
+              "gimppdb-utils.h");
 
 @procs = qw(gradient_new gradient_duplicate  gradient_is_editable
 	    gradient_rename gradient_delete

@@ -1,3 +1,37 @@
+2007-12-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/Makefile.am
+	* app/pdb/gimppdb-utils.[ch]: new utility functions which look up
+	brushes, patterns etc. and set appropriate error messages if the
+	objects are not found.
+
+	* tools/pdbgen/pdb/brush.pdb
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/buffer.pdb
+	* tools/pdbgen/pdb/context.pdb
+	* tools/pdbgen/pdb/convert.pdb
+	* tools/pdbgen/pdb/gradient.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/paint_tools.pdb
+	* tools/pdbgen/pdb/palette.pdb
+	* tools/pdbgen/pdb/palettes.pdb
+	* tools/pdbgen/pdb/pattern.pdb
+	* tools/pdbgen/pdb/patterns.pdb: use them here. Also set non_empty
+	to TRUE for all brush, pattern etc. names.
+
+	* app/pdb/brush_cmds.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/buffer_cmds.c
+	* app/pdb/context_cmds.c
+	* app/pdb/convert_cmds.c
+	* app/pdb/gradient_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/paint_tools_cmds.c
+	* app/pdb/palette_cmds.c
+	* app/pdb/palettes_cmds.c
+	* app/pdb/pattern_cmds.c
+	* app/pdb/patterns_cmds.c: regenerated.
+
 2007-12-11  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/gimpplugin-message.c: added sanity checks to message
