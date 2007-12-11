@@ -121,10 +121,12 @@ void    gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                         GimpPaintApplicationMode  mode);
 
 void    gimp_brush_core_color_area_with_pixmap
-                                       (GimpBrushCore            *core,
-                                        GimpDrawable             *drawable,
-                                        TempBuf                  *area,
-                                        GimpBrushApplicationMode  mode);
+                                         (GimpBrushCore            *core,
+                                          GimpDrawable             *drawable,
+                                          TempBuf                  *area,
+                                          GimpBrushApplicationMode  mode);
 
+TempBuf * gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
+                                          GimpBrushApplicationMode  brush_hardness);
 
 #endif  /*  __GIMP_BRUSH_CORE_H__  */

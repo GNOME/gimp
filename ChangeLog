@@ -1,3 +1,11 @@
+2007-12-11  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/paint/gimpheal.c:  heal from edge of brush mask
+	instead of edges of paint area.
+
+	* app/paint/gimpbrushcore.[ch]: export
+	gimp_brush_core_get_brush_mask() to enable use of mask.
+
 2007-12-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/Makefile.am

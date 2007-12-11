@@ -106,8 +106,6 @@ static TempBuf * gimp_brush_core_scale_mask       (GimpBrushCore    *core,
 static TempBuf * gimp_brush_core_scale_pixmap     (GimpBrushCore    *core,
                                                    GimpBrush        *brush);
 
-static TempBuf * gimp_brush_core_get_brush_mask   (GimpBrushCore    *core,
-                                                   GimpBrushApplicationMode  brush_hardness);
 static void      gimp_brush_core_invalidate_cache (GimpBrush        *brush,
                                                    GimpBrushCore    *core);
 
@@ -1344,7 +1342,7 @@ gimp_brush_core_scale_pixmap (GimpBrushCore *core,
   return core->scale_pixmap;
 }
 
-static TempBuf *
+TempBuf *
 gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
                                 GimpBrushApplicationMode  brush_hardness)
 {
