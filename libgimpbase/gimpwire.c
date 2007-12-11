@@ -433,12 +433,16 @@ _gimp_wire_read_string (GIOChannel  *channel,
       if (tmp > 0)
         {
           data[i] = g_new (gchar, tmp);
+
           if (! _gimp_wire_read_int8 (channel,
                                       (guint8 *) data[i], tmp, user_data))
             {
               g_free (data[i]);
               return FALSE;
             }
+
+          /*  make sure that the string is NULL-terminated  */
+          data[i][tmp - 1] = '\0';
         }
       else
         {
