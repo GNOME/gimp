@@ -63,7 +63,7 @@ gimp_wire_register (guint32             type,
   handler = g_hash_table_lookup (wire_ht, &type);
 
   if (! handler)
-    handler = g_new0 (GimpWireHandler, 1);
+    handler = g_slice_new0 (GimpWireHandler);
 
   handler->type         = type;
   handler->read_func    = read_func;
