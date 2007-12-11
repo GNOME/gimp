@@ -1,3 +1,11 @@
+2007-12-11  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* libgimpbase/gimpwire.c (_gimp_read_read_string): NULL-terminate
+	all strings coming in over the wire protocol. Should help with bug
+	#498207.
+
 2007-12-10  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
