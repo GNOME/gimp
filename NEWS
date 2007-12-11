@@ -20,7 +20,14 @@ Changes in GIMP 2.4.3
 - removed some pointless warnings from the JPEG and TIFF load plug-ins
 - fixed size calculation for the image size warning dialog (bug #329468)
 - fixed loading of tool options for the rectangle tools (bug #498948)
-- translation updates (ca, de, gl, it, lt)
+- push/pop a context in the Fog filter
+- fixed potential crashes in the Python binding
+- corrected grid drawing with non-integer spacing (bug #502374)
+- fixed grid snapping for coordinates less than the grid offset
+- made the healing brush work properly when dragged (bug #492575)
+- update tool state when a device change happens (bug #493176)
+- improved validation of strings send over the wire (#498207)
+- translation updates (ca, cs, de, gl, it, ko, lt)
 
 
 Contributors:
