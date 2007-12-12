@@ -238,6 +238,8 @@ floating_sel_to_layer (GimpLayer  *layer,
                         GIMP_ITEM (layer)->height);
 
   gimp_image_floating_selection_changed (image);
+
+  return TRUE;
 }
 
 void

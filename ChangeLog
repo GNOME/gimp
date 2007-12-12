@@ -1,3 +1,8 @@
+2007-12-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimplayer-floating-sel.c (floating_sel_to_layer): add
+	missing return value, this is no void function any more.
+
 2007-12-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/whirlpinch.c: extended the range allowed for the
