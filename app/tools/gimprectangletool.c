@@ -101,6 +101,12 @@ struct _GimpRectangleToolPrivate
    * during gimp_rectangle_tool_button_press and then only read.
    */
 
+  /*
+   * Wether or not the rectangle currently being rubber-banded was
+   * created from scatch.
+   */
+  gboolean                is_new;
+
   /* Holds the coordinate that should be used as the "other side" when
    * fixed-center is turned off.
    */
@@ -618,6 +624,53 @@ gimp_rectangle_tool_constraint_size_set (GimpRectangleTool *rect_tool,
                 NULL);
 }
 
+/**
+ * gimp_rectangle_tool_rectangle_is_new:
+ * @rect_tool:
+ *
+ * Returns: %TRUE if the user is creating a new rectangle from
+ * scratch, %FALSE if modifying n previously existing rectangle. This
+ * function is only meaningful in _motion and _button_release.
+ */
+gboolean
+gimp_rectangle_tool_rectangle_is_new (GimpRectangleTool *rect_tool)
+{
+  g_return_val_if_fail (GIMP_IS_RECTANGLE_TOOL (rect_tool), FALSE);
+
+  return GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool)->is_new;
+}
+
+/**
+ * gimp_rectangle_tool_point_in_rectangle:
+ * @rect_tool:
+ * @x:         X-coord of point to test (in image coordinates)
+ * @y:         Y-coord of point to test (in image coordinates)
+ *
+ * Returns: %TRUE if the passed point was within the rectangle
+ **/
+gboolean
+gimp_rectangle_tool_point_in_rectangle (GimpRectangleTool *rect_tool,
+                                        gdouble            x,
+                                        gdouble            y)
+{
+  gboolean inside = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_RECTANGLE_TOOL (rect_tool), FALSE);
+
+  if (GIMP_TOOL (rect_tool)->display)
+    {
+      gdouble pub_x1, pub_y1, pub_x2, pub_y2;
+
+      gimp_rectangle_tool_get_public_rect (rect_tool,
+                                           &pub_x1, &pub_y1, &pub_x2, &pub_y2);
+
+      inside = x >= pub_x1 && x <= pub_x2 &&
+               y >= pub_y1 && y <= pub_y2;
+    }
+
+  return inside;
+}
+
 void
 gimp_rectangle_tool_set_property (GObject      *object,
                                   guint         property_id,
@@ -810,6 +863,9 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
 
   if (private->function == GIMP_RECTANGLE_TOOL_CREATING)
     {
+      /* Remember that this rectangle was created from scratch. */
+      private->is_new = TRUE;
+
       private->x1 = private->x2 = snapped_x;
       private->y1 = private->y2 = snapped_y;
 
@@ -836,6 +892,9 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
     }
   else
     {
+      /* This rectangle was not created from scratch. */
+      private->is_new = FALSE;
+
       private->center_x_on_fixed_center = (private->x1 + private->x2) / 2;
       private->center_y_on_fixed_center = (private->y1 + private->y2) / 2;
 
