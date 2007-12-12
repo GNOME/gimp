@@ -1,3 +1,7 @@
+2007-12-12  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcellrenderercolor.c: draw using Cairo.
+
 2007-12-12  Tor Lillqvist  <tml@novell.com>
 
 	* app/base/tile-private.h

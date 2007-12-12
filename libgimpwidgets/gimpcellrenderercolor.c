@@ -24,11 +24,11 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "gimpwidgetstypes.h"
 
-#include "gimpcolorarea.h"
 #include "gimpcellrenderercolor.h"
 
 
@@ -66,6 +66,10 @@ static void gimp_cell_renderer_color_render       (GtkCellRenderer *cell,
                                                    GdkRectangle    *cell_area,
                                                    GdkRectangle    *expose_area,
                                                    GtkCellRendererState flags);
+
+static void gimp_cairo_set_checkerboard           (cairo_t         *cr,
+                                                   gint             size);
+
 
 
 G_DEFINE_TYPE (GimpCellRendererColor, gimp_cell_renderer_color,
@@ -235,40 +239,100 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
 
   if (rect.width > 2 && rect.height > 2)
     {
+      cairo_t      *cr = gdk_cairo_create (window);
       GtkStateType  state;
-      guchar       *buf;
-      guint         rowstride = 3 * (rect.width - 2);
 
-      if (rowstride & 3)
-        rowstride += 4 - (rowstride & 3);
+      cairo_rectangle (cr,
+                       rect.x + 1, rect.y + 1,
+                       rect.width - 2, rect.height - 2);
 
-      buf = g_alloca (rowstride * (rect.height - 2));
+      cairo_set_source_rgb (cr,
+                            color->color.r, color->color.g, color->color.b);
+      cairo_fill (cr);
 
-      _gimp_color_area_render_buf (widget,
-                                   (GTK_WIDGET_STATE (widget) ==
-                                    GTK_STATE_INSENSITIVE || !cell->sensitive),
-                                   (color->opaque ?
-                                    GIMP_COLOR_AREA_FLAT :
-                                    GIMP_COLOR_AREA_SMALL_CHECKS),
-                                   buf,
-                                   rect.width - 2, rect.height - 2, rowstride,
-                                   &color->color);
+      if (color->opaque && color->color.a != 1.0)
+        {
+          cairo_move_to (cr, rect.x + 1,              rect.y + rect.height - 1);
+          cairo_line_to (cr, rect.x + rect.width - 1, rect.y + rect.height - 1);
+          cairo_line_to (cr, rect.x + rect.width - 1, rect.y + 1);
+          cairo_close_path (cr);
 
-      gdk_draw_rgb_image_dithalign (window,
-                                    widget->style->black_gc,
-                                    rect.x + 1, rect.y + 1,
-                                    rect.width - 2, rect.height - 2,
-                                    GDK_RGB_DITHER_MAX,
-                                    buf, rowstride, rect.x, rect.y);
+          gimp_cairo_set_checkerboard (cr, GIMP_CHECK_SIZE_SM);
+          cairo_fill_preserve (cr);
 
-      state = (flags & GTK_CELL_RENDERER_SELECTED ?
-               GTK_STATE_SELECTED : GTK_STATE_NORMAL);
+          cairo_set_source_rgba (cr,
+                                 color->color.r,
+                                 color->color.g,
+                                 color->color.b,
+                                 color->color.a);
+          cairo_fill (cr);
+        }
 
-      gdk_draw_rectangle (window,
-                          widget->style->fg_gc[state],
-                          FALSE,
-                          rect.x, rect.y, rect.width - 1, rect.height - 1);
+      /* draw border */
+      cairo_rectangle (cr,
+                       rect.x + 0.5, rect.y + 0.5,
+                       rect.width - 1, rect.height - 1);
+
+      if (! cell->sensitive ||
+          GTK_WIDGET_STATE (widget) == GTK_STATE_INSENSITIVE)
+        {
+          state = GTK_STATE_INSENSITIVE;
+        }
+      else
+        {
+          state = (flags & GTK_CELL_RENDERER_SELECTED ?
+                   GTK_STATE_SELECTED : GTK_STATE_NORMAL);
+        }
+
+      gdk_cairo_set_source_color (cr, &widget->style->fg[state]);
+
+      cairo_set_line_width (cr, 1);
+      cairo_stroke (cr);
+
+      cairo_destroy (cr);
     }
+}
+
+/**
+ * gimp_cairo_set_checkerboard:
+ * @size:
+ * @light:
+ * @dark:
+ *
+ * Sets a repeating checkerboard as the source pattern within @cr.
+ **/
+static void
+gimp_cairo_set_checkerboard (cairo_t *cr,
+                             gint     size)
+{
+  cairo_t         *context;
+  cairo_surface_t *surface;
+  cairo_pattern_t *pattern;
+
+  surface = cairo_surface_create_similar (cairo_get_target (cr),
+                                          CAIRO_CONTENT_COLOR,
+                                          2 * size, 2 * size);
+  context = cairo_create (surface);
+
+  cairo_set_source_rgb (context,
+                        GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT);
+  cairo_rectangle (context, 0,    0,    size, size);
+  cairo_rectangle (context, size, size, size, size);
+  cairo_fill (context);
+
+  cairo_set_source_rgb (context,
+                        GIMP_CHECK_DARK, GIMP_CHECK_DARK, GIMP_CHECK_DARK);
+  cairo_rectangle (context, 0,    size, size, size);
+  cairo_rectangle (context, size, 0,    size, size);
+  cairo_fill (context);
+
+  cairo_destroy (context);
+
+  pattern = cairo_pattern_create_for_surface (surface);
+
+  cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
+  cairo_set_source (cr, pattern);
+  cairo_pattern_destroy (pattern);
 }
 
 /**
