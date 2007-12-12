@@ -1,3 +1,13 @@
+2007-12-12  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* configure.in
+	* app/gui/gui.c (GTK_REQUIRED_MICRO): bumped minimum required
+	version of gtk+ to 2.12.1.
+
+	* app/widgets/gimpdockbook.c (gimp_dockbook_tab_drag_motion):
+	removed unused parameter that was needed for gtk+ < 2.12.1.
+
 2007-12-12  Tor Lillqvist  <tml@novell.com>
 
 	* libgimpbase/gimpenv.c (gimp_toplevel_directory) [Win32]: Use the

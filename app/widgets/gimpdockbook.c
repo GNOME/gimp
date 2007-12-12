@@ -675,7 +675,6 @@ gimp_dockbook_tab_drag_motion (GtkWidget      *widget,
   GimpDockbook  *dockbook = dockable->dockbook;
   GtkTargetList *target_list;
   GdkAtom        target_atom;
-  guint          unused;
 
   if (! dockbook->tab_hover_timeout ||
       dockbook->tab_hover_dockable != dockable)
@@ -694,10 +693,7 @@ gimp_dockbook_tab_drag_motion (GtkWidget      *widget,
   target_list = gtk_drag_dest_get_target_list (widget);
   target_atom = gtk_drag_dest_find_target (widget, context, target_list);
 
-#ifdef __GNUC__
-#warning Remove "unused" as soon as we depend on GTK+ >= 2.12.1
-#endif
-  if (gtk_target_list_find (target_list, target_atom, &unused))
+  if (gtk_target_list_find (target_list, target_atom, NULL))
     {
       gdk_drag_status (context, GDK_ACTION_MOVE, time);
       gtk_drag_highlight (widget);
