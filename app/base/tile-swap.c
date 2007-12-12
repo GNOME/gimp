@@ -120,9 +120,13 @@ static gboolean       write_err_msg    = TRUE;
 
 
 #ifdef G_OS_WIN32
+
+#define LARGE_SEEK(f, o, w) _lseeki64 (f, o, w)
+#define LARGE_TRUNCATE(f, s) win32_large_truncate (f, s)
+
 static gint
-gimp_win32_large_truncate (gint   fd,
-                           gint64 size)
+win32_large_truncate (gint   fd,
+		      gint64 size)
 {
   if (LARGE_SEEK (fd, size, SEEK_SET) == size &&
       SetEndOfFile ((HANDLE) _get_osfhandle (fd)))
@@ -130,6 +134,12 @@ gimp_win32_large_truncate (gint   fd,
   else
     return -1;
 }
+
+#else
+
+#define LARGE_SEEK(f, o, t) lseek (f, o, t)
+#define LARGE_TRUNCATE(f, s) ftruncate (f, s)
+
 #endif
 
 

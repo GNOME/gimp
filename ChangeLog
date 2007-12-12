@@ -1,3 +1,11 @@
+2007-12-12  Tor Lillqvist  <tml@novell.com>
+
+	* app/base/tile-private.h
+	* app/base/tile-swap.c: Move the LARGE_SEEK and LARGE_TRUNCATE
+	macros from tile-private.h to tile-swap.c as they aren't used
+	anywhere else, and the helper function used on Windows was static
+	in tile-swap.c anyway. (#503124)
+
 2007-12-11  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.c (get_consecutive_cells):
