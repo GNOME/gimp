@@ -627,7 +627,7 @@ vectors_edit_vectors_response (GtkWidget            *widget,
 
       if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (vectors))))
         {
-          gimp_item_rename (GIMP_ITEM (vectors), new_name);
+          gimp_item_rename (GIMP_ITEM (vectors), new_name, NULL);
           gimp_image_flush (options->image);
         }
     }

@@ -99,7 +99,8 @@ static void       gimp_layer_convert            (GimpItem           *item,
                                                  GimpImage          *dest_image);
 static gboolean   gimp_layer_rename             (GimpItem           *item,
                                                  const gchar        *new_name,
-                                                 const gchar        *undo_desc);
+                                                 const gchar        *undo_desc,
+                                                 GError            **error);
 static void       gimp_layer_translate          (GimpItem           *item,
                                                  gint                offset_x,
                                                  gint                offset_y,
@@ -622,9 +623,10 @@ gimp_layer_convert (GimpItem  *item,
 }
 
 static gboolean
-gimp_layer_rename (GimpItem    *item,
-                   const gchar *new_name,
-                   const gchar *undo_desc)
+gimp_layer_rename (GimpItem     *item,
+                   const gchar  *new_name,
+                   const gchar  *undo_desc,
+                   GError      **error)
 {
   GimpLayer *layer = GIMP_LAYER (item);
   GimpImage *image = gimp_item_get_image (item);
@@ -637,7 +639,12 @@ gimp_layer_rename (GimpItem    *item,
   if (floating_sel)
     {
       if (GIMP_IS_CHANNEL (layer->fs.drawable))
-        return FALSE;
+        {
+          g_set_error (error, 0, 0,
+                       _("Cannot create a new layer from the floating selection "
+                         "because it belongs to a layer mask or channel."));
+          return FALSE;
+        }
 
       if (attached)
         {
@@ -649,7 +656,7 @@ gimp_layer_rename (GimpItem    *item,
         }
     }
 
-  GIMP_ITEM_CLASS (parent_class)->rename (item, new_name, undo_desc);
+  GIMP_ITEM_CLASS (parent_class)->rename (item, new_name, undo_desc, error);
 
   if (attached && floating_sel)
     gimp_image_undo_group_end (image);

@@ -562,7 +562,7 @@ drawable_set_name_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_item_rename (GIMP_ITEM (drawable), name);
+      success = gimp_item_rename (GIMP_ITEM (drawable), name, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

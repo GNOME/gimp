@@ -45,13 +45,14 @@ enum
 };
 
 
-static gboolean   gimp_layer_mask_is_attached  (GimpItem    *item);
-static GimpItem * gimp_layer_mask_duplicate    (GimpItem    *item,
-                                                GType        new_type,
-                                                gboolean     add_alpha);
-static gboolean   gimp_layer_mask_rename       (GimpItem    *item,
-                                                const gchar *new_name,
-                                                const gchar *undo_desc);
+static gboolean   gimp_layer_mask_is_attached  (GimpItem     *item);
+static GimpItem * gimp_layer_mask_duplicate    (GimpItem     *item,
+                                                GType         new_type,
+                                                gboolean      add_alpha);
+static gboolean   gimp_layer_mask_rename       (GimpItem     *item,
+                                                const gchar  *new_name,
+                                                const gchar  *undo_desc,
+                                                GError      **error);
 
 
 G_DEFINE_TYPE (GimpLayerMask, gimp_layer_mask, GIMP_TYPE_CHANNEL)
@@ -149,11 +150,14 @@ gimp_layer_mask_duplicate (GimpItem *item,
 }
 
 static gboolean
-gimp_layer_mask_rename (GimpItem    *item,
-                        const gchar *new_name,
-                        const gchar *undo_desc)
+gimp_layer_mask_rename (GimpItem     *item,
+                        const gchar  *new_name,
+                        const gchar  *undo_desc,
+                        GError      **error)
 {
   /* reject renaming, layer masks are always named "<layer name> mask"  */
+
+  g_set_error (error, 0, 0, _("Cannot rename layer masks."));
 
   return FALSE;
 }

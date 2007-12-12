@@ -111,7 +111,8 @@ gimp_image_set_quick_mask_state (GimpImage *image,
               gimp_channel_clear (selection, NULL, TRUE);
 
               gimp_channel_set_color (mask, &image->quick_mask_color, FALSE);
-              gimp_item_rename (GIMP_ITEM (mask), GIMP_IMAGE_QUICK_MASK_NAME);
+              gimp_item_rename (GIMP_ITEM (mask), GIMP_IMAGE_QUICK_MASK_NAME,
+                                NULL);
             }
 
           if (image->quick_mask_inverted)

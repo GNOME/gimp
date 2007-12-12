@@ -689,7 +689,7 @@ sub drawable_set_name {
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_item_rename (GIMP_ITEM (drawable), name);
+  success = gimp_item_rename (GIMP_ITEM (drawable), name, error);
 }
 CODE
     );

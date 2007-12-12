@@ -395,7 +395,7 @@ channels_edit_channel_response (GtkWidget            *widget,
                                      _("Channel Attributes"));
 
       if (name_changed)
-        gimp_item_rename (GIMP_ITEM (channel), new_name);
+        gimp_item_rename (GIMP_ITEM (channel), new_name, NULL);
 
       if (color_changed)
         gimp_channel_set_color (channel, &color, TRUE);

@@ -71,7 +71,8 @@ struct _GimpItemClass
                                GimpImage              *dest_image);
   gboolean   (* rename)       (GimpItem               *item,
                                const gchar            *new_name,
-                               const gchar            *undo_desc);
+                               const gchar            *undo_desc,
+                               GError                **error);
   void       (* translate)    (GimpItem               *item,
                                gint                    offset_x,
                                gint                    offset_y,
@@ -149,7 +150,8 @@ GimpItem      * gimp_item_convert          (GimpItem           *item,
                                             gboolean            add_alpha);
 
 gboolean        gimp_item_rename           (GimpItem           *item,
-                                            const gchar        *new_name);
+                                            const gchar        *new_name,
+                                            GError            **error);
 
 gint            gimp_item_width            (const GimpItem     *item);
 gint            gimp_item_height           (const GimpItem     *item);

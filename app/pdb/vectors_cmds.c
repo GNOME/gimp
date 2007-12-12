@@ -170,7 +170,7 @@ vectors_set_name_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_item_rename (GIMP_ITEM (vectors), name);
+      success = gimp_item_rename (GIMP_ITEM (vectors), name, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

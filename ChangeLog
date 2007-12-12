@@ -1,5 +1,26 @@
 2007-12-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpitem.[ch]: added GError to GimpItem::rename().
+
+	* app/core/gimplayer.c
+	* app/core/gimplayermask.c: set errors when renaming is impossible.
+
+	* app/text/gimptextlayer.c
+	* app/core/gimpimage-quick-mask.c: changed accordingly.
+
+	* app/actions/channels-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/vectors-commands.c
+	* app/widgets/gimpitemtreeview.c: handle the returned errors.
+
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/vectors.pdb: pass the error.
+
+	* app/pdb/drawable_cmds.c
+	* app/pdb/vectors_cmds.c: regenerated.
+
+2007-12-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimpheal.c: no need to declare init() and class_init(),
 	these declarations come for free with G_DEFINE_TYPE().
 

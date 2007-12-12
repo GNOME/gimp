@@ -143,7 +143,7 @@ sub vectors_set_name {
     %invoke = (
         code => <<"CODE"
 {
-  success = gimp_item_rename (GIMP_ITEM (vectors), name);
+  success = gimp_item_rename (GIMP_ITEM (vectors), name, error);
 }
 CODE
     );

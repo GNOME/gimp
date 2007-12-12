@@ -30,6 +30,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -846,6 +847,7 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
       GimpViewRenderer *renderer;
       GimpItem         *item;
       const gchar      *old_name;
+      GError           *error = NULL;
 
       gtk_tree_model_get (tree_view->model, &iter,
                           tree_view->model_column_renderer, &renderer,
@@ -859,7 +861,7 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
       if (! new_name) new_name = "";
 
       if (strcmp (old_name, new_name) &&
-          gimp_item_rename (item, new_name))
+          gimp_item_rename (item, new_name, &error))
         {
           gimp_image_flush (gimp_item_get_image (item));
         }
@@ -871,6 +873,11 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
                               tree_view->model_column_name, name,
                               -1);
           g_free (name);
+
+          gimp_message (view->image->gimp, G_OBJECT (view),
+                        GIMP_MESSAGE_WARNING,
+                        "%s", error->message);
+          g_clear_error (&error);
         }
 
       g_object_unref (renderer);

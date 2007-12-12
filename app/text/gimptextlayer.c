@@ -61,46 +61,47 @@ enum
   PROP_MODIFIED
 };
 
-static void       gimp_text_layer_finalize       (GObject        *object);
-static void       gimp_text_layer_get_property   (GObject        *object,
-                                                  guint           property_id,
-                                                  GValue         *value,
-                                                  GParamSpec     *pspec);
-static void       gimp_text_layer_set_property   (GObject        *object,
-                                                  guint           property_id,
-                                                  const GValue   *value,
-                                                  GParamSpec     *pspec);
+static void       gimp_text_layer_finalize       (GObject         *object);
+static void       gimp_text_layer_get_property   (GObject         *object,
+                                                  guint            property_id,
+                                                  GValue          *value,
+                                                  GParamSpec      *pspec);
+static void       gimp_text_layer_set_property   (GObject         *object,
+                                                  guint            property_id,
+                                                  const GValue    *value,
+                                                  GParamSpec      *pspec);
 
-static gint64     gimp_text_layer_get_memsize    (GimpObject     *object,
-                                                  gint64         *gui_size);
+static gint64     gimp_text_layer_get_memsize    (GimpObject      *object,
+                                                  gint64          *gui_size);
 
-static GimpItem * gimp_text_layer_duplicate      (GimpItem       *item,
-                                                  GType           new_type,
-                                                  gboolean        add_alpha);
-static gboolean   gimp_text_layer_rename         (GimpItem       *item,
-                                                  const gchar    *new_name,
-                                                  const gchar    *undo_desc);
+static GimpItem * gimp_text_layer_duplicate      (GimpItem        *item,
+                                                  GType            new_type,
+                                                  gboolean         add_alpha);
+static gboolean   gimp_text_layer_rename         (GimpItem        *item,
+                                                  const gchar     *new_name,
+                                                  const gchar     *undo_desc,
+                                                  GError         **error);
 
-static void       gimp_text_layer_set_tiles      (GimpDrawable   *drawable,
-                                                  gboolean        push_undo,
-                                                  const gchar    *undo_desc,
-                                                  TileManager    *tiles,
-                                                  GimpImageType   type,
-                                                  gint            offset_x,
-                                                  gint            offset_y);
-static void       gimp_text_layer_push_undo      (GimpDrawable   *drawable,
-                                                  const gchar    *undo_desc,
-                                                  TileManager    *tiles,
-                                                  gboolean        sparse,
-                                                  gint            x,
-                                                  gint            y,
-                                                  gint            width,
-                                                  gint            height);
+static void       gimp_text_layer_set_tiles      (GimpDrawable    *drawable,
+                                                  gboolean         push_undo,
+                                                  const gchar     *undo_desc,
+                                                  TileManager     *tiles,
+                                                  GimpImageType    type,
+                                                  gint             offset_x,
+                                                  gint             offset_y);
+static void       gimp_text_layer_push_undo      (GimpDrawable    *drawable,
+                                                  const gchar     *undo_desc,
+                                                  TileManager     *tiles,
+                                                  gboolean         sparse,
+                                                  gint             x,
+                                                  gint             y,
+                                                  gint             width,
+                                                  gint             height);
 
-static void       gimp_text_layer_text_notify    (GimpTextLayer  *layer);
-static gboolean   gimp_text_layer_render         (GimpTextLayer  *layer);
-static void       gimp_text_layer_render_layout  (GimpTextLayer  *layer,
-                                                  GimpTextLayout *layout);
+static void       gimp_text_layer_text_notify    (GimpTextLayer   *layer);
+static gboolean   gimp_text_layer_render         (GimpTextLayer   *layer);
+static void       gimp_text_layer_render_layout  (GimpTextLayer   *layer,
+                                                  GimpTextLayout  *layout);
 
 
 G_DEFINE_TYPE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER)
@@ -274,11 +275,12 @@ gimp_text_layer_duplicate (GimpItem *item,
 }
 
 static gboolean
-gimp_text_layer_rename (GimpItem    *item,
-                        const gchar *new_name,
-                        const gchar *undo_desc)
+gimp_text_layer_rename (GimpItem     *item,
+                        const gchar  *new_name,
+                        const gchar  *undo_desc,
+                        GError      **error)
 {
-  if (GIMP_ITEM_CLASS (parent_class)->rename (item, new_name, undo_desc))
+  if (GIMP_ITEM_CLASS (parent_class)->rename (item, new_name, undo_desc, error))
     {
       g_object_set (item, "auto-rename", FALSE, NULL);
 

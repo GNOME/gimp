@@ -968,8 +968,21 @@ layers_edit_layer_response (GtkWidget          *widget,
 
       if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (layer))))
         {
-          gimp_item_rename (GIMP_ITEM (layer), new_name);
-          gimp_image_flush (dialog->image);
+          GError *error = NULL;
+
+          if (gimp_item_rename (GIMP_ITEM (layer), new_name, &error))
+            {
+              gimp_image_flush (dialog->image);
+            }
+          else
+            {
+              gimp_message (dialog->image->gimp, G_OBJECT (widget),
+                            GIMP_MESSAGE_WARNING,
+                            "%s", error->message);
+              g_clear_error (&error);
+
+              return;
+            }
         }
 
       if (dialog->rename_toggle &&
