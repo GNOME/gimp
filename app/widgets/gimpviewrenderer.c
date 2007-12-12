@@ -1098,7 +1098,7 @@ gimp_view_renderer_create_pattern (GimpViewRenderer *renderer,
         {
           cairo_surface_t *surface;
 
-          surface = gimp_cairo_create_surface_from_pixbuf (pixbuf);
+          surface = gimp_cairo_surface_create_from_pixbuf (pixbuf);
 
           g_object_unref (pixbuf);
 

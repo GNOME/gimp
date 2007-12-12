@@ -26,7 +26,9 @@
 
 void              gimp_cairo_set_source_color           (cairo_t   *cr,
                                                          GimpRGB   *color);
-cairo_surface_t * gimp_cairo_create_surface_from_pixbuf (GdkPixbuf *pixbuf);
+cairo_pattern_t * gimp_cairo_checkerboard_create        (cairo_t   *cr,
+                                                         gint       size);
+cairo_surface_t * gimp_cairo_surface_create_from_pixbuf (GdkPixbuf *pixbuf);
 
 
 /*  some useful macros for writing directly to a Cairo surface  */

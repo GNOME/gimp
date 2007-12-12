@@ -1,5 +1,20 @@
 2007-12-12  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcairo-utils.[ch]: added new function
+	gimp_cairo_checkerboard_create() and renamed
+	gimp_cairo_create_surface_from_pixbuf() to
+	gimp_cairo_surface_create_from_pixbuf().
+
+	* libgimpwidgets/gimpcellrenderercolor.c
+	(gimp_cell_renderer_color_render): use Cairo utils here.
+
+	* app/widgets/gimpviewrenderer.c (gimp_view_renderer_create_pattern):
+	changed accordingly.
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
+2007-12-12  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/gimpcairo-utils.[ch]: removed here...
 

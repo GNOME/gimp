@@ -29,6 +29,7 @@
 
 #include "gimpwidgetstypes.h"
 
+#include "gimpcairo-utils.h"
 #include "gimpcellrenderercolor.h"
 
 
@@ -66,9 +67,6 @@ static void gimp_cell_renderer_color_render       (GtkCellRenderer *cell,
                                                    GdkRectangle    *cell_area,
                                                    GdkRectangle    *expose_area,
                                                    GtkCellRendererState flags);
-
-static void gimp_cairo_set_checkerboard           (cairo_t         *cr,
-                                                   gint             size);
 
 
 
@@ -252,19 +250,20 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
 
       if (color->opaque && color->color.a != 1.0)
         {
+          cairo_pattern_t *pattern;
+
           cairo_move_to (cr, rect.x + 1,              rect.y + rect.height - 1);
           cairo_line_to (cr, rect.x + rect.width - 1, rect.y + rect.height - 1);
           cairo_line_to (cr, rect.x + rect.width - 1, rect.y + 1);
           cairo_close_path (cr);
 
-          gimp_cairo_set_checkerboard (cr, GIMP_CHECK_SIZE_SM);
+          pattern = gimp_cairo_checkerboard_create (cr, GIMP_CHECK_SIZE_SM);
+          cairo_set_source (cr, pattern);
+          cairo_pattern_destroy (pattern);
+
           cairo_fill_preserve (cr);
 
-          cairo_set_source_rgba (cr,
-                                 color->color.r,
-                                 color->color.g,
-                                 color->color.b,
-                                 color->color.a);
+          gimp_cairo_set_source_color (cr, &color->color);
           cairo_fill (cr);
         }
 
@@ -291,48 +290,6 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
 
       cairo_destroy (cr);
     }
-}
-
-/**
- * gimp_cairo_set_checkerboard:
- * @size:
- * @light:
- * @dark:
- *
- * Sets a repeating checkerboard as the source pattern within @cr.
- **/
-static void
-gimp_cairo_set_checkerboard (cairo_t *cr,
-                             gint     size)
-{
-  cairo_t         *context;
-  cairo_surface_t *surface;
-  cairo_pattern_t *pattern;
-
-  surface = cairo_surface_create_similar (cairo_get_target (cr),
-                                          CAIRO_CONTENT_COLOR,
-                                          2 * size, 2 * size);
-  context = cairo_create (surface);
-
-  cairo_set_source_rgb (context,
-                        GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT);
-  cairo_rectangle (context, 0,    0,    size, size);
-  cairo_rectangle (context, size, size, size, size);
-  cairo_fill (context);
-
-  cairo_set_source_rgb (context,
-                        GIMP_CHECK_DARK, GIMP_CHECK_DARK, GIMP_CHECK_DARK);
-  cairo_rectangle (context, 0,    size, size, size);
-  cairo_rectangle (context, size, 0,    size, size);
-  cairo_fill (context);
-
-  cairo_destroy (context);
-
-  pattern = cairo_pattern_create_for_surface (surface);
-
-  cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
-  cairo_set_source (cr, pattern);
-  cairo_pattern_destroy (pattern);
 }
 
 /**

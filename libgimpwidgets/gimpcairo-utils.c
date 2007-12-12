@@ -25,6 +25,7 @@
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "gimpcairo-utils.h"
@@ -45,11 +46,63 @@ void
 gimp_cairo_set_source_color (cairo_t *cr,
                              GimpRGB *color)
 {
+  g_return_if_fail (cr != NULL);
+  g_return_if_fail (color != NULL);
+
   cairo_set_source_rgba (cr, color->r, color->g, color->b, color->a);
 }
 
 /**
- * gimp_cairo_create_surface_from_pixbuf:
+ * gimp_cairo_checkerboard_create:
+ * @cr:   Cairo context
+ * @size: check size
+ *
+ * Create a repeating checkerboard pattern.
+ *
+ * Return value: a new Cairo pattern that can be used as a source on @cr.
+ *
+ * Since: GIMP 2.6
+ **/
+cairo_pattern_t *
+gimp_cairo_checkerboard_create (cairo_t *cr,
+                                gint     size)
+{
+  cairo_t         *context;
+  cairo_surface_t *surface;
+  cairo_pattern_t *pattern;
+
+  g_return_val_if_fail (cr != NULL, NULL);
+  g_return_val_if_fail (size > 0, NULL);
+
+  surface = cairo_surface_create_similar (cairo_get_target (cr),
+                                          CAIRO_CONTENT_COLOR,
+                                          2 * size, 2 * size);
+  context = cairo_create (surface);
+
+  cairo_set_source_rgb (context,
+                        GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT);
+  cairo_rectangle (context, 0,    0,    size, size);
+  cairo_rectangle (context, size, size, size, size);
+  cairo_fill (context);
+
+  cairo_set_source_rgb (context,
+                        GIMP_CHECK_DARK, GIMP_CHECK_DARK, GIMP_CHECK_DARK);
+  cairo_rectangle (context, 0,    size, size, size);
+  cairo_rectangle (context, size, 0,    size, size);
+  cairo_fill (context);
+
+  cairo_destroy (context);
+
+  pattern = cairo_pattern_create_for_surface (surface);
+  cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
+
+  cairo_surface_destroy (surface);
+
+  return pattern;
+}
+
+/**
+ * gimp_cairo_surface_create_from_pixbuf:
  * @pixbuf: a GdkPixbuf
  *
  * Create a Cairo image surface from a GdkPixbuf.
@@ -60,7 +113,7 @@ gimp_cairo_set_source_color (cairo_t *cr,
  * Since: GIMP 2.6
  **/
 cairo_surface_t *
-gimp_cairo_create_surface_from_pixbuf (GdkPixbuf *pixbuf)
+gimp_cairo_surface_create_from_pixbuf (GdkPixbuf *pixbuf)
 {
   cairo_surface_t *surface;
   cairo_format_t   format;
