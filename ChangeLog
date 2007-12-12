@@ -1,3 +1,16 @@
+2007-12-12  Tor Lillqvist  <tml@novell.com>
+
+	* libgimpbase/gimpenv.c (gimp_toplevel_directory) [Win32]: Use the
+	location of the libgimpbase DLL and not that of the main
+	executable (which will be the Python interpreter in the case of
+	python-fu) to determine the top-level GIMP installation
+	folder. (#502506)
+
+	(gimp_locale_directory) [Win32]: Guard against the possibility
+	that we can't get the system codepage form of the locale
+	directory, in case the installation folder contains characters not
+	in the system codepage. In that case use the short name instead.
+
 2007-12-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcellrenderercolor.c: draw using Cairo.
