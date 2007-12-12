@@ -1,5 +1,10 @@
 2007-12-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpheal.c: no need to declare init() and class_init(),
+	these declarations come for free with G_DEFINE_TYPE().
+
+2007-12-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplayer-floating-sel.c (floating_sel_to_layer): add
 	missing return value, this is no void function any more.
 

@@ -57,10 +57,6 @@ static gboolean     gimp_heal_start              (GimpPaintCore    *paint_core,
                                                   GimpCoords       *coords,
                                                   GError          **error);
 
-static void         gimp_heal_class_init         (GimpHealClass    *klass);
-
-static void         gimp_heal_init               (GimpHeal         *heal);
-
 static void         gimp_heal_substitute_0_for_1 (PixelRegion      *pr);
 
 static void         gimp_heal_divide             (PixelRegion      *topPR,
@@ -102,9 +98,6 @@ static void         gimp_heal_motion             (GimpSourceCore   *source_core,
                                                   gint              paint_area_offset_y,
                                                   gint              paint_area_width,
                                                   gint              paint_area_height);
-
-
-
 
 
 G_DEFINE_TYPE (GimpHeal, gimp_heal, GIMP_TYPE_SOURCE_CORE)
@@ -434,7 +427,6 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                   gint              paint_area_width,
                   gint              paint_area_height)
 {
-  GimpHeal      *heal       = GIMP_HEAL (source_core);
   GimpPaintCore *paint_core = GIMP_PAINT_CORE (source_core);
   GimpBrushCore *brush_core = GIMP_BRUSH_CORE (source_core);
   GimpContext   *context    = GIMP_CONTEXT (paint_options);
