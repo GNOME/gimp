@@ -1,5 +1,10 @@
 2007-12-11  Kevin Cozens  <kcozens@cvs.gnome.org>
 
+	* plug-ins/script-fu/tinyscheme/scheme.c: Don't abort the top-level
+	s-exp when loading a file. See SourceForge bug #1589711.
+
+2007-12-11  Kevin Cozens  <kcozens@cvs.gnome.org>
+
 	* plug-ins/script-fu/tinyscheme/scheme.c: Applied changes from
 	official version of TinyScheme which fix is_integer(). See
 	SourceForge bug #1593861.

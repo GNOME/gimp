@@ -2476,7 +2476,8 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
           if (!file_push(sc,strvalue(car(sc->args)))) {
                Error_1(sc,"unable to open", car(sc->args));
           }
-          s_goto(sc,OP_T0LVL);
+          else
+            { s_retbool(1); }
 
      case OP_T0LVL: /* top level */
           if(file_interactive(sc)) {
