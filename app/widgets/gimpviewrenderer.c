@@ -39,7 +39,6 @@
 #include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
-#include "gimpcairo-utils.h"
 #include "gimprender.h"
 #include "gimpviewrenderer.h"
 #include "gimpviewrenderer-utils.h"

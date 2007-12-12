@@ -8,6 +8,8 @@ EXPORTS
 	gimp_button_extended_clicked
 	gimp_button_get_type
 	gimp_button_new
+	gimp_cairo_create_surface_from_pixbuf
+	gimp_cairo_set_source_color
 	gimp_cell_renderer_color_get_type
 	gimp_cell_renderer_color_new
 	gimp_cell_renderer_toggle_clicked

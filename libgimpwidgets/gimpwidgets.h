@@ -28,6 +28,7 @@
 
 #include <libgimpwidgets/gimpbrowser.h>
 #include <libgimpwidgets/gimpbutton.h>
+#include <libgimpwidgets/gimpcairo-utils.h>
 #include <libgimpwidgets/gimpcellrenderercolor.h>
 #include <libgimpwidgets/gimpcellrenderertoggle.h>
 #include <libgimpwidgets/gimpchainbutton.h>

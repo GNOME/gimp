@@ -1,3 +1,22 @@
+2007-12-12  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpcairo-utils.[ch]: removed here...
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpcairo-utils.[ch]: and added here after some
+	cleanup.
+
+	* libgimpwidgets/gimpwidgets.h: include gimpcairo-utils.h.
+
+	* app/widgets/gimpviewrenderer.c
+	* app/widgets/gimpviewrenderergradient.c
+	* app/widgets/gimpviewrendererpalette.c: changed accordingly.
+
+	* libgimpwidgets/gimpwidgets.def: updated for Cairo utils.
+
+	* libgimp/gimp.def: added gimp_image_get_vectors_by_tattoo.
+
 2007-12-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem.[ch]: added GError to GimpItem::rename().

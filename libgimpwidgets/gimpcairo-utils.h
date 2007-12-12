@@ -1,22 +1,23 @@
-/* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcairo-utils.h
  * Copyright (C) 2007 Sven Neumann <sven@gimp.org>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */
 
 #ifndef __GIMP_CAIRO_UTILS_H__
@@ -26,9 +27,6 @@
 void              gimp_cairo_set_source_color           (cairo_t   *cr,
                                                          GimpRGB   *color);
 cairo_surface_t * gimp_cairo_create_surface_from_pixbuf (GdkPixbuf *pixbuf);
-
-
-#define INT_MULT(a,b,t) ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
 
 
 /*  some useful macros for writing directly to a Cairo surface  */
@@ -41,6 +39,8 @@ cairo_surface_t * gimp_cairo_create_surface_from_pixbuf (GdkPixbuf *pixbuf);
  * @b: blue component
  *
  * Sets a single pixel in an Cairo image surface in %CAIRO_FORMAT_RGB24.
+ *
+ * Since: GIMP 2.6
  **/
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
 #define GIMP_CAIRO_RGB24_SET_PIXEL(d, r, g, b) \
@@ -60,24 +60,31 @@ cairo_surface_t * gimp_cairo_create_surface_from_pixbuf (GdkPixbuf *pixbuf);
  * @a: alpha component
  *
  * Sets a single pixel in an Cairo image surface in %CAIRO_FORMAT_ARGB32.
+ *
+ * Since: GIMP 2.6
  **/
+
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
 #define GIMP_CAIRO_ARGB32_SET_PIXEL(d, r, g, b, a) \
   G_STMT_START {                                   \
-    guint t1, t2, t3;                              \
-    d[0] = INT_MULT ((b), (a), t1);                \
-    d[1] = INT_MULT ((g), (a), t2);                \
-    d[2] = INT_MULT ((r), (a), t3);                \
+    guint tr = (a) * (r) + 0x80;                   \
+    guint tg = (a) * (g) + 0x80;                   \
+    guint tb = (a) * (b) + 0x80;                   \
+    d[0] = (((tb) >> 8) + (tb)) >> 8;              \
+    d[1] = (((tg) >> 8) + (tg)) >> 8;              \
+    d[2] = (((tr) >> 8) + (tr)) >> 8;              \
     d[3] = (a);                                    \
   } G_STMT_END
 #else
 #define GIMP_CAIRO_ARGB32_SET_PIXEL(d, r, g, b, a) \
   G_STMT_START {                                   \
-    guint t1, t2, t3;                              \
+    guint tr = (a) * (r) + 0x80;                   \
+    guint tg = (a) * (g) + 0x80;                   \
+    guint tb = (a) * (b) + 0x80;                   \
     d[0] = (a);                                    \
-    d[1] = INT_MULT ((r), (a), t1);                \
-    d[2] = INT_MULT ((g), (a), t2);                \
-    d[3] = INT_MULT ((b), (a), t3);                \
+    d[1] = (((tr) >> 8) + (tr)) >> 8;              \
+    d[2] = (((tg) >> 8) + (tg)) >> 8;              \
+    d[3] = (((tb) >> 8) + (tb)) >> 8;              \
   } G_STMT_END
 #endif
 

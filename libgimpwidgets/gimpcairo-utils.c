@@ -1,22 +1,23 @@
-/* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcairo-utils.c
  * Copyright (C) 2007 Sven Neumann <sven@gimp.org>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */
 
 #include "config.h"
@@ -37,6 +38,8 @@
  * Sets the source pattern within @cr to the color described by @color.
  *
  * This function calls cairo_set_source_rgba() for you.
+ *
+ * Since: GIMP 2.6
  **/
 void
 gimp_cairo_set_source_color (cairo_t *cr,
@@ -53,6 +56,8 @@ gimp_cairo_set_source_color (cairo_t *cr,
  *
  * You should avoid calling this function as there are probably more
  * efficient ways of achieving the result you are looking for.
+ *
+ * Since: GIMP 2.6
  **/
 cairo_surface_t *
 gimp_cairo_create_surface_from_pixbuf (GdkPixbuf *pixbuf)

@@ -27,12 +27,12 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
 #include "core/gimppalette.h"
 
-#include "gimpcairo-utils.h"
 #include "gimpviewrendererpalette.h"
 
 

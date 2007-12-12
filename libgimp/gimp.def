@@ -336,6 +336,7 @@ EXPORTS
 	gimp_image_get_thumbnail_data
 	gimp_image_get_unit
 	gimp_image_get_vectors
+	gimp_image_get_vectors_by_tattoo
 	gimp_image_get_vectors_position
 	gimp_image_grid_get_background_color
 	gimp_image_grid_get_foreground_color
