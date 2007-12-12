@@ -1,3 +1,13 @@
+2007-12-12  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/base/tile-private.h
+        * app/base/tile-swap.c: Move the LARGE_SEEK and LARGE_TRUNCATE
+        macros from tile-private.h to tile-swap.c as they aren't used
+        anywhere else, and the helper function used on Windows was static
+        in tile-swap.c anyway. (#503124)
+
 2007-12-11  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	Merged from trunk:

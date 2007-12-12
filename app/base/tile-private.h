@@ -21,21 +21,6 @@
 
 #include <sys/types.h>
 
-#ifdef G_OS_WIN32
-
-int gimp_win32_large_truncate (int    fd,
-                               gint64 size);
-
-#define LARGE_SEEK(f, o, w) _lseeki64 (f, o, w)
-#define LARGE_TRUNCATE(f, s) gimp_win32_large_truncate (f, s)
-
-#else
-
-#define LARGE_SEEK(f, o, t) lseek (f, o, t)
-#define LARGE_TRUNCATE(f, s) ftruncate (f, s)
-
-#endif
-
 typedef struct _TileLink TileLink;
 
 struct _TileLink
