@@ -1,3 +1,9 @@
+2007-12-12  Tor Lillqvist  <tml@novell.com>
+
+	* libgimpbase/gimpenv.c (gimp_locale_directory) [Win32]: Use
+	g_win32_locale_filename_from_utf8() instead of duplicating its
+	code.
+
 2007-12-12  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c: Extended public interface a bit.

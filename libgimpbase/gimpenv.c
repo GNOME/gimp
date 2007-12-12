@@ -367,24 +367,7 @@ gimp_locale_directory (void)
       gimp_locale_dir = gimp_env_get_dir ("GIMP2_LOCALEDIR", tmp);
       g_free (tmp);
 #ifdef G_OS_WIN32
-      tmp = g_locale_from_utf8 (gimp_locale_dir, -1, NULL, NULL, NULL);
-      /* g_locale_from_utf8() can fail in pathological cases, namely
-       * when the folder contains characters not in the system codepage,
-       * like Hebrew on a Western European machine.
-       */
-      if (tmp == NULL)
-	{
-	  /* Try to get the short name instead */
-	  wchar_t *w_name = g_utf8_to_utf16 (gimp_locale_dir, -1, NULL, NULL, NULL);
-	  wchar_t short_name[MAX_PATH];
-	  DWORD rc = GetShortPathNameW (w_name, short_name, G_N_ELEMENTS (short_name));
-
-	  if (rc > G_N_ELEMENTS (short_name) || rc == 0)
-	    tmp = ".";		/* eek */
-	  else
-	    tmp = g_utf16_to_utf8 (short_name, -1, NULL, NULL, NULL);
-	  g_free (w_name);
-	}
+      tmp = g_win32_locale_filename_from_utf8 (gimp_locale_dir);
       g_free (gimp_locale_dir);
       gimp_locale_dir = tmp;
 #endif
