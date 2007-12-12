@@ -248,7 +248,7 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
                             color->color.r, color->color.g, color->color.b);
       cairo_fill (cr);
 
-      if (color->opaque && color->color.a != 1.0)
+      if (! color->opaque && color->color.a < 1.0)
         {
           cairo_pattern_t *pattern;
 
@@ -284,7 +284,6 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
         }
 
       gdk_cairo_set_source_color (cr, &widget->style->fg[state]);
-
       cairo_set_line_width (cr, 1);
       cairo_stroke (cr);
 
