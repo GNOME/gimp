@@ -562,8 +562,8 @@ whirl_pinch_dialog (GimpDrawable *drawable)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                               _("_Whirl angle:"), SCALE_WIDTH, 7,
-                              wpvals.whirl, -360.0, 360.0, 1.0, 15.0, 2,
-                              TRUE, 0, 0,
+                              wpvals.whirl, -720.0, 720.0, 1.0, 15.0, 2,
+                              FALSE, -3600.0, 3600.0,
                               NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
