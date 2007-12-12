@@ -32,23 +32,40 @@
 
 
 /**
- * gimp_cairo_set_source_color:
+ * gimp_cairo_set_source_rgb:
  * @cr:    Cairo context
  * @color: GimpRGB color
  *
- * Sets the source pattern within @cr to the color described by @color.
+ * Sets the source pattern within @cr to the solid opaque color
+ * described by @color.
+ *
+ * This function calls cairo_set_source_rgb() for you.
+ *
+ * Since: GIMP 2.6
+ **/
+void
+gimp_cairo_set_source_rgb (cairo_t *cr,
+                           GimpRGB *color)
+{
+  cairo_set_source_rgb (cr, color->r, color->g, color->b);
+}
+
+/**
+ * gimp_cairo_set_source_rgba:
+ * @cr:    Cairo context
+ * @color: GimpRGB color
+ *
+ * Sets the source pattern within @cr to the solid translucent color
+ * described by @color.
  *
  * This function calls cairo_set_source_rgba() for you.
  *
  * Since: GIMP 2.6
  **/
 void
-gimp_cairo_set_source_color (cairo_t *cr,
-                             GimpRGB *color)
+gimp_cairo_set_source_rgba (cairo_t *cr,
+                           GimpRGB *color)
 {
-  g_return_if_fail (cr != NULL);
-  g_return_if_fail (color != NULL);
-
   cairo_set_source_rgba (cr, color->r, color->g, color->b, color->a);
 }
 

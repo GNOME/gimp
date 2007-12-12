@@ -1,5 +1,18 @@
 2007-12-12  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcairo-utils.[ch]: renamed
+	gimp_cairo_set_source_color() to gimp_cairo_set_source_rgb() and
+	added an RGBA variant.
+
+	* libgimpwidgets/gimpcellrenderercolor.c
+	(gimp_cell_renderer_color_render)
+	* app/widgets/gimpviewrenderer.c (gimp_view_renderer_draw): changed
+	accordingly.
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
+2007-12-12  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcairo-utils.[ch]: added new function
 	gimp_cairo_checkerboard_create() and renamed
 	gimp_cairo_create_surface_from_pixbuf() to

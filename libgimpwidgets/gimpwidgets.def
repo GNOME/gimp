@@ -9,7 +9,8 @@ EXPORTS
 	gimp_button_get_type
 	gimp_button_new
 	gimp_cairo_checkerboard_create
-	gimp_cairo_set_source_color
+	gimp_cairo_set_source_rgb
+	gimp_cairo_set_source_rgba
 	gimp_cairo_surface_create_from_pixbuf
 	gimp_cell_renderer_color_get_type
 	gimp_cell_renderer_color_new

@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcellrenderercolor.c
- * Copyright (C) 2004  Sven Neuman <sven1@gimp.org>
+ * Copyright (C) 2004,2007  Sven Neuman <sven1@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -244,8 +244,7 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
                        rect.x + 1, rect.y + 1,
                        rect.width - 2, rect.height - 2);
 
-      cairo_set_source_rgb (cr,
-                            color->color.r, color->color.g, color->color.b);
+      gimp_cairo_set_source_rgb (cr, &color->color);
       cairo_fill (cr);
 
       if (! color->opaque && color->color.a < 1.0)
@@ -263,7 +262,7 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
 
           cairo_fill_preserve (cr);
 
-          gimp_cairo_set_source_color (cr, &color->color);
+          gimp_cairo_set_source_rgba (cr, &color->color);
           cairo_fill (cr);
         }
 

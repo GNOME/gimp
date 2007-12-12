@@ -635,7 +635,7 @@ gimp_view_renderer_draw (GimpViewRenderer   *renderer,
 
       cairo_set_line_width (cr, renderer->border_width);
       cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
-      gimp_cairo_set_source_color (cr, &renderer->border_color);
+      gimp_cairo_set_source_rgb (cr, &renderer->border_color);
 
       x = draw_area->x + (draw_area->width  - width)  / 2.0;
       y = draw_area->y + (draw_area->height - height) / 2.0;
