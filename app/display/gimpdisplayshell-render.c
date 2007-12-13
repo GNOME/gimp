@@ -39,8 +39,6 @@
 #include "core/gimpimage-colormap.h"
 #include "core/gimpprojection.h"
 
-#include "widgets/gimprender.h"
-
 #include "gimpcanvas.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -56,6 +54,9 @@
                                                100% and 200% zoom)
                                              */
 
+#define GIMP_DISPLAY_RENDER_BUF_WIDTH  256
+
+
 typedef struct _RenderInfo  RenderInfo;
 
 typedef void (* RenderFunc) (RenderInfo *info);
@@ -64,9 +65,9 @@ struct _RenderInfo
 {
   GimpDisplayShell *shell;
   TileManager      *src_tiles;
-  const guint      *alpha;
   const guchar     *src;
   guchar           *dest;
+  gboolean          src_is_premult;
   gint              x, y;
   gint              w, h;
   gdouble           scalex;
@@ -99,7 +100,8 @@ struct _RenderInfo
 static void  gimp_display_shell_render_info_scale   (RenderInfo       *info,
                                                      GimpDisplayShell *shell,
                                                      TileManager      *tiles,
-                                                     gint              level);
+                                                     gint              level,
+                                                     gboolean          is_premult);
 
 static void  gimp_display_shell_render_setup_notify (GObject          *config,
                                                      GParamSpec       *param_spec,
@@ -110,6 +112,8 @@ static guchar *tile_buf    = NULL;
 
 static guint   check_mod   = 0;
 static guint   check_shift = 0;
+static guchar  check_dark  = 0;
+static guchar  check_light = 0;
 
 
 void
@@ -126,7 +130,7 @@ gimp_display_shell_render_init (Gimp *gimp)
                     gimp);
 
   /*  allocate a buffer for arranging information from a row of tiles  */
-  tile_buf = g_new (guchar, GIMP_RENDER_BUF_WIDTH * MAX_CHANNELS);
+  tile_buf = g_new (guchar, GIMP_DISPLAY_RENDER_BUF_WIDTH * MAX_CHANNELS);
 
   gimp_display_shell_render_setup_notify (G_OBJECT (gimp->config), NULL, gimp);
 }
@@ -153,10 +157,14 @@ gimp_display_shell_render_setup_notify (GObject    *config,
                                         Gimp       *gimp)
 {
   GimpCheckSize check_size;
+  GimpCheckType check_type;
 
   g_object_get (config,
                 "transparency-size", &check_size,
+                "transparency-type", &check_type,
                 NULL);
+
+  gimp_checks_get_shades (check_type, &check_light, &check_dark);
 
   switch (check_size)
     {
@@ -182,8 +190,6 @@ gimp_display_shell_render_setup_notify (GObject    *config,
 
 static void           render_image_rgb_a         (RenderInfo       *info);
 static void           render_image_gray_a        (RenderInfo       *info);
-
-static const guint  * render_image_init_alpha    (gint              mult);
 
 static const guchar * render_image_tile_fault    (RenderInfo       *info);
 
@@ -235,7 +241,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   info.h          = h;
 
   info.dest_bpp   = 3;
-  info.dest_bpl   = info.dest_bpp * GIMP_RENDER_BUF_WIDTH;
+  info.dest_bpl   = info.dest_bpp * GIMP_DISPLAY_RENDER_BUF_WIDTH;
   info.dest_width = info.dest_bpp * info.w;
 
   switch (GIMP_DISPLAY_CONFIG (image->gimp->config)->zoom_quality)
@@ -249,25 +255,19 @@ gimp_display_shell_render (GimpDisplayShell *shell,
       break;
     }
 
-  if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_projection_get_image_type (projection)))
-    {
-      gdouble opacity = gimp_projection_get_opacity (projection);
-
-      info.alpha = render_image_init_alpha (opacity * 255.999);
-    }
-
   /* Setup RenderInfo for rendering a GimpProjection level. */
   {
-    TileManager *src_tiles;
+    TileManager *tiles;
     gint         level;
+    gboolean     premult;
 
     level = gimp_projection_get_level (projection,
                                        shell->scale_x,
                                        shell->scale_y);
 
-    src_tiles = gimp_projection_get_tiles_at_level (projection, level);
+    tiles = gimp_projection_get_tiles_at_level (projection, level, &premult);
 
-    gimp_display_shell_render_info_scale (&info, shell, src_tiles, level);
+    gimp_display_shell_render_info_scale (&info, shell, tiles, level, premult);
   }
 
   /* Currently, only RGBA and GRAYA projection types are used. */
@@ -292,7 +292,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                       shell->render_buf,
                                       w, h,
                                       3,
-                                      3 * GIMP_RENDER_BUF_WIDTH);
+                                      3 * GIMP_DISPLAY_RENDER_BUF_WIDTH);
 
   /*  dim pixels outside the highlighted rectangle  */
   if (highlight)
@@ -301,10 +301,10 @@ gimp_display_shell_render (GimpDisplayShell *shell,
     }
   else if (shell->mask)
     {
-      TileManager *src_tiles = gimp_drawable_get_tiles (shell->mask);
+      TileManager *tiles = gimp_drawable_get_tiles (shell->mask);
 
       /* The mask does not (yet) have an image pyramid, use 0 as level, */
-      gimp_display_shell_render_info_scale (&info, shell, src_tiles, 0);
+      gimp_display_shell_render_info_scale (&info, shell, tiles, 0, FALSE);
 
       gimp_display_shell_render_mask (shell, &info);
     }
@@ -314,7 +314,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                         x + shell->disp_xoffset, y + shell->disp_yoffset,
                         w, h,
                         shell->render_buf,
-                        3 * GIMP_RENDER_BUF_WIDTH,
+                        3 * GIMP_DISPLAY_RENDER_BUF_WIDTH,
                         shell->offset_x, shell->offset_y);
 }
 
@@ -354,7 +354,7 @@ gimp_display_shell_render_highlight (GimpDisplayShell *shell,
           for (x = 0; x < w; x++)
             GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
 
-          buf += 3 * GIMP_RENDER_BUF_WIDTH;
+          buf += 3 * GIMP_DISPLAY_RENDER_BUF_WIDTH;
         }
 
       for ( ; y < rect.y + rect.height; y++)
@@ -365,7 +365,7 @@ gimp_display_shell_render_highlight (GimpDisplayShell *shell,
           for (x += rect.width; x < w; x++)
             GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
 
-          buf += 3 * GIMP_RENDER_BUF_WIDTH;
+          buf += 3 * GIMP_DISPLAY_RENDER_BUF_WIDTH;
         }
 
       for ( ; y < h; y++)
@@ -373,7 +373,7 @@ gimp_display_shell_render_highlight (GimpDisplayShell *shell,
           for (x = 0; x < w; x++)
             GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
 
-          buf += 3 * GIMP_RENDER_BUF_WIDTH;
+          buf += 3 * GIMP_DISPLAY_RENDER_BUF_WIDTH;
         }
     }
   else
@@ -383,7 +383,7 @@ gimp_display_shell_render_highlight (GimpDisplayShell *shell,
           for (x = 0; x < w; x++)
             GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
 
-          buf += 3 * GIMP_RENDER_BUF_WIDTH;
+          buf += 3 * GIMP_DISPLAY_RENDER_BUF_WIDTH;
         }
     }
 }
@@ -467,9 +467,8 @@ gimp_display_shell_render_mask (GimpDisplayShell *shell,
 static void
 render_image_gray_a (RenderInfo *info)
 {
-  const guint *alpha = info->alpha;
-  gint         y, ye;
-  gint         x, xe;
+  gint  y, ye;
+  gint  x, xe;
 
   y  = info->y;
   ye = info->y + info->h;
@@ -486,27 +485,20 @@ render_image_gray_a (RenderInfo *info)
 
       dark_light = (y >> check_shift) + (info->x >> check_shift);
 
-      for (x = info->x; x < xe; x++)
+      for (x = info->x; x < xe; x++, src += 2, dest += 3)
         {
-          const guint a = alpha[src[ALPHA_G_PIX]];
-          guchar      val;
+          guint v;
 
           if (dark_light & 0x1)
-            val = gimp_render_blend_dark_check[(a | src[GRAY_PIX])];
+            v = ((src[0] << 8) + check_dark  * (256 - src[1])) >> 8;
           else
-            val = gimp_render_blend_light_check[(a | src[GRAY_PIX])];
+            v = ((src[0] << 8) + check_light * (256 - src[1])) >> 8;
 
-          src += 2;
-
-          dest[0] = val;
-          dest[1] = val;
-          dest[2] = val;
-          dest += 3;
+          dest[0] = dest[1] = dest[2] = v;
 
           if (((x + 1) & check_mod) == 0)
             dark_light += 1;
         }
-
 
       if (++y == ye)
         break;
@@ -524,9 +516,8 @@ render_image_gray_a (RenderInfo *info)
 static void
 render_image_rgb_a (RenderInfo *info)
 {
-  const guint *alpha = info->alpha;
-  gint         y, ye;
-  gint         x, xe;
+  gint  y, ye;
+  gint  x, xe;
 
   y  = info->y;
   ye = info->y + info->h;
@@ -543,25 +534,26 @@ render_image_rgb_a (RenderInfo *info)
 
       dark_light = (y >> check_shift) + (info->x >> check_shift);
 
-      for (x = info->x; x < xe; x++)
+      for (x = info->x; x < xe; x++, src += 4, dest += 3)
         {
-          const guint a = alpha[src[ALPHA_PIX]];
+          guint r, g, b;
 
           if (dark_light & 0x1)
             {
-              dest[0] = gimp_render_blend_dark_check[(a | src[RED_PIX])];
-              dest[1] = gimp_render_blend_dark_check[(a | src[GREEN_PIX])];
-              dest[2] = gimp_render_blend_dark_check[(a | src[BLUE_PIX])];
+              r = ((src[0] << 8) + check_dark  * (256 - src[3])) >> 8;
+              g = ((src[1] << 8) + check_dark  * (256 - src[3])) >> 8;
+              b = ((src[2] << 8) + check_dark  * (256 - src[3])) >> 8;
             }
           else
             {
-              dest[0] = gimp_render_blend_light_check[(a | src[RED_PIX])];
-              dest[1] = gimp_render_blend_light_check[(a | src[GREEN_PIX])];
-              dest[2] = gimp_render_blend_light_check[(a | src[BLUE_PIX])];
+              r = ((src[0] << 8) + check_light * (256 - src[3])) >> 8;
+              g = ((src[1] << 8) + check_light * (256 - src[3])) >> 8;
+              b = ((src[2] << 8) + check_light * (256 - src[3])) >> 8;
             }
 
-          src += 4;
-          dest += 3;
+          dest[0] = r;
+          dest[1] = g;
+          dest[2] = b;
 
           if (((x + 1) & check_mod) == 0)
             dark_light += 1;
@@ -585,9 +577,11 @@ static void
 gimp_display_shell_render_info_scale (RenderInfo       *info,
                                       GimpDisplayShell *shell,
                                       TileManager      *tiles,
-                                      gint              level)
+                                      gint              level,
+                                      gboolean          is_premult)
 {
-  info->src_tiles = tiles;
+  info->src_tiles      = tiles;
+  info->src_is_premult = is_premult;
 
   /* We must reset info->dest because this member is modified in render
    * functions.
@@ -643,27 +637,7 @@ gimp_display_shell_render_info_scale (RenderInfo       *info,
     }
 }
 
-static const guint *
-render_image_init_alpha (gint mult)
-{
-  static guint *alpha_mult = NULL;
-  static gint   alpha_val  = -1;
-
-  if (alpha_val != mult)
-    {
-      gint i;
-
-      if (!alpha_mult)
-        alpha_mult = g_new (guint, 256);
-
-      alpha_val = mult;
-      for (i = 0; i < 256; i++)
-        alpha_mult[i] = ((mult * i) / 255) << 8;
-    }
-
-  return alpha_mult;
-}
-
+/* This version assumes that the src data is already pre-multiplied. */
 static inline void
 box_filter (const guint    left_weight,
             const guint    center_weight,
@@ -674,6 +648,38 @@ box_filter (const guint    left_weight,
             const guchar **src,   /* the 9 surrounding source pixels */
             guchar        *dest,
             const gint     bpp)
+{
+  const guint sum = ((left_weight + center_weight + right_weight) *
+                     (top_weight + middle_weight + bottom_weight));
+  gint i;
+
+  for (i = 0; i < bpp; i++)
+    {
+      dest[i] = ( left_weight   * ((src[0][i] * top_weight) +
+                                   (src[3][i] * middle_weight) +
+                                   (src[6][i] * bottom_weight))
+                + center_weight * ((src[1][i] * top_weight) +
+                                   (src[4][i] * middle_weight) +
+                                   (src[7][i] * bottom_weight))
+                + right_weight  * ((src[2][i] * top_weight) +
+                                   (src[5][i] * middle_weight) +
+                                   (src[8][i] * bottom_weight))) / sum;
+    }
+}
+
+/* This version assumes that the src data is not pre-multipled.
+ * It creates pre-multiplied output though.
+ */
+static inline void
+box_filter_premult (const guint    left_weight,
+                    const guint    center_weight,
+                    const guint    right_weight,
+                    const guint    top_weight,
+                    const guint    middle_weight,
+                    const guint    bottom_weight,
+                    const guchar **src,   /* the 9 surrounding source pixels */
+                    guchar        *dest,
+                    const gint     bpp)
 {
   const guint sum = ((left_weight + center_weight + right_weight) *
                      (top_weight + middle_weight + bottom_weight)) >> 4;
@@ -699,33 +705,24 @@ box_filter (const guint    left_weight,
           guint a = (center_weight * (factors[0] + factors[1] + factors[2]) +
                      right_weight  * (factors[3] + factors[4] + factors[5]) +
                      left_weight   * (factors[6] + factors[7] + factors[8]));
+          guint i;
 
-          if (a)
+          for (i = 0; i < ALPHA; i++)
             {
-              gint i;
+              dest[i] = ((center_weight * (factors[0] * src[1][i] +
+                                           factors[1] * src[4][i] +
+                                           factors[2] * src[7][i]) +
 
-              for (i = 0; i < ALPHA; i++)
-                {
-                  dest[i] = ((center_weight * (factors[0] * src[1][i] +
-                                               factors[1] * src[4][i] +
-                                               factors[2] * src[7][i]) +
+                          right_weight  * (factors[3] * src[2][i] +
+                                           factors[4] * src[5][i] +
+                                           factors[5] * src[8][i]) +
 
-                              right_weight  * (factors[3] * src[2][i] +
-                                               factors[4] * src[5][i] +
-                                               factors[5] * src[8][i]) +
-
-                              left_weight   * (factors[6] * src[0][i] +
-                                               factors[7] * src[3][i] +
-                                               factors[8] * src[6][i])
-                              ) / a) & 0xff;
-                }
-
-              dest[ALPHA] = (a + (sum >> 1)) / sum;
+                          left_weight   * (factors[6] * src[0][i] +
+                                           factors[7] * src[3][i] +
+                                           factors[8] * src[6][i])) / sum) >> 8;
             }
-          else
-            {
-              dest[ALPHA] = 0;
-            }
+
+          dest[ALPHA] = (a + (sum >> 1)) / sum;
         }
 #undef ALPHA
         break;
@@ -753,33 +750,24 @@ box_filter (const guint    left_weight,
           guint a = (center_weight * (factors[0] + factors[1] + factors[2]) +
                      right_weight  * (factors[3] + factors[4] + factors[5]) +
                      left_weight   * (factors[6] + factors[7] + factors[8]));
+          guint i;
 
-          if (a)
+          for (i = 0; i < ALPHA; i++)
             {
-              gint i;
+              dest[i] = ((center_weight * (factors[0] * src[1][i] +
+                                           factors[1] * src[4][i] +
+                                           factors[2] * src[7][i]) +
 
-              for (i = 0; i < ALPHA; i++)
-                {
-                  dest[i] = ((center_weight * (factors[0] * src[1][i] +
-                                               factors[1] * src[4][i] +
-                                               factors[2] * src[7][i]) +
+                          right_weight  * (factors[3] * src[2][i] +
+                                           factors[4] * src[5][i] +
+                                           factors[5] * src[8][i]) +
 
-                              right_weight  * (factors[3] * src[2][i] +
-                                               factors[4] * src[5][i] +
-                                               factors[5] * src[8][i]) +
-
-                              left_weight   * (factors[6] * src[0][i] +
-                                               factors[7] * src[3][i] +
-                                               factors[8] * src[6][i])
-                              ) / a) & 0xff;
-                }
-
-              dest[ALPHA] = (a + (sum >> 1)) / sum;
+                          left_weight   * (factors[6] * src[0][i] +
+                                           factors[7] * src[3][i] +
+                                           factors[8] * src[6][i])) / sum) >> 8;
             }
-          else
-            {
-              dest[ALPHA] = 0;
-            }
+
+          dest[ALPHA] = (a + (sum >> 1)) / sum;
         }
 #undef ALPHA
         break;
@@ -799,7 +787,9 @@ static const guchar * render_image_tile_fault_nearest  (RenderInfo *info);
  *  678
  */
 
-/* function to render a horizontal line of view data */
+/* Function to render a horizontal line of view data.  The data
+ * returned from this function has the alpha channel pre-multiplied.
+ */
 static const guchar *
 render_image_tile_fault (RenderInfo *info)
 {
@@ -1032,9 +1022,14 @@ render_image_tile_fault (RenderInfo *info)
            src[8] = src[5];
         }
 
-      box_filter (left_weight, center_weight, right_weight,
-                  top_weight, middle_weight, bottom_weight,
-                  src, dest, bpp);
+      if (info->src_is_premult)
+        box_filter (left_weight, center_weight, right_weight,
+                    top_weight, middle_weight, bottom_weight,
+                    src, dest, bpp);
+      else
+        box_filter_premult (left_weight, center_weight, right_weight,
+                            top_weight, middle_weight, bottom_weight,
+                            src, dest, bpp);
 
       dest += bpp;
 
@@ -1253,83 +1248,6 @@ done:
   return tile_buf;
 }
 
-/* function to render a horizontal line of view data */
-static const guchar *
-render_image_tile_fault_nearest (RenderInfo *info)
-{
-  Tile         *tile;
-  const guchar *src;
-  guchar       *dest;
-  gint          width;
-  gint          tilex;
-  gint          bpp;
-  gint          src_x;
-  gint64        dx;
-
-  tile = tile_manager_get_tile (info->src_tiles,
-                                info->src_x, info->src_y, TRUE, FALSE);
-
-  g_return_val_if_fail (tile != NULL, tile_buf);
-
-  src = tile_data_pointer (tile, info->src_x, info->src_y);
-
-  bpp   = tile_manager_bpp (info->src_tiles);
-  dest  = tile_buf;
-
-  dx    = info->dx_start;
-
-  width = info->w;
-
-  src_x = info->src_x;
-  tilex = info->src_x / TILE_WIDTH;
-
-  do
-    {
-      const guchar *s = src;
-      gint          skipped;
-
-      switch (bpp)
-        {
-        case 4:
-          *dest++ = *s++;
-        case 3:
-          *dest++ = *s++;
-        case 2:
-          *dest++ = *s++;
-        case 1:
-          *dest++ = *s++;
-        }
-
-      dx += info->x_dest_inc;
-      skipped = dx / info->x_src_dec;
-
-      if (skipped)
-        {
-          src += skipped * bpp;
-          src_x += skipped;
-          dx -= skipped * info->x_src_dec;
-
-          if ((src_x / TILE_WIDTH) != tilex)
-            {
-              tile_release (tile, FALSE);
-              tilex += 1;
-
-              tile = tile_manager_get_tile (info->src_tiles,
-                                            src_x, info->src_y, TRUE, FALSE);
-              if (! tile)
-                return tile_buf;
-
-              src = tile_data_pointer (tile, src_x, info->src_y);
-            }
-        }
-    }
-  while (--width);
-
-  tile_release (tile, FALSE);
-
-  return tile_buf;
-}
-
 static const guchar *
 render_image_tile_fault_one_row (RenderInfo *info)
 {
@@ -1476,9 +1394,14 @@ render_image_tile_fault_one_row (RenderInfo *info)
           src[8] = src[7];
         }
 
-      box_filter (left_weight, center_weight, right_weight,
-                  top_weight, middle_weight, bottom_weight,
-                  src, dest, bpp);
+      if (info->src_is_premult)
+        box_filter (left_weight, center_weight, right_weight,
+                    top_weight, middle_weight, bottom_weight,
+                    src, dest, bpp);
+      else
+        box_filter_premult (left_weight, center_weight, right_weight,
+                            top_weight, middle_weight, bottom_weight,
+                            src, dest, bpp);
 
       dest += bpp;
 
@@ -1611,9 +1534,111 @@ render_image_tile_fault_one_row (RenderInfo *info)
   while (--width);
 
 done:
-  for (dx=0; dx<3; dx++)
+  for (dx = 0; dx < 3; dx++)
     if (tile[dx])
       tile_release (tile[dx], FALSE);
+
+  return tile_buf;
+}
+
+/* function to render a horizontal line of view data */
+static const guchar *
+render_image_tile_fault_nearest (RenderInfo *info)
+{
+  Tile         *tile;
+  const guchar *src;
+  guchar       *d;
+  gint          width;
+  gint          tilex;
+  gint          bpp;
+  gint          src_x;
+  gint64        dx;
+
+  tile = tile_manager_get_tile (info->src_tiles,
+                                info->src_x, info->src_y, TRUE, FALSE);
+
+  g_return_val_if_fail (tile != NULL, tile_buf);
+
+  src = tile_data_pointer (tile, info->src_x, info->src_y);
+
+  bpp   = tile_manager_bpp (info->src_tiles);
+
+  dx    = info->dx_start;
+
+  width = info->w;
+
+  src_x = info->src_x;
+  tilex = info->src_x / TILE_WIDTH;
+
+  d     = tile_buf;
+
+  do
+    {
+      const guchar *s = src;
+      gint          skipped;
+
+      if (info->src_is_premult)
+        {
+          switch (bpp)
+            {
+            case 4:
+              *d++ = *s++;
+              *d++ = *s++;
+            case 2:
+              *d++ = *s++;
+              *d++ = *s++;
+            }
+        }
+      else  /* pre-multiply */
+        {
+          switch (bpp)
+            {
+            case 4:
+              d[0] = (s[0] * s[3]) >> 8;
+              d[1] = (s[1] * s[3]) >> 8;
+              d[2] = (s[2] * s[3]) >> 8;
+              d[3] = s[3];
+
+              d += 4;
+              s += 4;
+              break;
+
+            case 2:
+              d[0] = (s[0] * s[1]) >> 8;
+              d[1] = s[1];
+
+              d += 2;
+              s += 2;
+              break;
+            }
+        }
+
+      dx += info->x_dest_inc;
+      skipped = dx / info->x_src_dec;
+
+      if (skipped)
+        {
+          src += skipped * bpp;
+          src_x += skipped;
+          dx -= skipped * info->x_src_dec;
+
+          if ((src_x / TILE_WIDTH) != tilex)
+            {
+              tile_release (tile, FALSE);
+              tilex += 1;
+
+              tile = tile_manager_get_tile (info->src_tiles,
+                                            src_x, info->src_y, TRUE, FALSE);
+              if (! tile)
+                return tile_buf;
+
+              src = tile_data_pointer (tile, src_x, info->src_y);
+            }
+        }
+    }
+  while (--width);
+
+  tile_release (tile, FALSE);
 
   return tile_buf;
 }

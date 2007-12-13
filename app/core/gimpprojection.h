@@ -85,7 +85,8 @@ TileManager    * gimp_projection_get_tiles        (GimpProjection       *proj);
 
 TileManager    * gimp_projection_get_tiles_at_level
                                                   (GimpProjection       *proj,
-                                                   gint                  level);
+                                                   gint                  level,
+                                                   gboolean             *is_premult);
 gint             gimp_projection_get_level        (GimpProjection       *proj,
                                                    gdouble               scale_x,
                                                    gdouble               scale_y);
@@ -93,7 +94,6 @@ gint             gimp_projection_get_level        (GimpProjection       *proj,
 GimpImage      * gimp_projection_get_image        (const GimpProjection *proj);
 GimpImageType    gimp_projection_get_image_type   (const GimpProjection *proj);
 gint             gimp_projection_get_bytes        (const GimpProjection *proj);
-gdouble          gimp_projection_get_opacity      (const GimpProjection *proj);
 
 void             gimp_projection_flush            (GimpProjection       *proj);
 void             gimp_projection_flush_now        (GimpProjection       *proj);

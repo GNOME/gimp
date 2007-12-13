@@ -1,5 +1,31 @@
 2007-12-13  Sven Neumann  <sven@gimp.org>
 
+	Speed up our display rendering code paths by keeping data with
+	pre-multiplied alpha where possible. The projection tile-manager
+	at 100 % zoom is not affected. So we can still always get the
+	non-pre-multiplied pixel data.
+
+	* app/core/gimpprojection.[ch]: removed
+	gimp_projection_get_opacity(), the projection is always opaque.
+
+	* app/base/tile-pyramid.[ch]: use pre-multiplied alpha for the
+	upper levels of the pyramid. This speeds up validation of the
+	upper levels significantly.
+
+	* app/base/temp-buf.[ch]: added temp_buf_demultiply().
+
+	* app/core/gimpimage-preview.c: demultiply the preview temp-buf
+	obtained from the projection's tile tyramid.
+
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-render.c: added code to deal with
+	pre-multiplied data. In fact all data returned by
+	render_image_tile_fault() is now pre-multiplied so that
+	render_image_rgb_a() and render_image_gray_a() don't need to use
+	the large lookup tables from gimprender.[ch] any longer.
+
+2007-12-13  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimprender.[ch]: export the light and dark check
 	color so that places that just need this information don't have to
 	access the gimp_render_blend_{dark,light}_check arrays.

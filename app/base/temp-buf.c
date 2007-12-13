@@ -54,11 +54,11 @@ temp_buf_new (gint          width,
 
   temp = g_slice_new (TempBuf);
 
-  temp->width  = width;
-  temp->height = height;
-  temp->bytes  = bytes;
-  temp->x      = x;
-  temp->y      = y;
+  temp->bytes   = bytes;
+  temp->width   = width;
+  temp->height  = height;
+  temp->x       = x;
+  temp->y       = y;
 
   temp->data = g_new (guchar, width * height * bytes);
 
@@ -240,13 +240,13 @@ temp_buf_scale (TempBuf *src,
                 gint     new_width,
                 gint     new_height)
 {
-  TempBuf *dest;
-  guchar  *src_data;
-  guchar  *dest_data;
-  gdouble  x_ratio;
-  gdouble  y_ratio;
-  gint     loop1;
-  gint     loop2;
+  TempBuf      *dest;
+  const guchar *src_data;
+  guchar       *dest_data;
+  gdouble       x_ratio;
+  gdouble       y_ratio;
+  gint          loop1;
+  gint          loop2;
 
   g_return_val_if_fail (src != NULL, NULL);
   g_return_val_if_fail (new_width > 0 && new_height > 0, NULL);
@@ -266,9 +266,9 @@ temp_buf_scale (TempBuf *src,
     {
       for (loop2 = 0 ; loop2 < new_width ; loop2++)
         {
-          guchar *src_pixel;
-          guchar *dest_pixel;
-          gint    i;
+          const guchar *src_pixel;
+          guchar       *dest_pixel;
+          gint          i;
 
           src_pixel = src_data +
             (gint) (loop2 * x_ratio) * src->bytes +
@@ -344,38 +344,93 @@ temp_buf_copy_area (TempBuf *src,
   return new;
 }
 
+/**
+ * temp_buf_demultiply:
+ * @buf:
+ *
+ * Converts a TempBuf with pre-multiplied alpha to a 'normal' TempBuf.
+ */
 void
-temp_buf_free (TempBuf *temp_buf)
+temp_buf_demultiply (TempBuf *buf)
 {
-  g_return_if_fail (temp_buf != NULL);
+  guchar *data;
+  gint    pixels;
+  gint    x, y;
 
-  if (temp_buf->data)
-    g_free (temp_buf->data);
+  g_return_if_fail (buf != NULL);
 
-  g_slice_free (TempBuf, temp_buf);
+  switch (buf->bytes)
+    {
+    case 1:
+      break;
+
+    case 2:
+      data = temp_buf_data (buf);
+      pixels = buf->width * buf->height;
+      while (pixels--)
+        {
+          if (data[1])
+              data[0] = (data[0] << 8) / data[1];
+
+          data += 2;
+        }
+      break;
+
+    case 3:
+      break;
+
+    case 4:
+      data = temp_buf_data (buf);
+      pixels = buf->width * buf->height;
+      while (pixels--)
+        {
+          if (data[3])
+            {
+              data[0] = (data[0] << 8) / data[3];
+              data[1] = (data[1] << 8) / data[3];
+              data[2] = (data[2] << 8) / data[3];
+            }
+
+          data += 4;
+        }
+      break;
+
+    default:
+      g_return_if_reached ();
+      break;
+    }
+}
+
+void
+temp_buf_free (TempBuf *buf)
+{
+  g_return_if_fail (buf != NULL);
+
+  if (buf->data)
+    g_free (buf->data);
+
+  g_slice_free (TempBuf, buf);
 }
 
 guchar *
-temp_buf_data (TempBuf *temp_buf)
+temp_buf_data (TempBuf *buf)
 {
-  return temp_buf->data;
+  return buf->data;
 }
 
 guchar *
-temp_buf_data_clear (TempBuf *temp_buf)
+temp_buf_data_clear (TempBuf *buf)
 {
-  memset (temp_buf->data, 0,
-          temp_buf->height * temp_buf->width * temp_buf->bytes);
+  memset (buf->data, 0, buf->height * buf->width * buf->bytes);
 
-  return temp_buf->data;
+  return buf->data;
 }
 
 gsize
-temp_buf_get_memsize (TempBuf *temp_buf)
+temp_buf_get_memsize (TempBuf *buf)
 {
-  if (temp_buf)
-    return (sizeof (TempBuf) +
-            (gsize) temp_buf->bytes * temp_buf->width * temp_buf->height);
+  if (buf)
+    return (sizeof (TempBuf) + buf->bytes * buf->width * buf->height);
 
   return 0;
 }

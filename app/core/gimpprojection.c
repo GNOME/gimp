@@ -306,13 +306,14 @@ gimp_projection_new (GimpImage *image)
 TileManager *
 gimp_projection_get_tiles (GimpProjection *proj)
 {
-  return gimp_projection_get_tiles_at_level (proj, 0);
+  return gimp_projection_get_tiles_at_level (proj, 0, NULL);
 
 }
 
 TileManager *
 gimp_projection_get_tiles_at_level (GimpProjection *proj,
-                                    gint            level)
+                                    gint            level,
+                                    gboolean       *is_premult)
 {
   g_return_val_if_fail (GIMP_IS_PROJECTION (proj), NULL);
 
@@ -327,7 +328,7 @@ gimp_projection_get_tiles_at_level (GimpProjection *proj,
                                       proj);
     }
 
-  return tile_pyramid_get_tiles (proj->pyramid, level);
+  return tile_pyramid_get_tiles (proj->pyramid, level, is_premult);
 }
 
 /**
@@ -382,14 +383,6 @@ gimp_projection_get_bytes (const GimpProjection *proj)
   g_return_val_if_fail (GIMP_IS_PROJECTION (proj), 0);
 
   return GIMP_IMAGE_TYPE_BYTES (gimp_projection_get_image_type (proj));
-}
-
-gdouble
-gimp_projection_get_opacity (const GimpProjection *proj)
-{
-  g_return_val_if_fail (GIMP_IS_PROJECTION (proj), GIMP_OPACITY_OPAQUE);
-
-  return GIMP_OPACITY_OPAQUE;
 }
 
 void

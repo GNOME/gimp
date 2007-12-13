@@ -109,7 +109,7 @@ gimp_image_get_preview (GimpViewable *viewable,
         temp_buf_free (image->preview);
 
       image->preview = gimp_image_get_new_preview (viewable, context,
-                                                        width, height);
+                                                   width, height);
 
       return image->preview;
     }
@@ -122,16 +122,28 @@ gimp_image_get_new_preview (GimpViewable *viewable,
                             gint          height)
 {
   GimpImage   *image = GIMP_IMAGE (viewable);
+  TempBuf     *buf;
   TileManager *tiles;
   gdouble      scale_x;
   gdouble      scale_y;
   gint         level;
+  gboolean     is_premult;
 
   scale_x = (gdouble) width  / (gdouble) image->width;
   scale_y = (gdouble) height / (gdouble) image->height;
 
   level = gimp_projection_get_level (image->projection, scale_x, scale_y);
-  tiles = gimp_projection_get_tiles_at_level (image->projection, level);
 
-  return tile_manager_get_preview (tiles, width, height);
+  tiles = gimp_projection_get_tiles_at_level (image->projection, level,
+                                              &is_premult);
+
+  buf = tile_manager_get_preview (tiles, width, height);
+
+  /* FIXME: We could avoid this if the view renderer and all other
+   *        preview code would know how to deal with pre-multiply alpha.
+   */
+  if (is_premult)
+    temp_buf_demultiply (buf);
+
+  return buf;
 }

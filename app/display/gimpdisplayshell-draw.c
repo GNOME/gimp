@@ -520,7 +520,7 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
 
   level = gimp_projection_get_level (proj, shell->scale_x, shell->scale_y);
 
-  tiles = gimp_projection_get_tiles_at_level (proj, level);
+  tiles = gimp_projection_get_tiles_at_level (proj, level, NULL);
 
   level_width  = tile_manager_width (tiles);
   level_height = tile_manager_height (tiles);

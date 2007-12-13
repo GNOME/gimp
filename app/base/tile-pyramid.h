@@ -30,7 +30,8 @@ gint          tile_pyramid_get_level         (gint               width,
                                               gdouble            scale);
 
 TileManager * tile_pyramid_get_tiles         (TilePyramid       *pyramid,
-                                              gint               level);
+                                              gint               level,
+                                              gboolean          *is_premult);
 
 void          tile_pyramid_invalidate_area   (TilePyramid       *pyramid,
                                               gint               x,

@@ -22,12 +22,12 @@
 
 struct _TempBuf
 {
-  gint    bytes;      /*  the necessary info                             */
-  gint    width;
-  gint    height;
-  gint    x, y;       /*  origin of data source                          */
-  guchar *data;       /*  The data buffer. Do never access this field
-                          directly, use temp_buf_data() instead !!       */
+  gint      bytes;      /*  number of bytes per pixel (1,2,3 or 4)         */
+  gint      width;
+  gint      height;
+  gint      x, y;       /*  origin of data source                          */
+  guchar   *data;       /*  The data buffer. Do never access this field
+                            directly, use temp_buf_data() instead !!       */
 };
 
 
@@ -62,6 +62,9 @@ TempBuf * temp_buf_copy_area   (TempBuf       *src,
                                 gint           height,
                                 gint           dest_x,
                                 gint           dest_y);
+
+void      temp_buf_demultiply  (TempBuf       *buf);
+
 void      temp_buf_free        (TempBuf       *buf);
 guchar  * temp_buf_data        (TempBuf       *buf);
 guchar  * temp_buf_data_clear  (TempBuf       *buf);
