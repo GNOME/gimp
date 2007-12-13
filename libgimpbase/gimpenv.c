@@ -236,6 +236,34 @@ gimp_directory (void)
   return gimp_dir;
 }
 
+#ifdef G_OS_WIN32
+
+static HMODULE libgimpbase_dll = NULL;
+
+/* Minimal DllMain that just stores the handle to this DLL */
+
+BOOL WINAPI			/* Avoid silly "no previous prototype" gcc warning */
+DllMain (HINSTANCE hinstDLL,
+	 DWORD     fdwReason,
+	 LPVOID    lpvReserved);
+
+BOOL WINAPI
+DllMain (HINSTANCE hinstDLL,
+	 DWORD     fdwReason,
+	 LPVOID    lpvReserved)
+{
+  switch (fdwReason)
+    {
+    case DLL_PROCESS_ATTACH:
+      libgimpbase_dll = hinstDLL;
+      break;
+    }
+
+  return TRUE;
+}
+
+#endif
+
 static const gchar *
 gimp_toplevel_directory (void)
 {
@@ -246,23 +274,22 @@ gimp_toplevel_directory (void)
 
 #ifdef G_OS_WIN32
   {
-    /* Figure it out from the executable name */
+    /* Figure it out from the location of this DLL */
     gchar *filename;
     gchar *sep1, *sep2;
 
     wchar_t w_filename[MAX_PATH];
 
-    if (GetModuleFileNameW (NULL, w_filename, G_N_ELEMENTS (w_filename)) == 0)
+    if (GetModuleFileNameW (libgimpbase_dll, w_filename, G_N_ELEMENTS (w_filename)) == 0)
       g_error ("GetModuleFilenameW failed");
 
     filename = g_utf16_to_utf8 (w_filename, -1, NULL, NULL, NULL);
     if (filename == NULL)
       g_error ("Converting module filename to UTF-8 failed");
 
-    /* If the executable file name is of the format
-     * <foobar>\bin\*.exe or
-     * <foobar>\lib\gimp\GIMP_API_VERSION\plug-ins\*.exe, use <foobar>.
-     * Otherwise, use the directory where the executable is.
+    /* If the DLL file name is of the format
+     * <foobar>\bin\*.dll, use <foobar>.
+     * Otherwise, use the directory where the DLL is.
      */
 
     sep1 = strrchr (filename, '\\');
@@ -274,20 +301,6 @@ gimp_toplevel_directory (void)
         if (g_ascii_strcasecmp (sep2 + 1, "bin") == 0)
           {
             *sep2 = '\0';
-          }
-        else
-          {
-            gchar test[MAX_PATH];
-
-            g_snprintf (test, sizeof (test) - 1,
-                        "\\lib\\gimp\\%s\\plug-ins", GIMP_API_VERSION);
-
-            if (strlen (filename) > strlen (test) &&
-                g_ascii_strcasecmp (filename + strlen (filename) - strlen (test),
-                                    test) == 0)
-              {
-                filename[strlen (filename) - strlen (test)] = '\0';
-              }
           }
       }
 

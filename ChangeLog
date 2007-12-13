@@ -1,3 +1,13 @@
+2007-12-13  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* libgimpbase/gimpenv.c (gimp_toplevel_directory) [Win32]: Use
+	the location of the libgimpbase DLL and not that of the main
+	executable (which will be the Python interpreter in the case of
+	python-fu) to determine the top-level GIMP installation
+	folder. (#502506)
+
 2007-12-12  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
