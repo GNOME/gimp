@@ -227,7 +227,12 @@ gimp_crop_tool_button_press (GimpTool        *tool,
                              GdkModifierType  state,
                              GimpDisplay     *display)
 {
-  if (tool->display && display != tool->display)
+  GimpRectangleTool *rect_tool;
+
+  rect_tool = GIMP_RECTANGLE_TOOL (tool);
+
+  if (gimp_rectangle_tool_is_active (rect_tool) &&
+      ! gimp_rectangle_tool_is_active_at (rect_tool, display))
     gimp_rectangle_tool_cancel (GIMP_RECTANGLE_TOOL (tool));
 
   gimp_rectangle_tool_button_press (tool, coords, time, state, display);
@@ -289,13 +294,15 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
   GimpTool        *tool;
   GimpCropOptions *options;
   GimpImage       *image;
+  GimpDisplay     *display;
 
   tool    = GIMP_TOOL (rectangle);
   options = GIMP_CROP_TOOL_GET_OPTIONS (tool);
+  display = gimp_rectangle_tool_get_active_display (rectangle);
 
-  gimp_tool_pop_status (tool, tool->display);
+  gimp_tool_pop_status (tool, display);
 
-  image = tool->display->image;
+  image = display->image;
 
   /* if rectangle exists, crop it */
   if (w > 0 && h > 0)
