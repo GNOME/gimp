@@ -1,3 +1,9 @@
+2007-12-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_button_release): Make canceling work a bit
+	better.
+
 2007-12-13  Sven Neumann  <sven@gimp.org>
 
 	* app/base/tile-pyramid.c (tile_pyramid_write_quarter)
