@@ -350,7 +350,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
   priv          = GIMP_RECT_SELECT_TOOL_GET_PRIVATE(rect_sel_tool);
 
   if (gimp_rectangle_tool_is_active (rectangle) &&
-      ! gimp_rectangle_tool_is_active_at (rectangle, display))
+      ! gimp_rectangle_tool_is_active_on_display (rectangle, display))
     gimp_rectangle_tool_cancel (GIMP_RECTANGLE_TOOL (tool));
 
   function = gimp_rectangle_tool_get_function (rectangle);

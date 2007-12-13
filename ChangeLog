@@ -1,5 +1,14 @@
 2007-12-13  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangletool.[ch]: Changed name of
+	`gimp_rectangle_tool_is_active_at' to
+	`gimp_rectangle_tool_is_active_on_display'.
+
+	* app/tools/gimpcroptool.c
+	* app/tools/gimprectangleselecttool.c: Use the new name.
+
+2007-12-13  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangletool.[ch]: Don't use the `display' member
 	of GimpTool for keeping track of what display the rectangle is
 	active on. Instead store the active display in

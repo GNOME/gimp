@@ -143,7 +143,7 @@ gboolean    gimp_rectangle_tool_point_in_rectangle  (GimpRectangleTool       *re
                                                      gdouble                  x,
                                                      gdouble                  y);
 GimpDisplay*gimp_rectangle_tool_get_active_display  (GimpRectangleTool       *rect_tool);
-gboolean    gimp_rectangle_tool_is_active_at        (GimpRectangleTool       *rect_tool,
+gboolean    gimp_rectangle_tool_is_active_on_display(GimpRectangleTool       *rect_tool,
                                                      GimpDisplay             *display);
 gboolean    gimp_rectangle_tool_is_active           (GimpRectangleTool       *rect_tool);
 

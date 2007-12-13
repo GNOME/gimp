@@ -232,7 +232,7 @@ gimp_crop_tool_button_press (GimpTool        *tool,
   rect_tool = GIMP_RECTANGLE_TOOL (tool);
 
   if (gimp_rectangle_tool_is_active (rect_tool) &&
-      ! gimp_rectangle_tool_is_active_at (rect_tool, display))
+      ! gimp_rectangle_tool_is_active_on_display (rect_tool, display))
     gimp_rectangle_tool_cancel (GIMP_RECTANGLE_TOOL (tool));
 
   gimp_rectangle_tool_button_press (tool, coords, time, state, display);
