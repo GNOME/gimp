@@ -257,6 +257,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
   const gchar    *automatic;
   const gchar    *automatic_help_id;
   const gchar    *pictures;
+  const gchar    *documents;
   gboolean        local_only;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -340,6 +341,12 @@ gimp_file_dialog_new (Gimp                 *gimp,
   if (pictures)
     gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
                                           pictures, NULL);
+
+  documents = g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS);
+
+  if (documents)
+    gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
+                                          documents, NULL);
 
   gimp_file_dialog_add_preview (dialog, gimp);
 

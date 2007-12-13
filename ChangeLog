@@ -1,3 +1,8 @@
+2007-12-13  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_new): add
+	shortcut to user's DOCUMENTS dir, fixes bug #325294.
+
 2007-12-13  Sven Neumann  <sven@gimp.org>
 
 	* app/base/temp-buf.c (temp_buf_demultiply): corrected formula for
