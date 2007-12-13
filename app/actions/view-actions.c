@@ -728,17 +728,17 @@ view_actions_check_type_notify (GimpDisplayConfig *config,
   GimpRGB color;
 
   gimp_rgba_set_uchar (&color,
-                       gimp_render_blend_light_check[0],
-                       gimp_render_blend_light_check[1],
-                       gimp_render_blend_light_check[2],
+                       gimp_render_light_check,
+                       gimp_render_light_check,
+                       gimp_render_light_check,
                        255);
   gimp_action_group_set_action_color (group, "view-padding-color-light-check",
                                       &color, FALSE);
 
   gimp_rgba_set_uchar (&color,
-                       gimp_render_blend_dark_check[0],
-                       gimp_render_blend_dark_check[1],
-                       gimp_render_blend_dark_check[2],
+                       gimp_render_dark_check,
+                       gimp_render_dark_check,
+                       gimp_render_dark_check,
                        255);
   gimp_action_group_set_action_color (group, "view-padding-color-dark-check",
                                       &color, FALSE);

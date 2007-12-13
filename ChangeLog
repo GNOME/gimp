@@ -1,5 +1,15 @@
 2007-12-13  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimprender.[ch]: export the light and dark check
+	color so that places that just need this information don't have to
+	access the gimp_render_blend_{dark,light}_check arrays.
+
+	* app/actions/view-actions.c
+	* app/display/gimpdisplayshell-appearance.c
+	* app/widgets/gimpcolormapeditor.c: changed accordingly.
+
+2007-12-13  Sven Neumann  <sven@gimp.org>
+
 	* app/gimp-log.h: code cleanup.
 
 2007-12-13  Sven Neumann  <sven@gimp.org>

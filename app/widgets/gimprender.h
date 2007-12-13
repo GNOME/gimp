@@ -23,11 +23,16 @@
 #define GIMP_RENDER_BUF_WIDTH  256
 #define GIMP_RENDER_BUF_HEIGHT 256
 
+/* the dark and light checkerboard colors */
+extern guchar  gimp_render_dark_check;
+extern guchar  gimp_render_light_check;
 
+/* buffers that contain pre-rendered patterns/colors */
 extern guchar *gimp_render_check_buf;
 extern guchar *gimp_render_empty_buf;
 extern guchar *gimp_render_white_buf;
 
+/* lookup tables for blending over a checkerboard */
 extern guchar *gimp_render_blend_dark_check;
 extern guchar *gimp_render_blend_light_check;
 extern guchar *gimp_render_blend_white;
