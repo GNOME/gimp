@@ -10,16 +10,9 @@
 	(gimp_rectangle_tool_get_active_display): New public functions for
 	GimpRectangleTool active-display interaction.
 
-	* app/tools/gimpellipseselecttool.c
-	(gimp_ellipse_select_tool_select): Use the active display of
-	GimpRectangleTool instead of tool->display.
-
-	* app/tools/gimprectangleselecttool.c
-	(gimp_rect_select_tool_rectangle_changed): Use the active display
-	of GimpRectangleTool instead of tool->display.
-
 	* app/tools/gimpcroptool.c
-	(gimp_crop_tool_button_press): Use the active display of
+	* app/tools/gimprectangleselecttool.c
+	* app/tools/gimpellipseselecttool.c: Use the active display of
 	GimpRectangleTool instead of tool->display.
 
 2007-12-13  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
