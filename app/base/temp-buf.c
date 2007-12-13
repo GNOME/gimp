@@ -355,7 +355,6 @@ temp_buf_demultiply (TempBuf *buf)
 {
   guchar *data;
   gint    pixels;
-  gint    x, y;
 
   g_return_if_fail (buf != NULL);
 
@@ -369,8 +368,7 @@ temp_buf_demultiply (TempBuf *buf)
       pixels = buf->width * buf->height;
       while (pixels--)
         {
-          if (data[1])
-              data[0] = (data[0] << 8) / data[1];
+          data[0] = (data[0] << 8) / (data[1] + 1);
 
           data += 2;
         }
@@ -384,12 +382,9 @@ temp_buf_demultiply (TempBuf *buf)
       pixels = buf->width * buf->height;
       while (pixels--)
         {
-          if (data[3])
-            {
-              data[0] = (data[0] << 8) / data[3];
-              data[1] = (data[1] << 8) / data[3];
-              data[2] = (data[2] << 8) / data[3];
-            }
+          data[0] = (data[0] << 8) / (data[3] + 1);
+          data[1] = (data[1] << 8) / (data[3] + 1);
+          data[2] = (data[2] << 8) / (data[3] + 1);
 
           data += 4;
         }
