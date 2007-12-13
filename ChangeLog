@@ -1,5 +1,9 @@
 2007-12-13  Sven Neumann  <sven@gimp.org>
 
+	* app/gimp-log.h: code cleanup.
+
+2007-12-13  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-manager-crop.c (tile_manager_crop): code cleanup.
 
 2007-12-12  Tor Lillqvist  <tml@novell.com>

@@ -66,14 +66,17 @@ void   gimp_logv     (const gchar *function,
 
 #else /* no varargs macros */
 
-/* need to expand all the short forms to make them known constants at compile time  */
-#define TOOL_EVENTS GIMP_LOG_TOOL_EVENTS
-#define TOOL_FOCUS GIMP_LOG_TOOL_FOCUS
-#define DND GIMP_LOG_DND
-#define HELP GIMP_LOG_HELP
+/* need to expand all the short forms
+ * to make them known constants at compile time
+ */
+#define TOOL_EVENTS    GIMP_LOG_TOOL_EVENTS
+#define TOOL_FOCUS     GIMP_LOG_TOOL_FOCUS
+#define DND            GIMP_LOG_DND
+#define HELP           GIMP_LOG_HELP
 #define DIALOG_FACTORY GIMP_LOG_DIALOG_FACTORY
-#define SAVE_DIALOG GIMP_LOG_SAVE_DIALOG
-#define IMAGE_SCALE GIMP_LOG_IMAGE_SCALE
+#define SAVE_DIALOG    GIMP_LOG_SAVE_DIALOG
+#define IMAGE_SCALE    GIMP_LOG_IMAGE_SCALE
+
 #if 0 /* last resort */
 #  define GIMP_LOG /* nothing => no varargs, no log */
 #endif
