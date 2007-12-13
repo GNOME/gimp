@@ -35,17 +35,14 @@ TileManager *
 tile_manager_crop (TileManager *tiles,
                    gint         border)
 {
-  PixelRegion  PR;
-  TileManager *new_tiles;
-  gint         bytes, alpha;
-  guchar      *data;
-  gint         empty;
-  gint         x1, y1, x2, y2;
-  gint         x, y;
-  gint         ex, ey;
-  gint         found;
-  void        *pr;
-  guchar       black[MAX_CHANNELS] = { 0, 0, 0, 0 };
+  PixelRegion   PR;
+  TileManager  *new_tiles;
+  gint          bytes, alpha;
+  gint          x1, y1, x2, y2;
+  gboolean      found;
+  gboolean      empty;
+  gpointer      pr;
+  const guchar  black[MAX_CHANNELS] = { 0, 0, 0, 0 };
 
   g_return_val_if_fail (tiles != NULL, NULL);
 
@@ -64,9 +61,10 @@ tile_manager_crop (TileManager *tiles,
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      data = PR.data + alpha;
-      ex = PR.x + PR.w;
-      ey = PR.y + PR.h;
+      const guchar *data = PR.data + alpha;
+      gint          ex   = PR.x + PR.w;
+      gint          ey   = PR.y + PR.h;
+      gint          x, y;
 
       for (y = PR.y; y < ey; y++)
         {

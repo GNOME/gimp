@@ -1,3 +1,7 @@
+2007-12-13  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-manager-crop.c (tile_manager_crop): code cleanup.
+
 2007-12-12  Tor Lillqvist  <tml@novell.com>
 
 	* libgimpbase/gimpenv.c (gimp_locale_directory) [Win32]: Use
