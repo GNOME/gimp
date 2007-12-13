@@ -57,7 +57,8 @@
 
 2007-12-12  Martin Nordholts  <martinn@svn.gnome.org>
 
-	* app/tools/gimprectangletool.c: Extended public interface a bit.
+	* app/tools/gimprectangletool.[ch]: Extended public interface a
+	bit.
 	(gimp_rectangle_tool_point_in_rectangle): New convenience function
 	to test if a point is within the rectangle (if active).
 	(gimp_rectangle_tool_rectangle_is_new): New function so that
