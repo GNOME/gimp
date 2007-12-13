@@ -1,5 +1,12 @@
 2007-12-13  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-pyramid.c (tile_pyramid_write_quarter)
+	* app/display/gimpdisplayshell-render.c
+	(render_image_tile_fault_nearest): corrected formula used for
+	pre-multiplying the alpha value.
+
+2007-12-13  Sven Neumann  <sven@gimp.org>
+
 	Speed up our display rendering code paths by keeping data with
 	pre-multiplied alpha where possible. The projection tile-manager
 	at 100 % zoom is not affected. So we can still always get the

@@ -505,10 +505,10 @@ tile_pyramid_write_quarter (Tile *dest,
                   break;
 
                 default:
-                  dst[0] = ((src0[0] * src0[1] +
-                             src1[0] * src1[1] +
-                             src2[0] * src2[1] +
-                             src3[0] * src3[1]) >> 10);
+                  dst[0] = ((src0[0] * (src0[1] + 1) +
+                             src1[0] * (src1[1] + 1) +
+                             src2[0] * (src2[1] + 1) +
+                             src3[0] * (src3[1] + 1)) >> 10);
                   dst[1] = (a + 2) >> 2;
                   break;
                 }
@@ -557,19 +557,26 @@ tile_pyramid_write_quarter (Tile *dest,
                   break;
 
                 default:
-                  dst[0] = ((src0[0] * src0[3] +
-                             src1[0] * src1[3] +
-                             src2[0] * src2[3] +
-                             src3[0] * src3[3]) >> 10);
-                  dst[1] = ((src0[1] * src0[3] +
-                             src1[1] * src1[3] +
-                             src2[1] * src2[3] +
-                             src3[1] * src3[3]) >> 10);
-                  dst[2] = ((src0[2] * src0[3] +
-                             src1[2] * src1[3] +
-                             src2[2] * src2[3] +
-                             src3[2] * src3[3]) >> 10);
-                  dst[3] = (a + 2) >> 2;
+                  {
+                    const guint a0 = src0[3] + 1;
+                    const guint a1 = src1[3] + 1;
+                    const guint a2 = src2[3] + 1;
+                    const guint a3 = src3[3] + 1;
+
+                    dst[0] = (src0[0] * a0 +
+                              src1[0] * a1 +
+                              src2[0] * a2 +
+                              src3[0] * a3) >> 10;
+                    dst[1] = (src0[1] * a0 +
+                              src1[1] * a1 +
+                              src2[1] * a2 +
+                              src3[1] * a3) >> 10;
+                    dst[2] = (src0[2] * a0 +
+                              src1[2] * a1 +
+                              src2[2] * a2 +
+                              src3[2] * a3) >> 10;
+                    dst[3] = (a + 2) >> 2;
+                  }
                   break;
                 }
 

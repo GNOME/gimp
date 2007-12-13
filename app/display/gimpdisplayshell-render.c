@@ -778,6 +778,7 @@ box_filter_premult (const guint    left_weight,
     }
 }
 
+	
 /* fast paths */
 static const guchar * render_image_tile_fault_one_row  (RenderInfo *info);
 static const guchar * render_image_tile_fault_nearest  (RenderInfo *info);
@@ -1594,9 +1595,9 @@ render_image_tile_fault_nearest (RenderInfo *info)
           switch (bpp)
             {
             case 4:
-              d[0] = (s[0] * s[3]) >> 8;
-              d[1] = (s[1] * s[3]) >> 8;
-              d[2] = (s[2] * s[3]) >> 8;
+              d[0] = (s[0] * (s[3] + 1)) >> 8;
+              d[1] = (s[1] * (s[3] + 1)) >> 8;
+              d[2] = (s[2] * (s[3] + 1)) >> 8;
               d[3] = s[3];
 
               d += 4;
@@ -1604,7 +1605,7 @@ render_image_tile_fault_nearest (RenderInfo *info)
               break;
 
             case 2:
-              d[0] = (s[0] * s[1]) >> 8;
+              d[0] = (s[0] * (s[1] + 1)) >> 8;
               d[1] = s[1];
 
               d += 2;
