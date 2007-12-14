@@ -300,7 +300,7 @@ gimp_edit_named_copy (gint32       drawable_ID,
  * available for later pasting, regardless of any intermediate copy or
  * cut operations.
  *
- * Returns: The real name given to the buffer.
+ * Returns: The real name given to the buffer, or NULL if the selection contained only transparent pixels.
  *
  * Since: GIMP 2.4
  */

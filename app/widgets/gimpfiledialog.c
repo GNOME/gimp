@@ -75,6 +75,8 @@ static gdouble  gimp_file_dialog_progress_get_value (GimpProgress     *progress)
 static void     gimp_file_dialog_progress_pulse     (GimpProgress     *progress);
 static guint32  gimp_file_dialog_progress_get_window(GimpProgress     *progress);
 
+static void     gimp_file_dialog_add_user_dir       (GimpFileDialog   *dialog,
+                                                     GUserDirectory    directory);
 static void     gimp_file_dialog_add_preview        (GimpFileDialog   *dialog,
                                                      Gimp             *gimp);
 static void     gimp_file_dialog_add_filters        (GimpFileDialog   *dialog,
@@ -256,8 +258,6 @@ gimp_file_dialog_new (Gimp                 *gimp,
   GSList         *file_procs;
   const gchar    *automatic;
   const gchar    *automatic_help_id;
-  const gchar    *pictures;
-  const gchar    *documents;
   gboolean        local_only;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -336,17 +336,8 @@ gimp_file_dialog_new (Gimp                 *gimp,
       g_object_set_data (G_OBJECT (dialog), "gimp-dialog-help-button", button);
     }
 
-  pictures = g_get_user_special_dir (G_USER_DIRECTORY_PICTURES);
-
-  if (pictures)
-    gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
-                                          pictures, NULL);
-
-  documents = g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS);
-
-  if (documents)
-    gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
-                                          documents, NULL);
+  gimp_file_dialog_add_user_dir (dialog, G_USER_DIRECTORY_PICTURES);
+  gimp_file_dialog_add_user_dir (dialog, G_USER_DIRECTORY_DOCUMENTS);
 
   gimp_file_dialog_add_preview (dialog, gimp);
 
@@ -500,6 +491,17 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
 
 
 /*  private functions  */
+
+static void
+gimp_file_dialog_add_user_dir (GimpFileDialog *dialog,
+                               GUserDirectory  directory)
+{
+  const gchar *user_dir = g_get_user_special_dir (directory);
+
+  if (user_dir)
+    gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
+                                          user_dir, NULL);
+}
 
 static void
 gimp_file_dialog_add_preview (GimpFileDialog *dialog,
