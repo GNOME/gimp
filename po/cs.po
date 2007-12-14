@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-07 10:06+0100\n"
-"PO-Revision-Date: 2007-12-07 10:27+0100\n"
+"POT-Creation-Date: 2007-12-14 14:23+0100\n"
+"PO-Revision-Date: 2007-12-14 19:30+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -78,12 +78,12 @@ msgstr ""
 "Abyste předešli ztrátě dat, zkontrolujte prosím umístění a oprávnění "
 "odkládacího adresáře definovaného ve vašich Předvolbách (momentálně \"%s\")."
 
-#: ../app/batch.c:75
+#: ../app/batch.c:76
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
 msgstr "Nebyl specifikován dávkový interpretr, používá se výchozí '%s'.\n"
 
-#: ../app/batch.c:93 ../app/batch.c:111
+#: ../app/batch.c:94 ../app/batch.c:112
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "Dávkový interpretr '%s' není k dispozici. Dávkový režim zakázán."
@@ -666,7 +666,7 @@ msgid "%s Channel Copy"
 msgstr "Kopie kanálu %s"
 
 #: ../app/actions/channels-commands.c:308 ../app/core/gimpselection.c:565
-#: ../app/pdb/selection_cmds.c:438 ../app/pdb/selection_cmds.c:503
+#: ../app/pdb/selection_cmds.c:439 ../app/pdb/selection_cmds.c:504
 msgid "Channel to Selection"
 msgstr "Kanál do výběru"
 
@@ -2556,7 +2556,7 @@ msgid "Scale Image"
 msgstr "Velikost obrázku"
 
 #. Scaling
-#: ../app/actions/image-commands.c:669 ../app/actions/layers-commands.c:1068
+#: ../app/actions/image-commands.c:669 ../app/actions/layers-commands.c:1081
 #: ../app/dialogs/preferences-dialog.c:1891
 #: ../app/pdb/drawable_transform_cmds.c:673
 #: ../app/pdb/drawable_transform_cmds.c:748
@@ -2967,7 +2967,7 @@ msgstr "Vytvořit novou vrstvu"
 msgid "Set Layer Boundary Size"
 msgstr "Nastavení rozměrů hranic vrstvy"
 
-#: ../app/actions/layers-commands.c:592 ../app/core/gimplayer.c:251
+#: ../app/actions/layers-commands.c:592 ../app/core/gimplayer.c:252
 msgid "Scale Layer"
 msgstr "Velikost vrstvy"
 
@@ -2979,11 +2979,11 @@ msgstr "Ořezat vrstvu"
 msgid "Layer Mask to Selection"
 msgstr "Maska vrstvy do výběru"
 
-#: ../app/actions/layers-commands.c:1003
+#: ../app/actions/layers-commands.c:1016
 msgid "Please select a channel first"
 msgstr "Nejprve vyberte kanál"
 
-#: ../app/actions/layers-commands.c:1011 ../app/core/gimplayer.c:1263
+#: ../app/actions/layers-commands.c:1024 ../app/core/gimplayer.c:1270
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "Přidat masku vrstvy"
@@ -3441,63 +3441,59 @@ msgstr "_Vykreslit výběr"
 msgid "Stroke the selection with last used values"
 msgstr "Vykreslit výběr s naposledy použitými hodnotami"
 
-#: ../app/actions/select-commands.c:135
-msgid "Cannot float selection because the selected region is empty."
-msgstr "Nemohu udělat výběr plovoucí, protože vybraná oblast je prázdná."
-
-#: ../app/actions/select-commands.c:148 ../app/core/gimpselection.c:171
+#: ../app/actions/select-commands.c:149 ../app/core/gimpselection.c:171
 msgid "Feather Selection"
 msgstr "Zaoblit výběr"
 
-#: ../app/actions/select-commands.c:152
+#: ../app/actions/select-commands.c:153
 msgid "Feather selection by"
 msgstr "Zaoblit výběr o"
 
-#: ../app/actions/select-commands.c:183 ../app/core/gimpselection.c:178
+#: ../app/actions/select-commands.c:184 ../app/core/gimpselection.c:178
 msgid "Shrink Selection"
 msgstr "Zmenšit výběr"
 
-#: ../app/actions/select-commands.c:187
+#: ../app/actions/select-commands.c:188
 msgid "Shrink selection by"
 msgstr "Zmenšit výběr o"
 
-#: ../app/actions/select-commands.c:196
+#: ../app/actions/select-commands.c:197
 msgid "_Shrink from image border"
 msgstr "_Zmenšit dle hranic obrázku"
 
-#: ../app/actions/select-commands.c:217 ../app/core/gimpselection.c:177
+#: ../app/actions/select-commands.c:218 ../app/core/gimpselection.c:177
 msgid "Grow Selection"
 msgstr "Zvětšit výběr"
 
-#: ../app/actions/select-commands.c:221
+#: ../app/actions/select-commands.c:222
 msgid "Grow selection by"
 msgstr "Zvětšit výběr o"
 
-#: ../app/actions/select-commands.c:241 ../app/core/gimpselection.c:176
+#: ../app/actions/select-commands.c:242 ../app/core/gimpselection.c:176
 msgid "Border Selection"
 msgstr "Vybrat obvod"
 
-#: ../app/actions/select-commands.c:245
+#: ../app/actions/select-commands.c:246
 msgid "Border selection by"
 msgstr "Vybrat obvod"
 
 #. Feather button
-#: ../app/actions/select-commands.c:255
+#: ../app/actions/select-commands.c:256
 msgid "_Feather border"
 msgstr "_Prolnout okraje"
 
 #. Edge lock button
-#: ../app/actions/select-commands.c:268
+#: ../app/actions/select-commands.c:269
 msgid "_Lock selection to image edges"
 msgstr "_Omezit výběr okraji obrázku"
 
-#: ../app/actions/select-commands.c:317 ../app/actions/select-commands.c:349
+#: ../app/actions/select-commands.c:318 ../app/actions/select-commands.c:350
 #: ../app/actions/vectors-commands.c:381 ../app/actions/vectors-commands.c:414
 #: ../app/dialogs/stroke-dialog.c:282
 msgid "There is no active layer or channel to stroke to."
 msgstr "Není žádná aktivní vrstva nebo kanál, kam vykreslovat."
 
-#: ../app/actions/select-commands.c:323 ../app/core/gimpselection.c:155
+#: ../app/actions/select-commands.c:324 ../app/core/gimpselection.c:155
 msgid "Stroke Selection"
 msgstr "Vykreslit výběr"
 
@@ -3606,11 +3602,12 @@ msgstr "Otevřít textový soubor (UTF-8)"
 #: ../app/actions/text-editor-commands.c:144
 #: ../app/config/gimpconfig-file.c:59 ../app/core/gimpbrush-load.c:140
 #: ../app/core/gimpbrush-load.c:420 ../app/core/gimpbrushgenerated-load.c:73
-#: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpgradient-load.c:62
-#: ../app/core/gimppalette-load.c:76 ../app/core/gimppalette-load.c:271
-#: ../app/core/gimppalette-load.c:315 ../app/core/gimppalette-load.c:369
-#: ../app/core/gimppalette-load.c:457 ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpimagemaptool.c:586 ../app/xcf/xcf.c:329
+#: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpcurve-load.c:56
+#: ../app/core/gimpgradient-load.c:62 ../app/core/gimppalette-load.c:76
+#: ../app/core/gimppalette-load.c:271 ../app/core/gimppalette-load.c:315
+#: ../app/core/gimppalette-load.c:369 ../app/core/gimppalette-load.c:457
+#: ../app/core/gimppattern-load.c:76 ../app/tools/gimpimagemaptool.c:586
+#: ../app/xcf/xcf.c:329
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Nelze otevřít '%s' pro čtení: %s"
@@ -4441,7 +4438,7 @@ msgstr "Nahradit"
 msgid "Anti erase"
 msgstr "Opak gumy"
 
-#: ../app/base/tile-swap.c:544
+#: ../app/base/tile-swap.c:554
 msgid ""
 "Unable to open swap file. GIMP has run out of memory and cannot use the swap "
 "file. Some parts of your images may be corrupted. Try to save your work "
@@ -4453,16 +4450,16 @@ msgstr ""
 "práci pod jinými názvy souborů, spustit GIMP znovu a zkontrolovat nastavení "
 "odkládacího adresáře ve vašich Předvolbách."
 
-#: ../app/base/tile-swap.c:559
+#: ../app/base/tile-swap.c:569
 #, c-format
 msgid "Failed to resize swap file: %s"
 msgstr "Selhala změna velikosti odkládacího souboru: %s"
 
 #: ../app/config/gimpconfig-file.c:68 ../app/core/gimpbrushgenerated-save.c:63
-#: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:145
-#: ../app/core/gimppalette-save.c:56 ../app/gui/themes.c:239
-#: ../app/tools/gimpimagemaptool.c:585 ../app/vectors/gimpvectors-export.c:83
-#: ../app/xcf/xcf.c:421
+#: ../app/core/gimpcurve-save.c:53 ../app/core/gimpgradient-save.c:51
+#: ../app/core/gimpgradient-save.c:145 ../app/core/gimppalette-save.c:56
+#: ../app/gui/themes.c:239 ../app/tools/gimpimagemaptool.c:585
+#: ../app/vectors/gimpvectors-export.c:83 ../app/xcf/xcf.c:421
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nelze otevřít '%s' pro zápis: %s"
@@ -5385,7 +5382,7 @@ msgstr "Odstranit plovoucí výběr"
 msgid "Paste"
 msgstr "Vložit"
 
-#: ../app/core/core-enums.c:879 ../app/core/gimp-edit.c:540
+#: ../app/core/core-enums.c:879 ../app/core/gimp-edit.c:541
 msgid "Cut"
 msgstr "Vyjmout"
 
@@ -5588,7 +5585,7 @@ msgstr "Vyplnit průhledností"
 msgid "Fill with Pattern"
 msgstr "Vyplnit vzorkem"
 
-#: ../app/core/gimp-edit.c:556
+#: ../app/core/gimp-edit.c:564
 msgid "Global Buffer"
 msgstr "Globální buffer"
 
@@ -5716,7 +5713,7 @@ msgstr "Fatální chyba zpracování souboru stopy '%s': Soubor je zřejmě usek
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Neplatný řetězec v kódování UTF-8 v souboru se stopou '%s'."
 
-#: ../app/core/gimpbrush-load.c:283 ../app/core/gimpitem.c:504
+#: ../app/core/gimpbrush-load.c:283 ../app/core/gimpitem.c:506
 #: ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
 #: ../app/tools/gimpvectortool.c:296
@@ -5921,11 +5918,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:488 ../app/core/gimpdatafactory.c:491
-#: ../app/core/gimpitem.c:313 ../app/core/gimpitem.c:316
+#: ../app/core/gimpitem.c:314 ../app/core/gimpitem.c:317
 msgid "copy"
 msgstr "kopie"
 
-#: ../app/core/gimpdatafactory.c:500 ../app/core/gimpitem.c:325
+#: ../app/core/gimpdatafactory.c:500 ../app/core/gimpitem.c:326
 #, c-format
 msgid "%s copy"
 msgstr "%s kopie"
@@ -5995,7 +5992,7 @@ msgstr "Překlopit"
 msgid "command|Rotate"
 msgstr "Rotovat"
 
-#: ../app/core/gimpdrawable-transform.c:837 ../app/core/gimplayer.c:255
+#: ../app/core/gimpdrawable-transform.c:837 ../app/core/gimplayer.c:256
 msgid "Transform Layer"
 msgstr "Transformovat vrstvu"
 
@@ -6182,7 +6179,7 @@ msgstr "Nedostatek viditelných cest pro sloučení. Musí být alespoň dvě."
 msgid "Enable Quick Mask"
 msgstr "Povolit Rychlou masku"
 
-#: ../app/core/gimpimage-quick-mask.c:132
+#: ../app/core/gimpimage-quick-mask.c:133
 msgid "Disable Quick Mask"
 msgstr "Zakázat Rychlou masku"
 
@@ -6386,15 +6383,15 @@ msgstr[2] "%d vrstev"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nemohu otevřít miniaturu '%s': %s"
 
-#: ../app/core/gimpitem.c:1134
+#: ../app/core/gimpitem.c:1139
 msgid "Attach Parasite"
 msgstr "Připojení parazita"
 
-#: ../app/core/gimpitem.c:1144
+#: ../app/core/gimpitem.c:1149
 msgid "Attach Parasite to Item"
 msgstr "Připojení parazita k položce"
 
-#: ../app/core/gimpitem.c:1186 ../app/core/gimpitem.c:1193
+#: ../app/core/gimpitem.c:1191 ../app/core/gimpitem.c:1198
 msgid "Remove Parasite from Item"
 msgstr "Odstranění parazita z položky"
 
@@ -6406,7 +6403,7 @@ msgstr "Odstranit plovoucí výběr"
 msgid "Anchor Floating Selection"
 msgstr "Ukotvit plovoucí výběr"
 
-#: ../app/core/gimplayer-floating-sel.c:204
+#: ../app/core/gimplayer-floating-sel.c:204 ../app/core/gimplayer.c:644
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -6418,38 +6415,38 @@ msgstr ""
 msgid "Floating Selection to Layer"
 msgstr "Plovoucí výběr do vrstvy"
 
-#: ../app/core/gimplayer.c:248 ../app/tools/tools-enums.c:209
+#: ../app/core/gimplayer.c:249 ../app/tools/tools-enums.c:209
 msgid "Layer"
 msgstr "Vrstva"
 
-#: ../app/core/gimplayer.c:249
+#: ../app/core/gimplayer.c:250
 msgid "Rename Layer"
 msgstr "Přejmenovat vrstvu"
 
-#: ../app/core/gimplayer.c:250 ../app/pdb/layer_cmds.c:323
+#: ../app/core/gimplayer.c:251 ../app/pdb/layer_cmds.c:323
 #: ../app/pdb/layer_cmds.c:358
 msgid "Move Layer"
 msgstr "Přemístit vrstvu"
 
-#: ../app/core/gimplayer.c:252
+#: ../app/core/gimplayer.c:253
 msgid "Resize Layer"
 msgstr "Změnit velikost vrstvy"
 
-#: ../app/core/gimplayer.c:253
+#: ../app/core/gimplayer.c:254
 msgid "Flip Layer"
 msgstr "Překlopit vrstvu"
 
-#: ../app/core/gimplayer.c:254
+#: ../app/core/gimplayer.c:255
 msgid "Rotate Layer"
 msgstr "Rotovat vrstvu"
 
-#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1309
-#: ../app/core/gimplayermask.c:204
+#: ../app/core/gimplayer.c:406 ../app/core/gimplayer.c:1316
+#: ../app/core/gimplayermask.c:208
 #, c-format
 msgid "%s mask"
 msgstr "%s maska"
 
-#: ../app/core/gimplayer.c:446
+#: ../app/core/gimplayer.c:447
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -6458,47 +6455,52 @@ msgstr ""
 "Plovoucí výběr\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1240
+#: ../app/core/gimplayer.c:1247
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Nelze přidat masku vrstvy do vrstvy, která není součástí obrázku."
 
-#: ../app/core/gimplayer.c:1247
+#: ../app/core/gimplayer.c:1254
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Nelze přidat masku vrstvy, protože vrstva již masku má."
 
-#: ../app/core/gimplayer.c:1257
+#: ../app/core/gimplayer.c:1264
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nelze přidat masku vrstvy jiných rozměrů, než má daná vrstva."
 
-#: ../app/core/gimplayer.c:1363
+#: ../app/core/gimplayer.c:1370
 msgid "Transfer Alpha to Mask"
 msgstr "Přenést alfu do masky"
 
-#: ../app/core/gimplayer.c:1528 ../app/core/gimplayermask.c:231
+#: ../app/core/gimplayer.c:1535 ../app/core/gimplayermask.c:235
 msgid "Apply Layer Mask"
 msgstr "Použít masku vrstvy"
 
-#: ../app/core/gimplayer.c:1529
+#: ../app/core/gimplayer.c:1536
 msgid "Delete Layer Mask"
 msgstr "Odstranit masku vrstvy"
 
-#: ../app/core/gimplayer.c:1636
+#: ../app/core/gimplayer.c:1643
 msgid "Add Alpha Channel"
 msgstr "Přidat alfa kanál"
 
-#: ../app/core/gimplayer.c:1687
+#: ../app/core/gimplayer.c:1694
 msgid "Remove Alpha Channel"
 msgstr "Odstranit alfa kanál"
 
-#: ../app/core/gimplayer.c:1709
+#: ../app/core/gimplayer.c:1716
 msgid "Layer to Image Size"
 msgstr "Velikost vrstvy dle obrázku"
 
-#: ../app/core/gimplayermask.c:102
+#: ../app/core/gimplayermask.c:103
 msgid "Move Layer Mask"
 msgstr "Přesunout masku vrstvy"
 
-#: ../app/core/gimplayermask.c:292
+#. reject renaming, layer masks are always named "<layer name> mask"
+#: ../app/core/gimplayermask.c:160
+msgid "Cannot rename layer masks."
+msgstr "Masky vrstev nelze přejmenovat."
+
+#: ../app/core/gimplayermask.c:296
 msgid "Show Layer Mask"
 msgstr "Zobrazit masku vrstvy"
 
@@ -6620,15 +6622,19 @@ msgstr "Invertovat výběr"
 msgid "There is no selection to stroke."
 msgstr "Není žádný výběr k vytažení."
 
-#: ../app/core/gimpselection.c:647
+#: ../app/core/gimpselection.c:649
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Nemohu vyříznout nebo kopírovat, protože zvolená oblast je prázdná."
 
-#: ../app/core/gimpselection.c:827
+#: ../app/core/gimpselection.c:829
+msgid "Cannot float selection because the selected region is empty."
+msgstr "Nemohu udělat výběr plovoucí, protože vybraná oblast je prázdná."
+
+#: ../app/core/gimpselection.c:836
 msgid "Float Selection"
 msgstr "Plovoucí výběr"
 
-#: ../app/core/gimpselection.c:844
+#: ../app/core/gimpselection.c:853
 msgid "Floated Layer"
 msgstr "Plovoucí vrstva"
 
@@ -8508,7 +8514,7 @@ msgstr "Spouštím GIMP"
 msgid "Airbrush"
 msgstr "Rozprašovač"
 
-#: ../app/paint/gimpbrushcore.c:354
+#: ../app/paint/gimpbrushcore.c:352
 msgid "No brushes available for use with this tool."
 msgstr "Nejsou dostupné žádné stopy pro použití s tímto nástrojem."
 
@@ -8532,11 +8538,11 @@ msgstr "Zesvětlení / Ztmavení"
 msgid "Eraser"
 msgstr "Guma"
 
-#: ../app/paint/gimpheal.c:87 ../app/tools/gimphealtool.c:53
+#: ../app/paint/gimpheal.c:116 ../app/tools/gimphealtool.c:53
 msgid "Heal"
 msgstr "Léčení"
 
-#: ../app/paint/gimpheal.c:126
+#: ../app/paint/gimpheal.c:155
 msgid "Healing does not operate on indexed layers."
 msgstr "Léčení nefunguje na indexovaných vrstvách."
 
@@ -8649,10 +8655,115 @@ msgstr "2D transformace"
 msgid "Blending"
 msgstr "Mísení"
 
+#: ../app/pdb/floating_sel_cmds.c:62
+msgid "Cannot remove this layer because it is not a floating selection."
+msgstr "Tuto vrstvu nelze odstranit, protože se nejedná o plovoucí výběr."
+
+#: ../app/pdb/floating_sel_cmds.c:93
+msgid "Cannot anchor this layer because it is not a floating selection."
+msgstr "Tuto vrstvu nelze ukotvit, protože se nejedná o plovoucí výběr."
+
+#: ../app/pdb/floating_sel_cmds.c:124
+msgid ""
+"Cannot convert this layer to a normal layer because it is not a floating "
+"selection."
+msgstr "Tuto vrstvu nelze převést na normální vrstvu, protože se nejedná o plovoucí výběr."
+
+#: ../app/pdb/floating_sel_cmds.c:183
+msgid "Cannot rigor this layer because it is not a floating selection."
+msgstr "Tuto vrstvu nelze upevnit, protože se nejedná o plovoucí výběr."
+
+#: ../app/pdb/floating_sel_cmds.c:216
+msgid "Cannot relax this layer because it is not a floating selection."
+msgstr "Tuto vrstvu nelze uvolnit, protože se nejedná o plovoucí výběr."
+
 #: ../app/pdb/gimppdb-query.c:300
 #, c-format
 msgid "Procedure '%s' not found"
 msgstr "Procedura '%s' nenalezena"
+
+#: ../app/pdb/gimppdb-utils.c:52
+msgid "Invalid empty brush name"
+msgstr "Neplatné prázdné jméno stopy"
+
+#: ../app/pdb/gimppdb-utils.c:62
+#, c-format
+msgid "Brush '%s' not found"
+msgstr "Stopa '%s' nenalezena"
+
+#: ../app/pdb/gimppdb-utils.c:67
+#, c-format
+msgid "Brush '%s' is not editable"
+msgstr "Stopa '%s' není upravitelná"
+
+#: ../app/pdb/gimppdb-utils.c:93
+#, c-format
+msgid "Brush '%s' is not a generated brush"
+msgstr "Stopa '%s' není generovaná stopa"
+
+#: ../app/pdb/gimppdb-utils.c:113
+msgid "Invalid empty pattern name"
+msgstr "Neplatné prázdné jméno vzorku"
+
+#: ../app/pdb/gimppdb-utils.c:123
+#, c-format
+msgid "Pattern '%s' not found"
+msgstr "Vzorek '%s' nenalezen"
+
+#: ../app/pdb/gimppdb-utils.c:143
+msgid "Invalid empty gradient name"
+msgstr "Neplatné prázdné jméno přechodu"
+
+#: ../app/pdb/gimppdb-utils.c:153
+#, c-format
+msgid "Gradient '%s' not found"
+msgstr "Přechod '%s' nenalezen"
+
+#: ../app/pdb/gimppdb-utils.c:158
+#, c-format
+msgid "Gradient '%s' is not editable"
+msgstr "Přechod '%s' není upravitelný"
+
+#: ../app/pdb/gimppdb-utils.c:179
+msgid "Invalid empty palette name"
+msgstr "Neplatné prázdné jméno palety"
+
+#: ../app/pdb/gimppdb-utils.c:189
+#, c-format
+msgid "Palette '%s' not found"
+msgstr "Paleta '%s' nenalezena"
+
+#: ../app/pdb/gimppdb-utils.c:194
+#, c-format
+msgid "Palette '%s' is not editable"
+msgstr "Paleta '%s' není upravitelná"
+
+#: ../app/pdb/gimppdb-utils.c:214
+msgid "Invalid empty font name"
+msgstr "Neplatné prázdné jméno písma"
+
+#: ../app/pdb/gimppdb-utils.c:224
+#, c-format
+msgid "Font '%s' not found"
+msgstr "Písmo '%s' nenalezeno"
+
+#: ../app/pdb/gimppdb-utils.c:243
+msgid "Invalid empty buffer name"
+msgstr "Neplatné prázdné jméno bufferu"
+
+#: ../app/pdb/gimppdb-utils.c:253
+#, c-format
+msgid "Named buffer '%s' not found"
+msgstr "Pojmenovaný buffer '%s' nenalezen"
+
+#: ../app/pdb/gimppdb-utils.c:272
+msgid "Invalid empty paint method name"
+msgstr "Neplatné prázdné jméno kreslící metody"
+
+#: ../app/pdb/gimppdb-utils.c:282
+#, c-format
+msgid "Paint method '%s' does not exist"
+msgstr "Kreslící metoda '%s' neexistuje"
 
 #: ../app/pdb/gimppdb.c:306 ../app/pdb/gimppdb.c:376
 #, c-format
@@ -8772,6 +8883,15 @@ msgstr "V souboru interpretru %s se odkazuje na špatný interpretr: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Špatný řetězec binárního formátu v souboru interpretru %s"
 
+#: ../app/plug-in/gimpplugin-message.c:451
+#, c-format
+msgid ""
+"PDB calling error for procedure '%s':\n"
+"%s"
+msgstr ""
+"PDB chyba volání procedury '%s':\n"
+"%s"
+
 #: ../app/plug-in/gimpplugin.c:635
 #, c-format
 msgid ""
@@ -8874,47 +8994,47 @@ msgstr ""
 msgid "Add Text Layer"
 msgstr "Přidat textovou vrstvu"
 
-#: ../app/text/gimptextlayer.c:138
+#: ../app/text/gimptextlayer.c:139
 msgid "Text Layer"
 msgstr "Textová vrstva"
 
-#: ../app/text/gimptextlayer.c:139
+#: ../app/text/gimptextlayer.c:140
 msgid "Rename Text Layer"
 msgstr "Přejmenovat textovou vrstvu"
 
-#: ../app/text/gimptextlayer.c:140
+#: ../app/text/gimptextlayer.c:141
 msgid "Move Text Layer"
 msgstr "Přesunout textovou vrstvu"
 
-#: ../app/text/gimptextlayer.c:141
+#: ../app/text/gimptextlayer.c:142
 msgid "Scale Text Layer"
 msgstr "Velikost textové vrstvy"
 
-#: ../app/text/gimptextlayer.c:142
+#: ../app/text/gimptextlayer.c:143
 msgid "Resize Text Layer"
 msgstr "Změnit velikost textové vrstvy"
 
-#: ../app/text/gimptextlayer.c:143
+#: ../app/text/gimptextlayer.c:144
 msgid "Flip Text Layer"
 msgstr "Překlopit textovou vrstvu"
 
-#: ../app/text/gimptextlayer.c:144
+#: ../app/text/gimptextlayer.c:145
 msgid "Rotate Text Layer"
 msgstr "Rotovat textovou vrstvu"
 
-#: ../app/text/gimptextlayer.c:145
+#: ../app/text/gimptextlayer.c:146
 msgid "Transform Text Layer"
 msgstr "Transformovat textovou vrstvu"
 
-#: ../app/text/gimptextlayer.c:494
+#: ../app/text/gimptextlayer.c:496
 msgid "Discard Text Information"
 msgstr "Zahodit informace o textu"
 
-#: ../app/text/gimptextlayer.c:545
+#: ../app/text/gimptextlayer.c:547
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Funkce textu nejsou k dispozici kvůli nedostupnosti písem."
 
-#: ../app/text/gimptextlayer.c:580
+#: ../app/text/gimptextlayer.c:582
 msgid "Empty Text Layer"
 msgstr "Prázdná textová vrstva"
 
@@ -8972,7 +9092,9 @@ msgstr "Z_arovnat"
 
 #: ../app/tools/gimpaligntool.c:585
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
-msgstr "Klikněte na vrstvu, cestu či vodítko nebo klikněte a táhněte pro výběr více vrstev"
+msgstr ""
+"Klikněte na vrstvu, cestu či vodítko nebo klikněte a táhněte pro výběr více "
+"vrstev"
 
 #: ../app/tools/gimpaligntool.c:594
 msgid "Click to pick this layer as first item"
@@ -9451,7 +9573,7 @@ msgstr "Ořez: odstranění okrajů z obrazu či vrstvy"
 msgid "_Crop"
 msgstr "_Ořezat"
 
-#: ../app/tools/gimpcroptool.c:242
+#: ../app/tools/gimpcroptool.c:249
 msgid "Click or press Enter to crop"
 msgstr "Klikněte nebo stiskněte Enter pro oříznutí"
 
@@ -9576,24 +9698,24 @@ msgid "Exposure:"
 msgstr "Míra:"
 
 #: ../app/tools/gimpeditselectiontool.c:194
-#: ../app/tools/gimpeditselectiontool.c:1105
+#: ../app/tools/gimpeditselectiontool.c:1111
 msgid "Move Floating Selection"
 msgstr "Odstranit plovoucí výběr"
 
 #: ../app/tools/gimpeditselectiontool.c:396
-#: ../app/tools/gimpeditselectiontool.c:664
+#: ../app/tools/gimpeditselectiontool.c:670
 msgid "Move: "
 msgstr "Přesun: "
 
-#: ../app/tools/gimpellipseselecttool.c:68
+#: ../app/tools/gimpellipseselecttool.c:69
 msgid "Ellipse Select"
 msgstr "Výběr elipsy"
 
-#: ../app/tools/gimpellipseselecttool.c:69
+#: ../app/tools/gimpellipseselecttool.c:70
 msgid "Ellipse Select Tool: Select an elliptical region"
 msgstr "Výběr eliptických oblastí"
 
-#: ../app/tools/gimpellipseselecttool.c:70
+#: ../app/tools/gimpellipseselecttool.c:71
 msgid "_Ellipse Select"
 msgstr "Výběr _elipsy"
 
@@ -10351,7 +10473,7 @@ msgstr "Výběr obdélníku: výběr obdélníkové oblasti"
 msgid "_Rectangle Select"
 msgstr "Výběr _obdélníku"
 
-#: ../app/tools/gimprectangletool.c:984 ../app/tools/gimprectangletool.c:1856
+#: ../app/tools/gimprectangletool.c:1122 ../app/tools/gimprectangletool.c:2006
 msgid "Rectangle: "
 msgstr "Obdélník: "
 
@@ -11493,23 +11615,23 @@ msgstr "Zprávy jsou přesměrovány na stderr."
 msgid "%s Message"
 msgstr "Zpráva %s"
 
-#: ../app/widgets/gimpfiledialog.c:272
+#: ../app/widgets/gimpfiledialog.c:273
 msgid "Automatically Detected"
 msgstr "Automaticky detekováno"
 
-#: ../app/widgets/gimpfiledialog.c:282
+#: ../app/widgets/gimpfiledialog.c:283
 msgid "By Extension"
 msgstr "Podle přípony"
 
-#: ../app/widgets/gimpfiledialog.c:533
+#: ../app/widgets/gimpfiledialog.c:540
 msgid "All files"
 msgstr "Všechny soubory"
 
-#: ../app/widgets/gimpfiledialog.c:538
+#: ../app/widgets/gimpfiledialog.c:545
 msgid "All images"
 msgstr "Všechny obrázky"
 
-#: ../app/widgets/gimpfiledialog.c:667
+#: ../app/widgets/gimpfiledialog.c:674
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Zvolte _typ souboru (%s)"
@@ -11759,11 +11881,11 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "barev"
 
-#: ../app/widgets/gimpitemtreeview.c:976
+#: ../app/widgets/gimpitemtreeview.c:983
 msgid "Set Item Exclusive Visible"
 msgstr "Nastavit položku exkluzivně viditelnou"
 
-#: ../app/widgets/gimpitemtreeview.c:984
+#: ../app/widgets/gimpitemtreeview.c:991
 msgid "Set Item Exclusive Linked"
 msgstr "Nastavit položku exkluzivně viditelnou"
 
