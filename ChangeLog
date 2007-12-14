@@ -1,3 +1,7 @@
+2007-12-14  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-pyramid.c: reduced rounding errors.
+
 2007-12-13  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.[ch]: Changed name of

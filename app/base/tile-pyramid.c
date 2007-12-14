@@ -477,7 +477,7 @@ tile_pyramid_write_quarter (Tile *dest,
         case 1:
           for (x = 0; x < src_ewidth / 2; x++)
             {
-              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0]) >> 2;
+              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0] + 2) >> 2;
 
               dst += 1;
 
@@ -500,7 +500,7 @@ tile_pyramid_write_quarter (Tile *dest,
                   break;
 
                 case 1020: /* all opaque */
-                  dst[0] = (src0[0]  + src1[0] + src2[0] + src3[0]) >> 2;
+                  dst[0] = (src0[0]  + src1[0] + src2[0] + src3[0] + 2) >> 2;
                   dst[1] = 255;
                   break;
 
@@ -525,9 +525,9 @@ tile_pyramid_write_quarter (Tile *dest,
         case 3:
           for (x = 0; x < src_ewidth / 2; x++)
             {
-              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0]) >> 2;
-              dst[1] = (src0[1] + src1[1] + src2[1] + src3[1]) >> 2;
-              dst[2] = (src0[2] + src1[2] + src2[2] + src3[2]) >> 2;
+              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0] + 2) >> 2;
+              dst[1] = (src0[1] + src1[1] + src2[1] + src3[1] + 2) >> 2;
+              dst[2] = (src0[2] + src1[2] + src2[2] + src3[2] + 2) >> 2;
 
               dst += 3;
 
@@ -550,9 +550,9 @@ tile_pyramid_write_quarter (Tile *dest,
                   break;
 
                 case 1020: /* all opaque */
-                  dst[0] = (src0[0] + src1[0] + src2[0] + src3[0]) >> 2;
-                  dst[1] = (src0[1] + src1[1] + src2[1] + src3[1]) >> 2;
-                  dst[2] = (src0[2] + src1[2] + src2[2] + src3[2]) >> 2;
+                  dst[0] = (src0[0] + src1[0] + src2[0] + src3[0] + 2) >> 2;
+                  dst[1] = (src0[1] + src1[1] + src2[1] + src3[1] + 2) >> 2;
+                  dst[2] = (src0[2] + src1[2] + src2[2] + src3[2] + 2) >> 2;
                   dst[3] = 255;
                   break;
 
@@ -630,7 +630,7 @@ tile_pyramid_write_upper_quarter (Tile *dest,
         case 1:
           for (x = 0; x < src_ewidth / 2; x++)
             {
-              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0]) >> 2;
+              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0] + 2) >> 2;
 
               dst += 1;
 
@@ -644,8 +644,8 @@ tile_pyramid_write_upper_quarter (Tile *dest,
         case 2:
           for (x = 0; x < src_ewidth / 2; x++)
             {
-              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0]) >> 2;
-              dst[1] = (src0[1] + src1[1] + src2[1] + src3[1]) >> 2;
+              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0] + 2) >> 2;
+              dst[1] = (src0[1] + src1[1] + src2[1] + src3[1] + 2) >> 2;
 
               dst += 2;
 
@@ -659,9 +659,9 @@ tile_pyramid_write_upper_quarter (Tile *dest,
         case 3:
           for (x = 0; x < src_ewidth / 2; x++)
             {
-              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0]) >> 2;
-              dst[1] = (src0[1] + src1[1] + src2[1] + src3[1]) >> 2;
-              dst[2] = (src0[2] + src1[2] + src2[2] + src3[2]) >> 2;
+              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0] + 2) >> 2;
+              dst[1] = (src0[1] + src1[1] + src2[1] + src3[1] + 2) >> 2;
+              dst[2] = (src0[2] + src1[2] + src2[2] + src3[2] + 2) >> 2;
 
               dst += 3;
 
@@ -675,10 +675,10 @@ tile_pyramid_write_upper_quarter (Tile *dest,
         case 4:
           for (x = 0; x < src_ewidth / 2; x++)
             {
-              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0]) >> 2;
-              dst[1] = (src0[1] + src1[1] + src2[1] + src3[1]) >> 2;
-              dst[2] = (src0[2] + src1[2] + src2[2] + src3[2]) >> 2;
-              dst[3] = (src0[3] + src1[3] + src2[3] + src3[3]) >> 2;
+              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0] + 2) >> 2;
+              dst[1] = (src0[1] + src1[1] + src2[1] + src3[1] + 2) >> 2;
+              dst[2] = (src0[2] + src1[2] + src2[2] + src3[2] + 2) >> 2;
+              dst[3] = (src0[3] + src1[3] + src2[3] + src3[3] + 2) >> 2;
 
               dst += 4;
 
