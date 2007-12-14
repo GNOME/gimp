@@ -56,7 +56,8 @@
 static GimpBuffer * gimp_edit_extract         (GimpImage            *image,
                                                GimpPickable         *pickable,
                                                GimpContext          *context,
-                                               gboolean              cut_pixels);
+                                               gboolean              cut_pixels,
+                                               GError              **error);
 static GimpBuffer * gimp_edit_make_buffer     (Gimp                 *gimp,
                                                TileManager          *tiles);
 static gboolean     gimp_edit_fill_internal   (GimpImage            *image,
@@ -71,9 +72,10 @@ static gboolean     gimp_edit_fill_internal   (GimpImage            *image,
 /*  public functions  */
 
 const GimpBuffer *
-gimp_edit_cut (GimpImage    *image,
-               GimpDrawable *drawable,
-               GimpContext  *context)
+gimp_edit_cut (GimpImage     *image,
+               GimpDrawable  *drawable,
+               GimpContext   *context,
+               GError       **error)
 {
   GimpBuffer *buffer;
 
@@ -81,9 +83,10 @@ gimp_edit_cut (GimpImage    *image,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
-                              context, TRUE);
+                              context, TRUE, error);
 
   if (buffer)
     {
@@ -97,9 +100,10 @@ gimp_edit_cut (GimpImage    *image,
 }
 
 const GimpBuffer *
-gimp_edit_copy (GimpImage    *image,
-                GimpDrawable *drawable,
-                GimpContext  *context)
+gimp_edit_copy (GimpImage     *image,
+                GimpDrawable  *drawable,
+                GimpContext   *context,
+                GError       **error)
 {
   GimpBuffer *buffer;
 
@@ -107,9 +111,10 @@ gimp_edit_copy (GimpImage    *image,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
-                              context, FALSE);
+                              context, FALSE, error);
 
   if (buffer)
     {
@@ -123,16 +128,18 @@ gimp_edit_copy (GimpImage    *image,
 }
 
 const GimpBuffer *
-gimp_edit_copy_visible (GimpImage   *image,
-                        GimpContext *context)
+gimp_edit_copy_visible (GimpImage    *image,
+                        GimpContext  *context,
+                        GError      **error)
 {
   GimpBuffer *buffer;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   buffer = gimp_edit_extract (image, GIMP_PICKABLE (image->projection),
-                              context, FALSE);
+                              context, FALSE, error);
 
   if (buffer)
     {
@@ -331,10 +338,11 @@ gimp_edit_paste_as_new (Gimp       *gimp,
 }
 
 const gchar *
-gimp_edit_named_cut (GimpImage    *image,
-                     const gchar  *name,
-                     GimpDrawable *drawable,
-                     GimpContext  *context)
+gimp_edit_named_cut (GimpImage     *image,
+                     const gchar   *name,
+                     GimpDrawable  *drawable,
+                     GimpContext   *context,
+                     GError       **error)
 {
   GimpBuffer *buffer;
 
@@ -343,9 +351,10 @@ gimp_edit_named_cut (GimpImage    *image,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
-                              context, TRUE);
+                              context, TRUE, error);
 
   if (buffer)
     {
@@ -360,10 +369,11 @@ gimp_edit_named_cut (GimpImage    *image,
 }
 
 const gchar *
-gimp_edit_named_copy (GimpImage    *image,
-                      const gchar  *name,
-                      GimpDrawable *drawable,
-                      GimpContext  *context)
+gimp_edit_named_copy (GimpImage     *image,
+                      const gchar   *name,
+                      GimpDrawable  *drawable,
+                      GimpContext   *context,
+                      GError       **error)
 {
   GimpBuffer *buffer;
 
@@ -372,9 +382,10 @@ gimp_edit_named_copy (GimpImage    *image,
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
-                              context, FALSE);
+                              context, FALSE, error);
 
   if (buffer)
     {
@@ -389,18 +400,20 @@ gimp_edit_named_copy (GimpImage    *image,
 }
 
 const gchar *
-gimp_edit_named_copy_visible (GimpImage   *image,
-                              const gchar *name,
-                              GimpContext *context)
+gimp_edit_named_copy_visible (GimpImage    *image,
+                              const gchar  *name,
+                              GimpContext  *context,
+                              GError      **error)
 {
   GimpBuffer *buffer;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   buffer = gimp_edit_extract (image, GIMP_PICKABLE (image->projection),
-                              context, FALSE);
+                              context, FALSE, error);
 
   if (buffer)
     {
@@ -529,27 +542,20 @@ gimp_edit_fade (GimpImage   *image,
 /*  private functions  */
 
 static GimpBuffer *
-gimp_edit_extract (GimpImage    *image,
-                   GimpPickable *pickable,
-                   GimpContext  *context,
-                   gboolean      cut_pixels)
+gimp_edit_extract (GimpImage     *image,
+                   GimpPickable  *pickable,
+                   GimpContext   *context,
+                   gboolean       cut_pixels,
+                   GError       **error)
 {
   TileManager *tiles;
-  GError      *error = NULL;
 
   if (cut_pixels)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT, _("Cut"));
 
   /*  Cut/copy the mask portion from the image  */
   tiles = gimp_selection_extract (gimp_image_get_mask (image), pickable,
-                                  context, cut_pixels, FALSE, FALSE, &error);
-
-  if (! tiles)
-    {
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                    "%s", error->message);
-      g_clear_error (&error);
-    }
+                                  context, cut_pixels, FALSE, FALSE, error);
 
   if (cut_pixels)
     gimp_image_undo_group_end (image);

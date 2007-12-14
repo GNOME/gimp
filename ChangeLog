@@ -1,3 +1,18 @@
+2007-12-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp-edit.[ch]: added GErrors when functions can fail.
+
+	* app/actions/edit-commands.c: handle the returned errors.
+
+	* tools/pdbgen/pdb/edit.pdb: same here (*don't* pass the error as
+	usual since these functions never fail but have a boolean return
+	value indicating success instead; ugly, but better than having the
+	gimp_message() calls in the core). Also changed the named buffer
+	cut and copy functions to do the same (never fail but return a
+	NULL buffer name on failure), so they behave as documented.
+
+	* app/pdb/edit_cmds.c: regenerated.
+
 2007-12-14  Sven Neumann  <sven@gimp.org>
 
 	* app/base/tile-pyramid.c: reduced rounding errors.

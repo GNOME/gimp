@@ -47,9 +47,17 @@ HELP
 {
   if (gimp_item_is_attached (GIMP_ITEM (drawable)))
     {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
+      GError    *my_error = NULL;
 
-      non_empty = gimp_edit_cut (image, drawable, context) != NULL;
+      non_empty = gimp_edit_cut (image, drawable, context, &my_error) != NULL;
+
+      if (! non_empty)
+        {
+          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                        "%s", my_error->message);
+          g_clear_error (&my_error);
+        }
     }
   else
     success = FALSE;
@@ -88,9 +96,17 @@ HELP
 {
   if (gimp_item_is_attached (GIMP_ITEM (drawable)))
     {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
+      GError    *my_error = NULL;
 
-      non_empty = gimp_edit_copy (image, drawable, context) != NULL;
+      non_empty = gimp_edit_copy (image, drawable, context, &my_error) != NULL;
+
+      if (! non_empty)
+        {
+          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                        "%s", my_error->message);
+          g_clear_error (&my_error);
+        }
     }
   else
     success = FALSE;
@@ -126,7 +142,16 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  non_empty = gimp_edit_copy_visible (image, context) != NULL;
+  GError *my_error = NULL;
+
+  non_empty = gimp_edit_copy_visible (image, context, &my_error) != NULL;
+
+  if (! non_empty)
+    {
+      gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                    "%s", my_error->message);
+      g_clear_error (&my_error);
+    }
 }
 CODE
     );
@@ -248,15 +273,22 @@ HELP
 {
   if (gimp_item_is_attached (GIMP_ITEM (drawable)))
     {
-       GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
+      GError    *my_error = NULL;
 
-       real_name = (gchar *) gimp_edit_named_cut (image, buffer_name,
-                                                  drawable, context);
+      real_name = (gchar *) gimp_edit_named_cut (image, buffer_name,
+                                                 drawable, context, &my_error);
 
-       if (real_name)
-         real_name = g_strdup (real_name);
-       else
-         success = FALSE;
+      if (real_name)
+        {
+          real_name = g_strdup (real_name);
+        }
+      else
+        {
+          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                        "%s", my_error->message);
+          g_clear_error (&my_error);
+        }
     }
   else
     success = FALSE;
@@ -293,15 +325,22 @@ HELP
 {
   if (gimp_item_is_attached (GIMP_ITEM (drawable)))
     {
-       GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
+      GError    *my_error = NULL;
 
-       real_name = (gchar *) gimp_edit_named_copy (image, buffer_name,
-                                                   drawable, context);
+      real_name = (gchar *) gimp_edit_named_copy (image, buffer_name,
+                                                  drawable, context, &my_error);
 
-       if (real_name)
-         real_name = g_strdup (real_name);
-       else
-         success = FALSE;
+      if (real_name)
+        {
+          real_name = g_strdup (real_name);
+        }
+      else
+        {
+          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                        "%s", my_error->message);
+          g_clear_error (&my_error);
+        }
     }
   else
     success = FALSE;
@@ -331,19 +370,28 @@ HELP
 
     @outargs = (
 	{ name => 'real_name', type => 'string',
-	  desc => 'The real name given to the buffer' }
+	  desc => 'The real name given to the buffer, or NULL if the
+                   selection contained only transparent pixels' }
     );
 
     %invoke = (
 	code => <<CODE
 {
+  GError *my_error = NULL;
+
   real_name = (gchar *) gimp_edit_named_copy_visible (image, buffer_name,
-                                                      context);
+                                                      context, &my_error);
 
   if (real_name)
-    real_name = g_strdup (real_name);
+    {
+      real_name = g_strdup (real_name);
+    }
   else
-    success = FALSE;
+    {
+      gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                    "%s", my_error->message);
+      g_clear_error (&my_error);
+    }
 }
 CODE
     );

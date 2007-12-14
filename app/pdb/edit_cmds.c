@@ -65,9 +65,17 @@ edit_cut_invoker (GimpProcedure      *procedure,
     {
       if (gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
-          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
+          GError    *my_error = NULL;
 
-          non_empty = gimp_edit_cut (image, drawable, context) != NULL;
+          non_empty = gimp_edit_cut (image, drawable, context, &my_error) != NULL;
+
+          if (! non_empty)
+            {
+              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                            "%s", my_error->message);
+              g_clear_error (&my_error);
+            }
         }
       else
         success = FALSE;
@@ -100,9 +108,17 @@ edit_copy_invoker (GimpProcedure      *procedure,
     {
       if (gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
-          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
+          GError    *my_error = NULL;
 
-          non_empty = gimp_edit_copy (image, drawable, context) != NULL;
+          non_empty = gimp_edit_copy (image, drawable, context, &my_error) != NULL;
+
+          if (! non_empty)
+            {
+              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                            "%s", my_error->message);
+              g_clear_error (&my_error);
+            }
         }
       else
         success = FALSE;
@@ -133,7 +149,16 @@ edit_copy_visible_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      non_empty = gimp_edit_copy_visible (image, context) != NULL;
+      GError *my_error = NULL;
+
+      non_empty = gimp_edit_copy_visible (image, context, &my_error) != NULL;
+
+      if (! non_empty)
+        {
+          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                        "%s", my_error->message);
+          g_clear_error (&my_error);
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
@@ -237,15 +262,22 @@ edit_named_cut_invoker (GimpProcedure      *procedure,
     {
       if (gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
-           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
+          GError    *my_error = NULL;
 
-           real_name = (gchar *) gimp_edit_named_cut (image, buffer_name,
-                                                      drawable, context);
+          real_name = (gchar *) gimp_edit_named_cut (image, buffer_name,
+                                                     drawable, context, &my_error);
 
-           if (real_name)
-             real_name = g_strdup (real_name);
-           else
-             success = FALSE;
+          if (real_name)
+            {
+              real_name = g_strdup (real_name);
+            }
+          else
+            {
+              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                            "%s", my_error->message);
+              g_clear_error (&my_error);
+            }
         }
       else
         success = FALSE;
@@ -280,15 +312,22 @@ edit_named_copy_invoker (GimpProcedure      *procedure,
     {
       if (gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
-           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
+          GError    *my_error = NULL;
 
-           real_name = (gchar *) gimp_edit_named_copy (image, buffer_name,
-                                                       drawable, context);
+          real_name = (gchar *) gimp_edit_named_copy (image, buffer_name,
+                                                      drawable, context, &my_error);
 
-           if (real_name)
-             real_name = g_strdup (real_name);
-           else
-             success = FALSE;
+          if (real_name)
+            {
+              real_name = g_strdup (real_name);
+            }
+          else
+            {
+              gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                            "%s", my_error->message);
+              g_clear_error (&my_error);
+            }
         }
       else
         success = FALSE;
@@ -321,13 +360,21 @@ edit_named_copy_visible_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
+      GError *my_error = NULL;
+
       real_name = (gchar *) gimp_edit_named_copy_visible (image, buffer_name,
-                                                          context);
+                                                          context, &my_error);
 
       if (real_name)
-        real_name = g_strdup (real_name);
+        {
+          real_name = g_strdup (real_name);
+        }
       else
-        success = FALSE;
+        {
+          gimp_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                        "%s", my_error->message);
+          g_clear_error (&my_error);
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
@@ -984,7 +1031,7 @@ register_edit_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("real-name",
                                                            "real name",
-                                                           "The real name given to the buffer",
+                                                           "The real name given to the buffer, or NULL if the selection contained only transparent pixels",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));

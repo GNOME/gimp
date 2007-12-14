@@ -188,10 +188,19 @@ edit_cut_cmd_callback (GtkAction *action,
 {
   GimpImage    *image;
   GimpDrawable *drawable;
+  GError       *error = NULL;
   return_if_no_drawable (image, drawable, data);
 
-  if (gimp_edit_cut (image, drawable, action_data_get_context (data)))
-    gimp_image_flush (image);
+  if (gimp_edit_cut (image, drawable, action_data_get_context (data), &error))
+    {
+      gimp_image_flush (image);
+    }
+  else
+    {
+      gimp_message (image->gimp, G_OBJECT (action_data_get_display (data)),
+                    GIMP_MESSAGE_WARNING, "%s", error->message);
+      g_clear_error (&error);
+    }
 }
 
 void
@@ -200,9 +209,10 @@ edit_copy_cmd_callback (GtkAction *action,
 {
   GimpImage    *image;
   GimpDrawable *drawable;
+  GError       *error = NULL;
   return_if_no_drawable (image, drawable, data);
 
-  if (gimp_edit_copy (image, drawable, action_data_get_context (data)))
+  if (gimp_edit_copy (image, drawable, action_data_get_context (data), &error))
     {
       GimpDisplay *display = action_data_get_display (data);
 
@@ -212,6 +222,12 @@ edit_copy_cmd_callback (GtkAction *action,
 
       gimp_image_flush (image);
     }
+  else
+    {
+      gimp_message (image->gimp, G_OBJECT (action_data_get_display (data)),
+                    GIMP_MESSAGE_WARNING, "%s", error->message);
+      g_clear_error (&error);
+    }
 }
 
 void
@@ -219,10 +235,19 @@ edit_copy_visible_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
   GimpImage *image;
+  GError    *error = NULL;
   return_if_no_image (image, data);
 
-  if (gimp_edit_copy_visible (image, action_data_get_context (data)))
-    gimp_image_flush (image);
+  if (gimp_edit_copy_visible (image, action_data_get_context (data), &error))
+    {
+      gimp_image_flush (image);
+    }
+  else
+    {
+      gimp_message (image->gimp, G_OBJECT (action_data_get_display (data)),
+                    GIMP_MESSAGE_WARNING, "%s", error->message);
+      g_clear_error (&error);
+    }
 }
 
 void
@@ -463,6 +488,7 @@ cut_named_buffer_callback (GtkWidget   *widget,
 {
   GimpImage    *image    = GIMP_IMAGE (data);
   GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+  GError       *error    = NULL;
 
   if (! drawable)
     {
@@ -475,9 +501,15 @@ cut_named_buffer_callback (GtkWidget   *widget,
     name = _("(Unnamed Buffer)");
 
   if (gimp_edit_named_cut (image, name, drawable,
-                           gimp_get_user_context (image->gimp)))
+                           gimp_get_user_context (image->gimp), &error))
     {
       gimp_image_flush (image);
+    }
+  else
+    {
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    "%s", error->message);
+      g_clear_error (&error);
     }
 }
 
@@ -488,6 +520,7 @@ copy_named_buffer_callback (GtkWidget   *widget,
 {
   GimpImage    *image    = GIMP_IMAGE (data);
   GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+  GError       *error    = NULL;
 
   if (! drawable)
     {
@@ -500,9 +533,15 @@ copy_named_buffer_callback (GtkWidget   *widget,
     name = _("(Unnamed Buffer)");
 
   if (gimp_edit_named_copy (image, name, drawable,
-                            gimp_get_user_context (image->gimp)))
+                            gimp_get_user_context (image->gimp), &error))
     {
       gimp_image_flush (image);
+    }
+  else
+    {
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    "%s", error->message);
+      g_clear_error (&error);
     }
 }
 
@@ -512,13 +551,21 @@ copy_named_visible_buffer_callback (GtkWidget   *widget,
                                     gpointer     data)
 {
   GimpImage *image = GIMP_IMAGE (data);
+  GError    *error = NULL;
 
   if (! (name && strlen (name)))
     name = _("(Unnamed Buffer)");
 
   if (gimp_edit_named_copy_visible (image, name,
-                                    gimp_get_user_context (image->gimp)))
+                                    gimp_get_user_context (image->gimp),
+                                    &error))
     {
       gimp_image_flush (image);
+    }
+  else
+    {
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                    "%s", error->message);
+      g_clear_error (&error);
     }
 }
