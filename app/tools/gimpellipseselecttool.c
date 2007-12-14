@@ -33,7 +33,6 @@
 
 #include "gimpellipseselecttool.h"
 #include "gimprectangleselectoptions.h"
-#include "gimprectangletool.h"
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
@@ -129,11 +128,8 @@ gimp_ellipse_select_tool_select (GimpRectSelectTool *rect_tool,
 {
   GimpTool             *tool    = GIMP_TOOL (rect_tool);
   GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (rect_tool);
-  GimpDisplay          *display;
 
-  display = gimp_rectangle_tool_get_active_display (GIMP_RECTANGLE_TOOL (tool));
-
-  gimp_channel_select_ellipse (gimp_image_get_mask (display->image),
+  gimp_channel_select_ellipse (gimp_image_get_mask (tool->display->image),
                                x, y, w, h,
                                operation,
                                options->antialias,
