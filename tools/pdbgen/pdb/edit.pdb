@@ -424,8 +424,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  GimpBuffer *buffer = (GimpBuffer *)
-    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+  GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
   if (buffer && gimp_item_is_attached (GIMP_ITEM (drawable)))
     {
@@ -465,8 +464,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  GimpBuffer *buffer = (GimpBuffer *)
-    gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+  GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
   if (buffer)
     {
@@ -892,9 +890,9 @@ CODE
 @headers = qw(<string.h>
               "core/gimp.h"
               "core/gimp-edit.h"
-              "core/gimpcontainer.h"
               "core/gimpimage.h"
               "core/gimpprogress.h"
+              "gimppdb-utils.h"
               "gimp-intl.h");
 
 @procs = qw(edit_cut edit_copy edit_copy_visible

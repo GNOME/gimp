@@ -32,7 +32,6 @@
 #include "core/gimp-edit.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpdrawable-blend.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpdrawable.h"
@@ -41,6 +40,7 @@
 #include "core/gimpprogress.h"
 #include "core/gimpstrokedesc.h"
 #include "gimp-intl.h"
+#include "gimppdb-utils.h"
 #include "vectors/gimpvectors.h"
 
 #include "internal_procs.h"
@@ -406,8 +406,7 @@ edit_named_paste_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBuffer *buffer = (GimpBuffer *)
-        gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+      GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
       if (buffer && gimp_item_is_attached (GIMP_ITEM (drawable)))
         {
@@ -446,8 +445,7 @@ edit_named_paste_as_new_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpBuffer *buffer = (GimpBuffer *)
-        gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
+      GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
       if (buffer)
         {

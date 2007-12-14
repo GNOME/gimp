@@ -1,5 +1,12 @@
 2007-12-14  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/edit.pdb: use gimp_pdb_get_buffer() which
+	sets a proper error instead of looking up the buffers manually.
+
+	* app/pdb/edit_cmds.c: regenerated.
+
+2007-12-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp-edit.[ch]: added GErrors when functions can fail.
 
 	* app/actions/edit-commands.c: handle the returned errors.
