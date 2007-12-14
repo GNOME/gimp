@@ -1,3 +1,9 @@
+2007-12-14  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme.c (eqv): Only return true
+	when numbers are of equal value AND of the same type (ie. both
+	exact or inexact). R5RS compliance fix.
+
 2007-12-14  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Reverted the changes that made GimpRectangleTool keep track of its
