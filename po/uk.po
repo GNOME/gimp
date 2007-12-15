@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-11-28 17:03+0200\n"
-"PO-Revision-Date: 2007-11-28 17:59+0200\n"
+"PO-Revision-Date: 2007-12-15 17:59+0200\n"
 "Last-Translator: Maxim Dziumanenko <mvd@mylinux.com.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -83,10 +83,10 @@ msgstr ""
 "Інтерпретатор пакетної обробки не вказано, використовується типовий '%s'.\n"
 
 #: ../app/batch.c:93 ../app/batch.c:111
-#, fuzzy, c-format
+#, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
-"Інтерпретатор '%s' недоступний, використання командного режиму неможливе."
+"Інтерпретатор пакетної обробки '%s' недоступний, використання пакетного режиму неможливе."
 
 #: ../app/main.c:154 ../tools/gimp-remote.c:60
 msgid "Show version information and exit"
@@ -833,7 +833,7 @@ msgstr ""
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:770
 #: ../app/pdb/image_cmds.c:1995 ../app/widgets/gimpdnd-xds.c:98
 msgid "Untitled"
-msgstr "Неназване"
+msgstr "Без назви"
 
 #: ../app/actions/data-commands.c:231
 msgid "Delete Object"
@@ -1687,7 +1687,7 @@ msgstr "Немає активного шару чи каналу для вирі
 #: ../app/actions/edit-commands.c:475 ../app/actions/edit-commands.c:500
 #: ../app/actions/edit-commands.c:517
 msgid "(Unnamed Buffer)"
-msgstr "(Неназваний буфер)"
+msgstr "(Буфер без назви)"
 
 #: ../app/actions/edit-commands.c:495
 msgid "There is no active layer or channel to copy from."
@@ -1910,7 +1910,7 @@ msgstr "Відкривання зображення"
 
 #: ../app/actions/file-commands.c:539
 msgid "(Unnamed Template)"
-msgstr "(Неназваний шаблон)"
+msgstr "(Шаблон без назви)"
 
 #: ../app/actions/file-commands.c:587
 #, c-format
@@ -4525,7 +4525,7 @@ msgstr "Визначає колір тла навколо зображення."
 
 #: ../app/config/gimprc-blurbs.h:33
 msgid "How to handle embedded color profiles when opening a file."
-msgstr ""
+msgstr "Як обробляти обробляти вбудовані кольорові схеми при відкритті файлу."
 
 #: ../app/config/gimprc-blurbs.h:36
 msgid "Ask for confirmation before closing an image without saving."
@@ -5730,7 +5730,7 @@ msgstr "Неправильний UTF-8 рядок у файлі пензля '%s
 #: ../app/dialogs/template-options-dialog.c:83
 #: ../app/tools/gimpvectortool.c:296
 msgid "Unnamed"
-msgstr "Неназваний"
+msgstr "Без назви"
 
 #: ../app/core/gimpbrush-load.c:377
 #, c-format
@@ -9000,82 +9000,76 @@ msgid "Click to add this layer to the list"
 msgstr "Натисніть, щоб додати цей шар до списку"
 
 #: ../app/tools/gimpaligntool.c:606
-#, fuzzy
 msgid "Click to pick this guide as first item"
-msgstr "Натисніть, щоб вибрати контур для редагування."
+msgstr "Натисніть, щоб зробити цю напрямну першим об'єктом."
 
 #: ../app/tools/gimpaligntool.c:614
-#, fuzzy
 msgid "Click to add this guide to the list"
-msgstr "Натисніть, щоб відкрити контур."
+msgstr "Натисніть, щоб додати цю напрямну до списку"
 
 #: ../app/tools/gimpaligntool.c:618
-#, fuzzy
 msgid "Click to pick this path as first item"
-msgstr "Натисніть, щоб вибрати контур для редагування."
+msgstr "Натисніть, щоб зробити цей контур першим об'єктом"
 
 #: ../app/tools/gimpaligntool.c:626
-#, fuzzy
 msgid "Click to add this path to the list"
 msgstr "Натисніть, щоб вибрати контур для редагування."
 
 #: ../app/tools/gimpaligntool.c:764
-#, fuzzy
 msgid "Relative to:"
-msgstr "Піднімання контуру"
+msgstr "Відносно чого:"
 
 #: ../app/tools/gimpaligntool.c:782
 msgid "Align left edge of target"
-msgstr ""
+msgstr "Вирівняти зі лівою межею краю об'єкту"
 
 #: ../app/tools/gimpaligntool.c:788
 msgid "Align center of target"
-msgstr ""
+msgstr "Центрувати по вертикальній осі"
 
 #: ../app/tools/gimpaligntool.c:794
 msgid "Align right edge of target"
-msgstr ""
+msgstr "Вирівняти за правою межею об'єкту"
 
 #: ../app/tools/gimpaligntool.c:804
 msgid "Align top edge of target"
-msgstr ""
+msgstr "Вирівняти за верхньою межею об'єкту"
 
 #: ../app/tools/gimpaligntool.c:810
 msgid "Align middle of target"
-msgstr ""
+msgstr "Центрувати по горизонтальній осі"
 
 #: ../app/tools/gimpaligntool.c:816
 msgid "Align bottom of target"
-msgstr ""
+msgstr "Вирівняти за нижньою межею об'єкту"
 
 #: ../app/tools/gimpaligntool.c:820
-#, fuzzy
 msgid "Distribute"
-msgstr "В_икривлення"
+msgstr "Розташувати"
 
 #: ../app/tools/gimpaligntool.c:834
 msgid "Distribute left edges of targets"
-msgstr ""
+msgstr "Рівновіддалено розташувати ліві межі об'єктів"
 
 #: ../app/tools/gimpaligntool.c:841
 msgid "Distribute horizontal centers of targets"
-msgstr ""
+msgstr "Рівновіддалено розташувати центри об'єктів по горизонталі"
 
 #: ../app/tools/gimpaligntool.c:848
 msgid "Distribute right edges of targets"
-msgstr ""
+msgstr "Рівновіддалено розташувати праві межі об'єктів"
 
 #: ../app/tools/gimpaligntool.c:858
 msgid "Distribute top edges of targets"
-msgstr ""
+msgstr "Рівновіддалено розташувати верхні краї об'єктів"
 
 #: ../app/tools/gimpaligntool.c:865
 msgid "Distribute vertical centers of targets"
-msgstr ""
+msgstr "Рівновіддалено розташувати центри об'єктів по вертикали"
 
 #: ../app/tools/gimpaligntool.c:871
 msgid "Distribute bottoms of targets"
-msgstr ""
+msgstr "Рівновіддалено розташувати нижні межі об'єктів"
 
 #: ../app/tools/gimpaligntool.c:879 ../app/tools/gimpblendoptions.c:212
 msgid "Offset:"
@@ -9094,7 +9088,6 @@ msgid "Adaptive supersampling"
 msgstr "Адаптивна інтерполяція"
 
 #: ../app/tools/gimpblendoptions.c:255
-#, fuzzy
 msgid "Max depth:"
 msgstr "Макс. глибина:"
 
@@ -9105,37 +9098,35 @@ msgid "Threshold:"
 msgstr "Поріг:"
 
 #: ../app/tools/gimpblendtool.c:109
-#, fuzzy
 msgid "Blend Tool: Fill selected area with a color gradient"
-msgstr "Заповнення кольоровим градієнтом"
+msgstr "Градієнт: заповнення кольоровим градієнтом"
 
 #: ../app/tools/gimpblendtool.c:110
 msgid "Blen_d"
 msgstr "Г_радієнтне заповнення"
 
 #: ../app/tools/gimpblendtool.c:163
-#, fuzzy, c-format
+#, c-format
 msgid "Blend does not operate on indexed layers."
-msgstr "Вирівнювання не діє на індексовані шари."
+msgstr "Градієнтне заповнення не діє на індексовані шари."
 
 #: ../app/tools/gimpblendtool.c:399 ../app/tools/gimppainttool.c:595
-#, fuzzy, c-format
+#, c-format
 msgid "%s for constrained angles"
-msgstr "Вимірювання відстаней та кутів"
+msgstr "%s для обмеження кроку кута"
 
 #: ../app/tools/gimpblendtool.c:400
-#, fuzzy, c-format
+#, c-format
 msgid "%s to move the whole line"
-msgstr "Натисніть, щоб відкрити контур."
+msgstr "%s для зсуву усієї лінії"
 
 #: ../app/tools/gimpblendtool.c:402
 msgid "Blend: "
 msgstr "Градієнт: "
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:103
-#, fuzzy
 msgid "Brightness/Contrast Tool: Adjust brightness and contrast"
-msgstr "Коригування яскравості та контрастності"
+msgstr "Яскравість-Контраст: корекція яскравості та контрасту"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:104
 msgid "B_rightness-Contrast..."
@@ -9173,15 +9164,15 @@ msgstr "Максимальна відмінність кольорів"
 
 #. fill type
 #: ../app/tools/gimpbucketfilloptions.c:226
-#, fuzzy, c-format
+#, c-format
 msgid "Fill Type  (%s)"
-msgstr "Тип заповнення  %s"
+msgstr "Тип заповнення  (%s)"
 
 #. fill selection
 #: ../app/tools/gimpbucketfilloptions.c:239
-#, fuzzy, c-format
+#, c-format
 msgid "Affected Area  (%s)"
-msgstr "Область застосування  %s"
+msgstr "Область застосування  (%s)"
 
 #: ../app/tools/gimpbucketfilloptions.c:243
 msgid "Fill whole selection"
@@ -9207,18 +9198,16 @@ msgid "Sample merged"
 msgstr "Об'єднувати ділянки за зразком"
 
 #: ../app/tools/gimpbucketfilloptions.c:294
-#, fuzzy
 msgid "Fill by:"
-msgstr "Непрозорість заповнення:"
+msgstr "Тип заповнення:"
 
 #: ../app/tools/gimpbucketfilltool.c:80
 msgid "Bucket Fill"
 msgstr "Заповнення"
 
 #: ../app/tools/gimpbucketfilltool.c:81
-#, fuzzy
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
-msgstr "Заповнення кольором чи візерунком"
+msgstr "Заповнення: заповнення кольором чи візерунком"
 
 #: ../app/tools/gimpbucketfilltool.c:82
 msgid "_Bucket Fill"
@@ -9230,7 +9219,7 @@ msgstr "Виділення за кольором"
 
 #: ../app/tools/gimpbycolorselecttool.c:66
 msgid "Select by Color Tool: Select regions with similar colors"
-msgstr ""
+msgstr "Виділення за кольором: виділення областей із заповненням схожим кольором"
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "_By Color Select"
@@ -9239,25 +9228,24 @@ msgstr "Виділення за _кольором"
 #: ../app/tools/gimpclonetool.c:62
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
 msgstr ""
+"Штамп: вибіркове копіювання із зображення або візерунку за допомогою пензля"
 
 #: ../app/tools/gimpclonetool.c:63
 msgid "_Clone"
 msgstr "_Штамп"
 
 #: ../app/tools/gimpclonetool.c:86 ../app/tools/gimpclonetool.c:89
-#, fuzzy
 msgid "Click to clone"
-msgstr "Натисніть, щоб відкрити контур."
+msgstr "Натисніть для штамповки"
 
 #: ../app/tools/gimpclonetool.c:87 ../app/tools/gimpclonetool.c:91
 #, c-format
 msgid "%s to set a new clone source"
-msgstr ""
+msgstr "%s для створення джерела штампу"
 
 #: ../app/tools/gimpclonetool.c:90
-#, fuzzy
 msgid "Click to set a new clone source"
-msgstr "Натисніть, щоб створити новий компонент контуру."
+msgstr "Натисніть для отримання джерела штампу"
 
 #: ../app/tools/gimpclonetool.c:109
 #: ../app/tools/gimpperspectiveclonetool.c:960
@@ -9266,13 +9254,12 @@ msgstr "Джерело"
 
 #: ../app/tools/gimpclonetool.c:128 ../app/tools/gimphealtool.c:111
 #: ../app/tools/gimpperspectiveclonetool.c:979
-#, fuzzy
 msgid "Alignment:"
-msgstr "Вирівнювання"
+msgstr "Вирівнювання:"
 
 #: ../app/tools/gimpcolorbalancetool.c:93
 msgid "Color Balance Tool: Adjust color distribution"
-msgstr ""
+msgstr "Кольоровий баланс: корекція розподілу кольору"
 
 #: ../app/tools/gimpcolorbalancetool.c:94
 msgid "Color _Balance..."
@@ -9283,12 +9270,11 @@ msgid "Adjust Color Balance"
 msgstr "Коригування балансу кольорів"
 
 #: ../app/tools/gimpcolorbalancetool.c:153
-#, fuzzy, c-format
+#, c-format
 msgid "Color Balance operates only on RGB color layers."
-msgstr "Баланс кольорів діє лише на шари у форматі RGB."
+msgstr "Баланс кольорів діє лише на зображення у форматі RGB."
 
 #: ../app/tools/gimpcolorbalancetool.c:236
-#, fuzzy
 msgid "Select Range to Adjust"
 msgstr "Вибір ділянки для зміни"
 
@@ -9312,18 +9298,16 @@ msgid "Yellow"
 msgstr "Жовтий"
 
 #: ../app/tools/gimpcolorbalancetool.c:283
-#, fuzzy
 msgid "R_eset Range"
-msgstr "_Відновити значення"
+msgstr "_Відновити область"
 
 #: ../app/tools/gimpcolorbalancetool.c:292
 msgid "Preserve _luminosity"
 msgstr "Зберігати _яскравість"
 
 #: ../app/tools/gimpcolorizetool.c:91
-#, fuzzy
 msgid "Colorize Tool: Colorize the image"
-msgstr "Тонування зображення"
+msgstr "Тонування: фарбування зображень"
 
 #: ../app/tools/gimpcolorizetool.c:92
 msgid "Colori_ze..."
@@ -9370,48 +9354,43 @@ msgstr "Радіус:"
 
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:165
-#, fuzzy, c-format
+#, c-format
 msgid "Pick Mode  (%s)"
-msgstr "Тип дії %s"
+msgstr "Режим піпетки (%s)"
 
 #. the use_info_window toggle button
 #: ../app/tools/gimpcolorpickeroptions.c:174
-#, fuzzy, c-format
+#, c-format
 msgid "Use info window  (%s)"
-msgstr "Використовувати інформаційне вікно"
+msgstr "Інформаційне вікно (%s)"
 
 #: ../app/tools/gimpcolorpickertool.c:96
 msgid "Color Picker"
 msgstr "Піпетка"
 
 #: ../app/tools/gimpcolorpickertool.c:97
-#, fuzzy
 msgid "Color Picker Tool: Set colors from image pixels"
-msgstr "Отримання кольору із зображення"
+msgstr "Піпетка: отримання кольору із зображення"
 
 #: ../app/tools/gimpcolorpickertool.c:98
 msgid "C_olor Picker"
 msgstr "_Піпетка"
 
 #: ../app/tools/gimpcolorpickertool.c:242
-#, fuzzy
 msgid "Click in any image to view its color"
-msgstr "Змінити колір переднього плану сітки"
+msgstr "Натисніть на будь-якому зображенні для перегляду його кольору"
 
 #: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:498
-#, fuzzy
 msgid "Click in any image to pick the foreground color"
-msgstr "Змінити колір переднього плану сітки"
+msgstr "Натисніть на будь-якому зображенні для отримання його кольору переднього плану"
 
 #: ../app/tools/gimpcolorpickertool.c:257 ../app/tools/gimppainttool.c:504
-#, fuzzy
 msgid "Click in any image to pick the background color"
-msgstr "Змінити колір тла сітки"
+msgstr "Натисніть на будь-якому зображенні для отримання кольору його тла"
 
 #: ../app/tools/gimpcolorpickertool.c:265
-#, fuzzy
 msgid "Click in any image to add the color to the palette"
-msgstr "Змінити колір переднього плану сітки"
+msgstr "Натисніть на будь-якому зображенні, щоб додати колір до палітри"
 
 #. tool->display->shell
 #: ../app/tools/gimpcolorpickertool.c:318
@@ -9419,75 +9398,69 @@ msgid "Color Picker Information"
 msgstr "Інформація про піпетку"
 
 #: ../app/tools/gimpcolortool.c:255 ../app/tools/gimpcolortool.c:432
-#, fuzzy
 msgid "Move Sample Point: "
-msgstr "Переміщення виділеного"
+msgstr "Зсунути зразкову точку: "
 
 #: ../app/tools/gimpcolortool.c:426
 msgid "Cancel Sample Point"
-msgstr ""
+msgstr "Скасувати зразкову точку"
 
 #: ../app/tools/gimpcolortool.c:433
 msgid "Add Sample Point: "
-msgstr ""
+msgstr "Додати зразкову точку: "
 
 #: ../app/tools/gimpconvolvetool.c:73
-#, fuzzy
 msgid "Blur / Sharpen"
-msgstr "Різкість та розмитість"
+msgstr "Розмиття/різкість"
 
 #: ../app/tools/gimpconvolvetool.c:74
 msgid "Blur / Sharpen Tool: Selective blurring or unblurring using a brush"
 msgstr ""
+"Різкість чи розмиття: вибіркове розмиття чи збільшення різкості пензлем"
 
 #: ../app/tools/gimpconvolvetool.c:75
-#, fuzzy
 msgid "Bl_ur / Sharpen"
-msgstr "Різкість та розмитість"
+msgstr "_Розмиття/різкість"
 
 #: ../app/tools/gimpconvolvetool.c:170
 msgid "Click to blur"
-msgstr ""
+msgstr "Натисніть для розмиття"
 
 #: ../app/tools/gimpconvolvetool.c:171
-#, fuzzy
 msgid "Click to blur the line"
-msgstr "Натисніть для створення файлу перегляду"
+msgstr "Натисніть для розмиття лінією"
 
 #: ../app/tools/gimpconvolvetool.c:172
-#, fuzzy, c-format
+#, c-format
 msgid "%s to sharpen"
-msgstr "Різкість та розмитість"
+msgstr "%s для збільшення різкості"
 
 #: ../app/tools/gimpconvolvetool.c:176
-#, fuzzy
 msgid "Click to sharpen"
-msgstr "Різкість та розмитість"
+msgstr "Натисніть для збільшення різкості"
 
 #: ../app/tools/gimpconvolvetool.c:177
-#, fuzzy
 msgid "Click to sharpen the line"
-msgstr "Натисніть, щоб відкрити контур."
+msgstr "Натисніть для збільшення різкості лінією"
 
 #: ../app/tools/gimpconvolvetool.c:178
 #, c-format
 msgid "%s to blur"
-msgstr ""
+msgstr "%s для розмиття"
 
 #. the type radio box
 #: ../app/tools/gimpconvolvetool.c:199
-#, fuzzy, c-format
+#, c-format
 msgid "Convolve Type  (%s)"
-msgstr "Тип дії  %s"
+msgstr "Вид дії (%s)"
 
 #: ../app/tools/gimpcropoptions.c:148
 msgid "Current layer only"
 msgstr "Лише поточний шар"
 
 #: ../app/tools/gimpcropoptions.c:154
-#, fuzzy
 msgid "Allow growing"
-msgstr "Дозволити збільшення  %s"
+msgstr "Дозволити зростання"
 
 #: ../app/tools/gimpcroptool.c:115
 msgid "Crop"
@@ -9495,22 +9468,19 @@ msgstr "Кадрування"
 
 #: ../app/tools/gimpcroptool.c:116
 msgid "Crop Tool: Remove edge areas from image or layer"
-msgstr ""
+msgstr "Кадрування: видалення областей з межі зображення чи шару"
 
 #: ../app/tools/gimpcroptool.c:117
-#, fuzzy
 msgid "_Crop"
-msgstr "Кадрування"
+msgstr "_Кадрування"
 
 #: ../app/tools/gimpcroptool.c:242
-#, fuzzy
 msgid "Click or press Enter to crop"
-msgstr "Натисніть, щоб видалити цю точку."
+msgstr "Для кадрування клацніть мишею або натисніть Enter"
 
 #: ../app/tools/gimpcurvestool.c:151
-#, fuzzy
 msgid "Curves Tool: Adjust color curves"
-msgstr "Коригування кривих кольору"
+msgstr "Криві: корекція кольорових кривих"
 
 #: ../app/tools/gimpcurvestool.c:152
 msgid "_Curves..."
@@ -9537,26 +9507,23 @@ msgid "Save curves settings to file"
 msgstr "Зберегти значення кривих у файл"
 
 #: ../app/tools/gimpcurvestool.c:253
-#, fuzzy, c-format
+#, c-format
 msgid "Curves does not operate on indexed layers."
 msgstr "Інвертування не діє на індексовані шари."
 
 #: ../app/tools/gimpcurvestool.c:355
-#, fuzzy
 msgid "Click to add a control point"
-msgstr "Натисніть, щоб створити новий контур."
+msgstr "Натисніть, щоб додати контрольну точку"
 
 #: ../app/tools/gimpcurvestool.c:360
 msgid "Click to add control points to all channels"
-msgstr ""
+msgstr "Натисніть, щоб додати контрольні точки до усіх каналів"
 
 #: ../app/tools/gimpcurvestool.c:555 ../app/tools/gimplevelstool.c:365
-#, fuzzy
 msgid "Cha_nnel:"
-msgstr "Канал:"
+msgstr "_Канал:"
 
 #: ../app/tools/gimpcurvestool.c:577 ../app/tools/gimplevelstool.c:387
-#, fuzzy
 msgid "R_eset Channel"
 msgstr "В_ідновити канал"
 
@@ -9571,63 +9538,58 @@ msgid "Curve Type"
 msgstr "Тип кривої"
 
 #: ../app/tools/gimpcurvestool.c:753 ../app/tools/gimplevelstool.c:672
-#, fuzzy, c-format
+#, c-format
 msgid "not a GIMP Levels file"
-msgstr "Не є звичайним файлом"
+msgstr "не є файлом кольорових рівнів IMP"
 
 #: ../app/tools/gimpcurvestool.c:767 ../app/tools/gimplevelstool.c:711
-#, fuzzy, c-format
+#, c-format
 msgid "parse error"
-msgstr "критична помилка лексичного аналізу"
+msgstr "помилка при синтаксичному розборі"
 
 #: ../app/tools/gimpdodgeburntool.c:73
-#, fuzzy
 msgid "Dodge / Burn"
 msgstr "Освітлення/затемнення"
 
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
-msgstr ""
+msgstr "Освітлення/Затемнення: вибіркове освітлення чи затемнення пензлем"
 
 #: ../app/tools/gimpdodgeburntool.c:75
-#, fuzzy
 msgid "Dod_ge / Burn"
 msgstr "О_світлення/затемнення"
 
 #: ../app/tools/gimpdodgeburntool.c:173
-#, fuzzy
 msgid "Click to dodge"
-msgstr "Відсічений по зображенню"
+msgstr "Натисніть для освітлення"
 
 #: ../app/tools/gimpdodgeburntool.c:174
-#, fuzzy
 msgid "Click to dodge the line"
-msgstr "Натисніть, щоб відкрити контур."
+msgstr "Натисніть для освітлення лінією"
 
 #: ../app/tools/gimpdodgeburntool.c:175
 #, c-format
 msgid "%s to burn"
-msgstr ""
+msgstr "%s для затемнення"
 
 #: ../app/tools/gimpdodgeburntool.c:179
 msgid "Click to burn"
-msgstr ""
+msgstr "Натисніть для затемнення"
 
 #: ../app/tools/gimpdodgeburntool.c:180
-#, fuzzy
 msgid "Click to burn the line"
-msgstr "Натисніть для створення файлу перегляду"
+msgstr "Натисніть для затемнення лінією"
 
 #: ../app/tools/gimpdodgeburntool.c:181
 #, c-format
 msgid "%s to dodge"
-msgstr ""
+msgstr "%s для освітлення"
 
 #. the type (dodge or burn)
 #: ../app/tools/gimpdodgeburntool.c:202
-#, fuzzy, c-format
+#, c-format
 msgid "Type  (%s)"
-msgstr "Тип: %s"
+msgstr "Тип (%s)"
 
 #: ../app/tools/gimpdodgeburntool.c:214
 #: ../app/tools/gimpperspectiveclonetool.c:952
@@ -9653,53 +9615,49 @@ msgid "Ellipse Select"
 msgstr "Виділення еліпсом"
 
 #: ../app/tools/gimpellipseselecttool.c:69
-#, fuzzy
 msgid "Ellipse Select Tool: Select an elliptical region"
-msgstr "Виділення еліптичних ділянок"
+msgstr "Виділення еліпсу: виділення еліптичних областей"
 
 #: ../app/tools/gimpellipseselecttool.c:70
 msgid "_Ellipse Select"
 msgstr "Виділення _еліпсом"
 
 #: ../app/tools/gimperasertool.c:67
-#, fuzzy
 msgid "Eraser Tool: Erase to background or transparency using a brush"
-msgstr "Стирання до тла чи прозорості"
+msgstr "Гумка: стирання пензлем до тла чи прозорості"
 
 #: ../app/tools/gimperasertool.c:68
 msgid "_Eraser"
 msgstr "_Гумка"
 
 #: ../app/tools/gimperasertool.c:97
-#, fuzzy
 msgid "Click to erase"
-msgstr "Очищення кольору"
+msgstr "Натисніть, щоб стерти"
 
 #: ../app/tools/gimperasertool.c:98
-#, fuzzy
 msgid "Click to erase the line"
-msgstr "Натисніть для створення файлу перегляду"
+msgstr "Натисніть, щоб стерти лінією"
 
 #: ../app/tools/gimperasertool.c:99
-#, fuzzy, c-format
+#, c-format
 msgid "%s to pick a background color"
-msgstr "Встановити колір тла"
+msgstr "%s, щоб взяти піпеткою колір тла"
 
 #. the anti_erase toggle
 #: ../app/tools/gimperasertool.c:146
-#, fuzzy, c-format
+#, c-format
 msgid "Anti erase  (%s)"
-msgstr "Антигумка   %s"
+msgstr "Антигумка  (%s)"
 
 #: ../app/tools/gimpflipoptions.c:129
 msgid "Affect:"
-msgstr "Вплив:"
+msgstr "Зсув:"
 
 #. tool toggle
 #: ../app/tools/gimpflipoptions.c:135
-#, fuzzy, c-format
+#, c-format
 msgid "Flip Type  (%s)"
-msgstr "Тип віддзеркалення: %s"
+msgstr "Тип віддзеркалення (%s)"
 
 #: ../app/tools/gimpfliptool.c:77
 msgid "Flip"
@@ -9709,127 +9667,120 @@ msgstr "Дзеркало"
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr ""
+"Дзеркало: горизонтальне чи вертикальне віддзеркалення шару, виділення чи "
+"контуру"
 
 #: ../app/tools/gimpfliptool.c:80
 msgid "_Flip"
 msgstr "_Дзеркало"
 
 #: ../app/tools/gimpforegroundselectoptions.c:77
-#, fuzzy
 msgid "Select a single contiguous area"
-msgstr "Виділення суміжних ділянок"
+msgstr "Виділіть одну суміжну ділянку"
 
 #: ../app/tools/gimpforegroundselectoptions.c:86
 msgid "Size of the brush used for refinements"
-msgstr ""
+msgstr "Розмір пензля для виділення"
 
 #: ../app/tools/gimpforegroundselectoptions.c:91
 msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
 msgstr ""
+"При менших значеннях межа виділення буде більш охайною, проте у "
+"самому виділенні можуть з'явитися «дірки»."
 
 #: ../app/tools/gimpforegroundselectoptions.c:107
 msgid "Sensitivity for brightness component"
-msgstr ""
+msgstr "Чутливість компоненту яскравості"
 
 #: ../app/tools/gimpforegroundselectoptions.c:112
 msgid "Sensitivity for red/green component"
-msgstr ""
+msgstr "Чутливість червоного/зеленого компоненту"
 
 #: ../app/tools/gimpforegroundselectoptions.c:117
 msgid "Sensitivity for yellow/blue component"
-msgstr ""
+msgstr "Чутливість жовтого/синього компоненту"
 
 #. single / multiple objects
 #: ../app/tools/gimpforegroundselectoptions.c:231
-#, fuzzy
 msgid "Contiguous"
-msgstr "Продовжити"
+msgstr "Суміжна область"
 
 #. foreground / background
 #: ../app/tools/gimpforegroundselectoptions.c:236
 #, c-format
 msgid "Interactive refinement  (%s)"
-msgstr ""
+msgstr "Інтерактивне уточнення (%s)"
 
 #: ../app/tools/gimpforegroundselectoptions.c:240
-#, fuzzy
 msgid "Mark background"
-msgstr "Тло"
+msgstr "Позначити тло"
 
 #: ../app/tools/gimpforegroundselectoptions.c:241
-#, fuzzy
 msgid "Mark foreground"
-msgstr "Переднього плану"
+msgstr "Позначити передній план"
 
 #: ../app/tools/gimpforegroundselectoptions.c:257
-#, fuzzy
 msgid "Small brush"
-msgstr "Малий"
+msgstr "Маленький пензель"
 
 #: ../app/tools/gimpforegroundselectoptions.c:265
-#, fuzzy
 msgid "Large brush"
-msgstr "Створити пензель"
+msgstr "Великий пензель"
 
 #: ../app/tools/gimpforegroundselectoptions.c:289
-#, fuzzy
 msgid "Smoothing:"
-msgstr "Гладенька"
+msgstr "Згладжування:"
 
 #: ../app/tools/gimpforegroundselectoptions.c:295
-#, fuzzy
 msgid "Preview color:"
-msgstr "Попередній перегляд:"
+msgstr "Колір перегляду:"
 
 #. granularity
 #: ../app/tools/gimpforegroundselectoptions.c:298
-#, fuzzy
 msgid "Color Sensitivity"
-msgstr "Чутливість"
+msgstr "Чутливість до кольору"
 
 #: ../app/tools/gimpforegroundselecttool.c:145
-#, fuzzy
 msgid "Foreground Select"
-msgstr "Переднього плану"
+msgstr "Виділення переднього плану"
 
 #: ../app/tools/gimpforegroundselecttool.c:146
 msgid "Foreground Select Tool: Select a region containing foreground objects"
 msgstr ""
+"Виділення переднього плану: виділення області, що містить об'єкти на передньому "
+"плані"
 
 #: ../app/tools/gimpforegroundselecttool.c:147
-#, fuzzy
 msgid "F_oreground Select"
-msgstr "Переднього плану"
+msgstr "Виділення _переднього плану"
 
 #: ../app/tools/gimpforegroundselecttool.c:310
 msgid "Add more strokes or press Enter to accept the selection"
-msgstr ""
+msgstr "Продовжуйте штрихування або натисніть Enter для підтвердження"
 
 #: ../app/tools/gimpforegroundselecttool.c:312
 msgid "Mark foreground by painting on the object to extract"
-msgstr ""
+msgstr "Заштрихуйте об'єкт, що виділяється"
 
 #: ../app/tools/gimpforegroundselecttool.c:323
 msgid "Draw a rough circle around the object to extract"
-msgstr ""
+msgstr "Зробіть грубе виділення об'єкту, що отримується"
 
 #: ../app/tools/gimpforegroundselecttool.c:744
 msgid "command|Foreground Select"
-msgstr ""
+msgstr "Виділити передній план"
 
 #: ../app/tools/gimpfreeselecttool.c:98
-#, fuzzy
 msgid "Free Select Tool: Select a hand-drawn region"
-msgstr "Виділення довільних ділянок"
+msgstr "Вільне виділення: виділення області, що малюється вручну"
 
 #: ../app/tools/gimpfreeselecttool.c:99
 msgid "_Free Select"
 msgstr "_Вільне виділення"
 
 #: ../app/tools/gimpfreeselecttool.c:312
-#, fuzzy
 msgid "command|Free Select"
 msgstr "Вильне виділення"
 
@@ -9839,7 +9790,7 @@ msgstr "Виділення зв'язаної ділянки"
 
 #: ../app/tools/gimpfuzzyselecttool.c:64
 msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
-msgstr ""
+msgstr "Виділення пов'язаної області: виділення області за кольором"
 
 #: ../app/tools/gimpfuzzyselecttool.c:65
 msgid "Fu_zzy Select"
@@ -9847,27 +9798,24 @@ msgstr "Виді_лення зв'язаної ділянки"
 
 #: ../app/tools/gimphealtool.c:54
 msgid "Healing Tool: Heal image irregularities"
-msgstr ""
+msgstr "Лікувальний пензель: витягування дефектів у зображені"
 
 #: ../app/tools/gimphealtool.c:55
-#, fuzzy
 msgid "_Heal"
-msgstr "_Довідка"
+msgstr "_Лікувальний пензель"
 
 #: ../app/tools/gimphealtool.c:77 ../app/tools/gimphealtool.c:80
-#, fuzzy
 msgid "Click to heal"
-msgstr "Натисніть, щоб відкрити контур."
+msgstr "Натисніть, щоб залікувати"
 
 #: ../app/tools/gimphealtool.c:78 ../app/tools/gimphealtool.c:82
 #, c-format
 msgid "%s to set a new heal source"
-msgstr ""
+msgstr "%s для вибору джерела лікувального штампу"
 
 #: ../app/tools/gimphealtool.c:81
-#, fuzzy
 msgid "Click to set a new heal source"
-msgstr "Натисніть, щоб створити новий контур."
+msgstr "Натисніть для вибору нового джерела лікувального штампу"
 
 #: ../app/tools/gimphistogramoptions.c:127
 msgid "Histogram Scale"
@@ -9875,14 +9823,13 @@ msgstr "Масштаб гістограми"
 
 #: ../app/tools/gimphuesaturationtool.c:113
 msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
-msgstr ""
+msgstr "Тон-Насиченість: коригування відтінку, насиченості та освітлення"
 
 #: ../app/tools/gimphuesaturationtool.c:114
 msgid "Hue-_Saturation..."
 msgstr "Відтінок та _насиченість"
 
 #: ../app/tools/gimphuesaturationtool.c:131
-#, fuzzy
 msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Коригування відтінку, освітленості та насиченості"
 
@@ -9896,9 +9843,8 @@ msgid "M_aster"
 msgstr "По_мічник"
 
 #: ../app/tools/gimphuesaturationtool.c:229
-#, fuzzy
 msgid "Adjust all colors"
-msgstr "Коригування рівнів кольорів"
+msgstr "Змінювати усі кольори"
 
 #: ../app/tools/gimphuesaturationtool.c:230
 msgid "_R"
@@ -9925,22 +9871,18 @@ msgid "_M"
 msgstr "_M"
 
 #: ../app/tools/gimphuesaturationtool.c:238
-#, fuzzy
 msgid "Select Primary Color to Adjust"
 msgstr "Вибір основного кольору для змін"
 
 #: ../app/tools/gimphuesaturationtool.c:326
-#, fuzzy
 msgid "_Overlap:"
-msgstr "Перекривання"
+msgstr "_Перекриття:"
 
 #: ../app/tools/gimphuesaturationtool.c:344
-#, fuzzy
 msgid "Adjust Selected Color"
 msgstr "Зміна вибраного кольору"
 
 #: ../app/tools/gimphuesaturationtool.c:418
-#, fuzzy
 msgid "R_eset Color"
 msgstr "_Відновити колір"
 
@@ -9950,16 +9892,16 @@ msgstr "_Попередній перегляд"
 
 #: ../app/tools/gimpimagemaptool.c:265
 msgid "Quick Load"
-msgstr "Швидке завантажити"
+msgstr "Швидке завантаження"
 
 #: ../app/tools/gimpimagemaptool.c:294
 msgid "Quick Save"
 msgstr "Швидке збереження"
 
 #: ../app/tools/gimpimagemaptool.c:609
-#, fuzzy, c-format
+#, c-format
 msgid "Settings saved to '%s'"
-msgstr "Запуск розширення: \"%s\"\n"
+msgstr "Параметри збережені у '%s'"
 
 #. adjust sliders
 #: ../app/tools/gimpinkoptions-gui.c:56
@@ -10000,7 +9942,7 @@ msgstr "Форма"
 
 #: ../app/tools/gimpinktool.c:56
 msgid "Ink Tool: Calligraphy-style painting"
-msgstr ""
+msgstr "Перо: каліграфічне малювання"
 
 #: ../app/tools/gimpinktool.c:57
 msgid "In_k"
@@ -10012,50 +9954,44 @@ msgstr "Ножиці"
 
 #: ../app/tools/gimpiscissorstool.c:279
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
-msgstr ""
+msgstr "Розумні ножиці: виділення фігур за допомогою розпізнавання країв"
 
 #: ../app/tools/gimpiscissorstool.c:280
 msgid "Intelligent _Scissors"
 msgstr "_Розумні ножиці"
 
 #: ../app/tools/gimpiscissorstool.c:919 ../app/tools/gimpmeasuretool.c:602
-#, fuzzy
 msgid "Click-Drag to move this point"
-msgstr "Натисніть та перетягніть, щоб перемістити контур."
+msgstr "Натисніть та перетягніть, щоб перемістити точку"
 
 #: ../app/tools/gimpiscissorstool.c:921 ../app/tools/gimpiscissorstool.c:986
 #, c-format
 msgid "%s: disable auto-snap"
-msgstr ""
+msgstr "%s: вимкнути автоприлипання"
 
 #: ../app/tools/gimpiscissorstool.c:938
-#, fuzzy
 msgid "Click to close the curve"
-msgstr "Натисніть для створення файлу перегляду"
+msgstr "Натисніть для закриття контуру"
 
 #: ../app/tools/gimpiscissorstool.c:944
-#, fuzzy
 msgid "Click to add a point on this segment"
-msgstr "Натисніть, щоб створити новий контур."
+msgstr "Натисніть для додавання вузла до сегменту"
 
 #: ../app/tools/gimpiscissorstool.c:958
-#, fuzzy
 msgid "Click or press Enter to convert to a selection"
-msgstr "Натисніть, щоб видалити цю точку."
+msgstr "Натисніть та натисніть Enter для перетворення на виділення"
 
 #: ../app/tools/gimpiscissorstool.c:968
 msgid "Press Enter to convert to a selection"
-msgstr ""
+msgstr "Натисніть Enter для перетворення на виділення"
 
 #: ../app/tools/gimpiscissorstool.c:983
-#, fuzzy
 msgid "Click or Click-Drag to add a point"
-msgstr "Натисніть, щоб створити новий контур."
+msgstr "Натисніть або натисніть та перетягніть для додавання вузла"
 
 #: ../app/tools/gimplevelstool.c:158
-#, fuzzy
 msgid "Levels Tool: Adjust color levels"
-msgstr "Коригування рівнів кольорів"
+msgstr "Рівні: коригування рівнів кольорів"
 
 #: ../app/tools/gimplevelstool.c:159
 msgid "_Levels..."
@@ -10078,9 +10014,9 @@ msgid "Save levels settings to file"
 msgstr "Збереження параметрів рівнів у файл"
 
 #: ../app/tools/gimplevelstool.c:236
-#, fuzzy, c-format
+#, c-format
 msgid "Levels does not operate on indexed layers."
-msgstr "Інвертування не діє на індексовані шари."
+msgstr "Індексовані шар не можна редагувати за допомогою рівнів."
 
 #: ../app/tools/gimplevelstool.c:303
 msgid "Pick black point"
@@ -10118,21 +10054,19 @@ msgstr "Змінювати розмір вікна"
 
 #. tool toggle
 #: ../app/tools/gimpmagnifyoptions.c:172 ../app/tools/gimpmoveoptions.c:184
-#, fuzzy, c-format
+#, c-format
 msgid "Tool Toggle  (%s)"
 msgstr "Перемикач інструмента  %s"
 
 #: ../app/tools/gimpmagnifytool.c:86
-#, fuzzy
 msgid "Zoom"
-msgstr "Масштаб:"
+msgstr "Масштаб"
 
 #: ../app/tools/gimpmagnifytool.c:87
 msgid "Zoom Tool: Adjust the zoom level"
-msgstr ""
+msgstr "Масштаб: зміна масштабу зображення"
 
 #: ../app/tools/gimpmagnifytool.c:88
-#, fuzzy
 msgid "tool|_Zoom"
 msgstr "Мас_штаб"
 
@@ -10145,9 +10079,8 @@ msgid "Measure"
 msgstr "Вимірювач"
 
 #: ../app/tools/gimpmeasuretool.c:122
-#, fuzzy
 msgid "Measure Tool: Measure distances and angles"
-msgstr "Вимірювання відстаней та кутів"
+msgstr "Вимірювач: Вимірювання відстаней та кутів"
 
 #: ../app/tools/gimpmeasuretool.c:123
 msgid "_Measure"
@@ -10159,27 +10092,23 @@ msgstr "Додавання напрямних"
 
 #: ../app/tools/gimpmeasuretool.c:554
 msgid "Click to place vertical and horizontal guides"
-msgstr ""
+msgstr "Натисніть для розміщення вертикальної чи горизонтальної напрямної"
 
 #: ../app/tools/gimpmeasuretool.c:563
-#, fuzzy
 msgid "Click to place a horizontal guide"
-msgstr "Вибрати шар або напрямну"
+msgstr "Натисніть для розміщення горизонтальної напрямної"
 
 #: ../app/tools/gimpmeasuretool.c:577
-#, fuzzy
 msgid "Click to place a vertical guide"
-msgstr "Натисніть, щоб створити новий контур."
+msgstr "Натисніть для розміщення вертикальної напрямної"
 
 #: ../app/tools/gimpmeasuretool.c:591
-#, fuzzy
 msgid "Click-Drag to add a new point"
 msgstr "Натисніть, щоб створити новий контур."
 
 #: ../app/tools/gimpmeasuretool.c:621
-#, fuzzy
 msgid "Click-Drag to move all points"
-msgstr "Натисніть та перетягніть, щоб перемістити точку."
+msgstr "Натисніть та перетягніть, щоб перемістити всі точки"
 
 #. tool->display->shell
 #: ../app/tools/gimpmeasuretool.c:980
@@ -10195,9 +10124,8 @@ msgid "Pick a layer or guide"
 msgstr "Вибрати шар або напрямну"
 
 #: ../app/tools/gimpmoveoptions.c:141
-#, fuzzy
 msgid "Move the active layer"
-msgstr "Перемістити поточний шар"
+msgstr "Перемістити активний шар"
 
 #: ../app/tools/gimpmoveoptions.c:145
 msgid "Move selection"
@@ -10208,23 +10136,20 @@ msgid "Pick a path"
 msgstr "Вибрати контур для переміщення"
 
 #: ../app/tools/gimpmoveoptions.c:150
-#, fuzzy
 msgid "Move the active path"
-msgstr "Експортувати поточний контур"
+msgstr "Перемістити активний контур"
 
 #: ../app/tools/gimpmoveoptions.c:178
-#, fuzzy
 msgid "Move:"
 msgstr "Переміщення: "
 
 #: ../app/tools/gimpmovetool.c:125
-#, fuzzy
 msgid "tool|Move"
 msgstr "Переміщення"
 
 #: ../app/tools/gimpmovetool.c:126
 msgid "Move Tool: Move layers, selections, and other objects"
-msgstr ""
+msgstr "Переміщення: переміщення шарів, виділення та інших об'єктів"
 
 #: ../app/tools/gimpmovetool.c:127
 msgid "_Move"
@@ -10244,7 +10169,7 @@ msgstr "Додавання напрямних"
 
 #: ../app/tools/gimppaintbrushtool.c:52
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
-msgstr ""
+msgstr "Пензель: малювання плавних штрихів пензлем"
 
 #: ../app/tools/gimppaintbrushtool.c:53
 msgid "_Paintbrush"
@@ -10266,9 +10191,8 @@ msgid "Brush:"
 msgstr "Пензель:"
 
 #: ../app/tools/gimppaintoptions-gui.c:131
-#, fuzzy
 msgid "Scale:"
-msgstr "Масштаб"
+msgstr "Масштаб:"
 
 #: ../app/tools/gimppaintoptions-gui.c:147
 #: ../app/tools/gimppaintoptions-gui.c:436
@@ -10315,40 +10239,37 @@ msgstr "Довжина:"
 
 #: ../app/tools/gimppaintoptions-gui.c:384
 msgid "Apply Jitter"
-msgstr ""
+msgstr "Тремтіння"
 
 #: ../app/tools/gimppaintoptions-gui.c:389
-#, fuzzy
 msgid "Amount:"
-msgstr "Кількість:"
+msgstr "Ступінь:"
 
 #: ../app/tools/gimppaintoptions-gui.c:419
 msgid "Use color from gradient"
 msgstr "Використати колір з градієнта"
 
 #: ../app/tools/gimppainttool.c:132
-#, fuzzy
 msgid "Click to paint"
-msgstr "Вибір _білої точки"
+msgstr "Натисніть, щоб намалювати"
 
 #: ../app/tools/gimppainttool.c:133
-#, fuzzy
 msgid "Click to draw the line"
-msgstr "Натисніть для створення файлу перегляду"
+msgstr "Натисніть, щоб намалювати лінію"
 
 #: ../app/tools/gimppainttool.c:134
-#, fuzzy, c-format
+#, c-format
 msgid "%s to pick a color"
-msgstr "Зміна кольору швидкої маски"
+msgstr "%s, зоб взяти колір піпеткою"
 
 #: ../app/tools/gimppainttool.c:647
 #, c-format
 msgid "%s for a straight line"
-msgstr ""
+msgstr "%s для малювання прямої лінії"
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Pencil Tool: Hard edge painting using a brush"
-msgstr ""
+msgstr "Олівець: малювання різкими штрихами"
 
 #: ../app/tools/gimppenciltool.c:53
 msgid "Pe_ncil"
@@ -10359,44 +10280,40 @@ msgid ""
 "Perspective Clone Tool: Clone from an image source after applying a "
 "perspective transformation"
 msgstr ""
+"Штамп з перспективою: застосування інструменту \"Штамп\" з урахуванням перспективи "
+"зображення"
 
 #: ../app/tools/gimpperspectiveclonetool.c:130
-#, fuzzy
 msgid "_Perspective Clone"
-msgstr "_Перспектива"
+msgstr "Штамп з п_ерспективою"
 
 #: ../app/tools/gimpperspectiveclonetool.c:701
 msgid "Ctrl-Click to set a clone source"
-msgstr ""
+msgstr "Натисніть Ctrl для отримання джерела штампу"
 
 #: ../app/tools/gimpperspectivetool.c:68
-#, fuzzy
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
-msgstr "Зміна перспективи шару чи виділення"
+msgstr "Перспектива: зміна перспективи шару, виділення чи контуру"
 
 #: ../app/tools/gimpperspectivetool.c:70
 msgid "_Perspective"
 msgstr "_Перспектива"
 
 #: ../app/tools/gimpperspectivetool.c:97
-#, fuzzy
 msgid "command|Perspective"
 msgstr "Перспектива"
 
 #: ../app/tools/gimpperspectivetool.c:98
-#, fuzzy
 msgid "Perspective transformation"
-msgstr "Інформація про перетворення перспективи"
+msgstr "Трансформація перспективи"
 
 #: ../app/tools/gimpperspectivetool.c:113
-#, fuzzy
 msgid "Transformation Matrix"
-msgstr "Перетворення"
+msgstr "Матриця перетворення"
 
 #: ../app/tools/gimpposterizetool.c:78
-#, fuzzy
 msgid "Posterize Tool: Reduce to a limited set of colors"
-msgstr "Постеризація (зменшення кількості кольорів)"
+msgstr "Постеризація: зменшення кількості кольорів"
 
 #: ../app/tools/gimpposterizetool.c:79
 msgid "_Posterize..."
@@ -10421,104 +10338,89 @@ msgstr "Використовувати усі виділені шари при �
 
 #. Current, as in what is currently in use.
 #: ../app/tools/gimprectangleoptions.c:775
-#, fuzzy
 msgid "Current"
-msgstr "Поточний стан"
+msgstr "Активне"
 
 #: ../app/tools/gimprectangleoptions.c:853
 msgid "Expand from center"
-msgstr ""
+msgstr "Малювати з центру"
 
 #: ../app/tools/gimprectangleoptions.c:876
-#, fuzzy
 msgid "Fixed:"
-msgstr "Оптимальне заповнення"
+msgstr "Фікс.:"
 
 #: ../app/tools/gimprectangleoptions.c:1009
-#, fuzzy
 msgid "Position:"
 msgstr "Позиція"
 
 #: ../app/tools/gimprectangleoptions.c:1027
-#, fuzzy
 msgid "Highlight"
-msgstr "Відблиски"
+msgstr "Затемнити невиділене"
 
 #. Auto Shrink
 #: ../app/tools/gimprectangleoptions.c:1037
-#, fuzzy
 msgid "Auto Shrink"
-msgstr "Автозменшення"
+msgstr "Автозменшення виділення"
 
 #: ../app/tools/gimprectangleoptions.c:1044
-#, fuzzy
 msgid "Shrink merged"
-msgstr "Кристалізація об'єднанням"
+msgstr "В усіх шарах"
 
 #: ../app/tools/gimprectangleselectoptions.c:154
 msgid "Rounded corners"
-msgstr ""
+msgstr "Закруглені кути"
 
 #: ../app/tools/gimprectangleselecttool.c:141
-#, fuzzy
 msgid "Rectangle Select"
 msgstr "Прямокутне виділення"
 
 #: ../app/tools/gimprectangleselecttool.c:142
-#, fuzzy
 msgid "Rectangle Select Tool: Select a rectangular region"
-msgstr "Виділення прямокутних ділянок"
+msgstr "Прямокутне виділення: виділення прямокутної області"
 
 #: ../app/tools/gimprectangleselecttool.c:143
-#, fuzzy
 msgid "_Rectangle Select"
 msgstr "Пр_ямокутне виділення"
 
 #: ../app/tools/gimprectangletool.c:1032 ../app/tools/gimprectangletool.c:1880
-#, fuzzy
 msgid "Rectangle: "
-msgstr "_Відновити значення"
+msgstr "Прямокутник: "
 
 #: ../app/tools/gimpregionselecttool.c:162
 msgid "Move the mouse to change threshold"
-msgstr ""
+msgstr "Пересуньте мишу для зміни порога"
 
 #: ../app/tools/gimprotatetool.c:85
 msgid "Rotate"
 msgstr "Обертання"
 
 #: ../app/tools/gimprotatetool.c:86
-#, fuzzy
 msgid "Rotate Tool: Rotate the layer, selection or path"
-msgstr "Обертання шарів та виділених ділянок"
+msgstr "Обертання: обертання шарів, виділених ділянок чи контурів"
 
 #: ../app/tools/gimprotatetool.c:87
 msgid "_Rotate"
 msgstr "_Обертання"
 
 #: ../app/tools/gimprotatetool.c:142
-#, fuzzy
 msgid "_Angle:"
-msgstr "Кут:"
+msgstr "К_ут:"
 
 #: ../app/tools/gimprotatetool.c:157
-#, fuzzy
 msgid "Center _X:"
-msgstr "Центр X:"
+msgstr "Центр _X:"
 
 #: ../app/tools/gimprotatetool.c:166
-#, fuzzy
 msgid "Center _Y:"
-msgstr "Центр Y:"
+msgstr "Центр _Y:"
 
 #: ../app/tools/gimpscaletool.c:78
 msgid "Scale"
 msgstr "Масштаб"
 
 #: ../app/tools/gimpscaletool.c:79
-#, fuzzy
 msgid "Scale Tool: Scale the layer, selection or path"
-msgstr "Масштабування шару чи виділеної ділянки"
+msgstr "Масштаб: Масштабування шару, виділеної ділянки чи контуру"
 
 #: ../app/tools/gimpscaletool.c:80
 msgid "_Scale"
@@ -10526,7 +10428,7 @@ msgstr "Мас_штаб"
 
 #: ../app/tools/gimpscaletool.c:106
 msgid "command|Scale"
-msgstr ""
+msgstr "Масштаб"
 
 #: ../app/tools/gimpselectionoptions.c:103
 msgid "Smooth edges"
@@ -10549,72 +10451,60 @@ msgid "Feather edges"
 msgstr "Розмивати межі"
 
 #: ../app/tools/gimpselectionoptions.c:384
-#, fuzzy
 msgid "Interactive boundary"
-msgstr "Показувати інтерактивні межі"
+msgstr "Інтерактивні межі"
 
 #: ../app/tools/gimpselectionoptions.c:398
 msgid "Select transparent areas"
 msgstr "Виділяти прозорі ділянки"
 
 #: ../app/tools/gimpselectionoptions.c:423
-#, fuzzy
 msgid "Select by:"
-msgstr "Виділене"
+msgstr "Вибір за:"
 
 #: ../app/tools/gimpselectiontool.c:251
-#, fuzzy
 msgid "Click-Drag to replace the current selection"
-msgstr "Замінити поточне виділення"
+msgstr "Натисніть та перетягніть для заміни поточне виділення"
 
 #: ../app/tools/gimpselectiontool.c:259
-#, fuzzy
 msgid "Click-Drag to create a new selection"
-msgstr "Натисніть, щоб створити новий контур."
+msgstr "Натисніть та перетягніть для створення нового виділення"
 
 #: ../app/tools/gimpselectiontool.c:264
-#, fuzzy
 msgid "Click-Drag to add to the current selection"
-msgstr "Додати до поточного виділення"
+msgstr "Натисніть та перетягніть для додавання до поточного виділення"
 
 #: ../app/tools/gimpselectiontool.c:273
-#, fuzzy
 msgid "Click-Drag to subtract from the current selection"
-msgstr "Відняти від поточного виділення"
+msgstr "Натисніть та перетягніть для віднімання від поточного виділення"
 
 #: ../app/tools/gimpselectiontool.c:282
-#, fuzzy
 msgid "Click-Drag to intersect with the current selection"
-msgstr "Перетнути з поточним виділенням"
+msgstr "Натисніть та перетягніть для перетинання з поточним виділенням"
 
 #: ../app/tools/gimpselectiontool.c:292
-#, fuzzy
 msgid "Click-Drag to move the selection mask"
-msgstr "Натисніть та перетягніть, щоб перемістити точку."
+msgstr "Натисніть та перетягніть для зсуву маски виділення"
 
 #: ../app/tools/gimpselectiontool.c:300
-#, fuzzy
 msgid "Click-Drag to move the selected pixels"
-msgstr "Натисніть та перетягніть, щоб перемістити контур."
+msgstr "Натисніть та перетягніть для зсуву виділених точок"
 
 #: ../app/tools/gimpselectiontool.c:304
-#, fuzzy
 msgid "Click-Drag to move a copy of the selected pixels"
-msgstr "Натисніть, щоб об'єднати цю точку з вибраною кінцевою точкою."
+msgstr "Натисніть та перетягніть для зсуву копії виділених точок"
 
 #: ../app/tools/gimpselectiontool.c:308
-#, fuzzy
 msgid "Click to anchor the floating selection"
-msgstr "Прикріплення плаваючого виділення"
+msgstr "Натисніть, щоб причепити плаваюче виділення"
 
 #: ../app/tools/gimpsheartool.c:81
 msgid "Shear"
 msgstr "Викривлення"
 
 #: ../app/tools/gimpsheartool.c:82
-#, fuzzy
 msgid "Shear Tool: Shear the layer, selection or path"
-msgstr "Викривлення шарів та виділень"
+msgstr "Викривлення: викривлення шарів, виділених ділянок та контурів"
 
 #: ../app/tools/gimpsheartool.c:83
 msgid "S_hear"
@@ -10622,35 +10512,31 @@ msgstr "_Викривлення"
 
 #: ../app/tools/gimpsheartool.c:109
 msgid "command|Shear"
-msgstr ""
+msgstr "Викривлення"
 
 #: ../app/tools/gimpsheartool.c:133
-#, fuzzy
 msgid "Shear magnitude _X:"
-msgstr "Коефіцієнт викривлення по X:"
+msgstr "Коефіцієнт викривлення по _X:"
 
 #: ../app/tools/gimpsheartool.c:143
-#, fuzzy
 msgid "Shear magnitude _Y:"
-msgstr "Коефіцієнт викривлення по Y:"
+msgstr "Коефіцієнт викривлення по _Y:"
 
 #: ../app/tools/gimpsmudgetool.c:54
 msgid "Smudge Tool: Smudge selectively using a brush"
-msgstr ""
+msgstr "Палець: вибіркове розмазування пензлем"
 
 #: ../app/tools/gimpsmudgetool.c:55
 msgid "_Smudge"
 msgstr "Пале_ць"
 
 #: ../app/tools/gimpsmudgetool.c:74
-#, fuzzy
 msgid "Click to smudge"
-msgstr "Відсічений по зображенню"
+msgstr "Натисніть для розмиття"
 
 #: ../app/tools/gimpsmudgetool.c:75
-#, fuzzy
 msgid "Click to smudge the line"
-msgstr "Натисніть для створення файлу перегляду"
+msgstr "Натисніть для розмазування ліній"
 
 #: ../app/tools/gimptextoptions.c:114
 msgid ""
@@ -10672,14 +10558,12 @@ msgid "Indentation of the first line"
 msgstr "Розташування першого рядка"
 
 #: ../app/tools/gimptextoptions.c:152
-#, fuzzy
 msgid "Adjust line spacing"
-msgstr "Відстань між лініями сітки"
+msgstr "Інтервал між рядками"
 
 #: ../app/tools/gimptextoptions.c:158
-#, fuzzy
 msgid "Adjust letter spacing"
-msgstr "Відстань між лініями сітки"
+msgstr "Інтервал між літерами"
 
 #: ../app/tools/gimptextoptions.c:429
 msgid "Font:"
@@ -10707,18 +10591,16 @@ msgstr "Вирівнювання:"
 
 #. Create a path from the current text
 #: ../app/tools/gimptextoptions.c:498
-#, fuzzy
 msgid "Path from Text"
-msgstr "Створити криву з тексту"
+msgstr "Контур з тексту"
 
 #: ../app/tools/gimptextoptions.c:505
-#, fuzzy
 msgid "Text along Path"
-msgstr "У _контур"
+msgstr "Текст по контуру"
 
 #: ../app/tools/gimptexttool.c:142
 msgid "Text Tool: Create or edit text layers"
-msgstr ""
+msgstr "Текст: створення чи правка текстового шару"
 
 #: ../app/tools/gimptexttool.c:143
 msgid "Te_xt"
@@ -10748,9 +10630,8 @@ msgstr ""
 "текстовими атрибутами."
 
 #: ../app/tools/gimpthresholdtool.c:83
-#, fuzzy
 msgid "Threshold Tool: Reduce image to two colors using a threshold"
-msgstr "Перетворити зображення у двокольорове використовуючи поріг"
+msgstr "Поріг: перетворення зображення у двокольорове, використовуючи поріг"
 
 #: ../app/tools/gimpthresholdtool.c:84
 msgid "_Threshold..."
@@ -10767,17 +10648,15 @@ msgstr "Поріг не діє на індексовані шари."
 
 #: ../app/tools/gimpthresholdtool.c:237
 msgid "Automatically adjust to optimal binarization threshold"
-msgstr ""
+msgstr "Автоматично встановити оптимальну бінаризацію порога"
 
 #: ../app/tools/gimptransformoptions.c:249
-#, fuzzy
 msgid "Transform:"
-msgstr "Перетворення"
+msgstr "Перетворення:"
 
 #: ../app/tools/gimptransformoptions.c:255
-#, fuzzy
 msgid "Direction"
-msgstr "Опис"
+msgstr "Напрямок"
 
 #. the interpolation menu
 #: ../app/tools/gimptransformoptions.c:260
@@ -10785,38 +10664,34 @@ msgid "Interpolation:"
 msgstr "Інтерполяція:"
 
 #: ../app/tools/gimptransformoptions.c:273
-#, fuzzy
 msgid "Clipping:"
-msgstr "Віддзеркалення..."
+msgstr "Обрізка:"
 
 #: ../app/tools/gimptransformoptions.c:291
 msgid "Preview:"
-msgstr "Попередній перегляд:"
+msgstr "Перегляд:"
 
 #: ../app/tools/gimptransformoptions.c:332
-#, fuzzy, c-format
+#, c-format
 msgid "15 degrees  (%s)"
-msgstr "15 градусів  %s"
+msgstr "15 градусів (%s)"
 
 #: ../app/tools/gimptransformoptions.c:336
-#, fuzzy, c-format
+#, c-format
 msgid "Keep aspect  (%s)"
-msgstr "Фіксоване відношення сторін  %s"
+msgstr "Зберегти пропорції (%s)"
 
 #: ../app/tools/gimptransformtool.c:235
-#, fuzzy
 msgid "Transforming"
-msgstr "Перетворення..."
+msgstr "Перетворення"
 
 #: ../app/tools/gimptransformtool.c:1156
-#, fuzzy
 msgid "There is no layer to transform."
-msgstr "Немає активного шару чи каналу для вирізання."
+msgstr "Немає шару для перетворення."
 
 #: ../app/tools/gimptransformtool.c:1167
-#, fuzzy
 msgid "There is no path to transform."
-msgstr "Немає активного шару чи каналу для вирізання."
+msgstr "Немає контуру для перетворення."
 
 #: ../app/tools/gimpvectoroptions.c:77
 msgid "Restrict editing to polygons"
@@ -10845,19 +10720,16 @@ msgstr ""
 
 #. Create a selection from the current path
 #: ../app/tools/gimpvectoroptions.c:189
-#, fuzzy
 msgid "Selection from Path"
-msgstr "Виділена ділянка -> Кон_тур"
+msgstr "Виділена з тексту"
 
 #: ../app/tools/gimpvectortool.c:161
-#, fuzzy
 msgid "Paths Tool: Create and edit paths"
-msgstr "Створення та редагування контурів"
+msgstr "Контури: створення та редагування контурів"
 
 #: ../app/tools/gimpvectortool.c:162
-#, fuzzy
 msgid "Pat_hs"
-msgstr "Контури"
+msgstr "Кон_тури"
 
 #: ../app/tools/gimpvectortool.c:320
 msgid "Add Stroke"
@@ -10912,86 +10784,69 @@ msgid "Move Anchors"
 msgstr "Переміщення точок"
 
 #: ../app/tools/gimpvectortool.c:1145
-#, fuzzy
 msgid "Click to pick path to edit"
-msgstr "Натисніть, щоб вибрати контур для редагування."
+msgstr "Натисніть, щоб вибрати контур для редагування"
 
 #: ../app/tools/gimpvectortool.c:1148
-#, fuzzy
 msgid "Click to create a new path"
-msgstr "Натисніть, щоб створити новий контур."
+msgstr "Натисніть, щоб створити новий контур"
 
 #: ../app/tools/gimpvectortool.c:1151
-#, fuzzy
 msgid "Click to create a new component of the path"
-msgstr "Натисніть, щоб створити новий компонент контуру."
+msgstr "Натисніть, щоб створити новий компонент контуру"
 
 #: ../app/tools/gimpvectortool.c:1154
-#, fuzzy
 msgid "Click or Click-Drag to create a new anchor"
-msgstr "Натисніть, щоб створити новий контур."
+msgstr "Натисніть, щоб створити новий контур"
 
 #: ../app/tools/gimpvectortool.c:1163 ../app/tools/gimpvectortool.c:1170
-#, fuzzy
 msgid "Click-Drag to move the anchor around"
-msgstr "Натисніть та перетягніть, щоб перемістити точку."
+msgstr "Натисніть та перетягніть, щоб перемістити вузол"
 
 #: ../app/tools/gimpvectortool.c:1173 ../app/tools/gimpvectortool.c:1184
-#, fuzzy
 msgid "Click-Drag to move the anchors around"
-msgstr "Натисніть та перетягніть, щоб перемістити точки."
+msgstr "Натисніть та перетягніть, щоб перемістити вузли"
 
 #: ../app/tools/gimpvectortool.c:1176
-#, fuzzy
 msgid "Click-Drag to move the handle around"
-msgstr "Натисніть та перетягніть, щоб перемістити точку."
+msgstr "Натисніть та перетягніть, щоб перемістити важіль"
 
 #: ../app/tools/gimpvectortool.c:1189
-#, fuzzy
 msgid "Click-Drag to change the shape of the curve"
-msgstr ""
-"Натисніть та перетягніть, щоб змінити лінію. З SHIFT важелі переміщаються "
-"симетрично."
+msgstr "Натисніть та перетягніть, щоб змінити фігуру кривої"
 
 #: ../app/tools/gimpvectortool.c:1192
 #, c-format
 msgid "%s: symmetrical"
-msgstr ""
+msgstr "%s: симетрично"
 
 #: ../app/tools/gimpvectortool.c:1196
-#, fuzzy
 msgid "Click-Drag to move the component around"
-msgstr "Натисніть та перетягніть, щоб перемістити контур."
+msgstr "Натисніть та перетягніть, щоб перемістити компонент"
 
 #: ../app/tools/gimpvectortool.c:1203
-#, fuzzy
 msgid "Click-Drag to move the path around"
-msgstr "Натисніть та перетягніть, щоб перемістити контур."
+msgstr "Натисніть та перетягніть, щоб перемістити контур"
 
 #: ../app/tools/gimpvectortool.c:1206
-#, fuzzy
 msgid "Click-Drag to insert an anchor on the path"
-msgstr "Натисніть, щоб створити точку у контурі. (спробуйте натиснути SHIFT)"
+msgstr "Натисніть, щоб вставити вузол у контур"
 
 #: ../app/tools/gimpvectortool.c:1213
-#, fuzzy
 msgid "Click to delete this anchor"
-msgstr "Натисніть, щоб видалити цю точку."
+msgstr "Натисніть, щоб видалити цей вузол"
 
 #: ../app/tools/gimpvectortool.c:1216
-#, fuzzy
 msgid "Click to connect this anchor with the selected endpoint"
-msgstr "Натисніть, щоб об'єднати цю точку з вибраною кінцевою точкою."
+msgstr "Натисніть, щоб об'єднати цей вузол з вибраним кінцевим вузлом"
 
 #: ../app/tools/gimpvectortool.c:1220
-#, fuzzy
 msgid "Click to open up the path"
-msgstr "Натисніть, щоб відкрити контур."
+msgstr "Натисніть, щоб розімкнути контур"
 
 #: ../app/tools/gimpvectortool.c:1223
-#, fuzzy
 msgid "Click to make this node angular"
-msgstr "Натисніть, щоб зробити цю точку кутовою."
+msgstr "Натисніть, щоб зробити цей вузол кутовим"
 
 #: ../app/tools/gimpvectortool.c:1729
 msgid "Delete Anchors"
@@ -11002,28 +10857,24 @@ msgid "There is no active layer or channel to stroke to"
 msgstr "Немає активного шару або каналу для обведення"
 
 #: ../app/tools/tools-enums.c:58
-#, fuzzy
 msgid "No guides"
-msgstr "Показувати _напрямні"
+msgstr "Без напрямних"
 
 #: ../app/tools/tools-enums.c:59
-#, fuzzy
 msgid "Center lines"
-msgstr "По центру"
+msgstr "Ліній у центрі"
 
 #: ../app/tools/tools-enums.c:60
 msgid "Rule of thirds"
-msgstr ""
+msgstr "Правило третіх частих"
 
 #: ../app/tools/tools-enums.c:61
-#, fuzzy
 msgid "Golden sections"
-msgstr "Переміщення виділеного"
+msgstr "Золотий зріз"
 
 #: ../app/tools/tools-enums.c:120
-#, fuzzy
 msgid "Aspect ratio"
-msgstr "Пропорції:"
+msgstr "Відношення сторін"
 
 #: ../app/tools/tools-enums.c:121 ../app/widgets/gimpgrideditor.c:257
 #: ../app/widgets/gimpgrideditor.c:289
@@ -11240,14 +11091,14 @@ msgid "Reset the selected filter to default values"
 msgstr "Відновити типові параметри для вибраного фільтру"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:493
-#, fuzzy, c-format
+#, c-format
 msgid "Add '%s' to the list of active filters"
-msgstr "Додати вибраний фільтр до списку активних фільтрів."
+msgstr "Додати '%s' до списку активних фільтрів"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:530
-#, fuzzy, c-format
+#, c-format
 msgid "Remove '%s' from the list of active filters"
-msgstr "Вилучити вибраний фільтр зі списку активних фільтрів."
+msgstr "Вилучити '%s' зі списку активних фільтрів"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:561
 msgid "No filter selected"
@@ -11258,6 +11109,8 @@ msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr ""
+"Шістнадцяткова нотація кольорів, прийнята у HTML та CSS. Сюди також можна "
+"ввести назву кольору згідно CSS."
 
 #: ../app/widgets/gimpcolorframe.c:423
 msgid "Index:"
@@ -11340,14 +11193,12 @@ msgid "Larger Previews"
 msgstr "Збільшений перегляд"
 
 #: ../app/widgets/gimpcontrollereditor.c:201
-#, fuzzy
 msgid "_Dump events from this controller"
-msgstr "Відображати дії"
+msgstr "_Відображати дії"
 
 #: ../app/widgets/gimpcontrollereditor.c:206
-#, fuzzy
 msgid "_Enable this controller"
-msgstr "Увімкнути спосіб керування"
+msgstr "_Увімкнути цей спосіб керування"
 
 #: ../app/widgets/gimpcontrollereditor.c:227
 msgid "Name:"
@@ -11358,33 +11209,31 @@ msgid "Event"
 msgstr "Середовище"
 
 #: ../app/widgets/gimpcontrollereditor.c:366
-#, fuzzy
 msgid "_Grab event"
-msgstr "_Градієнт"
+msgstr "_Захопити подію"
 
 #: ../app/widgets/gimpcontrollereditor.c:376
-#, fuzzy
 msgid "Select the next event arriving from the controller"
-msgstr "Відображати дії"
+msgstr "Захопити наступну подію, що отримана від котролера"
 
 #: ../app/widgets/gimpcontrollereditor.c:534
 #, c-format
 msgid "Remove the action assigned to '%s'"
-msgstr ""
+msgstr "Видалити дію, прив'язану до '%s'"
 
 #: ../app/widgets/gimpcontrollereditor.c:539
 #, c-format
 msgid "Assign an action to '%s'"
-msgstr ""
+msgstr "Призначити дію події '%s'"
 
 #: ../app/widgets/gimpcontrollereditor.c:661
-#, fuzzy, c-format
+#, c-format
 msgid "Select Action for Event '%s'"
-msgstr "Вибір дії"
+msgstr "Виберіть дію для події '%s'"
 
 #: ../app/widgets/gimpcontrollereditor.c:666
 msgid "Select Controller Event Action"
-msgstr "Вибір дії"
+msgstr "Виберіть дію для події контролера"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:70
 #: ../app/widgets/gimpcontrollerkeyboard.c:73
@@ -11394,9 +11243,8 @@ msgstr "Вибір дії"
 #: ../app/widgets/gimpcontrollerkeyboard.c:85
 #: ../app/widgets/gimpcontrollerkeyboard.c:88
 #: ../app/widgets/gimpcontrollerkeyboard.c:91
-#, fuzzy
 msgid "Cursor Up"
-msgstr "Курсор"
+msgstr "Курсор вгору"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:95
 #: ../app/widgets/gimpcontrollerkeyboard.c:98
@@ -11406,9 +11254,8 @@ msgstr "Курсор"
 #: ../app/widgets/gimpcontrollerkeyboard.c:110
 #: ../app/widgets/gimpcontrollerkeyboard.c:113
 #: ../app/widgets/gimpcontrollerkeyboard.c:116
-#, fuzzy
 msgid "Cursor Down"
-msgstr "Курсор"
+msgstr "Курсор вниз"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:120
 #: ../app/widgets/gimpcontrollerkeyboard.c:123
@@ -11418,9 +11265,8 @@ msgstr "Курсор"
 #: ../app/widgets/gimpcontrollerkeyboard.c:135
 #: ../app/widgets/gimpcontrollerkeyboard.c:138
 #: ../app/widgets/gimpcontrollerkeyboard.c:141
-#, fuzzy
 msgid "Cursor Left"
-msgstr "Курсор"
+msgstr "Курсор ліворуч"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:145
 #: ../app/widgets/gimpcontrollerkeyboard.c:148
@@ -11430,9 +11276,8 @@ msgstr "Курсор"
 #: ../app/widgets/gimpcontrollerkeyboard.c:160
 #: ../app/widgets/gimpcontrollerkeyboard.c:163
 #: ../app/widgets/gimpcontrollerkeyboard.c:166
-#, fuzzy
 msgid "Cursor Right"
-msgstr "Вправо"
+msgstr "Вправо праворуч"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:178
 msgid "Keyboard"
@@ -11448,39 +11293,34 @@ msgid "Ready"
 msgstr "Виконано"
 
 #: ../app/widgets/gimpcontrollerlist.c:182
-#, fuzzy
 msgid "Available Controllers"
-msgstr "Доступні фільтри"
+msgstr "Доступні контролери"
 
 #: ../app/widgets/gimpcontrollerlist.c:274
-#, fuzzy
 msgid "Active Controllers"
-msgstr "Способи керування"
+msgstr "Активні контролери"
 
 #: ../app/widgets/gimpcontrollerlist.c:290
-#, fuzzy
 msgid "Configure the selected controller"
-msgstr "Параметри вибраного фільтра"
+msgstr "Налаштувати обраний контролер"
 
 #: ../app/widgets/gimpcontrollerlist.c:298
-#, fuzzy
 msgid "Move the selected controller up"
-msgstr "Перемістити вибрані фільтри вгору"
+msgstr "Перемістити обраний контролер вгору"
 
 #: ../app/widgets/gimpcontrollerlist.c:306
-#, fuzzy
 msgid "Move the selected controller down"
-msgstr "Перемістити вибраний фільтр вниз"
+msgstr "Перемістити обраний контролер вниз"
 
 #: ../app/widgets/gimpcontrollerlist.c:428
-#, fuzzy, c-format
+#, c-format
 msgid "Add '%s' to the list of active controllers"
-msgstr "Додати вибраний фільтр до списку активних фільтрів."
+msgstr "Додати '%s' до списку активних фільтрів"
 
 #: ../app/widgets/gimpcontrollerlist.c:479
-#, fuzzy, c-format
+#, c-format
 msgid "Remove '%s' from the list of active controllers"
-msgstr "Вилучити вибраний фільтр зі списку активних фільтрів."
+msgstr "Вилучити '%s' зі списку активних фільтрів"
 
 #: ../app/widgets/gimpcontrollerlist.c:512
 msgid ""
@@ -11488,6 +11328,9 @@ msgid ""
 "\n"
 "You already have a keyboard controller in your list of active controllers."
 msgstr ""
+"Активний контролер «Клавіатура» може бути лише один.\n"
+"\n"
+"У списку вже є такий контролер."
 
 #: ../app/widgets/gimpcontrollerlist.c:522
 msgid ""
@@ -11495,26 +11338,26 @@ msgid ""
 "\n"
 "You already have a wheel controller in your list of active controllers."
 msgstr ""
+"Активний контролер «Колесо миші» може бути лише один.\n"
+"\n"
+"У списку вже є такий контролер."
 
 #: ../app/widgets/gimpcontrollerlist.c:549
-#, fuzzy
 msgid "Remove Controller?"
-msgstr "Видалити _елемент"
+msgstr "Видалити контролер?"
 
 #: ../app/widgets/gimpcontrollerlist.c:554
-#, fuzzy
 msgid "Disable Controller"
-msgstr "Увімкнути спосіб керування"
+msgstr "Вимкнути контролер"
 
 #: ../app/widgets/gimpcontrollerlist.c:556
-#, fuzzy
 msgid "Remove Controller"
-msgstr "Видалити _елемент"
+msgstr "Видалити контролер"
 
 #: ../app/widgets/gimpcontrollerlist.c:567
-#, fuzzy, c-format
+#, c-format
 msgid "Remove Controller '%s'?"
-msgstr "Відновити '%s' до '%s'?"
+msgstr "Видалити контролер '%s'?"
 
 #: ../app/widgets/gimpcontrollerlist.c:571
 #, c-format
@@ -11525,11 +11368,14 @@ msgid ""
 "Selecting \"Disable Controller\" will disable the controller without "
 "removing it."
 msgstr ""
+"При видаленні контролера зі списку будуть знищені всі параметри подій.\n"
+"\n"
+"Функція «Вимкнути контролер» вимикає обраний контролер, без видалення "
+"параметрів."
 
 #: ../app/widgets/gimpcontrollerlist.c:631
-#, fuzzy
 msgid "Configure Input Controller"
-msgstr "Способи керування"
+msgstr "Налаштувати контролер вводу"
 
 #: ../app/widgets/gimpcontrollerwheel.c:72
 #: ../app/widgets/gimpcontrollerwheel.c:75
@@ -11606,7 +11452,7 @@ msgstr "Відновити"
 #: ../app/widgets/gimpdataeditor.c:445
 #, c-format
 msgid "%s (read only)"
-msgstr ""
+msgstr "%s (лише для читання)"
 
 #: ../app/widgets/gimpdevicestatus.c:138
 msgid "Save device status"
@@ -11624,10 +11470,9 @@ msgstr "Тло: %d, %d, %d"
 
 #: ../app/widgets/gimpdnd-xds.c:196
 msgid "The given filename does not have any known file extension."
-msgstr ""
+msgstr "Ця назва файлу не містить ніякого відомого розширення."
 
 #: ../app/widgets/gimpdnd-xds.c:214
-#, fuzzy
 msgid "File Exists"
 msgstr "Файл існує"
 
@@ -11645,9 +11490,8 @@ msgid "Do you want to replace it with the image you are saving?"
 msgstr "Бажаєте замінити це зображення тим, яке зараз зберігаєте?"
 
 #: ../app/widgets/gimpdock.c:287
-#, fuzzy
 msgid "Close all Tabs?"
-msgstr "Закрити усі вкладки"
+msgstr "Закрити усі вкладки?"
 
 #: ../app/widgets/gimpdock.c:293
 msgid "Close all Tabs"
@@ -11655,31 +11499,29 @@ msgstr "Закрити усі вкладки"
 
 #: ../app/widgets/gimpdock.c:303
 msgid "Close all tabs?"
-msgstr "Закрити усі вкладки"
+msgstr "Закрити усі вкладки?"
 
 #: ../app/widgets/gimpdock.c:306
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "This window has %d tab open. Closing the window will also close all its tabs."
 msgid_plural ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
 msgstr[0] ""
-"Вікно має %d відкритих вкладок. Закривання вікна призведе до закривання усіх "
-"його вкладок."
+"У вікні відкрито %d вкладка. При закритті вікна вона також буде закрита."
 msgstr[1] ""
-"Вікно має %d відкритих вкладок. Закривання вікна призведе до закривання усіх "
-"його вкладок."
+"У вікні відкрито %d вкладки. При закритті вікна всі вкладки також будуть закриті."
+msgstr[2] ""
+"У вікні відкрито %d вкладок. При закритті вікна всі вкладки також будуть закриті."
 
 #: ../app/widgets/gimpdockable.c:166
-#, fuzzy
 msgid "Configure this tab"
-msgstr "Налаштовування сітки"
+msgstr "Налаштовувати цю вкладку"
 
 #: ../app/widgets/gimpdockseparator.c:44
-#, fuzzy
 msgid "You can drop dockable dialogs here"
-msgstr "Сюди можна прикріпити панелі діалогових вікон."
+msgstr "Сюди можна прикріпити панелі діалогових вікон"
 
 #: ../app/widgets/gimperrordialog.c:151
 msgid "Too many error messages!"
@@ -11703,14 +11545,12 @@ msgid "By Extension"
 msgstr "За розширенням"
 
 #: ../app/widgets/gimpfiledialog.c:533
-#, fuzzy
 msgid "All files"
-msgstr "Всі файли"
+msgstr "Усі файли"
 
 #: ../app/widgets/gimpfiledialog.c:538
-#, fuzzy
 msgid "All images"
-msgstr "Зображення"
+msgstr "Усі зображення"
 
 #: ../app/widgets/gimpfiledialog.c:667
 #, c-format
@@ -11736,14 +11576,14 @@ msgid "Zoom factor: %d:1"
 msgstr "Масштаб: %d:1"
 
 #: ../app/widgets/gimpgradienteditor.c:788
-#, fuzzy, c-format
+#, c-format
 msgid "Displaying [%0.4f, %0.4f]"
-msgstr "Відображення [%0.6f, %0.6f]"
+msgstr "Відображення [%0.4f, %0.4f]"
 
 #: ../app/widgets/gimpgradienteditor.c:1008
-#, fuzzy, c-format
+#, c-format
 msgid "Position: %0.4f"
-msgstr "Позиція: %0.6f"
+msgstr "Позиція: %0.4f"
 
 #: ../app/widgets/gimpgradienteditor.c:1009
 #, c-format
@@ -11751,14 +11591,14 @@ msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
 #: ../app/widgets/gimpgradienteditor.c:1011
-#, fuzzy, c-format
+#, c-format
 msgid "HSV (%0.1f, %0.1f, %0.1f)"
-msgstr "HSV (%0.3f, %0.3f, %0.3f)"
+msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 
 #: ../app/widgets/gimpgradienteditor.c:1013
-#, fuzzy, c-format
+#, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
-msgstr "Яскравість: %0.3f    Непрозорість: %0.3f"
+msgstr "Яскравість: %0.1f   Непрозорість: %0.1f"
 
 #: ../app/widgets/gimpgradienteditor.c:1044
 #, c-format
@@ -11803,17 +11643,16 @@ msgstr "Клацання: виділення   Перетягування: пе�
 
 #: ../app/widgets/gimpgradienteditor.c:1559
 #: ../app/widgets/gimpgradienteditor.c:1567
-#, fuzzy, c-format
+#, c-format
 msgid "Handle position: %0.4f"
-msgstr "Позиція позначки: %0.6f"
+msgstr "Позиція позначки: %0.4f"
 
 #: ../app/widgets/gimpgradienteditor.c:1584
-#, fuzzy, c-format
+#, c-format
 msgid "Distance: %0.4f"
-msgstr "Відстань: %0.6f"
+msgstr "Відстань: %0.4f"
 
 #: ../app/widgets/gimpgrideditor.c:209
-#, fuzzy
 msgid "Line _style:"
 msgstr "Сти_ль лінії:"
 
@@ -11867,7 +11706,6 @@ msgid "Mean:"
 msgstr "Середнє:"
 
 #: ../app/widgets/gimphistogrameditor.c:99
-#, fuzzy
 msgid "Std dev:"
 msgstr "Станд. відхилення:"
 
@@ -11892,9 +11730,8 @@ msgid "Channel:"
 msgstr "Канал:"
 
 #: ../app/widgets/gimpimageprofileview.c:200
-#, fuzzy
 msgid "Querying..."
-msgstr "Викривлення..."
+msgstr "Запит..."
 
 #: ../app/widgets/gimpimagepropview.c:121
 msgid "Pixel dimensions:"
@@ -11909,57 +11746,48 @@ msgid "Resolution:"
 msgstr "Роздільна здатність:"
 
 #: ../app/widgets/gimpimagepropview.c:130
-#, fuzzy
 msgid "Color space:"
-msgstr "Ре_жим:"
+msgstr "Кольоровий режим:"
 
 #: ../app/widgets/gimpimagepropview.c:135
-#, fuzzy
 msgid "File Name:"
-msgstr "Назва:"
+msgstr "Назва файлу:"
 
 #: ../app/widgets/gimpimagepropview.c:141
-#, fuzzy
 msgid "File Size:"
-msgstr "Фіксований розмір"
+msgstr "Фіксований розмір:"
 
 #: ../app/widgets/gimpimagepropview.c:144
-#, fuzzy
 msgid "File Type:"
-msgstr "Тип файлу"
+msgstr "Тип файлу:"
 
 #: ../app/widgets/gimpimagepropview.c:149
 msgid "Size in memory:"
 msgstr "Розмір у пам'яті:"
 
 #: ../app/widgets/gimpimagepropview.c:152
-#, fuzzy
 msgid "Undo steps:"
-msgstr "В_ернути \"%s\""
+msgstr "Кількість скасувань:"
 
 #: ../app/widgets/gimpimagepropview.c:155
-#, fuzzy
 msgid "Redo steps:"
-msgstr "Повт_орити \"%s\""
+msgstr "Кількість повторів:"
 
 #: ../app/widgets/gimpimagepropview.c:160
-#, fuzzy
 msgid "Number of pixels:"
-msgstr "Кількість шарів:"
+msgstr "Кількість точок:"
 
 #: ../app/widgets/gimpimagepropview.c:163
 msgid "Number of layers:"
 msgstr "Кількість шарів:"
 
 #: ../app/widgets/gimpimagepropview.c:166
-#, fuzzy
 msgid "Number of channels:"
-msgstr "Кількість шарів:"
+msgstr "Кількість каналів:"
 
 #: ../app/widgets/gimpimagepropview.c:169
-#, fuzzy
 msgid "Number of paths:"
-msgstr "Кількість шарів:"
+msgstr "Кількість контурів:"
 
 #: ../app/widgets/gimpimagepropview.c:464
 #, c-format
@@ -11967,9 +11795,9 @@ msgid "pixels/%s"
 msgstr "точок/%s"
 
 #: ../app/widgets/gimpimagepropview.c:466
-#, fuzzy, c-format
+#, c-format
 msgid "%g × %g %s"
-msgstr "%g x %g %s"
+msgstr "%g × %g %s"
 
 #: ../app/widgets/gimpimagepropview.c:486
 msgid "colors"
@@ -11988,14 +11816,12 @@ msgid "Reorder Layer"
 msgstr "Реорганізувати шар"
 
 #: ../app/widgets/gimplayertreeview.c:310
-#, fuzzy
 msgid "Lock alpha channel"
-msgstr "_Альфа-канал шару"
+msgstr "Замкнути альфа-канал"
 
 #: ../app/widgets/gimplayertreeview.c:322
-#, fuzzy
 msgid "Lock:"
-msgstr "Панель"
+msgstr "Замкнути:"
 
 #: ../app/widgets/gimplayertreeview.c:874
 msgid "Empty Layer"
@@ -12031,13 +11857,12 @@ msgid "Columns:"
 msgstr "Стовпчики:"
 
 #: ../app/widgets/gimpprofilechooserdialog.c:144
-#, fuzzy
 msgid "ICC color profile (*.icc, *.icm)"
-msgstr "Вибір кольору"
+msgstr "Кольоровий ICC-профіль (*.icc, *.icm)"
 
 #: ../app/widgets/gimpprogressdialog.c:220
 msgid "Progress"
-msgstr "Перебіг"
+msgstr "Поступ"
 
 #: ../app/widgets/gimpselectiondata.c:258
 #, c-format
@@ -12055,19 +11880,18 @@ msgid "Invalid UTF-8"
 msgstr "неправильний рядок UTF-8"
 
 #: ../app/widgets/gimpsizebox.c:464
-#, fuzzy, c-format
+#, c-format
 msgid "%d × %d ppi"
-msgstr "%d x %d т/дюйм"
+msgstr "%d × %d ppi"
 
 #: ../app/widgets/gimpsizebox.c:466
-#, fuzzy, c-format
+#, c-format
 msgid "%d ppi"
-msgstr "%d т/дюйм"
+msgstr "%d ppi"
 
 #: ../app/widgets/gimpstrokeeditor.c:185
-#, fuzzy
 msgid "Line width:"
-msgstr "Ширина шару:"
+msgstr "Ширина лінії:"
 
 #: ../app/widgets/gimpstrokeeditor.c:202
 msgid "_Line Style"
@@ -12090,9 +11914,8 @@ msgid "Dash pattern:"
 msgstr "Шаблон лінії:"
 
 #: ../app/widgets/gimpstrokeeditor.c:302
-#, fuzzy
 msgid "Dash _preset:"
-msgstr "Тип лінії:"
+msgstr "Тип _пунктиру:"
 
 #: ../app/widgets/gimpstrokeeditor.c:323
 msgid "_Antialiasing"
@@ -12108,9 +11931,8 @@ msgid "_Advanced Options"
 msgstr "_Розширені параметри"
 
 #: ../app/widgets/gimptemplateeditor.c:362
-#, fuzzy
 msgid "Color _space:"
-msgstr "Ре_жим:"
+msgstr "_Кольоровий простір:"
 
 #: ../app/widgets/gimptemplateeditor.c:370
 msgid "_Fill with:"
@@ -12129,33 +11951,31 @@ msgid "_Icon:"
 msgstr "_Значок:"
 
 #: ../app/widgets/gimptemplateeditor.c:668
-#, fuzzy, c-format
+#, c-format
 msgid "%d × %d ppi, %s"
-msgstr "%d x %d т/дюйм, %s"
+msgstr "%d × %d ppi, %s"
 
 #: ../app/widgets/gimptemplateeditor.c:670
-#, fuzzy, c-format
+#, c-format
 msgid "%d ppi, %s"
-msgstr "%d т/дюйм, %s"
+msgstr "%d ppi, %s"
 
 #: ../app/widgets/gimptexteditor.c:203
-#, fuzzy
 msgid "_Use selected font"
-msgstr "Видалити вибраний елемент"
+msgstr "_Використовувати вибраний шрифт"
 
 #: ../app/widgets/gimpthumbbox.c:329
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Click to update preview\n"
 "%s%sClick to force update even if preview is up-to-date"
 msgstr ""
-"Клацніть щоб оновити попередній перегляд\n"
-"Натисніть з %s, щоб примусово оновити перегляд"
+"Натисніть щоб оновити перегляд\n"
+"%s%sкнопка миші- щоб примусово оновити перегляд"
 
 #: ../app/widgets/gimpthumbbox.c:347
-#, fuzzy
 msgid "Pr_eview"
-msgstr "Попередній перегляд"
+msgstr "_Попередній перегляд"
 
 #: ../app/widgets/gimpthumbbox.c:402 ../app/widgets/gimpthumbbox.c:466
 msgid "No selection"
@@ -12167,9 +11987,8 @@ msgid "Thumbnail %d of %d"
 msgstr "Мініатюра %d з %d"
 
 #: ../app/widgets/gimpthumbbox.c:728 ../app/widgets/gimpthumbbox.c:738
-#, fuzzy
 msgid "Creating preview..."
-msgstr "Завантаження попереднього перегляду..."
+msgstr "Створення попереднього перегляду..."
 
 #: ../app/widgets/gimptoolbox-color-area.c:135
 msgid "Change Foreground Color"
@@ -12190,7 +12009,7 @@ msgstr ""
 
 #: ../app/widgets/gimptoolbox-image-area.c:114
 msgid "Drag to an XDS enabled file-manager to save the image."
-msgstr ""
+msgstr "Перетягніть у файловий менеджер з підтримкою XDS, щоб зберегти."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:150
 msgid ""
@@ -12217,7 +12036,6 @@ msgstr ""
 "Клацніть, щоб відкрити діалогове вікно \"Градієнти\"."
 
 #: ../app/widgets/gimptoolbox.c:689
-#, fuzzy
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Click to open the color selection dialog."
@@ -12239,9 +12057,9 @@ msgid "Delete saved options..."
 msgstr "Видалити параметри..."
 
 #: ../app/widgets/gimptooloptionseditor.c:472
-#, fuzzy, c-format
+#, c-format
 msgid "Error saving tool options presets: %s"
-msgstr "Помилка збереження XCF файлу: %s"
+msgstr "Помилка при записі параметрів інструменту: %s"
 
 #: ../app/widgets/gimpuimanager.c:733
 msgid "Your GIMP installation is incomplete:"
@@ -12254,7 +12072,7 @@ msgstr "Перевірте, що XML-файли меню, коректно вс�
 #: ../app/widgets/gimpuimanager.c:741
 #, c-format
 msgid "There was an error parsing the menu definition from %s: %s"
-msgstr ""
+msgstr "Виникла помилка при розборі визначення меню з %s: %s"
 
 #: ../app/widgets/gimpundoeditor.c:270
 msgid "[ Base Image ]"
@@ -12295,22 +12113,22 @@ msgstr "Відкрити діалог вибору шрифту"
 #: ../app/widgets/gimpwidgets-utils.c:604
 #, c-format
 msgid "%s (try %s)"
-msgstr ""
+msgstr "%s (спробуйте %s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:604
 #, c-format
 msgid "%s (%s)"
-msgstr ""
+msgstr "%s (%s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:608
 #, c-format
 msgid "%s (try %s, %s)"
-msgstr ""
+msgstr "%s (спробуйте %s, %s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:612
 #, c-format
 msgid "%s (try %s, %s, %s)"
-msgstr ""
+msgstr "%s (спробуйте %s, %s, %s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:878
 #, c-format
@@ -12322,7 +12140,6 @@ msgid "Foreground"
 msgstr "Переднього плану"
 
 #: ../app/widgets/widgets-enums.c:83
-#, fuzzy
 msgid "Pixel"
 msgstr "Точок"
 
@@ -12347,9 +12164,8 @@ msgid "Set background color"
 msgstr "Встановити колір тла"
 
 #: ../app/widgets/widgets-enums.c:118
-#, fuzzy
 msgid "Add to palette"
-msgstr "Додати до палітри %s"
+msgstr "Додати до палітри"
 
 #: ../app/widgets/widgets-enums.c:173
 msgid "Black & white"
@@ -12420,12 +12236,13 @@ msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr ""
+"Цей файл XCF зіпсований! Деяку його частину все ж вийшло відновити."
 
 #: ../app/xcf/xcf-load.c:284
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
-msgstr ""
+msgstr "Цей файл XCF пошкоджений! Не вдається відновити навіть малу його частину!"
 
 #: ../app/xcf/xcf-load.c:316
 msgid ""
@@ -12463,9 +12280,9 @@ msgid "GIMP XCF image"
 msgstr "Файл XCF GIMP"
 
 #: ../app/xcf/xcf.c:267
-#, fuzzy, c-format
+#, c-format
 msgid "Opening '%s'"
-msgstr "Не вдається відкрити '%s': %s"
+msgstr "Відкривається \"%s\""
 
 #: ../app/xcf/xcf.c:309
 #, c-format
@@ -12473,14 +12290,13 @@ msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Помилка XCF: версія XCF-файла %d не підтримується"
 
 #: ../app/xcf/xcf.c:375
-#, fuzzy, c-format
+#, c-format
 msgid "Saving '%s'"
-msgstr "Збереження \"%s\"\n"
+msgstr "Збереження \"%s\""
 
 #: ../desktop/gimp.desktop.in.in.h:1
-#, fuzzy
 msgid "Create images and edit photographs"
-msgstr "Створення та редагування зображень чи фотографій"
+msgstr "Створення зображень та редагування фотографій"
 
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
@@ -12488,32 +12304,32 @@ msgstr "Редактор зображень"
 
 #: ../tools/gimp-remote.c:65
 msgid "Use a running GIMP only, never start a new one"
-msgstr ""
+msgstr "Використовувати лише запущену копію GIMP, не запускати нову"
 
 #: ../tools/gimp-remote.c:70
 msgid "Only check if GIMP is running, then quit"
-msgstr ""
+msgstr "Перевірити, що GIMP запускається, потім вийти"
 
 #: ../tools/gimp-remote.c:76
 msgid "Print X window ID of GIMP toolbox window, then quit"
-msgstr ""
+msgstr "Вивести ідентифікатор X windows вікна панелі інструментів GIMP та вийти"
 
 #: ../tools/gimp-remote.c:82
 msgid "Start GIMP without showing the startup window"
-msgstr ""
+msgstr "Запустити GIMP без стартового вікна"
 
 #: ../tools/gimp-remote-x11.c:67
 msgid "Could not connect to GIMP."
-msgstr ""
+msgstr "Неможливо з'єднатися з GIMP."
 
 #: ../tools/gimp-remote-x11.c:68
 msgid "Make sure that the Toolbox is visible!"
-msgstr ""
+msgstr "Перевірте, що панель інструментів видима!"
 
 #. if execv and execvp return, there was an error
 #: ../tools/gimp-remote-x11.c:248
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't start '%s': %s"
-msgstr "Не вдається створити '%s': %s"
+msgstr "Не вдається запустити '%s': %s"
 
 
