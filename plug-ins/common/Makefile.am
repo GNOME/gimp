@@ -108,7 +108,6 @@ libexec_PROGRAMS = \
 	lens \
 	lic \
 	$(MAIL) \
-	mapcolor \
 	max_rgb \
 	mblur \
 	$(MNG) \
@@ -134,7 +133,6 @@ libexec_PROGRAMS = \
 	$(POPPLER) \
 	postscript \
 	procedure-browser \
-	psd-load \
 	psd-save \
 	$(PSP) \
 	randomize \
@@ -1327,22 +1325,6 @@ mail_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-mapcolor_SOURCES = \
-	mapcolor.c
-
-mapcolor_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
 max_rgb_SOURCES = \
 	max_rgb.c
 
@@ -1744,19 +1726,6 @@ procedure_browser_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
-psd_load_SOURCES = \
-	psd-load.c
-
-psd_load_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
