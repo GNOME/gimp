@@ -96,6 +96,7 @@
     'poppler' => { ui => 1, optional => 1, cflags => 1 },
     'postscript' => { ui => 1 },
     'procedure-browser' => { ui => 1 },
+    'psd-load' => { ui => 1 },
     'psd-save' => { ui => 1 },
     'psp' => { ui => 1, optional => 1, libopt => 'z' },
     'randomize' => { ui => 1 },
