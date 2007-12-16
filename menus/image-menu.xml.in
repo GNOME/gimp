@@ -225,7 +225,7 @@
         <menuitem action="view-zoom-out" />
         <menuitem action="view-zoom-in" />
         <menuitem action="view-zoom-fit-in" />
-        <menuitem action="view-zoom-fit-to" />
+        <menuitem action="view-zoom-fill" />
         <separator />
         <menuitem action="view-zoom-16-1" />
         <menuitem action="view-zoom-8-1" />
