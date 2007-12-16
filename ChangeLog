@@ -1,4 +1,16 @@
-2007-12-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+2007-12-15  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/widgets/gimphelp-ids.h
+	* app/display/gimpdisplayshell-scale.[ch]
+	* app/display/gimpnavigationeditor.[ch]
+	* app/actions/view-commands.[ch]
+	* app/actions/view-commands.c:
+
+	Changed "Fit Image to Window" to "Fill Window", and changed
+	"fit-to" to "fill" in all the related things.  Fixes
+	bug #490364.
+	
+2007-12-15  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/mapcolor.c: removed
 	* plug-ins/common/plugin-defs.pl

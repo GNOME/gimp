@@ -89,11 +89,11 @@ static const GimpActionEntry view_actions[] =
     G_CALLBACK (view_zoom_fit_in_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FIT_IN },
 
-  { "view-zoom-fit-to", GTK_STOCK_ZOOM_FIT,
-    N_("Fit Image _to Window"), NULL,
-    N_("Adjust the zoom ratio so that the window is used optimally"),
-    G_CALLBACK (view_zoom_fit_to_cmd_callback),
-    GIMP_HELP_VIEW_ZOOM_FIT_TO },
+  { "view-zoom-fill", GTK_STOCK_ZOOM_FIT,
+    N_("Fi_ll Window"), NULL,
+    N_("Adjust the zoom ratio so that the entire window is used"),
+    G_CALLBACK (view_zoom_fill_cmd_callback),
+    GIMP_HELP_VIEW_ZOOM_FILL },
 
   { "view-zoom-revert", NULL,
     N_("Re_vert Zoom"), "grave",
@@ -578,7 +578,7 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-zoom-out",    display);
   SET_SENSITIVE ("view-zoom-in",     display);
   SET_SENSITIVE ("view-zoom-fit-in", display);
-  SET_SENSITIVE ("view-zoom-fit-to", display);
+  SET_SENSITIVE ("view-zoom-fill", display);
 
   SET_SENSITIVE ("view-zoom-16-1",  display);
   SET_SENSITIVE ("view-zoom-8-1",   display);

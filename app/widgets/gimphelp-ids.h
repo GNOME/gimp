@@ -79,7 +79,7 @@
 #define GIMP_HELP_VIEW_ZOOM_IN                    "gimp-view-zoom-in"
 #define GIMP_HELP_VIEW_ZOOM_100                   "gimp-view-zoom-100"
 #define GIMP_HELP_VIEW_ZOOM_FIT_IN                "gimp-view-zoom-fit-in"
-#define GIMP_HELP_VIEW_ZOOM_FIT_TO                "gimp-view-zoom-fit-to"
+#define GIMP_HELP_VIEW_ZOOM_FILL                  "gimp-view-zoom-fill"
 #define GIMP_HELP_VIEW_ZOOM_OTHER                 "gimp-view-zoom-other"
 #define GIMP_HELP_VIEW_SHOW_SELECTION             "gimp-view-show-selection"
 #define GIMP_HELP_VIEW_SHOW_LAYER_BOUNDARY        "gimp-view-show-layer-boundary"

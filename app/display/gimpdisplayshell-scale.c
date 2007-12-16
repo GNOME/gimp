@@ -418,14 +418,14 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
 }
 
 /**
- * gimp_display_shell_scale_fit_to:
+ * gimp_display_shell_scale_fill:
  * @shell:     the #GimpDisplayShell
  *
  * Sets the scale such that the entire display area is precisely filled by the
  * image.
  **/
 void
-gimp_display_shell_scale_fit_to (GimpDisplayShell *shell)
+gimp_display_shell_scale_fill (GimpDisplayShell *shell)
 {
   GimpImage *image;
   gint       image_width;

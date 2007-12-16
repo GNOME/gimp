@@ -25,7 +25,7 @@ void   view_new_cmd_callback                   (GtkAction *action,
 
 void   view_zoom_fit_in_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
-void   view_zoom_fit_to_cmd_callback           (GtkAction *action,
+void   view_zoom_fill_cmd_callback             (GtkAction *action,
                                                 gpointer   data);
 void   view_zoom_revert_cmd_callback           (GtkAction *action,
                                                 gpointer   data);

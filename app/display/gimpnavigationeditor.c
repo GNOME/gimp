@@ -373,9 +373,9 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
         gimp_editor_add_action_button (GIMP_EDITOR (editor), "view",
                                        "view-zoom-fit-in", NULL);
 
-      editor->zoom_fit_to_button =
+      editor->zoom_fill_button =
         gimp_editor_add_action_button (GIMP_EDITOR (editor), "view",
-                                       "view-zoom-fit-to", NULL);
+                                       "view-zoom-fill", NULL);
 
       editor->shrink_wrap_button =
         gimp_editor_add_action_button (GIMP_EDITOR (editor), "view",
