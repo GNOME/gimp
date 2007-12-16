@@ -1,5 +1,10 @@
 2007-12-16  Bill Skaggs  <weskaggs@primate.udavis.edu>
 
+	* plug-ins/common/edge.c: renamed to "Sharp Edges",
+	added "invert" option, other usability tweaks.
+	
+2007-12-16  Bill Skaggs  <weskaggs@primate.udavis.edu>
+
 	* menus/image-menu.xml.in: missed this yesterday
 	
 2007-12-16  Sven Neumann  <sven@gimp.org>
