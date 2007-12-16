@@ -26,12 +26,12 @@ Changes in GIMP 2.4.3
 - fixed grid snapping for coordinates less than the grid offset
 - made the healing brush work properly when dragged (bug #492575)
 - update tool state when a device change happens (bug #493176)
-- improved validation of strings send over the wire (bug #498207)
+- improved validation of strings sent over the wire (bug #498207)
 - fixed integer check in Script-Fu (bug #498207)
 - fixed potential out-of-memory problem in Script-Fu
 - fixed compilation on msys/mingw (bug #503124)
 - fixed localisation of Python plug-ins on Win32 (bug #502506)
-- translation updates (ca, cs, de, gl, it, ko, lt, sv)
+- translation updates (ca, cs, de, gl, it, ko, lt, sv, uk)
 
 
 Contributors:
