@@ -22,8 +22,9 @@
 
 #include "config.h"
 
-#include <cairo.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <string.h>
+
+#include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -64,9 +65,63 @@ gimp_cairo_set_source_rgb (cairo_t *cr,
  **/
 void
 gimp_cairo_set_source_rgba (cairo_t *cr,
-                           GimpRGB *color)
+                            GimpRGB *color)
 {
   cairo_set_source_rgba (cr, color->r, color->g, color->b, color->a);
+}
+
+/**
+ * gimp_cairo_set_focus_line_pattern:
+ * @cr:     Cairo context
+ * @widget: widget to draw the focus indicator on
+ *
+ * Sets color and dash pattern for stroking a focus line on the given
+ * @cr. The line pattern is taken from @widget.
+ *
+ * Return value: %TRUE if the widget style has a focus line pattern,
+ *               %FALSE otherwise
+ *
+ * Since: GIMP 2.6
+ **/
+gboolean
+gimp_cairo_set_focus_line_pattern (cairo_t   *cr,
+                                   GtkWidget *widget)
+{
+  gint8    *dash_list;
+  gboolean  retval = FALSE;
+
+  g_return_val_if_fail (cr != NULL, FALSE);
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
+
+  gtk_widget_style_get (widget,
+                        "focus-line-pattern", (gchar *) &dash_list,
+                        NULL);
+
+  if (dash_list[0])
+    {
+      /* Taken straight from gtk_default_draw_focus()
+       */
+      gint     n_dashes     = strlen ((const gchar *) dash_list);
+      gdouble *dashes       = g_new (gdouble, n_dashes);
+      gdouble  total_length = 0;
+      gint     i;
+
+      for (i = 0; i < n_dashes; i++)
+        {
+          dashes[i] = dash_list[i];
+          total_length += dash_list[i];
+        }
+
+      cairo_set_dash (cr, dashes, n_dashes, 0.5);
+
+      g_free (dashes);
+
+      retval = TRUE;
+    }
+
+  g_free (dash_list);
+
+  return retval;
 }
 
 /**

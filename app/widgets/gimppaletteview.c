@@ -21,12 +21,11 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
@@ -176,7 +175,6 @@ gimp_palette_view_expose (GtkWidget      *widget,
     {
       GimpViewRendererPalette *renderer;
       cairo_t                 *cr;
-      gint8                   *dash_list;
       gint                     row, col;
 
       renderer = GIMP_VIEW_RENDERER_PALETTE (view->renderer);
@@ -188,45 +186,22 @@ gimp_palette_view_expose (GtkWidget      *widget,
       gdk_cairo_region (cr, eevent->region);
       cairo_clip (cr);
 
-      cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
-      cairo_set_line_width (cr, 1.0);
-
       cairo_rectangle (cr,
                        widget->allocation.x + col * renderer->cell_width  + 0.5,
                        widget->allocation.y + row * renderer->cell_height + 0.5,
                        renderer->cell_width,
                        renderer->cell_height);
 
+      cairo_set_line_width (cr, 1.0);
+      gdk_cairo_set_source_color (cr, &widget->style->fg[GTK_STATE_SELECTED]);
       cairo_stroke_preserve (cr);
 
-      gtk_widget_style_get (widget,
-                            "focus-line-pattern", (gchar *) &dash_list,
-                            NULL);
-
-      if (dash_list[0])
+      if (gimp_cairo_set_focus_line_pattern (cr, widget))
         {
-          /* Taken straight from gtk_default_draw_focus()
-           */
-          gint     n_dashes     = strlen ((const gchar *) dash_list);
-          gdouble *dashes       = g_new (gdouble, n_dashes);
-          gdouble  total_length = 0;
-          gint     i;
-
-          for (i = 0; i < n_dashes; i++)
-            {
-              dashes[i] = dash_list[i];
-              total_length += dash_list[i];
-            }
-
-          cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
-          cairo_set_dash (cr, dashes, n_dashes, 0.5);
-
-          g_free (dashes);
-
+          gdk_cairo_set_source_color (cr, &widget->style->fg[GTK_STATE_NORMAL]);
           cairo_stroke (cr);
         }
 
-      g_free (dash_list);
       cairo_destroy (cr);
     }
 

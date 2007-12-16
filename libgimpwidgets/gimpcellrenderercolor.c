@@ -282,9 +282,16 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
                    GTK_STATE_SELECTED : GTK_STATE_NORMAL);
         }
 
-      gdk_cairo_set_source_color (cr, &widget->style->fg[state]);
       cairo_set_line_width (cr, 1);
-      cairo_stroke (cr);
+      gdk_cairo_set_source_color (cr, &widget->style->fg[state]);
+      cairo_stroke_preserve (cr);
+
+      if (state == GTK_STATE_SELECTED &&
+          gimp_cairo_set_focus_line_pattern (cr, widget))
+        {
+          gdk_cairo_set_source_color (cr, &widget->style->fg[GTK_STATE_NORMAL]);
+          cairo_stroke (cr);
+        }
 
       cairo_destroy (cr);
     }

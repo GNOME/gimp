@@ -28,6 +28,9 @@ void              gimp_cairo_set_source_rgb             (cairo_t   *cr,
                                                          GimpRGB   *color);
 void              gimp_cairo_set_source_rgba            (cairo_t   *cr,
                                                          GimpRGB   *color);
+gboolean          gimp_cairo_set_focus_line_pattern     (cairo_t   *cr,
+                                                         GtkWidget *widget);
+
 cairo_pattern_t * gimp_cairo_checkerboard_create        (cairo_t   *cr,
                                                          gint       size);
 cairo_surface_t * gimp_cairo_surface_create_from_pixbuf (GdkPixbuf *pixbuf);

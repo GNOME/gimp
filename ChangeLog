@@ -1,3 +1,17 @@
+2007-12-16  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcairo-utils.[ch]: added new function
+	gimp_cairo_set_focus_line_pattern().
+
+	* libgimpwidgets/gimpcellrenderercolor.c
+	(gimp_cell_renderer_color_render): use the focus line pattern to
+	emphasize the selected entry.
+
+	* app/widgets/gimppaletteview.c (gimp_palette_view_expose): use the
+	new utility function.
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
 2007-12-15  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimphelp-ids.h
@@ -16,7 +30,7 @@
 	* plug-ins/common/plugin-defs.pl
 	* plug-ins/common/Makefile.am: updated accordingly
 
-	See bug #436145 for the reasons for removing these plug-ins.
+	See bug #436145 for the reasons for removing this plug-in.
 
 2007-12-14  Sven Neumann  <sven@gimp.org>
 
