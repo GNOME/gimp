@@ -86,7 +86,6 @@ plug-ins/common/lcms.c
 plug-ins/common/lens.c
 plug-ins/common/lic.c
 plug-ins/common/mail.c
-plug-ins/common/mapcolor.c
 plug-ins/common/max_rgb.c
 plug-ins/common/mblur.c
 plug-ins/common/mng.c
