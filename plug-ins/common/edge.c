@@ -48,6 +48,10 @@
  *  plug-in by iccii
  */
 
+/*  16 December 2007  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+ *  Simplified user interface and added "invert" argument
+ */
+
 #include "config.h"
 
 #include <libgimp/gimp.h>
@@ -81,6 +85,8 @@ typedef struct
   gdouble  amount;
   gint     edgemode;
   gint     wrapmode;
+  gboolean invert;
+  gboolean user_set_invert;
 } EdgeVals;
 
 /*
@@ -119,9 +125,11 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 static EdgeVals evals =
 {
-  2.0,                           /* amount */
-  SOBEL,                         /* Edge detection algorithm */
-  GIMP_PIXEL_FETCHER_EDGE_SMEAR  /* wrapmode */
+  2.0,                            /* amount */
+  PREWITT,                        /* Edge detection algorithm */
+  GIMP_PIXEL_FETCHER_EDGE_SMEAR,  /* wrapmode */
+  FALSE,                          /* invert */
+  FALSE                           /* user set invert */
 };
 
 /***** Functions *****/
@@ -146,7 +154,8 @@ query (void)
     "AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in "
     "(useful for tilable image). EDGEMODE sets the kind of matrix "
     "transform applied to the pixels, SOBEL was the method used in older "
-    "versions.";
+    "versions.  PREWITT is the default, and the only method used in"
+    "interactive mode.  INVERT inverts the colors if true.";
 
   gimp_install_procedure (PLUG_IN_PROC,
                           N_("Several simple methods for detecting edges"),
@@ -154,7 +163,7 @@ query (void)
                           "Peter Mattis & (ported to 1.0 by) Eiichi Takamori",
                           "Peter Mattis",
                           "1996",
-                          N_("_Edge..."),
+                          N_("Sharp _Edges..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
@@ -210,6 +219,8 @@ run (const gchar      *name,
           evals.amount   = param[3].data.d_float;
           evals.wrapmode = param[4].data.d_int32;
           evals.edgemode = nparams > 5 ? param[5].data.d_int32 : SOBEL;
+          evals.invert   = nparams > 6 ? param[6].data.d_int32 : FALSE;
+
         }
       break;
 
@@ -239,7 +250,12 @@ run (const gchar      *name,
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &evals, sizeof (EdgeVals));
+        {
+          if (evals.invert == FALSE)
+            evals.user_set_invert = TRUE;
+
+          gimp_set_data (PLUG_IN_PROC, &evals, sizeof (EdgeVals));
+        }
     }
   else
     {
@@ -439,6 +455,9 @@ edge_detect (const guchar *data)
       break;
     }
 
+  if (evals.invert)
+    ret = 255 - ret;
+
   return CLAMP0255 (ret);
 }
 
@@ -616,17 +635,25 @@ edge_dialog (GimpDrawable *drawable)
   GtkWidget *dialog;
   GtkWidget *main_vbox;
   GtkWidget *preview;
-  GtkWidget *hbox;
   GtkWidget *table;
   GtkWidget *combo;
-  GtkWidget *toggle;
+  GtkWidget *button;
   GtkObject *scale_data;
-  GSList    *group = NULL;
   gboolean   run;
 
   gboolean use_wrap  = (evals.wrapmode == GIMP_PIXEL_FETCHER_EDGE_WRAP);
   gboolean use_smear = (evals.wrapmode == GIMP_PIXEL_FETCHER_EDGE_SMEAR);
   gboolean use_black = (evals.wrapmode == GIMP_PIXEL_FETCHER_EDGE_BLACK);
+
+  /*
+   * in interactive mode, we want to use Invert by default.  The
+   * handling of "invert" is a bit of a problem, because we want the default
+   * to be FALSE for noninteractive mode (to avoid breaking existing procedures
+   * that don't know about this argument) but TRUE for interactive use (because
+   * TRUE is what a user will usually want).
+   */
+  if (! evals.user_set_invert)
+    evals.invert   = TRUE;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
@@ -664,8 +691,8 @@ edge_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  combo = gimp_int_combo_box_new (_("Sobel"),           SOBEL,
-                                  _("Prewitt compass"), PREWITT,
+  combo = gimp_int_combo_box_new (_("Default"),         PREWITT,
+                                  _("Sobel"),           SOBEL,
                                   _("Gradient"),        GRADIENT,
                                   _("Roberts"),         ROBERTS,
                                   _("Differential"),    DIFFERENTIAL,
@@ -678,7 +705,7 @@ edge_dialog (GimpDrawable *drawable)
                               &evals.edgemode);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Algorithm:"), 0.0, 0.5,
+                             _("_Method:"), 0.0, 0.5,
                              combo, 2, FALSE);
   g_signal_connect_swapped (combo, "changed",
                             G_CALLBACK (gimp_preview_invalidate),
@@ -686,7 +713,7 @@ edge_dialog (GimpDrawable *drawable)
 
   /*  Label, scale, entry for evals.amount  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                                     _("A_mount:"), 100, 0,
+                                     _("_Amount:"), 100, 0,
                                      evals.amount, 1.0, 10.0, 0.1, 1.0, 1,
                                      FALSE, 1.0, G_MAXFLOAT,
                                      NULL, NULL);
@@ -698,51 +725,16 @@ edge_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  /*  Radio buttons WRAP, SMEAR, BLACK  */
-
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_table_attach (GTK_TABLE (table), hbox, 0, 3, 2, 3,
-                    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (hbox);
-
-  toggle = gtk_radio_button_new_with_mnemonic (group, _("_Wrap"));
-  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_wrap);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
+  button = gtk_check_button_new_with_mnemonic (_("_Invert"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), evals.invert);
+  g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &use_wrap);
-  g_signal_connect_swapped (toggle, "toggled",
+                    &evals.invert);
+  g_signal_connect_swapped (button, "toggled",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
-
-  toggle = gtk_radio_button_new_with_mnemonic (group, _("_Smear"));
-  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_smear);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &use_smear);
-  g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
-  toggle = gtk_radio_button_new_with_mnemonic (group, _("_Black"));
-  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_black);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &use_black);
-  g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
+  gtk_widget_show (button);
 
   gtk_widget_show (dialog);
 
