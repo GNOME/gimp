@@ -393,18 +393,22 @@ project_intensity (GimpProjection *proj,
                    PixelRegion    *dest,
                    PixelRegion    *mask)
 {
-  if (! proj->construct_flag)
-    initial_region (src, dest, mask, NULL,
-                    layer->opacity * 255.999,
-                    layer->mode,
-                    proj->image->visible,
-                    INITIAL_INTENSITY);
+  if (proj->construct_flag)
+    {
+      combine_regions (dest, src, dest, mask, NULL,
+                       layer->opacity * 255.999,
+                       layer->mode,
+                       proj->image->visible,
+                       COMBINE_INTEN_A_INTEN);
+    }
   else
-    combine_regions (dest, src, dest, mask, NULL,
-                     layer->opacity * 255.999,
-                     layer->mode,
-                     proj->image->visible,
-                     COMBINE_INTEN_A_INTEN);
+    {
+      initial_region (src, dest, mask, NULL,
+                      layer->opacity * 255.999,
+                      layer->mode,
+                      proj->image->visible,
+                      INITIAL_INTENSITY);
+    }
 }
 
 static void

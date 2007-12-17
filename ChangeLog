@@ -1,5 +1,10 @@
 2007-12-17  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpprojection-construct.c (project_intensity): minor
+	cleanup.
+
+2007-12-17  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpregioniterator.c: code cleanup; reduced number of
 	progress updates.
 
