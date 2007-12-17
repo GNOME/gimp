@@ -163,7 +163,7 @@ query (void)
                           "Peter Mattis & (ported to 1.0 by) Eiichi Takamori",
                           "Peter Mattis",
                           "1996",
-                          N_("Sharp _Edges..."),
+                          N_("_Edge..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
@@ -691,7 +691,7 @@ edge_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  combo = gimp_int_combo_box_new (_("Default"),         PREWITT,
+  combo = gimp_int_combo_box_new (_("Prewitt"),         PREWITT,
                                   _("Sobel"),           SOBEL,
                                   _("Gradient"),        GRADIENT,
                                   _("Roberts"),         ROBERTS,
