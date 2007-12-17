@@ -78,6 +78,8 @@ gimp_core_config_get_type
 gimp_crop_options_get_type
 gimp_crop_tool_get_type
 gimp_cursor_view_get_type
+gimp_curve_get_type
+gimp_curve_view_get_type
 gimp_curves_tool_get_type
 gimp_dash_editor_get_type
 gimp_data_editor_get_type
@@ -143,6 +145,7 @@ gimp_grid_get_type
 gimp_gui_config_get_type
 gimp_guide_get_type
 gimp_guide_undo_get_type
+gimp_handle_bar_get_type
 gimp_heal_get_type
 gimp_heal_tool_get_type
 gimp_histogram_box_get_type

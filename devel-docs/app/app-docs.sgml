@@ -33,6 +33,7 @@
     <xi:include href="xml/sanity.xml" />
     <xi:include href="xml/units.xml" />
     <xi:include href="xml/about.xml" />
+    <xi:include href="xml/gimp-log.xml" />
   </part>
 
   <part id="app-paint-funcs-part">
@@ -62,6 +63,7 @@
 
     <chapter id="app-base-utils">
       <title>Base Utilities</title>
+      <xi:include href="xml/base-utils.xml" />
       <xi:include href="xml/boundary.xml" />
       <xi:include href="xml/cpercep.xml" />
       <xi:include href="xml/gimphistogram.xml" />
@@ -200,6 +202,9 @@
       <xi:include href="xml/gimpbrushgenerated-load.xml" />
       <xi:include href="xml/gimpbrushgenerated-save.xml" />
       <xi:include href="xml/gimpbrushpipe.xml" />
+      <xi:include href="xml/gimpcurve.xml" />
+      <xi:include href="xml/gimpcurve-load.xml" />
+      <xi:include href="xml/gimpcurve-save.xml" />
       <xi:include href="xml/gimpgradient.xml" />
       <xi:include href="xml/gimpgradient-load.xml" />
       <xi:include href="xml/gimpgradient-save.xml" />
@@ -399,6 +404,8 @@
     <xi:include href="xml/pdb-types.xml" />
     <xi:include href="xml/gimppdb.xml" />
     <xi:include href="xml/gimppdb-query.xml" />
+    <xi:include href="xml/gimppdb-utils.xml" />
+    <xi:include href="xml/gimppdberror.xml" />
     <xi:include href="xml/gimp-pdb-compat.xml" />
     <xi:include href="xml/gimpprocedure.xml" />
     <xi:include href="xml/gimppluginprocedure.xml" />
@@ -861,11 +868,13 @@
       <xi:include href="xml/gimpcolorframe.xml" />
       <xi:include href="xml/gimpcolorpanel.xml" />
       <xi:include href="xml/gimpcursorview.xml" />
+      <xi:include href="xml/gimpcurveview.xml" />
       <xi:include href="xml/gimpdasheditor.xml" />
       <xi:include href="xml/gimpfgbgeditor.xml" />
       <xi:include href="xml/gimpfgbgview.xml" />
       <xi:include href="xml/gimpfileprocview.xml" />
       <xi:include href="xml/gimpgrideditor.xml" />
+      <xi:include href="xml/gimphandlebar.xml" />
       <xi:include href="xml/gimphistogrambox.xml" />
       <xi:include href="xml/gimphistogramview.xml" />
       <xi:include href="xml/gimpimagecommenteditor.xml" />

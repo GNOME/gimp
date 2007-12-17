@@ -1,3 +1,11 @@
+2007-12-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am (GTKDOC_LIBS): add app/gimp-log.o
+
+	* app/app.types
+	* app/app-docs.sgml
+	* app/app-sections.txt: updated.
+
 2007-11-22  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt: added

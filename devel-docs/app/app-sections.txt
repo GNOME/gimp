@@ -269,6 +269,7 @@ gimp_g_list_get_memsize
 gimp_g_list_get_memsize_foreach
 gimp_g_value_get_memsize
 gimp_g_param_spec_get_memsize
+gimp_string_get_memsize
 gimp_parasite_get_memsize
 gimp_get_default_language
 gimp_get_default_unit
@@ -451,6 +452,45 @@ gimp_buffer_get_type
 GIMP_BUFFER_CLASS
 GIMP_IS_BUFFER_CLASS
 GIMP_BUFFER_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpcurve</FILE>
+GIMP_CURVE_NUM_POINTS
+<TITLE>GimpCurve</TITLE>
+GimpCurve
+gimp_curve_new
+gimp_curve_get_standard
+gimp_curve_reset
+gimp_curve_set_curve_type
+gimp_curve_get_curve_type
+gimp_curve_get_closest_point
+gimp_curve_set_point
+gimp_curve_move_point
+gimp_curve_set_curve
+gimp_curve_get_uchar
+<SUBSECTION Standard>
+GimpCurveClass
+GIMP_CURVE
+GIMP_IS_CURVE
+GIMP_TYPE_CURVE
+gimp_curve_get_type
+GIMP_CURVE_CLASS
+GIMP_IS_CURVE_CLASS
+GIMP_CURVE_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpcurve-load</FILE>
+<TITLE>GimpCurve-load</TITLE>
+GIMP_CURVE_FILE_EXTENSION
+gimp_curve_load
+</SECTION>
+
+<SECTION>
+<FILE>gimpcurve-save</FILE>
+<TITLE>GimpCurve-save</TITLE>
+gimp_curve_save
 </SECTION>
 
 <SECTION>
@@ -747,6 +787,7 @@ GIMP_IS_DOCUMENT_LIST_CLASS
 <FILE>gimpdrawable</FILE>
 <TITLE>GimpDrawable</TITLE>
 GimpDrawable
+gimp_drawable_estimate_memsize
 gimp_drawable_configure
 gimp_drawable_update
 gimp_drawable_alpha_changed
@@ -1933,6 +1974,7 @@ gimp_viewable_get_stock_id
 gimp_viewable_set_stock_id
 gimp_viewable_preview_freeze
 gimp_viewable_preview_thaw
+gimp_viewable_preview_is_frozen
 <SUBSECTION Standard>
 GimpViewableClass
 GIMP_VIEWABLE
@@ -2465,7 +2507,7 @@ gimp_display_shell_scale_set_dot_for_dot
 gimp_display_shell_scale
 gimp_display_shell_scale_to
 gimp_display_shell_scale_fit_in
-gimp_display_shell_scale_fit_to
+gimp_display_shell_scale_fill
 gimp_display_shell_scale_by_values
 gimp_display_shell_scale_shrink_wrap
 gimp_display_shell_scale_resize
@@ -4159,6 +4201,7 @@ GimpRectangleToolProp
 GimpRectangleFunction
 GIMP_RECTANGLE_TOOL_GET_OPTIONS
 gimp_rectangle_tool_constructor
+gimp_rectangle_tool_init
 gimp_rectangle_tool_control
 gimp_rectangle_tool_button_press
 gimp_rectangle_tool_button_release
@@ -4176,7 +4219,6 @@ gimp_rectangle_tool_get_function
 gimp_rectangle_tool_set_function
 gimp_rectangle_tool_constraint_size_set
 gimp_rectangle_tool_pending_size_set
-gimp_rectangle_tool_get_press_coords
 gimp_rectangle_tool_install_properties
 gimp_rectangle_tool_set_property
 gimp_rectangle_tool_get_property
@@ -5503,6 +5545,27 @@ GIMP_CURSOR_VIEW_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpcurveview</FILE>
+<TITLE>GimpCurveView</TITLE>
+GimpCurveView
+gimp_curve_view_new
+gimp_curve_view_set_curve
+gimp_curve_view_get_curve
+gimp_curve_view_set_selected
+gimp_curve_view_set_xpos
+gimp_curve_view_set_cursor
+<SUBSECTION Standard>
+GimpCurveViewClass
+GIMP_CURVE_VIEW
+GIMP_IS_CURVE_VIEW
+GIMP_TYPE_CURVE_VIEW
+gimp_curve_view_get_type
+GIMP_CURVE_VIEW_CLASS
+GIMP_IS_CURVE_VIEW_CLASS
+GIMP_CURVE_VIEW_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpdbusservice</FILE>
 <TITLE>GimpDBusService</TITLE>
 GIMP_DBUS_SERVICE_NAME
@@ -5945,6 +6008,23 @@ gimp_grid_editor_get_type
 GIMP_GRID_EDITOR_CLASS
 GIMP_IS_GRID_EDITOR_CLASS
 GIMP_GRID_EDITOR_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimphandlebar</FILE>
+<TITLE>GimpHandleBar</TITLE>
+GimpHandleBar
+gimp_handle_bar_new
+gimp_handle_bar_set_adjustment
+<SUBSECTION Standard>
+GimpHandleBarClass
+GIMP_HANDLE_BAR
+GIMP_IS_HANDLE_BAR
+GIMP_TYPE_HANDLE_BAR
+gimp_handle_bar_get_type
+GIMP_HANDLE_BAR_CLASS
+GIMP_IS_HANDLE_BAR_CLASS
+GIMP_HANDLE_BAR_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -6498,16 +6578,14 @@ gimp_view_renderer_set_border_color
 gimp_view_renderer_set_border_type
 gimp_view_renderer_set_background
 gimp_view_renderer_invalidate
-gimp_view_renderer_unrealize
 gimp_view_renderer_update
 gimp_view_renderer_update_idle
 gimp_view_renderer_remove_idle
 gimp_view_renderer_draw
-gimp_view_renderer_default_render_buffer
+gimp_view_renderer_default_render_surface
 gimp_view_renderer_default_render_stock
-gimp_view_renderer_render_buffer
+gimp_view_renderer_render_surface
 gimp_view_renderer_render_pixbuf
-gimp_view_render_to_buffer
 <SUBSECTION Standard>
 GimpViewRendererClass
 GIMP_VIEW_RENDERER
@@ -7211,6 +7289,23 @@ GIMP_LICENSE
 </SECTION>
 
 <SECTION>
+<FILE>gimp-log</FILE>
+GimpLogFlags
+gimp_log_flags
+gimp_log_init
+gimp_log
+gimp_logv
+GIMP_LOG
+TOOL_EVENTS
+TOOL_FOCUS
+DND
+HELP
+DIALOG_FACTORY
+SAVE_DIALOG
+IMAGE_SCALE
+</SECTION>
+
+<SECTION>
 <FILE>base-enums</FILE>
 GIMP_TYPE_CURVE_TYPE
 GimpCurveType
@@ -7247,6 +7342,12 @@ TileValidateProc
 <FILE>base</FILE>
 base_init
 base_exit
+</SECTION>
+
+<SECTION>
+<FILE>base-utils</FILE>
+get_number_of_processors
+get_physical_memory_size
 </SECTION>
 
 <SECTION>
@@ -7287,10 +7388,7 @@ cpercep_space_to_rgb
 <FILE>curves</FILE>
 Curves
 curves_init
-curves_channel_reset
-curves_calculate_curve
 curves_lut_func
-CURVES_NUM_POINTS
 </SECTION>
 
 <SECTION>
@@ -7421,6 +7519,7 @@ temp_buf_copy
 temp_buf_resize
 temp_buf_scale
 temp_buf_copy_area
+temp_buf_demultiply
 temp_buf_free
 temp_buf_data
 temp_buf_data_clear
@@ -7552,9 +7651,6 @@ tile_update_rowhints
 <FILE>tile-private</FILE>
 Tile
 TileLink
-LARGE_SEEK
-LARGE_TRUNCATE
-gimp_win32_large_truncate
 </SECTION>
 
 <SECTION>
@@ -8203,7 +8299,6 @@ gimp_projection_get_level
 gimp_projection_get_image
 gimp_projection_get_image_type
 gimp_projection_get_bytes
-gimp_projection_get_opacity
 gimp_projection_flush
 gimp_projection_flush_now
 gimp_projection_finish_draw
@@ -8854,13 +8949,6 @@ gimp_pdb_compat_procs_register
 </SECTION>
 
 <SECTION>
-<FILE>gimp-pdb-query</FILE>
-gimp_pdb_dump
-gimp_pdb_query
-gimp_pdb_proc_info
-</SECTION>
-
-<SECTION>
 <FILE>gimpprocedure</FILE>
 GimpMarshalFunc
 <TITLE>GimpProcedure</TITLE>
@@ -8965,6 +9053,26 @@ GIMP_PDB_GET_CLASS
 gimp_pdb_dump
 gimp_pdb_query
 gimp_pdb_proc_info
+</SECTION>
+
+<SECTION>
+<FILE>gimppdb-utils</FILE>
+<TITLE>GimpPDB-utils</TITLE>
+gimp_pdb_get_brush
+gimp_pdb_get_generated_brush
+gimp_pdb_get_pattern
+gimp_pdb_get_gradient
+gimp_pdb_get_palette
+gimp_pdb_get_font
+gimp_pdb_get_buffer
+gimp_pdb_get_paint_info
+</SECTION>
+
+<SECTION>
+<FILE>gimppdberror</FILE>
+GimpPdbErrorCode
+GIMP_PDB_ERROR
+gimp_pdb_error_quark
 </SECTION>
 
 <SECTION>
@@ -9495,10 +9603,11 @@ gimp_pixbuf_targets_remove
 <FILE>gimprender</FILE>
 GIMP_RENDER_BUF_WIDTH
 GIMP_RENDER_BUF_HEIGHT
+gimp_render_dark_check
+gimp_render_light_check
 gimp_render_check_buf
 gimp_render_empty_buf
 gimp_render_white_buf
-gimp_render_temp_buf
 gimp_render_blend_dark_check
 gimp_render_blend_light_check
 gimp_render_blend_white
@@ -10353,7 +10462,7 @@ vectors_linked_cmd_callback
 view_new_cmd_callback
 view_zoom_explicit_cmd_callback
 view_zoom_fit_in_cmd_callback
-view_zoom_fit_to_cmd_callback
+view_zoom_fill_cmd_callback
 view_zoom_cmd_callback
 view_zoom_other_cmd_callback
 view_zoom_revert_cmd_callback
