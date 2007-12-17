@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-07 10:59+0100\n"
-"PO-Revision-Date: 2007-12-07 10:57+0100\n"
+"POT-Creation-Date: 2007-12-17 16:25+0100\n"
+"PO-Revision-Date: 2007-12-17 16:26+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -96,8 +96,7 @@ msgid "Iterations:"
 msgstr "Iterace:"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:773
-msgid ""
-"The higher the number of iterations, the more details will be calculated"
+msgid "The higher the number of iterations, the more details will be calculated"
 msgstr "Čím více iterací, tím více detailů v obraze."
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:781
@@ -293,8 +292,7 @@ msgstr "Inverze"
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
-msgstr ""
-"Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
+msgstr "Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
 
 #. Greenmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1032
@@ -510,8 +508,7 @@ msgstr "P_růhledné pozadí"
 
 #: ../plug-ins/Lighting/lighting_ui.c:312
 msgid "Make destination image transparent where bump height is zero"
-msgstr ""
-"Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
+msgstr "Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
 
 #: ../plug-ins/Lighting/lighting_ui.c:315
 msgid "Cre_ate new image"
@@ -2288,8 +2285,7 @@ msgstr "Posun _X:"
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
-msgstr ""
-"Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
+msgstr "Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
 
 #: ../plug-ins/common/bumpmap.c:944 ../plug-ins/common/postscript.c:3390
 msgid "_Y offset:"
@@ -2576,9 +2572,9 @@ msgid "Color to Alpha"
 msgstr "Barva do alfy"
 
 #. spinbutton 1
-#: ../plug-ins/common/colortoalpha.c:409 ../plug-ins/common/mapcolor.c:424
-#: ../plug-ins/gfli/gfli.c:840 ../plug-ins/gfli/gfli.c:910
-#: ../plug-ins/rcm/rcm_dialog.c:299 ../plug-ins/rcm/rcm_dialog.c:377
+#: ../plug-ins/common/colortoalpha.c:409 ../plug-ins/gfli/gfli.c:840
+#: ../plug-ins/gfli/gfli.c:910 ../plug-ins/rcm/rcm_dialog.c:299
+#: ../plug-ins/rcm/rcm_dialog.c:377
 msgid "From:"
 msgstr "Z:"
 
@@ -2733,8 +2729,7 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:512
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr ""
-"Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
+msgstr "Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
 
 #: ../plug-ins/common/compose.c:545
 #, c-format
@@ -2838,8 +2833,7 @@ msgid "E_xtend"
 msgstr "Rozšíři_t"
 
 #: ../plug-ins/common/convmatrix.c:111 ../plug-ins/common/displace.c:472
-#: ../plug-ins/common/edge.c:708 ../plug-ins/common/fractaltrace.c:736
-#: ../plug-ins/common/ripple.c:561
+#: ../plug-ins/common/fractaltrace.c:736 ../plug-ins/common/ripple.c:561
 msgid "_Wrap"
 msgstr "_Přes"
 
@@ -3584,13 +3578,13 @@ msgstr "_Polární"
 msgid "Edge Behavior"
 msgstr "Chování hran"
 
-#: ../plug-ins/common/displace.c:474 ../plug-ins/common/edge.c:721
-#: ../plug-ins/common/ripple.c:562 ../plug-ins/common/waves.c:280
+#: ../plug-ins/common/displace.c:474 ../plug-ins/common/ripple.c:562
+#: ../plug-ins/common/waves.c:280
 msgid "_Smear"
 msgstr "_Rozmazat"
 
-#: ../plug-ins/common/displace.c:476 ../plug-ins/common/edge.c:734
-#: ../plug-ins/common/fractaltrace.c:740 ../plug-ins/common/newsprint.c:398
+#: ../plug-ins/common/displace.c:476 ../plug-ins/common/fractaltrace.c:740
+#: ../plug-ins/common/newsprint.c:398
 msgid "_Black"
 msgstr "Č_erná"
 
@@ -3622,56 +3616,58 @@ msgstr "_Poloměr 2:"
 msgid "_Normalize"
 msgstr "_Normalizovat"
 
-#: ../plug-ins/common/dog.c:347 ../plug-ins/gimpressionist/paper.c:149
+#: ../plug-ins/common/dog.c:347 ../plug-ins/common/edge.c:728
+#: ../plug-ins/gimpressionist/paper.c:149
 msgid "_Invert"
 msgstr "_Invertovat"
 
-#: ../plug-ins/common/edge.c:152
+#: ../plug-ins/common/edge.c:161
 msgid "Several simple methods for detecting edges"
 msgstr "Několik jednoduchých metod detekce hran"
 
-#: ../plug-ins/common/edge.c:157
+#: ../plug-ins/common/edge.c:166
 msgid "_Edge..."
 msgstr "_Hrana..."
 
-#: ../plug-ins/common/edge.c:229
+#: ../plug-ins/common/edge.c:240
 msgid "Edge detection"
 msgstr "Detekce hran"
 
-#: ../plug-ins/common/edge.c:633
+#: ../plug-ins/common/edge.c:660
 msgid "Edge Detection"
 msgstr "Detekce hran"
 
-#: ../plug-ins/common/edge.c:667
+#: ../plug-ins/common/edge.c:694
+msgid "Prewitt"
+msgstr "Prewittův"
+
+#: ../plug-ins/common/edge.c:695
 msgid "Sobel"
 msgstr "Sobelův"
 
-#: ../plug-ins/common/edge.c:668
-msgid "Prewitt compass"
-msgstr "Prewittův"
-
-#: ../plug-ins/common/edge.c:669 ../plug-ins/common/sinus.c:904
+#: ../plug-ins/common/edge.c:696 ../plug-ins/common/sinus.c:904
 msgid "Gradient"
 msgstr "Přechod"
 
-#: ../plug-ins/common/edge.c:670
+#: ../plug-ins/common/edge.c:697
 msgid "Roberts"
 msgstr "Robertsův"
 
-#: ../plug-ins/common/edge.c:671
+#: ../plug-ins/common/edge.c:698
 msgid "Differential"
 msgstr "Diferenciální"
 
-#: ../plug-ins/common/edge.c:672 ../plug-ins/common/laplace.c:243
+#: ../plug-ins/common/edge.c:699 ../plug-ins/common/laplace.c:243
 msgid "Laplace"
 msgstr "Laplaceův"
 
-#: ../plug-ins/common/edge.c:681
-msgid "_Algorithm:"
-msgstr "_Algoritmus:"
+#: ../plug-ins/common/edge.c:708
+msgid "_Method:"
+msgstr "_Metoda:"
 
-#: ../plug-ins/common/edge.c:689
-msgid "A_mount:"
+#: ../plug-ins/common/edge.c:716 ../plug-ins/common/neon.c:745
+#: ../plug-ins/common/unsharp.c:691
+msgid "_Amount:"
 msgstr "_Míra:"
 
 #: ../plug-ins/common/emboss.c:124
@@ -4286,8 +4282,7 @@ msgstr ""
 "nebyl uložen."
 
 #: ../plug-ins/common/gif-save.c:958
-msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nemohu ukládat barevné obrázky RGB. Nejdříve jej převeďte na indexovaný nebo "
 "do šedí."
@@ -4876,8 +4871,7 @@ msgstr "Interaktivní deformace"
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
-msgstr ""
-"Kliknutím a táhnutím myši v náhledů definujte požadovanou deformaci obrázku."
+msgstr "Kliknutím a táhnutím myši v náhledů definujte požadovanou deformaci obrázku."
 
 #: ../plug-ins/common/jigsaw.c:356
 msgid "Add a jigsaw-puzzle pattern to the image"
@@ -5002,8 +4996,7 @@ msgid "Default RGB working space"
 msgstr "Výchozí pracovní prostor RGB"
 
 #: ../plug-ins/common/lcms.c:766
-msgid ""
-"Data attached as 'icc-profile' does not appear to be an ICC color profile"
+msgid "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr "Data připojená jako 'icc-profile' zřejmě nejsou barevným profilem ICC"
 
 #: ../plug-ins/common/lcms.c:817
@@ -5267,69 +5260,6 @@ msgstr "nějaký druh chyby přípony souboru nebo její nepřítomnost"
 msgid "Could not start sendmail (%s)"
 msgstr "Nemohu spustit sendmail (%s)"
 
-#: ../plug-ins/common/mapcolor.c:111
-msgid "First Source Color"
-msgstr "První zdrojová barva"
-
-#: ../plug-ins/common/mapcolor.c:112
-msgid "Second Source Color"
-msgstr "Druhá zdrojová barva"
-
-#: ../plug-ins/common/mapcolor.c:113
-msgid "First Destination Color"
-msgstr "První cílová barva"
-
-#: ../plug-ins/common/mapcolor.c:114
-msgid "Second Destination Color"
-msgstr "Druhá cílová barva"
-
-#: ../plug-ins/common/mapcolor.c:143
-msgid "Map colors sending foreground to black, background to white"
-msgstr "Přemapuje barvy, popředí na černou, pozadí na bílou"
-
-#: ../plug-ins/common/mapcolor.c:151
-msgid "Adjust _Foreground & Background"
-msgstr "Upravit _popředí a pozadí"
-
-#: ../plug-ins/common/mapcolor.c:160
-msgid "Map color range specified by two colors to another range"
-msgstr "Mapovar barevný rozsah určený dvěma barvami na jiný rozsah"
-
-#: ../plug-ins/common/mapcolor.c:168
-msgid "Color Range _Mapping..."
-msgstr "_Mapování rozsahu barev..."
-
-#: ../plug-ins/common/mapcolor.c:214 ../plug-ins/common/mapcolor.c:526
-msgid "Cannot operate on gray or indexed color images."
-msgstr "Nemohu pracovat s šedými nebo indexovanými barevnými obrázky."
-
-#: ../plug-ins/common/mapcolor.c:235
-msgid "Adjusting foreground and background colors"
-msgstr "Upravují se barvy popředí a pozadí"
-
-#: ../plug-ins/common/mapcolor.c:277
-msgid "Mapping colors"
-msgstr "Mapování barev"
-
-#: ../plug-ins/common/mapcolor.c:352
-msgid "Map Color Range"
-msgstr "Mapování barevného rozsahu"
-
-#: ../plug-ins/common/mapcolor.c:383
-msgid "Source Color Range"
-msgstr "Zdrojový rozsah barev"
-
-#: ../plug-ins/common/mapcolor.c:384
-msgid "Destination Color Range"
-msgstr "Cílový rozsah barev"
-
-#. spinbutton 2
-#: ../plug-ins/common/mapcolor.c:424 ../plug-ins/gfli/gfli.c:849
-#: ../plug-ins/gfli/gfli.c:919 ../plug-ins/rcm/rcm_dialog.c:325
-#: ../plug-ins/rcm/rcm_dialog.c:378
-msgid "To:"
-msgstr "Do:"
-
 #: ../plug-ins/common/max_rgb.c:90
 msgid "Reduce image to pure red, green, and blue"
 msgstr "Redukovat obrázek na čistou červenou, zelenou a modrou"
@@ -5410,8 +5340,7 @@ msgstr "Ú_hel:"
 #. * transparency & just use the full palette
 #: ../plug-ins/common/mng.c:499 ../plug-ins/common/png.c:1734
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr ""
-"Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
+msgstr "Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
 
 #: ../plug-ins/common/mng.c:1319
 msgid "Save as MNG"
@@ -5610,10 +5539,6 @@ msgstr "Neón"
 #: ../plug-ins/common/neon.c:693
 msgid "Neon Detection"
 msgstr "Detekce neonu"
-
-#: ../plug-ins/common/neon.c:745 ../plug-ins/common/unsharp.c:691
-msgid "_Amount:"
-msgstr "_Míra:"
 
 #: ../plug-ins/common/newsprint.c:127
 msgid "Round"
@@ -6649,8 +6574,7 @@ msgstr "Nelze zpracovat PSD soubor s více než %d kanály"
 
 #: ../plug-ins/common/psd-load.c:2522
 msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
-msgstr ""
-"Nelze zpracovat PSD soubory v barevném prostoru CMYK s více než 5 kanály"
+msgstr "Nelze zpracovat PSD soubory v barevném prostoru CMYK s více než 5 kanály"
 
 #: ../plug-ins/common/psd-load.c:2537
 #, c-format
@@ -7144,15 +7068,12 @@ msgid "After the delay, the screenshot is taken."
 msgstr "Po prodlevě je vytvořen snímek obrazovky."
 
 #: ../plug-ins/common/screenshot.c:1102
-msgid ""
-"After the delay, drag your mouse to select the region for the screenshot."
-msgstr ""
-"Po uplynytí časové prodlevy vyberte oblast snímku obrazovky táhnutím myší."
+msgid "After the delay, drag your mouse to select the region for the screenshot."
+msgstr "Po uplynytí časové prodlevy vyberte oblast snímku obrazovky táhnutím myší."
 
 #: ../plug-ins/common/screenshot.c:1105
 msgid "At the end of the delay, click in a window to snap it."
-msgstr ""
-"Po uplynutí časové prodlevy klikněte do okna, jehož snímek chcete vytvořit."
+msgstr "Po uplynutí časové prodlevy klikněte do okna, jehož snímek chcete vytvořit."
 
 #. Area
 #: ../plug-ins/common/screenshot.c:1111
@@ -7996,8 +7917,7 @@ msgid "Import _paths"
 msgstr "Importovat _cesty"
 
 #: ../plug-ins/common/svg.c:930
-msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importovat elementy cesty z SVG, aby mohly být použity s nástrojem GIMPu pro "
 "cesty"
@@ -8250,8 +8170,7 @@ msgid "ID"
 msgstr "ID"
 
 #: ../plug-ins/common/uniteditor.c:96
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Tento řetězec bude použit pouze k identifikaci jednotky v konfiguračním "
 "souboru GIMPu."
@@ -8428,8 +8347,7 @@ msgstr "_Body"
 
 #: ../plug-ins/common/video.c:1806
 msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-msgstr ""
-"Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
+msgstr "Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
 
 #: ../plug-ins/common/video.c:1813
 msgid "Vi_deo..."
@@ -9412,8 +9330,7 @@ msgstr "Kopírovat"
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
-msgstr ""
-"Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
+msgstr "Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
 
 #: ../plug-ins/gfig/gfig-dialog.c:1302
 msgid "Background:"
@@ -9538,8 +9455,7 @@ msgid "_Gfig..."
 msgstr "_Gfig..."
 
 #: ../plug-ins/gfig/gfig.c:731
-msgid ""
-"Error trying to save figure as a parasite: can't attach parasite to drawable."
+msgid "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Chyba při pokusu uložit obrázek jako parazita: nemohu připojit parazita k "
 "drawable."
@@ -9835,6 +9751,12 @@ msgstr "Bohužel, umím pracovat pouze s obrázky INDEXOVANÝMI a v ŠEDÍCH."
 msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI 1.3 - Čtení zásobníku políček"
 
+#. spinbutton 2
+#: ../plug-ins/gfli/gfli.c:849 ../plug-ins/gfli/gfli.c:919
+#: ../plug-ins/rcm/rcm_dialog.c:325 ../plug-ins/rcm/rcm_dialog.c:378
+msgid "To:"
+msgstr "Do:"
+
 #: ../plug-ins/gfli/gfli.c:879
 msgid "GFLI 1.3 - Save framestack"
 msgstr "GFLI 1.3 - Zápis zásobníku políček"
@@ -9979,8 +9901,7 @@ msgid "Shadow depth:"
 msgstr "Hloubka stínu:"
 
 #: ../plug-ins/gimpressionist/general.c:244
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Hloubka vrženého stínu, tj. jak daleko od objektu budou"
 
 #: ../plug-ins/gimpressionist/general.c:249
@@ -10358,13 +10279,11 @@ msgid "Size:"
 msgstr "Velikost:"
 
 #: ../plug-ins/gimpressionist/size.c:142
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Nechť hodnota (jas) oblasti určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:146
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
+msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "Vzdálenost od středu obrázku určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:150
@@ -12229,3 +12148,4 @@ msgstr "Chyba: Nemohu načíst soubor XJT vlastností '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Chyba: Soubor XJT vlastností '%s' je prázdný."
+
