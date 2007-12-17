@@ -1,3 +1,8 @@
+2007-12-17  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpregioniterator.c: code cleanup; reduced number of
+	progress updates.
+
 2007-12-16  Bill Skaggs  <weskaggs@primate.udavis.edu>
 
 	* plug-ins/common/edge.c: name reverted to "Edge",
