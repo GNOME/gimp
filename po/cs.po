@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-14 14:23+0100\n"
-"PO-Revision-Date: 2007-12-14 19:30+0100\n"
+"POT-Creation-Date: 2007-12-17 16:09+0100\n"
+"PO-Revision-Date: 2007-12-17 16:15+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1651,41 +1651,41 @@ msgstr "Opravdu vymazat historii změn obrázku?"
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Vymazání historie změn tohoto obrázku ušetří %s paměti."
 
-#: ../app/actions/edit-commands.c:211
+#: ../app/actions/edit-commands.c:221
 msgid "Copied pixels to the clipboard"
 msgstr "Pixely zkopírované do schránky"
 
-#: ../app/actions/edit-commands.c:278 ../app/actions/edit-commands.c:454
+#: ../app/actions/edit-commands.c:303 ../app/actions/edit-commands.c:479
 msgid "There is no image data in the clipboard to paste."
 msgstr "Ve schránce nejsou žádná obrazová data ke vložení."
 
-#: ../app/actions/edit-commands.c:292
+#: ../app/actions/edit-commands.c:317
 msgid "Cut Named"
 msgstr "Vyříznout pojmenované"
 
-#: ../app/actions/edit-commands.c:295 ../app/actions/edit-commands.c:336
-#: ../app/actions/edit-commands.c:356
+#: ../app/actions/edit-commands.c:320 ../app/actions/edit-commands.c:361
+#: ../app/actions/edit-commands.c:381
 msgid "Enter a name for this buffer"
 msgstr "Zadejte jméno tohoto bufferu"
 
-#: ../app/actions/edit-commands.c:333
+#: ../app/actions/edit-commands.c:358
 msgid "Copy Named"
 msgstr "Kopírovat pojmenované"
 
-#: ../app/actions/edit-commands.c:353
+#: ../app/actions/edit-commands.c:378
 msgid "Copy Visible Named "
 msgstr "Kopírovat _viditelné jménem"
 
-#: ../app/actions/edit-commands.c:470
+#: ../app/actions/edit-commands.c:496
 msgid "There is no active layer or channel to cut from."
 msgstr "Není žádná aktivní vrstva nebo kanál, odkud vyjmout."
 
-#: ../app/actions/edit-commands.c:475 ../app/actions/edit-commands.c:500
-#: ../app/actions/edit-commands.c:517
+#: ../app/actions/edit-commands.c:501 ../app/actions/edit-commands.c:533
+#: ../app/actions/edit-commands.c:557
 msgid "(Unnamed Buffer)"
 msgstr "(Nepojmenovaný buffer)"
 
-#: ../app/actions/edit-commands.c:495
+#: ../app/actions/edit-commands.c:528
 msgid "There is no active layer or channel to copy from."
 msgstr "Není žádná aktivní vrstva nebo kanál, odkud kopírovat."
 
@@ -3571,7 +3571,7 @@ msgstr "Otevřít"
 msgid "Load text from file"
 msgstr "Načíst text ze souboru"
 
-#: ../app/actions/text-editor-actions.c:50 ../app/core/gimp-edit.c:430
+#: ../app/actions/text-editor-actions.c:50 ../app/core/gimp-edit.c:443
 msgid "Clear"
 msgstr "Vymazat"
 
@@ -3990,12 +3990,12 @@ msgid "Adjust the zoom ratio so that the image becomes fully visible"
 msgstr "Upravit stupeň přiblížení, aby byl obrázek plně viditelný"
 
 #: ../app/actions/view-actions.c:93
-msgid "Fit Image _to Window"
-msgstr "_Vyplnit okno obrázkem"
+msgid "Fi_ll Window"
+msgstr "Vyplni_t okno"
 
 #: ../app/actions/view-actions.c:94
-msgid "Adjust the zoom ratio so that the window is used optimally"
-msgstr "Upravit stupeň přiblížení, aby bylo okno optimálně využito"
+msgid "Adjust the zoom ratio so that the entire window is used"
+msgstr "Upravit stupeň přiblížení, aby bylo využito celé okno"
 
 #: ../app/actions/view-actions.c:99 ../app/actions/view-actions.c:575
 msgid "Re_vert Zoom"
@@ -5378,11 +5378,11 @@ msgstr "Ukotvit plovoucí výběr"
 msgid "Remove floating selection"
 msgstr "Odstranit plovoucí výběr"
 
-#: ../app/core/core-enums.c:878 ../app/core/gimp-edit.c:255
+#: ../app/core/core-enums.c:878 ../app/core/gimp-edit.c:262
 msgid "Paste"
 msgstr "Vložit"
 
-#: ../app/core/core-enums.c:879 ../app/core/gimp-edit.c:541
+#: ../app/core/core-enums.c:879 ../app/core/gimp-edit.c:554
 msgid "Cut"
 msgstr "Vyjmout"
 
@@ -5561,31 +5561,31 @@ msgstr "Převést do pracovního prostoru RGB"
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Odstraňování \"%s\" selhalo: %s"
 
-#: ../app/core/gimp-edit.c:183 ../app/core/gimp-edit.c:317
+#: ../app/core/gimp-edit.c:190 ../app/core/gimp-edit.c:324
 msgid "Pasted Layer"
 msgstr "Vložená vrstva"
 
-#: ../app/core/gimp-edit.c:449
+#: ../app/core/gimp-edit.c:462
 msgid "Fill with Foreground Color"
 msgstr "Vyplnit barvou popředí"
 
-#: ../app/core/gimp-edit.c:453
+#: ../app/core/gimp-edit.c:466
 msgid "Fill with Background Color"
 msgstr "Vyplnit barvou pozadí"
 
-#: ../app/core/gimp-edit.c:457
+#: ../app/core/gimp-edit.c:470
 msgid "Fill with White"
 msgstr "Vyplnit bílou"
 
-#: ../app/core/gimp-edit.c:461
+#: ../app/core/gimp-edit.c:474
 msgid "Fill with Transparency"
 msgstr "Vyplnit průhledností"
 
-#: ../app/core/gimp-edit.c:465
+#: ../app/core/gimp-edit.c:478
 msgid "Fill with Pattern"
 msgstr "Vyplnit vzorkem"
 
-#: ../app/core/gimp-edit.c:564
+#: ../app/core/gimp-edit.c:570
 msgid "Global Buffer"
 msgstr "Globální buffer"
 
@@ -8651,7 +8651,7 @@ msgstr "2D transformace"
 msgid "2D Transforming"
 msgstr "2D transformace"
 
-#: ../app/pdb/edit_cmds.c:648 ../app/tools/gimpblendtool.c:224
+#: ../app/pdb/edit_cmds.c:693 ../app/tools/gimpblendtool.c:224
 msgid "Blending"
 msgstr "Mísení"
 
@@ -8667,7 +8667,9 @@ msgstr "Tuto vrstvu nelze ukotvit, protože se nejedná o plovoucí výběr."
 msgid ""
 "Cannot convert this layer to a normal layer because it is not a floating "
 "selection."
-msgstr "Tuto vrstvu nelze převést na normální vrstvu, protože se nejedná o plovoucí výběr."
+msgstr ""
+"Tuto vrstvu nelze převést na normální vrstvu, protože se nejedná o plovoucí "
+"výběr."
 
 #: ../app/pdb/floating_sel_cmds.c:183
 msgid "Cannot rigor this layer because it is not a floating selection."
@@ -9573,7 +9575,7 @@ msgstr "Ořez: odstranění okrajů z obrazu či vrstvy"
 msgid "_Crop"
 msgstr "_Ořezat"
 
-#: ../app/tools/gimpcroptool.c:249
+#: ../app/tools/gimpcroptool.c:244
 msgid "Click or press Enter to crop"
 msgstr "Klikněte nebo stiskněte Enter pro oříznutí"
 
@@ -9707,15 +9709,15 @@ msgstr "Odstranit plovoucí výběr"
 msgid "Move: "
 msgstr "Přesun: "
 
-#: ../app/tools/gimpellipseselecttool.c:69
+#: ../app/tools/gimpellipseselecttool.c:68
 msgid "Ellipse Select"
 msgstr "Výběr elipsy"
 
-#: ../app/tools/gimpellipseselecttool.c:70
+#: ../app/tools/gimpellipseselecttool.c:69
 msgid "Ellipse Select Tool: Select an elliptical region"
 msgstr "Výběr eliptických oblastí"
 
-#: ../app/tools/gimpellipseselecttool.c:71
+#: ../app/tools/gimpellipseselecttool.c:70
 msgid "_Ellipse Select"
 msgstr "Výběr _elipsy"
 
@@ -10473,7 +10475,7 @@ msgstr "Výběr obdélníku: výběr obdélníkové oblasti"
 msgid "_Rectangle Select"
 msgstr "Výběr _obdélníku"
 
-#: ../app/tools/gimprectangletool.c:1122 ../app/tools/gimprectangletool.c:2006
+#: ../app/tools/gimprectangletool.c:1057 ../app/tools/gimprectangletool.c:1929
 msgid "Rectangle: "
 msgstr "Obdélník: "
 
@@ -11623,15 +11625,15 @@ msgstr "Automaticky detekováno"
 msgid "By Extension"
 msgstr "Podle přípony"
 
-#: ../app/widgets/gimpfiledialog.c:540
+#: ../app/widgets/gimpfiledialog.c:542
 msgid "All files"
 msgstr "Všechny soubory"
 
-#: ../app/widgets/gimpfiledialog.c:545
+#: ../app/widgets/gimpfiledialog.c:547
 msgid "All images"
 msgstr "Všechny obrázky"
 
-#: ../app/widgets/gimpfiledialog.c:674
+#: ../app/widgets/gimpfiledialog.c:676
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Zvolte _typ souboru (%s)"
