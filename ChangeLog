@@ -1,3 +1,7 @@
+2007-12-16  Bill Skaggs  <weskaggs@primate.udavis.edu>
+
+	* plug-ins/common/edge.c: reverted to state pre-12/16.
+	
 2007-12-17  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpprojection-construct.c (project_intensity): minor
