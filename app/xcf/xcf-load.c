@@ -617,7 +617,6 @@ xcf_load_layer_props (XcfInfo   *info,
 {
   PropType prop_type;
   guint32  prop_size;
-  guint32  value;
 
   while (TRUE)
     {
@@ -645,9 +644,7 @@ xcf_load_layer_props (XcfInfo   *info,
             guint32 opacity;
 
             info->cp += xcf_read_int32 (info->fp, &opacity, 1);
-            layer->opacity = CLAMP ((gdouble) opacity / 255.0,
-                                    GIMP_OPACITY_TRANSPARENT,
-                                    GIMP_OPACITY_OPAQUE);
+            gimp_layer_set_opacity (layer, (gdouble) opacity / 255.0, FALSE);
           }
           break;
 
@@ -656,8 +653,7 @@ xcf_load_layer_props (XcfInfo   *info,
             gboolean visible;
 
             info->cp += xcf_read_int32 (info->fp, (guint32 *) &visible, 1);
-            gimp_item_set_visible (GIMP_ITEM (layer),
-                                   visible ? TRUE : FALSE, FALSE);
+            gimp_item_set_visible (GIMP_ITEM (layer), visible, FALSE);
           }
           break;
 
@@ -666,14 +662,17 @@ xcf_load_layer_props (XcfInfo   *info,
             gboolean linked;
 
             info->cp += xcf_read_int32 (info->fp, (guint32 *) &linked, 1);
-            gimp_item_set_linked (GIMP_ITEM (layer),
-                                  linked ? TRUE : FALSE, FALSE);
+            gimp_item_set_linked (GIMP_ITEM (layer), linked, FALSE);
           }
           break;
 
         case PROP_LOCK_ALPHA:
-          info->cp +=
-            xcf_read_int32 (info->fp, (guint32 *) &layer->lock_alpha, 1);
+          {
+            gboolean lock_alpha;
+
+            info->cp += xcf_read_int32 (info->fp, (guint32 *) &lock_alpha, 1);
+            gimp_layer_set_lock_alpha (layer, lock_alpha, FALSE);
+          }
           break;
 
         case PROP_APPLY_MASK:
@@ -698,14 +697,21 @@ xcf_load_layer_props (XcfInfo   *info,
           break;
 
         case PROP_MODE:
-          info->cp += xcf_read_int32 (info->fp, &value, 1);
-          layer->mode = value;
+          {
+            guint32 mode;
+
+            info->cp += xcf_read_int32 (info->fp, &mode, 1);
+            gimp_layer_set_mode (layer, (GimpLayerModeEffects) mode, FALSE);
+          }
           break;
 
         case PROP_TATTOO:
-          info->cp += xcf_read_int32 (info->fp,
-                                      (guint32 *) &GIMP_ITEM (layer)->tattoo,
-                                      1);
+          {
+            GimpTattoo tattoo;
+
+            info->cp += xcf_read_int32 (info->fp, (guint32 *) &tattoo, 1);
+            gimp_item_set_tattoo (GIMP_ITEM (layer), tattoo);
+          }
           break;
 
         case PROP_PARASITES:
@@ -803,7 +809,7 @@ xcf_load_channel_props (XcfInfo      *info,
             guint32 opacity;
 
             info->cp += xcf_read_int32 (info->fp, &opacity, 1);
-            (*channel)->color.a = opacity / 255.0;
+            gimp_channel_set_opacity (*channel, opacity / 255.0, FALSE);
           }
           break;
 
@@ -841,14 +847,17 @@ xcf_load_channel_props (XcfInfo      *info,
             guchar col[3];
 
             info->cp += xcf_read_int8 (info->fp, (guint8 *) col, 3);
-
             gimp_rgb_set_uchar (&(*channel)->color, col[0], col[1], col[2]);
           }
           break;
 
         case PROP_TATTOO:
-          info->cp +=
-            xcf_read_int32 (info->fp, &GIMP_ITEM (*channel)->tattoo, 1);
+          {
+            GimpTattoo tattoo;
+
+            info->cp += xcf_read_int32 (info->fp, (guint32 *) &tattoo, 1);
+            gimp_item_set_tattoo (GIMP_ITEM (*channel), tattoo);
+          }
           break;
 
         case PROP_PARASITES:
@@ -984,7 +993,8 @@ xcf_load_layer (XcfInfo   *info,
   if (! xcf_seek_pos (info, hierarchy_offset, NULL))
     goto error;
 
-  if (! xcf_load_hierarchy (info, GIMP_DRAWABLE (layer)->tiles))
+  if (! xcf_load_hierarchy (info,
+                            gimp_drawable_get_tiles (GIMP_DRAWABLE (layer))))
     goto error;
 
   xcf_progress_update (info);
@@ -1060,7 +1070,8 @@ xcf_load_channel (XcfInfo   *info,
   if (!xcf_seek_pos (info, hierarchy_offset, NULL))
     goto error;
 
-  if (!xcf_load_hierarchy (info, GIMP_DRAWABLE (channel)->tiles))
+  if (!xcf_load_hierarchy (info,
+                           gimp_drawable_get_tiles (GIMP_DRAWABLE (channel))))
     goto error;
 
   xcf_progress_update (info);
@@ -1118,7 +1129,8 @@ xcf_load_layer_mask (XcfInfo   *info,
   if (! xcf_seek_pos (info, hierarchy_offset, NULL))
     goto error;
 
-  if (!xcf_load_hierarchy (info, GIMP_DRAWABLE (layer_mask)->tiles))
+  if (!xcf_load_hierarchy (info,
+                           gimp_drawable_get_tiles (GIMP_DRAWABLE (layer_mask))))
     goto error;
 
   xcf_progress_update (info);
@@ -1597,10 +1609,10 @@ xcf_load_old_path (XcfInfo   *info,
   g_free (name);
   g_free (points);
 
-  GIMP_ITEM (vectors)->linked = locked;
+  gimp_item_set_linked (GIMP_ITEM (vectors), locked, FALSE);
 
   if (tattoo)
-    GIMP_ITEM (vectors)->tattoo = tattoo;
+    gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
 
   gimp_image_add_vectors (image, vectors,
                           gimp_container_num_children (image->vectors));
@@ -1689,11 +1701,11 @@ xcf_load_vector (XcfInfo   *info,
 
   vectors = gimp_vectors_new (image, name);
 
-  GIMP_ITEM (vectors)->visible = visible ? TRUE : FALSE;
-  GIMP_ITEM (vectors)->linked  = linked  ? TRUE : FALSE;
+  gimp_item_set_visible (GIMP_ITEM (vectors), visible, FALSE);
+  gimp_item_set_linked (GIMP_ITEM (vectors), linked, FALSE);
 
   if (tattoo)
-    GIMP_ITEM (vectors)->tattoo = tattoo;
+    gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
 
   for (i = 0; i < num_parasites; i++)
     {

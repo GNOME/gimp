@@ -473,7 +473,7 @@ xcf_save_layer_props (XcfInfo    *info,
     }
 
   xcf_check_error (xcf_save_prop (info, image, PROP_OPACITY, error,
-                                  layer->opacity));
+                                  gimp_layer_get_opacity (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_VISIBLE, error,
                                   gimp_item_get_visible (GIMP_ITEM (layer))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LINKED, error,
@@ -504,9 +504,9 @@ xcf_save_layer_props (XcfInfo    *info,
                                   GIMP_ITEM (layer)->offset_x,
                                   GIMP_ITEM (layer)->offset_y));
   xcf_check_error (xcf_save_prop (info, image, PROP_MODE, error,
-                                  layer->mode));
+                                  gimp_layer_get_mode (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
-                                  GIMP_ITEM (layer)->tattoo));
+                                  gimp_item_get_tattoo (GIMP_ITEM (layer))));
 
   if (GIMP_IS_TEXT_LAYER (layer) && GIMP_TEXT_LAYER (layer)->text)
     {
@@ -566,7 +566,7 @@ xcf_save_channel_props (XcfInfo      *info,
   xcf_check_error (xcf_save_prop (info, image, PROP_COLOR, error, col));
 
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
-                   GIMP_ITEM (channel)->tattoo));
+                                  gimp_item_get_tattoo (GIMP_ITEM (channel))));
 
   if (gimp_parasite_list_length (GIMP_ITEM (channel)->parasites) > 0)
     xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
@@ -1114,7 +1114,8 @@ xcf_save_layer (XcfInfo    *info,
   offset = info->cp;
 
   xcf_check_error (xcf_save_hierarchy (info,
-                                       GIMP_DRAWABLE(layer)->tiles, error));
+                                       gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
+                                       error));
 
   xcf_check_error (xcf_seek_pos (info, saved_pos, error));
   xcf_write_int32_check_error (info, &offset, 1);
@@ -1183,7 +1184,8 @@ xcf_save_channel (XcfInfo      *info,
   offset = info->cp;
 
   xcf_check_error (xcf_save_hierarchy (info,
-                                       GIMP_DRAWABLE (channel)->tiles, error));
+                                       gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
+                                       error));
 
   xcf_check_error (xcf_seek_pos (info, saved_pos, error));
   xcf_write_int32_check_error (info, &offset, 1);
@@ -1332,7 +1334,7 @@ xcf_save_level (XcfInfo      *info,
           switch (info->compression)
             {
             case COMPRESS_NONE:
-              xcf_check_error(xcf_save_tile (info, level->tiles[i], error));
+              xcf_check_error (xcf_save_tile (info, level->tiles[i], error));
               break;
             case COMPRESS_RLE:
               xcf_check_error (xcf_save_tile_rle (info, level->tiles[i],

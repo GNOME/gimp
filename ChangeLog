@@ -1,3 +1,10 @@
+2007-12-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c: use the proper APIs to get/set many item,
+	layer, channel and vectors properties instead of reading/writing
+	their struct members directly.
+
 2007-12-18  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpscrolledpreview.c
