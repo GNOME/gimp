@@ -452,16 +452,14 @@ tile_pyramid_write_quarter (Tile       *dest,
                             const gint  j)
 {
   const guchar *src_data    = tile_data_pointer (src, 0, 0);
-  guchar       *dest_data   = tile_data_pointer (dest, 0, 0);
+  guchar       *dest_data   = tile_data_pointer (dest,
+                                                 i * TILE_WIDTH / 2,
+                                                 j * TILE_WIDTH / 2);
   const gint    src_ewidth  = tile_ewidth  (src);
   const gint    src_eheight = tile_eheight (src);
   const gint    dest_ewidth = tile_ewidth  (dest);
   const gint    bpp         = tile_bpp     (dest);
   gint          y;
-
-  /* Adjust dest pointer to the right quadrant. */
-  dest_data += i * bpp * (TILE_WIDTH / 2) +
-               j * bpp * dest_ewidth * (TILE_HEIGHT / 2);
 
   for (y = 0; y < src_eheight / 2; y++)
     {
@@ -605,16 +603,14 @@ tile_pyramid_write_upper_quarter (Tile       *dest,
                                   const gint  j)
 {
   const guchar *src_data    = tile_data_pointer (src, 0, 0);
-  guchar       *dest_data   = tile_data_pointer (dest, 0, 0);
+  guchar       *dest_data   = tile_data_pointer (dest,
+                                                 i * TILE_WIDTH / 2,
+                                                 j * TILE_WIDTH / 2);
   const gint    src_ewidth  = tile_ewidth  (src);
   const gint    src_eheight = tile_eheight (src);
   const gint    dest_ewidth = tile_ewidth  (dest);
   const gint    bpp         = tile_bpp     (dest);
   gint          y;
-
-  /* Adjust dest pointer to the right quadrant. */
-  dest_data += i * bpp * (TILE_WIDTH / 2) +
-               j * bpp * dest_ewidth * (TILE_HEIGHT / 2);
 
   for (y = 0; y < src_eheight / 2; y++)
     {
