@@ -78,7 +78,6 @@ static gboolean   gimp_selection_stroke        (GimpItem        *item,
                                                 GimpStrokeDesc  *stroke_desc,
                                                 GimpProgress    *progress,
                                                 GError         **error);
-
 static void gimp_selection_invalidate_boundary (GimpDrawable    *drawable);
 
 static gboolean   gimp_selection_boundary      (GimpChannel     *channel,
@@ -124,9 +123,6 @@ static void       gimp_selection_shrink        (GimpChannel     *channel,
                                                 gint             radius_y,
                                                 gboolean         edge_lock,
                                                 gboolean         push_undo);
-
-static void       gimp_selection_validate_tile (TileManager     *tm,
-                                                Tile            *tile);
 
 
 G_DEFINE_TYPE (GimpSelection, gimp_selection, GIMP_TYPE_CHANNEL)
@@ -502,15 +498,6 @@ gimp_selection_shrink (GimpChannel *channel,
 					     push_undo);
 }
 
-static void
-gimp_selection_validate_tile (TileManager *tm,
-                              Tile        *tile)
-{
-  /*  Set the contents of the tile to empty  */
-  memset (tile_data_pointer (tile, 0, 0),
-          TRANSPARENT_OPACITY, tile_size (tile));
-}
-
 
 /*  public functions  */
 
@@ -536,10 +523,6 @@ gimp_selection_new (GimpImage *image,
   channel->show_masked = TRUE;
   channel->x2          = width;
   channel->y2          = height;
-
-  tile_manager_set_validate_proc (GIMP_DRAWABLE (channel)->tiles,
-                                  (TileValidateProc) gimp_selection_validate_tile,
-                                  NULL);
 
   return channel;
 }

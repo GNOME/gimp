@@ -281,8 +281,8 @@ tile_manager_get_at (TileManager *tm,
 }
 
 void
-tile_manager_validate (TileManager *tm,
-                       Tile        *tile)
+tile_manager_validate_tile (TileManager *tm,
+                            Tile        *tile)
 {
   g_return_if_fail (tm != NULL);
   g_return_if_fail (tile != NULL);
@@ -290,7 +290,14 @@ tile_manager_validate (TileManager *tm,
   tile->valid = TRUE;
 
   if (tm->validate_proc)
-    (* tm->validate_proc) (tm, tile, tm->user_data);
+    {
+      (* tm->validate_proc) (tm, tile, tm->user_data);
+    }
+  else
+    {
+      /*  Set the contents of the tile to empty  */
+      memset (tile->data, 0, tile_size (tile));
+    }
 
 #ifdef DEBUG_TILE_MANAGER
   g_printerr ("%c", tm->user_data ? 'V' : 'v');

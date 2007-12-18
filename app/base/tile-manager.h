@@ -79,7 +79,7 @@ void          tile_manager_map               (TileManager *tm,
 
 /* Validate a tiles memory.
  */
-void          tile_manager_validate          (TileManager  *tm,
+void          tile_manager_validate_tile     (TileManager  *tm,
                                               Tile         *tile);
 
 void          tile_manager_invalidate_area   (TileManager       *tm,

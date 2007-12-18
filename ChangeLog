@@ -1,5 +1,18 @@
 2007-12-18  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-manager.[ch]: renamed tile_manager_validate() to
+	tile_manager_validate_tile(). If no validate_proc is set,
+	initialize the tile data to all zero when validating it. This way
+	we never hand out uninitialized data and valgrind doesn't need to
+	complain any longer.
+
+	* app/base/tile.c: changed accordingly.
+
+	* app/core/gimpselection.c: no need to set an extra validate_proc
+	here as the default implementation now does the job for us.
+
+2007-12-18  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable.[ch]: made get_tiles() a method of
 	GimpDrawable.
 
