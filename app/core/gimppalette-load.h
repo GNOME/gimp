@@ -30,7 +30,8 @@ typedef enum
   GIMP_PALETTE_FILE_FORMAT_RIFF_PAL, /* RIFF palette                        */
   GIMP_PALETTE_FILE_FORMAT_ACT,      /* Photoshop binary color palette      */
   GIMP_PALETTE_FILE_FORMAT_PSP_PAL,  /* JASC's Paint Shop Pro color palette */
-  GIMP_PALETTE_FILE_FORMAT_ACO       /* Photoshop ACO color file            */
+  GIMP_PALETTE_FILE_FORMAT_ACO,      /* Photoshop ACO color file            */
+  GIMP_PALETTE_FILE_FORMAT_CSS       /* Cascaded Stylesheet file (CSS)      */
 } GimpPaletteFileFormat;
 
 
@@ -43,6 +44,8 @@ GList               * gimp_palette_load_riff          (const gchar  *filename,
 GList               * gimp_palette_load_psp           (const gchar  *filename,
                                                        GError      **error);
 GList               * gimp_palette_load_aco           (const gchar  *filename,
+                                                       GError      **error);
+GList               * gimp_palette_load_css           (const gchar  *filename,
                                                        GError      **error);
 
 GimpPaletteFileFormat gimp_palette_load_detect_format (const gchar  *filename);

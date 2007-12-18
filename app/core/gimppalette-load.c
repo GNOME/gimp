@@ -574,6 +574,69 @@ gimp_palette_load_aco (const gchar  *filename,
   return g_list_prepend (NULL, palette);
 }
 
+
+GList *
+gimp_palette_load_css (const gchar  *filename,
+		       GError      **error)
+{
+  GimpPalette *palette;
+  gchar       *name;
+  FILE        *file;
+  GRegex      *regex;
+  GimpRGB      color;
+
+  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  regex = g_regex_new (".*color.*:(?P<param>.*);", G_REGEX_CASELESS, 0, error);
+  if (! regex)
+    return NULL;
+
+  file = g_fopen (filename, "rb");
+  if (! file)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+      return NULL;
+    }
+
+  name = g_filename_display_basename (filename);
+  palette = GIMP_PALETTE (gimp_palette_new (name));
+  g_free (name);
+
+  do
+    {
+      GMatchInfo *matches;
+      gchar       buf[1024];
+
+      if (fgets (buf, sizeof (buf), file) != NULL)
+	{
+	  if (g_regex_match (regex, buf, 0, &matches))
+	    {
+	      gchar *word = g_match_info_fetch_named (matches, "param");
+
+	      if (gimp_rgb_parse_css (&color, word, -1))
+		{
+		  if (! gimp_palette_find_entry (palette, &color, NULL))
+		    {
+		      gimp_palette_add_entry (palette, -1, NULL, &color);
+		    }
+		}
+
+	      g_free (word);
+	    }
+	}
+    } while (! feof (file));
+
+  fclose (file);
+
+  g_regex_unref (regex);
+
+  return g_list_prepend (NULL, palette);
+}
+
 GimpPaletteFileFormat
 gimp_palette_load_detect_format (const gchar *filename)
 {
@@ -606,7 +669,13 @@ gimp_palette_load_detect_format (const gchar *filename)
           gchar *lower_filename = g_ascii_strdown (filename, -1);
 
           if (g_str_has_suffix (lower_filename, ".aco"))
-            format = GIMP_PALETTE_FILE_FORMAT_ACO;
+            {
+              format = GIMP_PALETTE_FILE_FORMAT_ACO;
+            }
+	  else if (g_str_has_suffix (lower_filename, ".css"))
+            {
+              format = GIMP_PALETTE_FILE_FORMAT_CSS;
+            }
 
           g_free (lower_filename);
         }

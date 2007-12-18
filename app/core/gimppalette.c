@@ -427,7 +427,6 @@ gimp_palette_find_entry (GimpPalette      *palette,
 
   g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
   g_return_val_if_fail (color != NULL, NULL);
-  g_return_val_if_fail (palette->n_colors > 0, NULL);
 
   if (! start_from)
     {

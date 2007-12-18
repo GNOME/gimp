@@ -515,6 +515,10 @@ gimp_palette_import_from_file (const gchar  *filename,
       palette_list = gimp_palette_load_aco (filename, error);
       break;
 
+    case GIMP_PALETTE_FILE_FORMAT_CSS:
+      palette_list = gimp_palette_load_css (filename, error);
+      break;
+
     default:
       g_set_error (error,
                    GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,

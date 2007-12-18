@@ -1,5 +1,15 @@
 2007-12-18  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimppalette-import.c
+	* app/core/gimppalette-load.[ch]: applied slightly modified patch
+	from Nicola Archibald that adds import of colors from CSS files
+	(bug #464480).
+
+	* app/core/gimppalette.c (gimp_palette_find_entry): allow to call
+	this function on an empty palette.
+
+2007-12-18  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-pyramid.c: use the coordinate parameters in
 	tile_data_pointer() instead of adjusting the pointer manually.
 
