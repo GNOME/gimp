@@ -1,3 +1,10 @@
+2007-12-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Merged from trunk:
+
+	* libgimpwidgets/gimpstock.h:  fix typo that probably caused
+	bug #503834.
+
 2007-12-16  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.4.4 (interface age 4).

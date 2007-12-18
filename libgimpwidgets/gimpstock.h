@@ -207,7 +207,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_CLOSE                    "gimp-close"
 #define GIMP_STOCK_MENU_LEFT                "gimp-menu-left"
 #define GIMP_STOCK_MENU_RIGHT               "gimp-menu-right"
-#define GIMP_STOCK_MOVE_TO_SCREEN           "gimp_move-to-screen"
+#define GIMP_STOCK_MOVE_TO_SCREEN           "gimp-move-to-screen"
 #define GIMP_STOCK_DEFAULT_COLORS           "gimp-default-colors"
 #define GIMP_STOCK_SWAP_COLORS              "gimp-swap-colors"
 #define GIMP_STOCK_ZOOM_FOLLOW_WINDOW       "gimp-zoom-follow-window"
