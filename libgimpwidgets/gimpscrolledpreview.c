@@ -432,8 +432,7 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
           hadj = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
           vadj = gtk_range_get_adjustment (GTK_RANGE (preview->vscr));
 
-          x = mevent->x;
-          y = mevent->y;
+          gtk_widget_get_pointer (area, &x, &y);
 
           x = priv->drag_xoff - (x - priv->drag_x);
           y = priv->drag_yoff - (y - priv->drag_y);
@@ -703,13 +702,16 @@ gimp_scrolled_preview_nav_popup_event (GtkWidget           *widget,
         GdkEventMotion *mevent = (GdkEventMotion *) event;
         GtkAdjustment  *hadj;
         GtkAdjustment  *vadj;
+        gint            cx, cy;
         gdouble         x, y;
 
         hadj = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
         vadj = gtk_range_get_adjustment (GTK_RANGE (preview->vscr));
 
-        x = mevent->x * (hadj->upper - hadj->lower) / widget->allocation.width;
-        y = mevent->y * (vadj->upper - vadj->lower) / widget->allocation.height;
+        gtk_widget_get_pointer (widget, &cx, &cy);
+
+        x = cx * (hadj->upper - hadj->lower) / widget->allocation.width;
+        y = cy * (vadj->upper - vadj->lower) / widget->allocation.height;
 
         x += hadj->lower - hadj->page_size / 2;
         y += vadj->lower - vadj->page_size / 2;

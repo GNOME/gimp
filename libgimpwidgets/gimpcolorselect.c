@@ -667,8 +667,15 @@ gimp_color_select_xy_events (GtkWidget       *widget,
 
     case GDK_MOTION_NOTIFY:
       mevent = (GdkEventMotion *) event;
-      x = mevent->x;
-      y = mevent->y;
+      if (mevent->is_hint)
+        {
+          gdk_window_get_pointer (widget->window, &x, &y, NULL);
+        }
+      else
+        {
+          x = mevent->x;
+          y = mevent->y;
+        }
       break;
 
     default:
