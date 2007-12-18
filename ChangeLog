@@ -1,5 +1,10 @@
 2007-12-18  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable.[ch]: made get_tiles() a method of
+	GimpDrawable.
+
+2007-12-18  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c
 	(render_image_tile_fault_nearest): added code for 1 and 3 bytes
 	per pixel. Fixes bug #504115.

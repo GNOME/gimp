@@ -128,6 +128,7 @@ static gint64  gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable
                                                     gint               width,
                                                     gint               height);
 
+static TileManager * gimp_drawable_real_get_tiles  (GimpDrawable      *drawable);
 static void       gimp_drawable_real_set_tiles     (GimpDrawable      *drawable,
                                                     gboolean           push_undo,
                                                     const gchar       *undo_desc,
@@ -215,6 +216,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->get_active_components       = NULL;
   klass->apply_region                = gimp_drawable_real_apply_region;
   klass->replace_region              = gimp_drawable_real_replace_region;
+  klass->get_tiles                   = gimp_drawable_real_get_tiles;
   klass->set_tiles                   = gimp_drawable_real_set_tiles;
   klass->push_undo                   = gimp_drawable_real_push_undo;
   klass->swap_pixels                 = gimp_drawable_real_swap_pixels;
@@ -625,6 +627,12 @@ gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
   return (gint64) gimp_drawable_bytes (drawable) * width * height;
 }
 
+static TileManager *
+gimp_drawable_real_get_tiles (GimpDrawable *drawable)
+{
+  return drawable->tiles;
+}
+
 static void
 gimp_drawable_real_set_tiles (GimpDrawable *drawable,
                               gboolean      push_undo,
@@ -906,11 +914,11 @@ gimp_drawable_replace_region (GimpDrawable *drawable,
 }
 
 TileManager *
-gimp_drawable_get_tiles (const GimpDrawable *drawable)
+gimp_drawable_get_tiles (GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  return drawable->tiles;
+  return GIMP_DRAWABLE_GET_CLASS (drawable)->get_tiles (drawable);
 }
 
 void
