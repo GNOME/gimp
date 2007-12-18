@@ -1,5 +1,14 @@
 2007-12-18  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpnavigationeditor.c: minor cleanup.
+
+	* app/widgets/gimpnavigationview.c
+	(gimp_navigation_view_motion_notify): fixed handling of motion
+	events that broke when I introduced the call to
+	gdk_event_request_motions().
+
+2007-12-18  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimppalette-import.c
 	* app/core/gimppalette-load.[ch]: applied slightly modified patch
 	from Nicola Archibald that adds import of colors from CSS files

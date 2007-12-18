@@ -252,7 +252,9 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
     }
   else
     {
-      editor = GIMP_NAVIGATION_EDITOR (GTK_BIN (GTK_BIN (shell->nav_popup)->child)->child);
+      GtkWidget *bin = gtk_bin_get_child (GTK_BIN (shell->nav_popup));
+
+      editor = GIMP_NAVIGATION_EDITOR (gtk_bin_get_child (GTK_BIN (bin)));
     }
 
   screen = gtk_widget_get_screen (widget);

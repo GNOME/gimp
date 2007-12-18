@@ -387,6 +387,7 @@ gimp_navigation_view_motion_notify (GtkWidget      *widget,
 {
   GimpNavigationView *nav_view = GIMP_NAVIGATION_VIEW (widget);
   GimpView           *view     = GIMP_VIEW (widget);
+  gint                x, y;
 
   if (! nav_view->has_grab)
     {
@@ -419,9 +420,11 @@ gimp_navigation_view_motion_notify (GtkWidget      *widget,
       return FALSE;
     }
 
+  gdk_window_get_pointer (view->event_window, &x, &y, NULL);
+
   gimp_navigation_view_move_to (nav_view,
-                                mevent->x - nav_view->motion_offset_x,
-                                mevent->y - nav_view->motion_offset_y);
+                                x - nav_view->motion_offset_x,
+                                y - nav_view->motion_offset_y);
 
   gdk_event_request_motions (mevent);
 
