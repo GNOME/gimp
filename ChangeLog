@@ -1,5 +1,6 @@
 2007-12-18  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-pyramid.c
 	* app/paint-funcs/paint-funcs.c: sprinkled with const qualifiers.
 
 2007-12-18  Sven Neumann  <sven@gimp.org>

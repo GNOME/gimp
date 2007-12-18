@@ -52,12 +52,12 @@ static void  tile_pyramid_validate_upper_tile (TileManager *tm,
 
 static void  tile_pyramid_write_quarter       (Tile        *dest,
                                                Tile        *src,
-                                               gint         i,
-                                               gint         j);
+                                               const gint   i,
+                                               const gint   j);
 static void  tile_pyramid_write_upper_quarter (Tile        *dest,
                                                Tile        *src,
-                                               gint         i,
-                                               gint         j);
+                                               const gint   i,
+                                               const gint   j);
 
 /**
  * tile_pyramid_new:
@@ -446,10 +446,10 @@ tile_pyramid_validate_upper_tile (TileManager *tm,
  * destination tile does.
  */
 static void
-tile_pyramid_write_quarter (Tile *dest,
-                            Tile *src,
-                            gint  i,
-                            gint  j)
+tile_pyramid_write_quarter (Tile       *dest,
+                            Tile       *src,
+                            const gint  i,
+                            const gint  j)
 {
   const guchar *src_data    = tile_data_pointer (src, 0, 0);
   guchar       *dest_data   = tile_data_pointer (dest, 0, 0);
@@ -491,7 +491,7 @@ tile_pyramid_write_quarter (Tile *dest,
         case 2:
           for (x = 0; x < src_ewidth / 2; x++)
             {
-              guint a = src0[1] + src1[1] + src2[1] + src3[1];
+              const guint a = src0[1] + src1[1] + src2[1] + src3[1];
 
               switch (a)
                 {
@@ -541,7 +541,7 @@ tile_pyramid_write_quarter (Tile *dest,
         case 4:
           for (x = 0; x < src_ewidth / 2; x++)
             {
-              guint a = src0[3] + src1[3] + src2[3] + src3[3];
+              const guint a = src0[3] + src1[3] + src2[3] + src3[3];
 
               switch (a)
                 {
@@ -599,10 +599,10 @@ tile_pyramid_write_quarter (Tile *dest,
  * The source and destination tiles have pre-multiplied alpha.
  */
 static void
-tile_pyramid_write_upper_quarter (Tile *dest,
-                                  Tile *src,
-                                  gint  i,
-                                  gint  j)
+tile_pyramid_write_upper_quarter (Tile       *dest,
+                                  Tile       *src,
+                                  const gint  i,
+                                  const gint  j)
 {
   const guchar *src_data    = tile_data_pointer (src, 0, 0);
   guchar       *dest_data   = tile_data_pointer (dest, 0, 0);
