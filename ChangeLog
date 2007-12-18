@@ -1,9 +1,15 @@
+2007-12-18  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/common/psd-load.c: applied patch from John Marshall
+	that fixes handling of PSD files with blank layer names (bug #504149).
+
 2007-12-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merged from trunk:
 
-	* libgimpwidgets/gimpstock.h:  fix typo that probably caused
-	bug #503834.
+	* libgimpwidgets/gimpstock.h:  fix typo.
 
 2007-12-16  Sven Neumann  <sven@gimp.org>
 

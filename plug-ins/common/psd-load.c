@@ -1252,6 +1252,9 @@ do_layer_record (FILE    *fd,
     }
   else
     {
+      /* Skip padding for Null string */
+      fseek  (fd, 3, SEEK_CUR);
+      (*offset) += 3;
       IFDBG g_printerr ("\t\t\t\t\t\tNULL LAYER NAME\n");
     }
 
@@ -1292,9 +1295,11 @@ do_layer_record (FILE    *fd,
           layer->name = getunicodepascalstring (fd, "layer name");
 
           if (layer->name)
-            layer->name = sanitise_string (layer->name);
-
-          IFDBG g_printerr ("Long Layer Name: '%s'\n",layer->name);
+            {
+              layer->name = sanitise_string (layer->name);
+              IFDBG g_printerr ("Long Layer Name: '%s'\n",layer->name);
+            }
+            
           break;
 
         /* lyid: Layer id number */
