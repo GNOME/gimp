@@ -392,14 +392,14 @@ static void
 gimp_display_shell_render_mask (GimpDisplayShell *shell,
                                 RenderInfo       *info)
 {
-  gint      y, ye;
-  gint      x, xe;
+  gint y, ye;
+  gint x, xe;
 
   y  = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->dy = info->dy_start;
+  info->dy  = info->dy_start;
   info->src = render_image_tile_fault (info);
 
   while (TRUE)
@@ -778,7 +778,7 @@ box_filter_premult (const guint    left_weight,
     }
 }
 
-	
+
 /* fast paths */
 static const guchar * render_image_tile_fault_one_row  (RenderInfo *info);
 static const guchar * render_image_tile_fault_nearest  (RenderInfo *info);
@@ -1584,9 +1584,11 @@ render_image_tile_fault_nearest (RenderInfo *info)
             {
             case 4:
               *d++ = *s++;
+            case 3:
               *d++ = *s++;
             case 2:
               *d++ = *s++;
+            case 1:
               *d++ = *s++;
             }
         }
@@ -1604,12 +1606,22 @@ render_image_tile_fault_nearest (RenderInfo *info)
               s += 4;
               break;
 
+            case 3:
+              *d++ = *s++;
+              *d++ = *s++;
+              *d++ = *s++;
+              break;
+
             case 2:
               d[0] = (s[0] * (s[1] + 1)) >> 8;
               d[1] = s[1];
 
               d += 2;
               s += 2;
+              break;
+
+            case 1:
+              *d++ = *s++;
               break;
             }
         }
