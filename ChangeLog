@@ -1,3 +1,8 @@
+2007-12-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* libgimpwidgets/gimpstock.h:  fix typo that probably caused
+	bug #503834.
+
 2007-12-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/xcf/xcf-load.c
