@@ -847,10 +847,13 @@ view_events (GtkWidget          *widget,
     case GDK_MOTION_NOTIFY:
       {
         GdkEventMotion *mevent = (GdkEventMotion *) event;
+        gint            x, y;
 
-        if (mevent->x != editor->view_last_x)
+        gtk_widget_get_pointer (widget, &x, &y);
+
+        if (x != editor->view_last_x)
           {
-            editor->view_last_x = mevent->x;
+            editor->view_last_x = x;
 
             if (editor->view_button_down)
               {
@@ -858,11 +861,11 @@ view_events (GtkWidget          *widget,
                                  (mevent->state & GDK_CONTROL_MASK) ?
                                  GIMP_COLOR_PICK_MODE_BACKGROUND :
                                  GIMP_COLOR_PICK_MODE_FOREGROUND,
-                                 mevent->x);
+                                 x);
               }
             else
               {
-                view_set_hint (editor, mevent->x);
+                view_set_hint (editor, x);
               }
           }
 
@@ -1185,23 +1188,26 @@ control_events (GtkWidget          *widget,
     case GDK_MOTION_NOTIFY:
       {
         GdkEventMotion *mevent = (GdkEventMotion *) event;
+        gint            x, y;
 
-        if (mevent->x != editor->control_last_x)
+        gtk_widget_get_pointer (editor->control, &x, &y);
+
+        if (x != editor->control_last_x)
           {
-            editor->control_last_x = mevent->x;
+            editor->control_last_x = x;
 
             if (GIMP_DATA_EDITOR (editor)->data_editable &&
                 editor->control_drag_mode != GRAD_DRAG_NONE)
               {
 
                 if ((mevent->time - editor->control_click_time) >= GRAD_MOVE_TIME)
-                  control_motion (editor, gradient, mevent->x);
+                  control_motion (editor, gradient, x);
               }
             else
               {
                 gimp_gradient_editor_update (editor);
 
-                control_do_hint (editor, mevent->x, mevent->y);
+                control_do_hint (editor, x, y);
               }
           }
 

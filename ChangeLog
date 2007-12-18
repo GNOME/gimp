@@ -1,5 +1,10 @@
 2007-12-18  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpgradienteditor.c: don't rely on the pointer
+	position in the GdkEventMotion struct, query the pointer instead.
+
+2007-12-18  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpnavigationeditor.c: minor cleanup.
 
 	* app/widgets/gimpnavigationview.c
