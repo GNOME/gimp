@@ -624,6 +624,8 @@ static gboolean
 gimp_real_exit (Gimp     *gimp,
                 gboolean  force)
 {
+  GError *error = NULL;
+
   if (gimp->be_verbose)
     g_print ("EXIT: gimp_real_exit\n");
 
@@ -638,7 +640,11 @@ gimp_real_exit (Gimp     *gimp,
   gimp_fonts_reset (gimp);
 
   if (gimp->config->save_document_history)
-    gimp_documents_save (gimp);
+    if (! gimp_documents_save (gimp, &error))
+      {
+        gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
+        g_clear_error (&error);
+      }
 
   gimp_templates_save (gimp);
   gimp_parasiterc_save (gimp);
@@ -810,6 +816,8 @@ void
 gimp_restore (Gimp               *gimp,
               GimpInitStatusFunc  status_callback)
 {
+  GError *error = NULL;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (status_callback != NULL);
 
@@ -843,7 +851,11 @@ gimp_restore (Gimp               *gimp,
 
   /*  initialize the document history  */
   status_callback (NULL, _("Documents"), 0.6);
-  gimp_documents_load (gimp);
+  if (! gimp_documents_load (gimp, &error))
+    {
+      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
+      g_clear_error (&error);
+    }
 
   /*  initialize the template list  */
   status_callback (NULL, _("Templates"), 0.7);

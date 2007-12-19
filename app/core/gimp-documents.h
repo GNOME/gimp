@@ -20,8 +20,10 @@
 #define __GIMP_DOCUMENTS_H__
 
 
-void  gimp_documents_load (Gimp *gimp);
-void  gimp_documents_save (Gimp *gimp);
+gboolean   gimp_documents_load (Gimp    *gimp,
+                                GError **error);
+gboolean   gimp_documents_save (Gimp    *gimp,
+                                GError **error);
 
 
 #endif  /*  __GIMP_DOCUMENTS_H__  */

@@ -227,6 +227,7 @@ gimp_tools_restore (Gimp *gimp)
   GimpContainer *gimp_list;
   gchar         *filename;
   GList         *list;
+  GError        *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -282,7 +283,12 @@ gimp_tools_restore (Gimp *gimp)
       gimp_tool_options_reset (tool_info->tool_options);
     }
 
-  gimp_contexts_load (gimp);
+  if (! gimp_contexts_load (gimp, &error))
+    {
+      gimp_message (gimp, NULL, GIMP_MESSAGE_WARNING,
+                    "%s", error->message);
+      g_clear_error (&error);
+    }
 
   for (list = GIMP_LIST (gimp->tool_info_list)->list;
        list;
@@ -339,9 +345,15 @@ gimp_tools_save (Gimp     *gimp,
 
   if (save_tool_options && (! tool_options_deleted || always_save))
     {
-      GList *list;
+      GList  *list;
+      GError *error = NULL;
 
-      gimp_contexts_save (gimp);
+      if (! gimp_contexts_save (gimp, &error))
+        {
+          gimp_message (gimp, NULL, GIMP_MESSAGE_WARNING,
+                        "%s", error->message);
+          g_clear_error (&error);
+        }
 
       gimp_tool_options_create_folder ();
 

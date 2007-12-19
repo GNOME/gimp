@@ -34,35 +34,49 @@
 
 /* functions to load and save the gimp documents files */
 
-void
-gimp_documents_load (Gimp *gimp)
+gboolean
+gimp_documents_load (Gimp    *gimp,
+                     GError **error)
 {
-  gchar  *filename;
-  GError *error = NULL;
+  gchar    *filename;
+  GError   *my_error = NULL;
+  gboolean  success;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_DOCUMENT_LIST (gimp->documents));
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_DOCUMENT_LIST (gimp->documents), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   filename = gimp_personal_rc_file ("documents");
 
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
 
-  if (! gimp_config_deserialize_file (GIMP_CONFIG (gimp->documents),
-                                      filename,
-                                      GINT_TO_POINTER (gimp->config->thumbnail_size),
-                                      &error))
+  success = gimp_config_deserialize_file (GIMP_CONFIG (gimp->documents),
+                                          filename,
+                                          GINT_TO_POINTER (gimp->config->thumbnail_size),
+                                          &my_error);
+
+  if (! success)
     {
-      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
-        gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
-      g_error_free (error);
+     if (my_error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
+        {
+          g_clear_error (&my_error);
+          success = TRUE;
+        }
+      else
+        {
+          g_propagate_error (error, my_error);
+        }
     }
 
   g_free (filename);
+
+  return success;
 }
 
-void
-gimp_documents_save (Gimp *gimp)
+gboolean
+gimp_documents_save (Gimp    *gimp,
+                     GError **error)
 {
   const gchar *header =
     "GIMP documents\n"
@@ -71,25 +85,24 @@ gimp_documents_save (Gimp *gimp)
   const gchar *footer =
     "end of documents";
 
-  gchar  *filename;
-  GError *error = NULL;
+  gchar    *filename;
+  gboolean  success;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_DOCUMENT_LIST (gimp->documents));
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_DOCUMENT_LIST (gimp->documents), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   filename = gimp_personal_rc_file ("documents");
 
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
 
-  if (! gimp_config_serialize_to_file (GIMP_CONFIG (gimp->documents),
-                                       filename,
-                                       header, footer, NULL,
-                                       &error))
-    {
-      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
-      g_error_free (error);
-    }
+  success = gimp_config_serialize_to_file (GIMP_CONFIG (gimp->documents),
+                                           filename,
+                                           header, footer, NULL,
+                                           error);
 
   g_free (filename);
+
+  return success;
 }
