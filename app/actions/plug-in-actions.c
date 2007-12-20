@@ -127,6 +127,7 @@ static const GimpEnumActionEntry plug_in_repeat_actions[] =
 void
 plug_in_actions_setup (GimpActionGroup *group)
 {
+  GimpPlugInManager     *manager = group->gimp->plug_in_manager;
   GimpPlugInActionEntry *entries;
   GSList                *list;
   gint                   n_entries;
@@ -141,13 +142,13 @@ plug_in_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (plug_in_repeat_actions),
                                       G_CALLBACK (plug_in_repeat_cmd_callback));
 
-  for (list = group->gimp->plug_in_manager->menu_branches;
+  for (list = gimp_plug_in_manager_get_menu_branches (manager);
        list;
        list = g_slist_next (list))
     {
       GimpPlugInMenuBranch *branch = list->data;
 
-      plug_in_actions_menu_branch_added (group->gimp->plug_in_manager,
+      plug_in_actions_menu_branch_added (manager,
                                          branch->prog_name,
                                          branch->menu_path,
                                          branch->menu_label,

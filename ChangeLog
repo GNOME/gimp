@@ -1,5 +1,12 @@
 2007-12-20  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimppluginmanager-menu-branch.[ch]: added accessor
+	for the list of menu branches.
+
+	* app/actions/plug-in-actions.c (plug_in_actions_setup): use it.
+
+2007-12-20  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: readded some AC_SUBST() that were removed under
 	the wrong assumption they would not be needed any longer.
 	Consistently use # to mark comments in configure.in.
