@@ -1,0 +1,23 @@
+Unknown resource ID's seen in PSD files but not yet identified.
+
+8BIM 1061  (0x0425)
+8BIM 1062  (0x0426)
+
+8BIM 1064  (0x0428)
+
+8BIM 1069  (0x042d)
+
+8BIM 1072  (0x0430)
+
+8BIM 1077  (0x0435)
+
+MeSa 7002  (0x165a)
+MeSa 7003  (0x165b)
+
+8BIM 4000  (0x0fa0)
+8BIM 4001  (0x0fa1)
+8BIM 4002  (0x0fa2)
+8BIM 4003  (0x0fa3)
+8BIM 4004  (0x0fa4)
+8BIM 4005  (0x0fa5)
+8BIM 4006  (0x0fa6)

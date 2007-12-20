@@ -66,6 +66,7 @@ SUBDIRS = \
 	pagecurl		\
 	$(print)		\
 	$(pygimp)		\
+	psd			\
 	rcm			\
 	sgi			\
 	sel2path		\

@@ -111,7 +111,6 @@ plug-ins/common/polar.c
 plug-ins/common/poppler.c
 plug-ins/common/postscript.c
 plug-ins/common/procedure-browser.c
-plug-ins/common/psd-load.c
 plug-ins/common/psd-save.c
 plug-ins/common/psp.c
 plug-ins/common/randomize.c

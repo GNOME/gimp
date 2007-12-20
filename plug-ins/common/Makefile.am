@@ -133,7 +133,6 @@ libexec_PROGRAMS = \
 	$(POPPLER) \
 	postscript \
 	procedure-browser \
-	psd-load \
 	psd-save \
 	$(PSP) \
 	randomize \
@@ -1718,22 +1717,6 @@ procedure_browser_SOURCES = \
 	procedure-browser.c
 
 procedure_browser_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
-psd_load_SOURCES = \
-	psd-load.c
-
-psd_load_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpmodule)	\
