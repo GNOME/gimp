@@ -1,3 +1,7 @@
+2007-12-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am (GTKDOC_LIBS): link against GEGL_LIBS.
+
 2007-12-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am (GTKDOC_LIBS): add app/gimp-log.o
