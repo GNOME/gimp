@@ -629,8 +629,8 @@ plug_in_actions_build_path (GimpActionGroup *group,
 
   if (p1 && p2 && ! g_hash_table_lookup (path_table, copy_original))
     {
-      gchar     *label;
       GtkAction *action;
+      gchar     *label;
 
       label = p2 + 1;
 
@@ -648,6 +648,7 @@ plug_in_actions_build_path (GimpActionGroup *group,
       *p1 = '\0';
       *p2 = '\0';
 
+      /* recursively call ourselves with the last part of the path removed */
       plug_in_actions_build_path (group, copy_original, copy_translated);
     }
 
