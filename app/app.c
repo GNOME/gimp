@@ -251,8 +251,10 @@ app_run (const gchar         *full_prog_name,
   g_main_loop_unref (loop);
 
   g_object_unref (gimp);
+
   errors_exit ();
   base_exit ();
+  gegl_exit ();
 }
 
 
@@ -283,11 +285,16 @@ app_exit_after_callback (Gimp      *gimp,
    */
 
 #ifdef GIMP_UNSTABLE
+
   g_main_loop_quit (loop);
+
 #else
-  /*  make sure that the swap file is removed before we quit */
+
+  /*  make sure that the swap files are removed before we quit */
   tile_swap_exit ();
+  gegl_exit ();
   exit (EXIT_SUCCESS);
+
 #endif
 
   return FALSE;

@@ -1,5 +1,9 @@
 2007-12-20  Sven Neumann  <sven@gimp.org>
 
+	* app/app.c: call gegl_exit() on shutdown.
+
+2007-12-20  Sven Neumann  <sven@gimp.org>
+
 	* INSTALL
 	* configure.in: require GEGL >= 0.0.14.
 
