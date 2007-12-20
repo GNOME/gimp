@@ -157,8 +157,6 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
 {
   GimpInk *ink = GIMP_INK (paint_core);
 
-  g_printerr ("%d\n", time);
-
   switch (paint_state)
     {
     case GIMP_PAINT_STATE_INIT:
