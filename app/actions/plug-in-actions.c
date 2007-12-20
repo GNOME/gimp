@@ -160,7 +160,7 @@ plug_in_actions_setup (GimpActionGroup *group)
                            G_CALLBACK (plug_in_actions_menu_branch_added),
                            group, 0);
 
-  for (list = group->gimp->plug_in_manager->plug_in_procedures;
+  for (list = manager->plug_in_procedures;
        list;
        list = g_slist_next (list))
     {
@@ -179,7 +179,7 @@ plug_in_actions_setup (GimpActionGroup *group)
                            G_CALLBACK (plug_in_actions_unregister_procedure),
                            group, 0);
 
-  n_entries = gimp_plug_in_manager_history_size (group->gimp->plug_in_manager);
+  n_entries = gimp_plug_in_manager_history_size (manager);
 
   entries = g_new0 (GimpPlugInActionEntry, n_entries);
 
@@ -205,11 +205,11 @@ plug_in_actions_setup (GimpActionGroup *group)
 
   g_free (entries);
 
-  g_signal_connect_object (group->gimp->plug_in_manager, "history-changed",
+  g_signal_connect_object (manager, "history-changed",
                            G_CALLBACK (plug_in_actions_history_changed),
                            group, 0);
 
-  plug_in_actions_history_changed (group->gimp->plug_in_manager, group);
+  plug_in_actions_history_changed (manager, group);
 }
 
 void
