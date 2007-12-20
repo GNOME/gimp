@@ -155,7 +155,7 @@ plug_in_actions_setup (GimpActionGroup *group)
                                          group);
     }
 
-  g_signal_connect_object (group->gimp->plug_in_manager,
+  g_signal_connect_object (manager,
                            "menu-branch-added",
                            G_CALLBACK (plug_in_actions_menu_branch_added),
                            group, 0);
@@ -216,13 +216,11 @@ void
 plug_in_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpImage         *image = action_data_get_image (data);
-  GimpPlugInManager *manager;
-  GimpImageType      type  = -1;
+  GimpImage         *image   = action_data_get_image (data);
+  GimpPlugInManager *manager = group->gimp->plug_in_manager;
+  GimpImageType      type    = -1;
   GSList            *list;
   gint               i;
-
-  manager = group->gimp->plug_in_manager;
 
   if (image)
     {
@@ -240,7 +238,8 @@ plug_in_actions_update (GimpActionGroup *group,
           ! proc->file_proc                      &&
           proc->image_types_val)
         {
-          gboolean sensitive = gimp_plug_in_procedure_get_sensitive (proc, type);
+          gboolean sensitive = gimp_plug_in_procedure_get_sensitive (proc,
+                                                                     type);
 
           gimp_action_group_set_action_sensitive (group,
                                                   GIMP_OBJECT (proc)->name,
@@ -291,9 +290,8 @@ plug_in_actions_menu_branch_added (GimpPlugInManager *manager,
   gchar       *full;
   gchar       *full_translated;
 
-  locale_domain =
-    gimp_plug_in_manager_get_locale_domain (group->gimp->plug_in_manager,
-                                            progname, NULL);
+  locale_domain = gimp_plug_in_manager_get_locale_domain (manager,
+                                                          progname, NULL);
 
   path_translated  = dgettext (locale_domain, menu_path);
   label_translated = dgettext (locale_domain, menu_label);
