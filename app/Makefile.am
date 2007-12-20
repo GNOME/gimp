@@ -84,6 +84,7 @@ INCLUDES = \
 	$(GTK_CFLAGS)		\
 	$(PANGOFT2_CFLAGS)	\
 	$(DBUS_GLIB_CFLAGS)	\
+	$(GEGL_CFLAGS)		\
 	-I$(includedir)
 
 AM_LDFLAGS = $(mwindows) $(munix) \
@@ -128,6 +129,7 @@ gimp_2_5_LDADD = \
 	$(FONTCONFIG_LIBS)		\
 	$(FREETYPE_LIBS)		\
 	$(DBUS_GLIB_LIBS)		\
+	$(GEGL_LIBS)			\
 	$(RT_LIBS)			\
 	$(INTLLIBS)			\
 	$(GIMPICONRC)
@@ -170,7 +172,7 @@ gimp_console_2_5_LDADD = \
 	$(PANGOFT2_LIBS)		\
 	$(FONTCONFIG_LIBS)		\
 	$(FREETYPE_LIBS)		\
-	$(GLIB_LIBS)			\
+	$(GEGL_LIBS)			\
 	$(RT_LIBS)			\
 	$(INTLLIBS)			\
 	$(GIMPICONRC)

@@ -1,5 +1,13 @@
 2007-12-20  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL
+	* configure.in: require GEGL >= 0.0.14.
+
+	* app/Makefile.am
+	* app/app.c: initialize the GEGL library.
+
+2007-12-20  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimpink.c: minor cleanup.
 
 2007-12-20  Sven Neumann  <sven@gimp.org>

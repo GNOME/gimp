@@ -40,6 +40,7 @@ m4_define([gimp_stable],
 m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
+m4_define([gegl_required_version], [0.0.14])
 m4_define([glib_required_version], [2.14.1])
 m4_define([gtk_required_version], [2.12.1])
 m4_define([gdk_pixbuf_required_version], [gtk_required_version])
@@ -125,25 +126,8 @@ LT_CURRENT_MINUS_AGE=m4_eval(lt_current - lt_age)
 AC_SUBST(LT_VERSION_INFO)
 AC_SUBST(LT_CURRENT_MINUS_AGE)
 
-GLIB_REQUIRED_VERSION=glib_required_version
-GTK_REQUIRED_VERSION=gtk_required_version
-GDK_PIXBUF_REQUIRED_VERSION=gdk_pixbuf_required_version
-PANGOFT2_REQUIRED_VERSION=pangoft2_required_version
-FONTCONFIG_REQUIRED_VERSION=fontconfig_required_version
-GTKDOC_REQUIRED_VERSION=gtkdoc_required_version
-GTKHTML2_REQUIRED_VERSION=gtkhtml2_required_version
-RSVG_REQUIRED_VERSION=rsvg_required_version
-WMF_REQUIRED_VERSION=wmf_required_version
-AC_SUBST(GLIB_REQUIRED_VERSION)
-AC_SUBST(GTK_REQUIRED_VERSION)
-AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
-AC_SUBST(PANGOFT2_REQUIRED_VERSION)
-AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
-AC_SUBST(GTKDOC_REQUIRED_VERSION)
-AC_SUBST(GTKHTML2_REQUIRED_VERSION)
-AC_SUBST(RSVG_REQUIRED_VERSION)
-AC_SUBST(WMF_REQUIRED_VERSION)
 
+# gettext i18n support
 GETTEXT_PACKAGE=gimp20
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
@@ -415,6 +399,11 @@ AM_GLIB_GNU_GETTEXT
 # Checks for required libraries
 ###############################
 
+
+PKG_CHECK_MODULES(GEGL, gegl >= gegl_required_version, :,
+  AC_MSG_ERROR([Test for GEGL failed. Please get it from http://gegl.org/]))
+
+
 AM_PATH_GLIB_2_0(glib_required_version, :,
   AC_MSG_ERROR(Test for GLIB failed. See the file 'INSTALL' for help.),
   gobject gthread)
@@ -428,6 +417,7 @@ else
   have_glib_2_17=no
 fi
 AC_MSG_RESULT($have_glib_2_17)
+
 
 dnl Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
 gimp_save_LIBS=$LIBS

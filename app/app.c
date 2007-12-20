@@ -32,6 +32,8 @@
 
 #include <glib-object.h>
 
+#include <gegl.h>
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 
@@ -76,12 +78,12 @@ void
 app_libs_init (GOptionContext *context,
                gboolean        no_interface)
 {
-  if (no_interface)
-    {
-      g_type_init ();
-    }
+  g_type_init ();
+
+  g_option_context_add_group (context, gegl_get_option_group ());
+
 #ifndef GIMP_CONSOLE_COMPILATION
-  else
+  if (! no_interface)
     {
       gui_libs_init (context);
     }
