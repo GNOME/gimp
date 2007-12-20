@@ -157,6 +157,8 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
 {
   GimpInk *ink = GIMP_INK (paint_core);
 
+  g_printerr ("%d\n", time);
+
   switch (paint_state)
     {
     case GIMP_PAINT_STATE_INIT:
@@ -202,7 +204,7 @@ gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
                          GimpDrawable     *drawable,
                          GimpPaintOptions *paint_options)
 {
-  GimpInk *ink  = GIMP_INK (paint_core);
+  GimpInk *ink = GIMP_INK (paint_core);
   gint     x, y;
   gint     width, height;
   gint     dwidth, dheight;
@@ -465,7 +467,7 @@ ink_pen_ellipse (GimpInkOptions *options,
               tscale_c, tscale_s, x, y);
 #endif
 
-  aspect = sqrt (x * x + y * y);
+  aspect = sqrt (SQR (x) + SQR (y));
 
   if (aspect != 0)
     {
@@ -525,8 +527,8 @@ time_smoother_init (GimpInk *ink,
 static guint32
 time_smoother_result (GimpInk *ink)
 {
-  gint    i;
   guint64 result = 0;
+  gint    i;
 
   for (i = 0; i < TIME_SMOOTHER_BUFFER; i++)
     result += ink->ts_buffer[i];
@@ -601,7 +603,11 @@ dist_smoother_add (GimpInk *ink,
  * do things. But it wouldn't be hard to implement at all.
  */
 
-enum { ROW_START, ROW_STOP };
+enum
+{
+  ROW_START,
+  ROW_STOP
+};
 
 /* The insertion sort here, for SUBSAMPLE = 8, tends to beat out
  * qsort() by 4x with CFLAGS=-O2, 2x with CFLAGS=-g
@@ -611,13 +617,14 @@ insert_sort (gint *data,
              gint  n)
 {
   gint i, j, k;
-  gint tmp1, tmp2;
 
   for (i = 2; i < 2 * n; i += 2)
     {
-      tmp1 = data[i];
-      tmp2 = data[i + 1];
+      gint tmp1 = data[i];
+      gint tmp2 = data[i + 1];
+
       j = 0;
+
       while (data[j] < tmp1)
         j += 2;
 
@@ -762,23 +769,19 @@ static void
 render_blob (Blob        *blob,
              PixelRegion *dest)
 {
-  gint      i;
-  gint      h;
-  guchar   *s;
   gpointer  pr;
 
   for (pr = pixel_regions_register (1, dest);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      h = dest->h;
-      s = dest->data;
+      guchar *d = dest->data;
+      gint    h = dest->h;
+      gint    y;
 
-      for (i=0; i<h; i++)
+      for (y = 0; y < h; y++, d += dest->rowstride)
         {
-          render_blob_line (blob, s,
-                            dest->x, dest->y + i, dest->w);
-          s += dest->rowstride;
+          render_blob_line (blob, d, dest->x, dest->y + y, dest->w);
         }
     }
 }

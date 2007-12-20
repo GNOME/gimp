@@ -1,5 +1,9 @@
 2007-12-20  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimpink.c: minor cleanup.
+
+2007-12-20  Sven Neumann  <sven@gimp.org>
+
 	* authors.xml: updated last-active attribute for recent contributors.
 
 2007-12-20  Sven Neumann  <sven@gimp.org>
