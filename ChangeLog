@@ -1,3 +1,8 @@
+2007-12-20  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/documents-commands.c (documents_clear_cmd_callback):
+	adopt to changes gimp_documents_save() API.
+
 2007-12-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp-contexts.[ch]

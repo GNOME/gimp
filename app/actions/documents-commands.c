@@ -216,8 +216,17 @@ documents_clear_cmd_callback (GtkAction *action,
 
   if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
-      gimp_container_clear (context->gimp->documents);
-      gimp_documents_save (context->gimp);
+      Gimp   *gimp  = context->gimp;
+      GError *error = NULL;
+
+      gimp_container_clear (gimp->documents);
+
+      if (! gimp_documents_save (gimp, &error))
+        {
+          gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
+                        "%s", error->message);
+          g_clear_error (&error);
+        }
     }
 
   gtk_widget_destroy (dialog);
