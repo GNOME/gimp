@@ -1,5 +1,9 @@
 2007-12-20  Sven Neumann  <sven@gimp.org>
 
+	* authors.xml: updated last-active attribute for recent contributors.
+
+2007-12-20  Sven Neumann  <sven@gimp.org>
+
 	* configure.in
 	* plug-ins/Makefile.am
 	* plug-ins/psd: added new PSD load plug-in written by John Marshall.
