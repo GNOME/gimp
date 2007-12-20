@@ -1,5 +1,11 @@
 2007-12-20  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpprofilechooserdialog.c: added code for adding a
+	shortcut to the default ICC profile location on Windows. Based on
+	a patch by John Marshall (bug #503410).
+
+2007-12-20  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/documents-commands.c (documents_clear_cmd_callback):
 	adapt to changed gimp_documents_save() API.
 

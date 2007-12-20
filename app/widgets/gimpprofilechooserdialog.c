@@ -60,6 +60,7 @@ static void   gimp_profile_chooser_dialog_get_property   (GObject               
                                                           GValue                   *value,
                                                           GParamSpec               *pspec);
 
+static void   gimp_profile_chooser_dialog_add_shortcut   (GimpProfileChooserDialog *dialog);
 static void   gimp_profile_chooser_dialog_update_preview (GimpProfileChooserDialog *dialog);
 
 static GtkWidget * gimp_profile_view_new                 (GtkTextBuffer            *buffer);
@@ -125,15 +126,7 @@ gimp_profile_chooser_dialog_constructor (GType                  type,
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
 
-#ifndef G_OS_WIN32
-  {
-    const gchar folder[] = "/usr/share/color/icc";
-
-    if (g_file_test (folder, G_FILE_TEST_IS_DIR))
-      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
-                                            folder, NULL);
-  }
-#endif
+  gimp_profile_chooser_dialog_add_shortcut (dialog);
 
   filter = gtk_file_filter_new ();
   gtk_file_filter_set_name (filter, _("All files (*.*)"));
@@ -246,6 +239,37 @@ gimp_profile_chooser_dialog_get_desc (GimpProfileChooserDialog *dialog,
     return g_strdup (dialog->desc);
 
   return NULL;
+}
+
+/* Add shortcut for default ICC profile location */
+static void
+gimp_profile_chooser_dialog_add_shortcut (GimpProfileChooserDialog *dialog)
+{
+#ifdef G_OS_WIN32
+  {
+    const gchar *prefix = g_getenv ("SystemRoot");
+    gchar       *folder;
+
+    if (! prefix)
+      prefix = "c:\\windows";
+
+    folder = g_strconcat (prefix, "\\system32\\spool\\drivers\\color", NULL);
+
+    if (g_file_test (folder, G_FILE_TEST_IS_DIR))
+      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
+                                            folder, NULL);
+
+    g_free (folder);
+  }
+#else
+  {
+    const gchar folder[] = "/usr/share/color/icc";
+
+    if (g_file_test (folder, G_FILE_TEST_IS_DIR))
+      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
+                                            folder, NULL);
+  }
+#endif
 }
 
 static void
