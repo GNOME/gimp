@@ -1,5 +1,13 @@
 2007-12-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.c: use accessors for drawable and
+	item properties.
+
+2007-12-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/xcf/xcf-save.c
 	* app/xcf/xcf-load.c: use accessors for colormap, parasites and
 	more item, layer, channel and mask properties instead of accessing

@@ -735,8 +735,8 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                                            FALSE,
                                            edit_select->cumlx + off_x,
                                            edit_select->cumly + off_y,
-                                           active_item->width,
-                                           active_item->height,
+                                           gimp_item_width  (active_item),
+                                           gimp_item_height (active_item),
                                            FALSE);
           }
       }

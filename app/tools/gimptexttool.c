@@ -280,8 +280,8 @@ gimp_text_tool_button_press (GimpTool        *tool,
       coords->x -= item->offset_x;
       coords->y -= item->offset_y;
 
-      if (coords->x > 0 && coords->x < item->width &&
-          coords->y > 0 && coords->y < item->height)
+      if (coords->x > 0 && coords->x < gimp_item_width  (item) &&
+          coords->y > 0 && coords->y < gimp_item_height (item))
         {
           /*  did the user click on a text layer?  */
           if (gimp_text_tool_set_drawable (text_tool, drawable, TRUE))

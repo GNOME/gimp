@@ -1216,7 +1216,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
-      tr_tool->original = tile_manager_ref (GIMP_DRAWABLE (active_item)->tiles);
+      tr_tool->original = tile_manager_ref (gimp_drawable_get_tiles (GIMP_DRAWABLE (active_item)));
       tile_manager_set_offsets (tr_tool->original, 0, 0);
       break;
 
