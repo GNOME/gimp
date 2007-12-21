@@ -1,3 +1,10 @@
+2007-12-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/xcf/xcf-save.c
+	* app/xcf/xcf-load.c: use accessors for colormap, parasites and
+	more item, layer, channel and mask properties instead of accessing
+	the object structs directly. Some minor style cleanups.
+
 2007-12-20  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/gimppluginmanager-menu-branch.[ch]: added accessor

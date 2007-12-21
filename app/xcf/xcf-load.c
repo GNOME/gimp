@@ -308,48 +308,44 @@ xcf_load_image_props (XcfInfo   *info,
           return TRUE;
 
         case PROP_COLORMAP:
-          if (info->file_version == 0)
-            {
-              gint i;
+          {
+            guint32 n_colors;
+            guchar  cmap[GIMP_IMAGE_COLORMAP_SIZE];
 
-              gimp_message (info->gimp, G_OBJECT (info->progress),
-                            GIMP_MESSAGE_WARNING,
-                            _("XCF warning: version 0 of XCF file format\n"
-                              "did not save indexed colormaps correctly.\n"
-                              "Substituting grayscale map."));
-              info->cp +=
-                xcf_read_int32 (info->fp, (guint32 *) &image->num_cols, 1);
-              image->cmap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
-              if (!xcf_seek_pos (info, info->cp + image->num_cols, NULL))
-                return FALSE;
+            info->cp += xcf_read_int32 (info->fp, &n_colors, 1);
 
-              for (i = 0; i<image->num_cols; i++)
-                {
-                  image->cmap[i*3+0] = i;
-                  image->cmap[i*3+1] = i;
-                  image->cmap[i*3+2] = i;
-                }
-            }
-          else
-            {
-              info->cp +=
-                xcf_read_int32 (info->fp, (guint32 *) &image->num_cols, 1);
-              image->cmap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
-              info->cp +=
-                xcf_read_int8 (info->fp,
-                               (guint8 *) image->cmap, image->num_cols * 3);
-            }
+            if (info->file_version == 0)
+              {
+                gint i;
 
-          /* discard color map, if image is not indexed, this is just
-           * sanity checking to make sure gimp doesn't end up with an
-           * image state that is impossible.
-           */
-          if (gimp_image_base_type (image) != GIMP_INDEXED)
-            {
-              g_free (image->cmap);
-              image->cmap = NULL;
-              image->num_cols = 0;
-            }
+                gimp_message (info->gimp, G_OBJECT (info->progress),
+                              GIMP_MESSAGE_WARNING,
+                              _("XCF warning: version 0 of XCF file format\n"
+                                "did not save indexed colormaps correctly.\n"
+                                "Substituting grayscale map."));
+
+                if (! xcf_seek_pos (info, info->cp + n_colors, NULL))
+                  return FALSE;
+
+                for (i = 0; i < n_colors; i++)
+                  {
+                    cmap[i * 3 + 0] = i;
+                    cmap[i * 3 + 1] = i;
+                    cmap[i * 3 + 2] = i;
+                  }
+              }
+            else
+              {
+                info->cp += xcf_read_int8 (info->fp, cmap, n_colors * 3);
+              }
+
+            /* only set color map if image is not indexed, this is
+             * just sanity checking to make sure gimp doesn't end up
+             * with an image state that is impossible.
+             */
+            if (gimp_image_base_type (image) == GIMP_INDEXED)
+              gimp_image_set_colormap (image, cmap, n_colors, FALSE);
+          }
           break;
 
         case PROP_COMPRESSION:
@@ -440,6 +436,7 @@ xcf_load_image_props (XcfInfo   *info,
 
             info->cp += xcf_read_float (info->fp, &xres, 1);
             info->cp += xcf_read_float (info->fp, &yres, 1);
+
             if (xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
                 yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
               {
@@ -449,6 +446,7 @@ xcf_load_image_props (XcfInfo   *info,
                 xres = image->gimp->config->default_image->xresolution;
                 yres = image->gimp->config->default_image->yresolution;
               }
+
             image->xresolution = xres;
             image->yresolution = yres;
           }
@@ -471,6 +469,7 @@ xcf_load_image_props (XcfInfo   *info,
                 gimp_image_parasite_attach (image, p);
                 gimp_parasite_free (p);
               }
+
             if (info->cp - base != prop_size)
               gimp_message (info->gimp, G_OBJECT (info->progress),
                             GIMP_MESSAGE_WARNING,
@@ -1011,9 +1010,9 @@ xcf_load_layer (XcfInfo   *info,
 
       xcf_progress_update (info);
 
-      layer_mask->apply_mask = apply_mask;
-      layer_mask->edit_mask  = edit_mask;
-      layer_mask->show_mask  = show_mask;
+      gimp_layer_mask_set_apply (layer_mask, apply_mask, FALSE);
+      gimp_layer_mask_set_edit  (layer_mask, edit_mask);
+      gimp_layer_mask_set_show  (layer_mask, show_mask, FALSE);
 
       gimp_layer_add_mask (layer, layer_mask, FALSE);
     }
@@ -1347,7 +1346,7 @@ static gboolean
 xcf_load_tile (XcfInfo *info,
                Tile    *tile)
 {
-  info->cp += xcf_read_int8 (info->fp, tile_data_pointer(tile, 0, 0),
+  info->cp += xcf_read_int8 (info->fp, tile_data_pointer (tile, 0, 0),
                              tile_size (tile));
 
   return TRUE;
@@ -1488,19 +1487,25 @@ xcf_load_tile_rle (XcfInfo *info,
 static GimpParasite *
 xcf_load_parasite (XcfInfo *info)
 {
-  GimpParasite *p;
+  GimpParasite *parasite;
   gchar        *name;
+  guint32       flags;
+  guint32       size;
+  gpointer      data;
 
   info->cp += xcf_read_string (info->fp, &name, 1);
-  p = gimp_parasite_new (name, 0, 0, NULL);
+  info->cp += xcf_read_int32  (info->fp, &flags, 1);
+  info->cp += xcf_read_int32  (info->fp, &size, 1);
+
+  data = g_new (gchar, size);
+  info->cp += xcf_read_int8 (info->fp, data, size);
+
+  parasite = gimp_parasite_new (name, flags, size, data);
+
   g_free (name);
+  g_free (data);
 
-  info->cp += xcf_read_int32 (info->fp, &p->flags, 1);
-  info->cp += xcf_read_int32 (info->fp, &p->size, 1);
-  p->data = g_new (gchar, p->size);
-  info->cp += xcf_read_int8 (info->fp, p->data, p->size);
-
-  return p;
+  return parasite;
 }
 
 static gboolean
