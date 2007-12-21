@@ -277,7 +277,7 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
 
       ink->start_blob = blob_duplicate (ink->last_blob);
 
-      time_smoother_init (ink, 0);
+      time_smoother_init (ink, time);
       ink->last_time = time;
 
       dist_smoother_init (ink, 0.0);
@@ -291,13 +291,10 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
       gdouble  dist;
       gdouble  velocity;
       guint32  lasttime = ink->last_time;
-      guint32  thistime = time;
-      guint32  dt;
+      guint32  thistime;
 
-      dt = thistime - lasttime;
-      time_smoother_add (ink, dt);
-
-      dt = ink->last_time = time_smoother_result (ink);
+      time_smoother_add (ink, time);
+      thistime = ink->last_time = time_smoother_result (ink);
 
       /* The time resolution on X-based GDK motion events is bloody
        * awful, hence the use of the smoothing function.  Sadly this
@@ -325,7 +322,7 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
           dist = dist_smoother_result (ink);
         }
 
-      velocity = 5.0 * dt * (dist / (gdouble) dt);
+      velocity = 10.0 * sqrt ((dist) / (gdouble) (thistime - lasttime));
 
       blob = ink_pen_ellipse (options,
                               paint_core->cur_coords.x,
@@ -541,6 +538,13 @@ static void
 time_smoother_add (GimpInk *ink,
                    guint32  value)
 {
+  guint64 long_value = (guint64) value;
+
+  /*  handle wrap-around of time values  */
+  if (long_value < ink->ts_buffer[ink->ts_index])
+    long_value += (guint64) + G_MAXUINT32;
+
+  ink->ts_buffer[ink->ts_index++] = long_value;
 
   ink->ts_buffer[ink->ts_index++] = value;
 

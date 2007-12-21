@@ -1,5 +1,9 @@
 2007-12-21  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimpink.c: reverted last change.
+
+2007-12-21  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimpink.c (gimp_ink_motion): applied patch from Alexia
 	Death that fixes Ink tool speed calculation when using a tablet
 	(bug #504711).
