@@ -50,7 +50,7 @@ gimp_image_add_sample_point_at_pos (GimpImage *image,
   sample_point = gimp_sample_point_new (image->gimp->next_sample_point_ID++);
 
   if (push_undo)
-    gimp_image_undo_push_sample_point (image, _("Add Sample_Point"),
+    gimp_image_undo_push_sample_point (image, _("Add Sample Point"),
                                        sample_point);
 
   gimp_image_add_sample_point (image, sample_point, x, y);

@@ -2,6 +2,13 @@
 
 	Merged from trunk:
 
+	* app/core/gimpimage-sample-points.c
+	(gimp_image_add_sample_point_at_pos): corrected undo description.
+
+2007-12-22  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* data/palettes/Tango.gpl: removed duplicate entry ("Untitled").
 
 2007-12-21  Sven Neumann  <sven@gimp.org>

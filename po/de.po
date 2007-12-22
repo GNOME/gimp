@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-21 23:47+0100\n"
-"PO-Revision-Date: 2007-11-21 23:47+0100\n"
+"POT-Creation-Date: 2007-12-22 15:57+0100\n"
+"PO-Revision-Date: 2007-12-22 15:58+0100\n"
 "Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -86,13 +86,13 @@ msgstr ""
 "die Zugriffsrechte des Auslagerungsverzeichnisses das in Ihren Einstellungen "
 "angegeben ist .(derzeit »%s«)."
 
-#: ../app/batch.c:75
+#: ../app/batch.c:76
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
 msgstr ""
 "Kein Interpreter angegeben, es wird der Standardinterpreter »%s« verwendet.\n"
 
-#: ../app/batch.c:93 ../app/batch.c:111
+#: ../app/batch.c:94 ../app/batch.c:112
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
@@ -2592,7 +2592,7 @@ msgstr ""
 msgid "Change Print Size"
 msgstr "Druckgröße ändern"
 
-#: ../app/actions/image-commands.c:650 ../app/core/gimpimage-scale.c:77
+#: ../app/actions/image-commands.c:650 ../app/core/gimpimage-scale.c:79
 msgid "Scale Image"
 msgstr "Bild skalieren"
 
@@ -3011,7 +3011,7 @@ msgstr "Eine neue Ebene erstellen"
 msgid "Set Layer Boundary Size"
 msgstr "Ebenengröße festlegen"
 
-#: ../app/actions/layers-commands.c:572 ../app/core/gimplayer.c:247
+#: ../app/actions/layers-commands.c:572 ../app/core/gimplayer.c:251
 msgid "Scale Layer"
 msgstr "Ebene skalieren"
 
@@ -3027,7 +3027,7 @@ msgstr "Auswahl aus Ebenenmaske"
 msgid "Please select a channel first"
 msgstr "Bitte wählen Sie zunächst einen Kanal aus"
 
-#: ../app/actions/layers-commands.c:991 ../app/core/gimplayer.c:1244
+#: ../app/actions/layers-commands.c:991 ../app/core/gimplayer.c:1266
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "Ebenenmaske hinzufügen"
@@ -3717,24 +3717,24 @@ msgid "Enter a name for the saved options"
 msgstr "Bitte benennen Sie diese Einstellungen"
 
 #: ../app/actions/tool-options-commands.c:77
-#: ../app/actions/tool-options-commands.c:245
-#: ../app/actions/tool-options-commands.c:262
+#: ../app/actions/tool-options-commands.c:247
+#: ../app/actions/tool-options-commands.c:264
 msgid "Saved Options"
 msgstr "Gespeicherte Einstellungen"
 
-#: ../app/actions/tool-options-commands.c:138
+#: ../app/actions/tool-options-commands.c:140
 msgid "Rename Saved Tool Options"
 msgstr "Gespeicherte Einstellungen umbenennen"
 
-#: ../app/actions/tool-options-commands.c:142
+#: ../app/actions/tool-options-commands.c:144
 msgid "Enter a new name for the saved options"
 msgstr "Bitte benennen Sie diese Einstellungen neu"
 
-#: ../app/actions/tool-options-commands.c:185
+#: ../app/actions/tool-options-commands.c:187
 msgid "Reset Tool Options"
 msgstr "Werkzeugeinstellungen zurücksetzen"
 
-#: ../app/actions/tool-options-commands.c:208
+#: ../app/actions/tool-options-commands.c:210
 msgid "Do you really want to reset all tool options to default values?"
 msgstr ""
 "Möchten Sie wirklich alle Werkzeugeinstellungen auf Vorgabewerte "
@@ -4497,7 +4497,7 @@ msgstr "Ersetzen"
 msgid "Anti erase"
 msgstr "Gegen-Radierer"
 
-#: ../app/base/tile-swap.c:544
+#: ../app/base/tile-swap.c:554
 msgid ""
 "Unable to open swap file. GIMP has run out of memory and cannot use the swap "
 "file. Some parts of your images may be corrupted. Try to save your work "
@@ -4511,7 +4511,7 @@ msgstr ""
 "starten Sie anschließend GIMP neu. Bitte überprüfen Sie unbedingt den "
 "Speicherort des Auslagerungsverzeichnisses in Ihren Einstellungen."
 
-#: ../app/base/tile-swap.c:559
+#: ../app/base/tile-swap.c:569
 #, c-format
 msgid "Failed to resize swap file: %s"
 msgstr "Die Größenänderung der Auslagerungsdatei ist fehlgeschlagen: %s"
@@ -4541,8 +4541,8 @@ msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
 msgstr ""
-"Fehler beim Lesen Ihrer »%s«-Datei. Vorgabewerte werden verwendet. Unter »%"
-"s« wurde eine Sicherungskopie Ihrer Konfiguration gespeichert."
+"Fehler beim Lesen Ihrer »%s«-Datei. Vorgabewerte werden verwendet. Unter »%s« "
+"wurde eine Sicherungskopie Ihrer Konfiguration gespeichert."
 
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
@@ -4917,8 +4917,7 @@ msgid ""
 "with the \"View->Show Guides\" command."
 msgstr ""
 "Legt fest, ob die Hilfslinien standardmäßig angezeigt werden soll. Dies kann "
-"auch mit Hilfe des Befehls »Ansicht->Hilfslinien anzeigen« beeinflusst "
-"werden."
+"auch mit Hilfe des Befehls »Ansicht->Hilfslinien anzeigen« beeinflusst werden."
 
 #: ../app/config/gimprc-blurbs.h:322
 msgid ""
@@ -5499,7 +5498,7 @@ msgid "Text"
 msgstr "Text"
 
 #: ../app/core/core-enums.c:881 ../app/core/core-enums.c:924
-#: ../app/core/gimpdrawable-transform.c:557
+#: ../app/core/gimpdrawable-transform.c:566
 msgid "Transform"
 msgstr "Transformation"
 
@@ -5806,15 +5805,14 @@ msgstr "Schwerwiegender Syntaxfehler in Pinseldatei »%s«: Byte = 0."
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr ""
-"Schwerwiegender Fehler beim Lesen der Pinseldatei »%s«: Unbekannte Farbtiefe "
-"%d."
+"Schwerwiegender Fehler beim Lesen der Pinseldatei »%s«: Unbekannte Farbtiefe %"
+"d."
 
 #: ../app/core/gimpbrush-load.c:252
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr ""
-"Schwerwiegender Fehler beim Lesen der Pinseldatei »%s«: Unbekannte Version %"
-"d."
+"Schwerwiegender Fehler beim Lesen der Pinseldatei »%s«: Unbekannte Version %d."
 
 #: ../app/core/gimpbrush-load.c:268 ../app/core/gimpbrush-load.c:388
 #: ../app/core/gimpbrush-load.c:720
@@ -5974,7 +5972,7 @@ msgstr "Kanal spiegeln"
 msgid "Rotate Channel"
 msgstr "Kanal drehen"
 
-#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:826
+#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:839
 msgid "Transform Channel"
 msgstr "Kanal transformieren"
 
@@ -6114,21 +6112,19 @@ msgstr "Ebene verschieben"
 msgid "Render Stroke"
 msgstr "Nachziehen"
 
-#. Start a transform undo group
-#: ../app/core/gimpdrawable-transform.c:617 ../app/tools/gimpfliptool.c:112
+#: ../app/core/gimpdrawable-transform.c:627 ../app/tools/gimpfliptool.c:112
 msgid "command|Flip"
 msgstr "Spiegeln"
 
-#. Start a transform undo group
-#: ../app/core/gimpdrawable-transform.c:701 ../app/tools/gimprotatetool.c:113
+#: ../app/core/gimpdrawable-transform.c:713 ../app/tools/gimprotatetool.c:113
 msgid "command|Rotate"
 msgstr "Drehen"
 
-#: ../app/core/gimpdrawable-transform.c:824 ../app/core/gimplayer.c:251
+#: ../app/core/gimpdrawable-transform.c:837 ../app/core/gimplayer.c:255
 msgid "Transform Layer"
 msgstr "Ebene transformieren"
 
-#: ../app/core/gimpdrawable-transform.c:839
+#: ../app/core/gimpdrawable-transform.c:852
 msgid "Transformation"
 msgstr "Transformation"
 
@@ -6137,8 +6133,8 @@ msgstr "Transformation"
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Read error in line %d."
 msgstr ""
-"Schwerwiegender Fehler beim Lesen der Palettendatei »%s«: Lesefehler in "
-"Zeile %d."
+"Schwerwiegender Fehler beim Lesen der Palettendatei »%s«: Lesefehler in Zeile "
+"%d."
 
 #: ../app/core/gimpgradient-load.c:81
 #, c-format
@@ -6329,12 +6325,12 @@ msgid "Disable Quick Mask"
 msgstr "Schnellmaske deaktivieren"
 
 #: ../app/core/gimpimage-sample-points.c:53
-msgid "Add Sample_Point"
-msgstr "Prüfpunkt _hinzufügen"
+msgid "Add Sample Point"
+msgstr "Prüfpunkt hinzufügen"
 
 #: ../app/core/gimpimage-sample-points.c:98 ../app/tools/gimpcolortool.c:425
 msgid "Remove Sample Point"
-msgstr "Prüfpunkt e_ntfernen"
+msgstr "Prüfpunkt entfernen"
 
 #: ../app/core/gimpimage-sample-points.c:135
 msgid "Move Sample Point"
@@ -6564,38 +6560,38 @@ msgstr ""
 msgid "Floating Selection to Layer"
 msgstr "Schwebende Auswahl in Ebene"
 
-#: ../app/core/gimplayer.c:244 ../app/tools/tools-enums.c:181
+#: ../app/core/gimplayer.c:248 ../app/tools/tools-enums.c:181
 msgid "Layer"
 msgstr "Ebene"
 
-#: ../app/core/gimplayer.c:245
+#: ../app/core/gimplayer.c:249
 msgid "Rename Layer"
 msgstr "Ebene umbenennen"
 
-#: ../app/core/gimplayer.c:246 ../app/pdb/layer_cmds.c:314
+#: ../app/core/gimplayer.c:250 ../app/pdb/layer_cmds.c:314
 #: ../app/pdb/layer_cmds.c:348
 msgid "Move Layer"
 msgstr "Ebene bewegen"
 
-#: ../app/core/gimplayer.c:248
+#: ../app/core/gimplayer.c:252
 msgid "Resize Layer"
 msgstr "Ebenengröße ändern"
 
-#: ../app/core/gimplayer.c:249
+#: ../app/core/gimplayer.c:253
 msgid "Flip Layer"
 msgstr "Ebene spiegeln"
 
-#: ../app/core/gimplayer.c:250
+#: ../app/core/gimplayer.c:254
 msgid "Rotate Layer"
 msgstr "Ebene drehen"
 
-#: ../app/core/gimplayer.c:400 ../app/core/gimplayer.c:1290
+#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1312
 #: ../app/core/gimplayermask.c:204
 #, c-format
 msgid "%s mask"
 msgstr "%s Maske"
 
-#: ../app/core/gimplayer.c:444
+#: ../app/core/gimplayer.c:449
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -6604,43 +6600,43 @@ msgstr ""
 "Schwebende Auswahl\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1221
+#: ../app/core/gimplayer.c:1243
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Masken können nicht zu einer Ebene ohne Alphakanal hinzufügt werden."
 
-#: ../app/core/gimplayer.c:1228
+#: ../app/core/gimplayer.c:1250
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Es konnte keine Ebenenmaske hinzugefügt werden, da diese Ebene bereits eine "
 "Maske hat."
 
-#: ../app/core/gimplayer.c:1238
+#: ../app/core/gimplayer.c:1260
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Ebenenmasken mit anderen Abmessungen als die der Ebene können nicht "
 "hinzufügt werden."
 
-#: ../app/core/gimplayer.c:1344
+#: ../app/core/gimplayer.c:1366
 msgid "Transfer Alpha to Mask"
 msgstr "Alpha in Maske übernehmen"
 
-#: ../app/core/gimplayer.c:1509 ../app/core/gimplayermask.c:231
+#: ../app/core/gimplayer.c:1531 ../app/core/gimplayermask.c:231
 msgid "Apply Layer Mask"
 msgstr "Ebenenmaske anwenden"
 
-#: ../app/core/gimplayer.c:1510
+#: ../app/core/gimplayer.c:1532
 msgid "Delete Layer Mask"
 msgstr "Ebenenmaske löschen"
 
-#: ../app/core/gimplayer.c:1617
+#: ../app/core/gimplayer.c:1639
 msgid "Add Alpha Channel"
 msgstr "Alphakanal hinzufügen"
 
-#: ../app/core/gimplayer.c:1668
+#: ../app/core/gimplayer.c:1690
 msgid "Remove Alpha Channel"
 msgstr "Alphakanal entfernen"
 
-#: ../app/core/gimplayer.c:1690
+#: ../app/core/gimplayer.c:1712
 msgid "Layer to Image Size"
 msgstr "Ebene auf Bildgröße skalieren"
 
@@ -6668,8 +6664,8 @@ msgstr "Unbekannter Palettendateityp: %s"
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr ""
-"Schwerwiegender Fehler beim Lesen der Palettendatei »%s«: Lesefehler in "
-"Zeile %d."
+"Schwerwiegender Fehler beim Lesen der Palettendatei »%s«: Lesefehler in Zeile "
+"%d."
 
 # CHECK
 #: ../app/core/gimppalette-load.c:95
@@ -8867,8 +8863,8 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"Prozedur »%s« lieferte einen falschen Wertetyp für den Rückgabewert »%"
-"s« (Nr. %d). %s erwartet, %s erhalten."
+"Prozedur »%s« lieferte einen falschen Wertetyp für den Rückgabewert »%s« (Nr. %"
+"d). %s erwartet, %s erhalten."
 
 #: ../app/pdb/gimpprocedure.c:527
 #, c-format
@@ -8876,8 +8872,8 @@ msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
 "d). Expected %s, got %s."
 msgstr ""
-"Prozedur »%s« wurde mit einem falschen Wertetyp für das Argument »%s« (Nr. %"
-"d) aufgerufen. %s erwartet, %s erhalten."
+"Prozedur »%s« wurde mit einem falschen Wertetyp für das Argument »%s« (Nr. %d) "
+"aufgerufen. %s erwartet, %s erhalten."
 
 #: ../app/pdb/gimpprocedure.c:559
 #, c-format
@@ -8934,8 +8930,8 @@ msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
 "s). This value is out of range."
 msgstr ""
-"Die Prozedur »%s« wurden mit dem Wert »%s« für das Argument »%s« (Nr. %d, "
-"Typ %s) aufgerufen. Dieser liegt außerhalb des Wertebereiches."
+"Die Prozedur »%s« wurden mit dem Wert »%s« für das Argument »%s« (Nr. %d, Typ %"
+"s) aufgerufen. Dieser liegt außerhalb des Wertebereiches."
 
 #: ../app/pdb/image_cmds.c:2061
 msgid ""
@@ -11204,8 +11200,7 @@ msgstr "_Tastenkombination neu zuweisen"
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr ""
-"Die Tastenkombination »%s« wird bereits von »%s« aus der Gruppe »%s« "
-"verwendet."
+"Die Tastenkombination »%s« wird bereits von »%s« aus der Gruppe »%s« verwendet."
 
 #: ../app/widgets/gimpactionview.c:564
 #, c-format
@@ -12536,3 +12531,6 @@ msgstr "Bitte stellen Sie sicher, dass der Werkzeugkasten sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
+
+#~ msgid "Add Sample_Point"
+#~ msgstr "Prüfpunkt _hinzufügen"
