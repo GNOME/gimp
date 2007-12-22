@@ -1,3 +1,7 @@
+2007-12-22  Sven Neumann  <sven@gimp.org>
+
+	* data/palettes/Tango.gpl: removed duplicate entry ("Untitled").
+
 2007-12-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpeditselectiontool.c
