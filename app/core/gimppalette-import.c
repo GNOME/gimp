@@ -287,8 +287,9 @@ gimp_palette_import_extract (GimpImage     *image,
   if (selection_only &&
       ! gimp_channel_is_empty (gimp_image_get_mask (image)))
     {
-      pixel_region_init (&mask_region,
-                         GIMP_DRAWABLE (gimp_image_get_mask (image))->tiles,
+      GimpDrawable *mask = GIMP_DRAWABLE (gimp_image_get_mask (image));
+
+      pixel_region_init (&mask_region, gimp_drawable_get_tiles (mask),
                          x + pickable_off_x, y + pickable_off_y,
                          width, height,
                          FALSE);

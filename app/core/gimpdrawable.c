@@ -269,7 +269,8 @@ gimp_drawable_get_memsize (GimpObject *object,
   GimpDrawable *drawable = GIMP_DRAWABLE (object);
   gint64        memsize  = 0;
 
-  memsize += tile_manager_get_memsize (drawable->tiles, FALSE);
+  memsize += tile_manager_get_memsize (gimp_drawable_get_tiles (drawable),
+                                       FALSE);
 
   *gui_size += gimp_preview_cache_get_memsize (drawable->preview_cache);
 
@@ -284,8 +285,8 @@ gimp_drawable_get_size (GimpViewable *viewable,
 {
   GimpItem *item = GIMP_ITEM (viewable);
 
-  *width  = item->width;
-  *height = item->height;
+  *width  = gimp_item_width  (item);
+  *height = gimp_item_height (item);
 
   return TRUE;
 }
@@ -333,20 +334,20 @@ gimp_drawable_duplicate (GimpItem *item,
                                gimp_item_get_image (item),
                                item->offset_x,
                                item->offset_y,
-                               item->width,
-                               item->height,
+                               gimp_item_width  (item),
+                               gimp_item_height (item),
                                new_image_type,
                                GIMP_OBJECT (new_drawable)->name);
 
-      pixel_region_init (&srcPR, drawable->tiles,
+      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                          0, 0,
-                         item->width,
-                         item->height,
+                         gimp_item_width  (item),
+                         gimp_item_height (item),
                          FALSE);
-      pixel_region_init (&destPR, new_drawable->tiles,
+      pixel_region_init (&destPR, gimp_drawable_get_tiles (new_drawable),
                          0, 0,
-                         new_item->width,
-                         new_item->height,
+                         gimp_item_width  (new_item),
+                         gimp_item_height (new_item),
                          TRUE);
 
       if (new_image_type == drawable->type)
@@ -387,16 +388,19 @@ gimp_drawable_scale (GimpItem              *item,
                      GimpProgress          *progress)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  PixelRegion   srcPR, destPR;
   TileManager  *new_tiles;
+  PixelRegion   srcPR, destPR;
 
   new_tiles = tile_manager_new (new_width, new_height, drawable->bytes);
 
-  pixel_region_init (&srcPR, drawable->tiles,
-                     0, 0, item->width, item->height,
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
+                     0, 0,
+                     gimp_item_width  (item),
+                     gimp_item_height (item),
                      FALSE);
   pixel_region_init (&destPR, new_tiles,
-                     0, 0, new_width, new_height,
+                     0, 0,
+                     new_width, new_height,
                      TRUE);
 
   /*  Scale the drawable -
@@ -433,9 +437,9 @@ gimp_drawable_resize (GimpItem    *item,
   gint          copy_width, copy_height;
 
   /*  if the size doesn't change, this is a nop  */
-  if (new_width  == item->width  &&
-      new_height == item->height &&
-      offset_x   == 0            &&
+  if (new_width  == gimp_item_width  (item) &&
+      new_height == gimp_item_height (item) &&
+      offset_x   == 0                       &&
       offset_y   == 0)
     return;
 
@@ -443,7 +447,8 @@ gimp_drawable_resize (GimpItem    *item,
   new_offset_y = item->offset_y - offset_y;
 
   gimp_rectangle_intersect (item->offset_x, item->offset_y,
-                            item->width, item->height,
+                            gimp_item_width  (item),
+                            gimp_item_height (item),
                             new_offset_x, new_offset_y,
                             new_width, new_height,
                             &copy_x, &copy_y,
@@ -472,7 +477,7 @@ gimp_drawable_resize (GimpItem    *item,
   /*  Determine whether anything needs to be copied  */
   if (copy_width && copy_height)
     {
-      pixel_region_init (&srcPR, drawable->tiles,
+      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                          copy_x - item->offset_x, copy_y - item->offset_y,
                          copy_width, copy_height,
                          FALSE);
@@ -505,15 +510,18 @@ gimp_drawable_flip (GimpItem            *item,
 
   gimp_item_offsets (item, &off_x, &off_y);
 
-  tile_manager_get_offsets (drawable->tiles, &old_off_x, &old_off_y);
-  tile_manager_set_offsets (drawable->tiles, off_x, off_y);
+  tile_manager_get_offsets (gimp_drawable_get_tiles (drawable),
+                            &old_off_x, &old_off_y);
+  tile_manager_set_offsets (gimp_drawable_get_tiles (drawable),
+                            off_x, off_y);
 
   tiles = gimp_drawable_transform_tiles_flip (drawable, context,
-                                              drawable->tiles,
+                                              gimp_drawable_get_tiles (drawable),
                                               flip_type, axis,
                                               clip_result);
 
-  tile_manager_set_offsets (drawable->tiles, old_off_x, old_off_y);
+  tile_manager_set_offsets (gimp_drawable_get_tiles (drawable),
+                            old_off_x, old_off_y);
 
   if (tiles)
     {
@@ -537,15 +545,18 @@ gimp_drawable_rotate (GimpItem         *item,
 
   gimp_item_offsets (item, &off_x, &off_y);
 
-  tile_manager_get_offsets (drawable->tiles, &old_off_x, &old_off_y);
-  tile_manager_set_offsets (drawable->tiles, off_x, off_y);
+  tile_manager_get_offsets (gimp_drawable_get_tiles (drawable),
+                            &old_off_x, &old_off_y);
+  tile_manager_set_offsets (gimp_drawable_get_tiles (drawable),
+                            off_x, off_y);
 
   tiles = gimp_drawable_transform_tiles_rotate (drawable, context,
-                                                drawable->tiles,
+                                                gimp_drawable_get_tiles (drawable),
                                                 rotate_type, center_x, center_y,
                                                 clip_result);
 
-  tile_manager_set_offsets (drawable->tiles, old_off_x, old_off_y);
+  tile_manager_set_offsets (gimp_drawable_get_tiles (drawable),
+                            old_off_x, old_off_y);
 
   if (tiles)
     {
@@ -571,18 +582,21 @@ gimp_drawable_transform (GimpItem               *item,
 
   gimp_item_offsets (item, &off_x, &off_y);
 
-  tile_manager_get_offsets (drawable->tiles, &old_off_x, &old_off_y);
-  tile_manager_set_offsets (drawable->tiles, off_x, off_y);
+  tile_manager_get_offsets (gimp_drawable_get_tiles (drawable),
+                            &old_off_x, &old_off_y);
+  tile_manager_set_offsets (gimp_drawable_get_tiles (drawable),
+                            off_x, off_y);
 
   tiles = gimp_drawable_transform_tiles_affine (drawable, context,
-                                                drawable->tiles,
+                                                gimp_drawable_get_tiles (drawable),
                                                 matrix, direction,
                                                 interpolation_type,
                                                 recursion_level,
                                                 clip_result,
                                                 progress);
 
-  tile_manager_set_offsets (drawable->tiles, old_off_x, old_off_y);
+  tile_manager_set_offsets (gimp_drawable_get_tiles (drawable),
+                            old_off_x, old_off_y);
 
   if (tiles)
     {
@@ -600,8 +614,8 @@ gimp_drawable_get_pixel_at (GimpPickable *pickable,
   GimpDrawable *drawable = GIMP_DRAWABLE (pickable);
 
   /* do not make this a g_return_if_fail() */
-  if (x < 0 || x >= GIMP_ITEM (drawable)->width ||
-      y < 0 || y >= GIMP_ITEM (drawable)->height)
+  if (x < 0 || x >= gimp_item_width  (GIMP_ITEM (drawable)) ||
+      y < 0 || y >= gimp_item_height (GIMP_ITEM (drawable)))
     return FALSE;
 
   read_pixel_data_1 (gimp_drawable_get_tiles (drawable), x, y, pixel);
@@ -671,8 +685,8 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
   item->offset_x = offset_x;
   item->offset_y = offset_y;
 
-  if (item->width  != tile_manager_width (tiles) ||
-      item->height != tile_manager_height (tiles))
+  if (gimp_item_width  (item) != tile_manager_width (tiles) ||
+      gimp_item_height (item) != tile_manager_height (tiles))
     {
       item->width  = tile_manager_width (tiles);
       item->height = tile_manager_height (tiles);
@@ -964,12 +978,15 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
 
-  if (item->width    != tile_manager_width (tiles)  ||
-      item->height   != tile_manager_height (tiles) ||
-      item->offset_x != offset_x                    ||
-      item->offset_y != offset_y)
+  if (gimp_item_width  (item) != tile_manager_width (tiles)  ||
+      gimp_item_height (item) != tile_manager_height (tiles) ||
+      item->offset_x          != offset_x                    ||
+      item->offset_y          != offset_y)
     {
-      gimp_drawable_update (drawable, 0, 0, item->width, item->height);
+      gimp_drawable_update (drawable,
+                            0, 0,
+                            gimp_item_width  (item),
+                            gimp_item_height (item));
     }
 
   if (gimp_drawable_has_floating_sel (drawable))
@@ -983,7 +1000,10 @@ gimp_drawable_set_tiles_full (GimpDrawable       *drawable,
   if (gimp_drawable_has_floating_sel (drawable))
     floating_sel_rigor (gimp_image_floating_sel (image), FALSE);
 
-  gimp_drawable_update (drawable, 0, 0, item->width, item->height);
+  gimp_drawable_update (drawable,
+                        0, 0,
+                        gimp_item_width  (item),
+                        gimp_item_height (item));
 }
 
 void
@@ -1060,7 +1080,8 @@ gimp_drawable_get_shadow_tiles (GimpDrawable *drawable)
   g_return_val_if_fail (gimp_item_is_attached (item), NULL);
 
   return gimp_image_get_shadow_tiles (gimp_item_get_image (item),
-                                      item->width, item->height,
+                                      gimp_item_width  (item),
+                                      gimp_item_height (item),
                                       drawable->bytes);
 }
 

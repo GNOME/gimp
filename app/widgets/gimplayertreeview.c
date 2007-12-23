@@ -1061,31 +1061,31 @@ gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
          gimp_layer_tree_view_paint_mode_menu_callback);
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (view->paint_mode_menu),
-                                 layer->mode);
+                                 gimp_layer_get_mode (layer));
 
   UNBLOCK (view->paint_mode_menu,
            gimp_layer_tree_view_paint_mode_menu_callback);
 
-  if (layer->lock_alpha !=
+  if (gimp_layer_get_lock_alpha (layer) !=
       gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (view->lock_alpha_toggle)))
     {
       BLOCK (view->lock_alpha_toggle,
              gimp_layer_tree_view_lock_alpha_button_toggled);
 
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (view->lock_alpha_toggle),
-                                    layer->lock_alpha);
+                                    gimp_layer_get_lock_alpha (layer));
 
       UNBLOCK (view->lock_alpha_toggle,
                gimp_layer_tree_view_lock_alpha_button_toggled);
     }
 
-  if (layer->opacity * 100.0 != view->opacity_adjustment->value)
+  if (gimp_layer_get_opacity (layer) * 100.0 != view->opacity_adjustment->value)
     {
       BLOCK (view->opacity_adjustment,
              gimp_layer_tree_view_opacity_scale_changed);
 
       gtk_adjustment_set_value (view->opacity_adjustment,
-                                layer->opacity * 100.0);
+                                gimp_layer_get_opacity (layer) * 100.0);
 
       UNBLOCK (view->opacity_adjustment,
                gimp_layer_tree_view_opacity_scale_changed);

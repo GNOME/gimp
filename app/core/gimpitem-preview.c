@@ -69,8 +69,8 @@ gimp_item_get_preview_size (GimpViewable *viewable,
     }
   else
     {
-      gimp_viewable_calc_preview_size (item->width,
-                                       item->height,
+      gimp_viewable_calc_preview_size (gimp_item_width  (item),
+                                       gimp_item_height (item),
                                        size,
                                        size,
                                        dot_for_dot, 1.0, 1.0,
@@ -94,12 +94,13 @@ gimp_item_get_popup_size (GimpViewable *viewable,
   if (image && ! image->gimp->config->layer_previews)
     return FALSE;
 
-  if (item->width > width || item->height > height)
+  if (gimp_item_width  (item) > width ||
+      gimp_item_height (item) > height)
     {
       gboolean scaling_up;
 
-      gimp_viewable_calc_preview_size (item->width,
-                                       item->height,
+      gimp_viewable_calc_preview_size (gimp_item_width  (item),
+                                       gimp_item_height (item),
                                        width  * 2,
                                        height * 2,
                                        dot_for_dot,
@@ -111,8 +112,8 @@ gimp_item_get_popup_size (GimpViewable *viewable,
 
       if (scaling_up)
         {
-          *popup_width = item->width;
-          *popup_width = item->height;
+          *popup_width = gimp_item_width  (item);
+          *popup_width = gimp_item_height (item);
         }
 
       return TRUE;

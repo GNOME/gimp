@@ -51,16 +51,16 @@ gimp_channel_add_segment (GimpChannel *mask,
 
   /*  check horizontal extents...  */
   x2 = x + width;
-  x2 = CLAMP (x2, 0, GIMP_ITEM (mask)->width);
-  x  = CLAMP (x,  0, GIMP_ITEM (mask)->width);
+  x2 = CLAMP (x2, 0, gimp_item_width (GIMP_ITEM (mask)));
+  x  = CLAMP (x,  0, gimp_item_width (GIMP_ITEM (mask)));
   width = x2 - x;
   if (!width)
     return;
 
-  if (y < 0 || y >= GIMP_ITEM (mask)->height)
+  if (y < 0 || y >= gimp_item_height (GIMP_ITEM (mask)))
     return;
 
-  pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
+  pixel_region_init (&maskPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                      x, y, width, 1, TRUE);
 
   for (pr = pixel_regions_register (1, &maskPR);
@@ -96,17 +96,17 @@ gimp_channel_sub_segment (GimpChannel *mask,
 
   /*  check horizontal extents...  */
   x2 = x + width;
-  x2 = CLAMP (x2, 0, GIMP_ITEM (mask)->width);
-  x =  CLAMP (x,  0, GIMP_ITEM (mask)->width);
+  x2 = CLAMP (x2, 0, gimp_item_width (GIMP_ITEM (mask)));
+  x =  CLAMP (x,  0, gimp_item_width (GIMP_ITEM (mask)));
   width = x2 - x;
 
   if (! width)
     return;
 
-  if (y < 0 || y > GIMP_ITEM (mask)->height)
+  if (y < 0 || y > gimp_item_height (GIMP_ITEM (mask)))
     return;
 
-  pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
+  pixel_region_init (&maskPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                      x, y, width, 1, TRUE);
 
   for (pr = pixel_regions_register (1, &maskPR);
@@ -140,12 +140,12 @@ gimp_channel_combine_rect (GimpChannel    *mask,
 
   if (! gimp_rectangle_intersect (x, y, w, h,
                                   0, 0,
-                                  GIMP_ITEM (mask)->width,
-                                  GIMP_ITEM (mask)->height,
+                                  gimp_item_width  (GIMP_ITEM (mask)),
+                                  gimp_item_height (GIMP_ITEM (mask)),
                                   &x, &y, &w, &h))
     return;
 
-  pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
+  pixel_region_init (&maskPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                      x, y, w, h, TRUE);
 
   if (op == GIMP_CHANNEL_OP_ADD || op == GIMP_CHANNEL_OP_REPLACE)
@@ -178,10 +178,10 @@ gimp_channel_combine_rect (GimpChannel    *mask,
   else
     mask->bounds_known = FALSE;
 
-  mask->x1 = CLAMP (mask->x1, 0, GIMP_ITEM (mask)->width);
-  mask->y1 = CLAMP (mask->y1, 0, GIMP_ITEM (mask)->height);
-  mask->x2 = CLAMP (mask->x2, 0, GIMP_ITEM (mask)->width);
-  mask->y2 = CLAMP (mask->y2, 0, GIMP_ITEM (mask)->height);
+  mask->x1 = CLAMP (mask->x1, 0, gimp_item_width  (GIMP_ITEM (mask)));
+  mask->y1 = CLAMP (mask->y1, 0, gimp_item_height (GIMP_ITEM (mask)));
+  mask->x2 = CLAMP (mask->x2, 0, gimp_item_width  (GIMP_ITEM (mask)));
+  mask->y2 = CLAMP (mask->y2, 0, gimp_item_height (GIMP_ITEM (mask)));
 
   gimp_drawable_update (GIMP_DRAWABLE (mask), x, y, w, h);
 }
@@ -286,8 +286,8 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
 
   if (! gimp_rectangle_intersect (x, y, w, h,
                                   0, 0,
-                                  GIMP_ITEM (mask)->width,
-                                  GIMP_ITEM (mask)->height,
+                                  gimp_item_width  (GIMP_ITEM (mask)),
+                                  gimp_item_height (GIMP_ITEM (mask)),
                                   NULL, NULL, NULL, NULL))
   {
     return;
@@ -318,7 +318,7 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
       gdouble half_ellipse_width_at_y;
 
       /* If this row is not part of the mask, continue with the next row */
-      if (cur_y < 0 || cur_y >= GIMP_ITEM (mask)->height)
+      if (cur_y < 0 || cur_y >= gimp_item_height (GIMP_ITEM (mask)))
         {
           continue;
         }
@@ -483,10 +483,10 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
       mask->bounds_known = FALSE;
     }
 
-  mask->x1 = CLAMP (mask->x1, 0, GIMP_ITEM (mask)->width);
-  mask->y1 = CLAMP (mask->y1, 0, GIMP_ITEM (mask)->height);
-  mask->x2 = CLAMP (mask->x2, 0, GIMP_ITEM (mask)->width);
-  mask->y2 = CLAMP (mask->y2, 0, GIMP_ITEM (mask)->height);
+  mask->x1 = CLAMP (mask->x1, 0, gimp_item_width  (GIMP_ITEM (mask)));
+  mask->y1 = CLAMP (mask->y1, 0, gimp_item_height (GIMP_ITEM (mask)));
+  mask->x2 = CLAMP (mask->x2, 0, gimp_item_width  (GIMP_ITEM (mask)));
+  mask->y2 = CLAMP (mask->y2, 0, gimp_item_height (GIMP_ITEM (mask)));
 
   gimp_drawable_update (GIMP_DRAWABLE (mask), x, y, w, h);
 }
@@ -579,17 +579,17 @@ gimp_channel_combine_mask (GimpChannel    *mask,
   g_return_if_fail (GIMP_IS_CHANNEL (add_on));
 
   if (! gimp_rectangle_intersect (off_x, off_y,
-                                  GIMP_ITEM (add_on)->width,
-                                  GIMP_ITEM (add_on)->height,
+                                  gimp_item_width  (GIMP_ITEM (add_on)),
+                                  gimp_item_height (GIMP_ITEM (add_on)),
                                   0, 0,
-                                  GIMP_ITEM (mask)->width,
-                                  GIMP_ITEM (mask)->height,
+                                  gimp_item_width  (GIMP_ITEM (mask)),
+                                  gimp_item_height (GIMP_ITEM (mask)),
                                   &x, &y, &w, &h))
     return;
 
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (add_on)->tiles,
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (add_on)),
                      x - off_x, y - off_y, w, h, FALSE);
-  pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
+  pixel_region_init (&destPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                      x, y, w, h, TRUE);
 
   switch (op)

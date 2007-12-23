@@ -331,7 +331,8 @@ gimp_item_real_duplicate (GimpItem *item,
 
   gimp_item_configure (new_item, gimp_item_get_image (item),
                        item->offset_x, item->offset_y,
-                       item->width, item->height,
+                       gimp_item_width  (item),
+                       gimp_item_height (item),
                        new_name);
 
   g_free (new_name);
@@ -339,8 +340,8 @@ gimp_item_real_duplicate (GimpItem *item,
   g_object_unref (new_item->parasites);
   new_item->parasites = gimp_parasite_list_copy (item->parasites);
 
-  new_item->visible = item->visible;
-  new_item->linked  = item->linked;
+  new_item->visible = gimp_item_get_visible (item);
+  new_item->linked  = gimp_item_get_linked (item);
 
   return new_item;
 }
@@ -719,8 +720,8 @@ gimp_item_check_scaling (const GimpItem *item,
 
   img_scale_w     = (gdouble) new_width  / (gdouble) image->width;
   img_scale_h     = (gdouble) new_height / (gdouble) image->height;
-  new_item_width  = ROUND (img_scale_w * (gdouble) item->width);
-  new_item_height = ROUND (img_scale_h * (gdouble) item->height);
+  new_item_width  = ROUND (img_scale_w * (gdouble) gimp_item_width  (item));
+  new_item_height = ROUND (img_scale_h * (gdouble) gimp_item_height (item));
 
   return (new_item_width > 0 && new_item_height > 0);
 }
@@ -807,8 +808,8 @@ gimp_item_scale_by_factors (GimpItem              *item,
 
   new_offset_x = ROUND (w_factor * (gdouble) item->offset_x);
   new_offset_y = ROUND (h_factor * (gdouble) item->offset_y);
-  new_width    = ROUND (w_factor * (gdouble) item->width);
-  new_height   = ROUND (h_factor * (gdouble) item->height);
+  new_width    = ROUND (w_factor * (gdouble) gimp_item_width  (item));
+  new_height   = ROUND (h_factor * (gdouble) gimp_item_height (item));
 
   if (new_width != 0 && new_height != 0)
     {
@@ -1254,7 +1255,7 @@ gimp_item_set_visible (GimpItem *item,
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
 
-  if (item->visible != visible)
+  if (gimp_item_get_visible (item) != visible)
     {
       if (push_undo && gimp_item_is_attached (item))
         {
@@ -1277,7 +1278,7 @@ gimp_item_set_linked (GimpItem *item,
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
 
-  if (item->linked != linked)
+  if (gimp_item_get_linked (item) != linked)
     {
       if (push_undo && gimp_item_is_attached (item))
         {
@@ -1316,8 +1317,8 @@ gimp_item_is_in_set (GimpItem    *item,
       return TRUE;
 
     case GIMP_ITEM_SET_IMAGE_SIZED:
-      return (item->width  == item->image->width &&
-              item->height == item->image->height);
+      return (gimp_item_width  (item) == item->image->width &&
+              gimp_item_height (item) == item->image->height);
 
     case GIMP_ITEM_SET_VISIBLE:
       return gimp_item_get_visible (item);

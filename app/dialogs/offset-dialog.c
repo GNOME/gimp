@@ -192,16 +192,16 @@ offset_dialog_new (GimpDrawable *drawable,
                                   dialog->image->yresolution, FALSE);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (dialog->off_se), 0,
-                                         -item->width,
-                                         item->width);
+                                         - gimp_item_width (item),
+                                         gimp_item_width (item));
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (dialog->off_se), 1,
-                                         -item->height,
-                                         item->height);
+                                         - gimp_item_height (item),
+                                         gimp_item_height (item));
 
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (dialog->off_se), 0,
-                            0, item->width);
+                            0, gimp_item_width (item));
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (dialog->off_se), 1,
-                            0, item->width);
+                            0, gimp_item_height (item));
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se), 0, 0);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se), 1, 0);
@@ -286,9 +286,9 @@ offset_halfheight_callback (GtkWidget    *widget,
       GimpItem *item = GIMP_ITEM (gimp_image_get_active_drawable (image));
 
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se),
-                                  0, item->width / 2);
+                                  0, gimp_item_width (item) / 2);
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se),
-                                  1, item->height / 2);
+                                  1, gimp_item_height (item) / 2);
    }
 }
 

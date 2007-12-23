@@ -301,8 +301,8 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
       gimp_item_offsets (GIMP_ITEM (template), &off_x, &off_y);
       width   = gimp_item_width  (GIMP_ITEM (template));
       height  = gimp_item_height (GIMP_ITEM (template));
-      opacity = template->opacity;
-      mode    = template->mode;
+      opacity = gimp_layer_get_opacity (template);
+      mode    = gimp_layer_get_mode (template);
     }
   else
     {

@@ -306,8 +306,8 @@ gimp_selection_invalidate_boundary (GimpDrawable *drawable)
   if (layer && gimp_layer_is_floating_sel (layer))
     gimp_drawable_update (GIMP_DRAWABLE (layer),
                           0, 0,
-                          GIMP_ITEM (layer)->width,
-                          GIMP_ITEM (layer)->height);
+                          gimp_item_width  (GIMP_ITEM (layer)),
+                          gimp_item_height (GIMP_ITEM (layer)));
 
   /*  invalidate the preview  */
   drawable->preview_valid = FALSE;
@@ -519,10 +519,11 @@ gimp_selection_new (GimpImage *image,
                            GIMP_GRAY_IMAGE,
                            _("Selection Mask"));
 
-  channel->color       = black;
-  channel->show_masked = TRUE;
-  channel->x2          = width;
-  channel->y2          = height;
+  gimp_channel_set_color (channel, &black, FALSE);
+  gimp_channel_set_show_masked (channel, TRUE);
+
+  channel->x2 = width;
+  channel->y2 = height;
 
   return channel;
 }
@@ -542,24 +543,32 @@ gimp_selection_load (GimpChannel *selection,
   src_item  = GIMP_ITEM (channel);
   dest_item = GIMP_ITEM (selection);
 
-  g_return_if_fail (src_item->width  == dest_item->width);
-  g_return_if_fail (src_item->height == dest_item->height);
+  g_return_if_fail (gimp_item_width  (src_item) == gimp_item_width  (dest_item));
+  g_return_if_fail (gimp_item_height (src_item) == gimp_item_height (dest_item));
 
   gimp_channel_push_undo (selection, _("Channel to Selection"));
 
   /*  copy the channel to the mask  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
-                     0, 0, src_item->width, src_item->height,
+  pixel_region_init (&srcPR,
+                     gimp_drawable_get_tiles (GIMP_DRAWABLE (channel)),
+                     0, 0,
+                     gimp_item_width  (src_item),
+                     gimp_item_height (src_item),
                      FALSE);
-  pixel_region_init (&destPR, GIMP_DRAWABLE (selection)->tiles,
-                     0, 0, dest_item->width, dest_item->height,
+  pixel_region_init (&destPR,
+                     gimp_drawable_get_tiles (GIMP_DRAWABLE (selection)),
+                     0, 0,
+                     gimp_item_width  (dest_item),
+                     gimp_item_height (dest_item),
                      TRUE);
   copy_region (&srcPR, &destPR);
 
   selection->bounds_known = FALSE;
 
-  gimp_drawable_update (GIMP_DRAWABLE (selection), 0, 0,
-                        dest_item->width, dest_item->height);
+  gimp_drawable_update (GIMP_DRAWABLE (selection),
+                        0, 0,
+                        gimp_item_width  (dest_item),
+                        gimp_item_height (dest_item));
 }
 
 GimpChannel *

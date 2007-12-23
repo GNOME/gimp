@@ -189,36 +189,40 @@ gimp_text_layer_from_layer (GimpLayer *layer,
   gimp_object_set_name (GIMP_OBJECT (text_layer),
                         gimp_object_get_name (GIMP_OBJECT (layer)));
 
-  item->ID        = gimp_item_get_ID (GIMP_ITEM (layer));
-  item->tattoo    = gimp_item_get_tattoo (GIMP_ITEM (layer));
-  item->image     = gimp_item_get_image (GIMP_ITEM (layer));
+  item->ID    = gimp_item_get_ID (GIMP_ITEM (layer));
+  item->image = gimp_item_get_image (GIMP_ITEM (layer));
+
+  gimp_item_set_tattoo (item, gimp_item_get_tattoo (GIMP_ITEM (layer)));
 
   gimp_item_set_image (GIMP_ITEM (layer), NULL);
   g_hash_table_replace (item->image->gimp->item_table,
-                        GINT_TO_POINTER (item->ID),
+                        GINT_TO_POINTER (gimp_item_get_ID (item)),
                         item);
 
   item->parasites = GIMP_ITEM (layer)->parasites;
   GIMP_ITEM (layer)->parasites = NULL;
 
-  item->width     = gimp_item_width (GIMP_ITEM (layer));
-  item->height    = gimp_item_height (GIMP_ITEM (layer));
+  item->width  = gimp_item_width (GIMP_ITEM (layer));
+  item->height = gimp_item_height (GIMP_ITEM (layer));
 
   gimp_item_offsets (GIMP_ITEM (layer), &item->offset_x, &item->offset_y);
 
-  item->visible   = gimp_item_get_visible (GIMP_ITEM (layer));
-  item->linked    = gimp_item_get_linked (GIMP_ITEM (layer));
+  gimp_item_set_visible (item, gimp_item_get_visible (GIMP_ITEM (layer)), FALSE);
+  gimp_item_set_linked  (item, gimp_item_get_linked  (GIMP_ITEM (layer)), FALSE);
 
-  drawable->tiles     = GIMP_DRAWABLE (layer)->tiles;
+  drawable->tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (layer));
   GIMP_DRAWABLE (layer)->tiles = NULL;
 
   drawable->bytes     = gimp_drawable_bytes (GIMP_DRAWABLE (layer));
   drawable->type      = gimp_drawable_type (GIMP_DRAWABLE (layer));
   drawable->has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-  GIMP_LAYER (text_layer)->opacity    = gimp_layer_get_opacity (layer);
-  GIMP_LAYER (text_layer)->mode       = gimp_layer_get_mode (layer);
-  GIMP_LAYER (text_layer)->lock_alpha = gimp_layer_get_lock_alpha (layer);
+  gimp_layer_set_opacity    (GIMP_LAYER (text_layer),
+                             gimp_layer_get_opacity (layer), FALSE);
+  gimp_layer_set_mode       (GIMP_LAYER (text_layer),
+                             gimp_layer_get_mode (layer), FALSE);
+  gimp_layer_set_lock_alpha (GIMP_LAYER (text_layer),
+                             gimp_layer_get_lock_alpha (layer), FALSE);
 
   gimp_text_layer_set_text (text_layer, text);
 

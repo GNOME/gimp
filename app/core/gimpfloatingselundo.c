@@ -141,8 +141,8 @@ gimp_floating_sel_undo_pop (GimpUndo            *undo,
           floating_sel_store (floating_layer,
                               GIMP_ITEM (floating_layer)->offset_x,
                               GIMP_ITEM (floating_layer)->offset_y,
-                              GIMP_ITEM (floating_layer)->width,
-                              GIMP_ITEM (floating_layer)->height);
+                              gimp_item_width  (GIMP_ITEM (floating_layer)),
+                              gimp_item_height (GIMP_ITEM (floating_layer)));
           floating_layer->fs.initial = TRUE;
 
           /*  clear the selection  */
@@ -154,8 +154,8 @@ gimp_floating_sel_undo_pop (GimpUndo            *undo,
           floating_sel_restore (floating_layer,
                                 GIMP_ITEM (floating_layer)->offset_x,
                                 GIMP_ITEM (floating_layer)->offset_y,
-                                GIMP_ITEM (floating_layer)->width,
-                                GIMP_ITEM (floating_layer)->height);
+                                gimp_item_width  (GIMP_ITEM (floating_layer)),
+                                gimp_item_height (GIMP_ITEM (floating_layer)));
 
           /*  Update the preview for the underlying drawable  */
           gimp_viewable_invalidate_preview (GIMP_VIEWABLE (floating_layer));
@@ -172,8 +172,8 @@ gimp_floating_sel_undo_pop (GimpUndo            *undo,
 
       gimp_drawable_update (GIMP_DRAWABLE (floating_layer),
                             0, 0,
-                            GIMP_ITEM (floating_layer)->width,
-                            GIMP_ITEM (floating_layer)->height);
+                            gimp_item_width  (GIMP_ITEM (floating_layer)),
+                            gimp_item_height (GIMP_ITEM (floating_layer)));
 
       gimp_image_floating_selection_changed (undo->image);
       break;

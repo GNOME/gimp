@@ -87,8 +87,8 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
   cairo_set_line_width (cr, 1.0);
   gdk_cairo_set_source_color (cr, &widget->style->black);
 
-  xscale = (gdouble) GIMP_ITEM (vectors)->width  / (gdouble) renderer->width;
-  yscale = (gdouble) GIMP_ITEM (vectors)->height / (gdouble) renderer->height;
+  xscale = (gdouble) gimp_item_width  (GIMP_ITEM (vectors)) / (gdouble) renderer->width;
+  yscale = (gdouble) gimp_item_height (GIMP_ITEM (vectors)) / (gdouble) renderer->height;
 
   for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
        stroke != NULL;

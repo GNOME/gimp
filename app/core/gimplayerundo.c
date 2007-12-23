@@ -256,8 +256,12 @@ gimp_layer_undo_pop (GimpUndo            *undo,
 
       GIMP_ITEM (layer)->removed = FALSE;
 
-      if (layer->mask)
-        GIMP_ITEM (layer->mask)->removed = FALSE;
+      if (gimp_layer_get_mask (layer))
+        {
+          GimpLayerMask *mask = gimp_layer_get_mask (layer);
+
+          GIMP_ITEM (mask)->removed = FALSE;
+        }
     }
 
   if (old_has_alpha != gimp_image_has_alpha (undo->image))

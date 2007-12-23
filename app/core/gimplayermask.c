@@ -179,8 +179,8 @@ gimp_layer_mask_new (GimpImage     *image,
                            GIMP_GRAY_IMAGE, name);
 
   /*  set the layer_mask color and opacity  */
-  GIMP_CHANNEL (layer_mask)->color       = *color;
-  GIMP_CHANNEL (layer_mask)->show_masked = TRUE;
+  gimp_channel_set_color (GIMP_CHANNEL (layer_mask), color, FALSE);
+  gimp_channel_set_show_masked (GIMP_CHANNEL (layer_mask), TRUE);
 
   /*  selection mask variables  */
   GIMP_CHANNEL (layer_mask)->x2          = width;

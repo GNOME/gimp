@@ -546,7 +546,8 @@ gimp_image_merge_layers (GimpImage     *image,
                          (x4 - x3), (y4 - y3),
                          FALSE);
 
-      if (layer->mask && layer->mask->apply_mask)
+      if (gimp_layer_get_mask (layer) &&
+          gimp_layer_mask_get_apply (layer->mask))
         {
           TileManager *tiles;
 
@@ -566,12 +567,12 @@ gimp_image_merge_layers (GimpImage     *image,
        *  work on the projection with the lower layer, but only locally on
        *  the layers alpha channel.
        */
-      mode = layer->mode;
+      mode = gimp_layer_get_mode (layer);
       if (layer == bottom_layer && mode != GIMP_DISSOLVE_MODE)
         mode = GIMP_NORMAL_MODE;
 
       combine_regions (&src1PR, &src2PR, &src1PR, mask, NULL,
-                       layer->opacity * 255.999,
+                       gimp_layer_get_opacity (layer) * 255.999,
                        mode,
                        active,
                        operation);

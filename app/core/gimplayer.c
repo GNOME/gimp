@@ -527,9 +527,12 @@ gimp_layer_duplicate (GimpItem *item,
       GimpLayer *layer     = GIMP_LAYER (item);
       GimpLayer *new_layer = GIMP_LAYER (new_item);
 
-      new_layer->mode       = layer->mode;
-      new_layer->opacity    = layer->opacity;
-      new_layer->lock_alpha = layer->lock_alpha;
+      gimp_layer_set_mode       (new_layer,
+                                 gimp_layer_get_mode (layer), FALSE);
+      gimp_layer_set_opacity    (new_layer,
+                                 gimp_layer_get_opacity (layer), FALSE);
+      gimp_layer_set_lock_alpha (new_layer,
+                                 gimp_layer_get_lock_alpha (layer), FALSE);
 
       /*  duplicate the layer mask if necessary  */
       if (layer->mask)
@@ -590,7 +593,7 @@ gimp_layer_convert (GimpItem  *item,
             PixelRegion layerPR;
             PixelRegion newPR;
 
-            pixel_region_init (&layerPR, drawable->tiles,
+            pixel_region_init (&layerPR, gimp_drawable_get_tiles (drawable),
                                0, 0,
                                gimp_item_width (item),
                                gimp_item_height (item),
@@ -676,7 +679,10 @@ gimp_layer_translate (GimpItem *item,
     gimp_image_undo_push_item_displace (gimp_item_get_image (item), NULL, item);
 
   /*  update the old region  */
-  gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, item->width, item->height);
+  gimp_drawable_update (GIMP_DRAWABLE (layer),
+                        0, 0,
+                        gimp_item_width  (item),
+                        gimp_item_height (item));
 
   /*  invalidate the selection boundary because of a layer modification  */
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
@@ -691,7 +697,10 @@ gimp_layer_translate (GimpItem *item,
     floating_sel_rigor (layer, FALSE);
 
   /*  update the new region  */
-  gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, item->width, item->height);
+  gimp_drawable_update (GIMP_DRAWABLE (layer),
+                        0, 0,
+                        gimp_item_width  (item),
+                        gimp_item_height (item));
 
   if (layer->mask)
     {
@@ -866,8 +875,8 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
   Tile      *tile;
   gint       val   = 0;
 
-  if (x >= 0 && x < GIMP_ITEM (layer)->width &&
-      y >= 0 && y < GIMP_ITEM (layer)->height &&
+  if (x >= 0 && x < gimp_item_width  (GIMP_ITEM (layer)) &&
+      y >= 0 && y < gimp_item_height (GIMP_ITEM (layer)) &&
       gimp_item_get_visible (GIMP_ITEM (layer)))
     {
       /*  If the point is inside, and the layer has no
@@ -879,7 +888,7 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
       /*  Otherwise, determine if the alpha value at
        *  the given point is non-zero
        */
-      tile = tile_manager_get_tile (GIMP_DRAWABLE (layer)->tiles,
+      tile = tile_manager_get_tile (gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                                     x, y, TRUE, FALSE);
 
       val = * ((const guchar *) tile_data_pointer (tile, x, y) +
@@ -954,7 +963,8 @@ gimp_layer_layer_mask_update (GimpDrawable *drawable,
 {
   GimpLayerMask *layer_mask = GIMP_LAYER_MASK (drawable);
 
-  if (layer_mask->apply_mask || layer_mask->show_mask)
+  if (gimp_layer_mask_get_apply (layer_mask) ||
+      gimp_layer_mask_get_show (layer_mask))
     {
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             x, y, width, height);
@@ -1130,7 +1140,8 @@ gimp_layer_new_from_region (PixelRegion          *region,
       return NULL;
     }
 
-  pixel_region_init (&layerPR, GIMP_DRAWABLE (new_layer)->tiles,
+  pixel_region_init (&layerPR,
+                     gimp_drawable_get_tiles (GIMP_DRAWABLE (new_layer)),
                      0, 0, width, height,
                      TRUE);
 
@@ -1274,12 +1285,13 @@ gimp_layer_add_mask (GimpLayer     *layer,
 
   gimp_layer_mask_set_layer (mask, layer);
 
-  if (mask->apply_mask || mask->show_mask)
+  if (gimp_layer_mask_get_apply (mask) ||
+      gimp_layer_mask_get_show (mask))
     {
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,
-                            GIMP_ITEM (layer)->width,
-                            GIMP_ITEM (layer)->height);
+                            gimp_item_width  (GIMP_ITEM (layer)),
+                            gimp_item_height (GIMP_ITEM (layer)));
     }
 
   g_signal_connect (mask, "update",
@@ -1317,8 +1329,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
                                gimp_object_get_name (GIMP_OBJECT (layer)));
 
   mask = gimp_layer_mask_new (image,
-                              item->width,
-                              item->height,
+                              gimp_item_width  (item),
+                              gimp_item_height (item),
                               mask_name, &black);
 
   g_free (mask_name);
@@ -1339,8 +1351,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
   pixel_region_init (&destPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                      0, 0,
-                     GIMP_ITEM (mask)->width,
-                     GIMP_ITEM (mask)->height,
+                     gimp_item_width  (GIMP_ITEM (mask)),
+                     gimp_item_height (GIMP_ITEM (mask)),
                      TRUE);
 
   switch (add_mask_type)
@@ -1355,7 +1367,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
         {
           pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                              0, 0,
-                             item->width, item->height,
+                             gimp_item_width  (item),
+                             gimp_item_height (item),
                              FALSE);
 
           extract_alpha_region (&srcPR, NULL, &destPR);
@@ -1369,13 +1382,14 @@ gimp_layer_create_mask (const GimpLayer *layer,
               gimp_drawable_push_undo (drawable,
                                        _("Transfer Alpha to Mask"),
                                        0, 0,
-                                       item->width,
-                                       item->height,
+                                       gimp_item_width  (item),
+                                       gimp_item_height (item),
                                        NULL, FALSE);
 
               pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                  0, 0,
-                                 item->width, item->height,
+                                 gimp_item_width  (item),
+                                 gimp_item_height (item),
                                  TRUE);
 
               for (pr = pixel_regions_register (1, &srcPR);
@@ -1413,13 +1427,16 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
         channel_empty = gimp_channel_is_empty (channel);
 
-        gimp_rectangle_intersect (0, 0, image->width, image->height,
+        gimp_rectangle_intersect (0, 0,
+                                  image->width, image->height,
                                   item->offset_x, item->offset_y,
-                                  item->width, item->height,
-                                  &copy_x, &copy_y, &copy_width, &copy_height);
+                                  gimp_item_width  (item),
+                                  gimp_item_height (item),
+                                  &copy_x, &copy_y,
+                                  &copy_width, &copy_height);
 
-        if (copy_width  < item->width  ||
-            copy_height < item->height ||
+        if (copy_width  < gimp_item_width  (item) ||
+            copy_height < gimp_item_height (item) ||
             channel_empty)
           gimp_channel_clear (GIMP_CHANNEL (mask), NULL, FALSE);
 
@@ -1457,8 +1474,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
             copy_type = (GIMP_IMAGE_TYPE_HAS_ALPHA (layer_type) ?
                          GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE);
 
-            copy_tiles = tile_manager_new (item->width,
-                                           item->height,
+            copy_tiles = tile_manager_new (gimp_item_width  (item),
+                                           gimp_item_height (item),
                                            GIMP_IMAGE_TYPE_BYTES (copy_type));
 
             gimp_drawable_convert_grayscale (drawable,
@@ -1467,16 +1484,16 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
             pixel_region_init (&srcPR, copy_tiles,
                                0, 0,
-                               item->width,
-                               item->height,
+                               gimp_item_width  (item),
+                               gimp_item_height (item),
                                FALSE);
           }
         else
           {
             pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                                0, 0,
-                               item->width,
-                               item->height,
+                               gimp_item_width  (item),
+                               gimp_item_height (item),
                                FALSE);
           }
 
@@ -1507,22 +1524,24 @@ gimp_layer_apply_mask (GimpLayer         *layer,
                        GimpMaskApplyMode  mode,
                        gboolean           push_undo)
 {
-  GimpItem    *item;
-  GimpImage   *image;
-  PixelRegion  srcPR, maskPR;
-  gboolean     view_changed = FALSE;
+  GimpItem      *item;
+  GimpImage     *image;
+  GimpLayerMask *mask;
+  PixelRegion    srcPR, maskPR;
+  gboolean       view_changed = FALSE;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
-  if (! layer->mask)
+  mask = gimp_layer_get_mask (layer);
+
+  if (! mask)
     return;
 
   /*  APPLY can only be done to layers with an alpha channel  */
   if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     g_return_if_fail (mode == GIMP_MASK_DISCARD || push_undo == TRUE);
 
-  item = GIMP_ITEM (layer);
-
+  item  = GIMP_ITEM (layer);
   image = gimp_item_get_image (item);
 
   if (! image)
@@ -1535,7 +1554,7 @@ gimp_layer_apply_mask (GimpLayer         *layer,
                                    _("Apply Layer Mask") :
                                    _("Delete Layer Mask"));
 
-      gimp_image_undo_push_layer_mask_remove (image, NULL, layer, layer->mask);
+      gimp_image_undo_push_layer_mask_remove (image, NULL, layer, mask);
 
       if (mode == GIMP_MASK_APPLY &&
           ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
@@ -1545,9 +1564,9 @@ gimp_layer_apply_mask (GimpLayer         *layer,
     }
 
   /*  check if applying the mask changes the projection  */
-  if (layer->mask->show_mask                                   ||
-      (mode == GIMP_MASK_APPLY   && ! layer->mask->apply_mask) ||
-      (mode == GIMP_MASK_DISCARD &&   layer->mask->apply_mask))
+  if (gimp_layer_mask_get_show (mask)                                   ||
+      (mode == GIMP_MASK_APPLY   && ! gimp_layer_mask_get_apply (mask)) ||
+      (mode == GIMP_MASK_DISCARD &&   gimp_layer_mask_get_apply (mask)))
     {
       view_changed = TRUE;
     }
@@ -1557,31 +1576,33 @@ gimp_layer_apply_mask (GimpLayer         *layer,
       if (push_undo)
         gimp_drawable_push_undo (GIMP_DRAWABLE (layer), NULL,
                                  0, 0,
-                                 item->width,
-                                 item->height,
+                                 gimp_item_width  (item),
+                                 gimp_item_height (item),
                                  NULL, FALSE);
 
       /*  Combine the current layer's alpha channel and the mask  */
-      pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+      pixel_region_init (&srcPR,
+                         gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                          0, 0,
-                         item->width,
-                         item->height,
+                         gimp_item_width  (item),
+                         gimp_item_height (item),
                          TRUE);
-      pixel_region_init (&maskPR, GIMP_DRAWABLE (layer->mask)->tiles,
+      pixel_region_init (&maskPR,
+                         gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),
                          0, 0,
-                         item->width,
-                         item->height,
+                         gimp_item_width  (item),
+                         gimp_item_height (item),
                          FALSE);
 
       apply_mask_to_region (&srcPR, &maskPR, OPAQUE_OPACITY);
     }
 
-  g_signal_handlers_disconnect_by_func (layer->mask,
+  g_signal_handlers_disconnect_by_func (mask,
                                         gimp_layer_layer_mask_update,
                                         layer);
 
-  gimp_item_removed (GIMP_ITEM (layer->mask));
-  g_object_unref (layer->mask);
+  gimp_item_removed (GIMP_ITEM (mask));
+  g_object_unref (mask);
   layer->mask = NULL;
 
   if (push_undo)
@@ -1592,8 +1613,8 @@ gimp_layer_apply_mask (GimpLayer         *layer,
     {
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,
-                            item->width,
-                            item->height);
+                            gimp_item_width  (item),
+                            gimp_item_height (item));
     }
   else
     {
@@ -1606,6 +1627,7 @@ gimp_layer_apply_mask (GimpLayer         *layer,
 void
 gimp_layer_add_alpha (GimpLayer *layer)
 {
+  GimpItem      *item;
   PixelRegion    srcPR, destPR;
   TileManager   *new_tiles;
   GimpImageType  new_type;
@@ -1615,23 +1637,25 @@ gimp_layer_add_alpha (GimpLayer *layer)
   if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     return;
 
+  item = GIMP_ITEM (layer);
+
   new_type = gimp_drawable_type_with_alpha (GIMP_DRAWABLE (layer));
 
   /*  Allocate the new tiles  */
-  new_tiles = tile_manager_new (GIMP_ITEM (layer)->width,
-                                GIMP_ITEM (layer)->height,
+  new_tiles = tile_manager_new (gimp_item_width  (item),
+                                gimp_item_height (item),
                                 GIMP_IMAGE_TYPE_BYTES (new_type));
 
   /*  Configure the pixel regions  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                      0, 0,
-                     GIMP_ITEM (layer)->width,
-                     GIMP_ITEM (layer)->height,
+                     gimp_item_width  (item),
+                     gimp_item_height (item),
                      FALSE);
   pixel_region_init (&destPR, new_tiles,
                      0, 0,
-                     GIMP_ITEM (layer)->width,
-                     GIMP_ITEM (layer)->height,
+                     gimp_item_width  (item),
+                     gimp_item_height (item),
                      TRUE);
 
   /*  Add an alpha channel  */
@@ -1642,8 +1666,8 @@ gimp_layer_add_alpha (GimpLayer *layer)
                                 gimp_item_is_attached (GIMP_ITEM (layer)),
                                 _("Add Alpha Channel"),
                                 new_tiles, new_type,
-                                GIMP_ITEM (layer)->offset_x,
-                                GIMP_ITEM (layer)->offset_y);
+                                item->offset_x,
+                                item->offset_y);
   tile_manager_unref (new_tiles);
 }
 
@@ -1651,6 +1675,7 @@ void
 gimp_layer_flatten (GimpLayer   *layer,
                     GimpContext *context)
 {
+  GimpItem      *item;
   PixelRegion    srcPR, destPR;
   TileManager   *new_tiles;
   GimpImageType  new_type;
@@ -1662,6 +1687,8 @@ gimp_layer_flatten (GimpLayer   *layer,
   if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     return;
 
+  item = GIMP_ITEM (layer);
+
   new_type = gimp_drawable_type_without_alpha (GIMP_DRAWABLE (layer));
 
   gimp_image_get_background (gimp_item_get_image (GIMP_ITEM (layer)), context,
@@ -1669,20 +1696,20 @@ gimp_layer_flatten (GimpLayer   *layer,
                              bg);
 
   /*  Allocate the new tiles  */
-  new_tiles = tile_manager_new (GIMP_ITEM (layer)->width,
-                                GIMP_ITEM (layer)->height,
+  new_tiles = tile_manager_new (gimp_item_width  (item),
+                                gimp_item_height (item),
                                 GIMP_IMAGE_TYPE_BYTES (new_type));
 
   /*  Configure the pixel regions  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles,
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
                      0, 0,
-                     GIMP_ITEM (layer)->width,
-                     GIMP_ITEM (layer)->height,
+                     gimp_item_width  (item),
+                     gimp_item_height (item),
                      FALSE);
   pixel_region_init (&destPR, new_tiles,
                      0, 0,
-                     GIMP_ITEM (layer)->width,
-                     GIMP_ITEM (layer)->height,
+                     gimp_item_width  (item),
+                     gimp_item_height (item),
                      TRUE);
 
   /*  Remove alpha channel  */
@@ -1693,8 +1720,8 @@ gimp_layer_flatten (GimpLayer   *layer,
                                 gimp_item_is_attached (GIMP_ITEM (layer)),
                                 _("Remove Alpha Channel"),
                                 new_tiles, new_type,
-                                GIMP_ITEM (layer)->offset_x,
-                                GIMP_ITEM (layer)->offset_y);
+                                item->offset_x,
+                                item->offset_y);
   tile_manager_unref (new_tiles);
 }
 
@@ -1761,25 +1788,25 @@ gimp_layer_boundary (GimpLayer *layer,
   new_segs[0].x1   = item->offset_x;
   new_segs[0].y1   = item->offset_y;
   new_segs[0].x2   = item->offset_x;
-  new_segs[0].y2   = item->offset_y + item->height;
+  new_segs[0].y2   = item->offset_y + gimp_item_height (item);
   new_segs[0].open = 1;
 
   new_segs[1].x1   = item->offset_x;
   new_segs[1].y1   = item->offset_y;
-  new_segs[1].x2   = item->offset_x + item->width;
+  new_segs[1].x2   = item->offset_x + gimp_item_width (item);
   new_segs[1].y2   = item->offset_y;
   new_segs[1].open = 1;
 
-  new_segs[2].x1   = item->offset_x + item->width;
+  new_segs[2].x1   = item->offset_x + gimp_item_width (item);
   new_segs[2].y1   = item->offset_y;
-  new_segs[2].x2   = item->offset_x + item->width;
-  new_segs[2].y2   = item->offset_y + item->height;
+  new_segs[2].x2   = item->offset_x + gimp_item_width  (item);
+  new_segs[2].y2   = item->offset_y + gimp_item_height (item);
   new_segs[2].open = 0;
 
   new_segs[3].x1   = item->offset_x;
-  new_segs[3].y1   = item->offset_y + item->height;
-  new_segs[3].x2   = item->offset_x + item->width;
-  new_segs[3].y2   = item->offset_y + item->height;
+  new_segs[3].y1   = item->offset_y + gimp_item_height (item);
+  new_segs[3].x2   = item->offset_x + gimp_item_width  (item);
+  new_segs[3].y2   = item->offset_y + gimp_item_height (item);
   new_segs[3].open = 0;
 
   return new_segs;
@@ -1830,8 +1857,8 @@ gimp_layer_set_opacity (GimpLayer *layer,
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,
-                            GIMP_ITEM (layer)->width,
-                            GIMP_ITEM (layer)->height);
+                            gimp_item_width  (GIMP_ITEM (layer)),
+                            gimp_item_height (GIMP_ITEM (layer)));
     }
 }
 
@@ -1866,8 +1893,8 @@ gimp_layer_set_mode (GimpLayer            *layer,
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,
-                            GIMP_ITEM (layer)->width,
-                            GIMP_ITEM (layer)->height);
+                            gimp_item_width  (GIMP_ITEM (layer)),
+                            gimp_item_height (GIMP_ITEM (layer)));
     }
 }
 

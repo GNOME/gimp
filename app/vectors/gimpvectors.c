@@ -221,9 +221,8 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
 static void
 gimp_vectors_init (GimpVectors *vectors)
 {
-  GimpItem *item = GIMP_ITEM (vectors);
+  gimp_item_set_visible (GIMP_ITEM (vectors), FALSE, FALSE);
 
-  item->visible           = FALSE;
   vectors->strokes        = NULL;
   vectors->last_stroke_ID = 0;
   vectors->freeze_count   = 0;
@@ -352,8 +351,8 @@ gimp_vectors_scale (GimpItem              *item,
       GimpStroke *stroke = list->data;
 
       gimp_stroke_scale (stroke,
-                         (gdouble) new_width  / (gdouble) item->width,
-                         (gdouble) new_height / (gdouble) item->height);
+                         (gdouble) new_width  / (gdouble) gimp_item_width  (item),
+                         (gdouble) new_height / (gdouble) gimp_item_height (item));
       gimp_stroke_translate (stroke, new_offset_x, new_offset_y);
     }
 

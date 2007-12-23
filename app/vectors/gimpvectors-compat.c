@@ -128,26 +128,25 @@ gimp_vectors_compat_new (GimpImage              *image,
 gboolean
 gimp_vectors_compat_is_compatible (GimpImage *image)
 {
-  GList       *list;
-  GList       *strokes;
-  GimpVectors *vectors;
-  GimpStroke  *stroke;
-  gint         open_count;
+  GList *list;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
   for (list = GIMP_LIST (image->vectors)->list;
        list;
        list = g_list_next (list))
     {
-      open_count = 0;
+      GimpVectors *vectors    = GIMP_VECTORS (list->data);
+      GList       *strokes;
+      gint         open_count = 0;
 
-      vectors = GIMP_VECTORS (list->data);
-
-      if (GIMP_ITEM (vectors)->visible == TRUE)
+      if (gimp_item_get_visible (GIMP_ITEM (vectors)))
         return FALSE;
 
       for (strokes = vectors->strokes; strokes; strokes = g_list_next (strokes))
         {
-          stroke = GIMP_STROKE (strokes->data);
+           GimpStroke *stroke = GIMP_STROKE (strokes->data);
+
           if (! GIMP_IS_BEZIER_STROKE (stroke))
             return FALSE;
 
@@ -158,6 +157,7 @@ gimp_vectors_compat_is_compatible (GimpImage *image)
       if (open_count >= 2)
         return FALSE;
     }
+
   return TRUE;
 }
 

@@ -243,8 +243,8 @@ gimp_image_resize_to_layers (GimpImage    *image,
   item = list->data;
   min_x = item->offset_x;
   min_y = item->offset_y;
-  max_x = item->offset_x + item->width;
-  max_y = item->offset_y + item->height;
+  max_x = item->offset_x + gimp_item_width  (item);
+  max_y = item->offset_y + gimp_item_height (item);
 
   /*  Respect all layers  */
   for (list = g_list_next (list);
@@ -255,8 +255,8 @@ gimp_image_resize_to_layers (GimpImage    *image,
 
       min_x = MIN (min_x, item->offset_x);
       min_y = MIN (min_y, item->offset_y);
-      max_x = MAX (max_x, item->offset_x + item->width);
-      max_y = MAX (max_y, item->offset_y + item->height);
+      max_x = MAX (max_x, item->offset_x + gimp_item_width  (item));
+      max_y = MAX (max_y, item->offset_y + gimp_item_height (item));
     }
 
   gimp_image_resize (image, context,

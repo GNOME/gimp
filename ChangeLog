@@ -1,3 +1,38 @@
+2007-12-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/layers-commands.c
+	* app/core/gimpchannel-combine.c
+	* app/core/gimpchannel-select.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-convert.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpdrawablemodundo.c
+	* app/core/gimpfloatingselundo.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage.c
+	* app/core/gimpitem-preview.c
+	* app/core/gimpitem.c
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimplayer.c
+	* app/core/gimplayermask.c
+	* app/core/gimplayerundo.c
+	* app/core/gimpmaskundo.c
+	* app/core/gimppalette-import.c
+	* app/core/gimpprojection-construct.c
+	* app/core/gimpselection.c
+	* app/dialogs/offset-dialog.c
+	* app/text/gimptextlayer-xcf.c
+	* app/text/gimptextlayer.c
+	* app/vectors/gimpvectors-compat.c
+	* app/vectors/gimpvectors.c
+	* app/vectors/gimpvectorsmodundo.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpviewrendererdrawable.c
+	* app/widgets/gimpviewrenderervectors.c: use accessors for item,
+	layer, channel and mask attributes.
+
 2007-12-22  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-sample-points.c

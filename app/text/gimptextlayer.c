@@ -564,15 +564,16 @@ gimp_text_layer_render (GimpTextLayer *layer)
 
       tile_manager_unref (new_tiles);
 
-      if (GIMP_LAYER (layer)->mask)
+      if (gimp_layer_get_mask (GIMP_LAYER (layer)))
         {
+          GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (layer));
+
           static GimpContext *unused_eek = NULL;
 
           if (! unused_eek)
             unused_eek = gimp_context_new (image->gimp, "eek", NULL);
 
-          gimp_item_resize (GIMP_ITEM (GIMP_LAYER (layer)->mask), unused_eek,
-                            width, height, 0, 0);
+          gimp_item_resize (GIMP_ITEM (mask), unused_eek, width, height, 0, 0);
         }
     }
 
@@ -625,7 +626,7 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
 
   g_free (bitmap.buffer);
 
-  pixel_region_init (&textPR, drawable->tiles,
+  pixel_region_init (&textPR, gimp_drawable_get_tiles (drawable),
                      0, 0, bitmap.width, bitmap.rows, TRUE);
   pixel_region_init (&maskPR, mask,
                      0, 0, bitmap.width, bitmap.rows, FALSE);

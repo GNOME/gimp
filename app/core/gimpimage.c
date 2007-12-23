@@ -1650,8 +1650,8 @@ gimp_image_set_component_active (GimpImage       *image,
           floating_sel_rigor (floating_sel, FALSE);
           gimp_drawable_update (GIMP_DRAWABLE (floating_sel),
                                 0, 0,
-                                GIMP_ITEM (floating_sel)->width,
-                                GIMP_ITEM (floating_sel)->height);
+                                gimp_item_width  (GIMP_ITEM (floating_sel)),
+                                gimp_item_height (GIMP_ITEM (floating_sel)));
         }
 
       /*  If there is an active channel and we mess with the components,
@@ -2533,10 +2533,11 @@ gimp_image_get_active_drawable (const GimpImage *image)
     }
   else if (image->active_layer)
     {
-      GimpLayer *layer = image->active_layer;
+      GimpLayer     *layer = image->active_layer;
+      GimpLayerMask *mask  = gimp_layer_get_mask (layer);
 
-      if (layer->mask && layer->mask->edit_mask)
-        return GIMP_DRAWABLE (layer->mask);
+      if (mask && gimp_layer_mask_get_edit (mask))
+        return GIMP_DRAWABLE (mask);
       else
         return GIMP_DRAWABLE (layer);
     }
