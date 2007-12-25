@@ -193,7 +193,7 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
   if (! (uri && strlen (uri)))
     return FALSE;
 
-  basename = file_utils_uri_display_basename(uri);
+  basename      = file_utils_uri_display_basename (uri);
 
   save_proc     = dialog->file_proc;
   uri_proc      = file_procedure_find (gimp->plug_in_manager->save_procs,
@@ -201,20 +201,16 @@ file_save_dialog_check_uri (GtkWidget            *save_dialog,
   basename_proc = file_procedure_find (gimp->plug_in_manager->save_procs,
                                        basename, NULL);
 
-#ifdef DEBUG_SPEW
-  g_print ("\n\n%s: URI = %s\n",
-           G_STRFUNC, uri);
-  g_print ("%s: basename = %s\n",
-           G_STRFUNC, basename);
-  g_print ("%s: selected save_proc: %s\n",
-           G_STRFUNC, save_proc && save_proc->menu_label ?
-           save_proc->menu_label : "NULL");
-  g_print ("%s: URI save_proc: %s\n",
-           G_STRFUNC, uri_proc ? uri_proc->menu_label : "NULL");
-  g_print ("%s: basename save_proc: %s\n\n",
-           G_STRFUNC, basename_proc && basename_proc->menu_label ?
-           basename_proc->menu_label : "NULL");
-#endif
+  GIMP_LOG (SAVE_DIALOG, "URI = %s", uri);
+  GIMP_LOG (SAVE_DIALOG, "basename = %s", basename);
+  GIMP_LOG (SAVE_DIALOG, "selected save_proc: %s",
+            save_proc && save_proc->menu_label ?
+            save_proc->menu_label : "NULL");
+  GIMP_LOG (SAVE_DIALOG, "URI save_proc: %s",
+            uri_proc ? uri_proc->menu_label : "NULL");
+  GIMP_LOG (SAVE_DIALOG, "basename save_proc: %s",
+            basename_proc && basename_proc->menu_label ?
+            basename_proc->menu_label : "NULL");
 
   /*  first check if the user entered an extension at all  */
   if (! basename_proc)

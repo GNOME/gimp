@@ -1,3 +1,8 @@
+2007-12-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/file-save-dialog.c: forgot to port some debug output
+	to GIMP_LOG().
+
 2007-12-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/layers-commands.c
