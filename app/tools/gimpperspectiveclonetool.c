@@ -876,8 +876,8 @@ gimp_perspective_clone_tool_bounds (GimpPerspectiveCloneTool *tool,
 
   tool->x1 = 0;
   tool->y1 = 0;
-  tool->x2 = display->image->width;
-  tool->y2 = display->image->height;
+  tool->x2 = gimp_image_get_width  (display->image);
+  tool->y2 = gimp_image_get_height (display->image);
 }
 
 static void

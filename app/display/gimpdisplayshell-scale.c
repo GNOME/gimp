@@ -98,8 +98,8 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   if (! shell->display)
     return;
 
-  image_width  = shell->display->image->width;
-  image_height = shell->display->image->height;
+  image_width  = gimp_image_get_width  (shell->display->image);
+  image_height = gimp_image_get_height (shell->display->image);
 
   sx = SCALEX (shell, image_width);
   sy = SCALEY (shell, image_height);
@@ -400,8 +400,8 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
 
   image = shell->display->image;
 
-  image_width  = image->width;
-  image_height = image->height;
+  image_width  = gimp_image_get_width  (image);
+  image_height = gimp_image_get_height (image);
 
   if (! shell->dot_for_dot)
     {
@@ -436,8 +436,8 @@ gimp_display_shell_scale_fill (GimpDisplayShell *shell)
 
   image = shell->display->image;
 
-  image_width  = image->width;
-  image_height = image->height;
+  image_width  = gimp_image_get_width  (image);
+  image_height = gimp_image_get_height (image);
 
   if (! shell->dot_for_dot)
     {

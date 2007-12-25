@@ -183,7 +183,7 @@ xcf_save_choose_format (XcfInfo   *info,
   GList *list;
   gint   save_version = 0;  /* default to oldest */
 
-  if (image->cmap)
+  if (gimp_image_get_colormap (image))
     save_version = 1;  /* need version 1 for colormaps */
 
   for (list = GIMP_LIST (image->layers)->list;
@@ -248,10 +248,13 @@ xcf_save_image (XcfInfo    *info,
   xcf_write_int8_check_error (info, (guint8 *) version_tag, 14);
 
   /* write out the width, height and image type information for the image */
-  xcf_write_int32_check_error (info, (guint32 *) &image->width, 1);
-  xcf_write_int32_check_error (info, (guint32 *) &image->height, 1);
+  value = gimp_image_get_width (image);
+  xcf_write_int32_check_error (info, (guint32 *) &value, 1);
 
-  value = image->base_type;
+  value = gimp_image_get_height (image);
+  xcf_write_int32_check_error (info, (guint32 *) &value, 1);
+
+  value = gimp_image_base_type (image);
   xcf_write_int32_check_error (info, &value, 1);
 
   /* determine the number of layers and channels in the image */
@@ -337,7 +340,7 @@ xcf_save_image (XcfInfo    *info,
         }
       else
         {
-          channel = image->selection_mask;
+          channel = gimp_image_get_mask (image);
           have_selection = FALSE;
         }
 
@@ -552,7 +555,7 @@ xcf_save_channel_props (XcfInfo      *info,
   if (channel == gimp_image_get_active_channel (image))
     xcf_check_error (xcf_save_prop (info, image, PROP_ACTIVE_CHANNEL, error));
 
-  if (channel == image->selection_mask)
+  if (channel == gimp_image_get_mask (image))
     xcf_check_error (xcf_save_prop (info, image, PROP_SELECTION, error));
 
   xcf_check_error (xcf_save_prop (info, image, PROP_OPACITY, error,

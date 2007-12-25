@@ -440,8 +440,10 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
                            &iscissors->x,
                            &iscissors->y);
 
-      iscissors->x = CLAMP (iscissors->x, 0, display->image->width - 1);
-      iscissors->y = CLAMP (iscissors->y, 0, display->image->height - 1);
+      iscissors->x = CLAMP (iscissors->x,
+                            0, gimp_image_get_width  (display->image) - 1);
+      iscissors->y = CLAMP (iscissors->y,
+                            0, gimp_image_get_height (display->image) - 1);
 
       iscissors->ix = iscissors->x;
       iscissors->iy = iscissors->y;
@@ -530,8 +532,8 @@ iscissors_convert (GimpIscissorsTool *iscissors,
     g_object_unref (iscissors->mask);
 
   iscissors->mask = gimp_channel_new_mask (display->image,
-                                           display->image->width,
-                                           display->image->height);
+                                           gimp_image_get_width  (display->image),
+                                           gimp_image_get_height (display->image));
   gimp_scan_convert_render (sc,
                             gimp_drawable_get_tiles (GIMP_DRAWABLE (iscissors->mask)),
                             0, 0, options->antialias);
@@ -693,8 +695,10 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
         find_max_gradient (iscissors, display->image,
                            &iscissors->x, &iscissors->y);
 
-      iscissors->x = CLAMP (iscissors->x, 0, display->image->width  - 1);
-      iscissors->y = CLAMP (iscissors->y, 0, display->image->height - 1);
+      iscissors->x = CLAMP (iscissors->x,
+                            0, gimp_image_get_width  (display->image) - 1);
+      iscissors->y = CLAMP (iscissors->y,
+                            0, gimp_image_get_height (display->image) - 1);
 
       if (iscissors->first_point)
         {
@@ -709,8 +713,10 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
         find_max_gradient (iscissors, display->image,
                            &iscissors->x, &iscissors->y);
 
-      iscissors->x = CLAMP (iscissors->x, 0, display->image->width  - 1);
-      iscissors->y = CLAMP (iscissors->y, 0, display->image->height - 1);
+      iscissors->x = CLAMP (iscissors->x,
+                            0, gimp_image_get_width  (display->image) - 1);
+      iscissors->y = CLAMP (iscissors->y,
+                            0, gimp_image_get_height (display->image) - 1);
 
       iscissors->nx = iscissors->x;
       iscissors->ny = iscissors->y;
@@ -1358,10 +1364,10 @@ calculate_curve (GimpTool *tool,
   display = tool->display;
 
   /*  Get the bounding box  */
-  xs = CLAMP (curve->x1, 0, display->image->width - 1);
-  ys = CLAMP (curve->y1, 0, display->image->height - 1);
-  xe = CLAMP (curve->x2, 0, display->image->width - 1);
-  ye = CLAMP (curve->y2, 0, display->image->height - 1);
+  xs = CLAMP (curve->x1, 0, gimp_image_get_width  (display->image) - 1);
+  ys = CLAMP (curve->y1, 0, gimp_image_get_height (display->image) - 1);
+  xe = CLAMP (curve->x2, 0, gimp_image_get_width  (display->image) - 1);
+  ye = CLAMP (curve->y2, 0, gimp_image_get_height (display->image) - 1);
   x1 = MIN (xs, xe);
   y1 = MIN (ys, ye);
   x2 = MAX (xs, xe) + 1;  /*  +1 because if xe = 199 & xs = 0, x2 - x1, width = 200  */
@@ -1378,11 +1384,12 @@ calculate_curve (GimpTool *tool,
   eheight = (y2 - y1) * EXTEND_BY + FIXED;
 
   if (xe >= xs)
-    x2 += CLAMP (ewidth, 0, display->image->width - x2);
+    x2 += CLAMP (ewidth, 0, gimp_image_get_width (display->image) - x2);
   else
     x1 -= CLAMP (ewidth, 0, x1);
+
   if (ye >= ys)
-    y2 += CLAMP (eheight, 0, display->image->height - y2);
+    y2 += CLAMP (eheight, 0, gimp_image_get_height (display->image) - y2);
   else
     y1 -= CLAMP (eheight, 0, y1);
 
@@ -1861,7 +1868,8 @@ gradient_map_new (GimpImage *image)
 {
   TileManager *tm;
 
-  tm = tile_manager_new (image->width, image->height,
+  tm = tile_manager_new (gimp_image_get_width  (image),
+                         gimp_image_get_height (image),
                          sizeof (guint8) * COST_WIDTH);
 
   tile_manager_set_validate_proc (tm,
@@ -1894,14 +1902,14 @@ find_max_gradient (GimpIscissorsTool *iscissors,
   radius = GRADIENT_SEARCH >> 1;
 
   /*  calculate the extent of the search  */
-  cx = CLAMP (*x, 0, image->width);
-  cy = CLAMP (*y, 0, image->height);
+  cx = CLAMP (*x, 0, gimp_image_get_width  (image));
+  cy = CLAMP (*y, 0, gimp_image_get_height (image));
   sx = cx - radius;
   sy = cy - radius;
-  x1 = CLAMP (cx - radius, 0, image->width);
-  y1 = CLAMP (cy - radius, 0, image->height);
-  x2 = CLAMP (cx + radius, 0, image->width);
-  y2 = CLAMP (cy + radius, 0, image->height);
+  x1 = CLAMP (cx - radius, 0, gimp_image_get_width  (image));
+  y1 = CLAMP (cy - radius, 0, gimp_image_get_height (image));
+  x2 = CLAMP (cx + radius, 0, gimp_image_get_width  (image));
+  y2 = CLAMP (cy + radius, 0, gimp_image_get_height (image));
   /*  calculate the factor to multiply the distance from the cursor by  */
 
   max_gradient = 0;

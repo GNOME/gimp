@@ -39,6 +39,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-colormap.h"
 #include "core/gimpundostack.h"
 #include "core/gimpunit.h"
 #include "core/gimp-utils.h"
@@ -439,8 +440,10 @@ gimp_image_prop_view_update (GimpImagePropView *view)
 
   /*  pixel size  */
   g_snprintf (buf, sizeof (buf), ngettext ("%d × %d pixel",
-                                           "%d × %d pixels", image->height),
-              image->width, image->height);
+                                           "%d × %d pixels",
+                                           gimp_image_get_height (image)),
+              gimp_image_get_width  (image),
+              gimp_image_get_height (image));
   gtk_label_set_text (GTK_LABEL (view->pixel_size_label), buf);
 
   /*  print size  */
@@ -453,8 +456,8 @@ gimp_image_prop_view_update (GimpImagePropView *view)
               unit_digits + 1, unit_digits + 1,
               _gimp_unit_get_plural (image->gimp, unit));
   g_snprintf (buf, sizeof (buf), format_buf,
-              image->width  * unit_factor / image->xresolution,
-              image->height * unit_factor / image->yresolution);
+              gimp_image_get_width  (image) * unit_factor / image->xresolution,
+              gimp_image_get_height (image) * unit_factor / image->yresolution);
   gtk_label_set_text (GTK_LABEL (view->print_size_label), buf);
 
   /*  resolution  */
@@ -483,7 +486,8 @@ gimp_image_prop_view_update (GimpImagePropView *view)
       break;
     case GIMP_INDEXED:
       g_snprintf (buf, sizeof (buf),
-                  "%s (%d %s)", desc, image->num_cols, _("colors"));
+                  "%s (%d %s)", desc, gimp_image_get_colormap_size (image),
+                  _("colors"));
       break;
     }
 
@@ -498,7 +502,9 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   gimp_image_prop_view_label_set_undo (view->redo_label, image->redo_stack);
 
   /*  number of layers  */
-  g_snprintf (buf, sizeof (buf), "%d", image->width * image->height);
+  g_snprintf (buf, sizeof (buf), "%d",
+              gimp_image_get_width  (image) *
+              gimp_image_get_height (image));
   gtk_label_set_text (GTK_LABEL (view->pixels_label), buf);
 
   /*  number of layers  */

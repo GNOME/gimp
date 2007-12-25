@@ -474,8 +474,10 @@ gimp_display_shell_untransform_viewport (GimpDisplayShell *shell,
 
   if (x1 < 0) x1 = 0;
   if (y1 < 0) y1 = 0;
-  if (x2 > shell->display->image->width)  x2 = shell->display->image->width;
-  if (y2 > shell->display->image->height) y2 = shell->display->image->height;
+  if (x2 > gimp_image_get_width (shell->display->image))
+    x2 = gimp_image_get_width (shell->display->image);
+  if (y2 > gimp_image_get_height (shell->display->image))
+    y2 = gimp_image_get_height (shell->display->image);
 
   if (x)      *x      = x1;
   if (y)      *y      = y1;

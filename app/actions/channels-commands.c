@@ -348,8 +348,8 @@ channels_new_channel_response (GtkWidget            *widget,
       else
         {
           new_channel = gimp_channel_new (options->image,
-                                          options->image->width,
-                                          options->image->height,
+                                          gimp_image_get_width  (options->image),
+                                          gimp_image_get_height (options->image),
                                           channel_name,
                                           &channel_color);
 

@@ -663,8 +663,8 @@ gimp_display_shell_new (GimpDisplay     *display,
 
   shell->display = display;
 
-  image_width  = display->image->width;
-  image_height = display->image->height;
+  image_width  = gimp_image_get_width  (display->image);
+  image_height = gimp_image_get_height (display->image);
 
   gimp = display->image->gimp;
   display_config = GIMP_DISPLAY_CONFIG (gimp->config);
@@ -1166,16 +1166,16 @@ gimp_display_shell_scale_changed (GimpDisplayShell *shell)
 
   image = shell->display->image;
 
-  shell->scale_x = (gimp_zoom_model_get_factor (shell->zoom)
-                    * SCREEN_XRES (shell) / image->xresolution);
+  shell->scale_x = (gimp_zoom_model_get_factor (shell->zoom) *
+                    SCREEN_XRES (shell) / image->xresolution);
 
-  shell->scale_y = (gimp_zoom_model_get_factor (shell->zoom)
-                    * SCREEN_YRES (shell) / image->yresolution);
+  shell->scale_y = (gimp_zoom_model_get_factor (shell->zoom) *
+                    SCREEN_YRES (shell) / image->yresolution);
 
-  shell->x_dest_inc = image->width;
-  shell->y_dest_inc = image->height;
-  shell->x_src_dec  = ceil (image->width  * shell->scale_x);
-  shell->y_src_dec  = ceil (image->height * shell->scale_y);
+  shell->x_dest_inc = gimp_image_get_width  (image);
+  shell->y_dest_inc = gimp_image_get_height (image);
+  shell->x_src_dec  = ceil (gimp_image_get_width  (image) * shell->scale_x);
+  shell->y_src_dec  = ceil (gimp_image_get_height (image) * shell->scale_y);
 }
 
 void
@@ -1593,8 +1593,8 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
   monitor = gdk_screen_get_monitor_at_window (screen, widget->window);
   gdk_screen_get_monitor_geometry (screen, monitor, &rect);
 
-  width  = SCALEX (shell, shell->display->image->width);
-  height = SCALEY (shell, shell->display->image->height);
+  width  = SCALEX (shell, gimp_image_get_width  (shell->display->image));
+  height = SCALEY (shell, gimp_image_get_height (shell->display->image));
 
   disp_width  = shell->disp_width;
   disp_height = shell->disp_height;

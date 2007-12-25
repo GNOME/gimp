@@ -351,14 +351,15 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
                               _gimp_unit_get_digits (gimp, shell->unit) + 1);
                   i += print (title, title_len, i, unit_format,
-                              (image->width *
+                              (gimp_image_get_width (image) *
                                _gimp_unit_get_factor (gimp, shell->unit) /
                                image->xresolution));
                   break;
                 }
               /* else fallthru */
             case 'w': /* width in pixels */
-              i += print (title, title_len, i, "%d", image->width);
+              i += print (title, title_len, i, "%d",
+                          gimp_image_get_width (image));
               break;
 
             case 'H': /* height in real-world units */
@@ -369,14 +370,15 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
                               _gimp_unit_get_digits (gimp, shell->unit) + 1);
                   i += print (title, title_len, i, unit_format,
-                              (image->height *
+                              (gimp_image_get_height (image) *
                                _gimp_unit_get_factor (gimp, shell->unit) /
                                image->yresolution));
                   break;
                 }
               /* else fallthru */
             case 'h': /* height in pixels */
-              i += print (title, title_len, i, "%d", image->height);
+              i += print (title, title_len, i, "%d",
+                          gimp_image_get_height (image));
               break;
 
             case 'u': /* unit symbol */

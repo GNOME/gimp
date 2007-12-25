@@ -579,9 +579,12 @@ gimp_rect_select_tool_select (GimpRectangleTool *rectangle,
 
   gimp_tool_pop_status (tool, tool->display);
 
-  rectangle_exists = (x <= image->width && y <= image->height &&
-                      x + w >= 0 && y + h >= 0 &&
-                      w > 0 && h > 0);
+  rectangle_exists = (x <= gimp_image_get_width  (image) &&
+                      y <= gimp_image_get_height (image) &&
+                      x + w >= 0                         &&
+                      y + h >= 0                         &&
+                      w > 0                              &&
+                      h > 0);
 
   if (priv->use_saved_op)
     operation = priv->operation;

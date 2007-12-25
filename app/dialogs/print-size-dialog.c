@@ -206,8 +206,10 @@ print_size_dialog_new (GimpImage              *image,
   gimp_size_entry_set_refval_boundaries
     (GIMP_SIZE_ENTRY (entry), 1, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 0, image->width);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 1, image->height);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 0,
+                              gimp_image_get_width  (image));
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 1,
+                              gimp_image_get_height (image));
 
   /*  the resolution entry  */
 
@@ -348,14 +350,16 @@ print_size_dialog_size_changed (GtkWidget       *widget,
   width  = gimp_size_entry_get_value (private->size_entry, 0);
   height = gimp_size_entry_get_value (private->size_entry, 1);
 
-  xres = scale * image->width  / MAX (0.001, width);
-  yres = scale * image->height / MAX (0.001, height);
+  xres = scale * gimp_image_get_width  (image) / MAX (0.001, width);
+  yres = scale * gimp_image_get_height (image) / MAX (0.001, height);
 
   xres = CLAMP (xres, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
   yres = CLAMP (yres, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
 
   print_size_dialog_set_resolution (private, xres, yres);
-  print_size_dialog_set_size (private, image->width, image->height);
+  print_size_dialog_set_size (private,
+                              gimp_image_get_width  (image),
+                              gimp_image_get_height (image));
 }
 
 static void

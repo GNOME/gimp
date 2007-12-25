@@ -762,12 +762,14 @@ gimp_move_tool_draw (GimpDrawTool *draw_tool)
 
   if (move->moving_guide && move->guide_position != -1)
     {
+      GimpImage *image = draw_tool->display->image;
+
       switch (move->guide_orientation)
         {
         case GIMP_ORIENTATION_HORIZONTAL:
           gimp_draw_tool_draw_line (draw_tool,
                                     0, move->guide_position,
-                                    draw_tool->display->image->width,
+                                    gimp_image_get_width (image),
                                     move->guide_position,
                                     FALSE);
           break;
@@ -776,7 +778,7 @@ gimp_move_tool_draw (GimpDrawTool *draw_tool)
           gimp_draw_tool_draw_line (draw_tool,
                                     move->guide_position, 0,
                                     move->guide_position,
-                                    draw_tool->display->image->height,
+                                    gimp_image_get_height (image),
                                     FALSE);
           break;
 

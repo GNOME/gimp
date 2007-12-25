@@ -475,10 +475,14 @@ gimp_display_update_area (GimpDisplay *display,
     }
   else
     {
-      GimpArea *area = gimp_area_new (CLAMP (x, 0, display->image->width),
-                                      CLAMP (y, 0, display->image->height),
-                                      CLAMP (x + w, 0, display->image->width),
-                                      CLAMP (y + h, 0, display->image->height));
+      GimpArea *area;
+      gint      image_width  = gimp_image_get_width  (display->image);
+      gint      image_height = gimp_image_get_height (display->image);
+
+      area = gimp_area_new (CLAMP (x,     0, image_width),
+                            CLAMP (y,     0, image_height),
+                            CLAMP (x + w, 0, image_width),
+                            CLAMP (y + h, 0, image_height));
 
       display->update_areas = gimp_area_list_process (display->update_areas,
                                                       area);
@@ -540,15 +544,17 @@ gimp_display_paint_area (GimpDisplay *display,
                          gint         w,
                          gint         h)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDisplayShell *shell        = GIMP_DISPLAY_SHELL (display->shell);
+  gint              image_width  = gimp_image_get_width  (display->image);
+  gint              image_height = gimp_image_get_height (display->image);
   gint              x1, y1, x2, y2;
   gdouble           x1_f, y1_f, x2_f, y2_f;
 
   /*  Bounds check  */
-  x1 = CLAMP (x,     0, display->image->width);
-  y1 = CLAMP (y,     0, display->image->height);
-  x2 = CLAMP (x + w, 0, display->image->width);
-  y2 = CLAMP (y + h, 0, display->image->height);
+  x1 = CLAMP (x,     0, image_width);
+  y1 = CLAMP (y,     0, image_height);
+  x2 = CLAMP (x + w, 0, image_width);
+  y2 = CLAMP (y + h, 0, image_height);
 
   x = x1;
   y = y1;

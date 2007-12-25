@@ -55,16 +55,19 @@ colormap_edit_color_cmd_callback (GtkAction *action,
 {
   GimpColormapEditor *editor;
   GimpImage          *image;
+  const guchar       *colormap;
   GimpRGB             color;
   gchar              *desc;
   return_if_no_image (image, data);
 
   editor = GIMP_COLORMAP_EDITOR (data);
 
+  colormap = gimp_image_get_colormap (image);
+
   gimp_rgba_set_uchar (&color,
-                       image->cmap[editor->col_index * 3],
-                       image->cmap[editor->col_index * 3 + 1],
-                       image->cmap[editor->col_index * 3 + 2],
+                       colormap[editor->col_index * 3],
+                       colormap[editor->col_index * 3 + 1],
+                       colormap[editor->col_index * 3 + 2],
                        OPAQUE_OPACITY);
 
   desc = g_strdup_printf (_("Edit colormap entry #%d"), editor->col_index);
@@ -116,7 +119,7 @@ colormap_add_color_cmd_callback (GtkAction *action,
   return_if_no_context (context, data);
   return_if_no_image (image, data);
 
-  if (image->num_cols < 256)
+  if (gimp_image_get_colormap_size (image) < 256)
     {
       GimpRGB color;
 

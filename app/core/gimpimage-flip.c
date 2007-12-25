@@ -57,11 +57,11 @@ gimp_image_flip (GimpImage           *image,
   switch (flip_type)
     {
     case GIMP_ORIENTATION_HORIZONTAL:
-      axis = (gdouble) image->width / 2.0;
+      axis = (gdouble) gimp_image_get_width (image) / 2.0;
       break;
 
     case GIMP_ORIENTATION_VERTICAL:
-      axis = (gdouble) image->height / 2.0;
+      axis = (gdouble) gimp_image_get_height (image) / 2.0;
       break;
 
     default:
@@ -133,13 +133,15 @@ gimp_image_flip (GimpImage           *image,
         case GIMP_ORIENTATION_HORIZONTAL:
           if (flip_type == GIMP_ORIENTATION_VERTICAL)
             gimp_image_move_guide (image, guide,
-                                   image->height - position, TRUE);
+                                   gimp_image_get_height (image) - position,
+                                   TRUE);
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
           if (flip_type == GIMP_ORIENTATION_HORIZONTAL)
             gimp_image_move_guide (image, guide,
-                                   image->width - position, TRUE);
+                                   gimp_image_get_width (image) - position,
+                                   TRUE);
           break;
 
         default:
@@ -155,12 +157,14 @@ gimp_image_flip (GimpImage           *image,
       if (flip_type == GIMP_ORIENTATION_VERTICAL)
         gimp_image_move_sample_point (image, sample_point,
                                       sample_point->x,
-                                      image->height - sample_point->y,
+                                      gimp_image_get_height (image) -
+                                      sample_point->y,
                                       TRUE);
 
       if (flip_type == GIMP_ORIENTATION_HORIZONTAL)
         gimp_image_move_sample_point (image, sample_point,
-                                      image->width - sample_point->x,
+                                      gimp_image_get_width (image) -
+                                      sample_point->x,
                                       sample_point->y,
                                       TRUE);
     }

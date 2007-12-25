@@ -91,8 +91,8 @@ gimp_image_set_quick_mask_state (GimpImage *image,
                 floating_sel_to_layer (floating_sel, NULL);
 
               mask = gimp_channel_new (image,
-                                       image->width,
-                                       image->height,
+                                       gimp_image_get_width  (image),
+                                       gimp_image_get_height (image),
                                        GIMP_IMAGE_QUICK_MASK_NAME,
                                        &image->quick_mask_color);
 

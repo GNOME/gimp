@@ -64,7 +64,7 @@ gimp_image_snap_x (GimpImage *image,
   if (! (snap_to_guides || snap_to_grid || snap_to_canvas))
     return FALSE;
 
-  if (x < -epsilon_x || x >= (image->width + epsilon_x))
+  if (x < -epsilon_x || x >= (gimp_image_get_width (image) + epsilon_x))
     return FALSE;
 
   if (snap_to_guides)
@@ -108,7 +108,7 @@ gimp_image_snap_x (GimpImage *image,
       while (xoffset > xspacing)
         xoffset -= xspacing;
 
-      for (i = xoffset; i <= image->width; i += xspacing)
+      for (i = xoffset; i <= gimp_image_get_width (image); i += xspacing)
         {
           if (i < 0)
             continue;
@@ -135,12 +135,12 @@ gimp_image_snap_x (GimpImage *image,
           snapped = TRUE;
         }
 
-      dist = ABS (image->width - x);
+      dist = ABS (gimp_image_get_width (image) - x);
 
       if (dist < MIN (epsilon_x, mindist))
         {
           mindist = dist;
-          *tx = image->width;
+          *tx = gimp_image_get_width (image);
           snapped = TRUE;
         }
     }
@@ -172,7 +172,7 @@ gimp_image_snap_y (GimpImage *image,
   if (! (snap_to_guides || snap_to_grid || snap_to_canvas))
     return FALSE;
 
-  if (y < -epsilon_y || y >= (image->height + epsilon_y))
+  if (y < -epsilon_y || y >= (gimp_image_get_height (image) + epsilon_y))
     return FALSE;
 
   if (snap_to_guides)
@@ -216,7 +216,7 @@ gimp_image_snap_y (GimpImage *image,
       while (yoffset > yspacing)
         yoffset -= yspacing;
 
-      for (i = yoffset; i <= image->height; i += yspacing)
+      for (i = yoffset; i <= gimp_image_get_height (image); i += yspacing)
         {
           if (i < 0)
             continue;
@@ -243,12 +243,12 @@ gimp_image_snap_y (GimpImage *image,
           snapped = TRUE;
         }
 
-      dist = ABS (image->height - y);
+      dist = ABS (gimp_image_get_height (image) - y);
 
       if (dist < MIN (epsilon_y, mindist))
         {
           mindist = dist;
-          *ty = image->height;
+          *ty = gimp_image_get_height (image);
           snapped = TRUE;
         }
     }
@@ -281,15 +281,15 @@ gimp_image_snap_point (GimpImage *image,
   *tx = x;
   *ty = y;
 
-  if (! image->guides)         snap_to_guides  = FALSE;
-  if (! image->grid)           snap_to_grid    = FALSE;
-  if (! image->active_vectors) snap_to_vectors = FALSE;
+  if (! image->guides)                         snap_to_guides  = FALSE;
+  if (! gimp_image_get_grid (image))           snap_to_grid    = FALSE;
+  if (! gimp_image_get_active_vectors (image)) snap_to_vectors = FALSE;
 
   if (! (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_vectors))
     return FALSE;
 
-  if (x < -epsilon_x || x >= (image->width  + epsilon_x) ||
-      y < -epsilon_y || y >= (image->height + epsilon_y))
+  if (x < -epsilon_x || x >= (gimp_image_get_width  (image) + epsilon_x) ||
+      y < -epsilon_y || y >= (gimp_image_get_height (image) + epsilon_y))
     {
       return FALSE;
     }
@@ -356,7 +356,7 @@ gimp_image_snap_point (GimpImage *image,
       while (yoffset > yspacing)
         yoffset -= yspacing;
 
-      for (i = xoffset; i <= image->width; i += xspacing)
+      for (i = xoffset; i <= gimp_image_get_width (image); i += xspacing)
         {
           if (i < 0)
             continue;
@@ -371,7 +371,7 @@ gimp_image_snap_point (GimpImage *image,
             }
         }
 
-      for (i = yoffset; i <= image->height; i += yspacing)
+      for (i = yoffset; i <= gimp_image_get_height (image); i += yspacing)
         {
           if (i < 0)
             continue;
@@ -398,12 +398,12 @@ gimp_image_snap_point (GimpImage *image,
           snapped = TRUE;
         }
 
-      dist = ABS (image->width - x);
+      dist = ABS (gimp_image_get_width (image) - x);
 
       if (dist < MIN (epsilon_x, mindist_x))
         {
           mindist_x = dist;
-          *tx = image->width;
+          *tx = gimp_image_get_width (image);
           snapped = TRUE;
         }
 
@@ -416,12 +416,12 @@ gimp_image_snap_point (GimpImage *image,
           snapped = TRUE;
         }
 
-      dist = ABS (image->height - y);
+      dist = ABS (gimp_image_get_height (image) - y);
 
       if (dist < MIN (epsilon_y, mindist_y))
         {
           mindist_y = dist;
-          *ty = image->height;
+          *ty = gimp_image_get_height (image);
           snapped = TRUE;
         }
     }
@@ -494,9 +494,9 @@ gimp_image_snap_rectangle (GimpImage *image,
   *tx1 = x1;
   *ty1 = y1;
 
-  if (! image->guides)         snap_to_guides  = FALSE;
-  if (! image->grid)           snap_to_grid    = FALSE;
-  if (! image->active_vectors) snap_to_vectors = FALSE;
+  if (! image->guides)                         snap_to_guides  = FALSE;
+  if (! gimp_image_get_grid (image))           snap_to_grid    = FALSE;
+  if (! gimp_image_get_active_vectors (image)) snap_to_vectors = FALSE;
 
   if (! (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_vectors))
     return FALSE;

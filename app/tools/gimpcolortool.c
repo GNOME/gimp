@@ -558,15 +558,17 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
           if (color_tool->sample_point_x != -1 &&
               color_tool->sample_point_y != -1)
             {
+              GimpImage *image = draw_tool->display->image;
+
               gimp_draw_tool_draw_line (draw_tool,
                                         0, color_tool->sample_point_y + 0.5,
-                                        draw_tool->display->image->width,
+                                        gimp_image_get_width (image),
                                         color_tool->sample_point_y + 0.5,
                                         FALSE);
               gimp_draw_tool_draw_line (draw_tool,
                                         color_tool->sample_point_x + 0.5, 0,
                                         color_tool->sample_point_x + 0.5,
-                                        draw_tool->display->image->height,
+                                        gimp_image_get_height (image),
                                         FALSE);
             }
         }

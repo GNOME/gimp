@@ -281,7 +281,8 @@ file_open_thumbnail (Gimp          *gimp,
 
 #ifdef GIMP_UNSTABLE
               g_printerr ("opened thumbnail at %d x %d\n",
-                          image->width, image->height);
+                          gimp_image_get_width  (image),
+                          gimp_image_get_height (image));
 #endif
             }
         }
@@ -568,7 +569,10 @@ file_open_sanitize_image (GimpImage *image,
    * load plug-ins are not required to call gimp_drawable_update() or
    * anything.
    */
-  gimp_image_update (image, 0, 0, image->width, image->height);
+  gimp_image_update (image,
+                     0, 0,
+                     gimp_image_get_width  (image),
+                     gimp_image_get_height (image));
   gimp_image_flush (image);
 
   /* same for drawable previews */

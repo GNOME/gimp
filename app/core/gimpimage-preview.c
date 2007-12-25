@@ -40,8 +40,8 @@ gimp_image_get_preview_size (GimpViewable *viewable,
 {
   GimpImage *image = GIMP_IMAGE (viewable);
 
-  gimp_viewable_calc_preview_size (image->width,
-                                   image->height,
+  gimp_viewable_calc_preview_size (gimp_image_get_width  (image),
+                                   gimp_image_get_height (image),
                                    size,
                                    size,
                                    dot_for_dot,
@@ -62,12 +62,13 @@ gimp_image_get_popup_size (GimpViewable *viewable,
 {
   GimpImage *image = GIMP_IMAGE (viewable);
 
-  if (image->width > width || image->height > height)
+  if (gimp_image_get_width  (image) > width ||
+      gimp_image_get_height (image) > height)
     {
       gboolean scaling_up;
 
-      gimp_viewable_calc_preview_size (image->width,
-                                       image->height,
+      gimp_viewable_calc_preview_size (gimp_image_get_width  (image),
+                                       gimp_image_get_height (image),
                                        width  * 2,
                                        height * 2,
                                        dot_for_dot, 1.0, 1.0,
@@ -77,8 +78,8 @@ gimp_image_get_popup_size (GimpViewable *viewable,
 
       if (scaling_up)
         {
-          *popup_width  = image->width;
-          *popup_height = image->height;
+          *popup_width  = gimp_image_get_width  (image);
+          *popup_height = gimp_image_get_height (image);
         }
 
       return TRUE;
@@ -129,8 +130,8 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   gint         level;
   gboolean     is_premult;
 
-  scale_x = (gdouble) width  / (gdouble) image->width;
-  scale_y = (gdouble) height / (gdouble) image->height;
+  scale_x = (gdouble) width  / (gdouble) gimp_image_get_width  (image);
+  scale_y = (gdouble) height / (gdouble) gimp_image_get_height (image);
 
   level = gimp_projection_get_level (image->projection, scale_x, scale_y);
 

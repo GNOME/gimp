@@ -82,8 +82,8 @@ gimp_image_scale (GimpImage             *image,
   /*  Push the image size to the stack  */
   gimp_image_undo_push_image_size (image, NULL);
 
-  old_width   = image->width;
-  old_height  = image->height;
+  old_width   = gimp_image_get_width  (image);
+  old_height  = gimp_image_get_height (image);
   img_scale_w = (gdouble) new_width  / (gdouble) old_width;
   img_scale_h = (gdouble) new_height / (gdouble) old_height;
 
@@ -257,7 +257,7 @@ gimp_image_scale_check (const GimpImage *image,
                                              GIMP_ITEM_TYPE_LAYERS |
                                              GIMP_ITEM_TYPE_CHANNELS,
                                              GIMP_ITEM_SET_ALL);
-  drawables = g_list_prepend (drawables, image->selection_mask);
+  drawables = g_list_prepend (drawables, gimp_image_get_mask (image));
 
   scalable_size = 0;
   scaled_size   = 0;

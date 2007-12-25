@@ -1,5 +1,77 @@
 2007-12-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/channels-commands.c
+	* app/actions/colormap-actions.c
+	* app/actions/colormap-commands.c
+	* app/actions/image-commands.c
+	* app/core/gimp-edit.c
+	* app/core/gimpdrawable-preview.c
+	* app/core/gimpimage-colorhash.c
+	* app/core/gimpimage-colormap.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-flip.c
+	* app/core/gimpimage-guides.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-preview.c
+	* app/core/gimpimage-quick-mask.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-rotate.c
+	* app/core/gimpimage-sample-points.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage-snap.c
+	* app/core/gimpimage.c
+	* app/core/gimpimagefile.c
+	* app/core/gimpimageundo.c
+	* app/core/gimpitem-preview.c
+	* app/core/gimpitem.c
+	* app/core/gimplayer.c
+	* app/core/gimppalette-import.c
+	* app/core/gimpprojection-construct.c
+	* app/core/gimpprojection.c
+	* app/core/gimpselection.c
+	* app/core/gimpundo.c
+	* app/dialogs/layer-options-dialog.c
+	* app/dialogs/print-size-dialog.c
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-scroll.c
+	* app/display/gimpdisplayshell-title.c
+	* app/display/gimpdisplayshell-transform.c
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpstatusbar.c
+	* app/file/file-open.c
+	* app/paint/gimppaintoptions.c
+	* app/tools/gimpaligntool.c
+	* app/tools/gimpcolortool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimpperspectiveclonetool.c
+	* app/tools/gimprectangleselecttool.c
+	* app/tools/gimprectangletool.c
+	* app/tools/gimprotatetool.c
+	* app/vectors/gimpvectors-export.c
+	* app/vectors/gimpvectors-import.c
+	* app/vectors/gimpvectors.c
+	* app/widgets/gimpimagepropview.c
+	* app/widgets/gimpnavigationview.c
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimpviewrendererdrawable.c
+	* app/widgets/gimpviewrendererimage.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+	* tools/pdbgen/pdb/guides.pdb
+	* tools/pdbgen/pdb/image.pdb: use accessors for many image properties.
+
+	* app/pdb/guides_cmds.c
+	* app/pdb/image_cmds.c: regenerated.
+
+2007-12-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/file-save-dialog.c: forgot to port some debug output
 	to GIMP_LOG().
 

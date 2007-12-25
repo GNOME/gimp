@@ -24,6 +24,7 @@
 
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
+#include "gimpimage-colormap.h"
 
 
 #define MAXDIFF         195076
@@ -113,14 +114,14 @@ gimp_image_color_hash_rgb_to_indexed (const GimpImage *image,
                                       gint             g,
                                       gint             b)
 {
-  guchar *cmap;
-  gint    num_cols;
-  guint   pixel;
-  gint    hash_index;
-  gint    cmap_index;
+  const guchar *cmap;
+  gint          num_cols;
+  guint         pixel;
+  gint          hash_index;
+  gint          cmap_index;
 
-  cmap       = image->cmap;
-  num_cols   = image->num_cols;
+  cmap       = gimp_image_get_colormap (image);
+  num_cols   = gimp_image_get_colormap_size (image);
   pixel      = (r << 16) | (g << 8) | b;
   hash_index = pixel % HASH_TABLE_SIZE;
 

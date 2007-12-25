@@ -611,8 +611,8 @@ gimp_rectangle_tool_constraint_size_set (GimpRectangleTool *rect_tool,
         case GIMP_RECTANGLE_CONSTRAIN_IMAGE:
         default:
           {
-            width  = image->width;
-            height = image->height;
+            width  = gimp_image_get_width  (image);
+            height = gimp_image_get_height (image);
           }
           break;
         }
@@ -1935,7 +1935,7 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->fixed_width_entry),
                                       0, display->image->xresolution, FALSE);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->fixed_width_entry),
-                                0, 0, display->image->width);
+                                0, 0, gimp_image_get_width (display->image));
     }
 
   if (options_private->fixed_height_entry)
@@ -1943,7 +1943,7 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->fixed_height_entry),
                                       0, display->image->yresolution, FALSE);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->fixed_height_entry),
-                                0, 0, display->image->height);
+                                0, 0, gimp_image_get_height (display->image));
     }
 
   if (options_private->x_entry)
@@ -1951,7 +1951,7 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->x_entry),
                                       0, display->image->xresolution, FALSE);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->x_entry),
-                                0, 0, display->image->width);
+                                0, 0, gimp_image_get_width (display->image));
     }
 
   if (options_private->y_entry)
@@ -1959,7 +1959,7 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->y_entry),
                                       0, display->image->yresolution, FALSE);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->y_entry),
-                                0, 0, display->image->height);
+                                0, 0, gimp_image_get_height (display->image));
     }
 
   if (options_private->width_entry)
@@ -1967,7 +1967,7 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->width_entry),
                                       0, display->image->xresolution, FALSE);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->width_entry),
-                                0, 0, display->image->width);
+                                0, 0, gimp_image_get_width (display->image));
     }
 
   if (options_private->height_entry)
@@ -1975,7 +1975,7 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->height_entry),
                                       0, display->image->yresolution, FALSE);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->height_entry),
-                                0, 0, display->image->height);
+                                0, 0, gimp_image_get_height (display->image));
     }
 
   if (options_private->auto_shrink_button)
@@ -2409,8 +2409,8 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rect_tool)
   if (! display)
     return;
 
-  width  = display->image->width;
-  height = display->image->height;
+  width  = gimp_image_get_width  (display->image);
+  height = gimp_image_get_height (display->image);
 
   g_object_get (gimp_tool_get_options (tool),
                 "shrink-merged", &shrink_merged,
@@ -3815,8 +3815,8 @@ gimp_rectangle_tool_apply_fixed_rule (GimpRectangleTool *rect_tool)
 
       aspect = CLAMP (options_private->aspect_numerator /
                       options_private->aspect_denominator,
-                      1.0 / tool->display->image->height,
-                      tool->display->image->width);
+                      1.0 / gimp_image_get_height (tool->display->image),
+                      gimp_image_get_width (tool->display->image));
 
       if (constraint_to_use == GIMP_RECTANGLE_CONSTRAIN_NONE)
         {
@@ -3928,8 +3928,8 @@ gimp_rectangle_tool_get_constraints (GimpRectangleTool       *rect_tool,
     case GIMP_RECTANGLE_CONSTRAIN_IMAGE:
       *min_x = 0;
       *min_y = 0;
-      *max_x = tool->display->image->width;
-      *max_y = tool->display->image->height;
+      *max_x = gimp_image_get_width  (tool->display->image);
+      *max_y = gimp_image_get_height (tool->display->image);
       break;
 
     case GIMP_RECTANGLE_CONSTRAIN_DRAWABLE:

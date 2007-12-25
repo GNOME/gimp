@@ -236,8 +236,8 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
     {
       edit_select->x1 = 0;
       edit_select->y1 = 0;
-      edit_select->x2 = display->image->width;
-      edit_select->y2 = display->image->height;
+      edit_select->x2 = gimp_image_get_width  (display->image);
+      edit_select->y2 = gimp_image_get_height (display->image);
     }
   else
     {

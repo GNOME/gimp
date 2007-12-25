@@ -225,13 +225,13 @@ gimp_navigation_view_move_to (GimpNavigationView *nav_view,
 
   /*  transform to image coordinates  */
   if (view->renderer->width != nav_view->p_width)
-    ratiox = ((image->width - nav_view->width + 1.0) /
+    ratiox = ((gimp_image_get_width (image) - nav_view->width + 1.0) /
               (view->renderer->width - nav_view->p_width));
   else
     ratiox = 1.0;
 
   if (view->renderer->height != nav_view->p_height)
-    ratioy = ((image->height - nav_view->height + 1.0) /
+    ratioy = ((gimp_image_get_height (image) - nav_view->height + 1.0) /
               (view->renderer->height - nav_view->p_height));
   else
     ratioy = 1.0;
@@ -481,8 +481,10 @@ gimp_navigation_view_transform (GimpNavigationView *nav_view)
 
   image = GIMP_IMAGE (view->renderer->viewable);
 
-  ratiox = ((gdouble) view->renderer->width  / (gdouble) image->width);
-  ratioy = ((gdouble) view->renderer->height / (gdouble) image->height);
+  ratiox = ((gdouble) view->renderer->width  /
+            (gdouble) gimp_image_get_width  (image));
+  ratioy = ((gdouble) view->renderer->height /
+            (gdouble) gimp_image_get_height (image));
 
   nav_view->p_x = RINT (nav_view->x * ratiox);
   nav_view->p_y = RINT (nav_view->y * ratioy);
@@ -505,10 +507,10 @@ gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
 
       image = GIMP_IMAGE (view->renderer->viewable);
 
-      if (nav_view->x      > 0             ||
-          nav_view->y      > 0             ||
-          nav_view->width  < image->width ||
-          nav_view->height < image->height)
+      if (nav_view->x      > 0                             ||
+          nav_view->y      > 0                             ||
+          nav_view->width  < gimp_image_get_width  (image) ||
+          nav_view->height < gimp_image_get_height (image))
         {
           GtkWidget *widget = GTK_WIDGET (view);
 
@@ -550,17 +552,19 @@ gimp_navigation_view_set_marker (GimpNavigationView *nav_view,
   if (GTK_WIDGET_DRAWABLE (view))
     gimp_navigation_view_draw_marker (nav_view, NULL);
 
-  nav_view->x = CLAMP (x, 0.0, image->width  - 1.0);
-  nav_view->y = CLAMP (y, 0.0, image->height - 1.0);
+  nav_view->x = CLAMP (x, 0.0, gimp_image_get_width  (image) - 1.0);
+  nav_view->y = CLAMP (y, 0.0, gimp_image_get_height (image) - 1.0);
 
   if (width < 0.0)
-    width = image->width;
+    width = gimp_image_get_width (image);
 
   if (height < 0.0)
-    height = image->height;
+    height = gimp_image_get_height (image);
 
-  nav_view->width  = CLAMP (width,  1.0, image->width  - nav_view->x);
-  nav_view->height = CLAMP (height, 1.0, image->height - nav_view->y);
+  nav_view->width  = CLAMP (width,  1.0,
+                            gimp_image_get_width  (image) - nav_view->x);
+  nav_view->height = CLAMP (height, 1.0,
+                            gimp_image_get_height (image) - nav_view->y);
 
   gimp_navigation_view_transform (nav_view);
 

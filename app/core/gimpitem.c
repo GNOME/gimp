@@ -718,8 +718,10 @@ gimp_item_check_scaling (const GimpItem *item,
 
   image = gimp_item_get_image (item);
 
-  img_scale_w     = (gdouble) new_width  / (gdouble) image->width;
-  img_scale_h     = (gdouble) new_height / (gdouble) image->height;
+  img_scale_w     = ((gdouble) new_width /
+                     (gdouble) gimp_image_get_width (image));
+  img_scale_h     = ((gdouble) new_height /
+                     (gdouble) gimp_image_get_height (image));
   new_item_width  = ROUND (img_scale_w * (gdouble) gimp_item_width  (item));
   new_item_height = ROUND (img_scale_h * (gdouble) gimp_item_height (item));
 
@@ -872,18 +874,20 @@ gimp_item_scale_by_origin (GimpItem              *item,
 
   if (local_origin)
     {
-      new_offset_x = item->offset_x + ((item->width  - new_width)  / 2.0);
-      new_offset_y = item->offset_y + ((item->height - new_height) / 2.0);
+      new_offset_x = (item->offset_x +
+                      ((gimp_item_width  (item) - new_width)  / 2.0));
+      new_offset_y = (item->offset_y +
+                      ((gimp_item_height (item) - new_height) / 2.0));
     }
   else
     {
       new_offset_x = (gint) (((gdouble) new_width *
                               (gdouble) item->offset_x /
-                              (gdouble) item->width));
+                              (gdouble) gimp_item_width (item)));
 
       new_offset_y = (gint) (((gdouble) new_height *
                               (gdouble) item->offset_y /
-                              (gdouble) item->height));
+                              (gdouble) gimp_item_height (item)));
     }
 
   gimp_item_scale (item,
@@ -1317,8 +1321,8 @@ gimp_item_is_in_set (GimpItem    *item,
       return TRUE;
 
     case GIMP_ITEM_SET_IMAGE_SIZED:
-      return (gimp_item_width  (item) == item->image->width &&
-              gimp_item_height (item) == item->image->height);
+      return (gimp_item_width  (item) == gimp_image_get_width  (item->image) &&
+              gimp_item_height (item) == gimp_image_get_height (item->image));
 
     case GIMP_ITEM_SET_VISIBLE:
       return gimp_item_get_visible (item);

@@ -1428,7 +1428,8 @@ gimp_layer_create_mask (const GimpLayer *layer,
         channel_empty = gimp_channel_is_empty (channel);
 
         gimp_rectangle_intersect (0, 0,
-                                  image->width, image->height,
+                                  gimp_image_get_width  (image),
+                                  gimp_image_get_height (image),
                                   item->offset_x, item->offset_y,
                                   gimp_item_width  (item),
                                   gimp_item_height (item),
@@ -1744,7 +1745,9 @@ gimp_layer_resize_to_image (GimpLayer   *layer,
 
   gimp_item_offsets (GIMP_ITEM (layer), &offset_x, &offset_y);
   gimp_item_resize (GIMP_ITEM (layer), context,
-                    image->width, image->height, offset_x, offset_y);
+                    gimp_image_get_width  (image),
+                    gimp_image_get_height (image),
+                    offset_x, offset_y);
 
   gimp_image_undo_group_end (image);
 }

@@ -268,8 +268,8 @@ gimp_vectors_import (GimpImage    *image,
   /*  the base of the stack, defines the size of the view-port  */
   base = g_slice_new0 (SvgHandler);
   base->name   = "image";
-  base->width  = image->width;
-  base->height = image->height;
+  base->width  = gimp_image_get_width  (image);
+  base->height = gimp_image_get_height (image);
 
   g_queue_push_head (parser.stack, base);
 
@@ -533,8 +533,8 @@ svg_handler_svg_start (SvgHandler   *handler,
     {
       if (w > 0.0 && h > 0.0)
         gimp_matrix3_scale (matrix,
-                            parser->image->width  / w,
-                            parser->image->height / h);
+                            gimp_image_get_width  (parser->image) / w,
+                            gimp_image_get_height (parser->image) / h);
     }
 
   handler->width  = w;

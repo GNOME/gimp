@@ -64,8 +64,9 @@ gimp_image_duplicate (GimpImage *image)
 
   /*  Create a new image  */
   new_image = gimp_create_image (image->gimp,
-                                 image->width, image->height,
-                                 image->base_type,
+                                 gimp_image_get_width  (image),
+                                 gimp_image_get_height (image),
+                                 gimp_image_base_type (image),
                                  FALSE);
   gimp_image_undo_disable (new_image);
 
@@ -80,7 +81,7 @@ gimp_image_duplicate (GimpImage *image)
     }
 
   /*  Copy the colormap if necessary  */
-  if (new_image->base_type == GIMP_INDEXED)
+  if (gimp_image_base_type (new_image) == GIMP_INDEXED)
     gimp_image_set_colormap (new_image,
                              gimp_image_get_colormap (image),
                              gimp_image_get_colormap_size (image),
@@ -89,7 +90,7 @@ gimp_image_duplicate (GimpImage *image)
   /*  Copy resolution information  */
   new_image->xresolution     = image->xresolution;
   new_image->yresolution     = image->yresolution;
-  new_image->resolution_unit = image->resolution_unit;
+  new_image->resolution_unit = gimp_image_get_unit (image);
 
   /*  Copy floating layer  */
   floating_layer = gimp_image_floating_sel (image);
@@ -196,14 +197,20 @@ gimp_image_duplicate (GimpImage *image)
     PixelRegion  srcPR, destPR;
 
     src_tiles  =
-      gimp_drawable_get_tiles (GIMP_DRAWABLE (image->selection_mask));
+      gimp_drawable_get_tiles (GIMP_DRAWABLE (gimp_image_get_mask (image)));
     dest_tiles =
-      gimp_drawable_get_tiles (GIMP_DRAWABLE (new_image->selection_mask));
+      gimp_drawable_get_tiles (GIMP_DRAWABLE (gimp_image_get_mask (new_image)));
 
     pixel_region_init (&srcPR, src_tiles,
-                       0, 0, image->width, image->height, FALSE);
+                       0, 0,
+                       gimp_image_get_width  (image),
+                       gimp_image_get_height (image),
+                       FALSE);
     pixel_region_init (&destPR, dest_tiles,
-                       0, 0, image->width, image->height, TRUE);
+                       0, 0,
+                       gimp_image_get_width  (image),
+                       gimp_image_get_height (image),
+                       TRUE);
 
     copy_region (&srcPR, &destPR);
 

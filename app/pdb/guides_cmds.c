@@ -55,7 +55,7 @@ image_add_hguide_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (yposition <= image->height)
+      if (yposition <= gimp_image_get_height (image))
         {
           GimpGuide *g;
 
@@ -93,7 +93,7 @@ image_add_vguide_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (xposition <= image->width)
+      if (xposition <= gimp_image_get_width (image))
         {
           GimpGuide *g;
 

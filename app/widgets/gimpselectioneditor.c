@@ -294,8 +294,8 @@ gimp_selection_view_button_press (GtkWidget           *widget,
       operation = GIMP_CHANNEL_OP_SUBTRACT;
     }
 
-  x = image_editor->image->width  * bevent->x / renderer->width;
-  y = image_editor->image->height * bevent->y / renderer->height;
+  x = gimp_image_get_width  (image_editor->image) * bevent->x / renderer->width;
+  y = gimp_image_get_height (image_editor->image) * bevent->y / renderer->height;
 
   if (gimp_image_pick_color (image_editor->image, drawable, x, y,
                              options->sample_merged,

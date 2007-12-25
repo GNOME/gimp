@@ -239,7 +239,7 @@ xcf_load_image (Gimp     *gimp,
       xcf_progress_update (info);
 
       /* add the channel to the image if its not the selection */
-      if (channel != image->selection_mask)
+      if (channel != gimp_image_get_mask (image))
         gimp_image_add_channel (image, channel,
                                 gimp_container_num_children (image->channels));
 
@@ -786,21 +786,26 @@ xcf_load_channel_props (XcfInfo      *info,
           break;
 
         case PROP_SELECTION:
-          g_object_unref (image->selection_mask);
-          image->selection_mask =
-            gimp_selection_new (image,
-                                gimp_item_width (GIMP_ITEM (*channel)),
-                                gimp_item_height (GIMP_ITEM (*channel)));
-          g_object_ref_sink (image->selection_mask);
+          {
+            GimpChannel *mask;
 
-          tile_manager_unref (GIMP_DRAWABLE (image->selection_mask)->tiles);
-          GIMP_DRAWABLE (image->selection_mask)->tiles =
-            GIMP_DRAWABLE (*channel)->tiles;
-          GIMP_DRAWABLE (*channel)->tiles = NULL;
-          g_object_unref (*channel);
-          *channel = image->selection_mask;
-          (*channel)->boundary_known = FALSE;
-          (*channel)->bounds_known   = FALSE;
+            g_object_unref (gimp_image_get_mask (image));
+
+            mask = image->selection_mask =
+              gimp_selection_new (image,
+                                  gimp_item_width (GIMP_ITEM (*channel)),
+                                  gimp_item_height (GIMP_ITEM (*channel)));
+            g_object_ref_sink (mask);
+
+            tile_manager_unref (GIMP_DRAWABLE (mask)->tiles);
+            GIMP_DRAWABLE (mask)->tiles =
+              GIMP_DRAWABLE (*channel)->tiles;
+            GIMP_DRAWABLE (*channel)->tiles = NULL;
+            g_object_unref (*channel);
+            *channel = mask;
+            (*channel)->boundary_known = FALSE;
+            (*channel)->bounds_known   = FALSE;
+          }
           break;
 
         case PROP_OPACITY:

@@ -43,7 +43,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (yposition <= image->height)
+  if (yposition <= gimp_image_get_height (image))
     {
       GimpGuide *g;
 
@@ -83,7 +83,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (xposition <= image->width)
+  if (xposition <= gimp_image_get_width (image))
     {
       GimpGuide *g;
 

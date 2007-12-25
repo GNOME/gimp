@@ -902,10 +902,10 @@ gimp_statusbar_update_cursor (GimpStatusbar *statusbar,
 
   shell = statusbar->shell;
 
-  if (x <  0 ||
-      y <  0 ||
-      x >= shell->display->image->width ||
-      y >= shell->display->image->height)
+  if (x <  0                                             ||
+      y <  0                                             ||
+      x >= gimp_image_get_width  (shell->display->image) ||
+      y >= gimp_image_get_height (shell->display->image))
     {
       gtk_widget_set_sensitive (statusbar->cursor_label, FALSE);
     }
@@ -1080,7 +1080,9 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
                   _gimp_unit_get_digits (image->gimp, shell->unit));
     }
 
-  gimp_statusbar_update_cursor (statusbar, -image->width, -image->height);
+  gimp_statusbar_update_cursor (statusbar,
+                                - gimp_image_get_width  (image),
+                                - gimp_image_get_height (image));
 
   text = gtk_label_get_text (GTK_LABEL (statusbar->cursor_label));
 

@@ -477,22 +477,25 @@ gimp_undo_create_preview_private (GimpUndo    *undo,
 
   preview_size = image->gimp->config->undo_preview_size;
 
-  if (image->width <= preview_size && image->height <= preview_size)
+  if (gimp_image_get_width  (image) <= preview_size &&
+      gimp_image_get_height (image) <= preview_size)
     {
-      width  = image->width;
-      height = image->height;
+      width  = gimp_image_get_width  (image);
+      height = gimp_image_get_height (image);
     }
   else
     {
-      if (image->width > image->height)
+      if (gimp_image_get_width (image) > gimp_image_get_height (image))
         {
           width  = preview_size;
-          height = MAX (1, (image->height * preview_size / image->width));
+          height = MAX (1, (gimp_image_get_height (image) * preview_size /
+                            gimp_image_get_width (image)));
         }
       else
         {
           height = preview_size;
-          width  = MAX (1, (image->width * preview_size / image->height));
+          width  = MAX (1, (gimp_image_get_width (image) * preview_size /
+                            gimp_image_get_height (image)));
         }
     }
 

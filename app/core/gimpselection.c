@@ -360,8 +360,8 @@ gimp_selection_boundary (GimpChannel     *channel,
                                                           num_segs_in,
                                                           num_segs_out,
                                                           0, 0,
-                                                          image->width,
-                                                          image->height);
+                                                          gimp_image_get_width  (image),
+                                                          gimp_image_get_height (image));
     }
   else if ((layer = gimp_image_get_active_layer (image)))
     {
@@ -375,12 +375,12 @@ gimp_selection_boundary (GimpChannel     *channel,
 
       gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 
-      x1 = CLAMP (off_x, 0, image->width);
-      y1 = CLAMP (off_y, 0, image->height);
-      x2 = CLAMP (off_x + gimp_item_width (GIMP_ITEM (layer)), 0,
-                  image->width);
-      y2 = CLAMP (off_y + gimp_item_height (GIMP_ITEM (layer)), 0,
-                  image->height);
+      x1 = CLAMP (off_x, 0, gimp_image_get_width  (image));
+      y1 = CLAMP (off_y, 0, gimp_image_get_height (image));
+      x2 = CLAMP (off_x + gimp_item_width (GIMP_ITEM (layer)),
+                  0, gimp_image_get_width (image));
+      y2 = CLAMP (off_y + gimp_item_height (GIMP_ITEM (layer)),
+                  0, gimp_image_get_height (image));
 
       return GIMP_CHANNEL_CLASS (parent_class)->boundary (channel,
                                                           segs_in, segs_out,

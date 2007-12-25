@@ -80,8 +80,8 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
 
   gimp_display_shell_transform_xy (shell, 0, 0, &x1, &y1, FALSE);
   gimp_display_shell_transform_xy (shell,
-                                   shell->display->image->width,
-                                   shell->display->image->height,
+                                   gimp_image_get_width  (shell->display->image),
+                                   gimp_image_get_height (shell->display->image),
                                    &x2, &y2, FALSE);
 
   gdk_drawable_get_size (shell->canvas->window, &w, &h);
@@ -164,8 +164,8 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
       x2 = area->x + area->width;
       y2 = area->y + area->height;
 
-      width  = shell->display->image->width;
-      height = shell->display->image->height;
+      width  = gimp_image_get_width  (shell->display->image);
+      height = gimp_image_get_height (shell->display->image);
 
       x_offset = grid->xoffset;
       while (x_offset > 0)

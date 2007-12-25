@@ -69,8 +69,8 @@ gimp_image_rotate (GimpImage        *image,
 
   gimp_set_busy (image->gimp);
 
-  center_x = (gdouble) image->width  / 2.0;
-  center_y = (gdouble) image->height / 2.0;
+  center_x = (gdouble) gimp_image_get_width  (image) / 2.0;
+  center_y = (gdouble) gimp_image_get_height (image) / 2.0;
 
   progress_max = (image->channels->num_children +
                   image->layers->num_children   +
@@ -86,14 +86,14 @@ gimp_image_rotate (GimpImage        *image,
     {
     case GIMP_ROTATE_90:
     case GIMP_ROTATE_270:
-      new_image_width  = image->height;
-      new_image_height = image->width;
+      new_image_width  = gimp_image_get_height (image);
+      new_image_height = gimp_image_get_width  (image);
       size_changed     = TRUE;
       break;
 
     case GIMP_ROTATE_180:
-      new_image_width  = image->width;
-      new_image_height = image->height;
+      new_image_width  = gimp_image_get_width  (image);
+      new_image_height = gimp_image_get_height (image);
       size_changed     = FALSE;
      break;
 
@@ -133,8 +133,8 @@ gimp_image_rotate (GimpImage        *image,
       item->offset_y = 0;
 
       gimp_item_translate (item,
-                           (new_image_width  - image->width)  / 2,
-                           (new_image_height - image->height) / 2,
+                           (new_image_width  - gimp_image_get_width  (image)) / 2,
+                           (new_image_height - gimp_image_get_height (image)) / 2,
                            FALSE);
 
       if (progress)
@@ -142,14 +142,18 @@ gimp_image_rotate (GimpImage        *image,
     }
 
   /*  Don't forget the selection mask!  */
-  gimp_item_rotate (GIMP_ITEM (gimp_image_get_mask (image)), context,
-                    rotate_type, center_x, center_y, FALSE);
+  {
+    GimpChannel *mask = gimp_image_get_mask (image);
 
-  GIMP_ITEM (image->selection_mask)->offset_x = 0;
-  GIMP_ITEM (image->selection_mask)->offset_y = 0;
+    gimp_item_rotate (GIMP_ITEM (mask), context,
+                      rotate_type, center_x, center_y, FALSE);
 
-  if (progress)
-    gimp_progress_set_value (progress, progress_current++ / progress_max);
+    GIMP_ITEM (mask)->offset_x = 0;
+    GIMP_ITEM (mask)->offset_y = 0;
+
+    if (progress)
+      gimp_progress_set_value (progress, progress_current++ / progress_max);
+  }
 
   /*  Rotate all layers  */
   for (list = GIMP_LIST (image->layers)->list;
@@ -222,13 +226,13 @@ gimp_image_rotate_item_offset (GimpImage        *image,
   switch (rotate_type)
     {
     case GIMP_ROTATE_90:
-      x = image->height - off_y - gimp_item_width (item);
+      x = gimp_image_get_height (image) - off_y - gimp_item_width (item);
       y = off_x;
       break;
 
     case GIMP_ROTATE_270:
       x = off_y;
-      y = image->width - off_x - gimp_item_height (item);
+      y = gimp_image_get_width (image) - off_x - gimp_item_height (item);
       break;
 
     case GIMP_ROTATE_180:
@@ -265,7 +269,8 @@ gimp_image_rotate_guides (GimpImage        *image,
             case GIMP_ORIENTATION_HORIZONTAL:
               gimp_image_undo_push_guide (image, NULL, guide);
               gimp_guide_set_orientation (guide, GIMP_ORIENTATION_VERTICAL);
-              gimp_guide_set_position (guide, image->height - position);
+              gimp_guide_set_position (guide,
+                                       gimp_image_get_height (image) - position);
               break;
 
             case GIMP_ORIENTATION_VERTICAL:
@@ -283,12 +288,14 @@ gimp_image_rotate_guides (GimpImage        *image,
             {
             case GIMP_ORIENTATION_HORIZONTAL:
               gimp_image_move_guide (image, guide,
-                                     image->height - position, TRUE);
+                                     gimp_image_get_height (image) - position,
+                                     TRUE);
               break;
 
             case GIMP_ORIENTATION_VERTICAL:
               gimp_image_move_guide (image, guide,
-                                     image->width - position, TRUE);
+                                     gimp_image_get_width (image) - position,
+                                     TRUE);
               break;
 
             default:
@@ -307,7 +314,8 @@ gimp_image_rotate_guides (GimpImage        *image,
             case GIMP_ORIENTATION_VERTICAL:
               gimp_image_undo_push_guide (image, NULL, guide);
               gimp_guide_set_orientation (guide, GIMP_ORIENTATION_HORIZONTAL);
-              gimp_guide_set_position (guide, image->width - position);
+              gimp_guide_set_position (guide,
+                                       gimp_image_get_width (image) - position);
               break;
 
             default:
@@ -341,16 +349,16 @@ gimp_image_rotate_sample_points (GimpImage        *image,
         {
         case GIMP_ROTATE_90:
           sample_point->x = old_y;
-          sample_point->y = image->height - old_x;
+          sample_point->y = gimp_image_get_height (image) - old_x;
           break;
 
         case GIMP_ROTATE_180:
-          sample_point->x = image->height - old_x;
-          sample_point->y = image->width - old_y;
+          sample_point->x = gimp_image_get_height (image) - old_x;
+          sample_point->y = gimp_image_get_width  (image) - old_y;
           break;
 
         case GIMP_ROTATE_270:
-          sample_point->x = image->width - old_y;
+          sample_point->x = gimp_image_get_width (image) - old_y;
           sample_point->y = old_x;
           break;
         }

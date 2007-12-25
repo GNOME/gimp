@@ -26,6 +26,7 @@
 
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-colormap.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
@@ -93,7 +94,7 @@ colormap_actions_update (GimpActionGroup *group,
   if (image)
     {
       indexed    = gimp_image_base_type (image) == GIMP_INDEXED;
-      num_colors = image->num_cols;
+      num_colors = gimp_image_get_colormap_size (image);
     }
 
   if (context)

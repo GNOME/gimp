@@ -906,7 +906,7 @@ do_alignment (GtkWidget *widget,
   GList             *list;
   gint               offset;
 
-  image = GIMP_TOOL (align_tool)->display->image;
+  image  = GIMP_TOOL (align_tool)->display->image;
   action = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "action"));
   offset = align_tool->horz_offset;
 
@@ -967,33 +967,24 @@ do_alignment (GtkWidget *widget,
       break;
 
     case GIMP_ALIGN_REFERENCE_SELECTION:
-      if (image->selection_mask)
-        {
-          reference_object = G_OBJECT (image->selection_mask);
-        }
-      else
-        return;
+      reference_object = G_OBJECT (gimp_image_get_mask (image));
       break;
 
     case GIMP_ALIGN_REFERENCE_ACTIVE_LAYER:
-      if (image->active_layer)
-        reference_object = G_OBJECT (image->active_layer);
-      else
-        return;
+      reference_object = G_OBJECT (gimp_image_get_active_layer (image));
       break;
 
     case GIMP_ALIGN_REFERENCE_ACTIVE_CHANNEL:
-      if (image->active_channel)
-        reference_object = G_OBJECT (image->active_channel);
-      else
-        return;
+      reference_object = G_OBJECT (gimp_image_get_active_channel (image));
       break;
 
     case GIMP_ALIGN_REFERENCE_ACTIVE_PATH:
       g_print ("reference = active path not yet handled.\n");
-      return;
       break;
     }
+
+  if (! reference_object)
+    return;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (align_tool));
 

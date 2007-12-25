@@ -76,12 +76,12 @@ gimp_drawable_get_preview (GimpViewable *viewable,
     return NULL;
 
   /* Ok prime the cache with a large preview if the cache is invalid */
-  if (! drawable->preview_valid                  &&
-      width  <= PREVIEW_CACHE_PRIME_WIDTH        &&
-      height <= PREVIEW_CACHE_PRIME_HEIGHT       &&
-      image                                     &&
-      image->width  > PREVIEW_CACHE_PRIME_WIDTH &&
-      image->height > PREVIEW_CACHE_PRIME_HEIGHT)
+  if (! drawable->preview_valid                                 &&
+      width  <= PREVIEW_CACHE_PRIME_WIDTH                       &&
+      height <= PREVIEW_CACHE_PRIME_HEIGHT                      &&
+      image                                                     &&
+      gimp_image_get_width  (image) > PREVIEW_CACHE_PRIME_WIDTH &&
+      gimp_image_get_height (image) > PREVIEW_CACHE_PRIME_HEIGHT)
     {
       TempBuf *tb = gimp_drawable_preview_private (drawable,
                                                    PREVIEW_CACHE_PRIME_WIDTH,

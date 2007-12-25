@@ -825,7 +825,7 @@ gimp_image_convert (GimpImage               *image,
   gimp_image_undo_push_image_type (image, NULL);
 
   /*  Set the new base type  */
-  old_type = image->base_type;
+  old_type = gimp_image_base_type (image);
 
   g_object_set (image, "base-type", new_type, NULL);
 
@@ -1004,12 +1004,9 @@ gimp_image_convert (GimpImage               *image,
       break;
 
     case GIMP_INDEXED:
-      gimp_image_undo_push_image_colormap (image, NULL);
-
-      image->cmap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
-
       if (remove_dups && (palette_type != GIMP_MAKE_PALETTE))
         {
+          guchar colormap[GIMP_IMAGE_COLORMAP_SIZE];
           gint   i, j;
           guchar old_palette[256 * 3];
           guchar new_palette[256 * 3];
@@ -1044,28 +1041,28 @@ gimp_image_convert (GimpImage               *image,
 
           for (i = 0, j = 0; i < num_entries; i++)
             {
-              image->cmap[j] = new_palette[j]; j++;
-              image->cmap[j] = new_palette[j]; j++;
-              image->cmap[j] = new_palette[j]; j++;
+              colormap[j] = new_palette[j]; j++;
+              colormap[j] = new_palette[j]; j++;
+              colormap[j] = new_palette[j]; j++;
             }
 
-          image->num_cols = num_entries;
+          gimp_image_set_colormap (image, colormap, num_entries, TRUE);
         }
       else
         {
-          gint i,j;
+          guchar colormap[GIMP_IMAGE_COLORMAP_SIZE];
+          gint   i, j;
 
           for (i = 0, j = 0; i < quantobj->actual_number_of_colors; i++)
             {
-              image->cmap[j++] = quantobj->cmap[i].red;
-              image->cmap[j++] = quantobj->cmap[i].green;
-              image->cmap[j++] = quantobj->cmap[i].blue;
+              colormap[j++] = quantobj->cmap[i].red;
+              colormap[j++] = quantobj->cmap[i].green;
+              colormap[j++] = quantobj->cmap[i].blue;
             }
 
-          image->num_cols = quantobj->actual_number_of_colors;
+          gimp_image_set_colormap (image, colormap,
+                                   quantobj->actual_number_of_colors, TRUE);
         }
-
-      gimp_image_colormap_changed (image, -1);
       break;
     }
 

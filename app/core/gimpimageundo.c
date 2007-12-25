@@ -126,18 +126,18 @@ gimp_image_undo_constructor (GType                  type,
   switch (GIMP_UNDO (object)->undo_type)
     {
     case GIMP_UNDO_IMAGE_TYPE:
-      image_undo->base_type = image->base_type;
+      image_undo->base_type = gimp_image_base_type (image);
       break;
 
     case GIMP_UNDO_IMAGE_SIZE:
-      image_undo->width  = image->width;
-      image_undo->height = image->height;
+      image_undo->width  = gimp_image_get_width  (image);
+      image_undo->height = gimp_image_get_height (image);
       break;
 
     case GIMP_UNDO_IMAGE_RESOLUTION:
       image_undo->xresolution     = image->xresolution;
       image_undo->yresolution     = image->yresolution;
-      image_undo->resolution_unit = image->resolution_unit;
+      image_undo->resolution_unit = gimp_image_get_unit (image);
       break;
 
     case GIMP_UNDO_IMAGE_GRID:
@@ -252,12 +252,12 @@ gimp_image_undo_pop (GimpUndo            *undo,
         GimpImageBaseType base_type;
 
         base_type = image_undo->base_type;
-        image_undo->base_type = image->base_type;
+        image_undo->base_type = gimp_image_base_type (image);
         g_object_set (image, "base-type", base_type, NULL);
 
         gimp_image_colormap_changed (image, -1);
 
-        if (image_undo->base_type != image->base_type)
+        if (image_undo->base_type != gimp_image_base_type (image))
           accum->mode_changed = TRUE;
       }
       break;
@@ -270,8 +270,8 @@ gimp_image_undo_pop (GimpUndo            *undo,
         width  = image_undo->width;
         height = image_undo->height;
 
-        image_undo->width  = image->width;
-        image_undo->height = image->height;
+        image_undo->width  = gimp_image_get_width  (image);
+        image_undo->height = gimp_image_get_height (image);
 
         g_object_set (image,
                       "width",  width,
@@ -281,8 +281,8 @@ gimp_image_undo_pop (GimpUndo            *undo,
         gimp_drawable_invalidate_boundary
           (GIMP_DRAWABLE (gimp_image_get_mask (image)));
 
-        if (image->width  != image_undo->width ||
-            image->height != image_undo->height)
+        if (gimp_image_get_width  (image) != image_undo->width ||
+            gimp_image_get_height (image) != image_undo->height)
           accum->size_changed = TRUE;
       }
       break;
@@ -306,11 +306,11 @@ gimp_image_undo_pop (GimpUndo            *undo,
           accum->resolution_changed = TRUE;
         }
 
-      if (image_undo->resolution_unit != image->resolution_unit)
+      if (image_undo->resolution_unit != gimp_image_get_unit (image))
         {
           GimpUnit unit;
 
-          unit = image->resolution_unit;
+          unit = gimp_image_get_unit (image);
           image->resolution_unit = image_undo->resolution_unit;
           image_undo->resolution_unit = unit;
 

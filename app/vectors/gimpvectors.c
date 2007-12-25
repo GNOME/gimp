@@ -296,8 +296,8 @@ static void
 gimp_vectors_convert (GimpItem  *item,
                       GimpImage *dest_image)
 {
-  item->width  = dest_image->width;
-  item->height = dest_image->height;
+  item->width  = gimp_image_get_width  (dest_image);
+  item->height = gimp_image_get_height (dest_image);
 
   GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image);
 }
@@ -356,8 +356,11 @@ gimp_vectors_scale (GimpItem              *item,
       gimp_stroke_translate (stroke, new_offset_x, new_offset_y);
     }
 
-  GIMP_ITEM_CLASS (parent_class)->scale (item, image->width, image->height,
-                                         0, 0, interpolation_type, progress);
+  GIMP_ITEM_CLASS (parent_class)->scale (item,
+                                         gimp_image_get_width  (image),
+                                         gimp_image_get_height (image),
+                                         0, 0,
+                                         interpolation_type, progress);
 
   gimp_vectors_thaw (vectors);
 }
@@ -387,7 +390,9 @@ gimp_vectors_resize (GimpItem    *item,
     }
 
   GIMP_ITEM_CLASS (parent_class)->resize (item, context,
-                                          image->width, image->height, 0, 0);
+                                          gimp_image_get_width  (image),
+                                          gimp_image_get_height (image),
+                                          0, 0);
 
   gimp_vectors_thaw (vectors);
 }
@@ -552,7 +557,9 @@ gimp_vectors_new (GimpImage   *image,
   vectors = g_object_new (GIMP_TYPE_VECTORS, NULL);
 
   gimp_item_configure (GIMP_ITEM (vectors), image,
-                       0, 0, image->width, image->height,
+                       0, 0,
+                       gimp_image_get_width  (image),
+                       gimp_image_get_height (image),
                        name);
 
   return vectors;

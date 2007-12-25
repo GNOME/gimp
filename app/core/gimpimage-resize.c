@@ -93,8 +93,8 @@ gimp_image_resize_with_layers (GimpImage    *image,
                                                  GIMP_ITEM_TYPE_LAYERS,
                                                  layer_set);
 
-  old_width  = image->width;
-  old_height = image->height;
+  old_width  = gimp_image_get_width  (image);
+  old_height = gimp_image_get_height (image);
 
   /*  Push the image size to the stack  */
   gimp_image_undo_push_image_size (image, NULL);

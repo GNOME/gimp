@@ -83,9 +83,11 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 
   if (image && ! renderer->is_popup)
     {
-      width  = MAX (1, ROUND ((((gdouble) width / (gdouble) image->width) *
+      width  = MAX (1, ROUND ((((gdouble) width /
+                                (gdouble) gimp_image_get_width (image)) *
                                (gdouble) gimp_item_width (item))));
-      height = MAX (1, ROUND ((((gdouble) height / (gdouble) image->height) *
+      height = MAX (1, ROUND ((((gdouble) height /
+                                (gdouble) gimp_image_get_height (image)) *
                                (gdouble) gimp_item_height (item))));
 
       gimp_viewable_calc_preview_size (gimp_item_width  (item),
@@ -128,7 +130,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
                                         gimp_item_width  (item),
                                         gimp_item_height (item),
                                         -item->offset_x, -item->offset_y,
-                                        image->width, image->height,
+                                        gimp_image_get_width  (image),
+                                        gimp_image_get_height (image),
                                         &src_x, &src_y,
                                         &src_width, &src_height))
             {
@@ -136,10 +139,10 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
               gint dest_height;
 
               dest_width  = ROUND (((gdouble) renderer->width /
-                                    (gdouble) image->width) *
+                                    (gdouble) gimp_image_get_width (image)) *
                                    (gdouble) src_width);
               dest_height = ROUND (((gdouble) renderer->height /
-                                    (gdouble) image->height) *
+                                    (gdouble) gimp_image_get_height (image)) *
                                    (gdouble) src_height);
 
               if (dest_width  < 1) dest_width  = 1;
@@ -189,12 +192,14 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
         {
           if (item->offset_x != 0)
             render_buf->x =
-              ROUND ((((gdouble) renderer->width / (gdouble) image->width) *
+              ROUND ((((gdouble) renderer->width /
+                       (gdouble) gimp_image_get_width (image)) *
                       (gdouble) item->offset_x));
 
           if (item->offset_y != 0)
             render_buf->y =
-              ROUND ((((gdouble) renderer->height / (gdouble) image->height) *
+              ROUND ((((gdouble) renderer->height /
+                       (gdouble) gimp_image_get_height (image)) *
                       (gdouble) item->offset_y));
 
           if (scaling_up)

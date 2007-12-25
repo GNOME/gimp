@@ -236,8 +236,8 @@ gimp_edit_paste (GimpImage    *image,
     {
       /*  otherwise the offsets to the center of the image  */
 
-      center_x = image->width  / 2;
-      center_y = image->height / 2;
+      center_x = gimp_image_get_width  (image) / 2;
+      center_y = gimp_image_get_height (image) / 2;
     }
 
   width  = gimp_item_width  (GIMP_ITEM (layer));
@@ -249,8 +249,8 @@ gimp_edit_paste (GimpImage    *image,
   /*  Ensure that the pasted layer is always within the image, if it
    *  fits and aligned at top left if it doesn't. (See bug #142944).
    */
-  offset_x = MIN (offset_x, image->width  - width);
-  offset_y = MIN (offset_y, image->height - height);
+  offset_x = MIN (offset_x, gimp_image_get_width  (image) - width);
+  offset_y = MIN (offset_y, gimp_image_get_height (image) - height);
   offset_x = MAX (offset_x, 0);
   offset_y = MAX (offset_y, 0);
 
@@ -517,7 +517,8 @@ gimp_edit_fade (GimpImage   *image,
       gimp_image_undo (image);
 
       pixel_region_init (&src2PR, src2_tiles,
-                         0, 0, undo->width, undo->height,
+                         0, 0,
+                         undo->width, undo->height,
                          FALSE);
 
       gimp_drawable_apply_region (drawable, &src2PR,

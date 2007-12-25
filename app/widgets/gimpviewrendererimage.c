@@ -80,8 +80,8 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
       gboolean  scaling_up;
       TempBuf  *render_buf = NULL;
 
-      gimp_viewable_calc_preview_size (image->width,
-                                       image->height,
+      gimp_viewable_calc_preview_size (gimp_image_get_width  (image),
+                                       gimp_image_get_height (image),
                                        renderer->width,
                                        renderer->height,
                                        renderer->dot_for_dot,
@@ -97,8 +97,8 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
 
           temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
                                                     renderer->context,
-                                                    image->width,
-                                                    image->height);
+                                                    gimp_image_get_width  (image),
+                                                    gimp_image_get_height (image));
 
           if (temp_buf)
             {

@@ -181,14 +181,14 @@ layer_options_dialog_new (GimpImage    *image,
                                              GIMP_MAX_IMAGE_SIZE);
 
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options->size_se), 0,
-                                0, image->width);
+                                0, gimp_image_get_width  (image));
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options->size_se), 1,
-                                0, image->height);
+                                0, gimp_image_get_height (image));
 
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (options->size_se), 0,
-                                  image->width);
+                                  gimp_image_get_width  (image));
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (options->size_se), 1,
-                                  image->height);
+                                  gimp_image_get_height (image));
 
       /*  The radio frame  */
       frame = gimp_enum_radio_frame_new_with_range (GIMP_TYPE_FILL_TYPE,

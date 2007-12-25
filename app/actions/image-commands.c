@@ -571,8 +571,8 @@ image_resize_callback (GtkWidget    *dialog,
 
       gtk_widget_destroy (dialog);
 
-      if (width  == image->width &&
-          height == image->height)
+      if (width  == gimp_image_get_width  (image) &&
+          height == gimp_image_get_height (image))
         return;
 
       progress = gimp_progress_start (GIMP_PROGRESS (display),
@@ -612,9 +612,9 @@ image_print_size_callback (GtkWidget *dialog,
 {
   gtk_widget_destroy (dialog);
 
-  if (xresolution     == image->xresolution     &&
-      yresolution     == image->yresolution     &&
-      resolution_unit == image->resolution_unit)
+  if (xresolution     == image->xresolution &&
+      yresolution     == image->yresolution &&
+      resolution_unit == gimp_image_get_unit (image))
     return;
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_SCALE,
@@ -647,11 +647,11 @@ image_scale_callback (GtkWidget              *dialog,
 
   if (width > 0 && height > 0)
     {
-      if (width           == image->width           &&
-          height          == image->height          &&
-          xresolution     == image->xresolution     &&
-          yresolution     == image->yresolution     &&
-          resolution_unit == image->resolution_unit)
+      if (width           == gimp_image_get_width  (image) &&
+          height          == gimp_image_get_height (image) &&
+          xresolution     == image->xresolution            &&
+          yresolution     == image->yresolution            &&
+          resolution_unit == gimp_image_get_unit (image))
         return;
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_SCALE,
@@ -660,8 +660,8 @@ image_scale_callback (GtkWidget              *dialog,
       gimp_image_set_resolution (image, xresolution, yresolution);
       gimp_image_set_unit (image, resolution_unit);
 
-      if (width  != image->width ||
-          height != image->height)
+      if (width  != gimp_image_get_width  (image) ||
+          height != gimp_image_get_height (image))
         {
           GimpProgress *progress;
 

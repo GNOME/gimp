@@ -575,7 +575,8 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
           fade_out = fade_options->fade_length;
           break;
         case GIMP_UNIT_PERCENT:
-          fade_out = (MAX (image->width, image->height) *
+          fade_out = (MAX (gimp_image_get_width  (image),
+                           gimp_image_get_height (image)) *
                       fade_options->fade_length / 100);
           break;
         default:
@@ -658,7 +659,8 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
           gradient_length = gradient_options->gradient_length;
           break;
         case GIMP_UNIT_PERCENT:
-          gradient_length = (MAX (image->width, image->height) *
+          gradient_length = (MAX (gimp_image_get_width  (image),
+                                  gimp_image_get_height (image)) *
                              gradient_options->gradient_length / 100);
           break;
         default:

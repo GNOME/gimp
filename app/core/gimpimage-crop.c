@@ -179,12 +179,12 @@ gimp_image_crop (GimpImage   *image,
 
               gimp_item_offsets (item, &off_x, &off_y);
 
-              lx1 = CLAMP (off_x, 0, image->width);
-              ly1 = CLAMP (off_y, 0, image->height);
+              lx1 = CLAMP (off_x, 0, gimp_image_get_width  (image));
+              ly1 = CLAMP (off_y, 0, gimp_image_get_height (image));
               lx2 = CLAMP (gimp_item_width  (item) + off_x,
-                           0, image->width);
+                           0, gimp_image_get_width (image));
               ly2 = CLAMP (gimp_item_height (item) + off_y,
-                           0, image->height);
+                           0, gimp_image_get_height (image));
 
               width  = lx2 - lx1;
               height = ly2 - ly1;
@@ -262,7 +262,10 @@ gimp_image_crop (GimpImage   *image,
 
       gimp_image_undo_group_end (image);
 
-      gimp_image_update (image, 0, 0, image->width, image->height);
+      gimp_image_update (image,
+                         0, 0,
+                         gimp_image_get_width  (image),
+                         gimp_image_get_height (image));
 
       gimp_viewable_size_changed (GIMP_VIEWABLE (image));
       g_object_thaw_notify (G_OBJECT (image));

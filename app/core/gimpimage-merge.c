@@ -131,7 +131,7 @@ gimp_image_merge_visible_layers (GimpImage     *image,
       return layer;
     }
 
-  return image->active_layer;
+  return gimp_image_get_active_layer (image);
 }
 
 GimpLayer *
@@ -374,10 +374,10 @@ gimp_image_merge_layers (GimpImage     *image,
 
           if (merge_type == GIMP_CLIP_TO_IMAGE)
             {
-              x1 = CLAMP (x1, 0, image->width);
-              y1 = CLAMP (y1, 0, image->height);
-              x2 = CLAMP (x2, 0, image->width);
-              y2 = CLAMP (y2, 0, image->height);
+              x1 = CLAMP (x1, 0, gimp_image_get_width  (image));
+              y1 = CLAMP (y1, 0, gimp_image_get_height (image));
+              x2 = CLAMP (x2, 0, gimp_image_get_width  (image));
+              y2 = CLAMP (y2, 0, gimp_image_get_height (image));
             }
           break;
 
@@ -396,8 +396,8 @@ gimp_image_merge_layers (GimpImage     *image,
             {
               x1 = 0;
               y1 = 0;
-              x2 = image->width;
-              y2 = image->height;
+              x2 = gimp_image_get_width  (image);
+              y2 = gimp_image_get_height (image);
             }
           break;
         }

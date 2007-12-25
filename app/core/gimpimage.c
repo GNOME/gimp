@@ -729,8 +729,8 @@ gimp_image_constructor (GType                  type,
 
   /* create the selection mask */
   image->selection_mask = gimp_selection_new (image,
-                                              image->width,
-                                              image->height);
+                                              gimp_image_get_width  (image),
+                                              gimp_image_get_height (image));
   g_object_ref_sink (image->selection_mask);
 
   g_signal_connect (image->selection_mask, "update",
@@ -1031,8 +1031,8 @@ gimp_image_get_size (GimpViewable *viewable,
 {
   GimpImage *image = GIMP_IMAGE (viewable);
 
-  *width  = image->width;
-  *height = image->height;
+  *width  = gimp_image_get_width  (image);
+  *height = gimp_image_get_height (image);
 
   return TRUE;
 }
@@ -1114,7 +1114,10 @@ gimp_image_real_colormap_changed (GimpImage *image,
       gimp_image_color_hash_invalidate (image, color_index);
 
       /* A colormap alteration affects the whole image */
-      gimp_image_update (image, 0, 0, image->width, image->height);
+      gimp_image_update (image,
+                         0, 0,
+                         gimp_image_get_width  (image),
+                         gimp_image_get_height (image));
 
       gimp_image_invalidate_layer_previews (image);
     }
@@ -1700,7 +1703,10 @@ gimp_image_set_component_visible (GimpImage       *image,
                      gimp_image_signals[COMPONENT_VISIBILITY_CHANGED], 0,
                      channel);
 
-      gimp_image_update (image, 0, 0, image->width, image->height);
+      gimp_image_update (image,
+                         0, 0,
+                         gimp_image_get_width  (image),
+                         gimp_image_get_height (image));
     }
 }
 
@@ -3720,8 +3726,8 @@ gimp_image_coords_in_active_pickable (GimpImage        *image,
 
   if (sample_merged)
     {
-      if (x >= 0 && x < image->width &&
-          y >= 0 && y < image->height)
+      if (x >= 0 && x < gimp_image_get_width  (image) &&
+          y >= 0 && y < gimp_image_get_height (image))
         in_pickable = TRUE;
     }
   else

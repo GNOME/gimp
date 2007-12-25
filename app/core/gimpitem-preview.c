@@ -56,8 +56,8 @@ gimp_item_get_preview_size (GimpViewable *viewable,
 
   if (image && ! is_popup)
     {
-      gimp_viewable_calc_preview_size (image->width,
-                                       image->height,
+      gimp_viewable_calc_preview_size (gimp_image_get_width  (image),
+                                       gimp_image_get_height (image),
                                        size,
                                        size,
                                        dot_for_dot,

@@ -422,10 +422,10 @@ image_crop_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (new_width  > image->width          ||
-          new_height > image->height         ||
-          offx > (image->width  - new_width) ||
-          offy > (image->height - new_height))
+      if (new_width  >  gimp_image_get_width  (image)              ||
+          new_height >  gimp_image_get_height (image)              ||
+          offx       > (gimp_image_get_width  (image) - new_width) ||
+          offy       > (gimp_image_get_height (image) - new_height))
         success = FALSE;
       else
         gimp_image_crop (image, context,

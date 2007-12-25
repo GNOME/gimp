@@ -44,8 +44,8 @@ gimp_image_add_sample_point_at_pos (GimpImage *image,
   GimpSamplePoint *sample_point;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (x >= 0 && x < image->width, NULL);
-  g_return_val_if_fail (y >= 0 && y < image->height, NULL);
+  g_return_val_if_fail (x >= 0 && x < gimp_image_get_width  (image), NULL);
+  g_return_val_if_fail (y >= 0 && y < gimp_image_get_height (image), NULL);
 
   sample_point = gimp_sample_point_new (image->gimp->next_sample_point_ID++);
 
@@ -69,8 +69,8 @@ gimp_image_add_sample_point (GimpImage       *image,
   g_return_if_fail (sample_point != NULL);
   g_return_if_fail (x >= 0);
   g_return_if_fail (y >= 0);
-  g_return_if_fail (x < image->width);
-  g_return_if_fail (y < image->height);
+  g_return_if_fail (x < gimp_image_get_width  (image));
+  g_return_if_fail (y < gimp_image_get_height (image));
 
   image->sample_points = g_list_append (image->sample_points, sample_point);
 
@@ -128,8 +128,8 @@ gimp_image_move_sample_point (GimpImage       *image,
   g_return_if_fail (sample_point != NULL);
   g_return_if_fail (x >= 0);
   g_return_if_fail (y >= 0);
-  g_return_if_fail (x < image->width);
-  g_return_if_fail (y < image->height);
+  g_return_if_fail (x < gimp_image_get_width  (image));
+  g_return_if_fail (y < gimp_image_get_height (image));
 
   if (push_undo)
     gimp_image_undo_push_sample_point (image, _("Move Sample Point"),
@@ -155,8 +155,8 @@ gimp_image_find_sample_point (GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (epsilon_x > 0 && epsilon_y > 0, NULL);
 
-  if (x < 0 || x >= image->width ||
-      y < 0 || y >= image->height)
+  if (x < 0 || x >= gimp_image_get_width  (image) ||
+      y < 0 || y >= gimp_image_get_height (image))
     {
       return NULL;
     }

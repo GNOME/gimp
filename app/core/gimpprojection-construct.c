@@ -31,6 +31,7 @@
 
 #include "gimpdrawable.h"
 #include "gimpimage.h"
+#include "gimpimage-colormap.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
@@ -441,11 +442,13 @@ project_indexed (GimpProjection *proj,
                  PixelRegion    *dest,
                  PixelRegion    *mask)
 {
-  g_return_if_fail (proj->image->cmap != NULL);
+  const guchar *colormap = gimp_image_get_colormap (proj->image);
+
+  g_return_if_fail (colormap != NULL);
 
   if (proj->construct_flag)
     {
-      combine_regions (dest, src, dest, mask, proj->image->cmap,
+      combine_regions (dest, src, dest, mask, colormap,
                        gimp_layer_get_opacity (layer) * 255.999,
                        gimp_layer_get_mode (layer),
                        proj->image->visible,
@@ -453,7 +456,7 @@ project_indexed (GimpProjection *proj,
     }
   else
     {
-      initial_region (src, dest, mask, proj->image->cmap,
+      initial_region (src, dest, mask, colormap,
                       gimp_layer_get_opacity (layer) * 255.999,
                       gimp_layer_get_mode (layer),
                       proj->image->visible,
@@ -468,11 +471,13 @@ project_indexed_alpha (GimpProjection *proj,
                        PixelRegion    *dest,
                        PixelRegion    *mask)
 {
-  g_return_if_fail (proj->image->cmap != NULL);
+  const guchar *colormap = gimp_image_get_colormap (proj->image);
+
+  g_return_if_fail (colormap != NULL);
 
   if (proj->construct_flag)
     {
-      combine_regions (dest, src, dest, mask, proj->image->cmap,
+      combine_regions (dest, src, dest, mask, colormap,
                        gimp_layer_get_opacity (layer) * 255.999,
                        gimp_layer_get_mode (layer),
                        proj->image->visible,
@@ -480,7 +485,7 @@ project_indexed_alpha (GimpProjection *proj,
     }
   else
     {
-      initial_region (src, dest, mask, proj->image->cmap,
+      initial_region (src, dest, mask, colormap,
                       gimp_layer_get_opacity (layer) * 255.999,
                       gimp_layer_get_mode (layer),
                       proj->image->visible,

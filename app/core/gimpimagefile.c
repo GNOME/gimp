@@ -699,7 +699,7 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
       return NULL;
     }
 
-  pixbuf_width  = gdk_pixbuf_get_width (pixbuf);
+  pixbuf_width  = gdk_pixbuf_get_width  (pixbuf);
   pixbuf_height = gdk_pixbuf_get_height (pixbuf);
 
   gimp_viewable_calc_preview_size (pixbuf_width,
@@ -758,24 +758,27 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
   if (size < 1)
     return TRUE;
 
-  if (image->width <= size && image->height <= size)
+  if (gimp_image_get_width  (image) <= size &&
+      gimp_image_get_height (image) <= size)
     {
-      width  = image->width;
-      height = image->height;
+      width  = gimp_image_get_width  (image);
+      height = gimp_image_get_height (image);
 
       size = MAX (width, height);
     }
   else
     {
-      if (image->width < image->height)
+      if (gimp_image_get_width (image) < gimp_image_get_height (image))
         {
           height = size;
-          width  = MAX (1, (size * image->width) / image->height);
+          width  = MAX (1, (size * gimp_image_get_width (image) /
+                            gimp_image_get_height (image)));
         }
       else
         {
           width  = size;
-          height = MAX (1, (size * image->height) / image->width);
+          height = MAX (1, (size * gimp_image_get_height (image) /
+                            gimp_image_get_width (image)));
         }
     }
 
@@ -831,7 +834,7 @@ gimp_thumbnail_set_info_from_image (GimpThumbnail *thumbnail,
 
   g_object_set (thumbnail,
                 "image-mimetype",   mime_type,
-                "image-width",      gimp_image_get_width (image),
+                "image-width",      gimp_image_get_width  (image),
                 "image-height",     gimp_image_get_height (image),
                 "image-type",       desc->value_desc,
                 "image-num-layers", gimp_container_num_children (image->layers),

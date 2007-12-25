@@ -224,13 +224,13 @@ gimp_measure_tool_button_press (GimpTool        *tool,
                                    (measure->y[i] ==
                                     CLAMP (measure->y[i],
                                            0,
-                                           display->image->height)));
+                                           gimp_image_get_height (display->image))));
 
                   create_vguide = ((state & GDK_MOD1_MASK) &&
                                    (measure->x[i] ==
                                     CLAMP (measure->x[i],
                                            0,
-                                           display->image->width)));
+                                           gimp_image_get_width (display->image))));
 
                   if (create_hguide && create_vguide)
                     gimp_image_undo_group_start (display->image,
