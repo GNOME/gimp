@@ -400,16 +400,16 @@ xcf_save_image_props (XcfInfo    *info,
                                     gimp_image_get_colormap (image)));
 
   if (info->compression != COMPRESS_NONE)
-    xcf_check_error (xcf_save_prop (info, image, PROP_COMPRESSION,
-                                    error, info->compression));
+    xcf_check_error (xcf_save_prop (info, image, PROP_COMPRESSION, error,
+                                    info->compression));
 
-  if (image->guides)
-    xcf_check_error (xcf_save_prop (info, image, PROP_GUIDES,
-                                    error, image->guides));
+  if (gimp_image_get_guides (image))
+    xcf_check_error (xcf_save_prop (info, image, PROP_GUIDES, error,
+                                    gimp_image_get_guides (image)));
 
-  if (image->sample_points)
-    xcf_check_error (xcf_save_prop (info, image, PROP_SAMPLE_POINTS,
-                                    error, image->sample_points));
+  if (gimp_image_get_sample_points (image))
+    xcf_check_error (xcf_save_prop (info, image, PROP_SAMPLE_POINTS, error,
+                                    gimp_image_get_sample_points (image)));
 
   xcf_check_error (xcf_save_prop (info, image, PROP_RESOLUTION, error,
                                   image->xresolution, image->yresolution));

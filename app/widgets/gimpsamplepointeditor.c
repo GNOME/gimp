@@ -30,6 +30,7 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
+#include "core/gimpimage-sample-points.h"
 #include "core/gimpsamplepoint.h"
 
 #include "gimpcolorframe.h"
@@ -364,7 +365,7 @@ gimp_sample_point_editor_point_update (GimpImage             *image,
                                        GimpSamplePoint       *sample_point,
                                        GimpSamplePointEditor *editor)
 {
-  gint i = g_list_index (image->sample_points, sample_point);
+  gint i = g_list_index (gimp_image_get_sample_points (image), sample_point);
 
   if (i < 4)
     gimp_sample_point_editor_dirty (editor, i);
@@ -380,13 +381,16 @@ gimp_sample_point_editor_proj_update (GimpImage             *image,
                                       GimpSamplePointEditor *editor)
 {
   GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
+  GList           *sample_points;
   gint             n_points     = 0;
   GList           *list;
   gint             i;
 
-  n_points = MIN (4, g_list_length (image_editor->image->sample_points));
+  sample_points = gimp_image_get_sample_points (image_editor->image);
 
-  for (i = 0, list = image_editor->image->sample_points;
+  n_points = MIN (4, g_list_length (sample_points));
+
+  for (i = 0, list = sample_points;
        i < n_points;
        i++, list = g_list_next (list))
     {
@@ -404,11 +408,14 @@ static void
 gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
 {
   GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
+  GList           *sample_points;
   gint             n_points     = 0;
   gint             i;
 
+  sample_points = gimp_image_get_sample_points (image_editor->image);
+
   if (image_editor->image)
-    n_points = MIN (4, g_list_length (image_editor->image->sample_points));
+    n_points = MIN (4, g_list_length (sample_points));
 
   for (i = 0; i < n_points; i++)
     {
@@ -446,6 +453,7 @@ static gboolean
 gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
 {
   GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
+  GList           *sample_points;
   gint             n_points     = 0;
   GList           *list;
   gint             i;
@@ -455,9 +463,11 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
   if (! image_editor->image)
     return FALSE;
 
-  n_points = MIN (4, g_list_length (image_editor->image->sample_points));
+  sample_points = gimp_image_get_sample_points (image_editor->image);
 
-  for (i = 0, list = image_editor->image->sample_points;
+  n_points = MIN (4, g_list_length (sample_points));
+
+  for (i = 0, list = sample_points;
        i < n_points;
        i++, list = g_list_next (list))
     {

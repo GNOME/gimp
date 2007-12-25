@@ -144,6 +144,14 @@ gimp_image_move_guide (GimpImage *image,
   gimp_image_update_guide (image, guide);
 }
 
+GList *
+gimp_image_get_guides (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return image->guides;
+}
+
 GimpGuide *
 gimp_image_get_guide (GimpImage *image,
                       guint32    id)

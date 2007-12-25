@@ -165,7 +165,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
   g_list_free (resize_layers);
 
   /*  Reposition or remove all guides  */
-  for (list = image->guides; list; list = g_list_next (list))
+  for (list = gimp_image_get_guides (image); list; list = g_list_next (list))
     {
       GimpGuide *guide        = list->data;
       gboolean   remove_guide = FALSE;
@@ -196,7 +196,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
     }
 
   /*  Reposition or remove sample points  */
-  for (list = image->sample_points; list; list = g_list_next (list))
+  for (list = gimp_image_get_sample_points (image); list; list = g_list_next (list))
     {
       GimpSamplePoint *sample_point        = list->data;
       gboolean         remove_sample_point = FALSE;

@@ -1,5 +1,25 @@
 2007-12-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-guides.[ch]
+	* app/core/gimpimage-sample-points.[ch]: add accessors for the lists
+	of guides and sample points.
+
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-flip.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-rotate.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage-snap.c
+	* app/core/gimpimage.c
+	* app/display/gimpdisplayshell-appearance.c
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell.c
+	* app/widgets/gimpsamplepointeditor.c
+	* app/xcf/xcf-save.c: use the new accessors.
+
+2007-12-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.h (struct GimpImage):: renamed "cmap" to
 	"colormap" and "num_cols" to "n_colors".
 

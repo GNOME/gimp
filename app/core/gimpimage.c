@@ -991,11 +991,12 @@ gimp_image_get_memsize (GimpObject *object,
   memsize += gimp_object_get_memsize (GIMP_OBJECT (image->projection),
                                       gui_size);
 
-  memsize += gimp_g_list_get_memsize (image->guides, sizeof (GimpGuide));
+  memsize += gimp_g_list_get_memsize (gimp_image_get_guides (image),
+                                      sizeof (GimpGuide));
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (image->grid), gui_size);
 
-  memsize += gimp_g_list_get_memsize (image->sample_points,
+  memsize += gimp_g_list_get_memsize (gimp_image_get_sample_points (image),
                                       sizeof (GimpSamplePoint));
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (image->layers),

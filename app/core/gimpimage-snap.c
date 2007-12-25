@@ -58,8 +58,8 @@ gimp_image_snap_x (GimpImage *image,
 
   *tx = x;
 
-  if (! image->guides) snap_to_guides = FALSE;
-  if (! image->grid)   snap_to_grid   = FALSE;
+  if (! gimp_image_get_guides (image)) snap_to_guides = FALSE;
+  if (! gimp_image_get_grid (image))   snap_to_grid   = FALSE;
 
   if (! (snap_to_guides || snap_to_grid || snap_to_canvas))
     return FALSE;
@@ -71,7 +71,7 @@ gimp_image_snap_x (GimpImage *image,
     {
       GList *list;
 
-      for (list = image->guides; list; list = g_list_next (list))
+      for (list = gimp_image_get_guides (image); list; list = g_list_next (list))
         {
           GimpGuide *guide    = list->data;
           gint       position = gimp_guide_get_position (guide);
@@ -166,8 +166,8 @@ gimp_image_snap_y (GimpImage *image,
 
   *ty = y;
 
-  if (! image->guides) snap_to_guides = FALSE;
-  if (! image->grid)   snap_to_grid   = FALSE;
+  if (! gimp_image_get_guides (image)) snap_to_guides = FALSE;
+  if (! gimp_image_get_grid (image))   snap_to_grid   = FALSE;
 
   if (! (snap_to_guides || snap_to_grid || snap_to_canvas))
     return FALSE;
@@ -179,7 +179,7 @@ gimp_image_snap_y (GimpImage *image,
     {
       GList *list;
 
-      for (list = image->guides; list; list = g_list_next (list))
+      for (list = gimp_image_get_guides (image); list; list = g_list_next (list))
         {
           GimpGuide *guide    = list->data;
           gint       position = gimp_guide_get_position (guide);
@@ -281,7 +281,7 @@ gimp_image_snap_point (GimpImage *image,
   *tx = x;
   *ty = y;
 
-  if (! image->guides)                         snap_to_guides  = FALSE;
+  if (! gimp_image_get_guides (image))         snap_to_guides  = FALSE;
   if (! gimp_image_get_grid (image))           snap_to_grid    = FALSE;
   if (! gimp_image_get_active_vectors (image)) snap_to_vectors = FALSE;
 
@@ -298,7 +298,7 @@ gimp_image_snap_point (GimpImage *image,
     {
       GList *list;
 
-      for (list = image->guides; list; list = g_list_next (list))
+      for (list = gimp_image_get_guides (image); list; list = g_list_next (list))
         {
           GimpGuide *guide    = list->data;
           gint       position = gimp_guide_get_position (guide);
@@ -494,7 +494,7 @@ gimp_image_snap_rectangle (GimpImage *image,
   *tx1 = x1;
   *ty1 = y1;
 
-  if (! image->guides)                         snap_to_guides  = FALSE;
+  if (! gimp_image_get_guides (image))         snap_to_guides  = FALSE;
   if (! gimp_image_get_grid (image))           snap_to_grid    = FALSE;
   if (! gimp_image_get_active_vectors (image)) snap_to_vectors = FALSE;
 

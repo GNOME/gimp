@@ -31,6 +31,8 @@
 #include "core/gimpgrid.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-guides.h"
+#include "core/gimpimage-sample-points.h"
 #include "core/gimplist.h"
 #include "core/gimpprojection.h"
 #include "core/gimpsamplepoint.h"
@@ -122,7 +124,7 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell)
     {
       GList *list;
 
-      for (list = shell->display->image->guides;
+      for (list = gimp_image_get_guides (shell->display->image);
            list;
            list = g_list_next (list))
         {
@@ -408,7 +410,7 @@ gimp_display_shell_draw_sample_point (GimpDisplayShell *shell,
   gimp_canvas_draw_text (GIMP_CANVAS (shell->canvas), style,
                          x + 2, y + 2,
                          "%d",
-                         g_list_index (shell->display->image->sample_points,
+                         g_list_index (gimp_image_get_sample_points (shell->display->image),
                                        sample_point) + 1);
 }
 
@@ -421,7 +423,7 @@ gimp_display_shell_draw_sample_points (GimpDisplayShell *shell)
     {
       GList *list;
 
-      for (list = shell->display->image->sample_points;
+      for (list = gimp_image_get_sample_points (shell->display->image);
            list;
            list = g_list_next (list))
         {

@@ -38,6 +38,7 @@ void        gimp_image_move_guide     (GimpImage *image,
                                        gint       position,
                                        gboolean   push_undo);
 
+GList     * gimp_image_get_guides     (GimpImage *image);
 GimpGuide * gimp_image_get_guide      (GimpImage *image,
                                        guint32    id);
 GimpGuide * gimp_image_get_next_guide (GimpImage *image,

@@ -37,6 +37,7 @@ void              gimp_image_move_sample_point       (GimpImage       *image,
                                                       gint             y,
                                                       gboolean         push_undo);
 
+GList           * gimp_image_get_sample_points       (GimpImage       *image);
 GimpSamplePoint * gimp_image_find_sample_point       (GimpImage       *image,
                                                       gdouble          x,
                                                       gdouble          y,

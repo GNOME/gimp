@@ -255,7 +255,7 @@ gimp_image_rotate_guides (GimpImage        *image,
   GList *list;
 
   /*  Rotate all Guides  */
-  for (list = image->guides; list; list = g_list_next (list))
+  for (list = gimp_image_get_guides (image); list; list = g_list_next (list))
     {
       GimpGuide           *guide       = list->data;
       GimpOrientationType  orientation = gimp_guide_get_orientation (guide);
@@ -334,7 +334,7 @@ gimp_image_rotate_sample_points (GimpImage        *image,
   GList *list;
 
   /*  Rotate all sample points  */
-  for (list = image->sample_points; list; list = g_list_next (list))
+  for (list = gimp_image_get_sample_points (image); list; list = g_list_next (list))
     {
       GimpSamplePoint *sample_point = list->data;
       gint             old_x;

@@ -141,6 +141,14 @@ gimp_image_move_sample_point (GimpImage       *image,
   gimp_image_update_sample_point (image, sample_point);
 }
 
+GList *
+gimp_image_get_sample_points (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return image->sample_points;
+}
+
 GimpSamplePoint *
 gimp_image_find_sample_point (GimpImage *image,
                               gdouble    x,

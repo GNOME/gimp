@@ -199,7 +199,7 @@ gimp_image_crop (GimpImage   *image,
         }
 
       /*  Reposition or remove all guides  */
-      list = image->guides;
+      list = gimp_image_get_guides (image);
       while (list)
         {
           GimpGuide *guide        = list->data;
@@ -235,7 +235,7 @@ gimp_image_crop (GimpImage   *image,
         }
 
       /*  Reposition or remove sample points  */
-      list = image->sample_points;
+      list = gimp_image_get_sample_points (image);
       while (list)
         {
           GimpSamplePoint *sample_point        = list->data;

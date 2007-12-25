@@ -239,7 +239,7 @@ gimp_image_duplicate (GimpImage *image)
     }
 
   /*  Copy any guides  */
-  for (list = image->guides; list; list = g_list_next (list))
+  for (list = gimp_image_get_guides (image); list; list = g_list_next (list))
     {
       GimpGuide *guide    = list->data;
       gint       position = gimp_guide_get_position (guide);
@@ -260,7 +260,7 @@ gimp_image_duplicate (GimpImage *image)
     }
 
   /*  Copy any sample points  */
-  for (list = image->sample_points; list; list = g_list_next (list))
+  for (list = gimp_image_get_sample_points (image); list; list = g_list_next (list))
     {
       GimpSamplePoint *sample_point = list->data;
 

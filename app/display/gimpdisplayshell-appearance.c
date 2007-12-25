@@ -28,6 +28,8 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-guides.h"
+#include "core/gimpimage-sample-points.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimprender.h"
@@ -336,7 +338,7 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
 
   g_object_set (options, "show-guides", show, NULL);
 
-  if (shell->display->image->guides)
+  if (gimp_image_get_guides (shell->display->image))
     gimp_display_shell_expose_full (shell);
 
   SET_ACTIVE (shell->menubar_manager, "view-show-guides", show);
@@ -394,7 +396,7 @@ gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
 
   g_object_set (options, "show-sample-points", show, NULL);
 
-  if (shell->display->image->sample_points)
+  if (gimp_image_get_sample_points (shell->display->image))
     gimp_display_shell_expose_full (shell);
 
   SET_ACTIVE (shell->menubar_manager, "view-show-sample-points", show);

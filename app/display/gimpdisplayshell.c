@@ -39,6 +39,8 @@
 #include "core/gimpcontext.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-grid.h"
+#include "core/gimpimage-guides.h"
 #include "core/gimpimage-snap.h"
 #include "core/gimpprojection.h"
 #include "core/gimpmarshal.h"
@@ -1241,13 +1243,13 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
   *snapped_coords = *coords;
 
   if (gimp_display_shell_get_snap_to_guides (shell) &&
-      shell->display->image->guides)
+      gimp_image_get_guides (shell->display->image))
     {
       snap_to_guides = TRUE;
     }
 
   if (gimp_display_shell_get_snap_to_grid (shell) &&
-      shell->display->image->grid)
+      gimp_image_get_grid (shell->display->image))
     {
       snap_to_grid = TRUE;
     }
