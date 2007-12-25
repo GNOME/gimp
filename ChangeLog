@@ -1,5 +1,14 @@
 2007-12-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.h (struct GimpImage):: renamed "cmap" to
+	"colormap" and "num_cols" to "n_colors".
+
+	* app/core/gimpimage.c
+	* app/core/gimpimage-colormap.[ch]
+	* app/widgets/gimpcolormapeditor.c: changed accordingly.
+
+2007-12-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/channels-commands.c
 	* app/actions/colormap-actions.c
 	* app/actions/colormap-commands.c

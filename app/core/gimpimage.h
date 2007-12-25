@@ -113,8 +113,8 @@ struct _GimpImage
   GimpUnit           resolution_unit;       /*  resolution unit              */
   GimpImageBaseType  base_type;             /*  base gimp_image type         */
 
-  guchar            *cmap;                  /*  colormap--for indexed        */
-  gint               num_cols;              /*  number of cols--for indexed  */
+  guchar            *colormap;              /*  colormap (for indexed)       */
+  gint               n_colors;              /*  # of colors (for indexed)    */
 
   gint               dirty;                 /*  dirty flag -- # of ops       */
   guint              dirty_time;            /*  time when image became dirty */

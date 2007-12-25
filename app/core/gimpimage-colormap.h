@@ -26,7 +26,7 @@
 const guchar * gimp_image_get_colormap       (const GimpImage *image);
 gint           gimp_image_get_colormap_size  (const GimpImage *image);
 void           gimp_image_set_colormap       (GimpImage       *image,
-                                              const guchar    *cmap,
+                                              const guchar    *colormap,
                                               gint             n_colors,
                                               gboolean         push_undo);
 

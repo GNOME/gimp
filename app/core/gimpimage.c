@@ -576,8 +576,8 @@ gimp_image_init (GimpImage *image)
   image->resolution_unit       = GIMP_UNIT_INCH;
   image->base_type             = GIMP_RGB;
 
-  image->cmap                  = NULL;
-  image->num_cols              = 0;
+  image->colormap              = NULL;
+  image->n_colors              = 0;
 
   image->dirty                 = 1;
   image->dirty_time            = 0;
@@ -720,8 +720,8 @@ gimp_image_constructor (GType                  type,
       break;
     case GIMP_INDEXED:
       /* always allocate 256 colors for the colormap */
-      image->num_cols = 0;
-      image->cmap     = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
+      image->n_colors = 0;
+      image->colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
       break;
     default:
       break;
@@ -872,10 +872,10 @@ gimp_image_finalize (GObject *object)
   if (image->shadow)
     gimp_image_free_shadow_tiles (image);
 
-  if (image->cmap)
+  if (image->colormap)
     {
-      g_free (image->cmap);
-      image->cmap = NULL;
+      g_free (image->colormap);
+      image->colormap = NULL;
     }
 
   if (image->layers)
@@ -983,7 +983,7 @@ gimp_image_get_memsize (GimpObject *object,
   GimpImage *image   = GIMP_IMAGE (object);
   gint64     memsize = 0;
 
-  if (image->cmap)
+  if (gimp_image_get_colormap (image))
     memsize += GIMP_IMAGE_COLORMAP_SIZE;
 
   memsize += tile_manager_get_memsize (image->shadow, FALSE);
@@ -1805,7 +1805,7 @@ gimp_image_colormap_changed (GimpImage *image,
                              gint       color_index)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (color_index >= -1 && color_index < image->num_cols);
+  g_return_if_fail (color_index >= -1 && color_index < image->n_colors);
 
   g_signal_emit (image, gimp_image_signals[COLORMAP_CHANGED], 0,
                  color_index);
@@ -2086,9 +2086,9 @@ gimp_image_get_color (const GimpImage *src_image,
       {
         gint index = *src++ * 3;
 
-        *rgba++ = src_image->cmap[index++];
-        *rgba++ = src_image->cmap[index++];
-        *rgba++ = src_image->cmap[index++];
+        *rgba++ = src_image->colormap[index++];
+        *rgba++ = src_image->colormap[index++];
+        *rgba++ = src_image->colormap[index++];
       }
       break;
     }

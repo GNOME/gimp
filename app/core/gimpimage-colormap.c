@@ -38,7 +38,7 @@ gimp_image_get_colormap (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return image->cmap;
+  return image->colormap;
 }
 
 gint
@@ -46,41 +46,41 @@ gimp_image_get_colormap_size (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
 
-  return image->num_cols;
+  return image->n_colors;
 }
 
 void
 gimp_image_set_colormap (GimpImage    *image,
-                         const guchar *cmap,
+                         const guchar *colormap,
                          gint          n_colors,
                          gboolean      push_undo)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (cmap != NULL || n_colors == 0);
+  g_return_if_fail (colormap != NULL || n_colors == 0);
   g_return_if_fail (n_colors >= 0 && n_colors <= 256);
 
   if (push_undo)
     gimp_image_undo_push_image_colormap (image, _("Set Colormap"));
 
-  if (image->cmap)
-    memset (image->cmap, 0, GIMP_IMAGE_COLORMAP_SIZE);
+  if (image->colormap)
+    memset (image->colormap, 0, GIMP_IMAGE_COLORMAP_SIZE);
 
-  if (cmap)
+  if (colormap)
     {
-      if (! image->cmap)
-        image->cmap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
+      if (! image->colormap)
+        image->colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
 
-      memcpy (image->cmap, cmap, n_colors * 3);
+      memcpy (image->colormap, colormap, n_colors * 3);
     }
   else if (! gimp_image_base_type (image) == GIMP_INDEXED)
     {
-      if (image->cmap)
-        g_free (image->cmap);
+      if (image->colormap)
+        g_free (image->colormap);
 
-      image->cmap = NULL;
+      image->colormap = NULL;
     }
 
-  image->num_cols = n_colors;
+  image->n_colors = n_colors;
 
   gimp_image_colormap_changed (image, -1);
 }
@@ -91,14 +91,14 @@ gimp_image_get_colormap_entry (GimpImage *image,
                                GimpRGB   *color)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (image->cmap != NULL);
-  g_return_if_fail (color_index >= 0 && color_index < image->num_cols);
+  g_return_if_fail (image->colormap != NULL);
+  g_return_if_fail (color_index >= 0 && color_index < image->n_colors);
   g_return_if_fail (color != NULL);
 
   gimp_rgba_set_uchar (color,
-                       image->cmap[color_index * 3],
-                       image->cmap[color_index * 3 + 1],
-                       image->cmap[color_index * 3 + 2],
+                       image->colormap[color_index * 3],
+                       image->colormap[color_index * 3 + 1],
+                       image->colormap[color_index * 3 + 2],
                        OPAQUE_OPACITY);
 }
 
@@ -109,8 +109,8 @@ gimp_image_set_colormap_entry (GimpImage     *image,
                                gboolean       push_undo)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (image->cmap != NULL);
-  g_return_if_fail (color_index >= 0 && color_index < image->num_cols);
+  g_return_if_fail (image->colormap != NULL);
+  g_return_if_fail (color_index >= 0 && color_index < image->n_colors);
   g_return_if_fail (color != NULL);
 
   if (push_undo)
@@ -118,9 +118,9 @@ gimp_image_set_colormap_entry (GimpImage     *image,
                                          _("Change Colormap entry"));
 
   gimp_rgb_get_uchar (color,
-                      &image->cmap[color_index * 3],
-                      &image->cmap[color_index * 3 + 1],
-                      &image->cmap[color_index * 3 + 2]);
+                      &image->colormap[color_index * 3],
+                      &image->colormap[color_index * 3 + 1],
+                      &image->colormap[color_index * 3 + 2]);
 
   gimp_image_colormap_changed (image, color_index);
 }
@@ -130,19 +130,19 @@ gimp_image_add_colormap_entry (GimpImage     *image,
                                const GimpRGB *color)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (image->cmap != NULL);
-  g_return_if_fail (image->num_cols < 256);
+  g_return_if_fail (image->colormap != NULL);
+  g_return_if_fail (image->n_colors < 256);
   g_return_if_fail (color != NULL);
 
   gimp_image_undo_push_image_colormap (image,
                                        _("Add Color to Colormap"));
 
   gimp_rgb_get_uchar (color,
-                      &image->cmap[image->num_cols * 3],
-                      &image->cmap[image->num_cols * 3 + 1],
-                      &image->cmap[image->num_cols * 3 + 2]);
+                      &image->colormap[image->n_colors * 3],
+                      &image->colormap[image->n_colors * 3 + 1],
+                      &image->colormap[image->n_colors * 3 + 2]);
 
-  image->num_cols++;
+  image->n_colors++;
 
   gimp_image_colormap_changed (image, -1);
 }
