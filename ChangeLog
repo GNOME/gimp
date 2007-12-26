@@ -1,3 +1,7 @@
+2007-12-26  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimpbrushcore.c: sprinkled with const qualifiers.
+
 2007-12-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-guides.[ch]

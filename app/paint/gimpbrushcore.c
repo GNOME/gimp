@@ -380,13 +380,17 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 static void
 gimp_avoid_exact_integer (gdouble *x)
 {
-  gdouble integral   = floor (*x);
-  gdouble fractional = *x - integral;
+  const gdouble integral   = floor (*x);
+  const gdouble fractional = *x - integral;
 
   if (fractional < EPSILON)
-    *x = integral + EPSILON;
-  else if (fractional > (1-EPSILON))
-    *x = integral + (1-EPSILON);
+    {
+      *x = integral + EPSILON;
+    }
+  else if (fractional > (1 -EPSILON))
+    {
+      *x = integral + (1 - EPSILON);
+    }
 }
 
 static void
@@ -760,7 +764,7 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
                                    GimpPaintOptions *paint_options)
 {
   TempBuf *mask  = NULL;
-  gdouble  scale = 1.0;
+  gdouble  scale;
 
   g_return_if_fail (GIMP_IS_BRUSH_CORE (core));
   g_return_if_fail (core->main_brush != NULL);
@@ -935,10 +939,10 @@ rotate_pointers (gulong  **p,
   gulong  *tmp;
 
   tmp = p[0];
+
   for (i = 0; i < n-1; i++)
-    {
-      p[i] = p[i+1];
-    }
+    p[i] = p[i+1];
+
   p[i] = tmp;
 }
 
@@ -948,21 +952,21 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
                                 gdouble        x,
                                 gdouble        y)
 {
-  TempBuf    *dest;
-  gdouble     left;
-  guchar     *m;
-  guchar     *d;
-  guchar      empty         = TRANSPARENT_OPACITY;
-  const gint *k;
-  gint        index1;
-  gint        index2;
-  gint        dest_offset_x = 0;
-  gint        dest_offset_y = 0;
-  const gint *kernel;
-  gint        i, j;
-  gint        r, s;
-  gulong     *accum[KERNEL_HEIGHT];
-  gint        offs;
+  TempBuf      *dest;
+  gdouble       left;
+  const guchar *m;
+  guchar       *d;
+  const gint   *k;
+  gint          index1;
+  gint          index2;
+  gint          dest_offset_x = 0;
+  gint          dest_offset_y = 0;
+  const gint   *kernel;
+  gint          i, j;
+  gint          r, s;
+  gulong       *accum[KERNEL_HEIGHT];
+  const guchar  empty = TRANSPARENT_OPACITY;
+  gint          offs;
 
   while (x < 0)
     x += mask->width;
@@ -1084,10 +1088,10 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
                                  gdouble        pressure)
 {
   static guchar  mapi[256];
-  guchar        *source;
+  const guchar  *source;
   guchar        *dest;
-  guchar         empty = TRANSPARENT_OPACITY;
   TempBuf       *subsample_mask;
+  const guchar   empty = TRANSPARENT_OPACITY;
   gint           i;
 
   /* Get the raw subsampled mask */
@@ -1123,8 +1127,8 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
    *      --                  /                   |
    */
   {
-    static gdouble  map[256];
-    gdouble         ds, s, c;
+    gdouble  map[256];
+    gdouble  ds, s, c;
 
     ds = (pressure - 0.5) * (20.0 / 256.0);
     s  = 0;
@@ -1197,13 +1201,13 @@ gimp_brush_core_solidify_mask (GimpBrushCore *core,
                                gdouble        x,
                                gdouble        y)
 {
-  TempBuf *dest;
-  guchar  *m;
-  guchar  *d;
-  guchar   empty         = TRANSPARENT_OPACITY;
-  gint     dest_offset_x = 0;
-  gint     dest_offset_y = 0;
-  gint     i, j;
+  TempBuf      *dest;
+  const guchar *m;
+  guchar       *d;
+  gint          dest_offset_x = 0;
+  gint          dest_offset_y = 0;
+  gint          i, j;
+  const guchar  empty         = TRANSPARENT_OPACITY;
 
   if ((brush_mask->width % 2) == 0)
     {
@@ -1477,13 +1481,13 @@ paint_line_pixmap_mask (GimpImage                *dest,
                         gint                      width,
                         GimpBrushApplicationMode  mode)
 {
-  guchar  *b;
-  guchar  *p;
-  guchar  *mask;
-  gdouble  alpha;
-  gdouble  factor = 0.00392156986;  /*  1.0 / 255.0  */
-  gint     x_index;
-  gint     i,byte_loop;
+  const guchar  *mask;
+  guchar        *b;
+  guchar        *p;
+  gdouble        alpha;
+  const gdouble  factor = 0.00392156986;  /*  1.0 / 255.0  */
+  gint           x_index;
+  gint           i;
 
   /*  Make sure x, y are positive  */
   while (x < 0)
@@ -1505,6 +1509,8 @@ paint_line_pixmap_mask (GimpImage                *dest,
 
       for (i = 0; i < width; i++)
         {
+          gint byte_loop;
+
           /* attempt to avoid doing this calc twice in the loop */
           x_index = ((i + x) % pixmap_mask->width);
           p = b + x_index * pixmap_mask->bytes;
