@@ -69,10 +69,14 @@ grid_dialog_new (GimpImage   *image,
   GimpGrid  *grid_backup;
   GtkWidget *dialog;
   GtkWidget *editor;
+  gdouble    xres;
+  gdouble    yres;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
+
+  gimp_image_get_resolution (image, &xres, &yres);
 
   grid = gimp_image_get_grid (GIMP_IMAGE (image));
   grid_backup = gimp_config_duplicate (GIMP_CONFIG (grid));
@@ -102,8 +106,7 @@ grid_dialog_new (GimpImage   *image,
                     G_CALLBACK (grid_dialog_response),
                     dialog);
 
-  editor = gimp_grid_editor_new (grid, context,
-                                 image->xresolution, image->yresolution);
+  editor = gimp_grid_editor_new (grid, context, xres, yres);
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox),
                      editor);

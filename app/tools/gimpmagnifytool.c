@@ -222,8 +222,12 @@ gimp_magnify_tool_button_release (GimpTool              *tool,
 
       if (new_scale != current_scale)
         {
-          gint offset_x = 0;
-          gint offset_y = 0;
+          gdouble xres;
+          gdouble yres;
+          gint    offset_x = 0;
+          gint    offset_y = 0;
+
+          gimp_image_get_resolution (display->image, &xres, &yres);
 
           switch (options->zoom_type)
             {
@@ -238,13 +242,11 @@ gimp_magnify_tool_button_release (GimpTool              *tool,
                *               offset
                */
               offset_x = RINT (new_scale * ((x1 + x2) / 2.0) *
-                               SCREEN_XRES (shell) / display->image->xresolution
-                               -
+                               SCREEN_XRES (shell) / xres -
                                (shell->disp_width / 2.0));
 
               offset_y = RINT (new_scale * ((y1 + y2) / 2.0) *
-                               SCREEN_YRES (shell) / display->image->yresolution
-                               -
+                               SCREEN_YRES (shell) / yres -
                                (shell->disp_height / 2.0));
               break;
 
@@ -261,16 +263,14 @@ gimp_magnify_tool_button_release (GimpTool              *tool,
               offset_x = RINT (new_scale * UNSCALEX (shell,
                                                      shell->offset_x +
                                                      shell->disp_width / 2.0) *
-                               SCREEN_XRES (shell) / display->image->xresolution
-                               -
+                               SCREEN_XRES (shell) / xres -
                                (SCALEX (shell, (x1 + x2) / 2.0) -
                                 shell->offset_x));
 
               offset_y = RINT (new_scale * UNSCALEY (shell,
                                                      shell->offset_y +
                                                      shell->disp_height / 2.0) *
-                               SCREEN_YRES (shell) / display->image->yresolution
-                               -
+                               SCREEN_YRES (shell) / yres -
                                (SCALEY (shell, (y1 + y2) / 2.0) -
                                 shell->offset_y));
               break;

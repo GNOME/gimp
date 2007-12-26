@@ -56,6 +56,8 @@ gimp_image_duplicate (GimpImage *image)
   GimpDrawable *new_floating_sel_drawable = NULL;
   GimpDrawable *floating_sel_drawable     = NULL;
   gchar        *filename;
+  gdouble       xres;
+  gdouble       yres;
   gint          count;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
@@ -88,9 +90,9 @@ gimp_image_duplicate (GimpImage *image)
                              FALSE);
 
   /*  Copy resolution information  */
-  new_image->xresolution     = image->xresolution;
-  new_image->yresolution     = image->yresolution;
-  new_image->resolution_unit = gimp_image_get_unit (image);
+  gimp_image_get_resolution (image, &xres, &yres);
+  gimp_image_set_resolution (new_image, xres, yres);
+  gimp_image_set_unit (new_image, gimp_image_get_unit (image));
 
   /*  Copy floating layer  */
   floating_layer = gimp_image_floating_sel (image);

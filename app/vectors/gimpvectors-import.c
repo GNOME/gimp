@@ -474,9 +474,13 @@ svg_handler_svg_start (SvgHandler   *handler,
   gdouble      y = 0;
   gdouble      w = handler->width;
   gdouble      h = handler->height;
+  gdouble      xres;
+  gdouble      yres;
 
   matrix = g_slice_new (GimpMatrix3);
   gimp_matrix3_identity (matrix);
+
+  gimp_image_get_resolution (parser->image, &xres, &yres);
 
   while (*names)
     {
@@ -484,26 +488,22 @@ svg_handler_svg_start (SvgHandler   *handler,
         {
         case 'x':
           if (strcmp (*names, "x") == 0)
-            parse_svg_length (*values,
-                              handler->width, parser->image->xresolution, &x);
+            parse_svg_length (*values, handler->width, xres, &x);
           break;
 
         case 'y':
           if (strcmp (*names, "y") == 0)
-            parse_svg_length (*values,
-                              handler->height, parser->image->yresolution, &y);
+            parse_svg_length (*values, handler->height, yres, &y);
           break;
 
         case 'w':
           if (strcmp (*names, "width") == 0)
-            parse_svg_length (*values,
-                              handler->width, parser->image->xresolution, &w);
+            parse_svg_length (*values, handler->width, xres, &w);
           break;
 
         case 'h':
           if (strcmp (*names, "height") == 0)
-            parse_svg_length (*values,
-                              handler->height, parser->image->yresolution, &h);
+            parse_svg_length (*values, handler->height, yres, &h);
           break;
 
         case 'v':
@@ -637,13 +637,17 @@ svg_handler_rect_start (SvgHandler   *handler,
                         const gchar **values,
                         SvgParser    *parser)
 {
-  SvgPath    *path   = g_slice_new0 (SvgPath);
-  gdouble     x      = 0.0;
-  gdouble     y      = 0.0;
-  gdouble     width  = 0.0;
-  gdouble     height = 0.0;
-  gdouble     rx     = 0.0;
-  gdouble     ry     = 0.0;
+  SvgPath *path   = g_slice_new0 (SvgPath);
+  gdouble  x      = 0.0;
+  gdouble  y      = 0.0;
+  gdouble  width  = 0.0;
+  gdouble  height = 0.0;
+  gdouble  rx     = 0.0;
+  gdouble  ry     = 0.0;
+  gdouble  xres;
+  gdouble  yres;
+
+  gimp_image_get_resolution (parser->image, &xres, &yres);
 
   while (*names)
     {
@@ -656,41 +660,29 @@ svg_handler_rect_start (SvgHandler   *handler,
 
         case 'x':
           if (strcmp (*names, "x") == 0)
-            parse_svg_length (*values,
-                              handler->width, parser->image->xresolution,
-                              &x);
+            parse_svg_length (*values, handler->width, xres, &x);
           break;
 
         case 'y':
           if (strcmp (*names, "y") == 0)
-            parse_svg_length (*values,
-                              handler->height, parser->image->yresolution,
-                              &y);
+            parse_svg_length (*values, handler->height, yres, &y);
           break;
 
         case 'w':
           if (strcmp (*names, "width") == 0)
-            parse_svg_length (*values,
-                              handler->width, parser->image->xresolution,
-                              &width);
+            parse_svg_length (*values, handler->width, xres, &width);
           break;
 
         case 'h':
           if (strcmp (*names, "height") == 0)
-            parse_svg_length (*values,
-                              handler->height, parser->image->yresolution,
-                              &height);
+            parse_svg_length (*values, handler->height, yres, &height);
           break;
 
         case 'r':
           if (strcmp (*names, "rx") == 0)
-            parse_svg_length (*values,
-                              handler->width, parser->image->xresolution,
-                              &rx);
+            parse_svg_length (*values, handler->width, xres, &rx);
           else if (strcmp (*names, "ry") == 0)
-            parse_svg_length (*values,
-                              handler->height, parser->image->yresolution,
-                              &ry);
+            parse_svg_length (*values, handler->height, yres, &ry);
           break;
 
         case 't':
@@ -798,6 +790,10 @@ svg_handler_ellipse_start (SvgHandler   *handler,
   GimpCoords  center = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
   gdouble     rx     = 0.0;
   gdouble     ry     = 0.0;
+  gdouble     xres;
+  gdouble     yres;
+
+  gimp_image_get_resolution (parser->image, &xres, &yres);
 
   while (*names)
     {
@@ -810,36 +806,24 @@ svg_handler_ellipse_start (SvgHandler   *handler,
 
         case 'c':
           if (strcmp (*names, "cx") == 0)
-            parse_svg_length (*values,
-                              handler->width, parser->image->xresolution,
-                              &center.x);
+            parse_svg_length (*values, handler->width, xres, &center.x);
           else if (strcmp (*names, "cy") == 0)
-            parse_svg_length (*values,
-                              handler->height, parser->image->yresolution,
-                              &center.y);
+            parse_svg_length (*values, handler->height, yres, &center.y);
           break;
 
         case 'r':
           if (strcmp (*names, "r") == 0)
             {
-              parse_svg_length (*values,
-                                handler->width, parser->image->xresolution,
-                                &rx);
-              parse_svg_length (*values,
-                                handler->height, parser->image->yresolution,
-                                &ry);
+              parse_svg_length (*values, handler->width,  xres, &rx);
+              parse_svg_length (*values, handler->height, yres, &ry);
             }
           else if (strcmp (*names, "rx") == 0)
             {
-              parse_svg_length (*values,
-                                handler->width, parser->image->xresolution,
-                                &rx);
+              parse_svg_length (*values, handler->width, xres, &rx);
             }
           else if (strcmp (*names, "ry") == 0)
             {
-              parse_svg_length (*values,
-                                handler->height, parser->image->yresolution,
-                                &ry);
+              parse_svg_length (*values, handler->height, yres, &ry);
             }
           break;
 
@@ -879,6 +863,10 @@ svg_handler_line_start (SvgHandler   *handler,
   GimpCoords  start = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
   GimpCoords  end   = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
   GimpStroke *stroke;
+  gdouble     xres;
+  gdouble     yres;
+
+  gimp_image_get_resolution (parser->image, &xres, &yres);
 
   while (*names)
     {
@@ -891,24 +879,16 @@ svg_handler_line_start (SvgHandler   *handler,
 
         case 'x':
           if (strcmp (*names, "x1") == 0)
-            parse_svg_length (*values,
-                              handler->width, parser->image->xresolution,
-                              &start.x);
+            parse_svg_length (*values, handler->width, xres, &start.x);
           else if (strcmp (*names, "x2") == 0)
-            parse_svg_length (*values,
-                              handler->width, parser->image->xresolution,
-                              &end.x);
+            parse_svg_length (*values, handler->width, xres, &end.x);
           break;
 
         case 'y':
           if (strcmp (*names, "y1") == 0)
-            parse_svg_length (*values,
-                              handler->height, parser->image->yresolution,
-                              &start.y);
+            parse_svg_length (*values, handler->height, yres, &start.y);
           else if (strcmp (*names, "y2") == 0)
-            parse_svg_length (*values,
-                              handler->height, parser->image->yresolution,
-                              &end.y);
+            parse_svg_length (*values, handler->height, yres, &end.y);
           break;
 
         case 't':

@@ -609,10 +609,9 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
   g_return_if_fail (title != NULL);
   g_return_if_fail (separator != NULL);
+
   if (help == NULL)
-    {
-      help = "";
-    }
+    help = "";
 
   shell = statusbar->shell;
 
@@ -629,15 +628,19 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
   else /* show real world units */
     {
       GimpImage *image       = shell->display->image;
+      gdouble    xres;
+      gdouble    yres;
       gdouble    unit_factor = _gimp_unit_get_factor (image->gimp,
                                                       shell->unit);
+
+      gimp_image_get_resolution (image, &xres, &yres);
 
       gimp_statusbar_push (statusbar, context,
                            statusbar->cursor_format_str,
                            title,
-                           x * unit_factor / image->xresolution,
+                           x * unit_factor / xres,
                            separator,
-                           y * unit_factor / image->yresolution,
+                           y * unit_factor / yres,
                            help);
     }
 }
@@ -654,10 +657,9 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
   g_return_if_fail (title != NULL);
+
   if (help == NULL)
-    {
-      help = "";
-    }
+    help = "";
 
   shell = statusbar->shell;
 
@@ -672,18 +674,22 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
   else /* show real world units */
     {
       GimpImage *image       = shell->display->image;
+      gdouble    xres;
+      gdouble    yres;
       gdouble    resolution;
       gdouble    unit_factor = _gimp_unit_get_factor (image->gimp,
                                                       shell->unit);
 
+      gimp_image_get_resolution (image, &xres, &yres);
+
       switch (axis)
         {
         case GIMP_ORIENTATION_HORIZONTAL:
-          resolution = image->xresolution;
+          resolution = xres;
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
-          resolution = image->yresolution;
+          resolution = yres;
           break;
 
         default:
@@ -1037,6 +1043,8 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
   GimpImage    *image = shell->display->image;
   GtkTreeModel *model;
   const gchar  *text;
+  gdouble       xres;
+  gdouble       yres;
   gint          width;
   gint          diff;
 
@@ -1048,8 +1056,8 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
                                      gimp_statusbar_scale_changed, statusbar);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->unit_combo));
-  gimp_unit_store_set_resolutions (GIMP_UNIT_STORE (model),
-                                   image->xresolution, image->yresolution);
+  gimp_image_get_resolution (image, &xres, &yres);
+  gimp_unit_store_set_resolutions (GIMP_UNIT_STORE (model), xres, yres);
 
   g_signal_handlers_block_by_func (statusbar->unit_combo,
                                    gimp_statusbar_unit_changed, statusbar);

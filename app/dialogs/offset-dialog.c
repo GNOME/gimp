@@ -87,6 +87,8 @@ offset_dialog_new (GimpDrawable *drawable,
   GtkWidget    *frame;
   GtkWidget    *radio_button;
   GtkObject    *adjustment;
+  gdouble       xres;
+  gdouble       yres;
   const gchar  *title = NULL;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -99,6 +101,8 @@ offset_dialog_new (GimpDrawable *drawable,
   dialog->fill_type = gimp_drawable_has_alpha (drawable) | WRAP_AROUND;
   item = GIMP_ITEM (drawable);
   dialog->image     = gimp_item_get_image (item);
+
+  gimp_image_get_resolution (dialog->image, &xres, &yres);
 
   if (GIMP_IS_LAYER (drawable))
     title = _("Offset Layer");
@@ -187,9 +191,9 @@ offset_dialog_new (GimpDrawable *drawable,
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (dialog->off_se), GIMP_UNIT_PIXEL);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (dialog->off_se), 0,
-                                  dialog->image->xresolution, FALSE);
+                                  xres, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (dialog->off_se), 1,
-                                  dialog->image->yresolution, FALSE);
+                                  yres, FALSE);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (dialog->off_se), 0,
                                          - gimp_item_width (item),

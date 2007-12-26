@@ -809,6 +809,8 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
   gdouble           theta1, theta2;
   gdouble           pixel_angle;
   gdouble           unit_angle;
+  gdouble           xres;
+  gdouble           yres;
   gchar             format[128];
 
   /*  calculate distance and angle  */
@@ -829,15 +831,17 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
   pixel_width  = ABS (ax - bx);
   pixel_height = ABS (ay - by);
 
+  gimp_image_get_resolution (image, &xres, &yres);
+
   unit_width  = (_gimp_unit_get_factor (image->gimp, shell->unit) *
-                 pixel_width / image->xresolution);
+                 pixel_width / xres);
   unit_height = (_gimp_unit_get_factor (image->gimp, shell->unit) *
-                 pixel_height / image->yresolution);
+                 pixel_height / yres);
 
   pixel_distance = sqrt (SQR (ax - bx) + SQR (ay - by));
   unit_distance  = (_gimp_unit_get_factor (image->gimp, shell->unit) *
-                    sqrt (SQR ((gdouble)(ax - bx) / image->xresolution) +
-                          SQR ((gdouble)(ay - by) / image->yresolution)));
+                    sqrt (SQR ((gdouble)(ax - bx) / xres) +
+                          SQR ((gdouble)(ay - by) / yres)));
 
   if (measure->num_points != 3)
     bx = ax > 0 ? 1 : -1;
@@ -849,10 +853,8 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
   if (pixel_angle > 180.0)
     pixel_angle = fabs (360.0 - pixel_angle);
 
-  theta1 = gimp_measure_tool_get_angle (ax, ay,
-                                        image->xresolution, image->yresolution);
-  theta2 = gimp_measure_tool_get_angle (bx, by,
-                                        image->xresolution, image->yresolution);
+  theta1 = gimp_measure_tool_get_angle (ax, ay, xres, yres);
+  theta2 = gimp_measure_tool_get_angle (bx, by, xres, yres);
 
   measure->angle1 = theta1;
   measure->angle2 = theta2;

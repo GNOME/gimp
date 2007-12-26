@@ -606,15 +606,19 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
           else
             {
               GimpImage *image = display->image;
+              gdouble    xres;
+              gdouble    yres;
               gchar      format_str[64];
+
+              gimp_image_get_resolution (image, &xres, &yres);
 
               g_snprintf (format_str, sizeof (format_str), "%%.%df %s.  %%s",
                           _gimp_unit_get_digits (image->gimp, shell->unit),
                           _gimp_unit_get_symbol (image->gimp, shell->unit));
 
               dist = (_gimp_unit_get_factor (image->gimp, shell->unit) *
-                      sqrt (SQR (dx / image->xresolution) +
-                            SQR (dy / image->yresolution)));
+                      sqrt (SQR (dx / xres) +
+                            SQR (dy / yres)));
 
               gimp_tool_push_status (tool, display, format_str,
                                      dist, status_help);

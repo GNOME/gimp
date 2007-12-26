@@ -183,6 +183,9 @@ gimp_image_rotate (GimpImage        *image,
   /*  Resize the image (if needed)  */
   if (size_changed)
     {
+      gdouble xres;
+      gdouble yres;
+
       gimp_image_undo_push_image_size (image, NULL);
 
       g_object_set (image,
@@ -190,16 +193,10 @@ gimp_image_rotate (GimpImage        *image,
                     "height", new_image_height,
                     NULL);
 
-      if (image->xresolution != image->yresolution)
-        {
-          gdouble tmp;
+      gimp_image_get_resolution (image, &xres, &yres);
 
-          gimp_image_undo_push_image_resolution (image, NULL);
-
-          tmp                = image->xresolution;
-          image->yresolution = image->xresolution;
-          image->xresolution = tmp;
-        }
+      if (xres != yres)
+        gimp_image_set_resolution (image, yres, xres);
     }
 
   gimp_image_undo_group_end (image);

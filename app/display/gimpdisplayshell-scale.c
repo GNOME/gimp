@@ -394,6 +394,8 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
   GimpImage *image;
   gint       image_width;
   gint       image_height;
+  gdouble    xres;
+  gdouble    yres;
   gdouble    zoom_factor;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -403,12 +405,12 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
   image_width  = gimp_image_get_width  (image);
   image_height = gimp_image_get_height (image);
 
+  gimp_image_get_resolution (image, &xres, &yres);
+
   if (! shell->dot_for_dot)
     {
-      image_width  = ROUND (image_width *
-                            shell->monitor_xres / image->xresolution);
-      image_height = ROUND (image_height *
-                            shell->monitor_yres / image->yresolution);
+      image_width  = ROUND (image_width  * shell->monitor_xres / xres);
+      image_height = ROUND (image_height * shell->monitor_yres / yres);
     }
 
   zoom_factor = MIN ((gdouble) shell->disp_width  / (gdouble) image_width,
@@ -430,6 +432,8 @@ gimp_display_shell_scale_fill (GimpDisplayShell *shell)
   GimpImage *image;
   gint       image_width;
   gint       image_height;
+  gdouble    xres;
+  gdouble    yres;
   gdouble    zoom_factor;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -439,12 +443,12 @@ gimp_display_shell_scale_fill (GimpDisplayShell *shell)
   image_width  = gimp_image_get_width  (image);
   image_height = gimp_image_get_height (image);
 
+  gimp_image_get_resolution (image, &xres, &yres);
+
   if (! shell->dot_for_dot)
     {
-      image_width  = ROUND (image_width *
-                            shell->monitor_xres / image->xresolution);
-      image_height = ROUND (image_height *
-                            shell->monitor_yres / image->yresolution);
+      image_width  = ROUND (image_width  * shell->monitor_xres / xres);
+      image_height = ROUND (image_height * shell->monitor_yres / yres);
     }
 
   zoom_factor = MAX ((gdouble) shell->disp_width  / (gdouble) image_width,
@@ -798,15 +802,19 @@ img2real (GimpDisplayShell *shell,
           gdouble           len)
 {
   GimpImage *image = shell->display->image;
+  gdouble    xres;
+  gdouble    yres;
   gdouble    res;
 
   if (shell->unit == GIMP_UNIT_PIXEL)
     return len;
 
+  gimp_image_get_resolution (image, &xres, &yres);
+
   if (xdir)
-    res = image->xresolution;
+    res = xres;
   else
-    res = image->yresolution;
+    res = yres;
 
   return len * _gimp_unit_get_factor (image->gimp, shell->unit) / res;
 }

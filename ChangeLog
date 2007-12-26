@@ -1,3 +1,41 @@
+2007-12-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/image-commands.c
+	* app/actions/select-commands.c
+	* app/core/gimp-edit.c
+	* app/core/gimpdrawable-stroke.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-preview.c
+	* app/core/gimpimage-rotate.c
+	* app/core/gimpimageundo.c
+	* app/core/gimpitem-preview.c
+	* app/dialogs/grid-dialog.c
+	* app/dialogs/layer-options-dialog.c
+	* app/dialogs/offset-dialog.c
+	* app/dialogs/stroke-dialog.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-title.c
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpstatusbar.c
+	* app/paint/gimppaintoptions.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimprectangletool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimptexttool.c
+	* app/vectors/gimpvectors-export.c
+	* app/vectors/gimpvectors-import.c
+	* app/widgets/gimpcursorview.c
+	* app/widgets/gimpimagepropview.c
+	* app/widgets/gimptoolbox-dnd.c
+	* app/widgets/gimpviewrendererdrawable.c
+	* app/widgets/gimpviewrendererimage.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c: use gimp_image_get/set_resolution() instead
+	of accessing the GimpImage members directly.
+
 2007-12-26  Sven Neumann  <sven@gimp.org>
 
 	* app/paint/gimpbrushcore.c: sprinkled with const qualifiers.

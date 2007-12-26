@@ -437,6 +437,10 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   const gchar       *desc;
   gchar              format_buf[32];
   gchar              buf[256];
+  gdouble            xres;
+  gdouble            yres;
+
+  gimp_image_get_resolution (image, &xres, &yres);
 
   /*  pixel size  */
   g_snprintf (buf, sizeof (buf), ngettext ("%d × %d pixel",
@@ -456,8 +460,8 @@ gimp_image_prop_view_update (GimpImagePropView *view)
               unit_digits + 1, unit_digits + 1,
               _gimp_unit_get_plural (image->gimp, unit));
   g_snprintf (buf, sizeof (buf), format_buf,
-              gimp_image_get_width  (image) * unit_factor / image->xresolution,
-              gimp_image_get_height (image) * unit_factor / image->yresolution);
+              gimp_image_get_width  (image) * unit_factor / xres,
+              gimp_image_get_height (image) * unit_factor / yres);
   gtk_label_set_text (GTK_LABEL (view->print_size_label), buf);
 
   /*  resolution  */
@@ -467,8 +471,8 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   g_snprintf (format_buf, sizeof (format_buf), _("pixels/%s"),
               _gimp_unit_get_abbreviation (image->gimp, unit));
   g_snprintf (buf, sizeof (buf), _("%g × %g %s"),
-              image->xresolution / unit_factor,
-              image->yresolution / unit_factor,
+              xres / unit_factor,
+              yres / unit_factor,
               unit == GIMP_UNIT_INCH ? _("ppi") : format_buf);
   gtk_label_set_text (GTK_LABEL (view->resolution_label), buf);
 

@@ -392,6 +392,10 @@ xcf_save_image_props (XcfInfo    *info,
 {
   GimpParasite *parasite = NULL;
   GimpUnit      unit     = gimp_image_get_unit (image);
+  gdouble       xres;
+  gdouble       yres;
+
+  gimp_image_get_resolution (image, &xres, &yres);
 
   /* check and see if we should save the colormap property */
   if (gimp_image_get_colormap (image))
@@ -412,7 +416,7 @@ xcf_save_image_props (XcfInfo    *info,
                                     gimp_image_get_sample_points (image)));
 
   xcf_check_error (xcf_save_prop (info, image, PROP_RESOLUTION, error,
-                                  image->xresolution, image->yresolution));
+                                  xres, yres));
 
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
                                   gimp_image_get_tattoo_state (image)));

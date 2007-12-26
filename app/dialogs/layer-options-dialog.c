@@ -130,6 +130,11 @@ layer_options_dialog_new (GimpImage    *image,
 
   if (! layer)
     {
+      gdouble xres;
+      gdouble yres;
+
+      gimp_image_get_resolution (image, &xres, &yres);
+
       /*  The size labels  */
       label = gtk_label_new (_("Width:"));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
@@ -169,9 +174,9 @@ layer_options_dialog_new (GimpImage    *image,
                                 GIMP_UNIT_PIXEL);
 
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options->size_se), 0,
-                                      image->xresolution, FALSE);
+                                      xres, FALSE);
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options->size_se), 1,
-                                      image->yresolution, FALSE);
+                                      yres, FALSE);
 
       gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (options->size_se), 0,
                                              GIMP_MIN_IMAGE_SIZE,

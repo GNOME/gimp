@@ -135,8 +135,9 @@ gimp_image_undo_constructor (GType                  type,
       break;
 
     case GIMP_UNDO_IMAGE_RESOLUTION:
-      image_undo->xresolution     = image->xresolution;
-      image_undo->yresolution     = image->yresolution;
+      gimp_image_get_resolution (image,
+                                 &image_undo->xresolution,
+                                 &image_undo->yresolution);
       image_undo->resolution_unit = gimp_image_get_unit (image);
       break;
 
@@ -288,23 +289,24 @@ gimp_image_undo_pop (GimpUndo            *undo,
       break;
 
     case GIMP_UNDO_IMAGE_RESOLUTION:
-      if (ABS (image_undo->xresolution - image->xresolution) >= 1e-5 ||
-          ABS (image_undo->yresolution - image->yresolution) >= 1e-5)
-        {
-          gdouble xres;
-          gdouble yres;
+      {
+        gdouble xres;
+        gdouble yres;
 
-          xres = image->xresolution;
-          yres = image->yresolution;
+        gimp_image_get_resolution (image, &xres, &yres);
 
-          image->xresolution = image_undo->xresolution;
-          image->yresolution = image_undo->yresolution;
+        if (ABS (image_undo->xresolution - xres) >= 1e-5 ||
+            ABS (image_undo->yresolution - yres) >= 1e-5)
+          {
+            image->xresolution = image_undo->xresolution;
+            image->yresolution = image_undo->yresolution;
 
-          image_undo->xresolution = xres;
-          image_undo->yresolution = yres;
+            image_undo->xresolution = xres;
+            image_undo->yresolution = yres;
 
-          accum->resolution_changed = TRUE;
-        }
+            accum->resolution_changed = TRUE;
+          }
+      }
 
       if (image_undo->resolution_unit != gimp_image_get_unit (image))
         {

@@ -447,8 +447,7 @@ xcf_load_image_props (XcfInfo   *info,
                 yres = image->gimp->config->default_image->yresolution;
               }
 
-            image->xresolution = xres;
-            image->yresolution = yres;
+            gimp_image_set_resolution (image, xres, yres);
           }
           break;
 

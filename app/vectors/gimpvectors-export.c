@@ -167,10 +167,14 @@ gimp_vectors_export_image_size (const GimpImage *image,
   const gchar *abbrev;
   gchar        wbuf[G_ASCII_DTOSTR_BUF_SIZE];
   gchar        hbuf[G_ASCII_DTOSTR_BUF_SIZE];
+  gdouble      xres;
+  gdouble      yres;
   gdouble      w, h;
 
-  w = (gdouble) gimp_image_get_width  (image) / image->xresolution;
-  h = (gdouble) gimp_image_get_height (image) / image->yresolution;
+  gimp_image_get_resolution (image, &xres, &yres);
+
+  w = (gdouble) gimp_image_get_width  (image) / xres;
+  h = (gdouble) gimp_image_get_height (image) / yres;
 
   /*  FIXME: should probably use the display unit here  */
   unit = gimp_image_get_unit (image);

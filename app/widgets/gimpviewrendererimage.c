@@ -77,16 +77,20 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
     {
       gint      view_width;
       gint      view_height;
+      gdouble   xres;
+      gdouble   yres;
       gboolean  scaling_up;
       TempBuf  *render_buf = NULL;
+
+      gimp_image_get_resolution (image, &xres, &yres);
 
       gimp_viewable_calc_preview_size (gimp_image_get_width  (image),
                                        gimp_image_get_height (image),
                                        renderer->width,
                                        renderer->height,
                                        renderer->dot_for_dot,
-                                       image->xresolution,
-                                       image->yresolution,
+                                       xres,
+                                       yres,
                                        &view_width,
                                        &view_height,
                                        &scaling_up);

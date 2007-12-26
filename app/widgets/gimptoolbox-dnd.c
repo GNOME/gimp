@@ -182,6 +182,8 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
   gint               off_x, off_y;
   gint               bytes;
   GimpImageBaseType  type;
+  gdouble            xres;
+  gdouble            yres;
 
   if (context->gimp->busy)
     return;
@@ -201,7 +203,8 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
                              gimp_image_get_colormap_size (image),
                              FALSE);
 
-  gimp_image_set_resolution (new_image, image->xresolution, image->yresolution);
+  gimp_image_get_resolution (image, &xres, &yres);
+  gimp_image_set_resolution (new_image, xres, yres);
   gimp_image_set_unit (new_image, gimp_image_get_unit (image));
 
   if (GIMP_IS_LAYER (drawable))
@@ -281,6 +284,8 @@ gimp_toolbox_drop_component (GtkWidget       *widget,
   GimpImage   *new_image;
   GimpLayer   *new_layer;
   const gchar *desc;
+  gdouble      xres;
+  gdouble      yres;
 
   if (context->gimp->busy)
     return;
@@ -292,7 +297,8 @@ gimp_toolbox_drop_component (GtkWidget       *widget,
 
   gimp_image_undo_disable (new_image);
 
-  gimp_image_set_resolution (new_image, image->xresolution, image->yresolution);
+  gimp_image_get_resolution (image, &xres, &yres);
+  gimp_image_set_resolution (new_image, xres, yres);
   gimp_image_set_unit (new_image, gimp_image_get_unit (image));
 
   channel = gimp_channel_new_from_component (image, component, NULL, NULL);

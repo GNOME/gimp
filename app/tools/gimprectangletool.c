@@ -1909,6 +1909,8 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
   GimpTool                    *tool = GIMP_TOOL (rect_tool);
   GimpRectangleOptionsPrivate *options_private;
   GimpRectangleToolPrivate    *private;
+  gdouble                      xres;
+  gdouble                      yres;
 
   options_private =
     GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (gimp_tool_get_options (tool));
@@ -1930,10 +1932,12 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), tool->display);
 
+  gimp_image_get_resolution (display->image, &xres, &yres);
+
   if (options_private->fixed_width_entry)
     {
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->fixed_width_entry),
-                                      0, display->image->xresolution, FALSE);
+                                      0, xres, FALSE);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->fixed_width_entry),
                                 0, 0, gimp_image_get_width (display->image));
     }
@@ -1941,7 +1945,7 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
   if (options_private->fixed_height_entry)
     {
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->fixed_height_entry),
-                                      0, display->image->yresolution, FALSE);
+                                      0, yres, FALSE);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->fixed_height_entry),
                                 0, 0, gimp_image_get_height (display->image));
     }
@@ -1949,7 +1953,7 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
   if (options_private->x_entry)
     {
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->x_entry),
-                                      0, display->image->xresolution, FALSE);
+                                      0, xres, FALSE);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->x_entry),
                                 0, 0, gimp_image_get_width (display->image));
     }
@@ -1957,7 +1961,7 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
   if (options_private->y_entry)
     {
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->y_entry),
-                                      0, display->image->yresolution, FALSE);
+                                      0, yres, FALSE);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->y_entry),
                                 0, 0, gimp_image_get_height (display->image));
     }
@@ -1965,7 +1969,7 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
   if (options_private->width_entry)
     {
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->width_entry),
-                                      0, display->image->xresolution, FALSE);
+                                      0, xres, FALSE);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->width_entry),
                                 0, 0, gimp_image_get_width (display->image));
     }
@@ -1973,7 +1977,7 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
   if (options_private->height_entry)
     {
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->height_entry),
-                                      0, display->image->yresolution, FALSE);
+                                      0, yres, FALSE);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->height_entry),
                                 0, 0, gimp_image_get_height (display->image));
     }

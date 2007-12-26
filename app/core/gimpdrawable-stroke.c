@@ -214,9 +214,11 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
   TileManager *mask;
   gint         x, y, w, h;
   gint         bytes;
-  gint         off_x, off_y;
+  gint         off_x;
+  gint         off_y;
   guchar       bg[1] = { 0, };
-  PixelRegion  maskPR, basePR;
+  PixelRegion  maskPR;
+  PixelRegion  basePR;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -228,7 +230,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
     {
       x = 0;
       y = 0;
-      w = gimp_item_width (GIMP_ITEM (drawable));
+      w = gimp_item_width  (GIMP_ITEM (drawable));
       h = gimp_item_height (GIMP_ITEM (drawable));
     }
   else if (! gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
@@ -242,12 +244,14 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
 
   if (options->unit != GIMP_UNIT_PIXEL)
     {
-      gimp_scan_convert_set_pixel_ratio (scan_convert,
-                                         image->yresolution /
-                                         image->xresolution);
+      gdouble xres;
+      gdouble yres;
 
-      width *= (image->yresolution /
-                _gimp_unit_get_factor (image->gimp, options->unit));
+      gimp_image_get_resolution (image, &xres, &yres);
+
+      gimp_scan_convert_set_pixel_ratio (scan_convert, yres / xres);
+
+      width *= (yres / _gimp_unit_get_factor (image->gimp, options->unit));
     }
 
   gimp_scan_convert_stroke (scan_convert, width,

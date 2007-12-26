@@ -138,11 +138,15 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
 {
   GimpScaleTool        *scale   = GIMP_SCALE_TOOL (tr_tool);
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  gdouble               xres;
+  gdouble               yres;
 
   tr_tool->trans_info[X0] = (gdouble) tr_tool->x1;
   tr_tool->trans_info[Y0] = (gdouble) tr_tool->y1;
   tr_tool->trans_info[X1] = (gdouble) tr_tool->x2;
   tr_tool->trans_info[Y1] = (gdouble) tr_tool->y2;
+
+  gimp_image_get_resolution (display->image, &xres, &yres);
 
   if (scale->box)
     {
@@ -161,8 +165,8 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
                   "height",      tr_tool->y2 - tr_tool->y1,
                   "keep-aspect", options->constrain,
                   "unit",        GIMP_DISPLAY_SHELL (display->shell)->unit,
-                  "xresolution", display->image->xresolution,
-                  "yresolution", display->image->yresolution,
+                  "xresolution", xres,
+                  "yresolution", yres,
                   NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (scale->box), 6);

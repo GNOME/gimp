@@ -39,14 +39,18 @@ gimp_image_get_preview_size (GimpViewable *viewable,
                              gint         *height)
 {
   GimpImage *image = GIMP_IMAGE (viewable);
+  gdouble    xres;
+  gdouble    yres;
+
+  gimp_image_get_resolution (image, &xres, &yres);
 
   gimp_viewable_calc_preview_size (gimp_image_get_width  (image),
                                    gimp_image_get_height (image),
                                    size,
                                    size,
                                    dot_for_dot,
-                                   image->xresolution,
-                                   image->yresolution,
+                                   xres,
+                                   yres,
                                    width,
                                    height,
                                    NULL);

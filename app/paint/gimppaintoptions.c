@@ -580,10 +580,16 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
                       fade_options->fade_length / 100);
           break;
         default:
-          unit_factor = gimp_unit_get_factor (fade_options->fade_unit);
-          fade_out    = (fade_options->fade_length *
-                         MAX (image->xresolution,
-                              image->yresolution) / unit_factor);
+          {
+            gdouble xres;
+            gdouble yres;
+
+            gimp_image_get_resolution (image, &xres, &yres);
+
+            unit_factor = gimp_unit_get_factor (fade_options->fade_unit);
+            fade_out    = (fade_options->fade_length *
+                           MAX (xres, yres) / unit_factor);
+          }
           break;
         }
 
@@ -664,10 +670,16 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
                              gradient_options->gradient_length / 100);
           break;
         default:
-          unit_factor = gimp_unit_get_factor (gradient_options->gradient_unit);
-          gradient_length = (gradient_options->gradient_length *
-                             MAX (image->xresolution,
-                                  image->yresolution) / unit_factor);
+          {
+            gdouble xres;
+            gdouble yres;
+
+            gimp_image_get_resolution (image, &xres, &yres);
+
+            unit_factor = gimp_unit_get_factor (gradient_options->gradient_unit);
+            gradient_length = (gradient_options->gradient_length *
+                               MAX (xres, yres) / unit_factor);
+          }
           break;
         }
 

@@ -173,9 +173,12 @@ stroke_dialog_new (GimpItem    *item,
 
   {
     GtkWidget *stroke_editor;
+    gdouble    xres;
+    gdouble    yres;
 
-    stroke_editor = gimp_stroke_editor_new (desc->stroke_options,
-                                            image->yresolution);
+    gimp_image_get_resolution (image, &xres, &yres);
+
+    stroke_editor = gimp_stroke_editor_new (desc->stroke_options, yres);
     gtk_container_add (GTK_CONTAINER (frame), stroke_editor);
     gtk_widget_show (stroke_editor);
 

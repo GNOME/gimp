@@ -314,10 +314,12 @@ gimp_edit_paste_as_new (Gimp       *gimp,
 
   if (invoke)
     {
-      gimp_image_set_resolution (image,
-                                 invoke->xresolution, invoke->yresolution);
-      gimp_image_set_unit (image,
-                           gimp_image_get_unit (invoke));
+      gdouble xres;
+      gdouble yres;
+
+      gimp_image_get_resolution (invoke, &xres, &yres);
+      gimp_image_set_resolution (image, xres, yres);
+      gimp_image_set_unit (image, gimp_image_get_unit (invoke));
     }
 
   layer = gimp_layer_new_from_tiles (paste->tiles, image, type,

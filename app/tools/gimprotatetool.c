@@ -198,11 +198,15 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
                           GimpDisplay       *display)
 {
   GimpRotateTool *rotate = GIMP_ROTATE_TOOL (tr_tool);
+  gdouble         xres;
+  gdouble         yres;
 
   tr_tool->trans_info[ANGLE]      = 0.0;
   tr_tool->trans_info[REAL_ANGLE] = 0.0;
   tr_tool->trans_info[CENTER_X]   = tr_tool->cx;
   tr_tool->trans_info[CENTER_Y]   = tr_tool->cy;
+
+  gimp_image_get_resolution (display->image, &xres, &yres);
 
   g_signal_handlers_block_by_func (rotate->sizeentry,
                                    rotate_center_changed,
@@ -212,9 +216,9 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
                             GIMP_DISPLAY_SHELL (display->shell)->unit);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (rotate->sizeentry), 0,
-                                  display->image->xresolution, FALSE);
+                                  xres, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (rotate->sizeentry), 1,
-                                  display->image->yresolution, FALSE);
+                                  yres, FALSE);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (rotate->sizeentry), 0,
                                          -65536,

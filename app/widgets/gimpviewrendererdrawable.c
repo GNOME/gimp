@@ -71,6 +71,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
   gint          height;
   gint          view_width;
   gint          view_height;
+  gdouble       xres       = 1.0;
+  gdouble       yres       = 1.0;
   gboolean      scaling_up;
   TempBuf      *render_buf = NULL;
 
@@ -80,6 +82,9 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 
   width  = renderer->width;
   height = renderer->height;
+
+  if (image)
+    gimp_image_get_resolution (image, &xres, &yres);
 
   if (image && ! renderer->is_popup)
     {
@@ -95,8 +100,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
                                        width,
                                        height,
                                        renderer->dot_for_dot,
-                                       image->xresolution,
-                                       image->yresolution,
+                                       xres,
+                                       yres,
                                        &view_width,
                                        &view_height,
                                        &scaling_up);
@@ -108,8 +113,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
                                        width,
                                        height,
                                        renderer->dot_for_dot,
-                                       image ? image->xresolution : 1.0,
-                                       image ? image->yresolution : 1.0,
+                                       xres,
+                                       yres,
                                        &view_width,
                                        &view_height,
                                        &scaling_up);

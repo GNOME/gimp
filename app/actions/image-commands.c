@@ -610,10 +610,15 @@ image_print_size_callback (GtkWidget *dialog,
                            GimpUnit   resolution_unit,
                            gpointer   data)
 {
+  gdouble xres;
+  gdouble yres;
+
   gtk_widget_destroy (dialog);
 
-  if (xresolution     == image->xresolution &&
-      yresolution     == image->yresolution &&
+  gimp_image_get_resolution (image, &xres, &yres);
+
+  if (xresolution     == xres &&
+      yresolution     == yres &&
       resolution_unit == gimp_image_get_unit (image))
     return;
 
@@ -641,16 +646,20 @@ image_scale_callback (GtkWidget              *dialog,
                       gpointer                user_data)
 {
   GimpImage *image = GIMP_IMAGE (viewable);
+  gdouble    xres;
+  gdouble    yres;
 
   image_scale_unit   = unit;
   image_scale_interp = interpolation;
+
+  gimp_image_get_resolution (image, &xres, &yres);
 
   if (width > 0 && height > 0)
     {
       if (width           == gimp_image_get_width  (image) &&
           height          == gimp_image_get_height (image) &&
-          xresolution     == image->xresolution            &&
-          yresolution     == image->yresolution            &&
+          xresolution     == xres                          &&
+          yresolution     == yres                          &&
           resolution_unit == gimp_image_get_unit (image))
         return;
 
