@@ -1,5 +1,9 @@
 2007-12-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpcolorbalancetool.c: remove the same cruft here.
+
+2007-12-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpbrightnesscontrasttool.c: remove unused cruft.
 
 2007-12-27  Sven Neumann  <sven@gimp.org>
