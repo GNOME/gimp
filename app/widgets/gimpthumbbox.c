@@ -411,6 +411,7 @@ gimp_thumb_box_new (GimpContext *context)
   box->info = gtk_label_new (" \n \n \n ");
   gtk_misc_set_alignment (GTK_MISC (box->info), 0.5, 0.0);
   gtk_label_set_justify (GTK_LABEL (box->info), GTK_JUSTIFY_CENTER);
+  gtk_label_set_line_wrap (GTK_LABEL (box->info), TRUE);
   gimp_label_set_attributes (GTK_LABEL (box->info),
                              PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
                              -1);

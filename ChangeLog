@@ -1,3 +1,8 @@
+2007-12-27  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpthumbbox.c (gimp_thumb_box_new): enable line
+	wrapping on the info label.
+
 2007-12-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/image-commands.c
