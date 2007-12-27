@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-22 19:07+0200\n"
-"PO-Revision-Date: 2007-11-22 19:08+0200\n"
+"POT-Creation-Date: 2007-12-27 11:32+0200\n"
+"PO-Revision-Date: 2007-12-27 11:32+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -80,14 +80,14 @@ msgstr ""
 "Norėdami išvengti duomenų praradimo, patikrinkite Nustatymuose nurodyto "
 "mainų aplanko vietą ir leidimus (šiuo metu yra „%s“)."
 
-#: ../app/batch.c:75
+#: ../app/batch.c:76
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
 msgstr ""
 "Nenurodytas paketinio apdorojimo interpretatorius, naudojamas numatytasis „%"
 "s“.\n"
 
-#: ../app/batch.c:93 ../app/batch.c:111
+#: ../app/batch.c:94 ../app/batch.c:112
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
@@ -706,7 +706,7 @@ msgstr "_Pridėti spalvą iš fono"
 
 #: ../app/actions/colormap-actions.c:63
 msgid "Add current background color"
-msgstr "Pridėti esamą fono splavą"
+msgstr "Pridėti esamą fono spalvą"
 
 #: ../app/actions/colormap-commands.c:70
 #, c-format
@@ -2571,7 +2571,7 @@ msgstr "Nepavyko apkirpti, kadangi dabartinis pažymėjimas yra tuščias."
 msgid "Change Print Size"
 msgstr "Keisti spaudinio dydį"
 
-#: ../app/actions/image-commands.c:650 ../app/core/gimpimage-scale.c:77
+#: ../app/actions/image-commands.c:650 ../app/core/gimpimage-scale.c:79
 msgid "Scale Image"
 msgstr "Keisti paveikslėlio dydį"
 
@@ -2987,7 +2987,7 @@ msgstr "Sukurti naują sluoksnį"
 msgid "Set Layer Boundary Size"
 msgstr "Nustatyti sluoksnio ribų dydį"
 
-#: ../app/actions/layers-commands.c:572 ../app/core/gimplayer.c:247
+#: ../app/actions/layers-commands.c:572 ../app/core/gimplayer.c:251
 msgid "Scale Layer"
 msgstr "Keisti sluoksnio dydį"
 
@@ -3003,7 +3003,7 @@ msgstr "Kaukę paversti pažymėjimu"
 msgid "Please select a channel first"
 msgstr "Pirma pasirinkite kanalą"
 
-#: ../app/actions/layers-commands.c:991 ../app/core/gimplayer.c:1244
+#: ../app/actions/layers-commands.c:991 ../app/core/gimplayer.c:1266
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "Pridėti sluoksnio kaukę"
@@ -3038,7 +3038,7 @@ msgstr "Nauja spalva iš _fono"
 
 #: ../app/actions/palette-editor-actions.c:79
 msgid "New color from background color"
-msgstr "Nauja spalva iš fono splavos"
+msgstr "Nauja spalva iš fono spalvos"
 
 #: ../app/actions/palette-editor-actions.c:87
 #: ../app/actions/view-actions.c:261
@@ -3469,19 +3469,19 @@ msgstr ""
 
 #: ../app/actions/select-commands.c:148 ../app/core/gimpselection.c:170
 msgid "Feather Selection"
-msgstr "Išlieti pažymėtas sritis"
+msgstr "Išlieti pažymėtą sritį"
 
 #: ../app/actions/select-commands.c:152
 msgid "Feather selection by"
-msgstr "Kiek išlieti pažymėtas sritis"
+msgstr "Kiek išlieti pažymėtą sritį"
 
 #: ../app/actions/select-commands.c:183 ../app/core/gimpselection.c:177
 msgid "Shrink Selection"
-msgstr "Sumažinti pažymėtas sritis"
+msgstr "Sumažinti pažymėtą sritį"
 
 #: ../app/actions/select-commands.c:187
 msgid "Shrink selection by"
-msgstr "Kiek sumažinti pažymėtas sritis"
+msgstr "Kiek sumažinti pažymėtą sritį"
 
 #: ../app/actions/select-commands.c:196
 msgid "_Shrink from image border"
@@ -3489,15 +3489,15 @@ msgstr "_Sumažinti nuo paveikslėlio rėmelio"
 
 #: ../app/actions/select-commands.c:217 ../app/core/gimpselection.c:176
 msgid "Grow Selection"
-msgstr "Padidinti pažymėtas sritis"
+msgstr "Padidinti pažymėtą sritį"
 
 #: ../app/actions/select-commands.c:221
 msgid "Grow selection by"
-msgstr "Kiek padidinti pažymėtas sritis"
+msgstr "Kiek padidinti pažymėtą sritį"
 
 #: ../app/actions/select-commands.c:241 ../app/core/gimpselection.c:175
 msgid "Border Selection"
-msgstr "Įrėminti pažymėtas sritis"
+msgstr "Įrėminti pažymėtą sritį"
 
 #: ../app/actions/select-commands.c:245
 msgid "Border selection by"
@@ -3687,24 +3687,24 @@ msgid "Enter a name for the saved options"
 msgstr "Įveskite išsaugotų parinkčių pavadinimą"
 
 #: ../app/actions/tool-options-commands.c:77
-#: ../app/actions/tool-options-commands.c:245
-#: ../app/actions/tool-options-commands.c:262
+#: ../app/actions/tool-options-commands.c:247
+#: ../app/actions/tool-options-commands.c:264
 msgid "Saved Options"
 msgstr "Išsaugotos parinktys"
 
-#: ../app/actions/tool-options-commands.c:138
+#: ../app/actions/tool-options-commands.c:140
 msgid "Rename Saved Tool Options"
 msgstr "Pervadinti išsaugotas įrankių parinktis"
 
-#: ../app/actions/tool-options-commands.c:142
+#: ../app/actions/tool-options-commands.c:144
 msgid "Enter a new name for the saved options"
 msgstr "Įveskite naują išsaugotų parinkčių pavadinimą"
 
-#: ../app/actions/tool-options-commands.c:185
+#: ../app/actions/tool-options-commands.c:187
 msgid "Reset Tool Options"
 msgstr "Atkurti įrankių parinktis"
 
-#: ../app/actions/tool-options-commands.c:208
+#: ../app/actions/tool-options-commands.c:210
 msgid "Do you really want to reset all tool options to default values?"
 msgstr ""
 "Ar tikrai norite atstatyti visų įrankių parinkčių numatytąsias reikšmes?"
@@ -4042,15 +4042,15 @@ msgstr "Parodyti šio paveikslėlio apžvalgos langą"
 
 #: ../app/actions/view-actions.c:111
 msgid "Display _Filters..."
-msgstr "Rodyti _filtrus..."
+msgstr "Rodymo _filtrai..."
 
 #: ../app/actions/view-actions.c:112
 msgid "Configure filters applied to this view"
-msgstr "Konfigūruoti filtrus pritaikytus šiam vaizdui"
+msgstr "Konfigūruoti šiam vaizdus pritaikytus filtrus"
 
 #: ../app/actions/view-actions.c:117
 msgid "Shrink _Wrap"
-msgstr "Sutraukti _apvedimą"
+msgstr "Sumažinti _apvedimą"
 
 #: ../app/actions/view-actions.c:118
 msgid "Reduce the image window to the size of the image display"
@@ -4465,7 +4465,7 @@ msgstr "Pakeisti"
 msgid "Anti erase"
 msgstr "Antitrintukas"
 
-#: ../app/base/tile-swap.c:544
+#: ../app/base/tile-swap.c:554
 msgid ""
 "Unable to open swap file. GIMP has run out of memory and cannot use the swap "
 "file. Some parts of your images may be corrupted. Try to save your work "
@@ -4478,7 +4478,7 @@ msgstr ""
 "paleiskite GIMP iš naujo ir patikrinkite Nustatymuose nurodytą mainų aplanko "
 "vietą."
 
-#: ../app/base/tile-swap.c:559
+#: ../app/base/tile-swap.c:569
 #, c-format
 msgid "Failed to resize swap file: %s"
 msgstr "Nepavyko pakeisti mainų failo dydžio: %s"
@@ -5436,7 +5436,7 @@ msgid "Text"
 msgstr "Tekstas"
 
 #: ../app/core/core-enums.c:881 ../app/core/core-enums.c:924
-#: ../app/core/gimpdrawable-transform.c:557
+#: ../app/core/gimpdrawable-transform.c:566
 msgid "Transform"
 msgstr "Transformuoti"
 
@@ -5896,7 +5896,7 @@ msgstr "Apsukti kanalą"
 msgid "Rotate Channel"
 msgstr "Pasukti kanalą"
 
-#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:826
+#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:839
 msgid "Transform Channel"
 msgstr "Transformuoti kanalą"
 
@@ -6039,21 +6039,19 @@ msgstr "Paslinkti piešimo sritį"
 msgid "Render Stroke"
 msgstr "Atvaizduoti potėpį"
 
-#. Start a transform undo group
-#: ../app/core/gimpdrawable-transform.c:617 ../app/tools/gimpfliptool.c:112
+#: ../app/core/gimpdrawable-transform.c:627 ../app/tools/gimpfliptool.c:112
 msgid "command|Flip"
 msgstr "Apsukti"
 
-#. Start a transform undo group
-#: ../app/core/gimpdrawable-transform.c:701 ../app/tools/gimprotatetool.c:113
+#: ../app/core/gimpdrawable-transform.c:713 ../app/tools/gimprotatetool.c:113
 msgid "command|Rotate"
 msgstr "Pasukimas"
 
-#: ../app/core/gimpdrawable-transform.c:824 ../app/core/gimplayer.c:251
+#: ../app/core/gimpdrawable-transform.c:837 ../app/core/gimplayer.c:255
 msgid "Transform Layer"
 msgstr "Transformuoti sluoksnį"
 
-#: ../app/core/gimpdrawable-transform.c:839
+#: ../app/core/gimpdrawable-transform.c:852
 msgid "Transformation"
 msgstr "Transformavimas"
 
@@ -6246,8 +6244,8 @@ msgid "Disable Quick Mask"
 msgstr "Išjungti greitą kaukę"
 
 #: ../app/core/gimpimage-sample-points.c:53
-msgid "Add Sample_Point"
-msgstr "Pridėti mėginio _tašką"
+msgid "Add Sample Point"
+msgstr "Pridėti mėginio tašką"
 
 #: ../app/core/gimpimage-sample-points.c:98 ../app/tools/gimpcolortool.c:425
 msgid "Remove Sample Point"
@@ -6482,38 +6480,38 @@ msgstr ""
 msgid "Floating Selection to Layer"
 msgstr "Plaukiojantis pažymėjimas į sluosnį"
 
-#: ../app/core/gimplayer.c:244 ../app/tools/tools-enums.c:181
+#: ../app/core/gimplayer.c:248 ../app/tools/tools-enums.c:181
 msgid "Layer"
 msgstr "Sluoksnis"
 
-#: ../app/core/gimplayer.c:245
+#: ../app/core/gimplayer.c:249
 msgid "Rename Layer"
 msgstr "Pervadinti sluoksnį"
 
-#: ../app/core/gimplayer.c:246 ../app/pdb/layer_cmds.c:314
+#: ../app/core/gimplayer.c:250 ../app/pdb/layer_cmds.c:314
 #: ../app/pdb/layer_cmds.c:348
 msgid "Move Layer"
 msgstr "Perkelti sluoksnį"
 
-#: ../app/core/gimplayer.c:248
+#: ../app/core/gimplayer.c:252
 msgid "Resize Layer"
 msgstr "Keisti sluoksnio dydį"
 
-#: ../app/core/gimplayer.c:249
+#: ../app/core/gimplayer.c:253
 msgid "Flip Layer"
 msgstr "Apsukti sluoksnį"
 
-#: ../app/core/gimplayer.c:250
+#: ../app/core/gimplayer.c:254
 msgid "Rotate Layer"
 msgstr "Pasukti sluoksnį"
 
-#: ../app/core/gimplayer.c:400 ../app/core/gimplayer.c:1290
+#: ../app/core/gimplayer.c:405 ../app/core/gimplayer.c:1312
 #: ../app/core/gimplayermask.c:204
 #, c-format
 msgid "%s mask"
 msgstr "%s kaukė"
 
-#: ../app/core/gimplayer.c:444
+#: ../app/core/gimplayer.c:449
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -6522,42 +6520,42 @@ msgstr ""
 "Plaukiojantis pažymėjimas\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1221
+#: ../app/core/gimplayer.c:1243
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "Negalima pridėti sluoksnio kaukės sluoksniui, kuris nėra paveikslėlio dalis."
 
-#: ../app/core/gimplayer.c:1228
+#: ../app/core/gimplayer.c:1250
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Negalima pridėti sluoksnio kaukės, kadangi sluoksnis jau vieną turi."
 
-#: ../app/core/gimplayer.c:1238
+#: ../app/core/gimplayer.c:1260
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Negalima pridėti sluoksnio kaukės, turinčios kitokius, nei pasirinkto "
 "sluoksnio, matmenis."
 
-#: ../app/core/gimplayer.c:1344
+#: ../app/core/gimplayer.c:1366
 msgid "Transfer Alpha to Mask"
 msgstr "Perkelti alfą į kaukę"
 
-#: ../app/core/gimplayer.c:1509 ../app/core/gimplayermask.c:231
+#: ../app/core/gimplayer.c:1531 ../app/core/gimplayermask.c:231
 msgid "Apply Layer Mask"
 msgstr "Pritaikyti sluoksnio kaukę"
 
-#: ../app/core/gimplayer.c:1510
+#: ../app/core/gimplayer.c:1532
 msgid "Delete Layer Mask"
 msgstr "Ištrinti sluoksnio kaukę"
 
-#: ../app/core/gimplayer.c:1617
+#: ../app/core/gimplayer.c:1639
 msgid "Add Alpha Channel"
 msgstr "Pridėti alfa kanalą"
 
-#: ../app/core/gimplayer.c:1668
+#: ../app/core/gimplayer.c:1690
 msgid "Remove Alpha Channel"
 msgstr "Pašalinti alfa kanalą"
 
-#: ../app/core/gimplayer.c:1690
+#: ../app/core/gimplayer.c:1712
 msgid "Layer to Image Size"
 msgstr "Sluoksnio dydį prilyginti paveikslėlio dydžiui"
 
@@ -12265,7 +12263,7 @@ msgstr "Nustatyti priekinio plano spalvą"
 
 #: ../app/widgets/widgets-enums.c:117
 msgid "Set background color"
-msgstr "Nustatyti fono splavą"
+msgstr "Nustatyti fono spalvą"
 
 #: ../app/widgets/widgets-enums.c:118
 msgid "Add to palette"
@@ -12436,6 +12434,9 @@ msgstr "Įsitikinkite, kad įrankinė matoma!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Nepavyko paleisti „%s“: %s"
+
+#~ msgid "Add Sample_Point"
+#~ msgstr "Pridėti mėginio _tašką"
 
 #~ msgid "not a GIMP Curves file"
 #~ msgstr "tai ne GIMP kreivių failas"
