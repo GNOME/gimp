@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP (libgimp) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-09 15:12+0200\n"
-"PO-Revision-Date: 2007-11-09 01:42+0200\n"
+"POT-Creation-Date: 2007-12-27 11:33+0200\n"
+"PO-Revision-Date: 2007-12-23 00:47+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -360,7 +360,7 @@ msgstr "_Pažymėjimas"
 
 #: ../libgimpbase/gimpbaseenums.c:32
 msgid "_Grayscale copy of layer"
-msgstr "_Nespalvota sluoksnio kopija"
+msgstr "_Pilkų atspalvių sluoksnio kopija"
 
 #: ../libgimpbase/gimpbaseenums.c:33
 msgid "C_hannel"
@@ -608,7 +608,7 @@ msgstr "Jokios"
 
 #: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|Linear"
-msgstr "Linijinė"
+msgstr "Tiesinė"
 
 #: ../libgimpbase/gimpbaseenums.c:564
 msgid "Cubic"
@@ -1334,7 +1334,7 @@ msgstr "Spalvų deficito simuliavimo filtras (Brettel-Vienot-Mollon algoritmas)"
 
 #: ../modules/cdisplay_colorblind.c:292
 msgid "Color Deficient Vision"
-msgstr "Matymas su spalvų deficitu"
+msgstr "Regėjimas su spalvų deficitu"
 
 #: ../modules/cdisplay_colorblind.c:507
 msgid "Color _deficiency type:"
@@ -1342,15 +1342,15 @@ msgstr "Spalvų _deficito tipas:"
 
 #: ../modules/cdisplay_gamma.c:91
 msgid "Gamma color display filter"
-msgstr "Gamos spalvų ekrano filtras"
+msgstr "Gamma spalvų ekrano filtras"
 
 #: ../modules/cdisplay_gamma.c:160
 msgid "Gamma"
-msgstr "Gama"
+msgstr "Gamma"
 
 #: ../modules/cdisplay_gamma.c:253
 msgid "_Gamma:"
-msgstr "_Gama:"
+msgstr "_Gamma:"
 
 #: ../modules/cdisplay_highcontrast.c:91
 msgid "High Contrast color display filter"
