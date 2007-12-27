@@ -1,3 +1,7 @@
+2007-12-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpbrightnesscontrasttool.c: remove unused cruft.
+
 2007-12-27  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpthumbbox.c (gimp_thumb_box_new): enable line

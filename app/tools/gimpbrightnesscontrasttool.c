@@ -45,10 +45,6 @@
 
 #define SLIDER_WIDTH 200
 
-#define BRIGHTNESS  0x1
-#define CONTRAST    0x2
-#define ALL        (BRIGHTNESS | CONTRAST)
-
 
 static void   gimp_brightness_contrast_tool_finalize       (GObject               *object);
 
@@ -77,8 +73,7 @@ static void   gimp_brightness_contrast_tool_map            (GimpImageMapTool    
 static void   gimp_brightness_contrast_tool_dialog         (GimpImageMapTool      *image_map_tool);
 static void   gimp_brightness_contrast_tool_reset          (GimpImageMapTool      *image_map_tool);
 
-static void   brightness_contrast_update                   (GimpBrightnessContrastTool *bc_tool,
-                                                            gint                        update);
+static void   brightness_contrast_update                   (GimpBrightnessContrastTool *bc_tool);
 static void   brightness_contrast_brightness_changed       (GtkAdjustment              *adj,
                                                             GimpBrightnessContrastTool *bc_tool);
 static void   brightness_contrast_contrast_changed         (GtkAdjustment              *adj,
@@ -175,7 +170,7 @@ gimp_brightness_contrast_tool_initialize (GimpTool     *tool,
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
-  brightness_contrast_update (bc_tool, ALL);
+  brightness_contrast_update (bc_tool);
 
   return TRUE;
 }
@@ -254,7 +249,7 @@ gimp_brightness_contrast_tool_motion (GimpTool        *tool,
   bc_tool->brightness = CLAMP (bc_tool->dy, -127.0, 127.0);
   bc_tool->contrast   = CLAMP (bc_tool->dx, -127.0, 127.0);
 
-  brightness_contrast_update (bc_tool, ALL);
+  brightness_contrast_update (bc_tool);
   gimp_image_map_tool_preview (im_tool);
 
   gimp_tool_control_resume (tool->control);
@@ -320,18 +315,14 @@ gimp_brightness_contrast_tool_reset (GimpImageMapTool *im_tool)
   bc_tool->brightness = 0.0;
   bc_tool->contrast   = 0.0;
 
-  brightness_contrast_update (bc_tool, ALL);
+  brightness_contrast_update (bc_tool);
 }
 
 static void
-brightness_contrast_update (GimpBrightnessContrastTool *bc_tool,
-                            gint                        update)
+brightness_contrast_update (GimpBrightnessContrastTool *bc_tool)
 {
-  if (update & BRIGHTNESS)
-    gtk_adjustment_set_value (bc_tool->brightness_data, bc_tool->brightness);
-
-  if (update & CONTRAST)
-    gtk_adjustment_set_value (bc_tool->contrast_data, bc_tool->contrast);
+  gtk_adjustment_set_value (bc_tool->brightness_data, bc_tool->brightness);
+  gtk_adjustment_set_value (bc_tool->contrast_data,   bc_tool->contrast);
 }
 
 static void
