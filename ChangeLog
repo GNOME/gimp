@@ -1,3 +1,15 @@
+2007-12-28  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpviewrenderer.c (gimp_view_renderer_real_draw):
+	if the surface has CAIRO_CONTENT_COLOR_ALPHA, render it on a
+	checkerboard background.
+
+	* app/widgets/gimpviewrenderergradient.[ch]: just draw the
+	gradient with alpha-transparency instead of doing the blend on the
+	checkerboard here.
+
+	* app/widgets/gimpcolormapeditor.c: formatting.
+
 2007-12-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpcolorbalancetool.c: remove the same cruft here.

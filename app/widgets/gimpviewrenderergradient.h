@@ -38,12 +38,8 @@ struct _GimpViewRendererGradient
 {
   GimpViewRenderer  parent_instance;
 
-  guchar           *even;
-  guchar           *odd;
-  gint              width;
   gdouble           left;
   gdouble           right;
-
   gboolean          reverse;
   gboolean          has_fg_bg_segments;
 };

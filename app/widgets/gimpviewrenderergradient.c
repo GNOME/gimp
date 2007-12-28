@@ -25,6 +25,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -33,11 +34,8 @@
 
 #include "core/gimpgradient.h"
 
-#include "gimprender.h"
 #include "gimpviewrenderergradient.h"
 
-
-static void   gimp_view_renderer_gradient_finalize    (GObject          *object);
 
 static void   gimp_view_renderer_gradient_set_context (GimpViewRenderer *renderer,
                                                        GimpContext      *context);
@@ -55,10 +53,7 @@ G_DEFINE_TYPE (GimpViewRendererGradient, gimp_view_renderer_gradient,
 static void
 gimp_view_renderer_gradient_class_init (GimpViewRendererGradientClass *klass)
 {
-  GObjectClass          *object_class   = G_OBJECT_CLASS (klass);
   GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
-
-  object_class->finalize      = gimp_view_renderer_gradient_finalize;
 
   renderer_class->set_context = gimp_view_renderer_gradient_set_context;
   renderer_class->invalidate  = gimp_view_renderer_gradient_invalidate;
@@ -68,32 +63,9 @@ gimp_view_renderer_gradient_class_init (GimpViewRendererGradientClass *klass)
 static void
 gimp_view_renderer_gradient_init (GimpViewRendererGradient *renderer)
 {
-  renderer->even    = NULL;
-  renderer->odd     = NULL;
-  renderer->width   = -1;
   renderer->left    = 0.0;
   renderer->right   = 1.0;
   renderer->reverse = FALSE;
-}
-
-static void
-gimp_view_renderer_gradient_finalize (GObject *object)
-{
-  GimpViewRendererGradient *renderer = GIMP_VIEW_RENDERER_GRADIENT (object);
-
-  if (renderer->even)
-    {
-      g_free (renderer->even);
-      renderer->even = NULL;
-    }
-
-  if (renderer->odd)
-    {
-      g_free (renderer->odd);
-      renderer->odd = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -187,8 +159,7 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
   GimpViewRendererGradient *rendergrad = GIMP_VIEW_RENDERER_GRADIENT (renderer);
   GimpGradient             *gradient   = GIMP_GRADIENT (renderer->viewable);
   GimpGradientSegment      *seg        = NULL;
-  guchar                   *even;
-  guchar                   *odd;
+  guchar                   *buf;
   guchar                   *dest;
   gint                      dest_stride;
   gint                      x;
@@ -196,27 +167,11 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
   gdouble                   dx, cur_x;
   GimpRGB                   color;
 
-  if (renderer->width != rendergrad->width)
-    {
-      if (rendergrad->even)
-        g_free (rendergrad->even);
-
-      if (rendergrad->odd)
-        g_free (rendergrad->odd);
-
-      rendergrad->even = g_new (guchar, 4 * renderer->width);
-      rendergrad->odd  = g_new (guchar, 4 * renderer->width);
-
-      rendergrad->width = renderer->width;
-    }
-
-  even = rendergrad->even;
-  odd  = rendergrad->odd;
-
+  buf   = g_alloca (4 * renderer->width);
   dx    = (rendergrad->right - rendergrad->left) / (renderer->width - 1);
   cur_x = rendergrad->left;
 
-  for (x = 0; x < renderer->width; x++, even += 4, odd += 4)
+  for (x = 0, dest = buf; x < renderer->width; x++, dest += 4)
     {
       guchar r, g, b, a;
 
@@ -226,46 +181,20 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
 
       gimp_rgba_get_uchar (&color, &r, &g, &b, &a);
 
-      if (x & 0x4)
-        {
-          GIMP_CAIRO_RGB24_SET_PIXEL (even,
-                                      gimp_render_blend_dark_check[(a << 8) | r],
-                                      gimp_render_blend_dark_check[(a << 8) | g],
-                                      gimp_render_blend_dark_check[(a << 8) | b]);
-          GIMP_CAIRO_RGB24_SET_PIXEL (odd,
-                                      gimp_render_blend_light_check[(a << 8) | r],
-                                      gimp_render_blend_light_check[(a << 8) | g],
-                                      gimp_render_blend_light_check[(a << 8) | b]);
-        }
-      else
-        {
-          GIMP_CAIRO_RGB24_SET_PIXEL (even,
-                                      gimp_render_blend_light_check[(a << 8) | r],
-                                      gimp_render_blend_light_check[(a << 8) | g],
-                                      gimp_render_blend_light_check[(a << 8) | b]);
-          GIMP_CAIRO_RGB24_SET_PIXEL (odd,
-                                      gimp_render_blend_dark_check[(a << 8) | r],
-                                      gimp_render_blend_dark_check[(a << 8) | g],
-                                      gimp_render_blend_dark_check[(a << 8) | b]);
-        }
+      GIMP_CAIRO_ARGB32_SET_PIXEL (dest, r, g, b, a);
     }
 
   if (! renderer->surface)
-    renderer->surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
+    renderer->surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
                                                     renderer->width,
                                                     renderer->height);
 
   dest        = cairo_image_surface_get_data (renderer->surface);
   dest_stride = cairo_image_surface_get_stride (renderer->surface);
 
-  for (y = 0; y < renderer->height; y++)
+  for (y = 0; y < renderer->height; y++, dest += dest_stride)
     {
-      if (y & 0x4)
-        memcpy (dest, rendergrad->even, renderer->width * 4);
-      else
-        memcpy (dest, rendergrad->odd,  renderer->width * 4);
-
-      dest += dest_stride;
+      memcpy (dest, buf, renderer->width * 4);
     }
 
   renderer->needs_render = FALSE;

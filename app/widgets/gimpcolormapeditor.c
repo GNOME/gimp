@@ -510,7 +510,8 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
               row[l * 3 + b] = (((((i * cellsize + k) & 0x4) ?
                                   (l) :
                                   (l + 0x4)) & 0x4) ?
-                                gimp_render_light_check : gimp_render_dark_check);
+                                gimp_render_light_check :
+                                gimp_render_dark_check);
 
           gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row, 0,
                                 i * cellsize + k,
@@ -751,7 +752,7 @@ gimp_colormap_preview_drag_color (GtkWidget *widget,
                                   gpointer   data)
 {
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (data);
-  GimpImage          *image = GIMP_IMAGE_EDITOR (editor)->image;
+  GimpImage          *image  = GIMP_IMAGE_EDITOR (editor)->image;
 
   if (HAVE_COLORMAP (image))
     gimp_image_get_colormap_entry (image, editor->dnd_col_index, color);
@@ -765,7 +766,7 @@ gimp_colormap_preview_drop_color (GtkWidget     *widget,
                                   gpointer       data)
 {
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (data);
-  GimpImage          *image = GIMP_IMAGE_EDITOR (editor)->image;
+  GimpImage          *image  = GIMP_IMAGE_EDITOR (editor)->image;
 
   if (HAVE_COLORMAP (image) && gimp_image_get_colormap_size (image) < 256)
     {

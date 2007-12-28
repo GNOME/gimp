@@ -713,15 +713,28 @@ gimp_view_renderer_real_draw (GimpViewRenderer   *renderer,
     }
   else if (renderer->surface)
     {
-      gint  width  = renderer->width;
-      gint  height = renderer->height;
-      gint  x, y;
+      cairo_content_t content = cairo_surface_get_content (renderer->surface);
+      gint            width   = renderer->width;
+      gint            height  = renderer->height;
 
-      x = area->x + (area->width  - width)  / 2;
-      y = area->y + (area->height - height) / 2;
+      cairo_translate (cr,
+                       area->x + (area->width  - width)  / 2,
+                       area->y + (area->height - height) / 2);
 
-      cairo_set_source_surface (cr, renderer->surface, x, y);
-      cairo_rectangle (cr, x, y, width, height);
+      cairo_rectangle (cr, 0, 0, width, height);
+
+      if (content == CAIRO_CONTENT_COLOR_ALPHA)
+        {
+          cairo_pattern_t *pattern;
+
+          pattern = gimp_cairo_checkerboard_create (cr, GIMP_CHECK_SIZE_SM);
+
+          cairo_set_source (cr, pattern);
+          cairo_pattern_destroy (pattern);
+          cairo_fill_preserve (cr);
+        }
+
+      cairo_set_source_surface (cr, renderer->surface, 0, 0);
       cairo_fill (cr);
     }
 }
