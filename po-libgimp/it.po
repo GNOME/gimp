@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-08 00:49+0200\n"
-"PO-Revision-Date: 2007-10-08 00:52+0200\n"
+"POT-Creation-Date: 2007-12-28 14:40+0100\n"
+"PO-Revision-Date: 2007-12-28 14:41+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -22,12 +22,11 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Selezione pennello"
 
-#: ../libgimp/gimpbrushselectbutton.c:911
-#: ../libgimp/gimppatternselectbutton.c:712
+#: ../libgimp/gimpbrushselectbutton.c:913
+#: ../libgimp/gimppatternselectbutton.c:714
 msgid "_Browse..."
 msgstr "_Naviga..."
 
-# %s è il tipo di formato, p.e. "PNG non può gestire i livelli" -Luca
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
 msgid "%s plug-in can't handle layers"
@@ -358,7 +357,6 @@ msgstr "_Trasferisci il canale alfa del livello"
 msgid "_Selection"
 msgstr "_Selezione"
 
-# non è "Copia in livelli di grigio del livello" ??? -Luca
 #: ../libgimpbase/gimpbaseenums.c:32
 msgid "_Grayscale copy of layer"
 msgstr "Copia del livello in scala di _grigi"
@@ -627,7 +625,7 @@ msgstr "Costante"
 msgid "Incremental"
 msgstr "Incrementale"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:214
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:224
 msgid "None"
 msgstr "Nessuno"
 
@@ -764,7 +762,8 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:408
+#: ../modules/cdisplay_lcms.c:216 ../modules/colorsel_cmyk_lcms.c:408
+#: ../modules/colorsel_cmyk_lcms.c:414
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
 
@@ -816,7 +815,9 @@ msgstr ""
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
-msgstr "Se abilitata, la simulazione di stampa segnerà i colori che non potranno essere rappresentati nello spazio di colore del risultato."
+msgstr ""
+"Se abilitata, la simulazione di stampa segnerà i colori che non potranno "
+"essere rappresentati nello spazio di colore del risultato."
 
 #: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color to use for marking colors which are out of gamut."
@@ -929,6 +930,7 @@ msgid "Could not create '%s': %s"
 msgstr "Impossibile creare \"%s\": %s"
 
 #: ../libgimpconfig/gimpscanner.c:255
+#, c-format
 msgid "invalid UTF-8 string"
 msgstr "stringa UTF-8 non valida"
 
@@ -976,6 +978,7 @@ msgid "Failed to create thumbnail folder '%s'."
 msgstr "Fallita la creazione della cartella per le miniature \"%s\"."
 
 #: ../libgimpthumb/gimpthumbnail.c:498
+#, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "La miniatura non contiene la tag Thumb::URI"
 
@@ -1010,7 +1013,7 @@ msgstr "Seleziona il profilo di colore da disco..."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
 msgid "profile|None"
-msgstr "profile|Nessuno"
+msgstr "Nessuno"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
@@ -1172,7 +1175,6 @@ msgstr "Incolla come nuovo"
 msgid "Paste Into"
 msgstr "Incolla dentro"
 
-# Un'altra traduzione per reset potrebbe essere "Azzera" -Luca
 #: ../libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
 msgstr "_Reimposta"
@@ -1366,15 +1368,15 @@ msgstr "Contrasto"
 msgid "Contrast c_ycles:"
 msgstr "_Cicli di contrasto:"
 
-#: ../modules/cdisplay_lcms.c:105
+#: ../modules/cdisplay_lcms.c:111
 msgid "Color management display filter using ICC color profiles"
 msgstr "Il filtro di gestione colore del display usa i profili di colore ICC"
 
-#: ../modules/cdisplay_lcms.c:166
+#: ../modules/cdisplay_lcms.c:172
 msgid "Color Management"
 msgstr "Gestione del colore"
 
-#: ../modules/cdisplay_lcms.c:235
+#: ../modules/cdisplay_lcms.c:245
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1382,19 +1384,19 @@ msgstr ""
 "Questo filtro prende la sua configurazione dalla sezione gestione colore "
 "nella finestra delle preferenze."
 
-#: ../modules/cdisplay_lcms.c:249
+#: ../modules/cdisplay_lcms.c:259
 msgid "Mode of operation:"
 msgstr "Modalità di operazione:"
 
-#: ../modules/cdisplay_lcms.c:256
+#: ../modules/cdisplay_lcms.c:267
 msgid "Image profile:"
 msgstr "Profilo immagine:"
 
-#: ../modules/cdisplay_lcms.c:263
+#: ../modules/cdisplay_lcms.c:275
 msgid "Monitor profile:"
 msgstr "Profilo del monitor:"
 
-#: ../modules/cdisplay_lcms.c:270
+#: ../modules/cdisplay_lcms.c:283
 msgid "Print simulation profile:"
 msgstr "Profilo di simulazione di stampa:"
 
@@ -1490,7 +1492,7 @@ msgstr "Selettore colore CMYK (che usa i profili di colore)"
 msgid "Profile: (none)"
 msgstr "Profilo: (nessuno)"
 
-#: ../modules/colorsel_cmyk_lcms.c:410
+#: ../modules/colorsel_cmyk_lcms.c:417
 #, c-format
 msgid "Profile: %s"
 msgstr "Profilo: %s"
