@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-12-28 15:18+0100\n"
-"PO-Revision-Date: 2007-12-28 15:19+0100\n"
+"PO-Revision-Date: 2007-12-28 15:40+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -5021,9 +5021,7 @@ msgstr "Spazio di lavoro RGB predefinito"
 #: ../plug-ins/common/lcms.c:766
 msgid ""
 "Data attached as 'icc-profile' does not appear to be an ICC color profile"
-msgstr ""
-"I dati allegato come \"icc-profile\" non sembrano essere un profilo di "
-"colore ICC"
+msgstr "I dati allegati come \"icc-profile\" non sembrano essere un profilo di colore ICC"
 
 #: ../plug-ins/common/lcms.c:817
 #, c-format
