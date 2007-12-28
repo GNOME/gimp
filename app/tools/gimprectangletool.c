@@ -2703,13 +2703,17 @@ gimp_rectangle_tool_update_highlight (GimpRectangleTool *rect_tool)
     {
       GimpRectangleToolPrivate *private;
       GdkRectangle              rect;
+      gdouble                   pub_x1, pub_y1, pub_x2, pub_y2;
 
       private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
 
-      rect.x      = private->x1;
-      rect.y      = private->y1;
-      rect.width  = private->x2 - private->x1;
-      rect.height = private->y2 - private->y1;
+      gimp_rectangle_tool_get_public_rect (rect_tool,
+                                           &pub_x1, &pub_y1, &pub_x2, &pub_y2);
+
+      rect.x      = pub_x1;
+      rect.y      = pub_y1;
+      rect.width  = pub_x2 - pub_x1;
+      rect.height = pub_y2 - pub_y1;
 
       gimp_display_shell_set_highlight (shell, &rect);
     }
