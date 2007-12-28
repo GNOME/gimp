@@ -256,7 +256,9 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
           cairo_line_to (cr, rect.x + rect.width - 1, rect.y + 1);
           cairo_close_path (cr);
 
-          pattern = gimp_cairo_checkerboard_create (cr, GIMP_CHECK_SIZE_SM);
+          pattern = gimp_cairo_checkerboard_create (cr,
+                                                    GIMP_CHECK_SIZE_SM,
+                                                    NULL, NULL);
           cairo_set_source (cr, pattern);
           cairo_pattern_destroy (pattern);
 

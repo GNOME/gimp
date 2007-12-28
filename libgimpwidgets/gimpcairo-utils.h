@@ -32,7 +32,9 @@ gboolean          gimp_cairo_set_focus_line_pattern     (cairo_t   *cr,
                                                          GtkWidget *widget);
 
 cairo_pattern_t * gimp_cairo_checkerboard_create        (cairo_t   *cr,
-                                                         gint       size);
+                                                         gint       size,
+                                                         GimpRGB   *light,
+                                                         GimpRGB   *dark);
 cairo_surface_t * gimp_cairo_surface_create_from_pixbuf (GdkPixbuf *pixbuf);
 
 

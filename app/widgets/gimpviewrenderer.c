@@ -726,8 +726,24 @@ gimp_view_renderer_real_draw (GimpViewRenderer   *renderer,
       if (content == CAIRO_CONTENT_COLOR_ALPHA)
         {
           if (! renderer->pattern)
-            renderer->pattern = gimp_cairo_checkerboard_create (cr,
-                                                                GIMP_CHECK_SIZE_SM);
+            {
+              GimpRGB light;
+              GimpRGB dark;
+
+              gimp_rgb_set_uchar (&light,
+                                  gimp_render_light_check,
+                                  gimp_render_light_check,
+                                  gimp_render_light_check);
+              gimp_rgb_set_uchar (&dark,
+                                  gimp_render_dark_check,
+                                  gimp_render_dark_check,
+                                  gimp_render_dark_check);
+
+              renderer->pattern =
+                gimp_cairo_checkerboard_create (cr,
+                                                GIMP_CHECK_SIZE_SM,
+                                                &light, &dark);
+            }
 
           cairo_set_source (cr, renderer->pattern);
           cairo_fill_preserve (cr);

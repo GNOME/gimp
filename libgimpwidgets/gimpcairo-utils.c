@@ -126,8 +126,10 @@ gimp_cairo_set_focus_line_pattern (cairo_t   *cr,
 
 /**
  * gimp_cairo_checkerboard_create:
- * @cr:   Cairo context
- * @size: check size
+ * @cr:    Cairo context
+ * @size:  check size
+ * @light: light check color or %NULL to use the default light gray
+ * @dark:  dark check color or %NULL to use the default dark gray
  *
  * Create a repeating checkerboard pattern.
  *
@@ -137,7 +139,9 @@ gimp_cairo_set_focus_line_pattern (cairo_t   *cr,
  **/
 cairo_pattern_t *
 gimp_cairo_checkerboard_create (cairo_t *cr,
-                                gint     size)
+                                gint     size,
+                                GimpRGB *light,
+                                GimpRGB *dark)
 {
   cairo_t         *context;
   cairo_surface_t *surface;
@@ -151,14 +155,22 @@ gimp_cairo_checkerboard_create (cairo_t *cr,
                                           2 * size, 2 * size);
   context = cairo_create (surface);
 
-  cairo_set_source_rgb (context,
-                        GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT);
+  if (light)
+    gimp_cairo_set_source_rgb (context, light);
+  else
+    cairo_set_source_rgb (context,
+                          GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT);
+
   cairo_rectangle (context, 0,    0,    size, size);
   cairo_rectangle (context, size, size, size, size);
   cairo_fill (context);
 
-  cairo_set_source_rgb (context,
-                        GIMP_CHECK_DARK, GIMP_CHECK_DARK, GIMP_CHECK_DARK);
+  if (dark)
+    gimp_cairo_set_source_rgb (context, dark);
+  else
+    cairo_set_source_rgb (context,
+                          GIMP_CHECK_DARK, GIMP_CHECK_DARK, GIMP_CHECK_DARK);
+
   cairo_rectangle (context, 0,    size, size, size);
   cairo_rectangle (context, size, 0,    size, size);
   cairo_fill (context);
