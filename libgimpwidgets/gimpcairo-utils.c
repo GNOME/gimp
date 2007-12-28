@@ -45,8 +45,8 @@
  * Since: GIMP 2.6
  **/
 void
-gimp_cairo_set_source_rgb (cairo_t *cr,
-                           GimpRGB *color)
+gimp_cairo_set_source_rgb (cairo_t       *cr,
+                           const GimpRGB *color)
 {
   cairo_set_source_rgb (cr, color->r, color->g, color->b);
 }
@@ -64,8 +64,8 @@ gimp_cairo_set_source_rgb (cairo_t *cr,
  * Since: GIMP 2.6
  **/
 void
-gimp_cairo_set_source_rgba (cairo_t *cr,
-                            GimpRGB *color)
+gimp_cairo_set_source_rgba (cairo_t       *cr,
+                            const GimpRGB *color)
 {
   cairo_set_source_rgba (cr, color->r, color->g, color->b, color->a);
 }
@@ -138,10 +138,10 @@ gimp_cairo_set_focus_line_pattern (cairo_t   *cr,
  * Since: GIMP 2.6
  **/
 cairo_pattern_t *
-gimp_cairo_checkerboard_create (cairo_t *cr,
-                                gint     size,
-                                GimpRGB *light,
-                                GimpRGB *dark)
+gimp_cairo_checkerboard_create (cairo_t       *cr,
+                                gint           size,
+                                const GimpRGB *light,
+                                const GimpRGB *dark)
 {
   cairo_t         *context;
   cairo_surface_t *surface;

@@ -725,21 +725,10 @@ view_actions_check_type_notify (GimpDisplayConfig *config,
                                 GParamSpec        *pspec,
                                 GimpActionGroup   *group)
 {
-  GimpRGB color;
-
-  gimp_rgba_set_uchar (&color,
-                       gimp_render_light_check,
-                       gimp_render_light_check,
-                       gimp_render_light_check,
-                       255);
   gimp_action_group_set_action_color (group, "view-padding-color-light-check",
-                                      &color, FALSE);
-
-  gimp_rgba_set_uchar (&color,
-                       gimp_render_dark_check,
-                       gimp_render_dark_check,
-                       gimp_render_dark_check,
-                       255);
+                                      gimp_render_light_check_color (),
+                                      FALSE);
   gimp_action_group_set_action_color (group, "view-padding-color-dark-check",
-                                      &color, FALSE);
+                                      gimp_render_dark_check_color (),
+                                      FALSE);
 }

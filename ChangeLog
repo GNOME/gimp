@@ -1,5 +1,19 @@
 2007-12-28  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcairo-utils.[ch]: addec const qualifiers to
+	GimpRGB parameters.
+
+	* app/widgets/gimprender.[ch]: removed global variables for
+	checkerboard colors and introduced functions to get the
+	checkerboard colors as pointers to GimpRGB structs.
+
+	* app/actions/view-actions.c
+	* app/display/gimpdisplayshell-appearance.c
+	* app/widgets/gimpviewrenderer.c
+	* app/widgets/gimpcolormapeditor.c: changed accordingly.
+
+2007-12-28  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcairo-utils.[ch]: added light and dark check
 	color parameters to gimp_cairo_checkerboard_create().
 

@@ -24,18 +24,20 @@
 #define __GIMP_CAIRO_UTILS_H__
 
 
-void              gimp_cairo_set_source_rgb             (cairo_t   *cr,
-                                                         GimpRGB   *color);
-void              gimp_cairo_set_source_rgba            (cairo_t   *cr,
-                                                         GimpRGB   *color);
-gboolean          gimp_cairo_set_focus_line_pattern     (cairo_t   *cr,
-                                                         GtkWidget *widget);
+void              gimp_cairo_set_source_rgb             (cairo_t       *cr,
+                                                         const GimpRGB *color);
+void              gimp_cairo_set_source_rgba            (cairo_t       *cr,
+                                                         const GimpRGB *color);
 
-cairo_pattern_t * gimp_cairo_checkerboard_create        (cairo_t   *cr,
-                                                         gint       size,
-                                                         GimpRGB   *light,
-                                                         GimpRGB   *dark);
-cairo_surface_t * gimp_cairo_surface_create_from_pixbuf (GdkPixbuf *pixbuf);
+gboolean          gimp_cairo_set_focus_line_pattern     (cairo_t       *cr,
+                                                         GtkWidget     *widget);
+
+cairo_pattern_t * gimp_cairo_checkerboard_create        (cairo_t       *cr,
+                                                         gint           size,
+                                                         const GimpRGB *light,
+                                                         const GimpRGB *dark);
+
+cairo_surface_t * gimp_cairo_surface_create_from_pixbuf (GdkPixbuf     *pixbuf);
 
 
 /*  some useful macros for writing directly to a Cairo surface  */

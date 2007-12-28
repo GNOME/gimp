@@ -539,17 +539,11 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
       break;
 
     case GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK:
-      gimp_rgb_set_uchar (&color,
-                          gimp_render_light_check,
-                          gimp_render_light_check,
-                          gimp_render_light_check);
+      color = *gimp_render_light_check_color ();
       break;
 
     case GIMP_CANVAS_PADDING_MODE_DARK_CHECK:
-      gimp_rgb_set_uchar (&color,
-                          gimp_render_dark_check,
-                          gimp_render_dark_check,
-                          gimp_render_dark_check);
+      color = *gimp_render_dark_check_color ();
       break;
 
     case GIMP_CANVAS_PADDING_MODE_CUSTOM:

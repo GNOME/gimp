@@ -727,22 +727,10 @@ gimp_view_renderer_real_draw (GimpViewRenderer   *renderer,
         {
           if (! renderer->pattern)
             {
-              GimpRGB light;
-              GimpRGB dark;
-
-              gimp_rgb_set_uchar (&light,
-                                  gimp_render_light_check,
-                                  gimp_render_light_check,
-                                  gimp_render_light_check);
-              gimp_rgb_set_uchar (&dark,
-                                  gimp_render_dark_check,
-                                  gimp_render_dark_check,
-                                  gimp_render_dark_check);
-
               renderer->pattern =
-                gimp_cairo_checkerboard_create (cr,
-                                                GIMP_CHECK_SIZE_SM,
-                                                &light, &dark);
+                gimp_cairo_checkerboard_create (cr, GIMP_CHECK_SIZE_SM,
+                                                gimp_render_light_check_color (),
+                                                gimp_render_dark_check_color ());
             }
 
           cairo_set_source (cr, renderer->pattern);
