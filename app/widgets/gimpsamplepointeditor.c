@@ -412,10 +412,11 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
   gint             n_points     = 0;
   gint             i;
 
-  sample_points = gimp_image_get_sample_points (image_editor->image);
-
   if (image_editor->image)
-    n_points = MIN (4, g_list_length (sample_points));
+    {
+      sample_points = gimp_image_get_sample_points (image_editor->image);
+      n_points = MIN (4, g_list_length (sample_points));
+    }
 
   for (i = 0; i < n_points; i++)
     {
