@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
 #endif
@@ -41,7 +43,6 @@
 
 #include "gimpcolormapeditor.h"
 #include "gimpdnd.h"
-#include "gimprender.h"
 #include "gimpmenufactory.h"
 #include "gimpuimanager.h"
 
@@ -452,15 +453,15 @@ gimp_colormap_editor_max_index (GimpColormapEditor *editor)
 static void
 gimp_colormap_editor_draw (GimpColormapEditor *editor)
 {
-  GimpImage *image = GIMP_IMAGE_EDITOR (editor)->image;
-  gint       i, j, k, l, b;
+  GimpImage *image  = GIMP_IMAGE_EDITOR (editor)->image;
+  gint       i, j, k, b;
   gint       col;
   guchar    *row;
-  gint       cellsize, ncol, xn, yn, width, height;
+  gint       cellsize, ncol, xn, yn;
+  gint       width  = editor->preview->allocation.width;
+  gint       height = editor->preview->allocation.height;
 
-  width  = editor->preview->allocation.width;
-  height = editor->preview->allocation.height;
-  ncol   = gimp_image_get_colormap_size (image);
+  ncol = gimp_image_get_colormap_size (image);
 
   if (! ncol)
     {
@@ -503,16 +504,10 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
               row[(j * cellsize + k) * 3 + b] = image->colormap[col * 3 + b];
         }
 
+      memset (row + j * cellsize * 3, 255, 3 * (width - j * cellsize));
+
       for (k = 0; k < cellsize; k++)
         {
-          for (l = j * cellsize; l < width; l++)
-            for (b = 0; b < 3; b++)
-              row[l * 3 + b] = (((((i * cellsize + k) & 0x4) ?
-                                  (l) :
-                                  (l + 0x4)) & 0x4) ?
-                                gimp_render_blend_dark_check[0] :
-                                gimp_render_blend_light_check[0]);
-
           gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row, 0,
                                 i * cellsize + k,
                                 width);
@@ -584,6 +579,7 @@ gimp_colormap_editor_draw_cell (GimpColormapEditor *editor,
           row[k*3+1] = image->colormap[col * 3 + 1];
           row[k*3+2] = image->colormap[col * 3 + 2];
         }
+
       for (k = 0; k < cellsize; k++)
         gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row,
                               x, y+k, cellsize);
@@ -598,13 +594,10 @@ static void
 gimp_colormap_editor_clear (GimpColormapEditor *editor,
                             gint                start_row)
 {
-  gint    i, j;
-  gint    offset;
-  gint    width, height;
   guchar *row;
-
-  width  = editor->preview->allocation.width;
-  height = editor->preview->allocation.height;
+  gint    width  = editor->preview->allocation.width;
+  gint    height = editor->preview->allocation.height;
+  gint    y;
 
   if (start_row < 0)
     start_row = 0;
@@ -614,39 +607,10 @@ gimp_colormap_editor_clear (GimpColormapEditor *editor,
 
   row = g_alloca (width * 3);
 
-  if (start_row & 0x3)
-    {
-      offset = (start_row & 0x4) ? 0x4 : 0x0;
+  memset (row, 255, 3 * width);
 
-      for (j = 0; j < width; j++)
-        {
-          row[j * 3 + 0] = row[j * 3 + 1] = row[j * 3 + 2] =
-            ((j + offset) & 0x4) ?
-            gimp_render_blend_dark_check[0] : gimp_render_blend_light_check[0];
-        }
-
-      for (j = 0; j < (4 - (start_row & 0x3)) && start_row + j < height; j++)
-        gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row,
-                              0, start_row + j, width);
-
-      start_row += (4 - (start_row & 0x3));
-    }
-
-  for (i = start_row; i < height; i += 4)
-    {
-      offset = (i & 0x4) ? 0x4 : 0x0;
-
-      for (j = 0; j < width; j++)
-        {
-          row[j * 3 + 0] = row[j * 3 + 1] = row[j * 3 + 2] =
-            ((j + offset) & 0x4) ?
-            gimp_render_blend_dark_check[0] : gimp_render_blend_light_check[0];
-        }
-
-      for (j = 0; j < 4 && i + j < height; j++)
-        gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row,
-                              0, i + j, width);
-    }
+  for (y = start_row; y < height; y++)
+    gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row, 0, y, width);
 
   gtk_widget_queue_draw (editor->preview);
 }

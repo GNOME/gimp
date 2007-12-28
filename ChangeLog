@@ -1,3 +1,8 @@
+2007-12-28  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcolormapeditor.c: don't use the render buffer.
+	Use a white background until this widget is rewritten.
+
 2007-12-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpsamplepointeditor.c
