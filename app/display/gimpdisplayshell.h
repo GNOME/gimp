@@ -46,6 +46,10 @@
 #define  FUNSCALEX(s,x)   ((x) / (s)->scale_x)
 #define  FUNSCALEY(s,y)   ((y) / (s)->scale_y)
 
+/*  the size of the display render buffer  */
+#define GIMP_DISPLAY_RENDER_BUF_WIDTH  256
+#define GIMP_DISPLAY_RENDER_BUF_HEIGHT 256
+
 
 #define GIMP_TYPE_DISPLAY_SHELL            (gimp_display_shell_get_type ())
 #define GIMP_DISPLAY_SHELL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DISPLAY_SHELL, GimpDisplayShell))

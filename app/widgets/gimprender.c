@@ -168,8 +168,7 @@ gimp_render_setup_notify (gpointer    config,
   g_free (gimp_render_empty_buf);
   g_free (gimp_render_white_buf);
 
-#define BUF_SIZE (MAX (GIMP_RENDER_BUF_WIDTH, \
-                       GIMP_VIEWABLE_MAX_PREVIEW_SIZE) + 4)
+#define BUF_SIZE (GIMP_VIEWABLE_MAX_PREVIEW_SIZE + 4)
 
   gimp_render_check_buf = g_new  (guchar, BUF_SIZE * 3);
   gimp_render_empty_buf = g_new0 (guchar, BUF_SIZE * 3);

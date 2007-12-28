@@ -20,9 +20,6 @@
 #define __GIMP_RENDER_H__
 
 
-#define GIMP_RENDER_BUF_WIDTH  256
-#define GIMP_RENDER_BUF_HEIGHT 256
-
 /* buffers that contain pre-rendered patterns/colors */
 extern guchar *gimp_render_check_buf;
 extern guchar *gimp_render_empty_buf;

@@ -46,7 +46,6 @@
 #include "core/gimpmarshal.h"
 #include "core/gimpsamplepoint.h"
 
-#include "widgets/gimprender.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
@@ -278,8 +277,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->statusbar              = NULL;
 
   shell->render_buf             = g_new (guchar,
-                                         GIMP_RENDER_BUF_WIDTH  *
-                                         GIMP_RENDER_BUF_HEIGHT * 3);
+                                         GIMP_DISPLAY_RENDER_BUF_WIDTH  *
+                                         GIMP_DISPLAY_RENDER_BUF_HEIGHT * 3);
 
   shell->title_idle_id          = 0;
 
