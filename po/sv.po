@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-12 15:23+0100\n"
-"PO-Revision-Date: 2007-11-12 15:23+0100\n"
+"POT-Creation-Date: 2007-12-28 20:18+0100\n"
+"PO-Revision-Date: 2007-12-28 20:18+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -62,13 +62,13 @@ msgstr ""
 "\n"
 "För att undvika förlust av data, kontrollera platsen för och rättigheter på katalogen för växlingsfiler som är definierad i dina inställningar (för tillfället \"%s\")."
 
-#: ../app/batch.c:75
+#: ../app/batch.c:76
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
 msgstr "Ingen satstolkare angiven, använder standardtolkaren \"%s\".\n"
 
-#: ../app/batch.c:93
-#: ../app/batch.c:111
+#: ../app/batch.c:94
+#: ../app/batch.c:112
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "Satstolkaren \"%s\" är inte tillgänglig. Satsläge inaktiverat."
@@ -2610,7 +2610,7 @@ msgid "Change Print Size"
 msgstr "Ändra utskriftsstorlek"
 
 #: ../app/actions/image-commands.c:650
-#: ../app/core/gimpimage-scale.c:77
+#: ../app/core/gimpimage-scale.c:79
 msgid "Scale Image"
 msgstr "Skala bild"
 
@@ -3033,7 +3033,7 @@ msgid "Set Layer Boundary Size"
 msgstr "Ställ in storlek på lagergräns"
 
 #: ../app/actions/layers-commands.c:572
-#: ../app/core/gimplayer.c:247
+#: ../app/core/gimplayer.c:251
 msgid "Scale Layer"
 msgstr "Skala om lager"
 
@@ -3050,7 +3050,7 @@ msgid "Please select a channel first"
 msgstr "Välj en kanal först"
 
 #: ../app/actions/layers-commands.c:991
-#: ../app/core/gimplayer.c:1244
+#: ../app/core/gimplayer.c:1266
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "Lägg till lagermask"
@@ -3751,24 +3751,24 @@ msgid "Enter a name for the saved options"
 msgstr "Ange namn för de sparade alternativen"
 
 #: ../app/actions/tool-options-commands.c:77
-#: ../app/actions/tool-options-commands.c:245
-#: ../app/actions/tool-options-commands.c:262
+#: ../app/actions/tool-options-commands.c:247
+#: ../app/actions/tool-options-commands.c:264
 msgid "Saved Options"
 msgstr "Sparade alternativ"
 
-#: ../app/actions/tool-options-commands.c:138
+#: ../app/actions/tool-options-commands.c:140
 msgid "Rename Saved Tool Options"
 msgstr "Ge nytt namn till sparade verktygsalternativ"
 
-#: ../app/actions/tool-options-commands.c:142
+#: ../app/actions/tool-options-commands.c:144
 msgid "Enter a new name for the saved options"
 msgstr "Ange nytt namn för de sparade alternativen"
 
-#: ../app/actions/tool-options-commands.c:185
+#: ../app/actions/tool-options-commands.c:187
 msgid "Reset Tool Options"
 msgstr "Återställ verktygsalternativ"
 
-#: ../app/actions/tool-options-commands.c:208
+#: ../app/actions/tool-options-commands.c:210
 msgid "Do you really want to reset all tool options to default values?"
 msgstr "Vill du verkligen återställa alla verktygsalternativ till standardvärden?"
 
@@ -4545,11 +4545,11 @@ msgstr "Ersätt"
 msgid "Anti erase"
 msgstr "Antisudda"
 
-#: ../app/base/tile-swap.c:544
+#: ../app/base/tile-swap.c:554
 msgid "Unable to open swap file. GIMP has run out of memory and cannot use the swap file. Some parts of your images may be corrupted. Try to save your work using different filenames, restart GIMP and check the location of the swap directory in your Preferences."
 msgstr "Kunde inte öppna växlingfilen. GIMP har slut på minne och kan inte använda växlingsfilen. Delar av dina bilder kan vara skadade. Prova att spara ditt arbete under andra filnamn, starta om GIMP och kontrollera platsen för växlingskatalogen i dina inställningar."
 
-#: ../app/base/tile-swap.c:559
+#: ../app/base/tile-swap.c:569
 #, c-format
 msgid "Failed to resize swap file: %s"
 msgstr "Misslyckades med att ändra storlek på växlingsfil: %s"
@@ -5308,7 +5308,7 @@ msgstr "Text"
 
 #: ../app/core/core-enums.c:881
 #: ../app/core/core-enums.c:924
-#: ../app/core/gimpdrawable-transform.c:557
+#: ../app/core/gimpdrawable-transform.c:566
 msgid "Transform"
 msgstr "Transformera"
 
@@ -5765,7 +5765,7 @@ msgid "Rotate Channel"
 msgstr "Rotera kanal"
 
 #: ../app/core/gimpchannel.c:264
-#: ../app/core/gimpdrawable-transform.c:826
+#: ../app/core/gimpdrawable-transform.c:839
 msgid "Transform Channel"
 msgstr "Transformera kanal"
 
@@ -5913,24 +5913,22 @@ msgstr "Position för rityta"
 msgid "Render Stroke"
 msgstr "Rendera penseldrag"
 
-#. Start a transform undo group
-#: ../app/core/gimpdrawable-transform.c:617
+#: ../app/core/gimpdrawable-transform.c:627
 #: ../app/tools/gimpfliptool.c:112
 msgid "command|Flip"
 msgstr "Vänd"
 
-#. Start a transform undo group
-#: ../app/core/gimpdrawable-transform.c:701
+#: ../app/core/gimpdrawable-transform.c:713
 #: ../app/tools/gimprotatetool.c:113
 msgid "command|Rotate"
 msgstr "Rotera"
 
-#: ../app/core/gimpdrawable-transform.c:824
-#: ../app/core/gimplayer.c:251
+#: ../app/core/gimpdrawable-transform.c:837
+#: ../app/core/gimplayer.c:255
 msgid "Transform Layer"
 msgstr "Transformera lager"
 
-#: ../app/core/gimpdrawable-transform.c:839
+#: ../app/core/gimpdrawable-transform.c:852
 msgid "Transformation"
 msgstr "Transformation"
 
@@ -6119,8 +6117,8 @@ msgid "Disable Quick Mask"
 msgstr "Inaktivera snabbmask"
 
 #: ../app/core/gimpimage-sample-points.c:53
-msgid "Add Sample_Point"
-msgstr "Lägg till sampel_punkt"
+msgid "Add Sample Point"
+msgstr "Lägg till sampelpunkt"
 
 #: ../app/core/gimpimage-sample-points.c:98
 #: ../app/tools/gimpcolortool.c:425
@@ -6356,41 +6354,41 @@ msgstr "Kan inte skapa nytt lager från den flytande markeringen då den tillhö
 msgid "Floating Selection to Layer"
 msgstr "Flytande markering till lager"
 
-#: ../app/core/gimplayer.c:244
+#: ../app/core/gimplayer.c:248
 #: ../app/tools/tools-enums.c:181
 msgid "Layer"
 msgstr "Lager"
 
-#: ../app/core/gimplayer.c:245
+#: ../app/core/gimplayer.c:249
 msgid "Rename Layer"
 msgstr "Byt namn på lager"
 
-#: ../app/core/gimplayer.c:246
+#: ../app/core/gimplayer.c:250
 #: ../app/pdb/layer_cmds.c:314
 #: ../app/pdb/layer_cmds.c:348
 msgid "Move Layer"
 msgstr "Flytta lager"
 
-#: ../app/core/gimplayer.c:248
+#: ../app/core/gimplayer.c:252
 msgid "Resize Layer"
 msgstr "Ändra storlek på lager"
 
-#: ../app/core/gimplayer.c:249
+#: ../app/core/gimplayer.c:253
 msgid "Flip Layer"
 msgstr "Vänd lager"
 
-#: ../app/core/gimplayer.c:250
+#: ../app/core/gimplayer.c:254
 msgid "Rotate Layer"
 msgstr "Rotera lager"
 
-#: ../app/core/gimplayer.c:400
-#: ../app/core/gimplayer.c:1290
+#: ../app/core/gimplayer.c:405
+#: ../app/core/gimplayer.c:1312
 #: ../app/core/gimplayermask.c:204
 #, c-format
 msgid "%s mask"
 msgstr "%s-mask"
 
-#: ../app/core/gimplayer.c:444
+#: ../app/core/gimplayer.c:449
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -6399,40 +6397,40 @@ msgstr ""
 "Flytande markering\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1221
+#: ../app/core/gimplayer.c:1243
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Kan inte lägga till lagermask till ett lager som inte tillhör en bild."
 
-#: ../app/core/gimplayer.c:1228
+#: ../app/core/gimplayer.c:1250
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Kan inte lägga till lagermask eftersom lagret redan har en."
 
-#: ../app/core/gimplayer.c:1238
+#: ../app/core/gimplayer.c:1260
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Kan inte lägga till lagermask med andra dimensioner än det angivna lagret."
 
-#: ../app/core/gimplayer.c:1344
+#: ../app/core/gimplayer.c:1366
 msgid "Transfer Alpha to Mask"
 msgstr "Överför alfa till mask"
 
-#: ../app/core/gimplayer.c:1509
+#: ../app/core/gimplayer.c:1531
 #: ../app/core/gimplayermask.c:231
 msgid "Apply Layer Mask"
 msgstr "Tillämpa lagermask"
 
-#: ../app/core/gimplayer.c:1510
+#: ../app/core/gimplayer.c:1532
 msgid "Delete Layer Mask"
 msgstr "Ta bort lagermask"
 
-#: ../app/core/gimplayer.c:1617
+#: ../app/core/gimplayer.c:1639
 msgid "Add Alpha Channel"
 msgstr "Lägg till alfakanal"
 
-#: ../app/core/gimplayer.c:1668
+#: ../app/core/gimplayer.c:1690
 msgid "Remove Alpha Channel"
 msgstr "Ta bort alfakanal"
 
-#: ../app/core/gimplayer.c:1690
+#: ../app/core/gimplayer.c:1712
 msgid "Layer to Image Size"
 msgstr "Lagerstorlek som bilden"
 
@@ -12201,6 +12199,9 @@ msgstr "Försäkra dig om att verktygslådan är synlig!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Kunde inte starta \"%s\": %s"
+
+#~ msgid "Add Sample_Point"
+#~ msgstr "Lägg till sampel_punkt"
 
 #, fuzzy
 #~ msgid "not a GIMP Curves file"
