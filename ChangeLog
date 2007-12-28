@@ -1,3 +1,11 @@
+2007-12-28  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/script-fu/scripts/chip-away.scm: applied patch from
+	Ulf-D. Ehlert that fixes the range of the "Chip amount" parameter
+	(bug #506110).
+
 2007-12-22  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
