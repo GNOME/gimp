@@ -52,34 +52,34 @@ enum
 };
 
 
-static void      gimp_view_renderer_dispose          (GObject            *object);
-static void      gimp_view_renderer_finalize         (GObject            *object);
+static void      gimp_view_renderer_dispose           (GObject            *object);
+static void      gimp_view_renderer_finalize          (GObject            *object);
 
-static gboolean  gimp_view_renderer_idle_update      (GimpViewRenderer   *renderer);
-static void      gimp_view_renderer_real_set_context (GimpViewRenderer   *renderer,
-                                                      GimpContext        *context);
-static void      gimp_view_renderer_real_invalidate  (GimpViewRenderer   *renderer);
-static void      gimp_view_renderer_real_draw        (GimpViewRenderer   *renderer,
-                                                      GtkWidget          *widget,
-                                                      cairo_t            *cr,
-                                                      const GdkRectangle *draw_area);
-static void      gimp_view_renderer_real_render      (GimpViewRenderer   *renderer,
-                                                      GtkWidget          *widget);
+static gboolean  gimp_view_renderer_idle_update       (GimpViewRenderer   *renderer);
+static void      gimp_view_renderer_real_set_context  (GimpViewRenderer   *renderer,
+                                                       GimpContext        *context);
+static void      gimp_view_renderer_real_invalidate   (GimpViewRenderer   *renderer);
+static void      gimp_view_renderer_real_draw         (GimpViewRenderer   *renderer,
+                                                       GtkWidget          *widget,
+                                                       cairo_t            *cr,
+                                                       const GdkRectangle *draw_area);
+static void      gimp_view_renderer_real_render       (GimpViewRenderer   *renderer,
+                                                       GtkWidget          *widget);
 
-static void      gimp_view_renderer_size_changed     (GimpViewRenderer   *renderer,
-                                                      GimpViewable       *viewable);
+static void      gimp_view_renderer_size_changed      (GimpViewRenderer   *renderer,
+                                                       GimpViewable       *viewable);
 
 static cairo_pattern_t *
-                 gimp_view_renderer_create_pattern   (GimpViewRenderer   *renderer,
-                                                      GtkWidget          *widget);
+                 gimp_view_renderer_create_background (GimpViewRenderer   *renderer,
+                                                       GtkWidget          *widget);
 
-static void      gimp_view_render_to_surface         (TempBuf            *temp_buf,
-                                                      gint                channel,
-                                                      GimpViewBG          inside_bg,
-                                                      GimpViewBG          outside_bg,
-                                                      cairo_surface_t    *surface,
-                                                      gint                dest_width,
-                                                      gint                dest_height);
+static void      gimp_view_render_to_surface          (TempBuf            *temp_buf,
+                                                       gint                channel,
+                                                       GimpViewBG          inside_bg,
+                                                       GimpViewBG          outside_bg,
+                                                       cairo_surface_t    *surface,
+                                                       gint                dest_width,
+                                                       gint                dest_height);
 
 
 
@@ -697,8 +697,8 @@ gimp_view_renderer_real_draw (GimpViewRenderer   *renderer,
       if (renderer->bg_stock_id)
         {
           if (! renderer->pattern)
-            renderer->pattern = gimp_view_renderer_create_pattern (renderer,
-                                                                   widget);
+            renderer->pattern = gimp_view_renderer_create_background (renderer,
+                                                                      widget);
 
           cairo_set_source (cr, renderer->pattern);
           cairo_paint (cr);
@@ -725,12 +725,11 @@ gimp_view_renderer_real_draw (GimpViewRenderer   *renderer,
 
       if (content == CAIRO_CONTENT_COLOR_ALPHA)
         {
-          cairo_pattern_t *pattern;
+          if (! renderer->pattern)
+            renderer->pattern = gimp_cairo_checkerboard_create (cr,
+                                                                GIMP_CHECK_SIZE_SM);
 
-          pattern = gimp_cairo_checkerboard_create (cr, GIMP_CHECK_SIZE_SM);
-
-          cairo_set_source (cr, pattern);
-          cairo_pattern_destroy (pattern);
+          cairo_set_source (cr, renderer->pattern);
           cairo_fill_preserve (cr);
         }
 
@@ -1095,9 +1094,12 @@ gimp_view_renderer_render_pixbuf (GimpViewRenderer *renderer,
   renderer->needs_render = FALSE;
 }
 
+/* This function creates a background pattern from a stock icon
+ * if renderer->bg_stock_id is set.
+ */
 static cairo_pattern_t *
-gimp_view_renderer_create_pattern (GimpViewRenderer *renderer,
-                                   GtkWidget        *widget)
+gimp_view_renderer_create_background (GimpViewRenderer *renderer,
+                                      GtkWidget        *widget)
 {
   cairo_pattern_t *pattern = NULL;
 

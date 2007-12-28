@@ -1,5 +1,9 @@
 2007-12-28  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpviewrenderer.c: cache the checkerboard pattern.
+
+2007-12-28  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpviewrenderer.c (gimp_view_renderer_real_draw):
 	if the surface has CAIRO_CONTENT_COLOR_ALPHA, render it on a
 	checkerboard background.
