@@ -54,8 +54,8 @@ gimp_display_shell_transform_coordinate (GimpDisplayShell *shell,
 
   *display_coords = *image_coords;
 
-  display_coords->x = shell->scale_x * image_coords->x;
-  display_coords->y = shell->scale_y * image_coords->y;
+  display_coords->x = SCALEX (shell, image_coords->x);
+  display_coords->y = SCALEY (shell, image_coords->y);
 
   display_coords->x += - shell->offset_x + shell->disp_xoffset;
   display_coords->y += - shell->offset_y + shell->disp_yoffset;
@@ -115,11 +115,8 @@ gimp_display_shell_transform_xy (GimpDisplayShell *shell,
       y += offset_y;
     }
 
-  tx = PROJ_ROUND64 (x * shell->x_src_dec) + (shell->x_dest_inc >> 1) - 1;
-  ty = PROJ_ROUND64 (y * shell->y_src_dec) + (shell->y_dest_inc >> 1) - 1;
-
-  tx /= shell->x_dest_inc;
-  ty /= shell->y_dest_inc;
+  tx = PROJ_ROUND64 (x * shell->x_src_dec) / shell->x_dest_inc;
+  ty = PROJ_ROUND64 (y * shell->y_src_dec) / shell->y_dest_inc;
 
   tx += shell->disp_xoffset - shell->offset_x;
   ty += shell->disp_yoffset - shell->offset_y;
@@ -223,8 +220,8 @@ gimp_display_shell_transform_xy_f  (GimpDisplayShell *shell,
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
-  *nx = shell->scale_x * (x + offset_x) - shell->offset_x;
-  *ny = shell->scale_y * (y + offset_y) - shell->offset_y;
+  *nx = SCALEX (shell, x + offset_x) - shell->offset_x;
+  *ny = SCALEY (shell, y + offset_y) - shell->offset_y;
 
   *nx += shell->disp_xoffset;
   *ny += shell->disp_yoffset;
@@ -314,14 +311,12 @@ gimp_display_shell_transform_points (GimpDisplayShell *shell,
       x = points[i*2]   + offset_x;
       y = points[i*2+1] + offset_y;
 
-      x = PROJ_ROUND64 (shell->x_src_dec * x +
-                        (shell->x_dest_inc >> 1) - 1) / shell->x_dest_inc;
-      y = PROJ_ROUND64 (shell->y_src_dec * y +
-                        (shell->y_dest_inc >> 1) - 1) / shell->y_dest_inc;
+      x *= shell->x_src_dec / shell->x_dest_inc;
+      y *= shell->y_src_dec / shell->y_dest_inc;
 
-      coords[i].x = CLAMP (x + shell->disp_xoffset - shell->offset_x,
+      coords[i].x = CLAMP (PROJ_ROUND64 (x + shell->disp_xoffset - shell->offset_x),
                            G_MININT, G_MAXINT);
-      coords[i].y = CLAMP (y + shell->disp_yoffset - shell->offset_y,
+      coords[i].y = CLAMP (PROJ_ROUND64 (y + shell->disp_yoffset - shell->offset_y),
                            G_MININT, G_MAXINT);
     }
 }
@@ -366,14 +361,12 @@ gimp_display_shell_transform_coords (GimpDisplayShell *shell,
       x = image_coords[i].x + offset_x;
       y = image_coords[i].y + offset_y;
 
-      x = PROJ_ROUND64 (shell->x_src_dec * x +
-                        (shell->x_dest_inc >> 1) - 1) / shell->x_dest_inc;
-      y = PROJ_ROUND64 (shell->y_src_dec * y +
-                        (shell->y_dest_inc >> 1) - 1) / shell->y_dest_inc;
+      x *= shell->x_src_dec / shell->x_dest_inc;
+      y *= shell->y_src_dec / shell->y_dest_inc;
 
-      disp_coords[i].x = CLAMP (x + shell->disp_xoffset - shell->offset_x,
+      disp_coords[i].x = CLAMP (PROJ_ROUND64 (x + shell->disp_xoffset - shell->offset_x),
                                 G_MININT, G_MAXINT);
-      disp_coords[i].y = CLAMP (y + shell->disp_yoffset - shell->offset_y,
+      disp_coords[i].y = CLAMP (PROJ_ROUND64 (y + shell->disp_yoffset - shell->offset_y),
                                 G_MININT, G_MAXINT);
     }
 }
@@ -421,14 +414,10 @@ gimp_display_shell_transform_segments (GimpDisplayShell *shell,
       y1 = src_segs[i].y1 + offset_y;
       y2 = src_segs[i].y2 + offset_y;
 
-      x1 = (x1 * shell->x_src_dec +
-            (shell->x_dest_inc >> 1) - 1) / shell->x_dest_inc;
-      x2 = (x2 * shell->x_src_dec +
-            (shell->x_dest_inc >> 1) - 1) / shell->x_dest_inc;
-      y1 = (y1 * shell->y_src_dec +
-            (shell->y_dest_inc >> 1) - 1) / shell->y_dest_inc;
-      y2 = (y2 * shell->y_src_dec +
-            (shell->y_dest_inc >> 1) - 1) / shell->y_dest_inc;
+      x1 = PROJ_ROUND64 (x1 * shell->x_src_dec) / shell->x_dest_inc;
+      x2 = PROJ_ROUND64 (x2 * shell->x_src_dec) / shell->x_dest_inc;
+      y1 = PROJ_ROUND64 (y1 * shell->y_src_dec) / shell->y_dest_inc;
+      y2 = PROJ_ROUND64 (y2 * shell->y_src_dec) / shell->y_dest_inc;
 
       dest_segs[i].x1 = CLAMP (x1 + shell->disp_xoffset - shell->offset_x,
                                G_MININT, G_MAXINT);

@@ -591,13 +591,11 @@ gimp_display_shell_render_info_scale (RenderInfo       *info,
   info->scalex   = shell->scale_x * (1 << level);
   info->scaley   = shell->scale_y * (1 << level);
 
-  info->src_y    = (gdouble) info->y / info->scaley;
-
   /* use Bresenham like stepping */
   info->x_dest_inc = shell->x_dest_inc;
   info->x_src_dec  = shell->x_src_dec << level;
 
-  info->dx_start   = ((gint64) info->x_dest_inc) * info->x + info->x_dest_inc/2;
+  info->dx_start   = ((gint64) info->x_dest_inc) * info->x + info->x_dest_inc / 2;
   info->src_x      = info->dx_start / info->x_src_dec;
   info->dx_start   = info->dx_start % info->x_src_dec;
 
@@ -605,7 +603,7 @@ gimp_display_shell_render_info_scale (RenderInfo       *info,
   info->y_dest_inc = shell->y_dest_inc;
   info->y_src_dec  = shell->y_src_dec << level;
 
-  info->dy_start   = ((gint64) info->y_dest_inc * info->y) + info->y_dest_inc/2;
+  info->dy_start   = ((gint64) info->y_dest_inc) * info->y + info->y_dest_inc / 2;
   info->src_y      = info->dy_start / info->y_src_dec;
   info->dy_start   = info->dy_start % info->y_src_dec;
 

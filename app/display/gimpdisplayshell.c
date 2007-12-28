@@ -1179,8 +1179,8 @@ gimp_display_shell_scale_changed (GimpDisplayShell *shell)
 
   shell->x_dest_inc = gimp_image_get_width  (image);
   shell->y_dest_inc = gimp_image_get_height (image);
-  shell->x_src_dec  = ceil (gimp_image_get_width  (image) * shell->scale_x);
-  shell->y_src_dec  = ceil (gimp_image_get_height (image) * shell->scale_y);
+  shell->x_src_dec  = SCALEX (shell, gimp_image_get_width  (image));
+  shell->y_src_dec  = SCALEY (shell, gimp_image_get_height (image));
 }
 
 void

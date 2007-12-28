@@ -740,6 +740,7 @@ selection_window_state_event (GtkWidget           *shell,
 
   return FALSE;
 }
+
 static gboolean
 selection_visibility_notify_event (GtkWidget          *shell,
                                    GdkEventVisibility *event,
