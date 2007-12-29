@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpops.c
+ * gimpoperationtilesink.c
  * Copyright (C) 2007 Øyvind Kolås <pippin@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -24,6 +24,7 @@
 #include <string.h>
 
 #include <glib-object.h>
+
 #include "gegl/gegl-types.h"
 #include <gegl/buffer/gegl-buffer.h>
 
@@ -184,8 +185,7 @@ gimp_operation_tile_sink_process (GeglOperation *operation,
           GeglRectangle rect = { destPR.x, destPR.y, destPR.w, destPR.h };
 
           gegl_buffer_get (input,
-                           1.0, &rect, format,
-                           destPR.data, destPR.rowstride);
+                           1.0, &rect, format, destPR.data, destPR.rowstride);
         }
     }
   else

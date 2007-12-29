@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpops.c
+ * gimpoperationtilesource.c
  * Copyright (C) 2007 Øyvind Kolås <pippin@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -24,6 +24,7 @@
 #include <string.h>
 
 #include <glib-object.h>
+
 #include "gegl/gegl-types.h"
 #include <gegl/buffer/gegl-buffer.h>
 
@@ -201,8 +202,7 @@ gimp_operation_tile_source_process (GeglOperation *operation,
         {
           GeglRectangle rect = { srcPR.x, srcPR.y, srcPR.w, srcPR.h };
 
-          gegl_buffer_set (output, &rect, format, srcPR.data,
-                           srcPR.rowstride);
+          gegl_buffer_set (output, &rect, format, srcPR.data, srcPR.rowstride);
         }
 
       gegl_operation_set_data (operation, context_id,

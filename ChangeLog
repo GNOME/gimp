@@ -1,3 +1,8 @@
+2007-12-29  Sven Neumann  <sven@gimp.org>
+
+	* app/gegl/gimpoperationtilesink.c
+	* app/gegl/gimpoperationtilesource.c: formatting.
+
 2007-12-29  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/gegl/gimpoperationtilesource.c: do not fetch the full extent
