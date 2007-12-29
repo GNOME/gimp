@@ -149,7 +149,7 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  if (!t_tool->hist)
+  if (! t_tool->hist)
     t_tool->hist = gimp_histogram_new ();
 
   t_tool->threshold->color          = gimp_drawable_is_rgb (drawable);

@@ -1,5 +1,15 @@
 2007-12-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpthresholdtool.c: more cleanup in preparation of
+	migrating to gegl.
+
+2007-12-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimp-gegl.c
 	* app/gegl/gimpoperationtilesource.c
 	* app/gegl/gimpoperationtilesink.c: fixup includes a bit.

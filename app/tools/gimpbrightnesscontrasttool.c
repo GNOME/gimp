@@ -73,7 +73,7 @@ static void   gimp_brightness_contrast_tool_map            (GimpImageMapTool    
 static void   gimp_brightness_contrast_tool_dialog         (GimpImageMapTool      *image_map_tool);
 static void   gimp_brightness_contrast_tool_reset          (GimpImageMapTool      *image_map_tool);
 
-static void   brightness_contrast_update                   (GimpBrightnessContrastTool *bc_tool);
+static void   brightness_contrast_update_sliders           (GimpBrightnessContrastTool *bc_tool);
 static void   brightness_contrast_brightness_changed       (GtkAdjustment              *adj,
                                                             GimpBrightnessContrastTool *bc_tool);
 static void   brightness_contrast_contrast_changed         (GtkAdjustment              *adj,
@@ -170,7 +170,7 @@ gimp_brightness_contrast_tool_initialize (GimpTool     *tool,
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
-  brightness_contrast_update (bc_tool);
+  brightness_contrast_update_sliders (bc_tool);
 
   return TRUE;
 }
@@ -230,7 +230,6 @@ gimp_brightness_contrast_tool_button_release (GimpTool              *tool,
   gimp_image_map_tool_preview (im_tool);
 }
 
-
 static void
 gimp_brightness_contrast_tool_motion (GimpTool        *tool,
                                       GimpCoords      *coords,
@@ -249,7 +248,7 @@ gimp_brightness_contrast_tool_motion (GimpTool        *tool,
   bc_tool->brightness = CLAMP (bc_tool->dy, -127.0, 127.0);
   bc_tool->contrast   = CLAMP (bc_tool->dx, -127.0, 127.0);
 
-  brightness_contrast_update (bc_tool);
+  brightness_contrast_update_sliders (bc_tool);
   gimp_image_map_tool_preview (im_tool);
 
   gimp_tool_control_resume (tool->control);
@@ -315,11 +314,11 @@ gimp_brightness_contrast_tool_reset (GimpImageMapTool *im_tool)
   bc_tool->brightness = 0.0;
   bc_tool->contrast   = 0.0;
 
-  brightness_contrast_update (bc_tool);
+  brightness_contrast_update_sliders (bc_tool);
 }
 
 static void
-brightness_contrast_update (GimpBrightnessContrastTool *bc_tool)
+brightness_contrast_update_sliders (GimpBrightnessContrastTool *bc_tool)
 {
   gtk_adjustment_set_value (bc_tool->brightness_data, bc_tool->brightness);
   gtk_adjustment_set_value (bc_tool->contrast_data,   bc_tool->contrast);

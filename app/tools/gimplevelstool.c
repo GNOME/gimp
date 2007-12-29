@@ -90,33 +90,33 @@ static gboolean gimp_levels_tool_settings_load  (GimpImageMapTool  *image_mao_to
 static gboolean gimp_levels_tool_settings_save  (GimpImageMapTool  *image_map_tool,
                                                  gpointer           fp);
 
-static void     levels_update_adjustments            (GimpLevelsTool *tool);
-static void     levels_update_input_bar              (GimpLevelsTool *tool);
+static void     levels_update_adjustments       (GimpLevelsTool    *tool);
+static void     levels_update_input_bar         (GimpLevelsTool    *tool);
 
-static void     levels_channel_callback              (GtkWidget      *widget,
-                                                      GimpLevelsTool *tool);
-static void     levels_channel_reset_callback        (GtkWidget      *widget,
-                                                      GimpLevelsTool *tool);
+static void     levels_channel_callback         (GtkWidget         *widget,
+                                                 GimpLevelsTool    *tool);
+static void     levels_channel_reset_callback   (GtkWidget         *widget,
+                                                 GimpLevelsTool    *tool);
 
-static gboolean levels_menu_sensitivity              (gint            value,
-                                                      gpointer        data);
+static gboolean levels_menu_sensitivity         (gint               value,
+                                                 gpointer           data);
 
-static void     levels_stretch_callback              (GtkWidget      *widget,
-                                                      GimpLevelsTool *tool);
-static void     levels_low_input_adjustment_update   (GtkAdjustment  *adjustment,
-                                                      GimpLevelsTool *tool);
-static void     levels_gamma_adjustment_update       (GtkAdjustment  *adjustment,
-                                                      GimpLevelsTool *tool);
-static void     levels_linear_gamma_adjustment_update(GtkAdjustment  *adjustment,
-                                                      GimpLevelsTool *tool);
-static void     levels_high_input_adjustment_update  (GtkAdjustment  *adjustment,
-                                                      GimpLevelsTool *tool);
-static void     levels_low_output_adjustment_update  (GtkAdjustment  *adjustment,
-                                                      GimpLevelsTool *tool);
-static void     levels_high_output_adjustment_update (GtkAdjustment  *adjustment,
-                                                      GimpLevelsTool *tool);
-static void     levels_input_picker_toggled          (GtkWidget      *widget,
-                                                      GimpLevelsTool *tool);
+static void     levels_stretch_callback         (GtkWidget         *widget,
+                                                 GimpLevelsTool    *tool);
+static void     levels_low_input_changed        (GtkAdjustment     *adjustment,
+                                                 GimpLevelsTool    *tool);
+static void     levels_gamma_changed            (GtkAdjustment     *adjustment,
+                                                 GimpLevelsTool    *tool);
+static void     levels_linear_gamma_changed     (GtkAdjustment     *adjustment,
+                                                 GimpLevelsTool    *tool);
+static void     levels_high_input_changed       (GtkAdjustment     *adjustment,
+                                                 GimpLevelsTool    *tool);
+static void     levels_low_output_changed       (GtkAdjustment     *adjustment,
+                                                 GimpLevelsTool    *tool);
+static void     levels_high_output_changed      (GtkAdjustment     *adjustment,
+                                                 GimpLevelsTool    *tool);
+static void     levels_input_picker_toggled     (GtkWidget         *widget,
+                                                 GimpLevelsTool    *tool);
 
 
 G_DEFINE_TYPE (GimpLevelsTool, gimp_levels_tool, GIMP_TYPE_IMAGE_MAP_TOOL)
@@ -472,7 +472,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   tool->low_input = GTK_ADJUSTMENT (data);
   g_signal_connect (tool->low_input, "value-changed",
-                    G_CALLBACK (levels_low_input_adjustment_update),
+                    G_CALLBACK (levels_low_input_changed),
                     tool);
 
   gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->input_sliders), 0,
@@ -486,13 +486,13 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   tool->gamma = GTK_ADJUSTMENT (data);
   g_signal_connect (tool->gamma, "value-changed",
-                    G_CALLBACK (levels_gamma_adjustment_update),
+                    G_CALLBACK (levels_gamma_changed),
                     tool);
 
   tool->gamma_linear = GTK_ADJUSTMENT (gtk_adjustment_new (127, 0, 255,
                                                            0.1, 1.0, 0.0));
   g_signal_connect (tool->gamma_linear, "value-changed",
-                    G_CALLBACK (levels_linear_gamma_adjustment_update),
+                    G_CALLBACK (levels_linear_gamma_changed),
                     tool);
 
   gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->input_sliders), 1,
@@ -514,7 +514,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   tool->high_input = GTK_ADJUSTMENT (data);
   g_signal_connect (tool->high_input, "value-changed",
-                    G_CALLBACK (levels_high_input_adjustment_update),
+                    G_CALLBACK (levels_high_input_changed),
                     tool);
 
   gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->input_sliders), 2,
@@ -574,7 +574,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   tool->low_output = GTK_ADJUSTMENT (data);
   g_signal_connect (tool->low_output, "value-changed",
-                    G_CALLBACK (levels_low_output_adjustment_update),
+                    G_CALLBACK (levels_low_output_changed),
                     tool);
 
   gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->output_sliders), 0,
@@ -587,7 +587,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   tool->high_output = GTK_ADJUSTMENT (data);
   g_signal_connect (tool->high_output, "value-changed",
-                    G_CALLBACK (levels_high_output_adjustment_update),
+                    G_CALLBACK (levels_high_output_changed),
                     tool);
 
   gimp_handle_bar_set_adjustment (GIMP_HANDLE_BAR (tool->output_sliders), 2,
@@ -914,8 +914,8 @@ levels_linear_gamma_update (GimpLevelsTool *tool)
 }
 
 static void
-levels_linear_gamma_adjustment_update (GtkAdjustment  *adjustment,
-                                       GimpLevelsTool *tool)
+levels_linear_gamma_changed (GtkAdjustment  *adjustment,
+                             GimpLevelsTool *tool)
 {
   gdouble delta, mid, tmp, value;
 
@@ -935,8 +935,8 @@ levels_linear_gamma_adjustment_update (GtkAdjustment  *adjustment,
 }
 
 static void
-levels_low_input_adjustment_update (GtkAdjustment  *adjustment,
-                                    GimpLevelsTool *tool)
+levels_low_input_changed (GtkAdjustment  *adjustment,
+                          GimpLevelsTool *tool)
 {
   gint value = ROUND (adjustment->value);
 
@@ -957,8 +957,8 @@ levels_low_input_adjustment_update (GtkAdjustment  *adjustment,
 }
 
 static void
-levels_gamma_adjustment_update (GtkAdjustment  *adjustment,
-                                GimpLevelsTool *tool)
+levels_gamma_changed (GtkAdjustment  *adjustment,
+                      GimpLevelsTool *tool)
 {
   if (tool->levels->gamma[tool->channel] != adjustment->value)
     {
@@ -972,8 +972,8 @@ levels_gamma_adjustment_update (GtkAdjustment  *adjustment,
 }
 
 static void
-levels_high_input_adjustment_update (GtkAdjustment  *adjustment,
-                                     GimpLevelsTool *tool)
+levels_high_input_changed (GtkAdjustment  *adjustment,
+                           GimpLevelsTool *tool)
 {
   gint value = ROUND (adjustment->value);
 
@@ -994,8 +994,8 @@ levels_high_input_adjustment_update (GtkAdjustment  *adjustment,
 }
 
 static void
-levels_low_output_adjustment_update (GtkAdjustment  *adjustment,
-                                     GimpLevelsTool *tool)
+levels_low_output_changed (GtkAdjustment  *adjustment,
+                           GimpLevelsTool *tool)
 {
   gint value = ROUND (adjustment->value);
 
@@ -1008,8 +1008,8 @@ levels_low_output_adjustment_update (GtkAdjustment  *adjustment,
 }
 
 static void
-levels_high_output_adjustment_update (GtkAdjustment  *adjustment,
-                                      GimpLevelsTool *tool)
+levels_high_output_changed (GtkAdjustment  *adjustment,
+                            GimpLevelsTool *tool)
 {
   gint value = ROUND (adjustment->value);
 
