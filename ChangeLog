@@ -1,3 +1,8 @@
+2007-12-29  Sven Neumann  <sven@gimp.org>
+
+	* app/gegl/gimp-gegl-utils.h: declare gimp_bpp_to_babl_format() as
+	G_GNUC_CONST.
+
 2007-12-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/gimpoperationtilesink.c (tile_sink_process): add

@@ -35,10 +35,14 @@ gimp_bpp_to_babl_format (guint bpp)
 
   switch (bpp)
     {
-    case 1: return babl_format ("Y' u8");
-    case 2: return babl_format ("Y'A u8");
-    case 3: return babl_format ("R'G'B' u8");
-    case 4: return babl_format ("R'G'B'A u8");
+    case 1:
+      return babl_format ("Y' u8");
+    case 2:
+      return babl_format ("Y'A u8");
+    case 3:
+      return babl_format ("R'G'B' u8");
+    case 4:
+      return babl_format ("R'G'B'A u8");
     }
 
   return NULL;
