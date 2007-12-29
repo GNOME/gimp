@@ -183,17 +183,16 @@ gimp_operation_tile_source_process (GeglOperation *operation,
       const Babl    *format;
       PixelRegion    srcPR;
       gpointer       pr;
-      GeglRectangle  extent = { 0, 0,
-                                tile_manager_width  (self->tile_manager),
-                                tile_manager_height (self->tile_manager) };
+      const GeglRectangle *result;
 
+      result = gegl_operation_result_rect (operation, context_id);
       format = gimp_bpp_to_babl_format (tile_manager_bpp (self->tile_manager));
 
-      output = gegl_buffer_new (&extent, format);
+      output = gegl_buffer_new (result, format);
 
       pixel_region_init (&srcPR, self->tile_manager,
-                         extent.x, extent.y,
-                         extent.width, extent.height,
+                         result->x, result->y,
+                         result->width, result->height,
                          FALSE);
 
       for (pr = pixel_regions_register (1, &srcPR);
@@ -202,10 +201,8 @@ gimp_operation_tile_source_process (GeglOperation *operation,
         {
           GeglRectangle rect = { srcPR.x, srcPR.y, srcPR.w, srcPR.h };
 
-          /* FIXME: need to use the correct size instead of the full extent
-           */
           gegl_buffer_set (output, &rect, format, srcPR.data,
-                           GEGL_AUTO_ROWSTRIDE);
+                           srcPR.rowstride);
         }
 
       gegl_operation_set_data (operation, context_id,

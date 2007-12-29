@@ -1,5 +1,11 @@
 2007-12-29  Øyvind Kolås  <pippin@gimp.org>
 
+	* app/gegl/gimpoperationtilesource.c: do not fetch the full extent
+	of the TileManager but only the needed pixels. Pass rowstride
+	correctly when fecting subregions.
+
+2007-12-29  Øyvind Kolås  <pippin@gimp.org>
+
 	* configure.in: depend on GEGL 0.0.15 (version ends in odd, thus
 	depending on svn trunk of GEGL).
 
