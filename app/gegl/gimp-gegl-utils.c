@@ -31,6 +31,8 @@
 const Babl *
 gimp_bpp_to_babl_format (guint bpp)
 {
+  g_return_val_if_fail (bpp > 0 && bpp <= 4, NULL);
+
   switch (bpp)
     {
     case 1: return babl_format ("Y' u8");
@@ -38,8 +40,6 @@ gimp_bpp_to_babl_format (guint bpp)
     case 3: return babl_format ("R'G'B' u8");
     case 4: return babl_format ("R'G'B'A u8");
     }
-
-  g_warning ("bpp !(>0 && <=4)");
 
   return NULL;
 }

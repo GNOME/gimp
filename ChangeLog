@@ -1,5 +1,10 @@
 2007-12-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimp-gegl-utils.c (gimp_bpp_to_babl_format): use
+	g_return_val_if_fail() instead of g_warning().
+
+2007-12-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimp-gegl-utils.c: new files containing
 	gimp_bpp_to_babl_format().
 
