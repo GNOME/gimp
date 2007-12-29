@@ -183,6 +183,7 @@ INCLUDES = \
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
 	$(GTK_CFLAGS)		\
+	$(GEGL_CFLAGS)		\
 	-I$(includedir)
 
 EXTRA_DIST = makefile.msc
