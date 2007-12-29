@@ -137,11 +137,11 @@ tile_sink_process (GeglOperation *operation,
 
   if (self->tile_manager)
     {
-      GeglBuffer    *input;
-      GeglRectangle *extent;
-      gpointer       pr;
-      PixelRegion    destPR;
-      const Babl    *format;
+      GeglBuffer          *input;
+      const Babl          *format;
+      const GeglRectangle *extent;
+      PixelRegion          destPR;
+      gpointer             pr;
 
       /* is this somethings that should be done already for all sinks? */
       input = GEGL_BUFFER (gegl_operation_get_data (operation, context_id,

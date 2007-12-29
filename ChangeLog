@@ -1,5 +1,10 @@
 2007-12-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimpoperationtilesink.c (tile_sink_process): add
+	some const that should also be in the gegl api *cough*.
+
+2007-12-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimp-gegl-utils.c (gimp_bpp_to_babl_format): use
 	g_return_val_if_fail() instead of g_warning().
 
