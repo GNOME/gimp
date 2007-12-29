@@ -20,7 +20,8 @@
 #define __GIMP_DRAWABLE_INVERT_H__
 
 
-void   gimp_drawable_invert (GimpDrawable *drawable);
+void   gimp_drawable_invert (GimpDrawable *drawable,
+                             GimpProgress *progress);
 
 
 #endif  /*  __GIMP_DRAWABLE_INVERT_H__  */

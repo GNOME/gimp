@@ -1,3 +1,12 @@
+2007-12-30  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-invert.[ch]: let gimp_drawable_invert()
+	take a GimpProgress parameter.
+
+	* tools/pdbgen/pdb/color.pdb
+	* app/pdb/color_cmds.c
+	* app/actions/drawable-commands.c: changed accordingly.
+
 2007-12-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/Makefile.am

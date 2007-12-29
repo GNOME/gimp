@@ -388,7 +388,7 @@ HELP
     success = FALSE;
 
   if (success)
-    gimp_drawable_invert (drawable);
+    gimp_drawable_invert (drawable, progress);
 }
 CODE
     );

@@ -363,7 +363,7 @@ invert_invoker (GimpProcedure      *procedure,
         success = FALSE;
 
       if (success)
-        gimp_drawable_invert (drawable);
+        gimp_drawable_invert (drawable, progress);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

@@ -34,6 +34,7 @@
 #include "core/gimpitem-linked.h"
 #include "core/gimpitemundo.h"
 #include "core/gimplayermask.h"
+#include "core/gimpprogress.h"
 
 #include "dialogs/desaturate-dialog.h"
 #include "dialogs/offset-dialog.h"
@@ -114,8 +115,10 @@ drawable_invert_cmd_callback (GtkAction *action,
 {
   GimpImage    *image;
   GimpDrawable *drawable;
+  GimpDisplay  *display;
   GtkWidget    *widget;
   return_if_no_drawable (image, drawable, data);
+  return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
   if (gimp_drawable_is_indexed (drawable))
@@ -125,7 +128,7 @@ drawable_invert_cmd_callback (GtkAction *action,
       return;
     }
 
-  gimp_drawable_invert (drawable);
+  gimp_drawable_invert (drawable, GIMP_PROGRESS (display));
   gimp_image_flush (image);
 }
 
