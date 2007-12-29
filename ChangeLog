@@ -1,3 +1,12 @@
+2007-12-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/tile-manager.[ch]: add boxed type GIMP_TYPE_TILE_MANAGER.
+
+	* app/gegl/gimpoperationtilesink.c
+	* app/gegl/gimpoperationtilesource.c: use GParamSpecBoxed instead
+	of GParamSpecPointer for the tile-manager properties and ref them
+	properly. Some cleanup.
+
 2007-12-29  Sven Neumann  <sven@gimp.org>
 
 	* app/gegl/gimp-gegl-utils.h: declare gimp_bpp_to_babl_format() as

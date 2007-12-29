@@ -33,6 +33,20 @@
 #include "tile-private.h"
 
 
+GType
+gimp_tile_manager_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    type = g_boxed_type_register_static ("TileManager",
+                                         (GBoxedCopyFunc) tile_manager_ref,
+                                         (GBoxedFreeFunc) tile_manager_unref);
+
+  return type;
+}
+
+
 static inline gint
 tile_manager_get_tile_num (TileManager *tm,
                            gint         xpixel,

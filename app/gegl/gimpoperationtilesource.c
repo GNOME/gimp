@@ -30,7 +30,6 @@
 
 #include "gegl-types.h"
 
-#include "base/base-types.h"
 #include "base/tile-manager.h"
 #include "base/pixel-region.h"
 
@@ -45,23 +44,27 @@ enum
 };
 
 
-static void          tile_source_get_property       (GObject       *gobject,
-                                                     guint          property_id,
-                                                     GValue        *value,
-                                                     GParamSpec    *pspec);
-static void          tile_source_set_property       (GObject       *gobject,
-                                                     guint          property_id,
-                                                     const GValue  *value,
-                                                     GParamSpec    *pspec);
+static void     gimp_operation_tile_source_finalize     (GObject       *object);
+static void     gimp_operation_tile_source_get_property (GObject       *object,
+                                                         guint          property_id,
+                                                         GValue        *value,
+                                                         GParamSpec    *pspec);
+static void     gimp_operation_tile_source_set_property (GObject       *object,
+                                                         guint          property_id,
+                                                         const GValue  *value,
+                                                         GParamSpec    *pspec);
 
-static GeglRectangle tile_source_get_defined_region (GeglOperation *operation);
+static GeglRectangle
+          gimp_operation_tile_source_get_defined_region (GeglOperation *operation);
 
-static gboolean      tile_source_process            (GeglOperation *operation,
-                                                     gpointer       context_id);
+static gboolean gimp_operation_tile_source_process      (GeglOperation *operation,
+                                                         gpointer       context_id);
 
 
 G_DEFINE_TYPE (GimpOperationTileSource, gimp_operation_tile_source,
                GEGL_TYPE_OPERATION_SOURCE)
+
+#define parent_class gimp_operation_tile_source_parent_class
 
 
 static void
@@ -71,23 +74,24 @@ gimp_operation_tile_source_class_init (GimpOperationTileSourceClass * klass)
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationSourceClass *source_class    = GEGL_OPERATION_SOURCE_CLASS (klass);
 
-  object_class->set_property          = tile_source_set_property;
-  object_class->get_property          = tile_source_get_property;
+  object_class->finalize              = gimp_operation_tile_source_finalize;
+  object_class->set_property          = gimp_operation_tile_source_set_property;
+  object_class->get_property          = gimp_operation_tile_source_get_property;
 
-  operation_class->get_defined_region = tile_source_get_defined_region;
+  operation_class->get_defined_region = gimp_operation_tile_source_get_defined_region;
 
-  source_class->process               = tile_source_process;
+  source_class->process               = gimp_operation_tile_source_process;
 
   gegl_operation_class_set_name (operation_class, "gimp-tilemanager-source");;
 
   g_object_class_install_property (object_class,
                                    PROP_TILE_MANAGER,
-                                   g_param_spec_pointer ("tile-manager",
-                                                         "Tile Manager",
-                                                         "The tile manager to use as a destination",
-                                                         G_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
-
+                                   g_param_spec_boxed ("tile-manager",
+                                                       "Tile Manager",
+                                                       "The tile manager to use as source",
+                                                       GIMP_TYPE_TILE_MANAGER,
+                                                       G_PARAM_READWRITE |
+                                                       G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -96,17 +100,31 @@ gimp_operation_tile_source_init (GimpOperationTileSource *self)
 }
 
 static void
-tile_source_get_property (GObject    *object,
-                          guint       property_id,
-                          GValue     *value,
-                          GParamSpec *pspec)
+gimp_operation_tile_source_finalize (GObject *object)
+{
+  GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (object);
+
+  if (self->tile_manager)
+    {
+      tile_manager_unref (self->tile_manager);
+      self->tile_manager = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_operation_tile_source_get_property (GObject    *object,
+                                         guint       property_id,
+                                         GValue     *value,
+                                         GParamSpec *pspec)
 {
   GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (object);
 
   switch (property_id)
     {
     case PROP_TILE_MANAGER:
-      g_value_set_pointer (value, self->tile_manager);
+      g_value_set_boxed (value, self->tile_manager);
       break;
 
     default:
@@ -116,17 +134,19 @@ tile_source_get_property (GObject    *object,
 }
 
 static void
-tile_source_set_property (GObject      *object,
-                          guint         property_id,
-                          const GValue *value,
-                          GParamSpec   *pspec)
+gimp_operation_tile_source_set_property (GObject      *object,
+                                         guint         property_id,
+                                         const GValue *value,
+                                         GParamSpec   *pspec)
 {
   GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (object);
 
   switch (property_id)
     {
     case PROP_TILE_MANAGER:
-      self->tile_manager = g_value_get_pointer (value);
+      if (self->tile_manager)
+        tile_manager_unref (self->tile_manager);
+      self->tile_manager = g_value_dup_boxed (value);
       break;
 
     default:
@@ -136,7 +156,7 @@ tile_source_set_property (GObject      *object,
 }
 
 static GeglRectangle
-tile_source_get_defined_region (GeglOperation *operation)
+gimp_operation_tile_source_get_defined_region (GeglOperation *operation)
 {
   GimpOperationTileSource *self   = GIMP_OPERATION_TILE_SOURCE (operation);
   GeglRectangle            result = { 0, };
@@ -153,8 +173,8 @@ tile_source_get_defined_region (GeglOperation *operation)
 }
 
 static gboolean
-tile_source_process (GeglOperation *operation,
-                     gpointer       context_id)
+gimp_operation_tile_source_process (GeglOperation *operation,
+                                    gpointer       context_id)
 {
   GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (operation);
 

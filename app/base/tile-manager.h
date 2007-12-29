@@ -20,6 +20,12 @@
 #define __TILE_MANAGER_H__
 
 
+#define GIMP_TYPE_TILE_MANAGER               (gimp_tile_manager_get_type ())
+#define GIMP_VALUE_HOLDS_TILE_MANAGER(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_TILE_MANAGER))
+
+GType         gimp_tile_manager_get_type     (void) G_GNUC_CONST;
+
+
 /* Creates a new tile manager with the specified width for the
  *  toplevel. The toplevel size is used to compute the number of
  *  levels and their size. Each level is 1/2 the width and height of
