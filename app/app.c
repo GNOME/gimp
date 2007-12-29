@@ -44,6 +44,8 @@
 #include "base/base.h"
 #include "base/tile-swap.h"
 
+#include "gegl/gimp-gegl.h"
+
 #include "core/gimp.h"
 #include "core/gimp-user-install.h"
 
@@ -186,6 +188,8 @@ app_run (const gchar         *full_prog_name,
   /*  initialize lowlevel stuff  */
   swap_is_ok = base_init (config, be_verbose, use_cpu_accel);
 
+  gimp_gegl_init ();
+
 #ifndef GIMP_CONSOLE_COMPILATION
   if (! no_interface)
     update_status_func = gui_init (gimp, no_splash);
@@ -253,8 +257,8 @@ app_run (const gchar         *full_prog_name,
   g_object_unref (gimp);
 
   errors_exit ();
-  base_exit ();
   gegl_exit ();
+  base_exit ();
 }
 
 
@@ -290,9 +294,11 @@ app_exit_after_callback (Gimp      *gimp,
 
 #else
 
+  gegl_exit ();
+
   /*  make sure that the swap files are removed before we quit */
   tile_swap_exit ();
-  gegl_exit ();
+
   exit (EXIT_SUCCESS);
 
 #endif

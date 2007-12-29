@@ -279,8 +279,6 @@ static const GOptionEntry main_entries[] =
   { NULL }
 };
 
-void gimp_gegl_ops_init (void);
-
 int
 main (int    argc,
       char **argv)
@@ -385,8 +383,6 @@ main (int    argc,
     app_abort (no_interface, abort_message);
 
   gimp_init_signal_handlers ();
-
-  gimp_gegl_ops_init ();
 
   app_run (argv[0],
            filenames,

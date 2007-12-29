@@ -1,8 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpops.c
- * Copyright (C) 2007 Øyvind Kolås <pippin@gimp.org>
+ * gegl-types.h
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,18 +18,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include <gegl.h>
-#include <gegl/buffer/gegl-buffer.h>
-
-#include "gegl/gegl-types.h"
-#include "gimpoptilesink.h"
-#include "gimpoptilesource.h"
+#ifndef __OUR_GEGL_TYPES_H__
+#define __OUR_GEGL_TYPES_H__
 
 
-void gimp_gegl_ops_init (void);
+#include "base/base-types.h"
 
-void gimp_gegl_ops_init (void)
-{
-  g_type_class_ref (GIMP_TYPE_OPERATION_TILE_SINK);
-  g_type_class_ref (GIMP_TYPE_OPERATION_TILE_SOURCE);
-}
+
+typedef struct _GimpOperationTileSink   GimpOperationTileSink;
+typedef struct _GimpOperationTileSource GimpOperationTileSource;
+
+
+#endif /* __OUR_GEGL_TYPES_H__ */

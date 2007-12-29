@@ -1,3 +1,23 @@
+2007-12-29  Michael Natterer  <mitch@gimp.org>
+
+	Some cleanup...
+
+	* app/Makefile.am: change linking order.
+
+	* app/main.c: move gegl initialization from here...
+
+	* app/app.c: ...to here.
+
+	* app/gegl/gimpops.c: removed.
+
+	* app/gegl/gimp-gegl.[ch]
+	* app/gegl/gegl-types.h: added.
+
+	* app/gegl/Makefile.am: changed accordingly.
+
+	* app/gegl/gimpoptilesink.[ch]
+	* app/gegl/gimpoptilesource.[ch]: made more gimpish.
+
 2007-12-29  Øyvind Kolås  <pippin@gimp.org>
 
 	Added adapter GEGL operations for reading and writing to TileManagers.

@@ -3,9 +3,12 @@
 noinst_LIBRARIES = libappgegl.a
 
 libappgegl_a_SOURCES = \
+	gimp-gegl.c		\
+	gimp-gegl.h		\
 	gimpoptilesink.c	\
+	gimpoptilesink.h	\
 	gimpoptilesource.c	\
-	gimpops.c
+	gimpoptilesource.h
 
 INCLUDES = \
 	-I.			\

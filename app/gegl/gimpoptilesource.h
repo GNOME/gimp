@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpops.c
+ * gimpoperationtilesource.h
  * Copyright (C) 2007 Øyvind Kolås <pippin@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,39 +19,35 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef _GIMP_OPERATION_TILE_SOURCE_H
-#define _GIMP_OPERATION_TILE_SOURCE_H
+#ifndef __GIMP_OPERATION_TILE_SOURCE_H__
+#define __GIMP_OPERATION_TILE_SOURCE_H__
 
-#include <glib-object.h>
-#include "gegl/gegl-types.h"
+
 #include "gegl/gegl-operation-source.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
 
 #define GIMP_TYPE_OPERATION_TILE_SOURCE           (gimp_operation_tile_source_get_type ())
 #define GIMP_OPERATION_TILE_SOURCE(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_TILE_SOURCE, GimpOperationTileSource))
 #define GIMP_OPERATION_TILE_SOURCE_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_TILE_SOURCE, GimpOperationTileSourceClass))
 #define GIMP_OPERATION_TILE_SOURCE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_TILE_SOURCE, GimpOperationTileSourceClass))
 
-typedef struct _GimpOperationTileSource  GimpOperationTileSource;
-struct _GimpOperationTileSource
-{
-   GeglOperationSourceClass operation_source;
-   gpointer                 tile_manager;
-};
 
 typedef struct _GimpOperationTileSourceClass GimpOperationTileSourceClass;
-struct _GimpOperationTileSourceClass
+
+struct _GimpOperationTileSource
 {
-   GeglOperationSourceClass operation_source_class;
+  GeglOperationSource  parent_instance;
+
+  TileManager         *tile_manager;
 };
 
-GType gimp_operation_tile_source_get_type (void) G_GNUC_CONST;
+struct _GimpOperationTileSourceClass
+{
+  GeglOperationSourceClass  parent_class;
+};
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
-#endif
+GType   gimp_operation_tile_source_get_type (void) G_GNUC_CONST;
+
+
+#endif /* __GIMP_OPERATION_TILE_SOURCE_H__ */
