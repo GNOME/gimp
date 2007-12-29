@@ -15,6 +15,7 @@ SUBDIRS = \
 	base 		\
 	config		\
 	core		\
+	gegl		\
 	paint		\
 	text		\
 	vectors		\
@@ -98,6 +99,7 @@ gimp_2_5_LDADD = \
 	gui/libappgui.a			\
 	actions/libappactions.a		\
 	dialogs/libappdialogs.a		\
+	gegl/libappgegl.a		\
 	menus/libappmenus.a		\
 	display/libappdisplay.a		\
 	tools/libapptools.a		\
@@ -147,6 +149,7 @@ gimp_console_2_5_LDADD = \
 	widgets/widgets-enums.o		\
 	display/display-enums.o		\
 	display/gimpdisplayoptions.o	\
+	gegl/libappgegl.a		\
 	pdb/libappinternal-procs.a	\
 	xcf/libappxcf.a			\
 	file/libappfile.a		\

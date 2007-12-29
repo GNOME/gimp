@@ -1,6 +1,22 @@
+2007-12-29  Øyvind Kolås  <pippin@gimp.org>
+
+	Added adapter GEGL operations for reading and writing to TileManagers.
+
+	* configure.in:
+	* app/Makefile.am: added gegl subdir.
+	* app/gegl/Makefile.am: added.
+	* app/gegl/gimpops.c: (gimp_gegl_ops_init):
+	* app/gegl/gimpoptilesink.[ch]: adapter GEGL operation for writing to
+	GIMP tile managers.
+	* app/gegl/gimpoptilesource.[ch]: adapter GEGL operation for reading
+	from GIMP tile managers.
+	* app/main.c: (main): call gimp_gegl_ops_init()
+	* app/gegl/gegl/: added some headers from GEGL that are not installed
+	since they are not public API yet.
+
 2007-12-29  Simon Budig  <simon@gimp.org>
 
-        * app/display/gimpdisplayshell.c: don't use ceil, use SCALEX.
+	* app/display/gimpdisplayshell.c: don't use ceil, use SCALEX.
 	* app/display/gimpdisplayshell-transform.c: Round hopefully more
 	properly.
 

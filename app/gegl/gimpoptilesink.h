@@ -1,0 +1,57 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * gimpops.c
+ * Copyright (C) 2007 Øyvind Kolås <pippin@gimp.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#ifndef _GIMP_OPERATION_TILE_SINK_H
+#define _GIMP_OPERATION_TILE_SINK_H
+
+#include <glib-object.h>
+#include "gegl/gegl-types.h"
+#include "gegl/gegl-operation-sink.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+#define GIMP_TYPE_OPERATION_TILE_SINK           (gimp_operation_tile_sink_get_type ())
+#define GIMP_OPERATION_TILE_SINK(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_TILE_SINK, GimpOperationTileSink))
+#define GIMP_OPERATION_TILE_SINK_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_TILE_SINK, GimpOperationTileSinkClass))
+#define GIMP_OPERATION_TILE_SINK_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_TILE_SINK, GimpOperationTileSinkClass))
+
+typedef struct _GimpOperationTileSink  GimpOperationTileSink;
+struct _GimpOperationTileSink
+{
+   GeglOperationSinkClass operation_sink;
+   gpointer               tile_manager;
+};
+
+typedef struct _GimpOperationTileSinkClass GimpOperationTileSinkClass;
+struct _GimpOperationTileSinkClass
+{
+   GeglOperationSinkClass operation_sink_class;
+};
+
+GType gimp_operation_tile_sink_get_type (void) G_GNUC_CONST;
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif
