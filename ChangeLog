@@ -1,3 +1,9 @@
+2007-12-29  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/gegl/gimpoperationtilesource.c: override the default behaviour
+	of GeglOperationSource to expand the result rect to the full have
+	rect with a NULL (nop) implementation.
+
 2007-12-30  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-invert.[ch]: let gimp_drawable_invert()

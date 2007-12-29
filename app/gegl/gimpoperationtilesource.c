@@ -79,6 +79,11 @@ gimp_operation_tile_source_class_init (GimpOperationTileSourceClass * klass)
   object_class->get_property          = gimp_operation_tile_source_get_property;
 
   operation_class->get_defined_region = gimp_operation_tile_source_get_defined_region;
+  operation_class->adjust_result_region = NULL; /* the default source is
+                                                 expanding to agressivly
+                                                 make use of available caching,
+                                                 this behavior is at least a
+                                                 little unexpected. */
 
   source_class->process               = gimp_operation_tile_source_process;
 
