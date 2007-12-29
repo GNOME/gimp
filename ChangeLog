@@ -1,5 +1,20 @@
 2007-12-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimp-gegl-utils.c: new files containing
+	gimp_bpp_to_babl_format().
+
+	* app/gegl/gimpoptilesink.[ch]
+	* app/gegl/gimpoptilesource.[ch]: renamed..
+
+	* app/gegl/gimpoperationtilesink.[ch]
+	* app/gegl/gimpoperationtilesource.[ch]: ...to these. Cleaned them
+	up quite a bit more.
+
+	* app/gegl/Makefile.am
+	* app/gegl/gimp-gegl.c: changed accordingly.
+
+2007-12-29  Michael Natterer  <mitch@gimp.org>
+
 	Some cleanup...
 
 	* app/Makefile.am: change linking order.

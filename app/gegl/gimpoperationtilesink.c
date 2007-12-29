@@ -34,7 +34,8 @@
 #include "base/tile-manager.h"
 #include "base/pixel-region.h"
 
-#include "gimpoptilesink.h"
+#include "gimp-gegl-utils.h"
+#include "gimpoperationtilesink.h"
 
 
 enum
@@ -44,33 +45,21 @@ enum
 };
 
 
-static void     get_property (GObject       *gobject,
-                              guint          property_id,
-                              GValue        *value,
-                              GParamSpec    *pspec);
+static void     tile_sink_get_property (GObject       *gobject,
+                                        guint          property_id,
+                                        GValue        *value,
+                                        GParamSpec    *pspec);
+static void     tile_sink_set_property (GObject       *gobject,
+                                        guint          property_id,
+                                        const GValue  *value,
+                                        GParamSpec    *pspec);
 
-static void     set_property (GObject       *gobject,
-                              guint          property_id,
-                              const GValue  *value,
-                              GParamSpec    *pspec);
+static gboolean tile_sink_process      (GeglOperation *operation,
+                                        gpointer       context_id);
 
-static gboolean process      (GeglOperation *operation,
-                              gpointer       context_id);
 
-static Babl *bpp_to_format (guint bpp)
-{
-  switch (bpp)
-    {
-      case 1: return babl_format ("Y' u8");
-      case 2: return babl_format ("Y'A u8");
-      case 3: return babl_format ("R'G'B' u8");
-      case 4: return babl_format ("R'G'B'A u8");
-    }
-  g_warning ("bpp !(>0 && <=4)");
-  return NULL;
-}
-
-G_DEFINE_TYPE (GimpOperationTileSink, gimp_operation_tile_sink, GEGL_TYPE_OPERATION_SINK)
+G_DEFINE_TYPE (GimpOperationTileSink, gimp_operation_tile_sink,
+               GEGL_TYPE_OPERATION_SINK)
 
 static void
 gimp_operation_tile_sink_class_init (GimpOperationTileSinkClass * klass)
@@ -79,10 +68,10 @@ gimp_operation_tile_sink_class_init (GimpOperationTileSinkClass * klass)
   GeglOperationClass     *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationSinkClass *sink_class      = GEGL_OPERATION_SINK_CLASS (klass);
 
-  object_class->set_property = set_property;
-  object_class->get_property = get_property;
+  object_class->set_property = tile_sink_set_property;
+  object_class->get_property = tile_sink_get_property;
 
-  sink_class->process        = process;
+  sink_class->process        = tile_sink_process;
 
   gegl_operation_class_set_name (operation_class, "gimp-tilemanager-sink");;
 
@@ -101,10 +90,10 @@ gimp_operation_tile_sink_init (GimpOperationTileSink *self)
 }
 
 static void
-get_property (GObject    *object,
-              guint       property_id,
-              GValue     *value,
-              GParamSpec *pspec)
+tile_sink_get_property (GObject    *object,
+                        guint       property_id,
+                        GValue     *value,
+                        GParamSpec *pspec)
 {
   GimpOperationTileSink *self = GIMP_OPERATION_TILE_SINK (object);
 
@@ -121,10 +110,10 @@ get_property (GObject    *object,
 }
 
 static void
-set_property (GObject      *object,
-              guint         property_id,
-              const GValue *value,
-              GParamSpec   *pspec)
+tile_sink_set_property (GObject      *object,
+                        guint         property_id,
+                        const GValue *value,
+                        GParamSpec   *pspec)
 {
   GimpOperationTileSink *self = GIMP_OPERATION_TILE_SINK (object);
 
@@ -141,18 +130,18 @@ set_property (GObject      *object,
 }
 
 static gboolean
-process (GeglOperation *operation,
-         gpointer       context_id)
+tile_sink_process (GeglOperation *operation,
+                   gpointer       context_id)
 {
   GimpOperationTileSink *self = GIMP_OPERATION_TILE_SINK (operation);
-  GeglBuffer            *input;
-  GeglRectangle         *extent;
 
   if (self->tile_manager)
     {
-      gpointer    pr;
-      PixelRegion destPR;
-      Babl        *format;
+      GeglBuffer    *input;
+      GeglRectangle *extent;
+      gpointer       pr;
+      PixelRegion    destPR;
+      const Babl    *format;
 
       /* is this somethings that should be done already for all sinks? */
       input = GEGL_BUFFER (gegl_operation_get_data (operation, context_id,
@@ -165,7 +154,7 @@ process (GeglOperation *operation,
                          extent->width, extent->height,
                          TRUE);
 
-      format = bpp_to_format (tile_manager_bpp (self->tile_manager));
+      format = gimp_bpp_to_babl_format (tile_manager_bpp (self->tile_manager));
 
       for (pr = pixel_regions_register (1, &destPR);
            pr;

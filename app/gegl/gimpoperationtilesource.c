@@ -34,7 +34,8 @@
 #include "base/tile-manager.h"
 #include "base/pixel-region.h"
 
-#include "gimpoptilesource.h"
+#include "gimp-gegl-utils.h"
+#include "gimpoperationtilesource.h"
 
 
 enum
@@ -44,19 +45,19 @@ enum
 };
 
 
-static void     get_property (GObject       *gobject,
-                              guint          property_id,
-                              GValue        *value,
-                              GParamSpec    *pspec);
-static void     set_property (GObject       *gobject,
-                              guint          property_id,
-                              const GValue  *value,
-                              GParamSpec    *pspec);
+static void          tile_source_get_property       (GObject       *gobject,
+                                                     guint          property_id,
+                                                     GValue        *value,
+                                                     GParamSpec    *pspec);
+static void          tile_source_set_property       (GObject       *gobject,
+                                                     guint          property_id,
+                                                     const GValue  *value,
+                                                     GParamSpec    *pspec);
 
-static gboolean process      (GeglOperation *operation,
-                              gpointer       context_id);
+static GeglRectangle tile_source_get_defined_region (GeglOperation *operation);
 
-static GeglRectangle get_defined_region (GeglOperation *operation);
+static gboolean      tile_source_process            (GeglOperation *operation,
+                                                     gpointer       context_id);
 
 
 G_DEFINE_TYPE (GimpOperationTileSource, gimp_operation_tile_source,
@@ -70,12 +71,12 @@ gimp_operation_tile_source_class_init (GimpOperationTileSourceClass * klass)
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationSourceClass *source_class    = GEGL_OPERATION_SOURCE_CLASS (klass);
 
-  object_class->set_property          = set_property;
-  object_class->get_property          = get_property;
+  object_class->set_property          = tile_source_set_property;
+  object_class->get_property          = tile_source_get_property;
 
-  operation_class->get_defined_region = get_defined_region;
+  operation_class->get_defined_region = tile_source_get_defined_region;
 
-  source_class->process               = process;
+  source_class->process               = tile_source_process;
 
   gegl_operation_class_set_name (operation_class, "gimp-tilemanager-source");;
 
@@ -95,10 +96,10 @@ gimp_operation_tile_source_init (GimpOperationTileSource *self)
 }
 
 static void
-get_property (GObject    *object,
-              guint       property_id,
-              GValue     *value,
-              GParamSpec *pspec)
+tile_source_get_property (GObject    *object,
+                          guint       property_id,
+                          GValue     *value,
+                          GParamSpec *pspec)
 {
   GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (object);
 
@@ -109,15 +110,16 @@ get_property (GObject    *object,
       break;
 
     default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
 
 static void
-set_property (GObject      *object,
-              guint         property_id,
-              const GValue *value,
-              GParamSpec   *pspec)
+tile_source_set_property (GObject      *object,
+                          guint         property_id,
+                          const GValue *value,
+                          GParamSpec   *pspec)
 {
   GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (object);
 
@@ -128,44 +130,45 @@ set_property (GObject      *object,
       break;
 
     default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
 
-static Babl *
-bpp_to_format (guint bpp)
+static GeglRectangle
+tile_source_get_defined_region (GeglOperation *operation)
 {
-  switch (bpp)
-    {
-    case 1: return babl_format ("Y' u8");
-    case 2: return babl_format ("Y'A u8");
-    case 3: return babl_format ("R'G'B' u8");
-    case 4: return babl_format ("R'G'B'A u8");
-    }
-
-  g_warning ("bpp !(>0 && <=4)");
-
-  return NULL;
-}
-
-static gboolean
-process (GeglOperation *operation,
-         gpointer       context_id)
-{
-  GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (operation);
-  GeglBuffer              *output;
-  Babl                    *format;
+  GimpOperationTileSource *self   = GIMP_OPERATION_TILE_SOURCE (operation);
+  GeglRectangle            result = { 0, };
 
   if (self->tile_manager)
     {
-      PixelRegion   srcPR;
-      gpointer      pr;
-      GeglRectangle extent = { 0, 0,
-                               tile_manager_width (self->tile_manager),
-                               tile_manager_height (self->tile_manager) };
+      result.x      = 0;
+      result.y      = 0;
+      result.width  = tile_manager_width (self->tile_manager);
+      result.height = tile_manager_height (self->tile_manager);
+    }
 
-      format = bpp_to_format (tile_manager_bpp (self->tile_manager));
+  return result;
+}
 
+static gboolean
+tile_source_process (GeglOperation *operation,
+                     gpointer       context_id)
+{
+  GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (operation);
+
+  if (self->tile_manager)
+    {
+      GeglBuffer    *output;
+      const Babl    *format;
+      PixelRegion    srcPR;
+      gpointer       pr;
+      GeglRectangle  extent = { 0, 0,
+                                tile_manager_width  (self->tile_manager),
+                                tile_manager_height (self->tile_manager) };
+
+      format = gimp_bpp_to_babl_format (tile_manager_bpp (self->tile_manager));
 
       output = gegl_buffer_new (&extent, format);
 
@@ -188,21 +191,4 @@ process (GeglOperation *operation,
     }
 
   return TRUE;
-}
-
-static GeglRectangle
-get_defined_region (GeglOperation *operation)
-{
-  GimpOperationTileSource *self   = GIMP_OPERATION_TILE_SOURCE (operation);
-  GeglRectangle            result = { 0, };
-
-  if (self->tile_manager)
-    {
-      result.x      = 0;
-      result.y      = 0;
-      result.width  = tile_manager_width (self->tile_manager);
-      result.height = tile_manager_height (self->tile_manager);
-    }
-
-  return result;
 }

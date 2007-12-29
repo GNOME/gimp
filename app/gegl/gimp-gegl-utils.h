@@ -1,8 +1,8 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-gegl.c
- * Copyright (C) 2007 Øyvind Kolås <pippin@gimp.org>
+ * gimp-gegl-utils.h
+ * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,23 +19,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include "config.h"
-
-#include <gegl.h>
-#include <gegl/buffer/gegl-buffer.h>
-
-#include "gegl/gegl-types.h"
-
-#include "gegl-types.h"
-
-#include "gimp-gegl.h"
-#include "gimpoperationtilesink.h"
-#include "gimpoperationtilesource.h"
+#ifndef __GIMP_GEGL_UTILS_H__
+#define __GIMP_GEGL_UTILS_H__
 
 
-void
-gimp_gegl_init (void)
-{
-  g_type_class_ref (GIMP_TYPE_OPERATION_TILE_SINK);
-  g_type_class_ref (GIMP_TYPE_OPERATION_TILE_SOURCE);
-}
+const Babl * gimp_bpp_to_babl_format (guint bpp);
+
+
+#endif /* __GIMP_GEGL_UTILS_H__ */
