@@ -20,13 +20,13 @@
  */
 
 #include "config.h"
+#include <glib-object.h>
 
 #include <string.h>
 
-#include <gegl.h>
+#include "gegl/gegl-types.h"
 #include <gegl/buffer/gegl-buffer.h>
 
-#include "gegl/gegl-types.h"
 
 #include "gegl-types.h"
 

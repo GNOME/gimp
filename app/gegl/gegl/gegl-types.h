@@ -23,6 +23,8 @@
 G_BEGIN_DECLS
 
 typedef struct _GeglConnection       GeglConnection;
+typedef struct _GeglColor            GeglColor;
+typedef struct _GeglCurve            GeglCurve;
 typedef struct _GeglCRVisitor        GeglCRVisitor;
 typedef struct _GeglDebugRectVisitor GeglDebugRectVisitor;
 typedef struct _GeglEvalMgr          GeglEvalMgr;
@@ -31,15 +33,27 @@ typedef struct _GeglFinishVisitor    GeglFinishVisitor;
 typedef struct _GeglGraph            GeglGraph;
 typedef struct _GeglHaveVisitor      GeglHaveVisitor;
 typedef struct _GeglNeedVisitor      GeglNeedVisitor;
+typedef struct _GeglNode             GeglNode;
 typedef struct _GeglNodeDynamic      GeglNodeDynamic;
 typedef struct _GeglOperation        GeglOperation;
 typedef struct _GeglPad              GeglPad;
+typedef struct _GeglVector             GeglVector;
+typedef struct _GeglProcessor        GeglProcessor;
 typedef struct _GeglPrepareVisitor   GeglPrepareVisitor;
 typedef struct _GeglVisitable        GeglVisitable; /* dummy typedef */
 typedef struct _GeglVisitor          GeglVisitor;
 
+typedef struct _GeglRectangle        GeglRectangle;
 typedef struct _GeglPoint            GeglPoint;
 typedef struct _GeglDimension        GeglDimension;
+
+struct _GeglRectangle
+{
+  gint x;
+  gint y;
+  gint width;
+  gint height;
+};
 
 struct _GeglPoint
 {
