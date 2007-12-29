@@ -202,7 +202,10 @@ gimp_operation_tile_source_process (GeglOperation *operation,
         {
           GeglRectangle rect = { srcPR.x, srcPR.y, srcPR.w, srcPR.h };
 
-          gegl_buffer_set (output, &rect, format, srcPR.data);
+          /* FIXME: need to use the correct size instead of the full extent
+           */
+          gegl_buffer_set (output, &rect, format, srcPR.data,
+                           GEGL_AUTO_ROWSTRIDE);
         }
 
       gegl_operation_set_data (operation, context_id,

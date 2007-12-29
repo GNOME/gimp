@@ -1,3 +1,12 @@
+2007-12-29  Øyvind Kolås  <pippin@gimp.org>
+
+	* configure.in: depend on GEGL 0.0.15 (version ends in odd, thus
+	depending on svn trunk of GEGL).
+
+	* app/gegl/gimpoperationtilesource.c:
+	(gimp_operation_tile_source_process): just use GEGL_AUTO_ROWSTRIDE for
+	the rowstride in gegl_buffer_set for now.
+
 2007-12-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpbrightnesscontrasttool.c
