@@ -1,3 +1,9 @@
+2007-12-30  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/core/Makefile.am: added GEGL_CFLAGS.
+	* app/core/gimpdrawable-invert.c: added an alternate GEGL code path
+	that can be enabled by uncommenting ENABLE_GEGL in the file.
+
 2007-12-30  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpmodule.c
@@ -15,6 +21,14 @@
 	* plug-ins/pygimp/gimpmodule.c
 	* plug-ins/pygimp/pygimp.h
 	* plug-ins/pygimp/pygimp-tile.c: Basic wrapping of GimpPixelFetcher.
+
+2007-12-30  Øyvind Kolås  <pippin@gimp.org>
+
+	reviewed by: <delete if not using a buddy>
+
+	* app/core/Makefile.am:
+	* app/core/gimpdrawable-invert.c: (idle_fun),
+	(gimp_drawable_invert):
 
 2007-12-30  Øyvind Kolås  <pippin@gimp.org>
 

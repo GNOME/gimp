@@ -13,6 +13,7 @@ INCLUDES = \
 	$(LIBART_CFLAGS)	\
 	$(GEGL_CFLAGS)		\
 	$(GLIB_CFLAGS)		\
+	$(GEGL_CFLAGS)		\
 	-I$(includedir)
 
 noinst_LIBRARIES = libappcore.a
