@@ -1,3 +1,8 @@
+2007-12-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/chip-away.scm: applied another patch
+	from Ulf-D. Ehlert for the parameter range (bug #506110).
+
 2007-12-29  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/gegl/gimpoperationtilesource.c: override the default behaviour

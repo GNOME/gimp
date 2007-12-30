@@ -193,7 +193,7 @@
   SF-STRING     _"Text"                 "Sloth"
   SF-FONT       _"Font"                 "RoostHeavy"
   SF-ADJUSTMENT _"Font size (pixels)"   '(200 2 1000 1 10 0 1)
-  SF-ADJUSTMENT _"Chip amount"          '(30 0 250 1 10 0 1)
+  SF-ADJUSTMENT _"Chip amount"          '(30 0 200 1 10 0 1)
   SF-ADJUSTMENT _"Blur amount"          '(3 1 100 1 10 1 0)
   SF-TOGGLE     _"Invert"               FALSE
   SF-TOGGLE     _"Drop shadow"          TRUE
