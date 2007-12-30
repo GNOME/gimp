@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -69,6 +70,8 @@ static void   gimp_brightness_contrast_tool_motion         (GimpTool            
                                                             GdkModifierType        state,
                                                             GimpDisplay           *display);
 
+static GeglNode *
+              gimp_brightness_contrast_tool_get_operation  (GimpImageMapTool      *image_map_tool);
 static void   gimp_brightness_contrast_tool_map            (GimpImageMapTool      *image_map_tool);
 static void   gimp_brightness_contrast_tool_dialog         (GimpImageMapTool      *image_map_tool);
 static void   gimp_brightness_contrast_tool_reset          (GimpImageMapTool      *image_map_tool);
@@ -109,18 +112,19 @@ gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  object_class->finalize     = gimp_brightness_contrast_tool_finalize;
+  object_class->finalize       = gimp_brightness_contrast_tool_finalize;
 
-  tool_class->initialize     = gimp_brightness_contrast_tool_initialize;
-  tool_class->button_press   = gimp_brightness_contrast_tool_button_press;
-  tool_class->button_release = gimp_brightness_contrast_tool_button_release;
-  tool_class->motion         = gimp_brightness_contrast_tool_motion;
+  tool_class->initialize       = gimp_brightness_contrast_tool_initialize;
+  tool_class->button_press     = gimp_brightness_contrast_tool_button_press;
+  tool_class->button_release   = gimp_brightness_contrast_tool_button_release;
+  tool_class->motion           = gimp_brightness_contrast_tool_motion;
 
-  im_tool_class->shell_desc  = _("Adjust Brightness and Contrast");
+  im_tool_class->shell_desc    = _("Adjust Brightness and Contrast");
 
-  im_tool_class->map         = gimp_brightness_contrast_tool_map;
-  im_tool_class->dialog      = gimp_brightness_contrast_tool_dialog;
-  im_tool_class->reset       = gimp_brightness_contrast_tool_reset;
+  im_tool_class->get_operation = gimp_brightness_contrast_tool_get_operation;
+  im_tool_class->map           = gimp_brightness_contrast_tool_map;
+  im_tool_class->dialog        = gimp_brightness_contrast_tool_dialog;
+  im_tool_class->reset         = gimp_brightness_contrast_tool_reset;
 }
 
 static void
@@ -135,6 +139,12 @@ static void
 gimp_brightness_contrast_tool_finalize (GObject *object)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (object);
+
+  if (bc_tool->bc_node)
+    {
+      g_object_unref (bc_tool->bc_node);
+      bc_tool->bc_node = NULL;
+    }
 
   if (bc_tool->lut)
     {
@@ -175,10 +185,41 @@ gimp_brightness_contrast_tool_initialize (GimpTool     *tool,
   return TRUE;
 }
 
+static GeglNode *
+gimp_brightness_contrast_tool_get_operation (GimpImageMapTool *im_tool)
+{
+  GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (im_tool);
+
+  if (! bc_tool->bc_node)
+    {
+      bc_tool->bc_node = g_object_new (GEGL_TYPE_NODE,
+                                       "operation", "brightness-contrast",
+                                       NULL);
+    }
+
+  return bc_tool->bc_node;
+}
+
 static void
 gimp_brightness_contrast_tool_map (GimpImageMapTool *im_tool)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (im_tool);
+
+  if (bc_tool->bc_node)
+    {
+      gdouble brightness;
+      gdouble contrast;
+
+      brightness = bc_tool->brightness / 127.0;
+      contrast   = (bc_tool->contrast < 0 ?
+                    (bc_tool->contrast + 127.0) / 127.0 :
+                    bc_tool->contrast * 4.0 / 127.0 + 1);
+
+      gegl_node_set (bc_tool->bc_node,
+                     "brightness", brightness,
+                     "contrast",   contrast,
+                     NULL);
+    }
 
   brightness_contrast_lut_setup (bc_tool->lut,
                                  bc_tool->brightness / 255.0,

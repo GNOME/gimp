@@ -1,3 +1,25 @@
+2007-12-30  Michael Natterer  <mitch@gimp.org>
+
+	First actual image processing with GEGL! Wheeeee :-)
+
+	* app/core/gimpimagemap.[ch]: added code to use gegl instead of the
+	old apply_func and apply_data.
+
+	(gimp_image_map_new): add GeglNode parameter that, if passed,
+	switches the whole thing to using a gegl graph with this node
+	as central processing node.
+
+	* app/tools/gimpimagemaptool.[ch]: add virtual function
+	get_operation() which, if implemented, returns a GeglNode to pass
+	to gimp_image_map_new(). Added a "Use GEGL" toggle so we can
+	switch between legacy and gegl code for the migration period.
+
+	* app/tools/gimpbrightnesscontrasttool.[ch]: implement
+	get_operation() and return a brightness-contrast node.
+
+	(gimp_briughtness_contrast_tool_map): set the node's properties
+	from the GUI.
+
 2007-12-30  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpstatusbar.[ch]

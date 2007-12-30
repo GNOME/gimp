@@ -44,6 +44,7 @@ struct _GimpBrightnessContrastTool
   gdouble           brightness;
   gdouble           contrast;
   GimpLut          *lut;
+  GeglNode         *bc_node;
 
   /*  dialog  */
   GtkAdjustment    *brightness_data;

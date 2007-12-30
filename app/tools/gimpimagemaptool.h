@@ -19,6 +19,10 @@
 #ifndef  __GIMP_IMAGE_MAP_TOOL_H__
 #define  __GIMP_IMAGE_MAP_TOOL_H__
 
+#ifdef __GNUC__
+#warning FIXME: dont include gegl.h here
+#endif
+#include <gegl.h>
 
 #include "gimpcolortool.h"
 
@@ -50,6 +54,9 @@ struct _GimpImageMapTool
 
   /* settings file dialog */
   GtkWidget     *settings_dialog;
+
+  /* temp hack */
+  gboolean       use_gegl;
 };
 
 struct _GimpImageMapToolClass
@@ -64,15 +71,16 @@ struct _GimpImageMapToolClass
   const gchar        *save_dialog_title;
 
   /* virtual functions */
-  void     (* map)           (GimpImageMapTool  *image_map_tool);
-  void     (* dialog)        (GimpImageMapTool  *image_map_tool);
-  void     (* reset)         (GimpImageMapTool  *image_map_tool);
+  GeglNode * (* get_operation) (GimpImageMapTool  *image_map_tool);
+  void       (* map)           (GimpImageMapTool  *image_map_tool);
+  void       (* dialog)        (GimpImageMapTool  *image_map_tool);
+  void       (* reset)         (GimpImageMapTool  *image_map_tool);
 
-  gboolean (* settings_load) (GimpImageMapTool  *image_map_tool,
-                              gpointer           file,
-                              GError           **error);
-  gboolean (* settings_save) (GimpImageMapTool  *image_map_tool,
-                              gpointer           file);
+  gboolean   (* settings_load) (GimpImageMapTool  *image_map_tool,
+                                gpointer           file,
+                                GError           **error);
+  gboolean   (* settings_save) (GimpImageMapTool  *image_map_tool,
+                                gpointer           file);
 };
 
 

@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <glib-object.h>
+#include <gegl.h>
 
 #include "core-types.h"
 
@@ -53,30 +54,42 @@ struct _GimpImageMap
   TileManager           *undo_tiles;
   gint                   undo_offset_x;
   gint                   undo_offset_y;
+
   GimpImageMapApplyFunc  apply_func;
-  gpointer               user_data;
+  gpointer               apply_data;
   PixelRegion            srcPR;
   PixelRegion            destPR;
   PixelRegionIterator   *PRI;
+
+  GeglNode              *gegl;
+  GeglNode              *input;
+  GeglNode              *shift;
+  GeglNode              *operation;
+  GeglNode              *output;
+  GeglProcessor         *processor;
+
   guint                  idle_id;
 };
 
 
 static void   gimp_image_map_pickable_iface_init (GimpPickableInterface *iface);
 
-static void            gimp_image_map_dispose        (GObject      *object);
-static void            gimp_image_map_finalize       (GObject      *object);
+static void            gimp_image_map_dispose        (GObject             *object);
+static void            gimp_image_map_finalize       (GObject             *object);
 
-static GimpImage     * gimp_image_map_get_image      (GimpPickable *pickable);
-static GimpImageType   gimp_image_map_get_image_type (GimpPickable *pickable);
-static gint            gimp_image_map_get_bytes      (GimpPickable *pickable);
-static TileManager   * gimp_image_map_get_tiles      (GimpPickable *pickable);
-static gboolean        gimp_image_map_get_pixel_at   (GimpPickable *pickable,
-                                                      gint          x,
-                                                      gint          y,
-                                                      guchar       *pixel);
+static GimpImage     * gimp_image_map_get_image      (GimpPickable        *pickable);
+static GimpImageType   gimp_image_map_get_image_type (GimpPickable        *pickable);
+static gint            gimp_image_map_get_bytes      (GimpPickable        *pickable);
+static TileManager   * gimp_image_map_get_tiles      (GimpPickable        *pickable);
+static gboolean        gimp_image_map_get_pixel_at   (GimpPickable        *pickable,
+                                                      gint                 x,
+                                                      gint                 y,
+                                                      guchar              *pixel);
 
-static gboolean        gimp_image_map_do             (GimpImageMap *image_map);
+static gboolean        gimp_image_map_do             (GimpImageMap        *image_map);
+static void            gimp_image_map_data_written   (GObject             *operation,
+                                                      const GeglRectangle *extent,
+                                                      GimpImageMap        *image_map);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpImageMap, gimp_image_map, GIMP_TYPE_OBJECT,
@@ -125,7 +138,7 @@ gimp_image_map_init (GimpImageMap *image_map)
   image_map->undo_offset_x = 0;
   image_map->undo_offset_y = 0;
   image_map->apply_func    = NULL;
-  image_map->user_data     = NULL;
+  image_map->apply_data    = NULL;
   image_map->PRI           = NULL;
   image_map->idle_id       = 0;
 }
@@ -163,8 +176,32 @@ gimp_image_map_finalize (GObject *object)
       g_source_remove (image_map->idle_id);
       image_map->idle_id = 0;
 
-      pixel_regions_process_stop (image_map->PRI);
-      image_map->PRI = NULL;
+      if (image_map->processor)
+        {
+          g_object_unref (image_map->processor);
+          image_map->processor = NULL;
+        }
+
+      if (image_map->PRI)
+        {
+          pixel_regions_process_stop (image_map->PRI);
+          image_map->PRI = NULL;
+        }
+    }
+
+  if (image_map->gegl)
+    {
+      g_object_unref (image_map->gegl);
+      image_map->gegl = NULL;
+      image_map->input = NULL;
+      image_map->shift = NULL;
+      image_map->output = NULL;
+    }
+
+  if (image_map->operation)
+    {
+      g_object_unref (image_map->operation);
+      image_map->operation = NULL;
     }
 
   if (image_map->drawable)
@@ -254,17 +291,22 @@ gimp_image_map_get_pixel_at (GimpPickable *pickable,
 
 GimpImageMap *
 gimp_image_map_new (GimpDrawable *drawable,
-                    const gchar  *undo_desc)
+                    const gchar  *undo_desc,
+                    GeglNode     *operation)
 {
   GimpImageMap *image_map;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (operation == NULL || GEGL_IS_NODE (operation), NULL);
 
   image_map = g_object_new (GIMP_TYPE_IMAGE_MAP, NULL);
 
   image_map->drawable  = g_object_ref (drawable);
   image_map->undo_desc = g_strdup (undo_desc);
+
+  if (operation)
+    image_map->operation = g_object_ref (operation);
 
   gimp_viewable_preview_freeze (GIMP_VIEWABLE (drawable));
 
@@ -285,7 +327,7 @@ gimp_image_map_apply (GimpImageMap          *image_map,
   g_return_if_fail (apply_func != NULL);
 
   image_map->apply_func = apply_func;
-  image_map->user_data  = apply_data;
+  image_map->apply_data = apply_data;
 
   /*  If we're still working, remove the timer  */
   if (image_map->idle_id)
@@ -293,8 +335,17 @@ gimp_image_map_apply (GimpImageMap          *image_map,
       g_source_remove (image_map->idle_id);
       image_map->idle_id = 0;
 
-      pixel_regions_process_stop (image_map->PRI);
-      image_map->PRI = NULL;
+      if (image_map->processor)
+        {
+          g_object_unref (image_map->processor);
+          image_map->processor = NULL;
+        }
+
+      if (image_map->PRI)
+        {
+          pixel_regions_process_stop (image_map->PRI);
+          image_map->PRI = NULL;
+        }
     }
 
   /*  Make sure the drawable is still valid  */
@@ -359,19 +410,91 @@ gimp_image_map_apply (GimpImageMap          *image_map,
       image_map->undo_offset_y = y;
     }
 
-  /*  Configure the src from the drawable data  */
-  pixel_region_init (&image_map->srcPR, image_map->undo_tiles,
-                     0, 0, width, height, FALSE);
+  if (image_map->operation)
+    {
+      GeglRectangle rect;
 
-  /*  Configure the dest as the shadow buffer  */
-  pixel_region_init (&image_map->destPR,
+      if (! image_map->gegl)
+        {
+          GObject  *sink_operation;
+
+          image_map->gegl = gegl_node_new ();
+
+          image_map->input =
+            gegl_node_new_child (image_map->gegl,
+                                 "operation", "gimp-tilemanager-source",
+                                 NULL);
+
+          image_map->shift =
+            gegl_node_new_child (image_map->gegl,
+                                 "operation", "shift",
+                                 NULL);
+
+#ifdef __GNUC__
+#warning FIXME: gegl_node_add_child() needs to be public
+#endif
+          gegl_node_add_child (image_map->gegl, image_map->operation);
+
+          image_map->output =
+            gegl_node_new_child (image_map->gegl,
+                                 "operation", "gimp-tilemanager-sink",
+                                 NULL);
+
+          g_object_get (image_map->output,
+                        "gegl-operation", &sink_operation,
+                        NULL);
+
+          g_signal_connect (sink_operation, "data-written",
+                            G_CALLBACK (gimp_image_map_data_written),
+                            image_map);
+
+          g_object_unref (sink_operation);
+
+          gegl_node_link_many (image_map->input,
+                               image_map->shift,
+                               image_map->operation,
+                               image_map->output,
+                               NULL);
+        }
+
+      gegl_node_set (image_map->input,
+                     "tile-manager", image_map->undo_tiles,
+                     NULL);
+
+      gegl_node_set (image_map->shift,
+                     "x", (gdouble) x,
+                     "y", (gdouble) y,
+                     NULL);
+
+      gegl_node_set (image_map->output,
+                     "tile-manager",
                      gimp_drawable_get_shadow_tiles (image_map->drawable),
-                     x, y, width, height, TRUE);
+                     NULL);
 
-  /*  Apply the image transformation to the pixels  */
-  image_map->PRI = pixel_regions_register (2,
-                                           &image_map->srcPR,
-                                           &image_map->destPR);
+      rect.x      = x;
+      rect.y      = y;
+      rect.width  = width;
+      rect.height = height;
+
+      image_map->processor = gegl_node_new_processor (image_map->output,
+                                                      &rect);
+    }
+  else
+    {
+      /*  Configure the src from the drawable data  */
+      pixel_region_init (&image_map->srcPR, image_map->undo_tiles,
+                         0, 0, width, height, FALSE);
+
+      /*  Configure the dest as the shadow buffer  */
+      pixel_region_init (&image_map->destPR,
+                         gimp_drawable_get_shadow_tiles (image_map->drawable),
+                         x, y, width, height, TRUE);
+
+      /*  Apply the image transformation to the pixels  */
+      image_map->PRI = pixel_regions_register (2,
+                                               &image_map->srcPR,
+                                               &image_map->destPR);
+    }
 
   /*  Start the intermittant work procedure  */
   image_map->idle_id = g_idle_add ((GSourceFunc) gimp_image_map_do, image_map);
@@ -425,8 +548,17 @@ gimp_image_map_clear (GimpImageMap *image_map)
       g_source_remove (image_map->idle_id);
       image_map->idle_id = 0;
 
-      pixel_regions_process_stop (image_map->PRI);
-      image_map->PRI = NULL;
+      if (image_map->processor)
+        {
+          g_object_unref (image_map->processor);
+          image_map->processor = NULL;
+        }
+
+      if (image_map->PRI)
+        {
+          pixel_regions_process_stop (image_map->PRI);
+          image_map->PRI = NULL;
+        }
     }
 
   /*  Make sure the drawable is still valid  */
@@ -485,7 +617,6 @@ static gboolean
 gimp_image_map_do (GimpImageMap *image_map)
 {
   GimpImage *image;
-  gint       i;
 
   if (! gimp_item_is_attached (GIMP_ITEM (image_map->drawable)))
     {
@@ -496,49 +627,15 @@ gimp_image_map_do (GimpImageMap *image_map)
 
   image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
 
-  /*  Process up to 16 tiles in one go. This reduces the overhead
-   *  caused by updating the display while the imagemap is being
-   *  applied and gives us a tiny speedup.
-   */
-  for (i = 0; i < 16; i++)
+  if (image_map->gegl)
     {
-      PixelRegion  srcPR;
-      PixelRegion  destPR;
-      gint         x, y, w, h;
+      gboolean result = gegl_processor_work (image_map->processor, NULL);
 
-      x = image_map->destPR.x;
-      y = image_map->destPR.y;
-      w = image_map->destPR.w;
-      h = image_map->destPR.h;
-
-      /* Reset to initial drawable conditions. */
-      pixel_region_init (&srcPR, image_map->undo_tiles,
-                         x - image_map->undo_offset_x,
-                         y - image_map->undo_offset_y,
-                         w, h, FALSE);
-      pixel_region_init (&destPR, gimp_drawable_get_tiles (image_map->drawable),
-                         x, y, w, h, TRUE);
-      copy_region (&srcPR, &destPR);
-
-      image_map->apply_func (image_map->user_data,
-                             &image_map->srcPR,
-                             &image_map->destPR);
-
-
-      pixel_region_init (&srcPR, image->shadow, x, y, w, h, FALSE);
-
-      gimp_drawable_apply_region (image_map->drawable, &srcPR,
-                                  FALSE, NULL,
-                                  GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
-                                  NULL,
-                                  x, y);
-
-      gimp_drawable_update (image_map->drawable, x, y, w, h);
-
-      image_map->PRI = pixel_regions_process (image_map->PRI);
-
-      if (image_map->PRI == NULL)
+      if (! result)
         {
+          g_object_unref (image_map->processor);
+          image_map->processor = NULL;
+
           image_map->idle_id = 0;
 
           g_signal_emit (image_map, image_map_signals[FLUSH], 0);
@@ -546,8 +643,110 @@ gimp_image_map_do (GimpImageMap *image_map)
           return FALSE;
         }
     }
+  else
+    {
+      gint i;
+
+      /*  Process up to 16 tiles in one go. This reduces the overhead
+       *  caused by updating the display while the imagemap is being
+       *  applied and gives us a tiny speedup.
+       */
+      for (i = 0; i < 16; i++)
+        {
+          PixelRegion  srcPR;
+          PixelRegion  destPR;
+          gint         x, y, w, h;
+
+          x = image_map->destPR.x;
+          y = image_map->destPR.y;
+          w = image_map->destPR.w;
+          h = image_map->destPR.h;
+
+          /* Reset to initial drawable conditions. */
+          pixel_region_init (&srcPR, image_map->undo_tiles,
+                             x - image_map->undo_offset_x,
+                             y - image_map->undo_offset_y,
+                             w, h, FALSE);
+          pixel_region_init (&destPR,
+                             gimp_drawable_get_tiles (image_map->drawable),
+                             x, y, w, h, TRUE);
+          copy_region (&srcPR, &destPR);
+
+          image_map->apply_func (image_map->apply_data,
+                                 &image_map->srcPR,
+                                 &image_map->destPR);
+
+
+          pixel_region_init (&srcPR, image->shadow, x, y, w, h, FALSE);
+
+          gimp_drawable_apply_region (image_map->drawable, &srcPR,
+                                      FALSE, NULL,
+                                      GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
+                                      NULL,
+                                      x, y);
+
+          gimp_drawable_update (image_map->drawable, x, y, w, h);
+
+          image_map->PRI = pixel_regions_process (image_map->PRI);
+
+          if (image_map->PRI == NULL)
+            {
+              image_map->idle_id = 0;
+
+              g_signal_emit (image_map, image_map_signals[FLUSH], 0);
+
+              return FALSE;
+            }
+        }
+    }
 
   g_signal_emit (image_map, image_map_signals[FLUSH], 0);
 
   return TRUE;
+}
+
+static void
+gimp_image_map_data_written (GObject             *operation,
+                             const GeglRectangle *extent,
+                             GimpImageMap        *image_map)
+{
+  GimpImage   *image;
+  PixelRegion  srcPR;
+  PixelRegion  destPR;
+
+#if 0
+  g_print ("%s: rect = { %d, %d, %d, %d }\n",
+           G_STRFUNC, extent->x, extent->y, extent->width, extent->height);
+#endif
+
+  image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
+
+  /* Reset to initial drawable conditions. */
+  pixel_region_init (&srcPR, image_map->undo_tiles,
+                     extent->x - image_map->undo_offset_x,
+                     extent->y - image_map->undo_offset_y,
+                     extent->width,
+                     extent->height,
+                     FALSE);
+  pixel_region_init (&destPR, gimp_drawable_get_tiles (image_map->drawable),
+                     extent->x, extent->y,
+                     extent->width, extent->height,
+                     TRUE);
+  copy_region (&srcPR, &destPR);
+
+  /* Apply the result of the gegl graph. */
+  pixel_region_init (&srcPR, image->shadow,
+                     extent->x, extent->y,
+                     extent->width, extent->height,
+                     FALSE);
+
+  gimp_drawable_apply_region (image_map->drawable, &srcPR,
+                              FALSE, NULL,
+                              GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
+                              NULL,
+                              extent->x, extent->y);
+
+  gimp_drawable_update (image_map->drawable,
+                        extent->x, extent->y,
+                        extent->width, extent->height);
 }

@@ -21,6 +21,7 @@
 #include <errno.h>
 
 #include <glib/gstdio.h>
+#include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -77,6 +78,8 @@ static void     gimp_image_map_tool_map        (GimpImageMapTool *im_tool);
 static void     gimp_image_map_tool_dialog     (GimpImageMapTool *im_tool);
 static void     gimp_image_map_tool_reset      (GimpImageMapTool *im_tool);
 
+static void     gimp_image_map_tool_create_map (GimpImageMapTool *im_tool);
+
 static void     gimp_image_map_tool_flush      (GimpImageMap     *image_map,
                                                 GimpImageMapTool *im_tool);
 
@@ -100,6 +103,8 @@ static void     gimp_image_map_tool_settings_dialog  (GimpImageMapTool *im_tool,
                                                       gboolean          save);
 static void     gimp_image_map_tool_notify_preview   (GObject          *config,
                                                       GParamSpec       *pspec,
+                                                      GimpImageMapTool *im_tool);
+static void     gimp_image_map_tool_gegl_toggled     (GtkWidget        *toggle,
                                                       GimpImageMapTool *im_tool);
 
 
@@ -240,6 +245,23 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
                                G_CALLBACK (gimp_image_map_tool_notify_preview),
                                image_map_tool, 0);
 
+      if (GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool)->get_operation)
+        {
+          image_map_tool->use_gegl = TRUE;
+
+          toggle = gtk_check_button_new_with_label ("Use GEGL");
+          gtk_box_pack_end (GTK_BOX (image_map_tool->main_vbox), toggle,
+                            FALSE, FALSE, 0);
+          gtk_widget_show (toggle);
+
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                        image_map_tool->use_gegl);
+
+          g_signal_connect (toggle, "toggled",
+                            G_CALLBACK (gimp_image_map_tool_gegl_toggled),
+                            image_map_tool);
+        }
+
       if (klass->load_dialog_title)
         {
           image_map_tool->load_button =
@@ -313,11 +335,8 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
   gtk_widget_show (image_map_tool->shell);
 
   image_map_tool->drawable  = drawable;
-  image_map_tool->image_map = gimp_image_map_new (drawable, tool_info->blurb);
 
-  g_signal_connect (image_map_tool->image_map, "flush",
-                    G_CALLBACK (gimp_image_map_tool_flush),
-                    image_map_tool);
+  gimp_image_map_tool_create_map (image_map_tool);
 
   return TRUE;
 }
@@ -414,6 +433,29 @@ static void
 gimp_image_map_tool_reset (GimpImageMapTool *tool)
 {
   GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->reset (tool);
+}
+
+static void
+gimp_image_map_tool_create_map (GimpImageMapTool *tool)
+{
+  GeglNode *operation = NULL;
+
+  if (tool->image_map)
+    {
+      gimp_image_map_clear (tool->image_map);
+      g_object_unref (tool->image_map);
+    }
+
+  if (tool->use_gegl)
+    operation = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->get_operation (tool);
+
+  tool->image_map = gimp_image_map_new (tool->drawable,
+                                        GIMP_TOOL (tool)->tool_info->blurb,
+                                        operation);
+
+  g_signal_connect (tool->image_map, "flush",
+                    G_CALLBACK (gimp_image_map_tool_flush),
+                    tool);
 }
 
 static gboolean
@@ -795,4 +837,19 @@ gimp_image_map_tool_settings_dialog (GimpImageMapTool *tool,
                      GIMP_TOOL (tool)->tool_info->help_id, NULL);
 
   gtk_widget_show (tool->settings_dialog);
+}
+
+static void
+gimp_image_map_tool_gegl_toggled (GtkWidget        *toggle,
+                                  GimpImageMapTool *im_tool)
+{
+  im_tool->use_gegl = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
+
+  gimp_tool_control_set_preserve (GIMP_TOOL (im_tool)->control, TRUE);
+
+  gimp_image_map_tool_create_map (im_tool);
+
+  gimp_tool_control_set_preserve (GIMP_TOOL (im_tool)->control, FALSE);
+
+  gimp_image_map_tool_preview (im_tool);
 }
