@@ -1,3 +1,21 @@
+2007-12-30  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpmodule.c
+	* plug-ins/pygimp/pygimp-pdb.c
+	* plug-ins/pygimp/pygimp-colors.c
+	* plug-ins/pygimp/pygimpcolor-api.h
+	* plug-ins/pygimp/pygimpcolor.h: Move pygimp_rgb_from_pyobject into
+	the gimpcolor module, and make it handle translation of sequences
+	into colors too. Make the GimpParam translation code use it.
+
+	* plug-ins/pygimp/gimpcolormodule.c: Initial wrapping of
+	gimp_bilinear color functions.
+
+	* plug-ins/pygimp/gimpenumsmodule.c
+	* plug-ins/pygimp/gimpmodule.c
+	* plug-ins/pygimp/pygimp.h
+	* plug-ins/pygimp/pygimp-tile.c: Basic wrapping of GimpPixelFetcher.
+
 2007-12-30  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/gegl/gimpoperationtilesink.c: specify that this operation does

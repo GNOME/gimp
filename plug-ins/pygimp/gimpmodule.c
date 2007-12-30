@@ -830,30 +830,6 @@ pygimp_get_foreground(PyObject *self)
     return pygimp_rgb_new(&rgb);
 }
 
-static gboolean
-pygimp_rgb_from_pyobject(PyObject *object, GimpRGB *color)
-{
-    g_return_val_if_fail(color != NULL, FALSE);
-
-    if (pygimp_rgb_check (object)) {
-        *color = *pyg_boxed_get(object, GimpRGB);
-        return TRUE;
-    }
-    if (PyString_Check (object)) {
-        if (gimp_rgb_parse_css (color, PyString_AsString(object), -1)) {
-            return TRUE;
-        } else {
-            PyErr_Clear();
-            PyErr_SetString(PyExc_TypeError, "unable to parse color string");
-            return FALSE;
-        }
-    }
-
-    PyErr_Clear();
-    PyErr_SetString(PyExc_TypeError, "could not convert to GimpRGB");
-    return FALSE;
-}
-
 static PyObject *
 pygimp_set_background(PyObject *self, PyObject *args)
 {
@@ -1895,6 +1871,12 @@ initgimp(void)
     if (PyType_Ready(&PyGimpVectors_Type) < 0)
         return;
 
+    PyGimpPixelFetcher_Type.ob_type = &PyType_Type;
+    PyGimpPixelFetcher_Type.tp_alloc = PyType_GenericAlloc;
+    PyGimpPixelFetcher_Type.tp_new = PyType_GenericNew;
+    if (PyType_Ready(&PyGimpPixelFetcher_Type) < 0)
+        return;
+
     pygimp_init_pygobject();
     init_pygimpcolor();
 
@@ -1948,6 +1930,9 @@ initgimp(void)
 
     Py_INCREF(&PyGimpVectors_Type);
     PyModule_AddObject(m, "Vectors", (PyObject *)&PyGimpVectors_Type);
+
+    Py_INCREF(&PyGimpPixelFetcher_Type);
+    PyModule_AddObject(m, "PixelFetcher", (PyObject *)&PyGimpPixelFetcher_Type);
 
     /* for other modules */
     pygimp_api_functions.pygimp_error = pygimp_error;

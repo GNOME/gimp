@@ -46,6 +46,8 @@ extern PyTypeObject PyGimpCMYK_Type;
 #define pygimp_cmyk_check(v) (pyg_boxed_check((v), GIMP_TYPE_CMYK))
 PyObject *pygimp_cmyk_new(const GimpCMYK *cmyk);
 
+int pygimp_rgb_from_pyobject(PyObject *object, GimpRGB *color);
+
 G_END_DECLS
 
 #endif

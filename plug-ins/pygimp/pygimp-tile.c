@@ -22,6 +22,10 @@
 #endif
 
 #include "pygimp.h"
+
+#define NO_IMPORT_PYGIMPCOLOR
+#include "pygimpcolor-api.h"
+
 #include <structmember.h>
 
 /* maximum bits per pixel ... */
@@ -696,4 +700,209 @@ PyTypeObject PyGimpPixelRgn_Type = {
     (initproc)0,                        /* tp_init */
     (allocfunc)0,			/* tp_alloc */
     (newfunc)0,				/* tp_new */
+};
+
+static PyObject *
+pf_get_pixel(PyGimpPixelFetcher *self, PyObject *args, PyObject *kwargs)
+{
+    int x, y;
+    guchar pixel[4];
+    static char *kwlist[] = { "x", "y", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "ii:get_pixel", kwlist,
+                                      &x, &y))
+        return NULL;
+
+    gimp_pixel_fetcher_get_pixel(self->pf, x, y, pixel);
+
+    return PyString_FromStringAndSize((char *)pixel, self->bpp);
+}
+
+static PyObject *
+pf_put_pixel(PyGimpPixelFetcher *self, PyObject *args, PyObject *kwargs)
+{
+    int x, y, len;
+    guchar *pixel;
+    static char *kwlist[] = { "x", "y", "pixel", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, 
+                                     "iis#:put_pixel", kwlist,
+                                      &x, &y, &pixel, &len))
+        return NULL;
+
+    if (len != self->bpp) {
+	PyErr_Format(PyExc_TypeError, "pixel must be %d bpp", self->bpp);
+        return NULL;
+    }
+
+    gimp_pixel_fetcher_put_pixel(self->pf, x, y, pixel);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyMethodDef pf_methods[] = {
+    {"get_pixel", (PyCFunction)pf_get_pixel, METH_VARARGS | METH_KEYWORDS},
+    {"put_pixel", (PyCFunction)pf_put_pixel, METH_VARARGS | METH_KEYWORDS},
+    {NULL, NULL}
+};
+
+static PyObject *
+pf_get_bg_color(PyGimpPixelFetcher *self, void *closure)
+{
+    return pygimp_rgb_new(&self->bg_color);
+}
+
+static int
+pf_set_bg_color(PyGimpPixelFetcher *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "cannot delete bg_color");
+        return -1;
+    }
+
+    if (!pygimp_rgb_from_pyobject(value, &self->bg_color))
+        return -1;
+
+    gimp_pixel_fetcher_set_bg_color(self->pf, &self->bg_color);
+
+    return 0;
+}
+
+static PyObject *
+pf_get_edge_mode(PyGimpPixelFetcher *self, void *closure)
+{
+    return PyInt_FromLong(self->edge_mode);
+}
+
+static int
+pf_set_edge_mode(PyGimpPixelFetcher *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "cannot delete edge_mode");
+        return -1;
+    }
+
+    if (!PyInt_Check(value)) {
+        PyErr_SetString(PyExc_TypeError, "type mismatch");
+        return -1;
+    }
+
+    self->edge_mode = PyInt_AsLong(value);
+
+    gimp_pixel_fetcher_set_edge_mode(self->pf, self->edge_mode);
+
+    return 0;
+}
+
+static PyGetSetDef pf_getsets[] = {
+    { "bg_color", (getter)pf_get_bg_color, (setter)pf_set_bg_color },
+    { "edge_mode", (getter)pf_get_edge_mode, (setter)pf_set_edge_mode },
+    { NULL, (getter)0, (setter)0 }
+};
+
+static void
+pf_dealloc(PyGimpPixelFetcher *self)
+{
+    gimp_pixel_fetcher_destroy(self->pf);
+
+    Py_DECREF(self->drawable);
+    PyObject_DEL(self);
+}
+
+static PyObject *
+pf_repr(PyGimpPixelFetcher *self)
+{
+    PyObject *s;
+    char *name;
+
+    name = gimp_drawable_get_name(self->drawable->drawable->drawable_id);
+
+    if (self->shadow)
+        s = PyString_FromFormat("<gimp.PixelFetcher for drawable '%s' (shadow)>", name);
+    else
+        s = PyString_FromFormat("<gimp.PixelFetcher for drawable '%s'>", name);
+
+    g_free(name);
+
+    return s;
+}
+
+static int
+pf_init(PyGimpPixelFetcher *self, PyObject *args, PyObject *kwargs)
+{
+    PyGimpDrawable *drw;
+    gboolean shadow = FALSE;
+    GimpRGB bg_color = { 0.0, 0.0, 0.0, 1.0 };
+    GimpPixelFetcherEdgeMode edge_mode = GIMP_PIXEL_FETCHER_EDGE_NONE;
+    static char *kwlist[] = { "drawable", "shadow", "bg_color", "edge_mode",
+	                      NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O!|iO&i:gimp.PixelFetcher.__init__",
+                                     kwlist,
+                                     &PyGimpDrawable_Type, &drw, &shadow,
+                                     pygimp_rgb_from_pyobject, &bg_color,
+                                     &edge_mode))
+        return -1;
+
+    self->pf = gimp_pixel_fetcher_new(drw->drawable, shadow);
+
+    Py_INCREF(drw);
+    self->drawable = drw;
+
+    self->shadow = shadow;
+    self->bg_color = bg_color;
+    self->edge_mode = edge_mode;
+
+    self->bpp = gimp_drawable_bpp(drw->drawable->drawable_id);
+
+    gimp_pixel_fetcher_set_bg_color(self->pf, &bg_color);
+    gimp_pixel_fetcher_set_edge_mode(self->pf, edge_mode);
+
+    return 0;
+}
+
+PyTypeObject PyGimpPixelFetcher_Type = {
+    PyObject_HEAD_INIT(NULL)
+    0,                                  /* ob_size */
+    "gimp.PixelFetcher",                /* tp_name */
+    sizeof(PyGimpPixelFetcher),         /* tp_basicsize */
+    0,                                  /* tp_itemsize */
+    /* methods */
+    (destructor)pf_dealloc,             /* tp_dealloc */
+    (printfunc)0,                       /* tp_print */
+    (getattrfunc)0,                     /* tp_getattr */
+    (setattrfunc)0,                     /* tp_setattr */
+    (cmpfunc)0,                         /* tp_compare */
+    (reprfunc)pf_repr,                  /* tp_repr */
+    0,                                  /* tp_as_number */
+    0,                                  /* tp_as_sequence */
+    0,                                  /* tp_as_mapping */
+    (hashfunc)0,                        /* tp_hash */
+    (ternaryfunc)0,                     /* tp_call */
+    (reprfunc)0,                        /* tp_str */
+    (getattrofunc)0,                    /* tp_getattro */
+    (setattrofunc)0,                    /* tp_setattro */
+    0,                                  /* tp_as_buffer */
+    Py_TPFLAGS_DEFAULT,                 /* tp_flags */
+    NULL, /* Documentation string */
+    (traverseproc)0,                    /* tp_traverse */
+    (inquiry)0,                         /* tp_clear */
+    (richcmpfunc)0,                     /* tp_richcompare */
+    0,                                  /* tp_weaklistoffset */
+    (getiterfunc)0,                     /* tp_iter */
+    (iternextfunc)0,                    /* tp_iternext */
+    pf_methods,                         /* tp_methods */
+    0,                                  /* tp_members */
+    pf_getsets,                         /* tp_getset */
+    (PyTypeObject *)0,                  /* tp_base */
+    (PyObject *)0,                      /* tp_dict */
+    0,                                  /* tp_descr_get */
+    0,                                  /* tp_descr_set */
+    0,                                  /* tp_dictoffset */
+    (initproc)pf_init,                  /* tp_init */
+    (allocfunc)0,                       /* tp_alloc */
+    (newfunc)0,                         /* tp_new */
 };

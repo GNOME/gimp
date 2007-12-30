@@ -148,67 +148,95 @@ cleanup:
     return dict;
 }
 
-#if 0
 static PyObject *
 pygimp_bilinear(PyObject *self, PyObject *args, PyObject *kwargs)
 {
     gdouble x, y;
     gdouble values[4];
+    PyObject *py_values;
     static char *kwlist[] = { "x", "y", "values", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-				     "dd(dddd):bilinear", kwlist,
-				     &x, &y,
-				     &values[0], &values[1],
-				     &values[2], &values[3]))
+				     "ddO:bilinear", kwlist,
+				     &x, &y, &py_values))
   	return NULL;
 
-    return PyFloat_FromDouble(gimp_bilinear(x, y, values));
-}
-
-static PyObject *
-pygimp_bilinear_8(PyObject *self, PyObject *args, PyObject *kwargs)
-{
-    gdouble x, y;
-    char *values;
-    int len;
-    guchar r;
-    static char *kwlist[] = { "x", "y", "values", NULL };
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-				     "dds#:bilinear_8", kwlist,
-				     &x, &y, &values, &len))
-  	return NULL;
-
-    if (len != 4) {
-	PyErr_SetString(PyExc_ValueError,
-			"string must be exactly 4 bytes long");
-	return NULL;
+    if (PyString_Check(py_values)) {
+        if (PyString_Size(py_values) == 4) {
+            guchar ret;
+            ret = gimp_bilinear_8(x, y, (guchar *)PyString_AsString(py_values));
+            return PyString_FromStringAndSize((char *)&ret, 1);
+        }
+    } else if (PySequence_Check(py_values)) {
+        if (PySequence_Size(py_values) == 4) {
+            int i;
+            for (i = 0; i < 4; i++) {
+                PyObject *v;
+                v = PySequence_GetItem(py_values, i);
+                values[i] = PyFloat_AsDouble(v);
+                Py_DECREF(v);
+            }
+            return PyFloat_FromDouble(gimp_bilinear(x, y, values));
+        }
     }
 
-    r = gimp_bilinear_8(x, y, values);
-
-    return PyString_FromStringAndSize(&r, 1);
+    PyErr_SetString(PyExc_TypeError, "values is not a sequence of 4 items");
+    return NULL;
 }
 
 static PyObject *
-pygimp_bilinear_32(PyObject *self, PyObject *args, PyObject *kwargs)
+pygimp_bilinear_color(PyObject *self, PyObject *args, PyObject *kwargs, gboolean with_alpha)
 {
     gdouble x, y;
-    guint32 values[4];
+    GimpRGB values[4];
+    GimpRGB rgb;
+    PyObject *py_values, *v;
+    int i, success;
     static char *kwlist[] = { "x", "y", "values", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-				     "dd(IIII):bilinear_32",
-				     kwlist,
-				     &x, &y,
-				     &values[0], &values[1],
-				     &values[2], &values[3]))
-  	return NULL;
+                                     with_alpha ? "ddO:bilinear_rgba"
+                                               : "ddO:bilinear_rgb",
+                                     kwlist,
+                                     &x, &y, &py_values))
+        return NULL;
 
-    return PyInt_FromLong(gimp_bilinear_32(x, y, values));
+    if (!PySequence_Check(py_values) || PySequence_Size(py_values) != 4) {
+        PyErr_SetString(PyExc_TypeError, "values is not a sequence of 4 items");
+        return NULL;
+    }
+
+    for (i = 0; i < 4; i++) {
+        v = PySequence_GetItem(py_values, i);
+        success = pygimp_rgb_from_pyobject(v, &values[i]);
+        Py_DECREF(v);
+        if (!success) {
+            PyErr_Format(PyExc_TypeError, "values[%d] is not a GimpRGB", i);
+            return NULL;
+        }
+    }
+
+    if (with_alpha)
+        rgb = gimp_bilinear_rgba(x, y, values);
+    else
+        rgb = gimp_bilinear_rgb(x, y, values);
+
+    return pygimp_rgb_new(&rgb);
 }
 
+static PyObject *
+pygimp_bilinear_rgb(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    return pygimp_bilinear_color(self, args, kwargs, FALSE);
+}
+
+static PyObject *
+pygimp_bilinear_rgba(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    return pygimp_bilinear_color(self, args, kwargs, TRUE);
+}
+
+#if 0
 static PyObject *
 pygimp_bilinear_pixels_8(PyObject *self, PyObject *args, PyObject *kwargs)
 {
@@ -334,11 +362,11 @@ static struct PyMethodDef gimpcolor_methods[] = {
     {"rgb_parse_hex", (PyCFunction)pygimp_rgb_parse_hex, METH_VARARGS | METH_KEYWORDS},
     {"rgb_parse_css", (PyCFunction)pygimp_rgb_parse_css, METH_VARARGS | METH_KEYWORDS},
     {"rgb_names", (PyCFunction)pygimp_rgb_list_names, METH_NOARGS},
-#if 0
     {"bilinear", (PyCFunction)pygimp_bilinear, METH_VARARGS | METH_KEYWORDS},
-    {"bilinear_8", (PyCFunction)pygimp_bilinear_8, METH_VARARGS | METH_KEYWORDS},
-    {"bilinear_32", (PyCFunction)pygimp_bilinear_32, METH_VARARGS | METH_KEYWORDS},
-    //{"bilinear_pixels_8", (PyCFunction)pygimp_bilinear_pixels_8, METH_VARARGS | METH_KEYWORDS},
+    {"bilinear_rgb", (PyCFunction)pygimp_bilinear_rgb, METH_VARARGS | METH_KEYWORDS},
+    {"bilinear_rgba", (PyCFunction)pygimp_bilinear_rgba, METH_VARARGS | METH_KEYWORDS},
+#if 0
+    {"bilinear_pixels_8", (PyCFunction)pygimp_bilinear_pixels_8, METH_VARARGS | METH_KEYWORDS},
     {"adaptive_supersample_area", (PyCFunction)pygimp_adaptive_supersample_area, METH_VARARGS | METH_KEYWORDS},
 #endif
     {NULL,	 (PyCFunction)NULL, 0, NULL}		/* sentinel */
@@ -353,7 +381,8 @@ static struct _PyGimpColor_Functions pygimpcolor_api_functions = {
     &PyGimpHSL_Type,
     pygimp_hsl_new,
     &PyGimpCMYK_Type,
-    pygimp_cmyk_new
+    pygimp_cmyk_new,
+    pygimp_rgb_from_pyobject
 };
 
 

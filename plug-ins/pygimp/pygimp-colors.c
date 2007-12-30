@@ -2355,3 +2355,51 @@ pygimp_cmyk_new(const GimpCMYK *cmyk)
 {
     return pyg_boxed_new(GIMP_TYPE_CMYK, (gpointer)cmyk, TRUE, TRUE);
 }
+
+int
+pygimp_rgb_from_pyobject(PyObject *object, GimpRGB *color)
+{
+    g_return_val_if_fail(color != NULL, FALSE);
+
+    if (pygimp_rgb_check(object)) {
+        *color = *pyg_boxed_get(object, GimpRGB);
+        return 1;
+    } else if (PyString_Check(object)) {
+        if (gimp_rgb_parse_css (color, PyString_AsString(object), -1)) {
+            return 1;
+        } else {
+            PyErr_SetString(PyExc_TypeError, "unable to parse color string");
+            return 0;
+        }
+    } else if (PySequence_Check(object)) {
+        GimpRGB rgb;
+        PyObject *r, *g, *b, *a = NULL;
+
+        if (!PyArg_ParseTuple(object, "OOO|O", &r, &g, &b, &a))
+            return 0;
+
+#define SET_MEMBER(m)	G_STMT_START {				\
+    if (PyInt_Check(m))						\
+	rgb.m = (double) PyInt_AS_LONG(m) / 255.0;		\
+    else if (PyFloat_Check(m))					\
+        rgb.m = PyFloat_AS_DOUBLE(m);				\
+    else {							\
+	PyErr_SetString(PyExc_TypeError,			\
+			#m " must be an int or a float");	\
+	return -1;						\
+    }								\
+} G_STMT_END
+
+        SET_MEMBER(r);
+        SET_MEMBER(g);
+        SET_MEMBER(b);
+
+        if (a)
+            SET_MEMBER(a);
+        else
+            rgb.a = 1.0;
+    }
+
+    PyErr_SetString(PyExc_TypeError, "could not convert to GimpRGB");
+    return 0;
+}

@@ -34,6 +34,7 @@ struct _PyGimpColor_Functions {
     PyObject *(* hsl_new)(const GimpHSL *hsl);
     PyTypeObject *CMYK_Type;
     PyObject *(* cmyk_new)(const GimpCMYK *cmyk);
+    int (* rgb_from_pyobject)(PyObject *object, GimpRGB *color);
 };
 
 #ifndef _INSIDE_PYGIMPCOLOR_
@@ -58,6 +59,8 @@ struct _PyGimpColor_Functions *_PyGimpColor_API;
 #define pygimp_hsv_new (_PyGimpColor_API->hsv_new)
 #define pygimp_hsl_new (_PyGimpColor_API->hsl_new)
 #define pygimp_cmyk_new (_PyGimpColor_API->cmyk_new)
+
+#define pygimp_rgb_from_pyobject (_PyGimpColor_API->rgb_from_pyobject)
 
 #define init_pygimpcolor() G_STMT_START { \
     PyObject *gimpcolormodule = PyImport_ImportModule("gimpcolor"); \

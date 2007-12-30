@@ -75,6 +75,17 @@ add_misc_enums(PyObject *m)
 
     PyModule_AddObject(m, "MAX_MEMSIZE",
 		       PyLong_FromUnsignedLongLong(GIMP_MAX_MEMSIZE));
+
+    PyModule_AddIntConstant(m, "PIXEL_FETCHER_EDGE_NONE",
+                            GIMP_PIXEL_FETCHER_EDGE_NONE);
+    PyModule_AddIntConstant(m, "PIXEL_FETCHER_EDGE_WRAP",
+                            GIMP_PIXEL_FETCHER_EDGE_WRAP);
+    PyModule_AddIntConstant(m, "PIXEL_FETCHER_EDGE_SMEAR",
+                            GIMP_PIXEL_FETCHER_EDGE_SMEAR);
+    PyModule_AddIntConstant(m, "PIXEL_FETCHER_EDGE_BLACK",
+                            GIMP_PIXEL_FETCHER_EDGE_BLACK);
+    PyModule_AddIntConstant(m, "PIXEL_FETCHER_EDGE_BACKGROUND",
+                            GIMP_PIXEL_FETCHER_EDGE_BACKGROUND);
 }
 
 static void

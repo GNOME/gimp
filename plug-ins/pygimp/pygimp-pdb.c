@@ -311,7 +311,7 @@ pygimp_param_to_tuple(int nparams, const GimpParam *params)
 GimpParam *
 pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 {
-    PyObject *tuple, *item, *r, *g, *b, *x, *y, *w, *h;
+    PyObject *tuple, *item, *x, *y, *w, *h;
     GimpParam *ret;
     int i, j, len;
     gint32 *i32a; gint16 *i16a; guint8 *i8a; gdouble *fa; gchar **sa;
@@ -455,23 +455,15 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    break;
 	case GIMP_PDB_COLOR:
 	    {
-		GimpRGB *rgb, tmprgb;
+                GimpRGB rgb;
 
-		if (!pygimp_rgb_check(item)) {
-		    check(!PySequence_Check(item) ||
-			  PySequence_Length(item) < 3);
-		    r = PySequence_GetItem(item, 0);
-		    g = PySequence_GetItem(item, 1);
-		    b = PySequence_GetItem(item, 2);
-		    check(!PyInt_Check(r) || !PyInt_Check(g) ||
-			  !PyInt_Check(b));
-		    gimp_rgba_set_uchar(&tmprgb, PyInt_AsLong(r),
-					PyInt_AsLong(g), PyInt_AsLong(b), 255);
-		    rgb = &tmprgb;
-		} else {
-		    rgb = pyg_boxed_get(item, GimpRGB);
+                if (!pygimp_rgb_from_pyobject(item, &rgb)) {
+                    Py_DECREF(tuple);
+                    gimp_destroy_params(ret, nparams);
+                    return NULL;
 		}
-		ret[i].data.d_color = *rgb;
+
+                ret[i].data.d_color = rgb;
 	    }
 	    break;
 	case GIMP_PDB_REGION:
