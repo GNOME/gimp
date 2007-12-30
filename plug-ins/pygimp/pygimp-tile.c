@@ -748,6 +748,101 @@ static PyMethodDef pf_methods[] = {
     {NULL, NULL}
 };
 
+static int
+pf_length(PyGimpPixelFetcher *self)
+{
+    PyErr_SetString(pygimp_error, "Can't get size of pixel fetcher");
+    return -1;
+}
+
+static PyObject *
+pf_subscript(PyGimpPixelFetcher *self, PyObject *key)
+{
+    PyObject *py_x, *py_y;
+    int x, y;
+    guchar pixel[4];
+
+    if (!PyTuple_Check(key) || PyTuple_Size(key) != 2) {
+        PyErr_SetString(PyExc_TypeError, "subscript must be a 2-tuple");
+	return NULL;
+    }
+
+    if (!PyArg_ParseTuple(key, "OO", &py_x, &py_y))
+        return NULL;
+
+    if (PyInt_Check(py_x)) {
+        if (PyInt_Check(py_y)) {
+	    x = PyInt_AsLong(py_x);
+            y = PyInt_AsLong(py_y);
+
+            gimp_pixel_fetcher_get_pixel(self->pf, x, y, pixel);
+            return PyString_FromStringAndSize((char *)pixel, self->bpp);
+        } else {
+            PyErr_SetString(PyExc_TypeError, "invalid y subscript");
+            return NULL;
+        }
+    } else {
+        PyErr_SetString(PyExc_TypeError, "invalid x subscript");
+        return NULL;
+    }
+}
+
+static int
+pf_ass_sub(PyGimpPixelFetcher *self, PyObject *v, PyObject *w)
+{
+    PyObject *py_x, *py_y;
+    int x, y, len;
+    guchar *pixel;
+
+    if (w == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can't delete subscripts");
+        return -1;
+    }
+
+    if (!PyString_Check(w)) {
+        PyErr_SetString(PyExc_TypeError, "must assign string to subscript");
+        return -1;
+    }
+
+    if (!PyTuple_Check(v) || PyTuple_Size(v) != 2) {
+        PyErr_SetString(PyExc_TypeError, "subscript must be a 2-tuple");
+        return -1;
+    }
+
+    if (!PyArg_ParseTuple(v, "OO", &py_x, &py_y))
+        return -1;
+
+    pixel = (guchar *)PyString_AsString(w);
+    len = PyString_Size(w);
+
+    if (len != self->bpp) {
+	PyErr_Format(PyExc_TypeError, "pixel must be %d bpp", self->bpp);
+        return -1;
+    }
+
+    if (PyInt_Check(py_x)) {
+        if (PyInt_Check(py_y)) {
+	    x = PyInt_AsLong(py_x);
+            y = PyInt_AsLong(py_y);
+
+            gimp_pixel_fetcher_put_pixel(self->pf, x, y, pixel);
+            return 0;
+        } else {
+            PyErr_SetString(PyExc_TypeError, "invalid y subscript");
+            return -1;
+        }
+    } else {
+        PyErr_SetString(PyExc_TypeError, "invalid x subscript");
+        return -1;
+    }
+}
+
+static PyMappingMethods pf_as_mapping = {
+    (inquiry)pf_length,
+    (binaryfunc)pf_subscript,
+    (objobjargproc)pf_ass_sub,
+};
+
 static PyObject *
 pf_get_bg_color(PyGimpPixelFetcher *self, void *closure)
 {
@@ -879,7 +974,7 @@ PyTypeObject PyGimpPixelFetcher_Type = {
     (reprfunc)pf_repr,                  /* tp_repr */
     0,                                  /* tp_as_number */
     0,                                  /* tp_as_sequence */
-    0,                                  /* tp_as_mapping */
+    &pf_as_mapping,                     /* tp_as_mapping */
     (hashfunc)0,                        /* tp_hash */
     (ternaryfunc)0,                     /* tp_call */
     (reprfunc)0,                        /* tp_str */

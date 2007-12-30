@@ -1,3 +1,7 @@
+2007-12-30  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-tile.c: subscript API for PixelFetcher.
+
 2007-12-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/gimpoperationtilesource.c: minor cleanup.
