@@ -23,6 +23,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -108,6 +109,7 @@ gimp_progress_box_progress_start (GimpProgress *progress,
 
       box->active     = TRUE;
       box->cancelable = cancelable;
+      box->value      = 0.0;
 
       if (GTK_WIDGET_DRAWABLE (box->progress))
         gdk_window_process_updates (box->progress->window, TRUE);
@@ -132,6 +134,7 @@ gimp_progress_box_progress_end (GimpProgress *progress)
 
       box->active     = FALSE;
       box->cancelable = FALSE;
+      box->value      = 0.0;
     }
 }
 
@@ -168,10 +171,17 @@ gimp_progress_box_progress_set_value (GimpProgress *progress,
     {
       GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
 
-      gtk_progress_bar_set_fraction (bar, percentage);
+      box->value = percentage;
 
-      if (GTK_WIDGET_DRAWABLE (box->progress))
-        gdk_window_process_updates (box->progress->window, TRUE);
+      /* only update the progress bar if this causes a visible change */
+      if (fabs (GTK_WIDGET (bar)->allocation.width *
+                (percentage - gtk_progress_bar_get_fraction (bar))) > 1.0)
+        {
+          gtk_progress_bar_set_fraction (bar, box->value);
+
+          if (GTK_WIDGET_DRAWABLE (box->progress))
+            gdk_window_process_updates (box->progress->window, TRUE);
+        }
     }
 }
 
@@ -181,11 +191,7 @@ gimp_progress_box_progress_get_value (GimpProgress *progress)
   GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
 
   if (box->active)
-    {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
-
-      return gtk_progress_bar_get_fraction (bar);
-    }
+    return box->value;
 
   return 0.0;
 }

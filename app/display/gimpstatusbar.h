@@ -62,6 +62,7 @@ struct _GimpStatusbar
   GtkWidget        *cancel_button;
   gboolean          progress_active;
   gboolean          progress_shown;
+  gdouble           progress_value;
 };
 
 struct _GimpStatusbarClass

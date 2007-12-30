@@ -281,6 +281,7 @@ gimp_statusbar_progress_start (GimpProgress *progress,
         gtk_widget_show (statusbar->cancel_button);
 
       statusbar->progress_active = TRUE;
+      statusbar->progress_value  = 0.0;
 
       if (! GTK_WIDGET_VISIBLE (statusbar))
         {
@@ -313,6 +314,7 @@ gimp_statusbar_progress_end (GimpProgress *progress)
         }
 
       statusbar->progress_active = FALSE;
+      statusbar->progress_value  = 0.0;
 
       gimp_statusbar_pop (statusbar, "progress");
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
@@ -356,10 +358,18 @@ gimp_statusbar_progress_set_value (GimpProgress *progress,
     {
       GtkWidget *bar = statusbar->progressbar;
 
-      gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), percentage);
+      statusbar->progress_value = percentage;
 
-      if (GTK_WIDGET_DRAWABLE (bar))
-        gdk_window_process_updates (bar->window, TRUE);
+      /* only update the progress bar if this causes a visible change */
+      if (fabs (bar->allocation.width *
+                (percentage -
+                 gtk_progress_bar_get_fraction (GTK_PROGRESS_BAR (bar)))) > 1.0)
+        {
+          gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), percentage);
+
+          if (GTK_WIDGET_DRAWABLE (bar))
+            gdk_window_process_updates (bar->window, TRUE);
+        }
     }
 }
 
@@ -370,9 +380,7 @@ gimp_statusbar_progress_get_value (GimpProgress *progress)
 
   if (statusbar->progress_active)
     {
-      GtkWidget *bar = statusbar->progressbar;
-
-      return gtk_progress_bar_get_fraction (GTK_PROGRESS_BAR (bar));
+      return statusbar->progress_value;
     }
 
   return 0.0;

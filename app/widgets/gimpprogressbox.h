@@ -43,6 +43,7 @@ struct _GimpProgressBox
 
   gboolean    active;
   gboolean    cancelable;
+  gdouble     value;
 
   GtkWidget  *label;
   GtkWidget  *progress;

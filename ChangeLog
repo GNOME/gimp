@@ -1,3 +1,9 @@
+2007-12-30  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpstatusbar.[ch]
+	* app/widgets/gimpprogressbox.[ch]: only update the GtkProgressBar
+	if that would cause a visible change.
+
 2007-12-30  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-tile.c: subscript API for PixelFetcher.
