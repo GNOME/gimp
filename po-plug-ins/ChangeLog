@@ -1,3 +1,7 @@
+2007-12-30  Ulf-D. Ehlert  <ulfehlert@svn.gnome.org>
+
+	* de.po: Fixed German translation.
+
 2007-12-28 Marco Ciampa  <ciampix@libero.it>
 
 	* it.po: updated italian translation.
@@ -68,7 +72,7 @@
 
 2007-10-19  Jorge Gonzalez  <jorgegonz@svn.gnome.org>  
 
-        * es.po: Updated Spanish translation by Francisco Vila
+	* es.po: Updated Spanish translation by Francisco Vila
 
 2007-10-18  Priit Laes  <plaes@svn.gnome.org>
 
@@ -400,7 +404,7 @@
 
 2007-07-08  Jorge Gonzalez <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation by Francisco Vila.
+	* es.po: Updated Spanish translation by Francisco Vila.
 
 2007-07-05  Jakub Friedl  <jfriedl@suse.cz>
 
@@ -477,7 +481,7 @@
 
 2007-04-25  Mukund Sivaraman  <muks@mukund.org>
 
-        * POTFILES.in: split TIFF load and save functionality into
+	* POTFILES.in: split TIFF load and save functionality into
 	different plug-ins.
 
 2007-04-21  Djihed Afifi <djihed@gmail.com> 
@@ -1151,7 +1155,7 @@
 
 2005-12-04  Marco Ciampa  <ciampix@libero.it>
 
-        * it.po: updated italian translation.
+	* it.po: updated italian translation.
 
 2005-12-04  Adam Weinberger  <adamw@gnome.org>
 
@@ -1244,7 +1248,7 @@
 
 2005-10-20  Marco Ciampa  <ciampix@libero.it>
 
-        * it.po: updated italian translation.
+	* it.po: updated italian translation.
 
 2005-10-18  Marco Ciampa  <ciampix@libero.it>
 
@@ -1320,7 +1324,7 @@
 
 2005-09-19  Ankit Patel  <ankit644@yahoo.com>
 
-        * gu.po: Updated Gujarati Translation.
+	* gu.po: Updated Gujarati Translation.
 
 2005-09-17  Takeshi AIHANA <aihana@gnome.gr.jp>
 
@@ -2813,7 +2817,7 @@
 
 2003-10-17  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-10-14  Dmitry G. Mastrukov  <dmitry@taurussoft.org>
 
@@ -2904,7 +2908,7 @@
 
 2003-09-08  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-09-06  Jan Morén  <jan.moren@lucs.lu.se>
 
@@ -2912,7 +2916,7 @@
 
 2003-09-03  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-09-02  Jan Morén  <jan.moren@lucs.lu.se>
 
@@ -2929,7 +2933,7 @@
 
 2003-08-28  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-08-27  Dmitry G. Mastrukov  <dmitry@taurussoft.org>
 
@@ -2949,7 +2953,7 @@
 	* el.po: Updated Greek translation.
 
 2003-08-17  Manish Singh  <yosh@gimp.org>
-                                                                                
+
 	* update.sh: s/gimp14/gimp20/
 
 2003-08-13  Manish Singh  <yosh@gimp.org>
@@ -2966,15 +2970,15 @@
 
 2003-08-07  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-08-06  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2003-08-05  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-07-31  Christophe Merlet  <redfox@redfoxcenter.org>
 
@@ -2992,7 +2996,7 @@
 
 2003-07-22  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-07-19  Miloslav Trmac  <mitr@volny.cz>
 
@@ -3000,7 +3004,7 @@
 
 2003-07-14  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation by
+	* es.po: Updated Spanish translation by
                  Francisco Javier F. Serrador <serrador@arrakis.es>.
 
 2003-07-14  Takeshi AIHANA <aihana@gnome.gr.jp>
@@ -3044,7 +3048,7 @@
 
 2003-06-20  Pablo Gonzalo del Campo <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-06-19  Christophe Merlet  <redfox@redfoxcenter.org>
 
@@ -3072,7 +3076,7 @@
 
 2003-06-10  Pablo Gonzalo del Campo <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-06-10  Abel Cheung  <maddog@linux.org.hk>
 
@@ -3104,7 +3108,7 @@
 
 2003-05-24  Duarte loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2003-04-29  Jan Morén  <jan.moren@lucs.lu.se>
 
@@ -3124,11 +3128,11 @@
 
 2003-04-06  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2003-04-03  Pablo Gonzalo del Campo <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-04-01  Miloslav Trmac  <mitr@volny.cz>
 
@@ -3403,11 +3407,11 @@
 
 2002-08-25  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2002-08-17  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2002-08-13  Ole Laursen  <olau@hardworking.dk>
 
@@ -3448,11 +3452,11 @@
 
 2002-06-17  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2002-06-17  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2002-06-10  Kjartan Maraas  <kmaraas@gnome.org>
 
@@ -3532,7 +3536,7 @@
 
 2002-03-08  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Added Portuguese translation.
+	* pt.po: Added Portuguese translation.
 
 2002-03-05  Valek Filippov  <frob@df.ru>
 
@@ -4218,7 +4222,7 @@ Mon Apr 17 22:16:29 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 2000-04-16  Sven Neumann  <sven@gimp.org>
 
-        * de.po:  updated german translation
+	* de.po:  updated german translation
 
 2000-04-14  Kjartan Maraas  <kmaraas@online.no>
 
@@ -4334,7 +4338,7 @@ Thu Mar  9 22:39:37 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 Wed Mar  8 22:51:30 CET 2000  Sven Neumann <sven@gimp.org>
 
-        * fr.po: s/<Images>/<Image>/   
+	* fr.po: s/<Images>/<Image>/   
                  s/<Boite a utils>/<Toolbox>/
 
 2000-03-09  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
@@ -4422,7 +4426,7 @@ Sat Feb 19 11:00:45 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 Thu Feb 17 11:00:25 CET 2000  Sven Neumann <sven@gimp.org>
 
-        * de.po: updated
+	* de.po: updated
 
 Thu Feb 17 00:37:30 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
@@ -4477,7 +4481,7 @@ Mon Feb  7 18:50:25 CET 2000  Sven Neumann <sven@gimp.org>
 
 Mon Feb  7 01:18:33 CET 2000  Sven Neumann <sven@gimp.org>
 
-        * en_GB.po: removed fuzzy comment from header
+	* en_GB.po: removed fuzzy comment from header
 
 Fri Feb  4 20:42:59 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
@@ -4509,7 +4513,7 @@ Mon Jan 31 20:32:00 CET 2000  Joaquim Fellmann <joaquim@hrnet.fr>
 
 Mon Jan 31 01:39:26 CET 2000  Sven Neumann <sven@gimp.org>
 
-        * de.po: updated
+	* de.po: updated
 
 Sat Jan 29 23:11:05 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
@@ -4547,11 +4551,11 @@ Tue Jan 25 21:50:52 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 2000-01-21 Artur PolaczyÃ±ski  <artie@kmfms.com>
  
-       * pl.po: Updated translation.
+	* pl.po: Updated translation.
 	
 2000-01-24  Sergey Panov <sipan@mit.edu>
 
-        * ru.po: Updated Russian translation from
+	* ru.po: Updated Russian translation from
          Valek Filippov <frob@df.ru>
 
 Sun Jan 23 14:51:15 CET 2000  Joaquim Fellmann <joaquim@hrnet.fr>
@@ -4604,7 +4608,7 @@ Tue Jan 11 12:09:05 CET 2000  Sven Neumann <sven@gimp.org>
 
 2000-01-10  Sergey Panov  <sipan@mit.edu>
 
-        * ru.po: Updated Russian translation from Valek Filippov <val@df.ru>.
+	* ru.po: Updated Russian translation from Valek Filippov <val@df.ru>.
 
 Mon Jan 10 21:31:57 CET 2000  Sven Neumann <sven@gimp.org>
 
@@ -4629,7 +4633,7 @@ Fri Jan  7 19:21:45 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 2000-01-06  Sergey Panov  <sipan@mit.edu>
 
-        * ru.po: Updated Russian translation from Valek Filippov <val@df.ru>.
+	* ru.po: Updated Russian translation from Valek Filippov <val@df.ru>.
 
 2000-01-03  Kjartan Maraas  <kmaraas@online.no>
 
@@ -4646,12 +4650,12 @@ Wed Dec 29 21:45:44 CET 1999  Stanislav Brabec  <utx@penguin.cz>
 
 1999-12-28  Sergey Panov  <sipan@mit.edu>
 
-        * ru.po: Updated Russian translation from Valek Filippov <val@df.ru>.
+	* ru.po: Updated Russian translation from Valek Filippov <val@df.ru>.
           with some corrections/additions from Sergey Panov  <sipan@mit.edu>
 
 Tue Dec 28 23:20:11 CET 1999  Sven Neumann <sven@gimp.org>
 
-        * de.po: updated german translation
+	* de.po: updated german translation
 
 1999-12-28  Kjartan Maraas  <kmaraas@online.no>
 
@@ -4815,7 +4819,7 @@ Thu Sep  9 00:03:04 PDT 1999 Manish Singh <yosh@gimp.org>
 
 Tue Sep  7 21:02:48 CDT 1999 James Mitchell <mitchell@gimp.org>
 
-        * it.po: More translations from Daniele Medri <madrid@linux.it>
+	* it.po: More translations from Daniele Medri <madrid@linux.it>
 	         521 translated messages, 116 untranslated messages. 
 
 1999-09-06  Kjartan Maraas  <kmaraas@online.no>
