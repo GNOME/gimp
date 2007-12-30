@@ -11,7 +11,6 @@ INCLUDES = \
 	-I$(top_srcdir)/app	\
 	$(GDK_PIXBUF_CFLAGS)	\
 	$(LIBART_CFLAGS)	\
-	$(GEGL_CFLAGS)		\
 	$(GLIB_CFLAGS)		\
 	$(GEGL_CFLAGS)		\
 	-I$(includedir)
