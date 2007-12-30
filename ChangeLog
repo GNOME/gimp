@@ -1,3 +1,11 @@
+2007-12-30  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/gegl/gimpoperationtilesink.c: specify that this operation does
+	not need the full buffer available before "flushing" the sink.
+
+	* app/gegl/gegl/gegl-operation-sink.h:
+	* app/gegl/gegl/gegl-operation.h: updated copy of headers.
+
 2007-12-30  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/jpeg/jpegqual.c (quant_info): added entry for Canon

@@ -77,6 +77,7 @@ gimp_operation_tile_sink_class_init (GimpOperationTileSinkClass * klass)
   object_class->get_property = gimp_operation_tile_sink_get_property;
 
   sink_class->process        = gimp_operation_tile_sink_process;
+  sink_class->needs_full     = FALSE;
 
   gegl_operation_class_set_name (operation_class, "gimp-tilemanager-sink");;
 
