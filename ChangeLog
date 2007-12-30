@@ -1,3 +1,8 @@
+2007-12-30  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-invert.c (gimp_drawable_invert): moved
+	processing in the GEGL code path back to the main loop.
+
 2007-12-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpcolorbalancetool.c
