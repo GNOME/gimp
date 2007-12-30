@@ -250,15 +250,15 @@ GeglBuffer    * gegl_operation_get_source           (GeglOperation *operation,
                                                      gpointer       context_id,
                                                      const gchar   *pad_name);
 
-gboolean gegl_operation_calc_source_regions (GeglOperation *operation,
-                                             gpointer       context_id);
+gboolean gegl_operation_calc_source_regions  (GeglOperation *operation,
+                                              gpointer       context_id);
 
-void gegl_operation_vector_prop_changed (GeglVector    *vector,
-                                         GeglOperation *operation);
+void     gegl_operation_vector_prop_changed  (GeglVector    *vector,
+                                              GeglOperation *operation);
 
-void gegl_extension_handler_cleanup (void);
+void     gegl_extension_handler_cleanup      (void);
 
-void gegl_operation_gtype_cleanup (void);
+void     gegl_operation_gtype_cleanup        (void);
 
 G_END_DECLS
 
