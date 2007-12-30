@@ -40,8 +40,10 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <setjmp.h>
+
 #include <glib.h>
 
 #include <jpeglib.h>
@@ -50,26 +52,44 @@
 #include "jpeg-quality.h"
 
 /* command-line options */
-static gboolean      option_summary      = FALSE;
-static gboolean      option_ctable       = FALSE;
-static gboolean      option_table_2cols  = FALSE;
-static gboolean      option_unknown      = FALSE;
-static gboolean      option_ignore_err   = FALSE;
+static gboolean   option_summary      = FALSE;
+static gboolean   option_ctable       = FALSE;
+static gboolean   option_table_2cols  = FALSE;
+static gboolean   option_unknown      = FALSE;
+static gboolean   option_ignore_err   = FALSE;
+static gchar    **filenames           = NULL;
 
-static GOptionEntry  option_entries[] =
+static const GOptionEntry option_entries[] =
 {
-  { "ignore-errors", 'i', 0, G_OPTION_ARG_NONE, &option_ignore_err,
-    "Continue processing other files after a JPEG error", NULL },
-  { "summary",  's', 0, G_OPTION_ARG_NONE, &option_summary,
-    "Print summary information and closest IJG quality", NULL },
-  { "tables",   't', 0, G_OPTION_ARG_NONE, &option_table_2cols,
-    "Dump quantization tables", NULL },
-  { "c-tables", 'c', 0, G_OPTION_ARG_NONE, &option_ctable,
-    "Dump quantization tables as C code", NULL },
-  { "ctables",  0, G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &option_ctable,
-    NULL, NULL },
-  { "unknown",  'u', 0, G_OPTION_ARG_NONE, &option_unknown,
-    "Only print information about files with unknown tables", NULL },
+  {
+    "ignore-errors", 'i', 0, G_OPTION_ARG_NONE, &option_ignore_err,
+    "Continue processing other files after a JPEG error", NULL
+  },
+  {
+    "summary",  's', 0, G_OPTION_ARG_NONE, &option_summary,
+    "Print summary information and closest IJG quality", NULL
+  },
+  {
+    "tables",   't', 0, G_OPTION_ARG_NONE, &option_table_2cols,
+    "Dump quantization tables", NULL
+  },
+  {
+    "c-tables", 'c', 0, G_OPTION_ARG_NONE, &option_ctable,
+    "Dump quantization tables as C code", NULL
+  },
+  {
+    "ctables",  0, G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &option_ctable,
+    NULL, NULL
+  },
+  {
+    "unknown",  'u', 0, G_OPTION_ARG_NONE, &option_unknown,
+    "Only print information about files with unknown tables", NULL
+  },
+  {
+    G_OPTION_REMAINING, 0, 0,
+    G_OPTION_ARG_FILENAME_ARRAY, &filenames,
+    NULL, NULL
+  },
   { NULL }
 };
 
@@ -535,13 +555,16 @@ add_unknown_table (struct jpeg_decompress_struct *cinfo,
   table_data->hashval = hashval;
   table_data->subsmp_h = cinfo->comp_info[0].h_samp_factor;
   table_data->subsmp_v = cinfo->comp_info[0].v_samp_factor;
+
   num_quant_tables = 0;
   for (t = 0; t < 4; t++)
     if (cinfo->quant_tbl_ptrs[t])
       num_quant_tables++;
+
   table_data->num_quant_tables = num_quant_tables;
   table_data->ijg_qual = jpeg_detect_quality (cinfo);
   table_data->files = g_slist_prepend (NULL, filename);
+
   if (cinfo->quant_tbl_ptrs[0])
     {
       for (i = 0; i < DCTSIZE2; i++)
@@ -552,6 +575,7 @@ add_unknown_table (struct jpeg_decompress_struct *cinfo,
       for (i = 0; i < DCTSIZE2; i++)
         table_data->luminance[i] = 0;
     }
+
   if (cinfo->quant_tbl_ptrs[1])
     {
       for (i = 0; i < DCTSIZE2; i++)
@@ -562,6 +586,7 @@ add_unknown_table (struct jpeg_decompress_struct *cinfo,
       for (i = 0; i < DCTSIZE2; i++)
         table_data->chrominance[i] = 0;
     }
+
   found_tables = g_slist_prepend (found_tables, table_data);
 }
 
@@ -1013,34 +1038,46 @@ int
 main (int   argc,
       char *argv[])
 {
-  GError         *error = NULL;
   GOptionContext *context;
+  GError         *error = NULL;
+  gint            i;
 
   g_set_prgname ("jpegqual");
 
-  context = g_option_context_new ("FILE [...] - analyzes JPEG quantization tables");
+  context =
+    g_option_context_new ("FILE [...] - analyzes JPEG quantization tables");
   g_option_context_add_main_entries (context, option_entries,
                                      NULL /* skip i18n? */);
-  g_option_context_parse (context, &argc, &argv, &error);
-  if (argc <= 1)
+
+  if (! g_option_context_parse (context, &argc, &argv, &error))
+    {
+      g_printerr ("%s\n", error->message);
+      g_error_free (error);
+      return EXIT_FAILURE;
+    }
+
+  if (! filenames)
     {
       g_printerr ("Missing file name.  Try the option --help for help\n");
-      return 1;
+      return EXIT_FAILURE;
     }
+
   if (!option_summary && !option_ctable && !option_table_2cols)
     {
       g_printerr ("Missing output option.  Assuming that you wanted --summary.\n");
       option_summary = TRUE;
     }
 
-  for (argv++, argc--; *argv; argv++, argc--)
+  for (i = 0; filenames[i]; i++)
     {
-      if (! analyze_file (*argv) && ! option_ignore_err)
-        return 1;
+      if (! analyze_file (filenames[i]) && ! option_ignore_err)
+        return EXIT_FAILURE;
     }
+
   if (option_unknown && found_tables)
     {
       print_unknown_tables ();
     }
-  return 0;
+
+  return EXIT_SUCCESS;
 }
