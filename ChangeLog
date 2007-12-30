@@ -1,5 +1,15 @@
 2007-12-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c: #include <gegl.h>. Fixes the build.
+
+2007-12-30  Michael Natterer  <mitch@gimp.org>
+
 	First actual image processing with GEGL! Wheeeee :-)
 
 	* app/core/gimpimagemap.[ch]: added code to use gegl instead of the
