@@ -1,5 +1,18 @@
 2007-12-30  Sven Neumann  <sven@gimp.org>
 
+	* app/gegl/gimp-gegl-utils.[ch]: added new function
+	gimp_bpp_to_babl_format_linear().
+
+	* app/gegl/gimpoperationtilesink.[ch]
+	* app/gegl/gimpoperationtilesource.[ch]: added boolean property to
+	toggle between linear and gamma-corrected data.
+
+	* app/core/gimpdrawable-invert.c: assume linear data to be closer
+	to the original definition of the invert operation in GIMP.
+	Enable the GEGL code path per default.
+
+2007-12-30  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable-invert.c (gimp_drawable_invert): moved
 	processing in the GEGL code path back to the main loop.
 

@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* #define ENABLE_GEGL */
+#define ENABLE_GEGL
 #ifdef ENABLE_GEGL
 
 #include "config.h"
@@ -57,10 +57,12 @@ gimp_drawable_invert (GimpDrawable *drawable,
   input  = gegl_node_new_child (gegl,
                                 "operation",    "gimp-tilemanager-source",
                                 "tile-manager", gimp_drawable_get_tiles (drawable),
+                                "linear",       TRUE,
                                 NULL);
   output = gegl_node_new_child (gegl,
                                 "operation",    "gimp-tilemanager-sink",
                                 "tile-manager", gimp_drawable_get_shadow_tiles (drawable),
+                                "linear",       TRUE,
                                 NULL);
   invert = gegl_node_new_child (gegl,
                                 "operation",    "invert",

@@ -39,6 +39,7 @@ struct _GimpOperationTileSource
   GeglOperationSource  parent_instance;
 
   TileManager         *tile_manager;
+  gboolean             linear; /* should linear data be assumed */
 };
 
 struct _GimpOperationTileSourceClass

@@ -43,7 +43,8 @@
 enum
 {
   PROP_0,
-  PROP_TILE_MANAGER
+  PROP_TILE_MANAGER,
+  PROP_LINEAR
 };
 
 enum
@@ -109,6 +110,14 @@ gimp_operation_tile_sink_class_init (GimpOperationTileSinkClass * klass)
                                                        GIMP_TYPE_TILE_MANAGER,
                                                        G_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class,
+                                   PROP_LINEAR,
+                                   g_param_spec_boolean ("linear",
+                                                         "Linear data",
+                                                         "Should the data written to the tile-manager be linear or gamma-corrected?",
+                                                         FALSE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -144,6 +153,10 @@ gimp_operation_tile_sink_get_property (GObject    *object,
       g_value_set_boxed (value, self->tile_manager);
       break;
 
+    case PROP_LINEAR:
+      g_value_set_boolean (value, self->linear);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -166,6 +179,10 @@ gimp_operation_tile_sink_set_property (GObject      *object,
       self->tile_manager = g_value_dup_boxed (value);
       break;
 
+    case PROP_LINEAR:
+      self->linear = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -184,10 +201,15 @@ gimp_operation_tile_sink_process (GeglOperation *operation,
       const Babl          *format;
       const GeglRectangle *extent;
       PixelRegion          destPR;
+      const guint          bpp = tile_manager_bpp (self->tile_manager);
       gpointer             pr;
 
       extent = gegl_operation_result_rect (operation, context_id);
-      format = gimp_bpp_to_babl_format (tile_manager_bpp (self->tile_manager));
+
+      if (self->linear)
+        format = gimp_bpp_to_babl_format_linear (bpp);
+      else
+        format = gimp_bpp_to_babl_format (bpp);
 
       input = GEGL_BUFFER (gegl_operation_get_data (operation, context_id,
                                                     "input"));
