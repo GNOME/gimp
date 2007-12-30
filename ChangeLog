@@ -1,3 +1,11 @@
+2007-12-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/gimpoperationtilesource.c: minor cleanup.
+
+	* app/gegl/gimpoperationtilesink.[ch]: add "data-written" signal
+	that is emitted whenever pixels have been written to the tile
+	manager.
+
 2007-12-30  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/core/Makefile.am: added GEGL_CFLAGS.

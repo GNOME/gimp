@@ -44,6 +44,9 @@ struct _GimpOperationTileSink
 struct _GimpOperationTileSinkClass
 {
   GeglOperationSinkClass operation_sink_class;
+
+  void (* data_written) (GimpOperationTileSink *sink,
+                         const GeglRectangle   *extent);
 };
 
 

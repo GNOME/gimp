@@ -185,20 +185,20 @@ gimp_operation_tile_source_process (GeglOperation *operation,
 
   if (self->tile_manager)
     {
-      GeglBuffer    *output;
-      const Babl    *format;
-      PixelRegion    srcPR;
-      gpointer       pr;
-      const GeglRectangle *result;
+      GeglBuffer          *output;
+      const Babl          *format;
+      const GeglRectangle *extent;
+      PixelRegion          srcPR;
+      gpointer             pr;
 
-      result = gegl_operation_result_rect (operation, context_id);
+      extent = gegl_operation_result_rect (operation, context_id);
       format = gimp_bpp_to_babl_format (tile_manager_bpp (self->tile_manager));
 
-      output = gegl_buffer_new (result, format);
+      output = gegl_buffer_new (extent, format);
 
       pixel_region_init (&srcPR, self->tile_manager,
-                         result->x, result->y,
-                         result->width, result->height,
+                         extent->x, extent->y,
+                         extent->width, extent->height,
                          FALSE);
 
       for (pr = pixel_regions_register (1, &srcPR);

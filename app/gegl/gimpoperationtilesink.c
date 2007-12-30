@@ -34,6 +34,8 @@
 #include "base/tile-manager.h"
 #include "base/pixel-region.h"
 
+#include "core/gimpmarshal.h"
+
 #include "gimp-gegl-utils.h"
 #include "gimpoperationtilesink.h"
 
@@ -42,6 +44,12 @@ enum
 {
   PROP_0,
   PROP_TILE_MANAGER
+};
+
+enum
+{
+  DATA_WRITTEN,
+  LAST_SIGNAL
 };
 
 
@@ -64,6 +72,8 @@ G_DEFINE_TYPE (GimpOperationTileSink, gimp_operation_tile_sink,
 
 #define parent_class gimp_operation_tile_sink_parent_class
 
+static guint tile_sink_signals[LAST_SIGNAL] = { 0 };
+
 
 static void
 gimp_operation_tile_sink_class_init (GimpOperationTileSinkClass * klass)
@@ -71,6 +81,16 @@ gimp_operation_tile_sink_class_init (GimpOperationTileSinkClass * klass)
   GObjectClass           *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass     *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationSinkClass *sink_class      = GEGL_OPERATION_SINK_CLASS (klass);
+
+  tile_sink_signals[DATA_WRITTEN] =
+    g_signal_new ("data-written",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpOperationTileSinkClass, data_written),
+                  NULL, NULL,
+                  gimp_marshal_VOID__POINTER,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_POINTER);
 
   object_class->finalize     = gimp_operation_tile_sink_finalize;
   object_class->set_property = gimp_operation_tile_sink_set_property;
@@ -166,18 +186,16 @@ gimp_operation_tile_sink_process (GeglOperation *operation,
       PixelRegion          destPR;
       gpointer             pr;
 
-      /* is this somethings that should be done already for all sinks? */
+      extent = gegl_operation_result_rect (operation, context_id);
+      format = gimp_bpp_to_babl_format (tile_manager_bpp (self->tile_manager));
+
       input = GEGL_BUFFER (gegl_operation_get_data (operation, context_id,
                                                     "input"));
-
-      extent = gegl_operation_result_rect (operation, context_id);
 
       pixel_region_init (&destPR, self->tile_manager,
                          extent->x, extent->y,
                          extent->width, extent->height,
                          TRUE);
-
-      format = gimp_bpp_to_babl_format (tile_manager_bpp (self->tile_manager));
 
       for (pr = pixel_regions_register (1, &destPR);
            pr;
@@ -188,6 +206,9 @@ gimp_operation_tile_sink_process (GeglOperation *operation,
           gegl_buffer_get (input,
                            1.0, &rect, format, destPR.data, destPR.rowstride);
         }
+
+      g_signal_emit (operation, tile_sink_signals[DATA_WRITTEN], 0,
+                     extent);
     }
   else
     {
