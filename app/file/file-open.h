@@ -76,5 +76,6 @@ gboolean    file_open_from_command_line     (Gimp                *gimp,
                                              const gchar         *filename,
                                              gboolean             as_new);
 
+void        file_create_scratch_image       (Gimp                *gimp);
 
 #endif /* __FILE_OPEN_H__ */

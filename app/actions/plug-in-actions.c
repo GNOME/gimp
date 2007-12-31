@@ -221,6 +221,7 @@ plug_in_actions_update (GimpActionGroup *group,
   GimpImageType      type    = -1;
   GSList            *list;
   gint               i;
+  gboolean           scratch = FALSE;
 
   if (image)
     {
@@ -228,6 +229,8 @@ plug_in_actions_update (GimpActionGroup *group,
 
       if (drawable)
         type = gimp_drawable_type (drawable);
+
+      scratch = gimp_image_is_scratch (image);
     }
 
   for (list = manager->plug_in_procedures; list; list = g_slist_next (list))
@@ -240,6 +243,10 @@ plug_in_actions_update (GimpActionGroup *group,
         {
           gboolean sensitive = gimp_plug_in_procedure_get_sensitive (proc,
                                                                      type);
+
+          /* only typeless plug-ins are sensitive for scratch images */
+          if (scratch)
+            sensitive = FALSE;
 
           gimp_action_group_set_action_sensitive (group,
                                                   GIMP_OBJECT (proc)->name,

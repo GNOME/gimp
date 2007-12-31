@@ -25,6 +25,8 @@
 #include "display-types.h"
 #include "tools/tools-types.h"
 
+#include "file/file-open.h"
+
 #include "core/gimp.h"
 #include "core/gimparea.h"
 #include "core/gimpimage.h"
@@ -324,22 +326,25 @@ gimp_display_new (GimpImage       *image,
                   GimpUIManager   *popup_manager)
 {
   GimpDisplay *display;
+  Gimp        *gimp;
   gint         ID;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
+  gimp = image->gimp;
+
   /*  If there isn't an interface, never create a display  */
-  if (image->gimp->no_interface)
+  if (gimp->no_interface)
     return NULL;
 
   do
     {
-      ID = image->gimp->next_display_ID++;
+      ID = gimp->next_display_ID++;
 
-      if (image->gimp->next_display_ID == G_MAXINT)
-        image->gimp->next_display_ID = 1;
+      if (gimp->next_display_ID == G_MAXINT)
+        gimp->next_display_ID = 1;
     }
-  while (gimp_display_get_by_ID (image->gimp, ID));
+  while (gimp_display_get_by_ID (gimp, ID));
 
   display = g_object_new (GIMP_TYPE_DISPLAY,
                           "id", ID,
@@ -358,7 +363,27 @@ gimp_display_new (GimpImage       *image,
                     display);
 
   /* add the display to the list */
-  gimp_container_add (image->gimp->displays, GIMP_OBJECT (display));
+  gimp_container_add (gimp->displays, GIMP_OBJECT (display));
+
+  /* if there is a scratch image display, we need to get rid of it,
+   * unless of course it is one that we have just created here.
+   */
+  if (gimp->scratch_image)
+    {
+      GList *list;
+
+      for (list = GIMP_LIST (gimp->displays)->list; list; list = g_list_next (list))
+        {
+          GimpDisplay *d = GIMP_DISPLAY (list->data);
+
+          if (gimp_image_is_scratch (d->image) && d != display)
+            {
+              gimp_display_delete (d);
+              gimp->scratch_image = NULL;
+              break;
+            }
+        }
+    }
 
   return display;
 }
@@ -367,21 +392,23 @@ void
 gimp_display_delete (GimpDisplay *display)
 {
   GimpTool *active_tool;
+  Gimp     *gimp;
 
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
+  gimp = display->image->gimp;
+
   /* remove the display from the list */
-  gimp_container_remove (display->image->gimp->displays,
+  gimp_container_remove (gimp->displays,
                          GIMP_OBJECT (display));
 
   /*  stop any active tool  */
-  tool_manager_control_active (display->image->gimp, GIMP_TOOL_ACTION_HALT,
-                               display);
+  tool_manager_control_active (gimp, GIMP_TOOL_ACTION_HALT, display);
 
-  active_tool = tool_manager_get_active (display->image->gimp);
+  active_tool = tool_manager_get_active (gimp);
 
   if (active_tool && active_tool->focus_display == display)
-    tool_manager_focus_display_active (display->image->gimp, NULL);
+    tool_manager_focus_display_active (gimp, NULL);
 
   /*  free the update area lists  */
   gimp_area_list_free (display->update_areas);
@@ -403,6 +430,10 @@ gimp_display_delete (GimpDisplay *display)
   gimp_display_disconnect (display);
 
   g_object_unref (display);
+
+  /* make a new scratch image if we need one */
+  if (! gimp->exiting && gimp_container_is_empty (gimp->displays))
+      file_create_scratch_image (gimp);
 }
 
 gint

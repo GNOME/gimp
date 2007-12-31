@@ -172,8 +172,11 @@ struct _GimpImage
   /*  Preview  */
   TempBuf           *preview;               /*  the projection preview       */
 
-  /*  Signal emmision accumulator  */
+  /*  Signal emission accumulator  */
   GimpImageFlushAccumulator  flush_accum;
+
+  /* Is this a scratch image? */
+  gboolean scratch;
 };
 
 struct _GimpImageClass
@@ -535,5 +538,6 @@ gboolean    gimp_image_coords_in_active_pickable (GimpImage          *image,
 void        gimp_image_invalidate_layer_previews (GimpImage          *image);
 void      gimp_image_invalidate_channel_previews (GimpImage          *image);
 
+gboolean    gimp_image_is_scratch                (GimpImage          *image);
 
 #endif /* __GIMP_IMAGE_H__ */

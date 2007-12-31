@@ -50,6 +50,7 @@
 #include "vectors/gimpvectors-import.h"
 
 #include "widgets/gimpdnd.h"
+#include "widgets/gimptoolbox-dnd.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -190,6 +191,14 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
   if (image->gimp->busy)
     return;
 
+  /* this shouldn't be possible, but anyway... */
+  if (gimp_image_is_scratch (image))
+    {
+      gimp_toolbox_drop_drawable (widget, x, y, viewable,
+                                  (gpointer) gimp_get_user_context (image->gimp));
+      return;
+    }
+
   if (GIMP_IS_LAYER (viewable))
     new_type = G_TYPE_FROM_INSTANCE (viewable);
   else
@@ -243,6 +252,10 @@ gimp_display_shell_drop_vectors (GtkWidget    *widget,
   if (image->gimp->busy)
     return;
 
+  /* should we warn here? */
+  if (gimp_image_is_scratch (image))
+    return;
+
   new_item = gimp_item_convert (GIMP_ITEM (viewable), image,
                                 G_TYPE_FROM_INSTANCE (viewable), TRUE);
 
@@ -278,6 +291,10 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
   if (image->gimp->busy)
     return;
 
+  /* should we warn here? */
+  if (gimp_image_is_scratch (image))
+    return;
+
   if (! gimp_vectors_import_buffer (image,
                                     (const gchar *) svg_data, svg_data_len,
                                     TRUE, TRUE, -1, NULL, &error))
@@ -302,6 +319,9 @@ gimp_display_shell_dnd_bucket_fill (GimpDisplayShell   *shell,
   GimpDrawable *drawable;
 
   if (image->gimp->busy)
+    return;
+
+  if (gimp_image_is_scratch (image))
     return;
 
   drawable = gimp_image_get_active_drawable (image);
@@ -380,6 +400,13 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
   if (image->gimp->busy)
     return;
 
+  if (gimp_image_is_scratch (image))
+    {
+      gimp_toolbox_drop_buffer (widget, drop_x, drop_y, viewable,
+                                gimp_get_user_context (image->gimp));
+      return;
+    }
+
   buffer = GIMP_BUFFER (viewable);
 
   gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
@@ -406,6 +433,17 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
   GList            *list;
 
   GIMP_LOG (DND, NULL);
+
+  /*
+   * if this is a scratch image display, we want to treat the drop
+   * as though it has been made to the toolbox
+   */
+  if (gimp_image_is_scratch (image))
+    {
+      gimp_toolbox_drop_uri_list (widget, x, y, uri_list,
+                                  (gpointer) context);
+      return;
+    }
 
   for (list = uri_list; list; list = g_list_next (list))
     {
@@ -470,6 +508,10 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
   if (dest_image->gimp->busy)
     return;
 
+  /* this should never happen, but anyway... */
+  if (gimp_image_is_scratch (dest_image))
+    return;
+
   channel = gimp_channel_new_from_component (image, component, NULL, NULL);
 
   new_item = gimp_item_convert (GIMP_ITEM (channel), dest_image,
@@ -523,6 +565,13 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
 
   if (image->gimp->busy)
     return;
+
+  if (gimp_image_is_scratch (image))
+    {
+      gimp_toolbox_drop_pixbuf (widget, x, y, pixbuf,
+                                (gpointer) gimp_get_user_context (image->gimp));
+      return;
+    }
 
   new_layer =
     gimp_layer_new_from_pixbuf (pixbuf, image,

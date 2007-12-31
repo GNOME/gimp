@@ -536,6 +536,7 @@ view_actions_update (GimpActionGroup *group,
   gchar              *label          = NULL;
   gboolean            fullscreen     = FALSE;
   gboolean            revert_enabled = FALSE;   /* able to revert zoom? */
+  gboolean            scratch        = TRUE;
 
   if (display)
     {
@@ -546,12 +547,14 @@ view_actions_update (GimpActionGroup *group,
       options = fullscreen ? shell->fullscreen_options : shell->options;
 
       revert_enabled = gimp_display_shell_scale_can_revert (shell);
+
+      scratch = gimp_image_is_scratch (display->image);
     }
 
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+        gimp_action_group_set_action_sensitive (group, action, ((condition) && ! scratch) != 0)
 #define SET_COLOR(action,color) \
         gimp_action_group_set_action_color (group, action, color, FALSE)
 

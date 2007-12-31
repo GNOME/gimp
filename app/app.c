@@ -234,6 +234,10 @@ app_run (const gchar         *full_prog_name,
       for (i = 0; filenames[i] != NULL; i++)
         file_open_from_command_line (gimp, filenames[i], as_new);
     }
+#ifndef GIMP_CONSOLE_COMPILATION
+  else if (! no_interface)
+    file_create_scratch_image (gimp);
+#endif
 
 #ifndef GIMP_CONSOLE_COMPILATION
   if (! no_interface)

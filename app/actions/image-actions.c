@@ -236,11 +236,12 @@ void
 image_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpImage *image = action_data_get_image (data);
-  gboolean   fs    = FALSE;
-  gboolean   aux   = FALSE;
-  gboolean   lp    = FALSE;
-  gboolean   sel   = FALSE;
+  GimpImage *image   = action_data_get_image (data);
+  gboolean   fs      = FALSE;
+  gboolean   aux     = FALSE;
+  gboolean   lp      = FALSE;
+  gboolean   sel     = FALSE;
+  gboolean   scratch = TRUE;
 
   if (image)
     {
@@ -263,36 +264,37 @@ image_actions_update (GimpActionGroup *group,
 
       gimp_action_group_set_action_active (group, action, TRUE);
 
-      fs  = (gimp_image_floating_sel (image) != NULL);
-      aux = (gimp_image_get_active_channel (image) != NULL);
-      lp  = ! gimp_image_is_empty (image);
-      sel = ! gimp_channel_is_empty (gimp_image_get_mask (image));
+      fs      = (gimp_image_floating_sel (image) != NULL);
+      aux     = (gimp_image_get_active_channel (image) != NULL);
+      lp      = ! gimp_image_is_empty (image);
+      sel     = ! gimp_channel_is_empty (gimp_image_get_mask (image));
+      scratch = gimp_image_is_scratch (image);
     }
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("image-convert-rgb",       image);
-  SET_SENSITIVE ("image-convert-grayscale", image);
-  SET_SENSITIVE ("image-convert-indexed",   image);
+  SET_SENSITIVE ("image-convert-rgb",       image && ! scratch);
+  SET_SENSITIVE ("image-convert-grayscale", image && ! scratch);
+  SET_SENSITIVE ("image-convert-indexed",   image && ! scratch);
 
-  SET_SENSITIVE ("image-flip-horizontal", image);
-  SET_SENSITIVE ("image-flip-vertical",   image);
-  SET_SENSITIVE ("image-rotate-90",       image);
-  SET_SENSITIVE ("image-rotate-180",      image);
-  SET_SENSITIVE ("image-rotate-270",      image);
+  SET_SENSITIVE ("image-flip-horizontal", image && ! scratch);
+  SET_SENSITIVE ("image-flip-vertical",   image && ! scratch);
+  SET_SENSITIVE ("image-rotate-90",       image && ! scratch);
+  SET_SENSITIVE ("image-rotate-180",      image && ! scratch);
+  SET_SENSITIVE ("image-rotate-270",      image && ! scratch);
 
-  SET_SENSITIVE ("image-resize",              image);
-  SET_SENSITIVE ("image-resize-to-layers",    image);
-  SET_SENSITIVE ("image-resize-to-selection", image && sel);
-  SET_SENSITIVE ("image-print-size",          image);
-  SET_SENSITIVE ("image-scale",               image);
-  SET_SENSITIVE ("image-crop",                image && sel);
-  SET_SENSITIVE ("image-duplicate",           image);
-  SET_SENSITIVE ("image-merge-layers",        image && !fs && !aux && lp);
-  SET_SENSITIVE ("image-flatten",             image && !fs && !aux && lp);
-  SET_SENSITIVE ("image-configure-grid",      image);
-  SET_SENSITIVE ("image-properties",          image);
+  SET_SENSITIVE ("image-resize",              image && ! scratch);
+  SET_SENSITIVE ("image-resize-to-layers",    image && ! scratch);
+  SET_SENSITIVE ("image-resize-to-selection", image && sel && ! scratch);
+  SET_SENSITIVE ("image-print-size",          image && ! scratch);
+  SET_SENSITIVE ("image-scale",               image && ! scratch);
+  SET_SENSITIVE ("image-crop",                image && sel && ! scratch);
+  SET_SENSITIVE ("image-duplicate",           image && ! scratch);
+  SET_SENSITIVE ("image-merge-layers",        image && !fs && !aux && lp && ! scratch);
+  SET_SENSITIVE ("image-flatten",             image && !fs && !aux && lp && ! scratch);
+  SET_SENSITIVE ("image-configure-grid",      image && ! scratch);
+  SET_SENSITIVE ("image-properties",          image && ! scratch);
 
 #undef SET_SENSITIVE
 }

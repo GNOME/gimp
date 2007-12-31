@@ -224,19 +224,23 @@ file_actions_update (GimpActionGroup *group,
 {
   GimpImage    *image    = action_data_get_image (data);
   GimpDrawable *drawable = NULL;
+  gboolean      scratch  = FALSE;
 
   if (image)
-    drawable = gimp_image_get_active_drawable (image);
+    {
+      drawable = gimp_image_get_active_drawable (image);
+      scratch  = gimp_image_is_scratch (image);
+    }
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
   SET_SENSITIVE ("file-open-as-layers",   image);
-  SET_SENSITIVE ("file-save",             image && drawable);
-  SET_SENSITIVE ("file-save-as",          image && drawable);
-  SET_SENSITIVE ("file-save-a-copy",      image && drawable);
-  SET_SENSITIVE ("file-save-as-template", image);
-  SET_SENSITIVE ("file-revert",           image && GIMP_OBJECT (image)->name);
+  SET_SENSITIVE ("file-save",             image && drawable && ! scratch);
+  SET_SENSITIVE ("file-save-as",          image && drawable && ! scratch);
+  SET_SENSITIVE ("file-save-a-copy",      image && drawable && ! scratch);
+  SET_SENSITIVE ("file-save-as-template", image && ! scratch);
+  SET_SENSITIVE ("file-revert",           image && GIMP_OBJECT (image)->name && ! scratch);
 
 #undef SET_SENSITIVE
 }

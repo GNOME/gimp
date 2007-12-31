@@ -1,4 +1,54 @@
 2007-12-31  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	A set of changes enabling gimp to work properly without a 
+	toolbox	menu.  As suggested by the usability team, when gimp 
+	is opened without an image, a "scratch" image is created, from
+	the splash image, to hold the menus.  The scratch image
+	is automatically deleted if any other image is created.  If
+	the last open image is closed, a new scratch image is created.
+	DND to the scratch image causes a new image to be created.
+
+	* configure.in:  change default to disable toolbox menu.
+
+	* devel-docs/log: new directory
+
+	* devel-docs/log/20071231-scratch.txt: more detailed explanation
+	of changes made in this commit.
+	
+	* app/file/file-open.[ch]:  add function to create scratch image
+	and display.
+
+	* app/app.c: if no files specified, create a scratch image
+	on startup.
+	
+	* app/core/gimpimage.[ch]: add "scratch" boolean.
+	
+	* app/core/gimp-gui.[ch] (gimp_create_scratch_display): new
+	function.
+	
+	* app/core/gimp.[ch]:  add "exiting" boolean, so we can tell
+	that we don't need a new scratch image.
+
+	* app/actions/image-actions.c
+	* app/actions/layers-actions.c
+	* app/actions/view-actions.c
+	* app/actions/file-actions.c
+	* app/actions/plug-in-actions.c
+	* app/actions/select-actions.c
+	* app/actions/edit-actions.c: disable most image actions for
+	scratch images.
+
+	* app/display/gimpdisplay.c: create or delete scratch images
+	as necessary.
+	
+	* app/display/gimpdisplayshell-title.c: use "GIMP" as title
+	for a scratch image.
+
+	* app/display/gimpdisplayshell-dnd.c
+	* app/widgets/gimptoolbox-dnd.[ch]: send dnd's onto a scratch
+	image to the toolbox instead.
+	
+2007-12-31  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	branch point for "weskaggs" branch.
 	

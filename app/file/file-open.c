@@ -41,6 +41,8 @@
 #define R_OK 4
 #endif
 
+#include "libgimpbase/gimpenv.h"
+
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core/core-types.h"
@@ -543,6 +545,55 @@ file_open_from_command_line (Gimp        *gimp,
     }
 
   return success;
+}
+
+
+/*  Create a scratch image to hold the menus, in case no real
+ * image is open.  We use the splash as the image to show.
+ */
+void
+file_create_scratch_image (Gimp        *gimp)
+{
+  GError            *error     = NULL;
+  gchar             *uri;
+  GimpImage         *image;
+  GimpPDBStatusType  status;
+  const gchar       *mime_type = NULL;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  uri = file_utils_any_to_uri (gimp,
+                               g_build_filename (gimp_data_directory (),
+                                                 "images",
+                                                 "gimp-splash.png",
+                                                 NULL),
+                               &error);
+
+  /* this better not happen */
+  if (error)
+    return;
+
+  image = file_open_image (gimp,
+                           gimp_get_user_context (gimp),
+                           NULL,
+                           uri,
+                           "gimp-splash.png",
+                           TRUE,
+                           NULL,
+                           GIMP_RUN_NONINTERACTIVE,
+                           &status,
+                           &mime_type,
+                           &error);
+
+  /* this better not happen */
+  if (error)
+    return;
+
+  image->scratch = TRUE;
+  gimp->scratch_image = image;
+
+  gimp_create_scratch_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
+  g_object_unref (image);
 }
 
 

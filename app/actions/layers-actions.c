@@ -470,6 +470,7 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       indexed    = FALSE;    /*  is indexed             */
   gboolean       lock_alpha = FALSE;
   gboolean       text_layer = FALSE;
+  gboolean       scratch    = TRUE;
   GList         *next       = NULL;
   GList         *prev       = NULL;
 
@@ -479,6 +480,7 @@ layers_actions_update (GimpActionGroup *group,
       ac      = (gimp_image_get_active_channel (image) != NULL);
       sel     = ! gimp_channel_is_empty (gimp_image_get_mask (image));
       indexed = (gimp_image_base_type (image) == GIMP_INDEXED);
+      scratch = gimp_image_is_scratch (image);
 
       layer = gimp_image_get_active_layer (image);
 
@@ -511,69 +513,69 @@ layers_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_VISIBLE   ("layers-text-tool",       text_layer && !ac);
-  SET_SENSITIVE ("layers-edit-attributes", layer && !fs && !ac);
+  SET_SENSITIVE ("layers-edit-attributes", layer && !fs && !ac && !scratch);
 
-  SET_SENSITIVE ("layers-new",             image);
-  SET_SENSITIVE ("layers-new-last-values", image);
-  SET_SENSITIVE ("layers-duplicate",       layer && !fs && !ac);
-  SET_SENSITIVE ("layers-delete",          layer && !ac);
+  SET_SENSITIVE ("layers-new",             image && !scratch);
+  SET_SENSITIVE ("layers-new-last-values", image && !scratch);
+  SET_SENSITIVE ("layers-duplicate",       layer && !fs && !ac && !scratch);
+  SET_SENSITIVE ("layers-delete",          layer && !ac && !scratch);
 
-  SET_SENSITIVE ("layers-select-top",      layer && !fs && !ac && prev);
-  SET_SENSITIVE ("layers-select-bottom",   layer && !fs && !ac && next);
-  SET_SENSITIVE ("layers-select-previous", layer && !fs && !ac && prev);
-  SET_SENSITIVE ("layers-select-next",     layer && !fs && !ac && next);
+  SET_SENSITIVE ("layers-select-top",      layer && !fs && !ac && prev && !scratch);
+  SET_SENSITIVE ("layers-select-bottom",   layer && !fs && !ac && next && !scratch);
+  SET_SENSITIVE ("layers-select-previous", layer && !fs && !ac && prev && !scratch);
+  SET_SENSITIVE ("layers-select-next",     layer && !fs && !ac && next && !scratch);
 
-  SET_SENSITIVE ("layers-raise",           layer && !fs && !ac && prev);
-  SET_SENSITIVE ("layers-raise-to-top",    layer && !fs && !ac && prev);
-  SET_SENSITIVE ("layers-lower",           layer && !fs && !ac && next);
-  SET_SENSITIVE ("layers-lower-to-bottom", layer && !fs && !ac && next);
+  SET_SENSITIVE ("layers-raise",           layer && !fs && !ac && prev && !scratch);
+  SET_SENSITIVE ("layers-raise-to-top",    layer && !fs && !ac && prev && !scratch);
+  SET_SENSITIVE ("layers-lower",           layer && !fs && !ac && next && !scratch);
+  SET_SENSITIVE ("layers-lower-to-bottom", layer && !fs && !ac && next && !scratch);
 
-  SET_SENSITIVE ("layers-anchor",          layer &&  fs && !ac);
-  SET_SENSITIVE ("layers-merge-down",      layer && !fs && !ac && next);
-  SET_SENSITIVE ("layers-merge-layers",    layer && !fs && !ac);
-  SET_SENSITIVE ("layers-flatten-image",   layer && !fs && !ac);
+  SET_SENSITIVE ("layers-anchor",          layer &&  fs && !ac && !scratch);
+  SET_SENSITIVE ("layers-merge-down",      layer && !fs && !ac && next && !scratch);
+  SET_SENSITIVE ("layers-merge-layers",    layer && !fs && !ac && !scratch);
+  SET_SENSITIVE ("layers-flatten-image",   layer && !fs && !ac && !scratch);
 
-  SET_VISIBLE   ("layers-text-discard",             text_layer && !ac);
-  SET_VISIBLE   ("layers-text-to-vectors",          text_layer && !ac);
-  SET_VISIBLE   ("layers-text-along-vectors",       text_layer && !ac);
-  SET_VISIBLE   ("layers-text-selection-replace",   text_layer && !ac);
-  SET_VISIBLE   ("layers-text-selection-add",       text_layer && !ac);
-  SET_VISIBLE   ("layers-text-selection-subtract",  text_layer && !ac);
-  SET_VISIBLE   ("layers-text-selection-intersect", text_layer && !ac);
+  SET_VISIBLE   ("layers-text-discard",             text_layer && !ac && !scratch);
+  SET_VISIBLE   ("layers-text-to-vectors",          text_layer && !ac && !scratch);
+  SET_VISIBLE   ("layers-text-along-vectors",       text_layer && !ac && !scratch);
+  SET_VISIBLE   ("layers-text-selection-replace",   text_layer && !ac && !scratch);
+  SET_VISIBLE   ("layers-text-selection-add",       text_layer && !ac && !scratch);
+  SET_VISIBLE   ("layers-text-selection-subtract",  text_layer && !ac && !scratch);
+  SET_VISIBLE   ("layers-text-selection-intersect", text_layer && !ac && !scratch);
 
-  SET_SENSITIVE ("layers-resize",          layer && !ac);
-  SET_SENSITIVE ("layers-resize-to-image", layer && !ac);
-  SET_SENSITIVE ("layers-scale",           layer && !ac);
+  SET_SENSITIVE ("layers-resize",          layer && !ac && !scratch);
+  SET_SENSITIVE ("layers-resize-to-image", layer && !ac && !scratch);
+  SET_SENSITIVE ("layers-scale",           layer && !ac && !scratch);
 
-  SET_SENSITIVE ("layers-crop",            layer && sel);
+  SET_SENSITIVE ("layers-crop",            layer && sel && !scratch);
 
-  SET_SENSITIVE ("layers-alpha-add",       layer && !fs && !alpha);
-  SET_SENSITIVE ("layers-alpha-remove",    layer && !fs &&  alpha);
+  SET_SENSITIVE ("layers-alpha-add",       layer && !fs && !alpha && !scratch);
+  SET_SENSITIVE ("layers-alpha-remove",    layer && !fs &&  alpha && !scratch);
 
-  SET_SENSITIVE ("layers-lock-alpha", layer);
-  SET_ACTIVE    ("layers-lock-alpha", lock_alpha);
+  SET_SENSITIVE ("layers-lock-alpha", layer && !scratch);
+  SET_ACTIVE    ("layers-lock-alpha", lock_alpha && !scratch);
 
-  SET_SENSITIVE ("layers-mask-add",    layer && !fs && !ac && !mask);
-  SET_SENSITIVE ("layers-mask-apply",  layer && !fs && !ac &&  mask);
-  SET_SENSITIVE ("layers-mask-delete", layer && !fs && !ac &&  mask);
+  SET_SENSITIVE ("layers-mask-add",    layer && !fs && !ac && !mask && !scratch);
+  SET_SENSITIVE ("layers-mask-apply",  layer && !fs && !ac &&  mask && !scratch);
+  SET_SENSITIVE ("layers-mask-delete", layer && !fs && !ac &&  mask && !scratch);
 
-  SET_SENSITIVE ("layers-mask-edit",    layer && !fs && !ac &&  mask);
-  SET_SENSITIVE ("layers-mask-show",    layer && !fs && !ac &&  mask);
-  SET_SENSITIVE ("layers-mask-disable", layer && !fs && !ac &&  mask);
+  SET_SENSITIVE ("layers-mask-edit",    layer && !fs && !ac &&  mask && !scratch);
+  SET_SENSITIVE ("layers-mask-show",    layer && !fs && !ac &&  mask && !scratch);
+  SET_SENSITIVE ("layers-mask-disable", layer && !fs && !ac &&  mask && !scratch);
 
   SET_ACTIVE ("layers-mask-edit",    mask && gimp_layer_mask_get_edit (mask));
   SET_ACTIVE ("layers-mask-show",    mask && gimp_layer_mask_get_show (mask));
   SET_ACTIVE ("layers-mask-disable", mask && !gimp_layer_mask_get_apply (mask));
 
-  SET_SENSITIVE ("layers-mask-selection-replace",   layer && !fs && !ac && mask);
-  SET_SENSITIVE ("layers-mask-selection-add",       layer && !fs && !ac && mask);
-  SET_SENSITIVE ("layers-mask-selection-subtract",  layer && !fs && !ac && mask);
-  SET_SENSITIVE ("layers-mask-selection-intersect", layer && !fs && !ac && mask);
+  SET_SENSITIVE ("layers-mask-selection-replace",   layer && !fs && !ac && mask && !scratch);
+  SET_SENSITIVE ("layers-mask-selection-add",       layer && !fs && !ac && mask && !scratch);
+  SET_SENSITIVE ("layers-mask-selection-subtract",  layer && !fs && !ac && mask && !scratch);
+  SET_SENSITIVE ("layers-mask-selection-intersect", layer && !fs && !ac && mask && !scratch);
 
-  SET_SENSITIVE ("layers-alpha-selection-replace",   layer && !fs && !ac);
-  SET_SENSITIVE ("layers-alpha-selection-add",       layer && !fs && !ac);
-  SET_SENSITIVE ("layers-alpha-selection-subtract",  layer && !fs && !ac);
-  SET_SENSITIVE ("layers-alpha-selection-intersect", layer && !fs && !ac);
+  SET_SENSITIVE ("layers-alpha-selection-replace",   layer && !fs && !ac && !scratch);
+  SET_SENSITIVE ("layers-alpha-selection-add",       layer && !fs && !ac && !scratch);
+  SET_SENSITIVE ("layers-alpha-selection-subtract",  layer && !fs && !ac && !scratch);
+  SET_SENSITIVE ("layers-alpha-selection-intersect", layer && !fs && !ac && !scratch);
 
 #undef SET_VISIBLE
 #undef SET_SENSITIVE

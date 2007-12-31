@@ -674,6 +674,8 @@ gimp_image_init (GimpImage *image)
   image->flush_accum.alpha_changed       = FALSE;
   image->flush_accum.mask_changed        = FALSE;
   image->flush_accum.preview_invalidated = FALSE;
+
+  image->scratch = FALSE;
 }
 
 static GObject *
@@ -3808,4 +3810,12 @@ gimp_image_get_icc_profile (GimpColorManaged *managed,
     }
 
   return NULL;
+}
+
+gboolean
+gimp_image_is_scratch (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  return image->scratch;
 }

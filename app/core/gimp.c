@@ -109,7 +109,6 @@ static void      gimp_edit_config_notify   (GObject           *edit_config,
                                             GParamSpec        *param_spec,
                                             GObject           *global_config);
 
-
 G_DEFINE_TYPE (Gimp, gimp, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_parent_class
@@ -176,6 +175,8 @@ gimp_class_init (GimpClass *klass)
 static void
 gimp_init (Gimp *gimp)
 {
+  gimp->exiting          = FALSE;
+
   gimp->config           = NULL;
   gimp->session_name     = NULL;
 
@@ -247,6 +248,8 @@ gimp_init (Gimp *gimp)
   gimp->context_list        = NULL;
   gimp->default_context     = NULL;
   gimp->user_context        = NULL;
+
+  gimp->scratch_image       = NULL;
 }
 
 static void
@@ -884,6 +887,8 @@ gimp_exit (Gimp     *gimp,
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
+  gimp->exiting = TRUE;
+
   if (gimp->be_verbose)
     g_print ("EXIT: gimp_exit\n");
 
@@ -1068,3 +1073,4 @@ gimp_message_valist (Gimp                *gimp,
 
   g_free (message);
 }
+

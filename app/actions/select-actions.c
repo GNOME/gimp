@@ -136,10 +136,12 @@ select_actions_update (GimpActionGroup *group,
   GimpDrawable *drawable = NULL;
   gboolean      fs       = FALSE;
   gboolean      sel      = FALSE;
+  gboolean      scratch  = TRUE;
 
   if (image)
     {
       drawable = gimp_image_get_active_drawable (image);
+      scratch = gimp_image_is_scratch (image);
 
       fs  = (gimp_image_floating_sel (image) != NULL);
       sel = ! gimp_channel_is_empty (gimp_image_get_mask (image));
@@ -148,20 +150,20 @@ select_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("select-all",    drawable);
-  SET_SENSITIVE ("select-none",   drawable && sel);
-  SET_SENSITIVE ("select-invert", drawable);
-  SET_SENSITIVE ("select-float",  drawable && sel);
+  SET_SENSITIVE ("select-all",    drawable && !scratch);
+  SET_SENSITIVE ("select-none",   drawable && sel && !scratch);
+  SET_SENSITIVE ("select-invert", drawable && !scratch);
+  SET_SENSITIVE ("select-float",  drawable && sel && !scratch);
 
-  SET_SENSITIVE ("select-feather", drawable && sel);
-  SET_SENSITIVE ("select-sharpen", drawable && sel);
-  SET_SENSITIVE ("select-shrink",  drawable && sel);
-  SET_SENSITIVE ("select-grow",    drawable && sel);
-  SET_SENSITIVE ("select-border",  drawable && sel);
+  SET_SENSITIVE ("select-feather", drawable && sel && !scratch);
+  SET_SENSITIVE ("select-sharpen", drawable && sel && !scratch);
+  SET_SENSITIVE ("select-shrink",  drawable && sel && !scratch);
+  SET_SENSITIVE ("select-grow",    drawable && sel && !scratch);
+  SET_SENSITIVE ("select-border",  drawable && sel && !scratch);
 
-  SET_SENSITIVE ("select-save",               drawable && !fs);
-  SET_SENSITIVE ("select-stroke",             drawable && sel);
-  SET_SENSITIVE ("select-stroke-last-values", drawable && sel);
+  SET_SENSITIVE ("select-save",               drawable && !fs && !scratch);
+  SET_SENSITIVE ("select-stroke",             drawable && sel && !scratch);
+  SET_SENSITIVE ("select-stroke-last-values", drawable && sel && !scratch);
 
 #undef SET_SENSITIVE
 }

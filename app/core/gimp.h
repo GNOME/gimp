@@ -43,6 +43,8 @@ struct _Gimp
                                         */
   gchar                  *session_name;
 
+  gboolean                exiting;
+
   gboolean                be_verbose;
   gboolean                no_data;
   gboolean                no_fonts;
@@ -113,6 +115,9 @@ struct _Gimp
 
   /*  the context used by the interface  */
   GimpContext            *user_context;
+
+  /* the menu-holder image in case no real image exists */
+  GimpImage              *scratch_image;
 };
 
 struct _GimpClass

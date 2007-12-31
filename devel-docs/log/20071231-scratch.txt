@@ -1,0 +1,57 @@
+Development log for "weskaggs" branch.
+
+2007-12-31:  Scratch images as menu-holders.
+
+One of the goals for 2.6 is to remove the menu from the toolbox and
+merge its contents into the image menu.  The code for the merged menu
+has already been written, and is available if Trunk is configured with
+--disable-toolbox-menu.  To make this work properly, though, it is
+necessary to make sure that some kind of image will be open at all
+times.
+
+I have looked over Peter's web page to get an understanding of how the
+usability team would like this to be done.  Their specification is not
+complete, but two important thing come clear:  (1) if Gimp is opened
+without any image to display, a "placeholder" image should be created
+to hold the menus.  They don't care very strongly about the contents
+of that image.  (2) If the last open image is closed, a new
+"placeholder" image should be created.
+
+The changes I am committing today form a test implementation of this
+functionality.  Here is what happens:
+
+1) If Gimp is started without any image specified, a "scratch" image
+   is created, showing the splash image, without any decoration.
+
+2) If any other image is created, by any means, the scratch image is
+   removed. 
+
+3) Most image-related menu operations are disabled on a scratch
+   image.  The only plug-ins that are available are ones that take an
+   empty image-type specification.
+
+4) DND to a scratch image causes a new image to be created, not for
+   the dragged thing to be opened as layers.
+
+5) The titlebar of a scratch image shows just "GIMP".
+
+6) Closing the last open image causes a new scratch image to be
+   created.
+
+A couple of comments:
+
+1) It will probably look better with a sideways-oriented splash image
+   than a vertically-oriented one.
+
+2) The shrink-wrapping of the scratch image is imperfect at the
+   moment.
+
+3) I think it would be cool to show tips on the scratch image instead
+   of using a separate, and annoying, dialog.  Many of the tips are a
+   bit too long to fit nicely onto a standard splash image, though.
+   Anyway, I intend to look at this topic some more.
+
+4) If using the splash screen is really the right thing to do, then
+   some of the code could be made more efficient, by using the
+   existing splash code, instead of just opening the png file
+   independently, as happens currently.

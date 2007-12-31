@@ -20,7 +20,37 @@
 #define __GIMP_TOOLBOX_DND_H__
 
 
-void   gimp_toolbox_dnd_init (GimpToolbox *toolbox);
+void   gimp_toolbox_dnd_init      (GimpToolbox  *toolbox);
 
+void   gimp_toolbox_drop_uri_list (GtkWidget    *widget,
+                                   gint          x,
+                                   gint          y,
+                                   GList        *uri_list,
+                                   gpointer      data);
+
+void   gimp_toolbox_drop_drawable (GtkWidget    *widget,
+                                   gint          x,
+                                   gint          y,
+                                   GimpViewable *viewable,
+                                   gpointer      data);
+
+void  gimp_toolbox_drop_buffer    (GtkWidget    *widget,
+                                   gint          x,
+                                   gint          y,
+                                   GimpViewable *viewable,
+                                   gpointer      data);
+
+void  gimp_toolbox_drop_pixbuf    (GtkWidget    *widget,
+                                   gint          x,
+                                   gint          y,
+                                   GdkPixbuf    *pixbuf,
+                                   gpointer      data);
+
+void  gimp_toolbox_drop_component (GtkWidget    *widget,
+                                   gint          x,
+                                   gint          y,
+                                   GimpImage    *image,
+                                   GimpChannelType component,
+                                   gpointer      data);
 
 #endif /* __GIMP_TOOLBOX_DND_H__ */

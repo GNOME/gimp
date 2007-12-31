@@ -59,6 +59,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-appearance.h"
 
 #include "actions/plug-in-actions.h"
 
@@ -90,6 +91,9 @@ static GimpObject   * gui_display_get_by_ID    (Gimp                *gimp,
 static gint           gui_display_get_ID       (GimpObject          *display);
 static guint32        gui_display_get_window   (GimpObject          *display);
 static GimpObject   * gui_display_create       (GimpImage           *image,
+                                                GimpUnit             unit,
+                                                gdouble              scale);
+static GimpObject * gui_scratch_display_create (GimpImage           *image,
                                                 GimpUnit             unit,
                                                 gdouble              scale);
 static void           gui_display_delete       (GimpObject          *display);
@@ -127,28 +131,29 @@ gui_vtable_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp->gui.ungrab              = gui_ungrab;
-  gimp->gui.threads_enter       = gui_threads_enter;
-  gimp->gui.threads_leave       = gui_threads_leave;
-  gimp->gui.set_busy            = gui_set_busy;
-  gimp->gui.unset_busy          = gui_unset_busy;
-  gimp->gui.show_message        = gui_message;
-  gimp->gui.help                = gui_help;
-  gimp->gui.get_program_class   = gui_get_program_class;
-  gimp->gui.get_display_name    = gui_get_display_name;
-  gimp->gui.get_theme_dir       = gui_get_theme_dir;
-  gimp->gui.display_get_by_id   = gui_display_get_by_ID;
-  gimp->gui.display_get_id      = gui_display_get_ID;
-  gimp->gui.display_get_window  = gui_display_get_window;
-  gimp->gui.display_create      = gui_display_create;
-  gimp->gui.display_delete      = gui_display_delete;
-  gimp->gui.displays_reconnect  = gui_displays_reconnect;
-  gimp->gui.progress_new        = gui_new_progress;
-  gimp->gui.progress_free       = gui_free_progress;
-  gimp->gui.pdb_dialog_new      = gui_pdb_dialog_new;
-  gimp->gui.pdb_dialog_set      = gui_pdb_dialog_set;
-  gimp->gui.pdb_dialog_close    = gui_pdb_dialog_close;
-  gimp->gui.recent_list_add_uri = gui_recent_list_add_uri;
+  gimp->gui.ungrab                 = gui_ungrab;
+  gimp->gui.threads_enter          = gui_threads_enter;
+  gimp->gui.threads_leave          = gui_threads_leave;
+  gimp->gui.set_busy               = gui_set_busy;
+  gimp->gui.unset_busy             = gui_unset_busy;
+  gimp->gui.show_message           = gui_message;
+  gimp->gui.help                   = gui_help;
+  gimp->gui.get_program_class      = gui_get_program_class;
+  gimp->gui.get_display_name       = gui_get_display_name;
+  gimp->gui.get_theme_dir          = gui_get_theme_dir;
+  gimp->gui.display_get_by_id      = gui_display_get_by_ID;
+  gimp->gui.display_get_id         = gui_display_get_ID;
+  gimp->gui.display_get_window     = gui_display_get_window;
+  gimp->gui.display_create         = gui_display_create;
+  gimp->gui.scratch_display_create = gui_scratch_display_create;
+  gimp->gui.display_delete         = gui_display_delete;
+  gimp->gui.displays_reconnect     = gui_displays_reconnect;
+  gimp->gui.progress_new           = gui_new_progress;
+  gimp->gui.progress_free          = gui_free_progress;
+  gimp->gui.pdb_dialog_new         = gui_pdb_dialog_new;
+  gimp->gui.pdb_dialog_set         = gui_pdb_dialog_set;
+  gimp->gui.pdb_dialog_close       = gui_pdb_dialog_close;
+  gimp->gui.recent_list_add_uri    = gui_recent_list_add_uri;
 }
 
 
@@ -293,6 +298,38 @@ gui_display_create (GimpImage *image,
 
   gimp_ui_manager_update (GIMP_DISPLAY_SHELL (display->shell)->menubar_manager,
                           display);
+
+  return GIMP_OBJECT (display);
+}
+
+static GimpObject *
+gui_scratch_display_create (GimpImage *image,
+                            GimpUnit   unit,
+                            gdouble    scale)
+{
+  GimpDisplay      *display;
+  GimpDisplayShell *shell;
+  GList            *image_managers;
+
+  image_managers = gimp_ui_managers_from_name ("<Image>");
+
+  display = gimp_display_new (image, unit, scale,
+                              global_menu_factory,
+                              image_managers->data);
+
+  shell = GIMP_DISPLAY_SHELL (display->shell);
+
+  gimp_context_set_display (gimp_get_user_context (image->gimp), display);
+
+  gimp_display_shell_set_show_layer      (shell, FALSE);
+  gimp_display_shell_set_show_rulers     (shell, FALSE);
+  gimp_display_shell_set_show_scrollbars (shell, FALSE);
+  gimp_display_shell_set_show_statusbar  (shell, FALSE);
+
+  gimp_display_shell_shrink_wrap (shell);
+
+  gimp_ui_manager_update (shell->menubar_manager, display);
+
 
   return GIMP_OBJECT (display);
 }

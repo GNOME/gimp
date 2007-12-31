@@ -255,6 +255,7 @@ edit_actions_update (GimpActionGroup *group,
   gchar        *fade_name    = NULL;
   gboolean      undo_enabled = FALSE;
   gboolean      fade_enabled = FALSE;
+  gboolean      scratch      = TRUE;
 
   if (image)
     {
@@ -262,7 +263,7 @@ edit_actions_update (GimpActionGroup *group,
       GimpUndo *redo;
 
       drawable = gimp_image_get_active_drawable (image);
-
+      scratch = gimp_image_is_scratch (image);
       undo_enabled = gimp_image_undo_is_enabled (image);
 
       if (undo_enabled)
@@ -297,7 +298,7 @@ edit_actions_update (GimpActionGroup *group,
 #define SET_LABEL(action,label) \
         gimp_action_group_set_action_label (group, action, (label))
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+        gimp_action_group_set_action_sensitive (group, action, ((condition) && ! scratch) != 0)
 
   SET_LABEL ("edit-undo", undo_name ? undo_name : _("_Undo"));
   SET_LABEL ("edit-redo", redo_name ? redo_name : _("_Redo"));

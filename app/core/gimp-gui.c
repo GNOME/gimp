@@ -289,6 +289,21 @@ gimp_create_display (Gimp      *gimp,
   return NULL;
 }
 
+GimpObject *
+gimp_create_scratch_display (Gimp      *gimp,
+                             GimpImage *image,
+                             GimpUnit   unit,
+                             gdouble    scale)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  if (gimp->gui.scratch_display_create)
+    return gimp->gui.scratch_display_create (image, unit, scale);
+
+  return NULL;
+}
+
 void
 gimp_delete_display (Gimp       *gimp,
                      GimpObject *display)

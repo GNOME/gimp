@@ -68,11 +68,19 @@ gimp_display_shell_title_init (GimpDisplayShell *shell)
 
   config = GIMP_DISPLAY_CONFIG (shell->display->image->gimp->config);
 
-  gimp_display_shell_format_title (shell, title, sizeof (title),
-                                   config->image_status_format);
+  if (gimp_image_is_scratch (shell->display->image))
+    {
+      gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "title",
+                           "%s", "");
+    }
+  else
+    {
+      gimp_display_shell_format_title (shell, title, sizeof (title),
+                                       config->image_status_format);
 
-  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "title",
-                       "%s", title);
+      gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "title",
+                           "%s", title);
+    }
 }
 
 void
@@ -102,20 +110,27 @@ gimp_display_shell_update_title_idle (gpointer data)
 
   shell->title_idle_id = 0;
 
-  /* format the title */
-  gimp_display_shell_format_title (shell, title, sizeof (title),
-                                   config->image_title_format);
-  gdk_window_set_title (GTK_WIDGET (shell)->window, title);
-
-  /* format the statusbar */
-  if (strcmp (config->image_title_format, config->image_status_format))
+  if (gimp_image_is_scratch (shell->display->image))
     {
-      gimp_display_shell_format_title (shell, title, sizeof (title),
-                                       config->image_status_format);
+      gdk_window_set_title (GTK_WIDGET (shell)->window, "GIMP");
     }
+  else
+    {
+      /* format the title */
+      gimp_display_shell_format_title (shell, title, sizeof (title),
+                                       config->image_title_format);
+      gdk_window_set_title (GTK_WIDGET (shell)->window, title);
 
-  gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar), "title",
-                          "%s", title);
+      /* format the statusbar */
+      if (strcmp (config->image_title_format, config->image_status_format))
+        {
+          gimp_display_shell_format_title (shell, title, sizeof (title),
+                                           config->image_status_format);
+        }
+
+      gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar), "title",
+                              "%s", title);
+    }
 
   return FALSE;
 }
