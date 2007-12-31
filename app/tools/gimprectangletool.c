@@ -1928,7 +1928,7 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
 
   /* initialize the statusbar display */
   gimp_tool_push_status_coords (tool, tool->display,
-                                _("Rectangle: "), 0, " x ", 0, NULL);
+                                _("Rectangle: "), 0, " × ", 0, NULL);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), tool->display);
 
