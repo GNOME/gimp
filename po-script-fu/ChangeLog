@@ -1,4 +1,7 @@
-2007-11-01  Sven Neumann  <sven@gimp.org>
+2007-12-31  Yannig Marchegay <yannig@marchegay.org>
+
+	* oc.po: Updated Occitan translation.
+2007-11-01  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: removed hsv-graph.scm.
 
