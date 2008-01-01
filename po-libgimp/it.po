@@ -1,7 +1,7 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
-# Daniele Medri <madrid@linux.it>, 2000, 2001, 2002
-# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005, 2006, 2007
+# Daniele Medri <madrid@linux.it>, 2000-2002
+# Marco Ciampa <ciampix@libero.it>, 2003-2008
 # Luca Ferretti <elle.uca@libero.it>, 2006
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 msgid ""
@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-12-28 14:40+0100\n"
-"PO-Revision-Date: 2007-12-28 14:41+0100\n"
+"PO-Revision-Date: 2008-01-01 02:04+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -769,7 +769,7 @@ msgstr "(stringa UTF-8 non valida)"
 
 #: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "Mode of operation for color management."
-msgstr "Modalità di operazione per gestione colore."
+msgstr "Modalità di operazione per la gestione del colore."
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "The color profile of your (primary) monitor."
@@ -1370,7 +1370,7 @@ msgstr "_Cicli di contrasto:"
 
 #: ../modules/cdisplay_lcms.c:111
 msgid "Color management display filter using ICC color profiles"
-msgstr "Il filtro di gestione colore del display usa i profili di colore ICC"
+msgstr "Il filtro di gestione del colore del display usa i profili di colore ICC"
 
 #: ../modules/cdisplay_lcms.c:172
 msgid "Color Management"
@@ -1380,9 +1380,7 @@ msgstr "Gestione del colore"
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr ""
-"Questo filtro prende la sua configurazione dalla sezione gestione colore "
-"nella finestra delle preferenze."
+msgstr "Questo filtro prende la sua configurazione dalla sezione gestione del colore nella finestra delle preferenze."
 
 #: ../modules/cdisplay_lcms.c:259
 msgid "Mode of operation:"

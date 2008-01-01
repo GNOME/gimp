@@ -1,7 +1,7 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2007
+# Marco Ciampa <ciampix@libero.it>, 2003-2008
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 #
 # Convenzioni adottate per Gimp:
@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-12-28 14:38+0100\n"
-"PO-Revision-Date: 2007-12-28 14:39+0100\n"
+"PO-Revision-Date: 2008-01-01 02:04+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -5631,7 +5631,7 @@ msgstr "Mantieni il profilo incorporato"
 
 #: ../app/core/core-enums.c:1260
 msgid "Convert to RGB workspace"
-msgstr "Converti in spazio colore RGB"
+msgstr "Converti allo spazio di lavoro RGB"
 
 #: ../app/core/gimp-contexts.c:141 ../app/core/gimptooloptions.c:239
 #: ../app/gui/session.c:257 ../app/menus/menus.c:430
@@ -7892,7 +7892,7 @@ msgstr "C_alibratura..."
 
 #: ../app/dialogs/preferences-dialog.c:2395
 msgid "Color Management"
-msgstr "Gestione colore"
+msgstr "Gestione del colore"
 
 #: ../app/dialogs/preferences-dialog.c:2415
 msgid "_RGB profile:"
@@ -7936,15 +7936,15 @@ msgstr "Prova ad usare il profilo del moni_tor di sistema"
 
 #: ../app/dialogs/preferences-dialog.c:2473
 msgid "_Display rendering intent:"
-msgstr "Modalità di rendering su _display:"
+msgstr "Intento di rendering per il _display:"
 
 #: ../app/dialogs/preferences-dialog.c:2482
 msgid "_Softproof rendering intent:"
-msgstr "Modalità di rendering su _campione:"
+msgstr "Intento di rendering per la _simulazione a video:"
 
 #: ../app/dialogs/preferences-dialog.c:2495
 msgid "Mark out of gamut colors"
-msgstr "Delimita la gamma di colori"
+msgstr "Evidenzia i colori fuori gamut"
 
 #: ../app/dialogs/preferences-dialog.c:2500
 msgid "Select Warning Color"
