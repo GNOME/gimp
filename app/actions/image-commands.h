@@ -58,6 +58,11 @@ void   image_flatten_image_cmd_callback    (GtkAction *action,
 
 void   image_configure_grid_cmd_callback   (GtkAction *action,
                                             gpointer   data);
+void   image_align_items_cmd_callback      (GtkAction *action,
+                                            gpointer   data);
+void   image_distribute_items_cmd_callback (GtkAction *action,
+                                            gpointer   data);
+
 void   image_properties_cmd_callback       (GtkAction *action,
                                             gpointer   data);
 

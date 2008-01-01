@@ -319,6 +319,8 @@
       <placeholder name="Structure">
         <menuitem action="image-merge-layers" />
         <menuitem action="image-flatten" />
+        <menuitem action="image-align-items" />
+        <menuitem action="image-distribute-items" />
       </placeholder>
       <placeholder name="Arrange" />
       <separator />
@@ -513,7 +515,7 @@
 	<menuitem action="tools-dodge-burn" />
       </menu>
       <menu action="tools-transform-menu" name="Transform Tools">
-	<menuitem action="tools-align" />
+	<menuitem action="tools-link" />
 	<menuitem action="tools-move" />
 	<menuitem action="tools-crop" />
 	<menuitem action="tools-rotate" />

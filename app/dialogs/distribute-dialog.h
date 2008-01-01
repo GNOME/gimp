@@ -16,15 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_IMAGE_ARRANGE_H__
-#define __GIMP_IMAGE_ARRANGE_H__
+#ifndef __DISTRIBUTE_DIALOG_H__
+#define __DISTRIBUTE_DIALOG_H__
 
 
-void gimp_image_align_linked_items      (GimpImage         *image,
-                                         GimpAlignmentType  alignment,
-                                         GObject           *reference);
+GtkWidget * distribute_dialog_new (GimpImage   *image,
+                                   GimpContext *context,
+                                   GtkWidget   *parent);
 
-void gimp_image_distribute_linked_items (GimpImage         *image,
-                                         GimpAlignmentType  alignment);
-
-#endif  /*  __GIMP_IMAGE_ARRANGE_H__  */
+#endif  /*  __DISTRIBUTE_DIALOG_H__  */

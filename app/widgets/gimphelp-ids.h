@@ -127,6 +127,8 @@
 #define GIMP_HELP_IMAGE_DUPLICATE                 "gimp-image-duplicate"
 #define GIMP_HELP_IMAGE_MERGE_LAYERS              "gimp-image-merge-layers"
 #define GIMP_HELP_IMAGE_FLATTEN                   "gimp-image-flatten"
+#define GIMP_HELP_IMAGE_ALIGN_ITEMS               "gimp-image-align-items"
+#define GIMP_HELP_IMAGE_DISTRIBUTE_ITEMS          "gimp-image-distribute-items"
 #define GIMP_HELP_IMAGE_GRID                      "gimp-image-grid"
 #define GIMP_HELP_IMAGE_PROPERTIES                "gimp-image-properties"
 
@@ -260,6 +262,7 @@
 #define GIMP_HELP_TOOL_INK                        "gimp-tool-ink"
 #define GIMP_HELP_TOOL_ISCISSORS                  "gimp-tool-iscissors"
 #define GIMP_HELP_TOOL_LEVELS                     "gimp-tool-levels"
+#define GIMP_HELP_TOOL_LINK                       "gimp-tool-link"
 #define GIMP_HELP_TOOL_MEASURE                    "gimp-tool-measure"
 #define GIMP_HELP_TOOL_MOVE                       "gimp-tool-move"
 #define GIMP_HELP_TOOL_PATH                       "gimp-tool-path"

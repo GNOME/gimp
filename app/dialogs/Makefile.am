@@ -22,12 +22,16 @@ libappdialogs_a_sources = \
 	\
 	about-dialog.c			\
 	about-dialog.h			\
+	align-dialog.c			\
+	align-dialog.h			\
 	channel-options-dialog.c	\
 	channel-options-dialog.h	\
 	convert-dialog.c		\
 	convert-dialog.h		\
 	desaturate-dialog.c		\
 	desaturate-dialog.h		\
+	distribute-dialog.c		\
+	distribute-dialog.h		\
 	fade-dialog.c			\
 	fade-dialog.h			\
 	file-open-dialog.c		\

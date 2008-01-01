@@ -167,6 +167,8 @@ static void     gimp_image_drawable_update       (GimpDrawable   *drawable,
                                                   GimpImage      *image);
 static void     gimp_image_drawable_visibility   (GimpItem       *item,
                                                   GimpImage      *image);
+static void     gimp_image_drawable_linked       (GimpItem       *item,
+                                                  GimpImage      *image);
 static void     gimp_image_layer_alpha_changed   (GimpDrawable   *drawable,
                                                   GimpImage      *image);
 static void     gimp_image_layer_add             (GimpContainer  *container,
@@ -185,6 +187,8 @@ static void     gimp_image_channel_name_changed  (GimpChannel    *channel,
                                                   GimpImage      *image);
 static void     gimp_image_channel_color_changed (GimpChannel    *channel,
                                                   GimpImage      *image);
+static void     unlink_item_callback             (GObject        *object,
+                                                  gpointer        data);
 
 static const guint8 * gimp_image_get_icc_profile (GimpColorManaged *managed,
                                                   gsize            *len);
@@ -609,6 +613,10 @@ gimp_image_init (GimpImage *image)
     gimp_container_add_handler (image->layers, "visibility-changed",
                                 G_CALLBACK (gimp_image_drawable_visibility),
                                 image);
+  image->layer_linked_handler =
+    gimp_container_add_handler (image->layers, "linked-changed",
+                                G_CALLBACK (gimp_image_drawable_linked),
+                                image);
   image->layer_alpha_handler =
     gimp_container_add_handler (image->layers, "alpha-changed",
                                 G_CALLBACK (gimp_image_layer_alpha_changed),
@@ -827,6 +835,8 @@ gimp_image_dispose (GObject *object)
                                  image->layer_update_handler);
   gimp_container_remove_handler (image->layers,
                                  image->layer_visible_handler);
+  gimp_container_remove_handler (image->layers,
+                                 image->layer_linked_handler);
   gimp_container_remove_handler (image->layers,
                                  image->layer_alpha_handler);
 
@@ -1197,6 +1207,22 @@ gimp_image_drawable_visibility (GimpItem  *item,
                      gimp_item_width (item),
                      gimp_item_height (item));
 }
+
+static void
+gimp_image_drawable_linked (GimpItem  *item,
+                            GimpImage *image)
+{
+  gint offset_x;
+  gint offset_y;
+
+  gimp_item_offsets (item, &offset_x, &offset_y);
+
+  gimp_image_update (image,
+                     offset_x, offset_y,
+                     gimp_item_width (item),
+                     gimp_item_height (item));
+}
+
 
 static void
 gimp_image_layer_alpha_changed (GimpDrawable *drawable,
@@ -1902,6 +1928,44 @@ gimp_image_undo_event (GimpImage     *image,
   g_signal_emit (image, gimp_image_signals[UNDO_EVENT], 0, event, undo);
 }
 
+
+/*
+ * gimp_image_unlink_all_items
+ * image: a #GimpImage
+ *
+ * Unlink all items in the image  that are linked.  An undo group
+ * is pushed automatically.
+ */
+void
+gimp_image_unlink_all_items (GimpImage *image)
+{
+  GimpContainer *container;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_LINKED,
+                               _("Unlink All Items"));
+
+  container = gimp_image_get_layers (image);
+  gimp_container_foreach (container, (GFunc) unlink_item_callback, image);
+
+  container = gimp_image_get_channels (image);
+  gimp_container_foreach (container, (GFunc) unlink_item_callback, image);
+
+  container = gimp_image_get_vectors (image);
+  gimp_container_foreach (container, (GFunc) unlink_item_callback, image);
+
+  gimp_image_undo_group_end (image);
+}
+
+static void
+unlink_item_callback (GObject  *object,
+                      gpointer  data)
+{
+  GimpItem  *item   = GIMP_ITEM (object);
+
+  gimp_item_set_linked (item, FALSE, TRUE);
+}
 
 /* NOTE about the image->dirty counter:
  *   If 0, then the image is clean (ie, copy on disk is the same as the one

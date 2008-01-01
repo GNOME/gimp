@@ -107,12 +107,6 @@ typedef enum  /*< pdb-skip >*/
   GIMP_ALIGN_TOP,
   GIMP_ALIGN_VCENTER,
   GIMP_ALIGN_BOTTOM,
-  GIMP_ARRANGE_LEFT,
-  GIMP_ARRANGE_HCENTER,
-  GIMP_ARRANGE_RIGHT,
-  GIMP_ARRANGE_TOP,
-  GIMP_ARRANGE_VCENTER,
-  GIMP_ARRANGE_BOTTOM
 } GimpAlignmentType;
 
 
@@ -122,7 +116,6 @@ GType gimp_align_reference_type_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_ALIGN_REFERENCE_FIRST,          /*< desc="First item"     >*/
   GIMP_ALIGN_REFERENCE_IMAGE,          /*< desc="Image"          >*/
   GIMP_ALIGN_REFERENCE_SELECTION,      /*< desc="Selection"      >*/
   GIMP_ALIGN_REFERENCE_ACTIVE_LAYER,   /*< desc="Active layer"   >*/
@@ -299,6 +292,7 @@ typedef enum  /*< pdb-skip >*/
 {
   GIMP_SELECTION_OFF,
   GIMP_SELECTION_LAYER_OFF,
+  GIMP_SELECTION_LAYER_ON,
   GIMP_SELECTION_ON,
   GIMP_SELECTION_PAUSE,
   GIMP_SELECTION_RESUME

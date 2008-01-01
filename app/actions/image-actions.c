@@ -134,6 +134,18 @@ static const GimpActionEntry image_actions[] =
     G_CALLBACK (image_flatten_image_cmd_callback),
     GIMP_HELP_IMAGE_FLATTEN },
 
+  { "image-align-items", NULL,
+    N_("_Align"), NULL,
+    N_("Align the linked items"),
+    G_CALLBACK (image_align_items_cmd_callback),
+    GIMP_HELP_IMAGE_ALIGN_ITEMS },
+
+  { "image-distribute-items", NULL,
+    N_("Dis_tribute"), NULL,
+    N_("Distribute the linked items with even spacing"),
+    G_CALLBACK (image_distribute_items_cmd_callback),
+    GIMP_HELP_IMAGE_DISTRIBUTE_ITEMS },
+
   { "image-configure-grid", GIMP_STOCK_GRID,
     N_("Configure G_rid..."), NULL,
     N_("Configure the grid for this image"),
@@ -295,6 +307,9 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-flatten",             image && !fs && !aux && lp && ! scratch);
   SET_SENSITIVE ("image-configure-grid",      image && ! scratch);
   SET_SENSITIVE ("image-properties",          image && ! scratch);
+
+  SET_SENSITIVE ("image-align-items",        image && lp && ! scratch);
+  SET_SENSITIVE ("image-distribute-items",   image && lp && ! scratch);
 
 #undef SET_SENSITIVE
 }

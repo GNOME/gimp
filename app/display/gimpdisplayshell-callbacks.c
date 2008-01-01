@@ -431,6 +431,9 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
   /* draw the sample points */
   gimp_display_shell_draw_sample_points (shell);
 
+  /* draw the "linked" indicators */
+  gimp_display_shell_draw_linked (shell);
+
   /* and the cursor (if we have a software cursor) */
   gimp_display_shell_draw_cursor (shell);
 

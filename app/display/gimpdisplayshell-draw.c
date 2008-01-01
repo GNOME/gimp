@@ -36,6 +36,7 @@
 #include "core/gimplist.h"
 #include "core/gimpprojection.h"
 #include "core/gimpsamplepoint.h"
+#include "core/gimplayer.h"
 
 #include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
@@ -53,11 +54,13 @@
 
 /*  local function prototypes  */
 
-static GdkGC * gimp_display_shell_get_grid_gc (GimpDisplayShell *shell,
-                                               GimpGrid         *grid);
-static GdkGC * gimp_display_shell_get_pen_gc  (GimpDisplayShell *shell,
-                                               GimpContext      *context,
-                                               GimpActiveColor   active);
+static GdkGC * gimp_display_shell_get_grid_gc      (GimpDisplayShell *shell,
+                                                    GimpGrid         *grid);
+static GdkGC * gimp_display_shell_get_pen_gc       (GimpDisplayShell *shell,
+                                                    GimpContext      *context,
+                                                    GimpActiveColor   active);
+static void    gimp_display_shell_draw_item_linked (GimpDisplayShell *shell,
+                                                    GimpItem         *item);
 
 
 /*  public functions  */
@@ -301,6 +304,74 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
       gimp_canvas_set_custom_gc (canvas, NULL);
     }
 }
+
+/*
+ * gimp_display_shell_draw_linked:
+ * @shell: the display shell
+ *
+ * Draw a small square at each corner of the bounds for each linked item.
+ */
+void
+gimp_display_shell_draw_linked (GimpDisplayShell   *shell)
+{
+  GimpImage     *image;
+  GimpContainer *layers;
+  gint           num_layers;
+  gint           i;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  image = shell->display->image;
+
+  layers = gimp_image_get_layers (image);
+  num_layers = gimp_container_num_children (layers);
+
+  for (i = 0; i < num_layers; i++)
+    {
+      GimpLayer *layer;
+      GimpItem  *item;
+
+      layer = GIMP_LAYER (gimp_container_get_child_by_index (layers, i));
+
+      item = GIMP_ITEM (layer);
+
+      if (gimp_item_get_visible (item) && gimp_item_get_linked (item))
+        gimp_display_shell_draw_item_linked (shell, item);
+    }
+}
+
+#define LINKED_MARKER_SIZE 4
+
+static void
+gimp_display_shell_draw_item_linked (GimpDisplayShell *shell,
+                                     GimpItem         *item)
+{
+  GimpCanvas *canvas   = GIMP_CANVAS (shell->canvas);
+  gint        width    = gimp_item_width (item);
+  gint        height   = gimp_item_height (item);
+  gint        xoffset;
+  gint        yoffset;
+  gint        x0, y0, x1, y1;
+  gint        msize    = LINKED_MARKER_SIZE;
+
+  gimp_item_offsets (item, &xoffset, &yoffset);
+
+  gimp_display_shell_transform_xy (shell, xoffset, yoffset,
+                                   &x0, &y0, FALSE);
+  gimp_display_shell_transform_xy (shell, xoffset + width, yoffset + height,
+                                   &x1, &y1, FALSE);
+
+  gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_BLACK, TRUE,
+                              x0, y0, msize, msize);
+  gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_BLACK, TRUE,
+                              x0, y1 - msize, msize, msize);
+  gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_BLACK, TRUE,
+                              x1 - msize, y0, msize, msize);
+  gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_BLACK, TRUE,
+                              x1 - msize, y1 - msize, msize, msize);
+}
+
+#undef LINKED_MARKER_SIZE
 
 void
 gimp_display_shell_draw_pen (GimpDisplayShell  *shell,

@@ -16,40 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include "config.h"
-
-#include <gtk/gtk.h>
-
-#include "tools-types.h"
-
-#include "gimpalignoptions.h"
-#include "gimptooloptions-gui.h"
+#ifndef __ALIGN_DIALOG_H__
+#define __ALIGN_DIALOG_H__
 
 
-G_DEFINE_TYPE (GimpAlignOptions, gimp_align_options, GIMP_TYPE_TOOL_OPTIONS)
+GtkWidget * align_dialog_new (GimpImage   *image,
+                              GimpContext *context,
+                              GtkWidget   *parent);
 
 
-static void
-gimp_align_options_class_init (GimpAlignOptionsClass *klass)
-{
-}
-
-static void
-gimp_align_options_init (GimpAlignOptions *options)
-{
-}
-
-GtkWidget *
-gimp_align_options_gui (GimpToolOptions *tool_options)
-{
-  GtkWidget *vbox = gimp_tool_options_gui (tool_options);
-  GtkWidget *container;
-
-  container = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), container, FALSE, FALSE, 0);
-  gtk_widget_show (container);
-
-  g_object_set_data (G_OBJECT (tool_options), "controls-container", container);
-
-  return vbox;
-}
+#endif  /*  __ALIGN_DIALOG_H__  */

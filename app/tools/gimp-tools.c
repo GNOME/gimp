@@ -37,7 +37,6 @@
 #include "tool_manager.h"
 
 #include "gimpairbrushtool.h"
-#include "gimpaligntool.h"
 #include "gimpblendtool.h"
 #include "gimpbrightnesscontrasttool.h"
 #include "gimpbucketfilltool.h"
@@ -61,6 +60,7 @@
 #include "gimpinktool.h"
 #include "gimpiscissorstool.h"
 #include "gimplevelstool.h"
+#include "gimplinktool.h"
 #include "gimpmagnifytool.h"
 #include "gimpmeasuretool.h"
 #include "gimpmovetool.h"
@@ -147,7 +147,7 @@ gimp_tools_init (Gimp *gimp)
     gimp_scale_tool_register,
     gimp_rotate_tool_register,
     gimp_crop_tool_register,
-    gimp_align_tool_register,
+    gimp_link_tool_register,
     gimp_move_tool_register,
 
     /*  non-modifying tools  */

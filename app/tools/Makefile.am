@@ -14,10 +14,6 @@ libapptools_a_sources = \
 	\
 	gimpairbrushtool.c		\
 	gimpairbrushtool.h		\
-	gimpalignoptions.c		\
-	gimpalignoptions.h		\
-	gimpaligntool.c			\
-	gimpaligntool.h			\
 	gimpblendoptions.c		\
 	gimpblendoptions.h		\
 	gimpblendtool.c			\
@@ -96,6 +92,8 @@ libapptools_a_sources = \
 	gimpiscissorstool.h		\
 	gimplevelstool.c		\
 	gimplevelstool.h		\
+	gimplinktool.c			\
+	gimplinktool.h			\
 	gimpmagnifyoptions.c		\
 	gimpmagnifyoptions.h		\
 	gimpmagnifytool.c		\

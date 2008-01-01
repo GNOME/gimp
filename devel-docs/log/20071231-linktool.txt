@@ -1,0 +1,77 @@
+Development log for "weskaggs" branch.
+
+2007-12-31:  Item-linking stuff.
+
+The aim of this commit is to move Gimp toward having a proper vector
+selection mechanism -- a mechanism capable of easily selecting and
+unselecting groups of items such as layers, paths, etc.  The
+infrastructure for such a mechanism is present in the concept of
+"linking", but it is not very usable, since currently the only way to
+link or unlink things is by clicking on the chain area in the Layers
+dialog (or something equally painful).  What is needed is a way to
+select things in a manner similar to that used by vector graphics
+programs -- that is, by clicking on items in the image, or by drawing
+a rubber-band box around a set of items.
+
+The basic functionality needed to do this is already present, in the
+Align tool -- the problem is that it only maintain a temporary
+internal list of the items that are selected.  This commit converts
+the Align tool into a vector selection tool, called the "Link Tool".
+I use that name because it would be bad to confuse the
+vector-selection function with the raster-selection that is
+implemented by Gimp's Selection tools, and I think we should maintain
+the term "linking", even though it will be confusing sometimes.
+
+Replacing the Align tool with the Link tool allows the
+align/distribute functionality to be performed by dialogs (which act
+on the set of linked items) rather than inside the tool.  Thus, the
+resulting tool is quite a bit simpler, and doesn't require any
+options.
+
+Here are the details:
+
+1) I made linkage visible in the image by writing code to draw small
+   squares at the corners of each linked item.  This is generally the
+   way selection is indicated in vector graphics programs, so it
+   should be intuitive.
+
+2) In the Link tool:
+
+  a) Clicking on a layer or path causes it to be linked, and clears
+  all other links.
+
+  b) Shift-clicking adds the item to the set of linked items.
+
+  c) Control-clicking removes the item from the set of linked items.
+
+  d) Rubber-banding links all items whose corners all fall within the
+  rubber-banded region.  Shift and Control have the same effects as
+  for clicking.
+
+3) The symbol I used for the Link tool in the Toolbox is a
+   cursor-arrow (GTK_STOCK_CURSOR).  This is the standard symbol for
+   selection in vector-graphics programs -- it should however be
+   modified to look less like a cursor and more like a tool icon.
+
+4) Align and Distribute are made available in the Image submenu.  They
+   bring up dialogs that give options for the alignment target, and
+   buttons for each possible alignment point (i.e., right side,
+   horizontal center, etc).
+
+5) I changed Distribute to make it work more like Distribute in
+   Inkscape.  Now, it sorts the items in order of position of the
+   alignment points (either horizontally or vertically, depending on
+   the type of alignment), and then shifts the items to make their
+   alignment points evenly spaced, without moving the items at the
+   ends. 
+
+
+There is more to be done.  I think probably activating a layer in the
+layers dialog should automatically cause it to be linked, and should
+unlink anything that is currently linked; shift-clicking to activate a
+layer should add to the linked-set instead of replacing.
+
+I also wonder whether it would be a good idea to borrow the button
+symbols from Inkscape for the Align and Distribute dialogs -- they are
+more complicated than the ones currently used, but probably more
+attractive.

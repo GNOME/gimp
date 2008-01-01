@@ -141,6 +141,7 @@ struct _GimpImage
 
   GQuark             layer_update_handler;
   GQuark             layer_visible_handler;
+  GQuark             layer_linked_handler;
   GQuark             layer_alpha_handler;
   GQuark             channel_update_handler;
   GQuark             channel_visible_handler;
@@ -534,6 +535,7 @@ gboolean    gimp_image_coords_in_active_pickable (GimpImage          *image,
                                                   const GimpCoords   *coords,
                                                   gboolean            sample_merged,
                                                   gboolean            selected_only);
+void        gimp_image_unlink_all_items          (GimpImage          *image);
 
 void        gimp_image_invalidate_layer_previews (GimpImage          *image);
 void      gimp_image_invalidate_channel_previews (GimpImage          *image);

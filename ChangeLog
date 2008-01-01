@@ -1,5 +1,59 @@
 2007-12-31  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	This is a set of changes aimed at making the "linking"
+	function usable as a vector-selection.  A new tool is
+	added, derived from the existing alignment tool, that
+	allows items to be linked by clicking on them or enclosing
+	them in a rubber-band box.  The "align" and "distribute" 
+	functions are removed from the alignment tool, and made 
+	accessible via dialogs in the "image" submenu -- they now 
+	act on the set of linked items rather than a temporary list 
+	maintained by the align tool.
+
+	* devel-docs/log/20071231-linktool.txt: longer explanation
+	of this commit.
+	
+	* app/core/core-enums.[ch]: change alignment enum.
+
+	* app/core/gimpimage-arrange.[ch]: add new functions
+	to align/distribute the linked items in an image.
+
+	* app/core/gimpimage.[ch] (gimp_image_unlink_all_items):
+	new function.
+
+	* app/tools/gimpaligntool.[ch]
+	* app/tools/gimpalignoptions.[ch]: removed.
+
+	* app/tools/gimplinktool.[ch]: new tool, derived from old
+	align tool, to make linking things easy and fun.
+
+	* app/tools/gimp-tools.c
+	* app/tools/Makefile.am: changed accordingly.
+
+	* app/dialogs/align-dialog.[ch]: new dialog for aligning
+	the set of linked items in various ways.
+
+	* app/dialogs/distribute-dialog.[ch]: new dialog for
+	distributing the set of linked items in various ways.
+
+	* app/dialogs/Makefile.am: changed accordingly.
+
+	* app/actions/image-actions.c
+	* app/actions/image-commands.[ch]:  add actions and commands
+	to allow the new dialog to be placed in the "image" submenu.
+
+	* app/display/gimpdisplayshell-draw.[ch]
+	* app/display/gimpdisplayshell-callbacks.c: draw small black
+	markers at the corners of the bounding box for linked items.
+
+	* app/widgets/gimphelp-ids.h: add help ids for new tool
+	and new dialogs.
+
+	* menus/image-menu.xml.in: add "Align" and "Distribute"
+	to "image" submenu.
+
+2007-12-31  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	A set of changes enabling gimp to work properly without a 
 	toolbox	menu.  As suggested by the usability team, when gimp 
 	is opened without an image, a "scratch" image is created, from

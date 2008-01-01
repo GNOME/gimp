@@ -149,18 +149,12 @@ gimp_alignment_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_ALIGN_LEFT, "GIMP_ALIGN_LEFT", "align-left" },
-    { GIMP_ALIGN_HCENTER, "GIMP_ALIGN_HCENTER", "align-hcenter" },
-    { GIMP_ALIGN_RIGHT, "GIMP_ALIGN_RIGHT", "align-right" },
-    { GIMP_ALIGN_TOP, "GIMP_ALIGN_TOP", "align-top" },
-    { GIMP_ALIGN_VCENTER, "GIMP_ALIGN_VCENTER", "align-vcenter" },
-    { GIMP_ALIGN_BOTTOM, "GIMP_ALIGN_BOTTOM", "align-bottom" },
-    { GIMP_ARRANGE_LEFT, "GIMP_ARRANGE_LEFT", "arrange-left" },
-    { GIMP_ARRANGE_HCENTER, "GIMP_ARRANGE_HCENTER", "arrange-hcenter" },
-    { GIMP_ARRANGE_RIGHT, "GIMP_ARRANGE_RIGHT", "arrange-right" },
-    { GIMP_ARRANGE_TOP, "GIMP_ARRANGE_TOP", "arrange-top" },
-    { GIMP_ARRANGE_VCENTER, "GIMP_ARRANGE_VCENTER", "arrange-vcenter" },
-    { GIMP_ARRANGE_BOTTOM, "GIMP_ARRANGE_BOTTOM", "arrange-bottom" },
+    { GIMP_ALIGN_LEFT, "GIMP_ALIGN_LEFT", "left" },
+    { GIMP_ALIGN_HCENTER, "GIMP_ALIGN_HCENTER", "hcenter" },
+    { GIMP_ALIGN_RIGHT, "GIMP_ALIGN_RIGHT", "right" },
+    { GIMP_ALIGN_TOP, "GIMP_ALIGN_TOP", "top" },
+    { GIMP_ALIGN_VCENTER, "GIMP_ALIGN_VCENTER", "vcenter" },
+    { GIMP_ALIGN_BOTTOM, "GIMP_ALIGN_BOTTOM", "bottom" },
     { 0, NULL, NULL }
   };
 
@@ -172,12 +166,6 @@ gimp_alignment_type_get_type (void)
     { GIMP_ALIGN_TOP, "GIMP_ALIGN_TOP", NULL },
     { GIMP_ALIGN_VCENTER, "GIMP_ALIGN_VCENTER", NULL },
     { GIMP_ALIGN_BOTTOM, "GIMP_ALIGN_BOTTOM", NULL },
-    { GIMP_ARRANGE_LEFT, "GIMP_ARRANGE_LEFT", NULL },
-    { GIMP_ARRANGE_HCENTER, "GIMP_ARRANGE_HCENTER", NULL },
-    { GIMP_ARRANGE_RIGHT, "GIMP_ARRANGE_RIGHT", NULL },
-    { GIMP_ARRANGE_TOP, "GIMP_ARRANGE_TOP", NULL },
-    { GIMP_ARRANGE_VCENTER, "GIMP_ARRANGE_VCENTER", NULL },
-    { GIMP_ARRANGE_BOTTOM, "GIMP_ARRANGE_BOTTOM", NULL },
     { 0, NULL, NULL }
   };
 
@@ -197,7 +185,6 @@ gimp_align_reference_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_ALIGN_REFERENCE_FIRST, "GIMP_ALIGN_REFERENCE_FIRST", "first" },
     { GIMP_ALIGN_REFERENCE_IMAGE, "GIMP_ALIGN_REFERENCE_IMAGE", "image" },
     { GIMP_ALIGN_REFERENCE_SELECTION, "GIMP_ALIGN_REFERENCE_SELECTION", "selection" },
     { GIMP_ALIGN_REFERENCE_ACTIVE_LAYER, "GIMP_ALIGN_REFERENCE_ACTIVE_LAYER", "active-layer" },
@@ -208,7 +195,6 @@ gimp_align_reference_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_ALIGN_REFERENCE_FIRST, N_("First item"), NULL },
     { GIMP_ALIGN_REFERENCE_IMAGE, N_("Image"), NULL },
     { GIMP_ALIGN_REFERENCE_SELECTION, N_("Selection"), NULL },
     { GIMP_ALIGN_REFERENCE_ACTIVE_LAYER, N_("Active layer"), NULL },
@@ -627,6 +613,7 @@ gimp_selection_control_get_type (void)
   {
     { GIMP_SELECTION_OFF, "GIMP_SELECTION_OFF", "off" },
     { GIMP_SELECTION_LAYER_OFF, "GIMP_SELECTION_LAYER_OFF", "layer-off" },
+    { GIMP_SELECTION_LAYER_ON, "GIMP_SELECTION_LAYER_ON", "layer-on" },
     { GIMP_SELECTION_ON, "GIMP_SELECTION_ON", "on" },
     { GIMP_SELECTION_PAUSE, "GIMP_SELECTION_PAUSE", "pause" },
     { GIMP_SELECTION_RESUME, "GIMP_SELECTION_RESUME", "resume" },
@@ -637,6 +624,7 @@ gimp_selection_control_get_type (void)
   {
     { GIMP_SELECTION_OFF, "GIMP_SELECTION_OFF", NULL },
     { GIMP_SELECTION_LAYER_OFF, "GIMP_SELECTION_LAYER_OFF", NULL },
+    { GIMP_SELECTION_LAYER_ON, "GIMP_SELECTION_LAYER_ON", NULL },
     { GIMP_SELECTION_ON, "GIMP_SELECTION_ON", NULL },
     { GIMP_SELECTION_PAUSE, "GIMP_SELECTION_PAUSE", NULL },
     { GIMP_SELECTION_RESUME, "GIMP_SELECTION_RESUME", NULL },
