@@ -167,7 +167,7 @@ GimpImage    * gimp_create_image         (Gimp                *gimp,
                                           gint                 height,
                                           GimpImageBaseType    type,
                                           gboolean             attach_comment);
-
+gboolean       gimp_image_list_is_empty  (Gimp                *gimp);
 void           gimp_set_default_context  (Gimp                *gimp,
                                           GimpContext         *context);
 GimpContext  * gimp_get_default_context  (Gimp                *gimp);

@@ -949,6 +949,12 @@ gimp_create_image (Gimp              *gimp,
   return image;
 }
 
+gboolean
+gimp_image_list_is_empty (Gimp *gimp)
+{
+  return gimp_container_is_empty (GIMP_CONTAINER (gimp->images));
+}
+
 void
 gimp_set_default_context (Gimp        *gimp,
                           GimpContext *context)

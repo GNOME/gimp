@@ -1,5 +1,13 @@
 2008-01-01  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/core/gimp.[ch] (gimp_image_list_is_empty):
+	new function.
+
+	* app/app.c: make sure we get a scratch image if
+	gimp is started with a filename for a nonexistent file.
+
+2008-01-01  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	Merged 24493-24499 from trunk
 
 2007-12-31  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
