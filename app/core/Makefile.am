@@ -129,6 +129,8 @@ libappcore_a_sources = \
 	gimpdrawable-levels.h		\
 	gimpdrawable-offset.c		\
 	gimpdrawable-offset.h		\
+	gimpdrawable-operation.c	\
+	gimpdrawable-operation.h	\
 	gimpdrawable-preview.c		\
 	gimpdrawable-preview.h		\
 	gimpdrawable-stroke.c		\

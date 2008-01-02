@@ -1,3 +1,14 @@
+2008-01-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/gimpdrawable-operation.[ch]: new files containing
+	gimp_drawable_apply_operation() which applies a gegl operation
+	to a drawable's selected pixels using shadow tiles. Will soon
+	be used in more places than just invert.
+
+	* app/core/gimpdrawable-invert.c: use it here, makes
+	gimp_drawable_invert() a 3-liner.
+
 2008-01-01  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_start): Use ×

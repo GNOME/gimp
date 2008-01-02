@@ -21,15 +21,15 @@
 
 #include "config.h"
 
-#include <glib-object.h>
 #include <gegl.h>
 
 #include "core-types.h"
 
 #include "gimpdrawable.h"
 #include "gimpdrawable-invert.h"
-#include "gimpimage.h"
+#include "gimpdrawable-operation.h"
 #include "gimpprogress.h"
+
 #include "gimp-intl.h"
 
 
@@ -37,54 +37,20 @@ void
 gimp_drawable_invert (GimpDrawable *drawable,
                       GimpProgress *progress)
 {
-  GeglNode      *gegl;
-  GeglNode      *input;
-  GeglNode      *invert;
-  GeglNode      *output;
-  GeglProcessor *processor;
-  GeglRectangle  rect;
-  gdouble        value;
+  GeglNode *invert;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  if (! gimp_drawable_mask_intersect (drawable,
-                                      &rect.x,     &rect.y,
-                                      &rect.width, &rect.height))
-    return;
+  invert = g_object_new (GEGL_TYPE_NODE,
+                         "operation", "invert",
+                         NULL);
 
-  gegl   = gegl_node_new ();
-  input  = gegl_node_new_child (gegl,
-                                "operation",    "gimp-tilemanager-source",
-                                "tile-manager", gimp_drawable_get_tiles (drawable),
-                                "linear",       TRUE,
-                                NULL);
-  output = gegl_node_new_child (gegl,
-                                "operation",    "gimp-tilemanager-sink",
-                                "tile-manager", gimp_drawable_get_shadow_tiles (drawable),
-                                "linear",       TRUE,
-                                NULL);
-  invert = gegl_node_new_child (gegl,
-                                "operation",    "invert",
-                                NULL);
+  gimp_drawable_apply_operation (drawable, invert, TRUE,
+                                 progress, _("Invert"));
 
-  gegl_node_link_many (input, invert, output, NULL);
-
-  processor = gegl_node_new_processor (output, &rect);
-
-  gimp_progress_start (progress, _("Invert"), FALSE);
-
-  while (gegl_processor_work (processor, &value))
-    gimp_progress_set_value (progress, value);
-
-  g_object_unref (processor);
-
-  gimp_drawable_update (drawable, rect.x, rect.y, rect.width, rect.height);
-  gimp_drawable_merge_shadow (drawable, TRUE, _("Invert"));
-
-  gimp_progress_end (progress);
-
-  g_object_unref (gegl);
+  g_object_unref (invert);
 }
 
 
