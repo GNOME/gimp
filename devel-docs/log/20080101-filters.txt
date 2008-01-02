@@ -1,0 +1,51 @@
+Development log for "weskaggs" branch.
+
+2008-01-01:  Reorganization of filters.
+
+This commit moves a whole bunch of filters around, renaming some,
+moving others to different categories, and removing some.  In a few
+cases the reasons for the changes are pretty obvious, I think -- I
+will try to explain the less obvious changes here.
+
+) I removed the "Map" category because it doesn't really give much of
+an idea of what a filter does -- except for the color-mapping filters,
+which are organized separately.
+
+) I added new categories "Transparency", "Transform", "Tiling", and
+"Pointillize", because I think they are useful.
+
+) I'm not very happy with the name "Pointillize", but haven't been
+able to think of a better one yet.  The filters that fall into this
+group are ones that leave the large-scale structure of an image
+intact, but change the structure at a micro-level.  Most of the
+filters I put here were formerly in the "Distorts" category.
+
+) I renamed "Distorts" as "Distort" because most of the other
+categories are named using active verbs, not adjectives.
+
+) I removed mail.c because it is essentially useless.  I removed
+nlfilt.c for the same reason -- its documentation is very misleading:
+it hardly ever does anything useful.
+
+) I removed blinds.c, cartoon.c, and fractaltrace.c because they are
+too specialized to be generally useful -- these belong in the
+repository rather than inside gimp.
+
+) I removed lic.c and warp.c because they are unusable: too
+complicated and lacking previews.  These could potentially come back
+if they are made usable, although I think they belong more
+appropriately in the repository in any case.
+
+) I removed the menu entry for sharpen.c, because for interactive use,
+Unsharp Mask is nearly always a better approach.
+
+) I removed the menu entries for sobel.c and laplace.c because they
+are hardly ever useful except in scripts.
+
+) I renamed "Align visible layers" to "Auto-align layers" because the
+old name conflicts with the new Align dialog.
+
+I don't consider these changes to be perfect, final, and
+unquestionable, but I believe most of them are significant
+improvements.
+

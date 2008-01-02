@@ -47,12 +47,10 @@ libexec_PROGRAMS = \
 	apply_lens \
 	autocrop \
 	autostretch_hsv \
-	blinds \
 	blur \
 	borderaverage \
 	bumpmap \
 	c_astretch \
-	cartoon \
 	ccanalyze \
 	channel_mixer \
 	checkerboard \
@@ -83,7 +81,6 @@ libexec_PROGRAMS = \
 	film \
 	flarefx \
 	fp \
-	fractaltrace \
 	gauss \
 	gbr \
 	gee \
@@ -106,15 +103,12 @@ libexec_PROGRAMS = \
 	laplace \
 	$(LCMS) \
 	lens \
-	lic \
-	$(MAIL) \
 	max_rgb \
 	mblur \
 	$(MNG) \
 	mosaic \
 	neon \
 	newsprint \
-	nlfilt \
 	noisify \
 	normalize \
 	nova \
@@ -126,6 +120,7 @@ libexec_PROGRAMS = \
 	pix \
 	pixelize \
 	plasma \
+	plasma2 \
 	plugin-browser \
 	$(PNG) \
 	pnm \
@@ -171,7 +166,6 @@ libexec_PROGRAMS = \
 	video \
 	vinvert \
 	vpropagate \
-	warp \
 	waves \
 	webbrowser \
 	whirlpinch \
@@ -185,7 +179,6 @@ libexec_PROGRAMS = \
 EXTRA_PROGRAMS = \
 	aa \
 	lcms \
-	mail \
 	mng \
 	png \
 	poppler \
@@ -374,22 +367,6 @@ autostretch_hsv_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-blinds_SOURCES = \
-	blinds.c
-
-blinds_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
 blur_SOURCES = \
 	blur.c
 
@@ -445,22 +422,6 @@ c_astretch_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
-cartoon_SOURCES = \
-	cartoon.c
-
-cartoon_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -938,22 +899,6 @@ fp_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-fractaltrace_SOURCES = \
-	fractaltrace.c
-
-fractaltrace_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
 gauss_SOURCES = \
 	gauss.c
 
@@ -1292,39 +1237,6 @@ lens_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-lic_SOURCES = \
-	lic.c
-
-lic_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
-mail_SOURCES = \
-	mail.c
-
-mail_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(LIBMAIL)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
 max_rgb_SOURCES = \
 	max_rgb.c
 
@@ -1410,22 +1322,6 @@ newsprint_SOURCES = \
 	newsprint.c
 
 newsprint_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
-nlfilt_SOURCES = \
-	nlfilt.c
-
-nlfilt_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpmodule)	\
@@ -1599,6 +1495,22 @@ plasma_SOURCES = \
 	plasma.c
 
 plasma_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+plasma2_SOURCES = \
+	plasma2.c
+
+plasma2_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpmodule)	\
@@ -2324,22 +2236,6 @@ vpropagate_SOURCES = \
 	vpropagate.c
 
 vpropagate_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
-warp_SOURCES = \
-	warp.c
-
-warp_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpmodule)	\

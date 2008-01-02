@@ -270,7 +270,8 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
+  gimp_plugin_menu_register (PLUG_IN_PROC,
+                             "<Image>/Filters/Light and Shadow/Light");
 
   gimp_install_procedure (PLUG_IN_TILED_PROC,
                           "Create an embossing effect using a tiled image "

@@ -226,7 +226,7 @@ query (void)
 			  args,
 			  return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distorts");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distort");
 }
 
 static void

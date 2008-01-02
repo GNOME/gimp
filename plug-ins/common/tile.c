@@ -108,14 +108,14 @@ query (void)
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
                           "1996-1997",
-                          N_("_Tile..."),
+                          N_("_Expand as tiles..."),
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_vals),
                           args, return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Tiling");
 }
 
 static void

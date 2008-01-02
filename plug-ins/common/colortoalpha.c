@@ -105,7 +105,7 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC,
-                             "<Image>/Colors/Modify");
+                             "<Image>/Filters/Transparency");
   gimp_plugin_menu_register (PLUG_IN_PROC,
                              "<Image>/Layer/Transparency/Modify");
 }

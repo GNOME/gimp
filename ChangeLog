@@ -1,5 +1,102 @@
 2008-01-01  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	Fun with filters.  Note that it will be necessary to do 
+	"Make uninstall" in plug-ins/common to avoid error messages 
+	from the removed plug-ins.
+
+	* devel-docs/log/20080101-filters.txt: explanation of changes
+	made in this commit.
+	
+	* app/actions/plug-in-actions.c
+	* menus/image-menu.xml.in: add "Transparency",
+	"Transform", "Pointillize", and "Tiling" categories 
+	to Filters menu; renamed "Distorts" to "Distort".
+
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/iwarp.c
+	* plug-ins/common/lens.c
+	* plug-ins/common/ripple.c
+	* plug-ins/common/waves.c
+	* plug-ins/common/whirlpinch.c: changed "Distorts" to 
+	"Distort" in register func.
+
+	* plug-ins/common/displace.c: moved "Displace" to the
+	"Distort" category.
+	
+	* plug-ins/common/blur.c: renamed menu entry from
+	"Blur" to "Simple Blur".
+
+	* plug-ins/common/shift.c: changed menu entry to
+	"Random Shift", and moved to "Blur" category.
+
+	* plug-ins/common/mail.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/nlfilt.c
+	* plug-ins/common/cartoon.c
+	* plug-ins/common/lic.c
+	* plug-ins/common/fractaltrace.c
+	* plug-ins/common/warp.c: removed.
+
+	* plug-ins/common/laplace.c
+	* plug-ins/common/sobel.c
+	* plug-ins/common/sharpen.c: removed menu entry,
+	leaving procedure in pdb.
+
+	* plug-ins/common/align-layers.c: renamed menu
+	entry to "Auto-align layers".
+
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/softglow.c: moved to "Light and
+	Shadow/Light" category.
+
+	* plug-ins/common/emboss.c
+	* plug-ins/common/engrave.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/papertile.c
+	* plug-ins/common/mosaic.c: moved to "Artistic"
+	category.
+
+	* plug-ins/common/pixelize.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/cubism.c: moved to "Pointillize"
+	category.
+
+	* plug-ins/common/video.c: moved to "Noise" category.
+
+	* plug-ins/common/spread.c: moved to "Blur" category.
+	
+	* plug-ins/common/vpropagate.c: moved "Value Propagate"
+	to the "Blur" category.
+
+	* plug-ins/MapObject/mapobject-main.c
+	* plug-ins/common/polar.c: moved to "Transform"
+	category.
+	
+	* plug-ins/script-fu/scripts/erase-rows.scm:
+	moved to "Transparency" category.
+
+	* plug-ins/script-fu/scripts/tileblur.scm
+	* plug-ins/common/tileit.c
+	* plug-ins/common/tiler.c: moved to "Tiling" category.
+
+	* plug-ins/common/tile.c: change menu entry to "Expand
+	by Tiling", and move to "Tiling" category.
+
+	* plug-ins/common/edge.c: change menu entry to
+	"Simple Edge".
+
+	* plug-ins/common/colortoalpha.c: moved menu entry from
+	"Colors/Modify" to "Filters/Transparency".
+
+	* plug-ins/common/colorify.c: change menu entry from
+	"Colorify" to "Monochrome".
+	
+	* plug-ins/common/plug-in-defs.pl: changed
+	accordingly
+	
+2008-01-01  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/core/gimp.[ch] (gimp_image_list_is_empty):
 	new function.
 

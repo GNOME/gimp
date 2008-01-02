@@ -77,4 +77,4 @@
 )
 
 (script-fu-menu-register "script-fu-tile-blur"
-                         "<Image>/Filters/Blur")
+                         "<Image>/Filters/Tiling")

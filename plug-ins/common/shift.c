@@ -105,13 +105,13 @@ query (void)
                           "Degenhardt and Federico Mena Quintero",
                           "Brian Degenhardt",
                           "1997",
-                          N_("_Shift..."),
+                          N_("Random _Shift..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distorts");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Blur");
 }
 
 static void

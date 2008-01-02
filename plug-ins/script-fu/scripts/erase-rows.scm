@@ -46,4 +46,4 @@
 )
 
 (script-fu-menu-register "script-fu-erase-rows"
-                         "<Image>/Filters/Distorts")
+                         "<Image>/Filters/Transparency")

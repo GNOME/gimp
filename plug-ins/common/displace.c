@@ -182,7 +182,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distort");
 
   gimp_install_procedure ("plug-in-displace-polar",
                           "Displace the contents of the specified drawable",

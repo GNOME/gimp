@@ -125,12 +125,12 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Align all visible layers of the image"),
+                          N_("Automatically align all visible layers of the image"),
                           "Align visible layers",
                           "Shuji Narazaki <narazaki@InetQ.or.jp>",
                           "Shuji Narazaki",
                           "1997",
-                          N_("Align Visi_ble Layers..."),
+                          N_("A_uto-align layers..."),
                           "RGB*,GRAY*,INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,

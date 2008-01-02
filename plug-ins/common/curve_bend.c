@@ -546,7 +546,7 @@ query (void)
                           args,
                           return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distorts");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Distort");
 
    /* the installation of the Iterator procedure for the bend plugin */
   gimp_install_procedure (PLUG_IN_ITER_NAME,

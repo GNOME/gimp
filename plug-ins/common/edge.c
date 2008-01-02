@@ -154,7 +154,7 @@ query (void)
                           "Peter Mattis & (ported to 1.0 by) Eiichi Takamori",
                           "Peter Mattis",
                           "1996",
-                          N_("_Edge..."),
+                          N_("Simple _Edge..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,

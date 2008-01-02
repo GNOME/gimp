@@ -131,7 +131,7 @@ query (void)
                           "Federico Mena Quintero, Stephen Norris, "
                           "Daniel Cotting",
                           "1995-1998",
-                          N_("_Blur"),
+                          N_("Simple _Blur"),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,

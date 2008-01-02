@@ -564,7 +564,8 @@
       <separator />
       <menu action="plug-in-blur-menu" name="Blur" />
       <menu action="plug-in-enhance-menu" name="Enhance" />
-      <menu action="plug-in-distorts-menu" name="Distorts" />
+      <menu action="plug-in-distort-menu" name="Distort" />
+      <menu action="plug-in-transform-menu" name="Transform" />
       <menu action="plug-in-light-shadow-menu" name="Light and Shadow">
         <placeholder name="Light" />
 	<separator />
@@ -574,11 +575,13 @@
       </menu>
       <menu action="plug-in-noise-menu" name="Noise" />
       <menu action="plug-in-edge-detect-menu" name="Edge-Detect" />
+      <menu action="plug-in-transparency-menu" name="Transparency" />
       <menu action="plug-in-generic-menu" name="Generic" />
       <menu action="plug-in-combine-menu" name="Combine" />
       <separator />
+      <menu action="plug-in-pointillize-menu" name="Pointillize" />
       <menu action="plug-in-artistic-menu" name="Artistic" />
-      <menu action="plug-in-map-menu" name="Map" />
+      <menu action="plug-in-tiling-menu" name="Tiling" />
       <menu action="plug-in-render-menu" name="Render">
 	<menu action="plug-in-render-clouds-menu" name="Clouds" />
 	<menu action="plug-in-render-nature-menu" name="Nature" />
