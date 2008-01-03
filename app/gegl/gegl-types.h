@@ -25,6 +25,7 @@
 #include "base/base-types.h"
 
 
+typedef struct _GimpOperationDesaturate GimpOperationDesaturate;
 typedef struct _GimpOperationTileSink   GimpOperationTileSink;
 typedef struct _GimpOperationTileSource GimpOperationTileSource;
 

@@ -16,49 +16,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#define ENABLE_GEGL
-#ifdef ENABLE_GEGL
-
 #include "config.h"
 
 #include <gegl.h>
-
-#include "core-types.h"
-
-#include "gimpdrawable.h"
-#include "gimpdrawable-invert.h"
-#include "gimpdrawable-operation.h"
-#include "gimpprogress.h"
-
-#include "gimp-intl.h"
-
-
-void
-gimp_drawable_invert (GimpDrawable *drawable,
-                      GimpProgress *progress)
-{
-  GeglNode *invert;
-
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
-
-  invert = g_object_new (GEGL_TYPE_NODE,
-                         "operation", "invert",
-                         NULL);
-
-  gimp_drawable_apply_operation (drawable, invert, TRUE,
-                                 progress, _("Invert"));
-
-  g_object_unref (invert);
-}
-
-
-#else /* ENABLE_GEGL is not defined */
-
-#include "config.h"
-
-#include <glib-object.h>
 
 #include "core-types.h"
 
@@ -69,41 +29,59 @@ gimp_drawable_invert (GimpDrawable *drawable,
 
 #include "gimpdrawable.h"
 #include "gimpdrawable-invert.h"
+#include "gimpdrawable-operation.h"
 #include "gimpprogress.h"
 
 #include "gimp-intl.h"
+
+
+static gboolean enable_gegl = TRUE;
 
 
 void
 gimp_drawable_invert (GimpDrawable *drawable,
                       GimpProgress *progress)
 {
-  PixelRegion  srcPR, destPR;
-  gint         x, y, width, height;
-  GimpLut     *lut;
-
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-    return;
+  if (enable_gegl)
+    {
+      GeglNode *invert;
 
-  lut = invert_lut_new (gimp_drawable_bytes (drawable));
+      invert = g_object_new (GEGL_TYPE_NODE,
+                             "operation", "invert",
+                             NULL);
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                     x, y, width, height, FALSE);
-  pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                     x, y, width, height, TRUE);
+      gimp_drawable_apply_operation (drawable, invert, TRUE,
+                                     progress, _("Invert"));
 
-  pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
-                                  lut, 2, &srcPR, &destPR);
+      g_object_unref (invert);
+    }
+  else
+    {
+      PixelRegion  srcPR, destPR;
+      gint         x, y, width, height;
+      GimpLut     *lut;
 
-  gimp_lut_free (lut);
+      if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+        return;
 
-  gimp_drawable_merge_shadow (drawable, TRUE, _("Invert"));
+      lut = invert_lut_new (gimp_drawable_bytes (drawable));
 
-  gimp_drawable_update (drawable, x, y, width, height);
+      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
+                         x, y, width, height, FALSE);
+      pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
+                         x, y, width, height, TRUE);
+
+      pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
+                                      lut, 2, &srcPR, &destPR);
+
+      gimp_lut_free (lut);
+
+      gimp_drawable_merge_shadow (drawable, TRUE, _("Invert"));
+
+      gimp_drawable_update (drawable, x, y, width, height);
+    }
 }
-
-#endif

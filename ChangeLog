@@ -1,5 +1,23 @@
 2008-01-03  Michael Natterer  <mitch@gimp.org>
 
+	Some more gegl code to have some playground for experimenting.
+
+	* app/gegl/Makefile.am
+	* app/gegl/gegl-types.h
+	* app/gegl/gimpoperationdesaturate.[ch]: ported desaturate.
+
+	* app/gegl/gimp-gegl.c: register it.
+
+	* app/gegl/gimpoperationtilesink.h: fix name of parent class member.
+
+	* app/core/gimpdrawable-desaturate.c: use the new operator, but
+	keep the old code around (prepared for runtime switching).
+
+	* app/core/gimpdrawable-invert.c: prepare for runtime switching
+	here too.
+
+2008-01-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gegl/gegl-operation-sink.h
 	* app/gegl/gegl/gegl-operation-source.h: updated copies from gegl.
 

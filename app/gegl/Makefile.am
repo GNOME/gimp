@@ -7,6 +7,8 @@ libappgegl_a_SOURCES = \
 	gimp-gegl.h			\
 	gimp-gegl-utils.c		\
 	gimp-gegl-utils.h		\
+	gimpoperationdesaturate.c	\
+	gimpoperationdesaturate.h	\
 	gimpoperationtilesink.c		\
 	gimpoperationtilesink.h		\
 	gimpoperationtilesource.c	\
