@@ -1,0 +1,12 @@
+Development log for "weskaggs" branch.
+
+2008-01-01:  Variable blur filter.
+
+I'm going to add a few filters that I believe form part of the basic
+"toolkit" that should be available to all users.  This is the first.
+It does a simple blur, but with an intensity at each point controlled
+by a "map" drawable.  This plug-in was written several years ago, and
+an earlier version is available in the registry.  I have updated it
+and added a preview.
+
+

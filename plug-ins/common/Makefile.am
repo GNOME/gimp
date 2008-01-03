@@ -120,7 +120,6 @@ libexec_PROGRAMS = \
 	pix \
 	pixelize \
 	plasma \
-	plasma2 \
 	plugin-browser \
 	$(PNG) \
 	pnm \
@@ -163,6 +162,7 @@ libexec_PROGRAMS = \
 	tiler \
 	uniteditor \
 	unsharp \
+	variable-blur \
 	video \
 	vinvert \
 	vpropagate \
@@ -1507,22 +1507,6 @@ plasma_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-plasma2_SOURCES = \
-	plasma2.c
-
-plasma2_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
 plugin_browser_SOURCES = \
 	plugin-browser.c
 
@@ -2191,6 +2175,22 @@ unsharp_SOURCES = \
 	unsharp.c
 
 unsharp_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+variable_blur_SOURCES = \
+	variable-blur.c
+
+variable_blur_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpmodule)	\

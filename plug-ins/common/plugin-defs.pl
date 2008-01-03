@@ -125,6 +125,7 @@
     'tiler' => {},
     'uniteditor' => { ui => 1 },
     'unsharp' => { ui => 1 },
+    'variable-blur' => { ui => 1 },
     'video' => { ui => 1 },
     'vinvert' => {},
     'vpropagate' => { ui => 1 },

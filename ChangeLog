@@ -1,3 +1,14 @@
+2008-01-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* devel-docs/log/20080101-filters.txt: explanation of
+	this commit.
+
+	* plug-ins/common/variable-blur.c: new "variable blur"
+	filter, updated from the one in the registry.
+
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/Makefile.am: updated accordingly.
+	
 2008-01-01  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Fun with filters.  Note that it will be necessary to do 
