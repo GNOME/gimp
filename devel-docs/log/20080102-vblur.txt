@@ -1,6 +1,6 @@
 Development log for "weskaggs" branch.
 
-2008-01-01:  Variable blur filter.
+2008-01-02:  Variable blur filter.
 
 I'm going to add a few filters that I believe form part of the basic
 "toolkit" that should be available to all users.  This is the first.

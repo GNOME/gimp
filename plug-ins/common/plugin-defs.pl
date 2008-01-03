@@ -83,6 +83,7 @@
     'pix' => { ui => 1 },
     'pixelize' => { ui => 1 },
     'plasma' => { ui => 1 },
+    'plasma2' => { ui => 1 },
     'plugin-browser' => { ui => 1 },
     'png' => { ui => 1, optional => 1, cflags => 1 },
     'pnm' => { ui => 1 },

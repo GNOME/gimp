@@ -1,6 +1,23 @@
 2008-01-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* devel-docs/log/20080101-filters.txt: explanation of
+	* devel-docs/log/20080102-plasma2.txt: explanation of
+	this commit.
+
+	* plug-ins/common/plasma2.c: enhanced Plasma plug-in
+	by David Necas (Yeti), ported to Gimp coding style
+	with deprecated functions updated.
+
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/Makefile.am: updated accordingly.
+
+	* plug-ins/common/plasma.c: remove menu entry since
+	Plasma2 supersedes it -- leave for pdb though.
+
+	* devel-docs/log/20080102-vblur.txt: fix typo.
+	
+2008-01-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* devel-docs/log/20080102-vblur.txt: explanation of
 	this commit.
 
 	* plug-ins/common/variable-blur.c: new "variable blur"

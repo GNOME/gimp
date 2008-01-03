@@ -120,6 +120,7 @@ libexec_PROGRAMS = \
 	pix \
 	pixelize \
 	plasma \
+	plasma2 \
 	plugin-browser \
 	$(PNG) \
 	pnm \
@@ -1495,6 +1496,22 @@ plasma_SOURCES = \
 	plasma.c
 
 plasma_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+plasma2_SOURCES = \
+	plasma2.c
+
+plasma2_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpmodule)	\

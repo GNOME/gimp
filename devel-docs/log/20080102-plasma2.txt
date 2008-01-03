@@ -1,0 +1,16 @@
+Development log for "weskaggs" branch.
+
+2008-01-02:   Plasma2 filter.
+
+One of the points that the usability team has made is that Gimp needs
+a more complete set of noise- or texture-generating plug-ins.  Toward
+that end, I am adding a massively rewritten version of "plasma",
+created a few years ago by David Necas (aka Yeti).  It is well
+written, and adds considerable functionality, which is all easily
+discoverable via the preview.  I have formatted the code according to
+Gimp coding style, and replaced all of the deprecated functionality.
+
+Because this essentially replaces the orignal "plasma", I am removing
+the old version from the menu, but leaving it in the PDB since it is
+likely to be used by a substantial number of scripts.
+
