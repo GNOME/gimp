@@ -15,8 +15,8 @@
  *
  * Copyright 2006 Øyvind Kolås
  */
-#ifndef __GEGL_OPERATION_SOURCE_H__
-#define __GEGL_OPERATION_SOURCE_H__
+#ifndef _GEGL_OPERATION_FILTER_H
+#define _GEGL_OPERATION_FILTER_H
 
 #include <glib-object.h>
 #include "gegl-types.h"
@@ -24,27 +24,27 @@
 
 G_BEGIN_DECLS
 
-#define GEGL_TYPE_OPERATION_SOURCE               (gegl_operation_source_get_type ())
-#define GEGL_OPERATION_SOURCE(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GEGL_TYPE_OPERATION_SOURCE, GeglOperationSource))
-#define GEGL_OPERATION_SOURCE_CLASS(klass)       (G_TYPE_CHECK_CLASS_CAST ((klass),  GEGL_TYPE_OPERATION_SOURCE, GeglOperationSourceClass))
-#define GEGL_OPERATION_SOURCE_GET_CLASS(obj)     (G_TYPE_INSTANCE_GET_CLASS ((obj),  GEGL_TYPE_OPERATION_SOURCE, GeglOperationSourceClass))
+#define GEGL_TYPE_OPERATION_FILTER           (gegl_operation_filter_get_type ())
+#define GEGL_OPERATION_FILTER(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GEGL_TYPE_OPERATION_FILTER, GeglOperationFilter))
+#define GEGL_OPERATION_FILTER_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GEGL_TYPE_OPERATION_FILTER, GeglOperationFilterClass))
+#define GEGL_OPERATION_FILTER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GEGL_TYPE_OPERATION_FILTER, GeglOperationFilterClass))
 
-typedef struct _GeglOperationSource  GeglOperationSource;
-struct _GeglOperationSource
+typedef struct _GeglOperationFilter  GeglOperationFilter;
+struct _GeglOperationFilter
 {
   GeglOperation parent_instance;
 };
 
-typedef struct _GeglOperationSourceClass GeglOperationSourceClass;
-struct _GeglOperationSourceClass
+typedef struct _GeglOperationFilterClass GeglOperationFilterClass;
+struct _GeglOperationFilterClass
 {
   GeglOperationClass parent_class;
 
-  gboolean (*process) (GeglOperation *self,
-                       gpointer       context_id);
+  gboolean (* process) (GeglOperation *self,
+                        gpointer       context_id);
 };
 
-GType gegl_operation_source_get_type (void) G_GNUC_CONST;
+GType gegl_operation_filter_get_type (void) G_GNUC_CONST;
 
 G_END_DECLS
 

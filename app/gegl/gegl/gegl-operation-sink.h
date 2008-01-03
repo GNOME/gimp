@@ -22,9 +22,7 @@
 #include "gegl-types.h"
 #include "gegl-operation.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 
 #define GEGL_TYPE_OPERATION_SINK            (gegl_operation_sink_get_type ())
 #define GEGL_OPERATION_SINK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GEGL_TYPE_OPERATION_SINK, GeglOperationSink))
@@ -36,24 +34,24 @@ extern "C" {
 typedef struct _GeglOperationSink  GeglOperationSink;
 struct _GeglOperationSink
 {
-    GeglOperation operation;
+  GeglOperation parent_instance;
 };
 
 typedef struct _GeglOperationSinkClass GeglOperationSinkClass;
 struct _GeglOperationSinkClass
 {
-   GeglOperationClass  operation_class;
-   gboolean            needs_full;
-   gboolean (*process) (GeglOperation *self,
+  GeglOperationClass parent_class;
+
+  gboolean           needs_full;
+
+  gboolean (* process) (GeglOperation *self,
                         gpointer       context_id);
 };
 
-GType gegl_operation_sink_get_type (void) G_GNUC_CONST;
+GType    gegl_operation_sink_get_type   (void) G_GNUC_CONST;
 
 gboolean gegl_operation_sink_needs_full (GeglOperation *operation);
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+G_END_DECLS
 
 #endif

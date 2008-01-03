@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpcolor/gimpcolor.h"
 
@@ -29,9 +29,12 @@
 
 #include "gimpdrawable.h"
 #include "gimpdrawable-desaturate.h"
-#include "gimpimage.h"
+#include "gimpdrawable-operation.h"
 
 #include "gimp-intl.h"
+
+
+static gboolean enable_gegl = TRUE;
 
 
 static void  desaturate_region_lightness  (gpointer     data,
@@ -51,52 +54,72 @@ void
 gimp_drawable_desaturate (GimpDrawable       *drawable,
                           GimpDesaturateMode  mode)
 {
-  PixelRegion         srcPR, destPR;
-  PixelProcessorFunc  function;
-  gint                x, y;
-  gint                width, height;
-  gboolean            has_alpha;
-
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_drawable_is_rgb (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
 
-  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-    return;
-
-  switch (mode)
+  if (enable_gegl)
     {
-    case GIMP_DESATURATE_LIGHTNESS:
-      function = (PixelProcessorFunc) desaturate_region_lightness;
-      break;
+      GeglNode *desaturate;
 
-      break;
-    case GIMP_DESATURATE_LUMINOSITY:
-      function = (PixelProcessorFunc) desaturate_region_luminosity;
-      break;
+      desaturate = g_object_new (GEGL_TYPE_NODE,
+                                 "operation", "gimp-desaturate",
+                                 NULL);
 
-    case GIMP_DESATURATE_AVERAGE:
-      function = (PixelProcessorFunc) desaturate_region_average;
-      break;
+      gegl_node_set (desaturate,
+                     "mode", mode,
+                     NULL);
 
-    default:
-      g_return_if_reached ();
-      return;
+      gimp_drawable_apply_operation (drawable, desaturate, TRUE,
+                                     NULL, _("Desaturate"));
+
+      g_object_unref  (desaturate);
     }
+  else
+    {
+      PixelRegion         srcPR, destPR;
+      PixelProcessorFunc  function;
+      gint                x, y;
+      gint                width, height;
+      gboolean            has_alpha;
 
-  has_alpha = gimp_drawable_has_alpha (drawable);
+      if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+        return;
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                     x, y, width, height, FALSE);
-  pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                     x, y, width, height, TRUE);
+      switch (mode)
+        {
+        case GIMP_DESATURATE_LIGHTNESS:
+          function = (PixelProcessorFunc) desaturate_region_lightness;
+          break;
 
-  pixel_regions_process_parallel (function, GINT_TO_POINTER (has_alpha),
-                                  2, &srcPR, &destPR);
+          break;
+        case GIMP_DESATURATE_LUMINOSITY:
+          function = (PixelProcessorFunc) desaturate_region_luminosity;
+          break;
 
-  gimp_drawable_merge_shadow (drawable, TRUE, _("Desaturate"));
+        case GIMP_DESATURATE_AVERAGE:
+          function = (PixelProcessorFunc) desaturate_region_average;
+          break;
 
-  gimp_drawable_update (drawable, x, y, width, height);
+        default:
+          g_return_if_reached ();
+          return;
+        }
+
+      has_alpha = gimp_drawable_has_alpha (drawable);
+
+      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
+                         x, y, width, height, FALSE);
+      pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
+                         x, y, width, height, TRUE);
+
+      pixel_regions_process_parallel (function, GINT_TO_POINTER (has_alpha),
+                                      2, &srcPR, &destPR);
+
+      gimp_drawable_merge_shadow (drawable, TRUE, _("Desaturate"));
+
+      gimp_drawable_update (drawable, x, y, width, height);
+    }
 }
 
 static void

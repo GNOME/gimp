@@ -11600,7 +11600,7 @@ msgstr ""
 #: ../app/widgets/gimpimagepropview.c:464
 #, c-format
 msgid "pixels/%s"
-msgstr "pixels"
+msgstr "pixels/%s"
 
 #: ../app/widgets/gimpimagepropview.c:466
 #, c-format

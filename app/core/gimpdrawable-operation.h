@@ -1,7 +1,10 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gegl-types.h
+ * gimpdrawable-operation.h
+ * Copyright (C) 2007 Øyvind Kolås <pippin@gimp.org>
+ *                    Sven Neumann <sven@gimp.org>
+ *                    Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,17 +21,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __OUR_GEGL_TYPES_H__
-#define __OUR_GEGL_TYPES_H__
+#ifndef __GIMP_DRAWABLE_OPERATION_H__
+#define __GIMP_DRAWABLE_OPERATION_H__
 
 
-#include "base/base-types.h"
+void   gimp_drawable_apply_operation (GimpDrawable *drawable,
+                                      GeglNode     *operation,
+                                      gboolean      linear,
+                                      GimpProgress *progress,
+                                      const gchar  *undo_desc);
 
 
-typedef struct _GimpOperationDesaturate GimpOperationDesaturate;
-typedef struct _GimpOperationThreshold  GimpOperationThreshold;
-typedef struct _GimpOperationTileSink   GimpOperationTileSink;
-typedef struct _GimpOperationTileSource GimpOperationTileSource;
-
-
-#endif /* __OUR_GEGL_TYPES_H__ */
+#endif /* __GIMP_DRAWABLE_OPERATION_H__ */

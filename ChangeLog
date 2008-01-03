@@ -1,5 +1,9 @@
 2008-01-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	merge 24500:24518 from trunk.
+	
+2008-01-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* plug-ins/common/randomize.c: Add ability to use
 	an "intensity map" to control the randomization at each
 	point.  Add new pdb functions variable-hurl, variable-pick,
