@@ -44,6 +44,7 @@ struct _GimpImageMapTool
   GimpColorTool  parent_instance;
 
   GimpDrawable  *drawable;
+  GeglNode      *operation;
   GimpImageMap  *image_map;
 
   /* dialog */

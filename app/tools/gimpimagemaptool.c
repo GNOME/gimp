@@ -169,6 +169,12 @@ gimp_image_map_tool_finalize (GObject *object)
 {
   GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (object);
 
+  if (image_map_tool->operation)
+    {
+      g_object_unref (image_map_tool->operation);
+      image_map_tool->operation = NULL;
+    }
+
   if (image_map_tool->shell)
     {
       gtk_widget_destroy (image_map_tool->shell);
@@ -446,12 +452,12 @@ gimp_image_map_tool_create_map (GimpImageMapTool *tool)
       g_object_unref (tool->image_map);
     }
 
-  if (tool->use_gegl)
-    operation = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->get_operation (tool);
+  if (tool->use_gegl && ! tool->operation)
+    tool->operation = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->get_operation (tool);
 
   tool->image_map = gimp_image_map_new (tool->drawable,
                                         GIMP_TOOL (tool)->tool_info->blurb,
-                                        operation);
+                                        tool->operation);
 
   g_signal_connect (tool->image_map, "flush",
                     G_CALLBACK (gimp_image_map_tool_flush),

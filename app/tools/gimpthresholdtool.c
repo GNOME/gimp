@@ -123,12 +123,6 @@ gimp_threshold_tool_finalize (GObject *object)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (object);
 
-  if (t_tool->t_node)
-    {
-      g_object_unref (t_tool->t_node);
-      t_tool->t_node = NULL;
-    }
-
   g_slice_free (Threshold, t_tool->threshold);
 
   if (t_tool->hist)
@@ -189,16 +183,9 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
 static GeglNode *
 gimp_threshold_tool_get_operation (GimpImageMapTool *im_tool)
 {
-  GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (im_tool);
-
-  if (! t_tool->t_node)
-    {
-      t_tool->t_node = g_object_new (GEGL_TYPE_NODE,
-                                     "operation", "gimp-threshold",
-                                     NULL);
-    }
-
-  return t_tool->t_node;
+  return g_object_new (GEGL_TYPE_NODE,
+                       "operation", "gimp-threshold",
+                       NULL);
 }
 
 static void
@@ -206,9 +193,9 @@ gimp_threshold_tool_map (GimpImageMapTool *image_map_tool)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
 
-  if (t_tool->t_node)
+  if (image_map_tool->operation)
     {
-      gegl_node_set (t_tool->t_node,
+      gegl_node_set (image_map_tool->operation,
                      "low",  t_tool->threshold->low_threshold  / 255.0,
                      "high", t_tool->threshold->high_threshold / 255.0,
                      NULL);

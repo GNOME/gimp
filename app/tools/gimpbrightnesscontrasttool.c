@@ -140,12 +140,6 @@ gimp_brightness_contrast_tool_finalize (GObject *object)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (object);
 
-  if (bc_tool->bc_node)
-    {
-      g_object_unref (bc_tool->bc_node);
-      bc_tool->bc_node = NULL;
-    }
-
   if (bc_tool->lut)
     {
       gimp_lut_free (bc_tool->lut);
@@ -188,16 +182,9 @@ gimp_brightness_contrast_tool_initialize (GimpTool     *tool,
 static GeglNode *
 gimp_brightness_contrast_tool_get_operation (GimpImageMapTool *im_tool)
 {
-  GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (im_tool);
-
-  if (! bc_tool->bc_node)
-    {
-      bc_tool->bc_node = g_object_new (GEGL_TYPE_NODE,
-                                       "operation", "brightness-contrast",
-                                       NULL);
-    }
-
-  return bc_tool->bc_node;
+  return g_object_new (GEGL_TYPE_NODE,
+                       "operation", "brightness-contrast",
+                       NULL);
 }
 
 static void
@@ -205,7 +192,7 @@ gimp_brightness_contrast_tool_map (GimpImageMapTool *im_tool)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (im_tool);
 
-  if (bc_tool->bc_node)
+  if (im_tool->operation)
     {
       gdouble brightness;
       gdouble contrast;
@@ -215,7 +202,7 @@ gimp_brightness_contrast_tool_map (GimpImageMapTool *im_tool)
                     (bc_tool->contrast + 127.0) / 127.0 :
                     bc_tool->contrast * 4.0 / 127.0 + 1);
 
-      gegl_node_set (bc_tool->bc_node,
+      gegl_node_set (im_tool->operation,
                      "brightness", brightness,
                      "contrast",   contrast,
                      NULL);
