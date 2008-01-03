@@ -318,10 +318,9 @@ gimp_image_map_apply (GimpImageMap          *image_map,
                       GimpImageMapApplyFunc  apply_func,
                       gpointer               apply_data)
 {
-  gint x, y;
-  gint width, height;
-  gint undo_offset_x, undo_offset_y;
-  gint undo_width, undo_height;
+  GeglRectangle rect;
+  gint          undo_offset_x, undo_offset_y;
+  gint          undo_width, undo_height;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
   g_return_if_fail (apply_func != NULL);
@@ -354,7 +353,8 @@ gimp_image_map_apply (GimpImageMap          *image_map,
 
   /*  The application should occur only within selection bounds  */
   if (! gimp_drawable_mask_intersect (image_map->drawable,
-                                      &x, &y, &width, &height))
+                                      &rect.x, &rect.y,
+                                      &rect.width, &rect.height))
     return;
 
   /*  If undo tiles don't exist, or change size, (re)allocate  */
@@ -362,7 +362,7 @@ gimp_image_map_apply (GimpImageMap          *image_map,
     {
       undo_offset_x = image_map->undo_offset_x;
       undo_offset_y = image_map->undo_offset_y;
-      undo_width    = tile_manager_width (image_map->undo_tiles);
+      undo_width    = tile_manager_width  (image_map->undo_tiles);
       undo_height   = tile_manager_height (image_map->undo_tiles);
     }
   else
@@ -373,18 +373,18 @@ gimp_image_map_apply (GimpImageMap          *image_map,
       undo_height   = 0;
     }
 
-  if (! image_map->undo_tiles ||
-      undo_offset_x != x      ||
-      undo_offset_y != y      ||
-      undo_width    != width  ||
-      undo_height   != height)
+  if (! image_map->undo_tiles     ||
+      undo_offset_x != rect.x     ||
+      undo_offset_y != rect.y     ||
+      undo_width    != rect.width ||
+      undo_height   != rect.height)
     {
       /* If either the extents changed or the tiles don't exist,
        * allocate new
        */
-      if (! image_map->undo_tiles ||
-          undo_width  != width    ||
-          undo_height != height)
+      if (! image_map->undo_tiles   ||
+          undo_width  != rect.width ||
+          undo_height != rect.height)
         {
           /*  Destroy old tiles  */
           if (image_map->undo_tiles)
@@ -392,31 +392,34 @@ gimp_image_map_apply (GimpImageMap          *image_map,
 
           /*  Allocate new tiles  */
           image_map->undo_tiles =
-            tile_manager_new (width, height,
+            tile_manager_new (rect.width, rect.height,
                               gimp_drawable_bytes (image_map->drawable));
         }
 
       /*  Copy from the image to the new tiles  */
       pixel_region_init (&image_map->srcPR,
                          gimp_drawable_get_tiles (image_map->drawable),
-                         x, y, width, height, FALSE);
-      pixel_region_init (&image_map->destPR, image_map->undo_tiles,
-                         0, 0, width, height, TRUE);
+                         rect.x, rect.y,
+                         rect.width, rect.height,
+                         FALSE);
+      pixel_region_init (&image_map->destPR,
+                         image_map->undo_tiles,
+                         0, 0,
+                         rect.width, rect.height,
+                         TRUE);
 
       copy_region (&image_map->srcPR, &image_map->destPR);
 
       /*  Set the offsets  */
-      image_map->undo_offset_x = x;
-      image_map->undo_offset_y = y;
+      image_map->undo_offset_x = rect.x;
+      image_map->undo_offset_y = rect.y;
     }
 
   if (image_map->operation)
     {
-      GeglRectangle rect;
-
       if (! image_map->gegl)
         {
-          GObject  *sink_operation;
+          GObject *sink_operation;
 
           image_map->gegl = gegl_node_new ();
 
@@ -462,8 +465,8 @@ gimp_image_map_apply (GimpImageMap          *image_map,
                      NULL);
 
       gegl_node_set (image_map->shift,
-                     "x", (gdouble) x,
-                     "y", (gdouble) y,
+                     "x", (gdouble) rect.x,
+                     "y", (gdouble) rect.y,
                      NULL);
 
       gegl_node_set (image_map->output,
@@ -471,24 +474,24 @@ gimp_image_map_apply (GimpImageMap          *image_map,
                      gimp_drawable_get_shadow_tiles (image_map->drawable),
                      NULL);
 
-      rect.x      = x;
-      rect.y      = y;
-      rect.width  = width;
-      rect.height = height;
-
       image_map->processor = gegl_node_new_processor (image_map->output,
                                                       &rect);
     }
   else
     {
       /*  Configure the src from the drawable data  */
-      pixel_region_init (&image_map->srcPR, image_map->undo_tiles,
-                         0, 0, width, height, FALSE);
+      pixel_region_init (&image_map->srcPR,
+                         image_map->undo_tiles,
+                         0, 0,
+                         rect.width, rect.height,
+                         FALSE);
 
       /*  Configure the dest as the shadow buffer  */
       pixel_region_init (&image_map->destPR,
                          gimp_drawable_get_shadow_tiles (image_map->drawable),
-                         x, y, width, height, TRUE);
+                         rect.x, rect.y,
+                         rect.width, rect.height,
+                         TRUE);
 
       /*  Apply the image transformation to the pixels  */
       image_map->PRI = pixel_regions_register (2,
@@ -572,14 +575,16 @@ gimp_image_map_clear (GimpImageMap *image_map)
       PixelRegion destPR;
       gint        x      = image_map->undo_offset_x;
       gint        y      = image_map->undo_offset_y;
-      gint        width  = tile_manager_width (image_map->undo_tiles);
+      gint        width  = tile_manager_width  (image_map->undo_tiles);
       gint        height = tile_manager_height (image_map->undo_tiles);
 
       /*  Copy from the drawable to the tiles  */
       pixel_region_init (&srcPR, image_map->undo_tiles,
-                         0, 0, width, height, FALSE);
+                         0, 0, width, height,
+                         FALSE);
       pixel_region_init (&destPR, gimp_drawable_get_tiles (image_map->drawable),
-                         x, y, width, height, TRUE);
+                         x, y, width, height,
+                         TRUE);
 
       /* if the user has changed the image depth get out quickly */
       if (destPR.bytes != srcPR.bytes)
@@ -604,6 +609,24 @@ gimp_image_map_abort (GimpImageMap *image_map)
 {
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
 
+  if (image_map->idle_id)
+    {
+      g_source_remove (image_map->idle_id);
+      image_map->idle_id = 0;
+
+      if (image_map->processor)
+        {
+          g_object_unref (image_map->processor);
+          image_map->processor = NULL;
+        }
+
+      if (image_map->PRI)
+        {
+          pixel_regions_process_stop (image_map->PRI);
+          image_map->PRI = NULL;
+        }
+    }
+
   if (! gimp_item_is_attached (GIMP_ITEM (image_map->drawable)))
     return;
 
@@ -622,16 +645,26 @@ gimp_image_map_do (GimpImageMap *image_map)
     {
       image_map->idle_id = 0;
 
-      return FALSE;
+      if (image_map->processor)
+        {
+          g_object_unref (image_map->processor);
+          image_map->processor = NULL;
+        }
+
+      if (image_map->PRI)
+        {
+          pixel_regions_process_stop (image_map->PRI);
+          image_map->PRI = NULL;
+        }
+
+     return FALSE;
     }
 
   image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
 
   if (image_map->gegl)
     {
-      gboolean result = gegl_processor_work (image_map->processor, NULL);
-
-      if (! result)
+      if (! gegl_processor_work (image_map->processor, NULL))
         {
           g_object_unref (image_map->processor);
           image_map->processor = NULL;
@@ -729,15 +762,19 @@ gimp_image_map_data_written (GObject             *operation,
                      extent->height,
                      FALSE);
   pixel_region_init (&destPR, gimp_drawable_get_tiles (image_map->drawable),
-                     extent->x, extent->y,
-                     extent->width, extent->height,
+                     extent->x,
+                     extent->y,
+                     extent->width,
+                     extent->height,
                      TRUE);
   copy_region (&srcPR, &destPR);
 
   /* Apply the result of the gegl graph. */
   pixel_region_init (&srcPR, image->shadow,
-                     extent->x, extent->y,
-                     extent->width, extent->height,
+                     extent->x,
+                     extent->y,
+                     extent->width,
+                     extent->height,
                      FALSE);
 
   gimp_drawable_apply_region (image_map->drawable, &srcPR,

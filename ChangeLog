@@ -1,5 +1,11 @@
 2008-01-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimagemap.c: quite some cleanup (use GeglRectangle
+	more globally and don't leave stuff around if we abort for
+	whatever reason).
+
+2008-01-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/Makefile.am
 	* app/gegl/gegl-types.h
 	* app/gegl/gimpoperationthreshold.[ch]: gimpish threshold operator
