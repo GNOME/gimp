@@ -1,5 +1,18 @@
 2008-01-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/Makefile.am
+	* app/gegl/gegl-types.h
+	* app/gegl/gimpoperationthreshold.[ch]: gimpish threshold operator
+	which has "low" and "high" properties.
+
+	* app/gegl/gimp-gegl.c: register it.
+
+	* app/gegl/gimpoperationdesaturate.[ch]: fix copyright.
+
+	* app/tools/gimpthresholdtool.[ch]: use the new operator.
+
+2008-01-03  Michael Natterer  <mitch@gimp.org>
+
 	Some more gegl code to have some playground for experimenting.
 
 	* app/gegl/Makefile.am

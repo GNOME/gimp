@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationdesaturate.h
+ * gimpoperationthreshold.h
  * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,35 +19,36 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_OPERATION_DESATURATE_H__
-#define __GIMP_OPERATION_DESATURATE_H__
+#ifndef __GIMP_OPERATION_THRESHOLD_H__
+#define __GIMP_OPERATION_THRESHOLD_H__
 
 
 #include "gegl/gegl-operation-point-filter.h"
 
 
-#define GIMP_TYPE_OPERATION_DESATURATE           (gimp_operation_desaturate_get_type ())
-#define GIMP_OPERATION_DESATURATE(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_DESATURATE, GimpOperationDesaturate))
-#define GIMP_OPERATION_DESATURATE_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_DESATURATE, GimpOperationDesaturateClass))
-#define GIMP_OPERATION_DESATURATE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_DESATURATE, GimpOperationDesaturateClass))
+#define GIMP_TYPE_OPERATION_THRESHOLD           (gimp_operation_threshold_get_type ())
+#define GIMP_OPERATION_THRESHOLD(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_THRESHOLD, GimpOperationThreshold))
+#define GIMP_OPERATION_THRESHOLD_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_THRESHOLD, GimpOperationThresholdClass))
+#define GIMP_OPERATION_THRESHOLD_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_THRESHOLD, GimpOperationThresholdClass))
 
 
-typedef struct _GimpOperationDesaturateClass GimpOperationDesaturateClass;
+typedef struct _GimpOperationThresholdClass GimpOperationThresholdClass;
 
-struct _GimpOperationDesaturate
+struct _GimpOperationThreshold
 {
   GeglOperationPointFilter  parent_instance;
 
-  GimpDesaturateMode        mode;
+  gfloat                    low;
+  gfloat                    high;
 };
 
-struct _GimpOperationDesaturateClass
+struct _GimpOperationThresholdClass
 {
   GeglOperationPointFilterClass  parent_class;
 };
 
 
-GType   gimp_operation_desaturate_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_threshold_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_DESATURATE_H__ */
+#endif /* __GIMP_OPERATION_THRESHOLD_H__ */

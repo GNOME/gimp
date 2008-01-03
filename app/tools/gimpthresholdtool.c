@@ -47,22 +47,23 @@
 
 /*  local function prototypes  */
 
-static void     gimp_threshold_tool_finalize        (GObject           *object);
+static void       gimp_threshold_tool_finalize        (GObject           *object);
 
-static gboolean gimp_threshold_tool_initialize      (GimpTool          *tool,
-                                                     GimpDisplay       *display,
-                                                     GError           **error);
+static gboolean   gimp_threshold_tool_initialize      (GimpTool          *tool,
+                                                       GimpDisplay       *display,
+                                                       GError           **error);
 
-static void     gimp_threshold_tool_map             (GimpImageMapTool  *im_tool);
-static void     gimp_threshold_tool_dialog          (GimpImageMapTool  *im_tool);
-static void     gimp_threshold_tool_reset           (GimpImageMapTool  *im_tool);
+static GeglNode * gimp_threshold_tool_get_operation   (GimpImageMapTool  *im_tool);
+static void       gimp_threshold_tool_map             (GimpImageMapTool  *im_tool);
+static void       gimp_threshold_tool_dialog          (GimpImageMapTool  *im_tool);
+static void       gimp_threshold_tool_reset           (GimpImageMapTool  *im_tool);
 
-static void     gimp_threshold_tool_histogram_range (GimpHistogramView *view,
-                                                     gint               start,
-                                                     gint               end,
-                                                     GimpThresholdTool *t_tool);
-static void     gimp_threshold_tool_auto_clicked    (GtkWidget         *button,
-                                                     GimpThresholdTool *t_tool);
+static void       gimp_threshold_tool_histogram_range (GimpHistogramView *view,
+                                                       gint               start,
+                                                       gint               end,
+                                                       GimpThresholdTool *t_tool);
+static void       gimp_threshold_tool_auto_clicked    (GtkWidget         *button,
+                                                       GimpThresholdTool *t_tool);
 
 
 G_DEFINE_TYPE (GimpThresholdTool, gimp_threshold_tool,
@@ -95,15 +96,16 @@ gimp_threshold_tool_class_init (GimpThresholdToolClass *klass)
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  object_class->finalize    = gimp_threshold_tool_finalize;
+  object_class->finalize       = gimp_threshold_tool_finalize;
 
-  tool_class->initialize    = gimp_threshold_tool_initialize;
+  tool_class->initialize       = gimp_threshold_tool_initialize;
 
-  im_tool_class->shell_desc = _("Apply Threshold");
+  im_tool_class->shell_desc    = _("Apply Threshold");
 
-  im_tool_class->map        = gimp_threshold_tool_map;
-  im_tool_class->dialog     = gimp_threshold_tool_dialog;
-  im_tool_class->reset      = gimp_threshold_tool_reset;
+  im_tool_class->get_operation = gimp_threshold_tool_get_operation;
+  im_tool_class->map           = gimp_threshold_tool_map;
+  im_tool_class->dialog        = gimp_threshold_tool_dialog;
+  im_tool_class->reset         = gimp_threshold_tool_reset;
 }
 
 static void
@@ -120,6 +122,12 @@ static void
 gimp_threshold_tool_finalize (GObject *object)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (object);
+
+  if (t_tool->t_node)
+    {
+      g_object_unref (t_tool->t_node);
+      t_tool->t_node = NULL;
+    }
 
   g_slice_free (Threshold, t_tool->threshold);
 
@@ -178,10 +186,33 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
   return TRUE;
 }
 
+static GeglNode *
+gimp_threshold_tool_get_operation (GimpImageMapTool *im_tool)
+{
+  GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (im_tool);
+
+  if (! t_tool->t_node)
+    {
+      t_tool->t_node = g_object_new (GEGL_TYPE_NODE,
+                                     "operation", "gimp-threshold",
+                                     NULL);
+    }
+
+  return t_tool->t_node;
+}
+
 static void
 gimp_threshold_tool_map (GimpImageMapTool *image_map_tool)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
+
+  if (t_tool->t_node)
+    {
+      gegl_node_set (t_tool->t_node,
+                     "low",  t_tool->threshold->low_threshold  / 255.0,
+                     "high", t_tool->threshold->high_threshold / 255.0,
+                     NULL);
+    }
 
   gimp_image_map_apply (image_map_tool->image_map,
                         (GimpImageMapApplyFunc) threshold,

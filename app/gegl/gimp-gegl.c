@@ -28,6 +28,7 @@
 
 #include "gimp-gegl.h"
 #include "gimpoperationdesaturate.h"
+#include "gimpoperationthreshold.h"
 #include "gimpoperationtilesink.h"
 #include "gimpoperationtilesource.h"
 
@@ -36,6 +37,7 @@ void
 gimp_gegl_init (void)
 {
   g_type_class_ref (GIMP_TYPE_OPERATION_DESATURATE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_THRESHOLD);
   g_type_class_ref (GIMP_TYPE_OPERATION_TILE_SINK);
   g_type_class_ref (GIMP_TYPE_OPERATION_TILE_SOURCE);
 }
