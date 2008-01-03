@@ -1,3 +1,20 @@
+2008-01-03  Bill Skaggs  <weskaggs@primate.udavis.edu>
+
+	committing patch by Simon Budig to give an indication
+	when working on a layer mask, updated to fix staleness
+	and respond to "edit-changed".  Might fix bug #132204.
+	
+	* app/core/core-enums.[ch]: add GIMP_SELECTION_LAYER_ON.
+
+	* app/core/gimplayermask.c: add handler for "edit-changed".
+
+	* app/core/gimpcanvas.[ch]:  add new style
+	GIMP_CANVAS_STYLE_LAYER_MASK_ACTIVE.
+
+	* app/display/gimpdisplayshell-selection.c: use new style
+	when layer mask is active.
+	
+
 2008-01-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpimagemaptool.[ch]: keep the central processing
