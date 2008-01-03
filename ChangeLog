@@ -1,5 +1,12 @@
 2008-01-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins/common/randomize.c: Remove random seed
+	widget for hurl, pick, and slur.  Don't show repeat
+	count for hurl, since it is redundant.  Move pick
+	to the Blur category.
+	
+2008-01-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* plug-ins/common/randomize.c: added previews for hurl,
 	pick, and slur.
 	

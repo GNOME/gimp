@@ -261,7 +261,7 @@ query (void)
 			  args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC[0], "<Image>/Filters/Noise");
-  gimp_plugin_menu_register (PLUG_IN_PROC[1], "<Image>/Filters/Noise");
+  gimp_plugin_menu_register (PLUG_IN_PROC[1], "<Image>/Filters/Blur");
   gimp_plugin_menu_register (PLUG_IN_PROC[2], "<Image>/Filters/Noise");
 }
 
@@ -500,7 +500,7 @@ randomize (GimpDrawable *drawable,
     }
 
   bytes = drawable->bpp;
-  has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   /*
    *  allocate row buffers
@@ -513,9 +513,9 @@ randomize (GimpDrawable *drawable,
   /*
    *  initialize the pixel regions
    */
-  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, x1, y1, width, height, TRUE, TRUE);
-  gimp_pixel_rgn_init (&destPR2, drawable, x1, y1, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&srcPR,   drawable, x1, y1, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR,  drawable, x1, y1, width, height, TRUE,  TRUE);
+  gimp_pixel_rgn_init (&destPR2, drawable, x1, y1, width, height, TRUE,  TRUE);
   sp = &srcPR;
   dp = &destPR;
   tp = NULL;
@@ -720,8 +720,6 @@ randomize_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *table;
-  GtkWidget *label;
-  GtkWidget *seed_hbox;
   GtkWidget *main_vbox;
   GtkWidget *preview;
   GtkObject *adj;
@@ -765,14 +763,6 @@ randomize_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), table, TRUE, TRUE, 0);
   gtk_widget_show(table);
 
-  /*  Random Seed  */
-  seed_hbox = gimp_random_seed_new (&pivals.seed, &pivals.randomize);
-  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				     _("_Random seed:"), 0.0, 0.5,
-				     seed_hbox, 1, TRUE);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label),
-				 GIMP_RANDOM_SEED_SPINBUTTON (seed_hbox));
-
   /*
    *  Randomization percentage label & scale (1 to 100)
    */
@@ -789,19 +779,23 @@ randomize_dialog (GimpDrawable *drawable)
                             preview);
 
   /*
-   *  Repeat count label & scale (1 to 100)
+   *  Repeat count label & scale (1 to 100).  Don't show this for Hurl,
+   *  since repeating is equivalent to changing the percentage.
    */
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("R_epeat:"), SCALE_WIDTH, 0,
-			      pivals.rndm_rcount, 1.0, 100.0, 1.0, 10.0, 0,
-			      TRUE, 0, 0,
-			      _("Number of times to apply filter"), NULL);
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &pivals.rndm_rcount);
-  g_signal_connect_swapped (adj, "value-changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
+  if (rndm_type != RNDM_HURL)
+    {
+      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+                                  _("R_epeat:"), SCALE_WIDTH, 0,
+                                  pivals.rndm_rcount, 1.0, 100.0, 1.0, 10.0, 0,
+                                  TRUE, 0, 0,
+                                  _("Number of times to apply filter"), NULL);
+      g_signal_connect (adj, "value-changed",
+                        G_CALLBACK (gimp_double_adjustment_update),
+                        &pivals.rndm_rcount);
+      g_signal_connect_swapped (adj, "value-changed",
+                                G_CALLBACK (gimp_preview_invalidate),
+                                preview);
+    }
 
   gtk_widget_show (dlg);
 
