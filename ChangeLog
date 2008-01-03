@@ -1,5 +1,15 @@
 2008-01-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins/common/randomize.c: Add ability to use
+	an "intensity map" to control the randomization at each
+	point.  Add new pdb functions variable-hurl, variable-pick,
+	and variable-slur that take an additional drawable arg,
+	while leaving old procedures in pdb.
+
+	* plug-ins/common/variable-blur.c: a few small fixes.
+	
+2008-01-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* plug-ins/common/randomize.c: Remove random seed
 	widget for hurl, pick, and slur.  Don't show repeat
 	count for hurl, since it is redundant.  Move pick

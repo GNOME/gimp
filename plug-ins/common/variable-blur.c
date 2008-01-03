@@ -444,11 +444,12 @@ blur (GimpDrawable *drawable,
 	      if (ind == 0)
 		{
 		  guchar value;
+                  gint   c      = (col / bytes) * map_bytes;
 
 		  if (pivals.map_is_rgb)
-		    value = (mr[col] + mr[col + 1] + mr[col + 2]) / 3;
+		    value = ((gint) mr[c] + (gint) mr[c + 1] + (gint) mr[c + 2]) / 3;
 		  else
-		    value = mr[col];
+		    value = mr[c];
 
 		  beta = beta_table[value];
 		}
@@ -668,7 +669,7 @@ blur_dialog (GimpDrawable *drawable)
                             preview);
 
   /*
-   * Check button and drawable menu for blur intensity map
+   * drawable menu for blur intensity map
    */
   hbox = gtk_hbox_new(FALSE, 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
@@ -688,7 +689,7 @@ blur_dialog (GimpDrawable *drawable)
   combo = gimp_drawable_combo_box_new (dialog_constrain,
                                        GINT_TO_POINTER (pivals.drawable_id));
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              pivals.drawable_id,
+                              pivals.map_id,
                               (GCallback) dialog_usemap_callback,
                               preview);
   gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 10);
