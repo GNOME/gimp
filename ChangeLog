@@ -1,3 +1,11 @@
+2008-01-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/gegl/gegl-operation-sink.h
+	* app/gegl/gegl/gegl-operation-source.h: updated copies from gegl.
+
+	* app/gegl/gegl/gegl-operation-filter.h
+	* app/gegl/gegl/gegl-operation-point-filter.h: new files from gegl.
+
 2008-01-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/randomize.c: added previews for hurl,
