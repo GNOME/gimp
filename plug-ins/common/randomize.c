@@ -136,6 +136,8 @@ static RandomizeVals pivals =
   SEED_DEFAULT
 };
 
+static GRand  *gr; /* The GRand object which generates the
+                    * random numbers */
 
 /*********************************
  *
@@ -151,7 +153,7 @@ static void run   (const gchar      *name,
 		   GimpParam       **return_vals);
 
 static void randomize                    (GimpDrawable *drawable,
-                                          GRand        *gr);
+                                          GimpPreview  *preview);
 
 static inline void randomize_prepare_row (GimpPixelRgn *pixel_rgn,
 					  guchar       *data,
@@ -159,7 +161,7 @@ static inline void randomize_prepare_row (GimpPixelRgn *pixel_rgn,
 					  gint          y,
 					  gint          w);
 
-static gboolean    randomize_dialog      (void);
+static gboolean    randomize_dialog      (GimpDrawable *drawable);
 
 
 /************************************ Guts ***********************************/
@@ -283,8 +285,6 @@ run (const gchar      *name,
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;        /* assume the best! */
   static GimpParam   values[1];
-  GRand             *gr; /* The GRand object which generates the
-                          * random numbers */
 
   INIT_I18N ();
 
@@ -315,6 +315,8 @@ run (const gchar      *name,
       gimp_drawable_is_gray (drawable->drawable_id) ||
       gimp_drawable_is_indexed (drawable->drawable_id))
     {
+      gimp_tile_cache_ntiles (2 * drawable->ntile_cols);
+
       switch (run_mode)
 	{
 	  /*
@@ -323,7 +325,7 @@ run (const gchar      *name,
 	case GIMP_RUN_INTERACTIVE:
 	  gimp_get_data (PLUG_IN_PROC[rndm_type - 1], &pivals);
 
-	  if (! randomize_dialog ()) /* return on Cancel */
+	  if (! randomize_dialog (drawable)) /* return on Cancel */
 	    return;
 	  break;
 	  /*
@@ -375,9 +377,6 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  gimp_tile_cache_ntiles (2 *
-                                  (drawable->width / gimp_tile_width () + 1));
-
           gimp_progress_init_printf ("%s", gettext (RNDM_NAME[rndm_type - 1]));
 
 	  /*
@@ -385,7 +384,7 @@ run (const gchar      *name,
 	   */
           g_rand_set_seed (gr, pivals.seed);
 
-	  randomize (drawable, gr);
+	  randomize (drawable, NULL);
 	  /*
 	   *  If we ran interactively (even repeating) update the display.
 	   */
@@ -470,7 +469,7 @@ randomize_prepare_row (GimpPixelRgn *pixel_rgn,
 
 static void
 randomize (GimpDrawable *drawable,
-           GRand        *gr)
+           GimpPreview  *preview)
 {
   GimpPixelRgn srcPR, destPR, destPR2, *sp, *dp, *tp;
   gint width, height;
@@ -486,22 +485,23 @@ randomize (GimpDrawable *drawable,
   gint has_alpha, ind;
   gint i, j, k;
 
-  /*
-   *  Get the input area. This is the bounding box of the selection in
-   *  the image (or the entire image if there is no selection). Only
-   *  operating on the input area is simply an optimization. It doesn't
-   *  need to be done for correct operation. (It simply makes it go
-   *  faster, since fewer pixels need to be operated on).
-   */
-  gimp_drawable_mask_bounds(drawable->drawable_id, &x1, &y1, &x2, &y2);
-  /*
-   *  Get the size of the input image. (This will/must be the same
-   *  as the size of the output image.  Also get alpha info.
-   */
-  width = drawable->width;
-  height = drawable->height;
+  if (preview)
+    {
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
+      x2 = x1 + width;
+      y2 = y1 + height;
+    }
+  else
+    {
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+      width     = (x2 - x1);
+      height    = (y2 - y1);
+    }
+
   bytes = drawable->bpp;
   has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
+
   /*
    *  allocate row buffers
    */
@@ -513,9 +513,9 @@ randomize (GimpDrawable *drawable,
   /*
    *  initialize the pixel regions
    */
-  gimp_pixel_rgn_init(&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init(&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
-  gimp_pixel_rgn_init(&destPR2, drawable, 0, 0, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable, x1, y1, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&destPR2, drawable, x1, y1, width, height, TRUE, TRUE);
   sp = &srcPR;
   dp = &destPR;
   tp = NULL;
@@ -646,10 +646,13 @@ randomize (GimpDrawable *drawable,
 	  cr = nr;
 	  nr = tmp;
 
-	  if (PROG_UPDATE_TIME)
-	    gimp_progress_update ((cnt - 1 +
-                                   (double) row / (double) (y2 - y1)) /
-                                  pivals.rndm_rcount);
+          if (! preview && PROG_UPDATE_TIME)
+            {
+              gdouble base = (gdouble) cnt / pivals.rndm_rcount;
+              gdouble inc  = (gdouble) row / ((y2 - y1) * pivals.rndm_rcount);
+
+              gimp_progress_update (base + inc);
+            }
         }
 
       /*
@@ -672,14 +675,23 @@ randomize (GimpDrawable *drawable,
         }
     }
 
-  gimp_progress_update (1.0);
+  if (! preview)
+    gimp_progress_update (1.0);
 
   /*
    *  update the randomized region
    */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  if (preview)
+    {
+      gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
+                                         dp);
+    }
+  else
+    {
+      gimp_drawable_flush (drawable);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+    }
 
   /*
    *  clean up after ourselves.
@@ -704,12 +716,14 @@ randomize (GimpDrawable *drawable,
  ********************************/
 
 static gboolean
-randomize_dialog (void)
+randomize_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *table;
   GtkWidget *label;
   GtkWidget *seed_hbox;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
   GtkObject *adj;
   gboolean   run;
 
@@ -731,11 +745,24 @@ randomize_dialog (void)
 
   gimp_window_set_transient (GTK_WINDOW (dlg));
 
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
+
+  preview = gimp_drawable_preview_new (drawable, NULL);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
+  gtk_widget_show (preview);
+
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (randomize),
+                            drawable);
+
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, TRUE, TRUE, 0);
   gtk_widget_show(table);
 
   /*  Random Seed  */
@@ -757,6 +784,9 @@ randomize_dialog (void)
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pivals.rndm_pct);
+  g_signal_connect_swapped (adj, "value-changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*
    *  Repeat count label & scale (1 to 100)
@@ -769,6 +799,9 @@ randomize_dialog (void)
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pivals.rndm_rcount);
+  g_signal_connect_swapped (adj, "value-changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (dlg);
 
