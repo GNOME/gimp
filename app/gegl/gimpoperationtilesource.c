@@ -59,7 +59,9 @@ static GeglRectangle
           gimp_operation_tile_source_get_defined_region (GeglOperation *operation);
 
 static gboolean gimp_operation_tile_source_process      (GeglOperation *operation,
-                                                         gpointer       context_id);
+                                                         gpointer       context_id,
+                                                         const GeglRectangle *need,
+                                                         const GeglRectangle *result);
 
 
 G_DEFINE_TYPE (GimpOperationTileSource, gimp_operation_tile_source,
@@ -195,8 +197,9 @@ gimp_operation_tile_source_get_defined_region (GeglOperation *operation)
 }
 
 static gboolean
-gimp_operation_tile_source_process (GeglOperation *operation,
-                                    gpointer       context_id)
+gimp_operation_tile_source_process (GeglOperation       *operation,
+                                    gpointer             context_id,
+                                    const GeglRectangle *result)
 {
   GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (operation);
 
@@ -204,23 +207,20 @@ gimp_operation_tile_source_process (GeglOperation *operation,
     {
       GeglBuffer          *output;
       const Babl          *format;
-      const GeglRectangle *extent;
       PixelRegion          srcPR;
       const guint          bpp = tile_manager_bpp (self->tile_manager);
       gpointer             pr;
-
-      extent = gegl_operation_result_rect (operation, context_id);
 
       if (self->linear)
         format = gimp_bpp_to_babl_format_linear (bpp);
       else
         format = gimp_bpp_to_babl_format (bpp);
 
-      output = gegl_buffer_new (extent, format);
+      output = gegl_buffer_new (result, format);
 
       pixel_region_init (&srcPR, self->tile_manager,
-                         extent->x, extent->y,
-                         extent->width, extent->height,
+                         result->x, result->y,
+                         result->width, result->height,
                          FALSE);
 
       for (pr = pixel_regions_register (1, &srcPR);

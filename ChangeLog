@@ -1,3 +1,13 @@
+2008-01-04  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/gegl/gegl/gegl-operation-sink.h:
+	* app/gegl/gegl/gegl-operation-source.h:
+	* app/gegl/gegl/gegl-operation.h: synchronised with GEGL headers.
+
+	* app/gegl/gimpoperationtilesink.c:
+	* app/gegl/gimpoperationtilesource.c: added const GeglRectangle
+	*result to arguments of _process().
+
 2008-01-04  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpdisplayconfig.c: changed the default marching ants

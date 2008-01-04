@@ -65,7 +65,9 @@ static void     gimp_operation_tile_sink_set_property (GObject       *object,
                                                        GParamSpec    *pspec);
 
 static gboolean gimp_operation_tile_sink_process      (GeglOperation *operation,
-                                                       gpointer       context_id);
+                                                       gpointer       context_id,
+                                                       const GeglRectangle *need,
+                                                       const GeglRectangle *result);
 
 
 G_DEFINE_TYPE (GimpOperationTileSink, gimp_operation_tile_sink,
@@ -190,8 +192,9 @@ gimp_operation_tile_sink_set_property (GObject      *object,
 }
 
 static gboolean
-gimp_operation_tile_sink_process (GeglOperation *operation,
-                                  gpointer       context_id)
+gimp_operation_tile_sink_process (GeglOperation       *operation,
+                                  gpointer             context_id,
+                                  const GeglRectangle *result)
 {
   GimpOperationTileSink *self = GIMP_OPERATION_TILE_SINK (operation);
 
@@ -199,12 +202,9 @@ gimp_operation_tile_sink_process (GeglOperation *operation,
     {
       GeglBuffer          *input;
       const Babl          *format;
-      const GeglRectangle *extent;
       PixelRegion          destPR;
       const guint          bpp = tile_manager_bpp (self->tile_manager);
       gpointer             pr;
-
-      extent = gegl_operation_result_rect (operation, context_id);
 
       if (self->linear)
         format = gimp_bpp_to_babl_format_linear (bpp);
@@ -215,8 +215,8 @@ gimp_operation_tile_sink_process (GeglOperation *operation,
                                                     "input"));
 
       pixel_region_init (&destPR, self->tile_manager,
-                         extent->x, extent->y,
-                         extent->width, extent->height,
+                         result->x, result->y,
+                         result->width, result->height,
                          TRUE);
 
       for (pr = pixel_regions_register (1, &destPR);
@@ -230,7 +230,7 @@ gimp_operation_tile_sink_process (GeglOperation *operation,
         }
 
       g_signal_emit (operation, tile_sink_signals[DATA_WRITTEN], 0,
-                     extent);
+                     result);
     }
   else
     {
