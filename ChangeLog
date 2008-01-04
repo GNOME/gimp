@@ -1,5 +1,12 @@
 2008-01-04  Jakub Steiner <jimmac@ximian.com>
 
+	* data/images/wilber-devel-icon.png
+	* data/images/wilber-icon.png
+	* data/images/wilber-devel.png
+	* data/images/gimp-logo.png: sync to the latest wilber version.
+
+2008-01-04  Jakub Steiner <jimmac@ximian.com>
+
 	* libgimpwidgets/wilber-16.png:
 	* libgimpwidgets/wilber-22.png:
 	* libgimpwidgets/wilber-32.png:
