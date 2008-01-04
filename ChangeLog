@@ -1,5 +1,21 @@
 2008-01-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/gimpcoreconfig.[ch]: add "use-gegl" property but
+	don't serialize it.
+
+	* app/widgets/gimptoolbox.c: add super ugly "Use GEGL" toggle to
+	the toolbox so we don't need to have prefs open all the time when
+	experimenting with gegl.
+
+	* app/tools/gimpimagemaptool.[ch]: remove "Use GEGL" toggle from
+	the tool dialogs and connect to the config property instead.
+
+	* app/core/gimpdrawable-desaturate.c
+	* app/core/gimpdrawable-invert.c: made them runtime-switchable by
+	looking at the config property.
+
+2008-01-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/Makefile.am
 	* app/gegl/gegl-types.h
 	* app/gegl/gimpoperationcolorize.[ch]

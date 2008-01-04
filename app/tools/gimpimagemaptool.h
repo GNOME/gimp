@@ -55,9 +55,6 @@ struct _GimpImageMapTool
 
   /* settings file dialog */
   GtkWidget     *settings_dialog;
-
-  /* temp hack */
-  gboolean       use_gegl;
 };
 
 struct _GimpImageMapToolClass

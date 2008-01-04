@@ -89,7 +89,8 @@ enum
   PROP_MIN_COLORS,
   PROP_COLOR_MANAGEMENT,
   PROP_COLOR_PROFILE_POLICY,
-  PROP_SAVE_DOCUMENT_HISTORY
+  PROP_SAVE_DOCUMENT_HISTORY,
+  PROP_USE_GEGL
 };
 
 
@@ -358,6 +359,15 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                     SAVE_DOCUMENT_HISTORY_BLURB,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
+
+  /*  not serialized  */
+  g_object_class_install_property (object_class, PROP_USE_GEGL,
+                                   g_param_spec_boolean ("use-gegl",
+                                                         "Use GEGL",
+                                                         "Use GEGL",
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -578,6 +588,9 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_SAVE_DOCUMENT_HISTORY:
       core_config->save_document_history = g_value_get_boolean (value);
       break;
+    case PROP_USE_GEGL:
+      core_config->use_gegl = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -717,6 +730,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_SAVE_DOCUMENT_HISTORY:
       g_value_set_boolean (value, core_config->save_document_history);
+      break;
+    case PROP_USE_GEGL:
+      g_value_set_boolean (value, core_config->use_gegl);
       break;
 
     default:

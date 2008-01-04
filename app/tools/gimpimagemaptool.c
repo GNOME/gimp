@@ -30,6 +30,9 @@
 
 #include "tools-types.h"
 
+/* temp */
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
@@ -104,7 +107,8 @@ static void     gimp_image_map_tool_settings_dialog  (GimpImageMapTool *im_tool,
 static void     gimp_image_map_tool_notify_preview   (GObject          *config,
                                                       GParamSpec       *pspec,
                                                       GimpImageMapTool *im_tool);
-static void     gimp_image_map_tool_gegl_toggled     (GtkWidget        *toggle,
+static void     gimp_image_map_tool_gegl_notify      (GObject          *config,
+                                                      const GParamSpec *pspec,
                                                       GimpImageMapTool *im_tool);
 
 
@@ -251,23 +255,6 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
                                G_CALLBACK (gimp_image_map_tool_notify_preview),
                                image_map_tool, 0);
 
-      if (GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool)->get_operation)
-        {
-          image_map_tool->use_gegl = TRUE;
-
-          toggle = gtk_check_button_new_with_label ("Use GEGL");
-          gtk_box_pack_end (GTK_BOX (image_map_tool->main_vbox), toggle,
-                            FALSE, FALSE, 0);
-          gtk_widget_show (toggle);
-
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                        image_map_tool->use_gegl);
-
-          g_signal_connect (toggle, "toggled",
-                            G_CALLBACK (gimp_image_map_tool_gegl_toggled),
-                            image_map_tool);
-        }
-
       if (klass->load_dialog_title)
         {
           image_map_tool->load_button =
@@ -330,6 +317,11 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       gimp_image_map_tool_dialog (image_map_tool);
 
       gtk_widget_show (vbox);
+
+      if (GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool)->get_operation)
+        g_signal_connect_object (tool_info->gimp->config, "notify::use-gegl",
+                                 G_CALLBACK (gimp_image_map_tool_gegl_notify),
+                                 image_map_tool, 0);
     }
 
   drawable = gimp_image_get_active_drawable (display->image);
@@ -444,18 +436,21 @@ gimp_image_map_tool_reset (GimpImageMapTool *tool)
 static void
 gimp_image_map_tool_create_map (GimpImageMapTool *tool)
 {
+  GimpCoreConfig *config = GIMP_TOOL (tool)->tool_info->gimp->config;
+
   if (tool->image_map)
     {
       gimp_image_map_clear (tool->image_map);
       g_object_unref (tool->image_map);
     }
 
-  if (tool->use_gegl && ! tool->operation)
+  if (config->use_gegl && ! tool->operation)
     tool->operation = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->get_operation (tool);
 
   tool->image_map = gimp_image_map_new (tool->drawable,
                                         GIMP_TOOL (tool)->tool_info->blurb,
-                                        tool->use_gegl ? tool->operation : NULL);
+                                        config->use_gegl ?
+                                        tool->operation : NULL);
 
   g_signal_connect (tool->image_map, "flush",
                     G_CALLBACK (gimp_image_map_tool_flush),
@@ -844,11 +839,10 @@ gimp_image_map_tool_settings_dialog (GimpImageMapTool *tool,
 }
 
 static void
-gimp_image_map_tool_gegl_toggled (GtkWidget        *toggle,
-                                  GimpImageMapTool *im_tool)
+gimp_image_map_tool_gegl_notify (GObject          *config,
+                                 const GParamSpec *pspec,
+                                 GimpImageMapTool *im_tool)
 {
-  im_tool->use_gegl = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
-
   gimp_tool_control_set_preserve (GIMP_TOOL (im_tool)->control, TRUE);
 
   gimp_image_map_tool_create_map (im_tool);
