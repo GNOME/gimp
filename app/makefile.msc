@@ -46,6 +46,7 @@ GIMP_CORE_OBJECTS = \
 	config/appconfig.lib \
 	core/appcore.lib \
 	file/appfile.lib \
+	gegl/appgegl.lib \
 	paint/apppaint.lib \
 	paint-funcs/apppaint-funcs.lib \
 	pdb/apppdb.lib \
@@ -72,6 +73,7 @@ PKG_LINK = \
 	$(LIBART_LIBS) \
 	$(PANGOWIN32_LIBS) \
 	$(PANGOCAIRO_LIBS) \
+	$(GEGL_LIBS) $(BABL_LIBS) \
 !IFNDEF PANGO_WIN32_EXTENDED
 	$(PANGOFT2_LIBS) \
 	$(FREETYPE2_LIBS) \
@@ -87,6 +89,7 @@ INCLUDES = \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/app \
 	$(GTK2_CFLAGS) \
+	$(GEGL_CFLAGS) \
 !IFNDEF PANGO_WIN32_EXTENDED
 	$(FONTCONFIG_CFLAGS) \
 	$(FREETYPE2_CFLAGS) \

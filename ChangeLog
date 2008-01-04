@@ -1,3 +1,8 @@
+2008-01-04  Hans Breuer  <hans@breuer.org>
+
+	**/makefile.msc app/gimpcore.def : updated so it compiles and links
+	(almost, see bug #507298)
+	
 2008-01-04  Sven Neumann  <sven@gimp.org>
 
 	Merged from gimp-2-4 branch:

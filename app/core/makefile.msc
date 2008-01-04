@@ -9,7 +9,7 @@ PKG_VER = $(GIMP_VER)
 
 PKG_LINK = \
 	$(GLIB_LIBS) $(GTK_PIXBUF_LIBS) $(INTL_LIBS) $(LIBART_LIBS) \
-	$(PANGOWIN32_LIBS) $(GDK_PIXBUF_LIBS) \
+	$(PANGOWIN32_LIBS) $(GDK_PIXBUF_LIBS) $(GEGL_LIBS) \
 #	$(PANGOFT2_LIBS) \
 	\
 	..\..\regexrepl\regexrepl.lib \
@@ -68,6 +68,7 @@ OBJECTS = \
 	gimpcontext.obj \
 	gimpcoords.obj \
 	gimpcurve.obj \
+	gimpcurve-load.obj \
 	gimpcurve-save.obj \
 	gimpdashpattern.obj \
 	gimpdata.obj \
@@ -84,6 +85,7 @@ OBJECTS = \
 	gimpdrawable-invert.obj \
 	gimpdrawable-levels.obj \
 	gimpdrawable-offset.obj \
+	gimpdrawable-operation.obj \
 	gimpdrawable-preview.obj \
 	gimpdrawable-stroke.obj \
 	gimpdrawable-transform.obj \
@@ -191,6 +193,7 @@ INCLUDES = \
 	-I$(PRJ_TOP)/app \
 	$(GTK2_CFLAGS) \
 	$(LIBART_CFLAGS) \
+	$(GEGL_CFLAGS)
 
 DEFINES = \
 	-DGIMP_COMPILATION \

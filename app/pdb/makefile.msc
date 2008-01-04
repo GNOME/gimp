@@ -80,6 +80,7 @@ OBJECTS = \
 	vectors_cmds.obj \
 	\
 	gimppdb.obj \
+	gimppdb-utils.obj \
 	gimppdberror.obj \
 	\
 	gimp-pdb-compat.obj \

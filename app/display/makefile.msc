@@ -13,7 +13,7 @@ INCLUDES = \
 	-FImsvc_recommended_pragmas.h \
 	-I$(PRJ_TOP) \
 	-I$(PRJ_TOP)/app \
-	$(GTK2_CFLAGS) \
+	$(GTK2_CFLAGS)
 
 DEFINES = \
 	-DG_LOG_DOMAIN=\"Gimp-Display\"
