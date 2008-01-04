@@ -7,8 +7,12 @@ libappgegl_a_SOURCES = \
 	gimp-gegl.h			\
 	gimp-gegl-utils.c		\
 	gimp-gegl-utils.h		\
+	gimpoperationcolorize.c		\
+	gimpoperationcolorize.h		\
 	gimpoperationdesaturate.c	\
 	gimpoperationdesaturate.h	\
+	gimpoperationposterize.c	\
+	gimpoperationposterize.h	\
 	gimpoperationthreshold.c	\
 	gimpoperationthreshold.h	\
 	gimpoperationtilesink.c		\

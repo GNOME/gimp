@@ -1,5 +1,19 @@
 2008-01-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/Makefile.am
+	* app/gegl/gegl-types.h
+	* app/gegl/gimpoperationcolorize.[ch]
+	* app/gegl/gimpoperationposterize.[ch]: new operators which still
+	use a lot of gimp stuff they shouldn't use, but at least the
+	infrastructure for improving them is there now.
+
+	* app/gegl/gimp-gegl.c: register them.
+
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpposterizetool.c: use them.
+
+2008-01-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimagemap.c (gimp_image_map_apply): switch tile
 	sources and sinks to assume linear data.
 
