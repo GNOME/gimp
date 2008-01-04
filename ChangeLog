@@ -1,3 +1,13 @@
+2008-01-04  Jakub Steiner <jimmac@ximian.com>
+
+	* libgimpwidgets/wilber-16.png:
+	* libgimpwidgets/wilber-22.png:
+	* libgimpwidgets/wilber-32.png:
+	* libgimpwidgets/wilber-48.png:
+	* libgimpwidgets/wilber-64.png:
+	* libgimpwidgets/wilber-256.png: update app icon. Add 256x256px
+		for OS X and Vista 
+
 2008-01-04  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprotatetool.c (rotate_angle_changed): also update
