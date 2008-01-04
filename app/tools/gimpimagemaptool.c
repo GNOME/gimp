@@ -444,8 +444,6 @@ gimp_image_map_tool_reset (GimpImageMapTool *tool)
 static void
 gimp_image_map_tool_create_map (GimpImageMapTool *tool)
 {
-  GeglNode *operation = NULL;
-
   if (tool->image_map)
     {
       gimp_image_map_clear (tool->image_map);
@@ -457,7 +455,7 @@ gimp_image_map_tool_create_map (GimpImageMapTool *tool)
 
   tool->image_map = gimp_image_map_new (tool->drawable,
                                         GIMP_TOOL (tool)->tool_info->blurb,
-                                        tool->operation);
+                                        tool->use_gegl ? tool->operation : NULL);
 
   g_signal_connect (tool->image_map, "flush",
                     G_CALLBACK (gimp_image_map_tool_flush),
