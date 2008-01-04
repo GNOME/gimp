@@ -697,9 +697,10 @@ selection_start_timeout (Selection *selection)
 
 
       if (selection->segs_in)
-        selection->timeout = g_timeout_add (config->marching_ants_speed,
-                                            (GSourceFunc) selection_timeout,
-                                            selection);
+        selection->timeout = g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                                 config->marching_ants_speed,
+                                                 (GSourceFunc) selection_timeout,
+                                                  selection, NULL);
     }
 
   return FALSE;

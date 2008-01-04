@@ -1,3 +1,8 @@
+2008-01-04  Hans Breuer  <hans@breuer.org>
+
+	* app/display/gimpdisplayshell-selection.c :
+	marching ants with G_PRIORITY_DEFAULT_IDLE, fixes bug #479875
+
 2008-01-04  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
