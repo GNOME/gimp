@@ -283,21 +283,19 @@ gimp_rotate_tool_motion (GimpTransformTool *tr_tool,
   /*  limit the angle to between -180 and 180 degrees  */
   if (tr_tool->trans_info[REAL_ANGLE] < - G_PI)
     {
-      tr_tool->trans_info[REAL_ANGLE] =
-        2.0 * G_PI + tr_tool->trans_info[REAL_ANGLE];
+      tr_tool->trans_info[REAL_ANGLE] += 2.0 * G_PI;
     }
   else if (tr_tool->trans_info[REAL_ANGLE] > G_PI)
     {
-      tr_tool->trans_info[REAL_ANGLE] =
-        tr_tool->trans_info[REAL_ANGLE] - 2.0 * G_PI;
+      tr_tool->trans_info[REAL_ANGLE] -= 2.0 * G_PI;
     }
 
   /*  constrain the angle to 15-degree multiples if ctrl is held down  */
   if (options->constrain)
     {
       tr_tool->trans_info[ANGLE] =
-        FIFTEEN_DEG * (int) ((tr_tool->trans_info[REAL_ANGLE] +
-                              FIFTEEN_DEG / 2.0) / FIFTEEN_DEG);
+        FIFTEEN_DEG * (gint) ((tr_tool->trans_info[REAL_ANGLE] +
+                               FIFTEEN_DEG / 2.0) / FIFTEEN_DEG);
     }
   else
     {
@@ -331,7 +329,7 @@ rotate_angle_changed (GtkAdjustment     *adj,
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
 
-      tr_tool->trans_info[ANGLE] = value;
+      tr_tool->trans_info[REAL_ANGLE] = tr_tool->trans_info[ANGLE] = value;
 
       gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
 

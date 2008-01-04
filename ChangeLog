@@ -1,3 +1,8 @@
+2008-01-04  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprotatetool.c (rotate_angle_changed): also update
+	trans_info[REAL_ANGLE]. Fixes bug #507167.
+
 2008-01-03  Bill Skaggs  <weskaggs@primate.udavis.edu>
 
 	committing patch by Simon Budig to give an indication
