@@ -60,7 +60,6 @@ static GeglRectangle
 
 static gboolean gimp_operation_tile_source_process      (GeglOperation *operation,
                                                          gpointer       context_id,
-                                                         const GeglRectangle *need,
                                                          const GeglRectangle *result);
 
 

@@ -66,7 +66,6 @@ static void     gimp_operation_tile_sink_set_property (GObject       *object,
 
 static gboolean gimp_operation_tile_sink_process      (GeglOperation *operation,
                                                        gpointer       context_id,
-                                                       const GeglRectangle *need,
                                                        const GeglRectangle *result);
 
 
