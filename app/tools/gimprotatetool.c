@@ -325,7 +325,7 @@ rotate_angle_changed (GtkAdjustment     *adj,
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
 
-      tr_tool->trans_info[ANGLE] = value;
+      tr_tool->trans_info[REAL_ANGLE] = tr_tool->trans_info[ANGLE] = value;
 
       gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->display);
 
