@@ -1,5 +1,8 @@
 2008-01-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimagemap.c (gimp_image_map_apply): switch tile
+	sources and sinks to assume linear data.
+
 	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_create_map):
 	enable disabling gegl again, which i broke with my last commit.
 

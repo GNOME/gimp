@@ -419,8 +419,6 @@ gimp_image_map_apply (GimpImageMap          *image_map,
     {
       if (! image_map->gegl)
         {
-          GObject *sink_operation;
-
           image_map->gegl = gegl_node_new ();
 
           image_map->input =
@@ -443,15 +441,19 @@ gimp_image_map_apply (GimpImageMap          *image_map,
                                  "operation", "gimp-tilemanager-sink",
                                  NULL);
 
-          g_object_get (image_map->output,
-                        "gegl-operation", &sink_operation,
-                        NULL);
+          {
+            GObject *sink_operation;
 
-          g_signal_connect (sink_operation, "data-written",
-                            G_CALLBACK (gimp_image_map_data_written),
-                            image_map);
+            g_object_get (image_map->output,
+                          "gegl-operation", &sink_operation,
+                          NULL);
 
-          g_object_unref (sink_operation);
+            g_signal_connect (sink_operation, "data-written",
+                              G_CALLBACK (gimp_image_map_data_written),
+                              image_map);
+
+            g_object_unref (sink_operation);
+          }
 
           gegl_node_link_many (image_map->input,
                                image_map->shift,
@@ -462,6 +464,7 @@ gimp_image_map_apply (GimpImageMap          *image_map,
 
       gegl_node_set (image_map->input,
                      "tile-manager", image_map->undo_tiles,
+                     "linear",       TRUE,
                      NULL);
 
       gegl_node_set (image_map->shift,
@@ -470,8 +473,8 @@ gimp_image_map_apply (GimpImageMap          *image_map,
                      NULL);
 
       gegl_node_set (image_map->output,
-                     "tile-manager",
-                     gimp_drawable_get_shadow_tiles (image_map->drawable),
+                     "tile-manager", gimp_drawable_get_shadow_tiles (image_map->drawable),
+                     "linear",       TRUE,
                      NULL);
 
       image_map->processor = gegl_node_new_processor (image_map->output,
