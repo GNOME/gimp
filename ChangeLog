@@ -1,3 +1,10 @@
+2008-01-04  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/config/gimpdisplayconfig.c: changed the default marching ants
+	speed to 200.
+
 2008-01-04  Hans Breuer  <hans@breuer.org>
 
 	* app/display/gimpdisplayshell-selection.c :
