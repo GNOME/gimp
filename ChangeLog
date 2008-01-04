@@ -1,5 +1,15 @@
 2008-01-04  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/color.pdb: optionally use gegl where we already
+	have operations (breaking the indentation to keep the diff small
+	and readable).
+
+	* app/pdb/Makefile.am: add GEGL_CFLAGS.
+
+	* app/pdb/color_cmds.c: regenerated.
+
+2008-01-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpcoreconfig.[ch]: add "use-gegl" property but
 	don't serialize it.
 

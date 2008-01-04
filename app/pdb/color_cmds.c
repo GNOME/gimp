@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <gegl.h>
 
 #include <glib-object.h>
 
@@ -34,11 +35,11 @@
 #include "base/gimphistogram.h"
 #include "base/gimplut.h"
 #include "base/hue-saturation.h"
-#include "base/levels.h"
 #include "base/lut-funcs.h"
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 #include "base/threshold.h"
+#include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
 #include "core/gimpcurve.h"
 #include "core/gimpdrawable-desaturate.h"
@@ -46,6 +47,7 @@
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpdrawable-invert.h"
 #include "core/gimpdrawable-levels.h"
+#include "core/gimpdrawable-operation.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "gimp-intl.h"
@@ -78,6 +80,26 @@ brightness_contrast_invoker (GimpProcedure      *procedure,
 
       if (success)
         {
+      if (gimp->config->use_gegl)
+        {
+          GeglNode *node = g_object_new (GEGL_TYPE_NODE,
+                                         "operation",  "brightness-contrast",
+                                         NULL);
+
+          gegl_node_set (node,
+                         "brightness", brightness / 127.0,
+                         "contrast",   (contrast < 0 ?
+                                        (contrast + 127.0) / 127.0 :
+                                        contrast * 4.0 / 127.0 + 1),
+                         NULL);
+
+          gimp_drawable_apply_operation (drawable, node, TRUE,
+                                         progress, _("Brightness-Contrast"));
+
+          g_object_unref (node);
+        }
+      else
+        {
           gint x, y, width, height;
 
           /* The application should occur only within selection bounds */
@@ -104,6 +126,7 @@ brightness_contrast_invoker (GimpProcedure      *procedure,
               gimp_drawable_merge_shadow (drawable, TRUE, _("Brightness-Contrast"));
               gimp_drawable_update (drawable, x, y, width, height);
             }
+        }
         }
     }
 
@@ -231,6 +254,23 @@ posterize_invoker (GimpProcedure      *procedure,
 
       if (success)
         {
+      if (gimp->config->use_gegl)
+        {
+          GeglNode *node = g_object_new (GEGL_TYPE_NODE,
+                                         "operation", "gimp-posterize",
+                                         NULL);
+
+          gegl_node_set (node,
+                         "levels", levels,
+                         NULL);
+
+          gimp_drawable_apply_operation (drawable, node, TRUE,
+                                         progress, _("Levels"));
+
+          g_object_unref (node);
+        }
+      else
+        {
           gint x, y, width, height;
 
           /* The application should occur only within selection bounds */
@@ -255,6 +295,7 @@ posterize_invoker (GimpProcedure      *procedure,
               gimp_drawable_merge_shadow (drawable, TRUE, _("Posterize"));
               gimp_drawable_update (drawable, x, y, width, height);
             }
+        }
         }
     }
 
@@ -634,6 +675,25 @@ colorize_invoker (GimpProcedure      *procedure,
 
       if (success)
         {
+      if (gimp->config->use_gegl)
+        {
+          GeglNode *node = g_object_new (GEGL_TYPE_NODE,
+                                         "operation", "gimp-colorize",
+                                         NULL);
+
+          gegl_node_set (node,
+                         "hue",        hue,
+                         "saturation", saturation,
+                         "lightness",  lightness,
+                         NULL);
+
+          gimp_drawable_apply_operation (drawable, node, TRUE,
+                                         progress, _("Colorize"));
+
+          g_object_unref (node);
+        }
+      else
+        {
           gint x, y, width, height;
 
           /* The application should occur only within selection bounds */
@@ -661,6 +721,7 @@ colorize_invoker (GimpProcedure      *procedure,
               gimp_drawable_merge_shadow (drawable, TRUE, _("Colorize"));
               gimp_drawable_update (drawable, x, y, width, height);
             }
+        }
         }
     }
 
@@ -828,6 +889,24 @@ threshold_invoker (GimpProcedure      *procedure,
 
       if (success)
         {
+      if (gimp->config->use_gegl)
+        {
+          GeglNode *node = g_object_new (GEGL_TYPE_NODE,
+                                         "operation", "gimp-threshold",
+                                         NULL);
+
+          gegl_node_set (node,
+                         "low",  low_threshold  / 255.0,
+                         "high", high_threshold / 255.0,
+                         NULL);
+
+          gimp_drawable_apply_operation (drawable, node, TRUE,
+                                         progress, _("Threshold"));
+
+          g_object_unref (node);
+        }
+      else
+        {
           gint x, y, width, height;
 
           /* The application should occur only within selection bounds */
@@ -851,6 +930,7 @@ threshold_invoker (GimpProcedure      *procedure,
               gimp_drawable_merge_shadow (drawable, TRUE, _("Threshold"));
               gimp_drawable_update (drawable, x, y, width, height);
             }
+        }
         }
     }
 
