@@ -36,6 +36,11 @@
 #include "gimppickable.h"
 #include "gimpviewable.h"
 
+#ifdef __GNUC__
+#warning FIXME: gegl_node_add_child() needs to be public
+#endif
+GeglNode * gegl_node_add_child (GeglNode *self,
+                                GeglNode *child);
 
 enum
 {
@@ -431,9 +436,6 @@ gimp_image_map_apply (GimpImageMap          *image_map,
                                  "operation", "shift",
                                  NULL);
 
-#ifdef __GNUC__
-#warning FIXME: gegl_node_add_child() needs to be public
-#endif
           gegl_node_add_child (image_map->gegl, image_map->operation);
 
           image_map->output =

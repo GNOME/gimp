@@ -1,3 +1,8 @@
+2008-01-05  Manish Singh  <yosh@gimp.org>
+
+	* app/core/gimpimagemap.c: hardcode a declaration of
+	gegl_node_add_child() in here for now.
+
 2008-01-05  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/gegl/gegl/gegl-operation-sink.h:
