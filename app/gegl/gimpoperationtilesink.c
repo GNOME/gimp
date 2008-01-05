@@ -26,6 +26,7 @@
 #include <glib-object.h>
 
 #include "gegl/gegl-types.h"
+#include "gegl/graph/gegl-node-context.h"
 #include <gegl/buffer/gegl-buffer.h>
 
 #include "gegl-types.h"
@@ -65,7 +66,7 @@ static void     gimp_operation_tile_sink_set_property (GObject       *object,
                                                        GParamSpec    *pspec);
 
 static gboolean gimp_operation_tile_sink_process      (GeglOperation *operation,
-                                                       gpointer       context_id,
+                                                       GeglNodeContext *context,
                                                        const GeglRectangle *result);
 
 
@@ -192,7 +193,7 @@ gimp_operation_tile_sink_set_property (GObject      *object,
 
 static gboolean
 gimp_operation_tile_sink_process (GeglOperation       *operation,
-                                  gpointer             context_id,
+                                  GeglNodeContext *context,
                                   const GeglRectangle *result)
 {
   GimpOperationTileSink *self = GIMP_OPERATION_TILE_SINK (operation);
@@ -210,8 +211,7 @@ gimp_operation_tile_sink_process (GeglOperation       *operation,
       else
         format = gimp_bpp_to_babl_format (bpp);
 
-      input = GEGL_BUFFER (gegl_operation_get_data (operation, context_id,
-                                                    "input"));
+      input = gegl_node_context_get_source (context, "input");
 
       pixel_region_init (&destPR, self->tile_manager,
                          result->x, result->y,

@@ -1,3 +1,18 @@
+2008-01-05  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/gegl/gegl/gegl-operation-sink.h:
+	* app/gegl/gegl/gegl-operation-source.h:
+	* app/gegl/gegl/gegl-operation.h:
+	* app/gegl/gegl/gegl-types.h:
+	* app/gegl/gegl/graph/:
+	* app/gegl/gegl/graph/gegl-node-context.h: synchronoised with GEGL
+	headers.
+
+	* app/gegl/gimpoperationtilesink.c:
+	* app/gegl/gimpoperationtilesource.c: updated to new API, where a
+	GeglNodeContext is used in process methods instead of gpointer
+	context_id.
+
 2008-01-04  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/gegl/gegl/gegl-operation-sink.h:

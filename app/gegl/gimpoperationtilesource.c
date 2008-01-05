@@ -34,6 +34,7 @@
 #include "base/pixel-region.h"
 
 #include "gimp-gegl-utils.h"
+#include "gegl/graph/gegl-node-context.h"
 #include "gimpoperationtilesource.h"
 
 
@@ -59,7 +60,7 @@ static GeglRectangle
           gimp_operation_tile_source_get_defined_region (GeglOperation *operation);
 
 static gboolean gimp_operation_tile_source_process      (GeglOperation *operation,
-                                                         gpointer       context_id,
+                                                         GeglNodeContext *context,
                                                          const GeglRectangle *result);
 
 
@@ -197,7 +198,7 @@ gimp_operation_tile_source_get_defined_region (GeglOperation *operation)
 
 static gboolean
 gimp_operation_tile_source_process (GeglOperation       *operation,
-                                    gpointer             context_id,
+                                    GeglNodeContext     *context,
                                     const GeglRectangle *result)
 {
   GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (operation);
@@ -231,8 +232,7 @@ gimp_operation_tile_source_process (GeglOperation       *operation,
           gegl_buffer_set (output, &rect, format, srcPR.data, srcPR.rowstride);
         }
 
-      gegl_operation_set_data (operation, context_id,
-                               "output", G_OBJECT (output));
+      gegl_node_context_set_object (context, "output", G_OBJECT (output));
     }
 
   return TRUE;

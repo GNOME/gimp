@@ -111,27 +111,8 @@ struct _GeglOperationClass
                                            gint           x,
                                            gint           y);
 
-  /* XXX: get array of in Gvalues and out Gvalues, filled with buffers? */
-
-  /* do the actual processing needed to put GeglBuffers on the output pad
-   * Replace context_id with an actual object?
-   *
-   * GeglOperationData  <- per evaluation unique data for operation?
-   *                       (or node?) 
-   *
-   * .. compute_input request?
-   *
-   */
   gboolean        (*process) (GeglOperation       *operation,
-   /*
-                              GValue             **pads,
-                              const gchar        **pad_names,
-                              gint                 n_pads,
-                              const GeglRectangle *result_rect,
-                              const GeglRectangle *requested_rect,
-    */
-
-                              gpointer             context_id,
+                              GeglNodeContext     *context,
                               const gchar         *output_pad,
                               const GeglRectangle *result_rect
                               );
@@ -153,15 +134,6 @@ void            gegl_operation_set_source_region    (GeglOperation *operation,
                                                      const gchar   *pad_name,
                                                      GeglRectangle *region);
 
-#if 0
-/* returns the bounding box of the buffer that needs to be computed */
-const GeglRectangle * gegl_operation_result_rect    (GeglOperation *operation,
-                                                     gpointer       context_id);
-
-/* returns the bounding box of the buffer needed for computation */
-const GeglRectangle * gegl_operation_need_rect      (GeglOperation *operation,
-                                                     gpointer       context_id);
-#endif
 
 /* virtual method invokers that depends only on the set properties of a
  * operation|node
@@ -187,30 +159,16 @@ GeglNode       *gegl_operation_detect               (GeglOperation *operation,
 
 
 /* virtual method invokers that change behavior based on the roi being computed,
- * needs a context_id being based that is used for storing dynamic data.
+ * needs a context_id being based that is used for storing context data.
  */
 
-void            gegl_operation_attach               (GeglOperation *operation,
-                                                     GeglNode      *node);
-void            gegl_operation_prepare              (GeglOperation *operation);
-gboolean        gegl_operation_process              (GeglOperation *operation,
-                                                     gpointer       context_id,
-                                                     const gchar   *output_pad,
+void            gegl_operation_attach               (GeglOperation       *operation,
+                                                     GeglNode            *node);
+void            gegl_operation_prepare              (GeglOperation       *operation);
+gboolean        gegl_operation_process              (GeglOperation       *operation,
+                                                     GeglNodeContext     *context,
+                                                     const gchar         *output_pad,
                                                      const GeglRectangle *result_rect);
-
-
-/* retrieve the buffer that we are going to write into, it will be of the
- * dimensions retrieved through the rectangle computation, and of the format
- * currently specified on the associated nodes, "property_name" pad.
- */
-GeglBuffer    * gegl_operation_get_target           (GeglOperation *operation,
-                                                     gpointer       context_id,
-                                                     const gchar   *property_name);
-
-
-GeglBuffer    * gegl_operation_get_source            (GeglOperation *operation,
-                                                      gpointer       context_id,
-                                                      const gchar   *property_name);
 
 gchar        ** gegl_list_operations                (guint *n_operations_p);
 GParamSpec   ** gegl_list_properties                (const gchar *operation_type,
@@ -239,31 +197,6 @@ void       gegl_operation_set_format                (GeglOperation *operation,
  * a GeglNode using just a string with the registered name.
  */
 GType      gegl_operation_gtype_from_name           (const gchar *name);
-
-
-
-
-/* set a dynamic named instance for this node, this function takes over
- * ownership of the reference (should only be used for internal GeglOperation
- * implementations that override caching behaviour, use with care)
- */
-void            gegl_operation_set_data             (GeglOperation *operation,
-                                                     gpointer       context_id,
-                                                     const gchar   *property_name,
-                                                     GObject       *data);
-
-
-/*************************
- *  The following is internal GEGL functions, declared in the header for now, should.
- *  be removed when the operation API is made public.
- */
-
-
-/* retrieve a gobject previously set dynamically on an operation */
-GObject       * gegl_operation_get_data             (GeglOperation *operation,
-                                                     gpointer       context_id,
-                                                     const gchar   *property_name);
-
 
 gboolean gegl_operation_calc_source_regions  (GeglOperation *operation,
                                               gpointer       context_id);
