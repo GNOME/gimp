@@ -1,5 +1,12 @@
 2008-01-05  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/pygimp-image.c: new Image.new_layer() method,
+	which is convenience for creating, filling, and attaching a new
+	layer onto an image. Based on a idea and patch by João S. O. Bueno
+	in bug #505982.
+
+2008-01-05  Manish Singh  <yosh@gimp.org>
+
 	* app/core/gimpimagemap.c: hardcode a declaration of
 	gegl_node_add_child() in here for now.
 

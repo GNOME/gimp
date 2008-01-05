@@ -66,6 +66,94 @@ img_add_layer(PyGimpImage *self, PyObject *args)
 }
 
 static PyObject *
+img_new_layer(PyGimpImage *self, PyObject *args, PyObject *kwargs)
+{
+    char *layer_name;
+    int layer_id;
+    int width, height;
+    int layer_type;
+    int offs_x = 0, offs_y = 0;
+    gboolean alpha = TRUE;
+    int pos = -1;
+    double opacity = 100.0;
+    GimpLayerModeEffects mode = GIMP_NORMAL_MODE;
+    GimpFillType fill_mode = -1;
+
+    static char *kwlist[] = { "name", "width", "height", "offset_x", "offset_y",
+                              "alpha", "pos", "opacity", "mode", "fill_mode",
+                              NULL };
+
+    layer_name = "New Layer";
+
+    width = gimp_image_width(self->ID);
+    height = gimp_image_width(self->ID);
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "|siiiiiidii:new_layer", kwlist,
+                                     &layer_name, &width, &height,
+                                     &offs_x, &offs_y, &alpha, &pos,
+                                     &opacity, &mode, &fill_mode))
+        return NULL;
+
+
+    switch (gimp_image_base_type(self->ID))  {
+        case GIMP_RGB:
+            layer_type = alpha ? GIMP_RGBA_IMAGE: GIMP_RGB_IMAGE;
+            break;
+        case GIMP_GRAY:
+            layer_type = alpha ? GIMP_GRAYA_IMAGE: GIMP_GRAY_IMAGE;
+            break;
+        case GIMP_INDEXED:
+            layer_type = alpha ? GIMP_INDEXEDA_IMAGE: GIMP_INDEXED_IMAGE;
+            break;
+        default:
+            PyErr_SetString(pygimp_error, "Unknown image base type");
+            return NULL; 
+    }
+
+    if (fill_mode == -1)
+        fill_mode = alpha ? GIMP_TRANSPARENT_FILL: GIMP_BACKGROUND_FILL;
+
+
+    layer_id = gimp_layer_new(self->ID, layer_name, width, height,
+                              layer_type, opacity, mode);
+
+    if (!layer_id) {
+        PyErr_Format(pygimp_error,
+                     "could not create new layer in image (ID %d)",
+                     self->ID);
+        return NULL;
+    }
+
+    if (!gimp_drawable_fill(layer_id, fill_mode)) {
+        gimp_drawable_delete(layer_id);
+        PyErr_Format(pygimp_error,
+                     "could not fill new layer with fill mode %d",
+                     fill_mode);
+        return NULL;
+    }
+
+    if (!gimp_image_add_layer(self->ID, layer_id, pos)) {
+        gimp_drawable_delete(layer_id);
+        PyErr_Format(pygimp_error,
+                     "could not add layer (ID %d) to image (ID %d)",
+                     layer_id, self->ID);
+        return NULL;
+    }
+
+    if (!gimp_layer_set_offsets(layer_id, offs_x, offs_y)) {
+        gimp_image_remove_layer(self->ID, layer_id);
+        PyErr_Format(pygimp_error,
+                     "could not set offset %d, %d on layer (ID %d)",
+                      offs_x, offs_y, layer_id);
+        return NULL;
+    }
+
+    return pygimp_layer_new(layer_id);
+}
+
+
+static PyObject *
 img_clean_all(PyGimpImage *self)
 {
     if (!gimp_image_clean_all(self->ID)) {
@@ -740,6 +828,7 @@ img_undo_group_end(PyGimpImage *self)
 static PyMethodDef img_methods[] = {
     {"add_channel",	(PyCFunction)img_add_channel,	METH_VARARGS},
     {"add_layer",	(PyCFunction)img_add_layer,	METH_VARARGS},
+    {"new_layer",       (PyCFunction)img_new_layer, METH_VARARGS | METH_KEYWORDS},
     {"clean_all",	(PyCFunction)img_clean_all,	METH_NOARGS},
     {"disable_undo",	(PyCFunction)img_disable_undo,	METH_NOARGS},
     {"enable_undo",	(PyCFunction)img_enable_undo,	METH_NOARGS},
