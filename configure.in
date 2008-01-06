@@ -982,6 +982,8 @@ AC_SUBST(LIBTIFF)
 # Check for libjpeg
 ###################
 
+jpeg_ok=no
+
 AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
   if test "x$with_libjpeg" != xno && test -z "$LIBJPEG"; then
     AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
@@ -1016,8 +1018,9 @@ AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
 *** --without-libjpeg to configure but you won't be able to use JPEGs then.])
   fi
 
-AC_SUBST(JPEG)
+AM_CONDITIONAL(BUILD_JPEG, test "x$jpeg_ok" = xyes)
 AC_SUBST(LIBJPEG)
+
 
 ## xjt does build, but it is more confusing than useful on Win32,
 ## as it wants to run tar, mv and bzip2, which seldom are available

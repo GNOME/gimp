@@ -8,6 +8,10 @@ if BUILD_HELPBROWSER
 helpbrowser = helpbrowser
 endif
 
+if BUILD_JPEG
+jpeg = jpeg
+endif
+
 if BUILD_PRINT
 print = print
 endif
@@ -60,7 +64,7 @@ SUBDIRS = \
 	$(helpbrowser)		\
 	ifscompose		\
 	imagemap		\
-	jpeg                    \
+	$(jpeg)                 \
 	maze			\
 	metadata		\
 	pagecurl		\
