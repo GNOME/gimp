@@ -205,11 +205,11 @@ gimp_operation_tile_source_process (GeglOperation       *operation,
 
   if (self->tile_manager)
     {
-      GeglBuffer          *output;
-      const Babl          *format;
-      PixelRegion          srcPR;
-      const guint          bpp = tile_manager_bpp (self->tile_manager);
-      gpointer             pr;
+      GeglBuffer  *output;
+      const Babl  *format;
+      PixelRegion  srcPR;
+      guint        bpp = tile_manager_bpp (self->tile_manager);
+      gpointer     pr;
 
       if (self->linear)
         format = gimp_bpp_to_babl_format_linear (bpp);
@@ -219,7 +219,7 @@ gimp_operation_tile_source_process (GeglOperation       *operation,
       output = gegl_buffer_new (result, format);
 
       pixel_region_init (&srcPR, self->tile_manager,
-                         result->x, result->y,
+                         result->x,     result->y,
                          result->width, result->height,
                          FALSE);
 
