@@ -1,3 +1,9 @@
+2008-01-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_gegl_notify):
+	toggle the image map mode only if an image map currently exists.
+	Fixes crash when toggling "Use GEGL" while the tool is not active.
+
 2008-01-06  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: compile a list of MIME types that GIMP can read.

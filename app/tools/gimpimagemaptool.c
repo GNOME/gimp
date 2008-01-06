@@ -139,6 +139,7 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
   klass->save_dialog_title = NULL;
   klass->save_button_tip   = NULL;
 
+  klass->get_operation     = NULL;
   klass->map               = NULL;
   klass->dialog            = NULL;
   klass->reset             = NULL;
@@ -159,13 +160,15 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
                                      GIMP_DIRTY_DRAWABLE        |
                                      GIMP_DIRTY_SELECTION);
 
-  image_map_tool->drawable  = NULL;
-  image_map_tool->image_map = NULL;
+  image_map_tool->drawable        = NULL;
+  image_map_tool->operation       = NULL;
+  image_map_tool->image_map       = NULL;
 
-  image_map_tool->shell       = NULL;
-  image_map_tool->main_vbox   = NULL;
-  image_map_tool->load_button = NULL;
-  image_map_tool->save_button = NULL;
+  image_map_tool->shell           = NULL;
+  image_map_tool->main_vbox       = NULL;
+  image_map_tool->load_button     = NULL;
+  image_map_tool->save_button     = NULL;
+  image_map_tool->settings_dialog = NULL;
 }
 
 static void
@@ -843,11 +846,14 @@ gimp_image_map_tool_gegl_notify (GObject          *config,
                                  const GParamSpec *pspec,
                                  GimpImageMapTool *im_tool)
 {
-  gimp_tool_control_set_preserve (GIMP_TOOL (im_tool)->control, TRUE);
+  if (im_tool->image_map)
+    {
+      gimp_tool_control_set_preserve (GIMP_TOOL (im_tool)->control, TRUE);
 
-  gimp_image_map_tool_create_map (im_tool);
+      gimp_image_map_tool_create_map (im_tool);
 
-  gimp_tool_control_set_preserve (GIMP_TOOL (im_tool)->control, FALSE);
+      gimp_tool_control_set_preserve (GIMP_TOOL (im_tool)->control, FALSE);
 
-  gimp_image_map_tool_preview (im_tool);
+      gimp_image_map_tool_preview (im_tool);
+    }
 }
