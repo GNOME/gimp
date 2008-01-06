@@ -1,5 +1,19 @@
 2008-01-06  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: compile a list of MIME types that GIMP can read.
+
+	* desktop/gimp.desktop.in.in: use the list of MIME types as
+	compiled by the configure script. Fixes bug #507318.
+
+	* desktop/Makefile.am
+	* desktop/gimp.applications.in
+	* desktop/gimp.keys.in: removed, the gimp.application and
+	gimp.keys files are obsolete.
+
+	* plug-ins/psd/psd.c (MAIN): corrected MIME type in unused code.
+
+2008-01-06  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: applied patch from Matt Smith that adds a
 	--without-hal configure option (bug #507595).
 	

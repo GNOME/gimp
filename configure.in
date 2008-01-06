@@ -944,6 +944,15 @@ fi
 AM_CONDITIONAL(TOOLBOX_MENU, test "x$enable_toolbox_menu" = "xyes")
 
 
+############
+# MIME types
+############
+
+# The list of MIME types that are supported by plug-ins that are compiled
+# unconditionally:
+MIME_TYPES="application/postscript;application/pdf;image/bmp;image/g3fax;image/gif;image/x-fits;image/pcx;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-sgi;image/x-tga;image/x-xbitmap;image/x-xwindowdump;image/x-xcf;image/x-compressed-xcf"
+
+
 ###################
 # Check for libtiff
 ###################
@@ -968,9 +977,13 @@ AC_ARG_WITH(libtiff,  [  --without-libtiff       build without TIFF support])
   fi
 
   if test "x$with_libtiff" != xno && test -z "$LIBTIFF"; then
-     AC_MSG_ERROR([
+    AC_MSG_ERROR([
 *** Checks for TIFF libary failed. You can build without it by passing
 *** --without-libtiff to configure but you won't be able to use TIFFs then.])
+  fi
+
+  if test "x$have_libtiff" = xyes; then
+    MIME_TYPES="$MIME_TYPES;image/tiff"
   fi
 
 AC_SUBST(TIFF_LOAD)
@@ -1013,9 +1026,13 @@ AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
   fi
 
   if test "x$with_libjpeg" != xno && test -z "$LIBJPEG"; then
-     AC_MSG_ERROR([
+    AC_MSG_ERROR([
 *** Checks for JPEG library failed. You can build without it by passing
 *** --without-libjpeg to configure but you won't be able to use JPEGs then.])
+  fi
+
+  if test "x$jpeg_ok" = xyes; then
+    MIME_TYPES="$MIME_TYPES;image/jpeg"
   fi
 
 AM_CONDITIONAL(BUILD_JPEG, test "x$jpeg_ok" = xyes)
@@ -1047,6 +1064,10 @@ if test -z "$LIBZ"; then
     [have_zlib="no (ZLIB library not found)"])
 fi
 
+if test "x$have_zlib" = xyes; then
+  MIME_TYPES="$MIME_TYPES;image/x-psd"
+fi
+
 AC_SUBST(LIBZ)
 AC_SUBST(PSP)
 
@@ -1066,6 +1087,10 @@ if test "x$with_libpng" != xno; then
      AC_MSG_ERROR([
 *** Checks for PNG library failed. You can build without it by passing
 *** --without-libpng to configure but you won't be able to use PNGs then.])])
+fi
+
+if test "x$have_libpng" = xyes; then
+  MIME_TYPES="$MIME_TYPES;image/png;image/x-icon"
 fi
 
 AC_SUBST(PNG)
@@ -1159,6 +1184,10 @@ fi
 CFLAGS="$gimp_save_CFLAGS"
 LDFLAGS="$gimp_save_LDFLAGS"
 
+if test "x$have_libxpm" = xyes; then
+  MIME_TYPES="$MIME_TYPES;image/x-xpixmap"
+fi
+
 AC_SUBST(XPM)
 AC_SUBST(LIBXPM)
 
@@ -1198,6 +1227,10 @@ if test "x$with_librsvg" != xno; then
     have_librsvg="no (librsvg not found)")
 else
    have_librsvg="no (librsvg support disabled)"
+fi
+
+if test "x$have_librsvg" = xyes; then
+  MIME_TYPES="$MIME_TYPES;image/svg+xml"
 fi
 
 AC_SUBST(SVG)
@@ -1336,6 +1369,11 @@ if test "x$WMF_CONFIG" != "xno" ; then
 else
   have_libwmf="no (libwmf not found)"
 fi
+
+if test "x$have_libwmf" = xyes; then
+  MIME_TYPES="$MIME_TYPES;image/x-wmf"
+fi
+
 AC_SUBST(LIBWMF)
 AC_SUBST(WMF_CFLAGS)
 AC_SUBST(WMF)
@@ -1614,7 +1652,7 @@ AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
 
 
 #########################################
-# Check whether script_fu should be built
+# Check whether Script-Fu should be built
 #########################################
 
 have_script_fu=yes
@@ -1716,7 +1754,7 @@ AM_CONDITIONAL(ENABLE_GTK_DOC_APP, test "x$enable_gtk_doc_app" = xyes)
 
 
 #########################################
-# Allow to configure the gimp environment
+# Allow to configure the GIMP environment
 #########################################
 
 AC_ARG_ENABLE(default-binary, [  --enable-default-binary install this as the default gimp binary (default=gimp_stable)], , enable_default_binary=gimp_stable)
@@ -1774,6 +1812,8 @@ AM_CONDITIONAL(STATICLIBS, test "x$enable_static" = xyes)
 # a tuned version of glib-mkenums
 GIMP_MKENUMS="\$(PERL) \$(top_srcdir)/tools/gimp-mkenums"
 AC_SUBST(GIMP_MKENUMS)
+
+AC_SUBST(MIME_TYPES)
 
 
 #########################
@@ -1983,9 +2023,7 @@ data/palettes/Makefile
 data/patterns/Makefile
 data/tips/Makefile
 desktop/Makefile
-desktop/gimp.applications
 desktop/gimp.desktop.in
-desktop/gimp.keys
 etc/Makefile
 m4macros/Makefile
 po/Makefile.in

@@ -157,7 +157,7 @@ query (void)
                           save_args, NULL);
 
   gimp_register_save_handler (SAVE_PROC, "psd", "");
-  gimp_register_file_handler_mime (SAVE_PROC, "image/psd");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/x-psd");
 #endif /* PSD_SAVE */
 }
 
