@@ -1,6 +1,11 @@
-2008-01-05  Kevin Cozens  <kcozens@cvs.gnome.org>
+2008-01-06  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
+
+	* plug-ins/common/convmatrix.c (convolve_image): fixed out-of-bounds
+	array access.
+
+2008-01-05  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* configure.in: Set default value of jpeg_ok to no. From a patch
 	by Hanno Boeck which fixes bug #507572.

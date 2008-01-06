@@ -571,8 +571,9 @@ convolve_image (GimpDrawable *drawable,
   guchar       *tmp_row;
   gfloat        sum;
   gint          x_offset;
-  gboolean      chanmask[CHANNELS-1];
-  gint          bpp,channel,alpha_channel;
+  gboolean      chanmask[CHANNELS - 1];
+  gint          bpp;
+  gint          alpha_channel;
 
   /* Get the input area. This is the bounding box of the selection in
    *  the image (or the entire image if there is no selection). Only
@@ -605,7 +606,7 @@ convolve_image (GimpDrawable *drawable,
 
   if (gimp_drawable_is_rgb (drawable->drawable_id))
     {
-      for (i = 0; i < CHANNELS; i++)
+      for (i = 0; i < CHANNELS - 1; i++)
         chanmask[i] = config.channels[i + 1];
     }
   else /* Grayscale */
@@ -642,6 +643,8 @@ convolve_image (GimpDrawable *drawable,
 
   for (row = src_y1; row < src_y2; row++)
     {
+      gint channel;
+
       x_offset = 0;
 
       for (col = src_x1; col < src_x2; col++)
