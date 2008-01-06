@@ -1,5 +1,14 @@
 2008-01-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gegl/buffer/gegl-buffer-types.h
+	* app/gegl/gegl/gegl-operation-filter.h
+	* app/gegl/gegl/gegl-operation-point-filter.h
+	* app/gegl/gegl/gegl-operation-sink.h
+	* app/gegl/gegl/gegl-operation-source.h
+	* app/gegl/gegl/gegl-operation.h: updated from GEGL.
+
+2008-01-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_create_map):
 	don't call a NULL GimpImageMapToolClass::get_operation().
 
