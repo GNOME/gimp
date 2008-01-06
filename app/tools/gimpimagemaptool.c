@@ -447,7 +447,8 @@ gimp_image_map_tool_create_map (GimpImageMapTool *tool)
       g_object_unref (tool->image_map);
     }
 
-  if (config->use_gegl && ! tool->operation)
+  if (config->use_gegl && ! tool->operation &&
+      GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->get_operation)
     tool->operation = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->get_operation (tool);
 
   tool->image_map = gimp_image_map_new (tool->drawable,
