@@ -1,5 +1,12 @@
 2008-01-06  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: applied patch from Matt Smith that adds a
+	--without-hal configure option (bug #507595).
+	
+	* INSTALL: document the new option.
+
+2008-01-06  Sven Neumann  <sven@gimp.org>
+
 	* configure.in
 	* plug-ins/Makefile.am: fixed --without-jpeg configure option
 	(bug #507572).

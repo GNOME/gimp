@@ -1478,9 +1478,16 @@ fi
 # Check for libhal (Hardware Abstraction Layer)
 ###############################################
 
+AC_ARG_WITH(hal,   [  --without-hal           build without HAL support])
+
 have_libhal=no
 
-if test "x$have_linux_input" = xyes && test "x$have_dbus_glib" = xyes; then
+if test "x$with_hal" = xno; then
+  have_libhal="no (disabled)"
+fi
+
+if test "x$have_linux_input" = xyes && test "x$have_dbus_glib" = xyes &&
+    test "x$with_hal" != xno; then
   PKG_CHECK_MODULES(HAL, hal >= libhal_required_version,
     have_libhal=yes,
     AC_MSG_RESULT([no])
