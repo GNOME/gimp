@@ -55,7 +55,7 @@ gimp_checks_get_shades (GimpCheckType  type,
       {   0,   0 }   /*  BLACK_ONLY    */
     };
 
-  type = CLAMP (type, 0, 5);
+  type = MIN (type, 5);
 
   if (light)
     *light = shades[type][1];
