@@ -7,7 +7,7 @@
 
 	* desktop/Makefile.am
 	* desktop/gimp.applications.in
-	* desktop/gimp.keys.in: removed, the gimp.application and
+	* desktop/gimp.keys.in: removed; the gimp.applications and
 	gimp.keys files are obsolete.
 
 	* plug-ins/psd/psd.c (MAIN): corrected MIME type in unused code.
