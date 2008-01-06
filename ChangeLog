@@ -1,3 +1,10 @@
+2008-01-05  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	Merged from trunk:
+
+	* configure.in: Set default value of jpeg_ok to no. From a patch
+	by Hanno Boeck which fixes bug #507572.
+
 2008-01-04  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:

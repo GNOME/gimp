@@ -1003,6 +1003,7 @@ AC_SUBST(LIBTIFF)
 # Check for libjpeg
 ###################
 
+jpeg_ok=no
 AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
   if test "x$with_libjpeg" != xno && test -z "$LIBJPEG"; then
     AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
