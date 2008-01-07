@@ -23,7 +23,7 @@
 #include "libgimpmodule/gimpmoduletypes.h"
 #include "libgimpthumb/gimpthumb-types.h"
 
-#include "base/base-types.h"
+#include "gegl/gegl-types.h"
 
 #include "core/core-enums.h"
 

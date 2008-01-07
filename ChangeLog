@@ -1,5 +1,13 @@
 2008-01-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-types.h: include gegl/gegl-types.h instead of
+	base/base-types.h.
+
+	* app/gegl/gegl/gegl-types.h: add ugly #ifdefs so we can include
+	gegl.h and this file at the same time.
+
+2008-01-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplayer.c (gimp_layer_transform_color): reordered
 	and renamed parameters to make more sense.
 
