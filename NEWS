@@ -7,6 +7,25 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Changes in GIMP 2.4.4
+=====================
+
+- fixed typo in stock icon name
+- fixed handling of PSD files with empty layer names (bug #504149)
+- merged TinyScheme bug-fixes
+- removed duplicate entry from Tango palette
+- corrected parameter range in Chip Away script (bug #506110)
+- reduced redraw priority and speed of the marching ants (bug #479875)
+- fixed out-of-bounds array access in Convolution Matrix plug-in
+- translation updates (de, it, lt, sv, uk)
+
+
+Contributors:
+
+   Sven Neumann, Kevin Cozens, Hans Breuer, Bill Skaggs, Ulf-D. Ehlert
+
+
+
 Changes in GIMP 2.4.3
 =====================
 
