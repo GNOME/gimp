@@ -37,9 +37,12 @@
 enum
 {
   PROP_0,
-  PROP_HUE,
-  PROP_SATURATION,
-  PROP_LIGHTNESS
+  PROP_CHANNEL,
+  PROP_GAMMA,
+  PROP_LOW_INPUT,
+  PROP_HIGH_INPUT,
+  PROP_LOW_OUTPUT,
+  PROP_HIGH_OUTPUT
 };
 
 
@@ -77,11 +80,74 @@ gimp_operation_levels_class_init (GimpOperationLevelsClass * klass)
   point_class->process       = gimp_operation_levels_process;
 
   gegl_operation_class_set_name (operation_class, "gimp-levels");
+
+  g_object_class_install_property (object_class, PROP_CHANNEL,
+                                   g_param_spec_enum ("channel",
+                                                      "Channel",
+                                                      "The affected channel",
+                                                      GIMP_TYPE_HISTOGRAM_CHANNEL,
+                                                      GIMP_HISTOGRAM_VALUE,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_GAMMA,
+                                   g_param_spec_float ("gamma",
+                                                       "Gamma",
+                                                       "Gamma",
+                                                       0.1, 10.0, 1.0,
+                                                       G_PARAM_READWRITE |
+                                                       G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_LOW_INPUT,
+                                   g_param_spec_float ("low-input",
+                                                       "Low Input",
+                                                       "Low Input",
+                                                       0.0, 1.0, 0.0,
+                                                       G_PARAM_READWRITE |
+                                                       G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_HIGH_INPUT,
+                                   g_param_spec_float ("high-input",
+                                                       "High Input",
+                                                       "High Input",
+                                                       0.0, 1.0, 1.0,
+                                                       G_PARAM_READWRITE |
+                                                       G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_LOW_OUTPUT,
+                                   g_param_spec_float ("low-output",
+                                                       "Low Output",
+                                                       "Low Output",
+                                                       0.0, 1.0, 0.0,
+                                                       G_PARAM_READWRITE |
+                                                       G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_HIGH_OUTPUT,
+                                   g_param_spec_float ("high-output",
+                                                       "High Output",
+                                                       "High Output",
+                                                       0.0, 1.0, 1.0,
+                                                       G_PARAM_READWRITE |
+                                                       G_PARAM_CONSTRUCT));
 }
 
 static void
 gimp_operation_levels_init (GimpOperationLevels *self)
 {
+  GimpHistogramChannel channel;
+
+  self->channel = GIMP_HISTOGRAM_VALUE;
+
+  for (channel = GIMP_HISTOGRAM_VALUE;
+       channel <= GIMP_HISTOGRAM_ALPHA;
+       channel++)
+    {
+      self->gamma[channel]       = 1.0;
+      self->low_input[channel]   = 0.0;
+      self->high_input[channel]  = 1.0;
+      self->low_output[channel]  = 0.0;
+      self->high_output[channel] = 1.0;
+    }
 }
 
 static void
@@ -90,10 +156,34 @@ gimp_operation_levels_get_property (GObject    *object,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  /* GimpOperationLevels *self = GIMP_OPERATION_LEVELS (object); */
+  GimpOperationLevels *self = GIMP_OPERATION_LEVELS (object);
 
   switch (property_id)
     {
+    case PROP_CHANNEL:
+      g_value_set_enum (value, self->channel);
+      break;
+
+    case PROP_GAMMA:
+      g_value_set_float (value, self->gamma[self->channel]);
+      break;
+
+    case PROP_LOW_INPUT:
+      g_value_set_float (value, self->low_input[self->channel]);
+      break;
+
+    case PROP_HIGH_INPUT:
+      g_value_set_float (value, self->high_input[self->channel]);
+      break;
+
+    case PROP_LOW_OUTPUT:
+      g_value_set_float (value, self->low_output[self->channel]);
+      break;
+
+    case PROP_HIGH_OUTPUT:
+      g_value_set_float (value, self->high_output[self->channel]);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -106,10 +196,34 @@ gimp_operation_levels_set_property (GObject      *object,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  /* GimpOperationLevels *self = GIMP_OPERATION_LEVELS (object); */
+  GimpOperationLevels *self = GIMP_OPERATION_LEVELS (object);
 
   switch (property_id)
     {
+    case PROP_CHANNEL:
+      self->channel = g_value_get_enum (value);
+      break;
+
+    case PROP_GAMMA:
+      self->gamma[self->channel] = g_value_get_float (value);
+      break;
+
+    case PROP_LOW_INPUT:
+      self->low_input[self->channel] = g_value_get_float (value);
+      break;
+
+    case PROP_HIGH_INPUT:
+      self->high_input[self->channel] = g_value_get_float (value);
+      break;
+
+    case PROP_LOW_OUTPUT:
+      self->low_output[self->channel] = g_value_get_float (value);
+      break;
+
+    case PROP_HIGH_OUTPUT:
+      self->high_output[self->channel] = g_value_get_float (value);
+      break;
+
    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -118,21 +232,17 @@ gimp_operation_levels_set_property (GObject      *object,
 
 static inline gfloat
 gimp_operation_levels_map (gfloat value,
+                           gfloat gamma,
                            gfloat low_input,
                            gfloat high_input,
-                           gfloat gamma,
                            gfloat low_output,
                            gfloat high_output)
 {
   /*  determine input intensity  */
   if (high_input != low_input)
-    {
-      value = (value - low_input) / (high_input - low_input);
-    }
+    value = (value - low_input) / (high_input - low_input);
   else
-    {
-      value = (value - low_input);
-    }
+    value = (value - low_input);
 
   if (gamma != 0.0)
     {
@@ -171,18 +281,18 @@ gimp_operation_levels_process (GeglOperation *operation,
           gfloat value;
 
           value = gimp_operation_levels_map (src[channel],
+                                             self->gamma[channel + 1],
                                              self->low_input[channel + 1],
                                              self->high_input[channel + 1],
-                                             self->gamma[channel + 1],
                                              self->low_output[channel + 1],
                                              self->high_output[channel + 1]);
 
           /* don't apply the overall curve to the alpha channel */
           if (channel != 3)
             value = gimp_operation_levels_map (value,
+                                               self->gamma[0],
                                                self->low_input[0],
                                                self->high_input[0],
-                                               self->gamma[0],
                                                self->low_output[0],
                                                self->high_output[0]);
 

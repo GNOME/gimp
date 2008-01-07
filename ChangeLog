@@ -1,5 +1,12 @@
 2008-01-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimpoperationlevels.[ch]: add properties, some cleanup.
+
+	* app/tools/gimplevelstool.c: use gegl_node_set() instead of
+	accessing the operation directly.
+
+2008-01-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/Makefile.am
 	* app/gegl/gegl-types.h
 	* app/gegl/gimpoperationlevels.[ch]: new operator.

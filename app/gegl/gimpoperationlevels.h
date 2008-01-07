@@ -40,6 +40,8 @@ struct _GimpOperationLevels
 {
   GeglOperationPointFilter  parent_instance;
 
+  GimpHistogramChannel      channel;
+
   gfloat                    gamma[5];
 
   gfloat                    low_input[5];

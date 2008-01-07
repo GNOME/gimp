@@ -37,8 +37,6 @@
 #include "base/gimplut.h"
 #include "base/levels.h"
 
-#include "gegl/gimpoperationlevels.h"
-
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpimage.h"
@@ -270,28 +268,25 @@ gimp_levels_tool_map (GimpImageMapTool *image_map_tool)
 
   if (image_map_tool->operation)
     {
-      GimpOperationLevels  *levels;
-      Levels               *l;
+      Levels               *levels = tool->levels;
       GimpHistogramChannel  channel;
-
-      g_object_get (image_map_tool->operation, "gegl-operation", &levels, NULL);
-
-      l = tool->levels;
 
       for (channel = GIMP_HISTOGRAM_VALUE;
            channel <= GIMP_HISTOGRAM_ALPHA;
            channel++)
         {
-          levels->gamma[channel]       = l->gamma[channel];
+          gegl_node_set (image_map_tool->operation,
+                         "channel", channel,
+                         NULL);
 
-          levels->low_input[channel]   = l->low_input[channel]   / 255.0;
-          levels->high_input[channel]  = l->high_input[channel]  / 255.0;
-
-          levels->low_output[channel]  = l->low_output[channel]  / 255.0;
-          levels->high_output[channel] = l->high_output[channel] / 255.0;
+          gegl_node_set (image_map_tool->operation,
+                         "gamma",       levels->gamma[channel],
+                         "low-input",   levels->low_input[channel]   / 255.0,
+                         "high-input",  levels->high_input[channel]  / 255.0,
+                         "low-output",  levels->low_output[channel]  / 255.0,
+                         "high-output", levels->high_output[channel] / 255.0,
+                         NULL);
         }
-
-      g_object_unref (levels);
     }
 
   gimp_lut_setup (tool->lut,
