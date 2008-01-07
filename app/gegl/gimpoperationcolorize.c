@@ -202,9 +202,14 @@ gimp_operation_colorize_process (GeglOperation *operation,
 
       gimp_hsl_to_rgb (&hsl, &rgb);
 
-      dest[RED_PIX]   = rgb.r;
-      dest[GREEN_PIX] = rgb.g;
-      dest[BLUE_PIX]  = rgb.b;
+      /*  the code in base/colorize.c would multiply r,b,g with lum,
+       *  but this is a bug since it should multiply with 255. We
+       *  don't repeat this bug here (this is the reason why the gegl
+       *  colorize is brighter than the legacy one).
+       */
+      dest[RED_PIX]   = rgb.r; /* * lum; */
+      dest[GREEN_PIX] = rgb.g; /* * lum; */
+      dest[BLUE_PIX]  = rgb.b; /* * lum */;
       dest[ALPHA_PIX] = src[ALPHA_PIX];
 
       src  += 4;

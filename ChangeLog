@@ -1,5 +1,10 @@
 2008-01-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimpoperationcolorize.c (process): add some comments
+	about how this code is different from base/colorize.c
+
+2008-01-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-types.h: include gegl/gegl-types.h instead of
 	base/base-types.h.
 
