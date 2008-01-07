@@ -156,10 +156,10 @@ static gint    gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                y);
 
 static void       gimp_layer_transform_color    (GimpImage          *image,
-                                                 PixelRegion        *layerPR,
-                                                 PixelRegion        *bufPR,
-                                                 GimpImageType       dest_type,
-                                                 GimpImageType       src_type);
+                                                 PixelRegion        *srcPR,
+                                                 GimpImageType       src_type,
+                                                 PixelRegion        *destPR,
+                                                 GimpImageType       dest_type);
 
 static void       gimp_layer_layer_mask_update  (GimpDrawable       *layer_mask,
                                                  gint                x,
@@ -570,7 +570,7 @@ gimp_layer_convert (GimpItem  *item,
       if (gimp_drawable_has_alpha (drawable))
         new_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_type);
 
-      new_tiles = tile_manager_new (gimp_item_width (item),
+      new_tiles = tile_manager_new (gimp_item_width  (item),
                                     gimp_item_height (item),
                                     GIMP_IMAGE_TYPE_BYTES (new_type));
 
@@ -595,19 +595,18 @@ gimp_layer_convert (GimpItem  *item,
 
             pixel_region_init (&layerPR, gimp_drawable_get_tiles (drawable),
                                0, 0,
-                               gimp_item_width (item),
+                               gimp_item_width  (item),
                                gimp_item_height (item),
                                FALSE);
             pixel_region_init (&newPR, new_tiles,
                                0, 0,
-                               gimp_item_width (item),
+                               gimp_item_width  (item),
                                gimp_item_height (item),
                                TRUE);
 
             gimp_layer_transform_color (dest_image,
-                                        &newPR, &layerPR,
-                                        new_type,
-                                        gimp_drawable_type (drawable));
+                                        &layerPR, gimp_drawable_type (drawable),
+                                        &newPR,   new_type);
           }
           break;
         }
@@ -912,43 +911,43 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
 
 static void
 gimp_layer_transform_color (GimpImage     *image,
-                            PixelRegion   *layerPR,
-                            PixelRegion   *bufPR,
-                            GimpImageType  dest_type,
-                            GimpImageType  src_type)
+                            PixelRegion   *srcPR,
+                            GimpImageType  src_type,
+                            PixelRegion   *destPR,
+                            GimpImageType  dest_type)
 {
   GimpImageBaseType base_type = GIMP_IMAGE_TYPE_BASE_TYPE (src_type);
   gboolean          alpha     = GIMP_IMAGE_TYPE_HAS_ALPHA (src_type);
   gpointer          pr;
 
-  for (pr = pixel_regions_register (2, layerPR, bufPR);
+  for (pr = pixel_regions_register (2, srcPR, destPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      const guchar *src  = bufPR->data;
-      guchar       *dest = layerPR->data;
-      gint          h    = layerPR->h;
+      const guchar *src  = srcPR->data;
+      guchar       *dest = destPR->data;
+      gint          h    = destPR->h;
 
       while (h--)
         {
           const guchar *s = src;
           guchar       *d = dest;
-          gint i;
+          gint          i;
 
-          for (i = 0; i < layerPR->w; i++)
+          for (i = 0; i < destPR->w; i++)
             {
               gimp_image_transform_color (image, dest_type, d, base_type, s);
 
               /*  alpha channel  */
-              d[layerPR->bytes - 1] = (alpha ?
-                                       s[bufPR->bytes - 1] : OPAQUE_OPACITY);
+              d[destPR->bytes - 1] = (alpha ?
+                                      s[srcPR->bytes - 1] : OPAQUE_OPACITY);
 
-              s += bufPR->bytes;
-              d += layerPR->bytes;
+              s += srcPR->bytes;
+              d += destPR->bytes;
             }
 
-          src  += bufPR->rowstride;
-          dest += layerPR->rowstride;
+          src  += srcPR->rowstride;
+          dest += destPR->rowstride;
         }
     }
 }
@@ -1170,8 +1169,9 @@ gimp_layer_new_from_region (PixelRegion          *region,
           break;
         case GIMP_GRAY_IMAGE:
         case GIMP_GRAYA_IMAGE:
-          gimp_layer_transform_color (dest_image, &layerPR, region,
-                                      type, src_type);
+          gimp_layer_transform_color (dest_image,
+                                      region,   src_type,
+                                      &layerPR, type);
           break;
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
@@ -1196,8 +1196,9 @@ gimp_layer_new_from_region (PixelRegion          *region,
         {
         case GIMP_RGB_IMAGE:
         case GIMP_RGBA_IMAGE:
-          gimp_layer_transform_color (dest_image, &layerPR, region,
-                                      type, src_type);
+          gimp_layer_transform_color (dest_image,
+                                      region,   src_type,
+                                      &layerPR, type);
           break;
         case GIMP_GRAYA_IMAGE:
           copy_region (region, &layerPR);
@@ -1220,13 +1221,11 @@ gimp_layer_new_from_region (PixelRegion          *region,
         {
         case GIMP_RGB_IMAGE:
         case GIMP_RGBA_IMAGE:
-          gimp_layer_transform_color (dest_image, &layerPR, region,
-                                      type, src_type);
-          break;
         case GIMP_GRAY_IMAGE:
         case GIMP_GRAYA_IMAGE:
-          gimp_layer_transform_color (dest_image, &layerPR, region,
-                                      type, src_type);
+          gimp_layer_transform_color (dest_image,
+                                      region,   src_type,
+                                      &layerPR, type);
           break;
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
