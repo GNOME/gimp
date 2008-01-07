@@ -56,9 +56,9 @@ static void     gimp_operation_tile_source_set_property (GObject       *object,
                                                          const GValue  *value,
                                                          GParamSpec    *pspec);
 
+static void     gimp_operation_tile_source_prepare      (GeglOperation *operation);
 static GeglRectangle
           gimp_operation_tile_source_get_defined_region (GeglOperation *operation);
-
 static gboolean gimp_operation_tile_source_process      (GeglOperation *operation,
                                                          GeglNodeContext *context,
                                                          GeglBuffer          *output,
@@ -82,6 +82,7 @@ gimp_operation_tile_source_class_init (GimpOperationTileSourceClass * klass)
   object_class->set_property          = gimp_operation_tile_source_set_property;
   object_class->get_property          = gimp_operation_tile_source_get_property;
 
+  operation_class->prepare            = gimp_operation_tile_source_prepare;
   operation_class->get_defined_region = gimp_operation_tile_source_get_defined_region;
   operation_class->adjust_result_region = NULL; /* the default source is
                                                  expanding to agressivly
@@ -180,6 +181,25 @@ gimp_operation_tile_source_set_property (GObject      *object,
     }
 }
 
+static void
+gimp_operation_tile_source_prepare (GeglOperation *operation)
+{
+  GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (operation);
+
+  if (self->tile_manager)
+    {
+      const Babl *format;
+      guint       bpp = tile_manager_bpp (self->tile_manager);
+
+      if (self->linear)
+        format = gimp_bpp_to_babl_format_linear (bpp);
+      else
+        format = gimp_bpp_to_babl_format (bpp);
+
+      gegl_operation_set_format (operation, "output", format);
+    }
+}
+
 static GeglRectangle
 gimp_operation_tile_source_get_defined_region (GeglOperation *operation)
 {
@@ -207,18 +227,11 @@ gimp_operation_tile_source_process (GeglOperation       *operation,
 
   if (self->tile_manager)
     {
-      GeglBuffer  *output;
       const Babl  *format;
       PixelRegion  srcPR;
-      guint        bpp = tile_manager_bpp (self->tile_manager);
       gpointer     pr;
 
-      if (self->linear) /* FIXME: this should be set in prepare and not process */
-        format = gimp_bpp_to_babl_format_linear (bpp);
-      else
-        format = gimp_bpp_to_babl_format (bpp);
-
-      output = gegl_buffer_new (result, format); /* FIXME: use the passed in buffer */
+      format = gegl_operation_get_format (operation, "output");
 
       pixel_region_init (&srcPR, self->tile_manager,
                          result->x,     result->y,
@@ -233,10 +246,6 @@ gimp_operation_tile_source_process (GeglOperation       *operation,
 
           gegl_buffer_set (output, &rect, format, srcPR.data, srcPR.rowstride);
         }
-
-      gegl_node_context_set_object (context, "output", G_OBJECT (output)); /* FIXME: should not be needed
-                                                                              if using the passed in 
-                                                                              buffer */
     }
 
   return TRUE;

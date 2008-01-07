@@ -1,3 +1,10 @@
+2008-01-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/gegl/gegl-operation.h: updated from GEGL.
+
+	* app/gegl/gimpoperationtilesource.c: use the passed buffer in
+	process() and add prepare() implementation which sets the format.
+
 2008-01-05  Joao S. O. Bueno <gwidion@mpc.com.br>
 
 	* plug-ins/pygimp/pygimp-vectors.c: fixed incorrect function name

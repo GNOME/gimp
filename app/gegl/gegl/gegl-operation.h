@@ -188,7 +188,9 @@ void       gegl_operation_create_pad                (GeglOperation *operation,
  * turn into a global mechanism) */
 void       gegl_operation_set_format                (GeglOperation *operation,
                                                      const gchar   *pad_name,
-                                                     Babl          *format);
+                                                     const Babl    *format);
+const Babl * gegl_operation_get_format              (GeglOperation *operation,
+                                                     const gchar   *pad_name);
 
 /* Used to look up the gtype when changing the type of operation associated
  * a GeglNode using just a string with the registered name.
