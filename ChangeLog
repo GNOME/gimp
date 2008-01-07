@@ -1,5 +1,15 @@
 2008-01-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/Makefile.am
+	* app/gegl/gegl-types.h
+	* app/gegl/gimpoperationlevels.[ch]: new operator.
+
+	* app/gegl/gimp-gegl.c: register it.
+
+	* app/tools/gimplevelstool.c: use it,
+
+2008-01-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimpoperationcolorize.c (process): add some comments
 	about how this code is different from base/colorize.c
 
