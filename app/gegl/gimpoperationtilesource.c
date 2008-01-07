@@ -61,6 +61,7 @@ static GeglRectangle
 
 static gboolean gimp_operation_tile_source_process      (GeglOperation *operation,
                                                          GeglNodeContext *context,
+                                                         GeglBuffer          *output,
                                                          const GeglRectangle *result);
 
 
@@ -199,6 +200,7 @@ gimp_operation_tile_source_get_defined_region (GeglOperation *operation)
 static gboolean
 gimp_operation_tile_source_process (GeglOperation       *operation,
                                     GeglNodeContext     *context,
+                                    GeglBuffer          *output,
                                     const GeglRectangle *result)
 {
   GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (operation);
@@ -211,12 +213,12 @@ gimp_operation_tile_source_process (GeglOperation       *operation,
       guint        bpp = tile_manager_bpp (self->tile_manager);
       gpointer     pr;
 
-      if (self->linear)
+      if (self->linear) /* FIXME: this should be set in prepare and not process */
         format = gimp_bpp_to_babl_format_linear (bpp);
       else
         format = gimp_bpp_to_babl_format (bpp);
 
-      output = gegl_buffer_new (result, format);
+      output = gegl_buffer_new (result, format); /* FIXME: use the passed in buffer */
 
       pixel_region_init (&srcPR, self->tile_manager,
                          result->x,     result->y,
@@ -232,7 +234,9 @@ gimp_operation_tile_source_process (GeglOperation       *operation,
           gegl_buffer_set (output, &rect, format, srcPR.data, srcPR.rowstride);
         }
 
-      gegl_node_context_set_object (context, "output", G_OBJECT (output));
+      gegl_node_context_set_object (context, "output", G_OBJECT (output)); /* FIXME: should not be needed
+                                                                              if using the passed in 
+                                                                              buffer */
     }
 
   return TRUE;

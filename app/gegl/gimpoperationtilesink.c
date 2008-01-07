@@ -67,6 +67,7 @@ static void     gimp_operation_tile_sink_set_property (GObject       *object,
 
 static gboolean gimp_operation_tile_sink_process      (GeglOperation *operation,
                                                        GeglNodeContext *context,
+                                                       GeglBuffer          *input,
                                                        const GeglRectangle *result);
 
 
@@ -194,13 +195,13 @@ gimp_operation_tile_sink_set_property (GObject      *object,
 static gboolean
 gimp_operation_tile_sink_process (GeglOperation       *operation,
                                   GeglNodeContext     *context,
+                                  GeglBuffer          *input,
                                   const GeglRectangle *result)
 {
   GimpOperationTileSink *self = GIMP_OPERATION_TILE_SINK (operation);
 
   if (self->tile_manager)
     {
-      GeglBuffer  *input;
       const Babl  *format;
       PixelRegion  destPR;
       guint        bpp = tile_manager_bpp (self->tile_manager);
@@ -210,8 +211,6 @@ gimp_operation_tile_sink_process (GeglOperation       *operation,
         format = gimp_bpp_to_babl_format_linear (bpp);
       else
         format = gimp_bpp_to_babl_format (bpp);
-
-      input = gegl_node_context_get_source (context, "input");
 
       pixel_region_init (&destPR, self->tile_manager,
                          result->x,     result->y,

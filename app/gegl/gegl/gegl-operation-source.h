@@ -43,6 +43,7 @@ struct _GeglOperationSourceClass
 
   gboolean (* process) (GeglOperation       *self,
                         GeglNodeContext     *context,
+                        GeglBuffer          *output,
                         const GeglRectangle *result);
 };
 

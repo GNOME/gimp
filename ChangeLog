@@ -1,3 +1,12 @@
+2008-01-07  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/gegl/gimpoperationtilesink.c:
+	* app/gegl/gimpoperationtilesource.c: modified to match newer API in
+	GEGL.
+
+	* app/gegl/gegl/gegl-operation-sink.h:
+	* app/gegl/gegl/gegl-operation-source.h: updated from GEGL.
+
 2008-01-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/gegl/buffer/gegl-buffer-types.h
