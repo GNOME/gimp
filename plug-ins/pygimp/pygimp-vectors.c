@@ -152,7 +152,7 @@ vs_flip(PyGimpVectorsStroke *self, PyObject *args, PyObject *kwargs)
 
     static char *kwlist[] = { "flip_type", "axis", NULL };
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "id:rotate", kwlist,
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "id:flip", kwlist,
                                      &flip_type, &axis))
         return NULL;
 

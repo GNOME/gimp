@@ -1,3 +1,8 @@
+2008-01-05  Joao S. O. Bueno <gwidion@mpc.com.br>
+
+	* plug-ins/pygimp/pygimp-vectors.c: fixed incorrect function name
+	in error message for vs_flip
+
 2008-01-07  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/gegl/gimpoperationtilesink.c:
