@@ -197,7 +197,7 @@ gimp_brightness_contrast_tool_map (GimpImageMapTool *im_tool)
       gdouble brightness;
       gdouble contrast;
 
-      brightness = bc_tool->brightness / 127.0;
+      brightness = bc_tool->brightness / 256.0;
       contrast   = (bc_tool->contrast < 0 ?
                     (bc_tool->contrast + 127.0) / 127.0 :
                     bc_tool->contrast * 4.0 / 127.0 + 1);
