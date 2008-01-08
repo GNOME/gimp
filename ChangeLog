@@ -1,3 +1,8 @@
+2008-01-08  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/ftx/ftx.c (foreign_filetype): Test for symlink
+	before testing for other file types. Spotted by David Martin.
+
 2008-01-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/gimpoperationlevels.[ch]: add properties, some cleanup.
