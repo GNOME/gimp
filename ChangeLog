@@ -1,3 +1,8 @@
+2008-01-08  Sven Neumann  <sven@gimp.org>
+
+	* app/file/file-open.c (file_open_layers): moved code to a utility
+	function, in preparation for a possible fix for bug #507116.
+
 2008-01-08  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/ftx/ftx.c (foreign_filetype): Test for symlink

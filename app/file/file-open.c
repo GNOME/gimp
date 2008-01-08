@@ -65,7 +65,6 @@
 #include "plug-in/gimppluginerror.h"
 #include "plug-in/plug-in-icc-profile.h"
 
-
 #include "file-open.h"
 #include "file-procedure.h"
 #include "file-utils.h"
@@ -75,6 +74,9 @@
 
 static void  file_open_sanitize_image       (GimpImage    *image,
                                              gboolean      as_new);
+static void  file_open_convert_items        (GimpImage    *dest_image,
+                                             const gchar  *basename,
+                                             GList        *items);
 static void  file_open_handle_color_profile (GimpImage    *image,
                                              GimpContext  *context,
                                              GimpProgress *progress,
@@ -409,7 +411,7 @@ file_open_layers (Gimp                *gimp,
 
       gimp_image_undo_disable (new_image);
 
-      for (list = GIMP_LIST (new_image->layers)->list;
+      for (list = GIMP_LIST (gimp_image_get_layers (new_image))->list;
            list;
            list = g_list_next (list))
         {
@@ -441,31 +443,7 @@ file_open_layers (Gimp                *gimp,
         {
           gchar *basename = file_utils_uri_display_basename (uri);
 
-          for (list = layers; list; list = g_list_next (list))
-            {
-              GimpLayer *layer = list->data;
-              GimpItem  *item;
-
-              item = gimp_item_convert (GIMP_ITEM (layer), dest_image,
-                                        G_TYPE_FROM_INSTANCE (layer),
-                                        TRUE);
-
-              if (layers->next == NULL)
-                {
-                  gimp_object_set_name (GIMP_OBJECT (item), basename);
-                }
-              else
-                {
-                  gchar *name;
-
-                  name = g_strdup_printf ("%s - %s", basename,
-                                          gimp_object_get_name (GIMP_OBJECT (layer)));
-                  gimp_object_take_name (GIMP_OBJECT (item), name);
-                }
-
-              list->data = item;
-            }
-
+          file_open_convert_items (dest_image, basename, layers);
           g_free (basename);
 
           gimp_document_list_add_uri (GIMP_DOCUMENT_LIST (gimp->documents),
@@ -479,7 +457,7 @@ file_open_layers (Gimp                *gimp,
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Image doesn't contain any layers"));
           *status = GIMP_PDB_EXECUTION_ERROR;
-       }
+        }
 
       g_object_unref (new_image);
     }
@@ -578,6 +556,38 @@ file_open_sanitize_image (GimpImage *image,
   /* same for drawable previews */
   gimp_image_invalidate_layer_previews (image);
   gimp_image_invalidate_channel_previews (image);
+}
+
+/* Converts items from one image to another */
+static void
+file_open_convert_items (GimpImage   *dest_image,
+                         const gchar *basename,
+                         GList       *items)
+{
+  GList *list;
+
+  for (list = items; list; list = g_list_next (list))
+    {
+      GimpItem *src = list->data;
+      GimpItem *item;
+
+      item = gimp_item_convert (src, dest_image,
+                                G_TYPE_FROM_INSTANCE (src), TRUE);
+
+      if (g_list_length (items) == 1)
+        {
+          gimp_object_set_name (GIMP_OBJECT (item), basename);
+        }
+      else
+        {
+          gchar *name = g_strdup_printf ("%s - %s", basename,
+                                         GIMP_OBJECT (src)->name);
+
+          gimp_object_take_name (GIMP_OBJECT (item), name);
+        }
+
+      list->data = item;
+    }
 }
 
 static void
