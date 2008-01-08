@@ -259,8 +259,7 @@ channels_duplicate_cmd_callback (GtkAction *action,
 
       new_channel =
         GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel),
-                                           G_TYPE_FROM_INSTANCE (channel),
-                                           TRUE));
+                                           G_TYPE_FROM_INSTANCE (channel)));
     }
 
   gimp_image_add_channel (image, new_channel, -1);
@@ -339,8 +338,7 @@ channels_new_channel_response (GtkWidget            *widget,
 
           new_channel =
             GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (selection),
-                                               GIMP_TYPE_CHANNEL,
-                                               FALSE));
+                                               GIMP_TYPE_CHANNEL));
 
           gimp_object_set_name (GIMP_OBJECT (new_channel), channel_name);
           gimp_channel_set_color (new_channel, &channel_color, FALSE);

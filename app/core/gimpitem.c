@@ -78,8 +78,7 @@ static gint64     gimp_item_get_memsize       (GimpObject    *object,
                                                gint64        *gui_size);
 
 static GimpItem * gimp_item_real_duplicate    (GimpItem      *item,
-                                               GType          new_type,
-                                               gboolean       add_alpha);
+                                               GType          new_type);
 static void       gimp_item_real_convert      (GimpItem      *item,
                                                GimpImage     *dest_image);
 static gboolean   gimp_item_real_rename       (GimpItem      *item,
@@ -289,8 +288,7 @@ gimp_item_get_memsize (GimpObject *object,
 
 static GimpItem *
 gimp_item_real_duplicate (GimpItem *item,
-                          GType     new_type,
-                          gboolean  add_alpha)
+                          GType     new_type)
 {
   GimpItem *new_item;
   gchar    *new_name;
@@ -525,22 +523,20 @@ gimp_item_is_attached (GimpItem *item)
 
 /**
  * gimp_item_duplicate:
- * @item:      The #GimpItem to duplicate.
- * @new_type:  The type to make the new item.
- * @add_alpha: #TRUE if an alpha channel should be added to the new item.
+ * @item:     The #GimpItem to duplicate.
+ * @new_type: The type to make the new item.
  *
  * Returns: the newly created item.
  */
 GimpItem *
 gimp_item_duplicate (GimpItem *item,
-                     GType     new_type,
-                     gboolean  add_alpha)
+                     GType     new_type)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (item->image), NULL);
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_ITEM), NULL);
 
-  return GIMP_ITEM_GET_CLASS (item)->duplicate (item, new_type, add_alpha);
+  return GIMP_ITEM_GET_CLASS (item)->duplicate (item, new_type);
 }
 
 /**
@@ -548,15 +544,13 @@ gimp_item_duplicate (GimpItem *item,
  * @item:       The #GimpItem to convert.
  * @dest_image: The #GimpImage in which to place the converted item.
  * @new_type:   The type to convert the item to.
- * @add_alpha:  #TRUE if an alpha channel should be added to the converted item.
  *
  * Returns: the new item that results from the conversion.
  */
 GimpItem *
 gimp_item_convert (GimpItem  *item,
                    GimpImage *dest_image,
-                   GType      new_type,
-                   gboolean   add_alpha)
+                   GType      new_type)
 {
   GimpItem *new_item;
 
@@ -565,7 +559,7 @@ gimp_item_convert (GimpItem  *item,
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_ITEM), NULL);
 
-  new_item = gimp_item_duplicate (item, new_type, add_alpha);
+  new_item = gimp_item_duplicate (item, new_type);
 
   if (new_item)
     GIMP_ITEM_GET_CLASS (new_item)->convert (new_item, dest_image);

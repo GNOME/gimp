@@ -736,7 +736,7 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
         dest_index++;
 
       new_item = gimp_item_convert (GIMP_ITEM (src_viewable),
-                                    item_view->image, item_type, TRUE);
+                                    item_view->image, item_type);
 
       gimp_item_set_linked (new_item, FALSE, FALSE);
 

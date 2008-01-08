@@ -212,8 +212,8 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
   else
     new_type = GIMP_TYPE_LAYER;
 
-  new_layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (drawable), new_image,
-                                             new_type, FALSE));
+  new_layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (drawable),
+                                             new_image, new_type));
 
   gimp_object_set_name (GIMP_OBJECT (new_layer),
                         gimp_object_get_name (GIMP_OBJECT (drawable)));
@@ -303,9 +303,8 @@ gimp_toolbox_drop_component (GtkWidget       *widget,
 
   channel = gimp_channel_new_from_component (image, component, NULL, NULL);
 
-  new_layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (channel), new_image,
-                                             GIMP_TYPE_LAYER, FALSE));
-
+  new_layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (channel),
+                                             new_image, GIMP_TYPE_LAYER));
   g_object_unref (channel);
 
   gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,

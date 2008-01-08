@@ -195,7 +195,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
   else
     new_type = GIMP_TYPE_LAYER;
 
-  new_item = gimp_item_convert (GIMP_ITEM (viewable), image, new_type, TRUE);
+  new_item = gimp_item_convert (GIMP_ITEM (viewable), image, new_type);
 
   if (new_item)
     {
@@ -243,8 +243,8 @@ gimp_display_shell_drop_vectors (GtkWidget    *widget,
   if (image->gimp->busy)
     return;
 
-  new_item = gimp_item_convert (GIMP_ITEM (viewable), image,
-                                G_TYPE_FROM_INSTANCE (viewable), TRUE);
+  new_item = gimp_item_convert (GIMP_ITEM (viewable),
+                                image, G_TYPE_FROM_INSTANCE (viewable));
 
   if (new_item)
     {
@@ -472,9 +472,8 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
 
   channel = gimp_channel_new_from_component (image, component, NULL, NULL);
 
-  new_item = gimp_item_convert (GIMP_ITEM (channel), dest_image,
-                                GIMP_TYPE_LAYER, TRUE);
-
+  new_item = gimp_item_convert (GIMP_ITEM (channel),
+                                dest_image, GIMP_TYPE_LAYER);
   g_object_unref (channel);
 
   if (new_item)

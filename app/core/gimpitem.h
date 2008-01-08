@@ -65,8 +65,7 @@ struct _GimpItemClass
   /*  virtual functions  */
   gboolean   (* is_attached)  (GimpItem               *item);
   GimpItem * (* duplicate)    (GimpItem               *item,
-                               GType                   new_type,
-                               gboolean                add_alpha);
+                               GType                   new_type);
   void       (* convert)      (GimpItem               *item,
                                GimpImage              *dest_image);
   gboolean   (* rename)       (GimpItem               *item,
@@ -142,12 +141,10 @@ void            gimp_item_configure        (GimpItem           *item,
                                             gint                height,
                                             const gchar        *name);
 GimpItem      * gimp_item_duplicate        (GimpItem           *item,
-                                            GType               new_type,
-                                            gboolean            add_alpha);
+                                            GType               new_type);
 GimpItem      * gimp_item_convert          (GimpItem           *item,
                                             GimpImage          *dest_image,
-                                            GType               new_type,
-                                            gboolean            add_alpha);
+                                            GType               new_type);
 
 gboolean        gimp_item_rename           (GimpItem           *item,
                                             const gchar        *new_name,

@@ -104,8 +104,7 @@ gimp_image_set_quick_mask_state (GimpImage *image,
               /* if selection */
 
               mask = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (selection),
-                                                        GIMP_TYPE_CHANNEL,
-                                                        FALSE));
+                                                        GIMP_TYPE_CHANNEL));
 
               /* Clear the selection */
               gimp_channel_clear (selection, NULL, TRUE);

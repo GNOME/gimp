@@ -140,7 +140,7 @@ channel_copy_invoker (GimpProcedure      *procedure,
   if (success)
     {
       channel_copy = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel),
-                                   G_TYPE_FROM_INSTANCE (channel), FALSE));
+                                   G_TYPE_FROM_INSTANCE (channel)));
 
       if (! channel_copy)
         success = FALSE;

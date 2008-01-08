@@ -75,8 +75,7 @@ static gboolean   gimp_drawable_get_size           (GimpViewable      *viewable,
 static void       gimp_drawable_invalidate_preview (GimpViewable      *viewable);
 
 static GimpItem * gimp_drawable_duplicate          (GimpItem          *item,
-                                                    GType              new_type,
-                                                    gboolean           add_alpha);
+                                                    GType              new_type);
 static void       gimp_drawable_translate          (GimpItem          *item,
                                                     gint               offset_x,
                                                     gint               offset_y,
@@ -307,28 +306,20 @@ gimp_drawable_invalidate_preview (GimpViewable *viewable)
 
 static GimpItem *
 gimp_drawable_duplicate (GimpItem *item,
-                         GType     new_type,
-                         gboolean  add_alpha)
+                         GType     new_type)
 {
   GimpItem *new_item;
 
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
 
-  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
-                                                        add_alpha);
+  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type);
 
   if (GIMP_IS_DRAWABLE (new_item))
     {
       GimpDrawable  *drawable     = GIMP_DRAWABLE (item);
       GimpDrawable  *new_drawable = GIMP_DRAWABLE (new_item);
-      GimpImageType  new_image_type;
       PixelRegion    srcPR;
       PixelRegion    destPR;
-
-      if (add_alpha)
-        new_image_type = gimp_drawable_type_with_alpha (drawable);
-      else
-        new_image_type = gimp_drawable_type (drawable);
 
       gimp_drawable_configure (new_drawable,
                                gimp_item_get_image (item),
@@ -336,7 +327,7 @@ gimp_drawable_duplicate (GimpItem *item,
                                item->offset_y,
                                gimp_item_width  (item),
                                gimp_item_height (item),
-                               new_image_type,
+                               gimp_drawable_type (drawable),
                                GIMP_OBJECT (new_drawable)->name);
 
       pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
@@ -350,10 +341,7 @@ gimp_drawable_duplicate (GimpItem *item,
                          gimp_item_height (new_item),
                          TRUE);
 
-      if (new_image_type == drawable->type)
-        copy_region (&srcPR, &destPR);
-      else
-        add_alpha_region (&srcPR, &destPR);
+      copy_region (&srcPR, &destPR);
     }
 
   return new_item;

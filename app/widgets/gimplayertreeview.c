@@ -764,7 +764,7 @@ gimp_layer_tree_view_drop_component (GimpContainerTreeView   *tree_view,
   channel = gimp_channel_new_from_component (src_image, component, NULL, NULL);
 
   new_item = gimp_item_convert (GIMP_ITEM (channel), item_view->image,
-                                GIMP_TYPE_LAYER, TRUE);
+                                GIMP_TYPE_LAYER);
 
   g_object_unref (channel);
 

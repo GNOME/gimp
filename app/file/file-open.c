@@ -571,8 +571,7 @@ file_open_convert_items (GimpImage   *dest_image,
       GimpItem *src = list->data;
       GimpItem *item;
 
-      item = gimp_item_convert (src, dest_image,
-                                G_TYPE_FROM_INSTANCE (src), TRUE);
+      item = gimp_item_convert (src, dest_image, G_TYPE_FROM_INSTANCE (src));
 
       if (g_list_length (items) == 1)
         {

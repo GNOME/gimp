@@ -93,8 +93,7 @@ static gchar    * gimp_layer_get_description    (GimpViewable       *viewable,
 static void       gimp_layer_removed            (GimpItem           *item);
 static gboolean   gimp_layer_is_attached        (GimpItem           *item);
 static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
-                                                 GType               new_type,
-                                                 gboolean            add_alpha);
+                                                 GType               new_type);
 static void       gimp_layer_convert            (GimpItem           *item,
                                                  GimpImage          *dest_image);
 static gboolean   gimp_layer_rename             (GimpItem           *item,
@@ -512,15 +511,13 @@ gimp_layer_is_attached (GimpItem *item)
 
 static GimpItem *
 gimp_layer_duplicate (GimpItem *item,
-                      GType     new_type,
-                      gboolean  add_alpha)
+                      GType     new_type)
 {
   GimpItem *new_item;
 
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
 
-  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
-                                                        add_alpha);
+  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type);
 
   if (GIMP_IS_LAYER (new_item))
     {
@@ -537,11 +534,11 @@ gimp_layer_duplicate (GimpItem *item,
       /*  duplicate the layer mask if necessary  */
       if (layer->mask)
         {
-          GimpItem *new_mask =
-            gimp_item_duplicate (GIMP_ITEM (layer->mask),
-                                 G_TYPE_FROM_INSTANCE (layer->mask),
-                                 FALSE);
-          gimp_layer_add_mask (new_layer, GIMP_LAYER_MASK (new_mask), FALSE);
+          GimpItem *mask;
+
+          mask = gimp_item_duplicate (GIMP_ITEM (layer->mask),
+                                      G_TYPE_FROM_INSTANCE (layer->mask));
+          gimp_layer_add_mask (new_layer, GIMP_LAYER_MASK (mask), FALSE);
         }
     }
 

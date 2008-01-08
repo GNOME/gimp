@@ -1,5 +1,37 @@
 2008-01-08  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpitem.[ch]: removed "add_alpha" parameter from
+	gimp_item_duplicate() and gimp_item_convert(). This is a relict
+	from the time when only the bottom layer was allowed to have no
+	alpha channel.
+
+	* app/actions/channels-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/vectors-commands.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-quick-mask.c
+	* app/core/gimplayer.c
+	* app/core/gimplayermask.c
+	* app/core/gimpselection.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/file/file-open.c
+	* app/pdb/channel_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/text/gimptextlayer.c
+	* app/vectors/gimpvectors.c
+	* app/vectors/gimpvectorsmodundo.c
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimptoolbox-dnd.c
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/layer.pdb: changed accordingly.
+
+2008-01-08  Sven Neumann  <sven@gimp.org>
+
 	* app/file/file-open.c (file_open_layers): moved code to a utility
 	function, in preparation for a possible fix for bug #507116.
 
