@@ -66,7 +66,6 @@ static void     gimp_operation_tile_sink_set_property (GObject       *object,
                                                        GParamSpec    *pspec);
 
 static gboolean gimp_operation_tile_sink_process      (GeglOperation *operation,
-                                                       GeglNodeContext *context,
                                                        GeglBuffer          *input,
                                                        const GeglRectangle *result);
 
@@ -194,7 +193,6 @@ gimp_operation_tile_sink_set_property (GObject      *object,
 
 static gboolean
 gimp_operation_tile_sink_process (GeglOperation       *operation,
-                                  GeglNodeContext     *context,
                                   GeglBuffer          *input,
                                   const GeglRectangle *result)
 {

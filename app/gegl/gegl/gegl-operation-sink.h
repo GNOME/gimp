@@ -44,7 +44,6 @@ struct _GeglOperationSinkClass
   gboolean           needs_full;
 
   gboolean (* process) (GeglOperation       *self,
-                        GeglNodeContext     *context,
                         GeglBuffer          *input,
                         const GeglRectangle *result);
 };

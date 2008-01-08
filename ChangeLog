@@ -1,3 +1,10 @@
+2008-01-08  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/gegl/gimpoperationtilesink.c: removed no longer needed
+	context_id.
+	* app/gegl/gegl/gegl-operation-sink.h: resynced from GEGL.
+	* app/gegl/gegl/gegl-types.h: resynced from GEGL.
+
 2008-01-08  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpitem.[ch]: removed "add_alpha" parameter from
