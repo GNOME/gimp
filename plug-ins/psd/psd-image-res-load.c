@@ -19,7 +19,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 /* ----- Known Image Resource Block Types -----
   All image resources not otherwise handled, including unknown types
   are added as image parasites.
@@ -83,12 +82,12 @@
   PSD_PATH_INFO_LAST    = 2998,    Loaded     * 0x0bb6 - Last path info block *
   PSD_CLIPPING_PATH     = 2999,               * 0x0bb7 - Name of clipping path *
   PSD_PRINT_FLAGS_2     = 10000               * 0x2710 - Print flags *
-
 */
 
 #include "config.h"
 
 #include <string.h>
+#include <errno.h>
 
 #include <glib/gstdio.h>
 #include <libgimp/gimp.h>
@@ -111,230 +110,256 @@
 
 #define EXIF_HEADER_SIZE 8
 
-
 /*  Local function prototypes  */
 static gint     load_resource_unknown  (const PSDimageres     *res_a,
                                         const gint32           image_id,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_ps_only  (const PSDimageres     *res_a,
                                         const gint32           image_id,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_1005     (const PSDimageres     *res_a,
                                         const gint32           image_id,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_1006     (const PSDimageres     *res_a,
                                         const gint32           image_id,
                                         PSDimage              *img_a,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_1007     (const PSDimageres     *res_a,
                                         const gint32           image_id,
                                         PSDimage              *img_a,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_1008     (const PSDimageres     *res_a,
                                         const gint32           image_id,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_1022     (const PSDimageres     *res_a,
                                         const gint32           image_id,
                                         PSDimage              *img_a,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_1024     (const PSDimageres     *res_a,
                                         const gint32           image_id,
                                         PSDimage              *img_a,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_1028     (const PSDimageres     *res_a,
                                         const gint32           image_id,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_1032     (const PSDimageres     *res_a,
                                         const gint32           image_id,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_1033     (const PSDimageres     *res_a,
                                         const gint32           image_id,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_1039     (const PSDimageres     *res_a,
                                         const gint32           image_id,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_1045     (const PSDimageres     *res_a,
                                         const gint32           image_id,
                                         PSDimage              *img_a,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_1046     (const PSDimageres     *res_a,
                                         const gint32           image_id,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_1053     (const PSDimageres     *res_a,
                                         const gint32           image_id,
                                         PSDimage              *img_a,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_1058     (const PSDimageres     *res_a,
                                         const gint32           image_id,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_1060     (const PSDimageres     *res_a,
                                         const gint32           image_id,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 static gint     load_resource_2000     (const PSDimageres     *res_a,
                                         const gint32           image_id,
-                                        FILE                  *f);
+                                        FILE                  *f,
+                                        GError               **error);
 
 /* Public Functions */
 gint
-get_image_resource_header (PSDimageres *res_a,
-                           FILE        *f)
+get_image_resource_header (PSDimageres  *res_a,
+                           FILE         *f,
+                           GError      **error)
 {
-  gint32               read_len,
-                       write_len;
-  gchar                *name;
+  gint32        read_len;
+  gint32        write_len;
+  gchar        *name;
 
   if (fread (&res_a->type, 4, 1, f) < 1
       || fread (&res_a->id, 2, 1, f) < 1)
     {
-      g_message (_("Error reading image resource block header"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
   res_a->id = GUINT16_FROM_BE (res_a->id);
-  name = fread_pascal_string (&read_len, &write_len, 2, f);
+  name = fread_pascal_string (&read_len, &write_len, 2, f, error);
+  if (*error)
+    return -1;
   if (name != NULL)
     g_strlcpy (res_a->name, name, write_len + 1);
   else
-    res_a->name[0] = 0;
+    res_a->name[0] = 0x0;
   g_free (name);
   if (fread (&res_a->data_len, 4, 1, f) < 1)
     {
-      g_message (_("Error image resource block length"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
   res_a->data_len = GUINT32_FROM_BE (res_a->data_len);
   res_a->data_start = ftell (f);
 
   IFDBG(2) g_debug ("Type: %.4s, id: %d, start: %d, len: %d",
-                        res_a->type, res_a->id, res_a->data_start, res_a->data_len);
+                    res_a->type, res_a->id, res_a->data_start, res_a->data_len);
 
   return 0;
 }
 
 gint
-load_image_resource (PSDimageres  *res_a,
-                     const gint32  image_id,
-                     PSDimage     *img_a,
-                     FILE         *f)
+load_image_resource (PSDimageres   *res_a,
+                     const gint32   image_id,
+                     PSDimage      *img_a,
+                     FILE          *f,
+                     GError       **error)
 {
   gint  pad;
 
   /* Set file position to start of image resource data block */
   if (fseek (f, res_a->data_start, SEEK_SET) < 0)
     {
-      g_message (_("Error setting file position"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
 
    /* Process image resource blocks */
   if (memcmp (res_a->type, "8BIM", 4) != 0 &&
       memcmp (res_a->type, "MeSa", 4) !=0)
-      g_message (_("Unknown image resource type signature %.4s"), res_a->type);
-
-  switch (res_a->id)
     {
-      case PSD_PS2_IMAGE_INFO:
-      case PSD_PS2_COLOR_TAB:
-      case PSD_OBSOLETE_01:
-      case PSD_OBSOLETE_02:
-      case PSD_OBSOLETE_03:
-        /* Drop obsolete image resource blocks */
-        IFDBG(2) g_debug ("Obsolete image resource block: %d",
-                           res_a->id);
-        break;
+      IFDBG(1) g_debug ("Unknown image resource type signature %.4s",
+                        res_a->type);
+    }
+  else
+    {
+      switch (res_a->id)
+        {
+          case PSD_PS2_IMAGE_INFO:
+          case PSD_PS2_COLOR_TAB:
+          case PSD_OBSOLETE_01:
+          case PSD_OBSOLETE_02:
+          case PSD_OBSOLETE_03:
+            /* Drop obsolete image resource blocks */
+            IFDBG(2) g_debug ("Obsolete image resource block: %d",
+                               res_a->id);
+            break;
 
-      case PSD_THUMB_RES:
-      case PSD_THUMB_RES2:
-        /* Drop thumbnails from standard file load */
-        IFDBG(2) g_debug ("Thumbnail resource block: %d",
-                           res_a->id);
-        break;
+          case PSD_THUMB_RES:
+          case PSD_THUMB_RES2:
+            /* Drop thumbnails from standard file load */
+            IFDBG(2) g_debug ("Thumbnail resource block: %d",
+                               res_a->id);
+            break;
 
-      case PSD_MAC_PRINT_INFO:
-      case PSD_JPEG_QUAL:
-        /* Save photoshop resources with no meaning for GIMP
-          as image parasites */
-        load_resource_ps_only (res_a, image_id, f);
-        break;
+          case PSD_MAC_PRINT_INFO:
+          case PSD_JPEG_QUAL:
+            /* Save photoshop resources with no meaning for GIMP
+              as image parasites */
+            load_resource_ps_only (res_a, image_id, f, error);
+            break;
 
-      case PSD_RESN_INFO:
-        load_resource_1005 (res_a, image_id, f);
-        break;
+          case PSD_RESN_INFO:
+            load_resource_1005 (res_a, image_id, f, error);
+            break;
 
-      case PSD_ALPHA_NAMES:
-        load_resource_1006 (res_a, image_id, img_a, f);
-        break;
+          case PSD_ALPHA_NAMES:
+            load_resource_1006 (res_a, image_id, img_a, f, error);
+            break;
 
-      case PSD_DISPLAY_INFO:
-        load_resource_1007 (res_a, image_id, img_a, f);
-        break;
+          case PSD_DISPLAY_INFO:
+            load_resource_1007 (res_a, image_id, img_a, f, error);
+            break;
 
-      case PSD_CAPTION:
-        load_resource_1008 (res_a, image_id, f);
-        break;
+          case PSD_CAPTION:
+            load_resource_1008 (res_a, image_id, f, error);
+            break;
 
-      case PSD_QUICK_MASK:
-        load_resource_1022 (res_a, image_id, img_a, f);
-        break;
+          case PSD_QUICK_MASK:
+            load_resource_1022 (res_a, image_id, img_a, f, error);
+            break;
 
-      case PSD_LAYER_STATE:
-        load_resource_1024 (res_a, image_id, img_a, f);
-        break;
+          case PSD_LAYER_STATE:
+            load_resource_1024 (res_a, image_id, img_a, f, error);
+            break;
 
-      case PSD_IPTC_NAA_DATA:
-        load_resource_1028 (res_a, image_id, f);
-        break;
+          case PSD_IPTC_NAA_DATA:
+            load_resource_1028 (res_a, image_id, f, error);
+            break;
 
-      case PSD_GRID_GUIDE:
-        load_resource_1032 (res_a, image_id, f);
-        break;
+          case PSD_GRID_GUIDE:
+            load_resource_1032 (res_a, image_id, f, error);
+            break;
 
-      case PSD_ICC_PROFILE:
-        load_resource_1039 (res_a, image_id, f);
-        break;
+          case PSD_ICC_PROFILE:
+            load_resource_1039 (res_a, image_id, f, error);
+            break;
 
-      case PSD_ALPHA_NAMES_UNI:
-        load_resource_1045 (res_a, image_id, img_a,  f);
-        break;
+          case PSD_ALPHA_NAMES_UNI:
+            load_resource_1045 (res_a, image_id, img_a, f, error);
+            break;
 
-      case PSD_IDX_COL_TAB_CNT:
-        load_resource_1046 (res_a, image_id, f);
-        break;
+          case PSD_IDX_COL_TAB_CNT:
+            load_resource_1046 (res_a, image_id, f, error);
+            break;
 
-      case PSD_ALPHA_ID:
-        load_resource_1053 (res_a, image_id, img_a, f);
-        break;
+          case PSD_ALPHA_ID:
+            load_resource_1053 (res_a, image_id, img_a, f, error);
+            break;
 
-      case PSD_EXIF_DATA:
-        load_resource_1058 (res_a, image_id, f);
-        break;
+          case PSD_EXIF_DATA:
+            load_resource_1058 (res_a, image_id, f, error);
+            break;
 
-      case PSD_XMP_DATA:
-        load_resource_1060 (res_a, image_id, f);
-        break;
+          case PSD_XMP_DATA:
+            load_resource_1060 (res_a, image_id, f, error);
+            break;
 
-      default:
-        if (res_a->id >= 2000 &&
-            res_a->id <  2999)
-          load_resource_2000 (res_a, image_id, f);
-        else
-          load_resource_unknown (res_a, image_id, f);
+          default:
+            if (res_a->id >= 2000 &&
+                res_a->id <  2999)
+              load_resource_2000 (res_a, image_id, f, error);
+            else
+              load_resource_unknown (res_a, image_id, f, error);
+        }
     }
 
   /* Image blocks are null padded to even length */
@@ -346,7 +371,7 @@ load_image_resource (PSDimageres  *res_a,
   /* Set file position to end of image resource block */
   if (fseek (f, res_a->data_start + res_a->data_len + pad, SEEK_SET) < 0)
     {
-      g_message (_("Error setting file position"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
 
@@ -354,9 +379,10 @@ load_image_resource (PSDimageres  *res_a,
 }
 
 gint
-load_thumbnail_resource (PSDimageres  *res_a,
-                         const gint32  image_id,
-                         FILE         *f)
+load_thumbnail_resource (PSDimageres   *res_a,
+                         const gint32   image_id,
+                         FILE          *f,
+                         GError       **error)
 {
   gint  rtn = 0;
   gint  pad;
@@ -364,7 +390,7 @@ load_thumbnail_resource (PSDimageres  *res_a,
   /* Set file position to start of image resource data block */
   if (fseek (f, res_a->data_start, SEEK_SET) < 0)
     {
-      g_message (_("Error setting file position"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
 
@@ -373,7 +399,7 @@ load_thumbnail_resource (PSDimageres  *res_a,
      || res_a->id == PSD_THUMB_RES2)
    {
         /* Load thumbnails from standard file load */
-        load_resource_1033 (res_a, image_id, f);
+        load_resource_1033 (res_a, image_id, f, error);
         rtn = 1;
    }
 
@@ -386,7 +412,7 @@ load_thumbnail_resource (PSDimageres  *res_a,
   /* Set file position to end of image resource block */
   if (fseek (f, res_a->data_start + res_a->data_len + pad, SEEK_SET) < 0)
     {
-      g_message (_("Error setting file position"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
 
@@ -396,9 +422,10 @@ load_thumbnail_resource (PSDimageres  *res_a,
 /* Private Functions */
 
 static gint
-load_resource_unknown (const PSDimageres *res_a,
-                       const gint32       image_id,
-                       FILE              *f)
+load_resource_unknown (const PSDimageres  *res_a,
+                       const gint32        image_id,
+                       FILE               *f,
+                       GError            **error)
 {
   /* Unknown image resources attached as parasites to re-save later */
   GimpParasite  *parasite;
@@ -410,7 +437,7 @@ load_resource_unknown (const PSDimageres *res_a,
   data = g_malloc (res_a->data_len);
   if (fread (data, res_a->data_len, 1, f) < 1)
     {
-      g_message (_("Error reading image resource block %d"), res_a->id);
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
 
@@ -428,9 +455,10 @@ load_resource_unknown (const PSDimageres *res_a,
 }
 
 static gint
-load_resource_ps_only (const PSDimageres *res_a,
-                       const gint32       image_id,
-                       FILE              *f)
+load_resource_ps_only (const PSDimageres  *res_a,
+                       const gint32        image_id,
+                       FILE               *f,
+                       GError            **error)
 {
   /* Save photoshop resources with no meaning for GIMP as image parasites
      to re-save later */
@@ -443,7 +471,7 @@ load_resource_ps_only (const PSDimageres *res_a,
   data = g_malloc (res_a->data_len);
   if (fread (data, res_a->data_len, 1, f) < 1)
     {
-      g_message (_("Error reading image resource block %d"), res_a->id);
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
 
@@ -461,9 +489,10 @@ load_resource_ps_only (const PSDimageres *res_a,
 }
 
 static gint
-load_resource_1005 (const PSDimageres *res_a,
-                    const gint32       image_id,
-                    FILE              *f)
+load_resource_1005 (const PSDimageres  *res_a,
+                    const gint32        image_id,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load image resolution and unit of measure */
 
@@ -481,7 +510,7 @@ load_resource_1005 (const PSDimageres *res_a,
       || fread (&res_info.vResUnit, 2, 1, f) < 1
       || fread (&res_info.heightUnit, 2, 1, f) < 1)
     {
-      g_message (_("Error reading image resource block %d"), res_a->id);
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
   res_info.hRes = GINT32_FROM_BE (res_info.hRes);
@@ -499,7 +528,7 @@ load_resource_1005 (const PSDimageres *res_a,
                       res_info.vResUnit,
                       res_info.heightUnit);
 
-  /* Resolution always record as pixels / inch in a fixed point implied
+  /* Resolution always recorded as pixels / inch in a fixed point implied
      decimal int32 with 16 bits before point and 16 after (i.e. cast as
      double and divide resolution by 2^16 */
   gimp_image_set_resolution (image_id,
@@ -524,24 +553,25 @@ load_resource_1005 (const PSDimageres *res_a,
 }
 
 static gint
-load_resource_1006 (const PSDimageres *res_a,
-                    const gint32       image_id,
-                    PSDimage          *img_a,
-                    FILE              *f)
+load_resource_1006 (const PSDimageres  *res_a,
+                    const gint32        image_id,
+                    PSDimage           *img_a,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load alpha channel names stored as a series of pascal strings
      unpadded between strings */
 
   gchar        *str;
-  gint32        block_rem,
-                read_len,
-                write_len;
+  gint32        block_rem;
+  gint32        read_len;
+  gint32        write_len;
 
   IFDBG(2) g_debug ("Process image resource block 1006: Alpha Channel Names");
 
   if (img_a->alpha_names)
     {
-      IFDBG(2) g_debug ("Alpha names loaded from unicode resource block");
+      IFDBG(3) g_debug ("Alpha names loaded from unicode resource block");
       return 0;
     }
 
@@ -550,12 +580,13 @@ load_resource_1006 (const PSDimageres *res_a,
   block_rem = res_a->data_len;
   while (block_rem > 1)
     {
-      str = fread_pascal_string (&read_len, &write_len, 1, f);
-      IFDBG(2) g_debug ("String: %s, %d, %d", str, read_len, write_len);
+      str = fread_pascal_string (&read_len, &write_len, 1, f, error);
+      if (*error)
+        return -1;
+      IFDBG(3) g_debug ("String: %s, %d, %d", str, read_len, write_len);
       if (write_len >= 0)
         {
-          g_ptr_array_add (img_a->alpha_names, (gpointer) g_strdup (str));
-          g_free (str);
+          g_ptr_array_add (img_a->alpha_names, (gpointer) str);
         }
       block_rem -= read_len;
     }
@@ -564,10 +595,11 @@ load_resource_1006 (const PSDimageres *res_a,
 }
 
 static gint
-load_resource_1007 (const PSDimageres *res_a,
-                    const gint32       image_id,
-                    PSDimage          *img_a,
-                    FILE              *f)
+load_resource_1007 (const PSDimageres  *res_a,
+                    const gint32        image_id,
+                    PSDimage           *img_a,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load alpha channel display info */
 
@@ -594,7 +626,7 @@ load_resource_1007 (const PSDimageres *res_a,
           || fread (&dsp_info.kind, 1, 1, f) < 1
           || fread (&dsp_info.padding, 1, 1, f) < 1)
         {
-          g_message (_("Error reading image resource block %d"), res_a->id);
+          psd_set_error (feof (f), errno, error);
           return -1;
         }
       dsp_info.colorSpace = GINT16_FROM_BE (dsp_info.colorSpace);
@@ -642,9 +674,14 @@ load_resource_1007 (const PSDimageres *res_a,
           case PSD_CS_DIC:
           case PSD_CS_ANPA:
           default:
-            IFDBG(2) g_debug ("Color space %d not supported by GIMP", dsp_info.colorSpace);
+            if (CONVERSION_WARNINGS)
+              g_message ("Unsupported color space: %d",
+                         dsp_info.colorSpace);
             gimp_rgb_set (&gimp_rgb, 1.0, 0.0, 0.0);
         }
+
+      gimp_rgb_set_alpha (&gimp_rgb, 1.0);
+
       IFDBG(2) g_debug ("PS cSpace: %d, col: %d %d %d %d, opacity: %d, kind: %d",
              dsp_info.colorSpace, ps_color.cmyk.cyan, ps_color.cmyk.magenta,
              ps_color.cmyk.yellow, ps_color.cmyk.black, dsp_info.opacity,
@@ -666,20 +703,23 @@ load_resource_1007 (const PSDimageres *res_a,
 }
 
 static gint
-load_resource_1008 (const PSDimageres *res_a,
-                    const gint32       image_id,
-                    FILE              *f)
+load_resource_1008 (const PSDimageres  *res_a,
+                    const gint32        image_id,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load image caption */
   GimpParasite  *parasite;
   gchar         *caption;
-  gint32         read_len,
-                 write_len;
+  gint32         read_len;
+  gint32         write_len;
 
   IFDBG(2) g_debug ("Process image resource block: 1008: Caption");
-  caption = fread_pascal_string (&read_len, &write_len, 1, f);
+  caption = fread_pascal_string (&read_len, &write_len, 1, f, error);
+  if (*error)
+    return -1;
 
-  IFDBG(2) g_debug ("Caption: %s", caption);
+  IFDBG(3) g_debug ("Caption: %s", caption);
   parasite = gimp_parasite_new (GIMP_PARASITE_COMMENT, GIMP_PARASITE_PERSISTENT,
                                 write_len, caption);
   gimp_image_parasite_attach (image_id, parasite);
@@ -690,10 +730,11 @@ load_resource_1008 (const PSDimageres *res_a,
 }
 
 static gint
-load_resource_1022 (const PSDimageres *res_a,
-                    const gint32       image_id,
-                    PSDimage          *img_a,
-                    FILE              *f)
+load_resource_1022 (const PSDimageres  *res_a,
+                    const gint32        image_id,
+                    PSDimage           *img_a,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load quick mask info */
   gboolean              quick_mask_empty;       /* Quick mask initially empty */
@@ -703,7 +744,7 @@ load_resource_1022 (const PSDimageres *res_a,
   if (fread (&img_a->quick_mask_id, 2, 1, f) < 1
       || fread (&quick_mask_empty, 1, 1, f) < 1)
     {
-      g_message (_("Error reading image resource block %d"), res_a->id);
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
   img_a->quick_mask_id = GUINT16_FROM_BE (img_a->quick_mask_id);
@@ -716,17 +757,18 @@ load_resource_1022 (const PSDimageres *res_a,
 }
 
 static gint
-load_resource_1024 (const PSDimageres *res_a,
-                    const gint32       image_id,
-                    PSDimage          *img_a,
-                    FILE              *f)
+load_resource_1024 (const PSDimageres  *res_a,
+                    const gint32        image_id,
+                    PSDimage           *img_a,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load image layer state - current active layer counting from bottom up */
   IFDBG(2) g_debug ("Process image resource block: 1024: Layer State");
 
   if (fread (&img_a->layer_state, 2, 1, f) < 1)
     {
-      g_message (_("Error reading image resource block %d"), res_a->id);
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
   img_a->layer_state = GUINT16_FROM_BE (img_a->layer_state);
@@ -735,9 +777,10 @@ load_resource_1024 (const PSDimageres *res_a,
 }
 
 static gint
-load_resource_1028 (const PSDimageres *res_a,
-                    const gint32       image_id,
-                    FILE              *f)
+load_resource_1028 (const PSDimageres  *res_a,
+                    const gint32        image_id,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load IPTC data block */
 
@@ -757,7 +800,7 @@ load_resource_1028 (const PSDimageres *res_a,
   res_data = g_malloc (res_a->data_len);
   if (fread (res_data, res_a->data_len, 1, f) < 1)
     {
-      g_message (_("Error reading image resource block %d"), res_a->id);
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
 
@@ -787,7 +830,7 @@ load_resource_1028 (const PSDimageres *res_a,
   IFDBG (2) g_debug ("Processing IPTC data as psd parasite");
   name = g_strdup_printf ("psd-image-resource-%.4s-%.4x",
                            res_a->type, res_a->id);
-  IFDBG(2) g_debug ("Parasite name: %s", name);
+  IFDBG(3) g_debug ("Parasite name: %s", name);
 
   parasite = gimp_parasite_new (name, 0, res_a->data_len, res_data);
   gimp_image_parasite_attach (image_id, parasite);
@@ -801,9 +844,10 @@ load_resource_1028 (const PSDimageres *res_a,
 }
 
 static gint
-load_resource_1032 (const PSDimageres *res_a,
-                    const gint32       image_id,
-                    FILE              *f)
+load_resource_1032 (const PSDimageres  *res_a,
+                    const gint32        image_id,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load grid and guides */
 
@@ -820,7 +864,7 @@ load_resource_1032 (const PSDimageres *res_a,
       || fread (&hdr.fGridCycleH, 4, 1, f) < 1
       || fread (&hdr.fGuideCount, 4, 1, f) < 1)
     {
-      g_message (_("Error reading image resource block %d"), res_a->id);
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
   hdr.fVersion = GUINT32_FROM_BE (hdr.fVersion);
@@ -828,7 +872,7 @@ load_resource_1032 (const PSDimageres *res_a,
   hdr.fGridCycleH = GUINT32_FROM_BE (hdr.fGridCycleH);
   hdr.fGuideCount = GUINT32_FROM_BE (hdr.fGuideCount);
 
-  IFDBG(2) g_debug ("Grids & Guides: %d, %d, %d, %d",
+  IFDBG(3) g_debug ("Grids & Guides: %d, %d, %d, %d",
                      hdr.fVersion,
                      hdr.fGridCycleV,
                      hdr.fGridCycleH,
@@ -839,13 +883,13 @@ load_resource_1032 (const PSDimageres *res_a,
       if (fread (&guide.fLocation, 4, 1, f) < 1
           || fread (&guide.fDirection, 1, 1, f) < 1)
         {
-          g_message (_("Error reading image resource block %d"), res_a->id);
+          psd_set_error (feof (f), errno, error);
           return -1;
         }
       guide.fLocation = GUINT32_FROM_BE (guide.fLocation);
       guide.fLocation /= 32;
 
-      IFDBG(2) g_debug ("Guide: %d px, %d",
+      IFDBG(3) g_debug ("Guide: %d px, %d",
                          guide.fLocation,
                          guide.fDirection);
 
@@ -859,9 +903,10 @@ load_resource_1032 (const PSDimageres *res_a,
 }
 
 static gint
-load_resource_1033 (const PSDimageres *res_a,
-                    const gint32       image_id,
-                    FILE              *f)
+load_resource_1033 (const PSDimageres  *res_a,
+                    const gint32        image_id,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load thumbnail image */
 
@@ -872,9 +917,9 @@ load_resource_1033 (const PSDimageres *res_a,
   GimpDrawable         *drawable;
   GimpPixelRgn          pixel_rgn;
   gint32                layer_id;
-  guchar               *buf,
-                       *rgb_buf,
-                      **rowbuf;
+  guchar               *buf;
+  guchar               *rgb_buf;
+  guchar              **rowbuf;
   gint                  i;
 
   IFDBG(2) g_debug ("Process image resource block %d: Thumbnail Image", res_a->id);
@@ -889,7 +934,7 @@ load_resource_1033 (const PSDimageres *res_a,
       || fread (&thumb_info.bitspixel, 2, 1, f) < 1
       || fread (&thumb_info.planes, 2, 1, f) < 1)
     {
-      g_message (_("Error reading image resource block %d"), res_a->id);
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
   thumb_info.format = GINT32_FROM_BE (thumb_info.format);
@@ -910,7 +955,7 @@ load_resource_1033 (const PSDimageres *res_a,
 
   if (thumb_info.format != 1)
     {
-      g_message (_("Unknown thumbnail format %d"), thumb_info.format);
+      IFDBG(1) g_debug ("Unknown thumbnail format %d", thumb_info.format);
       return -1;
     }
 
@@ -1008,9 +1053,10 @@ load_resource_1033 (const PSDimageres *res_a,
 }
 
 static gint
-load_resource_1039 (const PSDimageres *res_a,
-                    const gint32       image_id,
-                    FILE              *f)
+load_resource_1039 (const PSDimageres  *res_a,
+                    const gint32        image_id,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load ICC profile */
   GimpParasite  *parasite;
@@ -1021,7 +1067,7 @@ load_resource_1039 (const PSDimageres *res_a,
   icc_profile = g_malloc (res_a->data_len);
   if (fread (icc_profile, res_a->data_len, 1, f) < 1)
     {
-      g_message (_("Error reading image resource block %d"), res_a->id);
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
 
@@ -1036,24 +1082,31 @@ load_resource_1039 (const PSDimageres *res_a,
 }
 
 static gint
-load_resource_1045 (const PSDimageres *res_a,
-                    const gint32       image_id,
-                    PSDimage          *img_a,
-                    FILE              *f)
+load_resource_1045 (const PSDimageres  *res_a,
+                    const gint32        image_id,
+                    PSDimage           *img_a,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load alpha channel names stored as a series of unicode strings
      in a GPtrArray */
 
   gchar        *str;
-  gint32        block_rem,
-                read_len,
-                write_len;
+  gint32        block_rem;
+  gint32        read_len;
+  gint32        write_len;
 
   IFDBG(2) g_debug ("Process image resource block 1045: Unicode Alpha Channel Names");
 
   if (img_a->alpha_names)
     {
-      IFDBG(2) g_debug ("Deleting localised alpha channel names");
+      gint      i;
+      IFDBG(3) g_debug ("Deleting localised alpha channel names");
+      for (i = 0; i < img_a->alpha_names->len; ++i)
+        {
+          str = g_ptr_array_index (img_a->alpha_names, i);
+          g_free (str);
+        }
       g_ptr_array_free (img_a->alpha_names, TRUE);
     }
 
@@ -1062,12 +1115,14 @@ load_resource_1045 (const PSDimageres *res_a,
   block_rem = res_a->data_len;
   while (block_rem > 1)
     {
-      str = fread_unicode_string (&read_len, &write_len, 1, f);
-      IFDBG(2) g_debug ("String: %s, %d, %d", str, read_len, write_len);
+      str = fread_unicode_string (&read_len, &write_len, 1, f, error);
+      if (*error)
+        return -1;
+
+      IFDBG(3) g_debug ("String: %s, %d, %d", str, read_len, write_len);
       if (write_len >= 0)
         {
-          g_ptr_array_add (img_a->alpha_names, (gpointer) g_strdup (str));
-          g_free (str);
+          g_ptr_array_add (img_a->alpha_names, (gpointer) str);
         }
       block_rem -= read_len;
     }
@@ -1076,9 +1131,10 @@ load_resource_1045 (const PSDimageres *res_a,
 }
 
 static gint
-load_resource_1046 (const PSDimageres *res_a,
-                    const gint32       image_id,
-                    FILE              *f)
+load_resource_1046 (const PSDimageres  *res_a,
+                    const gint32        image_id,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load indexed color table count */
   guchar       *cmap;
@@ -1089,12 +1145,12 @@ load_resource_1046 (const PSDimageres *res_a,
 
   if (fread (&index_count, 2, 1, f) < 1)
     {
-      g_message (_("Error reading image resource block %d"), res_a->id);
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
   index_count = GINT16_FROM_BE (index_count);
 
-  IFDBG(2) g_debug ("Indexed color table count: %d", index_count);
+  IFDBG(3) g_debug ("Indexed color table count: %d", index_count);
   /* FIXME - check that we have indexed image */
   if (index_count && index_count < 256)
     {
@@ -1107,14 +1163,15 @@ load_resource_1046 (const PSDimageres *res_a,
 }
 
 static gint
-load_resource_1053 (const PSDimageres *res_a,
-                    const gint32       image_id,
-                    PSDimage          *img_a,
-                    FILE              *f)
+load_resource_1053 (const PSDimageres  *res_a,
+                    const gint32        image_id,
+                    PSDimage           *img_a,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load image alpha channel ids (tattoos) */
-  gint16        tot_rec,
-                cidx;
+  gint16        tot_rec;
+  gint16        cidx;
 
   IFDBG(2) g_debug ("Process image resource block: 1053: Channel ID");
 
@@ -1128,7 +1185,7 @@ load_resource_1053 (const PSDimageres *res_a,
     {
       if (fread (&img_a->alpha_id[cidx], 4, 1, f) < 1)
         {
-          g_message (_("Error reading image resource block %d"), res_a->id);
+          psd_set_error (feof (f), errno, error);
           return -1;
         }
       img_a->alpha_id[cidx] = GUINT32_FROM_BE (img_a->alpha_id[cidx]);
@@ -1140,20 +1197,22 @@ load_resource_1053 (const PSDimageres *res_a,
 }
 
 static gint
-load_resource_1058 (const PSDimageres *res_a,
-                    const gint32       image_id,
-                    FILE              *f)
+load_resource_1058 (const PSDimageres  *res_a,
+                    const gint32        image_id,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load EXIF data block */
 
 #ifdef HAVE_EXIF
   ExifData     *exif_data;
   ExifEntry    *exif_entry;
-  guchar       *exif_buf,
-               *tmp_data;
+  guchar       *exif_buf;
+  guchar       *tmp_data;
   guint         exif_buf_len;
-  gint16        jpeg_len,
-                jpeg_fill = 0;
+  gint16        jpeg_len;
+  gint16        jpeg_fill = 0;
+  GimpParam    *return_vals;
   gint          nreturn_vals;
 #else
   gchar        *name;
@@ -1167,7 +1226,7 @@ load_resource_1058 (const PSDimageres *res_a,
   res_data = g_malloc (res_a->data_len);
   if (fread (res_data, res_a->data_len, 1, f) < 1)
     {
-      g_message (_("Error reading image resource block %d"), res_a->id);
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
 
@@ -1198,19 +1257,20 @@ load_resource_1058 (const PSDimageres *res_a,
   if ((exif_entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_0],
                                             EXIF_TAG_XML_PACKET)))
     {
-      IFDBG(2) g_debug ("Processing Exif XMP data block");
+      IFDBG(3) g_debug ("Processing Exif XMP data block");
       /*Create NULL terminated EXIF data block */
       tmp_data = g_malloc (exif_entry->size + 1);
       memcpy (tmp_data, exif_entry->data, exif_entry->size);
       tmp_data[exif_entry->size] = 0;
       /* Merge with existing XMP data block */
-      gimp_run_procedure (DECODE_XMP_PROC,
-                          &nreturn_vals,
-                          GIMP_PDB_IMAGE,  image_id,
-                          GIMP_PDB_STRING, tmp_data,
-                          GIMP_PDB_END);
+      return_vals = gimp_run_procedure (DECODE_XMP_PROC,
+                                        &nreturn_vals,
+                                        GIMP_PDB_IMAGE,  image_id,
+                                        GIMP_PDB_STRING, tmp_data,
+                                        GIMP_PDB_END);
       g_free (tmp_data);
-      IFDBG(2) g_debug ("Deleting XMP block from Exif data");
+      gimp_destroy_params (return_vals, nreturn_vals);
+      IFDBG(3) g_debug ("Deleting XMP block from Exif data");
       /* Delete XMP data from Exif block */
       exif_content_remove_entry (exif_data->ifd[EXIF_IFD_0],
                                  exif_entry);
@@ -1220,7 +1280,7 @@ load_resource_1058 (const PSDimageres *res_a,
   if ((exif_entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_0],
                                             EXIF_TAG_IMAGE_RESOURCES)))
     {
-      IFDBG(2) g_debug ("Deleting PS Image Resource block from Exif data");
+      IFDBG(3) g_debug ("Deleting PS Image Resource block from Exif data");
       /* Delete PS Image Resource data from Exif block */
       exif_content_remove_entry (exif_data->ifd[EXIF_IFD_0],
                                  exif_entry);
@@ -1247,7 +1307,7 @@ load_resource_1058 (const PSDimageres *res_a,
   IFDBG (2) g_debug ("Processing exif data as psd parasite");
   name = g_strdup_printf ("psd-image-resource-%.4s-%.4x",
                            res_a->type, res_a->id);
-  IFDBG(2) g_debug ("Parasite name: %s", name);
+  IFDBG(3) g_debug ("Parasite name: %s", name);
 
   parasite = gimp_parasite_new (name, 0, res_a->data_len, res_data);
   gimp_image_parasite_attach (image_id, parasite);
@@ -1261,11 +1321,13 @@ load_resource_1058 (const PSDimageres *res_a,
 }
 
 static gint
-load_resource_1060 (const PSDimageres *res_a,
-                    const gint32       image_id,
-                    FILE              *f)
+load_resource_1060 (const PSDimageres  *res_a,
+                    const gint32        image_id,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load XMP Metadata block */
+  GimpParam    *return_vals;
   gint          nreturn_vals;
   gchar        *res_data;
 
@@ -1274,42 +1336,42 @@ load_resource_1060 (const PSDimageres *res_a,
   res_data = g_malloc (res_a->data_len + 1);
   if (fread (res_data, res_a->data_len, 1, f) < 1)
     {
-      g_message (_("Error reading image resource block %d"), res_a->id);
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
   /* Null terminate metadata block for decode procedure */
   res_data[res_a->data_len] = 0;
 
-  gimp_run_procedure (DECODE_XMP_PROC,
-                      &nreturn_vals,
-                      GIMP_PDB_IMAGE,  image_id,
-                      GIMP_PDB_STRING, res_data,
-                      GIMP_PDB_END);
-
+  return_vals = gimp_run_procedure (DECODE_XMP_PROC,
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE,  image_id,
+                                    GIMP_PDB_STRING, res_data,
+                                    GIMP_PDB_END);
   g_free (res_data);
+  gimp_destroy_params (return_vals, nreturn_vals);
   return 0;
 }
 
 static gint
-load_resource_2000 (const PSDimageres *res_a,
-                    const gint32       image_id,
-                    FILE              *f)
+load_resource_2000 (const PSDimageres  *res_a,
+                    const gint32        image_id,
+                    FILE               *f,
+                    GError            **error)
 {
-  gchar        *name;
   gdouble      *controlpoints;
-  gint32        x[3],
-                y[3],
-                vector_id = -1;
-  gint16        type,
-                init_fill,
-                num_rec,
-                path_rec,
-                cntr;
-  gint          image_width,
-                image_height,
-                i;
-  gboolean      closed,
-                fill;
+  gint32        x[3];
+  gint32        y[3];
+  gint32        vector_id = -1;
+  gint16        type;
+  gint16        init_fill;
+  gint16        num_rec;
+  gint16        path_rec;
+  gint16        cntr;
+  gint          image_width;
+  gint          image_height;
+  gint          i;
+  gboolean      closed;
+  gboolean      fill;
 
   /* Load path data from image resources 2000-2998 */
 
@@ -1320,13 +1382,13 @@ load_resource_2000 (const PSDimageres *res_a,
 
   if (fread (&type, 2, 1, f) < 1)
     {
-      g_message (_("Error reading image resource block %d"), res_a->id);
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
   type = GINT16_FROM_BE (type);
   if (type != PSD_PATH_FILL_RULE)
     {
-      g_message (_("Unexpected path record type: %d"), type);
+      IFDBG(1) g_debug ("Unexpected path record type: %d", type);
       return -1;
     }
   else
@@ -1334,7 +1396,7 @@ load_resource_2000 (const PSDimageres *res_a,
 
   if (fseek (f, 24, SEEK_CUR) < 0)
     {
-      g_message (_("Error setting file position"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
 
@@ -1346,27 +1408,25 @@ load_resource_2000 (const PSDimageres *res_a,
   image_height = gimp_image_height (image_id);
 
   /* Create path */
-  name = gimp_any_to_utf8 (res_a->name, -1, _("Invalid UTF-8 string in PSD file"));
-  vector_id = gimp_vectors_new (image_id, name);
-  g_free (name);
+  vector_id = gimp_vectors_new (image_id, res_a->name);
   gimp_image_add_vectors (image_id, vector_id, -1);
 
   while (path_rec > 0)
     {
       if (fread (&type, 2, 1, f) < 1)
         {
-          g_message (_("Error reading image resource block %d"), res_a->id);
+          psd_set_error (feof (f), errno, error);
           return -1;
         }
       type = GINT16_FROM_BE (type);
-      IFDBG(2) g_debug ("Path record type %d", type);
+      IFDBG(3) g_debug ("Path record type %d", type);
 
       if (type == PSD_PATH_FILL_RULE)
         {
           fill = FALSE;
           if (fseek (f, 24, SEEK_CUR) < 0)
             {
-              g_message (_("Error setting file position"));
+              psd_set_error (feof (f), errno, error);
               return -1;
             }
         }
@@ -1375,7 +1435,7 @@ load_resource_2000 (const PSDimageres *res_a,
         {
           if (fread (&init_fill, 2, 1, f) < 1)
             {
-              g_message (_("Error reading image resource block %d"), res_a->id);
+              psd_set_error (feof (f), errno, error);
               return -1;
             }
           if (init_fill != 0)
@@ -1383,7 +1443,7 @@ load_resource_2000 (const PSDimageres *res_a,
 
           if (fseek (f, 22, SEEK_CUR) < 0)
             {
-              g_message (_("Error setting file position"));
+              psd_set_error (feof (f), errno, error);
               return -1;
             }
         }
@@ -1393,16 +1453,16 @@ load_resource_2000 (const PSDimageres *res_a,
         {
           if (fread (&num_rec, 2, 1, f) < 1)
             {
-              g_message (_("Error reading image resource block %d"), res_a->id);
+              psd_set_error (feof (f), errno, error);
               return -1;
             }
           num_rec = GINT16_FROM_BE (num_rec);
           if (num_rec > path_rec)
             {
-              g_message (_("Too many path point records"));
+              psd_set_error (feof (f), errno, error);
               return - 1;
             }
-          IFDBG(2) g_debug ("Num path records %d", num_rec);
+          IFDBG(3) g_debug ("Num path records %d", num_rec);
 
           if (type == PSD_PATH_CL_LEN)
             closed = TRUE;
@@ -1412,7 +1472,7 @@ load_resource_2000 (const PSDimageres *res_a,
           controlpoints = g_malloc (sizeof (gdouble) * num_rec * 6);
           if (fseek (f, 22, SEEK_CUR) < 0)
             {
-              g_message (_("Error setting file position"));
+              psd_set_error (feof (f), errno, error);
               return -1;
             }
 
@@ -1420,12 +1480,11 @@ load_resource_2000 (const PSDimageres *res_a,
             {
               if (fread (&type, 2, 1, f) < 1)
                 {
-                  g_message (_("Error reading image resource block %d"),
-                             res_a->id);
+                  psd_set_error (feof (f), errno, error);
                   return -1;
                 }
               type = GINT16_FROM_BE (type);
-              IFDBG(2) g_debug ("Path record type %d", type);
+              IFDBG(3) g_debug ("Path record type %d", type);
 
               if (type == PSD_PATH_CL_LNK
                   || type == PSD_PATH_CL_UNLNK
@@ -1439,8 +1498,7 @@ load_resource_2000 (const PSDimageres *res_a,
                     || fread (&y[2], 4, 1, f) < 1
                     || fread (&x[2], 4, 1, f) < 1)
                     {
-                      g_message (_("Error reading image resource block %d"),
-                                 res_a->id);
+                      psd_set_error (feof (f), errno, error);
                       return -1;
                     }
                   for (i = 0; i < 3; ++i)
@@ -1452,15 +1510,15 @@ load_resource_2000 (const PSDimageres *res_a,
                       controlpoints[cntr] = y[i] / 16777216.0 * image_height;
                       cntr++;
                     }
-                  IFDBG(2) g_debug ("Path points (%d,%d), (%d,%d), (%d,%d)",
+                  IFDBG(3) g_debug ("Path points (%d,%d), (%d,%d), (%d,%d)",
                                     x[0], y[0], x[1], y[1], x[2], y[2]);
                 }
               else
                 {
-                  g_message (_("Unexpected path type record %d"), type);
+                  IFDBG(1) g_debug ("Unexpected path type record %d", type);
                   if (fseek (f, 24, SEEK_CUR) < 0)
                     {
-                      g_message (_("Error setting file position"));
+                      psd_set_error (feof (f), errno, error);
                       return -1;
                     }
                 }
@@ -1478,7 +1536,7 @@ load_resource_2000 (const PSDimageres *res_a,
         {
           if (fseek (f, 24, SEEK_CUR) < 0)
             {
-              g_message (_("Error setting file position"));
+              psd_set_error (feof (f), errno, error);
               return -1;
             }
         }

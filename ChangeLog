@@ -1,3 +1,13 @@
+2008-01-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/psd/psd-image-res-load.[ch]
+	* plug-ins/psd/psd-layer-res-load.[ch]
+	* plug-ins/psd/psd-load.c
+	* plug-ins/psd/psd-thumb-load.c
+	* plug-ins/psd/psd-util.[ch]
+	* plug-ins/psd/psd.[ch]: applied a patch from John Marshall that
+	improves error handling of the new PSD load plug-in (bug #448181).
+
 2008-01-08  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/gegl/gimpoperationtilesink.c: removed no longer needed

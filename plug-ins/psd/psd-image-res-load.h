@@ -24,16 +24,18 @@
 
 
 gint  get_image_resource_header (PSDimageres  *res_a,
-                                 FILE         *f);
+                                 FILE         *f,
+                                 GError      **error);
 
-gint  load_image_resource       (PSDimageres  *res_a,
-                                 const gint32  image_id,
-                                 PSDimage     *img_a,
-                                 FILE         *f);
+gint  load_image_resource       (PSDimageres   *res_a,
+                                 const gint32   image_id,
+                                 PSDimage      *img_a,
+                                 FILE          *f,
+                                 GError       **error);
 
-gint  load_thumbnail_resource   (PSDimageres  *res_a,
-                                 const gint32  image_id,
-                                 FILE         *f);
-
+gint  load_thumbnail_resource   (PSDimageres   *res_a,
+                                 const gint32   image_id,
+                                 FILE          *f,
+                                 GError       **error);
 
 #endif /* __PSD_IMAGE_RES_LOAD_H__ */

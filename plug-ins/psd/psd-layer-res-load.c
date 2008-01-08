@@ -92,6 +92,7 @@
 #include "config.h"
 
 #include <string.h>
+#include <errno.h>
 
 #include <glib/gstdio.h>
 #include <libgimp/gimp.h>
@@ -102,51 +103,59 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-
 /*  Local function prototypes  */
 static gint     load_resource_unknown (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f);
+                                       FILE                  *f,
+                                       GError               **error);
 
 static gint     load_resource_ladj    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f);
+                                       FILE                  *f,
+                                       GError               **error);
 
 static gint     load_resource_lfil    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f);
+                                       FILE                  *f,
+                                       GError               **error);
 
 static gint     load_resource_lfx     (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f);
+                                       FILE                  *f,
+                                       GError               **error);
 
 static gint     load_resource_ltyp    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f);
+                                       FILE                  *f,
+                                       GError               **error);
 
 static gint     load_resource_luni    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f);
+                                       FILE                  *f,
+                                       GError               **error);
 
 static gint     load_resource_lyid    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f);
+                                       FILE                  *f,
+                                       GError               **error);
 
 static gint     load_resource_lsct    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
-                                       FILE                  *f);
+                                       FILE                  *f,
+                                       GError               **error);
 
 
 /* Public Functions */
 gint
-get_layer_resource_header (PSDlayerres *res_a,
-                           FILE        *f)
+get_layer_resource_header (PSDlayerres  *res_a,
+                           FILE         *f,
+                           GError      **error)
 {
   if (fread (res_a->sig, 4, 1, f) < 1
       || fread (res_a->key, 4, 1, f) < 1
       || fread (&res_a->data_len, 4, 1, f) < 1)
     {
-      g_message (_("Error reading layer resource block header"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
   res_a->data_len = GUINT32_FROM_BE (res_a->data_len);
@@ -159,64 +168,69 @@ get_layer_resource_header (PSDlayerres *res_a,
 }
 
 gint
-load_layer_resource (PSDlayerres *res_a,
-                     PSDlayer    *lyr_a,
-                     FILE        *f)
+load_layer_resource (PSDlayerres  *res_a,
+                     PSDlayer     *lyr_a,
+                     FILE         *f,
+                     GError      **error)
 {
   gint  pad;
 
   /* Set file position to start of layer resource data block */
   if (fseek (f, res_a->data_start, SEEK_SET) < 0)
     {
-      g_message (_("Error setting file position"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
 
    /* Process layer resource blocks */
   if (memcmp (res_a->sig, "8BIM", 4) != 0)
-      g_message (_("Unknown layer resource signature %.4s"), res_a->sig);
-
-  if (memcmp (res_a->key, PSD_LADJ_LEVEL, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_CURVE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_BALANCE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_BLACK_WHITE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_HUE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_HUE2, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_SELECTIVE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_MIXER, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_GRAD_MAP, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_PHOTO_FILT, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_EXPOSURE, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_THRESHOLD, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_INVERT, 4) == 0
-      || memcmp (res_a->key, PSD_LADJ_POSTERIZE, 4) == 0)
-        load_resource_ladj (res_a, lyr_a, f);
-
-  else if (memcmp (res_a->key, PSD_LFIL_SOLID, 4) == 0
-      || memcmp (res_a->key, PSD_LFIL_PATTERN, 4) == 0
-      || memcmp (res_a->key, PSD_LFIL_GRADIENT, 4) == 0)
-        load_resource_lfil (res_a, lyr_a, f);
-
-  else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0
-      || memcmp (res_a->key, PSD_LFX_FX2, 4) == 0)
-        load_resource_lfx (res_a, lyr_a, f);
-
-  else if (memcmp (res_a->key, PSD_LTYP_TYPE, 4) == 0
-      || memcmp (res_a->key, PSD_LTYP_TYPE2, 4) == 0)
-        load_resource_ltyp (res_a, lyr_a, f);
-
-  else if (memcmp (res_a->key, PSD_LPRP_UNICODE, 4) == 0)
-        load_resource_luni (res_a, lyr_a, f);
-
-  else if (memcmp (res_a->key, PSD_LPRP_ID, 4) == 0)
-        load_resource_lyid (res_a, lyr_a, f);
-
-  else if (memcmp (res_a->key, PSD_LOTH_SECTION, 4) == 0)
-        load_resource_lsct (res_a, lyr_a, f);
-
+    {
+      IFDBG(1) g_debug ("Unknown layer resource signature %.4s", res_a->sig);
+    }
   else
-    load_resource_unknown (res_a, lyr_a, f);
+    {
+      if (memcmp (res_a->key, PSD_LADJ_LEVEL, 4) == 0
+          || memcmp (res_a->key, PSD_LADJ_CURVE, 4) == 0
+          || memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0
+          || memcmp (res_a->key, PSD_LADJ_BALANCE, 4) == 0
+          || memcmp (res_a->key, PSD_LADJ_BLACK_WHITE, 4) == 0
+          || memcmp (res_a->key, PSD_LADJ_HUE, 4) == 0
+          || memcmp (res_a->key, PSD_LADJ_HUE2, 4) == 0
+          || memcmp (res_a->key, PSD_LADJ_SELECTIVE, 4) == 0
+          || memcmp (res_a->key, PSD_LADJ_MIXER, 4) == 0
+          || memcmp (res_a->key, PSD_LADJ_GRAD_MAP, 4) == 0
+          || memcmp (res_a->key, PSD_LADJ_PHOTO_FILT, 4) == 0
+          || memcmp (res_a->key, PSD_LADJ_EXPOSURE, 4) == 0
+          || memcmp (res_a->key, PSD_LADJ_THRESHOLD, 4) == 0
+          || memcmp (res_a->key, PSD_LADJ_INVERT, 4) == 0
+          || memcmp (res_a->key, PSD_LADJ_POSTERIZE, 4) == 0)
+            load_resource_ladj (res_a, lyr_a, f, error);
+
+      else if (memcmp (res_a->key, PSD_LFIL_SOLID, 4) == 0
+          || memcmp (res_a->key, PSD_LFIL_PATTERN, 4) == 0
+          || memcmp (res_a->key, PSD_LFIL_GRADIENT, 4) == 0)
+            load_resource_lfil (res_a, lyr_a, f, error);
+
+      else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0
+          || memcmp (res_a->key, PSD_LFX_FX2, 4) == 0)
+            load_resource_lfx (res_a, lyr_a, f, error);
+
+      else if (memcmp (res_a->key, PSD_LTYP_TYPE, 4) == 0
+          || memcmp (res_a->key, PSD_LTYP_TYPE2, 4) == 0)
+            load_resource_ltyp (res_a, lyr_a, f, error);
+
+      else if (memcmp (res_a->key, PSD_LPRP_UNICODE, 4) == 0)
+            load_resource_luni (res_a, lyr_a, f, error);
+
+      else if (memcmp (res_a->key, PSD_LPRP_ID, 4) == 0)
+            load_resource_lyid (res_a, lyr_a, f, error);
+
+      else if (memcmp (res_a->key, PSD_LOTH_SECTION, 4) == 0)
+            load_resource_lsct (res_a, lyr_a, f, error);
+
+      else
+        load_resource_unknown (res_a, lyr_a, f, error);
+    }
 
   /* Layer blocks are null padded to even length */
   if (res_a->data_len % 2 == 0)
@@ -227,7 +241,7 @@ load_layer_resource (PSDlayerres *res_a,
   /* Set file position to end of layer resource block */
   if (fseek (f, res_a->data_start + res_a->data_len + pad, SEEK_SET) < 0)
     {
-      g_message (_("Error setting file position"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
 
@@ -237,9 +251,10 @@ load_layer_resource (PSDlayerres *res_a,
 /* Private Functions */
 
 static gint
-load_resource_unknown (const PSDlayerres *res_a,
-                       PSDlayer          *lyr_a,
-                       FILE              *f)
+load_resource_unknown (const PSDlayerres  *res_a,
+                       PSDlayer           *lyr_a,
+                       FILE               *f,
+                       GError            **error)
 {
   IFDBG(2) g_debug ("Process unknown layer resource block: %.4s", res_a->key);
 
@@ -247,9 +262,10 @@ load_resource_unknown (const PSDlayerres *res_a,
 }
 
 static gint
-load_resource_ladj (const PSDlayerres *res_a,
-                    PSDlayer          *lyr_a,
-                    FILE              *f)
+load_resource_ladj (const PSDlayerres  *res_a,
+                    PSDlayer           *lyr_a,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load adjustment layer */
   static gboolean   msg_flag = FALSE;
@@ -258,10 +274,10 @@ load_resource_ladj (const PSDlayerres *res_a,
   lyr_a->drop = TRUE;
   if (! msg_flag && CONVERSION_WARNINGS)
     {
-      g_message (_("Warning:\n"
-                   "The image file contains adjustment layers. "
-                   "These are not supported by the GIMP and will "
-                   "be dropped."));
+      g_message ("Warning:\n"
+                 "The image file contains adjustment layers. "
+                 "These are not supported by the GIMP and will "
+                 "be dropped.");
       msg_flag = TRUE;
     }
 
@@ -269,9 +285,10 @@ load_resource_ladj (const PSDlayerres *res_a,
 }
 
 static gint
-load_resource_lfil (const PSDlayerres *res_a,
-                    PSDlayer          *lyr_a,
-                    FILE              *f)
+load_resource_lfil (const PSDlayerres  *res_a,
+                    PSDlayer           *lyr_a,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load fill layer */
   static gboolean   msg_flag = FALSE;
@@ -279,10 +296,10 @@ load_resource_lfil (const PSDlayerres *res_a,
   IFDBG(2) g_debug ("Process layer resource block %.4s: Fill layer", res_a->key);
   if (! msg_flag && CONVERSION_WARNINGS)
     {
-      g_message (_("Warning:\n"
-                   "The image file contains fill layers. "
-                   "These are not supported by the GIMP and will "
-                   "be rasterized."));
+      g_message ("Warning:\n"
+                 "The image file contains fill layers. "
+                 "These are not supported by the GIMP and will "
+                 "be rasterized.");
       msg_flag = TRUE;
     }
 
@@ -290,9 +307,10 @@ load_resource_lfil (const PSDlayerres *res_a,
 }
 
 static gint
-load_resource_lfx (const PSDlayerres *res_a,
-                   PSDlayer          *lyr_a,
-                   FILE              *f)
+load_resource_lfx (const PSDlayerres  *res_a,
+                   PSDlayer           *lyr_a,
+                   FILE               *f,
+                   GError            **error)
 {
   /* Load layer effects */
   static gboolean   msg_flag = FALSE;
@@ -300,10 +318,10 @@ load_resource_lfx (const PSDlayerres *res_a,
   IFDBG(2) g_debug ("Process layer resource block %.4s: Layer effects", res_a->key);
   if (! msg_flag && CONVERSION_WARNINGS)
     {
-      g_message (_("Warning:\n"
-                   "The image file contains layer effects. "
-                   "These are not supported by the GIMP and will "
-                   "be dropped."));
+      g_message ("Warning:\n"
+                 "The image file contains layer effects. "
+                 "These are not supported by the GIMP and will "
+                 "be dropped.");
       msg_flag = TRUE;
     }
 
@@ -311,36 +329,37 @@ load_resource_lfx (const PSDlayerres *res_a,
 }
 
 static gint
-load_resource_ltyp (const PSDlayerres *res_a,
-                    PSDlayer          *lyr_a,
-                    FILE              *f)
+load_resource_ltyp (const PSDlayerres  *res_a,
+                    PSDlayer           *lyr_a,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load type tool layer */
-  gint16            version,
-                    text_desc_vers;
+  gint16            version;
+  gint16            text_desc_vers;
   gint32            desc_version;
-  guint64           t_xx,
-                    t_xy,
-                    t_yx,
-                    t_yy,
-                    t_tx,
-                    t_ty;
-  gdouble           transform_xx,
-                    transform_xy,
-                    transform_yx,
-                    transform_yy,
-                    transform_tx,
-                    transform_ty;
+  guint64           t_xx;
+  guint64           t_xy;
+  guint64           t_yx;
+  guint64           t_yy;
+  guint64           t_tx;
+  guint64           t_ty;
+  gdouble           transform_xx;
+  gdouble           transform_xy;
+  gdouble           transform_yx;
+  gdouble           transform_yy;
+  gdouble           transform_tx;
+  gdouble           transform_ty;
 
   static gboolean   msg_flag = FALSE;
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: Type tool layer", res_a->key);
   if (! msg_flag && CONVERSION_WARNINGS)
     {
-      g_message (_("Warning:\n"
-                   "The image file contains type tool layers. "
-                   "These are not supported by the GIMP and will "
-                   "be dropped."));
+      g_message ("Warning:\n"
+                 "The image file contains type tool layers. "
+                 "These are not supported by the GIMP and will "
+                 "be dropped.");
       msg_flag = TRUE;
     }
 
@@ -357,7 +376,7 @@ load_resource_ltyp (const PSDlayerres *res_a,
           || fread (&text_desc_vers, 2, 1, f) < 1
           || fread (&desc_version, 4, 1, f) < 1)
         {
-          g_message (_("Error reading text descriptor info"));
+          psd_set_error (feof (f), errno, error);
           return -1;
         }
 
@@ -395,47 +414,52 @@ load_resource_ltyp (const PSDlayerres *res_a,
 }
 
 static gint
-load_resource_luni (const PSDlayerres *res_a,
-                    PSDlayer          *lyr_a,
-                    FILE              *f)
+load_resource_luni (const PSDlayerres  *res_a,
+                    PSDlayer           *lyr_a,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load layer name in unicode (length padded to multiple of 4 bytes) */
-  gint32                read_len,
-                        write_len;
+  gint32        read_len;
+  gint32        write_len;
 
   IFDBG(2) g_debug ("Process layer resource block luni: Unicode Name");
   if (lyr_a->name)
     g_free (lyr_a->name);
 
-  lyr_a->name = fread_unicode_string (&read_len, &write_len, 4, f);
-  IFDBG(2) g_debug ("Unicode name: %s", lyr_a->name);
+  lyr_a->name = fread_unicode_string (&read_len, &write_len, 4, f, error);
+  if (*error)
+    return -1;
+  IFDBG(3) g_debug ("Unicode name: %s", lyr_a->name);
 
   return 0;
 }
 
 static gint
-load_resource_lyid (const PSDlayerres *res_a,
-                    PSDlayer          *lyr_a,
-                    FILE              *f)
+load_resource_lyid (const PSDlayerres  *res_a,
+                    PSDlayer           *lyr_a,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load layer id (tattoo) */
 
   IFDBG(2) g_debug ("Process layer resource block lyid: Layer ID");
   if (fread (&lyr_a->id, 4, 1, f) < 1)
     {
-      g_message (_("Error reading layer ID"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
   lyr_a->id = GUINT32_FROM_BE (lyr_a->id);
-  IFDBG(2) g_debug ("Layer id: %i", lyr_a->id);
+  IFDBG(3) g_debug ("Layer id: %i", lyr_a->id);
 
   return 0;
 }
 
 static gint
-load_resource_lsct (const PSDlayerres *res_a,
-                    PSDlayer          *lyr_a,
-                    FILE              *f)
+load_resource_lsct (const PSDlayerres  *res_a,
+                    PSDlayer           *lyr_a,
+                    FILE               *f,
+                    GError            **error)
 {
   /* Load adjustment layer */
   static gboolean   msg_flag = FALSE;
@@ -444,11 +468,11 @@ load_resource_lsct (const PSDlayerres *res_a,
   IFDBG(2) g_debug ("Process layer resource block %.4s: Section divider", res_a->key);
   if (fread (&type, 4, 1, f) < 1)
     {
-      g_message (_("Error reading Section divider record"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
   type = GUINT32_FROM_BE (type);
-  IFDBG(2) g_debug ("Section divider type: %i", type);
+  IFDBG(3) g_debug ("Section divider type: %i", type);
 
   if (type == 1 ||      /* Layer group start - open folder */
       type == 2)        /* Layer group start - closed folder */
@@ -456,10 +480,10 @@ load_resource_lsct (const PSDlayerres *res_a,
       lyr_a->drop = TRUE;
       if (! msg_flag && CONVERSION_WARNINGS)
         {
-          g_message (_("Warning:\n"
-                       "The image file contains layer groups. "
-                       "These are not supported by the GIMP and will "
-                       "be dropped."));
+          g_message ("Warning:\n"
+                     "The image file contains layer groups. "
+                     "These are not supported by the GIMP and will "
+                     "be dropped.");
           msg_flag = TRUE;
         }
     }

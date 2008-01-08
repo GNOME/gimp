@@ -19,10 +19,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 #include "config.h"
 
 #include <string.h>
+#include <errno.h>
 
 #include <glib/gstdio.h>
 #include <libgimp/gimp.h>
@@ -36,19 +36,43 @@
 #define MIN_RUN     3
 
 /*  Local function prototypes  */
+static gchar *          gimp_layer_mode_effects_name    (const GimpLayerModeEffects      mode);
 
 
 /* Utility function */
-gchar *
-fread_pascal_string (gint32        *bytes_read,
-                     gint32        *bytes_written,
-                     const guint16  pad_len,
-                     FILE          *f)
+void
+psd_set_error (const gboolean   file_eof,
+               const gint       err_no,
+               GError         **error)
 {
-  /* Reads a pascal string padded to a multiple of pad_len and converts to utf-8 */
+  /*
+   *  Set error
+   */
+  if (file_eof)
+    *error = g_error_new (G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                          _("Unexpected end of file"));
+  else
+    *error = g_error_new (G_FILE_ERROR,
+                          g_file_error_from_errno (err_no),
+                          "%s", g_strerror (err_no));
 
-  gchar        *str,
-               *utf8_str;
+  return;
+}
+
+gchar *
+fread_pascal_string (gint32         *bytes_read,
+                     gint32         *bytes_written,
+                     const guint16   mod_len,
+                     FILE           *f,
+                     GError        **error)
+{
+  /*
+   * Reads a pascal string from the file padded to a multiple of mod_len
+   * and returns a utf-8 string.
+   */
+
+  gchar        *str;
+  gchar        *utf8_str;
   guchar        len;
   gint32        padded_len;
 
@@ -57,7 +81,7 @@ fread_pascal_string (gint32        *bytes_read,
 
   if (fread (&len, 1, 1, f) < 1)
     {
-      g_message (_("Error reading pascal string length"));
+      psd_set_error (feof (f), errno, error);
       return NULL;
     }
   (*bytes_read)++;
@@ -65,12 +89,12 @@ fread_pascal_string (gint32        *bytes_read,
 
   if (len == 0)
     {
-      if (fseek (f, pad_len - 1, SEEK_CUR) < 0)
+      if (fseek (f, mod_len - 1, SEEK_CUR) < 0)
         {
-          g_message (_("Error setting file position"));
+          psd_set_error (feof (f), errno, error);
           return NULL;
         }
-      *bytes_read += (pad_len - 1);
+      *bytes_read += (mod_len - 1);
       *bytes_written = 0;
       return NULL;
     }
@@ -78,19 +102,19 @@ fread_pascal_string (gint32        *bytes_read,
   str = g_malloc (len);
   if (fread (str, len, 1, f) < 1)
     {
-      g_message (_("Error reading pascal string"));
+      psd_set_error (feof (f), errno, error);
       return NULL;
     }
   *bytes_read += len;
 
-  if (pad_len > 0)
+  if (mod_len > 0)
     {
       padded_len = len + 1;
-      while (padded_len % pad_len != 0)
+      while (padded_len % mod_len != 0)
         {
           if (fseek (f, 1, SEEK_CUR) < 0)
             {
-              g_message (_("Error setting file position"));
+              psd_set_error (feof (f), errno, error);
               return NULL;
             }
           (*bytes_read)++;
@@ -98,27 +122,30 @@ fread_pascal_string (gint32        *bytes_read,
         }
     }
 
-  utf8_str = gimp_any_to_utf8 (str, len, _("Invalid UTF-8 string in PSD file"));
+  utf8_str = gimp_any_to_utf8 (str, len, NULL);
   *bytes_written = strlen (utf8_str);
   g_free (str);
 
-  IFDBG(2) g_debug ("Pascal string: %s, bytes_read: %d, bytes_written: %d",
+  IFDBG(3) g_debug ("Pascal string: %s, bytes_read: %d, bytes_written: %d",
                     utf8_str, *bytes_read, *bytes_written);
 
   return utf8_str;
 }
 
 gint32
-fwrite_pascal_string (const gchar   *src,
-                      const guint16  pad_len,
-                      FILE          *f)
+fwrite_pascal_string (const gchar    *src,
+                      const guint16   mod_len,
+                      FILE           *f,
+                      GError        **error)
 {
-  /* Converts utf-8 string to current locale and writes as pascal string with
-     padding to pad width */
+  /*
+   *  Converts utf-8 string to current locale and writes as pascal
+   *  string with padding to a multiple of mod_len.
+   */
 
-  gchar        *str,
-               *pascal_str,
-                null_str = 0x0;
+  gchar        *str;
+  gchar        *pascal_str;
+  gchar         null_str = 0x0;
   guchar        pascal_len;
   gint32        bytes_written = 0;
   gsize         len;
@@ -129,7 +156,7 @@ fwrite_pascal_string (const gchar   *src,
       if (fwrite (&null_str, 1, 1, f) < 1
           || fwrite (&null_str, 1, 1, f) < 1)
         {
-          g_message (_("Error writing pascal string"));
+          psd_set_error (feof (f), errno, error);
           return -1;
         }
       bytes_written += 2;
@@ -146,7 +173,7 @@ fwrite_pascal_string (const gchar   *src,
       if (fwrite (&pascal_len, 1, 1, f) < 1
           || fwrite (pascal_str, pascal_len, 1, f) < 1)
         {
-          g_message (_("Error writing pascal string"));
+          psd_set_error (feof (f), errno, error);
           return -1;
         }
       bytes_written++;
@@ -156,13 +183,13 @@ fwrite_pascal_string (const gchar   *src,
     }
 
   /* Pad with nulls */
-  if (pad_len > 0)
+  if (mod_len > 0)
     {
-      while (bytes_written % pad_len != 0)
+      while (bytes_written % mod_len != 0)
         {
           if (fwrite (&null_str, 1, 1, f) < 1)
             {
-              g_message (_("Error writing pascal string"));
+              psd_set_error (feof (f), errno, error);
               return -1;
             }
           bytes_written++;
@@ -173,18 +200,22 @@ fwrite_pascal_string (const gchar   *src,
 }
 
 gchar *
-fread_unicode_string (gint32        *bytes_read,
-                      gint32        *bytes_written,
-                      const guint16  pad_len,
-                      FILE          *f)
+fread_unicode_string (gint32         *bytes_read,
+                      gint32         *bytes_written,
+                      const guint16   mod_len,
+                      FILE           *f,
+                      GError        **error)
 {
-  /* Reads a utf-16 string padded to a multiple of pad_len and converts to utf-8 */
+  /*
+   * Reads a utf-16 string from the file padded to a multiple of mod_len
+   * and returns a utf-8 string.
+   */
 
   gchar        *utf8_str;
   gunichar2    *utf16_str;
-  gint32        len,
-                i,
-                padded_len;
+  gint32        len;
+  gint32        i;
+  gint32        padded_len;
   glong         utf8_str_len;
 
   *bytes_read = 0;
@@ -192,7 +223,7 @@ fread_unicode_string (gint32        *bytes_read,
 
   if (fread (&len, 4, 1, f) < 1)
     {
-      g_message (_("Error reading unicode string length"));
+      psd_set_error (feof (f), errno, error);
       return NULL;
     }
   *bytes_read += 4;
@@ -201,12 +232,12 @@ fread_unicode_string (gint32        *bytes_read,
 
   if (len == 0)
     {
-      if (fseek (f, pad_len - 1, SEEK_CUR) < 0)
+      if (fseek (f, mod_len - 1, SEEK_CUR) < 0)
         {
-          g_message (_("Error setting file position"));
+          psd_set_error (feof (f), errno, error);
           return NULL;
         }
-      *bytes_read += (pad_len - 1);
+      *bytes_read += (mod_len - 1);
       *bytes_written = 0;
       return NULL;
     }
@@ -216,21 +247,21 @@ fread_unicode_string (gint32        *bytes_read,
     {
       if (fread (&utf16_str[i], 2, 1, f) < 1)
         {
-          g_message (_("Error reading unicode string"));
+          psd_set_error (feof (f), errno, error);
           return NULL;
         }
       *bytes_read += 2;
       utf16_str[i] = GINT16_FROM_BE (utf16_str[i]);
     }
 
-  if (pad_len > 0)
+  if (mod_len > 0)
     {
       padded_len = len + 1;
-      while (padded_len % pad_len != 0)
+      while (padded_len % mod_len != 0)
         {
           if (fseek (f, 1, SEEK_CUR) < 0)
             {
-              g_message (_("Error setting file position"));
+              psd_set_error (feof (f), errno, error);
               return NULL;
             }
           (*bytes_read)++;
@@ -249,17 +280,20 @@ fread_unicode_string (gint32        *bytes_read,
 }
 
 gint32
-fwrite_unicode_string (const gchar   *src,
-                       const guint16  pad_len,
-                       FILE          *f)
+fwrite_unicode_string (const gchar    *src,
+                       const guint16   mod_len,
+                       FILE           *f,
+                       GError        **error)
 {
-  /* Converts utf-8 string to utf-16 and writes 4 byte length then string
-     padding to pad width */
+  /*
+   *  Converts utf-8 string to utf-16 and writes 4 byte length
+   *  then string padding to multiple of mod_len.
+   */
 
   gunichar2    *utf16_str;
   gchar         null_str = 0x0;
-  gint32        utf16_len = 0,
-                bytes_written = 0;
+  gint32        utf16_len = 0;
+  gint32        bytes_written = 0;
   gint          i;
   glong         len;
 
@@ -268,7 +302,7 @@ fwrite_unicode_string (const gchar   *src,
        /* Write null string as four byte 0 int32 */
       if (fwrite (&utf16_len, 4, 1, f) < 1)
         {
-          g_message (_("Error writing unicode string"));
+          psd_set_error (feof (f), errno, error);
           return -1;
         }
       bytes_written += 4;
@@ -285,7 +319,7 @@ fwrite_unicode_string (const gchar   *src,
       if (fwrite (&utf16_len, 4, 1, f) < 1
           || fwrite (utf16_str, 2, utf16_len + 1, f) < utf16_len + 1)
         {
-          g_message (_("Error writing unicode string"));
+          psd_set_error (feof (f), errno, error);
           return -1;
         }
       bytes_written += (4 + 2 * utf16_len + 2);
@@ -294,13 +328,13 @@ fwrite_unicode_string (const gchar   *src,
     }
 
   /* Pad with nulls */
-  if (pad_len > 0)
+  if (mod_len > 0)
     {
-      while (bytes_written % pad_len != 0)
+      while (bytes_written % mod_len != 0)
         {
           if (fwrite (&null_str, 1, 1, f) < 1)
             {
-              g_message (_("Error writing unicode string"));
+              psd_set_error (feof (f), errno, error);
               return -1;
             }
           bytes_written++;
@@ -319,15 +353,12 @@ decode_packbits (const gchar *src,
 /*
  *  Decode a PackBits chunk.
  */
-  int    n;
-  gchar  dat;
-  gint32 unpack_left = unpacked_len,
-         pack_left = packed_len,
-         error_code = 0,
-         return_val = 0;
-
-  IFDBG(3) g_debug ("Decode packbits");
-  IFDBG(3) g_debug ("Packed len %d, unpacked %d",packed_len, unpacked_len);
+  gint      n;
+  gchar     dat;
+  gint32    unpack_left = unpacked_len;
+  gint32    pack_left = packed_len;
+  gint32    error_code = 0;
+  gint32    return_val = 0;
 
   while (unpack_left > 0 && pack_left > 0)
     {
@@ -405,7 +436,6 @@ decode_packbits (const gchar *src,
         }
     }
 
-  IFDBG(3) g_debug ("Pack left %d, unpack left %d", pack_left, unpack_left);
   if (unpack_left)
     {
       IFDBG(2) g_debug ("Packbits decode - unpack left %d", unpack_left);
@@ -582,8 +612,12 @@ psd_to_gimp_blend_mode (const gchar *psd_mode)
   if (g_ascii_strncasecmp (psd_mode, "sat ", 4) == 0)           /* Saturation (ps3) */
     {
       if (CONVERSION_WARNINGS)
-        g_message (_("Gimp uses a different equation to photoshop for the "
-                     "saturation blend mode. Results will differ."));
+        {
+          static gchar  *mode_name = "SATURATION";
+          g_message ("Gimp uses a different equation to photoshop for "
+                     "blend mode: %s. Results will differ.",
+                     mode_name);
+        }
       return GIMP_SATURATION_MODE;
     }
   if (g_ascii_strncasecmp (psd_mode, "colr", 4) == 0)           /* Color (ps3) */
@@ -591,8 +625,12 @@ psd_to_gimp_blend_mode (const gchar *psd_mode)
   if (g_ascii_strncasecmp (psd_mode, "lum ", 4) == 0)           /* Luminosity (ps3) */
     {
       if (CONVERSION_WARNINGS)
-        g_message (_("Gimp uses a different equation to photoshop for the "
-                     "value (luminosity) blend mode. Results will differ."));
+        {
+          static gchar  *mode_name = "LUMINOSITY (VALUE)";
+          g_message ("Gimp uses a different equation to photoshop for "
+                     "blend mode: %s. Results will differ.",
+                     mode_name);
+        }
       return GIMP_VALUE_MODE;
     }
   if (g_ascii_strncasecmp (psd_mode, "mul ", 4) == 0)           /* Multiply (ps3) */
@@ -604,8 +642,12 @@ psd_to_gimp_blend_mode (const gchar *psd_mode)
   if (g_ascii_strncasecmp (psd_mode, "over", 4) == 0)           /* Overlay (ps3) */
     {
       if (CONVERSION_WARNINGS)
-        g_message (_("Gimp uses a different equation to photoshop for the "
-                     "overlay blend mode. Results will differ."));
+        {
+          static gchar  *mode_name = "OVERLAY";
+          g_message ("Gimp uses a different equation to photoshop for "
+                     "blend mode: %s. Results will differ.",
+                     mode_name);
+        }
       return GIMP_OVERLAY_MODE;
     }
   if (g_ascii_strncasecmp (psd_mode, "hLit", 4) == 0)           /* Hard light (ps3) */
@@ -613,8 +655,12 @@ psd_to_gimp_blend_mode (const gchar *psd_mode)
   if (g_ascii_strncasecmp (psd_mode, "sLit", 4) == 0)           /* Soft light (ps3) */
     {
       if (CONVERSION_WARNINGS)
-        g_message (_("Gimp uses a different equation to photoshop for the "
-                     "soft light blend mode. Results will differ."));
+        {
+          static gchar  *mode_name = "SOFT LIGHT";
+          g_message ("Gimp uses a different equation to photoshop for "
+                     "blend mode: %s. Results will differ.",
+                     mode_name);
+        }
     return GIMP_SOFTLIGHT_MODE;
     }
   if (g_ascii_strncasecmp (psd_mode, "diff", 4) == 0)           /* Difference (ps3) */
@@ -622,8 +668,11 @@ psd_to_gimp_blend_mode (const gchar *psd_mode)
   if (g_ascii_strncasecmp (psd_mode, "smud", 4) == 0)           /* Exclusion (ps6) */
     {
       if (CONVERSION_WARNINGS)
-        g_message (_("Exclusion blend mode not supported by GIMP. "
-                     "Blend mode reverts to normal."));
+        {
+          static gchar  *mode_name = "EXCLUSION";
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     mode_name);
+        }
       return GIMP_NORMAL_MODE;
     }
   if (g_ascii_strncasecmp (psd_mode, "div ", 4) == 0)           /* Color dodge (ps6) */
@@ -633,8 +682,11 @@ psd_to_gimp_blend_mode (const gchar *psd_mode)
   if (g_ascii_strncasecmp (psd_mode, "lbrn", 4) == 0)           /* Linear burn (ps7)*/
     {
       if (CONVERSION_WARNINGS)
-        g_message (_("Linear burn blend mode not supported by GIMP. "
-                     "Blend mode reverts to normal."));
+        {
+          static gchar  *mode_name = "LINEAR BURN";
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     mode_name);
+        }
       return GIMP_NORMAL_MODE;
     }
   if (g_ascii_strncasecmp (psd_mode, "lddg", 4) == 0)           /* Linear dodge (ps7)*/
@@ -642,34 +694,51 @@ psd_to_gimp_blend_mode (const gchar *psd_mode)
   if (g_ascii_strncasecmp (psd_mode, "lLit", 4) == 0)           /* Linear light (ps7)*/
     {
       if (CONVERSION_WARNINGS)
-        g_message (_("Linear light blend mode not supported by GIMP. "
-                     "Blend mode reverts to normal."));
+        {
+          static gchar  *mode_name = "LINEAR LIGHT";
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     mode_name);
+        }
       return GIMP_NORMAL_MODE;
     }
   if (g_ascii_strncasecmp (psd_mode, "pLit", 4) == 0)           /* Pin light (ps7)*/
     {
       if (CONVERSION_WARNINGS)
-        g_message (_("Pin light blend mode not supported by GIMP. "
-                     "Blend mode reverts to normal."));
+        {
+          static gchar  *mode_name = "PIN LIGHT";
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     mode_name);
+        }
       return GIMP_NORMAL_MODE;
     }
   if (g_ascii_strncasecmp (psd_mode, "vLit", 4) == 0)           /* Vivid light (ps7)*/
     {
       if (CONVERSION_WARNINGS)
-        g_message (_("Vivid light blend mode not supported by GIMP. "
-                     "Blend mode reverts to normal."));
+        {
+          static gchar  *mode_name = "VIVID LIGHT";
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     mode_name);
+        }
       return GIMP_NORMAL_MODE;
     }
   if (g_ascii_strncasecmp (psd_mode, "hMix", 4) == 0)           /* Hard Mix (CS)*/
     {
       if (CONVERSION_WARNINGS)
-        g_message (_("Hard mix blend mode not supported by GIMP. "
-                     "Blend mode reverts to normal."));
+        {
+          static gchar  *mode_name = "HARD MIX";
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     mode_name);
+        }
       return GIMP_NORMAL_MODE;
     }
 
   if (CONVERSION_WARNINGS)
-    g_message (_("Unknown blend mode %.4s. Blend mode reverts to normal."), psd_mode);
+    {
+      gchar  *mode_name = g_strndup (psd_mode, 4);
+      g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                 mode_name);
+      g_free (mode_name);
+    }
   return GIMP_NORMAL_MODE;
 }
 
@@ -688,8 +757,8 @@ gimp_to_psd_blend_mode (const GimpLayerModeEffects gimp_layer_mode)
         break;
       case GIMP_BEHIND_MODE:
         if (CONVERSION_WARNINGS)
-          g_message (_("Behind blend mode not supported in PSD file. "
-                       "Blend mode reverts to normal."));
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     gimp_layer_mode_effects_name (gimp_layer_mode));
         psd_mode = g_strndup ("norm", 4);
         break;
       case GIMP_MULTIPLY_MODE:
@@ -700,8 +769,9 @@ gimp_to_psd_blend_mode (const GimpLayerModeEffects gimp_layer_mode)
         break;
       case GIMP_OVERLAY_MODE:
         if (CONVERSION_WARNINGS)
-          g_message (_("Gimp uses a different equation to photoshop for the "
-                       "overlay blend mode. Results will differ."));
+          g_message ("Gimp uses a different equation to photoshop for "
+                     "blend mode: %s. Results will differ.",
+                     gimp_layer_mode_effects_name (gimp_layer_mode));
         psd_mode = g_strndup ("over", 4);                       /* Overlay (ps3) */
         break;
       case GIMP_DIFFERENCE_MODE:
@@ -712,8 +782,8 @@ gimp_to_psd_blend_mode (const GimpLayerModeEffects gimp_layer_mode)
         break;
       case GIMP_SUBTRACT_MODE:
         if (CONVERSION_WARNINGS)
-          g_message (_("Photoshop does not support the subtract "
-                       "blend mode. Layer mode reverts to normal."));
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     gimp_layer_mode_effects_name (gimp_layer_mode));
         psd_mode = g_strndup ("norm", 4);
         break;
       case GIMP_DARKEN_ONLY_MODE:
@@ -727,8 +797,9 @@ gimp_to_psd_blend_mode (const GimpLayerModeEffects gimp_layer_mode)
         break;
       case GIMP_SATURATION_MODE:
         if (CONVERSION_WARNINGS)
-          g_message (_("Gimp uses a different equation to photoshop for the "
-                       "saturation blend mode. Results will differ."));
+          g_message ("Gimp uses a different equation to photoshop for "
+                     "blend mode: %s. Results will differ.",
+                     gimp_layer_mode_effects_name (gimp_layer_mode));
         psd_mode = g_strndup ("sat ", 4);                       /* Saturation (ps3) */
         break;
       case GIMP_COLOR_MODE:
@@ -736,14 +807,15 @@ gimp_to_psd_blend_mode (const GimpLayerModeEffects gimp_layer_mode)
         break;
       case GIMP_VALUE_MODE:
         if (CONVERSION_WARNINGS)
-          g_message (_("Gimp uses a different equation to photoshop for the "
-                       "value (luminosity) blend mode. Results will differ."));
+          g_message ("Gimp uses a different equation to photoshop for "
+                     "blend mode: %s. Results will differ.",
+                     gimp_layer_mode_effects_name (gimp_layer_mode));
         psd_mode = g_strndup ("lum ", 4);                       /* Luminosity (ps3) */
         break;
       case GIMP_DIVIDE_MODE:
         if (CONVERSION_WARNINGS)
-          g_message (_("Photoshop does not support the divide "
-                       "blend mode. Layer mode reverts to normal."));
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     gimp_layer_mode_effects_name (gimp_layer_mode));
         psd_mode = g_strndup ("norm", 4);
         break;
       case GIMP_DODGE_MODE:
@@ -757,35 +829,73 @@ gimp_to_psd_blend_mode (const GimpLayerModeEffects gimp_layer_mode)
         break;
       case GIMP_SOFTLIGHT_MODE:
         if (CONVERSION_WARNINGS)
-          g_message (_("Gimp uses a different equation to photoshop for the "
-                       "soft light blend mode. Results will differ."));
-        psd_mode = g_strndup ("sLit", 4);                       /* Soft Light (ps3) */
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     gimp_layer_mode_effects_name (gimp_layer_mode));
+         psd_mode = g_strndup ("sLit", 4);                       /* Soft Light (ps3) */
         break;
       case GIMP_GRAIN_EXTRACT_MODE:
         if (CONVERSION_WARNINGS)
-          g_message (_("Photoshop does not support the grain extract "
-                       "blend mode. Layer mode reverts to normal."));
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     gimp_layer_mode_effects_name (gimp_layer_mode));
         psd_mode = g_strndup ("norm", 4);
         break;
       case GIMP_GRAIN_MERGE_MODE:
         if (CONVERSION_WARNINGS)
-          g_message (_("Photoshop does not support the grain merge "
-                       "blend mode. Layer mode reverts to normal."));
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     gimp_layer_mode_effects_name (gimp_layer_mode));
         psd_mode = g_strndup ("norm", 4);
         break;
       case GIMP_COLOR_ERASE_MODE:
         if (CONVERSION_WARNINGS)
-          g_message (_("Photoshop does not support the color erase "
-                       "blend mode. Layer mode reverts to normal."));
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     gimp_layer_mode_effects_name (gimp_layer_mode));
         psd_mode = g_strndup ("norm", 4);
         break;
 
       default:
         if (CONVERSION_WARNINGS)
-          g_message (_("Blend mode %d not supported. Blend mode reverts to normal.")
-                     , gimp_layer_mode);
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     gimp_layer_mode_effects_name (gimp_layer_mode));
         psd_mode = g_strndup ("norm", 4);
     }
 
   return psd_mode;
+}
+
+static gchar *
+gimp_layer_mode_effects_name (const GimpLayerModeEffects mode)
+{
+  static gchar *layer_mode_effects_names[] =
+  {
+    "NORMAL",
+    "DISSOLVE",
+    "BEHIND",
+    "MULTIPLY",
+    "SCREEN",
+    "OVERLAY",
+    "DIFFERENCE",
+    "ADD",
+    "SUBTRACT",
+    "DARKEN",
+    "LIGHTEN",
+    "HUE",
+    "SATURATION",
+    "COLOR",
+    "VALUE",
+    "DIVIDE",
+    "DODGE",
+    "BURN",
+    "HARD LIGHT",
+    "SOFT LIGHT",
+    "GRAIN EXTRACT",
+    "GRAIN MERGE",
+    "COLOR ERASE"
+  };
+  static gchar *err_name = NULL;
+  if (mode >= 0 && mode <= GIMP_COLOR_ERASE_MODE)
+    return layer_mode_effects_names[mode];
+  g_free (err_name);
+
+  err_name = g_strdup_printf ("UNKNOWN (%d)", mode);
+  return err_name;
 }

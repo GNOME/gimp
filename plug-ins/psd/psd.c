@@ -200,8 +200,6 @@ run (const gchar      *name,
         }
       else
         {
-          g_message (_("Could not open '%s' for reading"),
-                     gimp_filename_to_utf8 (param[1].data.d_string));
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
