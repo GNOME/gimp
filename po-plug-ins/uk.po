@@ -2200,33 +2200,33 @@ msgstr "_Кількість сегментів:"
 
 #: ../plug-ins/common/blur.c:125
 msgid "Simple blur, fast but not very strong"
-msgstr "Просте розмиття, швидке, но не сильное"
+msgstr "Просте розмиття, швидке, але не сильне"
 
 #: ../plug-ins/common/blur.c:134
 msgid "_Blur"
 msgstr "_Розмивання"
 
 #: ../plug-ins/common/blur.c:178 ../plug-ins/common/unsharp.c:439
-#, fuzzy
 msgid "Blurring"
-msgstr "Розмивання..."
+msgstr "Застосовується розмивання"
 
 #: ../plug-ins/common/borderaverage.c:99
 msgid "Set foreground to the average color of the image border"
 msgstr ""
+"Встановити колір переднього плану на значення, що дорівнює середньому значенню "
+"кольору межі зображення"
 
 #: ../plug-ins/common/borderaverage.c:104
 msgid "_Border Average..."
-msgstr "Пошук с_ереднього значення кольору..."
+msgstr "_Середній колір рамки..."
 
 #: ../plug-ins/common/borderaverage.c:171
-#, fuzzy
 msgid "Border Average"
-msgstr "Пошук середнього значення кольору..."
+msgstr "Пошук середнього значення кольору"
 
 #: ../plug-ins/common/borderaverage.c:351
 msgid "Borderaverage"
-msgstr "Усереднений колір рамки"
+msgstr "Середній колір рамки"
 
 #: ../plug-ins/common/borderaverage.c:372
 msgid "Border Size"
@@ -2242,16 +2242,15 @@ msgstr "_Кількість кольорів:"
 
 #: ../plug-ins/common/bumpmap.c:257
 msgid "Create an embossing effect using a bump map"
-msgstr ""
+msgstr "Створити ефект рельєфу"
 
 #: ../plug-ins/common/bumpmap.c:267
 msgid "_Bump Map..."
-msgstr "_Карта рельєфу..."
+msgstr "_Рельєф..."
 
 #: ../plug-ins/common/bumpmap.c:416
-#, fuzzy
 msgid "Bump-mapping"
-msgstr "Створення рельєфу..."
+msgstr "Створення рельєфу"
 
 #: ../plug-ins/common/bumpmap.c:766
 msgid "Bump Map"
@@ -2259,11 +2258,11 @@ msgstr "Рельєф"
 
 #: ../plug-ins/common/bumpmap.c:832
 msgid "_Bump map:"
-msgstr "_Карта рельєфу:"
+msgstr "_Мапа рельєфу:"
 
 #: ../plug-ins/common/bumpmap.c:844
 msgid "_Map type:"
-msgstr "Тип _мапи:"
+msgstr "_Тип мапи:"
 
 #. Compensate darkening
 #: ../plug-ins/common/bumpmap.c:849
@@ -2290,52 +2289,51 @@ msgstr "Під_вищення:"
 
 #: ../plug-ins/common/bumpmap.c:930 ../plug-ins/common/postscript.c:3379
 msgid "_X offset:"
-msgstr "Зсув по _X:"
+msgstr "Зсув вздовж _X:"
 
 #: ../plug-ins/common/bumpmap.c:933 ../plug-ins/common/bumpmap.c:947
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
 msgstr ""
-"Зсув можна скорегувати перетягуванням перегляду з використання середньої "
+"Зсув можна скоригувати перетягуванням перегляду з використання середньої "
 "кнопки."
 
 #: ../plug-ins/common/bumpmap.c:944 ../plug-ins/common/postscript.c:3388
 msgid "_Y offset:"
-msgstr "Зсув по _Y:"
+msgstr "Зсув вздовж _Y:"
 
 #: ../plug-ins/common/bumpmap.c:958
 msgid "_Waterlevel:"
-msgstr "Рівень _води:"
+msgstr "Ватер_лінія:"
 
 #: ../plug-ins/common/bumpmap.c:970
 msgid "A_mbient:"
-msgstr "_Облягання:"
+msgstr "_Освітлення:"
 
 #: ../plug-ins/common/c_astretch.c:68
 msgid "Stretch contrast to cover the maximum possible range"
-msgstr ""
+msgstr "Гранично збільшити контраст"
 
 #: ../plug-ins/common/c_astretch.c:79
 msgid "_Stretch Contrast"
-msgstr "_Розтягнути контраст..."
+msgstr "З_більшити контраст..."
 
 #: ../plug-ins/common/c_astretch.c:113
-#, fuzzy
 msgid "Auto-stretching contrast"
-msgstr "Автозбільшення контрасту..."
+msgstr "Автозбільшення контрасту"
 
 #: ../plug-ins/common/c_astretch.c:152
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
-msgstr "c_astretch: cmap було NULL!  Вихід...\n"
+msgstr "c_astretch: cmap дорівнює NULL!  Вихід...\n"
 
 #: ../plug-ins/common/cartoon.c:142
 msgid "Simulate a cartoon by enhancing edges"
-msgstr ""
+msgstr "Створити ефект мультяшного зображення шляхом обведення контурів"
 
 #: ../plug-ins/common/cartoon.c:147
 msgid "Ca_rtoon..."
-msgstr "_Картон..."
+msgstr "_Комікс..."
 
 #: ../plug-ins/common/cartoon.c:229 ../plug-ins/common/dog.c:251
 #: ../plug-ins/common/gauss.c:445 ../plug-ins/common/neon.c:225
@@ -2343,11 +2341,11 @@ msgstr "_Картон..."
 #: ../plug-ins/common/softglow.c:221 ../plug-ins/gflare/gflare.c:965
 #: ../plug-ins/sgi/sgi.c:520 ../plug-ins/xjt/xjt.c:1688
 msgid "Cannot operate on indexed color images."
-msgstr "Не можна використовувати на індексованих зображеннях"
+msgstr "Не можна використовувати для індексованих зображень"
 
 #: ../plug-ins/common/cartoon.c:809
 msgid "Cartoon"
-msgstr "_Картон"
+msgstr "_Комікс"
 
 #: ../plug-ins/common/cartoon.c:846 ../plug-ins/common/photocopy.c:874
 msgid "_Mask radius:"
@@ -2358,28 +2356,27 @@ msgid "_Percent black:"
 msgstr "_Відсоток чорного:"
 
 #: ../plug-ins/common/ccanalyze.c:106
-#, fuzzy
 msgid "Analyze the set of colors in the image"
-msgstr "Змінити кількість кольорів у відображенні"
+msgstr "Аналізує набір кольорів у зображені"
 
 #: ../plug-ins/common/ccanalyze.c:112
 msgid "Colorcube A_nalysis..."
-msgstr "К_ольоровий аналіз зображення..."
+msgstr "_Аналіз зображення..."
 
 #: ../plug-ins/common/ccanalyze.c:200 ../plug-ins/common/ccanalyze.c:356
 msgid "Colorcube Analysis"
-msgstr "Кольоровий аналіз зображення"
+msgstr "Аналіз зображення"
 
 #. output results
 #: ../plug-ins/common/ccanalyze.c:384
 #: ../plug-ins/imagemap/imap_cmd_guides.c:231
-#, fuzzy, c-format
+#, c-format
 msgid "Image dimensions: %d × %d"
 msgstr "Розміри зображення: %d x %d"
 
 #: ../plug-ins/common/ccanalyze.c:387
 msgid "No colors"
-msgstr "Без кольорів"
+msgstr "Немає кольорів"
 
 #: ../plug-ins/common/ccanalyze.c:389
 msgid "Only one unique color"
@@ -2392,7 +2389,7 @@ msgstr "Кількість кольорів: %d"
 
 #: ../plug-ins/common/channel_mixer.c:175
 msgid "Alter colors by mixing RGB Channels"
-msgstr ""
+msgstr "Змінює кольори шляхом змішування каналів RGB"
 
 #: ../plug-ins/common/channel_mixer.c:180
 msgid "Channel Mi_xer..."
@@ -2444,28 +2441,27 @@ msgstr "Зберігати _яскравість"
 
 #: ../plug-ins/common/channel_mixer.c:877
 msgid "Load Channel Mixer Settings"
-msgstr "Завантажити настройки мікшера каналів"
+msgstr "Завантажити параметри мікшера каналів"
 
 #: ../plug-ins/common/channel_mixer.c:1004
 msgid "Save Channel Mixer Settings"
-msgstr "Зберегти настройки мікшера каналів"
+msgstr "Зберегти параметри мікшера каналів"
 
 #: ../plug-ins/common/checkerboard.c:89
 msgid "Create a checkerboard pattern"
-msgstr ""
+msgstr "Створити текстуру у вигляді шахової дошки"
 
 #: ../plug-ins/common/checkerboard.c:94
 msgid "_Checkerboard..."
-msgstr "_Шахівниця..."
+msgstr "_Шахова дошка..."
 
 #: ../plug-ins/common/checkerboard.c:161
-#, fuzzy
 msgid "Adding checkerboard"
-msgstr "Додавання шахівниці..."
+msgstr "Створення шахової дошки..."
 
 #: ../plug-ins/common/checkerboard.c:346
 msgid "Checkerboard"
-msgstr "Шахівниця"
+msgstr "Шахова дошка"
 
 #: ../plug-ins/common/checkerboard.c:412
 #: ../plug-ins/gimpressionist/sizemap.c:493
@@ -2478,37 +2474,33 @@ msgstr "_Психоделія"
 
 #: ../plug-ins/common/color_enhance.c:69
 msgid "Stretch color saturation to cover maximum possible range"
-msgstr ""
+msgstr "Гранично збільшити насиченість кольору"
 
 #: ../plug-ins/common/color_enhance.c:81
 msgid "_Color Enhance"
-msgstr "Підсилення _кольору"
+msgstr "Підсилити _колір"
 
 #: ../plug-ins/common/color_enhance.c:115
-#, fuzzy
 msgid "Color Enhance"
-msgstr "Підсилення _кольору"
+msgstr "Підсилення кольорів"
 
 #: ../plug-ins/common/colorify.c:102
 msgid "Replace all colors with shades of a specified color"
-msgstr ""
+msgstr "Замінити всі кольори напівтонами обраного кольору"
 
 #: ../plug-ins/common/colorify.c:108
-#, fuzzy
 msgid "Colorif_y..."
 msgstr "_Фарбування..."
 
 #: ../plug-ins/common/colorify.c:169
-#, fuzzy
 msgid "Colorifying"
-msgstr "Фарбування..."
+msgstr "Фарбування"
 
 #: ../plug-ins/common/colorify.c:255
 msgid "Colorify"
 msgstr "Фарбування"
 
 #: ../plug-ins/common/colorify.c:289
-#, fuzzy
 msgid "Custom color:"
 msgstr "Вибраний колір:"
 
@@ -2517,87 +2509,79 @@ msgid "Colorify Custom Color"
 msgstr "Фарбування вибраним кольором"
 
 #: ../plug-ins/common/colormap-remap.c:97
-#, fuzzy
 msgid "Rearrange the colormap"
-msgstr "Обертання мапи кольорів..."
+msgstr "Перерозподілити мапу кольорів"
 
 #: ../plug-ins/common/colormap-remap.c:104
-#, fuzzy
 msgid "R_earrange Colormap..."
-msgstr "Обертання мапи кольорів..."
+msgstr "_Перерозподілити мапу кольорів..."
 
 #: ../plug-ins/common/colormap-remap.c:116
-#, fuzzy
 msgid "Swap two colors in the colormap"
-msgstr "Обертання мапи кольорів..."
+msgstr "Поміняти місцями два кольори на карті"
 
 #: ../plug-ins/common/colormap-remap.c:123
-#, fuzzy
 msgid "_Swap Colors"
-msgstr "Фарбування за зразком"
+msgstr "Поміняти _місцями кольори"
 
 #: ../plug-ins/common/colormap-remap.c:286
 #: ../plug-ins/common/colormap-remap.c:297
 #: ../plug-ins/common/colormap-remap.c:308
 msgid "Invalid remap array was passed to remap function"
-msgstr ""
+msgstr "Функції передано некоректну множину"
 
 #: ../plug-ins/common/colormap-remap.c:332
-#, fuzzy
 msgid "Rearranging the colormap"
-msgstr "Обертання мапи кольорів..."
+msgstr "Перерозподіл мапи кольорів"
 
 #: ../plug-ins/common/colormap-remap.c:481
 msgid "Sort on Hue"
-msgstr ""
+msgstr "Відсортувати за тоном"
 
 #: ../plug-ins/common/colormap-remap.c:485
-#, fuzzy
 msgid "Sort on Saturation"
-msgstr "Насиченість"
+msgstr "Відсортувати за насиченістю"
 
 #: ../plug-ins/common/colormap-remap.c:489
-#, fuzzy
 msgid "Sort on Value"
-msgstr "Результуючі значення"
+msgstr "Відсортувати за значенням"
 
 #: ../plug-ins/common/colormap-remap.c:493
-#, fuzzy
 msgid "Reverse Order"
-msgstr "_Обернути"
+msgstr "Зворотний порядок"
 
 #: ../plug-ins/common/colormap-remap.c:497
-#, fuzzy
 msgid "Reset Order"
-msgstr "_Ліва межа"
+msgstr "Скинути порядок"
 
 #: ../plug-ins/common/colormap-remap.c:596
-#, fuzzy
 msgid "Rearrange Colormap"
-msgstr "Обертання мапи кольорів..."
+msgstr "Перебудувати мапу кольорів"
 
 #: ../plug-ins/common/colormap-remap.c:699
 msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
 msgstr ""
+"Використовуйте функцію drag-n-drop для перерозподілу мапи. Числами "
+"позначається оригінальний індекс кольору. Меню сортування кольорів викликається "
+"правою кнопкою миші."
 
 #: ../plug-ins/common/colortoalpha.c:94
 msgid "Convert a specified color to transparency"
-msgstr ""
+msgstr "Перетворює обраний колір на прозорість"
 
 #: ../plug-ins/common/colortoalpha.c:101
 msgid "Color to _Alpha..."
-msgstr "Колір у _альфа-канал..."
+msgstr "Колір на _альфа-канал..."
 
 #: ../plug-ins/common/colortoalpha.c:184
-#, fuzzy
 msgid "Removing color"
-msgstr "Видалення кольору..."
+msgstr "Видалення кольору"
 
 #: ../plug-ins/common/colortoalpha.c:377
 msgid "Color to Alpha"
-msgstr "Колір у альфа-канал"
+msgstr "Колір на альфа-канал"
 
 #. spinbutton 1
 #: ../plug-ins/common/colortoalpha.c:409 ../plug-ins/common/mapcolor.c:424
@@ -2608,11 +2592,11 @@ msgstr "З:"
 
 #: ../plug-ins/common/colortoalpha.c:413
 msgid "Color to Alpha Color Picker"
-msgstr "Колір у альфа: зміна кольору"
+msgstr "Вибір кольору у альфа-каналі"
 
 #: ../plug-ins/common/colortoalpha.c:428
 msgid "to alpha"
-msgstr "у альфа-канал"
+msgstr "на альфа-канал"
 
 #: ../plug-ins/common/compose.c:189 ../plug-ins/common/decompose.c:170
 #: ../plug-ins/common/raw.c:1002
@@ -2633,7 +2617,6 @@ msgid "HSV"
 msgstr "HSV"
 
 #: ../plug-ins/common/compose.c:212 ../plug-ins/common/compose.c:220
-#, fuzzy
 msgid "_Hue:"
 msgstr "Від_тінок"
 
@@ -2647,133 +2630,118 @@ msgid "_Value:"
 msgstr "_Яскравість:"
 
 #: ../plug-ins/common/compose.c:219 ../plug-ins/common/decompose.c:193
-#, fuzzy
 msgid "HSL"
-msgstr "HSV"
+msgstr "HSL"
 
 #: ../plug-ins/common/compose.c:222
-#, fuzzy
 msgid "_Lightness:"
-msgstr "_Яскравість:"
+msgstr "_Освітлення:"
 
 #: ../plug-ins/common/compose.c:227 ../plug-ins/common/decompose.c:202
 msgid "CMY"
 msgstr "CMY"
 
 #: ../plug-ins/common/compose.c:228 ../plug-ins/common/compose.c:236
-#, fuzzy
 msgid "_Cyan:"
-msgstr "Блакитний:"
+msgstr "_Блакитний:"
 
 #: ../plug-ins/common/compose.c:229 ../plug-ins/common/compose.c:237
-#, fuzzy
 msgid "_Magenta:"
-msgstr "Пурпурний:"
+msgstr "_Пурпурний:"
 
 #: ../plug-ins/common/compose.c:230 ../plug-ins/common/compose.c:238
-#, fuzzy
 msgid "_Yellow:"
-msgstr "Жовтий:"
+msgstr "_Жовтий:"
 
 #: ../plug-ins/common/compose.c:235 ../plug-ins/common/decompose.c:211
 msgid "CMYK"
 msgstr "CMYK"
 
 #: ../plug-ins/common/compose.c:239
-#, fuzzy
 msgid "_Black:"
-msgstr "Чорний:"
+msgstr "_Чорний:"
 
 #: ../plug-ins/common/compose.c:243 ../plug-ins/common/decompose.c:224
 msgid "LAB"
 msgstr "LAB"
 
 #: ../plug-ins/common/compose.c:252
-#, fuzzy
 msgid "_Luma y470:"
-msgstr "Luma_y470:"
+msgstr "_Luma y470:"
 
 #: ../plug-ins/common/compose.c:253
-#, fuzzy
 msgid "_Blueness cb470:"
-msgstr "Blueness_cb470:"
+msgstr "_Blueness cb470:"
 
 #: ../plug-ins/common/compose.c:254
-#, fuzzy
 msgid "_Redness cr470:"
-msgstr "Redness_cr470:"
+msgstr "_Redness cr470:"
 
 #: ../plug-ins/common/compose.c:260
-#, fuzzy
 msgid "_Luma y709:"
-msgstr "Luma_y709:"
+msgstr "_Luma y709:"
 
 #: ../plug-ins/common/compose.c:261
-#, fuzzy
 msgid "_Blueness cb709:"
-msgstr "Blueness_cb709:"
+msgstr "_Blueness cb709:"
 
 #: ../plug-ins/common/compose.c:262
-#, fuzzy
 msgid "_Redness cr709:"
-msgstr "Redness_cr709:"
+msgstr "_Redness cr709:"
 
 #: ../plug-ins/common/compose.c:268
-#, fuzzy
 msgid "_Luma y470f:"
-msgstr "Luma_y470f:"
+msgstr "_Luma y470f:"
 
 #: ../plug-ins/common/compose.c:269
-#, fuzzy
 msgid "_Blueness cb470f:"
-msgstr "Blueness_cb470f:"
+msgstr "_Blueness cb470f:"
 
 #: ../plug-ins/common/compose.c:270
-#, fuzzy
 msgid "_Redness cr470f:"
-msgstr "Redness_cr470f:"
+msgstr "_Redness cr470f:"
 
 #: ../plug-ins/common/compose.c:276
-#, fuzzy
 msgid "_Luma y709f:"
-msgstr "Luma_y709f:"
+msgstr "_Luma y709f:"
 
 #: ../plug-ins/common/compose.c:277
-#, fuzzy
 msgid "_Blueness cb709f:"
-msgstr "Blueness_cb709f:"
+msgstr "_Blueness cb709f:"
 
 #: ../plug-ins/common/compose.c:278
-#, fuzzy
 msgid "_Redness cr709f:"
-msgstr "Redness_cr709f:"
+msgstr "_Redness cr709f:"
 
 #: ../plug-ins/common/compose.c:404
 msgid "Create an image using multiple gray images as color channels"
 msgstr ""
+"Створити нове зображення, використовуючи зображення у режимі «Градації сірого» "
+"у якості каналів"
 
 #: ../plug-ins/common/compose.c:410
 msgid "C_ompose..."
-msgstr "_Компонування..."
+msgstr "_Зібрати..."
 
 #: ../plug-ins/common/compose.c:434
 msgid "Recompose an image that was previously decomposed"
-msgstr ""
+msgstr "Зібрати раніше розібране на канали зображення"
 
 #: ../plug-ins/common/compose.c:442
-#, fuzzy
 msgid "R_ecompose"
-msgstr "Розкладання"
+msgstr "_Возз'єднати"
 
 #: ../plug-ins/common/compose.c:488
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
 msgstr ""
+"Функція «Возз'єднати» доступна лише для тих зображень, які створені "
+"за допомогою фільтру «Розібрати»'."
 
 #: ../plug-ins/common/compose.c:512
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr ""
+msgstr "Помилка сканування даних decompose: надто мало шарів"
 
 #: ../plug-ins/common/compose.c:545
 #, c-format
@@ -2781,18 +2749,17 @@ msgid "Could not get layers for image %d"
 msgstr "Не вдається отримати шари зображення %d"
 
 #: ../plug-ins/common/compose.c:612
-#, fuzzy
 msgid "Composing"
-msgstr "Компонування..."
+msgstr "Збирання"
 
 #: ../plug-ins/common/compose.c:697 ../plug-ins/common/compose.c:1731
 msgid "At least one image is needed to compose"
-msgstr ""
+msgstr "Для збирання треба принаймні одне зображення"
 
 #: ../plug-ins/common/compose.c:708 ../plug-ins/common/compose.c:721
-#, fuzzy, c-format
+#, c-format
 msgid "Specified layer %d not found"
-msgstr "Вказане вікно не знайдене"
+msgstr "Шар %d не знайдено"
 
 #: ../plug-ins/common/compose.c:728
 msgid "Drawables have different size"
@@ -2813,21 +2780,20 @@ msgstr "Зображення не у відтінках сірого (bpp=%d)"
 
 #: ../plug-ins/common/compose.c:818
 msgid "Unable to recompose, source layer not found"
-msgstr ""
+msgstr "Неможливо возз'єднати, відсутній початковий щар"
 
 #: ../plug-ins/common/compose.c:1484
 msgid "Compose"
-msgstr "Скласти"
+msgstr "Зібрати"
 
 #. Compose type combo
 #: ../plug-ins/common/compose.c:1511
 msgid "Compose Channels"
-msgstr "Скласти канали"
+msgstr "Зібрати канали"
 
 #: ../plug-ins/common/compose.c:1521 ../plug-ins/common/decompose.c:1515
-#, fuzzy
 msgid "Color _model:"
-msgstr "Режим кольору"
+msgstr "Кольорова _модель:"
 
 #. Channel representation table
 #: ../plug-ins/common/compose.c:1553
@@ -2835,9 +2801,8 @@ msgid "Channel Representations"
 msgstr "Представлення каналу"
 
 #: ../plug-ins/common/compose.c:1616
-#, fuzzy
 msgid "Mask value"
-msgstr "Файл маски"
+msgstr "Значення маски"
 
 #: ../plug-ins/common/compressor.c:158
 msgid "gzip archive"
@@ -2848,16 +2813,13 @@ msgid "bzip archive"
 msgstr "архів bzip"
 
 #: ../plug-ins/common/compressor.c:373
-#, fuzzy
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Немає потрібного розширення, зберігається як стиснутий XCF."
 
 #: ../plug-ins/common/compressor.c:536
-#, fuzzy
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr ""
-"Немає потрібного розширення, спроба визначення типу за допомогою команди "
-"file."
+"Немає потрібного розширення, спроба визначення типу за вмістом файлу."
 
 #: ../plug-ins/common/convmatrix.c:101
 msgid "Gr_ey"
@@ -2894,18 +2856,16 @@ msgid "Cro_p"
 msgstr "_Обрізати"
 
 #: ../plug-ins/common/convmatrix.c:238
-#, fuzzy
 msgid "Apply a generic 5x5 convolution matrix"
-msgstr "Застосування згортання"
+msgstr "Застосувати до зображення матрицю згортання 5x5"
 
 #: ../plug-ins/common/convmatrix.c:243
 msgid "_Convolution Matrix..."
 msgstr "Матриця _згортання..."
 
 #: ../plug-ins/common/convmatrix.c:278
-#, fuzzy
 msgid "Convolution does not work on layers smaller than 3x3 pixels."
-msgstr "Матриця згортання не працює з шарами меншими ніж три точки."
+msgstr "Матриця згортання не працює з шарами меншими ніж 3x3 точок."
 
 #: ../plug-ins/common/convmatrix.c:351
 msgid "Applying convolution"
@@ -2929,7 +2889,6 @@ msgid "O_ffset:"
 msgstr "_Зсув:"
 
 #: ../plug-ins/common/convmatrix.c:1053
-#, fuzzy
 msgid "N_ormalise"
 msgstr "_Нормалізувати"
 
@@ -2947,11 +2906,11 @@ msgstr "Канали"
 
 #: ../plug-ins/common/csource.c:110
 msgid "C source code"
-msgstr "програма на C"
+msgstr "Програма на C"
 
 #: ../plug-ins/common/csource.c:637
 msgid "Save as C-Source"
-msgstr "Збереження як файл мовою C"
+msgstr "Зберегти у вигляді файлу мовою C"
 
 #: ../plug-ins/common/csource.c:668
 msgid "_Prefixed name:"
@@ -2998,6 +2957,7 @@ msgstr "_Непрозорість:"
 #: ../plug-ins/common/cubism.c:150
 msgid "Convert the image into randomly rotated square blobs"
 msgstr ""
+"Перетворює зображення на квадратні блоки, обернені довільним чином"
 
 #: ../plug-ins/common/cubism.c:155
 msgid "_Cubism..."
@@ -3020,26 +2980,25 @@ msgid "_Use background color"
 msgstr "_Використовувати колір тла"
 
 #: ../plug-ins/common/cubism.c:418
-#, fuzzy
 msgid "Cubistic transformation"
 msgstr "Кубістичне перетворення"
 
 #: ../plug-ins/common/curve_bend.c:520
 msgid "Bend the image using two control curves"
-msgstr ""
+msgstr "Вигнути зображення, використовуючи дві напрямні криві"
 
 #: ../plug-ins/common/curve_bend.c:541
 msgid "_Curve Bend..."
-msgstr "_Криве згинання..."
+msgstr "_Згин за кривою..."
 
 #: ../plug-ins/common/curve_bend.c:675
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
-"\"Криве згинання\" діє лише на шарах (а був застосований для каналу чи маски)"
+"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: ../plug-ins/common/curve_bend.c:683
 msgid "Cannot operate on layers with masks."
-msgstr "Не можна використовувати на індексованих зображеннях"
+msgstr "Не можна використовувати на шарах з маскою."
 
 #. could not float the selection because selection rectangle
 #. * is completely empty return GIMP_PDB_EXECUTION_ERROR
@@ -3052,7 +3011,7 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #. The shell and main vbox
 #: ../plug-ins/common/curve_bend.c:1195 ../plug-ins/common/curve_bend.c:2915
 msgid "Curve Bend"
-msgstr "Криве згинання"
+msgstr "Вигин кривої"
 
 #. Preview area, top of column
 #: ../plug-ins/common/curve_bend.c:1231
@@ -3063,9 +3022,8 @@ msgstr "Перегляд"
 
 #. The preview button
 #: ../plug-ins/common/curve_bend.c:1260
-#, fuzzy
 msgid "_Preview Once"
-msgstr "Одноразовий _перегляд"
+msgstr "_Переглнути"
 
 #. The preview toggle
 #: ../plug-ins/common/curve_bend.c:1269
@@ -3082,7 +3040,7 @@ msgstr "Параметри"
 #. Rotate spinbutton
 #: ../plug-ins/common/curve_bend.c:1293
 msgid "Rotat_e:"
-msgstr "_Обернути:"
+msgstr "_Обертання:"
 
 #. The smoothing toggle
 #: ../plug-ins/common/curve_bend.c:1312
@@ -3093,7 +3051,7 @@ msgstr "_Згладжувати зображення"
 #: ../plug-ins/common/curve_bend.c:1322 ../plug-ins/common/gqbist.c:853
 #: ../plug-ins/common/mosaic.c:728 ../plug-ins/common/ripple.c:511
 msgid "_Antialiasing"
-msgstr "Згладжувати кон_тур"
+msgstr "Згладжувати _межі"
 
 #. The work_on_copy toggle
 #: ../plug-ins/common/curve_bend.c:1332
@@ -3103,19 +3061,19 @@ msgstr "Працювати з копі_єю"
 #. The curves graph
 #: ../plug-ins/common/curve_bend.c:1342
 msgid "Modify Curves"
-msgstr "Змінити криву"
+msgstr "Коригуючі криві"
 
 #: ../plug-ins/common/curve_bend.c:1370
 msgid "Curve for Border"
-msgstr "Крива для краю"
+msgstr "Крива для межі"
 
 #: ../plug-ins/common/curve_bend.c:1374
 msgid "_Upper"
-msgstr "В_ерхнього"
+msgstr "В_ерхньої"
 
 #: ../plug-ins/common/curve_bend.c:1375
 msgid "_Lower"
-msgstr "Н_ижнього"
+msgstr "Н_ижньої"
 
 #: ../plug-ins/common/curve_bend.c:1385
 msgid "Curve Type"
@@ -3123,11 +3081,11 @@ msgstr "Тип кривої"
 
 #: ../plug-ins/common/curve_bend.c:1389
 msgid "Smoot_h"
-msgstr "_Згладжування"
+msgstr "_Гладка"
 
 #: ../plug-ins/common/curve_bend.c:1390
 msgid "_Free"
-msgstr "В_ільна"
+msgstr "Дов_ільна"
 
 #. The Copy button
 #: ../plug-ins/common/curve_bend.c:1405
@@ -3169,12 +3127,10 @@ msgid "Save the curves to a file"
 msgstr "Зберегти криві у файлі"
 
 #: ../plug-ins/common/curve_bend.c:2013
-#, fuzzy
 msgid "Load Curve Points from File"
 msgstr "Завантажити точки кривої з файлу"
 
 #: ../plug-ins/common/curve_bend.c:2048
-#, fuzzy
 msgid "Save Curve Points to File"
 msgstr "Зберегти точки кривої у файлі"
 
@@ -3210,33 +3166,28 @@ msgid "value"
 msgstr "яскравість"
 
 #: ../plug-ins/common/decompose.c:193 ../plug-ins/common/decompose.c:197
-#, fuzzy
 msgid "hue_l"
-msgstr "відтінок"
+msgstr "hue_l"
 
 #: ../plug-ins/common/decompose.c:194 ../plug-ins/common/decompose.c:198
-#, fuzzy
 msgid "saturation_l"
-msgstr "насиченість"
+msgstr "saturation_l"
 
 #: ../plug-ins/common/decompose.c:195 ../plug-ins/common/decompose.c:199
-#, fuzzy
 msgid "lightness"
-msgstr "_Яскравість"
+msgstr "lightness"
 
 #: ../plug-ins/common/decompose.c:197
 msgid "Hue (HSL)"
-msgstr ""
+msgstr "Відтінок (HSL)"
 
 #: ../plug-ins/common/decompose.c:198
-#, fuzzy
 msgid "Saturation (HSL)"
-msgstr "Насиченість"
+msgstr "Насиченість (HSL)"
 
 #: ../plug-ins/common/decompose.c:199
-#, fuzzy
 msgid "Lightness"
-msgstr "_Яскравість"
+msgstr "Яскравість"
 
 #: ../plug-ins/common/decompose.c:202 ../plug-ins/common/decompose.c:206
 msgid "cyan"
@@ -3263,17 +3214,14 @@ msgid "Yellow"
 msgstr "Жовтий"
 
 #: ../plug-ins/common/decompose.c:211 ../plug-ins/common/decompose.c:216
-#, fuzzy
 msgid "cyan-k"
 msgstr "блакитний_k"
 
 #: ../plug-ins/common/decompose.c:212 ../plug-ins/common/decompose.c:217
-#, fuzzy
 msgid "magenta-k"
 msgstr "пурпурний_k"
 
 #: ../plug-ins/common/decompose.c:213 ../plug-ins/common/decompose.c:218
-#, fuzzy
 msgid "yellow-k"
 msgstr "жовтий_k"
 
@@ -3298,109 +3246,97 @@ msgid "Alpha"
 msgstr "Альфа"
 
 #: ../plug-ins/common/decompose.c:229
-#, fuzzy
 msgid "luma-y470"
-msgstr "luma_y470"
+msgstr "luma-y470"
 
 #: ../plug-ins/common/decompose.c:230
-#, fuzzy
 msgid "blueness-cb470"
-msgstr "blueness_cb470"
+msgstr "blueness-cb470"
 
 #: ../plug-ins/common/decompose.c:231
-#, fuzzy
 msgid "redness-cr470"
-msgstr "redness_cr470"
+msgstr "redness-cr470"
 
 #: ../plug-ins/common/decompose.c:233
-#, fuzzy
 msgid "luma-y709"
-msgstr "luma_y709"
+msgstr "luma-y709"
 
 #: ../plug-ins/common/decompose.c:234
-#, fuzzy
 msgid "blueness-cb709"
-msgstr "blueness_cb709"
+msgstr "blueness-cb709"
 
 #: ../plug-ins/common/decompose.c:235
-#, fuzzy
 msgid "redness-cr709"
-msgstr "redness_cr709"
+msgstr "redness-cr709"
 
 #: ../plug-ins/common/decompose.c:237
-#, fuzzy
 msgid "luma-y470f"
-msgstr "luma_y470f"
+msgstr "luma-y470f"
 
 #: ../plug-ins/common/decompose.c:238
-#, fuzzy
 msgid "blueness-cb470f"
-msgstr "blueness_cb470f"
+msgstr "blueness-cb470f"
 
 #: ../plug-ins/common/decompose.c:239
-#, fuzzy
 msgid "redness-cr470f"
-msgstr "redness_cr470f"
+msgstr "redness-cr470f"
 
 #: ../plug-ins/common/decompose.c:241
-#, fuzzy
 msgid "luma-y709f"
-msgstr "luma_y709f"
+msgstr "luma-y709f"
 
 #: ../plug-ins/common/decompose.c:242
-#, fuzzy
 msgid "blueness-cb709f"
-msgstr "blueness_cb709f"
+msgstr "blueness-cb709f"
 
 #: ../plug-ins/common/decompose.c:243
-#, fuzzy
 msgid "redness-cr709f"
-msgstr "redness_cr709f"
+msgstr "redness-cr709f"
 
 #: ../plug-ins/common/decompose.c:312 ../plug-ins/common/decompose.c:326
 msgid "Decompose an image into separate colorspace components"
-msgstr ""
+msgstr "Розібрати зображення на окремі кольорові складові"
 
 #: ../plug-ins/common/decompose.c:318 ../plug-ins/common/decompose.c:336
 msgid "_Decompose..."
-msgstr "_Розкладання..."
+msgstr "_Розібрати..."
 
 #: ../plug-ins/common/decompose.c:429
-#, fuzzy
 msgid "Decomposing"
-msgstr "Розкладання..."
+msgstr "Розкладання"
 
 #: ../plug-ins/common/decompose.c:1480
 msgid "Decompose"
-msgstr "Розкладання"
+msgstr "Розкласти"
 
 #: ../plug-ins/common/decompose.c:1503
 msgid "Extract Channels"
 msgstr "Добути канали"
 
 #: ../plug-ins/common/decompose.c:1550
-#, fuzzy
 msgid "_Decompose to layers"
 msgstr "Розкласти на _шари"
 
 #: ../plug-ins/common/decompose.c:1561
-#, fuzzy
 msgid "_Foreground as registration color"
-msgstr "Кольори переднього плану та тла"
+msgstr "П_ередній план як колір приведення"
 
 #: ../plug-ins/common/decompose.c:1562
 msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
 msgstr ""
+"Точки кольору переднього плану будуть чорними на всіх створюваних "
+"зображеннях. Це може стати у нагоді для створення позначок для обрізки, видимих "
+"в усіх каналах."
 
 #: ../plug-ins/common/deinterlace.c:91
 msgid "Fix images where every other row is missing"
-msgstr ""
+msgstr "Виправити зображення з кожним другим втраченим рядом точок"
 
 #: ../plug-ins/common/deinterlace.c:100
 msgid "_Deinterlace..."
-msgstr "Прибирання _черезрядковісті..."
+msgstr "Прибрати _черезрядковість..."
 
 #: ../plug-ins/common/deinterlace.c:157 ../plug-ins/common/deinterlace.c:325
 msgid "Deinterlace"
@@ -3416,16 +3352,15 @@ msgstr "Лишити п_арні поля"
 
 #: ../plug-ins/common/depthmerge.c:183
 msgid "Combine two images using depth maps (z-buffers)"
-msgstr ""
+msgstr "Об'єднати два зображення, використовуючи карту глибин (z-buffers)"
 
 #: ../plug-ins/common/depthmerge.c:192
 msgid "_Depth Merge..."
-msgstr "Об'єднання _глибин"
+msgstr "Об'єднання _глибин..."
 
 #: ../plug-ins/common/depthmerge.c:386
-#, fuzzy
 msgid "Depth-merging"
-msgstr "Об'єднання глибин..."
+msgstr "Об'єднання глибин"
 
 #: ../plug-ins/common/depthmerge.c:643
 msgid "Depth Merge"
@@ -3457,17 +3392,16 @@ msgstr "Мас_штаб 2:"
 
 #: ../plug-ins/common/desktop-link.c:82
 msgid "Desktop Link"
-msgstr ""
+msgstr "Посилання .desktop"
 
 #: ../plug-ins/common/desktop-link.c:163
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading desktop file '%s': %s"
-msgstr "Помилка відкривання файлу \"%s\""
+msgstr "Помилка при відкритті файлу desktop '%s': %s"
 
 #: ../plug-ins/common/despeckle.c:147
-#, fuzzy
 msgid "Remove speckle noise from the image"
-msgstr "Вкажіть масштаб (розмір) зображення"
+msgstr "Видалити із зображення шум, що створюється плямами"
 
 #: ../plug-ins/common/despeckle.c:153
 msgid "Des_peckle..."
@@ -3479,15 +3413,15 @@ msgstr "Прибирання плям"
 
 #: ../plug-ins/common/despeckle.c:423
 msgid "Median"
-msgstr "Медіана"
+msgstr "Середнє"
 
 #: ../plug-ins/common/despeckle.c:431
 msgid "_Adaptive"
-msgstr "_Адаптивна"
+msgstr "_Адаптивне"
 
 #: ../plug-ins/common/despeckle.c:441
 msgid "R_ecursive"
-msgstr "Р_екурсивна"
+msgstr "Р_екурсивне"
 
 #: ../plug-ins/common/despeckle.c:462 ../plug-ins/common/neon.c:730
 #: ../plug-ins/common/nlfilt.c:1088 ../plug-ins/common/nova.c:366
@@ -3506,16 +3440,15 @@ msgstr "Рівень _білого:"
 
 #: ../plug-ins/common/destripe.c:103
 msgid "Remove vertical stripe artifacts from the image"
-msgstr ""
+msgstr "Видалити вертикальні смуги із зображення"
 
 #: ../plug-ins/common/destripe.c:109
 msgid "Des_tripe..."
 msgstr "Прибирання _штрихів..."
 
 #: ../plug-ins/common/destripe.c:272
-#, fuzzy
 msgid "Destriping"
-msgstr "Прибирання штрихів..."
+msgstr "Прибирання штрихів"
 
 #: ../plug-ins/common/destripe.c:438
 msgid "Destripe"
@@ -3541,7 +3474,7 @@ msgstr "Зображення DICOM"
 
 #: ../plug-ins/common/dicom.c:166
 msgid "Digital Imaging and Communications in Medicine image"
-msgstr "Цифрова медична фотографія та зв'язок (DICOM)"
+msgstr "Зображення формату Digital Imaging and Communications in Medicine"
 
 #: ../plug-ins/common/dicom.c:322
 #, c-format
@@ -3557,25 +3490,23 @@ msgstr "Не можна зберігати зображення с альфа-к
 #: ../plug-ins/common/xwd.c:589 ../plug-ins/fits/fits.c:448
 #: ../plug-ins/xjt/xjt.c:1692
 msgid "Cannot operate on unknown image types."
-msgstr "Не вдіється виконати дії з зображеннями невідомого типу."
+msgstr "Не вдається виконати дії із зображеннями невідомого типу."
 
 #: ../plug-ins/common/diffraction.c:167
-#, fuzzy
 msgid "Generate diffraction patterns"
-msgstr "Створення дифракційних візерунків..."
+msgstr "Створити дифракційні тестури"
 
 #: ../plug-ins/common/diffraction.c:172
 msgid "_Diffraction Patterns..."
-msgstr "_Дифракційні візерунки..."
+msgstr "_Дифракційні текстури..."
 
 #: ../plug-ins/common/diffraction.c:330
-#, fuzzy
 msgid "Creating diffraction pattern"
-msgstr "Створення дифракційних візерунків..."
+msgstr "Створення дифракційних текстур..."
 
 #: ../plug-ins/common/diffraction.c:434
 msgid "Diffraction Patterns"
-msgstr "Дифракційні візерунки"
+msgstr "Дифракційні текстури"
 
 #: ../plug-ins/common/diffraction.c:527
 msgid "Frequencies"
@@ -3583,12 +3514,11 @@ msgstr "Частоти"
 
 #: ../plug-ins/common/diffraction.c:565
 msgid "Contours"
-msgstr "_Контури"
+msgstr "Контури"
 
 #: ../plug-ins/common/diffraction.c:603
-#, fuzzy
 msgid "Sharp Edges"
-msgstr "Р_ізкі краї"
+msgstr "Різкі краї"
 
 #: ../plug-ins/common/diffraction.c:615 ../plug-ins/common/softglow.c:681
 #: ../plug-ins/flame/flame.c:1057
@@ -3604,80 +3534,71 @@ msgid "Po_larization:"
 msgstr "По_ляризація:"
 
 #: ../plug-ins/common/diffraction.c:641
-#, fuzzy
 msgid "Other Options"
 msgstr "Інші параметри"
 
 #: ../plug-ins/common/displace.c:142
-#, fuzzy
 msgid "_X displacement"
-msgstr "Зміщення по _X:"
+msgstr "Зсув вздовж _X:"
 
 #: ../plug-ins/common/displace.c:142
-#, fuzzy
 msgid "_Pinch"
-msgstr "_Дюйм"
+msgstr "_Щіпок"
 
 #: ../plug-ins/common/displace.c:143
-#, fuzzy
 msgid "_Y displacement"
-msgstr "Зміщення по _Y:"
+msgstr "Зсув вздовж _Y:"
 
 #: ../plug-ins/common/displace.c:143
-#, fuzzy
 msgid "_Whirl"
-msgstr "_Білий"
+msgstr "_Вихор"
 
 #: ../plug-ins/common/displace.c:169
 msgid "Displace pixels as indicated by displacement maps"
-msgstr ""
+msgstr "Зсунути точки зображення за мапою зсуву"
 
 #: ../plug-ins/common/displace.c:179
 msgid "_Displace..."
-msgstr "З_міщення..."
+msgstr "З_сув..."
 
 #: ../plug-ins/common/displace.c:290
-#, fuzzy
 msgid "Displacing"
-msgstr "Зміщення..."
+msgstr "Зсув"
 
 #: ../plug-ins/common/displace.c:326
 msgid "Displace"
-msgstr "Зміщення"
+msgstr "Зсув"
 
 #. X options
 #: ../plug-ins/common/displace.c:362
 msgid "_X displacement:"
-msgstr "Зміщення по _X:"
+msgstr "Зсув вздовж _X:"
 
 #. Y Options
 #: ../plug-ins/common/displace.c:409
 msgid "_Y displacement:"
-msgstr "Зміщення по _Y:"
+msgstr "Зсув вздовж _Y:"
 
 #: ../plug-ins/common/displace.c:459
-#, fuzzy
 msgid "Displacement Mode"
-msgstr "_Заміщення:"
+msgstr "Тип зсуву:"
 
 #: ../plug-ins/common/displace.c:462
-#, fuzzy
 msgid "_Cartesian"
-msgstr "_Матеріал"
+msgstr "_Картезіанський"
 
 #: ../plug-ins/common/displace.c:463
-#, fuzzy
 msgid "_Polar"
-msgstr "Полярність"
+msgstr "_Полярний"
 
 #: ../plug-ins/common/displace.c:468
 msgid "Edge Behavior"
-msgstr ""
+msgstr "Межа"
 
 #: ../plug-ins/common/displace.c:474 ../plug-ins/common/edge.c:721
 #: ../plug-ins/common/ripple.c:562 ../plug-ins/common/waves.c:280
 msgid "_Smear"
-msgstr "_Розмазати"
+msgstr "_Розмити"
 
 #: ../plug-ins/common/displace.c:476 ../plug-ins/common/edge.c:734
 #: ../plug-ins/common/fractaltrace.c:740 ../plug-ins/common/newsprint.c:398
@@ -3686,19 +3607,17 @@ msgstr "_Чорний"
 
 #: ../plug-ins/common/dog.c:133
 msgid "Edge detection with control of edge thickness"
-msgstr ""
+msgstr "Обводить контури зображення з урахуванням товщини ліній"
 
 #: ../plug-ins/common/dog.c:140
-#, fuzzy
 msgid "_Difference of Gaussians..."
-msgstr "Вибіркове Гаусеве розмивання..."
+msgstr "_Різниця за Гаусом..."
 
 #: ../plug-ins/common/dog.c:231 ../plug-ins/common/dog.c:278
 msgid "DoG Edge Detect"
-msgstr "Виділення меж DoG"
+msgstr "Виділення меж"
 
 #: ../plug-ins/common/dog.c:306
-#, fuzzy
 msgid "Smoothing Parameters"
 msgstr "Параметри згладжування"
 
@@ -3712,7 +3631,7 @@ msgstr "Р_адіус 2:"
 
 #: ../plug-ins/common/dog.c:336 ../plug-ins/common/normalize.c:92
 msgid "_Normalize"
-msgstr "_Нормалізувати"
+msgstr "_Упорядкувати"
 
 #: ../plug-ins/common/dog.c:347 ../plug-ins/gimpressionist/paper.c:149
 msgid "_Invert"
@@ -3720,14 +3639,13 @@ msgstr "_Інвертувати"
 
 #: ../plug-ins/common/edge.c:152
 msgid "Several simple methods for detecting edges"
-msgstr ""
+msgstr "Декілька простих способів виділення меж"
 
 #: ../plug-ins/common/edge.c:157
 msgid "_Edge..."
-msgstr "_Краї..."
+msgstr "_Межі..."
 
 #: ../plug-ins/common/edge.c:229
-#, fuzzy
 msgid "Edge detection"
 msgstr "Виділення меж"
 
@@ -3740,9 +3658,8 @@ msgid "Sobel"
 msgstr "Собел"
 
 #: ../plug-ins/common/edge.c:668
-#, fuzzy
 msgid "Prewitt compass"
-msgstr "За Превриттом"
+msgstr "За Превиттом"
 
 #: ../plug-ins/common/edge.c:669 ../plug-ins/common/sinus.c:904
 msgid "Gradient"
@@ -3758,7 +3675,7 @@ msgstr "Диференційний"
 
 #: ../plug-ins/common/edge.c:672 ../plug-ins/common/laplace.c:243
 msgid "Laplace"
-msgstr "Лапласа"
+msgstr "за Лапласом"
 
 #: ../plug-ins/common/edge.c:681
 msgid "_Algorithm:"
@@ -3770,15 +3687,15 @@ msgstr "_Величина:"
 
 #: ../plug-ins/common/emboss.c:124
 msgid "Simulate an image created by embossing"
-msgstr ""
+msgstr "Надати зображенню вигляд барельєфа"
 
 #: ../plug-ins/common/emboss.c:130
 msgid "_Emboss..."
-msgstr "_Чеканка..."
+msgstr "_Барельєф..."
 
 #: ../plug-ins/common/emboss.c:384 ../plug-ins/common/emboss.c:446
 msgid "Emboss"
-msgstr "Чеканка"
+msgstr "Барельєф"
 
 #: ../plug-ins/common/emboss.c:474
 msgid "Function"
@@ -3790,7 +3707,7 @@ msgstr "_Рельєф"
 
 #: ../plug-ins/common/emboss.c:479
 msgid "_Emboss"
-msgstr "_Чеканка"
+msgstr "_Барельєф"
 
 #: ../plug-ins/common/emboss.c:511
 msgid "E_levation:"
@@ -3798,16 +3715,15 @@ msgstr "_Підвищення:"
 
 #: ../plug-ins/common/engrave.c:101
 msgid "Simulate an antique engraving"
-msgstr ""
+msgstr "Надати зображенню вигляд старовинної гравюри"
 
 #: ../plug-ins/common/engrave.c:106
 msgid "En_grave..."
 msgstr "Г_равюра..."
 
 #: ../plug-ins/common/engrave.c:180
-#, fuzzy
 msgid "Engraving"
-msgstr "Створення гравюри..."
+msgstr "Створення гравюри"
 
 #: ../plug-ins/common/engrave.c:209
 msgid "Engrave"
@@ -3829,7 +3745,7 @@ msgstr "_Обмеження ширини лінії"
 
 #: ../plug-ins/common/exchange.c:122
 msgid "Swap one color with another"
-msgstr ""
+msgstr "Замінити один колір іншим"
 
 #: ../plug-ins/common/exchange.c:128
 msgid "_Color Exchange..."
@@ -3840,13 +3756,12 @@ msgid "Color Exchange"
 msgstr "Заміна кольору"
 
 #: ../plug-ins/common/exchange.c:309
-#, fuzzy
 msgid "Middle-Click Inside Preview to Pick \"From Color\""
-msgstr "Перегляд: Клацніть всередині щоб вибрати \"З кольору\""
+msgstr "Натисніть середньою кнопкою миші всередині для вибору «З кольору»"
 
 #: ../plug-ins/common/exchange.c:347
 msgid "To Color"
-msgstr "В колір"
+msgstr "На колір"
 
 #: ../plug-ins/common/exchange.c:347
 msgid "From Color"
@@ -3854,7 +3769,7 @@ msgstr "З кольору"
 
 #: ../plug-ins/common/exchange.c:365
 msgid "Color Exchange: To Color"
-msgstr "Заміна кольору: В колір"
+msgstr "Заміна кольору: На колір"
 
 #: ../plug-ins/common/exchange.c:366
 msgid "Color Exchange: From Color"
@@ -3878,44 +3793,39 @@ msgstr "Зафіксувати _пороги"
 
 #: ../plug-ins/common/film.c:217
 msgid "Combine several images on a film strip"
-msgstr ""
+msgstr "Об'єднати декілька зображень у одне на зразок фотоплівки"
 
 #: ../plug-ins/common/film.c:222
-#, fuzzy
 msgid "_Filmstrip..."
-msgstr "_Плівка..."
+msgstr "_Фотоплівка..."
 
 #: ../plug-ins/common/film.c:307
-#, fuzzy
 msgid "Composing images"
-msgstr "Збирання зображень..."
+msgstr "Збирання зображень"
 
 #: ../plug-ins/common/film.c:425 ../plug-ins/common/guillotine.c:185
 #: ../plug-ins/helpbrowser/dialog.c:1144
 msgid "Untitled"
-msgstr "Без_назви"
+msgstr "Без назви"
 
 #: ../plug-ins/common/film.c:879
-#, fuzzy
 msgid "Available images:"
-msgstr "Доступні зображення:"
+msgstr "Доступні:"
 
 #: ../plug-ins/common/film.c:880
-#, fuzzy
 msgid "On film:"
-msgstr "Фотоплівка:"
+msgstr "На плівку:"
 
 #. Create selection
 #: ../plug-ins/common/film.c:966 ../plug-ins/imagemap/imap_selection.c:367
 #: ../plug-ins/rcm/rcm_dialog.c:173 ../plug-ins/sel2path/sel2path.c:430
 msgid "Selection"
-msgstr "Виділення"
+msgstr "Вибір"
 
 #. Film height/colour
 #: ../plug-ins/common/film.c:976 ../plug-ins/common/film.c:1248
-#, fuzzy
 msgid "Filmstrip"
-msgstr "Фільтр"
+msgstr "Фотоплівка"
 
 #. Keep maximum image height
 #: ../plug-ins/common/film.c:985
@@ -3939,7 +3849,7 @@ msgstr "Нумерація"
 
 #: ../plug-ins/common/film.c:1053
 msgid "Start _index:"
-msgstr "Початковий _номер:"
+msgstr "Рахувати _від:"
 
 #: ../plug-ins/common/film.c:1066
 msgid "_Font:"
@@ -3964,7 +3874,6 @@ msgid "Image Selection"
 msgstr "Вибір зображення"
 
 #: ../plug-ins/common/film.c:1128
-#, fuzzy
 msgid "All Values are Fractions of the Strip Height"
 msgstr "Всі значення є долями висоти плівки"
 
@@ -4001,33 +3910,28 @@ msgid "_Number height:"
 msgstr "Висота _чисел:"
 
 #: ../plug-ins/common/flarefx.c:188
-#, fuzzy
 msgid "Add a lens flare effect"
-msgstr "Центр ефекту відблиску"
+msgstr "Додати відблиск до зображення"
 
 #: ../plug-ins/common/flarefx.c:195
-#, fuzzy
 msgid "Lens _Flare..."
-msgstr "Створення відблиску..."
+msgstr "Від_блиск..."
 
 #: ../plug-ins/common/flarefx.c:270
-#, fuzzy
 msgid "Render lens flare"
 msgstr "Створення відблиску..."
 
 #: ../plug-ins/common/flarefx.c:306
-#, fuzzy
 msgid "Lens Flare"
-msgstr "Новий градієнтний спалах"
+msgstr "Відблиск лінзи"
 
 #: ../plug-ins/common/flarefx.c:753
 msgid "Center of Flare Effect"
-msgstr "Центр ефекту відблиску"
+msgstr "Центр відблиску"
 
 #: ../plug-ins/common/flarefx.c:793 ../plug-ins/common/nova.c:484
-#, fuzzy
 msgid "Show _position"
-msgstr "Показати позицію"
+msgstr "_Показати позицію"
 
 #: ../plug-ins/common/fp.c:223
 msgid "Cyan:"
@@ -4051,11 +3955,11 @@ msgstr "Світліше:"
 
 #: ../plug-ins/common/fp.c:230
 msgid "More Sat:"
-msgstr "Більше насиченості:"
+msgstr "Більш насичений:"
 
 #: ../plug-ins/common/fp.c:231
 msgid "Less Sat:"
-msgstr "Менше насиченості:"
+msgstr "Менш насичений:"
 
 #: ../plug-ins/common/fp.c:233 ../plug-ins/common/fp.c:532
 msgid "Current:"
@@ -4063,25 +3967,23 @@ msgstr "Поточне:"
 
 #: ../plug-ins/common/fp.c:317
 msgid "Interactively modify the image colors"
-msgstr ""
+msgstr "Змінити кольори зображення різними способами"
 
 #: ../plug-ins/common/fp.c:322
 msgid "_Filter Pack..."
 msgstr "_Набір фільтрів..."
 
 #: ../plug-ins/common/fp.c:372
-#, fuzzy
 msgid "FP can only be used on RGB images."
-msgstr "Підтримує роботу лише з RGB-зображеннями."
+msgstr "Можлива робота лише із зображеннями у просторі RGB."
 
 #: ../plug-ins/common/fp.c:382
 msgid "FP can only be run interactively."
-msgstr ""
+msgstr "Набір фільтрів можна запускати лише інтерактивно."
 
 #: ../plug-ins/common/fp.c:400
-#, fuzzy
 msgid "Applying filter pack"
-msgstr "Застосування набору фільтрів..."
+msgstr "Застосовується набір фільтрів"
 
 #: ../plug-ins/common/fp.c:524
 msgid "Original:"
@@ -4132,38 +4034,34 @@ msgid "Saturation Variations"
 msgstr "Зміна насиченості"
 
 #: ../plug-ins/common/fp.c:830
-#, fuzzy
 msgid "Select Pixels By"
 msgstr "Вибрати точки за"
 
 #: ../plug-ins/common/fp.c:835
 msgid "H_ue"
-msgstr "_Відтінок:"
+msgstr "_Відтінком:"
 
 #: ../plug-ins/common/fp.c:836
 msgid "Satu_ration"
-msgstr "_Насиченість"
+msgstr "_Насиченістю"
 
 #: ../plug-ins/common/fp.c:837
 msgid "V_alue"
-msgstr "_Яскравість"
+msgstr "_Яскравістю"
 
 #: ../plug-ins/common/fp.c:863
 msgid "Show"
 msgstr "Показати"
 
 #: ../plug-ins/common/fp.c:868
-#, fuzzy
 msgid "_Entire image"
 msgstr "Вс_е зображення"
 
 #: ../plug-ins/common/fp.c:869
-#, fuzzy
 msgid "Se_lection only"
 msgstr "Виді_лену частину"
 
 #: ../plug-ins/common/fp.c:870
-#, fuzzy
 msgid "Selec_tion in context"
 msgstr "Виділене у _контексті"
 
@@ -4194,7 +4092,7 @@ msgstr "Розмір перегляду"
 
 #: ../plug-ins/common/fractaltrace.c:116
 msgid "Transform image with the Mandelbrot Fractal"
-msgstr ""
+msgstr "Перетворює зображення за допомогою фракталу Мандельброта"
 
 #: ../plug-ins/common/fractaltrace.c:121
 msgid "_Fractal Trace..."
@@ -4235,7 +4133,7 @@ msgstr "Y_1:"
 
 #: ../plug-ins/common/gauss.c:159
 msgid "Simplest, most commonly used way of blurring"
-msgstr ""
+msgstr "Найбільш простий спосіб розмити зображення"
 
 #: ../plug-ins/common/gauss.c:172
 msgid "_Gaussian Blur..."
