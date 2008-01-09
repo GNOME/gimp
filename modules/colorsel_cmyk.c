@@ -29,7 +29,7 @@
 
 /* definitions and variables */
 
-#define COLORSEL_TYPE_CMYK            (colorsel_cmyk_type)
+#define COLORSEL_TYPE_CMYK            (colorsel_cmyk_get_type ())
 #define COLORSEL_CMYK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), COLORSEL_TYPE_CMYK, ColorselCmyk))
 #define COLORSEL_CMYK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), COLORSEL_TYPE_CMYK, ColorselCmykClass))
 #define COLORSEL_IS_CMYK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), COLORSEL_TYPE_CMYK))
@@ -54,9 +54,7 @@ struct _ColorselCmykClass
 };
 
 
-static GType  colorsel_cmyk_get_type   (GTypeModule       *module);
-static void   colorsel_cmyk_class_init (ColorselCmykClass *klass);
-static void   colorsel_cmyk_init       (ColorselCmyk      *cmyk);
+GType         colorsel_cmyk_get_type       (void);
 
 static void   colorsel_cmyk_set_color      (GimpColorSelector *selector,
                                             const GimpRGB     *rgb,
@@ -77,7 +75,9 @@ static const GimpModuleInfo colorsel_cmyk_info =
   "July 2003"
 };
 
-static GType colorsel_cmyk_type = 0;
+
+G_DEFINE_DYNAMIC_TYPE (ColorselCmyk, colorsel_cmyk,
+                       GIMP_TYPE_COLOR_SELECTOR)
 
 
 G_MODULE_EXPORT const GimpModuleInfo *
@@ -89,37 +89,9 @@ gimp_module_query (GTypeModule *module)
 G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
-  colorsel_cmyk_get_type (module);
+  colorsel_cmyk_register_type (module);
 
   return TRUE;
-}
-
-static GType
-colorsel_cmyk_get_type (GTypeModule *module)
-{
-  if (! colorsel_cmyk_type)
-    {
-      const GTypeInfo select_info =
-      {
-        sizeof (ColorselCmykClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) colorsel_cmyk_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (ColorselCmyk),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) colorsel_cmyk_init,
-      };
-
-      colorsel_cmyk_type =
-        g_type_module_register_type (module,
-                                     GIMP_TYPE_COLOR_SELECTOR,
-                                     "ColorselCmyk",
-                                     &select_info, 0);
-    }
-
-  return colorsel_cmyk_type;
 }
 
 static void
@@ -131,6 +103,11 @@ colorsel_cmyk_class_init (ColorselCmykClass *klass)
   selector_class->help_id   = "gimp-colorselector-cmyk";
   selector_class->stock_id  = GTK_STOCK_PRINT;  /* FIXME */
   selector_class->set_color = colorsel_cmyk_set_color;
+}
+
+static void
+colorsel_cmyk_class_finalize (ColorselCmykClass *klass)
+{
 }
 
 static void

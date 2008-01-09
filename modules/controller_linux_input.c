@@ -118,7 +118,7 @@ enum
 };
 
 
-#define CONTROLLER_TYPE_LINUX_INPUT            (controller_type)
+#define CONTROLLER_TYPE_LINUX_INPUT            (controller_linux_input_get_type ())
 #define CONTROLLER_LINUX_INPUT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CONTROLLER_TYPE_LINUX_INPUT, ControllerLinuxInput))
 #define CONTROLLER_LINUX_INPUT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CONTROLLER_TYPE_LINUX_INPUT, ControllerLinuxInputClass))
 #define CONTROLLER_IS_LINUX_INPUT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CONTROLLER_TYPE_LINUX_INPUT))
@@ -144,19 +144,18 @@ struct _ControllerLinuxInputClass
 };
 
 
-GType         linux_input_get_type     (GTypeModule    *module);
-static void   linux_input_class_init   (ControllerLinuxInputClass *klass);
-static void   linux_input_init         (ControllerLinuxInput      *controller);
-static void   linux_input_dispose      (GObject        *object);
-static void   linux_input_finalize     (GObject        *object);
-static void   linux_input_set_property (GObject        *object,
-                                        guint           property_id,
-                                        const GValue   *value,
-                                        GParamSpec     *pspec);
-static void   linux_input_get_property (GObject        *object,
-                                        guint           property_id,
-                                        GValue         *value,
-                                        GParamSpec     *pspec);
+GType         controller_linux_input_get_type     (void);
+
+static void   linux_input_dispose                 (GObject        *object);
+static void   linux_input_finalize                (GObject        *object);
+static void   linux_input_set_property            (GObject        *object,
+                                                   guint           property_id,
+                                                   const GValue   *value,
+                                                   GParamSpec     *pspec);
+static void   linux_input_get_property            (GObject        *object,
+                                                   guint           property_id,
+                                                   GValue         *value,
+                                                   GParamSpec     *pspec);
 
 static gint          linux_input_get_n_events     (GimpController *controller);
 static const gchar * linux_input_get_event_name   (GimpController *controller,
@@ -184,8 +183,8 @@ static const GimpModuleInfo linux_input_info =
 };
 
 
-static GType                controller_type = 0;
-static GimpControllerClass *parent_class    = NULL;
+G_DEFINE_DYNAMIC_TYPE (ControllerLinuxInput, controller_linux_input,
+                       GIMP_TYPE_CONTROLLER)
 
 
 G_MODULE_EXPORT const GimpModuleInfo *
@@ -198,46 +197,16 @@ G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
   gimp_input_device_store_get_type (module);
-  linux_input_get_type (module);
+  controller_linux_input_register_type (module);
 
   return TRUE;
 }
 
-
-GType
-linux_input_get_type (GTypeModule *module)
-{
-  if (! controller_type)
-    {
-      const GTypeInfo controller_info =
-      {
-        sizeof (ControllerLinuxInputClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) linux_input_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (ControllerLinuxInput),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) linux_input_init
-      };
-
-      controller_type = g_type_module_register_type (module,
-                                                     GIMP_TYPE_CONTROLLER,
-                                                     "ControllerLinuxInput",
-                                                     &controller_info, 0);
-    }
-
-  return controller_type;
-}
-
 static void
-linux_input_class_init (ControllerLinuxInputClass *klass)
+controller_linux_input_class_init (ControllerLinuxInputClass *klass)
 {
   GimpControllerClass *controller_class = GIMP_CONTROLLER_CLASS (klass);
   GObjectClass        *object_class     = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->dispose            = linux_input_dispose;
   object_class->finalize           = linux_input_finalize;
@@ -268,7 +237,12 @@ linux_input_class_init (ControllerLinuxInputClass *klass)
 }
 
 static void
-linux_input_init (ControllerLinuxInput *controller)
+controller_linux_input_class_finalize (ControllerLinuxInputClass *klass)
+{
+}
+
+static void
+controller_linux_input_init (ControllerLinuxInput *controller)
 {
   controller->store = gimp_input_device_store_new ();
 
@@ -290,7 +264,7 @@ linux_input_dispose (GObject *object)
 
   linux_input_set_device (controller, NULL);
 
-  G_OBJECT_CLASS (parent_class)->dispose (object);
+  G_OBJECT_CLASS (controller_linux_input_parent_class)->dispose (object);
 }
 
 static void
@@ -304,7 +278,7 @@ linux_input_finalize (GObject *object)
       controller->store = NULL;
     }
 
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (controller_linux_input_parent_class)->finalize (object);
 }
 
 static void

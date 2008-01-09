@@ -42,7 +42,7 @@
                        GDK_BUTTON_MOTION_MASK )
 
 
-#define COLORSEL_TYPE_TRIANGLE            (colorsel_triangle_type)
+#define COLORSEL_TYPE_TRIANGLE            (colorsel_triangle_get_type ())
 #define COLORSEL_TRIANGLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), COLORSEL_TYPE_TRIANGLE, ColorselTriangle))
 #define COLORSEL_TRIANGLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), COLORSEL_TYPE_TRIANGLE, ColorselTriangleClass))
 #define COLORSEL_IS_TRIANGLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), COLORSEL_TYPE_TRIANGLE))
@@ -70,15 +70,13 @@ struct _ColorselTriangleClass
 };
 
 
-static GType      colorsel_triangle_get_type   (GTypeModule           *module);
-static void       colorsel_triangle_class_init (ColorselTriangleClass *klass);
-static void       colorsel_triangle_init       (ColorselTriangle      *triangle);
+GType              colorsel_triangle_get_type       (void);
 
-static void       colorsel_triangle_set_color       (GimpColorSelector *selector,
+static void        colorsel_triangle_set_color      (GimpColorSelector *selector,
                                                      const GimpRGB     *rgb,
                                                      const GimpHSV     *hsv);
 
-static void       colorsel_xy_to_triangle_buf       (gint              x,
+static void        colorsel_xy_to_triangle_buf      (gint              x,
                                                      gint              y,
                                                      gdouble           hue,
                                                      guchar           *buf,
@@ -89,12 +87,12 @@ static void       colorsel_xy_to_triangle_buf       (gint              x,
                                                      gint              hx,
                                                      gint              hy);
 
-static GtkWidget *colorsel_triangle_create_preview  (ColorselTriangle *triangle);
-static void       colorsel_triangle_update_preview  (ColorselTriangle *triangle);
-static void       colorsel_triangle_size_allocate   (GtkWidget        *widget,
+static GtkWidget * colorsel_triangle_create_preview (ColorselTriangle *triangle);
+static void        colorsel_triangle_update_preview (ColorselTriangle *triangle);
+static void        colorsel_triangle_size_allocate  (GtkWidget        *widget,
                                                      GtkAllocation    *allocation,
                                                      ColorselTriangle *triangle);
-static gboolean   colorsel_triangle_event           (GtkWidget        *widget,
+static gboolean    colorsel_triangle_event          (GtkWidget        *widget,
                                                      GdkEvent         *event,
                                                      ColorselTriangle *triangle);
 
@@ -114,8 +112,8 @@ static const GtkTargetEntry targets[] =
 };
 
 
-static GType                   colorsel_triangle_type = 0;
-static GimpColorSelectorClass *parent_class           = NULL;
+G_DEFINE_DYNAMIC_TYPE (ColorselTriangle, colorsel_triangle,
+                       GIMP_TYPE_COLOR_SELECTOR)
 
 
 G_MODULE_EXPORT const GimpModuleInfo *
@@ -127,37 +125,9 @@ gimp_module_query (GTypeModule *module)
 G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
-  colorsel_triangle_get_type (module);
+  colorsel_triangle_register_type (module);
 
   return TRUE;
-}
-
-static GType
-colorsel_triangle_get_type (GTypeModule *module)
-{
-  if (! colorsel_triangle_type)
-    {
-      const GTypeInfo select_info =
-      {
-        sizeof (ColorselTriangleClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) colorsel_triangle_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (ColorselTriangle),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) colorsel_triangle_init,
-      };
-
-      colorsel_triangle_type =
-        g_type_module_register_type (module,
-                                     GIMP_TYPE_COLOR_SELECTOR,
-                                     "ColorselTriangle",
-                                     &select_info, 0);
-    }
-
-  return colorsel_triangle_type;
 }
 
 static void
@@ -165,12 +135,15 @@ colorsel_triangle_class_init (ColorselTriangleClass *klass)
 {
   GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   selector_class->name      = _("Triangle");
   selector_class->help_id   = "gimp-colorselector-triangle";
   selector_class->stock_id  = GIMP_STOCK_COLOR_TRIANGLE;
   selector_class->set_color = colorsel_triangle_set_color;
+}
+
+static void
+colorsel_triangle_class_finalize (ColorselTriangleClass *klass)
+{
 }
 
 static void

@@ -31,7 +31,7 @@
 #define DEFAULT_CONTRAST 1.0
 
 
-#define CDISPLAY_TYPE_CONTRAST            (cdisplay_contrast_type)
+#define CDISPLAY_TYPE_CONTRAST            (cdisplay_contrast_get_type ())
 #define CDISPLAY_CONTRAST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CDISPLAY_TYPE_CONTRAST, CdisplayContrast))
 #define CDISPLAY_CONTRAST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CDISPLAY_TYPE_CONTRAST, CdisplayContrastClass))
 #define CDISPLAY_IS_CONTRAST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CDISPLAY_TYPE_CONTRAST))
@@ -62,8 +62,7 @@ enum
 };
 
 
-static GType       cdisplay_contrast_get_type     (GTypeModule           *module);
-static void        cdisplay_contrast_class_init   (CdisplayContrastClass *klass);
+GType              cdisplay_contrast_get_type     (void);
 
 static void        cdisplay_contrast_set_property (GObject          *object,
                                                    guint             property_id,
@@ -95,8 +94,8 @@ static const GimpModuleInfo cdisplay_contrast_info =
   "October 14, 2000"
 };
 
-static GType                  cdisplay_contrast_type = 0;
-static GimpColorDisplayClass *parent_class        = NULL;
+G_DEFINE_DYNAMIC_TYPE (CdisplayContrast, cdisplay_contrast,
+                       GIMP_TYPE_COLOR_DISPLAY)
 
 
 G_MODULE_EXPORT const GimpModuleInfo *
@@ -108,37 +107,9 @@ gimp_module_query (GTypeModule *module)
 G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
-  cdisplay_contrast_get_type (module);
+  cdisplay_contrast_register_type (module);
 
   return TRUE;
-}
-
-static GType
-cdisplay_contrast_get_type (GTypeModule *module)
-{
-  if (! cdisplay_contrast_type)
-    {
-      const GTypeInfo display_info =
-      {
-        sizeof (CdisplayContrastClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) cdisplay_contrast_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (CdisplayContrast),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      cdisplay_contrast_type =
-        g_type_module_register_type (module,
-                                     GIMP_TYPE_COLOR_DISPLAY,
-                                     "CdisplayContrast",
-                                     &display_info, 0);
-    }
-
-  return cdisplay_contrast_type;
 }
 
 static void
@@ -146,8 +117,6 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
 {
   GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
   GimpColorDisplayClass *display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->get_property = cdisplay_contrast_get_property;
   object_class->set_property = cdisplay_contrast_set_property;
@@ -163,6 +132,16 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
 
   display_class->convert     = cdisplay_contrast_convert;
   display_class->configure   = cdisplay_contrast_configure;
+}
+
+static void
+cdisplay_contrast_class_finalize (CdisplayContrastClass *klass)
+{
+}
+
+static void
+cdisplay_contrast_init (CdisplayContrast *contrast)
+{
 }
 
 static void

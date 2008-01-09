@@ -32,7 +32,7 @@
 #include "libgimp/libgimp-intl.h"
 
 
-#define COLORSEL_TYPE_WATER            (colorsel_water_type)
+#define COLORSEL_TYPE_WATER            (colorsel_water_get_type ())
 #define COLORSEL_WATER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), COLORSEL_TYPE_WATER, ColorselWater))
 #define COLORSEL_WATER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), COLORSEL_TYPE_WATER, ColorselWaterClass))
 #define COLORSEL_IS_WATER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), COLORSEL_TYPE_WATER))
@@ -59,23 +59,21 @@ struct _ColorselWaterClass
 };
 
 
-static GType      colorsel_water_get_type   (GTypeModule        *module);
-static void       colorsel_water_class_init (ColorselWaterClass *klass);
-static void       colorsel_water_init       (ColorselWater      *water);
+GType             colorsel_water_get_type (void);
 
-static void       select_area_expose        (GtkWidget          *widget,
-                                             GdkEventExpose     *event);
-static gboolean   button_press_event        (GtkWidget          *widget,
-                                             GdkEventButton     *event,
-                                             ColorselWater      *water);
-static gboolean   motion_notify_event       (GtkWidget          *widget,
-                                             GdkEventMotion     *event,
-                                             ColorselWater      *water);
-static gboolean   proximity_out_event       (GtkWidget          *widget,
-                                             GdkEventProximity  *event,
-                                             ColorselWater      *water);
-static void       pressure_adjust_update    (GtkAdjustment      *adj,
-                                             ColorselWater      *water);
+static void       select_area_expose      (GtkWidget          *widget,
+                                           GdkEventExpose     *event);
+static gboolean   button_press_event      (GtkWidget          *widget,
+                                           GdkEventButton     *event,
+                                           ColorselWater      *water);
+static gboolean   motion_notify_event     (GtkWidget          *widget,
+                                           GdkEventMotion     *event,
+                                           ColorselWater      *water);
+static gboolean   proximity_out_event     (GtkWidget          *widget,
+                                           GdkEventProximity  *event,
+                                           ColorselWater      *water);
+static void       pressure_adjust_update  (GtkAdjustment      *adj,
+                                           ColorselWater      *water);
 
 
 static const GimpModuleInfo colorsel_water_info =
@@ -94,8 +92,8 @@ static const GtkTargetEntry targets[] =
 };
 
 
-static GType                   colorsel_water_type = 0;
-static GimpColorSelectorClass *parent_class           = NULL;
+G_DEFINE_DYNAMIC_TYPE (ColorselWater, colorsel_water,
+                       GIMP_TYPE_COLOR_SELECTOR)
 
 
 G_MODULE_EXPORT const GimpModuleInfo *
@@ -107,37 +105,9 @@ gimp_module_query (GTypeModule *module)
 G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
-  colorsel_water_get_type (module);
+  colorsel_water_register_type (module);
 
   return TRUE;
-}
-
-static GType
-colorsel_water_get_type (GTypeModule *module)
-{
-  if (! colorsel_water_type)
-    {
-      const GTypeInfo select_info =
-      {
-        sizeof (ColorselWaterClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) colorsel_water_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (ColorselWater),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) colorsel_water_init,
-      };
-
-      colorsel_water_type =
-        g_type_module_register_type (module,
-                                     GIMP_TYPE_COLOR_SELECTOR,
-                                     "ColorselWater",
-                                     &select_info, 0);
-    }
-
-  return colorsel_water_type;
 }
 
 static void
@@ -145,11 +115,14 @@ colorsel_water_class_init (ColorselWaterClass *klass)
 {
   GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
+  selector_class->name     = _("Watercolor");
+  selector_class->help_id  = "gimp-colorselector-watercolor";
+  selector_class->stock_id = GIMP_STOCK_TOOL_PAINTBRUSH;
+}
 
-  selector_class->name      = _("Watercolor");
-  selector_class->help_id   = "gimp-colorselector-watercolor";
-  selector_class->stock_id  = GIMP_STOCK_TOOL_PAINTBRUSH;
+static void
+colorsel_water_class_finalize (ColorselWaterClass *klass)
+{
 }
 
 static void

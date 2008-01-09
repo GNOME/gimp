@@ -49,7 +49,7 @@
 #include "libgimp/libgimp-intl.h"
 
 
-#define CDISPLAY_TYPE_LCMS            (cdisplay_lcms_type)
+#define CDISPLAY_TYPE_LCMS            (cdisplay_lcms_get_type ())
 #define CDISPLAY_LCMS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CDISPLAY_TYPE_LCMS, CdisplayLcms))
 #define CDISPLAY_LCMS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CDISPLAY_TYPE_LCMS, CdisplayLcmsClass))
 #define CDISPLAY_IS_LCMS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CDISPLAY_TYPE_LCMS))
@@ -72,9 +72,8 @@ struct _CdisplayLcmsClass
 };
 
 
-static GType        cdisplay_lcms_get_type     (GTypeModule       *module);
-static void         cdisplay_lcms_class_init   (CdisplayLcmsClass *klass);
-static void         cdisplay_lcms_init         (CdisplayLcms      *lcms);
+GType               cdisplay_lcms_get_type     (void);
+
 static void         cdisplay_lcms_finalize     (GObject           *object);
 
 static GtkWidget  * cdisplay_lcms_configure    (GimpColorDisplay  *display);
@@ -111,9 +110,8 @@ static const GimpModuleInfo cdisplay_lcms_info =
   "2005 - 2007"
 };
 
-static GType                  cdisplay_lcms_type = 0;
-static GimpColorDisplayClass *parent_class       = NULL;
-
+G_DEFINE_DYNAMIC_TYPE (CdisplayLcms, cdisplay_lcms,
+                       GIMP_TYPE_COLOR_DISPLAY)
 
 G_MODULE_EXPORT const GimpModuleInfo *
 gimp_module_query (GTypeModule *module)
@@ -124,35 +122,9 @@ gimp_module_query (GTypeModule *module)
 G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
-  cdisplay_lcms_get_type (module);
+  cdisplay_lcms_register_type (module);
 
   return TRUE;
-}
-
-static GType
-cdisplay_lcms_get_type (GTypeModule *module)
-{
-  if (! cdisplay_lcms_type)
-    {
-      const GTypeInfo display_info =
-      {
-        sizeof (CdisplayLcmsClass),
-        (GBaseInitFunc)     NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) cdisplay_lcms_class_init,
-        NULL,                   /* class_finalize */
-        NULL,                   /* class_data     */
-        sizeof (CdisplayLcms),
-        0,                      /* n_preallocs    */
-        (GInstanceInitFunc) cdisplay_lcms_init,
-      };
-
-       cdisplay_lcms_type =
-        g_type_module_register_type (module, GIMP_TYPE_COLOR_DISPLAY,
-                                     "CdisplayLcms", &display_info, 0);
-    }
-
-  return cdisplay_lcms_type;
 }
 
 static void
@@ -160,8 +132,6 @@ cdisplay_lcms_class_init (CdisplayLcmsClass *klass)
 {
   GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
   GimpColorDisplayClass *display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize = cdisplay_lcms_finalize;
 
@@ -174,6 +144,11 @@ cdisplay_lcms_class_init (CdisplayLcmsClass *klass)
   display_class->changed     = cdisplay_lcms_changed;
 
   cmsErrorAction (LCMS_ERROR_IGNORE);
+}
+
+static void
+cdisplay_lcms_class_finalize (CdisplayLcmsClass *klass)
+{
 }
 
 static void
@@ -193,7 +168,7 @@ cdisplay_lcms_finalize (GObject *object)
       lcms->transform = NULL;
     }
 
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (cdisplay_lcms_parent_class)->finalize (object);
 }
 
 static void

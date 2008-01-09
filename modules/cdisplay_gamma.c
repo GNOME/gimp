@@ -31,7 +31,7 @@
 #define DEFAULT_GAMMA 1.0
 
 
-#define CDISPLAY_TYPE_GAMMA            (cdisplay_gamma_type)
+#define CDISPLAY_TYPE_GAMMA            (cdisplay_gamma_get_type ())
 #define CDISPLAY_GAMMA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CDISPLAY_TYPE_GAMMA, CdisplayGamma))
 #define CDISPLAY_GAMMA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CDISPLAY_TYPE_GAMMA, CdisplayGammaClass))
 #define CDISPLAY_IS_GAMMA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CDISPLAY_TYPE_GAMMA))
@@ -62,8 +62,7 @@ enum
 };
 
 
-static GType       cdisplay_gamma_get_type     (GTypeModule        *module);
-static void        cdisplay_gamma_class_init   (CdisplayGammaClass *klass);
+GType              cdisplay_gamma_get_type     (void);
 
 static void        cdisplay_gamma_set_property (GObject            *object,
                                                 guint               property_id,
@@ -95,8 +94,8 @@ static const GimpModuleInfo cdisplay_gamma_info =
   "October 14, 2000"
 };
 
-static GType                  cdisplay_gamma_type = 0;
-static GimpColorDisplayClass *parent_class        = NULL;
+G_DEFINE_DYNAMIC_TYPE (CdisplayGamma, cdisplay_gamma,
+                       GIMP_TYPE_COLOR_DISPLAY)
 
 
 G_MODULE_EXPORT const GimpModuleInfo *
@@ -108,37 +107,9 @@ gimp_module_query (GTypeModule *module)
 G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
-  cdisplay_gamma_get_type (module);
+  cdisplay_gamma_register_type (module);
 
   return TRUE;
-}
-
-static GType
-cdisplay_gamma_get_type (GTypeModule *module)
-{
-  if (! cdisplay_gamma_type)
-    {
-      const GTypeInfo display_info =
-      {
-        sizeof (CdisplayGammaClass),
-        (GBaseInitFunc)     NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc)    cdisplay_gamma_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (CdisplayGamma),
-        0,              /* n_preallocs    */
-        NULL            /* instance_init  */
-      };
-
-      cdisplay_gamma_type =
-        g_type_module_register_type (module,
-                                     GIMP_TYPE_COLOR_DISPLAY,
-                                     "CdisplayGamma",
-                                     &display_info, 0);
-    }
-
-  return cdisplay_gamma_type;
 }
 
 static void
@@ -146,8 +117,6 @@ cdisplay_gamma_class_init (CdisplayGammaClass *klass)
 {
   GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
   GimpColorDisplayClass *display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->get_property = cdisplay_gamma_get_property;
   object_class->set_property = cdisplay_gamma_set_property;
@@ -163,6 +132,16 @@ cdisplay_gamma_class_init (CdisplayGammaClass *klass)
 
   display_class->convert     = cdisplay_gamma_convert;
   display_class->configure   = cdisplay_gamma_configure;
+}
+
+static void
+cdisplay_gamma_class_finalize (CdisplayGammaClass *klass)
+{
+}
+
+static void
+cdisplay_gamma_init (CdisplayGamma *gamma)
+{
 }
 
 static void

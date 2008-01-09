@@ -36,7 +36,7 @@
 
 #include "libgimp/libgimp-intl.h"
 
-#define CDISPLAY_TYPE_PROOF            (cdisplay_proof_type)
+#define CDISPLAY_TYPE_PROOF            (cdisplay_proof_get_type ())
 #define CDISPLAY_PROOF(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CDISPLAY_TYPE_PROOF, CdisplayProof))
 #define CDISPLAY_PROOF_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CDISPLAY_TYPE_PROOF, CdisplayProofClass))
 #define CDISPLAY_IS_PROOF(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CDISPLAY_TYPE_PROOF))
@@ -72,9 +72,7 @@ enum
 };
 
 
-static GType       cdisplay_proof_get_type     (GTypeModule        *module);
-static void        cdisplay_proof_class_init   (CdisplayProofClass *klass);
-static void        cdisplay_proof_init         (CdisplayProof      *proof);
+GType              cdisplay_proof_get_type     (void);
 
 static void        cdisplay_proof_finalize     (GObject          *object);
 static void        cdisplay_proof_get_property (GObject          *object,
@@ -107,9 +105,8 @@ static const GimpModuleInfo cdisplay_proof_info =
   "November 14, 2003"
 };
 
-static GType                  cdisplay_proof_type = 0;
-static GimpColorDisplayClass *parent_class        = NULL;
-
+G_DEFINE_DYNAMIC_TYPE (CdisplayProof, cdisplay_proof,
+                       GIMP_TYPE_COLOR_DISPLAY)
 
 G_MODULE_EXPORT const GimpModuleInfo *
 gimp_module_query (GTypeModule *module)
@@ -120,35 +117,9 @@ gimp_module_query (GTypeModule *module)
 G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
-  cdisplay_proof_get_type (module);
+  cdisplay_proof_register_type (module);
 
   return TRUE;
-}
-
-static GType
-cdisplay_proof_get_type (GTypeModule *module)
-{
-  if (! cdisplay_proof_type)
-    {
-      const GTypeInfo display_info =
-      {
-        sizeof (CdisplayProofClass),
-        (GBaseInitFunc)     NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) cdisplay_proof_class_init,
-        NULL,                   /* class_finalize */
-        NULL,                   /* class_data     */
-        sizeof (CdisplayProof),
-        0,                      /* n_preallocs    */
-        (GInstanceInitFunc) cdisplay_proof_init,
-      };
-
-       cdisplay_proof_type =
-        g_type_module_register_type (module, GIMP_TYPE_COLOR_DISPLAY,
-                                     "CdisplayProof", &display_info, 0);
-    }
-
-  return cdisplay_proof_type;
 }
 
 static void
@@ -156,8 +127,6 @@ cdisplay_proof_class_init (CdisplayProofClass *klass)
 {
   GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
   GimpColorDisplayClass *display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize     = cdisplay_proof_finalize;
   object_class->get_property = cdisplay_proof_get_property;
@@ -189,6 +158,11 @@ cdisplay_proof_class_init (CdisplayProofClass *klass)
 }
 
 static void
+cdisplay_proof_class_finalize (CdisplayProofClass *klass)
+{
+}
+
+static void
 cdisplay_proof_init (CdisplayProof *proof)
 {
   proof->transform = NULL;
@@ -205,13 +179,14 @@ cdisplay_proof_finalize (GObject *object)
       g_free (proof->profile);
       proof->profile = NULL;
     }
+
   if (proof->transform)
     {
       cmsDeleteTransform (proof->transform);
       proof->transform = NULL;
     }
 
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (cdisplay_proof_parent_class)->finalize (object);
 }
 
 static void
