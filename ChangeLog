@@ -1,5 +1,10 @@
 2008-01-09  Sven Neumann  <sven@gimp.org>
 
+	* modules/colorsel_cmyk_lcms.c (colorsel_cmyk_class_init): don't
+	abort on errors in lcms.
+
+2008-01-09  Sven Neumann  <sven@gimp.org>
+
 	* app/gegl/gimpoperationtilesink.c: use the marshaller from GLib;
 	don't include gimpmarshal.h from app/core.
 

@@ -156,6 +156,8 @@ colorsel_cmyk_class_init (ColorselCmykClass *klass)
   selector_class->stock_id   = GTK_STOCK_PRINT;  /* FIXME */
   selector_class->set_color  = colorsel_cmyk_set_color;
   selector_class->set_config = colorsel_cmyk_set_config;
+
+  cmsErrorAction (LCMS_ERROR_IGNORE);
 }
 
 static void
