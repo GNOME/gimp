@@ -280,9 +280,15 @@ gimp_levels_tool_map (GimpImageMapTool *image_map_tool)
            channel <= GIMP_HISTOGRAM_ALPHA;
            channel++)
         {
-          gegl_node_set (image_map_tool->operation,
-                         "channel", channel,
-                         NULL);
+          /* FIXME: hack */
+          if (! tool->color && channel == 1)
+            gegl_node_set (image_map_tool->operation,
+                           "channel", GIMP_HISTOGRAM_ALPHA,
+                           NULL);
+          else
+            gegl_node_set (image_map_tool->operation,
+                           "channel", channel,
+                           NULL);
 
           gegl_node_set (image_map_tool->operation,
                          "gamma",       levels->gamma[channel],
@@ -291,6 +297,10 @@ gimp_levels_tool_map (GimpImageMapTool *image_map_tool)
                          "low-output",  levels->low_output[channel]  / 255.0,
                          "high-output", levels->high_output[channel] / 255.0,
                          NULL);
+
+          /* FIXME: hack */
+          if (! tool->color && channel == 1)
+            break;
         }
     }
 
