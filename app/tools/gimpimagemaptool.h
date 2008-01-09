@@ -41,20 +41,24 @@ typedef struct _GimpImageMapToolClass GimpImageMapToolClass;
 
 struct _GimpImageMapTool
 {
-  GimpColorTool  parent_instance;
+  GimpColorTool          parent_instance;
 
-  GimpDrawable  *drawable;
-  GeglNode      *operation;
-  GimpImageMap  *image_map;
+  GimpDrawable          *drawable;
+
+  GeglNode              *operation;
+  GimpImageMapApplyFunc  apply_func;
+  gpointer               apply_data;
+
+  GimpImageMap          *image_map;
 
   /* dialog */
-  GtkWidget     *shell;
-  GtkWidget     *main_vbox;
-  GtkWidget     *load_button;
-  GtkWidget     *save_button;
+  GtkWidget             *shell;
+  GtkWidget             *main_vbox;
+  GtkWidget             *load_button;
+  GtkWidget             *save_button;
 
   /* settings file dialog */
-  GtkWidget     *settings_dialog;
+  GtkWidget             *settings_dialog;
 };
 
 struct _GimpImageMapToolClass

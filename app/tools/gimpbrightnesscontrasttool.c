@@ -130,9 +130,14 @@ gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass
 static void
 gimp_brightness_contrast_tool_init (GimpBrightnessContrastTool *bc_tool)
 {
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (bc_tool);
+
   bc_tool->brightness = 0.0;
   bc_tool->contrast   = 0.0;
   bc_tool->lut        = gimp_lut_new ();
+
+  im_tool->apply_func = (GimpImageMapApplyFunc) gimp_lut_process;
+  im_tool->apply_data = bc_tool->lut;
 }
 
 static void
@@ -212,9 +217,6 @@ gimp_brightness_contrast_tool_map (GimpImageMapTool *im_tool)
                                  bc_tool->brightness / 255.0,
                                  bc_tool->contrast / 127.0,
                                  gimp_drawable_bytes (im_tool->drawable));
-  gimp_image_map_apply (im_tool->image_map,
-                        (GimpImageMapApplyFunc) gimp_lut_process,
-                        bc_tool->lut);
 }
 
 

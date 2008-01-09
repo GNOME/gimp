@@ -165,15 +165,19 @@ typedef struct _GimpScanConvert     GimpScanConvert;
 
 /*  functions  */
 
-typedef void     (* GimpInitStatusFunc)   (const gchar      *text1,
-                                           const gchar      *text2,
-                                           gdouble           percentage);
+typedef void     (* GimpInitStatusFunc)    (const gchar      *text1,
+                                            const gchar      *text2,
+                                            gdouble           percentage);
 
-typedef gboolean (* GimpObjectFilterFunc) (const GimpObject *object,
-                                           gpointer          user_data);
+typedef gboolean (* GimpObjectFilterFunc)  (const GimpObject *object,
+                                            gpointer          user_data);
 
-typedef gint64   (* GimpMemsizeFunc)      (gpointer          instance,
-                                           gint64           *gui_size);
+typedef gint64   (* GimpMemsizeFunc)       (gpointer          instance,
+                                            gint64           *gui_size);
+
+typedef void     (* GimpImageMapApplyFunc) (gpointer          apply_data,
+                                            PixelRegion      *srcPR,
+                                            PixelRegion      *destPR);
 
 
 /*  structs  */

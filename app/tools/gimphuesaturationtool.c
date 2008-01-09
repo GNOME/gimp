@@ -129,10 +129,15 @@ gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
 static void
 gimp_hue_saturation_tool_init (GimpHueSaturationTool *hs_tool)
 {
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (hs_tool);
+
   hs_tool->hue_saturation = g_slice_new0 (HueSaturation);
   hs_tool->hue_partition  = GIMP_ALL_HUES;
 
   hue_saturation_init (hs_tool->hue_saturation);
+
+  im_tool->apply_func = (GimpImageMapApplyFunc) hue_saturation;
+  im_tool->apply_data = hs_tool->hue_saturation;
 }
 
 static void
@@ -179,11 +184,6 @@ gimp_hue_saturation_tool_initialize (GimpTool     *tool,
 static void
 gimp_hue_saturation_tool_map (GimpImageMapTool *image_map_tool)
 {
-  GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
-
-  gimp_image_map_apply (image_map_tool->image_map,
-                        (GimpImageMapApplyFunc) hue_saturation,
-                        hs_tool->hue_saturation);
 }
 
 

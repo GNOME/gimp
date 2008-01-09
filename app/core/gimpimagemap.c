@@ -295,15 +295,18 @@ gimp_image_map_get_pixel_at (GimpPickable *pickable,
 }
 
 GimpImageMap *
-gimp_image_map_new (GimpDrawable *drawable,
-                    const gchar  *undo_desc,
-                    GeglNode     *operation)
+gimp_image_map_new (GimpDrawable          *drawable,
+                    const gchar           *undo_desc,
+                    GeglNode              *operation,
+                    GimpImageMapApplyFunc  apply_func,
+                    gpointer               apply_data)
 {
   GimpImageMap *image_map;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (operation == NULL || GEGL_IS_NODE (operation), NULL);
+  g_return_val_if_fail (operation != NULL || apply_func != NULL, NULL);
 
   image_map = g_object_new (GIMP_TYPE_IMAGE_MAP, NULL);
 
@@ -313,25 +316,25 @@ gimp_image_map_new (GimpDrawable *drawable,
   if (operation)
     image_map->operation = g_object_ref (operation);
 
+  image_map->apply_func = apply_func;
+  image_map->apply_data = apply_data;
+
   gimp_viewable_preview_freeze (GIMP_VIEWABLE (drawable));
 
   return image_map;
 }
 
 void
-gimp_image_map_apply (GimpImageMap          *image_map,
-                      GimpImageMapApplyFunc  apply_func,
-                      gpointer               apply_data)
+gimp_image_map_apply (GimpImageMap        *image_map,
+                      const GeglRectangle *visible)
 {
   GeglRectangle rect;
-  gint          undo_offset_x, undo_offset_y;
-  gint          undo_width, undo_height;
+  gint          undo_offset_x;
+  gint          undo_offset_y;
+  gint          undo_width;
+  gint          undo_height;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
-  g_return_if_fail (apply_func != NULL);
-
-  image_map->apply_func = apply_func;
-  image_map->apply_data = apply_data;
 
   /*  If we're still working, remove the timer  */
   if (image_map->idle_id)

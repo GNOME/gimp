@@ -175,6 +175,8 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
 static void
 gimp_levels_tool_init (GimpLevelsTool *tool)
 {
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
+
   tool->lut           = gimp_lut_new ();
   tool->levels        = g_slice_new0 (Levels);
   tool->hist          = NULL;
@@ -182,6 +184,9 @@ gimp_levels_tool_init (GimpLevelsTool *tool)
   tool->active_picker = NULL;
 
   levels_init (tool->levels);
+
+  im_tool->apply_func = (GimpImageMapApplyFunc) gimp_lut_process;
+  im_tool->apply_data = tool->lut;
 }
 
 static void
@@ -293,10 +298,6 @@ gimp_levels_tool_map (GimpImageMapTool *image_map_tool)
                   (GimpLutFunc) levels_lut_func,
                   tool->levels,
                   gimp_drawable_bytes (image_map_tool->drawable));
-
-  gimp_image_map_apply (image_map_tool->image_map,
-                        (GimpImageMapApplyFunc) gimp_lut_process,
-                        tool->lut);
 }
 
 

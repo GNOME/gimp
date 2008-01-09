@@ -49,6 +49,8 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-transform.h"
 
 #include "gimpcoloroptions.h"
 #include "gimpimagemaptool.h"
@@ -421,7 +423,33 @@ gimp_image_map_tool_pick_color (GimpColorTool *color_tool,
 static void
 gimp_image_map_tool_map (GimpImageMapTool *tool)
 {
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (GIMP_TOOL (tool)->display->shell);
+  GimpItem         *item  = GIMP_ITEM (tool->drawable);
+  gint              x, y;
+  gint              w, h;
+  gint              off_x, off_y;
+  GeglRectangle     visible;
+
   GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->map (tool);
+
+  gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
+
+  gimp_item_offsets (item, &off_x, &off_y);
+
+  gimp_rectangle_intersect (x, y, w, h,
+                            off_x,
+                            off_y,
+                            gimp_item_width  (item),
+                            gimp_item_height (item),
+                            &visible.x,
+                            &visible.y,
+                            &visible.width,
+                            &visible.height);
+
+  visible.x -= off_x;
+  visible.y -= off_y;
+
+  gimp_image_map_apply (tool->image_map, &visible);
 }
 
 static void
@@ -454,7 +482,9 @@ gimp_image_map_tool_create_map (GimpImageMapTool *tool)
   tool->image_map = gimp_image_map_new (tool->drawable,
                                         GIMP_TOOL (tool)->tool_info->blurb,
                                         config->use_gegl ?
-                                        tool->operation : NULL);
+                                        tool->operation : NULL,
+                                        tool->apply_func,
+                                        tool->apply_data);
 
   g_signal_connect (tool->image_map, "flush",
                     G_CALLBACK (gimp_image_map_tool_flush),

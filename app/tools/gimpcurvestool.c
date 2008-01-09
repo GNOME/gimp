@@ -171,7 +171,8 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
 static void
 gimp_curves_tool_init (GimpCurvesTool *tool)
 {
-  gint i;
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
+  gint              i;
 
   for (i = 0; i < G_N_ELEMENTS (tool->curve); i++)
     {
@@ -187,6 +188,9 @@ gimp_curves_tool_init (GimpCurvesTool *tool)
 
   for (i = 0; i < G_N_ELEMENTS (tool->col_value); i++)
     tool->col_value[i] = -1;
+
+  im_tool->apply_func = (GimpImageMapApplyFunc) gimp_lut_process;
+  im_tool->apply_data = tool->lut;
 }
 
 static void
@@ -411,10 +415,6 @@ gimp_curves_tool_map (GimpImageMapTool *image_map_tool)
                   (GimpLutFunc) curves_lut_func,
                   &curves,
                   gimp_drawable_bytes (image_map_tool->drawable));
-
-  gimp_image_map_apply (image_map_tool->image_map,
-                        (GimpImageMapApplyFunc) gimp_lut_process,
-                        tool->lut);
 }
 
 

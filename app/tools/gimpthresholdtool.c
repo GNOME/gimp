@@ -111,11 +111,16 @@ gimp_threshold_tool_class_init (GimpThresholdToolClass *klass)
 static void
 gimp_threshold_tool_init (GimpThresholdTool *t_tool)
 {
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (t_tool);
+
   t_tool->threshold = g_slice_new0 (Threshold);
   t_tool->hist      = NULL;
 
   t_tool->threshold->low_threshold  = 127;
   t_tool->threshold->high_threshold = 255;
+
+  im_tool->apply_func = (GimpImageMapApplyFunc) threshold;
+  im_tool->apply_data = t_tool->threshold;
 }
 
 static void
@@ -200,10 +205,6 @@ gimp_threshold_tool_map (GimpImageMapTool *image_map_tool)
                      "high", t_tool->threshold->high_threshold / 255.0,
                      NULL);
     }
-
-  gimp_image_map_apply (image_map_tool->image_map,
-                        (GimpImageMapApplyFunc) threshold,
-                        t_tool->threshold);
 }
 
 

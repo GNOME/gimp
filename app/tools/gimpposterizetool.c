@@ -106,8 +106,13 @@ gimp_posterize_tool_class_init (GimpPosterizeToolClass *klass)
 static void
 gimp_posterize_tool_init (GimpPosterizeTool *posterize_tool)
 {
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (posterize_tool);
+
   posterize_tool->levels = POSTERIZE_DEFAULT_LEVELS;
   posterize_tool->lut    = gimp_lut_new ();
+
+  im_tool->apply_func = (GimpImageMapApplyFunc) gimp_lut_process;
+  im_tool->apply_data = posterize_tool->lut;
 }
 
 static void
@@ -179,10 +184,6 @@ gimp_posterize_tool_map (GimpImageMapTool *image_map_tool)
   posterize_lut_setup (posterize_tool->lut,
                        posterize_tool->levels,
                        gimp_drawable_bytes (image_map_tool->drawable));
-
-  gimp_image_map_apply (image_map_tool->image_map,
-                        (GimpImageMapApplyFunc) gimp_lut_process,
-                        posterize_tool->lut);
 }
 
 

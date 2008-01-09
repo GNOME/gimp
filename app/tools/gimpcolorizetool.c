@@ -109,9 +109,14 @@ gimp_colorize_tool_class_init (GimpColorizeToolClass *klass)
 static void
 gimp_colorize_tool_init (GimpColorizeTool *col_tool)
 {
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (col_tool);
+
   col_tool->colorize = g_slice_new0 (Colorize);
 
   colorize_init (col_tool->colorize);
+
+  im_tool->apply_func = (GimpImageMapApplyFunc) colorize;
+  im_tool->apply_data = col_tool->colorize;
 }
 
 static void
@@ -176,10 +181,6 @@ gimp_colorize_tool_map (GimpImageMapTool *image_map_tool)
     }
 
   colorize_calculate (col_tool->colorize);
-
-  gimp_image_map_apply (image_map_tool->image_map,
-                        (GimpImageMapApplyFunc) colorize,
-                        col_tool->colorize);
 }
 
 

@@ -1,3 +1,33 @@
+2008-01-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-types.h: add typedef GimpImageMapApplyFunc here.
+
+	* app/core/gimpimagemap.[ch] (gimp_image_map_new): add apply_func
+	and apply_data parameters.
+
+	(gimp_image_map_apply): remove them here and add a GeglRectangle
+	parameter which is the visible area of the affected drawable.
+
+	* app/tools/gimpimagemaptool.[ch]: keep apply_func and apply_data
+	around in the GimpImageMapTool struct.
+
+	(gimp_image_map_tool_create_map): pass them to gimp_image_map_new().
+
+	(gimp_image_map_tool_map): call gimp_image_map_apply() here and
+	pass the drawable's visible rectangle.
+
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c (init): set apply_func and
+	apply_data in the parent instance.
+
+	(map): remove calls to gimp_image_map_apply().
+
 2008-01-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/psd/psd-image-res-load.[ch]
