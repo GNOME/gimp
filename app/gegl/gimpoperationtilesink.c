@@ -35,8 +35,6 @@
 #include "base/tile-manager.h"
 #include "base/pixel-region.h"
 
-#include "core/gimpmarshal.h"
-
 #include "gimp-gegl-utils.h"
 #include "gimpoperationtilesink.h"
 
@@ -91,7 +89,7 @@ gimp_operation_tile_sink_class_init (GimpOperationTileSinkClass * klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpOperationTileSinkClass, data_written),
                   NULL, NULL,
-                  gimp_marshal_VOID__POINTER,
+                  g_cclosure_marshal_VOID__POINTER,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 

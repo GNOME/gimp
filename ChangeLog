@@ -1,3 +1,8 @@
+2008-01-09  Sven Neumann  <sven@gimp.org>
+
+	* app/gegl/gimpoperationtilesink.c: use the marshaller from GLib;
+	don't include gimpmarshal.h from app/core.
+
 2008-01-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimplevelstool.c (gimp_levels_tool_map): fix alpha
