@@ -2,6 +2,13 @@
 
 	Merged from trunk:
 
+	* modules/colorsel_cmyk_lcms.c (colorsel_cmyk_class_init): don't
+	abort on errors in lcms.
+
+2008-01-09  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* plug-ins/common/convmatrix.c (convolve_image): round the result
 	of the convolution. Fixes bug #508114.
 
