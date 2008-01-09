@@ -14,6 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:547
 #: ../plug-ins/gfig/gfig-dialog.c:274 ../plug-ins/gflare/gflare.c:883
@@ -4141,9 +4143,8 @@ msgstr "_Гаусеве розмивання (IIR)..."
 
 #: ../plug-ins/common/gauss.c:179 ../plug-ins/common/gauss.c:199
 #: ../plug-ins/common/gauss.c:219 ../plug-ins/common/gauss.c:239
-#, fuzzy
 msgid "Apply a gaussian blur"
-msgstr "Гаусове розмивання"
+msgstr "Застосувати Гаусове розмивання"
 
 #: ../plug-ins/common/gauss.c:428 ../plug-ins/common/gauss.c:476
 msgid "Gaussian Blur"
@@ -4197,7 +4198,7 @@ msgstr "Неправильний рядок UTF-8 у файлі пензля \"%
 #: ../plug-ins/common/gbr.c:425 ../plug-ins/common/gih.c:499
 #: ../plug-ins/common/gih.c:1158 ../plug-ins/gflare/gflare.c:3017
 msgid "Unnamed"
-msgstr "Без_назви"
+msgstr "Без назви"
 
 #: ../plug-ins/common/gbr.c:607
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
@@ -4210,7 +4211,7 @@ msgstr "Збереження як пензель"
 #. attach labels
 #: ../plug-ins/common/gbr.c:731 ../plug-ins/common/grid.c:790
 msgid "Spacing:"
-msgstr "Проміжок:"
+msgstr "Інтервал:"
 
 #: ../plug-ins/common/gbr.c:742 ../plug-ins/common/gih.c:910
 #: ../plug-ins/common/pat.c:541 ../plug-ins/gimpressionist/presets.c:646
@@ -4219,32 +4220,29 @@ msgstr "Опис:"
 
 #: ../plug-ins/common/gee.c:99 ../plug-ins/common/gee_zoom.c:121
 msgid "A big hello from the GIMP team!"
-msgstr ""
+msgstr "Велике привітання від розробників GIMP !"
 
 #: ../plug-ins/common/gee.c:104 ../plug-ins/common/gee.c:160
-#, fuzzy
 msgid "Gee Slime"
-msgstr "_Ковзання"
+msgstr "Gee-_Slime"
 
 #: ../plug-ins/common/gee.c:166 ../plug-ins/common/gee_zoom.c:192
-#, fuzzy
 msgid "Thank You for Choosing GIMP"
-msgstr "Дякуємо вам, за те що вибрали GIMP"
+msgstr "Дякуємо, що обрали GIMP"
 
 #: ../plug-ins/common/gee.c:173
 #, c-format
 msgid "A less obsolete creation by %s"
-msgstr ""
+msgstr "Найменш застаріле творіння %s"
 
 #: ../plug-ins/common/gee_zoom.c:126 ../plug-ins/common/gee_zoom.c:186
-#, fuzzy
 msgid "Gee Zoom"
-msgstr "Gee-_Масштаб"
+msgstr "Gee-_Zoom"
 
 #: ../plug-ins/common/gee_zoom.c:200
 #, c-format
 msgid "An obsolete creation by %s"
-msgstr ""
+msgstr "Морально застаріле творіння %s"
 
 #: ../plug-ins/common/gif-load.c:141 ../plug-ins/common/gif-save.c:410
 msgid "GIF image"
@@ -4252,11 +4250,11 @@ msgstr "Зображення GIF"
 
 #: ../plug-ins/common/gif-load.c:325
 msgid "This is not a GIF file"
-msgstr "Не є GIF файлом"
+msgstr "Не є файлом GIF"
 
 #: ../plug-ins/common/gif-load.c:364
 msgid "Non-square pixels.  Image might look squashed."
-msgstr "Не квадратні точки. Зображення може виглядати пошкодженим."
+msgstr "Неквадратні точки. Зображення, ймовірно, пошкоджене."
 
 #: ../plug-ins/common/gif-load.c:881
 #, c-format
@@ -4264,9 +4262,9 @@ msgid "Background (%d%s)"
 msgstr "Тло (%d%s)"
 
 #: ../plug-ins/common/gif-load.c:904
-#, fuzzy, c-format
+#, c-format
 msgid "Opening '%s' (frame %d)"
-msgstr "Відкривається %s..."
+msgstr "Відкривається '%s' (кадр %d)"
 
 #: ../plug-ins/common/gif-load.c:933 ../plug-ins/common/iwarp.c:793
 #: ../plug-ins/common/iwarp.c:828
@@ -4297,47 +4295,35 @@ msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 msgstr ""
-"Формат GIF підтримує коментарі лише у 7-бітному ASCII. Коментар не "
+"Формат GIF підтримує коментарі лише у 7-розрядному ASCII. Коментар не "
 "збережений."
 
 #: ../plug-ins/common/gif-save.c:958
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
-"Не вдається зберегти RGB-зображення як GIF - спершу перетворіть його в "
-"індексоване чи сіре."
+"Не вдається зберегти зображення у форматі RGB. Спершу перетворіть його на "
+"індексоване чи у градації сірого."
 
 #: ../plug-ins/common/gif-save.c:1135
-#, fuzzy
 msgid "Delay inserted to prevent evil CPU-sucking animation."
-msgstr ""
-"Передбачена затримка для запобігання перевантаження процесора складною "
+msgstr "Затримка передбачена для запобігання перевантаження процесора складною "
 "анімацією."
 
 #: ../plug-ins/common/gif-save.c:1175
-#, fuzzy
 msgid ""
 "The image you are trying to save as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr ""
-"Зображення, яке ви намагаєтесь зберегти як GIF\n"
-"містить шари, що виходять за дійсні межі\n"
-"зображення. Це недопустимо в GIF.\n"
-"\n"
-"Ви можете або обрізати всі шари по межі\n"
-"зображення, або скасувати це збереження."
+"Зображення, яке ви намагаєтесь зберегти як GIF містить шари, що виходять за дійсні межі"
+"зображення."
 
 #: ../plug-ins/common/gif-save.c:1192
-#, fuzzy
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this save."
 msgstr ""
-"Зображення, яке ви намагаєтесь зберегти як GIF\n"
-"містить шари, що виходять за дійсні межі\n"
-"зображення. Це недопустимо в GIF.\n"
-"\n"
-"Ви можете або обрізати всі шари по межі\n"
+"Це неприпустимо в GIF. Ви можете або обрізати всі шари по межі "
 "зображення, або скасувати це збереження."
 
 #: ../plug-ins/common/gif-save.c:1233
@@ -4350,9 +4336,8 @@ msgid "GIF Options"
 msgstr "Параметри GIF"
 
 #: ../plug-ins/common/gif-save.c:1261
-#, fuzzy
 msgid "I_nterlace"
-msgstr "Черезрядковість"
+msgstr "_Черезрядковість"
 
 #: ../plug-ins/common/gif-save.c:1277
 msgid "_GIF comment:"
@@ -4376,9 +4361,8 @@ msgid "milliseconds"
 msgstr "мілісекунд"
 
 #: ../plug-ins/common/gif-save.c:1378
-#, fuzzy
 msgid "_Frame disposal where unspecified:"
-msgstr "Розміщення кадру де не вказано:"
+msgstr "_Розміщення кадру, якщо не вказано:"
 
 #: ../plug-ins/common/gif-save.c:1382
 msgid "I don't care"
@@ -4395,15 +4379,15 @@ msgstr "Один кадр на шар (заміна)"
 #. The "Always use default values" toggles
 #: ../plug-ins/common/gif-save.c:1402
 msgid "_Use delay entered above for all frames"
-msgstr ""
+msgstr "_Використовувати надалі вказану затримку"
 
 #: ../plug-ins/common/gif-save.c:1412
 msgid "U_se disposal entered above for all frames"
-msgstr ""
+msgstr "В_икористовувати надалі вказане розташування"
 
 #: ../plug-ins/common/gif-save.c:2565
 msgid "Error writing output file."
-msgstr "Помилка запису у файл виводу."
+msgstr "Помилка запису до файлу виводу."
 
 #: ../plug-ins/common/gif-save.c:2635
 #, c-format
@@ -4412,7 +4396,7 @@ msgstr "Коментар типово обмежений довжиною  %d с
 
 #: ../plug-ins/common/gih.c:207 ../plug-ins/common/gih.c:228
 msgid "GIMP brush (animated)"
-msgstr "Пензель GIMP(анімований)"
+msgstr "Пензель GIMP(анімаційний)"
 
 #: ../plug-ins/common/gih.c:321
 #, c-format
@@ -4482,90 +4466,84 @@ msgstr "Кількість кадрів:"
 #: ../plug-ins/common/glasstile.c:124
 msgid "Simulate distortion caused by square glass tiles"
 msgstr ""
+"Викривити зображення так, ніби на нього дивляться через квадратні скляні "
+"блоки"
 
 #: ../plug-ins/common/glasstile.c:130
 msgid "_Glass Tile..."
-msgstr "_Скляна плитка..."
+msgstr "_Скляні блоки..."
 
 #: ../plug-ins/common/glasstile.c:210 ../plug-ins/common/glasstile.c:250
 msgid "Glass Tile"
-msgstr "Скляна плитка"
+msgstr "Скляні блоки"
 
 #: ../plug-ins/common/glasstile.c:288
 msgid "Tile _width:"
-msgstr "_Ширина плитки:"
+msgstr "_Ширина блоку:"
 
 #: ../plug-ins/common/glasstile.c:302 ../plug-ins/common/mosaic.c:661
 msgid "Tile _height:"
-msgstr "В_исота плитки:"
+msgstr "В_исота блоку:"
 
 #: ../plug-ins/common/gqbist.c:402
 msgid "Generate a huge variety of abstract patterns"
-msgstr ""
+msgstr "Створити різні абстрактні текстури"
 
 #: ../plug-ins/common/gqbist.c:410
 msgid "_Qbist..."
 msgstr "_Q-біст..."
 
 #: ../plug-ins/common/gqbist.c:511
-#, fuzzy
 msgid "Qbist"
-msgstr "G-Qбіст"
+msgstr "Q-біст"
 
 #: ../plug-ins/common/gqbist.c:707
-#, fuzzy
 msgid "Load QBE File"
-msgstr "Завантажити QBE-файл"
+msgstr "Завантаження файлу QBE"
 
 #: ../plug-ins/common/gqbist.c:749
-#, fuzzy
 msgid "Save as QBE File"
-msgstr "Збереження файлу"
+msgstr "Збереження файлу QBE"
 
 #: ../plug-ins/common/gqbist.c:803
 msgid "G-Qbist"
-msgstr "G-Qбіст"
+msgstr "G-Q-біст"
 
 #: ../plug-ins/common/gradmap.c:84
 msgid "Recolor the image using colors from the active gradient"
-msgstr ""
+msgstr "Змінити колір зображення, використовуючи колір активного градієнту"
 
 #: ../plug-ins/common/gradmap.c:97
 msgid "_Gradient Map"
-msgstr "_Градієнтна мапа"
+msgstr "_Відобразити градієнт"
 
 #: ../plug-ins/common/gradmap.c:106
 msgid "Recolor the image using colors from the active palette"
-msgstr ""
+msgstr "Змінити колір зображення, використовуючи активну палітру"
 
 #: ../plug-ins/common/gradmap.c:119
-#, fuzzy
 msgid "_Palette Map"
-msgstr "Тип _палітри:"
+msgstr "В_ідобразити палітру:"
 
 #: ../plug-ins/common/gradmap.c:162
-#, fuzzy
 msgid "Gradient Map"
-msgstr "_Градієнтна мапа"
+msgstr "Відображення градієнту"
 
 #: ../plug-ins/common/gradmap.c:167
-#, fuzzy
 msgid "Palette Map"
-msgstr "Тип _палітри:"
+msgstr "Відображення палітри"
 
 #: ../plug-ins/common/grid.c:142
-#, fuzzy
 msgid "Draw a grid on the image"
-msgstr "Намалювати рамку з променів навколо зображення"
+msgstr "Малює сітку на зображенні"
 
 #: ../plug-ins/common/grid.c:148
 msgid "_Grid..."
 msgstr "_Сітка..."
 
 #: ../plug-ins/common/grid.c:241
-#, fuzzy
 msgid "Drawing grid"
-msgstr "Малювання сітки..."
+msgstr "Малювання сітки"
 
 #: ../plug-ins/common/grid.c:635 ../plug-ins/gfig/gfig-dialog.c:1355
 #: ../plug-ins/imagemap/imap_menu.c:209
@@ -4575,11 +4553,11 @@ msgstr "Сітка"
 #. attach labels
 #: ../plug-ins/common/grid.c:717
 msgid "Horizontal"
-msgstr "Горизонтальна"
+msgstr "Горизонталь"
 
 #: ../plug-ins/common/grid.c:719
 msgid "Vertical"
-msgstr "Вертикальна"
+msgstr "Вертикаль"
 
 #: ../plug-ins/common/grid.c:721
 msgid "Intersection"
@@ -4614,9 +4592,8 @@ msgid "HTML table"
 msgstr "Таблиця HTML"
 
 #: ../plug-ins/common/gtm.c:398
-#, fuzzy
 msgid "Save as HTML table"
-msgstr "Таблиця HTML"
+msgstr "Збереження таблиці HTML"
 
 #: ../plug-ins/common/gtm.c:425
 msgid "Warning"
@@ -4682,15 +4659,15 @@ msgstr ""
 
 #: ../plug-ins/common/gtm.c:510
 msgid "C_aption"
-msgstr "_Підпис"
+msgstr "_Заголовок"
 
 #: ../plug-ins/common/gtm.c:516
 msgid "Check if you would like to have the table captioned."
-msgstr "Таблиця має підпис"
+msgstr "Таблиця має заголовок"
 
 #: ../plug-ins/common/gtm.c:531
 msgid "The text for the table caption."
-msgstr "Текст підпису таблиці."
+msgstr "Текст заголовку таблиці."
 
 #: ../plug-ins/common/gtm.c:544
 msgid "C_ell content:"
@@ -4698,7 +4675,7 @@ msgstr "В_міст комірки:"
 
 #: ../plug-ins/common/gtm.c:548
 msgid "The text to go into each cell."
-msgstr "Текст, що пишеться у кожну комірку."
+msgstr "Текст, що пишеться у кожній комірці."
 
 #. HTML Table Options
 #: ../plug-ins/common/gtm.c:558
@@ -4715,15 +4692,16 @@ msgstr "Кількість точок в рамці таблиці."
 
 #: ../plug-ins/common/gtm.c:588
 msgid "The width for each table cell.  Can be a number or a percent."
-msgstr "Ширина кожної комірки. Може бути числом чи відсотками."
+msgstr "Ширина кожної комірки. Може бути числом чи відсотком."
 
 #: ../plug-ins/common/gtm.c:604
 msgid "The height for each table cell.  Can be a number or a percent."
-msgstr "Висота кожної комірки. Може бути числом чи відсотками."
+msgstr "Висота кожної комірки. Може бути числом чи відсотком."
 
 #: ../plug-ins/common/gtm.c:615
 msgid "Cell-_padding:"
-msgstr "_Заповнення комірки:"
+msgstr "_Заповнення комірки\n"
+"(cellpadding):"
 
 #: ../plug-ins/common/gtm.c:619
 msgid "The amount of cellpadding."
@@ -4731,7 +4709,8 @@ msgstr "Розмір заповнення комірок."
 
 #: ../plug-ins/common/gtm.c:628
 msgid "Cell-_spacing:"
-msgstr "_Інтервал між комірками:"
+msgstr "_Інтервал між комірками\n"
+"(cellspacing):"
 
 #: ../plug-ins/common/gtm.c:632
 msgid "The amount of cellspacing."
@@ -4739,16 +4718,15 @@ msgstr "Розмір інтервалу між комірками."
 
 #: ../plug-ins/common/guillotine.c:69
 msgid "Slice the image into subimages using guides"
-msgstr ""
+msgstr "Розрізати зображення на частини, вказані напрямними"
 
 #: ../plug-ins/common/guillotine.c:74
 msgid "_Guillotine"
 msgstr "Г_ільйотина..."
 
 #: ../plug-ins/common/guillotine.c:106
-#, fuzzy
 msgid "Guillotine"
-msgstr "Г_ільйотина..."
+msgstr "Гільйотина"
 
 #: ../plug-ins/common/header.c:77
 msgid "C source code header"
@@ -4756,7 +4734,7 @@ msgstr "Заголовок програми на С"
 
 #: ../plug-ins/common/hot.c:207
 msgid "Find and fix pixels that may be unsafely bright"
-msgstr ""
+msgstr "Знайти та змінити точки, які можуть бути надто яскравими"
 
 #: ../plug-ins/common/hot.c:217
 msgid "_Hot..."
@@ -4764,10 +4742,9 @@ msgstr "_Гарячі кольори..."
 
 #: ../plug-ins/common/hot.c:379 ../plug-ins/common/hot.c:570
 msgid "Hot"
-msgstr "Гарячі"
+msgstr "Гарячі кольори"
 
 #: ../plug-ins/common/hot.c:607
-#, fuzzy
 msgid "Create _new layer"
 msgstr "Створити _новий шар"
 
@@ -4788,9 +4765,8 @@ msgid "_Blacken"
 msgstr "_Чорний"
 
 #: ../plug-ins/common/illusion.c:91
-#, fuzzy
 msgid "Superimpose many altered copies of the image"
-msgstr "Використовувати колір зображення"
+msgstr "Накласти численні викривлені копії зображення одне на одне"
 
 #: ../plug-ins/common/illusion.c:96
 msgid "_Illusion..."
@@ -4814,21 +4790,20 @@ msgstr "Режим _2"
 
 #: ../plug-ins/common/iwarp.c:262
 msgid "Use mouse control to warp image areas"
-msgstr ""
+msgstr "Використовуйте кнопки миші для викривлення зображення"
 
 #: ../plug-ins/common/iwarp.c:267
 msgid "_IWarp..."
 msgstr "_Інтерактивне спотворення..."
 
 #: ../plug-ins/common/iwarp.c:699
-#, fuzzy
 msgid "Warping"
-msgstr "Попередження"
+msgstr "Викривлення"
 
 #: ../plug-ins/common/iwarp.c:804
-#, fuzzy, c-format
+#, c-format
 msgid "Warping Frame %d"
-msgstr "Викривляється кадр № %d..."
+msgstr "Викривляється кадр %d"
 
 #: ../plug-ins/common/iwarp.c:816
 msgid "Ping pong"
@@ -4839,22 +4814,20 @@ msgid "A_nimate"
 msgstr "_Анімувати"
 
 #: ../plug-ins/common/iwarp.c:1041
-#, fuzzy
 msgid "Number of _frames:"
 msgstr "Кількість _кадрів:"
 
 #: ../plug-ins/common/iwarp.c:1050
 msgid "R_everse"
-msgstr "_Обернути"
+msgstr "У _зворотному порядку"
 
 #: ../plug-ins/common/iwarp.c:1059
-#, fuzzy
 msgid "_Ping pong"
-msgstr "Пін-понґ"
+msgstr "_Пін-понґ"
 
 #: ../plug-ins/common/iwarp.c:1072
 msgid "_Animate"
-msgstr "_Анімувати"
+msgstr "_Анімація"
 
 #: ../plug-ins/common/iwarp.c:1093
 msgid "Deform Mode"
@@ -4866,7 +4839,7 @@ msgstr "_Перемістити"
 
 #: ../plug-ins/common/iwarp.c:1107
 msgid "_Grow"
-msgstr "_Ріст"
+msgstr "_Зростання"
 
 #: ../plug-ins/common/iwarp.c:1108
 msgid "S_wirl CCW"
@@ -4874,7 +4847,7 @@ msgstr "_Вихор CCW"
 
 #: ../plug-ins/common/iwarp.c:1109
 msgid "Remo_ve"
-msgstr "В_идалити"
+msgstr "В_идалення"
 
 #: ../plug-ins/common/iwarp.c:1110
 msgid "S_hrink"
@@ -4890,11 +4863,11 @@ msgstr "Радіус _деформації:"
 
 #: ../plug-ins/common/iwarp.c:1150
 msgid "D_eform amount:"
-msgstr "Степінь д_еформації:"
+msgstr "Ступінь д_еформації:"
 
 #: ../plug-ins/common/iwarp.c:1159
 msgid "_Bilinear"
-msgstr "_Білінійний"
+msgstr "_Білінійне згладжування"
 
 #: ../plug-ins/common/iwarp.c:1173
 msgid "Adaptive s_upersample"
@@ -4921,20 +4894,19 @@ msgstr "Інтерактивне спотворення"
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
-msgstr ""
+msgstr "Натисніть та потягніть, щоб визначити викривлення."
 
 #: ../plug-ins/common/jigsaw.c:356
 msgid "Add a jigsaw-puzzle pattern to the image"
-msgstr ""
+msgstr "Надати зображенню вигляд головоломки-пазла"
 
 #: ../plug-ins/common/jigsaw.c:361
 msgid "_Jigsaw..."
 msgstr "_Головоломка..."
 
 #: ../plug-ins/common/jigsaw.c:414
-#, fuzzy
 msgid "Assembling jigsaw"
-msgstr "Складання головоломки..."
+msgstr "Складання головоломки"
 
 #: ../plug-ins/common/jigsaw.c:2416
 msgid "Jigsaw"
@@ -4942,27 +4914,27 @@ msgstr "Головоломка"
 
 #: ../plug-ins/common/jigsaw.c:2444
 msgid "Number of Tiles"
-msgstr "Кількість елементів"
+msgstr "Кількість частин головоломки"
 
 #: ../plug-ins/common/jigsaw.c:2459
 msgid "Number of pieces going across"
-msgstr "Кількість елементів по горизонталі"
+msgstr "Кількість частин вздовж горизонталі"
 
 #: ../plug-ins/common/jigsaw.c:2476
 msgid "Number of pieces going down"
-msgstr "Кількість елементів по вертикалі"
+msgstr "Кількість частин вздовж вертикалі"
 
 #: ../plug-ins/common/jigsaw.c:2490
 msgid "Bevel Edges"
-msgstr "Закруглені краї"
+msgstr "Фаска меж"
 
 #: ../plug-ins/common/jigsaw.c:2500
 msgid "_Bevel width:"
-msgstr "Ширина _фаски:"
+msgstr "_Рельєф меж:"
 
 #: ../plug-ins/common/jigsaw.c:2504
 msgid "Degree of slope of each piece's edge"
-msgstr "Кут нахилу краю кожного елементу"
+msgstr "Ступінь нахилу кромки"
 
 #: ../plug-ins/common/jigsaw.c:2517
 msgid "H_ighlight:"
@@ -4970,12 +4942,12 @@ msgstr "В_ідблиски:"
 
 #: ../plug-ins/common/jigsaw.c:2521
 msgid "The amount of highlighting on the edges of each piece"
-msgstr "Розмір відблиску на краях кожного елементу"
+msgstr "Розмір відблиску на межах кожного елементу"
 
 #. frame for primitive radio buttons
 #: ../plug-ins/common/jigsaw.c:2538
 msgid "Jigsaw Style"
-msgstr "Стиль головоломки"
+msgstr "Стиль елементів головоломки"
 
 #: ../plug-ins/common/jigsaw.c:2542
 msgid "_Square"
@@ -4994,217 +4966,197 @@ msgid "Each piece has curved sides"
 msgstr "Кожен елемент має викривлені сторони"
 
 #: ../plug-ins/common/laplace.c:75
-#, fuzzy
 msgid "High-resolution edge detection"
-msgstr "Виділення меж за Собел"
+msgstr "Виділення меж з високою роздільною здатністю"
 
 #: ../plug-ins/common/laplace.c:85
 msgid "_Laplace"
 msgstr "_Лапласа"
 
 #: ../plug-ins/common/laplace.c:321
-#, fuzzy
 msgid "Cleanup"
-msgstr "Очищення..."
+msgstr "Очищення"
 
 #: ../plug-ins/common/lcms.c:222
-#, fuzzy
 msgid "Set a color profile on the image"
-msgstr "Використовувати колір зображення"
+msgstr "Змінити кольоровий профіль зображення"
 
 #: ../plug-ins/common/lcms.c:229
 msgid "_Assign Color Profile..."
-msgstr ""
+msgstr "_Призначити кольоровий профіль..."
 
 #: ../plug-ins/common/lcms.c:245
 msgid "Assign default RGB Profile"
-msgstr ""
+msgstr "Призначити стандартний кольоровий профіль"
 
 #: ../plug-ins/common/lcms.c:252
-#, fuzzy
 msgid "Apply a color profile on the image"
-msgstr "Використовувати колір зображення"
+msgstr "Застосувати до зображення новий кольоровий профіль"
 
 #: ../plug-ins/common/lcms.c:262
 msgid "_Convert to Color Profile..."
-msgstr ""
+msgstr "_Перетворити на кольоровий профіль..."
 
 #: ../plug-ins/common/lcms.c:280
-#, fuzzy
 msgid "Convert to default RGB Profile"
-msgstr "Сперш перетворіть зображення у RGB!"
+msgstr "Перетворити у стандартний профіль RGB"
 
 #: ../plug-ins/common/lcms.c:294
-#, fuzzy
 msgid "Image Color Profile Information"
-msgstr "Перетворення кольорів"
+msgstr "Інформація про профіль"
 
 #: ../plug-ins/common/lcms.c:308
-#, fuzzy
 msgid "Color Profile Information"
-msgstr "Перетворення кольорів"
+msgstr "Інформація про профіль"
 
 #: ../plug-ins/common/lcms.c:571
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
-msgstr ""
+msgstr "Кольоровий профіль  '%s' не для кольорового простору RGB."
 
 #: ../plug-ins/common/lcms.c:678
 msgid "Default RGB working space"
-msgstr ""
+msgstr "Стандартний профіль RGB робочого простору"
 
 #: ../plug-ins/common/lcms.c:766
 msgid ""
 "Data attached as 'icc-profile' does not appear to be an ICC color profile"
-msgstr ""
+msgstr "Дані, приєднані як ICC-профіль, не схожі на ICC-профіль"
 
 #: ../plug-ins/common/lcms.c:817
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' does not appear to be an ICC color profile"
-msgstr "Файл \"%s\" не є файлом IFS-фракталу."
+msgstr "\"%s\" не схожий ICC-профіль"
 
 #. ICC color profile conversion
 #: ../plug-ins/common/lcms.c:875
 #, c-format
 msgid "Converting from '%s' to '%s'"
-msgstr ""
+msgstr "Перетворення з '%s' на '%s'"
 
 #: ../plug-ins/common/lcms.c:1122
-#, fuzzy, c-format
+#, c-format
 msgid "Could not load ICC profile from '%s'"
-msgstr "Не вдається зчитати записи кольорів з \"%s\""
+msgstr "Не вдається відкрити ICC-профіль з '%s'"
 
 #: ../plug-ins/common/lcms.c:1144
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
-msgstr ""
+msgstr "Зображення '%s' містить вбудований кольоровий профіль:"
 
 #: ../plug-ins/common/lcms.c:1188
-#, fuzzy, c-format
+#, c-format
 msgid "Convert the image to the RGB working space (%s)?"
-msgstr "Сперш перетворіть зображення у RGB!"
+msgstr "Перетворити зображення на робочий простір RGB (%s)?"
 
 #: ../plug-ins/common/lcms.c:1219
 msgid "Convert to RGB working space?"
-msgstr ""
+msgstr "Перетворити на робочий простір RGB?"
 
 #: ../plug-ins/common/lcms.c:1224
-#, fuzzy
 msgid "_Keep"
-msgstr "В_ільна"
+msgstr "_Лишити як є"
 
 #: ../plug-ins/common/lcms.c:1229
-#, fuzzy
 msgid "_Convert"
-msgstr "_Інвертувати"
+msgstr "_Перетворили"
 
 #: ../plug-ins/common/lcms.c:1256 ../plug-ins/jpeg/jpeg-exif.c:372
 msgid "_Don't ask me again"
-msgstr ""
+msgstr "_Не питати надалі"
 
 #: ../plug-ins/common/lcms.c:1320
-#, fuzzy
 msgid "Select destination profile"
-msgstr "Другий цільовий колір"
+msgstr "Виберіть кінцевий профіль"
 
 #: ../plug-ins/common/lcms.c:1347
-#, fuzzy
 msgid "All files (*.*)"
-msgstr "_усіх секторів"
+msgstr "Усі файли (*.*)"
 
 #: ../plug-ins/common/lcms.c:1352
 msgid "ICC color profile (*.icc, *.icm)"
-msgstr ""
+msgstr "Кольоровий ICC-профіль (*.icc, *.icm)"
 
 #: ../plug-ins/common/lcms.c:1395
 #, c-format
 msgid "RGB workspace (%s)"
-msgstr ""
+msgstr "Робочий простір RGB (%s)"
 
 #: ../plug-ins/common/lcms.c:1445
-#, fuzzy
 msgid "Convert to ICC Color Profile"
-msgstr "Колір у альфа: зміна кольору"
+msgstr "Перетворити на кольоровий ICC-профіль"
 
 #: ../plug-ins/common/lcms.c:1446
 msgid "Assign ICC Color Profile"
-msgstr ""
+msgstr "Призначити кольоровий профіль"
 
 #: ../plug-ins/common/lcms.c:1454
 msgid "_Assign"
-msgstr ""
+msgstr "_Призначити"
 
 #: ../plug-ins/common/lcms.c:1471
 msgid "Current Color Profile"
-msgstr ""
+msgstr "Поточний кольоровий профіль"
 
 #: ../plug-ins/common/lcms.c:1486
 msgid "Convert to"
-msgstr ""
+msgstr "Перетворити на"
 
 #: ../plug-ins/common/lcms.c:1486
 msgid "Assign"
-msgstr ""
+msgstr "Призначити"
 
 #: ../plug-ins/common/lcms.c:1510
-#, fuzzy
 msgid "_Rendering Intent:"
-msgstr "_Візуалізація"
+msgstr "_Мета передачі кольору:"
 
 #: ../plug-ins/common/lcms.c:1526
 msgid "_Black Point Compensation"
-msgstr ""
+msgstr "Використовувати _компенсацію чорної точки"
 
 #: ../plug-ins/common/lcms.c:1567
 msgid "Destination profile is not for RGB color space."
-msgstr ""
+msgstr "Профіль виводу не призначений для кольорового простору RGB."
 
 #: ../plug-ins/common/lens.c:115
 msgid "Corrects lens distortion"
-msgstr ""
+msgstr "Виправити геометричні викривлення, що вносяться оптикою"
 
 #: ../plug-ins/common/lens.c:120
-#, fuzzy
 msgid "Lens Distortion..."
-msgstr "Виділення меж..."
+msgstr "Виправити викривлення оптики..."
 
 #: ../plug-ins/common/lens.c:383
 msgid "Lens distortion"
-msgstr ""
+msgstr "Корекція викривлень оптики"
 
 #: ../plug-ins/common/lens.c:483
-#, fuzzy
 msgid "Lens Distortion"
-msgstr "Виділення неону"
+msgstr "Корекція викривлень оптики"
 
 #: ../plug-ins/common/lens.c:520
-#, fuzzy
 msgid "_Main:"
-msgstr "В_ідображення"
+msgstr "_Головна:"
 
 #: ../plug-ins/common/lens.c:534
-#, fuzzy
 msgid "_Edge:"
-msgstr "Краї"
+msgstr "_Край:"
 
 #: ../plug-ins/common/lens.c:548 ../plug-ins/flame/flame.c:1213
 msgid "_Zoom:"
 msgstr "Мас_штаб:"
 
 #: ../plug-ins/common/lens.c:562
-#, fuzzy
 msgid "_Brighten:"
 msgstr "_Яскравість:"
 
 #: ../plug-ins/common/lens.c:576
-#, fuzzy
 msgid "_X shift:"
-msgstr "Розмір по _X:"
+msgstr "Зсув вздовж _X:"
 
 #: ../plug-ins/common/lens.c:590
-#, fuzzy
 msgid "_Y shift:"
-msgstr "Розмір по _Y:"
+msgstr "Зсув вздовж _Y:"
 
 #: ../plug-ins/common/lic.c:566 ../plug-ins/common/lic.c:641
 msgid "Van Gogh (LIC)"
@@ -5243,7 +5195,6 @@ msgid "W_ith source image"
 msgstr "З _початковим  зображенням"
 
 #: ../plug-ins/common/lic.c:716
-#, fuzzy
 msgid "_Effect image:"
 msgstr "Зображення _ефекту:"
 
@@ -5269,29 +5220,27 @@ msgstr "М_аксимальне значення:"
 
 #: ../plug-ins/common/lic.c:809
 msgid "Special effects that nobody understands"
-msgstr ""
+msgstr "Спеціальні ефекти, сенс яких нікому не відомий"
 
 #: ../plug-ins/common/lic.c:814
 msgid "_Van Gogh (LIC)..."
 msgstr "_Ван Гог (LIC)..."
 
 #: ../plug-ins/common/mail.c:259
-#, fuzzy
 msgid "Email the image"
-msgstr "Розрізати початкове зображення"
+msgstr "Надіслати це зображення електронною поштою"
 
 #: ../plug-ins/common/mail.c:265
 msgid "_Mail Image..."
-msgstr "Надіс_лати зображення..."
+msgstr "Надіс_лати поштою..."
 
 #: ../plug-ins/common/mail.c:524
 msgid "Send as Mail"
-msgstr "Надіслати як пошту"
+msgstr "Надіслати поштою"
 
 #: ../plug-ins/common/mail.c:529
-#, fuzzy
 msgid "_Send"
-msgstr "_Відправник:"
+msgstr "_Надіслати:"
 
 #: ../plug-ins/common/mail.c:561
 msgid "_Filename:"
@@ -5300,7 +5249,7 @@ msgstr "Назва _файлу:"
 #. Encapsulation label
 #: ../plug-ins/common/mail.c:568
 msgid "Encapsulation:"
-msgstr "Кодування даних:"
+msgstr "Інкапсуляція:"
 
 #: ../plug-ins/common/mail.c:580
 msgid "_MIME"
@@ -5331,9 +5280,9 @@ msgid "some sort of error with the file extension or lack thereof"
 msgstr "певна помилка у розширенні файлу"
 
 #: ../plug-ins/common/mail.c:903
-#, fuzzy, c-format
+#, c-format
 msgid "Could not start sendmail (%s)"
-msgstr "Не вдається записати у файл '%s': %s"
+msgstr "Не вдається запустити sendmail (%s)"
 
 #: ../plug-ins/common/mapcolor.c:111
 msgid "First Source Color"
@@ -5345,54 +5294,53 @@ msgstr "Колір другого джерела"
 
 #: ../plug-ins/common/mapcolor.c:113
 msgid "First Destination Color"
-msgstr "Перший цільовий колір"
+msgstr "Перший підсумковий колір"
 
 #: ../plug-ins/common/mapcolor.c:114
 msgid "Second Destination Color"
-msgstr "Другий цільовий колір"
+msgstr "Другий підсумковий колір"
 
 #: ../plug-ins/common/mapcolor.c:143
 msgid "Map colors sending foreground to black, background to white"
 msgstr ""
+"Змінити кольори, надаючи передньому плану значення білого, а тлу — значення "
+"чорного"
 
 #: ../plug-ins/common/mapcolor.c:151
-#, fuzzy
 msgid "Adjust _Foreground & Background"
-msgstr "Перед_ній план та тло"
+msgstr "Змінити перед_ній план та тло"
 
 #: ../plug-ins/common/mapcolor.c:160
 msgid "Map color range specified by two colors to another range"
 msgstr ""
+"Перетворення одного кольорового діапазону, що представлений двома кольорами, у інший "
+"кольоровий діапазон"
 
 #: ../plug-ins/common/mapcolor.c:168
 msgid "Color Range _Mapping..."
-msgstr "_Мапа заміни кольору..."
+msgstr "Відображення _кольорового діапазону..."
 
 #: ../plug-ins/common/mapcolor.c:214 ../plug-ins/common/mapcolor.c:526
 msgid "Cannot operate on gray or indexed color images."
-msgstr "Не застосовне до індексованих зображень."
+msgstr "Не можна застосовувати до індексованих зображень."
 
 #: ../plug-ins/common/mapcolor.c:235
-#, fuzzy
 msgid "Adjusting foreground and background colors"
-msgstr "Кольори переднього плану та тла"
+msgstr "Зміни кольорів переднього плану та тла"
 
 #: ../plug-ins/common/mapcolor.c:277
-#, fuzzy
 msgid "Mapping colors"
-msgstr "Відображення кольорів..."
+msgstr "Відображення кольорів"
 
 #: ../plug-ins/common/mapcolor.c:352
 msgid "Map Color Range"
-msgstr "Відображення діапазону кольорів"
+msgstr "Відобразити кольоровий діапазон"
 
 #: ../plug-ins/common/mapcolor.c:383
-#, fuzzy
 msgid "Source Color Range"
 msgstr "Початковий діапазон кольорів"
 
 #: ../plug-ins/common/mapcolor.c:384
-#, fuzzy
 msgid "Destination Color Range"
 msgstr "Цільовий діапазон кольорів"
 
@@ -5406,11 +5354,12 @@ msgstr "До:"
 #: ../plug-ins/common/max_rgb.c:90
 msgid "Reduce image to pure red, green, and blue"
 msgstr ""
+"Скоротити діапазон кольорів зображення до максимальних значень червоного, "
+"зеленого та синього"
 
 #: ../plug-ins/common/max_rgb.c:95
-#, fuzzy
 msgid "Maxim_um RGB..."
-msgstr "Максимум RGB..."
+msgstr "_Максимум RGB..."
 
 #: ../plug-ins/common/max_rgb.c:134 ../plug-ins/common/scatter_hsv.c:158
 msgid "Can only operate on RGB drawables."
@@ -5421,9 +5370,8 @@ msgid "Max RGB"
 msgstr "Максимум RGB"
 
 #: ../plug-ins/common/max_rgb.c:259
-#, fuzzy
 msgid "Maximum RGB Value"
-msgstr "М_аксимальне значення:"
+msgstr "Максимальне значення RGB"
 
 #: ../plug-ins/common/max_rgb.c:291
 msgid "_Hold the maximal channels"
@@ -5435,14 +5383,13 @@ msgstr "Зб_ерігати мінімальні канали"
 
 #: ../plug-ins/common/mblur.c:157 ../plug-ins/common/mblur.c:171
 msgid "Simulate movement using directional blur"
-msgstr ""
+msgstr "Імітує рух, використовуючи розмиття"
 
 #: ../plug-ins/common/mblur.c:164 ../plug-ins/common/mblur.c:177
 msgid "_Motion Blur..."
 msgstr "Розмивання р_ухом..."
 
 #: ../plug-ins/common/mblur.c:910
-#, fuzzy
 msgid "Motion blurring"
 msgstr "Розмивання рухом..."
 
@@ -5456,11 +5403,11 @@ msgstr "Тип розмивання"
 
 #: ../plug-ins/common/mblur.c:1049
 msgid "_Linear"
-msgstr "_Лінійний"
+msgstr "_Лінійне"
 
 #: ../plug-ins/common/mblur.c:1050
 msgid "_Radial"
-msgstr "_Радіальний"
+msgstr "_Радіальне"
 
 #: ../plug-ins/common/mblur.c:1051 ../plug-ins/imagemap/imap_menu.c:203
 msgid "_Zoom"
@@ -5472,7 +5419,7 @@ msgstr "Центр розмивання"
 
 #: ../plug-ins/common/mblur.c:1101
 msgid "Blur _outward"
-msgstr ""
+msgstr "Розмити _назовні"
 
 #: ../plug-ins/common/mblur.c:1114
 msgid "Blur Parameters"
@@ -5487,7 +5434,7 @@ msgstr "К_ут:"
 #: ../plug-ins/common/mng.c:499 ../plug-ins/common/png.c:1734
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
-"Не вдається зберегти прозорість, натомість буде збережено непрозорість."
+"Не вдається зберегти прозорість, натомість зберігатиметься непрозорість."
 
 #: ../plug-ins/common/mng.c:1319
 msgid "Save as MNG"
@@ -5555,7 +5502,7 @@ msgstr "Замістити"
 
 #: ../plug-ins/common/mng.c:1442
 msgid "Default frame disposal:"
-msgstr "Типове розташування кадру:"
+msgstr "Кадри:"
 
 #: ../plug-ins/common/mng.c:1454
 msgid "PNG compression level:"
@@ -5564,7 +5511,7 @@ msgstr "Рівень стиснення PNG:"
 #: ../plug-ins/common/mng.c:1462 ../plug-ins/common/png.c:1881
 msgid "Choose a high compression level for small file size"
 msgstr ""
-"Виберіть більший степінь стиснення для отримання файлів меншого розміру"
+"Виберіть більший ступінь стиснення для отримання файлів меншого розміру"
 
 #: ../plug-ins/common/mng.c:1476
 msgid "JPEG compression quality:"
@@ -5575,7 +5522,6 @@ msgid "JPEG smoothing factor:"
 msgstr "Параметр згладжування JPEG:"
 
 #: ../plug-ins/common/mng.c:1503
-#, fuzzy
 msgid "Animated MNG Options"
 msgstr "Параметри анімаційного MNG"
 
@@ -5592,9 +5538,8 @@ msgid "MNG animation"
 msgstr "Анімація MNG"
 
 #: ../plug-ins/common/mosaic.c:359
-#, fuzzy
 msgid "Convert the image into irregular tiles"
-msgstr "Сперш перетворіть зображення у RGB!"
+msgstr "Надати зображенню вигляд мозаїки"
 
 #: ../plug-ins/common/mosaic.c:364
 msgid "_Mosaic..."
@@ -5602,47 +5547,39 @@ msgstr "_Мозаїка"
 
 #. progress bar for gradient finding
 #: ../plug-ins/common/mosaic.c:503
-#, fuzzy
 msgid "Finding edges"
-msgstr "Пошук країв..."
+msgstr "Пошук країв"
 
 #. Progress bar for rendering tiles
 #: ../plug-ins/common/mosaic.c:557
-#, fuzzy
 msgid "Rendering tiles"
-msgstr "Візуалізація елементів..."
+msgstr "Візуалізація елементів"
 
 #: ../plug-ins/common/mosaic.c:590
 msgid "Mosaic"
 msgstr "Мозаїка"
 
 #: ../plug-ins/common/mosaic.c:630
-#, fuzzy
 msgid "Squares"
-msgstr "_Квадрати"
+msgstr "Квадрати"
 
 #: ../plug-ins/common/mosaic.c:631
-#, fuzzy
 msgid "Hexagons"
-msgstr "_Шестикутники"
+msgstr "Шестикутники"
 
 #: ../plug-ins/common/mosaic.c:632
-#, fuzzy
 msgid "Octagons & squares"
-msgstr "_Восьмикутники й квадрати"
+msgstr "Восьмикутники й квадрати"
 
 #: ../plug-ins/common/mosaic.c:633
-#, fuzzy
 msgid "Triangles"
-msgstr "Черепиця"
+msgstr "Трикутники"
 
 #: ../plug-ins/common/mosaic.c:641
-#, fuzzy
 msgid "_Tiling primitives:"
-msgstr "Елементи мозаїки"
+msgstr "_Елементи мозаїки:"
 
 #: ../plug-ins/common/mosaic.c:649
-#, fuzzy
 msgid "Tile _size:"
 msgstr "_Розмір елементу:"
 
@@ -5652,7 +5589,7 @@ msgstr "_Інтервал між елементами:"
 
 #: ../plug-ins/common/mosaic.c:686
 msgid "Tile _neatness:"
-msgstr "_Чистота елементів:"
+msgstr "_Охайність елементів:"
 
 #: ../plug-ins/common/mosaic.c:699
 msgid "Light _direction:"
@@ -5685,20 +5622,19 @@ msgstr "Не вдається додати додаткову точку.\n"
 
 #: ../plug-ins/common/neon.c:134
 msgid "Simulate the glowing boundary of a neon light"
-msgstr ""
+msgstr "Створити сяючий неоновий контур"
 
 #: ../plug-ins/common/neon.c:139
 msgid "_Neon..."
 msgstr "_Неон..."
 
 #: ../plug-ins/common/neon.c:211
-#, fuzzy
 msgid "Neon"
-msgstr "Немає"
+msgstr "Неон"
 
 #: ../plug-ins/common/neon.c:693
 msgid "Neon Detection"
-msgstr "Виділення неону"
+msgstr "Виділення межі - неон"
 
 #: ../plug-ins/common/neon.c:745 ../plug-ins/common/unsharp.c:691
 msgid "_Amount:"
@@ -5745,25 +5681,26 @@ msgid "_Yellow"
 msgstr "_Жовтий"
 
 #: ../plug-ins/common/newsprint.c:411
-#, fuzzy
 msgid "Luminance"
-msgstr "Зменшити _яскравість"
+msgstr "Яскравість"
 
 #: ../plug-ins/common/newsprint.c:517
 msgid "Halftone the image to give newspaper-like effect"
 msgstr ""
+"Перетворює зображення на напівтонові точки, щоб створити ефект газетного "
+"друку"
 
 #: ../plug-ins/common/newsprint.c:526
 msgid "Newsprin_t..."
-msgstr "_Газетний папір"
+msgstr "_Газетний папір..."
 
 #: ../plug-ins/common/newsprint.c:627 ../plug-ins/common/newsprint.c:1188
 msgid "Newsprint"
-msgstr "Газета"
+msgstr "Газетний папір"
 
 #: ../plug-ins/common/newsprint.c:1031
 msgid "_Spot function:"
-msgstr "К_рапельна функція:"
+msgstr "_Спот-функція:"
 
 #. resolution settings
 #: ../plug-ins/common/newsprint.c:1239
@@ -5812,14 +5749,13 @@ msgid "_Lock channels"
 msgstr "_Фіксувати канали"
 
 #: ../plug-ins/common/newsprint.c:1415
-#, fuzzy
 msgid "_Factory Defaults"
 msgstr "Поча_ткові параметри"
 
 #. anti-alias control
 #: ../plug-ins/common/newsprint.c:1441 ../plug-ins/gfig/gfig-dialog.c:1256
 msgid "Antialiasing"
-msgstr "Згладжування контурів"
+msgstr "Згладжування"
 
 #: ../plug-ins/common/newsprint.c:1449
 msgid "O_versample:"
@@ -5827,7 +5763,7 @@ msgstr "П_ерекриття:"
 
 #: ../plug-ins/common/nlfilt.c:118
 msgid "Nonlinear swiss army knife filter"
-msgstr ""
+msgstr "Багатофункціональний нелінійний фільтр"
 
 #: ../plug-ins/common/nlfilt.c:124
 msgid "_NL Filter..."
@@ -5847,7 +5783,7 @@ msgstr "_Альфа-усікання середнє"
 
 #: ../plug-ins/common/nlfilt.c:1049
 msgid "Op_timal estimation"
-msgstr "_Оптимальна оцінка"
+msgstr "_Оптимальний розрахунок"
 
 #: ../plug-ins/common/nlfilt.c:1051
 msgid "_Edge enhancement"
@@ -5859,26 +5795,23 @@ msgstr "А_льфа:"
 
 #: ../plug-ins/common/noisify.c:144
 msgid "Distort colors by random amounts"
-msgstr ""
+msgstr "Викривити кольори довільним чином"
 
 #: ../plug-ins/common/noisify.c:154
-#, fuzzy
 msgid "_RGB Noise..."
-msgstr "_Суцільний шум..."
+msgstr "_Шум RGB..."
 
 #: ../plug-ins/common/noisify.c:282
-#, fuzzy
 msgid "Adding noise"
-msgstr "Додавання шуму..."
+msgstr "Додавання шуму"
 
 #: ../plug-ins/common/noisify.c:448
-#, fuzzy
 msgid "RGB Noise"
-msgstr "Шум"
+msgstr "Шум RGB"
 
 #: ../plug-ins/common/noisify.c:481
 msgid "Co_rrelated noise"
-msgstr "_Корельований шум"
+msgstr "_Кореляція шуму"
 
 #: ../plug-ins/common/noisify.c:496
 msgid "_Independent RGB"
@@ -5895,60 +5828,53 @@ msgstr "Канал %d:"
 
 #: ../plug-ins/common/normalize.c:80
 msgid "Stretch brightness values to cover the full range"
-msgstr ""
+msgstr "Гранично розтягнути значення яскравості"
 
 #: ../plug-ins/common/normalize.c:126
-#, fuzzy
 msgid "Normalizing"
-msgstr "Нормалізація..."
+msgstr "Нормалізація"
 
 #: ../plug-ins/common/nova.c:168
 msgid "Add a starburst to the image"
-msgstr ""
+msgstr "Додати до зображення зоряний спалах"
 
 #: ../plug-ins/common/nova.c:177
-#, fuzzy
 msgid "Super_nova..."
 msgstr "_Наднова..."
 
 #: ../plug-ins/common/nova.c:261
-#, fuzzy
 msgid "Rendering supernova"
-msgstr "Відображення наднова..."
+msgstr "Відображення Наднової..."
 
 #: ../plug-ins/common/nova.c:304
-#, fuzzy
 msgid "Supernova"
 msgstr "Наднова"
 
 #: ../plug-ins/common/nova.c:349
-#, fuzzy
 msgid "Supernova Color Picker"
 msgstr "Вибір кольору Наднової"
 
 #: ../plug-ins/common/nova.c:378
 msgid "_Spokes:"
-msgstr "Пл_ями:"
+msgstr "_Променів:"
 
 #: ../plug-ins/common/nova.c:393
 msgid "R_andom hue:"
 msgstr "_Випадковий відтінок:"
 
 #: ../plug-ins/common/nova.c:446
-#, fuzzy
 msgid "Center of Nova"
 msgstr "Центр Наднової"
 
 #: ../plug-ins/common/oilify.c:119 ../plug-ins/common/oilify.c:134
 msgid "Smear colors to simulate an oil painting"
-msgstr ""
+msgstr "Розмити кольори, щоб створити ефект малювання олією"
 
 #: ../plug-ins/common/oilify.c:125
 msgid "Oili_fy..."
-msgstr "_Олійна фарба"
+msgstr "_Олійна фарба..."
 
 #: ../plug-ins/common/oilify.c:247
-#, fuzzy
 msgid "Oil painting"
 msgstr "Малювання олією..."
 
@@ -5964,9 +5890,8 @@ msgstr "Розмір _маски:"
 #. * Mask-size map check button
 #.
 #: ../plug-ins/common/oilify.c:830
-#, fuzzy
 msgid "Use m_ask-size map:"
-msgstr "Використовувати мапу значень"
+msgstr "Використовувати м_апу розміром з маску:"
 
 #: ../plug-ins/common/oilify.c:867 ../plug-ins/common/sinus.c:922
 msgid "_Exponent:"
@@ -5976,9 +5901,8 @@ msgstr "_Експонента:"
 #. * Exponent map check button
 #.
 #: ../plug-ins/common/oilify.c:882
-#, fuzzy
 msgid "Use e_xponent map:"
-msgstr "_Експонента:"
+msgstr "Використовувати мапу _експоненти:"
 
 #.
 #. * Intensity algorithm check button
@@ -5993,7 +5917,7 @@ msgstr "Розріз паперу"
 
 #: ../plug-ins/common/papertile.c:269
 msgid "Division"
-msgstr "Ділення"
+msgstr "Сегменти"
 
 #: ../plug-ins/common/papertile.c:319
 msgid "Fractional Pixels"
@@ -6049,7 +5973,7 @@ msgstr "Колір т_ла"
 
 #: ../plug-ins/common/papertile.c:394
 msgid "S_elect here:"
-msgstr "_Вибраний символ:"
+msgstr "_Вибрати:"
 
 #: ../plug-ins/common/papertile.c:401
 msgid "Background Color"
@@ -6057,11 +5981,11 @@ msgstr "Колір тла"
 
 #: ../plug-ins/common/papertile.c:846
 msgid "Cut image into paper tiles, and slide them"
-msgstr ""
+msgstr "Розрізати зображення на частини та зсунути їх відносно один одного"
 
 #: ../plug-ins/common/papertile.c:851
 msgid "September 31, 1999"
-msgstr "31 Вересень 1999"
+msgstr "31 вересня 1999"
 
 #: ../plug-ins/common/papertile.c:852
 msgid "_Paper Tile..."
@@ -6069,16 +5993,16 @@ msgstr "Розріз _паперу..."
 
 #: ../plug-ins/common/pat.c:121 ../plug-ins/common/pat.c:143
 msgid "GIMP pattern"
-msgstr "Візерунок GIMP"
+msgstr "Текстура GIMP"
 
 #: ../plug-ins/common/pat.c:358
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Неправильний UTF-8 рядок у файлі шаблону \"%s\"."
+msgstr "Неправильний UTF-8 рядок у файлі текстури \"%s\"."
 
 #: ../plug-ins/common/pat.c:513
 msgid "Save as Pattern"
-msgstr "Зберегти як візерунок"
+msgstr "Зберегти як текстуру"
 
 #: ../plug-ins/common/pcx.c:129 ../plug-ins/common/pcx.c:148
 msgid "ZSoft PCX image"
@@ -6092,52 +6016,55 @@ msgstr "Не вдається зчитати заголовок з \"%s\""
 #: ../plug-ins/common/pcx.c:363
 #, c-format
 msgid "'%s' is not a PCX file"
-msgstr "\"%s\": не є PCX файлом"
+msgstr "\"%s\": не є файлом PCX"
 
 #: ../plug-ins/common/pcx.c:386
 msgid "Invalid number of bytes per line in PCX header"
-msgstr ""
+msgstr "Некоректна кількість байтів на рядок у заголовку PCX"
 
 #: ../plug-ins/common/pcx.c:434
 msgid "Unusual PCX flavour, giving up"
-msgstr "Незвичайний вигляд файлу PCX"
+msgstr "Незвичайний вигляд файлу PCX. Вихід"
 
 #: ../plug-ins/common/pcx.c:655
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid X offset: %d"
-msgstr "Зсув по _X:"
+msgstr "Некоректний зсув вздовж X: %d"
 
 #: ../plug-ins/common/pcx.c:661
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid Y offset: %d"
-msgstr "Зсув по _Y:"
+msgstr "Некоректний зсув вздовж Y: %d"
 
 #: ../plug-ins/common/pcx.c:667
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr ""
+"Права межа знаходиться за припустимими межами (має бути < %d): %d"
 
 #: ../plug-ins/common/pcx.c:674
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr ""
+"Нижня межа знаходиться за припустимими межами (має бути < %d): %d"
 
 #: ../plug-ins/common/pcx.c:730
-#, fuzzy, c-format
+#, c-format
 msgid "Writing to file '%s' failed: %s"
-msgstr "Помилка у діалозі друку: %d"
+msgstr "Помилка при записі до файлу '%s': %s"
 
 #: ../plug-ins/common/photocopy.c:153
 msgid "Simulate color distortion produced by a copy machine"
 msgstr ""
+"Створити ефект викривлення кольору, що імітує роботу копіювальної машини"
 
 #: ../plug-ins/common/photocopy.c:158
 msgid "_Photocopy..."
-msgstr "_Фотографія..."
+msgstr "_Фотокопія..."
 
 #: ../plug-ins/common/photocopy.c:837
 msgid "Photocopy"
-msgstr "Фотографія"
+msgstr "Фотокопія"
 
 #: ../plug-ins/common/photocopy.c:888 ../plug-ins/common/sharpen.c:511
 #: ../plug-ins/common/softglow.c:695
@@ -6153,40 +6080,36 @@ msgid "Percent _white:"
 msgstr "Відсоток _білого:"
 
 #: ../plug-ins/common/pix.c:140 ../plug-ins/common/pix.c:157
-#, fuzzy
 msgid "Alias Pix image"
-msgstr "Зображення X PixMap"
+msgstr "Зображення Alias Pix"
 
 #: ../plug-ins/common/pixelize.c:164
 msgid "Simplify image into an array of solid-colored squares"
-msgstr ""
+msgstr "Зменшити деталізацію зображення"
 
 #: ../plug-ins/common/pixelize.c:171
 msgid "_Pixelize..."
 msgstr "_Пікселізація..."
 
 #: ../plug-ins/common/pixelize.c:273
-#, fuzzy
 msgid "Pixelizing"
-msgstr "Пікселізація..."
+msgstr "Пікселізація"
 
 #: ../plug-ins/common/pixelize.c:314
 msgid "Pixelize"
 msgstr "Пікселізація"
 
 #: ../plug-ins/common/pixelize.c:350
-#, fuzzy
 msgid "Pixel _width:"
 msgstr "_Ширина точки:"
 
 #: ../plug-ins/common/pixelize.c:355
-#, fuzzy
 msgid "Pixel _height:"
 msgstr "_Висота точки:"
 
 #: ../plug-ins/common/plasma.c:176
 msgid "Create a random plasma texture"
-msgstr ""
+msgstr "Створити випадкову плазмову текстуру"
 
 #: ../plug-ins/common/plasma.c:181
 msgid "_Plasma..."
@@ -6206,34 +6129,35 @@ msgstr "_Турбулентність:"
 
 #: ../plug-ins/common/plugin-browser.c:134
 msgid "Display information about plug-ins"
-msgstr ""
+msgstr "Відобразити інформацію про розширення"
 
 #: ../plug-ins/common/plugin-browser.c:144
 msgid "_Plug-In Browser"
-msgstr "Перегляд _доповнень"
+msgstr "Перегляд _доповнень GIMP"
 
 #: ../plug-ins/common/plugin-browser.c:372
-#, fuzzy
 msgid "Searching by name"
-msgstr "Пошук за _назвою"
+msgstr "Триває пошук за назвою"
 
 #: ../plug-ins/common/plugin-browser.c:386
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d розширення"
+msgstr[1] "%d розширення"
+msgstr[2] "%d розширень"
 
 #: ../plug-ins/common/plugin-browser.c:395
 msgid "No matches for your query"
-msgstr ""
+msgstr "Відповідностей не знайдено"
 
 #: ../plug-ins/common/plugin-browser.c:398
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d модуль відповідає запиту"
+msgstr[1] "%d модулі відповідає запиту"
+msgstr[2] "%d модулів відповідає запиту"
 
 #: ../plug-ins/common/plugin-browser.c:529
 msgid "No matches"
@@ -6250,7 +6174,7 @@ msgstr "Назва"
 #: ../plug-ins/common/plugin-browser.c:605
 #: ../plug-ins/common/plugin-browser.c:668
 msgid "Menu Path"
-msgstr "Шлях меню"
+msgstr "Шлях у меню"
 
 #: ../plug-ins/common/plugin-browser.c:613
 #: ../plug-ins/common/plugin-browser.c:677
@@ -6259,17 +6183,16 @@ msgstr "Типи зображень"
 
 #: ../plug-ins/common/plugin-browser.c:623
 #: ../plug-ins/common/plugin-browser.c:686
-#, fuzzy
 msgid "Installation Date"
-msgstr "Вставляння дати"
+msgstr "Дата встановлення"
 
 #: ../plug-ins/common/plugin-browser.c:647
 msgid "List View"
-msgstr "Перегляд списком"
+msgstr "У вигляді списку"
 
 #: ../plug-ins/common/plugin-browser.c:709
 msgid "Tree View"
-msgstr "Перегляд деревом"
+msgstr "У вигляді дерева"
 
 #: ../plug-ins/common/png.c:261 ../plug-ins/common/png.c:282
 #: ../plug-ins/common/png.c:302 ../plug-ins/common/png.c:319
@@ -6277,9 +6200,9 @@ msgid "PNG image"
 msgstr "Зображення PNG"
 
 #: ../plug-ins/common/png.c:613
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading PNG file: %s"
-msgstr "Помилка відкривання файлу \"%s\""
+msgstr "Помилка при відкритті файлу PNG: \"%s\""
 
 #: ../plug-ins/common/png.c:686
 #, c-format
@@ -6346,14 +6269,12 @@ msgid "Co_mpression level:"
 msgstr "Рівень ст_иснення:"
 
 #: ../plug-ins/common/png.c:1895 ../plug-ins/jpeg/jpeg-save.c:1169
-#, fuzzy
 msgid "_Load Defaults"
 msgstr "За_вантажити початкові параметри"
 
 #: ../plug-ins/common/png.c:1903 ../plug-ins/jpeg/jpeg-save.c:1178
-#, fuzzy
 msgid "S_ave Defaults"
-msgstr "З_берегти початкові параметри"
+msgstr "З_апам'ятати ці параметри"
 
 #: ../plug-ins/common/pnm.c:245
 msgid "PNM Image"
@@ -6364,9 +6285,8 @@ msgid "PNM image"
 msgstr "Зображення PNM"
 
 #: ../plug-ins/common/pnm.c:277
-#, fuzzy
 msgid "PBM image"
-msgstr "Зображення PNM"
+msgstr "Зображення PBM"
 
 #: ../plug-ins/common/pnm.c:289
 msgid "PGM image"
@@ -6379,46 +6299,40 @@ msgstr "Зображення PPM"
 #: ../plug-ins/common/pnm.c:514 ../plug-ins/common/pnm.c:536
 #: ../plug-ins/common/pnm.c:545 ../plug-ins/common/pnm.c:556
 #: ../plug-ins/common/pnm.c:644 ../plug-ins/common/pnm.c:714
-#, fuzzy
 msgid "Premature end of file."
-msgstr "PNM: Передчасне закінчення файлу."
+msgstr "Передчасне закінчення файлу."
 
 #: ../plug-ins/common/pnm.c:516
-#, fuzzy
 msgid "Invalid file."
-msgstr "PNM: Неправильний файл."
+msgstr "Неправильний файл."
 
 #: ../plug-ins/common/pnm.c:530
 msgid "File not in a supported format."
 msgstr "Файл має непідтримуваний формат."
 
 #: ../plug-ins/common/pnm.c:539
-#, fuzzy
 msgid "Invalid X resolution."
-msgstr "PNM: Неправильна роздільна здатність по X"
+msgstr "Неправильна роздільна здатність по X"
 
 #: ../plug-ins/common/pnm.c:541
 msgid "Image width is larger than GIMP can handle."
-msgstr ""
+msgstr "GIMP не впорається із зображенням такої ширини"
 
 #: ../plug-ins/common/pnm.c:548
-#, fuzzy
 msgid "Invalid Y resolution."
-msgstr "PNM: Неправильна роздільна здатність по Y"
+msgstr "Неправильна роздільна здатність вздовж Y"
 
 #: ../plug-ins/common/pnm.c:550
 msgid "Image height is larger than GIMP can handle."
-msgstr ""
+msgstr "GIMP не впорається із зображенням такої висоти"
 
 #: ../plug-ins/common/pnm.c:562
-#, fuzzy
 msgid "Invalid maximum value."
-msgstr "PNM: Неправильне максимальне значення."
+msgstr "Неправильне максимальне значення."
 
 #: ../plug-ins/common/pnm.c:767
-#, fuzzy
 msgid "Error reading file."
-msgstr "Помилка зчитування файлу"
+msgstr "Помилка при читанні файлу."
 
 #: ../plug-ins/common/pnm.c:1133
 msgid "Save as PNM"
@@ -6439,22 +6353,19 @@ msgstr "ASCII"
 
 #: ../plug-ins/common/polar.c:156
 msgid "Convert image to or from polar coordinates"
-msgstr ""
+msgstr "Перетворює зображення з чи на полярні координати"
 
 #: ../plug-ins/common/polar.c:163
-#, fuzzy
 msgid "P_olar Coordinates..."
-msgstr "_Полярні координати"
+msgstr "_Полярні координати..."
 
 #: ../plug-ins/common/polar.c:360
-#, fuzzy
 msgid "Polar coordinates"
-msgstr "_Полярні координати"
+msgstr "Полярні координати"
 
 #: ../plug-ins/common/polar.c:592
-#, fuzzy
 msgid "Polar Coordinates"
-msgstr "_Полярні координати"
+msgstr "Полярні координати"
 
 #: ../plug-ins/common/polar.c:630
 msgid "Circle _depth in percent:"
@@ -6462,11 +6373,11 @@ msgstr "Г_либина кола у відсотках:"
 
 #: ../plug-ins/common/polar.c:642
 msgid "Offset _angle:"
-msgstr "_Кут зміщення:"
+msgstr "_Кут зсуву:"
 
 #: ../plug-ins/common/polar.c:657
 msgid "_Map backwards"
-msgstr "Відобразити _назад"
+msgstr "_Розвернути"
 
 #: ../plug-ins/common/polar.c:663
 msgid ""
@@ -6502,47 +6413,43 @@ msgstr ""
 
 #: ../plug-ins/common/poppler.c:285
 msgid "Portable Document Format"
-msgstr ""
+msgstr "Portable Document Format"
 
 #: ../plug-ins/common/poppler.c:606
 #, c-format
 msgid "%s-%s"
-msgstr ""
+msgstr "%s-%s"
 
 #: ../plug-ins/common/poppler.c:608 ../plug-ins/common/postscript.c:1109
 #, c-format
 msgid "%s-pages"
-msgstr ""
+msgstr "%s-сторінок"
 
 #: ../plug-ins/common/poppler.c:786
 msgid "Import from PDF"
-msgstr ""
+msgstr "Імпорт з PDF"
 
 #: ../plug-ins/common/poppler.c:791 ../plug-ins/common/postscript.c:3081
 #: ../plug-ins/common/tiff-load.c:451
-#, fuzzy
 msgid "_Import"
-msgstr "Імпорт _контурів"
+msgstr "_Імпортувати"
 
 #: ../plug-ins/common/poppler.c:857
-#, fuzzy
 msgid "_Width (pixels):"
-msgstr "Ширина (у точках):"
+msgstr "_Ширина (у точках):"
 
 #: ../plug-ins/common/poppler.c:858
-#, fuzzy
 msgid "_Height (pixels):"
-msgstr "Висота (у точках):"
+msgstr "_Висота (у точках):"
 
 #: ../plug-ins/common/poppler.c:860
-#, fuzzy
 msgid "_Resolution:"
-msgstr "Роздільна здатність:"
+msgstr "_Роздільна здатність:"
 
 #: ../plug-ins/common/poppler.c:1134
-#, fuzzy, c-format
+#, c-format
 msgid "pixels/%s"
-msgstr "точок/%a"
+msgstr "точок/%s"
 
 #: ../plug-ins/common/postscript.c:597 ../plug-ins/common/postscript.c:689
 msgid "PostScript document"
@@ -6550,7 +6457,7 @@ msgstr "Документ PostScript"
 
 #: ../plug-ins/common/postscript.c:616 ../plug-ins/common/postscript.c:705
 msgid "Encapsulated PostScript image"
-msgstr "Зображення Encapsulated PostScript"
+msgstr "Encapsulated PostScript"
 
 #: ../plug-ins/common/postscript.c:636
 msgid "PDF document"
@@ -6573,6 +6480,10 @@ msgid ""
 "location.\n"
 "(%s)"
 msgstr ""
+"Помилка при виконанні Ghostscript. Перевірте, що Ghostscript встановлено та при "
+"потребі у змінній оточення GS_PROG вкажіть GIMP "
+"розташування виконуваного файлу Ghostscript.\n"
+"(%s)"
 
 #: ../plug-ins/common/postscript.c:1911 ../plug-ins/common/tiff-load.c:954
 #, c-format
@@ -6584,12 +6495,11 @@ msgstr "Сторінка %d"
 #: ../plug-ins/common/sunras.c:1485 ../plug-ins/common/sunras.c:1593
 #: ../plug-ins/fits/fits.c:831 ../plug-ins/fits/fits.c:955
 msgid "Write error occurred"
-msgstr "Помилка при записуванні"
+msgstr "Помилка при записі"
 
 #: ../plug-ins/common/postscript.c:3076
-#, fuzzy
 msgid "Import from PostScript"
-msgstr "Завантажити PostScript"
+msgstr "Завантажити з PostScript"
 
 #. Rendering
 #: ../plug-ins/common/postscript.c:3119
@@ -6612,19 +6522,16 @@ msgstr "Сторінок для завантаження(наприклад: 1-4
 
 #: ../plug-ins/common/postscript.c:3185
 #: ../plug-ins/common/spheredesigner.c:2650
-#, fuzzy
 msgid "Layers"
-msgstr "Шар загину"
+msgstr "Шари"
 
 #: ../plug-ins/common/postscript.c:3187
-#, fuzzy
 msgid "Images"
 msgstr "Зображення"
 
 #: ../plug-ins/common/postscript.c:3190
-#, fuzzy
 msgid "Open as"
-msgstr "Відкрити"
+msgstr "Відкрити як"
 
 #: ../plug-ins/common/postscript.c:3194
 msgid "Try Bounding Box"
@@ -6728,7 +6635,7 @@ msgstr "_Розмір перегляду:"
 
 #: ../plug-ins/common/procedure-browser.c:83
 msgid "List available procedures in the PDB"
-msgstr ""
+msgstr "Список доступних процедур у базі даних"
 
 #: ../plug-ins/common/procedure-browser.c:88
 msgid "Procedure _Browser"
@@ -6744,57 +6651,57 @@ msgstr "Неправильний  UTF-8 рядок у PSD файлі"
 
 #: ../plug-ins/common/psd-load.c:623
 msgid "Cannot handle bitmap PSD files"
-msgstr ""
+msgstr "Неможливо працювати з файлами формату PSD з бітовою маскою"
 
 #: ../plug-ins/common/psd-load.c:632
 msgid "Cannot handle PSD files in CMYK color"
-msgstr ""
+msgstr "Неможливо працювати з файлами PSD у просторі CMYK"
 
 #: ../plug-ins/common/psd-load.c:635
 msgid "Cannot handle PSD files in Multichannel color"
-msgstr ""
+msgstr "Неможливо працювати з файлами PSD з багатоканальним кольором CMYK"
 
 #: ../plug-ins/common/psd-load.c:638
 msgid "Cannot handle PSD files in Duotone color"
-msgstr ""
+msgstr "Неможливо працювати з файлом PSD у режимі Duotone"
 
 #: ../plug-ins/common/psd-load.c:641
 msgid "Cannot handle PSD files in Lab color"
-msgstr ""
+msgstr "Неможливо працювати з файлом PSD у просторі L*a*b*"
 
 #: ../plug-ins/common/psd-load.c:644
 #, c-format
 msgid "Cannot handle the color mode %d of the PSD file"
-msgstr ""
+msgstr "Неможливо працювати з кольоровим режимом %d у файлі PSD"
 
 #: ../plug-ins/common/psd-load.c:737
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot handle PSD file with more than %d channels"
-msgstr "Не вдається зберегти зображення з альфа-каналами."
+msgstr "Неможливо працювати з файлом PSD, де більше ніж %d каналів"
 
 #: ../plug-ins/common/psd-load.c:2522
 msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
 msgstr ""
+"Неможливо працювати з файлом PSD у просторі CMYK, де більше 5 каналів"
 
 #: ../plug-ins/common/psd-load.c:2537
 #, c-format
 msgid "Cannot handle image mode %d (%s)"
-msgstr ""
+msgstr "Неможливо працювати з файлом у режимі %d (%s)"
 
 #: ../plug-ins/common/psd-load.c:2546
 #, c-format
 msgid "Cannot handle %d bits per channel PSD files"
-msgstr ""
+msgstr "Неможливо працювати з файлом PSD у режимі %d розрядів на канал"
 
 #: ../plug-ins/common/psd-load.c:3347
-#, fuzzy
 msgid "This is not an Adobe Photoshop PSD file"
-msgstr "Не є GIF файлом"
+msgstr "Не є файлом Adobe Photoshop PSD"
 
 #: ../plug-ins/common/psd-load.c:3352
 #, c-format
 msgid "The PSD file has bad version number '%d', not 1"
-msgstr ""
+msgstr "У файлі PSD некоректний номер версії '%d', а не 1"
 
 #: ../plug-ins/common/psd-save.c:222
 msgid "Photoshop image"
@@ -6806,10 +6713,14 @@ msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
 "plug-in does not support that, using normal mode instead."
 msgstr ""
+"Неможливо зберегти шар у режимі '%s'. Або ж формат PSD не підтримує його, "
+"або розширення для збереження даних до нього. натомість використовуйте режим "
+"«Звичайний»."
 
 #: ../plug-ins/common/psd-save.c:608
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
+"Помилка: Неможливо перетворити основний тип зображення GIMP на режим PSD"
 
 #: ../plug-ins/common/psd-save.c:1525
 #, c-format
@@ -6851,31 +6762,28 @@ msgid "LZ77"
 msgstr "LZ77"
 
 #: ../plug-ins/common/randomize.c:102
-#, fuzzy
 msgid "Random Hurl"
-msgstr "Випадковий кидок 1.7"
+msgstr "Випадковий кидок"
 
 #: ../plug-ins/common/randomize.c:103
-#, fuzzy
 msgid "Random Pick"
-msgstr "Випадковий вибір 1.7"
+msgstr "Випадковий вибір"
 
 #: ../plug-ins/common/randomize.c:104
-#, fuzzy
 msgid "Random Slur"
-msgstr "Випадкова пляма 1.7"
+msgstr "Випадкова пляма"
 
 #: ../plug-ins/common/randomize.c:200
 msgid "Completely randomize a fraction of pixels"
-msgstr ""
+msgstr "Повністю перемішує частину точок"
 
 #: ../plug-ins/common/randomize.c:202
 msgid "Randomly interchange some pixels with neighbors"
-msgstr ""
+msgstr "Поміняти місцями деякі точки випадковим чином"
 
 #: ../plug-ins/common/randomize.c:204
 msgid "Randomly slide some pixels downward (similar to melting)"
-msgstr ""
+msgstr "Опустити деякі точки випадковим чином (подібно до танення)"
 
 #: ../plug-ins/common/randomize.c:231
 msgid "_Hurl..."
@@ -6887,7 +6795,7 @@ msgstr "_Вибір..."
 
 #: ../plug-ins/common/randomize.c:255
 msgid "_Slur..."
-msgstr "_Пляма..."
+msgstr "_Танення..."
 
 #: ../plug-ins/common/randomize.c:744 ../plug-ins/common/snoise.c:601
 msgid "_Random seed:"
@@ -6910,23 +6818,20 @@ msgid "Number of times to apply filter"
 msgstr "Скільки разів застосувати фільтр"
 
 #: ../plug-ins/common/raw.c:179 ../plug-ins/common/raw.c:194
-#, fuzzy
 msgid "Raw image data"
-msgstr "Зображення з необробленими даними"
+msgstr "Raw Image Data"
 
 #: ../plug-ins/common/raw.c:959
-#, fuzzy
 msgid "Load Image from Raw Data"
-msgstr "Завантаження мапи зображення"
+msgstr "Завантаження зображення з Raw-даних"
 
 #: ../plug-ins/common/raw.c:992
 msgid "Image"
 msgstr "Зображення"
 
 #: ../plug-ins/common/raw.c:1003
-#, fuzzy
 msgid "RGB Alpha"
-msgstr "Альфа"
+msgstr "RGB з альфа-каналом"
 
 #: ../plug-ins/common/raw.c:1004
 msgid "Planar RGB"
@@ -6937,9 +6842,8 @@ msgid "Indexed"
 msgstr "Індексований"
 
 #: ../plug-ins/common/raw.c:1006
-#, fuzzy
 msgid "Indexed Alpha"
-msgstr "Індексований"
+msgstr "Індексоване з альфа-каналом"
 
 #: ../plug-ins/common/raw.c:1011
 msgid "Image _Type:"
@@ -6954,9 +6858,8 @@ msgid "R, G, B (normal)"
 msgstr "R, G, B (звичайний)"
 
 #: ../plug-ins/common/raw.c:1072 ../plug-ins/common/raw.c:1172
-#, fuzzy
 msgid "B, G, R, X (BMP style)"
-msgstr "B, G, R, X (у стилі bmp)"
+msgstr "B, G, R, X (у стилі BMP)"
 
 #: ../plug-ins/common/raw.c:1077
 msgid "_Palette Type:"
@@ -6967,9 +6870,8 @@ msgid "Off_set:"
 msgstr "_Зсув:"
 
 #: ../plug-ins/common/raw.c:1100
-#, fuzzy
 msgid "Select Palette File"
-msgstr "Вибір файлу палітри для завантаження"
+msgstr "Виберіть файл палітри"
 
 #: ../plug-ins/common/raw.c:1106
 msgid "Pal_ette File:"
@@ -6977,19 +6879,19 @@ msgstr "Файл _палітри:"
 
 #: ../plug-ins/common/raw.c:1134
 msgid "Raw Image Save"
-msgstr "Збереження зображення у необробленому форматі"
+msgstr "Зберегти Raw"
 
 #: ../plug-ins/common/raw.c:1156
 msgid "RGB Save Type"
-msgstr "Тип зберігання RGB"
+msgstr "Тип збереження RGB"
 
 #: ../plug-ins/common/raw.c:1160
 msgid "Standard (R,G,B)"
-msgstr "Стандартне (R,G,B)"
+msgstr "Стандартний (R,G,B)"
 
 #: ../plug-ins/common/raw.c:1161
 msgid "Planar (RRR,GGG,BBB)"
-msgstr "Планарне (RRR,GGG,BBB)"
+msgstr "Планарний (RRR,GGG,BBB)"
 
 #: ../plug-ins/common/raw.c:1166
 msgid "Indexed Palette Type"
@@ -6997,46 +6899,43 @@ msgstr "Тип індексованої палітри"
 
 #: ../plug-ins/common/redeye.c:107
 msgid "Remove the red eye effect caused by camera flashes"
-msgstr ""
+msgstr "Прибрати ефект червоних очей, що створюються фотоспалахом"
 
 #: ../plug-ins/common/redeye.c:118
 msgid "_Red Eye Removal..."
-msgstr ""
+msgstr "Прибрати ефект _червоних очей..."
 
 #: ../plug-ins/common/redeye.c:145
 msgid "Red Eye Removal"
-msgstr ""
+msgstr "Прибирання ефекту червоних очей"
 
 #: ../plug-ins/common/redeye.c:179
 msgid "Threshold for the red eye color to remove."
-msgstr ""
+msgstr "Межа прибирання ефекту червоних очей."
 
 #: ../plug-ins/common/redeye.c:184
 msgid "Manually selecting the eyes may improve the results."
-msgstr ""
+msgstr "Виділення області очей може покращити результат."
 
 #: ../plug-ins/common/redeye.c:317
-#, fuzzy
 msgid "Removing red eye"
-msgstr "Видалення кольору..."
+msgstr "Прибрати ефект червоних очей"
 
 #: ../plug-ins/common/retinex.c:156
 msgid "Enhance contrast using the Retinex method"
-msgstr ""
+msgstr "Збільшити контраст, використовуючи алгоритм Retinex"
 
 #: ../plug-ins/common/retinex.c:166
-#, fuzzy
 msgid "Retine_x..."
-msgstr "Retinex..."
+msgstr "Ретіне_кс..."
 
 #: ../plug-ins/common/retinex.c:250
-#, fuzzy
 msgid "Retinex"
-msgstr "Retinex..."
+msgstr "Ретінекс"
 
 #: ../plug-ins/common/retinex.c:289
 msgid "Retinex Image Enhancement"
-msgstr "Retinex покращення зображення"
+msgstr "Покращення зображення за допомогою ретінексу"
 
 #: ../plug-ins/common/retinex.c:318
 msgid "Level"
@@ -7044,7 +6943,7 @@ msgstr "Рівень"
 
 #: ../plug-ins/common/retinex.c:322
 msgid "_Uniform"
-msgstr "_Однорідний"
+msgstr "_Загальний для усіх"
 
 #: ../plug-ins/common/retinex.c:324
 msgid "_Low"
@@ -7067,22 +6966,20 @@ msgid "_Dynamic:"
 msgstr "_Динамічно:"
 
 #: ../plug-ins/common/retinex.c:654
-#, fuzzy
 msgid "Retinex: filtering"
-msgstr "Retinex: Фільтрування..."
+msgstr "Retinex: фільтрування"
 
 #: ../plug-ins/common/ripple.c:127
 msgid "Displace pixels in a ripple pattern"
-msgstr ""
+msgstr "Перемішати точки для створення текстури, що імітує брижі"
 
 #: ../plug-ins/common/ripple.c:134
 msgid "_Ripple..."
 msgstr "_Брижі..."
 
 #: ../plug-ins/common/ripple.c:224
-#, fuzzy
 msgid "Rippling"
-msgstr "Створення брижів..."
+msgstr "Створення брижів"
 
 #: ../plug-ins/common/ripple.c:466
 msgid "Ripple"
@@ -7098,9 +6995,8 @@ msgid "Edges"
 msgstr "Краї"
 
 #: ../plug-ins/common/ripple.c:563
-#, fuzzy
 msgid "_Blank"
-msgstr "_Чорний"
+msgstr "О_чистити"
 
 #. Wave toggle box
 #: ../plug-ins/common/ripple.c:585
@@ -7109,7 +7005,7 @@ msgstr "Тип хвилі"
 
 #: ../plug-ins/common/ripple.c:589
 msgid "Saw_tooth"
-msgstr "Пи_лоподібна"
+msgstr "Пи_лкоподібна"
 
 #: ../plug-ins/common/ripple.c:590
 msgid "S_ine"
@@ -7125,24 +7021,23 @@ msgstr "_Амплітуда:"
 
 #: ../plug-ins/common/rotate.c:413
 msgid "You can not rotate the whole image if there's a selection."
-msgstr "Не можна повертати все зображення, якщо в ньому є виділена ділянка."
+msgstr "Не можна обертати все зображення, якщо в ньому є виділена ділянка."
 
 #: ../plug-ins/common/rotate.c:420
 msgid "You can not rotate the whole image if there's a floating selection."
-msgstr "Не можна повертати все зображення, якщо в ньому є плаваюче виділення."
+msgstr "Не можна обертати все зображення, якщо в ньому є плаваюче виділення."
 
 #: ../plug-ins/common/rotate.c:431
 msgid "Sorry, channels and masks can not be rotated."
-msgstr "Нажаль канали та маски не можна обертати."
+msgstr "На жаль канали та маски не можна обертати."
 
 #: ../plug-ins/common/rotate.c:437
-#, fuzzy
 msgid "Rotating"
 msgstr "Обертання"
 
 #: ../plug-ins/common/sample_colorize.c:298
 msgid "Colorize image using a sample image as a guide"
-msgstr ""
+msgstr "Фарбувати одне зображення за зразком іншого"
 
 #: ../plug-ins/common/sample_colorize.c:303
 msgid "_Sample Colorize..."
@@ -7153,9 +7048,8 @@ msgid "Sample Colorize"
 msgstr "Фарбування за зразком"
 
 #: ../plug-ins/common/sample_colorize.c:1318
-#, fuzzy
 msgid "Get _Sample Colors"
-msgstr "Отримання кольору зразка"
+msgstr "Отримати кольори з_разка"
 
 #. layer combo_box (Dst)
 #: ../plug-ins/common/sample_colorize.c:1347
@@ -7192,19 +7086,18 @@ msgid "Input levels:"
 msgstr "Рівень на вході:"
 
 #: ../plug-ins/common/sample_colorize.c:1600
-#, fuzzy
 msgid "Output levels:"
-msgstr "Рівень на виході:"
+msgstr "Рівні на виході:"
 
 #. check button
 #: ../plug-ins/common/sample_colorize.c:1640
 msgid "Hold intensity"
-msgstr "Зберегти інтенсивність"
+msgstr "Зберегти глибину кольору"
 
 #. check button
 #: ../plug-ins/common/sample_colorize.c:1651
 msgid "Original intensity"
-msgstr "Початкова інтенсивність"
+msgstr "Початкова глибина кольору"
 
 #. check button
 #: ../plug-ins/common/sample_colorize.c:1669
@@ -7217,28 +7110,24 @@ msgid "Smooth samples"
 msgstr "Згладжувати кольори зразка"
 
 #: ../plug-ins/common/sample_colorize.c:2652
-#, fuzzy
 msgid "Sample analyze"
-msgstr "Аналіз зразка..."
+msgstr "Аналіз зразка"
 
 #: ../plug-ins/common/sample_colorize.c:3030
-#, fuzzy
 msgid "Remap colorized"
-msgstr "Фарбування за зразком..."
+msgstr "Фарбування за зразком"
 
 #: ../plug-ins/common/scatter_hsv.c:103
 msgid "Randomize hue/saturation/value independently"
-msgstr ""
+msgstr "Змінити відтінок, яскравість та контраст точок довільним чином"
 
 #: ../plug-ins/common/scatter_hsv.c:108
-#, fuzzy
 msgid "HSV Noise..."
-msgstr "Додавання суцільного шуму..."
+msgstr "Шум HSV..."
 
 #: ../plug-ins/common/scatter_hsv.c:215 ../plug-ins/common/scatter_hsv.c:361
-#, fuzzy
 msgid "HSV Noise"
-msgstr "Шум"
+msgstr "Шум HSV"
 
 #: ../plug-ins/common/scatter_hsv.c:397
 msgid "_Holdness:"
@@ -7250,25 +7139,21 @@ msgstr "_Відтінок:"
 
 #: ../plug-ins/common/screenshot.c:234
 msgid "Create an image from an area of the screen"
-msgstr ""
+msgstr "Створити зображення з вказаної частини робочого столу"
 
 #: ../plug-ins/common/screenshot.c:247
-#, fuzzy
 msgid "_Screenshot..."
 msgstr "_Знімок екрану..."
 
 #: ../plug-ins/common/screenshot.c:412
-#, fuzzy
 msgid "Error selecting the window"
-msgstr "Помилка при захопленні знімку"
+msgstr "Помилка при виборі вікна"
 
 #: ../plug-ins/common/screenshot.c:773
-#, fuzzy
 msgid "Importing screenshot"
-msgstr "Помилка при отриманні знімка екрану"
+msgstr "Імпорт знімку екрану"
 
 #: ../plug-ins/common/screenshot.c:799 ../plug-ins/common/screenshot.c:977
-#, fuzzy
 msgid "Screenshot"
 msgstr "Знімок екрану"
 
@@ -7278,65 +7163,60 @@ msgstr "Вказане вікно не знайдене"
 
 #: ../plug-ins/common/screenshot.c:898
 msgid "There was an error taking the screenshot."
-msgstr ""
+msgstr "При створенні знімку екрану виникла помилка."
 
 #: ../plug-ins/common/screenshot.c:986
-#, fuzzy
 msgid "S_nap"
-msgstr "_Переставити"
+msgstr "За_хопити"
 
 #: ../plug-ins/common/screenshot.c:1016
 msgid "After the delay, the screenshot is taken."
-msgstr ""
+msgstr "Після затримки робиться знімок"
 
 #: ../plug-ins/common/screenshot.c:1018
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
-msgstr ""
+msgstr "Після затримки, пересуньте мишу на область для знімку."
 
 #: ../plug-ins/common/screenshot.c:1021
 msgid "At the end of the delay, click in a window to snap it."
-msgstr ""
+msgstr "Після затримки клацніть на вікні для отримання його знімку"
 
 #. Area
 #: ../plug-ins/common/screenshot.c:1027
-#, fuzzy
 msgid "Area"
-msgstr "Ділянка:"
+msgstr "Область"
 
 #: ../plug-ins/common/screenshot.c:1038
 msgid "Take a screenshot of a single _window"
-msgstr ""
+msgstr "Зняти лише активне _вікно"
 
 #: ../plug-ins/common/screenshot.c:1059
-#, fuzzy
 msgid "Include window _decoration"
-msgstr "Включаючи облямівку"
+msgstr "Включаючи _рамку вікна"
 
 #: ../plug-ins/common/screenshot.c:1075
 msgid "Take a screenshot of the entire _screen"
-msgstr ""
+msgstr "Зняти _весь екран"
 
 #: ../plug-ins/common/screenshot.c:1092
-#, fuzzy
 msgid "Select a _region to grab"
-msgstr "Вибрати попередній вектор"
+msgstr "Виділіть _область"
 
 #. Delay
 #: ../plug-ins/common/screenshot.c:1107
-#, fuzzy
 msgid "Delay"
-msgstr "Перекривання"
+msgstr "Затримка"
 
 #. this is the unit label of a spinbutton
 #: ../plug-ins/common/screenshot.c:1129
-#, fuzzy
 msgid "seconds"
-msgstr "мілісекунд"
+msgstr "секунд"
 
 #: ../plug-ins/common/sel_gauss.c:104
 msgid "Blur neighboring pixels, but only in low-contrast areas"
 msgstr ""
+"Розмити сусідні точки, але лише на ділянках з невеликим контрастом"
 
 #: ../plug-ins/common/sel_gauss.c:115
 msgid "_Selective Gaussian Blur..."
@@ -7356,16 +7236,15 @@ msgstr "_Макс. Дельта:"
 
 #: ../plug-ins/common/semiflatten.c:68
 msgid "Replace partial transparency with the current background color"
-msgstr ""
+msgstr "Замінити часткову прозорість поточним кольором тла"
 
 #: ../plug-ins/common/semiflatten.c:75
 msgid "_Semi-Flatten"
 msgstr "Напів_зведення..."
 
 #: ../plug-ins/common/semiflatten.c:118
-#, fuzzy
 msgid "Semi-Flattening"
-msgstr "Напівзведення..."
+msgstr "Напівзведення"
 
 #: ../plug-ins/common/sharpen.c:113
 msgid "Make image sharper (less powerful than Unsharp Mask)"
