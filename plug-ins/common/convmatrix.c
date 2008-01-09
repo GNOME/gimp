@@ -15,44 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
- * The GNU General Public License is also available from
- * http://www.fsf.org/copyleft/gpl.html
- *
- *
- * CHANGELOG:
- * v0.14        21.09.2006                   (gg <gg at catking the net>)
- *      Replace numerical consts by named const, much variable renaming for maintainability
- *      Generalisation of code w.r.t. matrix dimension with aim to support 7x7
- *      Some minor bug fixes.
- *
- * v0.13        15.12.2000
- *      Made the PDB interface actually work.   (Simon Budig <simon@gimp.org>)
- *
- * v0.12        15.9.1997
- *      Got rid of the unportable snprintf. Also made some _tiny_ GUI fixes.
- *
- * v0.11        20.7.1997
- *      Negative values in the matrix are now abs'ed when used to weight
- *      alpha. Embossing effects should work properly now. Also fixed a
- *      totally idiotic bug with embossing.
- *
- * v0.1         2.7.1997
- *      Initial release. Works... kinda.
- *
- *
- * TODO:
- *
- * - remove channels selector (that's what the channels dialog is for)
- * - remove idiotic slowdowns
- * - clean up code
- * - optimize properly
- * - save & load matrices
- * - spiffy frontend for designing matrices
- *
- * What else?
- *
- *
  */
 
 #include "config.h"
@@ -68,6 +30,7 @@
 
 #define PLUG_IN_PROC   "plug-in-convmatrix"
 #define PLUG_IN_BINARY "convmatrix"
+
 #define RESPONSE_RESET 1
 
 
@@ -569,7 +532,6 @@ convolve_image (GimpDrawable *drawable,
   guchar       *dest_row[DEST_ROWS];
   guchar       *src_row[MATRIX_SIZE];
   guchar       *tmp_row;
-  gfloat        sum;
   gint          x_offset;
   gboolean      chanmask[CHANNELS - 1];
   gint          bpp;
@@ -650,29 +612,44 @@ convolve_image (GimpDrawable *drawable,
       for (col = src_x1; col < src_x2; col++)
         for (channel = 0; channel < bpp; channel++)
           {
-            if (chanmask[channel])
-              sum = convolve_pixel(src_row, x_offset, channel, drawable);
-            else
-              sum = src_row[HALF_WINDOW][x_offset + HALF_WINDOW * bpp];  /* copy unmodified px */
+            guchar d;
 
-            dest_row[HALF_WINDOW][x_offset] = (guchar) CLAMP (sum, 0, 255);
+            if (chanmask[channel])
+              {
+                gint result;
+
+                result = ROUND (convolve_pixel (src_row,
+                                                x_offset, channel, drawable));
+                d = CLAMP (result, 0, 255);
+              }
+            else
+              {
+                /* copy unmodified pixel */
+                d = src_row[HALF_WINDOW][x_offset + HALF_WINDOW * bpp];
+              }
+
+            dest_row[HALF_WINDOW][x_offset] = d;
             x_offset++;
           }
 
       if (row >= src_y1 + HALF_WINDOW)
-        gimp_pixel_rgn_set_row (&destPR, dest_row[0], src_x1, row - HALF_WINDOW, src_w);
+        gimp_pixel_rgn_set_row (&destPR,
+                                dest_row[0], src_x1, row - HALF_WINDOW, src_w);
 
       if (row < src_y2 - 1)
         {
           tmp_row = dest_row[0];
+
           for (i = 0; i < DEST_ROWS - 1; i++)
             dest_row[i] = dest_row[i + 1];
 
           dest_row[DEST_ROWS - 1] = tmp_row;
 
           tmp_row = src_row[0];
+
           for (i = 0; i < MATRIX_SIZE - 1; i++)
             src_row[i] = src_row[i + 1];
+
           src_row[MATRIX_SIZE-1] = tmp_row;
 
           my_get_row (&srcPR, src_row[MATRIX_SIZE - 1],
@@ -699,10 +676,13 @@ convolve_image (GimpDrawable *drawable,
     {
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, src_x1, src_y1, src_x2 - src_x1, src_y2 - src_y1);
+      gimp_drawable_update (drawable->drawable_id,
+                            src_x1, src_y1, src_x2 - src_x1, src_y2 - src_y1);
     }
+
   for (i = 0; i < MATRIX_SIZE; i++)
     g_free (src_row[i]);
+
   for (i = 0; i < DEST_ROWS; i++)
     g_free (dest_row[i]);
 }
