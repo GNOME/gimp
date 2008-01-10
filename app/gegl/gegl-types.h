@@ -25,13 +25,14 @@
 #include "base/base-types.h"
 
 
-typedef struct _GimpOperationColorize   GimpOperationColorize;
-typedef struct _GimpOperationDesaturate GimpOperationDesaturate;
-typedef struct _GimpOperationLevels     GimpOperationLevels;
-typedef struct _GimpOperationPosterize  GimpOperationPosterize;
-typedef struct _GimpOperationThreshold  GimpOperationThreshold;
-typedef struct _GimpOperationTileSink   GimpOperationTileSink;
-typedef struct _GimpOperationTileSource GimpOperationTileSource;
+typedef struct _GimpOperationColorBalance GimpOperationColorBalance;
+typedef struct _GimpOperationColorize     GimpOperationColorize;
+typedef struct _GimpOperationDesaturate   GimpOperationDesaturate;
+typedef struct _GimpOperationLevels       GimpOperationLevels;
+typedef struct _GimpOperationPosterize    GimpOperationPosterize;
+typedef struct _GimpOperationThreshold    GimpOperationThreshold;
+typedef struct _GimpOperationTileSink     GimpOperationTileSink;
+typedef struct _GimpOperationTileSource   GimpOperationTileSource;
 
 
 #endif /* __OUR_GEGL_TYPES_H__ */

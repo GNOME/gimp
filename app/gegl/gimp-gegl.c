@@ -27,6 +27,7 @@
 #include "gegl-types.h"
 
 #include "gimp-gegl.h"
+#include "gimpoperationcolorbalance.h"
 #include "gimpoperationcolorize.h"
 #include "gimpoperationdesaturate.h"
 #include "gimpoperationlevels.h"
@@ -39,6 +40,7 @@
 void
 gimp_gegl_init (void)
 {
+  g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_BALANCE);
   g_type_class_ref (GIMP_TYPE_OPERATION_COLORIZE);
   g_type_class_ref (GIMP_TYPE_OPERATION_DESATURATE);
   g_type_class_ref (GIMP_TYPE_OPERATION_LEVELS);

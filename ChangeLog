@@ -1,3 +1,13 @@
+2008-01-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/Makefile.am
+	* app/gegl/gegl-types.h
+	* app/gegl/gimpoperationcolorbalance.[ch]: new operator.
+
+	* app/gegl/gimp-gegl.c: register it.
+
+	* app/tools/gimpcolorbalancetool.c: use it.
+
 2008-01-09 Joao S. O. Bueno <gwidion@mpc.com.br>
 
         * plug-ins/pygimp/pygimp-vectors.c: Allow Vectors.remove_stroke
