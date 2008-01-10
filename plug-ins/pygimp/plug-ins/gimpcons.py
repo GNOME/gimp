@@ -55,7 +55,7 @@ def do_console():
                                                RESPONSE_CLEAR,
                                                RESPONSE_SAVE))
 
-            banner = ('Gimp %s Python Console\nPython %s\n' %
+            banner = ('GIMP %s Python Console\nPython %s\n' %
                       (gimp.pdb.gimp_version(), sys.version))
 
             self.cons = pyconsole.Console(locals=namespace, banner=banner,
@@ -215,7 +215,7 @@ def do_console():
 
 register(
     PROC_NAME,
-    N_("Interactive Gimp-Python interpreter"),
+    N_("Interactive GIMP Python interpreter"),
     "Type in commands and see results",
     "James Henstridge",
     "James Henstridge",
