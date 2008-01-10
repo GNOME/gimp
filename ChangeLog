@@ -1,3 +1,9 @@
+2008-01-09 Joao S. O. Bueno <gwidion@mpc.com.br>
+
+        * plug-ins/pygimp/pygimp-vectors.c: Allow Vectors.remove_stroke
+	method to accept VectorStroke objects besides stroke IDs. Fix
+	method names in error strings.
+
 2008-01-09  Michael Natterer  <mitch@gimp.org>
 
 	* modules/cdisplay_colorblind.c

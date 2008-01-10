@@ -169,7 +169,7 @@ vs_flip_free(PyGimpVectorsStroke *self, PyObject *args, PyObject *kwargs)
 
     static char *kwlist[] = { "x1", "y1", "x2", "y2", NULL };
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "dddd:rotate", kwlist,
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "dddd:flip_free", kwlist,
                                      &x1, &y1, &x2, &y2))
         return NULL;
 
@@ -446,7 +446,7 @@ vbs_cubicto(PyGimpVectorsStroke *self, PyObject *args, PyObject *kwargs)
     static char *kwlist[] = { "x0", "y0", "x1", "y1", "x2", "y2", NULL };
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
-                                     "dddddd:conicto", kwlist,
+                                     "dddddd:cubicto", kwlist,
                                      &x0, &y0, &x1, &y1, &x2, &y2))
         return NULL;
 
@@ -594,16 +594,24 @@ vectors_bezier_stroke_new(PyGimpVectors *vectors, int stroke)
 static PyObject *
 vectors_remove_stroke(PyGimpVectors *self, PyObject *args, PyObject *kwargs)
 {
-    int stroke;
+    int stroke_id ;
+    /* PyGimpVectorsStroke *stroke; */
+    PyObject *stroke = NULL;
 
     static char *kwlist[] = { "stroke", NULL };
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "i:remove_stroke", kwlist,
-                                     &stroke))
+    PyArg_ParseTupleAndKeywords(args, kwargs, "O:remove_stroke", kwlist, &stroke);
+
+    if (PyInt_Check(stroke))
+        stroke_id = PyInt_AsLong(stroke);
+    else if (PyObject_IsInstance(stroke, (PyObject *) &PyGimpVectorsStroke_Type))
+        stroke_id = ((PyGimpVectorsStroke *) stroke)->stroke;
+    else  {
+        PyErr_SetString(PyExc_TypeError, "stroke must be a gimp.VectorsBezierStroke object or an Integer");
         return NULL;
+    }
 
-
-    gimp_vectors_remove_stroke(self->ID, stroke);
+    gimp_vectors_remove_stroke(self->ID, stroke_id);
 
     Py_INCREF(Py_None);
     return Py_None;
