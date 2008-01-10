@@ -77,6 +77,7 @@ INCLUDES = \
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
 	$(GDK_PIXBUF_CFLAGS)	\
+	$(GEGL_CFLAGS)		\
 	$(GLIB_CFLAGS)		\
 	-I$(includedir)
 

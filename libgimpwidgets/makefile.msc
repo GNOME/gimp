@@ -17,7 +17,7 @@ INCLUDES = -I..
 DEPCFLAGS = \
 	-FImsvc_recommended_pragmas.h \
 	$(GLIB_CFLAGS) $(GTK2_CFLAGS) $(INTL_CFLAGS)
-DEPLIBS = $(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS)
+DEPLIBS = $(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS) $(CAIRO_LIBS)
 
 all : \
 	..\config.h \
@@ -34,6 +34,7 @@ install : all
 OBJECTS = \
 	gimpbrowser.obj \
 	gimpbutton.obj \
+	gimpcairo-utils.obj \
 	gimpcellrenderercolor.obj \
 	gimpcellrenderertoggle.obj \
 	gimpchainbutton.obj \

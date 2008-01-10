@@ -35,22 +35,26 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-
 /*  Local function prototypes  */
 static gint             read_header_block          (PSDimage     *img_a,
-                                                    FILE         *f);
+                                                    FILE         *f,
+                                                    GError      **error);
 
 static gint             read_color_mode_block      (PSDimage     *img_a,
-                                                    FILE         *f);
+                                                    FILE         *f,
+                                                    GError      **error);
 
 static gint             read_image_resource_block  (PSDimage     *img_a,
-                                                    FILE         *f);
+                                                    FILE         *f,
+                                                    GError      **error);
 
 static PSDlayer **      read_layer_block           (PSDimage     *img_a,
-                                                    FILE         *f);
+                                                    FILE         *f,
+                                                    GError      **error);
 
 static gint             read_merged_image_block    (PSDimage     *img_a,
-                                                    FILE         *f);
+                                                    FILE         *f,
+                                                    GError      **error);
 
 static gint32           create_gimp_image          (PSDimage     *img_a,
                                                     const gchar  *filename);
@@ -60,18 +64,23 @@ static gint             add_color_map              (const gint32  image_id,
 
 static gint             add_image_resources        (const gint32  image_id,
                                                     PSDimage     *img_a,
-                                                    FILE         *f);
+                                                    FILE         *f,
+                                                    GError      **error);
 
 static gint             add_layers                 (const gint32  image_id,
                                                     PSDimage     *img_a,
                                                     PSDlayer    **lyr_a,
-                                                    FILE         *f);
+                                                    FILE         *f,
+                                                    GError      **error);
 
 static gint             add_merged_image           (const gint32  image_id,
                                                     PSDimage     *img_a,
-                                                    FILE         *f);
+                                                    FILE         *f,
+                                                    GError      **error);
 
 /*  Local utility function prototypes  */
+static gchar          * get_psd_color_mode_name    (PSDColorMode  mode);
+
 static void             psd_to_gimp_color_map      (guchar       *map256);
 
 static GimpImageType    get_gimp_image_type        (const GimpImageBaseType image_base_type,
@@ -81,11 +90,13 @@ static gint             read_channel_data          (PSDchannel     *channel,
                                                     const guint16   bps,
                                                     const guint16   compression,
                                                     const guint16  *rle_pack_len,
-                                                    FILE           *f);
+                                                    FILE           *f,
+                                                    GError        **error);
 
 static void             convert_16_bit             (const gchar *src,
                                                     gchar       *dst,
                                                     guint32      len);
+
 static void             convert_1_bit              (const gchar *src,
                                                     gchar       *dst,
                                                     guint32      rows,
@@ -101,14 +112,13 @@ load_image (const gchar *filename)
   PSDimage              img_a;
   PSDlayer            **lyr_a;
   gint32                image_id = -1;
-
+  GError               *error = NULL;
 
   /* ----- Open PSD file ----- */
   if (g_stat (filename, &st) == -1)
     return -1;
 
   IFDBG(1) g_debug ("Open file %s", gimp_filename_to_utf8 (filename));
-
   f = g_fopen (filename, "rb");
   if (f == NULL)
     {
@@ -120,121 +130,103 @@ load_image (const gchar *filename)
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  IFDBG(2) g_debug ("Read header block");
   /* ----- Read the PSD file Header block ----- */
-  if (read_header_block (&img_a, f) < 0)
-    {
-      fclose(f);
-      return -1;
-    }
+  IFDBG(2) g_debug ("Read header block");
+  if (read_header_block (&img_a, f, &error) < 0)
+    goto load_error;
   gimp_progress_update (0.1);
 
-  IFDBG(2) g_debug ("Read colour mode block");
   /* ----- Read the PSD file Colour Mode block ----- */
-  if (read_color_mode_block (&img_a, f) < 0)
-    {
-      fclose(f);
-      return -1;
-    }
+  IFDBG(2) g_debug ("Read colour mode block");
+  if (read_color_mode_block (&img_a, f, &error) < 0)
+    goto load_error;
   gimp_progress_update (0.2);
 
-  IFDBG(2) g_debug ("Read image resource block");
   /* ----- Read the PSD file Image Resource block ----- */
-  if (read_image_resource_block (&img_a, f) < 0)
-    {
-      fclose(f);
-      return -1;
-    }
+  IFDBG(2) g_debug ("Read image resource block");
+  if (read_image_resource_block (&img_a, f, &error) < 0)
+    goto load_error;
   gimp_progress_update (0.3);
 
-  IFDBG(2) g_debug ("Read layer & mask block");
   /* ----- Read the PSD file Layer & Mask block ----- */
-  lyr_a = read_layer_block (&img_a, f);
-  if (img_a.num_layers != 0)
-    if (lyr_a == NULL)
-      {
-        fclose(f);
-        return -1;
-      }
+  IFDBG(2) g_debug ("Read layer & mask block");
+  lyr_a = read_layer_block (&img_a, f, &error);
+  if (img_a.num_layers != 0 && lyr_a == NULL)
+    goto load_error;
   gimp_progress_update (0.4);
 
-  IFDBG(2) g_debug ("Read merged image and extra alpha channel block");
   /* ----- Read the PSD file Merged Image Data block ----- */
-  if (read_merged_image_block (&img_a, f) < 0)
-    {
-      fclose(f);
-      return -1;
-    }
+  IFDBG(2) g_debug ("Read merged image and extra alpha channel block");
+  if (read_merged_image_block (&img_a, f, &error) < 0)
+    goto load_error;
   gimp_progress_update (0.5);
 
-  IFDBG(2) g_debug ("Create GIMP image");
   /* ----- Create GIMP image ----- */
+  IFDBG(2) g_debug ("Create GIMP image");
   image_id = create_gimp_image (&img_a, filename);
-  if (image_id == -1)
-    {
-      fclose(f);
-      return -1;
-    }
+  if (image_id < 0)
+    goto load_error;
   gimp_progress_update (0.6);
 
-  IFDBG(2) g_debug ("Add color map");
   /* ----- Add colour map ----- */
+  IFDBG(2) g_debug ("Add color map");
   if (add_color_map (image_id, &img_a) < 0)
-    {
-      gimp_image_delete (image_id);
-      fclose(f);
-      return -1;
-    }
+    goto load_error;
   gimp_progress_update (0.7);
 
-  IFDBG(2) g_debug ("Add image resources");
   /* ----- Add image resources ----- */
-  if (add_image_resources (image_id, &img_a, f) < 0)
-    {
-      gimp_image_delete (image_id);
-      fclose(f);
-      return -1;
-    }
+  IFDBG(2) g_debug ("Add image resources");
+  if (add_image_resources (image_id, &img_a, f, &error) < 0)
+    goto load_error;
   gimp_progress_update (0.8);
 
-  IFDBG(2) g_debug ("Add layers");
   /* ----- Add layers -----*/
-  if (add_layers (image_id, &img_a, lyr_a, f) < 0)
-    {
-      gimp_image_delete (image_id);
-      fclose(f);
-      return -1;
-    }
+  IFDBG(2) g_debug ("Add layers");
+  if (add_layers (image_id, &img_a, lyr_a, f, &error) < 0)
+    goto load_error;
   gimp_progress_update (0.9);
 
-  IFDBG(2) g_debug ("Add merged image data and extra alpha channels");
   /* ----- Add merged image data and extra alpha channels ----- */
-  if (add_merged_image (image_id, &img_a, f) < 0)
-    {
-      gimp_image_delete (image_id);
-      fclose(f);
-      return -1;
-    }
-
+  IFDBG(2) g_debug ("Add merged image data and extra alpha channels");
+  if (add_merged_image (image_id, &img_a, f, &error) < 0)
+    goto load_error;
+  gimp_progress_update (1.0);
 
   IFDBG(2) g_debug ("Close file & return, image id: %d", image_id);
   IFDBG(1) g_debug ("\n----------------------------------------"
                     "----------------------------------------\n");
 
-  gimp_progress_update (1.0);
-
   gimp_image_clean_all (image_id);
   gimp_image_undo_enable (image_id);
   fclose (f);
   return image_id;
+
+  /* ----- Process load errors ----- */
+ load_error:
+  if (error)
+    {
+      g_message (_("Error loading PSD file:\n\n%s"), error->message);
+      g_error_free (error);
+    }
+
+  /* Delete partially loaded image */
+  if (image_id > 0)
+    gimp_image_delete (image_id);
+
+  /* Close file if Open */
+  if (! (f == NULL))
+    fclose (f);
+
+  return -1;
 }
 
 
 /* Local functions */
 
 static gint
-read_header_block (PSDimage *img_a,
-                   FILE     *f)
+read_header_block (PSDimage  *img_a,
+                   FILE      *f,
+                   GError   **error)
 {
   guint16  version;
   gchar    sig[4];
@@ -249,7 +241,7 @@ read_header_block (PSDimage *img_a,
       || fread (&img_a->bps, 2, 1, f) < 1
       || fread (&img_a->color_mode, 2, 1, f) < 1)
     {
-      g_message (_("Error reading file header"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
   version = GUINT16_FROM_BE (version);
@@ -267,37 +259,43 @@ read_header_block (PSDimage *img_a,
 
   if (memcmp (sig, "8BPS", 4) != 0)
     {
-      g_message (_("Incorrect file signature"));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                  _("Not a valid photoshop document file"));
       return -1;
     }
 
   if (version != 1)
     {
-      g_message (_("Unsupported PSD file format version %d"), version);
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                  _("Unsupported file format version: %d"), version);
       return -1;
     }
 
   if (img_a->channels > MAX_CHANNELS)
     {
-      g_message (_("Too many channels in file (%d)"), img_a->channels);
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                  _("Too many channels in file: %d"), img_a->channels);
       return -1;
-    }
-
-  if (img_a->rows == 0 || img_a->columns == 0)
-    {
-      g_message (_("Unsupported PSD file version (< 2.5)")); /* FIXME - image size */
-                                                             /* in resource block 1000 */
-      return -1;                                             /* don't have PS2 file spec */
     }
 
     /* Photoshop CS (version 8) supports 300000 x 300000, but this
        is currently larger than GIMP_MAX_IMAGE_SIZE */
 
-    if ((img_a->rows > GIMP_MAX_IMAGE_SIZE) ||
-        (img_a->columns > GIMP_MAX_IMAGE_SIZE))
-      {
-        g_message (_("Image size too large for GIMP."));
-      }
+  if (img_a->rows < 1 || img_a->rows > GIMP_MAX_IMAGE_SIZE)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                  _("Unsupported or invalid image height: %d"),
+                  img_a->rows);
+      return -1;
+    }
+
+  if (img_a->columns < 1 || img_a->columns > GIMP_MAX_IMAGE_SIZE)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                  _("Unsupported or invalid image width: %d"),
+                  img_a->columns);
+      return -1;
+    }
 
   if (img_a->color_mode != PSD_BITMAP
       && img_a->color_mode != PSD_GRAYSCALE
@@ -305,8 +303,9 @@ read_header_block (PSDimage *img_a,
       && img_a->color_mode != PSD_RGB
       && img_a->color_mode != PSD_DUOTONE)
     {
-      g_message (_("PSD color mode %d is not supported"),
-                   img_a->color_mode);
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                  _("Unsupported color mode: %s"),
+                  get_psd_color_mode_name (img_a->color_mode));
       return -1;
     }
 
@@ -316,10 +315,10 @@ read_header_block (PSDimage *img_a,
       case 16:
         IFDBG(3) g_debug ("16 Bit Data");
         if (CONVERSION_WARNINGS)
-          g_message (_("Warning:\n"
-                        "The image you are loading has 16 bits per channel. GIMP "
-                        "can only handle 8 bit, so it will be converted for you. "
-                        "Information will be lost because of this conversion."));
+          g_message ("Warning:\n"
+                     "The image you are loading has 16 bits per channel. GIMP "
+                     "can only handle 8 bit, so it will be converted for you. "
+                     "Information will be lost because of this conversion.");
         break;
 
       case 8:
@@ -331,7 +330,8 @@ read_header_block (PSDimage *img_a,
         break;
 
       default:
-        g_message (_("Unknown bit depth: %d."), img_a->bps);
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                    _("Unsupported bit depth: %d"), img_a->bps);
         return -1;
         break;
     }
@@ -340,8 +340,9 @@ read_header_block (PSDimage *img_a,
 }
 
 static gint
-read_color_mode_block (PSDimage *img_a,
-                       FILE     *f)
+read_color_mode_block (PSDimage  *img_a,
+                       FILE      *f,
+                       GError   **error)
 {
   static guchar cmap[] = {0, 0, 0, 255, 255, 255};
   guint32       block_len;
@@ -350,7 +351,7 @@ read_color_mode_block (PSDimage *img_a,
   img_a->color_map_len = 0;
   if (fread (&block_len, 4, 1, f) < 1)
     {
-      g_message (_("Error reading color block"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
   block_len = GUINT32_FROM_BE (block_len);
@@ -362,7 +363,9 @@ read_color_mode_block (PSDimage *img_a,
       if (img_a->color_mode == PSD_INDEXED ||
           img_a->color_mode == PSD_DUOTONE )
         {
-          g_message (_("No color block for indexed or duotone image"));
+          IFDBG(1) g_debug ("No color block for indexed or duotone image");
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                      _("The file is corrupt!"));
           return -1;
         }
     }
@@ -370,7 +373,9 @@ read_color_mode_block (PSDimage *img_a,
     {
       if (block_len != 768)
         {
-          g_message (_("Invalid color block size for indexed image"));
+          IFDBG(1) g_debug ("Invalid color block size for indexed image");
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                      _("The file is corrupt!"));
           return -1;
         }
       else
@@ -379,7 +384,7 @@ read_color_mode_block (PSDimage *img_a,
           img_a->color_map = g_malloc (img_a->color_map_len);
           if (fread (img_a->color_map, block_len, 1, f) < 1)
             {
-              g_message (_("Error reading color block"));
+              psd_set_error (feof (f), errno, error);
               return -1;
             }
           else
@@ -391,13 +396,13 @@ read_color_mode_block (PSDimage *img_a,
     }
   else if (img_a->color_mode == PSD_DUOTONE)
     {
-       img_a->color_map_len = block_len;
-       img_a->color_map = g_malloc (img_a->color_map_len);
-       if (fread (img_a->color_map, block_len, 1, f) < 1)
-         {
-           g_message (_("Error reading color block"));
-           return -1;
-         }
+      img_a->color_map_len = block_len;
+      img_a->color_map = g_malloc (img_a->color_map_len);
+      if (fread (img_a->color_map, block_len, 1, f) < 1)
+        {
+          psd_set_error (feof (f), errno, error);
+          return -1;
+        }
     }
 
   /* Create color map for bitmap image */
@@ -414,15 +419,16 @@ read_color_mode_block (PSDimage *img_a,
 }
 
 static gint
-read_image_resource_block (PSDimage *img_a,
-                           FILE     *f)
+read_image_resource_block (PSDimage  *img_a,
+                           FILE      *f,
+                           GError   **error)
 {
   guint32 block_len;
   guint32 block_end;
 
   if (fread (&block_len, 4, 1, f) < 1)
     {
-      g_message (_("Error reading image resource block"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
   img_a->image_res_len = GUINT32_FROM_BE (block_len);
@@ -434,7 +440,7 @@ read_image_resource_block (PSDimage *img_a,
 
   if (fseek (f, block_end, SEEK_SET) < 0)
     {
-      g_message (_("Error setting file position"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
 
@@ -442,21 +448,22 @@ read_image_resource_block (PSDimage *img_a,
 }
 
 static PSDlayer **
-read_layer_block (PSDimage *img_a,
-                  FILE     *f)
+read_layer_block (PSDimage  *img_a,
+                  FILE      *f,
+                  GError   **error)
 {
   PSDlayer **lyr_a;
-  guint32    block_len,
-             block_end,
-             block_rem;
-  gint32     read_len,
-             write_len;
-  gint       lidx,                  /* Layer index */
-             cidx;                  /* Channel index */
+  guint32    block_len;
+  guint32    block_end;
+  guint32    block_rem;
+  gint32     read_len;
+  gint32     write_len;
+  gint       lidx;                  /* Layer index */
+  gint       cidx;                  /* Channel index */
 
   if (fread (&block_len, 4, 1, f) < 1)
     {
-      g_message (_("Error reading layer and mask block"));
+      psd_set_error (feof (f), errno, error);
       img_a->num_layers = -1;
       return NULL;
     }
@@ -481,7 +488,7 @@ read_layer_block (PSDimage *img_a,
       if (fread (&block_len, 4, 1, f) < 1
           || fread (&img_a->num_layers, 2, 1, f) < 1)
         {
-          g_message (_("Error reading number of layers"));
+          psd_set_error (feof (f), errno, error);
           img_a->num_layers = -1;
           return NULL;
         }
@@ -516,7 +523,7 @@ read_layer_block (PSDimage *img_a,
                   || fread (&lyr_a[lidx]->right, 4, 1, f) < 1
                   || fread (&lyr_a[lidx]->num_channels, 2, 1, f) < 1)
                 {
-                  g_message (_("Error reading layer record (i)"));
+                  psd_set_error (feof (f), errno, error);
                   return NULL;
                 }
               lyr_a[lidx]->top = GUINT32_FROM_BE (lyr_a[lidx]->top);
@@ -527,18 +534,26 @@ read_layer_block (PSDimage *img_a,
 
               if (lyr_a[lidx]->num_channels > MAX_CHANNELS)
                 {
-                  g_message (_("Too many channels in layer (%d)"),
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                              _("Too many channels in layer: %d"),
                               lyr_a[lidx]->num_channels);
                   return NULL;
                 }
-              if ((lyr_a[lidx]->right - lyr_a[lidx]->left > GIMP_MAX_IMAGE_SIZE) ||
-                  (lyr_a[lidx]->bottom - lyr_a[lidx]->top > GIMP_MAX_IMAGE_SIZE))
+              if (lyr_a[lidx]->bottom - lyr_a[lidx]->top > GIMP_MAX_IMAGE_SIZE)
                 {
-                  g_message (_("Layer size too large for GIMP."));
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                              _("Unsupported or invalid layer height: %d"),
+                              lyr_a[lidx]->bottom - lyr_a[lidx]->top);
+                  return NULL;
+                }
+              if (lyr_a[lidx]->right - lyr_a[lidx]->left > GIMP_MAX_IMAGE_SIZE)
+                {
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                              _("Unsupported or invalid layer width: %d"),
+                              lyr_a[lidx]->right - lyr_a[lidx]->left);
                   return NULL;
                 }
 
-              IFDBG(2) g_debug (" ");
               IFDBG(2) g_debug ("Layer %d, Coords %d %d %d %d, channels %d, ",
                                  lidx, lyr_a[lidx]->left, lyr_a[lidx]->top,
                                  lyr_a[lidx]->right, lyr_a[lidx]->bottom,
@@ -550,7 +565,7 @@ read_layer_block (PSDimage *img_a,
                   if (fread (&lyr_a[lidx]->chn_info[cidx].channel_id, 2, 1, f) < 1
                       || fread (&lyr_a[lidx]->chn_info[cidx].data_len, 4, 1, f) < 1)
                     {
-                      g_message (_("Error reading layer - channel record"));
+                      psd_set_error (feof (f), errno, error);
                       return NULL;
                     }
                   lyr_a[lidx]->chn_info[cidx].channel_id =
@@ -558,7 +573,7 @@ read_layer_block (PSDimage *img_a,
                   lyr_a[lidx]->chn_info[cidx].data_len =
                     GUINT32_FROM_BE (lyr_a[lidx]->chn_info[cidx].data_len);
                   img_a->layer_data_len += lyr_a[lidx]->chn_info[cidx].data_len;
-                  IFDBG(2) g_debug ("Channel ID %d, data len %d",
+                  IFDBG(3) g_debug ("Channel ID %d, data len %d",
                                      lyr_a[lidx]->chn_info[cidx].channel_id,
                                      lyr_a[lidx]->chn_info[cidx].data_len);
                 }
@@ -571,13 +586,15 @@ read_layer_block (PSDimage *img_a,
                   || fread (&lyr_a[lidx]->filler, 1, 1, f) < 1
                   || fread (&lyr_a[lidx]->extra_len, 4, 1, f) < 1)
                 {
-                  g_message (_("Error reading layer record (ii)"));
+                  psd_set_error (feof (f), errno, error);
                   return NULL;
                 }
               if (memcmp (lyr_a[lidx]->mode_key, "8BIM", 4) != 0)
                 {
-                  g_message (_("Incorrect layer mode signature %.4s"),
-                              lyr_a[lidx]->mode_key);
+                  IFDBG(1) g_debug ("Incorrect layer mode signature %.4s",
+                                    lyr_a[lidx]->mode_key);
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                              _("The file is corrupt!"));
                   return NULL;
                 }
 
@@ -606,7 +623,7 @@ read_layer_block (PSDimage *img_a,
               /* Layer mask data */
               if (fread (&block_len, 4, 1, f) < 1)
                 {
-                  g_message (_("Error reading layer mask data length"));
+                  psd_set_error (feof (f), errno, error);
                   return NULL;
                 }
               block_len = GUINT32_FROM_BE (block_len);
@@ -642,7 +659,7 @@ read_layer_block (PSDimage *img_a,
                         || fread (&lyr_a[lidx]->layer_mask.extra_def_color, 1, 1, f) < 1
                         || fread (&lyr_a[lidx]->layer_mask.extra_flags, 1, 1, f) < 1)
                       {
-                        g_message (_("Error reading layer mask record"));
+                        psd_set_error (feof (f), errno, error);
                         return NULL;
                       }
                     lyr_a[lidx]->layer_mask.top =
@@ -674,7 +691,7 @@ read_layer_block (PSDimage *img_a,
                         || fread (&lyr_a[lidx]->layer_mask.bottom, 4, 1, f) < 1
                         || fread (&lyr_a[lidx]->layer_mask.right, 4, 1, f) < 1)
                       {
-                        g_message (_("Error reading layer mask extra record"));
+                        psd_set_error (feof (f), errno, error);
                         return NULL;
                       }
                     lyr_a[lidx]->layer_mask_extra.top =
@@ -702,10 +719,10 @@ read_layer_block (PSDimage *img_a,
                     break;
 
                   default:
-                    g_message ("Unknown layer mask size ... skipping");
+                    IFDBG(1) g_debug ("Unknown layer mask record size ... skipping");
                     if (fseek (f, block_len, SEEK_CUR) < 0)
                       {
-                        g_message (_("Error setting file position"));
+                        psd_set_error (feof (f), errno, error);
                         return NULL;
                       }
                 }
@@ -717,14 +734,14 @@ read_layer_block (PSDimage *img_a,
                                 lyr_a[lidx]->layer_mask.bottom,
                                 lyr_a[lidx]->layer_mask.mask_flags.relative_pos);
 
-              IFDBG(2) g_debug ("Default mask color, %d, %d",
+              IFDBG(3) g_debug ("Default mask color, %d, %d",
                                 lyr_a[lidx]->layer_mask.def_color,
                                 lyr_a[lidx]->layer_mask.extra_def_color);
 
               /* Layer blending ranges */           /* FIXME  */
               if (fread (&block_len, 4, 1, f) < 1)
                 {
-                  g_message (_("Error reading layer blending ranges length"));
+                  psd_set_error (feof (f), errno, error);
                   return NULL;
                 }
               block_len = GUINT32_FROM_BE (block_len);
@@ -734,12 +751,15 @@ read_layer_block (PSDimage *img_a,
                 {
                   if (fseek (f, block_len, SEEK_CUR) < 0)
                     {
-                      g_message (_("Error setting file position"));
+                      psd_set_error (feof (f), errno, error);
                       return NULL;
                     }
                 }
 
-              lyr_a[lidx]->name = fread_pascal_string (&read_len, &write_len, 4, f);
+              lyr_a[lidx]->name = fread_pascal_string (&read_len, &write_len,
+                                                       4, f, error);
+              if (*error)
+                return NULL;
               block_rem -= read_len;
               IFDBG(3) g_debug ("Remaining length %d", block_rem);
 
@@ -747,17 +767,19 @@ read_layer_block (PSDimage *img_a,
 
               while (block_rem > 7)
                 {
-                  if (get_layer_resource_header (&res_a, f) < 0)
+                  if (get_layer_resource_header (&res_a, f, error) < 0)
                     return NULL;
                   block_rem -= 12;
 
                   if (res_a.data_len > block_rem)
                     {
-                      g_message ("Unexpected end of layer resource data");
+                      IFDBG(1) g_debug ("Unexpected end of layer resource data");
+                      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                  _("The file is corrupt!"));
                       return NULL;
                     }
 
-                  if (load_layer_resource (&res_a, lyr_a[lidx], f) < 0)
+                  if (load_layer_resource (&res_a, lyr_a[lidx], f, error) < 0)
                     return NULL;
                   block_rem -= res_a.data_len;
                 }
@@ -765,7 +787,7 @@ read_layer_block (PSDimage *img_a,
                 {
                   if (fseek (f, block_rem, SEEK_CUR) < 0)
                     {
-                      g_message (_("Error setting file position"));
+                      psd_set_error (feof (f), errno, error);
                       return NULL;
                     }
                 }
@@ -774,7 +796,7 @@ read_layer_block (PSDimage *img_a,
           img_a->layer_data_start = ftell(f);
           if (fseek (f, img_a->layer_data_len, SEEK_CUR) < 0)
             {
-              g_message (_("Error setting file position"));
+              psd_set_error (feof (f), errno, error);
               return NULL;
             }
 
@@ -789,7 +811,7 @@ read_layer_block (PSDimage *img_a,
       /* Skip to end of block */
       if (fseek (f, block_end, SEEK_SET) < 0)
         {
-          g_message (_("Error setting file position"));
+          psd_set_error (feof (f), errno, error);
           return NULL;
         }
     }
@@ -798,11 +820,17 @@ read_layer_block (PSDimage *img_a,
 }
 
 static gint
-read_merged_image_block (PSDimage *img_a,
-                         FILE     *f)
+read_merged_image_block (PSDimage  *img_a,
+                         FILE      *f,
+                         GError   **error)
 {
   img_a->merged_image_start = ftell(f);
-  fseek (f, 0, SEEK_END);
+  if (fseek (f, 0, SEEK_END) < 0)
+    {
+      psd_set_error (feof (f), errno, error);
+      return -1;
+    }
+
   img_a->merged_image_len = ftell(f) - img_a->merged_image_start;
 
   IFDBG(1) g_debug ("Merged image data block: Start: %d, len: %d",
@@ -834,22 +862,19 @@ create_gimp_image (PSDimage    *img_a,
         break;
 
       default:
-        g_message (_("PSD color mode %d not supported"), img_a->color_mode);
+        /* Color mode already validated - should not be here */
+        g_warning ("Invalid color mode");
         return -1;
         break;
     }
 
   /* Create gimp image */
   IFDBG(2) g_debug ("Create image");
-  if ((image_id = gimp_image_new (img_a->columns, img_a->rows,
-                                  img_a->base_type)) == -1)
-    {
-      g_message (_("Could not create a new image"));
-      return -1;
-    }
+  image_id = gimp_image_new (img_a->columns, img_a->rows, img_a->base_type);
 
-  gimp_image_undo_disable (image_id);
   gimp_image_set_filename (image_id, filename);
+  gimp_image_undo_disable (image_id);
+
   return image_id;
 }
 
@@ -881,13 +906,14 @@ add_color_map (const gint32  image_id,
 static gint
 add_image_resources (const gint32  image_id,
                      PSDimage     *img_a,
-                     FILE         *f)
+                     FILE         *f,
+                     GError      **error)
 {
   PSDimageres  res_a;
 
   if (fseek (f, img_a->image_res_start, SEEK_SET) < 0)
     {
-      g_message (_("Error setting file position"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
 
@@ -903,17 +929,17 @@ add_image_resources (const gint32  image_id,
 
   while (ftell (f) < img_a->image_res_start + img_a->image_res_len)
     {
-      if (get_image_resource_header (&res_a, f) < 0)
+      if (get_image_resource_header (&res_a, f, error) < 0)
         return -1;
 
       if (res_a.data_start + res_a.data_len >
           img_a->image_res_start + img_a->image_res_len)
         {
-          g_message ("Unexpected end of image resource data");
+          IFDBG(1) g_debug ("Unexpected end of image resource data");
           return 0;
         }
 
-      if (load_image_resource (&res_a, image_id, img_a,  f) < 0)
+      if (load_image_resource (&res_a, image_id, img_a, f, error) < 0)
         return -1;
     }
 
@@ -924,36 +950,37 @@ static gint
 add_layers (const gint32  image_id,
             PSDimage     *img_a,
             PSDlayer    **lyr_a,
-            FILE         *f)
+            FILE         *f,
+            GError      **error)
 {
   PSDchannel          **lyr_chn;
   guchar               *pixels;
-  guint16               comp_mode,
-                        alpha_chn,
-                        user_mask_chn,
-                        layer_channels,
-                        channel_idx[MAX_CHANNELS],
-                       *rle_pack_len;
-  gint32                l_x,                   /* Layer x */
-                        l_y,                   /* Layer y */
-                        l_w,                   /* Layer width */
-                        l_h,                   /* Layer height */
-                        lm_x,                  /* Layer mask x */
-                        lm_y,                  /* Layer mask y */
-                        lm_w,                  /* Layer mask width */
-                        lm_h,                  /* Layer mask height */
-                        layer_size,
-                        layer_id = -1,
-                        mask_id = -1;
-  gint                  lidx,                  /* Layer index */
-                        cidx,                  /* Channel index */
-                        rowi,                  /* Row index */
-                        coli,                  /* Column index */
-                        i;
-  gboolean              alpha,
-                        user_mask,
-                        empty,
-                        empty_mask;
+  guint16               comp_mode;
+  guint16               alpha_chn;
+  guint16               user_mask_chn;
+  guint16               layer_channels;
+  guint16               channel_idx[MAX_CHANNELS];
+  guint16              *rle_pack_len;
+  gint32                l_x;                   /* Layer x */
+  gint32                l_y;                   /* Layer y */
+  gint32                l_w;                   /* Layer width */
+  gint32                l_h;                   /* Layer height */
+  gint32                lm_x;                  /* Layer mask x */
+  gint32                lm_y;                  /* Layer mask y */
+  gint32                lm_w;                  /* Layer mask width */
+  gint32                lm_h;                  /* Layer mask height */
+  gint32                layer_size;
+  gint32                layer_id = -1;
+  gint32                mask_id = -1;
+  gint                  lidx;                  /* Layer index */
+  gint                  cidx;                  /* Channel index */
+  gint                  rowi;                  /* Row index */
+  gint                  coli;                  /* Column index */
+  gint                  i;
+  gboolean              alpha;
+  gboolean              user_mask;
+  gboolean              empty;
+  gboolean              empty_mask;
   GimpDrawable         *drawable;
   GimpPixelRgn          pixel_rgn;
   GimpImageType         image_type;
@@ -971,7 +998,7 @@ add_layers (const gint32  image_id,
   /* Layered image - Photoshop 3 style */
   if (fseek (f, img_a->layer_data_start, SEEK_SET) < 0)
     {
-      g_message (_("Error setting file position"));
+      psd_set_error (feof (f), errno, error);
       return -1;
     }
 
@@ -985,8 +1012,13 @@ add_layers (const gint32  image_id,
 
           /* Step past layer data */
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
-              fseek (f, lyr_a[lidx]->chn_info[cidx].data_len, SEEK_CUR);
-
+            {
+              if (fseek (f, lyr_a[lidx]->chn_info[cidx].data_len, SEEK_CUR) < 0)
+                {
+                  psd_set_error (feof (f), errno, error);
+                  return -1;
+                }
+            }
           g_free (lyr_a[lidx]->chn_info);
           g_free (lyr_a[lidx]->name);
         }
@@ -1007,7 +1039,7 @@ add_layers (const gint32  image_id,
           else
               empty_mask = FALSE;
 
-          IFDBG(2) g_debug ("Empty mask %d, size %d %d", empty_mask,
+          IFDBG(3) g_debug ("Empty mask %d, size %d %d", empty_mask,
                             lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top,
                             lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left);
 
@@ -1049,36 +1081,33 @@ add_layers (const gint32  image_id,
                                            lyr_a[lidx]->layer_mask.left);
                 }
 
-              IFDBG(2) g_debug ("Channel id %d, %dx%d",
+              IFDBG(3) g_debug ("Channel id %d, %dx%d",
                                 lyr_chn[cidx]->id,
                                 lyr_chn[cidx]->columns,
                                 lyr_chn[cidx]->rows);
 
               if (fread (&comp_mode, 2, 1, f) < 1)
                 {
-                  g_message (_("Error reading layer compression mode"));
+                  psd_set_error (feof (f), errno, error);
                   return -1;
                 }
               comp_mode = GUINT16_FROM_BE (comp_mode);
-              IFDBG(2) g_debug ("Compression mode: %d", comp_mode);
+              IFDBG(3) g_debug ("Compression mode: %d", comp_mode);
 
               if (lyr_a[lidx]->chn_info[cidx].data_len - 2 > 0)
                 {
                   switch (comp_mode)
                     {
                       case PSD_COMP_RAW:        /* Planar raw data */
-                        IFDBG(2) g_debug ("Raw data length: %d",
+                        IFDBG(3) g_debug ("Raw data length: %d",
                                           lyr_a[lidx]->chn_info[cidx].data_len - 2);
-                        if (read_channel_data (lyr_chn[cidx],
-                            img_a->bps, PSD_COMP_RAW, NULL, f) < 1)
-                          {
-                            g_message (_("Error reading raw channel"));
-                            return -1;
-                          }
+                        if (read_channel_data (lyr_chn[cidx], img_a->bps,
+                            PSD_COMP_RAW, NULL, f, error) < 1)
+                          return -1;
                         break;
 
                       case PSD_COMP_RLE:        /* Packbits */
-                        IFDBG(2) g_debug ("RLE channel length %d, RLE length data: %d, "
+                        IFDBG(3) g_debug ("RLE channel length %d, RLE length data: %d, "
                                           "RLE data block: %d",
                                           lyr_a[lidx]->chn_info[cidx].data_len - 2,
                                           lyr_chn[cidx]->rows * 2,
@@ -1089,28 +1118,24 @@ add_layers (const gint32  image_id,
                           {
                             if (fread (&rle_pack_len[rowi], 2, 1, f) < 1)
                               {
-                                g_message (_("Error reading packbits length"));
+                                psd_set_error (feof (f), errno, error);
                                 return -1;
                               }
                                 rle_pack_len[rowi] = GUINT16_FROM_BE (rle_pack_len[rowi]);
-                                IFDBG(3) g_debug ("Row %d, Packed length %d",
-                                                  rowi, rle_pack_len[rowi]);
                           }
 
                         IFDBG(3) g_debug ("RLE decode - data");
                         if (read_channel_data (lyr_chn[cidx], img_a->bps,
-                            PSD_COMP_RLE, rle_pack_len, f) < 1)
-                          {
-                            g_message (_("Error reading packbits channel"));
-                            return -1;
-                          }
+                            PSD_COMP_RLE, rle_pack_len, f, error) < 1)
+                          return -1;
 
                         g_free (rle_pack_len);
                         break;
 
                       case PSD_COMP_ZIP:                 /* ? */
                       case PSD_COMP_ZIP_PRED:
-                        g_message (_("Compression mode not supported %d"), comp_mode);
+                        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                    _("Unsupported compression mode: %d"), comp_mode);
                         return -1;
                         break;
                     }
@@ -1130,7 +1155,7 @@ add_layers (const gint32  image_id,
           l_w = img_a->columns;
           l_h = img_a->rows;
 
-          IFDBG(2) g_debug ("Re-hash channel indices");
+          IFDBG(3) g_debug ("Re-hash channel indices");
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
             {
               if (lyr_chn[cidx]->id == PSD_CHANNEL_MASK)
@@ -1181,32 +1206,24 @@ add_layers (const gint32  image_id,
               l_w = lyr_a[lidx]->right - lyr_a[lidx]->left;
               l_h = lyr_a[lidx]->bottom - lyr_a[lidx]->top;
 
-              IFDBG(2) g_debug ("Draw layer");
+              IFDBG(3) g_debug ("Draw layer");
               image_type = get_gimp_image_type (img_a->base_type, alpha);
-              IFDBG(2) g_debug ("Layer type %d", image_type);
+              IFDBG(3) g_debug ("Layer type %d", image_type);
               layer_size = l_w * l_h;
               pixels = g_malloc (layer_size * layer_channels);
-              IFDBG(2) g_debug ("Allocate Pixels %d x %d", layer_size, layer_channels);
               for (cidx = 0; cidx < layer_channels; ++cidx)
                 {
-                  IFDBG(2) g_debug ("Start channel %d", channel_idx[cidx]);
+                  IFDBG(3) g_debug ("Start channel %d", channel_idx[cidx]);
                   for (i = 0; i < layer_size; ++i)
-                    {
-                      pixels[(i * layer_channels) + cidx] = lyr_chn[channel_idx[cidx]]->data[i];
-                      IFDBG(3) g_debug ("Pixels, %d, %d", (i * layer_channels) + cidx,
-                                         pixels[(i * layer_channels) + cidx]);
-                    }
-                  IFDBG(2) g_debug ("Done channel %d, id %d", cidx,
-                                     lyr_chn[channel_idx[cidx]]->id);
+                    pixels[(i * layer_channels) + cidx] = lyr_chn[channel_idx[cidx]]->data[i];
                   g_free (lyr_chn[channel_idx[cidx]]->data);
-                  IFDBG(2) g_debug ("Free channel %d", channel_idx[cidx]);
                 }
 
               layer_mode = psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode);
               layer_id = gimp_layer_new (image_id, lyr_a[lidx]->name, l_w, l_h,
                                          image_type, lyr_a[lidx]->opacity * 100 / 255,
                                          layer_mode);
-              IFDBG(2) g_debug ("New layer %d", layer_id);
+              IFDBG(3) g_debug ("Layer tattoo: %d", layer_id);
               g_free (lyr_a[lidx]->name);
               gimp_image_add_layer (image_id, layer_id, -1);
               gimp_layer_set_offsets (layer_id, l_x, l_y);
@@ -1229,7 +1246,7 @@ add_layers (const gint32  image_id,
             {
               if (empty_mask)
                 {
-                  IFDBG(2) g_debug ("Create empty mask");
+                  IFDBG(3) g_debug ("Create empty mask");
                   if (lyr_a[lidx]->layer_mask.def_color == 255)
                     mask_id = gimp_layer_create_mask (layer_id, GIMP_ADD_WHITE_MASK);
                   else
@@ -1255,23 +1272,23 @@ add_layers (const gint32  image_id,
                       lm_w = lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left;
                       lm_h = lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top;
                     }
-                  IFDBG(2) g_debug ("Mask channel index %d", user_mask_chn);
-                  IFDBG(2) g_debug ("Relative pos %d",
+                  IFDBG(3) g_debug ("Mask channel index %d", user_mask_chn);
+                  IFDBG(3) g_debug ("Relative pos %d",
                                     lyr_a[lidx]->layer_mask.mask_flags.relative_pos);
                   layer_size = lm_w * lm_h;
                   pixels = g_malloc (layer_size);
-                  IFDBG(2) g_debug ("Allocate Pixels %d", layer_size);
+                  IFDBG(3) g_debug ("Allocate Pixels %d", layer_size);
                   /* Crop mask at layer boundry */
-                  IFDBG(2) g_debug ("Original Mask %d %d %d %d", lm_x, lm_y, lm_w, lm_h);
+                  IFDBG(3) g_debug ("Original Mask %d %d %d %d", lm_x, lm_y, lm_w, lm_h);
                   if (lm_x < 0
                       || lm_y < 0
                       || lm_w + lm_x > l_w
                       || lm_h + lm_y > l_h)
                     {
                       if (CONVERSION_WARNINGS)
-                        g_message (_("Warning\n"
-                                     "Layer mask partly lies outside layer boundry. The mask will be "
-                                     "cropped which may result in data loss."));
+                        g_message ("Warning\n"
+                                   "Layer mask partly lies outside layer boundry. The mask will be "
+                                   "cropped which may result in data loss.");
                       i = 0;
                       for (rowi = 0; rowi < lm_h; ++rowi)
                         {
@@ -1281,7 +1298,6 @@ add_layers (const gint32  image_id,
                                 {
                                   if (coli + lm_x >= 0 && coli + lm_x < l_w)
                                     {
-                                      IFDBG(3) g_debug ("Row %d, col %d", rowi, coli);
                                       pixels[i] =
                                         lyr_chn[user_mask_chn]->data[(rowi * lm_w) + coli];
                                       i++;
@@ -1308,8 +1324,8 @@ add_layers (const gint32  image_id,
                     memcpy (pixels, lyr_chn[user_mask_chn]->data, layer_size);
                   g_free (lyr_chn[user_mask_chn]->data);
                   /* Draw layer mask data */
-                  IFDBG(2) g_debug ("Layer %d %d %d %d", l_x, l_y, l_w, l_h);
-                  IFDBG(2) g_debug ("Mask %d %d %d %d", lm_x, lm_y, lm_w, lm_h);
+                  IFDBG(3) g_debug ("Layer %d %d %d %d", l_x, l_y, l_w, l_h);
+                  IFDBG(3) g_debug ("Mask %d %d %d %d", lm_x, lm_y, lm_w, lm_h);
 
                   if (lyr_a[lidx]->layer_mask.def_color == 255)
                     mask_id = gimp_layer_create_mask (layer_id, GIMP_ADD_WHITE_MASK);
@@ -1344,31 +1360,32 @@ add_layers (const gint32  image_id,
 static gint
 add_merged_image (const gint32  image_id,
                   PSDimage     *img_a,
-                  FILE         *f)
+                  FILE         *f,
+                  GError      **error)
 {
   PSDchannel            chn_a[MAX_CHANNELS];
   gchar                *alpha_name;
   guchar               *pixels;
-  guint16               comp_mode,
-                        base_channels,
-                        extra_channels,
-                        total_channels,
-                       *rle_pack_len[MAX_CHANNELS];
-  guint32               block_len,
-                        block_start,
-                        block_end,
-                        alpha_id;
-  gint32                layer_size,
-                        layer_id = -1,
-                        channel_id = -1,
-                        active_layer;
+  guint16               comp_mode;
+  guint16               base_channels;
+  guint16               extra_channels;
+  guint16               total_channels;
+  guint16              *rle_pack_len[MAX_CHANNELS];
+  guint32               block_len;
+  guint32               block_start;
+  guint32               block_end;
+  guint32               alpha_id;
+  gint32                layer_size;
+  gint32                layer_id = -1;
+  gint32                channel_id = -1;
+  gint32                active_layer;
   gint16                alpha_opacity;
-  gint                 *lyr_lst,
-                        cidx,                  /* Channel index */
-                        rowi,                  /* Row index */
-                        lyr_count,
-                        offset,
-                        i;
+  gint                 *lyr_lst;
+  gint                  cidx;                  /* Channel index */
+  gint                  rowi;                  /* Row index */
+  gint                  lyr_count;
+  gint                  offset;
+  gint                  i;
   gboolean              alpha_visible;
   GimpDrawable         *drawable;
   GimpPixelRgn          pixel_rgn;
@@ -1412,7 +1429,7 @@ add_merged_image (const gint32  image_id,
 
       if (fread (&comp_mode, 2, 1, f) < 1)
         {
-          g_message (_("Error reading layer compression mode"));
+          psd_set_error (feof (f), errno, error);
           return -1;
         }
       comp_mode = GUINT16_FROM_BE (comp_mode);
@@ -1420,23 +1437,21 @@ add_merged_image (const gint32  image_id,
       switch (comp_mode)
         {
           case PSD_COMP_RAW:        /* Planar raw data */
-            IFDBG(2) g_debug ("Raw data length: %d", block_len);
+            IFDBG(3) g_debug ("Raw data length: %d", block_len);
             for (cidx = 0; cidx < total_channels; ++cidx)
               {
                 chn_a[cidx].columns = img_a->columns;
                 chn_a[cidx].rows = img_a->rows;
-                if (read_channel_data (&chn_a[cidx], img_a->bps, PSD_COMP_RAW, NULL, f) < 1)
-                  {
-                    g_message (_("Error reading raw channel"));
-                    return -1;
-                  }
+                if (read_channel_data (&chn_a[cidx], img_a->bps,
+                    PSD_COMP_RAW, NULL, f, error) < 1)
+                  return -1;
               }
             break;
 
           case PSD_COMP_RLE:        /* Packbits */
             /* Image data is stored as packed scanlines in planar order
                with all compressed length counters stored first */
-            IFDBG(2) g_debug ("RLE length data: %d, RLE data block: %d",
+            IFDBG(3) g_debug ("RLE length data: %d, RLE data block: %d",
                                total_channels * img_a->rows * 2,
                                block_len - (total_channels * img_a->rows * 2));
             for (cidx = 0; cidx < total_channels; ++cidx)
@@ -1448,29 +1463,27 @@ add_merged_image (const gint32  image_id,
                   {
                     if (fread (&rle_pack_len[cidx][rowi], 2, 1, f) < 1)
                       {
-                        g_message (_("Error reading packbits length"));
+                        psd_set_error (feof (f), errno, error);
                         return -1;
                       }
                     rle_pack_len[cidx][rowi] = GUINT16_FROM_BE (rle_pack_len[cidx][rowi]);
                   }
               }
 
-            IFDBG(2) g_debug ("RLE decode - data");
+            IFDBG(3) g_debug ("RLE decode - data");
             for (cidx = 0; cidx < total_channels; ++cidx)
               {
                 if (read_channel_data (&chn_a[cidx], img_a->bps,
-                    PSD_COMP_RLE, rle_pack_len[cidx], f) < 1)
-                    {
-                      g_message (_("Error reading packbits channel"));
-                      return -1;
-                    }
+                    PSD_COMP_RLE, rle_pack_len[cidx], f, error) < 1)
+                  return -1;
                 g_free (rle_pack_len[cidx]);
               }
             break;
 
           case PSD_COMP_ZIP:                 /* ? */
           case PSD_COMP_ZIP_PRED:
-            g_message (_("Compression mode not supported %d"), comp_mode);
+            g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                        _("Unsupported compression mode: %d"), comp_mode);
             return -1;
             break;
         }
@@ -1488,8 +1501,6 @@ add_merged_image (const gint32  image_id,
           for (i = 0; i < layer_size; ++i)
             {
               pixels[(i * base_channels) + cidx] = chn_a[cidx].data[i];
-              IFDBG(3) g_debug ("Pixels, %d, %d",
-                (i * base_channels) + cidx, pixels[(i * base_channels) + cidx]);
             }
           g_free (chn_a[cidx].data);
         }
@@ -1511,13 +1522,16 @@ add_merged_image (const gint32  image_id,
       g_free (pixels);
     }
   else
-    /* Free merged image data for layered image */
-    if (extra_channels)
-      for (cidx = 0; cidx < base_channels; ++cidx)
-        g_free (chn_a[cidx].data);
+    {
+      /* Free merged image data for layered image */
+      if (extra_channels)
+        for (cidx = 0; cidx < base_channels; ++cidx)
+          g_free (chn_a[cidx].data);
+    }
 
   /* ----- Draw extra alpha channels ----- */
-  if (extra_channels                    /* Extra alpha channels */
+  if ((extra_channels                   /* Extra alpha channels */
+      || img_a->transparency)           /* Transparency alpha channel */
       && image_id > -1)
     {
       IFDBG(2) g_debug ("Add extra channels");
@@ -1525,11 +1539,18 @@ add_merged_image (const gint32  image_id,
 
       /* Get channel resource data */
       if (img_a->transparency)
-        offset = 1;
+        {
+          offset = 1;
+          /* Free "Transparency" channel name */
+          alpha_name = g_ptr_array_index (img_a->alpha_names, 0);
+          if (alpha_name)
+            g_free (alpha_name);
+        }
       else
         offset = 0;
 
       /* Draw channels */
+      IFDBG(2) g_debug ("Number of channels: %d", extra_channels);
       for (i = 0; i < extra_channels; ++i)
         {
           /* Alpha channel name */
@@ -1539,6 +1560,10 @@ add_merged_image (const gint32  image_id,
           if (img_a->quick_mask_id)
             if (i == img_a->quick_mask_id - base_channels + offset)
               {
+                /* Free "Quick Mask" channel name */
+                alpha_name = g_ptr_array_index (img_a->alpha_names, i + offset);
+                if (alpha_name)
+                  g_free (alpha_name);
                 alpha_name = g_strdup (GIMP_IMAGE_QUICK_MASK_NAME);
                 alpha_visible = TRUE;
               }
@@ -1562,7 +1587,7 @@ add_merged_image (const gint32  image_id,
             }
           else
             {
-              gimp_rgb_set (&alpha_rgb, 1.0, 0.0, 0.0);
+              gimp_rgba_set (&alpha_rgb, 1.0, 0.0, 0.0, 1.0);
               alpha_opacity = 50;
             }
 
@@ -1573,6 +1598,7 @@ add_merged_image (const gint32  image_id,
                                          chn_a[cidx].columns, chn_a[cidx].rows,
                                          alpha_opacity, &alpha_rgb);
           gimp_image_add_channel (image_id, channel_id, 0);
+          g_free (alpha_name);
           drawable = gimp_drawable_get (channel_id);
           if (alpha_id)
             gimp_drawable_set_tattoo (drawable->drawable_id, alpha_id);
@@ -1619,6 +1645,33 @@ add_merged_image (const gint32  image_id,
 
 
 /* Local utility functions */
+static gchar *
+get_psd_color_mode_name (PSDColorMode mode)
+{
+  static gchar *psd_color_mode_names[] =
+  {
+    "BITMAP",
+    "GRAYSCALE",
+    "INDEXED",
+    "RGB",
+    "CMYK",
+    "UNKNOWN (5)",
+    "UNKNOWN (6)",
+    "MULTICHANNEL",
+    "DUOTONE",
+    "LAB"
+  };
+
+  static gchar *err_name = NULL;
+  if (mode >= PSD_BITMAP && mode <= PSD_LAB)
+    {
+      return psd_color_mode_names[mode];
+    }
+  g_free (err_name);
+
+  err_name = g_strdup_printf ("UNKNOWN (%d)", mode);
+  return err_name;
+}
 
 static void
 psd_to_gimp_color_map (guchar *map256)
@@ -1668,11 +1721,12 @@ get_gimp_image_type (const GimpImageBaseType image_base_type,
 }
 
 static gint
-read_channel_data (PSDchannel    *channel,
-                   const guint16  bps,
-                   const guint16  compression,
-                   const guint16 *rle_pack_len,
-                   FILE          *f)
+read_channel_data (PSDchannel     *channel,
+                   const guint16   bps,
+                   const guint16   compression,
+                   const guint16  *rle_pack_len,
+                   FILE           *f,
+                   GError        **error)
 {
   gchar    *raw_data;
   gchar    *src;
@@ -1686,13 +1740,16 @@ read_channel_data (PSDchannel    *channel,
     readline_len = (channel->columns * bps >> 3);
 
   IFDBG(3) g_debug ("raw data size %d x %d = %d", readline_len,
-   channel->rows, readline_len * channel->rows);
+                    channel->rows, readline_len * channel->rows);
   raw_data = g_malloc (readline_len * channel->rows);
   switch (compression)
     {
       case PSD_COMP_RAW:
         if (fread (raw_data, readline_len, channel->rows, f) < 1)
+          {
+            psd_set_error (feof (f), errno, error);
             return -1;
+          }
         break;
 
       case PSD_COMP_RLE:
@@ -1703,14 +1760,13 @@ read_channel_data (PSDchannel    *channel,
 /*      FIXME check for over-run
             if (ftell (f) + rle_pack_len[i] > block_end)
               {
-                g_message (_("Unexpected end of file"));
+                psd_set_error (TRUE, errno, error);
                 return -1;
               }
 */
-            IFDBG(3) g_debug ("pack len %d", rle_pack_len[i]);
             if (fread (src, rle_pack_len[i], 1, f) < 1)
               {
-                g_message (_("Error reading packbits data"));
+                psd_set_error (feof (f), errno, error);
                 return -1;
               }
             /* FIXME check for errors returned from decode packbits */
@@ -1753,7 +1809,7 @@ convert_16_bit (const gchar *src,
 {
 /* Convert 16 bit to 8 bit dropping low byte
 */
-  int i;
+  gint      i;
 
   IFDBG(3)  g_debug ("Start 16 bit conversion");
 

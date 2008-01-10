@@ -23,11 +23,6 @@
 #include "gimpobject.h"
 
 
-typedef void (* GimpImageMapApplyFunc) (gpointer     data,
-                                        PixelRegion *srcPR,
-                                        PixelRegion *destPR);
-
-
 #define GIMP_TYPE_IMAGE_MAP            (gimp_image_map_get_type ())
 #define GIMP_IMAGE_MAP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_MAP, GimpImageMap))
 #define GIMP_IMAGE_MAP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE_MAP, GimpImageMapClass))
@@ -57,11 +52,12 @@ GType          gimp_image_map_get_type     (void) G_GNUC_CONST;
 
 GimpImageMap * gimp_image_map_new          (GimpDrawable          *drawable,
                                             const gchar           *undo_desc,
-                                            GeglNode              *operation);
-
-void           gimp_image_map_apply        (GimpImageMap          *image_map,
+                                            GeglNode              *operation,
                                             GimpImageMapApplyFunc  apply_func,
                                             gpointer               apply_data);
+
+void           gimp_image_map_apply        (GimpImageMap          *image_map,
+                                            const GeglRectangle   *visible);
 void           gimp_image_map_commit       (GimpImageMap          *image_map);
 void           gimp_image_map_clear        (GimpImageMap          *image_map);
 void           gimp_image_map_abort        (GimpImageMap          *image_map);

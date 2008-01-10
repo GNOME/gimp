@@ -84,8 +84,7 @@ gimp_vectors_mod_undo_constructor (GType                  type,
 
   vectors_mod_undo->vectors =
     GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
-                                       G_TYPE_FROM_INSTANCE (vectors),
-                                       FALSE));
+                                       G_TYPE_FROM_INSTANCE (vectors)));
 
   return object;
 }
@@ -119,8 +118,7 @@ gimp_vectors_mod_undo_pop (GimpUndo            *undo,
 
   vectors_mod_undo->vectors =
     GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
-                                       G_TYPE_FROM_INSTANCE (vectors),
-                                       FALSE));
+                                       G_TYPE_FROM_INSTANCE (vectors)));
 
   gimp_vectors_freeze (vectors);
 

@@ -77,8 +77,7 @@ static gchar  * gimp_channel_get_description (GimpViewable     *viewable,
 
 static gboolean   gimp_channel_is_attached   (GimpItem         *item);
 static GimpItem * gimp_channel_duplicate     (GimpItem         *item,
-                                              GType             new_type,
-                                              gboolean          add_alpha);
+                                              GType             new_type);
 static void       gimp_channel_convert       (GimpItem         *item,
                                               GimpImage        *dest_image);
 static void       gimp_channel_translate     (GimpItem         *item,
@@ -376,18 +375,13 @@ gimp_channel_is_attached (GimpItem *item)
 
 static GimpItem *
 gimp_channel_duplicate (GimpItem *item,
-                        GType     new_type,
-                        gboolean  add_alpha)
+                        GType     new_type)
 {
   GimpItem *new_item;
 
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
 
-  if (g_type_is_a (new_type, GIMP_TYPE_CHANNEL))
-    add_alpha = FALSE;
-
-  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
-                                                        add_alpha);
+  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type);
 
   if (GIMP_IS_CHANNEL (new_item))
     {

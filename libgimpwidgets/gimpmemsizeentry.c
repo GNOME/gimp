@@ -172,8 +172,8 @@ gimp_memsize_entry_new (guint64  value,
 
   for (shift = 30; shift > 10; shift -= 10)
     {
-      if (value > ((guint64) 1 << shift) &&
-          value % ((guint64) 1 << shift) == 0)
+      if (value > (G_GUINT64_CONSTANT (1) << shift) &&
+          value % (G_GUINT64_CONSTANT (1) << shift) == 0)
         break;
     }
 
@@ -237,8 +237,8 @@ gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
 
   for (shift = 30; shift > 10; shift -= 10)
     {
-      if (value > ((guint64) 1 << shift) &&
-          value % ((guint64) 1 << shift) == 0)
+      if (value > (G_GUINT64_CONSTANT (1) << shift) &&
+          value % (G_GUINT64_CONSTANT (1) << shift) == 0)
         break;
     }
 

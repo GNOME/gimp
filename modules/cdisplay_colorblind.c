@@ -48,7 +48,7 @@ typedef enum
 } ColorblindDeficiency;
 
 #define CDISPLAY_TYPE_COLORBLIND_DEFICIENCY (cdisplay_colorblind_deficiency_type)
-static GType  cdisplay_colorblind_deficiency_get_type (GTypeModule *module);
+static GType  cdisplay_colorblind_deficiency_register_type (GTypeModule *module);
 
 static const GEnumValue enum_values[] =
 {
@@ -76,7 +76,7 @@ static const GimpEnumDesc enum_descs[] =
 #define COLOR_CACHE_SIZE    1021
 
 
-#define CDISPLAY_TYPE_COLORBLIND            (cdisplay_colorblind_type)
+#define CDISPLAY_TYPE_COLORBLIND            (cdisplay_colorblind_get_type ())
 #define CDISPLAY_COLORBLIND(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CDISPLAY_TYPE_COLORBLIND, CdisplayColorblind))
 #define CDISPLAY_COLORBLIND_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CDISPLAY_TYPE_COLORBLIND, CdisplayColorblindClass))
 #define CDISPLAY_IS_COLORBLIND(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CDISPLAY_TYPE_COLORBLIND))
@@ -113,9 +113,7 @@ enum
 };
 
 
-static GType       cdisplay_colorblind_get_type   (GTypeModule              *module);
-static void        cdisplay_colorblind_class_init (CdisplayColorblindClass  *klass);
-static void        cdisplay_colorblind_init       (CdisplayColorblind       *colorblind);
+GType              cdisplay_colorblind_get_type      (void);
 
 static void        cdisplay_colorblind_set_property  (GObject               *object,
                                                       guint                  property_id,
@@ -205,9 +203,11 @@ static const GimpModuleInfo cdisplay_colorblind_info =
   "January 22, 2003"
 };
 
-static GType                  cdisplay_colorblind_type            = 0;
-static GType                  cdisplay_colorblind_deficiency_type = 0;
-static GimpColorDisplayClass *parent_class                        = NULL;
+
+G_DEFINE_DYNAMIC_TYPE (CdisplayColorblind, cdisplay_colorblind,
+                       GIMP_TYPE_COLOR_DISPLAY)
+
+static GType cdisplay_colorblind_deficiency_type = 0;
 
 
 G_MODULE_EXPORT const GimpModuleInfo *
@@ -219,43 +219,14 @@ gimp_module_query (GTypeModule *module)
 G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
-  cdisplay_colorblind_get_type (module);
-  cdisplay_colorblind_deficiency_get_type (module);
+  cdisplay_colorblind_register_type (module);
+  cdisplay_colorblind_deficiency_register_type (module);
 
   return TRUE;
 }
 
 static GType
-cdisplay_colorblind_get_type (GTypeModule *module)
-{
-  if (! cdisplay_colorblind_type)
-    {
-      const GTypeInfo display_info =
-      {
-        sizeof (CdisplayColorblindClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) cdisplay_colorblind_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (CdisplayColorblind),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) cdisplay_colorblind_init,
-      };
-
-      cdisplay_colorblind_type =
-        g_type_module_register_type (module,
-                                     GIMP_TYPE_COLOR_DISPLAY,
-                                     "CdisplayColorblind",
-                                     &display_info, 0);
-    }
-
-  return cdisplay_colorblind_type;
-}
-
-
-static GType
-cdisplay_colorblind_deficiency_get_type (GTypeModule *module)
+cdisplay_colorblind_deficiency_register_type (GTypeModule *module)
 {
   if (! cdisplay_colorblind_deficiency_type)
     {
@@ -278,8 +249,6 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
   GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
   GimpColorDisplayClass *display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
   object_class->get_property = cdisplay_colorblind_get_property;
   object_class->set_property = cdisplay_colorblind_set_property;
 
@@ -296,6 +265,11 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
   display_class->convert     = cdisplay_colorblind_convert;
   display_class->configure   = cdisplay_colorblind_configure;
   display_class->changed     = cdisplay_colorblind_changed;
+}
+
+static void
+cdisplay_colorblind_class_finalize (CdisplayColorblindClass *klass)
+{
 }
 
 static void
@@ -320,6 +294,7 @@ cdisplay_colorblind_get_property (GObject    *object,
     case PROP_DEFICIENCY:
       g_value_set_enum (value, colorblind->deficiency);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -340,6 +315,7 @@ cdisplay_colorblind_set_property (GObject      *object,
       cdisplay_colorblind_set_deficiency (colorblind,
                                           g_value_get_enum (value));
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

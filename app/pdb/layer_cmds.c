@@ -115,9 +115,9 @@ layer_new_from_drawable_invoker (GimpProcedure      *procedure,
         new_type = GIMP_TYPE_LAYER;
 
       if (dest_image == gimp_item_get_image (GIMP_ITEM (drawable)))
-        new_item = gimp_item_duplicate (GIMP_ITEM (drawable), new_type, TRUE);
+        new_item = gimp_item_duplicate (GIMP_ITEM (drawable), new_type);
       else
-        new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type, TRUE);
+        new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type);
 
       if (new_item)
         layer_copy = GIMP_LAYER (new_item);
@@ -153,10 +153,16 @@ layer_copy_invoker (GimpProcedure      *procedure,
   if (success)
     {
       layer_copy = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
-                                                    G_TYPE_FROM_INSTANCE (layer),
-                                                    add_alpha));
-      if (! layer_copy)
-        success = FALSE;
+                                                    G_TYPE_FROM_INSTANCE (layer)));
+      if (layer_copy)
+        {
+          if (add_alpha)
+            gimp_layer_add_alpha (layer_copy);
+        }
+      else
+        {
+          success = FALSE;
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);

@@ -9,12 +9,6 @@ if DESKTOP_DATADIR
 applicationsdir = $(DESKTOP_DATADIR)/applications
 applications_DATA = $(desktop_files)
 
-mimeinfodir = $(DESKTOP_DATADIR)/mime-info
-mimeinfo_DATA = gimp.keys
-
-registrydir = $(DESKTOP_DATADIR)/application-registry
-registry_DATA = gimp.applications
-
 
 icons16dir = $(DESKTOP_DATADIR)/icons/hicolor/16x16/apps
 icons16_DATA = 16x16/gimp.png
@@ -46,9 +40,7 @@ endif
 
 
 EXTRA_DIST = \
-	gimp.applications.in	\
 	gimp.desktop.in.in	\
-	gimp.keys.in		\
 	16x16/gimp.png		\
 	22x22/gimp.png		\
 	24x24/gimp.png		\

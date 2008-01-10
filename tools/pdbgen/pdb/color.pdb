@@ -47,6 +47,26 @@ HELP
 
   if (success)
     {
+  if (gimp->config->use_gegl)
+    {
+      GeglNode *node = g_object_new (GEGL_TYPE_NODE,
+                                     "operation",  "brightness-contrast",
+                                     NULL);
+
+      gegl_node_set (node,
+                     "brightness", brightness / 127.0,
+                     "contrast",   (contrast < 0 ?
+                                    (contrast + 127.0) / 127.0 :
+                                    contrast * 4.0 / 127.0 + 1),
+                     NULL);
+
+      gimp_drawable_apply_operation (drawable, node, TRUE,
+                                     progress, _("Brightness-Contrast"));
+
+      g_object_unref (node);
+    }
+  else
+    {
       gint x, y, width, height;
 
       /* The application should occur only within selection bounds */
@@ -73,6 +93,7 @@ HELP
           gimp_drawable_merge_shadow (drawable, TRUE, _("Brightness-Contrast"));
           gimp_drawable_update (drawable, x, y, width, height);
         }
+    }
     }
 }
 CODE
@@ -116,8 +137,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("base/levels.h"
-                        "core/gimpdrawable-levels.h") ],
+	headers => [ qw("core/gimpdrawable-levels.h") ],
 	code => <<'CODE'
 {
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
@@ -159,9 +179,7 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("base/levels.h"
-                        "base/gimphistogram.h"
-                        "core/gimpdrawable-histogram.h"
+        headers => [ qw("core/gimpdrawable-histogram.h"
                         "core/gimpdrawable-levels.h") ],
         code => <<'CODE'
 {
@@ -185,9 +203,7 @@ sub levels_auto {
     );
 
     %invoke = (
-        headers => [ qw("base/levels.h"
-                        "base/gimphistogram.h"
-                        "core/gimpdrawable-histogram.h"
+        headers => [ qw("core/gimpdrawable-histogram.h"
                         "core/gimpdrawable-levels.h") ],
         code => <<'CODE'
 {
@@ -229,6 +245,23 @@ HELP
 
   if (success)
     {
+  if (gimp->config->use_gegl)
+    {
+      GeglNode *node = g_object_new (GEGL_TYPE_NODE,
+                                     "operation", "gimp-posterize",
+                                     NULL);
+
+      gegl_node_set (node,
+                     "levels", levels,
+                     NULL);
+
+      gimp_drawable_apply_operation (drawable, node, TRUE,
+                                     progress, _("Levels"));
+
+      g_object_unref (node);
+    }
+  else
+    {
       gint x, y, width, height;
 
       /* The application should occur only within selection bounds */
@@ -253,6 +286,7 @@ HELP
           gimp_drawable_merge_shadow (drawable, TRUE, _("Posterize"));
           gimp_drawable_update (drawable, x, y, width, height);
         }
+    }
     }
 }
 CODE
@@ -693,6 +727,25 @@ HELP
 
   if (success)
     {
+  if (gimp->config->use_gegl)
+    {
+      GeglNode *node = g_object_new (GEGL_TYPE_NODE,
+                                     "operation", "gimp-colorize",
+                                     NULL);
+
+      gegl_node_set (node,
+                     "hue",        hue,
+                     "saturation", saturation,
+                     "lightness",  lightness,
+                     NULL);
+
+      gimp_drawable_apply_operation (drawable, node, TRUE,
+                                     progress, _("Colorize"));
+
+      g_object_unref (node);
+    }
+  else
+    {
       gint x, y, width, height;
 
       /* The application should occur only within selection bounds */
@@ -720,6 +773,7 @@ HELP
           gimp_drawable_merge_shadow (drawable, TRUE, _("Colorize"));
           gimp_drawable_update (drawable, x, y, width, height);
         }
+    }
     }
 }
 CODE
@@ -774,7 +828,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimp.h" "core/gimpdrawable-histogram.h") ],
+	headers => [ qw("core/gimpdrawable-histogram.h") ],
 	code => <<'CODE'
 {
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
@@ -912,6 +966,24 @@ HELP
 
   if (success)
     {
+  if (gimp->config->use_gegl)
+    {
+      GeglNode *node = g_object_new (GEGL_TYPE_NODE,
+                                     "operation", "gimp-threshold",
+                                     NULL);
+
+      gegl_node_set (node,
+                     "low",  low_threshold  / 255.0,
+                     "high", high_threshold / 255.0,
+                     NULL);
+
+      gimp_drawable_apply_operation (drawable, node, TRUE,
+                                     progress, _("Threshold"));
+
+      g_object_unref (node);
+    }
+  else
+    {
       gint x, y, width, height;
 
       /* The application should occur only within selection bounds */
@@ -936,24 +1008,37 @@ HELP
           gimp_drawable_update (drawable, x, y, width, height);
         }
     }
+    }
 }
 CODE
     );
 }
 
 
-@headers = qw("base/gimphistogram.h"
+@headers = qw(<gegl.h>
+              "base/gimphistogram.h"
               "base/gimplut.h"
               "base/lut-funcs.h"
-	      "base/pixel-region.h"
+              "base/pixel-region.h"
               "base/pixel-processor.h"
+              "config/gimpcoreconfig.h"
+              "core/gimp.h"
               "core/gimpdrawable.h"
+              "core/gimpdrawable-operation.h"
               "core/gimpimage.h"
               "gimp-intl.h");
 
-@procs = qw(brightness_contrast levels levels_auto levels_stretch posterize
-            desaturate desaturate_full equalize invert curves_spline
-            curves_explicit color_balance colorize histogram hue_saturation
+@procs = qw(brightness_contrast
+            levels levels_auto levels_stretch
+            posterize
+            desaturate desaturate_full
+            equalize
+            invert
+            curves_spline curves_explicit
+            color_balance
+            colorize
+            histogram
+            hue_saturation
             threshold);
 
 %exports = (app => [@procs], lib => [@procs]);

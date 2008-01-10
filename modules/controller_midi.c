@@ -63,7 +63,7 @@ enum
 };
 
 
-#define CONTROLLER_TYPE_MIDI            (controller_type)
+#define CONTROLLER_TYPE_MIDI            (controller_midi_get_type ())
 #define CONTROLLER_MIDI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CONTROLLER_TYPE_MIDI, ControllerMidi))
 #define CONTROLLER_MIDI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CONTROLLER_TYPE_MIDI, ControllerMidiClass))
 #define CONTROLLER_IS_MIDI(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CONTROLLER_TYPE_MIDI))
@@ -104,45 +104,42 @@ struct _ControllerMidiClass
 };
 
 
-GType                midi_get_type        (GTypeModule    *module);
+GType                controller_midi_get_type (void);
 
-static void          midi_class_init      (ControllerMidiClass *klass);
-static void          midi_init            (ControllerMidi      *midi);
+static void          midi_dispose             (GObject        *object);
+static void          midi_set_property        (GObject        *object,
+                                               guint           property_id,
+                                               const GValue   *value,
+                                               GParamSpec     *pspec);
+static void          midi_get_property        (GObject        *object,
+                                               guint           property_id,
+                                               GValue         *value,
+                                               GParamSpec     *pspec);
 
-static void          midi_dispose         (GObject        *object);
-static void          midi_set_property    (GObject        *object,
-                                           guint           property_id,
-                                           const GValue   *value,
-                                           GParamSpec     *pspec);
-static void          midi_get_property    (GObject        *object,
-                                           guint           property_id,
-                                           GValue         *value,
-                                           GParamSpec     *pspec);
+static gint          midi_get_n_events        (GimpController *controller);
+static const gchar * midi_get_event_name      (GimpController *controller,
+                                               gint            event_id);
+static const gchar * midi_get_event_blurb     (GimpController *controller,
+                                               gint            event_id);
 
-static gint          midi_get_n_events    (GimpController *controller);
-static const gchar * midi_get_event_name  (GimpController *controller,
-                                           gint            event_id);
-static const gchar * midi_get_event_blurb (GimpController *controller,
-                                           gint            event_id);
+static gboolean      midi_set_device          (ControllerMidi *controller,
+                                               const gchar    *device);
+static void          midi_event               (ControllerMidi *midi,
+                                               gint            channel,
+                                               gint            event_id,
+                                               gdouble         value);
 
-static gboolean      midi_set_device      (ControllerMidi *controller,
-                                           const gchar    *device);
-static void          midi_event           (ControllerMidi *midi,
-                                           gint            channel,
-                                           gint            event_id,
-                                           gdouble         value);
-
-static gboolean      midi_read_event      (GIOChannel     *io,
-                                           GIOCondition    cond,
-                                           gpointer        data);
+static gboolean      midi_read_event          (GIOChannel     *io,
+                                               GIOCondition    cond,
+                                               gpointer        data);
 
 #ifdef HAVE_ALSA
-static gboolean      midi_alsa_prepare    (GSource        *source,
-                                           gint           *timeout);
-static gboolean      midi_alsa_check      (GSource        *source);
-static gboolean      midi_alsa_dispatch   (GSource        *source,
-                                           GSourceFunc     callback,
-                                           gpointer        user_data);
+static gboolean      midi_alsa_prepare        (GSource        *source,
+                                               gint           *timeout);
+static gboolean      midi_alsa_check          (GSource        *source);
+static gboolean      midi_alsa_dispatch       (GSource        *source,
+                                               GSourceFunc     callback,
+                                               gpointer        user_data);
 
 static GSourceFuncs alsa_source_funcs =
 {
@@ -172,10 +169,10 @@ static const GimpModuleInfo midi_info =
 };
 
 
-static GType                controller_type = 0;
-static GimpControllerClass *parent_class    = NULL;
+G_DEFINE_DYNAMIC_TYPE (ControllerMidi, controller_midi,
+                       GIMP_TYPE_CONTROLLER)
 
-static MidiEvent            midi_events[128 + 128 + 128];
+static MidiEvent midi_events[128 + 128 + 128];
 
 
 G_MODULE_EXPORT const GimpModuleInfo *
@@ -187,47 +184,17 @@ gimp_module_query (GTypeModule *module)
 G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
-  midi_get_type (module);
+  controller_midi_register_type (module);
 
   return TRUE;
 }
 
-
-GType
-midi_get_type (GTypeModule *module)
-{
-  if (! controller_type)
-    {
-      const GTypeInfo controller_info =
-      {
-        sizeof (ControllerMidiClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) midi_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (ControllerMidi),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) midi_init
-      };
-
-      controller_type = g_type_module_register_type (module,
-                                                     GIMP_TYPE_CONTROLLER,
-                                                     "ControllerMidi",
-                                                     &controller_info, 0);
-    }
-
-  return controller_type;
-}
-
 static void
-midi_class_init (ControllerMidiClass *klass)
+controller_midi_class_init (ControllerMidiClass *klass)
 {
   GimpControllerClass *controller_class = GIMP_CONTROLLER_CLASS (klass);
   GObjectClass        *object_class     = G_OBJECT_CLASS (klass);
   gchar               *blurb;
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->dispose            = midi_dispose;
   object_class->get_property       = midi_get_property;
@@ -266,7 +233,12 @@ midi_class_init (ControllerMidiClass *klass)
 }
 
 static void
-midi_init (ControllerMidi *midi)
+controller_midi_class_finalize (ControllerMidiClass *klass)
+{
+}
+
+static void
+controller_midi_init (ControllerMidi *midi)
 {
   midi->device       = NULL;
   midi->midi_channel = -1;
@@ -293,7 +265,7 @@ midi_dispose (GObject *object)
 
   midi_set_device (midi, NULL);
 
-  G_OBJECT_CLASS (parent_class)->dispose (object);
+  G_OBJECT_CLASS (controller_midi_parent_class)->dispose (object);
 }
 
 static void

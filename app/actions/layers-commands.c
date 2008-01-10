@@ -414,10 +414,8 @@ layers_duplicate_cmd_callback (GtkAction *action,
   GimpLayer *new_layer;
   return_if_no_layer (image, layer, data);
 
-  new_layer =
-    GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
-                                     G_TYPE_FROM_INSTANCE (layer),
-                                     TRUE));
+  new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
+                                               G_TYPE_FROM_INSTANCE (layer)));
   gimp_image_add_layer (image, new_layer, -1);
 
   gimp_image_flush (image);

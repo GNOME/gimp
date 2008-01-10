@@ -334,7 +334,7 @@ tile (gint32  image_id,
 
               progress += src_rgn.w * src_rgn.h;
 
-              if (c % 8 == 0)
+              if (c % 16 == 0)
                 gimp_progress_update ((gdouble) progress /
                                       (gdouble) max_progress);
             }

@@ -512,7 +512,6 @@ EXPORTS
 	gimp_projection_flush_now
 	gimp_projection_get_bytes
 	gimp_projection_get_image_type
-	gimp_projection_get_opacity
 	gimp_projection_get_tiles
 	gimp_rc_get_type
 	gimp_rc_new
@@ -927,3 +926,7 @@ gimp_curve_move_point
 gimp_curve_set_curve
 gimp_curve_set_curve_type
 gimp_curve_get_closest_point
+gimp_gegl_init
+gimp_image_get_guides
+gimp_image_get_sample_points
+gimp_plug_in_manager_get_menu_branches

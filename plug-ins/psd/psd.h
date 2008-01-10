@@ -19,7 +19,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 #ifndef __PSD_H__
 #define __PSD_H__
 
@@ -132,7 +131,6 @@
 #define PSD_LFX_OUTER_GLW       "oglw"          /* Effects layer - outer glow (PS5) */
 #define PSD_LFX_INNER_GLW       "iglw"          /* Effects layer - inner glow (PS5) */
 #define PSD_LFX_BEVEL           "bevl"          /* Effects layer - bevel (PS5) */
-
 
 /* PSD spec enums */
 

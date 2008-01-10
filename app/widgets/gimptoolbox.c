@@ -286,6 +286,15 @@ gimp_toolbox_constructor (GType                  type,
                            G_CALLBACK (toolbox_area_notify),
                            toolbox->image_area, 0);
 
+  {
+    GtkWidget *button;
+
+    button = gimp_prop_check_button_new (G_OBJECT (config), "use-gegl",
+                                         "Use GEGL");
+    gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+    gtk_widget_show (button);
+  }
+
   g_signal_connect_object (context, "tool-changed",
                            G_CALLBACK (toolbox_tool_changed),
                            toolbox->tool_wbox,

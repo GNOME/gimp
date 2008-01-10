@@ -47,13 +47,13 @@ enum
 
 static gboolean   gimp_layer_mask_is_attached  (GimpItem     *item);
 static GimpItem * gimp_layer_mask_duplicate    (GimpItem     *item,
-                                                GType         new_type,
-                                                gboolean      add_alpha);
+                                                GType         new_type);
 static gboolean   gimp_layer_mask_rename       (GimpItem     *item,
                                                 const gchar  *new_name,
                                                 const gchar  *undo_desc,
                                                 GError      **error);
 
+static void       gimp_layer_mask_real_edit_changed (GimpLayerMask *layer_mask);
 
 G_DEFINE_TYPE (GimpLayerMask, gimp_layer_mask, GIMP_TYPE_CHANNEL)
 
@@ -97,6 +97,8 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 
   viewable_class->default_stock_id = "gimp-layer-mask";
 
+  klass->edit_changed        = gimp_layer_mask_real_edit_changed;
+
   item_class->is_attached    = gimp_layer_mask_is_attached;
   item_class->duplicate      = gimp_layer_mask_duplicate;
   item_class->rename         = gimp_layer_mask_rename;
@@ -126,15 +128,13 @@ gimp_layer_mask_is_attached (GimpItem *item)
 
 static GimpItem *
 gimp_layer_mask_duplicate (GimpItem *item,
-                           GType     new_type,
-                           gboolean  add_alpha)
+                           GType     new_type)
 {
   GimpItem *new_item;
 
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
 
-  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
-                                                        add_alpha);
+  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type);
 
   if (GIMP_IS_LAYER_MASK (new_item))
     {
@@ -279,6 +279,13 @@ gimp_layer_mask_get_edit (const GimpLayerMask *layer_mask)
   g_return_val_if_fail (GIMP_IS_LAYER_MASK (layer_mask), FALSE);
 
   return layer_mask->edit_mask;
+}
+
+static void
+gimp_layer_mask_real_edit_changed (GimpLayerMask *layer_mask)
+{
+  gimp_image_selection_control (GIMP_ITEM (layer_mask)->image,
+                                GIMP_SELECTION_LAYER_ON);
 }
 
 void

@@ -34,6 +34,7 @@
 #include "base/pixel-region.h"
 
 #include "gimp-gegl-utils.h"
+#include "gegl/graph/gegl-node-context.h"
 #include "gimpoperationtilesource.h"
 
 
@@ -55,11 +56,13 @@ static void     gimp_operation_tile_source_set_property (GObject       *object,
                                                          const GValue  *value,
                                                          GParamSpec    *pspec);
 
+static void     gimp_operation_tile_source_prepare      (GeglOperation *operation);
 static GeglRectangle
           gimp_operation_tile_source_get_defined_region (GeglOperation *operation);
-
 static gboolean gimp_operation_tile_source_process      (GeglOperation *operation,
-                                                         gpointer       context_id);
+                                                         GeglNodeContext *context,
+                                                         GeglBuffer          *output,
+                                                         const GeglRectangle *result);
 
 
 G_DEFINE_TYPE (GimpOperationTileSource, gimp_operation_tile_source,
@@ -79,6 +82,7 @@ gimp_operation_tile_source_class_init (GimpOperationTileSourceClass * klass)
   object_class->set_property          = gimp_operation_tile_source_set_property;
   object_class->get_property          = gimp_operation_tile_source_get_property;
 
+  operation_class->prepare            = gimp_operation_tile_source_prepare;
   operation_class->get_defined_region = gimp_operation_tile_source_get_defined_region;
   operation_class->adjust_result_region = NULL; /* the default source is
                                                  expanding to agressivly
@@ -177,6 +181,25 @@ gimp_operation_tile_source_set_property (GObject      *object,
     }
 }
 
+static void
+gimp_operation_tile_source_prepare (GeglOperation *operation)
+{
+  GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (operation);
+
+  if (self->tile_manager)
+    {
+      const Babl *format;
+      guint       bpp = tile_manager_bpp (self->tile_manager);
+
+      if (self->linear)
+        format = gimp_bpp_to_babl_format_linear (bpp);
+      else
+        format = gimp_bpp_to_babl_format (bpp);
+
+      gegl_operation_set_format (operation, "output", format);
+    }
+}
+
 static GeglRectangle
 gimp_operation_tile_source_get_defined_region (GeglOperation *operation)
 {
@@ -195,32 +218,24 @@ gimp_operation_tile_source_get_defined_region (GeglOperation *operation)
 }
 
 static gboolean
-gimp_operation_tile_source_process (GeglOperation *operation,
-                                    gpointer       context_id)
+gimp_operation_tile_source_process (GeglOperation       *operation,
+                                    GeglNodeContext     *context,
+                                    GeglBuffer          *output,
+                                    const GeglRectangle *result)
 {
   GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (operation);
 
   if (self->tile_manager)
     {
-      GeglBuffer          *output;
-      const Babl          *format;
-      const GeglRectangle *extent;
-      PixelRegion          srcPR;
-      const guint          bpp = tile_manager_bpp (self->tile_manager);
-      gpointer             pr;
+      const Babl  *format;
+      PixelRegion  srcPR;
+      gpointer     pr;
 
-      extent = gegl_operation_result_rect (operation, context_id);
-
-      if (self->linear)
-        format = gimp_bpp_to_babl_format_linear (bpp);
-      else
-        format = gimp_bpp_to_babl_format (bpp);
-
-      output = gegl_buffer_new (extent, format);
+      format = gegl_operation_get_format (operation, "output");
 
       pixel_region_init (&srcPR, self->tile_manager,
-                         extent->x, extent->y,
-                         extent->width, extent->height,
+                         result->x,     result->y,
+                         result->width, result->height,
                          FALSE);
 
       for (pr = pixel_regions_register (1, &srcPR);
@@ -231,9 +246,6 @@ gimp_operation_tile_source_process (GeglOperation *operation,
 
           gegl_buffer_set (output, &rect, format, srcPR.data, srcPR.rowstride);
         }
-
-      gegl_operation_set_data (operation, context_id,
-                               "output", G_OBJECT (output));
     }
 
   return TRUE;

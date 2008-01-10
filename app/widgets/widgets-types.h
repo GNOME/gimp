@@ -127,6 +127,7 @@ typedef struct _GimpUIManager                GimpUIManager;
 /*  misc dialogs  */
 
 typedef struct _GimpColorDialog              GimpColorDialog;
+typedef struct _GimpDataChooserDialog        GimpDataChooserDialog;
 typedef struct _GimpErrorDialog              GimpErrorDialog;
 typedef struct _GimpFileDialog               GimpFileDialog;
 typedef struct _GimpMessageDialog            GimpMessageDialog;

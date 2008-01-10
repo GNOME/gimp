@@ -157,7 +157,7 @@ query (void)
                           save_args, NULL);
 
   gimp_register_save_handler (SAVE_PROC, "psd", "");
-  gimp_register_file_handler_mime (SAVE_PROC, "image/psd");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/x-psd");
 #endif /* PSD_SAVE */
 }
 
@@ -200,8 +200,6 @@ run (const gchar      *name,
         }
       else
         {
-          g_message (_("Could not open '%s' for reading"),
-                     gimp_filename_to_utf8 (param[1].data.d_string));
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }

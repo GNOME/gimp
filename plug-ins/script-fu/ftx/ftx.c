@@ -90,12 +90,12 @@ pointer foreign_filetype(scheme *sc, pointer args)
   filename = sc->vptr->string_value(first_arg);
   filename = g_filename_from_utf8 (filename, -1, NULL, NULL, NULL);
 
-  if (g_file_test(filename, G_FILE_TEST_IS_REGULAR))
+  if (g_file_test(filename, G_FILE_TEST_IS_SYMLINK))
+    retcode =  FILE_TYPE_LINK;
+  else if (g_file_test(filename, G_FILE_TEST_IS_REGULAR))
     retcode = FILE_TYPE_FILE;
   else if (g_file_test(filename, G_FILE_TEST_IS_DIR))
     retcode = FILE_TYPE_DIR;
-  else if (g_file_test(filename, G_FILE_TEST_IS_SYMLINK))
-    retcode =  FILE_TYPE_LINK;
   else
     retcode = FILE_TYPE_UNKNOWN;
 

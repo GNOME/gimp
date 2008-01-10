@@ -42,29 +42,28 @@
 
 
 #define SLIDER_WIDTH 200
-#define DA_WIDTH      40
-#define DA_HEIGHT     20
 
 
 /*  local function prototypes  */
 
-static void     gimp_colorize_tool_finalize    (GObject          *object);
+static void       gimp_colorize_tool_finalize      (GObject          *object);
 
-static gboolean gimp_colorize_tool_initialize  (GimpTool         *tool,
-                                                GimpDisplay      *display,
-                                                GError          **error);
+static gboolean   gimp_colorize_tool_initialize    (GimpTool         *tool,
+                                                    GimpDisplay      *display,
+                                                    GError          **error);
 
-static void     gimp_colorize_tool_map         (GimpImageMapTool *im_tool);
-static void     gimp_colorize_tool_dialog      (GimpImageMapTool *im_tool);
-static void     gimp_colorize_tool_reset       (GimpImageMapTool *im_tool);
+static GeglNode * gimp_colorize_tool_get_operation (GimpImageMapTool  *im_tool);
+static void       gimp_colorize_tool_map           (GimpImageMapTool *im_tool);
+static void       gimp_colorize_tool_dialog        (GimpImageMapTool *im_tool);
+static void       gimp_colorize_tool_reset         (GimpImageMapTool *im_tool);
 
-static void     colorize_update_sliders        (GimpColorizeTool *col_tool);
-static void     colorize_hue_changed           (GtkAdjustment    *adj,
-                                                GimpColorizeTool *col_tool);
-static void     colorize_saturation_changed    (GtkAdjustment    *adj,
-                                                GimpColorizeTool *col_tool);
-static void     colorize_lightness_changed     (GtkAdjustment    *adj,
-                                                GimpColorizeTool *col_tool);
+static void       colorize_update_sliders          (GimpColorizeTool *col_tool);
+static void       colorize_hue_changed             (GtkAdjustment    *adj,
+                                                    GimpColorizeTool *col_tool);
+static void       colorize_saturation_changed      (GtkAdjustment    *adj,
+                                                    GimpColorizeTool *col_tool);
+static void       colorize_lightness_changed       (GtkAdjustment    *adj,
+                                                    GimpColorizeTool *col_tool);
 
 
 G_DEFINE_TYPE (GimpColorizeTool, gimp_colorize_tool, GIMP_TYPE_IMAGE_MAP_TOOL)
@@ -95,23 +94,29 @@ gimp_colorize_tool_class_init (GimpColorizeToolClass *klass)
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  object_class->finalize    = gimp_colorize_tool_finalize;
+  object_class->finalize       = gimp_colorize_tool_finalize;
 
-  tool_class->initialize    = gimp_colorize_tool_initialize;
+  tool_class->initialize       = gimp_colorize_tool_initialize;
 
-  im_tool_class->shell_desc = _("Colorize the Image");
+  im_tool_class->shell_desc    = _("Colorize the Image");
 
-  im_tool_class->map        = gimp_colorize_tool_map;
-  im_tool_class->dialog     = gimp_colorize_tool_dialog;
-  im_tool_class->reset      = gimp_colorize_tool_reset;
+  im_tool_class->get_operation = gimp_colorize_tool_get_operation;
+  im_tool_class->map           = gimp_colorize_tool_map;
+  im_tool_class->dialog        = gimp_colorize_tool_dialog;
+  im_tool_class->reset         = gimp_colorize_tool_reset;
 }
 
 static void
 gimp_colorize_tool_init (GimpColorizeTool *col_tool)
 {
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (col_tool);
+
   col_tool->colorize = g_slice_new0 (Colorize);
 
   colorize_init (col_tool->colorize);
+
+  im_tool->apply_func = (GimpImageMapApplyFunc) colorize;
+  im_tool->apply_data = col_tool->colorize;
 }
 
 static void
@@ -143,7 +148,6 @@ gimp_colorize_tool_initialize (GimpTool     *tool,
     }
 
   colorize_init (col_tool->colorize);
-  colorize_calculate (col_tool->colorize);
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
@@ -154,14 +158,29 @@ gimp_colorize_tool_initialize (GimpTool     *tool,
   return TRUE;
 }
 
+static GeglNode *
+gimp_colorize_tool_get_operation (GimpImageMapTool *im_tool)
+{
+  return g_object_new (GEGL_TYPE_NODE,
+                       "operation", "gimp-colorize",
+                       NULL);
+}
+
 static void
 gimp_colorize_tool_map (GimpImageMapTool *image_map_tool)
 {
   GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (image_map_tool);
 
-  gimp_image_map_apply (image_map_tool->image_map,
-                        (GimpImageMapApplyFunc) colorize,
-                        col_tool->colorize);
+  if (image_map_tool->operation)
+    {
+      gegl_node_set (image_map_tool->operation,
+                     "hue",        col_tool->colorize->hue,
+                     "saturation", col_tool->colorize->saturation,
+                     "lightness",  col_tool->colorize->lightness,
+                     NULL);
+    }
+
+  colorize_calculate (col_tool->colorize);
 }
 
 
@@ -244,7 +263,6 @@ gimp_colorize_tool_reset (GimpImageMapTool *image_map_tool)
   GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (image_map_tool);
 
   colorize_init (col_tool->colorize);
-  colorize_calculate (col_tool->colorize);
 
   colorize_update_sliders (col_tool);
 }
@@ -267,7 +285,6 @@ colorize_hue_changed (GtkAdjustment    *adjustment,
   if (col_tool->colorize->hue != adjustment->value)
     {
       col_tool->colorize->hue = adjustment->value;
-      colorize_calculate (col_tool->colorize);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (col_tool));
     }
@@ -280,7 +297,6 @@ colorize_saturation_changed (GtkAdjustment    *adjustment,
   if (col_tool->colorize->saturation != adjustment->value)
     {
       col_tool->colorize->saturation = adjustment->value;
-      colorize_calculate (col_tool->colorize);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (col_tool));
     }
@@ -293,7 +309,6 @@ colorize_lightness_changed (GtkAdjustment    *adjustment,
   if (col_tool->colorize->lightness != adjustment->value)
     {
       col_tool->colorize->lightness = adjustment->value;
-      colorize_calculate (col_tool->colorize);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (col_tool));
     }

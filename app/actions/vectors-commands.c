@@ -249,10 +249,8 @@ vectors_duplicate_cmd_callback (GtkAction *action,
   GimpVectors *new_vectors;
   return_if_no_vectors (image, vectors, data);
 
-  new_vectors =
-    GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
-                                       G_TYPE_FROM_INSTANCE (vectors),
-                                       TRUE));
+  new_vectors = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
+                                                   G_TYPE_FROM_INSTANCE (vectors)));
   gimp_image_add_vectors (image, new_vectors, -1);
   gimp_image_flush (image);
 }

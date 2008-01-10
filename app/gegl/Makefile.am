@@ -7,8 +7,14 @@ libappgegl_a_SOURCES = \
 	gimp-gegl.h			\
 	gimp-gegl-utils.c		\
 	gimp-gegl-utils.h		\
+	gimpoperationcolorize.c		\
+	gimpoperationcolorize.h		\
 	gimpoperationdesaturate.c	\
 	gimpoperationdesaturate.h	\
+	gimpoperationlevels.c		\
+	gimpoperationlevels.h		\
+	gimpoperationposterize.c	\
+	gimpoperationposterize.h	\
 	gimpoperationthreshold.c	\
 	gimpoperationthreshold.h	\
 	gimpoperationtilesink.c		\
@@ -22,6 +28,5 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
-	$(GTK_CFLAGS)		\
 	$(GEGL_CFLAGS)		\
 	-I$(includedir)

@@ -30,9 +30,9 @@ G_BEGIN_DECLS
 
 struct _GimpDatafileData
 {
-  const gchar *filename;
-  const gchar *dirname;
-  const gchar *basename;
+  gchar *filename;
+  gchar *dirname;
+  gchar *basename;
 
   time_t       atime;
   time_t       mtime;

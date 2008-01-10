@@ -81,6 +81,7 @@ struct _GimpCoreConfig
   GimpColorConfig        *color_management;
   GimpColorProfilePolicy  color_profile_policy;
   gboolean                save_document_history;
+  gboolean                use_gegl;
 };
 
 struct _GimpCoreConfigClass

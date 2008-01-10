@@ -20,12 +20,12 @@
 #ifndef __GEGL_OPERATION_H__
 #define __GEGL_OPERATION_H__
 
+#include <glib-object.h>
+#include <babl/babl.h>
 #include "gegl-types.h"
 #include "buffer/gegl-buffer-types.h"
-#include <babl/babl.h>
 
 G_BEGIN_DECLS
-
 
 #define GEGL_TYPE_OPERATION            (gegl_operation_get_type ())
 #define GEGL_OPERATION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GEGL_TYPE_OPERATION, GeglOperation))
@@ -74,8 +74,7 @@ struct _GeglOperationClass
   /* prepare the node for processing (all properties will be set) override this
    * if you are creating a meta operation (using the node as a GeglGraph).
    */
-  void            (*prepare)              (GeglOperation *operation,
-                                           gpointer       context_id);
+  void            (*prepare)              (GeglOperation *operation);
 
   /* Returns a bounding rectangle for the data that is defined by this op. (is
    * already implemented in GeglOperationPointFilter and
@@ -88,9 +87,9 @@ struct _GeglOperationClass
    * graph. A default implementation of this, if not provided should probably
    * be to report that the entire defined region is dirtied.
    */
-  GeglRectangle   (*compute_affected_region)  (GeglOperation *operation,
-                                               const gchar   *input_pad,
-                                               GeglRectangle  region);
+  GeglRectangle   (*compute_affected_region)  (GeglOperation       *operation,
+                                               const gchar         *input_pad,
+                                               const GeglRectangle *input_region);
 
   /* computes the rectangle needed to be correctly computed in a buffer
    * on the named input_pad, for a given result rectangle
@@ -108,53 +107,41 @@ struct _GeglOperationClass
 
   /* Returns the node providing data for a specific location
    */
-  GeglNode*       (*detect)               (GeglOperation *operation,
-                                           gint           x,
-                                           gint           y);
+  GeglNode*       (*detect)                (GeglOperation       *operation,
+                                            gint                 x,
+                                            gint                 y);
 
-  /* do the actual processing needed to put GeglBuffers on the output pad */
-  gboolean        (*process)              (GeglOperation *operation,
-                                           gpointer       context_id,
-                                           const gchar   *output_pad);
-
+  gboolean        (*process)               (GeglOperation       *operation,
+                                            GeglNodeContext     *context,
+                                            const gchar         *output_pad,
+                                            const GeglRectangle *result_rect);
 };
 
 /* returns|registers the gtype for GeglOperation */
 GType           gegl_operation_get_type             (void) G_GNUC_CONST;
 
-/* returns the ROI passed to _this_ operation */
-const GeglRectangle *
-                gegl_operation_get_requested_region (GeglOperation *operation,
-                                                     gpointer       context_id);
-
 /* retrieves the bounding box of a connected input */
 GeglRectangle * gegl_operation_source_get_defined_region (GeglOperation *operation,
                                                           const gchar   *pad_name);
 
-/* retrieves the node providing data to a named input pad */
-GeglNode      * gegl_operation_get_source_node      (GeglOperation *operation,
-                                                     const gchar   *pad_name);
 
 /* sets the ROI needed to be computed on one of the sources */
-void            gegl_operation_set_source_region    (GeglOperation *operation,
-                                                     gpointer       context_id,
-                                                     const gchar   *pad_name,
-                                                     GeglRectangle *region);
+void            gegl_operation_set_source_region    (GeglOperation       *operation,
+                                                     gpointer             context_id,
+                                                     const gchar         *pad_name,
+                                                     const GeglRectangle *region);
 
-/* returns the bounding box of the buffer that needs to be computed */
-const GeglRectangle * gegl_operation_result_rect    (GeglOperation *operation,
-                                                     gpointer       context_id);
-
-/* returns the bounding box of the buffer needed for computation */
-const GeglRectangle * gegl_operation_need_rect      (GeglOperation *operation,
-                                                     gpointer       context_id);
 
 /* virtual method invokers that depends only on the set properties of a
  * operation|node
  */
+
+/* retrieves the node providing data to a named input pad */
+GeglNode      * gegl_operation_get_source_node      (GeglOperation *operation,
+                                                     const gchar   *pad_name);
 GeglRectangle   gegl_operation_compute_affected_region (GeglOperation *operation,
                                                      const gchar   *input_pad,
-                                                     GeglRectangle  region);
+                                                     const GeglRectangle *input_region);
 GeglRectangle   gegl_operation_get_defined_region   (GeglOperation *operation);
 GeglRectangle   gegl_operation_adjust_result_region (GeglOperation *operation,
                                                      const GeglRectangle *roi);
@@ -169,30 +156,16 @@ GeglNode       *gegl_operation_detect               (GeglOperation *operation,
 
 
 /* virtual method invokers that change behavior based on the roi being computed,
- * needs a context_id being based that is used for storing dynamic data.
+ * needs a context_id being based that is used for storing context data.
  */
 
-void            gegl_operation_attach               (GeglOperation *operation,
-                                                     GeglNode      *node);
-void            gegl_operation_prepare              (GeglOperation *operation,
-                                                     gpointer       context_id);
-gboolean        gegl_operation_process              (GeglOperation *operation,
-                                                     gpointer       context_id,
-                                                     const gchar   *output_pad);
-
-
-/* retrieve the buffer that we are going to write into, it will be of the
- * dimensions retrieved through the rectangle computation, and of the format
- * currently specified on the associated nodes, "property_name" pad.
- */
-GeglBuffer    * gegl_operation_get_target           (GeglOperation *operation,
-                                                     gpointer       context_id,
-                                                     const gchar   *property_name);
-
-
-GeglBuffer    * gegl_operation_get_source            (GeglOperation *operation,
-                                                      gpointer       context_id,
-                                                      const gchar   *property_name);
+void            gegl_operation_attach               (GeglOperation       *operation,
+                                                     GeglNode            *node);
+void            gegl_operation_prepare              (GeglOperation       *operation);
+gboolean        gegl_operation_process              (GeglOperation       *operation,
+                                                     GeglNodeContext     *context,
+                                                     const gchar         *output_pad,
+                                                     const GeglRectangle *result_rect);
 
 gchar        ** gegl_list_operations                (guint *n_operations_p);
 GParamSpec   ** gegl_list_properties                (const gchar *operation_type,
@@ -204,7 +177,8 @@ void       gegl_operation_class_set_name            (GeglOperationClass *operati
 
 /* create a pad for a specified property for this operation, this method is
  * to be called from the attach method of operations, most operations do not
- * have to care about this since a super class will do it for them.
+ * have to care about this since a super class like filter, sink, source or
+ * composer already does so.
  */
 void       gegl_operation_create_pad                (GeglOperation *operation,
                                                      GParamSpec    *param_spec);
@@ -214,41 +188,14 @@ void       gegl_operation_create_pad                (GeglOperation *operation,
  * turn into a global mechanism) */
 void       gegl_operation_set_format                (GeglOperation *operation,
                                                      const gchar   *pad_name,
-                                                     Babl          *format);
+                                                     const Babl    *format);
+const Babl * gegl_operation_get_format              (GeglOperation *operation,
+                                                     const gchar   *pad_name);
 
 /* Used to look up the gtype when changing the type of operation associated
  * a GeglNode using just a string with the registered name.
  */
 GType      gegl_operation_gtype_from_name           (const gchar *name);
-
-
-
-
-
-/* set a dynamic named instance for this node, this function takes over ownership
- * of the reference (mostly used to set the "output" GeglBuffer) for operations
- */
-void            gegl_operation_set_data             (GeglOperation *operation,
-                                                     gpointer       context_id,
-                                                     const gchar   *property_name,
-                                                     GObject       *data);
-
-
-/*************************
- *  The following is internal GEGL functions, declared in the header for now, should.
- *  be removed when the operation API is made public.
- */
-
-
-/* retrieve a gobject previously set dynamically on an operation */
-GObject       * gegl_operation_get_data             (GeglOperation *operation,
-                                                     gpointer       context_id,
-                                                     const gchar   *property_name);
-
-
-GeglBuffer    * gegl_operation_get_source           (GeglOperation *operation,
-                                                     gpointer       context_id,
-                                                     const gchar   *pad_name);
 
 gboolean gegl_operation_calc_source_regions  (GeglOperation *operation,
                                               gpointer       context_id);

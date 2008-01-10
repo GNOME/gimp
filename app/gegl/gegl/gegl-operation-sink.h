@@ -15,11 +15,10 @@
  *
  * Copyright 2006 Øyvind Kolås
  */
-#ifndef _GEGL_OPERATION_SINK_H
-#define _GEGL_OPERATION_SINK_H
 
-#include <glib-object.h>
-#include "gegl-types.h"
+#ifndef __GEGL_OPERATION_SINK_H__
+#define __GEGL_OPERATION_SINK_H__
+
 #include "gegl-operation.h"
 
 G_BEGIN_DECLS
@@ -27,9 +26,9 @@ G_BEGIN_DECLS
 #define GEGL_TYPE_OPERATION_SINK            (gegl_operation_sink_get_type ())
 #define GEGL_OPERATION_SINK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GEGL_TYPE_OPERATION_SINK, GeglOperationSink))
 #define GEGL_OPERATION_SINK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GEGL_TYPE_OPERATION_SINK, GeglOperationSinkClass))
-#define GEGL_OPERATION_SINK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GEGL_TYPE_OPERATION_SINK, GeglOperationSinkClass))
 #define GEGL_IS_OPERATION_SINK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GEGL_TYPE_OPERATION_SINK))
 #define GEGL_IS_OPERATION_SINK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GEGL_TYPE_OPERATION_SINK))
+#define GEGL_OPERATION_SINK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GEGL_TYPE_OPERATION_SINK, GeglOperationSinkClass))
 
 typedef struct _GeglOperationSink  GeglOperationSink;
 struct _GeglOperationSink
@@ -44,8 +43,9 @@ struct _GeglOperationSinkClass
 
   gboolean           needs_full;
 
-  gboolean (* process) (GeglOperation *self,
-                        gpointer       context_id);
+  gboolean (* process) (GeglOperation       *self,
+                        GeglBuffer          *input,
+                        const GeglRectangle *result);
 };
 
 GType    gegl_operation_sink_get_type   (void) G_GNUC_CONST;

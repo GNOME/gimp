@@ -111,10 +111,15 @@ gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
 static void
 gimp_color_balance_tool_init (GimpColorBalanceTool *cb_tool)
 {
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (cb_tool);
+
   cb_tool->color_balance = g_slice_new0 (ColorBalance);
   cb_tool->transfer_mode = GIMP_MIDTONES;
 
   color_balance_init (cb_tool->color_balance);
+
+  im_tool->apply_func = (GimpImageMapApplyFunc) color_balance;
+  im_tool->apply_data = cb_tool->color_balance;
 }
 
 static void
@@ -164,9 +169,6 @@ gimp_color_balance_tool_map (GimpImageMapTool *im_tool)
   GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (im_tool);
 
   color_balance_create_lookup_tables (cb_tool->color_balance);
-  gimp_image_map_apply (im_tool->image_map,
-                        (GimpImageMapApplyFunc) color_balance,
-                        cb_tool->color_balance);
 }
 
 

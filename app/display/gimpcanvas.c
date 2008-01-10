@@ -347,6 +347,7 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
     case GIMP_CANVAS_STYLE_LAYER_BOUNDARY:
     case GIMP_CANVAS_STYLE_GUIDE_NORMAL:
     case GIMP_CANVAS_STYLE_GUIDE_ACTIVE:
+    case GIMP_CANVAS_STYLE_LAYER_MASK_ACTIVE:
       mask |= GDK_GC_CAP_STYLE | GDK_GC_FILL | GDK_GC_STIPPLE;
       values.cap_style = GDK_CAP_NOT_LAST;
       values.fill      = GDK_OPAQUE_STIPPLED;
@@ -430,6 +431,16 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
 
       bg.red   = 0xffff;
       bg.green = 0x0;
+      bg.blue  = 0x0;
+      break;
+
+    case GIMP_CANVAS_STYLE_LAYER_MASK_ACTIVE:
+      fg.red   = 0x0;
+      fg.green = 0x0;
+      fg.blue  = 0x0;
+
+      bg.red   = 0x0;
+      bg.green = 0xffff;
       bg.blue  = 0x0;
       break;
 

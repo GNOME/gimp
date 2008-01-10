@@ -22,36 +22,62 @@
 #ifndef __PSD_UTIL_H__
 #define __PSD_UTIL_H__
 
+/*
+ *  Set file read error
+ */
+void                    psd_set_error          (const gboolean  file_eof,
+                                                const gint      err_no,
+                                                GError        **error);
 
-gchar                * fread_pascal_string    (gint32        *bytes_read,
-                                               gint32        *bytes_written,
-                                               const guint16  pad_len,
-                                               FILE          *f);
+/*
+ * Reads a pascal string from the file padded to a multiple of mod_len
+ * and returns a utf-8 string.
+ */
+gchar                 * fread_pascal_string    (gint32         *bytes_read,
+                                                gint32         *bytes_written,
+                                                const guint16   mod_len,
+                                                FILE           *f,
+                                                GError        **error);
 
-gint32                 fwrite_pascal_string   (const gchar   *src,
-                                               const guint16  pad_len,
-                                               FILE          *f);
+/*
+ *  Converts utf-8 string to current locale and writes as pascal
+ *  string with padding to a multiple of mod_len.
+ */
+gint32                  fwrite_pascal_string   (const gchar    *src,
+                                                const guint16   mod_len,
+                                                FILE           *f,
+                                                GError        **error);
 
-gchar                * fread_unicode_string   (gint32        *bytes_read,
-                                               gint32        *bytes_written,
-                                               const guint16  pad_len,
-                                               FILE          *f);
+/*
+ * Reads a utf-16 string from the file padded to a multiple of mod_len
+ * and returns a utf-8 string.
+ */
+gchar                 * fread_unicode_string   (gint32         *bytes_read,
+                                                gint32         *bytes_written,
+                                                const guint16   mod_len,
+                                                FILE           *f,
+                                                GError        **error);
 
-gint32                 fwrite_unicode_string  (const gchar   *src,
-                                               const guint16  pad_len,
-                                               FILE          *f);
+/*
+ *  Converts utf-8 string to utf-16 and writes 4 byte length
+ *  then string padding to multiple of mod_len.
+ */
+gint32                  fwrite_unicode_string  (const gchar    *src,
+                                                const guint16   mod_len,
+                                                FILE           *f,
+                                                GError        **error);
 
-gint                   decode_packbits        (const gchar   *src,
-                                               gchar         *dst,
-                                               guint16        packed_len,
-                                               guint32        unpacked_len);
+gint                    decode_packbits        (const gchar    *src,
+                                                gchar          *dst,
+                                                guint16         packed_len,
+                                                guint32         unpacked_len);
 
-gchar                * encode_packbits        (const gchar   *src,
-                                               const guint32  unpacked_len,
-                                               guint16       *packed_len);
+gchar                 * encode_packbits        (const gchar    *src,
+                                                const guint32   unpacked_len,
+                                                guint16        *packed_len);
 
-GimpLayerModeEffects   psd_to_gimp_blend_mode (const gchar   *psd_mode);
+GimpLayerModeEffects    psd_to_gimp_blend_mode (const gchar    *psd_mode);
 
-gchar *                gimp_to_psd_blend_mode (const GimpLayerModeEffects gimp_layer_mode);
+gchar *                 gimp_to_psd_blend_mode (const GimpLayerModeEffects gimp_layer_mode);
 
 #endif /* __PSD_UTIL_H__ */

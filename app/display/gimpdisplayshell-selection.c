@@ -28,6 +28,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
+#include "core/gimplayermask.h"
 #include "core/gimpimage.h"
 
 #include "gimpcanvas.h"
@@ -75,6 +76,7 @@ static void      selection_resume         (Selection      *selection);
 static void      selection_draw           (Selection      *selection);
 static void      selection_undraw         (Selection      *selection);
 static void      selection_layer_undraw   (Selection      *selection);
+static void      selection_layer_draw     (Selection      *selection);
 
 static void      selection_add_point      (GdkPoint       *points[8],
                                            gint            max_npoints[8],
@@ -176,6 +178,10 @@ gimp_display_shell_selection_control (GimpDisplayShell     *shell,
 
         case GIMP_SELECTION_LAYER_OFF:
           selection_layer_undraw (selection);
+          break;
+
+        case GIMP_SELECTION_LAYER_ON:
+          selection_layer_draw (selection);
           break;
 
         case GIMP_SELECTION_ON:
@@ -366,10 +372,14 @@ selection_undraw (Selection *selection)
 static void
 selection_layer_draw (Selection *selection)
 {
-  GimpCanvas *canvas = GIMP_CANVAS (selection->shell->canvas);
+  GimpCanvas   *canvas   = GIMP_CANVAS (selection->shell->canvas);
+  GimpImage    *image    = selection->shell->display->image;
+  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
   if (selection->segs_layer)
-    gimp_canvas_draw_segments (canvas, GIMP_CANVAS_STYLE_LAYER_BOUNDARY,
+    gimp_canvas_draw_segments (canvas, GIMP_IS_LAYER_MASK (drawable) ?
+                               GIMP_CANVAS_STYLE_LAYER_MASK_ACTIVE:
+                               GIMP_CANVAS_STYLE_LAYER_BOUNDARY,
                                selection->segs_layer,
                                selection->num_segs_layer);
 }
@@ -697,9 +707,10 @@ selection_start_timeout (Selection *selection)
 
 
       if (selection->segs_in)
-        selection->timeout = g_timeout_add (config->marching_ants_speed,
-                                            (GSourceFunc) selection_timeout,
-                                            selection);
+        selection->timeout = g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                                 config->marching_ants_speed,
+                                                 (GSourceFunc) selection_timeout,
+                                                  selection, NULL);
     }
 
   return FALSE;

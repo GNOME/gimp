@@ -65,8 +65,7 @@ static gint64     gimp_vectors_get_memsize  (GimpObject       *object,
 
 static gboolean   gimp_vectors_is_attached  (GimpItem         *item);
 static GimpItem * gimp_vectors_duplicate    (GimpItem         *item,
-                                             GType             new_type,
-                                             gboolean          add_alpha);
+                                             GType             new_type);
 static void       gimp_vectors_convert      (GimpItem         *item,
                                              GimpImage        *dest_image);
 static void       gimp_vectors_translate    (GimpItem         *item,
@@ -271,15 +270,13 @@ gimp_vectors_is_attached (GimpItem *item)
 
 static GimpItem *
 gimp_vectors_duplicate (GimpItem *item,
-                        GType     new_type,
-                        gboolean  add_alpha)
+                        GType     new_type)
 {
   GimpItem *new_item;
 
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_VECTORS), NULL);
 
-  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type,
-                                                        add_alpha);
+  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type);
 
   if (GIMP_IS_VECTORS (new_item))
     {

@@ -15,8 +15,9 @@
  *
  * Copyright 2006,2007 Øyvind Kolås <pippin@gimp.org>
  */
-#ifndef _GEGL_BUFFER_TYPES_H
-#define _GEGL_BUFFER_TYPES_H
+
+#ifndef __GEGL_BUFFER_TYPES_H__
+#define __GEGL_BUFFER_TYPES_H__
 
 typedef struct _GeglSampler              GeglSampler;
 
@@ -38,7 +39,7 @@ typedef struct _GeglHandlersClass        GeglHandlersClass;
 typedef struct _GeglStorage              GeglStorage;
 typedef struct _GeglStorageClass         GeglStorageClass;
 
-#ifndef _GEGL_BUFFER_H
+#ifndef __GEGL_BUFFER_H__
 typedef struct _GeglBuffer               GeglBuffer;
 #endif
 typedef struct _GeglBufferClass          GeglBufferClass;

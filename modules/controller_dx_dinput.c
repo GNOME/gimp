@@ -34,7 +34,7 @@
 #include <string.h>
 #include <math.h>
 
-#define _WIN32_WINNT 0x0501 
+#define _WIN32_WINNT 0x0501
 #include <windows.h>
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
@@ -64,7 +64,7 @@ enum
 #define NUM_EVENTS_PER_SLIDER 2 /* Slider decrease and increase */
 #define NUM_EVENTS_PER_POV 3    /* POV view vector X and Y view and return */
 
-#define CONTROLLER_TYPE_DX_DINPUT            (controller_type)
+#define CONTROLLER_TYPE_DX_DINPUT            (controller_dx_input_get_type ())
 #define CONTROLLER_DX_DINPUT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CONTROLLER_TYPE_DX_DINPUT, ControllerDXDInput))
 #define CONTROLLER_DX_DINPUT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CONTROLLER_TYPE_DX_DINPUT, ControllerDXDInputClass))
 #define CONTROLLER_IS_DX_DINPUT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CONTROLLER_TYPE_DX_DINPUT))
@@ -79,7 +79,7 @@ struct _DXDInputSource
   GSource             source;
   ControllerDXDInput *controller;
 };
-  
+
 struct _ControllerDXDInput
 {
   GimpController        parent_instance;
@@ -103,7 +103,7 @@ struct _ControllerDXDInput
 
   gint                  num_povs;
   gint                  num_pov_events;
-  
+
   gint                  num_events;
   gchar               **event_names;
   gchar               **event_blurbs;
@@ -125,19 +125,18 @@ struct _ControllerDXDInputClass
 };
 
 
-GType         dx_dinput_get_type     (GTypeModule    *module);
-static void   dx_dinput_class_init   (ControllerDXDInputClass *klass);
-static void   dx_dinput_init         (ControllerDXDInput      *controller);
-static void   dx_dinput_dispose      (GObject        *object);
-static void   dx_dinput_finalize     (GObject        *object);
-static void   dx_dinput_set_property (GObject        *object,
-                                      guint           property_id,
-                                      const GValue   *value,
-                                      GParamSpec     *pspec);
-static void   dx_dinput_get_property (GObject        *object,
-                                      guint           property_id,
-                                      GValue         *value,
-                                      GParamSpec     *pspec);
+GType         controller_dx_dinput_get_type     (void);
+
+static void   dx_dinput_dispose                 (GObject        *object);
+static void   dx_dinput_finalize                (GObject        *object);
+static void   dx_dinput_set_property            (GObject        *object,
+                                                 guint           property_id,
+                                                 const GValue   *value,
+                                                 GParamSpec     *pspec);
+static void   dx_dinput_get_property            (GObject        *object,
+                                                 guint           property_id,
+                                                 GValue         *value,
+                                                 GParamSpec     *pspec);
 
 static gint          dx_dinput_get_n_events     (GimpController *controller);
 static const gchar * dx_dinput_get_event_name   (GimpController *controller,
@@ -162,8 +161,8 @@ static const GimpModuleInfo dx_dinput_info =
 };
 
 
-static GType                controller_type = 0;
-static GimpControllerClass *parent_class    = NULL;
+G_DEFINE_DYNAMIC_TYPE (ControllerDXInput, controller_dx_input,
+                       GIMP_TYPE_CONTROLLER)
 
 
 G_MODULE_EXPORT const GimpModuleInfo *
@@ -176,46 +175,16 @@ G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
   gimp_input_device_store_get_type (module);
-  dx_dinput_get_type (module);
+  controller_dx_dinput_register_type (module);
 
   return TRUE;
 }
 
-
-GType
-dx_dinput_get_type (GTypeModule *module)
-{
-  if (! controller_type)
-    {
-      const GTypeInfo controller_info =
-      {
-        sizeof (ControllerDXDInputClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) dx_dinput_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (ControllerDXDInput),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) dx_dinput_init
-      };
-
-      controller_type = g_type_module_register_type (module,
-                                                     GIMP_TYPE_CONTROLLER,
-                                                     "ControllerDXDInput",
-                                                     &controller_info, 0);
-    }
-
-  return controller_type;
-}
-
 static void
-dx_dinput_class_init (ControllerDXDInputClass *klass)
+controller_dx_dinput_class_init (ControllerDXDInputClass *klass)
 {
   GimpControllerClass *controller_class = GIMP_CONTROLLER_CLASS (klass);
   GObjectClass        *object_class     = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->dispose            = dx_dinput_dispose;
   object_class->finalize           = dx_dinput_finalize;
@@ -244,7 +213,12 @@ dx_dinput_class_init (ControllerDXDInputClass *klass)
 }
 
 static void
-dx_dinput_init (ControllerDXDInput *controller)
+controller_dx_dinput_class_finalize (ControllerDXDInputClass *klass)
+{
+}
+
+static void
+controller_dx_dinput_init (ControllerDXDInput *controller)
 {
   controller->store = gimp_input_device_store_new ();
 
@@ -266,7 +240,7 @@ dx_dinput_dispose (GObject *object)
 
   dx_dinput_set_device (controller, NULL);
 
-  G_OBJECT_CLASS (parent_class)->dispose (object);
+  G_OBJECT_CLASS (controller_dx_input_parent_class)->dispose (object);
 }
 
 static void
@@ -306,7 +280,7 @@ dx_dinput_finalize (GObject *object)
       controller->store = NULL;
     }
 
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (controller_dx_input_parent_class)->finalize (object);
 }
 
 static void
@@ -354,7 +328,7 @@ static gint
 dx_dinput_get_n_events (GimpController *controller)
 {
   ControllerDXDInput *cdxdi = (ControllerDXDInput *) controller;
-  
+
   return cdxdi->num_events;
 }
 
@@ -367,7 +341,7 @@ dx_dinput_get_event_name
 
   if (event_id < 0 || event_id >= cdxdi->num_events)
     return NULL;
-  
+
   return cdxdi->event_names[event_id];
 }
 
@@ -379,7 +353,7 @@ dx_dinput_get_event_blurb (GimpController *controller,
 
   if (event_id < 0 || event_id >= cdxdi->num_events)
     return NULL;
-  
+
   return cdxdi->event_blurbs[event_id];
 }
 
@@ -565,7 +539,7 @@ dx_dinput_get_device_info (ControllerDXDInput *controller,
     controller->num_axes =
     controller->num_sliders =
     controller->num_povs = 0;
-  
+
   if (FAILED ((hresult = IDirectInputDevice8_EnumObjects (controller->didevice8,
                                                           count_objects,
                                                           controller,
@@ -679,7 +653,7 @@ dx_dinput_event_dispatch (GSource     *source,
   guchar                          *data;
   gint                             i;
   GimpControllerEvent              cevent = { 0, };
-  
+
   data = g_malloc (format->dwDataSize);
 
   if (FAILED ((hresult = IDirectInputDevice8_GetDeviceState (input->didevice8,
@@ -749,7 +723,7 @@ dx_dinput_event_dispatch (GSource     *source,
         *curr = *prev;
       rgodf++;
     }
-  
+
   for (i = 0; i < input->num_sliders; i++)
     {
       LONG *prev = (LONG *)(input->prevdata+rgodf->dwOfs);
@@ -780,7 +754,7 @@ dx_dinput_event_dispatch (GSource     *source,
         *curr = *prev;
       rgodf++;
     }
-  
+
   for (i = 0; i < input->num_povs; i++)
     {
       LONG prev = *((LONG *)(input->prevdata+rgodf->dwOfs));
@@ -834,7 +808,7 @@ dx_dinput_event_dispatch (GSource     *source,
         }
       rgodf++;
     }
-  
+
   g_assert (rgodf == format->rgodf + format->dwNumObjs);
 
   memmove (input->prevdata, data, format->dwDataSize);
@@ -875,7 +849,7 @@ dump_data_format (const DIDATAFORMAT *format)
     {
       const DIOBJECTDATAFORMAT *oformat = (DIOBJECTDATAFORMAT *) (((char *) format->rgodf) + i*format->dwObjSize);
       unsigned char *guid;
-      
+
       g_print ("Object %d:\n", i);
       if (oformat->pguid == NULL)
         g_print ("  pguid: NULL\n");
@@ -968,7 +942,7 @@ dx_dinput_setup_events (ControllerDXDInput *controller,
                    g_win32_error_message (hresult));
       goto fail0;
     }
-                                                          
+
   controller->format->dwFlags = dword.dwData + 1;
 
   controller->format->dwNumObjs =
@@ -993,7 +967,7 @@ dx_dinput_setup_events (ControllerDXDInput *controller,
     }
 
   controller->format->dwDataSize = 4*((controller->format->dwDataSize + 3)/4);
-  
+
   for (i = 0; i < controller->num_axes; i++)
     {
       controller->format->rgodf[k].pguid = NULL;
@@ -1003,7 +977,7 @@ dx_dinput_setup_events (ControllerDXDInput *controller,
       controller->format->dwDataSize += 4;
       k++;
     }
-  
+
   for (i = 0; i < controller->num_sliders; i++)
     {
       controller->format->rgodf[k].pguid = NULL;
@@ -1056,7 +1030,7 @@ dx_dinput_setup_events (ControllerDXDInput *controller,
                    g_win32_error_message (hresult));
       goto fail2;
     }
-    
+
   if (FAILED ((hresult = IDirectInputDevice8_GetDeviceState (controller->didevice8,
                                                              controller->format->dwDataSize,
                                                              controller->prevdata))))

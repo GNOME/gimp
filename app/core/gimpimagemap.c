@@ -36,6 +36,11 @@
 #include "gimppickable.h"
 #include "gimpviewable.h"
 
+#ifdef __GNUC__
+#warning FIXME: gegl_node_add_child() needs to be public
+#endif
+GeglNode * gegl_node_add_child (GeglNode *self,
+                                GeglNode *child);
 
 enum
 {
@@ -290,15 +295,18 @@ gimp_image_map_get_pixel_at (GimpPickable *pickable,
 }
 
 GimpImageMap *
-gimp_image_map_new (GimpDrawable *drawable,
-                    const gchar  *undo_desc,
-                    GeglNode     *operation)
+gimp_image_map_new (GimpDrawable          *drawable,
+                    const gchar           *undo_desc,
+                    GeglNode              *operation,
+                    GimpImageMapApplyFunc  apply_func,
+                    gpointer               apply_data)
 {
   GimpImageMap *image_map;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (operation == NULL || GEGL_IS_NODE (operation), NULL);
+  g_return_val_if_fail (operation != NULL || apply_func != NULL, NULL);
 
   image_map = g_object_new (GIMP_TYPE_IMAGE_MAP, NULL);
 
@@ -308,25 +316,25 @@ gimp_image_map_new (GimpDrawable *drawable,
   if (operation)
     image_map->operation = g_object_ref (operation);
 
+  image_map->apply_func = apply_func;
+  image_map->apply_data = apply_data;
+
   gimp_viewable_preview_freeze (GIMP_VIEWABLE (drawable));
 
   return image_map;
 }
 
 void
-gimp_image_map_apply (GimpImageMap          *image_map,
-                      GimpImageMapApplyFunc  apply_func,
-                      gpointer               apply_data)
+gimp_image_map_apply (GimpImageMap        *image_map,
+                      const GeglRectangle *visible)
 {
   GeglRectangle rect;
-  gint          undo_offset_x, undo_offset_y;
-  gint          undo_width, undo_height;
+  gint          undo_offset_x;
+  gint          undo_offset_y;
+  gint          undo_width;
+  gint          undo_height;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
-  g_return_if_fail (apply_func != NULL);
-
-  image_map->apply_func = apply_func;
-  image_map->apply_data = apply_data;
 
   /*  If we're still working, remove the timer  */
   if (image_map->idle_id)
@@ -419,8 +427,6 @@ gimp_image_map_apply (GimpImageMap          *image_map,
     {
       if (! image_map->gegl)
         {
-          GObject *sink_operation;
-
           image_map->gegl = gegl_node_new ();
 
           image_map->input =
@@ -433,9 +439,6 @@ gimp_image_map_apply (GimpImageMap          *image_map,
                                  "operation", "shift",
                                  NULL);
 
-#ifdef __GNUC__
-#warning FIXME: gegl_node_add_child() needs to be public
-#endif
           gegl_node_add_child (image_map->gegl, image_map->operation);
 
           image_map->output =
@@ -443,15 +446,19 @@ gimp_image_map_apply (GimpImageMap          *image_map,
                                  "operation", "gimp-tilemanager-sink",
                                  NULL);
 
-          g_object_get (image_map->output,
-                        "gegl-operation", &sink_operation,
-                        NULL);
+          {
+            GObject *sink_operation;
 
-          g_signal_connect (sink_operation, "data-written",
-                            G_CALLBACK (gimp_image_map_data_written),
-                            image_map);
+            g_object_get (image_map->output,
+                          "gegl-operation", &sink_operation,
+                          NULL);
 
-          g_object_unref (sink_operation);
+            g_signal_connect (sink_operation, "data-written",
+                              G_CALLBACK (gimp_image_map_data_written),
+                              image_map);
+
+            g_object_unref (sink_operation);
+          }
 
           gegl_node_link_many (image_map->input,
                                image_map->shift,
@@ -462,6 +469,7 @@ gimp_image_map_apply (GimpImageMap          *image_map,
 
       gegl_node_set (image_map->input,
                      "tile-manager", image_map->undo_tiles,
+                     "linear",       TRUE,
                      NULL);
 
       gegl_node_set (image_map->shift,
@@ -470,8 +478,8 @@ gimp_image_map_apply (GimpImageMap          *image_map,
                      NULL);
 
       gegl_node_set (image_map->output,
-                     "tile-manager",
-                     gimp_drawable_get_shadow_tiles (image_map->drawable),
+                     "tile-manager", gimp_drawable_get_shadow_tiles (image_map->drawable),
+                     "linear",       TRUE,
                      NULL);
 
       image_map->processor = gegl_node_new_processor (image_map->output,

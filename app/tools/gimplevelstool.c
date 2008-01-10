@@ -68,56 +68,57 @@
 
 /*  local function prototypes  */
 
-static void     gimp_levels_tool_finalize       (GObject           *object);
+static void       gimp_levels_tool_finalize       (GObject           *object);
 
-static gboolean gimp_levels_tool_initialize     (GimpTool          *tool,
-                                                 GimpDisplay       *display,
-                                                 GError           **error);
+static gboolean   gimp_levels_tool_initialize     (GimpTool          *tool,
+                                                   GimpDisplay       *display,
+                                                   GError           **error);
 
-static void     gimp_levels_tool_color_picked   (GimpColorTool     *color_tool,
-                                                 GimpColorPickState pick_state,
-                                                 GimpImageType      sample_type,
-                                                 GimpRGB           *color,
-                                                 gint               color_index);
+static void       gimp_levels_tool_color_picked   (GimpColorTool     *color_tool,
+                                                   GimpColorPickState pick_state,
+                                                   GimpImageType      sample_type,
+                                                   GimpRGB           *color,
+                                                   gint               color_index);
 
-static void     gimp_levels_tool_map            (GimpImageMapTool  *image_map_tool);
-static void     gimp_levels_tool_dialog         (GimpImageMapTool  *image_map_tool);
-static void     gimp_levels_tool_dialog_unmap   (GtkWidget         *dialog,
-                                                 GimpLevelsTool    *tool);
-static void     gimp_levels_tool_reset          (GimpImageMapTool  *image_map_tool);
-static gboolean gimp_levels_tool_settings_load  (GimpImageMapTool  *image_mao_tool,
-                                                 gpointer           fp,
-                                                 GError           **error);
-static gboolean gimp_levels_tool_settings_save  (GimpImageMapTool  *image_map_tool,
-                                                 gpointer           fp);
+static GeglNode * gimp_levels_tool_get_operation  (GimpImageMapTool  *im_tool);
+static void       gimp_levels_tool_map            (GimpImageMapTool  *im_tool);
+static void       gimp_levels_tool_dialog         (GimpImageMapTool  *im_tool);
+static void       gimp_levels_tool_dialog_unmap   (GtkWidget         *dialog,
+                                                   GimpLevelsTool    *tool);
+static void       gimp_levels_tool_reset          (GimpImageMapTool  *im_tool);
+static gboolean   gimp_levels_tool_settings_load  (GimpImageMapTool  *im_tool,
+                                                   gpointer           fp,
+                                                   GError           **error);
+static gboolean   gimp_levels_tool_settings_save  (GimpImageMapTool  *im_tool,
+                                                   gpointer           fp);
 
-static void     levels_update_adjustments       (GimpLevelsTool    *tool);
-static void     levels_update_input_bar         (GimpLevelsTool    *tool);
+static void       levels_update_adjustments       (GimpLevelsTool    *tool);
+static void       levels_update_input_bar         (GimpLevelsTool    *tool);
 
-static void     levels_channel_callback         (GtkWidget         *widget,
-                                                 GimpLevelsTool    *tool);
-static void     levels_channel_reset_callback   (GtkWidget         *widget,
-                                                 GimpLevelsTool    *tool);
+static void       levels_channel_callback         (GtkWidget         *widget,
+                                                   GimpLevelsTool    *tool);
+static void       levels_channel_reset_callback   (GtkWidget         *widget,
+                                                   GimpLevelsTool    *tool);
 
-static gboolean levels_menu_sensitivity         (gint               value,
-                                                 gpointer           data);
+static gboolean   levels_menu_sensitivity         (gint               value,
+                                                   gpointer           data);
 
-static void     levels_stretch_callback         (GtkWidget         *widget,
-                                                 GimpLevelsTool    *tool);
-static void     levels_low_input_changed        (GtkAdjustment     *adjustment,
-                                                 GimpLevelsTool    *tool);
-static void     levels_gamma_changed            (GtkAdjustment     *adjustment,
-                                                 GimpLevelsTool    *tool);
-static void     levels_linear_gamma_changed     (GtkAdjustment     *adjustment,
-                                                 GimpLevelsTool    *tool);
-static void     levels_high_input_changed       (GtkAdjustment     *adjustment,
-                                                 GimpLevelsTool    *tool);
-static void     levels_low_output_changed       (GtkAdjustment     *adjustment,
-                                                 GimpLevelsTool    *tool);
-static void     levels_high_output_changed      (GtkAdjustment     *adjustment,
-                                                 GimpLevelsTool    *tool);
-static void     levels_input_picker_toggled     (GtkWidget         *widget,
-                                                 GimpLevelsTool    *tool);
+static void       levels_stretch_callback         (GtkWidget         *widget,
+                                                   GimpLevelsTool    *tool);
+static void       levels_low_input_changed        (GtkAdjustment     *adjustment,
+                                                   GimpLevelsTool    *tool);
+static void       levels_gamma_changed            (GtkAdjustment     *adjustment,
+                                                   GimpLevelsTool    *tool);
+static void       levels_linear_gamma_changed     (GtkAdjustment     *adjustment,
+                                                   GimpLevelsTool    *tool);
+static void       levels_high_input_changed       (GtkAdjustment     *adjustment,
+                                                   GimpLevelsTool    *tool);
+static void       levels_low_output_changed       (GtkAdjustment     *adjustment,
+                                                   GimpLevelsTool    *tool);
+static void       levels_high_output_changed      (GtkAdjustment     *adjustment,
+                                                   GimpLevelsTool    *tool);
+static void       levels_input_picker_toggled     (GtkWidget         *widget,
+                                                   GimpLevelsTool    *tool);
 
 
 G_DEFINE_TYPE (GimpLevelsTool, gimp_levels_tool, GIMP_TYPE_IMAGE_MAP_TOOL)
@@ -163,6 +164,7 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
   im_tool_class->save_dialog_title = _("Save Levels");
   im_tool_class->save_button_tip   = _("Save levels settings to file");
 
+  im_tool_class->get_operation     = gimp_levels_tool_get_operation;
   im_tool_class->map               = gimp_levels_tool_map;
   im_tool_class->dialog            = gimp_levels_tool_dialog;
   im_tool_class->reset             = gimp_levels_tool_reset;
@@ -173,6 +175,8 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
 static void
 gimp_levels_tool_init (GimpLevelsTool *tool)
 {
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
+
   tool->lut           = gimp_lut_new ();
   tool->levels        = g_slice_new0 (Levels);
   tool->hist          = NULL;
@@ -180,6 +184,9 @@ gimp_levels_tool_init (GimpLevelsTool *tool)
   tool->active_picker = NULL;
 
   levels_init (tool->levels);
+
+  im_tool->apply_func = (GimpImageMapApplyFunc) gimp_lut_process;
+  im_tool->apply_data = tool->lut;
 }
 
 static void
@@ -251,19 +258,56 @@ gimp_levels_tool_initialize (GimpTool     *tool,
   return TRUE;
 }
 
+static GeglNode *
+gimp_levels_tool_get_operation (GimpImageMapTool *im_tool)
+{
+  return g_object_new (GEGL_TYPE_NODE,
+                       "operation", "gimp-levels",
+                       NULL);
+}
+
 static void
 gimp_levels_tool_map (GimpImageMapTool *image_map_tool)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
 
+  if (image_map_tool->operation)
+    {
+      Levels               *levels = tool->levels;
+      GimpHistogramChannel  channel;
+
+      for (channel = GIMP_HISTOGRAM_VALUE;
+           channel <= GIMP_HISTOGRAM_ALPHA;
+           channel++)
+        {
+          /* FIXME: hack */
+          if (! tool->color && channel == 1)
+            gegl_node_set (image_map_tool->operation,
+                           "channel", GIMP_HISTOGRAM_ALPHA,
+                           NULL);
+          else
+            gegl_node_set (image_map_tool->operation,
+                           "channel", channel,
+                           NULL);
+
+          gegl_node_set (image_map_tool->operation,
+                         "gamma",       levels->gamma[channel],
+                         "low-input",   levels->low_input[channel]   / 255.0,
+                         "high-input",  levels->high_input[channel]  / 255.0,
+                         "low-output",  levels->low_output[channel]  / 255.0,
+                         "high-output", levels->high_output[channel] / 255.0,
+                         NULL);
+
+          /* FIXME: hack */
+          if (! tool->color && channel == 1)
+            break;
+        }
+    }
+
   gimp_lut_setup (tool->lut,
                   (GimpLutFunc) levels_lut_func,
                   tool->levels,
                   gimp_drawable_bytes (image_map_tool->drawable));
-
-  gimp_image_map_apply (image_map_tool->image_map,
-                        (GimpImageMapApplyFunc) gimp_lut_process,
-                        tool->lut);
 }
 
 

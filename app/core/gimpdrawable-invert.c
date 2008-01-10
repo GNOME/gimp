@@ -27,15 +27,17 @@
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 
+/* temp */
+#include "config/gimpcoreconfig.h"
+#include "gimp.h"
+#include "gimpimage.h"
+
 #include "gimpdrawable.h"
 #include "gimpdrawable-invert.h"
 #include "gimpdrawable-operation.h"
 #include "gimpprogress.h"
 
 #include "gimp-intl.h"
-
-
-static gboolean enable_gegl = TRUE;
 
 
 void
@@ -46,7 +48,7 @@ gimp_drawable_invert (GimpDrawable *drawable,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  if (enable_gegl)
+  if (GIMP_ITEM (drawable)->image->gimp->config->use_gegl)
     {
       GeglNode *invert;
 

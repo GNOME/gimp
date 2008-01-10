@@ -133,8 +133,6 @@ _gimp_unit_cache_new (gchar   *identifier,
 gboolean
 _gimp_unit_cache_get_deletion_flag (GimpUnit unit)
 {
-  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, TRUE);
-
   if (unit < GIMP_UNIT_END)
     return FALSE;
 
@@ -145,8 +143,6 @@ void
 _gimp_unit_cache_set_deletion_flag (GimpUnit unit,
                                     gboolean deletion_flag)
 {
-  g_return_if_fail (unit >= GIMP_UNIT_PIXEL);
-
   if (unit < GIMP_UNIT_END)
     return;
 
@@ -185,8 +181,6 @@ _gimp_unit_cache_get_digits (GimpUnit unit)
 const gchar *
 _gimp_unit_cache_get_identifier (GimpUnit unit)
 {
-  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, NULL);
-
   if (unit == GIMP_UNIT_PERCENT)
     return gimp_unit_percent.identifier;
 
@@ -199,8 +193,6 @@ _gimp_unit_cache_get_identifier (GimpUnit unit)
 const gchar *
 _gimp_unit_cache_get_symbol (GimpUnit unit)
 {
-  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, NULL);
-
   if (unit == GIMP_UNIT_PERCENT)
     return gimp_unit_percent.symbol;
 
@@ -213,8 +205,6 @@ _gimp_unit_cache_get_symbol (GimpUnit unit)
 const gchar *
 _gimp_unit_cache_get_abbreviation (GimpUnit unit)
 {
-  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, NULL);
-
   if (unit == GIMP_UNIT_PERCENT)
     return gimp_unit_percent.abbreviation;
 
@@ -227,8 +217,6 @@ _gimp_unit_cache_get_abbreviation (GimpUnit unit)
 const gchar *
 _gimp_unit_cache_get_singular (GimpUnit unit)
 {
-  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, NULL);
-
   if (unit == GIMP_UNIT_PERCENT)
     return gettext (gimp_unit_percent.singular);
 
@@ -241,8 +229,6 @@ _gimp_unit_cache_get_singular (GimpUnit unit)
 const gchar *
 _gimp_unit_cache_get_plural (GimpUnit unit)
 {
-  g_return_val_if_fail (unit >= GIMP_UNIT_PIXEL, NULL);
-
   if (unit == GIMP_UNIT_PERCENT)
     return gettext (gimp_unit_percent.plural);
 

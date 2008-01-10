@@ -27,14 +27,16 @@
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 
+/* temp */
+#include "config/gimpcoreconfig.h"
+#include "gimp.h"
+#include "gimpimage.h"
+
 #include "gimpdrawable.h"
 #include "gimpdrawable-desaturate.h"
 #include "gimpdrawable-operation.h"
 
 #include "gimp-intl.h"
-
-
-static gboolean enable_gegl = TRUE;
 
 
 static void  desaturate_region_lightness  (gpointer     data,
@@ -58,7 +60,7 @@ gimp_drawable_desaturate (GimpDrawable       *drawable,
   g_return_if_fail (gimp_drawable_is_rgb (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
 
-  if (enable_gegl)
+  if (GIMP_ITEM (drawable)->image->gimp->config->use_gegl)
     {
       GeglNode *desaturate;
 

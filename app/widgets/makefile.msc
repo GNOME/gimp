@@ -35,7 +35,6 @@ OBJECTS = \
 	gimpbrushfactoryview.obj \
 	gimpbrushselect.obj \
 	gimpbufferview.obj \
-	gimpcairo-utils.obj \
 	gimpcellrendererdashes.obj \
 	gimpcellrendererviewable.obj \
 	gimpchanneltreeview.obj \

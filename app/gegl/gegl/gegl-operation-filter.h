@@ -15,8 +15,9 @@
  *
  * Copyright 2006 Øyvind Kolås
  */
-#ifndef _GEGL_OPERATION_FILTER_H
-#define _GEGL_OPERATION_FILTER_H
+
+#ifndef __GEGL_OPERATION_FILTER_H__
+#define __GEGL_OPERATION_FILTER_H__
 
 #include <glib-object.h>
 #include "gegl-types.h"
@@ -24,10 +25,12 @@
 
 G_BEGIN_DECLS
 
-#define GEGL_TYPE_OPERATION_FILTER           (gegl_operation_filter_get_type ())
-#define GEGL_OPERATION_FILTER(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GEGL_TYPE_OPERATION_FILTER, GeglOperationFilter))
-#define GEGL_OPERATION_FILTER_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GEGL_TYPE_OPERATION_FILTER, GeglOperationFilterClass))
-#define GEGL_OPERATION_FILTER_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GEGL_TYPE_OPERATION_FILTER, GeglOperationFilterClass))
+#define GEGL_TYPE_OPERATION_FILTER            (gegl_operation_filter_get_type ())
+#define GEGL_OPERATION_FILTER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GEGL_TYPE_OPERATION_FILTER, GeglOperationFilter))
+#define GEGL_OPERATION_FILTER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GEGL_TYPE_OPERATION_FILTER, GeglOperationFilterClass))
+#define GEGL_IS_OPERATION_FILTER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GEGL_TYPE_OPERATION_FILTER))
+#define GEGL_IS_OPERATION_FILTER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GEGL_TYPE_OPERATION_FILTER))
+#define GEGL_OPERATION_FILTER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GEGL_TYPE_OPERATION_FILTER, GeglOperationFilterClass))
 
 typedef struct _GeglOperationFilter  GeglOperationFilter;
 struct _GeglOperationFilter
@@ -40,8 +43,9 @@ struct _GeglOperationFilterClass
 {
   GeglOperationClass parent_class;
 
-  gboolean (* process) (GeglOperation *self,
-                        gpointer       context_id);
+  gboolean (* process) (GeglOperation       *self,
+                        GeglNodeContext     *context,
+                        const GeglRectangle *result);
 };
 
 GType gegl_operation_filter_get_type (void) G_GNUC_CONST;

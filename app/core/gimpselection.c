@@ -582,8 +582,7 @@ gimp_selection_save (GimpChannel *selection)
   image = gimp_item_get_image (GIMP_ITEM (selection));
 
   new_channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (selection),
-                                                   GIMP_TYPE_CHANNEL,
-                                                   FALSE));
+                                                   GIMP_TYPE_CHANNEL));
 
   /*  saved selections are not visible by default  */
   gimp_item_set_visible (GIMP_ITEM (new_channel), FALSE, FALSE);

@@ -26,6 +26,7 @@
 #include <glib-object.h>
 
 #include "gegl/gegl-types.h"
+#include "gegl/graph/gegl-node-context.h"
 #include <gegl/buffer/gegl-buffer.h>
 
 #include "gegl-types.h"
@@ -33,8 +34,6 @@
 #include "base/base-types.h"
 #include "base/tile-manager.h"
 #include "base/pixel-region.h"
-
-#include "core/gimpmarshal.h"
 
 #include "gimp-gegl-utils.h"
 #include "gimpoperationtilesink.h"
@@ -65,7 +64,8 @@ static void     gimp_operation_tile_sink_set_property (GObject       *object,
                                                        GParamSpec    *pspec);
 
 static gboolean gimp_operation_tile_sink_process      (GeglOperation *operation,
-                                                       gpointer       context_id);
+                                                       GeglBuffer          *input,
+                                                       const GeglRectangle *result);
 
 
 G_DEFINE_TYPE (GimpOperationTileSink, gimp_operation_tile_sink,
@@ -89,7 +89,7 @@ gimp_operation_tile_sink_class_init (GimpOperationTileSinkClass * klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpOperationTileSinkClass, data_written),
                   NULL, NULL,
-                  gimp_marshal_VOID__POINTER,
+                  g_cclosure_marshal_VOID__POINTER,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
@@ -190,33 +190,27 @@ gimp_operation_tile_sink_set_property (GObject      *object,
 }
 
 static gboolean
-gimp_operation_tile_sink_process (GeglOperation *operation,
-                                  gpointer       context_id)
+gimp_operation_tile_sink_process (GeglOperation       *operation,
+                                  GeglBuffer          *input,
+                                  const GeglRectangle *result)
 {
   GimpOperationTileSink *self = GIMP_OPERATION_TILE_SINK (operation);
 
   if (self->tile_manager)
     {
-      GeglBuffer          *input;
-      const Babl          *format;
-      const GeglRectangle *extent;
-      PixelRegion          destPR;
-      const guint          bpp = tile_manager_bpp (self->tile_manager);
-      gpointer             pr;
-
-      extent = gegl_operation_result_rect (operation, context_id);
+      const Babl  *format;
+      PixelRegion  destPR;
+      guint        bpp = tile_manager_bpp (self->tile_manager);
+      gpointer     pr;
 
       if (self->linear)
         format = gimp_bpp_to_babl_format_linear (bpp);
       else
         format = gimp_bpp_to_babl_format (bpp);
 
-      input = GEGL_BUFFER (gegl_operation_get_data (operation, context_id,
-                                                    "input"));
-
       pixel_region_init (&destPR, self->tile_manager,
-                         extent->x, extent->y,
-                         extent->width, extent->height,
+                         result->x,     result->y,
+                         result->width, result->height,
                          TRUE);
 
       for (pr = pixel_regions_register (1, &destPR);
@@ -230,7 +224,7 @@ gimp_operation_tile_sink_process (GeglOperation *operation,
         }
 
       g_signal_emit (operation, tile_sink_signals[DATA_WRITTEN], 0,
-                     extent);
+                     result);
     }
   else
     {

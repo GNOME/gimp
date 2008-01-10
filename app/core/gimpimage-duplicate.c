@@ -114,8 +114,7 @@ gimp_image_duplicate (GimpImage *image)
 
       new_layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (layer),
                                                  new_image,
-                                                 G_TYPE_FROM_INSTANCE (layer),
-                                                 FALSE));
+                                                 G_TYPE_FROM_INSTANCE (layer)));
 
       /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_layer),
@@ -149,11 +148,9 @@ gimp_image_duplicate (GimpImage *image)
       GimpChannel *channel = list->data;
       GimpChannel *new_channel;
 
-      new_channel =
-        GIMP_CHANNEL (gimp_item_convert (GIMP_ITEM (channel),
-                                         new_image,
-                                         G_TYPE_FROM_INSTANCE (channel),
-                                         FALSE));
+      new_channel = GIMP_CHANNEL (gimp_item_convert (GIMP_ITEM (channel),
+                                                     new_image,
+                                                     G_TYPE_FROM_INSTANCE (channel)));
 
       /*  Make sure the copied channel doesn't say: "<old channel> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_channel),
@@ -176,11 +173,9 @@ gimp_image_duplicate (GimpImage *image)
       GimpVectors *vectors = list->data;
       GimpVectors *new_vectors;
 
-      new_vectors =
-        GIMP_VECTORS (gimp_item_convert (GIMP_ITEM (vectors),
-                                         new_image,
-                                         G_TYPE_FROM_INSTANCE (vectors),
-                                         FALSE));
+      new_vectors = GIMP_VECTORS (gimp_item_convert (GIMP_ITEM (vectors),
+                                                     new_image,
+                                                     G_TYPE_FROM_INSTANCE (vectors)));
 
       /*  Make sure the copied vectors doesn't say: "<old vectors> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_vectors),
