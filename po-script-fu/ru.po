@@ -91,7 +91,7 @@ msgstr "Script-Fu: Выбор шрифта"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Palette Selection"
-msgstr "Script-Fu: Выбор выбор палитры"
+msgstr "Script-Fu: Выбор палитры"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:492
 msgid "Script-Fu Pattern Selection"
@@ -2774,7 +2774,7 @@ msgstr "Официальный _сайт"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
 msgid "_Preparing your Images for the Web"
-msgstr "По_дготовка _изображений к публикации в Интернете"
+msgstr "По_дготовка изображений к публикации в Интернете"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
 msgid "_User Manual Web Site"
