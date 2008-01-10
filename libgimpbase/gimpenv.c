@@ -412,7 +412,7 @@ gimp_sysconf_directory (void)
  * gimp_user_directory:
  * @type: the type of user directory to retrieve
  *
- * This procedure is deprecated! Use gimp_image_get_colormap() instead.
+ * This procedure is deprecated! Use g_get_user_special_dir() instead.
  *
  * Returns: The path to the specified user directory, or %NULL if the
  *          logical ID was not found.

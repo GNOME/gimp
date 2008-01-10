@@ -1,3 +1,7 @@
+2008-01-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* libgimpbase/gimpenv.c:  fix editing error in documentation.
+
 2008-01-10  Michael Natterer  <mitch@gimp.org>
 
 	Simplify things a bit and enable gegl-only color correction
