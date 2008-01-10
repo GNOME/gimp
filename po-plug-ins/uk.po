@@ -1644,7 +1644,7 @@ msgstr "Фіксована база"
 
 #: ../plug-ins/common/CML_explorer.c:1246
 msgid "Random Seed"
-msgstr "Випадкова база"
+msgstr "База випадковості"
 
 #: ../plug-ins/common/CML_explorer.c:1288 ../plug-ins/common/fp.c:700
 #: ../plug-ins/common/lic.c:671
@@ -2546,7 +2546,7 @@ msgstr "Відсортувати за насиченістю"
 
 #: ../plug-ins/common/colormap-remap.c:489
 msgid "Sort on Value"
-msgstr "Відсортувати за значенням"
+msgstr "Відсортувати за яскравістю"
 
 #: ../plug-ins/common/colormap-remap.c:493
 msgid "Reverse Order"
@@ -4029,11 +4029,11 @@ msgstr "_Додатково"
 
 #: ../plug-ins/common/fp.c:732
 msgid "Value Variations"
-msgstr "Зміна значень"
+msgstr "Зміни яскравості"
 
 #: ../plug-ins/common/fp.c:777
 msgid "Saturation Variations"
-msgstr "Зміна насиченості"
+msgstr "Зміни насиченості"
 
 #: ../plug-ins/common/fp.c:830
 msgid "Select Pixels By"
@@ -7249,6 +7249,7 @@ msgstr "Напівзведення"
 #: ../plug-ins/common/sharpen.c:113
 msgid "Make image sharper (less powerful than Unsharp Mask)"
 msgstr ""
+"Зробити зображення більш різким (менш ефективно, ніж нечітка маска)"
 
 #: ../plug-ins/common/sharpen.c:120
 msgid "_Sharpen..."
@@ -7258,9 +7259,8 @@ msgstr "Підвищення _різкості..."
 #. * Let the user know what we're doing...
 #.
 #: ../plug-ins/common/sharpen.c:307
-#, fuzzy
 msgid "Sharpening"
-msgstr "Підвищення різкості..."
+msgstr "Підвищення різкості"
 
 #: ../plug-ins/common/sharpen.c:476
 msgid "Sharpen"
@@ -7268,16 +7268,15 @@ msgstr "Підвищення різкості"
 
 #: ../plug-ins/common/shift.c:101
 msgid "Shift each row of pixels by a random amount"
-msgstr ""
+msgstr "Зсунути кожен ряд точок на випадкову відстань"
 
 #: ../plug-ins/common/shift.c:108
 msgid "_Shift..."
 msgstr "З_сув..."
 
 #: ../plug-ins/common/shift.c:189
-#, fuzzy
 msgid "Shifting"
-msgstr "Зміщення..."
+msgstr "Виконується зсув"
 
 #: ../plug-ins/common/shift.c:355
 msgid "Shift"
@@ -7297,16 +7296,15 @@ msgstr "_Величина зсуву:"
 
 #: ../plug-ins/common/sinus.c:186
 msgid "Generate complex sinusoidal textures"
-msgstr ""
+msgstr "Створити складні синусоїдні текстури"
 
 #: ../plug-ins/common/sinus.c:191
 msgid "_Sinus..."
 msgstr "С_инус..."
 
 #: ../plug-ins/common/sinus.c:284
-#, fuzzy
 msgid "Sinus: rendering"
-msgstr "Синус: візуалізація..."
+msgstr "Синус: візуалізація"
 
 #. Create Main window with a vbox
 #. ==============================
@@ -7319,12 +7317,10 @@ msgid "Drawing Settings"
 msgstr "Параметри малюнка"
 
 #: ../plug-ins/common/sinus.c:700
-#, fuzzy
 msgid "_X scale:"
 msgstr "Масштаб _X:"
 
 #: ../plug-ins/common/sinus.c:709
-#, fuzzy
 msgid "_Y scale:"
 msgstr "Масштаб _Y:"
 
@@ -7342,15 +7338,15 @@ msgstr "_База випадковості:"
 
 #: ../plug-ins/common/sinus.c:750
 msgid "_Force tiling?"
-msgstr "Примусова _безшовність"
+msgstr "_Безшовний"
 
 #: ../plug-ins/common/sinus.c:763
 msgid "_Ideal"
-msgstr "_Ідеально"
+msgstr "_Ідеальний"
 
 #: ../plug-ins/common/sinus.c:764
 msgid "_Distorted"
-msgstr "_Спотворено"
+msgstr "_Спотворений"
 
 #: ../plug-ins/common/sinus.c:782 ../plug-ins/common/sinus.c:798
 #: ../plug-ins/imagemap/imap_preferences.c:422
@@ -7387,12 +7383,10 @@ msgid "Alpha Channels"
 msgstr "Альфа-канали"
 
 #: ../plug-ins/common/sinus.c:855
-#, fuzzy
 msgid "F_irst color:"
 msgstr "П_ерший колір:"
 
 #: ../plug-ins/common/sinus.c:870
-#, fuzzy
 msgid "S_econd color:"
 msgstr "Д_ругий колір:"
 
@@ -7417,21 +7411,18 @@ msgid "_Blend"
 msgstr "_Змішування"
 
 #: ../plug-ins/common/sinus.c:1049
-#, fuzzy
 msgid "Do _preview"
 msgstr "_Попередній перегляд"
 
 #: ../plug-ins/common/smooth_palette.c:83
-#, fuzzy
 msgid "Derive a smooth color palette from the image"
-msgstr "Використовувати колір зображення"
+msgstr "Створити гладку палітру з кольорів зображення"
 
 #: ../plug-ins/common/smooth_palette.c:88
 msgid "Smoo_th Palette..."
 msgstr "Г_ладка палітра..."
 
 #: ../plug-ins/common/smooth_palette.c:179
-#, fuzzy
 msgid "Deriving smooth palette"
 msgstr "Отримання гладкої палітри"
 
@@ -7445,7 +7436,7 @@ msgstr "_Глибина пошуку:"
 
 #: ../plug-ins/common/snoise.c:176
 msgid "Create a random cloud-like texture"
-msgstr ""
+msgstr "Створити текстури, що містять випадкові плями"
 
 #: ../plug-ins/common/snoise.c:182
 msgid "_Solid Noise..."
@@ -7468,7 +7459,7 @@ msgstr "_Турбулентний"
 #. Tilable
 #: ../plug-ins/common/snoise.c:638
 msgid "T_ilable"
-msgstr "_Розсічений"
+msgstr "_Мозаїчний"
 
 #: ../plug-ins/common/snoise.c:653
 msgid "_X size:"
@@ -7480,54 +7471,51 @@ msgstr "Розмір по _Y:"
 
 #: ../plug-ins/common/sobel.c:108
 msgid "Specialized direction-dependent edge detection"
-msgstr ""
+msgstr "Спеціальний спосіб виділення межі, що залежить від напрямку"
 
 #: ../plug-ins/common/sobel.c:121
 msgid "_Sobel..."
-msgstr "_Собел..."
+msgstr "_Sobel..."
 
 #: ../plug-ins/common/sobel.c:229
 msgid "Sobel Edge Detection"
-msgstr "Виділення меж за Собел"
+msgstr "Виділення меж за Sobel"
 
 #: ../plug-ins/common/sobel.c:258
-#, fuzzy
 msgid "Sobel _horizontally"
-msgstr "Г_оризонтальне розмивання за Собел"
+msgstr "Г_оризонтальне розмивання за Sobel"
 
 #: ../plug-ins/common/sobel.c:270
-#, fuzzy
 msgid "Sobel _vertically"
-msgstr "_Вертикальне розмивання за Собел"
+msgstr "_Вертикальне розмивання за Sobel"
 
 #: ../plug-ins/common/sobel.c:282
 msgid "_Keep sign of result (one direction only)"
 msgstr "З_берігати знак результату (лише один напрямок)"
 
 #: ../plug-ins/common/sobel.c:368
-#, fuzzy
 msgid "Sobel edge detecting"
-msgstr "Виділення меж за Собел"
+msgstr "Виділення меж за Sobel"
 
 #: ../plug-ins/common/softglow.c:134
 msgid "Simulate glow by making highlights intense and fuzzy"
-msgstr ""
+msgstr "Створити світіння, підвищуючи яскравість на світлих ділянках та розмиваючи їх"
 
 #: ../plug-ins/common/softglow.c:139
 msgid "_Softglow..."
-msgstr "_М'який жар"
+msgstr "_Розсіяне світло..."
 
 #: ../plug-ins/common/softglow.c:630
 msgid "Softglow"
-msgstr "М'який жар"
+msgstr "Розсіяне світло"
 
 #: ../plug-ins/common/softglow.c:667
 msgid "_Glow radius:"
-msgstr "_Радіус розмивання:"
+msgstr "_Радіус світіння:"
 
 #: ../plug-ins/common/sparkle.c:178
 msgid "Turn bright spots into starry sparkles"
-msgstr ""
+msgstr "Перетворити найбільш світлі точки на іскри"
 
 #: ../plug-ins/common/sparkle.c:186
 msgid "_Sparkle..."
@@ -7535,106 +7523,93 @@ msgstr "_Іскри..."
 
 #: ../plug-ins/common/sparkle.c:223
 msgid "Region selected for filter is empty"
-msgstr ""
+msgstr "Вибрана для фільтру область порожня"
 
 #: ../plug-ins/common/sparkle.c:299
-#, fuzzy
 msgid "Sparkling"
-msgstr "Створення іскор..."
+msgstr "Створення іскор"
 
 #: ../plug-ins/common/sparkle.c:337
 msgid "Sparkle"
-msgstr "Іскра"
+msgstr "Іскри"
 
 #: ../plug-ins/common/sparkle.c:373
-#, fuzzy
 msgid "Luminosity _threshold:"
 msgstr "Поріг _яскравості:"
 
 #: ../plug-ins/common/sparkle.c:376
-#, fuzzy
 msgid "Adjust the luminosity threshold"
-msgstr "Підбір порогу яскравості"
+msgstr "Підбирання порогу яскравості"
 
 #: ../plug-ins/common/sparkle.c:386
 msgid "F_lare intensity:"
 msgstr "Інтенсивність _спалаху:"
 
 #: ../plug-ins/common/sparkle.c:389
-#, fuzzy
 msgid "Adjust the flare intensity"
-msgstr "Підбір інтенсивності спалаху"
+msgstr "Підбирання інтенсивності спалаху"
 
 #: ../plug-ins/common/sparkle.c:399
 msgid "_Spike length:"
 msgstr "Дов_жина променів:"
 
 #: ../plug-ins/common/sparkle.c:402
-#, fuzzy
 msgid "Adjust the spike length"
-msgstr "Підбір довжини променів"
+msgstr "Підбирання довжини променів"
 
 #: ../plug-ins/common/sparkle.c:412
 msgid "Sp_ike points:"
 msgstr "_Кількість променів:"
 
 #: ../plug-ins/common/sparkle.c:415
-#, fuzzy
 msgid "Adjust the number of spikes"
-msgstr "Підбір кількості променів"
+msgstr "Підбирання кількості променів"
 
 #: ../plug-ins/common/sparkle.c:425
 msgid "Spi_ke angle (-1: random):"
 msgstr "К_ут променя (-1: - випадковий):"
 
 #: ../plug-ins/common/sparkle.c:428
-#, fuzzy
 msgid "Adjust the spike angle (-1 causes a random angle to be chosen)"
-msgstr "Підбір кута променя (-1 означає вибір випадкового кута)"
+msgstr "Підбирання кута променя (-1 означає вибір випадкового кута)"
 
 #: ../plug-ins/common/sparkle.c:439
 msgid "Spik_e density:"
 msgstr "_Щільність променя:"
 
 #: ../plug-ins/common/sparkle.c:442
-#, fuzzy
 msgid "Adjust the spike density"
-msgstr "Підбір щільності променя"
+msgstr "Підбання щільності променя"
 
 #: ../plug-ins/common/sparkle.c:452
-#, fuzzy
 msgid "Tr_ansparency:"
-msgstr "Прозорий"
+msgstr "Проз_орість"
 
 #: ../plug-ins/common/sparkle.c:455
-#, fuzzy
 msgid "Adjust the opacity of the spikes"
-msgstr "Підбір непрозорості променя"
+msgstr "Підбирання непрозорості променя"
 
 #: ../plug-ins/common/sparkle.c:465
 msgid "_Random hue:"
 msgstr "_Випадковий відтінок:"
 
 #: ../plug-ins/common/sparkle.c:468
-#, fuzzy
 msgid "Adjust how much the hue should be changed randomly"
-msgstr "Підбір степені того як багато відтінку буде змінюватись випадково"
+msgstr "Підбирання ступені випадкової зміни тону"
 
 #: ../plug-ins/common/sparkle.c:478
 msgid "Rando_m saturation:"
 msgstr "В_ипадкова насиченість:"
 
 #: ../plug-ins/common/sparkle.c:481
-#, fuzzy
 msgid "Adjust how much the saturation should be changed randomly"
-msgstr "Підбір степені того як багато насиченості буде змінюватись випадково"
+msgstr "Підбирання ступені випадкової зміни насиченості"
 
 #: ../plug-ins/common/sparkle.c:498
 msgid "_Preserve luminosity"
 msgstr "З_берігати яскравість"
 
 #: ../plug-ins/common/sparkle.c:505
-#, fuzzy
 msgid "Should the luminosity be preserved?"
 msgstr "Чи потрібно зберігати яскравість?"
 
@@ -7643,16 +7618,14 @@ msgid "In_verse"
 msgstr "_Інверсія"
 
 #: ../plug-ins/common/sparkle.c:520
-#, fuzzy
 msgid "Should the effect be inversed?"
-msgstr "Чи потрібно робити інверсію ефекту?"
+msgstr "Чи потрібно інвертувати ефект?"
 
 #: ../plug-ins/common/sparkle.c:529
 msgid "A_dd border"
 msgstr "_Додати рамку"
 
 #: ../plug-ins/common/sparkle.c:535
-#, fuzzy
 msgid "Draw a border of spikes around the image"
 msgstr "Намалювати рамку з променів навколо зображення"
 
@@ -7687,7 +7660,7 @@ msgstr "Рівномірне тло"
 
 #: ../plug-ins/common/spheredesigner.c:292
 msgid "Checker"
-msgstr "Шахівниця"
+msgstr "Шахова дошка"
 
 #: ../plug-ins/common/spheredesigner.c:293
 msgid "Marble"
@@ -7732,9 +7705,9 @@ msgid "Light"
 msgstr "Світло"
 
 #: ../plug-ins/common/spheredesigner.c:2017
-#, fuzzy, c-format
+#, c-format
 msgid "File '%s' is not a valid save file."
-msgstr "\"%s\" не є файлом градієнтного спалаху."
+msgstr "Файл \"%s\" збережений некоректно."
 
 #: ../plug-ins/common/spheredesigner.c:2196
 msgid "Open File"
@@ -7749,9 +7722,8 @@ msgid "Sphere Designer"
 msgstr "Створення сфери"
 
 #: ../plug-ins/common/spheredesigner.c:2682
-#, fuzzy
 msgid "Properties"
-msgstr "Властивості текстури"
+msgstr "Властивості"
 
 #: ../plug-ins/common/spheredesigner.c:2698
 msgid "Bump"
@@ -7787,12 +7759,11 @@ msgstr "Величина:"
 
 #: ../plug-ins/common/spheredesigner.c:2777
 msgid "Exp.:"
-msgstr "Розш.:"
+msgstr "Експонента:"
 
 #: ../plug-ins/common/spheredesigner.c:2784
-#, fuzzy
 msgid "Transformations"
-msgstr "Перетворення %s"
+msgstr "Перетворення"
 
 #: ../plug-ins/common/spheredesigner.c:2807
 msgid "Scale Y:"
@@ -7827,14 +7798,12 @@ msgid "Position Z:"
 msgstr "Позиція по Z:"
 
 #: ../plug-ins/common/spheredesigner.c:2970
-#, fuzzy
 msgid "Rendering sphere"
-msgstr "Візуалізація сфери..."
+msgstr "Візуалізація сфери"
 
 #: ../plug-ins/common/spheredesigner.c:3020
-#, fuzzy
 msgid "Create an image of a textured sphere"
-msgstr "Центрувати зображення на сторінці"
+msgstr "Створити сферу з заданою текстурою"
 
 #: ../plug-ins/common/spheredesigner.c:3027
 msgid "Sphere _Designer..."
@@ -7842,20 +7811,19 @@ msgstr "_Створення сфери..."
 
 #: ../plug-ins/common/spheredesigner.c:3081
 msgid "Region selected for plug-in is empty"
-msgstr ""
+msgstr "Вибрана для розширення область пуста"
 
 #: ../plug-ins/common/spread.c:89
 msgid "Move pixels around randomly"
-msgstr ""
+msgstr "Перемішувати точки у випадковому порядку"
 
 #: ../plug-ins/common/spread.c:98
 msgid "Sp_read..."
 msgstr "_Розсіювання..."
 
 #: ../plug-ins/common/spread.c:181
-#, fuzzy
 msgid "Spreading"
-msgstr "Розсіювання..."
+msgstr "Розсіювання"
 
 #: ../plug-ins/common/spread.c:344
 msgid "Spread"
@@ -7867,16 +7835,15 @@ msgstr "Діапазон розсіювання"
 
 #: ../plug-ins/common/struc.c:1140
 msgid "Add a canvas texture to the image"
-msgstr ""
+msgstr "Добавить до зображення текстуру у вигляді полотно"
 
 #: ../plug-ins/common/struc.c:1145
 msgid "_Apply Canvas..."
-msgstr "_Застосування полотна..."
+msgstr "_Застосувати полотно..."
 
 #: ../plug-ins/common/struc.c:1226
-#, fuzzy
 msgid "Applying canvas"
-msgstr "Застосування полотна..."
+msgstr "Застосовується полотно"
 
 #: ../plug-ins/common/struc.c:1263
 msgid "Apply Canvas"
@@ -7905,7 +7872,7 @@ msgstr "Зображення SUN Rasterfile"
 #: ../plug-ins/common/sunras.c:388
 #, c-format
 msgid "Could not open '%s' as SUN-raster-file"
-msgstr "Не вдається відкрити \"%s\" як SUN-raster"
+msgstr "Не вдається відкрити \"%s\" як файл SUN-raster"
 
 #: ../plug-ins/common/sunras.c:396
 msgid "The type of this SUN-rasterfile is not supported"
@@ -7937,6 +7904,8 @@ msgid ""
 "'%s':\n"
 "Image width is larger than GIMP can handle"
 msgstr ""
+"'%s':\n"
+"GIMP не впорається із зображенням такої ширини"
 
 #: ../plug-ins/common/sunras.c:456 ../plug-ins/common/xbm.c:824
 #: ../plug-ins/common/xwd.c:492
@@ -7955,6 +7924,8 @@ msgid ""
 "'%s':\n"
 "Image height is larger than GIMP can handle"
 msgstr ""
+"'%s':\n"
+"GIMP не впорається із зображенням такої висоти"
 
 #: ../plug-ins/common/sunras.c:502
 msgid "This image depth is not supported"
@@ -7987,30 +7958,28 @@ msgstr "Форматування даних"
 
 #: ../plug-ins/common/sunras.c:1631
 msgid "RunLength Encoded"
-msgstr "Закодовано RunLength"
+msgstr "RLE-кодування"
 
 #: ../plug-ins/common/svg.c:138
-#, fuzzy
 msgid "SVG image"
-msgstr "Зображення GIF"
+msgstr "Зображення SVG"
 
 #: ../plug-ins/common/svg.c:323 ../plug-ins/common/svg.c:704
 msgid "Unknown reason"
 msgstr "Невідома причина"
 
 #: ../plug-ins/common/svg.c:327
-#, fuzzy
 msgid "Rendering SVG"
-msgstr "Візуалізація SVG..."
+msgstr "Візуалізація SVG"
 
 #: ../plug-ins/common/svg.c:339
 msgid "Rendered SVG"
 msgstr "Створений SVG"
 
 #: ../plug-ins/common/svg.c:553 ../plug-ins/common/wmf.c:347
-#, fuzzy, c-format
+#, c-format
 msgid "%d × %d"
-msgstr "%d x %d"
+msgstr "%d × %d"
 
 #: ../plug-ins/common/svg.c:561
 msgid ""
@@ -8093,25 +8062,23 @@ msgstr "_Початок знизу ліворуч"
 
 #: ../plug-ins/common/threshold_alpha.c:85
 msgid "Make transparency all-or-nothing"
-msgstr ""
+msgstr "Зробити прозорим або всі, або нічого"
 
 #: ../plug-ins/common/threshold_alpha.c:90
 msgid "_Threshold Alpha..."
 msgstr "_Поріг альфа-каналу..."
 
 #: ../plug-ins/common/threshold_alpha.c:131
-#, fuzzy
 msgid "The layer has its alpha channel locked."
-msgstr "Не можна зберігати зображення с альфа-каналами."
+msgstr "Альфа-канал цього слова заблокований."
 
 #: ../plug-ins/common/threshold_alpha.c:137
 msgid "RGBA/GRAYA drawable is not selected."
 msgstr "Малюнок RGBA/Сірий-альфа не вибрано."
 
 #: ../plug-ins/common/threshold_alpha.c:165
-#, fuzzy
 msgid "Coloring transparency"
-msgstr "Очистити прозоре"
+msgstr "Малювання прозорості"
 
 #: ../plug-ins/common/threshold_alpha.c:248
 msgid "Threshold Alpha"
@@ -8129,11 +8096,11 @@ msgstr "Зображення TIFF"
 #: ../plug-ins/common/tiff-load.c:305
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
-msgstr ""
+msgstr "TIFF '%s' не містить каталоги"
 
 #: ../plug-ins/common/tiff-load.c:446
 msgid "Import from TIFF"
-msgstr ""
+msgstr "Імпорт TIFF"
 
 #: ../plug-ins/common/tiff-load.c:970
 msgid "TIFF Channel"
@@ -8166,7 +8133,7 @@ msgstr "Збереження як TIFF"
 #. compression
 #: ../plug-ins/common/tiff-save.c:1069
 msgid "Compression"
-msgstr "Тип стиснення"
+msgstr "Стиснення"
 
 #: ../plug-ins/common/tiff-save.c:1073
 msgid "_None"
@@ -8182,7 +8149,7 @@ msgstr "_Упаковані біти"
 
 #: ../plug-ins/common/tiff-save.c:1076
 msgid "_Deflate"
-msgstr "_Стиснення"
+msgstr "_Стиснути"
 
 #: ../plug-ins/common/tiff-save.c:1077
 msgid "_JPEG"
@@ -8190,11 +8157,11 @@ msgstr "_JPEG"
 
 #: ../plug-ins/common/tiff-save.c:1078
 msgid "CCITT Group _3 fax"
-msgstr ""
+msgstr "CCITT Group _3 fax"
 
 #: ../plug-ins/common/tiff-save.c:1079
 msgid "CCITT Group _4 fax"
-msgstr ""
+msgstr "CCITT Group _4 fax"
 
 #: ../plug-ins/common/tiff-save.c:1101
 msgid "Save _color values from transparent pixels"
@@ -8205,9 +8172,8 @@ msgid "Comment:"
 msgstr "Коментар:"
 
 #: ../plug-ins/common/tile.c:101
-#, fuzzy
 msgid "Create an array of copies of the image"
-msgstr "Намалювати рамку з променів навколо зображення"
+msgstr "Створити копію вказаної частини зображення"
 
 #: ../plug-ins/common/tile.c:111
 msgid "_Tile..."
@@ -8215,9 +8181,8 @@ msgstr "_Черепиця..."
 
 #. Set the tile cache size
 #: ../plug-ins/common/tile.c:190 ../plug-ins/common/tileit.c:320
-#, fuzzy
 msgid "Tiling"
-msgstr "Укладка черепиці..."
+msgstr "Укладання черепиці"
 
 #: ../plug-ins/common/tile.c:401
 msgid "Tile"
@@ -8228,13 +8193,12 @@ msgid "Tile to New Size"
 msgstr "Розмір площі покриття"
 
 #: ../plug-ins/common/tile.c:444
-#, fuzzy
 msgid "C_reate new image"
-msgstr "Створити нове зображення"
+msgstr "_Створити нове зображення"
 
 #: ../plug-ins/common/tileit.c:215
 msgid "Tile image into smaller versions of the original"
-msgstr ""
+msgstr "Створити зображення з маленьких копій оригиналу"
 
 #: ../plug-ins/common/tileit.c:220
 msgid "_Small Tiles..."
@@ -8242,13 +8206,12 @@ msgstr "_Дрібна черепиця..."
 
 #: ../plug-ins/common/tileit.c:262
 msgid "Region selected for filter is empty."
-msgstr ""
+msgstr "Вибрана для фільтру область порожня."
 
 #. Get the preview image
 #: ../plug-ins/common/tileit.c:363
-#, fuzzy
 msgid "Small Tiles"
-msgstr "_Дрібна черепиця..."
+msgstr "Дрібна черепиця"
 
 #. Area for buttons etc
 #. Flip
@@ -8258,15 +8221,15 @@ msgstr "Віддзеркалення"
 
 #: ../plug-ins/common/tileit.c:461
 msgid "A_ll tiles"
-msgstr "_усіх секторів"
+msgstr "_Усіх секторів"
 
 #: ../plug-ins/common/tileit.c:475
 msgid "Al_ternate tiles"
-msgstr "кожного д_ругого сектору"
+msgstr "Кожного д_ругого сектору"
 
 #: ../plug-ins/common/tileit.c:489
 msgid "_Explicit tile"
-msgstr "вка_заного сектору"
+msgstr "Вка_заного сектору"
 
 #: ../plug-ins/common/tileit.c:495
 msgid "Ro_w:"
@@ -8286,18 +8249,16 @@ msgid "Number of Segments"
 msgstr "Кількість сегментів"
 
 #: ../plug-ins/common/tiler.c:67
-#, fuzzy
 msgid "Alters edges to make the image seamlessly tileable"
-msgstr "Виберіть якщо готову зображення має здаватись безшовним"
+msgstr "Створити безшовне зображення (як текстуру)"
 
 #: ../plug-ins/common/tiler.c:73
 msgid "_Make Seamless"
-msgstr "_Зробити без швів"
+msgstr "_Без швів"
 
 #: ../plug-ins/common/tiler.c:338
-#, fuzzy
 msgid "Tiler"
-msgstr "Черепиця"
+msgstr "Без швів"
 
 #: ../plug-ins/common/uniteditor.c:94
 msgid "Saved"
@@ -8358,11 +8319,11 @@ msgstr ""
 
 #: ../plug-ins/common/uniteditor.c:107
 msgid "Abbreviation"
-msgstr "Скорочення"
+msgstr "Абревіатура"
 
 #: ../plug-ins/common/uniteditor.c:107
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
-msgstr "Скорочення одиниці (наприклад, \"см\" для сантиметрів)."
+msgstr "Абревіатура одиниці (наприклад, \"см\" для сантиметрів)."
 
 #: ../plug-ins/common/uniteditor.c:109
 msgid "Singular"
@@ -8381,28 +8342,24 @@ msgid "The unit's plural form."
 msgstr "Одиниця в множині."
 
 #: ../plug-ins/common/uniteditor.c:121
-#, fuzzy
 msgid "Create a new unit from scratch"
 msgstr "Створити нову одиницю"
 
 #: ../plug-ins/common/uniteditor.c:127
-#, fuzzy
 msgid "Create a new unit using the currently selected unit as template"
-msgstr "Створити нову одиницю використовуючи вибрану як шаблон."
+msgstr "Створити нову одиницю, використовуючи вибрану як шаблон"
 
 #: ../plug-ins/common/uniteditor.c:145
 msgid "Create or alter units used in GIMP"
-msgstr ""
+msgstr "Створити чи змінити одиниці виміру, що використовуються у GIMP"
 
 #: ../plug-ins/common/uniteditor.c:150
-#, fuzzy
 msgid "U_nits"
-msgstr "Одиниці"
+msgstr "_Одиниці виміру"
 
 #: ../plug-ins/common/uniteditor.c:209
-#, fuzzy
 msgid "Add a New Unit"
-msgstr "Нова одиниця"
+msgstr "Створити нову одиницю"
 
 #: ../plug-ins/common/uniteditor.c:238
 msgid "_ID:"
@@ -8422,7 +8379,7 @@ msgstr "С_имвол:"
 
 #: ../plug-ins/common/uniteditor.c:283
 msgid "_Abbreviation:"
-msgstr "С_корочення:"
+msgstr "_Абревіатура:"
 
 #: ../plug-ins/common/uniteditor.c:295
 msgid "Si_ngular:"
@@ -8434,11 +8391,11 @@ msgstr "Мно_жина:"
 
 #: ../plug-ins/common/uniteditor.c:350
 msgid "Incomplete input"
-msgstr ""
+msgstr "Незавершений ввід"
 
 #: ../plug-ins/common/uniteditor.c:353
 msgid "Please fill in all text fields."
-msgstr ""
+msgstr "Заповніть всі поля"
 
 #: ../plug-ins/common/uniteditor.c:410
 msgid "Unit Editor"
@@ -8446,16 +8403,15 @@ msgstr "Редактор одиниць"
 
 #: ../plug-ins/common/unsharp.c:128
 msgid "The most widely useful method for sharpening an image"
-msgstr ""
+msgstr "Найбільш зручний метод для підвищення різкості зображення"
 
 #: ../plug-ins/common/unsharp.c:138
 msgid "_Unsharp Mask..."
 msgstr "_Нечітка маска..."
 
 #: ../plug-ins/common/unsharp.c:475
-#, fuzzy
 msgid "Merging"
-msgstr "Злиття..."
+msgstr "Злиття"
 
 #: ../plug-ins/common/unsharp.c:642
 msgid "Unsharp Mask"
@@ -8487,7 +8443,7 @@ msgstr "_3x3"
 
 #: ../plug-ins/common/video.c:47
 msgid "Larg_e 3x3"
-msgstr "Вел_ике 3x3"
+msgstr "Вел_икий 3x3"
 
 #: ../plug-ins/common/video.c:48
 msgid "_Hex"
@@ -8499,7 +8455,7 @@ msgstr "_Крапки"
 
 #: ../plug-ins/common/video.c:1806
 msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-msgstr ""
+msgstr "Створити ефект перегляду на моніторі з низькою роздільною здатністю"
 
 #: ../plug-ins/common/video.c:1813
 msgid "Vi_deo..."
@@ -8512,7 +8468,7 @@ msgstr "Відео"
 #. frame for the radio buttons
 #: ../plug-ins/common/video.c:2038
 msgid "Video Pattern"
-msgstr "Відео візерунок"
+msgstr "Шаблон відео"
 
 #: ../plug-ins/common/video.c:2082
 msgid "_Additive"
@@ -8523,18 +8479,16 @@ msgid "_Rotated"
 msgstr "_Повернутий"
 
 #: ../plug-ins/common/vinvert.c:90
-#, fuzzy
 msgid "Invert the brightness of each pixel"
-msgstr "Встановити висоту друку"
+msgstr "Інвертує яскравість кожної точки"
 
 #: ../plug-ins/common/vinvert.c:104
 msgid "_Value Invert"
-msgstr "_Інверсія значення..."
+msgstr "_Інверсія яскравості..."
 
 #: ../plug-ins/common/vinvert.c:191
-#, fuzzy
 msgid "Value Invert"
-msgstr "_Інверсія значення..."
+msgstr "Інверсія яскравості"
 
 #: ../plug-ins/common/vpropagate.c:189
 msgid "More _white (larger value)"
@@ -8570,33 +8524,31 @@ msgstr "_Більш прозорий"
 
 #: ../plug-ins/common/vpropagate.c:233
 msgid "Propagate certain colors to neighboring pixels"
-msgstr ""
+msgstr "Розповсюджувати яскравість вказаного кольору на сусідні точки"
 
 #: ../plug-ins/common/vpropagate.c:238
 msgid "_Value Propagate..."
-msgstr "_Розповсюдження значень..."
+msgstr "_Розповсюдження яскравості..."
 
 #: ../plug-ins/common/vpropagate.c:245
-#, fuzzy
 msgid "Shrink darker areas of the image"
-msgstr "Перший рядок зображення"
+msgstr "Зменшити темні області зображення"
 
 #: ../plug-ins/common/vpropagate.c:250
 msgid "E_rode"
 msgstr "_Ерозія"
 
 #: ../plug-ins/common/vpropagate.c:257
-#, fuzzy
 msgid "Grow darker areas of the image"
-msgstr "Перший рядок зображення"
+msgstr "Збільшити темні області зображення"
 
 #: ../plug-ins/common/vpropagate.c:262
 msgid "_Dilate"
-msgstr "_Ворсистість"
+msgstr "_Дилатація"
 
 #: ../plug-ins/common/vpropagate.c:473 ../plug-ins/common/vpropagate.c:1063
 msgid "Value Propagate"
-msgstr "Розповсюдження значень"
+msgstr "Розповсюдження яскравості"
 
 #. Parameter settings
 #: ../plug-ins/common/vpropagate.c:1128
@@ -8632,18 +8584,16 @@ msgid "To _bottom"
 msgstr "В_низ"
 
 #: ../plug-ins/common/vpropagate.c:1194
-#, fuzzy
 msgid "Propagating _alpha channel"
 msgstr "Розповсюдження _альфа-каналу"
 
 #: ../plug-ins/common/vpropagate.c:1205
-#, fuzzy
 msgid "Propagating value channel"
-msgstr "Розповсюдження каналу яскравості"
+msgstr "Розповсюдження каналу _яскравості"
 
 #: ../plug-ins/common/warp.c:233
 msgid "Twist or smear image in many different ways"
-msgstr ""
+msgstr "Викривлення та розмиття зображення різними способами"
 
 #: ../plug-ins/common/warp.c:241
 msgid "_Warp..."
@@ -8686,9 +8636,8 @@ msgid "Black"
 msgstr "Чорний"
 
 #: ../plug-ins/common/warp.c:517
-#, fuzzy
 msgid "Foreground color"
-msgstr "Колір п_ереднього плану"
+msgstr "Колір переднього плану"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
@@ -8721,7 +8670,7 @@ msgstr "Використовувати мапу значень"
 #. ---------    The "other" table         --------------------------
 #: ../plug-ins/common/warp.c:623
 msgid "More Advanced Options"
-msgstr "Більш розширені параметри"
+msgstr "Інші параметри"
 
 #: ../plug-ins/common/warp.c:640
 msgid "Gradient scale:"
@@ -8746,30 +8695,26 @@ msgstr "Меню вибору мапи векторів з фіксованим�
 
 #. make sure layer is visible
 #: ../plug-ins/common/warp.c:1181
-#, fuzzy
 msgid "Smoothing X gradient"
-msgstr "Згладжування X градієнта..."
+msgstr "Згладжування X градієнта"
 
 #: ../plug-ins/common/warp.c:1184
-#, fuzzy
 msgid "Smoothing Y gradient"
-msgstr "Згладжування Y градієнта..."
+msgstr "Згладжування Y градієнта"
 
 #. calculate new X,Y Displacement image maps
 #: ../plug-ins/common/warp.c:1234
-#, fuzzy
 msgid "Finding XY gradient"
-msgstr "Пошук XY градієнта..."
+msgstr "Пошук XY градієнта"
 
 #: ../plug-ins/common/warp.c:1256
-#, fuzzy, c-format
+#, c-format
 msgid "Flow step %d"
-msgstr "Поточний крок %d..."
+msgstr "Крок %d"
 
 #: ../plug-ins/common/waves.c:120
-#, fuzzy
 msgid "Distort the image with waves"
-msgstr "Центрувати зображення на сторінці"
+msgstr "Центрувати зображення хвилями"
 
 #: ../plug-ins/common/waves.c:125
 msgid "_Waves..."
@@ -8796,9 +8741,8 @@ msgid "_Wavelength:"
 msgstr "Дов_жина хвилі:"
 
 #: ../plug-ins/common/waves.c:447
-#, fuzzy
 msgid "Waving"
-msgstr "Створення хвиль..."
+msgstr "Створення хвиль"
 
 #: ../plug-ins/common/webbrowser.c:141
 msgid ""
@@ -8828,7 +8772,7 @@ msgstr ""
 
 #: ../plug-ins/common/whirlpinch.c:138
 msgid "Distort an image by whirling and pinching"
-msgstr ""
+msgstr "Викривити зображення за допомогою вихорів та щипків"
 
 #: ../plug-ins/common/whirlpinch.c:149
 msgid "W_hirl and Pinch..."
@@ -8836,12 +8780,11 @@ msgstr "_Вихор та щипок..."
 
 #: ../plug-ins/common/whirlpinch.c:193
 msgid "Region affected by plug-in is empty"
-msgstr ""
+msgstr "Область застосування доповнення порожня"
 
 #: ../plug-ins/common/whirlpinch.c:341
-#, fuzzy
 msgid "Whirling and pinching"
-msgstr "Створення вихрів та щипків..."
+msgstr "Створення вихорів та щипків"
 
 #: ../plug-ins/common/whirlpinch.c:528
 msgid "Whirl and Pinch"
@@ -8857,21 +8800,19 @@ msgstr "Величина _щипка:"
 
 #: ../plug-ins/common/wind.c:175
 msgid "Smear image to give windblown effect"
-msgstr ""
+msgstr "Розмити зображення, створюючи ефект пориву вітру"
 
 #: ../plug-ins/common/wind.c:180
 msgid "Wi_nd..."
 msgstr "Ві_тер..."
 
 #: ../plug-ins/common/wind.c:315
-#, fuzzy
 msgid "Rendering blast"
-msgstr "Відображення пориву вітру..."
+msgstr "Відображення пориву вітру"
 
 #: ../plug-ins/common/wind.c:442
-#, fuzzy
 msgid "Rendering wind"
-msgstr "Відображення вітру..."
+msgstr "Відображення вітру"
 
 #: ../plug-ins/common/wind.c:870
 msgid "Wind"
@@ -8913,7 +8854,7 @@ msgstr "П_ередній"
 
 #: ../plug-ins/common/wind.c:963
 msgid "Tr_ailing"
-msgstr "_Замикаючий"
+msgstr "_Завершальний"
 
 #: ../plug-ins/common/wind.c:964
 msgid "Bot_h"
@@ -8929,7 +8870,7 @@ msgstr "_Сила:"
 
 #: ../plug-ins/common/wind.c:1020
 msgid "Higher values increase the magnitude of the effect"
-msgstr "Підвищення значень підсилює ефект"
+msgstr "Підвищення значень посилює ефект"
 
 #: ../plug-ins/common/wmf.c:126
 msgid "Microsoft WMF file"
@@ -9078,14 +9019,13 @@ msgid "Can't read color entries"
 msgstr "Не вдається зчитати записи кольорів"
 
 #: ../plug-ins/common/xwd.c:555
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
 "not supported."
 msgstr ""
-"файл XWD %s має формат %d, глибину %d\n"
-"і %d бітів на точку.\n"
-"Зараз це не підтримується."
+"файл XWD %s має формат %d, глибину %d "
+"і %d бітів на точку. Наразі це не підтримується."
 
 #: ../plug-ins/common/xwd.c:578
 msgid "Cannot save images with alpha channels."
@@ -9101,16 +9041,15 @@ msgstr "Помилка за запису RGB-зображення"
 
 #: ../plug-ins/common/zealouscrop.c:85
 msgid "Autocrop unused space from edges and middle"
-msgstr ""
+msgstr "Автоматичне кадрування невикористаного простору"
 
 #: ../plug-ins/common/zealouscrop.c:90
 msgid "_Zealous Crop"
-msgstr "_Старанне кадрування(tm)..."
+msgstr "_Старанне кадрування"
 
 #: ../plug-ins/common/zealouscrop.c:138
-#, fuzzy
 msgid "Zealous cropping"
-msgstr "_Старанне кадрування(tm)..."
+msgstr "Старанне кадрування..."
 
 #: ../plug-ins/common/zealouscrop.c:239
 msgid "Nothing to crop."
@@ -9142,7 +9081,7 @@ msgstr "Завантаження файлу формату FITS"
 
 #: ../plug-ins/fits/fits.c:998
 msgid "Replacement for undefined pixels"
-msgstr ""
+msgstr "Заміщення для невизначених точок"
 
 #: ../plug-ins/fits/fits.c:1003 ../plug-ins/gfig/gfig-dialog.c:1286
 #: ../plug-ins/gfig/gfig-dialog.c:1461
@@ -9155,7 +9094,7 @@ msgstr "Масштабування значень точок"
 
 #: ../plug-ins/fits/fits.c:1015
 msgid "By DATAMIN/DATAMAX"
-msgstr "за діапазоном значень даних"
+msgstr "за DATAMIN/DATAMAX"
 
 #: ../plug-ins/fits/fits.c:1022
 msgid "Image Composing"
@@ -9163,20 +9102,19 @@ msgstr "Складання зображення"
 
 #: ../plug-ins/flame/flame.c:128
 msgid "Create cosmic recursive fractal flames"
-msgstr ""
+msgstr "Створити ефект спалахів полум'я з використанням фракталів"
 
 #: ../plug-ins/flame/flame.c:133
 msgid "_Flame..."
 msgstr "_Полум'я..."
 
 #: ../plug-ins/flame/flame.c:226
-#, fuzzy
 msgid "Drawing flame"
-msgstr "Малювання полум'я..."
+msgstr "Малювання полум'я"
 
 #: ../plug-ins/flame/flame.c:318
 msgid "Flame works only on RGB drawables."
-msgstr "Полум'я діє лише на RGB-зображення."
+msgstr "Полум'я працює лише з RGB-зображеннями."
 
 #: ../plug-ins/flame/flame.c:401
 #, c-format
@@ -9205,7 +9143,7 @@ msgstr "Пере_мішати"
 
 #: ../plug-ins/flame/flame.c:744
 msgid "Same"
-msgstr "Залишити попередній"
+msgstr "Залишити попередні"
 
 #: ../plug-ins/flame/flame.c:745 ../plug-ins/gimpressionist/orientation.c:146
 #: ../plug-ins/gimpressionist/size.c:149
@@ -9230,7 +9168,7 @@ msgstr "Згин"
 
 #: ../plug-ins/flame/flame.c:765
 msgid "_Variation:"
-msgstr "_Різновид:"
+msgstr "_Зміна:"
 
 #: ../plug-ins/flame/flame.c:787
 msgid "Load Flame"
@@ -9262,7 +9200,7 @@ msgstr "_Щільність зразка:"
 
 #: ../plug-ins/flame/flame.c:1110
 msgid "Spa_tial oversample:"
-msgstr "П_росторове перекриття:"
+msgstr "П_рекриття:"
 
 #: ../plug-ins/flame/flame.c:1121
 msgid "Spatial _filter radius:"
@@ -9282,11 +9220,11 @@ msgstr "_Камера"
 
 #: ../plug-ins/gfig/gfig-bezier.c:443
 msgid "Closed"
-msgstr "Закрита"
+msgstr "Замкнута"
 
 #: ../plug-ins/gfig/gfig-bezier.c:448
 msgid "Close curve on completion"
-msgstr "Закривати криву на завершенні"
+msgstr "Замикати криву на завершенні"
 
 #: ../plug-ins/gfig/gfig-bezier.c:453
 msgid "Show Line Frame"
@@ -9303,13 +9241,12 @@ msgstr "Gfig"
 
 #. Tool options notebook
 #: ../plug-ins/gfig/gfig-dialog.c:337
-#, fuzzy
 msgid "Tool Options"
 msgstr "Параметри інструменту"
 
 #: ../plug-ins/gfig/gfig-dialog.c:354
 msgid "_Stroke"
-msgstr "_Штрих"
+msgstr "_Обвести"
 
 #. Fill frame on right side
 #: ../plug-ins/gfig/gfig-dialog.c:401
@@ -9318,7 +9255,7 @@ msgstr "Заповнення"
 
 #: ../plug-ins/gfig/gfig-dialog.c:415
 msgid "No fill"
-msgstr "Без заповнення"
+msgstr "Немає"
 
 #: ../plug-ins/gfig/gfig-dialog.c:416
 msgid "Color fill"
@@ -9326,22 +9263,19 @@ msgstr "Колір"
 
 #: ../plug-ins/gfig/gfig-dialog.c:417
 msgid "Pattern fill"
-msgstr "Візерунок"
+msgstr "Текстура"
 
 #: ../plug-ins/gfig/gfig-dialog.c:418
-#, fuzzy
 msgid "Shape gradient"
-msgstr "Градієнт"
+msgstr "Градієнт за формою"
 
 #: ../plug-ins/gfig/gfig-dialog.c:419
-#, fuzzy
 msgid "Vertical gradient"
-msgstr "Перечитати градієнти"
+msgstr "Вертикальний градієнти"
 
 #: ../plug-ins/gfig/gfig-dialog.c:420
-#, fuzzy
 msgid "Horizontal gradient"
-msgstr "Г_оризонтальна основа:"
+msgstr "Горизонтальний градієнт"
 
 #. "show image" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:480
@@ -9350,9 +9284,8 @@ msgstr "Показати зображення"
 
 #. "snap to grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:493
-#, fuzzy
 msgid "checkbutton|Snap to grid"
-msgstr "Вирівняти за сіткою"
+msgstr "Прилипати до сітки"
 
 #. "show grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:502
@@ -9360,7 +9293,6 @@ msgid "Show grid"
 msgstr "Показати сітку"
 
 #: ../plug-ins/gfig/gfig-dialog.c:637
-#, fuzzy
 msgid "Load Gfig Object Collection"
 msgstr "Завантаження набору об'єктів Gfig"
 
@@ -9394,19 +9326,19 @@ msgstr "Опустити вибрані об'єкти"
 
 #: ../plug-ins/gfig/gfig-dialog.c:894
 msgid "Raise selected object to top"
-msgstr "Підняти вибрані об'єкти догори"
+msgstr "Підняти вибрані об'єкти на передній план"
 
 #: ../plug-ins/gfig/gfig-dialog.c:898
 msgid "Lower selected object to bottom"
-msgstr "Опустити вибрані об'єкти додолу"
+msgstr "Опустити вибрані об'єкт до самого низу"
 
 #: ../plug-ins/gfig/gfig-dialog.c:902
 msgid "Show previous object"
-msgstr "Вибрати попередній об'єкт"
+msgstr "Показати попередній об'єкт"
 
 #: ../plug-ins/gfig/gfig-dialog.c:906
 msgid "Show next object"
-msgstr "Скопіювати наступний об'єкт"
+msgstr "Показати наступний об'єкт"
 
 #: ../plug-ins/gfig/gfig-dialog.c:910 ../plug-ins/gfig/gfig-stock.c:53
 msgid "Show all objects"
@@ -9417,9 +9349,8 @@ msgid "Create line"
 msgstr "Створити лінію"
 
 #: ../plug-ins/gfig/gfig-dialog.c:919 ../plug-ins/gfig/gfig-stock.c:51
-#, fuzzy
 msgid "Create rectangle"
-msgstr "Створити коло"
+msgstr "Створити прямокутник"
 
 #: ../plug-ins/gfig/gfig-dialog.c:922 ../plug-ins/gfig/gfig-stock.c:42
 msgid "Create circle"
@@ -9443,7 +9374,7 @@ msgstr "Створити зірку"
 
 #: ../plug-ins/gfig/gfig-dialog.c:937 ../plug-ins/gfig/gfig-stock.c:54
 msgid "Create spiral"
-msgstr "творити спіраль"
+msgstr "Створити спіраль"
 
 #: ../plug-ins/gfig/gfig-dialog.c:940
 msgid "Create bezier curve. Shift + Button ends object creation."
@@ -9455,7 +9386,7 @@ msgstr "Перемістити об'єкт"
 
 #: ../plug-ins/gfig/gfig-dialog.c:947 ../plug-ins/gfig/gfig-stock.c:49
 msgid "Move a single point"
-msgstr "Перемістити точку"
+msgstr "Перемістити одну точку"
 
 #: ../plug-ins/gfig/gfig-dialog.c:950 ../plug-ins/gfig/gfig-stock.c:43
 msgid "Copy an object"
@@ -9471,7 +9402,7 @@ msgstr "Виділити об'єкт"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1038
 msgid "This tool has no options"
-msgstr "Цей інструмент не має кольору"
+msgstr "Цей інструмент не має параметрів"
 
 #. Put buttons in
 #: ../plug-ins/gfig/gfig-dialog.c:1228
@@ -9523,15 +9454,15 @@ msgstr "Радіус:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1386
 msgid "Grid spacing:"
-msgstr "Інтервал сітки:"
+msgstr "Розмір комірки:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1403
 msgid "Polar grid sectors desired:"
-msgstr ""
+msgstr "Сектори полярної сітки:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1425
 msgid "Polar grid radius interval:"
-msgstr ""
+msgstr "Інтервал радіусів пол. сітки:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1441 ../plug-ins/imagemap/imap_menu.c:220
 msgid "Rectangle"
@@ -9539,7 +9470,7 @@ msgstr "Прямокутник"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1443
 msgid "Isometric"
-msgstr "Ізометрія"
+msgstr "Ізометрична"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1452
 msgid "Grid type:"
@@ -9547,7 +9478,7 @@ msgstr "Тип сітки:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1459 ../plug-ins/gflare/gflare.c:552
 msgid "Normal"
-msgstr "Звичайний"
+msgstr "Звичайна"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1462
 msgid "Grey"
@@ -9571,7 +9502,7 @@ msgstr "Колір сітки:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1697
 msgid "Sides:"
-msgstr "Сторін:"
+msgstr "Сторони:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1707
 msgid "Right"
@@ -9592,7 +9523,7 @@ msgstr "Гей, куди подівся об'єкт?"
 
 #: ../plug-ins/gfig/gfig-dobject.c:955
 msgid "Error reading file"
-msgstr "Помилка зчитування файлу"
+msgstr "Помилка при зчитуванні файлу"
 
 #: ../plug-ins/gfig/gfig-dobject.c:1044
 msgid "Editing read-only object - you will not be able to save it"
@@ -9604,7 +9535,7 @@ msgstr "Кількість сторін правильного багатоку�
 
 #: ../plug-ins/gfig/gfig-preview.c:328
 msgid "Object Details"
-msgstr "Подробиці об'єкту"
+msgstr "Подробиці про об'єкт"
 
 #. Position labels
 #: ../plug-ins/gfig/gfig-preview.c:378
@@ -9613,11 +9544,11 @@ msgstr "Позиція XY:"
 
 #: ../plug-ins/gfig/gfig-spiral.c:55
 msgid "Spiral Number of Turns"
-msgstr "Кількість точок спіралі"
+msgstr "Кількість обертів спіралі"
 
 #: ../plug-ins/gfig/gfig-star.c:52
 msgid "Star Number of Points"
-msgstr "Кількість точок зірки"
+msgstr "Кількість променів зірки"
 
 #: ../plug-ins/gfig/gfig-stock.c:41
 msgid "Create bezier curve"
@@ -9625,25 +9556,24 @@ msgstr "Створити криву Без'є"
 
 #: ../plug-ins/gfig/gfig.c:124
 msgid "Create geometric shapes"
-msgstr ""
+msgstr "Створити геометричні фігури"
 
 #: ../plug-ins/gfig/gfig.c:135
 msgid "_Gfig..."
 msgstr "_Gfig..."
 
 #: ../plug-ins/gfig/gfig.c:731
-#, fuzzy
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
-"Помилка при збереженні фігури як шуму: не вдається приєднати шум до "
-"малюнка.\n"
+"Помилка при збереженні фігури як parasite: не вдається приєднати parasite до "
+"малюнка."
 
 #: ../plug-ins/gfig/gfig.c:758
-#, fuzzy, c-format
+#, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
-"Помилка при відкриванні тимчасового файлу '%s' для завантаження шуму.\n"
+"Помилка при відкриванні тимчасового файлу '%s' для завантаження parasite: %s"
 
 #: ../plug-ins/gflare/gflare.c:553
 msgid "Addition"
@@ -9651,24 +9581,22 @@ msgstr "Додавання"
 
 #: ../plug-ins/gflare/gflare.c:554
 msgid "Overlay"
-msgstr "Перекривання"
+msgstr "Перекриття"
 
 #: ../plug-ins/gflare/gflare.c:809
 msgid "Produce a lense flare effect using gradients"
-msgstr ""
+msgstr "Додати до зображення відблиск, використовуючи градієнт"
 
 #: ../plug-ins/gflare/gflare.c:814
-#, fuzzy
 msgid "_Gradient Flare..."
-msgstr "Градієнтний спалах..."
+msgstr "_Градієнтний спалах..."
 
 #.
 #. *    Dialog Shell
 #.
 #: ../plug-ins/gflare/gflare.c:953 ../plug-ins/gflare/gflare.c:2311
-#, fuzzy
 msgid "Gradient Flare"
-msgstr "Градієнтний спалах..."
+msgstr "Градієнтний спалах"
 
 #: ../plug-ins/gflare/gflare.c:1264
 #, c-format
@@ -9692,11 +9620,9 @@ msgid ""
 "(gflare-path \"%s\")\n"
 "and make a folder '%s', then you can save your own GFlares into that folder."
 msgstr ""
-"Файл GFlare '%s' не збережено.\n"
-"Якщо ви додасте новий запис у %s, наприклад:\n"
+"Файл GFlare '%s' не збережено. Якщо ви додасте новий запис у %s, наприклад:\n"
 "(gflare-path \"%s\")\n"
-"та створите папку %s,\n"
-"то зможете зберігати створені вами файли GFlare у цій теці."
+"та створите теку %s, то зможете зберігати створені файли GFlare у цій теці."
 
 #: ../plug-ins/gflare/gflare.c:1484
 #, c-format
@@ -9705,7 +9631,7 @@ msgstr "Не вдається записати файл град.спалаху 
 
 #: ../plug-ins/gflare/gflare.c:2368
 msgid "A_uto update preview"
-msgstr "_Автооновлення перегляду"
+msgstr "_Автоматичний перегляд"
 
 #: ../plug-ins/gflare/gflare.c:2419
 msgid "`Default' is created."
@@ -9735,12 +9661,10 @@ msgid "_Hue rotation:"
 msgstr "Обертання _відтінку:"
 
 #: ../plug-ins/gflare/gflare.c:2749
-#, fuzzy
 msgid "Vector _angle:"
 msgstr "_Кут вектора:"
 
 #: ../plug-ins/gflare/gflare.c:2761
-#, fuzzy
 msgid "Vector _length:"
 msgstr "Дов_жина вектора:"
 
@@ -9749,22 +9673,20 @@ msgid "A_daptive supersampling"
 msgstr "Адап_тивна інтерполяція"
 
 #: ../plug-ins/gflare/gflare.c:2801
-#, fuzzy
 msgid "_Max depth:"
 msgstr "Максимальна г_либина:"
 
 #: ../plug-ins/gflare/gflare.c:2811
 msgid "_Threshold"
-msgstr "П_оріг:"
+msgstr "П_оріг"
 
 #: ../plug-ins/gflare/gflare.c:2949
 msgid "S_elector"
 msgstr "Т_ип спалаху"
 
 #: ../plug-ins/gflare/gflare.c:3013
-#, fuzzy
 msgid "New Gradient Flare"
-msgstr "Градієнтний спалах..."
+msgstr "Новий градієнтний спалах"
 
 #: ../plug-ins/gflare/gflare.c:3016
 msgid "Enter a name for the new GFlare"
@@ -9776,13 +9698,12 @@ msgid "The name '%s' is used already!"
 msgstr "Назва \"%s\" вже використовується!"
 
 #: ../plug-ins/gflare/gflare.c:3092
-#, fuzzy
 msgid "Copy Gradient Flare"
-msgstr "Градієнтний спалах..."
+msgstr "Копіювання градієнтного спалаху"
 
 #: ../plug-ins/gflare/gflare.c:3095
 msgid "Enter a name for the copied GFlare"
-msgstr "Введіть назву градієнтного спалаху"
+msgstr "Введіть назву для копії градієнтного спалаху"
 
 #: ../plug-ins/gflare/gflare.c:3117
 #, c-format
@@ -9794,7 +9715,6 @@ msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: ../plug-ins/gflare/gflare.c:3158
-#, fuzzy
 msgid "Delete Gradient Flare"
 msgstr "Видалення градієнтного спалаху"
 
@@ -9804,7 +9724,6 @@ msgid "not found %s in gflares_list"
 msgstr "не знайдено %s в списку gflares_list"
 
 #: ../plug-ins/gflare/gflare.c:3271
-#, fuzzy
 msgid "Gradient Flare Editor"
 msgstr "Редактор градієнтних спалахів"
 
@@ -9824,7 +9743,6 @@ msgstr "Непрозорість:"
 
 #: ../plug-ins/gflare/gflare.c:3424 ../plug-ins/gflare/gflare.c:3452
 #: ../plug-ins/gflare/gflare.c:3480
-#, fuzzy
 msgid "Paint mode:"
 msgstr "Режим малювання:"
 
@@ -9840,7 +9758,7 @@ msgstr "Параметри малювання другого спалаху"
 
 #: ../plug-ins/gflare/gflare.c:3483 ../plug-ins/gimpressionist/general.c:116
 msgid "_General"
-msgstr "_Загальне"
+msgstr "_Загальний вигляд"
 
 #.
 #. *  Gradient Menus
@@ -9852,17 +9770,14 @@ msgstr "Градієнти"
 
 #: ../plug-ins/gflare/gflare.c:3520 ../plug-ins/gflare/gflare.c:3625
 #: ../plug-ins/gflare/gflare.c:3762
-#, fuzzy
 msgid "Radial gradient:"
 msgstr "Радіальний градієнт:"
 
 #: ../plug-ins/gflare/gflare.c:3524 ../plug-ins/gflare/gflare.c:3629
-#, fuzzy
 msgid "Angular gradient:"
 msgstr "Кутовий градієнт:"
 
 #: ../plug-ins/gflare/gflare.c:3528 ../plug-ins/gflare/gflare.c:3633
-#, fuzzy
 msgid "Angular size gradient:"
 msgstr "Кутовий розмір градієнта:"
 
@@ -9878,7 +9793,6 @@ msgstr "Обертання:"
 
 #: ../plug-ins/gflare/gflare.c:3572 ../plug-ins/gflare/gflare.c:3678
 #: ../plug-ins/gflare/gflare.c:3815
-#, fuzzy
 msgid "Hue rotation:"
 msgstr "Обертання _відтінку:"
 
@@ -9891,7 +9805,6 @@ msgid "# of Spikes:"
 msgstr "Кількість плям:"
 
 #: ../plug-ins/gflare/gflare.c:3702
-#, fuzzy
 msgid "Spike thickness:"
 msgstr "Товщина плям:"
 
@@ -9900,14 +9813,12 @@ msgid "_Rays"
 msgstr "_Промені"
 
 #: ../plug-ins/gflare/gflare.c:3766
-#, fuzzy
 msgid "Size factor gradient:"
-msgstr "Показник величини градієнта:"
+msgstr "Градієнт масшт. множника:"
 
 #: ../plug-ins/gflare/gflare.c:3770
-#, fuzzy
 msgid "Probability gradient:"
-msgstr "Градієнт вірогідності:"
+msgstr "Градієнт ймовірності:"
 
 #.
 #. *    Shape Radio Button Frame
@@ -9925,9 +9836,8 @@ msgid "Polygon"
 msgstr "Багатокутник"
 
 #: ../plug-ins/gflare/gflare.c:3890
-#, fuzzy
 msgid "Random seed:"
-msgstr "_База випадковості:"
+msgstr "База випадковості:"
 
 #: ../plug-ins/gflare/gflare.c:3904
 msgid "_Second Flares"
@@ -10043,7 +9953,7 @@ msgstr "Скопіювати текстуру з вибраного паперу
 
 #: ../plug-ins/gimpressionist/general.c:149
 msgid "Solid colored background"
-msgstr "Суцільно замальоване тло"
+msgstr "Суцільно пофарбоване тло"
 
 #: ../plug-ins/gimpressionist/general.c:168
 msgid "Use a transparent background; Only the strokes painted will be visible"
@@ -10060,16 +9970,15 @@ msgstr "Чи наносити малюнок на все зображення в
 #. Tileable checkbox
 #: ../plug-ins/gimpressionist/general.c:195 ../plug-ins/maze/maze_face.c:284
 msgid "Tileable"
-msgstr "Без швів"
+msgstr "Безшовний елемент мозаїки"
 
 #: ../plug-ins/gimpressionist/general.c:199
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr "Виберіть якщо готову зображення має здаватись безшовним"
+msgstr "Виберіть, якщо готове зображення має бути безшовним елементом мозаїки"
 
 #: ../plug-ins/gimpressionist/general.c:204
-#, fuzzy
 msgid "Drop shadow"
-msgstr "Відкинути тінь"
+msgstr "Падаюча тінь"
 
 #: ../plug-ins/gimpressionist/general.c:209
 msgid "Adds a shadow effect to each brush stroke"
@@ -10098,7 +10007,7 @@ msgstr "Глибина тіні:"
 #: ../plug-ins/gimpressionist/general.c:244
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr "Глибина тіни, визначає, як далеко від об'єкту вона має бути"
+msgstr "Глибина тіні, визначає, як далеко від об'єкту вона має бути"
 
 #: ../plug-ins/gimpressionist/general.c:249
 msgid "Shadow blur:"
@@ -10118,21 +10027,19 @@ msgstr "Довірче значення для адаптивного виділ
 
 #: ../plug-ins/gimpressionist/gimp.c:74
 msgid "Performs various artistic operations"
-msgstr ""
+msgstr "Множина способів прикрасити зображення"
 
 #: ../plug-ins/gimpressionist/gimp.c:79
 msgid "_GIMPressionist..."
-msgstr "_GIMPімпресіоніст..."
+msgstr "_Гімпресіоніст..."
 
 #: ../plug-ins/gimpressionist/gimp.c:350
-#, fuzzy
 msgid "Painting"
-msgstr "Малювання..."
+msgstr "Малювання"
 
 #: ../plug-ins/gimpressionist/gimpressionist.c:121
-#, fuzzy
 msgid "GIMPressionist"
-msgstr "_GIMPімпресіоніст..."
+msgstr "Гімпресіоніст..."
 
 #: ../plug-ins/gimpressionist/orientation.c:74
 msgid "Or_ientation"
@@ -10152,7 +10059,7 @@ msgstr "Початковий кут:"
 
 #: ../plug-ins/gimpressionist/orientation.c:104
 msgid "The starting angle of the first brush to create"
-msgstr "Початковий кут першого пензля"
+msgstr "Кут першого створюваного пензля"
 
 #: ../plug-ins/gimpressionist/orientation.c:112
 msgid "Angle span:"
@@ -10186,7 +10093,7 @@ msgstr "Вибирати випадковий напрямок для кожно
 #: ../plug-ins/gimpressionist/orientation.c:150
 #: ../plug-ins/gimpressionist/size.c:153
 msgid "Radial"
-msgstr "Радіальний"
+msgstr "Радіальне"
 
 #: ../plug-ins/gimpressionist/orientation.c:151
 msgid "Let the direction from the center determine the direction of the stroke"
@@ -10195,12 +10102,12 @@ msgstr "Напрямок від центру визначає напрямок �
 #: ../plug-ins/gimpressionist/orientation.c:158
 #: ../plug-ins/gimpressionist/size.c:161
 msgid "Flowing"
-msgstr "Плаваючий"
+msgstr "Плаваюче"
 
 #: ../plug-ins/gimpressionist/orientation.c:159
 #: ../plug-ins/gimpressionist/size.c:162
 msgid "The strokes follow a \"flowing\" pattern"
-msgstr "Мазки відповідні до \"плаваючого\" візерунку"
+msgstr "Мазки відповідні до \"плаваючої\" текстури"
 
 #: ../plug-ins/gimpressionist/orientation.c:163
 msgid "The hue of the region determines the direction of the stroke"
@@ -10213,12 +10120,12 @@ msgstr "Адаптивний"
 
 #: ../plug-ins/gimpressionist/orientation.c:167
 msgid "The direction that matches the original image the closest is selected"
-msgstr "Вибирається напрямок, найбільш співпадає з оригінальним зображенням"
+msgstr "Вибирається напрямок, найбільш відповідає оригінальному зображенню"
 
 #: ../plug-ins/gimpressionist/orientation.c:174
 #: ../plug-ins/gimpressionist/size.c:178
 msgid "Manual"
-msgstr "Ручний"
+msgstr "Ручне"
 
 #: ../plug-ins/gimpressionist/orientation.c:175
 msgid "Manually specify the stroke orientation"
@@ -10380,7 +10287,6 @@ msgid "The strokes are evenly distributed across the image"
 msgstr "Мазки рівномірно розподіляються по зображенню"
 
 #: ../plug-ins/gimpressionist/placement.c:84
-#, fuzzy
 msgid "Centered"
 msgstr "Центр"
 
@@ -10410,16 +10316,14 @@ msgid "Save Current"
 msgstr "Збереження поточних"
 
 #: ../plug-ins/gimpressionist/presets.c:874
-#, fuzzy
 msgid "Gimpressionist Defaults"
-msgstr "Типові параметри GIMPімпресіоніст"
+msgstr "Типові параметри"
 
 #: ../plug-ins/gimpressionist/presets.c:995
 msgid "_Presets"
 msgstr "_Параметри"
 
 #: ../plug-ins/gimpressionist/presets.c:1010
-#, fuzzy
 msgid "Save Current..."
 msgstr "Зберегти поточні..."
 
@@ -10482,12 +10386,12 @@ msgstr "Розмір:"
 #: ../plug-ins/gimpressionist/size.c:142
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
-msgstr "Розмір мазка визначатиметься яскравістю зображення"
+msgstr "Розмір мазка визначатиметься яскравістю області"
 
 #: ../plug-ins/gimpressionist/size.c:146
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
-msgstr "Відстань від центру зображення визначає розмір мазка"
+msgstr "Розмір мазка визначається відстанню від центру зображення"
 
 #: ../plug-ins/gimpressionist/size.c:150
 msgid "Selects a random size for each stroke"
@@ -10503,7 +10407,7 @@ msgstr "Розмір мазка буде визначатись відтінко
 
 #: ../plug-ins/gimpressionist/size.c:170
 msgid "The brush-size that matches the original image the closest is selected"
-msgstr "Вибрати розмір пензля, що найбільш співпадає з початковим зображенням"
+msgstr "Вибрати розмір пензля, що найбільш відповідає початковому зображеню"
 
 #: ../plug-ins/gimpressionist/size.c:179
 msgid "Manually specify the stroke size"
@@ -10567,26 +10471,27 @@ msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 msgstr ""
-"В режимі \"Вороной\" лише найближчий до заданої точки sm-вектор має вплив"
+"В режимі \"Вороний\" лише найближчий до заданої точки sm-вектор має вплив"
 
 #: ../plug-ins/help/gimphelpdomain.c:178
-#, fuzzy
 msgid "The GIMP help files are not found."
-msgstr "Файли довідки GIMP не встановлені."
+msgstr "Файли довідки GIMP не знайдені."
 
 #: ../plug-ins/help/gimphelpdomain.c:179
 msgid ""
 "Please install the additional help package or use the online user manual at "
 "http://docs.gimp.org/."
 msgstr ""
+"Будь ласка, встановіть додатковий пакет, що містить документацію, або "
+"скористайтесь сайтом http://docs.gimp.org/."
 
 #: ../plug-ins/help/gimphelpdomain.c:185
 msgid "There is a problem with the GIMP help files."
-msgstr "Помилка при читанні файлів довідки GIMP."
+msgstr "Помилка з файлами довідки GIMP."
 
 #: ../plug-ins/help/gimphelpdomain.c:187
 msgid "Please check your installation."
-msgstr "Перевірте інсталяцію."
+msgstr "Перевірте встановлення."
 
 #: ../plug-ins/help/gimphelpdomain.c:197
 #, c-format
@@ -10603,29 +10508,28 @@ msgstr ""
 "%s"
 
 #: ../plug-ins/helpbrowser/dialog.c:217
-#, fuzzy
 msgid "GIMP Help Browser"
 msgstr "Перегляд довідки GIMP"
 
 #: ../plug-ins/helpbrowser/dialog.c:312
 msgid "Drag and drop this icon to a web browser"
-msgstr ""
+msgstr "Перетягніть цей значок до веб-переглядача"
 
 #: ../plug-ins/helpbrowser/dialog.c:703
 msgid "Go back one page"
-msgstr ""
+msgstr "Назад на одну сторінку"
 
 #: ../plug-ins/helpbrowser/dialog.c:708
 msgid "Go forward one page"
-msgstr ""
+msgstr "Вперед на одну сторінку"
 
 #: ../plug-ins/helpbrowser/dialog.c:713
 msgid "Go to the index page"
-msgstr ""
+msgstr "До змісту"
 
 #: ../plug-ins/helpbrowser/dialog.c:748
 msgid "Visit the GIMP documentation website"
-msgstr ""
+msgstr "Відвідайте сайт документації GIMP"
 
 #: ../plug-ins/helpbrowser/dialog.c:824
 msgid "Document not found"
@@ -10637,7 +10541,7 @@ msgstr "Неможливо завантажити запитаний URL:"
 
 #: ../plug-ins/ifscompose/ifscompose.c:333
 msgid "Create an Iterated Function System (IFS) fractal"
-msgstr ""
+msgstr "Створити фрактал Iterated Function System (IFS)"
 
 #: ../plug-ins/ifscompose/ifscompose.c:345
 msgid "_IFS Fractal..."
@@ -10663,12 +10567,10 @@ msgid "IFS Fractal: Target"
 msgstr "IFS фрактал: ціль"
 
 #: ../plug-ins/ifscompose/ifscompose.c:655
-#, fuzzy
 msgid "Scale hue by:"
 msgstr "Масштабувати відтінок за:"
 
 #: ../plug-ins/ifscompose/ifscompose.c:670
-#, fuzzy
 msgid "Scale value by:"
 msgstr "Масштабувати яскравість за:"
 
@@ -10716,14 +10618,13 @@ msgstr "Виді_лити все"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1062
 msgid "Re_center"
-msgstr "Пере_центрувати"
+msgstr "Переобчислити _центрувати"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1062
 msgid "Recompute Center"
 msgstr "Переобчислити центр"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1066
-#, fuzzy
 msgid "Render Options"
 msgstr "Параметри візуалізації"
 
@@ -10743,14 +10644,13 @@ msgstr "Обертання / масштаб"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1078
 msgid "Stretch"
-msgstr "Розтягнути"
+msgstr "Розтягти"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1176
 msgid "IFS Fractal Render Options"
-msgstr "Параметри візуалізації IFS фракталу"
+msgstr "Параметри візуалізації"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1197
-#, fuzzy
 msgid "Max. memory:"
 msgstr "Макс. пам'ять:"
 
@@ -10759,12 +10659,11 @@ msgid "Subdivide:"
 msgstr "Підрозділяти:"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1237
-#, fuzzy
 msgid "Spot radius:"
 msgstr "Радіус плями:"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1302
-#, fuzzy, c-format
+#, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "Візуалізація IFS (%d/%d)..."
 
@@ -10775,7 +10674,7 @@ msgstr "Перетворення %s"
 
 #: ../plug-ins/ifscompose/ifscompose.c:2381
 msgid "Save failed"
-msgstr "Помилка збереження"
+msgstr "Помилка при збереженні"
 
 #: ../plug-ins/ifscompose/ifscompose.c:2462
 #: ../plug-ins/ifscompose/ifscompose.c:2475
@@ -10788,24 +10687,20 @@ msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Файл \"%s\" не є файлом IFS-фракталу."
 
 #: ../plug-ins/ifscompose/ifscompose.c:2510
-#, fuzzy
 msgid "Save as IFS Fractal file"
 msgstr "Збереження як файл IFS-фракталу"
 
 #: ../plug-ins/ifscompose/ifscompose.c:2547
-#, fuzzy
 msgid "Open IFS Fractal file"
 msgstr "Відкривання файлу IFS-фракталу"
 
 #: ../plug-ins/imagemap/imap_about.c:43
-#, fuzzy
 msgid "Image Map Plug-In"
-msgstr "Доповнення карти зображення 2.0"
+msgstr "Мапа зображення"
 
 #: ../plug-ins/imagemap/imap_about.c:47
-#, fuzzy
 msgid "Copyright © 1999-2005 by Maurits Rijk"
-msgstr "Авторські права(c) 1999-2004 Maurits Rijk"
+msgstr "Авторські права(c) 1999-2005 Maurits Rijk"
 
 #: ../plug-ins/imagemap/imap_about.c:49
 msgid "Released under the GNU General Public License"
@@ -10830,7 +10725,7 @@ msgstr "Центр _X:"
 #: ../plug-ins/imagemap/imap_rectangle.c:408
 #: ../plug-ins/imagemap/imap_rectangle.c:415
 msgid "pixels"
-msgstr "точки"
+msgstr "точок"
 
 #: ../plug-ins/imagemap/imap_circle.c:271
 msgid "Center _y:"
@@ -10863,7 +10758,7 @@ msgstr "Видалити точку"
 
 #: ../plug-ins/imagemap/imap_cmd_edit_object.c:54
 msgid "Edit Object"
-msgstr "Правка об'єкту"
+msgstr "Змінити об'єкту"
 
 #. Create the areas
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:117
@@ -10874,7 +10769,7 @@ msgstr "Використовувати напрямні Gimp"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:160
 msgid "Al_ternate"
-msgstr "_Чергування"
+msgstr "Т_екст підказки"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:165
 msgid "A_ll"
@@ -10885,22 +10780,18 @@ msgid "Add Additional Guides"
 msgstr "Додати додаткові напрямні"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:177
-#, fuzzy
 msgid "L_eft border"
 msgstr "_Ліва межа"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:181
-#, fuzzy
 msgid "_Right border"
 msgstr "_Права межа"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:185
-#, fuzzy
 msgid "_Upper border"
 msgstr "_Верхня межа"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:189
-#, fuzzy
 msgid "Lo_wer border"
 msgstr "_Нижня межа"
 
@@ -10916,7 +10807,7 @@ msgstr "Створити напрямні"
 #: ../plug-ins/imagemap/imap_cmd_guides.c:113
 #, c-format
 msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
-msgstr "Напрямні проходять від: %d,%d до %d,%d (%d ділянок)"
+msgstr "Напрямні проходять від: %d,%d до %d,%d (%d скторів)"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:144
 msgid ""
@@ -10931,34 +10822,28 @@ msgstr ""
 "звичайного типу - наборів \"мініатюр\", приданих для навігації."
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:170
-#, fuzzy
 msgid "_Left start at:"
 msgstr "_Ліва починається з:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:180
-#, fuzzy
 msgid "_Top start at:"
 msgstr "_Верхня починається з:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:185
-#, fuzzy
 msgid "_Horz. spacing:"
 msgstr "_Горизонтальний інтервал:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:191
-#, fuzzy
 msgid "_No. across:"
-msgstr "Кількість секторів в _ширину:"
+msgstr "Кількість секторів у _ширину:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:197
-#, fuzzy
 msgid "_Vert. spacing:"
 msgstr "_Вертикальний інтервал:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:203
-#, fuzzy
 msgid "No. _down:"
-msgstr "Кількість секторів в в_исоту:"
+msgstr "Кількість секторів у в_исоту:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:212
 msgid "Base _URL:"
@@ -10966,7 +10851,7 @@ msgstr "Основний _URL:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:237
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
-msgstr "Напрямні проходять від: 0,0 до 0,0 (0 ділянок)"
+msgstr "Напрямні проходять від: 0,0 до 0,0 (0 секторів)"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:272
 msgid "Guides"
@@ -10981,11 +10866,11 @@ msgstr "Вставити точку"
 #: ../plug-ins/imagemap/imap_cmd_object_down.c:55
 #: ../plug-ins/imagemap/imap_menu.c:176
 msgid "Move Down"
-msgstr "Зсунути вниз"
+msgstr "Перемістити вниз"
 
 #: ../plug-ins/imagemap/imap_cmd_move_sash.c:68
 msgid "Move Sash"
-msgstr "Зсунути пояс"
+msgstr "Перемістити пояс"
 
 #: ../plug-ins/imagemap/imap_cmd_move_selected.c:56
 msgid "Move Selected Objects"
@@ -10999,7 +10884,7 @@ msgstr "Перемістити вперед"
 #: ../plug-ins/imagemap/imap_cmd_object_up.c:55
 #: ../plug-ins/imagemap/imap_menu.c:175
 msgid "Move Up"
-msgstr "Зсунути вгору"
+msgstr "Перемістити вгору"
 
 #: ../plug-ins/imagemap/imap_cmd_paste.c:51
 #: ../plug-ins/imagemap/imap_menu.c:161
@@ -11008,7 +10893,7 @@ msgstr "Вставити"
 
 #: ../plug-ins/imagemap/imap_cmd_select.c:53
 msgid "Select"
-msgstr "Вибір"
+msgstr "Виділити"
 
 #: ../plug-ins/imagemap/imap_cmd_select_all.c:51
 #: ../plug-ins/rcm/rcm_stock.c:41
@@ -11025,11 +10910,11 @@ msgstr "Вибрати попередню"
 
 #: ../plug-ins/imagemap/imap_cmd_select_region.c:64
 msgid "Select Region"
-msgstr "Вибрати ділянку"
+msgstr "Вибрати область"
 
 #: ../plug-ins/imagemap/imap_cmd_send_to_back.c:51
 msgid "Send To Back"
-msgstr "Перемістити назад"
+msgstr "Перемістити на задній план"
 
 #: ../plug-ins/imagemap/imap_cmd_unselect.c:53
 msgid "Unselect"
@@ -11037,7 +10922,7 @@ msgstr "Зняти виділення"
 
 #: ../plug-ins/imagemap/imap_cmd_unselect_all.c:56
 msgid "Unselect All"
-msgstr "Зняти виділення із всього"
+msgstr "Зняти виділення з усього"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:196
 msgid "Link Type"
@@ -11113,35 +10998,32 @@ msgstr "_JavaScript"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:451
 msgid "Area Settings"
-msgstr "Параметри ділянки"
+msgstr "Параметри області"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:493
 #, c-format
 msgid "Area #%d Settings"
-msgstr "Параметри ділянки #%d"
+msgstr "Параметри області #%d"
 
 #: ../plug-ins/imagemap/imap_file.c:48 ../plug-ins/imagemap/imap_menu.c:71
 msgid "Error opening file"
-msgstr "Помилка відкривання файлу"
+msgstr "Помилка при відкриванні файлу"
 
 #: ../plug-ins/imagemap/imap_file.c:68
-#, fuzzy
 msgid "Load Image Map"
 msgstr "Завантаження мапи зображення"
 
 #: ../plug-ins/imagemap/imap_file.c:123
-#, fuzzy
 msgid "Save Image Map"
-msgstr "Збереження мапу зображення"
+msgstr "Зберегти мапу зображення"
 
 #: ../plug-ins/imagemap/imap_grid.c:197
 msgid "Grid Settings"
 msgstr "Параметри сітки"
 
 #: ../plug-ins/imagemap/imap_grid.c:201
-#, fuzzy
 msgid "_Snap-to grid enabled"
-msgstr "Прив'_язка до сітки"
+msgstr "При_липання до сітки увімкнено"
 
 #: ../plug-ins/imagemap/imap_grid.c:207
 msgid "Grid Visibility and Type"
@@ -11157,7 +11039,7 @@ msgstr "_Лінії"
 
 #: ../plug-ins/imagemap/imap_grid.c:231
 msgid "C_rosses"
-msgstr "Пере_хрещення"
+msgstr "Пере_тин"
 
 #: ../plug-ins/imagemap/imap_grid.c:239
 msgid "Grid Granularity"
@@ -11173,7 +11055,7 @@ msgstr "_Висота"
 
 #: ../plug-ins/imagemap/imap_grid.c:266
 msgid "Grid Offset"
-msgstr "Зміщення сітки"
+msgstr "Зсув ліній сітки"
 
 #: ../plug-ins/imagemap/imap_grid.c:273
 msgid "pixels from l_eft"
@@ -11188,19 +11070,17 @@ msgid "_Preview"
 msgstr "_Попередній перегляд"
 
 #: ../plug-ins/imagemap/imap_main.c:124
-#, fuzzy
 msgid "Create a clickable imagemap"
-msgstr "Створити нове зображення"
+msgstr "Створити мапу зображення (imagemap)"
 
 #: ../plug-ins/imagemap/imap_main.c:129
-#, fuzzy
 msgid "_Image Map..."
 msgstr "_Мапа зображення..."
 
 #: ../plug-ins/imagemap/imap_main.c:519
 #: ../plug-ins/imagemap/imap_settings.c:171
 msgid "<Untitled>"
-msgstr "<Неназване>"
+msgstr "<Без назви>"
 
 #: ../plug-ins/imagemap/imap_main.c:662
 msgid "Some data has been changed!"
@@ -11251,27 +11131,24 @@ msgid "_File"
 msgstr "_Файл"
 
 #: ../plug-ins/imagemap/imap_menu.c:147
-#, fuzzy
 msgid "_Open..."
-msgstr "_Неон..."
+msgstr "_Відкрити..."
 
 #: ../plug-ins/imagemap/imap_menu.c:147
 msgid "Open"
 msgstr "Відкрити"
 
 #: ../plug-ins/imagemap/imap_menu.c:149
-#, fuzzy
 msgid "_Save..."
-msgstr "_Хвилі..."
+msgstr "З_берегти..."
 
 #: ../plug-ins/imagemap/imap_menu.c:149
 msgid "Save"
 msgstr "Зберегти"
 
 #: ../plug-ins/imagemap/imap_menu.c:151
-#, fuzzy
 msgid "Save _As..."
-msgstr "_Хвилі..."
+msgstr "Зберегти _як..."
 
 #: ../plug-ins/imagemap/imap_menu.c:156
 msgid "_Edit"
@@ -11286,14 +11163,12 @@ msgid "Redo"
 msgstr "Повернути"
 
 #: ../plug-ins/imagemap/imap_menu.c:164
-#, fuzzy
 msgid "D_eselect All"
 msgstr "З_няти виділення"
 
 #: ../plug-ins/imagemap/imap_menu.c:166
-#, fuzzy
 msgid "Edit Area _Info..."
-msgstr "Правка інформації про ділянку..."
+msgstr "Правка _інформації про область..."
 
 #: ../plug-ins/imagemap/imap_menu.c:167
 msgid "Edit selected area info"
@@ -11304,18 +11179,16 @@ msgid "Preferences"
 msgstr "Настройка"
 
 #: ../plug-ins/imagemap/imap_menu.c:170
-#, fuzzy
 msgid "Move to Front"
-msgstr "Перемістити вперед"
+msgstr "На передній план"
 
 #: ../plug-ins/imagemap/imap_menu.c:172
-#, fuzzy
 msgid "Send to Back"
-msgstr "Перемістити назад"
+msgstr "На задній план"
 
 #: ../plug-ins/imagemap/imap_menu.c:174
 msgid "Delete Area"
-msgstr "Видалити ділянку"
+msgstr "Видалити область"
 
 #: ../plug-ins/imagemap/imap_menu.c:181
 msgid "_View"
@@ -11334,9 +11207,8 @@ msgid "Zoom out"
 msgstr "Зменшити"
 
 #: ../plug-ins/imagemap/imap_menu.c:185
-#, fuzzy
 msgid "_Zoom To"
-msgstr "Масштаб"
+msgstr "Мас_штаб"
 
 #: ../plug-ins/imagemap/imap_menu.c:187
 msgid "_Mapping"
@@ -11347,9 +11219,8 @@ msgid "Edit Map Info..."
 msgstr "Правка інформації про мапу..."
 
 #: ../plug-ins/imagemap/imap_menu.c:189
-#, fuzzy
 msgid "Edit Map Info"
-msgstr "Правка інформації про мапу..."
+msgstr "Правка інформації про мапу"
 
 #: ../plug-ins/imagemap/imap_menu.c:191
 msgid "_Tools"
@@ -11360,12 +11231,10 @@ msgid "Grid Settings..."
 msgstr "Параметри сітки..."
 
 #: ../plug-ins/imagemap/imap_menu.c:194
-#, fuzzy
 msgid "Use GIMP Guides..."
-msgstr "Використовувати напрямні..."
+msgstr "Використовувати напрямні GIMP..."
 
 #: ../plug-ins/imagemap/imap_menu.c:196
-#, fuzzy
 msgid "Create Guides..."
 msgstr "Створити напрямні..."
 
@@ -11378,9 +11247,8 @@ msgid "_Contents"
 msgstr "_Зміст"
 
 #: ../plug-ins/imagemap/imap_menu.c:208
-#, fuzzy
 msgid "Area List"
-msgstr "Список ділянок"
+msgstr "Список областей"
 
 #: ../plug-ins/imagemap/imap_menu.c:218
 msgid "Arrow"
@@ -11388,19 +11256,19 @@ msgstr "Стрілка"
 
 #: ../plug-ins/imagemap/imap_menu.c:219
 msgid "Select existing area"
-msgstr "Виділити існуючу ділянку"
+msgstr "Виділити існуючу область"
 
 #: ../plug-ins/imagemap/imap_menu.c:221
 msgid "Define Rectangle area"
-msgstr "Визначити прямокутну ділянку"
+msgstr "Визначити прямокутну область"
 
 #: ../plug-ins/imagemap/imap_menu.c:223
 msgid "Define Circle/Oval area"
-msgstr "Визначити круглу/овальну ділянку"
+msgstr "Визначити круглу/овальну область"
 
 #: ../plug-ins/imagemap/imap_menu.c:225
 msgid "Define Polygon area"
-msgstr "Визначити багатокутну ділянку"
+msgstr "Визначити багатокутну область"
 
 #: ../plug-ins/imagemap/imap_polygon.c:72
 msgid "_Polygon"
@@ -11440,15 +11308,15 @@ msgstr "Типовий тип мапи"
 
 #: ../plug-ins/imagemap/imap_preferences.c:373
 msgid "_Prompt for area info"
-msgstr "_Запрошення для вводу інформації про ділянку"
+msgstr "_Запрошення для вводу інформації про область"
 
 #: ../plug-ins/imagemap/imap_preferences.c:375
 msgid "_Require default URL"
-msgstr "_Потрібен типовий URL"
+msgstr "_Вимагати типовий URL"
 
 #: ../plug-ins/imagemap/imap_preferences.c:377
 msgid "Show area _handles"
-msgstr "Показувати обробник _ділянки"
+msgstr "Показувати обробник _області"
 
 #: ../plug-ins/imagemap/imap_preferences.c:379
 msgid "_Keep NCSA circles true"
@@ -11456,7 +11324,7 @@ msgstr "З_берігати NCSA кола"
 
 #: ../plug-ins/imagemap/imap_preferences.c:381
 msgid "Show area URL _tip"
-msgstr "Показувати п_ідказку з ділянки URL"
+msgstr "Показувати п_ідказку з URL ділянки"
 
 #: ../plug-ins/imagemap/imap_preferences.c:384
 msgid "_Use double-sized grab handles"
@@ -11467,7 +11335,6 @@ msgid "Menu"
 msgstr "Меню"
 
 #: ../plug-ins/imagemap/imap_preferences.c:395
-#, fuzzy
 msgid "Number of _undo levels (1 - 99):"
 msgstr "Кількість рівнів _скасування (1 - 99):"
 
@@ -11560,7 +11427,6 @@ msgid "_Description:"
 msgstr "_Опис:"
 
 #: ../plug-ins/imagemap/imap_settings.c:130
-#, fuzzy
 msgid "Map File Format"
 msgstr "Формат файлу мапи"
 
@@ -11569,31 +11435,29 @@ msgid "View Source"
 msgstr "Перегляд джерела"
 
 #: ../plug-ins/jpeg/jpeg-exif.c:288
-#, fuzzy
 msgid "Rotate Image?"
-msgstr "Обертання / масштаб"
+msgstr "Обертати зображення?"
 
 #: ../plug-ins/jpeg/jpeg-exif.c:291
-#, fuzzy
 msgid "_Keep Orientation"
-msgstr "Орієнтація"
+msgstr "З_берігати орієнтацію"
 
 #: ../plug-ins/jpeg/jpeg-exif.c:347
 msgid "According to the EXIF data, this image is rotated."
-msgstr ""
+msgstr "Відповідно до даних EXIF це зображення є оберненим."
 
 #: ../plug-ins/jpeg/jpeg-exif.c:362
 msgid "Would you like GIMP to rotate it into the standard orientation?"
-msgstr ""
+msgstr "Чи повернуть його до стандартної орієнтації?"
 
 #: ../plug-ins/jpeg/jpeg-load.c:241
 msgid "JPEG preview"
 msgstr "Перегляд JPEG"
 
 #: ../plug-ins/jpeg/jpeg-load.c:626 ../plug-ins/winicon/icoload.c:722
-#, fuzzy, c-format
+#, c-format
 msgid "Opening thumbnail for '%s'"
-msgstr "Відкривається мініатюра для \"%s\"..."
+msgstr "Відкривається перегляд для \"%s\""
 
 #: ../plug-ins/jpeg/jpeg-save.c:198
 #, c-format
@@ -11602,7 +11466,7 @@ msgstr "Розмір файлу: %02.01f кб"
 
 #: ../plug-ins/jpeg/jpeg-save.c:673
 msgid "Calculating file size..."
-msgstr ""
+msgstr "Обчислюється розмір файлу..."
 
 #: ../plug-ins/jpeg/jpeg-save.c:764 ../plug-ins/jpeg/jpeg-save.c:876
 msgid "File size: unknown"
@@ -11622,12 +11486,11 @@ msgstr "Параметр якості JPEG"
 
 #: ../plug-ins/jpeg/jpeg-save.c:874
 msgid "Enable preview to obtain the file size."
-msgstr ""
+msgstr "Увімкніть перегляд, щоб бачити розмір файлу."
 
 #: ../plug-ins/jpeg/jpeg-save.c:885
-#, fuzzy
 msgid "Show _preview in image window"
-msgstr "Попередній _перегляд у вікні зображення"
+msgstr "_Перегляд у вікні зображення"
 
 #: ../plug-ins/jpeg/jpeg-save.c:926
 msgid "_Smoothing:"
@@ -11639,7 +11502,7 @@ msgstr "Частота (рядки):"
 
 #: ../plug-ins/jpeg/jpeg-save.c:955
 msgid "Use restart markers"
-msgstr "Перезапустити маркери"
+msgstr "Використовувати маркери перезапуску"
 
 #: ../plug-ins/jpeg/jpeg-save.c:971 ../plug-ins/xjt/xjt.c:877
 msgid "Optimize"
@@ -11647,7 +11510,7 @@ msgstr "Оптимізувати"
 
 #: ../plug-ins/jpeg/jpeg-save.c:984
 msgid "Progressive"
-msgstr "Прогресивне"
+msgstr "Прогресивна"
 
 #: ../plug-ins/jpeg/jpeg-save.c:999
 msgid "Save EXIF data"
@@ -11655,17 +11518,16 @@ msgstr "Зберегти дані EXIF"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1016
 msgid "Save thumbnail"
-msgstr "Зберегти мініатюри"
+msgstr "Зберегти перегляд"
 
 #. XMP metadata
 #: ../plug-ins/jpeg/jpeg-save.c:1032
-#, fuzzy
 msgid "Save XMP data"
-msgstr "Зберегти дані EXIF"
+msgstr "Зберегти дані XMP"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1047
 msgid "Use quality settings from original image"
-msgstr ""
+msgstr "Використовувати характеристики якості початкового зображення"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1053
 msgid ""
@@ -11673,6 +11535,9 @@ msgid ""
 "settings (quantization tables), enable this option to get almost the same "
 "quality and file size."
 msgstr ""
+"Якщо початкове зображення було завантажене з файлу JPEG з "
+"нестандартними параметрами якості (таблиці квантування), використовувати цей "
+"параметр для отримання максимально схожої якості та розміру файлу."
 
 #. Subsampling
 #: ../plug-ins/jpeg/jpeg-save.c:1077
@@ -11681,24 +11546,24 @@ msgstr "Підвибірка:"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1084
 msgid "1x1,1x1,1x1 (best quality)"
-msgstr ""
+msgstr "1x1,1x1,1x1 (найкраща якість)"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1085
 msgid "2x1,1x1,1x1 (4:2:2)"
-msgstr ""
+msgstr "2x1,1x1,1x1 (4:2:2)"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1086
 msgid "1x2,1x1,1x1"
-msgstr ""
+msgstr "1x2,1x1,1x1"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1087
 msgid "2x2,1x1,1x1 (smallest file)"
-msgstr ""
+msgstr "2x2,1x1,1x1 (найменший файл)"
 
 #. DCT method
 #: ../plug-ins/jpeg/jpeg-save.c:1111
 msgid "DCT method:"
-msgstr "DCT метод:"
+msgstr "Метод DCT:"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1117
 msgid "Fast Integer"
@@ -11725,27 +11590,24 @@ msgid "Export Preview"
 msgstr "Перегляд файлу для експорту"
 
 #: ../plug-ins/maze/algorithms.c:289
-#, fuzzy
 msgid "Constructing maze using Prim's Algorithm"
 msgstr "Створення лабіринту використовуючи алгоритм Prim..."
 
 #: ../plug-ins/maze/algorithms.c:465
-#, fuzzy
 msgid "Constructing tileable maze using Prim's Algorithm"
-msgstr "Конструювання розсіченого лабіринту з використанням алгоритму Prim..."
+msgstr "Конструювання безшовного лабіринту з використанням алгоритму Prim..."
 
 #: ../plug-ins/maze/maze.c:153
 msgid "Draw a labyrinth"
-msgstr ""
+msgstr "Малює лабіринт"
 
 #: ../plug-ins/maze/maze.c:160
 msgid "_Maze..."
 msgstr "_Лабіринт..."
 
 #: ../plug-ins/maze/maze.c:449
-#, fuzzy
 msgid "Drawing maze"
-msgstr "Малювання лабіринту..."
+msgstr "Малювання лабіринту"
 
 #: ../plug-ins/maze/maze.h:22
 msgid "Maze"
@@ -11753,9 +11615,8 @@ msgstr "Лабіринт"
 
 #. The maze size frame
 #: ../plug-ins/maze/maze_face.c:200
-#, fuzzy
 msgid "Maze Size"
-msgstr "Розмір зображення"
+msgstr "Розмір лабіринту"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: ../plug-ins/maze/maze_face.c:214
@@ -11772,13 +11633,12 @@ msgstr "Висота (у точках):"
 
 #. The maze algorithm frame
 #: ../plug-ins/maze/maze_face.c:250
-#, fuzzy
 msgid "Algorithm"
-msgstr "_Алгоритм:"
+msgstr "Алгоритм:"
 
 #: ../plug-ins/maze/maze_face.c:276
 msgid "Depth first"
-msgstr "Переважно в глибину"
+msgstr "Спочатку в глибину"
 
 #: ../plug-ins/maze/maze_face.c:277
 msgid "Prim's algorithm"
@@ -11795,68 +11655,68 @@ msgstr ""
 #: ../plug-ins/metadata/xmp-parse.c:240
 #, c-format
 msgid "Error: No XMP packet found"
-msgstr ""
+msgstr "Помилка: пакет XMP не знайдено"
 
 #: ../plug-ins/metadata/xmp-parse.c:255
 #, c-format
 msgid "Error on line %d char %d: %s"
-msgstr ""
+msgstr "Помилка у рядку %d символ %d: %s"
 
 #: ../plug-ins/metadata/xmp-parse.c:277
 #, c-format
 msgid "Expected text or optional element <%s>, found <%s> instead"
-msgstr ""
+msgstr "Замість очікуваного тексту чи тегу <%s> знайдено <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:281
 #, c-format
 msgid "Expected element <%s>, found <%s> instead"
-msgstr ""
+msgstr "Замість очікуваного тегу <%s> знайдено <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:296
 #, c-format
 msgid "Unknown element <%s>"
-msgstr ""
+msgstr "Невідомий тег <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:325
 #, c-format
 msgid "Unknown attribute \"%s\"=\"%s\" in element <%s>"
-msgstr ""
+msgstr "Невідомий атрибут \"%s\"=\"%s\" у тегові <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:655
 #, c-format
 msgid "Required attribute rdf:about missing in <%s>"
-msgstr ""
+msgstr "Необхідний атрибут rdf відсутній у <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:881
 #, c-format
 msgid "Nested elements (<%s>) are not allowed in this context"
-msgstr ""
+msgstr "Вкладені елементи (<%s>) неприпустимі у цьому контексті"
 
 #: ../plug-ins/metadata/xmp-parse.c:1005
 #, c-format
 msgid "End of element <%s> not expected in this context"
-msgstr ""
+msgstr "Закінчення тегу <%s> не допустимо у цьому контексті"
 
 #: ../plug-ins/metadata/xmp-parse.c:1107
 #, c-format
 msgid "The current element (<%s>) cannot contain text"
-msgstr ""
+msgstr "Поточний елемент (<%s>) не може містити текст"
 
 #: ../plug-ins/metadata/xmp-parse.c:1132
 msgid "XMP packets must start with <?xpacket begin=...?>"
-msgstr ""
+msgstr "Пакет XMP має починатися так: <?xpacket begin=...?>"
 
 #: ../plug-ins/metadata/xmp-parse.c:1146
 msgid "XMP packets must end with <?xpacket end=...?>"
-msgstr ""
+msgstr "Пакети XMP мають закінчуватися так: <?xpacket end=...?>"
 
 #: ../plug-ins/metadata/xmp-parse.c:1159
 msgid "XMP cannot contain XML comments or processing instructions"
-msgstr ""
+msgstr "XMP не може містити коментарі XML або інструкції виконання"
 
 #: ../plug-ins/pagecurl/pagecurl.c:216
 msgid "Curl up one of the image corners"
-msgstr ""
+msgstr "Завернути один з кутів зображення"
 
 #: ../plug-ins/pagecurl/pagecurl.c:221
 msgid "_Pagecurl..."
@@ -11868,7 +11728,7 @@ msgstr "Ефект загнутої сторінки"
 
 #: ../plug-ins/pagecurl/pagecurl.c:462
 msgid "Curl Location"
-msgstr "Розміщення загину"
+msgstr "Позиція загину"
 
 #: ../plug-ins/pagecurl/pagecurl.c:481
 msgid "Lower right"
@@ -11896,15 +11756,15 @@ msgstr "_Тінь під загином"
 
 #: ../plug-ins/pagecurl/pagecurl.c:581
 msgid "Current gradient (reversed)"
-msgstr "Поточний градієнт (реверсний)"
+msgstr "Обраний градієнт (реверсивний)"
 
 #: ../plug-ins/pagecurl/pagecurl.c:586
 msgid "Current gradient"
-msgstr "Поточний градієнт"
+msgstr "Обраний градієнт"
 
 #: ../plug-ins/pagecurl/pagecurl.c:591
 msgid "Foreground / background colors"
-msgstr "Кольори переднього плану та тла"
+msgstr "Передній план та тло"
 
 #: ../plug-ins/pagecurl/pagecurl.c:611
 msgid "_Opacity:"
@@ -11915,49 +11775,41 @@ msgid "Curl Layer"
 msgstr "Шар загину"
 
 #: ../plug-ins/pagecurl/pagecurl.c:1022
-#, fuzzy
 msgid "Page Curl"
-msgstr "Загнута сторінка..."
+msgstr "Згин сторінки"
 
 #. label for the printable area
 #: ../plug-ins/print/print-page-layout.c:134
-#, fuzzy
 msgid "Printable area:"
-msgstr "Назва принтера:"
+msgstr "Область друку:"
 
 #: ../plug-ins/print/print-page-layout.c:148
-#, fuzzy
 msgid "_Adjust Page Size and Orientation"
-msgstr "Орієнтація"
+msgstr "_Скоригувати розмір та орієнтацію сторінки"
 
 #: ../plug-ins/print/print-page-layout.c:202
 msgid "Ignore Page _Margins"
-msgstr ""
+msgstr "Ігнорувати _поля сторінки"
 
 #: ../plug-ins/print/print-page-layout.c:357
-#, fuzzy
 msgid "_X resolution:"
-msgstr "Роздільна здатність:"
+msgstr "Роздільна здатність вздовж _X:"
 
 #: ../plug-ins/print/print-page-layout.c:361
-#, fuzzy
 msgid "_Y resolution:"
-msgstr "Роздільна здатність:"
+msgstr "Роздільна здатність вздовж _Y:"
 
 #: ../plug-ins/print/print-page-layout.c:432
-#, fuzzy
 msgid "_Left:"
-msgstr "Ліва сторона:"
+msgstr "_Ліворуч:"
 
 #: ../plug-ins/print/print-page-layout.c:451
-#, fuzzy
 msgid "_Right:"
-msgstr "Права сторона:"
+msgstr "_Праворуч:"
 
 #: ../plug-ins/print/print-page-layout.c:505
-#, fuzzy
 msgid "C_enter:"
-msgstr "Центр:"
+msgstr "Ц_ентр:"
 
 #: ../plug-ins/print/print-page-layout.c:513
 msgid "Horizontally"
@@ -11969,54 +11821,47 @@ msgstr "Вертикально"
 
 #: ../plug-ins/print/print-page-layout.c:515
 msgid "Both"
-msgstr ""
-"В обох\n"
-"напрямках"
+msgstr "Обидва"
 
 #: ../plug-ins/print/print.c:89
-#, fuzzy
 msgid "Print the image"
-msgstr "Друк у файл"
+msgstr "Надрукувати зображення"
 
 #: ../plug-ins/print/print.c:94
 msgid "_Print..."
 msgstr "Д_рук..."
 
 #: ../plug-ins/print/print.c:213
-#, fuzzy
 msgid "Image Settings"
-msgstr "Вибір зображення"
+msgstr "Параметри зображення"
 
 #: ../plug-ins/print/print.c:253
 msgid "An error occurred while trying to print:"
-msgstr ""
+msgstr "При друкуванні виникла помилка:"
 
 #: ../plug-ins/print/print.c:283
-#, fuzzy
 msgid "Printing"
-msgstr "Друк..."
+msgstr "Друк"
 
 #: ../plug-ins/rcm/rcm.c:99
 msgid "Replace a range of colors with another"
-msgstr ""
+msgstr "Замінювати один набір кольорів іншим"
 
 #: ../plug-ins/rcm/rcm.c:106
-#, fuzzy
 msgid "_Rotate Colors..."
-msgstr "_Полярні координати"
+msgstr "_Повернути кольори..."
 
 #: ../plug-ins/rcm/rcm.c:140
-#, fuzzy
 msgid "Rotating the colors"
-msgstr "Обертання мапи кольорів..."
+msgstr "Обертання кольорової мапи"
 
 #: ../plug-ins/rcm/rcm_dialog.c:119
 msgid "Original"
-msgstr "Початковий"
+msgstr "Початкова"
 
 #: ../plug-ins/rcm/rcm_dialog.c:137
 msgid "Rotated"
-msgstr "Повернутий"
+msgstr "Обернена"
 
 #: ../plug-ins/rcm/rcm_dialog.c:155
 msgid "Continuous update"
@@ -12047,7 +11892,7 @@ msgstr "Насиченість:"
 #. * Gray: Operation-Mode *
 #: ../plug-ins/rcm/rcm_dialog.c:514
 msgid "Gray Mode"
-msgstr "Режим кольору"
+msgstr "Режим сірого"
 
 #. Gray: Operation-Mode: two radio buttons
 #: ../plug-ins/rcm/rcm_dialog.c:523
@@ -12061,7 +11906,7 @@ msgstr "Змінити до цього"
 #. * Gray: What is gray? *
 #: ../plug-ins/rcm/rcm_dialog.c:548
 msgid "Gray Threshold"
-msgstr "Поріг зеленого"
+msgstr "Поріг сірого"
 
 #. * Misc: Used unit selection *
 #: ../plug-ins/rcm/rcm_dialog.c:588 ../plug-ins/rcm/rcm_dialog.c:698
@@ -12082,9 +11927,8 @@ msgid "Degrees"
 msgstr "Градуси"
 
 #: ../plug-ins/rcm/rcm_dialog.c:652
-#, fuzzy
 msgid "Rotate Colors"
-msgstr "В колір"
+msgstr "Обертання кольорової мапи"
 
 #: ../plug-ins/rcm/rcm_dialog.c:692
 msgid "Main Options"
@@ -12092,35 +11936,30 @@ msgstr "Основні параметри"
 
 #: ../plug-ins/rcm/rcm_dialog.c:695
 msgid "Gray Options"
-msgstr "Параметри зеленого"
+msgstr "Параметри сірого"
 
 #: ../plug-ins/rcm/rcm_stock.c:35
-#, fuzzy
 msgid "Switch to Clockwise"
 msgstr "За годинниковою"
 
 #: ../plug-ins/rcm/rcm_stock.c:37
-#, fuzzy
 msgid "Switch to C/Clockwise"
-msgstr "Проти годинниковою"
+msgstr "Проти годинниковї"
 
 #: ../plug-ins/rcm/rcm_stock.c:39
-#, fuzzy
 msgid "Change Order of Arrows"
 msgstr "Змінити порядок стрілок"
 
 #. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
 #: ../plug-ins/sel2path/pxl-outline.c:84
-#, fuzzy
 msgid "Selection to Path"
-msgstr "Виділення у контур..."
+msgstr "Виділення у контур"
 
 #: ../plug-ins/sel2path/sel2path.c:183
 msgid "No selection to convert"
 msgstr "Нічого не виділено для перетворення"
 
 #: ../plug-ins/sel2path/sel2path.c:300
-#, fuzzy
 msgid "Selection to Path Advanced Settings"
 msgstr "Додаткові параметри перетворення виділення у контур"
 
@@ -12131,7 +11970,7 @@ msgstr "Зображення Silicon Graphics IRIS"
 #: ../plug-ins/sgi/sgi.c:532
 #, c-format
 msgid "Could not open '%s' for writing."
-msgstr "Не вдається відкрити файл \"%s\" на запис."
+msgstr "Не вдається відкрити файл \"%s\" для запису"
 
 #: ../plug-ins/sgi/sgi.c:612
 msgid "Save as SGI"
@@ -12159,71 +11998,70 @@ msgstr ""
 
 #: ../plug-ins/twain/twain.c:87
 msgid "Capture an image from a TWAIN datasource"
-msgstr ""
+msgstr "Захопити зображення з пристрою, що підтримуються TWAIN"
 
 #: ../plug-ins/twain/twain.c:354
 msgid "_Scanner/Camera..."
-msgstr ""
+msgstr "_Сканер/Камера..."
 
 #. Initialize our progress dialog
 #: ../plug-ins/twain/twain.c:489
 msgid "Transferring data from scanner/camera"
-msgstr ""
+msgstr "Отримання даних зі сканера/камери"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:162
 #: ../plug-ins/uri/uri-backend-libcurl.c:126
 #, c-format
 msgid "Downloading %s of image data..."
-msgstr ""
+msgstr "Завантаження зображення (%s)..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:163
 #: ../plug-ins/uri/uri-backend-libcurl.c:133
 #: ../plug-ins/uri/uri-backend-wget.c:348
 #, c-format
 msgid "Downloaded %s of image data"
-msgstr ""
+msgstr "Завантажено %s зображення"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:181
-#, fuzzy, c-format
+#, c-format
 msgid "Uploading %s of image data..."
-msgstr "Копіювання IFS у зображення (%d/%d)..."
+msgstr "Надсилання зображення (%s)..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:182
 #, c-format
 msgid "Uploaded %s of image data"
-msgstr ""
+msgstr "Надіслано %s зображення"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:252
 #: ../plug-ins/uri/uri-backend-libcurl.c:155
 #: ../plug-ins/uri/uri-backend-wget.c:197
-#, fuzzy
 msgid "Connecting to server"
-msgstr "Нічого не виділено для перетворення"
+msgstr "З'єднання з сервером"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:311
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read %s from '%s': %s"
-msgstr "Не вдається зберегти файл \"%s\": %s"
+msgstr "Не вдається прочитати %s з \"%s\": %s"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:360
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to write %s to '%s': %s"
-msgstr "Не вдається записати файл град.спалаху '%s': %s"
+msgstr "Не вдається записати %s у '%s': %s"
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:57
 #, c-format
 msgid "Could not initialize libcurl"
-msgstr ""
+msgstr "Не вдається ініціалізувати libcurl"
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:160
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open output file for writing"
-msgstr "Не вдається відкрити файл \"%s\" на запис."
+msgstr "Не вдається відкрити зовнішній файл для запису"
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:198
 #, c-format
 msgid "Opening '%s' for reading resulted in HTTP response code: %d"
-msgstr ""
+msgstr "Операція відкривання '%s' завершилась кодом помилки HTTP: %d"
 
 #: ../plug-ins/uri/uri-backend-wget.c:164
 #: ../plug-ins/uri/uri-backend-wget.c:184
@@ -12232,50 +12070,46 @@ msgstr ""
 #: ../plug-ins/uri/uri-backend-wget.c:255
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
-msgstr ""
+msgstr "wget завершилася з помилкою на URI '%s'"
 
 #. The third line is "Connecting to..."
 #: ../plug-ins/uri/uri-backend-wget.c:192
 #, c-format
 msgid "(timeout is %d second)"
 msgid_plural "(timeout is %d seconds)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(тайм-аут %d сек.)"
+msgstr[1] "(тайм-аут %d сек.)"
+msgstr[2] "(тайм-аут %d сек.)"
 
 #. The fourth line is either the network request or an error
 #: ../plug-ins/uri/uri-backend-wget.c:221
-#, fuzzy
 msgid "Opening URI"
-msgstr "Відкривається %s..."
+msgstr "Відкривається URI"
 
 #: ../plug-ins/uri/uri-backend-wget.c:232
 #: ../plug-ins/uri/uri-backend-wget.c:265
-#, fuzzy, c-format
+#, c-format
 msgid "A network error occurred: %s"
-msgstr "Помилка при записуванні"
+msgstr "Помилка мережі: %s"
 
 #: ../plug-ins/uri/uri-backend-wget.c:305
-#, fuzzy, c-format
+#, c-format
 msgid "Downloading %s of image data"
-msgstr "Копіювання IFS у зображення (%d/%d)..."
+msgstr "Завантажується файл розміром %s "
 
 #: ../plug-ins/uri/uri-backend-wget.c:310
-#, fuzzy
 msgid "Downloading unknown amount of image data"
-msgstr "Копіювання IFS у зображення (%d/%d)..."
+msgstr "Завантажується зображення невідомого розміру"
 
 #: ../plug-ins/uri/uri.c:117 ../plug-ins/uri/uri.c:138
-#, fuzzy
 msgid "URI"
-msgstr "URL"
+msgstr "URI"
 
 #: ../plug-ins/winicon/icodialog.c:54
-#, fuzzy
 msgid "Save as Windows Icon"
-msgstr "Значок Microsoft Windows"
+msgstr "Зберегти як значок Windows"
 
 #: ../plug-ins/winicon/icodialog.c:86
-#, fuzzy
 msgid "Icon Details"
 msgstr "Подробиці значка"
 
@@ -12284,32 +12118,32 @@ msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
 msgstr ""
+"Великі значки та стиснення не підтримуються всіма програмами. Більш старі "
+"програми можуть некоректно відкривати цей файл."
 
 #: ../plug-ins/winicon/icodialog.c:178
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
-msgstr "1 біт/точку, 1-біт альфа-канал, 2-комірки палітри"
+msgstr "1 біт/точку, 1-біт альфа-каналом, 2-кольорова палітра"
 
 #: ../plug-ins/winicon/icodialog.c:179
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
-msgstr "4 біта/точку, 1-біт альфа-канал, 16-комірок палітри"
+msgstr "4 біта/точку, 1-біт альфа-канал, 16-кольорова палітра"
 
 #: ../plug-ins/winicon/icodialog.c:180
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
-msgstr "8 біт/точку, 1-біт альфа-канал, 256-комірок палітри"
+msgstr "8 біт/точку, 1-біт альфа-канал, 256-кольорова палітра"
 
 #: ../plug-ins/winicon/icodialog.c:181
-#, fuzzy
 msgid "24 bpp, 1-bit alpha, no palette"
-msgstr "32 біт/точку, 8-біт альфа-канал, без палітри"
+msgstr "24 біт/точку, 1-біт альфа-канал, без палітри"
 
 #: ../plug-ins/winicon/icodialog.c:182
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 біт/точку, 8-біт альфа-канал, без палітри"
 
 #: ../plug-ins/winicon/icodialog.c:196
-#, fuzzy
 msgid "Compressed (PNG)"
-msgstr "Розмір стиснутого файлу: %s"
+msgstr "Стиснений (PNG)"
 
 #. read successfully. add to image
 #: ../plug-ins/winicon/icoload.c:616
@@ -12323,11 +12157,11 @@ msgstr "Значок Microsoft Windows"
 
 #: ../plug-ins/winsnap/winsnap.c:864
 msgid "Grab"
-msgstr "Зняти"
+msgstr "Захопити"
 
 #: ../plug-ins/winsnap/winsnap.c:880
 msgid "Grab a single window"
-msgstr "Зняти одне вікно"
+msgstr "Захопити одне вікно"
 
 #: ../plug-ins/winsnap/winsnap.c:894
 msgid "Grab the whole screen"
@@ -12339,15 +12173,15 @@ msgstr "через"
 
 #: ../plug-ins/winsnap/winsnap.c:922
 msgid "Seconds delay"
-msgstr "секунд"
+msgstr "затримка у секундах"
 
 #: ../plug-ins/winsnap/winsnap.c:929
 msgid "Include decorations"
-msgstr "Включаючи облямівку"
+msgstr "Включаючи рамку"
 
 #: ../plug-ins/winsnap/winsnap.c:988
 msgid "Capture a window or desktop image"
-msgstr ""
+msgstr "Створити знімок екрану з робочим столом або вікнами"
 
 #: ../plug-ins/winsnap/winsnap.c:993
 msgid "_Screen Shot..."
