@@ -177,29 +177,25 @@ static void
 gimp_color_balance_tool_map (GimpImageMapTool *image_map_tool)
 {
   GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (image_map_tool);
+  ColorBalance         *cb      = cb_tool->color_balance;
+  GimpTransferMode      range;
 
-  if (image_map_tool->operation)
+  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
     {
-      ColorBalance     *cb = cb_tool->color_balance;
-      GimpTransferMode  range;
-
-      for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
-        {
-          gegl_node_set (image_map_tool->operation,
-                         "range", range,
-                         NULL);
-
-          gegl_node_set (image_map_tool->operation,
-                         "cyan-red",      cb->cyan_red[range]      / 256.0,
-                         "magenta-green", cb->magenta_green[range] / 256.0,
-                         "yellow-blue",   cb->yellow_blue[range]   / 256.0,
-                         NULL);
-        }
+      gegl_node_set (image_map_tool->operation,
+                     "range", range,
+                     NULL);
 
       gegl_node_set (image_map_tool->operation,
-                     "preserve-luminosity", cb->preserve_luminosity,
+                     "cyan-red",      cb->cyan_red[range]      / 256.0,
+                     "magenta-green", cb->magenta_green[range] / 256.0,
+                     "yellow-blue",   cb->yellow_blue[range]   / 256.0,
                      NULL);
     }
+
+  gegl_node_set (image_map_tool->operation,
+                 "preserve-luminosity", cb->preserve_luminosity,
+                 NULL);
 
   color_balance_create_lookup_tables (cb_tool->color_balance);
 }

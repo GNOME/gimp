@@ -196,22 +196,18 @@ static void
 gimp_brightness_contrast_tool_map (GimpImageMapTool *im_tool)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (im_tool);
+  gdouble                     brightness;
+  gdouble                     contrast;
 
-  if (im_tool->operation)
-    {
-      gdouble brightness;
-      gdouble contrast;
+  brightness = bc_tool->brightness / 256.0;
+  contrast   = (bc_tool->contrast < 0 ?
+                (bc_tool->contrast + 127.0) / 127.0 :
+                bc_tool->contrast * 4.0 / 127.0 + 1);
 
-      brightness = bc_tool->brightness / 256.0;
-      contrast   = (bc_tool->contrast < 0 ?
-                    (bc_tool->contrast + 127.0) / 127.0 :
-                    bc_tool->contrast * 4.0 / 127.0 + 1);
-
-      gegl_node_set (im_tool->operation,
-                     "brightness", brightness,
-                     "contrast",   contrast,
-                     NULL);
-    }
+  gegl_node_set (im_tool->operation,
+                 "brightness", brightness,
+                 "contrast",   contrast,
+                 NULL);
 
   brightness_contrast_lut_setup (bc_tool->lut,
                                  bc_tool->brightness / 255.0,

@@ -468,6 +468,7 @@ static void
 gimp_image_map_tool_create_map (GimpImageMapTool *tool)
 {
   GimpCoreConfig *config = GIMP_TOOL (tool)->tool_info->gimp->config;
+  gboolean        use_gegl;
 
   if (tool->image_map)
     {
@@ -475,14 +476,16 @@ gimp_image_map_tool_create_map (GimpImageMapTool *tool)
       g_object_unref (tool->image_map);
     }
 
-  if (config->use_gegl && ! tool->operation &&
-      GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->get_operation)
+  if (GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->get_operation)
     tool->operation = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->get_operation (tool);
+
+  g_assert (tool->operation || tool->apply_func);
+
+  use_gegl = (config->use_gegl || ! tool->apply_func);
 
   tool->image_map = gimp_image_map_new (tool->drawable,
                                         GIMP_TOOL (tool)->tool_info->blurb,
-                                        config->use_gegl ?
-                                        tool->operation : NULL,
+                                        use_gegl ? tool->operation : NULL,
                                         tool->apply_func,
                                         tool->apply_data);
 

@@ -1,5 +1,24 @@
 2008-01-10  Michael Natterer  <mitch@gimp.org>
 
+	Simplify things a bit and enable gegl-only color correction
+	tools (without legacy functions).
+
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_create_map):
+	always create the operation if ::get_operation() is implemented
+	and always use it when creating the GimpImageMap if there is no
+	legacy apply_func.
+
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c (map): set the operation's
+	properties unconditionally since it always exists now if we also
+	implement ::get_operation().
+
+2008-01-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/Makefile.am
 	* app/gegl/gegl-types.h
 	* app/gegl/gimpoperationcolorbalance.[ch]: new operator.
