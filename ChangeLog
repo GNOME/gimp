@@ -1,3 +1,10 @@
+2008-01-10  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-pdb.c (pdb_getattro): Handle __members__
+	specially to return the current PDB procedure list, and pass-through
+	any attributes that start with "_" without looking them up in the
+	PDB.
+
 2008-01-10  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpuimanager.c (gimp_ui_manager_ui_popup):

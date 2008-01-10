@@ -638,18 +638,59 @@ static PyMappingMethods pdb_as_mapping = {
 /* -------------------------------------------------------- */
 
 static PyObject *
-pdb_getattro(PyGimpPDB *self, PyObject *attr)
+build_procedure_list(void)
 {
+    int num, i;
+    char **names, *name, *p;
     PyObject *ret;
 
-    ret = PyObject_GenericGetAttr((PyObject *)self, attr);
+    gimp_procedural_db_query(".*", ".*", ".*", ".*", ".*", ".*", ".*",
+                             &num, &names);
 
+    ret = PyList_New(num);
+
+    for (i = 0; i < num; i++) {
+        name = g_strdup(names[i]);
+        for (p = name; *p != '\0'; p++) {
+            if (*p == '-')
+                *p = '_';
+	}
+        PyList_SetItem(ret, i, PyString_FromString(name));
+        g_free(name);
+    }
+
+    g_free(names);
+
+    return ret;
+}
+
+static PyObject *
+pdb_getattro(PyGimpPDB *self, PyObject *attr)
+{
+    char *attr_name;
+    PyObject *ret;
+
+    attr_name = PyString_AsString(attr);
+    if (!attr_name) {
+         PyErr_Clear();
+         return PyObject_GenericGetAttr((PyObject *)self, attr);
+    }
+
+    if (attr_name[0] == '_') {
+        if (strcmp(attr_name, "__members__")) {
+            return build_procedure_list();
+        } else {
+            return PyObject_GenericGetAttr((PyObject *)self, attr);
+        }
+    }
+
+    ret = PyObject_GenericGetAttr((PyObject *)self, attr);
     if (ret)
-	return ret;
+        return ret;
 
     PyErr_Clear();
 
-    return pygimp_pdb_function_new_from_proc_db(PyString_AsString(attr));
+    return pygimp_pdb_function_new_from_proc_db(attr_name);
 }
 
 PyTypeObject PyGimpPDB_Type = {
