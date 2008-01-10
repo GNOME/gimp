@@ -1,5 +1,12 @@
 2008-01-10  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpuimanager.c (gimp_ui_manager_ui_popup):
+	gracefully deal with a NULL return value from
+	gtk_ui_manager_get_widget(). This happens when the XML menu
+	definitions are not found.
+
+2008-01-10  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/pygimp/plug-ins/gimpcons.py: fixed spelling of GIMP.
 
 2008-01-10  Sven Neumann  <sven@gimp.org>
