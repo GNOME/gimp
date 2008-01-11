@@ -6963,7 +6963,7 @@ msgstr "Ділення _шкали:"
 
 #: ../plug-ins/common/retinex.c:381
 msgid "_Dynamic:"
-msgstr "_Динамічно:"
+msgstr "_Динаміка:"
 
 #: ../plug-ins/common/retinex.c:654
 msgid "Retinex: filtering"

@@ -545,15 +545,15 @@ msgstr "Перетин (перехрестя)"
 
 #: ../libgimpbase/gimpbaseenums.c:431
 msgid "Dashed"
-msgstr "Пунктиром"
+msgstr "Пунктир"
 
 #: ../libgimpbase/gimpbaseenums.c:432
 msgid "Double dashed"
-msgstr "Подвійним пунктиром"
+msgstr "Подвійний пунктир"
 
 #: ../libgimpbase/gimpbaseenums.c:433
 msgid "Solid"
-msgstr "Суцільною лінією"
+msgstr "Суцільна лінія"
 
 #: ../libgimpbase/gimpbaseenums.c:462
 msgid "Stock ID"
@@ -597,7 +597,7 @@ msgstr "Індексований-альфа"
 
 #: ../libgimpbase/gimpbaseenums.c:562
 msgid "interpolation|None"
-msgstr "Ніякого"
+msgstr "Ніякої"
 
 #: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|Linear"
@@ -665,11 +665,11 @@ msgstr "Світлі частини"
 
 #: ../libgimpbase/gimpbaseenums.c:744
 msgid "Normal (Forward)"
-msgstr "Звичайне (вперед)"
+msgstr "Звичайний (вперед)"
 
 #: ../libgimpbase/gimpbaseenums.c:745
 msgid "Corrective (Backward)"
-msgstr "Коригуюче (назад)"
+msgstr "Коригуючий (назад)"
 
 #: ../libgimpbase/gimpbaseenums.c:775
 msgid "Adjust"
@@ -834,19 +834,19 @@ msgstr "Імітація принтера"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:56
 msgid "Perceptual"
-msgstr "Перцепційний"
+msgstr "Перцепційна"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57
 msgid "Relative colorimetric"
-msgstr "Відносний колориметричний"
+msgstr "Відносна колориметрична"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
 msgid "intent|Saturation"
-msgstr "Насичений"
+msgstr "Насичена"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
-msgstr "Абсолютний колориметричний"
+msgstr "Абсолютна колориметрична"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:97
 #, c-format

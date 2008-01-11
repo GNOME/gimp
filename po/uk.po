@@ -377,7 +377,7 @@ msgstr "Зразкові точки"
 
 #: ../app/actions/actions.c:186
 msgid "Select"
-msgstr "Виділене"
+msgstr "Виділення"
 
 #. initialize the template list
 #: ../app/actions/actions.c:189 ../app/core/gimp.c:849
@@ -4378,7 +4378,7 @@ msgstr "Екран"
 
 #: ../app/base/base-enums.c:116
 msgid "Overlay"
-msgstr "Перекривання"
+msgstr "Перекриття"
 
 #: ../app/base/base-enums.c:117
 msgid "Difference"
@@ -4430,11 +4430,11 @@ msgstr "Розсіяне світло"
 
 #: ../app/base/base-enums.c:131
 msgid "Grain extract"
-msgstr "Кристалізація діленням"
+msgstr "Витягування зерна"
 
 #: ../app/base/base-enums.c:132
 msgid "Grain merge"
-msgstr "Кристалізація об'єднанням"
+msgstr "Об'єднання зерна"
 
 #: ../app/base/base-enums.c:133
 msgid "Color erase"
@@ -5560,11 +5560,11 @@ msgstr "Підтверджувати дії"
 
 #: ../app/core/core-enums.c:1259
 msgid "Keep embedded profile"
-msgstr "Зберегти вбудований профіль"
+msgstr "Зберігати вбудований профіль"
 
 #: ../app/core/core-enums.c:1260
 msgid "Convert to RGB workspace"
-msgstr "Перетворення кольорової моделі зображення на RGB"
+msgstr "Перетворювати кольорову модель зображення на RGB"
 
 #: ../app/core/gimp-contexts.c:141 ../app/core/gimptooloptions.c:239
 #: ../app/gui/session.c:257 ../app/menus/menus.c:430
@@ -7420,7 +7420,7 @@ msgstr "Максимальний розмір _нового зображення
 
 #: ../app/dialogs/preferences-dialog.c:1585
 msgid "Number of _processors to use:"
-msgstr "Кількість п_роцесорів, що використовуються:"
+msgstr "Кількість п_роцесорів:"
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1590
@@ -7442,7 +7442,7 @@ msgstr "Збереження зображень"
 
 #: ../app/dialogs/preferences-dialog.c:1606
 msgid "Confirm closing of unsa_ved images"
-msgstr "Запитувані при закриванні н_езбережених зображень"
+msgstr "Запитувати при закриванні н_езбережених зображень"
 
 #: ../app/dialogs/preferences-dialog.c:1616
 msgid "Save document _history on exit"
@@ -7592,7 +7592,7 @@ msgstr "Інструмент переміщення"
 
 #: ../app/dialogs/preferences-dialog.c:1928
 msgid "Set layer or path as active"
-msgstr "Додати шар чи контур активним"
+msgstr "Робити шар чи контур активним"
 
 #: ../app/dialogs/preferences-dialog.c:1941
 msgid "Toolbox"
@@ -7710,7 +7710,7 @@ msgstr "Зовнішній вигляд у повноекранному режи
 
 #: ../app/dialogs/preferences-dialog.c:2149
 msgid "Image Title & Statusbar Format"
-msgstr "Формат заголовку зображення та рядок сану"
+msgstr "Формат заголовку зображення та рядок стану"
 
 #: ../app/dialogs/preferences-dialog.c:2152
 msgid "Title & Status"
@@ -7822,19 +7822,19 @@ msgstr "Вибір кольорового профілю принтера"
 
 #: ../app/dialogs/preferences-dialog.c:2433
 msgid "_Mode of operation:"
-msgstr "_Вигляд керування:"
+msgstr "_Тип керування:"
 
 #: ../app/dialogs/preferences-dialog.c:2463
 msgid "_Try to use the system monitor profile"
-msgstr "_Спробувати використати системний ICC-профіль монітору"
+msgstr "_Намагатись використати системний профіль монітору"
 
 #: ../app/dialogs/preferences-dialog.c:2473
 msgid "_Display rendering intent:"
-msgstr "_Ціль передачі кольору для монітору:"
+msgstr "_Ціль кольоропередачі монітору:"
 
 #: ../app/dialogs/preferences-dialog.c:2482
 msgid "_Softproof rendering intent:"
-msgstr "_Ціль передачі кольору для проби кольорів:"
+msgstr "_Ціль кольоропередачі кольоропроби:"
 
 #: ../app/dialogs/preferences-dialog.c:2495
 msgid "Mark out of gamut colors"
@@ -7887,7 +7887,7 @@ msgstr "Поведінка вікон"
 
 #: ../app/dialogs/preferences-dialog.c:2600
 msgid "Window Manager Hints"
-msgstr "Керування зовнішнім виглядом виглядом вікон"
+msgstr "Керування зовнішнім виглядом вікон"
 
 #: ../app/dialogs/preferences-dialog.c:2606
 msgid "Hint for the _toolbox:"
@@ -10862,7 +10862,7 @@ msgstr "Без напрямних"
 
 #: ../app/tools/tools-enums.c:59
 msgid "Center lines"
-msgstr "Ліній у центрі"
+msgstr "Лінії у центрі"
 
 #: ../app/tools/tools-enums.c:60
 msgid "Rule of thirds"
@@ -10912,7 +10912,7 @@ msgstr "Зображення + сітка"
 
 #: ../app/tools/tools-enums.c:242
 msgid "Number of grid lines"
-msgstr "Число ліній сітки"
+msgstr "Кількість ліній сітки"
 
 #: ../app/tools/tools-enums.c:243
 msgid "Grid line spacing"
@@ -10994,7 +10994,7 @@ msgstr "Дія"
 
 #: ../app/widgets/gimpactionview.c:341
 msgid "Shortcut"
-msgstr "Комбінації клавіш"
+msgstr "Комбінація клавіш"
 
 #: ../app/widgets/gimpactionview.c:365
 msgid "Name"
@@ -11002,7 +11002,7 @@ msgstr "Назва"
 
 #: ../app/widgets/gimpactionview.c:497 ../app/widgets/gimpactionview.c:701
 msgid "Changing shortcut failed."
-msgstr "Не вдається змінити комбінації клавіші."
+msgstr "Не вдається змінити комбінацію клавіш."
 
 #: ../app/widgets/gimpactionview.c:539
 msgid "Conflicting Shortcuts"
@@ -12169,7 +12169,7 @@ msgstr "Додати до палітри"
 
 #: ../app/widgets/widgets-enums.c:173
 msgid "Black & white"
-msgstr "Чорна-білий"
+msgstr "Чорно-білий"
 
 #: ../app/widgets/widgets-enums.c:174
 msgid "Fancy"
