@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-27 11:32+0200\n"
-"PO-Revision-Date: 2007-12-27 11:32+0200\n"
+"POT-Creation-Date: 2008-01-11 09:32+0200\n"
+"PO-Revision-Date: 2008-01-11 09:32+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -2395,7 +2395,7 @@ msgstr "_Automatinis"
 
 #: ../app/actions/image-actions.c:68 ../app/actions/plug-in-actions.c:94
 msgid "_Map"
-msgstr "Žemėl_apis"
+msgstr "Atvai_zdis"
 
 #: ../app/actions/image-actions.c:69
 msgid "C_omponents"
@@ -4050,7 +4050,7 @@ msgstr "Konfigūruoti šiam vaizdus pritaikytus filtrus"
 
 #: ../app/actions/view-actions.c:117
 msgid "Shrink _Wrap"
-msgstr "Sumažinti _apvedimą"
+msgstr "Sumažinti _apvadą"
 
 #: ../app/actions/view-actions.c:118
 msgid "Reduce the image window to the size of the image display"
@@ -4282,7 +4282,7 @@ msgstr "Naudoti tamsių kvadratėlių spalvą"
 
 #: ../app/actions/view-actions.c:373
 msgid "Select _Custom Color..."
-msgstr "Pasirinkti _kitą spalvą..."
+msgstr "Pasirinkti _pasirinktinę spalvą..."
 
 #: ../app/actions/view-actions.c:374
 msgid "Use an arbitrary color"
@@ -7160,7 +7160,7 @@ msgstr "Automatinis įkėlimas"
 
 #: ../app/dialogs/module-dialog.c:174
 msgid "Module Path"
-msgstr "Modulių kontūras"
+msgstr "Modulio kelias"
 
 #: ../app/dialogs/module-dialog.c:424
 msgid "<No modules>"
