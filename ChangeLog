@@ -1,3 +1,12 @@
+2008-01-11  Michael Natterer  <mitch@gimp.org>
+
+	* modules/gimpinputdevicestore.h
+	* modules/gimpinputdevicestore-hal.c
+	* modules/gimpinputdevicestore-dx.c: use G_DEFINE_DYNAMIC_TYPE().
+
+	* modules/controller_dx_dinput.c
+	* modules/controller_linux_input.c: changed accordingly.
+
 2008-01-10  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-pdb.c (pdb_getattro): Handle __members__

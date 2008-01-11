@@ -174,7 +174,7 @@ gimp_module_query (GTypeModule *module)
 G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
-  gimp_input_device_store_get_type (module);
+  gimp_input_device_store_register_types (module);
   controller_dx_dinput_register_type (module);
 
   return TRUE;
