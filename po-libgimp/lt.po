@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP (libgimp) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-27 11:33+0200\n"
-"PO-Revision-Date: 2007-12-23 00:47+0200\n"
+"POT-Creation-Date: 2008-01-11 09:33+0200\n"
+"PO-Revision-Date: 2008-01-11 09:33+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -764,8 +764,8 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:216 ../modules/colorsel_cmyk_lcms.c:408
-#: ../modules/colorsel_cmyk_lcms.c:414
+#: ../modules/cdisplay_lcms.c:216 ../modules/colorsel_cmyk_lcms.c:410
+#: ../modules/colorsel_cmyk_lcms.c:416
 msgid "(invalid UTF-8 string)"
 msgstr "(nekorektiška UTF-8 eilutė)"
 
@@ -1437,38 +1437,38 @@ msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/colorsel_cmyk.c:148 ../modules/colorsel_cmyk_lcms.c:171
+#: ../modules/colorsel_cmyk.c:148 ../modules/colorsel_cmyk_lcms.c:173
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:173
+#: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:175
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:175
+#: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:177
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/colorsel_cmyk.c:154 ../modules/colorsel_cmyk_lcms.c:177
+#: ../modules/colorsel_cmyk.c:154 ../modules/colorsel_cmyk_lcms.c:179
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/colorsel_cmyk.c:158 ../modules/colorsel_cmyk_lcms.c:181
+#: ../modules/colorsel_cmyk.c:158 ../modules/colorsel_cmyk_lcms.c:183
 msgid "Cyan"
 msgstr "Žydra"
 
-#: ../modules/colorsel_cmyk.c:159 ../modules/colorsel_cmyk_lcms.c:182
+#: ../modules/colorsel_cmyk.c:159 ../modules/colorsel_cmyk_lcms.c:184
 msgid "Magenta"
 msgstr "Purpurinė"
 
-#: ../modules/colorsel_cmyk.c:160 ../modules/colorsel_cmyk_lcms.c:183
+#: ../modules/colorsel_cmyk.c:160 ../modules/colorsel_cmyk_lcms.c:185
 msgid "Yellow"
 msgstr "Geltona"
 
-#: ../modules/colorsel_cmyk.c:161 ../modules/colorsel_cmyk_lcms.c:184
+#: ../modules/colorsel_cmyk.c:161 ../modules/colorsel_cmyk_lcms.c:186
 msgid "Black"
 msgstr "Juoda"
 
@@ -1484,11 +1484,11 @@ msgstr "Iš spalvotų dažų atimamas juodos spalvos kiekis procentais."
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK spalvų parinkiklis (naudojant spalvų profilį)"
 
-#: ../modules/colorsel_cmyk_lcms.c:397
+#: ../modules/colorsel_cmyk_lcms.c:399
 msgid "Profile: (none)"
 msgstr "Profilis: (nėra)"
 
-#: ../modules/colorsel_cmyk_lcms.c:417
+#: ../modules/colorsel_cmyk_lcms.c:419
 #, c-format
 msgid "Profile: %s"
 msgstr "Profilis: %s"
