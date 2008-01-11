@@ -45,8 +45,9 @@ gimp_displays_dirty (Gimp *gimp)
        list = g_list_next (list))
     {
       GimpDisplay *display = list->data;
+      GimpImage   *image   = display->image;
 
-      if (display->image->dirty)
+      if (image->dirty && ! gimp_image_is_scratch (image))
         return TRUE;
     }
 
@@ -59,6 +60,7 @@ gimp_displays_image_dirty_callback (GimpImage     *image,
                                     GimpContainer *container)
 {
   if (image->dirty && image->disp_count > 0 &&
+      ! gimp_image_is_scratch (image)       &&
       ! gimp_container_have (container, GIMP_OBJECT (image)))
     gimp_container_add (container, GIMP_OBJECT (image));
 }
@@ -129,7 +131,7 @@ gimp_displays_get_dirty_images (Gimp *gimp)
         {
           GimpImage *image = list->data;
 
-          if (image->dirty && image->disp_count > 0)
+          if (image->dirty && image->disp_count > 0 && ! gimp_image_is_scratch (image))
             gimp_container_add (container, GIMP_OBJECT (image));
         }
 
@@ -151,7 +153,10 @@ gimp_displays_delete (Gimp *gimp)
     {
       GimpDisplay *display = GIMP_LIST (gimp->displays)->list->data;
 
-      gimp_display_delete (display);
+      if (gimp->exiting || ! gimp_image_is_scratch (display->image))
+        gimp_display_delete (display);
+      else
+        break;
     }
 }
 

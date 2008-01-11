@@ -1,3 +1,8 @@
+2008-01-11  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/display/gimpdisplay-foreach.c: fix problems quitting
+	or closing all images when there is a scratch image.
+	
 2008-01-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	merge 24519:24583 from trunk.
