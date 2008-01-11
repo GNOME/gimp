@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-11-28 17:03+0200\n"
-"PO-Revision-Date: 2007-12-15 17:59+0200\n"
+"PO-Revision-Date: 2008-01-11 17:59+0200\n"
 "Last-Translator: Maxim Dziumanenko <mvd@mylinux.com.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -360,7 +360,7 @@ msgstr "Палітри"
 #: ../app/actions/actions.c:174 ../app/core/gimp.c:828
 #: ../app/dialogs/dialogs.c:150 ../app/dialogs/preferences-dialog.c:2722
 msgid "Patterns"
-msgstr "Візерунки"
+msgstr "Текстури"
 
 #: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2738
 msgid "Plug-Ins"
@@ -712,7 +712,7 @@ msgstr "Правка елементу палітри кольорів"
 
 #: ../app/actions/context-actions.c:46
 msgid "_Context"
-msgstr "/_Контекст"
+msgstr "_Контекст"
 
 #: ../app/actions/context-actions.c:47 ../app/actions/image-actions.c:65
 msgid "_Colors"
@@ -738,7 +738,7 @@ msgstr "_Пензель"
 #: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:98
 #: ../app/dialogs/preferences-dialog.c:1918
 msgid "_Pattern"
-msgstr "_Візерунок"
+msgstr "_Текстура"
 
 #: ../app/actions/context-actions.c:53
 msgid "_Palette"
@@ -756,7 +756,7 @@ msgstr "_Шрифт"
 
 #: ../app/actions/context-actions.c:57
 msgid "_Shape"
-msgstr "_Форма"
+msgstr "_Фігура"
 
 #: ../app/actions/context-actions.c:58
 msgid "_Radius"
@@ -764,7 +764,7 @@ msgstr "_Радіус"
 
 #: ../app/actions/context-actions.c:59
 msgid "S_pikes"
-msgstr "_точок"
+msgstr "_Промені"
 
 #: ../app/actions/context-actions.c:60
 msgid "_Hardness"
@@ -868,11 +868,11 @@ msgstr "Відкрити панель з вкладками Шари, канал
 
 #: ../app/actions/dialogs-actions.c:48
 msgid "_Brushes, Patterns & Gradients"
-msgstr "_Пензлі, візерунки та градієнти"
+msgstr "_Пензлі, текстури та градієнти"
 
 #: ../app/actions/dialogs-actions.c:49
 msgid "Open a Brushes, Patterns & Gradients dock"
-msgstr "Відкрити панель з вкладками Пензлі, візерунки та градієнти"
+msgstr "Відкрити панель з вкладками Пензлі, текстури та градієнти"
 
 #: ../app/actions/dialogs-actions.c:54
 msgid "_Misc. Stuff"
@@ -1004,11 +1004,11 @@ msgstr "Відкрити діалог пензлів"
 
 #: ../app/actions/dialogs-actions.c:153
 msgid "P_atterns"
-msgstr "_Візерунки"
+msgstr "_Текстури"
 
 #: ../app/actions/dialogs-actions.c:154
 msgid "Open the patterns dialog"
-msgstr "Відкрити діалог візерунків"
+msgstr "Відкрити діалог текстур"
 
 #: ../app/actions/dialogs-actions.c:159
 msgid "_Gradients"
@@ -1092,7 +1092,7 @@ msgstr "Відкрити діалог параметрів програми"
 
 #: ../app/actions/dialogs-actions.c:224
 msgid "_Keyboard Shortcuts"
-msgstr "_Комбінації вклавіш..."
+msgstr "_Комбінації клавіш..."
 
 #: ../app/actions/dialogs-actions.c:225
 msgid "Open the keyboard shortcuts editor"
@@ -1157,7 +1157,7 @@ msgstr "_Додати вкладку"
 
 #: ../app/actions/dockable-actions.c:54
 msgid "_Preview Size"
-msgstr "_Розмір перегляду"
+msgstr "_Розмір ескізу"
 
 #: ../app/actions/dockable-actions.c:55
 msgid "_Tab Style"
@@ -1309,11 +1309,11 @@ msgstr "Перечитати усі перегляди"
 
 #: ../app/actions/documents-actions.c:94
 msgid "Remove Dangling E_ntries"
-msgstr "Видалити застарілі е_лементи"
+msgstr "Видалити застарілі з_аписи"
 
 #: ../app/actions/documents-actions.c:95
 msgid "Remove dangling entries"
-msgstr "Видалити застарілі елементи"
+msgstr "Видалити застарілі записи"
 
 #: ../app/actions/documents-commands.c:187
 msgid "Clear Document History"
@@ -1621,11 +1621,11 @@ msgstr "Заповнити виділену область кольором тл
 
 #: ../app/actions/edit-actions.c:195
 msgid "Fill with P_attern"
-msgstr "Заповнення ві_зерунком"
+msgstr "Заповнення _текстурою"
 
 #: ../app/actions/edit-actions.c:196
 msgid "Fill the selection using the active pattern"
-msgstr "Заповнити виділену область активним візерунком "
+msgstr "Заповнити виділену область активною текстурою"
 
 #: ../app/actions/edit-actions.c:275
 #, c-format
@@ -1644,7 +1644,7 @@ msgstr "П_ослабити %s..."
 
 #: ../app/actions/edit-commands.c:133
 msgid "Clear Undo History"
-msgstr "Очистити історію скасувань дій"
+msgstr "Очистити історію дій"
 
 #: ../app/actions/edit-commands.c:159
 msgid "Really clear image's undo history?"
@@ -1820,7 +1820,7 @@ msgstr "З_берегти"
 
 #: ../app/actions/file-actions.c:115
 msgid "Save this image"
-msgstr "Зберегти це зображеня"
+msgstr "Зберегти це зображення"
 
 #: ../app/actions/file-actions.c:120
 msgid "Save _As..."
@@ -1972,11 +1972,11 @@ msgstr "Колір крайньої _правої точки..."
 
 #: ../app/actions/gradient-editor-actions.c:112
 msgid "Ble_nd Endpoints' Colors"
-msgstr "Кольори крайніх точок з_мішування"
+msgstr "З_мішати кольори крайніх точок"
 
 #: ../app/actions/gradient-editor-actions.c:117
 msgid "Blend Endpoints' Opacit_y"
-msgstr "_Непрозорість крайніх точок змішування"
+msgstr "Змішати _непрозорість крайніх точок"
 
 #: ../app/actions/gradient-editor-actions.c:125
 msgid "Edit Active Gradient"
@@ -2205,7 +2205,7 @@ msgstr "Створення копії виділеної ділянки град
 
 #: ../app/actions/gradient-editor-commands.c:472
 msgid "Replicate"
-msgstr "Розмножити"
+msgstr "Створити копію"
 
 #: ../app/actions/gradient-editor-commands.c:492
 msgid ""
@@ -2225,19 +2225,19 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-commands.c:554
 msgid "Split Segment Uniformly"
-msgstr "Рівномірний розподіл сегменту"
+msgstr "Рівномірно розподілити сегмент"
 
 #: ../app/actions/gradient-editor-commands.c:555
 msgid "Split Gradient Segment Uniformly"
-msgstr "Розділення сегменту градієнта на рівні частини"
+msgstr "Рівномірно розділити сегмент градієнта"
 
 #: ../app/actions/gradient-editor-commands.c:559
 msgid "Split Segments Uniformly"
-msgstr "Розділення сегментів на рівні частини"
+msgstr "Рівномірно розділити сегменти"
 
 #: ../app/actions/gradient-editor-commands.c:560
 msgid "Split Gradient Segments Uniformly"
-msgstr "Розділення сегментів градієнта на рівні частини"
+msgstr "Рівномірно розподілити сегменти градієнту"
 
 #: ../app/actions/gradient-editor-commands.c:573
 msgid "Split"
@@ -2293,7 +2293,7 @@ msgstr "Зберегти як _POV-Ray..."
 
 #: ../app/actions/gradients-actions.c:67
 msgid "Save gradient as POV-Ray"
-msgstr "Зберегти графієнт як POV-Ray"
+msgstr "Зберегти градієнт як POV-Ray"
 
 #: ../app/actions/gradients-actions.c:72
 msgid "_Delete Gradient"
@@ -2427,7 +2427,7 @@ msgstr "Коригування роздільної здатності при д
 
 #: ../app/actions/image-actions.c:108
 msgid "_Scale Image..."
-msgstr "Мас_штабування зображення..."
+msgstr "Ро_змір зображення..."
 
 #: ../app/actions/image-actions.c:109
 msgid "Change the size of the image content"
@@ -2557,7 +2557,7 @@ msgstr "Змінити розмір при друкуванні"
 
 #: ../app/actions/image-commands.c:650 ../app/core/gimpimage-scale.c:77
 msgid "Scale Image"
-msgstr "Масштабування зображення"
+msgstr "Зміна розміру зображення"
 
 #. Scaling
 #: ../app/actions/image-commands.c:661 ../app/actions/layers-commands.c:1048
@@ -2566,11 +2566,11 @@ msgstr "Масштабування зображення"
 #: ../app/pdb/drawable_transform_cmds.c:738
 #: ../app/pdb/transform_tools_cmds.c:283 ../app/tools/gimpscaletool.c:107
 msgid "Scaling"
-msgstr "Масштабування"
+msgstr "Змінюється розмір зображення"
 
 #: ../app/actions/images-actions.c:43
 msgid "Images Menu"
-msgstr "Меню зображень"
+msgstr "Меню списку зображень"
 
 #: ../app/actions/images-actions.c:47
 msgid "_Raise Views"
@@ -2606,7 +2606,7 @@ msgstr "_Шар"
 
 #: ../app/actions/layers-actions.c:52
 msgid "Stac_k"
-msgstr "_Рівень"
+msgstr "Стопка _шарів"
 
 #: ../app/actions/layers-actions.c:53
 msgid "Te_xt to Selection"
@@ -2690,7 +2690,7 @@ msgstr "Зробити шар в_ерхнім"
 
 #: ../app/actions/layers-actions.c:105
 msgid "Move this layer to the top of the layer stack"
-msgstr "Зробити активний шар верхнім"
+msgstr "Зробити активний шар у верхнім"
 
 #: ../app/actions/layers-actions.c:110
 msgid "_Lower Layer"
@@ -2851,11 +2851,11 @@ msgstr "Видалити маску шару та її ефект"
 
 #: ../app/actions/layers-actions.c:254
 msgid "_Mask to Selection"
-msgstr "Маска -> Виді_лене"
+msgstr "Маска -> Виді_лена область"
 
 #: ../app/actions/layers-actions.c:255
 msgid "Replace the selection with the layer mask"
-msgstr "Перетворює маску на виділення"
+msgstr "Перетворює маску на виділену область"
 
 #: ../app/actions/layers-actions.c:261
 msgid "Add the layer mask to the current selection"
@@ -2871,7 +2871,7 @@ msgstr "Перетнути маску шару з поточним виділе�
 
 #: ../app/actions/layers-actions.c:281
 msgid "Al_pha to Selection"
-msgstr "_Альфа-канал -> Виділене"
+msgstr "_Альфа-канал -> Виділена область"
 
 #: ../app/actions/layers-actions.c:282
 msgid "Replace the selection with the layer's alpha channel"
@@ -2895,7 +2895,7 @@ msgstr "Перетнути альфа-канал з виділенням"
 
 #: ../app/actions/layers-actions.c:308
 msgid "_Text to Selection"
-msgstr "_Текст у виділення"
+msgstr "_Текст на виділену область"
 
 #: ../app/actions/layers-actions.c:309
 msgid "Replace the selection with the text layer's outline"
@@ -3125,35 +3125,35 @@ msgstr "Введіть назву для об'єднаної палітри"
 
 #: ../app/actions/patterns-actions.c:43
 msgid "Patterns Menu"
-msgstr "Меню візерунків"
+msgstr "Меню текстур"
 
 #: ../app/actions/patterns-actions.c:47
 msgid "_Open Pattern as Image"
-msgstr "Відкрити _візерунок як зображення"
+msgstr "Відкрити _текстуру як зображення"
 
 #: ../app/actions/patterns-actions.c:48
 msgid "Open pattern as image"
-msgstr "Відкрити візерунок як зображення"
+msgstr "Відкрити текстуру як зображення"
 
 #: ../app/actions/patterns-actions.c:53
 msgid "_New Pattern"
-msgstr "_Створити візерунок"
+msgstr "_Створити текстуру"
 
 #: ../app/actions/patterns-actions.c:54
 msgid "New pattern"
-msgstr "Створення візерунку"
+msgstr "Створення текстури"
 
 #: ../app/actions/patterns-actions.c:59
 msgid "D_uplicate Pattern"
-msgstr "Д_ублювати візерунок"
+msgstr "Створити _копію текстуру"
 
 #: ../app/actions/patterns-actions.c:60
 msgid "Duplicate pattern"
-msgstr "Дублювання візерунку"
+msgstr "Створити копію текстури"
 
 #: ../app/actions/patterns-actions.c:65
 msgid "Copy Pattern _Location"
-msgstr "Копіювати _адресу файлу візерунку"
+msgstr "Копіювати _адресу файлу текстури"
 
 #: ../app/actions/patterns-actions.c:66
 msgid "Copy pattern file location to clipboard"
@@ -3161,27 +3161,27 @@ msgstr "Копіювати адресу файлу в буфер обміну"
 
 #: ../app/actions/patterns-actions.c:71
 msgid "_Delete Pattern"
-msgstr "В_идалити візерунок"
+msgstr "В_идалити текстуру"
 
 #: ../app/actions/patterns-actions.c:72
 msgid "Delete pattern"
-msgstr "Видалення візерунка"
+msgstr "Видалення текстури"
 
 #: ../app/actions/patterns-actions.c:77
 msgid "_Refresh Patterns"
-msgstr "_Оновити візерунки"
+msgstr "_Оновити текстури"
 
 #: ../app/actions/patterns-actions.c:78
 msgid "Refresh patterns"
-msgstr "Оновити візерунки"
+msgstr "Оновлення текстури"
 
 #: ../app/actions/patterns-actions.c:86
 msgid "_Edit Pattern..."
-msgstr "_Правка візерунку..."
+msgstr "_Правка текстури..."
 
 #: ../app/actions/patterns-actions.c:87
 msgid "Edit pattern"
-msgstr "Правка візерунку..."
+msgstr "Правка текстури..."
 
 #: ../app/actions/plug-in-actions.c:83
 msgid "Filte_rs"
@@ -3377,7 +3377,7 @@ msgstr "Інвертувати виділення"
 
 #: ../app/actions/select-actions.c:68
 msgid "_Float"
-msgstr "П_лаваюче"
+msgstr "Зробити п_лаваючим"
 
 #: ../app/actions/select-actions.c:69
 msgid "Create a floating selection"
@@ -3385,17 +3385,17 @@ msgstr "Створити плаваюче виділення"
 
 #: ../app/actions/select-actions.c:74
 msgid "Fea_ther..."
-msgstr "_Розмивання..."
+msgstr "_Розмиття..."
 
 #: ../app/actions/select-actions.c:75
 msgid "Blur the selection border so that it fades out smoothly"
 msgstr ""
-"Розмити межу виділення, щоб перехід між виділеним та невиділеним "
+"Розмити межу виділення, щоб перехід між виділеним та не виділеним "
 "був поступовий"
 
 #: ../app/actions/select-actions.c:80
 msgid "_Sharpen"
-msgstr "Рі_зкість"
+msgstr "При_брати розмиття"
 
 #: ../app/actions/select-actions.c:81
 msgid "Remove fuzzyness from the selection"
@@ -3403,7 +3403,7 @@ msgstr "Видалити розмитість межі виділення"
 
 #: ../app/actions/select-actions.c:86
 msgid "S_hrink..."
-msgstr "З_меншення..."
+msgstr "З_меншити..."
 
 #: ../app/actions/select-actions.c:87
 msgid "Contract the selection"
@@ -3411,7 +3411,7 @@ msgstr "Зменшити виділення"
 
 #: ../app/actions/select-actions.c:92
 msgid "_Grow..."
-msgstr "З_більшення..."
+msgstr "З_більшити..."
 
 #: ../app/actions/select-actions.c:93
 msgid "Enlarge the selection"
@@ -3439,7 +3439,7 @@ msgstr "Обве_сти виділену ділянку..."
 
 #: ../app/actions/select-actions.c:111
 msgid "Paint along the selection outline"
-msgstr "Обвести виділення вказаним типом лінї"
+msgstr "Обвести виділення вказаним типом лінії"
 
 #: ../app/actions/select-actions.c:116
 msgid "_Stroke Selection"
@@ -3590,7 +3590,7 @@ msgstr "Очистити"
 
 #: ../app/actions/text-editor-actions.c:51
 msgid "Clear all text"
-msgstr "Видалити весь текст"
+msgstr "Видалити текст"
 
 #: ../app/actions/text-editor-actions.c:59
 msgid "LTR"
@@ -3646,7 +3646,7 @@ msgstr "В_идалити збережені параметри"
 
 #: ../app/actions/tool-options-actions.c:76
 msgid "_New Entry..."
-msgstr "_Створити контур..."
+msgstr "_Створити елемент..."
 
 #: ../app/actions/tool-options-actions.c:81
 msgid "R_eset Tool Options"
@@ -3662,7 +3662,7 @@ msgstr "Скинути параметри _усіх інструментів..."
 
 #: ../app/actions/tool-options-actions.c:88
 msgid "Reset all tool options"
-msgstr "Скинути параметри _усіх інструментів..."
+msgstr "Скинути параметри усіх інструментів..."
 
 #: ../app/actions/tool-options-commands.c:72
 msgid "Save Tool Options"
@@ -3800,7 +3800,7 @@ msgstr "_Створити контур..."
 
 #: ../app/actions/vectors-actions.c:60
 msgid "New path..."
-msgstr "_Створити контур..."
+msgstr "Створення контуру..."
 
 #: ../app/actions/vectors-actions.c:65
 msgid "_New Path"
@@ -3896,11 +3896,11 @@ msgstr "_Імпорт контуру..."
 
 #: ../app/actions/vectors-actions.c:162
 msgid "Path to Sele_ction"
-msgstr "Контур -> Виді_лена ділянка"
+msgstr "Контур -> Виді_лена область"
 
 #: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1875
 msgid "Path to selection"
-msgstr "Контур -> Виділену ділянку"
+msgstr "Контур -> Виділена область"
 
 #: ../app/actions/vectors-actions.c:168
 msgid "Fr_om Path"
@@ -3908,7 +3908,7 @@ msgstr "З конт_уру"
 
 #: ../app/actions/vectors-actions.c:174
 msgid "Add"
-msgstr "Додати"
+msgstr "Додавання"
 
 #: ../app/actions/vectors-actions.c:180 ../app/base/base-enums.c:119
 msgid "Subtract"
@@ -3920,11 +3920,11 @@ msgstr "Перетин"
 
 #: ../app/actions/vectors-actions.c:194
 msgid "Selecti_on to Path"
-msgstr "Виділена ділянка -> Кон_тур"
+msgstr "Виділена область -> Кон_тур"
 
 #: ../app/actions/vectors-actions.c:195 ../app/actions/vectors-actions.c:201
 msgid "Selection to path"
-msgstr "Виділена ділянка -> Кон_тур"
+msgstr "Виділена область -> Кон_тур"
 
 #: ../app/actions/vectors-actions.c:200
 msgid "To _Path"
@@ -3932,7 +3932,7 @@ msgstr "У _контур"
 
 #: ../app/actions/vectors-actions.c:206
 msgid "Selection to Path (_Advanced)"
-msgstr "Виділення у контур (_розширені параметри)"
+msgstr "Виділення до контуру (_розширені параметри)"
 
 #: ../app/actions/vectors-actions.c:207
 msgid "Advanced options"
@@ -3958,7 +3958,7 @@ msgstr "Параметри нового контуру"
 #: ../app/actions/vectors-commands.c:297 ../app/pdb/paths_cmds.c:612
 #: ../app/pdb/vectors_cmds.c:1115
 msgid "Path to Selection"
-msgstr "Контур -> Виділену ділянку"
+msgstr "Контур -> Виділену область"
 
 #: ../app/actions/vectors-commands.c:369 ../app/tools/gimpvectoroptions.c:199
 #: ../app/tools/gimpvectortool.c:1908 ../app/vectors/gimpvectors.c:199
@@ -3975,7 +3975,7 @@ msgstr "Мас_штаб"
 
 #: ../app/actions/view-actions.c:69
 msgid "_Padding Color"
-msgstr "Колір нап_овнення"
+msgstr "Колір тла в_ікна"
 
 #: ../app/actions/view-actions.c:71
 msgid "Move to Screen"
@@ -3991,7 +3991,7 @@ msgstr "_Закрити"
 
 #: ../app/actions/view-actions.c:82
 msgid "Close this image window"
-msgstr "закрийте вікно зображення"
+msgstr "Закрити вікно зображення"
 
 #: ../app/actions/view-actions.c:87
 msgid "_Fit Image in Window"
@@ -4241,7 +4241,7 @@ msgstr "_Інший..."
 
 #: ../app/actions/view-actions.c:347
 msgid "Set a custom zoom factor"
-msgstr "Вказати інший коефіцієнт масштабування"
+msgstr "Вказати інший масштаб"
 
 #: ../app/actions/view-actions.c:355
 msgid "From _Theme"
@@ -4300,7 +4300,7 @@ msgstr "Мас_штаб (%s)"
 
 #: ../app/actions/view-commands.c:586
 msgid "Set Canvas Padding Color"
-msgstr "Встановити колір тла навколо зображення"
+msgstr "Колір тла навколо зображення"
 
 #: ../app/actions/view-commands.c:588
 msgid "Set Custom Canvas Padding Color"
@@ -4318,16 +4318,16 @@ msgstr "Перемістити це вікно на екран %s"
 
 #: ../app/base/base-enums.c:23
 msgid "Smooth"
-msgstr "Гладенька"
+msgstr "Згладжування"
 
 #: ../app/base/base-enums.c:24
 msgid "Freehand"
-msgstr "Вільна"
+msgstr "Вручну"
 
 #: ../app/base/base-enums.c:55 ../app/base/base-enums.c:125
 #: ../app/core/core-enums.c:1200
 msgid "Value"
-msgstr "Інтенсивність"
+msgstr "Яскравість"
 
 #: ../app/base/base-enums.c:56 ../app/core/core-enums.c:1195
 #: ../app/tools/gimpcolorbalancetool.c:259
@@ -4414,7 +4414,7 @@ msgstr "Ділення"
 
 #: ../app/base/base-enums.c:127
 msgid "Dodge"
-msgstr "Освітлювач"
+msgstr "Освітлення"
 
 #: ../app/base/base-enums.c:128
 msgid "Burn"
@@ -4422,11 +4422,11 @@ msgstr "Затемнення"
 
 #: ../app/base/base-enums.c:129
 msgid "Hard light"
-msgstr "Жорстке світло"
+msgstr "Направлене світло"
 
 #: ../app/base/base-enums.c:130
 msgid "Soft light"
-msgstr "М'яке світло"
+msgstr "Розсіяне світло"
 
 #: ../app/base/base-enums.c:131
 msgid "Grain extract"
@@ -4593,7 +4593,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:132
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr ""
-"Якщо ввімкнено, вибраний візерунок використовується для всіх інструментів."
+"Якщо ввімкнено, вибраний текстура використовується для всіх інструментів."
 
 #: ../app/config/gimprc-blurbs.h:146
 msgid "Sets the browser used by the help system."
@@ -4728,7 +4728,7 @@ msgstr ""
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
-msgstr "Встановлює розмір попереднього перегляду для слоїв та каналів."
+msgstr "Встановлює розмір попереднього перегляду для шарів та каналів."
 
 #: ../app/config/gimprc-blurbs.h:254
 msgid ""
@@ -4750,7 +4750,7 @@ msgstr "Відновлювати позицію вікон від поперед
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
-"Запам'ятовувати поточні інструменти, візерунки, кольори та пензлі у сеансі."
+"Запам'ятовувати поточні інструменти, текстури, кольори та пензлі у сеансі."
 
 #: ../app/config/gimprc-blurbs.h:269
 msgid "Add all opened and saved files to the document history on disk."
@@ -5010,7 +5010,7 @@ msgid ""
 "contains '%s' it will be replaced with the URL, else the URL will be "
 "appended to the command with a space separating the two."
 msgstr ""
-"Вказує браузер, який буде використовувати система довідки. Це може бути "
+"Вказує веб-переглядач, який буде використовувати система довідки. Це може бути "
 "абсолютний шлях, чи назва виконуваної програми у одному з каталогів, що "
 "визначаються у PATH. Якщо команда містить '%s', замість цього виразу буде "
 "підставлений URL, якщо ні - тоді URL буде доданий у кінець команди через "
@@ -5093,7 +5093,7 @@ msgstr "Колір тла"
 
 #: ../app/core/core-enums.c:249
 msgid "White"
-msgstr "Біле"
+msgstr "Білий"
 
 #. Transparency
 #: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2286
@@ -5102,11 +5102,11 @@ msgstr "Прозорість"
 
 #: ../app/core/core-enums.c:251 ../app/core/core-enums.c:308
 msgid "Pattern"
-msgstr "Візерунок"
+msgstr "Текстура"
 
 #: ../app/core/core-enums.c:279
 msgid "Stroke line"
-msgstr "Штрих"
+msgstr "Лінія штриху"
 
 #: ../app/core/core-enums.c:280
 msgid "Stroke with a paint tool"
@@ -5278,7 +5278,7 @@ msgstr "<<неправильно>>"
 
 #: ../app/core/core-enums.c:849
 msgid "Scale image"
-msgstr "Масштабування зображення"
+msgstr "Масштаб зображення"
 
 #: ../app/core/core-enums.c:850
 msgid "Resize image"
@@ -5356,11 +5356,11 @@ msgstr "Переміщення елемента"
 
 #: ../app/core/core-enums.c:869
 msgid "Scale item"
-msgstr "Масштабування елемента"
+msgstr "Зміна масштабу елемента"
 
 #: ../app/core/core-enums.c:870
 msgid "Resize item"
-msgstr "Зміна розміру"
+msgstr "Зміна розміру елемента"
 
 #: ../app/core/core-enums.c:871
 msgid "Add layer"
@@ -5415,7 +5415,7 @@ msgstr "Малювання"
 
 #: ../app/core/core-enums.c:883 ../app/core/core-enums.c:928
 msgid "Attach parasite"
-msgstr "Долучення шуму"
+msgstr "Додавання шуму"
 
 #: ../app/core/core-enums.c:884 ../app/core/core-enums.c:929
 msgid "Remove parasite"
@@ -5515,7 +5515,7 @@ msgstr "Зміна контуру"
 
 #: ../app/core/core-enums.c:920
 msgid "Reposition path"
-msgstr "Зсув конуру"
+msgstr "Зсув контуру"
 
 #: ../app/core/core-enums.c:922
 msgid "FS rigor"
@@ -5595,7 +5595,7 @@ msgstr "Заповнення прозорим"
 
 #: ../app/core/gimp-edit.c:465
 msgid "Fill with Pattern"
-msgstr "Заповнення візерунком"
+msgstr "Заповнення текстурою"
 
 #: ../app/core/gimp-edit.c:556
 msgid "Global Buffer"
@@ -5813,16 +5813,16 @@ msgstr "Прямокутне виділення із закругленими к
 
 #: ../app/core/gimpchannel-select.c:432
 msgid "Alpha to Selection"
-msgstr "Альфа-канал -> Виділену ділянку"
+msgstr "Альфа-канал -> Виділена область"
 
 #: ../app/core/gimpchannel-select.c:470
 #, c-format
 msgid "%s Channel to Selection"
-msgstr "%s канал -> Виділену ділянку"
+msgstr "%s канал -> Виділена область"
 
 #: ../app/core/gimpchannel-select.c:518 ../app/tools/gimpfuzzyselecttool.c:78
 msgid "command|Fuzzy Select"
-msgstr "Виділення зв'язаної ділянки"
+msgstr "Виділення зв'язаної області"
 
 #: ../app/core/gimpchannel-select.c:565
 #: ../app/tools/gimpbycolorselecttool.c:80
@@ -5843,7 +5843,7 @@ msgstr "Переміщення каналу"
 
 #: ../app/core/gimpchannel.c:260
 msgid "Scale Channel"
-msgstr "Масштабування каналу"
+msgstr "Зміна масштабу каналу"
 
 #: ../app/core/gimpchannel.c:261
 msgid "Resize Channel"
@@ -5871,7 +5871,7 @@ msgstr "Розмивання каналу"
 
 #: ../app/core/gimpchannel.c:287
 msgid "Sharpen Channel"
-msgstr "Різкість каналу"
+msgstr "Видалення розмивання каналу"
 
 #: ../app/core/gimpchannel.c:288
 msgid "Clear Channel"
@@ -5961,7 +5961,7 @@ msgstr "Градієнтне заповнення"
 
 #: ../app/core/gimpdrawable-bucket-fill.c:87
 msgid "No patterns available for this operation."
-msgstr "Немає доступних візерунків для цієї операції."
+msgstr "Немає доступних текстур для цієї операції."
 
 #: ../app/core/gimpdrawable-bucket-fill.c:280
 msgid "command|Bucket Fill"
@@ -6399,11 +6399,11 @@ msgstr "Не вдається відкрити файл мініатюри '%s':
 
 #: ../app/core/gimpitem.c:1132
 msgid "Attach Parasite"
-msgstr "Долучення шуму"
+msgstr "Додавання шуму"
 
 #: ../app/core/gimpitem.c:1142
 msgid "Attach Parasite to Item"
-msgstr "Долучення шуму до елемента"
+msgstr "Додавання шуму до елемента"
 
 #: ../app/core/gimpitem.c:1184 ../app/core/gimpitem.c:1191
 msgid "Remove Parasite from Item"
@@ -6582,14 +6582,14 @@ msgstr ""
 #: ../app/core/gimppattern-load.c:162
 #, c-format
 msgid "Fatal parse error in pattern file '%s': File appears truncated."
-msgstr "Критична помилка аналізу файлу візерунку '%s': файл ймовірно обірваний."
+msgstr "Критична помилка аналізу файлу текстури '%s': файл ймовірно обірваний."
 
 #: ../app/core/gimppattern-load.c:104
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
-"Критична помилка при аналізі файлу візерунку '%s': невідома версія формату %"
+"Критична помилка при аналізі файлу текстури '%s': невідома версія формату %"
 "d."
 
 #: ../app/core/gimppattern-load.c:114
@@ -6598,14 +6598,14 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"Критична помилка при аналізі файлу візерунку '%s': непідтримувана глибина %"
+"Критична помилка при аналізі файлу текстури '%s': непідтримувана глибина %"
 "d.\n"
 "Шаблони GIMP повинні бути у відтінках сірого або RGB."
 
 #: ../app/core/gimppattern-load.c:139
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Неправильний UTF-8 рядок у файлі візерунку '%s'."
+msgstr "Неправильний UTF-8 рядок у файлі текстури '%s'."
 
 #: ../app/core/gimppdbprogress.c:288 ../app/widgets/gimppdbdialog.c:351
 #, c-format
@@ -7320,7 +7320,7 @@ msgstr "Видалити всі клавіші швидкого доступу"
 
 #: ../app/dialogs/preferences-dialog.c:602
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
-msgstr "Дійсно бажаєте видалити всі клавіші швидкого доступу з усіх мею?"
+msgstr "Дійсно бажаєте видалити всі клавіші швидкого доступу з усіх меню?"
 
 #: ../app/dialogs/preferences-dialog.c:643
 msgid ""
@@ -7575,7 +7575,7 @@ msgstr "Прилипання до напрямних та сітки"
 
 #: ../app/dialogs/preferences-dialog.c:1896
 msgid "_Snap distance:"
-msgstr "Відстань прив'_язки:"
+msgstr "Відстань прилипанн_я:"
 
 #: ../app/dialogs/preferences-dialog.c:1904
 msgid "Default _interpolation:"
@@ -7596,7 +7596,7 @@ msgstr "Додати шар чи контур активним"
 
 #: ../app/dialogs/preferences-dialog.c:1941
 msgid "Toolbox"
-msgstr "Меню панелі інструментів"
+msgstr "Панель інструментів"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1953
@@ -7611,7 +7611,7 @@ msgstr "_Колір переднього плану та тла"
 
 #: ../app/dialogs/preferences-dialog.c:1961
 msgid "Show active _brush, pattern & gradient"
-msgstr "_Пензлі, візерунки та градієнти"
+msgstr "_Пензлі, текстури та градієнти"
 
 #: ../app/dialogs/preferences-dialog.c:1965
 msgid "Show active _image"
@@ -7660,7 +7660,7 @@ msgstr "Змінювати розмір вікна при зміні _розмі
 
 #: ../app/dialogs/preferences-dialog.c:2080
 msgid "Fit to window"
-msgstr "Підганяти до розміру вікна"
+msgstr "До розміру вікна"
 
 #: ../app/dialogs/preferences-dialog.c:2082
 msgid "Initial zoom _ratio:"
@@ -7883,7 +7883,7 @@ msgstr "Способи керування"
 
 #: ../app/dialogs/preferences-dialog.c:2591
 msgid "Window Management"
-msgstr "Керування зовнішнім виглядом вікон"
+msgstr "Поведінка вікон"
 
 #: ../app/dialogs/preferences-dialog.c:2600
 msgid "Window Manager Hints"
@@ -7956,11 +7956,11 @@ msgstr "Виберіть теку пензлів"
 
 #: ../app/dialogs/preferences-dialog.c:2722
 msgid "Pattern Folders"
-msgstr "Теки візерунків"
+msgstr "Теки текстур"
 
 #: ../app/dialogs/preferences-dialog.c:2724
 msgid "Select Pattern Folders"
-msgstr "Виберіть теку візерунків"
+msgstr "Виберіть теку текстури"
 
 #: ../app/dialogs/preferences-dialog.c:2726
 msgid "Palette Folders"
@@ -8000,11 +8000,11 @@ msgstr "Сценарії"
 
 #: ../app/dialogs/preferences-dialog.c:2742
 msgid "Script-Fu Folders"
-msgstr "Теки сценаріїв"
+msgstr "Теки Script-Fu"
 
 #: ../app/dialogs/preferences-dialog.c:2744
 msgid "Select Script-Fu Folders"
-msgstr "Виберіть теку сценаріїв"
+msgstr "Виберіть теки Script-Fu"
 
 #: ../app/dialogs/preferences-dialog.c:2746
 msgid "Module Folders"
@@ -8040,11 +8040,11 @@ msgstr "Теми"
 
 #: ../app/dialogs/preferences-dialog.c:2758
 msgid "Theme Folders"
-msgstr "Теки тем"
+msgstr "Теки стилів оформлення"
 
 #: ../app/dialogs/preferences-dialog.c:2760
 msgid "Select Theme Folders"
-msgstr "Виберіть теку тем"
+msgstr "Виберіть теки стилів оформлення"
 
 #: ../app/dialogs/print-size-dialog.c:138
 msgid "Print Size"
@@ -8065,12 +8065,12 @@ msgstr "_Висота:"
 #: ../app/dialogs/print-size-dialog.c:220 ../app/widgets/gimpsizebox.c:264
 #: ../app/widgets/gimptemplateeditor.c:288
 msgid "_X resolution:"
-msgstr "Роздільна здатність по _X:"
+msgstr "Роздільна здатність вздовж _X:"
 
 #: ../app/dialogs/print-size-dialog.c:227 ../app/widgets/gimpsizebox.c:267
 #: ../app/widgets/gimptemplateeditor.c:295
 msgid "_Y resolution:"
-msgstr "Роздільна здатність по _Y:"
+msgstr "Роздільна здатність вздовж _Y:"
 
 #: ../app/dialogs/print-size-dialog.c:238 ../app/widgets/gimpsizebox.c:260
 #: ../app/widgets/gimptemplateeditor.c:308
@@ -8294,7 +8294,7 @@ msgstr "Нічого не робити"
 
 #: ../app/display/display-enums.c:87
 msgid "Pan view"
-msgstr "Переміщуватися по зображенню"
+msgstr "Переміщуватися на зображені"
 
 #: ../app/display/display-enums.c:88
 msgid "Switch to Move tool"
@@ -8323,13 +8323,13 @@ msgstr "При зміні розмірів вікна змінювати роз�
 
 #: ../app/display/gimpdisplayshell.c:1053
 msgid "Navigate the image display"
-msgstr "Навігація по зображенню"
+msgstr "Навігація на зображенні"
 
 #: ../app/display/gimpdisplayshell-close.c:125
 #: ../app/display/gimpdisplayshell-close.c:202
 #, c-format
 msgid "Close %s"
-msgstr "Закрити %s?"
+msgstr "Закрити %s"
 
 #: ../app/display/gimpdisplayshell-close.c:137
 msgid "Do_n't Save"
@@ -8420,11 +8420,11 @@ msgstr "Масштаб:"
 
 #: ../app/display/gimpdisplayshell-title.c:226
 msgid "RGB-empty"
-msgstr "RGB - пусто"
+msgstr "RGB - порожнє"
 
 #: ../app/display/gimpdisplayshell-title.c:229
 msgid "grayscale-empty"
-msgstr "відтінки сірого - пусто"
+msgstr "відтінки сірого - порожнє"
 
 #: ../app/display/gimpdisplayshell-title.c:229
 msgid "grayscale"
@@ -8432,7 +8432,7 @@ msgstr "відтінки сірого"
 
 #: ../app/display/gimpdisplayshell-title.c:232
 msgid "indexed-empty"
-msgstr "індексоване - пусто"
+msgstr "індексоване - порожнє"
 
 #: ../app/display/gimpdisplayshell-title.c:232
 msgid "indexed"
@@ -8533,7 +8533,7 @@ msgstr "Штамп"
 #: ../app/paint/gimpclone.c:141
 #, c-format
 msgid "No patterns available for use with this tool."
-msgstr "Немає візерунків, доступних для використання з цим інструментом."
+msgstr "Немає текстур, доступних для використання з цим інструментом."
 
 #: ../app/paint/gimpconvolve.c:75
 msgid "Convolve"
@@ -8904,7 +8904,7 @@ msgstr "Переміщення текстового шару"
 
 #: ../app/text/gimptextlayer.c:141
 msgid "Scale Text Layer"
-msgstr "Масштабування тестового шару"
+msgstr "Зміна масштабу тестового шару"
 
 #: ../app/text/gimptextlayer.c:142
 msgid "Resize Text Layer"
@@ -9013,7 +9013,7 @@ msgstr "Натисніть, щоб зробити цей контур перши
 
 #: ../app/tools/gimpaligntool.c:626
 msgid "Click to add this path to the list"
-msgstr "Натисніть, щоб вибрати контур для редагування."
+msgstr "Натисніть, щоб вибрати контур для редагування"
 
 #: ../app/tools/gimpaligntool.c:764
 msgid "Relative to:"
@@ -9207,7 +9207,7 @@ msgstr "Заповнення"
 
 #: ../app/tools/gimpbucketfilltool.c:81
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
-msgstr "Заповнення: заповнення кольором чи візерунком"
+msgstr "Заповнення: заповнення кольором чи текстурою"
 
 #: ../app/tools/gimpbucketfilltool.c:82
 msgid "_Bucket Fill"
@@ -9228,7 +9228,7 @@ msgstr "Виділення за _кольором"
 #: ../app/tools/gimpclonetool.c:62
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
 msgstr ""
-"Штамп: вибіркове копіювання із зображення або візерунку за допомогою пензля"
+"Штамп: вибіркове копіювання із зображення або текстури за допомогою пензля"
 
 #: ../app/tools/gimpclonetool.c:63
 msgid "_Clone"
@@ -9236,7 +9236,7 @@ msgstr "_Штамп"
 
 #: ../app/tools/gimpclonetool.c:86 ../app/tools/gimpclonetool.c:89
 msgid "Click to clone"
-msgstr "Натисніть для штамповки"
+msgstr "Натисніть для штампування"
 
 #: ../app/tools/gimpclonetool.c:87 ../app/tools/gimpclonetool.c:91
 #, c-format
@@ -9786,7 +9786,7 @@ msgstr "Вильне виділення"
 
 #: ../app/tools/gimpfuzzyselecttool.c:63
 msgid "Fuzzy Select"
-msgstr "Виділення зв'язаної ділянки"
+msgstr "Виділення зв'язаної області"
 
 #: ../app/tools/gimpfuzzyselecttool.c:64
 msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
@@ -9794,11 +9794,11 @@ msgstr "Виділення пов'язаної області: виділенн�
 
 #: ../app/tools/gimpfuzzyselecttool.c:65
 msgid "Fu_zzy Select"
-msgstr "Виді_лення зв'язаної ділянки"
+msgstr "Виді_лення зв'язаної області"
 
 #: ../app/tools/gimphealtool.c:54
 msgid "Healing Tool: Heal image irregularities"
-msgstr "Лікувальний пензель: витягування дефектів у зображені"
+msgstr "Лікувальний пензель: виправлення дефектів у зображені"
 
 #: ../app/tools/gimphealtool.c:55
 msgid "_Heal"
@@ -9840,7 +9840,7 @@ msgstr "Відтінок-насиченість діє діє лише на ша
 
 #: ../app/tools/gimphuesaturationtool.c:229
 msgid "M_aster"
-msgstr "По_мічник"
+msgstr "Все _одразу"
 
 #: ../app/tools/gimphuesaturationtool.c:229
 msgid "Adjust all colors"
@@ -10020,15 +10020,15 @@ msgstr "Індексовані шар не можна редагувати за 
 
 #: ../app/tools/gimplevelstool.c:303
 msgid "Pick black point"
-msgstr "Вибір _чорної точки"
+msgstr "Вибір чорної точки"
 
 #: ../app/tools/gimplevelstool.c:307
 msgid "Pick gray point"
-msgstr "Вибір _сірої точки"
+msgstr "Вибір сірої точки"
 
 #: ../app/tools/gimplevelstool.c:311
 msgid "Pick white point"
-msgstr "Вибір _білої точки"
+msgstr "Вибір білої точки"
 
 #. Input levels frame
 #: ../app/tools/gimplevelstool.c:402
@@ -10046,7 +10046,7 @@ msgstr "Рівні на виході"
 
 #: ../app/tools/gimplevelstool.c:608
 msgid "Adjust levels automatically"
-msgstr "Автоматичний підбір рівнів"
+msgstr "Підібрати рівні автоматично"
 
 #: ../app/tools/gimpmagnifyoptions.c:167
 msgid "Auto-resize window"
@@ -10596,7 +10596,7 @@ msgstr "Контур з тексту"
 
 #: ../app/tools/gimptextoptions.c:505
 msgid "Text along Path"
-msgstr "Текст по контуру"
+msgstr "Текст за контуром"
 
 #: ../app/tools/gimptexttool.c:142
 msgid "Text Tool: Create or edit text layers"
@@ -10648,7 +10648,7 @@ msgstr "Поріг не діє на індексовані шари."
 
 #: ../app/tools/gimpthresholdtool.c:237
 msgid "Automatically adjust to optimal binarization threshold"
-msgstr "Автоматично встановити оптимальну бінаризацію порога"
+msgstr "Автоматично встановити оптимальну бінаризацію порогу"
 
 #: ../app/tools/gimptransformoptions.c:249
 msgid "Transform:"
@@ -10737,11 +10737,11 @@ msgstr "Додавання контуру"
 
 #: ../app/tools/gimpvectortool.c:338
 msgid "Add Anchor"
-msgstr "Додавання точки"
+msgstr "Додавання вузла"
 
 #: ../app/tools/gimpvectortool.c:361
 msgid "Insert Anchor"
-msgstr "Вставлення точки"
+msgstr "Вставка вузла"
 
 #: ../app/tools/gimpvectortool.c:390
 msgid "Drag Handle"
@@ -10749,11 +10749,11 @@ msgstr "Перетягування важеля"
 
 #: ../app/tools/gimpvectortool.c:419
 msgid "Drag Anchor"
-msgstr "Перетягування точки"
+msgstr "Перетягування вузла"
 
 #: ../app/tools/gimpvectortool.c:436
 msgid "Drag Anchors"
-msgstr "Перетягування точок"
+msgstr "Перетягування вузлів"
 
 #: ../app/tools/gimpvectortool.c:456
 msgid "Drag Curve"
@@ -10773,7 +10773,7 @@ msgstr "Перетворення кута"
 
 #: ../app/tools/gimpvectortool.c:554
 msgid "Delete Anchor"
-msgstr "Видалення точки"
+msgstr "Видалення вузла"
 
 #: ../app/tools/gimpvectortool.c:576
 msgid "Delete Segment"
@@ -10781,7 +10781,7 @@ msgstr "Видалення сегменту"
 
 #: ../app/tools/gimpvectortool.c:787
 msgid "Move Anchors"
-msgstr "Переміщення точок"
+msgstr "Переміщення вузлів"
 
 #: ../app/tools/gimpvectortool.c:1145
 msgid "Click to pick path to edit"
@@ -10797,7 +10797,7 @@ msgstr "Натисніть, щоб створити новий компонен�
 
 #: ../app/tools/gimpvectortool.c:1154
 msgid "Click or Click-Drag to create a new anchor"
-msgstr "Натисніть, щоб створити новий контур"
+msgstr "Натисніть, або клацніть та перетягніть, щоб створити новий контур"
 
 #: ../app/tools/gimpvectortool.c:1163 ../app/tools/gimpvectortool.c:1170
 msgid "Click-Drag to move the anchor around"
@@ -10850,7 +10850,7 @@ msgstr "Натисніть, щоб зробити цей вузол кутови
 
 #: ../app/tools/gimpvectortool.c:1729
 msgid "Delete Anchors"
-msgstr "Видалення точки"
+msgstr "Видалення вузлів"
 
 #: ../app/tools/gimpvectortool.c:1902
 msgid "There is no active layer or channel to stroke to"
@@ -10936,7 +10936,7 @@ msgstr "Перейменування контуру"
 
 #: ../app/vectors/gimpvectors.c:194
 msgid "Scale Path"
-msgstr "Масштабування контуру"
+msgstr "Зміна масштабу контуру"
 
 #: ../app/vectors/gimpvectors.c:195
 msgid "Resize Path"
@@ -11037,7 +11037,7 @@ msgstr "Промені:"
 
 #: ../app/widgets/gimpbrusheditor.c:182
 msgid "Hardness:"
-msgstr "Твердість:"
+msgstr "Жорсткість:"
 
 #: ../app/widgets/gimpbrusheditor.c:195
 msgid "Aspect ratio:"
@@ -11214,7 +11214,7 @@ msgstr "_Захопити подію"
 
 #: ../app/widgets/gimpcontrollereditor.c:376
 msgid "Select the next event arriving from the controller"
-msgstr "Захопити наступну подію, що отримана від котролера"
+msgstr "Захопити наступну подію, що отримана від контролера"
 
 #: ../app/widgets/gimpcontrollereditor.c:534
 #, c-format
@@ -11386,7 +11386,7 @@ msgstr "Налаштувати контролер вводу"
 #: ../app/widgets/gimpcontrollerwheel.c:90
 #: ../app/widgets/gimpcontrollerwheel.c:93
 msgid "Scroll Up"
-msgstr "Вверх"
+msgstr "Прокрутка вгору"
 
 #: ../app/widgets/gimpcontrollerwheel.c:97
 #: ../app/widgets/gimpcontrollerwheel.c:100
@@ -11397,7 +11397,7 @@ msgstr "Вверх"
 #: ../app/widgets/gimpcontrollerwheel.c:115
 #: ../app/widgets/gimpcontrollerwheel.c:118
 msgid "Scroll Down"
-msgstr "Вниз"
+msgstr "Прокрутка вниз"
 
 #: ../app/widgets/gimpcontrollerwheel.c:122
 #: ../app/widgets/gimpcontrollerwheel.c:125
@@ -11408,7 +11408,7 @@ msgstr "Вниз"
 #: ../app/widgets/gimpcontrollerwheel.c:140
 #: ../app/widgets/gimpcontrollerwheel.c:143
 msgid "Scroll Left"
-msgstr "Вліво "
+msgstr "Прокрутка ліворуч "
 
 #: ../app/widgets/gimpcontrollerwheel.c:147
 #: ../app/widgets/gimpcontrollerwheel.c:150
@@ -11419,11 +11419,11 @@ msgstr "Вліво "
 #: ../app/widgets/gimpcontrollerwheel.c:165
 #: ../app/widgets/gimpcontrollerwheel.c:168
 msgid "Scroll Right"
-msgstr "Вправо"
+msgstr "Прокрутка праворуч"
 
 #: ../app/widgets/gimpcontrollerwheel.c:180
 msgid "Mouse Wheel"
-msgstr "Події колеса миші"
+msgstr "Колесо миші"
 
 #: ../app/widgets/gimpcontrollerwheel.c:224
 msgid "Mouse Wheel Events"
@@ -11755,7 +11755,7 @@ msgstr "Назва файлу:"
 
 #: ../app/widgets/gimpimagepropview.c:141
 msgid "File Size:"
-msgstr "Фіксований розмір:"
+msgstr "Розмір файлу:"
 
 #: ../app/widgets/gimpimagepropview.c:144
 msgid "File Type:"
@@ -12004,8 +12004,8 @@ msgid ""
 "The active image.\n"
 "Click to open the Image Dialog."
 msgstr ""
-"Активний візерунок.\n"
-"Клацніть, щоб відкрити діалогове вікно \"Візерунки\"."
+"Активне зображення.\n"
+"Клацніть, щоб відкрити діалогове вікно \"Зображення\"."
 
 #: ../app/widgets/gimptoolbox-image-area.c:114
 msgid "Drag to an XDS enabled file-manager to save the image."
@@ -12024,8 +12024,8 @@ msgid ""
 "The active pattern.\n"
 "Click to open the Pattern Dialog."
 msgstr ""
-"Активний візерунок.\n"
-"Клацніть, щоб відкрити діалогове вікно \"Візерунки\"."
+"Активна текстура.\n"
+"Клацніть, щоб відкрити діалогове вікно \"Текстури\"."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:214
 msgid ""
@@ -12063,7 +12063,7 @@ msgstr "Помилка при записі параметрів інструме
 
 #: ../app/widgets/gimpuimanager.c:733
 msgid "Your GIMP installation is incomplete:"
-msgstr "Вашу встановлення GIMP неповне:"
+msgstr "Встановлення GIMP не завершено:"
 
 #: ../app/widgets/gimpuimanager.c:735
 msgid "Plase make sure the menu XML files are correctly installed."
@@ -12092,7 +12092,7 @@ msgstr "Відкрити діалог вибору пензля"
 
 #: ../app/widgets/gimpviewablebox.c:138
 msgid "Open the pattern selection dialog"
-msgstr "Відкрити діалог вибору візерунка"
+msgstr "Відкрити діалог вибору текстури"
 
 #: ../app/widgets/gimpviewablebox.c:204
 msgid "Open the gradient selection dialog"
@@ -12104,7 +12104,7 @@ msgstr "Обернути"
 
 #: ../app/widgets/gimpviewablebox.c:306
 msgid "Open the palette selection dialog"
-msgstr "Відкрити діалог вибору візерунка"
+msgstr "Відкрити діалог вибору палітри"
 
 #: ../app/widgets/gimpviewablebox.c:364
 msgid "Open the font selection dialog"
