@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-04 18:27+0300\n"
-"PO-Revision-Date: 2007-10-04 18:28+0300\n"
+"POT-Creation-Date: 2008-01-11 09:34+0200\n"
+"PO-Revision-Date: 2008-01-11 09:38+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -185,7 +185,7 @@ msgstr "_Reikmenys"
 
 #: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Web Page Themes"
-msgstr "_Žiniatinklio svetainių temos"
+msgstr "_Tinklalapių temos"
 
 #: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Alien Glow"
@@ -269,7 +269,7 @@ msgstr "3D k_ontūras..."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
-msgstr "Nelygumų (alfa sluoksnio) išliejimo spindulys"
+msgstr "Įspaudų (alfa sluoksnio) išliejimo spindulys"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Create a logo with outlined text and a drop shadow"
@@ -501,7 +501,7 @@ msgstr "Perėjimo pradžia"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:9
 msgid "Supersample"
-msgstr ""
+msgstr "Papildoma imtis"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:10
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
@@ -763,8 +763,7 @@ msgstr "Nuožulnaus krašto plotis"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
 msgid "Create a simple, beveled button graphic for webpages"
-msgstr ""
-"Sukurti paprastą grafinį mygtuką nuožulniais kraštais žiniatinklio svetainėms"
+msgstr "Sukurti paprastą grafinį mygtuką nuožulniais kraštais tinklalapiams"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
 msgid "Lower-right color"
@@ -988,8 +987,8 @@ msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr ""
-"Naudojant išdeginimo scenarijų reikalingi du sluoksniai. Permatomo "
-"priekinio plano sluoksnio ir fono sluoksnio."
+"Naudojant išdeginimo scenarijų reikalingi du sluoksniai. Permatomo priekinio "
+"plano sluoksnio ir fono sluoksnio."
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "Color 1"
@@ -1423,7 +1422,7 @@ msgstr "Lyginės"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:6
 msgid "Even/odd"
-msgstr "Lyginės/nelyginės"
+msgstr "Lyginės / nelyginės"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:7
 msgid "Fill with BG"
@@ -1799,7 +1798,7 @@ msgstr "_Tinklelis..."
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "New Guides from _Selection"
-msgstr "Naujos gairės iš _pasirinkimo"
+msgstr "Naujos gairės iš _pažymėjimo"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "Add a guide at the position specified as a percentage of the image size"
@@ -1848,46 +1847,6 @@ msgstr "Pašalinti visas horizontalias ir vertikalias gaires"
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
 msgstr "Pašalinti visas gai_res"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-msgid "BG opacity"
-msgstr "Fono nepermatomumas"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid "Create a graph of the Hue, Saturation, and Value distributions"
-msgstr "Sukurti grafiką iš atspalvio, sodrumo ir reikšmės paskirstymų"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
-msgid "Draw _HSV Graph..."
-msgstr "Nubrėžti _HSV grafiką..."
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:4
-msgid "End X"
-msgstr "Pabaigos X"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:5
-msgid "End Y"
-msgstr "Pabaigos Y"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:6
-msgid "From top-left to bottom-right"
-msgstr "Nuo viršutinio kairio kampo į apatinį dešinį"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:7
-msgid "Graph scale"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:8
-msgid "Start X"
-msgstr "Pradžios X"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:9
-msgid "Start Y"
-msgstr "Pradžios Y"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:10
-msgid "Use selection bounds instead of values below"
-msgstr "Vietoje žemiau esančių reikšmių naudoti pažymėjimo ribas"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
@@ -1975,7 +1934,7 @@ msgstr "Sukurti stačiakampį teptuką"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "Create a rectangular brush with feathered edges"
-msgstr "Sukurti stačiakampį teptuką su plunksnuotais kraštais"
+msgstr "Sukurti stačiakampį teptuką išlietais kraštais"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
 msgid "Create an elliptical brush"
@@ -1983,15 +1942,15 @@ msgstr "Sukurti elipsinį teptuką"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid "Create an elliptical brush with feathered edges"
-msgstr "Sukurti elipsinį teptuką su plunksnuotais kraštais"
+msgstr "Sukurti elipsinį teptuką išlietais kraštais"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "Elli_ptical, Feathered..."
-msgstr "Eli_psinis, plunksnuotas..."
+msgstr "Eli_psinis, išlietais kraštais..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
 msgid "Feathering"
-msgstr "Plunksnuojama"
+msgstr "Kraštų išliejimas"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
 msgid "Name"
@@ -1999,13 +1958,13 @@ msgstr "Pavadinimas"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
 msgid "Re_ctangular, Feathered..."
-msgstr "Stačia_kampis, plunksnuotas..."
+msgstr "Stačia_kampis, išlietais kraštais..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:10
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:5
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "Spacing"
-msgstr "Išretinimas"
+msgstr "Intervalas"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:12
 msgid "_Elliptical..."
@@ -2288,11 +2247,11 @@ msgstr "Suapvalinti paveikslėlio kampus ir pageidaujant pridėti šešėlį ir 
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
 msgid "_Round Corners..."
-msgstr "_Apvalūs kampai..."
+msgstr "_Apvalaini kampai..."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
 msgid "Change the colormap of an image to the colors in a specified palette."
-msgstr "Pakeisti paveikslėlio spalvų gamą į nurodytos paletės spalvas."
+msgstr "Pakeisti paveikslėlio spalvų paletę į nurodytos paletės spalvas."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
 msgid "Palette"
@@ -2300,7 +2259,7 @@ msgstr "Paletė"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
 msgid "Se_t Colormap..."
-msgstr "Nus_tatyti spalvų gamą..."
+msgstr "Nus_tatyti spalvų paletę..."
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Convert a selection to a brush"
@@ -2337,11 +2296,11 @@ msgstr "Spindulys (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
 msgid "Round the corners of the current selection"
-msgstr "Suapvalinti esamo pasirinkimo kampus"
+msgstr "Suapvalinti esamo pažymėjimo kampus"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
 msgid "Rounded R_ectangle..."
-msgstr "Suapvalintas _stačiakampis..."
+msgstr "Apvalainas _stačiakampis..."
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
@@ -2866,7 +2825,7 @@ msgstr "_Kontūrų naudojimas"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
 msgid "_Basic Concepts"
-msgstr "_Pagrindinės koncepcijos"
+msgstr "_Pagrindiniai principai"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
 msgid "_Developer Web Site"
@@ -2929,6 +2888,33 @@ msgstr "Paryškinimo nepermatomumas"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach efektas..."
+
+#~ msgid "BG opacity"
+#~ msgstr "Fono nepermatomumas"
+
+#~ msgid "Create a graph of the Hue, Saturation, and Value distributions"
+#~ msgstr "Sukurti grafiką iš atspalvio, sodrumo ir reikšmės paskirstymų"
+
+#~ msgid "Draw _HSV Graph..."
+#~ msgstr "Nubrėžti _HSV grafiką..."
+
+#~ msgid "End X"
+#~ msgstr "Pabaigos X"
+
+#~ msgid "End Y"
+#~ msgstr "Pabaigos Y"
+
+#~ msgid "From top-left to bottom-right"
+#~ msgstr "Nuo viršutinio kairio kampo į apatinį dešinį"
+
+#~ msgid "Start X"
+#~ msgstr "Pradžios X"
+
+#~ msgid "Start Y"
+#~ msgstr "Pradžios Y"
+
+#~ msgid "Use selection bounds instead of values below"
+#~ msgstr "Vietoje žemiau esančių reikšmių naudoti pažymėjimo ribas"
 
 #~ msgid "Darken only\\n(Better, but only for images with a lot of white)"
 #~ msgstr ""
