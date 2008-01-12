@@ -1,3 +1,7 @@
+2008-01-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/color-balance.c: minor formatting fix.
+
 2008-01-11  Michael Natterer  <mitch@gimp.org>
 
 	* modules/gimpinputdevicestore.h
