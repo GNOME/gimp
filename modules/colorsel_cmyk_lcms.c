@@ -397,6 +397,7 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
     }
 
   gtk_label_set_text (GTK_LABEL (module->name_label), _("Profile: (none)"));
+  gimp_help_set_help_data (module->name_label, NULL, NULL);
 
   if (! config)
     goto out;
@@ -418,6 +419,7 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
 
   text = g_strdup_printf (_("Profile: %s"), name);
   gtk_label_set_text (GTK_LABEL (module->name_label), text);
+  gimp_help_set_help_data (module->name_label, text, NULL);
   g_free (text);
 
   rgb_profile = color_config_get_rgb_profile (config);

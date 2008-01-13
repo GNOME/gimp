@@ -1,3 +1,8 @@
+2008-01-13  Michael Natterer  <mitch@gimp.org>
+
+	* modules/colorsel_cmyk_lcms.c (colorsel_cmyk_config_changed): set
+	a tooltip on the profile name label because it's often ellipsized.
+
 2008-01-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/color-balance.c: minor formatting fix.
