@@ -13,6 +13,8 @@ libappgegl_a_SOURCES = \
 	gimpoperationcolorize.h		\
 	gimpoperationdesaturate.c	\
 	gimpoperationdesaturate.h	\
+	gimpoperationhuesaturation.c	\
+	gimpoperationhuesaturation.h	\
 	gimpoperationlevels.c		\
 	gimpoperationlevels.h		\
 	gimpoperationposterize.c	\

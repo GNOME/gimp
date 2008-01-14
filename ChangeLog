@@ -1,3 +1,13 @@
+2008-01-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/Makefile.am
+	* app/gegl/gegl-types.h
+	* app/gegl/gimpoperationhuesaturation.[ch]: new operation.
+
+	* app/gegl/gimp-gegl.c: register it.
+
+	* app/tools/gimphuesaturationtool.c: use it.
+
 2008-01-14  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-types.h
