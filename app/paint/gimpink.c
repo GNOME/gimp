@@ -77,18 +77,6 @@ static Blob    * ink_pen_ellipse         (GimpInkOptions   *options,
                                           gdouble           ytilt,
                                           gdouble           velocity);
 
-static void      time_smoother_add       (GimpInk          *ink,
-                                          guint32           value);
-static guint32   time_smoother_result    (GimpInk          *ink);
-static void      time_smoother_init      (GimpInk          *ink,
-                                          guint32           initval);
-
-static void      dist_smoother_add       (GimpInk          *ink,
-                                          gdouble           value);
-static gdouble   dist_smoother_result    (GimpInk          *ink);
-static void      dist_smoother_init      (GimpInk          *ink,
-                                          gdouble           initval);
-
 static void      render_blob             (Blob             *blob,
                                           PixelRegion      *dest);
 
@@ -270,67 +258,25 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
                                         paint_core->cur_coords.pressure,
                                         paint_core->cur_coords.xtilt,
                                         paint_core->cur_coords.ytilt,
-                                        10.0);
+                                        100);
 
       if (ink->start_blob)
         g_free (ink->start_blob);
 
       ink->start_blob = blob_duplicate (ink->last_blob);
 
-      time_smoother_init (ink, time);
-      ink->last_time = time;
-
-      dist_smoother_init (ink, 0.0);
-      ink->init_velocity = TRUE;
-
       blob_to_render = ink->last_blob;
     }
   else
     {
       Blob    *blob;
-      gdouble  dist;
-      gdouble  velocity;
-      guint32  lasttime = ink->last_time;
-      guint32  thistime;
-
-      time_smoother_add (ink, time);
-      thistime = ink->last_time = time_smoother_result (ink);
-
-      /* The time resolution on X-based GDK motion events is bloody
-       * awful, hence the use of the smoothing function.  Sadly this
-       * also means that there is always the chance of having an
-       * indeterminite velocity since this event and the previous
-       * several may still appear to issue at the same
-       * instant. -ADM
-       */
-      if (thistime == lasttime)
-        thistime = lasttime + 1;
-
-      dist = sqrt ((paint_core->last_coords.x - paint_core->cur_coords.x) *
-                   (paint_core->last_coords.x - paint_core->cur_coords.x) +
-                   (paint_core->last_coords.y - paint_core->cur_coords.y) *
-                   (paint_core->last_coords.y - paint_core->cur_coords.y));
-
-      if (ink->init_velocity)
-        {
-          dist_smoother_init (ink, dist);
-          ink->init_velocity = FALSE;
-        }
-      else
-        {
-          dist_smoother_add (ink, dist);
-          dist = dist_smoother_result (ink);
-        }
-
-      velocity = 10.0 * sqrt ((dist) / (gdouble) (thistime - lasttime));
-
       blob = ink_pen_ellipse (options,
                               paint_core->cur_coords.x,
                               paint_core->cur_coords.y,
                               paint_core->cur_coords.pressure,
                               paint_core->cur_coords.xtilt,
                               paint_core->cur_coords.ytilt,
-                              velocity);
+                              paint_core->cur_coords.velocity * 100);
 
       blob_union = blob_convex_union (ink->last_blob, blob);
       g_free (ink->last_blob);
@@ -507,84 +453,6 @@ ink_pen_ellipse (GimpInkOptions *options,
                             radmin * aspect * tsin,
                             -radmin * tsin,
                             radmin * tcos);
-}
-
-
-static void
-time_smoother_init (GimpInk *ink,
-                    guint32  initval)
-{
-  gint i;
-
-  ink->ts_index = 0;
-
-  for (i = 0; i < TIME_SMOOTHER_BUFFER; i++)
-    ink->ts_buffer[i] = initval;
-}
-
-static guint32
-time_smoother_result (GimpInk *ink)
-{
-  guint64 result = 0;
-  gint    i;
-
-  for (i = 0; i < TIME_SMOOTHER_BUFFER; i++)
-    result += ink->ts_buffer[i];
-
-  return (result / (guint64) TIME_SMOOTHER_BUFFER);
-}
-
-static void
-time_smoother_add (GimpInk *ink,
-                   guint32  value)
-{
-  guint64 long_value = (guint64) value;
-
-  /*  handle wrap-around of time values  */
-  if (long_value < ink->ts_buffer[ink->ts_index])
-    long_value += (guint64) + G_MAXUINT32;
-
-  ink->ts_buffer[ink->ts_index++] = long_value;
-
-  ink->ts_buffer[ink->ts_index++] = value;
-
-  if (ink->ts_index == TIME_SMOOTHER_BUFFER)
-    ink->ts_index = 0;
-}
-
-
-static void
-dist_smoother_init (GimpInk *ink,
-                    gdouble  initval)
-{
-  gint i;
-
-  ink->dt_index = 0;
-
-  for (i = 0; i < DIST_SMOOTHER_BUFFER; i++)
-    ink->dt_buffer[i] = initval;
-}
-
-static gdouble
-dist_smoother_result (GimpInk *ink)
-{
-  gint    i;
-  gdouble result = 0.0;
-
-  for (i = 0; i < DIST_SMOOTHER_BUFFER; i++)
-    result += ink->dt_buffer[i];
-
-  return (result / (gdouble) DIST_SMOOTHER_BUFFER);
-}
-
-static void
-dist_smoother_add (GimpInk *ink,
-                   gdouble  value)
-{
-  ink->dt_buffer[ink->dt_index++] = value;
-
-  if (ink->dt_index == DIST_SMOOTHER_BUFFER)
-    ink->dt_index = 0;
 }
 
 

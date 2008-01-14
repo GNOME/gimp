@@ -38,6 +38,10 @@ gboolean gimp_display_shell_get_event_state   (GimpDisplayShell *shell,
 void     gimp_display_shell_get_device_state  (GimpDisplayShell *shell,
                                                GdkDevice        *device,
                                                GdkModifierType  *state);
+gboolean gimp_display_shell_eval_event        (GimpDisplayShell *shell,
+                                               GimpCoords       *coords,
+                                               gdouble           inertia_factor,
+                                               guint32           time);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_COORDS_H__ */

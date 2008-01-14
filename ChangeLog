@@ -1,3 +1,16 @@
+2008-01-14  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-types.h
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-coords.[ch]
+	* app/display/gimpdisplayshell.h
+	* app/paint/gimpink.[ch]
+	* app/paint/gimpinkundo.[ch]: applied patch from Alexia Death that
+	adds an event evaluation function that decides if an event is
+	needed or can be discarded. As a side-product some useful dynamics
+	parameters like velocity are added to the GimpCoords struct. The
+	Ink tool is changed to use this information. See bug #508639.
+
 2008-01-13  Michael Natterer  <mitch@gimp.org>
 
 	* modules/colorsel_cmyk_lcms.c (colorsel_cmyk_config_changed): set

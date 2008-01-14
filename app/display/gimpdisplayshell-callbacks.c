@@ -902,7 +902,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                       &image_coords,
                                                       time, state, display);
 
-                    shell->last_motion_time = bevent->time;
+                    shell->last_read_motion_time = bevent->time;
                   }
               }
             break;
@@ -1182,7 +1182,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 GdkTimeCoord **history_events;
                 gint           n_history_events;
 
-               /*  if the first mouse button is down, check for automatic
+                /*  if the first mouse button is down, check for automatic
                  *  scrolling...
                  */
                 if ((mevent->x < 0                 ||
@@ -1194,11 +1194,19 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                     gimp_display_shell_autoscroll_start (shell, state, mevent);
                   }
 
-                if (gimp_tool_control_get_motion_mode (active_tool->control) ==
-                    GIMP_MOTION_MODE_EXACT &&
+                /* gdk_device_get_history() has several quirks. First is
+                 * that events with borderline timestamps at both ends
+                 * are included. Because of that we need to add 1 to
+                 * lower border. The second is due to poor X event
+                 * resolution. We need to do -1 to ensure that the
+                 * amount of events between timestamps is final or
+                 * risk loosing some.
+                 */
+                if ((gimp_tool_control_get_motion_mode (active_tool->control) ==
+                    GIMP_MOTION_MODE_EXACT) &&
                     gdk_device_get_history (mevent->device, mevent->window,
-                                            shell->last_motion_time,
-                                            mevent->time,
+                                            shell->last_read_motion_time+1,
+                                            mevent->time - 1,
                                             &history_events,
                                             &n_history_events))
                   {
@@ -1206,6 +1214,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
                     for (i = 0; i < n_history_events; i++)
                       {
+
                         gimp_display_shell_get_time_coords (shell,
                                                             mevent->device,
                                                             history_events[i],
@@ -1231,33 +1240,71 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                             x, y, width, height);
                           }
 
-                        tool_manager_motion_active (gimp,
-                                                    &image_coords,
-                                                    history_events[i]->time,
-                                                    state,
-                                                    display);
+                        /* Early removal of useless events saves CPU time.
+                         * Defaulting smoothing to 0.4.
+                         */
+                        if (gimp_display_shell_eval_event (shell,
+                                                           &image_coords, 0.4,
+                                                           history_events[i]->time))
+                          {
+                            tool_manager_motion_active (gimp,
+                                                        &image_coords,
+                                                        history_events[i]->time,
+                                                        state,
+                                                        display);
+
+                            shell->last_coords = image_coords;
+                            shell->last_disp_motion_time = history_events[i]->time;
+                          }
+
+                         shell->last_read_motion_time=history_events[i]->time;
                       }
 
                     gdk_device_free_history (history_events, n_history_events);
                   }
                 else
                   {
-                    tool_manager_motion_active (gimp,
-                                                &image_coords, time, state,
-                                                display);
-                  }
+                    /* Early removal of useless events saves CPU time.
+                     * Defaulting smoothing to 0.4.
+                     */
+                    if (gimp_display_shell_eval_event (shell,
+                                                       &image_coords, 0.4,
+                                                       time))
+                      {
+                        tool_manager_motion_active (gimp,
+                                                    &image_coords,
+                                                    time,
+                                                    state,
+                                                    display);
 
-                shell->last_motion_time = mevent->time;
+                        shell->last_coords = image_coords;
+                        shell->last_disp_motion_time = time;
+                      }
+
+                    shell->last_read_motion_time=time;
+                  }
               }
           }
 
         if (! (state &
                (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
           {
-            tool_manager_oper_update_active (gimp,
-                                             &image_coords, state,
-                                             shell->proximity,
-                                             display);
+            /* Early removal of useless events saves CPU time.
+             * Smoothing coasting to avoid unpredicted jumps when making contact.
+             * This may need a different solution but cant properly test it without
+             * adjustment.
+             */
+            if (gimp_display_shell_eval_event (shell, &image_coords, 0.4, time))
+              {
+                tool_manager_oper_update_active (gimp,
+                                                 &image_coords, state,
+                                                 shell->proximity,
+                                                 display);
+                shell->last_coords = image_coords;
+		shell->last_disp_motion_time = time;
+              }
+
+            shell->last_read_motion_time = time;
           }
       }
       break;

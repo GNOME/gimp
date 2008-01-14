@@ -82,20 +82,6 @@ gimp_ink_undo_constructor (GType                  type,
   if (ink->start_blob)
     ink_undo->last_blob = blob_duplicate (ink->start_blob);
 
-  memcpy (ink_undo->dt_buffer, ink->dt_buffer,
-          sizeof (ink_undo->dt_buffer));
-
-  ink_undo->dt_index = ink->dt_index;
-
-  memcpy (ink_undo->ts_buffer, ink->ts_buffer,
-          sizeof (ink_undo->ts_buffer));
-
-  ink_undo->ts_index = ink->ts_index;
-
-  ink_undo->last_time = ink->last_time;
-
-  ink_undo->init_velocity = ink->init_velocity;
-
   return object;
 }
 
@@ -112,44 +98,11 @@ gimp_ink_undo_pop (GimpUndo              *undo,
     {
       GimpInk *ink = GIMP_INK (GIMP_PAINT_CORE_UNDO (ink_undo)->paint_core);
       Blob    *tmp_blob;
-      gint     tmp_int;
-      gdouble  tmp_double;
-      guint32  tmp_int_buf[DIST_SMOOTHER_BUFFER];
-      gdouble  tmp_double_buf[DIST_SMOOTHER_BUFFER];
 
       tmp_blob = ink->last_blob;
       ink->last_blob = ink_undo->last_blob;
       ink_undo->last_blob = tmp_blob;
 
-      memcpy (tmp_double_buf, ink->dt_buffer,
-              sizeof (tmp_double_buf));
-      memcpy (ink->dt_buffer, ink_undo->dt_buffer,
-              sizeof (tmp_double_buf));
-      memcpy (ink_undo->dt_buffer, tmp_double_buf,
-              sizeof (tmp_double_buf));
-
-      tmp_int = ink->dt_index;
-      ink->dt_index = ink_undo->dt_index;
-      ink_undo->dt_index = tmp_int;
-
-      memcpy (tmp_int_buf, ink->ts_buffer,
-              sizeof (tmp_int_buf));
-      memcpy (ink->ts_buffer, ink_undo->ts_buffer,
-              sizeof (tmp_int_buf));
-      memcpy (ink_undo->ts_buffer, tmp_int_buf,
-              sizeof (tmp_int_buf));
-
-      tmp_int = ink->ts_index;
-      ink->ts_index = ink_undo->ts_index;
-      ink_undo->ts_index = tmp_int;
-
-      tmp_double = ink->last_time;
-      ink->last_time = ink_undo->last_time;
-      ink_undo->last_time = tmp_double;
-
-      tmp_int = ink->init_velocity;
-      ink->init_velocity = ink_undo->init_velocity;
-      ink_undo->init_velocity = tmp_int;
     }
 }
 

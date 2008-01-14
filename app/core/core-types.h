@@ -190,6 +190,11 @@ struct _GimpCoords
   gdouble xtilt;
   gdouble ytilt;
   gdouble wheel;
+  gdouble delta_time;
+  gdouble delta_x;
+  gdouble delta_y;
+  gdouble distance;
+  gdouble velocity;
 };
 
 
