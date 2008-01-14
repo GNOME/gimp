@@ -23,7 +23,8 @@
 void  gimp_tool_motion_constrain (gdouble   start_x,
                                   gdouble   start_y,
                                   gdouble  *end_x,
-                                  gdouble  *end_y);
+                                  gdouble  *end_y,
+                                  gint      n_snap_lines);
 
 
 #endif  /*  __TOOLS_UTILS_H__  */

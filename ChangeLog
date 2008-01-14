@@ -1,3 +1,16 @@
+2008-01-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/tools-utils.[ch]
+	(gimp_tool_motion_constrain): Generalized to allow a variable
+	number of lines for snapping, and rewritten to make snapping
+	happen more intuitively; snap the shortest distance rather than
+	only horizontally or vertically.
+	(gimp_tool_utils_point_to_line_distance): New helper function.
+
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimppainttool.c: Adjust to the new function signature.
+
 2008-01-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/Makefile.am

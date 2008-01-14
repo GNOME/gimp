@@ -51,6 +51,7 @@
 
 #define HANDLE_SIZE    15
 #define STATUSBAR_SIZE 200
+#define N_SNAP_LINES   12
 
 
 static GObject * gimp_paint_tool_constructor (GType                  type,
@@ -256,7 +257,8 @@ gimp_paint_tool_round_line (GimpPaintCore   *core,
   /* Restrict to multiples of 15 degrees if ctrl is pressed */
   if (state & GDK_CONTROL_MASK)
     gimp_tool_motion_constrain (core->last_coords.x, core->last_coords.y,
-                                &core->cur_coords.x, &core->cur_coords.y);
+                                &core->cur_coords.x, &core->cur_coords.y,
+                                N_SNAP_LINES);
 }
 
 static void

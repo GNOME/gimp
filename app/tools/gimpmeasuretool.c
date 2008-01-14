@@ -54,6 +54,7 @@
 
 #define  TARGET       12
 #define  ARC_RADIUS   30
+#define  N_SNAP_LINES 12
 
 
 /*  local function prototypes  */
@@ -434,7 +435,9 @@ gimp_measure_tool_motion (GimpTool        *tool,
           gdouble  x = measure->x[i];
           gdouble  y = measure->y[i];
 
-          gimp_tool_motion_constrain (measure->x[0], measure->y[0], &x, &y);
+          gimp_tool_motion_constrain (measure->x[0], measure->y[0],
+                                      &x, &y,
+                                      N_SNAP_LINES);
 
           measure->x[i] = ROUND (x);
           measure->y[i] = ROUND (y);
@@ -505,7 +508,9 @@ gimp_measure_tool_active_modifier_key (GimpTool        *tool,
       y = measure->mouse_y;
 
       if (press)
-        gimp_tool_motion_constrain (measure->x[0], measure->y[0], &x, &y);
+        gimp_tool_motion_constrain (measure->x[0], measure->y[0],
+                                    &x, &y,
+                                    N_SNAP_LINES);
 
       measure->x[measure->point] = ROUND (x);
       measure->y[measure->point] = ROUND (y);
