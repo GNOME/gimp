@@ -47,7 +47,6 @@
 
 
 #define TARGET_SIZE  15
-#define N_SNAP_LINES 12
 
 
 /*  local function prototypes  */
@@ -284,12 +283,11 @@ gimp_blend_tool_motion (GimpTool        *tool,
       blend_tool->end_y = coords->y;
     }
 
-  /* Restrict to multiples of 15 degrees if ctrl is pressed */
   if (state & GDK_CONTROL_MASK)
     {
       gimp_tool_motion_constrain (blend_tool->start_x, blend_tool->start_y,
                                   &blend_tool->end_x, &blend_tool->end_y,
-                                  N_SNAP_LINES);
+                                  GIMP_TOOL_CONSTRAIN_15_DEGREES);
     }
 
   gimp_tool_pop_status (tool, display);
@@ -322,7 +320,7 @@ gimp_blend_tool_active_modifier_key (GimpTool        *tool,
         {
           gimp_tool_motion_constrain (blend_tool->start_x, blend_tool->start_y,
                                       &blend_tool->end_x, &blend_tool->end_y,
-                                      N_SNAP_LINES);
+                                      GIMP_TOOL_CONSTRAIN_15_DEGREES);
         }
 
       gimp_tool_pop_status (tool, display);

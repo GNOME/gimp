@@ -1,5 +1,16 @@
 2008-01-15  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/tools-utils.h: Added symbolic constants for common
+	values to the n_snap_lines parameter of
+	gimp_tool_motion_constrain.
+
+	* app/tools/gimpblendtool.c:
+	* app/tools/gimpeditselectiontool.c:
+	* app/tools/gimpmeasuretool.c:
+	* app/tools/gimppainttool.c: Use these new symbolic constants.
+
+2008-01-15  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimpeditselectiontool.[ch]: Made it possible to
 	constrain movement with the Move Tool in 45 degree angles by
 	holding Ctrl when a move has been initiated. This fixes the

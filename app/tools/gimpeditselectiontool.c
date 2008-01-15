@@ -63,12 +63,6 @@
 #define EDIT_SELECT_SCROLL_LOCK FALSE
 #define ARROW_VELOCITY          25
 
-/**
- * The number of evenly distributed lines onto which moving will be
- * constrained when movement constraint is active.
- */
-#define N_SNAP_LINES            4
-
 
 static void    gimp_edit_selection_tool_button_release      (GimpTool              *tool,
                                                              GimpCoords            *coords,
@@ -566,7 +560,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
     {
       gimp_tool_motion_constrain (edit_select->start_x, edit_select->start_y,
                                   &coords->x, &coords->y,
-                                  N_SNAP_LINES);
+                                  GIMP_TOOL_CONSTRAIN_45_DEGREES);
     }
 
   motion_x = coords->x - off_x;
