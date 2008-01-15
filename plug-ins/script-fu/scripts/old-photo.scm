@@ -26,10 +26,10 @@
 
 (define (script-fu-old-photo inImage inLayer inDefocus inBorderSize inSepia inMottle inCopy)
   (let (
-       (theImage)
-       (theLayer)
-       (theWidth)
-       (theHeight)
+       (theImage 0)
+       (theLayer 0)
+       (theWidth 0)
+       (theHeight 0)
        )
   (gimp-image-undo-group-start inImage)
   (gimp-selection-all inImage)

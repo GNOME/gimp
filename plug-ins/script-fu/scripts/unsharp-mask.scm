@@ -12,12 +12,12 @@
                                              drawable-width drawable-height
                                              RGB-IMAGE "Original"
                                              100 NORMAL-MODE)))
-        (original-layer-for-darker)
-        (original-layer-for-lighter)
-        (blured-layer-for-darker)
-        (blured-layer-for-lighter)
-        (darker-layer)
-        (lighter-layer)
+        (original-layer-for-darker 0)
+        (original-layer-for-lighter 0)
+        (blured-layer-for-darker 0)
+        (blured-layer-for-lighter 0)
+        (darker-layer 0)
+        (lighter-layer 0)
         )
 
     (gimp-selection-all img)

@@ -38,8 +38,8 @@
   (let (
        (theWidth (car (gimp-image-width inImage)))
        (theHeight (car (gimp-image-height inImage)))
-       (theImage)
-       (theLayer)
+       (theImage 0)
+       (theLayer 0)
        )
 
     (gimp-context-push)

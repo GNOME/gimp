@@ -38,7 +38,7 @@
         (img (car (gimp-image-new width height RGB)))
         (layer-one (car (gimp-layer-new img width height
                                         RGB-IMAGE "bottom" 100 NORMAL-MODE)))
-        (layer-two)
+        (layer-two 0)
         )
 
     (gimp-image-undo-disable img)

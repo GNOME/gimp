@@ -81,7 +81,7 @@
                                                               GRAY-IMAGE RGB-IMAGE)
                                          "Background" 100 NORMAL-MODE)))
         (count      0)
-        (font)
+        (font       "")
         )
 
     (gimp-context-push)

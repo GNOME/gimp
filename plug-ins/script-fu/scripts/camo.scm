@@ -26,9 +26,9 @@
         (theHeight inSize)
         (theImage (car (gimp-image-new theWidth theHeight RGB)))
         (baseLayer (car (gimp-layer-new theImage theWidth theHeight RGBA-IMAGE "Background" 100 NORMAL-MODE)))
-        (thickLayer)
-        (thinLayer)
-        (theBlur)
+        (thickLayer 0)
+        (thinLayer 0)
+        (theBlur 0)
         )
 
     (gimp-context-push)

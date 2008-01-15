@@ -23,7 +23,7 @@
         (theWidth (car (gimp-image-width theImage)))
         (theNumber inNumber)
         (theSize (min theWidth theHeight))
-        (theStain)
+        (theStain 0)
         )
 
     (gimp-context-push)

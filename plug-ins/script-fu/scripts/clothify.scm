@@ -11,8 +11,8 @@
         (img (car (gimp-image-new width height RGB)))
 ;       (layer-two (car (gimp-layer-new img width height RGB-IMAGE "Y Dots" 100 MULTIPLY-MODE)))
         (layer-one (car (gimp-layer-new img width height RGB-IMAGE "X Dots" 100 NORMAL-MODE)))
-        (layer-two)
-        (bump-layer)
+        (layer-two 0)
+        (bump-layer 0)
         )
 
     (gimp-context-push)
