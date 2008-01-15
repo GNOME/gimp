@@ -350,7 +350,6 @@ run (const gchar      *name,
           bmvals.azimuth    = param[4].data.d_float;
           bmvals.elevation  = param[5].data.d_float;
           bmvals.depth      = param[6].data.d_int32;
-          bmvals.depth      = param[6].data.d_int32;
           bmvals.xofs       = param[7].data.d_int32;
           bmvals.yofs       = param[8].data.d_int32;
           bmvals.waterlevel = param[9].data.d_int32;
@@ -557,7 +556,8 @@ bumpmap_init_params (bumpmap_params_t *params)
   lz         = sin (elevation) * 255.0;
 
   /* Calculate constant Z component of surface normal */
-  nz           = (6 * 255) / bmvals.depth;
+  /*              (depth may be 0 if non-interactive) */
+  nz           = (6 * 255) / MAX (bmvals.depth, 1);
   params->nz2  = nz * nz;
   params->nzlz = nz * lz;
 
