@@ -17,12 +17,17 @@ Changes in GIMP 2.4.4
 - corrected parameter range in Chip Away script (bug #506110)
 - reduced redraw priority and speed of the marching ants (bug #479875)
 - fixed out-of-bounds array access in Convolution Matrix plug-in
-- translation updates (de, it, lt, sv, uk)
+- reduced rounding errors in Convolution Matrix plug-in (bug #508114)
+- fixed potential crash on missing CMYK color profile
+- fixed crash in Bumpmap plug-in when called from some scripts (bug #509608)
+- merged some other minor fixes from trunk
+- translation updates (de, it, lt, ru, sv, uk)
 
 
 Contributors:
 
-   Sven Neumann, Kevin Cozens, Hans Breuer, Bill Skaggs, Ulf-D. Ehlert
+   Sven Neumann, Michael Natterer, Kevin Cozens, Hans Breuer, Bill Skaggs,
+   Ulf-D. Ehlert
 
 
 
