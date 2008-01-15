@@ -1,3 +1,10 @@
+2008-01-15  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpeditselectiontool.[ch]: Made it possible to
+	constrain movement with the Move Tool in 45 degree angles by
+	holding Ctrl when a move has been initiated. This fixes the
+	essential part of bug #78730.
+
 2008-01-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/gimpoperationcolorize.[ch]
