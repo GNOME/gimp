@@ -1,3 +1,10 @@
+2008-01-14  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	Merged from trunk:
+
+	*  plug-ins/script-fu/scripts/script-fu-compat.init: Fixed definition
+	of 'prog1' due to recent fixes enforcing R5RS syntax for 'let'.
+
 2008-01-09  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
