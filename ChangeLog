@@ -1,3 +1,11 @@
+2008-01-15  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_notify_preview):
+	check for image_map_tool->image_map also when the preview is
+	switched on, not only when it's switched off.
+
 2008-01-15  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:

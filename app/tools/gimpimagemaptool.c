@@ -524,17 +524,17 @@ gimp_image_map_tool_notify_preview (GObject          *config,
   GimpTool            *tool    = GIMP_TOOL (image_map_tool);
   GimpImageMapOptions *options = GIMP_IMAGE_MAP_OPTIONS (config);
 
-  if (options->preview)
+  if (image_map_tool->image_map)
     {
-      gimp_tool_control_set_preserve (tool->control, TRUE);
+      if (options->preview)
+        {
+          gimp_tool_control_set_preserve (tool->control, TRUE);
 
-      gimp_image_map_tool_map (image_map_tool);
+          gimp_image_map_tool_map (image_map_tool);
 
-      gimp_tool_control_set_preserve (tool->control, FALSE);
-    }
-  else
-    {
-      if (image_map_tool->image_map)
+          gimp_tool_control_set_preserve (tool->control, FALSE);
+        }
+      else
         {
           gimp_tool_control_set_preserve (tool->control, TRUE);
 
