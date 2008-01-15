@@ -172,9 +172,9 @@ gimp_colorize_tool_map (GimpImageMapTool *image_map_tool)
   GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (image_map_tool);
 
   gegl_node_set (image_map_tool->operation,
-                 "hue",        col_tool->colorize->hue,
-                 "saturation", col_tool->colorize->saturation,
-                 "lightness",  col_tool->colorize->lightness,
+                 "hue",        col_tool->colorize->hue        / 360.0,
+                 "saturation", col_tool->colorize->saturation / 100.0,
+                 "lightness",  col_tool->colorize->lightness  / 100.0,
                  NULL);
 
   colorize_calculate (col_tool->colorize);

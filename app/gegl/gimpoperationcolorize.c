@@ -77,32 +77,29 @@ gimp_operation_colorize_class_init (GimpOperationColorizeClass * klass)
 
   gegl_operation_class_set_name (operation_class, "gimp-colorize");
 
-  g_object_class_install_property (object_class,
-                                   PROP_HUE,
-                                   g_param_spec_float ("hue",
-                                                       "Hue",
-                                                       "Hue",
-                                                       0.0, 360.0, 180.0,
-                                                       G_PARAM_READWRITE |
-                                                       G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_HUE,
+                                   g_param_spec_double ("hue",
+                                                        "Hue",
+                                                        "Hue",
+                                                        0.0, 1.0, 0.5,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class,
-                                   PROP_SATURATION,
-                                   g_param_spec_float ("saturation",
-                                                       "Saturation",
-                                                       "Saturation",
-                                                       0.0, 100.0, 50.0,
-                                                       G_PARAM_READWRITE |
-                                                       G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_SATURATION,
+                                   g_param_spec_double ("saturation",
+                                                        "Saturation",
+                                                        "Saturation",
+                                                        0.0, 1.0, 0.5,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class,
-                                   PROP_LIGHTNESS,
-                                   g_param_spec_float ("lightness",
-                                                       "Lightness",
-                                                       "Lightness",
-                                                       -100.0, 100.0, 0.0,
-                                                       G_PARAM_READWRITE |
-                                                       G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_LIGHTNESS,
+                                   g_param_spec_double ("lightness",
+                                                        "Lightness",
+                                                        "Lightness",
+                                                        -1.0, 1.0, 0.0,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -121,15 +118,15 @@ gimp_operation_colorize_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_HUE:
-      g_value_set_float (value, self->hue);
+      g_value_set_double (value, self->hue);
       break;
 
     case PROP_SATURATION:
-      g_value_set_float (value, self->saturation);
+      g_value_set_double (value, self->saturation);
       break;
 
     case PROP_LIGHTNESS:
-      g_value_set_float (value, self->lightness);
+      g_value_set_double (value, self->lightness);
       break;
 
     default:
@@ -149,15 +146,15 @@ gimp_operation_colorize_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_HUE:
-      self->hue = g_value_get_float (value);
+      self->hue = g_value_get_double (value);
       break;
 
     case PROP_SATURATION:
-      self->saturation = g_value_get_float (value);
+      self->saturation = g_value_get_double (value);
       break;
 
     case PROP_LIGHTNESS:
-      self->lightness = g_value_get_float (value);
+      self->lightness = g_value_get_double (value);
       break;
 
    default:
@@ -187,17 +184,17 @@ gimp_operation_colorize_process (GeglOperation *operation,
 
       if (self->lightness > 0)
         {
-          lum = lum * (100.0 - self->lightness) / 100.0;
+          lum = lum * (1.0 - self->lightness);
 
-          lum += 1.0 - (100.0 - self->lightness) / 100.0;
+          lum += 1.0 - (1.0 - self->lightness);
         }
       else if (self->lightness < 0)
         {
-          lum = lum * (self->lightness + 100.0) / 100.0;
+          lum = lum * (self->lightness + 1.0);
         }
 
-      hsl.h = self->hue        / 360.0;
-      hsl.s = self->saturation / 100.0;
+      hsl.h = self->hue;
+      hsl.s = self->saturation;
       hsl.l = lum;
 
       gimp_hsl_to_rgb (&hsl, &rgb);

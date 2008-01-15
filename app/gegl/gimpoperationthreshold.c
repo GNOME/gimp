@@ -76,23 +76,21 @@ gimp_operation_threshold_class_init (GimpOperationThresholdClass * klass)
 
   gegl_operation_class_set_name (operation_class, "gimp-threshold");
 
-  g_object_class_install_property (object_class,
-                                   PROP_LOW,
-                                   g_param_spec_float ("low",
-                                                       "Low",
-                                                       "Low threshold",
-                                                       0.0, 1.0, 0.5,
-                                                       G_PARAM_READWRITE |
-                                                       G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_LOW,
+                                   g_param_spec_double ("low",
+                                                        "Low",
+                                                        "Low threshold",
+                                                        0.0, 1.0, 0.5,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class,
-                                   PROP_HIGH,
-                                   g_param_spec_float ("high",
-                                                       "High",
-                                                       "High threshold",
-                                                       0.0, 1.0, 1.0,
-                                                       G_PARAM_READWRITE |
-                                                       G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_HIGH,
+                                   g_param_spec_double ("high",
+                                                        "High",
+                                                        "High threshold",
+                                                        0.0, 1.0, 1.0,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -111,11 +109,11 @@ gimp_operation_threshold_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_LOW:
-      g_value_set_float (value, self->low);
+      g_value_set_double (value, self->low);
       break;
 
     case PROP_HIGH:
-      g_value_set_float (value, self->high);
+      g_value_set_double (value, self->high);
       break;
 
     default:
@@ -135,11 +133,11 @@ gimp_operation_threshold_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_LOW:
-      self->low = g_value_get_float (value);
+      self->low = g_value_get_double (value);
       break;
 
     case PROP_HIGH:
-      self->high = g_value_get_float (value);
+      self->high = g_value_get_double (value);
       break;
 
     default:

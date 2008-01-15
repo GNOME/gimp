@@ -38,8 +38,8 @@ struct _GimpOperationThreshold
 {
   GeglOperationPointFilter  parent_instance;
 
-  gfloat                    low;
-  gfloat                    high;
+  gdouble                   low;
+  gdouble                   high;
 };
 
 struct _GimpOperationThresholdClass
