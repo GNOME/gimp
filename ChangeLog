@@ -1,8 +1,18 @@
+2008-01-15  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/common/bumpmap.c
+	* plug-ins/script-fu/scripts/swirltile.scm: applied patch from
+	Ulf-D. Ehlert that catches a potential division by zero in the
+	Bumpmap plug-in and adjusts the range of the Depth parameter in
+	the Swirl-Tile script (bug #509608).
+
 2008-01-14  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	Merged from trunk:
 
-	*  plug-ins/script-fu/scripts/script-fu-compat.init: Fixed definition
+	* plug-ins/script-fu/scripts/script-fu-compat.init: Fixed definition
 	of 'prog1' due to recent fixes enforcing R5RS syntax for 'let'.
 
 2008-01-09  Sven Neumann  <sven@gimp.org>
