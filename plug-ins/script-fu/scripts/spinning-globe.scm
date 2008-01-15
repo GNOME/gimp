@@ -36,7 +36,7 @@
         (n 0)
         (ang (* (/ 360 inFrames)
                 (if (= inFromLeft TRUE) 1 -1) ))
-        (theFrame)
+        (theFrame 0)
         )
 
   (gimp-layer-add-alpha theLayer)

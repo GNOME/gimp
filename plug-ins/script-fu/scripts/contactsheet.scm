@@ -34,15 +34,15 @@
 
   (define (init-sheet-data size)
     (let (
-         (sheet-w)
-         (sheet-h)
-         (thumb-w)
-         (thumb-h)
-         (border-x) ;Space between rows and at top and bottom of thumbnails
-         (border-y) ;Space between columns and at left and right of thumbnails
-         (off-x)  ; Additional X shift to properly center a row of thumbnails
-         (off-y)  ; Additional Y shift to properly center rows of thumbnails
-         (count)
+         (sheet-w 0)
+         (sheet-h 0)
+         (thumb-w 0)
+         (thumb-h 0)
+         (border-x 0) ;Space between rows and at top and bottom of thumbnails
+         (border-y 0) ;Space between columns and at left and right of thumbnails
+         (off-x 0)  ; Additional X shift to properly center a row of thumbnails
+         (off-y 0)  ; Additional Y shift to properly center rows of thumbnails
+         (count 0)
          )
 
       (case size
@@ -108,9 +108,9 @@
 
   (define (init-sheet-img img num img-width border-y off-y)
     (let* (
-          (text-layer)
-          (text-width)
-          (text-height)
+          (text-layer 0)
+          (text-width 0)
+          (text-height 0)
           )
       (gimp-selection-all img)
       (gimp-drawable-fill (car (gimp-image-get-active-layer img))
@@ -155,25 +155,25 @@
         (pos-x 0)
         (pos-y 0)
 
-        (sheet-data)
-        (sheet-width)
-        (sheet-height)
-        (thumb-w)
-        (thumb-h)
-        (border-x)
-        (border-y)
-        (off-x)
-        (off-y)
-        (max-x)
-        (max-y)
+        (sheet-data 0)
+        (sheet-width 0)
+        (sheet-height 0)
+        (thumb-w 0)
+        (thumb-h 0)
+        (border-x 0)
+        (border-y 0)
+        (off-x 0)
+        (off-y 0)
+        (max-x 0)
+        (max-y 0)
 
-        (sheet-img)
-        (sheet-layer)
+        (sheet-img 0)
+        (sheet-layer 0)
 
-        (new-img)
-        (file)
-        (file-path)
-        (tmp-layer)
+        (new-img 0)
+        (file 0)
+        (file-path 0)
+        (tmp-layer 0)
         )
 
     (gimp-context-push)

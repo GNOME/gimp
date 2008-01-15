@@ -194,8 +194,8 @@
                                                       font))
         (x-position (- cx (/ (car text-extents) 2)))
         (y-position (- cy (/ (cadr text-extents) 2)))
-        (shadow-w)
-        (shadow-x)
+        (shadow-w 0)
+        (shadow-x 0)
         )
 
     (gimp-context-push)
