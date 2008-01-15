@@ -1645,6 +1645,22 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
     }
 }
 
+void
+gimp_display_shell_shrink_wrap_strict (GimpDisplayShell *shell)
+{
+  gint          width, height;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (! GTK_WIDGET_REALIZED (shell))
+    return;
+
+  width  = SCALEX (shell, gimp_image_get_width  (shell->display->image));
+  height = SCALEY (shell, gimp_image_get_height (shell->display->image));
+
+  gtk_window_resize (GTK_WINDOW (shell), width, height);
+}
+
 /**
  * gimp_display_shell_set_highlight:
  * @shell:     a #GimpDisplayShell

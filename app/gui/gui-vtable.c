@@ -326,7 +326,7 @@ gui_scratch_display_create (GimpImage *image,
   gimp_display_shell_set_show_scrollbars (shell, FALSE);
   gimp_display_shell_set_show_statusbar  (shell, FALSE);
 
-  gimp_display_shell_shrink_wrap (shell);
+  gimp_display_shell_shrink_wrap_strict (shell);
 
   gimp_ui_manager_update (shell->menubar_manager, display);
 
