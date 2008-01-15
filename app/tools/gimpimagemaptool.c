@@ -637,7 +637,7 @@ gimp_image_map_tool_preview (GimpImageMapTool *image_map_tool)
   tool    = GIMP_TOOL (image_map_tool);
   options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
 
-  if (options->preview)
+  if (options->preview && image_map_tool->image_map)
     {
       gimp_tool_control_set_preserve (tool->control, TRUE);
 

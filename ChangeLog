@@ -1,3 +1,8 @@
+2008-01-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_preview):
+	don't call map() if image_map_tool->image_map is NULL.
+
 2008-01-14  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/tools-utils.[ch]
