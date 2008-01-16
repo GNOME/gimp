@@ -1,3 +1,11 @@
+2008-01-16  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/gegl/gegl/buffer/gegl-buffer-types.h: removed.
+	* app/gegl/gegl/buffer/: removed.
+	* app/gegl/gegl/gegl-operation.h: synced from gegl. Now includes
+	the installed gegl-buffer.h which contains the public typedefs
+	needed for implementing operations anyways.
+
 2008-01-16  Sven Neumann  <sven@gimp.org>
 
 	* app/base/boundary.c: minor cleanup.
