@@ -102,6 +102,8 @@ libappwidgets_a_sources = \
 	gimpcurveview.h			\
 	gimpdasheditor.c		\
 	gimpdasheditor.h		\
+	gimpdatachooserdialog.c		\
+	gimpdatachooserdialog.h		\
 	gimpdataeditor.c		\
 	gimpdataeditor.h		\
 	gimpdatafactoryview.c		\

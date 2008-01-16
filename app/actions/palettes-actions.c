@@ -44,6 +44,18 @@ static const GimpActionEntry palettes_actions[] =
     N_("Palettes Menu"), NULL, NULL, NULL,
     GIMP_HELP_PALETTE_DIALOG },
 
+  { "palettes-load", GTK_STOCK_NEW,
+    N_("_Load Palette"), "",
+    N_("Load palette"),
+    G_CALLBACK (data_load_cmd_callback),
+    GIMP_HELP_PALETTE_LOAD },
+
+  { "palettes-save", GTK_STOCK_NEW,
+    N_("_Save Palette"), "",
+    N_("Save palette"),
+    G_CALLBACK (data_save_cmd_callback),
+    GIMP_HELP_PALETTE_NEW },
+
   { "palettes-new", GTK_STOCK_NEW,
     N_("_New Palette"), "",
     N_("New palette"),

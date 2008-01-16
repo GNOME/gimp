@@ -75,6 +75,8 @@ gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
 static void
 gimp_data_factory_view_init (GimpDataFactoryView *view)
 {
+  view->load_button      = NULL;
+  view->save_button      = NULL;
   view->edit_button      = NULL;
   view->new_button       = NULL;
   view->duplicate_button = NULL;
@@ -168,6 +170,18 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                         G_CALLBACK (gimp_data_factory_view_tree_name_edited),
                         factory_view);
     }
+
+  str = g_strdup_printf ("%s-load", action_group);
+  factory_view->load_button =
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
+                                   str, NULL);
+  g_free (str);
+
+  str = g_strdup_printf ("%s-save", action_group);
+  factory_view->save_button =
+    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
+                                   str, NULL);
+  g_free (str);
 
   str = g_strdup_printf ("%s-edit", action_group);
   factory_view->edit_button =

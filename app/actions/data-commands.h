@@ -22,6 +22,10 @@
 
 void   data_open_as_image_cmd_callback (GtkAction   *action,
                                         gpointer     data);
+void   data_load_cmd_callback          (GtkAction   *action,
+                                        gpointer     data);
+void   data_save_cmd_callback          (GtkAction   *action,
+                                        gpointer     data);
 void   data_new_cmd_callback           (GtkAction   *action,
                                         gpointer     data);
 void   data_duplicate_cmd_callback     (GtkAction   *action,

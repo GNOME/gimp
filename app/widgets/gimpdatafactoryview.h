@@ -42,6 +42,8 @@ struct _GimpDataFactoryView
 
   GimpDataFactory     *factory;
 
+  GtkWidget           *load_button;
+  GtkWidget           *save_button;
   GtkWidget           *edit_button;
   GtkWidget           *new_button;
   GtkWidget           *duplicate_button;

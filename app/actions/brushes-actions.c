@@ -49,6 +49,18 @@ static const GimpActionEntry brushes_actions[] =
     G_CALLBACK (data_open_as_image_cmd_callback),
     GIMP_HELP_BRUSH_OPEN_AS_IMAGE },
 
+  { "brushes-load", GTK_STOCK_NEW,
+    N_("_Load Brush"), "",
+    N_("Load brush"),
+    G_CALLBACK (data_load_cmd_callback),
+    GIMP_HELP_BRUSH_LOAD },
+
+  { "brushes-save", GTK_STOCK_NEW,
+    N_("_Save Brush"), "",
+    N_("Save brush"),
+    G_CALLBACK (data_save_cmd_callback),
+    GIMP_HELP_BRUSH_SAVE },
+
   { "brushes-new", GTK_STOCK_NEW,
     N_("_New Brush"), "",
     N_("New brush"),

@@ -54,9 +54,6 @@ static gint64  gimp_data_factory_get_memsize  (GimpObject           *object,
 
 static gchar * gimp_data_factory_get_save_dir (GimpDataFactory      *factory);
 
-static void    gimp_data_factory_load_data  (const GimpDatafileData *file_data,
-                                             gpointer                data);
-
 
 G_DEFINE_TYPE (GimpDataFactory, gimp_data_factory, GIMP_TYPE_OBJECT)
 
@@ -191,12 +188,6 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
   gimp_container_thaw (factory->container);
 }
 
-typedef struct
-{
-  GimpDataFactory *factory;
-  GHashTable      *cache;
-} GimpDataLoadContext;
-
 static gboolean
 gimp_data_factory_refresh_cache_remove (gpointer key,
                                         gpointer value,
@@ -320,6 +311,28 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
 
   g_free (path);
   g_free (writable_path);
+}
+
+void
+gimp_data_factory_data_load_path (GimpDataFactory *factory,
+                                  gchar           *path)
+{
+  if (path && strlen (path))
+    {
+      gchar               *tmp;
+      GimpDataLoadContext  context;
+
+      context.factory = factory;
+      context.cache   = NULL;
+
+      tmp = gimp_config_path_expand (path, TRUE, NULL);
+      g_free (path);
+      path = tmp;
+
+      gimp_datafiles_read_directories (path, G_FILE_TEST_EXISTS,
+                                       gimp_data_factory_load_data,
+                                       &context);
+    }
 }
 
 static void
@@ -645,14 +658,17 @@ gimp_data_factory_get_save_dir (GimpDataFactory *factory)
   return writable_dir;
 }
 
-static void
+void
 gimp_data_factory_load_data (const GimpDatafileData *file_data,
-                             gpointer                data)
+                             gpointer                user_data)
 {
-  GimpDataLoadContext *context = data;
+  GimpDataLoadContext *context = user_data;
   GimpDataFactory     *factory = context->factory;
   GHashTable          *cache   = context->cache;
   gint                 i;
+
+  if (factory->gimp->be_verbose)
+    g_print ("gimp_data_factory_load_data: loading %s\n", file_data->filename);
 
   for (i = 0; i < factory->n_loader_entries; i++)
     {
@@ -668,11 +684,12 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
   {
     GList    *cached_data;
     gboolean  load_from_disk = TRUE;
+    GimpData *data           = NULL;
 
     if (cache &&
         (cached_data = g_hash_table_lookup (cache, file_data->filename)))
       {
-        GimpData *data = cached_data->data;
+        data = cached_data->data;
 
         load_from_disk = (data->mtime == 0 || data->mtime != file_data->mtime);
 
@@ -682,7 +699,10 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
 
             for (list = cached_data; list; list = g_list_next (list))
               gimp_container_add (factory->container, GIMP_OBJECT (list->data));
+
+            return;
           }
+
       }
 
     if (load_from_disk)
@@ -711,7 +731,7 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
 
             for (list = data_list; list; list = g_list_next (list))
               {
-                GimpData *data = list->data;
+                data = list->data;
 
                 gimp_data_set_filename (data, file_data->filename,
                                         writable, deletable);
@@ -723,6 +743,8 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
               }
 
             g_list_free (data_list);
+
+            return;
           }
 
         if (G_UNLIKELY (error))
@@ -730,7 +752,11 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
             gimp_message (factory->gimp, NULL, GIMP_MESSAGE_ERROR,
                           _("Failed to load data:\n\n%s"), error->message);
             g_clear_error (&error);
+
+            return;
           }
       }
   }
+
+  return;
 }

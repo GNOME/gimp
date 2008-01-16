@@ -50,6 +50,12 @@ struct _GimpDataFactoryLoaderEntry
 #define GIMP_DATA_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DATA_FACTORY, GimpDataFactoryClass))
 
 
+typedef struct
+{
+  GimpDataFactory *factory;
+  GHashTable      *cache;
+} GimpDataLoadContext;
+
 typedef struct _GimpDataFactoryClass  GimpDataFactoryClass;
 
 struct _GimpDataFactory
@@ -104,6 +110,10 @@ GimpData * gimp_data_factory_data_get_standard (GimpDataFactory  *factory);
 gboolean   gimp_data_factory_data_save_single  (GimpDataFactory  *factory,
                                                 GimpData         *data,
                                                 GError          **error);
+void       gimp_data_factory_data_load_path    (GimpDataFactory  *factory,
+                                                gchar            *path);
 
+void       gimp_data_factory_load_data   (const GimpDatafileData *file_data,
+                                          gpointer                data);
 
 #endif  /*  __GIMP_DATA_FACTORY_H__  */

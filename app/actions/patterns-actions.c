@@ -49,6 +49,18 @@ static const GimpActionEntry patterns_actions[] =
     G_CALLBACK (data_open_as_image_cmd_callback),
     GIMP_HELP_PATTERN_OPEN_AS_IMAGE },
 
+  { "patterns-load", GTK_STOCK_NEW,
+    N_("_Load Pattern"), "",
+    N_("Load pattern"),
+    G_CALLBACK (data_load_cmd_callback),
+    GIMP_HELP_PATTERN_LOAD },
+
+  { "patterns-save", GTK_STOCK_NEW,
+    N_("_Save Pattern"), "",
+    N_("Save pattern"),
+    G_CALLBACK (data_save_cmd_callback),
+    GIMP_HELP_PATTERN_SAVE },
+
   { "patterns-new", GTK_STOCK_NEW,
     N_("_New Pattern"), "",
     N_("New pattern"),

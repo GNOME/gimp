@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -36,6 +38,7 @@
 
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimpcontainerview.h"
+#include "widgets/gimpdatachooserdialog.h"
 #include "widgets/gimpdataeditor.h"
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpdialogfactory.h"
@@ -114,6 +117,23 @@ data_open_as_image_cmd_callback (GtkAction *action,
           g_free (uri);
         }
     }
+}
+
+void
+data_load_cmd_callback (GtkAction *action,
+                        gpointer   user_data)
+{
+  GimpDataFactoryView *view        = GIMP_DATA_FACTORY_VIEW (user_data);
+  GimpDataFactory     *factory     = view->factory;
+  GimpDataLoadContext  load_context;
+
+  gimp_data_chooser_dialog_new (factory, GIMP_VIEW_TYPE_LIST);
+}
+
+void
+data_save_cmd_callback (GtkAction *action,
+                        gpointer   user_data)
+{
 }
 
 void

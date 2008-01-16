@@ -1,5 +1,26 @@
 2008-01-16  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	Preliminary experimental implementation of data chooser
+	functionality.
+
+	* app/widgets/gimpdatachooserdialog.c
+	* app/widgets/gimpdatachooserdialog.h: new files
+
+	* app/core/gimpdatafactory.c
+	* app/core/gimpdatafactory.h
+	* app/actions/data-commands.c
+	* app/actions/data-commands.h
+	* app/actions/gradients-actions.c
+	* app/actions/palettes-actions.c
+	* app/actions/brushes-actions.c
+	* app/actions/patterns-actions.c
+	* app/widgets/Makefile.am
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpdatafactoryview.h
+	* app/widgets/gimphelp-ids.h
+
+2008-01-16  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/display/gimpdisplayshell.h: remove extra code that got
 	into this and broke the build.
 	
