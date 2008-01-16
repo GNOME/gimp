@@ -212,10 +212,9 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 			       gdouble           inertia_factor,
 			       guint32           time)
 {
+  const gdouble  smooth_factor = 0.3;
   guint32        thistime      = time;
   gdouble        dist;
-  gdouble        xy_sfactor    = 0;
-  const gdouble  smooth_factor = 0.3;
 
   if (shell->last_disp_motion_time == 0)
     {
@@ -224,9 +223,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
        */
       coords->velocity   = 100;
       coords->delta_time = 0.001;
-      coords->distance   = 0;
-
-      shell->last_coords = *coords;
+      coords->distance   = 1;
     }
   else
     {
@@ -253,41 +250,68 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
         }
       else
         {
-
-          coords->velocity = (coords->distance / (gdouble) coords->delta_time) / 10;
+          coords->velocity =
+            (coords->distance / (gdouble) coords->delta_time) / 10;
 
           /* A little smooth on this too, feels better in tools this way. */
           coords->velocity = (shell->last_coords.velocity * (1 - smooth_factor)
-                              +  coords->velocity * smooth_factor);
-	  /* Speed needs upper limit */
-          coords->velocity=MIN(coords->velocity,1.0);
+                              + coords->velocity * smooth_factor);
+          /* Speed needs upper limit */
+          coords->velocity = MIN (coords->velocity, 1.0);
         }
 
       if (inertia_factor > 0)
         {
-          /* Apply smoothing to X and Y.
-           *
-           * The very high velocity values (yes, thats around 25
-           * according to tests) happen at great zoom outs and scream
-           * for heavyhanded smooth so I made it automatic. This
-           * should be bound to zoom level once theres a GUI foob to
-           * adjust smooth or disabled completely.
-           */
+          /* Apply smoothing to X and Y. */
 
-           /*Apply smoothing to X and Y.
-             Smooth is dampened for high speeds to minimize the whip effect.*/
-           xy_sfactor = inertia_factor - inertia_factor * fabs (coords->velocity);
-           coords->x = shell->last_coords.x - (shell->last_coords.delta_x * xy_sfactor
-                                               + coords->delta_x * (1 - xy_sfactor));
-           coords->y = shell->last_coords.y - (shell->last_coords.delta_y * xy_sfactor
-                                               + coords->delta_y * (1 - xy_sfactor));
+          /* This tells how far from the pointer can stray from the line */
+          gdouble max_deviation = SQR (20 * inertia_factor);
+          gdouble cur_deviation = max_deviation;
+          gdouble sin_avg;
+          gdouble sin_old;
+          gdouble sin_new;
+          gdouble cos_avg;
+          gdouble cos_old;
+          gdouble cos_new;
+          gdouble new_x;
+          gdouble new_y;
 
-           /* Recalculate distance */
-           coords->distance = sqrt ((shell->last_coords.x - coords->x) *
-                                    (shell->last_coords.x - coords->x) +
-                                    (shell->last_coords.y - coords->y) *
-                                    (shell->last_coords.y - coords->y));
+          sin_new = coords->delta_x / coords->distance;
+          sin_old = shell->last_coords.delta_x / shell->last_coords.distance;
+          sin_avg = sin (asin (sin_old) * inertia_factor +
+                         asin (sin_new) * (1 - inertia_factor));
 
+          cos_new = coords->delta_y / coords->distance;
+          cos_old = shell->last_coords.delta_y / shell->last_coords.distance;
+          cos_avg = cos (acos (cos_old) * inertia_factor +
+                         acos (cos_new) * (1 - inertia_factor));
+
+          coords->delta_x = sin_avg * coords->distance;
+          coords->delta_y = cos_avg * coords->distance;
+
+          new_x = (shell->last_coords.x - coords->delta_x) * 0.5 + coords->x * 0.5;
+          new_y = (shell->last_coords.y - coords->delta_y) * 0.5 + coords->y * 0.5;
+
+          cur_deviation = SQR(coords->x-new_x) + SQR(coords->y-new_y);
+
+          while (cur_deviation >= max_deviation)
+            {
+              new_x = new_x * 0.8 + coords->x * 0.2;
+              new_y = new_y * 0.8 + coords->y * 0.2;
+
+              cur_deviation = (SQR (coords->x - new_x) +
+                               SQR (coords->y - new_y));
+            }
+
+          coords->x = new_x;
+          coords->y = new_y;
+
+          coords->delta_x = shell->last_coords.x - coords->x;
+          coords->delta_y = shell->last_coords.y - coords->y;
+
+          /* Recalculate distance */
+          coords->distance = sqrt (SQR (coords->delta_x) +
+                                   SQR (coords->delta_y));
         }
 
 #ifdef VERBOSE
@@ -297,10 +321,12 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
                   shell->last_coords.velocity,
                   coords->pressure,
                   coords->distance - dist,
-                  xy_sfactor);
+                  inertia_factor);
 #endif
-
     }
+
+  shell->last_coords = *coords;
+  shell->last_disp_motion_time = time;
 
   return TRUE;
 }

@@ -80,6 +80,9 @@
 #include "gimp-intl.h"
 
 
+#define DEFAULT_EVENT_SMOOTHING  0.7
+
+
 /*  local function prototypes  */
 
 static void       gimp_display_shell_vscrollbar_update (GtkAdjustment    *adjustment,
@@ -597,18 +600,18 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                        GdkEvent         *event,
                                        GimpDisplayShell *shell)
 {
-  GimpDisplay         *display;
-  GimpImage           *image;
-  Gimp                *gimp;
-  GdkDisplay          *gdk_display;
-  GimpTool            *active_tool;
-  GimpCoords           display_coords;
-  GimpCoords           image_coords;
-  GdkModifierType      state;
-  guint32              time;
-  gboolean             device_changed   = FALSE;
-  gboolean             return_val       = FALSE;
-  gboolean             update_sw_cursor = FALSE;
+  GimpDisplay     *display;
+  GimpImage       *image;
+  Gimp            *gimp;
+  GdkDisplay      *gdk_display;
+  GimpTool        *active_tool;
+  GimpCoords       display_coords;
+  GimpCoords       image_coords;
+  GdkModifierType  state;
+  guint32          time;
+  gboolean         device_changed   = FALSE;
+  gboolean         return_val       = FALSE;
+  gboolean         update_sw_cursor = FALSE;
 
   g_return_val_if_fail (GTK_WIDGET_REALIZED (canvas), FALSE);
 
@@ -1241,10 +1244,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                           }
 
                         /* Early removal of useless events saves CPU time.
-                         * Defaulting smoothing to 0.4.
                          */
                         if (gimp_display_shell_eval_event (shell,
-                                                           &image_coords, 0.4,
+                                                           &image_coords,
+                                                           DEFAULT_EVENT_SMOOTHING,
                                                            history_events[i]->time))
                           {
                             tool_manager_motion_active (gimp,
@@ -1252,12 +1255,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                         history_events[i]->time,
                                                         state,
                                                         display);
-
-                            shell->last_coords = image_coords;
-                            shell->last_disp_motion_time = history_events[i]->time;
                           }
 
-                         shell->last_read_motion_time=history_events[i]->time;
+                         shell->last_read_motion_time = history_events[i]->time;
                       }
 
                     gdk_device_free_history (history_events, n_history_events);
@@ -1265,10 +1265,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 else
                   {
                     /* Early removal of useless events saves CPU time.
-                     * Defaulting smoothing to 0.4.
                      */
                     if (gimp_display_shell_eval_event (shell,
-                                                       &image_coords, 0.4,
+                                                       &image_coords,
+                                                       DEFAULT_EVENT_SMOOTHING,
                                                        time))
                       {
                         tool_manager_motion_active (gimp,
@@ -1276,12 +1276,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                     time,
                                                     state,
                                                     display);
-
-                        shell->last_coords = image_coords;
-                        shell->last_disp_motion_time = time;
                       }
 
-                    shell->last_read_motion_time=time;
+                    shell->last_read_motion_time = time;
                   }
               }
           }
@@ -1290,18 +1287,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
           {
             /* Early removal of useless events saves CPU time.
-             * Smoothing coasting to avoid unpredicted jumps when making contact.
-             * This may need a different solution but cant properly test it without
-             * adjustment.
+             * Smoothing is 0.0 here for coasting.
              */
-            if (gimp_display_shell_eval_event (shell, &image_coords, 0.4, time))
+            if (gimp_display_shell_eval_event (shell, &image_coords, 0.0, time))
               {
                 tool_manager_oper_update_active (gimp,
                                                  &image_coords, state,
                                                  shell->proximity,
                                                  display);
-                shell->last_coords = image_coords;
-		shell->last_disp_motion_time = time;
               }
 
             shell->last_read_motion_time = time;

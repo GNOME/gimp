@@ -1,3 +1,9 @@
+2008-01-16  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-coords.c: applied parts of a change
+	from Alexia Death. This improves the event smoothing (bug #508639).
+
 2008-01-15  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/tools-utils.h: Added symbolic constants for common
