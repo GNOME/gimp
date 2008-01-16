@@ -1,3 +1,32 @@
+2008-01-16  Michael Natterer  <mitch@gimp.org>
+
+	Fix gegl types and includes so we can include operations from
+	app/gegl in other gimp files (needed soon):
+
+	* app/gegl/gegl/gegl-types.h: not copied from gegl any longer.
+	Now contains only two typedefs needed by the copied operation
+	headers.
+
+	* app/gegl/gegl-types.h: include above types file.
+
+	* app/gegl/gimp-gegl.c
+	* app/gegl/gimpoperationcolorbalance.c
+	* app/gegl/gimpoperationcolorize.c
+	* app/gegl/gimpoperationdesaturate.c
+	* app/gegl/gimpoperationhuesaturation.c
+	* app/gegl/gimpoperationlevels.c
+	* app/gegl/gimpoperationposterize.c
+	* app/gegl/gimpoperationthreshold.c
+	* app/gegl/gimpoperationtilesink.c
+	* app/gegl/gimpoperationtilesource.c: include only <gegl.h> and
+	"gegl-types.h" from this directory, which is much more gimpish
+	now. Include "gegl/buffer/gegl-buffer.h" in the source and sink
+	operations.
+
+	* app/tools/gimpimagemaptool.h: warn about inclusion of <gegl.h>
+	only if it hasn't been included before, so it only warns in the
+	files where we still have to address this issue.
+
 2008-01-16  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c

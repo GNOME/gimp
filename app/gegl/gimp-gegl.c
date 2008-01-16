@@ -21,8 +21,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
-#include "gegl/gegl-types.h"
+#include <gegl.h>
 
 #include "gegl-types.h"
 

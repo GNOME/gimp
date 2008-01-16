@@ -23,10 +23,8 @@
 
 #include <string.h>
 
-#include <glib-object.h>
-
-#include "gegl/gegl-types.h"
-#include <gegl/buffer/gegl-buffer.h>
+#include <gegl.h>
+#include "gegl/buffer/gegl-buffer.h"
 
 #include "gegl-types.h"
 
@@ -34,7 +32,6 @@
 #include "base/pixel-region.h"
 
 #include "gimp-gegl-utils.h"
-#include "gegl/graph/gegl-node-context.h"
 #include "gimpoperationtilesource.h"
 
 

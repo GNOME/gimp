@@ -18,11 +18,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __OUR_GEGL_TYPES_H__
-#define __OUR_GEGL_TYPES_H__
+#ifndef __GEGL_TYPES_H__
+#define __GEGL_TYPES_H__
 
 
 #include "base/base-types.h"
+#include "gegl/gegl-types.h"
 
 
 typedef struct _GimpOperationColorBalance  GimpOperationColorBalance;
@@ -36,4 +37,4 @@ typedef struct _GimpOperationTileSink      GimpOperationTileSink;
 typedef struct _GimpOperationTileSource    GimpOperationTileSource;
 
 
-#endif /* __OUR_GEGL_TYPES_H__ */
+#endif /* __GEGL_TYPES_H__ */

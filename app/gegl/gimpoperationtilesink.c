@@ -23,11 +23,8 @@
 
 #include <string.h>
 
-#include <glib-object.h>
-
-#include "gegl/gegl-types.h"
-#include "gegl/graph/gegl-node-context.h"
-#include <gegl/buffer/gegl-buffer.h>
+#include <gegl.h>
+#include "gegl/buffer/gegl-buffer.h"
 
 #include "gegl-types.h"
 
