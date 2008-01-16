@@ -37,10 +37,10 @@
                                        RGB-IMAGE "Background" 100 NORMAL-MODE)))
         (pattern (car (gimp-layer-new img width height
                                       RGBA-IMAGE "Pattern" 100 NORMAL-MODE)))
-        (layer2)
-        (layer3)
-        (pattern-mask)
-        (floating-sel)
+        (layer2 0)
+        (layer3 0)
+        (pattern-mask 0)
+        (floating-sel 0)
         )
 
     (gimp-context-push)

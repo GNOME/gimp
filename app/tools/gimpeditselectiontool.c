@@ -55,6 +55,7 @@
 #include "gimpeditselectiontool.h"
 #include "gimptoolcontrol.h"
 #include "tool_manager.h"
+#include "tools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -63,19 +64,23 @@
 #define ARROW_VELOCITY          25
 
 
-static void   gimp_edit_selection_tool_button_release (GimpTool              *tool,
-                                                       GimpCoords            *coords,
-                                                       guint32                time,
-                                                       GdkModifierType        state,
-                                                       GimpButtonReleaseType  release_type,
-                                                       GimpDisplay           *display);
-static void   gimp_edit_selection_tool_motion         (GimpTool              *tool,
-                                                       GimpCoords            *coords,
-                                                       guint32                time,
-                                                       GdkModifierType        state,
-                                                       GimpDisplay           *display);
-
-static void   gimp_edit_selection_tool_draw           (GimpDrawTool          *tool);
+static void    gimp_edit_selection_tool_button_release      (GimpTool              *tool,
+                                                             GimpCoords            *coords,
+                                                             guint32                time,
+                                                             GdkModifierType        state,
+                                                             GimpButtonReleaseType  release_type,
+                                                             GimpDisplay           *display);
+static void    gimp_edit_selection_tool_motion              (GimpTool              *tool,
+                                                             GimpCoords            *coords,
+                                                             guint32                time,
+                                                             GdkModifierType        state,
+                                                             GimpDisplay           *display);
+static void    gimp_edit_selection_tool_active_modifier_key (GimpTool              *tool,
+                                                             GdkModifierType        key,
+                                                             gboolean               press,
+                                                             GdkModifierType        state,
+                                                             GimpDisplay           *display);
+static void    gimp_edit_selection_tool_draw                (GimpDrawTool          *tool);
 
 
 G_DEFINE_TYPE (GimpEditSelectionTool, gimp_edit_selection_tool,
@@ -87,13 +92,14 @@ G_DEFINE_TYPE (GimpEditSelectionTool, gimp_edit_selection_tool,
 static void
 gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *klass)
 {
-  GimpToolClass     *tool_class = GIMP_TOOL_CLASS (klass);
-  GimpDrawToolClass *draw_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GimpToolClass     *tool_class   = GIMP_TOOL_CLASS (klass);
+  GimpDrawToolClass *draw_class   = GIMP_DRAW_TOOL_CLASS (klass);
 
-  tool_class->button_release = gimp_edit_selection_tool_button_release;
-  tool_class->motion         = gimp_edit_selection_tool_motion;
+  tool_class->button_release      = gimp_edit_selection_tool_button_release;
+  tool_class->motion              = gimp_edit_selection_tool_motion;
+  tool_class->active_modifier_key = gimp_edit_selection_tool_active_modifier_key;
 
-  draw_class->draw           = gimp_edit_selection_tool_draw;
+  draw_class->draw                = gimp_edit_selection_tool_draw;
 }
 
 static void
@@ -111,6 +117,8 @@ gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_selection_tool)
   edit_selection_tool->cumly      = 0;
 
   edit_selection_tool->first_move = TRUE;
+
+  edit_selection_tool->constrain  = FALSE;
 }
 
 static void
@@ -206,6 +214,12 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
 
   edit_select->x = edit_select->origx = coords->x - off_x;
   edit_select->y = edit_select->origy = coords->y - off_y;
+
+  /* Remember starting point for use in constrained movement */
+  edit_select->start_x = coords->x;
+  edit_select->start_y = coords->y;
+
+  edit_select->constrain = FALSE;
 
   switch (edit_select->edit_mode)
     {
@@ -542,6 +556,13 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 
   gimp_item_offsets (active_item, &off_x, &off_y);
 
+  if (edit_select->constrain)
+    {
+      gimp_tool_motion_constrain (edit_select->start_x, edit_select->start_y,
+                                  &coords->x, &coords->y,
+                                  GIMP_TOOL_CONSTRAIN_45_DEGREES);
+    }
+
   motion_x = coords->x - off_x;
   motion_y = coords->y - off_y;
 
@@ -674,6 +695,18 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
                                 NULL);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+}
+
+static void
+gimp_edit_selection_tool_active_modifier_key (GimpTool        *tool,
+                                              GdkModifierType  key,
+                                              gboolean         press,
+                                              GdkModifierType  state,
+                                              GimpDisplay     *display)
+{
+  GimpEditSelectionTool *edit_select = GIMP_EDIT_SELECTION_TOOL (tool);
+
+  edit_select->constrain = state & GDK_CONTROL_MASK ? TRUE : FALSE;
 }
 
 static void

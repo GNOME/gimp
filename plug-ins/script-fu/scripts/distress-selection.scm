@@ -34,7 +34,7 @@
        (theImage inImage)
        (theWidth (car (gimp-image-width inImage)))
        (theHeight (car (gimp-image-height inImage)))
-       (theLayer)
+       (theLayer 0)
        (theMode (car (gimp-image-base-type inImage)))
        )
 

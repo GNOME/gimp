@@ -42,13 +42,13 @@ struct _GimpOperationLevels
 
   GimpHistogramChannel      channel;
 
-  gfloat                    gamma[5];
+  gdouble                   gamma[5];
 
-  gfloat                    low_input[5];
-  gfloat                    high_input[5];
+  gdouble                   low_input[5];
+  gdouble                   high_input[5];
 
-  gfloat                    low_output[5];
-  gfloat                    high_output[5];
+  gdouble                   low_output[5];
+  gdouble                   high_output[5];
 };
 
 struct _GimpOperationLevelsClass

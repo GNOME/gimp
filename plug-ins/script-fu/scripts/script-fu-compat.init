@@ -330,8 +330,7 @@
 )
 
 (define (prog1 form1 . form2)
-  (let ((a))
-    (set! a form1)
+  (let ((a form1))
     (if (not (null? form2))
       form2
     )

@@ -52,8 +52,8 @@
 #include "gimp-intl.h"
 
 
-#define  TARGET       12
-#define  ARC_RADIUS   30
+#define  TARGET      12
+#define  ARC_RADIUS  30
 
 
 /*  local function prototypes  */
@@ -434,7 +434,9 @@ gimp_measure_tool_motion (GimpTool        *tool,
           gdouble  x = measure->x[i];
           gdouble  y = measure->y[i];
 
-          gimp_tool_motion_constrain (measure->x[0], measure->y[0], &x, &y);
+          gimp_tool_motion_constrain (measure->x[0], measure->y[0],
+                                      &x, &y,
+                                      GIMP_TOOL_CONSTRAIN_15_DEGREES);
 
           measure->x[i] = ROUND (x);
           measure->y[i] = ROUND (y);
@@ -505,7 +507,9 @@ gimp_measure_tool_active_modifier_key (GimpTool        *tool,
       y = measure->mouse_y;
 
       if (press)
-        gimp_tool_motion_constrain (measure->x[0], measure->y[0], &x, &y);
+        gimp_tool_motion_constrain (measure->x[0], measure->y[0],
+                                    &x, &y,
+                                    GIMP_TOOL_CONSTRAIN_15_DEGREES);
 
       measure->x[measure->point] = ROUND (x);
       measure->y[measure->point] = ROUND (y);

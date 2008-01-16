@@ -1,5 +1,9 @@
 2008-01-16  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	Merged 24584:24625 from trunk.
+	
+2008-01-16  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	Preliminary experimental implementation of data chooser
 	functionality.
 

@@ -253,10 +253,10 @@ gimp_paint_tool_round_line (GimpPaintCore   *core,
       core->cur_coords.y  = floor (core->cur_coords.y ) + 0.5;
     }
 
-  /* Restrict to multiples of 15 degrees if ctrl is pressed */
   if (state & GDK_CONTROL_MASK)
     gimp_tool_motion_constrain (core->last_coords.x, core->last_coords.y,
-                                &core->cur_coords.x, &core->cur_coords.y);
+                                &core->cur_coords.x, &core->cur_coords.y,
+                                GIMP_TOOL_CONSTRAIN_15_DEGREES);
 }
 
 static void

@@ -38,16 +38,6 @@ struct _GimpInkUndo
   GimpPaintCoreUndo  parent_instance;
 
   Blob              *last_blob;
-
-  gdouble            dt_buffer[DIST_SMOOTHER_BUFFER];
-  gint               dt_index;
-
-  guint32            ts_buffer[TIME_SMOOTHER_BUFFER];
-  gint               ts_index;
-
-  gdouble            last_time;
-
-  gboolean           init_velocity;
 };
 
 struct _GimpInkUndoClass

@@ -174,12 +174,9 @@ gimp_posterize_tool_map (GimpImageMapTool *image_map_tool)
 {
   GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (image_map_tool);
 
-  if (image_map_tool->operation)
-    {
-      gegl_node_set (image_map_tool->operation,
-                     "levels", posterize_tool->levels,
-                     NULL);
-    }
+  gegl_node_set (image_map_tool->operation,
+                 "levels", posterize_tool->levels,
+                 NULL);
 
   posterize_lut_setup (posterize_tool->lut,
                        posterize_tool->levels,

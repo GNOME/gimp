@@ -588,6 +588,9 @@ gimp_ui_manager_ui_popup (GimpUIManager        *manager,
   if (GTK_IS_MENU_ITEM (widget))
     widget = gtk_menu_item_get_submenu (GTK_MENU_ITEM (widget));
 
+  if (! widget)
+    return;
+
   g_return_if_fail (GTK_IS_MENU (widget));
 
   if (! position_func)

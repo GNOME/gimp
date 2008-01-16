@@ -106,6 +106,7 @@ color_balance_create_lookup_tables (ColorBalance *cb)
     (cb->magenta_green[GIMP_MIDTONES] > 0) ? midtones_add : midtones_sub;
   magenta_green_transfer[GIMP_HIGHLIGHTS] =
     (cb->magenta_green[GIMP_HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
+
   yellow_blue_transfer[GIMP_SHADOWS] =
     (cb->yellow_blue[GIMP_SHADOWS] > 0) ? shadows_add : shadows_sub;
   yellow_blue_transfer[GIMP_MIDTONES] =
@@ -188,7 +189,7 @@ color_balance (ColorBalance *cb,
 
           d[RED_PIX]   = r_n;
           d[GREEN_PIX] = g_n;
-           d[BLUE_PIX]  = b_n;
+          d[BLUE_PIX]  = b_n;
 
           if (alpha)
             d[ALPHA_PIX] = s[ALPHA_PIX];

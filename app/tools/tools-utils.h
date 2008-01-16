@@ -20,10 +20,20 @@
 #define __TOOLS_UTILS_H__
 
 
+/*
+ * Common values for the n_snap_lines parameter of
+ * gimp_tool_motion_constrain.
+ */
+#define GIMP_TOOL_CONSTRAIN_90_DEGREES 2
+#define GIMP_TOOL_CONSTRAIN_45_DEGREES 4
+#define GIMP_TOOL_CONSTRAIN_15_DEGREES 12
+
+
 void  gimp_tool_motion_constrain (gdouble   start_x,
                                   gdouble   start_y,
                                   gdouble  *end_x,
-                                  gdouble  *end_y);
+                                  gdouble  *end_y,
+                                  gint      n_snap_lines);
 
 
 #endif  /*  __TOOLS_UTILS_H__  */

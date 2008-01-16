@@ -22,9 +22,7 @@ INCLUDES = \
 	$(EXIF_CFLAGS)	\
 	-I$(includedir)
 
-libexec_PROGRAMS = $(JPEG)
-
-EXTRA_PROGRAMS = jpeg
+libexec_PROGRAMS = jpeg
 
 jpeg_SOURCES = \
 	jpeg.c		\

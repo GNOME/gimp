@@ -74,7 +74,7 @@
                                          "Bumpmap"
                                          100
                                          NORMAL-MODE)))
-        (select)
+        (select 0)
         )
 
     (gimp-context-push)

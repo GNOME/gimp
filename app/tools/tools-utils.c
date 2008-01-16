@@ -25,34 +25,46 @@
 #include "tools-utils.h"
 
 
+static gdouble gimp_tool_utils_point_to_line_distance (const GimpVector2 *point,
+                                                       const GimpVector2 *point_on_line,
+                                                       const GimpVector2 *normalized_line_direction,
+                                                       GimpVector2       *closest_line_point);
+
+
 /**
- * gimp_tool_motion_constrain_helper:
- * @dx: the (fixed) delta-x
- * @dy: a suggested delta-y
+ * gimp_tool_utils_point_to_line_distance:
+ * @point:              The point to calculate the distance for.
+ * @point_on_line:      A point on the line.
+ * @line_direction:     Normalized line direction vector.
+ * @closest_line_point: Gets set to the point on the line that is
+ *                      closest to @point.
  *
- * Returns: An adjusted dy' near dy such that the slope (dx,dy')
- *          is a multiple of 15 degrees.
+ * Returns: The shortest distance from @point to the line defined by
+ *          @point_on_line and @normalized_line_direction.
  **/
 static gdouble
-gimp_tool_motion_constrain_helper (gdouble dx,
-                                   gdouble dy)
+gimp_tool_utils_point_to_line_distance (const GimpVector2 *point,
+                                        const GimpVector2 *point_on_line,
+                                        const GimpVector2 *line_direction,
+                                        GimpVector2       *closest_line_point)
 {
-  static const gdouble slope[4]   = { 0, 0.26795, 0.57735, 1 };
-  static const gdouble divider[3] = { 0.13165, 0.41421, 0.76732 };
-  gint  i;
+  GimpVector2 distance_vector;
+  GimpVector2 tmp_a;
+  GimpVector2 tmp_b;
+  gdouble     d;
 
-  if (dy < 0)
-    return - gimp_tool_motion_constrain_helper (dx, -dy);
+  gimp_vector2_sub (&tmp_a, point, point_on_line);
 
-  dx = fabs (dx);
+  d = gimp_vector2_inner_product (&tmp_a, line_direction);
 
-  for (i = 0; i < 3; i ++)
-    if (dy < dx * divider[i])
-      break;
+  tmp_b = gimp_vector2_mul_val (*line_direction, d);
 
-  dy = dx * slope[i];
+  *closest_line_point = gimp_vector2_add_val (*point_on_line,
+                                              tmp_b);
 
-  return dy;
+  gimp_vector2_sub (&distance_vector, closest_line_point, point);
+
+  return gimp_vector2_length (&distance_vector);
 }
 
 /**
@@ -61,33 +73,47 @@ gimp_tool_motion_constrain_helper (gdouble dx,
  * @start_y:
  * @end_x:
  * @end_y:
+ * @n_snap_lines: Number evenly disributed lines to snap to.
  *
- * Restricts the motion vector to 15 degree steps by changing the end
- * point (if necessary).
+ * Projects a line onto the specified subset of evenly radially
+ * distributed lines. @n_lines of 2 makes the line snap horizontally
+ * or vertically. @n_lines of 4 snaps on 45 degree steps. @n_lines of
+ * 12 on 15 degree steps. etc.
  **/
 void
-gimp_tool_motion_constrain (gdouble   start_x,
-                            gdouble   start_y,
-                            gdouble  *end_x,
-                            gdouble  *end_y)
+gimp_tool_motion_constrain (gdouble  start_x,
+                            gdouble  start_y,
+                            gdouble *end_x,
+                            gdouble *end_y,
+                            gint     n_snap_lines)
 {
-  gdouble dx = *end_x - start_x;
-  gdouble dy = *end_y - start_y;
+  GimpVector2 line_point          = {  start_x,  start_y };
+  GimpVector2 point               = { *end_x,   *end_y   };
+  GimpVector2 constrained_point;
+  GimpVector2 line_dir;
+  gdouble     shortest_dist_moved = G_MAXDOUBLE;
+  gdouble     dist_moved;
+  gdouble     angle;
+  gint        i;
 
-  /*  This algorithm changes only one of dx and dy, and does not try
-   *  to constrain the resulting dx and dy to integers. This gives
-   *  at least two benefits:
-   *    1. gimp_tool_motion_constrain is idempotent, even if followed by
-   *       a rounding operation.
-   *    2. For any two lines with the same starting-point and ideal
-   *       15-degree direction, the points plotted by
-   *       gimp_paint_core_interpolate for the shorter line will always
-   *       be a superset of those plotted for the longer line.
-   */
+  for (i = 0; i < n_snap_lines; i++)
+    {
+      angle = i * G_PI / n_snap_lines;
 
-  if (fabs (dx) > fabs (dy))
-    *end_y = (start_y + gimp_tool_motion_constrain_helper (dx, dy));
-  else
-    *end_x = (start_x + gimp_tool_motion_constrain_helper (dy, dx));
+      gimp_vector2_set (&line_dir,
+                        cos (angle),
+                        sin (angle));
+
+      dist_moved = gimp_tool_utils_point_to_line_distance (&point,
+                                                           &line_point,
+                                                           &line_dir,
+                                                           &constrained_point);
+      if (dist_moved < shortest_dist_moved)
+        {
+          shortest_dist_moved = dist_moved;
+
+          *end_x = constrained_point.x;
+          *end_y = constrained_point.y;
+        }
+    }
 }
-

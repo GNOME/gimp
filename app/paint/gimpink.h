@@ -24,10 +24,6 @@
 #include "gimpink-blob.h"
 
 
-#define DIST_SMOOTHER_BUFFER 10
-#define TIME_SMOOTHER_BUFFER 10
-
-
 #define GIMP_TYPE_INK            (gimp_ink_get_type ())
 #define GIMP_INK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_INK, GimpInk))
 #define GIMP_INK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_INK, GimpInkClass))
@@ -46,18 +42,6 @@ struct _GimpInk
 
   Blob          *cur_blob;     /*  current blob                   */
   Blob          *last_blob;    /*  blob for last cursor position  */
-
-  /* circular distance history buffer */
-  gdouble        dt_buffer[DIST_SMOOTHER_BUFFER];
-  gint           dt_index;
-
-  /* circular timing history buffer */
-  guint32        ts_buffer[TIME_SMOOTHER_BUFFER];
-  gint           ts_index;
-
-  guint32        last_time;     /*  previous time of a motion event  */
-
-  gboolean       init_velocity;
 };
 
 struct _GimpInkClass

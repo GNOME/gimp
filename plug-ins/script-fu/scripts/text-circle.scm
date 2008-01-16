@@ -49,9 +49,9 @@
         (ndx-start 0)
         (ndx-step 1)
         (ccw 0)
-        (fill-angle-rad)
-        (rot-op)
-        (radian-step)
+        (fill-angle-rad 0)
+        (rot-op 0)
+        (radian-step 0)
         )
 
     (gimp-image-undo-disable img)

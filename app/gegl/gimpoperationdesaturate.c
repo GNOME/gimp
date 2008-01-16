@@ -21,12 +21,9 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "libgimpcolor/gimpcolor.h"
-
-#include "gegl/gegl-types.h"
-#include <gegl/buffer/gegl-buffer.h>
 
 #include "gegl-types.h"
 

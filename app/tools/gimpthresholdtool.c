@@ -198,13 +198,10 @@ gimp_threshold_tool_map (GimpImageMapTool *image_map_tool)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
 
-  if (image_map_tool->operation)
-    {
-      gegl_node_set (image_map_tool->operation,
-                     "low",  t_tool->threshold->low_threshold  / 255.0,
-                     "high", t_tool->threshold->high_threshold / 255.0,
-                     NULL);
-    }
+  gegl_node_set (image_map_tool->operation,
+                 "low",  t_tool->threshold->low_threshold  / 255.0,
+                 "high", t_tool->threshold->high_threshold / 255.0,
+                 NULL);
 }
 
 

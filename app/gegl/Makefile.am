@@ -7,10 +7,14 @@ libappgegl_a_SOURCES = \
 	gimp-gegl.h			\
 	gimp-gegl-utils.c		\
 	gimp-gegl-utils.h		\
+	gimpoperationcolorbalance.c	\
+	gimpoperationcolorbalance.h	\
 	gimpoperationcolorize.c		\
 	gimpoperationcolorize.h		\
 	gimpoperationdesaturate.c	\
 	gimpoperationdesaturate.h	\
+	gimpoperationhuesaturation.c	\
+	gimpoperationhuesaturation.h	\
 	gimpoperationlevels.c		\
 	gimpoperationlevels.h		\
 	gimpoperationposterize.c	\

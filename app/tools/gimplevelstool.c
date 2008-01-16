@@ -269,39 +269,34 @@ gimp_levels_tool_get_operation (GimpImageMapTool *im_tool)
 static void
 gimp_levels_tool_map (GimpImageMapTool *image_map_tool)
 {
-  GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
+  GimpLevelsTool       *tool = GIMP_LEVELS_TOOL (image_map_tool);
+  GimpHistogramChannel  channel;
 
-  if (image_map_tool->operation)
+  for (channel = GIMP_HISTOGRAM_VALUE;
+       channel <= GIMP_HISTOGRAM_ALPHA;
+       channel++)
     {
-      Levels               *levels = tool->levels;
-      GimpHistogramChannel  channel;
+      /* FIXME: hack */
+      if (! tool->color && channel == 1)
+        gegl_node_set (image_map_tool->operation,
+                       "channel", GIMP_HISTOGRAM_ALPHA,
+                       NULL);
+      else
+        gegl_node_set (image_map_tool->operation,
+                       "channel", channel,
+                       NULL);
 
-      for (channel = GIMP_HISTOGRAM_VALUE;
-           channel <= GIMP_HISTOGRAM_ALPHA;
-           channel++)
-        {
-          /* FIXME: hack */
-          if (! tool->color && channel == 1)
-            gegl_node_set (image_map_tool->operation,
-                           "channel", GIMP_HISTOGRAM_ALPHA,
-                           NULL);
-          else
-            gegl_node_set (image_map_tool->operation,
-                           "channel", channel,
-                           NULL);
+      gegl_node_set (image_map_tool->operation,
+                     "gamma",       tool->levels->gamma[channel],
+                     "low-input",   tool->levels->low_input[channel]   / 255.0,
+                     "high-input",  tool->levels->high_input[channel]  / 255.0,
+                     "low-output",  tool->levels->low_output[channel]  / 255.0,
+                     "high-output", tool->levels->high_output[channel] / 255.0,
+                     NULL);
 
-          gegl_node_set (image_map_tool->operation,
-                         "gamma",       levels->gamma[channel],
-                         "low-input",   levels->low_input[channel]   / 255.0,
-                         "high-input",  levels->high_input[channel]  / 255.0,
-                         "low-output",  levels->low_output[channel]  / 255.0,
-                         "high-output", levels->high_output[channel] / 255.0,
-                         NULL);
-
-          /* FIXME: hack */
-          if (! tool->color && channel == 1)
-            break;
-        }
+      /* FIXME: hack */
+      if (! tool->color && channel == 1)
+        break;
     }
 
   gimp_lut_setup (tool->lut,

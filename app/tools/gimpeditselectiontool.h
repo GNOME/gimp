@@ -53,6 +53,9 @@ struct _GimpEditSelectionTool
   gboolean            first_move;      /*  Don't push undos after the first  */
 
   gboolean            propagate_release;
+
+  gboolean            constrain;       /*  Constrain the movement            */
+  gdouble             start_x, start_y;/*  Coords when button was pressed    */
 };
 
 struct _GimpEditSelectionToolClass

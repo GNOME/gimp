@@ -25,8 +25,8 @@
         (theWidth inSize)
         (theHeight inSize)
         (theImage (car(gimp-image-new theWidth theHeight RGB)))
-        (theLayer)
-        (thinLayer)
+        (theLayer 0)
+        (thinLayer 0)
         )
 
   (gimp-context-push)

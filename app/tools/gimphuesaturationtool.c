@@ -49,15 +49,16 @@
 
 /*  local function prototypes  */
 
-static void     gimp_hue_saturation_tool_finalize   (GObject          *object);
+static void       gimp_hue_saturation_tool_finalize      (GObject          *object);
 
-static gboolean gimp_hue_saturation_tool_initialize (GimpTool         *tool,
-                                                     GimpDisplay      *display,
-                                                     GError          **error);
+static gboolean   gimp_hue_saturation_tool_initialize    (GimpTool         *tool,
+                                                          GimpDisplay      *display,
+                                                          GError          **error);
 
-static void     gimp_hue_saturation_tool_map        (GimpImageMapTool *im_tool);
-static void     gimp_hue_saturation_tool_dialog     (GimpImageMapTool *im_tool);
-static void     gimp_hue_saturation_tool_reset      (GimpImageMapTool *im_tool);
+static GeglNode * gimp_hue_saturation_tool_get_operation (GimpImageMapTool *im_tool);
+static void       gimp_hue_saturation_tool_map           (GimpImageMapTool *im_tool);
+static void       gimp_hue_saturation_tool_dialog        (GimpImageMapTool *im_tool);
+static void       gimp_hue_saturation_tool_reset         (GimpImageMapTool *im_tool);
 
 static void     hue_saturation_update_sliders       (GimpHueSaturationTool *hs_tool);
 static void     hue_saturation_update_color_areas   (GimpHueSaturationTool *hs_tool);
@@ -115,15 +116,16 @@ gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  object_class->finalize    = gimp_hue_saturation_tool_finalize;
+  object_class->finalize       = gimp_hue_saturation_tool_finalize;
 
-  tool_class->initialize    = gimp_hue_saturation_tool_initialize;
+  tool_class->initialize       = gimp_hue_saturation_tool_initialize;
 
-  im_tool_class->shell_desc = _("Adjust Hue / Lightness / Saturation");
+  im_tool_class->shell_desc    = _("Adjust Hue / Lightness / Saturation");
 
-  im_tool_class->map        = gimp_hue_saturation_tool_map;
-  im_tool_class->dialog     = gimp_hue_saturation_tool_dialog;
-  im_tool_class->reset      = gimp_hue_saturation_tool_reset;
+  im_tool_class->get_operation = gimp_hue_saturation_tool_get_operation;
+  im_tool_class->map           = gimp_hue_saturation_tool_map;
+  im_tool_class->dialog        = gimp_hue_saturation_tool_dialog;
+  im_tool_class->reset         = gimp_hue_saturation_tool_reset;
 }
 
 static void
@@ -181,9 +183,37 @@ gimp_hue_saturation_tool_initialize (GimpTool     *tool,
   return TRUE;
 }
 
+static GeglNode *
+gimp_hue_saturation_tool_get_operation (GimpImageMapTool *im_tool)
+{
+  return g_object_new (GEGL_TYPE_NODE,
+                       "operation", "gimp-hue-saturation",
+                       NULL);
+}
+
 static void
 gimp_hue_saturation_tool_map (GimpImageMapTool *image_map_tool)
 {
+  GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
+  HueSaturation         *hs      = hs_tool->hue_saturation;
+  GimpHueRange           range;
+
+  for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)
+    {
+      gegl_node_set (image_map_tool->operation,
+                     "range", range,
+                     NULL);
+
+      gegl_node_set (image_map_tool->operation,
+                     "hue",        hs->hue[range]        / 180.0,
+                     "saturation", hs->saturation[range] / 100.0,
+                     "lightness",  hs->lightness[range]  / 100.0,
+                     NULL);
+    }
+
+  gegl_node_set (image_map_tool->operation,
+                 "overlap", hs->overlap / 100.0,
+                 NULL);
 }
 
 

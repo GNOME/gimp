@@ -27,7 +27,7 @@
   (let* (
         (num-colours (car (gimp-palette-get-info palette)))
         (cmap (cons-array (* num-colours 3) 'byte))
-        (colour)
+        (colour 0)
         (i 0)
         )
 

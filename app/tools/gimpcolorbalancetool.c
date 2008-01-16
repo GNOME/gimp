@@ -43,15 +43,16 @@
 
 /*  local function prototypes  */
 
-static void     gimp_color_balance_tool_finalize   (GObject          *object);
+static void       gimp_color_balance_tool_finalize      (GObject          *object);
 
-static gboolean gimp_color_balance_tool_initialize (GimpTool         *tool,
-                                                    GimpDisplay      *display,
-                                                    GError          **error);
+static gboolean   gimp_color_balance_tool_initialize    (GimpTool         *tool,
+                                                         GimpDisplay      *display,
+                                                         GError          **error);
 
-static void     gimp_color_balance_tool_map        (GimpImageMapTool *im_tool);
-static void     gimp_color_balance_tool_dialog     (GimpImageMapTool *im_tool);
-static void     gimp_color_balance_tool_reset      (GimpImageMapTool *im_tool);
+static GeglNode * gimp_color_balance_tool_get_operation (GimpImageMapTool *im_tool);
+static void       gimp_color_balance_tool_map           (GimpImageMapTool *im_tool);
+static void       gimp_color_balance_tool_dialog        (GimpImageMapTool *im_tool);
+static void       gimp_color_balance_tool_reset         (GimpImageMapTool *im_tool);
 
 static void     color_balance_update               (GimpColorBalanceTool *cb_tool);
 static void     color_balance_range_callback       (GtkWidget            *widget,
@@ -97,15 +98,16 @@ gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  object_class->finalize    = gimp_color_balance_tool_finalize;
+  object_class->finalize       = gimp_color_balance_tool_finalize;
 
-  tool_class->initialize    = gimp_color_balance_tool_initialize;
+  tool_class->initialize       = gimp_color_balance_tool_initialize;
 
-  im_tool_class->shell_desc = _("Adjust Color Balance");
+  im_tool_class->shell_desc    = _("Adjust Color Balance");
 
-  im_tool_class->map        = gimp_color_balance_tool_map;
-  im_tool_class->dialog     = gimp_color_balance_tool_dialog;
-  im_tool_class->reset      = gimp_color_balance_tool_reset;
+  im_tool_class->get_operation = gimp_color_balance_tool_get_operation;
+  im_tool_class->map           = gimp_color_balance_tool_map;
+  im_tool_class->dialog        = gimp_color_balance_tool_dialog;
+  im_tool_class->reset         = gimp_color_balance_tool_reset;
 }
 
 static void
@@ -163,10 +165,37 @@ gimp_color_balance_tool_initialize (GimpTool     *tool,
   return TRUE;
 }
 
-static void
-gimp_color_balance_tool_map (GimpImageMapTool *im_tool)
+static GeglNode *
+gimp_color_balance_tool_get_operation (GimpImageMapTool *im_tool)
 {
-  GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (im_tool);
+  return g_object_new (GEGL_TYPE_NODE,
+                       "operation", "gimp-color-balance",
+                       NULL);
+}
+
+static void
+gimp_color_balance_tool_map (GimpImageMapTool *image_map_tool)
+{
+  GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (image_map_tool);
+  ColorBalance         *cb      = cb_tool->color_balance;
+  GimpTransferMode      range;
+
+  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
+    {
+      gegl_node_set (image_map_tool->operation,
+                     "range", range,
+                     NULL);
+
+      gegl_node_set (image_map_tool->operation,
+                     "cyan-red",      cb->cyan_red[range]      / 256.0,
+                     "magenta-green", cb->magenta_green[range] / 256.0,
+                     "yellow-blue",   cb->yellow_blue[range]   / 256.0,
+                     NULL);
+    }
+
+  gegl_node_set (image_map_tool->operation,
+                 "preserve-luminosity", cb->preserve_luminosity,
+                 NULL);
 
   color_balance_create_lookup_tables (cb_tool->color_balance);
 }
