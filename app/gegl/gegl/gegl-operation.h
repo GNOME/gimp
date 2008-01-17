@@ -23,7 +23,7 @@
 #include <glib-object.h>
 #include <babl/babl.h>
 #include "gegl-types.h"
-#include "gegl/buffer/gegl-buffer.h"
+#include "gegl-buffer.h"
 
 G_BEGIN_DECLS
 

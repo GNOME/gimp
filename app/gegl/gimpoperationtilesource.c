@@ -24,7 +24,7 @@
 #include <string.h>
 
 #include <gegl.h>
-#include "gegl/buffer/gegl-buffer.h"
+#include <gegl-buffer.h>
 
 #include "gegl-types.h"
 
