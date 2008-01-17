@@ -19,8 +19,6 @@
 #ifndef __GEGL_OPERATION_FILTER_H__
 #define __GEGL_OPERATION_FILTER_H__
 
-#include <glib-object.h>
-#include "gegl-types.h"
 #include "gegl-operation.h"
 
 G_BEGIN_DECLS
@@ -44,7 +42,8 @@ struct _GeglOperationFilterClass
   GeglOperationClass parent_class;
 
   gboolean (* process) (GeglOperation       *self,
-                        GeglNodeContext     *context,
+                        GeglBuffer          *input,
+                        GeglBuffer          *output,
                         const GeglRectangle *result);
 };
 

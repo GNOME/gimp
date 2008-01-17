@@ -34,10 +34,6 @@ G_BEGIN_DECLS
 #define GEGL_IS_OPERATION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GEGL_TYPE_OPERATION))
 #define GEGL_OPERATION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GEGL_TYPE_OPERATION, GeglOperationClass))
 
-#define MAX_PADS        16
-#define MAX_INPUT_PADS  MAX_PADS
-#define MAX_OUTPUT_PADS MAX_PADS
-
 typedef struct _GeglOperationClass GeglOperationClass;
 
 struct _GeglOperation
