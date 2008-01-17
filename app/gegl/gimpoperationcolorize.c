@@ -169,11 +169,14 @@ gimp_operation_colorize_process (GeglOperation *operation,
   GimpOperationColorize *self = GIMP_OPERATION_COLORIZE (operation);
   gfloat                *src  = in_buf;
   gfloat                *dest = out_buf;
+  GimpHSL                hsl;
   glong                  sample;
+
+  hsl.h = self->hue;
+  hsl.s = self->saturation;
 
   for (sample = 0; sample < samples; sample++)
     {
-      GimpHSL hsl;
       GimpRGB rgb;
       gfloat  lum = GIMP_RGB_LUMINANCE (src[RED_PIX],
                                         src[GREEN_PIX],
@@ -190,8 +193,6 @@ gimp_operation_colorize_process (GeglOperation *operation,
           lum = lum * (self->lightness + 1.0);
         }
 
-      hsl.h = self->hue;
-      hsl.s = self->saturation;
       hsl.l = lum;
 
       gimp_hsl_to_rgb (&hsl, &rgb);
