@@ -26,6 +26,8 @@
 #include "gegl/gegl-types.h"
 
 
+/*  operations  */
+
 typedef struct _GimpOperationColorBalance  GimpOperationColorBalance;
 typedef struct _GimpOperationColorize      GimpOperationColorize;
 typedef struct _GimpOperationDesaturate    GimpOperationDesaturate;
@@ -35,6 +37,11 @@ typedef struct _GimpOperationPosterize     GimpOperationPosterize;
 typedef struct _GimpOperationThreshold     GimpOperationThreshold;
 typedef struct _GimpOperationTileSink      GimpOperationTileSink;
 typedef struct _GimpOperationTileSource    GimpOperationTileSource;
+
+
+/*  operation config objects  */
+
+typedef struct _GimpLevelsConfig           GimpLevelsConfig;
 
 
 #endif /* __GEGL_TYPES_H__ */

@@ -37,6 +37,9 @@
 #include "base/gimplut.h"
 #include "base/levels.h"
 
+#include "gegl/gimplevelsconfig.h"
+#include "gegl/gimpoperationlevels.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpimage.h"
@@ -197,6 +200,12 @@ gimp_levels_tool_finalize (GObject *object)
   gimp_lut_free (tool->lut);
   g_slice_free (Levels, tool->levels);
 
+  if (tool->config)
+    {
+      g_object_unref (tool->config);
+      tool->config = NULL;
+    }
+
   if (tool->hist)
     {
       gimp_histogram_free (tool->hist);
@@ -226,6 +235,8 @@ gimp_levels_tool_initialize (GimpTool     *tool,
 
   if (! l_tool->hist)
     l_tool->hist = gimp_histogram_new ();
+
+  gimp_levels_config_reset (l_tool->config);
 
   levels_init (l_tool->levels);
 
@@ -261,9 +272,20 @@ gimp_levels_tool_initialize (GimpTool     *tool,
 static GeglNode *
 gimp_levels_tool_get_operation (GimpImageMapTool *im_tool)
 {
-  return g_object_new (GEGL_TYPE_NODE,
+  GimpLevelsTool *tool = GIMP_LEVELS_TOOL (im_tool);
+  GeglNode       *node;
+
+  node = g_object_new (GEGL_TYPE_NODE,
                        "operation", "gimp-levels",
                        NULL);
+
+  tool->config = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
+
+  gegl_node_set (node,
+                 "config", tool->config,
+                 NULL);
+
+  return node;
 }
 
 static void
@@ -278,21 +300,21 @@ gimp_levels_tool_map (GimpImageMapTool *image_map_tool)
     {
       /* FIXME: hack */
       if (! tool->color && channel == 1)
-        gegl_node_set (image_map_tool->operation,
-                       "channel", GIMP_HISTOGRAM_ALPHA,
-                       NULL);
+        g_object_set (tool->config,
+                      "channel", GIMP_HISTOGRAM_ALPHA,
+                      NULL);
       else
-        gegl_node_set (image_map_tool->operation,
-                       "channel", channel,
-                       NULL);
+        g_object_set (tool->config,
+                      "channel", channel,
+                      NULL);
 
-      gegl_node_set (image_map_tool->operation,
-                     "gamma",       tool->levels->gamma[channel],
-                     "low-input",   tool->levels->low_input[channel]   / 255.0,
-                     "high-input",  tool->levels->high_input[channel]  / 255.0,
-                     "low-output",  tool->levels->low_output[channel]  / 255.0,
-                     "high-output", tool->levels->high_output[channel] / 255.0,
-                     NULL);
+      g_object_set (tool->config,
+                    "gamma",       tool->levels->gamma[channel],
+                    "low-input",   tool->levels->low_input[channel]   / 255.0,
+                    "high-input",  tool->levels->high_input[channel]  / 255.0,
+                    "low-output",  tool->levels->low_output[channel]  / 255.0,
+                    "high-output", tool->levels->high_output[channel] / 255.0,
+                    NULL);
 
       /* FIXME: hack */
       if (! tool->color && channel == 1)
@@ -704,6 +726,8 @@ gimp_levels_tool_reset (GimpImageMapTool *image_map_tool)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
 
+  gimp_levels_config_reset (tool->config);
+
   levels_init (tool->levels);
   levels_update_adjustments (tool);
 }
@@ -831,20 +855,11 @@ levels_update_adjustments (GimpLevelsTool *tool)
 static void
 levels_update_input_bar (GimpLevelsTool *tool)
 {
-  GimpHistogramChannel channel;
+  GimpHistogramChannel channel = tool->channel;
 
-  if (tool->color)
-    {
-      channel = tool->channel;
-    }
-  else
-    {
-      /* FIXME: hack */
-      if (tool->channel == 1)
-        channel = GIMP_HISTOGRAM_ALPHA;
-      else
-        channel = GIMP_HISTOGRAM_VALUE;
-    }
+  /* FIXME: hack */
+  if (! tool->color && channel == 1)
+    channel = GIMP_HISTOGRAM_ALPHA;
 
   /*  Recalculate the transfer arrays  */
   levels_calculate_transfers (tool->levels);
@@ -897,6 +912,14 @@ static void
 levels_channel_reset_callback (GtkWidget      *widget,
                                GimpLevelsTool *tool)
 {
+  GimpHistogramChannel channel = tool->channel;
+
+  /* FIXME: hack */
+  if (! tool->color && channel == 1)
+    channel = GIMP_HISTOGRAM_ALPHA;
+
+  gimp_levels_config_reset_channel (tool->config, channel);
+
   levels_channel_reset (tool->levels, tool->channel);
   levels_update_adjustments (tool);
 

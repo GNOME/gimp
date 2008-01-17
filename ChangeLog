@@ -1,5 +1,17 @@
 2008-01-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/Makefile.am
+	* app/gegl/gegl-types.h
+	* app/gegl/gimplevelsconfig.[ch]: new config object for the levels
+	operation's settings.
+
+	* app/gegl/gimpoperationlevels.[ch]: remove all properties and add
+	a "config" property instead.
+
+	* app/tools/gimplevelstool.[ch]: keep a GimpLevelsConfig around.
+
+2008-01-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimpoperationcolorize.c
 	* app/gegl/gimpoperationhuesaturation.c (process): move some
 	calculations and assignments out of the inner loop.
