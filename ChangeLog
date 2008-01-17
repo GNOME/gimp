@@ -1,8 +1,16 @@
 2008-01-16  Øyvind Kolås  <pippin@gimp.org>
 
+	* app/gegl/gegl/gegl-operation.h: synced from GEGL.
+	* app/gegl/gegl/graph/gegl-node-context.h: removed, since none
+	of it's provided functionlity is any longer used by the GIMP
+	implemented ops.
+	* app/gegl/gegl/graph/: removed.
+
+2008-01-16  Øyvind Kolås  <pippin@gimp.org>
+
 	* app/gegl/gegl/buffer/gegl-buffer-types.h: removed.
 	* app/gegl/gegl/buffer/: removed.
-	* app/gegl/gegl/gegl-operation.h: synced from gegl. Now includes
+	* app/gegl/gegl/gegl-operation.h: synced from GEGL. Now includes
 	the installed gegl-buffer.h which contains the public typedefs
 	needed for implementing operations anyways.
 
