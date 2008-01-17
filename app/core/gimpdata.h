@@ -58,6 +58,8 @@ struct _GimpData
   guint         internal  : 1;
   gint          freeze_count;
   time_t        mtime;
+
+  GList        *tags;
 };
 
 struct _GimpDataClass

@@ -42,6 +42,7 @@
 #include "gimp-utils.h"
 #include "gimpdata.h"
 #include "gimpmarshal.h"
+#include "gimptagged.h"
 
 #include "gimp-intl.h"
 
@@ -62,14 +63,15 @@ enum
 };
 
 
-static void      gimp_data_class_init   (GimpDataClass *klass);
+static void      gimp_data_class_init        (GimpDataClass       *klass);
+static void      gimp_data_tagged_iface_init (GimpTaggedInterface *iface);
+
+static GObject * gimp_data_constructor     (GType                  type,
+                                            guint                  n_params,
+                                            GObjectConstructParam *params);
+
 static void      gimp_data_init         (GimpData      *data,
                                          GimpDataClass *data_class);
-
-static GObject * gimp_data_constructor  (GType                  type,
-                                         guint                  n_params,
-                                         GObjectConstructParam *params);
-
 static void      gimp_data_finalize     (GObject       *object);
 static void      gimp_data_set_property (GObject       *object,
                                          guint          property_id,
@@ -84,6 +86,12 @@ static gint64    gimp_data_get_memsize  (GimpObject    *object,
                                          gint64        *gui_size);
 
 static void      gimp_data_real_dirty   (GimpData      *data);
+
+static gboolean  gimp_data_add_tag      (GimpTagged    *tagged,
+                                         GimpTag        tag);
+static gboolean  gimp_data_remove_tag   (GimpTagged    *tagged,
+                                         GimpTag        tag);
+static GList *   gimp_data_get_tags     (GimpTagged    *tagged);
 
 
 static guint data_signals[LAST_SIGNAL] = { 0 };
@@ -111,9 +119,18 @@ gimp_data_get_type (void)
         (GInstanceInitFunc) gimp_data_init,
       };
 
+      const GInterfaceInfo tagged_info =
+      {
+        (GInterfaceInitFunc) gimp_data_tagged_iface_init,
+        NULL,           /* interface_finalize */
+        NULL            /* interface_data     */
+      };
+
       data_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
                                           "GimpData",
                                           &data_info, 0);
+
+      g_type_add_interface_static (data_type, GIMP_TYPE_TAGGED, &tagged_info);
   }
 
   return data_type;
@@ -171,6 +188,14 @@ gimp_data_class_init (GimpDataClass *klass)
 }
 
 static void
+gimp_data_tagged_iface_init (GimpTaggedInterface *iface)
+{
+  iface->add_tag    = gimp_data_add_tag;
+  iface->remove_tag = gimp_data_remove_tag;
+  iface->get_tags   = gimp_data_get_tags;
+}
+
+static void
 gimp_data_init (GimpData      *data,
                 GimpDataClass *data_class)
 {
@@ -182,6 +207,7 @@ gimp_data_init (GimpData      *data,
   data->internal     = FALSE;
   data->freeze_count = 0;
   data->mtime        = 0;
+  data->tags         = NULL;
 
   /*  look at the passed class pointer, not at GIMP_DATA_GET_CLASS(data)
    *  here, because the latter is always GimpDataClass itself
@@ -202,6 +228,12 @@ gimp_data_finalize (GObject *object)
     {
       g_free (data->filename);
       data->filename = NULL;
+    }
+
+  if (data->tags)
+    {
+      g_list_free (data->tags);
+      data->tags = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -312,6 +344,53 @@ gimp_data_real_dirty (GimpData *data)
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (data));
 
   gimp_object_name_changed (GIMP_OBJECT (data));
+}
+
+static gboolean
+gimp_data_add_tag (GimpTagged *tagged,
+                   GimpTag     tag)
+{
+  GimpData *data = GIMP_DATA (tagged);
+  GList    *list;
+
+  for (list = data->tags; list; list = list->next)
+    {
+      GimpTag this = GPOINTER_TO_UINT (list->data);
+
+      if (this == tag)
+        return FALSE;
+    }
+
+  data->tags = g_list_prepend (data->tags, GUINT_TO_POINTER (tag));
+
+  return TRUE;
+}
+
+static gboolean
+gimp_data_remove_tag (GimpTagged *tagged,
+                      GimpTag     tag)
+{
+  GimpData *data = GIMP_DATA (tagged);
+  GList    *list;
+
+  for (list = data->tags; list; list = list->next)
+    {
+      GimpTag this = GPOINTER_TO_UINT (list->data);
+
+      if (this == tag)
+        {
+          data->tags = g_list_delete_link (data->tags, list);
+          return TRUE;
+        }
+    }
+
+  return FALSE;
+}
+
+static GList *
+gimp_data_get_tags (GimpTagged *tagged)
+{
+  return GIMP_DATA (tagged)->tags;
 }
 
 /**
