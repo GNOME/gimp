@@ -59,53 +59,48 @@ struct _Boundary
 
 /*  local function prototypes  */
 
-static Boundary * boundary_new       (PixelRegion     *PR);
-static BoundSeg * boundary_free      (Boundary        *boundary,
-                                      gboolean         free_segs);
+static Boundary * boundary_new        (PixelRegion     *PR);
+static BoundSeg * boundary_free       (Boundary        *boundary,
+                                       gboolean         free_segs);
 
-static void       boundary_add_seg   (Boundary        *bounrady,
-                                      gint             x1,
-                                      gint             y1,
-                                      gint             x2,
-                                      gint             y2,
-                                      gboolean         open);
+static void       boundary_add_seg    (Boundary        *bounrady,
+                                       gint             x1,
+                                       gint             y1,
+                                       gint             x2,
+                                       gint             y2,
+                                       gboolean         open);
 
-static void       find_empty_segs    (PixelRegion     *maskPR,
-                                      gint             scanline,
-                                      gint             empty_segs[],
-                                      gint             max_empty,
-                                      gint            *num_empty,
-                                      BoundaryType     type,
-                                      gint             x1,
-                                      gint             y1,
-                                      gint             x2,
-                                      gint             y2,
-                                      guchar           threshold);
-static void       process_horiz_seg  (Boundary        *boundary,
-                                      gint             x1,
-                                      gint             y1,
-                                      gint             x2,
-                                      gint             y2,
-                                      gboolean         open);
-static void       make_horiz_segs    (Boundary        *boundary,
-                                      gint             start,
-                                      gint             end,
-                                      gint             scanline,
-                                      gint             empty[],
-                                      gint             num_empty,
-                                      gint             top);
-static Boundary * generate_boundary  (PixelRegion     *PR,
-                                      BoundaryType     type,
-                                      gint             x1,
-                                      gint             y1,
-                                      gint             x2,
-                                      gint             y2,
-                                      guchar           threshold);
-
-static gint       cmp_xy              (gint ax,
-                                       gint ay,
-                                       gint bx,
-                                       gint by);
+static void       find_empty_segs     (PixelRegion     *maskPR,
+                                       gint             scanline,
+                                       gint             empty_segs[],
+                                       gint             max_empty,
+                                       gint            *num_empty,
+                                       BoundaryType     type,
+                                       gint             x1,
+                                       gint             y1,
+                                       gint             x2,
+                                       gint             y2,
+                                       guchar           threshold);
+static void       process_horiz_seg   (Boundary        *boundary,
+                                       gint             x1,
+                                       gint             y1,
+                                       gint             x2,
+                                       gint             y2,
+                                       gboolean         open);
+static void       make_horiz_segs     (Boundary        *boundary,
+                                       gint             start,
+                                       gint             end,
+                                       gint             scanline,
+                                       gint             empty[],
+                                       gint             num_empty,
+                                       gint             top);
+static Boundary * generate_boundary   (PixelRegion     *PR,
+                                       BoundaryType     type,
+                                       gint             x1,
+                                       gint             y1,
+                                       gint             x2,
+                                       gint             y2,
+                                       guchar           threshold);
 
 static gint       cmp_segptr_xy1_addr (const BoundSeg **seg_ptr_a,
                                        const BoundSeg **seg_ptr_b);
@@ -128,10 +123,10 @@ static const BoundSeg * find_segment_with_func (const BoundSeg **segs,
                                                 const BoundSeg  *search_seg,
                                                 GCompareFunc     cmp_func);
 
-static void       simplify_subdivide (const BoundSeg  *segs,
-                                      gint             start_idx,
-                                      gint             end_idx,
-                                      GArray         **ret_points);
+static void       simplify_subdivide  (const BoundSeg  *segs,
+                                       gint             start_idx,
+                                       gint             end_idx,
+                                       GArray         **ret_points);
 
 
 /*  public functions  */
@@ -345,8 +340,8 @@ boundary_simplify (BoundSeg *sorted_segs,
           /* temporarily use the delimiter to close the polygon */
           tmp_seg = sorted_segs[seg];
           sorted_segs[seg] = sorted_segs[start];
-          simplify_subdivide (sorted_segs, start, start + n_points,
-                              &tmp_points);
+          simplify_subdivide (sorted_segs,
+                              start, start + n_points, &tmp_points);
           sorted_segs[seg] = tmp_seg;
 
           for (j = 0; j < tmp_points->len; j++)
@@ -723,20 +718,32 @@ generate_boundary (PixelRegion  *PR,
 
 /*  sorting utility functions  */
 
-static gint
-cmp_xy(gint ax, gint ay, gint bx, gint by)
+static inline gint
+cmp_xy (const gint ax,
+        const gint ay,
+        const gint bx,
+        const gint by)
 {
-  if (ay < by) {
-    return -1;
-  } else if (ay > by) {
-    return 1;
-  } else if (ax < bx) {
-    return -1;
-  } else if (ax > bx) {
-    return 1;
-  } else {
-    return 0;
-  }
+  if (ay < by)
+    {
+      return -1;
+    }
+  else if (ay > by)
+    {
+      return 1;
+    }
+  else if (ax < bx)
+    {
+      return -1;
+    }
+  else if (ax > bx)
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
 }
 
 
@@ -797,7 +804,7 @@ cmp_segptr_xy1 (const BoundSeg **seg_ptr_a, const BoundSeg **seg_ptr_b)
 {
   const BoundSeg *seg_a = *seg_ptr_a, *seg_b = *seg_ptr_b;
 
-  return cmp_xy(seg_a->x1, seg_a->y1, seg_b->x1, seg_b->y1);
+  return cmp_xy (seg_a->x1, seg_a->y1, seg_b->x1, seg_b->y1);
 }
 
 /*

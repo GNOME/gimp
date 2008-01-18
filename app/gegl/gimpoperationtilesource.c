@@ -24,7 +24,7 @@
 #include <string.h>
 
 #include <gegl.h>
-#include "gegl/buffer/gegl-buffer.h"
+#include <gegl-buffer.h>
 
 #include "gegl-types.h"
 
@@ -91,16 +91,15 @@ gimp_operation_tile_source_class_init (GimpOperationTileSourceClass * klass)
 
   gegl_operation_class_set_name (operation_class, "gimp-tilemanager-source");;
 
-  g_object_class_install_property (object_class,
-                                   PROP_TILE_MANAGER,
+  g_object_class_install_property (object_class, PROP_TILE_MANAGER,
                                    g_param_spec_boxed ("tile-manager",
                                                        "Tile Manager",
                                                        "The tile manager to use as source",
                                                        GIMP_TYPE_TILE_MANAGER,
                                                        G_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT));
-  g_object_class_install_property (object_class,
-                                   PROP_LINEAR,
+
+  g_object_class_install_property (object_class, PROP_LINEAR,
                                    g_param_spec_boolean ("linear",
                                                          "Linear data",
                                                          "Should the data read from the tile-manager assumed to be linear or gamma-corrected?",

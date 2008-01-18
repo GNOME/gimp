@@ -38,9 +38,7 @@ struct _GimpOperationColorize
 {
   GeglOperationPointFilter  parent_instance;
 
-  gdouble                   hue;
-  gdouble                   saturation;
-  gdouble                   lightness;
+  GimpColorizeConfig       *config;
 };
 
 struct _GimpOperationColorizeClass

@@ -150,6 +150,7 @@ typedef struct _GimpStrokeDesc      GimpStrokeDesc;
 
 typedef struct _GimpPickable        GimpPickable; /* dummy typedef */
 typedef struct _GimpProgress        GimpProgress; /* dummy typedef */
+typedef struct _GimpTagged          GimpTagged;   /* dummy typedef */
 
 
 /*  non-object types  */
@@ -161,6 +162,13 @@ typedef struct _GimpSamplePoint     GimpSamplePoint;
 typedef         guint32             GimpTattoo;
 typedef struct _GimpPaletteEntry    GimpPaletteEntry;
 typedef struct _GimpScanConvert     GimpScanConvert;
+
+
+/*  tags  */
+
+typedef GQuark                      GimpTag;
+#define gimp_tag_new(name)          g_quark_from_string (name)
+#define gimp_tag_get_name(tag)      g_quark_to_string (name)
 
 
 /*  functions  */

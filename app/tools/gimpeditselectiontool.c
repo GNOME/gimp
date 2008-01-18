@@ -64,23 +64,26 @@
 #define ARROW_VELOCITY          25
 
 
-static void    gimp_edit_selection_tool_button_release      (GimpTool              *tool,
-                                                             GimpCoords            *coords,
-                                                             guint32                time,
-                                                             GdkModifierType        state,
-                                                             GimpButtonReleaseType  release_type,
-                                                             GimpDisplay           *display);
-static void    gimp_edit_selection_tool_motion              (GimpTool              *tool,
-                                                             GimpCoords            *coords,
-                                                             guint32                time,
-                                                             GdkModifierType        state,
-                                                             GimpDisplay           *display);
-static void    gimp_edit_selection_tool_active_modifier_key (GimpTool              *tool,
-                                                             GdkModifierType        key,
-                                                             gboolean               press,
-                                                             GdkModifierType        state,
-                                                             GimpDisplay           *display);
-static void    gimp_edit_selection_tool_draw                (GimpDrawTool          *tool);
+static void       gimp_edit_selection_tool_button_release      (GimpTool                    *tool,
+                                                                GimpCoords                  *coords,
+                                                                guint32                      time,
+                                                                GdkModifierType              state,
+                                                                GimpButtonReleaseType        release_type,
+                                                                GimpDisplay                 *display);
+static void       gimp_edit_selection_tool_motion              (GimpTool                    *tool,
+                                                                GimpCoords                  *coords,
+                                                                guint32                      time,
+                                                                GdkModifierType              state,
+                                                                GimpDisplay                 *display);
+static void       gimp_edit_selection_tool_active_modifier_key (GimpTool                    *tool,
+                                                                GdkModifierType              key,
+                                                                gboolean                     press,
+                                                                GdkModifierType              state,
+                                                                GimpDisplay                 *display);
+static void       gimp_edit_selection_tool_draw                (GimpDrawTool                *tool);
+
+static GimpItem * gimp_edit_selection_tool_get_active_item     (const GimpEditSelectionTool *edit_select,
+                                                                const GimpImage             *image);
 
 
 G_DEFINE_TYPE (GimpEditSelectionTool, gimp_edit_selection_tool,
@@ -180,10 +183,8 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
 
   edit_select->edit_mode = edit_mode;
 
-  if (edit_select->edit_mode == GIMP_TRANSLATE_MODE_VECTORS)
-    active_item = GIMP_ITEM (gimp_image_get_active_vectors (display->image));
-  else
-    active_item = GIMP_ITEM (gimp_image_get_active_drawable (display->image));
+  active_item = gimp_edit_selection_tool_get_active_item (edit_select,
+                                                          display->image);
 
   switch (edit_select->edit_mode)
     {
@@ -435,10 +436,8 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
 
   tool_manager_pop_tool (display->image->gimp);
 
-  if (edit_select->edit_mode == GIMP_TRANSLATE_MODE_VECTORS)
-    active_item = GIMP_ITEM (gimp_image_get_active_vectors (display->image));
-  else
-    active_item = GIMP_ITEM (gimp_image_get_active_drawable (display->image));
+  active_item = gimp_edit_selection_tool_get_active_item (edit_select,
+                                                          display->image);
 
   gimp_edit_selection_tool_calc_coords (edit_select,
                                         coords->x,
@@ -549,10 +548,8 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  if (edit_select->edit_mode == GIMP_TRANSLATE_MODE_VECTORS)
-    active_item = GIMP_ITEM (gimp_image_get_active_vectors (display->image));
-  else
-    active_item = GIMP_ITEM (gimp_image_get_active_drawable (display->image));
+  active_item = gimp_edit_selection_tool_get_active_item (edit_select,
+                                                          display->image);
 
   gimp_item_offsets (active_item, &off_x, &off_y);
 
@@ -716,10 +713,8 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
   GimpDisplay           *display       = GIMP_TOOL (draw_tool)->display;
   GimpItem              *active_item;
 
-  if (edit_select->edit_mode == GIMP_TRANSLATE_MODE_VECTORS)
-    active_item = GIMP_ITEM (gimp_image_get_active_vectors (display->image));
-  else
-    active_item = GIMP_ITEM (gimp_image_get_active_drawable (display->image));
+  active_item = gimp_edit_selection_tool_get_active_item (edit_select,
+                                                          display->image);
 
   switch (edit_select->edit_mode)
     {
@@ -903,6 +898,20 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
     }
 
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
+}
+
+static GimpItem *
+gimp_edit_selection_tool_get_active_item (const GimpEditSelectionTool *edit_select,
+                                          const GimpImage             *image)
+{
+  GimpItem *active_item;
+
+  if (edit_select->edit_mode == GIMP_TRANSLATE_MODE_VECTORS)
+    active_item = GIMP_ITEM (gimp_image_get_active_vectors (image));
+  else
+    active_item = GIMP_ITEM (gimp_image_get_active_drawable (image));
+
+  return active_item;
 }
 
 static gint

@@ -266,9 +266,10 @@ gimp_operation_hue_saturation_process (GeglOperation *operation,
                                        void          *out_buf,
                                        glong          samples)
 {
-  GimpOperationHueSaturation *self = GIMP_OPERATION_HUE_SATURATION (operation);
-  gfloat                     *src  = in_buf;
-  gfloat                     *dest = out_buf;
+  GimpOperationHueSaturation *self    = GIMP_OPERATION_HUE_SATURATION (operation);
+  gfloat                     *src     = in_buf;
+  gfloat                     *dest    = out_buf;
+  gfloat                      overlap = self->overlap / 2.0;
   glong                       sample;
 
   for (sample = 0; sample < samples; sample++)
@@ -282,7 +283,6 @@ gimp_operation_hue_saturation_process (GeglOperation *operation,
       gboolean use_secondary_hue   = FALSE;
       gfloat   primary_intensity   = 0.0;
       gfloat   secondary_intensity = 0.0;
-      gfloat   overlap             = self->overlap / 2.0;
 
       rgb.r = src[RED_PIX];
       rgb.g = src[GREEN_PIX];

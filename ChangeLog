@@ -1,5 +1,9 @@
 2008-01-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	Merged 24626:24650 from trunk.
+	
+2008-01-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/core/gimpdatafactory.c
 	* app/widgets/gimpdatachooserdialog.c
 	* libgimpconfig/gimpconfig-path.c: further development

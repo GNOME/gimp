@@ -170,9 +170,9 @@ const gchar * gimp_viewable_get_stock_id     (GimpViewable  *viewable);
 void          gimp_viewable_set_stock_id     (GimpViewable  *viewable,
                                               const gchar   *stock_id);
 
-void       gimp_viewable_preview_freeze      (GimpViewable  *viewable);
-void       gimp_viewable_preview_thaw        (GimpViewable  *viewable);
-gboolean   gimp_viewable_preview_is_frozen   (GimpViewable  *viewable);
+void        gimp_viewable_preview_freeze     (GimpViewable  *viewable);
+void        gimp_viewable_preview_thaw       (GimpViewable  *viewable);
+gboolean    gimp_viewable_preview_is_frozen  (GimpViewable  *viewable);
 
 
 #endif  /* __GIMP_VIEWABLE_H__ */
