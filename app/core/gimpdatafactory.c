@@ -143,6 +143,10 @@ gimp_data_factory_new (Gimp                             *gimp,
   g_return_val_if_fail (loader_entries != NULL, NULL);
   g_return_val_if_fail (n_loader_entries > 0, NULL);
 
+  g_print ("Creating data factory\n");
+  g_print ("Path property is '%s'\n", path_property_name);
+  g_print ("Writable property is '%s'\n", writable_property_name);
+
   factory = g_object_new (GIMP_TYPE_DATA_FACTORY, NULL);
 
   factory->gimp                   = gimp;
@@ -299,7 +303,7 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
                              WRITABLE_PATH_KEY, writable_list);
         }
 
-      gimp_datafiles_read_directories (path, G_FILE_TEST_EXISTS,
+      gimp_datafiles_read_directories (writable_path, G_FILE_TEST_EXISTS,
                                        gimp_data_factory_load_data, &context);
 
       if (writable_path)

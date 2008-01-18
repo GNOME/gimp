@@ -108,6 +108,7 @@ gimp_data_chooser_dialog_new (GimpDataFactory *working_factory,
   GType            data_type;
   gint             view_size = 32;
   gchar           *path      = NULL;
+  gchar           *writable_path = NULL;
   gchar           *tmp;
   GimpContext     *context;
   gchar           *dirname;
@@ -120,7 +121,13 @@ gimp_data_chooser_dialog_new (GimpDataFactory *working_factory,
 
   g_object_get (working_factory->gimp->config,
                 working_factory->path_property_name,     &path,
+                working_factory->writable_property_name, &writable_path,
                 NULL);
+
+  g_print ("In data chooser dialog, for working factory:\n");
+  g_print ("Path is '%s'\n", path);
+  g_print ("Writable path is '%s'\n", writable_path);
+
   tmp = gimp_config_path_expand (path, TRUE, NULL);
   g_free (path);
   path = tmp;
@@ -137,7 +144,7 @@ gimp_data_chooser_dialog_new (GimpDataFactory *working_factory,
   factory = gimp_data_factory_new (working_factory->gimp,
                                    data_type,
                                    working_factory->path_property_name,
-                                   working_factory->writable_property_name,
+                                   working_factory->path_property_name,
                                    working_factory->loader_entries,
                                    working_factory->n_loader_entries,
                                    NULL,
@@ -349,9 +356,12 @@ gimp_data_chooser_dialog_activate_item (GtkWidget             *widget,
       return FALSE;
     }
 
-  g_object_get (factory->gimp->config,
-                factory->writable_property_name, &writable_path,
+  g_object_get (working_factory->gimp->config,
+                working_factory->writable_property_name, &writable_path,
                 NULL);
+
+  g_print ("writable path before expansion is '%s'\n", writable_path);
+
   tmp = gimp_config_path_expand (writable_path, TRUE, NULL);
   g_free (writable_path);
   writable_path = tmp;
@@ -379,6 +389,7 @@ gimp_data_chooser_dialog_activate_item (GtkWidget             *widget,
     }
 
   g_stat (new_filename, &filestat);
+  g_print ("loading new file %s\n", new_filename);
 
   file_data.filename = new_filename;
   file_data.dirname  = writable_path;

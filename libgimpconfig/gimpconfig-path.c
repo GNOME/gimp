@@ -203,9 +203,11 @@ static inline gchar * gimp_config_path_extract_token (const gchar **str);
 gchar *
 gimp_config_build_data_path (const gchar *name)
 {
-  return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name,
-                      G_SEARCHPATH_SEPARATOR_S,
-                      "${gimp_data_dir}", G_DIR_SEPARATOR_S, name,
+/*   return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name, */
+/*                       G_SEARCHPATH_SEPARATOR_S, */
+/*                       "${gimp_data_dir}", G_DIR_SEPARATOR_S, name, */
+/*                       NULL); */
+  return g_strconcat ("${gimp_data_dir}", G_DIR_SEPARATOR_S, name,
                       NULL);
 }
 

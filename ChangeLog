@@ -1,3 +1,10 @@
+2008-01-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpdatafactory.c
+	* app/widgets/gimpdatachooserdialog.c
+	* libgimpconfig/gimpconfig-path.c: further development
+	of data chooser.
+	
 2008-01-16  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merged 24584:24625 from trunk.
