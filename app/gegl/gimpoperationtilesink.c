@@ -99,16 +99,15 @@ gimp_operation_tile_sink_class_init (GimpOperationTileSinkClass * klass)
 
   gegl_operation_class_set_name (operation_class, "gimp-tilemanager-sink");;
 
-  g_object_class_install_property (object_class,
-                                   PROP_TILE_MANAGER,
+  g_object_class_install_property (object_class, PROP_TILE_MANAGER,
                                    g_param_spec_boxed ("tile-manager",
                                                        "Tile Manager",
                                                        "The tile manager to use as a destination",
                                                        GIMP_TYPE_TILE_MANAGER,
                                                        G_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT));
-  g_object_class_install_property (object_class,
-                                   PROP_LINEAR,
+
+  g_object_class_install_property (object_class, PROP_LINEAR,
                                    g_param_spec_boolean ("linear",
                                                          "Linear data",
                                                          "Should the data written to the tile-manager be linear or gamma-corrected?",
