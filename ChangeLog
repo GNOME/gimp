@@ -1,3 +1,10 @@
+2008-01-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Merged from trunk:
+
+	* app/base/lut-funcs.c (equalize_lut_fuct): Don't 
+	equalize the alpha channel.  Fixes bug #510210.
+	
 2008-01-15  Michael Natterer  <mitch@gimp.org>
 
 	Merged from trunk:
