@@ -1,5 +1,17 @@
 2008-01-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/Makefile.am
+	* app/gegl/gegl-types.h
+	* app/gegl/gimpcolorizeconfig.[ch]: new config object.
+
+	* app/gegl/gimpoperationcolorize.[ch]: remove all properties and
+	add a "config" property.
+
+	* app/tools/gimpcolorizetool.[ch]: port to GimpColorizeConfig, use
+	the old Colorize struct only in map().
+
+2008-01-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimplevelsconfig.[ch]: ported the stretch and pick
 	functions from base/levels.c.
 

@@ -27,18 +27,18 @@
 
 #include "gegl-types.h"
 
+#include "gimpcolorizeconfig.h"
 #include "gimpoperationcolorize.h"
 
 
 enum
 {
   PROP_0,
-  PROP_HUE,
-  PROP_SATURATION,
-  PROP_LIGHTNESS
+  PROP_CONFIG
 };
 
 
+static void     gimp_operation_colorize_finalize     (GObject       *object);
 static void     gimp_operation_colorize_get_property (GObject       *object,
                                                       guint          property_id,
                                                       GValue        *value,
@@ -67,6 +67,7 @@ gimp_operation_colorize_class_init (GimpOperationColorizeClass * klass)
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
+  object_class->finalize     = gimp_operation_colorize_finalize;
   object_class->set_property = gimp_operation_colorize_set_property;
   object_class->get_property = gimp_operation_colorize_get_property;
 
@@ -74,27 +75,11 @@ gimp_operation_colorize_class_init (GimpOperationColorizeClass * klass)
 
   gegl_operation_class_set_name (operation_class, "gimp-colorize");
 
-  g_object_class_install_property (object_class, PROP_HUE,
-                                   g_param_spec_double ("hue",
-                                                        "Hue",
-                                                        "Hue",
-                                                        0.0, 1.0, 0.5,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_SATURATION,
-                                   g_param_spec_double ("saturation",
-                                                        "Saturation",
-                                                        "Saturation",
-                                                        0.0, 1.0, 0.5,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_LIGHTNESS,
-                                   g_param_spec_double ("lightness",
-                                                        "Lightness",
-                                                        "Lightness",
-                                                        -1.0, 1.0, 0.0,
+  g_object_class_install_property (object_class, PROP_CONFIG,
+                                   g_param_spec_object ("config",
+                                                        "Config",
+                                                        "The config object",
+                                                        GIMP_TYPE_COLORIZE_CONFIG,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
@@ -102,6 +87,20 @@ gimp_operation_colorize_class_init (GimpOperationColorizeClass * klass)
 static void
 gimp_operation_colorize_init (GimpOperationColorize *self)
 {
+}
+
+static void
+gimp_operation_colorize_finalize (GObject *object)
+{
+  GimpOperationColorize *self = GIMP_OPERATION_COLORIZE (object);
+
+  if (self->config)
+    {
+      g_object_unref (self->config);
+      self->config = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -114,16 +113,8 @@ gimp_operation_colorize_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_HUE:
-      g_value_set_double (value, self->hue);
-      break;
-
-    case PROP_SATURATION:
-      g_value_set_double (value, self->saturation);
-      break;
-
-    case PROP_LIGHTNESS:
-      g_value_set_double (value, self->lightness);
+    case PROP_CONFIG:
+      g_value_set_object (value, self->config);
       break;
 
     default:
@@ -142,16 +133,10 @@ gimp_operation_colorize_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_HUE:
-      self->hue = g_value_get_double (value);
-      break;
-
-    case PROP_SATURATION:
-      self->saturation = g_value_get_double (value);
-      break;
-
-    case PROP_LIGHTNESS:
-      self->lightness = g_value_get_double (value);
+    case PROP_CONFIG:
+      if (self->config)
+        g_object_unref (self->config);
+      self->config = g_value_dup_object (value);
       break;
 
    default:
@@ -166,14 +151,15 @@ gimp_operation_colorize_process (GeglOperation *operation,
                                  void          *out_buf,
                                  glong          samples)
 {
-  GimpOperationColorize *self = GIMP_OPERATION_COLORIZE (operation);
-  gfloat                *src  = in_buf;
-  gfloat                *dest = out_buf;
+  GimpOperationColorize *self   = GIMP_OPERATION_COLORIZE (operation);
+  GimpColorizeConfig    *config = self->config;
+  gfloat                *src    = in_buf;
+  gfloat                *dest   = out_buf;
   GimpHSL                hsl;
   glong                  sample;
 
-  hsl.h = self->hue;
-  hsl.s = self->saturation;
+  hsl.h = config->hue;
+  hsl.s = config->saturation;
 
   for (sample = 0; sample < samples; sample++)
     {
@@ -182,15 +168,15 @@ gimp_operation_colorize_process (GeglOperation *operation,
                                         src[GREEN_PIX],
                                         src[BLUE_PIX]);
 
-      if (self->lightness > 0)
+      if (config->lightness > 0)
         {
-          lum = lum * (1.0 - self->lightness);
+          lum = lum * (1.0 - config->lightness);
 
-          lum += 1.0 - (1.0 - self->lightness);
+          lum += 1.0 - (1.0 - config->lightness);
         }
-      else if (self->lightness < 0)
+      else if (config->lightness < 0)
         {
-          lum = lum * (self->lightness + 1.0);
+          lum = lum * (config->lightness + 1.0);
         }
 
       hsl.l = lum;
