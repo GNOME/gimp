@@ -1,6 +1,6 @@
 2008-01-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* app/base/lut-funcs.c (equalize_lut_fuct): Don't 
+	* app/base/lut-funcs.c (equalize_lut_func): Don't 
 	equalize the alpha channel.  Fixes bug #510210.
 	
 2008-01-18  Michael Natterer  <mitch@gimp.org>
