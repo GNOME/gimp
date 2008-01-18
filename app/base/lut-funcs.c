@@ -293,12 +293,16 @@ typedef struct
 
 static gfloat
 equalize_lut_func (hist_lut_struct *hlut,
-                   gint             n_channels,
+                   gint             nchannels,
                    gint             channel,
                    gfloat           value)
 {
   gint i = 0;
   gint j;
+
+  /* don't equalize the alpha channel */
+  if ((nchannels == 2 || nchannels == 4) && channel == nchannels - 1)
+    return value;
 
   j = (gint) (value * 255.0 + 0.5);
 
