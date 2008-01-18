@@ -1,5 +1,16 @@
 2008-01-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimplevelsconfig.[ch]: ported the stretch and pick
+	functions from base/levels.c.
+
+	* app/tools/gimplevelstool.[ch]: use them instead of the old
+	stuff. Also switch to GimpLevelsConfig as primary storage for all
+	settings and fill the old Levels struct only when needed in map().
+	Remove all hackish fiddling with levels_tool->channel because it
+	is now always what is set in the menu.
+
+2008-01-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimpoperationtilesink.c (class_init)
 	* app/gegl/gimpoperationcolorize.c (class_init): cosmetic.
 

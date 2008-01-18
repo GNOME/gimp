@@ -54,11 +54,24 @@ struct _GimpLevelsConfigClass
 };
 
 
-GType   gimp_levels_config_get_type      (void) G_GNUC_CONST;
+GType   gimp_levels_config_get_type         (void) G_GNUC_CONST;
 
-void    gimp_levels_config_reset         (GimpLevelsConfig     *self);
-void    gimp_levels_config_reset_channel (GimpLevelsConfig     *self,
-                                          GimpHistogramChannel  channel);
+void    gimp_levels_config_reset            (GimpLevelsConfig     *config);
+void    gimp_levels_config_reset_channel    (GimpLevelsConfig     *config,
+                                             GimpHistogramChannel  channel);
+
+void    gimp_levels_config_stretch          (GimpLevelsConfig     *config,
+                                             GimpHistogram        *histogram,
+                                             gboolean              is_color);
+void    gimp_levels_config_stretch_channel  (GimpLevelsConfig     *config,
+                                             GimpHistogram        *histogram,
+                                             GimpHistogramChannel  channel);
+void    gimp_levels_config_adjust_by_colors (GimpLevelsConfig     *config,
+                                             GimpHistogramChannel  channel,
+                                             const GimpRGB        *black,
+                                             const GimpRGB        *gray,
+                                             const GimpRGB        *white);
+
 
 
 #endif /* __GIMP_LEVELS_CONFIG_H__ */

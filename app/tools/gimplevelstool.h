@@ -38,9 +38,9 @@ struct _GimpLevelsTool
 {
   GimpImageMapTool      parent_instance;
 
+  GimpLevelsConfig     *config;
   GimpLut              *lut;
   Levels               *levels;
-  GimpLevelsConfig     *config;
 
   /* dialog */
   gboolean              color;
