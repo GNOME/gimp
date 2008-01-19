@@ -2,7 +2,7 @@
 
 	Removed copies of GEGL headers from GIMP source, depend on installed
 	headers instead. GIMP trunk still depends on GEGL trunk but we're
-	moving towards a time when GIMMP can depend on a GEGL tarball instead.
+	moving towards a time when GIMP can depend on a GEGL tarball instead.
 
 	* app/gegl/gegl/gegl-operation-filter.h:
 	* app/gegl/gegl/gegl-operation-point-filter.h:
