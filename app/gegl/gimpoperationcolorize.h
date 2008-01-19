@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_COLORIZE_H__
 
 
-#include "gegl/gegl-operation-point-filter.h"
+#include <operation/gegl-operation-point-filter.h>
 
 
 #define GIMP_TYPE_OPERATION_COLORIZE           (gimp_operation_colorize_get_type ())

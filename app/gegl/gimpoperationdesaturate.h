@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_DESATURATE_H__
 
 
-#include "gegl/gegl-operation-point-filter.h"
+#include <operation/gegl-operation-point-filter.h>
 
 
 #define GIMP_TYPE_OPERATION_DESATURATE           (gimp_operation_desaturate_get_type ())

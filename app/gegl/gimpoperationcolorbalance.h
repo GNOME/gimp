@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_COLOR_BALANCE_H__
 
 
-#include "gegl/gegl-operation-point-filter.h"
+#include <operation/gegl-operation-point-filter.h>
 
 
 #define GIMP_TYPE_OPERATION_COLOR_BALANCE            (gimp_operation_color_balance_get_type ())

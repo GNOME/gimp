@@ -1,3 +1,28 @@
+2008-01-18  Øyvind Kolås  <pippin@gimp.org>
+
+	Removed copies of GEGL headers from GIMP source, depend on installed
+	headers instead. GIMP trunk still depends on GEGL trunk but we're
+	moving towards a time when GIMMP can depend on a GEGL tarball instead.
+
+	* app/gegl/gegl/gegl-operation-filter.h:
+	* app/gegl/gegl/gegl-operation-point-filter.h:
+	* app/gegl/gegl/gegl-operation-sink.h:
+	* app/gegl/gegl/gegl-operation-source.h:
+	* app/gegl/gegl/gegl-operation.h:
+	* app/gegl/gegl/gegl-types.h:
+	* app/gegl/gegl/: removed.
+
+	* app/gegl/gimpoperationcolorbalance.h:
+	* app/gegl/gimpoperationcolorize.h:
+	* app/gegl/gimpoperationdesaturate.h:
+	* app/gegl/gimpoperationhuesaturation.h:
+	* app/gegl/gimpoperationlevels.h:
+	* app/gegl/gimpoperationposterize.h:
+	* app/gegl/gimpoperationthreshold.h:
+	* app/gegl/gimpoperationtilesink.h:
+	* app/gegl/gimpoperationtilesource.h: modified path to parent class'
+	header file.
+
 2008-01-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/base/lut-funcs.c (equalize_lut_func): Don't 

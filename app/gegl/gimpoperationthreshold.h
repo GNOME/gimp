@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_THRESHOLD_H__
 
 
-#include "gegl/gegl-operation-point-filter.h"
+#include <operation/gegl-operation-point-filter.h>
 
 
 #define GIMP_TYPE_OPERATION_THRESHOLD           (gimp_operation_threshold_get_type ())
