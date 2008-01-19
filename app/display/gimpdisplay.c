@@ -39,6 +39,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplay-handlers.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-transform.h"
 
@@ -384,6 +385,69 @@ gimp_display_new (GimpImage       *image,
             }
         }
     }
+
+  return display;
+}
+
+GimpDisplay *
+gimp_scratch_display_new (GimpImage       *image,
+                          GimpUnit         unit,
+                          gdouble          scale,
+                          GimpMenuFactory *menu_factory,
+                          GimpUIManager   *popup_manager)
+{
+  GimpDisplay      *display;
+  Gimp             *gimp;
+  gint              ID;
+  GimpDisplayShell *shell;
+  gint              width, height;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  gimp = image->gimp;
+
+  /*  If there isn't an interface, never create a display  */
+  if (gimp->no_interface)
+    return NULL;
+
+  do
+    {
+      ID = gimp->next_display_ID++;
+
+      if (gimp->next_display_ID == G_MAXINT)
+        gimp->next_display_ID = 1;
+    }
+  while (gimp_display_get_by_ID (gimp, ID));
+
+  display = g_object_new (GIMP_TYPE_DISPLAY,
+                          "id", ID,
+                          NULL);
+
+  /*  refs the image  */
+  gimp_display_connect (display, image);
+
+  /*  create the shell for the image  */
+  display->shell = gimp_display_shell_new (display, unit, scale,
+                                  menu_factory, popup_manager);
+  shell = GIMP_DISPLAY_SHELL (display->shell);
+
+  gimp_display_shell_set_show_layer      (shell, FALSE);
+  gimp_display_shell_set_show_rulers     (shell, FALSE);
+  gimp_display_shell_set_show_scrollbars (shell, FALSE);
+  gimp_display_shell_set_show_statusbar  (shell, FALSE);
+
+  width  = SCALEX (shell, gimp_image_get_width  (shell->display->image));
+  height = SCALEY (shell, gimp_image_get_height (shell->display->image));
+  gtk_widget_set_size_request (display->shell, width, height);
+
+  gtk_widget_show (display->shell);
+
+  g_signal_connect (GIMP_DISPLAY_SHELL (display->shell)->statusbar, "cancel",
+                    G_CALLBACK (gimp_display_progress_canceled),
+                    display);
+
+  /* add the display to the list */
+  gimp_container_add (gimp->displays, GIMP_OBJECT (display));
 
   return display;
 }

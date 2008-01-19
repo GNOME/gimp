@@ -313,23 +313,15 @@ gui_scratch_display_create (GimpImage *image,
 
   image_managers = gimp_ui_managers_from_name ("<Image>");
 
-  display = gimp_display_new (image, unit, scale,
-                              global_menu_factory,
-                              image_managers->data);
+  display = gimp_scratch_display_new (image, unit, scale,
+                                      global_menu_factory,
+                                      image_managers->data);
 
   shell = GIMP_DISPLAY_SHELL (display->shell);
 
-  gimp_context_set_display (gimp_get_user_context (image->gimp), display);
-
-  gimp_display_shell_set_show_layer      (shell, FALSE);
-  gimp_display_shell_set_show_rulers     (shell, FALSE);
-  gimp_display_shell_set_show_scrollbars (shell, FALSE);
-  gimp_display_shell_set_show_statusbar  (shell, FALSE);
-
-  gimp_display_shell_shrink_wrap_strict (shell);
-
   gimp_ui_manager_update (shell->menubar_manager, display);
 
+  gimp_context_set_display (gimp_get_user_context (image->gimp), display);
 
   return GIMP_OBJECT (display);
 }

@@ -1,5 +1,14 @@
 2008-01-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	Set up appearance of scratch display before showing
+	it, to reduce flashing.
+	
+	* app/gui/gui-vtable.c
+	* app/display/gimpdisplayshell.[ch]
+	* app/display/gimpdisplay.[ch]
+	
+2008-01-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	Merged 24626:24650 from trunk.
 	
 2008-01-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>

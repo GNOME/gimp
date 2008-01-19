@@ -61,6 +61,11 @@ GimpDisplay * gimp_display_new         (GimpImage       *image,
                                         gdouble          scale,
                                         GimpMenuFactory *menu_factory,
                                         GimpUIManager   *popup_manager);
+GimpDisplay * gimp_scratch_display_new (GimpImage       *image,
+                                        GimpUnit         unit,
+                                        gdouble          scale,
+                                        GimpMenuFactory *menu_factory,
+                                        GimpUIManager   *popup_manager);
 void          gimp_display_delete      (GimpDisplay     *display);
 
 gint          gimp_display_get_ID      (GimpDisplay     *display);
