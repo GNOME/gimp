@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_LEVELS_H__
 
 
-#include "gegl/gegl-operation-point-filter.h"
+#include <operation/gegl-operation-point-filter.h>
 
 
 #define GIMP_TYPE_OPERATION_LEVELS            (gimp_operation_levels_get_type ())

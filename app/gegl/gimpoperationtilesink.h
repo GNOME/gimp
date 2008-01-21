@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_TILE_SINK_H__
 
 
-#include "gegl/gegl-operation-sink.h"
+#include <operation/gegl-operation-sink.h>
 
 
 #define GIMP_TYPE_OPERATION_TILE_SINK           (gimp_operation_tile_sink_get_type ())

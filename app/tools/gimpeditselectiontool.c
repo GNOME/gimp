@@ -543,6 +543,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
   GimpItem              *active_item;
   gint                   off_x, off_y;
   gdouble                motion_x, motion_y;
+  gint                   x, y;
 
   gdk_flush ();
 
@@ -568,120 +569,111 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
   gimp_edit_selection_tool_calc_coords (edit_select,
                                         motion_x,
                                         motion_y);
+  x = edit_select->x;
+  y = edit_select->y;
 
-  /******************************************* adam's live move *******/
-  /********************************************************************/
-  {
-    gint x, y;
+  /* if there has been movement, move the selection  */
+  if (edit_select->origx != x || edit_select->origy != y)
+    {
+      gint    xoffset;
+      gint    yoffset;
+      GError *error = NULL;
 
-    x = edit_select->x;
-    y = edit_select->y;
+      xoffset = x - edit_select->origx;
+      yoffset = y - edit_select->origy;
 
-    /* if there has been movement, move the selection  */
-    if (edit_select->origx != x || edit_select->origy != y)
-      {
-        gint    xoffset;
-        gint    yoffset;
-        GError *error = NULL;
+      edit_select->cumlx += xoffset;
+      edit_select->cumly += yoffset;
 
-        xoffset = x - edit_select->origx;
-        yoffset = y - edit_select->origy;
+      switch (edit_select->edit_mode)
+        {
+        case GIMP_TRANSLATE_MODE_LAYER_MASK:
+        case GIMP_TRANSLATE_MODE_MASK:
+          /*  we don't do the actual edit selection move here.  */
+          edit_select->origx = x;
+          edit_select->origy = y;
+          break;
 
-        edit_select->cumlx += xoffset;
-        edit_select->cumly += yoffset;
+        case GIMP_TRANSLATE_MODE_VECTORS:
+        case GIMP_TRANSLATE_MODE_CHANNEL:
+          edit_select->origx = x;
+          edit_select->origy = y;
 
-        switch (edit_select->edit_mode)
-          {
-          case GIMP_TRANSLATE_MODE_LAYER_MASK:
-          case GIMP_TRANSLATE_MODE_MASK:
-            /*  we don't do the actual edit selection move here.  */
-            edit_select->origx = x;
-            edit_select->origy = y;
-            break;
+          /*  fallthru  */
 
-          case GIMP_TRANSLATE_MODE_VECTORS:
-          case GIMP_TRANSLATE_MODE_CHANNEL:
-            edit_select->origx = x;
-            edit_select->origy = y;
-
-            /*  fallthru  */
-
-          case GIMP_TRANSLATE_MODE_LAYER:
-            /*  for CHANNEL_TRANSLATE, only translate the linked layers
-             *  and vectors on-the-fly, the channel is translated
-             *  on button_release.
-             */
-            if (edit_select->edit_mode != GIMP_TRANSLATE_MODE_CHANNEL)
-              gimp_item_translate (active_item, xoffset, yoffset,
-                                   edit_select->first_move);
-
-            if (gimp_item_get_linked (active_item))
-              {
-                /*  translate all linked layers & vectors as well  */
-
-                GList *linked;
-
-                linked = gimp_image_item_list_get_list (display->image,
-                                                        active_item,
-                                                        GIMP_ITEM_TYPE_LAYERS |
-                                                        GIMP_ITEM_TYPE_VECTORS,
-                                                        GIMP_ITEM_SET_LINKED);
-
-                gimp_image_item_list_translate (display->image,
-                                                linked,
-                                                xoffset, yoffset,
-                                                edit_select->first_move);
-
-                g_list_free (linked);
-              }
-            break;
-
-          case GIMP_TRANSLATE_MODE_MASK_TO_LAYER:
-          case GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER:
-            if (! gimp_selection_float (gimp_image_get_mask (display->image),
-                                        GIMP_DRAWABLE (active_item),
-                                        gimp_get_user_context (display->image->gimp),
-                                        edit_select->edit_mode ==
-                                        GIMP_TRANSLATE_MODE_MASK_TO_LAYER,
-                                        0, 0, &error))
-              {
-                /* no region to float, abort safely */
-                gimp_message (display->image->gimp, G_OBJECT (display),
-                              GIMP_MESSAGE_WARNING,
-                              "%s", error->message);
-                g_clear_error (&error);
-                gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-
-                return;
-              }
-
-            edit_select->origx -= edit_select->x1;
-            edit_select->origy -= edit_select->y1;
-            edit_select->x2    -= edit_select->x1;
-            edit_select->y2    -= edit_select->y1;
-            edit_select->x1     = 0;
-            edit_select->y1     = 0;
-
-            edit_select->edit_mode = GIMP_TRANSLATE_MODE_FLOATING_SEL;
-
-            active_item =
-              GIMP_ITEM (gimp_image_get_active_drawable (display->image));
-
-            /* fall through */
-
-          case GIMP_TRANSLATE_MODE_FLOATING_SEL:
+        case GIMP_TRANSLATE_MODE_LAYER:
+          /*  for CHANNEL_TRANSLATE, only translate the linked layers
+           *  and vectors on-the-fly, the channel is translated
+           *  on button_release.
+           */
+          if (edit_select->edit_mode != GIMP_TRANSLATE_MODE_CHANNEL)
             gimp_item_translate (active_item, xoffset, yoffset,
                                  edit_select->first_move);
-            break;
-          }
 
-        edit_select->first_move = FALSE;
-      }
+          if (gimp_item_get_linked (active_item))
+            {
+              /*  translate all linked layers & vectors as well  */
 
-    gimp_projection_flush (display->image->projection);
-  }
-  /********************************************************************/
-  /********************************************************************/
+              GList *linked;
+
+              linked = gimp_image_item_list_get_list (display->image,
+                                                      active_item,
+                                                      GIMP_ITEM_TYPE_LAYERS |
+                                                      GIMP_ITEM_TYPE_VECTORS,
+                                                      GIMP_ITEM_SET_LINKED);
+
+              gimp_image_item_list_translate (display->image,
+                                              linked,
+                                              xoffset, yoffset,
+                                              edit_select->first_move);
+
+              g_list_free (linked);
+            }
+          break;
+
+        case GIMP_TRANSLATE_MODE_MASK_TO_LAYER:
+        case GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER:
+          if (! gimp_selection_float (gimp_image_get_mask (display->image),
+                                      GIMP_DRAWABLE (active_item),
+                                      gimp_get_user_context (display->image->gimp),
+                                      edit_select->edit_mode ==
+                                      GIMP_TRANSLATE_MODE_MASK_TO_LAYER,
+                                      0, 0, &error))
+            {
+              /* no region to float, abort safely */
+              gimp_message (display->image->gimp, G_OBJECT (display),
+                            GIMP_MESSAGE_WARNING,
+                            "%s", error->message);
+              g_clear_error (&error);
+              gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+
+              return;
+            }
+
+          edit_select->origx -= edit_select->x1;
+          edit_select->origy -= edit_select->y1;
+          edit_select->x2    -= edit_select->x1;
+          edit_select->y2    -= edit_select->y1;
+          edit_select->x1     = 0;
+          edit_select->y1     = 0;
+
+          edit_select->edit_mode = GIMP_TRANSLATE_MODE_FLOATING_SEL;
+
+          active_item =
+            GIMP_ITEM (gimp_image_get_active_drawable (display->image));
+
+          /* fall through */
+
+        case GIMP_TRANSLATE_MODE_FLOATING_SEL:
+          gimp_item_translate (active_item, xoffset, yoffset,
+                               edit_select->first_move);
+          break;
+        }
+
+      edit_select->first_move = FALSE;
+    }
+
+  gimp_projection_flush (display->image->projection);
 
   gimp_tool_pop_status (tool, display);
   gimp_tool_push_status_coords (tool, display,

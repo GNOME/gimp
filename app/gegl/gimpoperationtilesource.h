@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_TILE_SOURCE_H__
 
 
-#include "gegl/gegl-operation-source.h"
+#include <operation/gegl-operation-source.h>
 
 
 #define GIMP_TYPE_OPERATION_TILE_SOURCE           (gimp_operation_tile_source_get_type ())

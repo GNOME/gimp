@@ -30,6 +30,9 @@
 
 #include "base/gimphistogram.h"
 
+/*  temp cruft  */
+#include "base/levels.h"
+
 #include "gimplevelsconfig.h"
 
 
@@ -407,5 +410,39 @@ gimp_levels_config_adjust_by_colors (GimpLevelsConfig     *config,
 
       /* Map selected color to corresponding lightness */
       config->gamma[channel] = log (inten) / log (out_light);
+    }
+}
+
+
+/*  temp cruft  */
+
+void
+gimp_levels_config_to_levels_cruft (GimpLevelsConfig *config,
+                                    Levels           *cruft,
+                                    gboolean          is_color)
+{
+  GimpHistogramChannel channel;
+
+  g_return_if_fail (GIMP_IS_LEVELS_CONFIG (config));
+  g_return_if_fail (cruft != NULL);
+
+  for (channel = GIMP_HISTOGRAM_VALUE;
+       channel <= GIMP_HISTOGRAM_ALPHA;
+       channel++)
+    {
+      cruft->gamma[channel]       = config->gamma[channel];
+      cruft->low_input[channel]   = config->low_input[channel]   * 255.999;
+      cruft->high_input[channel]  = config->high_input[channel]  * 255.999;
+      cruft->low_output[channel]  = config->low_output[channel]  * 255.999;
+      cruft->high_output[channel] = config->high_output[channel] * 255.999;
+    }
+
+  if (! is_color)
+    {
+      cruft->gamma[1]       = cruft->gamma[GIMP_HISTOGRAM_ALPHA];
+      cruft->low_input[1]   = cruft->low_input[GIMP_HISTOGRAM_ALPHA];
+      cruft->high_input[1]  = cruft->high_input[GIMP_HISTOGRAM_ALPHA];
+      cruft->low_output[1]  = cruft->low_output[GIMP_HISTOGRAM_ALPHA];
+      cruft->high_output[1] = cruft->high_output[GIMP_HISTOGRAM_ALPHA];
     }
 }
