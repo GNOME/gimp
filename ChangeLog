@@ -1,3 +1,8 @@
+2008-01-21  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpselection.c (gimp_selection_extract): don't clear
+	the selection as a side-effect of "Edit->Cut" (bug #510534).
+
 2008-01-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcolorbar.c (gimp_color_bar_class_init): fix the

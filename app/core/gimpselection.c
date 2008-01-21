@@ -732,9 +732,6 @@ gimp_selection_extract (GimpChannel  *selection,
 
       if (GIMP_IS_DRAWABLE (pickable) && cut_image)
         {
-          /*  Clear the region  */
-          gimp_channel_clear (selection, NULL, TRUE);
-
           /*  Update the region  */
           gimp_drawable_update (GIMP_DRAWABLE (pickable),
                                 x1, y1, (x2 - x1), (y2 - y1));
