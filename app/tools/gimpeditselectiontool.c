@@ -531,23 +531,22 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
   g_object_unref (edit_select);
 }
 
-
 static void
-gimp_edit_selection_tool_motion (GimpTool        *tool,
-                                 GimpCoords      *coords,
-                                 guint32          time,
-                                 GdkModifierType  state,
-                                 GimpDisplay     *display)
+gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
+                                        gdouble                new_x,
+                                        gdouble                new_y,
+                                        GimpDisplay           *display)
 {
-  GimpEditSelectionTool *edit_select = GIMP_EDIT_SELECTION_TOOL (tool);
-  GimpItem              *active_item;
-  gint                   off_x, off_y;
-  gdouble                motion_x, motion_y;
-  gint                   x, y;
+  GimpDrawTool *draw_tool          = GIMP_DRAW_TOOL (edit_select);
+  GimpTool     *tool               = GIMP_TOOL (edit_select);
+  GimpItem     *active_item;
+  gint          off_x, off_y;
+  gdouble       motion_x, motion_y;
+  gint          x, y;
 
   gdk_flush ();
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+  gimp_draw_tool_pause (draw_tool);
 
   active_item = gimp_edit_selection_tool_get_active_item (edit_select,
                                                           display->image);
@@ -557,12 +556,12 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
   if (edit_select->constrain)
     {
       gimp_tool_motion_constrain (edit_select->start_x, edit_select->start_y,
-                                  &coords->x, &coords->y,
+                                  &new_x, &new_y,
                                   GIMP_TOOL_CONSTRAIN_45_DEGREES);
     }
 
-  motion_x = coords->x - off_x;
-  motion_y = coords->y - off_y;
+  motion_x = new_x - off_x;
+  motion_y = new_y - off_y;
 
   /* now do the actual move. */
 
@@ -645,7 +644,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
                             GIMP_MESSAGE_WARNING,
                             "%s", error->message);
               g_clear_error (&error);
-              gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+              gimp_draw_tool_resume (draw_tool);
 
               return;
             }
@@ -683,7 +682,25 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
                                 edit_select->cumly,
                                 NULL);
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+  gimp_draw_tool_resume (draw_tool);
+}
+
+
+static void
+gimp_edit_selection_tool_motion (GimpTool        *tool,
+                                 GimpCoords      *coords,
+                                 guint32          time,
+                                 GdkModifierType  state,
+                                 GimpDisplay     *display)
+{
+  GimpEditSelectionTool *edit_select = GIMP_EDIT_SELECTION_TOOL (tool);
+
+  edit_select->last_x = coords->x;
+  edit_select->last_y = coords->y;
+
+  gimp_edit_selection_tool_update_motion (edit_select,
+                                          coords->x, coords->y,
+                                          display);
 }
 
 static void
@@ -696,6 +713,17 @@ gimp_edit_selection_tool_active_modifier_key (GimpTool        *tool,
   GimpEditSelectionTool *edit_select = GIMP_EDIT_SELECTION_TOOL (tool);
 
   edit_select->constrain = state & GDK_CONTROL_MASK ? TRUE : FALSE;
+
+  /* If we didn't came here due to a mouse release, immediately update
+   * the position of the thing we move.
+   */
+  if (state & GDK_BUTTON1_MASK)
+    {
+      gimp_edit_selection_tool_update_motion (edit_select,
+                                              edit_select->last_x,
+                                              edit_select->last_y,
+                                              display);
+    }
 }
 
 static void

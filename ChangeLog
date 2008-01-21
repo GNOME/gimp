@@ -1,3 +1,11 @@
+2008-01-21  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpeditselectiontool.[ch]: Moved the logic in _motion
+	to a new helper function _update_motion that is also called in
+	_active_modifier_key. Makes toggling Ctrl immediately apply/remove
+	movement constraints for the Move Tool when a move has been
+	initiated. This completes the fix for bug #78730.
+
 2008-01-21  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpselection.c (gimp_selection_extract): don't clear

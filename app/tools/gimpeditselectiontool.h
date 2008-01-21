@@ -56,6 +56,7 @@ struct _GimpEditSelectionTool
 
   gboolean            constrain;       /*  Constrain the movement            */
   gdouble             start_x, start_y;/*  Coords when button was pressed    */
+  gdouble             last_x,  last_y; /*  Previous coords sent to _motion   */
 };
 
 struct _GimpEditSelectionToolClass
