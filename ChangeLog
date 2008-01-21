@@ -1,5 +1,11 @@
 2008-01-21  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_set_other_side_coord): Don't foget to update
+	the integer representation of the rectangle.
+
+2008-01-21  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimpeditselectiontool.[ch]: Moved the logic in _motion
 	to a new helper function _update_motion that is also called in
 	_active_modifier_key. Makes toggling Ctrl immediately apply/remove
