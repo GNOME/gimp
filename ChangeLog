@@ -1,5 +1,13 @@
 2008-01-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable-levels.c: port to GEGL and use the new
+	code path when use-gegl is TRUE.
+
+	* app/base/levels.[ch]: remove stretch and pick APIs which are not
+	used any longer.
+
+2008-01-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimplevelsconfig.[ch]: add utility function
 	gimp_levels_config_to_levels_cruft() which fills the old Levels
 	struct from a GimpLevelsConfig object.

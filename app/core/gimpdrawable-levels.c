@@ -18,24 +18,28 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "core-types.h"
 
 #include "base/gimphistogram.h"
 #include "base/gimplut.h"
 #include "base/levels.h"
-#include "base/lut-funcs.h"
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 
+#include "gegl/gimplevelsconfig.h"
+
+/* temp */
+#include "config/gimpcoreconfig.h"
 #include "gimp.h"
+#include "gimpimage.h"
+
 #include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-histogram.h"
 #include "gimpdrawable-levels.h"
+#include "gimpdrawable-operation.h"
 
 #include "gimp-intl.h"
 
@@ -49,12 +53,8 @@ gimp_drawable_levels (GimpDrawable   *drawable,
                       gint32          low_output,
                       gint32          high_output)
 {
-  gint         x, y, width, height;
-  PixelRegion  srcPR, destPR;
-  Levels       levels;
-  GimpLut     *lut;
+  GimpLevelsConfig *config;
 
-  /* parameter checking */
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (! gimp_drawable_is_indexed (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
@@ -73,54 +73,83 @@ gimp_drawable_levels (GimpDrawable   *drawable,
     g_return_if_fail (channel == GIMP_HISTOGRAM_VALUE ||
                       channel == GIMP_HISTOGRAM_ALPHA);
 
-  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-    return;
+  config = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
 
-  /* FIXME: hack */
-  if (gimp_drawable_is_gray (drawable) &&
-      channel == GIMP_HISTOGRAM_ALPHA)
-    channel = 1;
+  g_object_set (config,
+                "channel", channel,
+                NULL);
 
-  lut = gimp_lut_new ();
+  g_object_set (config,
+                "low-input",   low_input   / 255.0,
+                "high-input",  high_input  / 255.0,
+                "gamma",       gamma,
+                "low-output",  low_output  / 255.0,
+                "high-output", high_output / 255.0,
+                NULL);
 
-  levels_init (&levels);
+  if (GIMP_ITEM (drawable)->image->gimp->config->use_gegl)
+    {
+      GeglNode *levels;
 
-  levels.low_input[channel]   = low_input;
-  levels.high_input[channel]  = high_input;
-  levels.gamma[channel]       = gamma;
-  levels.low_output[channel]  = low_output;
-  levels.high_output[channel] = high_output;
+      levels = g_object_new (GEGL_TYPE_NODE,
+                             "operation", "gimp-levels",
+                             NULL);
 
-  /* setup the lut */
-  gimp_lut_setup (lut,
-                  (GimpLutFunc) levels_lut_func,
-                   &levels,
-                   gimp_drawable_bytes (drawable));
+      gegl_node_set (levels,
+                     "config", config,
+                     NULL);
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                     x, y, width, height, FALSE);
-  pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                     x, y, width, height, TRUE);
+      gimp_drawable_apply_operation (drawable, levels, TRUE,
+                                     NULL, _("Levels"));
 
-  pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
-                                  lut, 2, &srcPR, &destPR);
+      g_object_unref (levels);
+    }
+  else
+    {
+      PixelRegion  srcPR, destPR;
+      Levels       levels;
+      GimpLut     *lut;
+      gint         x, y;
+      gint         width, height;
 
-  gimp_lut_free (lut);
+      if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+        return;
 
-  gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
-  gimp_drawable_update (drawable, x, y, width, height);
+      gimp_levels_config_to_levels_cruft (config, &levels,
+                                          gimp_drawable_is_rgb (drawable));
+
+      lut = gimp_lut_new ();
+      gimp_lut_setup (lut,
+                      (GimpLutFunc) levels_lut_func,
+                      &levels,
+                      gimp_drawable_bytes (drawable));
+
+      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
+                         x, y, width, height, FALSE);
+      pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
+                         x, y, width, height, TRUE);
+
+      pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
+                                      lut, 2, &srcPR, &destPR);
+
+      gimp_lut_free (lut);
+
+      gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
+
+      gimp_drawable_update (drawable, x, y, width, height);
+    }
+
+  g_object_unref (config);
 }
-
 
 void
 gimp_drawable_levels_stretch (GimpDrawable *drawable,
                               GimpContext  *context)
 {
-  gint           x, y, width, height;
-  PixelRegion    srcPR, destPR;
-  Levels         levels;
-  GimpLut       *lut;
-  GimpHistogram *hist;
+  GimpLevelsConfig *config;
+  GimpHistogram    *histogram;
+  gint              x, y;
+  gint              width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (! gimp_drawable_is_indexed (drawable));
@@ -130,33 +159,62 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable,
   if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     return;
 
-  /* Build the histogram */
-  hist = gimp_histogram_new ();
+  config = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
 
-  gimp_drawable_calculate_histogram (drawable, hist);
+  histogram = gimp_histogram_new ();
+  gimp_drawable_calculate_histogram (drawable, histogram);
 
-  /* Calculate the levels */
-  levels_init    (&levels);
-  levels_stretch (&levels, hist, ! gimp_drawable_is_gray (drawable));
+  gimp_levels_config_stretch (config, histogram,
+                              gimp_drawable_is_rgb (drawable));
 
-  /* Set up the lut */
-  lut  = gimp_lut_new ();
-  gimp_lut_setup (lut,
-                  (GimpLutFunc) levels_lut_func,
-                  &levels,
-                  gimp_drawable_bytes (drawable));
+  gimp_histogram_free (histogram);
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                     x, y, width, height, FALSE);
-  pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                     x, y, width, height, TRUE);
+  if (GIMP_ITEM (drawable)->image->gimp->config->use_gegl)
+    {
+      GeglNode *levels;
 
-  pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
-                                  lut, 2, &srcPR, &destPR);
+      levels = g_object_new (GEGL_TYPE_NODE,
+                             "operation", "gimp-levels",
+                             NULL);
 
-  gimp_lut_free (lut);
-  gimp_histogram_free (hist);
+      gegl_node_set (levels,
+                     "config", config,
+                     NULL);
 
-  gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
-  gimp_drawable_update (drawable, x, y, width, height);
+      gimp_drawable_apply_operation (drawable, levels, TRUE,
+                                     NULL, _("Levels"));
+
+      g_object_unref (levels);
+    }
+  else
+    {
+      PixelRegion  srcPR, destPR;
+      Levels       levels;
+      GimpLut     *lut;
+
+      gimp_levels_config_to_levels_cruft (config, &levels,
+                                          gimp_drawable_is_rgb (drawable));
+
+      lut  = gimp_lut_new ();
+      gimp_lut_setup (lut,
+                      (GimpLutFunc) levels_lut_func,
+                      &levels,
+                      gimp_drawable_bytes (drawable));
+
+      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
+                         x, y, width, height, FALSE);
+      pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
+                         x, y, width, height, TRUE);
+
+      pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
+                                      lut, 2, &srcPR, &destPR);
+
+      gimp_lut_free (lut);
+
+      gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
+
+      gimp_drawable_update (drawable, x, y, width, height);
+    }
+
+  g_object_unref (config);
 }
