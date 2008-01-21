@@ -26,10 +26,12 @@
 #include <operation/gegl-operation-point-filter.h>
 
 
-#define GIMP_TYPE_OPERATION_COLORIZE           (gimp_operation_colorize_get_type ())
-#define GIMP_OPERATION_COLORIZE(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_COLORIZE, GimpOperationColorize))
-#define GIMP_OPERATION_COLORIZE_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_COLORIZE, GimpOperationColorizeClass))
-#define GIMP_OPERATION_COLORIZE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_COLORIZE, GimpOperationColorizeClass))
+#define GIMP_TYPE_OPERATION_COLORIZE            (gimp_operation_colorize_get_type ())
+#define GIMP_OPERATION_COLORIZE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_COLORIZE, GimpOperationColorize))
+#define GIMP_OPERATION_COLORIZE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_COLORIZE, GimpOperationColorizeClass))
+#define GIMP_IS_OPERATION_COLORIZE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_COLORIZE))
+#define GIMP_IS_OPERATION_COLORIZE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_COLORIZE))
+#define GIMP_OPERATION_COLORIZE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_COLORIZE, GimpOperationColorizeClass))
 
 
 typedef struct _GimpOperationColorizeClass GimpOperationColorizeClass;
