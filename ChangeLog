@@ -1,5 +1,13 @@
 2008-01-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimplevelsconfig.[ch]: add utility function
+	gimp_levels_config_to_levels_cruft() which fills the old Levels
+	struct from a GimpLevelsConfig object.
+
+	* app/tools/gimplevelstool.c: use it.
+
+2008-01-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimpcolorizeconfig.h
 	* app/gegl/gimpoperationcolorize.h: add missing type macros.
 

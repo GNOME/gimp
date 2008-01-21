@@ -284,35 +284,13 @@ gimp_levels_tool_get_operation (GimpImageMapTool *im_tool)
 static void
 gimp_levels_tool_map (GimpImageMapTool *image_map_tool)
 {
-  GimpLevelsTool       *tool   = GIMP_LEVELS_TOOL (image_map_tool);
-  GimpLevelsConfig     *config = tool->config;
-  Levels               *levels = tool->levels;
-  GimpHistogramChannel  channel;
+  GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
 
-  for (channel = GIMP_HISTOGRAM_VALUE;
-       channel <= GIMP_HISTOGRAM_ALPHA;
-       channel++)
-    {
-      levels->gamma[channel]       = config->gamma[channel];
-      levels->low_input[channel]   = config->low_input[channel]   * 255.999;
-      levels->high_input[channel]  = config->high_input[channel]  * 255.999;
-      levels->low_output[channel]  = config->low_output[channel]  * 255.999;
-      levels->high_output[channel] = config->high_output[channel] * 255.999;
-    }
-
-  /* FIXME: hack */
-  if (! tool->color)
-    {
-      levels->gamma[1]       = levels->gamma[GIMP_HISTOGRAM_ALPHA];
-      levels->low_input[1]   = levels->low_input[GIMP_HISTOGRAM_ALPHA];
-      levels->high_input[1]  = levels->high_input[GIMP_HISTOGRAM_ALPHA];
-      levels->low_output[1]  = levels->low_output[GIMP_HISTOGRAM_ALPHA];
-      levels->high_output[1] = levels->high_output[GIMP_HISTOGRAM_ALPHA];
-    }
+  gimp_levels_config_to_levels_cruft (tool->config, tool->levels, tool->color);
 
   gimp_lut_setup (tool->lut,
                   (GimpLutFunc) levels_lut_func,
-                  levels,
+                  tool->levels,
                   gimp_drawable_bytes (image_map_tool->drawable));
 }
 
@@ -853,6 +831,7 @@ static void
 levels_update_input_bar (GimpLevelsTool *tool)
 {
   /*  Recalculate the transfer arrays  */
+  gimp_levels_config_to_levels_cruft (tool->config, tool->levels, tool->color);
   levels_calculate_transfers (tool->levels);
 
   switch (tool->channel)
