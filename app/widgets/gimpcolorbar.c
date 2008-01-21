@@ -75,13 +75,15 @@ gimp_color_bar_class_init (GimpColorBarClass *klass)
                                                       GTK_ORIENTATION_HORIZONTAL,
                                                       GIMP_PARAM_WRITABLE |
                                                       G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_COLOR,
                                    gimp_param_spec_rgb ("color",
                                                         NULL, NULL,
                                                         FALSE, &white,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT));
-  g_object_class_install_property (object_class, PROP_ORIENTATION,
+
+  g_object_class_install_property (object_class, PROP_CHANNEL,
                                    g_param_spec_enum ("histogram-channel",
                                                       NULL, NULL,
                                                       GIMP_TYPE_HISTOGRAM_CHANNEL,

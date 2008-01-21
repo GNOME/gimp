@@ -1,3 +1,10 @@
+2008-01-21  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	* app/widgets/gimpcolorbar.c (gimp_color_bar_class_init): fix the
+	ID of the "histogram-channel" property.
+
 2008-01-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merged from trunk:
