@@ -23,6 +23,7 @@
 #define __GIMP_OPERATION_POSTERIZE_H__
 
 
+#include <gegl-plugin.h>
 #include <operation/gegl-operation-point-filter.h>
 
 

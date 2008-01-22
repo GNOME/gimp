@@ -1,3 +1,15 @@
+2008-01-22  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/gegl/gimpoperationcolorbalance.h:
+	* app/gegl/gimpoperationcolorize.h:
+	* app/gegl/gimpoperationdesaturate.h:
+	* app/gegl/gimpoperationhuesaturation.h:
+	* app/gegl/gimpoperationlevels.h:
+	* app/gegl/gimpoperationposterize.h:
+	* app/gegl/gimpoperationthreshold.h:
+	* app/gegl/gimpoperationtilesink.h:
+	* app/gegl/gimpoperationtilesource.h: #include <gegl-plugin.h>
+
 2008-01-21  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c

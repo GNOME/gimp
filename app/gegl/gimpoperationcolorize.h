@@ -22,7 +22,7 @@
 #ifndef __GIMP_OPERATION_COLORIZE_H__
 #define __GIMP_OPERATION_COLORIZE_H__
 
-
+#include <gegl-plugin.h>
 #include <operation/gegl-operation-point-filter.h>
 
 
