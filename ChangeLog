@@ -1,5 +1,10 @@
 2008-01-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/pcx.c: corrected check of the bytesperline field
+	which caused monochrome PCX images to be rejected (bug #510658).
+
+2008-01-22  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp.[ch]: added new function gimp_use_gegl().
 
 	* app/core/gimpdrawable-desaturate.c
