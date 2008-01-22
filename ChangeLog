@@ -1,5 +1,14 @@
 2008-01-22  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimpbrushcore.c (gimp_brush_core_create_bound_segs):
+	dilate the brush mask in order to obtain a simpler boundary.
+	Addresses bug #304798.
+
+	* app/tools/gimpbrushtool.c (gimp_brush_tool_draw_brush): removed
+	redundant casts.
+
+2008-01-22  Sven Neumann  <sven@gimp.org>
+
 	* app/base/boundary.c: minor cleanups.
 
 2008-01-22  Sven Neumann  <sven@gimp.org>
