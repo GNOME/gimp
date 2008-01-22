@@ -49,7 +49,7 @@ static MapInfo_t *_map_info;
 %union {
   int val;
   double value;
-  char id[1024];		/* Large enough to hold all polygon points! */
+  char id[4096];		/* Large enough to hold all polygon points! */
 }
 
 %token<val> IMG SRC WIDTH HEIGHT BORDER USEMAP
@@ -136,7 +136,7 @@ description_line: DESCRIPTION STRING END_COMMENT
 		{
 		   gchar *description;
 
-		   description = g_strconcat(_map_info->description, $2, "\n", 
+		   description = g_strconcat(_map_info->description, $2, "\n",
 					     NULL);
 		   g_strreplace(&_map_info->description, description);
 		}
@@ -154,7 +154,7 @@ area		: '<' AREA tag_list xhtml_close
 		;
 
 xhtml_close	: '>'
-		| '/' '>' 
+		| '/' '>'
 		;
 
 tag_list	: /* Empty */
@@ -310,7 +310,7 @@ end_map		: '<' END_MAP '>'
 
 %%
 
-static void 
+static void
 csim_error(char* s)
 {
    extern FILE *csim_in;

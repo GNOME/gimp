@@ -1,5 +1,12 @@
 2008-01-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/imagemap/imap_csim.y: increased buffer size. Addresses
+	bug #511072.
+
+	* plug-ins/imagemap/imap_csim_parse.[ch]: regenerated.
+
+2008-01-22  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	* app/display/gimpdisplayshell-coords.[ch]: applied patch from
 	Alexia Death with further event filter improvements (bug #508639).
