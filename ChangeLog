@@ -2,6 +2,15 @@
 
 	Merged from trunk:
 
+	* app/core/gimpprojection.c (gimp_projection_idle_render_init):
+	decreased the priority of the projection idle renderer to 150,
+	halfway between G_PRIORITY_HIGH_IDLE and G_PRIORITY_DEFAULT_IDLE.
+	Fixes bug #511214.
+
+2008-01-22  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* app/paint/gimpbrushcore.c (gimp_brush_core_create_bound_segs):
 	smooth the brush mask in order to obtain a simpler boundary.
 	Addresses bug #304798.

@@ -35,6 +35,10 @@
 #include "gimpprojection-construct.h"
 
 
+/*  halfway between G_PRIORITY_HIGH_IDLE and G_PRIORITY_DEFAULT_IDLE  */
+#define  GIMP_PROJECTION_IDLE_PRIORITY  150
+
+
 enum
 {
   UPDATE,
@@ -546,7 +550,7 @@ gimp_projection_idle_render_init (GimpProjection *proj)
       gimp_projection_idle_render_next_area (proj);
 
       proj->idle_render.idle_id =
-        g_idle_add_full (G_PRIORITY_HIGH_IDLE,
+        g_idle_add_full (GIMP_PROJECTION_IDLE_PRIORITY,
                          gimp_projection_idle_render_callback, proj,
                          NULL);
     }
