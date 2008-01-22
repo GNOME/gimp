@@ -1,5 +1,9 @@
 2008-01-22  Sven Neumann  <sven@gimp.org>
 
+	* app/base/boundary.c: minor cleanups.
+
+2008-01-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/imagemap/imap_csim.y: increased buffer size. Addresses
 	bug #511072.
 

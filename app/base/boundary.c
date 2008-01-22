@@ -431,11 +431,12 @@ boundary_add_seg (Boundary *boundary,
       boundary->segs = g_renew (BoundSeg, boundary->segs, boundary->max_segs);
     }
 
-  boundary->segs[boundary->num_segs].x1 = x1;
-  boundary->segs[boundary->num_segs].y1 = y1;
-  boundary->segs[boundary->num_segs].x2 = x2;
-  boundary->segs[boundary->num_segs].y2 = y2;
+  boundary->segs[boundary->num_segs].x1   = x1;
+  boundary->segs[boundary->num_segs].y1   = y1;
+  boundary->segs[boundary->num_segs].x2   = x2;
+  boundary->segs[boundary->num_segs].y2   = y2;
   boundary->segs[boundary->num_segs].open = open;
+
   boundary->num_segs ++;
 }
 
@@ -457,10 +458,11 @@ find_empty_segs (PixelRegion  *maskPR,
   gint          start = 0;
   gint          end   = 0;
   gint          endx  = 0;
-  gint          dstep = 0;
-  gint          val, last;
-  gint          x, tilex;
+  gint          bpp   = 0;
+  gint          tilex = -1;
+  gint          last  = -1;
   gint          l_num_empty;
+  gint          x;
 
   *num_empty = 0;
 
@@ -491,17 +493,15 @@ find_empty_segs (PixelRegion  *maskPR,
         x2 = -1;
     }
 
-  tilex = -1;
   empty_segs[(*num_empty)++] = 0;
-  last = -1;
 
   l_num_empty = *num_empty;
+
+  bpp = maskPR->bytes;
 
   if (! maskPR->tiles)
     {
       data  = maskPR->data + scanline * maskPR->rowstride;
-      dstep = maskPR->bytes;
-
       endx = end;
     }
 
@@ -518,13 +518,12 @@ find_empty_segs (PixelRegion  *maskPR,
               tile = tile_manager_get_tile (maskPR->tiles,
                                             x, scanline, TRUE, FALSE);
               data = ((const guchar *) tile_data_pointer (tile, x, scanline) +
-                      tile_bpp (tile) - 1);
+                      bpp - 1);
 
               tilex = x / TILE_WIDTH;
-              dstep = tile_bpp (tile);
             }
 
-          endx = x + (TILE_WIDTH - (x%TILE_WIDTH));
+          endx = x + (TILE_WIDTH - (x % TILE_WIDTH));
           endx = MIN (end, endx);
         }
 
@@ -532,15 +531,21 @@ find_empty_segs (PixelRegion  *maskPR,
         {
           for (; x < endx; x++)
             {
-              if (*data > threshold)
-                if (x >= x1 && x < x2)
-                  val = -1;
-                else
-                  val = 1;
-              else
-                val = -1;
+              gint val;
 
-              data += dstep;
+              if (*data > threshold)
+                {
+                  if (x >= x1 && x < x2)
+                    val = -1;
+                  else
+                    val = 1;
+                }
+              else
+                {
+                  val = -1;
+                }
+
+              data += bpp;
 
               if (last != val)
                 empty_segs[l_num_empty++] = x;
@@ -552,12 +557,14 @@ find_empty_segs (PixelRegion  *maskPR,
         {
           for (; x < endx; x++)
             {
+              gint val;
+
               if (*data > threshold)
                 val = 1;
               else
                 val = -1;
 
-              data += dstep;
+              data += bpp;
 
               if (last != val)
                 empty_segs[l_num_empty++] = x;
@@ -626,13 +633,17 @@ make_horiz_segs (Boundary *boundary,
       e_e = *empty++;
 
       if (e_s <= start && e_e >= end)
-        process_horiz_seg (boundary,
-                           start, scanline, end, scanline, top);
+        {
+          process_horiz_seg (boundary,
+                             start, scanline, end, scanline, top);
+        }
       else if ((e_s > start && e_s < end) ||
                (e_e < end && e_e > start))
-        process_horiz_seg (boundary,
-                           MAX (e_s, start), scanline,
-                           MIN (e_e, end), scanline, top);
+        {
+          process_horiz_seg (boundary,
+                             MAX (e_s, start), scanline,
+                             MIN (e_e, end), scanline, top);
+        }
     }
 }
 
