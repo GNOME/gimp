@@ -28,7 +28,6 @@
 #include "base/pixel-region.h"
 
 /* temp */
-#include "config/gimpcoreconfig.h"
 #include "gimp.h"
 #include "gimpimage.h"
 
@@ -48,7 +47,7 @@ gimp_drawable_invert (GimpDrawable *drawable,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  if (GIMP_ITEM (drawable)->image->gimp->config->use_gegl)
+  if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
     {
       GeglNode *invert;
 

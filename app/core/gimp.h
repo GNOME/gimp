@@ -185,5 +185,7 @@ void           gimp_message_valist       (Gimp                *gimp,
                                           const gchar         *format,
                                           va_list              args);
 
+gboolean       gimp_use_gegl             (Gimp                *gimp);
+
 
 #endif  /* __GIMP_H__ */

@@ -31,7 +31,6 @@
 #include "gegl/gimplevelsconfig.h"
 
 /* temp */
-#include "config/gimpcoreconfig.h"
 #include "gimp.h"
 #include "gimpimage.h"
 
@@ -87,7 +86,7 @@ gimp_drawable_levels (GimpDrawable   *drawable,
                 "high-output", high_output / 255.0,
                 NULL);
 
-  if (GIMP_ITEM (drawable)->image->gimp->config->use_gegl)
+  if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
     {
       GeglNode *levels;
 
@@ -169,7 +168,7 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable,
 
   gimp_histogram_free (histogram);
 
-  if (GIMP_ITEM (drawable)->image->gimp->config->use_gegl)
+  if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
     {
       GeglNode *levels;
 

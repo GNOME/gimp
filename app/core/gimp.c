@@ -1068,3 +1068,11 @@ gimp_message_valist (Gimp                *gimp,
 
   g_free (message);
 }
+
+gboolean
+gimp_use_gegl (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  return gimp->config->use_gegl;
+}
