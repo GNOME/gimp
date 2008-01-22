@@ -254,6 +254,11 @@ plug-ins/pagecurl/pagecurl.c
 plug-ins/print/print-draw-page.c
 plug-ins/print/print-page-layout.c
 plug-ins/print/print.c
+plug-ins/psd/psd-image-res-load.c
+plug-ins/psd/psd-load.c
+plug-ins/psd/psd-thumb-load.c
+plug-ins/psd/psd-util.c
+plug-ins/psd/psd.c
 plug-ins/rcm/rcm.c
 plug-ins/rcm/rcm_dialog.c
 plug-ins/rcm/rcm_stock.c
