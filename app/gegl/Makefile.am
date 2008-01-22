@@ -10,6 +10,8 @@ libappgegl_a_SOURCES = \
 	\
 	gimpcolorizeconfig.c		\
 	gimpcolorizeconfig.h		\
+	gimphuesaturationconfig.c	\
+	gimphuesaturationconfig.h	\
 	gimplevelsconfig.c		\
 	gimplevelsconfig.h		\
 	\

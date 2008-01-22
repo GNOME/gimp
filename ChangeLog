@@ -1,3 +1,19 @@
+2008-01-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/Makefile.am
+	* app/gegl/gegl-types.h
+	* app/gegl/gimphuesaturationconfig.[ch]: new config object.
+
+	* app/gegl/gimpoperationhuesaturation.[ch]: remove all properties
+	and add a "config" property. Also add API to map a single GimpRGB
+	needed by the hue-saturation tool's color areas.
+
+	* app/tools/gimphuesaturationtool.[ch]: switch to using
+	GimpHueSaturationConfig, use the old HueSaturation struct only in
+	map().
+
+	* app/base/hue-saturation.[ch]: remove API that's no longer needed.
+
 2008-01-22  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/gegl/gimpoperationcolorbalance.h:

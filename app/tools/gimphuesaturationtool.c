@@ -28,6 +28,9 @@
 
 #include "base/hue-saturation.h"
 
+#include "gegl/gimphuesaturationconfig.h"
+#include "gegl/gimpoperationhuesaturation.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
@@ -81,16 +84,6 @@ G_DEFINE_TYPE (GimpHueSaturationTool, gimp_hue_saturation_tool,
                GIMP_TYPE_IMAGE_MAP_TOOL)
 
 #define parent_class gimp_hue_saturation_tool_parent_class
-
-static gint default_colors[6][3] =
-{
-  { 255,   0,   0 },
-  { 255, 255,   0 },
-  {   0, 255,   0 },
-  {   0, 255, 255 },
-  {   0,   0, 255 },
-  { 255,   0, 255 }
-};
 
 
 void
@@ -147,6 +140,12 @@ gimp_hue_saturation_tool_finalize (GObject *object)
 {
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (object);
 
+  if (hs_tool->config)
+    {
+      g_object_unref (hs_tool->config);
+      hs_tool->config = NULL;
+    }
+
   g_slice_free (HueSaturation, hs_tool->hue_saturation);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -172,8 +171,11 @@ gimp_hue_saturation_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  hue_saturation_init (hs_tool->hue_saturation);
-  hue_saturation_calculate_transfers (hs_tool->hue_saturation);
+  gimp_hue_saturation_config_reset (hs_tool->config);
+
+  g_object_set (hs_tool->config,
+                "range", hs_tool->hue_partition,
+                NULL);
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
@@ -186,34 +188,30 @@ gimp_hue_saturation_tool_initialize (GimpTool     *tool,
 static GeglNode *
 gimp_hue_saturation_tool_get_operation (GimpImageMapTool *im_tool)
 {
-  return g_object_new (GEGL_TYPE_NODE,
+  GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (im_tool);
+  GeglNode              *node;
+
+  node = g_object_new (GEGL_TYPE_NODE,
                        "operation", "gimp-hue-saturation",
                        NULL);
+
+  hs_tool->config = g_object_new (GIMP_TYPE_HUE_SATURATION_CONFIG, NULL);
+
+  gegl_node_set (node,
+                 "config", hs_tool->config,
+                 NULL);
+
+  return node;
 }
 
 static void
 gimp_hue_saturation_tool_map (GimpImageMapTool *image_map_tool)
 {
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
-  HueSaturation         *hs      = hs_tool->hue_saturation;
-  GimpHueRange           range;
 
-  for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)
-    {
-      gegl_node_set (image_map_tool->operation,
-                     "range", range,
-                     NULL);
+  gimp_hue_saturation_config_to_cruft (hs_tool->config, hs_tool->hue_saturation);
 
-      gegl_node_set (image_map_tool->operation,
-                     "hue",        hs->hue[range]        / 180.0,
-                     "saturation", hs->saturation[range] / 100.0,
-                     "lightness",  hs->lightness[range]  / 100.0,
-                     NULL);
-    }
-
-  gegl_node_set (image_map_tool->operation,
-                 "overlap", hs->overlap / 100.0,
-                 NULL);
+  hue_saturation_calculate_transfers (hs_tool->hue_saturation);
 }
 
 
@@ -452,8 +450,11 @@ gimp_hue_saturation_tool_reset (GimpImageMapTool *image_map_tool)
 {
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
 
-  hue_saturation_init (hs_tool->hue_saturation);
-  hue_saturation_calculate_transfers (hs_tool->hue_saturation);
+  gimp_hue_saturation_config_reset (hs_tool->config);
+
+  g_object_set (hs_tool->config,
+                "range", hs_tool->hue_partition,
+                NULL);
 
   hue_saturation_update_sliders (hs_tool);
   hue_saturation_update_color_areas (hs_tool);
@@ -462,39 +463,39 @@ gimp_hue_saturation_tool_reset (GimpImageMapTool *image_map_tool)
 static void
 hue_saturation_update_sliders (GimpHueSaturationTool *hs_tool)
 {
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (hs_tool->hue_data),
-                            hs_tool->hue_saturation->hue[hs_tool->hue_partition]);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (hs_tool->lightness_data),
-                            hs_tool->hue_saturation->lightness[hs_tool->hue_partition]);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (hs_tool->saturation_data),
-                            hs_tool->hue_saturation->saturation[hs_tool->hue_partition]);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (hs_tool->overlap_data),
-                            hs_tool->hue_saturation->overlap);
+  GimpHueSaturationConfig *config = hs_tool->config;
+
+  gtk_adjustment_set_value (hs_tool->hue_data,
+                            config->hue[hs_tool->hue_partition]        * 180.0);
+  gtk_adjustment_set_value (hs_tool->lightness_data,
+                            config->lightness[hs_tool->hue_partition]  * 100.0);
+  gtk_adjustment_set_value (hs_tool->saturation_data,
+                            config->saturation[hs_tool->hue_partition] * 100.0);
+  gtk_adjustment_set_value (hs_tool->overlap_data,
+                            config->overlap * 100.0);
 }
 
 static void
 hue_saturation_update_color_areas (GimpHueSaturationTool *hs_tool)
 {
-  gint    rgb[3];
-  GimpRGB color;
-  gint    i;
+  static GimpRGB default_colors[6] =
+  {
+    { 1.0,   0,   0, },
+    { 1.0, 1.0,   0, },
+    {   0, 1.0,   0, },
+    {   0, 1.0, 1.0, },
+    {   0,   0, 1.0, },
+    { 1.0,   0, 1.0, }
+  };
+
+  gint i;
 
   for (i = 0; i < 6; i++)
     {
-      rgb[RED_PIX]   = default_colors[i][RED_PIX];
-      rgb[GREEN_PIX] = default_colors[i][GREEN_PIX];
-      rgb[BLUE_PIX]  = default_colors[i][BLUE_PIX];
+      GimpRGB color = default_colors[i];
 
-      gimp_rgb_to_hsl_int (rgb, rgb + 1, rgb + 2);
-
-      rgb[RED_PIX]   = hs_tool->hue_saturation->hue_transfer[i][rgb[RED_PIX]];
-      rgb[GREEN_PIX] = hs_tool->hue_saturation->saturation_transfer[i][rgb[GREEN_PIX]];
-      rgb[BLUE_PIX]  = hs_tool->hue_saturation->lightness_transfer[i][rgb[BLUE_PIX]];
-
-      gimp_hsl_to_rgb_int (rgb, rgb + 1, rgb + 2);
-
-      gimp_rgb_set_uchar (&color,
-                          (guchar) rgb[0], (guchar) rgb[1], (guchar) rgb[2]);
+      gimp_operation_hue_saturation_map (hs_tool->config, &color, i + 1,
+                                         &color);
 
       gimp_color_area_set_color (GIMP_COLOR_AREA (hs_tool->hue_partition_da[i]),
                                  &color);
@@ -515,6 +516,10 @@ hue_saturation_partition_callback (GtkWidget *widget,
     {
       hs_tool->hue_partition = partition;
 
+      g_object_set (hs_tool->config,
+                    "range", hs_tool->hue_partition,
+                    NULL);
+
       hue_saturation_update_sliders (hs_tool);
     }
 }
@@ -525,9 +530,8 @@ hue_saturation_partition_reset_callback (GtkWidget *widget,
 {
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (data);
 
-  hue_saturation_partition_reset (hs_tool->hue_saturation,
-                                  hs_tool->hue_partition);
-  hue_saturation_calculate_transfers (hs_tool->hue_saturation);
+  gimp_hue_saturation_config_reset_range (hs_tool->config,
+                                          hs_tool->hue_partition);
 
   hue_saturation_update_sliders (hs_tool);
   hue_saturation_update_color_areas (hs_tool);
@@ -540,12 +544,13 @@ hue_saturation_hue_changed (GtkAdjustment *adjustment,
                             gpointer       data)
 {
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (data);
-  GimpHueRange           part    = hs_tool->hue_partition;
+  gdouble                value   = adjustment->value / 180.0;
 
-  if (hs_tool->hue_saturation->hue[part] != adjustment->value)
+  if (hs_tool->config->hue[hs_tool->hue_partition] != value)
     {
-      hs_tool->hue_saturation->hue[part] = adjustment->value;
-      hue_saturation_calculate_transfers (hs_tool->hue_saturation);
+      g_object_set (hs_tool->config,
+                    "hue", value,
+                    NULL);
 
       hue_saturation_update_color_areas (hs_tool);
 
@@ -558,12 +563,13 @@ hue_saturation_lightness_changed (GtkAdjustment *adjustment,
                                   gpointer       data)
 {
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (data);
-  GimpHueRange           part    = hs_tool->hue_partition;
+  gdouble                value   = adjustment->value / 100.0;
 
-  if (hs_tool->hue_saturation->lightness[part] != adjustment->value)
+  if (hs_tool->config->lightness[hs_tool->hue_partition] != value)
     {
-      hs_tool->hue_saturation->lightness[part] = adjustment->value;
-      hue_saturation_calculate_transfers (hs_tool->hue_saturation);
+      g_object_set (hs_tool->config,
+                    "lightness", value,
+                    NULL);
 
       hue_saturation_update_color_areas (hs_tool);
 
@@ -576,12 +582,13 @@ hue_saturation_saturation_changed (GtkAdjustment *adjustment,
                                    gpointer       data)
 {
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (data);
-  GimpHueRange           part    = hs_tool->hue_partition;
+  gdouble                value   = adjustment->value / 100.0;
 
-  if (hs_tool->hue_saturation->saturation[part] != adjustment->value)
+  if (hs_tool->config->saturation[hs_tool->hue_partition] != value)
     {
-      hs_tool->hue_saturation->saturation[part] = adjustment->value;
-      hue_saturation_calculate_transfers (hs_tool->hue_saturation);
+      g_object_set (hs_tool->config,
+                    "saturation", value,
+                    NULL);
 
       hue_saturation_update_color_areas (hs_tool);
 
@@ -594,11 +601,13 @@ hue_saturation_overlap_changed (GtkAdjustment *adjustment,
                                 gpointer       data)
 {
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (data);
+  gdouble                value   = adjustment->value / 100.0;
 
-  if (hs_tool->hue_saturation->overlap != adjustment->value)
+  if (hs_tool->config->overlap != value)
     {
-      hs_tool->hue_saturation->overlap = adjustment->value;
-      hue_saturation_calculate_transfers (hs_tool->hue_saturation);
+      g_object_set (hs_tool->config,
+                    "overlap", value,
+                    NULL);
 
       hue_saturation_update_color_areas (hs_tool);
 

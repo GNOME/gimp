@@ -36,17 +36,18 @@ typedef struct _GimpHueSaturationToolClass GimpHueSaturationToolClass;
 
 struct _GimpHueSaturationTool
 {
-  GimpImageMapTool  parent_instance;
+  GimpImageMapTool         parent_instance;
 
-  HueSaturation    *hue_saturation;
+  GimpHueSaturationConfig *config;
+  HueSaturation           *hue_saturation;
 
   /*  dialog  */
-  GimpHueRange      hue_partition;
-  GtkWidget        *hue_partition_da[6];
-  GtkAdjustment    *overlap_data;
-  GtkAdjustment    *hue_data;
-  GtkAdjustment    *lightness_data;
-  GtkAdjustment    *saturation_data;
+  GimpHueRange             hue_partition;
+  GtkWidget               *hue_partition_da[6];
+  GtkAdjustment           *overlap_data;
+  GtkAdjustment           *hue_data;
+  GtkAdjustment           *lightness_data;
+  GtkAdjustment           *saturation_data;
 };
 
 struct _GimpHueSaturationToolClass
