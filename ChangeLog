@@ -1,6 +1,11 @@
 2008-01-22  Sven Neumann  <sven@gimp.org>
 
 	* app/paint/gimpbrushcore.c (gimp_brush_core_create_bound_segs):
+	smooth the mask instead of dilating.
+
+2008-01-22  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimpbrushcore.c (gimp_brush_core_create_bound_segs):
 	dilate the brush mask in order to obtain a simpler boundary.
 	Addresses bug #304798.
 
