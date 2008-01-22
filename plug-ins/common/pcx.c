@@ -381,7 +381,7 @@ load_image (const gchar *filename)
       g_message (_("Unsupported or invalid image height: %d"), height);
       return -1;
     }
-  if (bytesperline < width)
+  if (bytesperline < (width * pcx_header.bpp) / 8)
     {
       g_message (_("Invalid number of bytes per line in PCX header"));
       return -1;
