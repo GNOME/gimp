@@ -30,6 +30,8 @@
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -780,6 +782,9 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
 
       pixel_region_init_temp_buf (&PR, mask,
                                   0, 0, mask->width, mask->height);
+
+      /*  dilate the mask in order to obtain a simpler boundary  */
+      dilate_region (&PR);
 
       boundary = boundary_find (&PR, BOUNDARY_WITHIN_BOUNDS,
                                 0, 0, PR.w, PR.h,
