@@ -210,6 +210,7 @@ gboolean
 gimp_display_shell_eval_event (GimpDisplayShell *shell,
                                GimpCoords       *coords,
 			       gdouble           inertia_factor,
+                               gdouble           filter_treshhold,
 			       guint32           time)
 {
   const gdouble  smooth_factor = 0.3;
@@ -230,10 +231,10 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
       gdouble dx = coords->delta_x = shell->last_coords.x - coords->x;
       gdouble dy = coords->delta_y = shell->last_coords.y - coords->y;
 
-      /* Events with distances less than 1 in either motion direction
-       * are not worth handling.
+      /* Events with distances less than the filter_threshold are not
+         worth handling.
        */
-      if (fabs (dx) < 1.0 && fabs (dy) < 1.0)
+      if (fabs (dx) < filter_treshhold && fabs (dy) < filter_treshhold)
         return FALSE;
 
       coords->delta_time = thistime - shell->last_disp_motion_time;
@@ -260,7 +261,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           coords->velocity = MIN (coords->velocity, 1.0);
         }
 
-      if (inertia_factor > 0)
+      if (inertia_factor > 0 && coords->distance > 0)
         {
           /* Apply smoothing to X and Y. */
 
@@ -292,7 +293,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           new_x = (shell->last_coords.x - coords->delta_x) * 0.5 + coords->x * 0.5;
           new_y = (shell->last_coords.y - coords->delta_y) * 0.5 + coords->y * 0.5;
 
-          cur_deviation = SQR(coords->x-new_x) + SQR(coords->y-new_y);
+          cur_deviation = SQR (coords->x - new_x) + SQR (coords->y - new_y);
 
           while (cur_deviation >= max_deviation)
             {

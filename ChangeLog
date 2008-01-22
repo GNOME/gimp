@@ -1,5 +1,11 @@
 2008-01-22  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-coords.[ch]: applied patch from
+	Alexia Death with further event filter improvements (bug #508639).
+
+2008-01-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/pcx.c: corrected check of the bytesperline field
 	which caused monochrome PCX images to be rejected (bug #510658).
 
