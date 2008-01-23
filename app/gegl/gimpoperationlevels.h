@@ -50,7 +50,11 @@ struct _GimpOperationLevelsClass
 };
 
 
-GType   gimp_operation_levels_get_type (void) G_GNUC_CONST;
+GType     gimp_operation_levels_get_type  (void) G_GNUC_CONST;
+
+gdouble   gimp_operation_levels_map_input (GimpLevelsConfig     *config,
+                                           GimpHistogramChannel  channel,
+                                           gdouble               value);
 
 
 #endif /* __GIMP_OPERATION_LEVELS_H__ */

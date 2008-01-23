@@ -225,3 +225,31 @@ gimp_operation_levels_process (GeglOperation *operation,
 
   return TRUE;
 }
+
+
+/*  public functions  */
+
+gdouble
+gimp_operation_levels_map_input (GimpLevelsConfig     *config,
+                                 GimpHistogramChannel  channel,
+                                 gdouble               value)
+{
+  g_return_val_if_fail (GIMP_IS_LEVELS_CONFIG (config), 0.0);
+
+  /*  determine input intensity  */
+  if (config->high_input[channel] != config->low_input[channel])
+    value = ((value - config->low_input[channel]) /
+             (config->high_input[channel] - config->low_input[channel]));
+  else
+    value = (value - config->low_input[channel]);
+
+  value = CLAMP (value, 0.0, 1.0);
+
+  if (config->gamma[channel] != 0.0)
+    {
+      value = pow (value, 1.0 / config->gamma[channel]);
+    }
+
+  return value;
+}
+

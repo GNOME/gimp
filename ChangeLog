@@ -1,3 +1,17 @@
+2008-01-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/gimpoperationlevels.[ch]
+	(gimp_operation_levels_map_input): new utility function which maps
+	a single value.
+
+	* app/tools/gimplevelstool.[ch] (levels_update_adjustments): use the
+	new function to create the input arrays for gimp_color_bar_set_buffer().
+
+	Removed the Levels struct from the GimpLevelsTool struct and only
+	use it in map() when needed.
+
+	* app/base/levels.[ch]: remove obsolete API and struct members.
+
 2008-01-22  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpprojection.c (gimp_projection_idle_render_init):

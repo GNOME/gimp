@@ -38,6 +38,7 @@
 #include "base/levels.h"
 
 #include "gegl/gimplevelsconfig.h"
+#include "gegl/gimpoperationlevels.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
@@ -180,12 +181,9 @@ gimp_levels_tool_init (GimpLevelsTool *tool)
   GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
 
   tool->lut           = gimp_lut_new ();
-  tool->levels        = g_slice_new0 (Levels);
   tool->hist          = NULL;
   tool->channel       = GIMP_HISTOGRAM_VALUE;
   tool->active_picker = NULL;
-
-  levels_init (tool->levels);
 
   im_tool->apply_func = (GimpImageMapApplyFunc) gimp_lut_process;
   im_tool->apply_data = tool->lut;
@@ -196,14 +194,13 @@ gimp_levels_tool_finalize (GObject *object)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (object);
 
-  gimp_lut_free (tool->lut);
-  g_slice_free (Levels, tool->levels);
-
   if (tool->config)
     {
       g_object_unref (tool->config);
       tool->config = NULL;
     }
+
+  gimp_lut_free (tool->lut);
 
   if (tool->hist)
     {
@@ -285,12 +282,13 @@ static void
 gimp_levels_tool_map (GimpImageMapTool *image_map_tool)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
+  Levels          levels;
 
-  gimp_levels_config_to_levels_cruft (tool->config, tool->levels, tool->color);
+  gimp_levels_config_to_levels_cruft (tool->config, &levels, tool->color);
 
   gimp_lut_setup (tool->lut,
                   (GimpLutFunc) levels_lut_func,
-                  tool->levels,
+                  &levels,
                   gimp_drawable_bytes (image_map_tool->drawable));
 }
 
@@ -830,28 +828,52 @@ levels_update_adjustments (GimpLevelsTool *tool)
 static void
 levels_update_input_bar (GimpLevelsTool *tool)
 {
-  /*  Recalculate the transfer arrays  */
-  gimp_levels_config_to_levels_cruft (tool->config, tool->levels, tool->color);
-  levels_calculate_transfers (tool->levels);
-
   switch (tool->channel)
     {
     case GIMP_HISTOGRAM_VALUE:
     case GIMP_HISTOGRAM_ALPHA:
     case GIMP_HISTOGRAM_RGB:
-      gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->input_bar),
-                                  tool->levels->input[tool->channel],
-                                  tool->levels->input[tool->channel],
-                                  tool->levels->input[tool->channel]);
+      {
+        guchar v[256];
+        gint   i;
+
+        for (i = 0; i < 256; i++)
+          {
+            v[i] = gimp_operation_levels_map_input (tool->config,
+                                                    tool->channel,
+                                                    i / 255.0) * 255.999;
+          }
+
+        gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->input_bar),
+                                    v, v, v);
+      }
       break;
 
     case GIMP_HISTOGRAM_RED:
     case GIMP_HISTOGRAM_GREEN:
     case GIMP_HISTOGRAM_BLUE:
-      gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->input_bar),
-                                  tool->levels->input[GIMP_HISTOGRAM_RED],
-                                  tool->levels->input[GIMP_HISTOGRAM_GREEN],
-                                  tool->levels->input[GIMP_HISTOGRAM_BLUE]);
+      {
+        guchar r[256];
+        guchar g[256];
+        guchar b[256];
+        gint   i;
+
+        for (i = 0; i < 256; i++)
+          {
+            r[i] = gimp_operation_levels_map_input (tool->config,
+                                                    GIMP_HISTOGRAM_RED,
+                                                    i / 255.0) * 255.999;
+            g[i] = gimp_operation_levels_map_input (tool->config,
+                                                    GIMP_HISTOGRAM_GREEN,
+                                                    i / 255.0) * 255.999;
+            b[i] = gimp_operation_levels_map_input (tool->config,
+                                                    GIMP_HISTOGRAM_BLUE,
+                                                    i / 255.0) * 255.999;
+          }
+
+        gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->input_bar),
+                                    r, g, b);
+      }
       break;
     }
 }

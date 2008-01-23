@@ -29,17 +29,14 @@ struct _Levels
 
   gint    low_output[5];
   gint    high_output[5];
-
-  guchar  input[5][256]; /* this is used only by the gui */
 };
 
 
-void     levels_init                (Levels *levels);
-void     levels_calculate_transfers (Levels *levels);
-gfloat   levels_lut_func            (Levels *levels,
-                                     gint    n_channels,
-                                     gint    channel,
-                                     gfloat  value);
+void     levels_init     (Levels *levels);
+gfloat   levels_lut_func (Levels *levels,
+                          gint    n_channels,
+                          gint    channel,
+                          gfloat  value);
 
 
 #endif  /*  __LEVELS_H__  */
