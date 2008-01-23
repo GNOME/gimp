@@ -38,7 +38,7 @@ do_about_dialog(void)
      {
        const gchar *authors[]     = { "Maurits Rijk (m.rijk@chello.nl)", NULL };
        const gchar *property_name = (gtk_check_version (2, 12, 0) ?
-                                     "program-name" : "name");
+                                     "name" : "program-name");
 
        dialog = g_object_new (GTK_TYPE_ABOUT_DIALOG,
                               "transient-for", get_dialog(),

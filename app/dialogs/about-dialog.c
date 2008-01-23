@@ -112,11 +112,9 @@ about_dialog_create (GimpContext *context)
                              "role",               "about-dialog",
                              "window-position",    GTK_WIN_POS_CENTER,
                              "title",              _("About GIMP"),
-#if GTK_CHECK_VERSION (2, 11, 0)
-                             "program-name",       GIMP_ACRONYM,
-#else
-                             "name",               GIMP_ACRONYM,
-#endif
+                             (gtk_check_version (2, 12, 0) ?
+                              "name" :
+                              "program-name"),     GIMP_ACRONYM,
                              "version",            GIMP_VERSION,
                              "copyright",          GIMP_COPYRIGHT,
                              "comments",           GIMP_NAME,
