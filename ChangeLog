@@ -1,5 +1,13 @@
 2008-01-23  Sven Neumann  <sven@gimp.org>
 
+	Merged from trunk:
+
+	* app/display/gimpdisplayshell-selection.c: show the selection,
+	even if the window is flagged as invisible, but don't start the
+	animation. Addresses bug #505758.
+
+2008-01-23  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/about-dialog.c (about_dialog_create): use a run-time
 	check for the GTK+ version instead of a compile time one.
 

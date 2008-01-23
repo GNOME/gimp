@@ -245,8 +245,8 @@ selection_start (Selection *selection)
 {
   selection_stop (selection);
 
-  /*  If this selection is paused or invisible, do not start it  */
-  if (selection->paused == 0 && selection->visible)
+  /*  If this selection is paused, do not start it  */
+  if (selection->paused == 0)
     {
       selection->timeout = g_idle_add ((GSourceFunc) selection_start_timeout,
                                        selection);
@@ -696,11 +696,11 @@ selection_start_timeout (Selection *selection)
                                    selection->num_segs_out);
 
 
-      if (selection->segs_in)
+      if (selection->segs_in && selection->visible)
         selection->timeout = g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE,
                                                  config->marching_ants_speed,
                                                  (GSourceFunc) selection_timeout,
-                                                  selection, NULL);
+                                                 selection, NULL);
     }
 
   return FALSE;
