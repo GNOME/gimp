@@ -1,3 +1,9 @@
+2008-01-23  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-selection.c: show the selection,
+	even if the window is flagged as invisible, but don't start the
+	animation. Addresses bug #505758.
+
 2008-01-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/gimphuesaturationconfig.[ch]
