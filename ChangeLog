@@ -9,7 +9,7 @@
 
 	* app/gegl/gimp-gegl.c: register the curves operation.
 
-	* app/tools/gimpcurvestool.[ch]: added get_operation() implemenetation
+	* app/tools/gimpcurvestool.[ch]: added get_operation() implementation
 	and use the new config object instead of keeping around 5 curves.
 
 2008-01-23  Michael Natterer  <mitch@gimp.org>
