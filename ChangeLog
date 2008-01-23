@@ -1,5 +1,16 @@
 2008-01-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpimagemaptool.h: don't #include <gegl.h>
+
+	* app/actions/tools-commands.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/tools/gimp-tools.c: include it here. Whenever the build
+	breaks because of some GEGL change in GIMP, please inlcude
+	<gegl.h> instead of <glib-object.h> or before <gtk/gtk.h> in the
+	affected .c files.
+
+2008-01-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/Makefile.am
 	* app/gegl/gegl-types.h
 	* app/gegl/gimpcurvesconfig.[ch]
