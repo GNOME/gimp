@@ -10,6 +10,8 @@ libappgegl_a_SOURCES = \
 	\
 	gimpcolorizeconfig.c		\
 	gimpcolorizeconfig.h		\
+	gimpcurvesconfig.c		\
+	gimpcurvesconfig.h		\
 	gimphuesaturationconfig.c	\
 	gimphuesaturationconfig.h	\
 	gimplevelsconfig.c		\
@@ -19,6 +21,8 @@ libappgegl_a_SOURCES = \
 	gimpoperationcolorbalance.h	\
 	gimpoperationcolorize.c		\
 	gimpoperationcolorize.h		\
+	gimpoperationcurves.c		\
+	gimpoperationcurves.h		\
 	gimpoperationdesaturate.c	\
 	gimpoperationdesaturate.h	\
 	gimpoperationhuesaturation.c	\
@@ -41,4 +45,5 @@ INCLUDES = \
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
 	$(GEGL_CFLAGS)		\
+	$(GDK_PIXBUF_CFLAGS)	\
 	-I$(includedir)

@@ -1,5 +1,19 @@
 2008-01-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/Makefile.am
+	* app/gegl/gegl-types.h
+	* app/gegl/gimpcurvesconfig.[ch]
+	* app/gegl/gimpoperationcurves.[ch]: add curves operation and its
+	config object. Hack around badly to be able to use GimpCurve from
+	app/core.
+
+	* app/gegl/gimp-gegl.c: register the curves operation.
+
+	* app/tools/gimpcurvestool.[ch]: added get_operation() implemenetation
+	and use the new config object instead of keeping around 5 curves.
+
+2008-01-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimpoperationlevels.[ch]
 	(gimp_operation_levels_map_input): new utility function which maps
 	a single value.
