@@ -284,7 +284,7 @@ gimp_levels_tool_map (GimpImageMapTool *image_map_tool)
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
   Levels          levels;
 
-  gimp_levels_config_to_levels_cruft (tool->config, &levels, tool->color);
+  gimp_levels_config_to_cruft (tool->config, &levels, tool->color);
 
   gimp_lut_setup (tool->lut,
                   (GimpLutFunc) levels_lut_func,

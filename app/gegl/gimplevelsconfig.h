@@ -73,7 +73,7 @@ void    gimp_levels_config_adjust_by_colors (GimpLevelsConfig     *config,
                                              const GimpRGB        *white);
 
 /*  temp cruft  */
-void    gimp_levels_config_to_levels_cruft  (GimpLevelsConfig     *config,
+void    gimp_levels_config_to_cruft         (GimpLevelsConfig     *config,
                                              Levels               *cruft,
                                              gboolean              is_color);
 

@@ -1,5 +1,12 @@
 2008-01-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimplevelsconfig.[ch]: to_levels_cruft() -> to_cruft().
+
+	* app/core/gimpdrawable-levels.c
+	* app/tools/gimplevelstool.c: changed accordingly.
+
+2008-01-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimphuesaturationtool.c: change signature of widget
 	callbacks to take a GimpHueSaturationTool pointer instead of
 	"gpointer data".
