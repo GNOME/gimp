@@ -1,7 +1,12 @@
 2008-01-23  Sven Neumann  <sven@gimp.org>
 
+	* app/sanity.c 
+	* app/gui/gui.c (gui_sanity_check): minor cleanup.
+
+2008-01-23  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/about-dialog.c (about_dialog_create): removed
-	obsolete version check here.
+	obsolete version check.
 
 2008-01-23  Sven Neumann  <sven@gimp.org>
 

@@ -268,15 +268,13 @@ gui_post_init (Gimp *gimp)
 static gchar *
 gui_sanity_check (void)
 {
-  const gchar *mismatch;
-
 #define GTK_REQUIRED_MAJOR 2
 #define GTK_REQUIRED_MINOR 12
 #define GTK_REQUIRED_MICRO 1
 
-  mismatch = gtk_check_version (GTK_REQUIRED_MAJOR,
-                                GTK_REQUIRED_MINOR,
-                                GTK_REQUIRED_MICRO);
+  const gchar *mismatch = gtk_check_version (GTK_REQUIRED_MAJOR,
+                                             GTK_REQUIRED_MINOR,
+                                             GTK_REQUIRED_MICRO);
 
   if (mismatch)
     {
