@@ -153,7 +153,7 @@ gimp_posterize_tool_initialize (GimpTool     *tool,
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (posterize_tool->levels_data),
+  gtk_adjustment_set_value (posterize_tool->levels_data,
                             posterize_tool->levels);
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (posterize_tool));
@@ -225,7 +225,7 @@ gimp_posterize_tool_reset (GimpImageMapTool *image_map_tool)
 
   posterize_tool->levels = POSTERIZE_DEFAULT_LEVELS;
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (posterize_tool->levels_data),
+  gtk_adjustment_set_value (posterize_tool->levels_data,
                             posterize_tool->levels);
 }
 

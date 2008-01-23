@@ -1,3 +1,12 @@
+2008-01-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimphuesaturationtool.c: change signature of widget
+	callbacks to take a GimpHueSaturationTool pointer instead of
+	"gpointer data".
+
+	* app/tools/gimpposterizetool.c: remove redundant GTK_ADJUSTMENT()
+	casts.
+
 2008-01-23  Sven Neumann  <sven@gimp.org>
 
 	* app/sanity.c 
