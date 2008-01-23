@@ -779,6 +779,10 @@ gimp_rect_select_tool_execute (GimpRectangleTool *rectangle,
   gimp_rect_select_tool_update_option_defaults (rect_sel_tool,
                                                 FALSE);
 
+  /* Reset the automatic undo/redo mechanism */
+  priv->undo = NULL;
+  priv->redo = NULL;
+
   return TRUE;
 }
 
