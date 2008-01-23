@@ -1,3 +1,12 @@
+2008-01-23  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Merged from trunk:
+
+	* app/tools/gimprectangleselecttool.c
+	(gimp_rect_select_tool_execute): Reset the automatic undo/redo
+	mechanism so that commiting pending rectangles with Return
+	works (bug #511599).
+
 2008-01-23  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:

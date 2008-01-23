@@ -654,6 +654,8 @@ gimp_rect_select_tool_execute (GimpRectangleTool *rectangle,
                                gint               w,
                                gint               h)
 {
+  GimpRectSelectTool *rect_select = GIMP_RECT_SELECT_TOOL (rectangle);
+
   if (w == 0 && h == 0)
     {
       GimpImage   *image     = GIMP_TOOL (rectangle)->display->image;
@@ -707,6 +709,10 @@ gimp_rect_select_tool_execute (GimpRectangleTool *rectangle,
 
   gimp_rect_select_tool_update_option_defaults (GIMP_RECT_SELECT_TOOL (rectangle),
                                                 FALSE);
+
+  /* Reset the automatic undo/redo mechanism */
+  rect_select->undo = NULL;
+  rect_select->redo = NULL;
 
   return TRUE;
 }
