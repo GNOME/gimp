@@ -1,5 +1,14 @@
 2008-01-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimphuesaturationconfig.[ch]
+	(gimp_hue_saturation_config_to_cruft): call
+	hue_saturation_calculate_transfers() here...
+
+	* app/tools/gimphuesaturationtool.c (gimp_hue_saturation_tool_map):
+	...instead of here.
+
+2008-01-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimplevelsconfig.[ch]: to_levels_cruft() -> to_cruft().
 
 	* app/core/gimpdrawable-levels.c

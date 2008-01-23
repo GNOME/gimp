@@ -210,8 +210,6 @@ gimp_hue_saturation_tool_map (GimpImageMapTool *image_map_tool)
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
 
   gimp_hue_saturation_config_to_cruft (hs_tool->config, hs_tool->hue_saturation);
-
-  hue_saturation_calculate_transfers (hs_tool->hue_saturation);
 }
 
 

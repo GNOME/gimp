@@ -222,19 +222,21 @@ gimp_hue_saturation_config_reset_range (GimpHueSaturationConfig *config,
 
 void
 gimp_hue_saturation_config_to_cruft (GimpHueSaturationConfig *config,
-                                     HueSaturation           *hs)
+                                     HueSaturation           *cruft)
 {
   GimpHueRange range;
 
   g_return_if_fail (GIMP_IS_HUE_SATURATION_CONFIG (config));
-  g_return_if_fail (hs != NULL);
+  g_return_if_fail (cruft != NULL);
 
   for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)
     {
-      hs->hue[range]        = config->hue[range]        * 180;
-      hs->saturation[range] = config->saturation[range] * 100;
-      hs->lightness[range]  = config->lightness[range]  * 100;
+      cruft->hue[range]        = config->hue[range]        * 180;
+      cruft->saturation[range] = config->saturation[range] * 100;
+      cruft->lightness[range]  = config->lightness[range]  * 100;
     }
 
-  hs->overlap = config->overlap * 100;
+  cruft->overlap = config->overlap * 100;
+
+  hue_saturation_calculate_transfers (cruft);
 }
