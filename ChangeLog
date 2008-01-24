@@ -1,3 +1,13 @@
+2008-01-24  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/core/gimpimage.c
+	* app/core/gimpimage-undo.c: fixed handling of the image undo
+	counter for the case where the user has undone the image to a
+	state before the last save and then pushes a new undo. Fixes
+	bug #509822.
+
 2008-01-23  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Merged from trunk:

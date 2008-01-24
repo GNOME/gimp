@@ -1910,11 +1910,11 @@ gimp_image_undo_event (GimpImage     *image,
  *
  *   The image is dirty (ie, needs saving) if counter is non-zero.
  *
- *   If the counter is around 10000, this is due to undo-ing back
- *   before a saved version, then mutating the image (thus destroying
+ *   If the counter is around 100000, this is due to undo-ing back
+ *   before a saved version, then changing the image (thus destroying
  *   the redo stack).  Once this has happened, it's impossible to get
  *   the image back to the state on disk, since the redo info has been
- *   freed.  See undo.c for the gorey details.
+ *   freed.  See gimpimage-undo.c for the gory details.
  */
 
 
