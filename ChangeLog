@@ -1,3 +1,10 @@
+2008-01-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/gimpcolorizeconfig.[ch]: added reset() and to_cruft()
+	functions.
+
+	* app/tools/gimpcolorizetool.c: use them.
+
 2008-01-23  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangleselecttool.c

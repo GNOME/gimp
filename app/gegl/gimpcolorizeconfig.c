@@ -25,6 +25,9 @@
 
 #include "gegl-types.h"
 
+/*  temp cruft  */
+#include "base/colorize.h"
+
 #include "gimpcolorizeconfig.h"
 
 
@@ -144,4 +147,34 @@ gimp_colorize_config_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+
+/*  public functions  */
+
+void
+gimp_colorize_config_reset (GimpColorizeConfig *config)
+{
+  g_return_if_fail (GIMP_IS_COLORIZE_CONFIG (config));
+
+  config->hue        = 0.5;
+  config->saturation = 0.5;
+  config->lightness  = 0.0;
+}
+
+
+/*  temp cruft  */
+
+void
+gimp_colorize_config_to_cruft (GimpColorizeConfig *config,
+                               Colorize           *cruft)
+{
+  g_return_if_fail (GIMP_IS_COLORIZE_CONFIG (config));
+  g_return_if_fail (cruft != NULL);
+
+  cruft->hue        = config->hue        * 360.0;
+  cruft->saturation = config->saturation * 100.0;
+  cruft->lightness  = config->lightness  * 100.0;
+
+  colorize_calculate (cruft);
 }

@@ -155,11 +155,7 @@ gimp_colorize_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  g_object_set (col_tool->config,
-                "hue",        0.5,
-                "saturation", 0.5,
-                "lightness",  0.0,
-                NULL);
+  gimp_colorize_config_reset (col_tool->config);
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
@@ -193,14 +189,8 @@ static void
 gimp_colorize_tool_map (GimpImageMapTool *image_map_tool)
 {
   GimpColorizeTool   *col_tool = GIMP_COLORIZE_TOOL (image_map_tool);
-  GimpColorizeConfig *config   = col_tool->config;
-  Colorize           *colorize = col_tool->colorize;
 
-  colorize->hue        = config->hue        * 360.0;
-  colorize->saturation = config->saturation * 100.0;
-  colorize->lightness  = config->lightness  * 100.0;
-
-  colorize_calculate (colorize);
+  gimp_colorize_config_to_cruft (col_tool->config, col_tool->colorize);
 }
 
 
@@ -282,11 +272,7 @@ gimp_colorize_tool_reset (GimpImageMapTool *image_map_tool)
 {
   GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (image_map_tool);
 
-  g_object_set (col_tool->config,
-                "hue",        0.5,
-                "saturation", 0.5,
-                "lightness",  0.0,
-                NULL);
+  gimp_colorize_config_reset (col_tool->config);
 
   colorize_update_sliders (col_tool);
 }
