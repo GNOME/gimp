@@ -8,6 +8,8 @@ libappgegl_a_SOURCES = \
 	gimp-gegl-utils.c		\
 	gimp-gegl-utils.h		\
 	\
+	gimpcolorbalanceconfig.c	\
+	gimpcolorbalanceconfig.h	\
 	gimpcolorizeconfig.c		\
 	gimpcolorizeconfig.h		\
 	gimpcurvesconfig.c		\

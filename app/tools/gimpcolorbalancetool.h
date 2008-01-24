@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_COLOR_BALANCE_DIALOG_H__
-#define __GIMP_COLOR_BALANCE_DIALOG_H__
+#ifndef __GIMP_COLOR_BALANCE_TOOL_H__
+#define __GIMP_COLOR_BALANCE_TOOL_H__
 
 
 #include "gimpimagemaptool.h"
@@ -37,16 +37,17 @@ typedef struct _GimpColorBalanceToolClass GimpColorBalanceToolClass;
 
 struct _GimpColorBalanceTool
 {
-  GimpImageMapTool  parent_instance;
+  GimpImageMapTool        parent_instance;
 
-  ColorBalance     *color_balance;
+  GimpColorBalanceConfig *config;
+  ColorBalance           *color_balance;
 
   /*  dialog  */
-  GimpTransferMode  transfer_mode;
-  GtkAdjustment    *cyan_red_adj;
-  GtkAdjustment    *magenta_green_adj;
-  GtkAdjustment    *yellow_blue_adj;
-  GtkWidget        *preserve_toggle;
+  GtkWidget              *range_radio;
+  GtkAdjustment          *cyan_red_adj;
+  GtkAdjustment          *magenta_green_adj;
+  GtkAdjustment          *yellow_blue_adj;
+  GtkWidget              *preserve_toggle;
 };
 
 struct _GimpColorBalanceToolClass
@@ -61,4 +62,4 @@ void    gimp_color_balance_tool_register (GimpToolRegisterCallback  callback,
 GType   gimp_color_balance_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_COLOR_BALANCE_GIMP_H__  */
+#endif  /*  __GIMP_COLOR_BALANCE_TOOL_H__  */

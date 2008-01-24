@@ -28,20 +28,18 @@
 
 #include "gegl-types.h"
 
+#include "gimpcolorbalanceconfig.h"
 #include "gimpoperationcolorbalance.h"
 
 
 enum
 {
   PROP_0,
-  PROP_RANGE,
-  PROP_CYAN_RED,
-  PROP_MAGENTA_GREEN,
-  PROP_YELLOW_BLUE,
-  PROP_PRESERVE_LUMINOSITY
+  PROP_CONFIG
 };
 
 
+static void     gimp_operation_color_balance_finalize     (GObject       *object);
 static void     gimp_operation_color_balance_get_property (GObject       *object,
                                                            guint          property_id,
                                                            GValue        *value,
@@ -70,6 +68,7 @@ gimp_operation_color_balance_class_init (GimpOperationColorBalanceClass * klass)
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
+  object_class->finalize     = gimp_operation_color_balance_finalize;
   object_class->set_property = gimp_operation_color_balance_set_property;
   object_class->get_property = gimp_operation_color_balance_get_property;
 
@@ -77,63 +76,32 @@ gimp_operation_color_balance_class_init (GimpOperationColorBalanceClass * klass)
 
   gegl_operation_class_set_name (operation_class, "gimp-color-balance");
 
-  g_object_class_install_property (object_class, PROP_RANGE,
-                                   g_param_spec_enum ("range",
-                                                      "range",
-                                                      "The affected range",
-                                                      GIMP_TYPE_TRANSFER_MODE,
-                                                      GIMP_MIDTONES,
-                                                      G_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_CYAN_RED,
-                                   g_param_spec_double ("cyan-red",
-                                                        "Cyan-Red",
-                                                        "Cyan-Red",
-                                                        -1.0, 1.0, 0.0,
+  g_object_class_install_property (object_class, PROP_CONFIG,
+                                   g_param_spec_object ("config",
+                                                        "Config",
+                                                        "The config object",
+                                                        GIMP_TYPE_COLOR_BALANCE_CONFIG,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_MAGENTA_GREEN,
-                                   g_param_spec_double ("magenta-green",
-                                                        "Magenta-Green",
-                                                        "Magenta-Green",
-                                                        -1.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_YELLOW_BLUE,
-                                   g_param_spec_double ("yellow-blue",
-                                                        "Yellow-Blue",
-                                                        "Yellow-Blue",
-                                                        -1.0, 1.0, 1.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_PRESERVE_LUMINOSITY,
-                                   g_param_spec_boolean ("preserve-luminosity",
-                                                         "Preserve Luminosity",
-                                                         "Preserve Luminosity",
-                                                         TRUE,
-                                                         G_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
 gimp_operation_color_balance_init (GimpOperationColorBalance *self)
 {
-  GimpTransferMode range;
+}
 
-  self->range = GIMP_MIDTONES;
+static void
+gimp_operation_color_balance_finalize (GObject *object)
+{
+  GimpOperationColorBalance *self = GIMP_OPERATION_COLOR_BALANCE (object);
 
-  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
+  if (self->config)
     {
-      self->cyan_red[range]      = 0.0;
-      self->magenta_green[range] = 0.0;
-      self->yellow_blue[range]   = 0.0;
+      g_object_unref (self->config);
+      self->config = NULL;
     }
 
-  self->preserve_luminosity = TRUE;
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -146,24 +114,8 @@ gimp_operation_color_balance_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_RANGE:
-      g_value_set_enum (value, self->range);
-      break;
-
-    case PROP_CYAN_RED:
-      g_value_set_double (value, self->cyan_red[self->range]);
-      break;
-
-    case PROP_MAGENTA_GREEN:
-      g_value_set_double (value, self->magenta_green[self->range]);
-      break;
-
-    case PROP_YELLOW_BLUE:
-      g_value_set_double (value, self->yellow_blue[self->range]);
-      break;
-
-    case PROP_PRESERVE_LUMINOSITY:
-      g_value_set_boolean (value, self->preserve_luminosity);
+    case PROP_CONFIG:
+      g_value_set_object (value, self->config);
       break;
 
     default:
@@ -182,24 +134,10 @@ gimp_operation_color_balance_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_RANGE:
-      self->range = g_value_get_enum (value);
-      break;
-
-    case PROP_CYAN_RED:
-      self->cyan_red[self->range] = g_value_get_double (value);
-      break;
-
-    case PROP_MAGENTA_GREEN:
-      self->magenta_green[self->range] = g_value_get_double (value);
-      break;
-
-    case PROP_YELLOW_BLUE:
-      self->yellow_blue[self->range] = g_value_get_double (value);
-      break;
-
-    case PROP_PRESERVE_LUMINOSITY:
-      self->preserve_luminosity = g_value_get_boolean (value);
+    case PROP_CONFIG:
+      if (self->config)
+        g_object_unref (self->config);
+      self->config = g_value_dup_object (value);
       break;
 
    default:
@@ -250,10 +188,14 @@ gimp_operation_color_balance_process (GeglOperation *operation,
                                       void          *out_buf,
                                       glong          samples)
 {
-  GimpOperationColorBalance *self = GIMP_OPERATION_COLOR_BALANCE (operation);
-  gfloat                    *src  = in_buf;
-  gfloat                    *dest = out_buf;
+  GimpOperationColorBalance *self   = GIMP_OPERATION_COLOR_BALANCE (operation);
+  GimpColorBalanceConfig    *config = self->config;
+  gfloat                    *src    = in_buf;
+  gfloat                    *dest   = out_buf;
   glong                      sample;
+
+  if (! config)
+    return FALSE;
 
   for (sample = 0; sample < samples; sample++)
     {
@@ -265,21 +207,21 @@ gimp_operation_color_balance_process (GeglOperation *operation,
       gfloat b_n;
 
       r_n = gimp_operation_color_balance_map (r,
-                                              self->cyan_red[GIMP_SHADOWS],
-                                              self->cyan_red[GIMP_MIDTONES],
-                                              self->cyan_red[GIMP_HIGHLIGHTS]);
+                                              config->cyan_red[GIMP_SHADOWS],
+                                              config->cyan_red[GIMP_MIDTONES],
+                                              config->cyan_red[GIMP_HIGHLIGHTS]);
 
       g_n = gimp_operation_color_balance_map (g,
-                                              self->magenta_green[GIMP_SHADOWS],
-                                              self->magenta_green[GIMP_MIDTONES],
-                                              self->magenta_green[GIMP_HIGHLIGHTS]);
+                                              config->magenta_green[GIMP_SHADOWS],
+                                              config->magenta_green[GIMP_MIDTONES],
+                                              config->magenta_green[GIMP_HIGHLIGHTS]);
 
       b_n = gimp_operation_color_balance_map (b,
-                                              self->yellow_blue[GIMP_SHADOWS],
-                                              self->yellow_blue[GIMP_MIDTONES],
-                                              self->yellow_blue[GIMP_HIGHLIGHTS]);
+                                              config->yellow_blue[GIMP_SHADOWS],
+                                              config->yellow_blue[GIMP_MIDTONES],
+                                              config->yellow_blue[GIMP_HIGHLIGHTS]);
 
-      if (self->preserve_luminosity)
+      if (config->preserve_luminosity)
         {
           GimpRGB rgb;
           GimpHSL hsl;

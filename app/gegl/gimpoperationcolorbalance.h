@@ -22,6 +22,7 @@
 #ifndef __GIMP_OPERATION_COLOR_BALANCE_H__
 #define __GIMP_OPERATION_COLOR_BALANCE_H__
 
+
 #include <gegl-plugin.h>
 #include <operation/gegl-operation-point-filter.h>
 
@@ -40,13 +41,7 @@ struct _GimpOperationColorBalance
 {
   GeglOperationPointFilter  parent_instance;
 
-  GimpTransferMode          range;
-
-  gdouble                   cyan_red[3];
-  gdouble                   magenta_green[3];
-  gdouble                   yellow_blue[3];
-
-  gboolean                  preserve_luminosity;
+  GimpColorBalanceConfig   *config;
 };
 
 struct _GimpOperationColorBalanceClass

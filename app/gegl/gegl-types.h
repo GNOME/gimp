@@ -42,6 +42,7 @@ typedef struct _GimpOperationTileSource    GimpOperationTileSource;
 
 /*  operation config objects  */
 
+typedef struct _GimpColorBalanceConfig     GimpColorBalanceConfig;
 typedef struct _GimpColorizeConfig         GimpColorizeConfig;
 typedef struct _GimpCurvesConfig           GimpCurvesConfig;
 typedef struct _GimpHueSaturationConfig    GimpHueSaturationConfig;

@@ -59,20 +59,13 @@ color_balance_init (ColorBalance *cb)
   g_return_if_fail (cb != NULL);
 
   for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
-    color_balance_range_reset (cb, range);
+    {
+      cb->cyan_red[range]      = 0.0;
+      cb->magenta_green[range] = 0.0;
+      cb->yellow_blue[range]   = 0.0;
+    }
 
   cb->preserve_luminosity = TRUE;
-}
-
-void
-color_balance_range_reset (ColorBalance     *cb,
-                           GimpTransferMode  range)
-{
-  g_return_if_fail (cb != NULL);
-
-  cb->cyan_red[range]      = 0.0;
-  cb->magenta_green[range] = 0.0;
-  cb->yellow_blue[range]   = 0.0;
 }
 
 void

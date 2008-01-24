@@ -1,3 +1,21 @@
+2008-01-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/Makefile.am
+	* app/gegl/gegl-types.h
+	* app/gegl/gimpcolorbalanceconfig.[ch]: new config object.
+
+	* app/gegl/gimpoperationcolorbalance.[ch]: use it.
+
+	* app/tools/gimpcolorbalancetool.[ch]: port to
+	GimpColorBalanceConfig and use the old ColorBalance cruft only in
+	map(). The effect of the GEGL operator is now even more different
+	from the cruft code because I removed a hack that was applying an
+	additional factor when mapping between the ColorBalance values and
+	the new properties, but that was only a workaround to make it look
+	more similar anyway. Will have to fix this properly.
+
+	* app/base/color-balance.[ch]: remove API that is now obsolete.
+
 2008-01-24  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage.c
