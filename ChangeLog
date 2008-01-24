@@ -1,3 +1,16 @@
+2008-01-24  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/stock-wilber-48.png: removed unused image.
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-wilber-22.png: moved here from
+	libgimpwidgets.
+
+	* libgimpwidgets/gimpstock.c: register Wilber icon in button size.
+
+	* data/images/wilber.png: moved 256x256 icon here from
+	libgimpwidgets.
+
 2008-01-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/Makefile.am
