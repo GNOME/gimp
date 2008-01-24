@@ -150,11 +150,10 @@ gimp_image_undo_free (GimpImage *image)
   /* If the image was dirty, but could become clean by redo-ing
    * some actions, then it should now become 'infinitely' dirty.
    * This is because we've just nuked the actions that would allow
-   * the image to become clean again.  The only hope for salvation
-   * is to save the image now!  -- austin
+   * the image to become clean again.
    */
   if (image->dirty < 0)
-    image->dirty = 10000;
+    image->dirty = 100000;
 
   /* The same applies to the case where the image would become clean
    * due to undo actions, but since user can't undo without an undo
@@ -194,15 +193,6 @@ gimp_image_undo_group_start (GimpImage    *image,
 
   /*  nuke the redo stack  */
   gimp_image_undo_free_redo (image);
-
-  /* If the image was dirty, but could become clean by redo-ing
-   * some actions, then it should now become 'infinitely' dirty.
-   * This is because we've just nuked the actions that would allow
-   * the image to become clean again.  The only hope for salvation
-   * is to save the image now!  -- austin
-   */
-  if (image->dirty < 0)
-    image->dirty = 10000;
 
   undo_group = gimp_undo_stack_new (image);
 
@@ -246,11 +236,11 @@ gimp_image_undo_group_end (GimpImage *image)
 }
 
 GimpUndo *
-gimp_image_undo_push (GimpImage        *image,
-                      GType             object_type,
-                      GimpUndoType      undo_type,
-                      const gchar      *name,
-                      GimpDirtyMask     dirty_mask,
+gimp_image_undo_push (GimpImage     *image,
+                      GType          object_type,
+                      GimpUndoType   undo_type,
+                      const gchar   *name,
+                      GimpDirtyMask  dirty_mask,
                       ...)
 {
   GParameter *params   = NULL;
@@ -291,15 +281,6 @@ gimp_image_undo_push (GimpImage        *image,
 
   /*  nuke the redo stack  */
   gimp_image_undo_free_redo (image);
-
-  /* If the image was dirty, but could become clean by redo-ing
-   * some actions, then it should now become 'infinitely' dirty.
-   * This is because we've just nuked the actions that would allow
-   * the image to become clean again.  The only hope for salvation
-   * is to save the image now!  -- austin
-   */
-  if (image->dirty < 0)
-    image->dirty = 10000;
 
   if (image->pushing_undo_group == GIMP_UNDO_GROUP_NONE)
     {
@@ -473,15 +454,16 @@ gimp_image_undo_free_space (GimpImage *image)
 static void
 gimp_image_undo_free_redo (GimpImage *image)
 {
-  GimpContainer *container;
-
-  container = image->redo_stack->undos;
+  GimpContainer *container = image->redo_stack->undos;
 
 #ifdef DEBUG_IMAGE_UNDO
   g_printerr ("redo_steps: %d    redo_bytes: %ld\n",
               gimp_container_num_children (container),
               (glong) gimp_object_get_memsize (GIMP_OBJECT (container), NULL));
 #endif
+
+  if (gimp_container_is_empty (container))
+    return;
 
   while (gimp_container_num_children (container) > 0)
     {
@@ -498,6 +480,19 @@ gimp_image_undo_free_redo (GimpImage *image)
       gimp_image_undo_event (image, GIMP_UNDO_EVENT_REDO_EXPIRED, freed);
 
       g_object_unref (freed);
+    }
+
+  /* We need to use <= here because the undo counter has already been
+   * incremented at this point.
+   */
+  if (image->dirty <= 0)
+    {
+      /* If the image was dirty, but could become clean by redo-ing
+       * some actions, then it should now become 'infinitely' dirty.
+       * This is because we've just nuked the actions that would allow
+       * the image to become clean again.
+       */
+      image->dirty = 100000;
     }
 }
 
