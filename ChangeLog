@@ -1,5 +1,9 @@
 2008-01-24  Sven Neumann  <sven@gimp.org>
 
+	* app/about.h (GIMP_COPYRIGHT): updated copyright.
+
+2008-01-24  Sven Neumann  <sven@gimp.org>
+
 	* themes/Default/images/stock-wilber-48.png: removed unused image.
 
 	* themes/Default/images/Makefile.am
