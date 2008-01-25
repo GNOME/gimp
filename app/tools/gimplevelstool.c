@@ -182,7 +182,6 @@ gimp_levels_tool_init (GimpLevelsTool *tool)
 
   tool->lut           = gimp_lut_new ();
   tool->hist          = NULL;
-  tool->channel       = GIMP_HISTOGRAM_VALUE;
   tool->active_picker = NULL;
 
   im_tool->apply_func = (GimpImageMapApplyFunc) gimp_lut_process;
@@ -234,9 +233,8 @@ gimp_levels_tool_initialize (GimpTool     *tool,
 
   gimp_levels_config_reset (l_tool->config);
 
-  l_tool->channel = l_tool->config->channel;
-  l_tool->color   = gimp_drawable_is_rgb (drawable);
-  l_tool->alpha   = gimp_drawable_has_alpha (drawable);
+  l_tool->color = gimp_drawable_is_rgb (drawable);
+  l_tool->alpha = gimp_drawable_has_alpha (drawable);
 
   if (l_tool->active_picker)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (l_tool->active_picker),
@@ -248,7 +246,7 @@ gimp_levels_tool_initialize (GimpTool     *tool,
                                       levels_menu_sensitivity, l_tool, NULL);
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (l_tool->channel_menu),
-                                 l_tool->channel);
+                                 l_tool->config->channel);
 
   levels_update_adjustments (l_tool);
 
@@ -689,9 +687,14 @@ gimp_levels_tool_dialog_unmap (GtkWidget      *dialog,
 static void
 gimp_levels_tool_reset (GimpImageMapTool *image_map_tool)
 {
-  GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
+  GimpLevelsTool       *tool    = GIMP_LEVELS_TOOL (image_map_tool);
+  GimpHistogramChannel  channel = tool->config->channel;
 
   gimp_levels_config_reset (tool->config);
+  g_object_set (tool->config,
+                "channel", channel,
+                NULL);
+
   levels_update_adjustments (tool);
 }
 
@@ -700,16 +703,17 @@ gimp_levels_tool_settings_load (GimpImageMapTool  *image_map_tool,
                                 gpointer           fp,
                                 GError           **error)
 {
-  GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
-  FILE           *file = fp;
-  gint            low_input[5];
-  gint            high_input[5];
-  gint            low_output[5];
-  gint            high_output[5];
-  gdouble         gamma[5];
-  gint            i, fields;
-  gchar           buf[50];
-  gchar          *nptr;
+  GimpLevelsTool       *tool = GIMP_LEVELS_TOOL (image_map_tool);
+  FILE                 *file = fp;
+  GimpHistogramChannel  channel;
+  gint                  low_input[5];
+  gint                  high_input[5];
+  gint                  low_output[5];
+  gint                  high_output[5];
+  gdouble               gamma[5];
+  gint                  i, fields;
+  gchar                 buf[50];
+  gchar                *nptr;
 
   if (! fgets (buf, sizeof (buf), file) ||
       strcmp (buf, "# GIMP Levels File\n") != 0)
@@ -739,6 +743,8 @@ gimp_levels_tool_settings_load (GimpImageMapTool  *image_map_tool,
         goto error;
     }
 
+  channel = tool->config->channel;
+
   for (i = 0; i < 5; i++)
     {
       g_object_set (tool->config,
@@ -755,7 +761,7 @@ gimp_levels_tool_settings_load (GimpImageMapTool  *image_map_tool,
     }
 
   g_object_set (tool->config,
-                "channel", tool->channel,
+                "channel", channel,
                 NULL);
 
   levels_update_adjustments (tool);
@@ -797,17 +803,19 @@ gimp_levels_tool_settings_save (GimpImageMapTool *image_map_tool,
 static void
 levels_update_adjustments (GimpLevelsTool *tool)
 {
+  GimpLevelsConfig *config = tool->config;
+
   tool->low_input->upper    = 255;
   tool->high_input->lower   = 0;
   tool->gamma_linear->lower = 0;
   tool->gamma_linear->upper = 255;
 
   gtk_adjustment_set_value (tool->low_input,
-                            tool->config->low_input[tool->channel] * 255.0);
+                            config->low_input[config->channel]  * 255.0);
   gtk_adjustment_set_value (tool->gamma,
-                            tool->config->gamma[tool->channel]);
+                            config->gamma[config->channel]);
   gtk_adjustment_set_value (tool->high_input,
-                            tool->config->high_input[tool->channel] * 255.0);
+                            config->high_input[config->channel] * 255.0);
 
   tool->low_input->upper    = tool->high_input->value;
   tool->high_input->lower   = tool->low_input->value;
@@ -818,9 +826,9 @@ levels_update_adjustments (GimpLevelsTool *tool)
   gtk_adjustment_changed (tool->gamma_linear);
 
   gtk_adjustment_set_value (tool->low_output,
-                            tool->config->low_output[tool->channel] * 255.0);
+                            config->low_output[config->channel]  * 255.0);
   gtk_adjustment_set_value (tool->high_output,
-                            tool->config->high_output[tool->channel] * 255.0);
+                            config->high_output[config->channel] * 255.0);
 
   levels_update_input_bar (tool);
 }
@@ -828,7 +836,9 @@ levels_update_adjustments (GimpLevelsTool *tool)
 static void
 levels_update_input_bar (GimpLevelsTool *tool)
 {
-  switch (tool->channel)
+  GimpLevelsConfig *config = tool->config;
+
+  switch (config->channel)
     {
     case GIMP_HISTOGRAM_VALUE:
     case GIMP_HISTOGRAM_ALPHA:
@@ -839,8 +849,8 @@ levels_update_input_bar (GimpLevelsTool *tool)
 
         for (i = 0; i < 256; i++)
           {
-            v[i] = gimp_operation_levels_map_input (tool->config,
-                                                    tool->channel,
+            v[i] = gimp_operation_levels_map_input (config,
+                                                    config->channel,
                                                     i / 255.0) * 255.999;
           }
 
@@ -860,13 +870,13 @@ levels_update_input_bar (GimpLevelsTool *tool)
 
         for (i = 0; i < 256; i++)
           {
-            r[i] = gimp_operation_levels_map_input (tool->config,
+            r[i] = gimp_operation_levels_map_input (config,
                                                     GIMP_HISTOGRAM_RED,
                                                     i / 255.0) * 255.999;
-            g[i] = gimp_operation_levels_map_input (tool->config,
+            g[i] = gimp_operation_levels_map_input (config,
                                                     GIMP_HISTOGRAM_GREEN,
                                                     i / 255.0) * 255.999;
-            b[i] = gimp_operation_levels_map_input (tool->config,
+            b[i] = gimp_operation_levels_map_input (config,
                                                     GIMP_HISTOGRAM_BLUE,
                                                     i / 255.0) * 255.999;
           }
@@ -886,16 +896,14 @@ levels_channel_callback (GtkWidget      *widget,
 
   if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
     {
-      tool->channel = value;
-
       g_object_set (tool->config,
-                    "channel", tool->channel,
+                    "channel", value,
                     NULL);
 
       gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->hist_view),
-                                       tool->channel);
+                                       tool->config->channel);
       gimp_color_bar_set_channel (GIMP_COLOR_BAR (tool->output_bar),
-                                  tool->channel);
+                                  tool->config->channel);
 
       levels_update_adjustments (tool);
     }
@@ -905,7 +913,7 @@ static void
 levels_channel_reset_callback (GtkWidget      *widget,
                                GimpLevelsTool *tool)
 {
-  gimp_levels_config_reset_channel (tool->config, tool->channel);
+  gimp_levels_config_reset_channel (tool->config, tool->config->channel);
   levels_update_adjustments (tool);
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
@@ -955,7 +963,7 @@ levels_linear_gamma_update (GimpLevelsTool *tool)
 
   delta = (tool->high_input->value - tool->low_input->value) / 2.0;
   mid   = tool->low_input->value + delta;
-  tmp   = log10 (1.0 / tool->config->gamma[tool->channel]);
+  tmp   = log10 (1.0 / tool->config->gamma[tool->config->channel]);
   value = mid + delta * tmp;
 
   gtk_adjustment_set_value (tool->gamma_linear, value);
@@ -986,16 +994,17 @@ static void
 levels_low_input_changed (GtkAdjustment  *adjustment,
                           GimpLevelsTool *tool)
 {
-  gint value = ROUND (adjustment->value);
+  GimpLevelsConfig *config = tool->config;
+  gint              value  = ROUND (adjustment->value);
 
   tool->high_input->lower   = value;
   tool->gamma_linear->lower = value;
   gtk_adjustment_changed (tool->high_input);
   gtk_adjustment_changed (tool->gamma_linear);
 
-  if (tool->config->low_input[tool->channel] != value / 255.0)
+  if (config->low_input[config->channel] != value / 255.0)
     {
-      g_object_set (tool->config,
+      g_object_set (config,
                     "low-input", value / 255.0,
                     NULL);
       levels_update_input_bar (tool);
@@ -1010,9 +1019,11 @@ static void
 levels_gamma_changed (GtkAdjustment  *adjustment,
                       GimpLevelsTool *tool)
 {
-  if (tool->config->gamma[tool->channel] != adjustment->value)
+  GimpLevelsConfig *config = tool->config;
+
+  if (config->gamma[config->channel] != adjustment->value)
     {
-      g_object_set (tool->config,
+      g_object_set (config,
                     "gamma", adjustment->value,
                     NULL);
       levels_update_input_bar (tool);
@@ -1027,16 +1038,17 @@ static void
 levels_high_input_changed (GtkAdjustment  *adjustment,
                            GimpLevelsTool *tool)
 {
-  gint value = ROUND (adjustment->value);
+  GimpLevelsConfig *config = tool->config;
+  gint              value  = ROUND (adjustment->value);
 
   tool->low_input->upper    = value;
   tool->gamma_linear->upper = value;
   gtk_adjustment_changed (tool->low_input);
   gtk_adjustment_changed (tool->gamma_linear);
 
-  if (tool->config->high_input[tool->channel] != value / 255.0)
+  if (config->high_input[config->channel] != value / 255.0)
     {
-      g_object_set (tool->config,
+      g_object_set (config,
                     "high-input", value / 255.0,
                     NULL);
       levels_update_input_bar (tool);
@@ -1051,11 +1063,12 @@ static void
 levels_low_output_changed (GtkAdjustment  *adjustment,
                            GimpLevelsTool *tool)
 {
-  gint value = ROUND (adjustment->value);
+  GimpLevelsConfig *config = tool->config;
+  gint              value  = ROUND (adjustment->value);
 
-  if (tool->config->low_output[tool->channel] != value / 255.0)
+  if (config->low_output[config->channel] != value / 255.0)
     {
-      g_object_set (tool->config,
+      g_object_set (config,
                     "low-output", value / 255.0,
                     NULL);
 
@@ -1067,11 +1080,12 @@ static void
 levels_high_output_changed (GtkAdjustment  *adjustment,
                             GimpLevelsTool *tool)
 {
-  gint value = ROUND (adjustment->value);
+  GimpLevelsConfig *config = tool->config;
+  gint              value  = ROUND (adjustment->value);
 
-  if (tool->config->high_output[tool->channel] != value / 255.0)
+  if (config->high_output[config->channel] != value / 255.0)
     {
-      g_object_set (tool->config,
+      g_object_set (config,
                     "high-output", value / 255.0,
                     NULL);
 
@@ -1171,7 +1185,7 @@ gimp_levels_tool_color_picked (GimpColorTool      *color_tool,
   else
     {
       levels_input_adjust_by_color (tool->config,
-                                    value, tool->channel, color);
+                                    value, tool->config->channel, color);
     }
 
   levels_update_adjustments (tool);

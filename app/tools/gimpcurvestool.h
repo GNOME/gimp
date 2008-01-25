@@ -43,7 +43,6 @@ struct _GimpCurvesTool
   /* dialog */
   gboolean              color;
   gboolean              alpha;
-  GimpHistogramChannel  channel;
 
   gint                  col_value[5];
 

@@ -179,8 +179,7 @@ gimp_curves_tool_init (GimpCurvesTool *tool)
   GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
   gint              i;
 
-  tool->lut     = gimp_lut_new ();
-  tool->channel = GIMP_HISTOGRAM_VALUE;
+  tool->lut = gimp_lut_new ();
 
   for (i = 0; i < G_N_ELEMENTS (tool->col_value); i++)
     tool->col_value[i] = -1;
@@ -236,9 +235,8 @@ gimp_curves_tool_initialize (GimpTool     *tool,
   if (! c_tool->hist)
     c_tool->hist = gimp_histogram_new ();
 
-  c_tool->channel = c_tool->config->channel;
-  c_tool->color   = gimp_drawable_is_rgb (drawable);
-  c_tool->alpha   = gimp_drawable_has_alpha (drawable);
+  c_tool->color = gimp_drawable_is_rgb (drawable);
+  c_tool->alpha = gimp_drawable_has_alpha (drawable);
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
@@ -250,13 +248,13 @@ gimp_curves_tool_initialize (GimpTool     *tool,
                                       curves_menu_sensitivity, c_tool, NULL);
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (c_tool->channel_menu),
-                                 c_tool->channel);
+                                 c_tool->config->channel);
 
   gimp_drawable_calculate_histogram (drawable, c_tool->hist);
   gimp_histogram_view_set_background (GIMP_HISTOGRAM_VIEW (c_tool->graph),
                                       c_tool->hist);
   gimp_curve_view_set_curve (GIMP_CURVE_VIEW (c_tool->graph),
-                             c_tool->config->curve[c_tool->channel]);
+                             c_tool->config->curve[c_tool->config->channel]);
 
   return TRUE;
 }
@@ -269,24 +267,25 @@ gimp_curves_tool_button_release (GimpTool              *tool,
                                  GimpButtonReleaseType  release_type,
                                  GimpDisplay           *display)
 {
-  GimpCurvesTool *c_tool = GIMP_CURVES_TOOL (tool);
+  GimpCurvesTool   *c_tool = GIMP_CURVES_TOOL (tool);
+  GimpCurvesConfig *config = c_tool->config;
 
   if (state & GDK_SHIFT_MASK)
     {
-      GimpCurve *curve = c_tool->config->curve[c_tool->channel];
+      GimpCurve *curve = config->curve[config->channel];
       gint       closest;
 
       closest =
         gimp_curve_get_closest_point (curve,
-                                      c_tool->col_value[c_tool->channel]);
+                                      c_tool->col_value[config->channel]);
 
       gimp_curve_view_set_selected (GIMP_CURVE_VIEW (c_tool->graph),
                                     closest);
 
       gimp_curve_set_point (curve,
                             closest,
-                            c_tool->col_value[c_tool->channel],
-                            curve->curve[c_tool->col_value[c_tool->channel]]);
+                            c_tool->col_value[config->channel],
+                            curve->curve[c_tool->col_value[config->channel]]);
     }
   else if (state & GDK_CONTROL_MASK)
     {
@@ -294,7 +293,7 @@ gimp_curves_tool_button_release (GimpTool              *tool,
 
       for (i = 0; i < 5; i++)
         {
-          GimpCurve *curve = c_tool->config->curve[i];
+          GimpCurve *curve = config->curve[i];
           gint       closest;
 
           closest =
@@ -386,7 +385,7 @@ gimp_curves_tool_color_picked (GimpColorTool      *color_tool,
   tool->col_value[GIMP_HISTOGRAM_VALUE] = MAX (MAX (r, g), b);
 
   gimp_curve_view_set_xpos (GIMP_CURVE_VIEW (tool->graph),
-                            tool->col_value[tool->channel]);
+                            tool->col_value[tool->config->channel]);
 }
 
 static GeglNode *
@@ -613,9 +612,13 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 static void
 gimp_curves_tool_reset (GimpImageMapTool *image_map_tool)
 {
-  GimpCurvesTool *tool = GIMP_CURVES_TOOL (image_map_tool);
+  GimpCurvesTool       *tool    = GIMP_CURVES_TOOL (image_map_tool);
+  GimpHistogramChannel  channel = tool->config->channel;
 
   gimp_curves_config_reset (tool->config);
+  g_object_set (tool->config,
+                "channel", channel,
+                NULL);
 }
 
 static gboolean
@@ -719,29 +722,31 @@ static void
 curves_curve_callback (GimpCurve      *curve,
                        GimpCurvesTool *tool)
 {
-  if (curve != tool->config->curve[tool->channel])
+  GimpCurvesConfig *config = tool->config;
+
+  if (curve != config->curve[config->channel])
     return;
 
   if (tool->xrange)
     {
-      switch (tool->channel)
+      switch (config->channel)
         {
         case GIMP_HISTOGRAM_VALUE:
         case GIMP_HISTOGRAM_ALPHA:
         case GIMP_HISTOGRAM_RGB:
           gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->xrange),
-                                      tool->config->curve[tool->channel]->curve,
-                                      tool->config->curve[tool->channel]->curve,
-                                      tool->config->curve[tool->channel]->curve);
+                                      config->curve[config->channel]->curve,
+                                      config->curve[config->channel]->curve,
+                                      config->curve[config->channel]->curve);
           break;
 
         case GIMP_HISTOGRAM_RED:
         case GIMP_HISTOGRAM_GREEN:
         case GIMP_HISTOGRAM_BLUE:
           gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->xrange),
-                                      tool->config->curve[GIMP_HISTOGRAM_RED]->curve,
-                                      tool->config->curve[GIMP_HISTOGRAM_GREEN]->curve,
-                                      tool->config->curve[GIMP_HISTOGRAM_BLUE]->curve);
+                                      config->curve[GIMP_HISTOGRAM_RED]->curve,
+                                      config->curve[GIMP_HISTOGRAM_GREEN]->curve,
+                                      config->curve[GIMP_HISTOGRAM_BLUE]->curve);
           break;
         }
     }
@@ -758,26 +763,27 @@ curves_channel_callback (GtkWidget      *widget,
 
   if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
     {
-      tool->channel = value;
+      GimpCurvesConfig *config = tool->config;
 
-      g_object_set (tool->config,
-                    "channel", tool->channel,
+      g_object_set (config,
+                    "channel", value,
                     NULL);
 
       gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->graph),
-                                       tool->channel);
+                                       config->channel);
       gimp_curve_view_set_xpos (GIMP_CURVE_VIEW (tool->graph),
-                                tool->col_value[tool->channel]);
+                                tool->col_value[config->channel]);
 
-      gimp_color_bar_set_channel (GIMP_COLOR_BAR (tool->yrange), tool->channel);
+      gimp_color_bar_set_channel (GIMP_COLOR_BAR (tool->yrange),
+                                  config->channel);
 
       gimp_curve_view_set_curve (GIMP_CURVE_VIEW (tool->graph),
-                                 tool->config->curve[tool->channel]);
+                                 config->curve[config->channel]);
 
       gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (tool->curve_type),
-                                       tool->config->curve[tool->channel]->curve_type);
+                                       config->curve[config->channel]->curve_type);
 
-      curves_curve_callback (tool->config->curve[tool->channel], tool);
+      curves_curve_callback (config->curve[config->channel], tool);
     }
 }
 
@@ -785,7 +791,7 @@ static void
 curves_channel_reset_callback (GtkWidget      *widget,
                                GimpCurvesTool *tool)
 {
-  gimp_curves_config_reset_channel (tool->config, tool->channel);
+  gimp_curves_config_reset_channel (tool->config, tool->config->channel);
 }
 
 static gboolean
@@ -819,12 +825,13 @@ static void
 curves_curve_type_callback (GtkWidget      *widget,
                             GimpCurvesTool *tool)
 {
-  GimpCurveType curve_type;
+  GimpCurvesConfig *config = tool->config;
+  GimpCurveType     curve_type;
 
   gimp_radio_button_update (widget, &curve_type);
 
-  if (tool->config->curve[tool->channel]->curve_type != curve_type)
+  if (config->curve[config->channel]->curve_type != curve_type)
     {
-      gimp_curve_set_curve_type (tool->config->curve[tool->channel], curve_type);
+      gimp_curve_set_curve_type (config->curve[config->channel], curve_type);
     }
 }

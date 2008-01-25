@@ -44,7 +44,6 @@ struct _GimpLevelsTool
   /* dialog */
   gboolean              color;
   gboolean              alpha;
-  GimpHistogramChannel  channel;
 
   GimpHistogram        *hist;
 

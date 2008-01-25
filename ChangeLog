@@ -1,3 +1,10 @@
+2008-01-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpcurvestool.[ch]
+	* app/tools/gimplevelstool.[ch]: remove the "channel" member from
+	the tool struct and use the channel from the options object
+	instead.
+
 2008-01-25  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcolormapeditor.c (gimp_colormap_editor_draw):
