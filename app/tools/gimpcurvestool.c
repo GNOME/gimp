@@ -18,16 +18,10 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -627,55 +621,16 @@ gimp_curves_tool_settings_load (GimpImageMapTool  *image_map_tool,
                                 GError           **error)
 {
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (image_map_tool);
-  FILE           *file = fp;
-  gint            i, j;
-  gint            fields;
-  gchar           buf[50];
-  gint            index[5][GIMP_CURVE_NUM_POINTS];
-  gint            value[5][GIMP_CURVE_NUM_POINTS];
 
-  if (! fgets (buf, sizeof (buf), file) ||
-      strcmp (buf, "# GIMP Curves File\n") != 0)
+  if (gimp_curves_config_load_cruft (tool->config, fp, error))
     {
-      g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-                   _("not a GIMP Curves file"));
-      return FALSE;
+      gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (tool->curve_type),
+                                       GIMP_CURVE_SMOOTH);
+
+      return TRUE;
     }
 
-  for (i = 0; i < 5; i++)
-    {
-      for (j = 0; j < GIMP_CURVE_NUM_POINTS; j++)
-        {
-          fields = fscanf (file, "%d %d ", &index[i][j], &value[i][j]);
-          if (fields != 2)
-            {
-              /*  FIXME: should have a helpful error message here  */
-              g_printerr ("fields != 2");
-              g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-                           _("parse error"));
-              return FALSE;
-            }
-        }
-    }
-
-  for (i = 0; i < 5; i++)
-    {
-      GimpCurve *curve = tool->config->curve[i];
-
-      gimp_data_freeze (GIMP_DATA (curve));
-
-      gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
-
-      for (j = 0; j < GIMP_CURVE_NUM_POINTS; j++)
-        gimp_curve_set_point (curve, j, index[i][j], value[i][j]);
-
-      gimp_data_thaw (GIMP_DATA (curve));
-    }
-
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (tool->curve_type),
-                                   GIMP_CURVE_SMOOTH);
-
-  return TRUE;
+  return FALSE;
 }
 
 static gboolean
@@ -683,39 +638,8 @@ gimp_curves_tool_settings_save (GimpImageMapTool *image_map_tool,
                                 gpointer          fp)
 {
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (image_map_tool);
-  FILE           *file = fp;
-  gint            i, j;
-  gint32          index;
 
-  fprintf (file, "# GIMP Curves File\n");
-
-  for (i = 0; i < 5; i++)
-    {
-      GimpCurve *curve = tool->config->curve[i];
-
-      if (curve->curve_type == GIMP_CURVE_FREE)
-        {
-          /* pick representative points from the curve and make them
-           * control points
-           */
-          for (j = 0; j <= 8; j++)
-            {
-              index = CLAMP0255 (j * 32);
-
-              curve->points[j * 2][0] = index;
-              curve->points[j * 2][1] = curve->curve[index];
-            }
-        }
-
-      for (j = 0; j < GIMP_CURVE_NUM_POINTS; j++)
-        fprintf (file, "%d %d ",
-                 curve->points[j][0],
-                 curve->points[j][1]);
-
-      fprintf (file, "\n");
-    }
-
-  return TRUE;
+  return gimp_curves_config_save_cruft (tool->config, fp);
 }
 
 static void

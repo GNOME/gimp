@@ -1,5 +1,16 @@
 2008-01-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimpcurvesconfig.[ch]
+	* app/gegl/gimplevelsconfig.[ch]: add load_cruft() and
+	save_cruft() functions which load/save the old (current) curves
+	and levels file formats.
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c: use them here and remove a lot of
+	includes.
+
+2008-01-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimphuesaturationtool.[ch]: removed the GimpHueRange
 	member from the tool struct and use the one from the config object
 	instead. Also did a global s/partition/range/.

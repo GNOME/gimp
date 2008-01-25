@@ -21,10 +21,15 @@
 
 #include "config.h"
 
+#include <errno.h>
+#include <string.h>
+
 #include <gegl.h>
+#include <glib/gstdio.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "gegl-types.h"
 
@@ -34,6 +39,8 @@
 #include "base/levels.h"
 
 #include "gimplevelsconfig.h"
+
+#include "gimp-intl.h"
 
 
 enum
@@ -411,6 +418,99 @@ gimp_levels_config_adjust_by_colors (GimpLevelsConfig     *config,
       /* Map selected color to corresponding lightness */
       config->gamma[channel] = log (inten) / log (out_light);
     }
+}
+
+gboolean
+gimp_levels_config_load_cruft (GimpLevelsConfig  *config,
+                               gpointer           fp,
+                               GError           **error)
+{
+  FILE    *file = fp;
+  gint     low_input[5];
+  gint     high_input[5];
+  gint     low_output[5];
+  gint     high_output[5];
+  gdouble  gamma[5];
+  gint     i;
+  gint     fields;
+  gchar    buf[50];
+  gchar   *nptr;
+
+  g_return_val_if_fail (GIMP_IS_LEVELS_CONFIG (config), FALSE);
+  g_return_val_if_fail (file != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (! fgets (buf, sizeof (buf), file) ||
+      strcmp (buf, "# GIMP Levels File\n") != 0)
+    {
+      g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+                   _("not a GIMP Levels file"));
+      return FALSE;
+    }
+
+  for (i = 0; i < 5; i++)
+    {
+      fields = fscanf (file, "%d %d %d %d ",
+                       &low_input[i],
+                       &high_input[i],
+                       &low_output[i],
+                       &high_output[i]);
+
+      if (fields != 4)
+        goto error;
+
+      if (! fgets (buf, 50, file))
+        goto error;
+
+      gamma[i] = g_ascii_strtod (buf, &nptr);
+
+      if (buf == nptr || errno == ERANGE)
+        goto error;
+    }
+
+  for (i = 0; i < 5; i++)
+    {
+      config->low_input[i]   = low_input[i]   / 255.0;
+      config->high_input[i]  = high_input[i]  / 255.0;
+      config->low_output[i]  = low_output[i]  / 255.0;
+      config->high_output[i] = high_output[i] / 255.0;
+      config->gamma[i]       = gamma[i];
+    }
+
+  return TRUE;
+
+ error:
+  g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+               _("parse error"));
+  return FALSE;
+}
+
+gboolean
+gimp_levels_config_save_cruft (GimpLevelsConfig *config,
+                               gpointer          fp)
+{
+  FILE *file = fp;
+  gint  i;
+
+  g_return_val_if_fail (GIMP_IS_LEVELS_CONFIG (config), FALSE);
+  g_return_val_if_fail (file != NULL, FALSE);
+
+  fprintf (file, "# GIMP Levels File\n");
+
+  for (i = 0; i < 5; i++)
+    {
+      gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
+
+      fprintf (file, "%d %d %d %d %s\n",
+               (gint) (config->low_input[i]   * 255.999),
+               (gint) (config->high_input[i]  * 255.999),
+               (gint) (config->low_output[i]  * 255.999),
+               (gint) (config->high_output[i] * 255.999),
+               g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                                config->gamma[i]));
+    }
+
+  return TRUE;
 }
 
 

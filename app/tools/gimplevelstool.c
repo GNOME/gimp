@@ -18,17 +18,10 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -54,7 +47,6 @@
 
 #include "gimphistogramoptions.h"
 #include "gimplevelstool.h"
-#include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
 
@@ -65,8 +57,8 @@
 #define PICK_ALL_CHANNELS (1 << 8)
 
 #define HISTOGRAM_WIDTH    256
-#define GRADIENT_HEIGHT    12
-#define CONTROL_HEIGHT     10
+#define GRADIENT_HEIGHT     12
+#define CONTROL_HEIGHT      10
 
 
 /*  local function prototypes  */
@@ -703,74 +695,15 @@ gimp_levels_tool_settings_load (GimpImageMapTool  *image_map_tool,
                                 gpointer           fp,
                                 GError           **error)
 {
-  GimpLevelsTool       *tool = GIMP_LEVELS_TOOL (image_map_tool);
-  FILE                 *file = fp;
-  GimpHistogramChannel  channel;
-  gint                  low_input[5];
-  gint                  high_input[5];
-  gint                  low_output[5];
-  gint                  high_output[5];
-  gdouble               gamma[5];
-  gint                  i, fields;
-  gchar                 buf[50];
-  gchar                *nptr;
+  GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
 
-  if (! fgets (buf, sizeof (buf), file) ||
-      strcmp (buf, "# GIMP Levels File\n") != 0)
+  if (gimp_levels_config_load_cruft (tool->config, fp, error))
     {
-      g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-                   _("not a GIMP Levels file"));
-      return FALSE;
+      levels_update_adjustments (tool);
+
+      return TRUE;
     }
 
-  for (i = 0; i < 5; i++)
-    {
-      fields = fscanf (file, "%d %d %d %d ",
-                       &low_input[i],
-                       &high_input[i],
-                       &low_output[i],
-                       &high_output[i]);
-
-      if (fields != 4)
-        goto error;
-
-      if (! fgets (buf, 50, file))
-        goto error;
-
-      gamma[i] = g_ascii_strtod (buf, &nptr);
-
-      if (buf == nptr || errno == ERANGE)
-        goto error;
-    }
-
-  channel = tool->config->channel;
-
-  for (i = 0; i < 5; i++)
-    {
-      g_object_set (tool->config,
-                    "channel", i,
-                    NULL);
-
-      g_object_set (tool->config,
-                    "low-input",   low_input[i]   / 255.0,
-                    "high-input",  high_input[i]  / 255.0,
-                    "low-output",  low_output[i]  / 255.0,
-                    "high-output", high_output[i] / 255.0,
-                    "gamma",       gamma[i],
-                    NULL);
-    }
-
-  g_object_set (tool->config,
-                "channel", channel,
-                NULL);
-
-  levels_update_adjustments (tool);
-
-  return TRUE;
-
- error:
-  g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-               _("parse error"));
   return FALSE;
 }
 
@@ -779,25 +712,8 @@ gimp_levels_tool_settings_save (GimpImageMapTool *image_map_tool,
                                 gpointer          fp)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
-  FILE           *file = fp;
-  gint            i;
 
-  fprintf (file, "# GIMP Levels File\n");
-
-  for (i = 0; i < 5; i++)
-    {
-      gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
-
-      fprintf (file, "%d %d %d %d %s\n",
-               (gint) (tool->config->low_input[i]   * 255.999),
-               (gint) (tool->config->high_input[i]  * 255.999),
-               (gint) (tool->config->low_output[i]  * 255.999),
-               (gint) (tool->config->high_output[i] * 255.999),
-               g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                                tool->config->gamma[i]));
-    }
-
-  return TRUE;
+  return gimp_levels_config_save_cruft (tool->config, fp);
 }
 
 static void
