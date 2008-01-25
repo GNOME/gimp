@@ -1,5 +1,14 @@
 2008-01-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/Makefile.am
+	* app/gegl/gegl-types.h
+	* app/gegl/gimpposterizeconfig.[ch]: new config object.
+
+	* app/gegl/gimpoperationposterize.[ch]
+	* app/tools/gimpposterizetool.[ch]: use it.
+
+2008-01-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpbrightnesscontrasttool.c
 	* app/tools/gimpcolorbalancetool.c
 	* app/tools/gimpcolorizetool.c

@@ -29,15 +29,17 @@
 #include "gegl-types.h"
 
 #include "gimpoperationposterize.h"
+#include "gimpposterizeconfig.h"
 
 
 enum
 {
   PROP_0,
-  PROP_LEVELS
+  PROP_CONFIG
 };
 
 
+static void     gimp_operation_posterize_finalize     (GObject       *object);
 static void     gimp_operation_posterize_get_property (GObject       *object,
                                                        guint          property_id,
                                                        GValue        *value,
@@ -66,6 +68,7 @@ gimp_operation_posterize_class_init (GimpOperationPosterizeClass * klass)
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
+  object_class->finalize     = gimp_operation_posterize_finalize;
   object_class->set_property = gimp_operation_posterize_set_property;
   object_class->get_property = gimp_operation_posterize_get_property;
 
@@ -73,19 +76,32 @@ gimp_operation_posterize_class_init (GimpOperationPosterizeClass * klass)
 
   gegl_operation_class_set_name (operation_class, "gimp-posterize");
 
-  g_object_class_install_property (object_class,
-                                   PROP_LEVELS,
-                                   g_param_spec_int ("levels",
-                                                     "Levels",
-                                                     "Posterize levels",
-                                                     2, 256, 10,
-                                                     G_PARAM_READWRITE |
-                                                     G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_CONFIG,
+                                   g_param_spec_object ("config",
+                                                        "Config",
+                                                        "The config object",
+                                                        GIMP_TYPE_POSTERIZE_CONFIG,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 }
 
 static void
 gimp_operation_posterize_init (GimpOperationPosterize *self)
 {
+}
+
+static void
+gimp_operation_posterize_finalize (GObject *object)
+{
+  GimpOperationPosterize *self = GIMP_OPERATION_POSTERIZE (object);
+
+  if (self->config)
+    {
+      g_object_unref (self->config);
+      self->config = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -98,8 +114,8 @@ gimp_operation_posterize_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_LEVELS:
-      g_value_set_int (value, self->levels);
+    case PROP_CONFIG:
+      g_value_set_object (value, self->config);
       break;
 
     default:
@@ -118,8 +134,10 @@ gimp_operation_posterize_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_LEVELS:
-      self->levels = g_value_get_int (value);
+    case PROP_CONFIG:
+      if (self->config)
+        g_object_unref (self->config);
+      self->config = g_value_dup_object (value);
       break;
 
     default:
@@ -135,9 +153,10 @@ gimp_operation_posterize_process (GeglOperation *operation,
                                   glong          samples)
 {
   GimpOperationPosterize *self   = GIMP_OPERATION_POSTERIZE (operation);
+  GimpPosterizeConfig    *config = self->config;
   gfloat                 *src    = in_buf;
   gfloat                 *dest   = out_buf;
-  gfloat                  levels = self->levels - 1.0;
+  gfloat                  levels = config->levels - 1.0;
   glong                   sample;
 
   for (sample = 0; sample < samples; sample++)

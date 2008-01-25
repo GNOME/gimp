@@ -47,6 +47,7 @@ typedef struct _GimpColorizeConfig         GimpColorizeConfig;
 typedef struct _GimpCurvesConfig           GimpCurvesConfig;
 typedef struct _GimpHueSaturationConfig    GimpHueSaturationConfig;
 typedef struct _GimpLevelsConfig           GimpLevelsConfig;
+typedef struct _GimpPosterizeConfig        GimpPosterizeConfig;
 typedef struct _GimpThresholdConfig        GimpThresholdConfig;
 
 
