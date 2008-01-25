@@ -23,8 +23,7 @@
 #define __GIMP_OPERATION_POSTERIZE_H__
 
 
-#include <gegl-plugin.h>
-#include <operation/gegl-operation-point-filter.h>
+#include "gimpoperationpointfilter.h"
 
 
 #define GIMP_TYPE_OPERATION_POSTERIZE            (gimp_operation_posterize_get_type ())
@@ -39,14 +38,12 @@ typedef struct _GimpOperationPosterizeClass GimpOperationPosterizeClass;
 
 struct _GimpOperationPosterize
 {
-  GeglOperationPointFilter  parent_instance;
-
-  GimpPosterizeConfig      *config;
+  GimpOperationPointFilter  parent_instance;
 };
 
 struct _GimpOperationPosterizeClass
 {
-  GeglOperationPointFilterClass  parent_class;
+  GimpOperationPointFilterClass  parent_class;
 };
 
 

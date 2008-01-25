@@ -22,8 +22,8 @@
 #ifndef __GIMP_OPERATION_HUE_SATURATION_H__
 #define __GIMP_OPERATION_HUE_SATURATION_H__
 
-#include <gegl-plugin.h>
-#include <operation/gegl-operation-point-filter.h>
+
+#include "gimpoperationpointfilter.h"
 
 
 #define GIMP_TYPE_OPERATION_HUE_SATURATION            (gimp_operation_hue_saturation_get_type ())
@@ -38,14 +38,12 @@ typedef struct _GimpOperationHueSaturationClass GimpOperationHueSaturationClass;
 
 struct _GimpOperationHueSaturation
 {
-  GeglOperationPointFilter  parent_instance;
-
-  GimpHueSaturationConfig  *config;
+  GimpOperationPointFilter  parent_instance;
 };
 
 struct _GimpOperationHueSaturationClass
 {
-  GeglOperationPointFilterClass  parent_class;
+  GimpOperationPointFilterClass  parent_class;
 };
 
 

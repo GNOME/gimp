@@ -32,51 +32,34 @@
 #include "gimpoperationhuesaturation.h"
 
 
-enum
-{
-  PROP_0,
-  PROP_CONFIG
-};
-
-
-static void     gimp_operation_hue_saturation_finalize     (GObject       *object);
-static void     gimp_operation_hue_saturation_get_property (GObject       *object,
-                                                            guint          property_id,
-                                                            GValue        *value,
-                                                            GParamSpec    *pspec);
-static void     gimp_operation_hue_saturation_set_property (GObject       *object,
-                                                            guint          property_id,
-                                                            const GValue  *value,
-                                                            GParamSpec    *pspec);
-
-static gboolean gimp_operation_hue_saturation_process      (GeglOperation *operation,
-                                                            void          *in_buf,
-                                                            void          *out_buf,
-                                                            glong          samples);
+static gboolean gimp_operation_hue_saturation_process (GeglOperation *operation,
+                                                       void          *in_buf,
+                                                       void          *out_buf,
+                                                       glong          samples);
 
 
 G_DEFINE_TYPE (GimpOperationHueSaturation, gimp_operation_hue_saturation,
-               GEGL_TYPE_OPERATION_POINT_FILTER)
+               GIMP_TYPE_OPERATION_POINT_FILTER)
 
 #define parent_class gimp_operation_hue_saturation_parent_class
 
 
 static void
-gimp_operation_hue_saturation_class_init (GimpOperationHueSaturationClass * klass)
+gimp_operation_hue_saturation_class_init (GimpOperationHueSaturationClass *klass)
 {
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
-  object_class->finalize     = gimp_operation_hue_saturation_finalize;
-  object_class->set_property = gimp_operation_hue_saturation_set_property;
-  object_class->get_property = gimp_operation_hue_saturation_get_property;
+  object_class->set_property = gimp_operation_point_filter_set_property;
+  object_class->get_property = gimp_operation_point_filter_get_property;
 
   point_class->process       = gimp_operation_hue_saturation_process;
 
   gegl_operation_class_set_name (operation_class, "gimp-hue-saturation");
 
-  g_object_class_install_property (object_class, PROP_CONFIG,
+  g_object_class_install_property (object_class,
+                                   GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,
                                    g_param_spec_object ("config",
                                                         "Config",
                                                         "The config object",
@@ -88,62 +71,6 @@ gimp_operation_hue_saturation_class_init (GimpOperationHueSaturationClass * klas
 static void
 gimp_operation_hue_saturation_init (GimpOperationHueSaturation *self)
 {
-}
-
-static void
-gimp_operation_hue_saturation_finalize (GObject *object)
-{
-  GimpOperationHueSaturation *self = GIMP_OPERATION_HUE_SATURATION (object);
-
-  if (self->config)
-    {
-      g_object_unref (self->config);
-      self->config = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-gimp_operation_hue_saturation_get_property (GObject    *object,
-                                            guint       property_id,
-                                            GValue     *value,
-                                            GParamSpec *pspec)
-{
-  GimpOperationHueSaturation *self = GIMP_OPERATION_HUE_SATURATION (object);
-
-  switch (property_id)
-    {
-    case PROP_CONFIG:
-      g_value_set_object (value, self->config);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_operation_hue_saturation_set_property (GObject      *object,
-                                            guint         property_id,
-                                            const GValue *value,
-                                            GParamSpec   *pspec)
-{
-  GimpOperationHueSaturation *self = GIMP_OPERATION_HUE_SATURATION (object);
-
-  switch (property_id)
-    {
-    case PROP_CONFIG:
-      if (self->config)
-        g_object_unref (self->config);
-      self->config = g_value_dup_object (value);
-      break;
-
-   default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
 }
 
 static inline gdouble
@@ -200,12 +127,15 @@ gimp_operation_hue_saturation_process (GeglOperation *operation,
                                        void          *out_buf,
                                        glong          samples)
 {
-  GimpOperationHueSaturation *self    = GIMP_OPERATION_HUE_SATURATION (operation);
-  GimpHueSaturationConfig    *config  = self->config;
-  gfloat                     *src     = in_buf;
-  gfloat                     *dest    = out_buf;
-  gfloat                      overlap = config->overlap / 2.0;
-  glong                       sample;
+  GimpOperationPointFilter *point   = GIMP_OPERATION_POINT_FILTER (operation);
+  GimpHueSaturationConfig  *config  = GIMP_HUE_SATURATION_CONFIG (point->config);
+  gfloat                   *src     = in_buf;
+  gfloat                   *dest    = out_buf;
+  gfloat                    overlap = config->overlap / 2.0;
+  glong                     sample;
+
+  if (! config)
+    return FALSE;
 
   for (sample = 0; sample < samples; sample++)
     {

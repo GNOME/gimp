@@ -35,6 +35,8 @@ libappgegl_a_SOURCES = \
 	gimpoperationhuesaturation.h	\
 	gimpoperationlevels.c		\
 	gimpoperationlevels.h		\
+	gimpoperationpointfilter.c	\
+	gimpoperationpointfilter.h	\
 	gimpoperationposterize.c	\
 	gimpoperationposterize.h	\
 	gimpoperationthreshold.c	\

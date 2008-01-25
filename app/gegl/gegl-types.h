@@ -34,6 +34,7 @@ typedef struct _GimpOperationCurves        GimpOperationCurves;
 typedef struct _GimpOperationDesaturate    GimpOperationDesaturate;
 typedef struct _GimpOperationHueSaturation GimpOperationHueSaturation;
 typedef struct _GimpOperationLevels        GimpOperationLevels;
+typedef struct _GimpOperationPointFilter   GimpOperationPointFilter;
 typedef struct _GimpOperationPosterize     GimpOperationPosterize;
 typedef struct _GimpOperationThreshold     GimpOperationThreshold;
 typedef struct _GimpOperationTileSink      GimpOperationTileSink;

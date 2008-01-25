@@ -2,6 +2,26 @@
 
 	* app/gegl/Makefile.am
 	* app/gegl/gegl-types.h
+	* app/gegl/gimpoperationpointfilter.[ch]: new parent class for all
+	image map operations. Features a "config" member and "public"
+	get_property() and set_property() functions to be used by
+	subclasses.
+
+	* app/gegl/gimpoperationcolorbalance.[ch]
+	* app/gegl/gimpoperationcolorize.[ch]
+	* app/gegl/gimpoperationcurves.[ch]
+	* app/gegl/gimpoperationhuesaturation.[ch]
+	* app/gegl/gimpoperationlevels.[ch]
+	* app/gegl/gimpoperationposterize.[ch]
+	* app/gegl/gimpoperationthreshold.[ch]: derive from
+	GimpOperationPointFilter, remove "config" members, remove
+	finalize(), get_property() and set_property() implementations and
+	use the ones provided by the parent class.
+
+2008-01-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/Makefile.am
+	* app/gegl/gegl-types.h
 	* app/gegl/gimpposterizeconfig.[ch]: new config object.
 
 	* app/gegl/gimpoperationposterize.[ch]
