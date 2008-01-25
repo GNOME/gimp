@@ -1,5 +1,15 @@
 2008-01-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/Makefile.am
+	* app/gegl/gegl-types.h
+	* app/gegl/gimpthresholdconfig.[ch]: new config object.
+
+	* app/gegl/gimpoperationthreshold.[ch]: use it.
+
+	* app/tools/gimpthresholdtool.[ch]: ditto.
+
+2008-01-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpcurvestool.[ch]
 	* app/tools/gimplevelstool.[ch]: remove the "channel" member from
 	the tool struct and use the channel from the options object

@@ -18,6 +18,8 @@ libappgegl_a_SOURCES = \
 	gimphuesaturationconfig.h	\
 	gimplevelsconfig.c		\
 	gimplevelsconfig.h		\
+	gimpthresholdconfig.c		\
+	gimpthresholdconfig.h		\
 	\
 	gimpoperationcolorbalance.c	\
 	gimpoperationcolorbalance.h	\

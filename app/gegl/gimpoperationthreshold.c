@@ -28,16 +28,17 @@
 #include "gegl-types.h"
 
 #include "gimpoperationthreshold.h"
+#include "gimpthresholdconfig.h"
 
 
 enum
 {
   PROP_0,
-  PROP_LOW,
-  PROP_HIGH
+  PROP_CONFIG
 };
 
 
+static void     gimp_operation_threshold_finalize     (GObject       *object);
 static void     gimp_operation_threshold_get_property (GObject       *object,
                                                        guint          property_id,
                                                        GValue        *value,
@@ -66,6 +67,7 @@ gimp_operation_threshold_class_init (GimpOperationThresholdClass * klass)
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
+  object_class->finalize     = gimp_operation_threshold_finalize;
   object_class->set_property = gimp_operation_threshold_set_property;
   object_class->get_property = gimp_operation_threshold_get_property;
 
@@ -73,19 +75,11 @@ gimp_operation_threshold_class_init (GimpOperationThresholdClass * klass)
 
   gegl_operation_class_set_name (operation_class, "gimp-threshold");
 
-  g_object_class_install_property (object_class, PROP_LOW,
-                                   g_param_spec_double ("low",
-                                                        "Low",
-                                                        "Low threshold",
-                                                        0.0, 1.0, 0.5,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_HIGH,
-                                   g_param_spec_double ("high",
-                                                        "High",
-                                                        "High threshold",
-                                                        0.0, 1.0, 1.0,
+  g_object_class_install_property (object_class, PROP_CONFIG,
+                                   g_param_spec_object ("config",
+                                                        "Config",
+                                                        "The config object",
+                                                        GIMP_TYPE_THRESHOLD_CONFIG,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
@@ -93,6 +87,20 @@ gimp_operation_threshold_class_init (GimpOperationThresholdClass * klass)
 static void
 gimp_operation_threshold_init (GimpOperationThreshold *self)
 {
+}
+
+static void
+gimp_operation_threshold_finalize (GObject *object)
+{
+  GimpOperationThreshold *self = GIMP_OPERATION_THRESHOLD (object);
+
+  if (self->config)
+    {
+      g_object_unref (self->config);
+      self->config = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -105,12 +113,8 @@ gimp_operation_threshold_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_LOW:
-      g_value_set_double (value, self->low);
-      break;
-
-    case PROP_HIGH:
-      g_value_set_double (value, self->high);
+    case PROP_CONFIG:
+      g_value_set_object (value, self->config);
       break;
 
     default:
@@ -129,12 +133,10 @@ gimp_operation_threshold_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_LOW:
-      self->low = g_value_get_double (value);
-      break;
-
-    case PROP_HIGH:
-      self->high = g_value_get_double (value);
+    case PROP_CONFIG:
+      if (self->config)
+        g_object_unref (self->config);
+      self->config = g_value_dup_object (value);
       break;
 
     default:
@@ -149,10 +151,14 @@ gimp_operation_threshold_process (GeglOperation *operation,
                                   void          *out_buf,
                                   glong          samples)
 {
-  GimpOperationThreshold *self = GIMP_OPERATION_THRESHOLD (operation);
-  gfloat                 *src  = in_buf;
-  gfloat                 *dest = out_buf;
+  GimpOperationThreshold *self   = GIMP_OPERATION_THRESHOLD (operation);
+  GimpThresholdConfig    *config = self->config;
+  gfloat                 *src    = in_buf;
+  gfloat                 *dest   = out_buf;
   glong                   sample;
+
+  if (! config)
+    return FALSE;
 
   for (sample = 0; sample < samples; sample++)
     {
@@ -161,7 +167,7 @@ gimp_operation_threshold_process (GeglOperation *operation,
       value = MAX (src[RED_PIX], src[GREEN_PIX]);
       value = MAX (value, src[BLUE_PIX]);
 
-      value = (value >= self->low && value <= self->high) ? 1.0 : 0.0;
+      value = (value >= config->low && value <= config->high) ? 1.0 : 0.0;
 
       dest[RED_PIX]   = value;
       dest[GREEN_PIX] = value;
