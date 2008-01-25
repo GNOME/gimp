@@ -40,7 +40,6 @@ struct _GimpDataChooserDialog
 
   GimpDataFactory      *working_factory;
   GimpDataFactoryView  *factory_view;
-  gchar                *filename;
 };
 
 struct _GimpDataChooserDialogClass

@@ -1,3 +1,8 @@
+2008-01-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpdatafactory.[ch]
+	* app/widgets/gimpdatachooserdialog.[ch]: clean up code
+	
 2008-01-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merged 24651:24662 from trunk.

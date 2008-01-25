@@ -54,6 +54,7 @@ typedef struct
 {
   GimpDataFactory *factory;
   GHashTable      *cache;
+  GimpData        *data;
 } GimpDataLoadContext;
 
 typedef struct _GimpDataFactoryClass  GimpDataFactoryClass;

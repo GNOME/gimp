@@ -143,10 +143,6 @@ gimp_data_factory_new (Gimp                             *gimp,
   g_return_val_if_fail (loader_entries != NULL, NULL);
   g_return_val_if_fail (n_loader_entries > 0, NULL);
 
-  g_print ("Creating data factory\n");
-  g_print ("Path property is '%s'\n", path_property_name);
-  g_print ("Writable property is '%s'\n", writable_property_name);
-
   factory = g_object_new (GIMP_TYPE_DATA_FACTORY, NULL);
 
   factory->gimp                   = gimp;
@@ -671,6 +667,8 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
   GHashTable          *cache   = context->cache;
   gint                 i;
 
+  context->data = NULL;
+
   if (factory->gimp->be_verbose)
     g_print ("gimp_data_factory_load_data: loading %s\n", file_data->filename);
 
@@ -693,7 +691,7 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
     if (cache &&
         (cached_data = g_hash_table_lookup (cache, file_data->filename)))
       {
-        data = cached_data->data;
+        context->data = data = cached_data->data;
 
         load_from_disk = (data->mtime == 0 || data->mtime != file_data->mtime);
 
@@ -735,7 +733,7 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
 
             for (list = data_list; list; list = g_list_next (list))
               {
-                data = list->data;
+                context->data = data = list->data;
 
                 gimp_data_set_filename (data, file_data->filename,
                                         writable, deletable);
