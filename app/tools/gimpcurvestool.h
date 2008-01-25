@@ -37,13 +37,12 @@ struct _GimpCurvesTool
 {
   GimpImageMapTool      parent_instance;
 
-  GimpCurve            *curve[5];
+  GimpCurvesConfig     *config;
   GimpLut              *lut;
 
   /* dialog */
   gboolean              color;
   gboolean              alpha;
-  GimpHistogramChannel  channel;
 
   gint                  col_value[5];
 

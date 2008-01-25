@@ -89,15 +89,13 @@ sanity_check_gimp (void)
 static gchar *
 sanity_check_glib (void)
 {
-  const gchar *mismatch;
-
 #define GLIB_REQUIRED_MAJOR 2
 #define GLIB_REQUIRED_MINOR 14
 #define GLIB_REQUIRED_MICRO 1
 
-  mismatch = glib_check_version (GLIB_REQUIRED_MAJOR,
-                                 GLIB_REQUIRED_MINOR,
-                                 GLIB_REQUIRED_MICRO);
+  const gchar *mismatch = glib_check_version (GLIB_REQUIRED_MAJOR,
+                                              GLIB_REQUIRED_MINOR,
+                                              GLIB_REQUIRED_MICRO);
 
   if (mismatch)
     {
@@ -124,21 +122,20 @@ sanity_check_glib (void)
 static gchar *
 sanity_check_pango (void)
 {
-  gint         pango_major_version = pango_version () / 100 / 100;
-  gint         pango_minor_version = pango_version () / 100 % 100;
-  gint         pango_micro_version = pango_version () % 100;
-  const gchar *mismatch;
-
 #define PANGO_REQUIRED_MAJOR 1
 #define PANGO_REQUIRED_MINOR 18
 #define PANGO_REQUIRED_MICRO 0
 
-  mismatch = pango_version_check (PANGO_REQUIRED_MAJOR,
-                                  PANGO_REQUIRED_MINOR,
-                                  PANGO_REQUIRED_MICRO);
+  const gchar *mismatch = pango_version_check (PANGO_REQUIRED_MAJOR,
+                                               PANGO_REQUIRED_MINOR,
+                                               PANGO_REQUIRED_MICRO);
 
   if (mismatch)
     {
+      const gint pango_major_version = pango_version () / 100 / 100;
+      const gint pango_minor_version = pango_version () / 100 % 100;
+      const gint pango_micro_version = pango_version () % 100;
+
       return g_strdup_printf
         ("%s\n\n"
          "GIMP requires Pango version %d.%d.%d or later.\n"
@@ -162,10 +159,7 @@ sanity_check_pango (void)
 static gchar *
 sanity_check_fontconfig (void)
 {
-  gint   fc_version       = FcGetVersion ();
-  gint   fc_major_version = fc_version / 100 / 100;
-  gint   fc_minor_version = fc_version / 100 % 100;
-  gint   fc_micro_version = fc_version % 100;
+  const gint fc_version = FcGetVersion ();
 
 #define FC_REQUIRED_MAJOR 2
 #define FC_REQUIRED_MINOR 2
@@ -175,6 +169,10 @@ sanity_check_fontconfig (void)
                     (FC_REQUIRED_MINOR *   100) +
                     (FC_REQUIRED_MICRO *     1)))
     {
+      const gint fc_major_version = fc_version / 100 / 100;
+      const gint fc_minor_version = fc_version / 100 % 100;
+      const gint fc_micro_version = fc_version % 100;
+
       return g_strdup_printf
         ("The Fontconfig version being used is too old!\n\n"
          "GIMP requires Fontconfig version %d.%d.%d or later.\n"

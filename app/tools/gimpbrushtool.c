@@ -295,8 +295,8 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
   if (brush_core->brush_bound_segs)
     {
       GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
-      gdouble           width  = (gdouble) brush_core->brush_bound_width;
-      gdouble           height = (gdouble) brush_core->brush_bound_height;
+      gdouble           width  = brush_core->brush_bound_width;
+      gdouble           height = brush_core->brush_bound_height;
 
       /*  don't draw the boundary if it becomes too small  */
       if (SCALEX (shell, width) > 4 && SCALEY (shell, height) > 4)

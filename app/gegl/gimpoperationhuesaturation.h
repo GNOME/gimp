@@ -22,7 +22,7 @@
 #ifndef __GIMP_OPERATION_HUE_SATURATION_H__
 #define __GIMP_OPERATION_HUE_SATURATION_H__
 
-
+#include <gegl-plugin.h>
 #include <operation/gegl-operation-point-filter.h>
 
 
@@ -40,13 +40,7 @@ struct _GimpOperationHueSaturation
 {
   GeglOperationPointFilter  parent_instance;
 
-  GimpHueRange              range;
-
-  gdouble                   hue[7];
-  gdouble                   saturation[7];
-  gdouble                   lightness[7];
-
-  gdouble                   overlap;
+  GimpHueSaturationConfig  *config;
 };
 
 struct _GimpOperationHueSaturationClass
@@ -56,6 +50,11 @@ struct _GimpOperationHueSaturationClass
 
 
 GType   gimp_operation_hue_saturation_get_type (void) G_GNUC_CONST;
+
+void    gimp_operation_hue_saturation_map      (GimpHueSaturationConfig *config,
+                                                const GimpRGB           *color,
+                                                GimpHueRange             range,
+                                                GimpRGB                 *result);
 
 
 #endif /* __GIMP_OPERATION_HUE_SATURATION_H__ */

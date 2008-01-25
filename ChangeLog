@@ -1,3 +1,7 @@
+2008-01-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Merged 24663:24709 from trunk.
+	
 2008-01-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpdatafactory.[ch]

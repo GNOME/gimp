@@ -22,7 +22,7 @@
 #ifndef __GIMP_OPERATION_TILE_SINK_H__
 #define __GIMP_OPERATION_TILE_SINK_H__
 
-
+#include <gegl-plugin.h>
 #include <operation/gegl-operation-sink.h>
 
 

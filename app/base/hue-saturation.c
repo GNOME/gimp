@@ -37,19 +37,13 @@ hue_saturation_init (HueSaturation *hs)
   g_return_if_fail (hs != NULL);
 
   hs->overlap = 0.0;
+
   for (partition = GIMP_ALL_HUES; partition <= GIMP_MAGENTA_HUES; partition++)
-    hue_saturation_partition_reset (hs, partition);
-}
-
-void
-hue_saturation_partition_reset (HueSaturation *hs,
-                                GimpHueRange   partition)
-{
-  g_return_if_fail (hs != NULL);
-
-  hs->hue[partition]        = 0.0;
-  hs->lightness[partition]  = 0.0;
-  hs->saturation[partition] = 0.0;
+    {
+      hs->hue[partition]        = 0.0;
+      hs->lightness[partition]  = 0.0;
+      hs->saturation[partition] = 0.0;
+    }
 }
 
 void
@@ -65,6 +59,7 @@ hue_saturation_calculate_transfers (HueSaturation *hs)
   for (hue = 0; hue < 6; hue++)
     for (i = 0; i < 256; i++)
       {
+        /*  Hue  */
         value = (hs->hue[0] + hs->hue[hue + 1]) * 255.0 / 360.0;
         if ((i + value) < 0)
           hs->hue_transfer[hue][i] = 255 + (i + value);

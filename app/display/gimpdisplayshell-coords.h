@@ -41,6 +41,7 @@ void     gimp_display_shell_get_device_state  (GimpDisplayShell *shell,
 gboolean gimp_display_shell_eval_event        (GimpDisplayShell *shell,
                                                GimpCoords       *coords,
                                                gdouble           inertia_factor,
+                                               gdouble           filter_threshhold,
                                                guint32           time);
 
 

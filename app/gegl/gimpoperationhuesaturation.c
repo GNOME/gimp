@@ -28,20 +28,18 @@
 
 #include "gegl-types.h"
 
+#include "gimphuesaturationconfig.h"
 #include "gimpoperationhuesaturation.h"
 
 
 enum
 {
   PROP_0,
-  PROP_RANGE,
-  PROP_HUE,
-  PROP_SATURATION,
-  PROP_LIGHTNESS,
-  PROP_OVERLAP
+  PROP_CONFIG
 };
 
 
+static void     gimp_operation_hue_saturation_finalize     (GObject       *object);
 static void     gimp_operation_hue_saturation_get_property (GObject       *object,
                                                             guint          property_id,
                                                             GValue        *value,
@@ -70,6 +68,7 @@ gimp_operation_hue_saturation_class_init (GimpOperationHueSaturationClass * klas
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
+  object_class->finalize     = gimp_operation_hue_saturation_finalize;
   object_class->set_property = gimp_operation_hue_saturation_set_property;
   object_class->get_property = gimp_operation_hue_saturation_get_property;
 
@@ -77,44 +76,11 @@ gimp_operation_hue_saturation_class_init (GimpOperationHueSaturationClass * klas
 
   gegl_operation_class_set_name (operation_class, "gimp-hue-saturation");
 
-  g_object_class_install_property (object_class, PROP_RANGE,
-                                   g_param_spec_enum ("range",
-                                                      "range",
-                                                      "The affected range",
-                                                      GIMP_TYPE_HUE_RANGE,
-                                                      GIMP_ALL_HUES,
-                                                      G_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_HUE,
-                                   g_param_spec_double ("hue",
-                                                        "Hue",
-                                                        "Hue",
-                                                        -1.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_SATURATION,
-                                   g_param_spec_double ("saturation",
-                                                        "Saturation",
-                                                        "Saturation",
-                                                        -1.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_LIGHTNESS,
-                                   g_param_spec_double ("lightness",
-                                                        "Lightness",
-                                                        "Lightness",
-                                                        -1.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_OVERLAP,
-                                   g_param_spec_double ("overlap",
-                                                        "Overlap",
-                                                        "Overlap",
-                                                        0.0, 1.0, 0.0,
+  g_object_class_install_property (object_class, PROP_CONFIG,
+                                   g_param_spec_object ("config",
+                                                        "Config",
+                                                        "The config object",
+                                                        GIMP_TYPE_HUE_SATURATION_CONFIG,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
@@ -122,18 +88,20 @@ gimp_operation_hue_saturation_class_init (GimpOperationHueSaturationClass * klas
 static void
 gimp_operation_hue_saturation_init (GimpOperationHueSaturation *self)
 {
-  GimpHueRange range;
+}
 
-  self->range = GIMP_ALL_HUES;
+static void
+gimp_operation_hue_saturation_finalize (GObject *object)
+{
+  GimpOperationHueSaturation *self = GIMP_OPERATION_HUE_SATURATION (object);
 
-  for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)
+  if (self->config)
     {
-      self->hue[range]        = 0.0;
-      self->saturation[range] = 0.0;
-      self->lightness[range]  = 0.0;
+      g_object_unref (self->config);
+      self->config = NULL;
     }
 
-  self->overlap = 0.0;
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -146,24 +114,8 @@ gimp_operation_hue_saturation_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_RANGE:
-      g_value_set_enum (value, self->range);
-      break;
-
-    case PROP_HUE:
-      g_value_set_double (value, self->hue[self->range]);
-      break;
-
-    case PROP_SATURATION:
-      g_value_set_double (value, self->saturation[self->range]);
-      break;
-
-    case PROP_LIGHTNESS:
-      g_value_set_double (value, self->lightness[self->range]);
-      break;
-
-    case PROP_OVERLAP:
-      g_value_set_double (value, self->overlap);
+    case PROP_CONFIG:
+      g_value_set_object (value, self->config);
       break;
 
     default:
@@ -182,24 +134,10 @@ gimp_operation_hue_saturation_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_RANGE:
-      self->range = g_value_get_enum (value);
-      break;
-
-    case PROP_HUE:
-      self->hue[self->range] = g_value_get_double (value);
-      break;
-
-    case PROP_SATURATION:
-      self->saturation[self->range] = g_value_get_double (value);
-      break;
-
-    case PROP_LIGHTNESS:
-      self->lightness[self->range] = g_value_get_double (value);
-      break;
-
-    case PROP_OVERLAP:
-      self->overlap = g_value_get_double (value);
+    case PROP_CONFIG:
+      if (self->config)
+        g_object_unref (self->config);
+      self->config = g_value_dup_object (value);
       break;
 
    default:
@@ -209,11 +147,11 @@ gimp_operation_hue_saturation_set_property (GObject      *object,
 }
 
 static inline gdouble
-map_hue (GimpOperationHueSaturation *self,
-         gint                        hue,
-         gdouble                     value)
+map_hue (GimpHueSaturationConfig *config,
+         GimpHueRange             range,
+         gdouble                  value)
 {
-  value += (self->hue[0] + self->hue[hue + 1]) / 2.0;
+  value += (config->hue[GIMP_ALL_HUES] + config->hue[range]) / 2.0;
 
   if (value < 0)
     return value + 1.0;
@@ -224,13 +162,11 @@ map_hue (GimpOperationHueSaturation *self,
 }
 
 static inline gdouble
-map_saturation (GimpOperationHueSaturation *self,
-                gint                        hue,
-                gdouble                     value)
+map_saturation (GimpHueSaturationConfig *config,
+                GimpHueRange             range,
+                gdouble                  value)
 {
-  gdouble v = self->saturation[0] + self->saturation[hue + 1];
-
-  // v = CLAMP (v, -1.0, 1.0);
+  gdouble v = config->saturation[GIMP_ALL_HUES] + config->saturation[range];
 
   /* This change affects the way saturation is computed. With the old
    * code (different code for value < 0), increasing the saturation
@@ -246,13 +182,11 @@ map_saturation (GimpOperationHueSaturation *self,
 }
 
 static inline gdouble
-map_lightness (GimpOperationHueSaturation *self,
-               gint                        hue,
-               gdouble                     value)
+map_lightness (GimpHueSaturationConfig *config,
+               GimpHueRange             range,
+               gdouble                  value)
 {
-  gdouble v = (self->lightness[0] + self->lightness[hue + 1]) / 2.0;
-
-  // v = CLAMP (v, -1.0, 1.0);
+  gdouble v = (config->lightness[GIMP_ALL_HUES] + config->lightness[range]) / 2.0;
 
   if (v < 0)
     return value * (v + 1.0);
@@ -267,9 +201,10 @@ gimp_operation_hue_saturation_process (GeglOperation *operation,
                                        glong          samples)
 {
   GimpOperationHueSaturation *self    = GIMP_OPERATION_HUE_SATURATION (operation);
+  GimpHueSaturationConfig    *config  = self->config;
   gfloat                     *src     = in_buf;
   gfloat                     *dest    = out_buf;
-  gfloat                      overlap = self->overlap / 2.0;
+  gfloat                      overlap = config->overlap / 2.0;
   glong                       sample;
 
   for (sample = 0; sample < samples; sample++)
@@ -331,22 +266,26 @@ gimp_operation_hue_saturation_process (GeglOperation *operation,
           secondary_hue = 0;
         }
 
+      /*  transform into GimpHueRange values  */
+      hue++;
+      secondary_hue++;
+
       if (use_secondary_hue)
         {
-          hsl.h = (map_hue        (self, hue,           hsl.h) * primary_intensity +
-                   map_hue        (self, secondary_hue, hsl.h) * secondary_intensity);
+          hsl.h = (map_hue        (config, hue,           hsl.h) * primary_intensity +
+                   map_hue        (config, secondary_hue, hsl.h) * secondary_intensity);
 
-          hsl.s = (map_saturation (self, hue,           hsl.s) * primary_intensity +
-                   map_saturation (self, secondary_hue, hsl.s) * secondary_intensity);
+          hsl.s = (map_saturation (config, hue,           hsl.s) * primary_intensity +
+                   map_saturation (config, secondary_hue, hsl.s) * secondary_intensity);
 
-          hsl.l = (map_lightness  (self, hue,           hsl.l) * primary_intensity +
-                   map_lightness  (self, secondary_hue, hsl.l) * secondary_intensity);
+          hsl.l = (map_lightness  (config, hue,           hsl.l) * primary_intensity +
+                   map_lightness  (config, secondary_hue, hsl.l) * secondary_intensity);
         }
       else
         {
-          hsl.h = map_hue        (self, hue, hsl.h);
-          hsl.s = map_saturation (self, hue, hsl.s);
-          hsl.l = map_lightness  (self, hue, hsl.l);
+          hsl.h = map_hue        (config, hue, hsl.h);
+          hsl.s = map_saturation (config, hue, hsl.s);
+          hsl.l = map_lightness  (config, hue, hsl.l);
         }
 
       gimp_hsl_to_rgb (&hsl, &rgb);
@@ -361,4 +300,28 @@ gimp_operation_hue_saturation_process (GeglOperation *operation,
     }
 
   return TRUE;
+}
+
+
+/*  public functions  */
+
+void
+gimp_operation_hue_saturation_map (GimpHueSaturationConfig *config,
+                                   const GimpRGB           *color,
+                                   GimpHueRange             range,
+                                   GimpRGB                 *result)
+{
+  GimpHSL hsl;
+
+  g_return_if_fail (GIMP_IS_HUE_SATURATION_CONFIG (config));
+  g_return_if_fail (color != NULL);
+  g_return_if_fail (result != NULL);
+
+  gimp_rgb_to_hsl (color, &hsl);
+
+  hsl.h = map_hue        (config, range, hsl.h);
+  hsl.s = map_saturation (config, range, hsl.s);
+  hsl.l = map_lightness  (config, range, hsl.l);
+
+  gimp_hsl_to_rgb (&hsl, result);
 }

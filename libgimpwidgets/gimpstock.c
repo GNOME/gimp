@@ -477,6 +477,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_WARNING,                  stock_warning_24                  },
   { GIMP_TOILET_PAPER,                   stock_toilet_paper_24             },
   { GIMP_STOCK_WEB,                      stock_web_24                      },
+  { GIMP_STOCK_WILBER,                   stock_wilber_22                   },
   { GIMP_STOCK_VIDEO,                    stock_video_24                    }
 };
 

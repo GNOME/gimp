@@ -207,7 +207,7 @@ typedef union YYSTYPE
 {
   int val;
   double value;
-  char id[1024];		/* Large enough to hold all polygon points! */
+  char id[4096];		/* Large enough to hold all polygon points! */
 }
 /* Line 187 of yacc.c.  */
 #line 214 "y.tab.c"
@@ -1580,7 +1580,7 @@ yyreduce:
     {
 		   gchar *description;
 
-		   description = g_strconcat(_map_info->description, (yyvsp[(2) - (3)].id), "\n", 
+		   description = g_strconcat(_map_info->description, (yyvsp[(2) - (3)].id), "\n",
 					     NULL);
 		   g_strreplace(&_map_info->description, description);
 		}
@@ -1955,7 +1955,7 @@ yyreturn:
 #line 311 "imap_csim.y"
 
 
-static void 
+static void
 csim_error(char* s)
 {
    extern FILE *csim_in;

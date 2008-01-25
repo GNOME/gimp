@@ -1,3 +1,7 @@
+2008-01-22  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added files from the new PSD load plug-in.
+
 2008-01-18  Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
 
 	* ru.po: Updated Russian translation.

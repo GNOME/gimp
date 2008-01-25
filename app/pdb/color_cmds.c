@@ -39,7 +39,6 @@
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 #include "base/threshold.h"
-#include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
 #include "core/gimpcurve.h"
 #include "core/gimpdrawable-desaturate.h"
@@ -80,7 +79,7 @@ brightness_contrast_invoker (GimpProcedure      *procedure,
 
       if (success)
         {
-      if (gimp->config->use_gegl)
+      if (gimp_use_gegl (gimp))
         {
           GeglNode *node = g_object_new (GEGL_TYPE_NODE,
                                          "operation",  "brightness-contrast",
@@ -254,7 +253,7 @@ posterize_invoker (GimpProcedure      *procedure,
 
       if (success)
         {
-      if (gimp->config->use_gegl)
+      if (gimp_use_gegl (gimp))
         {
           GeglNode *node = g_object_new (GEGL_TYPE_NODE,
                                          "operation", "gimp-posterize",
@@ -675,7 +674,7 @@ colorize_invoker (GimpProcedure      *procedure,
 
       if (success)
         {
-      if (gimp->config->use_gegl)
+      if (gimp_use_gegl (gimp))
         {
           GeglNode *node = g_object_new (GEGL_TYPE_NODE,
                                          "operation", "gimp-colorize",
@@ -889,7 +888,7 @@ threshold_invoker (GimpProcedure      *procedure,
 
       if (success)
         {
-      if (gimp->config->use_gegl)
+      if (gimp_use_gegl (gimp))
         {
           GeglNode *node = g_object_new (GEGL_TYPE_NODE,
                                          "operation", "gimp-threshold",

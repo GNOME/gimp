@@ -27,9 +27,10 @@
 
 #include "base/color-balance.h"
 
+#include "gegl/gimpcolorbalanceconfig.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpimagemap.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -116,7 +117,6 @@ gimp_color_balance_tool_init (GimpColorBalanceTool *cb_tool)
   GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (cb_tool);
 
   cb_tool->color_balance = g_slice_new0 (ColorBalance);
-  cb_tool->transfer_mode = GIMP_MIDTONES;
 
   color_balance_init (cb_tool->color_balance);
 
@@ -128,6 +128,12 @@ static void
 gimp_color_balance_tool_finalize (GObject *object)
 {
   GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (object);
+
+  if (cb_tool->config)
+    {
+      g_object_unref (cb_tool->config);
+      cb_tool->config = NULL;
+    }
 
   g_slice_free (ColorBalance, cb_tool->color_balance);
 
@@ -154,11 +160,12 @@ gimp_color_balance_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  color_balance_init (cb_tool->color_balance);
-
-  cb_tool->transfer_mode = GIMP_MIDTONES;
+  gimp_color_balance_config_reset (cb_tool->config);
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
+
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (cb_tool->range_radio),
+                                   cb_tool->config->range);
 
   color_balance_update (cb_tool);
 
@@ -168,36 +175,28 @@ gimp_color_balance_tool_initialize (GimpTool     *tool,
 static GeglNode *
 gimp_color_balance_tool_get_operation (GimpImageMapTool *im_tool)
 {
-  return g_object_new (GEGL_TYPE_NODE,
+  GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (im_tool);
+  GeglNode             *node;
+
+  node = g_object_new (GEGL_TYPE_NODE,
                        "operation", "gimp-color-balance",
                        NULL);
+
+  cb_tool->config = g_object_new (GIMP_TYPE_COLOR_BALANCE_CONFIG, NULL);
+
+  gegl_node_set (node,
+                 "config", cb_tool->config,
+                 NULL);
+
+  return node;
 }
 
 static void
 gimp_color_balance_tool_map (GimpImageMapTool *image_map_tool)
 {
   GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (image_map_tool);
-  ColorBalance         *cb      = cb_tool->color_balance;
-  GimpTransferMode      range;
 
-  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
-    {
-      gegl_node_set (image_map_tool->operation,
-                     "range", range,
-                     NULL);
-
-      gegl_node_set (image_map_tool->operation,
-                     "cyan-red",      cb->cyan_red[range]      / 256.0,
-                     "magenta-green", cb->magenta_green[range] / 256.0,
-                     "yellow-blue",   cb->yellow_blue[range]   / 256.0,
-                     NULL);
-    }
-
-  gegl_node_set (image_map_tool->operation,
-                 "preserve-luminosity", cb->preserve_luminosity,
-                 NULL);
-
-  color_balance_create_lookup_tables (cb_tool->color_balance);
+  gimp_color_balance_config_to_cruft (cb_tool->config, cb_tool->color_balance);
 }
 
 
@@ -252,7 +251,6 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *im_tool)
   GtkWidget            *vbox;
   GtkWidget            *hbox;
   GtkWidget            *table;
-  GtkWidget            *toggle;
   GtkWidget            *button;
   GtkWidget            *frame;
 
@@ -260,7 +258,7 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *im_tool)
                                      gtk_label_new (_("Select Range to Adjust")),
                                      G_CALLBACK (color_balance_range_callback),
                                      cb_tool,
-                                     &toggle);
+                                     &cb_tool->range_radio);
   gtk_box_pack_start (GTK_BOX (im_tool->main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -279,22 +277,22 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *im_tool)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  cb_tool->cyan_red_adj =
-    create_levels_scale (_("Cyan"), _("Red"), table, 0);
+  cb_tool->cyan_red_adj = create_levels_scale (_("Cyan"), _("Red"),
+                                               table, 0);
 
   g_signal_connect (cb_tool->cyan_red_adj, "value-changed",
                     G_CALLBACK (color_balance_cr_changed),
                     cb_tool);
 
-  cb_tool->magenta_green_adj =
-    create_levels_scale (_("Magenta"), _("Green"), table, 1);
+  cb_tool->magenta_green_adj = create_levels_scale (_("Magenta"), _("Green"),
+                                                    table, 1);
 
   g_signal_connect (cb_tool->magenta_green_adj, "value-changed",
                     G_CALLBACK (color_balance_mg_changed),
                     cb_tool);
 
-  cb_tool->yellow_blue_adj =
-    create_levels_scale (_("Yellow"), _("Blue"), table, 2);
+  cb_tool->yellow_blue_adj = create_levels_scale (_("Yellow"), _("Blue"),
+                                                  table, 2);
 
   g_signal_connect (cb_tool->yellow_blue_adj, "value-changed",
                     G_CALLBACK (color_balance_yb_changed),
@@ -315,7 +313,7 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *im_tool)
   cb_tool->preserve_toggle =
     gtk_check_button_new_with_mnemonic (_("Preserve _luminosity"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cb_tool->preserve_toggle),
-                                cb_tool->color_balance->preserve_luminosity);
+                                cb_tool->config->preserve_luminosity);
   gtk_box_pack_end (GTK_BOX (im_tool->main_vbox), cb_tool->preserve_toggle,
                     FALSE, FALSE, 0);
   gtk_widget_show (cb_tool->preserve_toggle);
@@ -323,51 +321,62 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *im_tool)
   g_signal_connect (cb_tool->preserve_toggle, "toggled",
                     G_CALLBACK (color_balance_preserve_toggled),
                     cb_tool);
-
-  /*  set range after everything is in place  */
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (toggle),
-                                   cb_tool->transfer_mode);
 }
 
 static void
 gimp_color_balance_tool_reset (GimpImageMapTool *im_tool)
 {
   GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (im_tool);
+  GimpTransferMode      range   = cb_tool->config->range;
 
-  color_balance_init (cb_tool->color_balance);
+  gimp_color_balance_config_reset (cb_tool->config);
+  g_object_set (cb_tool->config,
+                "range", range,
+                NULL);
+
   color_balance_update (cb_tool);
 }
 
 static void
 color_balance_update (GimpColorBalanceTool *cb_tool)
 {
-  GimpTransferMode tm = cb_tool->transfer_mode;
+  GimpColorBalanceConfig *config = cb_tool->config;
 
   gtk_adjustment_set_value (cb_tool->cyan_red_adj,
-                            cb_tool->color_balance->cyan_red[tm]);
+                            config->cyan_red[config->range]      * 100.0);
   gtk_adjustment_set_value (cb_tool->magenta_green_adj,
-                            cb_tool->color_balance->magenta_green[tm]);
+                            config->magenta_green[config->range] * 100.0);
   gtk_adjustment_set_value (cb_tool->yellow_blue_adj,
-                            cb_tool->color_balance->yellow_blue[tm]);
+                            config->yellow_blue[config->range]   * 100.0);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cb_tool->preserve_toggle),
-                                cb_tool->color_balance->preserve_luminosity);
+                                config->preserve_luminosity);
 }
 
 static void
 color_balance_range_callback (GtkWidget            *widget,
                               GimpColorBalanceTool *cb_tool)
 {
-  gimp_radio_button_update (widget, &cb_tool->transfer_mode);
-  color_balance_update (cb_tool);
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+    {
+      GimpTransferMode range;
+
+      gimp_radio_button_update (widget, &range);
+      g_object_set (cb_tool->config,
+                    "range", range,
+                    NULL);
+
+      color_balance_update (cb_tool);
+    }
 }
 
 static void
 color_balance_range_reset_callback (GtkWidget            *widget,
                                     GimpColorBalanceTool *cb_tool)
 {
-  color_balance_range_reset (cb_tool->color_balance,
-                             cb_tool->transfer_mode);
+  gimp_color_balance_config_reset_range (cb_tool->config,
+                                         cb_tool->config->range);
+
   color_balance_update (cb_tool);
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (cb_tool));
@@ -377,11 +386,14 @@ static void
 color_balance_preserve_toggled (GtkWidget            *widget,
                                 GimpColorBalanceTool *cb_tool)
 {
-  gboolean active = GTK_TOGGLE_BUTTON (widget)->active;
+  GimpColorBalanceConfig *config = cb_tool->config;
+  gboolean                active = GTK_TOGGLE_BUTTON (widget)->active;
 
-  if (cb_tool->color_balance->preserve_luminosity != active)
+  if (config->preserve_luminosity != active)
     {
-      cb_tool->color_balance->preserve_luminosity = active;
+      g_object_set (config,
+                    "preserve-luminosity", active,
+                    NULL);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (cb_tool));
     }
@@ -391,11 +403,14 @@ static void
 color_balance_cr_changed (GtkAdjustment        *adjustment,
                           GimpColorBalanceTool *cb_tool)
 {
-  GimpTransferMode tm = cb_tool->transfer_mode;
+  GimpColorBalanceConfig *config = cb_tool->config;
+  gdouble                 value  = adjustment->value / 100.0;
 
-  if (cb_tool->color_balance->cyan_red[tm] != adjustment->value)
+  if (config->cyan_red[config->range] != value)
     {
-      cb_tool->color_balance->cyan_red[tm] = adjustment->value;
+      g_object_set (config,
+                    "cyan-red", value,
+                    NULL);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (cb_tool));
     }
@@ -405,11 +420,14 @@ static void
 color_balance_mg_changed (GtkAdjustment        *adjustment,
                           GimpColorBalanceTool *cb_tool)
 {
-  GimpTransferMode tm = cb_tool->transfer_mode;
+  GimpColorBalanceConfig *config = cb_tool->config;
+  gdouble                 value  = adjustment->value / 100.0;
 
-  if (cb_tool->color_balance->magenta_green[tm] != adjustment->value)
+  if (config->magenta_green[config->range] != value)
     {
-      cb_tool->color_balance->magenta_green[tm] = adjustment->value;
+      g_object_set (config,
+                    "magenta-green", value,
+                    NULL);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (cb_tool));
     }
@@ -419,11 +437,14 @@ static void
 color_balance_yb_changed (GtkAdjustment        *adjustment,
                           GimpColorBalanceTool *cb_tool)
 {
-  GimpTransferMode tm = cb_tool->transfer_mode;
+  GimpColorBalanceConfig *config = cb_tool->config;
+  gdouble                 value  = adjustment->value / 100.0;
 
-  if (cb_tool->color_balance->yellow_blue[tm] != adjustment->value)
+  if (config->yellow_blue[config->range] != value)
     {
-      cb_tool->color_balance->yellow_blue[tm] = adjustment->value;
+      g_object_set (config,
+                    "yellow-blue", value,
+                    NULL);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (cb_tool));
     }

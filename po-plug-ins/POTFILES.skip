@@ -78,6 +78,8 @@ app/core/gimpbrushgenerated-save.c
 app/core/gimpbrushpipe-load.c
 app/core/gimpchannel-select.c
 app/core/gimpchannel.c
+app/core/gimpcurve-load.c
+app/core/gimpcurve-save.c
 app/core/gimpdata.c
 app/core/gimpdatafactory.c
 app/core/gimpdrawable-blend.c
@@ -202,6 +204,9 @@ app/pdb/color_cmds.c
 app/pdb/drawable_cmds.c
 app/pdb/drawable_transform_cmds.c
 app/pdb/edit_cmds.c
+app/pdb/floating_sel_cmds.c
+app/pdb/gimppdb-query.c
+app/pdb/gimppdb-utils.c
 app/pdb/gimppdb.c
 app/pdb/gimpprocedure.c
 app/pdb/image_cmds.c
@@ -213,6 +218,7 @@ app/pdb/transform_tools_cmds.c
 app/pdb/vectors_cmds.c
 app/plug-in/gimpenvirontable.c
 app/plug-in/gimpinterpreterdb.c
+app/plug-in/gimpplugin-message.c
 app/plug-in/gimpplugin.c
 app/plug-in/gimppluginmanager-restore.c
 app/plug-in/gimppluginmanager.c
@@ -439,5 +445,5 @@ plug-ins/script-fu/script-fu-interface.c
 plug-ins/script-fu/script-fu-scripts.c
 plug-ins/script-fu/script-fu-server.c
 plug-ins/script-fu/script-fu.c
-tools/gimp-remote.c
 tools/gimp-remote-x11.c
+tools/gimp-remote.c

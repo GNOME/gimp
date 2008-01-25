@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationlevels.c
+ * gimpoperationcurves.c
  * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -28,8 +28,8 @@
 
 #include "gegl-types.h"
 
-#include "gimplevelsconfig.h"
-#include "gimpoperationlevels.h"
+#include "gimpcurvesconfig.h"
+#include "gimpoperationcurves.h"
 
 
 enum
@@ -39,61 +39,61 @@ enum
 };
 
 
-static void     gimp_operation_levels_finalize     (GObject       *object);
-static void     gimp_operation_levels_get_property (GObject       *object,
+static void     gimp_operation_curves_finalize     (GObject       *object);
+static void     gimp_operation_curves_get_property (GObject       *object,
                                                     guint          property_id,
                                                     GValue        *value,
                                                     GParamSpec    *pspec);
-static void     gimp_operation_levels_set_property (GObject       *object,
+static void     gimp_operation_curves_set_property (GObject       *object,
                                                     guint          property_id,
                                                     const GValue  *value,
                                                     GParamSpec    *pspec);
 
-static gboolean gimp_operation_levels_process      (GeglOperation *operation,
+static gboolean gimp_operation_curves_process      (GeglOperation *operation,
                                                     void          *in_buf,
                                                     void          *out_buf,
                                                     glong          samples);
 
 
-G_DEFINE_TYPE (GimpOperationLevels, gimp_operation_levels,
+G_DEFINE_TYPE (GimpOperationCurves, gimp_operation_curves,
                GEGL_TYPE_OPERATION_POINT_FILTER)
 
-#define parent_class gimp_operation_levels_parent_class
+#define parent_class gimp_operation_curves_parent_class
 
 
 static void
-gimp_operation_levels_class_init (GimpOperationLevelsClass * klass)
+gimp_operation_curves_class_init (GimpOperationCurvesClass * klass)
 {
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
-  object_class->finalize     = gimp_operation_levels_finalize;
-  object_class->set_property = gimp_operation_levels_set_property;
-  object_class->get_property = gimp_operation_levels_get_property;
+  object_class->finalize     = gimp_operation_curves_finalize;
+  object_class->set_property = gimp_operation_curves_set_property;
+  object_class->get_property = gimp_operation_curves_get_property;
 
-  point_class->process       = gimp_operation_levels_process;
+  point_class->process       = gimp_operation_curves_process;
 
-  gegl_operation_class_set_name (operation_class, "gimp-levels");
+  gegl_operation_class_set_name (operation_class, "gimp-curves");
 
   g_object_class_install_property (object_class, PROP_CONFIG,
                                    g_param_spec_object ("config",
                                                         "Config",
                                                         "The config object",
-                                                        GIMP_TYPE_LEVELS_CONFIG,
+                                                        GIMP_TYPE_CURVES_CONFIG,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_operation_levels_init (GimpOperationLevels *self)
+gimp_operation_curves_init (GimpOperationCurves *self)
 {
 }
 
 static void
-gimp_operation_levels_finalize (GObject *object)
+gimp_operation_curves_finalize (GObject *object)
 {
-  GimpOperationLevels *self = GIMP_OPERATION_LEVELS (object);
+  GimpOperationCurves *self = GIMP_OPERATION_CURVES (object);
 
   if (self->config)
     {
@@ -105,12 +105,12 @@ gimp_operation_levels_finalize (GObject *object)
 }
 
 static void
-gimp_operation_levels_get_property (GObject    *object,
+gimp_operation_curves_get_property (GObject    *object,
                                     guint       property_id,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GimpOperationLevels *self = GIMP_OPERATION_LEVELS (object);
+  GimpOperationCurves *self = GIMP_OPERATION_CURVES (object);
 
   switch (property_id)
     {
@@ -125,12 +125,12 @@ gimp_operation_levels_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_levels_set_property (GObject      *object,
+gimp_operation_curves_set_property (GObject      *object,
                                     guint         property_id,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GimpOperationLevels *self = GIMP_OPERATION_LEVELS (object);
+  GimpOperationCurves *self = GIMP_OPERATION_CURVES (object);
 
   switch (property_id)
     {
@@ -147,44 +147,37 @@ gimp_operation_levels_set_property (GObject      *object,
 }
 
 static inline gdouble
-gimp_operation_levels_map (gdouble value,
-                           gdouble gamma,
-                           gdouble low_input,
-                           gdouble high_input,
-                           gdouble low_output,
-                           gdouble high_output)
+gimp_operation_curves_map (gdouble    value,
+                           GimpCurve *curve)
 {
-  /*  determine input intensity  */
-  if (high_input != low_input)
-    value = (value - low_input) / (high_input - low_input);
-  else
-    value = (value - low_input);
-
-  if (gamma != 0.0)
+  if (value < 0.0)
     {
-      if (value >= 0.0)
-        value =  pow ( value, 1.0 / gamma);
-      else
-        value = -pow (-value, 1.0 / gamma);
+      value = curve->curve[0] / 255.0;
     }
+  else if (value >= 1.0)
+    {
+      value = curve->curve[255] / 255.0;
+    }
+  else /* interpolate the curve */
+    {
+      gint    index = floor (value * 255.0);
+      gdouble f     = value * 255.0 - index;
 
-  /*  determine the output intensity  */
-  if (high_output >= low_output)
-    value = value * (high_output - low_output) + low_output;
-  else if (high_output < low_output)
-    value = low_output - value * (low_output - high_output);
+      value = ((1.0 - f) * curve->curve[index    ] +
+                      f  * curve->curve[index + 1] ) / 255.0;
+    }
 
   return value;
 }
 
 static gboolean
-gimp_operation_levels_process (GeglOperation *operation,
+gimp_operation_curves_process (GeglOperation *operation,
                                void          *in_buf,
                                void          *out_buf,
                                glong          samples)
 {
-  GimpOperationLevels *self   = GIMP_OPERATION_LEVELS (operation);
-  GimpLevelsConfig    *config = self->config;
+  GimpOperationCurves *self   = GIMP_OPERATION_CURVES (operation);
+  GimpCurvesConfig    *config = self->config;
   gfloat              *src    = in_buf;
   gfloat              *dest   = out_buf;
   glong                sample;
@@ -200,21 +193,13 @@ gimp_operation_levels_process (GeglOperation *operation,
         {
           gdouble value;
 
-          value = gimp_operation_levels_map (src[channel],
-                                             config->gamma[channel + 1],
-                                             config->low_input[channel + 1],
-                                             config->high_input[channel + 1],
-                                             config->low_output[channel + 1],
-                                             config->high_output[channel + 1]);
+          value = gimp_operation_curves_map (src[channel],
+                                             config->curve[channel + 1]);
 
           /* don't apply the overall curve to the alpha channel */
           if (channel != ALPHA_PIX)
-            value = gimp_operation_levels_map (value,
-                                               config->gamma[0],
-                                               config->low_input[0],
-                                               config->high_input[0],
-                                               config->low_output[0],
-                                               config->high_output[0]);
+            value = gimp_operation_curves_map (value,
+                                               config->curve[0]);
 
           dest[channel] = value;
         }
@@ -225,31 +210,3 @@ gimp_operation_levels_process (GeglOperation *operation,
 
   return TRUE;
 }
-
-
-/*  public functions  */
-
-gdouble
-gimp_operation_levels_map_input (GimpLevelsConfig     *config,
-                                 GimpHistogramChannel  channel,
-                                 gdouble               value)
-{
-  g_return_val_if_fail (GIMP_IS_LEVELS_CONFIG (config), 0.0);
-
-  /*  determine input intensity  */
-  if (config->high_input[channel] != config->low_input[channel])
-    value = ((value - config->low_input[channel]) /
-             (config->high_input[channel] - config->low_input[channel]));
-  else
-    value = (value - config->low_input[channel]);
-
-  value = CLAMP (value, 0.0, 1.0);
-
-  if (config->gamma[channel] != 0.0)
-    {
-      value = pow (value, 1.0 / config->gamma[channel]);
-    }
-
-  return value;
-}
-

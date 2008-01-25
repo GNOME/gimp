@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationposterize.h
+ * gimpoperationcurves.h
  * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,36 +19,38 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_OPERATION_POSTERIZE_H__
-#define __GIMP_OPERATION_POSTERIZE_H__
+#ifndef __GIMP_OPERATION_CURVES_H__
+#define __GIMP_OPERATION_CURVES_H__
 
 
 #include <gegl-plugin.h>
 #include <operation/gegl-operation-point-filter.h>
 
 
-#define GIMP_TYPE_OPERATION_POSTERIZE           (gimp_operation_posterize_get_type ())
-#define GIMP_OPERATION_POSTERIZE(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_POSTERIZE, GimpOperationPosterize))
-#define GIMP_OPERATION_POSTERIZE_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_POSTERIZE, GimpOperationPosterizeClass))
-#define GIMP_OPERATION_POSTERIZE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_POSTERIZE, GimpOperationPosterizeClass))
+#define GIMP_TYPE_OPERATION_CURVES            (gimp_operation_curves_get_type ())
+#define GIMP_OPERATION_CURVES(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_CURVES, GimpOperationCurves))
+#define GIMP_OPERATION_CURVES_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_CURVES, GimpOperationCurvesClass))
+#define GIMP_IS_OPERATION_CURVES(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_CURVES))
+#define GIMP_IS_OPERATION_CURVES_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_CURVES))
+#define GIMP_OPERATION_CURVES_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_CURVES, GimpOperationCurvesClass))
 
 
-typedef struct _GimpOperationPosterizeClass GimpOperationPosterizeClass;
+typedef struct _GimpOperationCurvesClass GimpOperationCurvesClass;
 
-struct _GimpOperationPosterize
+struct _GimpOperationCurves
 {
   GeglOperationPointFilter  parent_instance;
 
-  gint                      levels;
+  GimpCurvesConfig         *config;
 };
 
-struct _GimpOperationPosterizeClass
+struct _GimpOperationCurvesClass
 {
   GeglOperationPointFilterClass  parent_class;
 };
 
 
-GType   gimp_operation_posterize_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_curves_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_POSTERIZE_H__ */
+#endif /* __GIMP_OPERATION_CURVES_H__ */

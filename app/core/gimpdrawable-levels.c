@@ -31,7 +31,6 @@
 #include "gegl/gimplevelsconfig.h"
 
 /* temp */
-#include "config/gimpcoreconfig.h"
 #include "gimp.h"
 #include "gimpimage.h"
 
@@ -87,7 +86,7 @@ gimp_drawable_levels (GimpDrawable   *drawable,
                 "high-output", high_output / 255.0,
                 NULL);
 
-  if (GIMP_ITEM (drawable)->image->gimp->config->use_gegl)
+  if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
     {
       GeglNode *levels;
 
@@ -115,8 +114,8 @@ gimp_drawable_levels (GimpDrawable   *drawable,
       if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         return;
 
-      gimp_levels_config_to_levels_cruft (config, &levels,
-                                          gimp_drawable_is_rgb (drawable));
+      gimp_levels_config_to_cruft (config, &levels,
+                                   gimp_drawable_is_rgb (drawable));
 
       lut = gimp_lut_new ();
       gimp_lut_setup (lut,
@@ -169,7 +168,7 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable,
 
   gimp_histogram_free (histogram);
 
-  if (GIMP_ITEM (drawable)->image->gimp->config->use_gegl)
+  if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
     {
       GeglNode *levels;
 
@@ -192,8 +191,8 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable,
       Levels       levels;
       GimpLut     *lut;
 
-      gimp_levels_config_to_levels_cruft (config, &levels,
-                                          gimp_drawable_is_rgb (drawable));
+      gimp_levels_config_to_cruft (config, &levels,
+                                   gimp_drawable_is_rgb (drawable));
 
       lut  = gimp_lut_new ();
       gimp_lut_setup (lut,

@@ -42,14 +42,18 @@ void
 mru_destruct(MRU_t *mru)
 {
    g_list_foreach(mru->list, (GFunc) g_free, NULL);
+   g_list_free (mru->list);
    g_free(mru);
 }
 
 static void
 mru_remove_link(MRU_t *mru, GList *link)
 {
-   g_free(link->data);
-   mru->list = g_list_remove_link(mru->list, link);
+  if (link)
+    {
+      g_free(link->data);
+      mru->list = g_list_remove_link(mru->list, link);
+    }
 }
 
 static GList*

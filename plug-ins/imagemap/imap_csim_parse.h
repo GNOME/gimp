@@ -104,7 +104,7 @@ typedef union YYSTYPE
 {
   int val;
   double value;
-  char id[1024];		/* Large enough to hold all polygon points! */
+  char id[4096];		/* Large enough to hold all polygon points! */
 }
 /* Line 1489 of yacc.c.  */
 #line 111 "y.tab.h"

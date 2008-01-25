@@ -30,17 +30,12 @@
 
 #include "tools-types.h"
 
-/* temp */
-#include "config/gimpcoreconfig.h"
-
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpimagemap.h"
 #include "core/gimppickable.h"
-#include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
 
@@ -491,8 +486,8 @@ gimp_image_map_tool_reset (GimpImageMapTool *tool)
 static void
 gimp_image_map_tool_create_map (GimpImageMapTool *tool)
 {
-  GimpCoreConfig *config = GIMP_TOOL (tool)->tool_info->gimp->config;
-  gboolean        use_gegl;
+  Gimp     *gimp = GIMP_TOOL (tool)->tool_info->gimp;
+  gboolean  use_gegl;
 
   if (tool->image_map)
     {
@@ -502,7 +497,7 @@ gimp_image_map_tool_create_map (GimpImageMapTool *tool)
 
   g_assert (tool->operation || tool->apply_func);
 
-  use_gegl = (config->use_gegl || ! tool->apply_func);
+  use_gegl = gimp_use_gegl (gimp) || ! tool->apply_func;
 
   tool->image_map = gimp_image_map_new (tool->drawable,
                                         GIMP_TOOL (tool)->tool_info->blurb,

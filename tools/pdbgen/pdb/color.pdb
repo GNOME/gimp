@@ -47,7 +47,7 @@ HELP
 
   if (success)
     {
-  if (gimp->config->use_gegl)
+  if (gimp_use_gegl (gimp))
     {
       GeglNode *node = g_object_new (GEGL_TYPE_NODE,
                                      "operation",  "brightness-contrast",
@@ -245,7 +245,7 @@ HELP
 
   if (success)
     {
-  if (gimp->config->use_gegl)
+  if (gimp_use_gegl (gimp))
     {
       GeglNode *node = g_object_new (GEGL_TYPE_NODE,
                                      "operation", "gimp-posterize",
@@ -727,7 +727,7 @@ HELP
 
   if (success)
     {
-  if (gimp->config->use_gegl)
+  if (gimp_use_gegl (gimp))
     {
       GeglNode *node = g_object_new (GEGL_TYPE_NODE,
                                      "operation", "gimp-colorize",
@@ -966,7 +966,7 @@ HELP
 
   if (success)
     {
-  if (gimp->config->use_gegl)
+  if (gimp_use_gegl (gimp))
     {
       GeglNode *node = g_object_new (GEGL_TYPE_NODE,
                                      "operation", "gimp-threshold",
@@ -1021,7 +1021,6 @@ CODE
               "base/lut-funcs.h"
               "base/pixel-region.h"
               "base/pixel-processor.h"
-              "config/gimpcoreconfig.h"
               "core/gimp.h"
               "core/gimpdrawable.h"
               "core/gimpdrawable-operation.h"

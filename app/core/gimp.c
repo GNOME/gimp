@@ -1079,4 +1079,3 @@ gimp_message_valist (Gimp                *gimp,
 
   g_free (message);
 }
-

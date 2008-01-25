@@ -51,40 +51,6 @@ levels_init (Levels *levels)
     }
 }
 
-void
-levels_calculate_transfers (Levels *levels)
-{
-  gdouble inten;
-  gint    i, j;
-
-  g_return_if_fail (levels != NULL);
-
-  /*  Recalculate the levels arrays  */
-  for (j = 0; j < 5; j++)
-    {
-      for (i = 0; i < 256; i++)
-        {
-          /*  determine input intensity  */
-          if (levels->high_input[j] != levels->low_input[j])
-            {
-              inten = ((gdouble) (i - levels->low_input[j]) /
-                       (double) (levels->high_input[j] - levels->low_input[j]));
-            }
-          else
-            {
-              inten = (gdouble) (i - levels->low_input[j]);
-            }
-
-          inten = CLAMP (inten, 0.0, 1.0);
-
-          if (levels->gamma[j] != 0.0)
-            inten = pow (inten, (1.0 / levels->gamma[j]));
-
-          levels->input[j][i] = (guchar) (inten * 255.0 + 0.5);
-        }
-    }
-}
-
 gfloat
 levels_lut_func (Levels *levels,
                  gint    n_channels,

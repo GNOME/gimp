@@ -2881,6 +2881,8 @@ gimp_rectangle_tool_set_other_side_coord (GimpRectangleTool *rect_tool,
     *other_y = other_side_y;
 
   gimp_rectangle_tool_check_function (rect_tool);
+
+  gimp_rectangle_tool_update_int_rect (rect_tool);
 }
 
 /**

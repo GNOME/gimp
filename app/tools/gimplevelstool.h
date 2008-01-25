@@ -40,12 +40,10 @@ struct _GimpLevelsTool
 
   GimpLevelsConfig     *config;
   GimpLut              *lut;
-  Levels               *levels;
 
   /* dialog */
   gboolean              color;
   gboolean              alpha;
-  GimpHistogramChannel  channel;
 
   GimpHistogram        *hist;
 

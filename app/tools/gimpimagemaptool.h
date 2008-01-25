@@ -19,12 +19,6 @@
 #ifndef  __GIMP_IMAGE_MAP_TOOL_H__
 #define  __GIMP_IMAGE_MAP_TOOL_H__
 
-#ifndef __GEGL_H__
-#ifdef __GNUC__
-#warning FIXME: dont include gegl.h here
-#endif
-#include <gegl.h>
-#endif /* __GEGL_H__ */
 
 #include "gimpcolortool.h"
 

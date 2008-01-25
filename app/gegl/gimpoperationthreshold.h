@@ -23,13 +23,16 @@
 #define __GIMP_OPERATION_THRESHOLD_H__
 
 
+#include <gegl-plugin.h>
 #include <operation/gegl-operation-point-filter.h>
 
 
-#define GIMP_TYPE_OPERATION_THRESHOLD           (gimp_operation_threshold_get_type ())
-#define GIMP_OPERATION_THRESHOLD(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_THRESHOLD, GimpOperationThreshold))
-#define GIMP_OPERATION_THRESHOLD_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_THRESHOLD, GimpOperationThresholdClass))
-#define GIMP_OPERATION_THRESHOLD_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_THRESHOLD, GimpOperationThresholdClass))
+#define GIMP_TYPE_OPERATION_THRESHOLD            (gimp_operation_threshold_get_type ())
+#define GIMP_OPERATION_THRESHOLD(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_THRESHOLD, GimpOperationThreshold))
+#define GIMP_OPERATION_THRESHOLD_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_THRESHOLD, GimpOperationThresholdClass))
+#define GIMP_IS_OPERATION_THRESHOLD(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_THRESHOLD))
+#define GIMP_IS_OPERATION_THRESHOLD_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_THRESHOLD))
+#define GIMP_OPERATION_THRESHOLD_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_THRESHOLD, GimpOperationThresholdClass))
 
 
 typedef struct _GimpOperationThresholdClass GimpOperationThresholdClass;
@@ -38,8 +41,7 @@ struct _GimpOperationThreshold
 {
   GeglOperationPointFilter  parent_instance;
 
-  gdouble                   low;
-  gdouble                   high;
+  GimpThresholdConfig      *config;
 };
 
 struct _GimpOperationThresholdClass
