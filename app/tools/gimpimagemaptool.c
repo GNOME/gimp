@@ -31,13 +31,11 @@
 #include "tools-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpimagemap.h"
 #include "core/gimppickable.h"
-#include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
 

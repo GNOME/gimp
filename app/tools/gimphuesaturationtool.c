@@ -21,7 +21,6 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -33,7 +32,6 @@
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpimagemap.h"
 
 #include "widgets/gimphelp-ids.h"
 

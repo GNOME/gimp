@@ -36,7 +36,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpimage.h"
-#include "core/gimpimagemap.h"
 
 #include "widgets/gimpcolorbar.h"
 #include "widgets/gimphandlebar.h"

@@ -31,7 +31,6 @@
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpimagemap.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -126,13 +125,13 @@ gimp_colorize_tool_finalize (GObject *object)
 {
   GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (object);
 
-  g_slice_free (Colorize, col_tool->colorize);
-
   if (col_tool->config)
     {
       g_object_unref (col_tool->config);
       col_tool->config = NULL;
     }
+
+  g_slice_free (Colorize, col_tool->colorize);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

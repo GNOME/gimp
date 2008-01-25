@@ -1,5 +1,18 @@
 2008-01-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c: remove includes which are no
+	longer needed.
+
+2008-01-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimpcurvesconfig.[ch]
 	* app/gegl/gimplevelsconfig.[ch]: add load_cruft() and
 	save_cruft() functions which load/save the old (current) curves
