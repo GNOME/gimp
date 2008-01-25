@@ -504,7 +504,8 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
               row[(j * cellsize + k) * 3 + b] = image->colormap[col * 3 + b];
         }
 
-      memset (row + j * cellsize * 3, 255, 3 * (width - j * cellsize));
+      if (j * cellsize > width)
+        memset (row + j * cellsize * 3, 255, 3 * (width - j * cellsize));
 
       for (k = 0; k < cellsize; k++)
         {
