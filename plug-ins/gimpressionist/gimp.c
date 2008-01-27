@@ -147,7 +147,7 @@ run (const gchar      *name,
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
           if (!create_gimpressionist ())
-              return;
+            return;
         }
       break;
     default:
@@ -228,6 +228,8 @@ grabarea (void)
   int           rowstride;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+
+  gimp_tile_cache_ntiles ((x2 - x1) / gimp_tile_width () + 1);
 
   bpp = gimp_drawable_bpp (drawable->drawable_id);
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
@@ -340,6 +342,8 @@ gimpressionist_main (void)
   int           rowstride;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+
+  gimp_tile_cache_ntiles ((x2 - x1) / gimp_tile_width () + 1);
 
   bpp = gimp_drawable_bpp (drawable->drawable_id);
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);

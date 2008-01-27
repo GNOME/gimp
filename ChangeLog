@@ -1,3 +1,8 @@
+2008-01-27  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gimpressionist/gimp.c: use a tile cache for better
+	performance. Addresses bug #512126.
+
 2008-01-24  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
