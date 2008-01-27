@@ -20,6 +20,14 @@ Changes in GIMP 2.4.4
 - reduced rounding errors in Convolution Matrix plug-in (bug #508114)
 - fixed potential crash on missing CMYK color profile
 - fixed crash in Bumpmap plug-in when called from some scripts (bug #509608)
+- Equalize should not equalise the alpha channel (bug #510210)
+- increased the number of points the ImageMap plug-in can handle (bug #511072)
+- adjusted the priority of the projection renderer (bug #511214)
+- smooth the brush mask to get a simpler cursor boundary (bug #304798)
+- show the selection even if the image window is invisible (bug #505758)
+- allow to commit a pending rectangular selection using Enter (bug #511599)
+- fixed bug in image dirty state logic (bug #509822)
+- improved GIMPressionist startup time (bug #512126)
 - merged some other minor fixes from trunk
 - translation updates (de, it, lt, ru, sv, uk)
 
