@@ -22,6 +22,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -154,7 +155,7 @@ gimp_posterize_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  gimp_posterize_config_reset (posterize_tool->config);
+  gimp_config_reset (GIMP_CONFIG (posterize_tool->config));
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
@@ -235,7 +236,7 @@ gimp_posterize_tool_reset (GimpImageMapTool *image_map_tool)
 {
   GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (image_map_tool);
 
-  gimp_posterize_config_reset (posterize_tool->config);
+  gimp_config_reset (GIMP_CONFIG (posterize_tool->config));
 
   gtk_adjustment_set_value (posterize_tool->levels_data,
                             posterize_tool->config->levels);

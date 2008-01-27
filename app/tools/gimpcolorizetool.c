@@ -21,6 +21,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -154,7 +155,7 @@ gimp_colorize_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  gimp_colorize_config_reset (col_tool->config);
+  gimp_config_reset (GIMP_CONFIG (col_tool->config));
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
@@ -271,7 +272,7 @@ gimp_colorize_tool_reset (GimpImageMapTool *image_map_tool)
 {
   GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (image_map_tool);
 
-  gimp_colorize_config_reset (col_tool->config);
+  gimp_config_reset (GIMP_CONFIG (col_tool->config));
 
   colorize_update_sliders (col_tool);
 }

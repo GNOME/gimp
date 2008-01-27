@@ -21,6 +21,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -161,10 +162,10 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
+  gimp_config_reset (GIMP_CONFIG (t_tool->config));
+
   if (! t_tool->hist)
     t_tool->hist = gimp_histogram_new ();
-
-  gimp_threshold_config_reset (t_tool->config);
 
   t_tool->threshold->color = gimp_drawable_is_rgb (drawable);
 
@@ -277,7 +278,7 @@ gimp_threshold_tool_reset (GimpImageMapTool *image_map_tool)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
 
-  gimp_threshold_config_reset (t_tool->config);
+  gimp_config_reset (GIMP_CONFIG (t_tool->config));
 
   gimp_histogram_view_set_range (t_tool->histogram_box->view,
                                  t_tool->config->low  * 255.999,

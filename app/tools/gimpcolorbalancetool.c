@@ -21,6 +21,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -160,7 +161,7 @@ gimp_color_balance_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  gimp_color_balance_config_reset (cb_tool->config);
+  gimp_config_reset (GIMP_CONFIG (cb_tool->config));
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
@@ -329,7 +330,7 @@ gimp_color_balance_tool_reset (GimpImageMapTool *im_tool)
   GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (im_tool);
   GimpTransferMode      range   = cb_tool->config->range;
 
-  gimp_color_balance_config_reset (cb_tool->config);
+  gimp_config_reset (GIMP_CONFIG (cb_tool->config));
   g_object_set (cb_tool->config,
                 "range", range,
                 NULL);
@@ -374,8 +375,7 @@ static void
 color_balance_range_reset_callback (GtkWidget            *widget,
                                     GimpColorBalanceTool *cb_tool)
 {
-  gimp_color_balance_config_reset_range (cb_tool->config,
-                                         cb_tool->config->range);
+  gimp_color_balance_config_reset_range (cb_tool->config);
 
   color_balance_update (cb_tool);
 

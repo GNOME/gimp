@@ -22,6 +22,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -210,7 +211,6 @@ gimp_curves_tool_initialize (GimpTool     *tool,
 {
   GimpCurvesTool *c_tool   = GIMP_CURVES_TOOL (tool);
   GimpDrawable   *drawable = gimp_image_get_active_drawable (display->image);
-  gint            i;
 
   if (! drawable)
     return FALSE;
@@ -222,8 +222,7 @@ gimp_curves_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  for (i = 0; i < G_N_ELEMENTS (c_tool->config->curve); i++)
-    gimp_curve_reset (c_tool->config->curve[i], TRUE);
+  gimp_config_reset (GIMP_CONFIG (c_tool->config));
 
   if (! c_tool->hist)
     c_tool->hist = gimp_histogram_new ();
@@ -605,13 +604,15 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 static void
 gimp_curves_tool_reset (GimpImageMapTool *image_map_tool)
 {
-  GimpCurvesTool       *tool    = GIMP_CURVES_TOOL (image_map_tool);
-  GimpHistogramChannel  channel = tool->config->channel;
+  GimpCurvesTool       *tool = GIMP_CURVES_TOOL (image_map_tool);
+  GimpHistogramChannel  channel;
 
-  gimp_curves_config_reset (tool->config);
-  g_object_set (tool->config,
-                "channel", channel,
-                NULL);
+  for (channel = GIMP_HISTOGRAM_VALUE;
+       channel <= GIMP_HISTOGRAM_ALPHA;
+       channel++)
+    {
+      gimp_curve_reset (tool->config->curve[channel], FALSE);
+    }
 }
 
 static gboolean
@@ -714,7 +715,7 @@ static void
 curves_channel_reset_callback (GtkWidget      *widget,
                                GimpCurvesTool *tool)
 {
-  gimp_curves_config_reset_channel (tool->config, tool->config->channel);
+  gimp_curve_reset (tool->config->curve[tool->config->channel], FALSE);
 }
 
 static gboolean

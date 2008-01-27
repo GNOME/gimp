@@ -23,6 +23,8 @@
 
 #include <gegl.h>
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "gegl-types.h"
 
 /*  temp cruft  */
@@ -42,6 +44,8 @@ enum
 };
 
 
+static void   gimp_hue_saturation_config_iface_init   (GimpConfigInterface *iface);
+
 static void   gimp_hue_saturation_config_get_property (GObject      *object,
                                                        guint         property_id,
                                                        GValue       *value,
@@ -51,9 +55,13 @@ static void   gimp_hue_saturation_config_set_property (GObject      *object,
                                                        const GValue *value,
                                                        GParamSpec   *pspec);
 
+static void   gimp_hue_saturation_config_reset        (GimpConfig   *config);
 
-G_DEFINE_TYPE (GimpHueSaturationConfig, gimp_hue_saturation_config,
-               G_TYPE_OBJECT)
+
+G_DEFINE_TYPE_WITH_CODE (GimpHueSaturationConfig, gimp_hue_saturation_config,
+                         G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_hue_saturation_config_iface_init))
 
 #define parent_class gimp_hue_saturation_config_parent_class
 
@@ -109,9 +117,15 @@ gimp_hue_saturation_config_class_init (GimpHueSaturationConfigClass * klass)
 }
 
 static void
+gimp_hue_saturation_config_iface_init (GimpConfigInterface *iface)
+{
+  iface->reset = gimp_hue_saturation_config_reset;
+}
+
+static void
 gimp_hue_saturation_config_init (GimpHueSaturationConfig *self)
 {
-  gimp_hue_saturation_config_reset (self);
+  gimp_config_reset (GIMP_CONFIG (self));
 }
 
 static void
@@ -186,35 +200,41 @@ gimp_hue_saturation_config_set_property (GObject      *object,
     }
 }
 
+static void
+gimp_hue_saturation_config_reset (GimpConfig *config)
+{
+  GimpHueSaturationConfig *hs_config = GIMP_HUE_SATURATION_CONFIG (config);
+  GimpHueRange             range;
+
+  g_object_freeze_notify (G_OBJECT (config));
+
+  for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)
+    {
+      hs_config->range = range;
+      gimp_hue_saturation_config_reset_range (hs_config);
+    }
+
+  gimp_config_reset_property (G_OBJECT (config), "range");
+  gimp_config_reset_property (G_OBJECT (config), "overlap");
+
+  g_object_thaw_notify (G_OBJECT (config));
+}
+
 
 /*  public functions  */
 
 void
-gimp_hue_saturation_config_reset (GimpHueSaturationConfig *config)
-{
-  GimpHueRange range;
-
-  g_return_if_fail (GIMP_IS_HUE_SATURATION_CONFIG (config));
-
-  config->range = GIMP_ALL_HUES;
-
-  for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)
-    {
-      gimp_hue_saturation_config_reset_range (config, range);
-    }
-
-  config->overlap = 0.0;
-}
-
-void
-gimp_hue_saturation_config_reset_range (GimpHueSaturationConfig *config,
-                                        GimpHueRange             range)
+gimp_hue_saturation_config_reset_range (GimpHueSaturationConfig *config)
 {
   g_return_if_fail (GIMP_IS_HUE_SATURATION_CONFIG (config));
 
-  config->hue[range]        = 0.0;
-  config->saturation[range] = 0.0;
-  config->lightness[range]  = 0.0;
+  g_object_freeze_notify (G_OBJECT (config));
+
+  gimp_config_reset_property (G_OBJECT (config), "hue");
+  gimp_config_reset_property (G_OBJECT (config), "saturation");
+  gimp_config_reset_property (G_OBJECT (config), "lightness");
+
+  g_object_thaw_notify (G_OBJECT (config));
 }
 
 

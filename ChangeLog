@@ -1,3 +1,25 @@
+2008-01-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/gimpcolorbalanceconfig.[ch]
+	* app/gegl/gimpcolorizeconfig.[ch]
+	* app/gegl/gimpcurvesconfig.[ch]
+	* app/gegl/gimphuesaturationconfig.[ch]
+	* app/gegl/gimplevelsconfig.[ch]
+	* app/gegl/gimpposterizeconfig.[ch]
+	* app/gegl/gimpthresholdconfig.[ch]: implement the GimpConfig
+	interface and remove public reset() functions except special ones
+	which reset only parts of the objects. Add lots of property
+	notifications.
+
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c: use gimp_config_reset(), misc.
+	related changes and cleanups.
+
 2008-01-27  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/imagemap/imap_cern.[ly]

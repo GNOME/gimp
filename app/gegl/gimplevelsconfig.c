@@ -55,6 +55,8 @@ enum
 };
 
 
+static void   gimp_levels_config_iface_init   (GimpConfigInterface *iface);
+
 static void   gimp_levels_config_get_property (GObject       *object,
                                                guint          property_id,
                                                GValue        *value,
@@ -64,8 +66,13 @@ static void   gimp_levels_config_set_property (GObject       *object,
                                                const GValue  *value,
                                                GParamSpec    *pspec);
 
+static void   gimp_levels_config_reset        (GimpConfig    *config);
 
-G_DEFINE_TYPE (GimpLevelsConfig, gimp_levels_config, G_TYPE_OBJECT)
+
+G_DEFINE_TYPE_WITH_CODE (GimpLevelsConfig, gimp_levels_config,
+                         G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_levels_config_iface_init))
 
 #define parent_class gimp_levels_config_parent_class
 
@@ -129,9 +136,15 @@ gimp_levels_config_class_init (GimpLevelsConfigClass * klass)
 }
 
 static void
+gimp_levels_config_iface_init (GimpConfigInterface *iface)
+{
+  iface->reset = gimp_levels_config_reset;
+}
+
+static void
 gimp_levels_config_init (GimpLevelsConfig *self)
 {
-  gimp_levels_config_reset (self);
+  gimp_config_reset (GIMP_CONFIG (self));
 }
 
 static void
@@ -214,64 +227,80 @@ gimp_levels_config_set_property (GObject      *object,
     }
 }
 
-
-/*  public functions  */
-
-void
-gimp_levels_config_reset (GimpLevelsConfig *config)
+static void
+gimp_levels_config_reset (GimpConfig *config)
 {
-  GimpHistogramChannel channel;
+  GimpLevelsConfig     *l_config = GIMP_LEVELS_CONFIG (config);
+  GimpHistogramChannel  channel;
 
-  g_return_if_fail (GIMP_IS_LEVELS_CONFIG (config));
-
-  config->channel = GIMP_HISTOGRAM_VALUE;
+  g_object_freeze_notify (G_OBJECT (config));
 
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
     {
-      gimp_levels_config_reset_channel (config, channel);
+      l_config->channel = channel;
+      gimp_levels_config_reset_channel (l_config);
     }
+
+  gimp_config_reset_property (G_OBJECT (config), "channel");
+
+  g_object_thaw_notify (G_OBJECT (config));
 }
 
+
+/*  public functions  */
+
 void
-gimp_levels_config_reset_channel (GimpLevelsConfig     *config,
-                                  GimpHistogramChannel  channel)
+gimp_levels_config_reset_channel (GimpLevelsConfig *config)
 {
   g_return_if_fail (GIMP_IS_LEVELS_CONFIG (config));
 
-  config->gamma[channel]       = 1.0;
-  config->low_input[channel]   = 0.0;
-  config->high_input[channel]  = 1.0;
-  config->low_output[channel]  = 0.0;
-  config->high_output[channel] = 1.0;
+  g_object_freeze_notify (G_OBJECT (config));
+
+  gimp_config_reset_property (G_OBJECT (config), "gamma");
+  gimp_config_reset_property (G_OBJECT (config), "low-input");
+  gimp_config_reset_property (G_OBJECT (config), "high-input");
+  gimp_config_reset_property (G_OBJECT (config), "low-output");
+  gimp_config_reset_property (G_OBJECT (config), "high-output");
+
+  g_object_thaw_notify (G_OBJECT (config));
 }
 
 void
-gimp_levels_config_stretch (GimpLevelsConfig     *config,
-                            GimpHistogram        *histogram,
-                            gboolean              is_color)
+gimp_levels_config_stretch (GimpLevelsConfig *config,
+                            GimpHistogram    *histogram,
+                            gboolean          is_color)
 {
   g_return_if_fail (GIMP_IS_LEVELS_CONFIG (config));
   g_return_if_fail (histogram != NULL);
+
+  g_object_freeze_notify (G_OBJECT (config));
 
   if (is_color)
     {
       GimpHistogramChannel channel;
 
-     /*  Set the overall value to defaults  */
-      gimp_levels_config_reset_channel (config, GIMP_HISTOGRAM_VALUE);
+      /*  Set the overall value to defaults  */
+      channel = config->channel;
+      config->channel = GIMP_HISTOGRAM_VALUE;
+      gimp_levels_config_reset_channel (config);
+      config->channel = channel;
 
       for (channel = GIMP_HISTOGRAM_RED;
            channel <= GIMP_HISTOGRAM_BLUE;
            channel++)
-        gimp_levels_config_stretch_channel (config, histogram, channel);
+        {
+          gimp_levels_config_stretch_channel (config, histogram, channel);
+        }
     }
   else
     {
       gimp_levels_config_stretch_channel (config, histogram,
                                           GIMP_HISTOGRAM_VALUE);
     }
+
+  g_object_thaw_notify (G_OBJECT (config));
 }
 
 void
@@ -284,6 +313,8 @@ gimp_levels_config_stretch_channel (GimpLevelsConfig     *config,
 
   g_return_if_fail (GIMP_IS_LEVELS_CONFIG (config));
   g_return_if_fail (histogram != NULL);
+
+  g_object_freeze_notify (G_OBJECT (config));
 
   config->gamma[channel]       = 1.0;
   config->low_output[channel]  = 0.0;
@@ -340,6 +371,14 @@ gimp_levels_config_stretch_channel (GimpLevelsConfig     *config,
             }
         }
     }
+
+  g_object_notify (G_OBJECT (config), "gamma");
+  g_object_notify (G_OBJECT (config), "low-input");
+  g_object_notify (G_OBJECT (config), "high-input");
+  g_object_notify (G_OBJECT (config), "low-output");
+  g_object_notify (G_OBJECT (config), "high-output");
+
+  g_object_thaw_notify (G_OBJECT (config));
 }
 
 static gdouble
@@ -379,13 +418,22 @@ gimp_levels_config_adjust_by_colors (GimpLevelsConfig     *config,
 {
   g_return_if_fail (GIMP_IS_LEVELS_CONFIG (config));
 
+  g_object_freeze_notify (G_OBJECT (config));
+
   if (black)
-    config->low_input[channel] = gimp_levels_config_input_from_color (channel,
-                                                                      black);
+    {
+      config->low_input[channel] = gimp_levels_config_input_from_color (channel,
+                                                                        black);
+      g_object_notify (G_OBJECT (config), "low-input");
+    }
+
 
   if (white)
-    config->high_input[channel] = gimp_levels_config_input_from_color (channel,
-                                                                       white);
+    {
+      config->high_input[channel] = gimp_levels_config_input_from_color (channel,
+                                                                         white);
+      g_object_notify (G_OBJECT (config), "high-input");
+    }
 
   if (gray)
     {
@@ -417,7 +465,10 @@ gimp_levels_config_adjust_by_colors (GimpLevelsConfig     *config,
 
       /* Map selected color to corresponding lightness */
       config->gamma[channel] = log (inten) / log (out_light);
+      g_object_notify (G_OBJECT (config), "gamma");
     }
+
+  g_object_thaw_notify (G_OBJECT (config));
 }
 
 gboolean
@@ -468,6 +519,8 @@ gimp_levels_config_load_cruft (GimpLevelsConfig  *config,
         goto error;
     }
 
+  g_object_freeze_notify (G_OBJECT (config));
+
   for (i = 0; i < 5; i++)
     {
       config->low_input[i]   = low_input[i]   / 255.0;
@@ -476,6 +529,14 @@ gimp_levels_config_load_cruft (GimpLevelsConfig  *config,
       config->high_output[i] = high_output[i] / 255.0;
       config->gamma[i]       = gamma[i];
     }
+
+  g_object_notify (G_OBJECT (config), "gamma");
+  g_object_notify (G_OBJECT (config), "low-input");
+  g_object_notify (G_OBJECT (config), "high-input");
+  g_object_notify (G_OBJECT (config), "low-output");
+  g_object_notify (G_OBJECT (config), "high-output");
+
+  g_object_thaw_notify (G_OBJECT (config));
 
   return TRUE;
 

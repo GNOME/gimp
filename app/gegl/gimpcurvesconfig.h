@@ -55,21 +55,19 @@ struct _GimpCurvesConfigClass
 
 GType      gimp_curves_config_get_type      (void) G_GNUC_CONST;
 
-void       gimp_curves_config_reset         (GimpCurvesConfig      *config);
-void       gimp_curves_config_reset_channel (GimpCurvesConfig      *config,
-                                             GimpHistogramChannel   channel);
+void       gimp_curves_config_reset_channel (GimpCurvesConfig  *config);
 
-gboolean   gimp_curves_config_load_cruft    (GimpCurvesConfig      *config,
-                                             gpointer               fp,
-                                             GError               **error);
-gboolean   gimp_curves_config_save_cruft    (GimpCurvesConfig      *config,
-                                             gpointer               fp);
+gboolean   gimp_curves_config_load_cruft    (GimpCurvesConfig  *config,
+                                             gpointer           fp,
+                                             GError           **error);
+gboolean   gimp_curves_config_save_cruft    (GimpCurvesConfig  *config,
+                                             gpointer           fp);
 
 
 /*  temp cruft  */
-void       gimp_curves_config_to_cruft      (GimpCurvesConfig      *config,
-                                             Curves                *cruft,
-                                             gboolean               is_color);
+void       gimp_curves_config_to_cruft      (GimpCurvesConfig  *config,
+                                             Curves            *cruft,
+                                             gboolean           is_color);
 
 
 #endif /* __GIMP_CURVES_CONFIG_H__ */

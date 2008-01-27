@@ -48,7 +48,5 @@ struct _GimpPosterizeConfigClass
 
 GType   gimp_posterize_config_get_type (void) G_GNUC_CONST;
 
-void    gimp_posterize_config_reset    (GimpPosterizeConfig *config);
-
 
 #endif /* __GIMP_POSTERIZE_CONFIG_H__ */

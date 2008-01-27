@@ -25,6 +25,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "gegl-types.h"
 
@@ -45,6 +46,8 @@ enum
 };
 
 
+static void   gimp_color_balance_config_iface_init   (GimpConfigInterface *iface);
+
 static void   gimp_color_balance_config_get_property (GObject      *object,
                                                       guint         property_id,
                                                       GValue       *value,
@@ -54,9 +57,13 @@ static void   gimp_color_balance_config_set_property (GObject      *object,
                                                       const GValue *value,
                                                       GParamSpec   *pspec);
 
+static void   gimp_color_balance_config_reset        (GimpConfig   *config);
 
-G_DEFINE_TYPE (GimpColorBalanceConfig, gimp_color_balance_config,
-               G_TYPE_OBJECT)
+
+G_DEFINE_TYPE_WITH_CODE (GimpColorBalanceConfig, gimp_color_balance_config,
+                         G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_color_balance_config_iface_init))
 
 #define parent_class gimp_color_balance_config_parent_class
 
@@ -98,7 +105,7 @@ gimp_color_balance_config_class_init (GimpColorBalanceConfigClass * klass)
                                    g_param_spec_double ("yellow-blue",
                                                         "Yellow-Blue",
                                                         "Yellow-Blue",
-                                                        -1.0, 1.0, 1.0,
+                                                        -1.0, 1.0, 0.0,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
@@ -112,9 +119,15 @@ gimp_color_balance_config_class_init (GimpColorBalanceConfigClass * klass)
 }
 
 static void
+gimp_color_balance_config_iface_init (GimpConfigInterface *iface)
+{
+  iface->reset = gimp_color_balance_config_reset;
+}
+
+static void
 gimp_color_balance_config_init (GimpColorBalanceConfig *self)
 {
-  gimp_color_balance_config_reset (self);
+  gimp_config_reset (GIMP_CONFIG (self));
 }
 
 static void
@@ -189,35 +202,41 @@ gimp_color_balance_config_set_property (GObject      *object,
     }
 }
 
+static void
+gimp_color_balance_config_reset (GimpConfig *config)
+{
+  GimpColorBalanceConfig *cb_config = GIMP_COLOR_BALANCE_CONFIG (config);
+  GimpTransferMode        range;
+
+  g_object_freeze_notify (G_OBJECT (config));
+
+  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
+    {
+      cb_config->range = range;
+      gimp_color_balance_config_reset_range (cb_config);
+    }
+
+  gimp_config_reset_property (G_OBJECT (config), "range");
+  gimp_config_reset_property (G_OBJECT (config), "preserve-luminosity");
+
+  g_object_thaw_notify (G_OBJECT (config));
+}
+
 
 /*  public functions  */
 
 void
-gimp_color_balance_config_reset (GimpColorBalanceConfig *config)
-{
-  GimpTransferMode range;
-
-  g_return_if_fail (GIMP_IS_COLOR_BALANCE_CONFIG (config));
-
-  config->range = GIMP_MIDTONES;
-
-  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
-    {
-      gimp_color_balance_config_reset_range (config, range);
-    }
-
-  config->preserve_luminosity = TRUE;
-}
-
-void
-gimp_color_balance_config_reset_range (GimpColorBalanceConfig *config,
-                                       GimpTransferMode        range)
+gimp_color_balance_config_reset_range (GimpColorBalanceConfig *config)
 {
   g_return_if_fail (GIMP_IS_COLOR_BALANCE_CONFIG (config));
 
-  config->cyan_red[range]      = 0.0;
-  config->magenta_green[range] = 0.0;
-  config->yellow_blue[range]   = 0.0;
+  g_object_freeze_notify (G_OBJECT (config));
+
+  gimp_config_reset_property (G_OBJECT (config), "cyan-red");
+  gimp_config_reset_property (G_OBJECT (config), "magenta-green");
+  gimp_config_reset_property (G_OBJECT (config), "yellow-blue");
+
+  g_object_thaw_notify (G_OBJECT (config));
 }
 
 

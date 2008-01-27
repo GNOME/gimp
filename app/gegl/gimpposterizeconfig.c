@@ -23,6 +23,8 @@
 
 #include <gegl.h>
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "gegl-types.h"
 
 #include "gimpposterizeconfig.h"
@@ -45,8 +47,9 @@ static void   gimp_posterize_config_set_property (GObject      *object,
                                                   GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpPosterizeConfig, gimp_posterize_config,
-               G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_CODE (GimpPosterizeConfig, gimp_posterize_config,
+                         G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_posterize_config_parent_class
 
@@ -111,15 +114,4 @@ gimp_posterize_config_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-
-/*  public functions  */
-
-void
-gimp_posterize_config_reset (GimpPosterizeConfig *config)
-{
-  g_return_if_fail (GIMP_IS_POSTERIZE_CONFIG (config));
-
-  config->levels = 3;
 }

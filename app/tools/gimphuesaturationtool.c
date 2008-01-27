@@ -21,6 +21,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -168,7 +169,7 @@ gimp_hue_saturation_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  gimp_hue_saturation_config_reset (hs_tool->config);
+  gimp_config_reset (GIMP_CONFIG (hs_tool->config));
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
@@ -448,7 +449,7 @@ gimp_hue_saturation_tool_reset (GimpImageMapTool *image_map_tool)
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
   GimpHueRange           range   = hs_tool->config->range;
 
-  gimp_hue_saturation_config_reset (hs_tool->config);
+  gimp_config_reset (GIMP_CONFIG (hs_tool->config));
   g_object_set (hs_tool->config,
                 "range", range,
                 NULL);
@@ -520,8 +521,7 @@ static void
 hue_saturation_range_reset_callback (GtkWidget             *widget,
                                      GimpHueSaturationTool *hs_tool)
 {
-  gimp_hue_saturation_config_reset_range (hs_tool->config,
-                                          hs_tool->config->range);
+  gimp_hue_saturation_config_reset_range (hs_tool->config);
 
   hue_saturation_update_sliders (hs_tool);
   hue_saturation_update_color_areas (hs_tool);

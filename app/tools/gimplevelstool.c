@@ -22,6 +22,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -219,10 +220,10 @@ gimp_levels_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
+  gimp_config_reset (GIMP_CONFIG (l_tool->config));
+
   if (! l_tool->hist)
     l_tool->hist = gimp_histogram_new ();
-
-  gimp_levels_config_reset (l_tool->config);
 
   l_tool->color = gimp_drawable_is_rgb (drawable);
   l_tool->alpha = gimp_drawable_has_alpha (drawable);
@@ -681,7 +682,7 @@ gimp_levels_tool_reset (GimpImageMapTool *image_map_tool)
   GimpLevelsTool       *tool    = GIMP_LEVELS_TOOL (image_map_tool);
   GimpHistogramChannel  channel = tool->config->channel;
 
-  gimp_levels_config_reset (tool->config);
+  gimp_config_reset (GIMP_CONFIG (tool->config));
   g_object_set (tool->config,
                 "channel", channel,
                 NULL);
@@ -828,7 +829,7 @@ static void
 levels_channel_reset_callback (GtkWidget      *widget,
                                GimpLevelsTool *tool)
 {
-  gimp_levels_config_reset_channel (tool->config, tool->config->channel);
+  gimp_levels_config_reset_channel (tool->config);
   levels_update_adjustments (tool);
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
