@@ -1,7 +1,13 @@
 2008-01-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gimpressionist/gimp.c (gimpressionist_main): transfer
+	the pixels to the core on a tile-by-tile basis.
+
+2008-01-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gimpressionist/gimp.c (grabarea): changed code that
 	retrieves the source drawable to iterate over the data tile-by-tile.
+	Improves GIMPressionist startup time (bug #512126).
 
 2008-01-26  Manish Singh  <yosh@gimp.org>
 

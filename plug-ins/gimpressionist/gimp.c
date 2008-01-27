@@ -45,9 +45,7 @@ infile_copy_to_ppm (ppm_t * p)
 {
   if (!PPM_IS_INITED (&infile))
     grabarea ();
-#if 0
-    updatepreview (NULL, (void *)2); /* Force grabarea () */
-#endif
+
   ppm_copy (&infile, p);
 }
 
@@ -217,25 +215,19 @@ void
 grabarea (void)
 {
   GimpPixelRgn  src_rgn;
-  gint          alpha, bpp;
-  gboolean      has_alpha;
-  gint          x, y;
   ppm_t        *p;
   gint          x1, y1, x2, y2;
+  gint          x, y;
   gint          row, col;
   gint          rowstride;
   gpointer      pr;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  bpp = gimp_drawable_bpp (drawable->drawable_id);
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  alpha = (has_alpha) ? bpp - 1 : bpp;
-
   ppm_new (&infile, x2-x1, y2-y1);
   p = &infile;
 
-  if (has_alpha)
+  if (gimp_drawable_has_alpha (drawable->drawable_id))
     ppm_new (&inalpha, x2-x1, y2-y1);
 
   rowstride = p->width * 3;
@@ -250,7 +242,7 @@ grabarea (void)
     {
       const guchar *src = src_rgn.data;
 
-      switch (bpp)
+      switch (src_rgn.bpp)
         {
         case 1:
           for (y = 0, row = src_rgn.y - y1; y < src_rgn.h; y++, row++)
@@ -266,7 +258,7 @@ grabarea (void)
                   tmprow[k + 1] = s[0];
                   tmprow[k + 2] = s[0];
 
-                  s += src_rgn.bpp;
+                  s++;
                 }
 
               src += src_rgn.rowstride;
@@ -289,7 +281,7 @@ grabarea (void)
                   tmprow[k + 2] = s[0];
                   tmparow[k]    = 255 - s[1];
 
-                  s += src_rgn.bpp;
+                  s += 2;
                 }
 
               src += src_rgn.rowstride;
@@ -323,7 +315,7 @@ grabarea (void)
                   tmprow[k + 2] = s[2];
                   tmparow[k]    = 255 - s[3];
 
-                  s += src_rgn.bpp;
+                  s += 4;
                 }
 
               src += src_rgn.rowstride;
@@ -337,23 +329,19 @@ static void
 gimpressionist_main (void)
 {
   GimpPixelRgn  dest_rgn;
-  guchar       *dest_row;
-  guchar       *dest;
-  gint          alpha, bpp;
-  gboolean      has_alpha;
-  gint          x, y;
   ppm_t        *p;
   gint          x1, y1, x2, y2;
   gint          row, col;
+  gint          x, y;
   gint          rowstride;
+  gint          count;
+  glong         done;
+  glong         total;
+  gpointer      pr;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  bpp = gimp_drawable_bpp (drawable->drawable_id);
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  alpha = (has_alpha) ? bpp - 1 : bpp;
-
-  dest_row = g_new (guchar, (x2 - x1) * bpp);
+  total = (x2 - x1) * (y2 - y1);
 
   gimp_progress_init (_("Painting"));
 
@@ -365,91 +353,104 @@ gimpressionist_main (void)
   repaint (&infile, (img_has_alpha) ? &inalpha : NULL);
 
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       0, 0, x2 - x1, y2 - y1,
+                       x1, y1, x2 - x1, y2 - y1,
                        TRUE, TRUE);
 
   p = &infile;
 
   rowstride = p->width * 3;
 
-  if (bpp == 3)
+  for (pr = gimp_pixel_rgns_register (1, &dest_rgn), count = 0, done = 0;
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr), count++)
     {
-      int bpr = (x2 - x1) * 3;
+      guchar *dest = dest_rgn.data;
 
-      for (row = 0, y = y1; y < y2; row++, y++)
+      switch (dest_rgn.bpp)
         {
-          if (row % 10 == 0)
-            gimp_progress_update (0.8 + 0.2 * ((double)row / (y2 - y1)));
-          memcpy (dest_row, p->col + row * rowstride, bpr);
-          gimp_pixel_rgn_set_row (&dest_rgn, dest_row, x1, y, (x2 - x1));
-        }
-    }
-  else if (bpp == 4)
-    {
-
-      for (row = 0, y = y1; y < y2; row++, y++)
-        {
-          guchar *tmprow = p->col + row * rowstride;
-
-          if (row % 10 == 0)
-            gimp_progress_update (0.8 + 0.2 * ((double)row / (y2-y1)));
-          dest = dest_row;
-
-          for (col = 0, x = x1; x < x2; col++, x++)
+        case 1:
+          for (y = 0, row = dest_rgn.y - y1; y < dest_rgn.h; y++, row++)
             {
-              int k = col * 3;
+              guchar       *d       = dest;
+              const guchar *tmprow  = p->col + row * rowstride;
 
-              dest[0] = tmprow[k+0];
-              dest[1] = tmprow[k+1];
-              dest[2] = tmprow[k+2];
-              dest[3] = 255 - inalpha.col[row * rowstride + k];
-              dest += dest_rgn.bpp;
+              for (x = 0, col = dest_rgn.x - x1; x < dest_rgn.w; x++, col++)
+                {
+                  gint k = col * 3;
+
+                  *d++ = GIMP_RGB_LUMINANCE (tmprow[k + 0],
+                                             tmprow[k + 1],
+                                             tmprow[k + 2]);
+                }
+
+              dest += dest_rgn.rowstride;
             }
-          gimp_pixel_rgn_set_row (&dest_rgn, dest_row, x1, y, (x2 - x1));
-        }
-    }
-  else if (bpp == 2)
-    {
-      for (row = 0, y = y1; y < y2; row++, y++)
-        {
-          guchar *tmprow = p->col + row * rowstride;
+          break;
 
-          if (row % 10 == 0)
-            gimp_progress_update (0.8 + 0.2 * ((double)row / (y2-y1)));
-          dest = dest_row;
-
-          for (col = 0, x = x1; x < x2; col++, x++)
+        case 2:
+          for (y = 0, row = dest_rgn.y - y1; y < dest_rgn.h; y++, row++)
             {
-              int k = col * 3;
+              guchar       *d       = dest;
+              const guchar *tmprow  = p->col + row * rowstride;
+              const guchar *tmparow = inalpha.col + row * rowstride;
 
-              dest[0] = (tmprow[k+0] + tmprow[k+1] + tmprow[k+2]) / 3;
-              dest[1] = 255 - inalpha.col[row * rowstride + k];
-              dest += dest_rgn.bpp;
+              for (x = 0, col = dest_rgn.x - x1; x < dest_rgn.w; x++, col++)
+                {
+                  gint k     = col * 3;
+                  gint value = GIMP_RGB_LUMINANCE (tmprow[k + 0],
+                                                   tmprow[k + 1],
+                                                   tmprow[k + 2]);
+
+                  d[0] = value;
+                  d[1] = 255 - tmparow[k];
+
+                  d += 2;
+                }
+
+              dest += dest_rgn.rowstride;
             }
-          gimp_pixel_rgn_set_row (&dest_rgn, dest_row, x1, y, (x2 - x1));
-        }
-    }
-  else
-    {
-      for (row = 0, y = y1; y < y2; row++, y++)
-        {
-          guchar *tmprow = p->col + row * rowstride;
+          break;
 
-          if (row % 10 == 0)
-            gimp_progress_update (0.8 + 0.2 * ((double)row / (y2-y1)));
-          dest = dest_row;
+        case 3:
+          col = dest_rgn.x - x1;
 
-          for (col = 0, x = x1; x < x2; col++, x++)
+          for (y = 0, row = dest_rgn.y - y1; y < dest_rgn.h; y++, row++)
             {
-              int k = col * 3;
-              dest[0] = (tmprow[k+0] + tmprow[k+1] + tmprow[k+2]) / 3;
-              dest += dest_rgn.bpp;
-            }
-          gimp_pixel_rgn_set_row (&dest_rgn, dest_row, x1, y, (x2 - x1));
-        }
-    }
+              memcpy (dest, p->col + row * rowstride + col * 3, dest_rgn.w * 3);
 
-  g_free (dest_row);
+              dest += dest_rgn.rowstride;
+            }
+          break;
+
+        case 4:
+          for (y = 0, row = dest_rgn.y - y1; y < dest_rgn.h; y++, row++)
+            {
+              guchar       *d       = dest;
+              const guchar *tmprow  = p->col + row * rowstride;
+              const guchar *tmparow = inalpha.col + row * rowstride;
+
+              for (x = 0, col = dest_rgn.x - x1; x < dest_rgn.w; x++, col++)
+                {
+                  gint k = col * 3;
+
+                  d[0] = tmprow[k + 0];
+                  d[1] = tmprow[k + 1];
+                  d[2] = tmprow[k + 2];
+                  d[3] = 255 - tmparow[k];
+
+                  d += 4;
+                }
+
+              dest += dest_rgn.rowstride;
+            }
+          break;
+        }
+
+      done += dest_rgn.w * dest_rgn.h;
+
+      if (count % 16 == 0)
+        gimp_progress_update (0.8 + 0.2 * done / total);
+    }
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
