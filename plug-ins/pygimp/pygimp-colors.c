@@ -2372,7 +2372,6 @@ pygimp_rgb_from_pyobject(PyObject *object, GimpRGB *color)
             return 0;
         }
     } else if (PySequence_Check(object)) {
-        GimpRGB rgb;
         PyObject *r, *g, *b, *a = NULL;
 
         if (!PyArg_ParseTuple(object, "OOO|O", &r, &g, &b, &a))
@@ -2380,9 +2379,9 @@ pygimp_rgb_from_pyobject(PyObject *object, GimpRGB *color)
 
 #define SET_MEMBER(m)	G_STMT_START {				\
     if (PyInt_Check(m))						\
-	rgb.m = (double) PyInt_AS_LONG(m) / 255.0;		\
+        color->m = (double) PyInt_AS_LONG(m) / 255.0;		\
     else if (PyFloat_Check(m))					\
-        rgb.m = PyFloat_AS_DOUBLE(m);				\
+        color->m = PyFloat_AS_DOUBLE(m);			\
     else {							\
 	PyErr_SetString(PyExc_TypeError,			\
 			#m " must be an int or a float");	\
@@ -2397,11 +2396,9 @@ pygimp_rgb_from_pyobject(PyObject *object, GimpRGB *color)
         if (a)
             SET_MEMBER(a);
         else
-            rgb.a = 1.0;
-        color->r = rgb.r;
-        color->g = rgb.g;
-        color->b = rgb.b;
-        color->a = rgb.a;
+            color->a = 1.0;
+
+        gimp_rgb_clamp(color);
 
         return 1;
     }

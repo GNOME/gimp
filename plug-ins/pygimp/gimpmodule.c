@@ -837,30 +837,12 @@ pygimp_set_background(PyObject *self, PyObject *args)
     GimpRGB rgb;
 
     if (PyArg_ParseTuple(args, "O:set_background", &color)) {
-        if (! pygimp_rgb_from_pyobject (color, &rgb)) {
-            PyErr_Clear();
-            PyArg_ParseTuple(args, "O!:set_background", PyGimpRGB_Type, &color);
+        if (!pygimp_rgb_from_pyobject(color, &rgb))
             return NULL;
-        }
     } else {
-        int r, g, b;
-
         PyErr_Clear();
-        if (!PyArg_ParseTuple(args, "(iii):set_background", &r, &g, &b)) {
-            PyErr_Clear();
-            if (!PyArg_ParseTuple(args, "iii:set_background", &r, &g, &b)) {
-                PyErr_Clear();
-                PyArg_ParseTuple(args, "O!:set_background",
-                                 PyGimpRGB_Type, &color);
-                return NULL;
-            }
-        }
-
-        r = CLAMP(r, 0, 255);
-        g = CLAMP(g, 0, 255);
-        b = CLAMP(b, 0, 255);
-
-        gimp_rgba_set_uchar(&rgb, r, g, b, 255);
+        if (!pygimp_rgb_from_pyobject(args, &rgb))
+            return NULL;
     }
 
     gimp_context_set_background(&rgb);
@@ -876,30 +858,12 @@ pygimp_set_foreground(PyObject *self, PyObject *args)
     GimpRGB rgb;
 
     if (PyArg_ParseTuple(args, "O:set_foreground", &color)) {
-        if (! pygimp_rgb_from_pyobject (color, &rgb)) {
-            PyErr_Clear();
-            PyArg_ParseTuple(args, "O!:set_foreground", PyGimpRGB_Type, &color);
+        if (!pygimp_rgb_from_pyobject(color, &rgb))
             return NULL;
-        }
     } else {
-        int r, g, b;
-
         PyErr_Clear();
-        if (!PyArg_ParseTuple(args, "(iii):set_foreground", &r, &g, &b)) {
-            PyErr_Clear();
-            if (!PyArg_ParseTuple(args, "iii:set_foreground", &r, &g, &b)) {
-                PyErr_Clear();
-                PyArg_ParseTuple(args, "O!:set_foreground",
-                                 PyGimpRGB_Type, &color);
-                return NULL;
-            }
-        }
-
-        r = CLAMP(r, 0, 255);
-        g = CLAMP(g, 0, 255);
-        b = CLAMP(b, 0, 255);
-
-        gimp_rgba_set_uchar(&rgb, r, g, b, 255);
+        if (!pygimp_rgb_from_pyobject(args, &rgb))
+            return NULL;
     }
 
     gimp_context_set_foreground(&rgb);

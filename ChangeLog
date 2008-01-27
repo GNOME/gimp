@@ -1,4 +1,13 @@
-2008-01-26 Joao S. O. Bueno <gwidion@mpc.com.br> 
+2008-01-26  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-colors.c (pygimp_rgb_from_pyobject): no
+	need to use a temporary in tuple translation, and clamp the result.
+
+	* plug-ins/pygimp/gimpmodule.c (pygimp_set_background,
+	pygimp_set_foreground): restore support for passing in 3 args for
+	color components, for backward compatibility.
+
+2008-01-26  Joao S. O. Bueno <gwidion@mpc.com.br> 
 	
 	* plug-ins/pygimp/pygimp-colors.c (pygimp_rgb_from_pyobject): fix
 	subsequent error (calculated parameters where not used)
