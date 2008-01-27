@@ -1,3 +1,8 @@
+2008-01-26 Joao S. O. Bueno <gwidion@mpc.com.br> 
+	
+	* plug-ins/pygimp/pygimp-colors.c (pygimp_rgb_from_pyobject): fix
+	subsequent error (calculated parameters where not used)
+
 2008-01-26  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-colors.c (pygimp_rgb_from_pyobject): fix

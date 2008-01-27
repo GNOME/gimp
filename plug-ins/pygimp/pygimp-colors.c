@@ -2398,6 +2398,10 @@ pygimp_rgb_from_pyobject(PyObject *object, GimpRGB *color)
             SET_MEMBER(a);
         else
             rgb.a = 1.0;
+        color->r = rgb.r;
+        color->g = rgb.g;
+        color->b = rgb.b;
+        color->a = rgb.a;
 
         return 1;
     }
