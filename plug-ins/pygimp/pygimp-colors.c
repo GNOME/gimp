@@ -2386,7 +2386,7 @@ pygimp_rgb_from_pyobject(PyObject *object, GimpRGB *color)
     else {							\
 	PyErr_SetString(PyExc_TypeError,			\
 			#m " must be an int or a float");	\
-	return -1;						\
+	return 0;						\
     }								\
 } G_STMT_END
 
@@ -2398,6 +2398,8 @@ pygimp_rgb_from_pyobject(PyObject *object, GimpRGB *color)
             SET_MEMBER(a);
         else
             rgb.a = 1.0;
+
+        return 1;
     }
 
     PyErr_SetString(PyExc_TypeError, "could not convert to GimpRGB");
