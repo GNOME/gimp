@@ -174,7 +174,7 @@ typedef union YYSTYPE
 {
    int val;
    double value;
-   char id[256];
+   char *id;
 }
 /* Line 187 of yacc.c.  */
 #line 181 "y.tab.c"
@@ -482,8 +482,8 @@ static const yytype_int8 yyrhs[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    59,    59,    62,    63,    66,    67,    68,    69,    72,
-      77,    84,    91,   102,   103,   106,   107,   108,   109,   110,
-     113,   121,   133,   144,   144,   151,   152,   157
+      78,    86,    94,   106,   107,   110,   111,   112,   113,   114,
+     117,   126,   139,   151,   151,   159,   160,   165
 };
 #endif
 
@@ -1411,27 +1411,30 @@ yyreduce:
         case 9:
 #line 73 "imap_ncsa.y"
     {
+		   g_free ((yyvsp[(2) - (2)].id));
 		}
     break;
 
   case 10:
-#line 78 "imap_ncsa.y"
+#line 79 "imap_ncsa.y"
     {
 		   MapInfo_t *info = get_map_info();
 		   g_strreplace(&info->author, (yyvsp[(2) - (2)].id));
+		   g_free ((yyvsp[(2) - (2)].id));
 		}
     break;
 
   case 11:
-#line 85 "imap_ncsa.y"
+#line 87 "imap_ncsa.y"
     {
 		   MapInfo_t *info = get_map_info();
 		   g_strreplace(&info->title, (yyvsp[(2) - (2)].id));
+		   g_free ((yyvsp[(2) - (2)].id));
 		}
     break;
 
   case 12:
-#line 92 "imap_ncsa.y"
+#line 95 "imap_ncsa.y"
     {
 		   MapInfo_t *info = get_map_info();
 		   gchar *description;
@@ -1439,19 +1442,21 @@ yyreduce:
 		   description = g_strconcat(info->description, (yyvsp[(2) - (2)].id), "\n", 
 					     NULL);
 		   g_strreplace(&info->description, description);
+		   g_free ((yyvsp[(2) - (2)].id));
 		}
     break;
 
   case 20:
-#line 114 "imap_ncsa.y"
+#line 118 "imap_ncsa.y"
     {
 		   MapInfo_t *info = get_map_info();		      
 		   g_strreplace(&info->default_url, (yyvsp[(2) - (2)].id));
+		   g_free ((yyvsp[(2) - (2)].id));
 		}
     break;
 
   case 21:
-#line 122 "imap_ncsa.y"
+#line 127 "imap_ncsa.y"
     {
 		   gint x = (gint) (yyvsp[(3) - (8)].value);
 		   gint y = (gint) (yyvsp[(5) - (8)].value);
@@ -1460,11 +1465,12 @@ yyreduce:
 		   current_object = create_rectangle(x, y, width, height);
 		   object_set_url(current_object, (yyvsp[(2) - (8)].id));
 		   add_shape(current_object);
+		   g_free ((yyvsp[(2) - (8)].id));
 		}
     break;
 
   case 22:
-#line 134 "imap_ncsa.y"
+#line 140 "imap_ncsa.y"
     {
 		   gint x = (gint) (yyvsp[(3) - (8)].value);
 		   gint y = (gint) (yyvsp[(5) - (8)].value);
@@ -1472,30 +1478,32 @@ yyreduce:
 		   current_object = create_circle(x, y, r);
 		   object_set_url(current_object, (yyvsp[(2) - (8)].id));
 		   add_shape(current_object);
+		   g_free ((yyvsp[(2) - (8)].id));
 		}
     break;
 
   case 23:
-#line 144 "imap_ncsa.y"
+#line 151 "imap_ncsa.y"
     {current_object = create_polygon(NULL);}
     break;
 
   case 24:
-#line 145 "imap_ncsa.y"
+#line 152 "imap_ncsa.y"
     {
 		   object_set_url(current_object, (yyvsp[(2) - (4)].id));
 		   add_shape(current_object);
+		   g_free ((yyvsp[(2) - (4)].id));
 		}
     break;
 
   case 26:
-#line 153 "imap_ncsa.y"
+#line 161 "imap_ncsa.y"
     {
 		}
     break;
 
   case 27:
-#line 158 "imap_ncsa.y"
+#line 166 "imap_ncsa.y"
     {
 		   Polygon_t *polygon = ObjectToPolygon(current_object);
 		   GdkPoint *point = new_point((gint) (yyvsp[(1) - (3)].value), (gint) (yyvsp[(3) - (3)].value));
@@ -1506,7 +1514,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1510 "y.tab.c"
+#line 1518 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1720,7 +1728,7 @@ yyreturn:
 }
 
 
-#line 166 "imap_ncsa.y"
+#line 174 "imap_ncsa.y"
 
 
 static void 

@@ -61,7 +61,7 @@ RECT{WS}\(4096,4096\){WS}\(4096,4096\)   {
 
 <comment>.*$	 		{
 				   BEGIN(INITIAL);
-   				   strcpy(cern_lval.id, yytext);
+   				   cern_lval.id = g_strndup (yytext, yyleng);
    				   return COMMENT;
 				}
 
@@ -74,7 +74,7 @@ POLY				return POLYGON;
 DEFAULT				return DEFAULT;
 
 [^ ,\t\n]+$			{
-   				   strcpy(cern_lval.id, yytext);
+   				   cern_lval.id = g_strndup (yytext, yyleng);
 				   return LINK;
 				}
 

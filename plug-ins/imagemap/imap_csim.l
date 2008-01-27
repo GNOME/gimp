@@ -66,8 +66,7 @@ WS	[ \t\n]+
 			        }
 
 <comment>.*/--\> 		{
-   				   strcpy(csim_lval.id, yytext);
-				   csim_lval.id[yyleng - 1] = '\0';
+				   csim_lval.id = g_strndup (yytext, yyleng);
    				   return STRING;
 				}
 
@@ -113,7 +112,6 @@ NOHREF				return NOHREF;
 
 \"				{
 				   BEGIN(quoted_string);
-				   *csim_lval.id = 0;
 				}
 
 <quoted_string>\"		{
@@ -121,7 +119,9 @@ NOHREF				return NOHREF;
 				   return STRING;
 				}
 
-<quoted_string>[^\"]*		strcpy(csim_lval.id, yytext);
+<quoted_string>[^\"]*		{
+				  csim_lval.id = g_strndup (yytext, yyleng);
+				}
 
 -?{DIGIT}*"."?{DIGIT}*([Ee][-+]?{DIGIT}*)? {
                                    csim_lval.value = g_ascii_strtod (yytext, NULL);

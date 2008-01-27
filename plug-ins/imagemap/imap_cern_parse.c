@@ -173,7 +173,7 @@ typedef union YYSTYPE
 {
    int val;
    double value;
-   char id[256];
+   char *id;
 }
 /* Line 187 of yacc.c.  */
 #line 180 "y.tab.c"
@@ -481,8 +481,8 @@ static const yytype_int8 yyrhs[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    60,    60,    63,    64,    67,    68,    69,    70,    71,
-      74,    82,    94,   105,   105,   112,   113,   118,   127,   128,
-     129,   132,   137,   145
+      74,    83,    96,   108,   108,   116,   117,   122,   131,   132,
+     133,   136,   142,   150
 };
 #endif
 
@@ -1414,11 +1414,12 @@ yyreduce:
     {
 		   MapInfo_t *info = get_map_info();
 		   g_strreplace(&info->default_url, (yyvsp[(2) - (2)].id));
+                   g_free ((yyvsp[(2) - (2)].id));
 		}
     break;
 
   case 11:
-#line 83 "imap_cern.y"
+#line 84 "imap_cern.y"
     {
 		   gint x = (gint) (yyvsp[(3) - (12)].value);
 		   gint y = (gint) (yyvsp[(5) - (12)].value);
@@ -1427,11 +1428,12 @@ yyreduce:
 		   current_object = create_rectangle(x, y, width, height);
 		   object_set_url(current_object, (yyvsp[(12) - (12)].id));
 		   add_shape(current_object);
+                   g_free ((yyvsp[(12) - (12)].id));
 		}
     break;
 
   case 12:
-#line 95 "imap_cern.y"
+#line 97 "imap_cern.y"
     {
 		   gint x = (gint) (yyvsp[(3) - (8)].value);
 		   gint y = (gint) (yyvsp[(5) - (8)].value);
@@ -1439,30 +1441,32 @@ yyreduce:
 		   current_object = create_circle(x, y, r);
 		   object_set_url(current_object, (yyvsp[(8) - (8)].id));
 		   add_shape(current_object);
+                   g_free ((yyvsp[(8) - (8)].id));
 		}
     break;
 
   case 13:
-#line 105 "imap_cern.y"
+#line 108 "imap_cern.y"
     {current_object = create_polygon(NULL);}
     break;
 
   case 14:
-#line 106 "imap_cern.y"
+#line 109 "imap_cern.y"
     {
 		   object_set_url(current_object, (yyvsp[(4) - (4)].id));
 		   add_shape(current_object);
+                   g_free ((yyvsp[(4) - (4)].id));
 		}
     break;
 
   case 16:
-#line 114 "imap_cern.y"
+#line 118 "imap_cern.y"
     {
 		}
     break;
 
   case 17:
-#line 119 "imap_cern.y"
+#line 123 "imap_cern.y"
     {
 		   Polygon_t *polygon = ObjectToPolygon(current_object);
 		   GdkPoint *point = new_point((gint) (yyvsp[(2) - (5)].value), (gint) (yyvsp[(4) - (5)].value));
@@ -1472,22 +1476,23 @@ yyreduce:
     break;
 
   case 21:
-#line 133 "imap_cern.y"
+#line 137 "imap_cern.y"
     {
+		  g_free ((yyvsp[(2) - (2)].id));
 		}
     break;
 
   case 22:
-#line 138 "imap_cern.y"
+#line 143 "imap_cern.y"
     {
 		   MapInfo_t *info = get_map_info();
 		   g_strreplace(&info->author, (yyvsp[(2) - (2)].id));
-
+		   g_free ((yyvsp[(2) - (2)].id));
 		}
     break;
 
   case 23:
-#line 146 "imap_cern.y"
+#line 151 "imap_cern.y"
     {
 		   MapInfo_t *info = get_map_info();
 		   gchar *description;
@@ -1495,12 +1500,13 @@ yyreduce:
 		   description = g_strconcat(info->description, (yyvsp[(2) - (2)].id), "\n", 
 					     NULL);
 		   g_strreplace(&info->description, description);
+		   g_free ((yyvsp[(2) - (2)].id));
 		}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1504 "y.tab.c"
+#line 1510 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1714,7 +1720,7 @@ yyreturn:
 }
 
 
-#line 157 "imap_cern.y"
+#line 163 "imap_cern.y"
 
 
 static void 

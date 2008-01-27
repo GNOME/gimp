@@ -47,7 +47,7 @@ static Object_t *current_object;
 %union {
    int val;
    double value;
-   char id[256];
+   char *id;
 }
 
 %token<val> RECTANGLE POLYGON CIRCLE DEFAULT
@@ -75,6 +75,7 @@ default		: DEFAULT LINK
 		{
 		   MapInfo_t *info = get_map_info();
 		   g_strreplace(&info->default_url, $2);
+                   g_free ($2);
 		}
 		;
 
@@ -88,6 +89,7 @@ rectangle	: RECTANGLE '(' FLOAT ',' FLOAT ')' '(' FLOAT ',' FLOAT ')' LINK
 		   current_object = create_rectangle(x, y, width, height);
 		   object_set_url(current_object, $12);
 		   add_shape(current_object);
+                   g_free ($12);
 		}
 		;
 
@@ -99,6 +101,7 @@ circle		: CIRCLE '(' FLOAT ',' FLOAT ')' FLOAT LINK
 		   current_object = create_circle(x, y, r);
 		   object_set_url(current_object, $8);
 		   add_shape(current_object);
+                   g_free ($8);
 		}
 		;
 
@@ -106,6 +109,7 @@ polygon		: POLYGON {current_object = create_polygon(NULL);} coord_list LINK
 		{
 		   object_set_url(current_object, $4);
 		   add_shape(current_object);
+                   g_free ($4);
 		}
 		;
 
@@ -131,6 +135,7 @@ comment_line	: author_line
 
 real_comment	: BEGIN_COMMENT COMMENT
 		{
+		  g_free ($2);
 		}
 		;
 
@@ -138,7 +143,7 @@ author_line	: AUTHOR COMMENT
 		{
 		   MapInfo_t *info = get_map_info();
 		   g_strreplace(&info->author, $2);
-
+		   g_free ($2);
 		}
 		;
 
@@ -150,6 +155,7 @@ description_line: DESCRIPTION COMMENT
 		   description = g_strconcat(info->description, $2, "\n", 
 					     NULL);
 		   g_strreplace(&info->description, description);
+		   g_free ($2);
 		}
 		;
 

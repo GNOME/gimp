@@ -74,7 +74,7 @@ typedef union YYSTYPE
 {
    int val;
    double value;
-   char id[256];
+   char *id;
 }
 /* Line 1489 of yacc.c.  */
 #line 81 "y.tab.h"

@@ -67,7 +67,7 @@ WS	[ \t\n]+
 
 <comment>.*	 		{
 				   BEGIN(INITIAL);
-   				   strcpy(ncsa_lval.id, yytext);
+   				   ncsa_lval.id = g_strndup (yytext, yyleng);
    				   return COMMENT;
 				}
 
@@ -93,8 +93,7 @@ DEFAULT				{
 
 <imap_link>[^ ,\t\n]+		{
    				   BEGIN(INITIAL);
-   				   strcpy(ncsa_lval.id, yytext);
-				   ncsa_lval.id[yyleng - 1] = '\0';
+   				   ncsa_lval.id = g_strndup (yytext, yyleng);
 				   return LINK;
 				}
 

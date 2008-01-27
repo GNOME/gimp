@@ -1,3 +1,23 @@
+2008-01-27  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/imagemap/imap_cern.l:
+	* plug-ins/imagemap/imap_cern.y: 
+	* plug-ins/imagemap/imap_csim.l:
+	* plug-ins/imagemap/imap_csim.y:
+	* plug-ins/imagemap/imap_ncsa.l:
+	* plug-ins/imagemap/imap_ncsa.y: Dynamically allocate space to hold
+	comments, links, strings, and co-ordinate lists. Fixes bug #511072.
+
+	* plug-ins/imagemap/imap_cern_lex.c:
+	* plug-ins/imagemap/imap_cern_parse.c:
+	* plug-ins/imagemap/imap_cern_parse.h:
+	* plug-ins/imagemap/imap_csim_lex.c:
+	* plug-ins/imagemap/imap_csim_parse.c:
+	* plug-ins/imagemap/imap_csim_parse.h:
+	* plug-ins/imagemap/imap_ncsa_lex.c:
+	* plug-ins/imagemap/imap_ncsa_parse.c:
+	* plug-ins/imagemap/imap_ncsa_parse.h: Regenerated.
+
 2008-01-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gimpressionist/gimp.c (gimpressionist_main): transfer

@@ -49,7 +49,7 @@ static MapInfo_t *_map_info;
 %union {
   int val;
   double value;
-  char id[4096];		/* Large enough to hold all polygon points! */
+  char *id;
 }
 
 %token<val> IMG SRC WIDTH HEIGHT BORDER USEMAP
@@ -69,6 +69,7 @@ csim_file	: image start_map comment_lines area_list end_map
 image		: '<' IMG SRC '=' STRING image_tags xhtml_close
 		{
 		   g_strreplace(&_map_info->image_name, $5);
+		   g_free ($5);
 		}
 		;
 
@@ -79,8 +80,8 @@ image_tags	: /* Empty */
 image_tag	: image_width
 		| image_height
 		| BORDER '=' integer_value {}
-		| USEMAP '=' STRING {}
-		| ALT '=' STRING {}
+		| USEMAP '=' STRING { g_free ($3); }
+		| ALT '=' STRING { g_free ($3); }
 		;
 
 image_width	: WIDTH '=' integer_value
@@ -102,12 +103,14 @@ integer_value	: FLOAT
 		| STRING
 		{
 		  $$ = (gint) g_ascii_strtod ($1, NULL);
+		  g_free ($1);
 		}
 		;
 
 start_map	: '<' START_MAP NAME '=' STRING '>'
 		{
 		   g_strreplace(&_map_info->title, $5);
+		   g_free ($5);
 		}
 		;
 
@@ -122,13 +125,14 @@ comment_line	: author_line
 
 real_comment	: BEGIN_COMMENT STRING END_COMMENT
 		{
+		  g_free ($2);
 		}
 		;
 
 author_line	: AUTHOR STRING END_COMMENT
 		{
 		   g_strreplace(&_map_info->author, $2);
-
+		   g_free ($2);
 		}
 		;
 
@@ -139,6 +143,7 @@ description_line: DESCRIPTION STRING END_COMMENT
 		   description = g_strconcat(_map_info->description, $2, "\n",
 					     NULL);
 		   g_strreplace(&_map_info->description, description);
+		   g_free ($2);
 		}
 		;
 
@@ -187,6 +192,7 @@ shape_tag	: SHAPE '=' STRING
 		   } else if (!g_ascii_strcasecmp($3, "DEFAULT")) {
 		      current_type = UNDEFINED;
 		   }
+		   g_free ($3);
 		}
 		;
 
@@ -245,6 +251,8 @@ coords_tag	: COORDS '=' STRING
 			 polygon_remove_last_point(polygon);
 		      polygon->points = points;
 		   }
+
+		   g_free ($3);
 		}
 		;
 
@@ -255,6 +263,7 @@ href_tag	: HREF '=' STRING
 		   } else {
 		      object_set_url(current_object, $3);
 		   }
+		   g_free ($3);
 		}
 		;
 
@@ -266,42 +275,49 @@ nohref_tag	: NOHREF optional_value
 optional_value	: /* Empty */
 		| '=' STRING
 		{
+		   g_free ($2);
 		}
 		;
 
 alt_tag		: ALT '=' STRING
 		{
 		   object_set_comment(current_object, $3);
+		   g_free ($3);
 		}
 		;
 
 target_tag	: TARGET '=' STRING
 		{
 		   object_set_target(current_object, $3);
+		   g_free ($3);
 		}
 		;
 
 onmouseover_tag	: ONMOUSEOVER '=' STRING
 		{
 		   object_set_mouse_over(current_object, $3);
+		   g_free ($3);
 		}
 		;
 
 onmouseout_tag	: ONMOUSEOUT '=' STRING
 		{
 		   object_set_mouse_out(current_object, $3);
+		   g_free ($3);
 		}
 		;
 
 onfocus_tag	: ONFOCUS '=' STRING
 		{
 		   object_set_focus(current_object, $3);
+		   g_free ($3);
 		}
 		;
 
 onblur_tag	: ONBLUR '=' STRING
 		{
 		   object_set_blur(current_object, $3);
+		   g_free ($3);
 		}
 		;
 
