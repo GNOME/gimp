@@ -1,3 +1,8 @@
+2008-01-27  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gimpressionist/gimp.c (grabarea): changed code that
+	retrieves the source drawable to iterate over the data tile-by-tile.
+
 2008-01-26  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-colors.c (pygimp_rgb_from_pyobject): no

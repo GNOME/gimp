@@ -217,15 +217,14 @@ void
 grabarea (void)
 {
   GimpPixelRgn  src_rgn;
-  guchar       *src_row;
-  guchar       *src;
   gint          alpha, bpp;
   gboolean      has_alpha;
   gint          x, y;
   ppm_t        *p;
   gint          x1, y1, x2, y2;
   gint          row, col;
-  int           rowstride;
+  gint          rowstride;
+  gpointer      pr;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
@@ -235,94 +234,103 @@ grabarea (void)
 
   ppm_new (&infile, x2-x1, y2-y1);
   p = &infile;
+
   if (has_alpha)
-    {
-      ppm_new (&inalpha, x2-x1, y2-y1);
-    }
+    ppm_new (&inalpha, x2-x1, y2-y1);
 
   rowstride = p->width * 3;
-
-  src_row = g_new (guchar, (x2 - x1) * bpp);
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
                        0, 0, x2 - x1, y2 - y1,
                        FALSE, FALSE);
 
-  if (bpp == 3)
-    { /* RGB */
-      int bpr = (x2 - x1) * 3;
-
-      for (row = 0, y = y1; y < y2; row++, y++)
-        {
-          gimp_pixel_rgn_get_row (&src_rgn, src_row, x1, y, (x2 - x1));
-          memcpy (p->col + row * rowstride, src_row, bpr);
-        }
-    }
-  else if (bpp > 3)
-    { /* RGBA */
-      for (row = 0, y = y1; y < y2; row++, y++)
-        {
-          guchar *tmprow  = p->col + row * rowstride;
-          guchar *tmparow = inalpha.col + row * rowstride;
-
-          gimp_pixel_rgn_get_row (&src_rgn, src_row, x1, y, (x2 - x1));
-          src = src_row;
-
-          for (col = 0, x = x1; x < x2; col++, x++)
-            {
-              int k = col * 3;
-
-              tmprow[k+0] = src[0];
-              tmprow[k+1] = src[1];
-              tmprow[k+2] = src[2];
-              tmparow[k] = 255 - src[3];
-              src += src_rgn.bpp;
-            }
-        }
-    }
-  else if (bpp == 2)
+  for (pr = gimp_pixel_rgns_register (1, &src_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
-      /* GrayA */
-      for (row = 0, y = y1; y < y2; row++, y++)
+      const guchar *src = src_rgn.data;
+
+      switch (bpp)
         {
-          guchar *tmprow  = p->col + row * rowstride;
-          guchar *tmparow = inalpha.col + row * rowstride;
-
-          gimp_pixel_rgn_get_row (&src_rgn, src_row, x1, y, (x2 - x1));
-          src = src_row;
-
-          for (col = 0, x = x1; x < x2; col++, x++)
+        case 1:
+          for (y = 0, row = src_rgn.y - y1; y < src_rgn.h; y++, row++)
             {
-              int k = col * 3;
+              const guchar *s      = src;
+              guchar       *tmprow = p->col + row * rowstride;
 
-              tmprow[k+0] = src[0];
-              tmprow[k+1] = src[0];
-              tmprow[k+2] = src[0];
-              tmparow[k] = 255 - src[1];
-              src += src_rgn.bpp;
+              for (x = 0, col = src_rgn.x - x1; x < src_rgn.w; x++, col++)
+                {
+                  gint k = col * 3;
+
+                  tmprow[k + 0] = s[0];
+                  tmprow[k + 1] = s[0];
+                  tmprow[k + 2] = s[0];
+
+                  s += src_rgn.bpp;
+                }
+
+              src += src_rgn.rowstride;
             }
+          break;
+
+        case 2:
+          for (y = 0, row = src_rgn.y - y1; y < src_rgn.h; y++, row++)
+            {
+              const guchar *s       = src;
+              guchar       *tmprow  = p->col + row * rowstride;
+              guchar       *tmparow = inalpha.col + row * rowstride;
+
+              for (x = 0, col = src_rgn.x - x1; x < src_rgn.w; x++, col++)
+                {
+                  gint k = col * 3;
+
+                  tmprow[k + 0] = s[0];
+                  tmprow[k + 1] = s[0];
+                  tmprow[k + 2] = s[0];
+                  tmparow[k]    = 255 - s[1];
+
+                  s += src_rgn.bpp;
+                }
+
+              src += src_rgn.rowstride;
+            }
+          break;
+
+        case 3:
+          col = src_rgn.x - x1;
+
+          for (y = 0, row = src_rgn.y - y1; y < src_rgn.h; y++, row++)
+            {
+              memcpy (p->col + row * rowstride + col * 3, src, src_rgn.w * 3);
+
+              src += src_rgn.rowstride;
+            }
+          break;
+
+        case 4:
+          for (y = 0, row = src_rgn.y - y1; y < src_rgn.h; y++, row++)
+            {
+              const guchar *s       = src;
+              guchar       *tmprow  = p->col + row * rowstride;
+              guchar       *tmparow = inalpha.col + row * rowstride;
+
+              for (x = 0, col = src_rgn.x - x1; x < src_rgn.w; x++, col++)
+                {
+                  gint k = col * 3;
+
+                  tmprow[k + 0] = s[0];
+                  tmprow[k + 1] = s[1];
+                  tmprow[k + 2] = s[2];
+                  tmparow[k]    = 255 - s[3];
+
+                  s += src_rgn.bpp;
+                }
+
+              src += src_rgn.rowstride;
+            }
+          break;
         }
     }
-  else
-    { /* Gray */
-      for (row = 0, y = y1; y < y2; row++, y++)
-        {
-          guchar *tmprow = p->col + row * rowstride;
-
-          gimp_pixel_rgn_get_row (&src_rgn, src_row, x1, y, (x2 - x1));
-          src = src_row;
-          for (col = 0, x = x1; x < x2; col++, x++)
-            {
-              int k = col * 3;
-
-              tmprow[k+0] = src[0];
-              tmprow[k+1] = src[0];
-              tmprow[k+2] = src[0];
-              src += src_rgn.bpp;
-            }
-        }
-    }
-  g_free (src_row);
 }
 
 static void
@@ -337,7 +345,7 @@ gimpressionist_main (void)
   ppm_t        *p;
   gint          x1, y1, x2, y2;
   gint          row, col;
-  int           rowstride;
+  gint          rowstride;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
