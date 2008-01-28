@@ -1227,32 +1227,31 @@ gimp_display_shell_get_unit (GimpDisplayShell *shell)
 gboolean
 gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                 GimpCoords       *coords,
-                                GimpCoords       *snapped_coords,
                                 gint              snap_offset_x,
                                 gint              snap_offset_y,
                                 gint              snap_width,
                                 gint              snap_height)
 {
-  gboolean snap_to_guides  = FALSE;
-  gboolean snap_to_grid    = FALSE;
-  gboolean snap_to_canvas  = FALSE;
-  gboolean snap_to_vectors = FALSE;
-  gboolean snapped         = FALSE;
+  GimpImage *image;
+  gboolean   snap_to_guides  = FALSE;
+  gboolean   snap_to_grid    = FALSE;
+  gboolean   snap_to_canvas  = FALSE;
+  gboolean   snap_to_vectors = FALSE;
+  gboolean   snapped         = FALSE;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
-  g_return_val_if_fail (snapped_coords != NULL, FALSE);
 
-  *snapped_coords = *coords;
+  image = shell->display->image;
 
   if (gimp_display_shell_get_snap_to_guides (shell) &&
-      gimp_image_get_guides (shell->display->image))
+      gimp_image_get_guides (image))
     {
       snap_to_guides = TRUE;
     }
 
   if (gimp_display_shell_get_snap_to_grid (shell) &&
-      gimp_image_get_grid (shell->display->image))
+      gimp_image_get_grid (image))
     {
       snap_to_grid = TRUE;
     }
@@ -1260,18 +1259,17 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
   snap_to_canvas = gimp_display_shell_get_snap_to_canvas (shell);
 
   if (gimp_display_shell_get_snap_to_vectors (shell) &&
-      gimp_image_get_active_vectors (shell->display->image))
+      gimp_image_get_active_vectors (image))
     {
       snap_to_vectors = TRUE;
     }
 
   if (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_vectors)
     {
-      gdouble tx, ty;
       gint    snap_distance;
+      gdouble tx, ty;
 
-      snap_distance =
-        GIMP_DISPLAY_CONFIG (shell->display->image->gimp->config)->snap_distance;
+      snap_distance = GIMP_DISPLAY_CONFIG (image->gimp->config)->snap_distance;
 
       if (snap_width > 0 && snap_height > 0)
         {
@@ -1308,8 +1306,8 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
 
       if (snapped)
         {
-          snapped_coords->x = tx - snap_offset_x;
-          snapped_coords->y = ty - snap_offset_y;
+          coords->x = tx - snap_offset_x;
+          coords->y = ty - snap_offset_y;
         }
     }
 

@@ -661,7 +661,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
       if (gimp_display_shell_snap_coords (shell,
                                           &image_coords,
-                                          &image_coords,
                                           x, y, width, height))
         {
           update_sw_cursor = TRUE;
@@ -1085,7 +1084,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             if (gimp_display_shell_snap_coords (shell,
                                                 &image_coords,
-                                                &image_coords,
                                                 x, y, width, height))
               {
                 update_sw_cursor = TRUE;
@@ -1144,7 +1142,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                     &x, &y, &width, &height);
 
                 gimp_display_shell_snap_coords (shell,
-                                                &image_coords,
                                                 &image_coords,
                                                 x, y, width, height);
               }
@@ -1239,7 +1236,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                                 &x, &y, &width, &height);
 
                             gimp_display_shell_snap_coords (shell,
-                                                            &image_coords,
                                                             &image_coords,
                                                             x, y, width, height);
                           }

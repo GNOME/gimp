@@ -154,7 +154,6 @@ gimp_display_shell_autoscroll_timeout (gpointer data)
 
           gimp_display_shell_snap_coords (shell,
                                           &image_coords,
-                                          &image_coords,
                                           x, y, width, height);
         }
 

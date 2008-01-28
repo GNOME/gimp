@@ -221,7 +221,6 @@ GimpUnit    gimp_display_shell_get_unit            (GimpDisplayShell   *shell);
 
 gboolean    gimp_display_shell_snap_coords         (GimpDisplayShell   *shell,
                                                     GimpCoords         *coords,
-                                                    GimpCoords         *snapped_coords,
                                                     gint                snap_offset_x,
                                                     gint                snap_offset_y,
                                                     gint                snap_width,
