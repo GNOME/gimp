@@ -28,28 +28,29 @@
 
 /*  operations  */
 
-typedef struct _GimpOperationColorBalance  GimpOperationColorBalance;
-typedef struct _GimpOperationColorize      GimpOperationColorize;
-typedef struct _GimpOperationCurves        GimpOperationCurves;
-typedef struct _GimpOperationDesaturate    GimpOperationDesaturate;
-typedef struct _GimpOperationHueSaturation GimpOperationHueSaturation;
-typedef struct _GimpOperationLevels        GimpOperationLevels;
-typedef struct _GimpOperationPointFilter   GimpOperationPointFilter;
-typedef struct _GimpOperationPosterize     GimpOperationPosterize;
-typedef struct _GimpOperationThreshold     GimpOperationThreshold;
-typedef struct _GimpOperationTileSink      GimpOperationTileSink;
-typedef struct _GimpOperationTileSource    GimpOperationTileSource;
+typedef struct _GimpOperationColorBalance    GimpOperationColorBalance;
+typedef struct _GimpOperationColorize        GimpOperationColorize;
+typedef struct _GimpOperationCurves          GimpOperationCurves;
+typedef struct _GimpOperationDesaturate      GimpOperationDesaturate;
+typedef struct _GimpOperationHueSaturation   GimpOperationHueSaturation;
+typedef struct _GimpOperationLevels          GimpOperationLevels;
+typedef struct _GimpOperationPointFilter     GimpOperationPointFilter;
+typedef struct _GimpOperationPosterize       GimpOperationPosterize;
+typedef struct _GimpOperationThreshold       GimpOperationThreshold;
+typedef struct _GimpOperationTileSink        GimpOperationTileSink;
+typedef struct _GimpOperationTileSource      GimpOperationTileSource;
 
 
 /*  operation config objects  */
 
-typedef struct _GimpColorBalanceConfig     GimpColorBalanceConfig;
-typedef struct _GimpColorizeConfig         GimpColorizeConfig;
-typedef struct _GimpCurvesConfig           GimpCurvesConfig;
-typedef struct _GimpHueSaturationConfig    GimpHueSaturationConfig;
-typedef struct _GimpLevelsConfig           GimpLevelsConfig;
-typedef struct _GimpPosterizeConfig        GimpPosterizeConfig;
-typedef struct _GimpThresholdConfig        GimpThresholdConfig;
+typedef struct _GimpBrightnessContrastConfig GimpBrightnessContrastConfig;
+typedef struct _GimpColorBalanceConfig       GimpColorBalanceConfig;
+typedef struct _GimpColorizeConfig           GimpColorizeConfig;
+typedef struct _GimpCurvesConfig             GimpCurvesConfig;
+typedef struct _GimpHueSaturationConfig      GimpHueSaturationConfig;
+typedef struct _GimpLevelsConfig             GimpLevelsConfig;
+typedef struct _GimpPosterizeConfig          GimpPosterizeConfig;
+typedef struct _GimpThresholdConfig          GimpThresholdConfig;
 
 
 #endif /* __GEGL_TYPES_H__ */

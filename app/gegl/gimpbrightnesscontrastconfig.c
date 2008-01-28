@@ -1,0 +1,159 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * gimpbrightnesscontrastconfig.c
+ * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <gegl.h>
+
+#include "libgimpconfig/gimpconfig.h"
+
+#include "gegl-types.h"
+
+#include "gimpbrightnesscontrastconfig.h"
+
+
+enum
+{
+  PROP_0,
+  PROP_BRIGHTNESS,
+  PROP_CONTRAST
+};
+
+
+static void   gimp_brightness_contrast_config_get_property (GObject      *object,
+                                                            guint         property_id,
+                                                            GValue       *value,
+                                                            GParamSpec   *pspec);
+static void   gimp_brightness_contrast_config_set_property (GObject      *object,
+                                                            guint         property_id,
+                                                            const GValue *value,
+                                                            GParamSpec   *pspec);
+
+
+G_DEFINE_TYPE_WITH_CODE (GimpBrightnessContrastConfig,
+                         gimp_brightness_contrast_config,
+                         G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
+
+#define parent_class gimp_brightness_contrast_config_parent_class
+
+
+static void
+gimp_brightness_contrast_config_class_init (GimpBrightnessContrastConfigClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->set_property = gimp_brightness_contrast_config_set_property;
+  object_class->get_property = gimp_brightness_contrast_config_get_property;
+
+  g_object_class_install_property (object_class, PROP_BRIGHTNESS,
+                                   g_param_spec_double ("brightness",
+                                                        "Brightness",
+                                                        "Brightness",
+                                                        -1.0, 1.0, 0.0,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_CONTRAST,
+                                   g_param_spec_double ("contrast",
+                                                        "Contrast",
+                                                        "Contrast",
+                                                        -1.0, 1.0, 0.0,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+}
+
+static void
+gimp_brightness_contrast_config_init (GimpBrightnessContrastConfig *self)
+{
+}
+
+static void
+gimp_brightness_contrast_config_get_property (GObject    *object,
+                                              guint       property_id,
+                                              GValue     *value,
+                                              GParamSpec *pspec)
+{
+  GimpBrightnessContrastConfig *self = GIMP_BRIGHTNESS_CONTRAST_CONFIG (object);
+
+  switch (property_id)
+    {
+    case PROP_BRIGHTNESS:
+      g_value_set_double (value, self->brightness);
+      break;
+
+    case PROP_CONTRAST:
+      g_value_set_double (value, self->contrast);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_brightness_contrast_config_set_property (GObject      *object,
+                                              guint         property_id,
+                                              const GValue *value,
+                                              GParamSpec   *pspec)
+{
+  GimpBrightnessContrastConfig *self = GIMP_BRIGHTNESS_CONTRAST_CONFIG (object);
+
+  switch (property_id)
+    {
+    case PROP_BRIGHTNESS:
+      self->brightness = g_value_get_double (value);
+      break;
+
+    case PROP_CONTRAST:
+      self->contrast = g_value_get_double (value);
+      break;
+
+   default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+
+/*  public functions  */
+
+void
+gimp_brightness_contrast_config_set_node (GimpBrightnessContrastConfig *config,
+                                          GeglNode                     *node)
+{
+  gdouble brightness;
+  gdouble contrast;
+
+  g_return_if_fail (GIMP_IS_BRIGHTNESS_CONTRAST_CONFIG (config));
+  g_return_if_fail (GEGL_IS_NODE (node));
+
+  brightness = config->brightness / 2.0;
+  contrast   = (config->contrast < 0 ?
+                (config->contrast + 1.0) :
+                config->contrast * 4.0 + 1.0);
+
+  gegl_node_set (node,
+                 "brightness", brightness,
+                 "contrast",   contrast,
+                 NULL);
+}

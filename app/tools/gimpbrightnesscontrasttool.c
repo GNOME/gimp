@@ -21,12 +21,15 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
 #include "base/gimplut.h"
 #include "base/lut-funcs.h"
+
+#include "gegl/gimpbrightnesscontrastconfig.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -130,9 +133,7 @@ gimp_brightness_contrast_tool_init (GimpBrightnessContrastTool *bc_tool)
 {
   GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (bc_tool);
 
-  bc_tool->brightness = 0.0;
-  bc_tool->contrast   = 0.0;
-  bc_tool->lut        = gimp_lut_new ();
+  bc_tool->lut = gimp_lut_new ();
 
   im_tool->apply_func = (GimpImageMapApplyFunc) gimp_lut_process;
   im_tool->apply_data = bc_tool->lut;
@@ -142,6 +143,12 @@ static void
 gimp_brightness_contrast_tool_finalize (GObject *object)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (object);
+
+  if (bc_tool->config)
+    {
+      g_object_unref (bc_tool->config);
+      bc_tool->config = NULL;
+    }
 
   if (bc_tool->lut)
     {
@@ -172,8 +179,7 @@ gimp_brightness_contrast_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  bc_tool->brightness = 0.0;
-  bc_tool->contrast   = 0.0;
+  gimp_config_reset (GIMP_CONFIG (bc_tool->config));
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
@@ -185,6 +191,10 @@ gimp_brightness_contrast_tool_initialize (GimpTool     *tool,
 static GeglNode *
 gimp_brightness_contrast_tool_get_operation (GimpImageMapTool *im_tool)
 {
+  GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (im_tool);
+
+  bc_tool->config = g_object_new (GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG, NULL);
+
   return g_object_new (GEGL_TYPE_NODE,
                        "operation", "brightness-contrast",
                        NULL);
@@ -194,22 +204,13 @@ static void
 gimp_brightness_contrast_tool_map (GimpImageMapTool *im_tool)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (im_tool);
-  gdouble                     brightness;
-  gdouble                     contrast;
 
-  brightness = bc_tool->brightness / 256.0;
-  contrast   = (bc_tool->contrast < 0 ?
-                (bc_tool->contrast + 127.0) / 127.0 :
-                bc_tool->contrast * 4.0 / 127.0 + 1);
-
-  gegl_node_set (im_tool->operation,
-                 "brightness", brightness,
-                 "contrast",   contrast,
-                 NULL);
+  gimp_brightness_contrast_config_set_node (bc_tool->config,
+                                            im_tool->operation);
 
   brightness_contrast_lut_setup (bc_tool->lut,
-                                 bc_tool->brightness / 255.0,
-                                 bc_tool->contrast / 127.0,
+                                 bc_tool->config->brightness / 2.0,
+                                 bc_tool->config->contrast,
                                  gimp_drawable_bytes (im_tool->drawable));
 }
 
@@ -223,10 +224,10 @@ gimp_brightness_contrast_tool_button_press (GimpTool        *tool,
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
 
-  bc_tool->x = coords->x - bc_tool->contrast;
-  bc_tool->y = coords->y + bc_tool->brightness;
-  bc_tool->dx =   bc_tool->contrast;
-  bc_tool->dy = - bc_tool->brightness;
+  bc_tool->x  = coords->x - bc_tool->config->contrast   * 127.0;
+  bc_tool->y  = coords->y + bc_tool->config->brightness * 127.0;
+  bc_tool->dx =   bc_tool->config->contrast   * 127.0;
+  bc_tool->dy = - bc_tool->config->brightness * 127.0;
 
   gimp_tool_control_activate (tool->control);
   tool->display = display;
@@ -269,8 +270,8 @@ gimp_brightness_contrast_tool_motion (GimpTool        *tool,
   bc_tool->dx =   (coords->x - bc_tool->x);
   bc_tool->dy = - (coords->y - bc_tool->y);
 
-  bc_tool->brightness = CLAMP (bc_tool->dy, -127.0, 127.0);
-  bc_tool->contrast   = CLAMP (bc_tool->dx, -127.0, 127.0);
+  bc_tool->config->brightness = CLAMP (bc_tool->dy, -127.0, 127.0) / 127.0;
+  bc_tool->config->contrast   = CLAMP (bc_tool->dx, -127.0, 127.0) / 127.0;
 
   brightness_contrast_update_sliders (bc_tool);
   gimp_image_map_tool_preview (im_tool);
@@ -302,7 +303,7 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *im_tool)
   /*  Create the brightness scale widget  */
   data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                                _("_Brightness:"), SLIDER_WIDTH, -1,
-                               bc_tool->brightness,
+                               bc_tool->config->brightness * 127.0,
                                -127.0, 127.0, 1.0, 10.0, 0,
                                TRUE, 0.0, 0.0,
                                NULL, NULL);
@@ -317,7 +318,7 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *im_tool)
   /*  Create the contrast scale widget  */
   data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                                _("Con_trast:"), SLIDER_WIDTH, -1,
-                               bc_tool->contrast,
+                               bc_tool->config->contrast * 127.0,
                                -127.0, 127.0, 1.0, 10.0, 0,
                                TRUE, 0.0, 0.0,
                                NULL, NULL);
@@ -335,8 +336,7 @@ gimp_brightness_contrast_tool_reset (GimpImageMapTool *im_tool)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (im_tool);
 
-  bc_tool->brightness = 0.0;
-  bc_tool->contrast   = 0.0;
+  gimp_config_reset (GIMP_CONFIG (bc_tool->config));
 
   brightness_contrast_update_sliders (bc_tool);
 }
@@ -344,17 +344,24 @@ gimp_brightness_contrast_tool_reset (GimpImageMapTool *im_tool)
 static void
 brightness_contrast_update_sliders (GimpBrightnessContrastTool *bc_tool)
 {
-  gtk_adjustment_set_value (bc_tool->brightness_data, bc_tool->brightness);
-  gtk_adjustment_set_value (bc_tool->contrast_data,   bc_tool->contrast);
+  gtk_adjustment_set_value (bc_tool->brightness_data,
+                            bc_tool->config->brightness * 127.0);
+  gtk_adjustment_set_value (bc_tool->contrast_data,
+                            bc_tool->config->contrast   * 127.0);
 }
 
 static void
 brightness_contrast_brightness_changed (GtkAdjustment              *adjustment,
                                         GimpBrightnessContrastTool *bc_tool)
 {
-  if (bc_tool->brightness != adjustment->value)
+  GimpBrightnessContrastConfig *config = bc_tool->config;
+  gdouble                       value  = adjustment->value / 127.0;
+
+  if (config->brightness != value)
     {
-      bc_tool->brightness = adjustment->value;
+      g_object_set (config,
+                    "brightness", value,
+                    NULL);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (bc_tool));
     }
@@ -364,9 +371,14 @@ static void
 brightness_contrast_contrast_changed (GtkAdjustment              *adjustment,
                                       GimpBrightnessContrastTool *bc_tool)
 {
-  if (bc_tool->contrast != adjustment->value)
+  GimpBrightnessContrastConfig *config = bc_tool->config;
+  gdouble                       value  = adjustment->value / 127.0;
+
+  if (config->contrast != value)
     {
-      bc_tool->contrast = adjustment->value;
+      g_object_set (config,
+                    "contrast", value,
+                    NULL);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (bc_tool));
     }
