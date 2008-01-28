@@ -60,7 +60,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpColorizeConfig, gimp_colorize_config,
 
 
 static void
-gimp_colorize_config_class_init (GimpColorizeConfigClass * klass)
+gimp_colorize_config_class_init (GimpColorizeConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 

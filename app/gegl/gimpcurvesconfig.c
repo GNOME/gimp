@@ -74,7 +74,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpCurvesConfig, gimp_curves_config,
 
 
 static void
-gimp_curves_config_class_init (GimpCurvesConfigClass * klass)
+gimp_curves_config_class_init (GimpCurvesConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 

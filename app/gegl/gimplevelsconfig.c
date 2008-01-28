@@ -78,7 +78,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpLevelsConfig, gimp_levels_config,
 
 
 static void
-gimp_levels_config_class_init (GimpLevelsConfigClass * klass)
+gimp_levels_config_class_init (GimpLevelsConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 

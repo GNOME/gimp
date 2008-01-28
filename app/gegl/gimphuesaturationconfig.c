@@ -67,7 +67,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpHueSaturationConfig, gimp_hue_saturation_config,
 
 
 static void
-gimp_hue_saturation_config_class_init (GimpHueSaturationConfigClass * klass)
+gimp_hue_saturation_config_class_init (GimpHueSaturationConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 

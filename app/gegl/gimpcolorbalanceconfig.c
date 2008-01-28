@@ -69,7 +69,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpColorBalanceConfig, gimp_color_balance_config,
 
 
 static void
-gimp_color_balance_config_class_init (GimpColorBalanceConfigClass * klass)
+gimp_color_balance_config_class_init (GimpColorBalanceConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 

@@ -59,7 +59,7 @@ G_DEFINE_TYPE (GimpOperationDesaturate, gimp_operation_desaturate,
 
 
 static void
-gimp_operation_desaturate_class_init (GimpOperationDesaturateClass * klass)
+gimp_operation_desaturate_class_init (GimpOperationDesaturateClass *klass)
 {
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);

@@ -74,7 +74,7 @@ static guint tile_sink_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_operation_tile_sink_class_init (GimpOperationTileSinkClass * klass)
+gimp_operation_tile_sink_class_init (GimpOperationTileSinkClass *klass)
 {
   GObjectClass           *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass     *operation_class = GEGL_OPERATION_CLASS (klass);

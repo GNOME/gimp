@@ -69,7 +69,7 @@ G_DEFINE_TYPE (GimpOperationTileSource, gimp_operation_tile_source,
 
 
 static void
-gimp_operation_tile_source_class_init (GimpOperationTileSourceClass * klass)
+gimp_operation_tile_source_class_init (GimpOperationTileSourceClass *klass)
 {
   GObjectClass             *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);

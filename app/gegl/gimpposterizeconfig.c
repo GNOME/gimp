@@ -55,7 +55,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpPosterizeConfig, gimp_posterize_config,
 
 
 static void
-gimp_posterize_config_class_init (GimpPosterizeConfigClass * klass)
+gimp_posterize_config_class_init (GimpPosterizeConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 

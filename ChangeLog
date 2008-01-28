@@ -1,5 +1,19 @@
 2008-01-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimpcolorbalanceconfig.c
+	* app/gegl/gimpcolorizeconfig.c
+	* app/gegl/gimpcurvesconfig.c
+	* app/gegl/gimphuesaturationconfig.c
+	* app/gegl/gimplevelsconfig.c
+	* app/gegl/gimpoperationdesaturate.c
+	* app/gegl/gimpoperationtilesink.c
+	* app/gegl/gimpoperationtilesource.c
+	* app/gegl/gimpposterizeconfig.c
+	* app/gegl/gimpthresholdconfig.c: coding style paranoia: changed
+	one byte per file.
+
+2008-01-28  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpconfig/gimpconfig-serialize.c
 	(gimp_config_serialize_property): fix API docs.
 

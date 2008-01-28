@@ -59,7 +59,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpThresholdConfig, gimp_threshold_config,
 
 
 static void
-gimp_threshold_config_class_init (GimpThresholdConfigClass * klass)
+gimp_threshold_config_class_init (GimpThresholdConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
