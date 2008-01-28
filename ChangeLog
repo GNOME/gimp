@@ -1,3 +1,9 @@
+2008-01-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/keyboard-shortcuts-dialog.c
+	(keyboard_shortcuts_dialog_new): don't show the horizontal
+	scrollbar if it's not needed.
+
 2008-01-28  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.[ch] (gimp_display_shell_snap_coords):
