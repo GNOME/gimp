@@ -977,8 +977,7 @@ load_image (const gchar *filename)
     {
       if (error)
         {
-          g_message (_("Could not open '%s' for reading: %s"),
-                     gimp_filename_to_utf8 (filename), error->message);
+          g_message (error->message);
           g_error_free (error);
         }
       else
