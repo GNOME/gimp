@@ -1530,14 +1530,12 @@ lcms_dialog (GimpColorConfig *config,
                         &values->bpc);
     }
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
-
-  gtk_widget_hide (dialog);
-
-  if (run)
+  while ((run = gimp_dialog_run (GIMP_DIALOG (dialog))) == GTK_RESPONSE_OK)
     {
       gchar       *filename = gimp_color_profile_combo_box_get_active (box);
       cmsHPROFILE  dest_profile;
+
+      gtk_widget_set_sensitive (dialog, FALSE);
 
       if (filename)
         {
@@ -1548,23 +1546,32 @@ lcms_dialog (GimpColorConfig *config,
           dest_profile = cmsCreate_sRGBProfile ();
         }
 
-      if (lcms_icc_profile_is_rgb (dest_profile))
+      if (dest_profile)
         {
-          if (apply)
-            success = lcms_image_apply_profile (image,
-                                                src_profile, dest_profile,
-                                                filename,
-                                                values->intent, values->bpc);
+          if (lcms_icc_profile_is_rgb (dest_profile))
+            {
+              if (apply)
+                success = lcms_image_apply_profile (image,
+                                                    src_profile, dest_profile,
+                                                    filename,
+                                                    values->intent,
+                                                    values->bpc);
+              else
+                success = lcms_image_set_profile (image,
+                                                  dest_profile, filename, TRUE);
+            }
           else
-            success = lcms_image_set_profile (image,
-                                              dest_profile, filename, TRUE);
-        }
-      else
-        {
-          gimp_message (_("Destination profile is not for RGB color space."));
+            {
+              gimp_message (_("Destination profile is not for RGB color space."));
+            }
+
+          cmsCloseProfile (dest_profile);
         }
 
-      cmsCloseProfile (dest_profile);
+      if (success)
+        break;
+      else
+        gtk_widget_set_sensitive (dialog, TRUE);
     }
 
   gtk_widget_destroy (dialog);
