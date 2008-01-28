@@ -220,28 +220,27 @@ gimp_operation_tile_source_process (GeglOperation       *operation,
                                     const GeglRectangle *result)
 {
   GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (operation);
+  const Babl              *format;
+  PixelRegion              srcPR;
+  gpointer                 pr;
 
-  if (self->tile_manager)
+  if (! self->tile_manager)
+    return FALSE;
+
+  format = gegl_operation_get_format (operation, "output");
+
+  pixel_region_init (&srcPR, self->tile_manager,
+                     result->x,     result->y,
+                     result->width, result->height,
+                     FALSE);
+
+  for (pr = pixel_regions_register (1, &srcPR);
+       pr;
+       pr = pixel_regions_process (pr))
     {
-      const Babl  *format;
-      PixelRegion  srcPR;
-      gpointer     pr;
+      GeglRectangle rect = { srcPR.x, srcPR.y, srcPR.w, srcPR.h };
 
-      format = gegl_operation_get_format (operation, "output");
-
-      pixel_region_init (&srcPR, self->tile_manager,
-                         result->x,     result->y,
-                         result->width, result->height,
-                         FALSE);
-
-      for (pr = pixel_regions_register (1, &srcPR);
-           pr;
-           pr = pixel_regions_process (pr))
-        {
-          GeglRectangle rect = { srcPR.x, srcPR.y, srcPR.w, srcPR.h };
-
-          gegl_buffer_set (output, &rect, format, srcPR.data, srcPR.rowstride);
-        }
+      gegl_buffer_set (output, &rect, format, srcPR.data, srcPR.rowstride);
     }
 
   return TRUE;

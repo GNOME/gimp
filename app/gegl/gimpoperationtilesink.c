@@ -191,41 +191,38 @@ gimp_operation_tile_sink_process (GeglOperation       *operation,
                                   const GeglRectangle *result)
 {
   GimpOperationTileSink *self = GIMP_OPERATION_TILE_SINK (operation);
+  const Babl            *format;
+  PixelRegion            destPR;
+  guint                  bpp;
+  gpointer               pr;
 
-  if (self->tile_manager)
-    {
-      const Babl  *format;
-      PixelRegion  destPR;
-      guint        bpp = tile_manager_bpp (self->tile_manager);
-      gpointer     pr;
+  if (! self->tile_manager)
+    return FALSE;
 
-      if (self->linear)
-        format = gimp_bpp_to_babl_format_linear (bpp);
-      else
-        format = gimp_bpp_to_babl_format (bpp);
+  bpp = tile_manager_bpp (self->tile_manager);
 
-      pixel_region_init (&destPR, self->tile_manager,
-                         result->x,     result->y,
-                         result->width, result->height,
-                         TRUE);
-
-      for (pr = pixel_regions_register (1, &destPR);
-           pr;
-           pr = pixel_regions_process (pr))
-        {
-          GeglRectangle rect = { destPR.x, destPR.y, destPR.w, destPR.h };
-
-          gegl_buffer_get (input,
-                           1.0, &rect, format, destPR.data, destPR.rowstride);
-        }
-
-      g_signal_emit (operation, tile_sink_signals[DATA_WRITTEN], 0,
-                     result);
-    }
+  if (self->linear)
+    format = gimp_bpp_to_babl_format_linear (bpp);
   else
+    format = gimp_bpp_to_babl_format (bpp);
+
+  pixel_region_init (&destPR, self->tile_manager,
+                     result->x,     result->y,
+                     result->width, result->height,
+                     TRUE);
+
+  for (pr = pixel_regions_register (1, &destPR);
+       pr;
+       pr = pixel_regions_process (pr))
     {
-      g_warning ("no tilemanager?");
+      GeglRectangle rect = { destPR.x, destPR.y, destPR.w, destPR.h };
+
+      gegl_buffer_get (input,
+                       1.0, &rect, format, destPR.data, destPR.rowstride);
     }
+
+  g_signal_emit (operation, tile_sink_signals[DATA_WRITTEN], 0,
+                 result);
 
   return TRUE;
 }
