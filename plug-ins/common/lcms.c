@@ -948,7 +948,7 @@ lcms_image_transform_rgb (gint32                    image,
           break;
 
         default:
-          g_warning ("%s: unexpected bpp", G_GNUC_FUNCTION);
+          g_warning ("%s: unexpected bpp", G_STRLOC);
           continue;
         }
 

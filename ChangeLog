@@ -1,3 +1,9 @@
+2008-01-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/tile-manager.c
+	* plug-ins/common/lcms.c: use G_STRLOC instead of
+	G_GNUC_FUNCTION (which is now deprecated).
+
 2008-01-28  Tor Lillqvist  <tml@novell.com>
 
 	* modules/controller_dx_dinput.c: Make it compile again.
