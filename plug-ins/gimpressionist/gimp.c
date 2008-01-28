@@ -218,23 +218,26 @@ grabarea (void)
   ppm_t        *p;
   gint          x1, y1, x2, y2;
   gint          x, y;
+  gint          width, height;
   gint          row, col;
   gint          rowstride;
   gpointer      pr;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  ppm_new (&infile, x2-x1, y2-y1);
+  width  = x2 - x1;
+  height = y2 - y1;
+
+  ppm_new (&infile, width, height);
   p = &infile;
 
   if (gimp_drawable_has_alpha (drawable->drawable_id))
-    ppm_new (&inalpha, x2-x1, y2-y1);
+    ppm_new (&inalpha, width, height);
 
   rowstride = p->width * 3;
 
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-                       0, 0, x2 - x1, y2 - y1,
-                       FALSE, FALSE);
+  gimp_pixel_rgn_init (&src_rgn,
+                       drawable, x1, y1, width, height, FALSE, FALSE);
 
   for (pr = gimp_pixel_rgns_register (1, &src_rgn);
        pr != NULL;
@@ -331,8 +334,9 @@ gimpressionist_main (void)
   GimpPixelRgn  dest_rgn;
   ppm_t        *p;
   gint          x1, y1, x2, y2;
-  gint          row, col;
   gint          x, y;
+  gint          width, height;
+  gint          row, col;
   gint          rowstride;
   gint          count;
   glong         done;
@@ -341,24 +345,24 @@ gimpressionist_main (void)
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  total = (x2 - x1) * (y2 - y1);
+  width  = x2 - x1;
+  height = y2 - y1;
+
+  total = width * height;
 
   gimp_progress_init (_("Painting"));
 
-  if (!PPM_IS_INITED (&infile))
-    {
-      grabarea ();
-    }
+  if (! PPM_IS_INITED (&infile))
+    grabarea ();
 
   repaint (&infile, (img_has_alpha) ? &inalpha : NULL);
-
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       x1, y1, x2 - x1, y2 - y1,
-                       TRUE, TRUE);
 
   p = &infile;
 
   rowstride = p->width * 3;
+
+  gimp_pixel_rgn_init (&dest_rgn,
+                       drawable, x1, y1, width, height, TRUE, TRUE);
 
   for (pr = gimp_pixel_rgns_register (1, &dest_rgn), count = 0, done = 0;
        pr != NULL;
@@ -454,5 +458,5 @@ gimpressionist_main (void)
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
 }
