@@ -143,9 +143,10 @@ gimp_config_serialize_changed_properties (GimpConfig       *config,
 }
 
 /**
- * gimp_config_serialize_properties:
- * @config: a #GimpConfig.
- * @writer: a #GimpConfigWriter.
+ * gimp_config_serialize_property:
+ * @config:     a #GimpConfig.
+ * @param_spec: a #GParamSpec.
+ * @writer:     a #GimpConfigWriter.
  *
  * This function serializes a single object property to the @writer.
  *

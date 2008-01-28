@@ -1,5 +1,10 @@
 2008-01-28  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpconfig/gimpconfig-serialize.c
+	(gimp_config_serialize_property): fix API docs.
+
+2008-01-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gegl-types.h
 	* app/gegl/Makefile.am
 	* app/gegl/gimpbrightnesscontrastconfig.[ch]: new config object.
