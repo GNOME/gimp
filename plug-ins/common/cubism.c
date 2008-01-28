@@ -424,12 +424,13 @@ cubism (GimpDrawable *drawable,
            pr = gimp_pixel_rgns_process (pr))
         {
           count = src_rgn.w * src_rgn.h;
-          dest = src_rgn.data;
+          dest  = src_rgn.data;
 
           while (count--)
             for (i = 0; i < bytes; i++)
               *dest++ = bg_col[i];
         }
+
       dest = NULL;
     }
 
@@ -440,11 +441,10 @@ cubism (GimpDrawable *drawable,
 
   randomize_indices (num_tiles, random_indices);
 
-  count = 0;
   gimp_pixel_rgn_init (&src_rgn, drawable,
                        x1, y1, x2 - x1, y2 - y1, FALSE, FALSE);
 
-  while (count < num_tiles)
+  for (count = 0; count < num_tiles; count++)
     {
       i = random_indices[count] / (cols + 1);
       j = random_indices[count] % (cols + 1);
@@ -473,14 +473,13 @@ cubism (GimpDrawable *drawable,
 
       gimp_pixel_rgn_get_pixel (&src_rgn, col, ix, iy);
 
-      if (!has_alpha || col[bytes - 1])
+      if (! has_alpha || col[bytes - 1])
         fill_poly_color (&poly, drawable, preview, col, dest);
 
-      count++;
-      if (!preview)
+      if (! preview)
         {
-          if ((count % 5) == 0)
-            gimp_progress_update ((double) count / (double) num_tiles);
+          if (count % 8 == 0)
+            gimp_progress_update ((gdouble) count / (gdouble) num_tiles);
         }
     }
 
@@ -510,17 +509,12 @@ calc_alpha_blend (gdouble *vec,
 {
   gdouble r;
 
-  if (!one_over_dist)
+  if (! one_over_dist)
     return 1.0;
-  else
-    {
-      r = (vec[0] * x + vec[1] * y) * one_over_dist;
-      if (r < 0.2)
-        r = 0.2;
-      else if (r > 1.0)
-        r = 1.0;
-    }
-  return r;
+
+  r = (vec[0] * x + vec[1] * y) * one_over_dist;
+
+  return CLAMP (r, 0.2, 1.0);
 }
 
 static void
@@ -611,8 +605,8 @@ fill_poly_color (Polygon      *poly,
 
   if (poly->npts)
     {
-      gint poly_npts = poly->npts;
       GimpVector2 *curptr;
+      gint         poly_npts = poly->npts;
 
       xs = (gint) (poly->pts[poly_npts-1].x);
       ys = (gint) (poly->pts[poly_npts-1].y);
@@ -685,7 +679,10 @@ fill_poly_color (Polygon      *poly,
                       if (val > 0)
                         {
                           xx = (gdouble) j / (gdouble) SUPERSAMPLE + min_x;
-                          alpha = (gint) (val * calc_alpha_blend (vec, one_over_dist, xx - sx, yy - sy));
+                          alpha = (gint) (val * calc_alpha_blend (vec,
+                                                                  one_over_dist,
+                                                                  xx - sx,
+                                                                  yy - sy));
                           if (preview)
                             {
                               for (b = 0; b < bytes; b++)
@@ -698,13 +695,13 @@ fill_poly_color (Polygon      *poly,
 
 #ifndef USE_READABLE_BUT_SLOW_CODE
                           {
-                            guchar *buf_iter = buf,
-                              *col_iter = col,
-                              *buf_end = buf+bytes;
+                            guchar *buf_iter = buf;
+                            guchar *col_iter = col;
+                            guchar *buf_end  = buf + bytes;
 
                             for(; buf_iter < buf_end; buf_iter++, col_iter++)
-                              *buf_iter = ((guint)(*col_iter * alpha)
-                                           + (((guint)*buf_iter)
+                              *buf_iter = ((guint) (*col_iter * alpha)
+                                           + (((guint) *buf_iter)
                                               * (256 - alpha))) >> 8;
                           }
 #else /* original, pre-ECL code */
