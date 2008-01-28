@@ -84,12 +84,11 @@ gimp_operation_posterize_process (GeglOperation *operation,
   gfloat                   *src    = in_buf;
   gfloat                   *dest   = out_buf;
   gfloat                    levels = config->levels - 1.0;
-  glong                     sample;
 
   if (! config)
     return FALSE;
 
-  for (sample = 0; sample < samples; sample++)
+  while (samples--)
     {
       dest[RED_PIX]   = RINT (src[RED_PIX]   * levels) / levels;
       dest[GREEN_PIX] = RINT (src[GREEN_PIX] * levels) / levels;

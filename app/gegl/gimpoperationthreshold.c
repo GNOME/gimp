@@ -82,12 +82,11 @@ gimp_operation_threshold_process (GeglOperation *operation,
   GimpThresholdConfig      *config = GIMP_THRESHOLD_CONFIG (point->config);
   gfloat                   *src    = in_buf;
   gfloat                   *dest   = out_buf;
-  glong                     sample;
 
   if (! config)
     return FALSE;
 
-  for (sample = 0; sample < samples; sample++)
+  while (samples--)
     {
       gfloat value;
 

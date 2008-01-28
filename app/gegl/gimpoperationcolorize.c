@@ -83,7 +83,6 @@ gimp_operation_colorize_process (GeglOperation *operation,
   gfloat                   *src    = in_buf;
   gfloat                   *dest   = out_buf;
   GimpHSL                   hsl;
-  glong                     sample;
 
   if (! config)
     return FALSE;
@@ -91,7 +90,7 @@ gimp_operation_colorize_process (GeglOperation *operation,
   hsl.h = config->hue;
   hsl.s = config->saturation;
 
-  for (sample = 0; sample < samples; sample++)
+  while (samples--)
     {
       GimpRGB rgb;
       gfloat  lum = GIMP_RGB_LUMINANCE (src[RED_PIX],

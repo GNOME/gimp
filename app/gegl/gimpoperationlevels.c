@@ -114,12 +114,11 @@ gimp_operation_levels_process (GeglOperation *operation,
   GimpLevelsConfig         *config = GIMP_LEVELS_CONFIG (point->config);
   gfloat                   *src    = in_buf;
   gfloat                   *dest   = out_buf;
-  glong                     sample;
 
   if (! config)
     return FALSE;
 
-  for (sample = 0; sample < samples; sample++)
+  while (samples--)
     {
       gint channel;
 

@@ -107,12 +107,11 @@ gimp_operation_curves_process (GeglOperation *operation,
   GimpCurvesConfig         *config = GIMP_CURVES_CONFIG (point->config);
   gfloat                   *src    = in_buf;
   gfloat                   *dest   = out_buf;
-  glong                     sample;
 
   if (! config)
     return FALSE;
 
-  for (sample = 0; sample < samples; sample++)
+  while (samples--)
     {
       gint channel;
 

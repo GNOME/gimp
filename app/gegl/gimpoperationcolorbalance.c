@@ -119,12 +119,11 @@ gimp_operation_color_balance_process (GeglOperation *operation,
   GimpColorBalanceConfig   *config = GIMP_COLOR_BALANCE_CONFIG (point->config);
   gfloat                   *src    = in_buf;
   gfloat                   *dest   = out_buf;
-  glong                     sample;
 
   if (! config)
     return FALSE;
 
-  for (sample = 0; sample < samples; sample++)
+  while (samples--)
     {
       gfloat r = src[RED_PIX];
       gfloat g = src[GREEN_PIX];

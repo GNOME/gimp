@@ -132,12 +132,11 @@ gimp_operation_hue_saturation_process (GeglOperation *operation,
   gfloat                   *src     = in_buf;
   gfloat                   *dest    = out_buf;
   gfloat                    overlap = config->overlap / 2.0;
-  glong                     sample;
 
   if (! config)
     return FALSE;
 
-  for (sample = 0; sample < samples; sample++)
+  while (samples--)
     {
       GimpRGB  rgb;
       GimpHSL  hsl;

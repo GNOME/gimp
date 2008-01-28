@@ -137,9 +137,8 @@ gimp_operation_desaturate_process (GeglOperation *operation,
   GimpOperationDesaturate *self = GIMP_OPERATION_DESATURATE (operation);
   gfloat                  *src  = in_buf;
   gfloat                  *dest = out_buf;
-  glong                    sample;
 
-  for (sample = 0; sample < samples; sample++)
+  while (samples--)
     {
       gfloat value = 0.0;
 
