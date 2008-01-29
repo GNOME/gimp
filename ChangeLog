@@ -1,3 +1,10 @@
+2008-01-29  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme.c: Reverted changes that
+	prevent a seg fault due to bad syntax in LET*, LET, and LETREC.
+	The change enforced R5RS syntax breaking scripts that used bad
+	syntax (missing values) when they were updated to GIMP 2.4.
+
 2008-01-28  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
