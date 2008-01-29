@@ -106,6 +106,41 @@
 	Bumpmap plug-in and adjusts the range of the Depth parameter in
 	the Swirl-Tile script (bug #509608).
 
+2008-01-15  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	Merged from trunk:
+
+	* plug-ins/script-fu/scripts/3d-outline.scm
+	* plug-ins/script-fu/scripts/add-bevel.scm
+	* plug-ins/script-fu/scripts/burn-in-anim.scm
+	* plug-ins/script-fu/scripts/camo.scm
+	* plug-ins/script-fu/scripts/circuit.scm
+	* plug-ins/script-fu/scripts/clothify.scm
+	* plug-ins/script-fu/scripts/coffee.scm
+	* plug-ins/script-fu/scripts/contactsheet.scm
+	* plug-ins/script-fu/scripts/distress-selection.scm
+	* plug-ins/script-fu/scripts/flatland.scm
+	* plug-ins/script-fu/scripts/font-map.scm
+	* plug-ins/script-fu/scripts/fuzzyborder.scm
+	* plug-ins/script-fu/scripts/glossy.scm
+	* plug-ins/script-fu/scripts/land.scm
+	* plug-ins/script-fu/scripts/lava.scm
+	* plug-ins/script-fu/scripts/old-photo.scm
+	* plug-ins/script-fu/scripts/predator.scm
+	* plug-ins/script-fu/scripts/rendermap.scm
+	* plug-ins/script-fu/scripts/ripply-anim.scm
+	* plug-ins/script-fu/scripts/script-fu-set-cmap.scm
+	* plug-ins/script-fu/scripts/select-to-brush.scm
+	* plug-ins/script-fu/scripts/select-to-image.scm
+	* plug-ins/script-fu/scripts/select-to-pattern.scm
+	* plug-ins/script-fu/scripts/speed-text.scm
+	* plug-ins/script-fu/scripts/spinning-globe.scm
+	* plug-ins/script-fu/scripts/test-sphere.scm
+	* plug-ins/script-fu/scripts/text-circle.scm
+	* plug-ins/script-fu/scripts/unsharp-mask.scm
+	* plug-ins/script-fu/scripts/xach-effect.scm: Variables in a let
+	block must be of the form (variable value) per the R5RS.
+
 2008-01-14  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	Merged from trunk:
