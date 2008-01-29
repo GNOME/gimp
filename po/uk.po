@@ -948,7 +948,7 @@ msgstr "Відкрити діалог гістограми"
 
 #: ../app/actions/dialogs-actions.c:111
 msgid "_Selection Editor"
-msgstr "Правка виділеної діл_янки"
+msgstr "Правка виділеної _ділянки"
 
 #: ../app/actions/dialogs-actions.c:112
 msgid "Open the selection editor"
@@ -6792,7 +6792,7 @@ msgstr "_Розмиття кольору:"
 
 #: ../app/dialogs/convert-dialog.c:259
 msgid "Enable dithering of _transparency"
-msgstr "Увімкнути розмивання _прозорості"
+msgstr "Увімкнути розмиття про_зорості"
 
 #: ../app/dialogs/convert-dialog.c:285
 msgid "Converting to indexed colors"

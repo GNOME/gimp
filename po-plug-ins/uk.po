@@ -9188,7 +9188,7 @@ msgstr "_Візуалізація"
 
 #: ../plug-ins/flame/flame.c:1071
 msgid "Co_ntrast:"
-msgstr "_Контраст:"
+msgstr "К_онтраст:"
 
 #: ../plug-ins/flame/flame.c:1085
 msgid "_Gamma:"
