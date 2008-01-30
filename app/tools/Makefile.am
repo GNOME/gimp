@@ -120,6 +120,8 @@ libapptools_a_sources = \
 	gimpperspectiveclonetool.h	\
 	gimpperspectivetool.c		\
 	gimpperspectivetool.h		\
+	gimppolygonselecttool.c		\
+	gimppolygonselecttool.h		\
 	gimpposterizetool.c		\
 	gimpposterizetool.h		\
 	gimprectangleselecttool.c	\

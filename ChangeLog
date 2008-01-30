@@ -1,3 +1,27 @@
+2008-01-30  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Added a Polygon Select Tool which is a primitive selection tool
+	based on Free Hand Select. Code filtered through David Gowers who
+	also made the tool icon. This version of the tool is a for-now
+	solution to bug #119646.
+
+	* app/tools/gimppolygonselecttool.[ch]: The new tool.
+
+	* app/tools/gimp-tools.c: Add the tool.
+
+	* app/tools/Makefile.am: Add tool source.
+
+	* app/widgets/gimphelp-ids.h: Add help id for the tool.
+
+	* libgimpwidgets/gimpstock.[ch]: Setup for the new tool icon.
+
+	* menus/image-menu.xml.in: Add action entry for the tool.
+
+	* themes/Default/images/tools/stock-tool-polygon-select-{16,24}.png:
+	Tool icon graphics.
+
+	* themes/Default/images/Makefile.am: Add tool icon graphics.
+
 2008-01-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpimagemaptool.[ch]: add "GObject **config" return
