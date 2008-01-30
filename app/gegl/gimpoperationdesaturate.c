@@ -70,7 +70,7 @@ gimp_operation_desaturate_class_init (GimpOperationDesaturateClass *klass)
 
   point_class->process       = gimp_operation_desaturate_process;
 
-  gegl_operation_class_set_name (operation_class, "gimp-desaturate");
+  operation_class->name      = "gimp-desaturate";
 
   g_object_class_install_property (object_class,
                                    PROP_MODE,

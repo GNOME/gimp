@@ -56,7 +56,7 @@ gimp_operation_curves_class_init (GimpOperationCurvesClass *klass)
 
   point_class->process       = gimp_operation_curves_process;
 
-  gegl_operation_class_set_name (operation_class, "gimp-curves");
+  operation_class->name      = "gimp-curves";
 
   g_object_class_install_property (object_class,
                                    GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,

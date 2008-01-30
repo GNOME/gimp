@@ -56,7 +56,7 @@ gimp_operation_color_balance_class_init (GimpOperationColorBalanceClass *klass)
 
   point_class->process       = gimp_operation_color_balance_process;
 
-  gegl_operation_class_set_name (operation_class, "gimp-color-balance");
+  operation_class->name      = "gimp-color-balance";
 
   g_object_class_install_property (object_class,
                                    GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,

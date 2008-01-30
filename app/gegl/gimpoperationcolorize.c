@@ -55,7 +55,7 @@ gimp_operation_colorize_class_init (GimpOperationColorizeClass *klass)
 
   point_class->process       = gimp_operation_colorize_process;
 
-  gegl_operation_class_set_name (operation_class, "gimp-colorize");
+  operation_class->name      = "gimp-colorize";
 
   g_object_class_install_property (object_class,
                                    GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,
