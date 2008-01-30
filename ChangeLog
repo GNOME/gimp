@@ -1,7 +1,7 @@
 2008-01-30  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Added a Polygon Select Tool which is a primitive selection tool
-	based on Free Hand Select. Code filtered through David Gowers who
+	based on Free Select Tool. Code filtered through David Gowers who
 	also made the tool icon. This version of the tool is a for-now
 	solution to bug #119646.
 
