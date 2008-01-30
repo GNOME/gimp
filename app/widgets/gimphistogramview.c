@@ -623,7 +623,8 @@ gimp_histogram_view_set_channel (GimpHistogramView    *view,
 {
   g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
 
-  g_object_set (view, "histogram-channel", channel, NULL);
+  if (channel != view->channel)
+    g_object_set (view, "histogram-channel", channel, NULL);
 }
 
 GimpHistogramChannel
@@ -640,7 +641,8 @@ gimp_histogram_view_set_scale (GimpHistogramView  *view,
 {
   g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
 
-  g_object_set (view, "histogram-scale", scale, NULL);
+  if (scale != view->scale)
+    g_object_set (view, "histogram-scale", scale, NULL);
 }
 
 GimpHistogramScale
@@ -658,13 +660,17 @@ gimp_histogram_view_set_range (GimpHistogramView *view,
 {
   g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
 
-  view->start = MIN (start, end);
-  view->end   = MAX (start, end);
+  if (view->start != MIN (start, end) ||
+      view->end   != MAX (start, end))
+    {
+      view->start = MIN (start, end);
+      view->end   = MAX (start, end);
 
-  gtk_widget_queue_draw (GTK_WIDGET (view));
+      gtk_widget_queue_draw (GTK_WIDGET (view));
 
-  g_signal_emit (view, histogram_view_signals[RANGE_CHANGED], 0,
-                 view->start, view->end);
+      g_signal_emit (view, histogram_view_signals[RANGE_CHANGED], 0,
+                     view->start, view->end);
+    }
 }
 
 void

@@ -1,3 +1,11 @@
+2008-01-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimphistogramview.c
+	(gimp_histogram_view_set_channel)
+	(gimp_histogram_view_set_scale)
+	(gimp_histogram_view_set_range): don't emit signals/notifications
+	if the setting didn't change.
+
 2008-01-30  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/gegl/gimpoperationcolorbalance.c:
