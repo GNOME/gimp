@@ -176,6 +176,9 @@ gimp_hue_saturation_config_set_property (GObject      *object,
     {
     case PROP_RANGE:
       self->range = g_value_get_enum (value);
+      g_object_notify (object, "hue");
+      g_object_notify (object, "saturation");
+      g_object_notify (object, "lightness");
       break;
 
     case PROP_HUE:

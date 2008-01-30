@@ -178,6 +178,9 @@ gimp_color_balance_config_set_property (GObject      *object,
     {
     case PROP_RANGE:
       self->range = g_value_get_enum (value);
+      g_object_notify (object, "cyan-red");
+      g_object_notify (object, "magenta-green");
+      g_object_notify (object, "yellow-blue");
       break;
 
     case PROP_CYAN_RED:

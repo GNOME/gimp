@@ -1,3 +1,11 @@
+2008-01-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/gimpcolorbalanceconfig.c
+	* app/gegl/gimpcurvesconfig.c
+	* app/gegl/gimphuesaturationconfig.c
+	* app/gegl/gimplevelsconfig.c: add missing notifications on
+	property changes.
+
 2008-01-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/gimpoperationtilesink.c

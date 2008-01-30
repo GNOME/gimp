@@ -199,6 +199,11 @@ gimp_levels_config_set_property (GObject      *object,
     {
     case PROP_CHANNEL:
       self->channel = g_value_get_enum (value);
+      g_object_notify (object, "gamma");
+      g_object_notify (object, "low-input");
+      g_object_notify (object, "high-input");
+      g_object_notify (object, "low-output");
+      g_object_notify (object, "high-output");
       break;
 
     case PROP_GAMMA:
