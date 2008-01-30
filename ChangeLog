@@ -1,3 +1,7 @@
+2008-01-30  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.4.4 release.
+
 2008-01-29  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.c: Reverted changes that

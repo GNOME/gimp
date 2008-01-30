@@ -288,7 +288,7 @@
 # milliseconds (less time indicates faster marching).  This is an integer
 # value.
 # 
-# (marching-ants-speed 100)
+# (marching-ants-speed 200)
 
 # When enabled, the image window will automatically resize itself when
 # zooming into and out of images.  Possible values are yes and no.

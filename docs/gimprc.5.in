@@ -353,7 +353,7 @@ This is the distance in pixels where Guide and Grid snapping activates.  This
 is an integer value.
 
 .TP
-(marching-ants-speed 100)
+(marching-ants-speed 200)
 
 Speed of marching ants in the selection outline.  This value is in
 milliseconds (less time indicates faster marching).  This is an integer value.
