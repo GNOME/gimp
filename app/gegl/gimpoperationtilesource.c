@@ -79,6 +79,7 @@ gimp_operation_tile_source_class_init (GimpOperationTileSourceClass *klass)
   object_class->set_property          = gimp_operation_tile_source_set_property;
   object_class->get_property          = gimp_operation_tile_source_get_property;
 
+  operation_class->name               = "gimp-tilemanager-source";
   operation_class->prepare            = gimp_operation_tile_source_prepare;
   operation_class->get_defined_region = gimp_operation_tile_source_get_defined_region;
   operation_class->adjust_result_region = NULL; /* the default source is
@@ -89,7 +90,6 @@ gimp_operation_tile_source_class_init (GimpOperationTileSourceClass *klass)
 
   source_class->process               = gimp_operation_tile_source_process;
 
-  gegl_operation_class_set_name (operation_class, "gimp-tilemanager-source");;
 
   g_object_class_install_property (object_class, PROP_TILE_MANAGER,
                                    g_param_spec_boxed ("tile-manager",

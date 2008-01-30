@@ -3,9 +3,15 @@
 	* app/gegl/gimpoperationcolorbalance.c:
 	* app/gegl/gimpoperationcolorize.c:
 	* app/gegl/gimpoperationcurves.c:
+	* app/gegl/gimpoperationdesaturate.c:
+	* app/gegl/gimpoperationhuesaturation.c:
+	* app/gegl/gimpoperationlevels.c:
+	* app/gegl/gimpoperationposterize.c:
+	* app/gegl/gimpoperationthreshold.c:
+	* app/gegl/gimpoperationtilesink.c:
+	* app/gegl/gimpoperationtilesource.c:
 	* app/gegl/gimpoperationdesaturate.c: stop using
-	gegl_operation_class_set_name() for gimp gegl-ops before #warning in
-	build.
+	gegl_operation_class_set_name() for gimp gegl ops.
 
 2008-01-30  Michael Natterer  <mitch@gimp.org>
 

@@ -68,9 +68,9 @@ gimp_operation_desaturate_class_init (GimpOperationDesaturateClass *klass)
   object_class->set_property = gimp_operation_desaturate_set_property;
   object_class->get_property = gimp_operation_desaturate_get_property;
 
-  point_class->process       = gimp_operation_desaturate_process;
-
   operation_class->name      = "gimp-desaturate";
+
+  point_class->process       = gimp_operation_desaturate_process;
 
   g_object_class_install_property (object_class,
                                    PROP_MODE,
