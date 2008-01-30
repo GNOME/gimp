@@ -26,6 +26,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -163,6 +164,7 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
 
   image_map_tool->drawable        = NULL;
   image_map_tool->operation       = NULL;
+  image_map_tool->config          = NULL;
   image_map_tool->image_map       = NULL;
 
   image_map_tool->shell           = NULL;
@@ -187,7 +189,8 @@ gimp_image_map_tool_constructor (GType                  type,
   klass          = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool);
 
   if (klass->get_operation)
-    image_map_tool->operation = klass->get_operation (image_map_tool);
+    image_map_tool->operation = klass->get_operation (image_map_tool,
+                                                      &image_map_tool->config);
 
   return object;
 }
@@ -201,6 +204,12 @@ gimp_image_map_tool_finalize (GObject *object)
     {
       g_object_unref (image_map_tool->operation);
       image_map_tool->operation = NULL;
+    }
+
+  if (image_map_tool->config)
+    {
+      g_object_unref (image_map_tool->config);
+      image_map_tool->config = NULL;
     }
 
   if (image_map_tool->shell)
@@ -480,7 +489,14 @@ gimp_image_map_tool_dialog (GimpImageMapTool *tool)
 static void
 gimp_image_map_tool_reset (GimpImageMapTool *tool)
 {
-  GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->reset (tool);
+  if (GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->reset)
+    {
+      GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->reset (tool);
+    }
+  else if (tool->config)
+    {
+      gimp_config_reset (GIMP_CONFIG (tool->config));
+    }
 }
 
 static void

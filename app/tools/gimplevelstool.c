@@ -75,7 +75,8 @@ static void       gimp_levels_tool_color_picked   (GimpColorTool     *color_tool
                                                    GimpRGB           *color,
                                                    gint               color_index);
 
-static GeglNode * gimp_levels_tool_get_operation  (GimpImageMapTool  *im_tool);
+static GeglNode * gimp_levels_tool_get_operation  (GimpImageMapTool  *im_tool,
+                                                   GObject          **config);
 static void       gimp_levels_tool_map            (GimpImageMapTool  *im_tool);
 static void       gimp_levels_tool_dialog         (GimpImageMapTool  *im_tool);
 static void       gimp_levels_tool_dialog_unmap   (GtkWidget         *dialog,
@@ -87,7 +88,10 @@ static gboolean   gimp_levels_tool_settings_load  (GimpImageMapTool  *im_tool,
 static gboolean   gimp_levels_tool_settings_save  (GimpImageMapTool  *im_tool,
                                                    gpointer           fp);
 
-static void       levels_update_adjustments       (GimpLevelsTool    *tool);
+static void       gimp_levels_tool_config_notify  (GObject           *object,
+                                                   GParamSpec        *pspec,
+                                                   GimpLevelsTool    *tool);
+
 static void       levels_update_input_bar         (GimpLevelsTool    *tool);
 
 static void       levels_channel_callback         (GtkWidget         *widget,
@@ -185,12 +189,6 @@ gimp_levels_tool_finalize (GObject *object)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (object);
 
-  if (tool->config)
-    {
-      g_object_unref (tool->config);
-      tool->config = NULL;
-    }
-
   gimp_lut_free (tool->lut);
 
   if (tool->hist)
@@ -237,11 +235,6 @@ gimp_levels_tool_initialize (GimpTool     *tool,
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (l_tool->channel_menu),
                                       levels_menu_sensitivity, l_tool, NULL);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (l_tool->channel_menu),
-                                 l_tool->config->channel);
-
-  levels_update_adjustments (l_tool);
-
   gimp_drawable_calculate_histogram (drawable, l_tool->hist);
   gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (l_tool->hist_view),
                                      l_tool->hist);
@@ -250,7 +243,8 @@ gimp_levels_tool_initialize (GimpTool     *tool,
 }
 
 static GeglNode *
-gimp_levels_tool_get_operation (GimpImageMapTool *im_tool)
+gimp_levels_tool_get_operation (GimpImageMapTool  *im_tool,
+                                GObject          **config)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (im_tool);
   GeglNode       *node;
@@ -260,6 +254,12 @@ gimp_levels_tool_get_operation (GimpImageMapTool *im_tool)
                        NULL);
 
   tool->config = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
+
+  *config = G_OBJECT (tool->config);
+
+  g_signal_connect_object (tool->config, "notify",
+                           G_CALLBACK (gimp_levels_tool_config_notify),
+                           G_OBJECT (tool), 0);
 
   gegl_node_set (node,
                  "config", tool->config,
@@ -337,23 +337,24 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
 static void
 gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GimpLevelsTool  *tool         = GIMP_LEVELS_TOOL (image_map_tool);
-  GimpToolOptions *tool_options = GIMP_TOOL_GET_OPTIONS (image_map_tool);
-  GtkListStore    *store;
-  GtkWidget       *vbox;
-  GtkWidget       *vbox2;
-  GtkWidget       *vbox3;
-  GtkWidget       *hbox;
-  GtkWidget       *hbox2;
-  GtkWidget       *label;
-  GtkWidget       *menu;
-  GtkWidget       *frame;
-  GtkWidget       *hbbox;
-  GtkWidget       *button;
-  GtkWidget       *spinbutton;
-  GtkWidget       *bar;
-  GtkObject       *data;
-  gint             border;
+  GimpLevelsTool   *tool         = GIMP_LEVELS_TOOL (image_map_tool);
+  GimpToolOptions  *tool_options = GIMP_TOOL_GET_OPTIONS (image_map_tool);
+  GimpLevelsConfig *config       = tool->config;
+  GtkListStore     *store;
+  GtkWidget        *vbox;
+  GtkWidget        *vbox2;
+  GtkWidget        *vbox3;
+  GtkWidget        *hbox;
+  GtkWidget        *hbox2;
+  GtkWidget        *label;
+  GtkWidget        *menu;
+  GtkWidget        *frame;
+  GtkWidget        *hbbox;
+  GtkWidget        *button;
+  GtkWidget        *spinbutton;
+  GtkWidget        *bar;
+  GtkObject        *data;
+  gint              border;
 
   /*  The option menu for selecting channels  */
   hbox = gtk_hbox_new (FALSE, 6);
@@ -483,7 +484,9 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  spinbutton = gimp_spin_button_new (&data, 0, 0, 255, 1, 10, 10, 0.5, 0);
+  spinbutton = gimp_spin_button_new (&data,
+                                     config->low_input[config->channel] * 255.0,
+                                     0, 255, 1, 10, 10, 0.5, 0);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -496,7 +499,9 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                                   tool->low_input);
 
   /*  input gamma spin  */
-  spinbutton = gimp_spin_button_new (&data, 1, 0.1, 10, 0.01, 0.1, 1, 0.5, 2);
+  spinbutton = gimp_spin_button_new (&data,
+                                     config->gamma[config->channel],
+                                     0.1, 10, 0.01, 0.1, 1, 0.5, 2);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, TRUE, FALSE, 0);
   gimp_help_set_help_data (spinbutton, _("Gamma"), NULL);
   gtk_widget_show (spinbutton);
@@ -525,7 +530,9 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  spinbutton = gimp_spin_button_new (&data, 255, 0, 255, 1, 10, 10, 0.5, 0);
+  spinbutton = gimp_spin_button_new (&data,
+                                     config->high_input[config->channel] * 255.0,
+                                     0, 255, 1, 10, 10, 0.5, 0);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -585,7 +592,9 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (hbox);
 
   /*  low output spin  */
-  spinbutton = gimp_spin_button_new (&data, 0, 0, 255, 1, 10, 10, 0.5, 0);
+  spinbutton = gimp_spin_button_new (&data,
+                                     config->low_output[config->channel] * 255.0,
+                                     0, 255, 1, 10, 10, 0.5, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -598,7 +607,9 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                                   tool->low_output);
 
   /*  high output spin  */
-  spinbutton = gimp_spin_button_new (&data, 255, 0, 255, 1, 10, 10, 0.5, 0);
+  spinbutton = gimp_spin_button_new (&data,
+                                     config->high_output[config->channel] * 255.0,
+                                     0, 255, 1, 10, 10, 0.5, 0);
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -665,6 +676,9 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   g_signal_connect (image_map_tool->shell, "unmap",
                     G_CALLBACK (gimp_levels_tool_dialog_unmap),
                     tool);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->channel_menu),
+                                 config->channel);
 }
 
 static void
@@ -682,12 +696,14 @@ gimp_levels_tool_reset (GimpImageMapTool *image_map_tool)
   GimpLevelsTool       *tool    = GIMP_LEVELS_TOOL (image_map_tool);
   GimpHistogramChannel  channel = tool->config->channel;
 
+  g_object_freeze_notify (G_OBJECT (tool->config));
+
   gimp_config_reset (GIMP_CONFIG (tool->config));
   g_object_set (tool->config,
                 "channel", channel,
                 NULL);
 
-  levels_update_adjustments (tool);
+  g_object_thaw_notify (G_OBJECT (tool->config));
 }
 
 static gboolean
@@ -697,14 +713,7 @@ gimp_levels_tool_settings_load (GimpImageMapTool  *image_map_tool,
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
 
-  if (gimp_levels_config_load_cruft (tool->config, fp, error))
-    {
-      levels_update_adjustments (tool);
-
-      return TRUE;
-    }
-
-  return FALSE;
+  return gimp_levels_config_load_cruft (tool->config, fp, error);
 }
 
 static gboolean
@@ -717,36 +726,62 @@ gimp_levels_tool_settings_save (GimpImageMapTool *image_map_tool,
 }
 
 static void
-levels_update_adjustments (GimpLevelsTool *tool)
+gimp_levels_tool_config_notify (GObject        *object,
+                                GParamSpec     *pspec,
+                                GimpLevelsTool *tool)
 {
-  GimpLevelsConfig *config = tool->config;
+  GimpLevelsConfig *config = GIMP_LEVELS_CONFIG (object);
 
-  tool->low_input->upper    = 255;
-  tool->high_input->lower   = 0;
-  tool->gamma_linear->lower = 0;
-  tool->gamma_linear->upper = 255;
+  if (! tool->low_input)
+    return;
 
-  gtk_adjustment_set_value (tool->low_input,
-                            config->low_input[config->channel]  * 255.0);
-  gtk_adjustment_set_value (tool->gamma,
-                            config->gamma[config->channel]);
-  gtk_adjustment_set_value (tool->high_input,
-                            config->high_input[config->channel] * 255.0);
+  if (! strcmp (pspec->name, "channel"))
+    {
+      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->hist_view),
+                                       config->channel);
+      gimp_color_bar_set_channel (GIMP_COLOR_BAR (tool->output_bar),
+                                  config->channel);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->channel_menu),
+                                     config->channel);
+    }
+  else if (! strcmp (pspec->name, "gamma")     ||
+           ! strcmp (pspec->name, "low-input") ||
+           ! strcmp (pspec->name, "high-input"))
+    {
+      tool->low_input->upper    = 255;
+      tool->high_input->lower   = 0;
+      tool->gamma_linear->lower = 0;
+      tool->gamma_linear->upper = 255;
 
-  tool->low_input->upper    = tool->high_input->value;
-  tool->high_input->lower   = tool->low_input->value;
-  tool->gamma_linear->lower = tool->low_input->value;
-  tool->gamma_linear->upper = tool->high_input->value;
-  gtk_adjustment_changed (tool->low_input);
-  gtk_adjustment_changed (tool->high_input);
-  gtk_adjustment_changed (tool->gamma_linear);
+      gtk_adjustment_set_value (tool->low_input,
+                                config->low_input[config->channel]  * 255.0);
+      gtk_adjustment_set_value (tool->gamma,
+                                config->gamma[config->channel]);
+      gtk_adjustment_set_value (tool->high_input,
+                                config->high_input[config->channel] * 255.0);
 
-  gtk_adjustment_set_value (tool->low_output,
-                            config->low_output[config->channel]  * 255.0);
-  gtk_adjustment_set_value (tool->high_output,
-                            config->high_output[config->channel] * 255.0);
+      tool->low_input->upper    = tool->high_input->value;
+      tool->high_input->lower   = tool->low_input->value;
+      tool->gamma_linear->lower = tool->low_input->value;
+      tool->gamma_linear->upper = tool->high_input->value;
+      gtk_adjustment_changed (tool->low_input);
+      gtk_adjustment_changed (tool->high_input);
+      gtk_adjustment_changed (tool->gamma_linear);
 
-  levels_update_input_bar (tool);
+      levels_update_input_bar (tool);
+    }
+  else if (! strcmp (pspec->name, "low-output"))
+    {
+      gtk_adjustment_set_value (tool->low_output,
+                                config->low_output[config->channel] * 255.0);
+    }
+  else if (! strcmp (pspec->name, "high-output"))
+    {
+      gtk_adjustment_set_value (tool->high_output,
+                                config->high_output[config->channel] * 255.0);
+    }
+
+  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
 }
 
 static void
@@ -810,18 +845,12 @@ levels_channel_callback (GtkWidget      *widget,
 {
   gint value;
 
-  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value) &&
+      tool->config->channel != value)
     {
       g_object_set (tool->config,
                     "channel", value,
                     NULL);
-
-      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->hist_view),
-                                       tool->config->channel);
-      gimp_color_bar_set_channel (GIMP_COLOR_BAR (tool->output_bar),
-                                  tool->config->channel);
-
-      levels_update_adjustments (tool);
     }
 }
 
@@ -830,9 +859,6 @@ levels_channel_reset_callback (GtkWidget      *widget,
                                GimpLevelsTool *tool)
 {
   gimp_levels_config_reset_channel (tool->config);
-  levels_update_adjustments (tool);
-
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
 }
 
 static gboolean
@@ -867,9 +893,6 @@ levels_stretch_callback (GtkWidget      *widget,
                          GimpLevelsTool *tool)
 {
   gimp_levels_config_stretch (tool->config, tool->hist, tool->color);
-  levels_update_adjustments (tool);
-
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
 }
 
 static void
@@ -923,9 +946,6 @@ levels_low_input_changed (GtkAdjustment  *adjustment,
       g_object_set (config,
                     "low-input", value / 255.0,
                     NULL);
-      levels_update_input_bar (tool);
-
-      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
     }
 
   levels_linear_gamma_update (tool);
@@ -942,9 +962,6 @@ levels_gamma_changed (GtkAdjustment  *adjustment,
       g_object_set (config,
                     "gamma", adjustment->value,
                     NULL);
-      levels_update_input_bar (tool);
-
-      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
     }
 
   levels_linear_gamma_update (tool);
@@ -967,9 +984,6 @@ levels_high_input_changed (GtkAdjustment  *adjustment,
       g_object_set (config,
                     "high-input", value / 255.0,
                     NULL);
-      levels_update_input_bar (tool);
-
-      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
     }
 
   levels_linear_gamma_update (tool);
@@ -987,8 +1001,6 @@ levels_low_output_changed (GtkAdjustment  *adjustment,
       g_object_set (config,
                     "low-output", value / 255.0,
                     NULL);
-
-      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
     }
 }
 
@@ -1004,8 +1016,6 @@ levels_high_output_changed (GtkAdjustment  *adjustment,
       g_object_set (config,
                     "high-output", value / 255.0,
                     NULL);
-
-      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
     }
 }
 
@@ -1103,8 +1113,4 @@ gimp_levels_tool_color_picked (GimpColorTool      *color_tool,
       levels_input_adjust_by_color (tool->config,
                                     value, tool->config->channel, color);
     }
-
-  levels_update_adjustments (tool);
-
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
 }

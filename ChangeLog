@@ -1,5 +1,31 @@
 2008-01-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpimagemaptool.[ch]: add "GObject **config" return
+	value to GimpImageMapTool::get_operation() and memory-manage the
+	config object here.
+
+	Add default implementation of GimpImageMapTool::reset() which
+	calls gimp_config_reset() on the config object.
+
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c: return the config object in
+	get_operation() and don't unref it in finalize().
+
+	Connect to the config object's "notify" signal and update the GUI
+	in the callback. Also call gimp_image_map_tool_preview() there.
+	Removed all other GUI update functions and all calls to preview().
+
+	Removed reset() implementations which only called
+	gimp_config_reset().
+
+2008-01-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimphistogramview.c
 	(gimp_histogram_view_set_channel)
 	(gimp_histogram_view_set_scale)
