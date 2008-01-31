@@ -256,8 +256,8 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Email the image"),
-			  "You need to have uuencode and mail installed",
+			  N_("Send the image by email"),
+			  "You need to have sendmail installed",
 			  "Adrian Likins, Reagan Blundell",
 			  "Adrian Likins, Reagan Blundell, Daniel Risacher, "
                           "Spencer Kimball and Peter Mattis",
