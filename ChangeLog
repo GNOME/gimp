@@ -31,7 +31,7 @@
 
 	* menus/image-menu.xml.in: Add action entry for the tool.
 
-	* themes/Default/images/tools/stock-tool-polygon-select-{16,24}.png:
+	* themes/Default/images/tools/stock-tool-polygon-select-{16,22}.png:
 	Tool icon graphics.
 
 	* themes/Default/images/Makefile.am: Add tool icon graphics.
