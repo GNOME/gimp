@@ -21,12 +21,16 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
 #include "base/gimplut.h"
 #include "base/lut-funcs.h"
+
+#include "gegl/gimpposterizeconfig.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -41,8 +45,6 @@
 #include "gimp-intl.h"
 
 
-#define POSTERIZE_DEFAULT_LEVELS 3
-
 #define SLIDER_WIDTH 200
 
 
@@ -52,10 +54,14 @@ static gboolean   gimp_posterize_tool_initialize     (GimpTool          *tool,
                                                       GimpDisplay       *display,
                                                       GError           **error);
 
-static GeglNode * gimp_posterize_tool_get_operation  (GimpImageMapTool  *im_tool);
+static GeglNode * gimp_posterize_tool_get_operation  (GimpImageMapTool  *im_tool,
+                                                      GObject          **config);
 static void       gimp_posterize_tool_map            (GimpImageMapTool  *im_tool);
 static void       gimp_posterize_tool_dialog         (GimpImageMapTool  *im_tool);
-static void       gimp_posterize_tool_reset          (GimpImageMapTool  *im_tool);
+
+static void       gimp_posterize_tool_config_notify  (GObject           *object,
+                                                      GParamSpec        *pspec,
+                                                      GimpPosterizeTool *posterize_tool);
 
 static void       gimp_posterize_tool_levels_changed (GtkAdjustment     *adjustment,
                                                       GimpPosterizeTool *posterize_tool);
@@ -99,7 +105,6 @@ gimp_posterize_tool_class_init (GimpPosterizeToolClass *klass)
   im_tool_class->get_operation = gimp_posterize_tool_get_operation;
   im_tool_class->map           = gimp_posterize_tool_map;
   im_tool_class->dialog        = gimp_posterize_tool_dialog;
-  im_tool_class->reset         = gimp_posterize_tool_reset;
 }
 
 static void
@@ -107,8 +112,7 @@ gimp_posterize_tool_init (GimpPosterizeTool *posterize_tool)
 {
   GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (posterize_tool);
 
-  posterize_tool->levels = POSTERIZE_DEFAULT_LEVELS;
-  posterize_tool->lut    = gimp_lut_new ();
+  posterize_tool->lut = gimp_lut_new ();
 
   im_tool->apply_func = (GimpImageMapApplyFunc) gimp_lut_process;
   im_tool->apply_data = posterize_tool->lut;
@@ -148,12 +152,12 @@ gimp_posterize_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  posterize_tool->levels = POSTERIZE_DEFAULT_LEVELS;
+  gimp_config_reset (GIMP_CONFIG (posterize_tool->config));
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
   gtk_adjustment_set_value (posterize_tool->levels_data,
-                            posterize_tool->levels);
+                            posterize_tool->config->levels);
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (posterize_tool));
 
@@ -161,11 +165,29 @@ gimp_posterize_tool_initialize (GimpTool     *tool,
 }
 
 static GeglNode *
-gimp_posterize_tool_get_operation (GimpImageMapTool *im_tool)
+gimp_posterize_tool_get_operation (GimpImageMapTool  *image_map_tool,
+                                   GObject          **config)
 {
-  return g_object_new (GEGL_TYPE_NODE,
+  GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (image_map_tool);
+  GeglNode          *node;
+
+  node = g_object_new (GEGL_TYPE_NODE,
                        "operation", "gimp-posterize",
                        NULL);
+
+  posterize_tool->config = g_object_new (GIMP_TYPE_POSTERIZE_CONFIG, NULL);
+
+  *config = G_OBJECT (posterize_tool->config);
+
+  g_signal_connect_object (posterize_tool->config, "notify",
+                           G_CALLBACK (gimp_posterize_tool_config_notify),
+                           G_OBJECT (posterize_tool), 0);
+
+  gegl_node_set (node,
+                 "config", posterize_tool->config,
+                 NULL);
+
+  return node;
 }
 
 static void
@@ -173,12 +195,8 @@ gimp_posterize_tool_map (GimpImageMapTool *image_map_tool)
 {
   GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (image_map_tool);
 
-  gegl_node_set (image_map_tool->operation,
-                 "levels", posterize_tool->levels,
-                 NULL);
-
   posterize_lut_setup (posterize_tool->lut,
-                       posterize_tool->levels,
+                       posterize_tool->config->levels,
                        gimp_drawable_bytes (image_map_tool->drawable));
 }
 
@@ -204,7 +222,7 @@ gimp_posterize_tool_dialog (GimpImageMapTool *image_map_tool)
 
   data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                                _("Posterize _levels:"), SLIDER_WIDTH, -1,
-                               posterize_tool->levels,
+                               posterize_tool->config->levels,
                                2.0, 256.0, 1.0, 10.0, 0,
                                TRUE, 0.0, 0.0,
                                NULL, NULL);
@@ -218,24 +236,31 @@ gimp_posterize_tool_dialog (GimpImageMapTool *image_map_tool)
 }
 
 static void
-gimp_posterize_tool_reset (GimpImageMapTool *image_map_tool)
+gimp_posterize_tool_config_notify (GObject           *object,
+                                   GParamSpec        *pspec,
+                                   GimpPosterizeTool *posterize_tool)
 {
-  GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (image_map_tool);
+  GimpPosterizeConfig *config = GIMP_POSTERIZE_CONFIG (object);
 
-  posterize_tool->levels = POSTERIZE_DEFAULT_LEVELS;
+  if (! posterize_tool->levels_data)
+    return;
 
-  gtk_adjustment_set_value (posterize_tool->levels_data,
-                            posterize_tool->levels);
+  gtk_adjustment_set_value (posterize_tool->levels_data, config->levels);
+
+  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (posterize_tool));
 }
 
 static void
 gimp_posterize_tool_levels_changed (GtkAdjustment     *adjustment,
                                     GimpPosterizeTool *posterize_tool)
 {
-  if (posterize_tool->levels != adjustment->value)
-    {
-      posterize_tool->levels = adjustment->value;
+  GimpPosterizeConfig *config = posterize_tool->config;
+  gint                 value  = ROUND (adjustment->value);
 
-      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (posterize_tool));
+  if (config->levels != value)
+    {
+      g_object_set (config,
+                    "levels", value,
+                    NULL);
     }
 }

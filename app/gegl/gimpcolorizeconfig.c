@@ -23,6 +23,8 @@
 
 #include <gegl.h>
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "gegl-types.h"
 
 /*  temp cruft  */
@@ -50,13 +52,15 @@ static void   gimp_colorize_config_set_property (GObject      *object,
                                                  GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpColorizeConfig, gimp_colorize_config, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_CODE (GimpColorizeConfig, gimp_colorize_config,
+                         G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_colorize_config_parent_class
 
 
 static void
-gimp_colorize_config_class_init (GimpColorizeConfigClass * klass)
+gimp_colorize_config_class_init (GimpColorizeConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -147,19 +151,6 @@ gimp_colorize_config_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-
-/*  public functions  */
-
-void
-gimp_colorize_config_reset (GimpColorizeConfig *config)
-{
-  g_return_if_fail (GIMP_IS_COLORIZE_CONFIG (config));
-
-  config->hue        = 0.5;
-  config->saturation = 0.5;
-  config->lightness  = 0.0;
 }
 
 

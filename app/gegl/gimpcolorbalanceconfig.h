@@ -54,9 +54,7 @@ struct _GimpColorBalanceConfigClass
 
 GType   gimp_color_balance_config_get_type    (void) G_GNUC_CONST;
 
-void    gimp_color_balance_config_reset       (GimpColorBalanceConfig *config);
-void    gimp_color_balance_config_reset_range (GimpColorBalanceConfig *config,
-                                               GimpTransferMode        range);
+void    gimp_color_balance_config_reset_range (GimpColorBalanceConfig *config);
 
 /*  temp cruft  */
 void    gimp_color_balance_config_to_cruft    (GimpColorBalanceConfig *config,

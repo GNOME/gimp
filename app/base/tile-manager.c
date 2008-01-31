@@ -400,7 +400,7 @@ tile_manager_map_tile (TileManager *tm,
 
   if (G_UNLIKELY (num < 0))
     {
-      g_warning ("%s: tile coordinates out of range.", G_GNUC_FUNCTION);
+      g_warning ("%s: tile coordinates out of range.", G_STRLOC);
       return;
     }
 
@@ -427,13 +427,13 @@ tile_manager_map (TileManager *tm,
 
   if (G_UNLIKELY ((tile_num < 0) || (tile_num >= ntiles)))
     {
-      g_warning ("%s: tile out of range", G_GNUC_FUNCTION);
+      g_warning ("%s: tile out of range", G_STRLOC);
       return;
     }
 
   if (G_UNLIKELY (! tm->tiles))
     {
-      g_warning ("%s: empty tile level - initializing", G_GNUC_FUNCTION);
+      g_warning ("%s: empty tile level - initializing", G_STRLOC);
 
       tm->tiles = g_new (Tile *, ntiles);
       tiles = tm->tiles;
@@ -475,14 +475,14 @@ tile_manager_map (TileManager *tm,
 #endif
 
   if (G_UNLIKELY (! srctile->valid))
-    g_warning("%s: srctile not validated yet!  please report", G_GNUC_FUNCTION);
+    g_warning("%s: srctile not validated yet!  please report", G_STRLOC);
 
   if (G_UNLIKELY ((*tile_ptr)->ewidth  != srctile->ewidth  ||
                   (*tile_ptr)->eheight != srctile->eheight ||
                   (*tile_ptr)->bpp     != srctile->bpp))
     {
       g_warning ("%s: nonconformant map (%p -> %p)",
-                 G_GNUC_FUNCTION, srctile, *tile_ptr);
+                 G_STRLOC, srctile, *tile_ptr);
     }
 
   tile_detach (*tile_ptr, tm, tile_num);
@@ -645,7 +645,7 @@ tile_manager_get_tile_coordinates (TileManager *tm,
 
   if (G_UNLIKELY (tl == NULL))
     {
-      g_warning ("%s: tile not attached to manager", G_GNUC_FUNCTION);
+      g_warning ("%s: tile not attached to manager", G_STRLOC);
       return;
     }
 
@@ -689,7 +689,7 @@ tile_manager_map_over_tile (TileManager *tm,
 
   if (G_UNLIKELY (tl == NULL))
     {
-      g_warning ("%s: tile not attached to manager", G_GNUC_FUNCTION);
+      g_warning ("%s: tile not attached to manager", G_STRLOC);
       return;
     }
 

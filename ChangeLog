@@ -1,5 +1,9 @@
 2008-01-31  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 	
+	Merged 24710:24758 from trunk.
+	
+2008-01-31  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+	
 	* app/core/gimp.c: fix merge error from previous commit
 
 	* app/actions/data-commands.c

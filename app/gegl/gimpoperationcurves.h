@@ -23,8 +23,7 @@
 #define __GIMP_OPERATION_CURVES_H__
 
 
-#include <gegl-plugin.h>
-#include <operation/gegl-operation-point-filter.h>
+#include "gimpoperationpointfilter.h"
 
 
 #define GIMP_TYPE_OPERATION_CURVES            (gimp_operation_curves_get_type ())
@@ -39,14 +38,12 @@ typedef struct _GimpOperationCurvesClass GimpOperationCurvesClass;
 
 struct _GimpOperationCurves
 {
-  GeglOperationPointFilter  parent_instance;
-
-  GimpCurvesConfig         *config;
+  GimpOperationPointFilter  parent_instance;
 };
 
 struct _GimpOperationCurvesClass
 {
-  GeglOperationPointFilterClass  parent_class;
+  GimpOperationPointFilterClass  parent_class;
 };
 
 

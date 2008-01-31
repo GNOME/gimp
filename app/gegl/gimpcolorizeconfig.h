@@ -50,8 +50,6 @@ struct _GimpColorizeConfigClass
 
 GType   gimp_colorize_config_get_type (void) G_GNUC_CONST;
 
-void    gimp_colorize_config_reset    (GimpColorizeConfig *config);
-
 /*  temp cruft  */
 void    gimp_colorize_config_to_cruft (GimpColorizeConfig *config,
                                        Colorize           *cruft);

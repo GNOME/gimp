@@ -23,8 +23,7 @@
 #define __GIMP_OPERATION_COLOR_BALANCE_H__
 
 
-#include <gegl-plugin.h>
-#include <operation/gegl-operation-point-filter.h>
+#include "gimpoperationpointfilter.h"
 
 
 #define GIMP_TYPE_OPERATION_COLOR_BALANCE            (gimp_operation_color_balance_get_type ())
@@ -39,14 +38,12 @@ typedef struct _GimpOperationColorBalanceClass GimpOperationColorBalanceClass;
 
 struct _GimpOperationColorBalance
 {
-  GeglOperationPointFilter  parent_instance;
-
-  GimpColorBalanceConfig   *config;
+  GimpOperationPointFilter  parent_instance;
 };
 
 struct _GimpOperationColorBalanceClass
 {
-  GeglOperationPointFilterClass  parent_class;
+  GimpOperationPointFilterClass  parent_class;
 };
 
 

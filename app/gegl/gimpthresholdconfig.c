@@ -23,6 +23,8 @@
 
 #include <gegl.h>
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "gegl-types.h"
 
 /*  temp cruft  */
@@ -49,14 +51,15 @@ static void   gimp_threshold_config_set_property (GObject      *object,
                                                   GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpThresholdConfig, gimp_threshold_config,
-               G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_CODE (GimpThresholdConfig, gimp_threshold_config,
+                         G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_threshold_config_parent_class
 
 
 static void
-gimp_threshold_config_class_init (GimpThresholdConfigClass * klass)
+gimp_threshold_config_class_init (GimpThresholdConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -131,18 +134,6 @@ gimp_threshold_config_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-
-/*  public functions  */
-
-void
-gimp_threshold_config_reset (GimpThresholdConfig *config)
-{
-  g_return_if_fail (GIMP_IS_THRESHOLD_CONFIG (config));
-
-  config->low  = 0.5;
-  config->high = 1.0;
 }
 
 

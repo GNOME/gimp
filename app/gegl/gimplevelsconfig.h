@@ -56,9 +56,7 @@ struct _GimpLevelsConfigClass
 
 GType      gimp_levels_config_get_type         (void) G_GNUC_CONST;
 
-void       gimp_levels_config_reset            (GimpLevelsConfig      *config);
-void       gimp_levels_config_reset_channel    (GimpLevelsConfig      *config,
-                                                GimpHistogramChannel   channel);
+void       gimp_levels_config_reset_channel    (GimpLevelsConfig      *config);
 
 void       gimp_levels_config_stretch          (GimpLevelsConfig      *config,
                                                 GimpHistogram         *histogram,

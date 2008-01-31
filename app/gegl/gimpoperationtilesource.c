@@ -69,7 +69,7 @@ G_DEFINE_TYPE (GimpOperationTileSource, gimp_operation_tile_source,
 
 
 static void
-gimp_operation_tile_source_class_init (GimpOperationTileSourceClass * klass)
+gimp_operation_tile_source_class_init (GimpOperationTileSourceClass *klass)
 {
   GObjectClass             *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
@@ -79,6 +79,7 @@ gimp_operation_tile_source_class_init (GimpOperationTileSourceClass * klass)
   object_class->set_property          = gimp_operation_tile_source_set_property;
   object_class->get_property          = gimp_operation_tile_source_get_property;
 
+  operation_class->name               = "gimp-tilemanager-source";
   operation_class->prepare            = gimp_operation_tile_source_prepare;
   operation_class->get_defined_region = gimp_operation_tile_source_get_defined_region;
   operation_class->adjust_result_region = NULL; /* the default source is
@@ -89,7 +90,6 @@ gimp_operation_tile_source_class_init (GimpOperationTileSourceClass * klass)
 
   source_class->process               = gimp_operation_tile_source_process;
 
-  gegl_operation_class_set_name (operation_class, "gimp-tilemanager-source");;
 
   g_object_class_install_property (object_class, PROP_TILE_MANAGER,
                                    g_param_spec_boxed ("tile-manager",
@@ -220,28 +220,27 @@ gimp_operation_tile_source_process (GeglOperation       *operation,
                                     const GeglRectangle *result)
 {
   GimpOperationTileSource *self = GIMP_OPERATION_TILE_SOURCE (operation);
+  const Babl              *format;
+  PixelRegion              srcPR;
+  gpointer                 pr;
 
-  if (self->tile_manager)
+  if (! self->tile_manager)
+    return FALSE;
+
+  format = gegl_operation_get_format (operation, "output");
+
+  pixel_region_init (&srcPR, self->tile_manager,
+                     result->x,     result->y,
+                     result->width, result->height,
+                     FALSE);
+
+  for (pr = pixel_regions_register (1, &srcPR);
+       pr;
+       pr = pixel_regions_process (pr))
     {
-      const Babl  *format;
-      PixelRegion  srcPR;
-      gpointer     pr;
+      GeglRectangle rect = { srcPR.x, srcPR.y, srcPR.w, srcPR.h };
 
-      format = gegl_operation_get_format (operation, "output");
-
-      pixel_region_init (&srcPR, self->tile_manager,
-                         result->x,     result->y,
-                         result->width, result->height,
-                         FALSE);
-
-      for (pr = pixel_regions_register (1, &srcPR);
-           pr;
-           pr = pixel_regions_process (pr))
-        {
-          GeglRectangle rect = { srcPR.x, srcPR.y, srcPR.w, srcPR.h };
-
-          gegl_buffer_set (output, &rect, format, srcPR.data, srcPR.rowstride);
-        }
+      gegl_buffer_set (output, &rect, format, srcPR.data, srcPR.rowstride);
     }
 
   return TRUE;

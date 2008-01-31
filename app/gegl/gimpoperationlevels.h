@@ -23,8 +23,7 @@
 #define __GIMP_OPERATION_LEVELS_H__
 
 
-#include <gegl-plugin.h>
-#include <operation/gegl-operation-point-filter.h>
+#include "gimpoperationpointfilter.h"
 
 
 #define GIMP_TYPE_OPERATION_LEVELS            (gimp_operation_levels_get_type ())
@@ -39,14 +38,12 @@ typedef struct _GimpOperationLevelsClass GimpOperationLevelsClass;
 
 struct _GimpOperationLevels
 {
-  GeglOperationPointFilter  parent_instance;
-
-  GimpLevelsConfig         *config;
+  GimpOperationPointFilter  parent_instance;
 };
 
 struct _GimpOperationLevelsClass
 {
-  GeglOperationPointFilterClass  parent_class;
+  GimpOperationPointFilterClass  parent_class;
 };
 
 

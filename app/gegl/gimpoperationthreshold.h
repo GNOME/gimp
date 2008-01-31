@@ -23,8 +23,7 @@
 #define __GIMP_OPERATION_THRESHOLD_H__
 
 
-#include <gegl-plugin.h>
-#include <operation/gegl-operation-point-filter.h>
+#include "gimpoperationpointfilter.h"
 
 
 #define GIMP_TYPE_OPERATION_THRESHOLD            (gimp_operation_threshold_get_type ())
@@ -39,14 +38,12 @@ typedef struct _GimpOperationThresholdClass GimpOperationThresholdClass;
 
 struct _GimpOperationThreshold
 {
-  GeglOperationPointFilter  parent_instance;
-
-  GimpThresholdConfig      *config;
+  GimpOperationPointFilter  parent_instance;
 };
 
 struct _GimpOperationThresholdClass
 {
-  GeglOperationPointFilterClass  parent_class;
+  GimpOperationPointFilterClass  parent_class;
 };
 
 

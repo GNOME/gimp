@@ -1,3 +1,8 @@
+2008-01-28  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: add app/gegl/gimpcurvesconfig.c and
+	app/gegl/gimplevelsconfig.c
+
 2008-01-18  Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
 
 	* ru.po: Updated Russian translation.

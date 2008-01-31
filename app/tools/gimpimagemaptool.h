@@ -42,6 +42,7 @@ struct _GimpImageMapTool
   GimpDrawable          *drawable;
 
   GeglNode              *operation;
+  GObject               *config;
   GimpImageMapApplyFunc  apply_func;
   gpointer               apply_data;
 
@@ -69,7 +70,8 @@ struct _GimpImageMapToolClass
   const gchar        *save_dialog_title;
 
   /* virtual functions */
-  GeglNode * (* get_operation) (GimpImageMapTool  *image_map_tool);
+  GeglNode * (* get_operation) (GimpImageMapTool  *image_map_tool,
+                                GObject          **config);
   void       (* map)           (GimpImageMapTool  *image_map_tool);
   void       (* dialog)        (GimpImageMapTool  *image_map_tool);
   void       (* reset)         (GimpImageMapTool  *image_map_tool);

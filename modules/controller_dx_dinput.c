@@ -64,7 +64,7 @@ enum
 #define NUM_EVENTS_PER_SLIDER 2 /* Slider decrease and increase */
 #define NUM_EVENTS_PER_POV 3    /* POV view vector X and Y view and return */
 
-#define CONTROLLER_TYPE_DX_DINPUT            (controller_dx_input_get_type ())
+#define CONTROLLER_TYPE_DX_DINPUT            (controller_dx_dinput_get_type ())
 #define CONTROLLER_DX_DINPUT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CONTROLLER_TYPE_DX_DINPUT, ControllerDXDInput))
 #define CONTROLLER_DX_DINPUT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CONTROLLER_TYPE_DX_DINPUT, ControllerDXDInputClass))
 #define CONTROLLER_IS_DX_DINPUT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CONTROLLER_TYPE_DX_DINPUT))
@@ -161,7 +161,7 @@ static const GimpModuleInfo dx_dinput_info =
 };
 
 
-G_DEFINE_DYNAMIC_TYPE (ControllerDXInput, controller_dx_input,
+G_DEFINE_DYNAMIC_TYPE (ControllerDXDInput, controller_dx_dinput,
                        GIMP_TYPE_CONTROLLER)
 
 
@@ -240,7 +240,7 @@ dx_dinput_dispose (GObject *object)
 
   dx_dinput_set_device (controller, NULL);
 
-  G_OBJECT_CLASS (controller_dx_input_parent_class)->dispose (object);
+  G_OBJECT_CLASS (controller_dx_dinput_parent_class)->dispose (object);
 }
 
 static void
@@ -280,7 +280,7 @@ dx_dinput_finalize (GObject *object)
       controller->store = NULL;
     }
 
-  G_OBJECT_CLASS (controller_dx_input_parent_class)->finalize (object);
+  G_OBJECT_CLASS (controller_dx_dinput_parent_class)->finalize (object);
 }
 
 static void
@@ -892,7 +892,6 @@ dump_data_format (const DIDATAFORMAT *format)
 #undef BIT
       g_print ("\n");
       g_print ("  dwFlags:");
-#define BIT(x) if (oformat->dwFlags & DIDOI_ASPECT##x) g_print (" DIDOI_ASPECT"#x)
       switch (oformat->dwFlags & DIDOI_ASPECTACCEL)
         {
         case DIDOI_ASPECTPOSITION: g_print (" DIDOI_ASPECTPOSITION"); break;

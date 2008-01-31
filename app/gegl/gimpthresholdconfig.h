@@ -49,8 +49,6 @@ struct _GimpThresholdConfigClass
 
 GType   gimp_threshold_config_get_type (void) G_GNUC_CONST;
 
-void    gimp_threshold_config_reset    (GimpThresholdConfig *config);
-
 /*  temp cruft  */
 void    gimp_threshold_config_to_cruft (GimpThresholdConfig *config,
                                         Threshold           *cruft);

@@ -8,6 +8,8 @@ libappgegl_a_SOURCES = \
 	gimp-gegl-utils.c		\
 	gimp-gegl-utils.h		\
 	\
+	gimpbrightnesscontrastconfig.c	\
+	gimpbrightnesscontrastconfig.h	\
 	gimpcolorbalanceconfig.c	\
 	gimpcolorbalanceconfig.h	\
 	gimpcolorizeconfig.c		\
@@ -18,6 +20,8 @@ libappgegl_a_SOURCES = \
 	gimphuesaturationconfig.h	\
 	gimplevelsconfig.c		\
 	gimplevelsconfig.h		\
+	gimpposterizeconfig.c		\
+	gimpposterizeconfig.h		\
 	gimpthresholdconfig.c		\
 	gimpthresholdconfig.h		\
 	\
@@ -33,6 +37,8 @@ libappgegl_a_SOURCES = \
 	gimpoperationhuesaturation.h	\
 	gimpoperationlevels.c		\
 	gimpoperationlevels.h		\
+	gimpoperationpointfilter.c	\
+	gimpoperationpointfilter.h	\
 	gimpoperationposterize.c	\
 	gimpoperationposterize.h	\
 	gimpoperationthreshold.c	\

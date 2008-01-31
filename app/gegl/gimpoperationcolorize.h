@@ -22,8 +22,8 @@
 #ifndef __GIMP_OPERATION_COLORIZE_H__
 #define __GIMP_OPERATION_COLORIZE_H__
 
-#include <gegl-plugin.h>
-#include <operation/gegl-operation-point-filter.h>
+
+#include "gimpoperationpointfilter.h"
 
 
 #define GIMP_TYPE_OPERATION_COLORIZE            (gimp_operation_colorize_get_type ())
@@ -38,14 +38,12 @@ typedef struct _GimpOperationColorizeClass GimpOperationColorizeClass;
 
 struct _GimpOperationColorize
 {
-  GeglOperationPointFilter  parent_instance;
-
-  GimpColorizeConfig       *config;
+  GimpOperationPointFilter  parent_instance;
 };
 
 struct _GimpOperationColorizeClass
 {
-  GeglOperationPointFilterClass  parent_class;
+  GimpOperationPointFilterClass  parent_class;
 };
 
 

@@ -59,7 +59,7 @@ G_DEFINE_TYPE (GimpOperationDesaturate, gimp_operation_desaturate,
 
 
 static void
-gimp_operation_desaturate_class_init (GimpOperationDesaturateClass * klass)
+gimp_operation_desaturate_class_init (GimpOperationDesaturateClass *klass)
 {
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
@@ -68,9 +68,9 @@ gimp_operation_desaturate_class_init (GimpOperationDesaturateClass * klass)
   object_class->set_property = gimp_operation_desaturate_set_property;
   object_class->get_property = gimp_operation_desaturate_get_property;
 
-  point_class->process       = gimp_operation_desaturate_process;
+  operation_class->name      = "gimp-desaturate";
 
-  gegl_operation_class_set_name (operation_class, "gimp-desaturate");
+  point_class->process       = gimp_operation_desaturate_process;
 
   g_object_class_install_property (object_class,
                                    PROP_MODE,
@@ -137,9 +137,8 @@ gimp_operation_desaturate_process (GeglOperation *operation,
   GimpOperationDesaturate *self = GIMP_OPERATION_DESATURATE (operation);
   gfloat                  *src  = in_buf;
   gfloat                  *dest = out_buf;
-  glong                    sample;
 
-  for (sample = 0; sample < samples; sample++)
+  while (samples--)
     {
       gfloat value = 0.0;
 

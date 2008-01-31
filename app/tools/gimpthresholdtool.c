@@ -21,6 +21,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -54,10 +55,14 @@ static gboolean   gimp_threshold_tool_initialize      (GimpTool          *tool,
                                                        GimpDisplay       *display,
                                                        GError           **error);
 
-static GeglNode * gimp_threshold_tool_get_operation   (GimpImageMapTool  *im_tool);
+static GeglNode * gimp_threshold_tool_get_operation   (GimpImageMapTool  *im_tool,
+                                                       GObject          **config);
 static void       gimp_threshold_tool_map             (GimpImageMapTool  *im_tool);
 static void       gimp_threshold_tool_dialog          (GimpImageMapTool  *im_tool);
-static void       gimp_threshold_tool_reset           (GimpImageMapTool  *im_tool);
+
+static void       gimp_threshold_tool_config_notify   (GObject           *object,
+                                                       GParamSpec        *pspec,
+                                                       GimpThresholdTool *t_tool);
 
 static void       gimp_threshold_tool_histogram_range (GimpHistogramView *view,
                                                        gint               start,
@@ -106,7 +111,6 @@ gimp_threshold_tool_class_init (GimpThresholdToolClass *klass)
   im_tool_class->get_operation = gimp_threshold_tool_get_operation;
   im_tool_class->map           = gimp_threshold_tool_map;
   im_tool_class->dialog        = gimp_threshold_tool_dialog;
-  im_tool_class->reset         = gimp_threshold_tool_reset;
 }
 
 static void
@@ -125,12 +129,6 @@ static void
 gimp_threshold_tool_finalize (GObject *object)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (object);
-
-  if (t_tool->config)
-    {
-      g_object_unref (t_tool->config);
-      t_tool->config = NULL;
-    }
 
   g_slice_free (Threshold, t_tool->threshold);
 
@@ -161,10 +159,10 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
+  gimp_config_reset (GIMP_CONFIG (t_tool->config));
+
   if (! t_tool->hist)
     t_tool->hist = gimp_histogram_new ();
-
-  gimp_threshold_config_reset (t_tool->config);
 
   t_tool->threshold->color = gimp_drawable_is_rgb (drawable);
 
@@ -190,7 +188,8 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
 }
 
 static GeglNode *
-gimp_threshold_tool_get_operation (GimpImageMapTool *image_map_tool)
+gimp_threshold_tool_get_operation (GimpImageMapTool  *image_map_tool,
+                                   GObject          **config)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
   GeglNode          *node;
@@ -200,6 +199,12 @@ gimp_threshold_tool_get_operation (GimpImageMapTool *image_map_tool)
                        NULL);
 
   t_tool->config = g_object_new (GIMP_TYPE_THRESHOLD_CONFIG, NULL);
+
+  *config = G_OBJECT (t_tool->config);
+
+  g_signal_connect_object (t_tool->config, "notify",
+                           G_CALLBACK (gimp_threshold_tool_config_notify),
+                           G_OBJECT (t_tool), 0);
 
   gegl_node_set (node,
                  "config", t_tool->config,
@@ -273,15 +278,18 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 }
 
 static void
-gimp_threshold_tool_reset (GimpImageMapTool *image_map_tool)
+gimp_threshold_tool_config_notify (GObject           *object,
+                                   GParamSpec        *pspec,
+                                   GimpThresholdTool *t_tool)
 {
-  GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
+  GimpThresholdConfig *config = GIMP_THRESHOLD_CONFIG (object);
 
-  gimp_threshold_config_reset (t_tool->config);
+  if (t_tool->histogram_box)
+    gimp_histogram_view_set_range (t_tool->histogram_box->view,
+                                   config->low  * 255.999,
+                                   config->high * 255.999);
 
-  gimp_histogram_view_set_range (t_tool->histogram_box->view,
-                                 t_tool->config->low  * 255.999,
-                                 t_tool->config->high * 255.999);
+  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (t_tool));
 }
 
 static void
@@ -300,8 +308,6 @@ gimp_threshold_tool_histogram_range (GimpHistogramView *widget,
                     "low",  low,
                     "high", high,
                     NULL);
-
-      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (t_tool));
     }
 }
 

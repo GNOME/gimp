@@ -1,3 +1,21 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
 #include "config.h"
 
 #include <string.h>
@@ -74,79 +92,49 @@ preview_free_resources (void)
 void
 updatepreview (GtkWidget *wg, gpointer d)
 {
-  /* This portion is remmed out because of the remming out of the
-   * code below.
-   *            -- Shlomi Fish
-   * */
-#if 0
-  guchar buf[PREVIEWSIZE*3];
-
-  if (!PPM_IS_INITED (&infile) && d)
-    grabarea();
-#endif
-
-  /* It seems that infile.col must be true here. (after grabarea() that is.)
-   * Thus, I'm removing this entire portion of the code in hope that
-   * it works OK afterwards.
-   *            -- Shlomi Fish
-   * */
-#if 0
-  if (!PPM_IS_INITED (&infile) && !d) {
-    guchar *buffer;
-
-    buffer = g_new0 (guchar, 3*PREVIEWSIZE*PREVIEWSIZE);
-    gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                            0, 0, PREVIEWSIZE, PREVIEWSIZE,
-                            GIMP_RGB_IMAGE,
-                            buffer,
-                            PREVIEWSIZE * 3);
-
-    g_free (buffer);
-  }
-  else
-#endif
-  {
-    if (!PPM_IS_INITED (&backup_ppm))
-      {
-        infile_copy_to_ppm (&backup_ppm);
-        if ((backup_ppm.width != PREVIEWSIZE) ||
-            (backup_ppm.height != PREVIEWSIZE))
-          resize_fast (&backup_ppm, PREVIEWSIZE, PREVIEWSIZE);
-        if (img_has_alpha)
-          {
-            infile_copy_alpha_to_ppm (&alpha_backup_ppm);
-            if ((alpha_backup_ppm.width != PREVIEWSIZE) ||
-                (alpha_backup_ppm.height != PREVIEWSIZE))
-              resize_fast (&alpha_backup_ppm, PREVIEWSIZE, PREVIEWSIZE);
-          }
-      }
-    if (!PPM_IS_INITED (&preview_ppm))
-      {
-        ppm_copy (&backup_ppm, &preview_ppm);
-
-        if (img_has_alpha)
-          ppm_copy (&alpha_backup_ppm, &alpha_ppm);
-      }
-    if (d)
-      {
-        store_values ();
-
-        if (GPOINTER_TO_INT (d) != 2)
-          repaint (&preview_ppm, &alpha_ppm);
-      }
+  if (!PPM_IS_INITED (&backup_ppm))
+    {
+      infile_copy_to_ppm (&backup_ppm);
+      if ((backup_ppm.width != PREVIEWSIZE) ||
+          (backup_ppm.height != PREVIEWSIZE))
+        resize_fast (&backup_ppm, PREVIEWSIZE, PREVIEWSIZE);
       if (img_has_alpha)
-      drawalpha (&preview_ppm, &alpha_ppm);
-
-      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                              0, 0, PREVIEWSIZE, PREVIEWSIZE,
-                              GIMP_RGB_IMAGE,
-                              preview_ppm.col,
-                              PREVIEWSIZE * 3);
-
-      ppm_kill (&preview_ppm);
-      if (img_has_alpha)
-        ppm_kill (&alpha_ppm);
+        {
+          infile_copy_alpha_to_ppm (&alpha_backup_ppm);
+          if ((alpha_backup_ppm.width != PREVIEWSIZE) ||
+              (alpha_backup_ppm.height != PREVIEWSIZE))
+            resize_fast (&alpha_backup_ppm, PREVIEWSIZE, PREVIEWSIZE);
+        }
     }
+
+  if (!PPM_IS_INITED (&preview_ppm))
+    {
+      ppm_copy (&backup_ppm, &preview_ppm);
+
+      if (img_has_alpha)
+        ppm_copy (&alpha_backup_ppm, &alpha_ppm);
+    }
+
+  if (d)
+    {
+      store_values ();
+
+      if (GPOINTER_TO_INT (d) != 2)
+        repaint (&preview_ppm, &alpha_ppm);
+    }
+
+  if (img_has_alpha)
+    drawalpha (&preview_ppm, &alpha_ppm);
+
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, PREVIEWSIZE, PREVIEWSIZE,
+                          GIMP_RGB_IMAGE,
+                          preview_ppm.col,
+                          PREVIEWSIZE * 3);
+
+  ppm_kill (&preview_ppm);
+  if (img_has_alpha)
+    ppm_kill (&alpha_ppm);
 }
 
 static void
