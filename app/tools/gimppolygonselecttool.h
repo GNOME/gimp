@@ -37,15 +37,7 @@
 
 
 typedef struct _GimpPolygonSelectTool        GimpPolygonSelectTool;
-typedef struct _GimpPolygonSelectToolPrivate GimpPolygonSelectToolPrivate;
 typedef struct _GimpPolygonSelectToolClass   GimpPolygonSelectToolClass;
-
-struct _GimpPolygonSelectTool
-{
-  GimpSelectionTool             parent_instance;
-
-  GimpPolygonSelectToolPrivate *priv;
-};
 
 struct _GimpPolygonSelectToolClass
 {
