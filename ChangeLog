@@ -1,3 +1,11 @@
+2008-01-31  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+	
+	* app/core/gimp.c: fix merge error from previous commit
+
+	* app/actions/data-commands.c
+	* app/widgets/gimpdatachooserdialog.[ch]: implement "save
+	data", and assorted cleanups.
+
 2008-01-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merged 24663:24709 from trunk.

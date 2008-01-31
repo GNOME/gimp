@@ -124,16 +124,17 @@ data_load_cmd_callback (GtkAction *action,
                         gpointer   user_data)
 {
   GimpDataFactoryView *view        = GIMP_DATA_FACTORY_VIEW (user_data);
-  GimpDataFactory     *factory     = view->factory;
-  GimpDataLoadContext  load_context;
 
-  gimp_data_chooser_dialog_new (factory, GIMP_VIEW_TYPE_LIST);
+  gimp_data_chooser_dialog_new (view, GIMP_VIEW_TYPE_LIST, FALSE);
 }
 
 void
 data_save_cmd_callback (GtkAction *action,
                         gpointer   user_data)
 {
+  GimpDataFactoryView *view        = GIMP_DATA_FACTORY_VIEW (user_data);
+
+  gimp_data_chooser_dialog_new (view, GIMP_VIEW_TYPE_LIST, TRUE);
 }
 
 void

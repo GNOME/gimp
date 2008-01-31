@@ -47,6 +47,7 @@
 #include "dialogs/dialogs.h"
 
 #include "gimpcontainereditor.h"
+#include "gimpcontainerview.h"
 #include "gimpcontainertreeview.h"
 #include "gimpdatafactoryview.h"
 #include "gimpdatachooserdialog.h"
@@ -75,6 +76,8 @@ static gboolean    gimp_data_chooser_dialog_select_item   (GtkWidget            
                                                            gpointer               insert_data,
                                                            GimpDataChooserDialog *dialog);
 
+static void        gimp_data_chooser_dialog_save_data     (GimpDataChooserDialog *dialog,
+                                                           GimpData              *data_to_save);
 
 G_DEFINE_TYPE (GimpDataChooserDialog, gimp_data_chooser_dialog, GIMP_TYPE_DIALOG)
 
@@ -96,28 +99,34 @@ gimp_data_chooser_dialog_init (GimpDataChooserDialog *dialog)
 /*  public functions  */
 
 gchar *
-gimp_data_chooser_dialog_new (GimpDataFactory *working_factory,
-                              GimpViewType     view_type)
+gimp_data_chooser_dialog_new (GimpDataFactoryView *working_view,
+                              GimpViewType         view_type,
+                              gboolean             save_data)
 {
-  GtkWidget       *dialog;
-  GtkWidget       *factory_view;
-  GimpDataFactory *factory;
-  gchar           *filename = NULL;
-  GType            data_type;
-  gint             view_size = 32;
-  gchar           *path      = NULL;
-  gchar           *writable_path = NULL;
-  gchar           *tmp;
-  GimpContext     *context;
-  gchar           *dirname;
-  GList           *dirlist;
-  GtkWidget       *path_view;
-  GtkWidget       *hbox;
-  GimpDocked      *docked;
-  GtkTreeIter      iter;
-
+  GtkWidget             *dialog;
+  GimpDataChooserDialog *data_chooser_dialog;
+  GtkWidget             *factory_view;
+  GimpDataFactory       *working_factory;
+  GimpDataFactory       *factory;
+  GimpData              *data_to_save   = NULL;
+  gchar                 *filename       = NULL;
+  GType                  data_type;
+  gint                   view_size      = 32;
+  gchar                 *path           = NULL;
+  gchar                 *writable_path  = NULL;
+  gchar                 *tmp;
+  GimpContext           *context;
+  gchar                 *dirname;
+  GList                 *dirlist;
+  GtkWidget             *path_view;
+  GtkWidget             *hbox;
+  GimpDocked            *docked;
+  GtkTreeIter            iter;
+  gint                   response;
   GimpContainerEditor   *container_editor;
   GimpContainerTreeView *container_tree_view;
+
+  working_factory = working_view->factory;
 
   g_object_get (working_factory->gimp->config,
                 working_factory->path_property_name,     &path,
@@ -133,6 +142,23 @@ gimp_data_chooser_dialog_new (GimpDataFactory *working_factory,
 
   data_type = working_factory->container->children_type;
 
+  /* if we are in save mode, get the data item to save */
+  if (save_data)
+    {
+      GimpContext       *working_context;
+      GimpContainerView *container_view;
+
+      container_view = GIMP_CONTAINER_EDITOR (working_view)->view;
+
+      working_context = gimp_container_view_get_context (container_view);
+
+      data_to_save = (GimpData *)
+        gimp_context_get_by_type (working_context,
+                                  working_factory->container->children_type);
+    }
+
+
+
   /* create a context */
   context = gimp_context_new (working_factory->gimp, "tmp", NULL);
 
@@ -146,7 +172,7 @@ gimp_data_chooser_dialog_new (GimpDataFactory *working_factory,
                                    NULL,
                                    NULL);
 
-  /* load the data */
+  /* load the initial data */
   gimp_data_factory_data_load_path (factory, dirname);
 
   /* create the data factory view */
@@ -162,23 +188,37 @@ gimp_data_chooser_dialog_new (GimpDataFactory *working_factory,
   docked = GIMP_DOCKED (container_editor->view);
   gimp_docked_set_show_button_bar (docked, FALSE);
 
-  /* kludge to prevent activation from opening an editor */
-  gtk_widget_set_sensitive (GIMP_DATA_FACTORY_VIEW (factory_view)->edit_button,
-                            FALSE);
-
   /* create the dialog */
-  dialog = g_object_new (GIMP_TYPE_DATA_CHOOSER_DIALOG,
-                         "title",                     _("Load Data"),
-                         "role",                      "gimp-data-load",
-                         NULL);
+  if (save_data)
+    {
+      dialog = g_object_new (GIMP_TYPE_DATA_CHOOSER_DIALOG,
+                             "title",       _("Save Data"),
+                             "role",        "gimp-data-save",
+                             NULL);
 
-  GIMP_DATA_CHOOSER_DIALOG (dialog)->working_factory = working_factory;
+      gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                              NULL);
+    }
+  else
+    {
+      dialog = g_object_new (GIMP_TYPE_DATA_CHOOSER_DIALOG,
+                             "title",       _("Load Data"),
+                             "role",        "gimp-data-load",
+                             NULL);
 
-  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          GTK_STOCK_CLOSE,   GTK_RESPONSE_OK,
-                          NULL);
+      gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+                              GTK_STOCK_CLOSE,   GTK_RESPONSE_OK,
+                              NULL);
+
+    }
+
+  data_chooser_dialog = GIMP_DATA_CHOOSER_DIALOG (dialog);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+  data_chooser_dialog->working_factory = working_factory;
 
   gimp_help_connect (GTK_WIDGET (dialog),
                      gimp_standard_help_func, GIMP_HELP_HELP, dialog);
@@ -188,13 +228,14 @@ gimp_data_chooser_dialog_new (GimpDataFactory *working_factory,
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  path_view = gimp_data_chooser_dialog_path_view (GIMP_DATA_CHOOSER_DIALOG (dialog),
+  path_view = gimp_data_chooser_dialog_path_view (data_chooser_dialog,
                                                   dirlist);
   gtk_box_pack_start (GTK_BOX (hbox), path_view, FALSE, FALSE, 0);
   gtk_widget_show (path_view);
+  data_chooser_dialog->path_view = path_view;
 
   gtk_box_pack_start (GTK_BOX (hbox), factory_view, FALSE, FALSE, 0);
-  GIMP_DATA_CHOOSER_DIALOG (dialog)->factory_view = GIMP_DATA_FACTORY_VIEW (factory_view);
+  data_chooser_dialog->factory_view = GIMP_DATA_FACTORY_VIEW (factory_view);
   gtk_widget_set_size_request (factory_view, 300, 400);
   gtk_widget_show (factory_view);
 
@@ -211,11 +252,15 @@ gimp_data_chooser_dialog_new (GimpDataFactory *working_factory,
    * that automatically selects the first item if a treeview gets
    * focus with nothing selected.
    */
-  container_tree_view = GIMP_CONTAINER_TREE_VIEW (factory_view);
+  container_tree_view = GIMP_CONTAINER_TREE_VIEW (container_editor->view);
   gtk_tree_model_get_iter_first (container_tree_view->model, &iter);
   gtk_tree_selection_select_iter (container_tree_view->selection, &iter);
 
-  gimp_dialog_run (GIMP_DIALOG (dialog));
+  response = gimp_dialog_run (GIMP_DIALOG (dialog));
+
+  if (save_data && response == GTK_RESPONSE_OK)
+    gimp_data_chooser_dialog_save_data (data_chooser_dialog,
+                                        data_to_save);
 
   gtk_widget_destroy (dialog);
   g_object_unref (context);
@@ -238,6 +283,8 @@ gimp_data_chooser_dialog_path_view (GimpDataChooserDialog *dialog,
 
   for (list = dirlist; list; list = g_list_next (list))
     {
+      /* TODO: if we are in save mode, check that dir is writable */
+
       gtk_list_store_append (list_store, &iter);
       gtk_list_store_set (list_store, &iter, 0, list->data, -1);
     }
@@ -406,3 +453,58 @@ gimp_data_chooser_dialog_activate_item (GtkWidget             *widget,
 
   return FALSE;
 }
+
+static void
+gimp_data_chooser_dialog_save_data (GimpDataChooserDialog *dialog,
+                                    GimpData              *data_to_save)
+{
+  GtkTreeIter            iter;
+  GtkTreeModel          *model;
+  GtkTreeSelection      *selection;
+  gchar                 *dirname;
+  gchar                 *basename;
+  gchar                 *orig_filename;
+  gchar                 *new_filename;
+  gchar                 *contents;
+  gsize                  length;
+  GError                *error       = NULL;
+
+  /* get the directory to save into */
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->path_view));
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      gtk_tree_model_get (model, &iter, 0, &dirname, -1);
+    }
+
+  g_print ("dirname is %s\n", dirname);
+
+  orig_filename = data_to_save->filename;
+
+  g_file_get_contents (orig_filename, &contents, &length, &error);
+  if (error)
+    {
+      g_message ("save data: error getting contents of %s\n", orig_filename);
+      return;
+    }
+
+  basename = g_path_get_basename (orig_filename);
+
+  new_filename = g_build_filename (dirname, basename, NULL);
+
+  g_free (basename);
+/*   g_free (dirname); */
+
+  g_file_set_contents (new_filename, contents, length, &error);
+
+  if (error)
+    {
+      g_message ("save data: error writing %s\n", new_filename);
+    }
+
+  g_free (contents);
+  g_free (new_filename);
+
+  return;
+}
+
+

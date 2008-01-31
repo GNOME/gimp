@@ -38,6 +38,7 @@ struct _GimpDataChooserDialog
 {
   GimpDialog            parent_instance;
 
+  GtkWidget            *path_view;
   GimpDataFactory      *working_factory;
   GimpDataFactoryView  *factory_view;
 };
@@ -50,8 +51,9 @@ struct _GimpDataChooserDialogClass
 
 GType   gimp_data_chooser_dialog_get_type (void) G_GNUC_CONST;
 
-gchar * gimp_data_chooser_dialog_new      (GimpDataFactory *factory,
-                                           GimpViewType     view_type);
+gchar * gimp_data_chooser_dialog_new      (GimpDataFactoryView *working_view,
+                                           GimpViewType         view_type,
+                                           gboolean             save_data);
 
 G_END_DECLS
 
