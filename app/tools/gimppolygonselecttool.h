@@ -50,13 +50,13 @@ struct _GimpPolygonSelectToolClass
 };
 
 
-void    gimp_polygon_select_tool_register (GimpToolRegisterCallback  callback,
-                                           gpointer                  data);
+void    gimp_polygon_select_tool_register (GimpToolRegisterCallback callback,
+                                           gpointer                 data);
 
 GType   gimp_polygon_select_tool_get_type (void) G_GNUC_CONST;
 
-void    gimp_polygon_select_tool_select   (GimpPolygonSelectTool       *poly_sel,
-                                           GimpDisplay                 *display);
+void    gimp_polygon_select_tool_select   (GimpPolygonSelectTool *poly_sel,
+                                           GimpDisplay           *display);
 
 
 #endif /* GIMP_POLYGON_SELECT_TOOL_H */

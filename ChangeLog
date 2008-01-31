@@ -1,5 +1,9 @@
 2008-01-31  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimppolygonselecttool.[ch]: Code formating overhaul.
+
+2008-01-31  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimppolygonselecttool.[ch]: Made object instance
 	struct definition completely a private implementation detail.
 
