@@ -1,3 +1,8 @@
+2008-01-31  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimppolygonselecttool.c
+	(gimp_polygon_select_tool_real_select): Correct undo description.
+
 2008-01-30  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Added a Polygon Select Tool which is a primitive selection tool

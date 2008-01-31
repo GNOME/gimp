@@ -510,7 +510,7 @@ gimp_polygon_select_tool_real_select (GimpPolygonSelectTool *poly_sel_tool,
   GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (poly_sel_tool);
 
   gimp_channel_select_polygon (gimp_image_get_mask (display->image),
-                               Q_("command|Free Select"),
+                               Q_("command|Polygon Select"),
                                poly_sel_tool->priv->num_points,
                                poly_sel_tool->priv->points,
                                options->operation,
