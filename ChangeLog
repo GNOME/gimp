@@ -1,8 +1,14 @@
 2008-01-31  Sven Neumann  <sven@gimp.org>
 
+	Delay GEGL initialisation until after the command-line parsing so
+	that we can detect an already running GIMP instance and delegate
+	to that without going through the GEGL and babl initialisation.
+	
 	* app/app.c (app_libs_init): don't add the GEGL options group
 	here.  GEGL doesn't add any command-line options and it doesn't
 	look as if it would do that anytime soon.
+
+	* app/gegl/gimp-gegl.c (gimp_gegl_init): initialize GEGL here.
 
 2008-01-31  Sven Neumann  <sven@gimp.org>
 
