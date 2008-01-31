@@ -1,3 +1,7 @@
+2008-01-31  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/iwarp.c: choose a better tile cache size.
+
 2008-01-31  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimppolygonselecttool.[ch]: Code formating overhaul.

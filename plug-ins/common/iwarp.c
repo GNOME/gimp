@@ -301,10 +301,8 @@ run (const gchar      *name,
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_get_data (PLUG_IN_PROC, &iwarp_vals);
-          gimp_tile_cache_ntiles (2 * (drawable->width + gimp_tile_width ()-1) /
-                                  gimp_tile_width ());
-          if (iwarp_dialog())
-            iwarp();
+          if (iwarp_dialog ())
+            iwarp ();
           gimp_set_data (PLUG_IN_PROC, &iwarp_vals, sizeof (iwarp_vals_t));
           gimp_displays_flush ();
           break;
@@ -683,7 +681,7 @@ iwarp_frame (void)
   gboolean   padding;
 
   progress = 0;
-  max_progress = (yh-yl)*(xh-xl);
+  max_progress = (yh-yl) * (xh-xl);
 
   gimp_pixel_rgn_init (&dest_rgn, destdrawable,
                        xl, yl, xh-xl, yh-yl, TRUE, TRUE);
@@ -914,7 +912,6 @@ iwarp_preview_init (void)
   guchar    *linebuffer = NULL;
   gdouble    dx, dy;
 
-
   dx = (gdouble) sel_width / max_current_preview_width;
   dy = (gdouble) sel_height / max_current_preview_height;
 
@@ -930,7 +927,6 @@ iwarp_preview_init (void)
 
   preview_width  = (gint) (sel_width  / pre2img);
   preview_height = (gint) (sel_height / pre2img);
-
 
   if (srcimage)
     {
@@ -985,6 +981,8 @@ iwarp_init (void)
 
   tile_width  = gimp_tile_width ();
   tile_height = gimp_tile_height ();
+
+  gimp_tile_cache_ntiles (sel_width / tile_width + 1);
 
   iwarp_preview_init ();
   iwarp_cpy_images ();
