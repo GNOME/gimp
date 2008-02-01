@@ -1,3 +1,15 @@
+2008-02-01  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpconfig/gimpconfig-iface.[ch]: add new method
+	GimpConfigInterface::copy() which by default calls
+	gimp_config_sync() but is overridable for objects which are not
+	entirely property-defined or otherwise evil.
+
+	Freeze/thaw property notifications in deserialize() and reset().
+
+	* libgimpconfig/gimpconfig-utils.c (gimp_config_sync): freeze/thaw
+	property notifications on the dest object.
+
 2008-02-01  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/print.c: some minor cleanups and preparation for

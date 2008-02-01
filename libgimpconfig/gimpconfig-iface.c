@@ -58,6 +58,9 @@ static GimpConfig * gimp_config_iface_duplicate   (GimpConfig       *config);
 static gboolean     gimp_config_iface_equal       (GimpConfig       *a,
                                                    GimpConfig       *b);
 static void         gimp_config_iface_reset       (GimpConfig       *config);
+static gboolean     gimp_config_iface_copy        (GimpConfig       *src,
+                                                   GimpConfig       *dest,
+                                                   GParamFlags       flags);
 
 
 GType
@@ -95,6 +98,7 @@ gimp_config_iface_base_init (GimpConfigInterface *config_iface)
       config_iface->duplicate   = gimp_config_iface_duplicate;
       config_iface->equal       = gimp_config_iface_equal;
       config_iface->reset       = gimp_config_iface_reset;
+      config_iface->copy        = gimp_config_iface_copy;
     }
 
   /*  always set these to NULL since we don't want to inherit them
@@ -167,7 +171,7 @@ gimp_config_iface_duplicate (GimpConfig *config)
 
   g_free (construct_params);
 
-  gimp_config_sync (object, dup, 0);
+  gimp_config_copy (config, GIMP_CONFIG (dup), 0);
 
   return GIMP_CONFIG (dup);
 }
@@ -234,6 +238,14 @@ static void
 gimp_config_iface_reset (GimpConfig *config)
 {
   gimp_config_reset_properties (G_OBJECT (config));
+}
+
+static gboolean
+gimp_config_iface_copy (GimpConfig  *src,
+                        GimpConfig  *dest,
+                        GParamFlags  flags)
+{
+  return gimp_config_sync (G_OBJECT (src), G_OBJECT (dest), flags);
 }
 
 /**
@@ -340,7 +352,7 @@ gimp_config_serialize_to_string (GimpConfig *config,
 }
 
 /**
- * gimp_config_deserialize:
+ * gimp_config_deserialize_file:
  * @config: a #GObject that implements the #GimpConfigInterface.
  * @filename: the name of the file to read configuration from.
  * @data: user data passed to the deserialize implementation.
@@ -372,8 +384,12 @@ gimp_config_deserialize_file (GimpConfig   *config,
   if (! scanner)
     return FALSE;
 
+  g_object_freeze_notify (G_OBJECT (config));
+
   success = GIMP_CONFIG_GET_INTERFACE (config)->deserialize (config,
                                                              scanner, 0, data);
+
+  g_object_thaw_notify (G_OBJECT (config));
 
   gimp_scanner_destroy (scanner);
 
@@ -415,8 +431,12 @@ gimp_config_deserialize_string (GimpConfig      *config,
 
   scanner = gimp_scanner_new_string (text, text_len, error);
 
+  g_object_freeze_notify (G_OBJECT (config));
+
   success = GIMP_CONFIG_GET_INTERFACE (config)->deserialize (config,
                                                              scanner, 0, data);
+
+  g_object_thaw_notify (G_OBJECT (config));
 
   gimp_scanner_destroy (scanner);
 
@@ -535,5 +555,46 @@ gimp_config_reset (GimpConfig *config)
 {
   g_return_if_fail (GIMP_IS_CONFIG (config));
 
+  g_object_freeze_notify (G_OBJECT (config));
+
   GIMP_CONFIG_GET_INTERFACE (config)->reset (config);
+
+  g_object_thaw_notify (G_OBJECT (config));
+}
+
+/**
+ * gimp_config_copy:
+ * @src: a #GObject that implements the #GimpConfigInterface.
+ * @dest: another #GObject of the same type as @a.
+ * @flags: a mask of GParamFlags
+ *
+ * Compares all read- and write-able properties from @src and @dest
+ * that have all @flags set. Differing values are then copied from
+ * @src to @dest. If @flags is 0, all differing read/write properties.
+ *
+ * Properties marked as "construct-only" are not touched.
+ *
+ * Return value: %TRUE if @dest was modified, %FALSE otherwise
+ *
+ * Since: GIMP 2.6
+ **/
+gboolean
+gimp_config_copy (GimpConfig  *src,
+                  GimpConfig  *dest,
+                  GParamFlags  flags)
+{
+  gboolean changed;
+
+  g_return_val_if_fail (GIMP_IS_CONFIG (src), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONFIG (dest), FALSE);
+  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (src) == G_TYPE_FROM_INSTANCE (dest),
+                        FALSE);
+
+  g_object_freeze_notify (G_OBJECT (dest));
+
+  changed = GIMP_CONFIG_GET_INTERFACE (src)->copy (src, dest, flags);
+
+  g_object_thaw_notify (G_OBJECT (dest));
+
+  return changed;
 }

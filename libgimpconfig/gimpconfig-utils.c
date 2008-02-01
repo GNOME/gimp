@@ -216,6 +216,8 @@ gimp_config_sync (GObject     *src,
   if (!diff)
     return FALSE;
 
+  g_object_freeze_notify (G_OBJECT (dest));
+
   for (list = diff; list; list = list->next)
     {
       GParamSpec *prop_spec = list->data;
@@ -232,6 +234,8 @@ gimp_config_sync (GObject     *src,
           g_value_unset (&value);
         }
     }
+
+  g_object_thaw_notify (G_OBJECT (dest));
 
   g_list_free (diff);
 
@@ -306,9 +310,9 @@ gimp_config_reset_properties (GObject *object)
         }
     }
 
-  g_free (property_specs);
-
   g_object_thaw_notify (object);
+
+  g_free (property_specs);
 }
 
 
