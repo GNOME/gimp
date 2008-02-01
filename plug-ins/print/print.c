@@ -31,8 +31,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PRINT_PROC_NAME  "file-print-gtk"
-#define PLUG_IN_BINARY   "print"
+#define PLUG_IN_BINARY        "print"
+
+#define PRINT_PROC_NAME       "file-print-gtk"
+#define PAGE_SETUP_PROC_NAME  "file-print-gtk-page-setup"
 
 
 static void        query (void);
@@ -42,8 +44,9 @@ static void        run   (const gchar       *name,
                           gint              *nreturn_vals,
                           GimpParam        **return_vals);
 
-static gboolean    print_image              (gint32             image_ID,
+static GimpPDBStatusType  print_image       (gint32             image_ID,
                                              gboolean           interactive);
+static GimpPDBStatusType  page_setup        (gint32             image_ID);
 
 static void        print_show_error         (const gchar       *message,
                                              gboolean           interactive);
@@ -89,7 +92,7 @@ query (void)
                           N_("Print the image"),
                           "Print the image using the GTK+ Print API.",
                           "Bill Skaggs, Sven Neumann, Stefan Röllin",
-                          "Bill Skaggs  <weskaggs@primate.ucdavis.edu>",
+                          "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                           "2006, 2007",
                           N_("_Print..."),
                           "*",
@@ -101,6 +104,20 @@ query (void)
   gimp_plugin_icon_register (PRINT_PROC_NAME, GIMP_ICON_TYPE_STOCK_ID,
                              (const guint8 *) GTK_STOCK_PRINT);
 
+  gimp_install_procedure (PAGE_SETUP_PROC_NAME,
+                          N_("Adjust page size and orientation for printing"),
+                          "Adjust page size and orientation for printing for "
+                          "printing the image using the GTK+ Print API.",
+                          "Bill Skaggs, Sven Neumann, Stefan Röllin",
+                          "Sven Neumann <sven@gimp.org>",
+                          "2008",
+                          N_("Page Set_up ..."),
+                          "*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (print_args), 0,
+                          print_args, NULL);
+
+  gimp_plugin_menu_register (PAGE_SETUP_PROC_NAME, "<Image>/File/Send");
 }
 
 static void
@@ -112,9 +129,8 @@ run (const gchar      *name,
 {
   static GimpParam  values[2];
   GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpPDBStatusType status;
   gint32            image_ID;
-  gint32            drawable_ID;
 
   run_mode = param[0].data.d_int32;
 
@@ -123,21 +139,26 @@ run (const gchar      *name,
   *nreturn_vals = 1;
   *return_vals  = values;
 
+  g_thread_init (NULL);
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  image_ID    = param[1].data.d_int32;
-  drawable_ID = param[2].data.d_int32;
+  image_ID = param[1].data.d_int32;
 
   if (strcmp (name, PRINT_PROC_NAME) == 0)
     {
-      g_thread_init (NULL);
-
-      gimp_ui_init (PLUG_IN_BINARY, FALSE);
-
-      if (! print_image (image_ID, run_mode == GIMP_RUN_INTERACTIVE))
+      status = print_image (image_ID, run_mode == GIMP_RUN_INTERACTIVE);
+    }
+  else if (strcmp (name, PAGE_SETUP_PROC_NAME) == 0)
+    {
+      if (run_mode == GIMP_RUN_INTERACTIVE)
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = page_setup (image_ID);
+        }
+      else
+        {
+          status = GIMP_PDB_CALLING_ERROR;
         }
     }
   else
@@ -148,7 +169,7 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-static gboolean
+static GimpPDBStatusType
 print_image (gint32    image_ID,
              gboolean  interactive)
 {
@@ -165,7 +186,7 @@ print_image (gint32    image_ID,
                               GIMP_EXPORT_CAN_HANDLE_ALPHA);
 
   if (export == GIMP_EXPORT_CANCEL)
-    return FALSE;
+    return GIMP_PDB_EXECUTION_ERROR;
 
   operation = gtk_print_operation_new ();
 
@@ -202,6 +223,8 @@ print_image (gint32    image_ID,
 
   if (interactive)
     {
+      gimp_ui_init (PLUG_IN_BINARY, FALSE);
+
       g_signal_connect_swapped (operation, "end-print",
                                 G_CALLBACK (save_print_settings),
                                 &data);
@@ -234,7 +257,17 @@ print_image (gint32    image_ID,
       g_error_free (error);
     }
 
-  return TRUE;
+  return GIMP_PDB_SUCCESS;
+}
+
+static GimpPDBStatusType
+page_setup (gint32 image_ID)
+{
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+
+  gimp_message ("Page Setup is not yet implemented");
+
+  return GIMP_PDB_EXECUTION_ERROR;
 }
 
 static void
