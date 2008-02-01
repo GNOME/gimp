@@ -69,6 +69,8 @@ struct _GimpImageMapToolClass
   const gchar        *save_button_tip;
   const gchar        *save_dialog_title;
 
+  GimpContainer      *recent_settings;
+
   /* virtual functions */
   GeglNode * (* get_operation) (GimpImageMapTool  *image_map_tool,
                                 GObject          **config);

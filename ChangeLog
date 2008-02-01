@@ -1,5 +1,30 @@
 2008-02-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-types.h
+	* app/gegl/gegl-types.h: have app/gegl know app/core's namespace.
+
+	* app/gegl/gimpoperationcurves.h: remove temp hack includes.
+
+	* app/gegl/gimpoperationcurves.c: include "core/gimpcurve.h"
+
+	* app/gegl/gimpbrightnesscontrastconfig.[ch]
+	* app/gegl/gimpcolorbalanceconfig.[ch]
+	* app/gegl/gimpcolorizeconfig.[ch]
+	* app/gegl/gimpcurvesconfig.[ch]
+	* app/gegl/gimphuesaturationconfig.[ch]
+	* app/gegl/gimplevelsconfig.[ch]
+	* app/gegl/gimpoperationcurves.[ch]
+	* app/gegl/gimpposterizeconfig.[ch]
+	* app/gegl/gimpthresholdconfig.[ch]: derive from GimpViewable, install
+	properties using the GimpConfig macros, add implementations of
+	GimpConfigInterface::equal() and ::copy() where needed.
+
+	* app/tools/gimpimagemaptool.[ch]: add prototype of a menu of
+	recently used settings so the same color correction can easily be
+	applied to many images.
+
+2008-02-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainerview.c
 	(gimp_container_view_set_container): refuse containers if their
 	children are not GimpViewables instead of crashing later.

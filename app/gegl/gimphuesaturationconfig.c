@@ -44,22 +44,27 @@ enum
 };
 
 
-static void   gimp_hue_saturation_config_iface_init   (GimpConfigInterface *iface);
+static void     gimp_hue_saturation_config_iface_init   (GimpConfigInterface *iface);
 
-static void   gimp_hue_saturation_config_get_property (GObject      *object,
-                                                       guint         property_id,
-                                                       GValue       *value,
-                                                       GParamSpec   *pspec);
-static void   gimp_hue_saturation_config_set_property (GObject      *object,
-                                                       guint         property_id,
-                                                       const GValue *value,
-                                                       GParamSpec   *pspec);
+static void     gimp_hue_saturation_config_get_property (GObject      *object,
+                                                         guint         property_id,
+                                                         GValue       *value,
+                                                         GParamSpec   *pspec);
+static void     gimp_hue_saturation_config_set_property (GObject      *object,
+                                                         guint         property_id,
+                                                         const GValue *value,
+                                                         GParamSpec   *pspec);
 
-static void   gimp_hue_saturation_config_reset        (GimpConfig   *config);
+static gboolean gimp_hue_saturation_config_equal        (GimpConfig   *a,
+                                                         GimpConfig   *b);
+static void     gimp_hue_saturation_config_reset        (GimpConfig   *config);
+static gboolean gimp_hue_saturation_config_copy         (GimpConfig   *src,
+                                                         GimpConfig   *dest,
+                                                         GParamFlags   flags);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpHueSaturationConfig, gimp_hue_saturation_config,
-                         G_TYPE_OBJECT,
+                         GIMP_TYPE_VIEWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_hue_saturation_config_iface_init))
 
@@ -69,57 +74,47 @@ G_DEFINE_TYPE_WITH_CODE (GimpHueSaturationConfig, gimp_hue_saturation_config,
 static void
 gimp_hue_saturation_config_class_init (GimpHueSaturationConfigClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->set_property = gimp_hue_saturation_config_set_property;
-  object_class->get_property = gimp_hue_saturation_config_get_property;
+  object_class->set_property       = gimp_hue_saturation_config_set_property;
+  object_class->get_property       = gimp_hue_saturation_config_get_property;
 
-  g_object_class_install_property (object_class, PROP_RANGE,
-                                   g_param_spec_enum ("range",
-                                                      "range",
-                                                      "The affected range",
-                                                      GIMP_TYPE_HUE_RANGE,
-                                                      GIMP_ALL_HUES,
-                                                      G_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
+  viewable_class->default_stock_id = "gimp-tool-hue-saturation";
 
-  g_object_class_install_property (object_class, PROP_HUE,
-                                   g_param_spec_double ("hue",
-                                                        "Hue",
-                                                        "Hue",
-                                                        -1.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_RANGE,
+                                 "range",
+                                 "The affected range",
+                                 GIMP_TYPE_HUE_RANGE,
+                                 GIMP_ALL_HUES, 0);
 
-  g_object_class_install_property (object_class, PROP_SATURATION,
-                                   g_param_spec_double ("saturation",
-                                                        "Saturation",
-                                                        "Saturation",
-                                                        -1.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HUE,
+                                   "hue",
+                                   "Hue",
+                                   -1.0, 1.0, 0.0, 0);
 
-  g_object_class_install_property (object_class, PROP_LIGHTNESS,
-                                   g_param_spec_double ("lightness",
-                                                        "Lightness",
-                                                        "Lightness",
-                                                        -1.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SATURATION,
+                                   "saturation",
+                                   "Saturation",
+                                   -1.0, 1.0, 0.0, 0);
 
-  g_object_class_install_property (object_class, PROP_OVERLAP,
-                                   g_param_spec_double ("overlap",
-                                                        "Overlap",
-                                                        "Overlap",
-                                                        0.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LIGHTNESS,
+                                   "lightness",
+                                   "Lightness",
+                                   -1.0, 1.0, 0.0, 0);
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OVERLAP,
+                                   "overlap",
+                                   "Overlap",
+                                   0.0, 1.0, 0.0, 0);
 }
 
 static void
 gimp_hue_saturation_config_iface_init (GimpConfigInterface *iface)
 {
+  iface->equal = gimp_hue_saturation_config_equal;
   iface->reset = gimp_hue_saturation_config_reset;
+  iface->copy  = gimp_hue_saturation_config_copy;
 }
 
 static void
@@ -203,13 +198,35 @@ gimp_hue_saturation_config_set_property (GObject      *object,
     }
 }
 
+static gboolean
+gimp_hue_saturation_config_equal (GimpConfig *a,
+                                  GimpConfig *b)
+{
+  GimpHueSaturationConfig *a_config = GIMP_HUE_SATURATION_CONFIG (a);
+  GimpHueSaturationConfig *b_config = GIMP_HUE_SATURATION_CONFIG (b);
+  GimpHueRange             range;
+
+  for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)
+    {
+      if (a_config->hue[range]        != b_config->hue[range]        ||
+          a_config->saturation[range] != b_config->saturation[range] ||
+          a_config->lightness[range]  != b_config->lightness[range])
+        return FALSE;
+    }
+
+  /* don't compare "range" */
+
+  if (a_config->overlap != b_config->overlap)
+    return FALSE;
+
+  return TRUE;
+}
+
 static void
 gimp_hue_saturation_config_reset (GimpConfig *config)
 {
   GimpHueSaturationConfig *hs_config = GIMP_HUE_SATURATION_CONFIG (config);
   GimpHueRange             range;
-
-  g_object_freeze_notify (G_OBJECT (config));
 
   for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)
     {
@@ -219,8 +236,35 @@ gimp_hue_saturation_config_reset (GimpConfig *config)
 
   gimp_config_reset_property (G_OBJECT (config), "range");
   gimp_config_reset_property (G_OBJECT (config), "overlap");
+}
 
-  g_object_thaw_notify (G_OBJECT (config));
+static gboolean
+gimp_hue_saturation_config_copy (GimpConfig   *src,
+                                 GimpConfig   *dest,
+                                 GParamFlags   flags)
+{
+  GimpHueSaturationConfig *src_config  = GIMP_HUE_SATURATION_CONFIG (src);
+  GimpHueSaturationConfig *dest_config = GIMP_HUE_SATURATION_CONFIG (dest);
+  GimpHueRange             range;
+
+  for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)
+    {
+      dest_config->hue[range]        = src_config->hue[range];
+      dest_config->saturation[range] = src_config->saturation[range];
+      dest_config->lightness[range]  = src_config->lightness[range];
+    }
+
+  g_object_notify (G_OBJECT (dest), "hue");
+  g_object_notify (G_OBJECT (dest), "saturation");
+  g_object_notify (G_OBJECT (dest), "lightness");
+
+  dest_config->range   = src_config->range;
+  dest_config->overlap = src_config->overlap;
+
+  g_object_notify (G_OBJECT (dest), "range");
+  g_object_notify (G_OBJECT (dest), "overlap");
+
+  return TRUE;
 }
 
 

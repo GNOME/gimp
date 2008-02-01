@@ -28,6 +28,8 @@
 
 #include "gegl-types.h"
 
+#include "core/gimpcurve.h"
+
 #include "gimpcurvesconfig.h"
 #include "gimpoperationcurves.h"
 

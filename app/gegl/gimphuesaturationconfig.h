@@ -23,6 +23,9 @@
 #define __GIMP_HUE_SATURATION_CONFIG_H__
 
 
+#include "core/gimpviewable.h"
+
+
 #define GIMP_TYPE_HUE_SATURATION_CONFIG            (gimp_hue_saturation_config_get_type ())
 #define GIMP_HUE_SATURATION_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HUE_SATURATION_CONFIG, GimpHueSaturationConfig))
 #define GIMP_HUE_SATURATION_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_HUE_SATURATION_CONFIG, GimpHueSaturationConfigClass))
@@ -35,7 +38,7 @@ typedef struct _GimpHueSaturationConfigClass GimpHueSaturationConfigClass;
 
 struct _GimpHueSaturationConfig
 {
-  GObject       parent_instance;
+  GimpViewable  parent_instance;
 
   GimpHueRange  range;
 
@@ -48,7 +51,7 @@ struct _GimpHueSaturationConfig
 
 struct _GimpHueSaturationConfigClass
 {
-  GObjectClass  parent_class;
+  GimpViewableClass  parent_class;
 };
 
 

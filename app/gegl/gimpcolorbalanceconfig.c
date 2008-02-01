@@ -46,22 +46,27 @@ enum
 };
 
 
-static void   gimp_color_balance_config_iface_init   (GimpConfigInterface *iface);
+static void     gimp_color_balance_config_iface_init   (GimpConfigInterface *iface);
 
-static void   gimp_color_balance_config_get_property (GObject      *object,
-                                                      guint         property_id,
-                                                      GValue       *value,
-                                                      GParamSpec   *pspec);
-static void   gimp_color_balance_config_set_property (GObject      *object,
-                                                      guint         property_id,
-                                                      const GValue *value,
-                                                      GParamSpec   *pspec);
+static void     gimp_color_balance_config_get_property (GObject      *object,
+                                                        guint         property_id,
+                                                        GValue       *value,
+                                                        GParamSpec   *pspec);
+static void     gimp_color_balance_config_set_property (GObject      *object,
+                                                        guint         property_id,
+                                                        const GValue *value,
+                                                        GParamSpec   *pspec);
 
-static void   gimp_color_balance_config_reset        (GimpConfig   *config);
+static gboolean gimp_color_balance_config_equal        (GimpConfig   *a,
+                                                        GimpConfig   *b);
+static void     gimp_color_balance_config_reset        (GimpConfig   *config);
+static gboolean gimp_color_balance_config_copy         (GimpConfig   *src,
+                                                        GimpConfig   *dest,
+                                                        GParamFlags   flags);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpColorBalanceConfig, gimp_color_balance_config,
-                         G_TYPE_OBJECT,
+                         GIMP_TYPE_VIEWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_color_balance_config_iface_init))
 
@@ -71,57 +76,47 @@ G_DEFINE_TYPE_WITH_CODE (GimpColorBalanceConfig, gimp_color_balance_config,
 static void
 gimp_color_balance_config_class_init (GimpColorBalanceConfigClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->set_property = gimp_color_balance_config_set_property;
-  object_class->get_property = gimp_color_balance_config_get_property;
+  object_class->set_property       = gimp_color_balance_config_set_property;
+  object_class->get_property       = gimp_color_balance_config_get_property;
 
-  g_object_class_install_property (object_class, PROP_RANGE,
-                                   g_param_spec_enum ("range",
-                                                      "range",
-                                                      "The affected range",
-                                                      GIMP_TYPE_TRANSFER_MODE,
-                                                      GIMP_MIDTONES,
-                                                      G_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
+  viewable_class->default_stock_id = "gimp-tool-color-balance";
 
-  g_object_class_install_property (object_class, PROP_CYAN_RED,
-                                   g_param_spec_double ("cyan-red",
-                                                        "Cyan-Red",
-                                                        "Cyan-Red",
-                                                        -1.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_RANGE,
+                                 "range",
+                                 "The affected range",
+                                 GIMP_TYPE_TRANSFER_MODE,
+                                 GIMP_MIDTONES, 0);
 
-  g_object_class_install_property (object_class, PROP_MAGENTA_GREEN,
-                                   g_param_spec_double ("magenta-green",
-                                                        "Magenta-Green",
-                                                        "Magenta-Green",
-                                                        -1.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CYAN_RED,
+                                   "cyan-red",
+                                   "Cyan-Red",
+                                   -1.0, 1.0, 0.0, 0);
 
-  g_object_class_install_property (object_class, PROP_YELLOW_BLUE,
-                                   g_param_spec_double ("yellow-blue",
-                                                        "Yellow-Blue",
-                                                        "Yellow-Blue",
-                                                        -1.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_MAGENTA_GREEN,
+                                   "magenta-green",
+                                   "Magenta-Green",
+                                   -1.0, 1.0, 0.0, 0);
 
-  g_object_class_install_property (object_class, PROP_PRESERVE_LUMINOSITY,
-                                   g_param_spec_boolean ("preserve-luminosity",
-                                                         "Preserve Luminosity",
-                                                         "Preserve Luminosity",
-                                                         TRUE,
-                                                         G_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_YELLOW_BLUE,
+                                   "yellow-blue",
+                                   "Yellow-Blue",
+                                   -1.0, 1.0, 0.0, 0);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESERVE_LUMINOSITY,
+                                    "preserve-luminosity",
+                                    "Preserve Luminosity",
+                                    TRUE, 0);
 }
 
 static void
 gimp_color_balance_config_iface_init (GimpConfigInterface *iface)
 {
+  iface->equal = gimp_color_balance_config_equal;
   iface->reset = gimp_color_balance_config_reset;
+  iface->copy  = gimp_color_balance_config_copy;
 }
 
 static void
@@ -205,13 +200,35 @@ gimp_color_balance_config_set_property (GObject      *object,
     }
 }
 
+static gboolean
+gimp_color_balance_config_equal (GimpConfig *a,
+                                 GimpConfig *b)
+{
+  GimpColorBalanceConfig *a_config = GIMP_COLOR_BALANCE_CONFIG (a);
+  GimpColorBalanceConfig *b_config = GIMP_COLOR_BALANCE_CONFIG (b);
+  GimpTransferMode        range;
+
+  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
+    {
+      if (a_config->cyan_red[range]      != b_config->cyan_red[range]      ||
+          a_config->magenta_green[range] != b_config->magenta_green[range] ||
+          a_config->yellow_blue[range]   != b_config->yellow_blue[range])
+        return FALSE;
+    }
+
+  /* don't compare "range" */
+
+  if (a_config->preserve_luminosity != b_config->preserve_luminosity)
+    return FALSE;
+
+  return TRUE;
+}
+
 static void
 gimp_color_balance_config_reset (GimpConfig *config)
 {
   GimpColorBalanceConfig *cb_config = GIMP_COLOR_BALANCE_CONFIG (config);
   GimpTransferMode        range;
-
-  g_object_freeze_notify (G_OBJECT (config));
 
   for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
     {
@@ -221,8 +238,35 @@ gimp_color_balance_config_reset (GimpConfig *config)
 
   gimp_config_reset_property (G_OBJECT (config), "range");
   gimp_config_reset_property (G_OBJECT (config), "preserve-luminosity");
+}
 
-  g_object_thaw_notify (G_OBJECT (config));
+static gboolean
+gimp_color_balance_config_copy (GimpConfig  *src,
+                                GimpConfig  *dest,
+                                GParamFlags  flags)
+{
+  GimpColorBalanceConfig *src_config  = GIMP_COLOR_BALANCE_CONFIG (src);
+  GimpColorBalanceConfig *dest_config = GIMP_COLOR_BALANCE_CONFIG (dest);
+  GimpTransferMode        range;
+
+  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
+    {
+      dest_config->cyan_red[range]      = src_config->cyan_red[range];
+      dest_config->magenta_green[range] = src_config->magenta_green[range];
+      dest_config->yellow_blue[range]   = src_config->yellow_blue[range];
+    }
+
+  g_object_notify (G_OBJECT (dest), "cyan-red");
+  g_object_notify (G_OBJECT (dest), "magenta-green");
+  g_object_notify (G_OBJECT (dest), "yellow-blue");
+
+  dest_config->range               = src_config->range;
+  dest_config->preserve_luminosity = src_config->preserve_luminosity;
+
+  g_object_notify (G_OBJECT (dest), "range");
+  g_object_notify (G_OBJECT (dest), "preserve-luminosity");
+
+  return TRUE;
 }
 
 

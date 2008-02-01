@@ -37,6 +37,8 @@
 /*  temp cruft  */
 #include "base/curves.h"
 
+#include "core/gimpcurve.h"
+
 #include "gimpcurvesconfig.h"
 
 #include "gimp-intl.h"
@@ -50,26 +52,31 @@ enum
 };
 
 
-static void   gimp_curves_config_iface_init   (GimpConfigInterface *iface);
+static void     gimp_curves_config_iface_init   (GimpConfigInterface *iface);
 
-static void   gimp_curves_config_finalize     (GObject          *object);
-static void   gimp_curves_config_get_property (GObject          *object,
-                                               guint             property_id,
-                                               GValue           *value,
-                                               GParamSpec       *pspec);
-static void   gimp_curves_config_set_property (GObject          *object,
-                                               guint             property_id,
-                                               const GValue     *value,
-                                               GParamSpec       *pspec);
+static void     gimp_curves_config_finalize     (GObject          *object);
+static void     gimp_curves_config_get_property (GObject          *object,
+                                                 guint             property_id,
+                                                 GValue           *value,
+                                                 GParamSpec       *pspec);
+static void     gimp_curves_config_set_property (GObject          *object,
+                                                 guint             property_id,
+                                                 const GValue     *value,
+                                                 GParamSpec       *pspec);
 
-static void   gimp_curves_config_reset        (GimpConfig       *config);
+static gboolean gimp_curves_config_equal        (GimpConfig       *a,
+                                                 GimpConfig       *b);
+static void     gimp_curves_config_reset        (GimpConfig       *config);
+static gboolean gimp_curves_config_copy         (GimpConfig       *src,
+                                                 GimpConfig       *dest,
+                                                 GParamFlags       flags);
 
-static void   gimp_curves_config_curve_dirty  (GimpCurve        *curve,
-                                               GimpCurvesConfig *config);
+static void     gimp_curves_config_curve_dirty  (GimpCurve        *curve,
+                                                 GimpCurvesConfig *config);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpCurvesConfig, gimp_curves_config,
-                         G_TYPE_OBJECT,
+                         GIMP_TYPE_VIEWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_curves_config_iface_init))
 
@@ -79,33 +86,34 @@ G_DEFINE_TYPE_WITH_CODE (GimpCurvesConfig, gimp_curves_config,
 static void
 gimp_curves_config_class_init (GimpCurvesConfigClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->finalize     = gimp_curves_config_finalize;
-  object_class->set_property = gimp_curves_config_set_property;
-  object_class->get_property = gimp_curves_config_get_property;
+  object_class->finalize           = gimp_curves_config_finalize;
+  object_class->set_property       = gimp_curves_config_set_property;
+  object_class->get_property       = gimp_curves_config_get_property;
 
-  g_object_class_install_property (object_class, PROP_CHANNEL,
-                                   g_param_spec_enum ("channel",
-                                                      "Channel",
-                                                      "The affected channel",
-                                                      GIMP_TYPE_HISTOGRAM_CHANNEL,
-                                                      GIMP_HISTOGRAM_VALUE,
-                                                      G_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
+  viewable_class->default_stock_id = "gimp-tool-curves";
 
-  g_object_class_install_property (object_class, PROP_CURVE,
-                                   g_param_spec_object ("curve",
-                                                        "Curve",
-                                                        "Curve",
-                                                        GIMP_TYPE_CURVE,
-                                                        G_PARAM_READWRITE));
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CHANNEL,
+                                 "channel",
+                                 "The affected channel",
+                                 GIMP_TYPE_HISTOGRAM_CHANNEL,
+                                 GIMP_HISTOGRAM_VALUE, 0);
+
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_CURVE,
+                                   "curve",
+                                   "Curve",
+                                   GIMP_TYPE_CURVE,
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
 }
 
 static void
 gimp_curves_config_iface_init (GimpConfigInterface *iface)
 {
+  iface->equal = gimp_curves_config_equal;
   iface->reset = gimp_curves_config_reset;
+  iface->copy  = gimp_curves_config_copy;
 }
 
 static void
@@ -137,11 +145,8 @@ gimp_curves_config_finalize (GObject *object)
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
     {
-      if (self->curve[channel])
-        {
-          g_object_unref (self->curve[channel]);
-          self->curve[channel] = NULL;
-        }
+      g_object_unref (self->curve[channel]);
+      self->curve[channel] = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -187,9 +192,20 @@ gimp_curves_config_set_property (GObject      *object,
       break;
 
     case PROP_CURVE:
-      if (self->curve[self->channel])
-        g_object_unref (self->curve[self->channel]);
-      self->curve[self->channel] = g_value_dup_object (value);
+      {
+        GimpCurve *src_curve  = g_value_get_object (value);
+        GimpCurve *dest_curve = self->curve[self->channel];
+
+        if (src_curve && dest_curve)
+          {
+            gimp_config_sync (G_OBJECT (src_curve), G_OBJECT (dest_curve), 0);
+
+            memcpy (dest_curve->points, src_curve->points,
+                    sizeof (src_curve->points));
+            memcpy (dest_curve->curve, src_curve->curve,
+                    sizeof (src_curve->curve));
+          }
+      }
       break;
 
    default:
@@ -198,13 +214,48 @@ gimp_curves_config_set_property (GObject      *object,
     }
 }
 
+static gboolean
+gimp_curves_config_equal (GimpConfig *a,
+                          GimpConfig *b)
+{
+  GimpCurvesConfig     *a_config = GIMP_CURVES_CONFIG (a);
+  GimpCurvesConfig     *b_config = GIMP_CURVES_CONFIG (b);
+  GimpHistogramChannel  channel;
+
+  for (channel = GIMP_HISTOGRAM_VALUE;
+       channel <= GIMP_HISTOGRAM_ALPHA;
+       channel++)
+    {
+      GimpCurve *a_curve = a_config->curve[channel];
+      GimpCurve *b_curve = b_config->curve[channel];
+
+      if (a_curve && b_curve)
+        {
+          if (a_curve->curve_type != b_curve->curve_type)
+            return FALSE;
+
+          if (memcmp (a_curve->points, b_curve->points,
+                      sizeof (b_curve->points)) ||
+              memcmp (a_curve->curve, b_curve->curve,
+                      sizeof (b_curve->curve)))
+            return FALSE;
+        }
+      else if (a_curve || b_curve)
+        {
+          return FALSE;
+        }
+    }
+
+  /* don't compare "channel" */
+
+  return TRUE;
+}
+
 static void
 gimp_curves_config_reset (GimpConfig *config)
 {
   GimpCurvesConfig     *c_config = GIMP_CURVES_CONFIG (config);
   GimpHistogramChannel  channel;
-
-  g_object_freeze_notify (G_OBJECT (config));
 
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;
@@ -215,8 +266,42 @@ gimp_curves_config_reset (GimpConfig *config)
     }
 
   gimp_config_reset_property (G_OBJECT (config), "channel");
+}
 
-  g_object_thaw_notify (G_OBJECT (config));
+static gboolean
+gimp_curves_config_copy (GimpConfig  *src,
+                         GimpConfig  *dest,
+                         GParamFlags  flags)
+{
+  GimpCurvesConfig     *src_config  = GIMP_CURVES_CONFIG (src);
+  GimpCurvesConfig     *dest_config = GIMP_CURVES_CONFIG (dest);
+  GimpHistogramChannel  channel;
+
+  for (channel = GIMP_HISTOGRAM_VALUE;
+       channel <= GIMP_HISTOGRAM_ALPHA;
+       channel++)
+    {
+      GimpCurve *src_curve  = src_config->curve[channel];
+      GimpCurve *dest_curve = dest_config->curve[channel];
+
+      if (src_curve && dest_curve)
+        {
+          gimp_config_sync (G_OBJECT (src_curve), G_OBJECT (dest_curve), 0);
+
+          memcpy (dest_curve->points,
+                  src_curve->points, sizeof (src_curve->points));
+          memcpy (dest_curve->curve,
+                  src_curve->curve, sizeof (src_curve->curve));
+        }
+    }
+
+  g_object_notify (G_OBJECT (dest), "curve");
+
+  dest_config->channel = src_config->channel;
+
+  g_object_notify (G_OBJECT (dest), "channel");
+
+  return TRUE;
 }
 
 static void

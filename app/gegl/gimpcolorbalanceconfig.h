@@ -23,6 +23,9 @@
 #define __GIMP_COLOR_BALANCE_CONFIG_H__
 
 
+#include "core/gimpviewable.h"
+
+
 #define GIMP_TYPE_COLOR_BALANCE_CONFIG            (gimp_color_balance_config_get_type ())
 #define GIMP_COLOR_BALANCE_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_BALANCE_CONFIG, GimpColorBalanceConfig))
 #define GIMP_COLOR_BALANCE_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_COLOR_BALANCE_CONFIG, GimpColorBalanceConfigClass))
@@ -35,7 +38,7 @@ typedef struct _GimpColorBalanceConfigClass GimpColorBalanceConfigClass;
 
 struct _GimpColorBalanceConfig
 {
-  GObject           parent_instance;
+  GimpViewable      parent_instance;
 
   GimpTransferMode  range;
 
@@ -48,7 +51,7 @@ struct _GimpColorBalanceConfig
 
 struct _GimpColorBalanceConfigClass
 {
-  GObjectClass  parent_class;
+  GimpViewableClass  parent_class;
 };
 
 

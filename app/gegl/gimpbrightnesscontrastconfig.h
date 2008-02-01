@@ -23,6 +23,9 @@
 #define __GIMP_BRIGHTNESS_CONTRAST_CONFIG_H__
 
 
+#include "core/gimpviewable.h"
+
+
 #define GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG            (gimp_brightness_contrast_config_get_type ())
 #define GIMP_BRIGHTNESS_CONTRAST_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG, GimpBrightnessContrastConfig))
 #define GIMP_BRIGHTNESS_CONTRAST_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG, GimpBrightnessContrastConfigClass))
@@ -35,15 +38,15 @@ typedef struct _GimpBrightnessContrastConfigClass GimpBrightnessContrastConfigCl
 
 struct _GimpBrightnessContrastConfig
 {
-  GObject  parent_instance;
+  GimpViewable  parent_instance;
 
-  gdouble  brightness;
-  gdouble  contrast;
+  gdouble       brightness;
+  gdouble       contrast;
 };
 
 struct _GimpBrightnessContrastConfigClass
 {
-  GObjectClass  parent_class;
+  GimpViewableClass  parent_class;
 };
 
 

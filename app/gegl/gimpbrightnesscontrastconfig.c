@@ -50,7 +50,7 @@ static void   gimp_brightness_contrast_config_set_property (GObject      *object
 
 G_DEFINE_TYPE_WITH_CODE (GimpBrightnessContrastConfig,
                          gimp_brightness_contrast_config,
-                         G_TYPE_OBJECT,
+                         GIMP_TYPE_VIEWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_brightness_contrast_config_parent_class
@@ -59,26 +59,23 @@ G_DEFINE_TYPE_WITH_CODE (GimpBrightnessContrastConfig,
 static void
 gimp_brightness_contrast_config_class_init (GimpBrightnessContrastConfigClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->set_property = gimp_brightness_contrast_config_set_property;
-  object_class->get_property = gimp_brightness_contrast_config_get_property;
+  object_class->set_property       = gimp_brightness_contrast_config_set_property;
+  object_class->get_property       = gimp_brightness_contrast_config_get_property;
 
-  g_object_class_install_property (object_class, PROP_BRIGHTNESS,
-                                   g_param_spec_double ("brightness",
-                                                        "Brightness",
-                                                        "Brightness",
-                                                        -1.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  viewable_class->default_stock_id = "gimp-tool-brightness-constrast";
 
-  g_object_class_install_property (object_class, PROP_CONTRAST,
-                                   g_param_spec_double ("contrast",
-                                                        "Contrast",
-                                                        "Contrast",
-                                                        -1.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRIGHTNESS,
+                                   "brightness",
+                                   "Brightness",
+                                   -1.0, 1.0, 0.0, 0);
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CONTRAST,
+                                   "contrast",
+                                   "Contrast",
+                                   -1.0, 1.0, 0.0, 0);
 }
 
 static void
