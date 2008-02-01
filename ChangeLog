@@ -1,5 +1,9 @@
 2008-02-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimppolygonselecttool.h: fix include guards.
+
+2008-02-01  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpconfig/gimpconfig-iface.[ch]: add new method
 	GimpConfigInterface::copy() which by default calls
 	gimp_config_sync() but is overridable for objects which are not
