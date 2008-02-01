@@ -1,5 +1,10 @@
 2008-02-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpcurvestool.c: fix various curves tool brokenness.
+	Should behave (TM) now.
+
+2008-02-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-types.h
 	* app/gegl/gegl-types.h: have app/gegl know app/core's namespace.
 

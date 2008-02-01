@@ -236,14 +236,9 @@ gimp_curves_tool_initialize (GimpTool     *tool,
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (c_tool->channel_menu),
                                       curves_menu_sensitivity, c_tool, NULL);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (c_tool->channel_menu),
-                                 c_tool->config->channel);
-
   gimp_drawable_calculate_histogram (drawable, c_tool->hist);
   gimp_histogram_view_set_background (GIMP_HISTOGRAM_VIEW (c_tool->graph),
                                       c_tool->hist);
-  gimp_curve_view_set_curve (GIMP_CURVE_VIEW (c_tool->graph),
-                             c_tool->config->curve[c_tool->config->channel]);
 
   return TRUE;
 }
@@ -425,25 +420,25 @@ gimp_curves_tool_map (GimpImageMapTool *image_map_tool)
 static void
 gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GimpCurvesTool  *tool         = GIMP_CURVES_TOOL (image_map_tool);
-  GimpToolOptions *tool_options = GIMP_TOOL_GET_OPTIONS (image_map_tool);
-  GtkListStore    *store;
-  GtkWidget       *vbox;
-  GtkWidget       *vbox2;
-  GtkWidget       *hbox;
-  GtkWidget       *hbox2;
-  GtkWidget       *label;
-  GtkWidget       *bbox;
-  GtkWidget       *frame;
-  GtkWidget       *menu;
-  GtkWidget       *table;
-  GtkWidget       *button;
-  GtkWidget       *bar;
-  gint             padding;
+  GimpCurvesTool   *tool         = GIMP_CURVES_TOOL (image_map_tool);
+  GimpToolOptions  *tool_options = GIMP_TOOL_GET_OPTIONS (image_map_tool);
+  GimpCurvesConfig *config       = tool->config;
+  GtkListStore     *store;
+  GtkWidget        *vbox;
+  GtkWidget        *vbox2;
+  GtkWidget        *hbox;
+  GtkWidget        *hbox2;
+  GtkWidget        *label;
+  GtkWidget        *bbox;
+  GtkWidget        *frame;
+  GtkWidget        *table;
+  GtkWidget        *button;
+  GtkWidget        *bar;
+  gint              padding;
 
   vbox = image_map_tool->main_vbox;
 
-  /*  The option menu for selecting channels  */
+  /*  The combo box for selecting channels  */
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
@@ -455,20 +450,22 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   store = gimp_enum_store_new_with_range (GIMP_TYPE_HISTOGRAM_CHANNEL,
                                           GIMP_HISTOGRAM_VALUE,
                                           GIMP_HISTOGRAM_ALPHA);
-  menu = gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
+  tool->channel_menu =
+    gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
   g_object_unref (store);
 
-  g_signal_connect (menu, "changed",
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->channel_menu),
+                                 config->channel);
+  gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (tool->channel_menu),
+                                        "gimp-channel");
+  gtk_box_pack_start (GTK_BOX (hbox), tool->channel_menu, FALSE, FALSE, 0);
+  gtk_widget_show (tool->channel_menu);
+
+  g_signal_connect (tool->channel_menu, "changed",
                     G_CALLBACK (curves_channel_callback),
                     tool);
-  gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (menu),
-                                        "gimp-channel");
-  gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
-  gtk_widget_show (menu);
 
-  tool->channel_menu = menu;
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), menu);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), tool->channel_menu);
 
   button = gtk_button_new_with_mnemonic (_("R_eset Channel"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -478,11 +475,12 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (curves_channel_reset_callback),
                     tool);
 
-  menu = gimp_prop_enum_stock_box_new (G_OBJECT (tool_options),
-                                       "histogram-scale", "gimp-histogram",
-                                       0, 0);
-  gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
-  gtk_widget_show (menu);
+  /*  The histogram scale radio buttons  */
+  hbox2 = gimp_prop_enum_stock_box_new (G_OBJECT (tool_options),
+                                        "histogram-scale", "gimp-histogram",
+                                        0, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
+  gtk_widget_show (hbox2);
 
   /*  The table for the color bars and the graph  */
   table = gtk_table_new (2, 2, FALSE);
@@ -521,6 +519,8 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
                 "border-width", RADIUS,
                 "subdivisions", 1,
                 NULL);
+  gimp_curve_view_set_curve (GIMP_CURVE_VIEW (tool->graph),
+                             config->curve[config->channel]);
   gtk_container_add (GTK_CONTAINER (frame), tool->graph);
   gtk_widget_show (tool->graph);
 
@@ -636,21 +636,25 @@ gimp_curves_tool_config_notify (GObject        *object,
                                 GimpCurvesTool *tool)
 {
   GimpCurvesConfig *config = GIMP_CURVES_CONFIG (object);
+  GimpCurve        *curve  = config->curve[config->channel];
 
   if (! tool->xrange)
     return;
 
   if (! strcmp (pspec->name, "channel"))
     {
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->channel_menu),
+                                     config->channel);
+
       switch (config->channel)
         {
         case GIMP_HISTOGRAM_VALUE:
         case GIMP_HISTOGRAM_ALPHA:
         case GIMP_HISTOGRAM_RGB:
           gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->xrange),
-                                      config->curve[config->channel]->curve,
-                                      config->curve[config->channel]->curve,
-                                      config->curve[config->channel]->curve);
+                                      curve->curve,
+                                      curve->curve,
+                                      curve->curve);
           break;
 
         case GIMP_HISTOGRAM_RED:
@@ -671,13 +675,15 @@ gimp_curves_tool_config_notify (GObject        *object,
       gimp_color_bar_set_channel (GIMP_COLOR_BAR (tool->yrange),
                                   config->channel);
 
-      gimp_curve_view_set_curve (GIMP_CURVE_VIEW (tool->graph),
-                                 config->curve[config->channel]);
+      gimp_curve_view_set_curve (GIMP_CURVE_VIEW (tool->graph), curve);
+
+      gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (tool->curve_type),
+                                       curve->curve_type);
     }
   else if (! strcmp (pspec->name, "curve"))
     {
       gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (tool->curve_type),
-                                       config->curve[config->channel]->curve_type);
+                                       curve->curve_type);
     }
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
@@ -737,13 +743,16 @@ static void
 curves_curve_type_callback (GtkWidget      *widget,
                             GimpCurvesTool *tool)
 {
-  GimpCurvesConfig *config = tool->config;
-  GimpCurveType     curve_type;
-
-  gimp_radio_button_update (widget, &curve_type);
-
-  if (config->curve[config->channel]->curve_type != curve_type)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
-      gimp_curve_set_curve_type (config->curve[config->channel], curve_type);
+      GimpCurvesConfig *config = tool->config;
+      GimpCurveType     curve_type;
+
+      gimp_radio_button_update (widget, &curve_type);
+
+      if (config->curve[config->channel]->curve_type != curve_type)
+        {
+          gimp_curve_set_curve_type (config->curve[config->channel], curve_type);
+        }
     }
 }
