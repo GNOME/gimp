@@ -1,3 +1,8 @@
+2008-02-01  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* themes/Default/images/tools/stock-tool-polygon-select-22.png:
+	Lower opacity of shadow to mimic appearance of other tool icons.
+
 2008-02-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpcurvestool.c: fix various curves tool brokenness.
