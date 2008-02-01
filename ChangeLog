@@ -1,5 +1,11 @@
 2008-02-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainerview.c
+	(gimp_container_view_set_container): refuse containers if their
+	children are not GimpViewables instead of crashing later.
+
+2008-02-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimppolygonselecttool.h: fix include guards.
 
 2008-02-01  Michael Natterer  <mitch@gimp.org>
