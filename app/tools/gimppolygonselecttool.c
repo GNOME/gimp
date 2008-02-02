@@ -535,13 +535,11 @@ gimp_polygon_select_tool_remove_last (GimpPolygonSelectTool *poly_sel_tool)
 
   gimp_draw_tool_pause (draw_tool);
 
+  poly_sel_tool->num_points--;
+
   if (poly_sel_tool->num_points == 0)
     {
       gimp_polygon_select_tool_halt (poly_sel_tool);
-    }
-  else
-    {
-      poly_sel_tool->num_points--;
     }
 
   gimp_draw_tool_resume (draw_tool);

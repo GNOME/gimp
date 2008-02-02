@@ -1,6 +1,12 @@
 2008-02-02  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimppolygonselecttool.c
+	(gimp_polygon_select_tool_remove_last): Properly halt the tool
+	when there are no vertices left.
+
+2008-02-02  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimppolygonselecttool.c
 	(gimp_polygon_select_tool_commit): Add a call to
 	gimp_image_flush() so that the undo state gets updated.
 
