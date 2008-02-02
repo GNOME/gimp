@@ -1,5 +1,9 @@
 2008-02-02  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* INSTALL: Update GEGL dependency to GEGL trunk.
+
+2008-02-02  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimppolygonselecttool.c
 	(gimp_polygon_select_tool_commit): Only create a selection from
 	the polygon if there are 3 or more vertices.
