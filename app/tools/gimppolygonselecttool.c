@@ -436,6 +436,8 @@ gimp_polygon_select_tool_commit (GimpPolygonSelectTool *poly_sel_tool,
   gimp_polygon_select_tool_select (poly_sel_tool, display);
 
   gimp_polygon_select_tool_halt (poly_sel_tool);
+
+  gimp_image_flush (display->image);
 }
 
 static void
