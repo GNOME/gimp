@@ -1,6 +1,14 @@
 2008-02-02  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimppolygonselecttool.c
+	(gimp_polygon_select_tool_oper_update): Don't hide the pending
+	point line if we are grabbing the first point.
+	(gimp_polygon_select_tool_motion): Also update the pending point
+	if we are moving the first point.
+
+2008-02-02  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimppolygonselecttool.c
 	(gimp_polygon_select_tool_remove_last): Properly halt the tool
 	when there are no vertices left.
 
