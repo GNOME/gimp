@@ -455,7 +455,10 @@ static void
 gimp_polygon_select_tool_commit (GimpPolygonSelectTool *poly_sel_tool,
                                  GimpDisplay           *display)
 {
-  gimp_polygon_select_tool_select (poly_sel_tool, display);
+  if (poly_sel_tool->num_points >= 3)
+    {
+      gimp_polygon_select_tool_select (poly_sel_tool, display);
+    }
 
   gimp_polygon_select_tool_halt (poly_sel_tool);
 

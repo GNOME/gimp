@@ -1,6 +1,12 @@
 2008-02-02  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimppolygonselecttool.c
+	(gimp_polygon_select_tool_commit): Only create a selection from
+	the polygon if there are 3 or more vertices.
+
+2008-02-02  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimppolygonselecttool.c
 	(gimp_polygon_select_tool_oper_update): Don't hide the pending
 	point line if we are grabbing the first point.
 	(gimp_polygon_select_tool_motion): Also update the pending point
