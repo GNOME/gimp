@@ -41,12 +41,9 @@ struct _GimpCurvesTool
   GimpLut              *lut;
 
   /* dialog */
-  gboolean              color;
-  gboolean              alpha;
+  GimpHistogram        *hist;
 
   gint                  col_value[5];
-
-  GimpHistogram        *hist;
 
   GtkWidget            *channel_menu;
   GtkWidget            *xrange;

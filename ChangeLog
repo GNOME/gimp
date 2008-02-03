@@ -1,5 +1,12 @@
 2008-02-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimplevelstool.[ch]
+	* app/tools/gimpcurvestool.[ch]: remove boolean "color" and "alpha"
+	members from the tool structs and ask the drawable instead when
+	needed.
+
+2008-02-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimpthresholdconfig.[ch]: add "gboolean color"
 	parameter to gimp_threshold_config_to_cruft() and set the "color"
 	boolean in the Threshold cruft struct.

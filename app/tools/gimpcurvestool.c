@@ -224,9 +224,6 @@ gimp_curves_tool_initialize (GimpTool     *tool,
   if (! c_tool->hist)
     c_tool->hist = gimp_histogram_new ();
 
-  c_tool->color = gimp_drawable_is_rgb (drawable);
-  c_tool->alpha = gimp_drawable_has_alpha (drawable);
-
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
   /*  always pick colors  */
@@ -234,7 +231,7 @@ gimp_curves_tool_initialize (GimpTool     *tool,
                           GIMP_COLOR_TOOL_GET_OPTIONS (tool));
 
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (c_tool->channel_menu),
-                                      curves_menu_sensitivity, c_tool, NULL);
+                                      curves_menu_sensitivity, drawable, NULL);
 
   gimp_drawable_calculate_histogram (drawable, c_tool->hist);
   gimp_histogram_view_set_background (GIMP_HISTOGRAM_VIEW (c_tool->graph),
@@ -401,15 +398,17 @@ gimp_curves_tool_get_operation (GimpImageMapTool  *image_map_tool,
 static void
 gimp_curves_tool_map (GimpImageMapTool *image_map_tool)
 {
-  GimpCurvesTool *tool = GIMP_CURVES_TOOL (image_map_tool);
+  GimpCurvesTool *tool     = GIMP_CURVES_TOOL (image_map_tool);
+  GimpDrawable   *drawable = image_map_tool->drawable;
   Curves          curves;
 
-  gimp_curves_config_to_cruft (tool->config, &curves, tool->color);
+  gimp_curves_config_to_cruft (tool->config, &curves,
+                               gimp_drawable_is_rgb (drawable));
 
   gimp_lut_setup (tool->lut,
                   (GimpLutFunc) curves_lut_func,
                   &curves,
-                  gimp_drawable_bytes (image_map_tool->drawable));
+                  gimp_drawable_bytes (drawable));
 }
 
 
@@ -716,8 +715,8 @@ static gboolean
 curves_menu_sensitivity (gint      value,
                          gpointer  data)
 {
-  GimpCurvesTool       *tool    = GIMP_CURVES_TOOL (data);
-  GimpHistogramChannel  channel = value;
+  GimpDrawable         *drawable = GIMP_DRAWABLE (data);
+  GimpHistogramChannel  channel  = value;
 
   switch (channel)
     {
@@ -727,10 +726,10 @@ curves_menu_sensitivity (gint      value,
     case GIMP_HISTOGRAM_RED:
     case GIMP_HISTOGRAM_GREEN:
     case GIMP_HISTOGRAM_BLUE:
-      return tool->color;
+      return gimp_drawable_is_rgb (drawable);
 
     case GIMP_HISTOGRAM_ALPHA:
-      return tool->alpha;
+      return gimp_drawable_has_alpha (drawable);
 
     case GIMP_HISTOGRAM_RGB:
       return FALSE;

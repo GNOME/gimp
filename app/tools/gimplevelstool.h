@@ -42,9 +42,6 @@ struct _GimpLevelsTool
   GimpLut              *lut;
 
   /* dialog */
-  gboolean              color;
-  gboolean              alpha;
-
   GimpHistogram        *hist;
 
   GtkWidget            *channel_menu;

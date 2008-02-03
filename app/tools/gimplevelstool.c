@@ -223,9 +223,6 @@ gimp_levels_tool_initialize (GimpTool     *tool,
   if (! l_tool->hist)
     l_tool->hist = gimp_histogram_new ();
 
-  l_tool->color = gimp_drawable_is_rgb (drawable);
-  l_tool->alpha = gimp_drawable_has_alpha (drawable);
-
   if (l_tool->active_picker)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (l_tool->active_picker),
                                   FALSE);
@@ -233,7 +230,7 @@ gimp_levels_tool_initialize (GimpTool     *tool,
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (l_tool->channel_menu),
-                                      levels_menu_sensitivity, l_tool, NULL);
+                                      levels_menu_sensitivity, drawable, NULL);
 
   gimp_drawable_calculate_histogram (drawable, l_tool->hist);
   gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (l_tool->hist_view),
@@ -271,15 +268,17 @@ gimp_levels_tool_get_operation (GimpImageMapTool  *im_tool,
 static void
 gimp_levels_tool_map (GimpImageMapTool *image_map_tool)
 {
-  GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
+  GimpLevelsTool *tool     = GIMP_LEVELS_TOOL (image_map_tool);
+  GimpDrawable   *drawable = image_map_tool->drawable;
   Levels          levels;
 
-  gimp_levels_config_to_cruft (tool->config, &levels, tool->color);
+  gimp_levels_config_to_cruft (tool->config, &levels,
+                               gimp_drawable_is_rgb (drawable));
 
   gimp_lut_setup (tool->lut,
                   (GimpLutFunc) levels_lut_func,
                   &levels,
-                  gimp_drawable_bytes (image_map_tool->drawable));
+                  gimp_drawable_bytes (drawable));
 }
 
 
@@ -865,8 +864,8 @@ static gboolean
 levels_menu_sensitivity (gint      value,
                          gpointer  data)
 {
-  GimpLevelsTool       *tool    = GIMP_LEVELS_TOOL (data);
-  GimpHistogramChannel  channel = value;
+  GimpDrawable         *drawable = GIMP_DRAWABLE (data);
+  GimpHistogramChannel  channel  = value;
 
   switch (channel)
     {
@@ -876,10 +875,10 @@ levels_menu_sensitivity (gint      value,
     case GIMP_HISTOGRAM_RED:
     case GIMP_HISTOGRAM_GREEN:
     case GIMP_HISTOGRAM_BLUE:
-      return tool->color;
+      return gimp_drawable_is_rgb (drawable);
 
     case GIMP_HISTOGRAM_ALPHA:
-      return tool->alpha;
+      return gimp_drawable_has_alpha (drawable);
 
     case GIMP_HISTOGRAM_RGB:
       return FALSE;
@@ -892,7 +891,10 @@ static void
 levels_stretch_callback (GtkWidget      *widget,
                          GimpLevelsTool *tool)
 {
-  gimp_levels_config_stretch (tool->config, tool->hist, tool->color);
+  GimpDrawable *drawable = GIMP_IMAGE_MAP_TOOL (tool)->drawable;
+
+  gimp_levels_config_stretch (tool->config, tool->hist,
+                              gimp_drawable_is_rgb (drawable));
 }
 
 static void
