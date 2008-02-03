@@ -1,3 +1,13 @@
+2008-02-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/gimpthresholdconfig.[ch]: add "gboolean color"
+	parameter to gimp_threshold_config_to_cruft() and set the "color"
+	boolean in the Threshold cruft struct.
+
+	* app/tools/gimpthresholdtool.c: don't fiddle with the cruft
+	struct any longer and pass gimp_drawable_is_rgb() to above
+	function instead.
+
 2008-02-02  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* INSTALL: Update GEGL dependency to GEGL trunk.

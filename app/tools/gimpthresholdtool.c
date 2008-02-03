@@ -164,8 +164,6 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
   if (! t_tool->hist)
     t_tool->hist = gimp_histogram_new ();
 
-  t_tool->threshold->color = gimp_drawable_is_rgb (drawable);
-
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
   gimp_drawable_calculate_histogram (drawable, t_tool->hist);
@@ -216,9 +214,11 @@ gimp_threshold_tool_get_operation (GimpImageMapTool  *image_map_tool,
 static void
 gimp_threshold_tool_map (GimpImageMapTool *image_map_tool)
 {
-  GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (image_map_tool);
+  GimpThresholdTool *t_tool   = GIMP_THRESHOLD_TOOL (image_map_tool);
+  GimpDrawable      *drawable = image_map_tool->drawable;
 
-  gimp_threshold_config_to_cruft (t_tool->config, t_tool->threshold);
+  gimp_threshold_config_to_cruft (t_tool->config, t_tool->threshold,
+                                  gimp_drawable_is_rgb (drawable));
 }
 
 
@@ -315,11 +315,14 @@ static void
 gimp_threshold_tool_auto_clicked (GtkWidget         *button,
                                   GimpThresholdTool *t_tool)
 {
-  gdouble low = gimp_histogram_get_threshold (t_tool->hist,
-                                              t_tool->threshold->color ?
-                                              GIMP_HISTOGRAM_RGB :
-                                              GIMP_HISTOGRAM_VALUE,
-                                              0, 255);
+  GimpDrawable *drawable = GIMP_IMAGE_MAP_TOOL (t_tool)->drawable;
+  gdouble       low;
+
+  low = gimp_histogram_get_threshold (t_tool->hist,
+                                      gimp_drawable_is_rgb (drawable) ?
+                                      GIMP_HISTOGRAM_RGB :
+                                      GIMP_HISTOGRAM_VALUE,
+                                      0, 255);
 
   gimp_histogram_view_set_range (t_tool->histogram_box->view,
                                  low, 255.0);
