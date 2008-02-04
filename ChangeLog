@@ -1,3 +1,21 @@
+2008-02-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/gimpdrawable-brightness-contrast.[ch]
+	* app/core/gimpdrawable-color-balance.[ch]
+	* app/core/gimpdrawable-colorize.[ch]
+	* app/core/gimpdrawable-curves.[ch]
+	* app/core/gimpdrawable-hue-saturation.[ch]
+	* app/core/gimpdrawable-posterize.[ch]
+	* app/core/gimpdrawable-threshold.[ch]: new files containing all
+	the code that was in pdb/color_cmds.c. Cleaned up and GEGL-enabled
+	everyting.
+
+	* tools/pdbgen/pdb/color.pdb: remove almost all code and simply call
+	the new functions.
+
+	* app/pdb/color_cmds.c: regenerated.
+
 2008-02-04  Sven Neumann  <sven@gimp.org>
 
 	* app/paint/gimpbrushcore.c (gimp_brush_core_create_bound_segs):

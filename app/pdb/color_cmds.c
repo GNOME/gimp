@@ -29,26 +29,20 @@
 #include "gimpprocedure.h"
 #include "core/gimpparamspecs.h"
 
-#include "base/color-balance.h"
-#include "base/colorize.h"
-#include "base/curves.h"
 #include "base/gimphistogram.h"
-#include "base/gimplut.h"
-#include "base/hue-saturation.h"
-#include "base/lut-funcs.h"
-#include "base/pixel-processor.h"
-#include "base/pixel-region.h"
-#include "base/threshold.h"
-#include "core/gimp.h"
-#include "core/gimpcurve.h"
+#include "core/gimpdrawable-brightness-contrast.h"
+#include "core/gimpdrawable-color-balance.h"
+#include "core/gimpdrawable-colorize.h"
+#include "core/gimpdrawable-curves.h"
 #include "core/gimpdrawable-desaturate.h"
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-histogram.h"
+#include "core/gimpdrawable-hue-saturation.h"
 #include "core/gimpdrawable-invert.h"
 #include "core/gimpdrawable-levels.h"
-#include "core/gimpdrawable-operation.h"
+#include "core/gimpdrawable-posterize.h"
+#include "core/gimpdrawable-threshold.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
 #include "gimp-intl.h"
 
 #include "internal_procs.h"
@@ -78,55 +72,8 @@ brightness_contrast_invoker (GimpProcedure      *procedure,
         success = FALSE;
 
       if (success)
-        {
-      if (gimp_use_gegl (gimp))
-        {
-          GeglNode *node = g_object_new (GEGL_TYPE_NODE,
-                                         "operation",  "brightness-contrast",
-                                         NULL);
-
-          gegl_node_set (node,
-                         "brightness", brightness / 127.0,
-                         "contrast",   (contrast < 0 ?
-                                        (contrast + 127.0) / 127.0 :
-                                        contrast * 4.0 / 127.0 + 1),
-                         NULL);
-
-          gimp_drawable_apply_operation (drawable, node, TRUE,
-                                         progress, _("Brightness-Contrast"));
-
-          g_object_unref (node);
-        }
-      else
-        {
-          gint x, y, width, height;
-
-          /* The application should occur only within selection bounds */
-          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-            {
-              GimpLut     *lut;
-              PixelRegion  srcPR, destPR;
-
-              lut = brightness_contrast_lut_new (brightness / 255.0,
-                                                 contrast / 127.0,
-                                                 gimp_drawable_bytes (drawable));
-
-              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                                 x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                                 x, y, width, height, TRUE);
-
-              pixel_regions_process_parallel ((PixelProcessorFunc)
-                                              gimp_lut_process,
-                                              lut, 2, &srcPR, &destPR);
-
-              gimp_lut_free (lut);
-
-              gimp_drawable_merge_shadow (drawable, TRUE, _("Brightness-Contrast"));
-              gimp_drawable_update (drawable, x, y, width, height);
-            }
-        }
-        }
+        gimp_drawable_brightness_contrast (drawable, progress,
+                                           brightness, contrast);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -252,50 +199,7 @@ posterize_invoker (GimpProcedure      *procedure,
         success = FALSE;
 
       if (success)
-        {
-      if (gimp_use_gegl (gimp))
-        {
-          GeglNode *node = g_object_new (GEGL_TYPE_NODE,
-                                         "operation", "gimp-posterize",
-                                         NULL);
-
-          gegl_node_set (node,
-                         "levels", levels,
-                         NULL);
-
-          gimp_drawable_apply_operation (drawable, node, TRUE,
-                                         progress, _("Levels"));
-
-          g_object_unref (node);
-        }
-      else
-        {
-          gint x, y, width, height;
-
-          /* The application should occur only within selection bounds */
-          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-            {
-              GimpLut     *lut;
-              PixelRegion  srcPR, destPR;
-
-              lut = posterize_lut_new (levels, gimp_drawable_bytes (drawable));
-
-              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                                 x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                                 x, y, width, height, TRUE);
-
-              pixel_regions_process_parallel ((PixelProcessorFunc)
-                                              gimp_lut_process,
-                                              lut, 2, &srcPR, &destPR);
-
-              gimp_lut_free (lut);
-
-              gimp_drawable_merge_shadow (drawable, TRUE, _("Posterize"));
-              gimp_drawable_update (drawable, x, y, width, height);
-            }
-        }
-        }
+        gimp_drawable_posterize (drawable, progress, levels);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -439,65 +343,8 @@ curves_spline_invoker (GimpProcedure      *procedure,
         success = FALSE;
 
       if (success)
-        {
-          gint x, y, width, height;
-
-          /* The application should occur only within selection bounds */
-          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-            {
-              GimpCurve   *curve;
-              Curves       c;
-              gint         j;
-              PixelRegion  srcPR, destPR;
-              GimpLut     *lut;
-
-              /* FIXME: hack */
-              if (gimp_drawable_is_gray (drawable) &&
-                  channel == GIMP_HISTOGRAM_ALPHA)
-                channel = 1;
-
-              lut = gimp_lut_new ();
-
-              curves_init (&c);
-
-              curve = GIMP_CURVE (gimp_curve_new ("curves_spline"));
-
-              gimp_data_freeze (GIMP_DATA (curve));
-
-              /*  unset the last point  */
-              gimp_curve_set_point (curve, GIMP_CURVE_NUM_POINTS - 1, -1, -1);
-
-              for (j = 0; j < num_points / 2; j++)
-                gimp_curve_set_point (curve, j,
-                                      control_pts[j * 2],
-                                      control_pts[j * 2 + 1]);
-
-              gimp_data_thaw (GIMP_DATA (curve));
-
-              gimp_curve_get_uchar (curve, c.curve[channel]);
-
-              g_object_unref (curve);
-
-              gimp_lut_setup (lut,
-                              (GimpLutFunc) curves_lut_func,
-                              &c,
-                              gimp_drawable_bytes (drawable));
-
-              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                                 x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                                 x, y, width, height, TRUE);
-
-              pixel_regions_process_parallel ((PixelProcessorFunc)
-                                              gimp_lut_process,
-                                              lut, 2, &srcPR, &destPR);
-
-              gimp_lut_free (lut);
-
-              gimp_drawable_merge_shadow (drawable, TRUE, _("Curves"));
-              gimp_drawable_update (drawable, x, y, width, height);
-            }
-        }
+        gimp_drawable_curves_spline (drawable, progress,
+                                     channel, control_pts, num_points);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -533,49 +380,8 @@ curves_explicit_invoker (GimpProcedure      *procedure,
         success = FALSE;
 
       if (success)
-        {
-          gint x, y, width, height;
-
-          /* The application should occur only within selection bounds */
-          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-            {
-              Curves       c;
-              gint         j;
-              PixelRegion  srcPR, destPR;
-              GimpLut     *lut;
-
-              /* FIXME: hack */
-              if (gimp_drawable_is_gray (drawable) &&
-                  channel == GIMP_HISTOGRAM_ALPHA)
-                channel = 1;
-
-              lut = gimp_lut_new ();
-
-              curves_init (&c);
-
-              for (j = 0; j < 256; j++)
-                c.curve[channel][j] = curve[j];
-
-              gimp_lut_setup (lut,
-                              (GimpLutFunc) curves_lut_func,
-                              &c,
-                              gimp_drawable_bytes (drawable));
-
-              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                                 x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                                 x, y, width, height, TRUE);
-
-              pixel_regions_process_parallel ((PixelProcessorFunc)
-                                              gimp_lut_process,
-                                              lut, 2, &srcPR, &destPR);
-
-              gimp_lut_free (lut);
-
-              gimp_drawable_merge_shadow (drawable, TRUE, _("Curves"));
-              gimp_drawable_update (drawable, x, y, width, height);
-            }
-        }
+        gimp_drawable_curves_explicit (drawable, progress,
+                                       channel, curve, num_bytes);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -611,37 +417,10 @@ color_balance_invoker (GimpProcedure      *procedure,
         success = FALSE;
 
       if (success)
-        {
-          gint x, y, width, height;
-
-          /* The application should occur only within selection bounds */
-          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-            {
-              ColorBalance  cb;
-              PixelRegion   srcPR, destPR;
-
-              color_balance_init (&cb);
-
-              cb.preserve_luminosity = preserve_lum;
-
-              cb.cyan_red[transfer_mode]      = cyan_red;
-              cb.magenta_green[transfer_mode] = magenta_green;
-              cb.yellow_blue[transfer_mode]   = yellow_blue;
-
-              color_balance_create_lookup_tables (&cb);
-
-              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                                 x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                                 x, y, width, height, TRUE);
-
-              pixel_regions_process_parallel ((PixelProcessorFunc) color_balance,
-                                              &cb, 2, &srcPR, &destPR);
-
-              gimp_drawable_merge_shadow (drawable, TRUE, _("Color Balance"));
-              gimp_drawable_update (drawable, x, y, width, height);
-            }
-        }
+        gimp_drawable_color_balance (drawable, progress,
+                                     transfer_mode,
+                                     cyan_red, magenta_green, yellow_blue,
+                                     preserve_lum);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -673,55 +452,8 @@ colorize_invoker (GimpProcedure      *procedure,
         success = FALSE;
 
       if (success)
-        {
-      if (gimp_use_gegl (gimp))
-        {
-          GeglNode *node = g_object_new (GEGL_TYPE_NODE,
-                                         "operation", "gimp-colorize",
-                                         NULL);
-
-          gegl_node_set (node,
-                         "hue",        hue,
-                         "saturation", saturation,
-                         "lightness",  lightness,
-                         NULL);
-
-          gimp_drawable_apply_operation (drawable, node, TRUE,
-                                         progress, _("Colorize"));
-
-          g_object_unref (node);
-        }
-      else
-        {
-          gint x, y, width, height;
-
-          /* The application should occur only within selection bounds */
-          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-            {
-              Colorize     colors;
-              PixelRegion  srcPR, destPR;
-
-              colorize_init (&colors);
-
-              colors.hue        = hue;
-              colors.saturation = saturation;
-              colors.lightness  = lightness;
-
-              colorize_calculate (&colors);
-
-              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                                 x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                                 x, y, width, height, TRUE);
-
-              pixel_regions_process_parallel ((PixelProcessorFunc) colorize,
-                                              &colors, 2, &srcPR, &destPR);
-
-              gimp_drawable_merge_shadow (drawable, TRUE, _("Colorize"));
-              gimp_drawable_update (drawable, x, y, width, height);
-            }
-        }
-        }
+        gimp_drawable_colorize (drawable, progress,
+                                hue, saturation, lightness);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -827,36 +559,8 @@ hue_saturation_invoker (GimpProcedure      *procedure,
         success = FALSE;
 
       if (success)
-        {
-          gint x, y, width, height;
-
-          /* The application should occur only within selection bounds */
-          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-            {
-              HueSaturation  hs;
-              PixelRegion    srcPR, destPR;
-
-              hue_saturation_init (&hs);
-
-              hs.hue[hue_range]        = hue_offset;
-              hs.lightness[hue_range]  = lightness;
-              hs.saturation[hue_range] = saturation;
-
-              /* Calculate the transfer arrays */
-              hue_saturation_calculate_transfers (&hs);
-
-              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                                 x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                                 x, y, width, height, TRUE);
-
-              pixel_regions_process_parallel ((PixelProcessorFunc) hue_saturation,
-                                              &hs, 2, &srcPR, &destPR);
-
-              gimp_drawable_merge_shadow (drawable, TRUE, _("Hue-Saturation"));
-              gimp_drawable_update (drawable, x, y, width, height);
-            }
-        }
+        gimp_drawable_hue_saturation (drawable, progress,
+                                      hue_range, hue_offset, saturation, lightness);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -887,50 +591,8 @@ threshold_invoker (GimpProcedure      *procedure,
         success = FALSE;
 
       if (success)
-        {
-      if (gimp_use_gegl (gimp))
-        {
-          GeglNode *node = g_object_new (GEGL_TYPE_NODE,
-                                         "operation", "gimp-threshold",
-                                         NULL);
-
-          gegl_node_set (node,
-                         "low",  low_threshold  / 255.0,
-                         "high", high_threshold / 255.0,
-                         NULL);
-
-          gimp_drawable_apply_operation (drawable, node, TRUE,
-                                         progress, _("Threshold"));
-
-          g_object_unref (node);
-        }
-      else
-        {
-          gint x, y, width, height;
-
-          /* The application should occur only within selection bounds */
-          if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-            {
-              Threshold   tr;
-              PixelRegion srcPR, destPR;
-
-              tr.color          = gimp_drawable_is_rgb (drawable);
-              tr.low_threshold  = low_threshold;
-              tr.high_threshold = high_threshold;
-
-              pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                                 x, y, width, height, FALSE);
-              pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                                 x, y, width, height, TRUE);
-
-              pixel_regions_process_parallel ((PixelProcessorFunc) threshold,
-                                              &tr, 2, &srcPR, &destPR);
-
-              gimp_drawable_merge_shadow (drawable, TRUE, _("Threshold"));
-              gimp_drawable_update (drawable, x, y, width, height);
-            }
-        }
-        }
+        gimp_drawable_threshold (drawable, progress,
+                                 low_threshold, high_threshold);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

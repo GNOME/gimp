@@ -1,0 +1,200 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <gegl.h>
+
+#include "core-types.h"
+
+#include "base/curves.h"
+#include "base/gimplut.h"
+#include "base/pixel-processor.h"
+#include "base/pixel-region.h"
+
+#include "gegl/gimpcurvesconfig.h"
+
+/* temp */
+#include "gimp.h"
+#include "gimpimage.h"
+
+#include "gimpcurve.h"
+#include "gimpdrawable.h"
+#include "gimpdrawable-curves.h"
+#include "gimpdrawable-operation.h"
+
+#include "gimp-intl.h"
+
+
+/*  local function prototypes  */
+
+static void   gimp_drawable_curves (GimpDrawable     *drawable,
+                                    GimpProgress     *progress,
+                                    GimpCurvesConfig *config);
+
+
+/*  public functions  */
+
+void
+gimp_drawable_curves_spline (GimpDrawable *drawable,
+                             GimpProgress *progress,
+                             gint32        channel,
+                             const guint8 *points,
+                             gint          n_points)
+{
+  GimpCurvesConfig *config;
+  GimpCurve        *curve;
+  gint              i;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (! gimp_drawable_is_indexed (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
+                    channel <= GIMP_HISTOGRAM_ALPHA);
+
+  if (channel == GIMP_HISTOGRAM_ALPHA)
+    g_return_if_fail (gimp_drawable_has_alpha (drawable));
+
+  if (gimp_drawable_is_gray (drawable))
+    g_return_if_fail (channel == GIMP_HISTOGRAM_VALUE ||
+                      channel == GIMP_HISTOGRAM_ALPHA);
+
+  config = g_object_new (GIMP_TYPE_CURVES_CONFIG, NULL);
+
+  curve = config->curve[channel];
+
+  gimp_data_freeze (GIMP_DATA (curve));
+
+  /*  unset the last point  */
+  gimp_curve_set_point (curve, GIMP_CURVE_NUM_POINTS - 1, -1, -1);
+
+  for (i = 0; i < n_points / 2; i++)
+    gimp_curve_set_point (curve, i,
+                          points[i * 2],
+                          points[i * 2 + 1]);
+
+  gimp_data_thaw (GIMP_DATA (curve));
+
+  gimp_drawable_curves (drawable, progress, config);
+
+  g_object_unref (config);
+}
+
+void
+gimp_drawable_curves_explicit (GimpDrawable *drawable,
+                               GimpProgress *progress,
+                               gint32        channel,
+                               const guint8 *points,
+                               gint          n_points)
+{
+  GimpCurvesConfig *config;
+  GimpCurve        *curve;
+  gint              i;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (! gimp_drawable_is_indexed (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
+                    channel <= GIMP_HISTOGRAM_ALPHA);
+
+  if (channel == GIMP_HISTOGRAM_ALPHA)
+    g_return_if_fail (gimp_drawable_has_alpha (drawable));
+
+  if (gimp_drawable_is_gray (drawable))
+    g_return_if_fail (channel == GIMP_HISTOGRAM_VALUE ||
+                      channel == GIMP_HISTOGRAM_ALPHA);
+
+  config = g_object_new (GIMP_TYPE_CURVES_CONFIG, NULL);
+
+  curve = config->curve[channel];
+
+  gimp_data_freeze (GIMP_DATA (curve));
+
+  gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
+
+  for (i = 0; i < 256; i++)
+    gimp_curve_set_curve (curve, i, points[i]);
+
+  gimp_data_thaw (GIMP_DATA (curve));
+
+  gimp_drawable_curves (drawable, progress, config);
+
+  g_object_unref (config);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_drawable_curves (GimpDrawable     *drawable,
+                      GimpProgress     *progress,
+                      GimpCurvesConfig *config)
+{
+  if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
+    {
+      GeglNode *node;
+
+      node = g_object_new (GEGL_TYPE_NODE,
+                           "operation", "gimp-curves",
+                           NULL);
+      gegl_node_set (node,
+                     "config", config,
+                     NULL);
+
+      gimp_drawable_apply_operation (drawable, node, TRUE,
+                                     progress, _("Curves"));
+
+      g_object_unref (node);
+    }
+  else
+    {
+      gint x, y, width, height;
+
+      /* The application should occur only within selection bounds */
+      if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+        {
+          Curves       cruft;
+          PixelRegion  srcPR, destPR;
+          GimpLut     *lut;
+
+          lut = gimp_lut_new ();
+
+          gimp_curves_config_to_cruft (config, &cruft,
+                                       gimp_drawable_is_rgb (drawable));
+
+          gimp_lut_setup (lut,
+                          (GimpLutFunc) curves_lut_func,
+                          &cruft,
+                          gimp_drawable_bytes (drawable));
+
+          pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
+                             x, y, width, height, FALSE);
+          pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
+                             x, y, width, height, TRUE);
+
+          pixel_regions_process_parallel ((PixelProcessorFunc)
+                                          gimp_lut_process,
+                                          lut, 2, &srcPR, &destPR);
+
+          gimp_lut_free (lut);
+
+          gimp_drawable_merge_shadow (drawable, TRUE, _("Curves"));
+          gimp_drawable_update (drawable, x, y, width, height);
+        }
+    }
+}
