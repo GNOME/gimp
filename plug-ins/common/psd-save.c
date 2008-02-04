@@ -1218,7 +1218,6 @@ write_pixel_data (FILE   *fd,
   gint32 tile_height = gimp_tile_height();
 
   GimpDrawable *drawable = gimp_drawable_get (drawableID);
-  gint32 maskID = gimp_layer_get_mask(drawableID);
 
   gint32 height = drawable->height;
   gint32 width  = drawable->width;
@@ -1318,70 +1317,79 @@ write_pixel_data (FILE   *fd,
     }
 
   /* Write layer mask, as last channel, id -2 */
-  if (maskID != -1) {
-    GimpDrawable *mdrawable = gimp_drawable_get(maskID);
-    len = 0;
+  if (gimp_drawable_is_layer (drawableID))
+    {
+      gint32 maskID = gimp_layer_get_mask (drawableID);
 
-    gimp_pixel_rgn_init (&region, mdrawable, 0, 0,
-                         width, height, FALSE, FALSE);
+      if (maskID != -1)
+        {
+          GimpDrawable *mdrawable = gimp_drawable_get (maskID);
+          len = 0;
 
-    if (ChanLenPosition)
-      {
-        write_gint16 (fd, 1, "Compression type (RLE)");
-        len += 2;
-        IF_DEEP_DBG printf ("\t\t\t\t. ChanLenPos, len %d\n", len);
-      }
+          gimp_pixel_rgn_init (&region, mdrawable, 0, 0,
+                               width, height, FALSE, FALSE);
 
-    if (ltable_offset > 0)
-      {
-        length_table_pos = ltable_offset + 2 * (bytes+1) * height;
-        IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld\n", length_table_pos);
-      }
-    else
-      {
-        length_table_pos = ftell(fd);
+          if (ChanLenPosition)
+            {
+              write_gint16 (fd, 1, "Compression type (RLE)");
+              len += 2;
+              IF_DEEP_DBG printf ("\t\t\t\t. ChanLenPos, len %d\n", len);
+            }
 
-        xfwrite (fd, LengthsTable, height * sizeof(gint16),
-                 "Dummy RLE length");
-        len += height * sizeof(gint16);
-        IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld len %d\n", length_table_pos, len);
-      }
+          if (ltable_offset > 0)
+            {
+              length_table_pos = ltable_offset + 2 * (bytes+1) * height;
+              IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld\n",
+                                  length_table_pos);
+            }
+          else
+            {
+              length_table_pos = ftell(fd);
 
-    for (y = 0; y < height; y += tile_height)
-      {
-        int tlen;
-        gimp_pixel_rgn_get_rect (&region, data, 0, y,
-                                 width, MIN(height - y, tile_height));
-        tlen = get_compress_channel_data (&data[0],
-                                          width,
-                                          MIN(height - y, tile_height),
-                                          1,
-                                          &LengthsTable[y],
-                                          rledata);
-        len += tlen;
-        xfwrite (fd, rledata, tlen, "Compressed mask data");
-        IF_DEEP_DBG printf ("\t\t\t\t. Writing compressed mask, stream of %d\n", tlen);
-      }
+              xfwrite (fd, LengthsTable, height * sizeof(gint16),
+                       "Dummy RLE length");
+              len += height * sizeof(gint16);
+              IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld len %d\n",
+                                  length_table_pos, len);
+            }
 
-    /* Write compressed lengths table */
-    fseek (fd, length_table_pos, SEEK_SET); /*POS WHERE???*/
-    for (j = 0; j < height; j++) /* write real length table */
-      {
-        write_gint16 (fd, LengthsTable[j], "RLE length");
-        IF_DEEP_DBG printf ("\t\t\t\t. Updating RLE len %d\n", LengthsTable[j]);
-      }
+          for (y = 0; y < height; y += tile_height)
+            {
+              int tlen;
+              gimp_pixel_rgn_get_rect (&region, data, 0, y,
+                                       width, MIN(height - y, tile_height));
+              tlen = get_compress_channel_data (&data[0],
+                                                width,
+                                                MIN(height - y, tile_height),
+                                                1,
+                                                &LengthsTable[y],
+                                                rledata);
+              len += tlen;
+              xfwrite (fd, rledata, tlen, "Compressed mask data");
+              IF_DEEP_DBG printf ("\t\t\t\t. Writing compressed mask, stream of %d\n", tlen);
+            }
 
-    if (ChanLenPosition)    /* Update total compressed length */
-      {
-        fseek (fd, ChanLenPosition[bytes], SEEK_SET); /*+bytes OR SOMETHING*/
-        write_gint32 (fd, len, "channel data length");
-        IFDBG printf ("\t\tUpdating data len to %d, at %ld\n", len, ftell(fd));
-      }
-    fseek (fd, 0, SEEK_END);
-    IF_DEEP_DBG printf ("\t\t\t\t. Cur pos %ld\n", ftell(fd));
+          /* Write compressed lengths table */
+          fseek (fd, length_table_pos, SEEK_SET); /*POS WHERE???*/
+          for (j = 0; j < height; j++) /* write real length table */
+            {
+              write_gint16 (fd, LengthsTable[j], "RLE length");
+              IF_DEEP_DBG printf ("\t\t\t\t. Updating RLE len %d\n",
+                                  LengthsTable[j]);
+            }
 
-    gimp_drawable_detach (mdrawable);
-  }
+          if (ChanLenPosition)    /* Update total compressed length */
+            {
+              fseek (fd, ChanLenPosition[bytes], SEEK_SET); /*+bytes OR SOMETHING*/
+              write_gint32 (fd, len, "channel data length");
+              IFDBG printf ("\t\tUpdating data len to %d, at %ld\n", len, ftell(fd));
+            }
+          fseek (fd, 0, SEEK_END);
+          IF_DEEP_DBG printf ("\t\t\t\t. Cur pos %ld\n", ftell(fd));
+
+          gimp_drawable_detach (mdrawable);
+        }
+    }
 
   gimp_drawable_detach (drawable);
 
