@@ -1,5 +1,18 @@
 2008-02-04  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/Makefile.am
+	* plug-ins/print/print-page-setup.[ch]: new files.
+
+	* plug-ins/print/print-page-layout.c
+	* plug-ins/print/print-settings.c
+	* plug-ins/print/print.c: first draft of a Page Setup menu entry
+	instead of the "Adjust Page Size" button (bug #513291).
+	
+	* plug-ins/print/print.h
+	* plug-ins/print/print-draw-page.c: removed unused code.
+
+2008-02-04  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimpbrushcore.c (gimp_brush_core_create_bound_segs):
 	changed workaround to look at the brush size instead (bug #514309).
 

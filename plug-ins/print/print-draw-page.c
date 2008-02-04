@@ -33,16 +33,10 @@
 #define INT_BLEND(a,b,alpha,tmp)  (INT_MULT((a) - (b), alpha, tmp) + (b))
 
 
-static void  convert_from_rgb  (guchar          *pixels,
-                                gint             width);
-static void  convert_from_rgba (guchar          *pixels,
-                                gint             width);
-
-#if 0
-static void  draw_info_header  (GtkPrintContext *context,
-                                cairo_t         *cr,
-                                PrintData       *data);
-#endif
+static void  convert_from_rgb  (guchar *pixels,
+                                gint    width);
+static void  convert_from_rgba (guchar *pixels,
+                                gint    width);
 
 
 gboolean
@@ -79,19 +73,6 @@ draw_page_cairo (GtkPrintContext *context,
 
   scale_x = cr_dpi_x / data->xres;
   scale_y = cr_dpi_y / data->yres;
-
-#if 0
-  /* print header if it is requested */
-  if (data->show_info_header)
-    {
-      draw_info_header (context, cr, data);
-
-/* In points */
-#define HEADER_HEIGHT (20 * 72.0 / 25.4)
-      cairo_translate (cr, 0, HEADER_HEIGHT);
-      cr_height -= HEADER_HEIGHT;
-    }
-#endif
 
   cairo_translate (cr,
                    data->offset_x / cr_dpi_x * 72.0,
@@ -182,134 +163,3 @@ convert_from_rgba (guchar *pixels,
       cairo_data[i] = 0xFF000000 | (r << 16) | (g << 8) | b;
     }
 }
-
-#if 0
-static void
-draw_info_header (GtkPrintContext *context,
-                  cairo_t         *cr,
-                  PrintData       *data)
-{
-  PangoLayout          *layout;
-  PangoFontDescription *desc;
-  gdouble               text_height;
-  gdouble               text_width;
-  gdouble               fname_text_width;
-  gint                  layout_height;
-  gint                  layout_width;
-  gchar                 date_buffer[100];
-  GDate                *date;
-  const gchar          *name_str;
-  GimpParasite         *parasite;
-  const gchar          *end_ptr;
-  gchar                *filename;
-  gdouble               cr_width;
-
-  cairo_save (cr);
-
-  cr_width  = gtk_print_context_get_width (context);
-  cairo_rectangle (cr, 0, 0, cr_width, HEADER_HEIGHT);
-  cairo_set_source_rgb (cr, 0.8, 0.8, 0.8);
-  cairo_fill_preserve (cr);
-
-  cairo_set_source_rgb (cr, 0, 0, 0);
-  cairo_set_line_width (cr, 1);
-  cairo_stroke (cr);
-
-  layout = gtk_print_context_create_pango_layout (context);
-
-  desc = pango_font_description_from_string ("sans 14");
-  pango_layout_set_font_description (layout, desc);
-  pango_font_description_free (desc);
-
-  pango_layout_set_width (layout, -1);
-  pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
-
-  /* image name */
-  pango_layout_set_text (layout, gimp_image_get_name (data->image_id), -1);
-
-  pango_layout_get_size (layout, &layout_width, &layout_height);
-  text_height = (gdouble) layout_height / PANGO_SCALE;
-
-  cairo_move_to (cr, 0.02 * cr_width,  (HEADER_HEIGHT - text_height) / 5);
-  pango_cairo_show_layout (cr, layout);
-
-  /* user name */
-  name_str = g_get_real_name ();
-  if (name_str && g_utf8_validate (name_str, -1, &end_ptr))
-    {
-      pango_layout_set_text (layout, name_str, -1);
-
-      pango_layout_get_size (layout, &layout_width, &layout_height);
-      text_height = (gdouble) layout_height / PANGO_SCALE;
-      text_width = (gdouble) layout_width / PANGO_SCALE;
-
-      cairo_move_to (cr, 0.5 * cr_width - 0.5 * text_width,
-                     (HEADER_HEIGHT - text_height) / 5);
-      pango_cairo_show_layout (cr, layout);
-    }
-
-  /* date */
-  date = g_date_new ();
-  g_date_set_time_t (date, time (NULL));
-  g_date_strftime (date_buffer, 100, "%x", date);
-  g_date_free (date);
-  pango_layout_set_text (layout, date_buffer, -1);
-
-  pango_layout_get_size (layout, &layout_width, &layout_height);
-  text_height = (gdouble) layout_height / PANGO_SCALE;
-  text_width = (gdouble) layout_width / PANGO_SCALE;
-
-  cairo_move_to (cr,
-                 0.98 * cr_width - text_width,
-                 (HEADER_HEIGHT - text_height) / 5);
-  pango_cairo_show_layout (cr, layout);
-
-  /* file name if any */
-  filename = gimp_image_get_filename (data->image_id);
-
-  if (filename)
-    {
-      pango_layout_set_text (layout,
-                             gimp_filename_to_utf8 (filename), -1);
-      g_free (filename);
-
-      pango_layout_get_size (layout, &layout_width, &layout_height);
-      text_height = (gdouble) layout_height / PANGO_SCALE;
-      fname_text_width = (gdouble) layout_width / PANGO_SCALE;
-
-      cairo_move_to (cr,
-                     0.02 * cr_width,  4 * (HEADER_HEIGHT - text_height) / 5);
-      pango_cairo_show_layout (cr, layout);
-    }
-  else
-    {
-      fname_text_width = 0;
-    }
-
-  /* image comment if it is short */
-  parasite = gimp_image_parasite_find (data->image_id, "gimp-comment");
-
-  if (parasite)
-    {
-      pango_layout_set_text (layout, gimp_parasite_data (parasite), -1);
-
-      pango_layout_get_size (layout, &layout_width, &layout_height);
-      text_height = (gdouble) layout_height / PANGO_SCALE;
-      text_width = (gdouble) layout_width / PANGO_SCALE;
-
-      if (fname_text_width + text_width < 0.8 * cr_width &&
-          text_height < 0.5 * HEADER_HEIGHT)
-        {
-          cairo_move_to (cr, 0.98 * cr_width - text_width,
-                         4 * (HEADER_HEIGHT - text_height) / 5);
-          pango_cairo_show_layout (cr, layout);
-        }
-
-      gimp_parasite_free (parasite);
-    }
-
-  g_object_unref (layout);
-
-  cairo_restore (cr);
-}
-#endif

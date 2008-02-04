@@ -58,13 +58,12 @@ enum
 };
 
 
-static void        run_page_setup_dialog              (GtkWidget     *widget,
-                                                       PrintData     *data);
+static void        print_page_setup_notify       (GtkPrintOperation *operation);
 
-static GtkWidget * print_size_frame                   (PrintData     *data,
+static GtkWidget * print_size_frame                   (PrintData    *data,
                                                        GtkSizeGroup *label_group,
                                                        GtkSizeGroup *entry_group);
-static GtkWidget * print_offset_frame                 (PrintData     *data,
+static GtkWidget * print_offset_frame                 (PrintData    *data,
                                                        GtkSizeGroup *label_group,
                                                        GtkSizeGroup *entry_group);
 
@@ -145,14 +144,6 @@ print_page_layout_gui (PrintData *data)
   gtk_box_pack_start (GTK_BOX (hbox), info.area_label, TRUE, TRUE, 0);
   gtk_widget_show (info.area_label);
 
-  button = gtk_button_new_with_mnemonic (_("_Adjust Page Size "
-                                           "and Orientation"));
-  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (button), "clicked",
-                    G_CALLBACK (run_page_setup_dialog),
-                    data);
-  gtk_widget_show (button);
-
   /*  main hbox  */
   main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (layout), main_hbox, TRUE, TRUE, 0);
@@ -169,20 +160,6 @@ print_page_layout_gui (PrintData *data)
 
   label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
   entry_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-
-#if 0
-  /* Commented out until the header becomes a little more configurable
-   * and we can provide a user interface to include/exclude information.
-   */
-  button = gtk_check_button_new_with_label ("Print image header");
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                data->show_info_header);
-  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (button), "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &data->show_info_header);
-  gtk_widget_show (button);
-#endif
 
   /* size entry area for the image's print size */
 
@@ -221,45 +198,31 @@ print_page_layout_gui (PrintData *data)
 
   print_size_info_set_page_setup (&info);
 
+  g_signal_connect (data->operation, "notify::default-page-setup",
+                    G_CALLBACK (print_page_setup_notify),
+                    &info);
+
   return layout;
-}
-
-static void
-run_page_setup_dialog (GtkWidget *widget,
-                       PrintData *data)
-{
-  GtkPrintOperation *operation = data->operation;
-  GtkPrintSettings  *settings;
-  GtkPageSetup      *page_setup;
-  GtkWidget         *toplevel;
-
-  /* find a transient parent if possible */
-  toplevel = gtk_widget_get_toplevel (widget);
-  if (! GTK_WIDGET_TOPLEVEL (toplevel))
-    toplevel = NULL;
-
-  settings = gtk_print_operation_get_print_settings (operation);
-  if (! settings)
-    settings = gtk_print_settings_new ();
-
-  page_setup = gtk_print_operation_get_default_page_setup (operation);
-
-  page_setup = gtk_print_run_page_setup_dialog (GTK_WINDOW (toplevel),
-                                                page_setup, settings);
-
-  gtk_print_operation_set_default_page_setup (operation, page_setup);
-
-  gimp_print_preview_set_page_setup (GIMP_PRINT_PREVIEW (info.preview),
-                                     page_setup);
-
-  print_size_info_set_page_setup (&info);
 }
 
 #define SB_WIDTH 8
 
+static void
+print_page_setup_notify (GtkPrintOperation *operation)
+{
+  GtkPageSetup *setup;
+
+  setup = gtk_print_operation_get_default_page_setup (operation);
+
+  gimp_print_preview_set_page_setup (GIMP_PRINT_PREVIEW (info.preview),
+                                     setup);
+
+  print_size_info_set_page_setup (&info);
+}
+
 
 static GtkWidget *
-print_size_frame (PrintData *data,
+print_size_frame (PrintData    *data,
                   GtkSizeGroup *label_group,
                   GtkSizeGroup *entry_group)
 {
@@ -901,7 +864,7 @@ print_size_info_set_page_setup (PrintSizeInfo *info)
 
   if (info->chain && gimp_chain_button_get_active (info->chain))
     {
-      gdouble ratio_x = page_width / (gdouble) info->image_width;
+      gdouble ratio_x = page_width  / (gdouble) info->image_width;
       gdouble ratio_y = page_height / (gdouble) info->image_height;
 
       if (ratio_x < ratio_y)

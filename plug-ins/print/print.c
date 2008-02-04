@@ -26,6 +26,7 @@
 #include "print.h"
 #include "print-settings.h"
 #include "print-page-layout.h"
+#include "print-page-setup.h"
 #include "print-draw-page.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -192,6 +193,8 @@ print_image (gint32    image_ID,
 
   print_operation_set_name (operation, orig_image_ID);
 
+  print_page_setup_load (operation);
+
   /* fill in the PrintData struct */
   data.num_pages     = 1;
   data.image_id      = orig_image_ID;
@@ -263,11 +266,17 @@ print_image (gint32    image_ID,
 static GimpPDBStatusType
 page_setup (gint32 image_ID)
 {
+  GtkPrintOperation *operation;
+
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  gimp_message ("Page Setup is not yet implemented");
+  operation = gtk_print_operation_new ();
+  print_page_setup_dialog (operation);
+  g_object_unref (operation);
 
-  return GIMP_PDB_EXECUTION_ERROR;
+  /* FIXME: notify the print procedure about the changed page setup */
+
+  return GIMP_PDB_SUCCESS;
 }
 
 static void
