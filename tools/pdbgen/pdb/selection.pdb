@@ -184,7 +184,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -548,7 +548,9 @@ CODE
 }
 
 
-@headers = qw("core/gimpchannel-select.h" "core/gimppickable.h"
+@headers = qw("core/gimpchannel-select.h"
+              "core/gimppickable.h"
+              "gimppdb-utils.h"
               "gimp-intl.h");
 
 @procs = qw(selection_bounds selection_value selection_is_empty

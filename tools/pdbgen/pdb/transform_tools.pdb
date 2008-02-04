@@ -38,7 +38,7 @@ sub flip {
 {
   gint x, y, width, height;
 
-  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
   if (success &&
       gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -95,7 +95,7 @@ sub perspective {
 {
   gint x, y, width, height;
 
-  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
   if (success &&
       gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -159,7 +159,7 @@ sub rotate {
 {
   gint x, y, width, height;
 
-  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
   if (success &&
       gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -232,7 +232,7 @@ sub scale {
 {
   gint x, y, width, height;
 
-  success = (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
+  success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error) &&
              x0 < x1 && y0 < y1);
 
   if (success &&
@@ -299,7 +299,7 @@ sub shear {
 {
   gint x, y, width, height;
 
-  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
   if (success &&
       gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -374,7 +374,7 @@ sub transform_2d {
 {
   gint x, y, width, height;
 
-  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
   if (success &&
       gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -410,10 +410,15 @@ CODE
 }
 
 
-@headers = qw("libgimpmath/gimpmath.h" "config/gimpcoreconfig.h"
-              "core/gimp.h" "core/gimp-transform-utils.h" "core/gimpimage.h"
-              "core/gimpdrawable.h" "core/gimpdrawable-transform.h"
+@headers = qw("libgimpmath/gimpmath.h"
+              "config/gimpcoreconfig.h"
+              "core/gimp.h"
+              "core/gimp-transform-utils.h"
+              "core/gimpimage.h"
+              "core/gimpdrawable.h"
+              "core/gimpdrawable-transform.h"
               "core/gimpprogress.h"
+              "gimppdb-utils.h"
               "gimp-intl.h");
 
 @procs = qw(flip perspective rotate scale shear transform_2d);

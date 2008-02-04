@@ -150,7 +150,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     floating_sel_attach (layer, drawable);
   else
     success = FALSE;
@@ -224,6 +224,7 @@ CODE
 
 @headers = qw("core/gimplayer-floating-sel.h"
               "gimppdberror.h"
+              "gimppdb-utils.h"
               "gimp-intl.h");
 
 @procs = qw(floating_sel_remove floating_sel_anchor floating_sel_to_layer

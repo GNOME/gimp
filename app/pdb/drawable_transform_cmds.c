@@ -38,6 +38,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
 #include "gimp-intl.h"
+#include "gimppdb-utils.h"
 
 #include "internal_procs.h"
 
@@ -68,7 +69,7 @@ drawable_transform_flip_simple_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -124,7 +125,7 @@ drawable_transform_flip_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -194,7 +195,7 @@ drawable_transform_flip_default_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -282,7 +283,7 @@ drawable_transform_perspective_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -362,7 +363,7 @@ drawable_transform_perspective_default_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -436,7 +437,7 @@ drawable_transform_rotate_simple_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -492,7 +493,7 @@ drawable_transform_rotate_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -566,7 +567,7 @@ drawable_transform_rotate_default_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -650,7 +651,7 @@ drawable_transform_scale_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = (gimp_item_is_attached (GIMP_ITEM (drawable)) && x0 < x1 && y0 < y1);
+      success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error) && x0 < x1 && y0 < y1);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -721,7 +722,7 @@ drawable_transform_scale_default_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = (gimp_item_is_attached (GIMP_ITEM (drawable)) && x0 < x1 && y0 < y1);
+      success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error) && x0 < x1 && y0 < y1);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -798,7 +799,7 @@ drawable_transform_shear_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -865,7 +866,7 @@ drawable_transform_shear_default_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -952,7 +953,7 @@ drawable_transform_2d_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -1030,7 +1031,7 @@ drawable_transform_2d_default_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -1122,7 +1123,7 @@ drawable_transform_matrix_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -1208,7 +1209,7 @@ drawable_transform_matrix_default_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))

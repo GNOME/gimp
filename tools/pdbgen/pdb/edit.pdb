@@ -45,7 +45,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     {
       GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
       GError    *my_error = NULL;
@@ -94,7 +94,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     {
       GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
       GError    *my_error = NULL;
@@ -194,7 +194,8 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp->global_buffer && gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp->global_buffer &&
+      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     {
       floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
                                       drawable, gimp->global_buffer,
@@ -271,7 +272,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     {
       GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
       GError    *my_error = NULL;
@@ -323,7 +324,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     {
       GimpImage *image    = gimp_item_get_image (GIMP_ITEM (drawable));
       GError    *my_error = NULL;
@@ -426,7 +427,7 @@ HELP
 {
   GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
 
-  if (buffer && gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (buffer && gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     {
       floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
                                       drawable, buffer,
@@ -501,7 +502,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -541,7 +542,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -609,7 +610,7 @@ HELP
 	                 "core/gimpchannel.h") ],
 	code => <<'CODE'
 {
-  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
       gboolean   do_seed_fill;
@@ -693,7 +694,7 @@ HELP
 	                 "core/gimpchannel.h") ],
 	code => <<'CODE'
 {
-  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
       gboolean   do_seed_fill;
@@ -770,7 +771,7 @@ HELP
         headers => [ qw("core/gimpdrawable-blend.h") ],
 	code => <<'CODE'
 {
-  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
   if (success && supersample)
     {
@@ -826,7 +827,7 @@ HELP
 	headers => [ qw("core/gimpstrokedesc.h") ],
 	code => <<'CODE'
 {
-  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     {
       GimpImage      *image = gimp_item_get_image (GIMP_ITEM (drawable));
       GimpStrokeDesc *desc  = gimp_stroke_desc_new (gimp, context);
@@ -867,7 +868,7 @@ HELP
 	headers => [ qw("core/gimpstrokedesc.h") ],
 	code => <<'CODE'
 {
-  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     {
       GimpStrokeDesc *desc  = gimp_stroke_desc_new (gimp, context);
 

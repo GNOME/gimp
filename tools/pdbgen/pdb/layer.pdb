@@ -185,7 +185,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_item_is_attached (GIMP_ITEM (layer)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
     gimp_layer_add_mask (layer, mask, TRUE);
   else
     success = FALSE;
@@ -214,7 +214,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_item_is_attached (GIMP_ITEM (layer)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
     gimp_layer_apply_mask (layer, mode, TRUE);
   else
     success = FALSE;
@@ -250,7 +250,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_item_is_attached (GIMP_ITEM (layer)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
     gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
                                gimp->config->interpolation_type, NULL,
                                local_origin);
@@ -291,7 +291,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_item_is_attached (GIMP_ITEM (layer)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
     gimp_item_resize (GIMP_ITEM (layer), context,
                       new_width, new_height, offx, offy);
   else
@@ -319,7 +319,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_item_is_attached (GIMP_ITEM (layer)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
     gimp_layer_resize_to_image (layer, context);
   else
     success = FALSE;
@@ -953,6 +953,7 @@ CODE
               "core/gimp.h"
               "core/gimpimage-undo.h"
               "core/gimpitem-linked.h"
+              "gimppdb-utils.h"
               "gimp-intl.h");
 
 @procs = qw(layer_new layer_new_from_drawable layer_copy

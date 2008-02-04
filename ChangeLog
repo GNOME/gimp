@@ -1,3 +1,31 @@
+2008-02-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/gimppdb-utils.[ch]: add gimp_pdb_item_is_attached()
+	which is a replacement for gimp_item_is_attached() and returns a
+	proper error message.
+
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/drawable_transform.pdb
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/floating_sel.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/paint_tools.pdb
+	* tools/pdbgen/pdb/selection.pdb
+	* tools/pdbgen/pdb/text_tool.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb: use it.
+
+	* app/pdb/color_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/drawable_transform_cmds.c
+	* app/pdb/edit_cmds.c
+	* app/pdb/floating_sel_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/paint_tools_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/text_tool_cmds.c
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
 2008-02-04  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/Makefile.am

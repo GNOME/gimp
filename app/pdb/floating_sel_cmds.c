@@ -32,6 +32,7 @@
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayer.h"
 #include "gimp-intl.h"
+#include "gimppdb-utils.h"
 #include "gimppdberror.h"
 
 #include "internal_procs.h"
@@ -147,7 +148,7 @@ floating_sel_attach_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
         floating_sel_attach (layer, drawable);
       else
         success = FALSE;
