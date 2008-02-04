@@ -1,3 +1,7 @@
+2008-02-03  Stéphane Raimbault  <stephane.raimbault@gmail.com>
+
+	* fr.po: Fixed French translation (partial fix for bug #513008).
+
 2008-01-18  Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
 
 	* ru.po: Updated Russian translation.
