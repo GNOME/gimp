@@ -1,5 +1,11 @@
 2008-02-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_add_recent):
+	use localtime() instead of localtime_r() and don't use %F in
+	strftime(). Fixes bug #513966.
+
+2008-02-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/gimpdrawable-brightness-contrast.[ch]
 	* app/core/gimpdrawable-color-balance.[ch]

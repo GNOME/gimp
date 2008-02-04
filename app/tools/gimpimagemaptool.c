@@ -672,8 +672,8 @@ gimp_image_map_tool_add_recent (GimpImageMapTool *image_map_tool)
     }
 
   now = time (NULL);
-  localtime_r (&now, &tm);
-  strftime (buf, sizeof (buf), "%F %T", &tm);
+  tm = *localtime (&now);
+  strftime (buf, sizeof (buf), "%Y-%m-%d %T", &tm);
 
   name = g_locale_to_utf8 (buf, -1, NULL, NULL, NULL);
   gimp_object_set_name (GIMP_OBJECT (config), name);
