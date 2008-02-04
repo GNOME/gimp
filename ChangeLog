@@ -1,3 +1,12 @@
+2008-02-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/print-page-layout.c: only connect to page layout
+	changes for the lifetime of the dialog.
+	
+	* plug-ins/print/print-page-setup.[ch]
+	* plug-ins/print/print.c: use a	temporary procedure to notify the
+	Print procedure about changes to the page setup.
+
 2008-02-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/gimphistogram.[ch]: add refcounting and replace free()

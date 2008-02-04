@@ -68,6 +68,14 @@ static void        draw_page                (GtkPrintOperation *print,
 static GtkWidget * create_custom_widget     (GtkPrintOperation *operation,
                                              PrintData         *data);
 
+static gchar     * print_temp_proc_name     (gint32             image_ID);
+static gchar     * print_temp_proc_install  (gint32             image_ID);
+
+
+/*  Keep a reference to the current GtkPrintOperation
+ *  for access by the temporary procedure.
+ */
+static GtkPrintOperation *print_operation = NULL;
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -178,6 +186,7 @@ print_image (gint32    image_ID,
   GError            *error         = NULL;
   gint32             orig_image_ID = image_ID;
   gint32             drawable_ID   = gimp_image_get_active_drawable (image_ID);
+  gchar             *temp_proc;
   PrintData          data;
   GimpExportReturn   export;
 
@@ -193,7 +202,7 @@ print_image (gint32    image_ID,
 
   print_operation_set_name (operation, orig_image_ID);
 
-  print_page_setup_load (operation);
+  print_page_setup_load (operation, orig_image_ID);
 
   /* fill in the PrintData struct */
   data.num_pages     = 1;
@@ -224,6 +233,10 @@ print_image (gint32    image_ID,
                     G_CALLBACK (end_print),
                     &image_ID);
 
+  print_operation = operation;
+  temp_proc = print_temp_proc_install (orig_image_ID);
+  gimp_extension_enable ();
+
   if (interactive)
     {
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
@@ -249,6 +262,10 @@ print_image (gint32    image_ID,
                                NULL, &error);
     }
 
+  gimp_uninstall_temp_proc (temp_proc);
+  g_free (temp_proc);
+  print_operation = NULL;
+
   g_object_unref (operation);
 
   if (gimp_image_is_valid (image_ID))
@@ -267,14 +284,34 @@ static GimpPDBStatusType
 page_setup (gint32 image_ID)
 {
   GtkPrintOperation *operation;
+  gchar             *name;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   operation = gtk_print_operation_new ();
+
+  print_page_setup_load (operation, image_ID);
   print_page_setup_dialog (operation);
+  print_page_setup_save (operation);
+
   g_object_unref (operation);
 
-  /* FIXME: notify the print procedure about the changed page setup */
+  /* now notify a running print procedure about this change */
+  name = print_temp_proc_name (image_ID);
+
+  if (name)
+    {
+      GimpParam *return_vals;
+      gint       n_return_vals;
+
+      return_vals = gimp_run_procedure (name,
+                                        &n_return_vals,
+                                        GIMP_PDB_IMAGE, image_ID,
+                                        GIMP_PDB_END);
+      gimp_destroy_params (return_vals, n_return_vals);
+
+      g_free (name);
+    }
 
   return GIMP_PDB_SUCCESS;
 }
@@ -361,4 +398,55 @@ create_custom_widget (GtkPrintOperation *operation,
                       PrintData         *data)
 {
   return print_page_layout_gui (data);
+}
+
+static void
+print_temp_proc_run (const gchar      *name,
+                     gint              nparams,
+                     const GimpParam  *param,
+                     gint             *nreturn_vals,
+                     GimpParam       **return_vals)
+{
+  static GimpParam  values[1];
+
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_SUCCESS;
+
+  *nreturn_vals = 1;
+  *return_vals  = values;
+
+  if (print_operation && nparams == 1)
+    print_page_setup_load (print_operation, param[0].data.d_int32);
+}
+
+static gchar *
+print_temp_proc_name (gint32 image_ID)
+{
+  return g_strdup_printf (PRINT_PROC_NAME "-temp-%d", image_ID);
+}
+
+static gchar *
+print_temp_proc_install (gint32  image_ID)
+{
+  static const GimpParamDef args[] =
+  {
+    { GIMP_PDB_IMAGE, "image", "Image to print" }
+  };
+
+  gchar *name = print_temp_proc_name (image_ID);
+
+  gimp_install_temp_proc (name,
+                          "DON'T USE THIS ONE",
+                          "Temporary procedure to notify the Print plug-in "
+                          "about changes to the Page Setup.",
+			  "Sven Neumann",
+			  "Sven Neumann",
+			  "2008",
+                          NULL,
+                          "",
+                          GIMP_TEMPORARY,
+                          G_N_ELEMENTS (args), 0, args, NULL,
+                          print_temp_proc_run);
+
+  return name;
 }

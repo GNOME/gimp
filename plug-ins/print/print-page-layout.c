@@ -198,9 +198,9 @@ print_page_layout_gui (PrintData *data)
 
   print_size_info_set_page_setup (&info);
 
-  g_signal_connect (data->operation, "notify::default-page-setup",
-                    G_CALLBACK (print_page_setup_notify),
-                    &info);
+  g_signal_connect_object (data->operation, "notify::default-page-setup",
+                           G_CALLBACK (print_page_setup_notify),
+                           layout, 0);
 
   return layout;
 }

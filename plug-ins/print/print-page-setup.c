@@ -24,28 +24,26 @@
 #include "print-page-setup.h"
 
 
-static void  print_page_setup_save (GtkPrintOperation *operation);
-
-
 void
 print_page_setup_dialog (GtkPrintOperation *operation)
 {
-  GtkPrintSettings *settings = gtk_print_settings_new ();
+  GtkPrintSettings *settings;
   GtkPageSetup     *setup;
 
-  print_page_setup_load (operation);
+  g_return_if_fail (GTK_IS_PRINT_OPERATION (operation));
 
   setup = gtk_print_operation_get_default_page_setup (operation);
 
+  settings = gtk_print_settings_new ();
   setup = gtk_print_run_page_setup_dialog (NULL, setup, settings);
+  g_object_unref (settings);
 
   gtk_print_operation_set_default_page_setup (operation, setup);
-
-  print_page_setup_save (operation);
 }
 
 gboolean
-print_page_setup_load (GtkPrintOperation *operation)
+print_page_setup_load (GtkPrintOperation *operation,
+                       gint32             image_ID)
 {
   GtkPageSetup *setup;
   gchar        *filename;
@@ -67,7 +65,7 @@ print_page_setup_load (GtkPrintOperation *operation)
   return FALSE;
 }
 
-static void
+void
 print_page_setup_save (GtkPrintOperation *operation)
 {
   GtkPageSetup *setup;
