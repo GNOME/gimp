@@ -2,6 +2,15 @@
 
 	Merged from trunk:
 
+	* app/display/gimpdisplayshell-preview.c
+	(gimp_display_shell_trace_tri_edge): use a gint for direction, not
+	a gchar which might be unsigned. Patch from Giuliano Pochini;
+	fixes bug #340965.
+
+2008-02-04  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* app/paint/gimpbrushcore.c (gimp_brush_core_create_bound_segs):
 	changed workaround to look at the brush size instead (bug #514309).
 

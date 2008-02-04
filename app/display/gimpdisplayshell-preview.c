@@ -828,7 +828,7 @@ gimp_display_shell_trace_tri_edge (gint *dest,
 {
   const gint  dy = y2 - y1;
   gint        dx;
-  gchar       xdir;
+  gint        xdir;
   gint        errorterm;
   gint        b;
   gint       *dptr;
