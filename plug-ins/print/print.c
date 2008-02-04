@@ -36,6 +36,7 @@
 
 #define PRINT_PROC_NAME       "file-print-gtk"
 #define PAGE_SETUP_PROC_NAME  "file-print-gtk-page-setup"
+#define PRINT_TEMP_PROC_NAME  "file-print-gtk-page-setup-notify-temp"
 
 
 static void        query (void);
@@ -422,7 +423,7 @@ print_temp_proc_run (const gchar      *name,
 static gchar *
 print_temp_proc_name (gint32 image_ID)
 {
-  return g_strdup_printf (PRINT_PROC_NAME "-temp-%d", image_ID);
+  return g_strdup_printf (PRINT_TEMP_PROC_NAME "-%d", image_ID);
 }
 
 static gchar *
