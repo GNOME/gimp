@@ -1,3 +1,16 @@
+2008-02-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/Makefile.am
+	* app/tools/gimpgegltool.[ch]: add experimental GEGL tool which
+	will allow to try arbitrary GEGL operations. 100% unusable at the
+	moment.
+
+	* app/tools/gimp-tools.c: register it.
+
+	* app/dialogs/dialogs.c: register its dialog.
+
+	* menus/image-menu.xml.in: add it to the tools menu.
+
 2008-02-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/psd-save.c (write_pixel_data): check if drawable
