@@ -1,3 +1,11 @@
+2008-02-04  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/paint/gimpbrushcore.c (gimp_brush_core_create_bound_segs):
+	only smooth the inner area of the mask so that we don't enlarge
+	the boundary for hard brushes (bug #304798).
+
 2008-01-31  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/print.c (run): don't access param[2], we only
