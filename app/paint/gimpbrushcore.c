@@ -780,16 +780,15 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
       BoundSeg    *boundary;
       gint         num_groups;
 
-      if (mask->width > 2 && mask->height > 2)
-        {
-          /*  smooth the mask in order to obtain a simpler boundary  */
-          pixel_region_init_temp_buf (&PR, mask,
-                                      1, 1, mask->width - 2, mask->height - 2);
-          smooth_region (&PR);
-        }
-
       pixel_region_init_temp_buf (&PR, mask,
                                   0, 0, mask->width, mask->height);
+
+      /* Large, complex brush outlines are a performance problem.
+       * Smooth the mask in order to obtain a simpler boundary.
+       */
+      if (mask->width > 32 && mask->height > 32)
+        smooth_region (&PR);
+
 
       boundary = boundary_find (&PR, BOUNDARY_WITHIN_BOUNDS,
                                 0, 0, PR.w, PR.h,
