@@ -113,7 +113,7 @@ script_fu_query (void)
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
                           "1997",
-                          N_("Script-Fu _Console"),
+                          N_("_Console"),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (console_args), 0,

@@ -1,5 +1,10 @@
 2008-02-04  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/script-fu.c: rename "Script-Fu Console" menu
+	item to simply "Console".
+
+2008-02-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/gimppdb-utils.[ch]: add gimp_pdb_item_is_attached()
 	which is a replacement for gimp_item_is_attached() and returns a
 	proper error message.
