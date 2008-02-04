@@ -1,3 +1,8 @@
+2008-02-04  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimpbrushcore.c (gimp_brush_core_create_bound_segs):
+	changed workaround to look at the brush size instead (bug #514309).
+
 2008-02-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_add_recent):
