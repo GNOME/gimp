@@ -1,5 +1,12 @@
 2008-02-04  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-preview.c
+	(gimp_display_shell_trace_tri_edge): use a gint for direction, not
+	a gchar which might be unsigned. Patch from Giuliano Pochini;
+	fixes bug #340965.
+
+2008-02-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print-page-layout.c: only connect to page layout
 	changes for the lifetime of the dialog.
 	
