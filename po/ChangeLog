@@ -1,3 +1,7 @@
+2008-02-04  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: add new files with translatable strings.
+
 2008-01-28  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: add app/gegl/gimpcurvesconfig.c and
