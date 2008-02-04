@@ -192,12 +192,6 @@ gimp_curves_tool_finalize (GObject *object)
 
   gimp_lut_free (tool->lut);
 
-  if (tool->hist)
-    {
-      gimp_histogram_free (tool->hist);
-      tool->hist = NULL;
-    }
-
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -208,6 +202,7 @@ gimp_curves_tool_initialize (GimpTool     *tool,
 {
   GimpCurvesTool *c_tool   = GIMP_CURVES_TOOL (tool);
   GimpDrawable   *drawable = gimp_image_get_active_drawable (display->image);
+  GimpHistogram  *histogram;
 
   if (! drawable)
     return FALSE;
@@ -221,9 +216,6 @@ gimp_curves_tool_initialize (GimpTool     *tool,
 
   gimp_config_reset (GIMP_CONFIG (c_tool->config));
 
-  if (! c_tool->hist)
-    c_tool->hist = gimp_histogram_new ();
-
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
   /*  always pick colors  */
@@ -233,9 +225,11 @@ gimp_curves_tool_initialize (GimpTool     *tool,
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (c_tool->channel_menu),
                                       curves_menu_sensitivity, drawable, NULL);
 
-  gimp_drawable_calculate_histogram (drawable, c_tool->hist);
+  histogram = gimp_histogram_new ();
+  gimp_drawable_calculate_histogram (drawable, histogram);
   gimp_histogram_view_set_background (GIMP_HISTOGRAM_VIEW (c_tool->graph),
-                                      c_tool->hist);
+                                      histogram);
+  gimp_histogram_unref (histogram);
 
   return TRUE;
 }

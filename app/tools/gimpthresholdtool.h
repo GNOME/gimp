@@ -42,7 +42,7 @@ struct _GimpThresholdTool
   Threshold           *threshold;
 
   /*  dialog  */
-  GimpHistogram       *hist;
+  GimpHistogram       *histogram;
   GimpHistogramBox    *histogram_box;
 };
 

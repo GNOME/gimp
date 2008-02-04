@@ -72,7 +72,7 @@ gimp_drawable_equalize (GimpDrawable *drawable,
                                   lut, 2, &srcPR, &destPR);
 
   gimp_lut_free (lut);
-  gimp_histogram_free (hist);
+  gimp_histogram_unref (hist);
 
   gimp_drawable_merge_shadow (drawable, TRUE, _("Equalize"));
 

@@ -41,8 +41,6 @@ struct _GimpCurvesTool
   GimpLut              *lut;
 
   /* dialog */
-  GimpHistogram        *hist;
-
   gint                  col_value[5];
 
   GtkWidget            *channel_menu;

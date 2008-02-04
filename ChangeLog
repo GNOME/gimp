@@ -1,5 +1,32 @@
 2008-02-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/base/gimphistogram.[ch]: add refcounting and replace free()
+	API by ref() and unref().
+
+	* app/core/gimpdrawable-equalize.c
+	* app/core/gimpdrawable-levels.c
+	* app/widgets/gimphistogrameditor.c
+	* tools/pdbgen/pdb/color.pdb: replace calls to
+	gimp_histogram_free() by gimp_histogram_unref().
+
+	* app/pdb/color_cmds.c: regenerated.
+
+	* app/widgets/gimphistogramview.c: reference the histograms so we
+	don't need the widget's users to keep them around while the widget
+	exists.
+
+	* app/tools/gimpcurvestool.[ch]: remove the histogram from the
+	tool struct and just create one locally to set it on the histogram
+	view widget.
+
+	Unrelated:
+
+	* app/tools/gimplevelstool.[ch]
+	* app/tools/gimpthresholdtool.[ch]: renamed "hist" members to
+	"histogram" plus some cleanup.
+
+2008-02-04  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/script-fu.c: rename "Script-Fu Console" menu
 	item to simply "Console".
 

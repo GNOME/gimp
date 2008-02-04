@@ -23,7 +23,8 @@
 
 
 GimpHistogram * gimp_histogram_new           (void);
-void            gimp_histogram_free          (GimpHistogram        *histogram);
+GimpHistogram * gimp_histogram_ref           (GimpHistogram        *histogram);
+void            gimp_histogram_unref         (GimpHistogram        *histogram);
 
 void            gimp_histogram_calculate     (GimpHistogram        *histogram,
                                               PixelRegion          *region,

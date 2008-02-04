@@ -513,7 +513,7 @@ histogram_invoker (GimpProcedure      *procedure,
                                                  start_range, end_range);
           percentile = count / pixels;
 
-          gimp_histogram_free (histogram);
+          gimp_histogram_unref (histogram);
         }
     }
 

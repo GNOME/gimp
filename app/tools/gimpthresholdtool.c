@@ -119,7 +119,7 @@ gimp_threshold_tool_init (GimpThresholdTool *t_tool)
   GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (t_tool);
 
   t_tool->threshold = g_slice_new0 (Threshold);
-  t_tool->hist      = NULL;
+  t_tool->histogram = gimp_histogram_new ();
 
   im_tool->apply_func = (GimpImageMapApplyFunc) threshold;
   im_tool->apply_data = t_tool->threshold;
@@ -132,10 +132,10 @@ gimp_threshold_tool_finalize (GObject *object)
 
   g_slice_free (Threshold, t_tool->threshold);
 
-  if (t_tool->hist)
+  if (t_tool->histogram)
     {
-      gimp_histogram_free (t_tool->hist);
-      t_tool->hist = NULL;
+      gimp_histogram_unref (t_tool->histogram);
+      t_tool->histogram = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -161,24 +161,11 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
 
   gimp_config_reset (GIMP_CONFIG (t_tool->config));
 
-  if (! t_tool->hist)
-    t_tool->hist = gimp_histogram_new ();
-
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
-  gimp_drawable_calculate_histogram (drawable, t_tool->hist);
-
-  g_signal_handlers_block_by_func (t_tool->histogram_box->view,
-                                   gimp_threshold_tool_histogram_range,
-                                   t_tool);
+  gimp_drawable_calculate_histogram (drawable, t_tool->histogram);
   gimp_histogram_view_set_histogram (t_tool->histogram_box->view,
-                                     t_tool->hist);
-  gimp_histogram_view_set_range (t_tool->histogram_box->view,
-                                 t_tool->config->low  * 255.999,
-                                 t_tool->config->high * 255.999);
-  g_signal_handlers_unblock_by_func (t_tool->histogram_box->view,
-                                     gimp_threshold_tool_histogram_range,
-                                     t_tool);
+                                     t_tool->histogram);
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (t_tool));
 
@@ -229,13 +216,14 @@ gimp_threshold_tool_map (GimpImageMapTool *image_map_tool)
 static void
 gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GimpThresholdTool *t_tool       = GIMP_THRESHOLD_TOOL (image_map_tool);
-  GimpToolOptions   *tool_options = GIMP_TOOL_GET_OPTIONS (image_map_tool);
-  GtkWidget         *vbox;
-  GtkWidget         *hbox;
-  GtkWidget         *menu;
-  GtkWidget         *box;
-  GtkWidget         *button;
+  GimpThresholdTool   *t_tool       = GIMP_THRESHOLD_TOOL (image_map_tool);
+  GimpToolOptions     *tool_options = GIMP_TOOL_GET_OPTIONS (image_map_tool);
+  GimpThresholdConfig *config       = t_tool->config;
+  GtkWidget           *vbox;
+  GtkWidget           *hbox;
+  GtkWidget           *menu;
+  GtkWidget           *box;
+  GtkWidget           *button;
 
   vbox = image_map_tool->main_vbox;
 
@@ -254,6 +242,10 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (box);
 
   t_tool->histogram_box = GIMP_HISTOGRAM_BOX (box);
+
+  gimp_histogram_view_set_range (t_tool->histogram_box->view,
+                                 config->low  * 255.999,
+                                 config->high * 255.999);
 
   g_signal_connect (t_tool->histogram_box->view, "range-changed",
                     G_CALLBACK (gimp_threshold_tool_histogram_range),
@@ -284,10 +276,12 @@ gimp_threshold_tool_config_notify (GObject           *object,
 {
   GimpThresholdConfig *config = GIMP_THRESHOLD_CONFIG (object);
 
-  if (t_tool->histogram_box)
-    gimp_histogram_view_set_range (t_tool->histogram_box->view,
-                                   config->low  * 255.999,
-                                   config->high * 255.999);
+  if (! t_tool->histogram_box)
+    return;
+
+  gimp_histogram_view_set_range (t_tool->histogram_box->view,
+                                 config->low  * 255.999,
+                                 config->high * 255.999);
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (t_tool));
 }
@@ -318,7 +312,7 @@ gimp_threshold_tool_auto_clicked (GtkWidget         *button,
   GimpDrawable *drawable = GIMP_IMAGE_MAP_TOOL (t_tool)->drawable;
   gdouble       low;
 
-  low = gimp_histogram_get_threshold (t_tool->hist,
+  low = gimp_histogram_get_threshold (t_tool->histogram,
                                       gimp_drawable_is_rgb (drawable) ?
                                       GIMP_HISTOGRAM_RGB :
                                       GIMP_HISTOGRAM_VALUE,

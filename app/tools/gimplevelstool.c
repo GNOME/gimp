@@ -177,7 +177,7 @@ gimp_levels_tool_init (GimpLevelsTool *tool)
   GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
 
   tool->lut           = gimp_lut_new ();
-  tool->hist          = NULL;
+  tool->histogram     = gimp_histogram_new ();
   tool->active_picker = NULL;
 
   im_tool->apply_func = (GimpImageMapApplyFunc) gimp_lut_process;
@@ -191,10 +191,10 @@ gimp_levels_tool_finalize (GObject *object)
 
   gimp_lut_free (tool->lut);
 
-  if (tool->hist)
+  if (tool->histogram)
     {
-      gimp_histogram_free (tool->hist);
-      tool->hist = NULL;
+      gimp_histogram_unref (tool->histogram);
+      tool->histogram = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -220,9 +220,6 @@ gimp_levels_tool_initialize (GimpTool     *tool,
 
   gimp_config_reset (GIMP_CONFIG (l_tool->config));
 
-  if (! l_tool->hist)
-    l_tool->hist = gimp_histogram_new ();
-
   if (l_tool->active_picker)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (l_tool->active_picker),
                                   FALSE);
@@ -232,9 +229,9 @@ gimp_levels_tool_initialize (GimpTool     *tool,
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (l_tool->channel_menu),
                                       levels_menu_sensitivity, drawable, NULL);
 
-  gimp_drawable_calculate_histogram (drawable, l_tool->hist);
-  gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (l_tool->hist_view),
-                                     l_tool->hist);
+  gimp_drawable_calculate_histogram (drawable, l_tool->histogram);
+  gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (l_tool->histogram_view),
+                                     l_tool->histogram);
 
   return TRUE;
 }
@@ -416,14 +413,14 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
-  tool->hist_view = gimp_histogram_view_new (FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox2), tool->hist_view, TRUE, TRUE, 0);
-  gtk_widget_show (GTK_WIDGET (tool->hist_view));
+  tool->histogram_view = gimp_histogram_view_new (FALSE);
+  gtk_box_pack_start (GTK_BOX (vbox2), tool->histogram_view, TRUE, TRUE, 0);
+  gtk_widget_show (GTK_WIDGET (tool->histogram_view));
 
   gimp_histogram_options_connect_view (GIMP_HISTOGRAM_OPTIONS (tool_options),
-                                       GIMP_HISTOGRAM_VIEW (tool->hist_view));
+                                       GIMP_HISTOGRAM_VIEW (tool->histogram_view));
 
-  g_object_get (tool->hist_view, "border-width", &border, NULL);
+  g_object_get (tool->histogram_view, "border-width", &border, NULL);
 
   vbox3 = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox3), border);
@@ -736,7 +733,7 @@ gimp_levels_tool_config_notify (GObject        *object,
 
   if (! strcmp (pspec->name, "channel"))
     {
-      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->hist_view),
+      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->histogram_view),
                                        config->channel);
       gimp_color_bar_set_channel (GIMP_COLOR_BAR (tool->output_bar),
                                   config->channel);
@@ -893,7 +890,7 @@ levels_stretch_callback (GtkWidget      *widget,
 {
   GimpDrawable *drawable = GIMP_IMAGE_MAP_TOOL (tool)->drawable;
 
-  gimp_levels_config_stretch (tool->config, tool->hist,
+  gimp_levels_config_stretch (tool->config, tool->histogram,
                               gimp_drawable_is_rgb (drawable));
 }
 
