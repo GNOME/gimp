@@ -1,5 +1,10 @@
 2008-02-05  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-transform.c: changed coordinate
+	transformation for floats. Fixes bug #510294.
+
+2008-02-05  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/image-new-dialog.c (image_new_create_image):
 	use the user context when creating the new image. Fixes bug #514082.
 
