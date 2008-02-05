@@ -262,7 +262,7 @@ query (void)
 			  "Adrian Likins, Reagan Blundell, Daniel Risacher, "
                           "Spencer Kimball and Peter Mattis",
 			  "1995-1997",
-			  N_("_Mail Image..."),
+			  N_("Send by E_mail..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
@@ -521,7 +521,7 @@ save_dialog (void)
       g_free (gump_from);
     }
 
-  dlg = gimp_dialog_new (_("Send as Mail"), PLUG_IN_BINARY,
+  dlg = gimp_dialog_new (_("Send by Email"), PLUG_IN_BINARY,
                          NULL, 0,
 			 gimp_standard_help_func, PLUG_IN_PROC,
 

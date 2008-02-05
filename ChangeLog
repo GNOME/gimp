@@ -1,5 +1,10 @@
 2008-02-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/mail.c: changed menu label and dialog title to
+	"Send by Email".
+
+2008-02-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print.c: removed ellipsis from "Page Setup" menu
 	entry as specified in the HIG.
 
