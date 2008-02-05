@@ -1,3 +1,15 @@
+2008-02-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimppropwidgets.[ch] (gimp_prop_table_new): new
+	function which creates a table of prop widgets for all properties
+	of an object (pretty incomplete, does exactly what's needed in
+	GimpGeglTool, or even less).
+
+	* app/tools/gimpgegltool.c: create a proxy config class for each
+	GegĺOperation and create a prop table on the config class'
+	properties as GUI for the GEGL operation. Write the proxy object's
+	properties back to the GeglNode in map().
+
 2008-02-05  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-transform.c: changed coordinate

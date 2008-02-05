@@ -18,9 +18,13 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gegl.h>
+#include <gegl-plugin.h> /* temp hack for color pspec */
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -28,6 +32,8 @@
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+
+#include "widgets/gimppropwidgets.h"
 
 #include "display/gimpdisplay.h"
 
@@ -172,15 +178,42 @@ gimp_gegl_tool_map (GimpImageMapTool *image_map_tool)
 
   for (i = 0; i < n_pspecs; i++)
     {
-      GParamSpec *pspec = pspecs[i];
-      GValue      value = { 0, };
+      GParamSpec *gegl_pspec = pspecs[i];
+      GParamSpec *gimp_pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool->config),
+                                                             gegl_pspec->name);
 
-      g_value_init (&value, pspec->value_type);
+      if (gimp_pspec)
+        {
+          GValue value = { 0, };
 
-      g_object_get_property (G_OBJECT (tool->config), pspec->name, &value);
-      gegl_node_set_property (image_map_tool->operation, pspec->name, &value);
+          g_value_init (&value, gimp_pspec->value_type);
 
-      g_value_unset (&value);
+          g_object_get_property (G_OBJECT (tool->config), gimp_pspec->name,
+                                 &value);
+
+          if (GIMP_IS_PARAM_SPEC_RGB (gimp_pspec))
+            {
+              GeglColor *gegl_color = gegl_color_new (NULL);
+              GimpRGB    gimp_color;
+
+              gimp_value_get_rgb (&value, &gimp_color);
+              g_value_unset (&value);
+
+              gegl_color_set_rgba (gegl_color,
+                                   gimp_color.r,
+                                   gimp_color.g,
+                                   gimp_color.b,
+                                   gimp_color.a);
+
+              g_value_init (&value, gegl_pspec->value_type);
+              g_value_take_object (&value, gegl_color);
+            }
+
+          gegl_node_set_property (image_map_tool->operation, gegl_pspec->name,
+                                  &value);
+
+          g_value_unset (&value);
+        }
     }
 
   g_free (pspecs);
@@ -267,23 +300,278 @@ gimp_gegl_tool_config_notify (GObject      *object,
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
 }
 
-static GimpObject *
-gimp_gegl_tool_get_config (GimpGeglTool *tool)
+static GParamSpec *
+gimp_param_spec_duplicate (GParamSpec *pspec)
+{
+  if (G_IS_PARAM_SPEC_STRING (pspec))
+    {
+      GParamSpecString *spec = G_PARAM_SPEC_STRING (pspec);
+
+      return g_param_spec_string (pspec->name,
+                                  g_param_spec_get_nick (pspec),
+                                  g_param_spec_get_blurb (pspec),
+                                  spec->default_value,
+                                  pspec->flags);
+    }
+  else if (G_IS_PARAM_SPEC_BOOLEAN (pspec))
+    {
+      GParamSpecBoolean *spec = G_PARAM_SPEC_BOOLEAN (pspec);
+
+      return g_param_spec_boolean (pspec->name,
+                                   g_param_spec_get_nick (pspec),
+                                   g_param_spec_get_blurb (pspec),
+                                   spec->default_value,
+                                   pspec->flags);
+    }
+  else if (G_IS_PARAM_SPEC_DOUBLE (pspec))
+    {
+      GParamSpecDouble *spec = G_PARAM_SPEC_DOUBLE (pspec);
+
+      return g_param_spec_double (pspec->name,
+                                  g_param_spec_get_nick (pspec),
+                                  g_param_spec_get_blurb (pspec),
+                                  spec->minimum,
+                                  spec->maximum,
+                                  spec->default_value,
+                                  pspec->flags);
+    }
+  else if (G_IS_PARAM_SPEC_FLOAT (pspec))
+    {
+      GParamSpecFloat *spec = G_PARAM_SPEC_FLOAT (pspec);
+
+      return g_param_spec_float (pspec->name,
+                                 g_param_spec_get_nick (pspec),
+                                 g_param_spec_get_blurb (pspec),
+                                 spec->minimum,
+                                 spec->maximum,
+                                 spec->default_value,
+                                 pspec->flags);
+    }
+  else if (G_IS_PARAM_SPEC_INT (pspec))
+    {
+      GParamSpecInt *spec = G_PARAM_SPEC_INT (pspec);
+
+      return g_param_spec_int (pspec->name,
+                               g_param_spec_get_nick (pspec),
+                               g_param_spec_get_blurb (pspec),
+                               spec->minimum,
+                               spec->maximum,
+                               spec->default_value,
+                               pspec->flags);
+    }
+  else if (G_IS_PARAM_SPEC_UINT (pspec))
+    {
+      GParamSpecUInt *spec = G_PARAM_SPEC_UINT (pspec);
+
+      return g_param_spec_uint (pspec->name,
+                                g_param_spec_get_nick (pspec),
+                                g_param_spec_get_blurb (pspec),
+                                spec->minimum,
+                                spec->maximum,
+                                spec->default_value,
+                                pspec->flags);
+    }
+  else if (GEGL_IS_PARAM_SPEC_COLOR (pspec))
+    {
+      GeglColor *gegl_color;
+      GimpRGB    gimp_color;
+      gfloat     r = 0.0;
+      gfloat     g = 0.0;
+      gfloat     b = 0.0;
+      gfloat     a = 1.0;
+      GValue     value = { 0, };
+
+      g_value_init (&value, GEGL_TYPE_COLOR);
+      g_param_value_set_default (pspec, &value);
+
+      gegl_color = g_value_get_object (&value);
+      if (gegl_color)
+        gegl_color_get_rgba (gegl_color, &r, &g, &b, &a);
+
+      gimp_rgba_set (&gimp_color, r, g, b, a);
+
+      g_value_unset (&value);
+
+      return gimp_param_spec_rgb (pspec->name,
+                                  g_param_spec_get_nick (pspec),
+                                  g_param_spec_get_blurb (pspec),
+                                  TRUE,
+                                  &gimp_color,
+                                  pspec->flags);
+    }
+  else if (G_IS_PARAM_SPEC_OBJECT (pspec) ||
+           G_IS_PARAM_SPEC_POINTER (pspec))
+    {
+      /*  ignore object properties  */
+      return NULL;
+    }
+
+  g_warning ("%s: not supported: %s (%s)\n", G_STRFUNC,
+             g_type_name (G_TYPE_FROM_INSTANCE (pspec)), pspec->name);
+
+  return NULL;
+}
+
+static void
+gimp_gegl_tool_config_value_free (GValue *value)
+{
+  g_value_unset (value);
+  g_free (value);
+}
+
+static GHashTable *
+gimp_gegl_tool_config_get_properties (GObject *object)
+{
+  GHashTable *properties = g_object_get_data (object, "properties");
+
+  if (! properties)
+    {
+      properties = g_hash_table_new_full (g_str_hash,
+                                          g_str_equal,
+                                          (GDestroyNotify) g_free,
+                                          (GDestroyNotify) gimp_gegl_tool_config_value_free);
+
+      g_object_set_data_full (object, "properties", properties,
+                              (GDestroyNotify) g_hash_table_unref);
+    }
+
+  return properties;
+}
+
+static void
+gimp_gegl_tool_config_set_property (GObject      *object,
+                                    guint         property_id,
+                                    const GValue *value,
+                                    GParamSpec   *pspec)
+{
+  GHashTable *properties = gimp_gegl_tool_config_get_properties (object);
+  GValue     *val;
+
+  val = g_hash_table_lookup (properties, pspec->name);
+
+  if (! val)
+    {
+      val = g_new0 (GValue, 1);
+      g_hash_table_insert (properties, g_strdup (pspec->name), val);
+
+      g_value_init (val, pspec->value_type);
+    }
+
+  g_value_copy (value, val);
+}
+
+static void
+gimp_gegl_tool_config_get_property (GObject    *object,
+                                    guint       property_id,
+                                    GValue     *value,
+                                    GParamSpec *pspec)
+{
+  GHashTable *properties = gimp_gegl_tool_config_get_properties (object);
+  GValue     *val;
+
+  val = g_hash_table_lookup (properties, pspec->name);
+
+  if (! val)
+    {
+      val = g_new0 (GValue, 1);
+      g_hash_table_insert (properties, g_strdup (pspec->name), val);
+
+      g_value_init (val, pspec->value_type);
+      g_param_value_set_default (pspec, val);
+    }
+
+  g_value_copy (val, value);
+}
+
+static void
+gimp_gegl_tool_config_class_init (GObjectClass *klass,
+                                  const gchar  *operation)
 {
   GParamSpec **pspecs;
   guint        n_pspecs;
   gint         i;
 
-  pspecs = gegl_list_properties (tool->operation, &n_pspecs);
+  klass->set_property = gimp_gegl_tool_config_set_property;
+  klass->get_property = gimp_gegl_tool_config_get_property;
+
+  pspecs = gegl_list_properties (operation, &n_pspecs);
 
   for (i = 0; i < n_pspecs; i++)
     {
-      g_print ("property: %s\n", pspecs[i]->name);
+      GParamSpec *pspec = pspecs[i];
+
+      if ((pspec->flags & G_PARAM_READABLE) &&
+          (pspec->flags & G_PARAM_WRITABLE) &&
+          strcmp (pspec->name, "input")     &&
+          strcmp (pspec->name, "output"))
+        {
+          GParamSpec *copy = gimp_param_spec_duplicate (pspec);
+
+          if (copy)
+            {
+              g_print ("installing property: %s\n", copy->name);
+
+              g_object_class_install_property (klass, i + 1, copy);
+            }
+        }
     }
 
   g_free (pspecs);
+}
 
-  return NULL;
+static GimpObject *
+gimp_gegl_tool_get_config (GimpGeglTool *tool)
+{
+  static GHashTable *config_types = NULL;
+  GType              config_type;
+
+  if (! config_types)
+    config_types = g_hash_table_new_full (g_str_hash,
+                                          g_str_equal,
+                                          (GDestroyNotify) g_free,
+                                          NULL);
+
+  config_type = (GType) g_hash_table_lookup (config_types, tool->operation);
+
+  if (! config_type)
+    {
+      const GTypeInfo info =
+      {
+        sizeof (GimpObjectClass),
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_gegl_tool_config_class_init,
+        NULL,           /* class_finalize */
+        tool->operation,
+        sizeof (GimpObject),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) NULL,
+      };
+
+      const GInterfaceInfo config_info =
+      {
+        NULL, /* interface_init     */
+        NULL, /* interface_finalize */
+        NULL  /* interface_data     */
+      };
+
+      gchar *type_name = g_strdup_printf ("GimpGeglTool-%s-config",
+                                          tool->operation);
+
+      config_type = g_type_register_static (GIMP_TYPE_OBJECT, type_name,
+                                            &info, 0);
+
+      g_free (type_name);
+
+      g_type_add_interface_static (config_type, GIMP_TYPE_CONFIG,
+                                   &config_info);
+
+      g_hash_table_insert (config_types,
+                           g_strdup (tool->operation),
+                           (gpointer) config_type);
+    }
+
+  return g_object_new (config_type, NULL);
 }
 
 static void
@@ -323,10 +611,27 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
 
   tool->config = gimp_gegl_tool_get_config (tool);
 
+  if (tool->options_table)
+    {
+      gtk_container_remove (GTK_CONTAINER (tool->options_box),
+                            tool->options_table);
+      tool->options_table = NULL;
+    }
+
   if (tool->config)
-    g_signal_connect_object (tool->config, "notify",
-                             G_CALLBACK (gimp_gegl_tool_config_notify),
-                             G_OBJECT (tool), 0);
+    {
+      g_signal_connect_object (tool->config, "notify",
+                               G_CALLBACK (gimp_gegl_tool_config_notify),
+                               G_OBJECT (tool), 0);
+
+      tool->options_table =
+        gimp_prop_table_new (G_OBJECT (tool->config),
+                             G_TYPE_FROM_INSTANCE (tool->config),
+                             GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool)));
+      gtk_box_pack_start (GTK_BOX (tool->options_box), tool->options_table,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (tool->options_table);
+    }
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
 }
