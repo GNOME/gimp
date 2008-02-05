@@ -2,6 +2,12 @@
 
 	Merged from trunk:
 
+	* plug-ins/common/mail.c (to64): fixed a bug in the base64 encoding.
+
+2008-02-05  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* plug-ins/common/psd-save.c (write_pixel_data): check if drawable
 	is a layer before trying to access the layer mask.
 

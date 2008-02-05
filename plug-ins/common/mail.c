@@ -861,7 +861,7 @@ to64 (const gchar  *filename,
     {
       gsize step = MIN (1024, len - c);
 
-      bytes = g_base64_encode_step (in, step, TRUE, out, &state, &save);
+      bytes = g_base64_encode_step (in + c, step, TRUE, out, &state, &save);
       fwrite (out, 1, bytes, outfile);
 
       c += step;
