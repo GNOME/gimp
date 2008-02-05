@@ -1,3 +1,11 @@
+2008-02-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimagemap.c (gimp_image_map_apply): use
+	gegl_node_get_pad() instead of gegl_node_find_property() to find
+	out whether the node has an "input" pad.
+
+	* app/tools/gimpgegltool.c: #include "core/gimpimagemap.h"
+
 2008-02-05  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/stock-gegl-24.png

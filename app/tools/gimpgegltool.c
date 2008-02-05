@@ -32,6 +32,7 @@
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimagemap.h"
 
 #include "widgets/gimppropwidgets.h"
 

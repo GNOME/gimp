@@ -41,6 +41,11 @@
 #endif
 GeglNode * gegl_node_add_child (GeglNode *self,
                                 GeglNode *child);
+#ifdef __GNUC__
+#warning FIXME: gegl_node_get_pad() or something similar needs to be public
+#endif
+gpointer   gegl_node_get_pad (GeglNode    *self,
+                              const gchar *pad_name);
 
 enum
 {
@@ -429,8 +434,10 @@ gimp_image_map_apply (GimpImageMap        *image_map,
         {
           image_map->gegl = gegl_node_new ();
 
-          if (gegl_node_find_property (image_map->operation, "input"))
+          if (gegl_node_get_pad (image_map->operation, "input"))
             {
+              g_printerr ("%s: found input property\n", G_STRFUNC);
+
               image_map->input =
                 gegl_node_new_child (image_map->gegl,
                                      "operation", "gimp-tilemanager-source",
