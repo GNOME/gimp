@@ -90,8 +90,6 @@ static void      gimp_image_map_tool_map         (GimpImageMapTool *im_tool);
 static void      gimp_image_map_tool_dialog      (GimpImageMapTool *im_tool);
 static void      gimp_image_map_tool_reset       (GimpImageMapTool *im_tool);
 
-static void      gimp_image_map_tool_create_map  (GimpImageMapTool *im_tool);
-
 static void      gimp_image_map_tool_flush       (GimpImageMap     *image_map,
                                                   GimpImageMapTool *im_tool);
 
@@ -571,11 +569,15 @@ gimp_image_map_tool_reset (GimpImageMapTool *tool)
     }
 }
 
-static void
+void
 gimp_image_map_tool_create_map (GimpImageMapTool *tool)
 {
-  Gimp     *gimp = GIMP_TOOL (tool)->tool_info->gimp;
+  Gimp     *gimp;
   gboolean  use_gegl;
+
+  g_return_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool));
+
+  gimp = GIMP_TOOL (tool)->tool_info->gimp;
 
   if (tool->image_map)
     {

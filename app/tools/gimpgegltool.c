@@ -605,9 +605,18 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
   if (! tool->operation)
     return;
 
+  if (GIMP_IMAGE_MAP_TOOL (tool)->image_map)
+    {
+      gimp_image_map_clear (GIMP_IMAGE_MAP_TOOL (tool)->image_map);
+      g_object_unref (GIMP_IMAGE_MAP_TOOL (tool)->image_map);
+      GIMP_IMAGE_MAP_TOOL (tool)->image_map = NULL;
+    }
+
   gegl_node_set (GIMP_IMAGE_MAP_TOOL (tool)->operation,
                  "operation", tool->operation,
                  NULL);
+
+  gimp_image_map_tool_create_map (GIMP_IMAGE_MAP_TOOL (tool));
 
   tool->config = gimp_gegl_tool_get_config (tool);
 

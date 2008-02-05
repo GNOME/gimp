@@ -1,5 +1,18 @@
 2008-02-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimagemap.c (gimp_image_map_apply): do the right
+	thing for operations without "input" pad so we can use all source
+	operations too.
+
+	* app/tools/gimpimagemaptool.[ch]: make
+	gimp_image_map_tool_create_map() public for the time being.
+
+	* app/tools/gimpgegltool.c (gimp_gegl_tool_operation_changed):
+	recreate the GimpImageMap so we can switch from filter to source
+	operations and back.
+
+2008-02-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimppropwidgets.[ch] (gimp_prop_table_new): new
 	function which creates a table of prop widgets for all properties
 	of an object (pretty incomplete, does exactly what's needed in
