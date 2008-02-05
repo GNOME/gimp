@@ -714,7 +714,8 @@ gimp_image_map_tool_response (GtkWidget        *widget,
 
           gimp_image_flush (tool->display->image);
 
-          gimp_image_map_tool_add_recent (image_map_tool);
+          if (image_map_tool->config)
+            gimp_image_map_tool_add_recent (image_map_tool);
         }
 
       tool->display  = NULL;

@@ -1,5 +1,10 @@
 2008-02-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_response): don't
+	try to add a NULL config to the recent settings menu.
+
+2008-02-05  Michael Natterer  <mitch@gimp.org>
+
 	* themes/Default/images/Makefile.am
 	* themes/Default/images/stock-gegl-16.png
 	* themes/Default/images/stock-gegl-24.png
