@@ -80,7 +80,7 @@ gimp_gegl_tool_register (GimpToolRegisterCallback  callback,
                 0,
                 "gimp-gegl-tool",
                 _("GEGL Operation"),
-                _("GEGL Tool: Use an Abritrary GEGL Operation"),
+                _("GEGL Tool: Use an arbitrary GEGL operation"),
                 N_("_GEGL Operation..."), NULL,
                 NULL, "foo", /* GIMP_HELP_TOOL_GEGL, */
                 GIMP_STOCK_GEGL,
