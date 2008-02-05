@@ -1,5 +1,12 @@
 2008-02-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/mail.c: simplified code and user interface by
+	removing the uuencode option and the comment field which only
+	duplicated the message body.
+	(to64): fixed a bug in the base64 encoding.
+
+2008-02-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mail.c: changed menu label and dialog title to
 	"Send by Email".
 

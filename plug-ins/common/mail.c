@@ -18,60 +18,11 @@
  */
 
 /*
- *   GUMP - Gimp Useless Mail Plugin (or Gump Useless Mail Plugin if
- *   you prefer) version about .85 I would say... give or take a few
- *   decimal points
- *
+ *   GUMP - Gimp Useless Mail Plugin
+ *          (or Gump Useless Mail Plugin if you prefer)
  *
  *   by Adrian Likins <adrian@gimp.org>
  *      MIME encapsulation by Reagan Blundell <reagan@emails.net>
- *
- *
- *
- *   Based heavily on gz.c by Daniel Risacher
- *
- *     Lets you choose to send a image to the mail from the file save
- *     as dialog.  images are piped to uuencode and then to mail...
- *
- *
- *   This works fine for .99.10. I havent actually tried it in
- *   combination with the gz plugin, but it works with all other file
- *   types. I will eventually get around to making sure it works with
- *   gz.
- *
- *  To use: 1) image->File->mail image
- *          2) when the mail dialog popups up, fill it out. Only to:
- *             and filename are required note: the filename needs to a
- *             type that the image can be saved as. otherwise you will
- *             just send an empty message.
- *          3) click ok and it should be on its way
- *
- *
- * NOTE: You probabaly need sendmail installed. If your sendmail is in
- *       an odd spot you can change the #define below. If you use
- *       qmail or other MTA's, and this works after changing the
- *       MAILER, let me know how well or what changes were needed.
- *
- * NOTE: Uuencode is needed. If it is in the path, it should work fine
- *       as is. Other- wise just change the UUENCODE.
- *
- *
- * TODO: 1) the aforementioned abilty to specify the
- *           uuencode filename                         *done*
- *       2) someway to do this without tmp files
- *              * wont happen anytime soon*
- *       3) MIME? *done*
- *       4) a pointlessly snazzier dialog
- *       5) make sure it works with gz
- *               * works for .xcfgz but not .xcf.gz *
- *       6) add an option to choose if mail get
- *          uuencode or not (or MIME'ed for that matter)
- *       7) realtime preview
- *       8) better entry for comments    *done*
- *       9) list of frequently used addreses
- *      10) openGL compliance
- *      11) better handling of filesave errors
- *
  *
  * As always: The utility of this plugin is left as an exercise for
  * the reader
@@ -81,16 +32,9 @@
 #include "config.h"
 
 #include <string.h>
-#include <errno.h>
 
 #include <sys/types.h>
-#include <sys/param.h>
 #include <sys/wait.h>
-#include <sys/stat.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #include <glib/gstdio.h>
 
@@ -163,16 +107,6 @@ static const guint8 mail_icon[] =
 #define SENDMAIL "/usr/lib/sendmail"
 #endif
 
-#ifndef UUENCODE
-#define UUENCODE "uuencode"
-#endif
-
-enum
-{
-  ENCAPSULATION_UUENCODE,
-  ENCAPSULATION_MIME
-};
-
 #define BUFFER_SIZE 256
 
 #define PLUG_IN_PROC   "plug-in-mail-image"
@@ -180,12 +114,11 @@ enum
 
 typedef struct
 {
+  gchar filename[BUFFER_SIZE];
   gchar receipt[BUFFER_SIZE];
+  gchar from[BUFFER_SIZE];
   gchar subject[BUFFER_SIZE];
   gchar comment[BUFFER_SIZE];
-  gchar from[BUFFER_SIZE];
-  gchar filename[BUFFER_SIZE];
-  gint  encapsulation;
 } m_info;
 
 
@@ -196,27 +129,25 @@ static void   run   (const gchar      *name,
 		     gint             *nreturn_vals,
 		     GimpParam       **return_vals);
 
-static GimpPDBStatusType save_image   (const gchar *filename,
-                                       gint32       image_ID,
-                                       gint32       drawable_ID,
-                                       gint32       run_mode);
+static GimpPDBStatusType  save_image   (const gchar *filename,
+                                        gint32       image_ID,
+                                        gint32       drawable_ID,
+                                        gint32       run_mode);
 
-static gboolean  save_dialog          (void);
-static void      mail_entry_callback  (GtkWidget     *widget,
-                                       gchar         *data);
-static void      mesg_body_callback   (GtkTextBuffer *buffer,
-                                       gpointer       data);
+static gboolean   save_dialog          (void);
+static void       mail_entry_callback  (GtkWidget     *widget,
+                                        gchar         *data);
+static void       mesg_body_callback   (GtkTextBuffer *buffer,
+                                        gpointer       data);
 
-static gboolean  valid_file     (const gchar  *filename);
-static void      create_headers (FILE         *mailpipe);
-static gchar    *find_extension (const gchar  *filename);
-static gboolean  to64           (const gchar  *filename,
-                                 FILE         *outfile,
-                                 GError      **error);
-static gint      sane_dup2      (gint          fd1,
-                                 gint          fd2);
-static FILE     *sendmail_pipe  (gchar       **cmd,
-                                 gint         *pid);
+static gboolean   valid_file     (const gchar  *filename);
+static void       create_headers (FILE         *mailpipe);
+static gchar    * find_extension (const gchar  *filename);
+static gboolean   to64           (const gchar  *filename,
+                                  FILE         *outfile,
+                                  GError      **error);
+static FILE     * sendmail_pipe  (gchar       **cmd,
+                                  GPid         *pid);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -229,12 +160,10 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 static m_info mail_info =
 {
-  "", "", "", "", "",
-  ENCAPSULATION_MIME,  /* Change this to ENCAPSULATION_UUENCODE
-			  if you prefer that as the default */
+  "", "", "", "", ""
 };
 
-static gchar * mesg_body = NULL;
+static gchar *mesg_body = NULL;
 
 
 MAIN ()
@@ -248,11 +177,11 @@ query (void)
     { GIMP_PDB_IMAGE,    "image",         "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",      "Drawable to save" },
     { GIMP_PDB_STRING,   "filename",      "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "receipt",       "The email address to send to" },
-    { GIMP_PDB_STRING,   "from",          "The email address for the From: field" },
+    { GIMP_PDB_STRING,   "to-address",    "The email address to send to" },
+    { GIMP_PDB_STRING,   "from-address",  "The email address for the From: field" },
     { GIMP_PDB_STRING,   "subject",       "The subject" },
     { GIMP_PDB_STRING,   "comment",       "The Comment" },
-    { GIMP_PDB_INT32,    "encapsulation", "Uuencode, MIME" }
+    { GIMP_PDB_INT32,    "encapsulation", "ignored" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
@@ -263,7 +192,7 @@ query (void)
                           "Spencer Kimball and Peter Mattis",
 			  "1995-1997",
 			  N_("Send by E_mail..."),
-			  "RGB*, GRAY*, INDEXED*",
+			  "*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
@@ -324,7 +253,7 @@ run (const gchar      *name,
 
 	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 9)
+	  if (nparams < 8)
 	    {
 	      status = GIMP_PDB_CALLING_ERROR;
 	    }
@@ -340,7 +269,6 @@ run (const gchar      *name,
                          param[6].data.d_string, BUFFER_SIZE);
 	      g_strlcpy (mail_info.comment,
                          param[7].data.d_string, BUFFER_SIZE);
-	      mail_info.encapsulation = param[8].data.d_int32;
 	    }
 	  break;
 
@@ -360,8 +288,13 @@ run (const gchar      *name,
 			       run_mode);
 
 	  if (status == GIMP_PDB_SUCCESS)
-	    gimp_set_data (PLUG_IN_PROC, &mail_info, sizeof (m_info));
-	}
+            {
+              if (mesg_body)
+                g_strlcpy (mail_info.comment, mesg_body, BUFFER_SIZE);
+
+              gimp_set_data (PLUG_IN_PROC, &mail_info, sizeof (m_info));
+            }
+        }
     }
   else
     {
@@ -382,10 +315,8 @@ save_image (const gchar *filename,
   gchar             *tmpname;
   gchar             *mailcmd[3];
   GPid               mailpid;
-  pid_t              uupid;
-  gint               wpid;
-  gint               process_status;
   FILE              *mailpipe;
+  GError            *error = NULL;
 
   ext = find_extension (filename);
 
@@ -408,9 +339,6 @@ save_image (const gchar *filename,
 
   create_headers (mailpipe);
 
-  /* This is necessary to make the comments and headers work
-   * correctly. Not real sure why.
-   */
   fflush (mailpipe);
 
   if (! (gimp_file_save (run_mode,
@@ -422,57 +350,14 @@ save_image (const gchar *filename,
       goto error;
     }
 
-  if (mail_info.encapsulation == ENCAPSULATION_UUENCODE)
+  if (! to64 (tmpname, mailpipe, &error))
     {
-      /* fork off a uuencode process */
-      if ((uupid = fork ()) < 0)
-	{
-	  g_message ("fork() failed: %s", g_strerror (errno));
-	  goto error;
-	}
-      else if (uupid == 0)
-	{
-	  if (sane_dup2 (fileno (mailpipe), fileno (stdout)) == -1)
-	    {
-	      g_message ("dup2() failed: %s", g_strerror (errno));
-	    }
-
-	  execlp (UUENCODE, UUENCODE, tmpname, filename, NULL);
-
-	  /* What are we doing here? exec must have failed */
-	  g_message ("exec failed: uuencode: %s", g_strerror (errno));
-	  _exit (127);
-	}
-      else
-        {
-	  wpid = waitpid (uupid, &process_status, 0);
-
-	  if ((wpid < 0)
-	      || !WIFEXITED (process_status)
-	      || (WEXITSTATUS (process_status) != 0))
-	    {
-	      g_message ("mail didn't work or something on file '%s'",
-                         gimp_filename_to_utf8 (tmpname));
-	      goto error;
-	    }
-	}
+      g_message (error->message);
+      g_error_free (error);
+      goto error;
     }
-  else
-    {
-      /* This must be MIME stuff. Base64 away... */
-      GError *error = NULL;
 
-      if (! to64 (tmpname, mailpipe, &error))
-        {
-          g_message (error->message);
-          g_error_free (error);
-          goto error;
-        }
-
-      /* close off mime */
-      if (mail_info.encapsulation == ENCAPSULATION_MIME)
-        fprintf (mailpipe, "\n--GUMP-MIME-boundary--\n");
-    }
+  fprintf (mailpipe, "\n--GUMP-MIME-boundary--\n");
 
   goto cleanup;
 
@@ -485,6 +370,7 @@ cleanup:
   /* close out the sendmail process */
   fclose (mailpipe);
   waitpid (mailpid, NULL, 0);
+  g_spawn_close_pid (mailpid);
 
   /* delete the tmpfile that was generated */
   g_unlink (tmpname);
@@ -501,8 +387,6 @@ save_dialog (void)
   GtkWidget     *main_vbox;
   GtkWidget     *entry;
   GtkWidget     *table;
-  GtkWidget     *label;
-  GtkWidget     *vbox;
   GtkWidget     *scrolled_window;
   GtkWidget     *text_view;
   GtkTextBuffer *text_buffer;
@@ -549,7 +433,7 @@ save_dialog (void)
   gtk_widget_show (table);
 
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 12);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 12);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
 
   /* Filename entry */
@@ -564,35 +448,13 @@ save_dialog (void)
                     G_CALLBACK (mail_entry_callback),
                     mail_info.filename);
 
-  /* Encapsulation label */
-  label = gtk_label_new (_("Encapsulation:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.2);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  /* Encapsulation radiobuttons */
-  vbox = gimp_int_radio_group_new (FALSE, NULL,
-				   G_CALLBACK (gimp_radio_button_update),
-				   &mail_info.encapsulation,
-				   mail_info.encapsulation,
-
-				   _("_MIME"),     ENCAPSULATION_MIME,     NULL,
-				   _("_Uuencode"), ENCAPSULATION_UUENCODE, NULL,
-
-				   NULL);
-  gtk_table_attach (GTK_TABLE (table), vbox, 1, 2, row, row + 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (vbox);
-  row += 2;
-
   /* To entry */
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_max_length (GTK_ENTRY (entry), BUFFER_SIZE - 1);
   gtk_entry_set_text (GTK_ENTRY (entry), mail_info.receipt);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-			     _("_Recipient:"), 0.0, 0.5,
+			     _("_To:"), 0.0, 0.5,
 			     entry, 1, FALSE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
@@ -606,7 +468,7 @@ save_dialog (void)
   gtk_entry_set_max_length (GTK_ENTRY (entry), BUFFER_SIZE - 1);
   gtk_entry_set_text (GTK_ENTRY (entry), mail_info.from);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-			     _("_Sender:"), 0.0, 0.5,
+			     _("_From:"), 0.0, 0.5,
 			     entry, 1, FALSE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
@@ -624,19 +486,6 @@ save_dialog (void)
                     G_CALLBACK (mail_entry_callback),
                     mail_info.subject);
 
-  /* Comment entry */
-  entry = gtk_entry_new ();
-  gtk_widget_set_size_request (entry, 200, -1);
-  gtk_entry_set_max_length (GTK_ENTRY (entry), BUFFER_SIZE - 1);
-  gtk_entry_set_text (GTK_ENTRY (entry), mail_info.comment);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-			     _("Comm_ent:"), 0.0, 0.5,
-			     entry, 1, FALSE);
-  g_signal_connect (entry, "changed",
-                    G_CALLBACK (mail_entry_callback),
-                    mail_info.comment);
-
-
   /* Body  */
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
@@ -649,16 +498,18 @@ save_dialog (void)
 
   text_buffer = gtk_text_buffer_new (NULL);
 
+  g_signal_connect (text_buffer, "changed",
+                    G_CALLBACK (mesg_body_callback),
+		    NULL);
+
+  gtk_text_buffer_set_text (text_buffer, mail_info.comment, -1);
+
   text_view = gtk_text_view_new_with_buffer (text_buffer);
   g_object_unref (text_buffer);
 
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
-
-  g_signal_connect (text_buffer, "changed",
-                    G_CALLBACK (mesg_body_callback),
-		    NULL);
 
   gtk_widget_show (dlg);
 
@@ -795,45 +646,32 @@ create_headers (FILE *mailpipe)
 
   fprintf (mailpipe, "X-Mailer: GIMP Useless Mail Plug-In %s\n", GIMP_VERSION);
 
-  if (mail_info.encapsulation == ENCAPSULATION_MIME)
-    {
-      fprintf (mailpipe, "MIME-Version: 1.0\n");
-      fprintf (mailpipe, "Content-type: multipart/mixed; "
-                         "boundary=GUMP-MIME-boundary\n");
-    }
+  fprintf (mailpipe, "MIME-Version: 1.0\n");
+  fprintf (mailpipe, "Content-type: multipart/mixed; "
+                     "boundary=GUMP-MIME-boundary\n");
 
   fprintf (mailpipe, "\n\n");
 
-  if (mail_info.encapsulation == ENCAPSULATION_MIME)
-    {
-      fprintf (mailpipe, "--GUMP-MIME-boundary\n");
-      fprintf (mailpipe, "Content-type: text/plain; charset=UTF-8\n\n");
-    }
-
-  if (strlen (mail_info.comment) > 0)
-    {
-      fprintf (mailpipe, "%s", mail_info.comment);
-      fprintf (mailpipe, "\n\n");
-    }
+  fprintf (mailpipe, "--GUMP-MIME-boundary\n");
+  fprintf (mailpipe, "Content-type: text/plain; charset=UTF-8\n\n");
 
   if (mesg_body)
     fprintf (mailpipe, "%s", mesg_body);
 
   fprintf (mailpipe, "\n\n");
 
-  if (mail_info.encapsulation == ENCAPSULATION_MIME)
-    {
-      gchar *content = find_content_type (mail_info.filename);
+  {
+    gchar *content = find_content_type (mail_info.filename);
 
-      fprintf (mailpipe, "--GUMP-MIME-boundary\n");
-      fprintf (mailpipe, "Content-type: %s\n", content);
-      fprintf (mailpipe, "Content-transfer-encoding: base64\n");
-      fprintf (mailpipe, "Content-disposition: attachment; filename=\"%s\"\n",
-               mail_info.filename);
-      fprintf (mailpipe, "Content-description: %s\n\n", mail_info.filename);
+    fprintf (mailpipe, "--GUMP-MIME-boundary\n");
+    fprintf (mailpipe, "Content-type: %s\n", content);
+    fprintf (mailpipe, "Content-transfer-encoding: base64\n");
+    fprintf (mailpipe, "Content-disposition: attachment; filename=\"%s\"\n",
+             mail_info.filename);
+    fprintf (mailpipe, "Content-description: %s\n\n", mail_info.filename);
 
-      g_free (content);
-    }
+    g_free (content);
+  }
 }
 
 static gboolean
@@ -861,7 +699,7 @@ to64 (const gchar  *filename,
     {
       gsize step = MIN (1024, len - c);
 
-      bytes = g_base64_encode_step (in, step, TRUE, out, &state, &save);
+      bytes = g_base64_encode_step (in + c, step, TRUE, out, &state, &save);
       fwrite (out, 1, bytes, outfile);
 
       c += step;
@@ -875,24 +713,9 @@ to64 (const gchar  *filename,
   return TRUE;
 }
 
-static gint
-sane_dup2 (gint fd1,
-           gint fd2)
-{
-  gint ret;
-
- retry:
-  ret = dup2 (fd1, fd2);
-
-  if (ret < 0 && errno == EINTR)
-    goto retry;
-
-  return ret;
-}
-
 static FILE *
 sendmail_pipe (gchar **cmd,
-               gint   *pid)
+               GPid   *pid)
 {
   gint    fd;
   GError *err = NULL;
