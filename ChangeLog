@@ -2,6 +2,13 @@
 
 	Merged from trunk:
 
+	* app/dialogs/image-new-dialog.c (image_new_create_image):
+	use the user context when creating the new image. Fixes bug #514082.
+
+2008-02-05  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* plug-ins/common/mail.c (to64): fixed a bug in the base64 encoding.
 
 2008-02-05  Sven Neumann  <sven@gimp.org>
