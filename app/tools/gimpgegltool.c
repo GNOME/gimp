@@ -76,7 +76,7 @@ gimp_gegl_tool_register (GimpToolRegisterCallback  callback,
                 _("GEGL Tool: Use an Abritrary GEGL Operation"),
                 N_("_GEGL Operation..."), NULL,
                 NULL, "foo", /* GIMP_HELP_TOOL_GEGL, */
-                GIMP_STOCK_WILBER_EEK,
+                GIMP_STOCK_GEGL,
                 data);
 }
 

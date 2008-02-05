@@ -1,5 +1,15 @@
 2008-02-05  Michael Natterer  <mitch@gimp.org>
 
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-gegl-16.png
+	* themes/Default/images/stock-gegl-24.png
+	* libgimpwidgets/gimpstock.[ch]: new stock icon to be replaced by
+	somebody who can draw ;)
+
+	* app/tools/gimpgegltool.c: use it.
+
+2008-02-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/Makefile.am
 	* app/tools/gimpgegltool.[ch]: add experimental GEGL tool which
 	will allow to try arbitrary GEGL operations. 100% unusable at the

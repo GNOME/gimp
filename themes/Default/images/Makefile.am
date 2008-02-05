@@ -52,6 +52,7 @@ STOCK_MENU_IMAGES = \
 	stock-flip-horizontal-16.png			\
 	stock-flip-vertical-16.png			\
 	stock-floating-selection-16.png			\
+	stock-gegl-16.png				\
 	stock-gradient-bilinear-16.png			\
 	stock-gradient-conical-asymmetric-16.png	\
 	stock-gradient-conical-symmetric-16.png		\
@@ -159,6 +160,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-edit-16.png			\
 	stock-eye-20.png			\
 	stock-floating-selection-24.png		\
+	stock-gegl-24.png			\
 	stock-gravity-east-24.png		\
 	stock-gravity-north-24.png		\
 	stock-gravity-north-east-24.png		\
