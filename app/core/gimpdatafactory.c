@@ -57,6 +57,8 @@ static gchar * gimp_data_factory_get_save_dir (GimpDataFactory      *factory);
 static void    gimp_data_factory_load_data  (const GimpDatafileData *file_data,
                                              gpointer                data);
 
+static void    gimp_data_factory_load_data_recursive (const GimpDatafileData *file_data,
+                                                      gpointer                data);
 
 G_DEFINE_TYPE (GimpDataFactory, gimp_data_factory, GIMP_TYPE_OBJECT)
 
@@ -310,6 +312,10 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
 
       gimp_datafiles_read_directories (path, G_FILE_TEST_EXISTS,
                                        gimp_data_factory_load_data, &context);
+
+      gimp_datafiles_read_directories (path, G_FILE_TEST_IS_DIR,
+                                       gimp_data_factory_load_data_recursive,
+                                       &context);
 
       if (writable_path)
         {
@@ -643,6 +649,20 @@ gimp_data_factory_get_save_dir (GimpDataFactory *factory)
   gimp_path_free (writable_list);
 
   return writable_dir;
+}
+
+static void
+gimp_data_factory_load_data_recursive (const GimpDatafileData *file_data,
+                                       gpointer                data)
+{
+  GimpDataLoadContext *context = data;
+
+  gimp_datafiles_read_directories (file_data->filename, G_FILE_TEST_EXISTS,
+                                   gimp_data_factory_load_data, context);
+
+  gimp_datafiles_read_directories (file_data->filename, G_FILE_TEST_IS_DIR,
+                                   gimp_data_factory_load_data_recursive,
+                                   context);
 }
 
 static void

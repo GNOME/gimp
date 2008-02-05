@@ -1,3 +1,13 @@
+2008-02-05  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Applied patch from Olof Frahm which makes loading of data
+	files (brushes and so on) happen recursively (bug #514160).
+
+	* app/core/gimpdatafactory.c
+	(gimp_data_factory_data_load): Recursively search sub directories
+	for data files using the new helper function
+	(gimp_data_factory_load_data_recursive)
+
 2008-02-05  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpgegltool.c: spelling fix.
