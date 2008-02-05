@@ -121,7 +121,7 @@ query (void)
                           "Bill Skaggs, Sven Neumann, Stefan Röllin",
                           "Sven Neumann <sven@gimp.org>",
                           "2008",
-                          N_("Page Set_up ..."),
+                          N_("Page Set_up"),
                           "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (print_args), 0,
