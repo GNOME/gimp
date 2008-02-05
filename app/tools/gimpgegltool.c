@@ -21,7 +21,6 @@
 #include <string.h>
 
 #include <gegl.h>
-#include <gegl-plugin.h> /* temp hack for color pspec */
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"

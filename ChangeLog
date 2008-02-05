@@ -1,5 +1,9 @@
 2008-02-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpgegltool.c: don't include <gegl-plugin.h> any longer.
+
+2008-02-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimppropwidgets.c (gimp_prop_table_new): don't forget
 	the label for entry widgets.
 
