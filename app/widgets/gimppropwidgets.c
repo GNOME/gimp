@@ -755,6 +755,7 @@ gimp_prop_table_new (GObject     *config,
       if (G_IS_PARAM_SPEC_STRING (pspec))
         {
           widget = gimp_prop_entry_new (config, pspec->name, -1);
+          label  = g_param_spec_get_nick (pspec);
         }
       else if (G_IS_PARAM_SPEC_BOOLEAN (pspec))
         {
