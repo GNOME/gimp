@@ -21,8 +21,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef GIMP_POLYGON_SELECT_TOOL_H
-#define GIMP_POLYGON_SELECT_TOOL_H
+#ifndef __GIMP_POLYGON_SELECT_TOOL_H__
+#define __GIMP_POLYGON_SELECT_TOOL_H__
 
 
 #include "gimpselectiontool.h"
@@ -59,4 +59,4 @@ void    gimp_polygon_select_tool_select   (GimpPolygonSelectTool *poly_sel,
                                            GimpDisplay           *display);
 
 
-#endif /* GIMP_POLYGON_SELECT_TOOL_H */
+#endif /* __GIMP_POLYGON_SELECT_TOOL_H__ */

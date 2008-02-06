@@ -236,13 +236,20 @@ gimp_polygon_select_tool_oper_update (GimpTool        *tool,
 
   if (tool->display == display)
     {
+      gboolean hovering_first_point;
+
       gimp_polygon_select_tool_select_closet_point (poly_sel_tool,
                                                     display,
                                                     coords);
 
+      hovering_first_point = gimp_polygon_select_tool_should_close (poly_sel_tool,
+                                                                    display,
+                                                                    coords);
+
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-      if (poly_sel_tool->grabbed_point || poly_sel_tool->num_points == 0)
+      if (poly_sel_tool->num_points == 0 ||
+          (poly_sel_tool->grabbed_point && !hovering_first_point))
         {
           poly_sel_tool->show_pending_point = FALSE;
         }
@@ -250,8 +257,15 @@ gimp_polygon_select_tool_oper_update (GimpTool        *tool,
         {
           poly_sel_tool->show_pending_point = TRUE;
 
-          poly_sel_tool->pending_point.x    = coords->x;
-          poly_sel_tool->pending_point.y    = coords->y;
+          if (hovering_first_point)
+            {
+              poly_sel_tool->pending_point = poly_sel_tool->points[0];
+            }
+          else
+            {
+              poly_sel_tool->pending_point.x = coords->x;
+              poly_sel_tool->pending_point.y = coords->y;
+            }
         }
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
@@ -299,6 +313,14 @@ gimp_polygon_select_tool_motion (GimpTool        *tool,
         {
           poly_sel_tool->grabbed_point->x = coords->x;
           poly_sel_tool->grabbed_point->y = coords->y;
+
+          if (gimp_polygon_select_tool_should_close (poly_sel_tool,
+                                                     display,
+                                                     coords))
+            {
+              poly_sel_tool->pending_point.x = coords->x;
+              poly_sel_tool->pending_point.y = coords->y;
+            }
         }
       else
         {
@@ -433,9 +455,14 @@ static void
 gimp_polygon_select_tool_commit (GimpPolygonSelectTool *poly_sel_tool,
                                  GimpDisplay           *display)
 {
-  gimp_polygon_select_tool_select (poly_sel_tool, display);
+  if (poly_sel_tool->num_points >= 3)
+    {
+      gimp_polygon_select_tool_select (poly_sel_tool, display);
+    }
 
   gimp_polygon_select_tool_halt (poly_sel_tool);
+
+  gimp_image_flush (display->image);
 }
 
 static void
@@ -533,13 +560,11 @@ gimp_polygon_select_tool_remove_last (GimpPolygonSelectTool *poly_sel_tool)
 
   gimp_draw_tool_pause (draw_tool);
 
+  poly_sel_tool->num_points--;
+
   if (poly_sel_tool->num_points == 0)
     {
       gimp_polygon_select_tool_halt (poly_sel_tool);
-    }
-  else
-    {
-      poly_sel_tool->num_points--;
     }
 
   gimp_draw_tool_resume (draw_tool);

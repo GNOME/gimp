@@ -53,7 +53,7 @@ static void   gimp_colorize_config_set_property (GObject      *object,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpColorizeConfig, gimp_colorize_config,
-                         G_TYPE_OBJECT,
+                         GIMP_TYPE_VIEWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_colorize_config_parent_class
@@ -62,34 +62,28 @@ G_DEFINE_TYPE_WITH_CODE (GimpColorizeConfig, gimp_colorize_config,
 static void
 gimp_colorize_config_class_init (GimpColorizeConfigClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->set_property = gimp_colorize_config_set_property;
-  object_class->get_property = gimp_colorize_config_get_property;
+  object_class->set_property       = gimp_colorize_config_set_property;
+  object_class->get_property       = gimp_colorize_config_get_property;
 
-  g_object_class_install_property (object_class, PROP_HUE,
-                                   g_param_spec_double ("hue",
-                                                        "Hue",
-                                                        "Hue",
-                                                        0.0, 1.0, 0.5,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  viewable_class->default_stock_id = "gimp-tool-colorize";
 
-  g_object_class_install_property (object_class, PROP_SATURATION,
-                                   g_param_spec_double ("saturation",
-                                                        "Saturation",
-                                                        "Saturation",
-                                                        0.0, 1.0, 0.5,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HUE,
+                                   "hue",
+                                   "Hue",
+                                   0.0, 1.0, 0.5, 0);
 
-  g_object_class_install_property (object_class, PROP_LIGHTNESS,
-                                   g_param_spec_double ("lightness",
-                                                        "Lightness",
-                                                        "Lightness",
-                                                        -1.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SATURATION,
+                                   "saturation",
+                                   "Saturation",
+                                   0.0, 1.0, 0.5, 0);
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LIGHTNESS,
+                                   "lightness",
+                                   "Lightness",
+                                   -1.0, 1.0, 0.0, 0);
 }
 
 static void

@@ -33,6 +33,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "gimppdb-utils.h"
 #include "text/gimptext-compat.h"
 
 #include "internal_procs.h"
@@ -73,7 +74,7 @@ text_fontname_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (drawable && ! gimp_item_is_attached (GIMP_ITEM (drawable)))
+      if (drawable && ! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
         success = FALSE;
 
       if (success)
@@ -193,7 +194,7 @@ text_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (drawable && ! gimp_item_is_attached (GIMP_ITEM (drawable)))
+      if (drawable && ! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
         success = FALSE;
 
       if (success)

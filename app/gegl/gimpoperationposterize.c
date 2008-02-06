@@ -83,10 +83,12 @@ gimp_operation_posterize_process (GeglOperation *operation,
   GimpPosterizeConfig      *config = GIMP_POSTERIZE_CONFIG (point->config);
   gfloat                   *src    = in_buf;
   gfloat                   *dest   = out_buf;
-  gfloat                    levels = config->levels - 1.0;
+  gfloat                    levels;
 
   if (! config)
     return FALSE;
+
+  levels = config->levels - 1.0;
 
   while (samples--)
     {

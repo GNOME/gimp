@@ -23,6 +23,9 @@
 #define __GIMP_LEVELS_CONFIG_H__
 
 
+#include "core/gimpviewable.h"
+
+
 #define GIMP_TYPE_LEVELS_CONFIG            (gimp_levels_config_get_type ())
 #define GIMP_LEVELS_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LEVELS_CONFIG, GimpLevelsConfig))
 #define GIMP_LEVELS_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_LEVELS_CONFIG, GimpLevelsConfigClass))
@@ -35,7 +38,7 @@ typedef struct _GimpLevelsConfigClass GimpLevelsConfigClass;
 
 struct _GimpLevelsConfig
 {
-  GObject               parent_instance;
+  GimpViewable          parent_instance;
 
   GimpHistogramChannel  channel;
 
@@ -50,7 +53,7 @@ struct _GimpLevelsConfig
 
 struct _GimpLevelsConfigClass
 {
-  GObjectClass  parent_class;
+  GimpViewableClass  parent_class;
 };
 
 

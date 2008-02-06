@@ -23,7 +23,7 @@
 #include "libgimpmodule/gimpmoduletypes.h"
 #include "libgimpthumb/gimpthumb-types.h"
 
-#include "gegl/gegl-types.h"
+#include "base/base-types.h"
 
 #include "core/core-enums.h"
 
@@ -206,6 +206,7 @@ struct _GimpCoords
 };
 
 
+#include "gegl/gegl-types.h"
 #include "paint/paint-types.h"
 #include "text/text-types.h"
 #include "vectors/vectors-types.h"

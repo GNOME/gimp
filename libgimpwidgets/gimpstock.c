@@ -258,6 +258,7 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_TOILET_PAPER,                   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_WEB,                      NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VIDEO,                    NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GEGL,                     NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_SHAPE_CIRCLE,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SHAPE_DIAMOND,            NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -480,7 +481,8 @@ gimp_stock_button_pixbufs[] =
   { GIMP_TOILET_PAPER,                   stock_toilet_paper_24             },
   { GIMP_STOCK_WEB,                      stock_web_24                      },
   { GIMP_STOCK_WILBER,                   stock_wilber_22                   },
-  { GIMP_STOCK_VIDEO,                    stock_video_24                    }
+  { GIMP_STOCK_VIDEO,                    stock_video_24                    },
+  { GIMP_STOCK_GEGL,                     stock_gegl_24                     }
 };
 
 static const struct
@@ -643,6 +645,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_TOILET_PAPER,                   stock_toilet_paper_16             },
   { GIMP_STOCK_WEB,                      stock_web_16                      },
   { GIMP_STOCK_VIDEO,                    stock_video_16                    },
+  { GIMP_STOCK_GEGL,                     stock_gegl_16                     },
 
   { GIMP_STOCK_SHAPE_CIRCLE,             stock_shape_circle_16             },
   { GIMP_STOCK_SHAPE_SQUARE,             stock_shape_square_16             },

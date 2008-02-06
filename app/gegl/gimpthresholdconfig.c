@@ -52,7 +52,7 @@ static void   gimp_threshold_config_set_property (GObject      *object,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpThresholdConfig, gimp_threshold_config,
-                         G_TYPE_OBJECT,
+                         GIMP_TYPE_VIEWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_threshold_config_parent_class
@@ -61,26 +61,23 @@ G_DEFINE_TYPE_WITH_CODE (GimpThresholdConfig, gimp_threshold_config,
 static void
 gimp_threshold_config_class_init (GimpThresholdConfigClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->set_property = gimp_threshold_config_set_property;
-  object_class->get_property = gimp_threshold_config_get_property;
+  object_class->set_property       = gimp_threshold_config_set_property;
+  object_class->get_property       = gimp_threshold_config_get_property;
 
-  g_object_class_install_property (object_class, PROP_LOW,
-                                   g_param_spec_double ("low",
-                                                        "Low",
-                                                        "Low threshold",
-                                                        0.0, 1.0, 0.5,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  viewable_class->default_stock_id = "gimp-tool-threshold";
 
-  g_object_class_install_property (object_class, PROP_HIGH,
-                                   g_param_spec_double ("high",
-                                                        "High",
-                                                        "High threshold",
-                                                        0.0, 1.0, 1.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LOW,
+                                   "low",
+                                   "Low threshold",
+                                   0.0, 1.0, 0.5, 0);
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HIGH,
+                                   "high",
+                                   "High threshold",
+                                   0.0, 1.0, 1.0, 0);
 }
 
 static void
@@ -141,11 +138,13 @@ gimp_threshold_config_set_property (GObject      *object,
 
 void
 gimp_threshold_config_to_cruft (GimpThresholdConfig *config,
-                                Threshold           *cruft)
+                                Threshold           *cruft,
+                                gboolean             color)
 {
   g_return_if_fail (GIMP_IS_THRESHOLD_CONFIG (config));
   g_return_if_fail (cruft != NULL);
 
   cruft->low_threshold  = config->low  * 255.999;
   cruft->high_threshold = config->high * 255.999;
+  cruft->color          = color;
 }

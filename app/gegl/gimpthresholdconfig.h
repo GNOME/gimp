@@ -23,6 +23,9 @@
 #define __GIMP_THRESHOLD_CONFIG_H__
 
 
+#include "core/gimpviewable.h"
+
+
 #define GIMP_TYPE_THRESHOLD_CONFIG            (gimp_threshold_config_get_type ())
 #define GIMP_THRESHOLD_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_THRESHOLD_CONFIG, GimpThresholdConfig))
 #define GIMP_THRESHOLD_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_THRESHOLD_CONFIG, GimpThresholdConfigClass))
@@ -35,15 +38,15 @@ typedef struct _GimpThresholdConfigClass GimpThresholdConfigClass;
 
 struct _GimpThresholdConfig
 {
-  GObject  parent_instance;
+  GimpViewable  parent_instance;
 
-  gdouble  low;
-  gdouble  high;
+  gdouble       low;
+  gdouble       high;
 };
 
 struct _GimpThresholdConfigClass
 {
-  GObjectClass  parent_class;
+  GimpViewableClass  parent_class;
 };
 
 
@@ -51,7 +54,8 @@ GType   gimp_threshold_config_get_type (void) G_GNUC_CONST;
 
 /*  temp cruft  */
 void    gimp_threshold_config_to_cruft (GimpThresholdConfig *config,
-                                        Threshold           *cruft);
+                                        Threshold           *cruft,
+                                        gboolean             color);
 
 
 #endif /* __GIMP_THRESHOLD_CONFIG_H__ */

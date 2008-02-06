@@ -260,7 +260,7 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
 
       if (editor->histogram)
         {
-          gimp_histogram_free (editor->histogram);
+          gimp_histogram_unref (editor->histogram);
           editor->histogram = NULL;
 
           gimp_histogram_view_set_histogram (view, NULL);
@@ -268,7 +268,7 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
 
       if (editor->bg_histogram)
         {
-          gimp_histogram_free (editor->bg_histogram);
+          gimp_histogram_unref (editor->bg_histogram);
           editor->bg_histogram = NULL;
 
           gimp_histogram_view_set_background (view, NULL);
@@ -313,7 +313,7 @@ gimp_histogram_editor_layer_changed (GimpImage           *image,
         {
           GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
 
-          gimp_histogram_free (editor->bg_histogram);
+          gimp_histogram_unref (editor->bg_histogram);
           editor->bg_histogram = NULL;
 
           gimp_histogram_view_set_background (view, NULL);
@@ -386,7 +386,7 @@ gimp_histogram_editor_frozen_update (GimpHistogramEditor *editor,
     }
   else if (editor->bg_histogram)
     {
-      gimp_histogram_free (editor->bg_histogram);
+      gimp_histogram_unref (editor->bg_histogram);
       editor->bg_histogram = NULL;
 
       gimp_histogram_view_set_background (view, NULL);

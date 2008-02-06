@@ -48,7 +48,7 @@ static void   gimp_posterize_config_set_property (GObject      *object,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpPosterizeConfig, gimp_posterize_config,
-                         G_TYPE_OBJECT,
+                         GIMP_TYPE_VIEWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_posterize_config_parent_class
@@ -57,18 +57,18 @@ G_DEFINE_TYPE_WITH_CODE (GimpPosterizeConfig, gimp_posterize_config,
 static void
 gimp_posterize_config_class_init (GimpPosterizeConfigClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->set_property = gimp_posterize_config_set_property;
-  object_class->get_property = gimp_posterize_config_get_property;
+  object_class->set_property       = gimp_posterize_config_set_property;
+  object_class->get_property       = gimp_posterize_config_get_property;
 
-  g_object_class_install_property (object_class, PROP_LEVELS,
-                                   g_param_spec_int ("levels",
-                                                     "Levels",
-                                                     "Posterize levels",
-                                                     2, 256, 3,
-                                                     G_PARAM_READWRITE |
-                                                     G_PARAM_CONSTRUCT));
+  viewable_class->default_stock_id = "gimp-tool-posterize";
+
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_LEVELS,
+                                "levels",
+                                "Posterize levels",
+                                2, 256, 3, 0);
 }
 
 static void

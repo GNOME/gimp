@@ -62,6 +62,9 @@ struct _GimpConfigInterface
   gboolean     (* equal)                (GimpConfig       *a,
                                          GimpConfig       *b);
   void         (* reset)                (GimpConfig       *config);
+  gboolean     (* copy)                 (GimpConfig       *src,
+                                         GimpConfig       *dest,
+                                         GParamFlags       flags);
 };
 
 
@@ -95,6 +98,9 @@ gpointer      gimp_config_duplicate             (GimpConfig   *config);
 gboolean      gimp_config_is_equal_to           (GimpConfig   *a,
                                                  GimpConfig   *b);
 void          gimp_config_reset                 (GimpConfig   *config);
+gboolean      gimp_config_copy                  (GimpConfig   *src,
+                                                 GimpConfig   *dest,
+                                                 GParamFlags   flags);
 
 
 G_END_DECLS

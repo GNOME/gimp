@@ -28,6 +28,7 @@
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
+#include "core/gimpitem.h"
 
 #include "gimppdb-utils.h"
 #include "gimppdberror.h"
@@ -283,4 +284,25 @@ gimp_pdb_get_paint_info (Gimp         *gimp,
     }
 
   return paint_info;
+}
+
+gboolean
+gimp_pdb_item_is_attached (GimpItem  *item,
+                           GError   **error)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (! gimp_item_is_attached (item))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_CALLING_ERROR,
+                   _("Item '%s' (%d) cannot be used because it has not "
+                     "been added to an image"),
+                   gimp_object_get_name (GIMP_OBJECT (item)),
+                   gimp_item_get_ID (item));
+
+      return FALSE;
+    }
+
+  return TRUE;
 }

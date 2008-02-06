@@ -50,6 +50,7 @@ enum
 };
 
 
+static void  gimp_histogram_view_finalize          (GObject        *object);
 static void  gimp_histogram_view_set_property      (GObject        *object,
                                                     guint           property_id,
                                                     const GValue   *value,
@@ -108,6 +109,7 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
                   G_TYPE_INT,
                   G_TYPE_INT);
 
+  object_class->finalize             = gimp_histogram_view_finalize;
   object_class->get_property         = gimp_histogram_view_get_property;
   object_class->set_property         = gimp_histogram_view_set_property;
 
@@ -156,6 +158,26 @@ gimp_histogram_view_init (GimpHistogramView *view)
   view->bg_histogram = NULL;
   view->start        = 0;
   view->end          = 255;
+}
+
+static void
+gimp_histogram_view_finalize (GObject *object)
+{
+  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (object);
+
+  if (view->histogram)
+    {
+      gimp_histogram_unref (view->histogram);
+      view->histogram = NULL;
+    }
+
+  if (view->bg_histogram)
+    {
+      gimp_histogram_unref (view->bg_histogram);
+      view->bg_histogram = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -569,10 +591,18 @@ gimp_histogram_view_set_histogram (GimpHistogramView *view,
 
   if (view->histogram != histogram)
     {
+      if (view->histogram)
+        gimp_histogram_unref (view->histogram);
+
       view->histogram = histogram;
 
-      if (histogram && view->channel >= gimp_histogram_n_channels (histogram))
-        gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
+      if (histogram)
+        {
+          gimp_histogram_ref (histogram);
+
+          if (view->channel >= gimp_histogram_n_channels (histogram))
+            gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
+        }
     }
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
@@ -600,10 +630,18 @@ gimp_histogram_view_set_background (GimpHistogramView *view,
 
   if (view->bg_histogram != histogram)
     {
+      if (view->bg_histogram)
+        gimp_histogram_ref (view->bg_histogram);
+
       view->bg_histogram = histogram;
 
-      if (histogram && view->channel >= gimp_histogram_n_channels (histogram))
-        gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
+      if (histogram)
+        {
+          gimp_histogram_ref (histogram);
+
+          if (view->channel >= gimp_histogram_n_channels (histogram))
+            gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
+        }
     }
 
   gtk_widget_queue_draw (GTK_WIDGET (view));

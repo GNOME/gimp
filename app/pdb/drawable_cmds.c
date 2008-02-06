@@ -41,6 +41,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "gimp-intl.h"
+#include "gimppdb-utils.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
 
@@ -814,7 +815,7 @@ drawable_merge_shadow_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
         {
           const gchar *undo_desc = _("Plug-In");
 
@@ -1016,7 +1017,7 @@ drawable_offset_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
         gimp_drawable_offset (drawable, context, wrap_around, fill_type,
                               offset_x, offset_y);
       else
@@ -1205,7 +1206,7 @@ drawable_foreground_extract_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
         gimp_drawable_foreground_extract (drawable, mode, mask, progress);
       else
         success = FALSE;

@@ -69,6 +69,8 @@ struct _GimpImageMapToolClass
   const gchar        *save_button_tip;
   const gchar        *save_dialog_title;
 
+  GimpContainer      *recent_settings;
+
   /* virtual functions */
   GeglNode * (* get_operation) (GimpImageMapTool  *image_map_tool,
                                 GObject          **config);
@@ -84,9 +86,13 @@ struct _GimpImageMapToolClass
 };
 
 
-GType   gimp_image_map_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_image_map_tool_get_type   (void) G_GNUC_CONST;
 
-void    gimp_image_map_tool_preview  (GimpImageMapTool *image_map_tool);
+void    gimp_image_map_tool_preview    (GimpImageMapTool *image_map_tool);
+
+/* temp hack for the gegl tool */
+void    gimp_image_map_tool_create_map (GimpImageMapTool *image_map_tool);
+
 
 
 #endif  /*  __GIMP_IMAGE_MAP_TOOL_H__  */

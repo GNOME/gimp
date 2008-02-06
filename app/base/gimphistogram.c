@@ -42,6 +42,7 @@
 
 struct _GimpHistogram
 {
+  gint           ref_count;
   gint           n_channels;
 #ifdef ENABLE_MP
   GStaticMutex   mutex;
@@ -68,6 +69,8 @@ gimp_histogram_new (void)
 {
   GimpHistogram *histogram = g_slice_new0 (GimpHistogram);
 
+  histogram->ref_count = 1;
+
 #ifdef ENABLE_MP
   g_static_mutex_init (&histogram->mutex);
 #endif
@@ -75,13 +78,28 @@ gimp_histogram_new (void)
   return histogram;
 }
 
+GimpHistogram *
+gimp_histogram_ref (GimpHistogram *histogram)
+{
+  g_return_val_if_fail (histogram != NULL, NULL);
+
+  histogram->ref_count++;
+
+  return histogram;
+}
+
 void
-gimp_histogram_free (GimpHistogram *histogram)
+gimp_histogram_unref (GimpHistogram *histogram)
 {
   g_return_if_fail (histogram != NULL);
 
-  gimp_histogram_free_values (histogram);
-  g_slice_free (GimpHistogram, histogram);
+  histogram->ref_count--;
+
+  if (histogram->ref_count == 0)
+    {
+      gimp_histogram_free_values (histogram);
+      g_slice_free (GimpHistogram, histogram);
+    }
 }
 
 void

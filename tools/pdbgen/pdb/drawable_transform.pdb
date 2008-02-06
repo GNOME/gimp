@@ -25,10 +25,10 @@
 
 sub transform_invoke {
     my ($progress_text, $assemble_matrix, $check) = @_;
-    my $success_check = 'gimp_item_is_attached (GIMP_ITEM (drawable));';
+    my $success_check = 'gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);';
 
     if ($check) {
-        $success_check = "(gimp_item_is_attached (GIMP_ITEM (drawable)) && " . $check . ");";
+        $success_check = "(gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error) && " . $check . ");";
     }
 
     %invoke = (
@@ -71,10 +71,10 @@ CODE
 
 sub transform_default_invoke {
     my ($progress_text, $assemble_matrix, $check) = @_;
-    my $success_check = 'gimp_item_is_attached (GIMP_ITEM (drawable));';
+    my $success_check = 'gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);';
 
     if ($check) {
-        $success_check = "(gimp_item_is_attached (GIMP_ITEM (drawable)) && " . $check . ");";
+        $success_check = "(gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error) && " . $check . ");";
     }
 
     %invoke = (
@@ -166,7 +166,7 @@ HELP
 {
   gint x, y, width, height;
 
-  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
   if (success &&
       gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -463,7 +463,7 @@ HELP
 {
   gint x, y, width, height;
 
-  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+  success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error);
 
   if (success &&
       gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -1025,10 +1025,15 @@ CODE
 }
 
 
-@headers = qw("libgimpmath/gimpmath.h" "config/gimpcoreconfig.h"
-              "core/gimp.h" "core/gimp-transform-utils.h" "core/gimpimage.h"
-              "core/gimpdrawable.h" "core/gimpdrawable-transform.h"
+@headers = qw("libgimpmath/gimpmath.h"
+              "config/gimpcoreconfig.h"
+              "core/gimp.h"
+              "core/gimp-transform-utils.h"
+              "core/gimpimage.h"
+              "core/gimpdrawable.h"
+              "core/gimpdrawable-transform.h"
               "core/gimpprogress.h"
+              "gimppdb-utils.h"
               "gimp-intl.h");
 
 @procs = qw(drawable_transform_flip_simple

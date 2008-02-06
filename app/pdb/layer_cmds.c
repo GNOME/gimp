@@ -39,6 +39,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "gimp-intl.h"
+#include "gimppdb-utils.h"
 
 #include "internal_procs.h"
 
@@ -236,7 +237,7 @@ layer_scale_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (layer)))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
         gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
                                    gimp->config->interpolation_type, NULL,
                                    local_origin);
@@ -270,7 +271,7 @@ layer_resize_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (layer)))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
         gimp_item_resize (GIMP_ITEM (layer), context,
                           new_width, new_height, offx, offy);
       else
@@ -295,7 +296,7 @@ layer_resize_to_image_size_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (layer)))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
         gimp_layer_resize_to_image (layer, context);
       else
         success = FALSE;
@@ -496,7 +497,7 @@ layer_add_mask_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (layer)))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
         gimp_layer_add_mask (layer, mask, TRUE);
       else
         success = FALSE;
@@ -522,7 +523,7 @@ layer_remove_mask_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (layer)))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), error))
         gimp_layer_apply_mask (layer, mode, TRUE);
       else
         success = FALSE;

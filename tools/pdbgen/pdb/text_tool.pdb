@@ -73,7 +73,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (drawable && ! gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (drawable && ! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     success = FALSE;
 
   if (success)
@@ -193,7 +193,7 @@ sub text {
     %invoke = (
         code => <<'CODE'
 {
-  if (drawable && ! gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (drawable && ! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     success = FALSE;
 
   if (success)
@@ -266,7 +266,9 @@ CODE
 }
 
 
-@headers = qw("libgimpbase/gimpbase.h" "text/gimptext-compat.h");
+@headers = qw("libgimpbase/gimpbase.h"
+              "text/gimptext-compat.h"
+              "gimppdb-utils.h");
 
 @procs = qw(text_fontname text_get_extents_fontname
             text text_get_extents);

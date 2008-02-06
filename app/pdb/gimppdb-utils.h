@@ -49,5 +49,8 @@ GimpPaintInfo * gimp_pdb_get_paint_info      (Gimp         *gimp,
                                               const gchar  *name,
                                               GError      **error);
 
+gboolean        gimp_pdb_item_is_attached    (GimpItem     *item,
+                                              GError      **error);
+
 
 #endif /* __GIMP_PDB_UTILS_H__ */

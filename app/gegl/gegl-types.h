@@ -22,7 +22,7 @@
 #define __GEGL_TYPES_H__
 
 
-#include "base/base-types.h"
+#include "core/core-types.h"
 #include "gegl/gegl-types.h"
 
 

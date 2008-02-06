@@ -55,22 +55,27 @@ enum
 };
 
 
-static void   gimp_levels_config_iface_init   (GimpConfigInterface *iface);
+static void     gimp_levels_config_iface_init   (GimpConfigInterface *iface);
 
-static void   gimp_levels_config_get_property (GObject       *object,
-                                               guint          property_id,
-                                               GValue        *value,
-                                               GParamSpec    *pspec);
-static void   gimp_levels_config_set_property (GObject       *object,
-                                               guint          property_id,
-                                               const GValue  *value,
-                                               GParamSpec    *pspec);
+static void     gimp_levels_config_get_property (GObject       *object,
+                                                 guint          property_id,
+                                                 GValue        *value,
+                                                 GParamSpec    *pspec);
+static void     gimp_levels_config_set_property (GObject       *object,
+                                                 guint          property_id,
+                                                 const GValue  *value,
+                                                 GParamSpec    *pspec);
 
-static void   gimp_levels_config_reset        (GimpConfig    *config);
+static gboolean gimp_levels_config_equal        (GimpConfig    *a,
+                                                 GimpConfig    *b);
+static void     gimp_levels_config_reset        (GimpConfig    *config);
+static gboolean gimp_levels_config_copy         (GimpConfig    *src,
+                                                 GimpConfig    *dest,
+                                                 GParamFlags    flags);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpLevelsConfig, gimp_levels_config,
-                         G_TYPE_OBJECT,
+                         GIMP_TYPE_VIEWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_levels_config_iface_init))
 
@@ -80,65 +85,52 @@ G_DEFINE_TYPE_WITH_CODE (GimpLevelsConfig, gimp_levels_config,
 static void
 gimp_levels_config_class_init (GimpLevelsConfigClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->set_property = gimp_levels_config_set_property;
-  object_class->get_property = gimp_levels_config_get_property;
+  object_class->set_property       = gimp_levels_config_set_property;
+  object_class->get_property       = gimp_levels_config_get_property;
 
-  g_object_class_install_property (object_class, PROP_CHANNEL,
-                                   g_param_spec_enum ("channel",
-                                                      "Channel",
-                                                      "The affected channel",
-                                                      GIMP_TYPE_HISTOGRAM_CHANNEL,
-                                                      GIMP_HISTOGRAM_VALUE,
-                                                      G_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
+  viewable_class->default_stock_id = "gimp-tool-levels";
 
-  g_object_class_install_property (object_class, PROP_GAMMA,
-                                   g_param_spec_double ("gamma",
-                                                        "Gamma",
-                                                        "Gamma",
-                                                        0.1, 10.0, 1.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CHANNEL,
+                                 "channel",
+                                 "The affected channel",
+                                 GIMP_TYPE_HISTOGRAM_CHANNEL,
+                                 GIMP_HISTOGRAM_VALUE, 0);
 
-  g_object_class_install_property (object_class, PROP_LOW_INPUT,
-                                   g_param_spec_double ("low-input",
-                                                        "Low Input",
-                                                        "Low Input",
-                                                        0.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GAMMA,
+                                   "gamma",
+                                   "Gamma",
+                                   0.1, 10.0, 1.0, 0);
 
-  g_object_class_install_property (object_class, PROP_HIGH_INPUT,
-                                   g_param_spec_double ("high-input",
-                                                        "High Input",
-                                                        "High Input",
-                                                        0.0, 1.0, 1.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LOW_INPUT,
+                                   "low-input",
+                                   "Low Input",
+                                   0.0, 1.0, 0.0, 0);
 
-  g_object_class_install_property (object_class, PROP_LOW_OUTPUT,
-                                   g_param_spec_double ("low-output",
-                                                        "Low Output",
-                                                        "Low Output",
-                                                        0.0, 1.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HIGH_INPUT,
+                                   "high-input",
+                                   "High Input",
+                                   0.0, 1.0, 1.0, 0);
 
-  g_object_class_install_property (object_class, PROP_HIGH_OUTPUT,
-                                   g_param_spec_double ("high-output",
-                                                        "High Output",
-                                                        "High Output",
-                                                        0.0, 1.0, 1.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LOW_OUTPUT,
+                                   "low-output",
+                                   "Low Output",
+                                   0.0, 1.0, 0.0, 0);
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HIGH_OUTPUT,
+                                   "high-output",
+                                   "High Output",
+                                   0.0, 1.0, 1.0, 0);
 }
 
 static void
 gimp_levels_config_iface_init (GimpConfigInterface *iface)
 {
+  iface->equal = gimp_levels_config_equal;
   iface->reset = gimp_levels_config_reset;
+  iface->copy  = gimp_levels_config_copy;
 }
 
 static void
@@ -232,13 +224,36 @@ gimp_levels_config_set_property (GObject      *object,
     }
 }
 
+static gboolean
+gimp_levels_config_equal (GimpConfig *a,
+                          GimpConfig *b)
+{
+  GimpLevelsConfig     *a_config = GIMP_LEVELS_CONFIG (a);
+  GimpLevelsConfig     *b_config = GIMP_LEVELS_CONFIG (b);
+  GimpHistogramChannel  channel;
+
+  for (channel = GIMP_HISTOGRAM_VALUE;
+       channel <= GIMP_HISTOGRAM_ALPHA;
+       channel++)
+    {
+      if (a_config->gamma[channel]       != b_config->gamma[channel]      ||
+          a_config->low_input[channel]   != b_config->low_input[channel]  ||
+          a_config->high_input[channel]  != b_config->high_input[channel] ||
+          a_config->low_output[channel]  != b_config->low_output[channel] ||
+          a_config->high_output[channel] != b_config->high_output[channel])
+        return FALSE;
+    }
+
+  /* don't compare "channel" */
+
+  return TRUE;
+}
+
 static void
 gimp_levels_config_reset (GimpConfig *config)
 {
   GimpLevelsConfig     *l_config = GIMP_LEVELS_CONFIG (config);
   GimpHistogramChannel  channel;
-
-  g_object_freeze_notify (G_OBJECT (config));
 
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;
@@ -249,8 +264,39 @@ gimp_levels_config_reset (GimpConfig *config)
     }
 
   gimp_config_reset_property (G_OBJECT (config), "channel");
+}
 
-  g_object_thaw_notify (G_OBJECT (config));
+static gboolean
+gimp_levels_config_copy (GimpConfig  *src,
+                         GimpConfig  *dest,
+                         GParamFlags  flags)
+{
+  GimpLevelsConfig     *src_config  = GIMP_LEVELS_CONFIG (src);
+  GimpLevelsConfig     *dest_config = GIMP_LEVELS_CONFIG (dest);
+  GimpHistogramChannel  channel;
+
+  for (channel = GIMP_HISTOGRAM_VALUE;
+       channel <= GIMP_HISTOGRAM_ALPHA;
+       channel++)
+    {
+      dest_config->gamma[channel]       = src_config->gamma[channel];
+      dest_config->low_input[channel]   = src_config->low_input[channel];
+      dest_config->high_input[channel]  = src_config->high_input[channel];
+      dest_config->low_output[channel]  = src_config->low_output[channel];
+      dest_config->high_output[channel] = src_config->high_output[channel];
+    }
+
+  g_object_notify (G_OBJECT (dest), "gamma");
+  g_object_notify (G_OBJECT (dest), "low-input");
+  g_object_notify (G_OBJECT (dest), "high-input");
+  g_object_notify (G_OBJECT (dest), "low-output");
+  g_object_notify (G_OBJECT (dest), "high-output");
+
+  dest_config->channel = src_config->channel;
+
+  g_object_notify (G_OBJECT (dest), "channel");
+
+  return TRUE;
 }
 
 

@@ -60,6 +60,7 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   FOREIGN ("gimp-crop-tool-dialog",                TRUE,  FALSE),
   FOREIGN ("gimp-curves-tool-dialog",              TRUE,  TRUE),
   FOREIGN ("gimp-color-balance-tool-dialog",       TRUE,  FALSE),
+  FOREIGN ("gimp-gegl-tool-dialog",                TRUE,  FALSE),
   FOREIGN ("gimp-hue-saturation-tool-dialog",      TRUE,  FALSE),
   FOREIGN ("gimp-levels-tool-dialog",              TRUE,  TRUE),
   FOREIGN ("gimp-measure-tool-dialog",             TRUE,  FALSE),

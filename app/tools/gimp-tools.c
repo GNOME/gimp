@@ -56,6 +56,7 @@
 #include "gimpfreeselecttool.h"
 #include "gimpforegroundselecttool.h"
 #include "gimpfuzzyselecttool.h"
+#include "gimpgegltool.h"
 #include "gimphealtool.h"
 #include "gimphuesaturationtool.h"
 #include "gimpinktool.h"
@@ -115,6 +116,7 @@ gimp_tools_init (Gimp *gimp)
     /*  register tools in reverse order  */
 
     /*  color tools  */
+    gimp_gegl_tool_register,
     gimp_posterize_tool_register,
     gimp_curves_tool_register,
     gimp_levels_tool_register,

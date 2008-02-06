@@ -41,6 +41,11 @@
 #endif
 GeglNode * gegl_node_add_child (GeglNode *self,
                                 GeglNode *child);
+#ifdef __GNUC__
+#warning FIXME: gegl_node_get_pad() or something similar needs to be public
+#endif
+gpointer   gegl_node_get_pad (GeglNode    *self,
+                              const gchar *pad_name);
 
 enum
 {
@@ -460,11 +465,29 @@ gimp_image_map_apply (GimpImageMap        *image_map,
             g_object_unref (sink_operation);
           }
 
-          gegl_node_link_many (image_map->input,
-                               image_map->shift,
-                               image_map->operation,
-                               image_map->output,
-                               NULL);
+          if (gegl_node_get_pad (image_map->operation, "input"))
+            {
+              gegl_node_link_many (image_map->input,
+                                   image_map->shift,
+                                   image_map->operation,
+                                   image_map->output,
+                                   NULL);
+            }
+          else
+            {
+              GeglNode *over = gegl_node_new_child (image_map->gegl,
+                                                    "operation", "over",
+                                                    NULL);
+
+              gegl_node_link_many (image_map->input,
+                                   image_map->shift,
+                                   over,
+                                   image_map->output,
+                                   NULL);
+
+              gegl_node_connect_to (image_map->operation, "output",
+                                    over, "aux");
+            }
         }
 
       gegl_node_set (image_map->input,

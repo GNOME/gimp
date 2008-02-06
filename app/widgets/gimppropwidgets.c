@@ -35,6 +35,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpcontext.h"
 #include "core/gimpviewable.h"
 
 #include "gimpcolorpanel.h"
@@ -710,6 +711,131 @@ gimp_prop_number_pair_entry_number_pair_user_override_notify (GtkWidget         
     g_object_set (data->config,
                   data->user_override_property, new_config_user_override,
                   NULL);
+}
+
+
+/***********/
+/*  table  */
+/***********/
+
+GtkWidget *
+gimp_prop_table_new (GObject     *config,
+                     GType        owner_type,
+                     GimpContext *context)
+{
+  GtkWidget     *table;
+  GtkSizeGroup  *size_group;
+  GParamSpec   **param_specs;
+  guint          n_param_specs;
+  gint           i;
+  gint           row = 0;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
+
+  param_specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
+                                                &n_param_specs);
+
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
+  table = gtk_table_new (3, 1, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+
+  for (i = 0; i < n_param_specs; i++)
+    {
+      GParamSpec  *pspec  = param_specs[i];
+      GtkWidget   *widget = NULL;
+      const gchar *label  = NULL;
+
+      /*  ignore properties of parent classes of owner_type  */
+      if (! g_type_is_a (pspec->owner_type, owner_type))
+        continue;
+
+      if (G_IS_PARAM_SPEC_STRING (pspec))
+        {
+          static GQuark multiline_quark = 0;
+
+          if (! multiline_quark)
+            multiline_quark = g_quark_from_static_string ("multiline");
+
+          if (GIMP_IS_PARAM_SPEC_CONFIG_PATH (pspec))
+            {
+              widget = gimp_prop_file_chooser_button_new (config,
+                                                          pspec->name,
+                                                          g_param_spec_get_nick (pspec),
+                                                          GTK_FILE_CHOOSER_ACTION_OPEN);
+            }
+          else if (g_param_spec_get_qdata (pspec, multiline_quark))
+            {
+              GtkTextBuffer *buffer;
+              GtkWidget     *view;
+
+              buffer = gimp_prop_text_buffer_new (config, pspec->name, -1);
+              view = gtk_text_view_new_with_buffer (buffer);
+
+              widget = gtk_scrolled_window_new (NULL, NULL);
+              gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (widget),
+                                                   GTK_SHADOW_IN);
+              gtk_container_add (GTK_CONTAINER (widget), view);
+              gtk_widget_show (view);
+            }
+          else
+            {
+              widget = gimp_prop_entry_new (config, pspec->name, -1);
+            }
+
+          label  = g_param_spec_get_nick (pspec);
+        }
+      else if (G_IS_PARAM_SPEC_BOOLEAN (pspec))
+        {
+          widget = gimp_prop_check_button_new (config, pspec->name,
+                                               g_param_spec_get_nick (pspec));
+        }
+      else if (G_IS_PARAM_SPEC_INT (pspec)   ||
+               G_IS_PARAM_SPEC_UINT (pspec)  ||
+               G_IS_PARAM_SPEC_FLOAT (pspec) ||
+               G_IS_PARAM_SPEC_DOUBLE (pspec))
+        {
+          GtkObject *adj;
+          gint       digits = (G_IS_PARAM_SPEC_FLOAT (pspec) ||
+                               G_IS_PARAM_SPEC_DOUBLE (pspec)) ? 2 : 0;
+
+          adj = gimp_prop_scale_entry_new (config, pspec->name,
+                                           GTK_TABLE (table), 0, row++,
+                                           g_param_spec_get_nick (pspec),
+                                           1.0, 1.0, digits,
+                                           FALSE, 0.0, 0.0);
+
+          gtk_size_group_add_widget (size_group,
+                                     GIMP_SCALE_ENTRY_SPINBUTTON (adj));
+        }
+      else if (GIMP_IS_PARAM_SPEC_RGB (pspec))
+        {
+          widget = gimp_prop_color_button_new (config, pspec->name,
+                                               g_param_spec_get_nick (pspec),
+                                               128, 24,
+                                               GIMP_COLOR_AREA_SMALL_CHECKS);
+          gimp_color_panel_set_context (GIMP_COLOR_PANEL (widget), context);
+          label = g_param_spec_get_nick (pspec);
+        }
+      else
+        {
+          g_warning ("%s: not supported: %s (%s)\n", G_STRFUNC,
+                     g_type_name (G_TYPE_FROM_INSTANCE (pspec)), pspec->name);
+        }
+
+      if (widget)
+        gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                                   label, 0.0, 0.5,
+                                   widget, 2, FALSE);
+    }
+
+  g_object_unref (size_group);
+
+  g_free (param_specs);
+
+  return table;
 }
 
 

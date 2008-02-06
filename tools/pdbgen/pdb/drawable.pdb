@@ -70,7 +70,7 @@ HELP
 	headers => [ qw("plug-in/gimpplugin.h" "plug-in/gimppluginmanager.h") ],
 	code    => <<'CODE'
 {
-  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     {
       const gchar *undo_desc = _("Plug-In");
 
@@ -1186,7 +1186,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     gimp_drawable_offset (drawable, context, wrap_around, fill_type,
                           offset_x, offset_y);
   else
@@ -1254,7 +1254,7 @@ HELP
 	headers => [ qw("core/gimpdrawable-foreground-extract.h") ],
         code    => <<'CODE'
 {
-  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
     gimp_drawable_foreground_extract (drawable, mode, mask, progress);
   else
     success = FALSE;
@@ -1272,6 +1272,7 @@ CODE
               "core/gimpdrawable-offset.h"
               "core/gimplayer.h"
               "core/gimplayermask.h"
+              "gimppdb-utils.h"
               "gimp-intl.h");
 
 @procs = qw(drawable_is_valid

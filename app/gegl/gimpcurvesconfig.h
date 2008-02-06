@@ -23,9 +23,7 @@
 #define __GIMP_CURVES_CONFIG_H__
 
 
-#include <gdk-pixbuf/gdk-pixbuf.h> /* eek */
-#include "core/core-types.h" /* eek */
-#include "core/gimpcurve.h" /* eek */
+#include "core/gimpviewable.h"
 
 
 #define GIMP_TYPE_CURVES_CONFIG            (gimp_curves_config_get_type ())
@@ -40,7 +38,7 @@ typedef struct _GimpCurvesConfigClass GimpCurvesConfigClass;
 
 struct _GimpCurvesConfig
 {
-  GObject               parent_instance;
+  GimpViewable          parent_instance;
 
   GimpHistogramChannel  channel;
 
@@ -49,7 +47,7 @@ struct _GimpCurvesConfig
 
 struct _GimpCurvesConfigClass
 {
-  GObjectClass  parent_class;
+  GimpViewableClass  parent_class;
 };
 
 

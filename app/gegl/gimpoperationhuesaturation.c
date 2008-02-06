@@ -127,14 +127,16 @@ gimp_operation_hue_saturation_process (GeglOperation *operation,
                                        void          *out_buf,
                                        glong          samples)
 {
-  GimpOperationPointFilter *point   = GIMP_OPERATION_POINT_FILTER (operation);
-  GimpHueSaturationConfig  *config  = GIMP_HUE_SATURATION_CONFIG (point->config);
-  gfloat                   *src     = in_buf;
-  gfloat                   *dest    = out_buf;
-  gfloat                    overlap = config->overlap / 2.0;
+  GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
+  GimpHueSaturationConfig  *config = GIMP_HUE_SATURATION_CONFIG (point->config);
+  gfloat                   *src    = in_buf;
+  gfloat                   *dest   = out_buf;
+  gfloat                    overlap;
 
   if (! config)
     return FALSE;
+
+  overlap = config->overlap / 2.0;
 
   while (samples--)
     {

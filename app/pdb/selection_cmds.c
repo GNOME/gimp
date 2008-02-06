@@ -36,6 +36,7 @@
 #include "core/gimppickable.h"
 #include "core/gimpselection.h"
 #include "gimp-intl.h"
+#include "gimppdb-utils.h"
 
 #include "internal_procs.h"
 
@@ -186,7 +187,7 @@ selection_float_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (drawable)))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 

@@ -23,6 +23,9 @@
 #define __GIMP_POSTERIZE_CONFIG_H__
 
 
+#include "core/gimpviewable.h"
+
+
 #define GIMP_TYPE_POSTERIZE_CONFIG            (gimp_posterize_config_get_type ())
 #define GIMP_POSTERIZE_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_POSTERIZE_CONFIG, GimpPosterizeConfig))
 #define GIMP_POSTERIZE_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_POSTERIZE_CONFIG, GimpPosterizeConfigClass))
@@ -35,14 +38,14 @@ typedef struct _GimpPosterizeConfigClass GimpPosterizeConfigClass;
 
 struct _GimpPosterizeConfig
 {
-  GObject  parent_instance;
+  GimpViewable  parent_instance;
 
-  gint     levels;
+  gint          levels;
 };
 
 struct _GimpPosterizeConfigClass
 {
-  GObjectClass  parent_class;
+  GimpViewableClass  parent_class;
 };
 
 

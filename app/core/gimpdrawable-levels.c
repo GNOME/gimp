@@ -166,7 +166,7 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable,
   gimp_levels_config_stretch (config, histogram,
                               gimp_drawable_is_rgb (drawable));
 
-  gimp_histogram_free (histogram);
+  gimp_histogram_unref (histogram);
 
   if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
     {
