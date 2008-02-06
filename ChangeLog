@@ -1,5 +1,11 @@
 2008-02-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimagemap.c (gimp_image_map_apply): when using a
+	source operation, blend its output over the original image using
+	"over" instead of simply replacing the original image.
+
+2008-02-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpgegltool.c (gimp_param_spec_duplicate)
 	* app/widgets/gimppropwidgets.c (gimp_prop_table_new): support
 	multiline text and file paths. The multiline support is hacked up

@@ -434,20 +434,15 @@ gimp_image_map_apply (GimpImageMap        *image_map,
         {
           image_map->gegl = gegl_node_new ();
 
-          if (gegl_node_get_pad (image_map->operation, "input"))
-            {
-              g_printerr ("%s: found input property\n", G_STRFUNC);
+          image_map->input =
+            gegl_node_new_child (image_map->gegl,
+                                 "operation", "gimp-tilemanager-source",
+                                 NULL);
 
-              image_map->input =
-                gegl_node_new_child (image_map->gegl,
-                                     "operation", "gimp-tilemanager-source",
-                                     NULL);
-
-              image_map->shift =
-                gegl_node_new_child (image_map->gegl,
-                                     "operation", "shift",
-                                     NULL);
-            }
+          image_map->shift =
+            gegl_node_new_child (image_map->gegl,
+                                 "operation", "shift",
+                                 NULL);
 
           gegl_node_add_child (image_map->gegl, image_map->operation);
 
@@ -470,7 +465,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
             g_object_unref (sink_operation);
           }
 
-          if (image_map->input)
+          if (gegl_node_get_pad (image_map->operation, "input"))
             {
               gegl_node_link_many (image_map->input,
                                    image_map->shift,
@@ -480,24 +475,30 @@ gimp_image_map_apply (GimpImageMap        *image_map,
             }
           else
             {
-              gegl_node_link_many (image_map->operation,
+              GeglNode *over = gegl_node_new_child (image_map->gegl,
+                                                    "operation", "over",
+                                                    NULL);
+
+              gegl_node_link_many (image_map->input,
+                                   image_map->shift,
+                                   over,
                                    image_map->output,
                                    NULL);
+
+              gegl_node_connect_to (image_map->operation, "output",
+                                    over, "aux");
             }
         }
 
-      if (image_map->input)
-        {
-          gegl_node_set (image_map->input,
-                         "tile-manager", image_map->undo_tiles,
-                         "linear",       TRUE,
-                         NULL);
+      gegl_node_set (image_map->input,
+                     "tile-manager", image_map->undo_tiles,
+                     "linear",       TRUE,
+                     NULL);
 
-          gegl_node_set (image_map->shift,
-                         "x", (gdouble) rect.x,
-                         "y", (gdouble) rect.y,
-                         NULL);
-        }
+      gegl_node_set (image_map->shift,
+                     "x", (gdouble) rect.x,
+                     "y", (gdouble) rect.y,
+                     NULL);
 
       gegl_node_set (image_map->output,
                      "tile-manager", gimp_drawable_get_shadow_tiles (image_map->drawable),
