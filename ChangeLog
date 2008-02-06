@@ -1,5 +1,11 @@
 2008-02-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimpoperationhuesaturation.c
+	(gimp_operation_hue_saturation_process): don't crash if there is
+	no config object.
+
+2008-02-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimagemap.c (gimp_image_map_apply): when using a
 	source operation, blend its output over the original image using
 	"over" instead of simply replacing the original image.
