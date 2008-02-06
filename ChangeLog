@@ -1,5 +1,13 @@
 2008-02-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpclone.c
+	* app/paint/gimpheal.c
+	* app/paint/gimpink.c
+	* app/widgets/gimphistogrameditor.c: remove includes that are
+	not needed any longer.
+
+2008-02-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimpoperationposterize.c
 	* app/gegl/gimpoperationhuesaturation.c (process): don't crash if
 	there is no config object.

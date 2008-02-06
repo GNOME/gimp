@@ -25,7 +25,6 @@
 #include "widgets-types.h"
 
 #include "base/gimphistogram.h"
-#include "base/pixel-region.h"
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"

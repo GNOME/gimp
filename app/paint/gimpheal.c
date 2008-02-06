@@ -31,7 +31,6 @@
 
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
-#include "base/tile-manager.h"
 
 #include "core/gimppickable.h"
 #include "core/gimpimage.h"
