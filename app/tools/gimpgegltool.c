@@ -350,6 +350,17 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                    spec->default_value,
                                    pspec->flags);
     }
+  else if (G_IS_PARAM_SPEC_ENUM (pspec))
+    {
+      GParamSpecEnum *spec = G_PARAM_SPEC_ENUM (pspec);
+
+      return g_param_spec_enum (pspec->name,
+                                g_param_spec_get_nick (pspec),
+                                g_param_spec_get_blurb (pspec),
+                                G_TYPE_FROM_CLASS (spec->enum_class),
+                                spec->default_value,
+                                pspec->flags);
+    }
   else if (G_IS_PARAM_SPEC_DOUBLE (pspec))
     {
       GParamSpecDouble *spec = G_PARAM_SPEC_DOUBLE (pspec);
