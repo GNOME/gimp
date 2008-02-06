@@ -1,3 +1,10 @@
+2008-02-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpgegltool.c (gimp_param_spec_duplicate)
+	* app/widgets/gimppropwidgets.c (gimp_prop_table_new): support
+	multiline text and file paths. The multiline support is hacked up
+	and needs some proper solution.
+
 2008-02-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpgegltool.c: don't include <gegl-plugin.h> any longer.

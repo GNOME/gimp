@@ -21,6 +21,7 @@
 #include <string.h>
 
 #include <gegl.h>
+#include <gegl-paramspecs.h>
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -307,11 +308,37 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
     {
       GParamSpecString *spec = G_PARAM_SPEC_STRING (pspec);
 
-      return g_param_spec_string (pspec->name,
-                                  g_param_spec_get_nick (pspec),
-                                  g_param_spec_get_blurb (pspec),
-                                  spec->default_value,
-                                  pspec->flags);
+      if (GEGL_IS_PARAM_SPEC_PATH (pspec))
+        {
+          return gimp_param_spec_config_path (pspec->name,
+                                              g_param_spec_get_nick (pspec),
+                                              g_param_spec_get_blurb (pspec),
+                                              GIMP_CONFIG_PATH_FILE,
+                                              spec->default_value,
+                                              pspec->flags);
+        }
+      else
+        {
+          static GQuark  multiline_quark = 0;
+          GParamSpec    *new;
+
+          if (! multiline_quark)
+            multiline_quark = g_quark_from_static_string ("multiline");
+
+          new = g_param_spec_string (pspec->name,
+                                     g_param_spec_get_nick (pspec),
+                                     g_param_spec_get_blurb (pspec),
+                                     spec->default_value,
+                                     pspec->flags);
+
+          if (GEGL_IS_PARAM_SPEC_MULTILINE (pspec))
+            {
+              g_param_spec_set_qdata (new, multiline_quark,
+                                      GINT_TO_POINTER (TRUE));
+            }
+
+          return new;
+        }
     }
   else if (G_IS_PARAM_SPEC_BOOLEAN (pspec))
     {

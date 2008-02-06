@@ -754,7 +754,37 @@ gimp_prop_table_new (GObject     *config,
 
       if (G_IS_PARAM_SPEC_STRING (pspec))
         {
-          widget = gimp_prop_entry_new (config, pspec->name, -1);
+          static GQuark multiline_quark = 0;
+
+          if (! multiline_quark)
+            multiline_quark = g_quark_from_static_string ("multiline");
+
+          if (GIMP_IS_PARAM_SPEC_CONFIG_PATH (pspec))
+            {
+              widget = gimp_prop_file_chooser_button_new (config,
+                                                          pspec->name,
+                                                          g_param_spec_get_nick (pspec),
+                                                          GTK_FILE_CHOOSER_ACTION_OPEN);
+            }
+          else if (g_param_spec_get_qdata (pspec, multiline_quark))
+            {
+              GtkTextBuffer *buffer;
+              GtkWidget     *view;
+
+              buffer = gimp_prop_text_buffer_new (config, pspec->name, -1);
+              view = gtk_text_view_new_with_buffer (buffer);
+
+              widget = gtk_scrolled_window_new (NULL, NULL);
+              gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (widget),
+                                                   GTK_SHADOW_IN);
+              gtk_container_add (GTK_CONTAINER (widget), view);
+              gtk_widget_show (view);
+            }
+          else
+            {
+              widget = gimp_prop_entry_new (config, pspec->name, -1);
+            }
+
           label  = g_param_spec_get_nick (pspec);
         }
       else if (G_IS_PARAM_SPEC_BOOLEAN (pspec))
