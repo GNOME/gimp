@@ -155,6 +155,10 @@ AM_MAINTAINER_MODE
 ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
 
 
+# Check for pkg-config
+PKG_PROG_PKG_CONFIG(0.16)
+
+
 ###########################
 # Check target architecture
 ###########################
@@ -399,6 +403,21 @@ ALL_LINGUAS="ar bg ca cs da de dz el en_CA en_GB eo es et eu fa fi fr ga gl gu h
 
 AC_PROG_INTLTOOL
 AM_GLIB_GNU_GETTEXT
+
+
+AC_MSG_CHECKING([for iso-codes])
+PKG_CHECK_EXISTS(iso-codes,
+  have_iso_codes="yes"
+  AC_DEFINE(HAVE_ISO_CODES, 1,
+  	    [Define to 1 if the iso-codes package is available])
+  ISO_CODES_PREFIX=`$PKG_CONFIG --variable=prefix iso-codes`   
+  ISO_CODES_LOCATION="$ISO_CODES_PREFIX/share/xml/iso-codes"
+  ISO_CODES_LOCALEDIR="$ISO_CODES_PREFIX/$DATADIRNAME/locale",
+  have_iso_codes="no (iso-codes package not found)")
+AC_MSG_RESULT($have_iso_codes)
+
+AC_SUBST(ISO_CODES_LOCATION)
+AC_SUBST(ISO_CODES_LOCALEDIR)
 
 
 ###############################
@@ -2067,6 +2086,7 @@ Extra Binaries:
 
 Optional Features:
   D-Bus service:       $have_dbus_glib
+  Language selection:  $have_iso_codes
 
 Optional Plug-Ins:
   Ascii Art:           $have_libaa

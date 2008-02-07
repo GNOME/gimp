@@ -1,3 +1,13 @@
+2008-02-07  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: added configure checks for the iso-codes package.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimplanguagestore.[ch]:
+	* app/widgets/gimplanguagestore-parser.[ch]: added rough outline
+	of GtkListStore for language selection.
+
 2008-02-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/base-utils.[ch]: add get_pid() which returns getpid().
