@@ -1,3 +1,7 @@
+2008-02-07  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptext-parasite.c: formatting.
+
 2008-02-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpgegltool.c (gimp_param_spec_duplicate)

@@ -106,14 +106,14 @@ gimp_text_gdyntext_parasite_name (void)
 
 enum
 {
-  TEXT                  = 0,
+  TEXT            = 0,
   ANTIALIAS       = 1,
-  ALIGNMENT          = 2,
-  ROTATION          = 3,
-  LINE_SPACING          = 4,
-  COLOR                  = 5,
+  ALIGNMENT       = 2,
+  ROTATION        = 3,
+  LINE_SPACING    = 4,
+  COLOR           = 5,
   LAYER_ALIGNMENT = 6,
-  XLFD                  = 7,
+  XLFD            = 7,
   NUM_PARAMS
 };
 
