@@ -462,172 +462,6 @@ gimp_brush_get_shape (const gchar *name)
 }
 
 /**
- * gimp_brush_get_radius:
- * @name: The brush name.
- *
- * Get the radius of a generated brush.
- *
- * This procedure gets the radius value for a generated brush. If
- * called for any other type of brush, it does not succeed.
- *
- * Returns: The radius of the brush in pixels.
- *
- * Since: GIMP 2.4
- */
-gdouble
-gimp_brush_get_radius (const gchar *name)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gdouble radius = 0.0;
-
-  return_vals = gimp_run_procedure ("gimp-brush-get-radius",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    radius = return_vals[1].data.d_float;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return radius;
-}
-
-/**
- * gimp_brush_get_spikes:
- * @name: The brush name.
- *
- * Get the number of spikes for a generated brush.
- *
- * This procedure gets the number of spikes for a generated brush. If
- * called for any other type of brush, it does not succeed.
- *
- * Returns: The number of spikes on the brush.
- *
- * Since: GIMP 2.4
- */
-gint
-gimp_brush_get_spikes (const gchar *name)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint spikes = 0;
-
-  return_vals = gimp_run_procedure ("gimp-brush-get-spikes",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    spikes = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return spikes;
-}
-
-/**
- * gimp_brush_get_hardness:
- * @name: The brush name.
- *
- * Get the hardness of a generated brush.
- *
- * This procedure gets the hardness of a generated brush. The hardness
- * of a brush is the amount its intensity fades at the outside edge. If
- * called for any other type of brush, the function does not succeed.
- *
- * Returns: The hardness of the brush.
- *
- * Since: GIMP 2.4
- */
-gdouble
-gimp_brush_get_hardness (const gchar *name)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gdouble hardness = 0.0;
-
-  return_vals = gimp_run_procedure ("gimp-brush-get-hardness",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    hardness = return_vals[1].data.d_float;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return hardness;
-}
-
-/**
- * gimp_brush_get_aspect_ratio:
- * @name: The brush name.
- *
- * Get the aspect ratio of a generated brush.
- *
- * This procedure gets the aspect ratio of a generated brush. If called
- * for any other type of brush, it does not succeed.
- *
- * Returns: The aspect ratio of the brush.
- *
- * Since: GIMP 2.4
- */
-gdouble
-gimp_brush_get_aspect_ratio (const gchar *name)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gdouble aspect_ratio = 0.0;
-
-  return_vals = gimp_run_procedure ("gimp-brush-get-aspect-ratio",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    aspect_ratio = return_vals[1].data.d_float;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return aspect_ratio;
-}
-
-/**
- * gimp_brush_get_angle:
- * @name: The brush name.
- *
- * Get the rotation angle of a generated brush.
- *
- * This procedure gets the angle of rotation for a generated brush. If
- * called for any other type of brush, it does not succeed.
- *
- * Returns: The rotation angle of the brush.
- *
- * Since: GIMP 2.4
- */
-gdouble
-gimp_brush_get_angle (const gchar *name)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gdouble angle = 0.0;
-
-  return_vals = gimp_run_procedure ("gimp-brush-get-angle",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    angle = return_vals[1].data.d_float;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return angle;
-}
-
-/**
  * gimp_brush_set_shape:
  * @name: The brush name.
  * @shape_in: The brush shape.
@@ -668,6 +502,39 @@ gimp_brush_set_shape (const gchar             *name,
 }
 
 /**
+ * gimp_brush_get_radius:
+ * @name: The brush name.
+ *
+ * Get the radius of a generated brush.
+ *
+ * This procedure gets the radius value for a generated brush. If
+ * called for any other type of brush, it does not succeed.
+ *
+ * Returns: The radius of the brush in pixels.
+ *
+ * Since: GIMP 2.4
+ */
+gdouble
+gimp_brush_get_radius (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble radius = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-brush-get-radius",
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    radius = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return radius;
+}
+
+/**
  * gimp_brush_set_radius:
  * @name: The brush name.
  * @radius_in: The desired brush radius.
@@ -701,6 +568,39 @@ gimp_brush_set_radius (const gchar *name,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return radius_out;
+}
+
+/**
+ * gimp_brush_get_spikes:
+ * @name: The brush name.
+ *
+ * Get the number of spikes for a generated brush.
+ *
+ * This procedure gets the number of spikes for a generated brush. If
+ * called for any other type of brush, it does not succeed.
+ *
+ * Returns: The number of spikes on the brush.
+ *
+ * Since: GIMP 2.4
+ */
+gint
+gimp_brush_get_spikes (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint spikes = 0;
+
+  return_vals = gimp_run_procedure ("gimp-brush-get-spikes",
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    spikes = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return spikes;
 }
 
 /**
@@ -740,6 +640,40 @@ gimp_brush_set_spikes (const gchar *name,
 }
 
 /**
+ * gimp_brush_get_hardness:
+ * @name: The brush name.
+ *
+ * Get the hardness of a generated brush.
+ *
+ * This procedure gets the hardness of a generated brush. The hardness
+ * of a brush is the amount its intensity fades at the outside edge. If
+ * called for any other type of brush, the function does not succeed.
+ *
+ * Returns: The hardness of the brush.
+ *
+ * Since: GIMP 2.4
+ */
+gdouble
+gimp_brush_get_hardness (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble hardness = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-brush-get-hardness",
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    hardness = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return hardness;
+}
+
+/**
  * gimp_brush_set_hardness:
  * @name: The brush name.
  * @hardness_in: The desired brush hardness.
@@ -776,6 +710,39 @@ gimp_brush_set_hardness (const gchar *name,
 }
 
 /**
+ * gimp_brush_get_aspect_ratio:
+ * @name: The brush name.
+ *
+ * Get the aspect ratio of a generated brush.
+ *
+ * This procedure gets the aspect ratio of a generated brush. If called
+ * for any other type of brush, it does not succeed.
+ *
+ * Returns: The aspect ratio of the brush.
+ *
+ * Since: GIMP 2.4
+ */
+gdouble
+gimp_brush_get_aspect_ratio (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble aspect_ratio = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-brush-get-aspect-ratio",
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    aspect_ratio = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return aspect_ratio;
+}
+
+/**
  * gimp_brush_set_aspect_ratio:
  * @name: The brush name.
  * @aspect_ratio_in: The desired brush aspect ratio.
@@ -809,6 +776,39 @@ gimp_brush_set_aspect_ratio (const gchar *name,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return aspect_ratio_out;
+}
+
+/**
+ * gimp_brush_get_angle:
+ * @name: The brush name.
+ *
+ * Get the rotation angle of a generated brush.
+ *
+ * This procedure gets the angle of rotation for a generated brush. If
+ * called for any other type of brush, it does not succeed.
+ *
+ * Returns: The rotation angle of the brush.
+ *
+ * Since: GIMP 2.4
+ */
+gdouble
+gimp_brush_get_angle (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble angle = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-brush-get-angle",
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    angle = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return angle;
 }
 
 /**
