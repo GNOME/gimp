@@ -18,23 +18,15 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
-#include <sys/types.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #include <gtk/gtk.h>
-
-#ifdef G_OS_WIN32
-#include <process.h> /* getpid() : defined from _getpid by GLib */
-#endif
 
 #include "libgimpcolor/gimpcolor.h"
 
 #include "widgets-types.h"
+
+#include "base/base-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
@@ -365,7 +357,7 @@ gimp_selection_data_set_image (GtkSelectionData *selection,
   g_return_if_fail (selection != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  str = g_strdup_printf ("%d:%d", getpid (), gimp_image_get_ID (image));
+  str = g_strdup_printf ("%d:%d", get_pid (), gimp_image_get_ID (image));
 
   gtk_selection_data_set (selection, selection->target,
                           8, (guchar *) str, strlen (str) + 1);
@@ -390,7 +382,7 @@ gimp_selection_data_get_image (GtkSelectionData *selection,
     return NULL;
 
   if (sscanf (str, "%i:%i", &pid, &ID) == 2 &&
-      pid == getpid ())
+      pid == get_pid ())
     {
       image = gimp_image_get_by_ID (gimp, ID);
     }
@@ -410,7 +402,7 @@ gimp_selection_data_set_component (GtkSelectionData *selection,
   g_return_if_fail (selection != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  str = g_strdup_printf ("%d:%d:%d", getpid (), gimp_image_get_ID (image),
+  str = g_strdup_printf ("%d:%d:%d", get_pid (), gimp_image_get_ID (image),
                          (gint) channel);
 
   gtk_selection_data_set (selection, selection->target,
@@ -441,7 +433,7 @@ gimp_selection_data_get_component (GtkSelectionData *selection,
     return NULL;
 
   if (sscanf (str, "%i:%i:%i", &pid, &ID, &ch) == 3 &&
-      pid == getpid ())
+      pid == get_pid ())
     {
       image = gimp_image_get_by_ID (gimp, ID);
 
@@ -463,7 +455,7 @@ gimp_selection_data_set_item (GtkSelectionData *selection,
   g_return_if_fail (selection != NULL);
   g_return_if_fail (GIMP_IS_ITEM (item));
 
-  str = g_strdup_printf ("%d:%d", getpid (), gimp_item_get_ID (item));
+  str = g_strdup_printf ("%d:%d", get_pid (), gimp_item_get_ID (item));
 
   gtk_selection_data_set (selection, selection->target,
                           8, (guchar *) str, strlen (str) + 1);
@@ -488,7 +480,7 @@ gimp_selection_data_get_item (GtkSelectionData *selection,
     return NULL;
 
   if (sscanf (str, "%i:%i", &pid, &ID) == 2 &&
-      pid == getpid ())
+      pid == get_pid ())
     {
       item = gimp_item_get_by_ID (gimp, ID);
     }
@@ -513,7 +505,7 @@ gimp_selection_data_set_object (GtkSelectionData *selection,
     {
       gchar *str;
 
-      str = g_strdup_printf ("%d:%p:%s", getpid (), object, name);
+      str = g_strdup_printf ("%d:%p:%s", get_pid (), object, name);
       gtk_selection_data_set (selection, selection->target,
                               8, (guchar *) str, strlen (str) + 1);
       g_free (str);
@@ -680,7 +672,7 @@ gimp_selection_data_get_object (GtkSelectionData *selection,
     return NULL;
 
   if (sscanf (str, "%i:%p:%n", &pid, &object_addr, &name_offset) >= 2 &&
-      pid == getpid () && name_offset > 0)
+      pid == get_pid () && name_offset > 0)
     {
       gchar *name = str + name_offset;
 

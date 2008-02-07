@@ -35,8 +35,6 @@
 #ifdef G_OS_WIN32
 #include <windows.h>
 #include "libgimpbase/gimpwin32-io.h"
-#include <process.h>
-#define getpid _getpid
 #endif
 
 #include "base-types.h"
@@ -48,6 +46,7 @@
 #define _O_TEMPORARY 0
 #endif
 
+#include "base-utils.h"
 #include "tile.h"
 #include "tile-rowhints.h"
 #include "tile-swap.h"
@@ -169,7 +168,7 @@ tile_swap_init (const gchar *path)
   g_return_if_fail (path != NULL);
 
   dirname  = gimp_config_path_expand (path, TRUE, NULL);
-  basename = g_strdup_printf ("gimpswap.%lu", (unsigned long) getpid ());
+  basename = g_strdup_printf ("gimpswap.%lu", (unsigned long) get_pid ());
 
   /*  create the swap directory if it doesn't exist */
   if (! g_file_test (dirname, G_FILE_TEST_EXISTS))

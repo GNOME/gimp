@@ -20,6 +20,7 @@
 #define __BASE_H__
 
 
+GPid     get_pid                  (void);
 gint     get_number_of_processors (void);
 guint64  get_physical_memory_size (void);
 

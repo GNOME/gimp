@@ -1,5 +1,23 @@
 2008-02-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/base/base-utils.[ch]: add get_pid() which returns getpid().
+
+	* app/base/base.c
+	* app/base/tile-swap.c
+	* app/core/gimp-utils.c
+	* app/plug-in/gimppluginshm.c
+	* app/widgets/gimpselectiondata.c
+	* tools/pdbgen/pdb/misc.pdb: use it instead of getpid() and remove
+	all the #ifdef'ed includes getpid() needs.
+
+	* tools/pdbgen/app.pl: remove support for these includes. Also
+	remove some perl cruft in the include handling which is not needed
+	any longer.
+
+	* app/pdb/misc_cmds.c: regenerated.
+
+2008-02-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/app.c: #include <gegl.h> instead of <glib-object.h>
 
 2008-02-07  Sven Neumann  <sven@gimp.org>

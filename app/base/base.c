@@ -21,18 +21,12 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <string.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <sys/types.h>
 
 #include <glib-object.h>
 #include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
-#include <process.h>        /*  for _getpid()  */
 #include "libgimpbase/gimpwin32-io.h"
 #endif
 

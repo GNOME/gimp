@@ -56,10 +56,10 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw(<sys/types.h> <unistd.h> <process.h>) ],
+	headers => [ qw("base/base-utils.h") ],
 	code    => <<'CODE'
 {
-  pid = getpid ();
+  pid = get_pid ();
 }
 CODE
     );

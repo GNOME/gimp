@@ -681,23 +681,9 @@ GPL
 	    }
 	    $x cmp $y;
 	} keys %{$out->{headers}};
-        my $headers = ""; my $lib = 0; my $seen = 0; my $nl = 0;
-	my $sys = 0; my $base = 0;
+        my $headers = "";
+        my $lib = 0; my $seen = 0; my $sys = 0; my $base = 0;
 	foreach (@headers) {
-	    $headers .= "\n" if $nl;
-	    $nl = 0;
-
-	    if ($_ eq '<unistd.h>') {
-		$headers .= "\n" if $seen;
-		$headers .= "#ifdef HAVE_UNISTD_H\n";
-	    }
-	    if ($_ eq '<process.h>') {
-		$headers .= "\n" if $seen;
-		$headers .= "#include <glib.h>\n\n";	
-		$headers .= "#ifdef G_OS_WIN32\n";
-	    }
-
-
 	    $seen++ if /^</;
 
 	    if ($sys == 0 && !/^</) {
@@ -731,20 +717,6 @@ GPL
 	    }
 
 	    $headers .= "#include $_\n";
-
-	    if ($_ eq '<unistd.h>') {
-		$headers .= "#endif\n";
-		$seen = 0;
-		$nl = 1;
- 	    }
-
-            if ($_ eq '<process.h>') {
-		$headers .= "#endif\n";
-		$seen = 0;
-		$nl = 1;
-	    }
-
-	    $headers .= "\n" if $_ eq '"config.h"';
 	}
 
 	$headers .= "\n#include \"internal_procs.h\"\n";

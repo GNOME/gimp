@@ -27,13 +27,22 @@
 #ifdef G_OS_WIN32
 #define _WIN32_WINNT 0x0500
 #include <windows.h>
+#include <process.h>
 #endif
 
 #include "base-utils.h"
 
+
 #define NUM_PROCESSORS_DEFAULT 1
 
+
 /*  public functions  */
+
+GPid
+get_pid (void)
+{
+  return getpid ();
+}
 
 gint
 get_number_of_processors (void)

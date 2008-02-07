@@ -26,18 +26,6 @@
 #include <langinfo.h>
 #endif
 
-#include <sys/types.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#include <glib.h>
-
-#ifdef G_OS_WIN32
-#include <process.h>
-#endif
-
 #include <glib-object.h>
 #include <gobject/gvaluecollector.h>
 
@@ -47,6 +35,8 @@
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
+
+#include "base/base-utils.h"
 
 #include "config/gimpbaseconfig.h"
 
@@ -491,7 +481,7 @@ gimp_get_temp_filename (Gimp        *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   if (id == 0)
-    pid = getpid ();
+    pid = get_pid ();
 
   if (extension)
     basename = g_strdup_printf ("gimp-temp-%d%d.%s", pid, id++, extension);
