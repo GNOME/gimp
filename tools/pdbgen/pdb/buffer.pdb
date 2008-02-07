@@ -239,9 +239,12 @@ CODE
 	      "gimppdb-utils.h");
 
 @procs = qw(buffers_get_list
-            buffer_rename buffer_delete
-	    buffer_get_width buffer_get_height
-            buffer_get_bytes buffer_get_image_type);
+            buffer_rename
+            buffer_delete
+	    buffer_get_width
+            buffer_get_height
+            buffer_get_bytes
+            buffer_get_image_type);
 
 %exports = (app => [@procs], lib => [@procs]);
 

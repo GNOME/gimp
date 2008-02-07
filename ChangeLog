@@ -1,3 +1,16 @@
+2008-02-07  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/app.pl: add some perl evilness to make the includes
+	in the generated files look almost like they should.
+
+	* tools/pdbgen/pdb/*.pdb: remove inclusion of "core/gimp.h" where
+	not needed, clean up lists of includes and functions and reorder
+	some functions to make more sense. Zero logic changed.
+
+	* app/pdb/*_cmds.c
+	* libgimp/gimpcontext_pdb.[ch]
+	* libgimp/gimpbrush_pdb.[ch]: regenerated.
+
 2008-02-07  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: added configure checks for the iso-codes package.

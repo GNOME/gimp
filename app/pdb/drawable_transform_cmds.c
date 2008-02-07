@@ -20,15 +20,11 @@
 
 #include "config.h"
 
-
 #include <glib-object.h>
 
 #include "libgimpmath/gimpmath.h"
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
 #include "config/gimpcoreconfig.h"
 #include "core/gimp-transform-utils.h"
@@ -36,11 +32,15 @@
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
-#include "gimp-intl.h"
-#include "gimppdb-utils.h"
 
+#include "gimppdb.h"
+#include "gimppdb-utils.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
+
+#include "gimp-intl.h"
 
 
 static GValueArray *

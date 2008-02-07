@@ -669,6 +669,8 @@ GPL
 
 	foreach (@{$main::grp{$group}->{headers}}) { $out->{headers}->{$_}++ }
 
+	$out->{headers}->{"\"core/gimpparamspecs.h\""}++;
+
 	my @headers = sort {
 	    my ($x, $y) = ($a, $b);
 	    foreach ($x, $y) {
@@ -681,16 +683,22 @@ GPL
 	    }
 	    $x cmp $y;
 	} keys %{$out->{headers}};
-        my $headers = "";
-        my $lib = 0; my $seen = 0; my $sys = 0; my $base = 0;
+
+	my $headers = "";
+	my $lib = 0;
+	my $seen = 0;
+	my $sys = 0;
+	my $base = 0;
+	my $intl = 0;
+	my $utils = 0;
+
 	foreach (@headers) {
 	    $seen++ if /^</;
 
 	    if ($sys == 0 && !/^</) {
 		$sys = 1;
-		$headers .= "\n";
-		$headers .= '#include <glib-object.h>';
-		$headers .= "\n\n";
+		$headers .= "\n" if $seen;
+		$headers .= "#include <glib-object.h>\n\n";
 	    }
 
 	    $seen = 0 if !/^</;
@@ -704,22 +712,28 @@ GPL
 
 		if ($sys == 1 && $base == 0) {
 		    $base = 1;
-
-		    $headers .= '#include "pdb-types.h"';
-		    $headers .= "\n";
-		    $headers .= '#include "gimppdb.h"';
-		    $headers .= "\n";
-		    $headers .= '#include "gimpprocedure.h"';
-		    $headers .= "\n";
-		    $headers .= '#include "core/gimpparamspecs.h"';
-		    $headers .= "\n\n";
+		    $headers .= "#include \"pdb-types.h\"\n\n";
 		}
 	    }
 
-	    $headers .= "#include $_\n";
+	    if (/gimp-intl/) {
+		$intl = 1;
+	    }
+	    elsif (/gimppdb-utils/) {
+		$utils = 1;
+	    }
+	    else {
+		$headers .= "#include $_\n";
+	    }
 	}
 
-	$headers .= "\n#include \"internal_procs.h\"\n";
+	$headers .= "\n";
+	$headers .= "#include \"gimppdb.h\"\n";
+	$headers .= "#include \"gimppdb-utils.h\"\n" if $utils;
+	$headers .= "#include \"gimpprocedure.h\"\n";
+	$headers .= "#include \"internal_procs.h\"\n";
+
+	$headers .= "\n#include \"gimp-intl.h\"\n" if $intl;
 
 	my $extra = {};
 	if (exists $main::grp{$group}->{extra}->{app}) {

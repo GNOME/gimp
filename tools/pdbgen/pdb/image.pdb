@@ -2559,14 +2559,18 @@ CODE
             image_base_type
             image_width image_height
             image_free_shadow
-            image_resize image_resize_to_layers image_scale
+            image_resize image_resize_to_layers
+            image_scale
             image_crop image_flip image_rotate
-            image_get_layers image_get_channels
+            image_get_layers
+            image_get_channels
             image_get_vectors
             image_get_active_drawable
             image_unset_active_channel
-            image_get_floating_sel image_floating_sel_attached_to
-            image_pick_color image_pick_correlate_layer
+            image_get_floating_sel
+            image_floating_sel_attached_to
+            image_pick_color
+            image_pick_correlate_layer
             image_add_layer image_remove_layer
 	    image_get_layer_position
             image_raise_layer image_lower_layer

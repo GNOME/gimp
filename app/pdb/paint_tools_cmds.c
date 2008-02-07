@@ -20,24 +20,22 @@
 
 #include "config.h"
 
-
 #include <glib-object.h>
 
 #include "libgimpmath/gimpmath.h"
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
-#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimppaintinfo.h"
-#include "gimppdb-utils.h"
+#include "core/gimpparamspecs.h"
 #include "paint/gimppaintcore-stroke.h"
 #include "paint/gimppaintcore.h"
 #include "paint/gimppaintoptions.h"
 
+#include "gimppdb.h"
+#include "gimppdb-utils.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
 
 

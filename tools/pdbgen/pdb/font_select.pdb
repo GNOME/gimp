@@ -98,7 +98,9 @@ CODE
 
 @headers = qw("core/gimp.h");
 
-@procs = qw(fonts_popup fonts_close_popup fonts_set_popup);
+@procs = qw(fonts_popup
+            fonts_close_popup
+            fonts_set_popup);
 
 %exports = (app => [@procs], lib => [@procs]);
 

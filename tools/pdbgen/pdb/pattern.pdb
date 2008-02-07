@@ -114,13 +114,13 @@ CODE
 
 @headers = qw(<string.h>
               "base/temp-buf.h"
-              "core/gimp.h"
               "core/gimpcontext.h"
               "core/gimpdatafactory.h"
               "core/gimppattern.h"
               "gimppdb-utils.h");
 
-@procs = qw(pattern_get_info pattern_get_pixels);
+@procs = qw(pattern_get_info
+            pattern_get_pixels);
 
 %exports = (app => [@procs], lib => [@procs]);
 

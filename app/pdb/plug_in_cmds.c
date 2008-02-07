@@ -28,11 +28,9 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
+#include "core/gimpparamspecs.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimpplugindef.h"
 #include "plug-in/gimppluginmanager-menu-branch.h"
@@ -40,6 +38,8 @@
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginprocedure.h"
 
+#include "gimppdb.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
 
 

@@ -421,7 +421,12 @@ CODE
               "gimppdb-utils.h"
               "gimp-intl.h");
 
-@procs = qw(flip perspective rotate scale shear transform_2d);
+@procs = qw(flip
+            perspective
+            rotate
+            scale
+            shear
+            transform_2d);
 
 %exports = (app => [@procs], lib => [@procs]);
 

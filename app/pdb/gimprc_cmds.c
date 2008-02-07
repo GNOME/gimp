@@ -29,15 +29,15 @@
 #include "libgimpmodule/gimpmodule.h"
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
 #include "config/gimprc.h"
 #include "core/gimp-utils.h"
 #include "core/gimp.h"
+#include "core/gimpparamspecs.h"
 #include "core/gimptemplate.h"
 
+#include "gimppdb.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
 
 

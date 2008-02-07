@@ -1382,8 +1382,11 @@ CODE
               "core/gimpdatafactory.h"
               "gimppdb-utils.h");
 
-@procs = qw(gradient_new gradient_duplicate  gradient_is_editable
-	    gradient_rename gradient_delete
+@procs = qw(gradient_new
+            gradient_duplicate
+            gradient_is_editable
+	    gradient_rename
+            gradient_delete
             gradient_get_uniform_samples gradient_get_custom_samples
             gradient_segment_get_left_color gradient_segment_set_left_color
             gradient_segment_get_right_color gradient_segment_set_right_color

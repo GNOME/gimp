@@ -25,9 +25,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
 #include "base/gimphistogram.h"
 #include "core/gimpdrawable-brightness-contrast.h"
@@ -43,10 +40,14 @@
 #include "core/gimpdrawable-posterize.h"
 #include "core/gimpdrawable-threshold.h"
 #include "core/gimpdrawable.h"
-#include "gimp-intl.h"
-#include "gimppdb-utils.h"
+#include "core/gimpparamspecs.h"
 
+#include "gimppdb.h"
+#include "gimppdb-utils.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
+
+#include "gimp-intl.h"
 
 
 static GValueArray *

@@ -302,9 +302,15 @@ CODE
               "plug-in/gimpplugin-progress.h"
               "plug-in/gimppluginmanager.h");
 
-@procs = qw(progress_init progress_update progress_pulse progress_set_text
-            progress_end progress_get_window_handle
-            progress_install progress_uninstall progress_cancel);
+@procs = qw(progress_init
+            progress_update
+            progress_pulse
+            progress_set_text
+            progress_end
+            progress_get_window_handle
+            progress_install
+            progress_uninstall
+            progress_cancel);
 
 %exports = (app => [@procs], lib => [@procs]);
 

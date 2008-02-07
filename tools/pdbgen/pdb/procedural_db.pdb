@@ -447,13 +447,15 @@ CODE
 @headers = qw("libgimpbase/gimpbase.h"
               "core/gimp.h"
               "core/gimpparamspecs-desc.h"
+              "plug-in/gimppluginmanager-data.h"
               "gimppdb-query.h"
-              "gimp-pdb-compat.h"
-              "plug-in/gimppluginmanager-data.h");
+              "gimp-pdb-compat.h");
 
-@procs = qw(procedural_db_temp_name procedural_db_dump
-            procedural_db_query procedural_db_proc_info
-	    procedural_db_proc_arg procedural_db_proc_val
+@procs = qw(procedural_db_temp_name
+            procedural_db_dump
+            procedural_db_query
+            procedural_db_proc_info
+            procedural_db_proc_arg procedural_db_proc_val
 	    procedural_db_get_data procedural_db_get_data_size
 	    procedural_db_set_data);
 

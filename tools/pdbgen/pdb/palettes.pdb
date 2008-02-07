@@ -153,8 +153,10 @@ CODE
               "core/gimppalette.h"
               "gimppdb-utils.h");
 
-@procs = qw(palettes_refresh  palettes_get_list
-            palettes_get_palette palettes_get_palette_entry);
+@procs = qw(palettes_refresh
+            palettes_get_list
+            palettes_get_palette
+            palettes_get_palette_entry);
 
 %exports = (app => [@procs], lib => [@procs]);
 

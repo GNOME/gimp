@@ -106,9 +106,13 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h" "core/gimpdatafactory.h" "core/gimpgradient.h");
+@headers = qw("core/gimp.h"
+              "core/gimpdatafactory.h"
+              "core/gimpgradient.h");
 
-@procs = qw(gradients_popup gradients_close_popup gradients_set_popup);
+@procs = qw(gradients_popup
+            gradients_close_popup
+            gradients_set_popup);
 
 %exports = (app => [@procs], lib => [@procs]);
 

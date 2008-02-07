@@ -546,8 +546,12 @@ CODE
               "core/gimppalette.h"
               "gimppdb-utils.h");
 
-@procs = qw(palette_new palette_duplicate palette_rename palette_delete
-            palette_is_editable palette_get_info
+@procs = qw(palette_new
+            palette_duplicate
+            palette_rename
+            palette_delete
+            palette_is_editable
+            palette_get_info
             palette_get_columns palette_set_columns
             palette_add_entry palette_delete_entry
             palette_entry_get_color palette_entry_set_color

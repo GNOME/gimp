@@ -27,23 +27,23 @@
 #include "libgimpmath/gimpmath.h"
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
-#include "core/gimp.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
+#include "core/gimpparamspecs.h"
 #include "core/gimpstrokedesc.h"
-#include "gimp-intl.h"
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
 #include "vectors/gimpvectors-compat.h"
 #include "vectors/gimpvectors-import.h"
 #include "vectors/gimpvectors.h"
 
+#include "gimppdb.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
+
+#include "gimp-intl.h"
 
 
 static GValueArray *

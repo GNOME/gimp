@@ -20,15 +20,11 @@
 
 #include "config.h"
 
-
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
 #include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
@@ -38,10 +34,14 @@
 #include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
-#include "gimp-intl.h"
-#include "gimppdb-utils.h"
+#include "core/gimpparamspecs.h"
 
+#include "gimppdb.h"
+#include "gimppdb-utils.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
+
+#include "gimp-intl.h"
 
 
 static GValueArray *

@@ -896,12 +896,19 @@ CODE
               "gimppdb-utils.h"
               "gimp-intl.h");
 
-@procs = qw(edit_cut edit_copy edit_copy_visible
+@procs = qw(edit_cut
+            edit_copy edit_copy_visible
             edit_paste edit_paste_as_new
-            edit_named_cut edit_named_copy edit_named_copy_visible
+            edit_named_cut
+            edit_named_copy edit_named_copy_visible
             edit_named_paste edit_named_paste_as_new
-            edit_clear edit_fill edit_bucket_fill edit_bucket_fill_full
-	    edit_blend edit_stroke edit_stroke_vectors);
+            edit_clear
+            edit_fill
+            edit_bucket_fill
+            edit_bucket_fill_full
+	    edit_blend
+            edit_stroke
+            edit_stroke_vectors);
 
 %exports = (app => [@procs], lib => [@procs]);
 

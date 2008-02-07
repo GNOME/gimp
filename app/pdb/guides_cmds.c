@@ -20,19 +20,18 @@
 
 #include "config.h"
 
-
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
 #include "core/gimpguide.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"
+#include "core/gimpparamspecs.h"
 
+#include "gimppdb.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
 
 

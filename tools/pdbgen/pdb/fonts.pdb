@@ -69,9 +69,12 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h" "core/gimpcontainer.h" "text/gimp-fonts.h");
+@headers = qw("core/gimp.h"
+              "core/gimpcontainer.h"
+              "text/gimp-fonts.h");
 
-@procs = qw(fonts_refresh fonts_get_list);
+@procs = qw(fonts_refresh
+            fonts_get_list);
 
 %exports = (app => [@procs], lib => [@procs]);
 

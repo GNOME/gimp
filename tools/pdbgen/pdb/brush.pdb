@@ -845,16 +845,21 @@ CODE
               "core/gimpdatafactory.h"
               "gimppdb-utils.h");
 
-@procs = qw(brush_new brush_duplicate brush_is_generated 
-            brush_rename brush_delete brush_is_editable
-            brush_get_info brush_get_pixels
+@procs = qw(brush_new
+            brush_duplicate
+            brush_is_generated 
+            brush_rename
+            brush_delete
+            brush_is_editable
+            brush_get_info
+            brush_get_pixels
             brush_get_spacing brush_set_spacing
-            brush_get_shape brush_get_radius
-            brush_get_spikes brush_get_hardness
-            brush_get_aspect_ratio brush_get_angle
-            brush_set_shape brush_set_radius
-            brush_set_spikes brush_set_hardness
-            brush_set_aspect_ratio brush_set_angle);
+            brush_get_shape brush_set_shape
+            brush_get_radius brush_set_radius
+            brush_get_spikes brush_set_spikes
+            brush_get_hardness brush_set_hardness
+            brush_get_aspect_ratio brush_set_aspect_ratio
+            brush_get_angle brush_set_angle);
 
 %exports = (app => [@procs], lib => [@procs]);
 

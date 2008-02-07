@@ -283,8 +283,10 @@ CODE
               "plug-in/gimppluginprocedure.h");
 
 @procs = qw(plugins_query
-	    plugin_domain_register plugin_help_register
-            plugin_menu_register plugin_menu_branch_register
+	    plugin_domain_register
+            plugin_help_register
+            plugin_menu_register
+            plugin_menu_branch_register
             plugin_icon_register);
 
 %exports = (app => [@procs], lib => [@procs[1,2,3,4,5]]);
