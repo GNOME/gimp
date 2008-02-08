@@ -48,6 +48,8 @@ typedef struct
   gint                 unknown_depth;
   GString             *value;
   GimpLanguageStore   *store;
+  gchar               *language;
+  gchar               *code;
 } IsoCodesParser;
 
 
@@ -61,11 +63,6 @@ static void  iso_codes_parser_end_element   (GMarkupParseContext  *context,
                                              const gchar          *element_name,
                                              gpointer              user_data,
                                              GError              **error);
-static void  iso_codes_parser_characters    (GMarkupParseContext  *context,
-                                             const gchar          *text,
-                                             gsize                 text_len,
-                                             gpointer              user_data,
-                                             GError              **error);
 
 static void  iso_codes_parser_start_unknown (IsoCodesParser       *parser);
 static void  iso_codes_parser_end_unknown   (IsoCodesParser       *parser);
@@ -75,7 +72,7 @@ static const GMarkupParser markup_parser =
 {
   iso_codes_parser_start_element,
   iso_codes_parser_end_element,
-  iso_codes_parser_characters,
+  NULL,  /*  characters   */
   NULL,  /*  passthrough  */
   NULL   /*  error        */
 };
@@ -88,6 +85,7 @@ gimp_language_store_populate (GimpLanguageStore  *store,
 #ifdef HAVE_ISO_CODES
   GimpXmlParser  *xml_parser;
   gchar          *filename;
+  gboolean        success;
   IsoCodesParser  parser = { 0, };
 
   g_return_val_if_fail (GIMP_IS_LANGUAGE_STORE (store), FALSE);
@@ -99,14 +97,40 @@ gimp_language_store_populate (GimpLanguageStore  *store,
 
   filename = g_build_filename (ISO_CODES_LOCATION, "iso_639.xml", NULL);
 
-  gimp_xml_parser_parse_file (xml_parser, filename, error);
+  success = gimp_xml_parser_parse_file (xml_parser, filename, error);
 
   gimp_xml_parser_free (xml_parser);
   g_free (filename);
   g_string_free (parser.value, TRUE);
+
+  return success;
 #endif
 
   return TRUE;
+}
+
+static void
+iso_codes_parser_entry (IsoCodesParser  *parser,
+                        const gchar    **names,
+                        const gchar    **values)
+{
+  const gchar *lang = NULL;
+  const gchar *code = NULL;
+
+  while (*names && *values)
+    {
+      if (strcmp (*names, "name") == 0)
+        {
+          lang = *values;
+        }
+      else if (strcmp (*names, "iso_639_1_code") == 0)
+        {
+          code = *values;
+        }
+
+      names++;
+      values++;
+    }
 }
 
 static void
@@ -121,7 +145,23 @@ iso_codes_parser_start_element (GMarkupParseContext  *context,
 
   switch (parser->state)
     {
-    default:
+    case ISO_CODES_START:
+      if (strcmp (element_name, "iso_639_entries") == 0)
+        {
+          parser->state = ISO_CODES_IN_ENTRIES;
+          break;
+        }
+
+    case ISO_CODES_IN_ENTRIES:
+      if (strcmp (element_name, "iso_639_entry") == 0)
+        {
+          parser->state = ISO_CODES_IN_ENTRY;
+          iso_codes_parser_entry (parser, attribute_names, attribute_values);
+          break;
+        }
+
+    case ISO_CODES_IN_ENTRY:
+    case ISO_CODES_IN_UNKNOWN:
       iso_codes_parser_start_unknown (parser);
       break;
     }
@@ -137,24 +177,20 @@ iso_codes_parser_end_element (GMarkupParseContext *context,
 
   switch (parser->state)
     {
-    default:
-      iso_codes_parser_end_unknown (parser);
+    case ISO_CODES_START:
+      g_warning ("%s: shouldn't get here", G_STRLOC);
       break;
-    }
-}
 
-static void
-iso_codes_parser_characters (GMarkupParseContext *context,
-                             const gchar         *text,
-                             gsize                text_len,
-                             gpointer             user_data,
-                             GError             **error)
-{
-  IsoCodesParser *parser = user_data;
+    case ISO_CODES_IN_ENTRIES:
+      parser->state = ISO_CODES_START;
+      break;
 
-  switch (parser->state)
-    {
-    default:
+    case ISO_CODES_IN_ENTRY:
+      parser->state = ISO_CODES_IN_ENTRIES;
+      break;
+
+    case ISO_CODES_IN_UNKNOWN:
+      iso_codes_parser_end_unknown (parser);
       break;
     }
 }

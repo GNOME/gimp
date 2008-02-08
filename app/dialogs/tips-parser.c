@@ -296,7 +296,7 @@ tips_parser_end_element (GMarkupParseContext *context,
   switch (parser->state)
     {
     case TIPS_START:
-      g_warning ("tips_parser: This shouldn't happen.\n");
+      g_warning ("%s: shouldn't get here", G_STRLOC);
       break;
 
     case TIPS_IN_TIPS:

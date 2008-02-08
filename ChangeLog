@@ -1,3 +1,9 @@
+2008-02-08  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimplanguagestore-parser.c: implemented the parser.
+
+	* app/dialogs/tips-parser.c: minor cleanup.
+
 2008-02-08  Tor Lillqvist  <tml@novell.com>
 
 	* libgimpconfig/gimpconfig.def: Add gimp_config_copy.
