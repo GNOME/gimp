@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpTextEditor
- * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2002-2003, 2008  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -358,6 +358,7 @@ gimp_text_editor_language_entry_new (void)
   completion = gtk_entry_completion_new ();
   gtk_entry_completion_set_text_column (completion,
                                         GIMP_LANGUAGE_STORE_LANGUAGE);
+  gtk_entry_completion_set_inline_completion (completion, TRUE);
 
   store = gimp_language_store_new (FALSE);
   gtk_entry_completion_set_model (completion, GTK_TREE_MODEL (store));
