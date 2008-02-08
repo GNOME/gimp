@@ -1,5 +1,10 @@
 2008-02-08  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimptexteditor.c: use an entry with completion for
+	language selection. Still not functional.
+
+2008-02-08  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimplanguagestore.[ch]
 	* app/widgets/gimplanguagestore-parser.c: actually populate the
 	language store. Still work in progress...
