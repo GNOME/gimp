@@ -70,6 +70,8 @@ gimp_language_store_init (GimpLanguageStore *store)
 
   gtk_list_store_set_column_types (GTK_LIST_STORE (store),
                                    G_N_ELEMENTS (column_types), column_types);
+
+  gimp_language_store_populate (store, NULL);
 }
 
 static void
@@ -118,4 +120,21 @@ gimp_language_store_new (gboolean translations)
   return g_object_new (GIMP_TYPE_LANGUAGE_STORE,
                        "translations", translations,
                        NULL);
+}
+
+void
+gimp_language_store_add (GimpLanguageStore *store,
+                         const gchar       *lang,
+                         const gchar       *code)
+{
+  GtkTreeIter  iter;
+
+  g_return_if_fail (GIMP_IS_LANGUAGE_STORE (store));
+  g_return_if_fail (lang != NULL && code != NULL);
+
+  gtk_list_store_append (GTK_LIST_STORE (store), &iter);
+  gtk_list_store_set (GTK_LIST_STORE (store), &iter,
+                      GIMP_LANGUAGE_STORE_LANGUAGE,  lang,
+                      GIMP_LANGUAGE_STORE_ISO_639_1, code,
+                      -1);
 }

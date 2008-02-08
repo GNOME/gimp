@@ -1,5 +1,14 @@
 2008-02-08  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimplanguagestore.[ch]
+	* app/widgets/gimplanguagestore-parser.c: actually populate the
+	language store. Still work in progress...
+
+	* app/widgets/gimptexteditor.c: added a combo-box for language
+	selection. Not functional yet; just something to play with.
+
+2008-02-08  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimplanguagestore-parser.c: implemented the parser.
 
 	* app/dialogs/tips-parser.c: minor cleanup.

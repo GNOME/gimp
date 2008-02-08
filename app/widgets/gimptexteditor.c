@@ -31,6 +31,7 @@
 
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
+#include "gimplanguagestore.h"
 #include "gimptexteditor.h"
 #include "gimpuimanager.h"
 
@@ -167,6 +168,26 @@ gimp_text_editor_new (const gchar     *title,
                           FALSE, FALSE, 0);
       gtk_widget_show (toolbar);
     }
+
+  {
+    GtkListStore    *store;
+    GtkWidget       *combo;
+    GtkCellRenderer *cell;
+
+    store = gimp_language_store_new (FALSE);
+    combo = gtk_combo_box_new_with_model (GTK_TREE_MODEL (store));
+    g_object_unref (store);
+
+    cell = gtk_cell_renderer_text_new ();
+    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), cell, TRUE);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo), cell,
+                                    "text", GIMP_LANGUAGE_STORE_LANGUAGE,
+                                    NULL);
+
+    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (editor)->vbox),
+                        combo, FALSE, FALSE, 0);
+    gtk_widget_show (combo);
+  }
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),

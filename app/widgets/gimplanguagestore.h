@@ -56,6 +56,9 @@ struct _GimpLanguageStore
 GType          gimp_language_store_get_type (void) G_GNUC_CONST;
 
 GtkListStore * gimp_language_store_new      (gboolean  translations);
+void           gimp_language_store_add      (GimpLanguageStore *store,
+                                             const gchar       *lang,
+                                             const gchar       *code);
 
 
 #endif  /* __GIMP_LANGUAGE_STORE_H__ */

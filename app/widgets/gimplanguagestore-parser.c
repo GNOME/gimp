@@ -32,6 +32,8 @@
 #include "gimplanguagestore.h"
 #include "gimplanguagestore-parser.h"
 
+#include "gimp-intl.h"
+
 
 typedef enum
 {
@@ -46,10 +48,7 @@ typedef struct
   IsoCodesParserState  state;
   IsoCodesParserState  last_known_state;
   gint                 unknown_depth;
-  GString             *value;
   GimpLanguageStore   *store;
-  gchar               *language;
-  gchar               *code;
 } IsoCodesParser;
 
 
@@ -91,7 +90,9 @@ gimp_language_store_populate (GimpLanguageStore  *store,
   g_return_val_if_fail (GIMP_IS_LANGUAGE_STORE (store), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  parser.value = g_string_new (NULL);
+  bindtextdomain ("iso_639", ISO_CODES_LOCALEDIR);
+
+  parser.store = g_object_ref (store);
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
 
@@ -99,9 +100,10 @@ gimp_language_store_populate (GimpLanguageStore  *store,
 
   success = gimp_xml_parser_parse_file (xml_parser, filename, error);
 
-  gimp_xml_parser_free (xml_parser);
   g_free (filename);
-  g_string_free (parser.value, TRUE);
+
+  gimp_xml_parser_free (xml_parser);
+  g_object_unref (parser.store);
 
   return success;
 #endif
@@ -130,6 +132,28 @@ iso_codes_parser_entry (IsoCodesParser  *parser,
 
       names++;
       values++;
+    }
+
+  if (lang && *lang && code && *code)
+    {
+      const gchar *semicolon;
+
+      lang = dgettext ("iso_639", lang);
+
+      /*  there might be several language names; use the first one  */
+      semicolon = strchr (lang, ';');
+
+      if (semicolon)
+        {
+          gchar *first = g_strndup (lang, semicolon - lang);
+
+          gimp_language_store_add (parser->store, first, code);
+          g_free (first);
+        }
+      else
+        {
+          gimp_language_store_add (parser->store, lang, code);
+        }
     }
 }
 
