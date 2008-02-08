@@ -135,10 +135,6 @@ gimp_text_editor_new (const gchar     *title,
 {
   GimpTextEditor *editor;
   GtkTextBuffer  *buffer;
-  GtkWidget      *vbox;
-  GtkWidget      *hbox;
-  GtkWidget      *label;
-  GtkWidget      *entry;
   GtkWidget      *toolbar;
   GtkWidget      *scrolled_window;
 
@@ -170,21 +166,42 @@ gimp_text_editor_new (const gchar     *title,
 
   if (toolbar)
     {
+      GtkToolItem *item;
+      GtkWidget   *hbox;
+      GtkWidget   *label;
+      GtkWidget   *entry;
+
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG (editor)->vbox), toolbar,
                           FALSE, FALSE, 0);
       gtk_widget_show (toolbar);
-    }
 
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (editor)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+      item = gtk_tool_item_new ();
+      gtk_tool_item_set_expand (item, TRUE);
+      gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
+      gtk_widget_show (GTK_WIDGET (item));
+
+      hbox = gtk_hbox_new (FALSE, 6);
+      gtk_container_add (GTK_CONTAINER (item), hbox);
+      gtk_widget_show (hbox);
+
+      label = gtk_label_new_with_mnemonic (_("_Language:"));
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      entry = gimp_text_editor_language_entry_new ();
+      gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
+      gtk_widget_show (entry);
+
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
+    }
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (editor)->vbox),
+                      scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
   editor->view = gtk_text_view_new ();
@@ -207,25 +224,12 @@ gimp_text_editor_new (const gchar     *title,
       break;
     }
 
-  gtk_widget_set_size_request (editor->view, 128, 64);
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new_with_mnemonic (_("_Language:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  entry = gimp_text_editor_language_entry_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_show (entry);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
+  gtk_widget_set_size_request (editor->view, 150, 64);
 
   editor->font_toggle =
     gtk_check_button_new_with_mnemonic (_("_Use selected font"));
-  gtk_box_pack_start (GTK_BOX (vbox), editor->font_toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (editor)->vbox),
+                      editor->font_toggle, FALSE, FALSE, 0);
   gtk_widget_show (editor->font_toggle);
 
   g_signal_connect (editor->font_toggle, "toggled",
