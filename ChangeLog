@@ -1,3 +1,9 @@
+2008-02-09  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/gegl/gimpoperationtilesource.c:
+	%s/get_defined_region/get_bounding_box/
+	%s/adjust_result_region/get_cached_region/
+
 2008-02-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpcurve.[ch]: keep the anchor points as an array of
