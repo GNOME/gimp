@@ -1,3 +1,9 @@
+2008-02-09  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/color.pdb: don't include <gegl.h>
+
+	* app/pdb/color_cmds.c: regenerated.
+
 2008-02-09  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/gegl/gimpoperationtilesource.c:
