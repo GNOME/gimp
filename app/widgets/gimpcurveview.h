@@ -52,7 +52,7 @@ struct _GimpCurveView
 
   GdkCursorType      cursor_type;
 
-  gint               xpos;
+  gdouble            xpos;
   PangoLayout       *xpos_layout;
 
   gint               cursor_x;
@@ -78,7 +78,7 @@ GimpCurve * gimp_curve_view_get_curve    (GimpCurveView *view);
 void        gimp_curve_view_set_selected (GimpCurveView *view,
                                           gint           selected);
 void        gimp_curve_view_set_xpos     (GimpCurveView *view,
-                                          gint           x);
+                                          gdouble        x);
 
 
 #endif /* __GIMP_CURVE_VIEW_H__ */

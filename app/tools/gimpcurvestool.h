@@ -41,7 +41,7 @@ struct _GimpCurvesTool
   GimpLut              *lut;
 
   /* dialog */
-  gint                  col_value[5];
+  gdouble               picked_color[5];
 
   GtkWidget            *channel_menu;
   GtkWidget            *xrange;

@@ -125,7 +125,7 @@ gimp_curve_view_init (GimpCurveView *view)
   view->last_x      = 0.0;
   view->last_y      = 0.0;
   view->cursor_type = -1;
-  view->xpos        = -1;
+  view->xpos        = -1.0;
   view->cursor_x    = -1;
   view->cursor_y    = -1;
 
@@ -410,7 +410,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
        }
     }
 
-  if (view->xpos >= 0)
+  if (view->xpos >= 0.0)
     {
       gint  layout_x;
       gint  layout_y;
@@ -420,15 +420,15 @@ gimp_curve_view_expose (GtkWidget      *widget,
 
       /* draw the color line */
       cairo_move_to (cr,
-                     border + ROUND ((gdouble) width * view->xpos / 256.0),
+                     border + ROUND ((gdouble) width * view->xpos),
                      border);
       cairo_line_to (cr,
-                     border + ROUND ((gdouble) width * view->xpos / 256.0),
+                     border + ROUND ((gdouble) width * view->xpos),
                      border + height - 1);
       cairo_stroke (cr);
 
       /* and xpos indicator */
-      g_snprintf (buf, sizeof (buf), "x:%d", view->xpos);
+      g_snprintf (buf, sizeof (buf), "x:%d", (gint) (view->xpos * 255.999));
 
       if (! view->xpos_layout)
         view->xpos_layout = gtk_widget_create_pango_layout (widget, NULL);
@@ -436,13 +436,13 @@ gimp_curve_view_expose (GtkWidget      *widget,
       pango_layout_set_text (view->xpos_layout, buf, -1);
       pango_layout_get_pixel_size (view->xpos_layout, &layout_x, &layout_y);
 
-      if (view->xpos < 127)
+      if (view->xpos < 0.5)
         layout_x = border;
       else
         layout_x = -(layout_x + border);
 
       cairo_move_to (cr,
-                     border + (gdouble) width * view->xpos / 256.0 + layout_x,
+                     border + (gdouble) width * view->xpos + layout_x,
                      border + height - border - layout_y);
       pango_cairo_show_layout (cr, view->xpos_layout);
       cairo_fill (cr);
@@ -864,7 +864,7 @@ gimp_curve_view_set_selected (GimpCurveView *view,
 
 void
 gimp_curve_view_set_xpos (GimpCurveView *view,
-                          gint           x)
+                          gdouble        x)
 {
   g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
 

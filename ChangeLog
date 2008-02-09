@@ -1,5 +1,15 @@
 2008-02-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcurveview.[ch]: port the "xpos" API
+	to [0.0..1.0] doubles too.
+
+	* app/tools/gimpcurvestool.[ch]: rename "col_value" member to
+	"picked_color" and use gdouble instead of gint. Also use GimpCurve
+	API to map the values instead of accessing the curve directly.
+	Fixes setting curve anchor points by color picking.
+
+2008-02-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpcurve.[ch]: changed all values to be [0.0..1.0]
 	doubles instead of [0..255] integers. Also changed the API to use
 	doubles instead of ints. Still have the fixed-size arrays though.
