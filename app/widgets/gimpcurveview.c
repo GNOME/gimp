@@ -126,8 +126,8 @@ gimp_curve_view_init (GimpCurveView *view)
   view->last_y      = 0.0;
   view->cursor_type = -1;
   view->xpos        = -1.0;
-  view->cursor_x    = -1;
-  view->cursor_y    = -1;
+  view->cursor_x    = -1.0;
+  view->cursor_y    = -1.0;
 
   GTK_WIDGET_SET_FLAGS (view, GTK_CAN_FOCUS);
 
@@ -322,7 +322,7 @@ gimp_curve_view_draw_point (GimpCurveView *view,
   y = 1.0 - view->curve->points[i][1];
 
   cairo_move_to (cr,
-                 border + (gdouble) width  * x,
+                 border + (gdouble) width  * x + 3,
                  border + (gdouble) height * y);
   cairo_arc (cr,
              border + (gdouble) width  * x,
@@ -351,8 +351,8 @@ gimp_curve_view_expose (GtkWidget      *widget,
 
   border = GIMP_HISTOGRAM_VIEW (view)->border_width;
 
-  width  = widget->allocation.width  - 2 * border;
-  height = widget->allocation.height - 2 * border;
+  width  = widget->allocation.width  - 2 * border - 1;
+  height = widget->allocation.height - 2 * border - 1;
 
   cr = gdk_cairo_create (widget->window);
 
@@ -448,8 +448,8 @@ gimp_curve_view_expose (GtkWidget      *widget,
       cairo_fill (cr);
     }
 
-  if (view->cursor_x >= 0 && view->cursor_x <= 255 &&
-      view->cursor_y >= 0 && view->cursor_y <= 255)
+  if (view->cursor_x >= 0.0 && view->cursor_x <= 1.0 &&
+      view->cursor_y >= 0.0 && view->cursor_y <= 1.0)
     {
       gchar buf[32];
       gint  w, h;
@@ -478,7 +478,8 @@ gimp_curve_view_expose (GtkWidget      *widget,
       cairo_stroke (cr);
 
       g_snprintf (buf, sizeof (buf), "x:%3d y:%3d",
-                  view->cursor_x, 255 - view->cursor_y);
+                  (gint) (view->cursor_x * 255.999),
+                  (gint) ((1.0 - view->cursor_y) * 255.999));
       pango_layout_set_text (view->cursor_layout, buf, -1);
 
       gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
@@ -881,8 +882,8 @@ gimp_curve_view_set_cursor (GimpCurveView *view,
                             gdouble        x,
                             gdouble        y)
 {
-  view->cursor_x = x * 255.999;
-  view->cursor_y = y * 255.999;
+  view->cursor_x = x;
+  view->cursor_y = y;
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
@@ -890,8 +891,8 @@ gimp_curve_view_set_cursor (GimpCurveView *view,
 static void
 gimp_curve_view_unset_cursor (GimpCurveView *view)
 {
-  view->cursor_x = -1;
-  view->cursor_y = -1;
+  view->cursor_x = -1.0;
+  view->cursor_y = -1.0;
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }

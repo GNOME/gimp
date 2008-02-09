@@ -1,5 +1,12 @@
 2008-02-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcurveview.[ch]: port internal cursor stuff to
+	gdouble, fix off-by-one in curve drawing, fix drawing artefact in
+	handle drawing by starting drawing on the handle's outline and not
+	its center.
+
+2008-02-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcurveview.[ch]: port the "xpos" API
 	to [0.0..1.0] doubles too.
 

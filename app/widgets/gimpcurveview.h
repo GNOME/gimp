@@ -55,8 +55,8 @@ struct _GimpCurveView
   gdouble            xpos;
   PangoLayout       *xpos_layout;
 
-  gint               cursor_x;
-  gint               cursor_y;
+  gdouble            cursor_x;
+  gdouble            cursor_y;
   PangoLayout       *cursor_layout;
   PangoRectangle     cursor_rect;
 };
