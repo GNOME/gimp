@@ -43,10 +43,13 @@ struct _GimpDock
   GimpDialogFactory *dialog_factory;
   GimpContext       *context;
 
+  GtkWidget         *paned;
   GtkWidget         *main_vbox;
   GtkWidget         *vbox;
+  GtkWidget         *vbox2;
 
   GList             *dockbooks;
+  GList             *dockbooks2;
 };
 
 struct _GimpDockClass
@@ -80,10 +83,17 @@ void    gimp_dock_add          (GimpDock       *dock,
                                 GimpDockable   *dockable,
                                 gint            book,
                                 gint            index);
+void    gimp_dock_add2         (GimpDock       *dock,
+                                GimpDockable   *dockable,
+                                gint            book,
+                                gint            index);
 void    gimp_dock_remove       (GimpDock       *dock,
                                 GimpDockable   *dockable);
 
 void    gimp_dock_add_book     (GimpDock       *dock,
+                                GimpDockbook   *dockbook,
+                                gint            index);
+void    gimp_dock_add2_book    (GimpDock       *dock,
                                 GimpDockbook   *dockbook,
                                 gint            index);
 void    gimp_dock_remove_book  (GimpDock       *dock,

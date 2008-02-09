@@ -44,6 +44,8 @@ struct _GimpDockSeparator
 
   GtkWidget   *frame;
   GtkWidget   *label;
+
+  gint         pane;
 };
 
 struct _GimpDockSeparatorClass

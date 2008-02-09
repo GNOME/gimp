@@ -1,3 +1,26 @@
+2008-02-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Initial implementation of two-column docks.  Needs
+	some fixes and a lot of cleanup.  Docks are made
+	to contain a GtkHPaned instead of just a VBox.
+
+	* app/widgets/gimpviewrenderer.c
+	* app/widgets/gimptoolbox.[ch]
+	* app/widgets/gimpsessioninfo.h
+	* app/widgeapp/widgets/gimpsessioninfo-dock.c
+	* app/widgets/gimpsessioninfo-dock.c
+	* app/widgets/gimpdock.[ch]
+	* app/widgets/gimpdockseparator.[ch]
+	* app/widgets/gimpdockbook.[ch]
+
+	* app/widgets/gimpviewrenderer.c
+	* app/widgets/gimpviewrendererimage.c: Kludged workaround
+	for missing context whose cause I couldn't figure out;
+	needs fixing.
+
+	* etc/sessionrc: New default setup with all important
+	dockables in a single dock.
+	
 2008-02-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 	
 	Merged 24759:24821 from trunk.

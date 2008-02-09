@@ -20,7 +20,7 @@
 #define __GIMP_TOOLBOX_H__
 
 
-#include "gimpimagedock.h"
+#include "gimpmenudock.h"
 
 
 #define GIMP_TYPE_TOOLBOX            (gimp_toolbox_get_type ())
@@ -35,7 +35,7 @@ typedef struct _GimpToolboxClass GimpToolboxClass;
 
 struct _GimpToolbox
 {
-  GimpImageDock  parent_instance;
+  GimpMenuDock  parent_instance;
 
   GtkWidget     *menu_bar;
   GtkWidget     *tool_wbox;
@@ -52,7 +52,7 @@ struct _GimpToolbox
 
 struct _GimpToolboxClass
 {
-  GimpImageDockClass  parent_class;
+  GimpMenuDockClass  parent_class;
 };
 
 

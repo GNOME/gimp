@@ -29,6 +29,7 @@
 
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
+#include "gimptoolbox.h"
 #include "gimpsessioninfo.h"
 #include "gimpsessioninfo-aux.h"
 #include "gimpsessioninfo-book.h"
@@ -37,7 +38,8 @@
 
 enum
 {
-  SESSION_INFO_BOOK
+  SESSION_INFO_BOOK,
+  SESSION_INFO_GUTTER_POSITION
 };
 
 
@@ -54,7 +56,19 @@ gimp_session_info_dock_serialize (GimpConfigWriter *writer,
 
   gimp_config_writer_open (writer, "dock");
 
+  if (GIMP_IS_TOOLBOX (dock))
+    {
+      gint pos = gtk_paned_get_position (GTK_PANED (dock->paned));
+
+      gimp_config_writer_open (writer, "gutter-position");
+      gimp_config_writer_printf (writer, "%d", pos);
+      gimp_config_writer_close (writer);
+    }
+
   for (books = dock->dockbooks; books; books = g_list_next (books))
+    gimp_session_info_book_serialize (writer, books->data);
+
+  for (books = dock->dockbooks2; books; books = g_list_next (books))
     gimp_session_info_book_serialize (writer, books->data);
 
   gimp_config_writer_close (writer);
@@ -72,6 +86,8 @@ gimp_session_info_dock_deserialize (GScanner        *scanner,
 
   g_scanner_scope_add_symbol (scanner, scope, "book",
                               GINT_TO_POINTER (SESSION_INFO_BOOK));
+  g_scanner_scope_add_symbol (scanner, scope, "gutter-position",
+                              GINT_TO_POINTER (SESSION_INFO_GUTTER_POSITION));
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -100,6 +116,12 @@ gimp_session_info_dock_deserialize (GScanner        *scanner,
 
               break;
 
+            case SESSION_INFO_GUTTER_POSITION:
+              token = G_TOKEN_INT;
+              /* FIXME: check for errors */
+              gimp_scanner_parse_int (scanner, &info->gutter_position);
+              break;
+
             default:
               return token;
             }
@@ -116,6 +138,7 @@ gimp_session_info_dock_deserialize (GScanner        *scanner,
     }
 
   g_scanner_scope_remove_symbol (scanner, scope, "book");
+  g_scanner_scope_remove_symbol (scanner, scope, "gutter-position");
 
   return token;
 }
@@ -161,6 +184,9 @@ gimp_session_info_dock_restore (GimpSessionInfo   *info,
 
   if (dock && info->aux_info)
     gimp_session_info_aux_set_list (GTK_WIDGET (dock), info->aux_info);
+
+  if (GIMP_IS_TOOLBOX (dock) && info->gutter_position > 0)
+    gtk_paned_set_position (GTK_PANED (dock->paned), info->gutter_position);
 
   for (books = info->books; books; books = g_list_next (books))
     gimp_session_info_book_restore (books->data, dock);

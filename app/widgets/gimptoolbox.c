@@ -121,7 +121,7 @@ static void        toolbox_paste_received        (GtkClipboard   *clipboard,
                                                   gpointer        data);
 
 
-G_DEFINE_TYPE (GimpToolbox, gimp_toolbox, GIMP_TYPE_IMAGE_DOCK)
+G_DEFINE_TYPE (GimpToolbox, gimp_toolbox, GIMP_TYPE_MENU_DOCK)
 
 #define parent_class gimp_toolbox_parent_class
 
@@ -163,6 +163,18 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
 static void
 gimp_toolbox_init (GimpToolbox *toolbox)
 {
+  GimpDock  *dock       = GIMP_DOCK (toolbox);
+  GtkWidget *separator;
+
+  dock->vbox2 = gtk_vbox_new (FALSE, 0);
+  gtk_paned_add2 (GTK_PANED (dock->paned), dock->vbox2);
+  gtk_widget_show (dock->vbox2);
+
+  separator = gimp_dock_separator_new (dock);
+  gtk_box_pack_start (GTK_BOX (dock->vbox2), separator, FALSE, FALSE, 0);
+  gtk_widget_show (separator);
+  GIMP_DOCK_SEPARATOR (separator)->pane = 2;
+
   gtk_window_set_role (GTK_WINDOW (toolbox), "gimp-toolbox");
 
   gimp_help_connect (GTK_WIDGET (toolbox), gimp_standard_help_func,
@@ -348,6 +360,7 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
   if (tool_button)
     {
       GtkRequisition  button_requisition;
+      GtkAllocation  *alloc2;
       GList          *list;
       gint            n_tools;
       gint            tool_rows;
@@ -365,7 +378,9 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
             n_tools++;
         }
 
-      tool_columns = MAX (1, (allocation->width / button_requisition.width));
+      alloc2 = &GIMP_DOCK (toolbox)->vbox->allocation;
+
+      tool_columns = MAX (1, (alloc2->width / button_requisition.width));
       tool_rows    = n_tools / tool_columns;
 
       if (n_tools % tool_columns)

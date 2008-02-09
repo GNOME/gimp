@@ -29,6 +29,7 @@
 
 #include "base/temp-buf.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 
 #include "gimpviewrendererimage.h"
@@ -65,6 +66,10 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
   GimpViewRendererImage *rendererimage = GIMP_VIEW_RENDERER_IMAGE (renderer);
   GimpImage             *image         = GIMP_IMAGE (renderer->viewable);
   const gchar           *stock_id;
+
+  /* XXXX FIXME FIXME XXXX */
+  if (! renderer->context)
+    renderer->context = gimp_get_user_context (image->gimp);
 
   /* The conditions checked here are mostly a hack to hide the fact that
    * we are creating the channel preview from the image preview and turning

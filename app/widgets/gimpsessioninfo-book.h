@@ -28,6 +28,8 @@ struct _GimpSessionInfoBook
   gint       position;
   gint       current_page;
 
+  gint       pane;
+
   GtkWidget *widget;
 
   /*  list of GimpSessionInfoDockable  */

@@ -1,35 +1,35 @@
 # GIMP sessionrc
 # 
 # This file takes session-specific info (that is info, you want to keep
-# between two GIMP sessions). You are not supposed to edit it manually, but
-# of course you can do. The sessionrc will be entirely rewritten every time
-# you quit GIMP. If this file isn't found, defaults are used.
+# between two GIMP sessions).  You are not supposed to edit it manually, but
+# of course you can do.  The sessionrc will be entirely rewritten every time
+# you quit GIMP.  If this file isn't found, defaults are used.
 
 (session-info "toolbox" "dock"
     (position 48 48)
-    (size 204 720)
-    (open-on-exit)
-    (dock
-        (book
-            (dockable "gimp-tool-options"))))
-(session-info "dock" "dock"
-    (position 300 48)
-    (size 240 720)
+    (size 444 720)
     (open-on-exit)
     (aux-info
-        (show-image-menu "true")
+        (show-image-menu "false")
         (follow-active-image "true"))
     (dock
+        (gutter-position 204)
         (book
+            (pane 1)
+            (dockable "gimp-tool-options"
+                (tab-style icon)))
+        (book
+            (pane 2)
             (dockable "gimp-layer-list"
-	        (tab-style icon))
+                (tab-style icon))
             (dockable "gimp-channel-list"
-	        (tab-style icon))
+                (tab-style icon))
             (dockable "gimp-vectors-list"
-	        (tab-style icon))
+                (tab-style icon))
             (dockable "gimp-undo-history"
-	        (tab-style icon)))
+                (tab-style icon)))
         (book
+            (pane 2)
             (position 360)
             (dockable "gimp-color-editor"
 	        (tab-style preview))

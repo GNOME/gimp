@@ -30,6 +30,9 @@ struct _GimpSessionInfo
   gint                    width;
   gint                    height;
 
+  /* only applies to docks */
+  gint                    gutter_position;
+
   /*  only valid while restoring and saving the session  */
   gboolean                open;
   gint                    screen;

@@ -588,7 +588,7 @@ gimp_view_renderer_draw (GimpViewRenderer   *renderer,
   g_return_if_fail (expose_area != NULL);
 
   if (G_UNLIKELY (renderer->context == NULL))
-    g_warning ("%s: renderer->context is NULL", G_STRFUNC);
+    g_print ("gimp_view_renderer_draw: renderer->context is NULL\n");
 
   if (! GTK_WIDGET_DRAWABLE (widget))
     return;
