@@ -42,8 +42,8 @@ struct _GimpCurve
 
   GimpCurveType  curve_type;
 
-  gint           points[GIMP_CURVE_NUM_POINTS][2];
-  guchar         curve[256];
+  gdouble        points[GIMP_CURVE_NUM_POINTS][2];
+  gdouble        curve[256];
 };
 
 struct _GimpCurveClass
@@ -65,18 +65,21 @@ void            gimp_curve_set_curve_type    (GimpCurve     *curve,
 GimpCurveType   gimp_curve_get_curve_type    (GimpCurve     *curve);
 
 gint            gimp_curve_get_closest_point (GimpCurve     *curve,
-                                              gint           x);
+                                              gdouble        x);
 void            gimp_curve_set_point         (GimpCurve     *curve,
                                               gint           point,
-                                              gint           x,
-                                              gint           y);
+                                              gdouble        x,
+                                              gdouble        y);
 void            gimp_curve_move_point        (GimpCurve     *curve,
                                               gint           point,
-                                              gint           y);
+                                              gdouble        y);
 
 void            gimp_curve_set_curve         (GimpCurve     *curve,
-                                              gint           x,
-                                              gint           y);
+                                              gdouble        x,
+                                              gdouble        y);
+
+gdouble         gimp_curve_map               (GimpCurve     *curve,
+                                              gdouble        x);
 
 void            gimp_curve_get_uchar         (GimpCurve     *curve,
                                               guchar        *dest_array);

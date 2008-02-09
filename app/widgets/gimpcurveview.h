@@ -44,9 +44,10 @@ struct _GimpCurveView
   gint               grid_columns;
 
   gint               selected;
-  gint               last;
-  gint               leftmost;
-  gint               rightmost;
+  gdouble            last_x;
+  gdouble            last_y;
+  gdouble            leftmost;
+  gdouble            rightmost;
   gboolean           grabbed;
 
   GdkCursorType      cursor_type;
@@ -78,9 +79,6 @@ void        gimp_curve_view_set_selected (GimpCurveView *view,
                                           gint           selected);
 void        gimp_curve_view_set_xpos     (GimpCurveView *view,
                                           gint           x);
-void        gimp_curve_view_set_cursor   (GimpCurveView *view,
-                                          gint           x,
-                                          gint           y);
 
 
 #endif /* __GIMP_CURVE_VIEW_H__ */

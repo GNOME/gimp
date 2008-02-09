@@ -1,3 +1,22 @@
+2008-02-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcurve.[ch]: changed all values to be [0.0..1.0]
+	doubles instead of [0..255] integers. Also changed the API to use
+	doubles instead of ints. Still have the fixed-size arrays though.
+
+	(gimp_curve_map): new function to map values.
+
+	* app/gegl/gimpoperationcurves.c: remove private map() function
+	and use the one from GimpCurve.
+
+	* app/gegl/gimpcurvesconfig.c
+	* app/core/gimpdrawable-curves.c: port to the new gdouble API.
+
+	* app/tools/gimpcurvestool.c: use gimp_curve_get_uchar() to get
+	the arrays for the color bars.
+
+	* app/widgets/gimpcurveview.[ch]: port to gdouble and some cleanup.
+
 2008-02-08  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimptexteditor.c: use an entry with completion for

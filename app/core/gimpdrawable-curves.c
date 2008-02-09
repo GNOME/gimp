@@ -128,7 +128,9 @@ gimp_drawable_curves_explicit (GimpDrawable *drawable,
   gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
 
   for (i = 0; i < 256; i++)
-    gimp_curve_set_curve (curve, i, points[i]);
+    gimp_curve_set_curve (curve,
+                          (gdouble) i / 255.0,
+                          (gdouble) points[i] / 255.0);
 
   gimp_data_thaw (GIMP_DATA (curve));
 

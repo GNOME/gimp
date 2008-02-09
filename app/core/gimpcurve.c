@@ -331,18 +331,18 @@ gimp_curve_reset (GimpCurve *curve,
     curve->curve_type = GIMP_CURVE_SMOOTH;
 
   for (i = 0; i < 256; i++)
-    curve->curve[i] = i;
+    curve->curve[i] = (gdouble) i / 255.0;
 
   for (i = 0; i < GIMP_CURVE_NUM_POINTS; i++)
     {
-      curve->points[i][0] = -1;
-      curve->points[i][1] = -1;
+      curve->points[i][0] = -1.0;
+      curve->points[i][1] = -1.0;
     }
 
-  curve->points[0][0]  = 0;
-  curve->points[0][1]  = 0;
-  curve->points[GIMP_CURVE_NUM_POINTS - 1][0] = 255;
-  curve->points[GIMP_CURVE_NUM_POINTS - 1][1] = 255;
+  curve->points[0][0]  = 0.0;
+  curve->points[0][1]  = 0.0;
+  curve->points[GIMP_CURVE_NUM_POINTS - 1][0] = 1.0;
+  curve->points[GIMP_CURVE_NUM_POINTS - 1][1] = 1.0;
 
   g_object_freeze_notify (G_OBJECT (curve));
 
@@ -371,17 +371,16 @@ gimp_curve_set_curve_type (GimpCurve     *curve,
 
       if (curve_type == GIMP_CURVE_SMOOTH)
         {
-          gint   i;
-          gint32 index;
+          gint i;
 
           /*  pick representative points from the curve and make them
            *  control points
            */
           for (i = 0; i <= 8; i++)
             {
-              index = CLAMP0255 (i * 32);
+              gint32 index = CLAMP0255 (i * 32);
 
-              curve->points[i * 2][0] = index;
+              curve->points[i * 2][0] = (gdouble) index / 255.0;
               curve->points[i * 2][1] = curve->curve[index];
             }
 
@@ -404,30 +403,30 @@ gimp_curve_get_curve_type (GimpCurve *curve)
   return curve->curve_type;
 }
 
-#define MIN_DISTANCE 8
+#define MIN_DISTANCE (8.0 / 255.0)
 
 gint
 gimp_curve_get_closest_point (GimpCurve *curve,
-                              gint       x)
+                              gdouble    x)
 {
-  gint closest_point = 0;
-  gint distance      = G_MAXINT;
-  gint i;
+  gint    closest_point = 0;
+  gdouble distance      = G_MAXDOUBLE;
+  gint    i;
 
   g_return_val_if_fail (GIMP_IS_CURVE (curve), 0);
 
   for (i = 0; i < GIMP_CURVE_NUM_POINTS; i++)
     {
-      if (curve->points[i][0] != -1)
-        if (abs (x - curve->points[i][0]) < distance)
+      if (curve->points[i][0] >= 0.0)
+        if (fabs (x - curve->points[i][0]) < distance)
           {
-            distance = abs (x - curve->points[i][0]);
+            distance = fabs (x - curve->points[i][0]);
             closest_point = i;
           }
     }
 
   if (distance > MIN_DISTANCE)
-    closest_point = (x + 8) / 16;
+    closest_point = ((gint) (x * 255.999) + 8) / 16;
 
   return closest_point;
 }
@@ -435,8 +434,8 @@ gimp_curve_get_closest_point (GimpCurve *curve,
 void
 gimp_curve_set_point (GimpCurve *curve,
                       gint       point,
-                      gint       x,
-                      gint       y)
+                      gdouble    x,
+                      gdouble    y)
 {
   g_return_if_fail (GIMP_IS_CURVE (curve));
 
@@ -458,7 +457,7 @@ gimp_curve_set_point (GimpCurve *curve,
 void
 gimp_curve_move_point (GimpCurve *curve,
                        gint       point,
-                       gint       y)
+                       gdouble    y)
 {
   g_return_if_fail (GIMP_IS_CURVE (curve));
 
@@ -478,8 +477,8 @@ gimp_curve_move_point (GimpCurve *curve,
 
 void
 gimp_curve_set_curve (GimpCurve *curve,
-                      gint       x,
-                      gint       y)
+                      gdouble    x,
+                      gdouble    y)
 {
   g_return_if_fail (GIMP_IS_CURVE (curve));
 
@@ -488,7 +487,7 @@ gimp_curve_set_curve (GimpCurve *curve,
 
   g_object_freeze_notify (G_OBJECT (curve));
 
-  curve->curve[x] = y;
+  curve->curve[(gint) (x * 255.999)] = y;
 
   g_object_notify (G_OBJECT (curve), "curve");
 
@@ -497,14 +496,45 @@ gimp_curve_set_curve (GimpCurve *curve,
   gimp_data_dirty (GIMP_DATA (curve));
 }
 
+gdouble
+gimp_curve_map (GimpCurve *curve,
+                gdouble    x)
+{
+  gdouble value;
+
+  g_return_val_if_fail (GIMP_IS_CURVE (curve), 0.0);
+
+  if (x < 0.0)
+    {
+      value = curve->curve[0];
+    }
+  else if (x >= 1.0)
+    {
+      value = curve->curve[255];
+    }
+  else /* interpolate the curve */
+    {
+      gint    index = floor (x * 255.0);
+      gdouble f     = x * 255.0 - index;
+
+      value = ((1.0 - f) * curve->curve[index    ] +
+                      f  * curve->curve[index + 1]);
+    }
+
+  return value;
+}
+
 void
 gimp_curve_get_uchar (GimpCurve *curve,
                       guchar    *dest_array)
 {
+  gint i;
+
   g_return_if_fail (GIMP_IS_CURVE (curve));
   g_return_if_fail (dest_array != NULL);
 
-  memcpy (dest_array, curve->curve, 256);
+  for (i = 0; i < 256; i++)
+    dest_array[i] = curve->curve[i] * 255.999;
 }
 
 
@@ -527,16 +557,16 @@ gimp_curve_calculate (GimpCurve *curve)
       /*  cycle through the curves  */
       num_pts = 0;
       for (i = 0; i < GIMP_CURVE_NUM_POINTS; i++)
-        if (curve->points[i][0] != -1)
+        if (curve->points[i][0] >= 0.0)
           points[num_pts++] = i;
 
       /*  Initialize boundary curve points */
       if (num_pts != 0)
         {
-          for (i = 0; i < curve->points[points[0]][0]; i++)
+          for (i = 0; i < (gint) (curve->points[points[0]][0] * 255.999); i++)
             curve->curve[i] = curve->points[points[0]][1];
 
-          for (i = curve->points[points[num_pts - 1]][0]; i < 256; i++)
+          for (i = (gint) (curve->points[points[num_pts - 1]][0] * 255.999); i < 256; i++)
             curve->curve[i] = curve->points[points[num_pts - 1]][1];
         }
 
@@ -553,10 +583,10 @@ gimp_curve_calculate (GimpCurve *curve)
       /* ensure that the control points are used exactly */
       for (i = 0; i < num_pts; i++)
         {
-          gint x = curve->points[points[i]][0];
-          gint y = curve->points[points[i]][1];
+          gdouble x = curve->points[points[i]][0];
+          gdouble y = curve->points[points[i]][1];
 
-          curve->curve[x] = y;
+          curve->curve[(gint) (x * 255.999)] = y;
         }
 
       g_object_notify (G_OBJECT (curve), "curve");
@@ -661,14 +691,14 @@ gimp_curve_plot (GimpCurve *curve,
    * finally calculate the y(t) values for the given bezier values. We can
    * use homogenously distributed values for t, since x(t) increases linearily.
    */
-  for (i = 0; i <= dx; i++)
+  for (i = 0; i <= (gint) (dx * 255.999); i++)
     {
-      t = i / dx;
+      t = i / dx / 255.0;
       y =     y0 * (1-t) * (1-t) * (1-t) +
           3 * y1 * (1-t) * (1-t) * t     +
           3 * y2 * (1-t) * t     * t     +
               y3 * t     * t     * t;
 
-      curve->curve[ROUND(x0) + i] = CLAMP0255 (ROUND (y));
+      curve->curve[(gint) (x0 * 255.999) + i] = CLAMP (y, 0.0, 1.0);
     }
 }

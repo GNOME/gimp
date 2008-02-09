@@ -75,30 +75,6 @@ gimp_operation_curves_init (GimpOperationCurves *self)
 {
 }
 
-static inline gdouble
-gimp_operation_curves_map (gdouble    value,
-                           GimpCurve *curve)
-{
-  if (value < 0.0)
-    {
-      value = curve->curve[0] / 255.0;
-    }
-  else if (value >= 1.0)
-    {
-      value = curve->curve[255] / 255.0;
-    }
-  else /* interpolate the curve */
-    {
-      gint    index = floor (value * 255.0);
-      gdouble f     = value * 255.0 - index;
-
-      value = ((1.0 - f) * curve->curve[index    ] +
-                      f  * curve->curve[index + 1] ) / 255.0;
-    }
-
-  return value;
-}
-
 static gboolean
 gimp_operation_curves_process (GeglOperation *operation,
                                void          *in_buf,
@@ -121,13 +97,11 @@ gimp_operation_curves_process (GeglOperation *operation,
         {
           gdouble value;
 
-          value = gimp_operation_curves_map (src[channel],
-                                             config->curve[channel + 1]);
+          value = gimp_curve_map (config->curve[channel + 1], src[channel]);
 
           /* don't apply the overall curve to the alpha channel */
           if (channel != ALPHA_PIX)
-            value = gimp_operation_curves_map (value,
-                                               config->curve[0]);
+            value = gimp_curve_map (config->curve[0], value);
 
           dest[channel] = value;
         }
