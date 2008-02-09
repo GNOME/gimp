@@ -411,15 +411,15 @@ gimp_curves_config_save_cruft (GimpCurvesConfig *config,
             {
               gint32 index = CLAMP0255 (j * 32);
 
-              curve->points[j * 2][0] = (gdouble) index / 255.0;
-              curve->points[j * 2][1] = curve->curve[index];
+              curve->points[j * 2].x = (gdouble) index / 255.0;
+              curve->points[j * 2].y = curve->curve[index];
             }
         }
 
       for (j = 0; j < GIMP_CURVE_NUM_POINTS; j++)
         fprintf (file, "%d %d ",
-                 (gint) (curve->points[j][0] * 255.999),
-                 (gint) (curve->points[j][1] * 255.999));
+                 (gint) (curve->points[j].x * 255.999),
+                 (gint) (curve->points[j].y * 255.999));
 
       fprintf (file, "\n");
     }

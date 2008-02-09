@@ -21,6 +21,7 @@
 
 
 #include "gimpdata.h"
+#include "libgimpmath/gimpvector.h"
 
 
 #define GIMP_CURVE_NUM_POINTS 17 /* TODO: get rid of this limit */
@@ -42,7 +43,7 @@ struct _GimpCurve
 
   GimpCurveType  curve_type;
 
-  gdouble        points[GIMP_CURVE_NUM_POINTS][2];
+  GimpVector2    points[GIMP_CURVE_NUM_POINTS];
   gdouble        curve[256];
 };
 

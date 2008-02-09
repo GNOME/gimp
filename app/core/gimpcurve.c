@@ -335,14 +335,14 @@ gimp_curve_reset (GimpCurve *curve,
 
   for (i = 0; i < GIMP_CURVE_NUM_POINTS; i++)
     {
-      curve->points[i][0] = -1.0;
-      curve->points[i][1] = -1.0;
+      curve->points[i].x = -1.0;
+      curve->points[i].y = -1.0;
     }
 
-  curve->points[0][0]  = 0.0;
-  curve->points[0][1]  = 0.0;
-  curve->points[GIMP_CURVE_NUM_POINTS - 1][0] = 1.0;
-  curve->points[GIMP_CURVE_NUM_POINTS - 1][1] = 1.0;
+  curve->points[0].x  = 0.0;
+  curve->points[0].y  = 0.0;
+  curve->points[GIMP_CURVE_NUM_POINTS - 1].x = 1.0;
+  curve->points[GIMP_CURVE_NUM_POINTS - 1].y = 1.0;
 
   g_object_freeze_notify (G_OBJECT (curve));
 
@@ -380,8 +380,8 @@ gimp_curve_set_curve_type (GimpCurve     *curve,
             {
               gint32 index = CLAMP0255 (i * 32);
 
-              curve->points[i * 2][0] = (gdouble) index / 255.0;
-              curve->points[i * 2][1] = curve->curve[index];
+              curve->points[i * 2].x = (gdouble) index / 255.0;
+              curve->points[i * 2].y = curve->curve[index];
             }
 
           g_object_notify (G_OBJECT (curve), "points");
@@ -417,12 +417,12 @@ gimp_curve_get_closest_point (GimpCurve *curve,
 
   for (i = 0; i < GIMP_CURVE_NUM_POINTS; i++)
     {
-      if (curve->points[i][0] >= 0.0)
-        if (fabs (x - curve->points[i][0]) < distance)
-          {
-            distance = fabs (x - curve->points[i][0]);
-            closest_point = i;
-          }
+      if (curve->points[i].x >= 0.0 &&
+          fabs (x - curve->points[i].x) < distance)
+        {
+          distance = fabs (x - curve->points[i].x);
+          closest_point = i;
+        }
     }
 
   if (distance > MIN_DISTANCE)
@@ -444,8 +444,8 @@ gimp_curve_set_point (GimpCurve *curve,
 
   g_object_freeze_notify (G_OBJECT (curve));
 
-  curve->points[point][0] = x;
-  curve->points[point][1] = y;
+  curve->points[point].x = x;
+  curve->points[point].y = y;
 
   g_object_notify (G_OBJECT (curve), "points");
 
@@ -466,7 +466,7 @@ gimp_curve_move_point (GimpCurve *curve,
 
   g_object_freeze_notify (G_OBJECT (curve));
 
-  curve->points[point][1] = y;
+  curve->points[point].y = y;
 
   g_object_notify (G_OBJECT (curve), "points");
 
@@ -557,17 +557,17 @@ gimp_curve_calculate (GimpCurve *curve)
       /*  cycle through the curves  */
       num_pts = 0;
       for (i = 0; i < GIMP_CURVE_NUM_POINTS; i++)
-        if (curve->points[i][0] >= 0.0)
+        if (curve->points[i].x >= 0.0)
           points[num_pts++] = i;
 
       /*  Initialize boundary curve points */
       if (num_pts != 0)
         {
-          for (i = 0; i < (gint) (curve->points[points[0]][0] * 255.999); i++)
-            curve->curve[i] = curve->points[points[0]][1];
+          for (i = 0; i < (gint) (curve->points[points[0]].x * 255.999); i++)
+            curve->curve[i] = curve->points[points[0]].y;
 
-          for (i = (gint) (curve->points[points[num_pts - 1]][0] * 255.999); i < 256; i++)
-            curve->curve[i] = curve->points[points[num_pts - 1]][1];
+          for (i = (gint) (curve->points[points[num_pts - 1]].x * 255.999); i < 256; i++)
+            curve->curve[i] = curve->points[points[num_pts - 1]].y;
         }
 
       for (i = 0; i < num_pts - 1; i++)
@@ -583,8 +583,8 @@ gimp_curve_calculate (GimpCurve *curve)
       /* ensure that the control points are used exactly */
       for (i = 0; i < num_pts; i++)
         {
-          gdouble x = curve->points[points[i]][0];
-          gdouble y = curve->points[points[i]][1];
+          gdouble x = curve->points[points[i]].x;
+          gdouble y = curve->points[points[i]].y;
 
           curve->curve[(gint) (x * 255.999)] = y;
         }
@@ -621,10 +621,10 @@ gimp_curve_plot (GimpCurve *curve,
   gdouble slope;
 
   /* the outer control points for the bezier curve. */
-  x0 = curve->points[p2][0];
-  y0 = curve->points[p2][1];
-  x3 = curve->points[p3][0];
-  y3 = curve->points[p3][1];
+  x0 = curve->points[p2].x;
+  y0 = curve->points[p2].y;
+  x3 = curve->points[p3].x;
+  y3 = curve->points[p3].y;
 
   /*
    * the x values of the inner control points are fixed at
@@ -655,8 +655,8 @@ gimp_curve_plot (GimpCurve *curve,
        * the control handle of the right tangent, to ensure that the curve
        * does not have an inflection point.
        */
-      slope = (curve->points[p4][1] - y0) /
-              (curve->points[p4][0] - x0);
+      slope = (curve->points[p4].y - y0) /
+              (curve->points[p4].x - x0);
 
       y2 = y3 - slope * dx / 3.0;
       y1 = y0 + (y2 - y0) / 2.0;
@@ -664,8 +664,8 @@ gimp_curve_plot (GimpCurve *curve,
   else if (p1 != p2 && p3 == p4)
     {
       /* see previous case */
-      slope = (y3 - curve->points[p1][1]) /
-              (x3 - curve->points[p1][0]);
+      slope = (y3 - curve->points[p1].y) /
+              (x3 - curve->points[p1].x);
 
       y1 = y0 + slope * dx / 3.0;
       y2 = y3 + (y1 - y3) / 2.0;
@@ -676,13 +676,13 @@ gimp_curve_plot (GimpCurve *curve,
        * parallel to the line between the opposite endpoint and the adjacent
        * neighbor.
        */
-      slope = (y3 - curve->points[p1][1]) /
-              (x3 - curve->points[p1][0]);
+      slope = (y3 - curve->points[p1].y) /
+              (x3 - curve->points[p1].x);
 
       y1 = y0 + slope * dx / 3.0;
 
-      slope = (curve->points[p4][1] - y0) /
-              (curve->points[p4][0] - x0);
+      slope = (curve->points[p4].y - y0) /
+              (curve->points[p4].x - x0);
 
       y2 = y3 - slope * dx / 3.0;
     }

@@ -1,5 +1,13 @@
 2008-02-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpcurve.[ch]: keep the anchor points as an array of
+	GimpVector2 instead of plain doubles.
+
+	* app/gegl/gimpcurvesconfig.c
+	* app/widgets/gimpcurveview.c: changed accordingly.
+
+2008-02-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcurveview.c (gimp_curve_view_draw_point): cleanup.
 
 2008-02-09  Michael Natterer  <mitch@gimp.org>
