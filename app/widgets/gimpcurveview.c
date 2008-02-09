@@ -315,19 +315,21 @@ gimp_curve_view_draw_point (GimpCurveView *view,
 {
   gdouble x, y;
 
-  x = view->curve->points[i][0];
+  x =       view->curve->points[i][0];
+  y = 1.0 - view->curve->points[i][1];
+
   if (x < 0.0)
     return;
 
-  y = 1.0 - view->curve->points[i][1];
+#define RADIUS 3
 
   cairo_move_to (cr,
-                 border + (gdouble) width  * x + 3,
+                 border + (gdouble) width  * x + RADIUS,
                  border + (gdouble) height * y);
   cairo_arc (cr,
              border + (gdouble) width  * x,
              border + (gdouble) height * y,
-             3,
+             RADIUS,
              0, 2 * G_PI);
 }
 

@@ -1,5 +1,9 @@
 2008-02-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcurveview.c (gimp_curve_view_draw_point): cleanup.
+
+2008-02-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcurveview.[ch]: port internal cursor stuff to
 	gdouble, fix off-by-one in curve drawing, fix drawing artefact in
 	handle drawing by starting drawing on the handle's outline and not
