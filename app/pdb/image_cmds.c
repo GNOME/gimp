@@ -20,7 +20,6 @@
 
 #include "config.h"
 
-
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -28,9 +27,6 @@
 #include "libgimpmath/gimpmath.h"
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
 #include "base/temp-buf.h"
 #include "config/gimpcoreconfig.h"
@@ -50,14 +46,18 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
+#include "core/gimpparamspecs.h"
 #include "core/gimppickable.h"
 #include "core/gimpselection.h"
 #include "core/gimpunit.h"
-#include "gimp-intl.h"
 #include "gimppdberror.h"
 #include "vectors/gimpvectors.h"
 
+#include "gimppdb.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
+
+#include "gimp-intl.h"
 
 
 #if defined (HAVE_FINITE)

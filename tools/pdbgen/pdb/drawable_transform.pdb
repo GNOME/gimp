@@ -1037,15 +1037,21 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(drawable_transform_flip_simple
-            drawable_transform_flip drawable_transform_flip_default
+            drawable_transform_flip
+            drawable_transform_flip_default
             drawable_transform_perspective
             drawable_transform_perspective_default
             drawable_transform_rotate_simple
-            drawable_transform_rotate drawable_transform_rotate_default
-            drawable_transform_scale drawable_transform_scale_default
-            drawable_transform_shear drawable_transform_shear_default
-            drawable_transform_2d drawable_transform_2d_default
-            drawable_transform_matrix drawable_transform_matrix_default);
+            drawable_transform_rotate
+            drawable_transform_rotate_default
+            drawable_transform_scale
+            drawable_transform_scale_default
+            drawable_transform_shear
+            drawable_transform_shear_default
+            drawable_transform_2d
+            drawable_transform_2d_default
+            drawable_transform_matrix
+            drawable_transform_matrix_default);
 
 %exports = (app => [@procs], lib => [@procs]);
 

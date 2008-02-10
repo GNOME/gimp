@@ -44,18 +44,19 @@ struct _GimpCurveView
   gint               grid_columns;
 
   gint               selected;
-  gint               last;
-  gint               leftmost;
-  gint               rightmost;
+  gdouble            last_x;
+  gdouble            last_y;
+  gdouble            leftmost;
+  gdouble            rightmost;
   gboolean           grabbed;
 
   GdkCursorType      cursor_type;
 
-  gint               xpos;
+  gdouble            xpos;
   PangoLayout       *xpos_layout;
 
-  gint               cursor_x;
-  gint               cursor_y;
+  gdouble            cursor_x;
+  gdouble            cursor_y;
   PangoLayout       *cursor_layout;
   PangoRectangle     cursor_rect;
 };
@@ -77,10 +78,7 @@ GimpCurve * gimp_curve_view_get_curve    (GimpCurveView *view);
 void        gimp_curve_view_set_selected (GimpCurveView *view,
                                           gint           selected);
 void        gimp_curve_view_set_xpos     (GimpCurveView *view,
-                                          gint           x);
-void        gimp_curve_view_set_cursor   (GimpCurveView *view,
-                                          gint           x,
-                                          gint           y);
+                                          gdouble        x);
 
 
 #endif /* __GIMP_CURVE_VIEW_H__ */

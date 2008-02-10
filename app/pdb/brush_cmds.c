@@ -25,9 +25,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
 #include "base/temp-buf.h"
 #include "core/gimp.h"
@@ -35,8 +32,11 @@
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
-#include "gimppdb-utils.h"
+#include "core/gimpparamspecs.h"
 
+#include "gimppdb.h"
+#include "gimppdb-utils.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
 
 
@@ -453,171 +453,6 @@ brush_get_shape_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
-brush_get_radius_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GValueArray  *args,
-                          GError            **error)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  const gchar *name;
-  gdouble radius = 0.0;
-
-  name = g_value_get_string (&args->values[0]);
-
-  if (success)
-    {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
-
-      if (brush)
-        radius = GIMP_BRUSH_GENERATED (brush)->radius;
-      else
-        success = FALSE;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_double (&return_vals->values[1], radius);
-
-  return return_vals;
-}
-
-static GValueArray *
-brush_get_spikes_invoker (GimpProcedure      *procedure,
-                          Gimp               *gimp,
-                          GimpContext        *context,
-                          GimpProgress       *progress,
-                          const GValueArray  *args,
-                          GError            **error)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  const gchar *name;
-  gint32 spikes = 0;
-
-  name = g_value_get_string (&args->values[0]);
-
-  if (success)
-    {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
-
-      if (brush)
-        spikes = GIMP_BRUSH_GENERATED (brush)->spikes;
-      else
-        success = FALSE;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_int (&return_vals->values[1], spikes);
-
-  return return_vals;
-}
-
-static GValueArray *
-brush_get_hardness_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GValueArray  *args,
-                            GError            **error)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  const gchar *name;
-  gdouble hardness = 0.0;
-
-  name = g_value_get_string (&args->values[0]);
-
-  if (success)
-    {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
-
-      if (brush)
-        hardness = GIMP_BRUSH_GENERATED (brush)->hardness;
-      else
-        success = FALSE;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_double (&return_vals->values[1], hardness);
-
-  return return_vals;
-}
-
-static GValueArray *
-brush_get_aspect_ratio_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  const gchar *name;
-  gdouble aspect_ratio = 0.0;
-
-  name = g_value_get_string (&args->values[0]);
-
-  if (success)
-    {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
-
-      if (brush)
-        aspect_ratio = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
-      else
-        success = FALSE;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_double (&return_vals->values[1], aspect_ratio);
-
-  return return_vals;
-}
-
-static GValueArray *
-brush_get_angle_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GValueArray  *args,
-                         GError            **error)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  const gchar *name;
-  gdouble angle = 0.0;
-
-  name = g_value_get_string (&args->values[0]);
-
-  if (success)
-    {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
-
-      if (brush)
-        angle = GIMP_BRUSH_GENERATED (brush)->angle;
-      else
-        success = FALSE;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_double (&return_vals->values[1], angle);
-
-  return return_vals;
-}
-
-static GValueArray *
 brush_set_shape_invoker (GimpProcedure      *procedure,
                          Gimp               *gimp,
                          GimpContext        *context,
@@ -652,6 +487,39 @@ brush_set_shape_invoker (GimpProcedure      *procedure,
 
   if (success)
     g_value_set_enum (&return_vals->values[1], shape_out);
+
+  return return_vals;
+}
+
+static GValueArray *
+brush_get_radius_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  const gchar *name;
+  gdouble radius = 0.0;
+
+  name = g_value_get_string (&args->values[0]);
+
+  if (success)
+    {
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+
+      if (brush)
+        radius = GIMP_BRUSH_GENERATED (brush)->radius;
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_double (&return_vals->values[1], radius);
 
   return return_vals;
 }
@@ -696,6 +564,39 @@ brush_set_radius_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+brush_get_spikes_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  const gchar *name;
+  gint32 spikes = 0;
+
+  name = g_value_get_string (&args->values[0]);
+
+  if (success)
+    {
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+
+      if (brush)
+        spikes = GIMP_BRUSH_GENERATED (brush)->spikes;
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_int (&return_vals->values[1], spikes);
+
+  return return_vals;
+}
+
+static GValueArray *
 brush_set_spikes_invoker (GimpProcedure      *procedure,
                           Gimp               *gimp,
                           GimpContext        *context,
@@ -730,6 +631,39 @@ brush_set_spikes_invoker (GimpProcedure      *procedure,
 
   if (success)
     g_value_set_int (&return_vals->values[1], spikes_out);
+
+  return return_vals;
+}
+
+static GValueArray *
+brush_get_hardness_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GValueArray  *args,
+                            GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  const gchar *name;
+  gdouble hardness = 0.0;
+
+  name = g_value_get_string (&args->values[0]);
+
+  if (success)
+    {
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+
+      if (brush)
+        hardness = GIMP_BRUSH_GENERATED (brush)->hardness;
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_double (&return_vals->values[1], hardness);
 
   return return_vals;
 }
@@ -774,6 +708,39 @@ brush_set_hardness_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+brush_get_aspect_ratio_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GValueArray  *args,
+                                GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  const gchar *name;
+  gdouble aspect_ratio = 0.0;
+
+  name = g_value_get_string (&args->values[0]);
+
+  if (success)
+    {
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+
+      if (brush)
+        aspect_ratio = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_double (&return_vals->values[1], aspect_ratio);
+
+  return return_vals;
+}
+
+static GValueArray *
 brush_set_aspect_ratio_invoker (GimpProcedure      *procedure,
                                 Gimp               *gimp,
                                 GimpContext        *context,
@@ -808,6 +775,39 @@ brush_set_aspect_ratio_invoker (GimpProcedure      *procedure,
 
   if (success)
     g_value_set_double (&return_vals->values[1], aspect_ratio_out);
+
+  return return_vals;
+}
+
+static GValueArray *
+brush_get_angle_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  const gchar *name;
+  gdouble angle = 0.0;
+
+  name = g_value_get_string (&args->values[0]);
+
+  if (success)
+    {
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+
+      if (brush)
+        angle = GIMP_BRUSH_GENERATED (brush)->angle;
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_double (&return_vals->values[1], angle);
 
   return return_vals;
 }
@@ -1239,151 +1239,6 @@ register_brush_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-brush-get-radius
-   */
-  procedure = gimp_procedure_new (brush_get_radius_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brush-get-radius");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-brush-get-radius",
-                                     "Get the radius of a generated brush.",
-                                     "This procedure gets the radius value for a generated brush. If called for any other type of brush, it does not succeed.",
-                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-                                     "Bill Skaggs",
-                                     "2004",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_double ("radius",
-                                                        "radius",
-                                                        "The radius of the brush in pixels",
-                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-brush-get-spikes
-   */
-  procedure = gimp_procedure_new (brush_get_spikes_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brush-get-spikes");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-brush-get-spikes",
-                                     "Get the number of spikes for a generated brush.",
-                                     "This procedure gets the number of spikes for a generated brush. If called for any other type of brush, it does not succeed.",
-                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-                                     "Bill Skaggs",
-                                     "2004",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("spikes",
-                                                          "spikes",
-                                                          "The number of spikes on the brush.",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-brush-get-hardness
-   */
-  procedure = gimp_procedure_new (brush_get_hardness_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brush-get-hardness");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-brush-get-hardness",
-                                     "Get the hardness of a generated brush.",
-                                     "This procedure gets the hardness of a generated brush. The hardness of a brush is the amount its intensity fades at the outside edge. If called for any other type of brush, the function does not succeed.",
-                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-                                     "Bill Skaggs",
-                                     "2004",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_double ("hardness",
-                                                        "hardness",
-                                                        "The hardness of the brush.",
-                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-brush-get-aspect-ratio
-   */
-  procedure = gimp_procedure_new (brush_get_aspect_ratio_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brush-get-aspect-ratio");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-brush-get-aspect-ratio",
-                                     "Get the aspect ratio of a generated brush.",
-                                     "This procedure gets the aspect ratio of a generated brush. If called for any other type of brush, it does not succeed.",
-                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-                                     "Bill Skaggs",
-                                     "2004",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_double ("aspect-ratio",
-                                                        "aspect ratio",
-                                                        "The aspect ratio of the brush.",
-                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-brush-get-angle
-   */
-  procedure = gimp_procedure_new (brush_get_angle_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brush-get-angle");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-brush-get-angle",
-                                     "Get the rotation angle of a generated brush.",
-                                     "This procedure gets the angle of rotation for a generated brush. If called for any other type of brush, it does not succeed.",
-                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
-                                     "Bill Skaggs",
-                                     "2004",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
-                                                       "name",
-                                                       "The brush name",
-                                                       FALSE, FALSE, TRUE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_double ("angle",
-                                                        "angle",
-                                                        "The rotation angle of the brush.",
-                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
    * gimp-brush-set-shape
    */
   procedure = gimp_procedure_new (brush_set_shape_invoker);
@@ -1417,6 +1272,35 @@ register_brush_procs (GimpPDB *pdb)
                                                       GIMP_TYPE_BRUSH_GENERATED_SHAPE,
                                                       GIMP_BRUSH_GENERATED_CIRCLE,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-brush-get-radius
+   */
+  procedure = gimp_procedure_new (brush_get_radius_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brush-get-radius");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-get-radius",
+                                     "Get the radius of a generated brush.",
+                                     "This procedure gets the radius value for a generated brush. If called for any other type of brush, it does not succeed.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("radius",
+                                                        "radius",
+                                                        "The radius of the brush in pixels",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1456,6 +1340,35 @@ register_brush_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-brush-get-spikes
+   */
+  procedure = gimp_procedure_new (brush_get_spikes_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brush-get-spikes");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-get-spikes",
+                                     "Get the number of spikes for a generated brush.",
+                                     "This procedure gets the number of spikes for a generated brush. If called for any other type of brush, it does not succeed.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("spikes",
+                                                          "spikes",
+                                                          "The number of spikes on the brush.",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-brush-set-spikes
    */
   procedure = gimp_procedure_new (brush_set_spikes_invoker);
@@ -1487,6 +1400,35 @@ register_brush_procs (GimpPDB *pdb)
                                                           "The number of spikes actually assigned",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-brush-get-hardness
+   */
+  procedure = gimp_procedure_new (brush_get_hardness_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brush-get-hardness");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-get-hardness",
+                                     "Get the hardness of a generated brush.",
+                                     "This procedure gets the hardness of a generated brush. The hardness of a brush is the amount its intensity fades at the outside edge. If called for any other type of brush, the function does not succeed.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("hardness",
+                                                        "hardness",
+                                                        "The hardness of the brush.",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1526,6 +1468,35 @@ register_brush_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-brush-get-aspect-ratio
+   */
+  procedure = gimp_procedure_new (brush_get_aspect_ratio_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brush-get-aspect-ratio");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-get-aspect-ratio",
+                                     "Get the aspect ratio of a generated brush.",
+                                     "This procedure gets the aspect ratio of a generated brush. If called for any other type of brush, it does not succeed.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("aspect-ratio",
+                                                        "aspect ratio",
+                                                        "The aspect ratio of the brush.",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-brush-set-aspect-ratio
    */
   procedure = gimp_procedure_new (brush_set_aspect_ratio_invoker);
@@ -1555,6 +1526,35 @@ register_brush_procs (GimpPDB *pdb)
                                    g_param_spec_double ("aspect-ratio-out",
                                                         "aspect ratio out",
                                                         "The brush aspect ratio actually assigned",
+                                                        -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-brush-get-angle
+   */
+  procedure = gimp_procedure_new (brush_get_angle_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brush-get-angle");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-brush-get-angle",
+                                     "Get the rotation angle of a generated brush.",
+                                     "This procedure gets the angle of rotation for a generated brush. If called for any other type of brush, it does not succeed.",
+                                     "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
+                                     "Bill Skaggs",
+                                     "2004",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The brush name",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("angle",
+                                                        "angle",
+                                                        "The rotation angle of the brush.",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

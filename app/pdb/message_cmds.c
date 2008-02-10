@@ -25,16 +25,17 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
-#include "gimp-intl.h"
+#include "core/gimpparamspecs.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
 
+#include "gimppdb.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
+
+#include "gimp-intl.h"
 
 
 static GValueArray *

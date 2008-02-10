@@ -103,7 +103,9 @@ CODE
               "plug-in/gimppluginmanager.h"
               "gimp-intl.h");
 
-@procs = qw(message message_get_handler message_set_handler);
+@procs = qw(message
+            message_get_handler
+            message_set_handler);
 
 %exports = (app => [@procs], lib => [@procs]);
 

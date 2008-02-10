@@ -55,7 +55,7 @@ static void     gimp_operation_tile_source_set_property (GObject       *object,
 
 static void     gimp_operation_tile_source_prepare      (GeglOperation *operation);
 static GeglRectangle
-          gimp_operation_tile_source_get_defined_region (GeglOperation *operation);
+          gimp_operation_tile_source_get_bounding_box (GeglOperation *operation);
 static gboolean gimp_operation_tile_source_process      (GeglOperation *operation,
                                                          GeglNodeContext *context,
                                                          GeglBuffer          *output,
@@ -81,8 +81,8 @@ gimp_operation_tile_source_class_init (GimpOperationTileSourceClass *klass)
 
   operation_class->name               = "gimp-tilemanager-source";
   operation_class->prepare            = gimp_operation_tile_source_prepare;
-  operation_class->get_defined_region = gimp_operation_tile_source_get_defined_region;
-  operation_class->adjust_result_region = NULL; /* the default source is
+  operation_class->get_bounding_box   = gimp_operation_tile_source_get_bounding_box;
+  operation_class->get_cached_region = NULL; /* the default source is
                                                  expanding to agressivly
                                                  make use of available caching,
                                                  this behavior is at least a
@@ -197,7 +197,7 @@ gimp_operation_tile_source_prepare (GeglOperation *operation)
 }
 
 static GeglRectangle
-gimp_operation_tile_source_get_defined_region (GeglOperation *operation)
+gimp_operation_tile_source_get_bounding_box (GeglOperation *operation)
 {
   GimpOperationTileSource *self   = GIMP_OPERATION_TILE_SOURCE (operation);
   GeglRectangle            result = { 0, };

@@ -183,8 +183,7 @@ CODE
     );
 }
 
-@headers = qw("core/gimp.h"
-              "core/gimpimage.h"
+@headers = qw("core/gimpimage.h"
               "core/gimpimage-convert.h"
               "gimppdb-utils.h");
 

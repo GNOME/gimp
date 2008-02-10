@@ -615,11 +615,15 @@ CODE
 	      "file/file-procedure.h"
               "file/file-utils.h");
 
-@procs = qw(file_load file_load_layer file_load_layers
+@procs = qw(file_load
+            file_load_layer
+            file_load_layers
             file_save
-            file_load_thumbnail file_save_thumbnail
+            file_load_thumbnail
+            file_save_thumbnail
             temp_name
-            register_magic_load_handler register_load_handler
+            register_magic_load_handler
+            register_load_handler
             register_save_handler
             register_file_handler_mime
             register_thumbnail_loader);

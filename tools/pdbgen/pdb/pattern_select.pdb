@@ -100,9 +100,12 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h" "core/gimpdatafactory.h");
+@headers = qw("core/gimp.h"
+              "core/gimpdatafactory.h");
 
-@procs = qw(patterns_popup patterns_close_popup patterns_set_popup);
+@procs = qw(patterns_popup
+            patterns_close_popup
+            patterns_set_popup);
 
 %exports = (app => [@procs], lib => [@procs]);
 

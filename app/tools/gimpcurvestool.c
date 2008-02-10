@@ -178,8 +178,8 @@ gimp_curves_tool_init (GimpCurvesTool *tool)
 
   tool->lut = gimp_lut_new ();
 
-  for (i = 0; i < G_N_ELEMENTS (tool->col_value); i++)
-    tool->col_value[i] = -1;
+  for (i = 0; i < G_N_ELEMENTS (tool->picked_color); i++)
+    tool->picked_color[i] = -1.0;
 
   im_tool->apply_func = (GimpImageMapApplyFunc) gimp_lut_process;
   im_tool->apply_data = tool->lut;
@@ -248,19 +248,16 @@ gimp_curves_tool_button_release (GimpTool              *tool,
   if (state & GDK_SHIFT_MASK)
     {
       GimpCurve *curve = config->curve[config->channel];
+      gdouble    value = c_tool->picked_color[config->channel];
       gint       closest;
 
-      closest =
-        gimp_curve_get_closest_point (curve,
-                                      c_tool->col_value[config->channel]);
+      closest = gimp_curve_get_closest_point (curve, value);
 
       gimp_curve_view_set_selected (GIMP_CURVE_VIEW (c_tool->graph),
                                     closest);
 
-      gimp_curve_set_point (curve,
-                            closest,
-                            c_tool->col_value[config->channel],
-                            curve->curve[c_tool->col_value[config->channel]]);
+      gimp_curve_set_point (curve, closest,
+                            value, gimp_curve_map (curve, value));
     }
   else if (state & GDK_CONTROL_MASK)
     {
@@ -269,19 +266,16 @@ gimp_curves_tool_button_release (GimpTool              *tool,
       for (i = 0; i < 5; i++)
         {
           GimpCurve *curve = config->curve[i];
+          gdouble    value = c_tool->picked_color[i];
           gint       closest;
 
-          closest =
-            gimp_curve_get_closest_point (curve,
-                                          c_tool->col_value[i]);
+          closest = gimp_curve_get_closest_point (curve, value);
 
           gimp_curve_view_set_selected (GIMP_CURVE_VIEW (c_tool->graph),
                                         closest);
 
-          gimp_curve_set_point (curve,
-                                closest,
-                                c_tool->col_value[i],
-                                curve->curve[c_tool->col_value[i]]);
+          gimp_curve_set_point (curve, closest,
+                                value, gimp_curve_map (curve, value));
         }
     }
 
@@ -341,26 +335,21 @@ gimp_curves_tool_color_picked (GimpColorTool      *color_tool,
 {
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (color_tool);
   GimpDrawable   *drawable;
-  guchar          r, g, b, a;
 
   drawable = GIMP_IMAGE_MAP_TOOL (tool)->drawable;
 
-  gimp_rgba_get_uchar (color, &r, &g, &b, &a);
-
-  tool->col_value[GIMP_HISTOGRAM_RED]   = r;
-  tool->col_value[GIMP_HISTOGRAM_GREEN] = g;
-  tool->col_value[GIMP_HISTOGRAM_BLUE]  = b;
+  tool->picked_color[GIMP_HISTOGRAM_RED]   = color->r;
+  tool->picked_color[GIMP_HISTOGRAM_GREEN] = color->g;
+  tool->picked_color[GIMP_HISTOGRAM_BLUE]  = color->b;
 
   if (gimp_drawable_has_alpha (drawable))
-    tool->col_value[GIMP_HISTOGRAM_ALPHA] = a;
+    tool->picked_color[GIMP_HISTOGRAM_ALPHA] = color->a;
 
-  if (gimp_drawable_is_indexed (drawable))
-    tool->col_value[GIMP_HISTOGRAM_ALPHA] = color_index;
-
-  tool->col_value[GIMP_HISTOGRAM_VALUE] = MAX (MAX (r, g), b);
+  tool->picked_color[GIMP_HISTOGRAM_VALUE] = MAX (MAX (color->r, color->g),
+                                                  color->b);
 
   gimp_curve_view_set_xpos (GIMP_CURVE_VIEW (tool->graph),
-                            tool->col_value[tool->config->channel]);
+                            tool->picked_color[tool->config->channel]);
 }
 
 static GeglNode *
@@ -641,29 +630,35 @@ gimp_curves_tool_config_notify (GObject        *object,
 
       switch (config->channel)
         {
+          guchar r[256];
+          guchar g[256];
+          guchar b[256];
+
         case GIMP_HISTOGRAM_VALUE:
         case GIMP_HISTOGRAM_ALPHA:
         case GIMP_HISTOGRAM_RGB:
+          gimp_curve_get_uchar (curve, r);
+
           gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->xrange),
-                                      curve->curve,
-                                      curve->curve,
-                                      curve->curve);
+                                      r, r, r);
           break;
 
         case GIMP_HISTOGRAM_RED:
         case GIMP_HISTOGRAM_GREEN:
         case GIMP_HISTOGRAM_BLUE:
+          gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_RED],   r);
+          gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_GREEN], g);
+          gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_BLUE],  b);
+
           gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->xrange),
-                                      config->curve[GIMP_HISTOGRAM_RED]->curve,
-                                      config->curve[GIMP_HISTOGRAM_GREEN]->curve,
-                                      config->curve[GIMP_HISTOGRAM_BLUE]->curve);
+                                      r, g, b);
           break;
         }
 
       gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->graph),
                                        config->channel);
       gimp_curve_view_set_xpos (GIMP_CURVE_VIEW (tool->graph),
-                                tool->col_value[config->channel]);
+                                tool->picked_color[config->channel]);
 
       gimp_color_bar_set_channel (GIMP_COLOR_BAR (tool->yrange),
                                   config->channel);

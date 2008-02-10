@@ -210,9 +210,12 @@ CODE
 
 @headers = qw("core/gimp.h");
 
-@procs = qw(display_is_valid display_new display_delete
+@procs = qw(display_is_valid
+            display_new
+            display_delete
             display_get_window_handle
-	    displays_flush displays_reconnect);
+	    displays_flush
+            displays_reconnect);
 
 %exports = (app => [@procs], lib => [@procs]);
 

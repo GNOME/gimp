@@ -28,14 +28,12 @@
 #include "libgimpconfig/gimpconfig.h"
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
 #include "core/gimp-utils.h"
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimpparamspecs.h"
 #include "file/file-open.h"
 #include "file/file-procedure.h"
 #include "file/file-save.h"
@@ -43,6 +41,8 @@
 #include "plug-in/gimppluginmanager-file.h"
 #include "plug-in/gimppluginmanager.h"
 
+#include "gimppdb.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
 
 

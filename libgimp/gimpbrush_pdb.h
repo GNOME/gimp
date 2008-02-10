@@ -55,21 +55,21 @@ gboolean                gimp_brush_get_spacing      (const gchar              *n
 gboolean                gimp_brush_set_spacing      (const gchar              *name,
                                                      gint                      spacing);
 GimpBrushGeneratedShape gimp_brush_get_shape        (const gchar              *name);
-gdouble                 gimp_brush_get_radius       (const gchar              *name);
-gint                    gimp_brush_get_spikes       (const gchar              *name);
-gdouble                 gimp_brush_get_hardness     (const gchar              *name);
-gdouble                 gimp_brush_get_aspect_ratio (const gchar              *name);
-gdouble                 gimp_brush_get_angle        (const gchar              *name);
 GimpBrushGeneratedShape gimp_brush_set_shape        (const gchar              *name,
                                                      GimpBrushGeneratedShape   shape_in);
+gdouble                 gimp_brush_get_radius       (const gchar              *name);
 gdouble                 gimp_brush_set_radius       (const gchar              *name,
                                                      gdouble                   radius_in);
+gint                    gimp_brush_get_spikes       (const gchar              *name);
 gint                    gimp_brush_set_spikes       (const gchar              *name,
                                                      gint                      spikes_in);
+gdouble                 gimp_brush_get_hardness     (const gchar              *name);
 gdouble                 gimp_brush_set_hardness     (const gchar              *name,
                                                      gdouble                   hardness_in);
+gdouble                 gimp_brush_get_aspect_ratio (const gchar              *name);
 gdouble                 gimp_brush_set_aspect_ratio (const gchar              *name,
                                                      gdouble                   aspect_ratio_in);
+gdouble                 gimp_brush_get_angle        (const gchar              *name);
 gdouble                 gimp_brush_set_angle        (const gchar              *name,
                                                      gdouble                   angle_in);
 

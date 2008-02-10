@@ -25,16 +25,16 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer-filter.h"
 #include "core/gimpcontainer.h"
-#include "gimppdb-utils.h"
+#include "core/gimpparamspecs.h"
 
+#include "gimppdb.h"
+#include "gimppdb-utils.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
 
 

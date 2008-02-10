@@ -717,11 +717,12 @@ CODE
               "gimppdb-utils.h");
 
 @procs = qw(context_push context_pop
-            context_get_paint_method context_set_paint_method
             context_list_paint_methods
+            context_get_paint_method context_set_paint_method
             context_get_foreground context_set_foreground
             context_get_background context_set_background
-            context_set_default_colors context_swap_colors
+            context_set_default_colors
+            context_swap_colors
             context_get_opacity context_set_opacity
             context_get_paint_mode context_set_paint_mode
             context_get_brush context_set_brush

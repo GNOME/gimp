@@ -942,7 +942,6 @@ CODE
 
 
 @headers = qw("libgimpmath/gimpmath.h"
-              "core/gimp.h"
               "core/gimppaintinfo.h"
               "paint/gimppaintcore.h"
               "paint/gimppaintcore-stroke.h"

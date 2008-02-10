@@ -158,7 +158,9 @@ CODE
               "core/gimppattern.h"
               "gimppdb-utils.h");
 
-@procs = qw(patterns_refresh patterns_get_list patterns_get_pattern
+@procs = qw(patterns_refresh
+            patterns_get_list
+            patterns_get_pattern
             patterns_get_pattern_data);
 
 %exports = (app => [@procs], lib => [@procs]);

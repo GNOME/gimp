@@ -956,11 +956,18 @@ CODE
               "gimppdb-utils.h"
               "gimp-intl.h");
 
-@procs = qw(layer_new layer_new_from_drawable layer_copy
-            layer_add_alpha layer_flatten
-            layer_scale layer_resize layer_resize_to_image_size
-	    layer_translate layer_set_offsets
-            layer_create_mask layer_get_mask layer_from_mask
+@procs = qw(layer_new
+            layer_new_from_drawable
+            layer_copy
+            layer_add_alpha
+            layer_flatten
+            layer_scale
+            layer_resize layer_resize_to_image_size
+	    layer_translate
+            layer_set_offsets
+            layer_create_mask
+            layer_get_mask
+            layer_from_mask
             layer_add_mask layer_remove_mask
 	    layer_is_floating_sel
             layer_get_lock_alpha layer_set_lock_alpha

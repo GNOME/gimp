@@ -373,7 +373,9 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
       gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
 
       for (j = 0; j < GIMP_CURVE_NUM_POINTS; j++)
-        gimp_curve_set_point (curve, j, index[i][j], value[i][j]);
+        gimp_curve_set_point (curve, j,
+                              (gdouble) index[i][j] / 255.0,
+                              (gdouble) value[i][j] / 255.0);
 
       gimp_data_thaw (GIMP_DATA (curve));
     }
@@ -387,9 +389,8 @@ gboolean
 gimp_curves_config_save_cruft (GimpCurvesConfig *config,
                                gpointer          fp)
 {
-  FILE   *file = fp;
-  gint    i, j;
-  gint32  index;
+  FILE *file = fp;
+  gint  i;
 
   g_return_val_if_fail (GIMP_IS_CURVES_CONFIG (config), FALSE);
   g_return_val_if_fail (file != NULL, FALSE);
@@ -399,6 +400,7 @@ gimp_curves_config_save_cruft (GimpCurvesConfig *config,
   for (i = 0; i < 5; i++)
     {
       GimpCurve *curve = config->curve[i];
+      gint       j;
 
       if (curve->curve_type == GIMP_CURVE_FREE)
         {
@@ -407,17 +409,17 @@ gimp_curves_config_save_cruft (GimpCurvesConfig *config,
            */
           for (j = 0; j <= 8; j++)
             {
-              index = CLAMP0255 (j * 32);
+              gint32 index = CLAMP0255 (j * 32);
 
-              curve->points[j * 2][0] = index;
-              curve->points[j * 2][1] = curve->curve[index];
+              curve->points[j * 2].x = (gdouble) index / 255.0;
+              curve->points[j * 2].y = curve->curve[index];
             }
         }
 
       for (j = 0; j < GIMP_CURVE_NUM_POINTS; j++)
         fprintf (file, "%d %d ",
-                 curve->points[j][0],
-                 curve->points[j][1]);
+                 (gint) (curve->points[j].x * 255.999),
+                 (gint) (curve->points[j].y * 255.999));
 
       fprintf (file, "\n");
     }
@@ -442,11 +444,13 @@ gimp_curves_config_to_cruft (GimpCurvesConfig *config,
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
     {
-      gimp_curve_get_uchar (config->curve[channel], cruft->curve[channel]);
+      gimp_curve_get_uchar (config->curve[channel],
+                            cruft->curve[channel]);
     }
 
   if (! is_color)
     {
-      gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_ALPHA], cruft->curve[1]);
+      gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_ALPHA],
+                            cruft->curve[1]);
     }
 }

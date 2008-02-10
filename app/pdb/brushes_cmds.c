@@ -25,9 +25,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
 #include "base/temp-buf.h"
 #include "core/gimp.h"
@@ -35,8 +32,11 @@
 #include "core/gimpcontainer-filter.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
-#include "gimppdb-utils.h"
+#include "core/gimpparamspecs.h"
 
+#include "gimppdb.h"
+#include "gimppdb-utils.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
 
 

@@ -20,22 +20,22 @@
 
 #include "config.h"
 
-
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayer.h"
-#include "gimp-intl.h"
-#include "gimppdb-utils.h"
+#include "core/gimpparamspecs.h"
 #include "gimppdberror.h"
 
+#include "gimppdb.h"
+#include "gimppdb-utils.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
+
+#include "gimp-intl.h"
 
 
 static GValueArray *

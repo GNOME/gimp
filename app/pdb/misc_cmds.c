@@ -20,30 +20,18 @@
 
 #include "config.h"
 
-#include <glib.h>
-
-#ifdef G_OS_WIN32
-#include <process.h>
-#endif
-
-#include <sys/types.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
+
+#include "base/base-utils.h"
+#include "core/gimp.h"
 #include "core/gimpparamspecs.h"
 
-#include "core/gimp.h"
-
+#include "gimppdb.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
 
 
@@ -77,7 +65,7 @@ getpid_invoker (GimpProcedure      *procedure,
   GValueArray *return_vals;
   gint32 pid = 0;
 
-  pid = getpid ();
+  pid = get_pid ();
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE);
   g_value_set_int (&return_vals->values[1], pid);

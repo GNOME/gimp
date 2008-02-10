@@ -56,10 +56,10 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw(<sys/types.h> <unistd.h> <process.h>) ],
+	headers => [ qw("base/base-utils.h") ],
 	code    => <<'CODE'
 {
-  pid = getpid ();
+  pid = get_pid ();
 }
 CODE
     );
@@ -82,8 +82,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimp.h") ],
-	code    => <<'CODE'
+	code => <<'CODE'
 {
   gimp_exit (gimp, force);
 }
@@ -92,7 +91,11 @@ CODE
 }
 
 
-@procs = qw(version getpid quit);
+@headers = qw("core/gimp.h");
+
+@procs = qw(version
+            getpid
+            quit);
 
 %exports = (app => [@procs], lib => [@procs[0..1]]);
 

@@ -29,7 +29,6 @@
 
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
-#include "base/tile-manager.h"
 
 #include "paint-funcs/paint-funcs.h"
 

@@ -68,6 +68,11 @@ static gboolean   gimp_curve_view_leave_notify   (GtkWidget        *widget,
 static gboolean   gimp_curve_view_key_press      (GtkWidget        *widget,
                                                   GdkEventKey      *kevent);
 
+static void       gimp_curve_view_set_cursor     (GimpCurveView    *view,
+                                                  gdouble           x,
+                                                  gdouble           y);
+static void       gimp_curve_view_unset_cursor   (GimpCurveView *view);
+
 
 G_DEFINE_TYPE (GimpCurveView, gimp_curve_view,
                GIMP_TYPE_HISTOGRAM_VIEW)
@@ -117,11 +122,12 @@ gimp_curve_view_init (GimpCurveView *view)
 {
   view->curve       = NULL;
   view->selected    = 0;
-  view->last        = 0;
+  view->last_x      = 0.0;
+  view->last_y      = 0.0;
   view->cursor_type = -1;
-  view->xpos        = -1;
-  view->cursor_x    = -1;
-  view->cursor_y    = -1;
+  view->xpos        = -1.0;
+  view->cursor_x    = -1.0;
+  view->cursor_y    = -1.0;
 
   GTK_WIDGET_SET_FLAGS (view, GTK_CAN_FOCUS);
 
@@ -307,21 +313,23 @@ gimp_curve_view_draw_point (GimpCurveView *view,
                             gint           height,
                             gint           border)
 {
-  gint x, y;
+  gdouble x, y;
 
-  x = view->curve->points[i][0];
-  if (x < 0)
+  x =       view->curve->points[i].x;
+  y = 1.0 - view->curve->points[i].y;
+
+  if (x < 0.0)
     return;
 
-  y = 255 - view->curve->points[i][1];
+#define RADIUS 3
 
   cairo_move_to (cr,
-                 border + (gdouble) width  * x / 256.0,
-                 border + (gdouble) height * y / 256.0);
+                 border + (gdouble) width  * x + RADIUS,
+                 border + (gdouble) height * y);
   cairo_arc (cr,
-             border + (gdouble) width  * x / 256.0,
-             border + (gdouble) height * y / 256.0,
-             3,
+             border + (gdouble) width  * x,
+             border + (gdouble) height * y,
+             RADIUS,
              0, 2 * G_PI);
 }
 
@@ -335,7 +343,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
   gint           border;
   gint           width;
   gint           height;
-  gint           x, y;
+  gdouble        x, y;
   gint           i;
 
   GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
@@ -345,8 +353,8 @@ gimp_curve_view_expose (GtkWidget      *widget,
 
   border = GIMP_HISTOGRAM_VIEW (view)->border_width;
 
-  width  = widget->allocation.width  - 2 * border;
-  height = widget->allocation.height - 2 * border;
+  width  = widget->allocation.width  - 2 * border - 1;
+  height = widget->allocation.height - 2 * border - 1;
 
   cr = gdk_cairo_create (widget->window);
 
@@ -361,26 +369,26 @@ gimp_curve_view_expose (GtkWidget      *widget,
   /*  Draw the curve  */
   gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
 
-  x = 0;
-  y = 255 - view->curve->curve[x];
+  x = 0.0;
+  y = 1.0 - gimp_curve_map (view->curve, 0.0);
 
   cairo_move_to (cr,
-                 border + (gdouble) width  * x / 256.0,
-                 border + (gdouble) height * y / 256.0);
+                 border + (gdouble) width  * x,
+                 border + (gdouble) height * y);
 
-  for (i = 0; i < 256; i++)
+  for (i = 1; i < 256; i++)
     {
-      x = i;
-      y = 255 - view->curve->curve[x];
+      x = (gdouble) i / 255.0;
+      y = 1.0 - gimp_curve_map (view->curve, x);
 
       cairo_line_to (cr,
-                     border + (gdouble) width  * x / 256.0,
-                     border + (gdouble) height * y / 256.0);
+                     border + (gdouble) width  * x,
+                     border + (gdouble) height * y);
     }
 
   cairo_stroke (cr);
 
-  if (view->curve->curve_type == GIMP_CURVE_SMOOTH)
+  if (gimp_curve_get_curve_type (view->curve) == GIMP_CURVE_SMOOTH)
     {
       gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
 
@@ -404,44 +412,46 @@ gimp_curve_view_expose (GtkWidget      *widget,
        }
     }
 
-  if (view->xpos >= 0)
+  if (view->xpos >= 0.0)
     {
+      gint  layout_x;
+      gint  layout_y;
       gchar buf[32];
 
       gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
 
       /* draw the color line */
       cairo_move_to (cr,
-                     border + ROUND ((gdouble) width * view->xpos / 256.0),
+                     border + ROUND ((gdouble) width * view->xpos),
                      border);
       cairo_line_to (cr,
-                     border + ROUND ((gdouble) width * view->xpos / 256.0),
+                     border + ROUND ((gdouble) width * view->xpos),
                      border + height - 1);
       cairo_stroke (cr);
 
       /* and xpos indicator */
-      g_snprintf (buf, sizeof (buf), "x:%d", view->xpos);
+      g_snprintf (buf, sizeof (buf), "x:%d", (gint) (view->xpos * 255.999));
 
       if (! view->xpos_layout)
         view->xpos_layout = gtk_widget_create_pango_layout (widget, NULL);
 
       pango_layout_set_text (view->xpos_layout, buf, -1);
-      pango_layout_get_pixel_size (view->xpos_layout, &x, &y);
+      pango_layout_get_pixel_size (view->xpos_layout, &layout_x, &layout_y);
 
-      if (view->xpos < 127)
-        x = border;
+      if (view->xpos < 0.5)
+        layout_x = border;
       else
-        x = -(x + border);
+        layout_x = -(layout_x + border);
 
       cairo_move_to (cr,
-                     border + (gdouble) width * view->xpos / 256.0 + x,
-                     border + height - border - y);
+                     border + (gdouble) width * view->xpos + layout_x,
+                     border + height - border - layout_y);
       pango_cairo_show_layout (cr, view->xpos_layout);
       cairo_fill (cr);
     }
 
-  if (view->cursor_x >= 0 && view->cursor_x <= 255 &&
-      view->cursor_y >= 0 && view->cursor_y <= 255)
+  if (view->cursor_x >= 0.0 && view->cursor_x <= 1.0 &&
+      view->cursor_y >= 0.0 && view->cursor_y <= 1.0)
     {
       gchar buf[32];
       gint  w, h;
@@ -470,7 +480,8 @@ gimp_curve_view_expose (GtkWidget      *widget,
       cairo_stroke (cr);
 
       g_snprintf (buf, sizeof (buf), "x:%3d y:%3d",
-                  view->cursor_x, 255 - view->cursor_y);
+                  (gint) (view->cursor_x * 255.999),
+                  (gint) ((1.0 - view->cursor_y) * 255.999));
       pango_layout_set_text (view->cursor_layout, buf, -1);
 
       gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
@@ -512,7 +523,8 @@ gimp_curve_view_button_press (GtkWidget      *widget,
   GimpCurve     *curve = view->curve;
   gint           border;
   gint           width, height;
-  gint           x, y;
+  gdouble        x;
+  gdouble        y;
   gint           closest_point;
   gint           i;
 
@@ -523,11 +535,11 @@ gimp_curve_view_button_press (GtkWidget      *widget,
   width  = widget->allocation.width  - 2 * border;
   height = widget->allocation.height - 2 * border;
 
-  x = ROUND (((gdouble) (bevent->x - border) / (gdouble) width)  * 255.0);
-  y = ROUND (((gdouble) (bevent->y - border) / (gdouble) height) * 255.0);
+  x = (gdouble) (bevent->x - border) / (gdouble) width;
+  y = (gdouble) (bevent->y - border) / (gdouble) height;
 
-  x = CLAMP0255 (x);
-  y = CLAMP0255 (y);
+  x = CLAMP (x, 0.0, 1.0);
+  y = CLAMP (y, 0.0, 1.0);
 
   closest_point = gimp_curve_get_closest_point (curve, x);
 
@@ -535,36 +547,36 @@ gimp_curve_view_button_press (GtkWidget      *widget,
 
   set_cursor (view, GDK_TCROSS);
 
-  switch (curve->curve_type)
+  switch (gimp_curve_get_curve_type (curve))
     {
     case GIMP_CURVE_SMOOTH:
       /*  determine the leftmost and rightmost points  */
-      view->leftmost = -1;
+      view->leftmost = -1.0;
       for (i = closest_point - 1; i >= 0; i--)
-        if (curve->points[i][0] != -1)
+        if (curve->points[i].x >= 0.0)
           {
-            view->leftmost = curve->points[i][0];
+            view->leftmost = curve->points[i].x;
             break;
           }
 
-      view->rightmost = 256;
+      view->rightmost = 2.0;
       for (i = closest_point + 1; i < GIMP_CURVE_NUM_POINTS; i++)
-        if (curve->points[i][0] != -1)
+        if (curve->points[i].x >= 0.0)
           {
-            view->rightmost = curve->points[i][0];
+            view->rightmost = curve->points[i].x;
             break;
           }
 
       gimp_curve_view_set_selected (view, closest_point);
 
-      gimp_curve_set_point (curve, view->selected, x, 255 - y);
+      gimp_curve_set_point (curve, view->selected, x, 1.0 - y);
       break;
 
     case GIMP_CURVE_FREE:
-      gimp_curve_view_set_selected (view, x);
-      view->last = y;
+      view->last_x = x;
+      view->last_y = y;
 
-      gimp_curve_set_curve (curve, x, 255 - y);
+      gimp_curve_set_curve (curve, x, 1.0 - y);
       break;
     }
 
@@ -599,9 +611,9 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
   GimpCursorType  new_cursor = GDK_X_CURSOR;
   gint            border;
   gint            width, height;
-  gint            x, y;
+  gdouble         x;
+  gdouble         y;
   gint            closest_point;
-  gint            i;
 
   if (! curve)
     return TRUE;
@@ -610,20 +622,20 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
   width  = widget->allocation.width  - 2 * border;
   height = widget->allocation.height - 2 * border;
 
-  x = ROUND (((gdouble) (mevent->x - border) / (gdouble) width)  * 255.0);
-  y = ROUND (((gdouble) (mevent->y - border) / (gdouble) height) * 255.0);
+  x = (gdouble) (mevent->x - border) / (gdouble) width;
+  y = (gdouble) (mevent->y - border) / (gdouble) height;
 
-  x = CLAMP0255 (x);
-  y = CLAMP0255 (y);
+  x = CLAMP (x, 0.0, 1.0);
+  y = CLAMP (y, 0.0, 1.0);
 
   closest_point = gimp_curve_get_closest_point (curve, x);
 
-  switch (curve->curve_type)
+  switch (gimp_curve_get_curve_type (curve))
     {
     case GIMP_CURVE_SMOOTH:
       if (! view->grabbed) /*  If no point is grabbed...  */
         {
-          if (curve->points[closest_point][0] != -1)
+          if (curve->points[closest_point].x >= 0.0)
             new_cursor = GDK_FLEUR;
           else
             new_cursor = GDK_TCROSS;
@@ -634,15 +646,15 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
 
           gimp_data_freeze (GIMP_DATA (curve));
 
-          gimp_curve_set_point (curve, view->selected, -1, -1);
+          gimp_curve_set_point (curve, view->selected, -1.0, -1.0);
 
           if (x > view->leftmost && x < view->rightmost)
             {
-              closest_point = (x + 8) / 16;
-              if (curve->points[closest_point][0] == -1)
+              closest_point = ((gint) (x * 255.999) + 8) / 16;
+              if (curve->points[closest_point].x < 0.0)
                 gimp_curve_view_set_selected (view, closest_point);
 
-              gimp_curve_set_point (curve, view->selected, x, 255 - y);
+              gimp_curve_set_point (curve, view->selected, x, 1.0 - y);
             }
 
           gimp_data_thaw (GIMP_DATA (curve));
@@ -652,40 +664,44 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
     case GIMP_CURVE_FREE:
       if (view->grabbed)
         {
-          gint x1, x2, y1, y2;
+          gdouble x1, x2;
+          gdouble y1, y2;
 
-          if (view->selected > x)
+          if (view->last_x > x)
             {
               x1 = x;
-              x2 = view->selected;
+              x2 = view->last_x;
               y1 = y;
-              y2 = view->last;
+              y2 = view->last_y;
             }
           else
             {
-              x1 = view->selected;
+              x1 = view->last_x;
               x2 = x;
-              y1 = view->last;
+              y1 = view->last_y;
               y2 = y;
             }
 
           if (x2 != x1)
             {
+              gint i;
+
               gimp_data_freeze (GIMP_DATA (curve));
 
-              for (i = x1; i <= x2; i++)
-                gimp_curve_set_curve (curve, i,
-                                      255 - (y1 + ((y2 - y1) * (i - x1)) / (x2 - x1)));
+              for (i = (gint) (x1 * 255.999); i <= (gint) (x2 * 255.999); i++)
+                gimp_curve_set_curve (curve,
+                                      (gdouble) i / 255.0,
+                                      1.0 - (y1 + ((y2 - y1) * ((gdouble) i / 255.0 - x1)) / (x2 - x1)));
 
               gimp_data_thaw (GIMP_DATA (curve));
             }
           else
             {
-              gimp_curve_set_curve (curve, x, 255 - y);
+              gimp_curve_set_curve (curve, x, 1.0 - y);
             }
 
-          gimp_curve_view_set_selected (view, x);
-          view->last = y;
+          view->last_x = x;
+          view->last_y = y;
         }
 
       if (mevent->state & GDK_BUTTON1_MASK)
@@ -709,7 +725,7 @@ gimp_curve_view_leave_notify (GtkWidget        *widget,
 {
   GimpCurveView *view = GIMP_CURVE_VIEW (widget);
 
-  gimp_curve_view_set_cursor (view, -1, -1);
+  gimp_curve_view_unset_cursor (view);
 
   return TRUE;
 }
@@ -721,10 +737,11 @@ gimp_curve_view_key_press (GtkWidget   *widget,
   GimpCurveView *view   = GIMP_CURVE_VIEW (widget);
   GimpCurve     *curve  = view->curve;
   gint           i      = view->selected;
-  gint           y      = curve->points[i][1];
+  gdouble        y      = curve->points[i].y;
   gboolean       retval = FALSE;
 
-  if (view->grabbed || ! curve || curve->curve_type == GIMP_CURVE_FREE)
+  if (view->grabbed || ! curve ||
+      gimp_curve_get_curve_type (curve) == GIMP_CURVE_FREE)
     return FALSE;
 
   switch (kevent->keyval)
@@ -732,7 +749,7 @@ gimp_curve_view_key_press (GtkWidget   *widget,
     case GDK_Left:
       for (i = i - 1; i >= 0 && ! retval; i--)
         {
-          if (curve->points[i][0] != -1)
+          if (curve->points[i].x >= 0.0)
             {
               gimp_curve_view_set_selected (view, i);
 
@@ -744,7 +761,7 @@ gimp_curve_view_key_press (GtkWidget   *widget,
     case GDK_Right:
       for (i = i + 1; i < GIMP_CURVE_NUM_POINTS && ! retval; i++)
         {
-          if (curve->points[i][0] != -1)
+          if (curve->points[i].x >= 0.0)
             {
               gimp_curve_view_set_selected (view, i);
 
@@ -754,11 +771,12 @@ gimp_curve_view_key_press (GtkWidget   *widget,
       break;
 
     case GDK_Up:
-      if (y < 255)
+      if (y < 1.0)
         {
-          y = y + (kevent->state & GDK_SHIFT_MASK ? 16 : 1);
+          y = y + (kevent->state & GDK_SHIFT_MASK ?
+                   (16.0 / 255.0) : (1.0 / 255.0));
 
-          gimp_curve_move_point (curve, i, CLAMP0255 (y));
+          gimp_curve_move_point (curve, i, CLAMP (y, 0.0, 1.0));
 
           retval = TRUE;
         }
@@ -767,9 +785,10 @@ gimp_curve_view_key_press (GtkWidget   *widget,
     case GDK_Down:
       if (y > 0)
         {
-          y = y - (kevent->state & GDK_SHIFT_MASK ? 16 : 1);
+          y = y - (kevent->state & GDK_SHIFT_MASK ?
+                   (16.0 / 255.0) : (1.0 / 255.0));
 
-          gimp_curve_move_point (curve, i, CLAMP0255 (y));
+          gimp_curve_move_point (curve, i, CLAMP (y, 0.0, 1.0));
 
           retval = TRUE;
         }
@@ -848,7 +867,7 @@ gimp_curve_view_set_selected (GimpCurveView *view,
 
 void
 gimp_curve_view_set_xpos (GimpCurveView *view,
-                          gint           x)
+                          gdouble        x)
 {
   g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
 
@@ -857,15 +876,25 @@ gimp_curve_view_set_xpos (GimpCurveView *view,
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
-void
-gimp_curve_view_set_cursor (GimpCurveView *view,
-                            gint           x,
-                            gint           y)
-{
-  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
 
+/*  private functions  */
+
+static void
+gimp_curve_view_set_cursor (GimpCurveView *view,
+                            gdouble        x,
+                            gdouble        y)
+{
   view->cursor_x = x;
   view->cursor_y = y;
+
+  gtk_widget_queue_draw (GTK_WIDGET (view));
+}
+
+static void
+gimp_curve_view_unset_cursor (GimpCurveView *view)
+{
+  view->cursor_x = -1.0;
+  view->cursor_y = -1.0;
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }

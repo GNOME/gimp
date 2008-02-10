@@ -684,8 +684,7 @@ CODE
 }
 
 
-@headers = qw(<gegl.h>
-              "core/gimpdrawable.h"
+@headers = qw("core/gimpdrawable.h"
               "gimppdb-utils.h"
               "gimp-intl.h");
 

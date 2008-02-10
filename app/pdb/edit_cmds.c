@@ -25,9 +25,6 @@
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
 #include "core/gimp-edit.h"
 #include "core/gimp.h"
@@ -37,13 +34,17 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
 #include "core/gimpstrokedesc.h"
-#include "gimp-intl.h"
-#include "gimppdb-utils.h"
 #include "vectors/gimpvectors.h"
 
+#include "gimppdb.h"
+#include "gimppdb-utils.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
+
+#include "gimp-intl.h"
 
 
 static GValueArray *

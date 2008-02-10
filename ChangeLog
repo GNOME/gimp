@@ -1,5 +1,9 @@
 2008-02-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	Merged 24822:24845 from trunk.
+	
+2008-02-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	Initial implementation of two-column docks.  Needs
 	some fixes and a lot of cleanup.  Docks are made
 	to contain a GtkHPaned instead of just a VBox.

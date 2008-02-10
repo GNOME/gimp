@@ -596,7 +596,6 @@ CODE
 
 @headers = qw(<string.h>
               "libgimpmath/gimpmath.h"
-              "core/gimp.h"
               "core/gimplist.h"
               "core/gimpchannel-select.h"
               "vectors/gimpanchor.h"

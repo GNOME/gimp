@@ -465,16 +465,24 @@ gimp_image_map_apply (GimpImageMap        *image_map,
             g_object_unref (sink_operation);
           }
 
-          if (gegl_node_get_pad (image_map->operation, "input"))
+          if (gegl_node_get_pad (image_map->operation, "input") &&
+              gegl_node_get_pad (image_map->operation, "output"))
             {
+              /*  if there are input and output pads we probably have a
+               *  filter OP, connect it on both ends.
+               */
               gegl_node_link_many (image_map->input,
                                    image_map->shift,
                                    image_map->operation,
                                    image_map->output,
                                    NULL);
             }
-          else
+          else if (gegl_node_get_pad (image_map->operation, "output"))
             {
+              /*  if there is only an output pad we probably have a
+               *  source OP, blend its result on top of the original
+               *  pixels.
+               */
               GeglNode *over = gegl_node_new_child (image_map->gegl,
                                                     "operation", "over",
                                                     NULL);
@@ -487,6 +495,15 @@ gimp_image_map_apply (GimpImageMap        *image_map,
 
               gegl_node_connect_to (image_map->operation, "output",
                                     over, "aux");
+            }
+          else
+            {
+              /* otherwise we just construct a silly nop pipleline
+               */
+              gegl_node_link_many (image_map->input,
+                                   image_map->shift,
+                                   image_map->output,
+                                   NULL);
             }
         }
 

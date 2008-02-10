@@ -792,6 +792,11 @@ gimp_prop_table_new (GObject     *config,
           widget = gimp_prop_check_button_new (config, pspec->name,
                                                g_param_spec_get_nick (pspec));
         }
+      else if (G_IS_PARAM_SPEC_ENUM (pspec))
+        {
+          widget = gimp_prop_enum_combo_box_new (config, pspec->name, 0, 0);
+          label = g_param_spec_get_nick (pspec);
+        }
       else if (G_IS_PARAM_SPEC_INT (pspec)   ||
                G_IS_PARAM_SPEC_UINT (pspec)  ||
                G_IS_PARAM_SPEC_FLOAT (pspec) ||

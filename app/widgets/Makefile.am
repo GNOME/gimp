@@ -1,6 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
+        -DISO_CODES_LOCATION=\"$(ISO_CODES_LOCATION)\"		\
+        -DISO_CODES_LOCALEDIR=\"$(ISO_CODES_LOCALEDIR)\"	\
 	-DG_LOG_DOMAIN=\"Gimp-Widgets\"
 
 INCLUDES = \
@@ -189,6 +191,10 @@ libappwidgets_a_sources = \
 	gimpimageview.h			\
 	gimpitemtreeview.c		\
 	gimpitemtreeview.h		\
+	gimplanguagestore.c		\
+	gimplanguagestore.h		\
+	gimplanguagestore-parser.c	\
+	gimplanguagestore-parser.h	\
 	gimplayertreeview.c		\
 	gimplayertreeview.h		\
 	gimpmenudock.c			\

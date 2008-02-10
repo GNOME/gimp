@@ -20,25 +20,25 @@
 
 #include "config.h"
 
-
 #include <glib-object.h>
 
 #include "pdb-types.h"
-#include "gimppdb.h"
-#include "gimpprocedure.h"
-#include "core/gimpparamspecs.h"
 
 #include "core/gimpchannel-select.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimpparamspecs.h"
 #include "core/gimppickable.h"
 #include "core/gimpselection.h"
-#include "gimp-intl.h"
-#include "gimppdb-utils.h"
 
+#include "gimppdb.h"
+#include "gimppdb-utils.h"
+#include "gimpprocedure.h"
 #include "internal_procs.h"
+
+#include "gimp-intl.h"
 
 
 static GValueArray *

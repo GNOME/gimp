@@ -206,7 +206,8 @@ CODE
               "core/gimpdatafactory.h"
               "gimppdb-utils.h");
 
-@procs = qw(brushes_refresh brushes_get_list
+@procs = qw(brushes_refresh
+            brushes_get_list
             brushes_get_brush
             brushes_get_spacing brushes_set_spacing
             brushes_get_brush_data);

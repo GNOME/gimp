@@ -669,6 +669,8 @@ GPL
 
 	foreach (@{$main::grp{$group}->{headers}}) { $out->{headers}->{$_}++ }
 
+	$out->{headers}->{"\"core/gimpparamspecs.h\""}++;
+
 	my @headers = sort {
 	    my ($x, $y) = ($a, $b);
 	    foreach ($x, $y) {
@@ -681,30 +683,22 @@ GPL
 	    }
 	    $x cmp $y;
 	} keys %{$out->{headers}};
-        my $headers = ""; my $lib = 0; my $seen = 0; my $nl = 0;
-	my $sys = 0; my $base = 0;
+
+	my $headers = "";
+	my $lib = 0;
+	my $seen = 0;
+	my $sys = 0;
+	my $base = 0;
+	my $intl = 0;
+	my $utils = 0;
+
 	foreach (@headers) {
-	    $headers .= "\n" if $nl;
-	    $nl = 0;
-
-	    if ($_ eq '<unistd.h>') {
-		$headers .= "\n" if $seen;
-		$headers .= "#ifdef HAVE_UNISTD_H\n";
-	    }
-	    if ($_ eq '<process.h>') {
-		$headers .= "\n" if $seen;
-		$headers .= "#include <glib.h>\n\n";	
-		$headers .= "#ifdef G_OS_WIN32\n";
-	    }
-
-
 	    $seen++ if /^</;
 
 	    if ($sys == 0 && !/^</) {
 		$sys = 1;
-		$headers .= "\n";
-		$headers .= '#include <glib-object.h>';
-		$headers .= "\n\n";
+		$headers .= "\n" if $seen;
+		$headers .= "#include <glib-object.h>\n\n";
 	    }
 
 	    $seen = 0 if !/^</;
@@ -718,36 +712,28 @@ GPL
 
 		if ($sys == 1 && $base == 0) {
 		    $base = 1;
-
-		    $headers .= '#include "pdb-types.h"';
-		    $headers .= "\n";
-		    $headers .= '#include "gimppdb.h"';
-		    $headers .= "\n";
-		    $headers .= '#include "gimpprocedure.h"';
-		    $headers .= "\n";
-		    $headers .= '#include "core/gimpparamspecs.h"';
-		    $headers .= "\n\n";
+		    $headers .= "#include \"pdb-types.h\"\n\n";
 		}
 	    }
 
-	    $headers .= "#include $_\n";
-
-	    if ($_ eq '<unistd.h>') {
-		$headers .= "#endif\n";
-		$seen = 0;
-		$nl = 1;
- 	    }
-
-            if ($_ eq '<process.h>') {
-		$headers .= "#endif\n";
-		$seen = 0;
-		$nl = 1;
+	    if (/gimp-intl/) {
+		$intl = 1;
 	    }
-
-	    $headers .= "\n" if $_ eq '"config.h"';
+	    elsif (/gimppdb-utils/) {
+		$utils = 1;
+	    }
+	    else {
+		$headers .= "#include $_\n";
+	    }
 	}
 
-	$headers .= "\n#include \"internal_procs.h\"\n";
+	$headers .= "\n";
+	$headers .= "#include \"gimppdb.h\"\n";
+	$headers .= "#include \"gimppdb-utils.h\"\n" if $utils;
+	$headers .= "#include \"gimpprocedure.h\"\n";
+	$headers .= "#include \"internal_procs.h\"\n";
+
+	$headers .= "\n#include \"gimp-intl.h\"\n" if $intl;
 
 	my $extra = {};
 	if (exists $main::grp{$group}->{extra}->{app}) {
