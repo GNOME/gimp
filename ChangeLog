@@ -1,3 +1,8 @@
+2008-02-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpeditor.c: add button-relief style property which
+	defaults to NONE.
+
 2008-02-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimpeditor.c: draw editor buttons without
