@@ -1,3 +1,8 @@
+2008-02-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/ripple.c:  add a "phase shift" control,
+	for interactive use only.  Fixes bug #515144.
+
 2008-02-09  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/color.pdb: don't include <gegl.h>
