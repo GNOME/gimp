@@ -1,6 +1,6 @@
 # Swedish messages for GIMP plugins.
-# Copyright (C) 1999, 2000, 2001, 2002, 2007 Free Software Foundation, Inc.
-# Daniel Nylander <po@danielnylander.se>, 2007.
+# Copyright (C) 1999, 2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.
+# Daniel Nylander <po@danielnylander.se>, 2007, 2008.
 # Tomas Ögren <stric@ing.umu.se>, 1999.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002.
 # Jan Morén <jan.moren@lucs.lu.se>, 2002, 2003.
@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-11 16:13+0100\n"
-"PO-Revision-Date: 2007-12-11 16:14+0100\n"
+"POT-Creation-Date: 2008-02-10 13:22+0100\n"
+"PO-Revision-Date: 2008-02-10 13:26+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: ../plug-ins/FractalExplorer/Dialogs.c:547
 #: ../plug-ins/gfig/gfig-dialog.c:274
 #: ../plug-ins/gflare/gflare.c:883
-#: ../plug-ins/gimpressionist/utils.c:124
+#: ../plug-ins/gimpressionist/utils.c:143
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -261,7 +261,7 @@ msgstr "Cosinus"
 #: ../plug-ins/common/postscript.c:3242
 #: ../plug-ins/common/psp.c:418
 #: ../plug-ins/fits/fits.c:1026
-#: ../plug-ins/print/print-page-layout.c:512
+#: ../plug-ins/print/print-page-layout.c:475
 msgid "None"
 msgstr "Ingen"
 
@@ -362,7 +362,7 @@ msgstr "_Fraktaler"
 #: ../plug-ins/common/png.c:1244
 #: ../plug-ins/common/pnm.c:958
 #: ../plug-ins/common/postscript.c:1196
-#: ../plug-ins/common/psd-save.c:1549
+#: ../plug-ins/common/psd-save.c:1557
 #: ../plug-ins/common/raw.c:528
 #: ../plug-ins/common/raw.c:555
 #: ../plug-ins/common/spheredesigner.c:2120
@@ -414,8 +414,6 @@ msgstr "Spara fraktalparametrar"
 #: ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gif-load.c:309
 #: ../plug-ins/common/gih.c:649
-#: ../plug-ins/common/lcms.c:798
-#: ../plug-ins/common/lcms.c:1103
 #: ../plug-ins/common/mng.c:1121
 #: ../plug-ins/common/pat.c:317
 #: ../plug-ins/common/pcx.c:344
@@ -425,7 +423,6 @@ msgstr "Spara fraktalparametrar"
 #: ../plug-ins/common/poppler.c:527
 #: ../plug-ins/common/postscript.c:1023
 #: ../plug-ins/common/postscript.c:3031
-#: ../plug-ins/common/psd-load.c:2156
 #: ../plug-ins/common/psp.c:1432
 #: ../plug-ins/common/raw.c:243
 #: ../plug-ins/common/raw.c:645
@@ -435,7 +432,6 @@ msgstr "Spara fraktalparametrar"
 #: ../plug-ins/common/svg.c:702
 #: ../plug-ins/common/tga.c:423
 #: ../plug-ins/common/tiff-load.c:288
-#: ../plug-ins/common/wmf.c:980
 #: ../plug-ins/common/xbm.c:720
 #: ../plug-ins/common/xwd.c:420
 #: ../plug-ins/faxg3/faxg3.c:219
@@ -447,6 +443,8 @@ msgstr "Spara fraktalparametrar"
 #: ../plug-ins/help/gimphelplocale.c:193
 #: ../plug-ins/jpeg/jpeg-load.c:111
 #: ../plug-ins/jpeg/jpeg-load.c:821
+#: ../plug-ins/psd/psd-load.c:125
+#: ../plug-ins/psd/psd-thumb-load.c:78
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:271
 #: ../plug-ins/uri/uri-backend-libcurl.c:186
 #: ../plug-ins/winicon/icoload.c:651
@@ -648,7 +646,7 @@ msgstr "Ljusintensitet"
 #: ../plug-ins/Lighting/lighting_ui.c:466
 #: ../plug-ins/MapObject/mapobject_ui.c:659
 #: ../plug-ins/MapObject/mapobject_ui.c:986
-#: ../plug-ins/print/print-page-layout.c:406
+#: ../plug-ins/print/print-page-layout.c:369
 msgid "Position"
 msgstr "Position"
 
@@ -886,8 +884,8 @@ msgstr "Miljö_karta"
 
 # src/menus.c:293
 #: ../plug-ins/Lighting/lighting_ui.c:1074
-#: ../plug-ins/gimpressionist/preview.c:186
-#: ../plug-ins/gimpressionist/repaint.c:1166
+#: ../plug-ins/gimpressionist/preview.c:174
+#: ../plug-ins/gimpressionist/repaint.c:1184
 #: ../plug-ins/imagemap/imap_polygon.c:515
 msgid "_Update"
 msgstr "_Uppdatera"
@@ -1136,12 +1134,12 @@ msgid "Z scale (size)"
 msgstr "Z-skala (storlek)"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1193
-#: ../plug-ins/print/print-page-layout.c:465
+#: ../plug-ins/print/print-page-layout.c:428
 msgid "_Top:"
 msgstr "_Ovansida:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1193
-#: ../plug-ins/print/print-page-layout.c:484
+#: ../plug-ins/print/print-page-layout.c:447
 msgid "_Bottom:"
 msgstr "_Undersida:"
 
@@ -1150,7 +1148,7 @@ msgid "Images for the Cap Faces"
 msgstr "Bilder för ändarna"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1227
-#: ../plug-ins/print/print-page-layout.c:282
+#: ../plug-ins/print/print-page-layout.c:245
 msgid "Size"
 msgstr "Storlek"
 
@@ -1219,18 +1217,18 @@ msgstr "Felaktig färgkarta"
 #: ../plug-ins/common/pnm.c:485
 #: ../plug-ins/common/poppler.c:572
 #: ../plug-ins/common/postscript.c:1029
-#: ../plug-ins/common/psd-load.c:2161
 #: ../plug-ins/common/raw.c:650
 #: ../plug-ins/common/sunras.c:470
 #: ../plug-ins/common/tga.c:428
 #: ../plug-ins/common/tiff-load.c:569
-#: ../plug-ins/common/wmf.c:993
+#: ../plug-ins/common/wmf.c:992
 #: ../plug-ins/common/xbm.c:725
 #: ../plug-ins/common/xpm.c:343
 #: ../plug-ins/common/xwd.c:506
 #: ../plug-ins/faxg3/faxg3.c:204
 #: ../plug-ins/gfli/gfli.c:469
 #: ../plug-ins/jpeg/jpeg-load.c:117
+#: ../plug-ins/psd/psd-load.c:130
 #: ../plug-ins/sgi/sgi.c:318
 #: ../plug-ins/winicon/icoload.c:645
 #: ../plug-ins/xjt/xjt.c:3344
@@ -1270,12 +1268,14 @@ msgstr "Bitdjupet stöds inte eller är ogiltigt."
 
 #: ../plug-ins/bmp/bmpread.c:550
 #: ../plug-ins/common/pcx.c:376
+#: ../plug-ins/psd/psd-load.c:295
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Bildens bredd är ogiltig eller stöds inte: %d"
 
 #: ../plug-ins/bmp/bmpread.c:555
 #: ../plug-ins/common/pcx.c:381
+#: ../plug-ins/psd/psd-load.c:287
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Bildens höjd är ogiltig eller stöds inte: %d"
@@ -1297,7 +1297,6 @@ msgstr "Bildens höjd är ogiltig eller stöds inte: %d"
 #: ../plug-ins/common/pix.c:368
 #: ../plug-ins/common/png.c:831
 #: ../plug-ins/common/pnm.c:571
-#: ../plug-ins/common/psd-load.c:2587
 #: ../plug-ins/common/raw.c:691
 #: ../plug-ins/common/smooth_palette.c:257
 #: ../plug-ins/common/sunras.c:956
@@ -1308,9 +1307,11 @@ msgstr "Bildens höjd är ogiltig eller stöds inte: %d"
 #: ../plug-ins/faxg3/faxg3.c:464
 #: ../plug-ins/fits/fits.c:511
 #: ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:122
+#: ../plug-ins/gimpressionist/general.c:140
 #: ../plug-ins/jpeg/jpeg-load.c:249
 #: ../plug-ins/jpeg/jpeg-load.c:752
+#: ../plug-ins/psd/psd-image-res-load.c:995
+#: ../plug-ins/psd/psd-load.c:1510
 #: ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:571
 #: ../plug-ins/winsnap/winsnap.c:1155
@@ -1347,7 +1348,7 @@ msgstr "Alfakanal kommer att ignoreras."
 #: ../plug-ins/common/png.c:1251
 #: ../plug-ins/common/pnm.c:963
 #: ../plug-ins/common/postscript.c:1201
-#: ../plug-ins/common/psd-save.c:1554
+#: ../plug-ins/common/psd-save.c:1562
 #: ../plug-ins/common/sunras.c:549
 #: ../plug-ins/common/tga.c:1138
 #: ../plug-ins/common/tiff-save.c:681
@@ -1715,8 +1716,8 @@ msgstr "Slumpmässiga värden från frö (delad)"
 #: ../plug-ins/common/CML_explorer.c:300
 #: ../plug-ins/common/CML_explorer.c:308
 #: ../plug-ins/common/decompose.c:188
-#: ../plug-ins/gimpressionist/orientation.c:162
-#: ../plug-ins/gimpressionist/size.c:165
+#: ../plug-ins/gimpressionist/orientation.c:180
+#: ../plug-ins/gimpressionist/size.c:183
 msgid "Hue"
 msgstr "Nyans"
 
@@ -1729,8 +1730,8 @@ msgstr "Mättnad"
 #: ../plug-ins/common/CML_explorer.c:302
 #: ../plug-ins/common/CML_explorer.c:310
 #: ../plug-ins/common/decompose.c:190
-#: ../plug-ins/gimpressionist/orientation.c:138
-#: ../plug-ins/gimpressionist/size.c:141
+#: ../plug-ins/gimpressionist/orientation.c:156
+#: ../plug-ins/gimpressionist/size.c:159
 msgid "Value"
 msgstr "Värde"
 
@@ -2294,19 +2295,19 @@ msgstr "Persienner"
 
 #. Orientation toggle box
 #: ../plug-ins/common/blinds.c:259
-#: ../plug-ins/common/ripple.c:536
+#: ../plug-ins/common/ripple.c:538
 msgid "Orientation"
 msgstr "Orientering"
 
 #: ../plug-ins/common/blinds.c:263
-#: ../plug-ins/common/ripple.c:540
+#: ../plug-ins/common/ripple.c:542
 #: ../plug-ins/common/tileit.c:425
 #: ../plug-ins/pagecurl/pagecurl.c:534
 msgid "_Horizontal"
 msgstr "_Horisontell"
 
 #: ../plug-ins/common/blinds.c:264
-#: ../plug-ins/common/ripple.c:541
+#: ../plug-ins/common/ripple.c:543
 #: ../plug-ins/common/tileit.c:435
 #: ../plug-ins/pagecurl/pagecurl.c:533
 msgid "_Vertical"
@@ -2375,7 +2376,7 @@ msgstr "Skapa en ciseleringseffekt med en bumpmap"
 msgid "_Bump Map..."
 msgstr "_Bumpmap..."
 
-#: ../plug-ins/common/bumpmap.c:416
+#: ../plug-ins/common/bumpmap.c:415
 msgid "Bump-mapping"
 msgstr "Bumpmappning"
 
@@ -2611,7 +2612,7 @@ msgid "Checkerboard"
 msgstr "Schackrutor"
 
 #: ../plug-ins/common/checkerboard.c:412
-#: ../plug-ins/gimpressionist/sizemap.c:493
+#: ../plug-ins/gimpressionist/sizemap.c:511
 msgid "_Size:"
 msgstr "_Storlek:"
 
@@ -2727,7 +2728,6 @@ msgstr "Färg till Alfa"
 
 #. spinbutton 1
 #: ../plug-ins/common/colortoalpha.c:409
-#: ../plug-ins/common/mapcolor.c:424
 #: ../plug-ins/gfli/gfli.c:840
 #: ../plug-ins/gfli/gfli.c:910
 #: ../plug-ins/rcm/rcm_dialog.c:299
@@ -2976,92 +2976,92 @@ msgstr "Ingen känslig filändelse, sparar som komprimerad XCF."
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr "Ingen känslig filändelse, försöker läs in med filmagi."
 
-#: ../plug-ins/common/convmatrix.c:101
+#: ../plug-ins/common/convmatrix.c:64
 msgid "Gr_ey"
 msgstr "Gr_å"
 
-#: ../plug-ins/common/convmatrix.c:102
+#: ../plug-ins/common/convmatrix.c:65
 msgid "Re_d"
 msgstr "R_öd"
 
-#: ../plug-ins/common/convmatrix.c:103
+#: ../plug-ins/common/convmatrix.c:66
 #: ../plug-ins/common/newsprint.c:353
 msgid "_Green"
 msgstr "_Grön"
 
-#: ../plug-ins/common/convmatrix.c:104
+#: ../plug-ins/common/convmatrix.c:67
 #: ../plug-ins/common/newsprint.c:361
 msgid "_Blue"
 msgstr "_Blå"
 
-#: ../plug-ins/common/convmatrix.c:105
+#: ../plug-ins/common/convmatrix.c:68
 msgid "_Alpha"
 msgstr "_Alfa"
 
-#: ../plug-ins/common/convmatrix.c:110
+#: ../plug-ins/common/convmatrix.c:73
 msgid "E_xtend"
 msgstr "U_töka"
 
 # ?
-#: ../plug-ins/common/convmatrix.c:111
+#: ../plug-ins/common/convmatrix.c:74
 #: ../plug-ins/common/displace.c:472
 #: ../plug-ins/common/edge.c:708
 #: ../plug-ins/common/fractaltrace.c:736
-#: ../plug-ins/common/ripple.c:561
+#: ../plug-ins/common/ripple.c:563
 msgid "_Wrap"
 msgstr "_Wrap"
 
-#: ../plug-ins/common/convmatrix.c:112
+#: ../plug-ins/common/convmatrix.c:75
 msgid "Cro_p"
 msgstr "Be_skär"
 
-#: ../plug-ins/common/convmatrix.c:238
+#: ../plug-ins/common/convmatrix.c:201
 msgid "Apply a generic 5x5 convolution matrix"
 msgstr "Tillämpar en allmän 5x5 konvolveringsmatris"
 
-#: ../plug-ins/common/convmatrix.c:243
+#: ../plug-ins/common/convmatrix.c:206
 msgid "_Convolution Matrix..."
 msgstr "_Konvolveringsmatris..."
 
-#: ../plug-ins/common/convmatrix.c:278
+#: ../plug-ins/common/convmatrix.c:241
 msgid "Convolution does not work on layers smaller than 3x3 pixels."
 msgstr "Konvolvering fungerar inte på lager som är mindre än 3x3 bildpunkter."
 
-#: ../plug-ins/common/convmatrix.c:351
+#: ../plug-ins/common/convmatrix.c:314
 msgid "Applying convolution"
 msgstr "Tillämpar konvolvering"
 
-#: ../plug-ins/common/convmatrix.c:923
+#: ../plug-ins/common/convmatrix.c:906
 msgid "Convolution Matrix"
 msgstr "Konvolveringsmatris"
 
-#: ../plug-ins/common/convmatrix.c:960
+#: ../plug-ins/common/convmatrix.c:943
 msgid "Matrix"
 msgstr "Matris"
 
-#: ../plug-ins/common/convmatrix.c:998
+#: ../plug-ins/common/convmatrix.c:981
 msgid "D_ivisor:"
 msgstr "N_ämnare:"
 
-#: ../plug-ins/common/convmatrix.c:1024
+#: ../plug-ins/common/convmatrix.c:1007
 #: ../plug-ins/common/depthmerge.c:767
 #: ../plug-ins/common/raw.c:1022
 msgid "O_ffset:"
 msgstr "O_ffset:"
 
-#: ../plug-ins/common/convmatrix.c:1053
+#: ../plug-ins/common/convmatrix.c:1036
 msgid "N_ormalise"
 msgstr "_Normalisera"
 
-#: ../plug-ins/common/convmatrix.c:1065
+#: ../plug-ins/common/convmatrix.c:1048
 msgid "A_lpha-weighting"
 msgstr "A_lfa-viktning"
 
-#: ../plug-ins/common/convmatrix.c:1084
+#: ../plug-ins/common/convmatrix.c:1067
 msgid "Border"
 msgstr "Kant"
 
-#: ../plug-ins/common/convmatrix.c:1111
+#: ../plug-ins/common/convmatrix.c:1094
 msgid "Channels"
 msgstr "Kanaler"
 
@@ -3176,8 +3176,8 @@ msgstr "Böj efter kurva"
 
 #. Preview area, top of column
 #: ../plug-ins/common/curve_bend.c:1231
-#: ../plug-ins/gimpressionist/orientmap.c:574
-#: ../plug-ins/gimpressionist/sizemap.c:443
+#: ../plug-ins/gimpressionist/orientmap.c:592
+#: ../plug-ins/gimpressionist/sizemap.c:461
 msgid "Preview"
 msgstr "Förhandsgranska"
 
@@ -3195,7 +3195,7 @@ msgstr "Automatisk _förhandsgranskning"
 #. Options area, bottom of column
 #. Options section
 #: ../plug-ins/common/curve_bend.c:1279
-#: ../plug-ins/common/ripple.c:502
+#: ../plug-ins/common/ripple.c:504
 #: ../plug-ins/gfig/gfig-dialog.c:1207
 msgid "Options"
 msgstr "Alternativ"
@@ -3214,7 +3214,7 @@ msgstr "Ut_jämnande"
 #: ../plug-ins/common/curve_bend.c:1322
 #: ../plug-ins/common/gqbist.c:853
 #: ../plug-ins/common/mosaic.c:728
-#: ../plug-ins/common/ripple.c:511
+#: ../plug-ins/common/ripple.c:513
 msgid "_Antialiasing"
 msgstr "_Kantutjämning"
 
@@ -3649,7 +3649,7 @@ msgstr "Ta bort bandning"
 #: ../plug-ins/common/tile.c:431
 #: ../plug-ins/imagemap/imap_cmd_guides.c:165
 #: ../plug-ins/imagemap/imap_rectangle.c:403
-#: ../plug-ins/print/print-page-layout.c:315
+#: ../plug-ins/print/print-page-layout.c:278
 msgid "_Width:"
 msgstr "_Bredd:"
 
@@ -3790,7 +3790,7 @@ msgstr "Kantbeteende"
 
 #: ../plug-ins/common/displace.c:474
 #: ../plug-ins/common/edge.c:721
-#: ../plug-ins/common/ripple.c:562
+#: ../plug-ins/common/ripple.c:564
 #: ../plug-ins/common/waves.c:280
 msgid "_Smear"
 msgstr "_Smeta ut"
@@ -3833,7 +3833,7 @@ msgid "_Normalize"
 msgstr "_Normalisera"
 
 #: ../plug-ins/common/dog.c:347
-#: ../plug-ins/gimpressionist/paper.c:149
+#: ../plug-ins/gimpressionist/paper.c:167
 msgid "_Invert"
 msgstr "_Invertera"
 
@@ -3944,7 +3944,7 @@ msgstr "Gravera"
 #: ../plug-ins/common/tile.c:435
 #: ../plug-ins/imagemap/imap_cmd_guides.c:175
 #: ../plug-ins/imagemap/imap_rectangle.c:410
-#: ../plug-ins/print/print-page-layout.c:317
+#: ../plug-ins/print/print-page-layout.c:280
 msgid "_Height:"
 msgstr "_Höjd:"
 
@@ -4444,7 +4444,7 @@ msgstr "Mellanrum:"
 #: ../plug-ins/common/gbr.c:742
 #: ../plug-ins/common/gih.c:910
 #: ../plug-ins/common/pat.c:541
-#: ../plug-ins/gimpressionist/presets.c:646
+#: ../plug-ins/gimpressionist/presets.c:664
 msgid "Description:"
 msgstr "Beskrivning:"
 
@@ -4502,8 +4502,8 @@ msgid "Opening '%s' (frame %d)"
 msgstr "Öppnar \"%s\" (bildruta %d)"
 
 #: ../plug-ins/common/gif-load.c:933
-#: ../plug-ins/common/iwarp.c:793
-#: ../plug-ins/common/iwarp.c:828
+#: ../plug-ins/common/iwarp.c:791
+#: ../plug-ins/common/iwarp.c:826
 #, c-format
 msgid "Frame %d"
 msgstr "Bildruta %d"
@@ -5003,102 +5003,102 @@ msgstr "Använd musstyrning för att förvrida bildområden"
 msgid "_IWarp..."
 msgstr "_IWarp..."
 
-#: ../plug-ins/common/iwarp.c:699
+#: ../plug-ins/common/iwarp.c:697
 msgid "Warping"
 msgstr "Förvridning"
 
-#: ../plug-ins/common/iwarp.c:804
+#: ../plug-ins/common/iwarp.c:802
 #, c-format
 msgid "Warping Frame %d"
 msgstr "Förvrider bildruta %d"
 
-#: ../plug-ins/common/iwarp.c:816
+#: ../plug-ins/common/iwarp.c:814
 msgid "Ping pong"
 msgstr "Ping Pong"
 
-#: ../plug-ins/common/iwarp.c:1022
+#: ../plug-ins/common/iwarp.c:1020
 msgid "A_nimate"
 msgstr "A_nimera"
 
-#: ../plug-ins/common/iwarp.c:1041
+#: ../plug-ins/common/iwarp.c:1039
 msgid "Number of _frames:"
 msgstr "Antal _bildrutor:"
 
-#: ../plug-ins/common/iwarp.c:1050
+#: ../plug-ins/common/iwarp.c:1048
 msgid "R_everse"
 msgstr "B_aklänges"
 
-#: ../plug-ins/common/iwarp.c:1059
+#: ../plug-ins/common/iwarp.c:1057
 msgid "_Ping pong"
 msgstr "_Ping pong"
 
-#: ../plug-ins/common/iwarp.c:1072
+#: ../plug-ins/common/iwarp.c:1070
 msgid "_Animate"
 msgstr "_Animera"
 
-#: ../plug-ins/common/iwarp.c:1093
+#: ../plug-ins/common/iwarp.c:1091
 msgid "Deform Mode"
 msgstr "Deformationstyp"
 
-#: ../plug-ins/common/iwarp.c:1106
+#: ../plug-ins/common/iwarp.c:1104
 msgid "_Move"
 msgstr "_Flytta"
 
-#: ../plug-ins/common/iwarp.c:1107
+#: ../plug-ins/common/iwarp.c:1105
 msgid "_Grow"
 msgstr "_Väx"
 
-#: ../plug-ins/common/iwarp.c:1108
+#: ../plug-ins/common/iwarp.c:1106
 msgid "S_wirl CCW"
 msgstr "V_irvla moturs"
 
-#: ../plug-ins/common/iwarp.c:1109
+#: ../plug-ins/common/iwarp.c:1107
 msgid "Remo_ve"
 msgstr "Ta _bort"
 
-#: ../plug-ins/common/iwarp.c:1110
+#: ../plug-ins/common/iwarp.c:1108
 msgid "S_hrink"
 msgstr "K_rymp"
 
-#: ../plug-ins/common/iwarp.c:1111
+#: ../plug-ins/common/iwarp.c:1109
 msgid "Sw_irl CW"
 msgstr "Vi_rvla medurs"
 
-#: ../plug-ins/common/iwarp.c:1140
+#: ../plug-ins/common/iwarp.c:1138
 msgid "_Deform radius:"
 msgstr "_Deformationsradie:"
 
-#: ../plug-ins/common/iwarp.c:1150
+#: ../plug-ins/common/iwarp.c:1148
 msgid "D_eform amount:"
 msgstr "D_eformationsmängd:"
 
-#: ../plug-ins/common/iwarp.c:1159
+#: ../plug-ins/common/iwarp.c:1157
 msgid "_Bilinear"
 msgstr "_Bilinjär"
 
-#: ../plug-ins/common/iwarp.c:1173
+#: ../plug-ins/common/iwarp.c:1171
 msgid "Adaptive s_upersample"
 msgstr "Adaptiv s_upersampling"
 
-#: ../plug-ins/common/iwarp.c:1193
+#: ../plug-ins/common/iwarp.c:1191
 msgid "Ma_x depth:"
 msgstr "Ma_x djup:"
 
-#: ../plug-ins/common/iwarp.c:1203
+#: ../plug-ins/common/iwarp.c:1201
 msgid "Thresho_ld:"
 msgstr "Tröskel_värde:"
 
-#: ../plug-ins/common/iwarp.c:1216
+#: ../plug-ins/common/iwarp.c:1214
 #: ../plug-ins/common/sinus.c:771
 #: ../plug-ins/gflare/gflare.c:2821
 msgid "_Settings"
 msgstr "_Inställningar"
 
-#: ../plug-ins/common/iwarp.c:1265
+#: ../plug-ins/common/iwarp.c:1263
 msgid "IWarp"
 msgstr "IWarp"
 
-#: ../plug-ins/common/iwarp.c:1301
+#: ../plug-ins/common/iwarp.c:1299
 msgid "Click and drag in the preview to define the distortions to apply to the image."
 msgstr "Klicka och dra i förhandsvisningen för att definiera förvrängningarna att tillämpa på bilden."
 
@@ -5228,100 +5228,100 @@ msgstr "Standard RGB-arbetsrymd"
 msgid "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr "Data bifogat som \"icc-profile\" verkar inte vara en ICC-färgprofil"
 
-#: ../plug-ins/common/lcms.c:817
+#: ../plug-ins/common/lcms.c:816
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "\"%s\" verkar inte vara en ICC-färgprofil"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:875
+#: ../plug-ins/common/lcms.c:874
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Konverterar från \"%s\" till \"%s\""
 
-#: ../plug-ins/common/lcms.c:1122
+#: ../plug-ins/common/lcms.c:1119
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Kunde inte läsa in ICC-profil från \"%s\""
 
-#: ../plug-ins/common/lcms.c:1144
+#: ../plug-ins/common/lcms.c:1141
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "Bilden \"%s\" har en inbäddad färgprofil:"
 
-#: ../plug-ins/common/lcms.c:1188
+#: ../plug-ins/common/lcms.c:1185
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Konvertera bilden till RGB-arbetsrymden (%s)?"
 
-#: ../plug-ins/common/lcms.c:1219
+#: ../plug-ins/common/lcms.c:1216
 msgid "Convert to RGB working space?"
 msgstr "Konvertera till RGB-arbetsrymd?"
 
-#: ../plug-ins/common/lcms.c:1224
+#: ../plug-ins/common/lcms.c:1221
 msgid "_Keep"
 msgstr "_Behåll"
 
-#: ../plug-ins/common/lcms.c:1229
+#: ../plug-ins/common/lcms.c:1226
 msgid "_Convert"
 msgstr "_Konvertera"
 
-#: ../plug-ins/common/lcms.c:1256
+#: ../plug-ins/common/lcms.c:1253
 #: ../plug-ins/jpeg/jpeg-exif.c:372
 msgid "_Don't ask me again"
 msgstr "_Fråga mig inte igen"
 
-#: ../plug-ins/common/lcms.c:1320
+#: ../plug-ins/common/lcms.c:1317
 msgid "Select destination profile"
 msgstr "Välj målprofil"
 
-#: ../plug-ins/common/lcms.c:1347
+#: ../plug-ins/common/lcms.c:1344
 msgid "All files (*.*)"
 msgstr "Alla filer (*.*)"
 
-#: ../plug-ins/common/lcms.c:1352
+#: ../plug-ins/common/lcms.c:1349
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC-färgprofil (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1395
+#: ../plug-ins/common/lcms.c:1392
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "RGB-arbetsrymd (%s)"
 
-#: ../plug-ins/common/lcms.c:1445
+#: ../plug-ins/common/lcms.c:1442
 msgid "Convert to ICC Color Profile"
 msgstr "Konvertera till ICC-färgprofil"
 
-#: ../plug-ins/common/lcms.c:1446
+#: ../plug-ins/common/lcms.c:1443
 msgid "Assign ICC Color Profile"
 msgstr "Tilldela ICC-färgprofil"
 
-#: ../plug-ins/common/lcms.c:1454
+#: ../plug-ins/common/lcms.c:1451
 msgid "_Assign"
 msgstr "_Tilldela"
 
-#: ../plug-ins/common/lcms.c:1471
+#: ../plug-ins/common/lcms.c:1468
 msgid "Current Color Profile"
 msgstr "Aktuell färgprofil"
 
-#: ../plug-ins/common/lcms.c:1486
+#: ../plug-ins/common/lcms.c:1483
 msgid "Convert to"
 msgstr "Konvertera till"
 
-#: ../plug-ins/common/lcms.c:1486
+#: ../plug-ins/common/lcms.c:1483
 msgid "Assign"
 msgstr "Tilldela"
 
 # Klart osäker
-#: ../plug-ins/common/lcms.c:1510
+#: ../plug-ins/common/lcms.c:1507
 msgid "_Rendering Intent:"
 msgstr "_Renderingsintention:"
 
-#: ../plug-ins/common/lcms.c:1526
+#: ../plug-ins/common/lcms.c:1523
 msgid "_Black Point Compensation"
 msgstr "Svartpunkts_kompensation"
 
-#: ../plug-ins/common/lcms.c:1567
+#: ../plug-ins/common/lcms.c:1565
 msgid "Destination profile is not for RGB color space."
 msgstr "Målprofilen är inte för RGB-färgrymd."
 
@@ -5435,130 +5435,46 @@ msgstr "Specialeffekter som ingen förstår"
 msgid "_Van Gogh (LIC)..."
 msgstr "_Van Gogh (LIC)..."
 
-#: ../plug-ins/common/mail.c:259
-msgid "Email the image"
+#: ../plug-ins/common/mail.c:188
+msgid "Send the image by email"
 msgstr "Skicka bilden via e-post"
 
-#: ../plug-ins/common/mail.c:265
-msgid "_Mail Image..."
-msgstr "_Posta bild..."
+#: ../plug-ins/common/mail.c:194
+msgid "Send by E_mail..."
+msgstr "Skicka via e-p_ost..."
 
-#: ../plug-ins/common/mail.c:524
-msgid "Send as Mail"
-msgstr "Skicka som epost"
+#: ../plug-ins/common/mail.c:408
+msgid "Send by Email"
+msgstr "Skicka via e-post"
 
-#: ../plug-ins/common/mail.c:529
+#: ../plug-ins/common/mail.c:413
 msgid "_Send"
 msgstr "_Skicka"
 
-#: ../plug-ins/common/mail.c:561
+#: ../plug-ins/common/mail.c:445
 msgid "_Filename:"
 msgstr "_Filnamn:"
 
-#. Encapsulation label
-#: ../plug-ins/common/mail.c:568
-msgid "Encapsulation:"
-msgstr "Packningsformat:"
+#: ../plug-ins/common/mail.c:457
+msgid "_To:"
+msgstr "_Till:"
 
-#: ../plug-ins/common/mail.c:580
-msgid "_MIME"
-msgstr "_MIME"
+#: ../plug-ins/common/mail.c:471
+msgid "_From:"
+msgstr "_Från:"
 
-#: ../plug-ins/common/mail.c:581
-msgid "_Uuencode"
-msgstr "_Uuencode"
-
-#: ../plug-ins/common/mail.c:595
-msgid "_Recipient:"
-msgstr "_Mottagare:"
-
-#: ../plug-ins/common/mail.c:609
-msgid "_Sender:"
-msgstr "_Avsändare:"
-
-#: ../plug-ins/common/mail.c:621
+#: ../plug-ins/common/mail.c:483
 msgid "S_ubject:"
 msgstr "_Ämne:"
 
-# src/header_stuff.c:462
-#: ../plug-ins/common/mail.c:633
-msgid "Comm_ent:"
-msgstr "_Kommentar:"
-
-#: ../plug-ins/common/mail.c:741
+#: ../plug-ins/common/mail.c:592
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "något slags fel på filändelsen eller brist härav"
 
-#: ../plug-ins/common/mail.c:903
+#: ../plug-ins/common/mail.c:726
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Kunde inte starta sendmail (%s)"
-
-#: ../plug-ins/common/mapcolor.c:111
-msgid "First Source Color"
-msgstr "Första källfärgen"
-
-#: ../plug-ins/common/mapcolor.c:112
-msgid "Second Source Color"
-msgstr "Andra källfärgen"
-
-#: ../plug-ins/common/mapcolor.c:113
-msgid "First Destination Color"
-msgstr "Första målfärgen"
-
-#: ../plug-ins/common/mapcolor.c:114
-msgid "Second Destination Color"
-msgstr "Andra målfärgen"
-
-#: ../plug-ins/common/mapcolor.c:143
-msgid "Map colors sending foreground to black, background to white"
-msgstr "Mappa färger genom att skicka förgrund till svart, bakgrund till vit"
-
-#: ../plug-ins/common/mapcolor.c:151
-msgid "Adjust _Foreground & Background"
-msgstr "Justera _förgrund och bakgrund"
-
-#: ../plug-ins/common/mapcolor.c:160
-msgid "Map color range specified by two colors to another range"
-msgstr "Mappa färgintervall angivet av två färger till ett annat intervall"
-
-#: ../plug-ins/common/mapcolor.c:168
-msgid "Color Range _Mapping..."
-msgstr "Färgområdes_mappning..."
-
-#: ../plug-ins/common/mapcolor.c:214
-#: ../plug-ins/common/mapcolor.c:526
-msgid "Cannot operate on gray or indexed color images."
-msgstr "Kan inte arbeta med gråskala eller indexerade färgbilder."
-
-#: ../plug-ins/common/mapcolor.c:235
-msgid "Adjusting foreground and background colors"
-msgstr "Justerar förgrund- och bakgrundsfärger"
-
-#: ../plug-ins/common/mapcolor.c:277
-msgid "Mapping colors"
-msgstr "Mappar färger"
-
-#: ../plug-ins/common/mapcolor.c:352
-msgid "Map Color Range"
-msgstr "Mappa färgintervall"
-
-#: ../plug-ins/common/mapcolor.c:383
-msgid "Source Color Range"
-msgstr "Färgintervall för källa"
-
-#: ../plug-ins/common/mapcolor.c:384
-msgid "Destination Color Range"
-msgstr "Färgintervall för mål"
-
-#. spinbutton 2
-#: ../plug-ins/common/mapcolor.c:424
-#: ../plug-ins/gfli/gfli.c:849
-#: ../plug-ins/gfli/gfli.c:919
-#: ../plug-ins/rcm/rcm_dialog.c:325
-#: ../plug-ins/rcm/rcm_dialog.c:378
-msgid "To:"
-msgstr "Till:"
 
 #: ../plug-ins/common/max_rgb.c:90
 msgid "Reduce image to pure red, green, and blue"
@@ -6775,8 +6691,8 @@ msgstr "Grått"
 
 #: ../plug-ins/common/postscript.c:3215
 #: ../plug-ins/common/xpm.c:468
-#: ../plug-ins/gimpressionist/color.c:48
-#: ../plug-ins/gimpressionist/general.c:152
+#: ../plug-ins/gimpressionist/color.c:66
+#: ../plug-ins/gimpressionist/general.c:170
 #: ../plug-ins/imagemap/imap_menu.c:213
 msgid "Color"
 msgstr "Färg"
@@ -6867,64 +6783,9 @@ msgstr "Procedurbläddrare"
 msgid "Procedure Browser"
 msgstr "Procedurbläddrare"
 
-#: ../plug-ins/common/psd-load.c:527
-msgid "Invalid UTF-8 string in PSD file"
-msgstr "Ogiltig UTF-8-sträng i PSD-fil"
-
-#: ../plug-ins/common/psd-load.c:623
-msgid "Cannot handle bitmap PSD files"
-msgstr "Kan inte hantera bitmappade PSD-filer"
-
-#: ../plug-ins/common/psd-load.c:632
-msgid "Cannot handle PSD files in CMYK color"
-msgstr "Kan inte hantera PSD-filer i CMYK-färg"
-
-#: ../plug-ins/common/psd-load.c:635
-msgid "Cannot handle PSD files in Multichannel color"
-msgstr "Kan inte hantera PSD-filer i Multichannel-färg"
-
-#: ../plug-ins/common/psd-load.c:638
-msgid "Cannot handle PSD files in Duotone color"
-msgstr "Kan inte hantera PSD-filer i Duotone-färg"
-
-#: ../plug-ins/common/psd-load.c:641
-msgid "Cannot handle PSD files in Lab color"
-msgstr "Kan inte hantera PSD-filer i Lab-färg"
-
-#: ../plug-ins/common/psd-load.c:644
-#, c-format
-msgid "Cannot handle the color mode %d of the PSD file"
-msgstr "Kan inte hantera färgläge %d för PSD-filen"
-
-#: ../plug-ins/common/psd-load.c:737
-#, c-format
-msgid "Cannot handle PSD file with more than %d channels"
-msgstr "Kan inte hantera PSD-filer med fler än %d kanaler"
-
-#: ../plug-ins/common/psd-load.c:2522
-msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
-msgstr "Kan inte hantera PSD-filer i CMYK-färg med fler än 5 kanaler"
-
-#: ../plug-ins/common/psd-load.c:2537
-#, c-format
-msgid "Cannot handle image mode %d (%s)"
-msgstr "Kan inte hantera bildläge %d (%s)"
-
-#: ../plug-ins/common/psd-load.c:2546
-#, c-format
-msgid "Cannot handle %d bits per channel PSD files"
-msgstr "Kan inte hantera PSD-filer med %d bitar per kanal"
-
-#: ../plug-ins/common/psd-load.c:3347
-msgid "This is not an Adobe Photoshop PSD file"
-msgstr "Detta är inte en Adobe Photoshop PSD-fil"
-
-#: ../plug-ins/common/psd-load.c:3352
-#, c-format
-msgid "The PSD file has bad version number '%d', not 1"
-msgstr "PSD-filen har felaktigt versionsnummer \"%d\", inte 1"
-
 #: ../plug-ins/common/psd-save.c:222
+#: ../plug-ins/psd/psd.c:114
+#: ../plug-ins/psd/psd.c:153
 msgid "Photoshop image"
 msgstr "Photoshop-bild"
 
@@ -6937,12 +6798,12 @@ msgstr "Kunde inte spara lager med läget \"%s\".  Varken PSD-filformatet eller 
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Fel: Kan inte konvertera GIMP-basbildtyp till PSD-läge"
 
-#: ../plug-ins/common/psd-save.c:1525
+#: ../plug-ins/common/psd-save.c:1533
 #, c-format
 msgid "Unable to save '%s'.  The psd file format does not support images that are more than 30000 pixels wide or tall."
 msgstr "Kunde inte spara \"%s\". Filformatet psd har inte stöd för bilder som är högre eller bredare än 30000 bildpunkter."
 
-#: ../plug-ins/common/psd-save.c:1537
+#: ../plug-ins/common/psd-save.c:1545
 #, c-format
 msgid "Unable to save '%s'.  The psd file format does not support images with layers that are more than 30000 pixels wide or tall."
 msgstr "Kunde inte spara \"%s\". Filformatet psd har inte stöd för bilder med lager som är högre eller bredare än 30000 bildpunkter."
@@ -6981,48 +6842,48 @@ msgstr "Slumpval"
 msgid "Random Slur"
 msgstr "Slumpsluddra"
 
-#: ../plug-ins/common/randomize.c:200
+#: ../plug-ins/common/randomize.c:202
 msgid "Completely randomize a fraction of pixels"
 msgstr "Slumpa fullständigt en del av bildpunkterna"
 
-#: ../plug-ins/common/randomize.c:202
+#: ../plug-ins/common/randomize.c:204
 msgid "Randomly interchange some pixels with neighbors"
 msgstr "Växla slumpmässigt vissa bildpunkter med närliggande"
 
-#: ../plug-ins/common/randomize.c:204
+#: ../plug-ins/common/randomize.c:206
 msgid "Randomly slide some pixels downward (similar to melting)"
 msgstr "Dra slumpmässigt ner vissa bildpunkter (liknande smältning)"
 
-#: ../plug-ins/common/randomize.c:231
+#: ../plug-ins/common/randomize.c:233
 msgid "_Hurl..."
 msgstr "_Släng..."
 
-#: ../plug-ins/common/randomize.c:243
+#: ../plug-ins/common/randomize.c:245
 msgid "_Pick..."
 msgstr "_Peta..."
 
-#: ../plug-ins/common/randomize.c:255
+#: ../plug-ins/common/randomize.c:257
 msgid "_Slur..."
 msgstr "S_luddra..."
 
-#: ../plug-ins/common/randomize.c:744
+#: ../plug-ins/common/randomize.c:771
 #: ../plug-ins/common/snoise.c:601
 msgid "_Random seed:"
 msgstr "Slump_frö:"
 
-#: ../plug-ins/common/randomize.c:753
+#: ../plug-ins/common/randomize.c:780
 msgid "R_andomization (%):"
 msgstr "R_andomisering (%):"
 
-#: ../plug-ins/common/randomize.c:756
+#: ../plug-ins/common/randomize.c:783
 msgid "Percentage of pixels to be filtered"
 msgstr "Andel bildpunkter (i procent) att filtrera"
 
-#: ../plug-ins/common/randomize.c:765
+#: ../plug-ins/common/randomize.c:795
 msgid "R_epeat:"
 msgstr "_Upprepa:"
 
-#: ../plug-ins/common/randomize.c:768
+#: ../plug-ins/common/randomize.c:798
 msgid "Number of times to apply filter"
 msgstr "Antal gånger filtret skall tillämpas"
 
@@ -7181,55 +7042,59 @@ msgstr "Dy_namisk:"
 msgid "Retinex: filtering"
 msgstr "Retinex: filtrering"
 
-#: ../plug-ins/common/ripple.c:127
+#: ../plug-ins/common/ripple.c:129
 msgid "Displace pixels in a ripple pattern"
 msgstr "Förskjut bildpunkter i ett krusmönster"
 
-#: ../plug-ins/common/ripple.c:134
+#: ../plug-ins/common/ripple.c:136
 msgid "_Ripple..."
 msgstr "_Krusar..."
 
-#: ../plug-ins/common/ripple.c:224
+#: ../plug-ins/common/ripple.c:226
 msgid "Rippling"
 msgstr "Krusar"
 
-#: ../plug-ins/common/ripple.c:466
+#: ../plug-ins/common/ripple.c:468
 msgid "Ripple"
 msgstr "Krusning"
 
-#: ../plug-ins/common/ripple.c:523
+#: ../plug-ins/common/ripple.c:525
 msgid "_Retain tilability"
 msgstr "_Bevara upprepningsbarhet"
 
 #. Edges toggle box
-#: ../plug-ins/common/ripple.c:557
+#: ../plug-ins/common/ripple.c:559
 msgid "Edges"
 msgstr "Kanter"
 
-#: ../plug-ins/common/ripple.c:563
+#: ../plug-ins/common/ripple.c:565
 msgid "_Blank"
 msgstr "_Blank"
 
 #. Wave toggle box
-#: ../plug-ins/common/ripple.c:585
+#: ../plug-ins/common/ripple.c:587
 msgid "Wave Type"
 msgstr "Vågtyp"
 
-#: ../plug-ins/common/ripple.c:589
+#: ../plug-ins/common/ripple.c:591
 msgid "Saw_tooth"
 msgstr "Såg_tand"
 
-#: ../plug-ins/common/ripple.c:590
+#: ../plug-ins/common/ripple.c:592
 msgid "S_ine"
 msgstr "S_inus"
 
-#: ../plug-ins/common/ripple.c:613
+#: ../plug-ins/common/ripple.c:615
 msgid "_Period:"
 msgstr "_Period:"
 
-#: ../plug-ins/common/ripple.c:626
+#: ../plug-ins/common/ripple.c:628
 msgid "A_mplitude:"
 msgstr "A_mplitud:"
+
+#: ../plug-ins/common/ripple.c:641
+msgid "Phase _shift:"
+msgstr "Fas_skifte:"
 
 #: ../plug-ins/common/rotate.c:413
 msgid "You can not rotate the whole image if there's a selection."
@@ -7385,7 +7250,7 @@ msgstr "Det inträffade ett fel vid tagning av skärmbild."
 
 #: ../plug-ins/common/screenshot.c:1070
 msgid "S_nap"
-msgstr "_Fäst"
+msgstr "_Ta bild"
 
 #: ../plug-ins/common/screenshot.c:1100
 msgid "After the delay, the screenshot is taken."
@@ -7878,7 +7743,7 @@ msgid "Use the background color"
 msgstr "Använd bakgrundsfärg"
 
 #: ../plug-ins/common/spheredesigner.c:291
-#: ../plug-ins/gimpressionist/general.c:148
+#: ../plug-ins/gimpressionist/general.c:166
 msgid "Solid"
 msgstr "Enfärgad"
 
@@ -7968,7 +7833,7 @@ msgstr "Färgvalsdialog"
 
 #. Scale
 #: ../plug-ins/common/spheredesigner.c:2755
-#: ../plug-ins/gimpressionist/paper.c:176
+#: ../plug-ins/gimpressionist/paper.c:194
 #: ../plug-ins/ifscompose/ifscompose.c:553
 msgid "Scale:"
 msgstr "Skala:"
@@ -8252,7 +8117,7 @@ msgstr "Håll proportioner"
 
 #: ../plug-ins/common/svg.c:904
 #: ../plug-ins/common/wmf.c:689
-#: ../plug-ins/print/print-page-layout.c:336
+#: ../plug-ins/print/print-page-layout.c:299
 #, c-format
 msgid "pixels/%a"
 msgstr "bildpunkter/%a"
@@ -9097,7 +8962,7 @@ msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "Högre värden begränsar effekten till färre delar av bilden"
 
 #: ../plug-ins/common/wind.c:1016
-#: ../plug-ins/gimpressionist/orientmap.c:676
+#: ../plug-ins/gimpressionist/orientmap.c:694
 msgid "_Strength:"
 msgstr "_Styrka:"
 
@@ -9121,12 +8986,12 @@ msgstr ""
 msgid "Render Windows Metafile"
 msgstr "Rendera Windows metafil"
 
-#: ../plug-ins/common/wmf.c:986
+#: ../plug-ins/common/wmf.c:985
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "Kunde inte öppna \"%s\" för läsning"
 
-#: ../plug-ins/common/wmf.c:1002
+#: ../plug-ins/common/wmf.c:1001
 msgid "Rendered WMF"
 msgstr "Renderad WMF"
 
@@ -9378,8 +9243,8 @@ msgid "Same"
 msgstr "Samma"
 
 #: ../plug-ins/flame/flame.c:745
-#: ../plug-ins/gimpressionist/orientation.c:146
-#: ../plug-ins/gimpressionist/size.c:149
+#: ../plug-ins/gimpressionist/orientation.c:164
+#: ../plug-ins/gimpressionist/size.c:167
 msgid "Random"
 msgstr "Slumpvis"
 
@@ -9668,7 +9533,7 @@ msgid "Max undo:"
 msgstr "Max ångra:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1283
-#: ../plug-ins/gimpressionist/general.c:167
+#: ../plug-ins/gimpressionist/general.c:185
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -9762,7 +9627,7 @@ msgid "Left"
 msgstr "Vänster"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1718
-#: ../plug-ins/gimpressionist/orientation.c:130
+#: ../plug-ins/gimpressionist/orientation.c:148
 msgid "Orientation:"
 msgstr "Orientering:"
 
@@ -10007,7 +9872,7 @@ msgid "Second Flares Paint Options"
 msgstr "Andra överstrålarna ritinställningar"
 
 #: ../plug-ins/gflare/gflare.c:3483
-#: ../plug-ins/gimpressionist/general.c:116
+#: ../plug-ins/gimpressionist/general.c:134
 msgid "_General"
 msgstr "_Allmänt"
 
@@ -10121,434 +9986,442 @@ msgstr "Tyvärr, kan endast spara INDEXERADE och GRÅSKALE-bilder."
 msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI 1.3 - Läs in bildrutor"
 
+#. spinbutton 2
+#: ../plug-ins/gfli/gfli.c:849
+#: ../plug-ins/gfli/gfli.c:919
+#: ../plug-ins/rcm/rcm_dialog.c:325
+#: ../plug-ins/rcm/rcm_dialog.c:378
+msgid "To:"
+msgstr "Till:"
+
 #: ../plug-ins/gfli/gfli.c:879
 msgid "GFLI 1.3 - Save framestack"
 msgstr "GFLI 1.3 - Spara bildrutor"
 
-#: ../plug-ins/gimpressionist/brush.c:230
+#: ../plug-ins/gimpressionist/brush.c:247
 msgid "Can only save drawables!"
 msgstr "Kan endast spara ritytor!"
 
-#: ../plug-ins/gimpressionist/brush.c:235
+#: ../plug-ins/gimpressionist/brush.c:252
 msgid "Save Brush"
 msgstr "Spara pensel"
 
-#: ../plug-ins/gimpressionist/brush.c:490
+#: ../plug-ins/gimpressionist/brush.c:507
 msgid "_Brush"
 msgstr "_Pensel"
 
-#: ../plug-ins/gimpressionist/brush.c:527
+#: ../plug-ins/gimpressionist/brush.c:544
 msgid "Gamma:"
 msgstr "Gamma:"
 
-#: ../plug-ins/gimpressionist/brush.c:545
+#: ../plug-ins/gimpressionist/brush.c:562
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Ändrar gamma (ljusstyrka) på den valda penseln"
 
-#: ../plug-ins/gimpressionist/brush.c:553
+#: ../plug-ins/gimpressionist/brush.c:570
 msgid "Select:"
 msgstr "Välj:"
 
-#: ../plug-ins/gimpressionist/brush.c:582
+#: ../plug-ins/gimpressionist/brush.c:599
 msgid "Aspect ratio:"
 msgstr "Proportioner:"
 
-#: ../plug-ins/gimpressionist/brush.c:586
+#: ../plug-ins/gimpressionist/brush.c:603
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Anger aspektförhållandet för penseln"
 
-#: ../plug-ins/gimpressionist/brush.c:595
-#: ../plug-ins/gimpressionist/paper.c:188
+#: ../plug-ins/gimpressionist/brush.c:612
+#: ../plug-ins/gimpressionist/paper.c:206
 msgid "Relief:"
 msgstr "Relief:"
 
-#: ../plug-ins/gimpressionist/brush.c:599
-#: ../plug-ins/gimpressionist/paper.c:192
+#: ../plug-ins/gimpressionist/brush.c:616
+#: ../plug-ins/gimpressionist/paper.c:210
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "Anger mängden ciselering att tillämpa på bilden (i procent)"
 
-#: ../plug-ins/gimpressionist/color.c:42
+#: ../plug-ins/gimpressionist/color.c:60
 msgid "Co_lor"
 msgstr "F_ärg"
 
-#: ../plug-ins/gimpressionist/color.c:52
+#: ../plug-ins/gimpressionist/color.c:70
 msgid "A_verage under brush"
 msgstr "M_edelvärde under penseln"
 
-#: ../plug-ins/gimpressionist/color.c:54
+#: ../plug-ins/gimpressionist/color.c:72
 msgid "C_enter of brush"
 msgstr "Penselns _mittpunkt"
 
-#: ../plug-ins/gimpressionist/color.c:61
+#: ../plug-ins/gimpressionist/color.c:79
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "Färgen är beräknad som medelvärdet av alla bildpunkter under penseln"
 
-#: ../plug-ins/gimpressionist/color.c:65
+#: ../plug-ins/gimpressionist/color.c:83
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "Samplar färgen på bildpunkten i penselns mittpunkt"
 
-#: ../plug-ins/gimpressionist/color.c:76
+#: ../plug-ins/gimpressionist/color.c:94
 msgid "Color _noise:"
 msgstr "Färg_brus:"
 
-#: ../plug-ins/gimpressionist/color.c:80
+#: ../plug-ins/gimpressionist/color.c:98
 msgid "Adds random noise to the color"
 msgstr "Lägger till slumpmässigt brus till färgen"
 
-#: ../plug-ins/gimpressionist/general.c:132
+#: ../plug-ins/gimpressionist/general.c:150
 msgid "Keep original"
 msgstr "Behåll orginalet"
 
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/gimpressionist/general.c:151
 msgid "Preserve the original image as a background"
 msgstr "Bevara den ursprungliga bilden som bakgrund"
 
-#: ../plug-ins/gimpressionist/general.c:138
+#: ../plug-ins/gimpressionist/general.c:156
 msgid "From paper"
 msgstr "Från papper"
 
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/gimpressionist/general.c:157
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Kopiera det valda papperets textur som bakgrund"
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/gimpressionist/general.c:167
 msgid "Solid colored background"
 msgstr "Enfärgad bakgrund"
 
-#: ../plug-ins/gimpressionist/general.c:168
+#: ../plug-ins/gimpressionist/general.c:186
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "Använd en transparent bakgrund; endast penseldragen blir synliga"
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/gimpressionist/general.c:203
 msgid "Paint edges"
 msgstr "Måla kanter"
 
-#: ../plug-ins/gimpressionist/general.c:190
+#: ../plug-ins/gimpressionist/general.c:208
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Bestämmer om penseldrag skall placeras hela vägen ut till bildkanten"
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:195
+#: ../plug-ins/gimpressionist/general.c:213
 #: ../plug-ins/maze/maze_face.c:284
 msgid "Tileable"
 msgstr "Upprepningsbar"
 
-#: ../plug-ins/gimpressionist/general.c:199
+#: ../plug-ins/gimpressionist/general.c:217
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "Bestämmer om bilden skall kunna upprepas utan synliga skarvar"
 
-#: ../plug-ins/gimpressionist/general.c:204
+#: ../plug-ins/gimpressionist/general.c:222
 msgid "Drop shadow"
 msgstr "Skuggkastning"
 
-#: ../plug-ins/gimpressionist/general.c:209
+#: ../plug-ins/gimpressionist/general.c:227
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Lägger till en skuggeffekt till varje penseldrag"
 
-#: ../plug-ins/gimpressionist/general.c:222
+#: ../plug-ins/gimpressionist/general.c:240
 msgid "Edge darken:"
 msgstr "Mörka kanten:"
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/gimpressionist/general.c:244
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "Hur mycket kanten på penseldragen ska \"mörkna\""
 
-#: ../plug-ins/gimpressionist/general.c:231
+#: ../plug-ins/gimpressionist/general.c:249
 msgid "Shadow darken:"
 msgstr "Skuggmörkning:"
 
-#: ../plug-ins/gimpressionist/general.c:235
+#: ../plug-ins/gimpressionist/general.c:253
 msgid "How much to \"darken\" the drop shadow"
 msgstr "Hur mörk den kastade skuggan skall vara"
 
-#: ../plug-ins/gimpressionist/general.c:240
+#: ../plug-ins/gimpressionist/general.c:258
 msgid "Shadow depth:"
 msgstr "Skuggdjup:"
 
-#: ../plug-ins/gimpressionist/general.c:244
+#: ../plug-ins/gimpressionist/general.c:262
 msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Skuggans djup, alltså hur långt från objektet den skall vara"
 
-#: ../plug-ins/gimpressionist/general.c:249
+#: ../plug-ins/gimpressionist/general.c:267
 msgid "Shadow blur:"
 msgstr "Skuggoskärpa:"
 
-#: ../plug-ins/gimpressionist/general.c:253
+#: ../plug-ins/gimpressionist/general.c:271
 msgid "How much to blur the drop shadow"
 msgstr "Hur oskarp skuggkastningen skall vara"
 
-#: ../plug-ins/gimpressionist/general.c:258
+#: ../plug-ins/gimpressionist/general.c:276
 msgid "Deviation threshold:"
 msgstr "Avvikelsegräns:"
 
-#: ../plug-ins/gimpressionist/general.c:262
+#: ../plug-ins/gimpressionist/general.c:280
 msgid "A bailout-value for adaptive selections"
 msgstr "Ett avbrottsvärde för adaptiva markeringar"
 
-#: ../plug-ins/gimpressionist/gimp.c:74
+#: ../plug-ins/gimpressionist/gimp.c:90
 msgid "Performs various artistic operations"
 msgstr "Tillämpa olika artistiska åtgärder"
 
-#: ../plug-ins/gimpressionist/gimp.c:79
+#: ../plug-ins/gimpressionist/gimp.c:95
 msgid "_GIMPressionist..."
 msgstr "_GIMPressionist..."
 
-#: ../plug-ins/gimpressionist/gimp.c:350
+#: ../plug-ins/gimpressionist/gimp.c:371
 msgid "Painting"
 msgstr "Målar"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:121
+#: ../plug-ins/gimpressionist/gimpressionist.c:139
 msgid "GIMPressionist"
 msgstr "GIMPressionist"
 
-#: ../plug-ins/gimpressionist/orientation.c:74
+#: ../plug-ins/gimpressionist/orientation.c:92
 msgid "Or_ientation"
 msgstr "Or_ientering"
 
-#: ../plug-ins/gimpressionist/orientation.c:88
+#: ../plug-ins/gimpressionist/orientation.c:106
 msgid "Directions:"
 msgstr "Riktningar:"
 
-#: ../plug-ins/gimpressionist/orientation.c:92
+#: ../plug-ins/gimpressionist/orientation.c:110
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Antal riktningar (dvs. penslar) att använda"
 
-#: ../plug-ins/gimpressionist/orientation.c:100
+#: ../plug-ins/gimpressionist/orientation.c:118
 msgid "Start angle:"
 msgstr "Startvinkel:"
 
-#: ../plug-ins/gimpressionist/orientation.c:104
+#: ../plug-ins/gimpressionist/orientation.c:122
 msgid "The starting angle of the first brush to create"
 msgstr "Vinkeln på den första skapade penseln"
 
-#: ../plug-ins/gimpressionist/orientation.c:112
+#: ../plug-ins/gimpressionist/orientation.c:130
 msgid "Angle span:"
 msgstr "Vinkelomfång:"
 
-#: ../plug-ins/gimpressionist/orientation.c:116
+#: ../plug-ins/gimpressionist/orientation.c:134
 msgid "The angle span of the first brush to create"
 msgstr "Vinkeln på den första skapade penseln"
 
-#: ../plug-ins/gimpressionist/orientation.c:139
+#: ../plug-ins/gimpressionist/orientation.c:157
 msgid "Let the value (brightness) of the region determine the direction of the stroke"
 msgstr "Låt värdet (ljusstyrkan) på området bestämma penseldragets riktning"
 
-#: ../plug-ins/gimpressionist/orientation.c:142
-#: ../plug-ins/gimpressionist/size.c:145
+#: ../plug-ins/gimpressionist/orientation.c:160
+#: ../plug-ins/gimpressionist/size.c:163
 msgid "Radius"
 msgstr "Radie"
 
-#: ../plug-ins/gimpressionist/orientation.c:143
+#: ../plug-ins/gimpressionist/orientation.c:161
 msgid "The distance from the center of the image determines the direction of the stroke"
 msgstr "Avståndet från bildens mitt bestämmer penseldragets riktning"
 
-#: ../plug-ins/gimpressionist/orientation.c:147
+#: ../plug-ins/gimpressionist/orientation.c:165
 msgid "Selects a random direction of each stroke"
 msgstr "Välj slumpmässig riktning för varje penseldrag"
 
-#: ../plug-ins/gimpressionist/orientation.c:150
-#: ../plug-ins/gimpressionist/size.c:153
+#: ../plug-ins/gimpressionist/orientation.c:168
+#: ../plug-ins/gimpressionist/size.c:171
 msgid "Radial"
 msgstr "Radiell"
 
-#: ../plug-ins/gimpressionist/orientation.c:151
+#: ../plug-ins/gimpressionist/orientation.c:169
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Låt avståndet från bildens mitt bestämma penseldragets riktning"
 
-#: ../plug-ins/gimpressionist/orientation.c:158
-#: ../plug-ins/gimpressionist/size.c:161
+#: ../plug-ins/gimpressionist/orientation.c:176
+#: ../plug-ins/gimpressionist/size.c:179
 msgid "Flowing"
 msgstr "Flytande"
 
-#: ../plug-ins/gimpressionist/orientation.c:159
-#: ../plug-ins/gimpressionist/size.c:162
+#: ../plug-ins/gimpressionist/orientation.c:177
+#: ../plug-ins/gimpressionist/size.c:180
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "Penseldragen fäljer ett \"flytande\" mönster"
 
-#: ../plug-ins/gimpressionist/orientation.c:163
+#: ../plug-ins/gimpressionist/orientation.c:181
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "Områdets nyans bestämmer penseldragets riktning"
 
-#: ../plug-ins/gimpressionist/orientation.c:166
-#: ../plug-ins/gimpressionist/size.c:169
+#: ../plug-ins/gimpressionist/orientation.c:184
+#: ../plug-ins/gimpressionist/size.c:187
 msgid "Adaptive"
 msgstr "Adaptiv"
 
-#: ../plug-ins/gimpressionist/orientation.c:167
+#: ../plug-ins/gimpressionist/orientation.c:185
 msgid "The direction that matches the original image the closest is selected"
 msgstr "Den riktning som bäst passar orginalbilden blir vald"
 
-#: ../plug-ins/gimpressionist/orientation.c:174
-#: ../plug-ins/gimpressionist/size.c:178
+#: ../plug-ins/gimpressionist/orientation.c:192
+#: ../plug-ins/gimpressionist/size.c:196
 msgid "Manual"
 msgstr "Manuell"
 
-#: ../plug-ins/gimpressionist/orientation.c:175
+#: ../plug-ins/gimpressionist/orientation.c:193
 msgid "Manually specify the stroke orientation"
 msgstr "Välj penseldragets riktning manuellt"
 
-#: ../plug-ins/gimpressionist/orientation.c:186
+#: ../plug-ins/gimpressionist/orientation.c:204
 msgid "Opens up the Orientation Map Editor"
 msgstr "Öppnar riktningskartredigeraren"
 
-#: ../plug-ins/gimpressionist/orientmap.c:508
+#: ../plug-ins/gimpressionist/orientmap.c:526
 msgid "Orientation Map Editor"
 msgstr "Riktningskartredigerare"
 
-#: ../plug-ins/gimpressionist/orientmap.c:537
+#: ../plug-ins/gimpressionist/orientmap.c:555
 msgid "Vectors"
 msgstr "Vektorer"
 
-#: ../plug-ins/gimpressionist/orientmap.c:549
+#: ../plug-ins/gimpressionist/orientmap.c:567
 msgid "The vector-field. Left-click to move selected vector, Right-click to point it towards mouse, Middle-click to add a new vector."
 msgstr "Vektorfältet. Vänsterklicka för att flytta vald vektor, högerklicka för att rikta den mot muspekaren, mittenklicka för att lägga till en ny vektor."
 
-#: ../plug-ins/gimpressionist/orientmap.c:572
-#: ../plug-ins/gimpressionist/sizemap.c:441
+#: ../plug-ins/gimpressionist/orientmap.c:590
+#: ../plug-ins/gimpressionist/sizemap.c:459
 msgid "Adjust the preview's brightness"
 msgstr "Justera förhandsgranskarens ljusstyrka"
 
-#: ../plug-ins/gimpressionist/orientmap.c:594
+#: ../plug-ins/gimpressionist/orientmap.c:612
 msgid "Select previous vector"
 msgstr "Välj föregående vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:600
+#: ../plug-ins/gimpressionist/orientmap.c:618
 msgid "Select next vector"
 msgstr "Välj nästa vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:602
-#: ../plug-ins/gimpressionist/sizemap.c:472
+#: ../plug-ins/gimpressionist/orientmap.c:620
+#: ../plug-ins/gimpressionist/sizemap.c:490
 msgid "A_dd"
 msgstr "Lägg _till"
 
-#: ../plug-ins/gimpressionist/orientmap.c:606
+#: ../plug-ins/gimpressionist/orientmap.c:624
 msgid "Add new vector"
 msgstr "Lägg till ny vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:608
-#: ../plug-ins/gimpressionist/sizemap.c:479
+#: ../plug-ins/gimpressionist/orientmap.c:626
+#: ../plug-ins/gimpressionist/sizemap.c:497
 msgid "_Kill"
 msgstr "_Döda"
 
-#: ../plug-ins/gimpressionist/orientmap.c:612
+#: ../plug-ins/gimpressionist/orientmap.c:630
 msgid "Delete selected vector"
 msgstr "Ta bort vald vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
+#: ../plug-ins/gimpressionist/orientmap.c:641
 msgid "Type"
 msgstr "Typ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:627
+#: ../plug-ins/gimpressionist/orientmap.c:645
 msgid "_Normal"
 msgstr "_Normal"
 
-#: ../plug-ins/gimpressionist/orientmap.c:628
+#: ../plug-ins/gimpressionist/orientmap.c:646
 msgid "Vorte_x"
 msgstr "Vir_vel"
 
-#: ../plug-ins/gimpressionist/orientmap.c:629
+#: ../plug-ins/gimpressionist/orientmap.c:647
 msgid "Vortex_2"
 msgstr "Virvel_2"
 
-#: ../plug-ins/gimpressionist/orientmap.c:630
+#: ../plug-ins/gimpressionist/orientmap.c:648
 msgid "Vortex_3"
 msgstr "Virvel_3"
 
-#: ../plug-ins/gimpressionist/orientmap.c:636
-#: ../plug-ins/gimpressionist/sizemap.c:524
+#: ../plug-ins/gimpressionist/orientmap.c:654
+#: ../plug-ins/gimpressionist/sizemap.c:542
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/gimpressionist/orientmap.c:662
 msgid "Voronoi-mode makes only the vector closest to the given point have any influence"
 msgstr "Voronoi-läge medför att endast den vektor som är närmast en given punkt har någon påverkan"
 
-#: ../plug-ins/gimpressionist/orientmap.c:654
+#: ../plug-ins/gimpressionist/orientmap.c:672
 msgid "A_ngle:"
 msgstr "Vi_nkel:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:658
+#: ../plug-ins/gimpressionist/orientmap.c:676
 msgid "Change the angle of the selected vector"
 msgstr "Ändra vinkeln på vald vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:665
+#: ../plug-ins/gimpressionist/orientmap.c:683
 msgid "Ang_le offset:"
 msgstr "Vin_kelposition:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:669
+#: ../plug-ins/gimpressionist/orientmap.c:687
 msgid "Offset all vectors with a given angle"
 msgstr "Förskjut alla vektorer med en given vinkel"
 
-#: ../plug-ins/gimpressionist/orientmap.c:680
+#: ../plug-ins/gimpressionist/orientmap.c:698
 msgid "Change the strength of the selected vector"
 msgstr "Ändra styrkan på vald vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:687
+#: ../plug-ins/gimpressionist/orientmap.c:705
 msgid "S_trength exp.:"
 msgstr "S_tyrkeexponent:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:691
-#: ../plug-ins/gimpressionist/sizemap.c:519
+#: ../plug-ins/gimpressionist/orientmap.c:709
+#: ../plug-ins/gimpressionist/sizemap.c:537
 msgid "Change the exponent of the strength"
 msgstr "Ändra exponenten för styrkan"
 
-#: ../plug-ins/gimpressionist/paper.c:120
+#: ../plug-ins/gimpressionist/paper.c:138
 msgid "P_aper"
 msgstr "P_apper"
 
-#: ../plug-ins/gimpressionist/paper.c:155
+#: ../plug-ins/gimpressionist/paper.c:173
 msgid "Inverts the Papers texture"
 msgstr "Inverterar papperstexturen"
 
-#: ../plug-ins/gimpressionist/paper.c:159
+#: ../plug-ins/gimpressionist/paper.c:177
 msgid "O_verlay"
 msgstr "Ö_verlagring"
 
-#: ../plug-ins/gimpressionist/paper.c:164
+#: ../plug-ins/gimpressionist/paper.c:182
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Tillämpar papperet som det är (utan ciselering)"
 
-#: ../plug-ins/gimpressionist/paper.c:180
+#: ../plug-ins/gimpressionist/paper.c:198
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Bestämmer texturens skala (i procent av ofginalfilen)"
 
-#: ../plug-ins/gimpressionist/placement.c:49
+#: ../plug-ins/gimpressionist/placement.c:67
 msgid "Pl_acement"
 msgstr "Pl_acering"
 
-#: ../plug-ins/gimpressionist/placement.c:55
+#: ../plug-ins/gimpressionist/placement.c:73
 msgid "Placement"
 msgstr "Placering"
 
-#: ../plug-ins/gimpressionist/placement.c:59
+#: ../plug-ins/gimpressionist/placement.c:77
 msgid "Randomly"
 msgstr "Slumpmässigt"
 
-#: ../plug-ins/gimpressionist/placement.c:63
+#: ../plug-ins/gimpressionist/placement.c:81
 msgid "Evenly distributed"
 msgstr "Jämnt fördelat"
 
-#: ../plug-ins/gimpressionist/placement.c:71
+#: ../plug-ins/gimpressionist/placement.c:89
 msgid "Place strokes randomly around the image"
 msgstr "Placerar penseldragen slumpässigt runt bilden"
 
-#: ../plug-ins/gimpressionist/placement.c:75
+#: ../plug-ins/gimpressionist/placement.c:93
 msgid "The strokes are evenly distributed across the image"
 msgstr "Penseldragen är jämnt fördelade över bilden"
 
-#: ../plug-ins/gimpressionist/placement.c:84
+#: ../plug-ins/gimpressionist/placement.c:102
 msgid "Centered"
 msgstr "Centrerad"
 
-#: ../plug-ins/gimpressionist/placement.c:90
+#: ../plug-ins/gimpressionist/placement.c:108
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Samla penseldragen runt bildens mittpunkt"
 
-#: ../plug-ins/gimpressionist/placement.c:102
+#: ../plug-ins/gimpressionist/placement.c:120
 msgid "Stroke _density:"
 msgstr "Penseldrags_täthet:"
 
-#: ../plug-ins/gimpressionist/placement.c:106
+#: ../plug-ins/gimpressionist/placement.c:124
 msgid "The relative density of the brush strokes"
 msgstr "Relativ täthet av penseldragen"
 
@@ -10556,160 +10429,160 @@ msgstr "Relativ täthet av penseldragen"
 #. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:632
+#: ../plug-ins/gimpressionist/ppmtool.c:650
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Kunde inte spara PPM-filen \"%s\": %s"
 
-#: ../plug-ins/gimpressionist/presets.c:620
+#: ../plug-ins/gimpressionist/presets.c:638
 msgid "Save Current"
 msgstr "Spara aktuell"
 
-#: ../plug-ins/gimpressionist/presets.c:874
+#: ../plug-ins/gimpressionist/presets.c:892
 msgid "Gimpressionist Defaults"
 msgstr "Gimpressionist standardvärden"
 
-#: ../plug-ins/gimpressionist/presets.c:995
+#: ../plug-ins/gimpressionist/presets.c:1013
 msgid "_Presets"
 msgstr "_Förinställningar"
 
-#: ../plug-ins/gimpressionist/presets.c:1010
+#: ../plug-ins/gimpressionist/presets.c:1028
 msgid "Save Current..."
 msgstr "Spara aktuell..."
 
-#: ../plug-ins/gimpressionist/presets.c:1018
+#: ../plug-ins/gimpressionist/presets.c:1036
 msgid "Save the current settings to the specified file"
 msgstr "Spara aktuella inställningar till den angivna filen"
 
-#: ../plug-ins/gimpressionist/presets.c:1046
+#: ../plug-ins/gimpressionist/presets.c:1064
 msgid "Reads the selected Preset into memory"
 msgstr "Läser in vald inställning"
 
-#: ../plug-ins/gimpressionist/presets.c:1052
+#: ../plug-ins/gimpressionist/presets.c:1070
 msgid "Deletes the selected Preset"
 msgstr "Tar bort vald inställning"
 
-#: ../plug-ins/gimpressionist/presets.c:1058
+#: ../plug-ins/gimpressionist/presets.c:1076
 msgid "Reread the folder of Presets"
 msgstr "Läs om inställningskatalogen"
 
-#: ../plug-ins/gimpressionist/preview.c:192
+#: ../plug-ins/gimpressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr "Uppdatera förhandsgranskningsfönstret"
 
-#: ../plug-ins/gimpressionist/preview.c:200
+#: ../plug-ins/gimpressionist/preview.c:188
 msgid "Revert to the original image"
 msgstr "Återgå till orginalbilden"
 
-#: ../plug-ins/gimpressionist/size.c:77
+#: ../plug-ins/gimpressionist/size.c:95
 msgid "_Size"
 msgstr "_Storlek"
 
-#: ../plug-ins/gimpressionist/size.c:91
+#: ../plug-ins/gimpressionist/size.c:109
 msgid "Sizes:"
 msgstr "Storlekar:"
 
-#: ../plug-ins/gimpressionist/size.c:95
+#: ../plug-ins/gimpressionist/size.c:113
 msgid "The number of sizes of brushes to use"
 msgstr "Antal penselstorlekar att använda"
 
-#: ../plug-ins/gimpressionist/size.c:103
+#: ../plug-ins/gimpressionist/size.c:121
 msgid "Minimum size:"
 msgstr "Minimistorlek:"
 
-#: ../plug-ins/gimpressionist/size.c:107
+#: ../plug-ins/gimpressionist/size.c:125
 msgid "The smallest brush to create"
 msgstr "Minsta penseln att skapa"
 
-#: ../plug-ins/gimpressionist/size.c:115
+#: ../plug-ins/gimpressionist/size.c:133
 msgid "Maximum size:"
 msgstr "Maximumstorlek:"
 
-#: ../plug-ins/gimpressionist/size.c:119
+#: ../plug-ins/gimpressionist/size.c:137
 msgid "The largest brush to create"
 msgstr "Största penseln att skapa"
 
-#: ../plug-ins/gimpressionist/size.c:133
+#: ../plug-ins/gimpressionist/size.c:151
 msgid "Size:"
 msgstr "Storlek:"
 
-#: ../plug-ins/gimpressionist/size.c:142
+#: ../plug-ins/gimpressionist/size.c:160
 msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Låt regionens värde (ljusstyrka) avgöra storleken på penseldraget"
 
-#: ../plug-ins/gimpressionist/size.c:146
+#: ../plug-ins/gimpressionist/size.c:164
 msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "Avståndet från bildens mitt avgör storleken på penseldraget"
 
-#: ../plug-ins/gimpressionist/size.c:150
+#: ../plug-ins/gimpressionist/size.c:168
 msgid "Selects a random size for each stroke"
 msgstr "Väljer en slumpmässig storleken för varje penseldrag"
 
-#: ../plug-ins/gimpressionist/size.c:154
+#: ../plug-ins/gimpressionist/size.c:172
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "Låt riktningen från centrum avgöra storleken på penseldraget"
 
-#: ../plug-ins/gimpressionist/size.c:166
+#: ../plug-ins/gimpressionist/size.c:184
 msgid "The hue of the region determines the size of the stroke"
 msgstr "Regionens nyans avgör storleken på penseldraget"
 
-#: ../plug-ins/gimpressionist/size.c:170
+#: ../plug-ins/gimpressionist/size.c:188
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr "Penselstorleken som närmast passar orginalbilden är vald"
 
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/gimpressionist/size.c:197
 msgid "Manually specify the stroke size"
 msgstr "Ange penseldragens storlek manuellt"
 
-#: ../plug-ins/gimpressionist/size.c:190
+#: ../plug-ins/gimpressionist/size.c:208
 msgid "Opens up the Size Map Editor"
 msgstr "Öppnar storlekskartredigeraren"
 
-#: ../plug-ins/gimpressionist/sizemap.c:383
+#: ../plug-ins/gimpressionist/sizemap.c:401
 msgid "Size Map Editor"
 msgstr "Storlekskartredigerare"
 
-#: ../plug-ins/gimpressionist/sizemap.c:411
+#: ../plug-ins/gimpressionist/sizemap.c:429
 msgid "Smvectors"
 msgstr "Sk-vektorer"
 
-#: ../plug-ins/gimpressionist/sizemap.c:421
+#: ../plug-ins/gimpressionist/sizemap.c:439
 msgid "The smvector-field. Left-click to move selected smvector, Right-click to point it towards mouse, Middle-click to add a new smvector."
 msgstr "Sk-vektorfältet. Vänsterklicka för att flytta vald sk-vektor, högerklicka för att rikta den mot muspekaren, mittenklicka för att lägga till en ny sk-vektor."
 
-#: ../plug-ins/gimpressionist/sizemap.c:463
+#: ../plug-ins/gimpressionist/sizemap.c:481
 msgid "Select previous smvector"
 msgstr "Välj föregående sk-vektor"
 
-#: ../plug-ins/gimpressionist/sizemap.c:470
+#: ../plug-ins/gimpressionist/sizemap.c:488
 msgid "Select next smvector"
 msgstr "Välj nästa sk-vektor"
 
-#: ../plug-ins/gimpressionist/sizemap.c:477
+#: ../plug-ins/gimpressionist/sizemap.c:495
 msgid "Add new smvector"
 msgstr "Lägg till ny sk-vektor"
 
-#: ../plug-ins/gimpressionist/sizemap.c:484
+#: ../plug-ins/gimpressionist/sizemap.c:502
 msgid "Delete selected smvector"
 msgstr "Ta bort vald sk-vektor"
 
-#: ../plug-ins/gimpressionist/sizemap.c:497
+#: ../plug-ins/gimpressionist/sizemap.c:515
 msgid "Change the angle of the selected smvector"
 msgstr "Ändra vinkeln på vald sk-vektor"
 
-#: ../plug-ins/gimpressionist/sizemap.c:504
+#: ../plug-ins/gimpressionist/sizemap.c:522
 msgid "S_trength:"
 msgstr "S_tyrka:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:508
+#: ../plug-ins/gimpressionist/sizemap.c:526
 msgid "Change the strength of the selected smvector"
 msgstr "Ändra styrkan på vald sk-vektor"
 
-#: ../plug-ins/gimpressionist/sizemap.c:515
+#: ../plug-ins/gimpressionist/sizemap.c:533
 msgid "St_rength exp.:"
 msgstr "St_yrkeexponent:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:531
+#: ../plug-ins/gimpressionist/sizemap.c:549
 msgid "Voronoi-mode makes only the smvector closest to the given point have any influence"
 msgstr "Voronoi-läge medför att endast den sk-vektor som är närmast en given punkt har någon påverkan"
 
@@ -11692,6 +11565,7 @@ msgid "JPEG preview"
 msgstr "JPEG förhandsgranska"
 
 #: ../plug-ins/jpeg/jpeg-load.c:626
+#: ../plug-ins/psd/psd-thumb-load.c:83
 #: ../plug-ins/winicon/icoload.c:722
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -12016,70 +11890,148 @@ msgid "Page Curl"
 msgstr "Sidkrusning"
 
 #. label for the printable area
-#: ../plug-ins/print/print-page-layout.c:134
+#: ../plug-ins/print/print-page-layout.c:133
 msgid "Printable area:"
 msgstr "Utskrivningsområde:"
 
-#: ../plug-ins/print/print-page-layout.c:148
-msgid "_Adjust Page Size and Orientation"
-msgstr "_Justera sidstorlek och orientering"
-
-#: ../plug-ins/print/print-page-layout.c:202
+#: ../plug-ins/print/print-page-layout.c:179
 msgid "Ignore Page _Margins"
 msgstr "Ignorera sid_marginaler"
 
-#: ../plug-ins/print/print-page-layout.c:357
+#: ../plug-ins/print/print-page-layout.c:320
 msgid "_X resolution:"
 msgstr "_X-upplösning:"
 
-#: ../plug-ins/print/print-page-layout.c:361
+#: ../plug-ins/print/print-page-layout.c:324
 msgid "_Y resolution:"
 msgstr "_Y-upplösning:"
 
-#: ../plug-ins/print/print-page-layout.c:432
+#: ../plug-ins/print/print-page-layout.c:395
 msgid "_Left:"
 msgstr "_Vänster:"
 
-#: ../plug-ins/print/print-page-layout.c:451
+#: ../plug-ins/print/print-page-layout.c:414
 msgid "_Right:"
 msgstr "_Höger:"
 
-#: ../plug-ins/print/print-page-layout.c:505
+#: ../plug-ins/print/print-page-layout.c:468
 msgid "C_enter:"
 msgstr "Mitt_punkt:"
 
-#: ../plug-ins/print/print-page-layout.c:513
+#: ../plug-ins/print/print-page-layout.c:476
 msgid "Horizontally"
 msgstr "Horisontellt"
 
-#: ../plug-ins/print/print-page-layout.c:514
+#: ../plug-ins/print/print-page-layout.c:477
 msgid "Vertically"
 msgstr "Vertikalt"
 
 # src/dialogs.c:502 src/dialogs.c:600
-#: ../plug-ins/print/print-page-layout.c:515
+#: ../plug-ins/print/print-page-layout.c:478
 msgid "Both"
 msgstr "Både och"
 
-#: ../plug-ins/print/print.c:89
+#: ../plug-ins/print/print.c:102
 msgid "Print the image"
 msgstr "Skriv ut bilden"
 
-#: ../plug-ins/print/print.c:94
+#: ../plug-ins/print/print.c:107
 msgid "_Print..."
 msgstr "_Skriv ut..."
 
-#: ../plug-ins/print/print.c:213
+#: ../plug-ins/print/print.c:118
+msgid "Adjust page size and orientation for printing"
+msgstr "Justera sidstorlek och orientering för utskrift"
+
+#: ../plug-ins/print/print.c:124
+msgid "Page Set_up"
+msgstr "Sidinställnin_gar"
+
+#: ../plug-ins/print/print.c:253
 msgid "Image Settings"
 msgstr "Bildinställningar"
 
-#: ../plug-ins/print/print.c:253
+#: ../plug-ins/print/print.c:333
 msgid "An error occurred while trying to print:"
 msgstr "Ett fel inträffade vid försök att skriva ut:"
 
-#: ../plug-ins/print/print.c:283
+#: ../plug-ins/print/print.c:363
 msgid "Printing"
 msgstr "Skriver ut"
+
+#: ../plug-ins/psd/psd-load.c:208
+#, c-format
+msgid ""
+"Error loading PSD file:\n"
+"\n"
+"%s"
+msgstr ""
+"Fel vid inläsning av PSD-fil:\n"
+"\n"
+"%s"
+
+#: ../plug-ins/psd/psd-load.c:263
+#, c-format
+msgid "Not a valid photoshop document file"
+msgstr "Inte en giltig photoshop-dokumentfil"
+
+#: ../plug-ins/psd/psd-load.c:270
+#, c-format
+msgid "Unsupported file format version: %d"
+msgstr "Filformatets version stöds inte: %d"
+
+#: ../plug-ins/psd/psd-load.c:277
+#, c-format
+msgid "Too many channels in file: %d"
+msgstr "För många kanaler i fil: %d"
+
+#: ../plug-ins/psd/psd-load.c:307
+#, c-format
+msgid "Unsupported color mode: %s"
+msgstr "Färgläget stöds inte: %s"
+
+#: ../plug-ins/psd/psd-load.c:334
+#, c-format
+msgid "Unsupported bit depth: %d"
+msgstr "Bitdjupet stöds inte: %d"
+
+#: ../plug-ins/psd/psd-load.c:368
+#: ../plug-ins/psd/psd-load.c:378
+#: ../plug-ins/psd/psd-load.c:597
+#: ../plug-ins/psd/psd-load.c:778
+#, c-format
+msgid "The file is corrupt!"
+msgstr "Filen är skadad!"
+
+#: ../plug-ins/psd/psd-load.c:538
+#, c-format
+msgid "Too many channels in layer: %d"
+msgstr "För många kanaler i lager: %d"
+
+#: ../plug-ins/psd/psd-load.c:545
+#, c-format
+msgid "Unsupported or invalid layer height: %d"
+msgstr "Bildens höjd stöds inte eller är ogiltig: %d"
+
+#: ../plug-ins/psd/psd-load.c:552
+#, c-format
+msgid "Unsupported or invalid layer width: %d"
+msgstr "Bildens bredd stöds inte eller är ogiltig: %d"
+
+#: ../plug-ins/psd/psd-load.c:1138
+#: ../plug-ins/psd/psd-load.c:1486
+#, c-format
+msgid "Unsupported compression mode: %d"
+msgstr "Komprimeringsläget stöds inte: %d"
+
+#: ../plug-ins/psd/psd-load.c:1575
+msgid "Extra"
+msgstr "Extra"
+
+#: ../plug-ins/psd/psd-util.c:53
+#, c-format
+msgid "Unexpected end of file"
+msgstr "Oväntat slut på filen"
 
 #: ../plug-ins/rcm/rcm.c:99
 msgid "Replace a range of colors with another"
@@ -12501,6 +12453,79 @@ msgstr "Fel: Kan ej läsa XJT-egenskapsfilen \"%s\"."
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fel: XJT-egenskapsfilen \"%s\" är tom."
 
+#~ msgid "Email the image"
+#~ msgstr "Skicka bilden via e-post"
+#~ msgid "_Mail Image..."
+#~ msgstr "_Posta bild..."
+#~ msgid "Encapsulation:"
+#~ msgstr "Packningsformat:"
+#~ msgid "_MIME"
+#~ msgstr "_MIME"
+#~ msgid "_Uuencode"
+#~ msgstr "_Uuencode"
+#~ msgid "_Recipient:"
+#~ msgstr "_Mottagare:"
+#~ msgid "_Sender:"
+#~ msgstr "_Avsändare:"
+
+# src/header_stuff.c:462
+#~ msgid "Comm_ent:"
+#~ msgstr "_Kommentar:"
+#~ msgid "First Source Color"
+#~ msgstr "Första källfärgen"
+#~ msgid "Second Source Color"
+#~ msgstr "Andra källfärgen"
+#~ msgid "First Destination Color"
+#~ msgstr "Första målfärgen"
+#~ msgid "Second Destination Color"
+#~ msgstr "Andra målfärgen"
+#~ msgid "Map colors sending foreground to black, background to white"
+#~ msgstr ""
+#~ "Mappa färger genom att skicka förgrund till svart, bakgrund till vit"
+#~ msgid "Adjust _Foreground & Background"
+#~ msgstr "Justera _förgrund och bakgrund"
+#~ msgid "Map color range specified by two colors to another range"
+#~ msgstr "Mappa färgintervall angivet av två färger till ett annat intervall"
+#~ msgid "Color Range _Mapping..."
+#~ msgstr "Färgområdes_mappning..."
+#~ msgid "Cannot operate on gray or indexed color images."
+#~ msgstr "Kan inte arbeta med gråskala eller indexerade färgbilder."
+#~ msgid "Adjusting foreground and background colors"
+#~ msgstr "Justerar förgrund- och bakgrundsfärger"
+#~ msgid "Mapping colors"
+#~ msgstr "Mappar färger"
+#~ msgid "Map Color Range"
+#~ msgstr "Mappa färgintervall"
+#~ msgid "Source Color Range"
+#~ msgstr "Färgintervall för källa"
+#~ msgid "Destination Color Range"
+#~ msgstr "Färgintervall för mål"
+#~ msgid "Invalid UTF-8 string in PSD file"
+#~ msgstr "Ogiltig UTF-8-sträng i PSD-fil"
+#~ msgid "Cannot handle bitmap PSD files"
+#~ msgstr "Kan inte hantera bitmappade PSD-filer"
+#~ msgid "Cannot handle PSD files in CMYK color"
+#~ msgstr "Kan inte hantera PSD-filer i CMYK-färg"
+#~ msgid "Cannot handle PSD files in Multichannel color"
+#~ msgstr "Kan inte hantera PSD-filer i Multichannel-färg"
+#~ msgid "Cannot handle PSD files in Duotone color"
+#~ msgstr "Kan inte hantera PSD-filer i Duotone-färg"
+#~ msgid "Cannot handle PSD files in Lab color"
+#~ msgstr "Kan inte hantera PSD-filer i Lab-färg"
+#~ msgid "Cannot handle the color mode %d of the PSD file"
+#~ msgstr "Kan inte hantera färgläge %d för PSD-filen"
+#~ msgid "Cannot handle PSD file with more than %d channels"
+#~ msgstr "Kan inte hantera PSD-filer med fler än %d kanaler"
+#~ msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
+#~ msgstr "Kan inte hantera PSD-filer i CMYK-färg med fler än 5 kanaler"
+#~ msgid "Cannot handle image mode %d (%s)"
+#~ msgstr "Kan inte hantera bildläge %d (%s)"
+#~ msgid "Cannot handle %d bits per channel PSD files"
+#~ msgstr "Kan inte hantera PSD-filer med %d bitar per kanal"
+#~ msgid "This is not an Adobe Photoshop PSD file"
+#~ msgstr "Detta är inte en Adobe Photoshop PSD-fil"
+#~ msgid "The PSD file has bad version number '%d', not 1"
+#~ msgstr "PSD-filen har felaktigt versionsnummer \"%d\", inte 1"
 #~ msgid "Smoothness of Aliasing"
 #~ msgstr "Jämnhet för aliasing"
 #~ msgid "Preview as You Drag"
@@ -12517,7 +12542,6 @@ msgstr "Fel: XJT-egenskapsfilen \"%s\" är tom."
 #~ msgstr "Använd anpassade kvalitetsinställningar"
 #~ msgid "Force baseline JPEG"
 #~ msgstr "Tvinga grundläggande JPEG"
-
 #, fuzzy
 #~ msgid "Could not open color profile from '%s'"
 #~ msgstr "Kan inte läsa färgposter från \"%s\""
@@ -12825,8 +12849,6 @@ msgstr "Fel: XJT-egenskapsfilen \"%s\" är tom."
 #~ msgstr "Klistrar in..."
 #~ msgid "_Print"
 #~ msgstr "_Skriv ut"
-#~ msgid "Page Setup"
-#~ msgstr "Sidinställningar"
 #~ msgid "PrintDlg failed: %d"
 #~ msgstr "PrintDlg misslyckades: %d"
 #~ msgid "Printer doesn't support bitmaps"
