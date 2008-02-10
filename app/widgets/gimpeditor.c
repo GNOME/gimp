@@ -489,6 +489,7 @@ gimp_editor_add_button (GimpEditor  *editor,
 
   image = gtk_image_new_from_stock (stock_id, button_icon_size);
   gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_widget_show (image);
 
   return button;
@@ -620,6 +621,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
   else
     {
       button = gimp_button_new ();
+      gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
     }
 
   g_object_get (action,
