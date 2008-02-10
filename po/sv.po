@@ -1,6 +1,6 @@
 # Swedish messages for the GIMP.
-# Copyright (C) 1999, 2000, 2001, 2002, 2003, 2007 Free Software Foundation, Inc.
-# Daniel Nylander <po@danielnylander.se>, 2007.
+# Copyright (C) 1999, 2000, 2001, 2002, 2003, 2007, 2008 Free Software Foundation, Inc.
+# Daniel Nylander <po@danielnylander.se>, 2007, 2008.
 # Tomas Ögren <stric@ing.umu.se>, 1999, 2000.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-10 13:26+0100\n"
-"PO-Revision-Date: 2008-02-10 18:46+0100\n"
+"PO-Revision-Date: 2008-02-10 18:48+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -65,13 +65,13 @@ msgstr ""
 #: ../app/batch.c:76
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
-msgstr "Ingen satstolkare angiven, använder standardtolkaren \"%s\".\n"
+msgstr "Ingen satstolk angiven, använder standardtolken \"%s\".\n"
 
 #: ../app/batch.c:94
 #: ../app/batch.c:112
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
-msgstr "Satstolkaren \"%s\" är inte tillgänglig. Satsläge inaktiverat."
+msgstr "Satstolken \"%s\" är inte tillgänglig. Satsläge inaktiverat."
 
 #: ../app/main.c:155
 #: ../tools/gimp-remote.c:60
@@ -7972,7 +7972,7 @@ msgstr "Välj modulmappar"
 
 #: ../app/dialogs/preferences-dialog.c:2742
 msgid "Interpreters"
-msgstr "Tolkare"
+msgstr "Tolkar"
 
 #: ../app/dialogs/preferences-dialog.c:2742
 msgid "Interpreter Folders"
@@ -8814,7 +8814,7 @@ msgstr "Otillåtet variabelnamn i miljöfilen %s: %s"
 #: ../app/plug-in/gimpinterpreterdb.c:264
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
-msgstr "Felaktig tolkare refererad till i tolkarfilen %s: %s"
+msgstr "Felaktig tolk refererad till i tolkfilen %s: %s"
 
 #: ../app/plug-in/gimpinterpreterdb.c:322
 #, c-format
@@ -8865,7 +8865,7 @@ msgstr "Startar tillägg"
 
 #: ../app/plug-in/gimppluginmanager.c:296
 msgid "Plug-In Interpreters"
-msgstr "Insticksmodultolkare"
+msgstr "Insticksmodultolkar"
 
 #: ../app/plug-in/gimppluginmanager.c:303
 msgid "Plug-In Environment"
