@@ -417,9 +417,15 @@ gimp_curves_config_save_cruft (GimpCurvesConfig *config,
         }
 
       for (j = 0; j < GIMP_CURVE_NUM_POINTS; j++)
-        fprintf (file, "%d %d ",
-                 (gint) (curve->points[j].x * 255.999),
-                 (gint) (curve->points[j].y * 255.999));
+        {
+          gdouble x, y;
+
+          gimp_curve_get_point (curve, j, &x, &y);
+
+          fprintf (file, "%d %d ",
+                   (gint) (x * 255.999),
+                   (gint) (y * 255.999));
+        }
 
       fprintf (file, "\n");
     }

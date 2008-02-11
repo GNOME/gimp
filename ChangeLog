@@ -1,3 +1,11 @@
+2008-02-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcurve.[ch]: add gimp_curve_get_point().
+
+	* app/gegl/gimpcurvesconfig.c
+	* app/widgets/gimpcurveview.c: use it instead of accessing the
+	points array directly.
+
 2008-02-11  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/Makefile.am (libgimpthumb_2_0_la_LIBADD):
