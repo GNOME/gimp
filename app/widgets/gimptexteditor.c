@@ -205,6 +205,8 @@ gimp_text_editor_new (const gchar     *title,
   gtk_widget_show (scrolled_window);
 
   editor->view = gtk_text_view_new ();
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (editor->view),
+                               GTK_WRAP_WORD_CHAR);
   gtk_container_add (GTK_CONTAINER (scrolled_window), editor->view);
   gtk_widget_show (editor->view);
 

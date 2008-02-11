@@ -1,3 +1,8 @@
+2008-02-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimptexteditor.c (gimp_text_editor_new): enable
+	wrapping so the text doesn't scroll out horizontally.
+
 2008-02-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/pyconsole.py: formatting.
