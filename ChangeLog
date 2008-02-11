@@ -1,3 +1,8 @@
+2008-02-11  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/gegl/gimpoperationtilesource.c: context_id argument was removed
+	from the process() call of GeglOperationSource.
+
 2008-02-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpeditor.c: add button-relief style property which

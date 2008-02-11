@@ -55,9 +55,8 @@ static void     gimp_operation_tile_source_set_property (GObject       *object,
 
 static void     gimp_operation_tile_source_prepare      (GeglOperation *operation);
 static GeglRectangle
-          gimp_operation_tile_source_get_bounding_box (GeglOperation *operation);
+          gimp_operation_tile_source_get_bounding_box   (GeglOperation *operation);
 static gboolean gimp_operation_tile_source_process      (GeglOperation *operation,
-                                                         GeglNodeContext *context,
                                                          GeglBuffer          *output,
                                                          const GeglRectangle *result);
 
@@ -215,7 +214,6 @@ gimp_operation_tile_source_get_bounding_box (GeglOperation *operation)
 
 static gboolean
 gimp_operation_tile_source_process (GeglOperation       *operation,
-                                    GeglNodeContext     *context,
                                     GeglBuffer          *output,
                                     const GeglRectangle *result)
 {
