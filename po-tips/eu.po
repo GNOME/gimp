@@ -1,16 +1,16 @@
-# translation of eu.po to Basque
+# translation of gimp-tips.gimp-2-4.po to Basque
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
-# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2004, 2006.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2004, 2006, 2008.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: eu\n"
+"Project-Id-Version: gimp-tips.gimp-2-4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-08 13:41+0200\n"
-"PO-Revision-Date: 2007-09-08 13:44+0200\n"
-"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
+"POT-Creation-Date: 2008-02-11 19:52+0100\n"
+"PO-Revision-Date: 2008-02-10 22:59+0100\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -60,7 +60,7 @@ msgid ""
 "but that one. <tt>Shift</tt>-click again to show all layers."
 msgstr ""
 "Egin klik <tt>Maius</tt> tekla sakatuta 'Geruzak' elkarrizketa-koadroko "
-"begiaren ikonoan, geruza hori ez beste guztiak ezkutatzeko.  Egin klik "
+"begiaren ikonoan, geruza hori ez beste guztiak ezkutatzeko. Egin klik "
 "berriro <tt>Maius</tt> tekla sakatuta, geruza guztiak agertzeko."
 
 #: ../data/tips/gimp-tips.xml.in.h:6
@@ -107,7 +107,8 @@ msgstr ""
 msgid ""
 "GIMP allows you to undo most changes to the image, so feel free to "
 "experiment."
-msgstr "GIMP-ek irudiaren aldaketa gehienak desegin ditzakenez, jolastu irudiekin."
+msgstr ""
+"GIMP-ek irudiaren aldaketa gehienak desegin ditzakenez, jolastu irudiekin."
 
 #: ../data/tips/gimp-tips.xml.in.h:10
 msgid ""
@@ -115,10 +116,10 @@ msgid ""
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
-"GIMPek gzip konprimatzea unean onartzen du. Fitxategi-izenari <tt>.gz</tt> "
-"gehitu besterik ez duzu egin behar (edo <tt>.bz2</tt>, bzip2 instalatuta "
-"baduzu) eta irudia konprimituta gordeko da. Noski, konprimitutako irudiak "
-"ere karga daitezke."
+"GIMPek zuzenean gzip-ekin konprimitzea onartzen du. Fitxategi-izenari <tt>."
+"gz</tt> gehitu besterik ez duzu egin behar (edo <tt>.bz2</tt>, bzip2 "
+"instalatuta baduzu) eta irudia konprimituta gordeko da. Noski, "
+"konprimitutako irudiak ere karga daitezke."
 
 #: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
@@ -138,7 +139,7 @@ msgid ""
 msgstr ""
 "Geruza elkarrizketa-koadroan geruza baten izena <b>lodiz</b> agertzen bada, "
 "geruza horrek alfa-kanalik ez duela adierazten du. Alfa-kanala gehitzeko "
-"erabili Geruza → Gardentasuna → Gehitu alfa kanaka."
+"erabili Geruza → Gardentasuna → Gehitu alfa kanala."
 
 #: ../data/tips/gimp-tips.xml.in.h:13
 msgid ""
@@ -189,10 +190,10 @@ msgid ""
 "Channel) or flatten it (Image→Flatten Image)."
 msgstr ""
 "Efektu guztiak ez dira berdin aplikatzen irudi-mota guztietan. Hori "
-"adierazteko, menu-sarrera lausotuta agertuko da. Agian irudiaren modua "
-"GBUra  (gorria, berdea, urdina) aldatu behar duzu (Irudia→Modua→GBU), alfa "
-"kanal bat gehitu (Geruzak→Gardentasuna→Gehitu alfa kanala) edo irudia "
-"berdindu (Irudia→Berdindu irudia)."
+"adierazteko, menu-sarrera lausotuta agertuko da. Agian irudiaren modua GBUra "
+"(gorria, berdea, urdina) aldatu behar duzu (Irudia→Modua→GBU), alfa kanal "
+"bat gehitu (Geruzak→Gardentasuna→Gehitu alfa kanala) edo irudia berdindu "
+"(Irudia→Berdindu irudia)."
 
 #: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""
@@ -201,7 +202,7 @@ msgid ""
 "tt> before making a selection subtracts from the current one."
 msgstr ""
 "Hautapena egin aurretik <tt>Maius</tt> tekla sakatuta baduzu, uneko "
-"hautapenera gehituko duzu ordeztu beharrean. Hautapena egin aurretik "
+"hautapenari gehituko doizu ordeztu beharrean. Hautapena egin aurretik "
 "<tt>Ktrl</tt> erabiltzen bada, unekotik kendu egiten da."
 
 #: ../data/tips/gimp-tips.xml.in.h:19
@@ -226,10 +227,10 @@ msgid ""
 "completed, you can save it as JPEG, PNG, GIF, ..."
 msgstr ""
 "Irudi bat gordetzen duzunean, beranduago harekin berriro lan egiteko, saiatu "
-"XCF erabiltzen, GIMPen fitxategi-formatua da (erabili fitxategi-luzapen  "
-"hau: <tt>.xcf</tt>). Hala, lantzen ari zaren irudiaren geruza eta itxura "
-"guztia gordeko da. Proiektua bukatutakoan, ordea, formatu hauetan gorde "
-"behar duzu: JPEG, PNG, GIF, ..."
+"XCF formatua erabiltzen, GIMPen fitxategi-formatua da (erabili fitxategi-"
+"luzapen hau: <tt>.xcf</tt>). Hala, lantzen ari zaren irudiaren geruza eta "
+"itxura guztia gordeko da. Proiektua bukatutakoan, ordea, formatu hauetan "
+"gorde behar duzu: JPEG, PNG, GIF, ..."
 
 #: ../data/tips/gimp-tips.xml.in.h:21
 msgid ""
@@ -239,8 +240,10 @@ msgid ""
 "the <tt>Super</tt> key (or \"Windows logo\") instead."
 msgstr ""
 "Hautapen bat doitzeko edo lekuz aldatzeko, erabili <tt>Alt</tt>-arrastatu. "
-"Honek leihoa mugitzen badu, leiho kudeatzaileak <tt>Alt</tt> erabiltzen duela "
-"adierazten du. Leiho kudeatzaile gehienak <tt>Alt</tt> teklari ez ikusi egiteko  edo <tt>Super</tt> (\"Windows-en logoa\") tekla erabiltzeko horren ordez konfiguratuta daude."
+"Honek leihoa mugitzen badu, leiho-kudeatzaileak <tt>Alt</tt> erabiltzen "
+"duela adierazten du. Leiho-kudeatzaile gehienak <tt>Alt</tt> teklari ez "
+"ikusi egiteko edo <tt>Super</tt> (\"Windows-en logoa\") tekla erabiltzeko "
+"horren ordez konfiguratuta daude."
 
 #: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
@@ -286,7 +289,7 @@ msgid ""
 "You can get context-sensitive help for most of GIMP's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
-"GIMPeko eginbide gehienentzako testuinguruko laguntza F1 tekla edozein  "
+"GIMPeko eginbide gehienentzako testuinguruko laguntza F1 tekla edozein "
 "unetan sakatuta lor dezakezu. Horrek menuetan ere balio du."
 
 #: ../data/tips/gimp-tips.xml.in.h:27
@@ -338,4 +341,3 @@ msgstr ""
 "leiho bateko behealdeko ezkerreko &quot;Maskara azkarra&quot; botoian. "
 "Aldatu hautapena irudian marraztuz, eta egin klik berriro botoian hautapen "
 "arruntera itzultzeko."
-
