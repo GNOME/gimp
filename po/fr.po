@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-05 23:05+0100\n"
-"PO-Revision-Date: 2008-02-04 11:13+0100\n"
+"POT-Creation-Date: 2008-02-11 11:25+0100\n"
+"PO-Revision-Date: 2008-02-11 11:21+0100\n"
 "Last-Translator: Stéphane Raimbault <stephane.raimbault@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -2748,7 +2748,7 @@ msgstr "Fusionner les calques _visibles..."
 
 #: ../app/actions/layers-actions.c:146
 msgid "_Discard Text Information"
-msgstr "_Éliminer l'information de texte"
+msgstr "_Abandonner l'information de texte"
 
 #: ../app/actions/layers-actions.c:147
 msgid "Turn this text layer into a normal layer"
@@ -4471,7 +4471,7 @@ msgstr "Remplacer"
 msgid "Anti erase"
 msgstr "Anti-effacement"
 
-#: ../app/base/tile-swap.c:554
+#: ../app/base/tile-swap.c:553
 msgid ""
 "Unable to open swap file. GIMP has run out of memory and cannot use the swap "
 "file. Some parts of your images may be corrupted. Try to save your work "
@@ -4484,7 +4484,7 @@ msgstr ""
 "utilisant plusieurs noms de fichiers différents, redémarrez GIMP et vérifiez "
 "l'emplacement de votre répertoire de swap dans les Préférences."
 
-#: ../app/base/tile-swap.c:569
+#: ../app/base/tile-swap.c:568
 #, c-format
 msgid "Failed to resize swap file: %s"
 msgstr "Impossible de redimensionner le fichier d'échange : %s"
@@ -5608,7 +5608,7 @@ msgstr "Rigueur de la sélection flottante"
 msgid "FS relax"
 msgstr "Relâchement de la sélection flottante"
 
-#: ../app/core/core-enums.c:928 ../app/paint/gimpink.c:97
+#: ../app/core/core-enums.c:928 ../app/paint/gimpink.c:95
 #: ../app/tools/gimpinktool.c:55
 msgid "Ink"
 msgstr "Calligraphie"
@@ -6088,7 +6088,7 @@ msgstr "Balance des couleurs"
 msgid "Colorize"
 msgstr "Coloriage"
 
-#: ../app/core/gimpdrawable-curves.c:160 ../app/core/gimpdrawable-curves.c:196
+#: ../app/core/gimpdrawable-curves.c:162 ../app/core/gimpdrawable-curves.c:198
 #: ../app/tools/gimpcurvestool.c:130
 msgid "Curves"
 msgstr "Courbes"
@@ -8318,7 +8318,7 @@ msgstr[1] "Il y a %d images avec des modifications non enregistrées :"
 
 #: ../app/dialogs/quit-dialog.c:238
 msgid "_Discard Changes"
-msgstr "_Éliminer les changements"
+msgstr "_Abandonner les modifications"
 
 #: ../app/dialogs/resize-dialog.c:119
 msgid "Canvas Size"
@@ -8764,11 +8764,11 @@ msgstr "Aérographe"
 msgid "No brushes available for use with this tool."
 msgstr "Aucune brosse disponible pour être utilisée avec cet outil."
 
-#: ../app/paint/gimpclone.c:100 ../app/tools/gimpclonetool.c:61
+#: ../app/paint/gimpclone.c:99 ../app/tools/gimpclonetool.c:61
 msgid "Clone"
 msgstr "Clonage"
 
-#: ../app/paint/gimpclone.c:141
+#: ../app/paint/gimpclone.c:140
 #, c-format
 msgid "No patterns available for use with this tool."
 msgstr "Aucune motif disponible pour être utilisé avec cet outil."
@@ -8785,11 +8785,11 @@ msgstr "Éclaircir/Assombrir"
 msgid "Eraser"
 msgstr "Gomme"
 
-#: ../app/paint/gimpheal.c:116 ../app/tools/gimphealtool.c:53
+#: ../app/paint/gimpheal.c:115 ../app/tools/gimphealtool.c:53
 msgid "Heal"
 msgstr "Correcteur"
 
-#: ../app/paint/gimpheal.c:155
+#: ../app/paint/gimpheal.c:154
 #, c-format
 msgid "Healing does not operate on indexed layers."
 msgstr "Le correcteur ne fonctionne pas sur des calques en couleurs indexées."
@@ -8874,7 +8874,7 @@ msgstr "Transformation 2D"
 msgid "2D Transforming"
 msgstr "Transformation 2D en cours"
 
-#: ../app/pdb/edit_cmds.c:694 ../app/tools/gimpblendtool.c:224
+#: ../app/pdb/edit_cmds.c:695 ../app/tools/gimpblendtool.c:224
 msgid "Blending"
 msgstr "Mélange en cours"
 
@@ -9889,30 +9889,30 @@ msgstr "Enregistre les courbes dans le fichier"
 msgid "Curves does not operate on indexed layers."
 msgstr "Courbes ne fonctionne pas sur des calques en couleurs indexées."
 
-#: ../app/tools/gimpcurvestool.c:321
+#: ../app/tools/gimpcurvestool.c:315
 msgid "Click to add a control point"
 msgstr "Cliquez pour ajouter un point de contrôle."
 
-#: ../app/tools/gimpcurvestool.c:326
+#: ../app/tools/gimpcurvestool.c:320
 msgid "Click to add control points to all channels"
 msgstr "Cliquez pour ajouter des points de contrôle à tous les canaux."
 
-#: ../app/tools/gimpcurvestool.c:439 ../app/tools/gimplevelstool.c:361
+#: ../app/tools/gimpcurvestool.c:428 ../app/tools/gimplevelstool.c:361
 msgid "Cha_nnel:"
 msgstr "Ca_nal :"
 
-#: ../app/tools/gimpcurvestool.c:463 ../app/tools/gimplevelstool.c:383
+#: ../app/tools/gimpcurvestool.c:452 ../app/tools/gimplevelstool.c:383
 msgid "R_eset Channel"
 msgstr "Ré_initialiser le canal"
 
 #. Horizontal button box for load / save
 #. all channels frame
-#: ../app/tools/gimpcurvestool.c:555 ../app/tools/gimplevelstool.c:622
+#: ../app/tools/gimpcurvestool.c:544 ../app/tools/gimplevelstool.c:622
 msgid "All Channels"
 msgstr "Tous les canaux"
 
 #. The radio box for selecting the curve type
-#: ../app/tools/gimpcurvestool.c:573
+#: ../app/tools/gimpcurvestool.c:562
 msgid "Curve Type"
 msgstr "Type de courbe"
 
@@ -11475,7 +11475,7 @@ msgid "Percentage of width of brush"
 msgstr "Pourcentage de largeur de brosse"
 
 #: ../app/widgets/gimpbufferview.c:173 ../app/widgets/gimpbufferview.c:257
-#: ../app/widgets/gimpeditor.c:727
+#: ../app/widgets/gimpeditor.c:744
 msgid "(None)"
 msgstr "(Aucun)"
 
@@ -12126,31 +12126,31 @@ msgstr "Impossible de démarrer le greffon du navigateur d'aide de GIMP"
 msgid "Use _web browser instead"
 msgstr "Utiliser un navigateur _Web à la place"
 
-#: ../app/widgets/gimphistogrameditor.c:100
+#: ../app/widgets/gimphistogrameditor.c:99
 msgid "Mean:"
 msgstr "Moyenne :"
 
-#: ../app/widgets/gimphistogrameditor.c:101
+#: ../app/widgets/gimphistogrameditor.c:100
 msgid "Std dev:"
 msgstr "Dev Std :"
 
-#: ../app/widgets/gimphistogrameditor.c:102
+#: ../app/widgets/gimphistogrameditor.c:101
 msgid "Median:"
 msgstr "Médiane :"
 
-#: ../app/widgets/gimphistogrameditor.c:103
+#: ../app/widgets/gimphistogrameditor.c:102
 msgid "Pixels:"
 msgstr "Pixels :"
 
-#: ../app/widgets/gimphistogrameditor.c:104
+#: ../app/widgets/gimphistogrameditor.c:103
 msgid "Count:"
 msgstr "Compte :"
 
-#: ../app/widgets/gimphistogrameditor.c:105
+#: ../app/widgets/gimphistogrameditor.c:104
 msgid "Percentile:"
 msgstr "Pourcentage :"
 
-#: ../app/widgets/gimphistogrameditor.c:123
+#: ../app/widgets/gimphistogrameditor.c:122
 msgid "Channel:"
 msgstr "Canal :"
 
@@ -12289,7 +12289,7 @@ msgstr "Profil de couleur ICC (*.icc, *.icm)"
 msgid "Progress"
 msgstr "Avancement"
 
-#: ../app/widgets/gimpselectiondata.c:249
+#: ../app/widgets/gimpselectiondata.c:241
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -12300,7 +12300,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/widgets/gimpselectiondata.c:253
+#: ../app/widgets/gimpselectiondata.c:245
 msgid "Invalid UTF-8"
 msgstr "UTF-8 non valide"
 
@@ -12385,7 +12385,12 @@ msgstr "%d x %d ppp, %s"
 msgid "%d ppi, %s"
 msgstr "%d ppp, %s"
 
-#: ../app/widgets/gimptexteditor.c:203
+#: ../app/widgets/gimptexteditor.c:187
+#, fuzzy
+msgid "_Language:"
+msgstr "_Grande"
+
+#: ../app/widgets/gimptexteditor.c:230
 msgid "_Use selected font"
 msgstr "_Utiliser la police sélectionnée"
 
