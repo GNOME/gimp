@@ -1,3 +1,11 @@
+2008-02-12  Tor Lillqvist  <tml@novell.com>
+
+	* app/widgets/gimplanguagestore-parser.c
+	(gimp_language_store_populate): Don't use the compile-time paths
+	to iso-codes on Windows. Instead assume iso-codes is installed in
+	the same location as GIMP. Make sure translated language names are
+	in UTF-8 by calling bind_textdomain_codeset().
+
 2008-02-11  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/Makefile.am
