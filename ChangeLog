@@ -1,3 +1,10 @@
+2008-02-11  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* libgimpthumb/Makefile.am (libgimpthumb_2_0_la_LIBADD):
+	explicitly added GLIB_LIBS. Fixes bug #515566.
+
 2008-02-05  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:

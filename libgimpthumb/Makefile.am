@@ -81,7 +81,7 @@ libgimpthumb_2_0_la_LDFLAGS = \
 	$(no_undefined)				\
 	$(libgimpthumb_export_symbols)
 
-libgimpthumb_2_0_la_LIBADD = $(libgimpmath) $(GDK_PIXBUF_LIBS)
+libgimpthumb_2_0_la_LIBADD = $(libgimpmath) $(GDK_PIXBUF_LIBS) $(GLIB_LIBS) 
 
 
 noinst_PROGRAMS = gimp-thumbnail-list
