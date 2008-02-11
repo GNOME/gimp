@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-03 09:25+0100\n"
-"PO-Revision-Date: 2008-02-04 11:13+0100\n"
+"POT-Creation-Date: 2008-02-11 11:22+0100\n"
+"PO-Revision-Date: 2008-02-11 11:21+0100\n"
 "Last-Translator: Stéphane Raimbault <stephane.raimbault@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -2747,7 +2747,7 @@ msgstr "Fusionner les calques _visibles..."
 
 #: ../app/actions/layers-actions.c:146
 msgid "_Discard Text Information"
-msgstr "_Éliminer l'information de texte"
+msgstr "_Abandonner l'information de texte"
 
 #: ../app/actions/layers-actions.c:147
 msgid "Turn this text layer into a normal layer"
@@ -8257,7 +8257,7 @@ msgstr[1] "Il y a %d images avec des modifications non enregistrées :"
 
 #: ../app/dialogs/quit-dialog.c:238
 msgid "_Discard Changes"
-msgstr "_Éliminer les changements"
+msgstr "_Abandonner les modifications"
 
 #: ../app/dialogs/resize-dialog.c:119
 msgid "Canvas Size"
