@@ -170,12 +170,16 @@ typedef struct _GimpImageCommentEditor       GimpImageCommentEditor;
 typedef struct _GimpImageParasiteView        GimpImageParasiteView;
 typedef struct _GimpImagePropView            GimpImagePropView;
 typedef struct _GimpImageProfileView         GimpImageProfileView;
+typedef struct _GimpLanguageStore            GimpLanguageStore;
+typedef struct _GimpLanguageEntry            GimpLanguageEntry;
 typedef struct _GimpMessageBox               GimpMessageBox;
 typedef struct _GimpProgressBox              GimpProgressBox;
 typedef struct _GimpSizeBox                  GimpSizeBox;
 typedef struct _GimpStrokeEditor             GimpStrokeEditor;
 typedef struct _GimpTemplateEditor           GimpTemplateEditor;
 typedef struct _GimpThumbBox                 GimpThumbBox;
+typedef struct _GimpUnitStore                GimpUnitStore;
+typedef struct _GimpUnitComboBox             GimpUnitComboBox;
 
 
 /*  views  */
@@ -208,9 +212,6 @@ typedef struct _GimpCellRendererViewable     GimpCellRendererViewable;
 /*  misc utilities & constructors  */
 
 typedef struct _GimpDialogFactory            GimpDialogFactory;
-typedef struct _GimpLanguageStore            GimpLanguageStore;
-typedef struct _GimpUnitStore                GimpUnitStore;
-typedef struct _GimpUnitComboBox             GimpUnitComboBox;
 
 
 /*  structs  */
