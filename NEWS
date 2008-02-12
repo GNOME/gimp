@@ -7,6 +7,24 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Changes in GIMP 2.4.5
+=====================
+
+- fixed a regression introduced by the brush cursor optimization (bug #514309)
+- fixed bug in transform tool preview (bug #340965)
+- fixed PSD export of images with layer masks
+- fixed base64 encoding routine of the Mail plug-in
+- use the correct background color when creating a new image (bug #514082)
+- explicitly link libgimpthumb with GLib (bug #515566)
+- translation updates (eu, fr)
+
+
+Contributors:
+
+   Sven Neumann, Giuliano Pochini
+
+
+
 Changes in GIMP 2.4.4
 =====================
 
