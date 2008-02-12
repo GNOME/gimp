@@ -1,5 +1,12 @@
 2008-02-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gfli/fli.c: applied patch from David Capello that fixes
+	loading of fli files that specify width and height as zero
+	(interpreting this as 320x200).  It also fixes a problem in an
+	unused code path (writing of differential color chunks).
+
+2008-02-12  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimplanguagestore-parser.c: inverted logic; #ifdef
 	is IMO easier to read than #ifndef.
 

@@ -99,6 +99,12 @@ void fli_read_header(FILE *f, s_fli_header *fli_header)
 			fli_header->magic = NO_HEADER;
 		}
 	}
+
+	if (fli_header->width == 0)
+	  fli_header->width = 320;
+
+	if (fli_header->height == 0)
+	  fli_header->height = 200;
 }
 
 void fli_write_header(FILE *f, s_fli_header *fli_header)
@@ -268,14 +274,14 @@ int fli_write_color(FILE *f, s_fli_header *fli_header, unsigned char *old_cmap, 
 			fli_write_char(f, cmap[col_pos]>>2);
 		}
 	} else {
-		unsigned short num_packets, cnt_skip, cnt_col, col_pos, col_start;
-		num_packets=0; col_pos=0;
+		unsigned short cnt_skip, cnt_col, col_pos, col_start;
+		col_pos=0;
 		do {
 			cnt_skip=0;
 			while ((col_pos<256) && (old_cmap[col_pos*3+0]==cmap[col_pos*3+0]) && (old_cmap[col_pos*3+1]==cmap[col_pos*3+1]) && (old_cmap[col_pos*3+2]==cmap[col_pos*3+2])) {
 				cnt_skip++; col_pos++;
 			}
-			col_start=col_pos;
+			col_start=col_pos*3;
 			cnt_col=0;
 			while ((col_pos<256) && !((old_cmap[col_pos*3+0]==cmap[col_pos*3+0]) && (old_cmap[col_pos*3+1]==cmap[col_pos*3+1]) && (old_cmap[col_pos*3+2]==cmap[col_pos*3+2]))) {
 				cnt_col++; col_pos++;
@@ -359,14 +365,14 @@ int fli_write_color_2(FILE *f, s_fli_header *fli_header, unsigned char *old_cmap
 			fli_write_char(f, cmap[col_pos]);
 		}
 	} else {
-		unsigned short num_packets, cnt_skip, cnt_col, col_pos, col_start;
-		num_packets=0; col_pos=0;
+		unsigned short cnt_skip, cnt_col, col_pos, col_start;
+		col_pos=0;
 		do {
 			cnt_skip=0;
 			while ((col_pos<256) && (old_cmap[col_pos*3+0]==cmap[col_pos*3+0]) && (old_cmap[col_pos*3+1]==cmap[col_pos*3+1]) && (old_cmap[col_pos*3+2]==cmap[col_pos*3+2])) {
 				cnt_skip++; col_pos++;
 			}
-			col_start=col_pos;
+			col_start=col_pos*3;
 			cnt_col=0;
 			while ((col_pos<256) && !((old_cmap[col_pos*3+0]==cmap[col_pos*3+0]) && (old_cmap[col_pos*3+1]==cmap[col_pos*3+1]) && (old_cmap[col_pos*3+2]==cmap[col_pos*3+2]))) {
 				cnt_col++; col_pos++;
@@ -375,10 +381,11 @@ int fli_write_color_2(FILE *f, s_fli_header *fli_header, unsigned char *old_cmap
 				num_packets++;
 				fli_write_char(f, cnt_skip);
 				fli_write_char(f, cnt_col);
-				for (; cnt_col>0; cnt_col--) {
+				while (cnt_col>0) {
 					fli_write_char(f, cmap[col_start++]);
 					fli_write_char(f, cmap[col_start++]);
 					fli_write_char(f, cmap[col_start++]);
+					cnt_col--;
 				}
 			}
 		} while (col_pos<256);
