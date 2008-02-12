@@ -92,11 +92,11 @@ gimp_language_store_populate (GimpLanguageStore  *store,
   g_return_val_if_fail (GIMP_IS_LANGUAGE_STORE (store), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-#ifndef G_OS_WIN32
-  bindtextdomain ("iso_639", ISO_CODES_LOCALEDIR);
-#else
-  /* Assume iso-codes is installed in the same location as GIMP */
+#ifdef G_OS_WIN32
+  /*  on Win32, assume iso-codes is installed in the same location as GIMP  */
   bindtextdomain ("iso_639", gimp_locale_directory ());
+#else
+  bindtextdomain ("iso_639", ISO_CODES_LOCALEDIR);
 #endif
 
   bind_textdomain_codeset ("iso_639", "UTF-8");
@@ -105,10 +105,12 @@ gimp_language_store_populate (GimpLanguageStore  *store,
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
 
-#ifndef G_OS_WIN32
-  filename = g_build_filename (ISO_CODES_LOCATION, "iso_639.xml", NULL);
+#ifdef G_OS_WIN32
+  filename = g_build_filename (gimp_data_directory (),
+                               "..", "..", "xml", "iso-codes", "iso_639.xml",
+                               NULL);
 #else
-  filename = g_build_filename (gimp_data_directory (), "..", "..", "xml", "iso-codes", "iso_639.xml", NULL);
+  filename = g_build_filename (ISO_CODES_LOCATION, "iso_639.xml", NULL);
 #endif
 
   success = gimp_xml_parser_parse_file (xml_parser, filename, error);
