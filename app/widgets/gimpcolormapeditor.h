@@ -37,12 +37,14 @@ struct _GimpColormapEditor
 {
   GimpImageEditor  parent_instance;
 
+  GtkWidget       *preview;
   gint             col_index;
   gint             dnd_col_index;
-  GtkWidget       *preview;
   gint             xn;
   gint             yn;
   gint             cellsize;
+
+  PangoLayout     *layout;
 
   GtkWidget       *edit_button;
   GtkWidget       *add_button;

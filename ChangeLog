@@ -1,5 +1,10 @@
 2008-02-12  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcolormapeditor.[ch]: show a hint on non-indexed
+	images. Based on a patch from Olof Frahm. Closes bug #438217.
+
+2008-02-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gfli/fli.c: applied patch from David Capello that fixes
 	loading of fli files that specify width and height as zero
 	(interpreting this as 320x200).  It also fixes a problem in an
