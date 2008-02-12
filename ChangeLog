@@ -1,3 +1,18 @@
+2008-02-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/gimpoperationcolorbalance.c
+	* app/gegl/gimpoperationcolorize.c
+	* app/gegl/gimpoperationcurves.c
+	* app/gegl/gimpoperationdesaturate.c
+	* app/gegl/gimpoperationhuesaturation.c
+	* app/gegl/gimpoperationlevels.c
+	* app/gegl/gimpoperationposterize.c
+	* app/gegl/gimpoperationthreshold.c
+	* app/gegl/gimpoperationtilesink.c
+	* app/gegl/gimpoperationtilesource.c: added categories and very
+	lame descriptions. Dunno if the categories are good that way but
+	at least they are not NULL now.
+
 2008-02-12  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcolormapeditor.[ch]: show a hint on non-indexed
