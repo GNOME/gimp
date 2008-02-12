@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-19 09:10+0200\n"
-"PO-Revision-Date: 2007-10-19 09:10+0200\n"
+"PO-Revision-Date: 2008-02-11 23:59+0100\n"
 "Last-Translator: Laurent Monin <gimp@norz.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -1030,11 +1030,11 @@ msgstr "Échelles"
 
 #: ../libgimpwidgets/gimpcolorselection.c:210
 msgid "Current:"
-msgstr "Courant :"
+msgstr "Actuelle :"
 
 #: ../libgimpwidgets/gimpcolorselection.c:232
 msgid "Old:"
-msgstr "Ancien :"
+msgstr "Précédente :"
 
 #: ../libgimpwidgets/gimpcolorselection.c:286
 msgid ""

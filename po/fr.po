@@ -9,7 +9,7 @@
 # Raymond Ostertag <r.ostertag@caramail.com>, 2002-2007.
 # Thomas Morin <t0m@free.fr>, 2002-2003.
 # Jean-Louis Berliet <jl.berliet@free.fr>, 2004.
-# Julien Hardelin, 2004.
+# Julien Hardelin, <jm.hard@wanadoo.fr>, 2004.
 # Jonathan Ernst <jonathan@ernstfamily.ch>, 2006-2007.
 # Stéphane Raimbault <stephane.raimbault@gmail.com>, 2007-2008.
 # Laurent Monin <gimp@norz.org>, 2007.
@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-11 11:22+0100\n"
-"PO-Revision-Date: 2008-02-11 11:21+0100\n"
+"POT-Creation-Date: 2008-02-11 20:19+0100\n"
+"PO-Revision-Date: 2008-02-12 14:27+0100\n"
 "Last-Translator: Stéphane Raimbault <stephane.raimbault@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -144,11 +144,11 @@ msgstr "N'utilise pas les accélérations propres aux CPU"
 
 #: ../app/main.c:209
 msgid "Use an alternate sessionrc file"
-msgstr "Utiliser un autre fichier sessionrc"
+msgstr "Utilise un autre fichier sessionrc"
 
 #: ../app/main.c:214
 msgid "Use an alternate user gimprc file"
-msgstr "Utiliser un autre fichier système gimprc"
+msgstr "Utilise un autre fichier système gimprc"
 
 #: ../app/main.c:219
 msgid "Use an alternate system gimprc file"
@@ -332,7 +332,7 @@ msgstr "Polices"
 #: ../app/actions/actions.c:150 ../app/dialogs/dialogs.c:219
 #: ../app/widgets/gimpgradienteditor.c:275
 msgid "Gradient Editor"
-msgstr "Éditeur de dégradé"
+msgstr "Éditeur de dégradés"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:153 ../app/core/gimp.c:836
@@ -427,7 +427,7 @@ msgstr "Menu de l'éditeur de brosses"
 
 #: ../app/actions/brush-editor-actions.c:50
 msgid "Edit Active Brush"
-msgstr "Éditer la brosse active"
+msgstr "Modifier la brosse active"
 
 #: ../app/actions/brushes-actions.c:43
 msgid "Brushes Menu"
@@ -483,11 +483,11 @@ msgstr "Actualiser les brosses"
 
 #: ../app/actions/brushes-actions.c:86
 msgid "_Edit Brush..."
-msgstr "É_diter la brosse..."
+msgstr "Mo_difier la brosse..."
 
 #: ../app/actions/brushes-actions.c:87
 msgid "Edit brush"
-msgstr "Éditer la brosse"
+msgstr "Modifie la brosse"
 
 #: ../app/actions/buffers-actions.c:42
 msgid "Buffers Menu"
@@ -499,7 +499,7 @@ msgstr "C_oller le tampon"
 
 #: ../app/actions/buffers-actions.c:47
 msgid "Paste the selected buffer"
-msgstr "Copier le tampon sélectionné"
+msgstr "Colle le tampon sélectionné"
 
 #: ../app/actions/buffers-actions.c:52
 msgid "Paste Buffer _Into"
@@ -507,7 +507,7 @@ msgstr "Coller le tampon _dans"
 
 #: ../app/actions/buffers-actions.c:53
 msgid "Paste the selected buffer into the selection"
-msgstr "Coller le tampon sélectionné dans la sélection"
+msgstr "Colle le tampon sélectionné dans la sélection"
 
 #: ../app/actions/buffers-actions.c:58
 msgid "Paste Buffer as _New"
@@ -515,7 +515,7 @@ msgstr "Coller le tampon en tant que _nouveau"
 
 #: ../app/actions/buffers-actions.c:59
 msgid "Paste the selected buffer as new image"
-msgstr "Coller le tampon sélectionné comme une nouvelle image"
+msgstr "Colle le tampon sélectionné comme une nouvelle image"
 
 #: ../app/actions/buffers-actions.c:64
 msgid "_Delete Buffer"
@@ -523,7 +523,7 @@ msgstr "_Supprimer le tampon"
 
 #: ../app/actions/buffers-actions.c:65
 msgid "Delete the selected buffer"
-msgstr "Supprimer le tampon sélectionné"
+msgstr "Supprime le tampon sélectionné"
 
 #: ../app/actions/channels-actions.c:44
 msgid "Channels Menu"
@@ -531,11 +531,11 @@ msgstr "Menu des canaux"
 
 #: ../app/actions/channels-actions.c:48
 msgid "_Edit Channel Attributes..."
-msgstr "Éditer les _attributs du canal..."
+msgstr "Mo_difier les attributs du canal..."
 
 #: ../app/actions/channels-actions.c:49
 msgid "Edit the channel's name, color and opacity"
-msgstr "Éditer le nom, la couleur et l'opacité du canal"
+msgstr "Modifie le nom, la couleur et l'opacité du canal"
 
 #: ../app/actions/channels-actions.c:54
 msgid "_New Channel..."
@@ -543,7 +543,7 @@ msgstr "_Nouveau canal..."
 
 #: ../app/actions/channels-actions.c:55
 msgid "Create a new channel"
-msgstr "Créer un nouveau canal"
+msgstr "Crée un nouveau canal"
 
 #: ../app/actions/channels-actions.c:60
 msgid "_New Channel"
@@ -551,7 +551,7 @@ msgstr "_Nouveau canal"
 
 #: ../app/actions/channels-actions.c:61
 msgid "Create a new channel with last used values"
-msgstr "Créer un nouveau canal avec les dernières valeurs utilisées"
+msgstr "Crée un nouveau canal avec les dernières valeurs utilisées"
 
 #: ../app/actions/channels-actions.c:66
 msgid "D_uplicate Channel"
@@ -559,7 +559,7 @@ msgstr "D_upliquer le canal"
 
 #: ../app/actions/channels-actions.c:67
 msgid "Create a duplicate of this channel and add it to the image"
-msgstr "Créer une copie de ce canal et l'ajouter à l'image"
+msgstr "Crée une copie de ce canal et l'ajoute à l'image"
 
 #: ../app/actions/channels-actions.c:72
 msgid "_Delete Channel"
@@ -567,7 +567,7 @@ msgstr "Su_pprimer le canal"
 
 #: ../app/actions/channels-actions.c:73
 msgid "Delete this channel"
-msgstr "Effacer ce canal"
+msgstr "Supprime ce canal"
 
 #: ../app/actions/channels-actions.c:78
 msgid "_Raise Channel"
@@ -575,7 +575,7 @@ msgstr "_Remonter le canal"
 
 #: ../app/actions/channels-actions.c:79
 msgid "Raise this channel one step in the channel stack"
-msgstr "Remonter ce canal d'un rang dans la pile des canaux"
+msgstr "Remonte ce canal d'un niveau dans la pile des canaux"
 
 #: ../app/actions/channels-actions.c:84
 msgid "Raise Channel to _Top"
@@ -583,7 +583,7 @@ msgstr "Remonter le canal tout en _haut"
 
 #: ../app/actions/channels-actions.c:85
 msgid "Raise this channel to the top of the channel stack"
-msgstr "Remonter ce canal tout en haut de la pile des canaux"
+msgstr "Remonte ce canal tout en haut de la pile des canaux"
 
 #: ../app/actions/channels-actions.c:90
 msgid "_Lower Channel"
@@ -591,7 +591,7 @@ msgstr "_Descendre le canal"
 
 #: ../app/actions/channels-actions.c:91
 msgid "Lower this channel one step in the channel stack"
-msgstr "Descendre ce canal d'un rang dans la pile des canaux"
+msgstr "Descend ce canal d'un niveau dans la pile des canaux"
 
 #: ../app/actions/channels-actions.c:96
 msgid "Lower Channel to _Bottom"
@@ -599,7 +599,7 @@ msgstr "Descendre le canal au tout en _bas"
 
 #: ../app/actions/channels-actions.c:97
 msgid "Lower this channel to the bottom of the channel stack"
-msgstr "Descendre ce canal tout en bas de la pile des canaux"
+msgstr "Descend ce canal tout en bas de la pile des canaux"
 
 #: ../app/actions/channels-actions.c:105
 msgid "Channel to Sele_ction"
@@ -607,7 +607,7 @@ msgstr "Canal vers _sélection"
 
 #: ../app/actions/channels-actions.c:106
 msgid "Replace the selection with this channel"
-msgstr "Remplacer la sélection avec ce canal"
+msgstr "Remplace la sélection avec ce canal"
 
 #: ../app/actions/channels-actions.c:111 ../app/actions/layers-actions.c:260
 #: ../app/actions/vectors-actions.c:173
@@ -616,7 +616,7 @@ msgstr "A_jouter à la sélection"
 
 #: ../app/actions/channels-actions.c:112
 msgid "Add this channel to the current selection"
-msgstr "Ajouter ce canal à la sélection actuelle"
+msgstr "Ajoute ce canal à la sélection actuelle"
 
 #: ../app/actions/channels-actions.c:117 ../app/actions/layers-actions.c:266
 #: ../app/actions/layers-actions.c:293 ../app/actions/layers-actions.c:320
@@ -626,7 +626,7 @@ msgstr "S_oustraire de la sélection"
 
 #: ../app/actions/channels-actions.c:118
 msgid "Subtract this channel from the current selection"
-msgstr "Soustraire ce canal de la sélection actuelle"
+msgstr "Soustrait ce canal de la sélection actuelle"
 
 #: ../app/actions/channels-actions.c:123 ../app/actions/layers-actions.c:272
 #: ../app/actions/layers-actions.c:299 ../app/actions/layers-actions.c:326
@@ -645,11 +645,11 @@ msgstr "Attributs du canal"
 
 #: ../app/actions/channels-commands.c:88
 msgid "Edit Channel Attributes"
-msgstr "Édition des attributs du canal"
+msgstr "Modification des attributs du canal"
 
 #: ../app/actions/channels-commands.c:90
 msgid "Edit Channel Color"
-msgstr "Édition du canal de couleur"
+msgstr "Modification du canal de couleur"
 
 #: ../app/actions/channels-commands.c:91
 #: ../app/actions/channels-commands.c:123
@@ -692,12 +692,12 @@ msgstr "Menu de la palette"
 #: ../app/actions/colormap-actions.c:47
 #: ../app/actions/palette-editor-actions.c:48
 msgid "_Edit Color..."
-msgstr "Édit_er la couleur..."
+msgstr "Mo_difier la couleur..."
 
 #: ../app/actions/colormap-actions.c:48
 #: ../app/actions/palette-editor-actions.c:49
 msgid "Edit color"
-msgstr "Éditer la couleur"
+msgstr "Modifie la couleur"
 
 #: ../app/actions/colormap-actions.c:56
 msgid "_Add Color from FG"
@@ -705,7 +705,7 @@ msgstr "A_jouter la couleur depuis le PP"
 
 #: ../app/actions/colormap-actions.c:57
 msgid "Add current foreground color"
-msgstr "Ajouter la couleur actuelle d'arrière-plan"
+msgstr "Ajoute la couleur de premier plan actuelle"
 
 #: ../app/actions/colormap-actions.c:62
 msgid "_Add Color from BG"
@@ -713,16 +713,16 @@ msgstr "A_jouter la couleur depuis l'AP"
 
 #: ../app/actions/colormap-actions.c:63
 msgid "Add current background color"
-msgstr "Ajouter la couleur actuelle d'arrière-plan"
+msgstr "Ajoute la couleur d'arrière-plan actuelle"
 
 #: ../app/actions/colormap-commands.c:70
 #, c-format
 msgid "Edit colormap entry #%d"
-msgstr "Éditer l'entrée de la palette de couleurs #%d"
+msgstr "Modifie l'entrée n°%d de la palette de couleurs"
 
 #: ../app/actions/colormap-commands.c:77
 msgid "Edit Colormap Entry"
-msgstr "Éditer l'entrée de la palette des couleurs"
+msgstr "Modification de l'entrée de la palette des couleurs"
 
 #: ../app/actions/context-actions.c:46
 msgid "_Context"
@@ -1617,7 +1617,7 @@ msgstr "_Effacer"
 
 #: ../app/actions/edit-actions.c:175
 msgid "Clear the selected pixels"
-msgstr "Effacer les pixels sélectionnés"
+msgstr "Efface les pixels sélectionnés"
 
 #: ../app/actions/edit-actions.c:183
 msgid "Fill with _FG Color"
@@ -1625,7 +1625,7 @@ msgstr "Rempl_ir avec la couleur de PP"
 
 #: ../app/actions/edit-actions.c:184
 msgid "Fill the selection using the foreground color"
-msgstr "Remplir la sélection avec le couleur de premier plan"
+msgstr "Remplit la sélection avec le couleur de premier plan"
 
 #: ../app/actions/edit-actions.c:189
 msgid "Fill with B_G Color"
@@ -1633,7 +1633,7 @@ msgstr "Remplir avec la couleur d'_AP"
 
 #: ../app/actions/edit-actions.c:190
 msgid "Fill the selection using the background color"
-msgstr "Remplir la sélection avec la couleur d'arrière-plan"
+msgstr "Remplit la sélection avec la couleur d'arrière-plan"
 
 #: ../app/actions/edit-actions.c:195
 msgid "Fill with P_attern"
@@ -1641,7 +1641,7 @@ msgstr "Remplir avec un _motif"
 
 #: ../app/actions/edit-actions.c:196
 msgid "Fill the selection using the active pattern"
-msgstr "Remplir la sélection avec le motif actif"
+msgstr "Remplit la sélection avec le motif actif"
 
 #: ../app/actions/edit-actions.c:275
 #, c-format
@@ -2812,7 +2812,7 @@ msgstr "Ajouter un canal alp_ha"
 
 #: ../app/actions/layers-actions.c:195
 msgid "Add transparency information to the layer"
-msgstr "Ajoute l'information du transparence au calque"
+msgstr "Ajoute l'information de transparence au calque"
 
 #: ../app/actions/layers-actions.c:200
 msgid "_Remove Alpha Channel"
@@ -2832,7 +2832,7 @@ msgstr "Empêche de modifier l'information de transparence de ce calque"
 
 #: ../app/actions/layers-actions.c:216
 msgid "_Edit Layer Mask"
-msgstr "Édi_ter le masque de calque"
+msgstr "Mo_difier le masque de calque"
 
 #: ../app/actions/layers-actions.c:217
 msgid "Work on the layer mask"
@@ -2900,7 +2900,7 @@ msgstr "A_jouter à la sélection"
 
 #: ../app/actions/layers-actions.c:288
 msgid "Add the layer's alpha channel to the current selection"
-msgstr "Ajouter le canal alpha du calque à la sélection actuelle"
+msgstr "Ajoute le canal alpha du calque à la sélection actuelle"
 
 #: ../app/actions/layers-actions.c:294
 msgid "Subtract the layer's alpha channel from the current selection"
@@ -2944,15 +2944,15 @@ msgstr "Sélectionner le calque du _bas"
 
 #: ../app/actions/layers-actions.c:342
 msgid "Select the bottommost layer"
-msgstr "Sélectionner le calque le plus bas"
+msgstr "Sélectionne le calque le plus bas"
 
 #: ../app/actions/layers-actions.c:347
 msgid "Select _Previous Layer"
-msgstr "Sélectionne le calque _précédent"
+msgstr "Sélectionner le calque _précédent"
 
 #: ../app/actions/layers-actions.c:348
 msgid "Select the layer above the current layer"
-msgstr "Sélectionner le calque juste au-dessus du calque actuel"
+msgstr "Sélectionne le calque juste au-dessus du calque actuel"
 
 #: ../app/actions/layers-actions.c:353
 msgid "Select _Next Layer"
@@ -2960,7 +2960,7 @@ msgstr "Sélectionner le calque _suivant"
 
 #: ../app/actions/layers-actions.c:354
 msgid "Select the layer below the current layer"
-msgstr "Sélectionner le calque juste en-dessous du calque actuel"
+msgstr "Sélectionne le calque juste en-dessous du calque actuel"
 
 #: ../app/actions/layers-actions.c:362
 msgid "Set Opacity"
@@ -2972,7 +2972,7 @@ msgstr "Attributs du calque"
 
 #: ../app/actions/layers-commands.c:205
 msgid "Edit Layer Attributes"
-msgstr "Éditer les attributs du calque"
+msgstr "Modifier les attributs du calque"
 
 #: ../app/actions/layers-commands.c:239 ../app/actions/layers-commands.c:241
 #: ../app/actions/layers-commands.c:298 ../app/actions/layers-commands.c:302
@@ -2987,7 +2987,7 @@ msgstr "Créer un nouveau calque"
 
 #: ../app/actions/layers-commands.c:531
 msgid "Set Layer Boundary Size"
-msgstr "Changer la taille du calque"
+msgstr "Définir la taille de la bordure du calque"
 
 #: ../app/actions/layers-commands.c:572 ../app/core/gimplayer.c:251
 msgid "Scale Layer"
@@ -3016,15 +3016,15 @@ msgstr "Menu Éditeur de palettes"
 
 #: ../app/actions/palette-editor-actions.c:54
 msgid "_Delete Color"
-msgstr "_Effacer la couleur"
+msgstr "_Supprimer la couleur"
 
 #: ../app/actions/palette-editor-actions.c:55
 msgid "Delete color"
-msgstr "Supprimer la couleur"
+msgstr "Supprime la couleur"
 
 #: ../app/actions/palette-editor-actions.c:63
 msgid "Edit Active Palette"
-msgstr "É_diter la palette active"
+msgstr "Modifier la palette active"
 
 #: ../app/actions/palette-editor-actions.c:72
 msgid "New Color from _FG"
@@ -3058,11 +3058,11 @@ msgstr "Zoom _ajusté à la fenêtre"
 
 #: ../app/actions/palette-editor-commands.c:69
 msgid "Edit Palette Color"
-msgstr "Édition de la couleur de la palette"
+msgstr "Modification de la couleur de la palette"
 
 #: ../app/actions/palette-editor-commands.c:71
 msgid "Edit Color Palette Entry"
-msgstr "Éditer l'entrée de la palette de couleurs"
+msgstr "Modifier l'entrée de la palette de couleurs"
 
 #: ../app/actions/palettes-actions.c:44
 msgid "Palettes Menu"
@@ -3126,15 +3126,15 @@ msgstr "Actualise les palettes"
 
 #: ../app/actions/palettes-actions.c:93
 msgid "_Edit Palette..."
-msgstr "Édit_er la palette..."
+msgstr "Mo_difier la palette..."
 
 #: ../app/actions/palettes-actions.c:94
 msgid "Edit palette"
-msgstr "Édite la palette..."
+msgstr "Modifie la palette..."
 
 #: ../app/actions/palettes-commands.c:74
 msgid "Merge Palette"
-msgstr "Fusionner la palette"
+msgstr "Fusion de la palette"
 
 #: ../app/actions/palettes-commands.c:78
 msgid "Enter a name for the merged palette"
@@ -3174,7 +3174,7 @@ msgstr "Copier l'_emplacement du motif"
 
 #: ../app/actions/patterns-actions.c:66
 msgid "Copy pattern file location to clipboard"
-msgstr "Copier l'emplacement du fichier de motif dans le presse-papiers"
+msgstr "Copie l'emplacement du fichier de motif dans le presse-papiers"
 
 #: ../app/actions/patterns-actions.c:71
 msgid "_Delete Pattern"
@@ -3194,11 +3194,11 @@ msgstr "Actualise les motifs"
 
 #: ../app/actions/patterns-actions.c:86
 msgid "_Edit Pattern..."
-msgstr "Éditer le _motif..."
+msgstr "Mo_difier le motif..."
 
 #: ../app/actions/patterns-actions.c:87
 msgid "Edit pattern"
-msgstr "Édite le motif..."
+msgstr "Modifie le motif"
 
 #: ../app/actions/plug-in-actions.c:83
 msgid "Filte_rs"
@@ -3270,7 +3270,7 @@ msgstr "Réinitialiser to_us les filtres"
 
 #: ../app/actions/plug-in-actions.c:104
 msgid "Reset all plug-ins to their default settings"
-msgstr "Réinitialiser tous les greffons à leurs valeurs par défaut"
+msgstr "Réinitialise tous les greffons à leurs valeurs par défaut"
 
 #: ../app/actions/plug-in-actions.c:112
 msgid "Re_peat Last"
@@ -3343,15 +3343,16 @@ msgstr "Masquer les régions _non sélectionnées"
 
 #: ../app/actions/quick-mask-commands.c:105
 msgid "Quick Mask Attributes"
-msgstr "Éditer les attributs du masque rapide"
+msgstr "Attributs du masque rapide"
 
 #: ../app/actions/quick-mask-commands.c:108
 msgid "Edit Quick Mask Attributes"
-msgstr "Éditer les attributs du masque rapide"
+msgstr "Modification des attributs du masque rapide"
 
+# Gros doute (Stéphane)
 #: ../app/actions/quick-mask-commands.c:110
 msgid "Edit Quick Mask Color"
-msgstr "Éditer la couleur du masque rapide"
+msgstr "Modification de la couleur du masque rapide"
 
 #: ../app/actions/quick-mask-commands.c:111
 msgid "_Mask opacity:"
@@ -3375,7 +3376,7 @@ msgstr "_Tout"
 
 #: ../app/actions/select-actions.c:51
 msgid "Select everything"
-msgstr "Tout sélectionner"
+msgstr "Sélectionne tout"
 
 #: ../app/actions/select-actions.c:56
 msgid "select|_None"
@@ -3383,7 +3384,7 @@ msgstr "_Aucune"
 
 #: ../app/actions/select-actions.c:57
 msgid "Dismiss the selection"
-msgstr "Ne rien sélectionner"
+msgstr "Annule la sélection"
 
 #: ../app/actions/select-actions.c:62
 msgid "_Invert"
@@ -3391,7 +3392,7 @@ msgstr "_Inverser"
 
 #: ../app/actions/select-actions.c:63
 msgid "Invert the selection"
-msgstr "Inverser la sélection"
+msgstr "Inverse la sélection"
 
 #: ../app/actions/select-actions.c:68
 msgid "_Float"
@@ -3399,7 +3400,7 @@ msgstr "_Flottante"
 
 #: ../app/actions/select-actions.c:69
 msgid "Create a floating selection"
-msgstr "Créer une sélection flottante"
+msgstr "Crée une sélection flottante"
 
 #: ../app/actions/select-actions.c:74
 msgid "Fea_ther..."
@@ -3415,7 +3416,7 @@ msgstr "E_nlever l'adoucissement"
 
 #: ../app/actions/select-actions.c:81
 msgid "Remove fuzzyness from the selection"
-msgstr "Enlever la dispersion de la sélection"
+msgstr "Enleve la dispersion de la sélection"
 
 #: ../app/actions/select-actions.c:86
 msgid "S_hrink..."
@@ -3423,7 +3424,7 @@ msgstr "_Réduire..."
 
 #: ../app/actions/select-actions.c:87
 msgid "Contract the selection"
-msgstr "Contracter la sélection"
+msgstr "Contracte la sélection"
 
 #: ../app/actions/select-actions.c:92
 msgid "_Grow..."
@@ -3431,7 +3432,7 @@ msgstr "A_grandir..."
 
 #: ../app/actions/select-actions.c:93
 msgid "Enlarge the selection"
-msgstr "Agrandir la sélection"
+msgstr "Agrandit la sélection"
 
 #: ../app/actions/select-actions.c:98
 msgid "Bo_rder..."
@@ -3439,7 +3440,7 @@ msgstr "_Bordure..."
 
 #: ../app/actions/select-actions.c:99
 msgid "Replace the selection by its border"
-msgstr "Remplacer la sélection par sa bordure"
+msgstr "Remplace la sélection par sa bordure"
 
 #: ../app/actions/select-actions.c:104
 msgid "Save to _Channel"
@@ -3447,7 +3448,7 @@ msgstr "Enregistrer dans un cana_l"
 
 #: ../app/actions/select-actions.c:105
 msgid "Save the selection to a channel"
-msgstr "Enregistrer la sélection dans un canal"
+msgstr "Enregistre la sélection dans un canal"
 
 #: ../app/actions/select-actions.c:110
 msgid "_Stroke Selection..."
@@ -3455,7 +3456,7 @@ msgstr "Tracer la _sélection..."
 
 #: ../app/actions/select-actions.c:111
 msgid "Paint along the selection outline"
-msgstr "Peindre le long du contour de la sélection"
+msgstr "Peint le long du contour de la sélection"
 
 #: ../app/actions/select-actions.c:116
 msgid "_Stroke Selection"
@@ -3463,7 +3464,7 @@ msgstr "_Tracer la sélection"
 
 #: ../app/actions/select-actions.c:117
 msgid "Stroke the selection with last used values"
-msgstr "Tracer la sélection avec les dernières valeurs utilisées"
+msgstr "Trace la sélection avec les dernières valeurs utilisées"
 
 #: ../app/actions/select-commands.c:135
 msgid "Cannot float selection because the selected region is empty."
@@ -3473,7 +3474,7 @@ msgstr ""
 
 #: ../app/actions/select-commands.c:148 ../app/core/gimpselection.c:170
 msgid "Feather Selection"
-msgstr "Adoucir la sélection"
+msgstr "Adoucissement de la sélection"
 
 #: ../app/actions/select-commands.c:152
 msgid "Feather selection by"
@@ -3481,7 +3482,7 @@ msgstr "Adoucir la sélection de"
 
 #: ../app/actions/select-commands.c:183 ../app/core/gimpselection.c:177
 msgid "Shrink Selection"
-msgstr "Réduire la sélection"
+msgstr "Réduction de la sélection"
 
 #: ../app/actions/select-commands.c:187
 msgid "Shrink selection by"
@@ -3493,7 +3494,7 @@ msgstr "_Réduire depuis le bord de l'image"
 
 #: ../app/actions/select-commands.c:217 ../app/core/gimpselection.c:176
 msgid "Grow Selection"
-msgstr "Agrandir la sélection"
+msgstr "Agrandissement de la sélection"
 
 #: ../app/actions/select-commands.c:221
 msgid "Grow selection by"
@@ -3521,7 +3522,7 @@ msgstr "_Verrouiller la sélection aux bords de l'image"
 #: ../app/actions/vectors-commands.c:363 ../app/actions/vectors-commands.c:395
 #: ../app/dialogs/stroke-dialog.c:281
 msgid "There is no active layer or channel to stroke to."
-msgstr "Il n'y a pas de calque ou de canal actif sur lequel tracer"
+msgstr "Il n'y a pas de calque ou de canal actif sur lequel tracer."
 
 #: ../app/actions/select-commands.c:323 ../app/core/gimpselection.c:154
 msgid "Stroke Selection"
@@ -3537,7 +3538,7 @@ msgstr "_Créer une image à partir d'un modèle..."
 
 #: ../app/actions/templates-actions.c:47
 msgid "Create a new image from the selected template"
-msgstr "Créer une nouvelle image à partir du modèle sélectionné"
+msgstr "Crée une nouvelle image à partir du modèle sélectionné"
 
 #: ../app/actions/templates-actions.c:52
 msgid "_New Template..."
@@ -3545,7 +3546,7 @@ msgstr "_Nouveau modèle..."
 
 #: ../app/actions/templates-actions.c:53
 msgid "Create a new template"
-msgstr "Créer un nouveau modèle"
+msgstr "Crée un nouveau modèle"
 
 #: ../app/actions/templates-actions.c:58
 msgid "D_uplicate Template..."
@@ -3553,15 +3554,15 @@ msgstr "D_upliquer le modèle..."
 
 #: ../app/actions/templates-actions.c:59
 msgid "Duplicate the selected template"
-msgstr "Dupliquer le modèle sélectionné"
+msgstr "Duplique le modèle sélectionné"
 
 #: ../app/actions/templates-actions.c:64
 msgid "_Edit Template..."
-msgstr "Édit_er le modèle..."
+msgstr "Mo_difier le modèle..."
 
 #: ../app/actions/templates-actions.c:65
 msgid "Edit the selected template"
-msgstr "Éditer le modèle sélectionné"
+msgstr "Modifie le modèle sélectionné"
 
 #: ../app/actions/templates-actions.c:70
 msgid "_Delete Template"
@@ -3569,7 +3570,7 @@ msgstr "_Supprimer le modèle"
 
 #: ../app/actions/templates-actions.c:71
 msgid "Delete the selected template"
-msgstr "Supprimer le modèle sélectionné"
+msgstr "Supprime le modèle sélectionné"
 
 #: ../app/actions/templates-commands.c:121
 msgid "New Template"
@@ -3577,24 +3578,22 @@ msgstr "Nouveau modèle"
 
 #: ../app/actions/templates-commands.c:124
 msgid "Create a New Template"
-msgstr "Créer un nouveau modèle"
+msgstr "Création d'un nouveau modèle"
 
 #: ../app/actions/templates-commands.c:183
 #: ../app/actions/templates-commands.c:186
 msgid "Edit Template"
-msgstr "Éditer le modèle"
+msgstr "Modification du modèle"
 
 #: ../app/actions/templates-commands.c:221
 msgid "Delete Template"
-msgstr "Supprimer le modèle"
+msgstr "Suppression du modèle"
 
 #: ../app/actions/templates-commands.c:247
 #, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr ""
-"Êtes-vous sûr de vouloir supprimer le modèle « %s » de la liste et du "
-"disque ?"
+msgstr "Voulez-vous vraiment supprimer le modèle « %s » de la liste et du disque ?"
 
 #: ../app/actions/text-editor-actions.c:44
 msgid "Open"
@@ -3602,7 +3601,7 @@ msgstr "Ouvrir"
 
 #: ../app/actions/text-editor-actions.c:45
 msgid "Load text from file"
-msgstr "Charger le texte depuis le fichier"
+msgstr "Charge le texte depuis le fichier"
 
 #: ../app/actions/text-editor-actions.c:50 ../app/core/gimp-edit.c:430
 msgid "Clear"
@@ -3610,7 +3609,7 @@ msgstr "Effacer"
 
 #: ../app/actions/text-editor-actions.c:51
 msgid "Clear all text"
-msgstr "Effacer tout le texte"
+msgstr "Efface tout le texte"
 
 #: ../app/actions/text-editor-actions.c:59
 msgid "LTR"
@@ -3666,7 +3665,7 @@ msgstr "_Supprimer les options enregistrées"
 
 #: ../app/actions/tool-options-actions.c:76
 msgid "_New Entry..."
-msgstr "/_Nouvelle entrée..."
+msgstr "_Nouvelle entrée..."
 
 #: ../app/actions/tool-options-actions.c:81
 msgid "R_eset Tool Options"
@@ -3674,7 +3673,7 @@ msgstr "Ré_initialiser les options des outils"
 
 #: ../app/actions/tool-options-actions.c:82
 msgid "Reset to default values"
-msgstr "Remettre les valeurs par défaut"
+msgstr "Réinitialise aux valeurs par défaut"
 
 #: ../app/actions/tool-options-actions.c:87
 msgid "Reset _all Tool Options"
@@ -3682,7 +3681,7 @@ msgstr "Réinitialiser _toutes les options des outils"
 
 #: ../app/actions/tool-options-actions.c:88
 msgid "Reset all tool options"
-msgstr "Réinitialiser toutes les options des outils"
+msgstr "Réinitialise toutes les options des outils"
 
 #: ../app/actions/tool-options-commands.c:72
 msgid "Save Tool Options"
@@ -3700,7 +3699,7 @@ msgstr "Options enregistrées"
 
 #: ../app/actions/tool-options-commands.c:140
 msgid "Rename Saved Tool Options"
-msgstr "Renommer les options des outils enregistrées"
+msgstr "Renommage des options des outils enregistrées"
 
 #: ../app/actions/tool-options-commands.c:144
 msgid "Enter a new name for the saved options"
@@ -3708,7 +3707,7 @@ msgstr "Saisissez un nouveau nom pour les options enregistrées"
 
 #: ../app/actions/tool-options-commands.c:187
 msgid "Reset Tool Options"
-msgstr "Réinitialiser les options des outils"
+msgstr "Réinitialisation des options des outils"
 
 #: ../app/actions/tool-options-commands.c:210
 msgid "Do you really want to reset all tool options to default values?"
@@ -3750,11 +3749,11 @@ msgstr "Remonter l'outil"
 
 #: ../app/actions/tools-actions.c:63
 msgid "Ra_ise to Top"
-msgstr "Envoyer tout en haut"
+msgstr "Placer tout en _haut"
 
 #: ../app/actions/tools-actions.c:64
 msgid "Raise tool to top"
-msgstr "Envoyer l'outil tout en haut"
+msgstr "Place l'outil tout en bas"
 
 #: ../app/actions/tools-actions.c:69
 msgid "L_ower Tool"
@@ -3766,11 +3765,11 @@ msgstr "Descendre l'outil"
 
 #: ../app/actions/tools-actions.c:75
 msgid "Lo_wer to Bottom"
-msgstr "Envoyer tout en bas"
+msgstr "Placer tout en _bas"
 
 #: ../app/actions/tools-actions.c:76
 msgid "Lower tool to bottom"
-msgstr "Envoyer l'outil tout en bas"
+msgstr "Place l'outil tout en bas"
 
 #: ../app/actions/tools-actions.c:81
 msgid "_Reset Order & Visibility"
@@ -3778,7 +3777,7 @@ msgstr "_Réinitialiser l'ordre et la visibilité"
 
 #: ../app/actions/tools-actions.c:82
 msgid "Reset tool order and visibility"
-msgstr "Réinitialiser l'ordre et la visibilité des outils"
+msgstr "Réinitialise l'ordre et la visibilité des outils"
 
 #: ../app/actions/tools-actions.c:90
 msgid "_Show in Toolbox"
@@ -3810,11 +3809,11 @@ msgstr "Outil Che_min"
 
 #: ../app/actions/vectors-actions.c:53
 msgid "_Edit Path Attributes..."
-msgstr "Éditer les attri_buts du chemin..."
+msgstr "Mo_difier les attributs du chemin..."
 
 #: ../app/actions/vectors-actions.c:54
 msgid "Edit path attributes"
-msgstr "Édition des attributs du chemin"
+msgstr "Modifie les attributs du chemin"
 
 #: ../app/actions/vectors-actions.c:59
 msgid "_New Path..."
@@ -3838,7 +3837,7 @@ msgstr "D_upliquer le chemin"
 
 #: ../app/actions/vectors-actions.c:72
 msgid "Duplicate path"
-msgstr "Dupliquer le chemin"
+msgstr "Duplique le chemin"
 
 #: ../app/actions/vectors-actions.c:77
 msgid "_Delete Path"
@@ -3846,7 +3845,7 @@ msgstr "Su_pprimer le chemin"
 
 #: ../app/actions/vectors-actions.c:78 ../app/core/core-enums.c:918
 msgid "Delete path"
-msgstr "Supprimer le chemin"
+msgstr "Supprime le chemin"
 
 #: ../app/actions/vectors-actions.c:83
 msgid "Merge _Visible Paths"
@@ -3858,15 +3857,15 @@ msgstr "_Remonter le chemin"
 
 #: ../app/actions/vectors-actions.c:89
 msgid "Raise path"
-msgstr "Monter le chemin"
+msgstr "Remonte le chemin"
 
 #: ../app/actions/vectors-actions.c:94
 msgid "Raise Path to _Top"
-msgstr "Envoyer le chemin tout en _haut"
+msgstr "Placer le chemin tout en _haut"
 
 #: ../app/actions/vectors-actions.c:95
 msgid "Raise path to top"
-msgstr "Envoyer le chemin tout en haut"
+msgstr "Place le chemin tout en haut"
 
 #: ../app/actions/vectors-actions.c:100
 msgid "_Lower Path"
@@ -3874,15 +3873,15 @@ msgstr "_Descendre le chemin"
 
 #: ../app/actions/vectors-actions.c:101
 msgid "Lower path"
-msgstr "Descendre le chemin"
+msgstr "Descend le chemin"
 
 #: ../app/actions/vectors-actions.c:106
 msgid "Lower Path to _Bottom"
-msgstr "Envoyer le chemin tout en _bas"
+msgstr "Placer le chemin tout en _bas"
 
 #: ../app/actions/vectors-actions.c:107
 msgid "Lower path to bottom"
-msgstr "Envoyer le chemin tout en bas"
+msgstr "Place le chemin tout en bas"
 
 #: ../app/actions/vectors-actions.c:112
 msgid "Stro_ke Path..."
@@ -3890,7 +3889,7 @@ msgstr "_Tracer le chemin..."
 
 #: ../app/actions/vectors-actions.c:113
 msgid "Paint along the path"
-msgstr "Peindre le long du chemin"
+msgstr "Peint le long du chemin"
 
 #: ../app/actions/vectors-actions.c:118
 msgid "Stro_ke Path"
@@ -3898,7 +3897,7 @@ msgstr "_Tracer le chemin"
 
 #: ../app/actions/vectors-actions.c:119
 msgid "Paint along the path with last values"
-msgstr "Peindre le long du chemin avec les dernières valeurs"
+msgstr "Peint le long du chemin avec les dernières valeurs"
 
 #: ../app/actions/vectors-actions.c:124
 msgid "Co_py Path"
@@ -3930,11 +3929,11 @@ msgstr "_Depuis le chemin"
 
 #: ../app/actions/vectors-actions.c:174
 msgid "Add"
-msgstr "Ajouter"
+msgstr "Ajoute"
 
 #: ../app/actions/vectors-actions.c:180 ../app/base/base-enums.c:119
 msgid "Subtract"
-msgstr "Soustraction"
+msgstr "Soustrait"
 
 #: ../app/actions/vectors-actions.c:186
 msgid "Intersect"
@@ -3966,7 +3965,7 @@ msgstr "Attributs du chemin"
 
 #: ../app/actions/vectors-commands.c:141
 msgid "Edit Path Attributes"
-msgstr "Édition des attributs du chemin"
+msgstr "Modification des attributs du chemin"
 
 #: ../app/actions/vectors-commands.c:165 ../app/actions/vectors-commands.c:166
 #: ../app/actions/vectors-commands.c:188
@@ -4005,7 +4004,7 @@ msgstr "Aller à l'écran"
 
 #: ../app/actions/view-actions.c:76
 msgid "Create another view on this image"
-msgstr "Créer une nouvelle vue de cette image"
+msgstr "Crée une nouvelle vue sur cette image"
 
 #: ../app/actions/view-actions.c:81
 msgid "_Close"
@@ -4013,7 +4012,7 @@ msgstr "_Fermer"
 
 #: ../app/actions/view-actions.c:82
 msgid "Close this image window"
-msgstr "Fermer cette fenêtre d'image"
+msgstr "Ferme cette fenêtre d'image"
 
 #: ../app/actions/view-actions.c:87
 msgid "_Fit Image in Window"
@@ -4021,7 +4020,7 @@ msgstr "A_juster l'image dans la fenêtre"
 
 #: ../app/actions/view-actions.c:88
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
-msgstr "Ajuster le ratio de zoom pour que l'image soit entièrement visible"
+msgstr "Ajuste le ratio de zoom pour que l'image soit entièrement visible"
 
 #: ../app/actions/view-actions.c:93
 msgid "Fit Image _to Window"
@@ -4029,8 +4028,7 @@ msgstr "A_juster l'image à la fenêtre"
 
 #: ../app/actions/view-actions.c:94
 msgid "Adjust the zoom ratio so that the window is used optimally"
-msgstr ""
-"Ajuster le ratio de zoom pour que l'image soit utilisée de façon optimale"
+msgstr "Ajuste le ratio de zoom pour que l'image soit utilisée de façon optimale"
 
 #: ../app/actions/view-actions.c:99 ../app/actions/view-actions.c:575
 msgid "Re_vert Zoom"
@@ -4174,7 +4172,7 @@ msgstr "Afficher la barre d'é_tat"
 
 #: ../app/actions/view-actions.c:224
 msgid "Show this window's statusbar"
-msgstr "Afficher la barre d'état de cette fenêtre"
+msgstr "Affiche la barre d'état de cette fenêtre"
 
 #: ../app/actions/view-actions.c:230
 msgid "Fullscr_een"
@@ -4186,7 +4184,7 @@ msgstr "Bascule la vue plein écran"
 
 #: ../app/actions/view-actions.c:292
 msgid "1_6:1  (1600%)"
-msgstr "1_6:1 (1600%)"
+msgstr "1_6:1 (1600 %)"
 
 #: ../app/actions/view-actions.c:293
 msgid "Zoom 16:1"
@@ -4194,7 +4192,7 @@ msgstr "Zoom 16:1"
 
 #: ../app/actions/view-actions.c:298
 msgid "_8:1  (800%)"
-msgstr "_8:1 (800%)"
+msgstr "_8:1 (800 %)"
 
 #: ../app/actions/view-actions.c:299
 msgid "Zoom 8:1"
@@ -4202,7 +4200,7 @@ msgstr "Zoom 8:1"
 
 #: ../app/actions/view-actions.c:304
 msgid "_4:1  (400%)"
-msgstr "_4:1 (400%)"
+msgstr "_4:1 (400 %)"
 
 #: ../app/actions/view-actions.c:305
 msgid "Zoom 4:1"
@@ -4210,7 +4208,7 @@ msgstr "Zoom 4:1"
 
 #: ../app/actions/view-actions.c:310
 msgid "_2:1  (200%)"
-msgstr "_2:1 (200%)"
+msgstr "_2:1 (200 %)"
 
 #: ../app/actions/view-actions.c:311
 msgid "Zoom 2:1"
@@ -4218,7 +4216,7 @@ msgstr "Zoom 2:1"
 
 #: ../app/actions/view-actions.c:316
 msgid "_1:1  (100%)"
-msgstr "_1:1 (100%)"
+msgstr "_1:1 (100 %)"
 
 #: ../app/actions/view-actions.c:317
 msgid "Zoom 1:1"
@@ -4226,7 +4224,7 @@ msgstr "Zoom 1:1"
 
 #: ../app/actions/view-actions.c:322
 msgid "1:_2  (50%)"
-msgstr "1:_2 (50%)"
+msgstr "1:_2 (50 %)"
 
 #: ../app/actions/view-actions.c:323
 msgid "Zoom 1:2"
@@ -4234,7 +4232,7 @@ msgstr "Zoom 1:2"
 
 #: ../app/actions/view-actions.c:328
 msgid "1:_4  (25%)"
-msgstr "1:_4 (25%)"
+msgstr "1:_4 (25 %)"
 
 #: ../app/actions/view-actions.c:329
 msgid "Zoom 1:4"
@@ -4242,7 +4240,7 @@ msgstr "Zoom 1:4"
 
 #: ../app/actions/view-actions.c:334
 msgid "1:_8  (12.5%)"
-msgstr "1_:8 (12.5%)"
+msgstr "1_:8 (12,5 %)"
 
 #: ../app/actions/view-actions.c:335
 msgid "Zoom 1:8"
@@ -4250,7 +4248,7 @@ msgstr "Zoom 1:8"
 
 #: ../app/actions/view-actions.c:340
 msgid "1:1_6  (6.25%)"
-msgstr "1:1_6 (6.25%)"
+msgstr "1:1_6 (6,25 %)"
 
 #: ../app/actions/view-actions.c:341
 msgid "Zoom 1:16"
@@ -4307,7 +4305,7 @@ msgstr "Utilise la couleur définie dans les préférences"
 #: ../app/actions/view-actions.c:567
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
-msgstr "Zoom _précédent (%d%%)"
+msgstr "Zoom _précédent (%d %%)"
 
 #: ../app/actions/view-actions.c:704
 #, c-format
@@ -4325,7 +4323,7 @@ msgstr "Définition des couleurs de remplissage du canevas"
 
 #: ../app/actions/view-commands.c:588
 msgid "Set Custom Canvas Padding Color"
-msgstr "Définit les couleurs personnalisées de remplissage du canevas"
+msgstr "Définition des couleurs personnalisées de remplissage du canevas"
 
 #: ../app/actions/window-actions.c:168
 #, c-format
@@ -5568,7 +5566,7 @@ msgstr "Modification du calque de texte"
 
 #: ../app/core/core-enums.c:910
 msgid "Delete layer mask"
-msgstr "Effacer le masque de calque"
+msgstr "Supprimer le masque de calque"
 
 #: ../app/core/core-enums.c:912
 msgid "Show layer mask"
@@ -5918,7 +5916,7 @@ msgstr "Alpha vers Sélection"
 #: ../app/core/gimpchannel-select.c:470
 #, c-format
 msgid "%s Channel to Selection"
-msgstr "%s Canal vers Sélection"
+msgstr "Canal %s vers sélection"
 
 #: ../app/core/gimpchannel-select.c:518 ../app/tools/gimpfuzzyselecttool.c:78
 msgid "command|Fuzzy Select"
@@ -5995,12 +5993,13 @@ msgstr "Agrandissement du canal"
 
 #: ../app/core/gimpchannel.c:293
 msgid "Shrink Channel"
-msgstr "Réduction du canal"
+msgstr "Réduire le canal"
 
 #: ../app/core/gimpchannel.c:691
 msgid "Cannot stroke empty channel."
 msgstr "Impossible de tracer un canal vide."
 
+# Annulation d'action
 #: ../app/core/gimpchannel.c:1590
 msgid "Set Channel Color"
 msgstr "Changement de la couleur du canal"
@@ -6614,7 +6613,7 @@ msgstr "Appliquer le masque de calque"
 
 #: ../app/core/gimplayer.c:1532
 msgid "Delete Layer Mask"
-msgstr "Effacer le masque de calque"
+msgstr "Supprimer le masque de calque"
 
 #: ../app/core/gimplayer.c:1639
 msgid "Add Alpha Channel"
@@ -6943,7 +6942,7 @@ msgstr "Impossible de convertir vers une palette ayant plus de 256 couleurs."
 
 #: ../app/dialogs/desaturate-dialog.c:65
 msgid "Remove Colors"
-msgstr "Enlever les couleurs"
+msgstr "Suppression des couleurs"
 
 #: ../app/dialogs/desaturate-dialog.c:75
 msgid "_Desaturate"
@@ -7081,7 +7080,7 @@ msgstr "Configurer l'image de la grille"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:64
 msgid "Merge Layers"
-msgstr "Fusionner les calques"
+msgstr "Fusion des calques"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:66
 msgid "Layers Merge Options"
@@ -7265,7 +7264,7 @@ msgstr "Seulement en mémoire"
 
 #: ../app/dialogs/module-dialog.c:445
 msgid "No longer available"
-msgstr "Plus disponible"
+msgstr "N'est plus disponible"
 
 #: ../app/dialogs/module-dialog.c:481
 msgid "Load"
@@ -7650,7 +7649,7 @@ msgstr "_Rétablir les raccourcis clavier aux valeurs par défaut"
 
 #: ../app/dialogs/preferences-dialog.c:1689
 msgid "Remove _All Keyboard Shortcuts"
-msgstr "E_ffacer tous les raccourcis clavier"
+msgstr "Supprimer _tous les raccourcis clavier"
 
 #: ../app/dialogs/preferences-dialog.c:1701
 #: ../app/dialogs/preferences-dialog.c:1740
@@ -7725,7 +7724,7 @@ msgstr "Alignement sur les guides et la grille"
 
 #: ../app/dialogs/preferences-dialog.c:1896
 msgid "_Snap distance:"
-msgstr "Distance d'_alignement :"
+msgstr "Distance d'_alignement :"
 
 #: ../app/dialogs/preferences-dialog.c:1904
 msgid "Default _interpolation:"
@@ -7864,7 +7863,7 @@ msgstr "Format du titre et de la barre d'état de l'image"
 
 #: ../app/dialogs/preferences-dialog.c:2152
 msgid "Title & Status"
-msgstr "Titre et État"
+msgstr "Titre et état"
 
 #: ../app/dialogs/preferences-dialog.c:2170
 msgid "Current format"
@@ -9340,7 +9339,7 @@ msgstr "Différence maximale de couleur"
 #: ../app/tools/gimpbucketfilloptions.c:226
 #, c-format
 msgid "Fill Type  (%s)"
-msgstr "Type de fichier (%s)"
+msgstr "Type de remplissage (%s)"
 
 #. fill selection
 #: ../app/tools/gimpbucketfilloptions.c:239
@@ -9373,7 +9372,7 @@ msgstr "Échantillonner sur tous les calques"
 
 #: ../app/tools/gimpbucketfilloptions.c:294
 msgid "Fill by:"
-msgstr "Remplir avec :"
+msgstr "Remplir via :"
 
 #: ../app/tools/gimpbucketfilltool.c:80
 msgid "Bucket Fill"
@@ -9637,7 +9636,7 @@ msgstr "%s pour rendre flou"
 #: ../app/tools/gimpconvolvetool.c:199
 #, c-format
 msgid "Convolve Type  (%s)"
-msgstr "Type de circonvolution  (%s)"
+msgstr "Type de convolution (%s)"
 
 #: ../app/tools/gimpcropoptions.c:148
 msgid "Current layer only"
@@ -10182,7 +10181,7 @@ msgstr "Cliquez ou appuyez sur entrée pour convertir en une sélection"
 
 #: ../app/tools/gimpiscissorstool.c:968
 msgid "Press Enter to convert to a selection"
-msgstr "Appuyez sur entrée pour convertir en sélection"
+msgstr "Appuyez sur Entrée pour convertir en sélection"
 
 #: ../app/tools/gimpiscissorstool.c:983
 msgid "Click or Click-Drag to add a point"
@@ -10982,11 +10981,11 @@ msgstr "Convertir un bord"
 
 #: ../app/tools/gimpvectortool.c:554
 msgid "Delete Anchor"
-msgstr "Effacer une ancre"
+msgstr "Supprimer une ancre"
 
 #: ../app/tools/gimpvectortool.c:576
 msgid "Delete Segment"
-msgstr "Effacer un segment"
+msgstr "Supprimer un segment"
 
 #: ../app/tools/gimpvectortool.c:787
 msgid "Move Anchors"
@@ -11059,7 +11058,7 @@ msgstr "Cliquez pour rendre ce noeud angulaire"
 
 #: ../app/tools/gimpvectortool.c:1729
 msgid "Delete Anchors"
-msgstr "Effacer les ancres"
+msgstr "Supprimer les ancres"
 
 #: ../app/tools/gimpvectortool.c:1902
 msgid "There is no active layer or channel to stroke to"
@@ -11869,7 +11868,7 @@ msgstr "_Style de ligne :"
 
 #: ../app/widgets/gimpgrideditor.c:213
 msgid "Change grid foreground color"
-msgstr "Changer la couleur du premier plan de la grille"
+msgstr "Modifie la couleur de premier plan de la grille"
 
 #: ../app/widgets/gimpgrideditor.c:220
 msgid "_Foreground color:"
@@ -11877,7 +11876,7 @@ msgstr "_Premier plan :"
 
 #: ../app/widgets/gimpgrideditor.c:224
 msgid "Change grid background color"
-msgstr "Changer la couleur d'arrière-plan de la grille"
+msgstr "Modifie la couleur d'arrière-plan de la grille"
 
 #: ../app/widgets/gimpgrideditor.c:231
 msgid "_Background color:"
@@ -12204,11 +12203,11 @@ msgstr "Création de l'aperçu..."
 
 #: ../app/widgets/gimptoolbox-color-area.c:135
 msgid "Change Foreground Color"
-msgstr "Changer la couleur de premier plan"
+msgstr "Modification de la couleur de premier plan"
 
 #: ../app/widgets/gimptoolbox-color-area.c:140
 msgid "Change Background Color"
-msgstr "Changer la couleur d'arrière-plan"
+msgstr "Modification de la couleur d'arrière-plan"
 
 #: ../app/widgets/gimptoolbox-image-area.c:112
 #: ../app/widgets/gimptoolbox-image-area.c:117
@@ -12550,6 +12549,3 @@ msgstr "Assurez-vous que la boîte d'outils est bien visible."
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Impossible de lancer « %s » : %s"
-
-#~ msgid "Add Sample_Point"
-#~ msgstr "Ajouter un point d'é_chantilonage"
