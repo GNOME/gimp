@@ -1,3 +1,7 @@
+2008-02-13  Sven Neumann  <sven@gimp.org>
+
+	* eo.po: fixed header fields (copied from po/eo.po).
+
 2008-02-12  Inaki Larranaga Murgoitio  <dooteo@euskalgnu.org>
 
 	* eu.po: Updated Basque translation.
