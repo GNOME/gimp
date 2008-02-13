@@ -1,3 +1,7 @@
+2008-02-13  Sven Neumann  <sven@gimp.org>
+
+	* ja.po: fixed Plural-Forms definition.
+
 2008-02-11  Stéphane Raimbault  <stephane.raimbault@gmail.com>
 
 	* fr.po: Fixed French translation by Julien Hardelin and Stéphane
