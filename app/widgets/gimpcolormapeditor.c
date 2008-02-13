@@ -490,8 +490,8 @@ gimp_colormap_editor_create_layout (GtkWidget *widget)
   PangoAttribute *attr;
 
   layout = gtk_widget_create_pango_layout (widget,
-                                           _("Colormap is only useful with "
-                                             "indexed images."));
+                                           _("Only indexed images have "
+                                             "a colormap."));
   pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
 
   attrs = pango_attr_list_new ();

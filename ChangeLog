@@ -1,3 +1,8 @@
+2008-02-13  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/widgets/gimpcolormapeditor.c:  change wording of new
+	hint for non-indexed images.
+
 2008-02-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/gimpoperationcolorbalance.c
