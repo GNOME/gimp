@@ -1,3 +1,10 @@
+2008-02-14  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/text/gimpfont.c (gimp_font_get_sample_string): check if the
+	font has the glyphs from the sample string. Fixes bug #514021.
+
 2008-02-11  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
