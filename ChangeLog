@@ -1,3 +1,8 @@
+2008-02-14  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimpfont.c (gimp_font_get_sample_string): check if the
+	font has the glyphs from the sample string. Fixes bug #514021.
+
 2008-02-13  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/vpropagate.c:  change "darker" to "lighter"
