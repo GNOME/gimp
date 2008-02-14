@@ -3,7 +3,7 @@
  *
  * gimpscaleentry.h
  * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>,
- * 2008 Bill Skaggs <weskaggs@primate.ucdavis.edu>
+ *               2008 Bill Skaggs <weskaggs@primate.ucdavis.edu>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,6 +24,9 @@
 #ifndef __GIMP_SCALE_ENTRY_H__
 #define __GIMP_SCALE_ENTRY_H__
 
+G_BEGIN_DECLS
+
+
 #define GIMP_SCALE_ENTRY_LABEL(adj) \
         (g_object_get_data (G_OBJECT (adj), "label"))
 
@@ -39,46 +42,46 @@
         gtk_spin_button_get_adjustment \
         (GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (adj), "spinbutton")))
 
-GtkObject * gimp_scale_entry_new       (GtkTable           *table,
-                                        gint                column,
-                                        gint                row,
-                                        const gchar        *text,
-                                        gint                scale_width,
-                                        gint                spinbutton_width,
-                                        gdouble             value,
-                                        gdouble             lower,
-                                        gdouble             upper,
-                                        gdouble             step_increment,
-                                        gdouble             page_increment,
-                                        guint               digits,
-                                        gboolean            constrain,
-                                        gdouble             unconstrained_lower,
-                                        gdouble             unconstrained_upper,
-                                        const gchar        *tooltip,
-                                        const gchar        *help_id);
 
+GtkObject * gimp_scale_entry_new             (GtkTable    *table,
+                                              gint         column,
+                                              gint         row,
+                                              const gchar *text,
+                                              gint         scale_width,
+                                              gint         spinbutton_width,
+                                              gdouble      value,
+                                              gdouble      lower,
+                                              gdouble      upper,
+                                              gdouble      step_increment,
+                                              gdouble      page_increment,
+                                              guint        digits,
+                                              gboolean     constrain,
+                                              gdouble      unconstrained_lower,
+                                              gdouble      unconstrained_upper,
+                                              const gchar *tooltip,
+                                              const gchar *help_id);
 
-GtkObject * gimp_color_scale_entry_new (GtkTable           *table,
-                                        gint                column,
-                                        gint                row,
-                                        const gchar        *text,
-                                        gint                scale_width,
-                                        gint                spinbutton_width,
-                                        gdouble             value,
-                                        gdouble             lower,
-                                        gdouble             upper,
-                                        gdouble             step_increment,
-                                        gdouble             page_increment,
-                                        guint               digits,
-                                        const gchar        *tooltip,
-                                        const gchar        *help_id);
+GtkObject * gimp_color_scale_entry_new       (GtkTable    *table,
+                                              gint         column,
+                                              gint         row,
+                                              const gchar *text,
+                                              gint         scale_width,
+                                              gint         spinbutton_width,
+                                              gdouble      value,
+                                              gdouble      lower,
+                                              gdouble      upper,
+                                              gdouble      step_increment,
+                                              gdouble      page_increment,
+                                              guint        digits,
+                                              const gchar *tooltip,
+                                              const gchar *help_id);
 
-void     gimp_scale_entry_set_sensitive   (GtkObject       *adjustment,
-                                           gboolean         sensitive);
+void        gimp_scale_entry_set_sensitive   (GtkObject   *adjustment,
+                                              gboolean     sensitive);
 
-void     gimp_scale_entry_set_logarithmic (GtkObject       *adjustment,
-                                           gboolean         logarithmic);
-gboolean gimp_scale_entry_get_logarithmic (GtkObject       *adjustment);
+void        gimp_scale_entry_set_logarithmic (GtkObject   *adjustment,
+                                              gboolean     logarithmic);
+gboolean    gimp_scale_entry_get_logarithmic (GtkObject   *adjustment);
 
 
 

@@ -1,3 +1,8 @@
+2008-02-14  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpscaleentry.[ch]: cleanup.
+
 2008-02-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merged from weskaggs branch at Mitch's request.  Will
@@ -9,9 +14,7 @@
 	* libgimpwidgets/gimpscaleentry.c
 	* libgimpwidgets/gimpscaleentry.h: new files.
 	
-	* libgimpwidgets/gimpwidgets.h
-	* libgimpwidgets/gimpwidgets.c
-	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgets.[ch]
 	* libgimpwidgets/Makefile.am: changed accordingly.
 
 2008-02-14  Sven Neumann  <sven@gimp.org>

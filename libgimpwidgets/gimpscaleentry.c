@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpwidgets.c
+ * gimpscaleentry.c
  * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
@@ -29,6 +29,7 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "gimpwidgets.h"
+
 
 static void gimp_scale_entry_unconstrained_adjustment_callback (GtkAdjustment *adjustment,
                                                                 GtkAdjustment *other_adj);
