@@ -1,5 +1,10 @@
 2008-02-13  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins/common/vpropagate.c:  change "darker" to "lighter"
+	in tooltips, in response to comment #24 in bug #156545.
+	
+2008-02-13  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/widgets/gimpcolormapeditor.c:  change wording of new
 	hint for non-indexed images.
 

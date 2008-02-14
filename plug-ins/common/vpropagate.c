@@ -242,7 +242,7 @@ query (void)
                           args, NULL);
 
   gimp_install_procedure (ERODE_PROC,
-                          N_("Shrink darker areas of the image"),
+                          N_("Shrink lighter areas of the image"),
                           "Erode image",
                           "Shuji Narazaki (narazaki@InetQ.or.jp)",
                           "Shuji Narazaki",
@@ -254,7 +254,7 @@ query (void)
                           args, NULL);
 
   gimp_install_procedure (DILATE_PROC,
-                          N_("Grow darker areas of the image"),
+                          N_("Grow lighter areas of the image"),
                           "Dilate image",
                           "Shuji Narazaki (narazaki@InetQ.or.jp)",
                           "Shuji Narazaki",
