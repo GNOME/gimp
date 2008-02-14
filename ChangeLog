@@ -1,3 +1,16 @@
+2008-02-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Place scale entry code into separate files, no
+	functional changes.
+
+	* libgimpwidgets/gimpscaleentry.c
+	* libgimpwidgets/gimpscaleentry.h: new files.
+	
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgets.c
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/Makefile.am: changed accordingly.
+
 2008-02-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merged 24822:24845 from trunk.
