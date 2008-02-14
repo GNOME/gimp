@@ -1,3 +1,19 @@
+2008-02-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Merged from weskaggs branch at Mitch's request.  Will
+	need to update devel docs.
+	
+	Place scale entry code into separate files, no
+	functional changes.
+
+	* libgimpwidgets/gimpscaleentry.c
+	* libgimpwidgets/gimpscaleentry.h: new files.
+	
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgets.c
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/Makefile.am: changed accordingly.
+
 2008-02-14  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimpfont.c (gimp_font_get_sample_string): check if the
