@@ -23,8 +23,11 @@
 #include "config.h"
 
 #include <glib-object.h>
+
+#define PANGO_ENABLE_BACKEND 1   /* Argh */
 #include <pango/pangoft2.h>
-#define PANGO_ENABLE_ENGINE 1   /* Argh */
+
+#define PANGO_ENABLE_ENGINE  1   /* Argh */
 #include <pango/pango-ot.h>
 #include <freetype/tttables.h>
 
@@ -327,6 +330,21 @@ gimp_font_get_standard (void)
 }
 
 
+static inline gboolean
+gimp_font_covers_string (PangoFcFont *font,
+                         const gchar *sample)
+{
+  const gchar *p;
+
+  for (p = sample; *p; p = g_utf8_next_char (p))
+    {
+      if (! pango_fc_font_has_char (font, g_utf8_get_char (p)))
+        return FALSE;
+    }
+
+  return TRUE;
+}
+
 /* Guess a suitable short sample string for the font. */
 static const gchar *
 gimp_font_get_sample_string (PangoContext         *context,
@@ -366,7 +384,7 @@ gimp_font_get_sample_string (PangoContext         *context,
   static const struct
   {
     const gchar  script[4];
-    int          bit;
+    gint         bit;
     const gchar *sample;
   } scripts[] = {
     /* Han is first because fonts that support it presumably are primarily
@@ -648,7 +666,9 @@ gimp_font_get_sample_string (PangoContext         *context,
                   {
 #define TAG(s) FT_MAKE_TAG (s[0], s[1], s[2], s[3])
 
-                    if (slist[j] == TAG (scripts[i].script))
+                    if (slist[j] == TAG (scripts[i].script) &&
+                        gimp_font_covers_string (PANGO_FC_FONT (font),
+                                                 scripts[i].sample))
                       {
                         ot_alts[n_ot_alts++] = i;
                         DEBUGPRINT (("%.4s ", scripts[i].script));
@@ -656,6 +676,7 @@ gimp_font_get_sample_string (PangoContext         *context,
 #undef TAG
                   }
             }
+
           g_free (slist);
         }
     }
@@ -675,7 +696,9 @@ gimp_font_get_sample_string (PangoContext         *context,
            i++)
         {
           if (scripts[i].bit >= 0 &&
-              (&os2->ulUnicodeRange1)[scripts[i].bit/32] & (1 << (scripts[i].bit % 32)))
+              (&os2->ulUnicodeRange1)[scripts[i].bit/32] & (1 << (scripts[i].bit % 32)) &&
+              gimp_font_covers_string (PANGO_FC_FONT (font),
+                                       scripts[i].sample))
             {
               sr_alts[n_sr_alts++] = i;
               DEBUGPRINT (("%.4s ", scripts[i].script));

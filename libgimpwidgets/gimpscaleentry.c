@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpwidgets.c
+ * gimpscaleentry.c
  * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
@@ -29,6 +29,7 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "gimpwidgets.h"
+
 
 static void gimp_scale_entry_unconstrained_adjustment_callback (GtkAdjustment *adjustment,
                                                                 GtkAdjustment *other_adj);
@@ -546,41 +547,4 @@ gimp_scale_entry_set_sensitive (GtkObject *adjustment,
   widget = GIMP_SCALE_ENTRY_SPINBUTTON (adjustment);
   if (widget)
     gtk_widget_set_sensitive (widget, sensitive);
-}
-
-gdouble
-gimp_scale_entry_popup_new (GtkWindow   *parent,
-                            const gchar *text,
-                            gint         scale_width,
-                            gint         spinbutton_width,
-                            gdouble      value,
-                            gdouble      lower,
-                            gdouble      upper,
-                            gdouble      step_increment,
-                            gdouble      page_increment,
-                            guint        digits,
-                            gboolean     constrain,
-                            gdouble      unconstrained_lower,
-                            gdouble      unconstrained_upper,
-                            const gchar *tooltip,
-                            const gchar *help_id)
-{
-  GtkWidget *window;
-  GtkWidget *table = NULL;
-  GtkObject *entry;
-
-  window = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_window_set_decorated (GTK_WINDOW (window), FALSE);
-  gtk_window_set_modal (GTK_WINDOW (window), TRUE);
-
-  entry = gimp_scale_entry_new (GTK_TABLE (table), 0, 0, text,
-                                scale_width, spinbutton_width,
-                                value, lower, upper,
-                                step_increment, page_increment,
-                                digits, constrain,
-                                unconstrained_lower, unconstrained_upper,
-                                tooltip, help_id);
-
-
-  return value;
 }

@@ -1,6 +1,6 @@
 # Swedish messages for GIMP Script-Fu.
-# Copyright (C) 2000, 2001, 2002, 2003, 2007 Free Software Foundation, Inc.
-# Daniel Nylander <po@danielnylander.se>, 2007.
+# Copyright (C) 2000, 2001, 2002, 2003, 2007, 2008 Free Software Foundation, Inc.
+# Daniel Nylander <po@danielnylander.se>, 2007, 2008.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
 # Tomas Ögren <stric@ing.umu.se>, 2001.
@@ -9,45 +9,45 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-12 20:40+0200\n"
-"PO-Revision-Date: 2007-10-27 20:58+0100\n"
+"POT-Creation-Date: 2008-02-10 18:48+0100\n"
+"PO-Revision-Date: 2008-02-10 18:49+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:135
-#: ../plug-ins/script-fu/script-fu-console.c:202
+#: ../plug-ins/script-fu/script-fu-console.c:133
+#: ../plug-ins/script-fu/script-fu-console.c:200
 msgid "Script-Fu Console"
 msgstr "Script-Fu-konsoll"
 
-#: ../plug-ins/script-fu/script-fu-console.c:198
+#: ../plug-ins/script-fu/script-fu-console.c:196
 msgid "Welcome to TinyScheme"
 msgstr "Välkommen till TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:204
+#: ../plug-ins/script-fu/script-fu-console.c:202
 msgid "Interactive Scheme Development"
 msgstr "Interaktiv Scheme-utveckling"
 
-#: ../plug-ins/script-fu/script-fu-console.c:240
+#: ../plug-ins/script-fu/script-fu-console.c:238
 msgid "_Browse..."
 msgstr "_Bläddra..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:300
+#: ../plug-ins/script-fu/script-fu-console.c:296
 msgid "Save Script-Fu Console Output"
 msgstr "Spara utdata från Script-Fu-konsoll"
 
-#: ../plug-ins/script-fu/script-fu-console.c:347
+#: ../plug-ins/script-fu/script-fu-console.c:343
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Kunde inte öppna \"%s\" för skrivning: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:376
+#: ../plug-ins/script-fu/script-fu-console.c:372
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu-procedurbläddrare"
 
-#: ../plug-ins/script-fu/script-fu-console.c:719
+#: ../plug-ins/script-fu/script-fu-console.c:716
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu-evalueringsläget tillåter endast icke-interaktiv användning"
 
@@ -117,19 +117,19 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:711
+#: ../plug-ins/script-fu/script-fu-server.c:712
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-serveralternativ"
 
-#: ../plug-ins/script-fu/script-fu-server.c:716
+#: ../plug-ins/script-fu/script-fu-server.c:717
 msgid "_Start Server"
 msgstr "_Starta servern"
 
-#: ../plug-ins/script-fu/script-fu-server.c:744
+#: ../plug-ins/script-fu/script-fu-server.c:745
 msgid "Server port:"
 msgstr "Serverport:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:750
+#: ../plug-ins/script-fu/script-fu-server.c:751
 msgid "Server logfile:"
 msgstr "Serverloggfil:"
 
@@ -138,8 +138,8 @@ msgid "Interactive console for Script-Fu development"
 msgstr "Interaktiv konsoll för Script-Fu-utveckling"
 
 #: ../plug-ins/script-fu/script-fu.c:116
-msgid "Script-Fu _Console"
-msgstr "Script-Fu-konsoll"
+msgid "_Console"
+msgstr "_Konsoll"
 
 #: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
@@ -149,115 +149,115 @@ msgstr "Server för fjärråtgärder i Script-Fu"
 msgid "_Start Server..."
 msgstr "_Starta servern..."
 
-#: ../plug-ins/script-fu/script-fu.c:298
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
 msgstr "_GIMP på nätet"
 
-#: ../plug-ins/script-fu/script-fu.c:299
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
 msgstr "A_nvändarhandbok"
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:304
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Buttons"
 msgstr "_Knappar"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:309
 msgid "_Logos"
 msgstr "_Logotyper"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:311
 msgid "_Misc"
 msgstr "_Diverse"
 
-#: ../plug-ins/script-fu/script-fu.c:310
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Patterns"
 msgstr "_Mönster"
 
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "_Testa"
 
-#: ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Utilities"
 msgstr "_Verktyg"
 
-#: ../plug-ins/script-fu/script-fu.c:316
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Web Page Themes"
 msgstr "_Webbsideteman"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Alien Glow"
 msgstr "Rymd_glöd"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Beveled Pattern"
 msgstr "Av_fasat mönster"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:325
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:325
+#: ../plug-ins/script-fu/script-fu.c:328
 msgid "Alpha to _Logo"
 msgstr "Alfa till _logotyp"
 
-#: ../plug-ins/script-fu/script-fu.c:327
+#: ../plug-ins/script-fu/script-fu.c:330
 msgid "An_imation"
 msgstr "An_imation"
 
-#: ../plug-ins/script-fu/script-fu.c:329
+#: ../plug-ins/script-fu/script-fu.c:332
 msgid "_Animators"
 msgstr "_Animatörer"
 
-#: ../plug-ins/script-fu/script-fu.c:331
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Artistic"
 msgstr "_Konstnärlig"
 
-#: ../plug-ins/script-fu/script-fu.c:333
+#: ../plug-ins/script-fu/script-fu.c:336
 msgid "_Blur"
 msgstr "_Utsmetning"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:338
 msgid "_Decor"
 msgstr "_Dekor"
 
-#: ../plug-ins/script-fu/script-fu.c:337
+#: ../plug-ins/script-fu/script-fu.c:340
 msgid "_Effects"
 msgstr "_Effekter"
 
-#: ../plug-ins/script-fu/script-fu.c:339
+#: ../plug-ins/script-fu/script-fu.c:342
 msgid "En_hance"
 msgstr "För_bättra"
 
-#: ../plug-ins/script-fu/script-fu.c:341
+#: ../plug-ins/script-fu/script-fu.c:344
 msgid "_Light and Shadow"
 msgstr "_Ljus och skugga"
 
-#: ../plug-ins/script-fu/script-fu.c:343
+#: ../plug-ins/script-fu/script-fu.c:346
 msgid "S_hadow"
 msgstr "Sk_ugga"
 
-#: ../plug-ins/script-fu/script-fu.c:345
+#: ../plug-ins/script-fu/script-fu.c:348
 msgid "_Render"
 msgstr "_Rendera"
 
-#: ../plug-ins/script-fu/script-fu.c:347
+#: ../plug-ins/script-fu/script-fu.c:350
 msgid "_Alchemy"
 msgstr "_Alkemi"
 
-#: ../plug-ins/script-fu/script-fu.c:350
+#: ../plug-ins/script-fu/script-fu.c:353
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Läs om alla tillgängliga Script-Fu-skript"
 
-#: ../plug-ins/script-fu/script-fu.c:355
+#: ../plug-ins/script-fu/script-fu.c:358
 msgid "_Refresh Scripts"
 msgstr "_Uppdatera skript"
 
-#: ../plug-ins/script-fu/script-fu.c:378
+#: ../plug-ins/script-fu/script-fu.c:381
 msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
 msgstr "Du kan inte använda \"Uppdatera skript\" när en Script-Fu-dialogruta är öppen.  Stäng alla Script-Fu-fönster och försök igen."
 
@@ -1781,46 +1781,6 @@ msgstr "Ta bort alla horisontella och vertikala hjälplinjer"
 msgid "_Remove all Guides"
 msgstr "_Ta bort alla guider"
 
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-msgid "BG opacity"
-msgstr "Bakgrundsopacitet"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid "Create a graph of the Hue, Saturation, and Value distributions"
-msgstr "Skapa en graf över användningen av nyans, mättnad och intensitet"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
-msgid "Draw _HSV Graph..."
-msgstr "Rita _NMI-graf..."
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:4
-msgid "End X"
-msgstr "X-slut"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:5
-msgid "End Y"
-msgstr "Y-slut"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:6
-msgid "From top-left to bottom-right"
-msgstr "Från övre vänsterkant till nedre högerkant"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:7
-msgid "Graph scale"
-msgstr "Grafskala"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:8
-msgid "Start X"
-msgstr "Start i X-led"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:9
-msgid "Start Y"
-msgstr "Start i Y-led"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:10
-msgid "Use selection bounds instead of values below"
-msgstr "Använd markeringsgränser istället för nedanstående värden"
-
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
 msgstr "Skapa en tvåfärgerslogotyp med en textstil som liknar klotter "
@@ -2823,6 +2783,26 @@ msgstr "Markeringsopacitet"
 msgid "_Xach-Effect..."
 msgstr "_Xach-effekt..."
 
+#~ msgid "BG opacity"
+#~ msgstr "Bakgrundsopacitet"
+#~ msgid "Create a graph of the Hue, Saturation, and Value distributions"
+#~ msgstr "Skapa en graf över användningen av nyans, mättnad och intensitet"
+#~ msgid "Draw _HSV Graph..."
+#~ msgstr "Rita _NMI-graf..."
+#~ msgid "End X"
+#~ msgstr "X-slut"
+#~ msgid "End Y"
+#~ msgstr "Y-slut"
+#~ msgid "From top-left to bottom-right"
+#~ msgstr "Från övre vänsterkant till nedre högerkant"
+#~ msgid "Graph scale"
+#~ msgstr "Grafskala"
+#~ msgid "Start X"
+#~ msgstr "Start i X-led"
+#~ msgid "Start Y"
+#~ msgstr "Start i Y-led"
+#~ msgid "Use selection bounds instead of values below"
+#~ msgstr "Använd markeringsgränser istället för nedanstående värden"
 #~ msgid "Darken only\\n(Better, but only for images with a lot of white)"
 #~ msgstr "Gör endast mörkare\\n(bättre, men bara för bilder med mycket vitt)"
 #~ msgid "Apply generated layermask"

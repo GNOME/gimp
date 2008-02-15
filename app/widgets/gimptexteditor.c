@@ -31,7 +31,7 @@
 
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
-#include "gimplanguagestore.h"
+#include "gimplanguageentry.h"
 #include "gimptexteditor.h"
 #include "gimpuimanager.h"
 
@@ -46,14 +46,12 @@ enum
 };
 
 
-static void        gimp_text_editor_finalize           (GObject         *object);
+static void   gimp_text_editor_finalize     (GObject         *object);
 
-static GtkWidget * gimp_text_editor_language_entry_new (void);
-
-static void        gimp_text_editor_text_changed       (GtkTextBuffer   *buffer,
-                                                        GimpTextEditor  *editor);
-static void        gimp_text_editor_font_toggled       (GtkToggleButton *button,
-                                                        GimpTextEditor  *editor);
+static void   gimp_text_editor_text_changed (GtkTextBuffer   *buffer,
+                                             GimpTextEditor  *editor);
+static void   gimp_text_editor_font_toggled (GtkToggleButton *button,
+                                             GimpTextEditor  *editor);
 
 
 G_DEFINE_TYPE (GimpTextEditor, gimp_text_editor, GIMP_TYPE_DIALOG)
@@ -188,7 +186,7 @@ gimp_text_editor_new (const gchar     *title,
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
-      entry = gimp_text_editor_language_entry_new ();
+      entry = gimp_language_entry_new ();
       gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
       gtk_widget_show (entry);
 
@@ -205,6 +203,8 @@ gimp_text_editor_new (const gchar     *title,
   gtk_widget_show (scrolled_window);
 
   editor->view = gtk_text_view_new ();
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (editor->view),
+                               GTK_WRAP_WORD_CHAR);
   gtk_container_add (GTK_CONTAINER (scrolled_window), editor->view);
   gtk_widget_show (editor->view);
 
@@ -349,30 +349,6 @@ gimp_text_editor_get_font_name (GimpTextEditor *editor)
 
 
 /*  private functions  */
-
-static GtkWidget *
-gimp_text_editor_language_entry_new (void)
-{
-  GtkWidget          *entry;
-  GtkListStore       *store;
-  GtkEntryCompletion *completion;
-
-  entry = gtk_entry_new ();
-
-  completion = gtk_entry_completion_new ();
-  gtk_entry_completion_set_text_column (completion,
-                                        GIMP_LANGUAGE_STORE_LANGUAGE);
-  gtk_entry_completion_set_inline_completion (completion, TRUE);
-
-  store = gimp_language_store_new (FALSE);
-  gtk_entry_completion_set_model (completion, GTK_TREE_MODEL (store));
-  g_object_unref (store);
-
-  gtk_entry_set_completion (GTK_ENTRY (entry), completion);
-  g_object_unref (completion);
-
-  return entry;
-}
 
 static void
 gimp_text_editor_text_changed (GtkTextBuffer  *buffer,

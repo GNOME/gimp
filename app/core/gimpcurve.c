@@ -476,6 +476,21 @@ gimp_curve_move_point (GimpCurve *curve,
 }
 
 void
+gimp_curve_get_point (GimpCurve *curve,
+                      gint       point,
+                      gdouble   *x,
+                      gdouble   *y)
+{
+  g_return_if_fail (GIMP_IS_CURVE (curve));
+
+  if (curve->curve_type == GIMP_CURVE_FREE)
+    return;
+
+  if (x) *x = curve->points[point].x;
+  if (y) *y = curve->points[point].y;
+}
+
+void
 gimp_curve_set_curve (GimpCurve *curve,
                       gdouble    x,
                       gdouble    y)

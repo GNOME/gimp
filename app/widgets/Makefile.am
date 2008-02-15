@@ -191,6 +191,8 @@ libappwidgets_a_sources = \
 	gimpimageview.h			\
 	gimpitemtreeview.c		\
 	gimpitemtreeview.h		\
+	gimplanguageentry.c		\
+	gimplanguageentry.h		\
 	gimplanguagestore.c		\
 	gimplanguagestore.h		\
 	gimplanguagestore-parser.c	\

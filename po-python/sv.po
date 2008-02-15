@@ -1,6 +1,6 @@
 # Swedish messages for GIMP Python.
-# Copyright (C) 2000, 2001, 2002, 2003, 2007 Free Software Foundation, Inc.
-# Daniel Nylander <po@danielnylander.se>, 2007.
+# Copyright (C) 2000, 2001, 2002, 2003, 2007, 2008 Free Software Foundation, Inc.
+# Daniel Nylander <po@danielnylander.se>, 2007, 2008.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
 # Tomas Ögren <stric@ing.umu.se>, 2001.
@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-28 14:35+0200\n"
-"PO-Revision-Date: 2007-08-01 08:25+0100\n"
+"POT-Creation-Date: 2008-02-10 18:46+0100\n"
+"PO-Revision-Date: 2008-02-10 18:46+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -42,7 +42,7 @@ msgid "Yes"
 msgstr "Ja"
 
 #: ../plug-ins/pygimp/gimpfu.py:558
-#: ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpui.py:224
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu filväljare"
 
@@ -55,7 +55,7 @@ msgstr "Python-Fu mappväljare"
 msgid "Invalid input for '%s'"
 msgstr "Ogiltig inmatning för \"%s\""
 
-#: ../plug-ins/pygimp/gimpui.py:175
+#: ../plug-ins/pygimp/gimpui.py:177
 msgid "Python-Fu Color Selection"
 msgstr "Python-Fu färgval"
 
@@ -126,38 +126,38 @@ msgid "Save Python-Fu Console Output"
 msgstr "Spara Python-Fu konsollutdata"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
-msgid "Interactive Gimp-Python interpreter"
-msgstr "Interaktiv Gimp-Python-tolkare"
+msgid "Interactive GIMP Python interpreter"
+msgstr "Interaktiv GIMP Python-tolk"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
 msgid "_Console"
 msgstr "_Konsoll"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+#: ../plug-ins/pygimp/plug-ins/foggify.py:53
 msgid "Add a layer of fog"
 msgstr "Lägg till ett lager av dimma"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pygimp/plug-ins/foggify.py:58
 msgid "_Fog..."
 msgstr "_Dimma..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Layer name"
 msgstr "_Lagernamn"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "Clouds"
 msgstr "Moln"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "_Fog color"
 msgstr "Färg_ på dimma"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
 msgid "_Turbulence"
 msgstr "_Turbulens"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Op_acity"
 msgstr "Op_acitet"
 

@@ -1,5 +1,9 @@
 2008-02-15  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	Merge 24846:24891 from trunk.
+	
+2008-02-15  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	Clean up code for two-column toolbox.
 	
 	* app/actions/dialogs-commands.c

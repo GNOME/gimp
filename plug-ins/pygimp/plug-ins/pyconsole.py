@@ -16,17 +16,20 @@
 # This module 'runs' python interpreter in a TextView widget.
 # The main class is Console, usage is:
 # Console(locals=None, banner=None, completer=None, use_rlcompleter=True, start_script='') -
-# it creates the widget and 'starts' interactive session; see the end of
-# this file. If start_script is not empty, it pastes it as it was entered from keyboard.
+# it creates the widget and 'starts' interactive session; see the end
+# of this file. If start_script is not empty, it pastes it as it was
+# entered from keyboard.
 #
 # Console has "command" signal which is emitted when code is about to
-# be executed. You may connect to it using console.connect or console.connect_after
-# to get your callback ran before or after the code is executed.
+# be executed. You may connect to it using console.connect or
+# console.connect_after to get your callback ran before or after the
+# code is executed.
 #
 # To modify output appearance, set attributes of console.stdout_tag and
 # console.stderr_tag.
 #
-# Console may subclass a type other than gtk.TextView, to allow syntax highlighting and stuff,
+# Console may subclass a type other than gtk.TextView, to allow syntax
+# highlighting and stuff,
 # e.g.:
 #   console_type = pyconsole.ConsoleType(moo.edit.TextView)
 #   console = console_type(use_rlcompleter=False, start_script="import moo\nimport gtk\n")

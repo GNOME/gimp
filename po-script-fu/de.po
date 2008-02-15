@@ -1356,7 +1356,7 @@ msgstr "Krista_ll …"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
 msgid "Difference Clouds..."
-msgstr "Plastisches Rauschen …"
+msgstr "Differenz-Wolken …"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
 msgid "Solid noise applied with Difference layer mode"
