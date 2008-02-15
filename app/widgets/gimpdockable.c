@@ -840,7 +840,7 @@ gimp_dockable_detach (GimpDockable *dockable)
 
   dockbook = gimp_dockbook_new (GIMP_DOCK (dock)->dialog_factory->menu_factory);
 
-  gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
+  gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0, 0);
 
   g_object_ref (dockable);
 

@@ -420,7 +420,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 
           gimp_dock_add_book (GIMP_DOCK (dock),
                               GIMP_DOCKBOOK (dockbook),
-                              0);
+                              0, 0);
         }
 
       /*  Create the new dialog in the appropriate context which is
@@ -457,7 +457,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
               if (GIMP_IS_DOCKABLE (dialog))
                 {
                   gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dialog),
-                                 0, 0);
+                                 0, 0, 0);
 
                   gtk_widget_show (dock);
                 }

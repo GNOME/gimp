@@ -50,6 +50,7 @@ gimp_session_info_dock_serialize (GimpConfigWriter *writer,
                                   GimpDock         *dock)
 {
   GList *books;
+  gint   sector;
 
   g_return_if_fail (writer != NULL);
   g_return_if_fail (GIMP_IS_DOCK (dock));
@@ -65,11 +66,9 @@ gimp_session_info_dock_serialize (GimpConfigWriter *writer,
       gimp_config_writer_close (writer);
     }
 
-  for (books = dock->dockbooks; books; books = g_list_next (books))
-    gimp_session_info_book_serialize (writer, books->data);
-
-  for (books = dock->dockbooks2; books; books = g_list_next (books))
-    gimp_session_info_book_serialize (writer, books->data);
+  for (sector = 0; sector < N_DOCK_SECTORS; sector++)
+    for (books = dock->dockbooks[sector]; books; books = g_list_next (books))
+      gimp_session_info_book_serialize (writer, books->data);
 
   gimp_config_writer_close (writer);
 }

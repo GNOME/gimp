@@ -166,14 +166,14 @@ gimp_toolbox_init (GimpToolbox *toolbox)
   GimpDock  *dock       = GIMP_DOCK (toolbox);
   GtkWidget *separator;
 
-  dock->vbox2 = gtk_vbox_new (FALSE, 0);
-  gtk_paned_add2 (GTK_PANED (dock->paned), dock->vbox2);
-  gtk_widget_show (dock->vbox2);
+  dock->vbox[1] = gtk_vbox_new (FALSE, 0);
+  gtk_paned_add2 (GTK_PANED (dock->paned), dock->vbox[1]);
+  gtk_widget_show (dock->vbox[1]);
 
   separator = gimp_dock_separator_new (dock);
-  gtk_box_pack_start (GTK_BOX (dock->vbox2), separator, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (dock->vbox[1]), separator, FALSE, FALSE, 0);
   gtk_widget_show (separator);
-  GIMP_DOCK_SEPARATOR (separator)->pane = 2;
+  GIMP_DOCK_SEPARATOR (separator)->sector = 1;
 
   gtk_window_set_role (GTK_WINDOW (toolbox), "gimp-toolbox");
 
@@ -378,7 +378,7 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
             n_tools++;
         }
 
-      alloc2 = &GIMP_DOCK (toolbox)->vbox->allocation;
+      alloc2 = &GIMP_DOCK (toolbox)->vbox[0]->allocation;
 
       tool_columns = MAX (1, (alloc2->width / button_requisition.width));
       tool_rows    = n_tools / tool_columns;
@@ -493,7 +493,7 @@ static void
 gimp_toolbox_book_added (GimpDock     *dock,
                          GimpDockbook *dockbook)
 {
-  if (g_list_length (dock->dockbooks) == 1)
+  if (g_list_length (dock->dockbooks[0]) == 1)
     {
       gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
       toolbox_separator_collapse (GIMP_TOOLBOX (dock));
@@ -504,7 +504,7 @@ static void
 gimp_toolbox_book_removed (GimpDock     *dock,
                            GimpDockbook *dockbook)
 {
-  if (g_list_length (dock->dockbooks) == 0 &&
+  if (g_list_length (dock->dockbooks[0]) == 0 &&
       ! (GTK_OBJECT_FLAGS (dock) & GTK_IN_DESTRUCTION))
     {
       gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
@@ -585,11 +585,11 @@ toolbox_separator_expand (GimpToolbox *toolbox)
   GList     *children;
   GtkWidget *separator;
 
-  children = gtk_container_get_children (GTK_CONTAINER (dock->vbox));
+  children = gtk_container_get_children (GTK_CONTAINER (dock->vbox[0]));
   separator = children->data;
   g_list_free (children);
 
-  gtk_box_set_child_packing (GTK_BOX (dock->vbox), separator,
+  gtk_box_set_child_packing (GTK_BOX (dock->vbox[0]), separator,
                              TRUE, TRUE, 0, GTK_PACK_START);
   gimp_dock_separator_set_show_label (GIMP_DOCK_SEPARATOR (separator), TRUE);
 }
@@ -601,11 +601,11 @@ toolbox_separator_collapse (GimpToolbox *toolbox)
   GList     *children;
   GtkWidget *separator;
 
-  children = gtk_container_get_children (GTK_CONTAINER (dock->vbox));
+  children = gtk_container_get_children (GTK_CONTAINER (dock->vbox[0]));
   separator = children->data;
   g_list_free (children);
 
-  gtk_box_set_child_packing (GTK_BOX (dock->vbox), separator,
+  gtk_box_set_child_packing (GTK_BOX (dock->vbox[0]), separator,
                              FALSE, FALSE, 0, GTK_PACK_START);
   gimp_dock_separator_set_show_label (GIMP_DOCK_SEPARATOR (separator), FALSE);
 }

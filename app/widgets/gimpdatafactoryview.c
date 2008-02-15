@@ -43,6 +43,7 @@
 #include "gimpcontainergridview.h"
 #include "gimpcontainertreeview.h"
 #include "gimpdnd.h"
+#include "gimpdocked.h"
 #include "gimpviewrenderer.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
@@ -215,6 +216,9 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), action_group,
                                    str, NULL);
   g_free (str);
+
+  /* FIXME!  Kludge alert! */
+/*   gimp_docked_set_show_button_bar (GIMP_DOCKED (editor->view), FALSE); */
 
   gimp_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (factory_view->edit_button),

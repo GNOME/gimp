@@ -22,6 +22,7 @@
 #ifndef __GIMP_DOCK_H__
 #define __GIMP_DOCK_H__
 
+#define N_DOCK_SECTORS 2
 
 #include <gtk/gtkwindow.h>
 
@@ -45,11 +46,10 @@ struct _GimpDock
 
   GtkWidget         *paned;
   GtkWidget         *main_vbox;
-  GtkWidget         *vbox;
-  GtkWidget         *vbox2;
 
-  GList             *dockbooks;
-  GList             *dockbooks2;
+  GtkWidget         *vbox[N_DOCK_SECTORS];
+
+  GList             *dockbooks[N_DOCK_SECTORS];
 };
 
 struct _GimpDockClass
@@ -82,20 +82,15 @@ GList * gimp_dock_get_aux_info (GimpDock       *dock);
 void    gimp_dock_add          (GimpDock       *dock,
                                 GimpDockable   *dockable,
                                 gint            book,
-                                gint            index);
-void    gimp_dock_add2         (GimpDock       *dock,
-                                GimpDockable   *dockable,
-                                gint            book,
-                                gint            index);
+                                gint            index,
+                                gint            sector);
 void    gimp_dock_remove       (GimpDock       *dock,
                                 GimpDockable   *dockable);
 
 void    gimp_dock_add_book     (GimpDock       *dock,
                                 GimpDockbook   *dockbook,
-                                gint            index);
-void    gimp_dock_add2_book    (GimpDock       *dock,
-                                GimpDockbook   *dockbook,
-                                gint            index);
+                                gint            index,
+                                gint            sector);
 void    gimp_dock_remove_book  (GimpDock       *dock,
                                 GimpDockbook   *dockbook);
 

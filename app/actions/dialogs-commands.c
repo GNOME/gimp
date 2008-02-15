@@ -180,7 +180,7 @@ dialogs_create_dock (GdkScreen          *screen,
 
   dockbook = gimp_dockbook_new (global_dock_factory->menu_factory);
 
-  gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
+  gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0, 0);
 
   for (i = 0; i < n_tabs; i++)
     {
@@ -189,7 +189,7 @@ dialogs_create_dock (GdkScreen          *screen,
                                                  tabs[i], -1, TRUE);
 
       if (dockable && ! GIMP_DOCKABLE (dockable)->dockbook)
-        gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
+        gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1, 0);
     }
 
   gtk_widget_show (dock);

@@ -38,7 +38,7 @@
 enum
 {
   SESSION_INFO_BOOK_POSITION,
-  SESSION_INFO_BOOK_PANE,
+  SESSION_INFO_BOOK_SECTOR,
   SESSION_INFO_BOOK_CURRENT_PAGE,
   SESSION_INFO_BOOK_DOCKABLE
 };
@@ -99,8 +99,8 @@ gimp_session_info_book_serialize (GimpConfigWriter *writer,
   gimp_config_writer_printf (writer, "%d", current_page);
   gimp_config_writer_close (writer);
 
-  gimp_config_writer_open (writer, "pane");
-  gimp_config_writer_printf (writer, "%d", dockbook->pane);
+  gimp_config_writer_open (writer, "sector");
+  gimp_config_writer_printf (writer, "%d", dockbook->sector);
   gimp_config_writer_close (writer);
 
   children = gtk_container_get_children (GTK_CONTAINER (dockbook));
@@ -126,17 +126,14 @@ gimp_session_info_book_deserialize (GScanner        *scanner,
 
   g_scanner_scope_add_symbol (scanner, scope, "position",
                               GINT_TO_POINTER (SESSION_INFO_BOOK_POSITION));
-  g_scanner_scope_add_symbol (scanner, scope, "pane",
-                              GINT_TO_POINTER (SESSION_INFO_BOOK_PANE));
+  g_scanner_scope_add_symbol (scanner, scope, "sector",
+                              GINT_TO_POINTER (SESSION_INFO_BOOK_SECTOR));
   g_scanner_scope_add_symbol (scanner, scope, "current-page",
                               GINT_TO_POINTER (SESSION_INFO_BOOK_CURRENT_PAGE));
   g_scanner_scope_add_symbol (scanner, scope, "dockable",
                               GINT_TO_POINTER (SESSION_INFO_BOOK_DOCKABLE));
 
   book = gimp_session_info_book_new ();
-
-  /* FIXME */
-  book->pane = 1;
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -159,9 +156,9 @@ gimp_session_info_book_deserialize (GScanner        *scanner,
                 goto error;
               break;
 
-            case SESSION_INFO_BOOK_PANE:
+            case SESSION_INFO_BOOK_SECTOR:
               token = G_TOKEN_INT;
-              if (! gimp_scanner_parse_int (scanner, &book->pane))
+              if (! gimp_scanner_parse_int (scanner, &book->sector))
                 goto error;
               break;
 
@@ -202,7 +199,7 @@ gimp_session_info_book_deserialize (GScanner        *scanner,
   info->books = g_list_append (info->books, book);
 
   g_scanner_scope_remove_symbol (scanner, scope, "position");
-  g_scanner_scope_remove_symbol (scanner, scope, "pane");
+  g_scanner_scope_remove_symbol (scanner, scope, "sector");
   g_scanner_scope_remove_symbol (scanner, scope, "current-page");
   g_scanner_scope_remove_symbol (scanner, scope, "dockable");
 
@@ -226,11 +223,7 @@ gimp_session_info_book_restore (GimpSessionInfoBook *info,
 
   dockbook = gimp_dockbook_new (dock->dialog_factory->menu_factory);
 
-  if (info->pane == 1)
-    gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), -1);
-  else
-    gimp_dock_add2_book (dock, GIMP_DOCKBOOK (dockbook), -1);
-
+  gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), -1, info->sector);
 
   info->widget = dockbook;
 

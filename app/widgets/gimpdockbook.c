@@ -188,7 +188,7 @@ gimp_dockbook_init (GimpDockbook *dockbook)
 {
   dockbook->dock       = NULL;
   dockbook->ui_manager = NULL;
-  dockbook->pane       = 0;
+  dockbook->sector     = 0;
 
   gtk_notebook_popup_enable (GTK_NOTEBOOK (dockbook));
   gtk_notebook_set_scrollable (GTK_NOTEBOOK (dockbook), TRUE);

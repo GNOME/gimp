@@ -46,7 +46,7 @@ struct _GimpDockbook
   guint          tab_hover_timeout;
   GimpDockable  *tab_hover_dockable;
 
-  gint           pane;
+  gint           sector;
 };
 
 struct _GimpDockbookClass

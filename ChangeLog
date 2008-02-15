@@ -1,5 +1,25 @@
 2008-02-15  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	Clean up code for two-column toolbox.
+	
+	* app/actions/dialogs-commands.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimpwidgets-constructors.c
+	* app/widgets/gimpsessioninfo-book.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpsessioninfo-book.h
+	* app/widgets/gimpdockbook.c
+	* app/widgets/gimpdockbook.h
+	* app/widgets/gimpsessioninfo-dock.c
+	* app/widgets/gimpdockable.c
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpdock.h
+	* app/widgets/gimpdockseparator.c
+	* app/widgets/gimpdockseparator.h
+
+2008-02-15  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/widgets/gimptooloptionseditor.c: Remove shadow
 	from viewport.
 

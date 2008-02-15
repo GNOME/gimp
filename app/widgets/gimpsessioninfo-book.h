@@ -28,7 +28,7 @@ struct _GimpSessionInfoBook
   gint       position;
   gint       current_page;
 
-  gint       pane;
+  gint       sector;
 
   GtkWidget *widget;
 

@@ -95,7 +95,7 @@ gimp_dock_separator_init (GimpDockSeparator *separator)
   separator->dock  = NULL;
   separator->label = NULL;
 
-  separator->pane = 1;
+  separator->sector = 0;
 
   separator->frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (separator->frame), GTK_SHADOW_OUT);
@@ -239,11 +239,8 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
 
           dockbook = gimp_dockbook_new (dock->dialog_factory->menu_factory);
 
-          if (separator->pane == 2)
-            gimp_dock_add2_book (dock, GIMP_DOCKBOOK (dockbook), index);
-          else
-            gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), index);
-
+          gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), index,
+                              separator->sector);
 
           gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, -1);
 
