@@ -1832,6 +1832,9 @@ AM_CONDITIONAL(STATICLIBS, test "x$enable_static" = xyes)
 GIMP_MKENUMS="\$(PERL) \$(top_srcdir)/tools/gimp-mkenums"
 AC_SUBST(GIMP_MKENUMS)
 
+#Add required trailing ; to list
+MIME_TYPES="$MIME_TYPES;"
+
 AC_SUBST(MIME_TYPES)
 
 
