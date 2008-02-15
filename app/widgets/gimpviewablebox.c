@@ -429,8 +429,7 @@ gimp_viewable_box_new (GimpContainer *container,
                                      dialog_stock_id,
                                      dialog_tooltip);
 
-  g_object_set_data (G_OBJECT (hbox), "viewable-button", button);
-
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -443,8 +442,43 @@ gimp_viewable_box_new (GimpContainer *container,
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_widget_show (entry);
 
+  g_object_set_data (G_OBJECT (hbox), "viewable-button", button);
+  g_object_set_data (G_OBJECT (hbox), "viewable-entry",  entry);
+
   return hbox;
 }
+
+/*
+ * remove the button and entry from a viewable box, and
+ * insert them into a table at specified location
+ */
+void
+gimp_viewable_box_table_attach (GtkTable  *table,
+                                GtkWidget *box,
+                                gint       row,
+                                gint       button_start_col,
+                                gint       button_end_col,
+                                gint       entry_start_col,
+                                gint       entry_end_col)
+{
+  GtkWidget *button = g_object_get_data (G_OBJECT (box), "viewable-button");
+  GtkWidget *entry  = g_object_get_data (G_OBJECT (box), "viewable-entry");
+
+  g_object_ref (button);
+  g_object_ref (entry);
+
+  gtk_container_remove (GTK_CONTAINER (box), button);
+  gtk_container_remove (GTK_CONTAINER (box), entry);
+
+  gtk_table_attach_defaults (table, button,
+                             button_start_col, button_end_col, row, row + 1);
+  gtk_table_attach_defaults (table, entry,
+                             entry_start_col, entry_end_col, row, row + 1);
+
+  g_object_unref (button);
+  g_object_unref (entry);
+}
+
 
 static GtkWidget *
 view_props_connect (GtkWidget   *box,

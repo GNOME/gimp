@@ -67,5 +67,12 @@ GtkWidget * gimp_prop_font_box_new     (GimpContainer *container,
                                         const gchar   *view_type_prop,
                                         const gchar   *view_size_prop);
 
+void    gimp_viewable_box_table_attach (GtkTable      *table,
+                                        GtkWidget     *box,
+                                        gint           row,
+                                        gint           button_start_col,
+                                        gint           button_end_col,
+                                        gint           entry_start_col,
+                                        gint           entry_end_col);
 
 #endif /* __GIMP_VIEWABLE_BOX_H__ */

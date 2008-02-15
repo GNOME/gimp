@@ -129,12 +129,13 @@ gimp_container_entry_init (GimpContainerEntry *entry)
                              NULL);
 
   store = gtk_list_store_new (GIMP_CONTAINER_ENTRY_NUM_COLUMNS,
-                              GIMP_TYPE_VIEW_RENDERER,
-                              G_TYPE_STRING);
+                              G_TYPE_STRING,
+                              GIMP_TYPE_VIEW_RENDERER);
 
   gtk_entry_completion_set_model (completion, GTK_TREE_MODEL (store));
   g_object_unref (store);
 
+  gtk_entry_set_has_frame (GTK_ENTRY (entry), FALSE);
   gtk_entry_set_completion (GTK_ENTRY (entry), completion);
 
   g_signal_connect (completion, "match-selected",

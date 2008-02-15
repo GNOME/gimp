@@ -1,3 +1,10 @@
+2008-02-15  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/widgets/gimpcontainerentry.[ch]
+	* app/widgets/gimpviewablebox.[ch]: Change appearance of
+	selector widgets, and add code for packing the components
+	into a table.
+
 2008-02-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Place scale entry code into separate files, no
