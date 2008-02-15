@@ -107,6 +107,7 @@ static void
 gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
 {
   GtkWidget *sw;
+  GtkWidget *viewport;
 
   gtk_widget_set_size_request (GTK_WIDGET (editor), -1, 200);
 
@@ -128,6 +129,10 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (sw),
                                          editor->options_vbox);
   gtk_widget_show (editor->options_vbox);
+
+  viewport = gtk_widget_get_ancestor (editor->options_vbox,
+                                      GTK_TYPE_VIEWPORT);
+  gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
 
   editor->save_queue   = NULL;
   editor->save_idle_id = 0;
