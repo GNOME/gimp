@@ -216,39 +216,48 @@ gimp_color_hex_entry_events (GtkWidget *widget,
                              GdkEvent  *event)
 {
   GimpColorHexEntry *entry = GIMP_COLOR_HEX_ENTRY (widget);
-  const gchar       *text;
-  gchar              buffer[8];
-  guchar             r, g, b;
 
   switch (event->type)
     {
     case GDK_KEY_PRESS:
-      if (((GdkEventKey *) event)->keyval != GDK_Return)
-        break;
-      /*  else fall through  */
+      {
+        GdkEventKey *kevent = (GdkEventKey *) event;
+
+        if (kevent->keyval != GDK_Return   &&
+            kevent->keyval != GDK_KP_Enter &&
+            kevent->keyval != GDK_ISO_Enter)
+          break;
+        /*  else fall through  */
+      }
 
     case GDK_FOCUS_CHANGE:
-      text = gtk_entry_get_text (GTK_ENTRY (widget));
+      {
+        const gchar *text;
+        gchar        buffer[8];
+        guchar       r, g, b;
 
-      gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
-      g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x", r, g, b);
+        text = gtk_entry_get_text (GTK_ENTRY (widget));
 
-      if (g_ascii_strcasecmp (buffer, text) != 0)
-        {
-          GimpRGB  color;
-          gsize    len = strlen (text);
+        gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
+        g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x", r, g, b);
 
-          if (len > 0 &&
-              (gimp_rgb_parse_hex (&color, text, len) ||
-               gimp_rgb_parse_name (&color, text, -1)))
-            {
-              gimp_color_hex_entry_set_color (entry, &color);
-            }
-          else
-            {
-              gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-            }
-        }
+        if (g_ascii_strcasecmp (buffer, text) != 0)
+          {
+            GimpRGB  color;
+            gsize    len = strlen (text);
+
+            if (len > 0 &&
+                (gimp_rgb_parse_hex (&color, text, len) ||
+                 gimp_rgb_parse_name (&color, text, -1)))
+              {
+                gimp_color_hex_entry_set_color (entry, &color);
+              }
+            else
+              {
+                gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+              }
+          }
+      }
       break;
 
     default:

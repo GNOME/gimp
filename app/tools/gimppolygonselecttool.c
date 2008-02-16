@@ -412,8 +412,9 @@ gimp_polygon_select_tool_key_press (GimpTool    *tool,
       handled_key = TRUE;
       break;
 
-    case GDK_KP_Enter:
     case GDK_Return:
+    case GDK_KP_Enter:
+    case GDK_ISO_Enter:
       gimp_polygon_select_tool_commit (poly_sel_tool, display);
       handled_key = TRUE;
       break;

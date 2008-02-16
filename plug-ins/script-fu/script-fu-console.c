@@ -564,6 +564,8 @@ script_fu_cc_key_function (GtkWidget        *widget,
   switch (event->keyval)
     {
     case GDK_Return:
+    case GDK_KP_Enter:
+    case GDK_ISO_Enter:
       if (script_fu_cc_is_empty (console))
         return TRUE;
 

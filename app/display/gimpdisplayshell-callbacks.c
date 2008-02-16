@@ -141,7 +141,8 @@ gimp_display_shell_events (GtkWidget        *widget,
 
             if (event->type == GDK_KEY_PRESS)
               {
-                if (kevent->keyval == GDK_space && shell->space_release_pending)
+                if ((kevent->keyval == GDK_space ||
+                     kevent->keyval == GDK_KP_Space) && shell->space_release_pending)
                   {
                     shell->space_pressed         = TRUE;
                     shell->space_release_pending = FALSE;
@@ -149,7 +150,8 @@ gimp_display_shell_events (GtkWidget        *widget,
               }
             else
               {
-                if (kevent->keyval == GDK_space && shell->space_pressed)
+                if ((kevent->keyval == GDK_space ||
+                     kevent->keyval == GDK_KP_Space) && shell->space_pressed)
                   {
                     shell->space_pressed         = FALSE;
                     shell->space_release_pending = TRUE;
@@ -164,12 +166,15 @@ gimp_display_shell_events (GtkWidget        *widget,
           case GDK_Left:      case GDK_Right:
           case GDK_Up:        case GDK_Down:
           case GDK_space:
+          case GDK_KP_Space:
           case GDK_Tab:
           case GDK_ISO_Left_Tab:
           case GDK_Alt_L:     case GDK_Alt_R:
           case GDK_Shift_L:   case GDK_Shift_R:
           case GDK_Control_L: case GDK_Control_R:
-          case GDK_Return:    case GDK_KP_Enter:
+          case GDK_Return:
+          case GDK_KP_Enter:
+          case GDK_ISO_Enter:
           case GDK_BackSpace: case GDK_Delete:
             break;
 
@@ -1346,6 +1351,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               {
               case GDK_Return:
               case GDK_KP_Enter:
+              case GDK_ISO_Enter:
               case GDK_BackSpace:
               case GDK_Delete:
               case GDK_Escape:
@@ -1369,6 +1375,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 break;
 
               case GDK_space:
+              case GDK_KP_Space:
                 gimp_display_shell_space_pressed (shell, state, time);
                 return_val = TRUE;
                 break;
@@ -1460,6 +1467,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             switch (kevent->keyval)
               {
               case GDK_space:
+              case GDK_KP_Space:
                 gimp_display_shell_space_released (shell, state, time);
                 return_val = TRUE;
                 break;
