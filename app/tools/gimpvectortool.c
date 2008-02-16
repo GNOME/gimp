@@ -767,8 +767,9 @@ gimp_vector_tool_key_press (GimpTool     *tool,
 
   switch (kevent->keyval)
     {
-    case GDK_KP_Enter:
     case GDK_Return:
+    case GDK_KP_Enter:
+    case GDK_ISO_Enter:
       gimp_vector_tool_to_selection_extended (vector_tool, kevent->state);
       break;
 

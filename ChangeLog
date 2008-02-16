@@ -1,3 +1,22 @@
+2008-02-16  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/tools/gimpforegroundselecttool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimprectangletool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool.c
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimppaletteview.c
+	* libgimpwidgets/gimpcolorhexentry.c
+	* libgimpwidgets/gimpnumberpairentry.c
+	* plug-ins/script-fu/script-fu-console.c: Unify the handling of
+	various "Enter" and "Space" keysyms all over the place. Fixes bug
+	#516544 (also see gtk bug #515047).
+
 2008-02-14  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:

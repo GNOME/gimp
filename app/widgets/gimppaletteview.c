@@ -268,9 +268,11 @@ gimp_palette_view_key_press (GtkWidget   *widget,
   GimpPaletteView *view = GIMP_PALETTE_VIEW (widget);
 
   if (view->selected &&
-      (kevent->keyval == GDK_space  ||
-       kevent->keyval == GDK_Return ||
-       kevent->keyval == GDK_KP_Enter))
+      (kevent->keyval == GDK_space    ||
+       kevent->keyval == GDK_KP_Space ||
+       kevent->keyval == GDK_Return   ||
+       kevent->keyval == GDK_KP_Enter ||
+       kevent->keyval == GDK_ISO_Enter))
     {
       g_signal_emit (view, view_signals[ENTRY_CLICKED], 0,
                      view->selected, kevent->state);

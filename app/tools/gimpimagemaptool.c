@@ -356,8 +356,9 @@ gimp_image_map_tool_key_press (GimpTool    *tool,
     {
       switch (kevent->keyval)
         {
-        case GDK_KP_Enter:
         case GDK_Return:
+        case GDK_KP_Enter:
+        case GDK_ISO_Enter:
           gimp_image_map_tool_response (NULL, GTK_RESPONSE_OK, image_map_tool);
           return TRUE;
 

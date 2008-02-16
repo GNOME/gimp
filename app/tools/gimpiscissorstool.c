@@ -1053,8 +1053,9 @@ gimp_iscissors_tool_key_press (GimpTool    *tool,
 
   switch (kevent->keyval)
     {
-    case GDK_KP_Enter:
     case GDK_Return:
+    case GDK_KP_Enter:
+    case GDK_ISO_Enter:
       if (iscissors->connected && iscissors->mask)
         {
           gimp_iscissors_tool_apply (iscissors, display);
