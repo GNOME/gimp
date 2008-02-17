@@ -1,13 +1,13 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
-# Daniele Medri <madrid@linux.it>, 2000, 2001, 2002
-# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005, 2006, 2007
+# Daniele Medri <madrid@linux.it>, 2000-2002
+# Marco Ciampa <ciampix@libero.it>, 2003-2008
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-18 22:19+0200\n"
-"PO-Revision-Date: 2007-03-25 15:29+0200\n"
+"POT-Creation-Date: 2008-02-17 22:04+0100\n"
+"PO-Revision-Date: 2008-02-17 22:05+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -99,7 +99,7 @@ msgstr "Console Python"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
 msgid "_Browse..."
-msgstr "_Naviga..."
+msgstr "_Scorri..."
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
 msgid "Python Procedure Browser"
@@ -127,31 +127,31 @@ msgstr "Interprete interattivo Gimp-Python"
 msgid "_Console"
 msgstr "_Console"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+#: ../plug-ins/pygimp/plug-ins/foggify.py:53
 msgid "Add a layer of fog"
 msgstr "Aggiungi un livello di nebbia"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pygimp/plug-ins/foggify.py:58
 msgid "_Fog..."
 msgstr "_Nebbia"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Layer name"
 msgstr "Nome _livello"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "Clouds"
 msgstr "Nuvole"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "_Fog color"
 msgstr "Colore _nebbia"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
 msgid "_Turbulence"
 msgstr "_Turbolenza"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Op_acity"
 msgstr "Op_acità"
 
