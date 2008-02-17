@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-08 01:03+0200\n"
-"PO-Revision-Date: 2007-10-08 01:02+0200\n"
+"POT-Creation-Date: 2008-02-17 19:37+0100\n"
+"PO-Revision-Date: 2008-02-17 19:38+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgstr "Sviluppo interattivo in Scheme"
 
 #: ../plug-ins/script-fu/script-fu-console.c:238
 msgid "_Browse..."
-msgstr "_Naviga..."
+msgstr "_Scorri..."
 
 #: ../plug-ins/script-fu/script-fu-console.c:296
 msgid "Save Script-Fu Console Output"
@@ -44,7 +44,7 @@ msgstr "Impossibile aprire \"%s\" in scrittura: %s"
 msgid "Script-Fu Procedure Browser"
 msgstr "Navigatore delle procedure script-fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:716
+#: ../plug-ins/script-fu/script-fu-console.c:718
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "La modalità di valutazione Script-Fu permette solo invocazioni non "
@@ -1112,7 +1112,7 @@ msgstr "Sc_heggia..."
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:4
 msgid "Chip amount"
-msgstr "Livello scheggie"
+msgstr "Livello schegge"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Create a logo resembling a chipped wood carving"
@@ -1891,46 +1891,6 @@ msgstr "Rimuovi tutte le guide orizzontali e verticali"
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
 msgstr "_Rimuovi tutte le guide"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-msgid "BG opacity"
-msgstr "Opacità sfondo"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid "Create a graph of the Hue, Saturation, and Value distributions"
-msgstr "Crea un grafico della distribuzione di tonalità, saturazione e valore"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
-msgid "Draw _HSV Graph..."
-msgstr "Disegna grafico _HSV..."
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:4
-msgid "End X"
-msgstr "Fine X"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:5
-msgid "End Y"
-msgstr "Fine Y"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:6
-msgid "From top-left to bottom-right"
-msgstr "Da Alto-sinistra a Basso-destra"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:7
-msgid "Graph scale"
-msgstr "Scala grafico"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:8
-msgid "Start X"
-msgstr "Inizio X"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:9
-msgid "Start Y"
-msgstr "Inizio Y"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:10
-msgid "Use selection bounds instead of values below"
-msgstr "Usa margini della selezione invece dei valori sottostanti"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
