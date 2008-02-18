@@ -458,11 +458,21 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
   return NULL;
 }
 
+static GValue *
+gimp_gegl_tool_config_value_new (GParamSpec *pspec)
+{
+  GValue *value = g_slice_new0 (GValue);
+
+  g_value_init (value, pspec->value_type);
+
+  return value;
+}
+
 static void
 gimp_gegl_tool_config_value_free (GValue *value)
 {
   g_value_unset (value);
-  g_free (value);
+  g_slice_free (GValue, value);
 }
 
 static GHashTable *
@@ -484,24 +494,31 @@ gimp_gegl_tool_config_get_properties (GObject *object)
   return properties;
 }
 
+static GValue *
+gimp_gegl_tool_config_value_get (GObject    *object,
+                                 GParamSpec *pspec)
+{
+  GHashTable *properties = gimp_gegl_tool_config_get_properties (object);
+  GValue     *value;
+
+  value = g_hash_table_lookup (properties, pspec->name);
+
+  if (! value)
+    {
+      value = gimp_gegl_tool_config_value_new (pspec);
+      g_hash_table_insert (properties, g_strdup (pspec->name), value);
+    }
+
+  return value;
+}
+
 static void
 gimp_gegl_tool_config_set_property (GObject      *object,
                                     guint         property_id,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GHashTable *properties = gimp_gegl_tool_config_get_properties (object);
-  GValue     *val;
-
-  val = g_hash_table_lookup (properties, pspec->name);
-
-  if (! val)
-    {
-      val = g_new0 (GValue, 1);
-      g_hash_table_insert (properties, g_strdup (pspec->name), val);
-
-      g_value_init (val, pspec->value_type);
-    }
+  GValue *val = gimp_gegl_tool_config_value_get (object, pspec);
 
   g_value_copy (value, val);
 }
@@ -512,19 +529,7 @@ gimp_gegl_tool_config_get_property (GObject    *object,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GHashTable *properties = gimp_gegl_tool_config_get_properties (object);
-  GValue     *val;
-
-  val = g_hash_table_lookup (properties, pspec->name);
-
-  if (! val)
-    {
-      val = g_new0 (GValue, 1);
-      g_hash_table_insert (properties, g_strdup (pspec->name), val);
-
-      g_value_init (val, pspec->value_type);
-      g_param_value_set_default (pspec, val);
-    }
+  GValue *val = gimp_gegl_tool_config_value_get (object, pspec);
 
   g_value_copy (val, value);
 }

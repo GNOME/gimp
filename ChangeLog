@@ -1,5 +1,10 @@
 2008-02-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpgegltool.c (gimp_gegl_tool_config_get_property):
+	clean up generic property handling of generated settings classes.
+
+2008-02-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_initialize):
 	don't create the recent settings menu if the tool did not set a
 	config object.
