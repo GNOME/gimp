@@ -289,9 +289,6 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       GimpImageMapToolClass *klass;
       GtkWidget             *shell;
       GtkWidget             *vbox;
-      GtkWidget             *hbox;
-      GtkWidget             *label;
-      GtkWidget             *combo;
       GtkWidget             *toggle;
       const gchar           *stock_id;
 
@@ -324,26 +321,34 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
       gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell)->vbox), vbox);
 
-      hbox = gtk_hbox_new (FALSE, 4);
-      gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,
-                          FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      if (image_map_tool->config)
+        {
+          GtkWidget *hbox;
+          GtkWidget *label;
+          GtkWidget *combo;
 
-      label = gtk_label_new (_("Recent Settings:"));
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+          hbox = gtk_hbox_new (FALSE, 4);
+          gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,
+                              FALSE, FALSE, 0);
+          gtk_widget_show (hbox);
 
-      combo = gimp_container_combo_box_new (klass->recent_settings,
-                                            GIMP_CONTEXT (tool_info->tool_options),
-                                            16, 0);
-      gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-      gtk_widget_show (combo);
+          label = gtk_label_new (_("Recent Settings:"));
+          gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+          gtk_widget_show (label);
 
-      gimp_help_set_help_data (combo, _("Pick a setting from the list"), NULL);
+          combo = gimp_container_combo_box_new (klass->recent_settings,
+                                                GIMP_CONTEXT (tool_info->tool_options),
+                                                16, 0);
+          gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+          gtk_widget_show (combo);
 
-      g_signal_connect_after (combo, "select-item",
-                              G_CALLBACK (gimp_image_map_tool_recent_selected),
-                              image_map_tool);
+          gimp_help_set_help_data (combo, _("Pick a setting from the list"),
+                                   NULL);
+
+          g_signal_connect_after (combo, "select-item",
+                                  G_CALLBACK (gimp_image_map_tool_recent_selected),
+                                  image_map_tool);
+        }
 
       /*  The preview toggle  */
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),

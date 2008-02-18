@@ -278,10 +278,18 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
   /*  The options vbox  */
-  tool->options_box = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), tool->options_box,
+  tool->options_frame = gimp_frame_new (_("Operation Settings"));
+  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), tool->options_frame,
                       FALSE, FALSE, 0);
-  gtk_widget_show (tool->options_box);
+  gtk_widget_show (tool->options_frame);
+
+  tool->options_table = gtk_label_new ("Select an operation from the list above");
+  gimp_label_set_attributes (GTK_LABEL (tool->options_table),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_misc_set_padding (GTK_MISC (tool->options_table), 0, 4);
+  gtk_container_add (GTK_CONTAINER (tool->options_frame), tool->options_table);
+  gtk_widget_show (tool->options_table);
 }
 
 static void
@@ -660,7 +668,7 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
 
   if (tool->options_table)
     {
-      gtk_container_remove (GTK_CONTAINER (tool->options_box),
+      gtk_container_remove (GTK_CONTAINER (tool->options_frame),
                             tool->options_table);
       tool->options_table = NULL;
     }
@@ -675,8 +683,8 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
         gimp_prop_table_new (G_OBJECT (tool->config),
                              G_TYPE_FROM_INSTANCE (tool->config),
                              GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool)));
-      gtk_box_pack_start (GTK_BOX (tool->options_box), tool->options_table,
-                          FALSE, FALSE, 0);
+      gtk_container_add (GTK_CONTAINER (tool->options_frame),
+                         tool->options_table);
       gtk_widget_show (tool->options_table);
     }
 

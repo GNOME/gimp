@@ -43,7 +43,7 @@ struct _GimpGeglTool
 
   /* dialog */
   GtkWidget        *operation_combo;
-  GtkWidget        *options_box;
+  GtkWidget        *options_frame;
   GtkWidget        *options_table;
 };
 
