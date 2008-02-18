@@ -16,12 +16,14 @@ Changes in GIMP 2.4.5
 - fixed base64 encoding routine of the Mail plug-in
 - use the correct background color when creating a new image (bug #514082)
 - explicitly link libgimpthumb with GLib (bug #515566)
-- translation updates (eu, fr)
+- improved selection of the font sample string (bug #514021)
+- unified handling of "Enter" and "Space" keysyms (bug #516544)
+- translation fixes and updates (de, eu, eo, fr, he, it, ja)
 
 
 Contributors:
 
-   Sven Neumann, Giuliano Pochini
+   Sven Neumann, Michael Natterer, Giuliano Pochini
 
 
 
