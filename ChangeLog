@@ -1,3 +1,8 @@
+2008-02-18  Sven Neumann  <sven@gimp.org>
+
+	* app/batch.c (batch_exit_after_callback): synced cleanup
+	procedure with app_exit_after_callback() and documented its purpose.
+
 2008-02-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpgegltool.c (gimp_gegl_tool_config_get_property):
