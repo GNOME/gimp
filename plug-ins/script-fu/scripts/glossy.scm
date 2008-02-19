@@ -74,7 +74,6 @@
         (gimp-context-set-pattern pattern-text)
         (gimp-edit-bucket-fill logo-layer
                                PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
-        (gimp-context-set-pattern old-patterns)
       )
     )
 
@@ -106,7 +105,6 @@
         (gimp-edit-bucket-fill grow-me
                                PATTERN-BUCKET-FILL NORMAL-MODE 100
                                0 FALSE 0 0)
-        (gimp-context-set-pattern old-patterns)
       )
     )
 
@@ -134,7 +132,6 @@
         (gimp-context-set-pattern pattern-overlay)
         (gimp-edit-bucket-fill grow-me PATTERN-BUCKET-FILL
                                OVERLAY-MODE 100 0 FALSE 0 0)
-        (gimp-context-set-pattern old-patterns)
         (gimp-selection-none img)
       )
     )
