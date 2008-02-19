@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-27 13:20+0100\n"
+"POT-Creation-Date: 2008-02-19 20:21+0100\n"
 "PO-Revision-Date: 2007-12-27 15:16+0100\n"
 "Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
@@ -49,7 +49,7 @@ msgstr ""
 msgid "Script-Fu Procedure Browser"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu-console.c:716
+#: ../plug-ins/script-fu/script-fu-console.c:718
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 
@@ -136,7 +136,7 @@ msgid "Interactive console for Script-Fu development"
 msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:116
-msgid "Script-Fu _Console"
+msgid "_Console"
 msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:140
@@ -2833,4 +2833,3 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr ""
-
