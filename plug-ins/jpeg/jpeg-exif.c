@@ -152,13 +152,13 @@ jpeg_setup_exif_for_save (ExifData     *exif_data,
     }
 
   /* set the width and height */
-  if ((entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_0],
+  if ((entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_EXIF],
                                        EXIF_TAG_PIXEL_X_DIMENSION)))
     {
       exif_set_long (entry->data, byte_order,
                      (ExifLong) gimp_image_width (image_ID));
     }
-  if ((entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_0],
+  if ((entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_EXIF],
                                        EXIF_TAG_PIXEL_Y_DIMENSION)))
     {
       exif_set_long (entry->data, byte_order,

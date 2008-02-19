@@ -1,3 +1,10 @@
+2008-02-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Merged from trunk:
+
+	* plug-ins/jpeg/jpeg-exif.c: correctly record dimensions when
+	saving an image.  Fixes bug #517077.
+	
 2008-02-19  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
