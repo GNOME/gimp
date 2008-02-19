@@ -1,3 +1,8 @@
+2008-02-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/widgets/gimpwidgets-constructors.c: Enable tearoff
+	mode menus.
+	
 2008-02-15  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merge 24846:24891 from trunk.
