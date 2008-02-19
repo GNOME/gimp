@@ -129,7 +129,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                        _("Scale:"),
                                        0.01, 0.1, 2,
                                        FALSE, 0.0, 0.0);
-      gimp_scale_entry_set_logarithmic (adj, TRUE);
+      gimp_scale_control_set_logarithmic (adj, TRUE);
     }
 
   /*  the gradient  */

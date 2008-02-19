@@ -1175,25 +1175,25 @@ gimp_prop_scale_entry_new (GObject     *config,
 
   if (! limit_scale)
     {
-      adjustment = gimp_scale_entry_new (table, column, row,
-                                         label, -1, -1,
-                                         value, lower, upper,
-                                         step_increment, page_increment,
-                                         digits,
-                                         TRUE, 0.0, 0.0,
-                                         tooltip,
-                                         NULL);
+      adjustment = gimp_scale_control_new (table, column, row,
+                                           label, -1, -1,
+                                           value, lower, upper,
+                                           step_increment, page_increment,
+                                           digits,
+                                           TRUE, 0.0, 0.0,
+                                           tooltip,
+                                           NULL);
     }
   else
     {
-      adjustment = gimp_scale_entry_new (table, column, row,
-                                         label, -1, -1,
-                                         value, lower_limit, upper_limit,
-                                         step_increment, page_increment,
-                                         digits,
-                                         FALSE, lower, upper,
-                                         tooltip,
-                                         NULL);
+      adjustment = gimp_scale_control_new (table, column, row,
+                                           label, -1, -1,
+                                           value, lower_limit, upper_limit,
+                                           step_increment, page_increment,
+                                           digits,
+                                           FALSE, lower, upper,
+                                           tooltip,
+                                           NULL);
     }
 
   set_param_spec (G_OBJECT (adjustment), NULL,  param_spec);
@@ -1260,13 +1260,13 @@ gimp_prop_opacity_entry_new (GObject     *config,
   lower = G_PARAM_SPEC_DOUBLE (param_spec)->minimum * 100.0;
   upper = G_PARAM_SPEC_DOUBLE (param_spec)->maximum * 100.0;
 
-  adjustment = gimp_scale_entry_new (table, column, row,
-                                     label, -1, -1,
-                                     value, lower, upper,
-                                     1.0, 10.0, 1,
-                                     TRUE, 0.0, 0.0,
-                                     tooltip,
-                                     NULL);
+  adjustment = gimp_scale_control_new (table, column, row,
+                                       label, -1, -1,
+                                       value, lower, upper,
+                                       1.0, 10.0, 1,
+                                       TRUE, 0.0, 0.0,
+                                       tooltip,
+                                       NULL);
 
   set_param_spec (G_OBJECT (adjustment), NULL,  param_spec);
   g_object_set_data (G_OBJECT (adjustment),

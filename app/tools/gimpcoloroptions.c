@@ -171,7 +171,7 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
                                    _("Radius:"),
                                    1.0, 10.0, 0,
                                    FALSE, 0.0, 0.0);
-  gimp_scale_entry_set_logarithmic (adj, TRUE);
+  gimp_scale_control_set_logarithmic (adj, TRUE);
 
   return vbox;
 }

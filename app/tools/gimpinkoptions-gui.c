@@ -68,7 +68,7 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
                                    _("Size:"),
                                    1.0, 2.0, 1,
                                    FALSE, 0.0, 0.0);
-  gimp_scale_entry_set_logarithmic (adj, TRUE);
+  gimp_scale_control_set_logarithmic (adj, TRUE);
 
   /* angle adjust slider */
   gimp_prop_scale_entry_new (config, "tilt-angle",

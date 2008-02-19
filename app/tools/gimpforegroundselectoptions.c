@@ -311,18 +311,15 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
 
   adj = gimp_prop_opacity_entry_new (config, "sensitivity-l",
                                      GTK_TABLE (table), 0, row++, "L");
-  gtk_range_set_update_policy (GTK_RANGE (GIMP_SCALE_ENTRY_SCALE (adj)),
-                               GTK_UPDATE_DELAYED);
+  gimp_scale_control_set_update_policy (adj, GTK_UPDATE_DELAYED);
 
   adj = gimp_prop_opacity_entry_new (config, "sensitivity-a",
                                      GTK_TABLE (table), 0, row++, "a");
-  gtk_range_set_update_policy (GTK_RANGE (GIMP_SCALE_ENTRY_SCALE (adj)),
-                               GTK_UPDATE_DELAYED);
+  gimp_scale_control_set_update_policy (adj, GTK_UPDATE_DELAYED);
 
   adj = gimp_prop_opacity_entry_new (config, "sensitivity-b",
                                      GTK_TABLE (table), 0, row++, "b");
-  gtk_range_set_update_policy (GTK_RANGE (GIMP_SCALE_ENTRY_SCALE (adj)),
-                               GTK_UPDATE_DELAYED);
+  gimp_scale_control_set_update_policy (adj, GTK_UPDATE_DELAYED);
 
   return vbox;
 }

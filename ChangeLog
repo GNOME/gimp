@@ -1,5 +1,17 @@
 2008-02-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* libgimpwidgets/gimpwidgets.h: Include gimpscalecontrol.h
+	
+	* libgimpwidgets/gimppropwidgets.c (gimp_prop_scale_entry_new):
+	Use scale control rather than scale entry.
+
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimpinkoptions-gui.c
+	* app/tools/gimpforegroundselectoptions.c
+	* app/tools/gimpcoloroptions.c: corresponding tweaks.
+
+2008-02-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* libgimpwidgets/gimpscalecontrol.h
 	* libgimpwidgets/gimpscalecontrol.c: New widget intended
 	to replace scale entries.
