@@ -255,7 +255,7 @@ gimp_dispose (GObject *object)
   Gimp *gimp = GIMP (object);
 
   if (gimp->be_verbose)
-    g_print ("EXIT: gimp_dispose\n");
+    g_print ("EXIT: %s\n", G_STRFUNC);
 
   if (gimp->brush_factory)
     gimp_data_factory_data_free (gimp->brush_factory);
@@ -278,7 +278,7 @@ gimp_finalize (GObject *object)
   Gimp *gimp = GIMP (object);
 
   if (gimp->be_verbose)
-    g_print ("EXIT: gimp_finalize\n");
+    g_print ("EXIT: %s\n", G_STRFUNC);
 
   gimp_contexts_exit (gimp);
 
@@ -523,7 +523,7 @@ gimp_real_initialize (Gimp               *gimp,
   GimpData *clipboard_pattern;
 
   if (gimp->be_verbose)
-    g_print ("INIT: gimp_real_initialize\n");
+    g_print ("INIT: %s\n", G_STRFUNC);
 
   status_callback (_("Initialization"), NULL, 0.0);
 
@@ -614,7 +614,7 @@ gimp_real_restore (Gimp               *gimp,
                    GimpInitStatusFunc  status_callback)
 {
   if (gimp->be_verbose)
-    g_print ("INIT: gimp_real_restore\n");
+    g_print ("INIT: %s\n", G_STRFUNC);
 
   gimp_plug_in_manager_restore (gimp->plug_in_manager,
                                 gimp_get_user_context (gimp), status_callback);
@@ -627,7 +627,7 @@ gimp_real_exit (Gimp     *gimp,
   GError *error = NULL;
 
   if (gimp->be_verbose)
-    g_print ("EXIT: gimp_real_exit\n");
+    g_print ("EXIT: %s\n", G_STRFUNC);
 
   gimp_plug_in_manager_exit (gimp->plug_in_manager);
   gimp_modules_unload (gimp);
@@ -775,7 +775,7 @@ gimp_load_config (Gimp        *gimp,
   g_return_if_fail (gimp->edit_config == NULL);
 
   if (gimp->be_verbose)
-    g_print ("INIT: gimp_load_config\n");
+    g_print ("INIT: %s\n", G_STRFUNC);
 
   /*  this needs to be done before gimprc loading because gimprc can
    *  use user defined units
@@ -807,7 +807,7 @@ gimp_initialize (Gimp               *gimp,
   g_return_if_fail (GIMP_IS_CORE_CONFIG (gimp->config));
 
   if (gimp->be_verbose)
-    g_print ("INIT: gimp_initialize\n");
+    g_print ("INIT: %s\n", G_STRFUNC);
 
   g_signal_emit (gimp, gimp_signals[INITIALIZE], 0, status_callback);
 }
@@ -822,7 +822,7 @@ gimp_restore (Gimp               *gimp,
   g_return_if_fail (status_callback != NULL);
 
   if (gimp->be_verbose)
-    g_print ("INIT: gimp_restore\n");
+    g_print ("INIT: %s\n", G_STRFUNC);
 
   /*  initialize  the global parasite table  */
   status_callback (_("Looking for data files"), _("Parasites"), 0.0);
@@ -885,7 +885,7 @@ gimp_exit (Gimp     *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (gimp->be_verbose)
-    g_print ("EXIT: gimp_exit\n");
+    g_print ("EXIT: %s\n", G_STRFUNC);
 
   g_signal_emit (gimp, gimp_signals[EXIT], 0,
                  force ? TRUE : FALSE,

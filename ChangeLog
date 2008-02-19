@@ -1,5 +1,13 @@
 2008-02-19  Sven Neumann  <sven@gimp.org>
 
+	* app/app.c
+	* app/batch.c
+	* app/core/gimp.c
+	* app/gui/gui.c: use G_STRLOC instead of hardcoding the function
+	name in verbose output.
+
+2008-02-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/glossy.scm: actually use the "Default
 	Bumpmap Settings" parameter. Problem spotted by Ulf-D. Ehlert.
 

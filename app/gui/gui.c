@@ -338,7 +338,7 @@ gui_initialize_after_callback (Gimp               *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (gimp->be_verbose)
-    g_print ("INIT: gui_initialize_after_callback\n");
+    g_print ("INIT: %s\n", G_STRFUNC);
 
 #if defined (GDK_WINDOWING_X11)
   name = "DISPLAY";
@@ -372,7 +372,7 @@ gui_restore_callback (Gimp               *gimp,
   GimpGuiConfig     *gui_config     = GIMP_GUI_CONFIG (gimp->config);
 
   if (gimp->be_verbose)
-    g_print ("INIT: gui_restore_callback\n");
+    g_print ("INIT: %s\n", G_STRFUNC);
 
   gui_vtable_init (gimp);
 
@@ -447,7 +447,7 @@ gui_restore_after_callback (Gimp               *gimp,
   GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (gimp->config);
 
   if (gimp->be_verbose)
-    g_print ("INIT: gui_restore_after_callback\n");
+    g_print ("INIT: %s\n", G_STRFUNC);
 
   gimp->message_handler = GIMP_MESSAGE_BOX;
 
@@ -540,7 +540,7 @@ gui_exit_callback (Gimp     *gimp,
   GimpGuiConfig  *gui_config = GIMP_GUI_CONFIG (gimp->config);
 
   if (gimp->be_verbose)
-    g_print ("EXIT: gui_exit_callback\n");
+    g_print ("EXIT: %s\n", G_STRFUNC);
 
   if (! force && gimp_displays_dirty (gimp))
     {
@@ -591,7 +591,7 @@ gui_exit_after_callback (Gimp     *gimp,
                          gboolean  force)
 {
   if (gimp->be_verbose)
-    g_print ("EXIT: gui_exit_after_callback\n");
+    g_print ("EXIT: %s\n", G_STRFUNC);
 
   g_signal_handlers_disconnect_by_func (gimp->config,
                                         gui_show_help_button_notify,

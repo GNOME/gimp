@@ -273,7 +273,7 @@ app_exit_after_callback (Gimp      *gimp,
                          GMainLoop *loop)
 {
   if (gimp->be_verbose)
-    g_print ("EXIT: app_exit_after_callback\n");
+    g_print ("EXIT: %s\n", G_STRFUNC);
 
   /*
    *  In stable releases, we simply call exit() here. This speeds up

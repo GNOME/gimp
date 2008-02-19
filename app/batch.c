@@ -127,7 +127,7 @@ static gboolean
 batch_exit_after_callback (Gimp *gimp)
 {
   if (gimp->be_verbose)
-    g_print ("EXIT: batch_exit_after_callback\n");
+    g_print ("EXIT: %s\n", G_STRFUNC);
 
   gegl_exit ();
 
