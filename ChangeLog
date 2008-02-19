@@ -1,5 +1,10 @@
 2008-02-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/glossy.scm: actually use the "Default
+	Bumpmap Settings" parameter. Problem spotted by Ulf-D. Ehlert.
+
+2008-02-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/glossy.scm: applied patch from
 	Ulf-D. Ehlert that fixes a bug in the Glossy script when used with
 	a pattern instead of a gradient blend (bug #517285).
