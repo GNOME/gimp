@@ -275,6 +275,34 @@ pygimp_message(PyObject *self, PyObject *args)
 }
 
 static PyObject *
+pygimp_exit(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    gboolean force = FALSE;
+    int nreturn_vals;
+    GimpParam *return_vals;
+
+    static char *kwlist[] = { "force", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|i:exit", kwlist, &force))
+        return NULL;
+
+    return_vals = gimp_run_procedure("gimp-quit",
+                                     &nreturn_vals,
+                                     GIMP_PDB_INT32, force,
+                                     GIMP_PDB_END);
+
+    if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS) {
+        PyErr_SetString(pygimp_error, "error while exiting");
+        return NULL;
+    }
+
+    gimp_destroy_params(return_vals, nreturn_vals);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
 pygimp_set_data(PyObject *self, PyObject *args)
 {
     char *id, *data;
@@ -1659,6 +1687,7 @@ static struct PyMethodDef gimp_methods[] = {
     {"main",    (PyCFunction)pygimp_main,       METH_VARARGS},
     {"quit",    (PyCFunction)pygimp_quit,       METH_NOARGS},
     {"message", (PyCFunction)pygimp_message,    METH_VARARGS},
+    {"exit",    (PyCFunction)pygimp_exit,       METH_VARARGS | METH_KEYWORDS},
     {"set_data",        (PyCFunction)pygimp_set_data,   METH_VARARGS},
     {"get_data",        (PyCFunction)pygimp_get_data,   METH_VARARGS},
     {"progress_init",   (PyCFunction)pygimp_progress_init,      METH_VARARGS},

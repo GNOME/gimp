@@ -1,3 +1,8 @@
+2008-02-19  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpmodule.c: add gimp.exit(), a wrapper around
+	the PDB function gimp-quit.
+
 2008-02-18  Sven Neumann  <sven@gimp.org>
 
 	* app/batch.c (batch_exit_after_callback): synced cleanup
