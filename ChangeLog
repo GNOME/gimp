@@ -1,5 +1,15 @@
 2008-02-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* libgimpwidgets/gimpscalecontrol.h
+	* libgimpwidgets/gimpscalecontrol.c: New widget intended
+	to replace scale entries.
+
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/Makefile.am: Changed accordingly.
+	(will need to add functions to gimpwidgets.def eventually)
+	
+2008-02-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/widgets/gimpwidgets-constructors.c: Enable tearoff
 	mode menus.
 	
