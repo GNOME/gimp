@@ -1,3 +1,11 @@
+2008-02-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcurve.c: add precondition checks.
+
+	* app/core/gimpdrawable-curves.c (gimp_drawable_curves_spline):
+	divide values by 255 before setting them on the curve. Fixes crash
+	when using curves from the PDB.
+
 2008-02-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/print-preview.c (gimp_print_preview_expose_event):

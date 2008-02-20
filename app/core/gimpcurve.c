@@ -438,6 +438,9 @@ gimp_curve_set_point (GimpCurve *curve,
                       gdouble    y)
 {
   g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (point >= 0 && point < GIMP_CURVE_NUM_POINTS);
+  g_return_if_fail (x == -1.0 || (x >= 0 && x <= 1.0));
+  g_return_if_fail (y == -1.0 || (y >= 0 && y <= 1.0));
 
   if (curve->curve_type == GIMP_CURVE_FREE)
     return;
@@ -460,6 +463,8 @@ gimp_curve_move_point (GimpCurve *curve,
                        gdouble    y)
 {
   g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (point >= 0 && point < GIMP_CURVE_NUM_POINTS);
+  g_return_if_fail (y >= 0 && y <= 1.0);
 
   if (curve->curve_type == GIMP_CURVE_FREE)
     return;
@@ -482,6 +487,7 @@ gimp_curve_get_point (GimpCurve *curve,
                       gdouble   *y)
 {
   g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (point >= 0 && point < GIMP_CURVE_NUM_POINTS);
 
   if (curve->curve_type == GIMP_CURVE_FREE)
     return;
@@ -496,6 +502,8 @@ gimp_curve_set_curve (GimpCurve *curve,
                       gdouble    y)
 {
   g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (x >= 0 && x <= 1.0);
+  g_return_if_fail (y >= 0 && y <= 1.0);
 
   if (curve->curve_type == GIMP_CURVE_SMOOTH)
     return;

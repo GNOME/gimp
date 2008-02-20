@@ -85,8 +85,8 @@ gimp_drawable_curves_spline (GimpDrawable *drawable,
 
   for (i = 0; i < n_points / 2; i++)
     gimp_curve_set_point (curve, i,
-                          points[i * 2],
-                          points[i * 2 + 1]);
+                          (gdouble) points[i * 2]     / 255.0,
+                          (gdouble) points[i * 2 + 1] / 255.0);
 
   gimp_data_thaw (GIMP_DATA (curve));
 
@@ -129,7 +129,7 @@ gimp_drawable_curves_explicit (GimpDrawable *drawable,
 
   for (i = 0; i < 256; i++)
     gimp_curve_set_curve (curve,
-                          (gdouble) i / 255.0,
+                          (gdouble) i         / 255.0,
                           (gdouble) points[i] / 255.0);
 
   gimp_data_thaw (GIMP_DATA (curve));
