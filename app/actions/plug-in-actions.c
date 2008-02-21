@@ -482,9 +482,21 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
 
   if (proc)
     {
+      GtkAction   *actual_action;
       const gchar *label;
       gchar       *repeat;
       gchar       *reshow;
+      gboolean     sensitive = FALSE;
+
+      /*  copy the sensitivity of the plug-in procedure's actual action
+       *  instead of calling plug_in_actions_update() because doing the
+       *  latter would set the sensitivity of this image's action on
+       *  all images' actions. See bug #517683.
+       */
+      actual_action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                                   GIMP_OBJECT (proc)->name);
+      if (actual_action)
+        sensitive = gtk_action_get_sensitive (actual_action);
 
       label = gimp_plug_in_procedure_get_label (proc);
 
@@ -493,6 +505,9 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
 
       gimp_action_group_set_action_label (group, "plug-in-repeat", repeat);
       gimp_action_group_set_action_label (group, "plug-in-reshow", reshow);
+
+      gimp_action_group_set_action_sensitive (group, "plug-in-repeat", sensitive);
+      gimp_action_group_set_action_sensitive (group, "plug-in-reshow", sensitive);
 
       g_free (repeat);
       g_free (reshow);
@@ -503,20 +518,32 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
                                           _("Repeat Last"));
       gimp_action_group_set_action_label (group, "plug-in-reshow",
                                           _("Re-Show Last"));
+
+      gimp_action_group_set_action_sensitive (group, "plug-in-repeat", FALSE);
+      gimp_action_group_set_action_sensitive (group, "plug-in-reshow", FALSE);
     }
 
   for (i = 0; i < gimp_plug_in_manager_history_length (manager); i++)
     {
       GtkAction *action;
-      gchar     *name = g_strdup_printf ("plug-in-recent-%02d", i + 1);
+      GtkAction *actual_action;
+      gchar     *name      = g_strdup_printf ("plug-in-recent-%02d", i + 1);
+      gboolean   sensitive = FALSE;
 
       action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), name);
       g_free (name);
 
       proc = gimp_plug_in_manager_history_nth (manager, i);
 
+      /*  see comment above  */
+      actual_action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                                   GIMP_OBJECT (proc)->name);
+      if (actual_action)
+        sensitive = gtk_action_get_sensitive (actual_action);
+
       g_object_set (action,
                     "visible",   TRUE,
+                    "sensitive", sensitive,
                     "procedure", proc,
                     "label",     gimp_plug_in_procedure_get_label (proc),
                     "stock-id",  gimp_plug_in_procedure_get_stock_id (proc),
@@ -537,9 +564,6 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
                     "procedure", NULL,
                     NULL);
     }
-
-  /* update sensitivity of the actions */
-  plug_in_actions_update (group, manager->gimp);
 }
 
 static gboolean

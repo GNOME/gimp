@@ -1,3 +1,14 @@
+2008-02-21  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	* app/actions/plug-in-actions.c (plug_in_actions_history_changed):
+	don't call plug_in_actions_update() because that updated the
+	sensitivity of *all* plug-in actions according to the properties
+	of the *current* image. Instead, look up the original GtkAction of
+	the history items of *this* action group and copy the sensitivity
+	from that action. Fixes bug #517683.
+
 2008-02-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merged from trunk:
