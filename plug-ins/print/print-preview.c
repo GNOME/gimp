@@ -447,37 +447,34 @@ gimp_print_preview_expose_event (GtkWidget        *widget,
   scale = gimp_print_preview_get_scale (preview);
 
   /* draw background */
-  cairo_scale (cr, scale, scale);
   gdk_cairo_set_source_color (cr, &widget->style->white);
-  cairo_rectangle (cr, 0, 0, paper_width, paper_height);
-  cairo_fill (cr);
+  cairo_paint (cr);
 
   /* draw page_margins */
   gdk_cairo_set_source_color (cr, &widget->style->black);
+  cairo_set_line_width (cr, 1.0);
   cairo_rectangle (cr,
-                   left_margin,
-                   top_margin,
-                   paper_width - left_margin - right_margin,
-                   paper_height - top_margin - bottom_margin);
+                   scale * left_margin,
+                   scale * top_margin,
+                   scale * (paper_width - left_margin - right_margin),
+                   scale * (paper_height - top_margin - bottom_margin));
   cairo_stroke (cr);
 
   width  = preview->drawable->width;
   height = preview->drawable->height;
 
   cairo_translate (cr,
-                   left_margin + preview->image_offset_x,
-                   top_margin  + preview->image_offset_y);
+                   scale * (left_margin + preview->image_offset_x),
+                   scale * (top_margin  + preview->image_offset_y));
 
   if (preview->dragging)
     {
       cairo_rectangle (cr,
                        0, 0,
-                       width  * 72.0 / preview->image_xres,
-                       height * 72.0 / preview->image_yres);
+                       scale * width  * 72.0 / preview->image_xres,
+                       scale * height * 72.0 / preview->image_yres);
       cairo_stroke (cr);
     }
-
-  cairo_scale (cr, 72.0 / preview->image_xres, 72.0 / preview->image_yres);
 
   if (preview->pixbuf == NULL &&
       gimp_drawable_is_valid (preview->drawable->drawable_id))
@@ -496,7 +493,9 @@ gimp_print_preview_expose_event (GtkWidget        *widget,
 
       cairo_rectangle (cr, 0, 0, width, height);
 
-      cairo_scale (cr, scale_x, scale_y);
+      cairo_scale (cr,
+                   scale_x * scale * 72.0 / preview->image_xres,
+                   scale_y * scale * 72.0 / preview->image_yres);
 
       gdk_cairo_set_source_pixbuf (cr, preview->pixbuf, 0, 0);
       cairo_fill (cr);
