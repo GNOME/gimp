@@ -40,6 +40,7 @@ struct _GimpPrintPreview
   GtkPageSetup   *page;
   GdkPixbuf      *pixbuf;
   gboolean        dragging;
+  gboolean        inside;
 
   GimpDrawable   *drawable;
 
