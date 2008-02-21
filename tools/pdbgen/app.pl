@@ -175,7 +175,12 @@ CODE
         $result .= "\n" . ' ' x 2 . "return return_vals;\n";
     }
     else {
-	$result =~ s/_vals =//;
+	if ($success) {
+	    $result =~ s/return_vals =/return/;
+	}
+	else {
+	    $result =~ s/  return_vals =/\n  return/;
+	}
     }
 
     $result =~ s/, success\);$/, TRUE);/m unless $success;

@@ -84,7 +84,9 @@ display_new_invoker (GimpProcedure      *procedure,
             g_object_unref (image);
         }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
@@ -153,6 +155,7 @@ displays_flush_invoker (GimpProcedure      *procedure,
                         GError            **error)
 {
   gimp_container_foreach (gimp->images, (GFunc) gimp_image_flush, NULL);
+
   return gimp_procedure_get_return_values (procedure, TRUE);
 }
 

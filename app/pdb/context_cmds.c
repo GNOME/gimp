@@ -248,6 +248,7 @@ context_set_default_colors_invoker (GimpProcedure      *procedure,
                                     GError            **error)
 {
   gimp_context_set_default_colors (context);
+
   return gimp_procedure_get_return_values (procedure, TRUE);
 }
 
@@ -260,6 +261,7 @@ context_swap_colors_invoker (GimpProcedure      *procedure,
                              GError            **error)
 {
   gimp_context_swap_colors (context);
+
   return gimp_procedure_get_return_values (procedure, TRUE);
 }
 

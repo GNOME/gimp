@@ -83,7 +83,9 @@ HELP
         g_object_unref (image);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
