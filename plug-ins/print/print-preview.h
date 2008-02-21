@@ -32,37 +32,6 @@ G_BEGIN_DECLS
 typedef struct _GimpPrintPreview       GimpPrintPreview;
 typedef struct _GimpPrintPreviewClass  GimpPrintPreviewClass;
 
-struct _GimpPrintPreview
-{
-  GtkAspectFrame  parent_instance;
-
-  GtkWidget      *area;
-  GtkPageSetup   *page;
-  GdkPixbuf      *pixbuf;
-  gboolean        dragging;
-  gboolean        inside;
-
-  GimpDrawable   *drawable;
-
-  gdouble         image_offset_x;
-  gdouble         image_offset_y;
-  gdouble         image_offset_x_max;
-  gdouble         image_offset_y_max;
-  gdouble         image_xres;
-  gdouble         image_yres;
-
-  gboolean        use_full_page;
-};
-
-struct _GimpPrintPreviewClass
-{
-  GtkAspectFrameClass  parent_class;
-
-  void (* offsets_changed)  (GimpPrintPreview *print_preview,
-                             gint              offset_x,
-                             gint              offset_y);
-};
-
 
 GType       gimp_print_preview_get_type          (void) G_GNUC_CONST;
 
