@@ -1,5 +1,12 @@
 2008-02-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/tileit.c
+	* plug-ins/common/warp.c
+	* plug-ins/common/struc.c: fixed the same problem as in the Wind
+	plug-in here as well (see bug #516369).
+
+2008-02-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print-draw-page.c (draw_page_cairo): when
 	printing an image with alpha channel, use a Cairo surface with
 	alpha channel instead of doing a blend on a white background.
