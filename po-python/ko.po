@@ -1,32 +1,320 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
+# Copyright (C) 1999 Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Sung-Hyun Nam <namsh@kldp.org>, 1999.
+# Dongsu Jang <iolo@hellocity.net>, 2004.
+# Choi, Ji-Hui <like.a.dust@gmail.com>, 2007.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python HEAD\n"
+"Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-13 21:07+0200\n"
-"PO-Revision-Date: 2007-08-21 21:21+0900\n"
+"POT-Creation-Date: 2007-11-10 15:46+0000\n"
+"PO-Revision-Date: 2008-02-13 06:00+0900\n"
 "Last-Translator: Mr.Dust <like.a.dust@gmail.com>\n"
-"Language-Team: Korean <ko@li.org>\n"
+"Language-Team: Mr.Dust <like.a.dust@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: KOREA, REPUBLIC OF\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+#: ../plug-ins/pygimp/gimpfu.py:380
+msgid "Missing exception information"
+msgstr "누락된 예외 정보"
+
+#: ../plug-ins/pygimp/gimpfu.py:389
+#, python-format
+msgid "An error occured running %s"
+msgstr "%s 실행 중 오류 발생"
+
+#: ../plug-ins/pygimp/gimpfu.py:400
+msgid "_More Information"
+msgstr "자세한 정보(_M)"
+
+#: ../plug-ins/pygimp/gimpfu.py:506
+#: ../plug-ins/pygimp/gimpfu.py:518
+#: ../plug-ins/pygimp/gimpfu.py:524
+msgid "No"
+msgstr "아니오"
+
+#: ../plug-ins/pygimp/gimpfu.py:516
+#: ../plug-ins/pygimp/gimpfu.py:524
+msgid "Yes"
+msgstr "예"
+
+#: ../plug-ins/pygimp/gimpfu.py:558
+#: ../plug-ins/pygimp/gimpui.py:222
+msgid "Python-Fu File Selection"
+msgstr "파이썬-푸 파일 선택"
+
+#: ../plug-ins/pygimp/gimpfu.py:569
+msgid "Python-Fu Folder Selection"
+msgstr "파이썬-푸 폴더 선택"
+
+#: ../plug-ins/pygimp/gimpfu.py:659
+#, python-format
+msgid "Invalid input for '%s'"
+msgstr "잘못된 입력 '%s'"
+
+#: ../plug-ins/pygimp/gimpui.py:175
+msgid "Python-Fu Color Selection"
+msgstr "파이썬-푸 색상 선택"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+msgid "Saving as colored XHTML"
+msgstr "색상 XHTML로 저장 중"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+msgid "Save as colored XHTML"
+msgstr "색상 XHTML로 저장"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+msgid "Colored XHTML"
+msgstr "색상 XHTML"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+msgid "Character _source"
+msgstr "문자 원본(_S)"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+msgid "Source code"
+msgstr "소스 코드"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+msgid "Text file"
+msgstr "텍스트 파일"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+msgid "Entry box"
+msgstr "항목 상자"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+msgid "_File to read or characters to use"
+msgstr "파일을 읽거나 문자를 사용(_F)"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+msgid "Fo_nt size in pixels"
+msgstr "글꼴 크기(픽셀(_N)"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
+msgid "_Write a separate CSS file"
+msgstr "분리된 CSS 파일 쓰기(_W)"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
 msgstr "파이썬 콘솔"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
 msgid "_Browse..."
 msgstr "찾아보기(_B)..."
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
-msgid "Gimp-Python Console"
-msgstr "김프-파이썬 콘솔"
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
+msgid "Python Procedure Browser"
+msgstr "파이썬 프로시저 찾아보기"
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
-msgid "Interactive Python Development"
-msgstr "대화형 파이썬 개발"
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "'%s'을(를) 쓰기 모드로 열기 실패: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "'%s'에 쓸 수 없습니다.: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
+msgid "Save Python-Fu Console Output"
+msgstr "파이썬 콘솔 출력 저장하기"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
+msgid "Interactive Gimp-Python interpreter"
+msgstr "대화형 김프-파이썬 해석기"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
+msgid "_Console"
+msgstr "콘솔(_C)"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:52
+msgid "Add a layer of fog"
+msgstr "안개 레이어 더하기"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:57
+msgid "_Fog..."
+msgstr "안개(_F)..."
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+msgid "_Layer name"
+msgstr "레이어 이름(_L)"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+msgid "Clouds"
+msgstr "구름"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+msgid "_Fog color"
+msgstr "안개색(_F)"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+msgid "_Turbulence"
+msgstr "휘몰아침(_T)"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
+msgid "Op_acity"
+msgstr "투명도(_A):"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+msgid "Offset the colors in a palette"
+msgstr "팔레트의 색상 오프셋"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+msgid "_Offset Palette..."
+msgstr "팔레트 오프셋(_O)..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+msgid "Palette"
+msgstr "팔레트"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
+msgid "Off_set"
+msgstr "오프셋(_S):"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+msgid "Sort the colors in a palette"
+msgstr "팔레트의 색상 정렬"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+msgid "_Sort Palette..."
+msgstr "팔레트 정렬(_S)..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+msgid "Color _model"
+msgstr "색상 모델(_M)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "RGB"
+msgstr "RGB"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+msgid "HSV"
+msgstr "HSV"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+msgid "Channel to _sort"
+msgstr "채널 정렬(_S)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+msgid "Red or Hue"
+msgstr "빨강 혹은 색조"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+msgid "Green or Saturation"
+msgstr "초록 혹은 채도"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+msgid "Blue or Value"
+msgstr "파랑 혹은 명암"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+msgid "_Ascending"
+msgstr "오름차순(_A)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "팔레트의 색상을 이용해 반복되는 그라디언트 만들기"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
+msgid "Palette to _Repeating Gradient"
+msgstr "팔레트를 반복되는 그라디언트로(_R)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
+msgid "Create a gradient using colors from the palette"
+msgstr "팔레트의 색상을 이용해 그라디언트 만들기"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
+msgid "Palette to _Gradient"
+msgstr "팔레트를 그라디언트로(_G)"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
+msgid "Slice"
+msgstr "잘라내기"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr "안내선에 따라 이미지를 자르고, 이미지와 HTML 테이블 태그를 만들기"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
+msgid "_Slice..."
+msgstr "잘라내기(_S)..."
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+msgid "Path for HTML export"
+msgstr "HTML를  내보낼 경로"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+msgid "Filename for export"
+msgstr "내보낼 파일 이름"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+msgid "Image name prefix"
+msgstr "이미지명 접두어"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+msgid "Image format"
+msgstr "이미지 형식"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+msgid "Separate image folder"
+msgstr "분리된 이미지 폴더"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+msgid "Folder for image export"
+msgstr "이미지를 내보낼 폴더"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Space between table elements"
+msgstr "테이블 요소 사이의 간격"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+msgid "Javascript for onmouseover and clicked"
+msgstr "마우스오버와 클릭을 위한 자바스크립트"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+msgid "Skip animation for table caps"
+msgstr "테이블보를 위한 애니메이션 안보기"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+msgid "Add a drop shadow to a layer, and optionally bevel it"
+msgstr "레이어에 그림자를 추가하고, 선택적으로 기울이기"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+msgid "_Drop Shadow and Bevel..."
+msgstr "그림자 및 바벨(_D)..."
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+msgid "_Shadow blur"
+msgstr "흐릿한 그림자(_S)"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+msgid "_Bevel"
+msgstr "비스듬하게(Bevel)(_B)"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+msgid "_Drop shadow"
+msgstr "그림자 효과(_D)"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+msgid "Drop shadow _X displacement"
+msgstr "X 축에 그림자 효과(_X)"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
+msgid "Drop shadow _Y displacement"
+msgstr "Y 축에 그림자 효과(_Y)"
+
+#~ msgid "Gimp-Python Console"
+#~ msgstr "김프-파이썬 콘솔"
 

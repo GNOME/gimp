@@ -1,2789 +1,2788 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
+# Copyright (C) 1999 Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Sung-Hyun Nam <namsh@kldp.org>, 1999.
+# Dongsu Jang <iolo@hellocity.net>, 2004.
+# Choi, Ji-Hui <like.a.dust@gmail.com>, 2007.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu HEAD\n"
+"Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 15:42+0100\n"
-"PO-Revision-Date: 2007-08-23 12:13+0900\n"
+"POT-Creation-Date: 2007-11-10 15:46+0000\n"
+"PO-Revision-Date: 2008-02-13 06:00+0900\n"
 "Last-Translator: Mr.Dust <like.a.dust@gmail.com>\n"
-"Language-Team: Korean <ko@li.org>\n"
+"Language-Team: Mr.Dust <like.a.dust@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: KOREA, REPUBLIC OF\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
-#: plug-ins/script-fu/script-fu-console.c:129
-#: plug-ins/script-fu/script-fu-text-console.c:66
-msgid "Script-Fu console mode allows only interactive invocation"
-msgstr "Script-Fu 콘솔 모드는 대화형 호출만 허용합니다"
-
-#: plug-ins/script-fu/script-fu-console.c:156
+#: ../plug-ins/script-fu/script-fu-console.c:133
+#: ../plug-ins/script-fu/script-fu-console.c:200
 msgid "Script-Fu Console"
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/script-fu-console.c:183
-msgid "SIOD Output"
-msgstr "SIOD 출력"
+#: ../plug-ins/script-fu/script-fu-console.c:196
+msgid "Welcome to TinyScheme"
+msgstr "TinyScheme에 오신 것을 환영합니다!"
 
-#: plug-ins/script-fu/script-fu-console.c:249
-msgid "Current Command"
-msgstr "현재 명령"
+#: ../plug-ins/script-fu/script-fu-console.c:202
+msgid "Interactive Scheme Development"
+msgstr "대화형 Scheme 개발"
 
-#: plug-ins/script-fu/script-fu-console.c:267
+#: ../plug-ins/script-fu/script-fu-console.c:238
 msgid "_Browse..."
 msgstr "찾아보기(_B)..."
 
-#: plug-ins/script-fu/script-fu-console.c:548
-msgid "Script-Fu evaluate mode allows only noninteractive invocation"
+#: ../plug-ins/script-fu/script-fu-console.c:296
+msgid "Save Script-Fu Console Output"
+msgstr "스크립트-푸 콘솔 출력 저장"
+
+#: ../plug-ins/script-fu/script-fu-console.c:343
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "'%s'을(를) 쓰기 모드로 열기 실패: %s"
+
+#: ../plug-ins/script-fu/script-fu-console.c:372
+msgid "Script-Fu Procedure Browser"
+msgstr "스크립트-푸 프로시저 찾아보기"
+
+#: ../plug-ins/script-fu/script-fu-console.c:716
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu 평가 모드는 비대화형 호출만 허용합니다."
 
-#: plug-ins/script-fu/script-fu-interface.c:177
+#: ../plug-ins/script-fu/script-fu-interface.c:191
 msgid "Script-Fu cannot process two scripts at the same time."
-msgstr "Script-Fu 는 동시에 두 개의 스크립트를 실행할 수 없습니다."
+msgstr "Script-Fu는 동시에 두 개의 스크립트를 실행할 수 없습니다."
 
-#: plug-ins/script-fu/script-fu-interface.c:179
+#: ../plug-ins/script-fu/script-fu-interface.c:193
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "\"%s\" 스크립트가 이미 실행되고 있습니다."
 
-#. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-interface.c:202
-#: plug-ins/script-fu/script-fu-interface.c:204
-msgid "/Script-Fu/"
-msgstr "/Script-Fu/"
-
-#: plug-ins/script-fu/script-fu-interface.c:217
+#: ../plug-ins/script-fu/script-fu-interface.c:238
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#. the script arguments frame
-#: plug-ins/script-fu/script-fu-interface.c:254
-msgid "Script Arguments"
-msgstr "스크립트 인수"
-
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-interface.c:285
+#: ../plug-ins/script-fu/script-fu-interface.c:300
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-interface.c:328
+#: ../plug-ins/script-fu/script-fu-interface.c:348
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 색상 선택"
 
-#: plug-ins/script-fu/script-fu-interface.c:431
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 파일 선택"
 
-#: plug-ins/script-fu/script-fu-interface.c:435
+#: ../plug-ins/script-fu/script-fu-interface.c:463
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu 폴더 선택"
 
-#: plug-ins/script-fu/script-fu-interface.c:447
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu 글꼴 선택"
 
-#: plug-ins/script-fu/script-fu-interface.c:454
+#: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Palette Selection"
+msgstr "Script-Fu 팔레트 선택"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:492
+msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu 무늬 선택"
 
-#: plug-ins/script-fu/script-fu-interface.c:462
-msgid "Script-fu Pattern Selection"
-msgstr "Script-Fu 무늬 선택"
-
-#: plug-ins/script-fu/script-fu-interface.c:469
+#: ../plug-ins/script-fu/script-fu-interface.c:501
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu 그라디언트 선택"
 
-#: plug-ins/script-fu/script-fu-interface.c:477
+#: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 브러시 선택"
 
-#. the script progress frame
-#: plug-ins/script-fu/script-fu-interface.c:533
-msgid "Script Progress"
-msgstr "스크립트 진행률"
-
-#: plug-ins/script-fu/script-fu-interface.c:541
-msgid "(none)"
-msgstr ""
-
-#: plug-ins/script-fu/script-fu-interface.c:1058
-#: plug-ins/dbbrowser/gimpprocview.c:198
-msgid "Author:"
-msgstr "작성자:"
-
-#: plug-ins/script-fu/script-fu-interface.c:1065
-#: plug-ins/dbbrowser/gimpprocview.c:220
-msgid "Copyright:"
-msgstr "저작권:"
-
-#: plug-ins/script-fu/script-fu-interface.c:1072
-#: plug-ins/dbbrowser/gimpprocview.c:209
-msgid "Date:"
-msgstr "날짜:"
-
-#: plug-ins/script-fu/script-fu-interface.c:1081
-msgid "Image Types:"
-msgstr "이미지 유형:"
-
-#: plug-ins/script-fu/script-fu-scripts.c:611
+#: ../plug-ins/script-fu/script-fu-scripts.c:658
 #, c-format
 msgid ""
 "Error while executing\n"
 "%s\n"
+"\n"
 "%s"
 msgstr ""
 "실행 중 오류\n"
 "%s\n"
+"\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:642
+#: ../plug-ins/script-fu/script-fu-server.c:712
 msgid "Script-Fu Server Options"
-msgstr "Script-Fu 서버 선택사항"
+msgstr "Script-Fu 서버 옵션"
 
-#: plug-ins/script-fu/script-fu-server.c:670
-msgid "Server Port:"
+#: ../plug-ins/script-fu/script-fu-server.c:717
+msgid "_Start Server"
+msgstr "서버 시작(_S)"
+
+#: ../plug-ins/script-fu/script-fu-server.c:745
+msgid "Server port:"
 msgstr "서버 포트:"
 
-#: plug-ins/script-fu/script-fu-server.c:676
-msgid "Server Logfile:"
+#: ../plug-ins/script-fu/script-fu-server.c:751
+msgid "Server logfile:"
 msgstr "서버 로그파일:"
 
-#: plug-ins/script-fu/script-fu.c:122
+#: ../plug-ins/script-fu/script-fu.c:110
+msgid "Interactive console for Script-Fu development"
+msgstr "Script-Fu 개발을 위한대화형 콘솔"
+
+#: ../plug-ins/script-fu/script-fu.c:116
 msgid "Script-Fu _Console"
 msgstr "Script-Fu 콘솔(_C)"
 
-#: plug-ins/script-fu/script-fu.c:129
-#: plug-ins/script-fu/script-fu.c:158
-#: plug-ins/script-fu/script-fu.c:290
-msgid "<Toolbox>/Xtns/Script-Fu"
-msgstr "<Toolbox>/확장/Script-Fu"
+#: ../plug-ins/script-fu/script-fu.c:140
+msgid "Server for remote Script-Fu operation"
+msgstr "원격 스크립트-푸 동작을 위한 서버"
 
-#: plug-ins/script-fu/script-fu.c:151
+#: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
 msgstr "서버 시작(_S)..."
 
-#: plug-ins/script-fu/script-fu.c:282
+#: ../plug-ins/script-fu/script-fu.c:301
+msgid "_GIMP Online"
+msgstr "김프 온라인(_G)"
+
+#: ../plug-ins/script-fu/script-fu.c:302
+msgid "_User Manual"
+msgstr "사용자 설명서(_U)"
+
+#: ../plug-ins/script-fu/script-fu.c:305
+msgid "_Script-Fu"
+msgstr "스크립트-푸(_S)"
+
+#: ../plug-ins/script-fu/script-fu.c:307
+msgid "_Buttons"
+msgstr "버튼(_B)"
+
+#: ../plug-ins/script-fu/script-fu.c:309
+msgid "_Logos"
+msgstr "로고(_L)"
+
+#: ../plug-ins/script-fu/script-fu.c:311
+msgid "_Misc"
+msgstr "기타(_M)"
+
+#: ../plug-ins/script-fu/script-fu.c:313
+msgid "_Patterns"
+msgstr "무늬(_P)"
+
+#: ../plug-ins/script-fu/script-fu.c:315
+msgid "_Test"
+msgstr "테스트(_T)"
+
+#: ../plug-ins/script-fu/script-fu.c:317
+msgid "_Utilities"
+msgstr "유틸리티(_U)"
+
+#: ../plug-ins/script-fu/script-fu.c:319
+msgid "_Web Page Themes"
+msgstr "웹 페이지 테마(_W)"
+
+#: ../plug-ins/script-fu/script-fu.c:321
+msgid "_Alien Glow"
+msgstr "외계의 빛(_A)"
+
+#: ../plug-ins/script-fu/script-fu.c:323
+msgid "_Beveled Pattern"
+msgstr "바벨 무늬(_B)"
+
+#: ../plug-ins/script-fu/script-fu.c:325
+msgid "_Classic.Gimp.Org"
+msgstr "예전 Gimp.Org(_C)"
+
+#: ../plug-ins/script-fu/script-fu.c:328
+msgid "Alpha to _Logo"
+msgstr "로고용 효과(_L)"
+
+#: ../plug-ins/script-fu/script-fu.c:330
+msgid "An_imation"
+msgstr "애니메이션(_I)"
+
+#: ../plug-ins/script-fu/script-fu.c:332
+msgid "_Animators"
+msgstr "애니메이터(_A)"
+
+#: ../plug-ins/script-fu/script-fu.c:334
+msgid "_Artistic"
+msgstr "예술적인(_A)"
+
+#: ../plug-ins/script-fu/script-fu.c:336
+msgid "_Blur"
+msgstr "흐릿하게(_B)"
+
+#: ../plug-ins/script-fu/script-fu.c:338
+msgid "_Decor"
+msgstr "장식(_D)"
+
+#: ../plug-ins/script-fu/script-fu.c:340
+msgid "_Effects"
+msgstr "효과(_E)"
+
+#: ../plug-ins/script-fu/script-fu.c:342
+msgid "En_hance"
+msgstr "강화(_H)"
+
+#: ../plug-ins/script-fu/script-fu.c:344
+msgid "_Light and Shadow"
+msgstr "빛과 그림자(_L)"
+
+#: ../plug-ins/script-fu/script-fu.c:346
+msgid "S_hadow"
+msgstr "그림자(_H)"
+
+#: ../plug-ins/script-fu/script-fu.c:348
+msgid "_Render"
+msgstr "렌더(_R)"
+
+#: ../plug-ins/script-fu/script-fu.c:350
+msgid "_Alchemy"
+msgstr "연금술(_A)"
+
+#: ../plug-ins/script-fu/script-fu.c:353
+msgid "Re-read all available Script-Fu scripts"
+msgstr "사용가능한 모든 스크립트-푸 스크립트를 다시 읽기"
+
+#: ../plug-ins/script-fu/script-fu.c:358
 msgid "_Refresh Scripts"
 msgstr "스크립트 새로고침(_R)"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:128
-#: plug-ins/dbbrowser/gimpprocbrowser.c:142
-msgid "Procedure Browser"
-msgstr "프로시져 브라우져"
+#: ../plug-ins/script-fu/script-fu.c:381
+msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
+msgstr "스크립트 대화상자가 열려있는 동안에는 \"스크립트 새로고침\"을 사용할 수 없습니다. 모든 스크립트-푸 창을 닫고 다시 시도하십시오."
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:132
-#: plug-ins/dbbrowser/gimpprocbrowser.c:146
-msgid "Search by _Name"
-msgstr "이름으로 찾기(_N)"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:133
-#: plug-ins/dbbrowser/gimpprocbrowser.c:147
-msgid "Search by _Blurb"
-msgstr "설명으로 찾기(_B)"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:224
-msgid "_Search:"
-msgstr "찾기(_S):"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:386
-msgid "Searching by name - please wait"
-msgstr "이름으로 찾는 중 - 잠시만 기다려 주십시오"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:410
-msgid "Searching by blurb - please wait"
-msgstr "설명으로 찾는 중 - 잠시만 기다려 주십시오"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:421
-msgid "Searching - please wait"
-msgstr "찾는 중 - 잠시만 기다려 주십시오"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:428
-msgid "1 Procedure"
-msgstr "1 프로시져"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:430
-#, c-format
-msgid "%d Procedures"
-msgstr "%d 프로시져"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:476
-msgid "No matches"
-msgstr "일치하는 항목 없음"
-
-#: plug-ins/dbbrowser/gimpprocview.c:133
-msgid "Parameters"
-msgstr "매개 변수"
-
-#: plug-ins/dbbrowser/gimpprocview.c:146
-msgid "Return Values"
-msgstr "되돌림 값"
-
-#: plug-ins/dbbrowser/gimpprocview.c:159
-msgid "Additional Information"
-msgstr "추가 정보"
-
-#: plug-ins/dbbrowser/gimpprocview.c:319
-msgid "Internal GIMP procedure"
-msgstr "김프 내부 프로시져"
-
-#: plug-ins/dbbrowser/gimpprocview.c:320
-msgid "GIMP Plug-In"
-msgstr "김프 플러그인"
-
-#: plug-ins/dbbrowser/gimpprocview.c:321
-msgid "GIMP Extension"
-msgstr "김프 확장"
-
-#: plug-ins/dbbrowser/gimpprocview.c:322
-msgid "Temporary Procedure"
-msgstr "임시 프로시져"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:1
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
 msgstr "3D 윤곽선(_O)..."
 
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:2
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
-#: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
-#: plug-ins/script-fu/scripts/basic2-logo.scm.h:1
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:1
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
-#: plug-ins/script-fu/scripts/chalk.scm.h:1
-#: plug-ins/script-fu/scripts/chip-away.scm.h:1
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:1
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
-#: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
-#: plug-ins/script-fu/scripts/glossy.scm.h:1
-#: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
-#: plug-ins/script-fu/scripts/neon-logo.scm.h:1
-#: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
-#: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
-#: plug-ins/script-fu/scripts/textured-logo.scm.h:1
-msgid "<Image>/Script-Fu/Alpha to Logo"
-msgstr "<Image>/Script-Fu/로고용 효과"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:3
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
-#: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
-#: plug-ins/script-fu/scripts/basic2-logo.scm.h:2
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:2
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
-#: plug-ins/script-fu/scripts/carved-logo.scm.h:1
-#: plug-ins/script-fu/scripts/chalk.scm.h:2
-#: plug-ins/script-fu/scripts/chip-away.scm.h:2
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:2
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
-#: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
-#: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
-#: plug-ins/script-fu/scripts/glossy.scm.h:2
-#: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
-#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
-#: plug-ins/script-fu/scripts/neon-logo.scm.h:2
-#: plug-ins/script-fu/scripts/news-text.scm.h:1
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
-#: plug-ins/script-fu/scripts/speed-text.scm.h:1
-#: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
-#: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
-#: plug-ins/script-fu/scripts/text-circle.scm.h:1
-#: plug-ins/script-fu/scripts/textured-logo.scm.h:2
-#: plug-ins/script-fu/scripts/title-header.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Logos"
-msgstr "<Toolbox>/확장/Script-Fu/로고"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:4
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
 msgstr "범프맵(알파 레이어) 흐릿한 반지름"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:5
-#: plug-ins/script-fu/scripts/glossy.scm.h:7
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
+msgid "Create a logo with outlined text and a drop shadow"
+msgstr "테두리가 있는 글자 로고와 그림자를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:6
 msgid "Default bumpmap settings"
 msgstr "기본 범프맵 설정"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:6
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
-#: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
-#: plug-ins/script-fu/scripts/beveled-button.scm.h:3
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:11
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
-#: plug-ins/script-fu/scripts/carved-logo.scm.h:5
-#: plug-ins/script-fu/scripts/chalk.scm.h:5
-#: plug-ins/script-fu/scripts/chip-away.scm.h:8
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:5
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
-#: plug-ins/script-fu/scripts/crystal-logo.scm.h:6
-#: plug-ins/script-fu/scripts/frosty-logo.scm.h:5
-#: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-#: plug-ins/script-fu/scripts/glossy.scm.h:8
-#: plug-ins/script-fu/scripts/glowing-logo.scm.h:5
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
-#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
-#: plug-ins/script-fu/scripts/neon-logo.scm.h:6
-#: plug-ins/script-fu/scripts/news-text.scm.h:7
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:3
-#: plug-ins/script-fu/scripts/slide.scm.h:2
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
-#: plug-ins/script-fu/scripts/speed-text.scm.h:5
-#: plug-ins/script-fu/scripts/starburst-logo.scm.h:6
-#: plug-ins/script-fu/scripts/starscape-logo.scm.h:4
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
-#: plug-ins/script-fu/scripts/text-circle.scm.h:4
-#: plug-ins/script-fu/scripts/textured-logo.scm.h:6
-#: plug-ins/script-fu/scripts/title-header.scm.h:2
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:5
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:8
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:6
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:7
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:7
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/slide.scm.h:2
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:5
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:2
 msgid "Font"
 msgstr "글꼴"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:7
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
-#: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
-#: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
-#: plug-ins/script-fu/scripts/beveled-button.scm.h:4
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:12
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
-#: plug-ins/script-fu/scripts/carved-logo.scm.h:6
-#: plug-ins/script-fu/scripts/chalk.scm.h:6
-#: plug-ins/script-fu/scripts/chip-away.scm.h:9
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:6
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
-#: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
-#: plug-ins/script-fu/scripts/frosty-logo.scm.h:6
-#: plug-ins/script-fu/scripts/gimp-headers.scm.h:5
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-#: plug-ins/script-fu/scripts/glossy.scm.h:9
-#: plug-ins/script-fu/scripts/glowing-logo.scm.h:6
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
-#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
-#: plug-ins/script-fu/scripts/neon-logo.scm.h:7
-#: plug-ins/script-fu/scripts/news-text.scm.h:8
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:4
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
-#: plug-ins/script-fu/scripts/speed-text.scm.h:6
-#: plug-ins/script-fu/scripts/starburst-logo.scm.h:7
-#: plug-ins/script-fu/scripts/starscape-logo.scm.h:5
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
-#: plug-ins/script-fu/scripts/text-circle.scm.h:5
-#: plug-ins/script-fu/scripts/textured-logo.scm.h:7
-#: plug-ins/script-fu/scripts/title-header.scm.h:3
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:12
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:6
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:9
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:8
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:8
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:3
 msgid "Font size (pixels)"
 msgstr "글꼴 크기 (픽셀)"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:8
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:7
 msgid "Outline blur radius"
 msgstr "윤곽선 흐릿한 영역의 반지름"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:9
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
-#: plug-ins/script-fu/scripts/chip-away.scm.h:13
-#: plug-ins/script-fu/scripts/textured-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
+msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
+msgstr "선택한 영역(혹은 알파)에 무늬로 테두리를 넣고, 그림자를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:13
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
 msgid "Pattern"
 msgstr "무늬"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:10
-#: plug-ins/script-fu/scripts/glossy.scm.h:17
-#: plug-ins/script-fu/scripts/round-corners.scm.h:6
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:16
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:6
 msgid "Shadow X offset"
 msgstr "그림자 X 오프셋"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:11
-#: plug-ins/script-fu/scripts/glossy.scm.h:18
-#: plug-ins/script-fu/scripts/round-corners.scm.h:7
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:11
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:17
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:7
 msgid "Shadow Y offset"
 msgstr "그림자 Y 오프셋"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:12
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:12
 msgid "Shadow blur radius"
 msgstr "그림자 흐릿한 영역의 반지름"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm.h:13
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
-#: plug-ins/script-fu/scripts/basic1-logo.scm.h:6
-#: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
-#: plug-ins/script-fu/scripts/beveled-button.scm.h:9
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:17
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:10
-#: plug-ins/script-fu/scripts/carved-logo.scm.h:8
-#: plug-ins/script-fu/scripts/chalk.scm.h:7
-#: plug-ins/script-fu/scripts/chip-away.scm.h:14
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:9
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:11
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
-#: plug-ins/script-fu/scripts/crystal-logo.scm.h:8
-#: plug-ins/script-fu/scripts/frosty-logo.scm.h:7
-#: plug-ins/script-fu/scripts/gimp-headers.scm.h:12
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:14
-#: plug-ins/script-fu/scripts/glossy.scm.h:19
-#: plug-ins/script-fu/scripts/glowing-logo.scm.h:8
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:11
-#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
-#: plug-ins/script-fu/scripts/neon-logo.scm.h:10
-#: plug-ins/script-fu/scripts/news-text.scm.h:10
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:13
-#: plug-ins/script-fu/scripts/slide.scm.h:5
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:11
-#: plug-ins/script-fu/scripts/speed-text.scm.h:8
-#: plug-ins/script-fu/scripts/starburst-logo.scm.h:9
-#: plug-ins/script-fu/scripts/starscape-logo.scm.h:8
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
-#: plug-ins/script-fu/scripts/text-circle.scm.h:8
-#: plug-ins/script-fu/scripts/textured-logo.scm.h:14
-#: plug-ins/script-fu/scripts/title-header.scm.h:5
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:13
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:17
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:7
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:14
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:18
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:10
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:13
+#: ../plug-ins/script-fu/scripts/slide.scm.h:5
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:8
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:5
 msgid "Text"
 msgstr "텍스트"
 
-#: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:1
 msgid "3_D Truchet..."
-msgstr "3D 트뤼셰(_D)..."
+msgstr "3D 트뤼셰(Truchet)(_D)..."
 
-#: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
-#: plug-ins/script-fu/scripts/camo.scm.h:1
-#: plug-ins/script-fu/scripts/flatland.scm.h:1
-#: plug-ins/script-fu/scripts/land.scm.h:1
-#: plug-ins/script-fu/scripts/rendermap.scm.h:1
-#: plug-ins/script-fu/scripts/swirltile.scm.h:1
-#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
-#: plug-ins/script-fu/scripts/truchet.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns"
-msgstr "<Toolbox>/확장/Script-Fu/무늬"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
-#: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
-#: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:3
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
-#: plug-ins/script-fu/scripts/chalk.scm.h:3
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:4
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:3
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
-#: plug-ins/script-fu/scripts/frosty-logo.scm.h:3
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-#: plug-ins/script-fu/scripts/glossy.scm.h:3
-#: plug-ins/script-fu/scripts/glowing-logo.scm.h:3
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
-#: plug-ins/script-fu/scripts/image-structure.scm.h:3
-#: plug-ins/script-fu/scripts/neon-logo.scm.h:3
-#: plug-ins/script-fu/scripts/news-text.scm.h:2
-#: plug-ins/script-fu/scripts/speed-text.scm.h:2
-#: plug-ins/script-fu/scripts/sphere.scm.h:2
-#: plug-ins/script-fu/scripts/starburst-logo.scm.h:3
-#: plug-ins/script-fu/scripts/swirltile.scm.h:3
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
-#: plug-ins/script-fu/scripts/textured-logo.scm.h:3
-#: plug-ins/script-fu/scripts/truchet.scm.h:2
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:1
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:2
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:1
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:1
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:1
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:1
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:1
 msgid "Background color"
 msgstr "배경색"
 
-#: plug-ins/script-fu/scripts/3dTruchet.scm.h:4
-#: plug-ins/script-fu/scripts/truchet.scm.h:3
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:3
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:2
 msgid "Block size"
 msgstr "블럭 크기"
 
-#: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:4
+msgid "Create an image filled with a 3D Truchet pattern"
+msgstr "3D 트뤼셰(Truchet) 무늬로 채워진 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
 msgid "End blend"
 msgstr "끝 혼합 색상"
 
-#: plug-ins/script-fu/scripts/3dTruchet.scm.h:6
-#: plug-ins/script-fu/scripts/truchet.scm.h:5
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:6
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:5
 msgid "Number of X tiles"
 msgstr "X 타일 수"
 
-#: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
-#: plug-ins/script-fu/scripts/truchet.scm.h:6
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:7
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:6
 msgid "Number of Y tiles"
 msgstr "Y 타일 수"
 
-#: plug-ins/script-fu/scripts/3dTruchet.scm.h:8
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:16
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:8
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:16
 msgid "Start blend"
 msgstr "시작 혼합 색상"
 
-#: plug-ins/script-fu/scripts/3dTruchet.scm.h:9
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:9
 msgid "Supersample"
 msgstr "수퍼샘플"
 
-#: plug-ins/script-fu/scripts/3dTruchet.scm.h:10
-#: plug-ins/script-fu/scripts/add-bevel.scm.h:4
-#: plug-ins/script-fu/scripts/truchet.scm.h:8
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:10
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:8
 msgid "Thickness"
 msgstr "두께"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm.h:1
-#: plug-ins/script-fu/scripts/addborder.scm.h:1
-#: plug-ins/script-fu/scripts/coffee.scm.h:1
-#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
-#: plug-ins/script-fu/scripts/old-photo.scm.h:1
-#: plug-ins/script-fu/scripts/round-corners.scm.h:1
-#: plug-ins/script-fu/scripts/slide.scm.h:1
-msgid "<Image>/Script-Fu/Decor"
-msgstr "<Image>/Script-Fu/장식"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm.h:2
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
 msgid "Add B_evel..."
-msgstr "바벨 더하기(_e)..."
+msgstr "바벨 더하기(_E)..."
 
-#: plug-ins/script-fu/scripts/add-bevel.scm.h:3
-#: plug-ins/script-fu/scripts/chip-away.scm.h:12
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
+msgid "Add a beveled border to an image"
+msgstr "이미지에 바벨 테두리를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
 msgid "Keep bump layer"
 msgstr "범프 레이어 유지"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm.h:5
-#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
-#: plug-ins/script-fu/scripts/old-photo.scm.h:6
-#: plug-ins/script-fu/scripts/round-corners.scm.h:8
-#: plug-ins/script-fu/scripts/slide.scm.h:6
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:8
+#: ../plug-ins/script-fu/scripts/slide.scm.h:6
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:6
 msgid "Work on copy"
 msgstr "사본으로 작업하기"
 
-#: plug-ins/script-fu/scripts/addborder.scm.h:2
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:1
 msgid "Add _Border..."
 msgstr "액자 더하기(_B)..."
 
-#: plug-ins/script-fu/scripts/addborder.scm.h:3
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:2
+msgid "Add a border around an image"
+msgstr "이미지에 테두리를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:3
 msgid "Border X size"
 msgstr "테두리 X 크기"
 
-#: plug-ins/script-fu/scripts/addborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border Y size"
 msgstr "테두리 Y 크기"
 
-#: plug-ins/script-fu/scripts/addborder.scm.h:5
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
 msgid "Border color"
 msgstr "테두리 색상"
 
-#: plug-ins/script-fu/scripts/addborder.scm.h:6
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:6
 msgid "Delta value on color"
 msgstr "색상의 명도차"
 
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow"
-msgstr "<Toolbox>/확장/Script-Fu/웹 페이지 테마/외계의 빛"
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
+msgid "Create an arrow graphic with an eerie glow for web pages"
+msgstr "오싹한 광채를 가진 웹페이지용 화살표 이미지를 만듭니다."
 
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
 msgid "Down"
 msgstr "하"
 
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
-#: plug-ins/script-fu/scripts/camo.scm.h:5
-#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/camo.scm.h:5
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
 msgid "Flatten image"
 msgstr "배경으로 이미지 합치기"
 
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
-#: plug-ins/script-fu/scripts/neon-logo.scm.h:8
-#: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 msgid "Glow color"
 msgstr "빛 색상"
 
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
 msgid "Left"
 msgstr "좌"
 
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
 msgid "Orientation"
 msgstr "방향"
 
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
 msgid "Right"
 msgstr "우"
 
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
-#: plug-ins/script-fu/scripts/lava.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/lava.scm.h:7
 msgid "Size"
 msgstr "크기"
 
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
 msgid "Up"
 msgstr "상"
 
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:9
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:9
 msgid "_Arrow..."
 msgstr "화살표(_A)..."
 
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
 msgid "Bar height"
 msgstr "막대 높이"
 
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar length"
 msgstr "막대 길이"
 
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+msgid "Create an Hrule graphic with an eerie glow for web pages"
+msgstr "오싹한 광채를 가진 웹페이지용 Hrule 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
 msgid "_Hrule..."
 msgstr "수평방향(_H)..."
 
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
-#: plug-ins/script-fu/scripts/text-circle.scm.h:6
-#: plug-ins/script-fu/scripts/tileblur.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+msgid "Create a bullet graphic with an eerie glow for web pages"
+msgstr "오싹한 광채를 가진 웹페이지용 총알 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:7
 msgid "Radius"
 msgstr "반지름"
 
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
 msgid "_Bullet..."
 msgstr "글머리표(_B)..."
 
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "B_utton..."
-msgstr "버튼(_u)..."
+msgstr "버튼(_U)..."
 
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+msgid "Create a button graphic with an eerie glow for web pages"
+msgstr "오싹한 광채를 가진 웹페이지용 버튼 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow radius"
 msgstr "빛의 반지름"
 
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
-#: plug-ins/script-fu/scripts/beveled-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:6
 msgid "Padding"
 msgstr "채움"
 
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
-#: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
-#: plug-ins/script-fu/scripts/basic2-logo.scm.h:8
-#: plug-ins/script-fu/scripts/beveled-button.scm.h:10
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:18
-#: plug-ins/script-fu/scripts/gimp-headers.scm.h:13
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:15
-#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
-#: plug-ins/script-fu/scripts/news-text.scm.h:11
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:14
-#: plug-ins/script-fu/scripts/speed-text.scm.h:9
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:18
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:14
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:18
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:11
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:9
 msgid "Text color"
 msgstr "글자 색상"
 
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
+msgid "Add an eerie glow around the selected region (or alpha)"
+msgstr "선택한 영역(혹은 알파)에 오싹한 광채를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
 msgid "Alien _Glow..."
 msgstr "외계의 빛(_G)..."
 
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
+msgid "Create a logo with an alien glow around the text"
+msgstr "텍스트 주변에 외계빛이 있는 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
 msgid "Glow size (pixels * 4)"
 msgstr "빛 크기 (픽셀 * 4)"
 
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
+msgid "Add psychedelic outlines to the selected region (or alpha)"
+msgstr "선택한 영역(혹은 알파)에 환각적인 윤곽선을 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "Alien _Neon..."
 msgstr "외계의 네온(_N)..."
 
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
+msgid "Create a logo with psychedelic outlines around the text"
+msgstr "텍스트 주변에 환각적인 테두리가 있는 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
 msgid "Fade away"
 msgstr "점점 희미하게"
 
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
 msgid "Number of bands"
 msgstr "띠의 갯수"
 
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
 msgid "Width of bands"
 msgstr "띠의 너비"
 
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:12
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:12
 msgid "Width of gaps"
 msgstr "틈의 너비"
 
-#: plug-ins/script-fu/scripts/basic1-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
+msgid "Add a gradient effect, a drop shadow, and a background to the selected region (or alpha)"
+msgstr "선택한 영역(혹은 알파)에 그라디언트, 그림자, 배경을 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
+msgid "Create a plain text logo with a gradient effect, a drop shadow, and a background"
+msgstr "그라데이션, 그림자, 배경이 있는 글자를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
 msgstr "베이직 I(_B)..."
 
-#: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:1
+msgid "Add a shadow and a highlight to the selected region (or alpha)"
+msgstr "선택한 영역(혹은 알파)에 그림자와 강조 효과를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 msgid "B_asic II..."
-msgstr "베이직 II(_a)..."
+msgstr "베이직 II(_A)..."
 
-#: plug-ins/script-fu/scripts/beveled-button.scm.h:1
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Buttons"
-msgstr "<Toolbox>/확장/Script-Fu/버튼"
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+msgid "Create a simple logo with a shadow and a highlight"
+msgstr "그림자와 강조 효과가 있는 단순한 로고를 만듭니다."
 
-#: plug-ins/script-fu/scripts/beveled-button.scm.h:2
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:1
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:1
 msgid "Bevel width"
 msgstr "베벨 너비"
 
-#: plug-ins/script-fu/scripts/beveled-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
+msgid "Create a simple, beveled button graphic for webpages"
+msgstr "웹페이지용 단순한 바벨 버튼 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
 msgid "Lower-right color"
 msgstr "우하단 색상"
 
-#: plug-ins/script-fu/scripts/beveled-button.scm.h:7
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:11
 msgid "Pressed"
 msgstr "눌려짐"
 
-#: plug-ins/script-fu/scripts/beveled-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:8
 msgid "Simple _Beveled Button..."
-msgstr "간단한 베벨 버튼(_B)..."
+msgstr "단순하게 경사진 버튼(_B)..."
 
-#: plug-ins/script-fu/scripts/beveled-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:11
 msgid "Upper-left color"
 msgstr "좌상단 색상"
 
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern"
-msgstr "<Toolbox>/확장/Script-Fu/웹 페이지 테마/베벨 무늬"
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+msgid "Create a beveled pattern arrow for webpages"
+msgstr "웹페이지용 바벨무늬 화살표를 만듭니다."
 
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+msgid "Create a beveled pattern bullet for webpages"
+msgstr "웹페이지용 바벨무늬 탄환 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
 msgstr "지름"
 
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:4
 msgid "Transparent background"
 msgstr "투명 배경"
 
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
-msgid "H_eading..."
-msgstr "제목(_e)..."
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+msgid "Create a beveled pattern button for webpages"
+msgstr "웹페이지용 바벨무늬 버튼 이미지를 만듭니다."
 
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:5
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:4
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
-#: plug-ins/script-fu/scripts/swirltile.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+msgid "Create a beveled pattern heading for webpages"
+msgstr "웹페이지용 바벨무늬 제목 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
+msgid "H_eading..."
+msgstr "제목(_E)..."
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
+msgid "Create a beveled pattern hrule for webpages"
+msgstr "웹페이지용 바벨무늬 Hrule 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
 msgid "Height"
 msgstr "높이"
 
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:5
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:8
-#: plug-ins/script-fu/scripts/swirltile.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:5
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:11
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:11
 msgid "Width"
 msgstr "너비"
 
-#: plug-ins/script-fu/scripts/blend-anim.scm.h:1
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
-#: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
-#: plug-ins/script-fu/scripts/waves-anim.scm.h:1
-msgid "<Image>/Script-Fu/Animators"
-msgstr "<Image>/Script-Fu/에니메이터"
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
+msgid "Blend Animation needs at least three source layers"
+msgstr "합성 애니메이션은 최소 3개 이상의 레이어가 필요합니다."
 
-#: plug-ins/script-fu/scripts/blend-anim.scm.h:2
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
+msgid "Create intermediate layers to blend two or more layers over a background as an animation"
+msgstr "애니메이션의 배경 위로 2개 이상의 레이어를 합성하기 위한 고급 레이어를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Intermediate frames"
 msgstr "중간 프레임"
 
-#: plug-ins/script-fu/scripts/blend-anim.scm.h:3
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
 msgid "Looped"
 msgstr "반복"
 
-#: plug-ins/script-fu/scripts/blend-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
 msgid "Max. blur radius"
 msgstr "흐릿한 영역의 최대 반지름"
 
-#: plug-ins/script-fu/scripts/blend-anim.scm.h:5
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
 msgid "_Blend..."
 msgstr "혼합(_B)..."
 
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:4
-msgid "Blen_ded..."
-msgstr "혼합됨(_d)..."
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
+msgid "Add blended backgrounds, highlights, and shadows to the selected region (or alpha)"
+msgstr "선택한 영역(혹은 알파)에 합성한 배경, 강조 효과, 그림자를 추가합니다."
 
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
+msgid "Blen_ded..."
+msgstr "혼합됨(_D)..."
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Blend mode"
 msgstr "혼합 방법"
 
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
+msgid "Create a logo with blended backgrounds, highlights, and shadows"
+msgstr "합성된 배경, 강조 효과, 그림자가 있는 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "Custom Gradient"
 msgstr "사용자 그라디언트"
 
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:8
 msgid "FG-BG-HSV"
 msgstr "FG-BG-HSV"
 
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:9
 msgid "FG-BG-RGB"
 msgstr "FG-BG-RGB"
 
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:10
 msgid "FG-Transparent"
 msgstr "FG-투명"
 
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:13
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:7
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
-#: plug-ins/script-fu/scripts/land.scm.h:3
-#: plug-ins/script-fu/scripts/lava.scm.h:2
-#: plug-ins/script-fu/scripts/rendermap.scm.h:4
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:13
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/land.scm.h:3
+#: ../plug-ins/script-fu/scripts/lava.scm.h:2
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Gradient"
 msgstr "그라디언트"
 
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:14
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:8
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:3
-#: plug-ins/script-fu/scripts/rendermap.scm.h:5
-#: plug-ins/script-fu/scripts/title-header.scm.h:4
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:14
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:3
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:5
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:4
 msgid "Gradient reverse"
 msgstr "그라디언트 반전"
 
-#: plug-ins/script-fu/scripts/blended-logo.scm.h:15
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:15
 msgid "Offset (pixels)"
 msgstr "오프셋 (픽셀)"
 
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
+msgid "Add 'cow spots' to the selected region (or alpha)"
+msgstr "선택한 영역(혹은 알파)에 '얼룩 무늬'를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
 msgid "Background Color"
 msgstr "배경색"
 
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
 msgid "Bo_vination..."
-msgstr "젖소무늬(_v)..."
+msgstr "젖소 얼룩무늬(_V)..."
 
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+msgid "Create a logo with text in the style of 'cow spots'"
+msgstr "'얼룩무늬' 모양의 글자 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 msgid "Spots density X"
-msgstr "X 점박이 밀도"
+msgstr "점들의 X 밀도"
 
-#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:9
 msgid "Spots density Y"
-msgstr "Y 점박이 밀도"
+msgstr "점들의 Y 밀도"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
 msgid "Add glowing"
 msgstr "빛 더하기"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "After glow"
 msgstr "후광"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "B_urn-In..."
-msgstr ""
+msgstr "번인(Burn-In)(_U)..."
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
-msgid "Burn-In: Need two layers in total!"
-msgstr "태우기: 총 두 개의 레이어가 필요합니다!"
-
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Corona width"
 msgstr "화염 너비"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
+msgid "Create intermediate layers to produce an animated 'burn-in' transition between two layers"
+msgstr "두 레이어간에 움직이는 '번인(burn-in)' 변환을 만들기 위한 고급 레이어를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Fadeout"
 msgstr "점점 희미하게"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout width"
 msgstr "희미해지는 너비"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 msgid "Prepare for GIF"
 msgstr "GIF를 위한 준비"
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Speed (pixels/frame)"
 msgstr "속도 (픽셀/프레임)"
 
-#: plug-ins/script-fu/scripts/camo.scm.h:2
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+msgid "The Burn-In script needs two layers in total. A foreground layer with transparency and a background layer."
+msgstr "번인 (Burn-In) 스크립트는 투명 속성을 가진 전경 레이어와 배경 레이어, 총 두 개의 레이어가 필요합니다."
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "Color 1"
 msgstr "색상 1"
 
-#: plug-ins/script-fu/scripts/camo.scm.h:3
+#: ../plug-ins/script-fu/scripts/camo.scm.h:2
 msgid "Color 2"
 msgstr "색상 2"
 
-#: plug-ins/script-fu/scripts/camo.scm.h:4
+#: ../plug-ins/script-fu/scripts/camo.scm.h:3
 msgid "Color 3"
 msgstr "색상 3"
 
-#: plug-ins/script-fu/scripts/camo.scm.h:6
-#: plug-ins/script-fu/scripts/rendermap.scm.h:6
+#: ../plug-ins/script-fu/scripts/camo.scm.h:4
+msgid "Create an image filled with a camouflage pattern"
+msgstr "전투복 무늬로 채워진 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:6
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:6
 msgid "Granularity"
 msgstr "입자 크기"
 
-#: plug-ins/script-fu/scripts/camo.scm.h:7
-#: plug-ins/script-fu/scripts/rendermap.scm.h:7
+#: ../plug-ins/script-fu/scripts/camo.scm.h:7
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:7
 msgid "Image size"
 msgstr "이미지 크기"
 
-#: plug-ins/script-fu/scripts/camo.scm.h:8
-#: plug-ins/script-fu/scripts/distress-selection.scm.h:3
+#: ../plug-ins/script-fu/scripts/camo.scm.h:8
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:3
 msgid "Smooth"
 msgstr "부드럽게"
 
-#: plug-ins/script-fu/scripts/camo.scm.h:9
+#: ../plug-ins/script-fu/scripts/camo.scm.h:9
 msgid "_Camouflage..."
 msgstr "전투복무늬(_C)..."
 
-#: plug-ins/script-fu/scripts/carve-it.scm.h:1
-#: plug-ins/script-fu/scripts/chrome-it.scm.h:1
-msgid "<Image>/Script-Fu/Stencil Ops"
-msgstr "<Image>/Script-Fu/스텐실 효과"
-
-#: plug-ins/script-fu/scripts/carve-it.scm.h:2
-msgid "C_arve-It..."
-msgstr "음각화(_a).."
-
-#: plug-ins/script-fu/scripts/carve-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
 msgid "Carve white areas"
 msgstr "흰색 영역 조각"
 
-#: plug-ins/script-fu/scripts/carve-it.scm.h:4
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "Image to carve"
 msgstr "이미지를 조각으로"
 
-#: plug-ins/script-fu/scripts/carved-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
+msgid "Stencil C_arve..."
+msgstr "음각 스텐실(_A)..."
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
 msgid "Background Image"
 msgstr "배경 이미지"
 
-#: plug-ins/script-fu/scripts/carved-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
 msgid "Carve raised text"
 msgstr "튀어나온 글자 조각"
 
-#: plug-ins/script-fu/scripts/carved-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
 msgid "Carved..."
 msgstr "조각..."
 
-#: plug-ins/script-fu/scripts/carved-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
+msgid "Create a logo with text raised above or carved in to the specified background image"
+msgstr "배경 이미지에 글자가 튀어나오거나 움푹 들어간 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
 msgstr "글자 주위 채우기"
 
-#: plug-ins/script-fu/scripts/chalk.scm.h:4
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:2
 msgid "Chalk color"
 msgstr "분필 색상"
 
-#: plug-ins/script-fu/scripts/chalk.scm.h:8
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:3
+msgid "Create a chalk drawing effect for the selected region (or alpha)"
+msgstr "선택한 영역(혹은 알파)에 분필로 그리기 효과를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:4
+msgid "Create a logo resembling chalk scribbled on a blackboard"
+msgstr "칠판에 분필로 낙서한 것 같은 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:8
 msgid "_Chalk..."
 msgstr "분필(_C)..."
 
-#: plug-ins/script-fu/scripts/chip-away.scm.h:3
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
+msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
+msgstr "선택한 영역(혹은 알파)에 나무조각 효과를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
 msgstr "흐릿한 정도"
 
-#: plug-ins/script-fu/scripts/chip-away.scm.h:4
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:3
 msgid "Chip Awa_y..."
-msgstr "조금씩 깍기(_y)..."
+msgstr "조금씩 깍기(_Y)..."
 
-#: plug-ins/script-fu/scripts/chip-away.scm.h:5
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:4
 msgid "Chip amount"
 msgstr "깍는 정도"
 
-#: plug-ins/script-fu/scripts/chip-away.scm.h:6
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
+msgid "Create a logo resembling a chipped wood carving"
+msgstr "나무에 조각한 것 같은 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Drop shadow"
 msgstr "그림자 효과"
 
-#: plug-ins/script-fu/scripts/chip-away.scm.h:7
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:7
 msgid "Fill BG with pattern"
 msgstr "배경을 무늬로 채우기"
 
-#: plug-ins/script-fu/scripts/chip-away.scm.h:10
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:10
 msgid "Invert"
 msgstr "반전"
 
-#: plug-ins/script-fu/scripts/chip-away.scm.h:11
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:11
 msgid "Keep background"
 msgstr "배경 유지"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm.h:2
-msgid "C_hrome-It..."
-msgstr "찾아보기..."
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:1
+msgid "Add a chrome effect to the selected region (or alpha) using a specified (grayscale) stencil"
+msgstr "특수한 (그레이) 스텐실을 이용해 선택한 영역(혹은 알파)에 크롬 효과를 추가합니다."
 
-#: plug-ins/script-fu/scripts/chrome-it.scm.h:3
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "Chrome balance"
 msgstr "크롬 평균색"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm.h:4
-#: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
 msgid "Chrome factor"
 msgstr "크롬 인수"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm.h:5
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
 msgid "Chrome lightness"
 msgstr "크롬 명도"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm.h:6
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
 msgid "Chrome saturation"
 msgstr "크롬 채도"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
 msgid "Chrome white areas"
 msgstr "크롬 백색 영역"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm.h:8
-#: plug-ins/script-fu/scripts/crystal-logo.scm.h:5
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
 msgid "Environment map"
 msgstr "환경 매핑"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm.h:9
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
 msgid "Highlight balance"
 msgstr "하일라이트 평균색"
 
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
-msgid "C_hrome..."
-msgstr "크롬(_h)..."
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
+msgid "Stencil C_hrome..."
+msgstr "크롬 스텐실(_H)..."
 
-#: plug-ins/script-fu/scripts/chrome-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
+msgid "Add a simple chrome effect to the selected region (or alpha)"
+msgstr "선택한 영역(혹은 알파)에 단순한 크롬 효과를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+msgid "C_hrome..."
+msgstr "크롬(_H)..."
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+msgid "Create a simplistic, but cool, chromed logo"
+msgstr "단순하지만 멋진 크롬 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 msgid "Offsets (pixels * 2)"
 msgstr "오프셋 (픽셀수 * 2)"
 
-#: plug-ins/script-fu/scripts/circuit.scm.h:1
-#: plug-ins/script-fu/scripts/grid-system.scm.h:1
-#: plug-ins/script-fu/scripts/lava.scm.h:1
-#: plug-ins/script-fu/scripts/line-nova.scm.h:1
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-msgid "<Image>/Script-Fu/Render"
-msgstr "<Image>/Script-Fu/렌더"
-
-#: plug-ins/script-fu/scripts/circuit.scm.h:2
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:1
 msgid "Circuit seed"
 msgstr "회로 시작값"
 
-#: plug-ins/script-fu/scripts/circuit.scm.h:3
-#: plug-ins/script-fu/scripts/lava.scm.h:3
-#: plug-ins/script-fu/scripts/predator.scm.h:3
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:11
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:2
+msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
+msgstr "선택한 영역(혹은 알파)을 원형 보드와 같은 모양으로 채웁니다."
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:3
+#: ../plug-ins/script-fu/scripts/lava.scm.h:3
+#: ../plug-ins/script-fu/scripts/predator.scm.h:3
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "Keep selection"
 msgstr "선택 유지"
 
-#: plug-ins/script-fu/scripts/circuit.scm.h:4
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:4
 msgid "No background (only for separate layer)"
 msgstr "배경 없음 (레이어 분리할때만)"
 
-#: plug-ins/script-fu/scripts/circuit.scm.h:5
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:5
 msgid "Oilify mask size"
 msgstr "유화 마스크 크기"
 
-#: plug-ins/script-fu/scripts/circuit.scm.h:6
-#: plug-ins/script-fu/scripts/lava.scm.h:6
-#: plug-ins/script-fu/scripts/predator.scm.h:6
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:6
+#: ../plug-ins/script-fu/scripts/lava.scm.h:6
+#: ../plug-ins/script-fu/scripts/predator.scm.h:6
 msgid "Separate layer"
 msgstr "레이어 분리"
 
-#: plug-ins/script-fu/scripts/circuit.scm.h:7
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:7
 msgid "_Circuit..."
 msgstr "회로 시작값(_C)..."
 
-#: plug-ins/script-fu/scripts/clothify.scm.h:1
-#: plug-ins/script-fu/scripts/erase-rows.scm.h:1
-#: plug-ins/script-fu/scripts/predator.scm.h:1
-#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
-#: plug-ins/script-fu/scripts/weave.scm.h:1
-msgid "<Image>/Script-Fu/Alchemy"
-msgstr "<Image>/Script-Fu/연금술"
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:1
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr "선택한 영역(혹은 알파)에 옷감 텍스쳐를 추가합니다."
 
-#: plug-ins/script-fu/scripts/clothify.scm.h:2
-#: plug-ins/script-fu/scripts/swirltile.scm.h:2
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:2
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:1
 msgid "Azimuth"
 msgstr "방위각"
 
-#: plug-ins/script-fu/scripts/clothify.scm.h:3
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:3
 msgid "Blur X"
 msgstr "흐릿한 X"
 
-#: plug-ins/script-fu/scripts/clothify.scm.h:4
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:4
 msgid "Blur Y"
 msgstr "흐릿한 Y"
 
-#: plug-ins/script-fu/scripts/clothify.scm.h:5
-#: plug-ins/script-fu/scripts/swirltile.scm.h:5
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:5
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:5
 msgid "Depth"
 msgstr "깊이"
 
-#: plug-ins/script-fu/scripts/clothify.scm.h:6
-#: plug-ins/script-fu/scripts/swirltile.scm.h:6
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:6
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:6
 msgid "Elevation"
 msgstr "양각"
 
-#: plug-ins/script-fu/scripts/clothify.scm.h:7
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:7
 msgid "_Clothify..."
 msgstr "옷감(_C)..."
 
-#: plug-ins/script-fu/scripts/coffee.scm.h:2
-msgid ""
-"Darken only\n"
-"(Better, but only for images with alot of white)"
-msgstr ""
-"어둡게만\n"
-"(흰색이 많은 이미지에만 더 좋은 결과)"
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:1
+msgid "Add realistic looking coffee stains to the image"
+msgstr "이미지에 진짜같은 커피 얼룩을 추가합니다."
 
-#: plug-ins/script-fu/scripts/coffee.scm.h:3
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:2
+msgid "Darken only"
+msgstr "어둡게만"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
 msgstr "얼룩"
 
-#: plug-ins/script-fu/scripts/coffee.scm.h:4
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:4
 msgid "_Coffee Stain..."
 msgstr "커피 얼룩(_C)..."
 
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:4
-msgid "Comic Boo_k..."
-msgstr "코믹북(_k)..."
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
+msgid "Add a comic-book effect to the selected region (or alpha) by outlining and filling with a gradient"
+msgstr "선택한 영역(혹은 알파)에 윤곽선과 그라디언트로 채워진 만화책 효과를 추가합니다."
 
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
+msgid "Comic Boo_k..."
+msgstr "코믹북(_K)..."
+
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
+msgid "Create a comic-book style logo by outlining and filling with a gradient"
+msgstr "윤곽선이 있고, 그라디언트로 채워진 만화책 모양의 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 msgid "Outline color"
 msgstr "윤곽선 색상"
 
-#: plug-ins/script-fu/scripts/comic-logo.scm.h:10
-#: plug-ins/script-fu/scripts/glossy.scm.h:12
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Outline size"
 msgstr "윤곽선 크기"
 
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
+msgid "Add a metallic effect to the selected region (or alpha) with reflections and perspective shadows"
+msgstr "선택한 영역(혹은 알파)에 반사 효과 및 원근 그림자를 가진 금속 효과를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
 msgstr "시원한 금속 느낌(_M)..."
 
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
-#: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
+msgid "Create a metallic logo with reflections and perspective shadows"
+msgstr "반사 효과와 원근 그림자가 있는 금속 느낌의 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 msgid "Effect size (pixels)"
 msgstr "효과 크기 (픽셀)"
 
-#: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "Background image"
 msgstr "배경 이미지"
 
-#: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
+msgid "Create a logo with a crystal/gel effect displacing the image underneath"
+msgstr "이미지 아래쪽에 크리스탈/겔 효과가 있는 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
 msgstr "크리스탈..."
 
-#: plug-ins/script-fu/scripts/distress-selection.scm.h:1
-#: plug-ins/script-fu/scripts/fade-outline.scm.h:1
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
-#: plug-ins/script-fu/scripts/select-to-image.scm.h:1
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-msgid "<Image>/Script-Fu/Selection"
-msgstr "<Image>/Script-Fu/선택"
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
+msgid "Difference Clouds..."
+msgstr "구름의 특징..."
 
-#: plug-ins/script-fu/scripts/distress-selection.scm.h:2
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
+msgid "Solid noise applied with Difference layer mode"
+msgstr "차이점 레이어 모드에 강한 잡음 적용"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
+msgid "Distress the selection"
+msgstr "선택 망가뜨리기"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
 msgid "Granularity (1 is low)"
 msgstr "입자 크기 (최저 1)"
 
-#: plug-ins/script-fu/scripts/distress-selection.scm.h:4
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:4
 msgid "Smooth horizontally"
 msgstr "가로로 부드럽게"
 
-#: plug-ins/script-fu/scripts/distress-selection.scm.h:5
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:5
 msgid "Smooth vertically"
 msgstr "세로로 부드럽게"
 
-#: plug-ins/script-fu/scripts/distress-selection.scm.h:6
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:6
 msgid "Spread"
 msgstr "범위"
 
-#: plug-ins/script-fu/scripts/distress-selection.scm.h:7
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (bigger 1<-->255 smaller)"
 msgstr "임계값 (1-255)"
 
-#: plug-ins/script-fu/scripts/distress-selection.scm.h:8
-msgid "_Distress Selection..."
-msgstr "삐뚤 빼뚤하게(_D)..."
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
+msgid "_Distort..."
+msgstr "뒤틀기(_D)..."
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:1
-msgid "<Image>/Script-Fu/Shadow"
-msgstr "그림자"
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
+msgid "Add a drop shadow to the selected region (or alpha)"
+msgstr "선택한 영역(혹은 알파)에 그림자를 추가합니다."
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
 msgid "Allow resizing"
 msgstr "크기 바꾸기 허용"
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm.h:3
-#: plug-ins/script-fu/scripts/news-text.scm.h:3
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
-#: plug-ins/script-fu/scripts/round-corners.scm.h:4
-#: plug-ins/script-fu/scripts/swirltile.scm.h:4
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:3
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:2
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:3
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:3
 msgid "Blur radius"
 msgstr "흐릿한 영역의 반지름"
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
-#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:4
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:5
 msgid "Color"
 msgstr "색상"
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm.h:5
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
 msgid "Offset X"
 msgstr "X 오프셋"
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm.h:6
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "Offset Y"
 msgstr "Y 오프셋"
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:7
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
 msgid "Opacity"
 msgstr "불투명도"
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm.h:8
-msgid "_Drop-Shadow..."
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
+msgid "_Drop Shadow..."
 msgstr "그림자 효과(_D)..."
 
-#: plug-ins/script-fu/scripts/erase-rows.scm.h:2
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:1
 msgid "Columns"
 msgstr "열"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm.h:3
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:2
 msgid "Erase"
 msgstr "지우기"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm.h:4
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
+msgid "Erase every other row or column"
+msgstr "기타 행과 열을 모두 지우기"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
 msgstr "지우기/채우기"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm.h:5
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:5
 msgid "Even"
 msgstr "짝수"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm.h:6
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:6
 msgid "Even/odd"
 msgstr "짝수/홀수"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm.h:7
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:7
 msgid "Fill with BG"
 msgstr "배경색으로 채우기"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm.h:8
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:8
 msgid "Odd"
 msgstr "홀수"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm.h:9
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:9
 msgid "Rows"
 msgstr "행"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm.h:10
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:10
 msgid "Rows/cols"
 msgstr "행/열"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm.h:11
-msgid "_Erase every other Row..."
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:11
+msgid "_Erase Every Other Row..."
 msgstr "한 줄 건너 지우기(_E)..."
 
-#: plug-ins/script-fu/scripts/fade-outline.scm.h:2
-msgid "Apply generated layermask"
-msgstr "생성된 레이어마스크 적용"
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:1
+msgid "Create an image filled with a Land Pattern"
+msgstr "땅 무늬로 채워진 이미지를 만듭니다."
 
-#: plug-ins/script-fu/scripts/fade-outline.scm.h:3
-#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
-#: plug-ins/script-fu/scripts/old-photo.scm.h:2
-msgid "Border size"
-msgstr "경계선 크기"
-
-#: plug-ins/script-fu/scripts/fade-outline.scm.h:4
-msgid "Clear unselected maskarea"
-msgstr "선택안한 마스크영역 지우기"
-
-#: plug-ins/script-fu/scripts/fade-outline.scm.h:6
-#, no-c-format
-msgid "Fade from %"
-msgstr "희미하게 시작 %"
-
-#: plug-ins/script-fu/scripts/fade-outline.scm.h:8
-#, no-c-format
-msgid "Fade to   %"
-msgstr "희미하게 끝 %"
-
-#: plug-ins/script-fu/scripts/fade-outline.scm.h:9
-msgid "Use growing selection"
-msgstr "커지는 선택 사용"
-
-#: plug-ins/script-fu/scripts/fade-outline.scm.h:10
-msgid "_Fade Outline..."
-msgstr "외각을 흐리게(_F)..."
-
-#: plug-ins/script-fu/scripts/flatland.scm.h:2
-#: plug-ins/script-fu/scripts/land.scm.h:2
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:2
+#: ../plug-ins/script-fu/scripts/land.scm.h:2
 msgid "Detail level"
 msgstr "정밀도"
 
-#: plug-ins/script-fu/scripts/flatland.scm.h:3
-#: plug-ins/script-fu/scripts/land.scm.h:4
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:3
+#: ../plug-ins/script-fu/scripts/land.scm.h:4
 msgid "Image height"
 msgstr "이미지 높이"
 
-#: plug-ins/script-fu/scripts/flatland.scm.h:4
-#: plug-ins/script-fu/scripts/land.scm.h:5
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:4
+#: ../plug-ins/script-fu/scripts/land.scm.h:5
 msgid "Image width"
 msgstr "이미지 너비"
 
-#: plug-ins/script-fu/scripts/flatland.scm.h:5
-#: plug-ins/script-fu/scripts/land.scm.h:7
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:5
+#: ../plug-ins/script-fu/scripts/land.scm.h:7
 msgid "Random seed"
-msgstr "난수 시작값"
+msgstr "무작위 시작값"
 
-#: plug-ins/script-fu/scripts/flatland.scm.h:6
-#: plug-ins/script-fu/scripts/land.scm.h:8
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:6
+#: ../plug-ins/script-fu/scripts/land.scm.h:8
 msgid "Scale X"
 msgstr "가로 배율"
 
-#: plug-ins/script-fu/scripts/flatland.scm.h:7
-#: plug-ins/script-fu/scripts/land.scm.h:9
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:7
+#: ../plug-ins/script-fu/scripts/land.scm.h:9
 msgid "Scale Y"
 msgstr "세로 배율"
 
-#: plug-ins/script-fu/scripts/flatland.scm.h:8
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:8
 msgid "_Flatland..."
 msgstr "평지(_F)..."
 
-#: plug-ins/script-fu/scripts/font-map.scm.h:1
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Utils"
-msgstr "<Toolbox>/확장/Script-Fu/유틸"
-
-#: plug-ins/script-fu/scripts/font-map.scm.h:2
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:1
 msgid "Active colors"
 msgstr "현재 색상"
 
-#: plug-ins/script-fu/scripts/font-map.scm.h:3
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:2
 msgid "Black on white"
 msgstr "흰색위에 검정"
 
-#: plug-ins/script-fu/scripts/font-map.scm.h:4
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:3
+msgid "Create an image filled with previews of fonts matching a fontname filter"
+msgstr "글꼴명 필터와 일치하는 글꼴의 미리보기로 채워진 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:4
 msgid "Font _size (pixels)"
-msgstr "글꼴 크기(_s) (픽셀)"
+msgstr "글꼴 크기(_S) (픽셀)"
 
-#: plug-ins/script-fu/scripts/font-map.scm.h:5
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:5
+msgid "Render _Font Map..."
+msgstr "글꼴맵 렌더(_F)..."
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "Use font _name as text"
-msgstr "글꼴 이름을 텍스트로 사용(_n)"
+msgstr "글꼴 이름을 텍스트로 사용(_N)"
 
-#: plug-ins/script-fu/scripts/font-map.scm.h:6
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:7
 msgid "_Border (pixels)"
 msgstr "테두리(_B) (픽셀)"
 
-#: plug-ins/script-fu/scripts/font-map.scm.h:7
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:8
 msgid "_Color scheme"
 msgstr "색상 스킴(_C)"
 
-#: plug-ins/script-fu/scripts/font-map.scm.h:8
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:9
 msgid "_Filter (regexp)"
 msgstr "필터(_F) (정규식)"
 
-#: plug-ins/script-fu/scripts/font-map.scm.h:9
-msgid "_Font Map..."
-msgstr "글꼴 맵(_F)..."
-
-#: plug-ins/script-fu/scripts/font-map.scm.h:10
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:10
 msgid "_Labels"
 msgstr "레이블(_L)"
 
-#: plug-ins/script-fu/scripts/font-map.scm.h:11
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:11
 msgid "_Text"
 msgstr "텍스트(_T)"
 
-#: plug-ins/script-fu/scripts/frosty-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
+msgid "Add a frost effect to the selected region (or alpha) with an added drop shadow"
+msgstr "선택한 영역(혹은 알파)에 그림자가 있는 결빙 효과를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
+msgid "Create frozen logo with an added drop shadow"
+msgstr "그림자가 있는 얼음 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
 msgid "_Frosty..."
 msgstr "얼어붙은(_F)..."
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
+msgid "Add a jagged, fuzzy border to an image"
+msgstr "이미지에 뾰족뾰족하고 흐트러진 테두리를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Add shadow"
 msgstr "그림자 더하기"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 msgid "Blur border"
 msgstr "흐릿한 테두리"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
+msgid "Border size"
+msgstr "경계선 크기"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
 msgstr "입자 크기 (최저 1)"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
 #, no-c-format
 msgid "Shadow weight (%)"
 msgstr "그림자 높이(%)"
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
 msgid "_Fuzzy Border..."
 msgstr "거친 테두리(_F)..."
 
-#: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
-msgstr "<Toolbox>/확장/Script-Fu/웹 페이지 테마/이전 Gimp.Org"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "Autocrop"
 msgstr "자동 절단"
 
-#: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
+msgid "Create an image of a large header using the gimp.org webpage theme"
+msgstr "gimp.org 웹사이트 테마를 이용해 큰 헤더를 가진 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
+msgid "Create an image of a small header using the gimp.org webpage theme"
+msgstr "gimp.org 웹사이트 테마를 이용해 작은 헤더를 가진 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
 msgid "Dark color"
 msgstr "어두운 색상"
 
-#: plug-ins/script-fu/scripts/gimp-headers.scm.h:6
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:9
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:7
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
 msgid "Highlight color"
 msgstr "밝은 색상"
 
-#: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
 msgid "Index image"
 msgstr "인덱스 이미지"
 
-#: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:7
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
 msgid "Number of colors"
 msgstr "색상 수"
 
-#: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
 msgid "Remove background"
 msgstr "배경 지우기"
 
-#: plug-ins/script-fu/scripts/gimp-headers.scm.h:10
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:11
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
 msgid "Select-by-color threshold"
 msgstr "색으로 선택하기의 임계값"
 
-#: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:12
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
 msgid "Shadow color"
 msgstr "그림자 색상"
 
-#: plug-ins/script-fu/scripts/gimp-headers.scm.h:14
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:15
 msgid "_Big Header..."
-msgstr ""
+msgstr "큰 헤더(_B)..."
 
-#: plug-ins/script-fu/scripts/gimp-headers.scm.h:15
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:16
 msgid "_Small Header..."
-msgstr ""
+msgstr "작은 헤더(_S)..."
 
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:13
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+msgid "Create an image of a Tube Button Label Header using the gimp.org webpage theme"
+msgstr "gimp.org 웹사이트 테마를 이용해 튜브 버튼 레이블 헤더 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
+msgstr "gimp.org 웹사이트 테마를 이용해 튜브 버튼 레이블 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
+msgid "Create an image of a second level Tube Button Label using the gimp.org webpage theme"
+msgstr "gimp.org 웹사이트 테마를 이용해 두번째 단계의 튜브 버튼 레이블 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+msgid "Create an image of a third level Tube Button Label using the gimp.org webpage theme"
+msgstr "gimp.org 웹사이트 테마를 이용해 세번째 단계 튜브 버튼 레이블 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
-msgstr "튜브 하위버튼 레이블(_u)..."
+msgstr "튜브 하위버튼 레이블(_U)..."
 
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
 msgid "Tub_e Sub-Sub-Button Label..."
-msgstr "튜브 하위-하위버튼 레이블(_e)..."
+msgstr "튜브 하위-하위버튼 레이블(_E)..."
 
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:17
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
 msgid "_General Tube Labels..."
 msgstr "일반 튜브 레이블(_G)..."
 
-#: plug-ins/script-fu/scripts/gimp-labels.scm.h:18
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
 msgid "_Tube Button Label..."
 msgstr "튜브 버튼 레이블(_T)..."
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:4
-msgid "Blend gradient (Text)"
-msgstr "혼합 그라디언트 (글자)"
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:1
+msgid "Add gradients, patterns, shadows, and bump maps to the selected region (or alpha)"
+msgstr "선택한 영역(혹은 알파)에 그라디언트, 무늬, 그림자, 충돌맵을 추가합니다."
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:5
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
 msgstr "혼합 그라디언트 (윤곽선)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:6
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Blend gradient (text)"
 msgstr "혼합 그라디언트 (글자)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:10
-msgid "Glo_ssy..."
-msgstr "윤기나는(_s)..."
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:5
+msgid "Create a logo with gradients, patterns, shadows, and bump maps"
+msgstr "그라디언트, 무늬, 그림자, 충돌맵이 있는 로고를 만듭니다."
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:11
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:9
+msgid "Glo_ssy..."
+msgstr "윤기나는(_S)..."
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Outline gradient reverse"
 msgstr "윤곽선 그라디언트 거꾸로"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:13
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (outline)"
 msgstr "무늬 (윤곽선)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:14
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:13
 msgid "Pattern (overlay)"
 msgstr "무늬 (겹치기)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:15
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:14
 msgid "Pattern (text)"
 msgstr "무늬 (글자)"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:16
-#: plug-ins/script-fu/scripts/sphere.scm.h:5
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:15
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "그림자"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:20
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Text gradient reverse"
 msgstr "글자 그라디언트 거꾸로"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:21
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use pattern for outline instead of gradient"
 msgstr "윤곽선에 그라디언트 대신 무늬 사용"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:22
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:21
 msgid "Use pattern for text instead of gradient"
 msgstr "글자에 그라디언트 대신 무늬 사용"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:23
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:22
 msgid "Use pattern overlay"
 msgstr "무늬 겹치기 사용"
 
-#: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
+msgid "Add a glowing hot metal effect to the selected region (or alpha)"
+msgstr "선택한 영역(혹은 알파)에 밝게 빛나는 금속 효과를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
+msgid "Create a logo that looks like glowing hot metal"
+msgstr "밝게 빛나는 금속 느낌의 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
 msgid "Effect size (pixels * 3)"
 msgstr "효과 크기 (픽셀 * 3)"
 
-#: plug-ins/script-fu/scripts/glowing-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 msgid "Glo_wing Hot..."
-msgstr "뜨겁게 달궈진(_w)..."
+msgstr "뜨겁게 달궈진(_W)..."
 
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
-msgid "Bevel height (Sharpness)"
-msgstr "베벨 높이 (날카로움)"
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
+msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
+msgstr "선택한 영역(혹은 알파)에 눈부신 바벨 효과를 추가합니다."
 
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
 msgstr "베벨 높이 (날카로움)"
 
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
-#: plug-ins/script-fu/scripts/textured-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
 msgid "Border size (pixels)"
 msgstr "경계선 크기 (픽셀)"
 
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+msgid "Create a logo with a shiny look and beveled edges"
+msgstr "눈부시게 빛나고 경사진 경계를 가진 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 msgid "Gradient Beve_l..."
-msgstr "그라디언트 베벨(_l)..."
+msgstr "그라디언트 베벨(_L)..."
 
-#: plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
+msgid "Create an image filled with an example of the current gradient"
+msgstr "현재 그라디언트의 예제로 채워진 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
 msgid "Custom _Gradient..."
-msgstr "사용자 그라디언트"
+msgstr "사용자 그라디언트(_G)..."
 
-#: plug-ins/script-fu/scripts/grid-system.scm.h:2
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
+msgid "Draw a grid as specified by the lists of X and Y locations using the current brush"
+msgstr "현재 사용 중인 붓을 이용해 지정된 X, Y 위치에 모눈을 그립니다."
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X divisions"
 msgstr "X 축 분할 수"
 
-#: plug-ins/script-fu/scripts/grid-system.scm.h:3
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:3
 msgid "Y divisions"
 msgstr "Y 축 분할 수"
 
-#: plug-ins/script-fu/scripts/grid-system.scm.h:4
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:4
 msgid "_Grid..."
 msgstr "격자(_G)..."
 
-#: plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
-msgid "Creates four Guides around the bounding box of the current selection."
-msgstr "현재 선택의 경계에 맞는 네 개의 안내선을 만듭니다."
-
-#: plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "New Guides from _Selection"
 msgstr "선택으로부터 새 안내선 만들기(_S)"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
-#: plug-ins/script-fu/scripts/guides-new.scm.h:1
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
+msgid "Add a guide at the position specified as a percentage of the image size"
+msgstr "지정된 위치에(이미지 크기의 퍼센트) 안내선을 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:2
 msgid "Direction"
 msgstr "방향"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
-#: plug-ins/script-fu/scripts/guides-new.scm.h:2
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:3
 msgid "Horizontal"
 msgstr "가로"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:4
 msgid "New Guide (by _Percent)..."
-msgstr "새 안내선(퍼센트)..."
+msgstr "새 안내선(퍼센트)(_P)..."
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:5
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
 #, no-c-format
 msgid "Position (in %)"
 msgstr "위치(%)"
 
-#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
-#: plug-ins/script-fu/scripts/guides-new.scm.h:4
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:7
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:6
 msgid "Vertical"
 msgstr "세로"
 
-#: plug-ins/script-fu/scripts/guides-new.scm.h:3
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:1
+msgid "Add a guide at the orientation and position specified (in pixels)"
+msgstr "지정된 방향과 위치(픽셀)에 안내선을 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
 msgid "New _Guide..."
 msgstr "새 안내선(_G)..."
 
-#: plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
+msgid "Position"
+msgstr "위치"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
+msgid "Remove all horizontal and vertical guides"
+msgstr "모든 수평, 수직 안내선을 제거합니다."
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
 msgstr "모든 안내선 제거(_R)"
 
-#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-#: plug-ins/script-fu/scripts/image-structure.scm.h:1
-msgid "<Image>/Script-Fu/Utils"
-msgstr "<Image>/Script-Fu/유틸"
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
+msgid "Create a logo in a two-color, scribbled text style"
+msgstr "두 색상으로 된 필기체 모양의 로고를 만듭니다."
 
-#: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid "BG opacity"
-msgstr "배경 불투명도"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm.h:3
-msgid "Draw _HSV Graph..."
-msgstr "HSV 그래프 그리기(_H)..."
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm.h:4
-msgid "End X"
-msgstr "가로 끝"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm.h:5
-msgid "End Y"
-msgstr "세로 끝"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm.h:6
-msgid "From top-left to bottom-right"
-msgstr "좌상단에서 우하단으로"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm.h:7
-msgid "Graph scale"
-msgstr "그래프 배율"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm.h:8
-msgid "Start X"
-msgstr "가로 시작"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
-msgid "Start Y"
-msgstr "세로 시작"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm.h:10
-msgid "Use selection bounds instead of belows"
-msgstr "아래 대신에 선택 경계 사용"
-
-#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame color"
 msgstr "프레임 색상"
 
-#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
 msgid "Frame size"
 msgstr "프레임 크기"
 
-#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
-msgid "Imigre-26..."
-msgstr "크레파스..."
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
+msgid "Imigre-_26..."
+msgstr "크레파스(_2)..."
 
-#: plug-ins/script-fu/scripts/image-structure.scm.h:2
-msgid "Apply layer mask (or discard)"
-msgstr "레이어 마스크 적용 (또는 취소)"
+#: ../plug-ins/script-fu/scripts/land.scm.h:1
+msgid "Create an image filled with a topographic map pattern"
+msgstr "지형도 무늬로 채워진 이미지를 만듭니다."
 
-#: plug-ins/script-fu/scripts/image-structure.scm.h:4
-msgid "Create new image"
-msgstr "새 이미지 만들기"
-
-#: plug-ins/script-fu/scripts/image-structure.scm.h:5
-msgid "Insert layer names"
-msgstr "레이어 이름 삽입"
-
-#: plug-ins/script-fu/scripts/image-structure.scm.h:6
-msgid "Make new background"
-msgstr "새 배경 만들기"
-
-#: plug-ins/script-fu/scripts/image-structure.scm.h:7
-msgid "Outer border"
-msgstr "바깥쪽 테두리"
-
-#: plug-ins/script-fu/scripts/image-structure.scm.h:8
-msgid "Pad color"
-msgstr "채움 색상"
-
-#: plug-ins/script-fu/scripts/image-structure.scm.h:9
-msgid "Pad opacity"
-msgstr "채움 불투명도"
-
-#: plug-ins/script-fu/scripts/image-structure.scm.h:10
-msgid "Padding for transparent regions"
-msgstr "투명 영역 채우기"
-
-#: plug-ins/script-fu/scripts/image-structure.scm.h:11
-msgid "Shear length"
-msgstr "휘는 길이"
-
-#: plug-ins/script-fu/scripts/image-structure.scm.h:12
-msgid "Show Image _Structure..."
-msgstr "이미지 구조 표시(_S)..."
-
-#: plug-ins/script-fu/scripts/image-structure.scm.h:13
-msgid "Space between layers"
-msgstr "레이어 사이의 공간"
-
-#: plug-ins/script-fu/scripts/land.scm.h:6
+#: ../plug-ins/script-fu/scripts/land.scm.h:6
 msgid "Land height"
 msgstr "땅 높이"
 
-#: plug-ins/script-fu/scripts/land.scm.h:10
+#: ../plug-ins/script-fu/scripts/land.scm.h:10
 msgid "Sea depth"
 msgstr "바다 깊이"
 
-#: plug-ins/script-fu/scripts/land.scm.h:11
+#: ../plug-ins/script-fu/scripts/land.scm.h:11
 msgid "_Land..."
 msgstr "땅(_L)..."
 
-#: plug-ins/script-fu/scripts/lava.scm.h:4
-#: plug-ins/script-fu/scripts/swirltile.scm.h:8
+#: ../plug-ins/script-fu/scripts/lava.scm.h:1
+msgid "Fill the current selection with lava"
+msgstr "현재 선택을 용암 무늬로 채우기"
+
+#: ../plug-ins/script-fu/scripts/lava.scm.h:4
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
 msgid "Roughness"
 msgstr "거친 정도"
 
-#: plug-ins/script-fu/scripts/lava.scm.h:5
+#: ../plug-ins/script-fu/scripts/lava.scm.h:5
 msgid "Seed"
 msgstr "시작값"
 
-#: plug-ins/script-fu/scripts/lava.scm.h:8
+#: ../plug-ins/script-fu/scripts/lava.scm.h:8
 msgid "Use current gradient"
 msgstr "현재 그라디언트 사용"
 
-#: plug-ins/script-fu/scripts/lava.scm.h:9
+#: ../plug-ins/script-fu/scripts/lava.scm.h:9
 msgid "_Lava..."
 msgstr "용암무늬(_L)..."
 
-#: plug-ins/script-fu/scripts/line-nova.scm.h:2
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
+msgid "Fill a layer with rays emanating outward from its center using the FG color"
+msgstr "전경색을 이용해 중심으로부터 밖으로 뻗어니오는 광선 모양을 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
 msgstr "선형 광채(_N)..."
 
-#: plug-ins/script-fu/scripts/line-nova.scm.h:3
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:3
 msgid "Number of lines"
 msgstr "선분 개수"
 
-#: plug-ins/script-fu/scripts/line-nova.scm.h:4
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:4
 msgid "Offset radius"
 msgstr "오프셋 반지름"
 
-#: plug-ins/script-fu/scripts/line-nova.scm.h:5
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:5
 msgid "Randomness"
-msgstr "임의 정도"
+msgstr "무작위 정도"
 
-#: plug-ins/script-fu/scripts/line-nova.scm.h:6
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:6
 msgid "Sharpness (degrees)"
 msgstr "날카로운 정도 (각도)"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush"
-msgstr "<Toolbox>/확장/Script-Fu/브러시 만들기"
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:1
+msgid "Create a rectangular brush"
+msgstr "사각형 붓을 만듭니다."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:2
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
+msgid "Create a rectangular brush with feathered edges"
+msgstr "흐릿한 경계를 가진 사각형 붓을 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
+msgid "Create an elliptical brush"
+msgstr "타원형 붓을 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
+msgid "Create an elliptical brush with feathered edges"
+msgstr "흐릿한 경계를 가진 타원형 붓을 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "Elli_ptical, Feathered..."
-msgstr "테두리가 흐릿한 타원형(_p)..."
+msgstr "테두리가 흐릿한 타원형(_P)..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:3
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
 msgid "Feathering"
 msgstr "부드러움"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:5
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
 msgid "Name"
-msgstr "이름:"
+msgstr "이름"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:6
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
 msgid "Re_ctangular, Feathered..."
-msgstr "테두리가 흐릿한 사각형(_c)..."
+msgstr "테두리가 흐릿한 사각형(_C)..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:10
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:5
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "Spacing"
 msgstr "간격"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:9
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:12
 msgid "_Elliptical..."
 msgstr "타원형(_E)..."
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:10
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:13
 msgid "_Rectangular..."
 msgstr "사각형(_R)..."
 
-#: plug-ins/script-fu/scripts/neon-logo.scm.h:4
-msgid "Create shadow"
-msgstr "그림자 만들기"
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
+msgid "Convert the selected region (or alpha) into a neon-sign like object"
+msgstr "선택한 영역(혹은 알파)을 네온표시 비슷한 개체로 변환합니다."
 
-#: plug-ins/script-fu/scripts/neon-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
+msgid "Create a logo in the style of a neon sign"
+msgstr "네온 사인 스타일의 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
+msgid "Create shadow"
+msgstr "그림자를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
 msgid "Effect size (pixels * 5)"
 msgstr "효과 크기 (픽셀 * 5)"
 
-#: plug-ins/script-fu/scripts/neon-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:9
 msgid "N_eon..."
-msgstr "네온(_e)..."
+msgstr "네온(_E)..."
 
-#: plug-ins/script-fu/scripts/news-text.scm.h:4
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:3
 msgid "Cell size (pixels)"
 msgstr "셀 크기 (픽셀)"
 
-#: plug-ins/script-fu/scripts/news-text.scm.h:6
-#: plug-ins/script-fu/scripts/speed-text.scm.h:4
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:4
+msgid "Create a logo in the style of newspaper printing"
+msgstr "신문 인쇄 스타일의  로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:6
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:4
 #, no-c-format
 msgid "Density (%)"
 msgstr "밀도 (%)"
 
-#: plug-ins/script-fu/scripts/news-text.scm.h:9
-msgid "Newsprint Text..."
-msgstr "신문 글씨..."
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:9
+msgid "Newsprint Te_xt..."
+msgstr "신문인쇄 글자(_X)..."
 
-#: plug-ins/script-fu/scripts/old-photo.scm.h:3
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Defocus"
 msgstr "촛점 흐리기"
 
-#: plug-ins/script-fu/scripts/old-photo.scm.h:4
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:3
+msgid "Make an image look like an old photo"
+msgstr "이미지를 오래된 사진처럼 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:4
 msgid "Mottle"
 msgstr "얼룩"
 
-#: plug-ins/script-fu/scripts/old-photo.scm.h:5
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:5
 msgid "Sepia"
 msgstr "세피아"
 
-#: plug-ins/script-fu/scripts/old-photo.scm.h:7
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:7
 msgid "_Old Photo..."
 msgstr "오래된 사진(_O)..."
 
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
-msgid "Angle"
-msgstr "각도"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
-msgid "Cubic"
-msgstr "큐빅"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
-msgid "Interpolation"
-msgstr "보간법"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
-msgid "Linear"
-msgstr "선형"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
-msgid "None"
-msgstr "없음"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:11
-msgid "Relative distance of horizon"
-msgstr "수평선의 상대 거리"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:12
-msgid "Relative length of shadow"
-msgstr "그림자의 상대 길이"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:13
-msgid "_Perspective..."
-msgstr "원근 그림자(_P)..."
-
-#: plug-ins/script-fu/scripts/predator.scm.h:2
-msgid "Edge amount"
-msgstr "모서리 량"
-
-#: plug-ins/script-fu/scripts/predator.scm.h:4
-msgid "Pixel amount"
-msgstr "픽셀 량"
-
-#: plug-ins/script-fu/scripts/predator.scm.h:5
-msgid "Pixelize"
-msgstr "픽셀화"
-
-#: plug-ins/script-fu/scripts/predator.scm.h:7
-msgid "_Predator..."
-msgstr "약탈자(_P)..."
-
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:5
-msgid "Lower color"
-msgstr "아래쪽 색상"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:6
-msgid "Lower color (active)"
-msgstr "아래쪽 색상 (현재)"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:7
-msgid "Not pressed"
-msgstr "누르지 않음"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:8
-msgid "Not pressed (active)"
-msgstr "누르지 않음 (현재)"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:9
-msgid "Padding X"
-msgstr "가로 채움"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:10
-msgid "Padding Y"
-msgstr "세로 채움"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:12
-msgid "Round ratio"
-msgstr "둥근 비율"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:15
-msgid "Text color (active)"
-msgstr "글자 색상 (현재)"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:16
-msgid "Upper color"
-msgstr "위쪽 색상"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:17
-msgid "Upper color (active)"
-msgstr "위쪽 색상 (현재)"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm.h:18
-msgid "_Round Button..."
-msgstr "둥근 버튼(_R)..."
-
-#: plug-ins/script-fu/scripts/rendermap.scm.h:2
-msgid "Behaviour"
-msgstr "동작"
-
-#: plug-ins/script-fu/scripts/rendermap.scm.h:3
-msgid "Detail in Middle"
-msgstr "내부 정밀도"
-
-#: plug-ins/script-fu/scripts/rendermap.scm.h:8
-msgid "Render _Map..."
-msgstr "맵 렌더링(_M)..."
-
-#: plug-ins/script-fu/scripts/rendermap.scm.h:9
-msgid "Tile"
-msgstr "타일"
-
-#: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
-msgid "Black"
-msgstr "검정색"
-
-#: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
-msgid "Edge behaviour"
-msgstr "모서리 동작"
-
-#: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
-#: plug-ins/script-fu/scripts/waves-anim.scm.h:4
-msgid "Number of frames"
-msgstr "프레임 수"
-
-#: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
-msgid "Rippling strength"
-msgstr "물결 강도"
-
-#: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
-msgid "Smear"
-msgstr "번지기"
-
-#: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
-msgid "Wrap"
-msgstr "반복"
-
-#: plug-ins/script-fu/scripts/ripply-anim.scm.h:8
-msgid "_Rippling..."
-msgstr "잔물결(_R)..."
-
-#: plug-ins/script-fu/scripts/round-corners.scm.h:2
-msgid "Add background"
-msgstr "배경색 더하기"
-
-#: plug-ins/script-fu/scripts/round-corners.scm.h:3
-msgid "Add drop-shadow"
-msgstr "그림자 효과 더하기"
-
-#: plug-ins/script-fu/scripts/round-corners.scm.h:5
-msgid "Edge radius"
-msgstr "모서리 반지름"
-
-#: plug-ins/script-fu/scripts/round-corners.scm.h:9
-msgid "_Round Corners..."
-msgstr "둥근 코너(_R)..."
-
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
 msgid "Brush name"
 msgstr "브러시 이름"
 
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:2
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:1
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
 msgid "File name"
 msgstr "파일이름"
 
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
-msgid "To _Brush..."
-msgstr "브러쉬로 만들기(_B)..."
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:3
+msgid "New _Brush..."
+msgstr "새 붓(_B)..."
 
-#: plug-ins/script-fu/scripts/select-to-image.scm.h:2
-msgid "To _Image"
-msgstr "이미지로 만들기(_I)..."
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
+msgid "Paste the clipboard contents into a new brush"
+msgstr "클립보드에 있는 내용을 새 붓에 붙여 넣습니다."
 
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
-msgid "Filename"
-msgstr "파일이름"
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
+msgid "There is no image data in the clipboard to paste."
+msgstr "클립보드에 이미지 데이터가 없습니다."
 
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
+msgid "New _Pattern..."
+msgstr "새 무늬(_P)..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
+msgid "Paste the clipboard contents into a new pattern"
+msgstr "클립보드에 있는 내용을 새 무늬에 붙여 넣습니다."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:4
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 msgid "Pattern name"
 msgstr "무늬 이름"
 
-#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
+msgid "Add a perspective shadow to the selected region (or alpha)"
+msgstr "선택한 영역(또는 알파)에 원근 그림자를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
+msgid "Angle"
+msgstr "각도"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
+msgid "Interpolation"
+msgstr "보간법"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+msgid "Relative distance of horizon"
+msgstr "수평선의 상대 거리"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+msgid "Relative length of shadow"
+msgstr "그림자의 상대 길이"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
+msgid "_Perspective..."
+msgstr "원근 그림자(_P)..."
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:1
+msgid "Add a 'Predator' effect to the selected region (or alpha)"
+msgstr "선택한 영역(또는 알파)에 '약탈자' 효과를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:2
+msgid "Edge amount"
+msgstr "모서리 량"
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:4
+msgid "Pixel amount"
+msgstr "픽셀 량"
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:5
+msgid "Pixelize"
+msgstr "픽셀화"
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:7
+msgid "_Predator..."
+msgstr "약탈자(_P)..."
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:2
+msgid "Create images, each containing an oval button graphic"
+msgstr "타원형 버튼이 들어있는 이미지을 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:5
+msgid "Lower color"
+msgstr "아래쪽 색상"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:6
+msgid "Lower color (active)"
+msgstr "아래쪽 색상 (현재)"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:7
+msgid "Not pressed"
+msgstr "누르지 않음"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:8
+msgid "Not pressed (active)"
+msgstr "누르지 않음 (현재)"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:9
+msgid "Padding X"
+msgstr "가로 채움"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:10
+msgid "Padding Y"
+msgstr "세로 채움"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:12
+msgid "Round ratio"
+msgstr "둥근 비율"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:15
+msgid "Text color (active)"
+msgstr "글자 색상 (현재)"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:16
+msgid "Upper color"
+msgstr "위쪽 색상"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:17
+msgid "Upper color (active)"
+msgstr "위쪽 색상 (현재)"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:18
+msgid "_Round Button..."
+msgstr "둥근 버튼(_R)..."
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:1
+msgid "Behavior"
+msgstr "동작"
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
+msgid "Create an image filled with an Earth-like map pattern"
+msgstr "땅과 비슷한 지도 무늬로 채워진 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
+msgid "Detail in Middle"
+msgstr "내부 정밀도"
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:8
+msgid "Render _Map..."
+msgstr "맵 렌더링(_M)..."
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:9
+msgid "Tile"
+msgstr "타일"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:1
+msgid "Reverse Layer Order"
+msgstr "레이어 순서 반전"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:2
+msgid "Reverse the order of layers in the image"
+msgstr "이미지의 레이어 순서를 반전시킵니다."
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:1
+msgid "Black"
+msgstr "검정색"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
+msgid "Create a multi-layer image by adding a ripple effect to the current image"
+msgstr "현재 이미지에 잔물결(ripple) 효과가 추가된 다중 레이어 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+msgid "Edge behavior"
+msgstr "경계선의 움직임"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:4
+msgid "Number of frames"
+msgstr "프레임 수"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:5
+msgid "Rippling strength"
+msgstr "물결 강도"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:6
+msgid "Smear"
+msgstr "번지기"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:7
+msgid "Wrap"
+msgstr "반복"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:8
+msgid "_Rippling..."
+msgstr "잔물결(_R)..."
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:1
+msgid "Add background"
+msgstr "배경색 더하기"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:2
+msgid "Add drop-shadow"
+msgstr "그림자 효과 더하기"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:4
+msgid "Edge radius"
+msgstr "모서리 반지름"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
+msgid "Round the corners of an image and optionally add a drop-shadow and background"
+msgstr "이미지의 구석을 부드럽게 만들고, 선택적으로 그림자와 배경을 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
+msgid "_Round Corners..."
+msgstr "둥근 코너(_R)..."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr "이미지의 색상표를 지정한 팔레트의 색으로 변경합니다."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
+msgid "Palette"
+msgstr "팔레트"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
+msgid "Se_t Colormap..."
+msgstr "색상표 설정(_T)..."
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+msgid "Convert a selection to a brush"
+msgstr "선택을 붓으로 변환하기"
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:5
+msgid "To _Brush..."
+msgstr "브러쉬로 만들기(_B)..."
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
+msgid "Convert a selection to an image"
+msgstr "선택을 이미지로 변환하기"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm.h:2
+msgid "To _Image"
+msgstr "이미지로 만들기(_I)..."
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+msgid "Convert a selection to a pattern"
+msgstr "선택을 무늬로 변환하기"
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 msgid "To _Pattern..."
 msgstr "무늬로 만들기(_P)..."
 
-#: plug-ins/script-fu/scripts/selection-round.scm.h:1
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "Concave"
 msgstr "오목"
 
-#: plug-ins/script-fu/scripts/selection-round.scm.h:3
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:3
 #, no-c-format
 msgid "Radius (%)"
 msgstr "반지름 (%)"
 
-#: plug-ins/script-fu/scripts/selection-round.scm.h:4
-msgid "Rounded R_ectangle..."
-msgstr "둥근 사각형(_R)..."
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
+msgid "Round the corners of the current selection"
+msgstr "현재 선택의 구석을 둥글게 만듭니다."
 
-#: plug-ins/script-fu/scripts/slide.scm.h:3
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
+msgid "Rounded R_ectangle..."
+msgstr "둥근 사각형(_E)..."
+
+#: ../plug-ins/script-fu/scripts/slide.scm.h:1
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+msgstr "이미지에 슬라이드 필름같은 프레임, 톱니바퀴 구멍, 이름표를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Font color"
 msgstr "글꼴 색"
 
-#: plug-ins/script-fu/scripts/slide.scm.h:4
+#: ../plug-ins/script-fu/scripts/slide.scm.h:4
 msgid "Number"
 msgstr "번호"
 
-#: plug-ins/script-fu/scripts/slide.scm.h:7
+#: ../plug-ins/script-fu/scripts/slide.scm.h:7
 msgid "_Slide..."
 msgstr "필름 테두리(_S)..."
 
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+msgid "Create a State Of The Art chromed logo"
+msgstr "아트 크롬(Art chromed) 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
 msgid "SOTA Chrome..."
 msgstr "소타 크롬..."
 
-#: plug-ins/script-fu/scripts/speed-text.scm.h:7
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
+msgid "Create a logo with a speedy text effect"
+msgstr "빠르게 움직이는 글자 효과를 가진 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
 msgid "Speed Text..."
 msgstr "빠르게 움직이는 글자..."
 
-#: plug-ins/script-fu/scripts/sphere.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Misc"
-msgstr "<Toolbox>/확장/Script-Fu/기타"
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:2
+msgid "Create a simple sphere with a drop shadow"
+msgstr "그림자가 있는 단순한 구체를 만듭니다."
 
-#: plug-ins/script-fu/scripts/sphere.scm.h:3
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Lighting (degrees)"
 msgstr "조명 (각도)"
 
-#: plug-ins/script-fu/scripts/sphere.scm.h:4
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:4
 msgid "Radius (pixels)"
 msgstr "반지름 (픽셀)"
 
-#: plug-ins/script-fu/scripts/sphere.scm.h:6
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:6
 msgid "Sphere color"
 msgstr "구체의 색"
 
-#: plug-ins/script-fu/scripts/sphere.scm.h:7
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:7
 msgid "_Sphere..."
 msgstr "구체(_S)..."
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
+msgid "Create an animation by mapping the current image onto a spinning sphere"
+msgstr "현재 이미지를 회전하는 구체로 매핑하는 애니메이션을 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
 msgstr "프레임"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:3
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "n 색상에 대한 인덱스 (0 = RGB로 남겨둠)"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:5
 msgid "Turn from left to right"
 msgstr "왼쪽에서 오른쪽으로 돌기"
 
-#: plug-ins/script-fu/scripts/spinning-globe.scm.h:7
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:7
 msgid "_Spinning Globe..."
 msgstr "회전하는 구체(_S)..."
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgstr "현재 레이어에 스파이어로그래프, 에피트로코이드, 리사주 곡선을 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
 msgstr "에어브러시"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:3
 msgid "Brush"
 msgstr "브러시"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Circle"
 msgstr "원"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 msgid "Color method"
 msgstr "색상 기법"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
-msgid "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://netword.com/*spyrogimp"
-msgstr "스파이로그래프, 에피트로코이드, 리사주 곡선 그리기. 자세한 정보는 http://netword.com/*spyrogimp를 참조하시오."
-
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid "Epitrochoid"
 msgstr "에피트로코이드"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Frame"
 msgstr "프레임"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
 msgid "Gradient: Loop Sawtooth"
 msgstr "그라디언트: 톱니파형 반복"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:11
 msgid "Gradient: Loop Triangle"
 msgstr "그라디언트: 삼각파형 반복"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Hexagon"
 msgstr "6각형"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Hole ratio"
 msgstr "공간 비율"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Inner teeth"
 msgstr "내부 톱니"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Lissajous"
 msgstr "리사주"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:16
 msgid "Margin (pixels)"
 msgstr "여유 공간 (픽셀): "
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 msgid "Outer teeth"
 msgstr "바깥쪽 톱니"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 msgid "Pencil"
 msgstr "연필"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Pentagon"
 msgstr "5각형"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:20
 msgid "Polygon: 10 sides"
 msgstr "다각형: 10 면"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:21
 msgid "Polygon: 7 sides"
 msgstr "다각형: 7 면"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:22
 msgid "Polygon: 8 sides"
 msgstr "다각형: 8 면"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:23
 msgid "Polygon: 9 sides"
 msgstr "다각형: 9 면"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+msgid "Rendering Spyro"
+msgstr "Spyro 렌더링"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
 msgstr "모양"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:26
 msgid "Solid Color"
 msgstr "고정 색상"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"
 msgstr "스파이로그래프"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
 msgstr "사각형"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
-#: plug-ins/script-fu/scripts/text-circle.scm.h:7
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
 msgid "Start angle"
 msgstr "시작 각도"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:30
 msgid "Tool"
 msgstr "도구"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:31
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:31
 msgid "Triangle"
 msgstr "삼각형"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:32
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:32
 msgid "Type"
 msgstr "유형"
 
-#: plug-ins/script-fu/scripts/spyrogimp.scm.h:33
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:33
 msgid "_Spyrogimp..."
-msgstr "스파이로그래프(_S)"
+msgstr "스파이로그래프(_S)..."
 
-#: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:2
 msgid "Burst color"
 msgstr "폭발 색상"
 
-#: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:3
+msgid "Create a logo using a starburst gradient"
+msgstr "별빛 무늬 그라디언트를 이용해 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:4
 msgid "Effect size (pixels * 30)"
 msgstr "효과 크기 (픽셀 * 30)"
 
-#: plug-ins/script-fu/scripts/starburst-logo.scm.h:8
-msgid "Starb_urst..."
-msgstr "폭발(_u)..."
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:5
+msgid "Fill the selected region (or alpha) with a starburst gradient and add a shadow"
+msgstr "선택한 영역(혹은 알파)을 별빛과 그림자로 채웁니다."
 
-#: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
+msgid "Starb_urst..."
+msgstr "폭발(_U)..."
+
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
+msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
+msgstr "바위느낌의 텍스쳐, 초신성 빛, 그림자가 있는 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 msgid "Effect size (pixels * 4)"
 msgstr "효과 크기 (픽셀 * 4)"
 
-#: plug-ins/script-fu/scripts/starscape-logo.scm.h:7
-msgid "Sta_rscape..."
-msgstr "별빛(_r)..."
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
+msgid "Fill the selected region (or alpha) with a rock-like texture, a nova glow, and shadow"
+msgstr "선택한 영역(혹은 알파)를 바위느낌의 텍스쳐, 초신성 빛, 그림자로 채웁니다."
 
-#: plug-ins/script-fu/scripts/swirltile.scm.h:9
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
+msgid "Sta_rscape..."
+msgstr "별빛(_R)..."
+
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
+msgid "Create an image filled with a swirled tile effect"
+msgstr "소용돌이 타일 효과로 채워진 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Swirl-_Tile..."
 msgstr "소용돌이치는 타일(_T)..."
 
-#: plug-ins/script-fu/scripts/swirltile.scm.h:10
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Whirl amount"
 msgstr "소용돌이 량"
 
-#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
+msgid "Create an image filled with a swirly pattern"
+msgstr "소용돌이 무늬로 채워진 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of times to whirl"
 msgstr "소용돌이 회수"
 
-#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
 msgid "Quarter size"
 msgstr "쿼터 크기"
 
-#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
 msgid "Whirl angle"
 msgstr "소용돌이 각도"
 
-#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:5
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:5
 msgid "_Swirly..."
 msgstr "소용돌이(_S)..."
 
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
+msgid "Add a Trace of Particles effect to the selected region (or alpha)"
+msgstr "선택한 영역(혹은 알파)에 미립자 흔적 효과를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 msgid "Base color"
 msgstr "기본 색상"
 
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
+msgid "Create a logo using a Trace Of Particles effect"
+msgstr "충돌(bump) 맵을 이용해 엠보싱 효과를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
 msgid "Edge only"
 msgstr "모서리만"
 
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
 msgid "Edge width"
 msgstr "모서리 너비"
 
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
 msgid "Hit rate"
 msgstr "히트율"
 
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
 msgid "_Particle Trace..."
 msgstr "미립자 흔적(_P)..."
 
-#: plug-ins/script-fu/scripts/text-circle.scm.h:2
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "Antialias"
 msgstr "부드럽게"
 
-#: plug-ins/script-fu/scripts/text-circle.scm.h:3
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
+msgid "Create a logo by rendering the specified text along the perimeter of a circle"
+msgstr "원호를 따라 늘어선 텍스트를 가진 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 msgid "Fill angle"
 msgstr "채우기 각도"
 
-#: plug-ins/script-fu/scripts/text-circle.scm.h:9
-msgid "Text Circle..."
-msgstr "글자로 만든 원..."
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:9
+msgid "Text C_ircle..."
+msgstr "원형으로 늘어선 텍스트(_I)..."
 
-#: plug-ins/script-fu/scripts/textured-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
+msgid "Create a textured logo with highlights, shadows, and a mosaic background"
+msgstr "강조, 그림자, 모자이크 배경을 가진 텍스쳐 로고를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Ending blend"
 msgstr "혼합 끝"
 
-#: plug-ins/script-fu/scripts/textured-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
+msgid "Fill the selected region (or alpha) with a texture and add highlights, shadows, and a mosaic background"
+msgstr "선택한 영역(또는 알파)를 텍스쳐로 채우고, 강조, 그림자, 모자이크 배경을 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
 msgstr "6각형"
 
-#: plug-ins/script-fu/scripts/textured-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:9
 msgid "Mosaic tile type"
 msgstr "모자이크 타일 형태"
 
-#: plug-ins/script-fu/scripts/textured-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:10
 msgid "Octagons"
 msgstr "8각형"
 
-#: plug-ins/script-fu/scripts/textured-logo.scm.h:12
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:12
 msgid "Squares"
 msgstr "사각형"
 
-#: plug-ins/script-fu/scripts/textured-logo.scm.h:13
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:13
 msgid "Starting blend"
 msgstr "혼합 시작"
 
-#: plug-ins/script-fu/scripts/textured-logo.scm.h:15
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:15
 msgid "Text pattern"
 msgstr "글자 무늬"
 
-#: plug-ins/script-fu/scripts/textured-logo.scm.h:16
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:16
 msgid "_Textured..."
 msgstr "텍스쳐(_T)..."
 
-#: plug-ins/script-fu/scripts/tileblur.scm.h:1
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:1
 msgid "Blur horizontally"
 msgstr "가로로 흐릿하게"
 
-#: plug-ins/script-fu/scripts/tileblur.scm.h:2
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
+msgid "Blur the edges of an image so the result tiles seamlessly"
+msgstr "이미지의 경계부분을 흐릿하게 만들어 연속적인 타일로 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur type"
 msgstr "흐릿한 형태"
 
-#: plug-ins/script-fu/scripts/tileblur.scm.h:3
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:4
 msgid "Blur vertically"
 msgstr "세로로 흐릿하게"
 
-#: plug-ins/script-fu/scripts/tileblur.scm.h:4
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:5
 msgid "IIR"
 msgstr "IIR"
 
-#: plug-ins/script-fu/scripts/tileblur.scm.h:5
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:6
 msgid "RLE"
 msgstr "RLE"
 
-#: plug-ins/script-fu/scripts/tileblur.scm.h:7
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:8
 msgid "_Tileable Blur..."
 msgstr "타일 형태로 흐릿하게(_T)..."
 
-#: plug-ins/script-fu/scripts/title-header.scm.h:6
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:1
+msgid "Create a decorative web title header"
+msgstr "장식된 웹 제목 헤더를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:6
 msgid "Web Title Header..."
 msgstr "웹페이지 머릿 제목..."
 
-#: plug-ins/script-fu/scripts/truchet.scm.h:4
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:3
+msgid "Create an image filled with a Truchet pattern"
+msgstr "트뤼셰(Truchet) 무늬로 채워진 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground color"
 msgstr "전경색"
 
-#: plug-ins/script-fu/scripts/truchet.scm.h:7
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:7
 msgid "T_ruchet..."
-msgstr "트뤼셰(_r)..."
+msgstr "트뤼셰(Truchet)(_R)..."
 
-#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
 msgid "Mask opacity"
 msgstr "마스크 투명도"
 
-#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
 msgid "Mask size"
 msgstr "마스크 크기"
 
-#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:4
-msgid "_Unsharp Mask..."
-msgstr "언샤픈 마스크(_U)..."
-
-#: plug-ins/script-fu/scripts/waves-anim.scm.h:2
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:1
 msgid "Amplitude"
 msgstr "진폭"
 
-#: plug-ins/script-fu/scripts/waves-anim.scm.h:3
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:2
+msgid "Create a multi-layer image with an effect like a stone was thrown into the current image"
+msgstr "기존 이미지에 돌이 던져진 것 같은 효과를 가진 다중 레이어 이미지를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
 msgstr "방향 뒤집기"
 
-#: plug-ins/script-fu/scripts/waves-anim.scm.h:5
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:5
 msgid "Wavelength"
 msgstr "파장"
 
-#: plug-ins/script-fu/scripts/waves-anim.scm.h:6
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:6
 msgid "_Waves..."
 msgstr "물결(_W)..."
 
-#: plug-ins/script-fu/scripts/weave.scm.h:2
+#: ../plug-ins/script-fu/scripts/weave.scm.h:1
+msgid "Create a new layer filled with a weave effect to be used as an overlay or bump map"
+msgstr "덧씌우기나 충돌(bump)맵을 이용해 엮은 효과를 채워진 새 레이어를 만듭니다."
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
 msgstr "섬유다발 간격"
 
-#: plug-ins/script-fu/scripts/weave.scm.h:3
+#: ../plug-ins/script-fu/scripts/weave.scm.h:3
 msgid "Ribbon width"
 msgstr "섬유다발 너비"
 
-#: plug-ins/script-fu/scripts/weave.scm.h:4
+#: ../plug-ins/script-fu/scripts/weave.scm.h:4
 msgid "Shadow darkness"
 msgstr "그림자의 어두운 정도"
 
-#: plug-ins/script-fu/scripts/weave.scm.h:5
+#: ../plug-ins/script-fu/scripts/weave.scm.h:5
 msgid "Shadow depth"
 msgstr "그림자 심도"
 
-#: plug-ins/script-fu/scripts/weave.scm.h:6
+#: ../plug-ins/script-fu/scripts/weave.scm.h:6
 msgid "Thread density"
 msgstr "섬유 밀도"
 
-#: plug-ins/script-fu/scripts/weave.scm.h:7
+#: ../plug-ins/script-fu/scripts/weave.scm.h:7
 msgid "Thread intensity"
 msgstr "섬유 장력"
 
-#: plug-ins/script-fu/scripts/weave.scm.h:8
+#: ../plug-ins/script-fu/scripts/weave.scm.h:8
 msgid "Thread length"
 msgstr "섬유 길이"
 
-#: plug-ins/script-fu/scripts/weave.scm.h:9
+#: ../plug-ins/script-fu/scripts/weave.scm.h:9
 msgid "_Weave..."
-msgstr "엮기(_W)"
+msgstr "엮기(_W)..."
 
-#: plug-ins/script-fu/scripts/web-browser.scm.h:1
-msgid "<Toolbox>/Help/The GIMP Online"
-msgstr "<Toolbox>/도움말/김프 온라인"
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
+msgid "Bookmark to the GIMP web site"
+msgstr "김프 사이트를 북마크하기"
 
-#: plug-ins/script-fu/scripts/web-browser.scm.h:2
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
+msgid "Bookmark to the user manual"
+msgstr "사용자 설명서를 북마크하기"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
+msgid "Create and Use _Selections"
+msgstr "선택을 만들고 사용하기(_S)"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
+msgid "Create, Open and Save _Files"
+msgstr "파일을 만들고 열고, 저장하기(_F)"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
+msgid "Drawing _Simple Objects"
+msgstr "간단한 개체 그리기(_S)"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
+msgid "How to Use _Dialogs"
+msgstr "대화상자 사용법(_D)"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
 msgid "Plug-in _Registry"
 msgstr "플러그인 레지스트리(_R)"
 
-#: plug-ins/script-fu/scripts/web-browser.scm.h:3
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
+msgid "Using _Paths"
+msgstr "경로 사용(_P)"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
+msgid "_Basic Concepts"
+msgstr "기본 개념(_B)"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
 msgid "_Developer Web Site"
 msgstr "개발자 웹사이트(_D)"
 
-#: plug-ins/script-fu/scripts/web-browser.scm.h:4
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
 msgid "_Main Web Site"
 msgstr "공식 웹사이트(_M)"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:2
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
+msgid "_Preparing your Images for the Web"
+msgstr "웹페이지에 사용할 이미지 준비하기(_P)"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
+msgid "_User Manual Web Site"
+msgstr "사용자 설명서 웹사이트(_U)"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
+msgid "_Working with Digital Camera Photos"
+msgstr "디지털 카메라 사진으로 작업하기(_W)"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
+msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
+msgstr "선택한 영역(또는 알파)에 미묘하게 반투명한 3D 효과를 추가합니다."
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
 msgstr "그림자 효과 X 오프셋"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:3
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:3
 msgid "Drop shadow Y offset"
 msgstr "그림자 효과 Y 오프셋"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:4
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:4
 msgid "Drop shadow blur radius"
 msgstr "그림자 효과 흐릿한 영역 반지름"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:5
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:5
 msgid "Drop shadow color"
 msgstr "그림자 효과 색상"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:6
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:6
 msgid "Drop shadow opacity"
 msgstr "그림자 효과 투명도"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:7
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
 msgid "Highlight X offset"
 msgstr "하일라이트 X 오프셋"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:8
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
 msgid "Highlight Y offset"
 msgstr "하일라이트 Y 오프셋"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:10
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "하일라이트 불투명도"
 
-#: plug-ins/script-fu/scripts/xach-effect.scm.h:12
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
-msgstr "_Xach 효과..."
-
-#~ msgid "Buffer amount (% height of text)"
-#~ msgstr "버퍼 량 (텍스트 높이의 %)"
-#~ msgid "_ASCII to Layer..."
-#~ msgstr "아스키를 레이어로(_A)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
-#~ msgstr "<Toolbox>/확장/Script-Fu/스크립트 새로 고침(_R)"
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/3D 윤곽선(_O)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/3D 윤곽선(_O)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/패턴/3D 트뤼쉐(_D)..."
-#~ msgid "<Image>/Script-Fu/Decor/Add B_evel..."
-#~ msgstr "<Image>/Script-Fu/장식/베벨 더하기(_E)..."
-#~ msgid "<Image>/Script-Fu/Decor/Add _Border..."
-#~ msgstr "<Image>/Script-Fu/장식/테두리 더하기(_B)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/웹 페이지 테마/외계의 빛/화살표(_A)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/웹 페이지 테마/외계의 빛/글머리표(_B)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/웹 페이지 테마/외계의 빛/버튼(_U)..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Glow..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/외계의 빛(_G)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Glow..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/외계의 빛(_G)..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Neon..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/외계의 네온(_N)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Neon..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/외계의 네온(_N)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/유틸리티/아스키를 이미지로(_A)..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Basic I..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/기본 I(_B)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Basic I..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/기본 I(_B)..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/B_asic II..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/기본 II(_A)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/B_asic II..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/기본 II(_A)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/웹 페이지 테마/베벨 무늬/글머리표(_B)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/웹 페이지 테마/베벨 무늬/버튼(_U)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/웹 페이지 테마/베벨 무늬/제목(_E)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/웹 페이지 테마/베벨 무늬/수평선(_H)..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Blen_ded..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/블렌드(_D)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."
-#~ msgstr "<Toolbox>/Xtns/Script-Fu/로고/블렌드(_D)..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Bo_vination..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/점박이(_V)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/점박이(_V)..."
-#~ msgid "<Image>/Script-Fu/Animators/B_urn-In..."
-#~ msgstr "<Image>/Script-Fu/에니메이터/태우기(_U)..."
-#~ msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
-#~ msgstr "전경(글자) 레이어와 배경 레이어대한 태우기 효과; V2.1"
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Camouflage..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/무늬/위장(_C)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/조각..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Chalk..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/분필(_C)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/분필(_C)..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Chip Awa_y..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/부식(_Y)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/부식(_Y)..."
-#~ msgid "<Image>/Script-Fu/Stencil Ops/C_hrome-It..."
-#~ msgstr "<Image>/Script-Fu/스텐실 효과/크롬..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/C_hrome..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/크롬(_H)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/C_hrome..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/크롬(_H)..."
-#~ msgid "<Image>/Script-Fu/Render/_Circuit..."
-#~ msgstr "<Image>/Script-Fu/렌더/회로(_C)..."
-#~ msgid "<Image>/Script-Fu/Alchemy/_Clothify..."
-#~ msgstr "<Image>/Script-Fu/연금술/옷감(_C)..."
-#~ msgid "<Image>/Script-Fu/Decor/_Coffee Stain..."
-#~ msgstr "<Image>/Script-Fu/장식/커피 얼룩(_C)..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Comic Boo_k..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/만화책(_K)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Boo_k..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/만화책(_K)..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Cool _Metal..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/차가운 금속(_M)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/차가운 금속(_M)..."
-
-
-#~ msgid "<Image>/Edit/Copy/Copy _Visible"
-#~ msgstr "<Image>/편집/보이는 대로 복사(_V)"
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/크리스탈..."
-#~ msgid "<Image>/Script-Fu/Selection/_Fade Outline..."
-#~ msgstr "<Image>/Script-Fu/선택/윤곽선 희미하게(_F)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Flatland..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/무늬/평평한 땅(_F)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/유틸리티/글꼴 목록(_F)..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Frosty..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/얼어붙은(_F)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Frosty..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/얼어붙은(_F)..."
-#~ msgid "<Image>/Script-Fu/Decor/_Fuzzy Border..."
-#~ msgstr "<Image>/Script-Fu/장식/보풀있는 경계선(_F)..."
-
-
-#~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/웹 페이지 테마/Gimp.Org/작은 제목(_S)..."
-
-
-#~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-"
-#~ "Button Label..."
-#~ msgstr ""
-#~ "<Toolbox>/확장/Script-Fu/웹 페이지 테마/Gimp.Org/튜브 아래-단추 레이블"
-#~ "(_U)..."
-
-
-#~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
-#~ "Button Label..."
-#~ msgstr ""
-#~ "<Toolbox>/확장/Script-Fu/웹 페이지 테마/Gimp.Org/튜브 아래-아래-단추 레이"
-#~ "블(_E)..."
-
-
-#~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
-#~ "Labels..."
-#~ msgstr ""
-#~ "<Toolbox>/확장/Script-Fu/웹 페이지 테마/Gimp.Org/일반 튜브 레이블(_G)..."
-
-
-#~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
-#~ "Label..."
-#~ msgstr ""
-#~ "<Toolbox>/확장/Script-Fu/웹 페이지 테마/Gimp.Org/튜브 단추 레이블(_T)..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/광택(_S)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/광택(_S)..."
-
-
-#~ msgid "Use tattern for outline instead of gradient"
-#~ msgstr "윤곽선에 그라디언트 대신 무늬 사용"
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/작열(_W)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_wing Hot..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/작열(_W)..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Beve_l..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/그라디언트 베벨(_L)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/그라디언트 베벨(_L)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/유틸리티/커스텀 그라디언트(_G)..."
-#~ msgid "<Image>/Script-Fu/Render/_Grid..."
-#~ msgstr "<Image>/Script-Fu/렌더/모눈(_G)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/두 색 손 글씨(Imigre-26)..."
-#~ msgid "<Image>/Script-Fu/Render/Line _Nova..."
-#~ msgstr "<Image>/Script-Fu/렌더/선분으로 그린 별(_N)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/브러시 만들기/타원형, 부드러운 경계(_P)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/브러시 만들기/사각형, 부드러운 경계(_C)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/브러시 만들기/사각형(_R)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/네온(_E)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/신문 인쇄 글자..."
-#~ msgid "<Image>/Script-Fu/Decor/_Old Photo..."
-#~ msgstr "<Image>/Script-Fu/장식/오래된 사진(_O)..."
-#~ msgid "<Image>/Script-Fu/Shadow/_Perspective..."
-#~ msgstr "<Image>/Script-Fu/그림자/원근감있는 그림자 효과(_P)..."
-#~ msgid "<Image>/Script-Fu/Alchemy/_Predator..."
-#~ msgstr "<Image>/Script-Fu/연금술/프레데터(_P)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/버튼/둥근 단추(_R)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/무늬/지도(_M)..."
-#~ msgid "<Image>/Script-Fu/Animators/_Rippling..."
-#~ msgstr "<Image>/Script-Fu/애니메이터/물결(_R)..."
-#~ msgid "<Image>/Script-Fu/Decor/_Round Corners..."
-#~ msgstr "<Image>/Script-Fu/장식/둥근 모서리(_R)..."
-#~ msgid "<Image>/Script-Fu/Selection/To _Brush..."
-#~ msgstr "<Image>/Script-Fu/선택/브러시로(_B)..."
-#~ msgid "<Image>/Script-Fu/Selection/To _Pattern..."
-#~ msgstr "<Image>/Script-Fu/선택/무늬로(_P)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/SOTA 크롬..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/빠른 글자..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/기타/구(_S)..."
-#~ msgid "<Image>/Script-Fu/Animators/_Spinning Globe..."
-#~ msgstr "<Image>/Script-Fu/에니메이터/회전하는 지구(_S)..."
-#~ msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
-#~ msgstr "<Image>/Script-Fu/렌더러/스파이로김프(_S)..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/별의 폭발(_U)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/별의 폭발(_U)..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/Sta_rscape..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/우주공간(_R)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/우주공간(_R)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/무늬/소용돌이-타일(_T)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/무늬/소용돌이(_S)..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Particle Trace..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/입자 추적(_P)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/입자 추적(_P)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/글자 동그라미..."
-#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Textured..."
-#~ msgstr "<Image>/Script-Fu/알파를 로고로/재질감 주기(_T)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/재질감 주기(_T)..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/로고/웹 제목 헤더..."
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/패턴/트루쳇(_R)..."
-#~ msgid "<Image>/Script-Fu/Alchemy/_Unsharp Mask..."
-#~ msgstr "<Image>/Script-Fu/연금술/마스크 덜 선명하게(_U)..."
-#~ msgid "<Image>/Script-Fu/Animators/_Waves..."
-#~ msgstr "<Image>/Script-Fu/에니메이터/파동(_W)..."
-#~ msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
-#~ msgstr "<Toolbox>/도움말/김프 온라인/플로그인 저장소(_R)"
-#~ msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
-#~ msgstr "<Toolbox>/도움말/김프 온라인/개발자 웹 사이트(_D)"
-#~ msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
-#~ msgstr "<Image>/Script-Fu/그림자/입체적인 그림자 효과(_X)..."
-#~ msgid "Re-read all available scripts"
-#~ msgstr "모든 가용한 스크립트 다시 읽기"
-
-
-#~ msgid "Relative radius"
-#~ msgstr "상대 반지름"
-
-
-#~ msgid "_About"
-#~ msgstr "정보"
-#~ msgid "DB Browser"
-#~ msgstr "DB 찾아보기"
-#~ msgid "Blurb:"
-#~ msgstr "설명:"
-#~ msgid "In:"
-#~ msgstr "입력:"
-#~ msgid "Out:"
-#~ msgstr "출력:"
-#~ msgid "Help:"
-#~ msgstr "도움말:"
-#~ msgid "Font Size (pixels)"
-#~ msgstr "글꼴 크기 (픽셀)"
-#~ msgid "Text Color"
-#~ msgstr "글자 색상"
-#~ msgid "Transparent Background"
-#~ msgstr "투명 배경"
-#~ msgid "Unable to open a stream on the SIOD output pipe"
-#~ msgstr "SIOD 출력 파이프에 대한 스트림을 열 수 없습니다"
-#~ msgid "Unable to open the SIOD output pipe"
-#~ msgstr "SIOD 출력 파이프를 열 수 없습니다"
-
-
-#~ msgid "Blend gradient (sext)"
-#~ msgstr "혼합 그라디언트 (글자)"
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
-#~ msgstr "<Toolbox>/확장/Script-Fu/Script-Fu 콘솔(_C)"
-#~ msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
-#~ msgstr "<Toolbox>/확장/Script-Fu/서버 시작(_S)..."
+msgstr "Xach 효과(_X)..."
 

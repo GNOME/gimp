@@ -1,3 +1,7 @@
+2008-02-22  Changwoo Ryu  <cwryu@debian.org>
+
+	* ko.po: Updated Korean translation by Choi, Ji-Hui.
+
 2008-02-13  Sven Neumann  <sven@gimp.org>
 
 	* eo.po: fixed header fields (copied from po/eo.po).
