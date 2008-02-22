@@ -29,12 +29,18 @@
 
 static cairo_surface_t * print_cairo_surface_from_drawable (gint32 drawable_ID);
 
-static inline void       convert_from_rgb  (const guchar *src,
-                                            guchar       *dest,
-                                            gint          pixels);
-static inline void       convert_from_rgba (const guchar *src,
-                                            guchar       *dest,
-                                            gint          pixels);
+static inline void       convert_from_gray  (const guchar *src,
+                                             guchar       *dest,
+                                             gint          pixels);
+static inline void       convert_from_graya (const guchar *src,
+                                             guchar       *dest,
+                                             gint          pixels);
+static inline void       convert_from_rgb   (const guchar *src,
+                                             guchar       *dest,
+                                             gint          pixels);
+static inline void       convert_from_rgba  (const guchar *src,
+                                             guchar       *dest,
+                                             gint          pixels);
 
 
 gboolean
@@ -110,6 +116,14 @@ print_cairo_surface_from_drawable (gint32 drawable_ID)
         {
           switch (region.bpp)
             {
+            case 1:
+              convert_from_gray (src, dest, region.w);
+              break;
+
+            case 2:
+              convert_from_graya (src, dest, region.w);
+              break;
+
             case 3:
               convert_from_rgb (src, dest, region.w);
               break;
@@ -132,6 +146,34 @@ print_cairo_surface_from_drawable (gint32 drawable_ID)
   gimp_drawable_detach (drawable);
 
   return surface;
+}
+
+static inline void
+convert_from_gray (const guchar *src,
+                   guchar       *dest,
+                   gint          pixels)
+{
+  while (pixels--)
+    {
+      GIMP_CAIRO_RGB24_SET_PIXEL (dest, src[0], src[0], src[0]);
+
+      src  += 1;
+      dest += 4;
+    }
+}
+
+static inline void
+convert_from_graya (const guchar *src,
+                    guchar       *dest,
+                    gint          pixels)
+{
+  while (pixels--)
+    {
+      GIMP_CAIRO_ARGB32_SET_PIXEL (dest, src[0], src[0], src[0], src[1]);
+
+      src  += 2;
+      dest += 4;
+    }
 }
 
 static inline void

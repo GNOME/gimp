@@ -194,6 +194,7 @@ print_image (gint32    image_ID,
   /* export the image */
   export = gimp_export_image (&image_ID, &drawable_ID, NULL,
                               GIMP_EXPORT_CAN_HANDLE_RGB   |
+                              GIMP_EXPORT_CAN_HANDLE_GRAY  |
                               GIMP_EXPORT_CAN_HANDLE_ALPHA);
 
   if (export == GIMP_EXPORT_CANCEL)

@@ -1,6 +1,12 @@
 2008-02-22  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/print.c
+	* plug-ins/print/print-draw-page.c: added support for grayscale
+	images so we don't need to go through an extra export step.
+
+2008-02-22  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/print.c
 	* plug-ins/print/print-draw-page.[ch]: code cleanup.
 
 2008-02-22  Sven Neumann  <sven@gimp.org>
