@@ -387,7 +387,9 @@ draw_page (GtkPrintOperation *operation,
            gint               page_nr,
            PrintData         *data)
 {
-  draw_page_cairo (context, data);
+  print_draw_page (context, data);
+
+  gimp_progress_update (1.0);
 }
 
 /*

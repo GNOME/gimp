@@ -27,54 +27,70 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static inline void  convert_from_rgb  (const guchar *src,
-                                       guchar       *dest,
-                                       gint          pixels);
-static inline void  convert_from_rgba (const guchar *src,
-                                       guchar       *dest,
-                                       gint          pixels);
+static cairo_surface_t * print_cairo_surface_from_drawable (gint32 drawable_ID);
+
+static inline void       convert_from_rgb  (const guchar *src,
+                                            guchar       *dest,
+                                            gint          pixels);
+static inline void       convert_from_rgba (const guchar *src,
+                                            guchar       *dest,
+                                            gint          pixels);
 
 
 gboolean
-draw_page_cairo (GtkPrintContext *context,
+print_draw_page (GtkPrintContext *context,
                  PrintData       *data)
 {
-  GimpDrawable    *drawable = gimp_drawable_get (data->drawable_id);
-  GimpPixelRgn     region;
   cairo_t         *cr;
   cairo_surface_t *surface;
-  guchar          *pixels;
   gdouble          cr_width;
   gdouble          cr_height;
   gdouble          cr_dpi_x;
   gdouble          cr_dpi_y;
-  const gint       width    = drawable->width;
-  const gint       height   = drawable->height;
-  gint             stride;
-  gint             y;
-  gpointer         pr;
-  gdouble          scale_x;
-  gdouble          scale_y;
-  guint            count    = 0;
-  guint            done     = 0;
 
   cr = gtk_print_context_get_cairo_context (context);
+
+  surface = print_cairo_surface_from_drawable (data->drawable_id);
 
   cr_width  = gtk_print_context_get_width  (context);
   cr_height = gtk_print_context_get_height (context);
   cr_dpi_x  = gtk_print_context_get_dpi_x  (context);
   cr_dpi_y  = gtk_print_context_get_dpi_y  (context);
 
-  scale_x = cr_dpi_x / data->xres;
-  scale_y = cr_dpi_y / data->yres;
-
   cairo_translate (cr,
                    data->offset_x / cr_dpi_x * 72.0,
                    data->offset_y / cr_dpi_y * 72.0);
-  cairo_scale (cr, scale_x, scale_y);
+  cairo_scale (cr,
+               cr_dpi_x / data->xres, cr_dpi_y / data->yres);
 
-  surface = cairo_image_surface_create (gimp_drawable_has_alpha (data->drawable_id) ?
-                                        CAIRO_FORMAT_ARGB32 : CAIRO_FORMAT_RGB24,
+  cairo_rectangle (cr,
+                   0, 0,
+                   cairo_image_surface_get_width (surface),
+                   cairo_image_surface_get_height (surface));
+  cairo_set_source_surface (cr, surface, 0, 0);
+  cairo_fill (cr);
+  cairo_surface_destroy (surface);
+
+  return TRUE;
+}
+
+static cairo_surface_t *
+print_cairo_surface_from_drawable (gint32 drawable_ID)
+{
+  GimpDrawable    *drawable = gimp_drawable_get (drawable_ID);
+  GimpPixelRgn     region;
+  cairo_surface_t *surface;
+  const gint       width    = drawable->width;
+  const gint       height   = drawable->height;
+  guchar          *pixels;
+  gint             stride;
+  guint            count    = 0;
+  guint            done     = 0;
+  gpointer         pr;
+
+  surface = cairo_image_surface_create (gimp_drawable_has_alpha (drawable_ID) ?
+                                        CAIRO_FORMAT_ARGB32 :
+                                        CAIRO_FORMAT_RGB24,
                                         width, height);
 
   pixels = cairo_image_surface_get_data (surface);
@@ -88,6 +104,7 @@ draw_page_cairo (GtkPrintContext *context,
     {
       const guchar *src  = region.data;
       guchar       *dest = pixels + region.y * stride + region.x * 4;
+      gint          y;
 
       for (y = 0; y < region.h; y++)
         {
@@ -112,18 +129,10 @@ draw_page_cairo (GtkPrintContext *context,
         gimp_progress_update ((gdouble) done / (width * height));
     }
 
-  cairo_set_source_surface (cr, surface, 0, 0);
-  cairo_rectangle (cr, 0, 0, width, height);
-  cairo_fill (cr);
-  cairo_surface_destroy (surface);
-
-  gimp_progress_update (1.0);
-
   gimp_drawable_detach (drawable);
 
-  return TRUE;
+  return surface;
 }
-
 
 static inline void
 convert_from_rgb (const guchar *src,

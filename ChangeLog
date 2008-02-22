@@ -1,5 +1,10 @@
 2008-02-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print.c
+	* plug-ins/print/print-draw-page.[ch]: code cleanup.
+
+2008-02-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/tileit.c
 	* plug-ins/common/warp.c
 	* plug-ins/common/struc.c: fixed the same problem as in the Wind
