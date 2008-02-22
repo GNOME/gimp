@@ -310,18 +310,20 @@ render_blast (GimpDrawable *drawable,
   else
     {
       if (gimp_drawable_mask_intersect (drawable->drawable_id,
-                                        &x1, &y1, &x2, &y2))
+                                        &x1, &y1, &width, &height))
         {
           gimp_progress_init (_("Rendering blast"));
 
-          width = x2 - x1;
-          height = y2 - y1;
+          x2 = x1 + width;
+          y2 = y1 + height;
 
           gimp_pixel_rgn_init (&dest_region, drawable,
                                x1, y1, width, height, TRUE, TRUE);
         }
       else
-        return;
+        {
+          return;
+        }
     }
 
   gimp_pixel_rgn_init (&src_region,  drawable,
@@ -356,7 +358,9 @@ render_blast (GimpDrawable *drawable,
       else
         {
           gimp_pixel_rgn_set_row (&dest_region, buffer, x1, row, width);
-          gimp_progress_update ((double) (row - y1)/ (double) (height));
+
+          if (row % 8 == 0)
+            gimp_progress_update ((double) (row - y1)/ (double) (height));
         }
 
       if (marker)
@@ -481,7 +485,9 @@ render_wind (GimpDrawable *drawable,
       else
         {
           gimp_pixel_rgn_set_row (&dest_region, sb, x1, row, width);
-          gimp_progress_update ((double) (row - y1)/ (double) (height));
+
+          if (row % 8 == 0)
+            gimp_progress_update ((double) (row - y1)/ (double) (height));
         }
     }
 
