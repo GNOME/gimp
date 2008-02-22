@@ -73,7 +73,9 @@ draw_page_cairo (GtkPrintContext *context,
                    data->offset_y / cr_dpi_y * 72.0);
   cairo_scale (cr, scale_x, scale_y);
 
-  surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, width, height);
+  surface = cairo_image_surface_create (gimp_drawable_has_alpha (data->drawable_id) ?
+                                        CAIRO_FORMAT_ARGB32 : CAIRO_FORMAT_RGB24,
+                                        width, height);
 
   pixels = cairo_image_surface_get_data (surface);
   stride = cairo_image_surface_get_stride (surface);
@@ -89,7 +91,7 @@ draw_page_cairo (GtkPrintContext *context,
 
       for (y = 0; y < region.h; y++)
         {
-          switch (drawable->bpp)
+          switch (region.bpp)
             {
             case 3:
               convert_from_rgb (src, dest, region.w);
@@ -123,9 +125,6 @@ draw_page_cairo (GtkPrintContext *context,
 }
 
 
-#define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
-#define INT_BLEND(a,b,alpha,tmp)  (INT_MULT((a) - (b), alpha, tmp) + (b))
-
 static inline void
 convert_from_rgb (const guchar *src,
                   guchar       *dest,
@@ -147,23 +146,7 @@ convert_from_rgba (const guchar *src,
 {
   while (pixels--)
     {
-      guint32 r = src[0];
-      guint32 g = src[1];
-      guint32 b = src[2];
-      guint32 a = src[3];
-
-      if (a != 255)
-        {
-          guint32 tmp;
-
-          /* composite on a white background */
-
-          r = INT_BLEND (r, 255, a, tmp);
-          g = INT_BLEND (g, 255, a, tmp);
-          b = INT_BLEND (b, 255, a, tmp);
-        }
-
-      GIMP_CAIRO_RGB24_SET_PIXEL (dest, r, g, b);
+      GIMP_CAIRO_ARGB32_SET_PIXEL (dest, src[0], src[1], src[2], src[3]);
 
       src  += 4;
       dest += 4;

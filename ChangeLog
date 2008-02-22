@@ -1,5 +1,11 @@
 2008-02-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print-draw-page.c (draw_page_cairo): when
+	printing an image with alpha channel, use a Cairo surface with
+	alpha channel instead of doing a blend on a white background.
+
+2008-02-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print-draw-page.c (draw_page_cairo): access the
 	pixels tile-by-tile instead of row-by-row.
 
