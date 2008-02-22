@@ -437,18 +437,21 @@ render_wind (GimpDrawable *drawable,
     }
   else
     {
-      if (gimp_drawable_mask_intersect (drawable->drawable_id, &x1, &y1, &x2, &y2))
+      if (gimp_drawable_mask_intersect (drawable->drawable_id,
+                                        &x1, &y1, &width, &height))
         {
           gimp_progress_init (_("Rendering wind"));
 
-          width = x2 - x1;
-          height = y2 - y1;
+          x2 = x1 + width;
+          y2 = y1 + height;
 
           gimp_pixel_rgn_init (&dest_region, drawable,
                                x1, y1, width, height, TRUE, TRUE);
         }
       else
-        return;
+        {
+          return;
+        }
     }
 
   gimp_pixel_rgn_init (&src_region, drawable,

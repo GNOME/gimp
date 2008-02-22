@@ -1,3 +1,11 @@
+2008-02-22  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/common/wind.c (render_wind): fixed call to
+	gimp_drawable_mask_intersect() which was causing a crash as
+	reported in bug #516369.
+
 2008-02-21  Michael Natterer  <mitch@gimp.org>
 
 	Merged from trunk:
