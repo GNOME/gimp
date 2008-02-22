@@ -1,6 +1,10 @@
 2008-02-22  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/print/print.c
+	* plug-ins/print/print.c: use GTK_STOCK_PAGE_SETUP when compiled
+	against GTK+ >= 2.13.0.
+
+2008-02-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print-draw-page.c: added support for grayscale
 	images so we don't need to go through an extra export step.
 
