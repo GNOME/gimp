@@ -747,8 +747,11 @@ blur16 (GimpDrawable *drawable)
   /* --------------------------------------- */
 
   if (! gimp_drawable_mask_intersect (drawable->drawable_id,
-                                      &x1, &y1, &x2, &y2))
+                                      &x1, &y1, &width, &height))
     return;
+
+  x2 = x1 + width;
+  y2 = y1 + height;
 
   width = drawable->width;     /* size of input drawable*/
   height = drawable->height;
@@ -919,8 +922,11 @@ diff (GimpDrawable *drawable,
    *  faster, since fewer pixels need to be operated on).
    */
   if (! gimp_drawable_mask_intersect (drawable->drawable_id,
-                                      &x1, &y1, &x2, &y2))
+                                      &x1, &y1, &width, &height))
     return;
+
+  x2 = x1 + width;
+  y2 = y1 + height;
 
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
@@ -1235,8 +1241,11 @@ warp (GimpDrawable *orig_draw)
 
   /* Get selection area */
   if (! gimp_drawable_mask_intersect (orig_draw->drawable_id,
-                                      &x1, &y1, &x2, &y2))
+                                      &x1, &y1, &width, &height))
     return;
+
+  x2 = x1 + width;
+  y2 = y1 + height;
 
   width  = orig_draw->width;
   height = orig_draw->height;

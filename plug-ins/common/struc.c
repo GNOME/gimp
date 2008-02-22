@@ -1374,15 +1374,13 @@ strucpi (GimpDrawable *drawable,
        *  faster, since fewer pixels need to be operated on).
        */
       if (! gimp_drawable_mask_intersect (drawable->drawable_id,
-                                          &x1, &y1, &x2, &y2))
+                                          &x1, &y1, &width, &height))
         return;
 
-      /* Get the size of the input image. (This will/must be the same
-       *  as the size of the output image.
-       */
-      width = x2 - x1;
-      height = y2 - y1;
+      x2 = x1 + width;
+      y2 = y1 + height;
     }
+
   bytes = drawable->bpp;
 
   /*  allocate row buffers  */

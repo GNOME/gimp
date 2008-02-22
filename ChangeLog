@@ -2,6 +2,15 @@
 
 	Merged from trunk:
 
+	* plug-ins/common/tileit.c
+	* plug-ins/common/warp.c
+	* plug-ins/common/struc.c: fixed the same problem as in the Wind
+	plug-in here as well (see bug #516369).
+
+2008-02-22  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* plug-ins/common/wind.c (render_wind) (render_blast): fixed calls
 	to gimp_drawable_mask_intersect() which was causing a crash as
 	reported in bug #516369.
