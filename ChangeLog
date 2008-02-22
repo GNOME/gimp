@@ -1,5 +1,10 @@
 2008-02-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print-draw-page.c (draw_page_cairo): access the
+	pixels tile-by-tile instead of row-by-row.
+
+2008-02-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/wind.c (render_wind) (render_blast): fixed calls
 	to gimp_drawable_mask_intersect() which was causing a crash as
 	reported in bug #516369.
