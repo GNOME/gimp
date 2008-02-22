@@ -1,3 +1,8 @@
+2008-02-22  Ilkka Tuohela <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation, including fix for
+	         bug #514362.
+
 2008-02-19  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* nb.po: Updated Norwegian bokmål translation.
