@@ -1,19 +1,20 @@
 # Hungarian translation of gimp-plug-ins.
-# Copyright (C) 2000, 2001, 2003, 2004, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2000, 2001, 2003, 2004, 2007, 2008 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-plug-ins package.
 #
 # Andras Timar <timar@gnome.hu>, 2000, 2001, 2003.
 # Emese Kovacs <emese@gnome.hu>, 2001.
 # Laszlo Dvornik <dvornik@gnome.hu>, 2004.
 # Arpad Biro <biro_arpad@yahoo.com>, 2004, 2007.
+# Gabor Kelemen <kelemeng@gnome.hu>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-12 10:11+0100\n"
-"PO-Revision-Date: 2007-10-14 22:43+0200\n"
-"Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
-"Language-Team: Hungarian\n"
+"PO-Revision-Date: 2008-02-23 23:06+0100\n"
+"Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
+"Language-Team: Hungarian <gnome@fsf.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -7232,9 +7233,7 @@ msgstr "Félig-lapítás"
 
 #: ../plug-ins/common/sharpen.c:113
 msgid "Make image sharper (less powerful than Unsharp Mask)"
-msgstr ""
-"A kép élesebbé tevése (nem ad olyan jó eredményt, mint a \"Maszk életlenítése"
-"\")"
+msgstr "A kép élesebbé tétele (nem ad olyan jó eredményt, mint az \"Életlen maszk\")"
 
 #: ../plug-ins/common/sharpen.c:120
 msgid "_Sharpen..."
@@ -8393,7 +8392,7 @@ msgstr "Az egyik legjobb képélesítési módszer"
 
 #: ../plug-ins/common/unsharp.c:138
 msgid "_Unsharp Mask..."
-msgstr "_Maszk életlenítése..."
+msgstr "Életlen _maszk..."
 
 #: ../plug-ins/common/unsharp.c:475
 msgid "Merging"
@@ -8401,7 +8400,7 @@ msgstr "Összefésülés"
 
 #: ../plug-ins/common/unsharp.c:642
 msgid "Unsharp Mask"
-msgstr "Maszk életlenítése"
+msgstr "Életlen maszk"
 
 #: ../plug-ins/common/video.c:41
 msgid "_Staggered"
