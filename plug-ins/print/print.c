@@ -188,6 +188,8 @@ print_image (gint32    image_ID,
   if (export != GIMP_EXPORT_EXPORT)
     image_ID = -1;
 
+  gtk_print_operation_set_unit (operation, GTK_UNIT_POINTS);
+
   g_signal_connect (operation, "begin-print",
                     G_CALLBACK (begin_print),
                     &data);
