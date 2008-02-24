@@ -18,12 +18,20 @@ Changes in GIMP 2.4.5
 - explicitly link libgimpthumb with GLib (bug #515566)
 - improved selection of the font sample string (bug #514021)
 - unified handling of "Enter" and "Space" keysyms (bug #516544)
-- translation fixes and updates (de, eu, eo, fr, he, it, ja)
+- fixed bug in the Glossy script when used with a pattern (bug #517285)
+- correctly record dimensions in Exif data when saving as JPEG (bug #517077)
+- fixed sensitivity of plug-in menu items (bug #517683)
+- fixed potential crashes in Wind, Warp, Small Tiles and Apply Canvas
+  plug-ins (bug #516369)
+- added default keyboard shortcut for "Paste As New Image" (Ctrl-Shift-V)
+- added default keyboard shortcut for "Copy Visible" (Ctrl-Shift-C)
+- translation fixes and updates (de, eu, eo, fr, he, hu, it, ja, ko)
 
 
 Contributors:
 
-   Sven Neumann, Michael Natterer, Giuliano Pochini
+   Sven Neumann, Michael Natterer, Bill Skaggs, Ulf-D. Ehlert,
+   Giuliano Pochini
 
 
 
