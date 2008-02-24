@@ -117,7 +117,7 @@ static const GimpActionEntry edit_actions[] =
     GIMP_HELP_EDIT_COPY },
 
   { "edit-copy-visible", NULL, /* GIMP_STOCK_COPY_VISIBLE, */
-    N_("Copy _Visible"), "",
+    N_("Copy _Visible"), "<control><shift>C",
     N_("Copy the selected region to the clipboard"),
     G_CALLBACK (edit_copy_visible_cmd_callback),
     GIMP_HELP_EDIT_COPY_VISIBLE },
@@ -135,7 +135,7 @@ static const GimpActionEntry edit_actions[] =
     GIMP_HELP_EDIT_PASTE_INTO },
 
   { "edit-paste-as-new", GIMP_STOCK_PASTE_AS_NEW,
-    N_("Paste as New"), NULL,
+    N_("Paste as New"), "<control><shift>V",
     N_("Create a new image from the content of the clipboard"),
     G_CALLBACK (edit_paste_as_new_cmd_callback),
     GIMP_HELP_EDIT_PASTE_AS_NEW },
@@ -147,13 +147,13 @@ static const GimpActionEntry edit_actions[] =
     GIMP_HELP_EDIT_PASTE_AS_NEW },
 
   { "edit-named-cut", GTK_STOCK_CUT,
-    N_("Cu_t Named..."), "<control><shift>X",
+    N_("Cu_t Named..."), "",
     N_("Move the selected pixels to a named buffer"),
     G_CALLBACK (edit_named_cut_cmd_callback),
     GIMP_HELP_BUFFER_CUT },
 
   { "edit-named-copy", GTK_STOCK_COPY,
-    N_("_Copy Named..."), "<control><shift>C",
+    N_("_Copy Named..."), "",
     N_("Copy the selected pixels to a named buffer"),
     G_CALLBACK (edit_named_copy_cmd_callback),
     GIMP_HELP_BUFFER_COPY },
@@ -165,7 +165,7 @@ static const GimpActionEntry edit_actions[] =
     GIMP_HELP_BUFFER_COPY },
 
   { "edit-named-paste", GTK_STOCK_PASTE,
-    N_("_Paste Named..."), "<control><shift>V",
+    N_("_Paste Named..."), "",
     N_("Paste the content of a named buffer"),
     G_CALLBACK (edit_named_paste_cmd_callback),
     GIMP_HELP_BUFFER_PASTE },
