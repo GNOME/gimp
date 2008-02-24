@@ -2,6 +2,15 @@
 
 	Merged from trunk:
 
+	* app/actions/edit-actions.c: removed default keyboard shortcuts
+	from actions that work with named buffers. Use Ctrl-Shift-V as the
+	default keyboard shortcut for "Paste As New Image" and
+	Ctrl-Shift-C for "Copy Visible".
+
+2008-02-24  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* plug-ins/print/print.c (print_image): added missing call to
 	gtk_print_operation_set_unit().
 
