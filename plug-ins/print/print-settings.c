@@ -31,12 +31,12 @@
 
 static GKeyFile * print_settings_key_file_from_settings      (PrintData         *data);
 
-static void       save_print_settings_resource_file          (GKeyFile          *settings_key_file);
+static void       print_settings_save_resource_file          (GKeyFile          *settings_key_file);
 
-static void       save_print_settings_as_parasite            (GKeyFile          *settings_key_file,
+static void       print_settings_save_as_parasite            (GKeyFile          *settings_key_file,
                                                               gint32             image_ID);
 
-static void       add_print_setting_to_key_file              (const gchar       *key,
+static void       print_settings_add_to_key_file             (const gchar       *key,
                                                               const gchar       *value,
                                                               gpointer           data);
 
@@ -44,10 +44,10 @@ static GKeyFile * print_settings_key_file_from_resource_file (void);
 
 static GKeyFile * print_settings_key_file_from_parasite      (gint32             image_ID);
 
-static gboolean   load_print_settings_from_key_file          (PrintData         *data,
+static gboolean   print_settings_load_from_key_file          (PrintData         *data,
                                                               GKeyFile          *key_file);
 
-static GKeyFile * check_version                              (GKeyFile          *key_file);
+static gboolean   print_settings_check_version               (GKeyFile          *key_file);
 
 /*
  * set GtkPrintSettings from the contents of a "print-settings"
@@ -55,7 +55,7 @@ static GKeyFile * check_version                              (GKeyFile          
  * file of the same name
  */
 gboolean
-load_print_settings (PrintData *data)
+print_settings_load (PrintData *data)
 {
   GKeyFile *key_file = print_settings_key_file_from_parasite (data->image_id);
 
@@ -64,7 +64,7 @@ load_print_settings (PrintData *data)
 
   if (key_file)
     {
-      load_print_settings_from_key_file (data, key_file);
+      print_settings_load_from_key_file (data, key_file);
       g_key_file_free (key_file);
       return TRUE;
     }
@@ -77,13 +77,11 @@ load_print_settings (PrintData *data)
  * and as an image parasite
  */
 void
-save_print_settings (PrintData *data)
+print_settings_save (PrintData *data)
 {
-  GKeyFile *key_file;
+  GKeyFile *key_file = print_settings_key_file_from_settings (data);
 
-  key_file = print_settings_key_file_from_settings (data);
-
-  save_print_settings_resource_file (key_file);
+  print_settings_save_resource_file (key_file);
 
   /* image setup */
   if (gimp_image_is_valid (data->image_id))
@@ -103,7 +101,7 @@ save_print_settings (PrintData *data)
       g_key_file_set_boolean (key_file, "image-setup",
                               "use-full-page", data->use_full_page);
 
-      save_print_settings_as_parasite (key_file, data->image_id);
+      print_settings_save_as_parasite (key_file, data->image_id);
     }
 
   g_key_file_free (key_file);
@@ -129,9 +127,10 @@ print_settings_key_file_from_settings (PrintData *data)
 
   /* save the contents of the GtkPrintSettings for the operation */
   settings = gtk_print_operation_get_print_settings (operation);
+
   if (settings)
-    gtk_print_settings_foreach (settings, add_print_setting_to_key_file,
-                                key_file);
+    gtk_print_settings_foreach (settings,
+                                print_settings_add_to_key_file, key_file);
 
   return key_file;
 }
@@ -140,7 +139,7 @@ print_settings_key_file_from_settings (PrintData *data)
  * create a resource file from a GKeyFile holding the settings
  */
 static void
-save_print_settings_resource_file (GKeyFile *settings_key_file)
+print_settings_save_resource_file (GKeyFile *settings_key_file)
 {
   gchar  *filename;
   gchar  *contents;
@@ -148,7 +147,8 @@ save_print_settings_resource_file (GKeyFile *settings_key_file)
   GError *error = NULL;
 
   contents = g_key_file_to_data (settings_key_file, &length, &error);
-  if (error)
+
+  if (! contents)
     {
       g_warning ("Unable to get contents of settings key file: %s",
                  error->message);
@@ -174,14 +174,15 @@ save_print_settings_resource_file (GKeyFile *settings_key_file)
  * holding the print settings
  */
 static void
-save_print_settings_as_parasite (GKeyFile *settings_key_file,
+print_settings_save_as_parasite (GKeyFile *settings_key_file,
                                  gint32    image_ID)
 {
-  gchar     *contents;
-  gsize      length;
-  GError    *error = NULL;
+  gchar  *contents;
+  gsize   length;
+  GError *error = NULL;
 
   contents = g_key_file_to_data (settings_key_file, &length, &error);
+
   if (! contents)
     {
       g_warning ("Unable to get contents of settings key file: %s",
@@ -199,9 +200,9 @@ save_print_settings_as_parasite (GKeyFile *settings_key_file,
  * callback used in gtk_print_settings_foreach loop
  */
 static void
-add_print_setting_to_key_file (const gchar *key,
-                               const gchar *value,
-                               gpointer     data)
+print_settings_add_to_key_file (const gchar *key,
+                                const gchar *value,
+                                gpointer     data)
 {
   GKeyFile *key_file = data;
 
@@ -214,8 +215,8 @@ add_print_setting_to_key_file (const gchar *key,
 static GKeyFile *
 print_settings_key_file_from_resource_file (void)
 {
-  GKeyFile  *key_file = g_key_file_new ();
-  gchar     *filename;
+  GKeyFile *key_file = g_key_file_new ();
+  gchar    *filename;
 
   g_key_file_set_list_separator (key_file, '=');
 
@@ -229,7 +230,13 @@ print_settings_key_file_from_resource_file (void)
 
   g_free (filename);
 
-  return check_version (key_file);
+  if (! print_settings_check_version (key_file))
+    {
+      g_key_file_free (key_file);
+      return NULL;
+    }
+
+  return key_file;
 }
 
 /* load information from an image parasite called "print-settings"
@@ -262,11 +269,17 @@ print_settings_key_file_from_parasite (gint32 image_ID)
 
   gimp_parasite_free (parasite);
 
-  return check_version (key_file);
+  if (! print_settings_check_version (key_file))
+    {
+      g_key_file_free (key_file);
+      return FALSE;
+    }
+
+  return key_file;
 }
 
 static gboolean
-load_print_settings_from_key_file (PrintData *data,
+print_settings_load_from_key_file (PrintData *data,
                                    GKeyFile  *key_file)
 {
   GtkPrintOperation  *operation = data->operation;
@@ -340,26 +353,26 @@ load_print_settings_from_key_file (PrintData *data,
   return TRUE;
 }
 
-static GKeyFile *
-check_version (GKeyFile *key_file)
+static gboolean
+print_settings_check_version (GKeyFile *key_file)
 {
   gint  major_version;
   gint  minor_version;
 
-  if (! key_file || ! g_key_file_has_group (key_file, "meta"))
-    return NULL;
+  if (! g_key_file_has_group (key_file, "meta"))
+    return FALSE;
 
   major_version = g_key_file_get_integer (key_file,
                                           "meta", "major-version", NULL);
 
   if (major_version != PRINT_SETTINGS_MAJOR_VERSION)
-    return NULL;
+    return FALSE;
 
   minor_version = g_key_file_get_integer (key_file,
                                           "meta", "minor-version", NULL);
 
   if (minor_version != PRINT_SETTINGS_MINOR_VERSION)
-    return NULL;
+    return FALSE;
 
-  return key_file;
+  return TRUE;
 }

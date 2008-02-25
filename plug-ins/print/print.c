@@ -225,7 +225,7 @@ print_image (gint32    image_ID,
 
   gimp_image_get_resolution (image_ID, &data.xres, &data.yres);
 
-  load_print_settings (&data);
+  print_settings_load (&data);
 
   if (export != GIMP_EXPORT_EXPORT)
     image_ID = -1;
@@ -251,7 +251,7 @@ print_image (gint32    image_ID,
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
       g_signal_connect_swapped (operation, "end-print",
-                                G_CALLBACK (save_print_settings),
+                                G_CALLBACK (print_settings_save),
                                 &data);
 
       g_signal_connect (operation, "create-custom-widget",

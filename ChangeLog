@@ -1,5 +1,10 @@
 2008-02-25  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print-settings.[ch]
+	* plug-ins/print/print.c: code cleanup.
+
+2008-02-25  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print.c (end_print): use g_timeout_add_seconds().
 
 2008-02-24  Sven Neumann  <sven@gimp.org>
