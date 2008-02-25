@@ -1083,6 +1083,9 @@ curves_graph_events (GtkWidget      *widget,
           curves->points[tool->channel][tool->selected][0] = x;
           curves->points[tool->channel][tool->selected][1] = 255 - y;
 
+          curves_calculate_curve (curves, tool->channel);
+          curves_update (tool, XRANGE | GRAPH);
+
           gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
           break;
 
@@ -1090,11 +1093,11 @@ curves_graph_events (GtkWidget      *widget,
           curves->curve[tool->channel][x] = 255 - y;
           tool->selected = x;
           tool->last     = y;
+
+          curves_calculate_curve (curves, tool->channel);
+          curves_update (tool, XRANGE | GRAPH);
           break;
         }
-
-      curves_calculate_curve (curves, tool->channel);
-      curves_update (tool, XRANGE | GRAPH);
 
       if (! GTK_WIDGET_HAS_FOCUS (widget))
         gtk_widget_grab_focus (widget);

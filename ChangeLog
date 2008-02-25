@@ -1,3 +1,9 @@
+2008-02-25  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcurvestool.c (curves_graph_events): in the
+	button-press handler for smooth curves, recalculate the curve
+	before updating the preview. Fixes bug #518012.
+
 2008-02-24  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
