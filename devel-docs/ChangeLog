@@ -1,3 +1,8 @@
+2008-02-25  Sven Neumann  <sven@gimp.org>
+
+	* parasites.txt: document the "print-settings" and
+	"print-page-setup" image parasites.
+
 2007-12-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am (GTKDOC_LIBS): link app/gegl/libappgegl.a
