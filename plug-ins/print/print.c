@@ -386,7 +386,7 @@ end_print (GtkPrintOperation *operation,
   gimp_progress_end ();
 
   /* generate events to solve the problems described in bug #466928 */
-  g_timeout_add (1000, (GSourceFunc) gtk_true, NULL);
+  g_timeout_add_seconds (1, (GSourceFunc) gtk_true, NULL);
 }
 
 static void
