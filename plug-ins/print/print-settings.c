@@ -29,6 +29,8 @@
 #define PRINT_SETTINGS_MAJOR_VERSION 0
 #define PRINT_SETTINGS_MINOR_VERSION 4
 
+#define PRINT_SETTINGS_NAME          "print-settings"
+
 
 static GKeyFile * print_settings_key_file_from_settings      (PrintData         *data);
 
@@ -77,7 +79,7 @@ print_settings_save (PrintData *data)
 {
   GKeyFile *key_file = print_settings_key_file_from_settings (data);
 
-  print_utils_key_file_save_as_rcfile (key_file, "print-settings");
+  print_utils_key_file_save_as_rcfile (key_file, PRINT_SETTINGS_NAME);
 
   /* image setup */
   if (gimp_image_is_valid (data->image_id))
@@ -98,7 +100,8 @@ print_settings_save (PrintData *data)
                               "use-full-page", data->use_full_page);
 
       print_utils_key_file_save_as_parasite (key_file,
-                                             data->image_id, "print-settings");
+                                             data->image_id,
+                                             PRINT_SETTINGS_NAME);
     }
 
   g_key_file_free (key_file);
@@ -140,7 +143,7 @@ print_settings_add_to_key_file (const gchar *key,
 {
   GKeyFile *key_file = data;
 
-  g_key_file_set_value (key_file, "print-settings", key, value);
+  g_key_file_set_value (key_file, PRINT_SETTINGS_NAME, key, value);
 }
 
 /*
@@ -149,7 +152,9 @@ print_settings_add_to_key_file (const gchar *key,
 static GKeyFile *
 print_settings_key_file_from_resource_file (void)
 {
-  GKeyFile *key_file = print_utils_key_file_load_from_rcfile ("print-settings");
+  GKeyFile *key_file;
+
+  key_file = print_utils_key_file_load_from_rcfile (PRINT_SETTINGS_NAME);
 
   if (key_file && ! print_settings_check_version (key_file))
     {
@@ -170,7 +175,7 @@ print_settings_key_file_from_parasite (gint32 image_ID)
   GKeyFile *key_file;
 
   key_file = print_utils_key_file_load_from_parasite (image_ID,
-                                                      "print-settings");
+                                                      PRINT_SETTINGS_NAME);
 
   if (key_file && ! print_settings_check_version (key_file))
     {
@@ -195,7 +200,7 @@ print_settings_load_from_key_file (PrintData *data,
   if (! settings)
     settings = gtk_print_settings_new ();
 
-  keys = g_key_file_get_keys (key_file, "print-settings", &n_keys, NULL);
+  keys = g_key_file_get_keys (key_file, PRINT_SETTINGS_NAME, &n_keys, NULL);
 
   if (! keys)
     return FALSE;
@@ -204,7 +209,8 @@ print_settings_load_from_key_file (PrintData *data,
     {
       gchar *value;
 
-      value = g_key_file_get_value (key_file, "print-settings", keys[i], NULL);
+      value = g_key_file_get_value (key_file,
+                                    PRINT_SETTINGS_NAME, keys[i], NULL);
 
       if (value)
         {

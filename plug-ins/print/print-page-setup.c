@@ -24,6 +24,8 @@
 #include "print-page-setup.h"
 #include "print-utils.h"
 
+#define PRINT_PAGE_SETUP_NAME  "print-page-setup"
+
 
 void
 print_page_setup_dialog (GtkPrintOperation *operation)
@@ -51,28 +53,22 @@ print_page_setup_load (GtkPrintOperation *operation,
   g_return_if_fail (GTK_IS_PRINT_OPERATION (operation));
 
   key_file = print_utils_key_file_load_from_parasite (image_ID,
-                                                      "print-page-setup");
+                                                      PRINT_PAGE_SETUP_NAME);
 
   if (! key_file)
-    key_file = print_utils_key_file_load_from_rcfile ("print-page-setup");
+    key_file = print_utils_key_file_load_from_rcfile (PRINT_PAGE_SETUP_NAME);
 
   if (key_file)
     {
       GtkPageSetup *setup;
-      GError       *error = NULL;
 
-      setup = gtk_page_setup_new_from_key_file (key_file, NULL, &error);
+      setup = gtk_page_setup_new_from_key_file (key_file,
+                                                PRINT_PAGE_SETUP_NAME, NULL);
 
       if (setup)
         {
           gtk_print_operation_set_default_page_setup (operation, setup);
           g_object_unref (setup);
-        }
-      else
-        {
-          g_warning ("unable to read page setup from key file: %s",
-                     error->message);
-          g_error_free (error);
         }
 
       g_key_file_free (key_file);
@@ -92,12 +88,12 @@ print_page_setup_save (GtkPrintOperation *operation,
 
   setup = gtk_print_operation_get_default_page_setup (operation);
 
-  gtk_page_setup_to_key_file (setup, key_file, NULL);
+  gtk_page_setup_to_key_file (setup, key_file, PRINT_PAGE_SETUP_NAME);
 
   print_utils_key_file_save_as_parasite (key_file,
-                                         image_ID, "print-page-setup");
+                                         image_ID, PRINT_PAGE_SETUP_NAME);
   print_utils_key_file_save_as_rcfile (key_file,
-                                       "print-page-setup");
+                                       PRINT_PAGE_SETUP_NAME);
 
   g_key_file_free (key_file);
 }

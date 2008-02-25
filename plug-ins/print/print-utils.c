@@ -31,7 +31,7 @@ print_utils_key_file_load_from_rcfile (const gchar *basename)
 
   g_return_val_if_fail (basename != NULL, NULL);
 
-  filename = g_build_filename (gimp_directory (), "print-settings", NULL);
+  filename = g_build_filename (gimp_directory (), basename, NULL);
 
   key_file = g_key_file_new ();
 
