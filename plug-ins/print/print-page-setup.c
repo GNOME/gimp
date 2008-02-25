@@ -22,6 +22,7 @@
 #include <libgimp/gimpui.h>
 
 #include "print-page-setup.h"
+#include "print-utils.h"
 
 
 void
@@ -41,49 +42,62 @@ print_page_setup_dialog (GtkPrintOperation *operation)
   gtk_print_operation_set_default_page_setup (operation, setup);
 }
 
-gboolean
+void
 print_page_setup_load (GtkPrintOperation *operation,
                        gint32             image_ID)
 {
-  GtkPageSetup *setup;
-  gchar        *filename;
+  GKeyFile *key_file;
 
-  filename = g_build_filename (gimp_directory (), "print-page-setup", NULL);
+  g_return_if_fail (GTK_IS_PRINT_OPERATION (operation));
 
-  setup = gtk_page_setup_new_from_file (filename, NULL);
+  key_file = print_utils_key_file_load_from_parasite (image_ID,
+                                                      "print-page-setup");
 
-  g_free (filename);
+  if (! key_file)
+    key_file = print_utils_key_file_load_from_rcfile ("print-page-setup");
 
-  if (setup)
+  if (key_file)
     {
-      gtk_print_operation_set_default_page_setup (operation, setup);
-      g_object_unref (setup);
+      GtkPageSetup *setup;
+      GError       *error = NULL;
 
-      return TRUE;
+      setup = gtk_page_setup_new_from_key_file (key_file, NULL, &error);
+
+      if (setup)
+        {
+          gtk_print_operation_set_default_page_setup (operation, setup);
+          g_object_unref (setup);
+        }
+      else
+        {
+          g_warning ("unable to read page setup from key file: %s",
+                     error->message);
+          g_error_free (error);
+        }
+
+      g_key_file_free (key_file);
     }
-
-  return FALSE;
 }
 
 void
-print_page_setup_save (GtkPrintOperation *operation)
+print_page_setup_save (GtkPrintOperation *operation,
+                       gint32             image_ID)
 {
   GtkPageSetup *setup;
-  gchar        *filename;
-  GError       *error = NULL;
+  GKeyFile     *key_file;
+
+  g_return_if_fail (GTK_IS_PRINT_OPERATION (operation));
+
+  key_file = g_key_file_new ();
 
   setup = gtk_print_operation_get_default_page_setup (operation);
 
-  filename = g_build_filename (gimp_directory (), "print-page-setup", NULL);
+  gtk_page_setup_to_key_file (setup, key_file, NULL);
 
-  gtk_page_setup_to_file (setup, filename, &error);
+  print_utils_key_file_save_as_parasite (key_file,
+                                         image_ID, "print-page-setup");
+  print_utils_key_file_save_as_rcfile (key_file,
+                                       "print-page-setup");
 
-  if (error)
-    {
-      g_message ("Error saving page setup as resource file: %s",
-                 error->message);
-      g_error_free (error);
-    }
-
-  g_free (filename);
+  g_key_file_free (key_file);
 }

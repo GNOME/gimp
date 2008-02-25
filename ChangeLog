@@ -1,5 +1,18 @@
 2008-02-25  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/Makefile.am
+	* plug-ins/print/print-utils.[ch]: added new files with utility
+	functions.
+
+	* plug-ins/print/print-settings.c: use the new utility
+	functions for loading and saving GKeyFile.
+
+	* plug-ins/print/print-page-setup.[ch]
+	* plug-ins/print/print.c: also store the page setup in an image
+	parasite. Fixes most of what remained to be done for bug #513291.
+
+2008-02-25  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print-settings.[ch]
 	* plug-ins/print/print.c: code cleanup.
 

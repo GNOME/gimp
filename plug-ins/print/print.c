@@ -301,7 +301,7 @@ page_setup (gint32 image_ID)
 
   print_page_setup_load (operation, image_ID);
   print_page_setup_dialog (operation);
-  print_page_setup_save (operation);
+  print_page_setup_save (operation, image_ID);
 
   g_object_unref (operation);
 

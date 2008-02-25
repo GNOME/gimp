@@ -49,4 +49,6 @@ print_SOURCES = \
 	print-preview.c		\
 	print-preview.h		\
 	print-settings.c	\
-	print-settings.h
+	print-settings.h	\
+	print-utils.c		\
+	print-utils.h
