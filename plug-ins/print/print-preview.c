@@ -226,7 +226,7 @@ print_preview_realize (GtkWidget *widget)
   GTK_WIDGET_CLASS (print_preview_parent_class)->realize (widget);
 
   preview->cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
-                                                GDK_FLEUR);
+                                                GDK_HAND1);
 }
 
 static void
@@ -264,18 +264,26 @@ print_preview_button_press_event (GtkWidget      *widget,
 
   if (event->type == GDK_BUTTON_PRESS && event->button == 1 && preview->inside)
     {
-      gdk_pointer_grab (event->window, FALSE,
-                        (GDK_BUTTON1_MOTION_MASK |
-                         GDK_BUTTON_RELEASE_MASK),
-                        NULL, NULL, event->time);
+      GdkCursor *cursor;
 
-      preview->orig_offset_x = preview->image_offset_x;
-      preview->orig_offset_y = preview->image_offset_y;
+      cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
+                                           GDK_FLEUR);
 
-      preview->start_x = event->x;
-      preview->start_y = event->y;
+      if (gdk_pointer_grab (event->window, FALSE,
+                            (GDK_BUTTON1_MOTION_MASK |
+                             GDK_BUTTON_RELEASE_MASK),
+                            NULL, cursor, event->time) == GDK_GRAB_SUCCESS)
+        {
+          preview->orig_offset_x = preview->image_offset_x;
+          preview->orig_offset_y = preview->image_offset_y;
 
-      preview->dragging = TRUE;
+          preview->start_x = event->x;
+          preview->start_y = event->y;
+
+          preview->dragging = TRUE;
+        }
+
+      gdk_cursor_unref (cursor);
     }
 
   return FALSE;

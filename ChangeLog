@@ -1,5 +1,10 @@
 2008-02-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print-preview.c: use a different cursor when
+	dragging, just like GimpScrolledPreview.
+
+2008-02-26  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpchainbutton.c: use event boxes without
 	visible window instead of drawing areas for the lines besides the
 	button. Fixes the background which was drawn wrongly for many
