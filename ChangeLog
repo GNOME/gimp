@@ -1,5 +1,9 @@
 2008-02-26  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: use AM_PROG_CC_C_O to fix warning with automake 1.10.
+
+2008-02-26  Sven Neumann  <sven@gimp.org>
+
 	* app/version.c (gimp_show_library_version): made the library
 	version information easier to translate.
 

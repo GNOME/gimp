@@ -139,9 +139,11 @@ AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
                    [The prefix for our gettext translation domains.])
 
+# Determine a C compiler to use
+AC_PROG_CC
+AM_PROG_CC_C_O
 
 # Initialize libtool
-AC_PROG_CC
 AM_DISABLE_STATIC
 AC_LIBTOOL_WIN32_DLL
 AM_PROG_LIBTOOL
