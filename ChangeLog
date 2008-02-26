@@ -1,3 +1,9 @@
+2008-02-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimppolygonselecttool.c: draw handles at the corners
+	and use the MOVE cursor modifier when we are moving them. Fix draw
+	tool pause/resume in button_press() plus some minor cleanup.
+
 2008-02-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/print-page-layout.[ch]
