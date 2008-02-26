@@ -1,3 +1,10 @@
+2008-02-26  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/print-preview.[ch]: derive from GtkEventBox and
+	draw on the parent window.
+
+	* plug-ins/print/print-page-layout.c: tweaked dialog layout.
+
 2008-02-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/Makefile.am

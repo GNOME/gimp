@@ -24,9 +24,6 @@
 #include "print-preview.h"
 
 
-#define DRAWING_AREA_SIZE 200
-
-
 enum
 {
   OFFSETS_CHANGED,
@@ -34,11 +31,12 @@ enum
 };
 
 
-struct _GimpPrintPreview
+struct _PrintPreview
 {
-  GtkAspectFrame  parent_instance;
+  GtkEventBox     parent_instance;
 
-  GtkWidget      *area;
+  GdkCursor      *cursor;
+
   GtkPageSetup   *page;
   GdkPixbuf      *pixbuf;
   gboolean        dragging;
@@ -54,51 +52,62 @@ struct _GimpPrintPreview
   gdouble         image_height;
 
   gboolean        use_full_page;
+
+  /* for mouse drags */
+  gdouble         orig_offset_x;
+  gdouble         orig_offset_y;
+  gint            start_x;
+  gint            start_y;
 };
 
-struct _GimpPrintPreviewClass
+struct _PrintPreviewClass
 {
-  GtkAspectFrameClass  parent_class;
+  GtkEventBoxClass  parent_class;
 
-  void (* offsets_changed)  (GimpPrintPreview *print_preview,
-                             gint              offset_x,
-                             gint              offset_y);
+  void (* offsets_changed)  (PrintPreview *print_preview,
+                             gint          offset_x,
+                             gint          offset_y);
 };
 
 
-static void      gimp_print_preview_finalize         (GObject          *object);
+static void      print_preview_finalize             (GObject        *object);
 
-static void      gimp_print_preview_size_allocate    (GtkWidget        *widget,
-                                                      GtkAllocation    *allocation,
-                                                      GimpPrintPreview *preview);
-static void      gimp_print_preview_realize          (GtkWidget        *widget);
-static gboolean  gimp_print_preview_event            (GtkWidget        *widget,
-                                                      GdkEvent         *event,
-                                                      GimpPrintPreview *preview);
+static void      print_preview_realize              (GtkWidget      *widget);
+static void      print_preview_unrealize            (GtkWidget      *widget);
+static void      print_preview_size_allocate        (GtkWidget      *widget,
+                                                     GtkAllocation  *allocation);
+static gboolean  print_preview_expose_event         (GtkWidget      *widget,
+                                                     GdkEventExpose *event);
+static gboolean  print_preview_button_press_event   (GtkWidget      *widget,
+                                                     GdkEventButton *event);
+static gboolean  print_preview_button_release_event (GtkWidget      *widget,
+                                                     GdkEventButton *event);
+static gboolean  print_preview_motion_notify_event  (GtkWidget      *widget,
+                                                     GdkEventMotion *event);
 
-static gboolean  gimp_print_preview_expose_event     (GtkWidget        *widget,
-                                                      GdkEventExpose   *eevent,
-                                                      GimpPrintPreview *preview);
+static gboolean  print_preview_is_inside            (PrintPreview   *preview,
+                                                     gdouble         x,
+                                                     gdouble         y);
+static void      print_preview_set_inside           (PrintPreview   *preview,
+                                                     gboolean        inside);
 
-static gdouble   gimp_print_preview_get_scale        (GimpPrintPreview *preview);
+static gdouble   print_preview_get_scale            (PrintPreview   *preview);
 
-static void      gimp_print_preview_get_page_size    (GimpPrintPreview *preview,
-                                                      gdouble          *paper_width,
-                                                      gdouble          *paper_height);
-static void      gimp_print_preview_get_page_margins (GimpPrintPreview *preview,
-                                                      gdouble          *left_margin,
-                                                      gdouble          *right_margin,
-                                                      gdouble          *top_margin,
-                                                      gdouble          *bottom_margin);
-
-static void      print_preview_queue_draw            (GimpPrintPreview *preview);
+static void      print_preview_get_page_size        (PrintPreview   *preview,
+                                                     gdouble        *paper_width,
+                                                     gdouble        *paper_height);
+static void      print_preview_get_page_margins     (PrintPreview   *preview,
+                                                     gdouble        *left_margin,
+                                                     gdouble        *right_margin,
+                                                     gdouble        *top_margin,
+                                                     gdouble        *bottom_margin);
 
 
-G_DEFINE_TYPE (GimpPrintPreview, gimp_print_preview, GTK_TYPE_ASPECT_FRAME)
+G_DEFINE_TYPE (PrintPreview, print_preview, GTK_TYPE_EVENT_BOX)
 
-#define parent_class gimp_print_preview_parent_class
+#define parent_class print_preview_parent_class
 
-static guint gimp_print_preview_signals[LAST_SIGNAL] = { 0 };
+static guint print_preview_signals[LAST_SIGNAL] = { 0 };
 
 
 #define g_marshal_value_peek_double(v)   (v)->data[0].v_double
@@ -142,69 +151,51 @@ marshal_VOID__DOUBLE_DOUBLE (GClosure     *closure,
 }
 
 static void
-gimp_print_preview_class_init (GimpPrintPreviewClass *klass)
+print_preview_class_init (PrintPreviewClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  gimp_print_preview_signals[OFFSETS_CHANGED] =
+  print_preview_signals[OFFSETS_CHANGED] =
     g_signal_new ("offsets-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpPrintPreviewClass, offsets_changed),
+                  G_STRUCT_OFFSET (PrintPreviewClass, offsets_changed),
                   NULL, NULL,
                   marshal_VOID__DOUBLE_DOUBLE,
                   G_TYPE_NONE, 2,
                   G_TYPE_DOUBLE,
                   G_TYPE_DOUBLE);
 
-  object_class->finalize = gimp_print_preview_finalize;
+  object_class->finalize             = print_preview_finalize;
+
+  widget_class->realize              = print_preview_realize;
+  widget_class->unrealize            = print_preview_unrealize;
+  widget_class->size_allocate        = print_preview_size_allocate;
+  widget_class->expose_event         = print_preview_expose_event;
+  widget_class->button_press_event   = print_preview_button_press_event;
+  widget_class->button_release_event = print_preview_button_release_event;
+  widget_class->motion_notify_event  = print_preview_motion_notify_event;
 
   klass->offsets_changed = NULL;
 }
 
 static void
-gimp_print_preview_init (GimpPrintPreview *preview)
+print_preview_init (PrintPreview *preview)
 {
-  preview->page               = NULL;
-  preview->pixbuf             = NULL;
-  preview->dragging           = FALSE;
-  preview->inside             = FALSE;
-  preview->image_offset_x     = 0.0;
-  preview->image_offset_y     = 0.0;
-  preview->image_offset_x_max = 0.0;
-  preview->image_offset_y_max = 0.0;
-  preview->image_width        = 0.0;
-  preview->image_height       = 0.0;
-  preview->use_full_page      = FALSE;
+  gtk_event_box_set_visible_window (GTK_EVENT_BOX (preview), FALSE);
 
-  preview->area = gtk_drawing_area_new();
-  gtk_container_add (GTK_CONTAINER (preview), preview->area);
-  gtk_widget_show (preview->area);
-
-  gtk_widget_add_events (GTK_WIDGET (preview->area),
+  gtk_widget_add_events (GTK_WIDGET (preview),
                          GDK_BUTTON_PRESS_MASK   |
-                         GDK_POINTER_MOTION_MASK |
-                         GDK_LEAVE_NOTIFY_MASK);
-
-  g_signal_connect (preview->area, "size-allocate",
-                    G_CALLBACK (gimp_print_preview_size_allocate),
-                    preview);
-  g_signal_connect (preview->area, "realize",
-                    G_CALLBACK (gimp_print_preview_realize),
-                    NULL);
-  g_signal_connect (preview->area, "event",
-                    G_CALLBACK (gimp_print_preview_event),
-                    preview);
-  g_signal_connect (preview->area, "expose-event",
-                    G_CALLBACK (gimp_print_preview_expose_event),
-                    preview);
+                         GDK_BUTTON_RELEASE_MASK |
+                         GDK_POINTER_MOTION_MASK);
 }
 
 
 static void
-gimp_print_preview_finalize (GObject *object)
+print_preview_finalize (GObject *object)
 {
-  GimpPrintPreview *preview = GIMP_PRINT_PREVIEW (object);
+  PrintPreview *preview = PRINT_PREVIEW (object);
 
   if (preview->drawable)
     {
@@ -224,335 +215,177 @@ gimp_print_preview_finalize (GObject *object)
       preview->page = NULL;
     }
 
-  G_OBJECT_CLASS (gimp_print_preview_parent_class)->finalize (object);
-}
-
-/**
- * gimp_print_preview_new:
- * @page: page setup
- * @drawable_id: the drawable to print
- *
- * Creates a new #GimpPrintPreview widget.
- *
- * Return value: the new #GimpPrintPreview widget.
- **/
-GtkWidget *
-gimp_print_preview_new (GtkPageSetup *page,
-                        gint32        drawable_id)
-{
-  GimpPrintPreview *preview;
-  gfloat            ratio;
-
-  preview = g_object_new (GIMP_TYPE_PRINT_PREVIEW, NULL);
-
-  preview->drawable = gimp_drawable_get (drawable_id);
-
-  if (page != NULL)
-    preview->page = gtk_page_setup_copy (page);
-  else
-    preview->page = gtk_page_setup_new ();
-
-  ratio = (gtk_page_setup_get_paper_width (preview->page, GTK_UNIT_POINTS) /
-           gtk_page_setup_get_paper_height (preview->page, GTK_UNIT_POINTS));
-
-  gtk_aspect_frame_set (GTK_ASPECT_FRAME (preview), 0.5, 0.5, ratio, FALSE);
-
-  gtk_widget_set_size_request (preview->area,
-                               DRAWING_AREA_SIZE, DRAWING_AREA_SIZE);
-
-  return GTK_WIDGET (preview);
-}
-
-/**
- * gimp_print_preview_set_image_dpi:
- * @preview: a #GimpPrintPreview.
- * @xres: the X resolution
- * @yres: the Y resolution
- *
- * Sets the resolution of the image/drawable displayed by the
- * #GimpPrintPreview.
- **/
-void
-gimp_print_preview_set_image_dpi (GimpPrintPreview *preview,
-                                  gdouble           xres,
-                                  gdouble           yres)
-{
-  gdouble width;
-  gdouble height;
-
-  g_return_if_fail (GIMP_IS_PRINT_PREVIEW (preview));
-
-  width  = preview->drawable->width  * 72.0 / xres;
-  height = preview->drawable->height * 72.0 / yres;
-
-  if (width != preview->image_width || height != preview->image_height)
-    {
-      preview->image_width  = width;
-      preview->image_height = height;
-
-      print_preview_queue_draw (preview);
-    }
-}
-
-/**
- * gimp_print_preview_set_page_setup:
- * @preview: a #GimpPrintPreview.
- * @page: the page setup to use
- *
- * Sets the page setup to use by the #GimpPrintPreview.
- **/
-void
-gimp_print_preview_set_page_setup (GimpPrintPreview *preview,
-                                   GtkPageSetup     *page)
-{
-  gfloat ratio;
-
-  if (preview->page)
-    g_object_unref (preview->page);
-
-  preview->page = gtk_page_setup_copy (page);
-
-  ratio = (gtk_page_setup_get_paper_width (page, GTK_UNIT_POINTS) /
-           gtk_page_setup_get_paper_height (page, GTK_UNIT_POINTS));
-
-  gtk_aspect_frame_set (GTK_ASPECT_FRAME (preview), 0.5, 0.5, ratio, FALSE);
-
-  print_preview_queue_draw (preview);
-}
-
-/**
- * gimp_print_preview_set_image_offsets:
- * @preview: a #GimpPrintPreview.
- * @offset_x: the X offset
- * @offset_y: the Y offset
- *
- * Sets the offsets of the image/drawable displayed by the #GimpPrintPreview.
- * It does not emit the "offsets-changed" signal.
- **/
-void
-gimp_print_preview_set_image_offsets (GimpPrintPreview *preview,
-                                      gdouble           offset_x,
-                                      gdouble           offset_y)
-{
-  g_return_if_fail (GIMP_IS_PRINT_PREVIEW (preview));
-
-  preview->image_offset_x = offset_x;
-  preview->image_offset_y = offset_y;
-
-  print_preview_queue_draw (preview);
-}
-
-/**
- * gimp_print_preview_set_image_offsets_max:
- * @preview: a #GimpPrintPreview.
- * @offset_x_max: the maximum X offset allowed
- * @offset_y_max: the maximum Y offset allowed
- *
- * Sets the maximum offsets of the image/drawable displayed by the
- * #GimpPrintPreview.  It does not emit the "offsets-changed" signal.
- **/
-void
-gimp_print_preview_set_image_offsets_max (GimpPrintPreview *preview,
-                                          gdouble           offset_x_max,
-                                          gdouble           offset_y_max)
-{
-  g_return_if_fail (GIMP_IS_PRINT_PREVIEW (preview));
-
-  preview->image_offset_x_max = offset_x_max;
-  preview->image_offset_y_max = offset_y_max;
-
-  print_preview_queue_draw (preview);
-}
-
-/**
- * gimp_print_preview_set_use_full_page:
- * @preview: a #GimpPrintPreview.
- * @full_page: TRUE to ignore the page margins
- *
- * If @full_page is TRUE, the page margins are ignored and the full page
- * can be used to setup printing.
- **/
-void
-gimp_print_preview_set_use_full_page (GimpPrintPreview *preview,
-                                      gboolean          full_page)
-{
-  g_return_if_fail (GIMP_IS_PRINT_PREVIEW (preview));
-
-  preview->use_full_page = full_page;
-
-  print_preview_queue_draw (preview);
+  G_OBJECT_CLASS (print_preview_parent_class)->finalize (object);
 }
 
 static void
-gimp_print_preview_realize (GtkWidget *widget)
+print_preview_realize (GtkWidget *widget)
 {
-  GdkCursor *cursor;
+  PrintPreview *preview = PRINT_PREVIEW (widget);
 
-  cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
-                                       GDK_FLEUR);
-  gdk_window_set_cursor (widget->window, cursor);
-  gdk_cursor_unref (cursor);
-}
+  GTK_WIDGET_CLASS (print_preview_parent_class)->realize (widget);
 
-static gboolean
-gimp_print_preview_is_inside (GimpPrintPreview *preview,
-                              gdouble           x,
-                              gdouble           y)
-{
-  gdouble  left_margin;
-  gdouble  right_margin;
-  gdouble  top_margin;
-  gdouble  bottom_margin;
-  gdouble  scale;
-
-  gimp_print_preview_get_page_margins (preview,
-                                       &left_margin, &right_margin,
-                                       &top_margin,  &bottom_margin);
-
-  scale = gimp_print_preview_get_scale (preview);
-
-  x = x / scale - left_margin;
-  y = y / scale - top_margin;
-
-  return (x > preview->image_offset_x                        &&
-          x < preview->image_offset_x + preview->image_width &&
-          y > preview->image_offset_y                        &&
-          y < preview->image_offset_y + preview->image_height);
+  preview->cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
+                                                GDK_FLEUR);
 }
 
 static void
-print_preview_set_inside (GimpPrintPreview *preview,
-                          gboolean          inside)
+print_preview_unrealize (GtkWidget *widget)
 {
-  if (inside != preview->inside)
+  PrintPreview *preview = PRINT_PREVIEW (widget);
+
+  if (preview->cursor)
+    gdk_cursor_unref (preview->cursor);
+
+  GTK_WIDGET_CLASS (print_preview_parent_class)->unrealize (widget);
+}
+
+static void
+print_preview_size_allocate (GtkWidget     *widget,
+                             GtkAllocation *allocation)
+{
+  PrintPreview *preview = PRINT_PREVIEW (widget);
+
+  GTK_WIDGET_CLASS (print_preview_parent_class)->size_allocate (widget,
+                                                                allocation);
+
+  if (preview->pixbuf != NULL)
     {
-      preview->inside = inside;
-      print_preview_queue_draw (preview);
+      g_object_unref (preview->pixbuf);
+      preview->pixbuf = NULL;
     }
 }
 
 static gboolean
-gimp_print_preview_event (GtkWidget        *widget,
-                          GdkEvent         *event,
-                          GimpPrintPreview *preview)
+print_preview_button_press_event (GtkWidget      *widget,
+                                  GdkEventButton *event)
 {
-  static gdouble orig_offset_x = 0.0;
-  static gdouble orig_offset_y = 0.0;
-  static gint    start_x       = 0;
-  static gint    start_y       = 0;
+  PrintPreview *preview = PRINT_PREVIEW (widget);
 
-  switch (event->type)
+  if (event->type == GDK_BUTTON_PRESS && event->button == 1 && preview->inside)
     {
-    case GDK_BUTTON_PRESS:
-      gdk_pointer_grab (widget->window, FALSE,
+      gdk_pointer_grab (event->window, FALSE,
                         (GDK_BUTTON1_MOTION_MASK |
                          GDK_BUTTON_RELEASE_MASK),
-                        NULL, NULL, event->button.time);
+                        NULL, NULL, event->time);
 
-      orig_offset_x = preview->image_offset_x;
-      orig_offset_y = preview->image_offset_y;
+      preview->orig_offset_x = preview->image_offset_x;
+      preview->orig_offset_y = preview->image_offset_y;
 
-      start_x = event->button.x;
-      start_y = event->button.y;
+      preview->start_x = event->x;
+      preview->start_y = event->y;
 
       preview->dragging = TRUE;
-      break;
-
-    case GDK_MOTION_NOTIFY:
-      {
-        if (preview->dragging)
-          {
-            gdouble scale = gimp_print_preview_get_scale (preview);
-            gdouble offset_x;
-            gdouble offset_y;
-
-            offset_x = (orig_offset_x + (event->motion.x - start_x) / scale);
-            offset_y = (orig_offset_y + (event->motion.y - start_y) / scale);
-
-            offset_x = CLAMP (offset_x, 0, preview->image_offset_x_max);
-            offset_y = CLAMP (offset_y, 0, preview->image_offset_y_max);
-
-            if (preview->image_offset_x != offset_x ||
-                preview->image_offset_y != offset_y)
-              {
-                gimp_print_preview_set_image_offsets (preview,
-                                                      offset_x, offset_y);
-
-                g_signal_emit (preview,
-                               gimp_print_preview_signals[OFFSETS_CHANGED], 0,
-                               preview->image_offset_x,
-                               preview->image_offset_y);
-              }
-          }
-        else
-          {
-            print_preview_set_inside (preview,
-                                      gimp_print_preview_is_inside (preview,
-                                                                    event->motion.x,
-                                                                    event->motion.y));
-          }
-      }
-      break;
-
-    case GDK_BUTTON_RELEASE:
-      gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
-                                  event->button.time);
-      start_x = start_y = 0;
-      preview->dragging = FALSE;
-
-      print_preview_set_inside (preview,
-                                gimp_print_preview_is_inside (preview,
-                                                              event->button.x,
-                                                              event->button.y));
-      print_preview_queue_draw (preview);
-      break;
-
-    case GDK_LEAVE_NOTIFY:
-      print_preview_set_inside (preview, FALSE);
-      break;
-
-    default:
-      break;
     }
 
   return FALSE;
 }
 
 static gboolean
-gimp_print_preview_expose_event (GtkWidget        *widget,
-                                 GdkEventExpose   *eevent,
-                                 GimpPrintPreview *preview)
+print_preview_button_release_event (GtkWidget      *widget,
+                                    GdkEventButton *event)
 {
-  cairo_t *cr;
-  gdouble  paper_width;
-  gdouble  paper_height;
-  gdouble  left_margin;
-  gdouble  right_margin;
-  gdouble  top_margin;
-  gdouble  bottom_margin;
-  gdouble  scale;
+  PrintPreview *preview = PRINT_PREVIEW (widget);
 
-  gimp_print_preview_get_page_size (preview, &paper_width, &paper_height);
-  gimp_print_preview_get_page_margins (preview,
-                                       &left_margin, &right_margin,
-                                       &top_margin,  &bottom_margin);
+  if (preview->dragging)
+    {
+      gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
+                                  event->time);
+      preview->dragging = FALSE;
 
-  scale = gimp_print_preview_get_scale (preview);
+      print_preview_set_inside (preview,
+                                print_preview_is_inside (preview,
+                                                         event->x, event->y));
+    }
+
+  return FALSE;
+}
+
+static gboolean
+print_preview_motion_notify_event (GtkWidget      *widget,
+                                   GdkEventMotion *event)
+{
+  PrintPreview *preview = PRINT_PREVIEW (widget);
+
+  if (preview->dragging)
+    {
+      gdouble scale = print_preview_get_scale (preview);
+      gdouble offset_x;
+      gdouble offset_y;
+
+      offset_x = (preview->orig_offset_x +
+                  (event->x - preview->start_x) / scale);
+      offset_y = (preview->orig_offset_y +
+                  (event->y - preview->start_y) / scale);
+
+      offset_x = CLAMP (offset_x, 0, preview->image_offset_x_max);
+      offset_y = CLAMP (offset_y, 0, preview->image_offset_y_max);
+
+      if (preview->image_offset_x != offset_x ||
+          preview->image_offset_y != offset_y)
+        {
+          print_preview_set_image_offsets (preview,
+                                           offset_x, offset_y);
+
+          g_signal_emit (preview,
+                         print_preview_signals[OFFSETS_CHANGED], 0,
+                         preview->image_offset_x,
+                         preview->image_offset_y);
+        }
+    }
+  else
+    {
+      print_preview_set_inside (preview,
+                                print_preview_is_inside (preview,
+                                                         event->x, event->y));
+    }
+
+  return FALSE;
+}
+
+static gboolean
+print_preview_expose_event (GtkWidget      *widget,
+                            GdkEventExpose *event)
+{
+  PrintPreview *preview = PRINT_PREVIEW (widget);
+  cairo_t      *cr;
+  gdouble       paper_width;
+  gdouble       paper_height;
+  gdouble       left_margin;
+  gdouble       right_margin;
+  gdouble       top_margin;
+  gdouble       bottom_margin;
+  gdouble       scale;
+
+  print_preview_get_page_size (preview, &paper_width, &paper_height);
+  print_preview_get_page_margins (preview,
+                                  &left_margin, &right_margin,
+                                  &top_margin,  &bottom_margin);
+
+  scale = print_preview_get_scale (preview);
 
   cr = gdk_cairo_create (widget->window);
 
-  /* draw background */
+  cairo_translate (cr, widget->allocation.x, widget->allocation.y);
+  cairo_set_line_width (cr, 1.0);
+
+  /* draw page background */
+  cairo_rectangle (cr, 0, 0, scale * paper_width, scale * paper_height);
+
+  gdk_cairo_set_source_color (cr, &widget->style->black);
+  cairo_stroke_preserve (cr);
+
   gdk_cairo_set_source_color (cr, &widget->style->white);
-  cairo_paint (cr);
+  cairo_fill (cr);
 
   /* draw page_margins */
-  gdk_cairo_set_source_color (cr, &widget->style->black);
-  cairo_set_line_width (cr, 1.0);
   cairo_rectangle (cr,
                    scale * left_margin,
                    scale * top_margin,
                    scale * (paper_width - left_margin - right_margin),
                    scale * (paper_height - top_margin - bottom_margin));
+
+  gdk_cairo_set_source_color (cr, &widget->style->mid[widget->state]);
   cairo_stroke (cr);
 
   cairo_translate (cr,
@@ -565,6 +398,8 @@ gimp_print_preview_expose_event (GtkWidget        *widget,
                        0, 0,
                        scale * preview->image_width,
                        scale * preview->image_height);
+
+      gdk_cairo_set_source_color (cr, &widget->style->black);
       cairo_stroke (cr);
     }
 
@@ -599,38 +434,209 @@ gimp_print_preview_expose_event (GtkWidget        *widget,
   return FALSE;
 }
 
+/**
+ * print_preview_new:
+ * @page: page setup
+ * @drawable_id: the drawable to print
+ *
+ * Creates a new #PrintPreview widget.
+ *
+ * Return value: the new #PrintPreview widget.
+ **/
+GtkWidget *
+print_preview_new (GtkPageSetup *page,
+                   gint32        drawable_id)
+{
+  PrintPreview *preview;
+
+  g_return_val_if_fail (GTK_IS_PAGE_SETUP (page), NULL);
+
+  preview = g_object_new (PRINT_TYPE_PREVIEW, NULL);
+
+  preview->drawable = gimp_drawable_get (drawable_id);
+
+  print_preview_set_page_setup (preview, page);
+
+  return GTK_WIDGET (preview);
+}
+
+/**
+ * print_preview_set_image_dpi:
+ * @preview: a #PrintPreview.
+ * @xres: the X resolution
+ * @yres: the Y resolution
+ *
+ * Sets the resolution of the image/drawable displayed by the
+ * #PrintPreview.
+ **/
+void
+print_preview_set_image_dpi (PrintPreview *preview,
+                             gdouble       xres,
+                             gdouble       yres)
+{
+  gdouble width;
+  gdouble height;
+
+  g_return_if_fail (PRINT_IS_PREVIEW (preview));
+
+  width  = preview->drawable->width  * 72.0 / xres;
+  height = preview->drawable->height * 72.0 / yres;
+
+  if (width != preview->image_width || height != preview->image_height)
+    {
+      preview->image_width  = width;
+      preview->image_height = height;
+
+      gtk_widget_queue_draw (GTK_WIDGET (preview));
+    }
+}
+
+/**
+ * print_preview_set_page_setup:
+ * @preview: a #PrintPreview.
+ * @page: the page setup to use
+ *
+ * Sets the page setup to use by the #PrintPreview.
+ **/
+void
+print_preview_set_page_setup (PrintPreview *preview,
+                              GtkPageSetup *page)
+{
+  if (preview->page)
+    g_object_unref (preview->page);
+
+  preview->page = gtk_page_setup_copy (page);
+
+  gtk_widget_queue_draw (GTK_WIDGET (preview));
+}
+
+/**
+ * print_preview_set_image_offsets:
+ * @preview: a #PrintPreview.
+ * @offset_x: the X offset
+ * @offset_y: the Y offset
+ *
+ * Sets the offsets of the image/drawable displayed by the #PrintPreview.
+ * It does not emit the "offsets-changed" signal.
+ **/
+void
+print_preview_set_image_offsets (PrintPreview *preview,
+                                 gdouble       offset_x,
+                                 gdouble       offset_y)
+{
+  g_return_if_fail (PRINT_IS_PREVIEW (preview));
+
+  preview->image_offset_x = offset_x;
+  preview->image_offset_y = offset_y;
+
+  gtk_widget_queue_draw (GTK_WIDGET (preview));
+}
+
+/**
+ * print_preview_set_image_offsets_max:
+ * @preview: a #PrintPreview.
+ * @offset_x_max: the maximum X offset allowed
+ * @offset_y_max: the maximum Y offset allowed
+ *
+ * Sets the maximum offsets of the image/drawable displayed by the
+ * #PrintPreview.  It does not emit the "offsets-changed" signal.
+ **/
+void
+print_preview_set_image_offsets_max (PrintPreview *preview,
+                                     gdouble       offset_x_max,
+                                     gdouble       offset_y_max)
+{
+  g_return_if_fail (PRINT_IS_PREVIEW (preview));
+
+  preview->image_offset_x_max = offset_x_max;
+  preview->image_offset_y_max = offset_y_max;
+
+  gtk_widget_queue_draw (GTK_WIDGET (preview));
+}
+
+/**
+ * print_preview_set_use_full_page:
+ * @preview: a #PrintPreview.
+ * @full_page: TRUE to ignore the page margins
+ *
+ * If @full_page is TRUE, the page margins are ignored and the full page
+ * can be used to setup printing.
+ **/
+void
+print_preview_set_use_full_page (PrintPreview *preview,
+                                 gboolean      full_page)
+{
+  g_return_if_fail (PRINT_IS_PREVIEW (preview));
+
+  preview->use_full_page = full_page;
+
+  gtk_widget_queue_draw (GTK_WIDGET (preview));
+}
+
+static gboolean
+print_preview_is_inside (PrintPreview *preview,
+                         gdouble       x,
+                         gdouble       y)
+{
+  gdouble  left_margin;
+  gdouble  right_margin;
+  gdouble  top_margin;
+  gdouble  bottom_margin;
+  gdouble  scale;
+
+  print_preview_get_page_margins (preview,
+                                  &left_margin, &right_margin,
+                                  &top_margin,  &bottom_margin);
+
+  scale = print_preview_get_scale (preview);
+
+  x = x / scale - left_margin;
+  y = y / scale - top_margin;
+
+  return (x > preview->image_offset_x                        &&
+          x < preview->image_offset_x + preview->image_width &&
+          y > preview->image_offset_y                        &&
+          y < preview->image_offset_y + preview->image_height);
+}
+
+static void
+print_preview_set_inside (PrintPreview *preview,
+                          gboolean      inside)
+{
+  if (inside != preview->inside)
+    {
+      GtkWidget *widget = GTK_WIDGET (preview);
+
+      preview->inside = inside;
+
+      if (GTK_WIDGET_DRAWABLE (widget))
+        gdk_window_set_cursor (widget->window,
+                               inside ? preview->cursor : NULL);
+
+      gtk_widget_queue_draw (widget);
+    }
+}
+
 static gdouble
-gimp_print_preview_get_scale (GimpPrintPreview* preview)
+print_preview_get_scale (PrintPreview *preview)
 {
   gdouble paper_width;
   gdouble paper_height;
   gdouble scale_x;
   gdouble scale_y;
 
-  gimp_print_preview_get_page_size (preview, &paper_width, &paper_height);
+  print_preview_get_page_size (preview, &paper_width, &paper_height);
 
-  scale_x = ((gdouble) preview->area->allocation.width  / paper_width);
-  scale_y = ((gdouble) preview->area->allocation.height / paper_height);
+  scale_x = ((gdouble) GTK_WIDGET (preview)->allocation.width  / paper_width);
+  scale_y = ((gdouble) GTK_WIDGET (preview)->allocation.height / paper_height);
 
   return MIN (scale_x, scale_y);
 }
 
 static void
-gimp_print_preview_size_allocate (GtkWidget        *widget,
-                                  GtkAllocation    *allocation,
-                                  GimpPrintPreview *preview)
-{
-  if (preview->pixbuf != NULL)
-    {
-      g_object_unref (preview->pixbuf);
-      preview->pixbuf = NULL;
-    }
-}
-
-static void
-gimp_print_preview_get_page_size (GimpPrintPreview *preview,
-                                  gdouble          *paper_width,
-                                  gdouble          *paper_height)
+print_preview_get_page_size (PrintPreview *preview,
+                             gdouble      *paper_width,
+                             gdouble      *paper_height)
 {
   *paper_width  = gtk_page_setup_get_paper_width  (preview->page,
                                                    GTK_UNIT_POINTS);
@@ -639,11 +645,11 @@ gimp_print_preview_get_page_size (GimpPrintPreview *preview,
 }
 
 static void
-gimp_print_preview_get_page_margins (GimpPrintPreview *preview,
-                                     gdouble          *left_margin,
-                                     gdouble          *right_margin,
-                                     gdouble          *top_margin,
-                                     gdouble          *bottom_margin)
+print_preview_get_page_margins (PrintPreview *preview,
+                                gdouble      *left_margin,
+                                gdouble      *right_margin,
+                                gdouble      *top_margin,
+                                gdouble      *bottom_margin)
 {
   if (preview->use_full_page)
     {
@@ -663,10 +669,4 @@ gimp_print_preview_get_page_margins (GimpPrintPreview *preview,
       *bottom_margin = gtk_page_setup_get_bottom_margin (preview->page,
                                                          GTK_UNIT_POINTS);
     }
-}
-
-static void
-print_preview_queue_draw (GimpPrintPreview *preview)
-{
-  gtk_widget_queue_draw (GTK_WIDGET (preview->area));
 }
