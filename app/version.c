@@ -18,41 +18,37 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <glib.h>
+
+#include <fontconfig/fontconfig.h>
+
+#include <pango/pango.h>
+#include <pango/pangoft2.h>
+
+#include <gegl.h>
 
 #ifndef GIMP_CONSOLE_COMPILATION
 #include <gtk/gtk.h>
 #endif
-#include <fontconfig/fontconfig.h>
-#include <pango/pango.h>
-#include <pango/pangoft2.h>
-#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 
+#include "about.h"
 #include "version.h"
 
-#include "about.h"
 #include "gimp-intl.h"
 
+
 static void
-gimp_show_one_library_version (const gchar *package,
-                               int          build_time_major,
-                               int          build_time_minor,
-                               int          build_time_micro,
-                               int          run_time_major,
-                               int          run_time_minor,
-                               int          run_time_micro)
+gimp_show_library_version (const gchar *package,
+                           gint         build_time_major,
+                           gint         build_time_minor,
+                           gint         build_time_micro,
+                           gint         run_time_major,
+                           gint         run_time_minor,
+                           gint         run_time_micro)
 {
-  g_print ("%s: %s %d.%d.%d, %s %d.%d.%d\n",
+  g_print ("%s  %s %d.%d.%d, %s %d.%d.%d\n",
            package,
            _("compiled against version"),
            build_time_major, build_time_minor, build_time_micro,
@@ -63,35 +59,53 @@ gimp_show_one_library_version (const gchar *package,
 static void
 gimp_show_library_versions (void)
 {
-#ifdef GEGL_MAJOR_VERSION
-  int gegl_major_version, gegl_minor_version, gegl_micro_version;
-#endif
+  gint gegl_major_version;
+  gint gegl_minor_version;
+  gint gegl_micro_version;
+
+  gegl_get_version (&gegl_major_version,
+                    &gegl_minor_version,
+                    &gegl_micro_version);
+
+  gimp_show_library_version ("GEGL",
+                             GEGL_MAJOR_VERSION,
+                             GEGL_MINOR_VERSION,
+                             GEGL_MICRO_VERSION,
+                             gegl_major_version,
+                             gegl_minor_version,
+                             gegl_micro_version);
 
 #ifndef GIMP_CONSOLE_COMPILATION
-  gimp_show_one_library_version
-    ("GTK+",
-     GTK_MAJOR_VERSION, GTK_MINOR_VERSION, GTK_MICRO_VERSION,
-     gtk_major_version, gtk_minor_version, gtk_micro_version);
+  gimp_show_library_version ("GTK+",
+                             GTK_MAJOR_VERSION,
+                             GTK_MINOR_VERSION,
+                             GTK_MICRO_VERSION,
+                             gtk_major_version,
+                             gtk_minor_version,
+                             gtk_micro_version);
 #endif
-  gimp_show_one_library_version
-    ("Pango",
-     PANGO_VERSION_MAJOR, PANGO_VERSION_MINOR, PANGO_VERSION_MICRO,
-     pango_version () / 100 / 100, pango_version () / 100 % 100, pango_version () % 100);
-  gimp_show_one_library_version
-    ("GLib",
-     GLIB_MAJOR_VERSION, GLIB_MINOR_VERSION, GLIB_MICRO_VERSION,
-     glib_major_version, glib_minor_version, glib_micro_version);
-  gimp_show_one_library_version
-    ("Fontconfig",
-     FC_MAJOR, FC_MINOR, FC_REVISION,
-     FcGetVersion () / 100 / 100, FcGetVersion () / 100 % 100, FcGetVersion () % 100);
-#ifdef GEGL_MAJOR_VERSION
-  gegl_get_version (&gegl_major_version, &gegl_minor_version, &gegl_micro_version);
-  gimp_show_one_library_version
-    ("GEGL",
-     GEGL_MAJOR_VERSION, GEGL_MINOR_VERSION, GEGL_MICRO_VERSION,
-     gegl_major_version, gegl_minor_version, gegl_micro_version);
-#endif
+
+  gimp_show_library_version ("Pango",
+                             PANGO_VERSION_MAJOR,
+                             PANGO_VERSION_MINOR,
+                             PANGO_VERSION_MICRO,
+                             pango_version () / 100 / 100,
+                             pango_version () / 100 % 100,
+                             pango_version () % 100);
+
+  gimp_show_library_version ("GLib",
+                             GLIB_MAJOR_VERSION,
+                             GLIB_MINOR_VERSION,
+                             GLIB_MICRO_VERSION,
+                             glib_major_version,
+                             glib_minor_version,
+                             glib_micro_version);
+
+  gimp_show_library_version ("Fontconfig",
+                             FC_MAJOR, FC_MINOR, FC_REVISION,
+                             FcGetVersion () / 100 / 100,
+                             FcGetVersion () / 100 % 100,
+                             FcGetVersion () % 100);
 }
 
 void
@@ -106,4 +120,3 @@ gimp_version_show (gboolean be_verbose)
       gimp_show_library_versions ();
     }
 }
-
