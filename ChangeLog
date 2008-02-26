@@ -1,3 +1,17 @@
+2008-02-26  Tor Lillqvist  <tml@novell.com>
+
+	* app/version.[ch]: New files. Rename gimp_show_version() to
+	gimp_version_show() and move here. When given both --version and
+	--verbose, print build-time and run-time versions of the most
+	important dependencies.
+
+	* app/Makefile.am: Add them.
+
+	* app/main.c: Call gimp_version_show().
+
+	* app/Makefile.am: Use -mwindows only for the GUI gimp, not for
+	gimp-console.
+
 2008-02-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/print-preview.c
