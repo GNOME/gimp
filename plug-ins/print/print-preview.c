@@ -31,6 +31,9 @@ enum
 };
 
 
+#define SIZE_REQUEST  200
+
+
 struct _PrintPreview
 {
   GtkEventBox     parent_instance;
@@ -74,6 +77,8 @@ static void      print_preview_finalize             (GObject        *object);
 
 static void      print_preview_realize              (GtkWidget      *widget);
 static void      print_preview_unrealize            (GtkWidget      *widget);
+static void      print_preview_size_request         (GtkWidget      *widget,
+                                                     GtkRequisition *requisition);
 static void      print_preview_size_allocate        (GtkWidget      *widget,
                                                      GtkAllocation  *allocation);
 static gboolean  print_preview_expose_event         (GtkWidget      *widget,
@@ -171,6 +176,7 @@ print_preview_class_init (PrintPreviewClass *klass)
 
   widget_class->realize              = print_preview_realize;
   widget_class->unrealize            = print_preview_unrealize;
+  widget_class->size_request         = print_preview_size_request;
   widget_class->size_allocate        = print_preview_size_allocate;
   widget_class->expose_event         = print_preview_expose_event;
   widget_class->button_press_event   = print_preview_button_press_event;
@@ -238,6 +244,33 @@ print_preview_unrealize (GtkWidget *widget)
     gdk_cursor_unref (preview->cursor);
 
   GTK_WIDGET_CLASS (print_preview_parent_class)->unrealize (widget);
+}
+
+static void
+print_preview_size_request (GtkWidget      *widget,
+                            GtkRequisition *requisition)
+{
+  PrintPreview *preview = PRINT_PREVIEW (widget);
+  gdouble       paper_width;
+  gdouble       paper_height;
+
+  print_preview_get_page_size (preview, &paper_width, &paper_height);
+
+  if (paper_width > paper_height)
+    {
+      requisition->height = SIZE_REQUEST;
+      requisition->width  = paper_width * SIZE_REQUEST / paper_height;
+      requisition->width  = MIN (requisition->width, 2 * SIZE_REQUEST);
+    }
+  else
+    {
+      requisition->width  = SIZE_REQUEST;
+      requisition->height = paper_height * SIZE_REQUEST / paper_width;
+      requisition->height = MIN (requisition->height, 2 * SIZE_REQUEST);
+    }
+
+  requisition->width  += GTK_CONTAINER (widget)->border_width * 2;
+  requisition->height += GTK_CONTAINER (widget)->border_width * 2;
 }
 
 static void
@@ -374,7 +407,10 @@ print_preview_expose_event (GtkWidget      *widget,
 
   cr = gdk_cairo_create (widget->window);
 
-  cairo_translate (cr, widget->allocation.x, widget->allocation.y);
+  cairo_translate (cr,
+                   widget->allocation.x + GTK_CONTAINER (widget)->border_width,
+                   widget->allocation.y + GTK_CONTAINER (widget)->border_width);
+
   cairo_set_line_width (cr, 1.0);
 
   /* draw page background */
@@ -486,6 +522,7 @@ print_preview_set_image_dpi (PrintPreview *preview,
   gdouble height;
 
   g_return_if_fail (PRINT_IS_PREVIEW (preview));
+  g_return_if_fail (xres > 0.0 && yres > 0.0);
 
   width  = preview->drawable->width  * 72.0 / xres;
   height = preview->drawable->height * 72.0 / yres;
@@ -510,12 +547,15 @@ void
 print_preview_set_page_setup (PrintPreview *preview,
                               GtkPageSetup *page)
 {
+  g_return_if_fail (PRINT_IS_PREVIEW (preview));
+  g_return_if_fail (GTK_IS_PAGE_SETUP (page));
+
   if (preview->page)
     g_object_unref (preview->page);
 
   preview->page = gtk_page_setup_copy (page);
 
-  gtk_widget_queue_draw (GTK_WIDGET (preview));
+  gtk_widget_queue_resize (GTK_WIDGET (preview));
 }
 
 /**
@@ -628,15 +668,17 @@ print_preview_set_inside (PrintPreview *preview,
 static gdouble
 print_preview_get_scale (PrintPreview *preview)
 {
-  gdouble paper_width;
-  gdouble paper_height;
-  gdouble scale_x;
-  gdouble scale_y;
+  GtkWidget *widget = GTK_WIDGET (preview);
+  gdouble    paper_width;
+  gdouble    paper_height;
+  gdouble    scale_x;
+  gdouble    scale_y;
+  gint       border = GTK_CONTAINER (widget)->border_width;
 
   print_preview_get_page_size (preview, &paper_width, &paper_height);
 
-  scale_x = ((gdouble) GTK_WIDGET (preview)->allocation.width  / paper_width);
-  scale_y = ((gdouble) GTK_WIDGET (preview)->allocation.height / paper_height);
+  scale_x = (gdouble) (widget->allocation.width  - 2 * border) / paper_width;
+  scale_y = (gdouble) (widget->allocation.height - 2 * border) / paper_height;
 
   return MIN (scale_x, scale_y);
 }

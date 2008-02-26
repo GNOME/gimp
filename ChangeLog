@@ -1,5 +1,11 @@
 2008-02-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print-preview.c
+	* plug-ins/print/print-page-layout.c: let the preview widget
+	allocate a reasonable size.
+
+2008-02-26  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print-preview.c: use a different cursor when
 	dragging, just like GimpScrolledPreview.
 

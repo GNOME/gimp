@@ -58,7 +58,7 @@ enum
 };
 
 
-static void        print_page_setup_notify       (GtkPrintOperation *operation);
+static void        print_page_setup_notify            (GtkPrintOperation *operation);
 
 static GtkWidget * print_size_frame                   (PrintData    *data,
                                                        GtkSizeGroup *label_group,
@@ -162,7 +162,6 @@ print_page_layout_gui (PrintData *data)
   info.preview = print_preview_new (setup, data->drawable_id);
   print_preview_set_use_full_page (PRINT_PREVIEW (info.preview),
                                    data->use_full_page);
-  gtk_widget_set_size_request (info.preview, 200, -1);
   gtk_container_add (GTK_CONTAINER (frame), info.preview);
   gtk_widget_show (info.preview);
 
@@ -179,8 +178,6 @@ print_page_layout_gui (PrintData *data)
   return main_hbox;
 }
 
-#define SB_WIDTH 8
-
 static void
 print_page_setup_notify (GtkPrintOperation *operation)
 {
@@ -188,11 +185,12 @@ print_page_setup_notify (GtkPrintOperation *operation)
 
   setup = gtk_print_operation_get_default_page_setup (operation);
 
-  print_preview_set_page_setup (PRINT_PREVIEW (info.preview), setup);
-
   print_size_info_set_page_setup (&info);
+  print_preview_set_page_setup (PRINT_PREVIEW (info.preview), setup);
 }
 
+
+#define SB_WIDTH 8
 
 static GtkWidget *
 print_size_frame (PrintData    *data,
