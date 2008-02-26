@@ -1,5 +1,11 @@
 2008-02-26  Sven Neumann  <sven@gimp.org>
 
+	* app/Makefile.am (gimp_2_5_LDFLAGS): don't assume that global
+	AM_LDFLAGS and per-target LD_FLAGS would sum up and explicitly add
+	AM_LDFLAGS to gimp_2_5_LDFLAGS.
+
+2008-02-26  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print.h (struct PrintData): removed unused field.
 
 	* plug-ins/print/print-page-layout.c: set a minimum size of 1/100
