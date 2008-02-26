@@ -1,5 +1,21 @@
 2008-02-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-transform.[ch]
+	(gimp_display_shell_transform_points)
+	* app/tools/gimpdrawtool.[ch] (gimp_draw_tool_draw_lines): take
+	arrays of GimpVector2 instead of arrays of gdouble to represent
+	the input points.
+
+	* app/display/gimpdisplayshell-draw.c
+	* app/tools/gimppolygonselecttool.c
+	* app/tools/gimpfreeselecttool.c: don't cast the GimpVector2 arrays
+	to double arrays when passing them to above functions.
+
+	* app/tools/gimpiscissorstool.c: create a temporary GimpVector2
+	array instead of a temporary gdouble array.
+
+2008-02-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimppolygonselecttool.c: rename member num_points to
 	n_points and various small cleanups all over the place.
 

@@ -281,8 +281,7 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
   GimpFreeSelectTool *free_sel = GIMP_FREE_SELECT_TOOL (draw_tool);
 
   gimp_draw_tool_draw_lines (draw_tool,
-                             (const gdouble *) free_sel->points,
-                             free_sel->num_points,
+                             free_sel->points, free_sel->num_points,
                              FALSE, FALSE);
 }
 

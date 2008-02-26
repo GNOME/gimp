@@ -226,7 +226,7 @@ gboolean   gimp_draw_tool_on_vectors               (GimpDrawTool     *draw_tool,
                                                     GimpVectors     **ret_vectors);
 
 void       gimp_draw_tool_draw_lines               (GimpDrawTool     *draw_tool,
-                                                    const gdouble    *points,
+                                                    const GimpVector2 *points,
                                                     gint              n_points,
                                                     gboolean          filled,
                                                     gboolean          use_offsets);

@@ -1592,18 +1592,18 @@ gimp_draw_tool_on_vectors (GimpDrawTool      *draw_tool,
 }
 
 void
-gimp_draw_tool_draw_lines (GimpDrawTool  *draw_tool,
-                           const gdouble *points,
-                           gint           n_points,
-                           gboolean       filled,
-                           gboolean       use_offsets)
+gimp_draw_tool_draw_lines (GimpDrawTool      *draw_tool,
+                           const GimpVector2 *points,
+                           gint               n_points,
+                           gboolean           filled,
+                           gboolean           use_offsets)
 {
   GimpDisplayShell *shell;
   GdkPoint         *coords;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  if (n_points == 0)
+  if (points == NULL || n_points == 0)
     return;
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);

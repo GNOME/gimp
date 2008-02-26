@@ -324,8 +324,7 @@ gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
   coords = g_new (GdkPoint, MAX (2, num_points));
 
   gimp_display_shell_transform_points (shell,
-                                       (const gdouble *) points, coords,
-                                       num_points, FALSE);
+                                       points, coords, num_points, FALSE);
 
   if (num_points == 1)
     {

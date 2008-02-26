@@ -486,8 +486,7 @@ gimp_polygon_select_tool_draw (GimpDrawTool *draw_tool)
   GimpPolygonSelectTool *poly_sel_tool = GIMP_POLYGON_SELECT_TOOL (draw_tool);
 
   gimp_draw_tool_draw_lines (draw_tool,
-                             (const gdouble *) poly_sel_tool->points,
-                             poly_sel_tool->n_points,
+                             poly_sel_tool->points, poly_sel_tool->n_points,
                              FALSE, FALSE);
 
   if (poly_sel_tool->show_pending_point)
