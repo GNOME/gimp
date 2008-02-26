@@ -1,3 +1,7 @@
+2008-02-26  Sven Neumann  <sven@gimp.org>
+
+	* docs/gimp.1.in: document the "--version --verbose" option.
+
 2008-02-26  Tor Lillqvist  <tml@novell.com>
 
 	* app/version.[ch]: New files. Rename gimp_show_version() to
