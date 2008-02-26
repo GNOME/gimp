@@ -1,3 +1,11 @@
+2008-02-26  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	Merged from trunk:
+
+	* plug-ins/script-fu/scripts/frosty-logo.scm: Commited slightly
+	modified patch from LightningIsMyName. Fixes bug #472316. The
+	appearance of the sparkle layer could be better.
+
 2008-02-25  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcurvestool.c (curves_graph_events): in the
