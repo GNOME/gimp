@@ -1,5 +1,12 @@
 2008-02-26  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpchainbutton.c: use event boxes without
+	visible window instead of drawing areas for the lines besides the
+	button. Fixes the background which was drawn wrongly for many
+	themes.
+
+2008-02-26  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print-preview.[ch]: derive from GtkEventBox and
 	draw on the parent window.
 
