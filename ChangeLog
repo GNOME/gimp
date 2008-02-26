@@ -1,3 +1,8 @@
+2008-02-26  Tor Lillqvist  <tml@novell.com>
+
+	* app/version.c (gimp_show_library_versions): Show also GEGL
+	versions (if available).
+
 2008-02-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/print-preview.c: create a Cairo image surface

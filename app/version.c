@@ -34,6 +34,7 @@
 #include <fontconfig/fontconfig.h>
 #include <pango/pango.h>
 #include <pango/pangoft2.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -62,6 +63,10 @@ gimp_show_one_library_version (const gchar *package,
 static void
 gimp_show_library_versions (void)
 {
+#ifdef GEGL_MAJOR_VERSION
+  int gegl_major_version, gegl_minor_version, gegl_micro_version;
+#endif
+
 #ifndef GIMP_CONSOLE_COMPILATION
   gimp_show_one_library_version
     ("GTK+",
@@ -80,6 +85,13 @@ gimp_show_library_versions (void)
     ("Fontconfig",
      FC_MAJOR, FC_MINOR, FC_REVISION,
      FcGetVersion () / 100 / 100, FcGetVersion () / 100 % 100, FcGetVersion () % 100);
+#ifdef GEGL_MAJOR_VERSION
+  gegl_get_version (&gegl_major_version, &gegl_minor_version, &gegl_micro_version);
+  gimp_show_one_library_version
+    ("GEGL",
+     GEGL_MAJOR_VERSION, GEGL_MINOR_VERSION, GEGL_MICRO_VERSION,
+     gegl_major_version, gegl_minor_version, gegl_micro_version);
+#endif
 }
 
 void
