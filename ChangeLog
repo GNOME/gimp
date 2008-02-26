@@ -1,6 +1,7 @@
 2008-02-26  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: use AM_PROG_CC_C_O to fix warning with automake 1.10.
+	Removed obsolete call to AM_PROG_CC_STDC.
 
 2008-02-26  Sven Neumann  <sven@gimp.org>
 
