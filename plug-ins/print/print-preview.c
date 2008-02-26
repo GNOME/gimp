@@ -253,6 +253,7 @@ print_preview_size_request (GtkWidget      *widget,
   PrintPreview *preview = PRINT_PREVIEW (widget);
   gdouble       paper_width;
   gdouble       paper_height;
+  gint          border  = GTK_CONTAINER (widget)->border_width + 1;
 
   print_preview_get_page_size (preview, &paper_width, &paper_height);
 
@@ -269,8 +270,8 @@ print_preview_size_request (GtkWidget      *widget,
       requisition->height = MIN (requisition->height, 2 * SIZE_REQUEST);
     }
 
-  requisition->width  += GTK_CONTAINER (widget)->border_width * 2;
-  requisition->height += GTK_CONTAINER (widget)->border_width * 2;
+  requisition->width  += 2 * border;
+  requisition->height += 2 * border;
 }
 
 static void
@@ -397,6 +398,7 @@ print_preview_expose_event (GtkWidget      *widget,
   gdouble       top_margin;
   gdouble       bottom_margin;
   gdouble       scale;
+  gint          border = GTK_CONTAINER (widget)->border_width + 1;
 
   print_preview_get_page_size (preview, &paper_width, &paper_height);
   print_preview_get_page_margins (preview,
@@ -408,8 +410,8 @@ print_preview_expose_event (GtkWidget      *widget,
   cr = gdk_cairo_create (widget->window);
 
   cairo_translate (cr,
-                   widget->allocation.x + GTK_CONTAINER (widget)->border_width,
-                   widget->allocation.y + GTK_CONTAINER (widget)->border_width);
+                   widget->allocation.x + border,
+                   widget->allocation.y + border);
 
   cairo_set_line_width (cr, 1.0);
 
@@ -673,7 +675,7 @@ print_preview_get_scale (PrintPreview *preview)
   gdouble    paper_height;
   gdouble    scale_x;
   gdouble    scale_y;
-  gint       border = GTK_CONTAINER (widget)->border_width;
+  gint       border = GTK_CONTAINER (widget)->border_width + 1;
 
   print_preview_get_page_size (preview, &paper_width, &paper_height);
 
