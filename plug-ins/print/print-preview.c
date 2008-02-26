@@ -416,6 +416,13 @@ print_preview_expose_event (GtkWidget      *widget,
                    widget->allocation.x + border,
                    widget->allocation.y + border);
 
+  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+    {
+      gint width = widget->allocation.width - 2 * border;
+
+      cairo_translate (cr, width - scale * paper_width, 0);
+    }
+
   cairo_set_line_width (cr, 1.0);
 
   /* draw page background */
@@ -632,17 +639,32 @@ print_preview_is_inside (PrintPreview *preview,
                          gdouble       x,
                          gdouble       y)
 {
-  gdouble  left_margin;
-  gdouble  right_margin;
-  gdouble  top_margin;
-  gdouble  bottom_margin;
-  gdouble  scale;
+  GtkWidget *widget = GTK_WIDGET (preview);
+  gdouble    left_margin;
+  gdouble    right_margin;
+  gdouble    top_margin;
+  gdouble    bottom_margin;
+  gdouble    scale;
+  gint       border = GTK_CONTAINER (widget)->border_width + 1;
+
+  x -= border;
+
+  scale = print_preview_get_scale (preview);
+
+  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+    {
+      gdouble paper_width;
+      gdouble paper_height;
+      gint    width = widget->allocation.width - 2 * border;
+
+      print_preview_get_page_size (preview, &paper_width, &paper_height);
+
+      x -= width - scale * paper_width;
+    }
 
   print_preview_get_page_margins (preview,
                                   &left_margin, &right_margin,
                                   &top_margin,  &bottom_margin);
-
-  scale = print_preview_get_scale (preview);
 
   x = x / scale - left_margin;
   y = y / scale - top_margin;
