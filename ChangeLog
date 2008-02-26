@@ -1,3 +1,10 @@
+2008-02-26  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/print.h (struct PrintData): removed unused field.
+
+	* plug-ins/print/print-page-layout.c: set a minimum size of 1/100
+	of the paper size.
+
 2008-02-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimppolygonselecttool.c: draw handles at the corners

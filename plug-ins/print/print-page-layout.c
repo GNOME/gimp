@@ -847,17 +847,19 @@ print_size_info_set_page_setup (PrintSizeInfo *info)
       if (ratio_x < ratio_y)
         y = (gdouble) info->image_height * ratio_x;
       else
-        x = (gdouble) info->image_width * ratio_y;
+        x = (gdouble) info->image_width  * ratio_y;
     }
 
-  gimp_size_entry_set_value_boundaries (info->size_entry, WIDTH,  0.0, x);
-  gimp_size_entry_set_value_boundaries (info->size_entry, HEIGHT, 0.0, y);
+  gimp_size_entry_set_value_boundaries (info->size_entry, WIDTH,
+                                        page_width  / 100.0, x);
+  gimp_size_entry_set_value_boundaries (info->size_entry, HEIGHT,
+                                        page_height / 100.0, y);
 
   print_size_info_get_page_dimensions (info,
                                        &page_width, &page_height,
                                        GTK_UNIT_POINTS);
 
-  x = (gdouble) info->image_width / page_width * 72.0;
+  x = (gdouble) info->image_width  / page_width  * 72.0;
   y = (gdouble) info->image_height / page_height * 72.0;
 
   if (info->chain && gimp_chain_button_get_active (info->chain))
@@ -871,7 +873,4 @@ print_size_info_set_page_setup (PrintSizeInfo *info)
                                          x, GIMP_MAX_RESOLUTION);
   gimp_size_entry_set_refval_boundaries (info->resolution_entry, 1,
                                          y, GIMP_MAX_RESOLUTION);
-
-  /* FIXME: is this still needed at all? */
-  data->orientation = gtk_page_setup_get_orientation (setup);
 }

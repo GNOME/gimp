@@ -38,6 +38,5 @@ typedef struct
   PrintCenterMode     center;
   gboolean            use_full_page;
   GtkPrintOperation  *operation;
-  GtkPageOrientation  orientation;
 } PrintData;
 
