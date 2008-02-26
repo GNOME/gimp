@@ -1,3 +1,8 @@
+2008-02-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimppolygonselecttool.c: rename member num_points to
+	n_points and various small cleanups all over the place.
+
 2008-02-26  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: use AM_PROG_CC_C_O to fix warning with automake 1.10.
