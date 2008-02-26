@@ -36,31 +36,31 @@ enum
 
 struct _PrintPreview
 {
-  GtkEventBox     parent_instance;
+  GtkEventBox      parent_instance;
 
-  GdkCursor      *cursor;
+  GdkCursor       *cursor;
 
-  GtkPageSetup   *page;
-  GdkPixbuf      *pixbuf;
-  gboolean        dragging;
-  gboolean        inside;
+  GtkPageSetup    *page;
+  cairo_surface_t *thumbnail;
+  gboolean         dragging;
+  gboolean         inside;
 
-  GimpDrawable   *drawable;
+  GimpDrawable    *drawable;
 
-  gdouble         image_offset_x;
-  gdouble         image_offset_y;
-  gdouble         image_offset_x_max;
-  gdouble         image_offset_y_max;
-  gdouble         image_width;
-  gdouble         image_height;
+  gdouble          image_offset_x;
+  gdouble          image_offset_y;
+  gdouble          image_offset_x_max;
+  gdouble          image_offset_y_max;
+  gdouble          image_width;
+  gdouble          image_height;
 
-  gboolean        use_full_page;
+  gboolean         use_full_page;
 
   /* for mouse drags */
-  gdouble         orig_offset_x;
-  gdouble         orig_offset_y;
-  gint            start_x;
-  gint            start_y;
+  gdouble          orig_offset_x;
+  gdouble          orig_offset_y;
+  gint             start_x;
+  gint             start_y;
 };
 
 struct _PrintPreviewClass
@@ -106,6 +106,9 @@ static void      print_preview_get_page_margins     (PrintPreview   *preview,
                                                      gdouble        *right_margin,
                                                      gdouble        *top_margin,
                                                      gdouble        *bottom_margin);
+static cairo_surface_t * print_preview_get_thumbnail (GimpDrawable  *drawable,
+                                                      gint           width,
+                                                      gint           height);
 
 
 G_DEFINE_TYPE (PrintPreview, print_preview, GTK_TYPE_EVENT_BOX)
@@ -209,10 +212,10 @@ print_preview_finalize (GObject *object)
       preview->drawable = NULL;
     }
 
-  if (preview->pixbuf)
+  if (preview->thumbnail)
     {
-      g_object_unref (preview->pixbuf);
-      preview->pixbuf = NULL;
+      cairo_surface_destroy (preview->thumbnail);
+      preview->thumbnail = NULL;
     }
 
   if (preview->page)
@@ -283,10 +286,10 @@ print_preview_size_allocate (GtkWidget     *widget,
   GTK_WIDGET_CLASS (print_preview_parent_class)->size_allocate (widget,
                                                                 allocation);
 
-  if (preview->pixbuf != NULL)
+  if (preview->thumbnail)
     {
-      g_object_unref (preview->pixbuf);
-      preview->pixbuf = NULL;
+      cairo_surface_destroy (preview->thumbnail);
+      preview->thumbnail = NULL;
     }
 }
 
@@ -449,29 +452,30 @@ print_preview_expose_event (GtkWidget      *widget,
       cairo_stroke (cr);
     }
 
-  if (preview->pixbuf == NULL &&
+  if (preview->thumbnail == NULL &&
       gimp_drawable_is_valid (preview->drawable->drawable_id))
     {
-      preview->pixbuf =
-        gimp_drawable_get_thumbnail (preview->drawable->drawable_id,
-                                     MIN (widget->allocation.width, 1024),
-                                     MIN (widget->allocation.height, 1024),
-                                     GIMP_PIXBUF_KEEP_ALPHA);
+      preview->thumbnail =
+        print_preview_get_thumbnail (preview->drawable,
+                                     MIN (widget->allocation.width,  1024),
+                                     MIN (widget->allocation.height, 1024));
     }
 
-  if (preview->pixbuf != NULL)
+  if (preview->thumbnail != NULL)
     {
       gdouble scale_x;
       gdouble scale_y;
 
-      scale_x = preview->image_width  / gdk_pixbuf_get_width  (preview->pixbuf);
-      scale_y = preview->image_height / gdk_pixbuf_get_height (preview->pixbuf);
+      scale_x = (preview->image_width  /
+                 cairo_image_surface_get_width (preview->thumbnail));
+      scale_y = (preview->image_height /
+                 cairo_image_surface_get_height (preview->thumbnail));
 
       cairo_rectangle (cr, 0, 0, preview->image_width, preview->image_height);
 
       cairo_scale (cr, scale_x * scale, scale_y * scale);
 
-      gdk_cairo_set_source_pixbuf (cr, preview->pixbuf, 0, 0);
+      cairo_set_source_surface (cr, preview->thumbnail, 0, 0);
       cairo_fill (cr);
     }
 
@@ -721,4 +725,105 @@ print_preview_get_page_margins (PrintPreview *preview,
       *bottom_margin = gtk_page_setup_get_bottom_margin (preview->page,
                                                          GTK_UNIT_POINTS);
     }
+}
+
+
+/*  This thumbnail code should eventually end up in libgimpui.  */
+
+static cairo_surface_t *
+print_preview_get_thumbnail (GimpDrawable *drawable,
+                             gint          width,
+                             gint          height)
+{
+  cairo_surface_t *surface;
+  cairo_format_t   format;
+  guchar          *data;
+  guchar          *dest;
+  const guchar    *src;
+  gint             src_stride;
+  gint             dest_stride;
+  gint             y;
+  gint             bpp;
+
+  g_return_val_if_fail (width  > 0 && width  <= 1024, NULL);
+  g_return_val_if_fail (height > 0 && height <= 1024, NULL);
+
+  data = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                           &width, &height, &bpp);
+
+  switch (bpp)
+    {
+    case 1:
+    case 3:
+      format = CAIRO_FORMAT_RGB24;
+      break;
+    case 2:
+    case 4:
+      format = CAIRO_FORMAT_ARGB32;
+      break;
+    default:
+      g_assert_not_reached ();
+      break;
+    }
+
+  surface = cairo_image_surface_create (format, width, height);
+
+  src         = data;
+  src_stride  = width * bpp;
+
+  dest        = cairo_image_surface_get_data (surface);
+  dest_stride = cairo_image_surface_get_stride (surface);
+
+  for (y = 0; y < height; y++)
+    {
+      const guchar *s = src;
+      guchar       *d = dest;
+      gint          w = width;
+
+      switch (bpp)
+        {
+        case 1:
+          while (w--)
+            {
+              GIMP_CAIRO_RGB24_SET_PIXEL (d, s[0], s[0], s[0]);
+              s += 1;
+              d += 4;
+            }
+          break;
+
+        case 2:
+          while (w--)
+            {
+              GIMP_CAIRO_ARGB32_SET_PIXEL (d, s[0], s[0], s[0], s[1]);
+              s += 2;
+              d += 4;
+            }
+          break;
+
+        case 3:
+          while (w--)
+            {
+              GIMP_CAIRO_RGB24_SET_PIXEL (d, s[0], s[1], s[2]);
+              s += 3;
+              d += 4;
+            }
+          break;
+
+        case 4:
+          while (w--)
+            {
+              GIMP_CAIRO_ARGB32_SET_PIXEL (d, s[0], s[1], s[2], s[3]);
+              s += 4;
+              d += 4;
+            }
+          break;
+        }
+
+      src  += src_stride;
+      dest += dest_stride;
+    }
+
+  g_free (data);
+
+  return surface;
 }

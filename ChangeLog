@@ -1,5 +1,12 @@
 2008-02-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print-preview.c: create a Cairo image surface
+	from the data returned from gimp_drawable_get_thumbnail() instead
+	of using an intermediate GdkPixbuf. This code should eventually
+	end up in libgimpui.
+
+2008-02-26  Sven Neumann  <sven@gimp.org>
+
 	* docs/gimp.1.in: document the "--version --verbose" option.
 
 2008-02-26  Tor Lillqvist  <tml@novell.com>
