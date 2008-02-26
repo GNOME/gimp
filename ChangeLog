@@ -1,5 +1,11 @@
 2008-02-26  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpchainbutton.c: use a private inner class
+	directly derived from GtkWidget for drawing the lines. This saves
+	us two input windows.
+
+2008-02-26  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print-preview.c: take the reading direction into
 	account and do the right thing for RTL languages.
 
