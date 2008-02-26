@@ -94,7 +94,8 @@ static PrintSizeInfo  info;
 
 
 GtkWidget *
-print_page_layout_gui (PrintData *data)
+print_page_layout_gui (PrintData   *data,
+                       const gchar *help_id)
 {
   GtkWidget    *main_hbox;
   GtkWidget    *main_vbox;
@@ -174,6 +175,8 @@ print_page_layout_gui (PrintData *data)
   g_signal_connect_object (data->operation, "notify::default-page-setup",
                            G_CALLBACK (print_page_setup_notify),
                            main_hbox, 0);
+
+  gimp_help_connect (main_hbox, gimp_standard_help_func, help_id, NULL);
 
   return main_hbox;
 }

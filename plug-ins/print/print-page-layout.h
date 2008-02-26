@@ -16,5 +16,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-GtkWidget * print_page_layout_gui (PrintData *data);
+GtkWidget * print_page_layout_gui (PrintData   *data,
+                                   const gchar *help_id);
 

@@ -408,7 +408,7 @@ static GtkWidget *
 create_custom_widget (GtkPrintOperation *operation,
                       PrintData         *data)
 {
-  return print_page_layout_gui (data);
+  return print_page_layout_gui (data, PRINT_PROC_NAME);
 }
 
 static void
