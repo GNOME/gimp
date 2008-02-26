@@ -48,12 +48,26 @@ gimp_show_library_version (const gchar *package,
                            gint         run_time_minor,
                            gint         run_time_micro)
 {
-  g_print ("%s  %s %d.%d.%d, %s %d.%d.%d\n",
-           package,
-           _("compiled against version"),
-           build_time_major, build_time_minor, build_time_micro,
-           _("running against version"),
-           run_time_major, run_time_minor, run_time_micro);
+  gchar *build_time_version;
+  gchar *run_time_version;
+
+  build_time_version = g_strdup_printf ("%d.%d.%d",
+                                        build_time_major,
+                                        build_time_minor,
+                                        build_time_micro);
+  run_time_version = g_strdup_printf ("%d.%d.%d",
+                                      run_time_major,
+                                      run_time_minor,
+                                      run_time_micro);
+
+  /* show versions of libraries used by GIMP */
+  g_print (_("using %s, "
+             "compiled against version %s, running against version %s"),
+           package, build_time_version, run_time_version);
+  g_print ("\n");
+
+  g_free (run_time_version);
+  g_free (build_time_version);
 }
 
 static void
@@ -75,6 +89,14 @@ gimp_show_library_versions (void)
                              gegl_minor_version,
                              gegl_micro_version);
 
+  gimp_show_library_version ("GLib",
+                             GLIB_MAJOR_VERSION,
+                             GLIB_MINOR_VERSION,
+                             GLIB_MICRO_VERSION,
+                             glib_major_version,
+                             glib_minor_version,
+                             glib_micro_version);
+
 #ifndef GIMP_CONSOLE_COMPILATION
   gimp_show_library_version ("GTK+",
                              GTK_MAJOR_VERSION,
@@ -92,14 +114,6 @@ gimp_show_library_versions (void)
                              pango_version () / 100 / 100,
                              pango_version () / 100 % 100,
                              pango_version () % 100);
-
-  gimp_show_library_version ("GLib",
-                             GLIB_MAJOR_VERSION,
-                             GLIB_MINOR_VERSION,
-                             GLIB_MICRO_VERSION,
-                             glib_major_version,
-                             glib_minor_version,
-                             glib_micro_version);
 
   gimp_show_library_version ("Fontconfig",
                              FC_MAJOR, FC_MINOR, FC_REVISION,
