@@ -1,5 +1,10 @@
 2008-02-27  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL
+	* configure.in: depend on GEGL 0.0.16 or newer.
+
+2008-02-27  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable-transform.c (gimp_drawable_transform_affine):
 	pass the direction parameter down to
 	gimp_drawable_transform_tiles_affine() instead of hardcoding it to
