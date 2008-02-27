@@ -25,13 +25,15 @@ Changes in GIMP 2.4.5
   plug-ins (bug #516369)
 - added default keyboard shortcut for "Paste As New Image" (Ctrl-Shift-V)
 - added default keyboard shortcut for "Copy Visible" (Ctrl-Shift-C)
+- fixed missing preview update in Curves tool (bug #518012)
+- fixed a bug in the Frosty Logo script (bug #472316)
 - translation fixes and updates (de, eu, eo, fr, he, hu, it, ja, ko)
 
 
 Contributors:
 
-   Sven Neumann, Michael Natterer, Bill Skaggs, Ulf-D. Ehlert,
-   Giuliano Pochini
+   Sven Neumann, Michael Natterer, Bill Skaggs, Kevin Cozens,
+   Ulf-D. Ehlert, Giuliano Pochini, LightningIsMyName
 
 
 
