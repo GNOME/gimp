@@ -285,6 +285,8 @@ gui_display_create (GimpImage *image,
 
   image_managers = gimp_ui_managers_from_name ("<Image>");
 
+  g_return_val_if_fail (image_managers != NULL, NULL);
+
   display = gimp_display_new (image, unit, scale,
                               global_menu_factory,
                               image_managers->data);
