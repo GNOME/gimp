@@ -2,6 +2,15 @@
 
 	Merged from trunk:
 
+	* app/core/gimpdrawable-transform.c (gimp_drawable_transform_affine):
+	pass the direction parameter down to
+	gimp_drawable_transform_tiles_affine() instead of hardcoding it to
+	GIMP_TRANSFORM_FORWARD. Fixes bug #518910.
+
+2008-02-27  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* app/gui/gui-vtable.c (gui_display_create): added a sanity check
 	which might help to catch the problem reported in bug #518905.
 
