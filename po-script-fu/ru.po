@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-16 04:24+0400\n"
-"PO-Revision-Date: 2007-10-21 22:03+0300\n"
+"POT-Creation-Date: 2008-01-24 02:15+0300\n"
+"PO-Revision-Date: 2008-01-24 02:46+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: ../plug-ins/script-fu/script-fu-console.c:133
 #: ../plug-ins/script-fu/script-fu-console.c:200
 msgid "Script-Fu Console"
-msgstr "Консоль Скрипт-Фу"
+msgstr "Консоль Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:196
 msgid "Welcome to TinyScheme"
@@ -1782,46 +1782,6 @@ msgstr "Удалить все горизонтальные и вертикаль
 msgid "_Remove all Guides"
 msgstr "_Удалить направляющие"
 
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-msgid "BG opacity"
-msgstr "Непрозрачность фона"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid "Create a graph of the Hue, Saturation, and Value distributions"
-msgstr "Создать график распределения тона, насыщенности и яркости"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
-msgid "Draw _HSV Graph..."
-msgstr "Построить HSV-график..."
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:4
-msgid "End X"
-msgstr "Конец X"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:5
-msgid "End Y"
-msgstr "Конец Y"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:6
-msgid "From top-left to bottom-right"
-msgstr "От верхнего левого к нижнему правому"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:7
-msgid "Graph scale"
-msgstr "Масштаб графика"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:8
-msgid "Start X"
-msgstr "Начало по X"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:9
-msgid "Start Y"
-msgstr "Начало по Y"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:10
-msgid "Use selection bounds instead of values below"
-msgstr "Использовать границы выделения вместо указанных ниже значений"
-
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
 msgstr "Создать двухцветный логотип, похожий на небрежный текст"
@@ -2823,4 +2783,25 @@ msgstr "Непрозрачность бликов"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-эффект..."
+
+#~ msgid "BG opacity"
+#~ msgstr "Непрозрачность фона"
+#~ msgid "Create a graph of the Hue, Saturation, and Value distributions"
+#~ msgstr "Создать график распределения тона, насыщенности и яркости"
+#~ msgid "Draw _HSV Graph..."
+#~ msgstr "Построить HSV-график..."
+#~ msgid "End X"
+#~ msgstr "Конец X"
+#~ msgid "End Y"
+#~ msgstr "Конец Y"
+#~ msgid "From top-left to bottom-right"
+#~ msgstr "От верхнего левого к нижнему правому"
+#~ msgid "Graph scale"
+#~ msgstr "Масштаб графика"
+#~ msgid "Start X"
+#~ msgstr "Начало по X"
+#~ msgid "Start Y"
+#~ msgstr "Начало по Y"
+#~ msgid "Use selection bounds instead of values below"
+#~ msgstr "Использовать границы выделения вместо указанных ниже значений"
 
