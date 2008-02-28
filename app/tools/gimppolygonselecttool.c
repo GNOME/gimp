@@ -192,7 +192,7 @@ gimp_polygon_select_tool_init (GimpPolygonSelectTool *poly_sel_tool)
   gimp_tool_control_set_scroll_lock (tool->control, FALSE);
   gimp_tool_control_set_wants_click (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control,
-                                     GIMP_TOOL_CURSOR_FREE_SELECT);
+                                     GIMP_TOOL_CURSOR_POLYGON_SELECT);
 
   poly_sel_tool->points   = NULL;
   poly_sel_tool->n_points = 0;

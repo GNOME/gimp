@@ -1,3 +1,15 @@
+2008-02-28  Michael Natterer  <mitch@gimp.org>
+
+	* cursors/Makefile.am
+	* cursors/gimp-tool-cursors.xcf
+	* cursors/tool-polygon-select.png
+	* cursors/xbm/tool-polygon-select.xbm
+	* cursors/xbm/tool-polygon-select-mask.xbm
+	* app/widgets/widgets-enums.h
+	* app/widgets/gimpcursor.c: new cursor for polygon select.
+
+	* app/tools/gimppolygonselecttool.c: use it.
+
 2008-02-27  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL

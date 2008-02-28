@@ -59,6 +59,7 @@ CURSOR_IMAGES = \
 	tool-paths-segment.png		\
 	tool-pencil.png			\
 	tool-perspective.png		\
+	tool-polygon-select.png		\
 	tool-rect-select.png		\
 	tool-resize.png			\
 	tool-rotate.png			\
@@ -136,6 +137,8 @@ EXTRA_DIST = \
 	xbm/tool-ellipse-select-mask.xbm	\
 	xbm/tool-free-select.xbm		\
 	xbm/tool-free-select-mask.xbm		\
+	xbm/tool-polygon-select.xbm		\
+	xbm/tool-polygon-select-mask.xbm	\
 	xbm/tool-fuzzy-select.xbm		\
 	xbm/tool-fuzzy-select-mask.xbm		\
 	xbm/tool-paths-anchor.xbm		\
