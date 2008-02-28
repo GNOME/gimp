@@ -80,10 +80,15 @@ gimp_drawable_curves_spline (GimpDrawable *drawable,
 
   gimp_data_freeze (GIMP_DATA (curve));
 
+#ifdef __GNUC__
+#warning FIXME: create a curves object with the right number of points
+#endif
   /*  unset the last point  */
-  gimp_curve_set_point (curve, GIMP_CURVE_NUM_POINTS - 1, -1, -1);
+  gimp_curve_set_point (curve, curve->n_points - 1, -1, -1);
 
-  for (i = 0; i < n_points / 2; i++)
+  n_points = MIN (n_points / 2, curve->n_points);
+
+  for (i = 0; i < n_points; i++)
     gimp_curve_set_point (curve, i,
                           (gdouble) points[i * 2]     / 255.0,
                           (gdouble) points[i * 2 + 1] / 255.0);

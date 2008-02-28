@@ -637,7 +637,7 @@ gimp_curves_tool_config_notify (GObject        *object,
         case GIMP_HISTOGRAM_VALUE:
         case GIMP_HISTOGRAM_ALPHA:
         case GIMP_HISTOGRAM_RGB:
-          gimp_curve_get_uchar (curve, r);
+          gimp_curve_get_uchar (curve, sizeof (r), r);
 
           gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->xrange),
                                       r, r, r);
@@ -646,9 +646,12 @@ gimp_curves_tool_config_notify (GObject        *object,
         case GIMP_HISTOGRAM_RED:
         case GIMP_HISTOGRAM_GREEN:
         case GIMP_HISTOGRAM_BLUE:
-          gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_RED],   r);
-          gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_GREEN], g);
-          gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_BLUE],  b);
+          gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_RED],
+                                sizeof (r), r);
+          gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_GREEN],
+                                sizeof (g), g);
+          gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_BLUE],
+                                sizeof (b), b);
 
           gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->xrange),
                                       r, g, b);

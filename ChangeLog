@@ -1,5 +1,18 @@
 2008-02-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpcurve.[ch]: get rid of fixed-size arrays and
+	allocate the points and curve arrays dynamically. Added "n-points"
+	and "n-samples" CONSTRUCT_ONLY properties. Renamed member "curve"
+	to "samples". Lots of code changes to work with dynamic limits
+	rather than 17 and 256.
+
+	* app/core/gimpdrawable-curves.c
+	* app/gegl/gimpcurvesconfig.c
+	* app/tools/gimpcurvestool.c
+	* app/widgets/gimpcurveview.c: changed accordingly.
+
+2008-02-28  Michael Natterer  <mitch@gimp.org>
+
 	* cursors/Makefile.am
 	* cursors/gimp-tool-cursors.xcf
 	* cursors/tool-polygon-select.png

@@ -201,9 +201,9 @@ gimp_curves_config_set_property (GObject      *object,
             gimp_config_sync (G_OBJECT (src_curve), G_OBJECT (dest_curve), 0);
 
             memcpy (dest_curve->points, src_curve->points,
-                    sizeof (src_curve->points));
-            memcpy (dest_curve->curve, src_curve->curve,
-                    sizeof (src_curve->curve));
+                    sizeof (GimpVector2) * src_curve->n_points);
+            memcpy (dest_curve->samples, src_curve->samples,
+                    sizeof (gdouble) * src_curve->n_samples);
           }
       }
       break;
@@ -235,9 +235,9 @@ gimp_curves_config_equal (GimpConfig *a,
             return FALSE;
 
           if (memcmp (a_curve->points, b_curve->points,
-                      sizeof (b_curve->points)) ||
-              memcmp (a_curve->curve, b_curve->curve,
-                      sizeof (b_curve->curve)))
+                      sizeof (GimpVector2) * b_curve->n_points) ||
+              memcmp (a_curve->samples, b_curve->samples,
+                      sizeof (gdouble) * b_curve->n_samples))
             return FALSE;
         }
       else if (a_curve || b_curve)
@@ -288,10 +288,10 @@ gimp_curves_config_copy (GimpConfig  *src,
         {
           gimp_config_sync (G_OBJECT (src_curve), G_OBJECT (dest_curve), 0);
 
-          memcpy (dest_curve->points,
-                  src_curve->points, sizeof (src_curve->points));
-          memcpy (dest_curve->curve,
-                  src_curve->curve, sizeof (src_curve->curve));
+          memcpy (dest_curve->points, src_curve->points,
+                  sizeof (GimpVector2) * src_curve->n_points);
+          memcpy (dest_curve->samples, src_curve->samples,
+                  sizeof (gdouble) * src_curve->n_samples);
         }
     }
 
@@ -322,6 +322,8 @@ gimp_curves_config_reset_channel (GimpCurvesConfig *config)
   gimp_curve_reset (config->curve[config->channel], TRUE);
 }
 
+#define GIMP_CURVE_N_CRUFT_POINTS 17
+
 gboolean
 gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
                                gpointer           fp,
@@ -331,8 +333,8 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
   gint   i, j;
   gint   fields;
   gchar  buf[50];
-  gint   index[5][GIMP_CURVE_NUM_POINTS];
-  gint   value[5][GIMP_CURVE_NUM_POINTS];
+  gint   index[5][GIMP_CURVE_N_CRUFT_POINTS];
+  gint   value[5][GIMP_CURVE_N_CRUFT_POINTS];
 
   g_return_val_if_fail (GIMP_IS_CURVES_CONFIG (config), FALSE);
   g_return_val_if_fail (file != NULL, FALSE);
@@ -348,7 +350,7 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
 
   for (i = 0; i < 5; i++)
     {
-      for (j = 0; j < GIMP_CURVE_NUM_POINTS; j++)
+      for (j = 0; j < GIMP_CURVE_N_CRUFT_POINTS; j++)
         {
           fields = fscanf (file, "%d %d ", &index[i][j], &value[i][j]);
           if (fields != 2)
@@ -372,7 +374,7 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
 
       gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
 
-      for (j = 0; j < GIMP_CURVE_NUM_POINTS; j++)
+      for (j = 0; j < GIMP_CURVE_N_CRUFT_POINTS; j++)
         gimp_curve_set_point (curve, j,
                               (gdouble) index[i][j] / 255.0,
                               (gdouble) value[i][j] / 255.0);
@@ -404,27 +406,46 @@ gimp_curves_config_save_cruft (GimpCurvesConfig *config,
 
       if (curve->curve_type == GIMP_CURVE_FREE)
         {
-          /* pick representative points from the curve and make them
-           * control points
-           */
-          for (j = 0; j <= 8; j++)
-            {
-              gint32 index = CLAMP0255 (j * 32);
+          gint n_points;
 
-              curve->points[j * 2].x = (gdouble) index / 255.0;
-              curve->points[j * 2].y = curve->curve[index];
+          for (j = 0; j < curve->n_points; j++)
+            {
+              curve->points[j].x = -1;
+              curve->points[j].y = -1;
+            }
+
+          /* pick some points from the curve and make them control
+           * points
+           */
+          n_points = CLAMP (9, curve->n_points / 2, curve->n_points);
+
+          for (j = 0; j < n_points; j++)
+            {
+              gint sample = j * (curve->n_samples - 1) / (n_points - 1);
+              gint point  = j * (curve->n_points  - 1) / (n_points - 1);
+
+              curve->points[point].x = ((gdouble) sample /
+                                        (gdouble) (curve->n_samples - 1));
+              curve->points[point].y = curve->samples[sample];
             }
         }
 
-      for (j = 0; j < GIMP_CURVE_NUM_POINTS; j++)
+      for (j = 0; j < curve->n_points; j++)
         {
           gdouble x, y;
 
           gimp_curve_get_point (curve, j, &x, &y);
 
-          fprintf (file, "%d %d ",
-                   (gint) (x * 255.999),
-                   (gint) (y * 255.999));
+          if (x < 0.0 || y < 0.0)
+            {
+              fprintf (file, "%d %d ", -1, -1);
+            }
+          else
+            {
+              fprintf (file, "%d %d ",
+                       (gint) (x * 255.999),
+                       (gint) (y * 255.999));
+            }
         }
 
       fprintf (file, "\n");
@@ -451,12 +472,14 @@ gimp_curves_config_to_cruft (GimpCurvesConfig *config,
        channel++)
     {
       gimp_curve_get_uchar (config->curve[channel],
+                            sizeof (cruft->curve[channel]),
                             cruft->curve[channel]);
     }
 
   if (! is_color)
     {
       gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_ALPHA],
+                            sizeof (cruft->curve[1]),
                             cruft->curve[1]);
     }
 }

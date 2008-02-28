@@ -24,9 +24,6 @@
 #include "libgimpmath/gimpvector.h"
 
 
-#define GIMP_CURVE_NUM_POINTS 17 /* TODO: get rid of this limit */
-
-
 #define GIMP_TYPE_CURVE            (gimp_curve_get_type ())
 #define GIMP_CURVE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CURVE, GimpCurve))
 #define GIMP_CURVE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CURVE, GimpCurveClass))
@@ -43,8 +40,11 @@ struct _GimpCurve
 
   GimpCurveType  curve_type;
 
-  GimpVector2    points[GIMP_CURVE_NUM_POINTS];
-  gdouble        curve[256];
+  gint           n_points;
+  GimpVector2   *points;
+
+  gint           n_samples;
+  gdouble       *samples;
 };
 
 struct _GimpCurveClass
@@ -64,6 +64,9 @@ void            gimp_curve_reset             (GimpCurve     *curve,
 void            gimp_curve_set_curve_type    (GimpCurve     *curve,
                                               GimpCurveType  curve_type);
 GimpCurveType   gimp_curve_get_curve_type    (GimpCurve     *curve);
+
+gint            gimp_curve_get_n_points      (GimpCurve     *curve);
+gint            gimp_curve_get_n_samples     (GimpCurve     *curve);
 
 gint            gimp_curve_get_closest_point (GimpCurve     *curve,
                                               gdouble        x);
@@ -88,7 +91,8 @@ gdouble         gimp_curve_map               (GimpCurve     *curve,
                                               gdouble        x);
 
 void            gimp_curve_get_uchar         (GimpCurve     *curve,
-                                              guchar        *dest_array);
+                                              gint           n_samples,
+                                              guchar        *samples);
 
 
 #endif /* __GIMP_CURVE_H__ */
