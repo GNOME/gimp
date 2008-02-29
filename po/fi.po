@@ -8,6 +8,7 @@
 # Tapio Lehtonen <tale@debian.org>, 2004.
 # Mikko Paananen <mikko@ipi.fi>, 2004.
 # Ilkka Tuohela <hile@iki.fi>, 2006-2008.
+# Timo Jyrinki <timo.jyrinki@iki.fi>, 2008
 #
 # Sanastoa: http://www.imaginos.fi/materiaa/photoshp/23.html
 #
@@ -16,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-20 08:01+0300\n"
-"PO-Revision-Date: 2007-02-03 17:22+0300\n"
+"PO-Revision-Date: 2008-02-29 16:24+0200\n"
 "Last-Translator: Heino Keränen <h2k@nic.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +31,7 @@ msgstr "GIMP"
 
 #: ../app/about.h:27 ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
-msgstr "Gimp kuvankäsittelyohjelma"
+msgstr "GIMP-kuvankäsittely"
 
 #: ../app/about.h:30
 msgid ""
@@ -5695,7 +5696,7 @@ msgstr "Jäsennysvirhe sivellintiedostossa '%s':  Korkeus = 0."
 #: ../app/core/gimpbrush-load.c:215
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "Jäsennysvirhe sivellintiedostossa '%s':  Bittejä = 0."
+msgstr "Jäsennysvirhe sivellintiedostossa '%s':  Tavuja = 0."
 
 #: ../app/core/gimpbrush-load.c:239
 #, c-format
@@ -6800,6 +6801,7 @@ msgstr ""
 "Mikko Paananen\n"
 "Heino Keränen\n"
 "Ilkka Tuohela\n"
+"Timo Jyrinki\n"
 "\n"
 "http://www.gnome.fi/"
 
@@ -7109,8 +7111,8 @@ msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
 msgstr ""
-"Uuden pikanäppäimen muokkaus. Klikkaa riviä ja kirjoita vastaava uusi, tai "
-"tyhjennä Peruuta-näppäimellä."
+"Muokataksesi pikanäppäintä, napsauta riviä ja anna uusi pikanäppäin tai "
+"paina askelpalautinta poistaaksesi pikanäppäimen."
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:91
 #: ../app/dialogs/preferences-dialog.c:1660
@@ -8709,9 +8711,9 @@ msgid "Blending"
 msgstr "Sekoitus"
 
 #: ../app/pdb/floating_sel_cmds.c:63
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot remove this layer because it is not a floating selection."
-msgstr "Tason ankkurointi epäonnistui, koska se ei ole kelluva valinta."
+msgstr "Tason poisto epäonnistui, koska se ei ole kelluva valinta."
 
 #: ../app/pdb/floating_sel_cmds.c:94
 #, c-format
@@ -8719,11 +8721,13 @@ msgid "Cannot anchor this layer because it is not a floating selection."
 msgstr "Tason ankkurointi epäonnistui, koska se ei ole kelluva valinta."
 
 #: ../app/pdb/floating_sel_cmds.c:125
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot convert this layer to a normal layer because it is not a floating "
 "selection."
-msgstr "Tason ankkurointi epäonnistui, koska se ei ole kelluva valinta."
+msgstr ""
+"Tason muuntaminen tavalliseksi tasoksi epäonnistui, koska se ei ole kelluva "
+"valinta."
 
 #: ../app/pdb/floating_sel_cmds.c:184
 #, fuzzy, c-format
@@ -8823,12 +8827,12 @@ msgstr "Nimettyä puskuria \"%s\" ei löytynyt"
 #: ../app/pdb/gimppdb-utils.c:273
 #, c-format
 msgid "Invalid empty paint method name"
-msgstr ""
+msgstr "Epäkelpo tyhjä maalaustavan nimi"
 
 #: ../app/pdb/gimppdb-utils.c:283
 #, c-format
 msgid "Paint method '%s' does not exist"
-msgstr ""
+msgstr "Maalaustapaa \"%s\" ei ole olemassa"
 
 #: ../app/pdb/gimppdb-utils.c:299
 #, c-format
@@ -8941,13 +8945,13 @@ msgid "Bad binary format string in interpreter file %s"
 msgstr "Epäkelpo binaarinen merkkijono tulkkitiedostossa %s"
 
 #: ../app/plug-in/gimpplugin-message.c:451
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
 "%s"
 msgstr ""
-"PDB-kutsuvirhe:\n"
-"Proseduuria %s ei löydy"
+"PDB-kutsuvirhe proseduurille \"%s\":\n"
+"%s"
 
 #: ../app/plug-in/gimpplugin.c:635
 #, c-format
@@ -10469,24 +10473,20 @@ msgid "Transformation Matrix"
 msgstr "Muunnosmatriisi"
 
 #: ../app/tools/gimppolygonselecttool.c:152
-#, fuzzy
 msgid "Polygon Select"
-msgstr "Edustan valinta"
+msgstr "Monikulmavalinta"
 
 #: ../app/tools/gimppolygonselecttool.c:153
-#, fuzzy
 msgid "Polygon Select Tool: Select a hand-drawn polygon"
-msgstr "Vapaavalinta: Valitse käsinpiirrettäviä alueita"
+msgstr "Monikulmavalinta: Valitse käsinpiirrettävä monikulmio."
 
 #: ../app/tools/gimppolygonselecttool.c:154
-#, fuzzy
 msgid "_Polygon Select"
-msgstr "Edustan valinta"
+msgstr "_Monikulmavalinta"
 
 #: ../app/tools/gimppolygonselecttool.c:527
-#, fuzzy
 msgid "command|Polygon Select"
-msgstr "Edustavärin valinta"
+msgstr "Monikulmavalinta"
 
 #: ../app/tools/gimpposterizetool.c:85
 msgid "Posterize Tool: Reduce to a limited set of colors"
@@ -12133,9 +12133,8 @@ msgid "%d ppi, %s"
 msgstr "%d ppi, %s"
 
 #: ../app/widgets/gimptexteditor.c:185
-#, fuzzy
 msgid "_Language:"
-msgstr "_Suuri"
+msgstr "Kie_li:"
 
 #: ../app/widgets/gimptexteditor.c:230
 msgid "_Use selected font"
@@ -12168,7 +12167,6 @@ msgid "Creating preview..."
 msgstr "Luodaan esikatselua..."
 
 #: ../app/widgets/gimptoolbox-color-area.c:80
-#, fuzzy
 msgid ""
 "Foreground & background colors.\n"
 "The black and white squares reset colors.\n"
