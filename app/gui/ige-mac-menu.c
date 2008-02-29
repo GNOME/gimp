@@ -1,14 +1,15 @@
 /* GTK+ Integration for the Mac OS X Menubar.
  *
  * Copyright (C) 2007 Pioneer Research Center USA, Inc.
+ * Copyright (C) 2007 Imendio AB
  *
  * For further information, see:
  * http://developer.imendio.com/projects/gtk-macosx/menubar
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * License as published by the Free Software Foundation; version 2.1
+ * of the License.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -28,15 +29,14 @@
 #ifdef GDK_WINDOWING_QUARTZ
 
 #include <gdk/gdkkeysyms.h>
-
 #include <Carbon/Carbon.h>
 
 #include "ige-mac-menu.h"
 
-
 /* TODO
  *
- * - Sync adding/removing/reordering items
+ * - Adding a standard Window menu (Minimize etc)?
+ * - Sync reordering items? Does that work now?
  * - Create on demand? (can this be done with gtk+? ie fill in menu
      items when the menu is opened)
  * - Figure out what to do per app/window...
@@ -117,6 +117,7 @@ accel_find_func (GtkAccelKey *key,
 typedef struct
 {
   MenuRef menu;
+  guint   toplevel : 1;
 } CarbonMenu;
 
 static GQuark carbon_menu_quark = 0;
@@ -141,7 +142,8 @@ carbon_menu_get (GtkWidget *widget)
 
 static void
 carbon_menu_connect (GtkWidget *menu,
-		     MenuRef    menuRef)
+		     MenuRef    menuRef,
+                     gboolean   toplevel)
 {
   CarbonMenu *carbon_menu = carbon_menu_get (menu);
 
@@ -154,7 +156,8 @@ carbon_menu_connect (GtkWidget *menu,
 			       (GDestroyNotify) carbon_menu_free);
     }
 
-  carbon_menu->menu = menuRef;
+  carbon_menu->menu     = menuRef;
+  carbon_menu->toplevel = toplevel;
 }
 
 
@@ -578,6 +581,8 @@ menu_event_handler_func (EventHandlerCallRef  event_handler_call_ref,
 static void
 setup_menu_event_handler (void)
 {
+  static gboolean is_setup = FALSE;
+
   EventHandlerUPP menu_event_handler_upp;
   EventHandlerRef menu_event_handler_ref;
   const EventTypeSpec menu_events[] = {
@@ -586,6 +591,9 @@ setup_menu_event_handler (void)
     { kEventClassMenu, kEventMenuOpening },
     { kEventClassMenu, kEventMenuClosed }
   };
+
+  if (is_setup)
+    return;
 
   /* FIXME: We might have to install one per window? */
 
@@ -599,6 +607,8 @@ setup_menu_event_handler (void)
   RemoveEventHandler(menu_event_handler_ref);
   DisposeEventHandlerUPP(menu_event_handler_upp);
 #endif
+
+  is_setup = TRUE;
 }
 
 static void
@@ -614,7 +624,7 @@ sync_menu_shell (GtkMenuShell *menu_shell,
   if (debug)
     g_printerr ("%s: syncing shell %p\n", G_STRFUNC, menu_shell);
 
-  carbon_menu_connect (GTK_WIDGET (menu_shell), carbon_menu);
+  carbon_menu_connect (GTK_WIDGET (menu_shell), carbon_menu, toplevel);
 
   children = gtk_container_get_children (GTK_CONTAINER (menu_shell));
 
@@ -701,8 +711,8 @@ sync_menu_shell (GtkMenuShell *menu_shell,
   g_list_free (children);
 }
 
-
-static gulong emission_hook_id = 0;
+static gulong emission_hook_id    = 0;
+static gint   emission_hook_count = 0;
 
 static gboolean
 parent_set_emission_hook (GSignalInvocationHint *ihint,
@@ -742,7 +752,7 @@ parent_set_emission_hook (GSignalInvocationHint *ihint,
 
 	      sync_menu_shell (GTK_MENU_SHELL (menu_shell),
 			       carbon_menu->menu,
-			       carbon_menu->menu == (MenuRef) data,
+			       carbon_menu->toplevel,
 			       FALSE);
 	    }
         }
@@ -755,9 +765,15 @@ static void
 parent_set_emission_hook_remove (GtkWidget *widget,
 				 gpointer   data)
 {
+  emission_hook_count--;
+
+  if (emission_hook_count > 0)
+    return;
+
   g_signal_remove_emission_hook (g_signal_lookup ("parent-set",
 						  GTK_TYPE_WIDGET),
 				 emission_hook_id);
+  emission_hook_id = 0;
 }
 
 
@@ -768,8 +784,8 @@ parent_set_emission_hook_remove (GtkWidget *widget,
 void
 ige_mac_menu_set_menu_bar (GtkMenuShell *menu_shell)
 {
-  MenuRef carbon_menubar;
-  guint   hook_id;
+  CarbonMenu *current_menu;
+  MenuRef     carbon_menubar;
 
   g_return_if_fail (GTK_IS_MENU_SHELL (menu_shell));
 
@@ -779,17 +795,29 @@ ige_mac_menu_set_menu_bar (GtkMenuShell *menu_shell)
   if (carbon_menu_item_quark == 0)
     carbon_menu_item_quark = g_quark_from_static_string ("CarbonMenuItem");
 
+  current_menu = carbon_menu_get (GTK_WIDGET (menu_shell));
+  if (current_menu)
+    {
+      SetRootMenu (current_menu->menu);
+      return;
+    }
+
   CreateNewMenu (0 /*id*/, 0 /*options*/, &carbon_menubar);
   SetRootMenu (carbon_menubar);
 
   setup_menu_event_handler ();
 
-  emission_hook_id =
-    g_signal_add_emission_hook (g_signal_lookup ("parent-set",
-						 GTK_TYPE_WIDGET),
-				0,
-				parent_set_emission_hook,
-				carbon_menubar, NULL);
+  if (emission_hook_id == 0)
+    {
+      emission_hook_id =
+        g_signal_add_emission_hook (g_signal_lookup ("parent-set",
+                                                     GTK_TYPE_WIDGET),
+                                    0,
+                                    parent_set_emission_hook,
+                                    NULL, NULL);
+    }
+
+  emission_hook_count++;
 
   g_signal_connect (menu_shell, "destroy",
 		    G_CALLBACK (parent_set_emission_hook_remove),
@@ -805,6 +833,8 @@ ige_mac_menu_set_quit_menu_item (GtkMenuItem *menu_item)
   MenuItemIndex index;
 
   g_return_if_fail (GTK_IS_MENU_ITEM (menu_item));
+
+  setup_menu_event_handler ();
 
   if (GetIndMenuItemWithCommandID (NULL, kHICommandQuit, 1,
                                    &appmenu, &index) == noErr)
@@ -848,6 +878,8 @@ ige_mac_menu_add_app_menu_item (IgeMacMenuGroup *group,
 
   g_return_if_fail (group != NULL);
   g_return_if_fail (GTK_IS_MENU_ITEM (menu_item));
+
+  setup_menu_event_handler ();
 
   if (GetIndMenuItemWithCommandID (NULL, kHICommandHide, 1,
                                    &appmenu, NULL) != noErr)

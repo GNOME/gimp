@@ -1,3 +1,7 @@
+2008-02-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/ige-mac-menu.[ch]: synced copies from upstream.
+
 2008-02-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpcurve.[ch]: get rid of fixed-size arrays and
