@@ -1,3 +1,12 @@
+2008-03-01  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimppolygonselecttool.c
+	(gimp_polygon_select_tool_draw): Only draw the grabbed point, not
+	all points. Drawing all points adds unnecessary clutter to the
+	user interface.
+	(gimp_polygon_select_tool_select_closest_point): Handle drawing of
+	grabbed points.
+
 2008-02-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/ige-mac-menu.[ch]: synced copies from upstream.

@@ -511,17 +511,16 @@ static void
 gimp_polygon_select_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpPolygonSelectTool *poly_sel_tool = GIMP_POLYGON_SELECT_TOOL (draw_tool);
-  gint                   i;
 
   gimp_draw_tool_draw_lines (draw_tool,
                              poly_sel_tool->points, poly_sel_tool->n_points,
                              FALSE, FALSE);
 
-  for (i = 0; i < poly_sel_tool->n_points; i++)
+  if (poly_sel_tool->grabbed_point)
     {
       gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_CIRCLE,
-                                  poly_sel_tool->points[i].x,
-                                  poly_sel_tool->points[i].y,
+                                  poly_sel_tool->grabbed_point->x,
+                                  poly_sel_tool->grabbed_point->y,
                                   HANDLE_SIZE, HANDLE_SIZE,
                                   GTK_ANCHOR_CENTER, FALSE);
     }
@@ -611,9 +610,8 @@ gimp_polygon_select_tool_select_closest_point (GimpPolygonSelectTool *poly_sel_t
 {
   GimpDrawTool *draw_tool     = GIMP_DRAW_TOOL (poly_sel_tool);
   gdouble       shortest_dist = POINT_GRAB_THRESHOLD_SQ;
+  GimpVector2  *grabbed_point = NULL;
   int           i;
-
-  poly_sel_tool->grabbed_point = NULL;
 
   for (i = 0; i < poly_sel_tool->n_points; i++)
     {
@@ -628,8 +626,17 @@ gimp_polygon_select_tool_select_closest_point (GimpPolygonSelectTool *poly_sel_t
 
       if (dist < shortest_dist)
         {
-          poly_sel_tool->grabbed_point = &poly_sel_tool->points[i];
+          grabbed_point = &poly_sel_tool->points[i];
         }
+    }
+
+  if (grabbed_point != poly_sel_tool->grabbed_point)
+    {
+      gimp_draw_tool_pause(draw_tool);
+
+      poly_sel_tool->grabbed_point = grabbed_point;
+
+      gimp_draw_tool_resume(draw_tool);
     }
 }
 
