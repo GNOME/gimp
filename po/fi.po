@@ -7,6 +7,7 @@
 # Tapio Lehtonen <tale@debian.org>, 2004.
 # Mikko Paananen <mikko@ipi.fi>, 2004.
 # Ilkka Tuohela <hile@iki.fi>, 2006.
+# Timo Jyrinki <timo.jyrinki@iki.fi>, 2008.
 #
 # Sanastoa: http://www.imaginos.fi/materiaa/photoshp/23.html
 #
@@ -15,8 +16,8 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-09 10:47+0300\n"
-"PO-Revision-Date: 2007-02-03 17:22+0300\n"
-"Last-Translator: Heino Keränen <h2k@nic.fi>\n"
+"PO-Revision-Date: 2008-03-02 12:01+0200\n"
+"Last-Translator: Timo Jyrinki <timo.jyrinki@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,7 +30,7 @@ msgstr "GIMP"
 
 #: ../app/about.h:27 ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
-msgstr "Gimp kuvankäsittelyohjelma"
+msgstr "GIMP-kuvankäsittely"
 
 #: ../app/about.h:30
 msgid ""
@@ -5693,7 +5694,7 @@ msgstr "Jäsennysvirhe sivellintiedostossa '%s':  Korkeus = 0."
 #: ../app/core/gimpbrush-load.c:215
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "Jäsennysvirhe sivellintiedostossa '%s':  Bittejä = 0."
+msgstr "Jäsennysvirhe sivellintiedostossa '%s':  Tavuja = 0."
 
 #: ../app/core/gimpbrush-load.c:239
 #, c-format
@@ -6735,7 +6736,11 @@ msgstr ""
 "Jarkko Ranta\n"
 "Tapio Lehtonen\n"
 "Mikko Paananen\n"
-"Heino Keränen"
+"Heino Keränen\n"
+"Ilkka Tuohela\n"
+"Timo Jyrinki\n"
+"\n"
+"http://www.gnome.fi/"
 
 #: ../app/dialogs/about-dialog.c:533
 msgid "GIMP is brought to you by"
@@ -7043,8 +7048,8 @@ msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
 msgstr ""
-"Uuden pikanäppäimen muokkaus. Klikkaa riviä ja kirjoita vastaava uusi, tai "
-"tyhjennä Peruuta-näppäimellä."
+"Muokataksesi pikanäppäintä, napsauta riviä ja anna uusi pikanäppäin tai "
+"paina askelpalautinta poistaaksesi pikanäppäimen."
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:89
 #: ../app/dialogs/preferences-dialog.c:1669
