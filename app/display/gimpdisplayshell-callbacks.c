@@ -81,7 +81,7 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_EVENT_SMOOTHING  0.7
+#define DEFAULT_EVENT_SMOOTHING  0.98
 #define DEFAULT_EVENT_FILTER  0.5
 
 /*  local function prototypes  */
@@ -1293,9 +1293,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             /* Early removal of useless events saves CPU time.
              * Smoothing is 0.0 here for coasting.
              */
+
             if (gimp_display_shell_eval_event (shell,
-                                               &image_coords, 
-                                               0.0, 
+                                               &image_coords,
+                                               0.0,
                                                DEFAULT_EVENT_FILTER,
                                                time))
               {

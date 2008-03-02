@@ -190,9 +190,8 @@ gimp_display_shell_get_device_state (GimpDisplayShell *shell,
  *
  * This function evaluates the event to decide if the change is
  * big enough to need handling and returns FALSE, if change is less
- * than one image pixel or when smoothed event distance covers less
- * than one pixel taking a whole lot of load off any draw tools that
- * have no use for these sub-pixel events anyway. If the event is
+ * than set filter level taking a whole lot of load off any draw tools
+ * that have no use for these events anyway. If the event is
  * seen fit at first look, it is evaluated for speed and smoothed.
  * Due to lousy time resolution of events pretty strong smoothing is
  * applied to timestamps for sensible speed result. This function is
@@ -216,6 +215,22 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
   const gdouble  smooth_factor = 0.3;
   guint32        thistime      = time;
   gdouble        dist;
+  gdouble        filter;
+  gdouble        inertia;
+
+  /* Event filtering & smoothing causes problems with cursor tracking
+   * when zoomed above screen resolution so we need to supress it.
+   */
+  if (shell->scale_x > 1.0 || shell->scale_y > 1.0)
+    {
+     filter  = filter_treshhold / (MAX (shell->scale_x, shell->scale_y));
+     inertia = 0.0;
+    }
+  else
+    {
+      filter  = filter_treshhold;
+      inertia = inertia_factor;
+    }
 
   if (shell->last_disp_motion_time == 0)
     {
@@ -234,7 +249,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
       /* Events with distances less than the filter_threshold are not
          worth handling.
        */
-      if (fabs (dx) < filter_treshhold && fabs (dy) < filter_treshhold)
+      if (fabs (dx) < filter && fabs (dy) < filter)
         return FALSE;
 
       coords->delta_time = thistime - shell->last_disp_motion_time;
@@ -261,12 +276,12 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           coords->velocity = MIN (coords->velocity, 1.0);
         }
 
-      if (inertia_factor > 0 && coords->distance > 0)
+      if (inertia > 0 && coords->distance > 0)
         {
           /* Apply smoothing to X and Y. */
 
           /* This tells how far from the pointer can stray from the line */
-          gdouble max_deviation = SQR (20 * inertia_factor);
+          gdouble max_deviation = SQR (20 * inertia);
           gdouble cur_deviation = max_deviation;
           gdouble sin_avg;
           gdouble sin_old;
@@ -279,13 +294,13 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 
           sin_new = coords->delta_x / coords->distance;
           sin_old = shell->last_coords.delta_x / shell->last_coords.distance;
-          sin_avg = sin (asin (sin_old) * inertia_factor +
-                         asin (sin_new) * (1 - inertia_factor));
+          sin_avg = sin (asin (sin_old) * inertia +
+                         asin (sin_new) * (1 - inertia));
 
           cos_new = coords->delta_y / coords->distance;
           cos_old = shell->last_coords.delta_y / shell->last_coords.distance;
-          cos_avg = cos (acos (cos_old) * inertia_factor +
-                         acos (cos_new) * (1 - inertia_factor));
+          cos_avg = cos (acos (cos_old) * inertia +
+                         acos (cos_new) * (1 - inertia));
 
           coords->delta_x = sin_avg * coords->distance;
           coords->delta_y = cos_avg * coords->distance;
@@ -322,7 +337,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
                   shell->last_coords.velocity,
                   coords->pressure,
                   coords->distance - dist,
-                  inertia_factor);
+                  inertia);
 #endif
     }
 

@@ -1,3 +1,10 @@
+2008-03-02  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-coords.c
+	(gimp_display_shell_eval_event): applied slightly modified patch
+	from Alexia Death as attached to bug #508639.
+
 2008-03-01  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimppolygonselecttool.c
