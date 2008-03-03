@@ -1,5 +1,18 @@
 2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimppaintoptions-gui.c: fiddle with layout in
+	several ways.
+	
+2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* libgimpwidgets/gimppropwidgets.[ch]
+	* app/tools/gimpinkoptions-gui.c
+	* app/tools/gimpcoloroptions.c
+	* app/tools/gimpblendoptions.c: add "scale control" prop widget,
+	and use it in tool options.
+	
+2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* libgimpwidgets/gimpscalecontrol.[ch]: assorted fixes, and
 	improvements in appearance.
 	
