@@ -1,5 +1,11 @@
 2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/widgets/gimpbrushfactoryview.[ch]
+	* app/widgets/gimpbrushselect.c: use scale control instead of
+	scale entry for brush spacing.
+	
+2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimppaintoptions-gui.c: fiddle with layout in
 	several ways.
 	

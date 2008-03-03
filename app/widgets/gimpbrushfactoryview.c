@@ -78,14 +78,15 @@ gimp_brush_factory_view_init (GimpBrushFactoryView *view)
   gtk_widget_show (table);
 
   view->spacing_adjustment =
-    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+    GTK_ADJUSTMENT (gimp_scale_control_new (GTK_TABLE (table), 0, 0,
                                           _("Spacing:"), -1, -1,
                                           0.0, 1.0, 200.0, 1.0, 10.0, 1,
                                           FALSE, 1.0, 5000.0,
                                           _("Percentage of width of brush"),
                                           NULL));
 
-  view->spacing_scale = GIMP_SCALE_ENTRY_SCALE (view->spacing_adjustment);
+  /* FIXME -- change "scale" to something else */
+  view->spacing_widget = gimp_scale_control_get_widget (view->spacing_adjustment);
 
   g_signal_connect (view->spacing_adjustment, "value-changed",
                     G_CALLBACK (gimp_brush_factory_view_spacing_update),
@@ -155,7 +156,7 @@ gimp_brush_factory_view_new (GimpViewType     view_type,
 
   /*  eek  */
   gtk_box_pack_end (GTK_BOX (editor->view),
-                    factory_view->spacing_scale->parent,
+                    factory_view->spacing_widget->parent,
                     FALSE, FALSE, 0);
 
   factory_view->spacing_changed_handler_id =
@@ -197,7 +198,7 @@ gimp_brush_factory_view_select_item (GimpContainerEditor *editor,
                                          view);
     }
 
-  gtk_widget_set_sensitive (view->spacing_scale, spacing_sensitive);
+  gtk_widget_set_sensitive (view->spacing_widget, spacing_sensitive);
 }
 
 static void

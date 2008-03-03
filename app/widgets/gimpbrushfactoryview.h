@@ -39,7 +39,7 @@ struct _GimpBrushFactoryView
 {
   GimpDataFactoryView  parent_instance;
 
-  GtkWidget           *spacing_scale;
+  GtkWidget           *spacing_widget;
   GtkAdjustment       *spacing_adjustment;
 
   gboolean             change_brush_spacing;
