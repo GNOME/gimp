@@ -112,6 +112,19 @@ GtkObject     * gimp_prop_scale_entry_new         (GObject      *config,
                                                    gdouble       lower_limit,
                                                    gdouble       upper_limit);
 
+GtkObject     * gimp_prop_scale_control_new       (GObject      *config,
+                                                   const gchar  *property_name,
+                                                   GtkTable     *table,
+                                                   gint          column,
+                                                   gint          row,
+                                                   const gchar  *label,
+                                                   gdouble       step_increment,
+                                                   gdouble       page_increment,
+                                                   gint          digits,
+                                                   gboolean      limit_scale,
+                                                   gdouble       lower_limit,
+                                                   gdouble       upper_limit);
+
 /*  special form of gimp_prop_scale_entry_new() for GParamDouble  */
 
 GtkObject     * gimp_prop_opacity_entry_new       (GObject       *config,

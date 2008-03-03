@@ -1175,6 +1175,98 @@ gimp_prop_scale_entry_new (GObject     *config,
 
   if (! limit_scale)
     {
+      adjustment = gimp_scale_entry_new (table, column, row,
+                                         label, -1, -1,
+                                         value, lower, upper,
+                                         step_increment, page_increment,
+                                         digits,
+                                         TRUE, 0.0, 0.0,
+                                         tooltip,
+                                         NULL);
+    }
+  else
+    {
+      adjustment = gimp_scale_entry_new (table, column, row,
+                                         label, -1, -1,
+                                         value, lower_limit, upper_limit,
+                                         step_increment, page_increment,
+                                         digits,
+                                         FALSE, lower, upper,
+                                         tooltip,
+                                         NULL);
+    }
+
+  set_param_spec (G_OBJECT (adjustment), NULL,  param_spec);
+
+  g_signal_connect (adjustment, "value-changed",
+                    G_CALLBACK (gimp_prop_adjustment_callback),
+                    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_adjustment_notify),
+                  adjustment);
+
+  return adjustment;
+}
+
+/**
+ * gimp_prop_scale_control_new:
+ * @config:         Object to which property is attached.
+ * @property_name:  Name of double property controlled by the spin button.
+ * @table:          The #GtkTable the widgets will be attached to.
+ * @column:         The column to start with.
+ * @row:            The row to attach the widgets.
+ * @label:          The text for the #GtkLabel which will appear left of
+ *                  the #GtkHScale.
+ * @step_increment: Step size.
+ * @page_increment: Page size.
+ * @digits:         Number of digits after decimal point to display.
+ * @limit_scale:    %TRUE if the range of possible values of the
+ *                  GtkSpinButton should be the same as of the GtkHScale.
+ * @lower_limit:    The spinbutton's lower boundary if @limit_scale is %FALSE.
+ * @upper_limit:    The spinbutton's upper boundary if @limit_scale is %FALSE.
+ *
+ * Creates a label, entry, and popup button, all inserted in the specified
+ * table.  Clicking on the popup button pops up a slider/spinbutton control.
+ *
+ * Return value: The #GtkSpinButton's #GtkAdjustment.
+ *
+ * Since GIMP 2.6
+ */
+GtkObject *
+gimp_prop_scale_control_new (GObject     *config,
+                           const gchar *property_name,
+                           GtkTable    *table,
+                           gint         column,
+                           gint         row,
+                           const gchar *label,
+                           gdouble      step_increment,
+                           gdouble      page_increment,
+                           gint         digits,
+                           gboolean     limit_scale,
+                           gdouble      lower_limit,
+                           gdouble      upper_limit)
+{
+  GParamSpec  *param_spec;
+  GtkObject   *adjustment;
+  const gchar *tooltip;
+  gdouble      value;
+  gdouble      lower;
+  gdouble      upper;
+
+  param_spec = find_param_spec (config, property_name, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  if (! get_numeric_values (config,
+                            param_spec, &value, &lower, &upper, G_STRFUNC))
+    return NULL;
+
+  tooltip = dgettext (gimp_type_get_translation_domain (G_OBJECT_TYPE (config)),
+                      g_param_spec_get_blurb (param_spec));
+
+  if (! limit_scale)
+    {
       adjustment = gimp_scale_control_new (table, column, row,
                                            label, -1, -1,
                                            value, lower, upper,
@@ -1263,7 +1355,7 @@ gimp_prop_opacity_entry_new (GObject     *config,
   adjustment = gimp_scale_control_new (table, column, row,
                                        label, -1, -1,
                                        value, lower, upper,
-                                       1.0, 10.0, 1,
+                                       1.0, 10.0, 0,
                                        TRUE, 0.0, 0.0,
                                        tooltip,
                                        NULL);

@@ -63,11 +63,11 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (table);
 
   /*  size slider  */
-  adj = gimp_prop_scale_entry_new (config, "size",
-                                   GTK_TABLE (table), 0, 0,
-                                   _("Size:"),
-                                   1.0, 2.0, 1,
-                                   FALSE, 0.0, 0.0);
+  adj = gimp_prop_scale_control_new (config, "size",
+                                     GTK_TABLE (table), 0, 0,
+                                     _("Size:"),
+                                     1.0, 2.0, 1,
+                                     FALSE, 0.0, 0.0);
   gimp_scale_control_set_logarithmic (adj, TRUE);
 
   /* angle adjust slider */

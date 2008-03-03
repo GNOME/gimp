@@ -215,7 +215,8 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
 
   /*  the gradient type menu  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-type", 0, 0);
-  g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+  /* FIXME -- commented out because generated warning about missing prop */
+/*   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL); */
   gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (combo),
                                         "gimp-gradient");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
@@ -224,7 +225,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
 
   /*  the repeat option  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
-  g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+/*   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL); */
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
                              _("Repeat:"), 0.0, 0.5,
                              combo, 2, FALSE);
@@ -234,7 +235,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
                     combo);
 
   button = gimp_prop_check_button_new (config, "dither",
-                                       _("Dithering"));
+                                       _("Dither"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -244,7 +245,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
 
   frame = gimp_prop_expanding_frame_new (config, "supersample",
-                                         _("Adaptive supersampling"),
+                                         _("Supersample"),
                                          table, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

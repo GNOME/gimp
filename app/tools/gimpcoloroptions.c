@@ -166,11 +166,11 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
                             GIMP_COLOR_OPTIONS (config)->sample_average);
   g_object_set_data (G_OBJECT (button), "set_sensitive", table);
 
-  adj = gimp_prop_scale_entry_new (config, "average-radius",
-                                   GTK_TABLE (table), 0, 0,
-                                   _("Radius:"),
-                                   1.0, 10.0, 0,
-                                   FALSE, 0.0, 0.0);
+  adj = gimp_prop_scale_control_new (config, "average-radius",
+                                     GTK_TABLE (table), 0, 0,
+                                     _("Radius:"),
+                                     1.0, 10.0, 0,
+                                     FALSE, 0.0, 0.0);
   gimp_scale_control_set_logarithmic (adj, TRUE);
 
   return vbox;
