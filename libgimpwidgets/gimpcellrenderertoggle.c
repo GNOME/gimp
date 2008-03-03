@@ -242,8 +242,9 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer *cell,
   pixbuf_width  = gdk_pixbuf_get_width  (toggle->pixbuf);
   pixbuf_height = gdk_pixbuf_get_height (toggle->pixbuf);
 
-  calc_width  = (pixbuf_width +
-                 (gint) cell->xpad * 2 + widget->style->xthickness * 2);
+/*   calc_width  = (pixbuf_width + */
+/*                  (gint) cell->xpad * 2 + widget->style->xthickness * 2); */
+  calc_width  = pixbuf_width;
   calc_height = (pixbuf_height +
                  (gint) cell->ypad * 2 + widget->style->ythickness * 2);
 
@@ -419,6 +420,7 @@ gimp_cell_renderer_toggle_new (const gchar *stock_id)
 {
   return g_object_new (GIMP_TYPE_CELL_RENDERER_TOGGLE,
                        "stock_id", stock_id,
+                       "xpad",     0,
                        NULL);
 }
 

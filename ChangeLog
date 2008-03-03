@@ -1,5 +1,10 @@
 2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* libgimpwidgets/gimpcellrenderertoggle.c: reduce horizontal
+	space around buttons.
+	
+2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/display/gimpdisplayshell.[ch]: when we have a scratch
 	display, open new images in it instead of creating a new
 	display.
