@@ -1135,6 +1135,38 @@ gimp_display_shell_new (GimpDisplay     *display,
 }
 
 void
+gimp_display_shell_reconfigure_from_scratch (GimpDisplayShell *shell)
+{
+  Gimp              *gimp;
+  GimpDisplayConfig *display_config;
+
+  gimp = shell->display->image->gimp;
+  display_config = GIMP_DISPLAY_CONFIG (gimp->config);
+
+  gimp_config_sync (G_OBJECT (display_config->default_view),
+                    G_OBJECT (shell->options), 0);
+
+  if (shell->options->show_rulers)
+    {
+      gtk_widget_show (shell->origin);
+      gtk_widget_show (shell->hrule);
+      gtk_widget_show (shell->vrule);
+    }
+
+  if (shell->options->show_scrollbars)
+    {
+      gtk_widget_show (shell->vsb);
+      gtk_widget_show (shell->hsb);
+      gtk_widget_show (shell->zoom_button);
+      gtk_widget_show (shell->quick_mask_button);
+      gtk_widget_show (shell->nav_ebox);
+    }
+
+  if (shell->options->show_statusbar)
+    gtk_widget_show (shell->statusbar);
+}
+
+void
 gimp_display_shell_reconnect (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
