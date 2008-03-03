@@ -1,3 +1,8 @@
+2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* menus/image-menu.xml.in:  Simplify menu by moving some
+	of the less-used categories inside others.
+
 2008-02-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* libgimpwidgets/gimpwidgets.h: Include gimpscalecontrol.h

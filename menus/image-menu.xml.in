@@ -194,92 +194,68 @@
       <separator />
     </menu>
 
-    <menu action="select-menu" name="Select">
-      <menuitem action="select-all" />
-      <menuitem action="select-none" />
-      <menuitem action="select-invert" />
-      <menuitem action="select-float" />
-      <menuitem action="tools-by-color-select-short" />
-      <menuitem action="vectors-selection-from-vectors" />
-      <menuitem action="dialogs-selection-editor" />
-      <separator />
-      <placeholder name="Modify">
-        <menuitem action="select-feather" />
-        <menuitem action="select-sharpen" />
-        <menuitem action="select-shrink" />
-        <menuitem action="select-grow" />
-        <menuitem action="select-border" />
-      </placeholder>
-      <separator />
-      <menuitem action="quick-mask-toggle" />
-      <menuitem action="select-save" />
-      <menuitem action="vectors-selection-to-vectors-short" />
-      <separator />
-    </menu>
-
-    <menu action="view-menu" name="View">
-      <menuitem action="view-new" />
-      <menuitem action="view-dot-for-dot" />
-      <menu action="view-zoom-menu" name="Zoom">
-        <menuitem action="view-zoom-revert" />
-        <menuitem action="view-zoom-out" />
-        <menuitem action="view-zoom-in" />
-        <menuitem action="view-zoom-fit-in" />
-        <menuitem action="view-zoom-fill" />
-        <separator />
-        <menuitem action="view-zoom-16-1" />
-        <menuitem action="view-zoom-8-1" />
-        <menuitem action="view-zoom-4-1" />
-        <menuitem action="view-zoom-2-1" />
-        <menuitem action="view-zoom-1-1" />
-        <menuitem action="view-zoom-1-2" />
-        <menuitem action="view-zoom-1-4" />
-        <menuitem action="view-zoom-1-8" />
-        <menuitem action="view-zoom-1-16" />
-	<separator />
-        <menuitem action="view-zoom-other" />
-      </menu>
-      <separator />
-      <menuitem action="view-shrink-wrap" />
-      <menuitem action="view-fullscreen" />
-      <menu action="view-move-to-screen-menu" name="Move to Screen">
-        <menuitem action="view-open-display" />
-        <separator />
-      </menu>
-      <separator />
-      <menuitem action="view-navigation-window" />
-      <menuitem action="view-display-filters" />
-      <separator />
-      <menuitem action="view-show-selection" />
-      <menuitem action="view-show-layer-boundary" />
-      <menuitem action="view-show-guides" />
-      <menuitem action="view-show-grid" />
-      <menuitem action="view-show-sample-points" />
-      <separator />
-      <menuitem action="view-snap-to-guides" />
-      <menuitem action="view-snap-to-grid" />
-      <menuitem action="view-snap-to-canvas" />
-      <menuitem action="view-snap-to-vectors" />
-      <separator />
-      <menu action="view-padding-color-menu" name="Padding color">
-        <menuitem action="view-padding-color-theme" />
-        <menuitem action="view-padding-color-light-check" />
-        <menuitem action="view-padding-color-dark-check" />
-        <menuitem action="view-padding-color-custom" />
-        <separator />
-        <menuitem action="view-padding-color-prefs" />
-      </menu>
-      <menuitem action="view-show-menubar" />
-      <menuitem action="view-show-rulers" />
-      <menuitem action="view-show-scrollbars" />
-      <menuitem action="view-show-statusbar" />
-      <separator />
-    </menu>
-
     <menu action="image-menu" name="Image">
       <placeholder name="New">
         <menuitem action="image-duplicate" />
       </placeholder>
+      <menu action="view-menu" name="View">
+        <menuitem action="view-new" />
+        <menuitem action="view-dot-for-dot" />
+        <menu action="view-zoom-menu" name="Zoom">
+          <menuitem action="view-zoom-revert" />
+          <menuitem action="view-zoom-out" />
+          <menuitem action="view-zoom-in" />
+          <menuitem action="view-zoom-fit-in" />
+          <menuitem action="view-zoom-fill" />
+          <separator />
+          <menuitem action="view-zoom-16-1" />
+          <menuitem action="view-zoom-8-1" />
+          <menuitem action="view-zoom-4-1" />
+          <menuitem action="view-zoom-2-1" />
+          <menuitem action="view-zoom-1-1" />
+          <menuitem action="view-zoom-1-2" />
+          <menuitem action="view-zoom-1-4" />
+          <menuitem action="view-zoom-1-8" />
+          <menuitem action="view-zoom-1-16" />
+  	<separator />
+          <menuitem action="view-zoom-other" />
+        </menu>
+        <separator />
+        <menuitem action="view-shrink-wrap" />
+        <menuitem action="view-fullscreen" />
+        <menu action="view-move-to-screen-menu" name="Move to Screen">
+          <menuitem action="view-open-display" />
+          <separator />
+        </menu>
+        <separator />
+          <menuitem action="view-navigation-window" />
+        <menuitem action="view-display-filters" />
+        <separator />
+        <menuitem action="view-show-selection" />
+        <menuitem action="view-show-layer-boundary" />
+        <menuitem action="view-show-guides" />
+        <menuitem action="view-show-grid" />
+        <menuitem action="view-show-sample-points" />
+        <separator />
+        <menuitem action="view-snap-to-guides" />
+        <menuitem action="view-snap-to-grid" />
+        <menuitem action="view-snap-to-canvas" />
+        <menuitem action="view-snap-to-vectors" />
+        <separator />
+        <menu action="view-padding-color-menu" name="Padding color">
+          <menuitem action="view-padding-color-theme" />
+          <menuitem action="view-padding-color-light-check" />
+          <menuitem action="view-padding-color-dark-check" />
+          <menuitem action="view-padding-color-custom" />
+          <separator />
+          <menuitem action="view-padding-color-prefs" />
+        </menu>
+        <menuitem action="view-show-menubar" />
+        <menuitem action="view-show-rulers" />
+        <menuitem action="view-show-scrollbars" />
+        <menuitem action="view-show-statusbar" />
+        <separator />
+      </menu>
       <menu action="image-mode-menu" name="Mode">
         <menuitem action="image-convert-rgb" />
         <menuitem action="image-convert-grayscale" />
@@ -458,6 +434,29 @@
       <separator />
     </menu>
 
+    <menu action="select-menu" name="Select">
+      <menuitem action="select-all" />
+      <menuitem action="select-none" />
+      <menuitem action="select-invert" />
+      <menuitem action="select-float" />
+      <menuitem action="tools-by-color-select-short" />
+      <menuitem action="vectors-selection-from-vectors" />
+      <menuitem action="dialogs-selection-editor" />
+      <separator />
+      <placeholder name="Modify">
+        <menuitem action="select-feather" />
+        <menuitem action="select-sharpen" />
+        <menuitem action="select-shrink" />
+        <menuitem action="select-grow" />
+        <menuitem action="select-border" />
+      </placeholder>
+      <separator />
+      <menuitem action="quick-mask-toggle" />
+      <menuitem action="select-save" />
+      <menuitem action="vectors-selection-to-vectors-short" />
+      <separator />
+    </menu>
+
     <menu action="colors-menu" name="Colors">
       <menuitem action="tools-color-balance" />
       <menuitem action="tools-hue-saturation" />
@@ -488,72 +487,6 @@
       </menu>
       <separator />
       <placeholder name="Modify" />
-    </menu>
-
-    <menu action="tools-menu" name="Tools">
-      <menu action="tools-select-menu" name="Selection Tools">
-	<menuitem action="tools-rect-select" />
-	<menuitem action="tools-ellipse-select" />
-	<menuitem action="tools-free-select" />
-	<menuitem action="tools-polygon-select" />
-	<menuitem action="tools-foreground-select" />
-	<menuitem action="tools-fuzzy-select" />
-	<menuitem action="tools-by-color-select" />
-	<menuitem action="tools-iscissors" />
-      </menu>
-      <menu action="tools-paint-menu" name="Paint Tools">
-	<menuitem action="tools-bucket-fill" />
-	<menuitem action="tools-blend" />
-	<menuitem action="tools-pencil" />
-	<menuitem action="tools-paintbrush" />
-	<menuitem action="tools-eraser" />
-	<menuitem action="tools-airbrush" />
-	<menuitem action="tools-ink" />
-	<menuitem action="tools-clone" />
-	<menuitem action="tools-heal" />
-	<menuitem action="tools-perspective-clone" />
-	<menuitem action="tools-convolve" />
-	<menuitem action="tools-smudge" />
-	<menuitem action="tools-dodge-burn" />
-      </menu>
-      <menu action="tools-transform-menu" name="Transform Tools">
-	<menuitem action="tools-link" />
-	<menuitem action="tools-move" />
-	<menuitem action="tools-crop" />
-	<menuitem action="tools-rotate" />
-	<menuitem action="tools-scale" />
-	<menuitem action="tools-shear" />
-	<menuitem action="tools-perspective" />
-	<menuitem action="tools-flip" />
-      </menu>
-      <menu action="tools-color-menu" name="Color Tools">
-	<menuitem action="tools-color-balance" />
-	<menuitem action="tools-hue-saturation" />
-	<menuitem action="tools-colorize" />
-	<menuitem action="tools-brightness-contrast" />
-	<menuitem action="tools-threshold" />
-	<menuitem action="tools-levels" />
-	<menuitem action="tools-curves" />
-	<menuitem action="tools-posterize" />
-      </menu>
-      <menuitem action="tools-vector" />
-      <menuitem action="tools-color-picker" />
-      <menuitem action="tools-zoom" />
-      <menuitem action="tools-measure" />
-      <menuitem action="tools-text" />
-      <separator />
-      <menuitem action="dialogs-toolbox" />
-      <menuitem action="context-colors-default" />
-      <menuitem action="context-colors-swap" />
-    </menu>
-
-    <menu action="dialogs-menu" name="Dialogs">
-      <menu action="dialogs-new-dock-menu" name="Create New Dock">
-	<menuitem action="dialogs-new-dock-lcp" />
-	<menuitem action="dialogs-new-dock-data" />
-	<menuitem action="dialogs-new-dock-stuff" />
-      </menu>
-      <xi:include href="dialogs-menuitems.xml" />
     </menu>
 
     <menu action="plug-in-menu" name="Filters">
@@ -599,6 +532,70 @@
     </menu>
 
     <menu action="extensions-menu" name="Xtns">
+      <menu action="tools-menu" name="Tools">
+        <menu action="tools-select-menu" name="Selection Tools">
+    	  <menuitem action="tools-rect-select" />
+  	  <menuitem action="tools-ellipse-select" />
+	  <menuitem action="tools-free-select" />
+	  <menuitem action="tools-polygon-select" />
+	  <menuitem action="tools-foreground-select" />
+	  <menuitem action="tools-fuzzy-select" />
+	  <menuitem action="tools-by-color-select" />
+	  <menuitem action="tools-iscissors" />
+        </menu>
+        <menu action="tools-paint-menu" name="Paint Tools">
+	  <menuitem action="tools-bucket-fill" />
+	  <menuitem action="tools-blend" />
+	  <menuitem action="tools-pencil" />
+	  <menuitem action="tools-paintbrush" />
+	  <menuitem action="tools-eraser" />
+	  <menuitem action="tools-airbrush" />
+	  <menuitem action="tools-ink" />
+	  <menuitem action="tools-clone" />
+	  <menuitem action="tools-heal" />
+	  <menuitem action="tools-perspective-clone" />
+	  <menuitem action="tools-convolve" />
+	  <menuitem action="tools-smudge" />
+	  <menuitem action="tools-dodge-burn" />
+        </menu>
+        <menu action="tools-transform-menu" name="Transform Tools">
+	  <menuitem action="tools-link" />
+	  <menuitem action="tools-move" />
+	  <menuitem action="tools-crop" />
+	  <menuitem action="tools-rotate" />
+	  <menuitem action="tools-scale" />
+	  <menuitem action="tools-shear" />
+	  <menuitem action="tools-perspective" />
+	  <menuitem action="tools-flip" />
+        </menu>
+        <menu action="tools-color-menu" name="Color Tools">
+	  <menuitem action="tools-color-balance" />
+	  <menuitem action="tools-hue-saturation" />
+	  <menuitem action="tools-colorize" />
+	  <menuitem action="tools-brightness-contrast" />
+	  <menuitem action="tools-threshold" />
+	  <menuitem action="tools-levels" />
+	  <menuitem action="tools-curves" />
+	  <menuitem action="tools-posterize" />
+        </menu>
+        <menuitem action="tools-vector" />
+        <menuitem action="tools-color-picker" />
+        <menuitem action="tools-zoom" />
+        <menuitem action="tools-measure" />
+        <menuitem action="tools-text" />
+        <separator />
+        <menuitem action="dialogs-toolbox" />
+        <menuitem action="context-colors-default" />
+        <menuitem action="context-colors-swap" />
+      </menu>
+      <menu action="dialogs-menu" name="Dialogs">
+        <menu action="dialogs-new-dock-menu" name="Create New Dock">
+	  <menuitem action="dialogs-new-dock-lcp" />
+	  <menuitem action="dialogs-new-dock-data" />
+	  <menuitem action="dialogs-new-dock-stuff" />
+        </menu>
+        <xi:include href="dialogs-menuitems.xml" />
+      </menu>
       <placeholder name="Extensions">
 	<menuitem action="dialogs-module-dialog"/>
       </placeholder>
