@@ -1,5 +1,14 @@
 2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* data/images/gimp-scratch.png
+	* data/images/Makefile.am
+	* app/file/file-open.c
+	* app/gui/gui.c
+	* app/display/gimpdisplay.c: use a special scratch image for
+	no-image-open window, and use the window to show tips.
+	
+2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* text/gimptextlayout.c
 	* text/gimptext-compat.c: Hack in some very basic
 	markup-rendering capability.

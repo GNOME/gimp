@@ -255,11 +255,6 @@ void
 gui_post_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  if (GIMP_GUI_CONFIG (gimp->config)->show_tips)
-    gimp_dialog_factory_dialog_new (global_dialog_factory,
-                                    gdk_screen_get_default (),
-                                    "gimp-tips-dialog", -1, TRUE);
 }
 
 

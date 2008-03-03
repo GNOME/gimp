@@ -20,6 +20,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "display-types.h"
@@ -27,11 +28,22 @@
 
 #include "file/file-open.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimparea.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 #include "core/gimpprogress.h"
+
+#include "dialogs/tips-parser.h"
+
+/* FIXME */
+#include "text/gimpfont-utils.h"
+#include "text/gimptext.h"
+#include "text/gimptext-compat.h"
+#include "text/gimptextlayer.h"
 
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
@@ -96,6 +108,9 @@ static void     gimp_display_paint_area          (GimpDisplay         *display,
                                                   gint                 y,
                                                   gint                 w,
                                                   gint                 h);
+
+static void     text_show_tip                    (GimpImage           *image,
+                                                  GimpContext         *context);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDisplay, gimp_display, GIMP_TYPE_OBJECT,
@@ -436,8 +451,8 @@ gimp_scratch_display_new (GimpImage       *image,
   gimp_display_shell_set_show_scrollbars (shell, FALSE);
   gimp_display_shell_set_show_statusbar  (shell, FALSE);
 
-  width  = SCALEX (shell, gimp_image_get_width  (shell->display->image));
-  height = SCALEY (shell, gimp_image_get_height (shell->display->image));
+  width  = SCALEX (shell, gimp_image_get_width  (image));
+  height = SCALEY (shell, gimp_image_get_height (image));
   gtk_widget_set_size_request (display->shell, width, height);
 
   gtk_widget_show (display->shell);
@@ -449,8 +464,102 @@ gimp_scratch_display_new (GimpImage       *image,
   /* add the display to the list */
   gimp_container_add (gimp->displays, GIMP_OBJECT (display));
 
+  /*FIXME: hack alert */
+  if (GIMP_GUI_CONFIG (gimp->config)->show_tips)
+    text_show_tip (image, gimp_get_user_context (gimp));
+
   return display;
 }
+
+/*
+ * this is a hack, this function should be replaced by something
+ * better and go somewhere else
+ */
+static void
+text_show_tip (GimpImage   *image,
+               GimpContext *context)
+{
+  gchar            *filename;
+  GList            *tips;
+  GError           *error  = NULL;
+  Gimp             *gimp   = image->gimp;
+
+  filename = g_build_filename (gimp_data_directory (), "tips",
+                               "gimp-tips.xml", NULL);
+
+  tips = gimp_tips_from_file (filename, &error);
+  g_free (filename);
+
+  if (tips)
+    {
+      PangoFontDescription *desc;
+
+      gint           tips_count = g_list_length (tips);
+      GimpGuiConfig *config     = GIMP_GUI_CONFIG (gimp->config);
+      GList         *current_tip;
+      GimpText      *text;
+      GimpTip       *tip;
+      gchar         *tip_text;
+      GimpLayer     *layer;
+      gdouble        size;
+      GimpRGB        color = {0, 0.2, 0.4, 1.0};
+      gchar         *font;
+      gint           margin     = 30;
+      gdouble        box_height = 200;
+      gdouble        box_width;
+      gint           layer_height;
+
+      if (config->last_tip >= tips_count || config->last_tip < 0)
+        config->last_tip = 0;
+
+      current_tip = g_list_nth (tips, config->last_tip);
+
+      tip = current_tip->data;
+      tip_text = g_strconcat ("<span size=\"x-large\"><b>", _("TIP:"), "</b></span> ",
+                              tip->thetip, NULL);
+
+      /* the last-shown-tip is saved in sessionrc */
+      config->last_tip = g_list_position (tips, current_tip);
+
+      desc = pango_font_description_from_string ("sans 12");
+      size = PANGO_PIXELS (pango_font_description_get_size (desc));
+
+      pango_font_description_unset_fields (desc, PANGO_FONT_MASK_SIZE);
+      font = gimp_font_util_pango_font_description_to_string (desc);
+
+      pango_font_description_free (desc);
+
+      box_width = gimp_image_get_width (image) - 2 * margin;
+
+      /* FIXME: should calculate appropriate box height */
+      text = g_object_new (GIMP_TYPE_TEXT,
+                           "text",       tip_text,
+                           "font",       font,
+                           "font-size",  size,
+                           "color",      &color,
+                           "box-mode",   GIMP_TEXT_BOX_FIXED,
+                           "box-width",  box_width,
+                           "box-height", box_height,
+                           NULL);
+
+      g_free (font);
+      g_free (tip_text);
+
+      layer = gimp_text_layer_new (image, text);
+
+      g_object_unref (text);
+
+      layer_height = GIMP_ITEM (layer)->height;
+
+      GIMP_ITEM (layer)->offset_x = margin;
+      GIMP_ITEM (layer)->offset_y = margin;
+/*       GIMP_ITEM (layer)->offset_y = (gimp_image_get_height (image) - layer_height) / 2; */
+
+      gimp_image_add_layer (image, layer, -1);
+      gimp_image_flatten (image, context);
+    }
+}
+
 
 void
 gimp_display_delete (GimpDisplay *display)
@@ -548,6 +657,9 @@ gimp_display_reconnect (GimpDisplay *display,
 
   gimp_display_disconnect (display);
   gimp_display_connect (display, image);
+
+  if (image->gimp->scratch_image == old_image)
+    gimp_display_shell_reconfigure_from_scratch (GIMP_DISPLAY_SHELL (display->shell));
 
   g_object_unref (old_image);
 

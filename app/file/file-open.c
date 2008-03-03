@@ -344,6 +344,18 @@ file_open_with_proc_and_display (Gimp                *gimp,
 
   if (image)
     {
+      /*
+       * if we are showing a scratch image, we want to use the display
+       * from the scratch image for our new image.
+       */
+      if (context->gimp->scratch_image)
+        {
+          gimp_reconnect_displays (context->gimp,
+                                   context->gimp->scratch_image,
+                                   image);
+          context->gimp->scratch_image = NULL;
+        }
+      else
       gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
 
       if (! as_new)
@@ -543,7 +555,7 @@ file_create_scratch_image (Gimp        *gimp)
   uri = file_utils_any_to_uri (gimp,
                                g_build_filename (gimp_data_directory (),
                                                  "images",
-                                                 "gimp-splash.png",
+                                                 "gimp-scratch.png",
                                                  NULL),
                                &error);
 
@@ -555,7 +567,7 @@ file_create_scratch_image (Gimp        *gimp)
                            gimp_get_user_context (gimp),
                            NULL,
                            uri,
-                           "gimp-splash.png",
+                           "gimp-scratch.png",
                            TRUE,
                            NULL,
                            GIMP_RUN_NONINTERACTIVE,
