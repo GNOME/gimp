@@ -70,6 +70,21 @@ static void            gimp_scale_control_create_widgets    (GimpScaleControl *s
 static GtkWidget *     gimp_scale_control_create_label      (GimpScaleControl *scale_control,
                                                            const gchar    *text);
 
+static GtkWidget *     gimp_scale_control_popup           (GimpScaleControl *scale_control);
+
+static void            gimp_scale_control_show_popup      (GtkWidget        *widget,
+                                                           GimpScaleControl *scale_control);
+
+static void            gimp_scale_control_remove_popup    (GtkWidget        *widget,
+                                                           GdkEventCrossing *event,
+                                                           GimpScaleControl *scale_control);
+
+static void            gimp_scale_control_value_changed   (GimpScaleControl *scale_control);
+
+static void            gimp_scale_control_set_value       (GimpScaleControl *scale_control,
+                                                           gdouble           value);
+
+
 G_DEFINE_TYPE (GimpScaleControl, gimp_scale_control, GTK_TYPE_ADJUSTMENT)
 
 #define parent_class gimp_scale_control_parent_class
@@ -96,15 +111,19 @@ gimp_scale_control_init (GimpScaleControl *scale_control)
   scale_control->help_id             = NULL;
   scale_control->logarithmic         = FALSE;
   scale_control->policy              = GTK_UPDATE_DISCONTINUOUS;
+  scale_control->text                = NULL;
 
   scale_control->scale_adj           = NULL;
   scale_control->spinbutton_adj      = NULL;
 
+  scale_control->button              = NULL;
+  scale_control->button_label        = NULL;
   scale_control->label               = NULL;
   scale_control->scale               = NULL;
   scale_control->spinbutton          = NULL;
   scale_control->entry               = NULL;
   scale_control->popup_button        = NULL;
+  scale_control->popup_window        = NULL;
 }
 
 static void
@@ -300,10 +319,16 @@ gimp_scale_control_create_widgets (GimpScaleControl *scale_control)
  */
 static GtkWidget *
 gimp_scale_control_create_label (GimpScaleControl *scale_control,
-                               const gchar    *text)
+                               const gchar        *text)
 {
+  gchar     *markup;
+  GtkWidget *label;
 
-  GtkWidget *label = gtk_label_new_with_mnemonic (text);
+  markup = g_markup_printf_escaped ("%s", text);
+  label = gtk_label_new (NULL);
+
+  gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), markup);
+  g_free (markup);
 
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 
@@ -372,88 +397,85 @@ gimp_scale_control_new (GtkTable    *table,
                       const gchar *help_id)
 {
   GimpScaleControl *scale_control;
+  GtkWidget        *entry;
+  GtkWidget        *popup_button;
+  GtkWidget        *arrow;
+  GtkWidget        *hbox;
 
-  scale_control = gimp_scale_control_create (FALSE, scale_width, spinbutton_width,
+  /* we override the scale width */
+  scale_control = gimp_scale_control_create (FALSE, 180, spinbutton_width,
                                          value, lower, upper, step_increment,
                                          page_increment, digits, constrain,
                                          unconstrained_upper, unconstrained_lower,
                                          tooltip, help_id);
 
-  gimp_scale_control_create_widgets (scale_control);
-
+  scale_control->text  = text;
   scale_control->label = gimp_scale_control_create_label (scale_control, text);
 
-  gtk_table_attach (GTK_TABLE (table), scale_control->label,
-                    column, column + 1, row, row + 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (scale_control->label);
-  gtk_table_attach (GTK_TABLE (table), scale_control->scale,
-                    column + 1, column + 2, row, row + 1,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_widget_show (scale_control->scale);
-  gtk_table_attach (GTK_TABLE (table), scale_control->spinbutton,
-                    column + 2, column + 3, row, row + 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (scale_control->spinbutton);
+  g_signal_connect (scale_control, "value-changed",
+                    G_CALLBACK (gimp_scale_control_value_changed),
+                    NULL);
 
-  return GTK_OBJECT (scale_control);
-}
+/*   scale_control->button = gtk_button_new (); */
+/*   gtk_button_set_relief (GTK_BUTTON (scale_control->button), */
+/*                          GTK_RELIEF_NONE); */
+/*   gtk_button_set_alignment (GTK_BUTTON (scale_control->button), */
+/*                             0, 0.5); */
 
-GtkObject *
-gimp_scale_control_compact_new (GtkTable    *table,
-                              gint         column,
-                              gint         row,
-                              const gchar *text,
-                              gint         scale_width,
-                              gint         spinbutton_width,
-                              gdouble      value,
-                              gdouble      lower,
-                              gdouble      upper,
-                              gdouble      step_increment,
-                              gdouble      page_increment,
-                              guint        digits,
-                              gboolean     constrain,
-                              gdouble      unconstrained_lower,
-                              gdouble      unconstrained_upper,
-                              const gchar *tooltip,
-                              const gchar *help_id)
-{
-  GimpScaleControl *scale_control;
-  GtkWidget      *entry;
-  GtkWidget      *popup_button;
-  GtkWidget      *arrow;
-  gchar           value_str[20];
+/*   scale_control->button_label = gtk_label_new (NULL); */
+/*   gtk_container_add (GTK_CONTAINER (scale_control->button), */
+/*                      scale_control->button_label); */
+/*   gtk_misc_set_alignment (GTK_MISC (scale_control->button_label), 0, 0.5); */
+/*   gtk_widget_show (scale_control->button_label); */
 
-  scale_control = gimp_scale_control_create (FALSE, scale_width, spinbutton_width,
-                                         value, lower, upper, step_increment,
-                                         page_increment, digits, constrain,
-                                         unconstrained_upper, unconstrained_lower,
-                                         tooltip, help_id);
+/*   g_signal_connect (scale_control->button, "clicked", */
+/*      G_CALLBACK (gimp_scale_control_show_popup), */
+/*      (gpointer) scale_control); */
 
-  entry = gtk_entry_new ();
-  sprintf (value_str, "%lg", value);
-  gtk_entry_set_width_chars (GTK_ENTRY (entry), 8);
+  scale_control->entry = entry = gtk_entry_new ();
+
+  if (digits == 0)
+    gtk_entry_set_width_chars (GTK_ENTRY (entry), 4);
+  else
+    gtk_entry_set_width_chars (GTK_ENTRY (entry), 8);
+
   gtk_entry_set_has_frame (GTK_ENTRY (entry), FALSE);
-  gtk_entry_set_text (GTK_ENTRY (entry), value_str);
+  gimp_scale_control_set_value (scale_control, value);
 
-  popup_button = gtk_button_new ();
-  gtk_button_set_relief (GTK_BUTTON (popup_button), GTK_RELIEF_NONE);
+  scale_control->popup_button = popup_button = gtk_button_new ();
+/*   gtk_button_set_relief (GTK_BUTTON (popup_button), GTK_RELIEF_NONE); */
+
+  g_signal_connect (popup_button, "clicked",
+     G_CALLBACK (gimp_scale_control_show_popup),
+     (gpointer) scale_control);
 
   arrow = gtk_arrow_new (GTK_ARROW_DOWN, GTK_SHADOW_ETCHED_OUT);
   gtk_container_add (GTK_CONTAINER (popup_button), arrow);
   gtk_widget_show (arrow);
 
-  gtk_table_attach (GTK_TABLE (table), entry,
-                    column + 1, column + 2, row, row + 1,
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), scale_control->entry, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), popup_button, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  gtk_table_attach (GTK_TABLE (table), scale_control->label,
+                    column, column + 1, row, row + 1,
                     GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (entry);
-  gtk_table_attach (GTK_TABLE (table), popup_button,
-                    column + 2, column + 3, row, row + 1,
+  gtk_widget_show (scale_control->label);
+/*   gtk_table_attach (GTK_TABLE (table), scale_control->entry, */
+/*                     column + 1, column + 2, row, row + 1, */
+/*                     GTK_FILL, GTK_FILL, 0, 0); */
+
+
+/*   gtk_widget_show (scale_control->button); */
+  gtk_widget_show (scale_control->entry);
+
+  gtk_table_attach (GTK_TABLE (table), hbox,
+                    column + 1, column + 2, row, row + 1,
                     GTK_SHRINK, GTK_FILL, 0, 0);
   gtk_widget_show (popup_button);
 
-  scale_control->entry        = entry;
-  scale_control->popup_button = popup_button;
+  scale_control->popup_window = gimp_scale_control_popup (scale_control);
 
   return GTK_OBJECT (scale_control);
 }
@@ -506,6 +528,7 @@ gimp_color_scale_control_new (GtkTable    *table,
 
   gimp_scale_control_create_widgets (scale_control);
 
+  scale_control->text  = text;
   scale_control->label = gimp_scale_control_create_label (scale_control, text);
 
   gtk_table_attach (GTK_TABLE (table), scale_control->label,
@@ -586,8 +609,10 @@ gimp_scale_control_set_logarithmic (GtkObject *adjustment,
                                         scale_adj->step_increment,
                                         scale_adj->page_increment,
                                         0.0);
-          gtk_range_set_adjustment (GTK_RANGE (scale_control->scale),
-                                    GTK_ADJUSTMENT (new_adj));
+
+          if (scale_control->scale)
+            gtk_range_set_adjustment (GTK_RANGE (scale_control->scale),
+                                      GTK_ADJUSTMENT (new_adj));
 
           scale_adj = (GtkAdjustment *) new_adj;
           scale_control->scale_adj = GTK_OBJECT (scale_adj);
@@ -618,10 +643,7 @@ gimp_scale_control_set_logarithmic (GtkObject *adjustment,
                          G_CALLBACK (log_adjustment_callback),
                          scale_adj);
 
-       g_object_set_data (G_OBJECT (adjustment),
-                          "logarithmic", GINT_TO_POINTER (TRUE));
-
-  scale_control->logarithmic = TRUE;
+       scale_control->logarithmic = TRUE;
     }
   else
     {
@@ -733,4 +755,167 @@ gimp_scale_control_set_update_policy (GtkObject     *adjustment,
   g_return_if_fail (GIMP_IS_SCALE_CONTROL (adjustment));
 
   GIMP_SCALE_CONTROL (adjustment)->policy = policy;
+}
+
+/*
+ * creates the popup.  It can later be shown by calling
+ * gimp_scale_control_show_popup.
+ */
+static GtkWidget *
+gimp_scale_control_popup (GimpScaleControl *scale_control)
+{
+  GtkWidget     *popup_window;
+  GtkWidget     *table;
+  GtkWidget     *frame;
+  GtkWidget     *label;
+  gchar         *value_str;
+  GdkColor       bg             = {0, 50000, 40000, 50000};
+  GtkAdjustment *adjustment     = GTK_ADJUSTMENT (scale_control->scale_adj);
+
+  gimp_scale_control_create_widgets (scale_control);
+
+  popup_window = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_widget_set_name (popup_window, "gimp-scale-control-popup-window");
+  gtk_window_set_type_hint (GTK_WINDOW (popup_window),
+                            GDK_WINDOW_TYPE_HINT_COMBO);
+  gtk_widget_set_size_request (popup_window, 220, 80);
+  gtk_window_set_resizable (GTK_WINDOW (popup_window), FALSE);
+  gtk_window_set_gravity (GTK_WINDOW (popup_window), GDK_GRAVITY_WEST);
+  gtk_widget_add_events (popup_window, GDK_LEAVE_NOTIFY_MASK);
+  gtk_widget_modify_bg (popup_window, GTK_STATE_NORMAL, &bg);
+  g_signal_connect (popup_window, "leave-notify-event",
+                    G_CALLBACK (gimp_scale_control_remove_popup),
+                    scale_control);
+
+  frame = gtk_frame_new (scale_control->text);
+  gtk_container_add (GTK_CONTAINER (popup_window), frame);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (4, 9, TRUE);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
+
+  gtk_table_attach (GTK_TABLE (table), scale_control->scale,
+                    1, 7, 0, 1,
+                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_widget_show (scale_control->scale);
+
+  gtk_table_attach (GTK_TABLE (table), scale_control->spinbutton,
+                    3, 5, 1, 3,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (scale_control->spinbutton);
+
+  value_str = g_strdup_printf ("%lg", adjustment->lower);
+  label = gtk_label_new (value_str);
+  g_free (value_str);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0);
+  gtk_table_attach (GTK_TABLE (table), label,
+                    0, 2, 1, 2,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (label);
+
+  value_str = g_strdup_printf ("%lg", adjustment->upper);
+  label = gtk_label_new (value_str);
+  g_free (value_str);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0);
+  gtk_table_attach (GTK_TABLE (table), label,
+                    6, 8, 1, 2,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (label);
+
+  return popup_window;
+}
+
+/*
+ * position the popup window next to the calling widget,
+ * and show it
+ */
+static void
+gimp_scale_control_show_popup (GtkWidget        *widget,
+                               GimpScaleControl *scale_control)
+{
+  GtkWidget *popup_window = scale_control->popup_window;
+  GtkWidget *toplevel;
+  gint       x0;
+  gint       y0;
+  gint       x1;
+  gint       y1;
+
+
+  toplevel = gtk_widget_get_toplevel (widget);
+
+  if (! GTK_IS_WINDOW (toplevel))
+    return;
+
+  gtk_window_get_position (GTK_WINDOW (toplevel), &x0, &y0);
+  gtk_widget_translate_coordinates (widget, toplevel, 0, 0, &x1, &y1);
+
+  gtk_window_group_add_window (gtk_window_get_group (GTK_WINDOW (toplevel)),
+                               GTK_WINDOW (popup_window));
+  gtk_window_set_transient_for (GTK_WINDOW (popup_window),
+                                GTK_WINDOW (toplevel));
+
+  gtk_window_set_screen (GTK_WINDOW (popup_window),
+                         gtk_widget_get_screen (widget));
+
+  gtk_window_move (GTK_WINDOW (popup_window), x1 + x0 - 100, y1 + y0);
+
+  gtk_widget_show (popup_window);
+}
+
+static void
+gimp_scale_control_remove_popup (GtkWidget        *widget,
+                                 GdkEventCrossing *event,
+                                 GimpScaleControl *scale_control)
+{
+  if (event->detail != GDK_NOTIFY_INFERIOR)
+    gtk_widget_hide (scale_control->popup_window);
+}
+
+static void
+gimp_scale_control_value_changed (GimpScaleControl *scale_control)
+{
+  gdouble value;
+
+  value = GTK_ADJUSTMENT (scale_control)->value;
+
+  gimp_scale_control_set_value (scale_control, value);
+}
+
+/*
+ * sets the value in the entry
+ */
+static void
+gimp_scale_control_set_value (GimpScaleControl *scale_control,
+                              gdouble           value)
+{
+/*   gchar *markup; */
+  gchar *text;
+
+/*   markup = g_strdup_printf ("<u>%.*lf</u>", scale_control->digits, value); */
+
+  if (scale_control->digits == 0)
+    text = g_strdup_printf ("%d", (gint) value);
+  else
+    text = g_strdup_printf ("%.*lf", scale_control->digits, value);
+
+
+  if (scale_control->entry)
+      gtk_entry_set_text (GTK_ENTRY (scale_control->entry), text);
+/*       gtk_label_set_markup (GTK_LABEL (scale_control->button_label), markup); */
+
+  g_free (text);
+/*   g_free (markup); */
+}
+
+/*
+ * return the visible widget in the interface
+ */
+GtkWidget *
+gimp_scale_control_get_widget (GtkObject *adjustment)
+{
+  g_return_val_if_fail (GIMP_IS_SCALE_CONTROL (adjustment), NULL);
+
+  /* the hbox */
+  return GIMP_SCALE_CONTROL (adjustment)->entry->parent;
 }

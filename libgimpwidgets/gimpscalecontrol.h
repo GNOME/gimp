@@ -63,6 +63,7 @@ struct _GimpScaleControl
   const gchar   *help_id;
   gboolean       logarithmic;
   GtkUpdateType  policy;
+  const gchar   *text;
 
   GtkObject     *scale_adj;
   GtkObject     *spinbutton_adj;
@@ -70,8 +71,11 @@ struct _GimpScaleControl
   GtkWidget     *label;
   GtkWidget     *scale;
   GtkWidget     *spinbutton;
+  GtkWidget     *button;
+  GtkWidget     *button_label;
   GtkWidget     *entry;
   GtkWidget     *popup_button;
+  GtkWidget     *popup_window;
 };
 
 struct _GimpScaleControlClass
@@ -150,6 +154,8 @@ gboolean    gimp_scale_control_get_logarithmic (GtkObject   *adjustment);
 
 void        gimp_scale_control_set_update_policy (GtkObject     *adjustment,
                                                 GtkUpdateType  policy);
+
+GtkWidget * gimp_scale_control_get_widget     (GtkObject     *adjustment);
 
 G_END_DECLS
 

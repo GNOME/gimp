@@ -1,5 +1,10 @@
 2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* libgimpwidgets/gimpscalecontrol.[ch]: assorted fixes, and
+	improvements in appearance.
+	
+2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* libgimpwidgets/gimpcellrenderertoggle.c: reduce horizontal
 	space around buttons.
 	
