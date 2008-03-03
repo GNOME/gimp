@@ -144,6 +144,7 @@ text_get_extents (const gchar *fontname,
   PangoLayout          *layout;
   PangoFontMap         *fontmap;
   PangoRectangle        rect;
+  GError               *error  = NULL;
 
   g_return_val_if_fail (fontname != NULL, FALSE);
   g_return_val_if_fail (text != NULL, FALSE);
@@ -161,7 +162,16 @@ text_get_extents (const gchar *fontname,
   pango_layout_set_font_description (layout, font_desc);
   pango_font_description_free (font_desc);
 
-  pango_layout_set_text (layout, text, -1);
+  /*
+   * we want to treat the text as markup if possible, but
+   * first we have to check that it can be parsed.  If not,
+   * we treat it as plain text.
+  */
+  pango_parse_markup (text, -1, 0, NULL, NULL, NULL, &error);
+  if (error)
+    pango_layout_set_text (layout, text, -1);
+  else
+    pango_layout_set_markup (layout, text, -1);
 
   pango_layout_get_pixel_extents (layout, NULL, &rect);
 

@@ -133,10 +133,28 @@ gimp_text_layout_new (GimpText  *text,
   pango_layout_set_font_description (layout->layout, font_desc);
   pango_font_description_free (font_desc);
 
+  /* FIXME */
   if (text->text)
-    pango_layout_set_text (layout->layout, text->text, -1);
+    {
+      GError *error       = NULL;
+      gchar  *markup_text = text->text;
+
+      pango_parse_markup (markup_text, -1, 0, NULL,
+                          NULL, NULL, &error);
+
+      if (error)
+        {
+          pango_layout_set_text (layout->layout, markup_text, -1);
+          g_print ("markup parse error: %s", error->message);
+        }
+      else
+        pango_layout_set_markup (layout->layout, markup_text, -1);
+    }
   else
     pango_layout_set_text (layout->layout, NULL, 0);
+
+/*   if (text->attr_list) */
+/*     pango_layout_set_attributes (layout->layout, text->attr_list); */
 
   switch (text->justify)
     {
@@ -150,9 +168,6 @@ gimp_text_layout_new (GimpText  *text,
       alignment = PANGO_ALIGN_CENTER;
       break;
     case GIMP_TEXT_JUSTIFY_FILL:
-      /* FIXME: This doesn't work since the implementation is missing
-         at the Pango level.
-       */
       alignment = PANGO_ALIGN_LEFT;
       pango_layout_set_justify (layout->layout, TRUE);
       break;

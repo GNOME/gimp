@@ -1,5 +1,11 @@
 2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* text/gimptextlayout.c
+	* text/gimptext-compat.c: Hack in some very basic
+	markup-rendering capability.
+	
+2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* menus/image-menu.xml.in:  Simplify menu by moving some
 	of the less-used categories inside others.
 
