@@ -1,22 +1,23 @@
 # Dutch translation of the GIMP's libgimp strings
 # Copyright (C) 2000 Free Software Foundation, Inc.
-# Gert Dewit <Gert.Dewit@sos.be>, 2000
-# Branko Collin <collin@xs4all.nl>, 2001
-# Tino Meinen <a.t.meinen@chello.nl>, 2004, 2005, 2006
+# Gert Dewit <Gert.Dewit@sos.be>, 2000.
+# Branko Collin <collin@xs4all.nl>, 2001.
+# Tino Meinen <a.t.meinen@chello.nl>, 2004, 2005, 2006.
+# Filip Vervloesem <filip.vervloesem@member.fsf.org>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-14 11:08+0100\n"
-"PO-Revision-Date: 2006-01-14 17:11+0100\n"
-"Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
+"POT-Creation-Date: 2007-10-05 09:22+0100\n"
+"PO-Revision-Date: 2008-03-02 00:42+0100\n"
+"Last-Translator: Filip Vervloesem <filip.vervloesem@member.fsf.org>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../libgimp/gimpbrushmenu.c:140
+#: ../libgimp/gimpbrushselectbutton.c:170
 msgid "Brush Selection"
 msgstr "Penseelselectie"
 
@@ -24,162 +25,168 @@ msgstr "Penseelselectie"
 # of misschien 'Overzicht' (een overzicht van alle beschikbare patronen
 # en borstels)
 # Of verkennen
-#: ../libgimp/gimpbrushmenu.c:180 ../libgimp/gimppatternmenu.c:165
+#: ../libgimp/gimpbrushselectbutton.c:911
+#: ../libgimp/gimppatternselectbutton.c:712
 msgid "_Browse..."
 msgstr "_Bladeren..."
 
-#: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
+#: ../libgimp/gimpexport.c:217
+#: ../libgimp/gimpexport.c:253
 #, c-format
-msgid "%s can't handle layers"
-msgstr "%s ondersteunt geen lagen"
+msgid "%s plug-in can't handle layers"
+msgstr "%s plug-in ondersteunt geen lagen"
 
-#: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
-#: ../libgimp/gimpexport.c:234
+#: ../libgimp/gimpexport.c:218
+#: ../libgimp/gimpexport.c:227
+#: ../libgimp/gimpexport.c:236
+#: ../libgimp/gimpexport.c:254
 msgid "Merge Visible Layers"
 msgstr "Zichtbare lagen samenvoegen"
 
-#: ../libgimp/gimpexport.c:224
+#: ../libgimp/gimpexport.c:226
 #, c-format
-msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s ondersteunt geen laagverspringen, -grootte of -ondoorzichtigheid"
+msgid "%s plug-in can't handle layer offsets, size or opacity"
+msgstr "%s plug-in ondersteunt geen laagverschuiving, -grootte of -ondoorzichtigheid"
 
-#: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
+#: ../libgimp/gimpexport.c:235
+#: ../libgimp/gimpexport.c:244
 #, c-format
-msgid "%s can only handle layers as animation frames"
-msgstr "%s ondersteunt enkel lagen als animatieframes"
+msgid "%s plug-in can only handle layers as animation frames"
+msgstr "%s plug-in ondersteunt enkel lagen als animatieframes"
 
-#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:243
+#: ../libgimp/gimpexport.c:236
+#: ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
 msgstr "Opslaan als animatie"
 
-#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:252
-#: ../libgimp/gimpexport.c:261
+# 29/02/09: oudere vertaling "Afbeelding pletten" maakt niet duidelijk wat de functie precies doet
+#: ../libgimp/gimpexport.c:245
+#: ../libgimp/gimpexport.c:254
+#: ../libgimp/gimpexport.c:263
 msgid "Flatten Image"
-msgstr "Afbeelding pletten"
+msgstr "Alle lagen samenvoegen"
 
-#: ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:262
 #, c-format
-msgid "%s can't handle transparency"
-msgstr "%s ondersteunt geen transparantie"
+msgid "%s plug-in can't handle transparency"
+msgstr "%s plug-in ondersteunt geen transparantie"
 
-#: ../libgimp/gimpexport.c:269
+#: ../libgimp/gimpexport.c:271
 #, c-format
-msgid "%s can't handle layer masks"
-msgstr "%s ondersteunt geen laagmaskers"
+msgid "%s plug-in can't handle layer masks"
+msgstr "%s plug-in ondersteunt geen laagmaskers"
 
-#: ../libgimp/gimpexport.c:270
+#: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
 msgstr "Laagmaskers toepassen"
 
-#: ../libgimp/gimpexport.c:278
+#: ../libgimp/gimpexport.c:280
 #, c-format
-msgid "%s can only handle RGB images"
-msgstr "%s ondersteunt enkel RGB-afbeeldingen"
+msgid "%s plug-in can only handle RGB images"
+msgstr "%s plug-in ondersteunt enkel RGB-afbeeldingen"
 
-#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:317
-#: ../libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:281
+#: ../libgimp/gimpexport.c:319
+#: ../libgimp/gimpexport.c:328
 msgid "Convert to RGB"
-msgstr "Converteren naar RGB"
+msgstr "Naar RGB omzetten"
 
-#: ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:289
 #, c-format
-msgid "%s can only handle grayscale images"
-msgstr "%s ondersteunt enkel grijswaardenafbeeldingen"
+msgid "%s plug-in can only handle grayscale images"
+msgstr "%s plug-in ondersteunt enkel grijswaardenafbeeldingen"
 
-#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:317
-#: ../libgimp/gimpexport.c:338
+#: ../libgimp/gimpexport.c:290
+#: ../libgimp/gimpexport.c:319
+#: ../libgimp/gimpexport.c:340
 msgid "Convert to Grayscale"
-msgstr "Converteren naar grijswaarden"
+msgstr "Naar grijswaarden omzetten"
 
-#: ../libgimp/gimpexport.c:296
+#: ../libgimp/gimpexport.c:298
 #, c-format
-msgid "%s can only handle indexed images"
-msgstr "%s ondersteunt enkel geïndexeerde afbeeldingen"
+msgid "%s plug-in can only handle indexed images"
+msgstr "%s plug-in ondersteunt enkel geïndexeerde afbeeldingen"
 
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:326
-#: ../libgimp/gimpexport.c:336
+#: ../libgimp/gimpexport.c:299
+#: ../libgimp/gimpexport.c:328
+#: ../libgimp/gimpexport.c:338
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Omzetten naar geïndexeerd met standaardinstellingen\n"
-"(Doe dit handmatig om het resultaat fijn te regelen)"
+"Naar geïndexeerd omzetten met standaardinstellingen\n"
+"(Doe dit handmatig om het resultaat preciezer te regelen)"
 
-#: ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:308
 #, c-format
-msgid "%s can only handle bitmap (two color) indexed images"
-msgstr ""
-"%s ondersteunt enkel bitmap- (twee kleuren) en geïndexeerde afbeeldingen"
+msgid "%s plug-in can only handle bitmap (two color) indexed images"
+msgstr "%s plug-in ondersteunt enkel bitmapafbeeldingen (twee kleuren) en geïndexeerde afbeeldingen"
 
-#: ../libgimp/gimpexport.c:307
+#: ../libgimp/gimpexport.c:309
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Omzetten naar Geïndexeerd met standaardinstellingen voor bitmap\n"
-"(Doe dit handmatig om het resultaat fijn te regelen)"
+"Naar geïndexeerd omzetten met standaardinstellingen voor bitmap\n"
+"(Doe dit handmatig om het resultaat preciezer te regelen)"
 
-#: ../libgimp/gimpexport.c:316
+#: ../libgimp/gimpexport.c:318
 #, c-format
-msgid "%s can only handle RGB or grayscale images"
-msgstr "%s ondersteunt enkel RGB en Grijswaarden"
+msgid "%s plug-in can only handle RGB or grayscale images"
+msgstr "%s plug-in ondersteunt enkel RGB- of grijswaardenafbeeldingen"
 
-#: ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:327
 #, c-format
-msgid "%s can only handle RGB or indexed images"
-msgstr "%s ondersteunt enkel RGB en Geïndexeerd"
+msgid "%s plug-in  can only handle RGB or indexed images"
+msgstr "%s plug-in ondersteunt enkel RGB-afbeeldingen of geïndexeerde afbeeldingen"
 
-#: ../libgimp/gimpexport.c:335
+#: ../libgimp/gimpexport.c:337
 #, c-format
-msgid "%s can only handle grayscale or indexed images"
-msgstr "%s ondersteunt enkel Grijswaarden en Geïndexeerd"
+msgid "%s plug-in can only handle grayscale or indexed images"
+msgstr "%s plug-in ondersteunt enkel grijswaardenafbeeldingen of geïndexeerde afbeeldingen"
 
-#: ../libgimp/gimpexport.c:346
+#: ../libgimp/gimpexport.c:348
 #, c-format
-msgid "%s needs an alpha channel"
-msgstr "%s heeft een alphakanaal nodig"
+msgid "%s plug-in needs an alpha channel"
+msgstr "%s plug-in heeft een alfakanaal nodig"
 
-#: ../libgimp/gimpexport.c:347
+#: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
-msgstr "Alphakanaal toevoegen"
+msgstr "Alfakanaal toevoegen"
 
-#: ../libgimp/gimpexport.c:381
+#: ../libgimp/gimpexport.c:383
 msgid "Confirm Save"
 msgstr "Bevestig opslaan"
 
-#: ../libgimp/gimpexport.c:387
+#: ../libgimp/gimpexport.c:389
 msgid "Confirm"
 msgstr "Bevestigen"
 
-#: ../libgimp/gimpexport.c:462
+#: ../libgimp/gimpexport.c:464
 msgid "Export File"
 msgstr "Bestand exporteren"
 
-#: ../libgimp/gimpexport.c:466
+#: ../libgimp/gimpexport.c:468
 msgid "_Ignore"
 msgstr "_Negeren"
 
-#: ../libgimp/gimpexport.c:468
+#: ../libgimp/gimpexport.c:470
 msgid "_Export"
 msgstr "_Exporteren"
 
 #  the headline
 #. the headline
-#: ../libgimp/gimpexport.c:497
+#: ../libgimp/gimpexport.c:499
 #, c-format
-msgid ""
-"Your image should be exported before it can be saved as %s for the following "
-"reasons:"
-msgstr ""
-"Voordat uw afbeelding als %s opgeslagen kan worden moet zij eerst "
-"geëxporteerd worden, om de volgende redenen:"
+msgid "Your image should be exported before it can be saved as %s for the following reasons:"
+msgstr "Om uw afbeelding op te slaan als %s moet zij eerst geëxporteerd worden, om de volgende redenen:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:568
+#: ../libgimp/gimpexport.c:573
 msgid "The export conversion won't modify your original image."
-msgstr "De exportconversie zal uw orginele afbeelding niet wijzigen."
+msgstr "De exportconversie zal uw originele afbeelding niet wijzigen."
 
-#: ../libgimp/gimpexport.c:668
+#: ../libgimp/gimpexport.c:673
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -188,7 +195,7 @@ msgstr ""
 "U staat op het punt een laagmasker op te slaan als %s.\n"
 "Hiermee slaat u niet de zichtbare lagen op."
 
-#: ../libgimp/gimpexport.c:674
+#: ../libgimp/gimpexport.c:679
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -197,28 +204,29 @@ msgstr ""
 "U staat op het punt een kanaal (opgeslagen selectie) op te slaan als %s.\n"
 "Hiermee slaat u niet de zichtbare lagen op."
 
-#: ../libgimp/gimpfontselectbutton.c:124 ../libgimp/gimpfontselectbutton.c:169
+#: ../libgimp/gimpfontselectbutton.c:130
 msgid "Font Selection"
-msgstr "Fontselectie"
+msgstr "Lettertypeselectie"
 
-# zonder schreef/schreefloos
-#: ../libgimp/gimpfontselectbutton.c:137 ../libgimp/gimpfontselectbutton.c:170
+# zonder schreef/sans serif
+#: ../libgimp/gimpfontselectbutton.c:145
 msgid "Sans"
-msgstr "Sans"
+msgstr "Schreefloos"
 
-#: ../libgimp/gimpgradientmenu.c:115
+#: ../libgimp/gimpgradientselectbutton.c:148
 msgid "Gradient Selection"
 msgstr "Verloopselectie"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
+#: ../libgimp/gimpmenu.c:450
+#: ../libgimpwidgets/gimpintstore.c:239
 msgid "(Empty)"
 msgstr "(Leeg)"
 
-#: ../libgimp/gimppalettemenu.c:102
+#: ../libgimp/gimppaletteselectbutton.c:130
 msgid "Palette Selection"
 msgstr "Paletselectie"
 
-#: ../libgimp/gimppatternmenu.c:125
+#: ../libgimp/gimppatternselectbutton.c:156
 msgid "Pattern Selection"
 msgstr "Patroonselectie"
 
@@ -238,9 +246,10 @@ msgstr "op hulp"
 msgid "by author"
 msgstr "op auteur"
 
+# 29/02/08: oudere vertaling: "copyright"
 #: ../libgimp/gimpprocbrowserdialog.c:144
 msgid "by copyright"
-msgstr "op copyright"
+msgstr "op auteursrecht"
 
 #: ../libgimp/gimpprocbrowserdialog.c:145
 msgid "by date"
@@ -273,7 +282,7 @@ msgstr "Zoeken op auteur"
 
 #: ../libgimp/gimpprocbrowserdialog.c:430
 msgid "Searching by copyright"
-msgstr "Zoeken op copyright"
+msgstr "Zoeken op auteursrecht"
 
 #: ../libgimp/gimpprocbrowserdialog.c:437
 msgid "Searching by date"
@@ -303,7 +312,8 @@ msgstr[0] "%d procedure gevonden"
 msgstr[1] "%d procedures gevonden"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
+#: ../libgimp/gimpprocbrowserdialog.c:516
+#: ../libgimpwidgets/gimpbrowser.c:114
 msgid "No matches"
 msgstr "Geen resultaten"
 
@@ -329,359 +339,401 @@ msgstr "Datum:"
 
 #: ../libgimp/gimpprocview.c:234
 msgid "Copyright:"
-msgstr "Copyright:"
+msgstr "Auteursrecht:"
 
 #: ../libgimp/gimpunitcache.c:57
 msgid "percent"
 msgstr "procent"
 
 # full niet meevertaald
-#: ../libgimpbase/gimpbaseenums.c:26
+#: ../libgimpbase/gimpbaseenums.c:27
 msgid "_White (full opacity)"
 msgstr "_Wit (ondoorzichtig)"
 
-#: ../libgimpbase/gimpbaseenums.c:27
+#: ../libgimpbase/gimpbaseenums.c:28
 msgid "_Black (full transparency)"
 msgstr "_Zwart (transparant)"
 
-#: ../libgimpbase/gimpbaseenums.c:28
+#: ../libgimpbase/gimpbaseenums.c:29
 msgid "Layer's _alpha channel"
-msgstr "_Alphakanaal van laag"
+msgstr "_Alfakanaal van laag"
 
 # verzetten/verplaatsen
-#: ../libgimpbase/gimpbaseenums.c:29
-msgid "_Transfer layer's alpha channel"
-msgstr "Alphakanaal van laag ver_plaatsen"
-
 #: ../libgimpbase/gimpbaseenums.c:30
+msgid "_Transfer layer's alpha channel"
+msgstr "Alfakanaal van laag ver_plaatsen"
+
+#: ../libgimpbase/gimpbaseenums.c:31
 msgid "_Selection"
 msgstr "_Selectie"
 
-#: ../libgimpbase/gimpbaseenums.c:31
+#: ../libgimpbase/gimpbaseenums.c:32
 msgid "_Grayscale copy of layer"
 msgstr "_Grijswaardenkopie van laag"
 
-#: ../libgimpbase/gimpbaseenums.c:61
+#: ../libgimpbase/gimpbaseenums.c:33
+msgid "C_hannel"
+msgstr "_Kanaal"
+
+#: ../libgimpbase/gimpbaseenums.c:63
 msgid "FG to BG (RGB)"
 msgstr "VG naar AG (RGB)"
 
-#: ../libgimpbase/gimpbaseenums.c:62
+#: ../libgimpbase/gimpbaseenums.c:64
 msgid "FG to BG (HSV)"
 msgstr "VG naar AG (KVW)"
 
-#: ../libgimpbase/gimpbaseenums.c:63
+#: ../libgimpbase/gimpbaseenums.c:65
 msgid "FG to transparent"
 msgstr "VG naar transparant"
 
-#: ../libgimpbase/gimpbaseenums.c:64
+#: ../libgimpbase/gimpbaseenums.c:66
 msgid "Custom gradient"
 msgstr "Eigen verloop"
 
-#: ../libgimpbase/gimpbaseenums.c:93
+#: ../libgimpbase/gimpbaseenums.c:95
 msgid "FG color fill"
 msgstr "VG-kleur vullen"
 
-#: ../libgimpbase/gimpbaseenums.c:94
+#: ../libgimpbase/gimpbaseenums.c:96
 msgid "BG color fill"
 msgstr "AG-kleur vullen"
 
-#: ../libgimpbase/gimpbaseenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:97
 msgid "Pattern fill"
 msgstr "Patroon vullen"
 
-#: ../libgimpbase/gimpbaseenums.c:125
+#: ../libgimpbase/gimpbaseenums.c:127
 msgid "Add to the current selection"
 msgstr "Toevoegen aan huidige selectie"
 
-#: ../libgimpbase/gimpbaseenums.c:126
+#: ../libgimpbase/gimpbaseenums.c:128
 msgid "Subtract from the current selection"
 msgstr "Van huidige selectie aftrekken"
 
-#: ../libgimpbase/gimpbaseenums.c:127
+#: ../libgimpbase/gimpbaseenums.c:129
 msgid "Replace the current selection"
 msgstr "Huidige selectie vervangen"
 
-#: ../libgimpbase/gimpbaseenums.c:128
+#: ../libgimpbase/gimpbaseenums.c:130
 msgid "Intersect with the current selection"
 msgstr "Snijden met huidige selectie"
 
-#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:162
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Red"
 msgstr "Rood"
 
-#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:163
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Green"
 msgstr "Groen"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:164
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Blue"
 msgstr "Blauw"
 
-#: ../libgimpbase/gimpbaseenums.c:163
+#: ../libgimpbase/gimpbaseenums.c:165
 msgid "Gray"
 msgstr "Grijs"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:529
+#: ../libgimpbase/gimpbaseenums.c:166
+#: ../libgimpbase/gimpbaseenums.c:531
 msgid "Indexed"
 msgstr "Met index"
 
-#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpbase/gimpbaseenums.c:167
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Alpha"
-msgstr "Alpha"
+msgstr "Alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:194
+#: ../libgimpbase/gimpbaseenums.c:196
 msgid "Small"
 msgstr "Klein"
 
-#: ../libgimpbase/gimpbaseenums.c:195
+#: ../libgimpbase/gimpbaseenums.c:197
 msgid "Medium"
 msgstr "Middel"
 
-#: ../libgimpbase/gimpbaseenums.c:196
+#: ../libgimpbase/gimpbaseenums.c:198
 msgid "Large"
 msgstr "Groot"
 
 # schaakbord
-#: ../libgimpbase/gimpbaseenums.c:228
+#: ../libgimpbase/gimpbaseenums.c:230
 msgid "Light checks"
 msgstr "Lichte vakjes"
 
-#: ../libgimpbase/gimpbaseenums.c:229
+#: ../libgimpbase/gimpbaseenums.c:231
 msgid "Mid-tone checks"
 msgstr "Midtoonvakjes"
 
-#: ../libgimpbase/gimpbaseenums.c:230
+#: ../libgimpbase/gimpbaseenums.c:232
 msgid "Dark checks"
 msgstr "Donkere vakjes"
 
-#: ../libgimpbase/gimpbaseenums.c:231
+#: ../libgimpbase/gimpbaseenums.c:233
 msgid "White only"
 msgstr "Volledig wit"
 
-#: ../libgimpbase/gimpbaseenums.c:232
+#: ../libgimpbase/gimpbaseenums.c:234
 msgid "Gray only"
 msgstr "Volledig grijs"
 
-#: ../libgimpbase/gimpbaseenums.c:233
+#: ../libgimpbase/gimpbaseenums.c:235
 msgid "Black only"
 msgstr "Volledig zwart"
 
-#: ../libgimpbase/gimpbaseenums.c:261
-msgid "Image source"
-msgstr "Afbeeldingsbron"
+#: ../libgimpbase/gimpbaseenums.c:263
+msgid "Image"
+msgstr "Afbeelding"
 
-#: ../libgimpbase/gimpbaseenums.c:262
-msgid "Pattern source"
-msgstr "Patroonbron"
+#: ../libgimpbase/gimpbaseenums.c:264
+msgid "Pattern"
+msgstr "Patroon"
 
-#: ../libgimpbase/gimpbaseenums.c:291
+#: ../libgimpbase/gimpbaseenums.c:293
 msgid "Lightness"
 msgstr "Lichtheid"
 
 # lichtgevendheid/lichtheid
-#: ../libgimpbase/gimpbaseenums.c:292
+#: ../libgimpbase/gimpbaseenums.c:294
 msgid "Luminosity"
 msgstr "Helderheid"
 
-#: ../libgimpbase/gimpbaseenums.c:293
+#: ../libgimpbase/gimpbaseenums.c:295
 msgid "Average"
 msgstr "Gemiddelde"
 
-#: ../libgimpbase/gimpbaseenums.c:321
+#: ../libgimpbase/gimpbaseenums.c:323
 msgid "Dodge"
 msgstr "Lichter"
 
-#: ../libgimpbase/gimpbaseenums.c:322
+#: ../libgimpbase/gimpbaseenums.c:324
 msgid "Burn"
 msgstr "Donkerder"
 
-#: ../libgimpbase/gimpbaseenums.c:386 ../libgimpbase/gimpbaseenums.c:561
-msgid "Linear"
+#: ../libgimpbase/gimpbaseenums.c:388
+msgid "gradient|Linear"
 msgstr "Lineair"
 
-#: ../libgimpbase/gimpbaseenums.c:387
+#: ../libgimpbase/gimpbaseenums.c:389
 msgid "Bi-linear"
 msgstr "Bilineair"
 
-#: ../libgimpbase/gimpbaseenums.c:388
+#: ../libgimpbase/gimpbaseenums.c:390
 msgid "Radial"
 msgstr "Radiaal"
 
-#: ../libgimpbase/gimpbaseenums.c:389
+#: ../libgimpbase/gimpbaseenums.c:391
+#: ../libgimpwidgets/gimpwidgetsenums.c:24
 msgid "Square"
 msgstr "Vierkant"
 
 # symmetrisch
-#: ../libgimpbase/gimpbaseenums.c:390
+#: ../libgimpbase/gimpbaseenums.c:392
 msgid "Conical (sym)"
 msgstr "Conisch (sym)"
 
 # asymmetrisch
-#: ../libgimpbase/gimpbaseenums.c:391
+#: ../libgimpbase/gimpbaseenums.c:393
 msgid "Conical (asym)"
 msgstr "Conisch (asym)"
 
-#: ../libgimpbase/gimpbaseenums.c:392
+#: ../libgimpbase/gimpbaseenums.c:394
 msgid "Shaped (angular)"
 msgstr "Naar vorm (hoekig)"
 
-#: ../libgimpbase/gimpbaseenums.c:393
+#: ../libgimpbase/gimpbaseenums.c:395
 msgid "Shaped (spherical)"
 msgstr "Naar vorm (rond)"
 
-#: ../libgimpbase/gimpbaseenums.c:394
+#: ../libgimpbase/gimpbaseenums.c:396
 msgid "Shaped (dimpled)"
 msgstr "Naar vorm (putjes)"
 
-# spiraalvormig/spiraal
-#: ../libgimpbase/gimpbaseenums.c:395
+# met de klok mee
+#: ../libgimpbase/gimpbaseenums.c:397
 msgid "Spiral (cw)"
-msgstr "Spiraal (kloksgewijs)"
+msgstr "Spiraal (MKM)"
 
-#: ../libgimpbase/gimpbaseenums.c:396
+# tegen de klok in
+#: ../libgimpbase/gimpbaseenums.c:398
 msgid "Spiral (ccw)"
-msgstr "Spiraalvormig (antikloksgewijs)"
-
-#: ../libgimpbase/gimpbaseenums.c:427
-msgid "Intersections (dots)"
-msgstr ""
-
-# kruisdraad
-#: ../libgimpbase/gimpbaseenums.c:428
-msgid "Intersections (crosshairs)"
-msgstr ""
+msgstr "Spiraal (TKI)"
 
 #: ../libgimpbase/gimpbaseenums.c:429
+msgid "Intersections (dots)"
+msgstr "Intersecties (punten)"
+
+#: ../libgimpbase/gimpbaseenums.c:430
+msgid "Intersections (crosshairs)"
+msgstr "Intersecties (kruisjes)"
+
+#: ../libgimpbase/gimpbaseenums.c:431
 msgid "Dashed"
 msgstr "Streepjes"
 
-#: ../libgimpbase/gimpbaseenums.c:430
+#: ../libgimpbase/gimpbaseenums.c:432
 msgid "Double dashed"
 msgstr "Dubbele streepjes"
 
 # vaste lijn/vast/egaal/
-#: ../libgimpbase/gimpbaseenums.c:431
+#: ../libgimpbase/gimpbaseenums.c:433
 msgid "Solid"
 msgstr "Vast"
 
-#: ../libgimpbase/gimpbaseenums.c:460
+#: ../libgimpbase/gimpbaseenums.c:462
 msgid "Stock ID"
 msgstr "Standaard ID"
 
 # vertalen?
 # inlijns pixbuf
-#: ../libgimpbase/gimpbaseenums.c:461
+#: ../libgimpbase/gimpbaseenums.c:463
 msgid "Inline pixbuf"
 msgstr "Inline pixbuf"
 
-#: ../libgimpbase/gimpbaseenums.c:462
+#: ../libgimpbase/gimpbaseenums.c:464
 msgid "Image file"
-msgstr "Afbeelding"
+msgstr "Afbeeldingsbestand"
 
-#: ../libgimpbase/gimpbaseenums.c:491
+#: ../libgimpbase/gimpbaseenums.c:493
 msgid "RGB color"
 msgstr "RGB kleur"
 
-#: ../libgimpbase/gimpbaseenums.c:492 ../libgimpbase/gimpbaseenums.c:527
+#: ../libgimpbase/gimpbaseenums.c:494
+#: ../libgimpbase/gimpbaseenums.c:529
 msgid "Grayscale"
 msgstr "Grijswaarden"
 
-#: ../libgimpbase/gimpbaseenums.c:493
+#: ../libgimpbase/gimpbaseenums.c:495
 msgid "Indexed color"
 msgstr "Kleur met index"
 
-#: ../libgimpbase/gimpbaseenums.c:525
+#: ../libgimpbase/gimpbaseenums.c:527
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:526
-msgid "RGB-alpha"
-msgstr "RGB-alpha"
-
 #: ../libgimpbase/gimpbaseenums.c:528
-msgid "Grayscale-alpha"
-msgstr "Grijswaarden-alpha"
+msgid "RGB-alpha"
+msgstr "RGB-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:530
-msgid "Indexed-alpha"
-msgstr "Met index en alpha"
+msgid "Grayscale-alpha"
+msgstr "Grijswaarden-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:560
-msgid "None (Fastest)"
-msgstr "Geen (snelste)"
+#: ../libgimpbase/gimpbaseenums.c:532
+msgid "Indexed-alpha"
+msgstr "Met index en alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:562
+msgid "interpolation|None"
+msgstr "Geen"
+
+#: ../libgimpbase/gimpbaseenums.c:563
+msgid "interpolation|Linear"
+msgstr "Lineair"
+
+#: ../libgimpbase/gimpbaseenums.c:564
 msgid "Cubic"
 msgstr "Kubisch"
 
-#: ../libgimpbase/gimpbaseenums.c:563
-msgid "Lanczos (Best)"
-msgstr "Lanczos (beste)"
+#: ../libgimpbase/gimpbaseenums.c:565
+msgid "Sinc (Lanczos3)"
+msgstr "Sinc (Lanczos3)"
 
-#: ../libgimpbase/gimpbaseenums.c:591
+#: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
 msgstr "Constant"
 
-#: ../libgimpbase/gimpbaseenums.c:592
+#: ../libgimpbase/gimpbaseenums.c:594
 msgid "Incremental"
 msgstr "Oplopend"
 
-#: ../libgimpbase/gimpbaseenums.c:621 ../modules/cdisplay_lcms.c:254
+#: ../libgimpbase/gimpbaseenums.c:623
+#: ../modules/cdisplay_lcms.c:214
 msgid "None"
 msgstr "Geen"
 
-#: ../libgimpbase/gimpbaseenums.c:622
+#: ../libgimpbase/gimpbaseenums.c:624
 msgid "Sawtooth wave"
 msgstr "Zaagtandgolf"
 
-#: ../libgimpbase/gimpbaseenums.c:623
+#: ../libgimpbase/gimpbaseenums.c:625
 msgid "Triangular wave"
 msgstr "Driehoekige golf"
 
-# beeldpunten
-#: ../libgimpbase/gimpbaseenums.c:651
-msgid "Pixels"
-msgstr "Pixels"
+#: ../libgimpbase/gimpbaseenums.c:654
+msgid "Run interactively"
+msgstr "Interactief uitvoeren"
 
-#: ../libgimpbase/gimpbaseenums.c:652
+#: ../libgimpbase/gimpbaseenums.c:655
+msgid "Run non-interactively"
+msgstr "Niet-interactief uitvoeren"
+
+#: ../libgimpbase/gimpbaseenums.c:656
+msgid "Run with last used values"
+msgstr "Uitvoeren met laatst gebruikte waarden"
+
+#: ../libgimpbase/gimpbaseenums.c:684
+msgid "Pixels"
+msgstr "Beeldpunten"
+
+#: ../libgimpbase/gimpbaseenums.c:685
 msgid "Points"
 msgstr "Punten"
 
-#: ../libgimpbase/gimpbaseenums.c:681
+#: ../libgimpbase/gimpbaseenums.c:714
 msgid "Shadows"
 msgstr "Donkere kleuren"
 
-#: ../libgimpbase/gimpbaseenums.c:682
+#: ../libgimpbase/gimpbaseenums.c:715
 msgid "Midtones"
 msgstr "Middenkleuren"
 
-#: ../libgimpbase/gimpbaseenums.c:683
+#: ../libgimpbase/gimpbaseenums.c:716
 msgid "Highlights"
 msgstr "Lichtere kleuren"
 
 # vooruit/heen/voorwaarts
-#: ../libgimpbase/gimpbaseenums.c:711
-msgid "Forward"
-msgstr "Voorwaarts"
+#: ../libgimpbase/gimpbaseenums.c:744
+msgid "Normal (Forward)"
+msgstr "Normaal (voorwaarts)"
 
-# achteruit/terug/achterwaarts<
-#: ../libgimpbase/gimpbaseenums.c:712
-msgid "Backward"
-msgstr "Achterwaarts"
+#: ../libgimpbase/gimpbaseenums.c:745
+msgid "Corrective (Backward)"
+msgstr "Corrigerend (achterwaarts)"
 
-#: ../libgimpbase/gimpbaseenums.c:815
+#: ../libgimpbase/gimpbaseenums.c:775
+msgid "Adjust"
+msgstr "Aanpassen"
+
+#: ../libgimpbase/gimpbaseenums.c:776
+msgid "Clip"
+msgstr "Knippen"
+
+#: ../libgimpbase/gimpbaseenums.c:777
+msgid "Crop to result"
+msgstr "Resultaat bijsnijden"
+
+#: ../libgimpbase/gimpbaseenums.c:778
+msgid "Crop with aspect"
+msgstr "Bijsnijden volgens verhouding"
+
+#: ../libgimpbase/gimpbaseenums.c:881
 msgid "Internal GIMP procedure"
 msgstr "Interne GIMP procedure"
 
-#: ../libgimpbase/gimpbaseenums.c:816
+#: ../libgimpbase/gimpbaseenums.c:882
 msgid "GIMP Plug-In"
-msgstr "GIMP Plug-in"
+msgstr "GIMP plug-in"
 
-#: ../libgimpbase/gimpbaseenums.c:817
+#: ../libgimpbase/gimpbaseenums.c:883
 msgid "GIMP Extension"
 msgstr "GIMP extensie"
 
-#: ../libgimpbase/gimpbaseenums.c:818
+#: ../libgimpbase/gimpbaseenums.c:884
 msgid "Temporary Procedure"
 msgstr "Tijdelijke procedure"
 
@@ -737,53 +789,52 @@ msgstr "%.1f GB"
 msgid "%d GB"
 msgstr "%d GB"
 
-#: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
-#: ../modules/cdisplay_lcms.c:246
+#: ../libgimpbase/gimputils.c:170
+#: ../libgimpbase/gimputils.c:175
+#: ../modules/cdisplay_lcms.c:206
+#: ../modules/colorsel_cmyk_lcms.c:408
 msgid "(invalid UTF-8 string)"
 msgstr "(ongeldige UTF-8 tekenreeks)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:40
+#: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "Mode of operation for color management."
 msgstr "Werkingswijze van kleurbeheer."
 
-#: ../libgimpconfig/gimpcolorconfig.c:42
+#: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "The color profile of your (primary) monitor."
 msgstr "Het kleurprofiel van uw (primaire) beeldscherm."
 
-#: ../libgimpconfig/gimpcolorconfig.c:44
-msgid ""
-"When enabled, the GIMP will try to use the display color profile from the "
-"windowing system. The configured monitor profile is then only used as a "
-"fallback."
-msgstr ""
-"Indien aangezet, zal GIMP trachten het kleurprofiel voor weergave uit het "
-"'windowing'systeem te gebruiken. Het geconfigureerde beeldschermprofiel zal "
-"dan alleen worden gebruikt om op te kunnen terugvallen."
-
-#: ../libgimpconfig/gimpcolorconfig.c:48
-msgid "The default RGB workspace color profile."
-msgstr "Het standaard RGB kleurprofiel."
+#: ../libgimpconfig/gimpcolorconfig.c:46
+msgid "When enabled, GIMP will try to use the display color profile from the windowing system.  The configured monitor profile is then only used as a fallback."
+msgstr "Indien ingeschakeld, zal GIMP trachten het kleurprofiel voor weergave uit het venstersysteem te gebruiken. Het geconfigureerde beeldschermprofiel zal dan alleen worden gebruikt om op te kunnen terugvallen."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
-msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr ""
-"Het CMYK kleurprofiel dat gebruikt wordt om RGB en CMYK in elkaar om te "
-"zetten."
+msgid "The default RGB working space color profile."
+msgstr "Het standaard RGB-kleurprofiel voor de werkruimte."
 
 #: ../libgimpconfig/gimpcolorconfig.c:52
+msgid "The CMYK color profile used to convert between RGB and CMYK."
+msgstr "Het CMYK kleurprofiel dat gebruikt wordt om RGB en CMYK naar elkaar om te zetten."
+
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr "Het kleurprofiel om een afdrukversie te simuleren (softproof)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "Sets how colors are mapped for your display."
 msgstr "Stelt in hoe kleuren worden geprojecteerd op uw monitor."
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
-msgid ""
-"Sets how colors are converted from workspace to the print simulation device."
-msgstr ""
-"Stelt in hoe kleuren worden omgezet van werkruimte naar het "
-"afdruksimulatieapparaat."
+#: ../libgimpconfig/gimpcolorconfig.c:58
+msgid "Sets how colors are converted from RGB working space to the print simulation device."
+msgstr "Stelt in hoe kleuren worden omgezet van de RGB-werkruimte naar het afdruksimulatieapparaat."
+
+#: ../libgimpconfig/gimpcolorconfig.c:61
+msgid "When enabled, the print simulation will mark colors which can not be represented in the target color space."
+msgstr "Indien ingeschakeld zal de afdruksimulatie kleuren markeren die niet kunnen worden weergegeven in de doelkleurruimte."
+
+#: ../libgimpconfig/gimpcolorconfig.c:64
+msgid "The color to use for marking colors which are out of gamut."
+msgstr "De kleur die gebruikt wordt om kleuren te markeren die buiten het gamut vallen."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -794,84 +845,79 @@ msgstr "Geen kleurbeheer"
 msgid "Color managed display"
 msgstr "Monitor met kleurbeheer"
 
-# Simulatie afdrukken
 #: ../libgimpconfig/gimpcolorconfig-enums.c:26
 msgid "Print simulation"
-msgstr "Afdrukken simuleren"
+msgstr "Afdruksimulatie"
 
-# waarneembaar?
-#: ../libgimpconfig/gimpcolorconfig-enums.c:56 ../modules/cdisplay_proof.c:55
+# 29/02/08: oudere vertalingen waren "gevoelsmatig" en "waarneembaar?"
+# "Perceptueel" is de term die in de Nederlandse versies van alle Adobe-programma's (Photoshop, Indesign, ...) gebruikt wordt voor dit mechanisme.
+#: ../libgimpconfig/gimpcolorconfig-enums.c:56
 msgid "Perceptual"
-msgstr "Gevoelsmatig"
+msgstr "Perceptueel"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:57 ../modules/cdisplay_proof.c:56
+#: ../libgimpconfig/gimpcolorconfig-enums.c:57
 msgid "Relative colorimetric"
 msgstr "Relatief colorimetrisch"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#: ../libgimpwidgets/gimpwidgetsenums.c:93 ../modules/cdisplay_proof.c:57
-msgid "Saturation"
+msgid "intent|Saturation"
 msgstr "Verzadiging"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:59 ../modules/cdisplay_proof.c:58
+#: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
 msgstr "Absoluut colorimetrisch"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:88
-msgid "Ask"
-msgstr "Vragen"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:89
-msgid "Use embedded profile"
-msgstr "Ingebed profiel gebruiken"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:90
-msgid "Convert to RGB workspace"
-msgstr "Converteren naar RGB"
-
-#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#: ../libgimpconfig/gimpconfig-deserialize.c:97
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "waarde voor token %s is geen geldige UTF-8-tekenreeks"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:423
+#: ../libgimpconfig/gimpconfig-deserialize.c:436
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "verwachtte 'ja' of 'nee' voor Boolse token %s, kreeg '%s'"
+msgstr "verwachtte 'yes' of 'no' voor booleaanse token %s, kreeg '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:497
+#: ../libgimpconfig/gimpconfig-deserialize.c:510
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ongeldige waarde '%s' voor token %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:512
+#: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ongeldige waarde '%ld' voor token %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:581
+#: ../libgimpconfig/gimpconfig-deserialize.c:594
 #, c-format
 msgid "while parsing token '%s': %s"
-msgstr "bij parseren token '%s': %s"
+msgstr "bij verwerken token '%s': %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:453
-#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpconfig-iface.c:454
+#: ../libgimpconfig/gimpconfig-iface.c:467
+#: ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
+#: ../libgimpwidgets/gimpcolorprofilestore.c:654
 msgid "fatal parse error"
-msgstr "fatale parseerfout"
+msgstr "fatale verwerkingsfout"
 
-#: ../libgimpconfig/gimpconfig-path.c:376
+#: ../libgimpconfig/gimpconfig-path.c:377
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Kan niet uitbreiden ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:135
+#: ../libgimpconfig/gimpconfigwriter.c:78
+#: ../libgimpconfig/gimpconfigwriter.c:693
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr "Fout bij schrijven naar '%s': %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:136
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Kon geen tijdelijk bestand voor '%s' aanmaken: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:148
+#: ../libgimpconfig/gimpconfigwriter.c:149
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Kon '%s' niet openen voor schrijven: %s"
@@ -881,7 +927,7 @@ msgstr "Kon '%s' niet openen voor schrijven: %s"
 # Ik laat het zo maar staan, als mensen er over vallen moeten ze
 # maar schrijven.
 #
-#: ../libgimpconfig/gimpconfigwriter.c:667
+#: ../libgimpconfig/gimpconfigwriter.c:674
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -890,7 +936,7 @@ msgstr ""
 "Fout bij het schrijven van tijdelijk bestand voor '%s': %s\n"
 "Het originele bestand is niet getouched."
 
-#: ../libgimpconfig/gimpconfigwriter.c:675
+#: ../libgimpconfig/gimpconfigwriter.c:682
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -899,12 +945,7 @@ msgstr ""
 "Fout bij schrijven naar tijdelijk bestand voor '%s': %s\n"
 "Geen bestand aangemaakt."
 
-#: ../libgimpconfig/gimpconfigwriter.c:686
-#, c-format
-msgid "Error writing to '%s': %s"
-msgstr "Fout bij schrijven naar '%s': %s"
-
-#: ../libgimpconfig/gimpconfigwriter.c:704
+#: ../libgimpconfig/gimpconfigwriter.c:711
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Kan '%s' niet aanmaken: %s"
@@ -916,28 +957,30 @@ msgstr "ongeldige UTF-8-tekenreeks"
 #: ../libgimpconfig/gimpscanner.c:606
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "Fout tijdens parseren '%s' in regel %d: %s"
+msgstr "Fout tijdens verwerken '%s' in regel %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:152 ../libgimpmodule/gimpmodule.c:170
-#: ../libgimpmodule/gimpmodule.c:279 ../libgimpmodule/gimpmodule.c:306
-#: ../libgimpmodule/gimpmodule.c:417
+#: ../libgimpmodule/gimpmodule.c:153
+#: ../libgimpmodule/gimpmodule.c:171
+#: ../libgimpmodule/gimpmodule.c:280
+#: ../libgimpmodule/gimpmodule.c:307
+#: ../libgimpmodule/gimpmodule.c:418
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Laadfout module '%s': %s"
 
-#: ../libgimpmodule/gimpmodule.c:374
+#: ../libgimpmodule/gimpmodule.c:375
 msgid "Module error"
 msgstr "Modulefout"
 
-#: ../libgimpmodule/gimpmodule.c:375
+#: ../libgimpmodule/gimpmodule.c:376
 msgid "Loaded"
 msgstr "Geladen"
 
-#: ../libgimpmodule/gimpmodule.c:376
+#: ../libgimpmodule/gimpmodule.c:377
 msgid "Load failed"
 msgstr "Laden mislukte"
 
-#: ../libgimpmodule/gimpmodule.c:377
+#: ../libgimpmodule/gimpmodule.c:378
 msgid "Not loaded"
 msgstr "Niet geladen"
 
@@ -948,15 +991,19 @@ msgid ""
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 "Kon geen geldige persoonlijke map vinden.\n"
-"Miniaturen zullen nu worden opgeslagen in de map voor tijdelijke bestanden (%"
-"s)."
+"Miniaturen zullen nu worden opgeslagen in de map voor tijdelijke bestanden (%s)."
 
-#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
+#: ../libgimpthumb/gimpthumb-utils.c:249
+#: ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Kon de map '%s' voor de miniaturen niet aanmaken."
 
-#: ../libgimpthumb/gimpthumbnail.c:887
+#: ../libgimpthumb/gimpthumbnail.c:498
+msgid "Thumbnail contains no Thumb::URI tag"
+msgstr "Voorbeeld bevat geen Thumb::URI tag"
+
+#: ../libgimpthumb/gimpthumbnail.c:898
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Kon geen miniatuur aanmaken voor %s: %s"
@@ -981,6 +1028,14 @@ msgstr "_Zwart"
 msgid "_White"
 msgstr "_Wit"
 
+#: ../libgimpwidgets/gimpcolorprofilestore.c:144
+msgid "Select color profile from disk..."
+msgstr "Selecteer kleurprofiel van schijf..."
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:280
+msgid "profile|None"
+msgstr "Geen"
+
 # 'Schaalt'? 'Schubben'? Weegschalen
 # Misschien gaat het over kleurbereik
 #: ../libgimpwidgets/gimpcolorscales.c:98
@@ -989,58 +1044,102 @@ msgstr "Schalen"
 
 # Huidige kleur
 # (niet huidig kleur)
-#: ../libgimpwidgets/gimpcolorselection.c:187
+#: ../libgimpwidgets/gimpcolorselection.c:210
 msgid "Current:"
 msgstr "Huidige:"
 
 # Vorige kleur
-#: ../libgimpwidgets/gimpcolorselection.c:209
+#: ../libgimpwidgets/gimpcolorselection.c:232
 msgid "Old:"
 msgstr "Oude:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:263
-msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "Hexadecimale kleurnotatie zoals gebruikt in HTML en CSS"
+#: ../libgimpwidgets/gimpcolorselection.c:286
+msgid "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts CSS color names."
+msgstr "Hexadecimale kleurnotatie zoals gebruikt in HTML en CSS. CSS kleurennamen worden ook aanvaard."
 
-#: ../libgimpwidgets/gimpcolorselection.c:268
+#: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
 msgstr "HTML-_notatie:"
 
-#: ../libgimpwidgets/gimpfileentry.c:320
+#: ../libgimpwidgets/gimpfileentry.c:174
+msgid "Open a file selector to browse your folders"
+msgstr "Een bestandenkiezer openen om door uw mappen te bladeren"
+
+#: ../libgimpwidgets/gimpfileentry.c:175
+msgid "Open a file selector to browse your files"
+msgstr "Een bestandenkiezer openen om door uw bestanden te bladeren"
+
+#: ../libgimpwidgets/gimpfileentry.c:335
 msgid "Select Folder"
 msgstr "Selecteer map"
 
-#: ../libgimpwidgets/gimpfileentry.c:322
+#: ../libgimpwidgets/gimpfileentry.c:337
 msgid "Select File"
 msgstr "Selecteer bestand"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:203
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Kilobytes"
 msgstr "Kilobyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Megabytes"
 msgstr "Megabyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:205
+#: ../libgimpwidgets/gimpmemsizeentry.c:206
 msgid "Gigabytes"
 msgstr "Gigabyte"
 
-#: ../libgimpwidgets/gimppatheditor.c:212
+#. Count label
+#: ../libgimpwidgets/gimppageselector.c:269
+#: ../libgimpwidgets/gimppageselector.c:1171
+msgid "Nothing selected"
+msgstr "Niets geselecteerd"
+
+#: ../libgimpwidgets/gimppageselector.c:287
+msgid "Select _All"
+msgstr "_Alles selecteren"
+
+#: ../libgimpwidgets/gimppageselector.c:307
+msgid "Select _range:"
+msgstr "Be_reik selecteren:"
+
+#: ../libgimpwidgets/gimppageselector.c:319
+msgid "Open _pages as"
+msgstr "_Pagina's openen als "
+
+#: ../libgimpwidgets/gimppageselector.c:420
+msgid "Page 000"
+msgstr "Pagina 000"
+
+#: ../libgimpwidgets/gimppageselector.c:512
+#: ../libgimpwidgets/gimppageselector.c:749
+#, c-format
+msgid "Page %d"
+msgstr "Pagina %d"
+
+#: ../libgimpwidgets/gimppageselector.c:1176
+msgid "One page selected"
+msgstr "Eén pagina geselecteerd"
+
+#: ../libgimpwidgets/gimppageselector.c:1183
+#: ../libgimpwidgets/gimppageselector.c:1187
+#, c-format
+msgid "%d page selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "%d pagina geselecteerd"
+msgstr[1] "Alle %d pagina's geselecteerd"
+
+#: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Writable"
 msgstr "Schrijfbaar"
 
-#: ../libgimpwidgets/gimppatheditor.c:221
+#: ../libgimpwidgets/gimppatheditor.c:223
 msgid "Folder"
 msgstr "Map"
 
 #: ../libgimpwidgets/gimppickbutton.c:107
-msgid ""
-"Click the eyedropper, then click a color anywhere on your screen to select "
-"that color."
-msgstr ""
-"Klik op de druppelaar en vervolgens op een kleur op het scherm om die kleur "
-"te selecteren."
+msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
+msgstr "Klik op het pipet en vervolgens op een kleur op het scherm om die kleur te selecteren."
 
 #: ../libgimpwidgets/gimppreviewarea.c:94
 msgid "Check Size"
@@ -1051,23 +1150,17 @@ msgstr "Vakgrootte"
 msgid "Check Style"
 msgstr "Transparantiestijl"
 
-#. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:256
+#. toggle button to (de)activate the instant preview
+#: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "_Voorbeeld"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1872
+#: ../libgimpwidgets/gimppropwidgets.c:1901
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Dit tekstinvoerveld mag  maximaal %d teken bevatten."
 msgstr[1] "Dit tekstinvoerveld mag  maximaal %d tekens bevatten."
-
-# beeldpunten
-#: ../libgimpwidgets/gimpresolutionentry.c:382
-#, c-format
-msgid "pixels/%s"
-msgstr "pixels/%s"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -1091,7 +1184,7 @@ msgstr "Gekoppeld"
 
 #: ../libgimpwidgets/gimpstock.c:118
 msgid "Paste as New"
-msgstr "Plakken als Nieuw"
+msgstr "Plakken als nieuw"
 
 #: ../libgimpwidgets/gimpstock.c:119
 msgid "Paste Into"
@@ -1105,7 +1198,8 @@ msgstr "_Opnieuw instellen"
 msgid "Visible"
 msgstr "Zichtbaar"
 
-#: ../libgimpwidgets/gimpstock.c:157 ../libgimpwidgets/gimpstock.c:161
+#: ../libgimpwidgets/gimpstock.c:157
+#: ../libgimpwidgets/gimpstock.c:161
 msgid "_Stroke"
 msgstr "_Doorhalen"
 
@@ -1117,156 +1211,162 @@ msgstr "L_etterspatiëring"
 msgid "L_ine Spacing"
 msgstr "_Regelhoogte"
 
+# 29/02/08: oorspronkelijk stond hier "herschalen", maar is er wel een verschil tussen resize en scale??
 #: ../libgimpwidgets/gimpstock.c:190
 msgid "_Resize"
-msgstr "_Herschalen"
+msgstr "_Schalen"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:300
+#: ../libgimpwidgets/gimpstock.c:191
+#: ../libgimpwidgets/gimpstock.c:319
 msgid "_Scale"
 msgstr "_Schalen"
 
-#: ../libgimpwidgets/gimpstock.c:278
-msgid "Crop"
-msgstr "Snijden"
+#: ../libgimpwidgets/gimpstock.c:295
+msgid "Cr_op"
+msgstr "_Bijsnijden"
 
-#: ../libgimpwidgets/gimpstock.c:296
+#: ../libgimpwidgets/gimpstock.c:314
 msgid "_Transform"
 msgstr "_Transformeren"
 
-#: ../libgimpwidgets/gimpstock.c:299
+#: ../libgimpwidgets/gimpstock.c:318
 msgid "_Rotate"
 msgstr "_Draaien"
 
-#: ../libgimpwidgets/gimpstock.c:301
+#: ../libgimpwidgets/gimpstock.c:320
 msgid "_Shear"
 msgstr "_Hellen"
 
-#: ../libgimpwidgets/gimpunitmenu.c:267
+#: ../libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr "Meer..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:577
+#: ../libgimpwidgets/gimpunitmenu.c:581
 msgid "Unit Selection"
 msgstr "Selectie van de eenheden"
 
-#: ../libgimpwidgets/gimpunitmenu.c:625
+#: ../libgimpwidgets/gimpunitmenu.c:629
 msgid "Unit"
 msgstr "Eenheid"
 
-#: ../libgimpwidgets/gimpunitmenu.c:629
+#: ../libgimpwidgets/gimpunitmenu.c:633
 msgid "Factor"
 msgstr "Factor"
 
-#: ../libgimpwidgets/gimpwidgets.c:1003
-msgid ""
-"Use this value for random number generator seed - this allows you to repeat "
-"a given \"random\" operation"
-msgstr ""
-"Gebruik deze waarde als bron voor de generering van willekeurige nummers. "
-"Hiermee kunt u een bepaalde \"willekeurige\" operatie herhalen."
+#: ../libgimpwidgets/gimpwidgets.c:1005
+msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
+msgstr "Gebruik deze waarde als bron voor de generering van willekeurige nummers. Hiermee kunt u een bepaalde \"willekeurige\" operatie herhalen."
 
-#: ../libgimpwidgets/gimpwidgets.c:1007
+#: ../libgimpwidgets/gimpwidgets.c:1009
 msgid "_New Seed"
 msgstr "_Nieuw brongetal"
 
-#: ../libgimpwidgets/gimpwidgets.c:1020
+#: ../libgimpwidgets/gimpwidgets.c:1022
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"Gebruik een gegenereerd willekeurig nummer als bron voor de generering van "
-"een volgend willekeurig nummer."
+msgstr "Gebruik een gegenereerd willekeurig nummer als bron voor de generering van een volgend willekeurig nummer."
 
 # Husselen zou misschien kunnen, maar willekeurig maken is wel goed zo.
-#: ../libgimpwidgets/gimpwidgets.c:1024
+#: ../libgimpwidgets/gimpwidgets.c:1026
 msgid "_Randomize"
 msgstr "_Willekeurig maken"
 
+#: ../libgimpwidgets/gimpwidgetsenums.c:25
+msgid "Portrait"
+msgstr "Staand"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:26
+msgid "Landscape"
+msgstr "Liggend"
+
 # Deze letters moeten eigenlijk overeenkomen met de Nederlandse vertaling
 # Hue-kleurtoon
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "_H"
 msgstr "_K"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "Hue"
 msgstr "Kleurtoon"
 
 # Saturation-verzadiging
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "_S"
 msgstr "_V"
 
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
+msgid "Saturation"
+msgstr "Verzadiging"
+
 # Value-waarde
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "_V"
 msgstr "_W"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "Value"
 msgstr "Waarde"
 
 # Red-rood
-#: ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "_R"
 msgstr "_R"
 
 # Green-groen
-#: ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "_G"
 msgstr "_G"
 
 # Blue-blauw
-#: ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "_B"
 msgstr "_B"
 
 # Alpha-alfa
-#: ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "_A"
 msgstr "_A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpwidgets/gimpwidgetsenums.c:157
 msgid "Layers"
 msgstr "Lagen"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpwidgets/gimpwidgetsenums.c:158
 msgid "Images"
 msgstr "Afbeeldingen"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:186
+#: ../libgimpwidgets/gimpwidgetsenums.c:217
 msgid "Zoom in"
 msgstr "Inzoomen"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:187
+#: ../libgimpwidgets/gimpwidgetsenums.c:218
 msgid "Zoom out"
 msgstr "Uitzoomen"
 
 # Is 'Protanopia' called the same in Dutch?
+# 29/02/08: zie http://nl.wikipedia.org/wiki/Kleurenblindheid#Kleurenzien_en_mogelijke_afwijkingen voor de correcte term ("Protanopie")
 #: ../modules/cdisplay_colorblind.c:67
-msgid "Protanopia (insensitivity to red"
-msgstr "Protanopia (ongevoelig voor rood)"
+msgid "Protanopia (insensitivity to red)"
+msgstr "Protanopie (ongevoelig voor rood)"
 
 #: ../modules/cdisplay_colorblind.c:69
 msgid "Deuteranopia (insensitivity to green)"
-msgstr "Deuteranopia (ongevoelig voor groen)"
+msgstr "Deuteranopie (ongevoelig voor groen)"
 
-# Is 'Tritanopia' called the same in Dutch?
 #: ../modules/cdisplay_colorblind.c:71
 msgid "Tritanopia (insensitivity to blue)"
-msgstr "Tritanopia (ongevoelig voor blauw)"
+msgstr "Tritanopie (ongevoelig voor blauw)"
 
 #: ../modules/cdisplay_colorblind.c:200
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Simulatie beperkt kleurzicht (Brettel-Vienot-Mollon-algoritme)"
 
-# kleurblindheid
-#: ../modules/cdisplay_colorblind.c:290
+#: ../modules/cdisplay_colorblind.c:292
 msgid "Color Deficient Vision"
-msgstr "Beperkt kleurzicht"
+msgstr "Kleurenblindheid"
 
-# Kleur_deficientietype:
-#: ../modules/cdisplay_colorblind.c:503
+#: ../modules/cdisplay_colorblind.c:507
 msgid "Color _deficiency type:"
-msgstr "_Type beperkt kleurzicht:"
+msgstr "_Type kleurenblindheid:"
 
 #: ../modules/cdisplay_gamma.c:91
 msgid "Gamma color display filter"
@@ -1276,7 +1376,7 @@ msgstr "Gammakleurweergavefilter"
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/cdisplay_gamma.c:251
+#: ../modules/cdisplay_gamma.c:253
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
@@ -1289,7 +1389,7 @@ msgid "Contrast"
 msgstr "Contrast"
 
 # omwentelingen
-#: ../modules/cdisplay_highcontrast.c:251
+#: ../modules/cdisplay_highcontrast.c:253
 msgid "Contrast c_ycles:"
 msgstr "Contrast-c_ycles:"
 
@@ -1297,60 +1397,63 @@ msgstr "Contrast-c_ycles:"
 msgid "Color management display filter using ICC color profiles"
 msgstr "Kleurbeheer weergavefilter met ICC-kleurpofielen"
 
-#: ../modules/cdisplay_lcms.c:173
+#: ../modules/cdisplay_lcms.c:166
 msgid "Color Management"
 msgstr "Kleurbeheer"
 
-#: ../modules/cdisplay_lcms.c:288
-msgid ""
-"This filter takes its configuration from the Color Management section in the "
-"Preferences dialog."
-msgstr ""
-"Dit filter haalt zijn configuratie uit de sectie Kleurbeheer in het "
-"dialoogvenster Voorkeuren."
+#: ../modules/cdisplay_lcms.c:235
+msgid "This filter takes its configuration from the Color Management section in the Preferences dialog."
+msgstr "Dit filter haalt zijn configuratie uit de sectie Kleurbeheer in het dialoogvenster Voorkeuren."
 
-#: ../modules/cdisplay_lcms.c:311
+#: ../modules/cdisplay_lcms.c:249
 msgid "Mode of operation:"
 msgstr "Werkmethode:"
 
-#: ../modules/cdisplay_lcms.c:322
-msgid "RGB workspace profile:"
-msgstr "RGB kleurprofiel:"
+#: ../modules/cdisplay_lcms.c:256
+msgid "Image profile:"
+msgstr "Afbeeldingsprofiel:"
 
-#: ../modules/cdisplay_lcms.c:332
+#: ../modules/cdisplay_lcms.c:263
 msgid "Monitor profile:"
 msgstr "Beeldschermprofiel:"
 
 # Simulatie afdrukken
-#: ../modules/cdisplay_lcms.c:342
+#: ../modules/cdisplay_lcms.c:270
 msgid "Print simulation profile:"
 msgstr "Afdruksimulatieprofiel:"
 
-#: ../modules/cdisplay_proof.c:127
+#: ../modules/cdisplay_proof.c:103
 msgid "Color proof filter using ICC color profile"
 msgstr "Kleurcontrolefilter met ICC-kleurpofiel"
 
-#: ../modules/cdisplay_proof.c:221
+#: ../modules/cdisplay_proof.c:180
 msgid "Color Proof"
 msgstr "Kleurcontrole"
 
-# Feitelijk
-#: ../modules/cdisplay_proof.c:346
-msgid "_Intent:"
-msgstr "_Type:"
-
-# kiezen / uitkiezen 
-#: ../modules/cdisplay_proof.c:350
+#: ../modules/cdisplay_proof.c:340
 msgid "Choose an ICC Color Profile"
-msgstr "Een ICC-kleurprofiel uitkiezen"
+msgstr "Kies een ICC-kleurprofiel"
 
-#: ../modules/cdisplay_proof.c:353
+#: ../modules/cdisplay_proof.c:367
+msgid "All files (*.*)"
+msgstr "Alle bestanden (*.*)"
+
+#: ../modules/cdisplay_proof.c:372
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "ICC kleurprofielen (*.icc, *.icm)"
+
+#: ../modules/cdisplay_proof.c:430
 msgid "_Profile:"
 msgstr "_Profiel:"
 
+# 29/02/08: het gaat hier om de zgn. "rendering intent" (hoe moeten kleuren van één profiel omgezet worden naar een ander profiel?) Mogelijke Nederlandse vertalingen die ik gevonden heb zijn "weergavestrategie", "beeldomzettingsplan", "renderintentie" (dat laatste bv. bij Adobe).
+#: ../modules/cdisplay_proof.c:436
+msgid "_Intent:"
+msgstr "Render_intentie:"
+
 # Zwart compensatie?
 # Zwartpunt compensatie
-#: ../modules/cdisplay_proof.c:358
+#: ../modules/cdisplay_proof.c:441
 msgid "_Black Point Compensation"
 msgstr "Zwartpuntcompensatie"
 
@@ -1359,42 +1462,51 @@ msgid "CMYK color selector"
 msgstr "CMYK-kleurkiezer"
 
 #: ../modules/colorsel_cmyk.c:130
+#: ../modules/colorsel_cmyk_lcms.c:154
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
 #: ../modules/colorsel_cmyk.c:148
+#: ../modules/colorsel_cmyk_lcms.c:171
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
 #: ../modules/colorsel_cmyk.c:150
+#: ../modules/colorsel_cmyk_lcms.c:173
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
 #: ../modules/colorsel_cmyk.c:152
+#: ../modules/colorsel_cmyk_lcms.c:175
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
 #: ../modules/colorsel_cmyk.c:154
+#: ../modules/colorsel_cmyk_lcms.c:177
 msgid "_K"
 msgstr "_K"
 
 #: ../modules/colorsel_cmyk.c:158
+#: ../modules/colorsel_cmyk_lcms.c:181
 msgid "Cyan"
 msgstr "Cyaan"
 
 #: ../modules/colorsel_cmyk.c:159
+#: ../modules/colorsel_cmyk_lcms.c:182
 msgid "Magenta"
 msgstr "Magenta"
 
 #: ../modules/colorsel_cmyk.c:160
+#: ../modules/colorsel_cmyk_lcms.c:183
 msgid "Yellow"
 msgstr "Geel"
 
 #: ../modules/colorsel_cmyk.c:161
+#: ../modules/colorsel_cmyk_lcms.c:184
 msgid "Black"
 msgstr "Zwart"
 
@@ -1407,6 +1519,19 @@ msgstr "Zwart-_onttrekking:"
 msgid "The percentage of black to pull out of the colored inks."
 msgstr "Het percentage zwart dat uit de gekleurde inkt wordt onttrokken."
 
+#: ../modules/colorsel_cmyk_lcms.c:91
+msgid "CMYK color selector (using color profile)"
+msgstr "CMYK kleurenkiezer (met gebruik van kleurprofiel)"
+
+#: ../modules/colorsel_cmyk_lcms.c:397
+msgid "Profile: (none)"
+msgstr "Profiel: (geen)"
+
+#: ../modules/colorsel_cmyk_lcms.c:410
+#, c-format
+msgid "Profile: %s"
+msgstr "Profiel: %s"
+
 # Driehoekige kleurkiezer in schilderstijl
 #: ../modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
@@ -1416,35 +1541,373 @@ msgstr "Painterachtige driehoekige kleurkiezer"
 msgid "Triangle"
 msgstr "Driehoek"
 
-#: ../modules/colorsel_water.c:88
+#: ../modules/colorsel_water.c:84
 msgid "Watercolor style color selector"
 msgstr "Waterverfachtige kleurkiezer"
 
-#: ../modules/colorsel_water.c:154
+#: ../modules/colorsel_water.c:150
 msgid "Watercolor"
 msgstr "Waterverf"
 
-#: ../modules/colorsel_water.c:220
+#: ../modules/colorsel_water.c:213
 msgid "Pressure"
 msgstr "Druk"
 
-#~ msgid "Searching - please wait"
-#~ msgstr "Bezig met zoeken - een ogenblik geduld"
+#: ../modules/controller_linux_input.c:58
+msgid "Button 0"
+msgstr "Knop 0"
 
-#~ msgid "Could not open '%s' for reading: %s"
-#~ msgstr "Kon '%s' niet openen voor lezen: %s"
+#: ../modules/controller_linux_input.c:59
+msgid "Button 1"
+msgstr "Knop 1"
 
-#~ msgid "Loading module: '%s'\n"
-#~ msgstr "Module '%s' wordt geladen\n"
+#: ../modules/controller_linux_input.c:60
+msgid "Button 2"
+msgstr "Knop 2"
 
-#~ msgid "Skipping module: '%s'\n"
-#~ msgstr "Module '%s' wordt overgeslagen\n"
+#: ../modules/controller_linux_input.c:61
+msgid "Button 3"
+msgstr "Knop 3"
 
-#~ msgid "Sets the color profile used when printing."
-#~ msgstr "Stelt het kleurprofiel is dat gebruikt wordt bij afdrukken."
+#: ../modules/controller_linux_input.c:62
+msgid "Button 4"
+msgstr "Knop 4"
 
-#~ msgid "Forward (traditional)"
-#~ msgstr "Voorwaarts (traditioneel)"
+#: ../modules/controller_linux_input.c:63
+msgid "Button 5"
+msgstr "Knop 5"
 
-#~ msgid "Backward (corrective)"
-#~ msgstr "Achterwaarts (corrigerend)"
+#: ../modules/controller_linux_input.c:64
+msgid "Button 6"
+msgstr "Knop 6"
+
+#: ../modules/controller_linux_input.c:65
+msgid "Button 7"
+msgstr "Knop 7"
+
+#: ../modules/controller_linux_input.c:66
+msgid "Button 8"
+msgstr "Knop 8"
+
+#: ../modules/controller_linux_input.c:67
+msgid "Button 9"
+msgstr "Knop 9"
+
+#: ../modules/controller_linux_input.c:68
+msgid "Button Mouse"
+msgstr "Muisknop"
+
+#: ../modules/controller_linux_input.c:69
+msgid "Button Left"
+msgstr "Linkerknop"
+
+#: ../modules/controller_linux_input.c:70
+msgid "Button Right"
+msgstr "Rechterknop"
+
+#: ../modules/controller_linux_input.c:71
+msgid "Button Middle"
+msgstr "Middelste knop"
+
+#: ../modules/controller_linux_input.c:72
+msgid "Button Side"
+msgstr "Zijknop"
+
+#: ../modules/controller_linux_input.c:73
+msgid "Button Extra"
+msgstr "Extra knop"
+
+# vooruit/heen/voorwaarts
+#: ../modules/controller_linux_input.c:74
+msgid "Button Forward"
+msgstr "Knop voorwaarts"
+
+#: ../modules/controller_linux_input.c:75
+msgid "Button Back"
+msgstr "Terugknop"
+
+#: ../modules/controller_linux_input.c:76
+msgid "Button Task"
+msgstr "Taakknop"
+
+#: ../modules/controller_linux_input.c:78
+msgid "Button Wheel"
+msgstr "Wielknop"
+
+#: ../modules/controller_linux_input.c:81
+msgid "Button Gear Down"
+msgstr "Omhoogknop"
+
+#: ../modules/controller_linux_input.c:84
+msgid "Button Gear Up"
+msgstr "Omlaagknop"
+
+#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_dx_dinput.c:469
+msgid "X Move Left"
+msgstr "X naar links"
+
+#: ../modules/controller_linux_input.c:91
+#: ../modules/controller_dx_dinput.c:472
+msgid "X Move Right"
+msgstr "X naar rechts"
+
+# vooruit/heen/voorwaarts
+#: ../modules/controller_linux_input.c:92
+msgid "Y Move Forward"
+msgstr "Y voorwaarts"
+
+#: ../modules/controller_linux_input.c:93
+msgid "Y Move Back"
+msgstr "Y achterwaarts"
+
+#: ../modules/controller_linux_input.c:94
+#: ../modules/controller_dx_dinput.c:487
+msgid "Z Move Up"
+msgstr "Z omhoog"
+
+#: ../modules/controller_linux_input.c:95
+#: ../modules/controller_dx_dinput.c:490
+msgid "Z Move Down"
+msgstr "Z omlaag"
+
+#: ../modules/controller_linux_input.c:97
+msgid "X Axis Tilt Forward"
+msgstr "X-as naar voor hellen"
+
+#: ../modules/controller_linux_input.c:98
+msgid "X Axis Tilt Back"
+msgstr "X-as naar achter hellen"
+
+#: ../modules/controller_linux_input.c:99
+#: ../modules/controller_dx_dinput.c:505
+msgid "Y Axis Tilt Right"
+msgstr "Y-as naar rechts hellen"
+
+#: ../modules/controller_linux_input.c:100
+#: ../modules/controller_dx_dinput.c:508
+msgid "Y Axis Tilt Left"
+msgstr "Y-as naar links hellen"
+
+#: ../modules/controller_linux_input.c:101
+#: ../modules/controller_dx_dinput.c:514
+msgid "Z Axis Turn Left"
+msgstr "Z-as naar links draaien"
+
+#: ../modules/controller_linux_input.c:102
+#: ../modules/controller_dx_dinput.c:517
+msgid "Z Axis Turn Right"
+msgstr "Z-as naar rechts draaien"
+
+#: ../modules/controller_linux_input.c:104
+msgid "Horiz. Wheel Turn Back"
+msgstr "Horiz. wiel terugdraaien"
+
+#: ../modules/controller_linux_input.c:105
+msgid "Horiz. Wheel Turn Forward"
+msgstr "Horiz. wiel verderdraaien"
+
+#: ../modules/controller_linux_input.c:106
+msgid "Dial Turn Left"
+msgstr "Draaiknop links draaien"
+
+#: ../modules/controller_linux_input.c:107
+msgid "Dial Turn Right"
+msgstr "Draaiknop rechts draaien"
+
+#: ../modules/controller_linux_input.c:108
+msgid "Wheel Turn Left"
+msgstr "Wiel links draaien"
+
+#: ../modules/controller_linux_input.c:109
+msgid "Wheel Turn Right"
+msgstr "Wiel rechts draaien"
+
+#: ../modules/controller_linux_input.c:179
+msgid "Linux input event controller"
+msgstr "Linux invoeracties invoerapparaat"
+
+#: ../modules/controller_linux_input.c:249
+#: ../modules/controller_dx_dinput.c:227
+#: ../modules/controller_midi.c:245
+msgid "Device:"
+msgstr "Apparaat:"
+
+#: ../modules/controller_linux_input.c:250
+msgid "The name of the device to read Linux Input events from."
+msgstr "De naam van het apparaat waarvan Linux invoeracties moeten worden gelezen."
+
+#: ../modules/controller_linux_input.c:261
+msgid "Linux Input"
+msgstr "Linux invoer"
+
+#: ../modules/controller_linux_input.c:539
+msgid "Linux Input Events"
+msgstr "Linux invoeracties"
+
+#: ../modules/controller_linux_input.c:551
+#: ../modules/controller_dx_dinput.c:1122
+#: ../modules/controller_midi.c:533
+msgid "No device configured"
+msgstr "Geen apparaat geconfigureerd"
+
+#: ../modules/controller_linux_input.c:577
+#: ../modules/controller_midi.c:482
+#: ../modules/controller_midi.c:508
+#, c-format
+msgid "Reading from %s"
+msgstr "%s wordt gelezen"
+
+#: ../modules/controller_linux_input.c:595
+#: ../modules/controller_linux_input.c:649
+#: ../modules/controller_midi.c:464
+#: ../modules/controller_midi.c:525
+#: ../modules/controller_midi.c:596
+#, c-format
+msgid "Device not available: %s"
+msgstr "Apparaat is niet beschikbaar: %s"
+
+#: ../modules/controller_linux_input.c:614
+#: ../modules/controller_dx_dinput.c:1147
+msgid "Device not available"
+msgstr "Apparaat is niet beschikbaar"
+
+#: ../modules/controller_linux_input.c:658
+#: ../modules/controller_midi.c:605
+msgid "End of file"
+msgstr "Einde van het bestand"
+
+#: ../modules/controller_dx_dinput.c:157
+msgid "DirectX DirectInput event controller"
+msgstr "DirectX DirectInput-actie invoerapparaat"
+
+#: ../modules/controller_dx_dinput.c:228
+msgid "The device to read DirectInput events from."
+msgstr "Het apparaat waarvan DirectInput-acties moeten worden gelezen."
+
+#: ../modules/controller_dx_dinput.c:237
+msgid "DirectX DirectInput"
+msgstr "DirectX DirectInput"
+
+#: ../modules/controller_dx_dinput.c:446
+#, c-format
+msgid "Button %d"
+msgstr "Knop %d"
+
+#: ../modules/controller_dx_dinput.c:449
+#, c-format
+msgid "Button %d Press"
+msgstr "Knop %d indrukken"
+
+#: ../modules/controller_dx_dinput.c:452
+#, c-format
+msgid "Button %d Release"
+msgstr "Knop %d loslaten"
+
+#: ../modules/controller_dx_dinput.c:478
+msgid "Y Move Away"
+msgstr "Y weg"
+
+#: ../modules/controller_dx_dinput.c:481
+msgid "Y Move Near"
+msgstr "Y dichterbij"
+
+#: ../modules/controller_dx_dinput.c:496
+msgid "X Axis Tilt Away"
+msgstr "X-as helt verder"
+
+#: ../modules/controller_dx_dinput.c:499
+msgid "X Axis Tilt Near"
+msgstr "X-as helt dichterbij"
+
+#: ../modules/controller_dx_dinput.c:528
+#, c-format
+msgid "Slider %d Increase"
+msgstr "Schuifregelaar %d toenemen"
+
+#: ../modules/controller_dx_dinput.c:531
+#, c-format
+msgid "Slider %d Decrease"
+msgstr "Schuifregelaar %d afnemen"
+
+#: ../modules/controller_dx_dinput.c:541
+#, c-format
+msgid "POV %d X View"
+msgstr "POV %d X-zicht"
+
+#: ../modules/controller_dx_dinput.c:544
+#, c-format
+msgid "POV %d Y View"
+msgstr "POV %d Y-zicht"
+
+#: ../modules/controller_dx_dinput.c:547
+#, c-format
+msgid "POV %d Return"
+msgstr "POV %d terugkeren"
+
+#: ../modules/controller_dx_dinput.c:1111
+msgid "DirectInput Events"
+msgstr "DirectInput-acties"
+
+#: ../modules/controller_midi.c:167
+msgid "MIDI event controller"
+msgstr "MIDI-actie invoerapparaat"
+
+#: ../modules/controller_midi.c:236
+msgid "The name of the device to read MIDI events from."
+msgstr "De naam van het apparaat waarvan MIDI-acties moeten worden gelezen."
+
+#: ../modules/controller_midi.c:239
+msgid "Enter 'alsa' to use the ALSA sequencer."
+msgstr "Voer 'alsa' in om de ALSA sequencer te gebruiken."
+
+#: ../modules/controller_midi.c:254
+msgid "Channel:"
+msgstr "Kanaal:"
+
+#: ../modules/controller_midi.c:255
+msgid "The MIDI channel to read events from. Set to -1 for reading from all MIDI channels."
+msgstr "Het MIDI-kanaal waarvan acties moeten worden gelezen. Stel dit in op -1 om van alle MIDI-kanalen te lezen."
+
+#: ../modules/controller_midi.c:259
+msgid "MIDI"
+msgstr "MIDI"
+
+#: ../modules/controller_midi.c:383
+#, c-format
+msgid "Note %02x on"
+msgstr "Noot %02x aan"
+
+#: ../modules/controller_midi.c:386
+#, c-format
+msgid "Note %02x off"
+msgstr "Noot %02x uit"
+
+#: ../modules/controller_midi.c:389
+#, c-format
+msgid "Controller %03d"
+msgstr "Controller %03d"
+
+#: ../modules/controller_midi.c:436
+msgid "MIDI Events"
+msgstr "MIDI-acties"
+
+#: ../modules/controller_midi.c:454
+msgid "GIMP"
+msgstr "GIMP"
+
+#: ../modules/controller_midi.c:456
+msgid "GIMP MIDI Input Controller"
+msgstr "GIMP MIDI invoercontroller"
+
+#~ msgid "Image source"
+#~ msgstr "Afbeeldingsbron"
+#~ msgid "Pattern source"
+#~ msgstr "Patroonbron"
+#~ msgid "Linear"
+#~ msgstr "Lineair"
+#~ msgid "None (Fastest)"
+#~ msgstr "Geen (snelste)"
+#~ msgid "Lanczos (Best)"
+#~ msgstr "Lanczos (beste)"
+
