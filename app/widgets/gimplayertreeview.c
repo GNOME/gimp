@@ -280,12 +280,12 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   /*  Opacity scale  */
 
   view->opacity_adjustment =
-    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (view->options_box), 0, 1,
-                                          _("Opacity:"), -1, -1,
-                                          100.0, 0.0, 100.0, 1.0, 10.0, 1,
-                                          TRUE, 0.0, 0.0,
-                                          NULL,
-                                          GIMP_HELP_LAYER_DIALOG_OPACITY_SCALE));
+    GTK_ADJUSTMENT (gimp_scale_control_new (GTK_TABLE (view->options_box), 0, 1,
+                                            _("Opacity:"), -1, -1,
+                                            100.0, 0.0, 100.0, 1.0, 10.0, 0,
+                                            TRUE, 0.0, 0.0,
+                                            NULL,
+                                            GIMP_HELP_LAYER_DIALOG_OPACITY_SCALE));
 
   g_signal_connect (view->opacity_adjustment, "value-changed",
                     G_CALLBACK (gimp_layer_tree_view_opacity_scale_changed),
@@ -294,9 +294,10 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   /*  Lock alpha toggle  */
 
   hbox = gtk_hbox_new (FALSE, 6);
+  gtk_widget_show (hbox);
 
   view->lock_alpha_toggle = gtk_check_button_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), view->lock_alpha_toggle, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), view->lock_alpha_toggle, FALSE, FALSE, 5);
   gtk_widget_show (view->lock_alpha_toggle);
 
   g_signal_connect (view->lock_alpha_toggle, "toggled",
@@ -314,9 +315,11 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   gtk_container_add (GTK_CONTAINER (view->lock_alpha_toggle), image);
   gtk_widget_show (image);
 
-  gimp_table_attach_aligned (GTK_TABLE (view->options_box), 0, 2,
-                             _("Lock:"), 0.0, 0.5,
-                             hbox, 2, FALSE);
+  gtk_table_attach (GTK_TABLE (view->options_box), hbox, 2, 3, 1, 2,
+                    GTK_FILL, GTK_FILL, 0, 0);
+/*   gimp_table_attach_aligned (GTK_TABLE (view->options_box), 0, 2, */
+/*                              _("Lock:"), 0.0, 0.5, */
+/*                              hbox, 2, FALSE); */
 
   gtk_widget_set_sensitive (view->options_box, FALSE);
 
