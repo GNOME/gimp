@@ -74,7 +74,6 @@
         (gimp-context-set-pattern pattern-text)
         (gimp-edit-bucket-fill logo-layer
                                PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
-        (gimp-context-set-pattern old-patterns)
       )
     )
 
@@ -106,7 +105,6 @@
         (gimp-edit-bucket-fill grow-me
                                PATTERN-BUCKET-FILL NORMAL-MODE 100
                                0 FALSE 0 0)
-        (gimp-context-set-pattern old-patterns)
       )
     )
 
@@ -124,7 +122,10 @@
 
     (gimp-selection-none img)
 
-    (plug-in-bump-map RUN-NONINTERACTIVE img grow-me logo-layer
+    (plug-in-bump-map (if (= noninteractive TRUE)
+			  RUN-NONINTERACTIVE
+			  RUN-INTERACTIVE)
+		      img grow-me logo-layer
                       110.0 45.0 3 0 0 0 0 TRUE FALSE 0)
     (gimp-layer-set-mode logo-layer SCREEN-MODE)
 
@@ -134,7 +135,6 @@
         (gimp-context-set-pattern pattern-overlay)
         (gimp-edit-bucket-fill grow-me PATTERN-BUCKET-FILL
                                OVERLAY-MODE 100 0 FALSE 0 0)
-        (gimp-context-set-pattern old-patterns)
         (gimp-selection-none img)
       )
     )

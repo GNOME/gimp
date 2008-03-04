@@ -21,11 +21,11 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <glib-object.h>
+#include <gegl.h>
 
 #include "core/core-types.h"
 
-#include "base/base.h"
+#include "base/tile-swap.h"
 
 #include "core/gimp.h"
 #include "core/gimpparamspecs.h"
@@ -41,8 +41,7 @@
 #define BATCH_DEFAULT_EVAL_PROC   "plug-in-script-fu-eval"
 
 
-static gboolean  batch_exit_after_callback (Gimp          *gimp,
-                                            gboolean       kill_it);
+static gboolean  batch_exit_after_callback (Gimp          *gimp);
 static void      batch_run_cmd             (Gimp          *gimp,
                                             const gchar   *proc_name,
                                             GimpProcedure *procedure,
@@ -118,15 +117,23 @@ batch_run (Gimp         *gimp,
 }
 
 
+/*
+ * The purpose of this handler is to exit GIMP cleanly when the batch
+ * procedure calls the gimp-exit procedure. Without this callback, the
+ * message "batch command experienced an execution error" would appear
+ * and gimp would hang forever.
+ */
 static gboolean
-batch_exit_after_callback (Gimp     *gimp,
-                           gboolean  kill_it)
+batch_exit_after_callback (Gimp *gimp)
 {
   if (gimp->be_verbose)
-    g_print ("EXIT: %s\n", G_STRLOC);
+    g_print ("EXIT: %s\n", G_STRFUNC);
 
-  /*  make sure that the swap file is removed before we quit */
-  base_exit ();
+  gegl_exit ();
+
+  /*  make sure that the swap files are removed before we quit */
+  tile_swap_exit ();
+
   exit (EXIT_SUCCESS);
 
   return TRUE;

@@ -1,3 +1,31 @@
+2008-03-03  Vincent van Adrighem  <adrighem@gnome.org>
+
+	* nl.po: Translation updated by Filip Vervloesem.
+
+2008-02-29  Danilo Šegan  <danilo@gnome.org>
+
+	* sr.po, sr@Latn.po: Updated Serbian translations.
+
+2008-02-28  Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
+
+	* ru.po: Updated Russian translation.
+
+2008-02-26  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added app/version.h.
+
+2008-02-20  Ilkka Tuohela <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2008-02-18  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* nb.po: Updated Norwegian bokmål translation.
+
+2008-02-18  Yanko Kaneti  <yaneti@declera.com>
+
+        * bg.po: Fixed plural.
+
 2008-02-12  Stéphane Raimbault  <stephane.raimbault@gmail.com>
 
 	* fr.po: Fixed French translation by Julien Hardelin and Stéphane

@@ -1,4 +1,4 @@
-.TH GIMP 1 "Januar 23 2007" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMP 1 "February 23 2008" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 
 .SH NAME
 gimp - an image manipulation and paint program.
@@ -61,7 +61,8 @@ Show all command\-line options.
 Show GTK+ command\-line options.
 .TP 8
 .B \-v, \-\-version
-Output version information and exit.
+Output version information and exit. When combined with the \-\-verbose
+option, version information about libraries used by GIMP is shown as well.
 .TP 8
 .B \-\-license
 Output license information and exit.

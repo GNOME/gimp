@@ -194,12 +194,27 @@ Global data follows no strict rules.
         for use as a parasite.
 
 "decompose-data" (IMAGE, NONPERSISTENT) 
-        Starting with GIMP 2.3, this is added to images produced by
+        Starting with GIMP 2.4, this is added to images produced by
         the decompose plug-in, and contains information necessary to
         recompose the original source RGB layer from the resulting
         grayscale layers.  It is ascii; a typical example would be
         "source=2 type=RGBA 4 5 6 7".  This means that layer 2 was
         decomposed in RGBA mode, giving rise to layers 4, 5, 6, and 7.
+
+"print-settings" (IMAGE, NONPERSISTENT) 
+        This parasite is stored by the Print plug-in and holds settings
+        done in the Print dialog. It also has a version field so that
+        changes to the parasite can be done. GIMP 2.4 used version 0.3.
+        The format is GKeyFile. A lot of the contents are identical to
+        what is stored in ~/.gimp-2.x/print-settings but the parasite
+        has some additional image-related fields.
+
+"print-page-setup" (IMAGE, NONPERSISTENT) 
+        This parasite is stored by the Print plug-in and holds settings
+        done in the Page Setup dialog. The format is GKeyFile as created
+        from GtkPageSetup. The content is identical to what is stored in
+	~/.gimp-2.x/print-page-setup.
+
 
 ------------------------------------------------------------------
 *** KNOWN LAYER/DRAWABLE PARASITES:

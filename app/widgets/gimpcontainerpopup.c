@@ -123,7 +123,11 @@ gimp_container_popup_class_init (GimpContainerPopupClass *klass)
                                 "confirm", 0);
   gtk_binding_entry_add_signal (binding_set, GDK_KP_Enter, 0,
                                 "confirm", 0);
+  gtk_binding_entry_add_signal (binding_set, GDK_ISO_Enter, 0,
+                                "confirm", 0);
   gtk_binding_entry_add_signal (binding_set, GDK_space, 0,
+                                "confirm", 0);
+  gtk_binding_entry_add_signal (binding_set, GDK_KP_Space, 0,
                                 "confirm", 0);
 }
 

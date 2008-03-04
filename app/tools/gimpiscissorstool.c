@@ -882,23 +882,23 @@ static void
 iscissors_draw_curve (GimpDrawTool *draw_tool,
                       ICurve       *curve)
 {
-  gdouble  *points;
-  gpointer *point;
-  gint      i, len;
+  GimpVector2 *points;
+  gpointer    *point;
+  gint         i, len;
 
   if (! curve->points)
     return;
 
   len = curve->points->len;
 
-  points = g_new (gdouble, 2 * len);
+  points = g_new (GimpVector2, len);
 
   for (i = 0, point = curve->points->pdata; i < len; i++, point++)
     {
       guint32 coords = GPOINTER_TO_INT (*point);
 
-      points[i * 2]     = (coords & 0x0000ffff);
-      points[i * 2 + 1] = (coords >> 16);
+      points[i].x = (coords & 0x0000ffff);
+      points[i].y = (coords >> 16);
     }
 
   gimp_draw_tool_draw_lines (draw_tool, points, len, FALSE, FALSE);
@@ -1060,8 +1060,9 @@ gimp_iscissors_tool_key_press (GimpTool    *tool,
 
   switch (kevent->keyval)
     {
-    case GDK_KP_Enter:
     case GDK_Return:
+    case GDK_KP_Enter:
+    case GDK_ISO_Enter:
       if (iscissors->connected && iscissors->mask)
         {
           gimp_iscissors_tool_apply (iscissors, display);

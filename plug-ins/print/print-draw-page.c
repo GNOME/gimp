@@ -27,139 +27,179 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define EPSILON 0.0001
+static cairo_surface_t * print_cairo_surface_from_drawable (gint32 drawable_ID);
 
-#define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
-#define INT_BLEND(a,b,alpha,tmp)  (INT_MULT((a) - (b), alpha, tmp) + (b))
-
-
-static void  convert_from_rgb  (guchar *pixels,
-                                gint    width);
-static void  convert_from_rgba (guchar *pixels,
-                                gint    width);
+static inline void       convert_from_gray  (const guchar *src,
+                                             guchar       *dest,
+                                             gint          pixels);
+static inline void       convert_from_graya (const guchar *src,
+                                             guchar       *dest,
+                                             gint          pixels);
+static inline void       convert_from_rgb   (const guchar *src,
+                                             guchar       *dest,
+                                             gint          pixels);
+static inline void       convert_from_rgba  (const guchar *src,
+                                             guchar       *dest,
+                                             gint          pixels);
 
 
 gboolean
-draw_page_cairo (GtkPrintContext *context,
+print_draw_page (GtkPrintContext *context,
                  PrintData       *data)
 {
-  GimpDrawable    *drawable = gimp_drawable_get (data->drawable_id);
-  GimpPixelRgn     region;
   cairo_t         *cr;
   cairo_surface_t *surface;
-  guchar          *pixels;
   gdouble          cr_width;
   gdouble          cr_height;
   gdouble          cr_dpi_x;
   gdouble          cr_dpi_y;
-  gint             width;
-  gint             height;
-  gint             stride;
-  gint             y;
-  gdouble          scale_x;
-  gdouble          scale_y;
-
-  width  = drawable->width;
-  height = drawable->height;
-
-  gimp_tile_cache_ntiles (width / gimp_tile_width () + 1);
 
   cr = gtk_print_context_get_cairo_context (context);
+
+  surface = print_cairo_surface_from_drawable (data->drawable_id);
 
   cr_width  = gtk_print_context_get_width  (context);
   cr_height = gtk_print_context_get_height (context);
   cr_dpi_x  = gtk_print_context_get_dpi_x  (context);
   cr_dpi_y  = gtk_print_context_get_dpi_y  (context);
 
-  scale_x = cr_dpi_x / data->xres;
-  scale_y = cr_dpi_y / data->yres;
-
   cairo_translate (cr,
                    data->offset_x / cr_dpi_x * 72.0,
                    data->offset_y / cr_dpi_y * 72.0);
-  cairo_scale (cr, scale_x, scale_y);
+  cairo_scale (cr,
+               cr_dpi_x / data->xres, cr_dpi_y / data->yres);
 
-  gimp_pixel_rgn_init (&region, drawable, 0, 0, width, height, FALSE, FALSE);
-
-  surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, width, height);
-
-  pixels = cairo_image_surface_get_data (surface);
-  stride = cairo_image_surface_get_stride (surface);
-
-  for (y = 0; y < height; y++, pixels += stride)
-    {
-      gimp_pixel_rgn_get_row (&region, pixels, 0, y, width);
-
-      switch (drawable->bpp)
-        {
-        case 3:
-          convert_from_rgb (pixels, width);
-          break;
-        case 4:
-          convert_from_rgba (pixels, width);
-          break;
-        }
-
-      if (y % 16 == 0)
-        gimp_progress_update ((gdouble) y / (gdouble) height);
-    }
-
+  cairo_rectangle (cr,
+                   0, 0,
+                   cairo_image_surface_get_width (surface),
+                   cairo_image_surface_get_height (surface));
   cairo_set_source_surface (cr, surface, 0, 0);
-  cairo_rectangle (cr, 0, 0, width, height);
   cairo_fill (cr);
   cairo_surface_destroy (surface);
-
-  gimp_progress_update (1.0);
-
-  gimp_drawable_detach (drawable);
 
   return TRUE;
 }
 
-static void
-convert_from_rgb (guchar *pixels,
-                  gint    width)
+static cairo_surface_t *
+print_cairo_surface_from_drawable (gint32 drawable_ID)
 {
-  guint32 *cairo_data = (guint32 *) pixels;
-  guchar  *p;
-  gint     i;
+  GimpDrawable    *drawable = gimp_drawable_get (drawable_ID);
+  GimpPixelRgn     region;
+  cairo_surface_t *surface;
+  const gint       width    = drawable->width;
+  const gint       height   = drawable->height;
+  guchar          *pixels;
+  gint             stride;
+  guint            count    = 0;
+  guint            done     = 0;
+  gpointer         pr;
 
-  for (i = width - 1, p = pixels + 3 * width - 1; i >= 0; i--)
+  surface = cairo_image_surface_create (gimp_drawable_has_alpha (drawable_ID) ?
+                                        CAIRO_FORMAT_ARGB32 :
+                                        CAIRO_FORMAT_RGB24,
+                                        width, height);
+
+  pixels = cairo_image_surface_get_data (surface);
+  stride = cairo_image_surface_get_stride (surface);
+
+  gimp_pixel_rgn_init (&region, drawable, 0, 0, width, height, FALSE, FALSE);
+
+  for (pr = gimp_pixel_rgns_register (1, &region);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
-      guint32 b = *p--;
-      guint32 g = *p--;
-      guint32 r = *p--;
+      const guchar *src  = region.data;
+      guchar       *dest = pixels + region.y * stride + region.x * 4;
+      gint          y;
 
-      cairo_data[i] = 0xFF000000 | (r << 16) | (g << 8) | b;
+      for (y = 0; y < region.h; y++)
+        {
+          switch (region.bpp)
+            {
+            case 1:
+              convert_from_gray (src, dest, region.w);
+              break;
+
+            case 2:
+              convert_from_graya (src, dest, region.w);
+              break;
+
+            case 3:
+              convert_from_rgb (src, dest, region.w);
+              break;
+
+            case 4:
+              convert_from_rgba (src, dest, region.w);
+              break;
+            }
+
+          src  += region.rowstride;
+          dest += stride;
+        }
+
+      done += region.h * region.w;
+
+      if (count++ % 16 == 0)
+        gimp_progress_update ((gdouble) done / (width * height));
+    }
+
+  gimp_drawable_detach (drawable);
+
+  return surface;
+}
+
+static inline void
+convert_from_gray (const guchar *src,
+                   guchar       *dest,
+                   gint          pixels)
+{
+  while (pixels--)
+    {
+      GIMP_CAIRO_RGB24_SET_PIXEL (dest, src[0], src[0], src[0]);
+
+      src  += 1;
+      dest += 4;
     }
 }
 
-static void
-convert_from_rgba (guchar *pixels,
-                   gint    width)
+static inline void
+convert_from_graya (const guchar *src,
+                    guchar       *dest,
+                    gint          pixels)
 {
-  guint32 *cairo_data = (guint32 *) pixels;
-  guchar  *p;
-  gint     i;
-
-  for (i = 0, p = pixels; i < width; i++)
+  while (pixels--)
     {
-      guint32 r = *p++;
-      guint32 g = *p++;
-      guint32 b = *p++;
-      guint32 a = *p++;
+      GIMP_CAIRO_ARGB32_SET_PIXEL (dest, src[0], src[0], src[0], src[1]);
 
-      if (a != 255)
-        {
-          guint32 tmp;
+      src  += 2;
+      dest += 4;
+    }
+}
 
-          /* composite on a white background */
+static inline void
+convert_from_rgb (const guchar *src,
+                  guchar       *dest,
+                  gint          pixels)
+{
+  while (pixels--)
+    {
+      GIMP_CAIRO_RGB24_SET_PIXEL (dest, src[0], src[1], src[2]);
 
-          r = INT_BLEND (r, 255, a, tmp);
-          g = INT_BLEND (g, 255, a, tmp);
-          b = INT_BLEND (b, 255, a, tmp);
-        }
+      src  += 3;
+      dest += 4;
+    }
+}
 
-      cairo_data[i] = 0xFF000000 | (r << 16) | (g << 8) | b;
+static inline void
+convert_from_rgba (const guchar *src,
+                   guchar       *dest,
+                   gint          pixels)
+{
+  while (pixels--)
+    {
+      GIMP_CAIRO_ARGB32_SET_PIXEL (dest, src[0], src[1], src[2], src[3]);
+
+      src  += 4;
+      dest += 4;
     }
 }

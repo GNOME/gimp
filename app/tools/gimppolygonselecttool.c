@@ -49,7 +49,8 @@
 
 #define DEFAULT_MAX_INC         1024
 
-#define POINT_GRAB_THRESHOLD_SQ 100
+#define HANDLE_SIZE             10
+#define POINT_GRAB_THRESHOLD_SQ SQR(HANDLE_SIZE / 2)
 
 
 struct _GimpPolygonSelectTool
@@ -74,13 +75,14 @@ struct _GimpPolygonSelectTool
   GimpVector2       *points;
 
   /* The number of points used for the actual selection. */
-  gint               num_points;
+  gint               n_points;
 
   gint               max_segs;
 };
 
 
 static void         gimp_polygon_select_tool_finalize       (GObject               *object);
+
 static void         gimp_polygon_select_tool_control        (GimpTool              *tool,
                                                              GimpToolAction         action,
                                                              GimpDisplay           *display);
@@ -88,6 +90,10 @@ static void         gimp_polygon_select_tool_oper_update    (GimpTool           
                                                              GimpCoords            *coords,
                                                              GdkModifierType        state,
                                                              gboolean               proximity,
+                                                             GimpDisplay           *display);
+static void         gimp_polygon_select_tool_cursor_update  (GimpTool              *tool,
+                                                             GimpCoords            *coords,
+                                                             GdkModifierType        state,
                                                              GimpDisplay           *display);
 static void         gimp_polygon_select_tool_button_press   (GimpTool              *tool,
                                                              GimpCoords            *coords,
@@ -124,7 +130,7 @@ static GimpVector2 *gimp_polygon_select_tool_add_point      (GimpPolygonSelectTo
                                                              gdouble                x,
                                                              gdouble                y);
 static void         gimp_polygon_select_tool_remove_last    (GimpPolygonSelectTool *poly_sel_tool);
-static void         gimp_polygon_select_tool_select_closet_point
+static void         gimp_polygon_select_tool_select_closest_point
                                                             (GimpPolygonSelectTool *poly_sel_tool,
                                                              GimpDisplay           *display,
                                                              GimpCoords            *coords);
@@ -135,7 +141,6 @@ static gboolean     gimp_polygon_select_tool_should_close   (GimpPolygonSelectTo
 
 G_DEFINE_TYPE (GimpPolygonSelectTool, gimp_polygon_select_tool,
                GIMP_TYPE_SELECTION_TOOL);
-
 
 #define parent_class gimp_polygon_select_tool_parent_class
 
@@ -168,6 +173,7 @@ gimp_polygon_select_tool_class_init (GimpPolygonSelectToolClass *klass)
 
   tool_class->control        = gimp_polygon_select_tool_control;
   tool_class->oper_update    = gimp_polygon_select_tool_oper_update;
+  tool_class->cursor_update  = gimp_polygon_select_tool_cursor_update;
   tool_class->button_press   = gimp_polygon_select_tool_button_press;
   tool_class->motion         = gimp_polygon_select_tool_motion;
   tool_class->button_release = gimp_polygon_select_tool_button_release;
@@ -186,9 +192,10 @@ gimp_polygon_select_tool_init (GimpPolygonSelectTool *poly_sel_tool)
   gimp_tool_control_set_scroll_lock (tool->control, FALSE);
   gimp_tool_control_set_wants_click (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control,
-                                     GIMP_TOOL_CURSOR_FREE_SELECT);
+                                     GIMP_TOOL_CURSOR_POLYGON_SELECT);
 
   poly_sel_tool->points   = NULL;
+  poly_sel_tool->n_points = 0;
   poly_sel_tool->max_segs = 0;
 }
 
@@ -238,9 +245,9 @@ gimp_polygon_select_tool_oper_update (GimpTool        *tool,
     {
       gboolean hovering_first_point;
 
-      gimp_polygon_select_tool_select_closet_point (poly_sel_tool,
-                                                    display,
-                                                    coords);
+      gimp_polygon_select_tool_select_closest_point (poly_sel_tool,
+                                                     display,
+                                                     coords);
 
       hovering_first_point = gimp_polygon_select_tool_should_close (poly_sel_tool,
                                                                     display,
@@ -248,8 +255,8 @@ gimp_polygon_select_tool_oper_update (GimpTool        *tool,
 
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-      if (poly_sel_tool->num_points == 0 ||
-          (poly_sel_tool->grabbed_point && !hovering_first_point))
+      if (poly_sel_tool->n_points == 0 ||
+          (poly_sel_tool->grabbed_point && ! hovering_first_point))
         {
           poly_sel_tool->show_pending_point = FALSE;
         }
@@ -270,6 +277,28 @@ gimp_polygon_select_tool_oper_update (GimpTool        *tool,
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
+}
+
+static void
+gimp_polygon_select_tool_cursor_update (GimpTool        *tool,
+                                        GimpCoords      *coords,
+                                        GdkModifierType  state,
+                                        GimpDisplay     *display)
+{
+  GimpPolygonSelectTool *poly_sel_tool = GIMP_POLYGON_SELECT_TOOL (tool);
+
+  if (poly_sel_tool->grabbed_point &&
+      ! gimp_polygon_select_tool_should_close (poly_sel_tool, display, coords))
+    {
+      gimp_tool_set_cursor (tool, display,
+                            gimp_tool_control_get_cursor (tool->control),
+                            gimp_tool_control_get_tool_cursor (tool->control),
+                            GIMP_CURSOR_MODIFIER_MOVE);
+
+      return;
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 static void
@@ -342,6 +371,8 @@ gimp_polygon_select_tool_button_release (GimpTool              *tool,
 {
   GimpPolygonSelectTool *poly_sel_tool = GIMP_POLYGON_SELECT_TOOL (tool);
 
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (poly_sel_tool));
+
   switch (release_type)
     {
     case GIMP_BUTTON_RELEASE_CLICK:
@@ -349,8 +380,7 @@ gimp_polygon_select_tool_button_release (GimpTool              *tool,
                                                  display,
                                                  coords))
         {
-          gimp_polygon_select_tool_commit (poly_sel_tool,
-                                           display);
+          gimp_polygon_select_tool_commit (poly_sel_tool, display);
           break;
         }
 
@@ -359,7 +389,8 @@ gimp_polygon_select_tool_button_release (GimpTool              *tool,
     case GIMP_BUTTON_RELEASE_NORMAL:
       if (! poly_sel_tool->grabbed_point)
         {
-          gimp_polygon_select_tool_add_point (poly_sel_tool, coords->x, coords->y);
+          gimp_polygon_select_tool_add_point (poly_sel_tool,
+                                              coords->x, coords->y);
         }
       else
         {
@@ -370,16 +401,10 @@ gimp_polygon_select_tool_button_release (GimpTool              *tool,
       break;
 
     case GIMP_BUTTON_RELEASE_CANCEL:
-      {
-        gimp_draw_tool_pause (GIMP_DRAW_TOOL (poly_sel_tool));
-
-        if (poly_sel_tool->grabbed_point)
-          {
-            *poly_sel_tool->grabbed_point = poly_sel_tool->saved_grabbed_point;
-          }
-
-        gimp_draw_tool_resume (GIMP_DRAW_TOOL (poly_sel_tool));
-      }
+      if (poly_sel_tool->grabbed_point)
+        {
+          *poly_sel_tool->grabbed_point = poly_sel_tool->saved_grabbed_point;
+        }
       break;
 
     case GIMP_BUTTON_RELEASE_NO_MOTION:
@@ -395,6 +420,8 @@ gimp_polygon_select_tool_button_release (GimpTool              *tool,
         }
       break;
     }
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (poly_sel_tool));
 }
 
 static gboolean
@@ -403,32 +430,28 @@ gimp_polygon_select_tool_key_press (GimpTool    *tool,
                                     GimpDisplay *display)
 {
   GimpPolygonSelectTool *poly_sel_tool = GIMP_POLYGON_SELECT_TOOL (tool);
-  gboolean            handled_key   = FALSE;
 
   switch (kevent->keyval)
     {
     case GDK_BackSpace:
       gimp_polygon_select_tool_remove_last (poly_sel_tool);
-      handled_key = TRUE;
-      break;
+      return TRUE;
 
-    case GDK_KP_Enter:
     case GDK_Return:
+    case GDK_KP_Enter:
+    case GDK_ISO_Enter:
       gimp_polygon_select_tool_commit (poly_sel_tool, display);
-      handled_key = TRUE;
-      break;
+      return TRUE;
 
     case GDK_Escape:
       gimp_polygon_select_tool_halt (poly_sel_tool);
-      handled_key = TRUE;
-      break;
+      return TRUE;
 
     default:
-      handled_key = FALSE;
       break;
     }
 
-  return handled_key;
+  return FALSE;
 }
 
 static void
@@ -444,7 +467,7 @@ gimp_polygon_select_tool_start (GimpPolygonSelectTool *poly_sel_tool,
 
   tool->display = display;
 
-  poly_sel_tool->num_points         = 0;
+  poly_sel_tool->n_points           = 0;
   poly_sel_tool->grabbed_point      = NULL;
   poly_sel_tool->show_pending_point = FALSE;
 
@@ -455,7 +478,7 @@ static void
 gimp_polygon_select_tool_commit (GimpPolygonSelectTool *poly_sel_tool,
                                  GimpDisplay           *display)
 {
-  if (poly_sel_tool->num_points >= 3)
+  if (poly_sel_tool->n_points >= 3)
     {
       gimp_polygon_select_tool_select (poly_sel_tool, display);
     }
@@ -479,9 +502,9 @@ gimp_polygon_select_tool_halt (GimpPolygonSelectTool *poly_sel_tool)
 
   poly_sel_tool->grabbed_point      = NULL;
   poly_sel_tool->show_pending_point = FALSE;
-  poly_sel_tool->num_points         = 0;
+  poly_sel_tool->n_points           = 0;
 
-  tool->display            = NULL;
+  tool->display = NULL;
 }
 
 static void
@@ -490,15 +513,25 @@ gimp_polygon_select_tool_draw (GimpDrawTool *draw_tool)
   GimpPolygonSelectTool *poly_sel_tool = GIMP_POLYGON_SELECT_TOOL (draw_tool);
 
   gimp_draw_tool_draw_lines (draw_tool,
-                             (const gdouble *) poly_sel_tool->points,
-                             poly_sel_tool->num_points,
+                             poly_sel_tool->points, poly_sel_tool->n_points,
                              FALSE, FALSE);
+
+  if (poly_sel_tool->grabbed_point)
+    {
+      gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_CIRCLE,
+                                  poly_sel_tool->grabbed_point->x,
+                                  poly_sel_tool->grabbed_point->y,
+                                  HANDLE_SIZE, HANDLE_SIZE,
+                                  GTK_ANCHOR_CENTER, FALSE);
+    }
 
   if (poly_sel_tool->show_pending_point)
     {
+      GimpVector2 last = poly_sel_tool->points[poly_sel_tool->n_points - 1];
+
       gimp_draw_tool_draw_line (draw_tool,
-                                poly_sel_tool->points[poly_sel_tool->num_points - 1].x,
-                                poly_sel_tool->points[poly_sel_tool->num_points - 1].y,
+                                last.x,
+                                last.y,
                                 poly_sel_tool->pending_point.x,
                                 poly_sel_tool->pending_point.y,
                                 FALSE);
@@ -512,9 +545,9 @@ gimp_polygon_select_tool_select (GimpPolygonSelectTool *poly_sel_tool,
   g_return_if_fail (GIMP_IS_POLYGON_SELECT_TOOL (poly_sel_tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  GIMP_POLYGON_SELECT_TOOL_GET_CLASS (poly_sel_tool)->select (poly_sel_tool, display);
+  GIMP_POLYGON_SELECT_TOOL_GET_CLASS (poly_sel_tool)->select (poly_sel_tool,
+                                                              display);
 }
-
 
 static void
 gimp_polygon_select_tool_real_select (GimpPolygonSelectTool *poly_sel_tool,
@@ -524,7 +557,7 @@ gimp_polygon_select_tool_real_select (GimpPolygonSelectTool *poly_sel_tool,
 
   gimp_channel_select_polygon (gimp_image_get_mask (display->image),
                                Q_("command|Polygon Select"),
-                               poly_sel_tool->num_points,
+                               poly_sel_tool->n_points,
                                poly_sel_tool->points,
                                options->operation,
                                options->antialias,
@@ -539,7 +572,7 @@ gimp_polygon_select_tool_add_point (GimpPolygonSelectTool *poly_sel_tool,
                                     gdouble                x,
                                     gdouble                y)
 {
-  if (poly_sel_tool->num_points >= poly_sel_tool->max_segs)
+  if (poly_sel_tool->n_points >= poly_sel_tool->max_segs)
     {
       poly_sel_tool->max_segs += DEFAULT_MAX_INC;
 
@@ -547,10 +580,10 @@ gimp_polygon_select_tool_add_point (GimpPolygonSelectTool *poly_sel_tool,
                                          sizeof (GimpVector2) * poly_sel_tool->max_segs);
     }
 
-  poly_sel_tool->points[poly_sel_tool->num_points].x = x;
-  poly_sel_tool->points[poly_sel_tool->num_points].y = y;
+  poly_sel_tool->points[poly_sel_tool->n_points].x = x;
+  poly_sel_tool->points[poly_sel_tool->n_points].y = y;
 
-  return &poly_sel_tool->points[poly_sel_tool->num_points++];
+  return &poly_sel_tool->points[poly_sel_tool->n_points++];
 }
 
 static void
@@ -560,9 +593,9 @@ gimp_polygon_select_tool_remove_last (GimpPolygonSelectTool *poly_sel_tool)
 
   gimp_draw_tool_pause (draw_tool);
 
-  poly_sel_tool->num_points--;
+  poly_sel_tool->n_points--;
 
-  if (poly_sel_tool->num_points == 0)
+  if (poly_sel_tool->n_points == 0)
     {
       gimp_polygon_select_tool_halt (poly_sel_tool);
     }
@@ -571,31 +604,39 @@ gimp_polygon_select_tool_remove_last (GimpPolygonSelectTool *poly_sel_tool)
 }
 
 static void
-gimp_polygon_select_tool_select_closet_point (GimpPolygonSelectTool *poly_sel_tool,
-                                              GimpDisplay           *display,
-                                              GimpCoords            *coords)
+gimp_polygon_select_tool_select_closest_point (GimpPolygonSelectTool *poly_sel_tool,
+                                               GimpDisplay           *display,
+                                               GimpCoords            *coords)
 {
-  GimpDrawTool *draw_tool        = GIMP_DRAW_TOOL (poly_sel_tool);
-  gdouble       shortest_dist_sq;
+  GimpDrawTool *draw_tool     = GIMP_DRAW_TOOL (poly_sel_tool);
+  gdouble       shortest_dist = POINT_GRAB_THRESHOLD_SQ;
+  GimpVector2  *grabbed_point = NULL;
   int           i;
 
-  poly_sel_tool->grabbed_point = NULL;
-  shortest_dist_sq    = POINT_GRAB_THRESHOLD_SQ;
-
-  for (i = 0; i < poly_sel_tool->num_points; i++)
+  for (i = 0; i < poly_sel_tool->n_points; i++)
     {
-      gdouble dist_sq;
+      gdouble dist;
 
-      dist_sq = gimp_draw_tool_calc_distance_square (draw_tool,
-                                                     display,
-                                                     coords->x,
-                                                     coords->y,
-                                                     poly_sel_tool->points[i].x,
-                                                     poly_sel_tool->points[i].y);
-      if (dist_sq < shortest_dist_sq)
+      dist = gimp_draw_tool_calc_distance_square (draw_tool,
+                                                  display,
+                                                  coords->x,
+                                                  coords->y,
+                                                  poly_sel_tool->points[i].x,
+                                                  poly_sel_tool->points[i].y);
+
+      if (dist < shortest_dist)
         {
-          poly_sel_tool->grabbed_point = &poly_sel_tool->points[i];
+          grabbed_point = &poly_sel_tool->points[i];
         }
+    }
+
+  if (grabbed_point != poly_sel_tool->grabbed_point)
+    {
+      gimp_draw_tool_pause(draw_tool);
+
+      poly_sel_tool->grabbed_point = grabbed_point;
+
+      gimp_draw_tool_resume(draw_tool);
     }
 }
 
@@ -604,19 +645,20 @@ gimp_polygon_select_tool_should_close (GimpPolygonSelectTool *poly_sel_tool,
                                        GimpDisplay           *display,
                                        GimpCoords            *coords)
 {
-  gboolean should_close  = FALSE;
+  gboolean should_close = FALSE;
 
-  if (poly_sel_tool->num_points > 0)
+  if (poly_sel_tool->n_points > 0)
     {
-      gdouble dist_sq;
+      gdouble dist;
 
-      dist_sq = gimp_draw_tool_calc_distance_square (GIMP_DRAW_TOOL (poly_sel_tool),
-                                                     display,
-                                                     coords->x,
-                                                     coords->y,
-                                                     poly_sel_tool->points[0].x,
-                                                     poly_sel_tool->points[0].y);
-      should_close = dist_sq < POINT_GRAB_THRESHOLD_SQ;
+      dist = gimp_draw_tool_calc_distance_square (GIMP_DRAW_TOOL (poly_sel_tool),
+                                                  display,
+                                                  coords->x,
+                                                  coords->y,
+                                                  poly_sel_tool->points[0].x,
+                                                  poly_sel_tool->points[0].y);
+
+      should_close = dist < POINT_GRAB_THRESHOLD_SQ;
     }
 
   return should_close;

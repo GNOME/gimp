@@ -68,6 +68,7 @@
 #include "errors.h"
 #include "sanity.h"
 #include "units.h"
+#include "version.h"
 
 #ifdef G_OS_WIN32
 #include <windows.h>
@@ -309,6 +310,20 @@ main (int    argc,
   g_set_prgname (basename);
   g_free (basename);
 
+  /* Check argv[] for "--verbose" first */
+  for (i = 1; i < argc; i++)
+    {
+      const gchar *arg = argv[i];
+
+      if (arg[0] != '-')
+        continue;
+
+      if ((strcmp (arg, "--verbose") == 0) || (strcmp (arg, "-v") == 0))
+        {
+          be_verbose = TRUE;
+        }
+    }
+
   /* Check argv[] for "--no-interface" before trying to initialize gtk+. */
   for (i = 1; i < argc; i++)
     {
@@ -323,7 +338,6 @@ main (int    argc,
         }
       else if ((strcmp (arg, "--version") == 0) || (strcmp (arg, "-v") == 0))
         {
-          gimp_open_console_window ();
           gimp_show_version_and_exit ();
         }
 #if defined (G_OS_WIN32) && !defined (GIMP_CONSOLE_COMPILATION)
@@ -553,17 +567,10 @@ gimp_option_dump_gimprc (const gchar  *option_name,
 }
 
 static void
-gimp_show_version (void)
-{
-  gimp_open_console_window ();
-  g_print (_("%s version %s"), GIMP_NAME, GIMP_VERSION);
-  g_print ("\n");
-}
-
-static void
 gimp_show_version_and_exit (void)
 {
-  gimp_show_version ();
+  gimp_open_console_window ();
+  gimp_version_show (be_verbose);
 
   app_exit (EXIT_SUCCESS);
 }
@@ -571,7 +578,8 @@ gimp_show_version_and_exit (void)
 static void
 gimp_show_license_and_exit (void)
 {
-  gimp_show_version ();
+  gimp_open_console_window ();
+  gimp_version_show (be_verbose);
 
   g_print ("\n");
   g_print (GIMP_LICENSE);

@@ -1,3 +1,20 @@
+2008-02-28  Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
+
+	* ru.po: Updated Russian translation.
+
+2008-02-23  Gabor Kelemen  <kelemeng@gnome.hu>
+
+	* hu.po: Translation updated
+
+2008-02-22  Ilkka Tuohela <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation, including fix for
+	         bug #514362.
+
+2008-02-19  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* nb.po: Updated Norwegian bokmål translation.
+
 2008-02-10  Daniel Nylander <po@danielnylander.se>
 
 	* sv.po: Updated Swedish translation.

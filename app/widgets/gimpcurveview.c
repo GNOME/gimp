@@ -394,7 +394,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
       gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
 
       /*  Draw the unselected points  */
-      for (i = 0; i < GIMP_CURVE_NUM_POINTS; i++)
+      for (i = 0; i < view->curve->n_points; i++)
         {
           if (i == view->selected)
             continue;
@@ -481,7 +481,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
       cairo_stroke (cr);
 
       g_snprintf (buf, sizeof (buf), "x:%3d y:%3d",
-                  (gint) (view->cursor_x * 255.999),
+                  (gint) (view->cursor_x         * 255.999),
                   (gint) ((1.0 - view->cursor_y) * 255.999));
       pango_layout_set_text (view->cursor_layout, buf, -1);
 
@@ -567,7 +567,7 @@ gimp_curve_view_button_press (GtkWidget      *widget,
         }
 
       view->rightmost = 2.0;
-      for (i = closest_point + 1; i < GIMP_CURVE_NUM_POINTS; i++)
+      for (i = closest_point + 1; i < curve->n_points; i++)
         {
           gdouble point_x;
 
@@ -667,7 +667,9 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
 
           if (x > view->leftmost && x < view->rightmost)
             {
-              closest_point = ((gint) (x * 255.999) + 8) / 16;
+              gint n_points = gimp_curve_get_n_points (curve);
+
+              closest_point = ROUND (x * (gdouble) (n_points - 1));
 
               gimp_curve_get_point (curve, closest_point, &point_x, NULL);
 
@@ -684,6 +686,7 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
     case GIMP_CURVE_FREE:
       if (view->grabbed)
         {
+          gint    n_samples = gimp_curve_get_n_samples (curve);
           gdouble x1, x2;
           gdouble y1, y2;
 
@@ -704,14 +707,19 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
 
           if (x2 != x1)
             {
+              gint from = ROUND (x1 * (gdouble) (n_samples - 1));
+              gint to   = ROUND (x2 * (gdouble) (n_samples - 1));
               gint i;
 
               gimp_data_freeze (GIMP_DATA (curve));
 
-              for (i = (gint) (x1 * 255.999); i <= (gint) (x2 * 255.999); i++)
-                gimp_curve_set_curve (curve,
-                                      (gdouble) i / 255.0,
-                                      1.0 - (y1 + ((y2 - y1) * ((gdouble) i / 255.0 - x1)) / (x2 - x1)));
+              for (i = from; i <= to; i++)
+                {
+                  gdouble xpos = (gdouble) i / (gdouble) (n_samples - 1);
+                  gdouble ypos = (y1 + ((y2 - y1) * (xpos - x1)) / (x2 - x1));
+
+                  gimp_curve_set_curve (curve, xpos, 1.0 - ypos);
+                }
 
               gimp_data_thaw (GIMP_DATA (curve));
             }
@@ -783,7 +791,7 @@ gimp_curve_view_key_press (GtkWidget   *widget,
       break;
 
     case GDK_Right:
-      for (i = i + 1; i < GIMP_CURVE_NUM_POINTS && ! retval; i++)
+      for (i = i + 1; i < curve->n_points && ! retval; i++)
         {
           gimp_curve_get_point (curve, i, &x, NULL);
 

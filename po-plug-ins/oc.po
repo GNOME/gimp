@@ -9,18 +9,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-27 13:20+0100\n"
-"PO-Revision-Date: 2007-12-28 10:27+0100\n"
+"POT-Creation-Date: 2008-02-19 20:21+0100\n"
+"PO-Revision-Date: 2008-02-05 16:45+0100\n"
 "Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:547
 #: ../plug-ins/gfig/gfig-dialog.c:274 ../plug-ins/gflare/gflare.c:883
-#: ../plug-ins/gimpressionist/utils.c:124
+#: ../plug-ins/gimpressionist/utils.c:143
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -247,7 +247,7 @@ msgstr "Cosinus"
 #: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:422
 #: ../plug-ins/common/align_layers.c:453 ../plug-ins/common/postscript.c:3230
 #: ../plug-ins/common/postscript.c:3242 ../plug-ins/common/psp.c:418
-#: ../plug-ins/fits/fits.c:1026 ../plug-ins/print/print-page-layout.c:512
+#: ../plug-ins/fits/fits.c:1026 ../plug-ins/print/print-page-layout.c:475
 msgid "None"
 msgstr "Pas cap"
 
@@ -340,7 +340,7 @@ msgstr ""
 #: ../plug-ins/common/mng.c:950 ../plug-ins/common/pat.c:447
 #: ../plug-ins/common/pcx.c:645 ../plug-ins/common/pix.c:508
 #: ../plug-ins/common/png.c:1244 ../plug-ins/common/pnm.c:958
-#: ../plug-ins/common/postscript.c:1196 ../plug-ins/common/psd-save.c:1549
+#: ../plug-ins/common/postscript.c:1196 ../plug-ins/common/psd-save.c:1557
 #: ../plug-ins/common/raw.c:528 ../plug-ins/common/raw.c:555
 #: ../plug-ins/common/spheredesigner.c:2120 ../plug-ins/common/sunras.c:544
 #: ../plug-ins/common/tga.c:1133 ../plug-ins/common/tiff-save.c:671
@@ -378,7 +378,6 @@ msgstr ""
 #: ../plug-ins/common/compressor.c:622 ../plug-ins/common/curve_bend.c:869
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gif-load.c:309 ../plug-ins/common/gih.c:649
-#: ../plug-ins/common/lcms.c:798 ../plug-ins/common/lcms.c:1103
 #: ../plug-ins/common/mng.c:1121 ../plug-ins/common/pat.c:317
 #: ../plug-ins/common/pcx.c:344 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:703 ../plug-ins/common/pnm.c:480
@@ -388,12 +387,13 @@ msgstr ""
 #: ../plug-ins/common/spheredesigner.c:2010 ../plug-ins/common/sunras.c:378
 #: ../plug-ins/common/svg.c:321 ../plug-ins/common/svg.c:702
 #: ../plug-ins/common/tga.c:423 ../plug-ins/common/tiff-load.c:288
-#: ../plug-ins/common/wmf.c:980 ../plug-ins/common/xbm.c:720
-#: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
-#: ../plug-ins/fits/fits.c:345 ../plug-ins/flame/flame.c:411
-#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:429
-#: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/gimphelplocale.c:193
-#: ../plug-ins/jpeg/jpeg-load.c:111 ../plug-ins/jpeg/jpeg-load.c:821
+#: ../plug-ins/common/xbm.c:720 ../plug-ins/common/xwd.c:420
+#: ../plug-ins/faxg3/faxg3.c:219 ../plug-ins/fits/fits.c:345
+#: ../plug-ins/flame/flame.c:411 ../plug-ins/gfig/gfig.c:434
+#: ../plug-ins/gfli/gfli.c:429 ../plug-ins/gfli/gfli.c:464
+#: ../plug-ins/help/gimphelplocale.c:193 ../plug-ins/jpeg/jpeg-load.c:111
+#: ../plug-ins/jpeg/jpeg-load.c:821 ../plug-ins/psd/psd-load.c:125
+#: ../plug-ins/psd/psd-thumb-load.c:78
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:271
 #: ../plug-ins/uri/uri-backend-libcurl.c:186 ../plug-ins/winicon/icoload.c:651
 #: ../plug-ins/winicon/icoload.c:728 ../plug-ins/xjt/xjt.c:2545
@@ -591,7 +591,7 @@ msgstr ""
 #: ../plug-ins/Lighting/lighting_ui.c:466
 #: ../plug-ins/MapObject/mapobject_ui.c:659
 #: ../plug-ins/MapObject/mapobject_ui.c:986
-#: ../plug-ins/print/print-page-layout.c:406
+#: ../plug-ins/print/print-page-layout.c:369
 msgid "Position"
 msgstr "Posicion"
 
@@ -817,8 +817,8 @@ msgid "_Environment Map"
 msgstr ""
 
 #: ../plug-ins/Lighting/lighting_ui.c:1074
-#: ../plug-ins/gimpressionist/preview.c:186
-#: ../plug-ins/gimpressionist/repaint.c:1166
+#: ../plug-ins/gimpressionist/preview.c:174
+#: ../plug-ins/gimpressionist/repaint.c:1184
 #: ../plug-ins/imagemap/imap_polygon.c:515
 msgid "_Update"
 msgstr "_Metre a jorn"
@@ -1063,12 +1063,12 @@ msgid "Z scale (size)"
 msgstr ""
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1193
-#: ../plug-ins/print/print-page-layout.c:465
+#: ../plug-ins/print/print-page-layout.c:428
 msgid "_Top:"
 msgstr ""
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1193
-#: ../plug-ins/print/print-page-layout.c:484
+#: ../plug-ins/print/print-page-layout.c:447
 msgid "_Bottom:"
 msgstr ""
 
@@ -1077,7 +1077,7 @@ msgid "Images for the Cap Faces"
 msgstr ""
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1227
-#: ../plug-ins/print/print-page-layout.c:282
+#: ../plug-ins/print/print-page-layout.c:245
 msgid "Size"
 msgstr "Talha"
 
@@ -1138,12 +1138,12 @@ msgstr ""
 #: ../plug-ins/common/pnm.c:485 ../plug-ins/common/poppler.c:572
 #: ../plug-ins/common/postscript.c:1029 ../plug-ins/common/raw.c:650
 #: ../plug-ins/common/sunras.c:470 ../plug-ins/common/tga.c:428
-#: ../plug-ins/common/tiff-load.c:569 ../plug-ins/common/wmf.c:993
+#: ../plug-ins/common/tiff-load.c:569 ../plug-ins/common/wmf.c:992
 #: ../plug-ins/common/xbm.c:725 ../plug-ins/common/xpm.c:343
 #: ../plug-ins/common/xwd.c:506 ../plug-ins/faxg3/faxg3.c:204
 #: ../plug-ins/gfli/gfli.c:469 ../plug-ins/jpeg/jpeg-load.c:117
-#: ../plug-ins/sgi/sgi.c:318 ../plug-ins/winicon/icoload.c:645
-#: ../plug-ins/xjt/xjt.c:3344
+#: ../plug-ins/psd/psd-load.c:130 ../plug-ins/sgi/sgi.c:318
+#: ../plug-ins/winicon/icoload.c:645 ../plug-ins/xjt/xjt.c:3344
 #, c-format
 msgid "Opening '%s'"
 msgstr ""
@@ -1172,11 +1172,13 @@ msgid "Unsupported or invalid bitdepth."
 msgstr ""
 
 #: ../plug-ins/bmp/bmpread.c:550 ../plug-ins/common/pcx.c:376
+#: ../plug-ins/psd/psd-load.c:295
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr ""
 
 #: ../plug-ins/bmp/bmpread.c:555 ../plug-ins/common/pcx.c:381
+#: ../plug-ins/psd/psd-load.c:287
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr ""
@@ -1196,8 +1198,9 @@ msgstr ""
 #: ../plug-ins/common/tiff-load.c:952 ../plug-ins/common/tile.c:267
 #: ../plug-ins/common/xbm.c:880 ../plug-ins/faxg3/faxg3.c:464
 #: ../plug-ins/fits/fits.c:511 ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:249
-#: ../plug-ins/jpeg/jpeg-load.c:752 ../plug-ins/sgi/sgi.c:369
+#: ../plug-ins/gimpressionist/general.c:140 ../plug-ins/jpeg/jpeg-load.c:249
+#: ../plug-ins/jpeg/jpeg-load.c:752 ../plug-ins/psd/psd-image-res-load.c:995
+#: ../plug-ins/psd/psd-load.c:1510 ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1155
 msgid "Background"
 msgstr "Fons"
@@ -1223,7 +1226,7 @@ msgstr ""
 #: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:607
 #: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1251
 #: ../plug-ins/common/pnm.c:963 ../plug-ins/common/postscript.c:1201
-#: ../plug-ins/common/psd-save.c:1554 ../plug-ins/common/sunras.c:549
+#: ../plug-ins/common/psd-save.c:1562 ../plug-ins/common/sunras.c:549
 #: ../plug-ins/common/tga.c:1138 ../plug-ins/common/tiff-save.c:681
 #: ../plug-ins/common/xbm.c:1021 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:603 ../plug-ins/fits/fits.c:462
@@ -1577,8 +1580,8 @@ msgstr ""
 
 #: ../plug-ins/common/CML_explorer.c:300 ../plug-ins/common/CML_explorer.c:308
 #: ../plug-ins/common/decompose.c:188
-#: ../plug-ins/gimpressionist/orientation.c:162
-#: ../plug-ins/gimpressionist/size.c:165
+#: ../plug-ins/gimpressionist/orientation.c:180
+#: ../plug-ins/gimpressionist/size.c:183
 msgid "Hue"
 msgstr ""
 
@@ -1589,8 +1592,8 @@ msgstr "Saturacion"
 
 #: ../plug-ins/common/CML_explorer.c:302 ../plug-ins/common/CML_explorer.c:310
 #: ../plug-ins/common/decompose.c:190
-#: ../plug-ins/gimpressionist/orientation.c:138
-#: ../plug-ins/gimpressionist/size.c:141
+#: ../plug-ins/gimpressionist/orientation.c:156
+#: ../plug-ins/gimpressionist/size.c:159
 msgid "Value"
 msgstr "Valor"
 
@@ -1928,7 +1931,7 @@ msgstr ""
 
 #: ../plug-ins/common/animationplay.c:443
 msgid "_Step"
-msgstr "Pas"
+msgstr "_Pas"
 
 #: ../plug-ins/common/animationplay.c:443
 msgid "Step to next frame"
@@ -1948,7 +1951,7 @@ msgstr ""
 
 #: ../plug-ins/common/animationplay.c:470
 msgid "Slower"
-msgstr "Mostrar"
+msgstr ""
 
 #: ../plug-ins/common/animationplay.c:470
 msgid "Decrease the speed of the animation"
@@ -2145,16 +2148,16 @@ msgid "Blinds"
 msgstr ""
 
 #. Orientation toggle box
-#: ../plug-ins/common/blinds.c:259 ../plug-ins/common/ripple.c:536
+#: ../plug-ins/common/blinds.c:259 ../plug-ins/common/ripple.c:538
 msgid "Orientation"
 msgstr "Orientacion"
 
-#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:540
+#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:542
 #: ../plug-ins/common/tileit.c:425 ../plug-ins/pagecurl/pagecurl.c:534
 msgid "_Horizontal"
 msgstr "_Orizontal"
 
-#: ../plug-ins/common/blinds.c:264 ../plug-ins/common/ripple.c:541
+#: ../plug-ins/common/blinds.c:264 ../plug-ins/common/ripple.c:543
 #: ../plug-ins/common/tileit.c:435 ../plug-ins/pagecurl/pagecurl.c:533
 msgid "_Vertical"
 msgstr "_Vertical"
@@ -2220,7 +2223,7 @@ msgstr ""
 msgid "_Bump Map..."
 msgstr ""
 
-#: ../plug-ins/common/bumpmap.c:416
+#: ../plug-ins/common/bumpmap.c:415
 msgid "Bump-mapping"
 msgstr ""
 
@@ -2434,7 +2437,7 @@ msgid "Checkerboard"
 msgstr ""
 
 #: ../plug-ins/common/checkerboard.c:412
-#: ../plug-ins/gimpressionist/sizemap.c:493
+#: ../plug-ins/gimpressionist/sizemap.c:511
 msgid "_Size:"
 msgstr "_Talha :"
 
@@ -2783,86 +2786,86 @@ msgstr ""
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:101
+#: ../plug-ins/common/convmatrix.c:64
 msgid "Gr_ey"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:102
+#: ../plug-ins/common/convmatrix.c:65
 msgid "Re_d"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:103 ../plug-ins/common/newsprint.c:353
+#: ../plug-ins/common/convmatrix.c:66 ../plug-ins/common/newsprint.c:353
 msgid "_Green"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:104 ../plug-ins/common/newsprint.c:361
+#: ../plug-ins/common/convmatrix.c:67 ../plug-ins/common/newsprint.c:361
 msgid "_Blue"
 msgstr "_Blau"
 
-#: ../plug-ins/common/convmatrix.c:105
+#: ../plug-ins/common/convmatrix.c:68
 msgid "_Alpha"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:110
+#: ../plug-ins/common/convmatrix.c:73
 msgid "E_xtend"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:111 ../plug-ins/common/displace.c:472
+#: ../plug-ins/common/convmatrix.c:74 ../plug-ins/common/displace.c:472
 #: ../plug-ins/common/edge.c:708 ../plug-ins/common/fractaltrace.c:736
-#: ../plug-ins/common/ripple.c:561
+#: ../plug-ins/common/ripple.c:563
 msgid "_Wrap"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:112
+#: ../plug-ins/common/convmatrix.c:75
 msgid "Cro_p"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:238
+#: ../plug-ins/common/convmatrix.c:201
 msgid "Apply a generic 5x5 convolution matrix"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:243
+#: ../plug-ins/common/convmatrix.c:206
 msgid "_Convolution Matrix..."
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:278
+#: ../plug-ins/common/convmatrix.c:241
 msgid "Convolution does not work on layers smaller than 3x3 pixels."
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:351
+#: ../plug-ins/common/convmatrix.c:314
 msgid "Applying convolution"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:923
+#: ../plug-ins/common/convmatrix.c:906
 msgid "Convolution Matrix"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:960
+#: ../plug-ins/common/convmatrix.c:943
 msgid "Matrix"
 msgstr "Mairitz"
 
-#: ../plug-ins/common/convmatrix.c:998
+#: ../plug-ins/common/convmatrix.c:981
 msgid "D_ivisor:"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:1024 ../plug-ins/common/depthmerge.c:767
+#: ../plug-ins/common/convmatrix.c:1007 ../plug-ins/common/depthmerge.c:767
 #: ../plug-ins/common/raw.c:1022
 msgid "O_ffset:"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:1053
+#: ../plug-ins/common/convmatrix.c:1036
 msgid "N_ormalise"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:1065
+#: ../plug-ins/common/convmatrix.c:1048
 msgid "A_lpha-weighting"
 msgstr ""
 
-#: ../plug-ins/common/convmatrix.c:1084
+#: ../plug-ins/common/convmatrix.c:1067
 msgid "Border"
 msgstr "Bordadura"
 
-#: ../plug-ins/common/convmatrix.c:1111
+#: ../plug-ins/common/convmatrix.c:1094
 msgid "Channels"
 msgstr "Canals"
 
@@ -2975,8 +2978,8 @@ msgstr ""
 
 #. Preview area, top of column
 #: ../plug-ins/common/curve_bend.c:1231
-#: ../plug-ins/gimpressionist/orientmap.c:574
-#: ../plug-ins/gimpressionist/sizemap.c:443
+#: ../plug-ins/gimpressionist/orientmap.c:592
+#: ../plug-ins/gimpressionist/sizemap.c:461
 msgid "Preview"
 msgstr "Ulhada"
 
@@ -2992,7 +2995,7 @@ msgstr ""
 
 #. Options area, bottom of column
 #. Options section
-#: ../plug-ins/common/curve_bend.c:1279 ../plug-ins/common/ripple.c:502
+#: ../plug-ins/common/curve_bend.c:1279 ../plug-ins/common/ripple.c:504
 #: ../plug-ins/gfig/gfig-dialog.c:1207
 msgid "Options"
 msgstr "Opcions"
@@ -3009,7 +3012,7 @@ msgstr ""
 
 #. The antialiasing toggle
 #: ../plug-ins/common/curve_bend.c:1322 ../plug-ins/common/gqbist.c:853
-#: ../plug-ins/common/mosaic.c:728 ../plug-ins/common/ripple.c:511
+#: ../plug-ins/common/mosaic.c:728 ../plug-ins/common/ripple.c:513
 msgid "_Antialiasing"
 msgstr ""
 
@@ -3417,7 +3420,7 @@ msgstr ""
 #: ../plug-ins/common/smooth_palette.c:436 ../plug-ins/common/tile.c:431
 #: ../plug-ins/imagemap/imap_cmd_guides.c:165
 #: ../plug-ins/imagemap/imap_rectangle.c:403
-#: ../plug-ins/print/print-page-layout.c:315
+#: ../plug-ins/print/print-page-layout.c:278
 msgid "_Width:"
 msgstr "_Largor :"
 
@@ -3553,7 +3556,7 @@ msgid "Edge Behavior"
 msgstr ""
 
 #: ../plug-ins/common/displace.c:474 ../plug-ins/common/edge.c:721
-#: ../plug-ins/common/ripple.c:562 ../plug-ins/common/waves.c:280
+#: ../plug-ins/common/ripple.c:564 ../plug-ins/common/waves.c:280
 msgid "_Smear"
 msgstr ""
 
@@ -3590,7 +3593,7 @@ msgstr ""
 msgid "_Normalize"
 msgstr ""
 
-#: ../plug-ins/common/dog.c:347 ../plug-ins/gimpressionist/paper.c:149
+#: ../plug-ins/common/dog.c:347 ../plug-ins/gimpressionist/paper.c:167
 msgid "_Invert"
 msgstr ""
 
@@ -3692,7 +3695,7 @@ msgstr ""
 #: ../plug-ins/common/raw.c:1048 ../plug-ins/common/smooth_palette.c:441
 #: ../plug-ins/common/tile.c:435 ../plug-ins/imagemap/imap_cmd_guides.c:175
 #: ../plug-ins/imagemap/imap_rectangle.c:410
-#: ../plug-ins/print/print-page-layout.c:317
+#: ../plug-ins/print/print-page-layout.c:280
 msgid "_Height:"
 msgstr "_Nautor :"
 
@@ -4008,7 +4011,7 @@ msgstr "V_alor"
 
 #: ../plug-ins/common/fp.c:863
 msgid "Show"
-msgstr "Mostrar"
+msgstr "Visualizar"
 
 #: ../plug-ins/common/fp.c:868
 msgid "_Entire image"
@@ -4169,7 +4172,7 @@ msgid "Spacing:"
 msgstr ""
 
 #: ../plug-ins/common/gbr.c:742 ../plug-ins/common/gih.c:910
-#: ../plug-ins/common/pat.c:541 ../plug-ins/gimpressionist/presets.c:646
+#: ../plug-ins/common/pat.c:541 ../plug-ins/gimpressionist/presets.c:664
 msgid "Description:"
 msgstr "Descripcion :"
 
@@ -4221,8 +4224,8 @@ msgstr "Fons (%d%s)"
 msgid "Opening '%s' (frame %d)"
 msgstr ""
 
-#: ../plug-ins/common/gif-load.c:933 ../plug-ins/common/iwarp.c:793
-#: ../plug-ins/common/iwarp.c:828
+#: ../plug-ins/common/gif-load.c:933 ../plug-ins/common/iwarp.c:791
+#: ../plug-ins/common/iwarp.c:826
 #, c-format
 msgid "Frame %d"
 msgstr ""
@@ -4726,101 +4729,101 @@ msgstr ""
 msgid "_IWarp..."
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:699
+#: ../plug-ins/common/iwarp.c:697
 msgid "Warping"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:804
+#: ../plug-ins/common/iwarp.c:802
 #, c-format
 msgid "Warping Frame %d"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:816
+#: ../plug-ins/common/iwarp.c:814
 msgid "Ping pong"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1022
+#: ../plug-ins/common/iwarp.c:1020
 msgid "A_nimate"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1041
+#: ../plug-ins/common/iwarp.c:1039
 msgid "Number of _frames:"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1050
+#: ../plug-ins/common/iwarp.c:1048
 msgid "R_everse"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1059
+#: ../plug-ins/common/iwarp.c:1057
 msgid "_Ping pong"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1072
+#: ../plug-ins/common/iwarp.c:1070
 msgid "_Animate"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1093
+#: ../plug-ins/common/iwarp.c:1091
 msgid "Deform Mode"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1106
+#: ../plug-ins/common/iwarp.c:1104
 msgid "_Move"
 msgstr "_Desplaçar"
 
-#: ../plug-ins/common/iwarp.c:1107
+#: ../plug-ins/common/iwarp.c:1105
 msgid "_Grow"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1108
+#: ../plug-ins/common/iwarp.c:1106
 msgid "S_wirl CCW"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1109
+#: ../plug-ins/common/iwarp.c:1107
 msgid "Remo_ve"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1110
+#: ../plug-ins/common/iwarp.c:1108
 msgid "S_hrink"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1111
+#: ../plug-ins/common/iwarp.c:1109
 msgid "Sw_irl CW"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1140
+#: ../plug-ins/common/iwarp.c:1138
 msgid "_Deform radius:"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1150
+#: ../plug-ins/common/iwarp.c:1148
 msgid "D_eform amount:"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1159
+#: ../plug-ins/common/iwarp.c:1157
 msgid "_Bilinear"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1173
+#: ../plug-ins/common/iwarp.c:1171
 msgid "Adaptive s_upersample"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1193
+#: ../plug-ins/common/iwarp.c:1191
 msgid "Ma_x depth:"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1203
+#: ../plug-ins/common/iwarp.c:1201
 msgid "Thresho_ld:"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1216 ../plug-ins/common/sinus.c:771
+#: ../plug-ins/common/iwarp.c:1214 ../plug-ins/common/sinus.c:771
 #: ../plug-ins/gflare/gflare.c:2821
 msgid "_Settings"
 msgstr "_Paramètres"
 
-#: ../plug-ins/common/iwarp.c:1265
+#: ../plug-ins/common/iwarp.c:1263
 msgid "IWarp"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1301
+#: ../plug-ins/common/iwarp.c:1299
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
@@ -4953,98 +4956,98 @@ msgid ""
 "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:817
+#: ../plug-ins/common/lcms.c:816
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr ""
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:875
+#: ../plug-ins/common/lcms.c:874
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1122
+#: ../plug-ins/common/lcms.c:1119
 #, c-format
 msgid "Could not load ICC profile from '%s'"
-msgstr "Impossible de tampar lo fichièr"
+msgstr ""
 
-#: ../plug-ins/common/lcms.c:1144
+#: ../plug-ins/common/lcms.c:1141
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1188
+#: ../plug-ins/common/lcms.c:1185
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1219
+#: ../plug-ins/common/lcms.c:1216
 msgid "Convert to RGB working space?"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1224
+#: ../plug-ins/common/lcms.c:1221
 msgid "_Keep"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1229
+#: ../plug-ins/common/lcms.c:1226
 msgid "_Convert"
 msgstr "_Ensenhador"
 
-#: ../plug-ins/common/lcms.c:1256 ../plug-ins/jpeg/jpeg-exif.c:372
+#: ../plug-ins/common/lcms.c:1253 ../plug-ins/jpeg/jpeg-exif.c:372
 msgid "_Don't ask me again"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1320
+#: ../plug-ins/common/lcms.c:1317
 msgid "Select destination profile"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1347
+#: ../plug-ins/common/lcms.c:1344
 msgid "All files (*.*)"
 msgstr "Totes los fichièrs (*.*)"
 
-#: ../plug-ins/common/lcms.c:1352
+#: ../plug-ins/common/lcms.c:1349
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1395
+#: ../plug-ins/common/lcms.c:1392
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1445
+#: ../plug-ins/common/lcms.c:1442
 msgid "Convert to ICC Color Profile"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1446
+#: ../plug-ins/common/lcms.c:1443
 msgid "Assign ICC Color Profile"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1454
+#: ../plug-ins/common/lcms.c:1451
 msgid "_Assign"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1471
+#: ../plug-ins/common/lcms.c:1468
 msgid "Current Color Profile"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1486
+#: ../plug-ins/common/lcms.c:1483
 msgid "Convert to"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1486
+#: ../plug-ins/common/lcms.c:1483
 msgid "Assign"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1510
+#: ../plug-ins/common/lcms.c:1507
 msgid "_Rendering Intent:"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1526
+#: ../plug-ins/common/lcms.c:1523
 msgid "_Black Point Compensation"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1567
+#: ../plug-ins/common/lcms.c:1565
 msgid "Destination profile is not for RGB color space."
 msgstr ""
 
@@ -5156,60 +5159,45 @@ msgstr ""
 msgid "_Van Gogh (LIC)..."
 msgstr ""
 
-#: ../plug-ins/common/mail.c:259
-msgid "Email the image"
+#: ../plug-ins/common/mail.c:188
+msgid "Send the image by email"
 msgstr ""
 
-#: ../plug-ins/common/mail.c:265
-msgid "_Mail Image..."
+#: ../plug-ins/common/mail.c:194
+msgid "Send by E_mail..."
 msgstr ""
 
-#: ../plug-ins/common/mail.c:524
-msgid "Send as Mail"
+#: ../plug-ins/common/mail.c:408
+msgid "Send by Email"
 msgstr ""
 
-#: ../plug-ins/common/mail.c:529
+#: ../plug-ins/common/mail.c:413
 msgid "_Send"
 msgstr "_Enviar"
 
-#: ../plug-ins/common/mail.c:561
+#: ../plug-ins/common/mail.c:445
 msgid "_Filename:"
 msgstr "_Nom de fichièr :"
 
-#. Encapsulation label
-#: ../plug-ins/common/mail.c:568
-msgid "Encapsulation:"
+#: ../plug-ins/common/mail.c:457
+#
+msgid "_To:"
 msgstr ""
 
-#: ../plug-ins/common/mail.c:580
-msgid "_MIME"
-msgstr "_MIME"
-
-#: ../plug-ins/common/mail.c:581
-msgid "_Uuencode"
+#: ../plug-ins/common/mail.c:471
+#
+msgid "_From:"
 msgstr ""
 
-#: ../plug-ins/common/mail.c:595
-msgid "_Recipient:"
-msgstr ""
-
-#: ../plug-ins/common/mail.c:609
-msgid "_Sender:"
-msgstr ""
-
-#: ../plug-ins/common/mail.c:621
+#: ../plug-ins/common/mail.c:483
 msgid "S_ubject:"
 msgstr "Tè_ma :"
 
-#: ../plug-ins/common/mail.c:633
-msgid "Comm_ent:"
-msgstr "Co_mentari :"
-
-#: ../plug-ins/common/mail.c:741
+#: ../plug-ins/common/mail.c:592
 msgid "some sort of error with the file extension or lack thereof"
 msgstr ""
 
-#: ../plug-ins/common/mail.c:903
+#: ../plug-ins/common/mail.c:726
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr ""
@@ -5996,7 +5984,9 @@ msgstr ""
 #: ../plug-ins/common/plugin-browser.c:386
 #, c-format
 msgid "%d plug-in"
-msgstr ""
+msgid_plural "%d plug-ins"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../plug-ins/common/plugin-browser.c:395
 msgid "No matches for your query"
@@ -6005,7 +5995,9 @@ msgstr ""
 #: ../plug-ins/common/plugin-browser.c:398
 #, c-format
 msgid "%d plug-in matches your query"
-msgstr ""
+msgid_plural "%d plug-ins match your query"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../plug-ins/common/plugin-browser.c:529
 msgid "No matches"
@@ -6289,7 +6281,7 @@ msgstr "Resolucion :"
 #: ../plug-ins/common/poppler.c:1134
 #, c-format
 msgid "pixels/%s"
-msgstr "pixels"
+msgstr "pixels/%s"
 
 #: ../plug-ins/common/postscript.c:597 ../plug-ins/common/postscript.c:689
 msgid "PostScript document"
@@ -6388,8 +6380,8 @@ msgid "Gray"
 msgstr "Escala de grises"
 
 #: ../plug-ins/common/postscript.c:3215 ../plug-ins/common/xpm.c:468
-#: ../plug-ins/gimpressionist/color.c:48
-#: ../plug-ins/gimpressionist/general.c:152
+#: ../plug-ins/gimpressionist/color.c:66
+#: ../plug-ins/gimpressionist/general.c:170
 #: ../plug-ins/imagemap/imap_menu.c:213
 msgid "Color"
 msgstr "Color"
@@ -6479,7 +6471,8 @@ msgstr ""
 msgid "Procedure Browser"
 msgstr ""
 
-#: ../plug-ins/common/psd-save.c:222
+#: ../plug-ins/common/psd-save.c:222 ../plug-ins/psd/psd.c:114
+#: ../plug-ins/psd/psd.c:153
 msgid "Photoshop image"
 msgstr ""
 
@@ -6494,14 +6487,14 @@ msgstr ""
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 
-#: ../plug-ins/common/psd-save.c:1525
+#: ../plug-ins/common/psd-save.c:1533
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
 "more than 30000 pixels wide or tall."
 msgstr ""
 
-#: ../plug-ins/common/psd-save.c:1537
+#: ../plug-ins/common/psd-save.c:1545
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
@@ -6541,47 +6534,47 @@ msgstr ""
 msgid "Random Slur"
 msgstr ""
 
-#: ../plug-ins/common/randomize.c:200
+#: ../plug-ins/common/randomize.c:202
 msgid "Completely randomize a fraction of pixels"
 msgstr ""
 
-#: ../plug-ins/common/randomize.c:202
+#: ../plug-ins/common/randomize.c:204
 msgid "Randomly interchange some pixels with neighbors"
 msgstr ""
 
-#: ../plug-ins/common/randomize.c:204
+#: ../plug-ins/common/randomize.c:206
 msgid "Randomly slide some pixels downward (similar to melting)"
 msgstr ""
 
-#: ../plug-ins/common/randomize.c:231
+#: ../plug-ins/common/randomize.c:233
 msgid "_Hurl..."
 msgstr ""
 
-#: ../plug-ins/common/randomize.c:243
+#: ../plug-ins/common/randomize.c:245
 msgid "_Pick..."
 msgstr ""
 
-#: ../plug-ins/common/randomize.c:255
+#: ../plug-ins/common/randomize.c:257
 msgid "_Slur..."
 msgstr ""
 
-#: ../plug-ins/common/randomize.c:744 ../plug-ins/common/snoise.c:601
+#: ../plug-ins/common/randomize.c:771 ../plug-ins/common/snoise.c:601
 msgid "_Random seed:"
 msgstr ""
 
-#: ../plug-ins/common/randomize.c:753
+#: ../plug-ins/common/randomize.c:780
 msgid "R_andomization (%):"
 msgstr ""
 
-#: ../plug-ins/common/randomize.c:756
+#: ../plug-ins/common/randomize.c:783
 msgid "Percentage of pixels to be filtered"
 msgstr ""
 
-#: ../plug-ins/common/randomize.c:765
+#: ../plug-ins/common/randomize.c:795
 msgid "R_epeat:"
 msgstr ""
 
-#: ../plug-ins/common/randomize.c:768
+#: ../plug-ins/common/randomize.c:798
 msgid "Number of times to apply filter"
 msgstr ""
 
@@ -6737,54 +6730,58 @@ msgstr ""
 msgid "Retinex: filtering"
 msgstr ""
 
-#: ../plug-ins/common/ripple.c:127
+#: ../plug-ins/common/ripple.c:129
 msgid "Displace pixels in a ripple pattern"
 msgstr ""
 
-#: ../plug-ins/common/ripple.c:134
+#: ../plug-ins/common/ripple.c:136
 msgid "_Ripple..."
 msgstr ""
 
-#: ../plug-ins/common/ripple.c:224
+#: ../plug-ins/common/ripple.c:226
 msgid "Rippling"
 msgstr ""
 
-#: ../plug-ins/common/ripple.c:466
+#: ../plug-ins/common/ripple.c:468
 msgid "Ripple"
 msgstr ""
 
-#: ../plug-ins/common/ripple.c:523
+#: ../plug-ins/common/ripple.c:525
 msgid "_Retain tilability"
 msgstr ""
 
 #. Edges toggle box
-#: ../plug-ins/common/ripple.c:557
+#: ../plug-ins/common/ripple.c:559
 msgid "Edges"
 msgstr ""
 
-#: ../plug-ins/common/ripple.c:563
+#: ../plug-ins/common/ripple.c:565
 msgid "_Blank"
 msgstr "Void"
 
 #. Wave toggle box
-#: ../plug-ins/common/ripple.c:585
+#: ../plug-ins/common/ripple.c:587
 msgid "Wave Type"
 msgstr ""
 
-#: ../plug-ins/common/ripple.c:589
+#: ../plug-ins/common/ripple.c:591
 msgid "Saw_tooth"
 msgstr ""
 
-#: ../plug-ins/common/ripple.c:590
+#: ../plug-ins/common/ripple.c:592
 msgid "S_ine"
 msgstr ""
 
-#: ../plug-ins/common/ripple.c:613
+#: ../plug-ins/common/ripple.c:615
 msgid "_Period:"
 msgstr ""
 
-#: ../plug-ins/common/ripple.c:626
+#: ../plug-ins/common/ripple.c:628
 msgid "A_mplitude:"
+msgstr ""
+
+#: ../plug-ins/common/ripple.c:641
+msgid "Phase _shift:"
 msgstr ""
 
 #: ../plug-ins/common/rotate.c:413
@@ -7428,7 +7425,7 @@ msgid "Use the background color"
 msgstr ""
 
 #: ../plug-ins/common/spheredesigner.c:291
-#: ../plug-ins/gimpressionist/general.c:148
+#: ../plug-ins/gimpressionist/general.c:166
 msgid "Solid"
 msgstr ""
 
@@ -7518,7 +7515,7 @@ msgstr ""
 
 #. Scale
 #: ../plug-ins/common/spheredesigner.c:2755
-#: ../plug-ins/gimpressionist/paper.c:176
+#: ../plug-ins/gimpressionist/paper.c:194
 #: ../plug-ins/ifscompose/ifscompose.c:553
 msgid "Scale:"
 msgstr ""
@@ -7732,7 +7729,7 @@ msgstr ""
 
 #: ../plug-ins/common/svg.c:323 ../plug-ins/common/svg.c:704
 msgid "Unknown reason"
-msgstr ""
+msgstr "Rason desconeguda"
 
 #: ../plug-ins/common/svg.c:327
 msgid "Rendering SVG"
@@ -7775,7 +7772,7 @@ msgid "Constrain aspect ratio"
 msgstr ""
 
 #: ../plug-ins/common/svg.c:904 ../plug-ins/common/wmf.c:689
-#: ../plug-ins/print/print-page-layout.c:336
+#: ../plug-ins/print/print-page-layout.c:299
 #, c-format
 msgid "pixels/%a"
 msgstr ""
@@ -8278,7 +8275,7 @@ msgid "_Value Propagate..."
 msgstr ""
 
 #: ../plug-ins/common/vpropagate.c:245
-msgid "Shrink darker areas of the image"
+msgid "Shrink lighter areas of the image"
 msgstr ""
 
 #: ../plug-ins/common/vpropagate.c:250
@@ -8286,7 +8283,7 @@ msgid "E_rode"
 msgstr ""
 
 #: ../plug-ins/common/vpropagate.c:257
-msgid "Grow darker areas of the image"
+msgid "Grow lighter areas of the image"
 msgstr ""
 
 #: ../plug-ins/common/vpropagate.c:262
@@ -8605,7 +8602,7 @@ msgstr ""
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
 
-#: ../plug-ins/common/wind.c:1016 ../plug-ins/gimpressionist/orientmap.c:676
+#: ../plug-ins/common/wind.c:1016 ../plug-ins/gimpressionist/orientmap.c:694
 msgid "_Strength:"
 msgstr ""
 
@@ -8627,12 +8624,12 @@ msgstr ""
 msgid "Render Windows Metafile"
 msgstr ""
 
-#: ../plug-ins/common/wmf.c:986
+#: ../plug-ins/common/wmf.c:985
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr ""
 
-#: ../plug-ins/common/wmf.c:1002
+#: ../plug-ins/common/wmf.c:1001
 msgid "Rendered WMF"
 msgstr ""
 
@@ -8872,8 +8869,8 @@ msgstr ""
 msgid "Same"
 msgstr ""
 
-#: ../plug-ins/flame/flame.c:745 ../plug-ins/gimpressionist/orientation.c:146
-#: ../plug-ins/gimpressionist/size.c:149
+#: ../plug-ins/flame/flame.c:745 ../plug-ins/gimpressionist/orientation.c:164
+#: ../plug-ins/gimpressionist/size.c:167
 msgid "Random"
 msgstr "Aleatòri"
 
@@ -8915,7 +8912,7 @@ msgstr ""
 
 #: ../plug-ins/flame/flame.c:1071
 msgid "Co_ntrast:"
-msgstr ""
+msgstr "Co_ntrast :"
 
 #: ../plug-ins/flame/flame.c:1085
 msgid "_Gamma:"
@@ -9145,7 +9142,7 @@ msgid "Max undo:"
 msgstr ""
 
 #: ../plug-ins/gfig/gfig-dialog.c:1283
-#: ../plug-ins/gimpressionist/general.c:167
+#: ../plug-ins/gimpressionist/general.c:185
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -9238,7 +9235,7 @@ msgid "Left"
 msgstr "Esquèrra"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1718
-#: ../plug-ins/gimpressionist/orientation.c:130
+#: ../plug-ins/gimpressionist/orientation.c:148
 msgid "Orientation:"
 msgstr "Orientacion :"
 
@@ -9475,7 +9472,7 @@ msgstr ""
 msgid "Second Flares Paint Options"
 msgstr ""
 
-#: ../plug-ins/gflare/gflare.c:3483 ../plug-ins/gimpressionist/general.c:116
+#: ../plug-ins/gflare/gflare.c:3483 ../plug-ins/gimpressionist/general.c:134
 msgid "_General"
 msgstr "_General"
 
@@ -9589,438 +9586,438 @@ msgstr "Destinatari :"
 msgid "GFLI 1.3 - Save framestack"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:230
+#: ../plug-ins/gimpressionist/brush.c:247
 msgid "Can only save drawables!"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:235
+#: ../plug-ins/gimpressionist/brush.c:252
 msgid "Save Brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:490
+#: ../plug-ins/gimpressionist/brush.c:507
 msgid "_Brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:527
+#: ../plug-ins/gimpressionist/brush.c:544
 msgid "Gamma:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:545
+#: ../plug-ins/gimpressionist/brush.c:562
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:553
+#: ../plug-ins/gimpressionist/brush.c:570
 msgid "Select:"
 msgstr "Seleccionar :"
 
-#: ../plug-ins/gimpressionist/brush.c:582
+#: ../plug-ins/gimpressionist/brush.c:599
 msgid "Aspect ratio:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:586
+#: ../plug-ins/gimpressionist/brush.c:603
 msgid "Specifies the aspect ratio of the brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:595
-#: ../plug-ins/gimpressionist/paper.c:188
+#: ../plug-ins/gimpressionist/brush.c:612
+#: ../plug-ins/gimpressionist/paper.c:206
 msgid "Relief:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/brush.c:599
-#: ../plug-ins/gimpressionist/paper.c:192
+#: ../plug-ins/gimpressionist/brush.c:616
+#: ../plug-ins/gimpressionist/paper.c:210
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:42
+#: ../plug-ins/gimpressionist/color.c:60
 msgid "Co_lor"
 msgstr "Co_lor"
 
-#: ../plug-ins/gimpressionist/color.c:52
+#: ../plug-ins/gimpressionist/color.c:70
 msgid "A_verage under brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:54
+#: ../plug-ins/gimpressionist/color.c:72
 msgid "C_enter of brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:61
+#: ../plug-ins/gimpressionist/color.c:79
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:65
+#: ../plug-ins/gimpressionist/color.c:83
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:76
+#: ../plug-ins/gimpressionist/color.c:94
 msgid "Color _noise:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/color.c:80
+#: ../plug-ins/gimpressionist/color.c:98
 msgid "Adds random noise to the color"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:132
+#: ../plug-ins/gimpressionist/general.c:150
 msgid "Keep original"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/gimpressionist/general.c:151
 msgid "Preserve the original image as a background"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:138
+#: ../plug-ins/gimpressionist/general.c:156
 msgid "From paper"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/gimpressionist/general.c:157
 msgid "Copy the texture of the selected paper as a background"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/gimpressionist/general.c:167
 msgid "Solid colored background"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:168
+#: ../plug-ins/gimpressionist/general.c:186
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/gimpressionist/general.c:203
 msgid "Paint edges"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:190
+#: ../plug-ins/gimpressionist/general.c:208
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr ""
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:195 ../plug-ins/maze/maze_face.c:284
+#: ../plug-ins/gimpressionist/general.c:213 ../plug-ins/maze/maze_face.c:284
 msgid "Tileable"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:199
+#: ../plug-ins/gimpressionist/general.c:217
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:204
+#: ../plug-ins/gimpressionist/general.c:222
 msgid "Drop shadow"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:209
+#: ../plug-ins/gimpressionist/general.c:227
 msgid "Adds a shadow effect to each brush stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:222
+#: ../plug-ins/gimpressionist/general.c:240
 msgid "Edge darken:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/gimpressionist/general.c:244
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:231
+#: ../plug-ins/gimpressionist/general.c:249
 msgid "Shadow darken:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:235
+#: ../plug-ins/gimpressionist/general.c:253
 msgid "How much to \"darken\" the drop shadow"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:240
+#: ../plug-ins/gimpressionist/general.c:258
 msgid "Shadow depth:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:244
+#: ../plug-ins/gimpressionist/general.c:262
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:249
+#: ../plug-ins/gimpressionist/general.c:267
 msgid "Shadow blur:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:253
+#: ../plug-ins/gimpressionist/general.c:271
 msgid "How much to blur the drop shadow"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:258
+#: ../plug-ins/gimpressionist/general.c:276
 msgid "Deviation threshold:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/general.c:262
+#: ../plug-ins/gimpressionist/general.c:280
 msgid "A bailout-value for adaptive selections"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/gimp.c:74
+#: ../plug-ins/gimpressionist/gimp.c:90
 msgid "Performs various artistic operations"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/gimp.c:79
+#: ../plug-ins/gimpressionist/gimp.c:95
 msgid "_GIMPressionist..."
 msgstr ""
 
-#: ../plug-ins/gimpressionist/gimp.c:350
+#: ../plug-ins/gimpressionist/gimp.c:371
 msgid "Painting"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:121
+#: ../plug-ins/gimpressionist/gimpressionist.c:139
 msgid "GIMPressionist"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:74
+#: ../plug-ins/gimpressionist/orientation.c:92
 msgid "Or_ientation"
 msgstr "Or_ientacion"
 
-#: ../plug-ins/gimpressionist/orientation.c:88
+#: ../plug-ins/gimpressionist/orientation.c:106
 msgid "Directions:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:92
+#: ../plug-ins/gimpressionist/orientation.c:110
 msgid "The number of directions (i.e. brushes) to use"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:100
+#: ../plug-ins/gimpressionist/orientation.c:118
 msgid "Start angle:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:104
+#: ../plug-ins/gimpressionist/orientation.c:122
 msgid "The starting angle of the first brush to create"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:112
+#: ../plug-ins/gimpressionist/orientation.c:130
 msgid "Angle span:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:116
+#: ../plug-ins/gimpressionist/orientation.c:134
 msgid "The angle span of the first brush to create"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:139
+#: ../plug-ins/gimpressionist/orientation.c:157
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:142
-#: ../plug-ins/gimpressionist/size.c:145
+#: ../plug-ins/gimpressionist/orientation.c:160
+#: ../plug-ins/gimpressionist/size.c:163
 msgid "Radius"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:143
+#: ../plug-ins/gimpressionist/orientation.c:161
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:147
+#: ../plug-ins/gimpressionist/orientation.c:165
 msgid "Selects a random direction of each stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:150
-#: ../plug-ins/gimpressionist/size.c:153
+#: ../plug-ins/gimpressionist/orientation.c:168
+#: ../plug-ins/gimpressionist/size.c:171
 msgid "Radial"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:151
+#: ../plug-ins/gimpressionist/orientation.c:169
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:158
-#: ../plug-ins/gimpressionist/size.c:161
+#: ../plug-ins/gimpressionist/orientation.c:176
+#: ../plug-ins/gimpressionist/size.c:179
 msgid "Flowing"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:159
-#: ../plug-ins/gimpressionist/size.c:162
+#: ../plug-ins/gimpressionist/orientation.c:177
+#: ../plug-ins/gimpressionist/size.c:180
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:163
+#: ../plug-ins/gimpressionist/orientation.c:181
 msgid "The hue of the region determines the direction of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:166
-#: ../plug-ins/gimpressionist/size.c:169
+#: ../plug-ins/gimpressionist/orientation.c:184
+#: ../plug-ins/gimpressionist/size.c:187
 msgid "Adaptive"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:167
+#: ../plug-ins/gimpressionist/orientation.c:185
 msgid "The direction that matches the original image the closest is selected"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:174
-#: ../plug-ins/gimpressionist/size.c:178
+#: ../plug-ins/gimpressionist/orientation.c:192
+#: ../plug-ins/gimpressionist/size.c:196
 msgid "Manual"
 msgstr "Manual"
 
-#: ../plug-ins/gimpressionist/orientation.c:175
+#: ../plug-ins/gimpressionist/orientation.c:193
 msgid "Manually specify the stroke orientation"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientation.c:186
+#: ../plug-ins/gimpressionist/orientation.c:204
 msgid "Opens up the Orientation Map Editor"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:508
+#: ../plug-ins/gimpressionist/orientmap.c:526
 msgid "Orientation Map Editor"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:537
+#: ../plug-ins/gimpressionist/orientmap.c:555
 msgid "Vectors"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:549
+#: ../plug-ins/gimpressionist/orientmap.c:567
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:572
-#: ../plug-ins/gimpressionist/sizemap.c:441
+#: ../plug-ins/gimpressionist/orientmap.c:590
+#: ../plug-ins/gimpressionist/sizemap.c:459
 msgid "Adjust the preview's brightness"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:594
+#: ../plug-ins/gimpressionist/orientmap.c:612
 msgid "Select previous vector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:600
+#: ../plug-ins/gimpressionist/orientmap.c:618
 msgid "Select next vector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:602
-#: ../plug-ins/gimpressionist/sizemap.c:472
+#: ../plug-ins/gimpressionist/orientmap.c:620
+#: ../plug-ins/gimpressionist/sizemap.c:490
 msgid "A_dd"
 msgstr "Apon_dre"
 
-#: ../plug-ins/gimpressionist/orientmap.c:606
+#: ../plug-ins/gimpressionist/orientmap.c:624
 msgid "Add new vector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:608
-#: ../plug-ins/gimpressionist/sizemap.c:479
+#: ../plug-ins/gimpressionist/orientmap.c:626
+#: ../plug-ins/gimpressionist/sizemap.c:497
 msgid "_Kill"
 msgstr "_Tuar"
 
-#: ../plug-ins/gimpressionist/orientmap.c:612
+#: ../plug-ins/gimpressionist/orientmap.c:630
 msgid "Delete selected vector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
+#: ../plug-ins/gimpressionist/orientmap.c:641
 msgid "Type"
 msgstr "Tipe"
 
-#: ../plug-ins/gimpressionist/orientmap.c:627
+#: ../plug-ins/gimpressionist/orientmap.c:645
 msgid "_Normal"
 msgstr "_Normal"
 
-#: ../plug-ins/gimpressionist/orientmap.c:628
+#: ../plug-ins/gimpressionist/orientmap.c:646
 msgid "Vorte_x"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:629
+#: ../plug-ins/gimpressionist/orientmap.c:647
 msgid "Vortex_2"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:630
+#: ../plug-ins/gimpressionist/orientmap.c:648
 msgid "Vortex_3"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:636
-#: ../plug-ins/gimpressionist/sizemap.c:524
+#: ../plug-ins/gimpressionist/orientmap.c:654
+#: ../plug-ins/gimpressionist/sizemap.c:542
 msgid "_Voronoi"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/gimpressionist/orientmap.c:662
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:654
+#: ../plug-ins/gimpressionist/orientmap.c:672
 msgid "A_ngle:"
 msgstr "A_ngle :"
 
-#: ../plug-ins/gimpressionist/orientmap.c:658
+#: ../plug-ins/gimpressionist/orientmap.c:676
 msgid "Change the angle of the selected vector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:665
+#: ../plug-ins/gimpressionist/orientmap.c:683
 msgid "Ang_le offset:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:669
+#: ../plug-ins/gimpressionist/orientmap.c:687
 msgid "Offset all vectors with a given angle"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:680
+#: ../plug-ins/gimpressionist/orientmap.c:698
 msgid "Change the strength of the selected vector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:687
+#: ../plug-ins/gimpressionist/orientmap.c:705
 msgid "S_trength exp.:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/orientmap.c:691
-#: ../plug-ins/gimpressionist/sizemap.c:519
+#: ../plug-ins/gimpressionist/orientmap.c:709
+#: ../plug-ins/gimpressionist/sizemap.c:537
 msgid "Change the exponent of the strength"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/paper.c:120
+#: ../plug-ins/gimpressionist/paper.c:138
 msgid "P_aper"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/paper.c:155
+#: ../plug-ins/gimpressionist/paper.c:173
 msgid "Inverts the Papers texture"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/paper.c:159
+#: ../plug-ins/gimpressionist/paper.c:177
 msgid "O_verlay"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/paper.c:164
+#: ../plug-ins/gimpressionist/paper.c:182
 msgid "Applies the paper as it is (without embossing it)"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/paper.c:180
+#: ../plug-ins/gimpressionist/paper.c:198
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:49
+#: ../plug-ins/gimpressionist/placement.c:67
 msgid "Pl_acement"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:55
+#: ../plug-ins/gimpressionist/placement.c:73
 msgid "Placement"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:59
+#: ../plug-ins/gimpressionist/placement.c:77
 msgid "Randomly"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:63
+#: ../plug-ins/gimpressionist/placement.c:81
 msgid "Evenly distributed"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:71
+#: ../plug-ins/gimpressionist/placement.c:89
 msgid "Place strokes randomly around the image"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:75
+#: ../plug-ins/gimpressionist/placement.c:93
 msgid "The strokes are evenly distributed across the image"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:84
+#: ../plug-ins/gimpressionist/placement.c:102
 msgid "Centered"
 msgstr "Centrat"
 
-#: ../plug-ins/gimpressionist/placement.c:90
+#: ../plug-ins/gimpressionist/placement.c:108
 msgid "Focus the brush strokes around the center of the image"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:102
+#: ../plug-ins/gimpressionist/placement.c:120
 msgid "Stroke _density:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/placement.c:106
+#: ../plug-ins/gimpressionist/placement.c:124
 msgid "The relative density of the brush strokes"
 msgstr ""
 
@@ -10028,164 +10025,164 @@ msgstr ""
 #. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:632
+#: ../plug-ins/gimpressionist/ppmtool.c:650
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:620
+#: ../plug-ins/gimpressionist/presets.c:638
 msgid "Save Current"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:874
+#: ../plug-ins/gimpressionist/presets.c:892
 msgid "Gimpressionist Defaults"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:995
+#: ../plug-ins/gimpressionist/presets.c:1013
 msgid "_Presets"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:1010
+#: ../plug-ins/gimpressionist/presets.c:1028
 msgid "Save Current..."
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:1018
+#: ../plug-ins/gimpressionist/presets.c:1036
 msgid "Save the current settings to the specified file"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:1046
+#: ../plug-ins/gimpressionist/presets.c:1064
 msgid "Reads the selected Preset into memory"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:1052
+#: ../plug-ins/gimpressionist/presets.c:1070
 msgid "Deletes the selected Preset"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/presets.c:1058
+#: ../plug-ins/gimpressionist/presets.c:1076
 msgid "Reread the folder of Presets"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/preview.c:192
+#: ../plug-ins/gimpressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/preview.c:200
+#: ../plug-ins/gimpressionist/preview.c:188
 msgid "Revert to the original image"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:77
+#: ../plug-ins/gimpressionist/size.c:95
 msgid "_Size"
 msgstr "_Talha"
 
-#: ../plug-ins/gimpressionist/size.c:91
+#: ../plug-ins/gimpressionist/size.c:109
 msgid "Sizes:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:95
+#: ../plug-ins/gimpressionist/size.c:113
 msgid "The number of sizes of brushes to use"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:103
+#: ../plug-ins/gimpressionist/size.c:121
 msgid "Minimum size:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:107
+#: ../plug-ins/gimpressionist/size.c:125
 msgid "The smallest brush to create"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:115
+#: ../plug-ins/gimpressionist/size.c:133
 msgid "Maximum size:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:119
+#: ../plug-ins/gimpressionist/size.c:137
 msgid "The largest brush to create"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:133
+#: ../plug-ins/gimpressionist/size.c:151
 msgid "Size:"
 msgstr "Talha :"
 
-#: ../plug-ins/gimpressionist/size.c:142
+#: ../plug-ins/gimpressionist/size.c:160
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:146
+#: ../plug-ins/gimpressionist/size.c:164
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:150
+#: ../plug-ins/gimpressionist/size.c:168
 msgid "Selects a random size for each stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:154
+#: ../plug-ins/gimpressionist/size.c:172
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:166
+#: ../plug-ins/gimpressionist/size.c:184
 msgid "The hue of the region determines the size of the stroke"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:170
+#: ../plug-ins/gimpressionist/size.c:188
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/gimpressionist/size.c:197
 msgid "Manually specify the stroke size"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/size.c:190
+#: ../plug-ins/gimpressionist/size.c:208
 msgid "Opens up the Size Map Editor"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:383
+#: ../plug-ins/gimpressionist/sizemap.c:401
 msgid "Size Map Editor"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:411
+#: ../plug-ins/gimpressionist/sizemap.c:429
 msgid "Smvectors"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:421
+#: ../plug-ins/gimpressionist/sizemap.c:439
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:463
+#: ../plug-ins/gimpressionist/sizemap.c:481
 msgid "Select previous smvector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:470
+#: ../plug-ins/gimpressionist/sizemap.c:488
 msgid "Select next smvector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:477
+#: ../plug-ins/gimpressionist/sizemap.c:495
 msgid "Add new smvector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:484
+#: ../plug-ins/gimpressionist/sizemap.c:502
 msgid "Delete selected smvector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:497
+#: ../plug-ins/gimpressionist/sizemap.c:515
 msgid "Change the angle of the selected smvector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:504
+#: ../plug-ins/gimpressionist/sizemap.c:522
 msgid "S_trength:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:508
+#: ../plug-ins/gimpressionist/sizemap.c:526
 msgid "Change the strength of the selected smvector"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:515
+#: ../plug-ins/gimpressionist/sizemap.c:533
 msgid "St_rength exp.:"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/sizemap.c:531
+#: ../plug-ins/gimpressionist/sizemap.c:549
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -10291,7 +10288,7 @@ msgstr ""
 #. Full color control section
 #: ../plug-ins/ifscompose/ifscompose.c:687
 msgid "Full"
-msgstr ""
+msgstr "Complet"
 
 #: ../plug-ins/ifscompose/ifscompose.c:695
 msgid "IFS Fractal: Red"
@@ -11164,7 +11161,8 @@ msgstr ""
 msgid "JPEG preview"
 msgstr ""
 
-#: ../plug-ins/jpeg/jpeg-load.c:626 ../plug-ins/winicon/icoload.c:722
+#: ../plug-ins/jpeg/jpeg-load.c:626 ../plug-ins/psd/psd-thumb-load.c:83
+#: ../plug-ins/winicon/icoload.c:722
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr ""
@@ -11484,69 +11482,144 @@ msgid "Page Curl"
 msgstr ""
 
 #. label for the printable area
-#: ../plug-ins/print/print-page-layout.c:134
+#: ../plug-ins/print/print-page-layout.c:133
 msgid "Printable area:"
 msgstr ""
 
-#: ../plug-ins/print/print-page-layout.c:148
-msgid "_Adjust Page Size and Orientation"
-msgstr ""
-
-#: ../plug-ins/print/print-page-layout.c:202
+#: ../plug-ins/print/print-page-layout.c:179
 msgid "Ignore Page _Margins"
 msgstr ""
 
-#: ../plug-ins/print/print-page-layout.c:357
+#: ../plug-ins/print/print-page-layout.c:320
 msgid "_X resolution:"
 msgstr "Resolucion :"
 
-#: ../plug-ins/print/print-page-layout.c:361
+#: ../plug-ins/print/print-page-layout.c:324
 msgid "_Y resolution:"
 msgstr "Resolucion :"
 
-#: ../plug-ins/print/print-page-layout.c:432
+#: ../plug-ins/print/print-page-layout.c:395
 msgid "_Left:"
 msgstr "Esquèrra:"
 
-#: ../plug-ins/print/print-page-layout.c:451
+#: ../plug-ins/print/print-page-layout.c:414
 msgid "_Right:"
 msgstr "Drecha:"
 
-#: ../plug-ins/print/print-page-layout.c:505
+#: ../plug-ins/print/print-page-layout.c:468
 msgid "C_enter:"
 msgstr "Centre"
 
-#: ../plug-ins/print/print-page-layout.c:513
+#: ../plug-ins/print/print-page-layout.c:476
 msgid "Horizontally"
 msgstr "Orizontal"
 
-#: ../plug-ins/print/print-page-layout.c:514
+#: ../plug-ins/print/print-page-layout.c:477
 msgid "Vertically"
 msgstr "Vertical"
 
-#: ../plug-ins/print/print-page-layout.c:515
+#: ../plug-ins/print/print-page-layout.c:478
 msgid "Both"
 msgstr "Los dos"
 
-#: ../plug-ins/print/print.c:89
+#: ../plug-ins/print/print.c:102
 msgid "Print the image"
 msgstr "Estampar l'imatge"
 
-#: ../plug-ins/print/print.c:94
+#: ../plug-ins/print/print.c:107
 msgid "_Print..."
 msgstr "_Estampar..."
 
-#: ../plug-ins/print/print.c:213
+#: ../plug-ins/print/print.c:118
+msgid "Adjust page size and orientation for printing"
+msgstr ""
+
+#: ../plug-ins/print/print.c:124
+msgid "Page Set_up"
+msgstr ""
+
+#: ../plug-ins/print/print.c:253
 msgid "Image Settings"
 msgstr "_Paramètres"
 
-#: ../plug-ins/print/print.c:253
+#: ../plug-ins/print/print.c:333
 msgid "An error occurred while trying to print:"
 msgstr ""
 
-#: ../plug-ins/print/print.c:283
+#: ../plug-ins/print/print.c:363
 msgid "Printing"
 msgstr "Estampatge"
+
+#: ../plug-ins/psd/psd-load.c:208
+#, c-format
+msgid ""
+"Error loading PSD file:\n"
+"\n"
+"%s"
+msgstr ""
+"Error al moment de legir lo fichièr PSD :\n"
+"\n"
+"%s"
+
+#: ../plug-ins/psd/psd-load.c:263
+#, c-format
+msgid "Not a valid photoshop document file"
+msgstr ""
+
+#: ../plug-ins/psd/psd-load.c:270
+#, c-format
+msgid "Unsupported file format version: %d"
+msgstr ""
+
+#: ../plug-ins/psd/psd-load.c:277
+#, c-format
+msgid "Too many channels in file: %d"
+msgstr ""
+
+#: ../plug-ins/psd/psd-load.c:307
+#, c-format
+msgid "Unsupported color mode: %s"
+msgstr ""
+
+#: ../plug-ins/psd/psd-load.c:334
+#, c-format
+msgid "Unsupported bit depth: %d"
+msgstr ""
+
+#: ../plug-ins/psd/psd-load.c:368 ../plug-ins/psd/psd-load.c:378
+#: ../plug-ins/psd/psd-load.c:597 ../plug-ins/psd/psd-load.c:778
+#, c-format
+msgid "The file is corrupt!"
+msgstr ""
+
+#: ../plug-ins/psd/psd-load.c:538
+#, c-format
+msgid "Too many channels in layer: %d"
+msgstr ""
+
+#: ../plug-ins/psd/psd-load.c:545
+#, c-format
+msgid "Unsupported or invalid layer height: %d"
+msgstr ""
+
+#: ../plug-ins/psd/psd-load.c:552
+#, c-format
+msgid "Unsupported or invalid layer width: %d"
+msgstr ""
+
+#: ../plug-ins/psd/psd-load.c:1138 ../plug-ins/psd/psd-load.c:1486
+#, c-format
+msgid "Unsupported compression mode: %d"
+msgstr ""
+
+#: ../plug-ins/psd/psd-load.c:1575
+msgid "Extra"
+msgstr ""
+
+#: ../plug-ins/psd/psd-util.c:53
+#, c-format
+msgid "Unexpected end of file"
+msgstr ""
 
 #: ../plug-ins/rcm/rcm.c:99
 msgid "Replace a range of colors with another"
@@ -11784,7 +11857,9 @@ msgstr ""
 #: ../plug-ins/uri/uri-backend-wget.c:189
 #, c-format
 msgid "(timeout is %d second)"
-msgstr ""
+msgid_plural "(timeout is %d seconds)"
+msgstr[0] ""
+msgstr[1] ""
 
 #. The fourth line is either the network request or an error
 #: ../plug-ins/uri/uri-backend-wget.c:218
@@ -11938,7 +12013,7 @@ msgstr ""
 
 #: ../plug-ins/xjt/xjt.c:899
 msgid "Quality:"
-msgstr ""
+msgstr "Qualitat :"
 
 #: ../plug-ins/xjt/xjt.c:908
 msgid "Smoothing:"
@@ -11959,3 +12034,8 @@ msgstr ""
 msgid "Error: XJT property file '%s' is empty."
 msgstr ""
 
+#~ msgid "_MIME"
+#~ msgstr "_MIME"
+
+#~ msgid "Comm_ent:"
+#~ msgstr "Co_mentari :"

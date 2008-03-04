@@ -257,14 +257,15 @@ run (const gchar      *name,
   has_alpha = gimp_drawable_has_alpha (tileitdrawable->drawable_id);
 
   if (! gimp_drawable_mask_intersect (drawable->drawable_id,
-                                      &sel_x1, &sel_y1, &sel_x2, &sel_y2))
+                                      &sel_x1,    &sel_y1,
+                                      &sel_width, &sel_height))
     {
       g_message (_("Region selected for filter is empty."));
       return;
     }
 
-  sel_width  = sel_x2 - sel_x1;
-  sel_height = sel_y2 - sel_y1;
+  sel_x2 = sel_x1 + sel_width;
+  sel_y2 = sel_y1 + sel_height;
 
   /* Calculate preview size */
 

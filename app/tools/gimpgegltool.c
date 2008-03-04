@@ -278,10 +278,18 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
   /*  The options vbox  */
-  tool->options_box = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), tool->options_box,
+  tool->options_frame = gimp_frame_new (_("Operation Settings"));
+  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), tool->options_frame,
                       FALSE, FALSE, 0);
-  gtk_widget_show (tool->options_box);
+  gtk_widget_show (tool->options_frame);
+
+  tool->options_table = gtk_label_new ("Select an operation from the list above");
+  gimp_label_set_attributes (GTK_LABEL (tool->options_table),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_misc_set_padding (GTK_MISC (tool->options_table), 0, 4);
+  gtk_container_add (GTK_CONTAINER (tool->options_frame), tool->options_table);
+  gtk_widget_show (tool->options_table);
 }
 
 static void
@@ -450,11 +458,21 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
   return NULL;
 }
 
+static GValue *
+gimp_gegl_tool_config_value_new (GParamSpec *pspec)
+{
+  GValue *value = g_slice_new0 (GValue);
+
+  g_value_init (value, pspec->value_type);
+
+  return value;
+}
+
 static void
 gimp_gegl_tool_config_value_free (GValue *value)
 {
   g_value_unset (value);
-  g_free (value);
+  g_slice_free (GValue, value);
 }
 
 static GHashTable *
@@ -476,24 +494,31 @@ gimp_gegl_tool_config_get_properties (GObject *object)
   return properties;
 }
 
+static GValue *
+gimp_gegl_tool_config_value_get (GObject    *object,
+                                 GParamSpec *pspec)
+{
+  GHashTable *properties = gimp_gegl_tool_config_get_properties (object);
+  GValue     *value;
+
+  value = g_hash_table_lookup (properties, pspec->name);
+
+  if (! value)
+    {
+      value = gimp_gegl_tool_config_value_new (pspec);
+      g_hash_table_insert (properties, g_strdup (pspec->name), value);
+    }
+
+  return value;
+}
+
 static void
 gimp_gegl_tool_config_set_property (GObject      *object,
                                     guint         property_id,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GHashTable *properties = gimp_gegl_tool_config_get_properties (object);
-  GValue     *val;
-
-  val = g_hash_table_lookup (properties, pspec->name);
-
-  if (! val)
-    {
-      val = g_new0 (GValue, 1);
-      g_hash_table_insert (properties, g_strdup (pspec->name), val);
-
-      g_value_init (val, pspec->value_type);
-    }
+  GValue *val = gimp_gegl_tool_config_value_get (object, pspec);
 
   g_value_copy (value, val);
 }
@@ -504,19 +529,7 @@ gimp_gegl_tool_config_get_property (GObject    *object,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GHashTable *properties = gimp_gegl_tool_config_get_properties (object);
-  GValue     *val;
-
-  val = g_hash_table_lookup (properties, pspec->name);
-
-  if (! val)
-    {
-      val = g_new0 (GValue, 1);
-      g_hash_table_insert (properties, g_strdup (pspec->name), val);
-
-      g_value_init (val, pspec->value_type);
-      g_param_value_set_default (pspec, val);
-    }
+  GValue *val = gimp_gegl_tool_config_value_get (object, pspec);
 
   g_value_copy (val, value);
 }
@@ -660,7 +673,7 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
 
   if (tool->options_table)
     {
-      gtk_container_remove (GTK_CONTAINER (tool->options_box),
+      gtk_container_remove (GTK_CONTAINER (tool->options_frame),
                             tool->options_table);
       tool->options_table = NULL;
     }
@@ -675,8 +688,8 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
         gimp_prop_table_new (G_OBJECT (tool->config),
                              G_TYPE_FROM_INSTANCE (tool->config),
                              GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool)));
-      gtk_box_pack_start (GTK_BOX (tool->options_box), tool->options_table,
-                          FALSE, FALSE, 0);
+      gtk_container_add (GTK_CONTAINER (tool->options_frame),
+                         tool->options_table);
       gtk_widget_show (tool->options_table);
     }
 

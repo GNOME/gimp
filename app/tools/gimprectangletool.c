@@ -1350,8 +1350,9 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
       dy = 1;
       break;
 
-    case GDK_KP_Enter:
     case GDK_Return:
+    case GDK_KP_Enter:
+    case GDK_ISO_Enter:
       if (gimp_rectangle_tool_execute (rect_tool))
         gimp_rectangle_tool_halt (rect_tool);
       return TRUE;

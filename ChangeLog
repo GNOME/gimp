@@ -1,5 +1,9 @@
 2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	Merge 24892:25025 from trunk.
+	
+2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/widgets/gimptoolbox.[ch]
 	* app/widgets/gimptoolbox-dnd.c: fiddle around with
 	layout of toolbox.

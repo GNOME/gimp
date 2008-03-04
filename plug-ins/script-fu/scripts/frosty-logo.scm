@@ -10,7 +10,8 @@
         (border (/ size 5))
         (width (+ (car (gimp-drawable-width logo-layer)) border))
         (height (+ (car (gimp-drawable-height logo-layer)) border))
-        (logo-layer-mask (car (gimp-layer-create-mask logo-layer ADD-BLACK-MASK)))
+        (logo-layer-mask (car (gimp-layer-create-mask logo-layer
+                                                      ADD-BLACK-MASK)))
         (sparkle-layer (car (gimp-layer-new img width height RGBA-IMAGE
                                             "Sparkle" 100 NORMAL-MODE)))
         (matte-layer (car (gimp-layer-new img width height RGBA-IMAGE
@@ -30,7 +31,6 @@
     (gimp-image-add-layer img matte-layer 3)
     (gimp-image-add-layer img shadow-layer 4)
     (gimp-image-add-layer img bg-layer 5)
-    (gimp-layer-translate logo-layer border border)
     (gimp-selection-none img)
     (gimp-edit-clear sparkle-layer)
     (gimp-edit-clear matte-layer)
@@ -59,7 +59,6 @@
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill logo-layer BACKGROUND-FILL)
-;    (gimp-layer-add-mask logo-layer logo-layer-mask)
     (gimp-selection-load selection)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill logo-layer-mask BACKGROUND-FILL)
@@ -78,7 +77,6 @@
     (for-each (lambda (the-layer)
               (gimp-layer-resize the-layer (- width border) (- height border)
                                            (- border) (- border))
-              ; (gimp-layer-translate the-layer border border)
               )
               (list sparkle-layer matte-layer bg-layer)
     )
@@ -88,6 +86,8 @@
 
     (script-fu-util-image-resize-from-layer img logo-layer)
 
+    (gimp-layer-translate bg-layer (- 0 border) (- 0 border))
+
     (gimp-context-pop)
   )
 )
@@ -96,9 +96,45 @@
                                      logo-layer
                                      size
                                      bg-color)
-  (begin
+
+  (let* (
+        (position (- (car(gimp-image-get-layer-position img logo-layer)) 1))
+        (duplicate (car (gimp-layer-new-from-drawable logo-layer img)))
+        (name (car (gimp-layer-get-name logo-layer)))
+        (select (cons-array 4 'byte))
+        (crop 0)
+        (temp 0)
+        )
+
     (gimp-image-undo-group-start img)
-    (apply-frosty-logo-effect img logo-layer size bg-color)
+
+    (gimp-selection-layer-alpha logo-layer)
+    (gimp-image-add-layer img duplicate -1)
+    (gimp-layer-resize-to-image-size duplicate)
+    (gimp-selection-none img)
+    (apply-frosty-logo-effect img duplicate size bg-color)
+    (set! crop (aref (cadr (gimp-image-get-layers img)) (+ position 6)))
+    (set! temp (aref (cadr (gimp-image-get-layers img)) (+ position 3)))
+    (gimp-selection-layer-alpha temp)
+    (aset select 0 (cadr (gimp-selection-bounds img)))
+    (aset select 1 (caddr (gimp-selection-bounds img)))
+    (aset select 2 (cadddr (gimp-selection-bounds img)))
+    (aset select 3 (cadddr (cdr(gimp-selection-bounds img))))
+
+    (gimp-layer-resize crop
+           (+ 20 (- (aref select 2) (aref select 0)))
+           (+ 20 (- (aref select 3) (aref select 1)))
+           (- 0 (+ 0 (aref select 0)))
+           (- 0 (+ 0 (aref select 1))))
+    (gimp-layer-resize duplicate
+           (car (gimp-drawable-width logo-layer))
+           (car (gimp-drawable-height logo-layer))
+           (- 0 (car (gimp-drawable-offsets logo-layer)))
+           (- 0 (cadr (gimp-drawable-offsets logo-layer))))
+    (gimp-image-remove-layer img logo-layer)
+    (gimp-layer-set-name duplicate name)
+
+    (gimp-selection-none img)
     (gimp-image-undo-group-end img)
     (gimp-displays-flush)
   )

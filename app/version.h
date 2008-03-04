@@ -16,27 +16,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-typedef enum
-{
-  CENTER_NONE         = 0,
-  CENTER_HORIZONTALLY = 1,
-  CENTER_VERTICALLY   = 2,
-  CENTER_BOTH         = 3
-} PrintCenterMode;
+#ifndef __VERSION_H__
+#define __VERSION_H__
 
-typedef struct
-{
-  gint                num_pages;
-  gint32              image_id;
-  gint32              drawable_id;
-  GimpUnit            unit;
-  gdouble             xres;
-  gdouble             yres;
-  GimpUnit            image_unit;
-  gdouble             offset_x;
-  gdouble             offset_y;
-  PrintCenterMode     center;
-  gboolean            use_full_page;
-  GtkPrintOperation  *operation;
-} PrintData;
 
+#ifndef GIMP_APP_GLUE_COMPILATION
+#error You must not #include "version.h" from an app/ subdir
+#endif
+
+
+void   gimp_version_show (gboolean be_verbose);
+
+
+#endif /* __VERSION_H__ */

@@ -51,6 +51,8 @@ app_sources = \
 	sanity.h	\
 	units.c		\
 	units.h		\
+	version.c	\
+	version.h	\
 	gimp-log.c	\
 	gimp-log.h	\
 	gimp-intl.h
@@ -88,12 +90,14 @@ INCLUDES = \
 	$(GEGL_CFLAGS)		\
 	-I$(includedir)
 
-AM_LDFLAGS = $(mwindows) $(munix) \
+AM_LDFLAGS = $(munix) \
 	$(CARBON_LDFLAGS)			\
 	-u $(SYMPREFIX)xcf_init			\
 	-u $(SYMPREFIX)internal_procs_init	\
 	-u $(SYMPREFIX)gimp_coords_mix		\
 	-u $(SYMPREFIX)gimp_plug_in_manager_restore
+
+gimp_2_5_LDFLAGS = $(AM_LDFLAGS) $(mwindows) 
 
 gimp_2_5_LDADD = \
 	gui/libappgui.a			\

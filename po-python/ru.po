@@ -10,15 +10,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp python trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-22 23:36+0400\n"
-"PO-Revision-Date: 2007-10-16 05:33+0300\n"
+"POT-Creation-Date: 2008-01-24 02:16+0300\n"
+"PO-Revision-Date: 2008-01-24 02:46+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:380
 msgid "Missing exception information"
@@ -33,16 +32,19 @@ msgstr "При запуске %s произошла ошибка"
 msgid "_More Information"
 msgstr "_Подробнее"
 
-#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
+#: ../plug-ins/pygimp/gimpfu.py:506
+#: ../plug-ins/pygimp/gimpfu.py:518
 #: ../plug-ins/pygimp/gimpfu.py:524
 msgid "No"
 msgstr "Нет"
 
-#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:516
+#: ../plug-ins/pygimp/gimpfu.py:524
 msgid "Yes"
 msgstr "Да"
 
-#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:558
+#: ../plug-ins/pygimp/gimpui.py:224
 msgid "Python-Fu File Selection"
 msgstr "Выбор файла в Python-Fu"
 
@@ -55,7 +57,7 @@ msgstr "Выбор каталога в Python-Fu"
 msgid "Invalid input for '%s'"
 msgstr "Некорректный ввод для '%s'"
 
-#: ../plug-ins/pygimp/gimpui.py:175
+#: ../plug-ins/pygimp/gimpui.py:177
 msgid "Python-Fu Color Selection"
 msgstr "Выделение цвета в Python-Fu"
 
@@ -126,38 +128,38 @@ msgid "Save Python-Fu Console Output"
 msgstr "Сохранить вывод консоли Python-Fu"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
-msgid "Interactive Gimp-Python interpreter"
-msgstr "Интерактивная консоль для разработки на Python"
+msgid "Interactive GIMP Python interpreter"
+msgstr "Интерактивный интерпретатор Python в GIMP"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
 msgid "_Console"
 msgstr "_Консоль"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:52
+#: ../plug-ins/pygimp/plug-ins/foggify.py:53
 msgid "Add a layer of fog"
 msgstr "Добавить слой тумана"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:57
+#: ../plug-ins/pygimp/plug-ins/foggify.py:58
 msgid "_Fog..."
 msgstr "_Туман..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Layer name"
 msgstr "_Имя слоя"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "Clouds"
 msgstr "Облака"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "_Fog color"
 msgstr "_Цвет тумана"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
 msgid "_Turbulence"
 msgstr "Т_урбулентность"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:65
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Op_acity"
 msgstr "_Непрозрачность"
 
@@ -311,3 +313,4 @@ msgstr "Смещение тени по _X"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
 msgid "Drop shadow _Y displacement"
 msgstr "Смещение тени по _Y"
+

@@ -818,7 +818,9 @@ gimp_number_pair_entry_events (GtkWidget *widget,
       {
         GdkEventKey *kevent = (GdkEventKey *) event;
 
-        if (kevent->keyval != GDK_Return)
+        if (kevent->keyval != GDK_Return   &&
+            kevent->keyval != GDK_KP_Enter &&
+            kevent->keyval != GDK_ISO_Enter)
           break;
 
         /* If parsing was done due to widgets focus being lost, we only change

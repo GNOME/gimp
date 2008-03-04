@@ -40,7 +40,7 @@ m4_define([gimp_stable],
 m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
-m4_define([gegl_required_version], [0.0.15])
+m4_define([gegl_required_version], [0.0.16])
 m4_define([glib_required_version], [2.14.1])
 m4_define([gtk_required_version], [2.12.1])
 m4_define([gdk_pixbuf_required_version], [gtk_required_version])
@@ -139,9 +139,11 @@ AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
                    [The prefix for our gettext translation domains.])
 
+# Determine a C compiler to use
+AC_PROG_CC
+AM_PROG_CC_C_O
 
 # Initialize libtool
-AC_PROG_CC
 AM_DISABLE_STATIC
 AC_LIBTOOL_WIN32_DLL
 AM_PROG_LIBTOOL
@@ -247,7 +249,6 @@ AC_SUBST(WINDRES)
 
 # Checks for programs.
 AC_ISC_POSIX
-AM_PROG_CC_STDC
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 
@@ -1827,6 +1828,9 @@ AM_CONDITIONAL(STATICLIBS, test "x$enable_static" = xyes)
 # a tuned version of glib-mkenums
 GIMP_MKENUMS="\$(PERL) \$(top_srcdir)/tools/gimp-mkenums"
 AC_SUBST(GIMP_MKENUMS)
+
+#Add required trailing ; to list
+MIME_TYPES="$MIME_TYPES;"
 
 AC_SUBST(MIME_TYPES)
 

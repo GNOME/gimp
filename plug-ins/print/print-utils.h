@@ -16,27 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-typedef enum
-{
-  CENTER_NONE         = 0,
-  CENTER_HORIZONTALLY = 1,
-  CENTER_VERTICALLY   = 2,
-  CENTER_BOTH         = 3
-} PrintCenterMode;
+GKeyFile * print_utils_key_file_load_from_rcfile   (const gchar *basename);
+GKeyFile * print_utils_key_file_load_from_parasite (gint32       image_ID,
+                                                    const gchar *parasite_name);
 
-typedef struct
-{
-  gint                num_pages;
-  gint32              image_id;
-  gint32              drawable_id;
-  GimpUnit            unit;
-  gdouble             xres;
-  gdouble             yres;
-  GimpUnit            image_unit;
-  gdouble             offset_x;
-  gdouble             offset_y;
-  PrintCenterMode     center;
-  gboolean            use_full_page;
-  GtkPrintOperation  *operation;
-} PrintData;
-
+void       print_utils_key_file_save_as_rcfile     (GKeyFile    *key_file,
+                                                    const gchar *basename);
+void       print_utils_key_file_save_as_parasite   (GKeyFile    *key_file,
+                                                    gint32       image_ID,
+                                                    const gchar *parasite_name);

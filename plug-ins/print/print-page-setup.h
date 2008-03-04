@@ -17,9 +17,10 @@
  */
 
 
-void      print_page_setup_dialog (GtkPrintOperation *operation);
-gboolean  print_page_setup_load   (GtkPrintOperation *operation,
-                                   gint32             image_ID);
-void      print_page_setup_save   (GtkPrintOperation *operation);
+void   print_page_setup_dialog (GtkPrintOperation *operation);
+void   print_page_setup_load   (GtkPrintOperation *operation,
+                                gint32             image_ID);
+void   print_page_setup_save   (GtkPrintOperation *operation,
+                                gint32             image_ID);
 
 

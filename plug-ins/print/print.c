@@ -128,6 +128,11 @@ query (void)
                           print_args, NULL);
 
   gimp_plugin_menu_register (PAGE_SETUP_PROC_NAME, "<Image>/File/Send");
+
+#if GTK_CHECK_VERSION(2,13,0)
+  gimp_plugin_icon_register (PAGE_SETUP_PROC_NAME, GIMP_ICON_TYPE_STOCK_ID,
+                             (const guint8 *) GTK_STOCK_PAGE_SETUP);
+#endif
 }
 
 static void
@@ -194,6 +199,7 @@ print_image (gint32    image_ID,
   /* export the image */
   export = gimp_export_image (&image_ID, &drawable_ID, NULL,
                               GIMP_EXPORT_CAN_HANDLE_RGB   |
+                              GIMP_EXPORT_CAN_HANDLE_GRAY  |
                               GIMP_EXPORT_CAN_HANDLE_ALPHA);
 
   if (export == GIMP_EXPORT_CANCEL)
@@ -219,10 +225,12 @@ print_image (gint32    image_ID,
 
   gimp_image_get_resolution (image_ID, &data.xres, &data.yres);
 
-  load_print_settings (&data);
+  print_settings_load (&data);
 
   if (export != GIMP_EXPORT_EXPORT)
     image_ID = -1;
+
+  gtk_print_operation_set_unit (operation, GTK_UNIT_POINTS);
 
   g_signal_connect (operation, "begin-print",
                     G_CALLBACK (begin_print),
@@ -243,7 +251,7 @@ print_image (gint32    image_ID,
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
       g_signal_connect_swapped (operation, "end-print",
-                                G_CALLBACK (save_print_settings),
+                                G_CALLBACK (print_settings_save),
                                 &data);
 
       g_signal_connect (operation, "create-custom-widget",
@@ -293,7 +301,7 @@ page_setup (gint32 image_ID)
 
   print_page_setup_load (operation, image_ID);
   print_page_setup_dialog (operation);
-  print_page_setup_save (operation);
+  print_page_setup_save (operation, image_ID);
 
   g_object_unref (operation);
 
@@ -378,7 +386,7 @@ end_print (GtkPrintOperation *operation,
   gimp_progress_end ();
 
   /* generate events to solve the problems described in bug #466928 */
-  g_timeout_add (1000, (GSourceFunc) gtk_true, NULL);
+  g_timeout_add_seconds (1, (GSourceFunc) gtk_true, NULL);
 }
 
 static void
@@ -387,7 +395,9 @@ draw_page (GtkPrintOperation *operation,
            gint               page_nr,
            PrintData         *data)
 {
-  draw_page_cairo (context, data);
+  print_draw_page (context, data);
+
+  gimp_progress_update (1.0);
 }
 
 /*
@@ -398,7 +408,7 @@ static GtkWidget *
 create_custom_widget (GtkPrintOperation *operation,
                       PrintData         *data)
 {
-  return print_page_layout_gui (data);
+  return print_page_layout_gui (data, PRINT_PROC_NAME);
 }
 
 static void

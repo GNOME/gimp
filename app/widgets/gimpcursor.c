@@ -66,6 +66,8 @@
 #include "cursors/xbm/tool-ellipse-select-mask.xbm"
 #include "cursors/xbm/tool-free-select.xbm"
 #include "cursors/xbm/tool-free-select-mask.xbm"
+#include "cursors/xbm/tool-polygon-select.xbm"
+#include "cursors/xbm/tool-polygon-select-mask.xbm"
 #include "cursors/xbm/tool-fuzzy-select.xbm"
 #include "cursors/xbm/tool-fuzzy-select-mask.xbm"
 #include "cursors/xbm/tool-paths.xbm"
@@ -303,6 +305,12 @@ static GimpCursor gimp_tool_cursors[] =
     tool_free_select_width, tool_free_select_height,
     0, 0,
     tool_free_select, NULL, NULL, NULL
+  },
+  {
+    tool_polygon_select_bits, tool_polygon_select_mask_bits,
+    tool_polygon_select_width, tool_polygon_select_height,
+    0, 0,
+    tool_polygon_select, NULL, NULL, NULL
   },
   {
     tool_fuzzy_select_bits, tool_fuzzy_select_mask_bits,

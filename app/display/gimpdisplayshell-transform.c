@@ -276,7 +276,7 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
 /**
  * gimp_display_shell_transform_points:
  * @shell:       a #GimpDisplayShell
- * @points:      array of x, y coordinate pairs
+ * @points:      array of GimpVectors2 coordinate pairs
  * @coords:      returns the corresponding display coordinates
  * @n_points:    number of points
  * @use_offsets: if %TRUE, the source coordinates are in the coordinate
@@ -286,11 +286,11 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
  * objects can be rendered at the correct points on the display.
  **/
 void
-gimp_display_shell_transform_points (GimpDisplayShell *shell,
-                                     const gdouble    *points,
-                                     GdkPoint         *coords,
-                                     gint              n_points,
-                                     gboolean          use_offsets)
+gimp_display_shell_transform_points (GimpDisplayShell  *shell,
+                                     const GimpVector2 *points,
+                                     GdkPoint          *coords,
+                                     gint               n_points,
+                                     gboolean           use_offsets)
 {
   gint offset_x = 0;
   gint offset_y = 0;
@@ -308,8 +308,8 @@ gimp_display_shell_transform_points (GimpDisplayShell *shell,
 
   for (i = 0; i < n_points ; i++)
     {
-      gdouble x = points[i*2]   + offset_x;
-      gdouble y = points[i*2+1] + offset_y;
+      gdouble x = points[i].x + offset_x;
+      gdouble y = points[i].y + offset_y;
 
       x = x * shell->x_src_dec / shell->x_dest_inc;
       y = y * shell->y_src_dec / shell->y_dest_inc;

@@ -49,6 +49,7 @@ patterns_refresh_invoker (GimpProcedure      *procedure,
                           GError            **error)
 {
   gimp_data_factory_data_refresh (gimp->pattern_factory);
+
   return gimp_procedure_get_return_values (procedure, TRUE);
 }
 
