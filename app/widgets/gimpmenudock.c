@@ -478,34 +478,36 @@ gimp_menu_dock_update_title_idle (GimpMenuDock *menu_dock)
 {
   GString *title;
   GList   *list;
+  gint     sector;
 
   title = g_string_new (NULL);
 
-  for (list = GIMP_DOCK (menu_dock)->dockbooks;
-       list;
-       list = g_list_next (list))
-    {
-      GimpDockbook *dockbook = list->data;
-      GList        *children;
-      GList        *child;
+  for (sector = 0; sector < N_DOCK_SECTORS; sector++)
+    for (list = GIMP_DOCK (menu_dock)->dockbooks[sector];
+         list;
+         list = g_list_next (list))
+      {
+        GimpDockbook *dockbook = list->data;
+        GList        *children;
+        GList        *child;
 
-      children = gtk_container_get_children (GTK_CONTAINER (dockbook));
+        children = gtk_container_get_children (GTK_CONTAINER (dockbook));
 
-      for (child = children; child; child = g_list_next (child))
-        {
-          GimpDockable *dockable = child->data;
+        for (child = children; child; child = g_list_next (child))
+          {
+            GimpDockable *dockable = child->data;
 
-          g_string_append (title, dockable->name);
+            g_string_append (title, dockable->name);
 
-          if (g_list_next (child))
-            g_string_append (title, ", ");
-        }
+            if (g_list_next (child))
+              g_string_append (title, ", ");
+          }
 
-      g_list_free (children);
+        g_list_free (children);
 
-      if (g_list_next (list))
-        g_string_append (title, " | ");
-    }
+        if (g_list_next (list))
+          g_string_append (title, " | ");
+      }
 
   gtk_window_set_title (GTK_WINDOW (menu_dock), title->str);
 
