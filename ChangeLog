@@ -1,5 +1,11 @@
 2008-03-04  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/edit-commands.c (edit_copy_visible_cmd_callback)
+	(edit_cut_cmd_callback): added statusbar messages informing the
+	user that pixels have been transferred to the clipboard.
+
+2008-03-04  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable-transform.c (gimp_drawable_transform_cut):
 	clear the selection after cutting it as gimp_selection_extract()
 	doesn't do this for us any longer. See bug #510534.

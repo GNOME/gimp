@@ -193,6 +193,12 @@ edit_cut_cmd_callback (GtkAction *action,
 
   if (gimp_edit_cut (image, drawable, action_data_get_context (data), &error))
     {
+      GimpDisplay *display = action_data_get_display (data);
+
+      if (display)
+        gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_INFO,
+                      _("Cut pixels to the clipboard"));
+
       gimp_image_flush (image);
     }
   else
@@ -240,6 +246,12 @@ edit_copy_visible_cmd_callback (GtkAction *action,
 
   if (gimp_edit_copy_visible (image, action_data_get_context (data), &error))
     {
+      GimpDisplay *display = action_data_get_display (data);
+
+      if (display)
+        gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_INFO,
+                      _("Copied pixels to the clipboard"));
+
       gimp_image_flush (image);
     }
   else
