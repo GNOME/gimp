@@ -437,8 +437,9 @@ gimp_viewable_box_new (GimpContainer *container,
 
   /*  set a silly smally size request on the entry to disable
    *  GtkEntry's minimal width of 150 pixels.
+   *  FIXME
    */
-  gtk_widget_set_size_request (entry, 10, -1);
+  gtk_widget_set_size_request (entry, 100, -1);
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_widget_show (entry);
 
@@ -463,6 +464,7 @@ gimp_viewable_box_table_attach (GtkTable  *table,
 {
   GtkWidget *button = g_object_get_data (G_OBJECT (box), "viewable-button");
   GtkWidget *entry  = g_object_get_data (G_OBJECT (box), "viewable-entry");
+  GtkWidget *hbox;
 
   g_object_ref (button);
   g_object_ref (entry);
@@ -470,7 +472,11 @@ gimp_viewable_box_table_attach (GtkTable  *table,
   gtk_container_remove (GTK_CONTAINER (box), button);
   gtk_container_remove (GTK_CONTAINER (box), entry);
 
-  gtk_table_attach_defaults (table, button,
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 3);
+  gtk_widget_show (hbox);
+
+  gtk_table_attach_defaults (table, hbox,
                              button_start_col, button_end_col, row, row + 1);
   gtk_table_attach_defaults (table, entry,
                              entry_start_col, entry_end_col, row, row + 1);

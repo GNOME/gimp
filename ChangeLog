@@ -1,5 +1,11 @@
 2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/widgets/gimpviewablebox.c: when moving the elements
+	of a "viewable box" into a table, but the button into
+	an hbox.
+	
+2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* themes/Default/gtkrc: tweak some style values to try to
 	reduce wasted space.
 	
