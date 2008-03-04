@@ -47,6 +47,7 @@ struct _GimpTransformOptions
   GimpTransformGridType     grid_type;
   gint                      grid_size;
   gboolean                  constrain;
+  gint                      preview_opacity;
 };
 
 

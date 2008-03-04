@@ -280,6 +280,10 @@ gimp_transform_tool_constructor (GType                  type,
       g_signal_connect_object (options, "notify::grid-size",
                                G_CALLBACK (gimp_transform_tool_notify_preview),
                                tr_tool, 0);
+      g_signal_connect_object (tool->tool_info->tool_options,
+                               "notify::preview-opacity",
+                               G_CALLBACK (gimp_transform_tool_notify_preview),
+                               tr_tool, 0);
     }
 
   g_signal_connect_object (options, "notify::constrain",
@@ -1360,7 +1364,7 @@ gimp_transform_tool_force_expose_preview (GimpTransformTool *tr_tool)
   static gint       last_h = 0;
 
   GimpDisplayShell *shell;
-  gdouble           dx [4], dy [4];
+  gdouble           dx[4], dy[4];
   gint              area_x, area_y, area_w, area_h;
   gint              i;
 
@@ -1388,20 +1392,20 @@ gimp_transform_tool_force_expose_preview (GimpTransformTool *tr_tool)
                                      dx + 3, dy + 3, FALSE);
 
   /* find bounding box around preview */
-  area_x = area_w = (gint) dx [0];
-  area_y = area_h = (gint) dy [0];
+  area_x = area_w = (gint) dx[0];
+  area_y = area_h = (gint) dy[0];
 
   for (i = 1; i < 4; i++)
     {
-      if (dx [i] < area_x)
-        area_x = (gint) dx [i];
-      else if (dx [i] > area_w)
-        area_w = (gint) dx [i];
+      if (dx[i] < area_x)
+        area_x = (gint) dx[i];
+      else if (dx[i] > area_w)
+        area_w = (gint) dx[i];
 
-      if (dy [i] < area_y)
-        area_y = (gint) dy [i];
-      else if (dy [i] > area_h)
-        area_h = (gint) dy [i];
+      if (dy[i] < area_y)
+        area_y = (gint) dy[i];
+      else if (dy[i] > area_h)
+        area_h = (gint) dy[i];
     }
 
   area_w -= area_x;

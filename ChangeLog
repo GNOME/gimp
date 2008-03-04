@@ -1,5 +1,13 @@
 2008-03-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimptransformtool.[ch]
+	* app/tools/gimptransformoptions.[ch]
+	* app/display/gimpdisplayshell-preview.c: apply patch
+	from Tom Lechner (comment #35 in bug #167926) to allow
+	tranlucency in transform tool previews, for testing.
+	
+2008-03-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/display/gimpdisplayshell.[ch]
 	(gimp_display_shell_set_initial_scale): Factor out code
 	from gimp_display_shell_new.

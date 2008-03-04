@@ -50,7 +50,8 @@ enum
   PROP_PREVIEW_TYPE,
   PROP_GRID_TYPE,
   PROP_GRID_SIZE,
-  PROP_CONSTRAIN
+  PROP_CONSTRAIN,
+  PROP_PREVIEW_OPACITY
 };
 
 
@@ -66,6 +67,10 @@ static void   gimp_transform_options_get_property   (GObject         *object,
 static void   gimp_transform_options_reset          (GimpToolOptions *tool_options);
 
 static void   gimp_transform_options_preview_notify (GimpTransformOptions *options,
+                                                     GParamSpec           *pspec,
+                                                     GtkWidget            *density_box);
+
+static void   gimp_transform_options_preview_opacity_notify (GimpTransformOptions *options,
                                                      GParamSpec           *pspec,
                                                      GtkWidget            *density_box);
 
@@ -125,6 +130,10 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                     "constrain", NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_PREVIEW_OPACITY,
+                                "preview-opacity", NULL,
+                                0, 100, 100,
+                                GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -167,6 +176,9 @@ gimp_transform_options_set_property (GObject      *object,
     case PROP_CONSTRAIN:
       options->constrain = g_value_get_boolean (value);
       break;
+    case PROP_PREVIEW_OPACITY:
+      options->preview_opacity = g_value_get_int (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -207,6 +219,9 @@ gimp_transform_options_get_property (GObject    *object,
     case PROP_CONSTRAIN:
       g_value_set_boolean (value, options->constrain);
       break;
+    case PROP_PREVIEW_OPACITY:
+      g_value_set_int (value, options->preview_opacity);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -228,6 +243,12 @@ gimp_transform_options_reset (GimpToolOptions *tool_options)
   GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
+/** 
+ * gimp_transform_options_gui:
+ * @tool_options: a #GimpToolOptions
+ *
+ * Build the Transform Tool Options dialog.
+ **/
 GtkWidget *
 gimp_transform_options_gui (GimpToolOptions *tool_options)
 {
@@ -311,7 +332,17 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (button), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  gtk_widget_set_sensitive (button,
+  gtk_widget_set_sensitive (combo,
+                            options->preview_type ==
+                            GIMP_TRANSFORM_PREVIEW_TYPE_GRID ||
+                            options->preview_type ==
+                            GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID);
+  
+  g_signal_connect (config, "notify::preview-type",
+                    G_CALLBACK (gimp_transform_options_preview_notify),
+                    combo);
+  
+  gtk_widget_set_sensitive (table,
                             options->preview_type ==
                             GIMP_TRANSFORM_PREVIEW_TYPE_GRID ||
                             options->preview_type ==
@@ -319,13 +350,36 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
 
   g_signal_connect (config, "notify::preview-type",
                     G_CALLBACK (gimp_transform_options_preview_notify),
-                    button);
+                    table);
 
   gimp_prop_scale_entry_new (config, "grid-size",
                              GTK_TABLE (table), 0, 0,
                              NULL,
                              1.0, 8.0, 0,
                              FALSE, 0.0, 0.0);
+
+  /*  the preview opacity scale  */
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 2);
+  gtk_box_pack_start (GTK_BOX (button), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  gtk_widget_set_sensitive (table,
+                            options->preview_type ==
+                            GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE ||
+                            options->preview_type ==
+                            GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID);
+
+  g_signal_connect (config, "notify::preview-type",
+                    G_CALLBACK (gimp_transform_options_preview_opacity_notify),
+                    table);
+
+  gimp_prop_scale_entry_new (config, "preview-opacity",
+                             GTK_TABLE (table), 0, 0,
+                             _("Opacity:"),
+                             1.0, 8.0, 0,
+                             FALSE, 0.0, 0.0);
+
 
   if (tool_options->tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL)
     {
@@ -365,3 +419,16 @@ gimp_transform_options_preview_notify (GimpTransformOptions *options,
                             options->preview_type ==
                             GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID);
 }
+
+static void
+gimp_transform_options_preview_opacity_notify (GimpTransformOptions *options,
+                                               GParamSpec           *pspec,
+                                               GtkWidget            *density_box)
+{
+  gtk_widget_set_sensitive (density_box,
+                            options->preview_type ==
+                            GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE ||
+                            options->preview_type ==
+                            GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID);
+}
+
