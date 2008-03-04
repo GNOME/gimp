@@ -2,21 +2,21 @@
 # This is the German catalog for GIMP Python.
 # Copyright (C) 2006 Free Software Foundation, Inc.
 # Sven Neumann <sven@gimp.org>, 2006.
-# Hendrik Brandt <heb@gnome-de.org>, 2006, 2007.
+# Hendrik Brandt <heb@gnome-de.org>, 2006-2008.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-18 12:51+0200\n"
-"PO-Revision-Date: 2007-08-18 12:51+0200\n"
+"POT-Creation-Date: 2008-03-04 12:14+0100\n"
+"PO-Revision-Date: 2008-03-04 12:14+0100\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);"
 
 #: ../plug-ins/pygimp/gimpfu.py:380
 msgid "Missing exception information"
@@ -40,7 +40,7 @@ msgstr "Nein"
 msgid "Yes"
 msgstr "Ja"
 
-#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:224
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu-Dateiauswahl"
 
@@ -53,7 +53,7 @@ msgstr "Python-Fu-Ordnerauswahl"
 msgid "Invalid input for '%s'"
 msgstr "Ungültige Eingabe für »%s«"
 
-#: ../plug-ins/pygimp/gimpui.py:175
+#: ../plug-ins/pygimp/gimpui.py:177
 msgid "Python-Fu Color Selection"
 msgstr "Python-Fu-Farbauswahl"
 
@@ -124,38 +124,38 @@ msgid "Save Python-Fu Console Output"
 msgstr "Python-Fu-Konsolenausgabe speichern"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
-msgid "Interactive Gimp-Python interpreter"
+msgid "Interactive GIMP Python interpreter"
 msgstr "Interaktiver Gimp-Python-Interpreter"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
 msgid "_Console"
 msgstr "_Konsole"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+#: ../plug-ins/pygimp/plug-ins/foggify.py:53
 msgid "Add a layer of fog"
 msgstr "Erzeugt eine Ebene mit Nebel"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pygimp/plug-ins/foggify.py:58
 msgid "_Fog..."
 msgstr "_Nebel …"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Layer name"
 msgstr "_Ebenenname"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "Clouds"
 msgstr "Wolken"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "_Fog color"
 msgstr "_Nebelfarbe"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
 msgid "_Turbulence"
 msgstr "_Turbulenz"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Op_acity"
 msgstr "Deck_kraft"
 
@@ -314,3 +314,4 @@ msgstr "Schlagschatten _X-Versatz"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
 msgid "Drop shadow _Y displacement"
 msgstr "Schlagschatten _Y-Versatz"
+
