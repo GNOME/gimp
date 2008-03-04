@@ -1,6 +1,16 @@
 2008-03-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/display/gimpdisplayshell.[ch]
+	(gimp_display_shell_set_initial_scale): Factor out code
+	from gimp_display_shell_new.
+
+	* app/display/gimpdisplay.c (gimp_display_reconnect):
+	Scale things properly when opening an image in a 
+	no-image-open display.
+	
+2008-03-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/display/gimpdisplayshell.[ch]
 	* app/display/gimpdisplay.c: factor out duplicated
 	code for configuring display shell.
 	

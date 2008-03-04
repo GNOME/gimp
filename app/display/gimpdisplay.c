@@ -53,6 +53,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-handlers.h"
+#include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-transform.h"
 
 #include "gimp-intl.h"
@@ -443,7 +444,7 @@ gimp_scratch_display_new (GimpImage       *image,
 
   /*  create the shell for the image  */
   display->shell = gimp_display_shell_new (display, unit, scale,
-                                  menu_factory, popup_manager);
+                                           menu_factory, popup_manager);
   shell = GIMP_DISPLAY_SHELL (display->shell);
 
   gimp_display_shell_set_show_layer      (shell, FALSE);
@@ -659,7 +660,16 @@ gimp_display_reconnect (GimpDisplay *display,
   gimp_display_connect (display, image);
 
   if (image->gimp->scratch_image == old_image)
-    gimp_display_shell_configure (GIMP_DISPLAY_SHELL (display->shell));
+    {
+      GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (display->shell);
+      gint              n_width;
+      gint              n_height;
+
+      gimp_display_shell_set_initial_scale (shell, &n_width, &n_height);
+      gtk_widget_set_size_request (shell->canvas, n_width, n_height);
+      gimp_display_shell_configure (shell);
+      gimp_display_shell_scale_resize (shell, TRUE, TRUE);
+    }
 
   g_object_unref (old_image);
 

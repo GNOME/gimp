@@ -259,6 +259,8 @@ void        gimp_display_shell_set_mask            (GimpDisplayShell   *shell,
                                                     GimpDrawable       *mask,
                                                     GimpChannelType     color);
 void        gimp_display_shell_configure           (GimpDisplayShell   *shell);
-
+void        gimp_display_shell_set_initial_scale   (GimpDisplayShell  *shell,
+                                                    gint              *n_width_ptr,
+                                                    gint              *n_height_ptr);
 
 #endif /* __GIMP_DISPLAY_SHELL_H__ */
