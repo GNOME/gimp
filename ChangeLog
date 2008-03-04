@@ -1,5 +1,10 @@
 2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* themes/Default/gtkrc: tweak some style values to try to
+	reduce wasted space.
+	
+2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/widgets/gimpbrushfactoryview.[ch]
 	* app/widgets/gimpbrushselect.c: use scale control instead of
 	scale entry for brush spacing.

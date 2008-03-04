@@ -36,9 +36,20 @@ style "gimp-default-style"
       { "images/stock-warning-64.png", *, *, "gtk-dialog" }
     }
 
+  xthickness                        = 1
+  ythickness                        = 1
+
+  GtkEntry::inner_border            = {2, 0, 0, 0}
+  GtkComboBox::focus_line_width     = 0
+  GtkComboBox::focus_padding        = 0
+  GtkCheckButton::focus_line_width  = 0
+  GtkCheckButton::indicator_size    = 12
+  GtkCheckButton::indicator_spacing = 2
+  GtkCheckButton::focus_padding     = 0
   GtkPaned::handle_size             = 6
+  GimpFrame::label_spacing          = 0
   GimpDock::default_height          = 300
-  GimpDockSeparator::height         = 6
+  GimpDockSeparator::height         = 7
   GimpMenuDock::minimal_width       = 250
   GimpMenuDock::menu_preview_size   = button
   GimpToolbox::tool_icon_size       = button
@@ -60,14 +71,12 @@ style "gimp-default-style"
 
 class "GtkWidget" style "gimp-default-style"
 
-
 style "gimp-tiny-font-style"
 {
   font_name = "sans 8"
 }
 
 class "*Ruler*" style "gimp-tiny-font-style"
-
 
 style "gimp-tool-dialog-style" = "gimp-default-style"
 {
@@ -91,6 +100,30 @@ style "gimp-dockable-style" = "gimp-default-style"
   GimpFrame::label_spacing    = 2
   GtkButton::focus_line_width = 1
   GtkButton::focus_padding    = 0
+
+  xthickness                  = 1
+  ythickness                  = 1
 }
 
+style "gimp-dockable-title" = "gimp-default-style"
+{
+  text[NORMAL]                = "#0000FF"
+}
+
+style "gimp-dockable-button" = "gimp-default-style"
+{
+  bg[NORMAL]                  = "#FFFFFF"
+  base[NORMAL]                = "#FFFFFF"
+}
+
+style "gimp-dockbook-style" = "gimp-default-style"
+{
+  xthickness = 0
+  ythickness = 0
+}
+
+widget "*GimpDockbook" style "gimp-dockbook-style"
+
 widget "*GimpDockable.*" style "gimp-dockable-style"
+
+widget "*GimpDockable" style "gimp-dockable-title"
