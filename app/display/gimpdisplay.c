@@ -659,7 +659,7 @@ gimp_display_reconnect (GimpDisplay *display,
   gimp_display_connect (display, image);
 
   if (image->gimp->scratch_image == old_image)
-    gimp_display_shell_reconfigure_from_scratch (GIMP_DISPLAY_SHELL (display->shell));
+    gimp_display_shell_configure (GIMP_DISPLAY_SHELL (display->shell));
 
   g_object_unref (old_image);
 

@@ -1093,27 +1093,9 @@ gimp_display_shell_new (GimpDisplay     *display,
 
   /*  show everything  *******************************************************/
 
-  if (shell->options->show_rulers)
-    {
-      gtk_widget_show (shell->origin);
-      gtk_widget_show (shell->hrule);
-      gtk_widget_show (shell->vrule);
-    }
+  gimp_display_shell_configure (shell);
 
   gtk_widget_show (GTK_WIDGET (shell->canvas));
-
-  if (shell->options->show_scrollbars)
-    {
-      gtk_widget_show (shell->vsb);
-      gtk_widget_show (shell->hsb);
-      gtk_widget_show (shell->zoom_button);
-      gtk_widget_show (shell->quick_mask_button);
-      gtk_widget_show (shell->nav_ebox);
-    }
-
-  if (shell->options->show_statusbar)
-    gtk_widget_show (shell->statusbar);
-
   gtk_widget_show (main_vbox);
 
   filter = gimp_display_shell_filter_new (shell,
@@ -1135,7 +1117,7 @@ gimp_display_shell_new (GimpDisplay     *display,
 }
 
 void
-gimp_display_shell_reconfigure_from_scratch (GimpDisplayShell *shell)
+gimp_display_shell_configure (GimpDisplayShell *shell)
 {
   Gimp              *gimp;
   GimpDisplayConfig *display_config;

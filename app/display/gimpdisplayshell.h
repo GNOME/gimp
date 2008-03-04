@@ -258,7 +258,7 @@ void        gimp_display_shell_set_highlight       (GimpDisplayShell   *shell,
 void        gimp_display_shell_set_mask            (GimpDisplayShell   *shell,
                                                     GimpDrawable       *mask,
                                                     GimpChannelType     color);
-void   gimp_display_shell_reconfigure_from_scratch (GimpDisplayShell   *shell);
+void        gimp_display_shell_configure           (GimpDisplayShell   *shell);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_H__ */

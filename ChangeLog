@@ -1,3 +1,9 @@
+2008-03-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/display/gimpdisplayshell.[ch]
+	* app/display/gimpdisplay.c: factor out duplicated
+	code for configuring display shell.
+	
 2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merge 24892:25025 from trunk.
