@@ -1,3 +1,9 @@
+2008-03-04  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-transform.c (gimp_drawable_transform_cut):
+	clear the selection after cutting it as gimp_selection_extract()
+	doesn't do this for us any longer. See bug #510534.
+
 2008-03-02  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c

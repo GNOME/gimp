@@ -789,7 +789,11 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
         {
           tiles = gimp_selection_extract (gimp_image_get_mask (image),
                                           GIMP_PICKABLE (drawable),
-                                          context, TRUE, FALSE, TRUE, NULL);
+                                          context,
+                                          TRUE, FALSE, TRUE,
+                                          NULL);
+          /*  clear the selection  */
+          gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
 
           *new_layer = TRUE;
         }
@@ -801,14 +805,11 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
     }
   else  /*  otherwise, just copy the layer  */
     {
-      if (GIMP_IS_LAYER (drawable))
-        tiles = gimp_selection_extract (gimp_image_get_mask (image),
-                                        GIMP_PICKABLE (drawable),
-                                        context, FALSE, TRUE, TRUE, NULL);
-      else
-        tiles = gimp_selection_extract (gimp_image_get_mask (image),
-                                        GIMP_PICKABLE (drawable),
-                                        context, FALSE, TRUE, FALSE, NULL);
+      tiles = gimp_selection_extract (gimp_image_get_mask (image),
+                                      GIMP_PICKABLE (drawable),
+                                      context,
+                                      FALSE, TRUE, GIMP_IS_LAYER (drawable),
+                                      NULL);
 
       *new_layer = FALSE;
     }
