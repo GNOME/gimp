@@ -82,6 +82,7 @@ static void        gimp_toolbox_set_geometry     (GimpToolbox    *toolbox);
 
 static void        toolbox_separator_expand      (GimpToolbox    *toolbox);
 static void        toolbox_separator_collapse    (GimpToolbox    *toolbox);
+static void        toolbox_separator_hide        (GimpToolbox    *toolbox);
 static void        toolbox_create_tools          (GimpToolbox    *toolbox,
                                                   GimpContext    *context);
 static GtkWidget * toolbox_create_color_area     (GimpToolbox    *toolbox,
@@ -166,6 +167,9 @@ gimp_toolbox_init (GimpToolbox *toolbox)
   GimpDock  *dock       = GIMP_DOCK (toolbox);
   GtkWidget *separator;
 
+  /* FIXME */
+  toolbox->pack_vertically = TRUE;
+
   dock->vbox[1] = gtk_vbox_new (FALSE, 0);
   gtk_paned_add2 (GTK_PANED (dock->paned), dock->vbox[1]);
   gtk_widget_show (dock->vbox[1]);
@@ -228,6 +232,8 @@ gimp_toolbox_constructor (GType                  type,
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->tool_wbox), GTK_JUSTIFY_TOP);
   gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (toolbox->tool_wbox),
                                  GTK_JUSTIFY_LEFT);
+  gtk_wrap_box_set_hspacing (GTK_WRAP_BOX (toolbox->tool_wbox), 2);
+  gtk_wrap_box_set_vspacing (GTK_WRAP_BOX (toolbox->tool_wbox), 2);
   gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (toolbox->tool_wbox), 5.0 / 6.0);
 
   gtk_box_pack_start (GTK_BOX (vbox), toolbox->tool_wbox, FALSE, FALSE, 0);
@@ -268,9 +274,12 @@ gimp_toolbox_constructor (GType                  type,
   toolbox_create_tools (toolbox, context);
 
   toolbox->color_area = toolbox_create_color_area (toolbox, context);
-  gtk_wrap_box_pack_wrapped (GTK_WRAP_BOX (toolbox->area_wbox),
-                             toolbox->color_area,
-                             TRUE, TRUE, FALSE, TRUE, TRUE);
+  if (toolbox->pack_vertically)
+    gtk_box_pack_start (GTK_BOX (vbox), toolbox->color_area, FALSE, FALSE, 0);
+  else
+    gtk_wrap_box_pack_wrapped (GTK_WRAP_BOX (toolbox->area_wbox),
+                               toolbox->color_area,
+                               TRUE, TRUE, FALSE, TRUE, TRUE);
   if (config->toolbox_color_area)
     gtk_widget_show (toolbox->color_area);
 
@@ -279,8 +288,11 @@ gimp_toolbox_constructor (GType                  type,
                            toolbox->color_area, 0);
 
   toolbox->foo_area = toolbox_create_foo_area (toolbox, context);
-  gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->area_wbox), toolbox->foo_area,
-                     TRUE, TRUE, FALSE, TRUE);
+  if (toolbox->pack_vertically)
+    gtk_box_pack_start (GTK_BOX (vbox), toolbox->foo_area, FALSE, FALSE, 0);
+  else
+    gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->area_wbox), toolbox->foo_area,
+                       TRUE, TRUE, FALSE, TRUE);
   if (config->toolbox_foo_area)
     gtk_widget_show (toolbox->foo_area);
 
@@ -289,8 +301,11 @@ gimp_toolbox_constructor (GType                  type,
                            toolbox->foo_area, 0);
 
   toolbox->image_area = toolbox_create_image_area (toolbox, context);
-  gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->area_wbox), toolbox->image_area,
-                     TRUE, TRUE, FALSE, TRUE);
+  if (toolbox->pack_vertically)
+    gtk_box_pack_start (GTK_BOX (vbox), toolbox->image_area, FALSE, FALSE, 0);
+  else
+    gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->area_wbox), toolbox->image_area,
+                       TRUE, TRUE, FALSE, TRUE);
   if (config->toolbox_image_area)
     gtk_widget_show (toolbox->image_area);
 
@@ -298,14 +313,14 @@ gimp_toolbox_constructor (GType                  type,
                            G_CALLBACK (toolbox_area_notify),
                            toolbox->image_area, 0);
 
-  {
-    GtkWidget *button;
+/*   { */
+/*     GtkWidget *button; */
 
-    button = gimp_prop_check_button_new (G_OBJECT (config), "use-gegl",
-                                         "Use GEGL");
-    gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-    gtk_widget_show (button);
-  }
+/*     button = gimp_prop_check_button_new (G_OBJECT (config), "use-gegl", */
+/*                                          "Use GEGL"); */
+/*     gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0); */
+/*     gtk_widget_show (button); */
+/*   } */
 
   g_signal_connect_object (context, "tool-changed",
                            G_CALLBACK (toolbox_tool_changed),
@@ -316,7 +331,8 @@ gimp_toolbox_constructor (GType                  type,
 
   gimp_toolbox_style_set (GTK_WIDGET (toolbox), GTK_WIDGET (toolbox)->style);
 
-  toolbox_separator_expand (toolbox);
+  toolbox_separator_hide (toolbox);
+/*   toolbox_separator_expand (toolbox); */
 
   return object;
 }
@@ -592,6 +608,20 @@ toolbox_separator_expand (GimpToolbox *toolbox)
   gtk_box_set_child_packing (GTK_BOX (dock->vbox[0]), separator,
                              TRUE, TRUE, 0, GTK_PACK_START);
   gimp_dock_separator_set_show_label (GIMP_DOCK_SEPARATOR (separator), TRUE);
+}
+
+static void
+toolbox_separator_hide (GimpToolbox *toolbox)
+{
+  GimpDock  *dock = GIMP_DOCK (toolbox);
+  GList     *children;
+  GtkWidget *separator;
+
+  children = gtk_container_get_children (GTK_CONTAINER (dock->vbox[0]));
+  separator = children->data;
+  g_list_free (children);
+
+  gtk_widget_hide (separator);
 }
 
 static void

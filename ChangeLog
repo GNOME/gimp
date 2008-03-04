@@ -1,5 +1,11 @@
 2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/widgets/gimptoolbox.[ch]
+	* app/widgets/gimptoolbox-dnd.c: fiddle around with
+	layout of toolbox.
+	
+2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/widgets/gimpmenudock.c: fix error in handling of
 	multi-column docks.
 	

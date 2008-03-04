@@ -37,6 +37,8 @@
 #include "core/gimplayermask.h"
 #include "core/gimptoolinfo.h"
 
+#include "display/gimpdisplay-foreach.h"
+
 #include "file/file-open.h"
 #include "file/file-utils.h"
 

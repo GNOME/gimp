@@ -48,6 +48,9 @@ struct _GimpToolbox
   gint           tool_columns;
   gint           area_rows;
   gint           area_columns;
+
+  /* whether to pack the extra widgets sideways or vertically */
+  gboolean       pack_vertically;
 };
 
 struct _GimpToolboxClass
