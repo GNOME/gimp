@@ -1,5 +1,10 @@
 2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/widgets/gimppropwidgets.c: set border width of
+	expanding frames to 0.
+	
+2008-03-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/widgets/gimplayertreeview.c: change layout of
 	options to improve usage of space.
 	

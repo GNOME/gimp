@@ -93,6 +93,7 @@ gimp_prop_expanding_frame_new (GObject      *config,
     return NULL;
 
   frame = gimp_frame_new (NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 0);
 
   toggle = gimp_prop_check_button_new (config, property_name, button_label);
   gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
