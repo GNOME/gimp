@@ -1,3 +1,8 @@
+2008-03-05  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptransformtool.[ch]: applied some unrelated
+	cleanups from a patch from Tom Lechner (from bug #167926).
+
 2008-03-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.h: changed PROJ_ROUND() macros to

@@ -62,7 +62,7 @@ struct _GimpTransformTool
   gdouble         cx, cy;          /*  center point (for rotation)       */
   gdouble         aspect;          /*  original aspect ratio             */
 
-  gdouble         tx1, ty1;        /*  transformed coords                */
+  gdouble         tx1, ty1;        /*  transformed handle coords         */
   gdouble         tx2, ty2;
   gdouble         tx3, ty3;
   gdouble         tx4, ty4;
