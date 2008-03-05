@@ -183,7 +183,8 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
 
   /* only draw convex polygons */
 
-  if (! ((z1 * z2 > 0) && (z3 * z4 > 0))) return;
+  if (! ((z1 * z2 > 0) && (z3 * z4 > 0)))
+    return;
 
   if (GIMP_IS_LAYER (tool->drawable))
     opacity = gimp_layer_get_opacity (GIMP_LAYER (tool->drawable)) * 255.999;
@@ -651,7 +652,8 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
     }
 
   dx = x2 - x1;
-  if (! dx) return;
+  if (! dx)
+    return;
 
   pptr = (gdk_pixbuf_get_pixels (area)
           + (y - area_offy) * gdk_pixbuf_get_rowstride (area)
@@ -917,7 +919,8 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
   gfloat        mu, mv;
   gfloat        du, dv;
   gint          dx;
-  guchar        pixel[4], maskval;
+  guchar        pixel[4];
+  guchar        maskval;
   const guchar *cmap;
   gint          offset;
 
@@ -1035,6 +1038,8 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
       if (opacity == 255)
         while (dx--)
           {
+            register gulong tmp;
+
             read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
             read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
 
@@ -1043,7 +1048,7 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
             pptr[0] = cmap[offset + 0];
             pptr[1] = cmap[offset + 1];
             pptr[2] = cmap[offset + 2];
-            pptr[3] = ((gint) maskval * pixel[1]) >> 8;
+            pptr[3] = INT_MULT (maskval, pixel[1], tmp);
 
             pptr += 4;
 
