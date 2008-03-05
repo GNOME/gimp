@@ -1,5 +1,12 @@
 2008-03-05  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-preview.c: applied a modified and
+	further optimized version of the patch from Tom Lechner as
+	attached to bug #167926.  This makes the transform preview take
+	the layer opacity into account. Needs some more work...
+
+2008-03-05  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptransformtool.[ch]: applied some unrelated
 	cleanups from a patch from Tom Lechner (from bug #167926).
 
