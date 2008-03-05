@@ -16,10 +16,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: fr\n"
+"Project-Id-Version: The GIMP gimp-2-4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-11 20:19+0100\n"
-"PO-Revision-Date: 2008-02-12 14:27+0100\n"
+"POT-Creation-Date: 2008-03-05 22:52+0100\n"
+"PO-Revision-Date: 2008-03-05 22:53+0100\n"
 "Last-Translator: Stéphane Raimbault <stephane.raimbault@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -3288,21 +3288,21 @@ msgstr "Ré_afficher le dernier"
 msgid "Show the last used plug-in dialog again"
 msgstr "Affiche à nouveau la boîte de dialogue du dernier greffon utilisé"
 
-#: ../app/actions/plug-in-actions.c:491
+#: ../app/actions/plug-in-actions.c:503
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Ré_péter « %s »"
 
-#: ../app/actions/plug-in-actions.c:492
+#: ../app/actions/plug-in-actions.c:504
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "R_éafficher « %s »"
 
-#: ../app/actions/plug-in-actions.c:503
+#: ../app/actions/plug-in-actions.c:518
 msgid "Repeat Last"
 msgstr "Répéter le dernier"
 
-#: ../app/actions/plug-in-actions.c:505
+#: ../app/actions/plug-in-actions.c:520
 msgid "Re-Show Last"
 msgstr "Réafficher le dernier"
 
@@ -3593,7 +3593,8 @@ msgstr "Suppression du modèle"
 #, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr "Voulez-vous vraiment supprimer le modèle « %s » de la liste et du disque ?"
+msgstr ""
+"Voulez-vous vraiment supprimer le modèle « %s » de la liste et du disque ?"
 
 #: ../app/actions/text-editor-actions.c:44
 msgid "Open"
@@ -3638,7 +3639,7 @@ msgstr "Ouvrir un fichier texte (UTF-8)"
 #: ../app/core/gimppalette-load.c:76 ../app/core/gimppalette-load.c:271
 #: ../app/core/gimppalette-load.c:315 ../app/core/gimppalette-load.c:369
 #: ../app/core/gimppalette-load.c:457 ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpimagemaptool.c:586 ../app/xcf/xcf.c:323
+#: ../app/tools/gimpimagemaptool.c:587 ../app/xcf/xcf.c:323
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossible d'ouvrir « %s » en lecture : %s"
@@ -3919,7 +3920,7 @@ msgstr "Impor_ter un chemin..."
 msgid "Path to Sele_ction"
 msgstr "Ch_emin vers sélection"
 
-#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1875
+#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1876
 msgid "Path to selection"
 msgstr "Chemin vers sélection"
 
@@ -3982,7 +3983,7 @@ msgid "Path to Selection"
 msgstr "Chemin vers sélection"
 
 #: ../app/actions/vectors-commands.c:369 ../app/tools/gimpvectoroptions.c:199
-#: ../app/tools/gimpvectortool.c:1908 ../app/vectors/gimpvectors.c:199
+#: ../app/tools/gimpvectortool.c:1909 ../app/vectors/gimpvectors.c:199
 msgid "Stroke Path"
 msgstr "Tracer le chemin"
 
@@ -4028,7 +4029,8 @@ msgstr "A_juster l'image à la fenêtre"
 
 #: ../app/actions/view-actions.c:94
 msgid "Adjust the zoom ratio so that the window is used optimally"
-msgstr "Ajuste le ratio de zoom pour que l'image soit utilisée de façon optimale"
+msgstr ""
+"Ajuste le ratio de zoom pour que l'image soit utilisée de façon optimale"
 
 #: ../app/actions/view-actions.c:99 ../app/actions/view-actions.c:575
 msgid "Re_vert Zoom"
@@ -4492,7 +4494,7 @@ msgstr "Impossible de redimensionner le fichier d'échange : %s"
 #: ../app/config/gimpconfig-file.c:68 ../app/core/gimpbrushgenerated-save.c:63
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:145
 #: ../app/core/gimppalette-save.c:56 ../app/gui/themes.c:239
-#: ../app/tools/gimpimagemaptool.c:585 ../app/vectors/gimpvectors-export.c:83
+#: ../app/tools/gimpimagemaptool.c:586 ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:401
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -4503,7 +4505,7 @@ msgstr "Impossible d'ouvrir « %s » en écriture : %s"
 msgid "Error writing '%s': %s"
 msgstr "Erreur durant l'écriture de « %s » : %s"
 
-#: ../app/config/gimpconfig-file.c:90 ../app/tools/gimpimagemaptool.c:618
+#: ../app/config/gimpconfig-file.c:90 ../app/tools/gimpimagemaptool.c:619
 #, c-format
 msgid "Error reading '%s': %s"
 msgstr "Erreur durant la lecture de « %s » : %s"
@@ -9045,7 +9047,7 @@ msgstr "Justifié"
 
 #. This is a so-called pangram; it's supposed to
 #. contain all characters found in the alphabet.
-#: ../app/text/gimpfont.c:42
+#: ../app/text/gimpfont.c:45
 msgid ""
 "Pack my box with\n"
 "five dozen liquor jugs."
@@ -9958,7 +9960,7 @@ msgstr "Marquer le premier plan en dessinant sur l'objet à extraire"
 msgid "Draw a rough circle around the object to extract"
 msgstr "Tracer un cercle grossier autour de l'objet à extraire"
 
-#: ../app/tools/gimpforegroundselecttool.c:744
+#: ../app/tools/gimpforegroundselecttool.c:745
 msgid "command|Foreground Select"
 msgstr "Extraction de premier plan"
 
@@ -10094,7 +10096,7 @@ msgstr "Chargement rapide"
 msgid "Quick Save"
 msgstr "Enregistrement rapide"
 
-#: ../app/tools/gimpimagemaptool.c:609
+#: ../app/tools/gimpimagemaptool.c:610
 #, c-format
 msgid "Settings saved to '%s'"
 msgstr "Paramètres enregistrés sous « %s »"
@@ -10893,11 +10895,11 @@ msgstr "Conserver le rapport (%s)"
 msgid "Transforming"
 msgstr "Transformation"
 
-#: ../app/tools/gimptransformtool.c:1156
+#: ../app/tools/gimptransformtool.c:1157
 msgid "There is no layer to transform."
 msgstr "Il n'y a pas de calque à transformer."
 
-#: ../app/tools/gimptransformtool.c:1167
+#: ../app/tools/gimptransformtool.c:1168
 msgid "There is no path to transform."
 msgstr "Il n'y a pas de chemin à transformer."
 
@@ -10987,80 +10989,80 @@ msgstr "Supprimer une ancre"
 msgid "Delete Segment"
 msgstr "Supprimer un segment"
 
-#: ../app/tools/gimpvectortool.c:787
+#: ../app/tools/gimpvectortool.c:788
 msgid "Move Anchors"
 msgstr "Déplacer des ancres"
 
-#: ../app/tools/gimpvectortool.c:1145
+#: ../app/tools/gimpvectortool.c:1146
 msgid "Click to pick path to edit"
 msgstr "Cliquez pour sélectionner le chemin à éditer"
 
-#: ../app/tools/gimpvectortool.c:1148
+#: ../app/tools/gimpvectortool.c:1149
 msgid "Click to create a new path"
 msgstr "Cliquez pour créer un nouveau chemin"
 
-#: ../app/tools/gimpvectortool.c:1151
+#: ../app/tools/gimpvectortool.c:1152
 msgid "Click to create a new component of the path"
 msgstr "Cliquez pour créer un nouveau composant au chemin"
 
-#: ../app/tools/gimpvectortool.c:1154
+#: ../app/tools/gimpvectortool.c:1155
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Cliquez ou cliquez-glissez pour créer un nouveau noeud"
 
-#: ../app/tools/gimpvectortool.c:1163 ../app/tools/gimpvectortool.c:1170
+#: ../app/tools/gimpvectortool.c:1164 ../app/tools/gimpvectortool.c:1171
 msgid "Click-Drag to move the anchor around"
 msgstr "Cliquez-glissez pour déplacer le noeud."
 
-#: ../app/tools/gimpvectortool.c:1173 ../app/tools/gimpvectortool.c:1184
+#: ../app/tools/gimpvectortool.c:1174 ../app/tools/gimpvectortool.c:1185
 msgid "Click-Drag to move the anchors around"
 msgstr "Cliquez-glissez pour déplacer tous les noeuds"
 
-#: ../app/tools/gimpvectortool.c:1176
+#: ../app/tools/gimpvectortool.c:1177
 msgid "Click-Drag to move the handle around"
 msgstr "Cliquez-glissez pour déplacer le noeud"
 
-#: ../app/tools/gimpvectortool.c:1189
+#: ../app/tools/gimpvectortool.c:1190
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Cliquez-glissez pour changer la forme de la courbe"
 
-#: ../app/tools/gimpvectortool.c:1192
+#: ../app/tools/gimpvectortool.c:1193
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s symétrique"
 
-#: ../app/tools/gimpvectortool.c:1196
+#: ../app/tools/gimpvectortool.c:1197
 msgid "Click-Drag to move the component around"
 msgstr "Cliquez-glissez pour déplacer le composant"
 
-#: ../app/tools/gimpvectortool.c:1203
+#: ../app/tools/gimpvectortool.c:1204
 msgid "Click-Drag to move the path around"
 msgstr "Cliquez-glissez pour déplacer le chemin"
 
-#: ../app/tools/gimpvectortool.c:1206
+#: ../app/tools/gimpvectortool.c:1207
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Cliquez-glissez pour insérer un noeud sur le chemin"
 
-#: ../app/tools/gimpvectortool.c:1213
+#: ../app/tools/gimpvectortool.c:1214
 msgid "Click to delete this anchor"
 msgstr "Cliquez pour supprimer ce noeud"
 
-#: ../app/tools/gimpvectortool.c:1216
+#: ../app/tools/gimpvectortool.c:1217
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Cliquez pour connecter ce noeud au point final choisi"
 
-#: ../app/tools/gimpvectortool.c:1220
+#: ../app/tools/gimpvectortool.c:1221
 msgid "Click to open up the path"
 msgstr "Cliquez pour ouvrir le chemin"
 
-#: ../app/tools/gimpvectortool.c:1223
+#: ../app/tools/gimpvectortool.c:1224
 msgid "Click to make this node angular"
 msgstr "Cliquez pour rendre ce noeud angulaire"
 
-#: ../app/tools/gimpvectortool.c:1729
+#: ../app/tools/gimpvectortool.c:1730
 msgid "Delete Anchors"
 msgstr "Supprimer les ancres"
 
-#: ../app/tools/gimpvectortool.c:1902
+#: ../app/tools/gimpvectortool.c:1903
 msgid "There is no active layer or channel to stroke to"
 msgstr "Il n'y a pas de calque ou de canal actif sur lequel tracer"
 
@@ -11391,11 +11393,11 @@ msgstr "Notation HTML :"
 msgid "Palette"
 msgstr "Palette"
 
-#: ../app/widgets/gimpcontainerpopup.c:534
+#: ../app/widgets/gimpcontainerpopup.c:538
 msgid "Smaller Previews"
 msgstr "Aperçus plus petits"
 
-#: ../app/widgets/gimpcontainerpopup.c:539
+#: ../app/widgets/gimpcontainerpopup.c:543
 msgid "Larger Previews"
 msgstr "Aperçus plus grands"
 
@@ -12512,9 +12514,10 @@ msgstr "Erreur XCF : la version %d du format XCF non prise en charge"
 msgid "Saving '%s'"
 msgstr "Enregistrement de « %s »"
 
+# Utilisation de l'infinitif dans les infobulles du Bureau
 #: ../desktop/gimp.desktop.in.in.h:1
 msgid "Create images and edit photographs"
-msgstr "Crée des images et modifie des photographies"
+msgstr "Créer des images et modifier des photographies"
 
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
