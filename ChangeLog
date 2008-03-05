@@ -1,3 +1,22 @@
+2008-03-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.h: changed PROJ_ROUND() macros to
+	use RINT() so they work correctly with negative numbers.
+
+	* app/tools/gimpdrawtool.c
+	(gimp_draw_tool_draw_line)
+	(gimp_draw_tool_draw_dashed_line)
+	(gimp_draw_tool_draw_rectangle)
+	(gimp_draw_tool_draw_arc)
+	(gimp_draw_tool_draw_boundary): use floating-point coordinate
+	transform functions again. These functions were changed to use
+	integer transform functions in 2004 (!!) which broke sub-pixel
+	precision drawing for stuff like straight-line and blend tool
+	and also sub-pixel drawing of the brush outline.
+
+	Should be backported to 2.4 after it has shown no ill effects in
+	trunk.
+
 2008-03-04  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/edit-commands.c (edit_copy_visible_cmd_callback)

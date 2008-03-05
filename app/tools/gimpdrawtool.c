@@ -473,25 +473,25 @@ gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
                           gboolean      use_offsets)
 {
   GimpDisplayShell *shell;
-  gint              tx1, ty1;
-  gint              tx2, ty2;
+  gdouble           tx1, ty1;
+  gdouble           tx2, ty2;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
 
-  gimp_display_shell_transform_xy (shell,
-                                   x1, y1,
-                                   &tx1, &ty1,
-                                   use_offsets);
-  gimp_display_shell_transform_xy (shell,
-                                   x2, y2,
-                                   &tx2, &ty2,
-                                   use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     x1, y1,
+                                     &tx1, &ty1,
+                                     use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     x2, y2,
+                                     &tx2, &ty2,
+                                     use_offsets);
 
   gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         tx1, ty1,
-                         tx2, ty2);
+                         PROJ_ROUND (tx1), PROJ_ROUND (ty1),
+                         PROJ_ROUND (tx2), PROJ_ROUND (ty2));
 }
 
 /**
@@ -516,26 +516,26 @@ gimp_draw_tool_draw_dashed_line (GimpDrawTool *draw_tool,
                                  gboolean      use_offsets)
 {
   GimpDisplayShell *shell;
-  gint              tx1, ty1;
-  gint              tx2, ty2;
+  gdouble           tx1, ty1;
+  gdouble           tx2, ty2;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
 
-  gimp_display_shell_transform_xy (shell,
-                                   x1, y1,
-                                   &tx1, &ty1,
-                                   use_offsets);
-  gimp_display_shell_transform_xy (shell,
-                                   x2, y2,
-                                   &tx2, &ty2,
-                                   use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     x1, y1,
+                                     &tx1, &ty1,
+                                     use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     x2, y2,
+                                     &tx2, &ty2,
+                                     use_offsets);
 
   gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
                          GIMP_CANVAS_STYLE_XOR_DASHED,
-                         tx1, ty1,
-                         tx2, ty2);
+                         PROJ_ROUND (tx1), PROJ_ROUND (ty1),
+                         PROJ_ROUND (tx2), PROJ_ROUND (ty2));
 }
 
 /**
@@ -561,22 +561,22 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
                                gboolean      use_offsets)
 {
   GimpDisplayShell *shell;
-  gint              tx1, ty1;
-  gint              tx2, ty2;
+  gdouble           tx1, ty1;
+  gdouble           tx2, ty2;
   guint             w, h;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
 
-  gimp_display_shell_transform_xy (shell,
-                                   MIN (x, x + width), MIN (y, y + height),
-                                   &tx1, &ty1,
-                                   use_offsets);
-  gimp_display_shell_transform_xy (shell,
-                                   MAX (x, x + width), MAX (y, y + height),
-                                   &tx2, &ty2,
-                                   use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     MIN (x, x + width), MIN (y, y + height),
+                                     &tx1, &ty1,
+                                     use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     MAX (x, x + width), MAX (y, y + height),
+                                     &tx2, &ty2,
+                                     use_offsets);
 
   tx1 = CLAMP (tx1, -1, shell->disp_width  + 1);
   ty1 = CLAMP (ty1, -1, shell->disp_height + 1);
@@ -585,14 +585,14 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
 
   tx2 -= tx1;
   ty2 -= ty1;
-  w = MAX (0, tx2);
-  h = MAX (0, ty2);
+  w = PROJ_ROUND (MAX (0.0, tx2));
+  h = PROJ_ROUND (MAX (0.0, ty2));
 
   if (w > 0 && h > 0)
     gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
                                 GIMP_CANVAS_STYLE_XOR,
                                 filled,
-                                tx1, ty1,
+                                PROJ_ROUND (tx1), PROJ_ROUND (ty1),
                                 w - 1, h - 1);
 }
 
@@ -608,27 +608,27 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
                          gboolean      use_offsets)
 {
   GimpDisplayShell *shell;
-  gint              tx1, ty1;
-  gint              tx2, ty2;
+  gdouble           tx1, ty1;
+  gdouble           tx2, ty2;
   guint             w, h;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
 
-  gimp_display_shell_transform_xy (shell,
-                                   MIN (x, x + width), MIN (y, y + height),
-                                   &tx1, &ty1,
-                                   use_offsets);
-  gimp_display_shell_transform_xy (shell,
-                                   MAX (x, x + width), MAX (y, y + height),
-                                   &tx2, &ty2,
-                                   use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     MIN (x, x + width), MIN (y, y + height),
+                                     &tx1, &ty1,
+                                     use_offsets);
+  gimp_display_shell_transform_xy_f (shell,
+                                     MAX (x, x + width), MAX (y, y + height),
+                                     &tx2, &ty2,
+                                     use_offsets);
 
   tx2 -= tx1;
   ty2 -= ty1;
-  w = MAX (0, tx2);
-  h = MAX (0, ty2);
+  w = PROJ_ROUND (MAX (0.0, tx2));
+  h = PROJ_ROUND (MAX (0.0, ty2));
 
   if (w > 0 && h > 0)
     {
@@ -637,18 +637,19 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
           gimp_canvas_draw_arc (GIMP_CANVAS (shell->canvas),
                                 GIMP_CANVAS_STYLE_XOR,
                                 filled,
-                                tx1, ty1,
+                                PROJ_ROUND (tx1), PROJ_ROUND (ty1),
                                 w - 1, h - 1,
                                 angle1, angle2);
         }
       else
         {
           /* work around the problem of an 1xN or Nx1 arc not being shown
-             properly */
+           * properly
+           */
           gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
                                       GIMP_CANVAS_STYLE_XOR,
                                       filled,
-                                      tx1, ty1,
+                                      PROJ_ROUND (tx1), PROJ_ROUND (ty1),
                                       w - 1, h - 1);
         }
     }
@@ -1693,7 +1694,7 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
   GdkPoint         *gdk_points;
   gint              n_gdk_points;
   gint              xmax, ymax;
-  gint              x, y;
+  gdouble           x, y;
   gint              i;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
@@ -1728,14 +1729,14 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
 
       if (n_gdk_points == 0)
         {
-          gimp_display_shell_transform_xy (shell,
-                                           bound_segs[i].x1 + offset_x,
-                                           bound_segs[i].y1 + offset_y,
-                                           &x, &y,
-                                           use_offsets);
+          gimp_display_shell_transform_xy_f (shell,
+                                             bound_segs[i].x1 + offset_x,
+                                             bound_segs[i].y1 + offset_y,
+                                             &x, &y,
+                                             use_offsets);
 
-          gdk_points[0].x = CLAMP (x, -1, xmax);
-          gdk_points[0].y = CLAMP (y, -1, ymax);
+          gdk_points[0].x = PROJ_ROUND (CLAMP (x, -1, xmax));
+          gdk_points[0].y = PROJ_ROUND (CLAMP (y, -1, ymax));
 
           /*  If this segment is a closing segment && the segments lie inside
            *  the region, OR if this is an opening segment and the segments
@@ -1760,14 +1761,14 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
 
       g_assert (n_gdk_points < n_bound_segs + 1);
 
-      gimp_display_shell_transform_xy (shell,
-                                       bound_segs[i].x2 + offset_x,
-                                       bound_segs[i].y2 + offset_y,
-                                       &x, &y,
-                                       use_offsets);
+      gimp_display_shell_transform_xy_f (shell,
+                                         bound_segs[i].x2 + offset_x,
+                                         bound_segs[i].y2 + offset_y,
+                                         &x, &y,
+                                         use_offsets);
 
-      gdk_points[n_gdk_points].x = CLAMP (x, -1, xmax);
-      gdk_points[n_gdk_points].y = CLAMP (y, -1, ymax);
+      gdk_points[n_gdk_points].x = PROJ_ROUND (CLAMP (x, -1, xmax));
+      gdk_points[n_gdk_points].y = PROJ_ROUND (CLAMP (y, -1, ymax));
 
       /*  If this segment is a closing segment && the segments lie inside
        *  the region, OR if this is an opening segment and the segments
