@@ -35,7 +35,9 @@ menudata_DATA = \
 	tool-options-menu.xml		\
 	tools-menu.xml			\
 	undo-menu.xml			\
-	vectors-menu.xml
+	vectors-menu.xml		\
+	image-toolbar.xml		\
+	scratch-toolbar.xml
 
 EXTRA_DIST = \
 	$(menudata_DATA)		\

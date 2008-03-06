@@ -448,9 +448,13 @@ gimp_scratch_display_new (GimpImage       *image,
   shell = GIMP_DISPLAY_SHELL (display->shell);
 
   gimp_display_shell_set_show_layer      (shell, FALSE);
+  gimp_display_shell_set_show_toolbar    (shell, FALSE);
   gimp_display_shell_set_show_rulers     (shell, FALSE);
   gimp_display_shell_set_show_scrollbars (shell, FALSE);
   gimp_display_shell_set_show_statusbar  (shell, FALSE);
+
+  if (shell->scratch_toolbar)
+    gtk_widget_show (shell->scratch_toolbar);
 
   width  = SCALEX (shell, gimp_image_get_width  (image));
   height = SCALEY (shell, gimp_image_get_height (image));

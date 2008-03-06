@@ -41,6 +41,7 @@ struct _GimpDisplayOptions
 
   /*  GimpDisplayShell options  */
   gboolean               show_menubar;
+  gboolean               show_toolbar;
   gboolean               show_rulers;
   gboolean               show_scrollbars;
   gboolean               show_statusbar;

@@ -251,6 +251,7 @@
           <menuitem action="view-padding-color-prefs" />
         </menu>
         <menuitem action="view-show-menubar" />
+        <menuitem action="view-show-toolbar" />
         <menuitem action="view-show-rulers" />
         <menuitem action="view-show-scrollbars" />
         <menuitem action="view-show-statusbar" />

@@ -55,7 +55,7 @@ static const GimpActionEntry image_actions[] =
     N_("Image Menu"), NULL, NULL, NULL,
     GIMP_HELP_IMAGE_WINDOW },
 
-  { "extensions-menu",        NULL, N_("_Xtns")       },
+  { "extensions-menu",        NULL, N_("_Gimp")       },
 
   { "image-menu",             NULL, N_("_Image")      },
   { "image-mode-menu",        NULL, N_("_Mode")       },
@@ -67,6 +67,14 @@ static const GimpActionEntry image_actions[] =
   { "colors-auto-menu",       NULL, N_("_Auto")       },
   { "colors-map-menu",        NULL, N_("_Map")        },
   { "colors-components-menu", NULL, N_("C_omponents") },
+
+  { "image-toolbar", GTK_STOCK_EDIT,
+    "Image Toolbar", NULL, NULL, NULL,
+    GIMP_HELP_IMAGE_WINDOW },
+
+  { "scratch-toolbar", GTK_STOCK_EDIT,
+    "Scratch Toolbar", NULL, NULL, NULL,
+    GIMP_HELP_IMAGE_WINDOW },
 
   { "image-new", GTK_STOCK_NEW,
     N_("_New..."), "<control>N",

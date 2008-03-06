@@ -294,6 +294,10 @@ N_("When enabled, the mouse pointer will be shown over the image while " \
 N_("When enabled, the menubar is visible by default. This can also be " \
    "toggled with the \"View->Show Menubar\" command.")
 
+#define SHOW_TOOLBAR_BLURB \
+N_("When enabled, the image toolbar is visible. This can also be " \
+   "toggled with the \"View->Show Toolbar\" command.")
+
 #define SHOW_RULERS_BLURB \
 N_("When enabled, the rulers are visible by default. This can also be " \
    "toggled with the \"View->Show Rulers\" command.")

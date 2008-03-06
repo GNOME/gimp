@@ -222,6 +222,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->menubar_manager        = NULL;
   shell->popup_manager          = NULL;
+  shell->toolbar_manager        = NULL;
+  shell->scratch_toolbar_manager = NULL;
 
   shell->unit                   = GIMP_UNIT_PIXEL;
 
@@ -274,6 +276,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->nav_ebox               = NULL;
 
   shell->menubar                = NULL;
+  shell->toolbar                = NULL;
+  shell->scratch_toolbar        = NULL;
   shell->statusbar              = NULL;
 
   shell->render_buf             = g_new (guchar,
@@ -439,6 +443,18 @@ gimp_display_shell_destroy (GtkObject *object)
     {
       g_object_unref (shell->menubar_manager);
       shell->menubar_manager = NULL;
+    }
+
+  if (shell->toolbar_manager)
+    {
+      g_object_unref (shell->toolbar_manager);
+      shell->toolbar_manager = NULL;
+    }
+
+  if (shell->scratch_toolbar_manager)
+    {
+      g_object_unref (shell->scratch_toolbar_manager);
+      shell->scratch_toolbar_manager = NULL;
     }
 
   shell->popup_manager = NULL;
@@ -689,6 +705,16 @@ gimp_display_shell_new (GimpDisplay     *display,
 
   shell->popup_manager = popup_manager;
 
+  shell->toolbar_manager = gimp_menu_factory_manager_new (menu_factory,
+                                                          "<Image>",
+                                                          display,
+                                                          FALSE);
+
+  shell->scratch_toolbar_manager = gimp_menu_factory_manager_new (menu_factory,
+                                                                  "<Image>",
+                                                                  display,
+                                                                  FALSE);
+
   gtk_window_add_accel_group (GTK_WINDOW (shell),
                               gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (shell->menubar_manager)));
 
@@ -710,6 +736,8 @@ gimp_display_shell_new (GimpDisplay     *display,
    *  main_vbox
    *     |
    *     +-- menubar
+   *     |
+   *     +-- toolbar
    *     |
    *     +-- disp_vbox
    *     |      |
@@ -775,6 +803,32 @@ gimp_display_shell_new (GimpDisplay     *display,
       g_signal_connect (shell->menubar, "key-press-event",
                         G_CALLBACK (gimp_display_shell_events),
                         shell);
+    }
+
+  shell->toolbar =
+    gtk_ui_manager_get_widget (GTK_UI_MANAGER (shell->toolbar_manager),
+                               "/image-toolbar");
+
+  if (shell->toolbar)
+    {
+      gtk_box_pack_start (GTK_BOX (main_vbox), shell->toolbar, FALSE, FALSE, 0);
+      gtk_toolbar_set_icon_size (GTK_TOOLBAR (shell->toolbar),
+                                 GTK_ICON_SIZE_MENU);
+      gtk_toolbar_set_style (GTK_TOOLBAR (shell->toolbar), GTK_TOOLBAR_ICONS);
+      gtk_widget_show (shell->toolbar);
+    }
+
+  shell->scratch_toolbar =
+    gtk_ui_manager_get_widget (GTK_UI_MANAGER (shell->scratch_toolbar_manager),
+                               "/scratch-toolbar");
+
+  if (shell->scratch_toolbar)
+    {
+      gtk_box_pack_start (GTK_BOX (main_vbox), shell->scratch_toolbar, FALSE, FALSE, 0);
+      gtk_toolbar_set_icon_size (GTK_TOOLBAR (shell->scratch_toolbar),
+                                 GTK_ICON_SIZE_BUTTON);
+      gtk_toolbar_set_style (GTK_TOOLBAR (shell->scratch_toolbar), GTK_TOOLBAR_ICONS);
+/*       gtk_widget_show (shell->scratch_toolbar); */
     }
 
   /*  another vbox for everything except the statusbar  */
@@ -1146,6 +1200,12 @@ gimp_display_shell_configure (GimpDisplayShell *shell)
 
   gimp_config_sync (G_OBJECT (display_config->default_view),
                     G_OBJECT (shell->options), 0);
+
+  if (shell->scratch_toolbar)
+    gtk_widget_hide (shell->scratch_toolbar);
+
+  if (shell->options->show_toolbar && shell->toolbar)
+    gtk_widget_show (shell->toolbar);
 
   if (shell->options->show_rulers)
     {

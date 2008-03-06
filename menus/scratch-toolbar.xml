@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
+
+<ui>
+  <toolbar action="scratch-toolbar">
+    <toolitem action="image-new-from-image" />
+    <toolitem action="file-open" />
+    <toolitem action="file-open-as-layers" />
+    <toolitem action="file-open-location" />
+    <separator expand="true" />
+    <toolitem action="help-help" />
+    <toolitem action="dialogs-about" />
+    <toolitem action="file-quit" />
+  </toolbar>
+</ui>

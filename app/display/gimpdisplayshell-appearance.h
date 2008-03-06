@@ -28,6 +28,10 @@ void       gimp_display_shell_set_show_menubar       (GimpDisplayShell *shell,
                                                       gboolean          show);
 gboolean   gimp_display_shell_get_show_menubar       (GimpDisplayShell *shell);
 
+void       gimp_display_shell_set_show_toolbar       (GimpDisplayShell *shell,
+                                                      gboolean          show);
+gboolean   gimp_display_shell_get_show_toolbar       (GimpDisplayShell *shell);
+
 void       gimp_display_shell_set_show_rulers        (GimpDisplayShell *shell,
                                                       gboolean          show);
 gboolean   gimp_display_shell_get_show_rulers        (GimpDisplayShell *shell);

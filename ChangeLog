@@ -1,5 +1,30 @@
 2008-03-05  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	Create toolbars for the image window and no-image-open
+	window.  Add a config option to control whether toolbar
+	is shown in image.
+
+	* app/menus/menus.c
+	* app/actions/image-actions.c
+	* app/actions/view-actions.c
+	* app/actions/view-commands.c
+	* app/actions/view-commands.h
+	* app/config/gimprc-blurbs.h
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplayshell.h
+	* app/display/gimpdisplayoptions.c
+	* app/display/gimpdisplayoptions.h
+	* app/display/gimpdisplayshell-appearance.c
+	* app/display/gimpdisplayshell-appearance.h
+	* app/display/gimpdisplay.c
+	* app/widgets/gimphelp-ids.h
+	* menus/image-toolbar.xml
+	* menus/scratch-toolbar.xml
+	* menus/image-menu.xml.in
+	* menus/Makefile.am
+	
+2008-03-05  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/widgets/gimptoolbox.c: don't set geometry hints --
 	with two columns, they aren't useful.
 	

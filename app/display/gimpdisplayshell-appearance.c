@@ -124,6 +124,40 @@ gimp_display_shell_get_show_menubar (GimpDisplayShell *shell)
 }
 
 void
+gimp_display_shell_set_show_toolbar (GimpDisplayShell *shell,
+                                     gboolean          show)
+{
+  GimpDisplayOptions *options;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  options = GET_OPTIONS (shell);
+
+  g_object_set (options, "show-toolbar", show, NULL);
+
+  if (shell->toolbar)
+    {
+      if (show)
+        gtk_widget_show (shell->toolbar);
+      else
+        gtk_widget_hide (shell->toolbar);
+    }
+
+  SET_ACTIVE (shell->menubar_manager, "view-show-toolbar", show);
+
+  if (IS_ACTIVE_DISPLAY (shell))
+    SET_ACTIVE (shell->popup_manager, "view-show-toolbar", show);
+}
+
+gboolean
+gimp_display_shell_get_show_toolbar (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return GET_OPTIONS (shell)->show_toolbar;
+}
+
+void
 gimp_display_shell_set_show_rulers (GimpDisplayShell *shell,
                                     gboolean          show)
 {

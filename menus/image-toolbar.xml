@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
+
+<ui>
+  <toolbar action="image-toolbar">
+    <toolitem action="view-zoom-in" />
+    <toolitem action="view-zoom-out" />
+    <toolitem action="view-zoom-fit-in" />
+    <toolitem action="view-fullscreen" />
+  </toolbar>
+</ui>

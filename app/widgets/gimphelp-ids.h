@@ -91,6 +91,7 @@
 #define GIMP_HELP_VIEW_SNAP_TO_CANVAS             "gimp-view-snap-to-canvas"
 #define GIMP_HELP_VIEW_SNAP_TO_VECTORS            "gimp-view-snap-to-vectors"
 #define GIMP_HELP_VIEW_SHOW_MENUBAR               "gimp-view-show-menubar"
+#define GIMP_HELP_VIEW_SHOW_TOOLBAR               "gimp-view-show-toolbar"
 #define GIMP_HELP_VIEW_SHOW_RULERS                "gimp-view-show-rulers"
 #define GIMP_HELP_VIEW_SHOW_SCROLLBARS            "gimp-view-show-scrollbars"
 #define GIMP_HELP_VIEW_SHOW_STATUSBAR             "gimp-view-show-statusbar"

@@ -42,6 +42,7 @@ enum
 {
   PROP_0,
   PROP_SHOW_MENUBAR,
+  PROP_SHOW_TOOLBAR,
   PROP_SHOW_RULERS,
   PROP_SHOW_SCROLLBARS,
   PROP_SHOW_STATUSBAR,
@@ -94,6 +95,10 @@ gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_MENUBAR,
                                     "show-menubar", SHOW_MENUBAR_BLURB,
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TOOLBAR,
+                                    "show-toolbar", SHOW_TOOLBAR_BLURB,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
@@ -152,6 +157,10 @@ gimp_display_options_fullscreen_class_init (GimpDisplayOptionsFullscreenClass *k
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_MENUBAR,
                                     "show-menubar", SHOW_MENUBAR_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TOOLBAR,
+                                    "show-toolbar", SHOW_TOOLBAR_BLURB,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
@@ -216,6 +225,9 @@ gimp_display_options_set_property (GObject      *object,
     case PROP_SHOW_MENUBAR:
       options->show_menubar = g_value_get_boolean (value);
       break;
+    case PROP_SHOW_TOOLBAR:
+      options->show_toolbar = g_value_get_boolean (value);
+      break;
     case PROP_SHOW_RULERS:
       options->show_rulers = g_value_get_boolean (value);
       break;
@@ -265,6 +277,9 @@ gimp_display_options_get_property (GObject    *object,
     {
     case PROP_SHOW_MENUBAR:
       g_value_set_boolean (value, options->show_menubar);
+      break;
+    case PROP_SHOW_TOOLBAR:
+      g_value_set_boolean (value, options->show_toolbar);
       break;
     case PROP_SHOW_RULERS:
       g_value_set_boolean (value, options->show_rulers);

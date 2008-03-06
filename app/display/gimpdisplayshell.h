@@ -69,6 +69,8 @@ struct _GimpDisplayShell
 
   GimpUIManager    *menubar_manager;
   GimpUIManager    *popup_manager;
+  GimpUIManager    *toolbar_manager;
+  GimpUIManager    *scratch_toolbar_manager;
 
   gdouble           monitor_xres;
   gdouble           monitor_yres;
@@ -126,6 +128,8 @@ struct _GimpDisplayShell
   GtkWidget        *nav_ebox;          /*  SE: navigation event box           */
 
   GtkWidget        *menubar;           /*  menubar                            */
+  GtkWidget        *toolbar;           /*  toolbar                            */
+  GtkWidget        *scratch_toolbar;   /*  toolbar for scratch display        */
   GtkWidget        *statusbar;         /*  statusbar                          */
 
   guchar           *render_buf;        /*  buffer for rendering the image     */

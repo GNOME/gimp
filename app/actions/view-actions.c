@@ -205,6 +205,13 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     TRUE,
     GIMP_HELP_VIEW_SHOW_MENUBAR },
 
+  { "view-show-toolbar", NULL,
+    N_("Show _Toolbar"), NULL,
+    N_("Show this window's tool bar"),
+    G_CALLBACK (view_toggle_toolbar_cmd_callback),
+    TRUE,
+    GIMP_HELP_VIEW_SHOW_TOOLBAR },
+
   { "view-show-rulers", NULL,
     N_("Show R_ulers"), "<control><shift>R",
     N_("Show this window's rulers"),

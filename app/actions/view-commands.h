@@ -57,6 +57,8 @@ void   view_toggle_layer_boundary_cmd_callback (GtkAction *action,
                                                 gpointer   data);
 void   view_toggle_menubar_cmd_callback        (GtkAction *action,
                                                 gpointer   data);
+void   view_toggle_toolbar_cmd_callback        (GtkAction *action,
+                                                gpointer   data);
 void   view_toggle_rulers_cmd_callback         (GtkAction *action,
                                                 gpointer   data);
 void   view_toggle_scrollbars_cmd_callback     (GtkAction *action,
