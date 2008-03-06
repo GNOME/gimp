@@ -44,7 +44,6 @@
 
 
 #define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
-#define INT_BLEND(a,b,alpha,tmp)  (INT_MULT((a) - (b), alpha, tmp) + (b))
 
 
 #define MAX_SUB_COLS 6     /* number of columns and  */
@@ -377,19 +376,9 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
   if (maxx > dwidth - 1)  maxx=dwidth  - 1;
   if (maxy > dheight - 1) maxy=dheight - 1;
 
-  area = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
-                        mask ? TRUE : gimp_drawable_has_alpha (texture),
-                        8, maxx - minx + 1, maxy - miny + 1);
+  area = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
+                         maxx - minx + 1, maxy - miny + 1);
   g_return_if_fail (area != NULL);
-
-
-  /* get original data from dest in order to potentially take
-   * into account opacity
-   */
-
-  if (opacity != 255)
-    gdk_pixbuf_get_from_drawable (area, dest, NULL, minx, miny,
-                                  0, 0, maxx - minx + 1, maxy - miny + 1);
 
   gimp_display_shell_draw_tri (texture, dest, area, minx, miny,
                                mask, mask_offx, mask_offy,
@@ -611,8 +600,6 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
   g_return_if_fail (GDK_IS_PIXBUF (area));
   g_return_if_fail (gdk_pixbuf_get_bits_per_sample (area) == 8);
   g_return_if_fail (gdk_pixbuf_get_colorspace (area) == GDK_COLORSPACE_RGB);
-  g_return_if_fail (gdk_pixbuf_get_has_alpha (area) ==
-                    gimp_drawable_has_alpha (texture));
 
   /* make sure the pixel run goes in the positive direction */
   if (x1 > x2)
@@ -666,217 +653,117 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
     case GIMP_INDEXED_IMAGE:
       cmap = gimp_drawable_get_colormap (texture);
 
-      if (opacity == 255)
-        while (dx--)
-          {
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+      while (dx--)
+        {
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
-            offset = pixel[0] + pixel[0] + pixel[0];
+          offset = pixel[0] + pixel[0] + pixel[0];
 
-            pptr[0] = cmap[offset + 0];
-            pptr[1] = cmap[offset + 1];
-            pptr[2] = cmap[offset + 2];
+          pptr[0] = cmap[offset + 0];
+          pptr[1] = cmap[offset + 1];
+          pptr[2] = cmap[offset + 2];
+          pptr[3] = opacity;
 
-            pptr += 3;
+          pptr += 4;
 
-            u += du;
-            v += dv;
-          }
-      else
-        while (dx--)
-          {
-            register gulong tmp;
-
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-
-            offset = pixel[0] + pixel[0] + pixel[0];
-
-            pptr[0] = INT_BLEND (pptr[0], cmap[offset + 0], opacity, tmp);
-            pptr[1] = INT_BLEND (pptr[1], cmap[offset + 1], opacity, tmp);
-            pptr[2] = INT_BLEND (pptr[2], cmap[offset + 2], opacity, tmp);
-
-            pptr += 3;
-
-            u += du;
-            v += dv;
-          }
+          u += du;
+          v += dv;
+        }
       break;
 
     case GIMP_INDEXEDA_IMAGE:
       cmap = gimp_drawable_get_colormap (texture);
 
-      if (opacity == 255)
-        while (dx--)
-          {
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+      while (dx--)
+        {
+          register gulong tmp;
 
-            offset = pixel[0] + pixel[0] + pixel[0];
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
-            pptr[0] = cmap[offset + 0];
-            pptr[1] = cmap[offset + 1];
-            pptr[2] = cmap[offset + 2];
-            pptr[3] = pixel[1];
+          offset = pixel[0] + pixel[0] + pixel[0];
 
-            pptr += 4;
+          pptr[0] = cmap[offset + 0];
+          pptr[1] = cmap[offset + 1];
+          pptr[2] = cmap[offset + 2];
+          pptr[3] = INT_MULT (opacity, pixel[1], tmp);
 
-            u += du;
-            v += dv;
-          }
-      else
-        while (dx--)
-          {
-            register gulong tmp;
+          pptr += 4;
 
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-
-            offset = pixel[0] + pixel[0] + pixel[0];
-
-            pptr[0] = INT_BLEND (pptr[0], cmap[offset + 0], opacity, tmp);
-            pptr[1] = INT_BLEND (pptr[1], cmap[offset + 1], opacity, tmp);
-            pptr[2] = INT_BLEND (pptr[2], cmap[offset + 2], opacity, tmp);
-            pptr[3] = pixel[1];
-
-            pptr += 4;
-
-            u += du;
-            v += dv;
-          }
+          u += du;
+          v += dv;
+        }
       break;
 
     case GIMP_GRAY_IMAGE:
-      if (opacity == 255)
-        while (dx--)
-          {
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+      while (dx--)
+        {
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
-            pptr[0] = pixel[0];
-            pptr[1] = pixel[0];
-            pptr[2] = pixel[0];
+          pptr[0] = pixel[0];
+          pptr[1] = pixel[0];
+          pptr[2] = pixel[0];
+          pptr[3] = opacity;
 
-            pptr += 3;
+          pptr += 4;
 
-            u += du;
-            v += dv;
-          }
-      else
-        while (dx--)
-          {
-            register gulong tmp;
-
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-
-            pptr[0] = INT_BLEND (pptr[0], pixel[0], opacity, tmp);
-            pptr[1] = INT_BLEND (pptr[1], pixel[0], opacity, tmp);
-            pptr[2] = INT_BLEND (pptr[2], pixel[0], opacity, tmp);
-
-            pptr += 3;
-
-            u += du;
-            v += dv;
-          }
+          u += du;
+          v += dv;
+        }
       break;
 
     case GIMP_GRAYA_IMAGE:
-      if (opacity == 255)
-        while (dx--)
-          {
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+      while (dx--)
+        {
+          register gulong tmp;
 
-            pptr[0] = pixel[0];
-            pptr[1] = pixel[0];
-            pptr[2] = pixel[0];
-            pptr[3] = pixel[1];
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
-            pptr += 4;
+          pptr[0] = pixel[0];
+          pptr[1] = pixel[0];
+          pptr[2] = pixel[0];
+          pptr[3] = INT_MULT (opacity, pixel[1], tmp);
 
-            u += du;
-            v += dv;
-          }
-      else
-        while (dx--)
-          {
-            register gulong tmp;
+          pptr += 4;
 
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-
-            pptr[0] = INT_BLEND (pptr[0], pixel[0], opacity, tmp);
-            pptr[1] = INT_BLEND (pptr[1], pixel[0], opacity, tmp);
-            pptr[2] = INT_BLEND (pptr[2], pixel[0], opacity, tmp);
-            pptr[3] = pixel[1];
-
-            pptr += 4;
-
-            u += du;
-            v += dv;
-          }
+          u += du;
+          v += dv;
+        }
       break;
 
     case GIMP_RGB_IMAGE:
-      if (opacity == 255)
-        while (dx--)
-          {
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+      while (dx--)
+        {
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
-            pptr[0] = pixel[0];
-            pptr[1] = pixel[1];
-            pptr[2] = pixel[2];
+          pptr[0] = pixel[0];
+          pptr[1] = pixel[1];
+          pptr[2] = pixel[2];
+          pptr[3] = opacity;
 
-            pptr += 3;
+          pptr += 4;
 
-            u += du;
-            v += dv;
-          }
-      else
-        while (dx--)
-          {
-            register gulong tmp;
-
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-
-            pptr[0] = INT_BLEND (pptr[0], pixel[0], opacity, tmp);
-            pptr[1] = INT_BLEND (pptr[1], pixel[1], opacity, tmp);
-            pptr[2] = INT_BLEND (pptr[2], pixel[2], opacity, tmp);
-
-            pptr += 3;
-
-            u += du;
-            v += dv;
-          }
+          u += du;
+          v += dv;
+        }
       break;
 
     case GIMP_RGBA_IMAGE:
-      if (opacity == 255)
-        while (dx--)
-          {
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+      while (dx--)
+        {
+          register gulong tmp;
 
-            pptr[0] = pixel[0];
-            pptr[1] = pixel[1];
-            pptr[2] = pixel[2];
-            pptr[3] = pixel[3];
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
-            pptr += 4;
+          pptr[0] = pixel[0];
+          pptr[1] = pixel[1];
+          pptr[2] = pixel[2];
+          pptr[3] = INT_MULT (opacity, pixel[3], tmp);
 
-            u += du;
-            v += dv;
-          }
-      else
-        while (dx--)
-          {
-            register gulong tmp;
+          pptr += 4;
 
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-
-            pptr[0] = INT_BLEND (pptr[0], pixel[0], opacity, tmp);
-            pptr[1] = INT_BLEND (pptr[1], pixel[1], opacity, tmp);
-            pptr[2] = INT_BLEND (pptr[2], pixel[2], opacity, tmp);
-            pptr[3] = pixel[3];
-
-            pptr += 4;
-
-            u += du;
-            v += dv;
-          }
+          u += du;
+          v += dv;
+        }
       break;
 
     default:
@@ -990,259 +877,147 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
     case GIMP_INDEXED_IMAGE:
       cmap = gimp_drawable_get_colormap (texture);
 
-      if (opacity == 255)
-        while (dx--)
-          {
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-            read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, pptr + 3);
+      while (dx--)
+        {
+          register gulong tmp;
 
-            offset = pixel[0] + pixel[0] + pixel[0];
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
 
-            pptr[0] = cmap[offset + 0];
-            pptr[1] = cmap[offset + 1];
-            pptr[2] = cmap[offset + 2];
+          offset = pixel[0] + pixel[0] + pixel[0];
 
-            pptr += 4;
+          pptr[0] = cmap[offset + 0];
+          pptr[1] = cmap[offset + 1];
+          pptr[2] = cmap[offset + 2];
+          pptr[3] = INT_MULT (opacity, maskval, tmp);
 
-            u += du;
-            v += dv;
-            mu += du;
-            mv += dv;
-          }
-      else
-        while (dx--)
-          {
-            register gulong tmp;
+          pptr += 4;
 
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-            read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, pptr + 3);
-
-            offset = pixel[0] + pixel[0] + pixel[0];
-
-            pptr[0] = INT_BLEND (pptr[0], cmap[offset + 0], opacity, tmp);
-            pptr[1] = INT_BLEND (pptr[1], cmap[offset + 1], opacity, tmp);
-            pptr[2] = INT_BLEND (pptr[2], cmap[offset + 2], opacity, tmp);
-
-            pptr += 4;
-
-            u += du;
-            v += dv;
-            mu += du;
-            mv += dv;
-          }
+          u += du;
+          v += dv;
+          mu += du;
+          mv += dv;
+        }
       break;
 
     case GIMP_INDEXEDA_IMAGE:
       cmap = gimp_drawable_get_colormap (texture);
 
-      if (opacity == 255)
-        while (dx--)
-          {
-            register gulong tmp;
+      while (dx--)
+        {
+          register gulong tmp;
 
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-            read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
 
-            offset = pixel[0] + pixel[0] + pixel[0];
+          maskval = INT_MULT (maskval, pixel[1], tmp);
 
-            pptr[0] = cmap[offset + 0];
-            pptr[1] = cmap[offset + 1];
-            pptr[2] = cmap[offset + 2];
-            pptr[3] = INT_MULT (maskval, pixel[1], tmp);
+          offset = pixel[0] + pixel[0] + pixel[0];
 
-            pptr += 4;
+          pptr[0] = cmap[offset + 0];
+          pptr[1] = cmap[offset + 1];
+          pptr[2] = cmap[offset + 2];
+          pptr[3] = INT_MULT (opacity, maskval, tmp);
 
-            u += du;
-            v += dv;
-            mu += du;
-            mv += dv;
-          }
-      else
-        while (dx--)
-          {
-            register gulong tmp;
+          pptr += 4;
 
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-            read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
-
-            offset = pixel[0] + pixel[0] + pixel[0];
-
-            pptr[0] = INT_BLEND (pptr[0], cmap[offset + 0], opacity, tmp);
-            pptr[1] = INT_BLEND (pptr[1], cmap[offset + 1], opacity, tmp);
-            pptr[2] = INT_BLEND (pptr[2], cmap[offset + 2], opacity, tmp);
-            pptr[3] = INT_MULT (maskval, pixel[1], tmp);
-
-            pptr += 4;
-
-            u += du;
-            v += dv;
-            mu += du;
-            mv += dv;
-          }
+          u += du;
+          v += dv;
+          mu += du;
+          mv += dv;
+        }
       break;
 
     case GIMP_GRAY_IMAGE:
-      if (opacity == 255)
-        while (dx--)
-          {
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-            read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, pptr + 3);
+      while (dx--)
+        {
+          register gulong tmp;
 
-            pptr[0] = pixel[0];
-            pptr[1] = pixel[0];
-            pptr[2] = pixel[0];
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
 
-            pptr += 4;
+          pptr[0] = pixel[0];
+          pptr[1] = pixel[0];
+          pptr[2] = pixel[0];
+          pptr[3] = INT_MULT (opacity, maskval, tmp);
 
-            u += du;
-            v += dv;
-            mu += du;
-            mv += dv;
-          }
-      else
-        while (dx--)
-          {
-            register gulong tmp;
+          pptr += 4;
 
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-            read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, pptr + 3);
-
-            pptr[0] = INT_BLEND (pptr[0], pixel[0], opacity, tmp);
-            pptr[1] = INT_BLEND (pptr[1], pixel[0], opacity, tmp);
-            pptr[2] = INT_BLEND (pptr[2], pixel[0], opacity, tmp);
-
-            pptr += 4;
-
-            u += du;
-            v += dv;
-            mu += du;
-            mv += dv;
-          }
+          u += du;
+          v += dv;
+          mu += du;
+          mv += dv;
+        }
       break;
 
     case GIMP_GRAYA_IMAGE:
-      if (opacity == 255)
-        while (dx--)
-          {
-            register gulong tmp;
+      while (dx--)
+        {
+          register gulong tmp;
 
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-            read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
 
-            pptr[0] = pixel[0];
-            pptr[1] = pixel[0];
-            pptr[2] = pixel[0];
-            pptr[3] = INT_MULT (maskval, pixel[1], tmp);
+          maskval = INT_MULT (maskval, pixel[1], tmp);
 
-            pptr += 4;
+          pptr[0] = pixel[0];
+          pptr[1] = pixel[0];
+          pptr[2] = pixel[0];
+          pptr[3] = INT_MULT (opacity, maskval, tmp);
 
-            u += du;
-            v += dv;
-            mu += du;
-            mv += dv;
-          }
-      else
-        while (dx--)
-          {
-            register gulong tmp;
+          pptr += 4;
 
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-            read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
-
-            pptr[0] = INT_BLEND (pptr[0], pixel[0], opacity, tmp);
-            pptr[1] = INT_BLEND (pptr[1], pixel[0], opacity, tmp);
-            pptr[2] = INT_BLEND (pptr[2], pixel[0], opacity, tmp);
-            pptr[3] = INT_MULT (maskval, pixel[1], tmp);
-
-            pptr += 4;
-
-            u += du;
-            v += dv;
-            mu += du;
-            mv += dv;
-          }
+          u += du;
+          v += dv;
+          mu += du;
+          mv += dv;
+        }
       break;
 
     case GIMP_RGB_IMAGE:
-      if (opacity == 255)
-        while (dx--)
-          {
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-            read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, pptr + 3);
+      while (dx--)
+        {
+          register gulong tmp;
 
-            pptr[0] = pixel[0];
-            pptr[1] = pixel[1];
-            pptr[2] = pixel[2];
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
 
-            pptr += 4;
+          pptr[0] = pixel[0];
+          pptr[1] = pixel[1];
+          pptr[2] = pixel[2];
+          pptr[3] = INT_MULT (opacity, maskval, tmp);
 
-            u += du;
-            v += dv;
-            mu += du;
-            mv += dv;
-          }
-      else
-        while (dx--)
-          {
-            register gulong tmp;
+          pptr += 4;
 
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-            read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, pptr + 3);
-
-            pptr[0] = INT_BLEND (pptr[0], pixel[0], opacity, tmp);
-            pptr[1] = INT_BLEND (pptr[1], pixel[1], opacity, tmp);
-            pptr[2] = INT_BLEND (pptr[2], pixel[2], opacity, tmp);
-
-            pptr += 4;
-
-            u += du;
-            v += dv;
-            mu += du;
-            mv += dv;
-          }
+          u += du;
+          v += dv;
+          mu += du;
+          mv += dv;
+        }
       break;
 
     case GIMP_RGBA_IMAGE:
-      if (opacity == 255)
-        while (dx--)
-          {
-            register gulong tmp;
+      while (dx--)
+        {
+          register gulong tmp;
 
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-            read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
+          read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+          read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
 
-            pptr[0] = pixel[0];
-            pptr[1] = pixel[1];
-            pptr[2] = pixel[2];
-            pptr[3] = INT_MULT (maskval, pixel[3], tmp);
+          maskval = INT_MULT (maskval, pixel[3], tmp);
 
-            pptr += 4;
+          pptr[0] = pixel[0];
+          pptr[1] = pixel[1];
+          pptr[2] = pixel[2];
+          pptr[3] = INT_MULT (opacity, maskval, tmp);
 
-            u += du;
-            v += dv;
-            mu += du;
-            mv += dv;
-          }
-      else
-        while (dx--)
-          {
-            register gulong tmp;
+          pptr += 4;
 
-            read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
-            read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
-
-            pptr[0] = INT_BLEND (pptr[0], pixel[0], opacity, tmp);
-            pptr[1] = INT_BLEND (pptr[1], pixel[1], opacity, tmp);
-            pptr[2] = INT_BLEND (pptr[2], pixel[2], opacity, tmp);
-            pptr[3] = INT_MULT (maskval, pixel[3], tmp);
-
-            pptr += 4;
-
-            u += du;
-            v += dv;
-            mu += du;
-            mv += dv;
-          }
+          u += du;
+          v += dv;
+          mu += du;
+          mv += dv;
+        }
       break;
 
     default:
