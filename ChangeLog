@@ -1,5 +1,10 @@
 2008-03-05  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/widgets/gimpviewablebox.c: revert change that removed
+	button relief, let the theme deal with this.
+	
+2008-03-05  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimppaintoptions-gui.c
 	* app/tools/gimptransformoptions.c: make the layout a bit
 	more attractive.

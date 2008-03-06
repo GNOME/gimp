@@ -429,7 +429,7 @@ gimp_viewable_box_new (GimpContainer *container,
                                      dialog_stock_id,
                                      dialog_tooltip);
 
-  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+/*   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE); */
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -439,7 +439,7 @@ gimp_viewable_box_new (GimpContainer *container,
    *  GtkEntry's minimal width of 150 pixels.
    *  FIXME
    */
-  gtk_widget_set_size_request (entry, 100, -1);
+  gtk_widget_set_size_request (entry, 10, -1);
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_widget_show (entry);
 
