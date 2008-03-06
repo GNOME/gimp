@@ -563,7 +563,7 @@ gimp_interpolation_type_get_type (void)
     { GIMP_INTERPOLATION_NONE, N_("interpolation|None"), NULL },
     { GIMP_INTERPOLATION_LINEAR, N_("interpolation|Linear"), NULL },
     { GIMP_INTERPOLATION_CUBIC, N_("Cubic"), NULL },
-    { GIMP_INTERPOLATION_LANCZOS, N_("Sinc (Lanczos3)"), NULL },
+    { GIMP_INTERPOLATION_LANCZOS, N_("Lanczos"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -622,8 +622,8 @@ gimp_repeat_mode_get_type (void)
   static const GimpEnumDesc descs[] =
   {
     { GIMP_REPEAT_NONE, N_("None"), NULL },
-    { GIMP_REPEAT_SAWTOOTH, N_("Sawtooth wave"), NULL },
-    { GIMP_REPEAT_TRIANGULAR, N_("Triangular wave"), NULL },
+    { GIMP_REPEAT_SAWTOOTH, N_("Sawtooth"), NULL },
+    { GIMP_REPEAT_TRIANGULAR, N_("Triangular"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -775,8 +775,8 @@ gimp_transform_resize_get_type (void)
   {
     { GIMP_TRANSFORM_RESIZE_ADJUST, N_("Adjust"), NULL },
     { GIMP_TRANSFORM_RESIZE_CLIP, N_("Clip"), NULL },
-    { GIMP_TRANSFORM_RESIZE_CROP, N_("Crop to result"), NULL },
-    { GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT, N_("Crop with aspect"), NULL },
+    { GIMP_TRANSFORM_RESIZE_CROP, N_("To result"), NULL },
+    { GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT, N_("Keep aspect"), NULL },
     { 0, NULL, NULL }
   };
 

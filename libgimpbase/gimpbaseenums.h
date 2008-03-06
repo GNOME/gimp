@@ -248,7 +248,7 @@ typedef enum
   GIMP_INTERPOLATION_NONE,   /*< desc="interpolation|None"   >*/
   GIMP_INTERPOLATION_LINEAR, /*< desc="interpolation|Linear" >*/
   GIMP_INTERPOLATION_CUBIC,  /*< desc="Cubic"                >*/
-  GIMP_INTERPOLATION_LANCZOS /*< desc="Sinc (Lanczos3)"      >*/
+  GIMP_INTERPOLATION_LANCZOS /*< desc="Lanczos"              >*/
 } GimpInterpolationType;
 
 
@@ -270,8 +270,8 @@ GType gimp_repeat_mode_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_REPEAT_NONE,       /*< desc="None"            >*/
-  GIMP_REPEAT_SAWTOOTH,   /*< desc="Sawtooth wave"   >*/
-  GIMP_REPEAT_TRIANGULAR  /*< desc="Triangular wave" >*/
+  GIMP_REPEAT_SAWTOOTH,   /*< desc="Sawtooth"        >*/
+  GIMP_REPEAT_TRIANGULAR  /*< desc="Triangular"      >*/
 } GimpRepeatMode;
 
 
@@ -329,8 +329,8 @@ typedef enum
 {
   GIMP_TRANSFORM_RESIZE_ADJUST           = 0, /*< desc="Adjust" >*/
   GIMP_TRANSFORM_RESIZE_CLIP             = 1, /*< desc="Clip" >*/
-  GIMP_TRANSFORM_RESIZE_CROP,                 /*< desc="Crop to result" >*/
-  GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT      /*< desc="Crop with aspect" >*/
+  GIMP_TRANSFORM_RESIZE_CROP,                 /*< desc="To result" >*/
+  GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT      /*< desc="Keep aspect" >*/
 } GimpTransformResize;
 
 

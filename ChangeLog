@@ -1,3 +1,8 @@
+2008-03-05  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* libgimpbase/gimpbaseenums.[ch]: shorten text strings
+	for a few enums.
+	
 2008-03-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimptransformtool.[ch]
