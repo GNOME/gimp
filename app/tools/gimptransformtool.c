@@ -280,6 +280,10 @@ gimp_transform_tool_constructor (GType                  type,
       g_signal_connect_object (options, "notify::grid-size",
                                G_CALLBACK (gimp_transform_tool_notify_preview),
                                tr_tool, 0);
+      g_signal_connect_object (tool->tool_info->tool_options,
+                               "notify::preview-opacity",
+                               G_CALLBACK (gimp_transform_tool_notify_preview),
+                               tr_tool, 0);
     }
 
   g_signal_connect_object (options, "notify::constrain",

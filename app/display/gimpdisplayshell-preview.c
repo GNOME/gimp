@@ -27,7 +27,6 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
-#include "core/gimplayer.h"
 #include "core/gimpimage.h"
 
 #include "base/tile-manager.h"
@@ -185,8 +184,16 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
   if (! ((z1 * z2 > 0) && (z3 * z4 > 0)))
     return;
 
-  if (GIMP_IS_LAYER (tool->drawable))
-    opacity = gimp_layer_get_opacity (GIMP_LAYER (tool->drawable)) * 255.999;
+  /* take opacity from the tool options */
+  {
+    gdouble value;
+
+    g_object_get (gimp_tool_get_options (tool),
+                  "preview-opacity", &value,
+                  NULL);
+
+    opacity = value * 255.999;
+  }
 
   mask = NULL;
   mask_offx = mask_offy = 0;

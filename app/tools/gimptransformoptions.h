@@ -44,6 +44,7 @@ struct _GimpTransformOptions
   gint                      recursion_level;
   gboolean                  clip;
   GimpTransformPreviewType  preview_type;
+  gdouble                   preview_opacity;
   GimpTransformGridType     grid_type;
   gint                      grid_size;
   gboolean                  constrain;

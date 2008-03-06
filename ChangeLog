@@ -1,5 +1,13 @@
 2008-03-06  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptransformtool.c
+	* app/tools/gimptransformoptions.[ch]
+	* app/display/gimpdisplayshell-preview.c: take the preview opacity
+	from the transform tool options. Based on a patch from Tom Lechner.
+	Closes bug #520690.
+
+2008-03-06  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-preview.c: don't do the blending
 	here, just apply the opacity on the pixbuf's alpha channel.
 
