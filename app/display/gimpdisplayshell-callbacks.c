@@ -1209,9 +1209,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                  * risk loosing some.
                  */
                 if ((gimp_tool_control_get_motion_mode (active_tool->control) ==
-                    GIMP_MOTION_MODE_EXACT) &&
+                     GIMP_MOTION_MODE_EXACT) &&
                     gdk_device_get_history (mevent->device, mevent->window,
-                                            shell->last_read_motion_time+1,
+                                            shell->last_read_motion_time + 1,
                                             mevent->time - 1,
                                             &history_events,
                                             &n_history_events))
@@ -1220,7 +1220,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
                     for (i = 0; i < n_history_events; i++)
                       {
-
                         gimp_display_shell_get_time_coords (shell,
                                                             mevent->device,
                                                             history_events[i],
@@ -1293,7 +1292,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             /* Early removal of useless events saves CPU time.
              * Smoothing is 0.0 here for coasting.
              */
-
             if (gimp_display_shell_eval_event (shell,
                                                &image_coords,
                                                0.0,

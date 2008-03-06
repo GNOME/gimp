@@ -1,5 +1,10 @@
 2008-03-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): minor formatting fixes.
+
+2008-03-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/gimppdb-utils.[ch]: add gimp_pdb_get_vectors_stroke()
 	which is a replacement for gimp_vectors_stroke_get_by_ID() and
 	sets an error message if the stroke doesn't exist.
