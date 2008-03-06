@@ -1,19 +1,19 @@
 # translation of ca.po to Catalan
 # gimp-python translation to Catalan.
-# Copyright © 2000, 2001, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+# Copyright © 2000, 2001, 2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
 #
 #
 # Softcatala <linux a softcatala.org>, 2000-2001.
 # Xavier Beà <xbea a pie.xtec.es>, 2003, 2004.
 # Xavier Conde Rueda <xaviconde a eresmas.com>, 2004.
 # Quim Perez Noguer <noguer a osona.com>, 2005, 2006.
-# Joaquim Perez <noguer@gmail.com>, 2007.
+# Joaquim Perez <noguer@gmail.com>, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-26 12:47+0200\n"
-"PO-Revision-Date: 2007-10-15 23:26+0200\n"
+"POT-Creation-Date: 2008-03-06 21:44+0100\n"
+"PO-Revision-Date: 2008-02-29 19:08+0100\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,7 @@ msgstr "No"
 msgid "Yes"
 msgstr "Sí"
 
-#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:224
 msgid "Python-Fu File Selection"
 msgstr "Selecció del fitxer Python-Fu"
 
@@ -57,7 +57,7 @@ msgstr "Selecció de la carpeta Python-Fu"
 msgid "Invalid input for '%s'"
 msgstr "El valor d'entrada no és vàlid per a '%s'"
 
-#: ../plug-ins/pygimp/gimpui.py:175
+#: ../plug-ins/pygimp/gimpui.py:177
 msgid "Python-Fu Color Selection"
 msgstr "Selecció del color Python-Fu"
 
@@ -128,38 +128,38 @@ msgid "Save Python-Fu Console Output"
 msgstr "Desa la sortida de la consola Python-Fu"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
-msgid "Interactive Gimp-Python interpreter"
-msgstr "Intèrpret interactiu per al Gimp-Python"
+msgid "Interactive GIMP Python interpreter"
+msgstr "Intèrpret interactiu de Python del GIMP"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
 msgid "_Console"
 msgstr "_Consola"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:52
+#: ../plug-ins/pygimp/plug-ins/foggify.py:53
 msgid "Add a layer of fog"
 msgstr "Afegeix una capa de boira"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:57
+#: ../plug-ins/pygimp/plug-ins/foggify.py:58
 msgid "_Fog..."
 msgstr "_Boira..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Layer name"
 msgstr "_Nom de la capa"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "Clouds"
 msgstr "Núvols"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "_Fog color"
 msgstr "Color de la _boira"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
 msgid "_Turbulence"
 msgstr "_Turbulència"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:65
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Op_acity"
 msgstr "Op_acitat"
 
