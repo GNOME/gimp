@@ -1,5 +1,12 @@
 2008-03-06  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/tools-actions.c 
+	* app/actions/tools-commands.[ch]
+	* app/tools/gimptransformtool.c: allow to control the preview
+	opacity by actions (defaults to < to > keys).
+
+2008-03-06  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptransformtool.c
 	* app/tools/gimptransformoptions.[ch]
 	* app/display/gimpdisplayshell-preview.c: take the preview opacity

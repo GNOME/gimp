@@ -20,65 +20,68 @@
 #define __TOOLS_COMMANDS_H__
 
 
-void   tools_select_cmd_callback               (GtkAction   *action,
-                                                const gchar *value,
-                                                gpointer     data);
-void   tools_toggle_visibility_cmd_callback    (GtkAction   *action,
-                                                gpointer     data);
+void   tools_select_cmd_callback                    (GtkAction   *action,
+                                                     const gchar *value,
+                                                     gpointer     data);
+void   tools_toggle_visibility_cmd_callback         (GtkAction   *action,
+                                                     gpointer     data);
 
-void   tools_raise_cmd_callback                (GtkAction   *action,
-                                                gpointer     data);
-void   tools_raise_to_top_cmd_callback         (GtkAction   *action,
-                                                gpointer     data);
-void   tools_lower_cmd_callback                (GtkAction   *action,
-                                                gpointer     data);
-void   tools_lower_to_bottom_cmd_callback      (GtkAction   *action,
-                                                gpointer     data);
+void   tools_raise_cmd_callback                     (GtkAction   *action,
+                                                     gpointer     data);
+void   tools_raise_to_top_cmd_callback              (GtkAction   *action,
+                                                     gpointer     data);
+void   tools_lower_cmd_callback                     (GtkAction   *action,
+                                                     gpointer     data);
+void   tools_lower_to_bottom_cmd_callback           (GtkAction   *action,
+                                                     gpointer     data);
 
-void   tools_reset_cmd_callback                (GtkAction   *action,
-                                                gpointer     data);
+void   tools_reset_cmd_callback                     (GtkAction   *action,
+                                                     gpointer     data);
 
-void   tools_color_average_radius_cmd_callback (GtkAction   *action,
-                                                gint         value,
-                                                gpointer     data);
+void   tools_color_average_radius_cmd_callback      (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
 
-void   tools_paint_brush_scale_cmd_callback    (GtkAction   *action,
-                                                gint         value,
-                                                gpointer     data);
+void   tools_paint_brush_scale_cmd_callback         (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
 
-void   tools_ink_blob_size_cmd_callback        (GtkAction   *action,
-                                                gint         value,
-                                                gpointer     data);
-void   tools_ink_blob_aspect_cmd_callback      (GtkAction   *action,
-                                                gint         value,
-                                                gpointer     data);
-void   tools_ink_blob_angle_cmd_callback       (GtkAction   *action,
-                                                gint         value,
-                                                gpointer     data);
+void   tools_ink_blob_size_cmd_callback             (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
+void   tools_ink_blob_aspect_cmd_callback           (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
+void   tools_ink_blob_angle_cmd_callback            (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
 
-void   tools_fg_select_brush_size_cmd_callback (GtkAction   *action,
-                                                gint         value,
-                                                gpointer     data);
+void   tools_fg_select_brush_size_cmd_callback      (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
+void   tools_transform_preview_opacity_cmd_callback (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
 
-void   tools_value_1_cmd_callback              (GtkAction   *action,
-                                                gint         value,
-                                                gpointer     data);
-void   tools_value_2_cmd_callback              (GtkAction   *action,
-                                                gint         value,
-                                                gpointer     data);
-void   tools_value_3_cmd_callback              (GtkAction   *action,
-                                                gint         value,
-                                                gpointer     data);
-void   tools_value_4_cmd_callback              (GtkAction   *action,
-                                                gint         value,
-                                                gpointer     data);
+void   tools_value_1_cmd_callback                   (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
+void   tools_value_2_cmd_callback                   (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
+void   tools_value_3_cmd_callback                   (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
+void   tools_value_4_cmd_callback                   (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
 
-void   tools_object_1_cmd_callback             (GtkAction   *action,
-                                                gint         value,
-                                                gpointer     data);
-void   tools_object_2_cmd_callback             (GtkAction   *action,
-                                                gint         value,
-                                                gpointer     data);
+void   tools_object_1_cmd_callback                  (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
+void   tools_object_2_cmd_callback                  (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
 
 
 #endif /* __TOOLS_COMMANDS_H__ */
