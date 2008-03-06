@@ -128,7 +128,7 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONSTRAIN,
                                     "constrain", NULL,
-                                    FALSE,
+                                    TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_PREVIEW_OPACITY,
                                 "preview-opacity", NULL,
@@ -243,7 +243,7 @@ gimp_transform_options_reset (GimpToolOptions *tool_options)
   GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
-/** 
+/**
  * gimp_transform_options_gui:
  * @tool_options: a #GimpToolOptions
  *
@@ -261,6 +261,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   GtkWidget            *table;
   GtkWidget            *combo;
   GtkWidget            *button;
+  GtkWidget            *preview_vbox;
   const gchar          *constrain = NULL;
 
   hbox = gimp_prop_enum_stock_box_new (config, "type", "gimp", 0, 0);
@@ -278,12 +279,16 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (frame);
 
   /*  the interpolation menu  */
-  frame = gimp_frame_new (_("Interpolation:"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Interpolation:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   combo = gimp_prop_enum_combo_box_new (config, "interpolation", 0, 0);
-  gtk_container_add (GTK_CONTAINER (frame), combo);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
   /*  the clipping menu  */
@@ -291,12 +296,12 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  frame = gimp_frame_new (_("Clipping:"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  label = gtk_label_new (_("Clipping:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   combo = gimp_prop_enum_combo_box_new (config, "clip", 0, 0);
-  gtk_container_add (GTK_CONTAINER (frame), combo);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
   /*  the preview frame  */
@@ -318,67 +323,73 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (combo);
 
   /*  the grid type menu  */
-  button = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (frame), button);
-  gtk_widget_show (button);
+  preview_vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_add (GTK_CONTAINER (frame), preview_vbox);
+  gtk_widget_show (preview_vbox);
 
-  combo = gimp_prop_enum_combo_box_new (config, "grid-type", 0, 0);
-  gtk_box_pack_start (GTK_BOX (button), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
+  table = gtk_table_new (3, 3, 0);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 2);
+  gtk_box_pack_start (GTK_BOX (preview_vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  gimp_prop_scale_control_new (config, "grid-size",
+                               GTK_TABLE (table),
+                               0, 0, _("Grid lines:"),
+                               1, 8, 0, TRUE, 2, 100);
 
   /*  the grid density scale  */
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 2);
-  gtk_box_pack_start (GTK_BOX (button), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+/*   table = gtk_table_new (1, 3, FALSE); */
+/*   gtk_table_set_col_spacing (GTK_TABLE (table), 1, 2); */
+/*   gtk_box_pack_start (GTK_BOX (button), table, FALSE, FALSE, 0); */
+/*   gtk_widget_show (table); */
 
-  gtk_widget_set_sensitive (combo,
-                            options->preview_type ==
-                            GIMP_TRANSFORM_PREVIEW_TYPE_GRID ||
-                            options->preview_type ==
-                            GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID);
-  
-  g_signal_connect (config, "notify::preview-type",
-                    G_CALLBACK (gimp_transform_options_preview_notify),
-                    combo);
-  
-  gtk_widget_set_sensitive (table,
-                            options->preview_type ==
-                            GIMP_TRANSFORM_PREVIEW_TYPE_GRID ||
-                            options->preview_type ==
-                            GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID);
+/*   gtk_widget_set_sensitive (combo, */
+/*                             options->preview_type == */
+/*                             GIMP_TRANSFORM_PREVIEW_TYPE_GRID || */
+/*                             options->preview_type == */
+/*                             GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID); */
 
-  g_signal_connect (config, "notify::preview-type",
-                    G_CALLBACK (gimp_transform_options_preview_notify),
-                    table);
+/*   g_signal_connect (config, "notify::preview-type", */
+/*                     G_CALLBACK (gimp_transform_options_preview_notify), */
+/*                     combo); */
 
-  gimp_prop_scale_entry_new (config, "grid-size",
-                             GTK_TABLE (table), 0, 0,
-                             NULL,
-                             1.0, 8.0, 0,
-                             FALSE, 0.0, 0.0);
+/*   gtk_widget_set_sensitive (table, */
+/*                             options->preview_type == */
+/*                             GIMP_TRANSFORM_PREVIEW_TYPE_GRID || */
+/*                             options->preview_type == */
+/*                             GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID); */
+
+/*   g_signal_connect (config, "notify::preview-type", */
+/*                     G_CALLBACK (gimp_transform_options_preview_notify), */
+/*                     table); */
+
+/*   gimp_prop_scale_entry_new (config, "grid-size", */
+/*                              GTK_TABLE (table), 0, 0, */
+/*                              NULL, */
+/*                              1.0, 8.0, 0, */
+/*                              FALSE, 0.0, 0.0); */
 
   /*  the preview opacity scale  */
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 2);
-  gtk_box_pack_start (GTK_BOX (button), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+/*   table = gtk_table_new (1, 3, FALSE); */
+/*   gtk_table_set_col_spacing (GTK_TABLE (table), 1, 2); */
+/*   gtk_box_pack_start (GTK_BOX (button), table, FALSE, FALSE, 0); */
+/*   gtk_widget_show (table); */
 
-  gtk_widget_set_sensitive (table,
-                            options->preview_type ==
-                            GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE ||
-                            options->preview_type ==
-                            GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID);
+/*   gtk_widget_set_sensitive (table, */
+/*                             options->preview_type == */
+/*                             GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE || */
+/*                             options->preview_type == */
+/*                             GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID); */
 
-  g_signal_connect (config, "notify::preview-type",
-                    G_CALLBACK (gimp_transform_options_preview_opacity_notify),
-                    table);
+/*   g_signal_connect (config, "notify::preview-type", */
+/*                     G_CALLBACK (gimp_transform_options_preview_opacity_notify), */
+/*                     table); */
 
-  gimp_prop_scale_entry_new (config, "preview-opacity",
-                             GTK_TABLE (table), 0, 0,
-                             _("Opacity:"),
-                             1.0, 8.0, 0,
-                             FALSE, 0.0, 0.0);
+  gimp_prop_scale_control_new (config, "preview-opacity",
+                               GTK_TABLE (table), 0, 1,
+                               _("Opacity:"),
+                               1.0, 8.0, 0,
+                               FALSE, 0.0, 0.0);
 
 
   if (tool_options->tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL)

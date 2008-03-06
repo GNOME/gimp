@@ -108,11 +108,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_set_sensitive (label, FALSE);
     }
 
-  /*  the opacity scale  */
-  gimp_prop_opacity_entry_new (config, "opacity",
-                               GTK_TABLE (table), 0, table_row++,
-                               _("Opacity:"));
-
   /*  the brush  */
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
@@ -127,12 +122,12 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
                                         "brush-view-type", "brush-view-size");
-      gimp_viewable_box_table_attach (GTK_TABLE (table), button,
-                                      table_row, 2, 3, 1, 2);
-      ++table_row;
-/*       gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++, */
-/*                                  _("Brush:"), 0.0, 0.5, */
-/*                                  button, 2, FALSE); */
+/*       gimp_viewable_box_table_attach (GTK_TABLE (table), button, */
+/*                                       table_row, 2, 3, 1, 2); */
+/*       ++table_row; */
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
+                                 _("Brush:"), 0.0, 0.5,
+                                 button, 2, FALSE);
 
       adj = gimp_prop_scale_control_new (config, "brush-scale",
                                          GTK_TABLE (table), 0, table_row++,
@@ -141,6 +136,11 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                          FALSE, 0.0, 0.0);
       gimp_scale_control_set_logarithmic (adj, TRUE);
     }
+
+  /*  the opacity scale  */
+  gimp_prop_opacity_entry_new (config, "opacity",
+                               GTK_TABLE (table), 0, table_row++,
+                               _("Opacity:"));
 
   /*  the gradient  */
   if (tool_type == GIMP_TYPE_BLEND_TOOL)
@@ -390,7 +390,7 @@ jitter_options_gui (GimpJitterOptions  *jitter,
                                              _("Jitter"),
                                              table, NULL);
 
-      gimp_prop_scale_entry_new (config, "jitter-amount",
+      gimp_prop_scale_control_new (config, "jitter-amount",
                                  GTK_TABLE (table), 0, 0,
                                  _("Amount:"),
                                  0.01, 0.1, 2,
