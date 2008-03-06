@@ -52,5 +52,9 @@ GimpPaintInfo * gimp_pdb_get_paint_info      (Gimp         *gimp,
 gboolean        gimp_pdb_item_is_attached    (GimpItem     *item,
                                               GError      **error);
 
+GimpStroke    * gimp_pdb_get_vectors_stroke  (GimpVectors  *vectors,
+                                              gint          stroke_ID,
+                                              GError      **error);
+
 
 #endif /* __GIMP_PDB_UTILS_H__ */

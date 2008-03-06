@@ -30,6 +30,8 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimpitem.h"
 
+#include "vectors/gimpvectors.h"
+
 #include "gimppdb-utils.h"
 #include "gimppdberror.h"
 
@@ -306,3 +308,26 @@ gimp_pdb_item_is_attached (GimpItem  *item,
 
   return TRUE;
 }
+
+GimpStroke *
+gimp_pdb_get_vectors_stroke (GimpVectors  *vectors,
+                             gint          stroke_ID,
+                             GError      **error)
+{
+  GimpStroke *stroke;
+
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_ID);
+
+  if (! stroke)
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_CALLING_ERROR,
+                   _("Vectors object %d does not contain stroke with ID %d"),
+                   gimp_item_get_ID (GIMP_ITEM (vectors)), stroke_ID);
+    }
+
+  return stroke;
+}
+

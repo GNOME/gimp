@@ -1,3 +1,13 @@
+2008-03-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/gimppdb-utils.[ch]: add gimp_pdb_get_vectors_stroke()
+	which is a replacement for gimp_vectors_stroke_get_by_ID() and
+	sets an error message if the stroke doesn't exist.
+
+	* tools/pdbgen/pdb/vectors.pdb: use it.
+
+	* app/pdb/vectors_cmds.c: regenerated.
+
 2008-03-06  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/tools-actions.c 
