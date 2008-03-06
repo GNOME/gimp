@@ -1,5 +1,10 @@
 2008-03-05  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* libgimpwidgets/gimpscalecontrol.c: change fill style
+	when inserting in table.
+	
+2008-03-05  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* libgimpbase/gimpbaseenums.[ch]: shorten text strings
 	for a few enums.
 	

@@ -472,7 +472,7 @@ gimp_scale_control_new (GtkTable    *table,
 
   gtk_table_attach (GTK_TABLE (table), hbox,
                     column + 1, column + 2, row, row + 1,
-                    GTK_SHRINK, GTK_FILL, 0, 0);
+                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (popup_button);
 
   scale_control->popup_window = gimp_scale_control_popup (scale_control);
