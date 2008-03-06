@@ -1,5 +1,10 @@
 2008-03-07  Sven Neumann  <sven@gimp.org>
 
+	* etc/controllerrc: changed default mouse-wheel bindings to act on
+	the active tool instead of controlling the context.
+
+2008-03-07  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-preview.c: minor optimization.
 
 2008-03-06  Michael Natterer  <mitch@gimp.org>

@@ -5,8 +5,8 @@
     (debug-events no)
     (controller "GimpControllerWheel")
     (mapping
-        (map "scroll-up-alt"                 "context-opacity-increase-skip")
-        (map "scroll-down-alt"               "context-opacity-decrease-skip")
+        (map "scroll-up-alt"                 "tools-value-1-increase-skip")
+        (map "scroll-down-alt"               "tools-value-1-decrease-skip")
         (map "scroll-up-control-alt"         "context-gradient-select-next")
         (map "scroll-down-control-alt"       "context-gradient-select-previous")
         (map "scroll-up-shift-alt"           "context-pattern-select-next")
@@ -44,8 +44,8 @@
 #    (controller "ControllerLinuxInput"
 #        (device "/dev/input/event2"))
 #    (mapping
-#        (map "wheel-turn-left"  "context-brush-radius-decrease")
-#        (map "wheel-turn-right" "context-brush-radius-increase")))
+#        (map "wheel-turn-left"  "tools-value-2-decrease")
+#        (map "wheel-turn-right" "tools-value-2-increase")))
 
 # (GimpControllerInfo "Midi Example"
 #    (enabled yes)
