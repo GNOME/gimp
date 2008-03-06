@@ -42,7 +42,9 @@
 #include "gimpdisplayshell-transform.h"
 
 
-#define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
+#define INT_MULT(a,b,t)     ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
+#define INT_MULT3(a,b,c,t)  ((t) = (a) * (b) * (c) + 0x7F5B, \
+                            ((((t) >> 7) + (t)) >> 16))
 
 
 #define MAX_SUB_COLS 6     /* number of columns and  */
@@ -917,14 +919,12 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
 
-          maskval = INT_MULT (maskval, pixel[1], tmp);
-
           offset = pixel[0] + pixel[0] + pixel[0];
 
           pptr[0] = cmap[offset + 0];
           pptr[1] = cmap[offset + 1];
           pptr[2] = cmap[offset + 2];
-          pptr[3] = INT_MULT (opacity, maskval, tmp);
+          pptr[3] = INT_MULT3 (opacity, maskval, pixel[1], tmp);
 
           pptr += 4;
 
@@ -965,12 +965,10 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
 
-          maskval = INT_MULT (maskval, pixel[1], tmp);
-
           pptr[0] = pixel[0];
           pptr[1] = pixel[0];
           pptr[2] = pixel[0];
-          pptr[3] = INT_MULT (opacity, maskval, tmp);
+          pptr[3] = INT_MULT3 (opacity, maskval, pixel[1], tmp);
 
           pptr += 4;
 
@@ -1011,12 +1009,10 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
 
-          maskval = INT_MULT (maskval, pixel[3], tmp);
-
           pptr[0] = pixel[0];
           pptr[1] = pixel[1];
           pptr[2] = pixel[2];
-          pptr[3] = INT_MULT (opacity, maskval, tmp);
+          pptr[3] = INT_MULT3 (opacity, maskval, pixel[3], tmp);
 
           pptr += 4;
 

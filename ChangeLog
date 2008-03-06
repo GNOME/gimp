@@ -1,3 +1,7 @@
+2008-03-07  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-preview.c: minor optimization.
+
 2008-03-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c
