@@ -78,8 +78,6 @@ static void        gimp_toolbox_book_added       (GimpDock       *dock,
                                                   GimpDockbook   *dockbook);
 static void        gimp_toolbox_book_removed     (GimpDock       *dock,
                                                   GimpDockbook   *dockbook);
-static void        gimp_toolbox_set_geometry     (GimpToolbox    *toolbox);
-
 static void        toolbox_separator_expand      (GimpToolbox    *toolbox);
 static void        toolbox_separator_collapse    (GimpToolbox    *toolbox);
 static void        toolbox_separator_hide        (GimpToolbox    *toolbox);
@@ -212,7 +210,8 @@ gimp_toolbox_constructor (GType                  type,
   main_vbox = GIMP_DOCK (toolbox)->main_vbox;
 
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+/*   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0); */
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
   gtk_box_reorder_child (GTK_BOX (main_vbox), vbox, 0);
   gtk_widget_show (vbox);
 
@@ -275,7 +274,7 @@ gimp_toolbox_constructor (GType                  type,
 
   toolbox->color_area = toolbox_create_color_area (toolbox, context);
   if (toolbox->pack_vertically)
-    gtk_box_pack_start (GTK_BOX (vbox), toolbox->color_area, FALSE, FALSE, 0);
+    gtk_box_pack_end (GTK_BOX (vbox), toolbox->color_area, FALSE, FALSE, 0);
   else
     gtk_wrap_box_pack_wrapped (GTK_WRAP_BOX (toolbox->area_wbox),
                                toolbox->color_area,
@@ -501,8 +500,6 @@ gimp_toolbox_style_set (GtkWidget *widget,
           gtk_button_set_relief (GTK_BUTTON (tool_button), relief);
         }
     }
-
-  gimp_toolbox_set_geometry (GIMP_TOOLBOX (widget));
 }
 
 static void
@@ -511,7 +508,6 @@ gimp_toolbox_book_added (GimpDock     *dock,
 {
   if (g_list_length (dock->dockbooks[0]) == 1)
     {
-      gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
       toolbox_separator_collapse (GIMP_TOOLBOX (dock));
     }
 }
@@ -523,53 +519,7 @@ gimp_toolbox_book_removed (GimpDock     *dock,
   if (g_list_length (dock->dockbooks[0]) == 0 &&
       ! (GTK_OBJECT_FLAGS (dock) & GTK_IN_DESTRUCTION))
     {
-      gimp_toolbox_set_geometry (GIMP_TOOLBOX (dock));
       toolbox_separator_expand (GIMP_TOOLBOX (dock));
-    }
-}
-
-static void
-gimp_toolbox_set_geometry (GimpToolbox *toolbox)
-{
-  Gimp         *gimp;
-  GimpToolInfo *tool_info;
-  GtkWidget    *tool_button;
-
-  gimp = GIMP_DOCK (toolbox)->context->gimp;
-
-  tool_info = gimp_get_tool_info (gimp, "gimp-rect-select-tool");
-  tool_button = g_object_get_data (G_OBJECT (tool_info), TOOL_BUTTON_DATA_KEY);
-
-  if (tool_button)
-    {
-      GtkWidget      *main_vbox;
-      GtkRequisition  menubar_requisition = { 0, 0 };
-      GtkRequisition  button_requisition;
-      gint            border_width;
-      GdkGeometry     geometry;
-
-      main_vbox = GIMP_DOCK (toolbox)->main_vbox;
-
-      if (toolbox->menu_bar)
-        gtk_widget_size_request (toolbox->menu_bar, &menubar_requisition);
-
-      gtk_widget_size_request (tool_button, &button_requisition);
-
-      border_width = gtk_container_get_border_width (GTK_CONTAINER (main_vbox));
-
-      geometry.min_width  = (2 * border_width +
-                             2 * button_requisition.width);
-      geometry.min_height = -1;
-      geometry.width_inc  = button_requisition.width;
-      geometry.height_inc = (GIMP_DOCK (toolbox)->dockbooks ?
-                             1 : button_requisition.height);
-
-      gtk_window_set_geometry_hints (GTK_WINDOW (toolbox),
-                                     NULL,
-                                     &geometry,
-                                     GDK_HINT_MIN_SIZE   |
-                                     GDK_HINT_RESIZE_INC |
-                                     GDK_HINT_USER_POS);
     }
 }
 

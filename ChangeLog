@@ -1,5 +1,10 @@
 2008-03-05  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/widgets/gimptoolbox.c: don't set geometry hints --
+	with two columns, they aren't useful.
+	
+2008-03-05  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/widgets/gimpviewablebox.c: revert change that removed
 	button relief, let the theme deal with this.
 	
