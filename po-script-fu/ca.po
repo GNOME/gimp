@@ -1,18 +1,18 @@
 # translation of ca.po to Catalan
 # gimp-script-fu translation to Catalan.
-# Copyright © 2000, 2001, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
+# Copyright © 2000, 2001, 2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
 #
 # Softcatala <gnome@llistes.softcatala.org>, 2000-2007.
 # Quim Perez i Noguer <noguer a osona.com>, 2005-2007.
 # Xavier Conde Rueda <xavi.conde a gmail.com>, 2004-2007.
 # Jordi Jover, jordijn@softcatala.org, 2002.
-# Joaquim Perez <noguer@gmail.com>, 2007.
+# Joaquim Perez <noguer@gmail.com>, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-25 15:37+0200\n"
-"PO-Revision-Date: 2007-10-16 22:44+0200\n"
+"POT-Creation-Date: 2008-03-06 21:46+0100\n"
+"PO-Revision-Date: 2008-02-29 19:09+0100\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -51,7 +51,7 @@ msgstr "No s'ha pogut obrir «%s» per escriure: %s"
 msgid "Script-Fu Procedure Browser"
 msgstr "Gestor de funcions"
 
-#: ../plug-ins/script-fu/script-fu-console.c:716
+#: ../plug-ins/script-fu/script-fu-console.c:718
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "Si s'activa l'avaluador de funcions només es permetrà la invocació no "
@@ -146,8 +146,8 @@ msgid "Interactive console for Script-Fu development"
 msgstr "Consola interactiva per al desenvolupament de funcions"
 
 #: ../plug-ins/script-fu/script-fu.c:116
-msgid "Script-Fu _Console"
-msgstr "_Consola de les funcions"
+msgid "_Console"
+msgstr "_Consola"
 
 #: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
@@ -1899,48 +1899,6 @@ msgstr "Suprimeix totes les guies, horitzontals i verticals"
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
 msgstr "_Suprimeix totes les guies"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-msgid "BG opacity"
-msgstr "Opacitat del fons"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid "Create a graph of the Hue, Saturation, and Value distributions"
-msgstr ""
-"Crea una gràfica de la distribució del to, la saturació i el valor de la "
-"imatge actual"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
-msgid "Draw _HSV Graph..."
-msgstr "Dibuixa gràfic _HSV..."
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:4
-msgid "End X"
-msgstr "X final"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:5
-msgid "End Y"
-msgstr "Y final"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:6
-msgid "From top-left to bottom-right"
-msgstr "Del cantó superior esquerre a l'inferior dret"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:7
-msgid "Graph scale"
-msgstr "Escala de la gràfica"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:8
-msgid "Start X"
-msgstr "X inicial"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:9
-msgid "Start Y"
-msgstr "Y inicial"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:10
-msgid "Use selection bounds instead of values below"
-msgstr "Utilitza els límits de la selecció en comptes dels següents valors"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
