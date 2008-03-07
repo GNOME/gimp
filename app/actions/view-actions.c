@@ -123,7 +123,13 @@ static const GimpActionEntry view_actions[] =
     N_("_Open Display..."), NULL,
     N_("Connect to another display"),
     G_CALLBACK (window_open_display_cmd_callback),
-    NULL }
+    NULL },
+
+  { "view-hide-toolbar", GTK_STOCK_CLOSE,
+    N_("Hide _Toolbar"), NULL,
+    N_("Hide this tool bar"),
+    G_CALLBACK (view_hide_toolbar_cmd_callback),
+    GIMP_HELP_VIEW_SHOW_TOOLBAR }
 };
 
 static const GimpToggleActionEntry view_toggle_actions[] =
@@ -135,7 +141,7 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     TRUE,
     GIMP_HELP_VIEW_DOT_FOR_DOT },
 
-  { "view-show-selection", NULL,
+  { "view-show-selection", GIMP_STOCK_SELECTION_ALL,
     N_("Show _Selection"), "<control>T",
     N_("Display the selection outline"),
     G_CALLBACK (view_toggle_selection_cmd_callback),
@@ -156,7 +162,7 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     TRUE,
     GIMP_HELP_VIEW_SHOW_GUIDES },
 
-  { "view-show-grid", NULL,
+  { "view-show-grid", GIMP_STOCK_GRID,
     N_("S_how Grid"), NULL,
     N_("Display the image's grid"),
     G_CALLBACK (view_toggle_grid_cmd_callback),
@@ -652,6 +658,8 @@ view_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("view-show-menubar",    display);
   SET_ACTIVE    ("view-show-menubar",    display && options->show_menubar);
+  SET_SENSITIVE ("view-show-toolbar",    display);
+  SET_ACTIVE    ("view-show-toolbar",    display && options->show_toolbar);
   SET_SENSITIVE ("view-show-rulers",     display);
   SET_ACTIVE    ("view-show-rulers",     display && options->show_rulers);
   SET_SENSITIVE ("view-show-scrollbars", display);

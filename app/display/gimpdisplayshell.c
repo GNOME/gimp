@@ -827,7 +827,7 @@ gimp_display_shell_new (GimpDisplay     *display,
       gtk_box_pack_start (GTK_BOX (main_vbox), shell->scratch_toolbar, FALSE, FALSE, 0);
       gtk_toolbar_set_icon_size (GTK_TOOLBAR (shell->scratch_toolbar),
                                  GTK_ICON_SIZE_BUTTON);
-      gtk_toolbar_set_style (GTK_TOOLBAR (shell->scratch_toolbar), GTK_TOOLBAR_ICONS);
+/*       gtk_toolbar_set_style (GTK_TOOLBAR (shell->scratch_toolbar), GTK_TOOLBAR_ICONS); */
 /*       gtk_widget_show (shell->scratch_toolbar); */
     }
 

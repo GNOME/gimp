@@ -7,5 +7,17 @@
     <toolitem action="view-zoom-out" />
     <toolitem action="view-zoom-fit-in" />
     <toolitem action="view-fullscreen" />
+    <separator />
+    <toolitem action="view-show-grid" />
+    <toolitem action="view-show-selection" />
+    <toolitem action="quick-mask-toggle" />
+    <separator expand="true"/>
+    <toolitem action="edit-undo" />
+    <toolitem action="edit-redo" />
+    <toolitem action="edit-cut" />
+    <toolitem action="edit-copy" />
+    <toolitem action="edit-paste" />
+    <separator />
+    <toolitem action="view-hide-toolbar" />
   </toolbar>
 </ui>

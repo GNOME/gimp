@@ -39,6 +39,8 @@ void   view_zoom_other_cmd_callback            (GtkAction *action,
                                                 gpointer   data);
 void   view_dot_for_dot_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
+void   view_hide_toolbar_cmd_callback          (GtkAction *action,
+                                                gpointer   data);
 
 void   view_scroll_horizontal_cmd_callback     (GtkAction *action,
                                                 gint       value,

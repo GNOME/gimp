@@ -139,6 +139,8 @@ menus_init (Gimp              *gimp,
                                       "plug-in",
                                       "quick-mask",
                                       NULL,
+                                      "/tools-toolbar",
+                                      "tools-toolbar.xml", NULL,
                                       "/toolbox-menubar",
                                       "toolbox-menu.xml", toolbox_menu_setup,
                                       NULL);

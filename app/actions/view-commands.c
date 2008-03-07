@@ -395,6 +395,19 @@ view_toggle_toolbar_cmd_callback (GtkAction *action,
 }
 
 void
+view_hide_toolbar_cmd_callback (GtkAction *action,
+                                gpointer   data)
+{
+  GimpDisplay      *display;
+  GimpDisplayShell *shell;
+  return_if_no_display (display, data);
+
+  shell = GIMP_DISPLAY_SHELL (display->shell);
+
+  gimp_display_shell_set_show_toolbar (shell, FALSE);
+}
+
+void
 view_toggle_rulers_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {

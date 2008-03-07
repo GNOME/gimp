@@ -66,25 +66,31 @@ static const GimpActionEntry file_actions[] =
   { "file-acquire-menu",     NULL, N_("Acq_uire")     },
 
   { "file-open", GTK_STOCK_OPEN,
-    N_("_Open..."), NULL,
+    N_("_Open"), NULL,
     N_("Open an image file"),
     G_CALLBACK (file_open_cmd_callback),
     GIMP_HELP_FILE_OPEN },
 
   { "file-open-as-layers", GIMP_STOCK_LAYER,
-    N_("Op_en as Layers..."), "<control><alt>O",
+    N_("Op_en as Layers"), "<control><alt>O",
     N_("Open an image file as layers"),
     G_CALLBACK (file_open_as_layers_cmd_callback),
     GIMP_HELP_FILE_OPEN_AS_LAYER },
 
   { "file-open-location", GIMP_STOCK_WEB,
-    N_("Open _Location..."), NULL,
+    N_("_URL"), NULL,
     N_("Open an image file from a specified location"),
     G_CALLBACK (file_open_location_cmd_callback),
     GIMP_HELP_FILE_OPEN_LOCATION },
 
+  { "file-open-recent", GIMP_STOCK_IMAGES,
+    N_("_Recent"), NULL,
+    N_("Open a recently used image file"),
+    NULL,
+    GIMP_HELP_FILE_OPEN },
+
   { "file-save-as-template", NULL,
-    N_("Save as _Template..."), NULL,
+    N_("Save as _Template"), NULL,
     N_("Create a new template from this image"),
     G_CALLBACK (file_save_template_cmd_callback),
     GIMP_HELP_FILE_SAVE_AS_TEMPLATE },
@@ -117,19 +123,19 @@ static const GimpEnumActionEntry file_save_actions[] =
     GIMP_HELP_FILE_SAVE },
 
   { "file-save-as", GTK_STOCK_SAVE_AS,
-    N_("Save _As..."), "<control><shift>S",
+    N_("Save _As"), "<control><shift>S",
     N_("Save this image with a different name"),
     GIMP_SAVE_MODE_SAVE_AS, FALSE,
     GIMP_HELP_FILE_SAVE_AS },
 
   { "file-save-a-copy", NULL,
-    N_("Save a Cop_y..."), NULL,
+    N_("Save a Cop_y"), NULL,
     N_("Save this image with a different name, but keep its current name"),
     GIMP_SAVE_MODE_SAVE_A_COPY, FALSE,
     GIMP_HELP_FILE_SAVE_A_COPY },
 
   { "file-save-and-close", NULL,
-    N_("Save and Close..."), NULL,
+    N_("Save and Close"), NULL,
     N_("Save this image and close its window"),
     GIMP_SAVE_MODE_SAVE_AND_CLOSE, FALSE,
     GIMP_HELP_FILE_SAVE }

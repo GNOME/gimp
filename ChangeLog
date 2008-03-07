@@ -1,3 +1,25 @@
+2008-03-07  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Several small changes to make toolbars work better.
+	Added entries, added icons, tweaked layout.
+
+	* app/actions/image-actions.c
+	* app/actions/view-actions.c
+	* app/actions/view-commands.[ch]
+	* app/actions/file-actions.c
+	* app/actions/dialogs-actions.c
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplay.c
+	* menus/image-toolbar.xml
+	* menus/scratch-toolbar.xml
+
+	* app/menus/menus.c
+	* app/actions/tools-actions.c
+	* menus/Makefile.am
+	* menus/tools-toolbar.xml: added actions for tool
+	categories, and made a start toward setting up a 
+	Tools toolbar, not yet functional.
+	
 2008-03-05  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Create toolbars for the image window and no-image-open

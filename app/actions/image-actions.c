@@ -77,19 +77,19 @@ static const GimpActionEntry image_actions[] =
     GIMP_HELP_IMAGE_WINDOW },
 
   { "image-new", GTK_STOCK_NEW,
-    N_("_New..."), "<control>N",
+    N_("_New"), "<control>N",
     N_("Create a new image"),
     G_CALLBACK (image_new_cmd_callback),
     GIMP_HELP_FILE_NEW },
 
   { "image-new-from-image", GTK_STOCK_NEW,
-    N_("_New..."), NULL,
+    N_("_New"), NULL,
     N_("Create a new image"),
     G_CALLBACK (image_new_from_image_cmd_callback),
     GIMP_HELP_FILE_NEW },
 
   { "image-resize", GIMP_STOCK_RESIZE,
-    N_("Can_vas Size..."), NULL,
+    N_("Can_vas Size"), NULL,
     N_("Adjust the image dimensions"),
     G_CALLBACK (image_resize_cmd_callback),
     GIMP_HELP_IMAGE_RESIZE },
@@ -107,13 +107,13 @@ static const GimpActionEntry image_actions[] =
     GIMP_HELP_IMAGE_RESIZE_TO_SELECTION },
 
   { "image-print-size", GIMP_STOCK_PRINT_RESOLUTION,
-    N_("_Print Size..."), NULL,
+    N_("_Print Size"), NULL,
     N_("Adjust the print resolution"),
     G_CALLBACK (image_print_size_cmd_callback),
     GIMP_HELP_IMAGE_PRINT_SIZE },
 
   { "image-scale", GIMP_STOCK_SCALE,
-    N_("_Scale Image..."), NULL,
+    N_("_Scale Image"), NULL,
     N_("Change the size of the image content"),
     G_CALLBACK (image_scale_cmd_callback),
     GIMP_HELP_IMAGE_SCALE },
@@ -131,7 +131,7 @@ static const GimpActionEntry image_actions[] =
     GIMP_HELP_IMAGE_DUPLICATE },
 
   { "image-merge-layers", NULL,
-    N_("Merge Visible _Layers..."), "<control>M",
+    N_("Merge Visible _Layers"), "<control>M",
     N_("Merge all visible layers into one layer"),
     G_CALLBACK (image_merge_layers_cmd_callback),
     GIMP_HELP_IMAGE_MERGE_LAYERS },
@@ -155,7 +155,7 @@ static const GimpActionEntry image_actions[] =
     GIMP_HELP_IMAGE_DISTRIBUTE_ITEMS },
 
   { "image-configure-grid", GIMP_STOCK_GRID,
-    N_("Configure G_rid..."), NULL,
+    N_("Configure G_rid"), NULL,
     N_("Configure the grid for this image"),
     G_CALLBACK (image_configure_grid_cmd_callback),
     GIMP_HELP_IMAGE_GRID },
@@ -180,7 +180,7 @@ static const GimpRadioActionEntry image_convert_actions[] =
     GIMP_GRAY, GIMP_HELP_IMAGE_CONVERT_GRAYSCALE },
 
   { "image-convert-indexed", GIMP_STOCK_CONVERT_INDEXED,
-    N_("_Indexed..."), NULL,
+    N_("_Indexed"), NULL,
     N_("Convert the image to indexed colors"),
     GIMP_INDEXED, GIMP_HELP_IMAGE_CONVERT_INDEXED }
 };

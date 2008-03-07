@@ -417,6 +417,8 @@ gimp_scratch_display_new (GimpImage       *image,
   gint              ID;
   GimpDisplayShell *shell;
   gint              width, height;
+  gint              toolbar_height = 0;
+  gint              menubar_height = 0;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -453,12 +455,27 @@ gimp_scratch_display_new (GimpImage       *image,
   gimp_display_shell_set_show_scrollbars (shell, FALSE);
   gimp_display_shell_set_show_statusbar  (shell, FALSE);
 
+  if (shell->menubar)
+    {
+      GtkRequisition requisition;
+
+      gtk_widget_size_request (shell->menubar, &requisition);
+      menubar_height = requisition.height;
+    }
+
   if (shell->scratch_toolbar)
-    gtk_widget_show (shell->scratch_toolbar);
+    {
+      GtkRequisition requisition;
+
+      gtk_widget_show (shell->scratch_toolbar);
+      gtk_widget_size_request (shell->scratch_toolbar, &requisition);
+      toolbar_height = requisition.height;
+    }
 
   width  = SCALEX (shell, gimp_image_get_width  (image));
   height = SCALEY (shell, gimp_image_get_height (image));
-  gtk_widget_set_size_request (display->shell, width, height);
+  gtk_widget_set_size_request (display->shell, width,
+                               height + toolbar_height + menubar_height);
 
   gtk_widget_show (display->shell);
 

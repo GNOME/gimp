@@ -81,7 +81,72 @@ static const GimpActionEntry tools_actions[] =
     N_("_Reset Order & Visibility"), NULL,
     N_("Reset tool order and visibility"),
     G_CALLBACK (tools_reset_cmd_callback),
-    NULL }
+    NULL },
+
+  { "tool-group-select", GIMP_STOCK_TOOL_RECT_SELECT,
+    N_("Selection tools"), NULL,
+    N_("Select part of an image"),
+    NULL, NULL },
+
+  { "tool-group-paint", GIMP_STOCK_TOOL_PAINTBRUSH,
+    N_("Paint tools"), NULL,
+    N_("Paint on an image"),
+    NULL, NULL },
+
+  { "tool-group-fill", GIMP_STOCK_TOOL_BUCKET_FILL,
+    N_("Fill tools"), NULL,
+    N_("Fill a part of an image"),
+    NULL, NULL },
+
+  { "tool-group-crop", GIMP_STOCK_TOOL_CROP,
+    N_("Crop tool"), NULL,
+    N_("Crop the edges of an image"),
+    NULL, NULL },
+
+  { "tool-group-move", GIMP_STOCK_TOOL_MOVE,
+    N_("Move tool"), NULL,
+    N_("Move layers or other objects"),
+    NULL, NULL },
+
+  { "tool-group-link", GIMP_STOCK_CURSOR,
+    N_("Linking tool"), NULL,
+    N_("Link layers"),
+    NULL, NULL },
+
+  { "tool-group-transform", GIMP_STOCK_TOOL_SCALE,
+    N_("Transform tools"), NULL,
+    N_("Transform layers or other objects"),
+    NULL, NULL },
+
+  { "tool-group-color", GIMP_STOCK_TOOL_COLORIZE,
+    N_("Color tools"), NULL,
+    N_("Alter the colors in an image"),
+    NULL, NULL },
+
+  { "tool-group-vectors", GIMP_STOCK_TOOL_PATH,
+    N_("Path tool"), NULL,
+    N_("Create or edit paths"),
+    NULL, NULL },
+
+  { "tool-group-color-picker", GIMP_STOCK_TOOL_COLOR_PICKER,
+    N_("Color picker tool"), NULL,
+    N_("Set colors from points in an image"),
+    NULL, NULL },
+
+  { "tool-group-zoom", GIMP_STOCK_TOOL_ZOOM,
+    N_("Zoom tool"), NULL,
+    N_("Zoom in on part of an image"),
+    NULL, NULL },
+
+  { "tool-group-measure", GIMP_STOCK_TOOL_MEASURE,
+    N_("Measure tool"), NULL,
+    N_("Measure angles or distances"),
+    NULL, NULL },
+
+  { "tool-group-text", GIMP_STOCK_TOOL_TEXT,
+    N_("Text tool"), NULL,
+    N_("Create or edit text layers"),
+    NULL, NULL }
 };
 
 static const GimpToggleActionEntry tools_toggle_actions[] =
