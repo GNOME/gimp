@@ -1,3 +1,7 @@
+2008-03-08  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/about.h: It's 2008 now (bug #521202).
+
 2008-02-29  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.4.6 (interface age 6).
