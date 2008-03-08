@@ -1,5 +1,15 @@
 2008-03-08  Sven Neumann  <sven@gimp.org>
 
+	Experimental attempt to gain a little more horizontal space for
+	the tool options:
+	
+	* app/widgets/gimptooloptionseditor.c: removed the shadow from the
+	viewport and the border from the vbox.
+
+	* app/widgets/gimpdockable.c: use a semibold label for the title.
+
+2008-03-08  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpflipoptions.c
 	* app/tools/gimpmoveoptions.c
 	* app/tools/gimpselectionoptions.c

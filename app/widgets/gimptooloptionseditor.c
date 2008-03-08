@@ -106,7 +106,8 @@ gimp_tool_options_editor_class_init (GimpToolOptionsEditorClass *klass)
 static void
 gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
 {
-  GtkWidget *sw;
+  GtkScrolledWindow *scrolled_window;
+  GtkWidget         *viewport;
 
   gtk_widget_set_size_request (GTK_WIDGET (editor), -1, 200);
 
@@ -115,18 +116,25 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
                               gimp_tool_options_editor_drop_tool,
                               editor);
 
-  editor->scrolled_window = sw = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw),
+  editor->scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  scrolled_window = GTK_SCROLLED_WINDOW (editor->scrolled_window);
+
+  gtk_scrolled_window_set_policy (scrolled_window,
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_container_add (GTK_CONTAINER (editor), sw);
-  gtk_widget_show (sw);
+
+  gtk_container_add (GTK_CONTAINER (editor), editor->scrolled_window);
+  gtk_widget_show (editor->scrolled_window);
+
+  viewport = gtk_viewport_new (gtk_scrolled_window_get_hadjustment (scrolled_window),
+                               gtk_scrolled_window_get_vadjustment (scrolled_window));
+  gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), viewport);
+  gtk_widget_show (viewport);
 
   /*  The vbox containing the tool options  */
   editor->options_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (editor->options_vbox), 2);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (sw),
-                                         editor->options_vbox);
+  gtk_container_add (GTK_CONTAINER (viewport), editor->options_vbox);
   gtk_widget_show (editor->options_vbox);
 
   editor->save_queue   = NULL;

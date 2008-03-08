@@ -451,9 +451,11 @@ gimp_dockable_create_title_layout (GimpDockable *dockable,
                                    GtkWidget    *widget,
                                    gint          width)
 {
-  PangoLayout *layout;
-  GtkBin      *bin  = GTK_BIN (dockable);
-  gchar       *title = NULL;
+  PangoLayout    *layout;
+  PangoAttrList  *attrs;
+  PangoAttribute *attr;
+  GtkBin         *bin  = GTK_BIN (dockable);
+  gchar          *title = NULL;
 
   if (bin->child)
     title = gimp_docked_get_title (GIMP_DOCKED (bin->child));
@@ -461,6 +463,16 @@ gimp_dockable_create_title_layout (GimpDockable *dockable,
   layout = gtk_widget_create_pango_layout (widget,
                                            title ? title : dockable->blurb);
   g_free (title);
+
+  attrs = pango_attr_list_new ();
+
+  attr = pango_attr_weight_new (PANGO_WEIGHT_SEMIBOLD);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
+
+  pango_layout_set_attributes (layout, attrs);
+  pango_attr_list_unref (attrs);
 
   if (width > 0)
     {
