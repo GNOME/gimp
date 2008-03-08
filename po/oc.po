@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-19 20:21+0100\n"
-"PO-Revision-Date: 2008-02-04 19:01+0100\n"
+"POT-Creation-Date: 2008-03-07 10:20+0100\n"
+"PO-Revision-Date: 2008-03-04 18:39+0100\n"
 "Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
@@ -69,125 +69,120 @@ msgstr ""
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
 
-#: ../app/main.c:155 ../tools/gimp-remote.c:60
+#: ../app/main.c:156 ../tools/gimp-remote.c:60
 msgid "Show version information and exit"
 msgstr ""
 
-#: ../app/main.c:160
+#: ../app/main.c:161
 msgid "Show license information and exit"
 msgstr ""
 
-#: ../app/main.c:165
+#: ../app/main.c:166
 msgid "Be more verbose"
 msgstr ""
 
-#: ../app/main.c:170
+#: ../app/main.c:171
 msgid "Start a new GIMP instance"
 msgstr ""
 
-#: ../app/main.c:175
+#: ../app/main.c:176
 msgid "Open images as new"
 msgstr ""
 
-#: ../app/main.c:180
+#: ../app/main.c:181
 msgid "Run without a user interface"
 msgstr ""
 
-#: ../app/main.c:185
+#: ../app/main.c:186
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr ""
 
-#: ../app/main.c:190
+#: ../app/main.c:191
 msgid "Do not load any fonts"
 msgstr ""
 
-#: ../app/main.c:195
+#: ../app/main.c:196
 msgid "Do not show a startup window"
 msgstr ""
 
-#: ../app/main.c:200
+#: ../app/main.c:201
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr ""
 
-#: ../app/main.c:205
+#: ../app/main.c:206
 msgid "Do not use special CPU acceleration functions"
 msgstr ""
 
-#: ../app/main.c:210
+#: ../app/main.c:211
 msgid "Use an alternate sessionrc file"
 msgstr ""
 
-#: ../app/main.c:215
+#: ../app/main.c:216
 msgid "Use an alternate user gimprc file"
 msgstr ""
 
-#: ../app/main.c:220
+#: ../app/main.c:221
 msgid "Use an alternate system gimprc file"
 msgstr ""
 
-#: ../app/main.c:225
+#: ../app/main.c:226
 msgid "Batch command to run (can be used multiple times)"
 msgstr ""
 
-#: ../app/main.c:230
+#: ../app/main.c:231
 msgid "The procedure to process batch commands with"
 msgstr ""
 
-#: ../app/main.c:235
+#: ../app/main.c:236
 msgid "Send messages to console instead of using a dialog"
 msgstr ""
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:241
+#: ../app/main.c:242
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr ""
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:247
+#: ../app/main.c:248
 msgid "Debug in case of a crash (never|query|always)"
 msgstr ""
 
-#: ../app/main.c:252
+#: ../app/main.c:253
 msgid "Enable non-fatal debugging signal handlers"
 msgstr ""
 
-#: ../app/main.c:257
+#: ../app/main.c:258
 msgid "Make all warnings fatal"
 msgstr ""
 
-#: ../app/main.c:262
+#: ../app/main.c:263
 msgid "Output a gimprc file with default settings"
 msgstr ""
 
-#: ../app/main.c:343
+#: ../app/main.c:357
 msgid "[FILE|URI...]"
 msgstr ""
 
-#: ../app/main.c:361
+#: ../app/main.c:375
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr ""
 
-#: ../app/main.c:439
+#: ../app/main.c:453
 msgid "GIMP output. Type any character to close this window."
 msgstr ""
 
-#: ../app/main.c:440
+#: ../app/main.c:454
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr ""
 
-#: ../app/main.c:457
+#: ../app/main.c:471
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 
-#: ../app/main.c:559 ../tools/gimp-remote.c:95
-#, c-format
-msgid "%s version %s"
-msgstr "%s version %s"
-
-#: ../app/main.c:784
+#: ../app/main.c:792
 msgid "Another GIMP instance is already running."
 msgstr ""
 
@@ -209,6 +204,17 @@ msgid ""
 "you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
+
+#. show versions of libraries used by GIMP
+#: ../app/version.c:64
+#, c-format
+msgid "using %s, compiled against version %s, running against version %s"
+msgstr ""
+
+#: ../app/version.c:128 ../tools/gimp-remote.c:95
+#, c-format
+msgid "%s version %s"
+msgstr "%s version %s"
 
 #: ../app/actions/actions.c:99 ../app/dialogs/dialogs.c:216
 #: ../app/widgets/gimpbrusheditor.c:90
@@ -3215,21 +3221,21 @@ msgstr ""
 msgid "Show the last used plug-in dialog again"
 msgstr ""
 
-#: ../app/actions/plug-in-actions.c:490
+#: ../app/actions/plug-in-actions.c:502
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr ""
 
-#: ../app/actions/plug-in-actions.c:491
+#: ../app/actions/plug-in-actions.c:503
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr ""
 
-#: ../app/actions/plug-in-actions.c:502
+#: ../app/actions/plug-in-actions.c:517
 msgid "Repeat Last"
 msgstr ""
 
-#: ../app/actions/plug-in-actions.c:504
+#: ../app/actions/plug-in-actions.c:519
 msgid "Re-Show Last"
 msgstr ""
 
@@ -5799,7 +5805,7 @@ msgstr ""
 msgid "Colorize"
 msgstr ""
 
-#: ../app/core/gimpdrawable-curves.c:162 ../app/core/gimpdrawable-curves.c:198
+#: ../app/core/gimpdrawable-curves.c:167 ../app/core/gimpdrawable-curves.c:203
 #: ../app/tools/gimpcurvestool.c:130
 msgid "Curves"
 msgstr ""
@@ -5823,10 +5829,10 @@ msgstr ""
 msgid "Hue-Saturation"
 msgstr ""
 
-#: ../app/core/gimpdrawable-hue-saturation.c:104
 #
+#: ../app/core/gimpdrawable-hue-saturation.c:104
 msgid "Hue_Saturation"
-msgstr ""
+msgstr "_Saturacion :"
 
 #: ../app/core/gimpdrawable-invert.c:59 ../app/core/gimpdrawable-invert.c:84
 msgid "Invert"
@@ -8324,12 +8330,12 @@ msgstr ""
 msgid "Invalid character sequence in URI"
 msgstr ""
 
-#: ../app/gegl/gimpcurvesconfig.c:345
+#: ../app/gegl/gimpcurvesconfig.c:347
 #, c-format
 msgid "not a GIMP Curves file"
 msgstr ""
 
-#: ../app/gegl/gimpcurvesconfig.c:359 ../app/gegl/gimplevelsconfig.c:596
+#: ../app/gegl/gimpcurvesconfig.c:361 ../app/gegl/gimplevelsconfig.c:596
 #, c-format
 msgid "parse error"
 msgstr ""
@@ -9658,7 +9664,7 @@ msgstr ""
 msgid "_Free Select"
 msgstr ""
 
-#: ../app/tools/gimpfreeselecttool.c:312
+#: ../app/tools/gimpfreeselecttool.c:311
 msgid "command|Free Select"
 msgstr ""
 
@@ -10195,21 +10201,21 @@ msgstr ""
 msgid "Transformation Matrix"
 msgstr ""
 
-#: ../app/tools/gimppolygonselecttool.c:152
 #
+#: ../app/tools/gimppolygonselecttool.c:157
 msgid "Polygon Select"
-msgstr ""
+msgstr "Seleccionar"
 
-#: ../app/tools/gimppolygonselecttool.c:153
+#: ../app/tools/gimppolygonselecttool.c:158
 msgid "Polygon Select Tool: Select a hand-drawn polygon"
 msgstr ""
 
-#: ../app/tools/gimppolygonselecttool.c:154
 #
+#: ../app/tools/gimppolygonselecttool.c:159
 msgid "_Polygon Select"
-msgstr ""
+msgstr "_Seleccionar"
 
-#: ../app/tools/gimppolygonselecttool.c:527
+#: ../app/tools/gimppolygonselecttool.c:559
 msgid "command|Polygon Select"
 msgstr ""
 
@@ -11832,7 +11838,7 @@ msgstr ""
 
 #: ../app/widgets/gimptexteditor.c:185
 msgid "_Language:"
-msgstr ""
+msgstr "_Lenga :"
 
 #: ../app/widgets/gimptexteditor.c:230
 msgid "_Use selected font"

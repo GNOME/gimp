@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-19 20:21+0100\n"
-"PO-Revision-Date: 2008-02-05 16:45+0100\n"
+"POT-Creation-Date: 2008-03-07 10:20+0100\n"
+"PO-Revision-Date: 2008-03-04 18:40+0100\n"
 "Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
@@ -247,7 +247,7 @@ msgstr "Cosinus"
 #: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:422
 #: ../plug-ins/common/align_layers.c:453 ../plug-ins/common/postscript.c:3230
 #: ../plug-ins/common/postscript.c:3242 ../plug-ins/common/psp.c:418
-#: ../plug-ins/fits/fits.c:1026 ../plug-ins/print/print-page-layout.c:475
+#: ../plug-ins/fits/fits.c:1026 ../plug-ins/print/print-page-layout.c:449
 msgid "None"
 msgstr "Pas cap"
 
@@ -591,7 +591,7 @@ msgstr ""
 #: ../plug-ins/Lighting/lighting_ui.c:466
 #: ../plug-ins/MapObject/mapobject_ui.c:659
 #: ../plug-ins/MapObject/mapobject_ui.c:986
-#: ../plug-ins/print/print-page-layout.c:369
+#: ../plug-ins/print/print-page-layout.c:343
 msgid "Position"
 msgstr "Posicion"
 
@@ -632,7 +632,7 @@ msgstr ""
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
 #: ../plug-ins/Lighting/lighting_ui.c:517 ../plug-ins/common/struc.c:1292
-#: ../plug-ins/common/wind.c:934
+#: ../plug-ins/common/wind.c:943
 msgid "Direction"
 msgstr "Direccion"
 
@@ -941,7 +941,7 @@ msgid "Antialiasing quality. Higher is better, but slower"
 msgstr ""
 
 #: ../plug-ins/MapObject/mapobject_ui.c:585 ../plug-ins/common/redeye.c:173
-#: ../plug-ins/common/unsharp.c:704 ../plug-ins/common/wind.c:997
+#: ../plug-ins/common/unsharp.c:704 ../plug-ins/common/wind.c:1006
 #: ../plug-ins/imagemap/imap_preferences.c:441
 msgid "_Threshold:"
 msgstr "_Lindal :"
@@ -1063,12 +1063,12 @@ msgid "Z scale (size)"
 msgstr ""
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1193
-#: ../plug-ins/print/print-page-layout.c:428
+#: ../plug-ins/print/print-page-layout.c:402
 msgid "_Top:"
 msgstr ""
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1193
-#: ../plug-ins/print/print-page-layout.c:447
+#: ../plug-ins/print/print-page-layout.c:421
 msgid "_Bottom:"
 msgstr ""
 
@@ -1077,7 +1077,7 @@ msgid "Images for the Cap Faces"
 msgstr ""
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1227
-#: ../plug-ins/print/print-page-layout.c:245
+#: ../plug-ins/print/print-page-layout.c:219
 msgid "Size"
 msgstr "Talha"
 
@@ -1251,15 +1251,15 @@ msgstr ""
 
 #: ../plug-ins/bmp/bmpwrite.c:841
 msgid "16 bits"
-msgstr ""
+msgstr "16 bits"
 
 #: ../plug-ins/bmp/bmpwrite.c:877
 msgid "24 bits"
-msgstr ""
+msgstr "24 bits"
 
 #: ../plug-ins/bmp/bmpwrite.c:894
 msgid "32 bits"
-msgstr ""
+msgstr "32 bits"
 
 #: ../plug-ins/common/AlienMap2.c:140
 msgid "_Modify red channel"
@@ -2153,12 +2153,12 @@ msgid "Orientation"
 msgstr "Orientacion"
 
 #: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:542
-#: ../plug-ins/common/tileit.c:425 ../plug-ins/pagecurl/pagecurl.c:534
+#: ../plug-ins/common/tileit.c:426 ../plug-ins/pagecurl/pagecurl.c:534
 msgid "_Horizontal"
 msgstr "_Orizontal"
 
 #: ../plug-ins/common/blinds.c:264 ../plug-ins/common/ripple.c:543
-#: ../plug-ins/common/tileit.c:435 ../plug-ins/pagecurl/pagecurl.c:533
+#: ../plug-ins/common/tileit.c:436 ../plug-ins/pagecurl/pagecurl.c:533
 msgid "_Vertical"
 msgstr "_Vertical"
 
@@ -2977,9 +2977,11 @@ msgid "Curve Bend"
 msgstr ""
 
 #. Preview area, top of column
+#. preview
 #: ../plug-ins/common/curve_bend.c:1231
 #: ../plug-ins/gimpressionist/orientmap.c:592
 #: ../plug-ins/gimpressionist/sizemap.c:461
+#: ../plug-ins/print/print-page-layout.c:159
 msgid "Preview"
 msgstr "Ulhada"
 
@@ -3420,7 +3422,7 @@ msgstr ""
 #: ../plug-ins/common/smooth_palette.c:436 ../plug-ins/common/tile.c:431
 #: ../plug-ins/imagemap/imap_cmd_guides.c:165
 #: ../plug-ins/imagemap/imap_rectangle.c:403
-#: ../plug-ins/print/print-page-layout.c:278
+#: ../plug-ins/print/print-page-layout.c:252
 msgid "_Width:"
 msgstr "_Largor :"
 
@@ -3695,7 +3697,7 @@ msgstr ""
 #: ../plug-ins/common/raw.c:1048 ../plug-ins/common/smooth_palette.c:441
 #: ../plug-ins/common/tile.c:435 ../plug-ins/imagemap/imap_cmd_guides.c:175
 #: ../plug-ins/imagemap/imap_rectangle.c:410
-#: ../plug-ins/print/print-page-layout.c:280
+#: ../plug-ins/print/print-page-layout.c:254
 msgid "_Height:"
 msgstr "_Nautor :"
 
@@ -5179,15 +5181,15 @@ msgstr "_Enviar"
 msgid "_Filename:"
 msgstr "_Nom de fichièr :"
 
+#
 #: ../plug-ins/common/mail.c:457
-#
 msgid "_To:"
-msgstr ""
+msgstr "Destinatari :"
 
-#: ../plug-ins/common/mail.c:471
 #
+#: ../plug-ins/common/mail.c:471
 msgid "_From:"
-msgstr ""
+msgstr "Expedidor :"
 
 #: ../plug-ins/common/mail.c:483
 msgid "S_ubject:"
@@ -7772,7 +7774,7 @@ msgid "Constrain aspect ratio"
 msgstr ""
 
 #: ../plug-ins/common/svg.c:904 ../plug-ins/common/wmf.c:689
-#: ../plug-ins/print/print-page-layout.c:299
+#: ../plug-ins/print/print-page-layout.c:273
 #, c-format
 msgid "pixels/%a"
 msgstr ""
@@ -7933,7 +7935,7 @@ msgid "_Tile..."
 msgstr ""
 
 #. Set the tile cache size
-#: ../plug-ins/common/tile.c:190 ../plug-ins/common/tileit.c:320
+#: ../plug-ins/common/tile.c:190 ../plug-ins/common/tileit.c:321
 msgid "Tiling"
 msgstr ""
 
@@ -7957,47 +7959,47 @@ msgstr ""
 msgid "_Small Tiles..."
 msgstr ""
 
-#: ../plug-ins/common/tileit.c:262
+#: ../plug-ins/common/tileit.c:263
 msgid "Region selected for filter is empty."
 msgstr ""
 
 #. Get the preview image
-#: ../plug-ins/common/tileit.c:363
+#: ../plug-ins/common/tileit.c:364
 msgid "Small Tiles"
 msgstr ""
 
 #. Area for buttons etc
 #. Flip
-#: ../plug-ins/common/tileit.c:413 ../plug-ins/ifscompose/ifscompose.c:609
+#: ../plug-ins/common/tileit.c:414 ../plug-ins/ifscompose/ifscompose.c:609
 msgid "Flip"
 msgstr "Coalevar"
 
-#: ../plug-ins/common/tileit.c:461
+#: ../plug-ins/common/tileit.c:462
 msgid "A_ll tiles"
 msgstr ""
 
-#: ../plug-ins/common/tileit.c:475
+#: ../plug-ins/common/tileit.c:476
 msgid "Al_ternate tiles"
 msgstr ""
 
-#: ../plug-ins/common/tileit.c:489
+#: ../plug-ins/common/tileit.c:490
 msgid "_Explicit tile"
 msgstr ""
 
-#: ../plug-ins/common/tileit.c:495
+#: ../plug-ins/common/tileit.c:496
 msgid "Ro_w:"
 msgstr ""
 
-#: ../plug-ins/common/tileit.c:519
+#: ../plug-ins/common/tileit.c:520
 msgid "Col_umn:"
 msgstr "Col_omna :"
 
-#: ../plug-ins/common/tileit.c:571
+#: ../plug-ins/common/tileit.c:572
 msgid "O_pacity:"
 msgstr "O_pacitat :"
 
 #. Lower frame saying howmany segments
-#: ../plug-ins/common/tileit.c:580
+#: ../plug-ins/common/tileit.c:581
 msgid "Number of Segments"
 msgstr ""
 
@@ -8438,20 +8440,20 @@ msgid "Fixed-direction-vector map selection menu"
 msgstr ""
 
 #. make sure layer is visible
-#: ../plug-ins/common/warp.c:1172
+#: ../plug-ins/common/warp.c:1178
 msgid "Smoothing X gradient"
 msgstr ""
 
-#: ../plug-ins/common/warp.c:1175
+#: ../plug-ins/common/warp.c:1181
 msgid "Smoothing Y gradient"
 msgstr ""
 
 #. calculate new X,Y Displacement image maps
-#: ../plug-ins/common/warp.c:1225
+#: ../plug-ins/common/warp.c:1231
 msgid "Finding XY gradient"
 msgstr ""
 
-#: ../plug-ins/common/warp.c:1247
+#: ../plug-ins/common/warp.c:1256
 #, c-format
 msgid "Flow step %d"
 msgstr ""
@@ -8548,65 +8550,65 @@ msgstr ""
 msgid "Rendering blast"
 msgstr ""
 
-#: ../plug-ins/common/wind.c:442
+#: ../plug-ins/common/wind.c:447
 msgid "Rendering wind"
 msgstr ""
 
-#: ../plug-ins/common/wind.c:870
+#: ../plug-ins/common/wind.c:879
 msgid "Wind"
 msgstr "Vent"
 
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#: ../plug-ins/common/wind.c:910
+#: ../plug-ins/common/wind.c:919
 msgid "Style"
 msgstr "Estil"
 
-#: ../plug-ins/common/wind.c:914
+#: ../plug-ins/common/wind.c:923
 msgid "_Wind"
 msgstr ""
 
-#: ../plug-ins/common/wind.c:915
+#: ../plug-ins/common/wind.c:924
 msgid "_Blast"
 msgstr ""
 
-#: ../plug-ins/common/wind.c:938
+#: ../plug-ins/common/wind.c:947
 msgid "_Left"
 msgstr ""
 
-#: ../plug-ins/common/wind.c:939
+#: ../plug-ins/common/wind.c:948
 msgid "_Right"
 msgstr ""
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
-#: ../plug-ins/common/wind.c:958
+#: ../plug-ins/common/wind.c:967
 msgid "Edge Affected"
 msgstr ""
 
-#: ../plug-ins/common/wind.c:962
+#: ../plug-ins/common/wind.c:971
 msgid "L_eading"
 msgstr ""
 
-#: ../plug-ins/common/wind.c:963
+#: ../plug-ins/common/wind.c:972
 msgid "Tr_ailing"
 msgstr ""
 
-#: ../plug-ins/common/wind.c:964
+#: ../plug-ins/common/wind.c:973
 msgid "Bot_h"
 msgstr ""
 
-#: ../plug-ins/common/wind.c:1001
+#: ../plug-ins/common/wind.c:1010
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
 
-#: ../plug-ins/common/wind.c:1016 ../plug-ins/gimpressionist/orientmap.c:694
+#: ../plug-ins/common/wind.c:1025 ../plug-ins/gimpressionist/orientmap.c:694
 msgid "_Strength:"
 msgstr ""
 
-#: ../plug-ins/common/wind.c:1020
+#: ../plug-ins/common/wind.c:1029
 msgid "Higher values increase the magnitude of the effect"
 msgstr ""
 
@@ -11481,44 +11483,39 @@ msgstr ""
 msgid "Page Curl"
 msgstr ""
 
-#. label for the printable area
-#: ../plug-ins/print/print-page-layout.c:133
-msgid "Printable area:"
-msgstr ""
-
-#: ../plug-ins/print/print-page-layout.c:179
+#: ../plug-ins/print/print-page-layout.c:148
 msgid "Ignore Page _Margins"
 msgstr ""
 
-#: ../plug-ins/print/print-page-layout.c:320
+#: ../plug-ins/print/print-page-layout.c:294
 msgid "_X resolution:"
 msgstr "Resolucion :"
 
-#: ../plug-ins/print/print-page-layout.c:324
+#: ../plug-ins/print/print-page-layout.c:298
 msgid "_Y resolution:"
 msgstr "Resolucion :"
 
-#: ../plug-ins/print/print-page-layout.c:395
+#: ../plug-ins/print/print-page-layout.c:369
 msgid "_Left:"
 msgstr "Esquèrra:"
 
-#: ../plug-ins/print/print-page-layout.c:414
+#: ../plug-ins/print/print-page-layout.c:388
 msgid "_Right:"
 msgstr "Drecha:"
 
-#: ../plug-ins/print/print-page-layout.c:468
+#: ../plug-ins/print/print-page-layout.c:442
 msgid "C_enter:"
 msgstr "Centre"
 
-#: ../plug-ins/print/print-page-layout.c:476
+#: ../plug-ins/print/print-page-layout.c:450
 msgid "Horizontally"
 msgstr "Orizontal"
 
-#: ../plug-ins/print/print-page-layout.c:477
+#: ../plug-ins/print/print-page-layout.c:451
 msgid "Vertically"
 msgstr "Vertical"
 
-#: ../plug-ins/print/print-page-layout.c:478
+#: ../plug-ins/print/print-page-layout.c:452
 msgid "Both"
 msgstr "Los dos"
 
@@ -11536,17 +11533,17 @@ msgstr ""
 
 #: ../plug-ins/print/print.c:124
 msgid "Page Set_up"
-msgstr ""
+msgstr "Configuracion de la pagina"
 
-#: ../plug-ins/print/print.c:253
+#: ../plug-ins/print/print.c:261
 msgid "Image Settings"
 msgstr "_Paramètres"
 
-#: ../plug-ins/print/print.c:333
+#: ../plug-ins/print/print.c:341
 msgid "An error occurred while trying to print:"
 msgstr ""
 
-#: ../plug-ins/print/print.c:363
+#: ../plug-ins/print/print.c:371
 msgid "Printing"
 msgstr "Estampatge"
 
