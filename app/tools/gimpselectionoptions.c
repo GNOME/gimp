@@ -293,16 +293,25 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
   {
     GtkWidget *hbox;
     GtkWidget *label;
+    GtkWidget *box;
     GList     *children;
     GList     *list;
     gint       i;
 
-    hbox = gimp_prop_enum_stock_box_new (config, "operation",
-                                         "gimp-selection", 0, 0);
+    hbox = gtk_hbox_new (FALSE, 2);
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
 
-    children = gtk_container_get_children (GTK_CONTAINER (hbox));
+    label = gtk_label_new (_("Mode:"));
+    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+    gtk_widget_show (label);
+
+    box = gimp_prop_enum_stock_box_new (config, "operation",
+                                        "gimp-selection", 0, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
+    gtk_widget_show (box);
+
+    children = gtk_container_get_children (GTK_CONTAINER (box));
 
     /*  add modifier keys to the tooltips  */
     for (list = children, i = 0; list; list = list->next, i++)
@@ -332,15 +341,10 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
       }
 
     /*  move GIMP_CHANNEL_OP_REPLACE to the front  */
-    gtk_box_reorder_child (GTK_BOX (hbox),
+    gtk_box_reorder_child (GTK_BOX (box),
                            GTK_WIDGET (children->next->next->data), 0);
 
     g_list_free (children);
-
-    label = gtk_label_new (_("Mode:"));
-    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-    gtk_box_reorder_child (GTK_BOX (hbox), label, 0);
-    gtk_widget_show (label);
   }
 
   /*  the antialias toggle button  */

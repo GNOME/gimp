@@ -258,6 +258,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   GimpTransformOptions *options = GIMP_TRANSFORM_OPTIONS (tool_options);
   GtkWidget            *vbox    = gimp_tool_options_gui (tool_options);
   GtkWidget            *hbox;
+  GtkWidget            *box;
   GtkWidget            *label;
   GtkWidget            *frame;
   GtkWidget            *table;
@@ -265,14 +266,17 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   GtkWidget            *preview_box;
   const gchar          *constrain = NULL;
 
-  hbox = gimp_prop_enum_stock_box_new (config, "type", "gimp", 0, 0);
+  hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   label = gtk_label_new (_("Transform:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (hbox), label, 0);
   gtk_widget_show (label);
+
+  box = gimp_prop_enum_stock_box_new (config, "type", "gimp", 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
+  gtk_widget_show (box);
 
   frame = gimp_prop_enum_radio_frame_new (config, "direction",
                                           _("Direction"), 0, 0);

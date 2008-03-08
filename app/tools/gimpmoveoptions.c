@@ -167,18 +167,22 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *hbox;
+  GtkWidget *box;
   GtkWidget *label;
   GtkWidget *frame;
   gchar     *title;
 
-  hbox = gimp_prop_enum_stock_box_new (config, "move-type", "gimp", 0, 0);
+  hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   label = gtk_label_new (_("Move:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (hbox), label, 0);
   gtk_widget_show (label);
+
+  box = gimp_prop_enum_stock_box_new (config, "move-type", "gimp", 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
+  gtk_widget_show (box);
 
   /*  tool toggle  */
   title = g_strdup_printf (_("Tool Toggle  (%s)"),
