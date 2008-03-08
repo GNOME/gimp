@@ -139,6 +139,12 @@ struct _GimpRectangleToolPrivate
    * rectangle), but that will be the case if we always calculate the
    * integer coordinates based on rounded values of the gdouble
    * coordinates even if the gdouble width remains constant.
+   *
+   * TODO: Change the internal double-representation of the rectangle
+   * to x,y width,height instead of x1,y1 x2,y2. That way we don't
+   * need to keep a separate representation of the integer version of
+   * the rectangle; rounding width an height will yield consistant
+   * results and not depend on position of the rectangle.
    */
   gint                    x1_int,    y1_int;
   gint                    width_int, height_int;
