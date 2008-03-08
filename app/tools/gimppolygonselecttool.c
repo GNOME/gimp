@@ -60,6 +60,8 @@ struct _GimpPolygonSelectTool
   /* Point which is part of he polygon already. */
   GimpVector2       *grabbed_point;
 
+  gboolean           button1_down;
+
   /* Save the grabbed point state so we can cancel a movement
    * operation.
    */
@@ -129,6 +131,9 @@ static void         gimp_polygon_select_tool_real_select    (GimpPolygonSelectTo
 static GimpVector2 *gimp_polygon_select_tool_add_point      (GimpPolygonSelectTool *poly_sel_tool,
                                                              gdouble                x,
                                                              gdouble                y);
+static void         gimp_polygon_select_tool_update_button_state
+                                                            (GimpPolygonSelectTool *poly_sel_tool,
+                                                             GdkModifierType        state);
 static void         gimp_polygon_select_tool_remove_last    (GimpPolygonSelectTool *poly_sel_tool);
 static void         gimp_polygon_select_tool_select_closest_point
                                                             (GimpPolygonSelectTool *poly_sel_tool,
@@ -308,7 +313,12 @@ gimp_polygon_select_tool_button_press (GimpTool        *tool,
                                        GdkModifierType  state,
                                        GimpDisplay     *display)
 {
+  GimpDrawTool          *draw_tool     = GIMP_DRAW_TOOL (tool);
   GimpPolygonSelectTool *poly_sel_tool = GIMP_POLYGON_SELECT_TOOL (tool);
+
+  gimp_draw_tool_pause (draw_tool);
+
+  gimp_polygon_select_tool_update_button_state (poly_sel_tool, state);
 
   if (display != tool->display)
     {
@@ -322,6 +332,8 @@ gimp_polygon_select_tool_button_press (GimpTool        *tool,
     {
       poly_sel_tool->saved_grabbed_point = *poly_sel_tool->grabbed_point;
     }
+
+  gimp_draw_tool_resume (draw_tool);
 }
 
 static void
@@ -372,6 +384,8 @@ gimp_polygon_select_tool_button_release (GimpTool              *tool,
   GimpPolygonSelectTool *poly_sel_tool = GIMP_POLYGON_SELECT_TOOL (tool);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (poly_sel_tool));
+
+  gimp_polygon_select_tool_update_button_state (poly_sel_tool, state);
 
   switch (release_type)
     {
@@ -469,6 +483,7 @@ gimp_polygon_select_tool_start (GimpPolygonSelectTool *poly_sel_tool,
 
   poly_sel_tool->n_points           = 0;
   poly_sel_tool->grabbed_point      = NULL;
+  poly_sel_tool->button1_down       = FALSE;
   poly_sel_tool->show_pending_point = FALSE;
 
   gimp_draw_tool_start (draw_tool, display);
@@ -516,7 +531,8 @@ gimp_polygon_select_tool_draw (GimpDrawTool *draw_tool)
                              poly_sel_tool->points, poly_sel_tool->n_points,
                              FALSE, FALSE);
 
-  if (poly_sel_tool->grabbed_point)
+  if (poly_sel_tool->grabbed_point &&
+      ! poly_sel_tool->button1_down)
     {
       gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_CIRCLE,
                                   poly_sel_tool->grabbed_point->x,
@@ -584,6 +600,13 @@ gimp_polygon_select_tool_add_point (GimpPolygonSelectTool *poly_sel_tool,
   poly_sel_tool->points[poly_sel_tool->n_points].y = y;
 
   return &poly_sel_tool->points[poly_sel_tool->n_points++];
+}
+
+static void
+gimp_polygon_select_tool_update_button_state (GimpPolygonSelectTool *poly_sel_tool,
+                                              GdkModifierType        state)
+{
+  poly_sel_tool->button1_down = state & GDK_BUTTON1_MASK ? TRUE : FALSE;
 }
 
 static void

@@ -1,5 +1,10 @@
 2008-03-08  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimppolygonselecttool.c: Don't draw the handle for a
+	vertex while it is being moved.
+
+2008-03-08  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangletool.c: Added TODO on how to improve the
 	code by changing the way the rectangle is represented internally.
 
