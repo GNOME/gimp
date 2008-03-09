@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-10 13:22+0100\n"
-"PO-Revision-Date: 2008-02-10 13:26+0100\n"
+"POT-Creation-Date: 2008-03-09 16:30+0100\n"
+"PO-Revision-Date: 2008-03-09 16:31+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -261,7 +261,7 @@ msgstr "Cosinus"
 #: ../plug-ins/common/postscript.c:3242
 #: ../plug-ins/common/psp.c:418
 #: ../plug-ins/fits/fits.c:1026
-#: ../plug-ins/print/print-page-layout.c:475
+#: ../plug-ins/print/print-page-layout.c:449
 msgid "None"
 msgstr "Ingen"
 
@@ -646,7 +646,7 @@ msgstr "Ljusintensitet"
 #: ../plug-ins/Lighting/lighting_ui.c:466
 #: ../plug-ins/MapObject/mapobject_ui.c:659
 #: ../plug-ins/MapObject/mapobject_ui.c:986
-#: ../plug-ins/print/print-page-layout.c:369
+#: ../plug-ins/print/print-page-layout.c:343
 msgid "Position"
 msgstr "Position"
 
@@ -694,7 +694,7 @@ msgstr "Ljuskällans Z-position i XYZ-rummet"
 #. *************************************************
 #: ../plug-ins/Lighting/lighting_ui.c:517
 #: ../plug-ins/common/struc.c:1292
-#: ../plug-ins/common/wind.c:934
+#: ../plug-ins/common/wind.c:943
 msgid "Direction"
 msgstr "Riktning"
 
@@ -1012,7 +1012,7 @@ msgstr "Kvalitet på kantutjämning. Högre är bättre, men långsammare"
 #: ../plug-ins/MapObject/mapobject_ui.c:585
 #: ../plug-ins/common/redeye.c:173
 #: ../plug-ins/common/unsharp.c:704
-#: ../plug-ins/common/wind.c:997
+#: ../plug-ins/common/wind.c:1006
 #: ../plug-ins/imagemap/imap_preferences.c:441
 msgid "_Threshold:"
 msgstr "_Tröskelvärde:"
@@ -1134,12 +1134,12 @@ msgid "Z scale (size)"
 msgstr "Z-skala (storlek)"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1193
-#: ../plug-ins/print/print-page-layout.c:428
+#: ../plug-ins/print/print-page-layout.c:402
 msgid "_Top:"
 msgstr "_Ovansida:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1193
-#: ../plug-ins/print/print-page-layout.c:447
+#: ../plug-ins/print/print-page-layout.c:421
 msgid "_Bottom:"
 msgstr "_Undersida:"
 
@@ -1148,7 +1148,7 @@ msgid "Images for the Cap Faces"
 msgstr "Bilder för ändarna"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1227
-#: ../plug-ins/print/print-page-layout.c:245
+#: ../plug-ins/print/print-page-layout.c:219
 msgid "Size"
 msgstr "Storlek"
 
@@ -2301,14 +2301,14 @@ msgstr "Orientering"
 
 #: ../plug-ins/common/blinds.c:263
 #: ../plug-ins/common/ripple.c:542
-#: ../plug-ins/common/tileit.c:425
+#: ../plug-ins/common/tileit.c:426
 #: ../plug-ins/pagecurl/pagecurl.c:534
 msgid "_Horizontal"
 msgstr "_Horisontell"
 
 #: ../plug-ins/common/blinds.c:264
 #: ../plug-ins/common/ripple.c:543
-#: ../plug-ins/common/tileit.c:435
+#: ../plug-ins/common/tileit.c:436
 #: ../plug-ins/pagecurl/pagecurl.c:533
 msgid "_Vertical"
 msgstr "_Vertikal"
@@ -3175,9 +3175,11 @@ msgid "Curve Bend"
 msgstr "Böj efter kurva"
 
 #. Preview area, top of column
+#. preview
 #: ../plug-ins/common/curve_bend.c:1231
 #: ../plug-ins/gimpressionist/orientmap.c:592
 #: ../plug-ins/gimpressionist/sizemap.c:461
+#: ../plug-ins/print/print-page-layout.c:159
 msgid "Preview"
 msgstr "Förhandsgranska"
 
@@ -3649,7 +3651,7 @@ msgstr "Ta bort bandning"
 #: ../plug-ins/common/tile.c:431
 #: ../plug-ins/imagemap/imap_cmd_guides.c:165
 #: ../plug-ins/imagemap/imap_rectangle.c:403
-#: ../plug-ins/print/print-page-layout.c:278
+#: ../plug-ins/print/print-page-layout.c:252
 msgid "_Width:"
 msgstr "_Bredd:"
 
@@ -3944,7 +3946,7 @@ msgstr "Gravera"
 #: ../plug-ins/common/tile.c:435
 #: ../plug-ins/imagemap/imap_cmd_guides.c:175
 #: ../plug-ins/imagemap/imap_rectangle.c:410
-#: ../plug-ins/print/print-page-layout.c:280
+#: ../plug-ins/print/print-page-layout.c:254
 msgid "_Height:"
 msgstr "_Höjd:"
 
@@ -8117,7 +8119,7 @@ msgstr "Håll proportioner"
 
 #: ../plug-ins/common/svg.c:904
 #: ../plug-ins/common/wmf.c:689
-#: ../plug-ins/print/print-page-layout.c:299
+#: ../plug-ins/print/print-page-layout.c:273
 #, c-format
 msgid "pixels/%a"
 msgstr "bildpunkter/%a"
@@ -8284,7 +8286,7 @@ msgstr "_Plattlägg..."
 
 #. Set the tile cache size
 #: ../plug-ins/common/tile.c:190
-#: ../plug-ins/common/tileit.c:320
+#: ../plug-ins/common/tileit.c:321
 msgid "Tiling"
 msgstr "Plattlägger"
 
@@ -8309,48 +8311,48 @@ msgstr "Dela upp bilden i mindre versioner av originalet"
 msgid "_Small Tiles..."
 msgstr "_Små plattor..."
 
-#: ../plug-ins/common/tileit.c:262
+#: ../plug-ins/common/tileit.c:263
 msgid "Region selected for filter is empty."
 msgstr "Regionen markerade för filter är tom."
 
 #. Get the preview image
-#: ../plug-ins/common/tileit.c:363
+#: ../plug-ins/common/tileit.c:364
 msgid "Small Tiles"
 msgstr "Små plattor"
 
 #. Area for buttons etc
 #. Flip
-#: ../plug-ins/common/tileit.c:413
+#: ../plug-ins/common/tileit.c:414
 #: ../plug-ins/ifscompose/ifscompose.c:609
 msgid "Flip"
 msgstr "Vänd"
 
-#: ../plug-ins/common/tileit.c:461
+#: ../plug-ins/common/tileit.c:462
 msgid "A_ll tiles"
 msgstr "A_lla plattor"
 
-#: ../plug-ins/common/tileit.c:475
+#: ../plug-ins/common/tileit.c:476
 msgid "Al_ternate tiles"
 msgstr "Al_ternerande plattor"
 
-#: ../plug-ins/common/tileit.c:489
+#: ../plug-ins/common/tileit.c:490
 msgid "_Explicit tile"
 msgstr "_Explicit platta"
 
-#: ../plug-ins/common/tileit.c:495
+#: ../plug-ins/common/tileit.c:496
 msgid "Ro_w:"
 msgstr "R_ad:"
 
-#: ../plug-ins/common/tileit.c:519
+#: ../plug-ins/common/tileit.c:520
 msgid "Col_umn:"
 msgstr "K_olumn:"
 
-#: ../plug-ins/common/tileit.c:571
+#: ../plug-ins/common/tileit.c:572
 msgid "O_pacity:"
 msgstr "O_pacitet:"
 
 #. Lower frame saying howmany segments
-#: ../plug-ins/common/tileit.c:580
+#: ../plug-ins/common/tileit.c:581
 msgid "Number of Segments"
 msgstr "Antal segment:"
 
@@ -8622,16 +8624,16 @@ msgid "_Value Propagate..."
 msgstr "Sprid _värden..."
 
 #: ../plug-ins/common/vpropagate.c:245
-msgid "Shrink darker areas of the image"
-msgstr "Förminska mörkare områden av bilden"
+msgid "Shrink lighter areas of the image"
+msgstr "Förminska ljusare områden av bilden"
 
 #: ../plug-ins/common/vpropagate.c:250
 msgid "E_rode"
 msgstr "E_rodera"
 
 #: ../plug-ins/common/vpropagate.c:257
-msgid "Grow darker areas of the image"
-msgstr "Förstora mörkare områden av bilden"
+msgid "Grow lighter areas of the image"
+msgstr "Förstora ljusare områden av bilden"
 
 #: ../plug-ins/common/vpropagate.c:262
 msgid "_Dilate"
@@ -8790,20 +8792,20 @@ msgid "Fixed-direction-vector map selection menu"
 msgstr "Val av riktningsvektorkarta"
 
 #. make sure layer is visible
-#: ../plug-ins/common/warp.c:1172
+#: ../plug-ins/common/warp.c:1178
 msgid "Smoothing X gradient"
 msgstr "Jämnar ut X-gradient"
 
-#: ../plug-ins/common/warp.c:1175
+#: ../plug-ins/common/warp.c:1181
 msgid "Smoothing Y gradient"
 msgstr "Jämnar ut Y-gradient"
 
 #. calculate new X,Y Displacement image maps
-#: ../plug-ins/common/warp.c:1225
+#: ../plug-ins/common/warp.c:1231
 msgid "Finding XY gradient"
 msgstr "Söker XY-gradient"
 
-#: ../plug-ins/common/warp.c:1247
+#: ../plug-ins/common/warp.c:1256
 #, c-format
 msgid "Flow step %d"
 msgstr "Utflytning steg %d"
@@ -8906,67 +8908,67 @@ msgstr "Vi_nd..."
 msgid "Rendering blast"
 msgstr "Renderar vindstöt"
 
-#: ../plug-ins/common/wind.c:442
+#: ../plug-ins/common/wind.c:447
 msgid "Rendering wind"
 msgstr "Renderar vind"
 
-#: ../plug-ins/common/wind.c:870
+#: ../plug-ins/common/wind.c:879
 msgid "Wind"
 msgstr "Vind"
 
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#: ../plug-ins/common/wind.c:910
+#: ../plug-ins/common/wind.c:919
 msgid "Style"
 msgstr "Typ"
 
-#: ../plug-ins/common/wind.c:914
+#: ../plug-ins/common/wind.c:923
 msgid "_Wind"
 msgstr "_Vind"
 
-#: ../plug-ins/common/wind.c:915
+#: ../plug-ins/common/wind.c:924
 msgid "_Blast"
 msgstr "_Vindstöt"
 
-#: ../plug-ins/common/wind.c:938
+#: ../plug-ins/common/wind.c:947
 msgid "_Left"
 msgstr "_Vänster"
 
-#: ../plug-ins/common/wind.c:939
+#: ../plug-ins/common/wind.c:948
 msgid "_Right"
 msgstr "_Höger"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
-#: ../plug-ins/common/wind.c:958
+#: ../plug-ins/common/wind.c:967
 msgid "Edge Affected"
 msgstr "Påverkad kant"
 
-#: ../plug-ins/common/wind.c:962
+#: ../plug-ins/common/wind.c:971
 msgid "L_eading"
 msgstr "F_ramkant"
 
-#: ../plug-ins/common/wind.c:963
+#: ../plug-ins/common/wind.c:972
 msgid "Tr_ailing"
 msgstr "B_akkant"
 
 # src/dialogs.c:502 src/dialogs.c:600
-#: ../plug-ins/common/wind.c:964
+#: ../plug-ins/common/wind.c:973
 msgid "Bot_h"
 msgstr "B_åde och"
 
-#: ../plug-ins/common/wind.c:1001
+#: ../plug-ins/common/wind.c:1010
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "Högre värden begränsar effekten till färre delar av bilden"
 
-#: ../plug-ins/common/wind.c:1016
+#: ../plug-ins/common/wind.c:1025
 #: ../plug-ins/gimpressionist/orientmap.c:694
 msgid "_Strength:"
 msgstr "_Styrka:"
 
-#: ../plug-ins/common/wind.c:1020
+#: ../plug-ins/common/wind.c:1029
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Högre värden ökar magnituden av effekten"
 
@@ -11889,45 +11891,40 @@ msgstr "Lager för krusning"
 msgid "Page Curl"
 msgstr "Sidkrusning"
 
-#. label for the printable area
-#: ../plug-ins/print/print-page-layout.c:133
-msgid "Printable area:"
-msgstr "Utskrivningsområde:"
-
-#: ../plug-ins/print/print-page-layout.c:179
+#: ../plug-ins/print/print-page-layout.c:148
 msgid "Ignore Page _Margins"
 msgstr "Ignorera sid_marginaler"
 
-#: ../plug-ins/print/print-page-layout.c:320
+#: ../plug-ins/print/print-page-layout.c:294
 msgid "_X resolution:"
 msgstr "_X-upplösning:"
 
-#: ../plug-ins/print/print-page-layout.c:324
+#: ../plug-ins/print/print-page-layout.c:298
 msgid "_Y resolution:"
 msgstr "_Y-upplösning:"
 
-#: ../plug-ins/print/print-page-layout.c:395
+#: ../plug-ins/print/print-page-layout.c:369
 msgid "_Left:"
 msgstr "_Vänster:"
 
-#: ../plug-ins/print/print-page-layout.c:414
+#: ../plug-ins/print/print-page-layout.c:388
 msgid "_Right:"
 msgstr "_Höger:"
 
-#: ../plug-ins/print/print-page-layout.c:468
+#: ../plug-ins/print/print-page-layout.c:442
 msgid "C_enter:"
 msgstr "Mitt_punkt:"
 
-#: ../plug-ins/print/print-page-layout.c:476
+#: ../plug-ins/print/print-page-layout.c:450
 msgid "Horizontally"
 msgstr "Horisontellt"
 
-#: ../plug-ins/print/print-page-layout.c:477
+#: ../plug-ins/print/print-page-layout.c:451
 msgid "Vertically"
 msgstr "Vertikalt"
 
 # src/dialogs.c:502 src/dialogs.c:600
-#: ../plug-ins/print/print-page-layout.c:478
+#: ../plug-ins/print/print-page-layout.c:452
 msgid "Both"
 msgstr "Både och"
 
@@ -11947,15 +11944,15 @@ msgstr "Justera sidstorlek och orientering för utskrift"
 msgid "Page Set_up"
 msgstr "Sidinställnin_gar"
 
-#: ../plug-ins/print/print.c:253
+#: ../plug-ins/print/print.c:261
 msgid "Image Settings"
 msgstr "Bildinställningar"
 
-#: ../plug-ins/print/print.c:333
+#: ../plug-ins/print/print.c:341
 msgid "An error occurred while trying to print:"
 msgstr "Ett fel inträffade vid försök att skriva ut:"
 
-#: ../plug-ins/print/print.c:363
+#: ../plug-ins/print/print.c:371
 msgid "Printing"
 msgstr "Skriver ut"
 
@@ -12453,6 +12450,8 @@ msgstr "Fel: Kan ej läsa XJT-egenskapsfilen \"%s\"."
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fel: XJT-egenskapsfilen \"%s\" är tom."
 
+#~ msgid "Printable area:"
+#~ msgstr "Utskrivningsområde:"
 #~ msgid "Email the image"
 #~ msgstr "Skicka bilden via e-post"
 #~ msgid "_Mail Image..."
