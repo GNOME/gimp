@@ -63,6 +63,8 @@ typedef struct _ICurve ICurve;
 #define GIMP_IS_ISCISSORS_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ISCISSORS_TOOL))
 #define GIMP_ISCISSORS_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ISCISSORS_TOOL, GimpIscissorsToolClass))
 
+#define GIMP_ISCISSORS_TOOL_GET_OPTIONS(t)  (GIMP_ISCISSORS_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+
 
 typedef struct _GimpIscissorsTool      GimpIscissorsTool;
 typedef struct _GimpIscissorsToolClass GimpIscissorsToolClass;

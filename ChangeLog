@@ -1,3 +1,19 @@
+2008-03-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/Makefile.am
+	* app/tools/gimpiscissorsoptions.[ch]
+	* app/tools/gimpregionselectoptions.[ch]: new options classes.
+
+	* app/tools/gimpselectionoptions.[ch]: remove the options here.
+	Also remove some leftover rectangle options cruft that is in its
+	own files since long ago.
+
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpiscissorstool.[ch]
+	* app/tools/gimpregionselecttool.[ch]
+	* app/widgets/gimpselectioneditor.c: changed accordingly.
+
 2008-03-09  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c

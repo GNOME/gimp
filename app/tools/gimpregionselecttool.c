@@ -40,8 +40,8 @@
 #include "display/gimpdisplayshell-cursor.h"
 #include "display/gimpdisplayshell-transform.h"
 
+#include "gimpregionselectoptions.h"
 #include "gimpregionselecttool.h"
-#include "gimpselectionoptions.h"
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
@@ -145,8 +145,8 @@ gimp_region_select_tool_button_press (GimpTool        *tool,
                                       GdkModifierType  state,
                                       GimpDisplay     *display)
 {
-  GimpRegionSelectTool *region_sel = GIMP_REGION_SELECT_TOOL (tool);
-  GimpSelectionOptions *options    = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  GimpRegionSelectTool    *region_sel = GIMP_REGION_SELECT_TOOL (tool);
+  GimpRegionSelectOptions *options    = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
 
   region_sel->x               = coords->x;
   region_sel->y               = coords->y;
@@ -176,8 +176,9 @@ gimp_region_select_tool_button_release (GimpTool              *tool,
                                         GimpButtonReleaseType  release_type,
                                         GimpDisplay           *display)
 {
-  GimpRegionSelectTool *region_sel = GIMP_REGION_SELECT_TOOL (tool);
-  GimpSelectionOptions *options    = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  GimpRegionSelectTool    *region_sel  = GIMP_REGION_SELECT_TOOL (tool);
+  GimpSelectionOptions    *sel_options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  GimpRegionSelectOptions *options     = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
 
   gimp_tool_pop_status (tool, display);
 
@@ -226,10 +227,10 @@ gimp_region_select_tool_button_release (GimpTool              *tool,
                                        region_sel->region_mask,
                                        off_x,
                                        off_y,
-                                       options->operation,
-                                       options->feather,
-                                       options->feather_radius,
-                                       options->feather_radius);
+                                       sel_options->operation,
+                                       sel_options->feather,
+                                       sel_options->feather_radius,
+                                       sel_options->feather_radius);
 
 
           gimp_image_flush (display->image);
@@ -262,12 +263,12 @@ gimp_region_select_tool_motion (GimpTool        *tool,
                                 GdkModifierType  state,
                                 GimpDisplay     *display)
 {
-  GimpRegionSelectTool *region_sel = GIMP_REGION_SELECT_TOOL (tool);
-  GimpSelectionOptions *options    = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-  GdkSegment           *new_segs;
-  gint                  num_new_segs;
-  gint                  diff_x, diff_y;
-  gdouble               diff;
+  GimpRegionSelectTool    *region_sel = GIMP_REGION_SELECT_TOOL (tool);
+  GimpRegionSelectOptions *options    = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
+  GdkSegment              *new_segs;
+  gint                     num_new_segs;
+  gint                     diff_x, diff_y;
+  gdouble                  diff;
 
   static guint32 last_time = 0;
 
@@ -308,8 +309,8 @@ gimp_region_select_tool_cursor_update (GimpTool        *tool,
                                        GdkModifierType  state,
                                        GimpDisplay     *display)
 {
-  GimpSelectionOptions *options  = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-  GimpCursorModifier    modifier = GIMP_CURSOR_MODIFIER_NONE;
+  GimpRegionSelectOptions *options  = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
+  GimpCursorModifier       modifier = GIMP_CURSOR_MODIFIER_NONE;
 
   if (! gimp_image_coords_in_active_pickable (display->image, coords,
                                               options->sample_merged, FALSE))
@@ -342,13 +343,13 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
                                    GimpDisplay          *display,
                                    gint                 *num_segs)
 {
-  GimpTool             *tool    = GIMP_TOOL (region_sel);
-  GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-  GimpDisplayShell     *shell   = GIMP_DISPLAY_SHELL (display->shell);
-  GimpDrawable         *drawable;
-  GdkSegment           *segs;
-  BoundSeg             *bsegs;
-  PixelRegion           maskPR;
+  GimpTool                *tool    = GIMP_TOOL (region_sel);
+  GimpRegionSelectOptions *options = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
+  GimpDisplayShell        *shell   = GIMP_DISPLAY_SHELL (display->shell);
+  GimpDrawable            *drawable;
+  GdkSegment              *segs;
+  BoundSeg                *bsegs;
+  PixelRegion              maskPR;
 
   drawable = gimp_image_get_active_drawable (display->image);
 

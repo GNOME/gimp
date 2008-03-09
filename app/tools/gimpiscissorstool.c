@@ -75,8 +75,8 @@
 
 #include "display/gimpdisplay.h"
 
+#include "gimpiscissorsoptions.h"
 #include "gimpiscissorstool.h"
-#include "gimpselectionoptions.h"
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
@@ -271,8 +271,8 @@ gimp_iscissors_tool_register (GimpToolRegisterCallback  callback,
                               gpointer                  data)
 {
   (* callback) (GIMP_TYPE_ISCISSORS_TOOL,
-                GIMP_TYPE_SELECTION_OPTIONS,
-                gimp_selection_options_gui,
+                GIMP_TYPE_ISCISSORS_OPTIONS,
+                gimp_iscissors_options_gui,
                 0,
                 "gimp-iscissors-tool",
                 _("Scissors"),
@@ -405,7 +405,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
                                   GimpDisplay     *display)
 {
   GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  GimpSelectionOptions *options   = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  GimpIscissorsOptions *options   = GIMP_ISCISSORS_TOOL_GET_OPTIONS (tool);
 
   iscissors->x = RINT (coords->x);
   iscissors->y = RINT (coords->y);
@@ -549,7 +549,7 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
                                     GimpDisplay           *display)
 {
   GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  GimpSelectionOptions *options   = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  GimpIscissorsOptions *options   = GIMP_ISCISSORS_TOOL_GET_OPTIONS (tool);
 
   /* Make sure X didn't skip the button release event -- as it's known
    * to do
@@ -665,7 +665,7 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
                             GimpDisplay     *display)
 {
   GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
-  GimpSelectionOptions *options   = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  GimpIscissorsOptions *options   = GIMP_ISCISSORS_TOOL_GET_OPTIONS (tool);
 
   if (iscissors->state == NO_ACTION)
     return;

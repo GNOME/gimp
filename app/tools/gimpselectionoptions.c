@@ -34,11 +34,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpforegroundselecttool.h"
-#include "gimprectangleselecttool.h"
-#include "gimpregionselecttool.h"
-#include "gimpiscissorstool.h"
 #include "gimpselectionoptions.h"
-#include "gimprectangleselectoptions.h"
 #include "gimptooloptions-gui.h"
 
 #include "gimp-intl.h"
@@ -50,12 +46,7 @@ enum
   PROP_OPERATION,
   PROP_ANTIALIAS,
   PROP_FEATHER,
-  PROP_FEATHER_RADIUS,
-  PROP_SELECT_TRANSPARENT,
-  PROP_SAMPLE_MERGED,
-  PROP_THRESHOLD,
-  PROP_SELECT_CRITERION,
-  PROP_INTERACTIVE
+  PROP_FEATHER_RADIUS
 };
 
 
@@ -93,46 +84,22 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
                                  GIMP_TYPE_CHANNEL_OPS,
                                  GIMP_CHANNEL_OP_REPLACE,
                                  GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
                                     "antialias",
                                     N_("Smooth edges"),
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FEATHER,
                                     "feather", NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS,
                                    "feather-radius", NULL,
                                    0.0, 100.0, 10.0,
                                    GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SELECT_TRANSPARENT,
-                                    "select-transparent",
-                                    N_("Allow completely transparent regions "
-                                       "to be selected"),
-                                    TRUE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
-                                    "sample-merged",
-                                    N_("Base selection on all visible layers"),
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,
-                                   "threshold",
-                                   N_("Maximum color difference"),
-                                   0.0, 255.0, 15.0,
-                                   GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SELECT_CRITERION,
-                                 "select-criterion", NULL,
-                                 GIMP_TYPE_SELECT_CRITERION,
-                                 GIMP_SELECT_CRITERION_COMPOSITE,
-                                 GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INTERACTIVE,
-                                    "interactive", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -153,31 +120,17 @@ gimp_selection_options_set_property (GObject      *object,
     case PROP_OPERATION:
       options->operation = g_value_get_enum (value);
       break;
+
     case PROP_ANTIALIAS:
       options->antialias = g_value_get_boolean (value);
       break;
+
     case PROP_FEATHER:
       options->feather = g_value_get_boolean (value);
       break;
+
     case PROP_FEATHER_RADIUS:
       options->feather_radius = g_value_get_double (value);
-      break;
-
-    case PROP_SELECT_TRANSPARENT:
-      options->select_transparent = g_value_get_boolean (value);
-      break;
-    case PROP_SAMPLE_MERGED:
-      options->sample_merged = g_value_get_boolean (value);
-      break;
-    case PROP_THRESHOLD:
-      options->threshold = g_value_get_double (value);
-      break;
-    case PROP_SELECT_CRITERION:
-      options->select_criterion = g_value_get_enum (value);
-      break;
-
-    case PROP_INTERACTIVE:
-      options->interactive = g_value_get_boolean (value);
       break;
 
     default:
@@ -199,31 +152,17 @@ gimp_selection_options_get_property (GObject    *object,
     case PROP_OPERATION:
       g_value_set_enum (value, options->operation);
       break;
+
     case PROP_ANTIALIAS:
       g_value_set_boolean (value, options->antialias);
       break;
+
     case PROP_FEATHER:
       g_value_set_boolean (value, options->feather);
       break;
+
     case PROP_FEATHER_RADIUS:
       g_value_set_double (value, options->feather_radius);
-      break;
-
-    case PROP_SELECT_TRANSPARENT:
-      g_value_set_boolean (value, options->select_transparent);
-      break;
-    case PROP_SAMPLE_MERGED:
-      g_value_set_boolean (value, options->sample_merged);
-      break;
-    case PROP_THRESHOLD:
-      g_value_set_double (value, options->threshold);
-      break;
-    case PROP_SELECT_CRITERION:
-      g_value_set_enum (value, options->select_criterion);
-      break;
-
-    case PROP_INTERACTIVE:
-      g_value_set_boolean (value, options->interactive);
       break;
 
     default:
@@ -243,13 +182,6 @@ gimp_selection_options_reset (GimpToolOptions *tool_options)
   if (pspec)
     G_PARAM_SPEC_BOOLEAN (pspec)->default_value =
       (tool_options->tool_info->tool_type != GIMP_TYPE_FOREGROUND_SELECT_TOOL);
-
-  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
-                                        "threshold");
-
-  if (pspec)
-    G_PARAM_SPEC_DOUBLE (pspec)->default_value =
-      GIMP_GUI_CONFIG (tool_options->tool_info->gimp->config)->default_threshold;
 
   GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
@@ -380,53 +312,5 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
                                FALSE, 0.0, 0.0);
   }
 
-  /* selection tool with an interactive boundary that can be toggled */
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_ISCISSORS_TOOL)
-    {
-      button = gimp_prop_check_button_new (config, "interactive",
-                                           _("Interactive boundary"));
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-    }
-
-  /*  selection tools which operate on colors or contiguous regions  */
-  if (g_type_is_a (tool_options->tool_info->tool_type,
-                   GIMP_TYPE_REGION_SELECT_TOOL))
-    {
-      GtkWidget *table;
-      GtkWidget *combo;
-
-      /*  the select transparent areas toggle  */
-      button = gimp_prop_check_button_new (config, "select-transparent",
-                                           _("Select transparent areas"));
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-
-      /*  the sample merged toggle  */
-      button = gimp_prop_check_button_new (config, "sample-merged",
-                                           _("Sample merged"));
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-
-      /*  the threshold scale  */
-      table = gtk_table_new (2, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-      gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-      gtk_widget_show (table);
-
-      gimp_prop_scale_entry_new (config, "threshold",
-                                 GTK_TABLE (table), 0, 0,
-                                 _("Threshold:"),
-                                 1.0, 16.0, 1,
-                                 FALSE, 0.0, 0.0);
-
-      /*  the select criterion combo  */
-      combo = gimp_prop_enum_combo_box_new (config, "select-criterion", 0, 0);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                 _("Select by:"), 0.0, 0.5,
-                                 combo, 2, FALSE);
-    }
-
   return vbox;
 }
-

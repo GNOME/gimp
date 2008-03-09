@@ -36,29 +36,15 @@ typedef struct _GimpToolOptionsClass GimpSelectionOptionsClass;
 
 struct _GimpSelectionOptions
 {
-  GimpToolOptions     parent_instance;
+  GimpToolOptions  parent_instance;
 
-  /*  options used by all selection tools  */
-  GimpChannelOps      operation;
-  gboolean            antialias;
-  gboolean            feather;
-  gdouble             feather_radius;
-
-  /*  used by fuzzy, by-color selection  */
-  gboolean            select_transparent;
-  gboolean            sample_merged;
-  gdouble             threshold;
-  GimpSelectCriterion select_criterion;
-
-  /*  used by rect., ellipse selection  */
-  gboolean            auto_shrink;
-  gboolean            shrink_merged;
-
-  /*  used by iscissors */
-  gboolean            interactive;
+  GimpChannelOps   operation;
+  gboolean         antialias;
+  gboolean         feather;
+  gdouble          feather_radius;
 
   /*  options gui  */
-  GtkWidget          *antialias_toggle;
+  GtkWidget       *antialias_toggle;
 };
 
 
@@ -67,4 +53,4 @@ GType       gimp_selection_options_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_selection_options_gui      (GimpToolOptions *tool_options);
 
 
-#endif  /*  __GIMP_SELCTION_OPTIONS_H__  */
+#endif  /*  __GIMP_SELECTION_OPTIONS_H__  */

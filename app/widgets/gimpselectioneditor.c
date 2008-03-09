@@ -40,7 +40,7 @@
 #warning #include "tools/tools-types.h"
 #endif
 #include "tools/tools-types.h"
-#include "tools/gimpselectionoptions.h"
+#include "tools/gimpregionselectoptions.h"
 
 #include "gimpselectioneditor.h"
 #include "gimpdnd.h"
@@ -251,14 +251,15 @@ gimp_selection_view_button_press (GtkWidget           *widget,
                                   GdkEventButton      *bevent,
                                   GimpSelectionEditor *editor)
 {
-  GimpImageEditor      *image_editor = GIMP_IMAGE_EDITOR (editor);
-  GimpViewRenderer     *renderer;
-  GimpToolInfo         *tool_info;
-  GimpSelectionOptions *options;
-  GimpDrawable         *drawable;
-  GimpChannelOps        operation = GIMP_CHANNEL_OP_REPLACE;
-  gint                  x, y;
-  GimpRGB               color;
+  GimpImageEditor         *image_editor = GIMP_IMAGE_EDITOR (editor);
+  GimpViewRenderer        *renderer;
+  GimpToolInfo            *tool_info;
+  GimpSelectionOptions    *sel_options;
+  GimpRegionSelectOptions *options;
+  GimpDrawable            *drawable;
+  GimpChannelOps           operation = GIMP_CHANNEL_OP_REPLACE;
+  gint                     x, y;
+  GimpRGB                  color;
 
   if (! image_editor->image)
     return TRUE;
@@ -271,7 +272,8 @@ gimp_selection_view_button_press (GtkWidget           *widget,
   if (! tool_info)
     return TRUE;
 
-  options = GIMP_SELECTION_OPTIONS (tool_info->tool_options);
+  sel_options = GIMP_SELECTION_OPTIONS (tool_info->tool_options);
+  options     = GIMP_REGION_SELECT_OPTIONS (tool_info->tool_options);
 
   drawable = gimp_image_get_active_drawable (image_editor->image);
 
@@ -311,10 +313,10 @@ gimp_selection_view_button_press (GtkWidget           *widget,
                                     options->select_transparent,
                                     options->select_criterion,
                                     operation,
-                                    options->antialias,
-                                    options->feather,
-                                    options->feather_radius,
-                                    options->feather_radius);
+                                    sel_options->antialias,
+                                    sel_options->feather,
+                                    sel_options->feather_radius,
+                                    sel_options->feather_radius);
       gimp_image_flush (image_editor->image);
     }
 
@@ -328,10 +330,11 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
                                   const GimpRGB *color,
                                   gpointer       data)
 {
-  GimpImageEditor      *editor = GIMP_IMAGE_EDITOR (data);
-  GimpToolInfo         *tool_info;
-  GimpSelectionOptions *options;
-  GimpDrawable         *drawable;
+  GimpImageEditor         *editor = GIMP_IMAGE_EDITOR (data);
+  GimpToolInfo            *tool_info;
+  GimpSelectionOptions    *sel_options;
+  GimpRegionSelectOptions *options;
+  GimpDrawable            *drawable;
 
   if (! editor->image)
     return;
@@ -341,7 +344,8 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
   if (! tool_info)
     return;
 
-  options = GIMP_SELECTION_OPTIONS (tool_info->tool_options);
+  sel_options = GIMP_SELECTION_OPTIONS (tool_info->tool_options);
+  options     = GIMP_REGION_SELECT_OPTIONS (tool_info->tool_options);
 
   drawable = gimp_image_get_active_drawable (editor->image);
 
@@ -355,11 +359,11 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
                                 options->threshold,
                                 options->select_transparent,
                                 options->select_criterion,
-                                options->operation,
-                                options->antialias,
-                                options->feather,
-                                options->feather_radius,
-                                options->feather_radius);
+                                sel_options->operation,
+                                sel_options->antialias,
+                                sel_options->feather,
+                                sel_options->feather_radius,
+                                sel_options->feather_radius);
   gimp_image_flush (editor->image);
 }
 

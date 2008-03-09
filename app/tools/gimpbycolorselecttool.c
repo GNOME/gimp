@@ -37,7 +37,7 @@
 #include "display/gimpdisplay.h"
 
 #include "gimpbycolorselecttool.h"
-#include "gimpselectionoptions.h"
+#include "gimpregionselectoptions.h"
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
@@ -58,8 +58,8 @@ gimp_by_color_select_tool_register (GimpToolRegisterCallback  callback,
                                     gpointer                  data)
 {
   (* callback) (GIMP_TYPE_BY_COLOR_SELECT_TOOL,
-                GIMP_TYPE_SELECTION_OPTIONS,
-                gimp_selection_options_gui,
+                GIMP_TYPE_REGION_SELECT_OPTIONS,
+                gimp_region_select_options_gui,
                 0,
                 "gimp-by-color-select-tool",
                 _("Select by Color"),
@@ -93,12 +93,13 @@ static GimpChannel *
 gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
                                     GimpDisplay          *display)
 {
-  GimpTool              *tool    = GIMP_TOOL (region_select);
-  GimpSelectionOptions  *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-  GimpDrawable          *drawable;
-  GimpPickable          *pickable;
-  GimpRGB                color;
-  gint                   x, y;
+  GimpTool                *tool        = GIMP_TOOL (region_select);
+  GimpSelectionOptions    *sel_options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  GimpRegionSelectOptions *options     = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (tool);
+  GimpDrawable            *drawable;
+  GimpPickable            *pickable;
+  GimpRGB                  color;
+  gint                     x, y;
 
   drawable = gimp_image_get_active_drawable (display->image);
 
@@ -126,7 +127,7 @@ gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
   if (gimp_pickable_get_color_at (pickable, x, y, &color))
     return gimp_image_contiguous_region_by_color (display->image, drawable,
                                                   options->sample_merged,
-                                                  options->antialias,
+                                                  sel_options->antialias,
                                                   options->threshold,
                                                   options->select_transparent,
                                                   options->select_criterion,

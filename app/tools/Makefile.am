@@ -94,6 +94,8 @@ libapptools_a_sources = \
 	gimpinkoptions-gui.h		\
 	gimpinktool.c			\
 	gimpinktool.h			\
+	gimpiscissorsoptions.c		\
+	gimpiscissorsoptions.h		\
 	gimpiscissorstool.c		\
 	gimpiscissorstool.h		\
 	gimplevelstool.c		\
@@ -134,6 +136,8 @@ libapptools_a_sources = \
 	gimprectangletool.h		\
 	gimprectangleoptions.c		\
 	gimprectangleoptions.h		\
+	gimpregionselectoptions.c	\
+	gimpregionselectoptions.h	\
 	gimpregionselecttool.c		\
 	gimpregionselecttool.h		\
 	gimprotatetool.c		\
