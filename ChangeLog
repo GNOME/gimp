@@ -1,5 +1,13 @@
 2008-03-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimprectangleselecttool.[ch]
+	* app/tools/gimprectangleselectoptions.[ch]
+	* app/tools/gimpellipseselecttool.[ch]
+	* app/tools/gimp-tools.c: s/Rect/Rectangle/ and s/rect/rectangle/
+	in types and function names.
+
+2008-03-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/Makefile.am
 	* app/tools/gimpiscissorsoptions.[ch]
 	* app/tools/gimpregionselectoptions.[ch]: new options classes.

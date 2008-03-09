@@ -44,29 +44,30 @@ enum
 };
 
 
-static void   gimp_rect_select_options_set_property (GObject      *object,
-                                                     guint         property_id,
-                                                     const GValue *value,
-                                                     GParamSpec   *pspec);
-static void   gimp_rect_select_options_get_property (GObject      *object,
-                                                     guint         property_id,
-                                                     GValue       *value,
-                                                     GParamSpec   *pspec);
+static void   gimp_rectangle_select_options_set_property (GObject      *object,
+                                                          guint         property_id,
+                                                          const GValue *value,
+                                                          GParamSpec   *pspec);
+static void   gimp_rectangle_select_options_get_property (GObject      *object,
+                                                          guint         property_id,
+                                                          GValue       *value,
+                                                          GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpRectSelectOptions, gimp_rect_select_options,
+G_DEFINE_TYPE_WITH_CODE (GimpRectangleSelectOptions,
+                         gimp_rectangle_select_options,
                          GIMP_TYPE_SELECTION_OPTIONS,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_OPTIONS,
                                                 NULL))
 
 
 static void
-gimp_rect_select_options_class_init (GimpRectSelectOptionsClass *klass)
+gimp_rectangle_select_options_class_init (GimpRectangleSelectOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_rect_select_options_set_property;
-  object_class->get_property = gimp_rect_select_options_get_property;
+  object_class->set_property = gimp_rectangle_select_options_set_property;
+  object_class->get_property = gimp_rectangle_select_options_get_property;
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ROUND_CORNERS,
                                     "round-corners", NULL,
@@ -82,17 +83,17 @@ gimp_rect_select_options_class_init (GimpRectSelectOptionsClass *klass)
 }
 
 static void
-gimp_rect_select_options_init (GimpRectSelectOptions *options)
+gimp_rectangle_select_options_init (GimpRectangleSelectOptions *options)
 {
 }
 
 static void
-gimp_rect_select_options_set_property (GObject      *object,
-                                       guint         property_id,
-                                       const GValue *value,
-                                       GParamSpec   *pspec)
+gimp_rectangle_select_options_set_property (GObject      *object,
+                                            guint         property_id,
+                                            const GValue *value,
+                                            GParamSpec   *pspec)
 {
-  GimpRectSelectOptions *options = GIMP_RECT_SELECT_OPTIONS (object);
+  GimpRectangleSelectOptions *options = GIMP_RECTANGLE_SELECT_OPTIONS (object);
 
   switch (property_id)
     {
@@ -111,12 +112,12 @@ gimp_rect_select_options_set_property (GObject      *object,
 }
 
 static void
-gimp_rect_select_options_get_property (GObject      *object,
-                                       guint         property_id,
-                                       GValue       *value,
-                                       GParamSpec   *pspec)
+gimp_rectangle_select_options_get_property (GObject    *object,
+                                            guint       property_id,
+                                            GValue     *value,
+                                            GParamSpec *pspec)
 {
-  GimpRectSelectOptions *options = GIMP_RECT_SELECT_OPTIONS (object);
+  GimpRectangleSelectOptions *options = GIMP_RECTANGLE_SELECT_OPTIONS (object);
 
   switch (property_id)
     {
@@ -135,13 +136,13 @@ gimp_rect_select_options_get_property (GObject      *object,
 }
 
 GtkWidget *
-gimp_rect_select_options_gui (GimpToolOptions *tool_options)
+gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_selection_options_gui (tool_options);
 
   /*  the round corners frame  */
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL)
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_RECTANGLE_SELECT_TOOL)
     {
       GtkWidget *frame;
       GtkWidget *button;
@@ -159,7 +160,7 @@ gimp_rect_select_options_gui (GimpToolOptions *tool_options)
       g_object_set_data (G_OBJECT (button), "set_sensitive",
                          GIMP_SELECTION_OPTIONS (tool_options)->antialias_toggle);
       gtk_widget_set_sensitive (GIMP_SELECTION_OPTIONS (tool_options)->antialias_toggle,
-                                GIMP_RECT_SELECT_OPTIONS (tool_options)->round_corners);
+                                GIMP_RECTANGLE_SELECT_OPTIONS (tool_options)->round_corners);
 
       gimp_prop_scale_entry_new (config, "corner-radius",
                                  GTK_TABLE (table), 0, 0,

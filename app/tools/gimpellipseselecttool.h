@@ -36,12 +36,12 @@ typedef struct _GimpEllipseSelectToolClass GimpEllipseSelectToolClass;
 
 struct _GimpEllipseSelectTool
 {
-  GimpRectSelectTool  parent_instance;
+  GimpRectangleSelectTool  parent_instance;
 };
 
 struct _GimpEllipseSelectToolClass
 {
-  GimpRectSelectToolClass parent_class;
+  GimpRectangleSelectToolClass  parent_class;
 };
 
 

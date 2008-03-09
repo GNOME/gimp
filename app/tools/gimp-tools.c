@@ -173,7 +173,7 @@ gimp_tools_init (Gimp *gimp)
     gimp_polygon_select_tool_register,
     gimp_free_select_tool_register,
     gimp_ellipse_select_tool_register,
-    gimp_rect_select_tool_register
+    gimp_rectangle_select_tool_register
   };
 
   GList *default_order = NULL;
