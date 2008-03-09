@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-16 08:09+0100\n"
+"POT-Creation-Date: 2008-03-09 19:21+0000\n"
 "PO-Revision-Date: 2007-03-11 23:16-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: English, British\n"
@@ -15,42 +15,42 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:378
+#: ../plug-ins/pygimp/gimpfu.py:380
 msgid "Missing exception information"
 msgstr "Missing exception information"
 
-#: ../plug-ins/pygimp/gimpfu.py:387
+#: ../plug-ins/pygimp/gimpfu.py:389
 #, python-format
 msgid "An error occured running %s"
 msgstr "An error occured running %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:398
+#: ../plug-ins/pygimp/gimpfu.py:400
 msgid "_More Information"
 msgstr "_More Information"
 
-#: ../plug-ins/pygimp/gimpfu.py:504 ../plug-ins/pygimp/gimpfu.py:516
-#: ../plug-ins/pygimp/gimpfu.py:522
+#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
+#: ../plug-ins/pygimp/gimpfu.py:524
 msgid "No"
 msgstr "No"
 
-#: ../plug-ins/pygimp/gimpfu.py:514 ../plug-ins/pygimp/gimpfu.py:522
+#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
 msgid "Yes"
 msgstr "Yes"
 
-#: ../plug-ins/pygimp/gimpfu.py:556 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:224
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu File Selection"
 
-#: ../plug-ins/pygimp/gimpfu.py:567
+#: ../plug-ins/pygimp/gimpfu.py:569
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu Folder Selection"
 
-#: ../plug-ins/pygimp/gimpfu.py:657
+#: ../plug-ins/pygimp/gimpfu.py:659
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Invalid input for '%s'"
 
-#: ../plug-ins/pygimp/gimpui.py:175
+#: ../plug-ins/pygimp/gimpui.py:177
 msgid "Python-Fu Color Selection"
 msgstr "Python-Fu Colour Selection"
 
@@ -64,7 +64,7 @@ msgstr "Save as coloured XHTML"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
 msgid "Colored XHTML"
-msgstr "Colored XHTML"
+msgstr "Coloured XHTML"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
 msgid "Character _source"
@@ -121,38 +121,38 @@ msgid "Save Python-Fu Console Output"
 msgstr "Save Python-Fu Console Output"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
-msgid "Interactive Gimp-Python interpreter"
-msgstr "Interactive Gimp-Python interpreter"
+msgid "Interactive GIMP Python interpreter"
+msgstr "Interactive GIMP Python interpreter"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
 msgid "_Console"
 msgstr "_Console"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+#: ../plug-ins/pygimp/plug-ins/foggify.py:53
 msgid "Add a layer of fog"
 msgstr "Add a layer of fog"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pygimp/plug-ins/foggify.py:58
 msgid "_Fog..."
 msgstr "_Fog..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Layer name"
 msgstr "_Layer name"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "Clouds"
 msgstr "Clouds"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "_Fog color"
 msgstr "_Fog colour"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
 msgid "_Turbulence"
 msgstr "_Turbulence"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Op_acity"
 msgstr "Op_acity"
 
