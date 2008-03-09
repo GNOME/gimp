@@ -1,3 +1,17 @@
+2008-03-09  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk (slightly modified):
+
+	Fix mishandling of the "antialias" GParamSpec. Fixes bug #521069:
+
+	* app/tools/gimpselectionoptions.c (gimp_selection_options_reset):
+	don't set the default for "antialias" depending on the tool
+	type (which is impossible since the antialias GParamSpec only
+	exists once, and not once for each subclass).
+
+	* app/tools/gimpforegroundselectoptions.c: override the antialias
+	property here and default to FALSE.
+
 2008-03-08  Sven Neumann  <sven@gimp.org>
 
 	* app/about.h: reverted the last change, it breaks the string freeze.
