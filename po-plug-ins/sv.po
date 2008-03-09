@@ -7380,7 +7380,7 @@ msgstr "Det inträffade ett fel vid tagning av skärmbild."
 
 #: ../plug-ins/common/screenshot.c:986
 msgid "S_nap"
-msgstr "_Fäst"
+msgstr "_Ta bild"
 
 #: ../plug-ins/common/screenshot.c:1016
 msgid "After the delay, the screenshot is taken."
