@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-10 13:26+0100\n"
-"PO-Revision-Date: 2008-02-10 18:48+0100\n"
+"POT-Creation-Date: 2008-03-09 16:28+0100\n"
+"PO-Revision-Date: 2008-03-09 16:30+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -62,113 +62,113 @@ msgstr ""
 "\n"
 "För att undvika förlust av data, kontrollera platsen för och rättigheter på katalogen för växlingsfiler som är definierad i dina inställningar (för tillfället \"%s\")."
 
-#: ../app/batch.c:76
+#: ../app/batch.c:75
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
 msgstr "Ingen satstolk angiven, använder standardtolken \"%s\".\n"
 
-#: ../app/batch.c:94
-#: ../app/batch.c:112
+#: ../app/batch.c:93
+#: ../app/batch.c:111
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "Satstolken \"%s\" är inte tillgänglig. Satsläge inaktiverat."
 
-#: ../app/main.c:155
+#: ../app/main.c:156
 #: ../tools/gimp-remote.c:60
 msgid "Show version information and exit"
 msgstr "Visa versionsinformation och avsluta"
 
-#: ../app/main.c:160
+#: ../app/main.c:161
 msgid "Show license information and exit"
 msgstr "Visa licensinformation och avsluta"
 
-#: ../app/main.c:165
+#: ../app/main.c:166
 msgid "Be more verbose"
 msgstr "Var mer informativ"
 
-#: ../app/main.c:170
+#: ../app/main.c:171
 msgid "Start a new GIMP instance"
 msgstr "Starta en ny instans av GIMP"
 
-#: ../app/main.c:175
+#: ../app/main.c:176
 msgid "Open images as new"
 msgstr "Öppna bilder som nya"
 
-#: ../app/main.c:180
+#: ../app/main.c:181
 msgid "Run without a user interface"
 msgstr "Kör utan ett användargränssnitt"
 
-#: ../app/main.c:185
+#: ../app/main.c:186
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Läs inte in penslar, gradienter, mönster, ..."
 
-#: ../app/main.c:190
+#: ../app/main.c:191
 msgid "Do not load any fonts"
 msgstr "Läs inte in några typsnitt"
 
-#: ../app/main.c:195
+#: ../app/main.c:196
 msgid "Do not show a startup window"
 msgstr "Visa inte ett uppstartsfönster"
 
-#: ../app/main.c:200
+#: ../app/main.c:201
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "Använd inte delat minne mellan GIMP och insticksmoduler"
 
-#: ../app/main.c:205
+#: ../app/main.c:206
 msgid "Do not use special CPU acceleration functions"
 msgstr "Använd inga särskilda acceleringsfunktioner för processorer"
 
-#: ../app/main.c:210
+#: ../app/main.c:211
 msgid "Use an alternate sessionrc file"
 msgstr "Använd en alternativ sessionrc-fil"
 
-#: ../app/main.c:215
+#: ../app/main.c:216
 msgid "Use an alternate user gimprc file"
 msgstr "Använd en alternativ användar-gimprc-fil"
 
-#: ../app/main.c:220
+#: ../app/main.c:221
 msgid "Use an alternate system gimprc file"
 msgstr "Använd en alternativ system-gimprc-fil"
 
-#: ../app/main.c:225
+#: ../app/main.c:226
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Satskommando att köra (kan användas flera gånger)"
 
-#: ../app/main.c:230
+#: ../app/main.c:231
 msgid "The procedure to process batch commands with"
 msgstr "Proceduren att behandla satskommandon med"
 
-#: ../app/main.c:235
+#: ../app/main.c:236
 msgid "Send messages to console instead of using a dialog"
 msgstr "Skicka meddelanden till konsollen istället för att använda en dialog"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:241
+#: ../app/main.c:242
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB-kompatibilitetsläge (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:247
+#: ../app/main.c:248
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Felsök om en krasch sker (never|query|always)"
 
-#: ../app/main.c:252
+#: ../app/main.c:253
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Aktivera icke-ödesdiger signalhanterare för felsökning"
 
-#: ../app/main.c:257
+#: ../app/main.c:258
 msgid "Make all warnings fatal"
 msgstr "Gör alla varningar ödesdigra"
 
-#: ../app/main.c:262
+#: ../app/main.c:263
 msgid "Output a gimprc file with default settings"
 msgstr "Skriv ut en gimprc-fil med standardinställningar"
 
-#: ../app/main.c:343
+#: ../app/main.c:357
 msgid "[FILE|URI...]"
 msgstr "[FIL|URI...]"
 
-#: ../app/main.c:361
+#: ../app/main.c:375
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -176,26 +176,20 @@ msgstr ""
 "GIMP kunde inte initiera det grafiska användargränssnittet.\n"
 "Kontrollera att det finns en korrekt konfiguration för din displaymiljö."
 
-#: ../app/main.c:439
+#: ../app/main.c:453
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP-utdata. Tryck på en tangent för att stänga fönstret."
 
-#: ../app/main.c:440
+#: ../app/main.c:454
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Tryck på en tangent för att stänga fönstret)\n"
 
-#: ../app/main.c:457
+#: ../app/main.c:471
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP-utdata. Du kan minimera det här fönstret men stäng det inte."
 
-#: ../app/main.c:559
-#: ../tools/gimp-remote.c:95
-#, c-format
-msgid "%s version %s"
-msgstr "%s version %s"
-
-#: ../app/main.c:784
+#: ../app/main.c:792
 msgid "Another GIMP instance is already running."
 msgstr "En annan instans av GIMP körs redan."
 
@@ -220,6 +214,18 @@ msgstr ""
 "Namnet på katalogen som innehåller GIMP:s användarkonfiguration kan inte konverteras till UTF-8: %s\n"
 "\n"
 "Antagligen använder ditt filsystem en annan kodning än UTF-8, men du har inte talat om det för GLib. Ställ in miljövariabeln G_FILENAME_ENCODING."
+
+#. show versions of libraries used by GIMP
+#: ../app/version.c:64
+#, c-format
+msgid "using %s, compiled against version %s, running against version %s"
+msgstr "använder %s, kompilerad mot version %s, kör mot version %s"
+
+#: ../app/version.c:128
+#: ../tools/gimp-remote.c:95
+#, c-format
+msgid "%s version %s"
+msgstr "%s version %s"
 
 #: ../app/actions/actions.c:99
 #: ../app/dialogs/dialogs.c:216
@@ -1692,44 +1698,49 @@ msgstr "Verkligen tömma bildens ångringshistorik?"
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Att tömma ångringshistoriken för den här bilden kommer att frigöra %s minne."
 
-#: ../app/actions/edit-commands.c:221
+#: ../app/actions/edit-commands.c:200
+msgid "Cut pixels to the clipboard"
+msgstr "Klipp ut bildpunkter till urklipp"
+
+#: ../app/actions/edit-commands.c:227
+#: ../app/actions/edit-commands.c:253
 msgid "Copied pixels to the clipboard"
 msgstr "Kopierade bildpunkter till urklipp"
 
-#: ../app/actions/edit-commands.c:303
-#: ../app/actions/edit-commands.c:479
+#: ../app/actions/edit-commands.c:315
+#: ../app/actions/edit-commands.c:491
 msgid "There is no image data in the clipboard to paste."
 msgstr "Det finns ingen bilddata i urklipp att klistra in."
 
-#: ../app/actions/edit-commands.c:317
+#: ../app/actions/edit-commands.c:329
 msgid "Cut Named"
 msgstr "Klipp ut namngiven"
 
-#: ../app/actions/edit-commands.c:320
-#: ../app/actions/edit-commands.c:361
-#: ../app/actions/edit-commands.c:381
+#: ../app/actions/edit-commands.c:332
+#: ../app/actions/edit-commands.c:373
+#: ../app/actions/edit-commands.c:393
 msgid "Enter a name for this buffer"
 msgstr "Ange namn för denna buffert"
 
-#: ../app/actions/edit-commands.c:358
+#: ../app/actions/edit-commands.c:370
 msgid "Copy Named"
 msgstr "Kopiera namngiven"
 
-#: ../app/actions/edit-commands.c:378
+#: ../app/actions/edit-commands.c:390
 msgid "Copy Visible Named "
 msgstr "Kopiera synlig namngiven "
 
-#: ../app/actions/edit-commands.c:496
+#: ../app/actions/edit-commands.c:508
 msgid "There is no active layer or channel to cut from."
 msgstr "Det finns inget aktivt lager eller kanal att klippa ifrån."
 
-#: ../app/actions/edit-commands.c:501
-#: ../app/actions/edit-commands.c:533
-#: ../app/actions/edit-commands.c:557
+#: ../app/actions/edit-commands.c:513
+#: ../app/actions/edit-commands.c:545
+#: ../app/actions/edit-commands.c:569
 msgid "(Unnamed Buffer)"
 msgstr "(Namnlös buffert)"
 
-#: ../app/actions/edit-commands.c:528
+#: ../app/actions/edit-commands.c:540
 msgid "There is no active layer or channel to copy from."
 msgstr "Det finns inget aktivt lager eller kanal att kopiera ifrån."
 
@@ -3333,21 +3344,21 @@ msgstr "Visa s_enaste igen"
 msgid "Show the last used plug-in dialog again"
 msgstr "Visa dialogrutan för senast använda insticksmodulen igen"
 
-#: ../app/actions/plug-in-actions.c:490
+#: ../app/actions/plug-in-actions.c:502
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "U_pprepa \"%s\""
 
-#: ../app/actions/plug-in-actions.c:491
+#: ../app/actions/plug-in-actions.c:503
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "V_isa \"%s\" igen"
 
-#: ../app/actions/plug-in-actions.c:502
+#: ../app/actions/plug-in-actions.c:517
 msgid "Repeat Last"
 msgstr "Upprepa senaste"
 
-#: ../app/actions/plug-in-actions.c:504
+#: ../app/actions/plug-in-actions.c:519
 msgid "Re-Show Last"
 msgstr "Visa senaste igen"
 
@@ -3497,7 +3508,7 @@ msgstr "Spara markeringen till en kanal"
 
 #: ../app/actions/select-actions.c:110
 msgid "_Stroke Selection..."
-msgstr "Stryk markering..."
+msgstr "_Stryk längs markering..."
 
 #: ../app/actions/select-actions.c:111
 msgid "Paint along the selection outline"
@@ -3505,7 +3516,7 @@ msgstr "Måla längs markeringens kontur"
 
 #: ../app/actions/select-actions.c:116
 msgid "_Stroke Selection"
-msgstr "_Stryk markering"
+msgstr "_Stryk längs markering"
 
 #: ../app/actions/select-actions.c:117
 msgid "Stroke the selection with last used values"
@@ -3694,7 +3705,7 @@ msgstr "Öppna textfil (UTF-8)"
 #: ../app/core/gimppalette-load.c:457
 #: ../app/core/gimppalette-load.c:600
 #: ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpimagemaptool.c:831
+#: ../app/tools/gimpimagemaptool.c:837
 #: ../app/xcf/xcf.c:329
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -3976,7 +3987,7 @@ msgid "Path to Sele_ction"
 msgstr "_Slinga till markering"
 
 #: ../app/actions/vectors-actions.c:163
-#: ../app/tools/gimpvectortool.c:1875
+#: ../app/tools/gimpvectortool.c:1876
 msgid "Path to selection"
 msgstr "Slinga till markering"
 
@@ -4038,13 +4049,13 @@ msgstr "Alternativ för ny slinga"
 
 #: ../app/actions/vectors-commands.c:305
 #: ../app/pdb/paths_cmds.c:627
-#: ../app/pdb/vectors_cmds.c:1146
+#: ../app/pdb/vectors_cmds.c:1145
 msgid "Path to Selection"
 msgstr "Slinga till markering"
 
 #: ../app/actions/vectors-commands.c:385
 #: ../app/tools/gimpvectoroptions.c:199
-#: ../app/tools/gimpvectortool.c:1908
+#: ../app/tools/gimpvectortool.c:1909
 #: ../app/vectors/gimpvectors.c:199
 msgid "Stroke Path"
 msgstr "Stryk längs slinga"
@@ -4559,7 +4570,7 @@ msgstr "Misslyckades med att ändra storlek på växlingsfil: %s"
 #: ../app/core/gimpgradient-save.c:145
 #: ../app/core/gimppalette-save.c:56
 #: ../app/gui/themes.c:239
-#: ../app/tools/gimpimagemaptool.c:830
+#: ../app/tools/gimpimagemaptool.c:836
 #: ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:421
 #, c-format
@@ -4573,7 +4584,7 @@ msgid "Error writing '%s': %s"
 msgstr "Fel vid skrivning av \"%s\": %s"
 
 #: ../app/config/gimpconfig-file.c:90
-#: ../app/tools/gimpimagemaptool.c:863
+#: ../app/tools/gimpimagemaptool.c:869
 #, c-format
 msgid "Error reading '%s': %s"
 msgstr "Fel vid läsning av \"%s\": %s"
@@ -5764,7 +5775,7 @@ msgid "Rotate Channel"
 msgstr "Rotera kanal"
 
 #: ../app/core/gimpchannel.c:264
-#: ../app/core/gimpdrawable-transform.c:839
+#: ../app/core/gimpdrawable-transform.c:840
 msgid "Transform Channel"
 msgstr "Transformera kanal"
 
@@ -5904,8 +5915,8 @@ msgstr "Färgbalans"
 msgid "Colorize"
 msgstr "Färglägg"
 
-#: ../app/core/gimpdrawable-curves.c:162
-#: ../app/core/gimpdrawable-curves.c:198
+#: ../app/core/gimpdrawable-curves.c:167
+#: ../app/core/gimpdrawable-curves.c:203
 #: ../app/tools/gimpcurvestool.c:130
 msgid "Curves"
 msgstr "Kurvor"
@@ -5976,12 +5987,12 @@ msgstr "Vänd"
 msgid "command|Rotate"
 msgstr "Rotera"
 
-#: ../app/core/gimpdrawable-transform.c:837
+#: ../app/core/gimpdrawable-transform.c:838
 #: ../app/core/gimplayer.c:255
 msgid "Transform Layer"
 msgstr "Transformera lager"
 
-#: ../app/core/gimpdrawable-transform.c:852
+#: ../app/core/gimpdrawable-transform.c:853
 msgid "Transformation"
 msgstr "Transformation"
 
@@ -8455,12 +8466,12 @@ msgstr "\"%s\" är inte ett giltigt URI-schema"
 msgid "Invalid character sequence in URI"
 msgstr "Ogiltig teckensekvens i URI"
 
-#: ../app/gegl/gimpcurvesconfig.c:345
+#: ../app/gegl/gimpcurvesconfig.c:347
 #, c-format
 msgid "not a GIMP Curves file"
 msgstr "inte en GIMP-kurvfil"
 
-#: ../app/gegl/gimpcurvesconfig.c:359
+#: ../app/gegl/gimpcurvesconfig.c:361
 #: ../app/gegl/gimplevelsconfig.c:596
 #, c-format
 msgid "parse error"
@@ -8637,100 +8648,105 @@ msgstr "Kan inte släppa det här lagret därför att det inte är en flytande m
 msgid "Procedure '%s' not found"
 msgstr "Proceduren \"%s\" hittades inte"
 
-#: ../app/pdb/gimppdb-utils.c:53
+#: ../app/pdb/gimppdb-utils.c:55
 #, c-format
 msgid "Invalid empty brush name"
 msgstr "Ogiltigt tomt penselnamn"
 
-#: ../app/pdb/gimppdb-utils.c:63
+#: ../app/pdb/gimppdb-utils.c:65
 #, c-format
 msgid "Brush '%s' not found"
 msgstr "Penseln \"%s\" hittades inte"
 
-#: ../app/pdb/gimppdb-utils.c:68
+#: ../app/pdb/gimppdb-utils.c:70
 #, c-format
 msgid "Brush '%s' is not editable"
 msgstr "Penseln \"%s\" är inte redigerbar"
 
-#: ../app/pdb/gimppdb-utils.c:94
+#: ../app/pdb/gimppdb-utils.c:96
 #, c-format
 msgid "Brush '%s' is not a generated brush"
 msgstr "Penseln \"%s\" är inte en genererad pensel"
 
-#: ../app/pdb/gimppdb-utils.c:114
+#: ../app/pdb/gimppdb-utils.c:116
 #, c-format
 msgid "Invalid empty pattern name"
 msgstr "Ogiltigt tomt mönsternamn"
 
-#: ../app/pdb/gimppdb-utils.c:124
+#: ../app/pdb/gimppdb-utils.c:126
 #, c-format
 msgid "Pattern '%s' not found"
 msgstr "Mönstret \"%s\" hittades inte"
 
-#: ../app/pdb/gimppdb-utils.c:144
+#: ../app/pdb/gimppdb-utils.c:146
 #, c-format
 msgid "Invalid empty gradient name"
 msgstr "Ogiltigt tomt gradientnamn"
 
-#: ../app/pdb/gimppdb-utils.c:154
+#: ../app/pdb/gimppdb-utils.c:156
 #, c-format
 msgid "Gradient '%s' not found"
 msgstr "Gradienten \"%s\" hittades inte"
 
-#: ../app/pdb/gimppdb-utils.c:159
+#: ../app/pdb/gimppdb-utils.c:161
 #, c-format
 msgid "Gradient '%s' is not editable"
 msgstr "Gradienten \"%s\" är inte redigerbar"
 
-#: ../app/pdb/gimppdb-utils.c:180
+#: ../app/pdb/gimppdb-utils.c:182
 #, c-format
 msgid "Invalid empty palette name"
 msgstr "Ogiltigt tomt palettnamn"
 
-#: ../app/pdb/gimppdb-utils.c:190
+#: ../app/pdb/gimppdb-utils.c:192
 #, c-format
 msgid "Palette '%s' not found"
 msgstr "Paletten \"%s\" hittades inte"
 
-#: ../app/pdb/gimppdb-utils.c:195
+#: ../app/pdb/gimppdb-utils.c:197
 #, c-format
 msgid "Palette '%s' is not editable"
 msgstr "Paletten \"%s\" är inte redigerbar"
 
-#: ../app/pdb/gimppdb-utils.c:215
+#: ../app/pdb/gimppdb-utils.c:217
 #, c-format
 msgid "Invalid empty font name"
 msgstr "Ogiltigt tomt typsnittsnamn"
 
-#: ../app/pdb/gimppdb-utils.c:225
+#: ../app/pdb/gimppdb-utils.c:227
 #, c-format
 msgid "Font '%s' not found"
 msgstr "Typsnittet \"%s\" hittades inte"
 
-#: ../app/pdb/gimppdb-utils.c:244
+#: ../app/pdb/gimppdb-utils.c:246
 #, c-format
 msgid "Invalid empty buffer name"
 msgstr "Ogiltigt tomt buffertnamn"
 
-#: ../app/pdb/gimppdb-utils.c:254
+#: ../app/pdb/gimppdb-utils.c:256
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr "Namngiven buffert \"%s\" hittades inte"
 
-#: ../app/pdb/gimppdb-utils.c:273
+#: ../app/pdb/gimppdb-utils.c:275
 #, c-format
 msgid "Invalid empty paint method name"
 msgstr "Ogiltigt tomt målarmetodnamn"
 
-#: ../app/pdb/gimppdb-utils.c:283
+#: ../app/pdb/gimppdb-utils.c:285
 #, c-format
 msgid "Paint method '%s' does not exist"
 msgstr "Målarmetoden \"%s\" finns inte"
 
-#: ../app/pdb/gimppdb-utils.c:299
+#: ../app/pdb/gimppdb-utils.c:301
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr "Objektet \"%s\" (%d) kan inte användas därför att det inte har lagts till i en bild"
+
+#: ../app/pdb/gimppdb-utils.c:327
+#, c-format
+msgid "Vectors object %d does not contain stroke with ID %d"
+msgstr "Vektorobjekt %d innehåller inte penseldrag med ID %d"
 
 #: ../app/pdb/gimppdb.c:306
 #: ../app/pdb/gimppdb.c:376
@@ -8918,7 +8934,7 @@ msgstr "Fylld"
 
 #. This is a so-called pangram; it's supposed to
 #. contain all characters found in the alphabet.
-#: ../app/text/gimpfont.c:42
+#: ../app/text/gimpfont.c:45
 msgid ""
 "Pack my box with\n"
 "five dozen liquor jugs."
@@ -9136,7 +9152,6 @@ msgstr "Max djup:"
 
 #: ../app/tools/gimpblendoptions.c:262
 #: ../app/tools/gimpbucketfilloptions.c:287
-#: ../app/tools/gimpselectionoptions.c:415
 msgid "Threshold:"
 msgstr "Tröskelvärde:"
 
@@ -9202,7 +9217,6 @@ msgid "Base filled area on all visible layers"
 msgstr "Basera fyllda områden på alla synliga lager"
 
 #: ../app/tools/gimpbucketfilloptions.c:112
-#: ../app/tools/gimpselectionoptions.c:123
 msgid "Maximum color difference"
 msgstr "Maximal färgskillnad"
 
@@ -9239,7 +9253,6 @@ msgstr "Fyll transparenta områden"
 #: ../app/tools/gimpcolorpickeroptions.c:160
 #: ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpperspectiveclonetool.c:965
-#: ../app/tools/gimpselectionoptions.c:403
 msgid "Sample merged"
 msgstr "Sampla sammanfogade"
 
@@ -9396,7 +9409,7 @@ msgstr "Sampelmedel"
 
 #: ../app/tools/gimpcoloroptions.c:171
 #: ../app/tools/gimprectangleselectoptions.c:166
-#: ../app/tools/gimpselectionoptions.c:374
+#: ../app/tools/gimpselectionoptions.c:310
 #: ../app/widgets/gimpbrusheditor.c:154
 msgid "Radius:"
 msgstr "Radie:"
@@ -9694,12 +9707,12 @@ msgstr "%s för att välja en bakgrundsfärg"
 msgid "Anti erase  (%s)"
 msgstr "Antisudda  (%s)"
 
-#: ../app/tools/gimpflipoptions.c:129
+#: ../app/tools/gimpflipoptions.c:130
 msgid "Affect:"
 msgstr "Påverkar:"
 
 #. tool toggle
-#: ../app/tools/gimpflipoptions.c:135
+#: ../app/tools/gimpflipoptions.c:139
 #, c-format
 msgid "Flip Type  (%s)"
 msgstr "Vändtyp  (%s)"
@@ -9804,7 +9817,7 @@ msgstr "Markera förgrunden genom att måla på objektet att extrahera"
 msgid "Draw a rough circle around the object to extract"
 msgstr "Rita en grov cirkel runt objektet att extrahera"
 
-#: ../app/tools/gimpforegroundselecttool.c:744
+#: ../app/tools/gimpforegroundselecttool.c:745
 msgid "command|Foreground Select"
 msgstr "Förgrundsmarkering"
 
@@ -9816,7 +9829,7 @@ msgstr "Fri markering: Markera en handritad region"
 msgid "_Free Select"
 msgstr "_Fri markering"
 
-#: ../app/tools/gimpfreeselecttool.c:312
+#: ../app/tools/gimpfreeselecttool.c:311
 msgid "command|Free Select"
 msgstr "Fri markering"
 
@@ -9924,27 +9937,27 @@ msgstr "Justera markerad färg"
 msgid "R_eset Color"
 msgstr "_Återställ färg"
 
-#: ../app/tools/gimpimagemaptool.c:332
+#: ../app/tools/gimpimagemaptool.c:335
 msgid "Recent Settings:"
 msgstr "Tidigare inställningar:"
 
-#: ../app/tools/gimpimagemaptool.c:342
+#: ../app/tools/gimpimagemaptool.c:345
 msgid "Pick a setting from the list"
 msgstr "Välj en inställning från listan"
 
-#: ../app/tools/gimpimagemaptool.c:351
+#: ../app/tools/gimpimagemaptool.c:356
 msgid "_Preview"
 msgstr "_Förhandsgranskning"
 
-#: ../app/tools/gimpimagemaptool.c:383
+#: ../app/tools/gimpimagemaptool.c:388
 msgid "Quick Load"
 msgstr "Snabbinläsning"
 
-#: ../app/tools/gimpimagemaptool.c:412
+#: ../app/tools/gimpimagemaptool.c:417
 msgid "Quick Save"
 msgstr "Snabbsparande"
 
-#: ../app/tools/gimpimagemaptool.c:854
+#: ../app/tools/gimpimagemaptool.c:860
 #, c-format
 msgid "Settings saved to '%s'"
 msgstr "Inställningar sparade till \"%s\""
@@ -10105,7 +10118,7 @@ msgstr "Ändra automatiskt fönsterstorlek"
 
 #. tool toggle
 #: ../app/tools/gimpmagnifyoptions.c:172
-#: ../app/tools/gimpmoveoptions.c:184
+#: ../app/tools/gimpmoveoptions.c:188
 #, c-format
 msgid "Tool Toggle  (%s)"
 msgstr "Verktygsväxel  (%s)"
@@ -10191,7 +10204,7 @@ msgstr "Välj en slinga"
 msgid "Move the active path"
 msgstr "Flytta den aktiva slingan"
 
-#: ../app/tools/gimpmoveoptions.c:178
+#: ../app/tools/gimpmoveoptions.c:179
 msgid "Move:"
 msgstr "Flytta:"
 
@@ -10229,13 +10242,14 @@ msgid "_Paintbrush"
 msgstr "_Pensel"
 
 #: ../app/tools/gimppaintoptions-gui.c:99
-#: ../app/tools/gimpselectionoptions.c:340
+#: ../app/tools/gimpselectionoptions.c:237
 #: ../app/widgets/gimpbrushselect.c:191
 #: ../app/widgets/gimplayertreeview.c:269
 msgid "Mode:"
 msgstr "Läge:"
 
 #: ../app/tools/gimppaintoptions-gui.c:114
+#: ../app/tools/gimptransformoptions.c:348
 #: ../app/widgets/gimpbrushselect.c:178
 #: ../app/widgets/gimplayertreeview.c:284
 msgid "Opacity:"
@@ -10364,19 +10378,19 @@ msgstr "Perspektivtransformering"
 msgid "Transformation Matrix"
 msgstr "Transformationsmatris"
 
-#: ../app/tools/gimppolygonselecttool.c:152
+#: ../app/tools/gimppolygonselecttool.c:162
 msgid "Polygon Select"
 msgstr "Polygonmarkering"
 
-#: ../app/tools/gimppolygonselecttool.c:153
+#: ../app/tools/gimppolygonselecttool.c:163
 msgid "Polygon Select Tool: Select a hand-drawn polygon"
 msgstr "Polygonmarkeringsverktyg: Markera en handritad polygon"
 
-#: ../app/tools/gimppolygonselecttool.c:154
+#: ../app/tools/gimppolygonselecttool.c:164
 msgid "_Polygon Select"
 msgstr "_Polygonmarkering"
 
-#: ../app/tools/gimppolygonselecttool.c:526
+#: ../app/tools/gimppolygonselecttool.c:575
 msgid "command|Polygon Select"
 msgstr "Polygonmarkering"
 
@@ -10451,8 +10465,8 @@ msgstr "Rektangelmarkeringsverktyg: Markera en rektangulär region"
 msgid "_Rectangle Select"
 msgstr "_Rekt. markering"
 
-#: ../app/tools/gimprectangletool.c:1057
-#: ../app/tools/gimprectangletool.c:1931
+#: ../app/tools/gimprectangletool.c:1068
+#: ../app/tools/gimprectangletool.c:1943
 msgid "Rectangle: "
 msgstr "Rektangel: "
 
@@ -10500,38 +10514,18 @@ msgstr "_Skala"
 msgid "command|Scale"
 msgstr "Skala"
 
-#: ../app/tools/gimpselectionoptions.c:98
+#: ../app/tools/gimpselectionoptions.c:90
 msgid "Smooth edges"
 msgstr "Utjämna kanter"
 
-#: ../app/tools/gimpselectionoptions.c:112
-msgid "Allow completely transparent regions to be selected"
-msgstr "Tillåt att helt transparenta regioner kan markeras"
-
-#: ../app/tools/gimpselectionoptions.c:118
-msgid "Base selection on all visible layers"
-msgstr "Basera markering på alla synliga lager"
-
-#: ../app/tools/gimpselectionoptions.c:348
+#: ../app/tools/gimpselectionoptions.c:284
 #: ../app/tools/gimptextoptions.c:457
 msgid "Antialiasing"
 msgstr "Kantutjämning"
 
-#: ../app/tools/gimpselectionoptions.c:366
+#: ../app/tools/gimpselectionoptions.c:302
 msgid "Feather edges"
 msgstr "Fjädra kanter"
-
-#: ../app/tools/gimpselectionoptions.c:383
-msgid "Interactive boundary"
-msgstr "Interaktiv gräns"
-
-#: ../app/tools/gimpselectionoptions.c:397
-msgid "Select transparent areas"
-msgstr "Markera transparenta områden"
-
-#: ../app/tools/gimpselectionoptions.c:422
-msgid "Select by:"
-msgstr "Markera efter:"
 
 #: ../app/tools/gimpselectiontool.c:251
 msgid "Click-Drag to replace the current selection"
@@ -10710,46 +10704,46 @@ msgstr "Kan inte använda tröskelvärde på indexerade lager."
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Justera automatiskt till optimalt binäriserat tröskelvärde"
 
-#: ../app/tools/gimptransformoptions.c:249
+#: ../app/tools/gimptransformoptions.c:273
 msgid "Transform:"
 msgstr "Transformera:"
 
-#: ../app/tools/gimptransformoptions.c:255
+#: ../app/tools/gimptransformoptions.c:282
 msgid "Direction"
 msgstr "Riktning"
 
 #. the interpolation menu
-#: ../app/tools/gimptransformoptions.c:260
+#: ../app/tools/gimptransformoptions.c:287
 msgid "Interpolation:"
 msgstr "Interpolation:"
 
-#: ../app/tools/gimptransformoptions.c:273
+#: ../app/tools/gimptransformoptions.c:300
 msgid "Clipping:"
 msgstr "Klippning:"
 
-#: ../app/tools/gimptransformoptions.c:291
+#: ../app/tools/gimptransformoptions.c:318
 msgid "Preview:"
 msgstr "Förhandsvisning:"
 
-#: ../app/tools/gimptransformoptions.c:332
+#: ../app/tools/gimptransformoptions.c:389
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15° (%s)"
 
-#: ../app/tools/gimptransformoptions.c:336
+#: ../app/tools/gimptransformoptions.c:393
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Behåll aspekt (%s)"
 
-#: ../app/tools/gimptransformtool.c:235
+#: ../app/tools/gimptransformtool.c:236
 msgid "Transforming"
 msgstr "Transformerar"
 
-#: ../app/tools/gimptransformtool.c:1156
+#: ../app/tools/gimptransformtool.c:1162
 msgid "There is no layer to transform."
 msgstr "Det finns inget lager att transformera."
 
-#: ../app/tools/gimptransformtool.c:1167
+#: ../app/tools/gimptransformtool.c:1173
 msgid "There is no path to transform."
 msgstr "Det finns ingen slinga att transformera."
 
@@ -10839,82 +10833,82 @@ msgstr "Ta bort ankare"
 msgid "Delete Segment"
 msgstr "Ta bort segment"
 
-#: ../app/tools/gimpvectortool.c:787
+#: ../app/tools/gimpvectortool.c:788
 msgid "Move Anchors"
 msgstr "Flytta ankare"
 
-#: ../app/tools/gimpvectortool.c:1145
+#: ../app/tools/gimpvectortool.c:1146
 msgid "Click to pick path to edit"
 msgstr "Klicka för att välja slinga att redigera"
 
-#: ../app/tools/gimpvectortool.c:1148
+#: ../app/tools/gimpvectortool.c:1149
 msgid "Click to create a new path"
 msgstr "Klicka för att skapa en ny slinga"
 
-#: ../app/tools/gimpvectortool.c:1151
+#: ../app/tools/gimpvectortool.c:1152
 msgid "Click to create a new component of the path"
 msgstr "Klicka för att skapa ny komponent till slingan"
 
-#: ../app/tools/gimpvectortool.c:1154
+#: ../app/tools/gimpvectortool.c:1155
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Klicka eller klicka och dra för att skapa ett nytt ankare"
 
-#: ../app/tools/gimpvectortool.c:1163
-#: ../app/tools/gimpvectortool.c:1170
+#: ../app/tools/gimpvectortool.c:1164
+#: ../app/tools/gimpvectortool.c:1171
 msgid "Click-Drag to move the anchor around"
 msgstr "Klicka och dra för att flytta runt ankaret"
 
-#: ../app/tools/gimpvectortool.c:1173
-#: ../app/tools/gimpvectortool.c:1184
+#: ../app/tools/gimpvectortool.c:1174
+#: ../app/tools/gimpvectortool.c:1185
 msgid "Click-Drag to move the anchors around"
 msgstr "Klicka och dra för att flytta runt ankarna"
 
-#: ../app/tools/gimpvectortool.c:1176
+#: ../app/tools/gimpvectortool.c:1177
 msgid "Click-Drag to move the handle around"
 msgstr "Klicka och dra för att flytta runt handtaget"
 
-#: ../app/tools/gimpvectortool.c:1189
+#: ../app/tools/gimpvectortool.c:1190
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Klicka och dra för att ändra kurvans form"
 
-#: ../app/tools/gimpvectortool.c:1192
+#: ../app/tools/gimpvectortool.c:1193
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: symmetrisk"
 
-#: ../app/tools/gimpvectortool.c:1196
+#: ../app/tools/gimpvectortool.c:1197
 msgid "Click-Drag to move the component around"
 msgstr "Klicka och dra för att flytta runt komponenten"
 
-#: ../app/tools/gimpvectortool.c:1203
+#: ../app/tools/gimpvectortool.c:1204
 msgid "Click-Drag to move the path around"
 msgstr "Klicka och dra för att flytta runt slingan"
 
-#: ../app/tools/gimpvectortool.c:1206
+#: ../app/tools/gimpvectortool.c:1207
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Klicka och dra för att infoga ett ankare i slingan"
 
-#: ../app/tools/gimpvectortool.c:1213
+#: ../app/tools/gimpvectortool.c:1214
 msgid "Click to delete this anchor"
 msgstr "Klicka för att ta bort det här ankaret"
 
-#: ../app/tools/gimpvectortool.c:1216
+#: ../app/tools/gimpvectortool.c:1217
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Klicka för att koppla ihop ankaret med den valda ändpunkten"
 
-#: ../app/tools/gimpvectortool.c:1220
+#: ../app/tools/gimpvectortool.c:1221
 msgid "Click to open up the path"
 msgstr "Klicka för att öppna upp slingan"
 
-#: ../app/tools/gimpvectortool.c:1223
+#: ../app/tools/gimpvectortool.c:1224
 msgid "Click to make this node angular"
 msgstr "Klicka för att göra noden vinkelformad"
 
-#: ../app/tools/gimpvectortool.c:1729
+#: ../app/tools/gimpvectortool.c:1730
 msgid "Delete Anchors"
 msgstr "Ta bort ankare"
 
-#: ../app/tools/gimpvectortool.c:1902
+#: ../app/tools/gimpvectortool.c:1903
 msgid "There is no active layer or channel to stroke to"
 msgstr "Det finns inget aktivt lager eller kanal att stryka till"
 
@@ -11124,7 +11118,7 @@ msgstr "Procent av penselns bredd"
 
 #: ../app/widgets/gimpbufferview.c:173
 #: ../app/widgets/gimpbufferview.c:257
-#: ../app/widgets/gimpeditor.c:727
+#: ../app/widgets/gimpeditor.c:744
 msgid "(None)"
 msgstr "(Ingen)"
 
@@ -11246,23 +11240,27 @@ msgstr "Alfa:"
 msgid "n/a"
 msgstr "---"
 
-#: ../app/widgets/gimpcolormapeditor.c:207
+#: ../app/widgets/gimpcolormapeditor.c:226
 msgid "Color index:"
 msgstr "Färgindex:"
 
-#: ../app/widgets/gimpcolormapeditor.c:217
+#: ../app/widgets/gimpcolormapeditor.c:236
 msgid "HTML notation:"
 msgstr "HTML-notation:"
+
+#: ../app/widgets/gimpcolormapeditor.c:493
+msgid "Only indexed images have a colormap."
+msgstr "Endast indexerade bilder har en färgkarta."
 
 #: ../app/widgets/gimpcolorselectorpalette.c:59
 msgid "Palette"
 msgstr "Palett"
 
-#: ../app/widgets/gimpcontainerpopup.c:534
+#: ../app/widgets/gimpcontainerpopup.c:538
 msgid "Smaller Previews"
 msgstr "Mindre förhandsvisningar"
 
-#: ../app/widgets/gimpcontainerpopup.c:539
+#: ../app/widgets/gimpcontainerpopup.c:543
 msgid "Larger Previews"
 msgstr "Större förhandsvisningar"
 
@@ -12023,7 +12021,7 @@ msgstr "%d × %d punkter/tum, %s"
 msgid "%d ppi, %s"
 msgstr "%d punkter/tum, %s"
 
-#: ../app/widgets/gimptexteditor.c:187
+#: ../app/widgets/gimptexteditor.c:185
 msgid "_Language:"
 msgstr "_Språk:"
 
@@ -12117,19 +12115,19 @@ msgstr ""
 "Den aktiva gradienten.\n"
 "Klicka för att öppna gradientdialogen."
 
-#: ../app/widgets/gimptooloptionseditor.c:157
+#: ../app/widgets/gimptooloptionseditor.c:165
 msgid "Save options to..."
 msgstr "Spara alternativ till..."
 
-#: ../app/widgets/gimptooloptionseditor.c:165
+#: ../app/widgets/gimptooloptionseditor.c:173
 msgid "Restore options from..."
 msgstr "Återställ alternativ från..."
 
-#: ../app/widgets/gimptooloptionseditor.c:173
+#: ../app/widgets/gimptooloptionseditor.c:181
 msgid "Delete saved options..."
 msgstr "Ta bort sparade alternativ..."
 
-#: ../app/widgets/gimptooloptionseditor.c:472
+#: ../app/widgets/gimptooloptionseditor.c:480
 #, c-format
 msgid "Error saving tool options presets: %s"
 msgstr "Fel vid sparande av förval för verktygsalternativ: %s"
@@ -12402,6 +12400,16 @@ msgstr "Försäkra dig om att verktygslådan är synlig!"
 msgid "Couldn't start '%s': %s"
 msgstr "Kunde inte starta \"%s\": %s"
 
+#~ msgid "Allow completely transparent regions to be selected"
+#~ msgstr "Tillåt att helt transparenta regioner kan markeras"
+#~ msgid "Base selection on all visible layers"
+#~ msgstr "Basera markering på alla synliga lager"
+#~ msgid "Interactive boundary"
+#~ msgstr "Interaktiv gräns"
+#~ msgid "Select transparent areas"
+#~ msgstr "Markera transparenta områden"
+#~ msgid "Select by:"
+#~ msgstr "Markera efter:"
 #~ msgid "Fit Image _to Window"
 #~ msgstr "Anpassa bild _till fönster"
 #~ msgid "Add Sample_Point"
@@ -13648,8 +13656,6 @@ msgstr "Kunde inte starta \"%s\": %s"
 #~ "%s  från BG"
 #~ msgid "Edit Indexed Color"
 #~ msgstr "Redigera indexerad färg"
-#~ msgid "Edit indexed image palette color"
-#~ msgstr "Redigera palettfärg för indexerad bild"
 #~ msgid ""
 #~ "Open the selected entry\n"
 #~ "%s  Raise window if already open\n"
