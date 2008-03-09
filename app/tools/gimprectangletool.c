@@ -313,6 +313,11 @@ static void          gimp_rectangle_tool_get_public_rect      (GimpRectangleTool
                                                                gdouble                  *pub_y1,
                                                                gdouble                  *pub_x2,
                                                                gdouble                  *pub_y2);
+static void          gimp_rectangle_tool_adjust_coord         (GimpRectangleTool        *rect_tool,
+                                                               gdouble                   coord_x_input,
+                                                               gdouble                   coord_y_input,
+                                                               gdouble                  *coord_x_output,
+                                                               gdouble                  *coord_y_output);
 
 
 static guint gimp_rectangle_tool_signals[LAST_SIGNAL] = { 0 };
@@ -2990,12 +2995,16 @@ gimp_rectangle_tool_setup_snap_offsets (GimpRectangleTool *rect_tool,
   GimpTool                 *tool;
   GimpRectangleToolPrivate *private;
   gdouble                   pub_x1, pub_y1, pub_x2, pub_y2;
+  gdouble                   pub_coord_x, pub_coord_y;
 
   tool    = GIMP_TOOL (rect_tool);
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
 
   gimp_rectangle_tool_get_public_rect (rect_tool,
                                        &pub_x1, &pub_y1, &pub_x2, &pub_y2);
+  gimp_rectangle_tool_adjust_coord (rect_tool,
+                                    coords->x, coords->y,
+                                    &pub_coord_x, &pub_coord_y);
 
   switch (private->function)
     {
@@ -3004,60 +3013,60 @@ gimp_rectangle_tool_setup_snap_offsets (GimpRectangleTool *rect_tool,
 
     case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
       gimp_tool_control_set_snap_offsets (tool->control,
-                                          pub_x1 - coords->x,
-                                          pub_y1 - coords->y,
+                                          pub_x1 - pub_coord_x,
+                                          pub_y1 - pub_coord_y,
                                           0, 0);
       break;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
       gimp_tool_control_set_snap_offsets (tool->control,
-                                          pub_x2 - coords->x,
-                                          pub_y1 - coords->y,
+                                          pub_x2 - pub_coord_x,
+                                          pub_y1 - pub_coord_y,
                                           0, 0);
       break;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
       gimp_tool_control_set_snap_offsets (tool->control,
-                                          pub_x1 - coords->x,
-                                          pub_y2 - coords->y,
+                                          pub_x1 - pub_coord_x,
+                                          pub_y2 - pub_coord_y,
                                           0, 0);
       break;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
       gimp_tool_control_set_snap_offsets (tool->control,
-                                          pub_x2 - coords->x,
-                                          pub_y2 - coords->y,
+                                          pub_x2 - pub_coord_x,
+                                          pub_y2 - pub_coord_y,
                                           0, 0);
       break;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
       gimp_tool_control_set_snap_offsets (tool->control,
-                                          pub_x1 - coords->x, 0,
+                                          pub_x1 - pub_coord_x, 0,
                                           0, 0);
       break;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
       gimp_tool_control_set_snap_offsets (tool->control,
-                                          pub_x2 - coords->x, 0,
+                                          pub_x2 - pub_coord_x, 0,
                                           0, 0);
       break;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
       gimp_tool_control_set_snap_offsets (tool->control,
-                                          0, pub_y1 - coords->y,
+                                          0, pub_y1 - pub_coord_y,
                                           0, 0);
       break;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
       gimp_tool_control_set_snap_offsets (tool->control,
-                                          0, pub_y2 - coords->y,
+                                          0, pub_y2 - pub_coord_y,
                                           0, 0);
       break;
 
     case GIMP_RECTANGLE_TOOL_MOVING:
       gimp_tool_control_set_snap_offsets (tool->control,
-                                          pub_x1 - coords->x,
-                                          pub_y1 - coords->y,
+                                          pub_x1 - pub_coord_x,
+                                          pub_y1 - pub_coord_y,
                                           pub_x2 - pub_x1,
                                           pub_y2 - pub_y1);
       break;
@@ -4067,6 +4076,43 @@ gimp_rectangle_tool_get_public_rect (GimpRectangleTool *rect_tool,
         *pub_y1 = priv->y1;
         *pub_x2 = priv->x2;
         *pub_y2 = priv->y2;
+        break;
+    }
+}
+
+/**
+ * gimp_rectangle_tool_adjust_coord:
+ * @rect_tool:
+ * @ccoord_x_input:
+ * @ccoord_x_input:
+ * @ccoord_x_output:
+ * @ccoord_x_output:
+ *
+ * Transforms a coordinate to better fit the public behaviour of the
+ * rectangle.
+ */
+static void
+gimp_rectangle_tool_adjust_coord (GimpRectangleTool *rect_tool,
+                                  gdouble            coord_x_input,
+                                  gdouble            coord_y_input,
+                                  gdouble           *coord_x_output,
+                                  gdouble           *coord_y_output)
+{
+  GimpRectangleToolPrivate *priv;
+
+  priv = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
+
+  switch (priv->precision)
+    {
+      case GIMP_RECTANGLE_PRECISION_INT:
+        *coord_x_output = ROUND (coord_x_input);
+        *coord_y_output = ROUND (coord_y_input);
+        break;
+
+      case GIMP_RECTANGLE_PRECISION_DOUBLE:
+      default:
+        *coord_x_output = coord_x_input;
+        *coord_y_output = coord_y_input;
         break;
     }
 }
