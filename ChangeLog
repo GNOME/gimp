@@ -1,5 +1,18 @@
 2008-03-09  Michael Natterer  <mitch@gimp.org>
 
+	Fix mishandling of the "antialias" GParamSpec. Fixes bug #521069:
+
+	* app/tools/gimpselectionoptions.c: remove
+	gimp_selection_options_reset() which used to set the default for
+	"antialias" depending on the tool type (which is impossible since
+	the antialias GParamSpec only exists once, and not once for each
+	subclass).
+
+	* app/tools/gimpforegroundselectoptions.c: override the antialias
+	property here and default to FALSE.
+
+2008-03-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimprectangleselecttool.[ch]
 	* app/tools/gimprectangleselectoptions.[ch]
 	* app/tools/gimpellipseselecttool.[ch]

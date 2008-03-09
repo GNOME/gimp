@@ -25,15 +25,9 @@
 
 #include "tools-types.h"
 
-#include "config/gimpguiconfig.h"
-
-#include "core/gimp.h"
-#include "core/gimptoolinfo.h"
-
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "gimpforegroundselecttool.h"
 #include "gimpselectionoptions.h"
 #include "gimptooloptions-gui.h"
 
@@ -50,16 +44,14 @@ enum
 };
 
 
-static void   gimp_selection_options_set_property (GObject         *object,
-                                                   guint            property_id,
-                                                   const GValue    *value,
-                                                   GParamSpec      *pspec);
-static void   gimp_selection_options_get_property (GObject         *object,
-                                                   guint            property_id,
-                                                   GValue          *value,
-                                                   GParamSpec      *pspec);
-
-static void   gimp_selection_options_reset        (GimpToolOptions *tool_options);
+static void   gimp_selection_options_set_property (GObject      *object,
+                                                   guint         property_id,
+                                                   const GValue *value,
+                                                   GParamSpec   *pspec);
+static void   gimp_selection_options_get_property (GObject      *object,
+                                                   guint         property_id,
+                                                   GValue       *value,
+                                                   GParamSpec   *pspec);
 
 
 G_DEFINE_TYPE (GimpSelectionOptions, gimp_selection_options,
@@ -71,13 +63,10 @@ G_DEFINE_TYPE (GimpSelectionOptions, gimp_selection_options,
 static void
 gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
 {
-  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
-  GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->set_property = gimp_selection_options_set_property;
   object_class->get_property = gimp_selection_options_get_property;
-
-  options_class->reset       = gimp_selection_options_reset;
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OPERATION,
                                  "operation", NULL,
@@ -169,21 +158,6 @@ gimp_selection_options_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_selection_options_reset (GimpToolOptions *tool_options)
-{
-  GParamSpec *pspec;
-
-  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
-                                        "antialias");
-
-  if (pspec)
-    G_PARAM_SPEC_BOOLEAN (pspec)->default_value =
-      (tool_options->tool_info->tool_type != GIMP_TYPE_FOREGROUND_SELECT_TOOL);
-
-  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
 static const gchar *
@@ -284,9 +258,6 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
                                        _("Antialiasing"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_FOREGROUND_SELECT_TOOL)
-    gtk_widget_set_sensitive (button, FALSE);
 
   options->antialias_toggle = button;
 

@@ -38,6 +38,7 @@
 enum
 {
   PROP_0,
+  PROP_ANTIALIAS,
   PROP_CONTIGUOUS,
   PROP_BACKGROUND,
   PROP_STROKE_WIDTH,
@@ -72,20 +73,30 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
   object_class->set_property = gimp_foreground_select_options_set_property;
   object_class->get_property = gimp_foreground_select_options_get_property;
 
+  /*  override the antialias default value from GimpSelectionOptions  */
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
+                                    "antialias",
+                                    N_("Smooth edges"),
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONTIGUOUS,
                                     "contiguous",
                                     _("Select a single contiguous area"),
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BACKGROUND,
                                     "background", NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_STROKE_WIDTH,
                                 "stroke-width",
                                 _("Size of the brush used for refinements"),
                                 1, 80, 18,
                                 GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SMOOTHNESS,
                                 "smoothness",
                                 _("Smaller values give a more accurate "
@@ -93,25 +104,30 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                                   "in the selection"),
                                 0, 8, SIOX_DEFAULT_SMOOTHNESS,
                                 GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MASK_COLOR,
                                  "mask-color", NULL,
                                  GIMP_TYPE_CHANNEL_TYPE,
                                  GIMP_BLUE_CHANNEL,
                                  GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_EXPANDED,
                                     "expanded", NULL,
                                     FALSE,
                                     0);
+
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SENSITIVITY_L,
                                    "sensitivity-l",
                                    _("Sensitivity for brightness component"),
                                    0.0, 10.0, SIOX_DEFAULT_SENSITIVITY_L,
                                    GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SENSITIVITY_A,
                                    "sensitivity-a",
                                    _("Sensitivity for red/green component"),
                                    0.0, 10.0, SIOX_DEFAULT_SENSITIVITY_A,
                                    GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SENSITIVITY_B,
                                    "sensitivity-b",
                                    _("Sensitivity for yellow/blue component"),
@@ -134,33 +150,46 @@ gimp_foreground_select_options_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_ANTIALIAS:
+      GIMP_SELECTION_OPTIONS (object)->antialias = g_value_get_boolean (value);
+      break;
+
     case PROP_CONTIGUOUS:
       options->contiguous = g_value_get_boolean (value);
       break;
+
     case PROP_BACKGROUND:
       options->background = g_value_get_boolean (value);
       break;
+
     case PROP_STROKE_WIDTH:
       options->stroke_width = g_value_get_int (value);
       break;
+
     case PROP_SMOOTHNESS:
       options->smoothness = g_value_get_int (value);
       break;
+
     case PROP_MASK_COLOR:
       options->mask_color = g_value_get_enum (value);
       break;
+
     case PROP_EXPANDED:
       options->expanded = g_value_get_boolean (value);
       break;
+
     case PROP_SENSITIVITY_L:
       options->sensitivity[0] = g_value_get_double (value);
       break;
+
     case PROP_SENSITIVITY_A:
       options->sensitivity[1] = g_value_get_double (value);
       break;
+
     case PROP_SENSITIVITY_B:
       options->sensitivity[2] = g_value_get_double (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -177,33 +206,46 @@ gimp_foreground_select_options_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_ANTIALIAS:
+      g_value_set_boolean (value, GIMP_SELECTION_OPTIONS (object)->antialias);
+      break;
+
     case PROP_CONTIGUOUS:
       g_value_set_boolean (value, options->contiguous);
       break;
+
     case PROP_BACKGROUND:
       g_value_set_boolean (value, options->background);
       break;
+
     case PROP_STROKE_WIDTH:
       g_value_set_int (value, options->stroke_width);
       break;
+
     case PROP_SMOOTHNESS:
       g_value_set_int (value, options->smoothness);
       break;
+
     case PROP_MASK_COLOR:
       g_value_set_enum (value, options->mask_color);
       break;
+
     case PROP_EXPANDED:
       g_value_set_boolean (value, options->expanded);
       break;
+
     case PROP_SENSITIVITY_L:
       g_value_set_double (value, options->sensitivity[0]);
       break;
+
     case PROP_SENSITIVITY_A:
       g_value_set_double (value, options->sensitivity[1]);
       break;
+
     case PROP_SENSITIVITY_B:
       g_value_set_double (value, options->sensitivity[2]);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -226,6 +268,9 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   GtkObject *adj;
   gchar     *title;
   gint       row = 0;
+
+  gtk_widget_set_sensitive (GIMP_SELECTION_OPTIONS (tool_options)->antialias_toggle,
+                            FALSE);
 
   /*  single / multiple objects  */
   button = gimp_prop_check_button_new (config, "contiguous", _("Contiguous"));
