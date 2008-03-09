@@ -1,6 +1,6 @@
 # Swedish messages for the GIMP.
-# Copyright (C) 1999, 2000, 2001, 2002, 2003, 2007 Free Software Foundation, Inc.
-# Daniel Nylander <po@danielnylander.se>, 2007.
+# Copyright (C) 1999, 2000, 2001, 2002, 2003, 2007, 2008 Free Software Foundation, Inc.
+# Daniel Nylander <po@danielnylander.se>, 2007, 2008.
 # Tomas Ögren <stric@ing.umu.se>, 1999, 2000.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-28 20:18+0100\n"
-"PO-Revision-Date: 2007-12-28 20:18+0100\n"
+"POT-Creation-Date: 2008-03-09 16:32+0100\n"
+"PO-Revision-Date: 2008-03-09 16:35+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -3333,21 +3333,21 @@ msgstr "Visa s_enaste igen"
 msgid "Show the last used plug-in dialog again"
 msgstr "Visa dialogrutan för senast använda insticksmodulen igen"
 
-#: ../app/actions/plug-in-actions.c:491
+#: ../app/actions/plug-in-actions.c:503
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "U_pprepa \"%s\""
 
-#: ../app/actions/plug-in-actions.c:492
+#: ../app/actions/plug-in-actions.c:504
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "V_isa \"%s\" igen"
 
-#: ../app/actions/plug-in-actions.c:503
+#: ../app/actions/plug-in-actions.c:518
 msgid "Repeat Last"
 msgstr "Upprepa senaste"
 
-#: ../app/actions/plug-in-actions.c:505
+#: ../app/actions/plug-in-actions.c:520
 msgid "Re-Show Last"
 msgstr "Visa senaste igen"
 
@@ -3497,7 +3497,7 @@ msgstr "Spara markeringen till en kanal"
 
 #: ../app/actions/select-actions.c:110
 msgid "_Stroke Selection..."
-msgstr "Stryk markering..."
+msgstr "_Stryk längs markering..."
 
 #: ../app/actions/select-actions.c:111
 msgid "Paint along the selection outline"
@@ -3505,7 +3505,7 @@ msgstr "Måla längs markeringens kontur"
 
 #: ../app/actions/select-actions.c:116
 msgid "_Stroke Selection"
-msgstr "_Stryk markering"
+msgstr "_Stryk längs markering"
 
 #: ../app/actions/select-actions.c:117
 msgid "Stroke the selection with last used values"
@@ -3696,7 +3696,7 @@ msgstr "Öppna textfil (UTF-8)"
 #: ../app/core/gimppalette-load.c:369
 #: ../app/core/gimppalette-load.c:457
 #: ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpimagemaptool.c:586
+#: ../app/tools/gimpimagemaptool.c:587
 #: ../app/xcf/xcf.c:323
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -3978,7 +3978,7 @@ msgid "Path to Sele_ction"
 msgstr "_Slinga till markering"
 
 #: ../app/actions/vectors-actions.c:163
-#: ../app/tools/gimpvectortool.c:1875
+#: ../app/tools/gimpvectortool.c:1876
 msgid "Path to selection"
 msgstr "Slinga till markering"
 
@@ -4046,7 +4046,7 @@ msgstr "Slinga till markering"
 
 #: ../app/actions/vectors-commands.c:369
 #: ../app/tools/gimpvectoroptions.c:199
-#: ../app/tools/gimpvectortool.c:1908
+#: ../app/tools/gimpvectortool.c:1909
 #: ../app/vectors/gimpvectors.c:199
 msgid "Stroke Path"
 msgstr "Stryk längs slinga"
@@ -4560,7 +4560,7 @@ msgstr "Misslyckades med att ändra storlek på växlingsfil: %s"
 #: ../app/core/gimpgradient-save.c:145
 #: ../app/core/gimppalette-save.c:56
 #: ../app/gui/themes.c:239
-#: ../app/tools/gimpimagemaptool.c:585
+#: ../app/tools/gimpimagemaptool.c:586
 #: ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:401
 #, c-format
@@ -4574,7 +4574,7 @@ msgid "Error writing '%s': %s"
 msgstr "Fel vid skrivning av \"%s\": %s"
 
 #: ../app/config/gimpconfig-file.c:90
-#: ../app/tools/gimpimagemaptool.c:618
+#: ../app/tools/gimpimagemaptool.c:619
 #, c-format
 msgid "Error reading '%s': %s"
 msgstr "Fel vid läsning av \"%s\": %s"
@@ -6649,14 +6649,14 @@ msgstr "procent:"
 msgid "plural|percent"
 msgstr "procent"
 
-#: ../app/dialogs/about-dialog.c:127
+#: ../app/dialogs/about-dialog.c:125
 msgid "Visit the GIMP website"
 msgstr "Besök webbplatsen för GIMP"
 
 #. Translators: insert your names here,
 #. * separated by newline
 #.
-#: ../app/dialogs/about-dialog.c:134
+#: ../app/dialogs/about-dialog.c:132
 msgid "translator-credits"
 msgstr ""
 "Daniel Nylander\n"
@@ -6664,11 +6664,11 @@ msgstr ""
 "Christian Rose\n"
 "Tomas Ögren"
 
-#: ../app/dialogs/about-dialog.c:533
+#: ../app/dialogs/about-dialog.c:531
 msgid "GIMP is brought to you by"
 msgstr "GIMP presenteras av"
 
-#: ../app/dialogs/about-dialog.c:607
+#: ../app/dialogs/about-dialog.c:605
 msgid "This is an unstable development release."
 msgstr "Det här är en instabil utvecklingsutgåva."
 
@@ -8398,7 +8398,7 @@ msgstr "Uppstart av GIMP"
 msgid "Airbrush"
 msgstr "Färgspruta"
 
-#: ../app/paint/gimpbrushcore.c:354
+#: ../app/paint/gimpbrushcore.c:356
 #, c-format
 msgid "No brushes available for use with this tool."
 msgstr "Det finns inga penslar tillgängliga för detta verktyg."
@@ -8737,7 +8737,7 @@ msgstr "Fylld"
 
 #. This is a so-called pangram; it's supposed to
 #. contain all characters found in the alphabet.
-#: ../app/text/gimpfont.c:42
+#: ../app/text/gimpfont.c:45
 msgid ""
 "Pack my box with\n"
 "five dozen liquor jugs."
@@ -9634,7 +9634,7 @@ msgstr "Markera förgrunden genom att måla på objektet att extrahera"
 msgid "Draw a rough circle around the object to extract"
 msgstr "Rita en grov cirkel runt objektet att extrahera"
 
-#: ../app/tools/gimpforegroundselecttool.c:744
+#: ../app/tools/gimpforegroundselecttool.c:745
 msgid "command|Foreground Select"
 msgstr "Förgrundsmarkering"
 
@@ -9766,7 +9766,7 @@ msgstr "Snabbinläsning"
 msgid "Quick Save"
 msgstr "Snabbsparande"
 
-#: ../app/tools/gimpimagemaptool.c:609
+#: ../app/tools/gimpimagemaptool.c:610
 #, c-format
 msgid "Settings saved to '%s'"
 msgstr "Inställningar sparade till \"%s\""
@@ -10551,11 +10551,11 @@ msgstr "Behåll aspekt (%s)"
 msgid "Transforming"
 msgstr "Transformerar"
 
-#: ../app/tools/gimptransformtool.c:1156
+#: ../app/tools/gimptransformtool.c:1157
 msgid "There is no layer to transform."
 msgstr "Det finns inget lager att transformera."
 
-#: ../app/tools/gimptransformtool.c:1167
+#: ../app/tools/gimptransformtool.c:1168
 msgid "There is no path to transform."
 msgstr "Det finns ingen slinga att transformera."
 
@@ -10645,82 +10645,82 @@ msgstr "Ta bort ankare"
 msgid "Delete Segment"
 msgstr "Ta bort segment"
 
-#: ../app/tools/gimpvectortool.c:787
+#: ../app/tools/gimpvectortool.c:788
 msgid "Move Anchors"
 msgstr "Flytta ankare"
 
-#: ../app/tools/gimpvectortool.c:1145
+#: ../app/tools/gimpvectortool.c:1146
 msgid "Click to pick path to edit"
 msgstr "Klicka för att välja slinga att redigera"
 
-#: ../app/tools/gimpvectortool.c:1148
+#: ../app/tools/gimpvectortool.c:1149
 msgid "Click to create a new path"
 msgstr "Klicka för att skapa en ny slinga"
 
-#: ../app/tools/gimpvectortool.c:1151
+#: ../app/tools/gimpvectortool.c:1152
 msgid "Click to create a new component of the path"
 msgstr "Klicka för att skapa ny komponent till slingan"
 
-#: ../app/tools/gimpvectortool.c:1154
+#: ../app/tools/gimpvectortool.c:1155
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Klicka eller klicka och dra för att skapa ett nytt ankare"
 
-#: ../app/tools/gimpvectortool.c:1163
-#: ../app/tools/gimpvectortool.c:1170
+#: ../app/tools/gimpvectortool.c:1164
+#: ../app/tools/gimpvectortool.c:1171
 msgid "Click-Drag to move the anchor around"
 msgstr "Klicka och dra för att flytta runt ankaret"
 
-#: ../app/tools/gimpvectortool.c:1173
-#: ../app/tools/gimpvectortool.c:1184
+#: ../app/tools/gimpvectortool.c:1174
+#: ../app/tools/gimpvectortool.c:1185
 msgid "Click-Drag to move the anchors around"
 msgstr "Klicka och dra för att flytta runt ankarna"
 
-#: ../app/tools/gimpvectortool.c:1176
+#: ../app/tools/gimpvectortool.c:1177
 msgid "Click-Drag to move the handle around"
 msgstr "Klicka och dra för att flytta runt handtaget"
 
-#: ../app/tools/gimpvectortool.c:1189
+#: ../app/tools/gimpvectortool.c:1190
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Klicka och dra för att ändra kurvans form"
 
-#: ../app/tools/gimpvectortool.c:1192
+#: ../app/tools/gimpvectortool.c:1193
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: symmetrisk"
 
-#: ../app/tools/gimpvectortool.c:1196
+#: ../app/tools/gimpvectortool.c:1197
 msgid "Click-Drag to move the component around"
 msgstr "Klicka och dra för att flytta runt komponenten"
 
-#: ../app/tools/gimpvectortool.c:1203
+#: ../app/tools/gimpvectortool.c:1204
 msgid "Click-Drag to move the path around"
 msgstr "Klicka och dra för att flytta runt slingan"
 
-#: ../app/tools/gimpvectortool.c:1206
+#: ../app/tools/gimpvectortool.c:1207
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Klicka och dra för att infoga ett ankare i slingan"
 
-#: ../app/tools/gimpvectortool.c:1213
+#: ../app/tools/gimpvectortool.c:1214
 msgid "Click to delete this anchor"
 msgstr "Klicka för att ta bort det här ankaret"
 
-#: ../app/tools/gimpvectortool.c:1216
+#: ../app/tools/gimpvectortool.c:1217
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Klicka för att koppla ihop ankaret med den valda ändpunkten"
 
-#: ../app/tools/gimpvectortool.c:1220
+#: ../app/tools/gimpvectortool.c:1221
 msgid "Click to open up the path"
 msgstr "Klicka för att öppna upp slingan"
 
-#: ../app/tools/gimpvectortool.c:1223
+#: ../app/tools/gimpvectortool.c:1224
 msgid "Click to make this node angular"
 msgstr "Klicka för att göra noden vinkelformad"
 
-#: ../app/tools/gimpvectortool.c:1729
+#: ../app/tools/gimpvectortool.c:1730
 msgid "Delete Anchors"
 msgstr "Ta bort ankare"
 
-#: ../app/tools/gimpvectortool.c:1902
+#: ../app/tools/gimpvectortool.c:1903
 msgid "There is no active layer or channel to stroke to"
 msgstr "Det finns inget aktivt lager eller kanal att stryka till"
 
@@ -11064,11 +11064,11 @@ msgstr "HTML-notation:"
 msgid "Palette"
 msgstr "Palett"
 
-#: ../app/widgets/gimpcontainerpopup.c:534
+#: ../app/widgets/gimpcontainerpopup.c:538
 msgid "Smaller Previews"
 msgstr "Mindre förhandsvisningar"
 
-#: ../app/widgets/gimpcontainerpopup.c:539
+#: ../app/widgets/gimpcontainerpopup.c:543
 msgid "Larger Previews"
 msgstr "Större förhandsvisningar"
 
