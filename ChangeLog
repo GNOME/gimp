@@ -1,3 +1,7 @@
+2008-03-10  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimpink.c (gimp_ink_motion): formatting.
+
 2008-03-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/vectors/gimpanchor.c (gimp_anchor_copy): use g_slice_dup()

@@ -267,16 +267,16 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
     }
   else
     {
-      Blob    *blob;
-      blob = ink_pen_ellipse (options,
-                              paint_core->cur_coords.x,
-                              paint_core->cur_coords.y,
-                              paint_core->cur_coords.pressure,
-                              paint_core->cur_coords.xtilt,
-                              paint_core->cur_coords.ytilt,
-                              paint_core->cur_coords.velocity * 100);
+      Blob *blob = ink_pen_ellipse (options,
+                                    paint_core->cur_coords.x,
+                                    paint_core->cur_coords.y,
+                                    paint_core->cur_coords.pressure,
+                                    paint_core->cur_coords.xtilt,
+                                    paint_core->cur_coords.ytilt,
+                                    paint_core->cur_coords.velocity * 100);
 
       blob_union = blob_convex_union (ink->last_blob, blob);
+
       g_free (ink->last_blob);
       ink->last_blob = blob;
 
