@@ -1,5 +1,11 @@
 2008-03-10  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdockable.[ch]
+	* app/widgets/gimpdockbook.c: moved code for the drag widget to
+	GimpDockable. Use semi-bold text for the drag widget also.
+
+2008-03-10  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimpink.c (gimp_ink_motion): formatting.
 
 2008-03-10  Michael Natterer  <mitch@gimp.org>

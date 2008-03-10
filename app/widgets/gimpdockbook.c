@@ -102,9 +102,6 @@ static gboolean  gimp_dockbook_tab_drag_drop      (GtkWidget      *widget,
                                                    gint            y,
                                                    guint           time);
 
-static gboolean  gimp_dockbook_tab_drag_expose    (GtkWidget      *widget,
-                                                   GdkEventExpose *event);
-
 static void      gimp_dockbook_add_tab_timeout    (GimpDockbook   *dockbook,
                                                    GimpDockable   *dockable);
 static void      gimp_dockbook_remove_tab_timeout (GimpDockbook   *dockbook);
@@ -587,21 +584,7 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
   gtk_window_set_type_hint (GTK_WINDOW (window), GDK_WINDOW_TYPE_HINT_DND);
   gtk_window_set_screen (GTK_WINDOW (window), gtk_widget_get_screen (widget));
 
-  view = gimp_dockable_get_tab_widget (dockable,
-                                       dockable->context,
-                                       GIMP_TAB_STYLE_ICON_BLURB,
-                                       DND_WIDGET_ICON_SIZE);
-
-  g_signal_connect (view, "expose-event",
-                    G_CALLBACK (gimp_dockbook_tab_drag_expose),
-                    NULL);
-
-  if (GTK_IS_CONTAINER (view))
-    gtk_container_set_border_width (GTK_CONTAINER (view), 6);
-
-  if (GTK_IS_HBOX (view))
-    gtk_box_set_spacing (GTK_BOX (view), 6);
-
+  view = gimp_dockable_get_drag_widget (dockable);
   gtk_container_add (GTK_CONTAINER (window), view);
   gtk_widget_show (view);
 
@@ -772,24 +755,6 @@ gimp_dockbook_tab_drag_drop (GtkWidget      *widget,
   return FALSE;
 }
 
-static gboolean
-gimp_dockbook_tab_drag_expose (GtkWidget      *widget,
-                               GdkEventExpose *event)
-{
-  /*  mimic the appearance of a notebook tab  */
-
-  gtk_paint_extension (widget->style, widget->window,
-                       widget->state, GTK_SHADOW_OUT,
-                       &event->area, widget, "tab",
-                       widget->allocation.x,
-                       widget->allocation.y,
-                       widget->allocation.width,
-                       widget->allocation.height,
-                       GTK_POS_BOTTOM);
-
-  return FALSE;
-}
-
 static void
 gimp_dockbook_add_tab_timeout (GimpDockbook *dockbook,
                                GimpDockable *dockable)
@@ -798,6 +763,7 @@ gimp_dockbook_add_tab_timeout (GimpDockbook *dockbook,
     g_timeout_add (TAB_HOVER_TIMEOUT,
                    (GSourceFunc) gimp_dockbook_tab_timeout,
                    dockbook);
+
   dockbook->tab_hover_dockable = dockable;
 }
 

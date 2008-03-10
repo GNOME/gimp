@@ -446,23 +446,12 @@ gimp_dockable_style_set (GtkWidget *widget,
     }
 }
 
-static PangoLayout *
-gimp_dockable_create_title_layout (GimpDockable *dockable,
-                                   GtkWidget    *widget,
-                                   gint          width)
+static void
+gimp_dockable_layout_set_weight (PangoLayout *layout,
+                                 PangoWeight  weight)
 {
-  PangoLayout    *layout;
   PangoAttrList  *attrs;
   PangoAttribute *attr;
-  GtkBin         *bin  = GTK_BIN (dockable);
-  gchar          *title = NULL;
-
-  if (bin->child)
-    title = gimp_docked_get_title (GIMP_DOCKED (bin->child));
-
-  layout = gtk_widget_create_pango_layout (widget,
-                                           title ? title : dockable->blurb);
-  g_free (title);
 
   attrs = pango_attr_list_new ();
 
@@ -473,6 +462,25 @@ gimp_dockable_create_title_layout (GimpDockable *dockable,
 
   pango_layout_set_attributes (layout, attrs);
   pango_attr_list_unref (attrs);
+}
+
+static PangoLayout *
+gimp_dockable_create_title_layout (GimpDockable *dockable,
+                                   GtkWidget    *widget,
+                                   gint          width)
+{
+  PangoLayout    *layout;
+  GtkBin         *bin  = GTK_BIN (dockable);
+  gchar          *title = NULL;
+
+  if (bin->child)
+    title = gimp_docked_get_title (GIMP_DOCKED (bin->child));
+
+  layout = gtk_widget_create_pango_layout (widget,
+                                           title ? title : dockable->blurb);
+  g_free (title);
+
+  gimp_dockable_layout_set_weight (layout, PANGO_WEIGHT_SEMIBOLD);
 
   if (width > 0)
     {
@@ -633,6 +641,91 @@ gimp_dockable_forall (GtkContainer *container,
                                               callback, callback_data);
 }
 
+static GtkWidget *
+gimp_dockable_get_tab_widget_internal (GimpDockable *dockable,
+                                       GimpContext  *context,
+                                       GimpTabStyle  tab_style,
+                                       GtkIconSize   size,
+                                       gboolean      dnd)
+{
+  GtkWidget *tab_widget = NULL;
+  GtkWidget *label      = NULL;
+  GtkWidget *icon       = NULL;
+
+  switch (tab_style)
+    {
+    case GIMP_TAB_STYLE_NAME:
+    case GIMP_TAB_STYLE_ICON_NAME:
+    case GIMP_TAB_STYLE_PREVIEW_NAME:
+      label = gtk_label_new (dockable->name);
+      break;
+
+    case GIMP_TAB_STYLE_BLURB:
+    case GIMP_TAB_STYLE_ICON_BLURB:
+    case GIMP_TAB_STYLE_PREVIEW_BLURB:
+      label = gtk_label_new (dockable->blurb);
+      break;
+
+    default:
+      break;
+    }
+
+  switch (tab_style)
+    {
+    case GIMP_TAB_STYLE_ICON:
+    case GIMP_TAB_STYLE_ICON_NAME:
+    case GIMP_TAB_STYLE_ICON_BLURB:
+      icon = gtk_image_new_from_stock (dockable->stock_id, size);
+      break;
+
+    case GIMP_TAB_STYLE_PREVIEW:
+    case GIMP_TAB_STYLE_PREVIEW_NAME:
+    case GIMP_TAB_STYLE_PREVIEW_BLURB:
+      if (GTK_BIN (dockable)->child)
+        icon = gimp_docked_get_preview (GIMP_DOCKED (GTK_BIN (dockable)->child),
+                                        context, size);
+
+      if (! icon)
+        icon = gtk_image_new_from_stock (dockable->stock_id, size);
+      break;
+
+    default:
+      break;
+    }
+
+  if (label && dnd)
+    gimp_label_set_attributes (GTK_LABEL (label),
+                               PANGO_ATTR_WEIGHT, PANGO_WEIGHT_SEMIBOLD,
+                               -1);
+
+  switch (tab_style)
+    {
+    case GIMP_TAB_STYLE_ICON:
+    case GIMP_TAB_STYLE_PREVIEW:
+      tab_widget = icon;
+      break;
+
+    case GIMP_TAB_STYLE_NAME:
+    case GIMP_TAB_STYLE_BLURB:
+      tab_widget = label;
+      break;
+
+    case GIMP_TAB_STYLE_ICON_NAME:
+    case GIMP_TAB_STYLE_ICON_BLURB:
+    case GIMP_TAB_STYLE_PREVIEW_NAME:
+    case GIMP_TAB_STYLE_PREVIEW_BLURB:
+      tab_widget = gtk_hbox_new (FALSE, dnd ? 6 : 2);
+
+      gtk_box_pack_start (GTK_BOX (tab_widget), icon, FALSE, FALSE, 0);
+      gtk_widget_show (icon);
+
+      gtk_box_pack_start (GTK_BOX (tab_widget), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+      break;
+    }
+
+  return tab_widget;
+}
 
 /*  public functions  */
 
@@ -724,81 +817,34 @@ gimp_dockable_get_tab_widget (GimpDockable *dockable,
                               GimpTabStyle  tab_style,
                               GtkIconSize   size)
 {
-  GtkWidget *tab_widget = NULL;
-  GtkWidget *label      = NULL;
-  GtkWidget *icon       = NULL;
-
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  switch (tab_style)
-    {
-    case GIMP_TAB_STYLE_NAME:
-    case GIMP_TAB_STYLE_ICON_NAME:
-    case GIMP_TAB_STYLE_PREVIEW_NAME:
-      label = gtk_label_new (dockable->name);
-      break;
+  return gimp_dockable_get_tab_widget_internal (dockable, context,
+                                                tab_style, size, FALSE);
+}
 
-    case GIMP_TAB_STYLE_BLURB:
-    case GIMP_TAB_STYLE_ICON_BLURB:
-    case GIMP_TAB_STYLE_PREVIEW_BLURB:
-      label = gtk_label_new (dockable->blurb);
-      break;
+GtkWidget *
+gimp_dockable_get_drag_widget (GimpDockable *dockable)
+{
+  GtkWidget *frame;
+  GtkWidget *widget;
 
-    default:
-      break;
-    }
+  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
 
-  switch (tab_style)
-    {
-    case GIMP_TAB_STYLE_ICON:
-    case GIMP_TAB_STYLE_ICON_NAME:
-    case GIMP_TAB_STYLE_ICON_BLURB:
-      icon = gtk_image_new_from_stock (dockable->stock_id, size);
-      break;
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
 
-    case GIMP_TAB_STYLE_PREVIEW:
-    case GIMP_TAB_STYLE_PREVIEW_NAME:
-    case GIMP_TAB_STYLE_PREVIEW_BLURB:
-      if (GTK_BIN (dockable)->child)
-        icon = gimp_docked_get_preview (GIMP_DOCKED (GTK_BIN (dockable)->child),
-                                        context, size);
+  widget = gimp_dockable_get_tab_widget_internal (dockable,
+                                                  dockable->context,
+                                                  GIMP_TAB_STYLE_ICON_BLURB,
+                                                  GTK_ICON_SIZE_DND,
+                                                  TRUE);
+  gtk_container_set_border_width (GTK_CONTAINER (widget), 6);
+  gtk_container_add (GTK_CONTAINER (frame), widget);
+  gtk_widget_show (widget);
 
-      if (! icon)
-        icon = gtk_image_new_from_stock (dockable->stock_id, size);
-      break;
-
-    default:
-      break;
-    }
-
-  switch (tab_style)
-    {
-    case GIMP_TAB_STYLE_ICON:
-    case GIMP_TAB_STYLE_PREVIEW:
-      tab_widget = icon;
-      break;
-
-    case GIMP_TAB_STYLE_NAME:
-    case GIMP_TAB_STYLE_BLURB:
-      tab_widget = label;
-      break;
-
-    case GIMP_TAB_STYLE_ICON_NAME:
-    case GIMP_TAB_STYLE_ICON_BLURB:
-    case GIMP_TAB_STYLE_PREVIEW_NAME:
-    case GIMP_TAB_STYLE_PREVIEW_BLURB:
-      tab_widget = gtk_hbox_new (FALSE, 2);
-
-      gtk_box_pack_start (GTK_BOX (tab_widget), icon, FALSE, FALSE, 0);
-      gtk_widget_show (icon);
-
-      gtk_box_pack_start (GTK_BOX (tab_widget), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-      break;
-    }
-
-  return tab_widget;
+  return frame;
 }
 
 void
