@@ -58,15 +58,9 @@ gimp_anchor_new (GimpAnchorType    type,
 GimpAnchor *
 gimp_anchor_copy (const GimpAnchor *anchor)
 {
-  GimpAnchor *new;
-
   g_return_val_if_fail (anchor != NULL, NULL);
 
-  new = g_slice_new (GimpAnchor);
-
-  *new = *anchor;
-
-  return new;
+  return g_slice_dup (GimpAnchor, anchor);
 }
 
 void

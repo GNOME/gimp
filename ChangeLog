@@ -1,3 +1,8 @@
+2008-03-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/vectors/gimpanchor.c (gimp_anchor_copy): use g_slice_dup()
+	instead of copying the struct contents manually.
+
 2008-03-09  Michael Natterer  <mitch@gimp.org>
 
 	Fix mishandling of the "antialias" GParamSpec. Fixes bug #521069:
