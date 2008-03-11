@@ -165,6 +165,9 @@ These are:
   --without-print.  If for some reason you don't want to build the Print
      plug-in based on the GtkPrint API, you can build with --without-print.
 
+  --without-gio.  If you don't want to use GIO to access remote
+     files, you can pass --without-gio to the configure script.
+
   --without-gnomevfs.  If you don't want to use gnomevfs to access remote
      files, you can pass --without-gnomevfs to the configure script.
 

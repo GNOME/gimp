@@ -1,5 +1,16 @@
 2008-03-11  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL
+	* configure.in: added --without-gio configure option.
+
+	* plug-ins/uri/Makefile.am: prefer the GIO backend.
+
+	* plug-ins/uri/uri-backend-gio.c
+	* plug-ins/uri/uri-backend-libcurl.c
+	* plug-ins/uri/uri-backend-gnomevfs.c: improved progress messages.
+
+2008-03-11  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: added a check for gio-2.0.
 
 	* plug-ins/uri/Makefile.am

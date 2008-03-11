@@ -28,12 +28,18 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+typedef enum
+{
+  DOWNLOAD,
+  UPLOAD
+} Mode;
+
 /*  local function prototypes  */
 
 static gchar    * get_protocols (void);
 static gboolean   copy_uri      (const gchar  *src_uri,
                                  const gchar  *dest_uri,
-                                 const gchar  *format,
+                                 Mode          mode,
                                  GError      **error);
 
 
@@ -50,6 +56,11 @@ uri_backend_init (const gchar  *plugin_name,
                   GimpRunMode   run_mode,
                   GError      **error)
 {
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      gimp_ui_init (plugin_name, FALSE);
+    }
+
   return TRUE;
 }
 
@@ -98,15 +109,8 @@ uri_backend_load_image (const gchar  *uri,
   gboolean  success;
 
   dest_uri = g_filename_to_uri (tmpname, NULL, NULL);
-  success = copy_uri (uri, dest_uri,
-                      _("Downloading image (%s of %s)..."),
-                      error);
+  success = copy_uri (uri, dest_uri, DOWNLOAD, error);
   g_free (dest_uri);
-
-  if (*error)
-    {
-      g_printerr ("uri_backend_load_image: %s\n", (*error)->message);
-    }
 
   return success;
 }
@@ -121,15 +125,8 @@ uri_backend_save_image (const gchar  *uri,
   gboolean  success;
 
   src_uri = g_filename_to_uri (tmpname, NULL, NULL);
-  success = copy_uri (src_uri, uri,
-                      _("Uploading image (%s of %s)..."),
-                      error);
+  success = copy_uri (src_uri, uri, UPLOAD, error);
   g_free (src_uri);
-
-  if (*error)
-    {
-      g_printerr ("uri_backend_save_image: %s\n", (*error)->message);
-    }
 
   return success;
 }
@@ -171,22 +168,60 @@ uri_progress_callback (goffset  current_num_bytes,
                        goffset  total_num_bytes,
                        gpointer user_data)
 {
-  gchar *done  = gimp_memsize_to_string (current_num_bytes);
-  gchar *total = gimp_memsize_to_string (total_num_bytes);
+  Mode mode = GPOINTER_TO_INT (user_data);
 
-  gimp_progress_set_text_printf ((const gchar *) user_data, done, total);
+  if (total_num_bytes > 0)
+    {
+      const gchar *format;
+      gchar       *done  = gimp_memsize_to_string (current_num_bytes);
+      gchar       *total = gimp_memsize_to_string (total_num_bytes);
 
-  if (total_num_bytes)
-    gimp_progress_update (current_num_bytes / total_num_bytes);
+      switch (mode)
+        {
+        case DOWNLOAD:
+          format = _("Downloading image (%s of %s)");
+          break;
+        case UPLOAD:
+          format = _("Uploading image (%s of %s)");
+          break;
+        default:
+          g_assert_not_reached ();
+        }
 
-  g_free (total);
-  g_free (done);
+      gimp_progress_set_text_printf (format, done, total);
+      gimp_progress_update (current_num_bytes / total_num_bytes);
+
+      g_free (total);
+      g_free (done);
+    }
+  else
+    {
+      const gchar *format;
+      gchar       *done = gimp_memsize_to_string (current_num_bytes);
+
+      switch (mode)
+        {
+        case DOWNLOAD:
+          format = _("Downloaded %s of image data");
+          break;
+        case UPLOAD:
+          format = _("Uploaded %s of image data");
+          break;
+        default:
+          g_assert_not_reached ();
+        }
+
+      gimp_progress_set_text_printf (format, done);
+      gimp_progress_pulse ();
+
+      g_free (done);
+    }
 }
 
 static gboolean
 copy_uri (const gchar  *src_uri,
           const gchar  *dest_uri,
-          const gchar  *format,
+          Mode          mode,
           GError      **error)
 {
   GVfs     *vfs;
@@ -202,7 +237,7 @@ copy_uri (const gchar  *src_uri,
   gimp_progress_init (_("Connecting to server"));
 
   success = g_file_copy (src_file, dest_file, G_FILE_COPY_OVERWRITE, NULL,
-                         uri_progress_callback, (gpointer) format,
+                         uri_progress_callback, GINT_TO_POINTER (mode),
                          error);
 
   g_object_unref (src_file);

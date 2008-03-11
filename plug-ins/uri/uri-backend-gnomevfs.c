@@ -159,7 +159,7 @@ uri_backend_load_image (const gchar  *uri,
 
   dest_uri = g_filename_to_uri (tmpname, NULL, NULL);
   success = copy_uri (uri, dest_uri,
-                      _("Downloading %s of image data..."),
+                      _("Downloading %s of image data"),
                       _("Downloaded %s of image data"),
                       error);
   g_free (dest_uri);
@@ -178,7 +178,7 @@ uri_backend_save_image (const gchar  *uri,
 
   src_uri = g_filename_to_uri (tmpname, NULL, NULL);
   success = copy_uri (src_uri, uri,
-                      _("Uploading %s of image data..."),
+                      _("Uploading %s of image data"),
                       _("Uploaded %s of image data"),
                       error);
   g_free (src_uri);
