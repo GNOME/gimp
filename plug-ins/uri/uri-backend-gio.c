@@ -1,6 +1,9 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * URI plug-in, GIO backend
+ * Copyright (C) 2008  Sven Neumann <sven@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -34,7 +37,6 @@ typedef enum
   UPLOAD
 } Mode;
 
-/*  local function prototypes  */
 
 static gchar    * get_protocols (void);
 static gboolean   copy_uri      (const gchar  *src_uri,
@@ -42,13 +44,8 @@ static gboolean   copy_uri      (const gchar  *src_uri,
                                  Mode          mode,
                                  GError      **error);
 
-
-/*  private variables  */
-
 static gchar *supported_protocols = NULL;
 
-
-/*  public functions  */
 
 gboolean
 uri_backend_init (const gchar  *plugin_name,
@@ -105,14 +102,18 @@ uri_backend_load_image (const gchar  *uri,
                         GimpRunMode   run_mode,
                         GError      **error)
 {
-  gchar    *dest_uri;
-  gboolean  success;
+  gchar *dest_uri = g_filename_to_uri (tmpname, NULL, error);
 
-  dest_uri = g_filename_to_uri (tmpname, NULL, NULL);
-  success = copy_uri (uri, dest_uri, DOWNLOAD, error);
-  g_free (dest_uri);
+  if (dest_uri)
+    {
+      gboolean success = copy_uri (uri, dest_uri, DOWNLOAD, error);
 
-  return success;
+      g_free (dest_uri);
+
+      return success;
+    }
+
+  return FALSE;
 }
 
 gboolean
@@ -121,14 +122,18 @@ uri_backend_save_image (const gchar  *uri,
                         GimpRunMode   run_mode,
                         GError      **error)
 {
-  gchar    *src_uri;
-  gboolean  success;
+  gchar *src_uri = g_filename_to_uri (tmpname, NULL, error);
 
-  src_uri = g_filename_to_uri (tmpname, NULL, NULL);
-  success = copy_uri (src_uri, uri, UPLOAD, error);
-  g_free (src_uri);
+  if (src_uri)
+    {
+      gboolean success = copy_uri (src_uri, uri, UPLOAD, error);
 
-  return success;
+      g_free (src_uri);
+
+      return success;
+    }
+
+  return FALSE;
 }
 
 
@@ -224,12 +229,18 @@ copy_uri (const gchar  *src_uri,
           Mode          mode,
           GError      **error)
 {
-  GVfs     *vfs;
+  GVfs     *vfs = g_vfs_get_default ();
   GFile    *src_file;
   GFile    *dest_file;
   gboolean  success;
 
   vfs = g_vfs_get_default ();
+
+  if (! g_vfs_is_active (vfs))
+    {
+      g_set_error (error, 0, 0, "Initialization of GVfs failed");
+      return FALSE;
+    }
 
   src_file  = g_vfs_get_file_for_uri (vfs, src_uri);
   dest_file = g_vfs_get_file_for_uri (vfs, dest_uri);
