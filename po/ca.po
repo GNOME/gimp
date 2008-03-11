@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-06 21:17+0100\n"
-"PO-Revision-Date: 2008-02-29 18:20+0100\n"
+"POT-Creation-Date: 2008-03-12 00:00+0100\n"
+"PO-Revision-Date: 2008-03-11 23:59+0100\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -250,8 +250,8 @@ msgstr ""
 #, c-format
 msgid "using %s, compiled against version %s, running against version %s"
 msgstr ""
-"s'està utilitzant %s, compilat amb la versió %s i executant-se amb la "
-"versió %s"
+"s'està utilitzant %s, compilat amb la versió %s i executant-se amb la versió "
+"%s"
 
 #: ../app/version.c:128 ../tools/gimp-remote.c:95
 #, c-format
@@ -6130,7 +6130,7 @@ msgstr "To-Saturació avançat"
 
 #: ../app/core/gimpdrawable-hue-saturation.c:104
 msgid "Hue_Saturation"
-msgstr "To_Saturació avançat"
+msgstr "To_Saturació"
 
 #: ../app/core/gimpdrawable-invert.c:59 ../app/core/gimpdrawable-invert.c:84
 msgid "Invert"
@@ -6690,7 +6690,7 @@ msgstr "Mou la màscara de capa"
 #: ../app/core/gimplayermask.c:160
 #, c-format
 msgid "Cannot rename layer masks."
-msgstr "No s'ha pogut canviar el nom de la màscara de capa."
+msgstr "No s'ha pogut canviar el nom de la màscares de capa."
 
 #: ../app/core/gimplayermask.c:303
 msgid "Show Layer Mask"
@@ -8884,8 +8884,8 @@ msgid ""
 "Cannot convert this layer to a normal layer because it is not a floating "
 "selection."
 msgstr ""
-"No es pot convertir aquesta capa en una capa normal perquè no és una selecció "
-"flotant."
+"No es pot convertir aquesta capa en una capa normal perquè no és una "
+"selecció flotant."
 
 #: ../app/pdb/floating_sel_cmds.c:184
 #, c-format
@@ -8910,12 +8910,12 @@ msgstr "No és vàlid un nom de pinzell buit"
 #: ../app/pdb/gimppdb-utils.c:65
 #, c-format
 msgid "Brush '%s' not found"
-msgstr "El pinzell «%s» no s'ha trobat"
+msgstr "No s'ha trobat el pinzell «%s»"
 
 #: ../app/pdb/gimppdb-utils.c:70
 #, c-format
 msgid "Brush '%s' is not editable"
-msgstr "El pinxell «%s» no és editable"
+msgstr "El pinzell «%s» no és editable"
 
 #: ../app/pdb/gimppdb-utils.c:96
 #, c-format
@@ -8931,7 +8931,7 @@ msgstr "No és vàlid un nom de patró buit"
 #: ../app/pdb/gimppdb-utils.c:126
 #, c-format
 msgid "Pattern '%s' not found"
-msgstr "El patró «%s» no s'ha trobat"
+msgstr "No s'ha trobat el patró «%s»"
 
 #: ../app/pdb/gimppdb-utils.c:146
 #, c-format
@@ -8942,7 +8942,7 @@ msgstr "No és vàlid un nom de degradat buit"
 #: ../app/pdb/gimppdb-utils.c:156
 #, c-format
 msgid "Gradient '%s' not found"
-msgstr "El degradat «%s» no s'ha trobat"
+msgstr "No s'ha trobat el degradat «%s»"
 
 #: ../app/pdb/gimppdb-utils.c:161
 #, c-format
@@ -8958,7 +8958,7 @@ msgstr "No és vàlid un nom de paleta buit"
 #: ../app/pdb/gimppdb-utils.c:192
 #, c-format
 msgid "Palette '%s' not found"
-msgstr "La paleta «%s» no s'ha trobat"
+msgstr "No s'ha trobat la paleta «%s»"
 
 #: ../app/pdb/gimppdb-utils.c:197
 #, c-format
@@ -8973,7 +8973,7 @@ msgstr "No és vàlid un nom de tipus de lletra buit"
 #: ../app/pdb/gimppdb-utils.c:227
 #, c-format
 msgid "Font '%s' not found"
-msgstr "El tipus de lletra «%s» no s'ha trobat"
+msgstr "No s'ha trobat el tipus de lletra «%s»"
 
 #: ../app/pdb/gimppdb-utils.c:246
 #, c-format
@@ -8983,7 +8983,7 @@ msgstr "No és vàlid un nom buit"
 #: ../app/pdb/gimppdb-utils.c:256
 #, c-format
 msgid "Named buffer '%s' not found"
-msgstr "L'objecte «%s» no s'ha trobat"
+msgstr "No s'ha trobat l'objecte «%s»"
 
 #: ../app/pdb/gimppdb-utils.c:275
 #, c-format
@@ -9459,7 +9459,6 @@ msgstr "Profunditat màxima:"
 
 #: ../app/tools/gimpblendoptions.c:262
 #: ../app/tools/gimpbucketfilloptions.c:287
-#: ../app/tools/gimpselectionoptions.c:415
 msgid "Threshold:"
 msgstr "Llindar:"
 
@@ -9524,7 +9523,6 @@ msgid "Base filled area on all visible layers"
 msgstr "Àrea base plena en totes les capes visibles"
 
 #: ../app/tools/gimpbucketfilloptions.c:112
-#: ../app/tools/gimpselectionoptions.c:123
 msgid "Maximum color difference"
 msgstr ""
 "Selecciona tots els colors semblants que no superin aquest llindar de "
@@ -9561,7 +9559,6 @@ msgstr "Omple àrees transparents"
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpperspectiveclonetool.c:965
-#: ../app/tools/gimpselectionoptions.c:403
 msgid "Sample merged"
 msgstr "Mostra fusionada"
 
@@ -9717,8 +9714,8 @@ msgid "Sample average"
 msgstr "Mitjana de la mostra"
 
 #: ../app/tools/gimpcoloroptions.c:171
-#: ../app/tools/gimprectangleselectoptions.c:166
-#: ../app/tools/gimpselectionoptions.c:374
+#: ../app/tools/gimprectangleselectoptions.c:167
+#: ../app/tools/gimpselectionoptions.c:281
 #: ../app/widgets/gimpbrusheditor.c:154
 msgid "Radius:"
 msgstr "Radi:"
@@ -10016,12 +10013,12 @@ msgstr "%s per a definir el color de fons"
 msgid "Anti erase  (%s)"
 msgstr "Anti goma d'esborrar (%s)"
 
-#: ../app/tools/gimpflipoptions.c:129
+#: ../app/tools/gimpflipoptions.c:130
 msgid "Affect:"
 msgstr "Objecte:"
 
 #. tool toggle
-#: ../app/tools/gimpflipoptions.c:135
+#: ../app/tools/gimpflipoptions.c:139
 #, c-format
 msgid "Flip Type  (%s)"
 msgstr "Capgira (%s)"
@@ -10041,15 +10038,20 @@ msgstr ""
 msgid "_Flip"
 msgstr "_Capgira"
 
-#: ../app/tools/gimpforegroundselectoptions.c:77
+#: ../app/tools/gimpforegroundselectoptions.c:79
+#: ../app/tools/gimpselectionoptions.c:79
+msgid "Smooth edges"
+msgstr "Arrodoneix les vores"
+
+#: ../app/tools/gimpforegroundselectoptions.c:85
 msgid "Select a single contiguous area"
 msgstr "Selecciona una única regió contigua"
 
-#: ../app/tools/gimpforegroundselectoptions.c:86
+#: ../app/tools/gimpforegroundselectoptions.c:96
 msgid "Size of the brush used for refinements"
 msgstr "Mida del pinzell utilitzat per a concretar la selecció"
 
-#: ../app/tools/gimpforegroundselectoptions.c:91
+#: ../app/tools/gimpforegroundselectoptions.c:102
 msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
@@ -10057,55 +10059,55 @@ msgstr ""
 "Si doneu un valor petit aleshores la selecció serà més fina però pot ser que "
 "es facin forats"
 
-#: ../app/tools/gimpforegroundselectoptions.c:107
+#: ../app/tools/gimpforegroundselectoptions.c:121
 msgid "Sensitivity for brightness component"
 msgstr "Sensibilitat a la component brillantor"
 
-#: ../app/tools/gimpforegroundselectoptions.c:112
+#: ../app/tools/gimpforegroundselectoptions.c:127
 msgid "Sensitivity for red/green component"
 msgstr "Sensibilitat a la component verda/vermella"
 
-#: ../app/tools/gimpforegroundselectoptions.c:117
+#: ../app/tools/gimpforegroundselectoptions.c:133
 msgid "Sensitivity for yellow/blue component"
 msgstr "Sensibilitat a la component groga/blava"
 
 #. single / multiple objects
-#: ../app/tools/gimpforegroundselectoptions.c:231
+#: ../app/tools/gimpforegroundselectoptions.c:276
 msgid "Contiguous"
 msgstr "Contigua"
 
 #. foreground / background
-#: ../app/tools/gimpforegroundselectoptions.c:236
+#: ../app/tools/gimpforegroundselectoptions.c:281
 #, c-format
 msgid "Interactive refinement  (%s)"
 msgstr "Refinament interactiu (%s)"
 
-#: ../app/tools/gimpforegroundselectoptions.c:240
+#: ../app/tools/gimpforegroundselectoptions.c:285
 msgid "Mark background"
 msgstr "Marca el fons"
 
-#: ../app/tools/gimpforegroundselectoptions.c:241
+#: ../app/tools/gimpforegroundselectoptions.c:286
 msgid "Mark foreground"
 msgstr "Marca el primer pla"
 
-#: ../app/tools/gimpforegroundselectoptions.c:257
+#: ../app/tools/gimpforegroundselectoptions.c:302
 msgid "Small brush"
 msgstr "Pinzell petit"
 
-#: ../app/tools/gimpforegroundselectoptions.c:265
+#: ../app/tools/gimpforegroundselectoptions.c:310
 msgid "Large brush"
 msgstr "Pinzell gros"
 
-#: ../app/tools/gimpforegroundselectoptions.c:289
+#: ../app/tools/gimpforegroundselectoptions.c:334
 msgid "Smoothing:"
 msgstr "Suavitzat:"
 
-#: ../app/tools/gimpforegroundselectoptions.c:295
+#: ../app/tools/gimpforegroundselectoptions.c:340
 msgid "Preview color:"
 msgstr "Mostra del color:"
 
 #. granularity
-#: ../app/tools/gimpforegroundselectoptions.c:298
+#: ../app/tools/gimpforegroundselectoptions.c:343
 msgid "Color Sensitivity"
 msgstr "Sensibilitat als canvis de color"
 
@@ -10436,7 +10438,7 @@ msgid "Auto-resize window"
 msgstr "Redimensiona la finestra"
 
 #. tool toggle
-#: ../app/tools/gimpmagnifyoptions.c:172 ../app/tools/gimpmoveoptions.c:184
+#: ../app/tools/gimpmagnifyoptions.c:172 ../app/tools/gimpmoveoptions.c:188
 #, c-format
 msgid "Tool Toggle  (%s)"
 msgstr "Commutador d'eines (%s)"
@@ -10522,7 +10524,7 @@ msgstr "Selecciona un camí"
 msgid "Move the active path"
 msgstr "Mou el camí actiu"
 
-#: ../app/tools/gimpmoveoptions.c:178
+#: ../app/tools/gimpmoveoptions.c:179
 msgid "Move:"
 msgstr "Mou:"
 
@@ -10559,13 +10561,13 @@ msgid "_Paintbrush"
 msgstr "_Pinzell"
 
 #: ../app/tools/gimppaintoptions-gui.c:99
-#: ../app/tools/gimpselectionoptions.c:340
+#: ../app/tools/gimpselectionoptions.c:211
 #: ../app/widgets/gimpbrushselect.c:191 ../app/widgets/gimplayertreeview.c:269
 msgid "Mode:"
 msgstr "Mode:"
 
 #: ../app/tools/gimppaintoptions-gui.c:114
-#: ../app/tools/gimptransformoptions.c:344
+#: ../app/tools/gimptransformoptions.c:348
 #: ../app/widgets/gimpbrushselect.c:178 ../app/widgets/gimplayertreeview.c:284
 msgid "Opacity:"
 msgstr "Opacitat:"
@@ -10697,19 +10699,19 @@ msgstr "Transformació de la perspectiva"
 msgid "Transformation Matrix"
 msgstr "Matriu de transformació"
 
-#: ../app/tools/gimppolygonselecttool.c:157
+#: ../app/tools/gimppolygonselecttool.c:162
 msgid "Polygon Select"
 msgstr "Selecció poligonal"
 
-#: ../app/tools/gimppolygonselecttool.c:158
+#: ../app/tools/gimppolygonselecttool.c:163
 msgid "Polygon Select Tool: Select a hand-drawn polygon"
-msgstr "Eina Selecció poligonal: selecciona un polígon dibuixat a mà"
+msgstr "Eina de selecció poligonal: selecciona un polígon dibuixat a mà"
 
-#: ../app/tools/gimppolygonselecttool.c:159
+#: ../app/tools/gimppolygonselecttool.c:164
 msgid "_Polygon Select"
 msgstr "Selecció _poligonal"
 
-#: ../app/tools/gimppolygonselecttool.c:559
+#: ../app/tools/gimppolygonselecttool.c:575
 msgid "command|Polygon Select"
 msgstr "Selecció poligonal"
 
@@ -10776,23 +10778,23 @@ msgid "Shrink merged"
 msgstr "Encongeix a totes les capes"
 
 #  Mouse Cursors
-#: ../app/tools/gimprectangleselectoptions.c:154
+#: ../app/tools/gimprectangleselectoptions.c:155
 msgid "Rounded corners"
 msgstr "Vores arrodonides"
 
-#: ../app/tools/gimprectangleselecttool.c:162
+#: ../app/tools/gimprectangleselecttool.c:165
 msgid "Rectangle Select"
 msgstr "Selecció rectangular"
 
-#: ../app/tools/gimprectangleselecttool.c:163
+#: ../app/tools/gimprectangleselecttool.c:166
 msgid "Rectangle Select Tool: Select a rectangular region"
 msgstr "Eina Selecció rectangular: selecciona una regió rectangular"
 
-#: ../app/tools/gimprectangleselecttool.c:164
+#: ../app/tools/gimprectangleselecttool.c:167
 msgid "_Rectangle Select"
 msgstr "Selecció _rectangular"
 
-#: ../app/tools/gimprectangletool.c:1057 ../app/tools/gimprectangletool.c:1932
+#: ../app/tools/gimprectangletool.c:1068 ../app/tools/gimprectangletool.c:1943
 msgid "Rectangle: "
 msgstr "Rectangle: "
 
@@ -10840,38 +10842,14 @@ msgstr "E_scala"
 msgid "command|Scale"
 msgstr "Escala"
 
-#: ../app/tools/gimpselectionoptions.c:98
-msgid "Smooth edges"
-msgstr "Arrodoneix les vores"
-
-#: ../app/tools/gimpselectionoptions.c:112
-msgid "Allow completely transparent regions to be selected"
-msgstr "Permet seleccionar regions completament transparents"
-
-#: ../app/tools/gimpselectionoptions.c:118
-msgid "Base selection on all visible layers"
-msgstr "Obté el color resultant de fusionar les capes"
-
-#: ../app/tools/gimpselectionoptions.c:348 ../app/tools/gimptextoptions.c:457
+#: ../app/tools/gimpselectionoptions.c:258 ../app/tools/gimptextoptions.c:457
 msgid "Antialiasing"
 msgstr "Suavitzat"
 
 # Quim: opció en el diàleg selecció, per fer que les puntes de la selecció rectangular siguin arrodonides
-#: ../app/tools/gimpselectionoptions.c:366
+#: ../app/tools/gimpselectionoptions.c:273
 msgid "Feather edges"
 msgstr "Arrodoneix les vores"
-
-#: ../app/tools/gimpselectionoptions.c:383
-msgid "Interactive boundary"
-msgstr "Vora interactiva"
-
-#: ../app/tools/gimpselectionoptions.c:397
-msgid "Select transparent areas"
-msgstr "Àrees transparents"
-
-#: ../app/tools/gimpselectionoptions.c:422
-msgid "Select by:"
-msgstr "Canal:"
 
 #: ../app/tools/gimpselectiontool.c:251
 msgid "Click-Drag to replace the current selection"
@@ -11064,33 +11042,33 @@ msgstr "El llindar no funciona en capes indexades."
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Automàticament ajusta el llindar òptim de binarització"
 
-#: ../app/tools/gimptransformoptions.c:272
+#: ../app/tools/gimptransformoptions.c:273
 msgid "Transform:"
 msgstr "Transforma:"
 
-#: ../app/tools/gimptransformoptions.c:278
+#: ../app/tools/gimptransformoptions.c:282
 msgid "Direction"
 msgstr "Direcció"
 
 #. the interpolation menu
-#: ../app/tools/gimptransformoptions.c:283
+#: ../app/tools/gimptransformoptions.c:287
 msgid "Interpolation:"
 msgstr "Interpolació:"
 
-#: ../app/tools/gimptransformoptions.c:296
+#: ../app/tools/gimptransformoptions.c:300
 msgid "Clipping:"
 msgstr "Retallat:"
 
-#: ../app/tools/gimptransformoptions.c:314
+#: ../app/tools/gimptransformoptions.c:318
 msgid "Preview:"
 msgstr "Previsualització:"
 
-#: ../app/tools/gimptransformoptions.c:385
+#: ../app/tools/gimptransformoptions.c:389
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 graus (%s)"
 
-#: ../app/tools/gimptransformoptions.c:389
+#: ../app/tools/gimptransformoptions.c:393
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Conserva l'aspecte (%s)"
@@ -12479,19 +12457,19 @@ msgstr ""
 "Indica el degradat actiu.\n"
 "Feu un clic per a obrir el diàleg de degradats."
 
-#: ../app/widgets/gimptooloptionseditor.c:157
+#: ../app/widgets/gimptooloptionseditor.c:165
 msgid "Save options to..."
 msgstr "Desa opcions a..."
 
-#: ../app/widgets/gimptooloptionseditor.c:165
+#: ../app/widgets/gimptooloptionseditor.c:173
 msgid "Restore options from..."
 msgstr "Restaura opcions des de..."
 
-#: ../app/widgets/gimptooloptionseditor.c:173
+#: ../app/widgets/gimptooloptionseditor.c:181
 msgid "Delete saved options..."
 msgstr "Suprimeix opcions desades..."
 
-#: ../app/widgets/gimptooloptionseditor.c:472
+#: ../app/widgets/gimptooloptionseditor.c:480
 #, c-format
 msgid "Error saving tool options presets: %s"
 msgstr "S'ha produït un error mentre es desaven les opcions de les eines: %s"
@@ -12775,3 +12753,18 @@ msgstr "Assegureu-vos que la caixa d'eines és visible."
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "No s'ha pogut iniciar «%s»: %s"
+
+#~ msgid "Allow completely transparent regions to be selected"
+#~ msgstr "Permet seleccionar regions completament transparents"
+
+#~ msgid "Base selection on all visible layers"
+#~ msgstr "Obté el color resultant de fusionar les capes"
+
+#~ msgid "Interactive boundary"
+#~ msgstr "Vora interactiva"
+
+#~ msgid "Select transparent areas"
+#~ msgstr "Àrees transparents"
+
+#~ msgid "Select by:"
+#~ msgstr "Canal:"
