@@ -1,3 +1,9 @@
+2008-03-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpbrushgenerated.c: reorder and rename local
+	functions and prototypes to be consistent with other objects. Misc
+	minor cleanup.
+
 2008-03-10  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdockable.[ch]

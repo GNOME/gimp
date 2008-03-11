@@ -62,8 +62,23 @@ static void       gimp_brush_generated_get_property  (GObject      *object,
 static void       gimp_brush_generated_dirty         (GimpData     *data);
 static gchar    * gimp_brush_generated_get_extension (GimpData     *data);
 static GimpData * gimp_brush_generated_duplicate     (GimpData     *data);
+
+static void       gimp_brush_generated_scale_size    (GimpBrush    *gbrush,
+                                                      gdouble       scale,
+                                                      gint         *width,
+                                                      gint         *height);
 static TempBuf  * gimp_brush_generated_scale_mask    (GimpBrush    *gbrush,
                                                       gdouble       scale);
+
+static TempBuf  * gimp_brush_generated_calc          (GimpBrushGenerated      *brush,
+                                                      GimpBrushGeneratedShape  shape,
+                                                      gfloat                   radius,
+                                                      gint                     spikes,
+                                                      gfloat                   hardness,
+                                                      gfloat                   aspect_ratio,
+                                                      gfloat                   angle,
+                                                      GimpVector2             *xaxis,
+                                                      GimpVector2             *yaxis);
 static void       gimp_brush_generated_get_half_size (GimpBrushGenerated      *gbrush,
                                                       GimpBrushGeneratedShape  shape,
                                                       gfloat                   radius,
@@ -77,11 +92,6 @@ static void       gimp_brush_generated_get_half_size (GimpBrushGenerated      *g
                                                       gdouble                 *_c,
                                                       GimpVector2             *_x_axis,
                                                       GimpVector2             *_y_axis);
-static void       gimp_brush_generated_real_scale_size
-                                                     (GimpBrush  *gbrush,
-                                                      gdouble     scale,
-                                                      gint       *width,
-                                                      gint       *height);
 
 
 G_DEFINE_TYPE (GimpBrushGenerated, gimp_brush_generated, GIMP_TYPE_BRUSH)
@@ -96,16 +106,16 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
   GimpDataClass  *data_class   = GIMP_DATA_CLASS (klass);
   GimpBrushClass *brush_class  = GIMP_BRUSH_CLASS (klass);
 
-  object_class->set_property   = gimp_brush_generated_set_property;
-  object_class->get_property   = gimp_brush_generated_get_property;
+  object_class->set_property = gimp_brush_generated_set_property;
+  object_class->get_property = gimp_brush_generated_get_property;
 
-  data_class->save             = gimp_brush_generated_save;
-  data_class->dirty            = gimp_brush_generated_dirty;
-  data_class->get_extension    = gimp_brush_generated_get_extension;
-  data_class->duplicate        = gimp_brush_generated_duplicate;
+  data_class->save           = gimp_brush_generated_save;
+  data_class->dirty          = gimp_brush_generated_dirty;
+  data_class->get_extension  = gimp_brush_generated_get_extension;
+  data_class->duplicate      = gimp_brush_generated_duplicate;
 
-  brush_class->scale_size      = gimp_brush_generated_real_scale_size;
-  brush_class->scale_mask      = gimp_brush_generated_scale_mask;
+  brush_class->scale_size    = gimp_brush_generated_scale_size;
+  brush_class->scale_mask    = gimp_brush_generated_scale_mask;
 
   g_object_class_install_property (object_class, PROP_SHAPE,
                                    g_param_spec_enum ("shape", NULL, NULL,
@@ -113,27 +123,32 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
                                                       GIMP_BRUSH_GENERATED_CIRCLE,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_RADIUS,
                                    g_param_spec_double ("radius", NULL, NULL,
                                                         0.1, 4000.0, 5.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_SPIKES,
                                    g_param_spec_int    ("spikes", NULL, NULL,
                                                         2, 20, 2,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_HARDNESS,
                                    g_param_spec_double ("hardness", NULL, NULL,
                                                         0.0, 1.0, 0.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_ASPECT_RATIO,
                                    g_param_spec_double ("aspect-ratio",
                                                         NULL, NULL,
                                                         1.0, 20.0, 1.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_ANGLE,
                                    g_param_spec_double ("angle", NULL, NULL,
                                                         0.0, 180.0, 0.0,
@@ -219,6 +234,28 @@ gimp_brush_generated_get_property (GObject    *object,
     }
 }
 
+static void
+gimp_brush_generated_dirty (GimpData *data)
+{
+  GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (data);
+  GimpBrush          *gbrush = GIMP_BRUSH (brush);
+
+  if (gbrush->mask)
+    temp_buf_free (gbrush->mask);
+
+  gbrush->mask = gimp_brush_generated_calc (brush,
+                                            brush->shape,
+                                            brush->radius,
+                                            brush->spikes,
+                                            brush->hardness,
+                                            brush->aspect_ratio,
+                                            brush->angle,
+                                            &gbrush->x_axis,
+                                            &gbrush->y_axis);
+
+  GIMP_DATA_CLASS (parent_class)->dirty (data);
+}
+
 static gchar *
 gimp_brush_generated_get_extension (GimpData *data)
 {
@@ -238,6 +275,49 @@ gimp_brush_generated_duplicate (GimpData *data)
                                    brush->aspect_ratio,
                                    brush->angle);
 }
+
+static void
+gimp_brush_generated_scale_size (GimpBrush *gbrush,
+                                 gdouble    scale,
+                                 gint      *width,
+                                 gint      *height)
+{
+  GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (gbrush);
+  gint                half_width;
+  gint                half_height;
+
+  gimp_brush_generated_get_half_size (brush,
+                                      brush->shape,
+                                      brush->radius * scale,
+                                      brush->spikes,
+                                      brush->hardness,
+                                      brush->aspect_ratio,
+                                      brush->angle,
+                                      &half_width, &half_height,
+                                      NULL, NULL, NULL, NULL);
+
+  *width  = half_width  * 2 + 1;
+  *height = half_height * 2 + 1;
+}
+
+static TempBuf *
+gimp_brush_generated_scale_mask (GimpBrush *gbrush,
+                                 gdouble    scale)
+{
+  GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (gbrush);
+
+  return gimp_brush_generated_calc (brush,
+                                    brush->shape,
+                                    brush->radius * scale,
+                                    brush->spikes,
+                                    brush->hardness,
+                                    brush->aspect_ratio,
+                                    brush->angle,
+                                    NULL, NULL);
+}
+
+
+/*  the actual brush rendering functions  */
 
 static gdouble
 gauss (gdouble f)
@@ -418,29 +498,7 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
   return mask;
 }
 
-static void
-gimp_brush_generated_dirty (GimpData *data)
-{
-  GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (data);
-  GimpBrush          *gbrush = GIMP_BRUSH (brush);
-
-  if (gbrush->mask)
-    temp_buf_free (gbrush->mask);
-
-  gbrush->mask = gimp_brush_generated_calc (brush,
-                                            brush->shape,
-                                            brush->radius,
-                                            brush->spikes,
-                                            brush->hardness,
-                                            brush->aspect_ratio,
-                                            brush->angle,
-                                            &gbrush->x_axis,
-                                            &gbrush->y_axis);
-
-  GIMP_DATA_CLASS (parent_class)->dirty (data);
-}
-
-/* This function is shared between gimp_brush_scale_size and
+/* This function is shared between gimp_brush_generated_scale_size and
  * gimp_brush_generated_calc, therefore we provide a bunch of optional
  * pointers for returnvalues.
  */
@@ -517,45 +575,8 @@ gimp_brush_generated_get_half_size (GimpBrushGenerated      *gbrush,
     *_y_axis = y_axis;
 }
 
-static void
-gimp_brush_generated_real_scale_size (GimpBrush  *gbrush,
-                                      gdouble     scale,
-                                      gint       *width,
-                                      gint       *height)
-{
-  GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (gbrush);
-  gint                half_width;
-  gint                half_height;
 
-  gimp_brush_generated_get_half_size (brush,
-                                      brush->shape,
-                                      brush->radius * scale,
-                                      brush->spikes,
-                                      brush->hardness,
-                                      brush->aspect_ratio,
-                                      brush->angle,
-                                      &half_width, &half_height,
-                                      NULL, NULL, NULL, NULL);
-
-  *width  = half_width  * 2 + 1;
-  *height = half_height * 2 + 1;
-}
-
-static TempBuf *
-gimp_brush_generated_scale_mask (GimpBrush *gbrush,
-                                 gdouble    scale)
-{
-  GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (gbrush);
-
-  return gimp_brush_generated_calc (brush,
-                                    brush->shape,
-                                    brush->radius * scale,
-                                    brush->spikes,
-                                    brush->hardness,
-                                    brush->aspect_ratio,
-                                    brush->angle,
-                                    NULL, NULL);
-}
+/*  public functions  */
 
 GimpData *
 gimp_brush_generated_new (const gchar             *name,
