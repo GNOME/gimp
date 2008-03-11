@@ -1,3 +1,11 @@
+2008-03-11  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: added a check for gio-2.0.
+
+	* plug-ins/uri/Makefile.am
+	* plug-ins/uri/uri-backend-gio.c: added a first draft of an URI
+	plug-in based on GIO/GVfs.
+
 2008-03-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpbrushgenerated.c: reorder and rename local

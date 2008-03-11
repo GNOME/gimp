@@ -28,9 +28,15 @@ backend_sources = uri-backend-libcurl.c
 backend_cflags = $(URI_LIBCURL_CFLAGS)
 backend_libs = $(URI_LIBCURL_LIBS)
 else
+if HAVE_GIO
+backend_sources = uri-backend-gio.c
+backend_cflags = $(GIO_CFLAGS)
+backend_libs = $(GIO_LIBS)
+else
 backend_sources = uri-backend-wget.c
 backend_cflags = 
 backend_libs = 
+endif
 endif
 endif
 

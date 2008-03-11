@@ -1294,11 +1294,20 @@ AC_SUBST(POPPLER)
 AC_SUBST(LIBPOPPLER)
 
 
-###############################################################################
-# Check for gnome-vfs and libcurl (and optionally libgnomeui and gnome-keyring)
-###############################################################################
+###############################################
+# Check for gio, gnome-vfs and libcurl
+# (and optionally libgnomeui and gnome-keyring)
+###############################################
 
 uri_plugin=no
+
+
+PKG_CHECK_MODULES(GIO, gio-2.0, have_gio=yes, have_gio=no)
+AC_MSG_RESULT($have_gio)
+
+AM_CONDITIONAL(HAVE_GIO, test "x$have_gio" = xyes)
+
+
 gnome_vfs_modules="gnome-vfs-2.0 >= gnome_vfs_required_version"
 
 AC_ARG_WITH(gnomevfs,  [  --without-gnomevfs      build without gnomevfs support])
@@ -1332,6 +1341,7 @@ fi
 
 AM_CONDITIONAL(HAVE_GNOMEVFS, test "x$have_gnomevfs" = xyes)
 
+
 libcurl_modules="libcurl >= libcurl_required_version"
 
 AC_ARG_WITH(libcurl,  [  --without-libcurl       build without curl support])
@@ -1349,6 +1359,7 @@ fi
 
 AM_CONDITIONAL(HAVE_LIBCURL, test "x$have_libcurl" = xyes)
 
+
 if test "x$have_gnomevfs" = xyes; then
   uri_plugin="yes (using gnome-vfs)"
 elif test "x$have_libcurl" = xyes; then
@@ -1357,6 +1368,7 @@ elif test "x$os_win32" = xno; then
   uri_plugin="yes (using wget)"
 fi
 
+
 if test "x$have_gnomeui" = xyes; then
   AC_DEFINE(HAVE_GNOMEUI, 1, [Define to 1 if libgnomeui is available])
 fi
@@ -1364,8 +1376,6 @@ fi
 if test "x$have_gnome_keyring" = xyes; then
   AC_DEFINE(HAVE_GNOME_KEYRING, 1, [Define to 1 if gnome-keyring is available])
 fi
-
-
 
 
 ###################
