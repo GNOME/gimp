@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gio/gio.h>
 
 #include <libgimp/gimp.h>
@@ -37,6 +39,8 @@ typedef enum
   UPLOAD
 } Mode;
 
+
+static GType      mount_operation_get_type (void) G_GNUC_CONST;
 
 static gchar    * get_protocols (void);
 static gboolean   copy_uri      (const gchar  *src_uri,
@@ -230,7 +234,9 @@ static gboolean
 mount_enclosing_volume (GFile   *file,
                         GError **error)
 {
-  GMountOperation *operation = g_mount_operation_new ();
+  GMountOperation *operation;
+
+  operation = g_object_new (mount_operation_get_type (), NULL);
 
   g_file_mount_enclosing_volume (file, G_MOUNT_MOUNT_NONE,
                                  operation,
@@ -273,12 +279,13 @@ copy_uri (const gchar  *src_uri,
                          uri_progress_callback, GINT_TO_POINTER (mode),
                          error);
 
-#if 0
   if (! success &&
       run_mode == GIMP_RUN_INTERACTIVE &&
       (*error)->domain == G_IO_ERROR   &&
       (*error)->code   == G_IO_ERROR_NOT_MOUNTED)
     {
+      g_clear_error (error);
+
       if (mount_enclosing_volume (mode == DOWNLOAD ? src_file : dest_file,
                                   error))
         {
@@ -288,10 +295,294 @@ copy_uri (const gchar  *src_uri,
 
         }
     }
-#endif
 
   g_object_unref (src_file);
   g_object_unref (dest_file);
 
   return success;
+}
+
+
+/*************************************************************
+ * The code below is partly copied from eel-mount-operation.c.
+ * It should become obsolete with the next GTK+ release.
+ *************************************************************/
+
+#define MOUNT_OPERATION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), mount_operation_get_type (), MountOperation))
+
+
+typedef struct _MountOperation  MountOperation;
+typedef GMountOperationClass    MountOperationClass;
+
+struct _MountOperation
+{
+  GMountOperation  parent_instance;
+
+  GtkWidget       *username_entry;
+  GtkWidget       *anon_toggle;
+  GtkWidget       *domain_entry;
+  GtkWidget       *password_entry;
+};
+
+static void mount_operation_ask_password (GMountOperation   *operation,
+                                          const char        *message,
+                                          const char        *default_user,
+                                          const char        *default_domain,
+                                          GAskPasswordFlags  flags);
+static void mount_operation_ask_question (GMountOperation   *operation,
+                                          const char        *message,
+                                          const char        *choices[]);
+
+
+G_DEFINE_TYPE (MountOperation, mount_operation, G_TYPE_MOUNT_OPERATION)
+
+
+static void
+mount_operation_class_init (MountOperationClass *klass)
+{
+  GMountOperationClass *operation_class = G_MOUNT_OPERATION_CLASS (klass);
+
+  operation_class->ask_password = mount_operation_ask_password;
+  operation_class->ask_question = mount_operation_ask_question;
+}
+
+static void
+mount_operation_init (MountOperation *operation)
+{
+}
+
+static void
+mount_operation_password_response (GtkWidget      *dialog,
+                                   gint            response_id,
+                                   MountOperation *operation)
+{
+  const gchar *text;
+
+  switch (response_id)
+    {
+    case GTK_RESPONSE_OK:
+      if (operation->username_entry)
+        {
+          text = gtk_entry_get_text (GTK_ENTRY (operation->username_entry));
+          g_mount_operation_set_username (G_MOUNT_OPERATION (operation), text);
+        }
+
+      if (operation->domain_entry)
+        {
+          text = gtk_entry_get_text (GTK_ENTRY (operation->domain_entry));
+          g_mount_operation_set_domain (G_MOUNT_OPERATION (operation), text);
+        }
+
+      if (operation->password_entry)
+        {
+          text = gtk_entry_get_text (GTK_ENTRY (operation->domain_entry));
+          g_mount_operation_set_password (G_MOUNT_OPERATION (operation), text);
+        }
+
+      g_mount_operation_reply (G_MOUNT_OPERATION (operation),
+                               G_MOUNT_OPERATION_HANDLED);
+      break;
+
+    case GTK_RESPONSE_CANCEL:
+      g_mount_operation_reply (G_MOUNT_OPERATION (operation),
+                               G_MOUNT_OPERATION_ABORTED);
+      break;
+    }
+
+  gtk_widget_destroy (GTK_WIDGET (dialog));
+}
+
+static void
+mount_operation_anon_toggled (GtkWidget      *button,
+                              MountOperation *operation)
+{
+  if (operation->username_entry)
+    {
+      gboolean active;
+
+      active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
+
+      gtk_widget_set_sensitive (operation->username_entry, active);
+    }
+}
+
+static void
+mount_operation_ask_password (GMountOperation   *operation,
+                              const char        *message,
+                              const char        *default_user,
+                              const char        *default_domain,
+                              GAskPasswordFlags  flags)
+{
+  MountOperation *mount = MOUNT_OPERATION (operation);
+  GtkWidget      *dialog;
+  GtkWidget      *hbox;
+  GtkWidget      *image;
+  GtkWidget      *table;
+  gint            row = 0;
+
+  dialog = gtk_dialog_new_with_buttons (_("Enter Password"),
+                                        NULL, 0,
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                        NULL);
+
+  hbox = gtk_hbox_new (12, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
+  gtk_widget_show (hbox);
+
+  image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_AUTHENTICATION,
+                                    GTK_ICON_SIZE_DIALOG);
+  gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
+  table = gtk_table_new (0, 2, FALSE);
+  gtk_box_pack_start (GTK_BOX (hbox), table, TRUE, TRUE, 0);
+  gtk_widget_show (table);
+
+  if (flags & G_ASK_PASSWORD_NEED_USERNAME)
+    {
+      mount->username_entry = gtk_entry_new ();
+
+      if (default_user)
+        gtk_entry_set_text (GTK_ENTRY (mount->username_entry), default_user);
+
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                                 _("_User:"), 0.0, 0.5,
+                                 mount->username_entry, 0, FALSE);
+    }
+  else
+    {
+      mount->username_entry = NULL;
+    }
+
+  if (flags & G_ASK_PASSWORD_ANONYMOUS_SUPPORTED)
+    {
+      mount->anon_toggle =
+        gtk_check_button_new_with_mnemonic (_("Log in _anonymously"));
+
+      g_signal_connect (mount->anon_toggle, "toggled",
+                        G_CALLBACK (mount_operation_anon_toggled),
+                        mount);
+
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mount->anon_toggle),
+                                    TRUE);
+    }
+  else
+    {
+      mount->anon_toggle = NULL;
+    }
+
+  if (flags & G_ASK_PASSWORD_NEED_DOMAIN)
+    {
+      mount->domain_entry = gtk_entry_new ();
+
+      if (default_domain)
+        gtk_entry_set_text (GTK_ENTRY (mount->domain_entry), default_domain);
+
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                                 _("_Domain:"), 0.0, 0.5,
+                                 mount->domain_entry, 0, FALSE);
+    }
+  else
+    {
+      mount->domain_entry = NULL;
+    }
+
+  if (flags & G_ASK_PASSWORD_NEED_PASSWORD)
+    {
+      mount->password_entry = gtk_entry_new ();
+      gtk_entry_set_visibility (GTK_ENTRY (mount->password_entry), FALSE);
+
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                                 _("_Password:"), 0.0, 0.5,
+                                 mount->password_entry, 0, FALSE);
+    }
+  else
+    {
+      mount->password_entry = NULL;
+    }
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (mount_operation_password_response),
+                    operation);
+
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
+  gtk_widget_show (dialog);
+}
+
+static void
+mount_operation_question_response (GtkWidget      *dialog,
+                                   gint            response_id,
+                                   MountOperation *operation)
+{
+  if (response_id >= 0)
+    {
+      g_mount_operation_set_choice (G_MOUNT_OPERATION (operation), response_id);
+      g_mount_operation_reply (G_MOUNT_OPERATION (operation),
+                               G_MOUNT_OPERATION_HANDLED);
+    }
+  else
+    {
+      g_mount_operation_reply (G_MOUNT_OPERATION (operation),
+                               G_MOUNT_OPERATION_ABORTED);
+    }
+
+  gtk_widget_destroy (GTK_WIDGET (dialog));
+}
+
+static void
+mount_operation_ask_question (GMountOperation *operation,
+                              const char      *message,
+                              const char      *choices[])
+
+{
+  GtkWidget   *dialog;
+  gchar       *primary;
+  const gchar *secondary = NULL;
+
+  primary = strstr (message, "\n");
+  if (primary)
+    {
+      secondary = primary + 1;
+      primary = g_strndup (message, strlen (message) - strlen (primary));
+    }
+
+  dialog = gtk_message_dialog_new (NULL,
+                                   0, GTK_MESSAGE_QUESTION,
+                                   GTK_BUTTONS_NONE, "%s",
+                                   primary != NULL ? primary : message);
+  g_free (primary);
+
+  if (secondary)
+    gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                              "%s", secondary);
+
+  if (choices)
+    {
+      gint i, len;
+
+      /* First count the items in the list then
+       * add the buttons in reverse order */
+      for (len = 0; choices[len] != NULL; len++)
+        ;
+
+      for (i = len - 1; i >= 0; i--)
+        gtk_dialog_add_button (GTK_DIALOG (dialog), choices[i], i);
+    }
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (mount_operation_question_response),
+                    operation);
+
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
+  gtk_widget_show (GTK_WIDGET (dialog));
 }
