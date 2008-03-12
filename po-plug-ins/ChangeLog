@@ -1,3 +1,9 @@
+2008-03-12  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added plug-ins/uri/uri-backend-gio.c.
+
+	* de.po: updated German translation.
+
 2008-03-09  Philip Withnall  <pwithnall@svn.gnome.org>
 
 	* en_GB.po: Updated British English translation.
