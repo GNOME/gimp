@@ -375,7 +375,7 @@ mount_operation_password_response (GtkWidget      *dialog,
 
       if (operation->password_entry)
         {
-          text = gtk_entry_get_text (GTK_ENTRY (operation->domain_entry));
+          text = gtk_entry_get_text (GTK_ENTRY (operation->password_entry));
           g_mount_operation_set_password (G_MOUNT_OPERATION (operation), text);
         }
 
@@ -411,9 +411,11 @@ mount_operation_ask_password (GMountOperation   *operation,
   MountOperation *mount = MOUNT_OPERATION (operation);
   GtkWidget      *dialog;
   GtkWidget      *hbox;
+  GtkWidget      *vbox;
   GtkWidget      *image;
   GtkWidget      *table;
-  gint            row = 0;
+  GtkWidget      *focus = NULL;
+  gint            row   = 0;
 
   dialog = gtk_dialog_new_with_buttons (_("Enter Password"),
                                         NULL, 0,
@@ -421,7 +423,18 @@ mount_operation_ask_password (GMountOperation   *operation,
                                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
                                         NULL);
 
-  hbox = gtk_hbox_new (12, FALSE);
+  gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (mount_operation_password_response),
+                    operation);
+
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
   gtk_widget_show (hbox);
@@ -432,8 +445,29 @@ mount_operation_ask_password (GMountOperation   *operation,
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  if (message)
+    {
+      GtkWidget *label = gtk_label_new (message);
+
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+
+      gimp_label_set_attributes (GTK_LABEL (label),
+                                 PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
+                                 PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                                 -1);
+
+      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+    }
+
   table = gtk_table_new (0, 2, FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox), table, TRUE, TRUE, 0);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   if (flags & G_ASK_PASSWORD_NEED_USERNAME)
@@ -442,10 +476,12 @@ mount_operation_ask_password (GMountOperation   *operation,
 
       if (default_user)
         gtk_entry_set_text (GTK_ENTRY (mount->username_entry), default_user);
+      else
+        focus = mount->username_entry;
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                                  _("_User:"), 0.0, 0.5,
-                                 mount->username_entry, 0, FALSE);
+                                 mount->username_entry, 1, FALSE);
     }
   else
     {
@@ -463,6 +499,12 @@ mount_operation_ask_password (GMountOperation   *operation,
 
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mount->anon_toggle),
                                     TRUE);
+
+      gtk_table_attach (GTK_TABLE (table), mount->anon_toggle,
+                        1, 2, row, row + 1,
+                        GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show (mount->anon_toggle);
+      row++;
     }
   else
     {
@@ -475,10 +517,12 @@ mount_operation_ask_password (GMountOperation   *operation,
 
       if (default_domain)
         gtk_entry_set_text (GTK_ENTRY (mount->domain_entry), default_domain);
+      else if (! focus)
+        focus = mount->domain_entry;
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                                  _("_Domain:"), 0.0, 0.5,
-                                 mount->domain_entry, 0, FALSE);
+                                 mount->domain_entry, 1, FALSE);
     }
   else
     {
@@ -492,21 +536,17 @@ mount_operation_ask_password (GMountOperation   *operation,
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                                  _("_Password:"), 0.0, 0.5,
-                                 mount->password_entry, 0, FALSE);
+                                 mount->password_entry, 1, FALSE);
+      if (! focus)
+        focus = mount->password_entry;
     }
   else
     {
       mount->password_entry = NULL;
     }
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (mount_operation_password_response),
-                    operation);
+  if (focus)
+    gtk_widget_grab_focus (focus);
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
