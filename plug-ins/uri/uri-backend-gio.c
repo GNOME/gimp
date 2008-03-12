@@ -390,6 +390,7 @@ mount_operation_password_response (GtkWidget      *dialog,
     }
 
   gtk_widget_destroy (GTK_WIDGET (dialog));
+  g_object_unref (operation);
 }
 
 static void
@@ -549,8 +550,9 @@ mount_operation_ask_password (GMountOperation   *operation,
     gtk_widget_grab_focus (focus);
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
-
   gtk_widget_show (dialog);
+
+  g_object_ref (operation);
 }
 
 static void
@@ -571,6 +573,7 @@ mount_operation_question_response (GtkWidget      *dialog,
     }
 
   gtk_widget_destroy (GTK_WIDGET (dialog));
+  g_object_unref (operation);
 }
 
 static void
@@ -618,6 +621,7 @@ mount_operation_ask_question (GMountOperation *operation,
                     operation);
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
-
   gtk_widget_show (GTK_WIDGET (dialog));
+
+  g_object_ref (operation);
 }
