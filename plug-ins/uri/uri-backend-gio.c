@@ -393,17 +393,12 @@ mount_operation_password_response (GtkWidget      *dialog,
 }
 
 static void
-mount_operation_anon_toggled (GtkWidget      *button,
-                              MountOperation *operation)
+mount_operation_anon_toggled (GtkToggleButton *button,
+                              MountOperation  *operation)
 {
   if (operation->username_entry)
-    {
-      gboolean active;
-
-      active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
-
-      gtk_widget_set_sensitive (operation->username_entry, active);
-    }
+    gtk_widget_set_sensitive (operation->username_entry,
+                              ! gtk_toggle_button_get_active (button));
 }
 
 static void
