@@ -1,3 +1,19 @@
+2008-03-12  Åsmund Skjæveland  <aasmunds@ulrik.uio.no>
+
+	* po/nn.po: Added Norwegian Nynorsk translation from Kolbjørn
+	Stuestøl <kol-stue@online.no>.
+	* po-libgimp/nn.po: Added Norwegian Nynorsk translation from
+	Kolbjørn Stuestøl <kol-stue@online.no>.
+	* po-plug-ins/nn.po: Added Norwegian Nynorsk translation from
+	Kolbjørn Stuestøl <kol-stue@online.no>.
+	* po-python/nn.po: Added Norwegian Nynorsk translation from
+	Kolbjørn Stuestøl <kol-stue@online.no>.
+	* po-script-fu/nn.po: Added Norwegian Nynorsk translation from
+	Kolbjørn Stuestøl <kol-stue@online.no>.
+	* po-tips/nn.po: Added Norwegian Nynorsk translation from Kolbjørn
+	Stuestøl <kol-stue@online.no>.
+	* configure.in: Added nn to ALL_LINGUAS.
+	
 2008-03-09  Michael Natterer  <mitch@gimp.org>
 
 	Merged from trunk (slightly modified):
