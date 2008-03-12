@@ -367,6 +367,14 @@ mount_operation_password_response (GtkWidget      *dialog,
           g_mount_operation_set_username (G_MOUNT_OPERATION (operation), text);
         }
 
+      if (operation->anon_toggle)
+        {
+          GtkToggleButton *button = GTK_TOGGLE_BUTTON (operation->anon_toggle);
+
+          g_mount_operation_set_anonymous (G_MOUNT_OPERATION (operation),
+                                           gtk_toggle_button_get_active (button));
+        }
+
       if (operation->domain_entry)
         {
           text = gtk_entry_get_text (GTK_ENTRY (operation->domain_entry));
