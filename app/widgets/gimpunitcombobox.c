@@ -52,7 +52,7 @@ gimp_unit_combo_box_init (GimpUnitComboBox *combo)
                                   NULL);
 
   /*  hackedehack ...  */
-  layout = GTK_CELL_LAYOUT (GTK_BIN (combo)->child);
+  layout = GTK_CELL_LAYOUT (gtk_bin_get_child (GTK_BIN (combo)));
   gtk_cell_layout_clear (layout);
 
   cell = gtk_cell_renderer_text_new ();

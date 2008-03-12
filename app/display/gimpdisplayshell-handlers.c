@@ -453,7 +453,9 @@ static void
 gimp_display_shell_quick_mask_changed_handler (GimpImage        *image,
                                                GimpDisplayShell *shell)
 {
-  GtkImage *gtk_image = GTK_IMAGE (GTK_BIN (shell->quick_mask_button)->child);
+  GtkImage *gtk_image;
+
+  gtk_image = GTK_IMAGE (gtk_bin_get_child (GTK_BIN (shell->quick_mask_button)));
 
   g_signal_handlers_block_by_func (shell->quick_mask_button,
                                    gimp_display_shell_quick_mask_toggled,

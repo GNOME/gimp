@@ -1,3 +1,39 @@
+2008-03-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/data-commands.c
+	* app/actions/debug-commands.c
+	* app/actions/dockable-commands.c
+	* app/dialogs/stroke-dialog.c
+	* app/display/gimpdisplayshell-handlers.c
+	* app/gui/gui-message.c
+	* app/gui/gui.c
+	* app/tools/gimpforegroundselectoptions.c
+	* app/tools/gimpinkoptions-gui.c
+	* app/widgets/gimpcolordialog.c
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimpcontainerview-utils.c
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpdockable.c
+	* app/widgets/gimpsessioninfo-book.c
+	* app/widgets/gimpsessioninfo-dock.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimpunitcombobox.c
+	* app/widgets/gimpviewablebox.c
+	* libgimp/gimpexport.c
+	* libgimpmodule/gimpmodule.h
+	* libgimpwidgets/gimpenumwidgets.c
+	* libgimpwidgets/gimpframe.c
+	* libgimpwidgets/gimpoldwidgets.c
+	* libgimpwidgets/gimpwidgets.c
+	* plug-ins/MapObject/mapobject_ui.c
+	* plug-ins/common/papertile.c
+	* plug-ins/common/sinus.c
+	* plug-ins/flame/flame.c
+	* plug-ins/helpbrowser/gimpthrobber.c
+	* plug-ins/script-fu/scheme-wrapper.c
+	* plug-ins/script-fu/script-fu-console.c: use accessors instead of
+	accessing GtkBin.child and GtkPaned.child1,2 directly.
+
 2008-03-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/uri/uri-backend-gio.c: added password and question

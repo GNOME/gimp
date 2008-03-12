@@ -387,7 +387,7 @@ gimp_color_history_color_clicked (GtkWidget       *widget,
   GimpColorArea *color_area;
   GimpRGB        color;
 
-  color_area = GIMP_COLOR_AREA (GTK_BIN (widget)->child);
+  color_area = GIMP_COLOR_AREA (gtk_bin_get_child (GTK_BIN (widget)));
 
   gimp_color_area_get_color (color_area, &color);
   gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),

@@ -733,7 +733,8 @@ edit_callback (GtkWidget *widget,
       gtk_widget_show (hbox);
 
       button = gtk_button_new_with_mnemonic( _("_Randomize"));
-      gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+      gtk_misc_set_padding (GTK_MISC (gtk_bin_get_child (GTK_BIN (button))),
+                            2, 0);
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 

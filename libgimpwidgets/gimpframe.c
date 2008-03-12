@@ -99,7 +99,7 @@ gimp_frame_size_request (GtkWidget      *widget,
                          GtkRequisition *requisition)
 {
   GtkFrame       *frame = GTK_FRAME (widget);
-  GtkBin         *bin   = GTK_BIN (widget);
+  GtkWidget      *child = gtk_bin_get_child (GTK_BIN (widget));
   GtkRequisition  child_requisition;
 
   if (frame->label_widget && GTK_WIDGET_VISIBLE (frame->label_widget))
@@ -114,11 +114,11 @@ gimp_frame_size_request (GtkWidget      *widget,
 
   requisition->height += gimp_frame_get_label_spacing (frame);
 
-  if (bin->child && GTK_WIDGET_VISIBLE (bin->child))
+  if (child && GTK_WIDGET_VISIBLE (child))
     {
       gint indent = gimp_frame_get_indent (widget);
 
-      gtk_widget_size_request (bin->child, &child_requisition);
+      gtk_widget_size_request (child, &child_requisition);
 
       requisition->width = MAX (requisition->width,
                                 child_requisition.width + indent);
@@ -133,15 +133,15 @@ static void
 gimp_frame_size_allocate (GtkWidget     *widget,
                           GtkAllocation *allocation)
 {
-  GtkFrame *frame = GTK_FRAME (widget);
-  GtkBin   *bin   = GTK_BIN (widget);
+  GtkFrame  *frame = GTK_FRAME (widget);
+  GtkWidget *child = gtk_bin_get_child (GTK_BIN (widget));
 
   widget->allocation = *allocation;
 
   gimp_frame_child_allocate (frame, &frame->child_allocation);
 
-  if (bin->child && GTK_WIDGET_VISIBLE (bin->child))
-    gtk_widget_size_allocate (bin->child, &frame->child_allocation);
+  if (child && GTK_WIDGET_VISIBLE (child))
+    gtk_widget_size_allocate (child, &frame->child_allocation);
 
   if (frame->label_widget && GTK_WIDGET_VISIBLE (frame->label_widget))
     {

@@ -120,12 +120,12 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (frame);
 
   {
+    GtkWidget       *frame_child = gtk_bin_get_child (GTK_BIN (frame));
     GList           *children;
     GList           *list;
     GimpInkBlobType  blob_type;
 
-    children =
-      gtk_container_get_children (GTK_CONTAINER (GTK_BIN (frame)->child));
+    children = gtk_container_get_children (GTK_CONTAINER (frame_child));
 
     for (list = children, blob_type = GIMP_INK_BLOB_TYPE_ELLIPSE;
          list;
@@ -134,7 +134,8 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
         GtkWidget *radio = GTK_WIDGET (list->data);
         GtkWidget *blob;
 
-        gtk_container_remove (GTK_CONTAINER (radio), GTK_BIN (radio)->child);
+        gtk_container_remove (GTK_CONTAINER (radio),
+                              gtk_bin_get_child (GTK_BIN (radio)));
 
         blob = blob_image_new (blob_type);
         gtk_container_add (GTK_CONTAINER (radio), blob);

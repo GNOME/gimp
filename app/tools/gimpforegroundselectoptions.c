@@ -291,7 +291,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
 
   /*  stroke width  */
   inner_frame = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (GTK_BIN (frame)->child),
+  gtk_box_pack_start (GTK_BOX (gtk_bin_get_child (GTK_BIN (frame))),
                       inner_frame, FALSE, FALSE, 2);
   gtk_widget_show (inner_frame);
 

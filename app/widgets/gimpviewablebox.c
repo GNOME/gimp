@@ -228,7 +228,7 @@ gradient_box_new (GimpContainer *container,
       gtk_container_add (GTK_CONTAINER (toggle), image);
       gtk_widget_show (image);
 
-      view = GTK_BIN (button)->child;
+      view = gtk_bin_get_child (GTK_BIN (button));
 
       signal_name = g_strconcat ("notify::", reverse_prop, NULL);
       g_signal_connect_object (context, signal_name,

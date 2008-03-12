@@ -117,7 +117,9 @@ gui_message_error_console (GimpMessageSeverity  severity,
 
   if (dockable)
     {
-      gimp_error_console_add (GIMP_ERROR_CONSOLE (GTK_BIN (dockable)->child),
+      GtkWidget *child = gtk_bin_get_child (GTK_BIN (dockable));
+
+      gimp_error_console_add (GIMP_ERROR_CONSOLE (child),
                               severity, domain, message);
 
       return TRUE;

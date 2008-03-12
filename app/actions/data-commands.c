@@ -299,7 +299,7 @@ data_edit_cmd_callback (GtkAction   *action,
       dockable = gimp_dialog_factory_dialog_raise (global_dock_factory, screen,
                                                    value, -1);
 
-      gimp_data_editor_set_data (GIMP_DATA_EDITOR (GTK_BIN (dockable)->child),
+      gimp_data_editor_set_data (GIMP_DATA_EDITOR (gtk_bin_get_child (GTK_BIN (dockable))),
                                  data);
     }
 }

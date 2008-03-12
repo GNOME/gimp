@@ -403,7 +403,7 @@ open_dialog (void)
                                         p.drawable_has_alpha ?
                                         GIMP_COLOR_AREA_SMALL_CHECKS :
                                         GIMP_COLOR_AREA_FLAT);
-  gtk_box_pack_start (GTK_BOX (GTK_BIN (frame)->child),
+  gtk_box_pack_start (GTK_BOX (gtk_bin_get_child (GTK_BIN (frame))),
                       color_button, TRUE, TRUE, 0);
   gtk_widget_show (color_button);
 

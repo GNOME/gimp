@@ -176,8 +176,8 @@ gimp_throbber_construct_contents (GtkToolItem *tool_item)
     gtk_container_remove (GTK_CONTAINER (button->priv->image->parent),
                           button->priv->image);
 
-  if (GTK_BIN (button->priv->button)->child)
-    gtk_widget_destroy (GTK_BIN (button->priv->button)->child);
+  if (gtk_bin_get_child (GTK_BIN (button->priv->button)))
+    gtk_widget_destroy (gtk_bin_get_child (GTK_BIN (button->priv->button)));
 
   if (gtk_tool_item_get_toolbar_style (tool_item) == GTK_TOOLBAR_TEXT)
     {

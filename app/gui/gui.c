@@ -665,7 +665,7 @@ gui_device_change_notify (Gimp *gimp)
     {
       GtkWidget *device_status;
 
-      device_status = GTK_BIN (session_info->widget)->child;
+      device_status = gtk_bin_get_child (GTK_BIN (session_info->widget));
 
       gimp_device_status_update (GIMP_DEVICE_STATUS (device_status));
     }

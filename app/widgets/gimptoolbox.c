@@ -462,7 +462,7 @@ gimp_toolbox_style_set (GtkWidget *widget,
           GtkImage *image;
           gchar    *stock_id;
 
-          image = GTK_IMAGE (GTK_BIN (tool_button)->child);
+          image = GTK_IMAGE (gtk_bin_get_child (GTK_BIN (tool_button)));
 
           gtk_image_get_stock (image, &stock_id, NULL);
           gtk_image_set_from_stock (image, stock_id, tool_icon_size);

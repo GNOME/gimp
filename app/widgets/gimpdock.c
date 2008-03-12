@@ -579,9 +579,9 @@ gimp_dock_remove_book (GimpDock     *dock,
       grandparent = parent->parent;
 
       if (index == 0)
-        other_book = GTK_PANED (parent)->child2;
+        other_book = gtk_paned_get_child2 (GTK_PANED (parent));
       else
-        other_book = GTK_PANED (parent)->child1;
+        other_book = gtk_paned_get_child1 (GTK_PANED (parent));
 
       g_object_ref (other_book);
 

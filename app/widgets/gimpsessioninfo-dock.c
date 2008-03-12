@@ -174,7 +174,7 @@ gimp_session_info_dock_restore (GimpSessionInfo   *info,
         {
           GtkPaned *paned = GTK_PANED (dockbook->parent);
 
-          if (dockbook == paned->child2)
+          if (dockbook == gtk_paned_get_child2 (paned))
             g_signal_connect_after (paned, "map",
                                     G_CALLBACK (gimp_session_info_dock_paned_map),
                                     GINT_TO_POINTER (book_info->position));

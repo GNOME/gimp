@@ -384,9 +384,8 @@ void
 gimp_option_menu_set_history (GtkOptionMenu *option_menu,
                               gpointer       item_data)
 {
-  GtkWidget *menu_item;
-  GList     *list;
-  gint       history = 0;
+  GList *list;
+  gint   history = 0;
 
   g_return_if_fail (GTK_IS_OPTION_MENU (option_menu));
 
@@ -394,9 +393,9 @@ gimp_option_menu_set_history (GtkOptionMenu *option_menu,
        list;
        list = g_list_next (list))
     {
-      menu_item = GTK_WIDGET (list->data);
+      GtkWidget *menu_item = GTK_WIDGET (list->data);
 
-      if (GTK_IS_LABEL (GTK_BIN (menu_item)->child) &&
+      if (GTK_IS_LABEL (gtk_bin_get_child (GTK_BIN (menu_item))) &&
           g_object_get_data (G_OBJECT (menu_item),
                              "gimp-item-data") == item_data)
         {
@@ -447,10 +446,7 @@ gimp_option_menu_set_sensitive (GtkOptionMenu                     *option_menu,
                                 GimpOptionMenuSensitivityCallback  callback,
                                 gpointer                           callback_data)
 {
-  GtkWidget *menu_item;
-  GList     *list;
-  gpointer   item_data;
-  gboolean   sensitive;
+  GList *list;
 
   g_return_if_fail (GTK_IS_OPTION_MENU (option_menu));
   g_return_if_fail (callback != NULL);
@@ -459,10 +455,13 @@ gimp_option_menu_set_sensitive (GtkOptionMenu                     *option_menu,
        list;
        list = g_list_next (list))
     {
-      menu_item = GTK_WIDGET (list->data);
+      GtkWidget *menu_item = GTK_WIDGET (list->data);
 
-      if (GTK_IS_LABEL (GTK_BIN (menu_item)->child))
+      if (GTK_IS_LABEL (gtk_bin_get_child (GTK_BIN (menu_item))))
         {
+          gpointer item_data;
+          gboolean sensitive;
+
           item_data = g_object_get_data (G_OBJECT (menu_item),
                                          "gimp-item-data");
           sensitive = callback (item_data, callback_data);
@@ -490,10 +489,7 @@ gimp_int_option_menu_set_sensitive (GtkOptionMenu                        *option
                                     GimpIntOptionMenuSensitivityCallback  callback,
                                     gpointer                              callback_data)
 {
-  GtkWidget *menu_item;
-  GList     *list;
-  gint       item_data;
-  gboolean   sensitive;
+  GList *list;
 
   g_return_if_fail (GTK_IS_OPTION_MENU (option_menu));
   g_return_if_fail (callback != NULL);
@@ -502,10 +498,13 @@ gimp_int_option_menu_set_sensitive (GtkOptionMenu                        *option
        list;
        list = g_list_next (list))
     {
-      menu_item = GTK_WIDGET (list->data);
+      GtkWidget *menu_item = GTK_WIDGET (list->data);
 
-      if (GTK_IS_LABEL (GTK_BIN (menu_item)->child))
+      if (GTK_IS_LABEL (gtk_bin_get_child (GTK_BIN (menu_item))))
         {
+          gint     item_data;
+          gboolean sensitive;
+
           item_data = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (menu_item),
                                                           "gimp-item-data"));
           sensitive = callback (item_data, callback_data);
@@ -525,9 +524,7 @@ void
 gimp_menu_item_update (GtkWidget *widget,
                        gpointer   data)
 {
-  gint *item_val;
-
-  item_val = (gint *) data;
+  gint *item_val = (gint *) data;
 
   *item_val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                                   "gimp-item-data"));

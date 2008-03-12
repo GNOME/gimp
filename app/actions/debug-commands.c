@@ -154,20 +154,21 @@ debug_dump_menus_recurse_menu (GtkWidget *menu,
                                gint       depth,
                                gchar     *path)
 {
-  GtkWidget   *menu_item;
-  GList       *list;
-  const gchar *label;
-  gchar       *help_page;
-  gchar       *full_path;
-  gchar       *format_str;
+  GList *list;
 
   for (list = GTK_MENU_SHELL (menu)->children; list; list = g_list_next (list))
     {
-      menu_item = GTK_WIDGET (list->data);
+      GtkWidget *menu_item = GTK_WIDGET (list->data);
+      GtkWidget *child     = gtk_bin_get_child (GTK_BIN (menu_item));
 
-      if (GTK_IS_LABEL (GTK_BIN (menu_item)->child))
+      if (GTK_IS_LABEL (child))
         {
-          label = gtk_label_get_text (GTK_LABEL (GTK_BIN (menu_item)->child));
+          const gchar *label;
+          gchar       *full_path;
+          gchar       *help_page;
+          gchar       *format_str;
+
+          label = gtk_label_get_text (GTK_LABEL (child));
           full_path = g_strconcat (path, "/", label, NULL);
 
           help_page = g_object_get_data (G_OBJECT (menu_item), "gimp-help-id");

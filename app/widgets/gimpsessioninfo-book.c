@@ -83,7 +83,7 @@ gimp_session_info_book_serialize (GimpConfigWriter *writer,
     {
       GtkPaned *paned = GTK_PANED (GTK_WIDGET (dockbook)->parent);
 
-      if (GTK_WIDGET (dockbook) == paned->child2)
+      if (GTK_WIDGET (dockbook) == gtk_paned_get_child2 (paned))
         {
           gimp_config_writer_open (writer, "position");
           gimp_config_writer_printf (writer, "%d",

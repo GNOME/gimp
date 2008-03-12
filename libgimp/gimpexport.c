@@ -534,7 +534,7 @@ export_dialog (GSList      *actions,
 
           button = gtk_radio_button_new_with_label (radio_group,
                                                     gettext (action->possibilities[0]));
-          gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child),
+          gtk_label_set_justify (GTK_LABEL (gtk_bin_get_child (GTK_BIN (button))),
                                  GTK_JUSTIFY_LEFT);
           radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
           gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -547,7 +547,7 @@ export_dialog (GSList      *actions,
 
           button = gtk_radio_button_new_with_label (radio_group,
                                                     gettext (action->possibilities[1]));
-          gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child),
+          gtk_label_set_justify (GTK_LABEL (gtk_bin_get_child (GTK_BIN (button))),
                                  GTK_JUSTIFY_LEFT);
           radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
           gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);

@@ -181,9 +181,12 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
 
               if (new_dockable)
                 {
-                  GimpDocked *old = GIMP_DOCKED (GTK_BIN (dockable)->child);
-                  GimpDocked *new = GIMP_DOCKED (GTK_BIN (new_dockable)->child);
+                  GimpDocked *old;
+                  GimpDocked *new;
                   gboolean    show;
+
+                  old = GIMP_DOCKED (gtk_bin_get_child (GTK_BIN (dockable)));
+                  new = GIMP_DOCKED (gtk_bin_get_child (GTK_BIN (new_dockable)));
 
                   show = gimp_docked_get_show_button_bar (old);
                   gimp_docked_set_show_button_bar (new, show);
@@ -291,9 +294,12 @@ dockable_show_button_bar_cmd_callback (GtkAction *action,
 
   if (dockable)
     {
-      gboolean show = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+      GimpDocked *docked;
+      gboolean    show;
 
-      gimp_docked_set_show_button_bar (GIMP_DOCKED (GTK_BIN (dockable)->child),
-                                       show);
+      docked = GIMP_DOCKED (gtk_bin_get_child (GTK_BIN (dockable)));
+      show   = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+      gimp_docked_set_show_button_bar (docked, show);
     }
 }
