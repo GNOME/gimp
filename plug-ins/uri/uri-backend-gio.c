@@ -42,6 +42,7 @@ static gchar    * get_protocols (void);
 static gboolean   copy_uri      (const gchar  *src_uri,
                                  const gchar  *dest_uri,
                                  Mode          mode,
+                                 GimpRunMode   run_mode,
                                  GError      **error);
 
 static gchar *supported_protocols = NULL;
@@ -106,7 +107,7 @@ uri_backend_load_image (const gchar  *uri,
 
   if (dest_uri)
     {
-      gboolean success = copy_uri (uri, dest_uri, DOWNLOAD, error);
+      gboolean success = copy_uri (uri, dest_uri, DOWNLOAD, run_mode, error);
 
       g_free (dest_uri);
 
@@ -126,7 +127,7 @@ uri_backend_save_image (const gchar  *uri,
 
   if (src_uri)
     {
-      gboolean success = copy_uri (src_uri, uri, UPLOAD, error);
+      gboolean success = copy_uri (src_uri, uri, UPLOAD, run_mode, error);
 
       g_free (src_uri);
 
@@ -142,27 +143,19 @@ uri_backend_save_image (const gchar  *uri,
 static gchar *
 get_protocols (void)
 {
-  static const gchar *protocols[] =
-  {
-    "http:",
-    "https:",
-    "ftp:",
-    "sftp:",
-    "ssh:",
-    "smb:",
-    "dav:",
-    "davs:"
-  };
+  const gchar * const *schemes;
+  GString             *string = g_string_new (NULL);
+  gint                 i;
 
-  GString *string = g_string_new (NULL);
-  gint     i;
+  schemes = g_vfs_get_supported_uri_schemes (g_vfs_get_default ());
 
-  for (i = 0; i < G_N_ELEMENTS (protocols); i++)
+  for (i = 0; schemes[i]; i++)
     {
       if (string->len > 0)
         g_string_append_c (string, ',');
 
-      g_string_append (string, protocols[i]);
+      g_string_append (string, schemes[i]);
+      g_string_append_c (string, ':');
     }
 
   return g_string_free (string, FALSE);
@@ -223,10 +216,39 @@ uri_progress_callback (goffset  current_num_bytes,
     }
 }
 
+static void
+mount_volume_ready (GFile         *file,
+                    GAsyncResult  *res,
+                    GError       **error)
+{
+  g_file_mount_enclosing_volume_finish (file, res, error);
+
+  gtk_main_quit ();
+}
+
+static gboolean
+mount_enclosing_volume (GFile   *file,
+                        GError **error)
+{
+  GMountOperation *operation = g_mount_operation_new ();
+
+  g_file_mount_enclosing_volume (file, G_MOUNT_MOUNT_NONE,
+                                 operation,
+                                 NULL,
+                                 (GAsyncReadyCallback) mount_volume_ready,
+                                 error);
+  gtk_main ();
+
+  g_object_unref (operation);
+
+  return (*error == NULL);
+}
+
 static gboolean
 copy_uri (const gchar  *src_uri,
           const gchar  *dest_uri,
           Mode          mode,
+          GimpRunMode   run_mode,
           GError      **error)
 {
   GVfs     *vfs = g_vfs_get_default ();
@@ -247,9 +269,26 @@ copy_uri (const gchar  *src_uri,
 
   gimp_progress_init (_("Connecting to server"));
 
-  success = g_file_copy (src_file, dest_file, G_FILE_COPY_OVERWRITE, NULL,
+  success = g_file_copy (src_file, dest_file, 0, NULL,
                          uri_progress_callback, GINT_TO_POINTER (mode),
                          error);
+
+#if 0
+  if (! success &&
+      run_mode == GIMP_RUN_INTERACTIVE &&
+      (*error)->domain == G_IO_ERROR   &&
+      (*error)->code   == G_IO_ERROR_NOT_MOUNTED)
+    {
+      if (mount_enclosing_volume (mode == DOWNLOAD ? src_file : dest_file,
+                                  error))
+        {
+          success = g_file_copy (src_file, dest_file, 0, NULL,
+                                 uri_progress_callback, GINT_TO_POINTER (mode),
+                                 error);
+
+        }
+    }
+#endif
 
   g_object_unref (src_file);
   g_object_unref (dest_file);
