@@ -379,6 +379,9 @@ mount_operation_password_response (GtkWidget      *dialog,
           g_mount_operation_set_password (G_MOUNT_OPERATION (operation), text);
         }
 
+      g_mount_operation_set_password_save (G_MOUNT_OPERATION (operation),
+                                           G_PASSWORD_SAVE_NEVER);
+
       g_mount_operation_reply (G_MOUNT_OPERATION (operation),
                                G_MOUNT_OPERATION_HANDLED);
       break;
@@ -421,7 +424,7 @@ mount_operation_ask_password (GMountOperation   *operation,
   dialog = gtk_dialog_new_with_buttons (_("Enter Password"),
                                         NULL, 0,
                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                        _("_Log In"),     GTK_RESPONSE_OK,
                                         NULL);
 
   gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
@@ -540,6 +543,11 @@ mount_operation_ask_password (GMountOperation   *operation,
                                  mount->password_entry, 1, FALSE);
       if (! focus)
         focus = mount->password_entry;
+
+      if (flags & G_ASK_PASSWORD_SAVING_SUPPORTED)
+        {
+          /* FIXME: add check buttons for this */
+        }
     }
   else
     {
