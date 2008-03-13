@@ -1,3 +1,13 @@
+2008-03-13  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/common/tiff-load.c (load_image): set the original
+	filename only if all pages were loaded as layers; if a subset was
+	loaded, set the filename to "<filename>.tiff-n-of-m-pages" so a
+	simple "save" won't overwrite the original file without the user
+	changing the filename explicitely.
+
 2008-03-13  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
