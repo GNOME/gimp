@@ -741,6 +741,14 @@ load_image (const gchar       *filename,
               images_list = g_list_prepend (images_list,
                                             GINT_TO_POINTER (image));
             }
+          else if (pages->o_pages != pages->n_pages)
+            {
+              gchar *fname = g_strdup_printf (_("%s-%d-of-%d-pages"), filename,
+                                              pages->n_pages, pages->o_pages);
+
+              gimp_image_set_filename (image, fname);
+              g_free (fname);
+            }
           else
             {
               gimp_image_set_filename (image, filename);
