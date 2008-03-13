@@ -468,7 +468,8 @@ load_dialog (TIFF              *tif,
   selector = gimp_page_selector_new ();
   gtk_box_pack_start (GTK_BOX (vbox), selector, TRUE, TRUE, 0);
 
-  gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector), pages->n_pages);
+  gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector),
+                                  pages->n_pages);
   gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector), target);
 
   for (i = 0; i < pages->n_pages; i++)
@@ -732,14 +733,15 @@ load_image (const gchar       *filename,
 
           if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
             {
-              gchar *fname;
-              fname = g_strdup_printf ("%s-%d", filename, ilayer);
+              gchar *fname = g_strdup_printf ("%s-%d", filename, ilayer);
+
               gimp_image_set_filename (image, fname);
               g_free (fname);
 
-              images_list = g_list_prepend (images_list, GINT_TO_POINTER (image));
+              images_list = g_list_prepend (images_list,
+                                            GINT_TO_POINTER (image));
             }
-          else if (pages->o_pages == pages->n_pages)
+          else
             {
               gimp_image_set_filename (image, filename);
             }
@@ -881,9 +883,10 @@ load_image (const gchar       *filename,
            that produced the damaged TIFF file in the first place. */
 
         /* handle layer offset */
-        if (!TIFFGetField (tif, TIFFTAG_XPOSITION, &layer_offset_x))
+        if (! TIFFGetField (tif, TIFFTAG_XPOSITION, &layer_offset_x))
           layer_offset_x = 0.0;
-        if (!TIFFGetField (tif, TIFFTAG_YPOSITION, &layer_offset_y))
+
+        if (! TIFFGetField (tif, TIFFTAG_YPOSITION, &layer_offset_y))
           layer_offset_y = 0.0;
 
         /* round floating point position to integer position
@@ -1087,7 +1090,8 @@ load_image (const gchar       *filename,
     {
       /* resize image to bounding box of all layers */
       gimp_image_resize (image,
-                     max_col - min_col, max_row - min_row, -min_col, -min_row);
+                         max_col - min_col, max_row - min_row,
+                         -min_col, -min_row);
 
       gimp_image_undo_enable (image);
     }
