@@ -1,3 +1,10 @@
+2008-03-13  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/common/tiff-load.c (load_image): set a filename on the
+	image, even when not all images are imported as layers (bug #521436).
+
 2008-03-12  Åsmund Skjæveland  <aasmunds@ulrik.uio.no>
 
 	* configure.in: Added nn to ALL_LINGUAS.
