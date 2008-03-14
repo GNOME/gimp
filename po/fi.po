@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-20 08:01+0300\n"
+"POT-Creation-Date: 2008-03-14 09:22+0300\n"
 "PO-Revision-Date: 2008-02-29 16:31+0200\n"
 "Last-Translator: Timo Jyrinki <timo.jyrinki@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -94,101 +94,101 @@ msgstr "Polkutulkkia ei määritelty, käytetään oletusta '%s'.\n"
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "Komentojonotulkkia '%s' ei löydy. Komentojono tila ei käytettävissä."
 
-#: ../app/main.c:155 ../tools/gimp-remote.c:60
+#: ../app/main.c:156 ../tools/gimp-remote.c:60
 msgid "Show version information and exit"
 msgstr "Näytä versiotiedot ja sulje"
 
-#: ../app/main.c:160
+#: ../app/main.c:161
 msgid "Show license information and exit"
 msgstr "Näytä lisenssitiedot ja sulje"
 
-#: ../app/main.c:165
+#: ../app/main.c:166
 msgid "Be more verbose"
 msgstr "Selittävämmin"
 
-#: ../app/main.c:170
+#: ../app/main.c:171
 msgid "Start a new GIMP instance"
 msgstr "Käynnistä uusi Gimp-istunto"
 
-#: ../app/main.c:175
+#: ../app/main.c:176
 msgid "Open images as new"
 msgstr "Avaa kuvat uutena"
 
-#: ../app/main.c:180
+#: ../app/main.c:181
 msgid "Run without a user interface"
 msgstr "Suorita ilman käyttöliittymää"
 
-#: ../app/main.c:185
+#: ../app/main.c:186
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Älä lataa siveltimiä, liukuväriä, kuvioita, ..."
 
-#: ../app/main.c:190
+#: ../app/main.c:191
 msgid "Do not load any fonts"
 msgstr "Älä lataa mitään kirjasimia"
 
-#: ../app/main.c:195
+#: ../app/main.c:196
 msgid "Do not show a startup window"
 msgstr "Älä näytä käynnistysikkunaa"
 
-#: ../app/main.c:200
+#: ../app/main.c:201
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "Älä käytä jaettua muistia GIMPin ja liitännäisten välillä"
 
-#: ../app/main.c:205
+#: ../app/main.c:206
 msgid "Do not use special CPU acceleration functions"
 msgstr "Älä käytä suorittimen kiihdytysominaisuuksia"
 
-#: ../app/main.c:210
+#: ../app/main.c:211
 msgid "Use an alternate sessionrc file"
 msgstr "Käytä annettua sessionrc-tiedostoa"
 
-#: ../app/main.c:215
+#: ../app/main.c:216
 msgid "Use an alternate user gimprc file"
 msgstr "Käytä vaihtoehtoista gimprc-tiedostoa"
 
-#: ../app/main.c:220
+#: ../app/main.c:221
 msgid "Use an alternate system gimprc file"
 msgstr "Käytä vaihtoehtoista järjestelmän gimprc-tiedostoa"
 
-#: ../app/main.c:225
+#: ../app/main.c:226
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Toiminnon komentokehoite (voidaan käyttää useimmiten)"
 
-#: ../app/main.c:230
+#: ../app/main.c:231
 msgid "The procedure to process batch commands with"
 msgstr "Proseduuri komentokehoitteen käsittelyyn"
 
-#: ../app/main.c:235
+#: ../app/main.c:236
 msgid "Send messages to console instead of using a dialog"
 msgstr "Näytä varoitukset päätteessä ikkunan sijasta"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:241
+#: ../app/main.c:242
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB yhteensopiva tila (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:247
+#: ../app/main.c:248
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Tutki kaaduttaessa (never|query|always)"
 
-#: ../app/main.c:252
+#: ../app/main.c:253
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Käytä ei-vakavien signaalien käsittelijöiden virheenjäljitystä"
 
-#: ../app/main.c:257
+#: ../app/main.c:258
 msgid "Make all warnings fatal"
 msgstr "Tee kaikista varoituksista kriittisiä"
 
-#: ../app/main.c:262
+#: ../app/main.c:263
 msgid "Output a gimprc file with default settings"
 msgstr "Tulosta gimprc-tiedosto, jossa on kaikki oletusarvot"
 
-#: ../app/main.c:343
+#: ../app/main.c:357
 msgid "[FILE|URI...]"
 msgstr "[TIEDOSTO|URI...]"
 
-#: ../app/main.c:361
+#: ../app/main.c:375
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -196,25 +196,20 @@ msgstr ""
 "GIMP ei voi käynnistää graafista käyttöliittymää.\n"
 "Varmista, että ympäristö on asetettu oikein."
 
-#: ../app/main.c:439
+#: ../app/main.c:453
 msgid "GIMP output. Type any character to close this window."
 msgstr "Gimpin tuloste. Sulje tämä ikkuna kirjoittamalla mitä tahansa."
 
-#: ../app/main.c:440
+#: ../app/main.c:454
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Sulje ikkuna kirjoittamalla jotain tähän ikkunaan)\n"
 
-#: ../app/main.c:457
+#: ../app/main.c:471
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Gimpin tuloste. Voit pienentää ikkunan, mutta älä sulje sitä."
 
-#: ../app/main.c:559 ../tools/gimp-remote.c:95
-#, c-format
-msgid "%s version %s"
-msgstr "%s versio %s"
-
-#: ../app/main.c:784
+#: ../app/main.c:792
 msgid "Another GIMP instance is already running."
 msgstr "Toinen Gimp-istunto on jo käynnissä."
 
@@ -244,6 +239,18 @@ msgstr ""
 "\n"
 "Luultavimmin tiedostosysteemi tallentaa tiedostot muuten kuin UTF-8, ja et "
 "ole määritellyt tätä. Aseta ympäristömuuttujan G_FILENAME_ENCODING arvo."
+
+#. show versions of libraries used by GIMP
+#: ../app/version.c:64
+#, c-format
+msgid "using %s, compiled against version %s, running against version %s"
+msgstr "käytetään %s, käännetty versiota %s vasten, suoritetaan versiota "
+"%s vasten"
+
+#: ../app/version.c:128 ../tools/gimp-remote.c:95
+#, c-format
+msgid "%s version %s"
+msgstr "%s versio %s"
 
 #: ../app/actions/actions.c:99 ../app/dialogs/dialogs.c:216
 #: ../app/widgets/gimpbrusheditor.c:90
@@ -1658,41 +1665,45 @@ msgstr "Tyhjennetäänkö kuvan toimintohistoria?"
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Tämä kuvan toimintohistorian tyhjentäminen säästää muistia %s."
 
-#: ../app/actions/edit-commands.c:221
+#: ../app/actions/edit-commands.c:200
+msgid "Cut pixels to the clipboard"
+msgstr "Valitut pikselit leikattiin leikepöydälle"
+
+#: ../app/actions/edit-commands.c:227 ../app/actions/edit-commands.c:253
 msgid "Copied pixels to the clipboard"
 msgstr "Valitut pikselit kopioitiin leikepöydälle"
 
-#: ../app/actions/edit-commands.c:303 ../app/actions/edit-commands.c:479
+#: ../app/actions/edit-commands.c:315 ../app/actions/edit-commands.c:491
 msgid "There is no image data in the clipboard to paste."
 msgstr "Leikepöydällä ei ole liitettäviä kuvia."
 
-#: ../app/actions/edit-commands.c:317
+#: ../app/actions/edit-commands.c:329
 msgid "Cut Named"
 msgstr "Leikkaa nimellä"
 
-#: ../app/actions/edit-commands.c:320 ../app/actions/edit-commands.c:361
-#: ../app/actions/edit-commands.c:381
+#: ../app/actions/edit-commands.c:332 ../app/actions/edit-commands.c:373
+#: ../app/actions/edit-commands.c:393
 msgid "Enter a name for this buffer"
 msgstr "Anna nimi tälle leikkeelle"
 
-#: ../app/actions/edit-commands.c:358
+#: ../app/actions/edit-commands.c:370
 msgid "Copy Named"
 msgstr "Kopioi nimellä"
 
-#: ../app/actions/edit-commands.c:378
+#: ../app/actions/edit-commands.c:390
 msgid "Copy Visible Named "
 msgstr "Kopioi näkyvä nimellä"
 
-#: ../app/actions/edit-commands.c:496
+#: ../app/actions/edit-commands.c:508
 msgid "There is no active layer or channel to cut from."
 msgstr "Ei tasoa tai kanavaa josta voisi leikata."
 
-#: ../app/actions/edit-commands.c:501 ../app/actions/edit-commands.c:533
-#: ../app/actions/edit-commands.c:557
+#: ../app/actions/edit-commands.c:513 ../app/actions/edit-commands.c:545
+#: ../app/actions/edit-commands.c:569
 msgid "(Unnamed Buffer)"
 msgstr "(Nimeämätön leike)"
 
-#: ../app/actions/edit-commands.c:528
+#: ../app/actions/edit-commands.c:540
 msgid "There is no active layer or channel to copy from."
 msgstr "Ei tasoa tai kanavaa josta voisi kopioida."
 
@@ -3270,21 +3281,21 @@ msgstr "Näytä edellinen uudelleen"
 msgid "Show the last used plug-in dialog again"
 msgstr "Näytä viimeksi käytetyn liitännäisen dialogi uudelleen"
 
-#: ../app/actions/plug-in-actions.c:490
+#: ../app/actions/plug-in-actions.c:502
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Toista \"%s\""
 
-#: ../app/actions/plug-in-actions.c:491
+#: ../app/actions/plug-in-actions.c:503
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Näytä uudelleen \"%s\""
 
-#: ../app/actions/plug-in-actions.c:502
+#: ../app/actions/plug-in-actions.c:517
 msgid "Repeat Last"
 msgstr "Toista edellinen"
 
-#: ../app/actions/plug-in-actions.c:504
+#: ../app/actions/plug-in-actions.c:519
 msgid "Re-Show Last"
 msgstr "Näytä uudelleen edellinen"
 
@@ -3493,7 +3504,7 @@ msgstr "_Lukitse valinta kuvan reunoihin"
 
 #: ../app/actions/select-commands.c:330 ../app/actions/select-commands.c:362
 #: ../app/actions/vectors-commands.c:379 ../app/actions/vectors-commands.c:412
-#: ../app/dialogs/stroke-dialog.c:285
+#: ../app/dialogs/stroke-dialog.c:287
 msgid "There is no active layer or channel to stroke to."
 msgstr "Ei aktiivista tasoa tai kanavaa, jolle piirtää."
 
@@ -3949,7 +3960,7 @@ msgid "New Path Options"
 msgstr "Uuden polun asetukset"
 
 #: ../app/actions/vectors-commands.c:305 ../app/pdb/paths_cmds.c:627
-#: ../app/pdb/vectors_cmds.c:1146
+#: ../app/pdb/vectors_cmds.c:1145
 msgid "Path to Selection"
 msgstr "Polku valinnaksi"
 
@@ -5856,7 +5867,7 @@ msgstr "Peilaa kanava"
 msgid "Rotate Channel"
 msgstr "Kierrä kanavaa"
 
-#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:839
+#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:840
 msgid "Transform Channel"
 msgstr "Käännä kanavaa"
 
@@ -5988,7 +5999,7 @@ msgstr "Väritasapaino"
 msgid "Colorize"
 msgstr "Väritä"
 
-#: ../app/core/gimpdrawable-curves.c:162 ../app/core/gimpdrawable-curves.c:198
+#: ../app/core/gimpdrawable-curves.c:167 ../app/core/gimpdrawable-curves.c:203
 #: ../app/tools/gimpcurvestool.c:130
 msgid "Curves"
 msgstr "Käyrät"
@@ -6052,11 +6063,11 @@ msgstr "Peilaa"
 msgid "command|Rotate"
 msgstr "komento|Kierrä"
 
-#: ../app/core/gimpdrawable-transform.c:837 ../app/core/gimplayer.c:255
+#: ../app/core/gimpdrawable-transform.c:838 ../app/core/gimplayer.c:255
 msgid "Transform Layer"
 msgstr "Käännä taso"
 
-#: ../app/core/gimpdrawable-transform.c:852
+#: ../app/core/gimpdrawable-transform.c:853
 msgid "Transformation"
 msgstr "Käännös"
 
@@ -6875,7 +6886,7 @@ msgid "Choose shade of gray based on:"
 msgstr "Valitse harmaasävyinen varjostus:"
 
 #: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:171
-#: ../app/gui/gui-message.c:146
+#: ../app/gui/gui-message.c:148
 msgid "GIMP Message"
 msgstr "GIMPin ilmoitus"
 
@@ -8223,7 +8234,7 @@ msgstr ""
 msgid "Choose Stroke Style"
 msgstr "Valitse piirtotyyli"
 
-#: ../app/dialogs/stroke-dialog.c:217
+#: ../app/dialogs/stroke-dialog.c:219
 msgid "Paint tool:"
 msgstr "Maalaustyökalu:"
 
@@ -8570,12 +8581,12 @@ msgstr "\"%s:\" ei ole kelvollinen URI-malli"
 msgid "Invalid character sequence in URI"
 msgstr "Osoitteessa on virheellinen merkkijono"
 
-#: ../app/gegl/gimpcurvesconfig.c:345
+#: ../app/gegl/gimpcurvesconfig.c:347
 #, c-format
 msgid "not a GIMP Curves file"
 msgstr "Ei ole GIMPin käyrätiedosto"
 
-#: ../app/gegl/gimpcurvesconfig.c:359 ../app/gegl/gimplevelsconfig.c:596
+#: ../app/gegl/gimpcurvesconfig.c:361 ../app/gegl/gimplevelsconfig.c:596
 #, c-format
 msgid "parse error"
 msgstr "jäsennysvirhe"
@@ -8730,113 +8741,118 @@ msgstr ""
 "valinta."
 
 #: ../app/pdb/floating_sel_cmds.c:184
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot rigor this layer because it is not a floating selection."
 msgstr "Tason ankkurointi epäonnistui, koska se ei ole kelluva valinta."
 
 #: ../app/pdb/floating_sel_cmds.c:217
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot relax this layer because it is not a floating selection."
-msgstr "Tason ankkurointi epäonnistui, koska se ei ole kelluva valinta."
+msgstr "Tason vapautus epäonnistui, koska se ei ole kelluva valinta."
 
 #: ../app/pdb/gimppdb-query.c:300
 #, c-format
 msgid "Procedure '%s' not found"
 msgstr "Proseduuria %s ei löydy"
 
-#: ../app/pdb/gimppdb-utils.c:53
+#: ../app/pdb/gimppdb-utils.c:55
 #, c-format
 msgid "Invalid empty brush name"
 msgstr "Siveltimen nimi ei voi olla tyhjä"
 
-#: ../app/pdb/gimppdb-utils.c:63
+#: ../app/pdb/gimppdb-utils.c:65
 #, c-format
 msgid "Brush '%s' not found"
 msgstr "Sivellintä \"%s\" ei löydy"
 
-#: ../app/pdb/gimppdb-utils.c:68
+#: ../app/pdb/gimppdb-utils.c:70
 #, c-format
 msgid "Brush '%s' is not editable"
 msgstr "Sivellintä \"%s\" ei voi muokata"
 
-#: ../app/pdb/gimppdb-utils.c:94
+#: ../app/pdb/gimppdb-utils.c:96
 #, c-format
 msgid "Brush '%s' is not a generated brush"
 msgstr "Sivellin \"%s\" ei ole muodostettu sivellin"
 
-#: ../app/pdb/gimppdb-utils.c:114
+#: ../app/pdb/gimppdb-utils.c:116
 #, c-format
 msgid "Invalid empty pattern name"
 msgstr "Kuvion nimi ei voi olla tyhjä"
 
-#: ../app/pdb/gimppdb-utils.c:124
+#: ../app/pdb/gimppdb-utils.c:126
 #, c-format
 msgid "Pattern '%s' not found"
 msgstr "Kuviota  \"%s\" ei löydy"
 
-#: ../app/pdb/gimppdb-utils.c:144
+#: ../app/pdb/gimppdb-utils.c:146
 #, c-format
 msgid "Invalid empty gradient name"
 msgstr "Liukuvärin nimi ei voi olla tyhjä"
 
-#: ../app/pdb/gimppdb-utils.c:154
+#: ../app/pdb/gimppdb-utils.c:156
 #, c-format
 msgid "Gradient '%s' not found"
 msgstr "Liukuväriä \"%s\" ei löydy"
 
-#: ../app/pdb/gimppdb-utils.c:159
+#: ../app/pdb/gimppdb-utils.c:161
 #, c-format
 msgid "Gradient '%s' is not editable"
 msgstr "Liukuväriä \"%s\" ei voi muokata"
 
-#: ../app/pdb/gimppdb-utils.c:180
+#: ../app/pdb/gimppdb-utils.c:182
 #, c-format
 msgid "Invalid empty palette name"
 msgstr "Paletin nimi ei voi olla tyhjä"
 
-#: ../app/pdb/gimppdb-utils.c:190
+#: ../app/pdb/gimppdb-utils.c:192
 #, c-format
 msgid "Palette '%s' not found"
 msgstr "Palettia \"%s\" ei löydy"
 
-#: ../app/pdb/gimppdb-utils.c:195
+#: ../app/pdb/gimppdb-utils.c:197
 #, c-format
 msgid "Palette '%s' is not editable"
 msgstr "Palettia \"%s\" ei voi muokata"
 
-#: ../app/pdb/gimppdb-utils.c:215
+#: ../app/pdb/gimppdb-utils.c:217
 #, c-format
 msgid "Invalid empty font name"
 msgstr "Kirjasimen nimi ei voi olla tyhjä"
 
-#: ../app/pdb/gimppdb-utils.c:225
+#: ../app/pdb/gimppdb-utils.c:227
 #, c-format
 msgid "Font '%s' not found"
 msgstr "Kirjasinta \"%s\" ei löydy"
 
-#: ../app/pdb/gimppdb-utils.c:244
+#: ../app/pdb/gimppdb-utils.c:246
 #, c-format
 msgid "Invalid empty buffer name"
 msgstr "Puskurin nimi ei voi olla tyhjä"
 
-#: ../app/pdb/gimppdb-utils.c:254
+#: ../app/pdb/gimppdb-utils.c:256
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr "Nimettyä puskuria \"%s\" ei löytynyt"
 
-#: ../app/pdb/gimppdb-utils.c:273
+#: ../app/pdb/gimppdb-utils.c:275
 #, c-format
 msgid "Invalid empty paint method name"
 msgstr "Epäkelpo tyhjä maalaustavan nimi"
 
-#: ../app/pdb/gimppdb-utils.c:283
+#: ../app/pdb/gimppdb-utils.c:285
 #, c-format
 msgid "Paint method '%s' does not exist"
 msgstr "Maalaustapaa \"%s\" ei ole olemassa"
 
-#: ../app/pdb/gimppdb-utils.c:299
+#: ../app/pdb/gimppdb-utils.c:301
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
+msgstr ""
+
+#: ../app/pdb/gimppdb-utils.c:327
+#, c-format
+msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr ""
 
 #: ../app/pdb/gimppdb.c:306 ../app/pdb/gimppdb.c:376
@@ -9258,7 +9274,6 @@ msgstr "Enimmäissyvyys:"
 
 #: ../app/tools/gimpblendoptions.c:262
 #: ../app/tools/gimpbucketfilloptions.c:287
-#: ../app/tools/gimpselectionoptions.c:415
 msgid "Threshold:"
 msgstr "Raja:"
 
@@ -9323,7 +9338,6 @@ msgid "Base filled area on all visible layers"
 msgstr "Perustäyttö kaikkiin näkyviin tasoihin"
 
 #: ../app/tools/gimpbucketfilloptions.c:112
-#: ../app/tools/gimpselectionoptions.c:123
 msgid "Maximum color difference"
 msgstr "Suurin väriero"
 
@@ -9358,7 +9372,6 @@ msgstr "Täytä läpinäkyvät alueet"
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpperspectiveclonetool.c:965
-#: ../app/tools/gimpselectionoptions.c:403
 msgid "Sample merged"
 msgstr "Yhdistetty valinta"
 
@@ -9510,8 +9523,8 @@ msgid "Sample average"
 msgstr "Näytteistä keskiarvo"
 
 #: ../app/tools/gimpcoloroptions.c:171
-#: ../app/tools/gimprectangleselectoptions.c:166
-#: ../app/tools/gimpselectionoptions.c:374
+#: ../app/tools/gimprectangleselectoptions.c:167
+#: ../app/tools/gimpselectionoptions.c:281
 #: ../app/widgets/gimpbrusheditor.c:154
 msgid "Radius:"
 msgstr "Säde:"
@@ -9805,12 +9818,12 @@ msgstr "%s asettaa taustavärin"
 msgid "Anti erase  (%s)"
 msgstr "Käänteinen pyyhkiminen (%s)"
 
-#: ../app/tools/gimpflipoptions.c:129
+#: ../app/tools/gimpflipoptions.c:130
 msgid "Affect:"
 msgstr "Vaikutus:"
 
 #. tool toggle
-#: ../app/tools/gimpflipoptions.c:135
+#: ../app/tools/gimpflipoptions.c:139
 #, c-format
 msgid "Flip Type  (%s)"
 msgstr "Peilaustyyppi (%s)"
@@ -9829,15 +9842,20 @@ msgstr ""
 msgid "_Flip"
 msgstr "_Peilaa"
 
-#: ../app/tools/gimpforegroundselectoptions.c:77
+#: ../app/tools/gimpforegroundselectoptions.c:79
+#: ../app/tools/gimpselectionoptions.c:79
+msgid "Smooth edges"
+msgstr "Pehmennä reunoja"
+
+#: ../app/tools/gimpforegroundselectoptions.c:85
 msgid "Select a single contiguous area"
 msgstr "Valitse yksi yhtenäinen alue"
 
-#: ../app/tools/gimpforegroundselectoptions.c:86
+#: ../app/tools/gimpforegroundselectoptions.c:96
 msgid "Size of the brush used for refinements"
 msgstr "Parantamiseen käytettävän pensselin koko"
 
-#: ../app/tools/gimpforegroundselectoptions.c:91
+#: ../app/tools/gimpforegroundselectoptions.c:102
 msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
@@ -9845,55 +9863,55 @@ msgstr ""
 "Pienemmät arvot antavat tarkemman valinnan rajan, mutta saattavat jättää "
 "reikiä valintaan"
 
-#: ../app/tools/gimpforegroundselectoptions.c:107
+#: ../app/tools/gimpforegroundselectoptions.c:121
 msgid "Sensitivity for brightness component"
 msgstr "Herkkyys kirkkauskomponenttia varten"
 
-#: ../app/tools/gimpforegroundselectoptions.c:112
+#: ../app/tools/gimpforegroundselectoptions.c:127
 msgid "Sensitivity for red/green component"
 msgstr "Herkkyys punainen/vihreä -komponenttia varten"
 
-#: ../app/tools/gimpforegroundselectoptions.c:117
+#: ../app/tools/gimpforegroundselectoptions.c:133
 msgid "Sensitivity for yellow/blue component"
 msgstr "Herkkyys keltainen/sininen -komponenttia varten"
 
 #. single / multiple objects
-#: ../app/tools/gimpforegroundselectoptions.c:231
+#: ../app/tools/gimpforegroundselectoptions.c:276
 msgid "Contiguous"
 msgstr "Jatkuva"
 
 #. foreground / background
-#: ../app/tools/gimpforegroundselectoptions.c:236
+#: ../app/tools/gimpforegroundselectoptions.c:281
 #, c-format
 msgid "Interactive refinement  (%s)"
 msgstr "Vuorovaikutteinen parantaminen  (%s)"
 
-#: ../app/tools/gimpforegroundselectoptions.c:240
+#: ../app/tools/gimpforegroundselectoptions.c:285
 msgid "Mark background"
 msgstr "Merkitse tausta"
 
-#: ../app/tools/gimpforegroundselectoptions.c:241
+#: ../app/tools/gimpforegroundselectoptions.c:286
 msgid "Mark foreground"
 msgstr "Merkitse edusta"
 
-#: ../app/tools/gimpforegroundselectoptions.c:257
+#: ../app/tools/gimpforegroundselectoptions.c:302
 msgid "Small brush"
 msgstr "Pieni sivellin"
 
-#: ../app/tools/gimpforegroundselectoptions.c:265
+#: ../app/tools/gimpforegroundselectoptions.c:310
 msgid "Large brush"
 msgstr "Suuri sivellin"
 
-#: ../app/tools/gimpforegroundselectoptions.c:289
+#: ../app/tools/gimpforegroundselectoptions.c:334
 msgid "Smoothing:"
 msgstr "Pehmennys:"
 
-#: ../app/tools/gimpforegroundselectoptions.c:295
+#: ../app/tools/gimpforegroundselectoptions.c:340
 msgid "Preview color:"
 msgstr "Esikatselun väri:"
 
 #. granularity
-#: ../app/tools/gimpforegroundselectoptions.c:298
+#: ../app/tools/gimpforegroundselectoptions.c:343
 msgid "Color Sensitivity"
 msgstr "Värin herkkyys"
 
@@ -9933,7 +9951,7 @@ msgstr "Vapaavalinta: Valitse käsinpiirrettäviä alueita"
 msgid "_Free Select"
 msgstr "Vapaa valinta"
 
-#: ../app/tools/gimpfreeselecttool.c:312
+#: ../app/tools/gimpfreeselecttool.c:311
 msgid "command|Free Select"
 msgstr "Vapaa valinta"
 
@@ -10097,7 +10115,7 @@ msgid "Type"
 msgstr "Tyyppi"
 
 #. Blob shape widget
-#: ../app/tools/gimpinkoptions-gui.c:148
+#: ../app/tools/gimpinkoptions-gui.c:149
 msgid "Shape"
 msgstr "Muoto"
 
@@ -10214,7 +10232,7 @@ msgid "Auto-resize window"
 msgstr "Muuta ikkunan kokoa automaattisesti"
 
 #. tool toggle
-#: ../app/tools/gimpmagnifyoptions.c:172 ../app/tools/gimpmoveoptions.c:184
+#: ../app/tools/gimpmagnifyoptions.c:172 ../app/tools/gimpmoveoptions.c:188
 #, c-format
 msgid "Tool Toggle  (%s)"
 msgstr "Työkalu päälle/pois (%s)"
@@ -10300,7 +10318,7 @@ msgstr "Poimi polku"
 msgid "Move the active path"
 msgstr "Siirrä aktiivista polkua"
 
-#: ../app/tools/gimpmoveoptions.c:178
+#: ../app/tools/gimpmoveoptions.c:179
 msgid "Move:"
 msgstr "Siirrä: "
 
@@ -10337,12 +10355,13 @@ msgid "_Paintbrush"
 msgstr "_Sivellin"
 
 #: ../app/tools/gimppaintoptions-gui.c:99
-#: ../app/tools/gimpselectionoptions.c:340
+#: ../app/tools/gimpselectionoptions.c:211
 #: ../app/widgets/gimpbrushselect.c:191 ../app/widgets/gimplayertreeview.c:269
 msgid "Mode:"
 msgstr "Tila:"
 
 #: ../app/tools/gimppaintoptions-gui.c:114
+#: ../app/tools/gimptransformoptions.c:348
 #: ../app/widgets/gimpbrushselect.c:178 ../app/widgets/gimplayertreeview.c:284
 msgid "Opacity:"
 msgstr "Läpinäkyvyys:"
@@ -10472,19 +10491,19 @@ msgstr "Perspektiivin muunnos"
 msgid "Transformation Matrix"
 msgstr "Muunnosmatriisi"
 
-#: ../app/tools/gimppolygonselecttool.c:152
+#: ../app/tools/gimppolygonselecttool.c:162
 msgid "Polygon Select"
 msgstr "Monikulmavalinta"
 
-#: ../app/tools/gimppolygonselecttool.c:153
+#: ../app/tools/gimppolygonselecttool.c:163
 msgid "Polygon Select Tool: Select a hand-drawn polygon"
 msgstr "Monikulmavalinta: Valitse käsinpiirrettävä monikulmio."
 
-#: ../app/tools/gimppolygonselecttool.c:154
+#: ../app/tools/gimppolygonselecttool.c:164
 msgid "_Polygon Select"
 msgstr "_Monikulmavalinta"
 
-#: ../app/tools/gimppolygonselecttool.c:527
+#: ../app/tools/gimppolygonselecttool.c:575
 msgid "command|Polygon Select"
 msgstr "Monikulmavalinta"
 
@@ -10543,23 +10562,23 @@ msgstr "Kutista automaattisesti"
 msgid "Shrink merged"
 msgstr "Kutista yhdistetyt"
 
-#: ../app/tools/gimprectangleselectoptions.c:154
+#: ../app/tools/gimprectangleselectoptions.c:155
 msgid "Rounded corners"
 msgstr "Pyöristetyt kulmat"
 
-#: ../app/tools/gimprectangleselecttool.c:162
+#: ../app/tools/gimprectangleselecttool.c:165
 msgid "Rectangle Select"
 msgstr "Suorakulmiovalinta"
 
-#: ../app/tools/gimprectangleselecttool.c:163
+#: ../app/tools/gimprectangleselecttool.c:166
 msgid "Rectangle Select Tool: Select a rectangular region"
 msgstr "Suorakulmainen valinta: Valitse suorakulmainen alue"
 
-#: ../app/tools/gimprectangleselecttool.c:164
+#: ../app/tools/gimprectangleselecttool.c:167
 msgid "_Rectangle Select"
 msgstr "_Suorakulmiovalinta"
 
-#: ../app/tools/gimprectangletool.c:1057 ../app/tools/gimprectangletool.c:1932
+#: ../app/tools/gimprectangletool.c:1068 ../app/tools/gimprectangletool.c:1943
 msgid "Rectangle: "
 msgstr "Suorakulmio: "
 
@@ -10607,37 +10626,13 @@ msgstr "Skaalaus"
 msgid "command|Scale"
 msgstr "Skaalaus"
 
-#: ../app/tools/gimpselectionoptions.c:98
-msgid "Smooth edges"
-msgstr "Pehmennä reunoja"
-
-#: ../app/tools/gimpselectionoptions.c:112
-msgid "Allow completely transparent regions to be selected"
-msgstr "Salli täysin läpinäkyvien alueiden valinta"
-
-#: ../app/tools/gimpselectionoptions.c:118
-msgid "Base selection on all visible layers"
-msgstr "Valinta kaikille näkyville tasoille"
-
-#: ../app/tools/gimpselectionoptions.c:348 ../app/tools/gimptextoptions.c:457
+#: ../app/tools/gimpselectionoptions.c:258 ../app/tools/gimptextoptions.c:457
 msgid "Antialiasing"
 msgstr "Epätasaisuuden poisto"
 
-#: ../app/tools/gimpselectionoptions.c:366
+#: ../app/tools/gimpselectionoptions.c:273
 msgid "Feather edges"
 msgstr "Reunan pehmennys"
-
-#: ../app/tools/gimpselectionoptions.c:383
-msgid "Interactive boundary"
-msgstr "Interaktiivinen raja"
-
-#: ../app/tools/gimpselectionoptions.c:397
-msgid "Select transparent areas"
-msgstr "Valitse läpinäkyviä alueita"
-
-#: ../app/tools/gimpselectionoptions.c:422
-msgid "Select by:"
-msgstr "Valitse:"
 
 #: ../app/tools/gimpselectiontool.c:251
 msgid "Click-Drag to replace the current selection"
@@ -10823,46 +10818,46 @@ msgstr "Kynnysarvo ei toimi indeksoiduilla tasoilla."
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Sovita automaattisesti optimaaliseen binääriseen kynnykseen"
 
-#: ../app/tools/gimptransformoptions.c:249
+#: ../app/tools/gimptransformoptions.c:273
 msgid "Transform:"
 msgstr "Muunnos:"
 
-#: ../app/tools/gimptransformoptions.c:255
+#: ../app/tools/gimptransformoptions.c:282
 msgid "Direction"
 msgstr "Suunta"
 
 #. the interpolation menu
-#: ../app/tools/gimptransformoptions.c:260
+#: ../app/tools/gimptransformoptions.c:287
 msgid "Interpolation:"
 msgstr "Interpolaatio:"
 
-#: ../app/tools/gimptransformoptions.c:273
+#: ../app/tools/gimptransformoptions.c:300
 msgid "Clipping:"
 msgstr "Leikkaus:"
 
-#: ../app/tools/gimptransformoptions.c:291
+#: ../app/tools/gimptransformoptions.c:318
 msgid "Preview:"
 msgstr "Esikatselu:"
 
-#: ../app/tools/gimptransformoptions.c:332
+#: ../app/tools/gimptransformoptions.c:389
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15° (%s)"
 
-#: ../app/tools/gimptransformoptions.c:336
+#: ../app/tools/gimptransformoptions.c:393
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Säilytä kuvasuhde (%s)"
 
-#: ../app/tools/gimptransformtool.c:235
+#: ../app/tools/gimptransformtool.c:236
 msgid "Transforming"
 msgstr "Käännetään"
 
-#: ../app/tools/gimptransformtool.c:1157
+#: ../app/tools/gimptransformtool.c:1162
 msgid "There is no layer to transform."
 msgstr "Ei muunnettavaa tasoa."
 
-#: ../app/tools/gimptransformtool.c:1168
+#: ../app/tools/gimptransformtool.c:1173
 msgid "There is no path to transform."
 msgstr "Ei muunnettavaa polkua."
 
@@ -11360,11 +11355,11 @@ msgstr "Vain indeksoiduilla kuvilla on värikartta."
 msgid "Palette"
 msgstr "Paletti"
 
-#: ../app/widgets/gimpcontainerpopup.c:538
+#: ../app/widgets/gimpcontainerpopup.c:540
 msgid "Smaller Previews"
 msgstr "Pienempi esikatselu"
 
-#: ../app/widgets/gimpcontainerpopup.c:543
+#: ../app/widgets/gimpcontainerpopup.c:545
 msgid "Larger Previews"
 msgstr "Suurempi esikatselu"
 
@@ -12223,19 +12218,19 @@ msgstr ""
 "Käytössä oleva liukuväri.\n"
 "Avaa liukuväri-ikkuna napsauttamalla."
 
-#: ../app/widgets/gimptooloptionseditor.c:157
+#: ../app/widgets/gimptooloptionseditor.c:165
 msgid "Save options to..."
 msgstr "Tallenna asetukset..."
 
-#: ../app/widgets/gimptooloptionseditor.c:165
+#: ../app/widgets/gimptooloptionseditor.c:173
 msgid "Restore options from..."
 msgstr "Palauta asetukset..."
 
-#: ../app/widgets/gimptooloptionseditor.c:173
+#: ../app/widgets/gimptooloptionseditor.c:181
 msgid "Delete saved options..."
 msgstr "Poista tallennetut asetukset..."
 
-#: ../app/widgets/gimptooloptionseditor.c:472
+#: ../app/widgets/gimptooloptionseditor.c:480
 #, c-format
 msgid "Error saving tool options presets: %s"
 msgstr "Virhe tallennettaessa työkalun valitsinasetuksia: %s"
@@ -12512,6 +12507,21 @@ msgstr "Varmista että työkalulaatikko on näkyvillä!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Komentoa '%s' ei voitu käynnistää: %s"
+
+#~ msgid "Allow completely transparent regions to be selected"
+#~ msgstr "Salli täysin läpinäkyvien alueiden valinta"
+
+#~ msgid "Base selection on all visible layers"
+#~ msgstr "Valinta kaikille näkyville tasoille"
+
+#~ msgid "Interactive boundary"
+#~ msgstr "Interaktiivinen raja"
+
+#~ msgid "Select transparent areas"
+#~ msgstr "Valitse läpinäkyviä alueita"
+
+#~ msgid "Select by:"
+#~ msgstr "Valitse:"
 
 #~ msgid "Fit Image _to Window"
 #~ msgstr "Sovita kuva ikkunaan"
