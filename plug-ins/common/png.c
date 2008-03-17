@@ -914,11 +914,10 @@ load_image (const gchar *filename,
    * Load the colormap as necessary...
    */
 
-  empty = 0;                    /* by default assume no full transparent palette entries */
+  empty = 0; /* by default assume no full transparent palette entries */
 
   if (info->color_type & PNG_COLOR_MASK_PALETTE)
     {
-
       if (png_get_valid (pp, info, PNG_INFO_tRNS))
         {
           for (empty = 0; empty < 256 && alpha[empty] == 0; ++empty)
@@ -958,13 +957,13 @@ load_image (const gchar *filename,
     pixels[i] = pixel + info->width * info->channels * i;
 
   /* Install our own error handler to handle incomplete PNG files better */
-  error_data.drawable = drawable;
-  error_data.pixel = pixel;
+  error_data.drawable    = drawable;
+  error_data.pixel       = pixel;
   error_data.tile_height = tile_height;
-  error_data.width = info->width;
-  error_data.height = info->height;
-  error_data.bpp = bpp;
-  error_data.pixel_rgn = &pixel_rgn;
+  error_data.width       = info->width;
+  error_data.height      = info->height;
+  error_data.bpp         = bpp;
+  error_data.pixel_rgn   = &pixel_rgn;
 
   png_set_error_fn (pp, &error_data, on_read_error, NULL);
 
@@ -987,8 +986,8 @@ load_image (const gchar *filename,
                                      drawable->width, num);
 
           error_data.begin = begin;
-          error_data.end = end;
-          error_data.num = num;
+          error_data.end   = end;
+          error_data.num   = num;
 
           png_read_rows (pp, pixels, NULL, num);
 
@@ -997,9 +996,9 @@ load_image (const gchar *filename,
 
           memset (pixel, 0, tile_height * info->width * bpp);
 
-          gimp_progress_update (((double) pass +
-                                 (double) end / (double) info->height) /
-                                (double) num_passes);
+          gimp_progress_update (((gdouble) pass +
+                                 (gdouble) end / (gdouble) info->height) /
+                                (gdouble) num_passes);
         }
     }
 
@@ -1488,11 +1487,11 @@ save_image (const gchar *filename,
                   fixed = pixels[i];
                   for (k = 0; k < drawable->width; ++k)
                     {
-                      int aux;
-                      aux = k << 2;
+                      gint aux = k << 2;
+
                       if (! fixed[aux + 3])
                         {
-                          fixed[aux] = red;
+                          fixed[aux + 0] = red;
                           fixed[aux + 1] = green;
                           fixed[aux + 2] = blue;
                         }
@@ -1783,7 +1782,8 @@ save_dialog (gint32    image_ID,
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+                      table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   pg.interlaced = toggle =
