@@ -181,7 +181,8 @@ uri_progress_callback (goffset  current_num_bytes,
   /*  update the progress only up to 10 times a second  */
   g_get_current_time (&now);
 
-  if (((now.tv_sec - progress->last_time.tv_sec) * 1000 +
+  if (progress->last_time.tv_sec &&
+      ((now.tv_sec - progress->last_time.tv_sec) * 1000 +
        (now.tv_usec - progress->last_time.tv_usec) / 1000) < 100)
     return;
 
@@ -270,7 +271,7 @@ copy_uri (const gchar  *src_uri,
           GimpRunMode   run_mode,
           GError      **error)
 {
-  GVfs        *vfs = g_vfs_get_default ();
+  GVfs        *vfs;
   GFile       *src_file;
   GFile       *dest_file;
   UriProgress  progress = { 0, };
