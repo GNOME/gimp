@@ -1,5 +1,87 @@
 2008-03-18  Michael Natterer  <mitch@gimp.org>
 
+	First draft of the "no image open" window, which is implemented as
+	a display without image (a view with NULL model). Didn't change
+	the display's appearance yet so I can first make sure the display
+	without image works properly in all details before hiding these
+	details.
+
+	* app/core/gimp-gui.[ch]: add "gimp" parameter to display_create()
+	and allow "image" to be NULL.
+
+	* app/core/gimpcontext.c (gimp_context_real_set_display): a
+	display's image can be NULL now.
+
+	* app/display/gimpdisplay.[ch]: add Gimp and GimpDisplayConfig
+	members.  Add Gimp parameter to gimp_display_shell_new(). Changed
+	gimp_display_reconnect() to gimp_display_set_image() and allow to
+	set a NULL image.
+
+	* app/gui/gui-vtable.c (gui_display_create): if there is a single
+	display without an image, call gimp_display_set_image() on that
+	display instead of creating a new one.
+
+	* app/display/gimpdisplayshell-close.c: if the last display is
+	closed, don't close it but make it empty. Factored out that code
+	to gimp_display_shell_really_close().
+
+	* app/display/gimpdisplayshell-dnd.c: when dropping uris on an
+	empty display, open the first one into that display and the other
+	ones as layers of the newly opened image. This is consistent with
+	dropping on an existing image but maybe needs some discussion.
+
+	* app/display/gimpdisplayshell-callbacks.c: bail out early in the
+	tool event callback so tools never have to deal with empty
+	displays. In expose(), draw the drop zone on the empty display.
+
+	* app/display/gimpdisplayshell-title.c: set the empty display's
+	title to "Gimp - Drop Files".
+
+	* app/display/gimpdisplay-foreach.c
+	* app/display/gimpdisplay-handlers.c
+	* app/display/gimpdisplayshell-appearance.c
+	* app/display/gimpdisplayshell-autoscroll.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-cursor.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-filter-dialog.c
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell-layer-select.c
+	* app/display/gimpdisplayshell-preview.c
+	* app/display/gimpdisplayshell-render.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-scroll.c
+	* app/display/gimpdisplayshell-selection.c
+	* app/display/gimpdisplayshell-title.c
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpnavigationeditor.c
+	* app/display/gimpstatusbar.c: use display->gimp and
+	display->config instead of going via the image. Guard against
+	empty displays in some few places (most places can't be
+	called). Where needed, use the canvas' dimensions instead of the
+	image's dimensions so scroll offsets and scrollbars still have
+	sane values instead of the last image's ones.
+
+	* app/actions/actions.c (action_data_get_gimp)
+	(action_data_get_context): use display->gimp instead of
+	display->image->gimp.
+
+	* app/actions/edit-commands.c (edit_paste_cmd_callback): redirect
+	to "paste as new" if there is an empty display.
+
+	* app/actions/tools-commands.c (tools_select_cmd_callback): don't
+	initialize the new tool on an empty display.
+
+	* app/actions/view-actions.c (view_actions_update): changed lots
+	of sensitivity settings to be insensitive when there is no image
+	(instead of no display).
+
+	* app/actions/view-commands.c: use the display's config object
+	instead of gimp's.
+
+2008-03-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpcanvas.[ch]: add gimp_canvas_draw_drop_zone()
 	which simply renders a big "Drop Here" on the canvas. Replaced
 	Gimp member and construct property by GimpDisplayConfig.

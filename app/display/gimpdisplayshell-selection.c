@@ -166,7 +166,7 @@ gimp_display_shell_selection_control (GimpDisplayShell     *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (shell->selection)
+  if (shell->selection && shell->display->image)
     {
       Selection *selection = shell->selection;
 
@@ -684,6 +684,11 @@ static gboolean
 selection_start_timeout (Selection *selection)
 {
   selection_free_segs (selection);
+  selection->timeout = 0;
+
+  if (! selection->shell->display->image)
+    return FALSE;
+
   selection_generate_segs (selection);
 
   selection->index = 0;
@@ -695,8 +700,7 @@ selection_start_timeout (Selection *selection)
   if (! selection->hidden)
     {
       GimpCanvas        *canvas = GIMP_CANVAS (selection->shell->canvas);
-      GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG
-        (selection->shell->display->image->gimp->config);
+      GimpDisplayConfig *config = selection->shell->display->config;
 
       selection_draw (selection);
 

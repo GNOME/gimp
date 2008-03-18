@@ -608,17 +608,14 @@ view_padding_color_cmd_callback (GtkAction *action,
       g_object_set_data (G_OBJECT (shell), "padding-color-dialog", NULL);
 
       {
-        GimpDisplayConfig  *config;
         GimpDisplayOptions *default_options;
-
-        config = GIMP_DISPLAY_CONFIG (display->image->gimp->config);
 
         options->padding_mode_set = FALSE;
 
         if (fullscreen)
-          default_options = config->default_fullscreen_view;
+          default_options = display->config->default_fullscreen_view;
         else
-          default_options = config->default_view;
+          default_options = display->config->default_view;
 
         gimp_display_shell_set_padding (shell,
                                         default_options->padding_mode,

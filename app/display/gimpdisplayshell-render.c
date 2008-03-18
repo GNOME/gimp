@@ -244,7 +244,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   info.dest_bpl   = info.dest_bpp * GIMP_DISPLAY_RENDER_BUF_WIDTH;
   info.dest_width = info.dest_bpp * info.w;
 
-  switch (GIMP_DISPLAY_CONFIG (image->gimp->config)->zoom_quality)
+  switch (shell->display->config->zoom_quality)
     {
     case GIMP_ZOOM_QUALITY_LOW:
       info.zoom_quality = GIMP_DISPLAY_ZOOM_FAST;

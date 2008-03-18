@@ -325,7 +325,7 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
 
   if (shell)
     {
-      Gimp              *gimp   = shell->display->image->gimp;
+      Gimp              *gimp   = shell->display->gimp;
       GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (gimp->config);
       GimpView          *view;
 
@@ -639,9 +639,10 @@ gimp_navigation_editor_update_marker (GimpNavigationEditor *editor)
   if (renderer->dot_for_dot != shell->dot_for_dot)
     gimp_view_renderer_set_dot_for_dot (renderer, shell->dot_for_dot);
 
-  gimp_navigation_view_set_marker (GIMP_NAVIGATION_VIEW (editor->view),
-                                   shell->offset_x    / shell->scale_x,
-                                   shell->offset_y    / shell->scale_y,
-                                   shell->disp_width  / shell->scale_x,
-                                   shell->disp_height / shell->scale_y);
+  if (renderer->viewable)
+    gimp_navigation_view_set_marker (GIMP_NAVIGATION_VIEW (editor->view),
+                                     shell->offset_x    / shell->scale_x,
+                                     shell->offset_y    / shell->scale_y,
+                                     shell->disp_width  / shell->scale_x,
+                                     shell->disp_height / shell->scale_y);
 }

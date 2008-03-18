@@ -119,7 +119,8 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (gimp_display_shell_get_show_guides (shell))
+  if (shell->display->image &&
+      gimp_display_shell_get_show_guides (shell))
     {
       GList *list;
 
@@ -141,7 +142,8 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (area != NULL);
 
-  if (gimp_display_shell_get_show_grid (shell))
+  if (shell->display->image &&
+      gimp_display_shell_get_show_grid (shell))
     {
       GimpGrid   *grid;
       GimpCanvas *canvas;
@@ -417,7 +419,8 @@ gimp_display_shell_draw_sample_points (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (gimp_display_shell_get_show_sample_points (shell))
+  if (shell->display->image &&
+      gimp_display_shell_get_show_sample_points (shell))
     {
       GList *list;
 
@@ -474,7 +477,8 @@ gimp_display_shell_draw_vectors (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (TRUE /* gimp_display_shell_get_show_vectors (shell) */)
+  if (shell->display->image &&
+      TRUE /* gimp_display_shell_get_show_vectors (shell) */)
     {
       GList *list;
 
@@ -507,7 +511,7 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
                               gint              w,
                               gint              h)
 {
-  GimpProjection *proj = shell->display->image->projection;
+  GimpProjection *proj;
   TileManager    *tiles;
   gint            level;
   gint            level_width;
@@ -515,8 +519,12 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
   gint            sx, sy;
   gint            sw, sh;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell) &&
-                    GIMP_IS_PROJECTION (proj));
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (! shell->display->image)
+    return;
+
+  proj = shell->display->image->projection;
 
   level = gimp_projection_get_level (proj, shell->scale_x, shell->scale_y);
 

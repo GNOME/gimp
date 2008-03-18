@@ -41,7 +41,6 @@
 #include "gimpdisplayoptions.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
-#include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpstatusbar.h"
 
@@ -63,7 +62,7 @@
 #define IS_ACTIVE_DISPLAY(shell) \
   ((shell)->display == \
    gimp_context_get_display (gimp_get_user_context \
-                             ((shell)->display->image->gimp)))
+                             ((shell)->display->gimp)))
 
 
 void

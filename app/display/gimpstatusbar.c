@@ -27,6 +27,8 @@
 
 #include "display-types.h"
 
+#include "config/gimpdisplayconfig.h"
+
 #include "core/gimpimage.h"
 #include "core/gimpunit.h"
 #include "core/gimpprogress.h"
@@ -635,13 +637,12 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
     }
   else /* show real world units */
     {
-      GimpImage *image       = shell->display->image;
-      gdouble    xres;
-      gdouble    yres;
-      gdouble    unit_factor = _gimp_unit_get_factor (image->gimp,
-                                                      shell->unit);
+      gdouble xres;
+      gdouble yres;
+      gdouble unit_factor = _gimp_unit_get_factor (shell->display->gimp,
+                                                   shell->unit);
 
-      gimp_image_get_resolution (image, &xres, &yres);
+      gimp_image_get_resolution (shell->display->image, &xres, &yres);
 
       gimp_statusbar_push (statusbar, context,
                            statusbar->cursor_format_str,
@@ -681,14 +682,13 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
     }
   else /* show real world units */
     {
-      GimpImage *image       = shell->display->image;
-      gdouble    xres;
-      gdouble    yres;
-      gdouble    resolution;
-      gdouble    unit_factor = _gimp_unit_get_factor (image->gimp,
-                                                      shell->unit);
+      gdouble xres;
+      gdouble yres;
+      gdouble resolution;
+      gdouble unit_factor = _gimp_unit_get_factor (shell->display->gimp,
+                                                   shell->unit);
 
-      gimp_image_get_resolution (image, &xres, &yres);
+      gimp_image_get_resolution (shell->display->image, &xres, &yres);
 
       switch (axis)
         {
@@ -916,7 +916,8 @@ gimp_statusbar_update_cursor (GimpStatusbar *statusbar,
 
   shell = statusbar->shell;
 
-  if (x <  0                                             ||
+  if (! shell->display->image                            ||
+      x <  0                                             ||
       y <  0                                             ||
       x >= gimp_image_get_width  (shell->display->image) ||
       y >= gimp_image_get_height (shell->display->image))
@@ -1051,10 +1052,26 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
   GimpImage    *image = shell->display->image;
   GtkTreeModel *model;
   const gchar  *text;
-  gdouble       xres;
-  gdouble       yres;
+  gint          image_width;
+  gint          image_height;
+  gdouble       image_xres;
+  gdouble       image_yres;
   gint          width;
   gint          diff;
+
+  if (image)
+    {
+      image_width  = gimp_image_get_width  (image);
+      image_height = gimp_image_get_height (image);
+      gimp_image_get_resolution (image, &image_xres, &image_yres);
+    }
+  else
+    {
+      image_width  = shell->disp_width;
+      image_height = shell->disp_height;
+      image_xres   = shell->display->config->monitor_xres;
+      image_yres   = shell->display->config->monitor_yres;
+    }
 
   g_signal_handlers_block_by_func (statusbar->scale_combo,
                                    gimp_statusbar_scale_changed, statusbar);
@@ -1064,8 +1081,8 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
                                      gimp_statusbar_scale_changed, statusbar);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->unit_combo));
-  gimp_image_get_resolution (image, &xres, &yres);
-  gimp_unit_store_set_resolutions (GIMP_UNIT_STORE (model), xres, yres);
+  gimp_unit_store_set_resolutions (GIMP_UNIT_STORE (model),
+                                   image_xres, image_yres);
 
   g_signal_handlers_block_by_func (statusbar->unit_combo,
                                    gimp_statusbar_unit_changed, statusbar);
@@ -1088,17 +1105,15 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
                   "%%s%%.%df%%s%%.%df%%s",
-                  _gimp_unit_get_digits (image->gimp, shell->unit),
-                  _gimp_unit_get_digits (image->gimp, shell->unit));
+                  _gimp_unit_get_digits (shell->display->gimp, shell->unit),
+                  _gimp_unit_get_digits (shell->display->gimp, shell->unit));
       g_snprintf (statusbar->length_format_str,
                   sizeof (statusbar->length_format_str),
                   "%%s%%.%df%%s",
-                  _gimp_unit_get_digits (image->gimp, shell->unit));
+                  _gimp_unit_get_digits (shell->display->gimp, shell->unit));
     }
 
-  gimp_statusbar_update_cursor (statusbar,
-                                - gimp_image_get_width  (image),
-                                - gimp_image_get_height (image));
+  gimp_statusbar_update_cursor (statusbar, image_width, image_height);
 
   text = gtk_label_get_text (GTK_LABEL (statusbar->cursor_label));
 

@@ -252,7 +252,7 @@ action_data_get_gimp (gpointer data)
     return NULL;
 
   if (GIMP_IS_DISPLAY (data))
-    return ((GimpDisplay *) data)->image->gimp;
+    return ((GimpDisplay *) data)->gimp;
   else if (GIMP_IS_GIMP (data))
     return data;
   else if (GIMP_IS_DOCK (data))
@@ -279,7 +279,7 @@ action_data_get_context (gpointer data)
     return NULL;
 
   if (GIMP_IS_DISPLAY (data))
-    return gimp_get_user_context (((GimpDisplay *) data)->image->gimp);
+    return gimp_get_user_context (((GimpDisplay *) data)->gimp);
   else if (GIMP_IS_GIMP (data))
     return gimp_get_user_context (data);
   else if (GIMP_IS_DOCK (data))

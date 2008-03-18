@@ -35,6 +35,8 @@
 #include "widgets/gimpenumaction.h"
 #include "widgets/gimpuimanager.h"
 
+#include "display/gimpdisplay.h"
+
 #include "tools/gimp-tools.h"
 #include "tools/gimpcoloroptions.h"
 #include "tools/gimpforegroundselectoptions.h"
@@ -97,7 +99,7 @@ tools_select_cmd_callback (GtkAction   *action,
 
   display = gimp_context_get_display (context);
 
-  if (display)
+  if (display && display->image)
     tool_manager_initialize_active (gimp, display);
 }
 

@@ -22,8 +22,6 @@
 
 #include "display-types.h"
 
-#include "core/gimpimage.h"
-
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-autoscroll.h"
@@ -133,7 +131,7 @@ gimp_display_shell_autoscroll_timeout (gpointer data)
   if (dx || dy)
     {
       GimpDisplay *display     = shell->display;
-      GimpTool    *active_tool = tool_manager_get_active (display->image->gimp);
+      GimpTool    *active_tool = tool_manager_get_active (display->gimp);
 
       info->time += AUTOSCROLL_DT;
 
@@ -157,7 +155,7 @@ gimp_display_shell_autoscroll_timeout (gpointer data)
                                           x, y, width, height);
         }
 
-      tool_manager_motion_active (display->image->gimp,
+      tool_manager_motion_active (display->gimp,
                                   &image_coords,
                                   info->time, info->state,
                                   display);

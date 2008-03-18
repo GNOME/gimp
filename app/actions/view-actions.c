@@ -531,6 +531,7 @@ view_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
   GimpDisplay        *display        = action_data_get_display (data);
+  GimpImage          *image          = NULL;
   GimpDisplayShell   *shell          = NULL;
   GimpDisplayOptions *options        = NULL;
   gchar              *label          = NULL;
@@ -539,6 +540,7 @@ view_actions_update (GimpActionGroup *group,
 
   if (display)
     {
+      image = display->image;
       shell = GIMP_DISPLAY_SHELL (display->shell);
 
       fullscreen = gimp_display_shell_get_fullscreen (shell);
@@ -555,10 +557,10 @@ view_actions_update (GimpActionGroup *group,
 #define SET_COLOR(action,color) \
         gimp_action_group_set_action_color (group, action, color, FALSE)
 
-  SET_SENSITIVE ("view-new",   display);
+  SET_SENSITIVE ("view-new",   image);
   SET_SENSITIVE ("view-close", display);
 
-  SET_SENSITIVE ("view-dot-for-dot", display);
+  SET_SENSITIVE ("view-dot-for-dot", image);
   SET_ACTIVE    ("view-dot-for-dot", display && shell->dot_for_dot);
 
   SET_SENSITIVE ("view-zoom-revert", revert_enabled);
@@ -575,46 +577,46 @@ view_actions_update (GimpActionGroup *group,
                                           _("Re_vert Zoom"));
     }
 
-  SET_SENSITIVE ("view-zoom-out",    display);
-  SET_SENSITIVE ("view-zoom-in",     display);
-  SET_SENSITIVE ("view-zoom-fit-in", display);
-  SET_SENSITIVE ("view-zoom-fill", display);
+  SET_SENSITIVE ("view-zoom-out",    image);
+  SET_SENSITIVE ("view-zoom-in",     image);
+  SET_SENSITIVE ("view-zoom-fit-in", image);
+  SET_SENSITIVE ("view-zoom-fill",   image);
 
-  SET_SENSITIVE ("view-zoom-16-1",  display);
-  SET_SENSITIVE ("view-zoom-8-1",   display);
-  SET_SENSITIVE ("view-zoom-4-1",   display);
-  SET_SENSITIVE ("view-zoom-2-1",   display);
-  SET_SENSITIVE ("view-zoom-1-1",   display);
-  SET_SENSITIVE ("view-zoom-1-2",   display);
-  SET_SENSITIVE ("view-zoom-1-4",   display);
-  SET_SENSITIVE ("view-zoom-1-8",   display);
-  SET_SENSITIVE ("view-zoom-1-16",  display);
-  SET_SENSITIVE ("view-zoom-other", display);
+  SET_SENSITIVE ("view-zoom-16-1",  image);
+  SET_SENSITIVE ("view-zoom-8-1",   image);
+  SET_SENSITIVE ("view-zoom-4-1",   image);
+  SET_SENSITIVE ("view-zoom-2-1",   image);
+  SET_SENSITIVE ("view-zoom-1-1",   image);
+  SET_SENSITIVE ("view-zoom-1-2",   image);
+  SET_SENSITIVE ("view-zoom-1-4",   image);
+  SET_SENSITIVE ("view-zoom-1-8",   image);
+  SET_SENSITIVE ("view-zoom-1-16",  image);
+  SET_SENSITIVE ("view-zoom-other", image);
 
-  if (display)
+  if (image)
     view_actions_set_zoom (group, shell);
 
-  SET_SENSITIVE ("view-navigation-window", display);
-  SET_SENSITIVE ("view-display-filters",   display);
+  SET_SENSITIVE ("view-navigation-window", image);
+  SET_SENSITIVE ("view-display-filters",   image);
 
-  SET_SENSITIVE ("view-show-selection",      display);
+  SET_SENSITIVE ("view-show-selection",      image);
   SET_ACTIVE    ("view-show-selection",      display && options->show_selection);
-  SET_SENSITIVE ("view-show-layer-boundary", display);
+  SET_SENSITIVE ("view-show-layer-boundary", image);
   SET_ACTIVE    ("view-show-layer-boundary", display && options->show_layer_boundary);
-  SET_SENSITIVE ("view-show-guides",         display);
+  SET_SENSITIVE ("view-show-guides",         image);
   SET_ACTIVE    ("view-show-guides",         display && options->show_guides);
-  SET_SENSITIVE ("view-show-grid",           display);
+  SET_SENSITIVE ("view-show-grid",           image);
   SET_ACTIVE    ("view-show-grid",           display && options->show_grid);
-  SET_SENSITIVE ("view-show-sample-points",  display);
+  SET_SENSITIVE ("view-show-sample-points",  image);
   SET_ACTIVE    ("view-show-sample-points",  display && options->show_sample_points);
 
-  SET_SENSITIVE ("view-snap-to-guides",      display);
+  SET_SENSITIVE ("view-snap-to-guides",      image);
   SET_ACTIVE    ("view-snap-to-guides",      display && shell->snap_to_guides);
-  SET_SENSITIVE ("view-snap-to-grid",        display);
+  SET_SENSITIVE ("view-snap-to-grid",        image);
   SET_ACTIVE    ("view-snap-to-grid",        display && shell->snap_to_grid);
-  SET_SENSITIVE ("view-snap-to-canvas",      display);
+  SET_SENSITIVE ("view-snap-to-canvas",      image);
   SET_ACTIVE    ("view-snap-to-canvas",      display && shell->snap_to_canvas);
-  SET_SENSITIVE ("view-snap-to-vectors",     display);
+  SET_SENSITIVE ("view-snap-to-vectors",     image);
   SET_ACTIVE    ("view-snap-to-vectors",     display && shell->snap_to_vectors);
 
   SET_SENSITIVE ("view-padding-color-theme",       display);
@@ -649,8 +651,8 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-show-statusbar",  display);
   SET_ACTIVE    ("view-show-statusbar",  display && options->show_statusbar);
 
-  SET_SENSITIVE ("view-shrink-wrap", display);
-  SET_SENSITIVE ("view-fullscreen",  display);
+  SET_SENSITIVE ("view-shrink-wrap", image);
+  SET_SENSITIVE ("view-fullscreen",  image);
   SET_ACTIVE    ("view-fullscreen",  display && fullscreen);
 
   if (GIMP_IS_DISPLAY (group->user_data) ||

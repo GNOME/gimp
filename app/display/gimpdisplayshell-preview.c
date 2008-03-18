@@ -161,7 +161,7 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
   if (! gimp_display_shell_get_show_transform (shell) || ! shell->canvas)
     return;
 
-  tool = tool_manager_get_active (shell->display->image->gimp);
+  tool = tool_manager_get_active (shell->display->gimp);
 
   if (! GIMP_IS_TRANSFORM_TOOL (tool) ||
       ! GIMP_IS_DRAWABLE (tool->drawable))

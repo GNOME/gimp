@@ -46,6 +46,8 @@ static void  gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
                                                  gboolean            always_install);
 
 
+/*  public functions  */
+
 void
 gimp_display_shell_set_cursor (GimpDisplayShell   *shell,
                                GimpCursorType      cursor_type,
@@ -197,6 +199,9 @@ gimp_display_shell_clear_cursor (GimpDisplayShell *shell)
     }
 }
 
+
+/*  private functions  */
+
 static void
 gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
                                     GimpCursorType      cursor_type,
@@ -204,17 +209,14 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
                                     GimpCursorModifier  modifier,
                                     gboolean            always_install)
 {
-  GimpDisplayConfig *config;
-  GimpCursorFormat   cursor_format;
+  GimpCursorFormat cursor_format;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  config = GIMP_DISPLAY_CONFIG (shell->display->image->gimp->config);
 
   if (cursor_type != GIMP_CURSOR_NONE &&
       cursor_type != GIMP_CURSOR_BAD)
     {
-      switch (config->cursor_mode)
+      switch (shell->display->config->cursor_mode)
         {
         case GIMP_CURSOR_MODE_TOOL_ICON:
           break;
@@ -243,7 +245,7 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
         }
     }
 
-  cursor_format = GIMP_GUI_CONFIG (config)->cursor_format;
+  cursor_format = GIMP_GUI_CONFIG (shell->display->config)->cursor_format;
 
   if (shell->cursor_format   != cursor_format ||
       shell->current_cursor  != cursor_type   ||

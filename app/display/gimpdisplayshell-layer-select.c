@@ -85,7 +85,7 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
     return;
 
   layer_select = layer_select_new (image, layer,
-                                   image->gimp->config->layer_preview_size);
+                                   GIMP_CORE_CONFIG (shell->display->config)->layer_preview_size);
   layer_select_advance (layer_select, move);
 
   gtk_window_set_screen (GTK_WINDOW (layer_select->shell),

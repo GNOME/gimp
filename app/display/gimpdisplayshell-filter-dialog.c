@@ -63,18 +63,15 @@ GtkWidget *
 gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
 {
   ColorDisplayDialog *cdd;
-  GimpImage          *image;
   GtkWidget          *editor;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
-  image = shell->display->image;
-
   cdd = g_slice_new0 (ColorDisplayDialog);
 
   cdd->shell  = shell;
-  cdd->dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
-                                          gimp_get_user_context (image->gimp),
+  cdd->dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (shell->display->image),
+                                          gimp_get_user_context (shell->display->gimp),
                                           _("Color Display Filters"),
                                           "gimp-display-filters",
                                           GIMP_STOCK_DISPLAY_FILTER,

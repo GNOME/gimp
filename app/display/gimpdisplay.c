@@ -25,6 +25,8 @@
 #include "display-types.h"
 #include "tools/tools-types.h"
 
+#include "config/gimpdisplayconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimparea.h"
 #include "core/gimpimage.h"
@@ -47,6 +49,7 @@ enum
 {
   PROP_0,
   PROP_ID,
+  PROP_GIMP,
   PROP_IMAGE,
   PROP_SHELL
 };
@@ -117,6 +120,13 @@ gimp_display_class_init (GimpDisplayClass *klass)
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image",
                                                         NULL, NULL,
@@ -134,6 +144,8 @@ static void
 gimp_display_init (GimpDisplay *display)
 {
   display->ID           = 0;
+
+  display->gimp         = NULL;
 
   display->image        = NULL;
   display->instance     = 0;
@@ -170,10 +182,17 @@ gimp_display_set_property (GObject      *object,
     case PROP_ID:
       display->ID = g_value_get_int (value);
       break;
+
+    case PROP_GIMP:
+      display->gimp = g_value_get_object (value); /* don't ref the gimp */
+      display->config = GIMP_DISPLAY_CONFIG (display->gimp->config);
+      break;
+
     case PROP_IMAGE:
     case PROP_SHELL:
       g_assert_not_reached ();
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -193,12 +212,19 @@ gimp_display_get_property (GObject    *object,
     case PROP_ID:
       g_value_set_int (value, display->ID);
       break;
+
+    case PROP_GIMP:
+      g_value_set_object (value, display->gimp);
+      break;
+
     case PROP_IMAGE:
       g_value_set_object (value, display->image);
       break;
+
     case PROP_SHELL:
       g_value_set_object (value, display->shell);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -317,7 +343,8 @@ gimp_display_progress_canceled (GimpProgress *progress,
 /*  public functions  */
 
 GimpDisplay *
-gimp_display_new (GimpImage       *image,
+gimp_display_new (Gimp            *gimp,
+                  GimpImage       *image,
                   GimpUnit         unit,
                   gdouble          scale,
                   GimpMenuFactory *menu_factory,
@@ -326,27 +353,30 @@ gimp_display_new (GimpImage       *image,
   GimpDisplay *display;
   gint         ID;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
 
   /*  If there isn't an interface, never create a display  */
-  if (image->gimp->no_interface)
+  if (gimp->no_interface)
     return NULL;
 
   do
     {
-      ID = image->gimp->next_display_ID++;
+      ID = gimp->next_display_ID++;
 
-      if (image->gimp->next_display_ID == G_MAXINT)
-        image->gimp->next_display_ID = 1;
+      if (gimp->next_display_ID == G_MAXINT)
+        gimp->next_display_ID = 1;
     }
-  while (gimp_display_get_by_ID (image->gimp, ID));
+  while (gimp_display_get_by_ID (gimp, ID));
 
   display = g_object_new (GIMP_TYPE_DISPLAY,
-                          "id", ID,
+                          "id",   ID,
+                          "gimp", gimp,
                           NULL);
 
   /*  refs the image  */
-  gimp_display_connect (display, image);
+  if (image)
+    gimp_display_connect (display, image);
 
   /*  create the shell for the image  */
   display->shell = gimp_display_shell_new (display, unit, scale,
@@ -358,7 +388,7 @@ gimp_display_new (GimpImage       *image,
                     display);
 
   /* add the display to the list */
-  gimp_container_add (image->gimp->displays, GIMP_OBJECT (display));
+  gimp_container_add (gimp->displays, GIMP_OBJECT (display));
 
   return display;
 }
@@ -371,17 +401,16 @@ gimp_display_delete (GimpDisplay *display)
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
   /* remove the display from the list */
-  gimp_container_remove (display->image->gimp->displays,
+  gimp_container_remove (display->gimp->displays,
                          GIMP_OBJECT (display));
 
-  /*  stop any active tool  */
-  tool_manager_control_active (display->image->gimp, GIMP_TOOL_ACTION_HALT,
-                               display);
+  /*  unrefs the image  */
+  gimp_display_set_image (display, NULL);
 
-  active_tool = tool_manager_get_active (display->image->gimp);
+  active_tool = tool_manager_get_active (display->gimp);
 
   if (active_tool && active_tool->focus_display == display)
-    tool_manager_focus_display_active (display->image->gimp, NULL);
+    tool_manager_focus_display_active (display->gimp, NULL);
 
   /*  free the update area lists  */
   gimp_area_list_free (display->update_areas);
@@ -398,9 +427,6 @@ gimp_display_delete (GimpDisplay *display)
       display->shell = NULL;
       gtk_widget_destroy (shell);
     }
-
-  /*  unrefs the image  */
-  gimp_display_disconnect (display);
 
   g_object_unref (display);
 }
@@ -435,28 +461,35 @@ gimp_display_get_by_ID (Gimp *gimp,
 }
 
 void
-gimp_display_reconnect (GimpDisplay *display,
+gimp_display_set_image (GimpDisplay *display,
                         GimpImage   *image)
 {
-  GimpImage *old_image;
+  GimpImage *old_image = NULL;
 
   g_return_if_fail (GIMP_IS_DISPLAY (display));
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
 
-  /*  stop any active tool  */
-  tool_manager_control_active (display->image->gimp, GIMP_TOOL_ACTION_HALT,
-                               display);
+  if (display->image)
+    {
+      /*  stop any active tool  */
+      tool_manager_control_active (display->gimp, GIMP_TOOL_ACTION_HALT,
+                                   display);
 
-  gimp_display_shell_disconnect (GIMP_DISPLAY_SHELL (display->shell));
+      gimp_display_shell_disconnect (GIMP_DISPLAY_SHELL (display->shell));
 
-  old_image = g_object_ref (display->image);
+      old_image = g_object_ref (display->image);
 
-  gimp_display_disconnect (display);
-  gimp_display_connect (display, image);
+      gimp_display_disconnect (display);
+    }
 
-  g_object_unref (old_image);
+  if (image)
+    gimp_display_connect (display, image);
 
-  gimp_display_shell_reconnect (GIMP_DISPLAY_SHELL (display->shell));
+  if (old_image)
+    g_object_unref (old_image);
+
+  if (image)
+    gimp_display_shell_reconnect (GIMP_DISPLAY_SHELL (display->shell));
 }
 
 void

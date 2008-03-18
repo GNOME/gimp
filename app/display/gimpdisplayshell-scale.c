@@ -80,7 +80,7 @@ static gdouble img2real                              (GimpDisplayShell *shell,
 
 /**
  * gimp_display_shell_scale_setup:
- * @shell:        the #GimpDisplayShell
+ * @shell: the #GimpDisplayShell
  *
  * Prepares the display for drawing the image at current scale and offset.
  * This preparation involves, for example, setting up scrollbars and rulers.
@@ -88,21 +88,35 @@ static gdouble img2real                              (GimpDisplayShell *shell,
 void
 gimp_display_shell_scale_setup (GimpDisplayShell *shell)
 {
-  GtkRuler *hruler;
-  GtkRuler *vruler;
-  gfloat    sx, sy;
-  gint      image_width, image_height;
+  GimpImage *image;
+  GtkRuler  *hruler;
+  GtkRuler  *vruler;
+  gfloat     sx, sy;
+  gint       image_width, image_height;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   if (! shell->display)
     return;
 
-  image_width  = gimp_image_get_width  (shell->display->image);
-  image_height = gimp_image_get_height (shell->display->image);
+  image = shell->display->image;
 
-  sx = SCALEX (shell, image_width);
-  sy = SCALEY (shell, image_height);
+  if (image)
+    {
+      image_width  = gimp_image_get_width  (image);
+      image_height = gimp_image_get_height (image);
+
+      sx = SCALEX (shell, image_width);
+      sy = SCALEY (shell, image_height);
+    }
+  else
+    {
+      image_width  = shell->disp_width;
+      image_height = shell->disp_height;
+
+      sx = image_width;
+      sy = image_height;
+    }
 
   shell->hsbdata->value          = shell->offset_x;
   shell->hsbdata->upper          = sx;
@@ -122,19 +136,37 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   hruler = GTK_RULER (shell->hrule);
   vruler = GTK_RULER (shell->vrule);
 
-  hruler->lower    = 0;
-  hruler->upper    = img2real (shell, TRUE,
-                               FUNSCALEX (shell, shell->disp_width));
-  hruler->max_size = img2real (shell, TRUE,
-                               MAX (image_width, image_height));
+  hruler->lower = 0;
 
-  vruler->lower    = 0;
-  vruler->upper    = img2real (shell, FALSE,
-                               FUNSCALEY (shell, shell->disp_height));
-  vruler->max_size = img2real (shell, FALSE,
-                               MAX (image_width, image_height));
+  if (image)
+    {
+      hruler->upper    = img2real (shell, TRUE,
+                                   FUNSCALEX (shell, shell->disp_width));
+      hruler->max_size = img2real (shell, TRUE,
+                                   MAX (image_width, image_height));
+    }
+  else
+    {
+      hruler->upper    = image_width;
+      hruler->max_size = MAX (image_width, image_height);
+    }
 
-  if (sx < shell->disp_width)
+  vruler->lower = 0;
+
+  if (image)
+    {
+      vruler->upper    = img2real (shell, FALSE,
+                                   FUNSCALEY (shell, shell->disp_height));
+      vruler->max_size = img2real (shell, FALSE,
+                                   MAX (image_width, image_height));
+    }
+  else
+    {
+      vruler->upper    = image_height;
+      vruler->max_size = MAX (image_width, image_height);
+    }
+
+  if (image && sx < shell->disp_width)
     {
       shell->disp_xoffset = (shell->disp_width - sx) / 2;
 
@@ -145,7 +177,7 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
                                  FUNSCALEX (shell,
                                             (gdouble) shell->disp_xoffset));
     }
-  else
+  else if (image)
     {
       shell->disp_xoffset = 0;
 
@@ -156,8 +188,12 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
                                  FUNSCALEX (shell,
                                             (gdouble) shell->offset_x));
     }
+  else
+    {
+      shell->disp_xoffset = 0;
+    }
 
-  if (sy < shell->disp_height)
+  if (image && sy < shell->disp_height)
     {
       shell->disp_yoffset = (shell->disp_height - sy) / 2;
 
@@ -168,7 +204,7 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
                                  FUNSCALEY (shell,
                                             (gdouble) shell->disp_yoffset));
     }
-  else
+  else if (image)
     {
       shell->disp_yoffset = 0;
 
@@ -178,6 +214,10 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
       vruler->upper += img2real (shell, FALSE,
                                  FUNSCALEY (shell,
                                             (gdouble) shell->offset_y));
+    }
+  else
+    {
+      shell->disp_yoffset = 0;
     }
 
   gtk_widget_queue_draw (GTK_WIDGET (hruler));
@@ -227,7 +267,7 @@ gimp_display_shell_scale_revert (GimpDisplayShell *shell)
 
 /**
  * gimp_display_shell_scale_can_revert:
- * @shell:     the #GimpDisplayShell
+ * @shell: the #GimpDisplayShell
  *
  * Return value: %TRUE if a previous display scale exists, otherwise %FALSE.
  **/
@@ -256,8 +296,6 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
 
   if (dot_for_dot != shell->dot_for_dot)
     {
-      Gimp *gimp = shell->display->image->gimp;
-
       /* freeze the active tool */
       gimp_display_shell_pause (shell);
 
@@ -266,7 +304,7 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
       gimp_display_shell_scale_changed (shell);
 
       gimp_display_shell_scale_resize (shell,
-                                       GIMP_DISPLAY_CONFIG (gimp->config)->resize_windows_on_zoom,
+                                       shell->display->config->resize_windows_on_zoom,
                                        TRUE);
 
       /* re-enable the active tool */
@@ -350,10 +388,9 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
                              gdouble           x,
                              gdouble           y)
 {
-  GimpDisplayConfig *config;
-  gdouble            current;
-  gdouble            offset_x;
-  gdouble            offset_y;
+  gdouble current;
+  gdouble offset_x;
+  gdouble offset_y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -374,16 +411,14 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
   offset_x *= scale;
   offset_y *= scale;
 
-  config = GIMP_DISPLAY_CONFIG (shell->display->image->gimp->config);
-
   gimp_display_shell_scale_by_values (shell, scale,
                                       offset_x - x, offset_y - y,
-                                      config->resize_windows_on_zoom);
+                                      shell->display->config->resize_windows_on_zoom);
 }
 
 /**
  * gimp_display_shell_scale_fit_in:
- * @shell:     the #GimpDisplayShell
+ * @shell: the #GimpDisplayShell
  *
  * Sets the scale such that the entire image precisely fits in the display
  * area.
@@ -421,7 +456,7 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
 
 /**
  * gimp_display_shell_scale_fill:
- * @shell:     the #GimpDisplayShell
+ * @shell: the #GimpDisplayShell
  *
  * Sets the scale such that the entire display area is precisely filled by the
  * image.
@@ -459,11 +494,11 @@ gimp_display_shell_scale_fill (GimpDisplayShell *shell)
 
 /**
  * gimp_display_shell_scale_by_values:
- * @shell:          the #GimpDisplayShell
- * @scale:          the new scale
- * @offset_x:       the new X offset
- * @offset_y:       the new Y offset
- * @resize_window:  whether the display window should be resized
+ * @shell:         the #GimpDisplayShell
+ * @scale:         the new scale
+ * @offset_x:      the new X offset
+ * @offset_y:      the new Y offset
+ * @resize_window: whether the display window should be resized
  *
  * Directly sets the image scale and image offsets used by the display. If
  * @resize_window is %TRUE then the display window is resized to better
@@ -517,7 +552,7 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
 
 /**
  * gimp_display_shell_scale_shrink_wrap:
- * @shell:          the #GimpDisplayShell
+ * @shell: the #GimpDisplayShell
  *
  * Convenience function with the same functionality as
  * gimp_display_shell_scale_resize(@shell, TRUE, TRUE).
@@ -546,11 +581,7 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
                                  gboolean          resize_window,
                                  gboolean          redisplay)
 {
-  Gimp *gimp;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  gimp = shell->display->image->gimp;
 
   /* freeze the active tool */
   gimp_display_shell_pause (shell);
@@ -571,7 +602,7 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
 
 /**
  * gimp_display_shell_scale_dialog:
- * @shell:          the #GimpDisplayShell
+ * @shell: the #GimpDisplayShell
  *
  * Constructs and displays a dialog allowing the user to enter a custom display
  * scale.
@@ -612,7 +643,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 
   shell->scale_dialog =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
-                              gimp_get_user_context (image->gimp),
+                              gimp_get_user_context (shell->display->gimp),
                               _("Zoom Ratio"), "display_scale",
                               GTK_STOCK_ZOOM_100,
                               _("Select Zoom Ratio"),
@@ -801,20 +832,19 @@ img2real (GimpDisplayShell *shell,
           gboolean          xdir,
           gdouble           len)
 {
-  GimpImage *image = shell->display->image;
-  gdouble    xres;
-  gdouble    yres;
-  gdouble    res;
+  gdouble xres;
+  gdouble yres;
+  gdouble res;
 
   if (shell->unit == GIMP_UNIT_PIXEL)
     return len;
 
-  gimp_image_get_resolution (image, &xres, &yres);
+  gimp_image_get_resolution (shell->display->image, &xres, &yres);
 
   if (xdir)
     res = xres;
   else
     res = yres;
 
-  return len * _gimp_unit_get_factor (image->gimp, shell->unit) / res;
+  return len * _gimp_unit_get_factor (shell->display->gimp, shell->unit) / res;
 }

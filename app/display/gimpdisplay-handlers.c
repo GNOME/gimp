@@ -151,7 +151,7 @@ gimp_display_saved_handler (GimpImage   *image,
 {
   gchar *filename = file_utils_uri_display_name (uri);
 
-  gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_INFO,
+  gimp_message (display->gimp, G_OBJECT (display), GIMP_MESSAGE_INFO,
                 _("Image saved to '%s'"), filename);
 
   g_free (filename);

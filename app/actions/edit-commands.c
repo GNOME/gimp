@@ -268,7 +268,7 @@ edit_paste_cmd_callback (GtkAction *action,
 {
   GimpDisplay *display = action_data_get_display (data);
 
-  if (display)
+  if (display && display->image)
     edit_paste (display, FALSE);
   else
     edit_paste_as_new_cmd_callback (action, data);

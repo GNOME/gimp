@@ -30,7 +30,6 @@
 
 #include "config/gimpdisplayconfig.h"
 
-#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
@@ -61,15 +60,12 @@ static void     gimp_display_shell_format_title      (GimpDisplayShell *display,
 void
 gimp_display_shell_title_init (GimpDisplayShell *shell)
 {
-  GimpDisplayConfig *config;
-  gchar              title[MAX_TITLE_BUF];
+  gchar title[MAX_TITLE_BUF];
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  config = GIMP_DISPLAY_CONFIG (shell->display->image->gimp->config);
-
   gimp_display_shell_format_title (shell, title, sizeof (title),
-                                   config->image_status_format);
+                                   shell->display->config->image_status_format);
 
   gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "title",
                        "%s", title);
@@ -98,7 +94,7 @@ gimp_display_shell_update_title_idle (gpointer data)
   gchar              title[MAX_TITLE_BUF];
 
   shell  = GIMP_DISPLAY_SHELL (data);
-  config = GIMP_DISPLAY_CONFIG (shell->display->image->gimp->config);
+  config = shell->display->config;
 
   shell->title_idle_id = 0;
 
@@ -162,7 +158,13 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   image = shell->display->image;
-  gimp  = image->gimp;
+  gimp  = shell->display->gimp;
+
+  if (! image)
+    {
+      print (title, title_len, i, _("GIMP - Drop Files"));
+      return;
+    }
 
   gimp_zoom_model_get_fraction (shell->zoom, &num, &denom);
 

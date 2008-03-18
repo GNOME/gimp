@@ -90,16 +90,24 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
 void
 gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
 {
-  gint sx, sy;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  sx = SCALEX (shell, gimp_image_get_width  (shell->display->image));
-  sy = SCALEY (shell, gimp_image_get_height (shell->display->image));
+  if (shell->display->image)
+    {
+      gint sx, sy;
 
-  shell->offset_x = CLAMP (shell->offset_x, 0,
-                           MAX (sx - shell->disp_width, 0));
+      sx = SCALEX (shell, gimp_image_get_width  (shell->display->image));
+      sy = SCALEY (shell, gimp_image_get_height (shell->display->image));
 
-  shell->offset_y = CLAMP (shell->offset_y, 0,
-                           MAX (sy - shell->disp_height, 0));
+      shell->offset_x = CLAMP (shell->offset_x, 0,
+                               MAX (sx - shell->disp_width, 0));
+
+      shell->offset_y = CLAMP (shell->offset_y, 0,
+                               MAX (sy - shell->disp_height, 0));
+    }
+  else
+    {
+      shell->offset_x = 0;
+      shell->offset_y = 0;
+    }
 }

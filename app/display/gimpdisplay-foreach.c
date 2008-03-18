@@ -46,7 +46,7 @@ gimp_displays_dirty (Gimp *gimp)
     {
       GimpDisplay *display = list->data;
 
-      if (display->image->dirty)
+      if (display->image && display->image->dirty)
         return TRUE;
     }
 
@@ -183,7 +183,7 @@ gimp_displays_reconnect (Gimp      *gimp,
       GimpDisplay *display = list->data;
 
       if (display->image == old)
-        gimp_display_reconnect (display, new);
+        gimp_display_set_image (display, new);
     }
 
   /*  set the new_image on the remembered contexts (in reverse

@@ -111,7 +111,7 @@ gimp_display_shell_events (GtkWidget        *widget,
   if (! shell->display || ! shell->display->shell)
     return TRUE;
 
-  gimp = shell->display->image->gimp;
+  gimp = shell->display->gimp;
 
   switch (event->type)
     {
@@ -202,7 +202,7 @@ gimp_display_shell_events (GtkWidget        *widget,
       {
         GdkEventFocus *fevent = (GdkEventFocus *) event;
 
-        if (fevent->in && GIMP_DISPLAY_CONFIG (gimp->config)->activate_on_focus)
+        if (fevent->in && shell->display->config->activate_on_focus)
           set_display = TRUE;
       }
       break;
@@ -268,13 +268,9 @@ gimp_display_shell_events (GtkWidget        *widget,
       break;
     }
 
+  /*  Setting the context's display automatically sets the image, too  */
   if (set_display)
-    {
-      Gimp *gimp = shell->display->image->gimp;
-
-      /*  Setting the context's display automatically sets the image, too  */
-      gimp_context_set_display (gimp_get_user_context (gimp), shell->display);
-    }
+    gimp_context_set_display (gimp_get_user_context (gimp), shell->display);
 
   return FALSE;
 }
@@ -283,13 +279,8 @@ void
 gimp_display_shell_canvas_realize (GtkWidget        *canvas,
                                    GimpDisplayShell *shell)
 {
-  GimpDisplayConfig     *config;
-  GimpDisplay           *display;
-  GimpCanvasPaddingMode  padding_mode;
-  GimpRGB                padding_color;
-
-  display = shell->display;
-  config  = GIMP_DISPLAY_CONFIG (display->image->gimp->config);
+  GimpCanvasPaddingMode padding_mode;
+  GimpRGB               padding_color;
 
   gtk_widget_grab_focus (shell->canvas);
 
@@ -383,6 +374,21 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
   if (! shell->display || ! shell->display->shell)
     return TRUE;
 
+  if (! shell->display->image)
+    {
+      cairo_t *cr;
+
+      cr = gdk_cairo_create (widget->window);
+      gdk_cairo_region (cr, eevent->region);
+      cairo_clip (cr);
+
+      gimp_canvas_draw_drop_zone (GIMP_CANVAS (shell->canvas), cr);
+
+      cairo_destroy (cr);
+
+      return TRUE;
+    }
+
   /*  If the call to gimp_display_shell_pause() would cause a redraw,
    *  we need to make sure that no XOR drawing happens on areas that
    *  have already been cleared by the windowing system.
@@ -456,7 +462,7 @@ gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
 {
   GdkDevice *current_device;
 
-  current_device = gimp_devices_get_current (shell->display->image->gimp);
+  current_device = gimp_devices_get_current (shell->display->gimp);
 
   shell->draw_cursor = ! current_device->has_cursor;
 }
@@ -496,12 +502,12 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
                                   GdkModifierType   state,
                                   guint32           time)
 {
-  Gimp *gimp = shell->display->image->gimp;
+  Gimp *gimp = shell->display->gimp;
 
   if (shell->space_pressed)
     return;
 
-  switch (GIMP_DISPLAY_CONFIG (gimp->config)->space_bar_action)
+  switch (shell->display->config->space_bar_action)
     {
     case GIMP_SPACE_BAR_ACTION_NONE:
       return;
@@ -552,12 +558,12 @@ gimp_display_shell_space_released (GimpDisplayShell *shell,
                                    GdkModifierType   state,
                                    guint32           time)
 {
-  Gimp *gimp = shell->display->image->gimp;
+  Gimp *gimp = shell->display->gimp;
 
   if (! shell->space_pressed && ! shell->space_release_pending)
     return;
 
-  switch (GIMP_DISPLAY_CONFIG (gimp->config)->space_bar_action)
+  switch (shell->display->config->space_bar_action)
     {
     case GIMP_SPACE_BAR_ACTION_NONE:
       break;
@@ -589,7 +595,7 @@ gimp_display_shell_update_focus (GimpDisplayShell *shell,
                                  GimpCoords       *image_coords,
                                  GdkModifierType   state)
 {
-  Gimp *gimp = shell->display->image->gimp;
+  Gimp *gimp = shell->display->gimp;
 
   tool_manager_focus_display_active (gimp, shell->display);
   tool_manager_modifier_state_active (gimp, state, shell->display);
@@ -630,8 +636,11 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     return TRUE;
 
   display = shell->display;
+  gimp    = display->gimp;
   image   = display->image;
-  gimp    = image->gimp;
+
+  if (! image)
+    return TRUE;
 
   gdk_display = gtk_widget_get_display (canvas);
 
@@ -855,7 +864,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             event_mask = (GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK);
 
             if (active_tool &&
-                (! GIMP_DISPLAY_CONFIG (gimp->config)->perfect_mouse ||
+                (! shell->display->config->perfect_mouse ||
                  (gimp_tool_control_get_motion_mode (active_tool->control) !=
                   GIMP_MOTION_MODE_EXACT)))
               {
@@ -1511,7 +1520,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
   /*  cursor update support  */
 
-  if (GIMP_DISPLAY_CONFIG (gimp->config)->cursor_updating)
+  if (shell->display->config->cursor_updating)
     {
       active_tool = tool_manager_get_active (gimp);
 
@@ -1563,7 +1572,10 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
 {
   GimpDisplay *display = shell->display;
 
-  if (display->image->gimp->busy)
+  if (display->gimp->busy)
+    return TRUE;
+
+  if (! display->image)
     return TRUE;
 
   if (event->type == GDK_BUTTON_PRESS && event->button == 1)
@@ -1571,7 +1583,7 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
       GimpTool *active_tool;
       gboolean  sample_point;
 
-      active_tool  = tool_manager_get_active (display->image->gimp);
+      active_tool  = tool_manager_get_active (display->gimp);
       sample_point = (event->state & GDK_CONTROL_MASK);
 
       if (! ((sample_point && (GIMP_IS_COLOR_TOOL (active_tool) &&
@@ -1585,17 +1597,17 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
         {
           GimpToolInfo *tool_info;
 
-          tool_info = gimp_get_tool_info (display->image->gimp,
+          tool_info = gimp_get_tool_info (display->gimp,
                                           sample_point ?
                                           "gimp-color-picker-tool" :
                                           "gimp-move-tool");
 
           if (tool_info)
-            gimp_context_set_tool (gimp_get_user_context (display->image->gimp),
+            gimp_context_set_tool (gimp_get_user_context (display->gimp),
                                    tool_info);
         }
 
-      active_tool = tool_manager_get_active (display->image->gimp);
+      active_tool = tool_manager_get_active (display->gimp);
 
       if (active_tool)
         {
@@ -1653,7 +1665,7 @@ gimp_display_shell_origin_button_press (GtkWidget        *widget,
                                         GdkEventButton   *event,
                                         GimpDisplayShell *shell)
 {
-  if (! shell->display->image->gimp->busy)
+  if (! shell->display->gimp->busy)
     {
       if (event->button == 1)
         {
@@ -1674,6 +1686,9 @@ gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
                                             GdkEventButton   *bevent,
                                             GimpDisplayShell *shell)
 {
+  if (! shell->display->image)
+    return TRUE;
+
   if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 3))
     {
       gimp_ui_manager_ui_popup (shell->menubar_manager, "/quick-mask-popup",
@@ -1705,6 +1720,9 @@ gimp_display_shell_nav_button_press (GtkWidget        *widget,
                                      GdkEventButton   *bevent,
                                      GimpDisplayShell *shell)
 {
+  if (! shell->display->image)
+    return TRUE;
+
   if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 1))
     {
       gimp_navigation_editor_popup (shell, widget, bevent->x, bevent->y);

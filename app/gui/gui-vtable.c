@@ -59,6 +59,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-scale.h"
 
 #include "actions/plug-in-actions.h"
 
@@ -89,7 +90,8 @@ static GimpObject   * gui_display_get_by_ID    (Gimp                *gimp,
                                                 gint                 ID);
 static gint           gui_display_get_ID       (GimpObject          *display);
 static guint32        gui_display_get_window   (GimpObject          *display);
-static GimpObject   * gui_display_create       (GimpImage           *image,
+static GimpObject   * gui_display_create       (Gimp                *gimp,
+                                                GimpImage           *image,
                                                 GimpUnit             unit,
                                                 gdouble              scale);
 static void           gui_display_delete       (GimpObject          *display);
@@ -276,22 +278,52 @@ gui_display_get_window (GimpObject *display)
 }
 
 static GimpObject *
-gui_display_create (GimpImage *image,
+gui_display_create (Gimp      *gimp,
+                    GimpImage *image,
                     GimpUnit   unit,
                     gdouble    scale)
 {
-  GimpDisplay *display;
-  GList       *image_managers;
+  GimpContext *context = gimp_get_user_context (gimp);
+  GimpDisplay *display = NULL;
 
-  image_managers = gimp_ui_managers_from_name ("<Image>");
+  if (gimp_container_num_children (gimp->displays) == 1)
+    {
+      display = (GimpDisplay *)
+        gimp_container_get_child_by_index (gimp->displays, 0);
 
-  g_return_val_if_fail (image_managers != NULL, NULL);
+      if (display->image)
+        display = NULL;
+    }
 
-  display = gimp_display_new (image, unit, scale,
-                              global_menu_factory,
-                              image_managers->data);
+  if (display)
+    {
+      gimp_display_set_image (display, image);
+      gimp_display_shell_set_unit (GIMP_DISPLAY_SHELL (display->shell), unit);
+      gimp_display_shell_scale (GIMP_DISPLAY_SHELL (display->shell),
+                                GIMP_ZOOM_TO, scale);
 
-  gimp_context_set_display (gimp_get_user_context (image->gimp), display);
+      if (gimp_context_get_display (context) == display)
+        {
+          gimp_context_set_image (context, image);
+          gimp_context_display_changed (context);
+        }
+      else
+        {
+          gimp_context_set_display (context, display);
+        }
+    }
+  else
+    {
+      GList *image_managers = gimp_ui_managers_from_name ("<Image>");
+
+      g_return_val_if_fail (image_managers != NULL, NULL);
+
+      display = gimp_display_new (gimp, image, unit, scale,
+                                  global_menu_factory,
+                                  image_managers->data);
+
+      gimp_context_set_display (context, display);
+   }
 
   gimp_ui_manager_update (GIMP_DISPLAY_SHELL (display->shell)->menubar_manager,
                           display);

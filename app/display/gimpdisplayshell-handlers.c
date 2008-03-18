@@ -126,16 +126,13 @@ static gboolean   gimp_display_shell_idle_update_icon       (gpointer          d
 void
 gimp_display_shell_connect (GimpDisplayShell *shell)
 {
-  GimpImage         *image;
-  GimpDisplayConfig *display_config;
+  GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
   g_return_if_fail (GIMP_IS_IMAGE (shell->display->image));
 
   image = shell->display->image;
-
-  display_config = GIMP_DISPLAY_CONFIG (image->gimp->config);
 
   g_signal_connect (image, "clean",
                     G_CALLBACK (gimp_display_shell_clean_dirty_handler),
@@ -197,63 +194,63 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_vectors_remove_handler),
                     shell);
 
-  g_signal_connect (image->gimp->config,
+  g_signal_connect (shell->display->config,
                     "notify::transparency-size",
                     G_CALLBACK (gimp_display_shell_check_notify_handler),
                     shell);
-  g_signal_connect (image->gimp->config,
+  g_signal_connect (shell->display->config,
                     "notify::transparency-type",
                     G_CALLBACK (gimp_display_shell_check_notify_handler),
                     shell);
 
-  g_signal_connect (image->gimp->config,
+  g_signal_connect (shell->display->config,
                     "notify::image-title-format",
                     G_CALLBACK (gimp_display_shell_title_notify_handler),
                     shell);
-  g_signal_connect (image->gimp->config,
+  g_signal_connect (shell->display->config,
                     "notify::image-status-format",
                     G_CALLBACK (gimp_display_shell_title_notify_handler),
                     shell);
-  g_signal_connect (image->gimp->config,
+  g_signal_connect (shell->display->config,
                     "notify::navigation-preview-size",
                     G_CALLBACK (gimp_display_shell_nav_size_notify_handler),
                     shell);
-  g_signal_connect (image->gimp->config,
+  g_signal_connect (shell->display->config,
                     "notify::monitor-resolution-from-windowing-system",
                     G_CALLBACK (gimp_display_shell_monitor_res_notify_handler),
                     shell);
-  g_signal_connect (image->gimp->config,
+  g_signal_connect (shell->display->config,
                     "notify::monitor-xresolution",
                     G_CALLBACK (gimp_display_shell_monitor_res_notify_handler),
                     shell);
-  g_signal_connect (image->gimp->config,
+  g_signal_connect (shell->display->config,
                     "notify::monitor-yresolution",
                     G_CALLBACK (gimp_display_shell_monitor_res_notify_handler),
                     shell);
 
-  g_signal_connect (display_config->default_view,
+  g_signal_connect (shell->display->config->default_view,
                     "notify::padding-mode",
                     G_CALLBACK (gimp_display_shell_padding_notify_handler),
                     shell);
-  g_signal_connect (display_config->default_view,
+  g_signal_connect (shell->display->config->default_view,
                     "notify::padding-color",
                     G_CALLBACK (gimp_display_shell_padding_notify_handler),
                     shell);
-  g_signal_connect (display_config->default_fullscreen_view,
+  g_signal_connect (shell->display->config->default_fullscreen_view,
                     "notify::padding-mode",
                     G_CALLBACK (gimp_display_shell_padding_notify_handler),
                     shell);
-  g_signal_connect (display_config->default_fullscreen_view,
+  g_signal_connect (shell->display->config->default_fullscreen_view,
                     "notify::padding-color",
                     G_CALLBACK (gimp_display_shell_padding_notify_handler),
                     shell);
 
-  g_signal_connect (image->gimp->config,
+  g_signal_connect (shell->display->config,
                     "notify::marching-ants-speed",
                     G_CALLBACK (gimp_display_shell_ants_speed_notify_handler),
                     shell);
 
-  g_signal_connect (image->gimp->config,
+  g_signal_connect (shell->display->config,
                     "notify::zoom-quality",
                     G_CALLBACK (gimp_display_shell_quality_notify_handler),
                     shell);
@@ -265,16 +262,13 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
 void
 gimp_display_shell_disconnect (GimpDisplayShell *shell)
 {
-  GimpImage         *image;
-  GimpDisplayConfig *display_config;
+  GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
   g_return_if_fail (GIMP_IS_IMAGE (shell->display->image));
 
   image = shell->display->image;
-
-  display_config = GIMP_DISPLAY_CONFIG (image->gimp->config);
 
   if (shell->icon_idle_id)
     {
@@ -294,28 +288,28 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
       shell->pen_gc = NULL;
     }
 
-  g_signal_handlers_disconnect_by_func (image->gimp->config,
+  g_signal_handlers_disconnect_by_func (shell->display->config,
                                         gimp_display_shell_quality_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (image->gimp->config,
+  g_signal_handlers_disconnect_by_func (shell->display->config,
                                         gimp_display_shell_ants_speed_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (display_config->default_fullscreen_view,
+  g_signal_handlers_disconnect_by_func (shell->display->config->default_fullscreen_view,
                                         gimp_display_shell_padding_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (display_config->default_view,
+  g_signal_handlers_disconnect_by_func (shell->display->config->default_view,
                                         gimp_display_shell_padding_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (image->gimp->config,
+  g_signal_handlers_disconnect_by_func (shell->display->config,
                                         gimp_display_shell_monitor_res_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (image->gimp->config,
+  g_signal_handlers_disconnect_by_func (shell->display->config,
                                         gimp_display_shell_nav_size_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (image->gimp->config,
+  g_signal_handlers_disconnect_by_func (shell->display->config,
                                         gimp_display_shell_title_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (image->gimp->config,
+  g_signal_handlers_disconnect_by_func (shell->display->config,
                                         gimp_display_shell_check_notify_handler,
                                         shell);
 
@@ -428,7 +422,7 @@ gimp_display_shell_size_changed_handler (GimpImage        *image,
                                          GimpDisplayShell *shell)
 {
   gimp_display_shell_scale_resize (shell,
-                                   GIMP_DISPLAY_CONFIG (image->gimp->config)->resize_windows_on_resize,
+                                   shell->display->config->resize_windows_on_resize,
                                    TRUE);
 }
 
@@ -637,7 +631,7 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
   GimpCanvasPaddingMode  padding_mode;
   GimpRGB                padding_color;
 
-  display_config = GIMP_DISPLAY_CONFIG (shell->display->image->gimp->config);
+  display_config = shell->display->config;
 
   fullscreen = gimp_display_shell_get_fullscreen (shell);
 
