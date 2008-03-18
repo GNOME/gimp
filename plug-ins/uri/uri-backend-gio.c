@@ -164,12 +164,28 @@ get_protocols (void)
   return g_string_free (string, FALSE);
 }
 
+typedef struct
+{
+  Mode     mode;
+  GTimeVal last_time;
+} UriProgress;
+
 static void
 uri_progress_callback (goffset  current_num_bytes,
                        goffset  total_num_bytes,
                        gpointer user_data)
 {
-  Mode mode = GPOINTER_TO_INT (user_data);
+  UriProgress *progress = user_data;
+  GTimeVal     now;
+
+  /*  update the progress only up to 10 times a second  */
+  g_get_current_time (&now);
+
+  if (((now.tv_sec - progress->last_time.tv_sec) * 1000 +
+       (now.tv_usec - progress->last_time.tv_usec) / 1000) < 100)
+    return;
+
+  progress->last_time = now;
 
   if (total_num_bytes > 0)
     {
@@ -177,7 +193,7 @@ uri_progress_callback (goffset  current_num_bytes,
       gchar       *done  = gimp_memsize_to_string (current_num_bytes);
       gchar       *total = gimp_memsize_to_string (total_num_bytes);
 
-      switch (mode)
+      switch (progress->mode)
         {
         case DOWNLOAD:
           format = _("Downloading image (%s of %s)");
@@ -200,7 +216,7 @@ uri_progress_callback (goffset  current_num_bytes,
       const gchar *format;
       gchar       *done = gimp_memsize_to_string (current_num_bytes);
 
-      switch (mode)
+      switch (progress->mode)
         {
         case DOWNLOAD:
           format = _("Downloaded %s of image data");
@@ -254,10 +270,11 @@ copy_uri (const gchar  *src_uri,
           GimpRunMode   run_mode,
           GError      **error)
 {
-  GVfs     *vfs = g_vfs_get_default ();
-  GFile    *src_file;
-  GFile    *dest_file;
-  gboolean  success;
+  GVfs        *vfs = g_vfs_get_default ();
+  GFile       *src_file;
+  GFile       *dest_file;
+  UriProgress  progress = { 0, };
+  gboolean     success;
 
   vfs = g_vfs_get_default ();
 
@@ -272,8 +289,10 @@ copy_uri (const gchar  *src_uri,
 
   gimp_progress_init (_("Connecting to server"));
 
+  progress.mode = mode;
+
   success = g_file_copy (src_file, dest_file, 0, NULL,
-                         uri_progress_callback, GINT_TO_POINTER (mode),
+                         uri_progress_callback, &progress,
                          error);
 
   if (! success &&
