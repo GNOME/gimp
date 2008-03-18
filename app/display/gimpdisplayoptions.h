@@ -25,6 +25,7 @@
 
 #define GIMP_TYPE_DISPLAY_OPTIONS            (gimp_display_options_get_type ())
 #define GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN (gimp_display_options_fullscreen_get_type ())
+#define GIMP_TYPE_DISPLAY_OPTIONS_NO_IMAGE   (gimp_display_options_no_image_get_type ())
 
 #define GIMP_DISPLAY_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DISPLAY_OPTIONS, GimpDisplayOptions))
 #define GIMP_DISPLAY_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DISPLAY_OPTIONS, GimpDisplayOptionsClass))
@@ -64,6 +65,7 @@ struct _GimpDisplayOptionsClass
 
 GType  gimp_display_options_get_type            (void) G_GNUC_CONST;
 GType  gimp_display_options_fullscreen_get_type (void) G_GNUC_CONST;
+GType  gimp_display_options_no_image_get_type   (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_DISPLAY_OPTIONS_H__ */

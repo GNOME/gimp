@@ -28,6 +28,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-grid.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-sample-points.h"
 
@@ -46,8 +47,10 @@
 
 
 #define GET_OPTIONS(shell) \
-  (gimp_display_shell_get_fullscreen (shell) ? \
-   shell->fullscreen_options : shell->options)
+  (shell->display->image ? \
+   (gimp_display_shell_get_fullscreen (shell) ? \
+    shell->fullscreen_options : shell->options) : \
+   shell->no_image_options)
 
 #define SET_ACTIVE(manager,action_name,active) \
   { GimpActionGroup *group = \
@@ -64,6 +67,42 @@
    gimp_context_get_display (gimp_get_user_context \
                              ((shell)->display->gimp)))
 
+
+void
+gimp_display_shell_appearance_update (GimpDisplayShell *shell)
+{
+  GimpDisplayOptions *options;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  options = GET_OPTIONS (shell);
+
+  gtk_widget_set_name (GTK_WIDGET (shell->menubar),
+                       gimp_display_shell_get_fullscreen (shell) ?
+                       "gimp-menubar-fullscreen" : NULL);
+
+  gimp_display_shell_set_show_menubar       (shell,
+                                             options->show_menubar);
+  gimp_display_shell_set_show_rulers        (shell,
+                                             options->show_rulers);
+  gimp_display_shell_set_show_scrollbars    (shell,
+                                             options->show_scrollbars);
+  gimp_display_shell_set_show_statusbar     (shell,
+                                             options->show_statusbar);
+  gimp_display_shell_set_show_selection     (shell,
+                                             options->show_selection);
+  gimp_display_shell_set_show_layer         (shell,
+                                             options->show_layer_boundary);
+  gimp_display_shell_set_show_guides        (shell,
+                                             options->show_guides);
+  gimp_display_shell_set_show_grid          (shell,
+                                             options->show_grid);
+  gimp_display_shell_set_show_sample_points (shell,
+                                             options->show_sample_points);
+  gimp_display_shell_set_padding            (shell,
+                                             options->padding_mode,
+                                             &options->padding_color);
+}
 
 void
 gimp_display_shell_set_fullscreen (GimpDisplayShell *shell,
@@ -337,8 +376,11 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
 
   g_object_set (options, "show-guides", show, NULL);
 
-  if (gimp_image_get_guides (shell->display->image))
-    gimp_display_shell_expose_full (shell);
+  if (shell->display->image &&
+      gimp_image_get_guides (shell->display->image))
+    {
+      gimp_display_shell_expose_full (shell);
+    }
 
   SET_ACTIVE (shell->menubar_manager, "view-show-guides", show);
 
@@ -366,8 +408,11 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
 
   g_object_set (options, "show-grid", show, NULL);
 
-  if (shell->display->image->grid)
-    gimp_display_shell_expose_full (shell);
+  if (shell->display->image &&
+      gimp_image_get_grid (shell->display->image))
+    {
+      gimp_display_shell_expose_full (shell);
+    }
 
   SET_ACTIVE (shell->menubar_manager, "view-show-grid", show);
 
@@ -395,8 +440,11 @@ gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
 
   g_object_set (options, "show-sample-points", show, NULL);
 
-  if (gimp_image_get_sample_points (shell->display->image))
-    gimp_display_shell_expose_full (shell);
+  if (shell->display->image &&
+      gimp_image_get_sample_points (shell->display->image))
+    {
+      gimp_display_shell_expose_full (shell);
+    }
 
   SET_ACTIVE (shell->menubar_manager, "view-show-sample-points", show);
 

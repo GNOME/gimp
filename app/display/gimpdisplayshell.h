@@ -169,6 +169,7 @@ struct _GimpDisplayShell
 
   GimpDisplayOptions *options;
   GimpDisplayOptions *fullscreen_options;
+  GimpDisplayOptions *no_image_options;
 
   /*  the state of gimp_display_shell_tool_events()  */
   gboolean          space_pressed;

@@ -205,7 +205,7 @@ gimp_display_shell_selection_set_hidden (GimpDisplayShell *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (shell->selection)
+  if (shell->selection && shell->display->image)
     {
       Selection *selection = shell->selection;
 
@@ -227,7 +227,7 @@ gimp_display_shell_selection_layer_set_hidden (GimpDisplayShell *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (shell->selection)
+  if (shell->selection && shell->display->image)
     {
       Selection *selection = shell->selection;
 

@@ -545,7 +545,9 @@ view_actions_update (GimpActionGroup *group,
 
       fullscreen = gimp_display_shell_get_fullscreen (shell);
 
-      options = fullscreen ? shell->fullscreen_options : shell->options;
+      options = (image ?
+                 (fullscreen ? shell->fullscreen_options : shell->options) :
+                 shell->no_image_options);
 
       revert_enabled = gimp_display_shell_scale_can_revert (shell);
     }
@@ -619,11 +621,11 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-snap-to-vectors",     image);
   SET_ACTIVE    ("view-snap-to-vectors",     display && shell->snap_to_vectors);
 
-  SET_SENSITIVE ("view-padding-color-theme",       display);
-  SET_SENSITIVE ("view-padding-color-light-check", display);
-  SET_SENSITIVE ("view-padding-color-dark-check",  display);
-  SET_SENSITIVE ("view-padding-color-custom",      display);
-  SET_SENSITIVE ("view-padding-color-prefs",       display);
+  SET_SENSITIVE ("view-padding-color-theme",       image);
+  SET_SENSITIVE ("view-padding-color-light-check", image);
+  SET_SENSITIVE ("view-padding-color-dark-check",  image);
+  SET_SENSITIVE ("view-padding-color-custom",      image);
+  SET_SENSITIVE ("view-padding-color-prefs",       image);
 
   if (display)
     {
@@ -642,13 +644,13 @@ view_actions_update (GimpActionGroup *group,
         }
     }
 
-  SET_SENSITIVE ("view-show-menubar",    display);
+  SET_SENSITIVE ("view-show-menubar",    image);
   SET_ACTIVE    ("view-show-menubar",    display && options->show_menubar);
-  SET_SENSITIVE ("view-show-rulers",     display);
+  SET_SENSITIVE ("view-show-rulers",     image);
   SET_ACTIVE    ("view-show-rulers",     display && options->show_rulers);
-  SET_SENSITIVE ("view-show-scrollbars", display);
+  SET_SENSITIVE ("view-show-scrollbars", image);
   SET_ACTIVE    ("view-show-scrollbars", display && options->show_scrollbars);
-  SET_SENSITIVE ("view-show-statusbar",  display);
+  SET_SENSITIVE ("view-show-statusbar",  image);
   SET_ACTIVE    ("view-show-statusbar",  display && options->show_statusbar);
 
   SET_SENSITIVE ("view-shrink-wrap", image);

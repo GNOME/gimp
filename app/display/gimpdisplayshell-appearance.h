@@ -20,6 +20,8 @@
 #define __GIMP_DISPLAY_SHELL_APPEARANCE_H__
 
 
+void       gimp_display_shell_appearance_update      (GimpDisplayShell *shell);
+
 void       gimp_display_shell_set_fullscreen         (GimpDisplayShell *shell,
                                                       gboolean          fullscreen);
 gboolean   gimp_display_shell_get_fullscreen         (GimpDisplayShell *shell);

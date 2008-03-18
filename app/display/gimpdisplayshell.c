@@ -315,6 +315,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->options                = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
   shell->fullscreen_options     = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
+  shell->no_image_options       = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_NO_IMAGE, NULL);
 
   shell->space_pressed          = FALSE;
   shell->space_release_pending  = FALSE;
@@ -383,6 +384,9 @@ gimp_display_shell_finalize (GObject *object)
 
   if (shell->fullscreen_options)
     g_object_unref (shell->fullscreen_options);
+
+  if (shell->no_image_options)
+    g_object_unref (shell->no_image_options);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

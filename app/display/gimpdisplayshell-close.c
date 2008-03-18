@@ -42,6 +42,7 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-close.h"
 #include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-scale.h"
@@ -330,6 +331,8 @@ gimp_display_shell_really_close (GimpDisplayShell *shell)
 
       if (shell->display == gimp_context_get_display (user_context))
         gimp_ui_manager_update (shell->popup_manager, shell->display);
+
+      gimp_display_shell_appearance_update (shell);
     }
 }
 

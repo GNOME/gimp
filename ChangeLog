@@ -1,5 +1,31 @@
 2008-03-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayoptions.[ch]: add new options object
+	for the "no image" display appearance.
+
+	* app/display/gimpdisplayshell.[ch]: keep one of them around.
+
+	* app/display/gimpdisplayshell-appearance.[ch]: use the options
+	object when the display is empty. Add guards against no image
+	to some functions. Add gimp_display_shell_appearance_update()
+	which sets all options according to the current display state
+	(normal, fullscreen, no image).
+
+	* app/actions/view-actions.c: don't allow to configure the GUI
+	of the empty display.
+
+	* app/display/gimpdisplayshell-callbacks.c: use the new appearance
+	update function instead of doing it all here.
+
+	* app/display/gimpdisplayshell-close.c
+	* app/gui/gui-vtable.c: update the appearance when clearing or
+	filling the display.
+
+	* app/display/gimpdisplayshell-selection.c: forgot some guards
+	against empty displays.
+
+2008-03-18  Michael Natterer  <mitch@gimp.org>
+
 	First draft of the "no image open" window, which is implemented as
 	a display without image (a view with NULL model). Didn't change
 	the display's appearance yet so I can first make sure the display

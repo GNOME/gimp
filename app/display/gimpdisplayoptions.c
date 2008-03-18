@@ -80,6 +80,16 @@ G_DEFINE_TYPE_WITH_CODE (GimpDisplayOptionsFullscreen,
                          GIMP_TYPE_DISPLAY_OPTIONS,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
+typedef struct _GimpDisplayOptions      GimpDisplayOptionsNoImage;
+typedef struct _GimpDisplayOptionsClass GimpDisplayOptionsNoImageClass;
+
+#define gimp_display_options_no_image_init gimp_display_options_init
+
+G_DEFINE_TYPE_WITH_CODE (GimpDisplayOptionsNoImage,
+                         gimp_display_options_no_image,
+                         GIMP_TYPE_DISPLAY_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
+
 
 static void
 gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
@@ -198,6 +208,44 @@ gimp_display_options_fullscreen_class_init (GimpDisplayOptionsFullscreenClass *k
 }
 
 static void
+gimp_display_options_no_image_class_init (GimpDisplayOptionsNoImageClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->set_property = gimp_display_options_set_property;
+  object_class->get_property = gimp_display_options_get_property;
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
+                                    "show-rulers", SHOW_RULERS_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SCROLLBARS,
+                                    "show-scrollbars", SHOW_SCROLLBARS_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SELECTION,
+                                    "show-selection", SHOW_SELECTION_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_LAYER_BOUNDARY,
+                                    "show-layer-boundary", SHOW_LAYER_BOUNDARY_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_GUIDES,
+                                    "show-guides", SHOW_GUIDES_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_GRID,
+                                    "show-grid", SHOW_GRID_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SAMPLE_POINTS,
+                                    "show-sample-points", SHOW_SAMPLE_POINTS_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+}
+
+static void
 gimp_display_options_init (GimpDisplayOptions *options)
 {
   options->padding_mode_set = FALSE;
@@ -255,9 +303,9 @@ gimp_display_options_set_property (GObject      *object,
 
 static void
 gimp_display_options_get_property (GObject    *object,
-                                      guint       property_id,
-                                      GValue     *value,
-                                      GParamSpec *pspec)
+                                   guint       property_id,
+                                   GValue     *value,
+                                   GParamSpec *pspec)
 {
   GimpDisplayOptions *options = GIMP_DISPLAY_OPTIONS (object);
 
