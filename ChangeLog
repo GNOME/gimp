@@ -1,3 +1,12 @@
+2008-03-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpcanvas.[ch]: add gimp_canvas_draw_drop_zone()
+	which simply renders a big "Drop Here" on the canvas. Replaced
+	Gimp member and construct property by GimpDisplayConfig.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): changed
+	accordingly.
+
 2008-03-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/uri/uri-backend-gio.c (uri_progress_callback):

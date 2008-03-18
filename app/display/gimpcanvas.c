@@ -26,17 +26,17 @@
 
 #include "config/gimpdisplayconfig.h"
 
-#include "core/gimp.h"
-
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvas.h"
+
+#include "gimp-intl.h"
 
 
 enum
 {
   PROP_0,
-  PROP_GIMP
+  PROP_CONFIG
 };
 
 
@@ -163,9 +163,9 @@ gimp_canvas_class_init (GimpCanvasClass *klass)
   widget_class->unrealize    = gimp_canvas_unrealize;
   widget_class->style_set    = gimp_canvas_style_set;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp", NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
+  g_object_class_install_property (object_class, PROP_CONFIG,
+                                   g_param_spec_object ("config", NULL, NULL,
+                                                        GIMP_TYPE_DISPLAY_CONFIG,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
@@ -192,8 +192,8 @@ gimp_canvas_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      canvas->gimp = g_value_get_object (value);
+    case PROP_CONFIG:
+      canvas->config = g_value_get_object (value); /* don't dup */
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -211,8 +211,8 @@ gimp_canvas_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, canvas->gimp);
+    case PROP_CONFIG:
+      g_value_set_object (value, canvas->config);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -262,6 +262,12 @@ gimp_canvas_unrealize (GtkWidget *widget)
       canvas->layout = NULL;
     }
 
+  if (canvas->drop_zone_layout)
+    {
+      g_object_unref (canvas->drop_zone_layout);
+      canvas->drop_zone_layout = NULL;
+    }
+
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
@@ -279,6 +285,12 @@ gimp_canvas_style_set (GtkWidget *widget,
       g_object_unref (canvas->layout);
       canvas->layout = NULL;
     }
+
+  if (canvas->drop_zone_layout)
+    {
+      g_object_unref (canvas->drop_zone_layout);
+      canvas->drop_zone_layout = NULL;
+    }
 }
 
 /* Returns: %TRUE if the XOR color is not white */
@@ -286,10 +298,9 @@ static gboolean
 gimp_canvas_get_xor_color (GimpCanvas *canvas,
                            GdkColor   *color)
 {
-  GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (canvas->gimp->config);
-  guchar             r, g, b;
+  guchar r, g, b;
 
-  gimp_rgb_get_uchar (&config->xor_color, &r, &g, &b);
+  gimp_rgb_get_uchar (&canvas->config->xor_color, &r, &g, &b);
 
   color->red   = (r << 8) | r;
   color->green = (g << 8) | g;
@@ -491,13 +502,13 @@ gimp_canvas_ensure_style (GimpCanvas      *canvas,
  * Return value: a new #GimpCanvas widget
  **/
 GtkWidget *
-gimp_canvas_new (Gimp *gimp)
+gimp_canvas_new (GimpDisplayConfig *config)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY_CONFIG (config), NULL);
 
   return g_object_new (GIMP_TYPE_CANVAS,
-                       "name", "gimp-canvas",
-                       "gimp", gimp,
+                       "name",   "gimp-canvas",
+                       "config", config,
                        NULL);
 }
 
@@ -820,6 +831,34 @@ gimp_canvas_draw_rgb (GimpCanvas      *canvas,
                                 x, y, width, height,
                                 GDK_RGB_DITHER_MAX,
                                 rgb_buf, rowstride, xdith, ydith);
+}
+
+void
+gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
+                            cairo_t    *cr)
+{
+  GtkWidget *widget = GTK_WIDGET (canvas);
+  gint       width;
+  gint       height;
+  gdouble    factor;
+
+  if (! canvas->drop_zone_layout)
+    canvas->drop_zone_layout = gtk_widget_create_pango_layout (widget,
+                                                               _("Drop Files"));
+
+  pango_layout_get_pixel_size (canvas->drop_zone_layout, &width, &height);
+
+  factor = MIN (2.0 / 3.0 * widget->allocation.width  / width,
+                2.0 / 3.0 * widget->allocation.height / height);
+
+  cairo_scale (cr, factor, factor);
+
+  cairo_move_to (cr,
+                 (widget->allocation.width  / factor - width)  / 2.0,
+                 (widget->allocation.height / factor - height) / 2.0);
+
+  pango_cairo_show_layout (cr, canvas->drop_zone_layout);
+  cairo_fill (cr);
 }
 
 /**
