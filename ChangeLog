@@ -1,3 +1,12 @@
+2008-03-18  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/uri/Makefile.am
+        * plug-ins/uri/gimpmountoperation.[ch]: added a temporary copy of
+	GtkMountOperation until we depend on the next stable GTK+ release.
+	Converted to GIMP namespace to avoid symbol collisions.
+
+	* plug-ins/uri/uri-backend-gio.c: use the new mount operation.
+
 2008-03-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/png.c: formatting.

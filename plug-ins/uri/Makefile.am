@@ -19,7 +19,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = uri
 
 if HAVE_GIO
-backend_sources = uri-backend-gio.c
+backend_sources = gimpmountoperation.c gimpmountoperation.h uri-backend-gio.c
 backend_cflags = $(GIO_CFLAGS)
 backend_libs = $(GIO_LIBS)
 else
