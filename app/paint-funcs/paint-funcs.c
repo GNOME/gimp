@@ -450,7 +450,7 @@ combine_inten_a_and_indexed_pixels (const guchar *src1,
           const guchar    new_alpha = INT_MULT3 (255, *m, opacity, tmp);
           guint           b;
 
-          for (b = 0; b < bytes-1; b++)
+          for (b = 0; b < bytes - 1; b++)
             dest[b] = (new_alpha > 127) ? cmap[index + b] : src1[b];
 
           dest[b] = (new_alpha > 127) ? OPAQUE_OPACITY : src1[b];
@@ -472,7 +472,7 @@ combine_inten_a_and_indexed_pixels (const guchar *src1,
           const guchar    new_alpha = INT_MULT (255, opacity, tmp);
           guint           b;
 
-          for (b = 0; b < bytes-1; b++)
+          for (b = 0; b < bytes - 1; b++)
             dest[b] = (new_alpha > 127) ? cmap[index + b] : src1[b];
 
           dest[b] = (new_alpha > 127) ? OPAQUE_OPACITY : src1[b];
@@ -510,7 +510,7 @@ combine_inten_a_and_indexed_a_pixels (const guchar *src1,
           const guchar    new_alpha = INT_MULT3 (src2[alpha], *m, opacity, tmp);
           guint           b;
 
-          for (b = 0; b < bytes-1; b++)
+          for (b = 0; b < bytes - 1; b++)
             dest[b] = (new_alpha > 127) ? cmap[index + b] : src1[b];
 
           dest[b] = (new_alpha > 127) ? OPAQUE_OPACITY : src1[b];
@@ -532,7 +532,7 @@ combine_inten_a_and_indexed_a_pixels (const guchar *src1,
           const guchar    new_alpha = INT_MULT (src2[alpha], opacity, tmp);
           guint           b;
 
-          for (b = 0; b < bytes-1; b++)
+          for (b = 0; b < bytes - 1; b++)
             dest[b] = (new_alpha > 127) ? cmap[index + b] : src1[b];
 
           dest[b] = (new_alpha > 127) ? OPAQUE_OPACITY : src1[b];
@@ -638,9 +638,9 @@ combine_inten_and_inten_a_pixels (const guchar   *src1,
               register glong  t1;
               const guchar    new_alpha = INT_MULT (src2[alpha], opacity, t1);
 
-              dest[0] = INT_BLEND (src2[0] , src1[0] , new_alpha, t1);
-              dest[1] = INT_BLEND (src2[1] , src1[1] , new_alpha, t1);
-              dest[2] = INT_BLEND (src2[2] , src1[2] , new_alpha, t1);
+              dest[0] = INT_BLEND (src2[0], src1[0], new_alpha, t1);
+              dest[1] = INT_BLEND (src2[1], src1[1], new_alpha, t1);
+              dest[2] = INT_BLEND (src2[2], src1[2], new_alpha, t1);
 
               src1 += bytes;
               src2 += src2_bytes;
@@ -657,7 +657,7 @@ combine_inten_and_inten_a_pixels (const guchar   *src1,
 
               for (b = 0; b < bytes; b++)
                 dest[b] = (affect[b] ?
-                           INT_BLEND (src2[b] , src1[b] , new_alpha, t1) :
+                           INT_BLEND (src2[b], src1[b], new_alpha, t1) :
                            src1[b]);
 
               src1 += bytes;
@@ -805,8 +805,9 @@ combine_inten_a_and_inten_pixels (const guchar   *src1,
                 }
               else
                 {
-                  dest[alpha] = (src1[alpha]) ? src1[alpha] :
-                    (affect[alpha] ? new_alpha : src1[alpha]);
+                  dest[alpha] = (src1[alpha] ?
+                                 src1[alpha] : (affect[alpha] ?
+                                                new_alpha : src1[alpha]));
                 }
 
               m++;
@@ -1416,9 +1417,9 @@ replace_inten_pixels (const guchar   *src1,
           guchar mask_alpha = INT_MULT (*m, opacity, tmp);
 
           for (b = 0; b < bytes; b++)
-            dest[b] = (affect[b]) ?
-              INT_BLEND (src2[b], src1[b], mask_alpha, tmp) :
-              src1[b];
+            dest[b] = (affect[b] ?
+                       INT_BLEND (src2[b], src1[b], mask_alpha, tmp) :
+                       src1[b]);
 
           if (has_alpha1 && !has_alpha2)
             dest[b] = src1[b];
@@ -1437,9 +1438,9 @@ replace_inten_pixels (const guchar   *src1,
       while (length --)
         {
           for (b = 0; b < bytes; b++)
-            dest[b] = (affect[b]) ?
-              INT_BLEND (src2[b], src1[b], mask_alpha, tmp) :
-              src1[b];
+            dest[b] = (affect[b] ?
+                       INT_BLEND (src2[b], src1[b], mask_alpha, tmp) :
+                       src1[b]);
 
           if (has_alpha1 && !has_alpha2)
             dest[b] = src1[b];
@@ -1910,7 +1911,7 @@ color_region (PixelRegion  *dest,
 void
 color_region_mask (PixelRegion  *dest,
                    PixelRegion  *mask,
-                   const guchar *col)
+                  const guchar *col)
 {
   gpointer pr;
 
