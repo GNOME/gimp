@@ -86,15 +86,20 @@
 
 /*  local function prototypes  */
 
-static void       gimp_display_shell_vscrollbar_update (GtkAdjustment    *adjustment,
-                                                        GimpDisplayShell *shell);
-static void       gimp_display_shell_hscrollbar_update (GtkAdjustment    *adjustment,
-                                                        GimpDisplayShell *shell);
+static void       gimp_display_shell_vscrollbar_update       (GtkAdjustment    *adjustment,
+                                                              GimpDisplayShell *shell);
+static void       gimp_display_shell_hscrollbar_update       (GtkAdjustment    *adjustment,
+                                                              GimpDisplayShell *shell);
 
 static GdkModifierType
-                  gimp_display_shell_key_to_state      (gint              key);
+                  gimp_display_shell_key_to_state            (gint              key);
 
-static GdkEvent * gimp_display_shell_compress_motion   (GimpDisplayShell *shell);
+static GdkEvent * gimp_display_shell_compress_motion         (GimpDisplayShell *shell);
+
+static gboolean   gimp_display_shell_canvas_expose_drop_zone (GimpDisplayShell *shell,
+                                                              GdkEventExpose   *eevent);
+static gboolean   gimp_display_shell_canvas_expose_image     (GimpDisplayShell *shell,
+                                                              GdkEventExpose   *eevent);
 
 
 /*  public functions  */
@@ -339,96 +344,20 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
                                   GdkEventExpose   *eevent,
                                   GimpDisplayShell *shell)
 {
-  GdkRegion    *region = NULL;
-  GdkRectangle *rects;
-  gint          n_rects;
-  gint          i;
-
   /*  are we in destruction?  */
   if (! shell->display || ! shell->display->shell)
-    return TRUE;
+    {
+      return TRUE;
+    }
 
   if (! shell->display->image)
     {
-      cairo_t *cr;
-
-      cr = gdk_cairo_create (widget->window);
-      gdk_cairo_region (cr, eevent->region);
-      cairo_clip (cr);
-
-      gimp_canvas_draw_drop_zone (GIMP_CANVAS (shell->canvas), cr);
-
-      cairo_destroy (cr);
-
-      return FALSE;
+      return gimp_display_shell_canvas_expose_drop_zone (shell, eevent);
     }
-
-  /*  If the call to gimp_display_shell_pause() would cause a redraw,
-   *  we need to make sure that no XOR drawing happens on areas that
-   *  have already been cleared by the windowing system.
-   */
-  if (shell->paused_count == 0)
+  else
     {
-      GdkRectangle  area;
-
-      area.x      = 0;
-      area.y      = 0;
-      area.width  = shell->disp_width;
-      area.height = shell->disp_height;
-
-      region = gdk_region_rectangle (&area);
-
-      gdk_region_subtract (region, eevent->region);
-
-      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                   GIMP_CANVAS_STYLE_XOR, region);
-      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                   GIMP_CANVAS_STYLE_XOR_DASHED, region);
+      return gimp_display_shell_canvas_expose_image (shell, eevent);
     }
-
-  gimp_display_shell_pause (shell);
-
-  if (region)
-    {
-      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                   GIMP_CANVAS_STYLE_XOR, NULL);
-      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                   GIMP_CANVAS_STYLE_XOR_DASHED, NULL);
-      gdk_region_destroy (region);
-    }
-
-  gdk_region_get_rectangles (eevent->region, &rects, &n_rects);
-
-  for (i = 0; i < n_rects; i++)
-    gimp_display_shell_draw_area (shell,
-                                  rects[i].x,
-                                  rects[i].y,
-                                  rects[i].width,
-                                  rects[i].height);
-
-  g_free (rects);
-
-  /* draw the transform tool preview */
-  gimp_display_shell_preview_transform (shell);
-
-  /* draw the grid */
-  gimp_display_shell_draw_grid (shell, &eevent->area);
-
-  /* draw the guides */
-  gimp_display_shell_draw_guides (shell);
-
-  /* draw the sample points */
-  gimp_display_shell_draw_sample_points (shell);
-
-  /* and the cursor (if we have a software cursor) */
-  gimp_display_shell_draw_cursor (shell);
-
-  /* restart (and recalculate) the selection boundaries */
-  gimp_display_shell_selection_control (shell, GIMP_SELECTION_ON);
-
-  gimp_display_shell_resume (shell);
-
-  return FALSE;
 }
 
 static void
@@ -1799,4 +1728,98 @@ gimp_display_shell_compress_motion (GimpDisplayShell *shell)
   g_list_free (requeued_events);
 
   return last_motion;
+}
+
+static gboolean
+gimp_display_shell_canvas_expose_drop_zone (GimpDisplayShell *shell,
+                                            GdkEventExpose   *eevent)
+{
+  cairo_t *cr;
+
+  cr = gdk_cairo_create (shell->canvas->window);
+  gdk_cairo_region (cr, eevent->region);
+  cairo_clip (cr);
+
+  gimp_canvas_draw_drop_zone (GIMP_CANVAS (shell->canvas), cr);
+
+  cairo_destroy (cr);
+
+  return FALSE;
+}
+
+static gboolean
+gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
+                                        GdkEventExpose   *eevent)
+{
+  GdkRegion    *region = NULL;
+  GdkRectangle *rects;
+  gint          n_rects;
+  gint          i;
+
+  /*  If the call to gimp_display_shell_pause() would cause a redraw,
+   *  we need to make sure that no XOR drawing happens on areas that
+   *  have already been cleared by the windowing system.
+   */
+  if (shell->paused_count == 0)
+    {
+      GdkRectangle  area;
+
+      area.x      = 0;
+      area.y      = 0;
+      area.width  = shell->disp_width;
+      area.height = shell->disp_height;
+
+      region = gdk_region_rectangle (&area);
+
+      gdk_region_subtract (region, eevent->region);
+
+      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
+                                   GIMP_CANVAS_STYLE_XOR, region);
+      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
+                                   GIMP_CANVAS_STYLE_XOR_DASHED, region);
+    }
+
+  gimp_display_shell_pause (shell);
+
+  if (region)
+    {
+      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
+                                   GIMP_CANVAS_STYLE_XOR, NULL);
+      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
+                                   GIMP_CANVAS_STYLE_XOR_DASHED, NULL);
+      gdk_region_destroy (region);
+    }
+
+  gdk_region_get_rectangles (eevent->region, &rects, &n_rects);
+
+  for (i = 0; i < n_rects; i++)
+    gimp_display_shell_draw_area (shell,
+                                  rects[i].x,
+                                  rects[i].y,
+                                  rects[i].width,
+                                  rects[i].height);
+
+  g_free (rects);
+
+  /* draw the transform tool preview */
+  gimp_display_shell_preview_transform (shell);
+
+  /* draw the grid */
+  gimp_display_shell_draw_grid (shell, &eevent->area);
+
+  /* draw the guides */
+  gimp_display_shell_draw_guides (shell);
+
+  /* draw the sample points */
+  gimp_display_shell_draw_sample_points (shell);
+
+  /* and the cursor (if we have a software cursor) */
+  gimp_display_shell_draw_cursor (shell);
+
+  /* restart (and recalculate) the selection boundaries */
+  gimp_display_shell_selection_control (shell, GIMP_SELECTION_ON);
+
+  gimp_display_shell_resume (shell);
+
+  return FALSE;
 }

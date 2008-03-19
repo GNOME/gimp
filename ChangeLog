@@ -1,3 +1,11 @@
+2008-03-19  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_expose): Refactor to emphasize logic.
+	(gimp_display_shell_canvas_expose_image)
+	(gimp_display_shell_canvas_expose_drop_zone): New helper
+	functions.
+
 2008-03-19  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c
