@@ -1,5 +1,9 @@
 2008-03-19  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimppalette-load.c (gimp_palette_load): skip empty lines.
+
+2008-03-19  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell.c
 	* app/display/gimpdisplayshell-title.c
 	* app/display/gimpstatusbar.[ch]: hide/show the cursor label and

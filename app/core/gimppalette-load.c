@@ -174,7 +174,7 @@ gimp_palette_load (const gchar  *filename,
 
   while (! feof (file))
     {
-      if (str[0] != '#')
+      if (str[0] != '#' && str[0] != '\n')
         {
           tok = strtok (str, " \t");
           if (tok)
