@@ -1,5 +1,11 @@
 2008-03-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpcanvas.c (gimp_canvas_draw_drop_zone): make the
+	scale factor of the label 4/5 instead of 2/3 of the canvas and
+	move the factor out of the MIN().
+
+2008-03-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplay-foreach.[ch] (gimp_displays_delete): add
 	boolean "quit" parameter and leave the empty display open when it
 	is FALSE.

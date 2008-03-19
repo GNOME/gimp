@@ -853,8 +853,8 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
 
   pango_layout_get_pixel_size (canvas->drop_zone_layout, &width, &height);
 
-  factor = MIN (2.0 / 3.0 * widget->allocation.width  / width,
-                2.0 / 3.0 * widget->allocation.height / height);
+  factor = 4.0 / 5.0 * MIN ((gdouble) widget->allocation.width  / width,
+                            (gdouble) widget->allocation.height / height);
 
   cairo_scale (cr, factor, factor);
   cairo_move_to (cr,
