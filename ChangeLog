@@ -1,5 +1,13 @@
 2008-03-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_empty): the
+	code to reset the cursor got lost when introducing this function.
+
+	* app/display/gimpdisplayshell-dnd.c
+	(gimp_display_shell_dnd_init): remove redundant casts.
+
+2008-03-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpcanvas.c (gimp_canvas_draw_drop_zone): make the
 	scale factor of the label 4/5 instead of 2/3 of the canvas and
 	move the factor out of the MIN().
