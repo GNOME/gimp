@@ -533,6 +533,26 @@ gimp_statusbar_set_visible (GimpStatusbar *statusbar,
 }
 
 void
+gimp_statusbar_empty (GimpStatusbar *statusbar)
+{
+  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+
+  gtk_widget_hide (statusbar->cursor_frame);
+  gtk_widget_hide (statusbar->unit_combo);
+  gtk_widget_hide (statusbar->scale_combo);
+}
+
+void
+gimp_statusbar_fill (GimpStatusbar *statusbar)
+{
+  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+
+  gtk_widget_show (statusbar->cursor_frame);
+  gtk_widget_show (statusbar->unit_combo);
+  gtk_widget_show (statusbar->scale_combo);
+}
+
+void
 gimp_statusbar_push (GimpStatusbar *statusbar,
                      const gchar   *context,
                      const gchar   *format,

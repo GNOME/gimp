@@ -1,3 +1,10 @@
+2008-03-19  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplayshell-title.c
+	* app/display/gimpstatusbar.[ch]: hide/show the cursor label and
+	the unit and scale combo-boxes.
+
 2008-03-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplay.[ch]: add gimp_display_empty()/fill()

@@ -1121,6 +1121,8 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
   gimp_display_shell_scale_setup (shell);
   gimp_display_shell_scaled (shell);
 
+  gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
+
   gimp_display_shell_appearance_update (shell);
 
   gimp_display_shell_expose_full (shell);
@@ -1142,6 +1144,8 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   gimp_display_shell_set_unit (shell, unit);
   gimp_display_shell_set_initial_scale (shell, scale,
                                         &display_width, &display_height);
+
+  gimp_statusbar_fill (GIMP_STATUSBAR (shell->statusbar));
 
   gimp_display_shell_appearance_update (shell);
 }
