@@ -1,5 +1,11 @@
 2008-03-19  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayoptions.c
+	(gimp_display_options_no_image_class_init): hide the status-bar,
+	at least for now.
+
+2008-03-19  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdockable.c
 	* app/widgets/gimpwidgets-utils.[ch]: moved utility function for
 	setting attributes on a PangoLayout out of gimpdockable.c.
