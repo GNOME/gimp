@@ -1,3 +1,14 @@
+2008-03-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.[ch]
+	(gimp_display_shell_set_initial_scale): factored out this function
+	which calculates the zoom factor for new images. Also returns the
+	size of the canvas for that zoom factor.
+
+	* app/gui/gui-vtable.c (gui_display_create): use it to set the
+	initial scale of images loaded into the empty display, but don't
+	set the display's size yet.
+
 2008-03-19  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayoptions.c

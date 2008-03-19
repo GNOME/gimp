@@ -211,6 +211,11 @@ GtkWidget * gimp_display_shell_new                 (GimpDisplay        *display,
 
 void        gimp_display_shell_reconnect           (GimpDisplayShell   *shell);
 
+void        gimp_display_shell_set_initial_scale   (GimpDisplayShell   *shell,
+                                                    gdouble             scale,
+                                                    gint               *display_width,
+                                                    gint               *display_height);
+
 void        gimp_display_shell_scale_changed       (GimpDisplayShell   *shell);
 
 void        gimp_display_shell_scaled              (GimpDisplayShell   *shell);
