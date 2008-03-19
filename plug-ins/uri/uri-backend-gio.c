@@ -307,7 +307,7 @@ copy_uri (const gchar  *src_uri,
                                   error))
         {
           success = g_file_copy (src_file, dest_file, 0, NULL,
-                                 uri_progress_callback, GINT_TO_POINTER (mode),
+                                 uri_progress_callback, &progress,
                                  error);
 
         }

@@ -1,5 +1,9 @@
 2008-03-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/uri/uri-backend-gio.c (copy_uri): fixed stupid bug.
+
+2008-03-19  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/paint-funcs.c: minor formatting cleanup.
 
 2008-03-19  Sven Neumann  <sven@gimp.org>
