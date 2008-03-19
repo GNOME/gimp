@@ -1,3 +1,7 @@
+2008-03-19  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c: clean up after Martin.
+
 2008-03-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/view-commands.c: remove useless include.
