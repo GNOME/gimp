@@ -1,3 +1,18 @@
+2008-03-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplay.[ch]: add gimp_display_empty()/fill()
+	which turns it into an empty display and back.
+
+	* app/display/gimpdisplayshell.[ch]: add same api here.
+
+	* app/display/gimpdisplayshell-close.c
+	* app/gui/gui-vtable.c: use the new functions instead of having
+	the code here.
+
+	* app/display/gimpdisplayshell-selection.c
+	(gimp_display_shell_selection_control): stop the timeout and free
+	the segments when this function is called on an empty display.
+
 2008-03-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/uri/uri-backend-gio.c (copy_uri): fixed stupid bug.

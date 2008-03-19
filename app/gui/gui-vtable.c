@@ -59,8 +59,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-appearance.h"
-#include "display/gimpdisplayshell-scale.h"
 
 #include "actions/plug-in-actions.h"
 
@@ -298,15 +296,7 @@ gui_display_create (Gimp      *gimp,
 
   if (display)
     {
-      gint display_width;
-      gint display_height;
-
-      gimp_display_set_image (display, image);
-      gimp_display_shell_set_unit (GIMP_DISPLAY_SHELL (display->shell), unit);
-      gimp_display_shell_set_initial_scale (GIMP_DISPLAY_SHELL (display->shell),
-                                            scale,
-                                            &display_width, &display_height);
-      gimp_display_shell_appearance_update (GIMP_DISPLAY_SHELL (display->shell));
+      gimp_display_fill (display, image, unit, scale);
 
       if (gimp_context_get_display (context) == display)
         {

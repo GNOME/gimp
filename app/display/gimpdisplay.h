@@ -74,6 +74,12 @@ GimpDisplay * gimp_display_get_by_ID   (Gimp            *gimp,
 void          gimp_display_set_image   (GimpDisplay     *display,
                                         GimpImage       *image);
 
+void          gimp_display_empty       (GimpDisplay     *display);
+void          gimp_display_fill        (GimpDisplay     *display,
+                                        GimpImage       *image,
+                                        GimpUnit         unit,
+                                        gdouble          scale);
+
 void          gimp_display_update_area (GimpDisplay     *display,
                                         gboolean         now,
                                         gint             x,

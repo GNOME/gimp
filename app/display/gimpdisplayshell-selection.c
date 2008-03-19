@@ -197,6 +197,11 @@ gimp_display_shell_selection_control (GimpDisplayShell     *shell,
           break;
         }
     }
+  else if (shell->selection)
+    {
+      selection_stop (shell->selection);
+      selection_free_segs (shell->selection);
+    }
 }
 
 void

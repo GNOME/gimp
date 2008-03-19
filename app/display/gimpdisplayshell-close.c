@@ -42,12 +42,7 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-close.h"
-#include "gimpdisplayshell-cursor.h"
-#include "gimpdisplayshell-scale.h"
-#include "gimpdisplayshell-scroll.h"
-#include "gimpdisplayshell-selection.h"
 
 #include "gimp-intl.h"
 
@@ -310,20 +305,7 @@ gimp_display_shell_really_close (GimpDisplayShell *shell)
     {
       GimpContext *user_context;
 
-      gimp_display_shell_selection_control (shell, GIMP_SELECTION_OFF);
-
-      gimp_display_set_image (shell->display, NULL);
-
-      gimp_display_shell_expose_full (shell);
-
-      gimp_display_shell_scale (shell, GIMP_ZOOM_TO, 1.0);
-      gimp_display_shell_scroll_clamp_offsets (shell);
-      gimp_display_shell_scale_setup (shell);
-      gimp_display_shell_scaled (shell);
-
-      gimp_display_shell_set_cursor (shell, GIMP_CURSOR_MOUSE,
-                                     GIMP_TOOL_CURSOR_NONE,
-                                     GIMP_CURSOR_MODIFIER_NONE);
+      gimp_display_empty (shell->display);
 
       gimp_ui_manager_update (shell->menubar_manager, shell->display);
 
@@ -331,8 +313,6 @@ gimp_display_shell_really_close (GimpDisplayShell *shell)
 
       if (shell->display == gimp_context_get_display (user_context))
         gimp_ui_manager_update (shell->popup_manager, shell->display);
-
-      gimp_display_shell_appearance_update (shell);
     }
 }
 

@@ -495,6 +495,32 @@ gimp_display_set_image (GimpDisplay *display,
 }
 
 void
+gimp_display_empty (GimpDisplay *display)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (GIMP_IS_IMAGE (display->image));
+
+  gimp_display_set_image (display, NULL);
+
+  gimp_display_shell_empty (GIMP_DISPLAY_SHELL (display->shell));
+}
+
+void
+gimp_display_fill (GimpDisplay *display,
+                   GimpImage   *image,
+                   GimpUnit     unit,
+                   gdouble      scale)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  gimp_display_set_image (display, image);
+
+  gimp_display_shell_fill (GIMP_DISPLAY_SHELL (display->shell),
+                           image, unit, scale);
+}
+
+void
 gimp_display_update_area (GimpDisplay *display,
                           gboolean     now,
                           gint         x,

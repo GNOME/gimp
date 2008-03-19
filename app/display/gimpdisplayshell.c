@@ -67,6 +67,7 @@
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-progress.h"
 #include "gimpdisplayshell-scale.h"
+#include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
 #include "gimpdisplayshell-transform.h"
@@ -92,7 +93,7 @@ enum
 
 /*  local function prototypes  */
 
-static void     gimp_color_managed_iface_init      (GimpColorManagedInterface *iface);
+static void      gimp_color_managed_iface_init     (GimpColorManagedInterface *iface);
 
 static void      gimp_display_shell_finalize       (GObject          *object);
 static void      gimp_display_shell_set_property   (GObject          *object,
@@ -1101,8 +1102,48 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
   gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));
 
   gimp_display_shell_scale_setup (shell);
-  gimp_display_shell_expose_full (shell);
   gimp_display_shell_scaled (shell);
+
+  gimp_display_shell_expose_full (shell);
+}
+
+void
+gimp_display_shell_empty (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
+  g_return_if_fail (shell->display->image == NULL);
+
+  gimp_display_shell_selection_control (shell, GIMP_SELECTION_OFF);
+
+  gimp_display_shell_scale (shell, GIMP_ZOOM_TO, 1.0);
+  gimp_display_shell_scroll_clamp_offsets (shell);
+  gimp_display_shell_scale_setup (shell);
+  gimp_display_shell_scaled (shell);
+
+  gimp_display_shell_appearance_update (shell);
+
+  gimp_display_shell_expose_full (shell);
+}
+
+void
+gimp_display_shell_fill (GimpDisplayShell *shell,
+                         GimpImage        *image,
+                         GimpUnit          unit,
+                         gdouble           scale)
+{
+  gint display_width;
+  gint display_height;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  gimp_display_shell_set_unit (shell, unit);
+  gimp_display_shell_set_initial_scale (shell, scale,
+                                        &display_width, &display_height);
+
+  gimp_display_shell_appearance_update (shell);
 }
 
 /*
