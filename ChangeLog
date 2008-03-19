@@ -1,5 +1,11 @@
 2008-03-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): enable the right click
+	menu on the empty display.
+
+2008-03-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_empty): use
 	the desktop default cursor for the empty display.
 

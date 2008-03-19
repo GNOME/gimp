@@ -545,7 +545,18 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   image   = display->image;
 
   if (! image)
-    return TRUE;
+    {
+      if (event->type == GDK_BUTTON_PRESS &&
+          ((GdkEventButton *) event)->button == 3)
+        {
+          gimp_ui_manager_ui_popup (shell->popup_manager,
+                                    "/dummy-menubar/image-popup",
+                                    GTK_WIDGET (shell),
+                                    NULL, NULL, NULL, NULL);
+        }
+
+      return TRUE;
+    }
 
   gdk_display = gtk_widget_get_display (canvas);
 
