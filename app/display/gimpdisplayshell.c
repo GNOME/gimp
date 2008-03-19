@@ -1120,9 +1120,7 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
   gimp_display_shell_scale_setup (shell);
   gimp_display_shell_scaled (shell);
 
-  gimp_display_shell_set_cursor (shell, GIMP_CURSOR_MOUSE,
-                                 GIMP_TOOL_CURSOR_NONE,
-                                 GIMP_CURSOR_MODIFIER_NONE);
+  gdk_window_set_cursor (shell->canvas->window, NULL);
 
   gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
 

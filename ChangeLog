@@ -1,5 +1,10 @@
 2008-03-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_empty): use
+	the desktop default cursor for the empty display.
+
+2008-03-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_empty): the
 	code to reset the cursor got lost when introducing this function.
 
