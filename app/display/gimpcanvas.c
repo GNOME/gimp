@@ -865,7 +865,8 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
                          color->red   / 65535.0,
                          color->green / 65535.0,
                          color->blue  / 65535.0,
-                         0.1);
+                         0.2);
+
   pango_cairo_show_layout (cr, canvas->drop_zone_layout);
 }
 

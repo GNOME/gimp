@@ -1,5 +1,18 @@
 2008-03-19  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_expose): return FALSE so that the
+	default drag highlighting works.
+
+	* app/display/gimpdisplayshell-dnd.c: only set the canvas as drop
+	target, not the whole shell.
+
+	* app/display/gimpdisplayshell.c: delay the call to
+	gimp_display_shell_dnd_init() until after the canvas has been
+	created.
+
+2008-03-19  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimppalette-load.c (gimp_palette_load): skip empty lines.
 
 2008-03-19  Sven Neumann  <sven@gimp.org>

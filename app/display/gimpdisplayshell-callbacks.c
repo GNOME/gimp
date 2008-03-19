@@ -360,7 +360,7 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
 
       cairo_destroy (cr);
 
-      return TRUE;
+      return FALSE;
     }
 
   /*  If the call to gimp_display_shell_pause() would cause a redraw,
@@ -428,7 +428,7 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
 
   gimp_display_shell_resume (shell);
 
-  return TRUE;
+  return FALSE;
 }
 
 static void

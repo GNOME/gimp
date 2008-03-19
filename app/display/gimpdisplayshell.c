@@ -361,8 +361,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_events),
                     shell);
 
-  gimp_display_shell_dnd_init (shell);
-
   gimp_help_connect (GTK_WIDGET (shell), gimp_standard_help_func,
                      GIMP_HELP_IMAGE_WINDOW, NULL);
 }
@@ -851,6 +849,7 @@ gimp_display_shell_new (GimpDisplay     *display,
 
   shell->canvas = gimp_canvas_new (display->config);
 
+  gimp_display_shell_dnd_init (shell);
   gimp_display_shell_selection_init (shell);
 
   /*  the horizontal ruler  */
