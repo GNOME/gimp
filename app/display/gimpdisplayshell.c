@@ -1557,33 +1557,41 @@ void
 gimp_display_shell_update_icon (GimpDisplayShell *shell)
 {
   GimpImage *image;
-  GdkPixbuf *pixbuf;
-  gint       width, height;
-  gdouble    factor;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   image = shell->display->image;
 
-  factor = ((gdouble) gimp_image_get_height (image) /
-            (gdouble) gimp_image_get_width  (image));
-
-  if (factor >= 1)
+  if (image)
     {
-      height = MAX (shell->icon_size, 1);
-      width  = MAX (((gdouble) shell->icon_size) / factor, 1);
+      Gimp      *gimp   = shell->display->gimp;
+      GdkPixbuf *pixbuf;
+      gint       width;
+      gint       height;
+      gdouble    factor = ((gdouble) gimp_image_get_height (image) /
+                           (gdouble) gimp_image_get_width  (image));
+
+      if (factor >= 1)
+        {
+          height = MAX (shell->icon_size, 1);
+          width  = MAX (((gdouble) shell->icon_size) / factor, 1);
+        }
+      else
+        {
+          height = MAX (((gdouble) shell->icon_size) * factor, 1);
+          width  = MAX (shell->icon_size, 1);
+        }
+
+      pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (image),
+                                         gimp_get_user_context (gimp),
+                                         width, height);
+
+      gtk_window_set_icon (GTK_WINDOW (shell), pixbuf);
     }
   else
     {
-      height = MAX (((gdouble) shell->icon_size) * factor, 1);
-      width  = MAX (shell->icon_size, 1);
+      gtk_window_set_icon (GTK_WINDOW (shell), NULL);
     }
-
-  pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (image),
-                                     gimp_get_user_context (shell->display->gimp),
-                                     width, height);
-
-  gtk_window_set_icon (GTK_WINDOW (shell), pixbuf);
 }
 
 void

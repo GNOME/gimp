@@ -490,6 +490,8 @@ gimp_display_set_image (GimpDisplay *display,
 
   if (image)
     gimp_display_shell_reconnect (GIMP_DISPLAY_SHELL (display->shell));
+  else
+    gimp_display_shell_update_icon (GIMP_DISPLAY_SHELL (display->shell));
 }
 
 void

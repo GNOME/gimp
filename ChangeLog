@@ -1,3 +1,15 @@
+2008-03-19  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_update_icon):
+	deal with NULL image and unset the icon.
+
+	* app/display/gimpdisplay.c (gimp_display_set_image): unset the
+	icon when no image is set.
+
+	* app/display/gimpdisplayshell-title.c
+	(gimp_display_shell_format_title): use GIMP_NAME as the window
+	title when no image is set. Append GIMP_ACRONYM otherwise.
+
 2008-03-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayoptions.[ch]: add new options object

@@ -42,6 +42,8 @@
 #include "gimpdisplayshell-title.h"
 #include "gimpstatusbar.h"
 
+#include "about.h"
+
 #include "gimp-intl.h"
 
 
@@ -162,7 +164,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
   if (! image)
     {
-      print (title, title_len, i, _("GIMP - Drop Files"));
+      print (title, title_len, i, GIMP_NAME);
       return;
     }
 
@@ -423,5 +425,8 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
       format++;
     }
 
-  title[MIN (i, title_len - 1)] = '\0';
+  if (i)  /* U+2013 EN DASH */
+    i += g_strlcpy (title + i, " \342\200\223 ", title_len - i);
+
+  g_strlcpy (title + i, GIMP_ACRONYM, title_len - i);
 }
