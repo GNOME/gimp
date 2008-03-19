@@ -1,5 +1,14 @@
 2008-03-19  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdockable.c
+	* app/widgets/gimpwidgets-utils.[ch]: moved utility function for
+	setting attributes on a PangoLayout out of gimpdockable.c.
+
+	* app/display/gimpcanvas.c (gimp_canvas_draw_drop_zone): use a
+	bold font and paint the layout with transparency.
+	
+2008-03-19  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_update_icon):
 	deal with NULL image and unset the icon.
 

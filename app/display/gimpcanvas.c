@@ -838,13 +838,18 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
                             cairo_t    *cr)
 {
   GtkWidget *widget = GTK_WIDGET (canvas);
+  GdkColor  *color  = &widget->style->fg[widget->state];
   gint       width;
   gint       height;
   gdouble    factor;
 
   if (! canvas->drop_zone_layout)
-    canvas->drop_zone_layout = gtk_widget_create_pango_layout (widget,
-                                                               _("Drop Files"));
+    {
+      canvas->drop_zone_layout = gtk_widget_create_pango_layout (widget,
+                                                                 _("Drag images here"));
+      gimp_pango_layout_set_weight (canvas->drop_zone_layout,
+                                    PANGO_WEIGHT_BOLD);
+    }
 
   pango_layout_get_pixel_size (canvas->drop_zone_layout, &width, &height);
 
@@ -852,13 +857,16 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
                 2.0 / 3.0 * widget->allocation.height / height);
 
   cairo_scale (cr, factor, factor);
-
   cairo_move_to (cr,
                  (widget->allocation.width  / factor - width)  / 2.0,
                  (widget->allocation.height / factor - height) / 2.0);
 
+  cairo_set_source_rgba (cr,
+                         color->red   / 65535.0,
+                         color->green / 65535.0,
+                         color->blue  / 65535.0,
+                         0.1);
   pango_cairo_show_layout (cr, canvas->drop_zone_layout);
-  cairo_fill (cr);
 }
 
 /**

@@ -446,24 +446,6 @@ gimp_dockable_style_set (GtkWidget *widget,
     }
 }
 
-static void
-gimp_dockable_layout_set_weight (PangoLayout *layout,
-                                 PangoWeight  weight)
-{
-  PangoAttrList  *attrs;
-  PangoAttribute *attr;
-
-  attrs = pango_attr_list_new ();
-
-  attr = pango_attr_weight_new (PANGO_WEIGHT_SEMIBOLD);
-  attr->start_index = 0;
-  attr->end_index   = -1;
-  pango_attr_list_insert (attrs, attr);
-
-  pango_layout_set_attributes (layout, attrs);
-  pango_attr_list_unref (attrs);
-}
-
 static PangoLayout *
 gimp_dockable_create_title_layout (GimpDockable *dockable,
                                    GtkWidget    *widget,
@@ -480,7 +462,7 @@ gimp_dockable_create_title_layout (GimpDockable *dockable,
                                            title ? title : dockable->blurb);
   g_free (title);
 
-  gimp_dockable_layout_set_weight (layout, PANGO_WEIGHT_SEMIBOLD);
+  gimp_pango_layout_set_weight (layout, PANGO_WEIGHT_SEMIBOLD);
 
   if (width > 0)
     {
