@@ -1,5 +1,10 @@
 2008-03-19  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-title.c: changed to only append
+	GIMP_ACRONYM in the window title and not affect the status-bar.
+
+2008-03-19  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell.[ch]
 	* app/display/gimpdisplayshell-scale.[ch]: moved
 	gimp_display_shell_set_initial_scale() to gimpdisplayshell-scale.c.

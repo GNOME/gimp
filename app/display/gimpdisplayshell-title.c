@@ -51,7 +51,7 @@
 
 
 static gboolean gimp_display_shell_update_title_idle (gpointer          data);
-static void     gimp_display_shell_format_title      (GimpDisplayShell *display,
+static gint     gimp_display_shell_format_title      (GimpDisplayShell *display,
                                                       gchar            *title,
                                                       gint              title_len,
                                                       const gchar      *format);
@@ -62,15 +62,6 @@ static void     gimp_display_shell_format_title      (GimpDisplayShell *display,
 void
 gimp_display_shell_title_init (GimpDisplayShell *shell)
 {
-  gchar title[MAX_TITLE_BUF];
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  gimp_display_shell_format_title (shell, title, sizeof (title),
-                                   shell->display->config->image_status_format);
-
-  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "title",
-                       "%s", title);
 }
 
 void
@@ -91,29 +82,41 @@ gimp_display_shell_title_update (GimpDisplayShell *shell)
 static gboolean
 gimp_display_shell_update_title_idle (gpointer data)
 {
-  GimpDisplayShell  *shell;
-  GimpDisplayConfig *config;
-  gchar              title[MAX_TITLE_BUF];
-
-  shell  = GIMP_DISPLAY_SHELL (data);
-  config = shell->display->config;
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
 
   shell->title_idle_id = 0;
 
-  /* format the title */
-  gimp_display_shell_format_title (shell, title, sizeof (title),
-                                   config->image_title_format);
-  gdk_window_set_title (GTK_WIDGET (shell)->window, title);
-
-  /* format the statusbar */
-  if (strcmp (config->image_title_format, config->image_status_format))
+  if (shell->display->image)
     {
+      GimpDisplayConfig *config = shell->display->config;
+      gchar              title[MAX_TITLE_BUF];
+      gint               len;
+
+      /* format the title */
+      len = gimp_display_shell_format_title (shell, title, sizeof (title),
+                                             config->image_title_format);
+
+      if (len)  /* U+2013 EN DASH */
+        len += g_strlcpy (title + len, " \342\200\223 ", sizeof (title) - len);
+
+      g_strlcpy (title + len, GIMP_ACRONYM, sizeof (title) - len);
+
+      gdk_window_set_title (GTK_WIDGET (shell)->window, title);
+
+      /* format the statusbar */
       gimp_display_shell_format_title (shell, title, sizeof (title),
                                        config->image_status_format);
-    }
 
-  gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar), "title",
-                          "%s", title);
+      gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar), "title",
+                              "%s", title);
+    }
+  else
+    {
+      gdk_window_set_title (GTK_WIDGET (shell)->window, GIMP_NAME);
+
+      gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar), "title",
+                              "%s", "");
+    }
 
   return FALSE;
 }
@@ -146,7 +149,7 @@ print (gchar       *buf,
   return printed;
 }
 
-static void
+static gint
 gimp_display_shell_format_title (GimpDisplayShell *shell,
                                  gchar            *title,
                                  gint              title_len,
@@ -157,15 +160,15 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
   gint       num, denom;
   gint       i = 0;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), 0);
 
   image = shell->display->image;
   gimp  = shell->display->gimp;
 
   if (! image)
     {
-      print (title, title_len, i, GIMP_NAME);
-      return;
+      title[0] = '\n';
+      return 0;
     }
 
   gimp_zoom_model_get_fraction (shell->zoom, &num, &denom);
@@ -425,8 +428,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
       format++;
     }
 
-  if (i)  /* U+2013 EN DASH */
-    i += g_strlcpy (title + i, " \342\200\223 ", title_len - i);
+  title[MIN (i, title_len - 1)] = '\0';
 
-  g_strlcpy (title + i, GIMP_ACRONYM, title_len - i);
+  return i;
 }
