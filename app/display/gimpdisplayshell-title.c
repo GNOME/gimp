@@ -47,7 +47,7 @@
 #include "gimp-intl.h"
 
 
-#define MAX_TITLE_BUF 256
+#define MAX_TITLE_BUF 512
 
 
 static gboolean gimp_display_shell_update_title_idle (gpointer          data);
