@@ -223,10 +223,6 @@ gimp_display_options_no_image_class_init (GimpDisplayOptionsNoImageClass *klass)
                                     "show-scrollbars", SHOW_SCROLLBARS_BLURB,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
-                                    "show-statusbar", SHOW_STATUSBAR_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SELECTION,
                                     "show-selection", SHOW_SELECTION_BLURB,
                                     FALSE,
