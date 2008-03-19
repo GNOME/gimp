@@ -403,7 +403,7 @@ file_close_all_cmd_callback (GtkAction *action,
 
   if (! gimp_displays_dirty (gimp))
     {
-      gimp_displays_delete (gimp);
+      gimp_displays_delete (gimp, FALSE);
     }
   else
     {

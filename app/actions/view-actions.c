@@ -560,7 +560,7 @@ view_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_color (group, action, color, FALSE)
 
   SET_SENSITIVE ("view-new",   image);
-  SET_SENSITIVE ("view-close", display);
+  SET_SENSITIVE ("view-close", image);
 
   SET_SENSITIVE ("view-dot-for-dot", image);
   SET_ACTIVE    ("view-dot-for-dot", display && shell->dot_for_dot);

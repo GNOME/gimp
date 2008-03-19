@@ -196,7 +196,7 @@ quit_close_all_dialog_response (GtkWidget *dialog,
       if (do_quit)
         gimp_exit (gimp, TRUE);
       else
-        gimp_displays_delete (gimp);
+        gimp_displays_delete (gimp, FALSE);
     }
 }
 

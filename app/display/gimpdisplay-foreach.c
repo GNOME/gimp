@@ -140,7 +140,8 @@ gimp_displays_get_dirty_images (Gimp *gimp)
 }
 
 void
-gimp_displays_delete (Gimp *gimp)
+gimp_displays_delete (Gimp     *gimp,
+                      gboolean  quit)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -149,9 +150,18 @@ gimp_displays_delete (Gimp *gimp)
    */
   while (GIMP_LIST (gimp->displays)->list)
     {
-      GimpDisplay *display = GIMP_LIST (gimp->displays)->list->data;
+      GList       *list    = GIMP_LIST (gimp->displays)->list;
+      GimpDisplay *display = list->data;
 
-      gimp_display_delete (display);
+      if (list->next || quit)
+        {
+          gimp_display_delete (display);
+        }
+      else
+        {
+          gimp_display_empty (display);
+          break;
+        }
     }
 }
 

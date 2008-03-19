@@ -1,3 +1,18 @@
+2008-03-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplay-foreach.[ch] (gimp_displays_delete): add
+	boolean "quit" parameter and leave the empty display open when it
+	is FALSE.
+
+	* app/dialogs/quit-dialog.c
+	* app/actions/file-commands.c: pass quit = FALSE for "close all".
+
+	* app/gui/gui.c: pass quit = TRUE when quitting.
+
+	* app/actions/file-actions.c: fix sensitivity of "Close all".
+
+	* app/actions/view-actions.c: fix sensitivity of "Close".
+
 2008-03-19  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c: clean up after Martin.
