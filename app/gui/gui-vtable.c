@@ -97,7 +97,7 @@ static void           gui_display_delete       (GimpObject          *display);
 static void           gui_displays_reconnect   (Gimp                *gimp,
                                                 GimpImage           *old_image,
                                                 GimpImage           *new_image);
-static gboolean       gui_get_empty_display    (Gimp                *gimp);
+static GimpDisplay  * gui_get_empty_display    (Gimp                *gimp);
 static GimpProgress * gui_new_progress         (Gimp                *gimp,
                                                 GimpObject          *display);
 static void           gui_free_progress        (Gimp                *gimp,
@@ -325,7 +325,7 @@ gui_displays_reconnect (Gimp      *gimp,
   gimp_displays_reconnect (gimp, old_image, new_image);
 }
 
-static gboolean
+static GimpDisplay *
 gui_get_empty_display (Gimp *gimp)
 {
   GimpDisplay *display = NULL;

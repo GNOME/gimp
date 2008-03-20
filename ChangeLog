@@ -1,5 +1,9 @@
 2008-03-20  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/gui/gui-vtable.c: Fix stupid mistake in previous commit...
+
+2008-03-20  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/gui/gui-vtable.c
 	(gui_display_create): Make the logic clearer.
 	(gui_get_empty_display): New helper function.
