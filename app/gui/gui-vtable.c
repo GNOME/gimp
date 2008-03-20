@@ -303,7 +303,15 @@ gui_display_create (Gimp      *gimp,
                                   image_managers->data);
    }
 
-  gimp_context_set_display (context, display);
+  if (gimp_context_get_display (context) == display)
+    {
+      gimp_context_set_image (context, image);
+      gimp_context_display_changed (context);
+    }
+  else
+    {
+      gimp_context_set_display (context, display);
+    }
 
   gimp_ui_manager_update (GIMP_DISPLAY_SHELL (display->shell)->menubar_manager,
                           display);
