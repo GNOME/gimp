@@ -97,6 +97,7 @@ static void           gui_display_delete       (GimpObject          *display);
 static void           gui_displays_reconnect   (Gimp                *gimp,
                                                 GimpImage           *old_image,
                                                 GimpImage           *new_image);
+static gboolean       gui_get_empty_display    (Gimp                *gimp);
 static GimpProgress * gui_new_progress         (Gimp                *gimp,
                                                 GimpObject          *display);
 static void           gui_free_progress        (Gimp                *gimp,
@@ -285,28 +286,11 @@ gui_display_create (Gimp      *gimp,
   GimpContext *context = gimp_get_user_context (gimp);
   GimpDisplay *display = NULL;
 
-  if (gimp_container_num_children (gimp->displays) == 1)
+  if (gui_get_empty_display (gimp) != NULL)
     {
-      display = (GimpDisplay *)
-        gimp_container_get_child_by_index (gimp->displays, 0);
+      display = gui_get_empty_display (gimp);
 
-      if (display->image)
-        display = NULL;
-    }
-
-  if (display)
-    {
       gimp_display_fill (display, image, unit, scale);
-
-      if (gimp_context_get_display (context) == display)
-        {
-          gimp_context_set_image (context, image);
-          gimp_context_display_changed (context);
-        }
-      else
-        {
-          gimp_context_set_display (context, display);
-        }
     }
   else
     {
@@ -317,9 +301,9 @@ gui_display_create (Gimp      *gimp,
       display = gimp_display_new (gimp, image, unit, scale,
                                   global_menu_factory,
                                   image_managers->data);
-
-      gimp_context_set_display (context, display);
    }
+
+  gimp_context_set_display (context, display);
 
   gimp_ui_manager_update (GIMP_DISPLAY_SHELL (display->shell)->menubar_manager,
                           display);
@@ -339,6 +323,25 @@ gui_displays_reconnect (Gimp      *gimp,
                         GimpImage *new_image)
 {
   gimp_displays_reconnect (gimp, old_image, new_image);
+}
+
+static gboolean
+gui_get_empty_display (Gimp *gimp)
+{
+  GimpDisplay *display = NULL;
+
+  if (gimp_container_num_children (gimp->displays) == 1)
+    {
+      display = (GimpDisplay *) gimp_container_get_child_by_index (gimp->displays, 0);
+
+      if (display->image != NULL)
+        {
+          /* The display was not empty */
+          display = NULL;
+        }
+    }
+
+  return display;
 }
 
 static GimpProgress *
