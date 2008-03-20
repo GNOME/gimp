@@ -29,7 +29,8 @@
 
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "gimpmountoperation.h"
 
@@ -595,6 +596,9 @@ gimp_mount_operation_ask_password (GMountOperation   *mount_op,
   if (priv->parent_window == NULL && priv->screen)
     gtk_window_set_screen (GTK_WINDOW (dialog), priv->screen);
 
+  if (! priv->parent_window && ! priv->screen)
+    gimp_window_set_transient (GTK_WINDOW (dialog));
+
   gtk_widget_show_all (GTK_WIDGET (dialog));
 
   g_object_ref (operation);
@@ -676,6 +680,9 @@ gimp_mount_operation_ask_question (GMountOperation *op,
 
   if (priv->parent_window == NULL && priv->screen)
     gtk_window_set_screen (GTK_WINDOW (dialog), priv->screen);
+
+  if (! priv->parent_window && ! priv->screen)
+    gimp_window_set_transient (GTK_WINDOW (dialog));
 
   gtk_widget_show (dialog);
   g_object_ref (op);
