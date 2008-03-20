@@ -44,13 +44,13 @@ static const GimpActionEntry gradients_actions[] =
     N_("Gradients Menu"), NULL, NULL, NULL,
     GIMP_HELP_GRADIENT_DIALOG },
 
-  { "gradients-load", GTK_STOCK_NEW,
+  { "gradients-load", GTK_STOCK_OPEN,
     N_("_Load Gradient"), "",
     N_("Load gradient"),
     G_CALLBACK (data_load_cmd_callback),
     GIMP_HELP_GRADIENT_LOAD },
 
-  { "gradients-save", GTK_STOCK_NEW,
+  { "gradients-save", GTK_STOCK_SAVE,
     N_("_Save Gradient"), "",
     N_("Save gradient"),
     G_CALLBACK (data_save_cmd_callback),

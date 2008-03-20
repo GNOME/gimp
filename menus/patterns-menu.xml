@@ -13,6 +13,9 @@
     <menuitem action="patterns-duplicate" />
     -->
 
+    <menuitem action="patterns-load" />
+    <menuitem action="patterns-save" />
+
     <menuitem action="patterns-copy-location" />
     <menuitem action="patterns-delete" />
     <separator />

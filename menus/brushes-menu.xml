@@ -6,6 +6,8 @@
     <menuitem action="brushes-edit" />
     <menuitem action="brushes-open-as-image" />
     <separator />
+    <menuitem action="brushes-load" />
+    <menuitem action="brushes-save" />
     <menuitem action="brushes-new" />
     <menuitem action="brushes-duplicate" />
     <menuitem action="brushes-copy-location" />

@@ -5,6 +5,8 @@
   <popup action="gradients-popup">
     <menuitem action="gradients-edit" />
     <separator />
+    <menuitem action="gradients-load" />
+    <menuitem action="gradients-save" />
     <menuitem action="gradients-new" />
     <menuitem action="gradients-duplicate" />
     <menuitem action="gradients-save-as-pov" />

@@ -1,3 +1,17 @@
+2008-03-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/actions/gradients-actions.c
+	* app/actions/palettes-actions.c
+	* app/actions/patterns-actions.c
+	* app/actions/patterns-actions.c: use more appropriate
+	icons for Load and Save.
+
+	* menus/patterns-menu.xml
+	* menus/brushes-menu.xml
+	* menus/gradients-menu.xml
+	* menus/palettes-menu.xml: add Load and Save to context
+	menus.
+	
 2008-03-07  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Several small changes to make toolbars work better.

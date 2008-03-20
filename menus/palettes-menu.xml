@@ -5,6 +5,8 @@
   <popup action="palettes-popup">
     <menuitem action="palettes-edit" />
     <separator />
+    <menuitem action="palettes-load" />
+    <menuitem action="palettes-save" />
     <menuitem action="palettes-new" />
     <menuitem action="palettes-import" />
     <menuitem action="palettes-duplicate" />
