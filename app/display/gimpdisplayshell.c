@@ -668,8 +668,10 @@ gimp_display_shell_new (GimpDisplay     *display,
 
   /*  the toplevel shell */
   shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL,
-                     /* "gravity", GDK_GRAVITY_CENTER, */
-                        "unit",    unit,
+                        "window-position", (display->image ?
+                                            GTK_WIN_POS_MOUSE :
+                                            GTK_WIN_POS_CENTER),
+                        "unit",            unit,
                         NULL);
 
   shell->display = display;
