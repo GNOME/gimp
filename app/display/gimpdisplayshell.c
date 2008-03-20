@@ -674,8 +674,16 @@ gimp_display_shell_new (GimpDisplay     *display,
 
   shell->display = display;
 
-  image_width  = gimp_image_get_width  (shell->display->image);
-  image_height = gimp_image_get_height (shell->display->image);
+  if (shell->display->image)
+    {
+      image_width  = gimp_image_get_width  (shell->display->image);
+      image_height = gimp_image_get_height (shell->display->image);
+    }
+  else
+    {
+      image_width  = 640;
+      image_height = 480;
+    }
 
   shell->dot_for_dot = shell->display->config->default_dot_for_dot;
 
@@ -698,8 +706,16 @@ gimp_display_shell_new (GimpDisplay     *display,
     }
 
   /* adjust the initial scale -- so that window fits on screen. */
-  gimp_display_shell_set_initial_scale (shell, scale,
-                                        &shell_width, &shell_height);
+  if (shell->display->image)
+    {
+      gimp_display_shell_set_initial_scale (shell, scale,
+                                            &shell_width, &shell_height);
+    }
+  else
+    {
+      shell_width  = -1;
+      shell_height = image_height;
+    }
 
   shell->menubar_manager = gimp_menu_factory_manager_new (menu_factory,
                                                           "<Image>",
@@ -1085,7 +1101,10 @@ gimp_display_shell_new (GimpDisplay     *display,
       g_object_unref (filter);
     }
 
-  gimp_display_shell_connect (shell);
+  if (shell->display->image)
+    gimp_display_shell_connect (shell);
+  else
+    gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
 
   gimp_display_shell_title_init (shell);
 
@@ -1175,6 +1194,7 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   gimp_display_shell_set_unit (shell, unit);
   gimp_display_shell_set_initial_scale (shell, scale,
                                         &display_width, &display_height);
+  gimp_display_shell_scale_changed (shell);
 
   gimp_statusbar_fill (GIMP_STATUSBAR (shell->statusbar));
 

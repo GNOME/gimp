@@ -531,6 +531,9 @@ gui_restore_after_callback (Gimp               *gimp,
   dialogs_show_toolbox ();
 
   gui_dbus_service_init (gimp);
+
+  /*  create the empty display  */
+  gimp_create_display (gimp, NULL, GIMP_UNIT_PIXEL, 1.0);
 }
 
 static gboolean
