@@ -26,252 +26,6 @@
 /* | Copyright 1990, 1991, 1993, David Koblas.  (koblas@extra.com)     | */
 /* +-------------------------------------------------------------------+ */
 
-/*
- * REVISION HISTORY
- *
- * 2003-06-16
- * 4.01.00 - Attempt to use the palette colour closest to that of the
- *           GIMP's current brush background colour for the GIF file's
- *           background index hint for non-transparency-aware image
- *           viewers.  NOTE that this is merely a hint and may be
- *           ignored by this plugin for various (rare) reasons that
- *           would usually entail writing a somewhat larger image file.
- *           + major version bump to indicate 1.3/1.4 branch.
- *
- * 2002/04/24 - Cameron Gregory, http://www.flamingtext.com/
- *           Added no compress option
- *           Added rlecompress().  Should not be covered by lzw patent,
- *           but this is not legal advice.
- *
- * 99/04/25
- * 3.00.02 - Save the comment back onto the image as a persistent
- *           parasite if the comment was edited.
- *
- * 99/03/30
- * 3.00.01 - Round image timing to nearest 10ms instead of
- *           truncating.  Insert a mandatory 10ms minimum delay
- *           for the frames of looping animated GIFs, to avoid
- *           generating an evil CPU-sucking animation that 'other'
- *           GIF-animators sometimes like to save.
- *
- * 99/03/20
- * 3.00.00 - GIF-loading code moved to separate plugin.
- *
- * 99/02/22
- * 2.01.02 - Don't show a progress bar when loading non-interactively
- *
- * 99/01/23
- * 2.01.01 - Use a text-box to permit multi-line comments.  Don't
- *           try to write comment blocks which are longer than
- *           permitted.
- *
- * 98/10/09
- * 2.01.00 - Added support for persistent GIF Comments through
- *           the GIMP 1.1 GimpParasite mechanism where available.
- *           Did some user-interface tweaks.
- *           Fixed a bug when trying to save a GIF smaller
- *           than five pixels high as interlaced.
- *
- * 98/09/28
- * 2.00.05 - Fixed TigerT's Infinite GIF Bug.  Icky one.
- *
- * 98/09/15
- * 2.00.04 - The facility to specify the background colour of
- *           a transparent/animated GIF for non-transparent
- *           viewers now works very much more consistantly.
- *
- *           The only situations in which it will fail to work
- *           as expected now are those where file size can be reduced
- *           (abeit not by much, as the plugin is sometimes more pessimistic
- *           than it need be) by re-using an existing unused colour
- *           index rather than using another bit per pixel in the
- *           encoded file.  That will never be an issue with an image
- *           which was freshly converted from RGB to INDEXED with the
- *           Quantize option, as that option removes any unused colours
- *           from the image.
- *
- *           Let me know if you find the consistancy/size tradeoff more
- *           annoying than helpful and I can adjust it.  IMHO it is too
- *           arcane a feature to present to any user as a runtime option.
- *
- * 98/05/18
- * 2.00.03 - If we did manage to decode at least one frame of a
- *           gif, be sure to display the resulting image even if
- *           it terminated abruptly.
- *
- * 98/04/28
- * 2.00.02 - Fixed a bug with (ms) tag parsing.
- *
- * 98/03/16
- * 2.00.01 - Fixed a long-standing bug when loading GIFs which layer
- *           opaque frames onto transparent ones.
- *
- * 98/03/15
- * 2.00.00 - No longer beta.  Uses the current GIMP brush background
- *           colour as the transparent-index colour for viewers that
- *           don't know about transparency, instead of magenta.  Note
- *           that this is by no means likely to actually work, but
- *           is more likely to do so if your image has been freshly
- *           to-index'd before saving.
- *
- *           Also added some analysis to gif-reading to prevent the
- *           number of encoded bits being pumped up inadvertantly for
- *           successive load/saves of the same image.  [Adam]
- *
- * 97/12/11
- * 1.99.18 - Bleh.  Disposals should specify how the next frame will
- *           be composed with this frame, NOT how this frame will
- *           be composed with the previous frame.  Fixed.  [Adam]
- *
- * 97/11/30
- * 1.99.17 - No more bogus transparency indices in animated GIFs,
- *           hopefully.  Saved files are better-behaved, sometimes
- *           smaller.  [Adam]
- *
- * 97/09/29
- * 1.99.16 - Added a dialog for the user to choose what to do if
- *           one of the layers of the image extends beyond the image
- *           borders - crop or cancel.  Added code behind it.
- *
- *           Corrected the number of bits for the base image to be
- *           on the generous side.  Hopefully we can no longer generate
- *           GIFs which make XV barf.
- *
- *           Now a lot more careful about whether we choose to encode
- *           as a GIF87a or a GIF89a.  Hopefully does everything by the
- *           book.  It should now be nigh-on impossible to torture the
- *           plugin into generating a GIF which isn't extremely well
- *           behaved with respect to the GIF89a specification.
- *
- *           Fixed(?) a lot of dialog callback details, should now be
- *           happy with window deletion (GTK+970925).  Fixed the
- *           cancellation of a save.  [Adam]
- *
- * 97/09/16
- * 1.99.15 - Hey!  We can now cope with loading images which change
- *           colourmap between frames.  This plugin will never save
- *           such abominations of nature while I still live, though.
- *           There should be no noncorrupt GIF in the universe which
- *           GIMP can't load and play now.  [Adam]
- *
- * 97/09/14
- * 1.99.14 - Added a check for layers whose extents don't lay
- *           within the image boundaries, which would make it a
- *           lot harder to generate badly-behaved GIFs.  Doesn't
- *           do anything about it yet, but it should crop all layers
- *           to the image boundaries.  Also, there's now a (separate)
- *           animation-preview plugin!  [Adam]
- *
- * 97/08/29
- * 1.99.13 - Basic ability to embed GIF comments within saved images.
- *           Fixed a bug with encoding the number of loops in a GIF file -
- *           would have been important, but we're not using that feature
- *           yet anyway.  ;)
- *           Subtly improved dialog layout a little. [Adam]
- *
- * 97/07/25
- * 1.99.12 - Fixed attempts to load GIFs which don't exist.  Made a
- *           related cosmetic adjustment. [Adam]
- *
- * 97/07/10
- * 1.99.11 - Fixed a bug with loading and saving GIFs where the bottom
- *           layer wasn't the same size as the image. [Adam]
- *
- * 97/07/06
- * 1.99.10 - New 'save' dialog, now most of the default behaviour of
- *           animated GIF saving is user-settable (looping, default
- *           time between frames, etc.)
- *           PDB entry for saving is no longer compatible.  Fortunately
- *           I don't think that anyone is using file_gif_save in
- *           scripts.  [Adam]
- *
- * 97/07/05
- * 1.99.9  - More animated GIF work: now loads and saves frame disposal
- *           information.  This is neat and will also allow some delta
- *           stuff in the future.
- *           The disposal-method is kept in the layer name, like the timing
- *           info.
- *           (replace) - this frame replaces whatever else has been shown
- *                       so far.
- *           (combine) - this frame builds apon the previous frame.
- *           If a disposal method is not specified, it is assumed to mean
- *           "don't care."  [Adam]
- *
- * 97/07/04
- * 1.99.8  - Can save per-frame timing information too, now.  The time
- *           for which a frame is visible is specified within the layer name
- *           as i,e. (250ms).  If a frame doesn't have this timing value
- *           it defaults to lasting 100ms. [Adam]
- *
- * 97/07/02
- * 1.99.7  - For animated GIFs, fixed the saving of timing information for
- *           frames which couldn't be made transparent.
- *           Added the loading of timing information into the layer
- *           names.  Adjusted GIMP's GIF magic number very slightly. [Adam]
- *
- * 97/06/30
- * 1.99.6  - Now saves GRAY and GRAYA images, albeit not always
- *           optimally (yet). [Adam]
- *
- * 97/06/25
- * 1.99.5  - Good, the transparancy-on-big-architectures bug is
- *           fixed.  Cleaned up some stuff.
- *           (Adam D. Moss, adam@foxbox.org)
- *
- * 97/06/23
- * 1.99.4  - Trying to fix some endianness/word-size problems with
- *           transparent gif-saving on some architectures... does
- *           this help?  (Adam D. Moss, adam@foxbox.org)
- *
- * 97/05/18
- * 1.99.3  - Fixed the problem with GIFs getting loop extensions even
- *           if they only had one frame (thanks to Zach for noticing -
- *           git!  :) )  (Adam D. Moss, adam@foxbox.org)
- *
- * 97/05/17
- * 1.99.2  - Can now save animated GIFs.  Correctly handles saving of
- *           image offsets.  Uses N*tscape extentions to loop infinitely.
- *           Some notable shortcomings - see TODO list below.
- *           (Adam D. Moss, adam@foxbox.org)
- *
- * 97/05/16
- * 1.99.1  - Implemented image offsets in animated GIF loading.  Requires
- *           a fix to gimp_layer_translate in libgimp/gimplayer.c if used
- *           with GIMP versions <= 0.99.10.  Started work on saving animated
- *           GIFs.  Started TODO list.  (Adam D. Moss, adam@foxbox.org)
- *
- * 97/05/15
- * 1.99.0  - Started revision log.  GIF plugin now loads/saves INDEXED
- *           and INDEXEDA images with correct transparency where possible.
- *           Loads multi-image (animated) GIFs as a framestack implemented
- *           in GIMP layers.  Some bug fixes to original code, some new bugs
- *           cheerfully added.  (Adam D. Moss, adam@foxbox.org)
- *
- * Previous versions - load/save INDEXED images.
- *           (Peter Mattis & Spencer Kimball, gimp@scam.xcf.berkeley.edu)
- */
-
-/*
- * TODO (more *'s means more important!)
- *
- * - PDB stuff for comments
- *
- * - 'requantize' option for INDEXEDA images which really have 256 colours
- *   in them
- *
- * - Be a bit smarter about finding unused/superfluous colour indices for
- *   lossless colour crunching of INDEXEDA images.  (Specifically, look
- *   for multiple indices which correspond to the same physical colour.)
- *
- * - Tidy up parameters for the GIFEncode routines
- *
- * - Remove unused colourmap entries for GRAYSCALE images.
- *
- * - Button to activate the animation preview plugin from the GIF-save
- *   dialog.
- *
- */
-
 #include "config.h"
 
 #include <errno.h>
@@ -339,7 +93,7 @@ static gint   save_image               (const gchar      *filename,
                                         gint32            drawable_ID,
                                         gint32            orig_image_ID);
 
-static gboolean bounds_check           (gint32            image_ID);
+static gboolean sanity_check           (gint32            image_ID);
 static gboolean bad_bounds_dialog      (void);
 
 static gboolean save_dialog            (gint32            image_ID);
@@ -466,9 +220,7 @@ run (const gchar      *name,
           break;
         }
 
-      if (bounds_check (image_ID))
-        /* The image may or may not have had layers out of
-           bounds, but the user didn't mind cropping it down. */
+      if (sanity_check (image_ID))
         {
           switch (run_mode)
             {
@@ -589,7 +341,7 @@ static gint find_unused_ia_colour   (const guchar *pixels,
                                      gint         *colors);
 
 static void special_flatten_indexed_alpha (guchar *pixels,
-                                           gint   transparent,
+                                           gint    transparent,
                                            gint    numpixels);
 static int colors_to_bpp  (int);
 static int bpp_to_colors  (int);
@@ -779,33 +531,42 @@ parse_disposal_tag (const gchar *str)
 
 
 static gboolean
-bounds_check (gint32 image_ID)
+sanity_check (gint32 image_ID)
 {
-  GimpDrawable *drawable;
-  gint32       *layers;
-  gint          nlayers;
-  gint          i;
-  gint          offset_x, offset_y;
+  gint32 *layers;
+  gint    nlayers;
+  gint    image_width;
+  gint    image_height;
+  gint    i;
 
-  /* get a list of layers for this image_ID */
-  layers = gimp_image_get_layers (image_ID, &nlayers);
+  image_width  = gimp_image_width (image_ID);
+  image_height = gimp_image_height (image_ID);
 
+  if (image_width > G_MAXUSHORT || image_height > G_MAXUSHORT)
+    {
+      g_message (_("The GIF format does not support images larger "
+                   "than %d x %d pixels."), G_MAXUSHORT, G_MAXUSHORT);
+      return FALSE;
+    }
 
   /*** Iterate through the layers to make sure they're all ***/
   /*** within the bounds of the image                      ***/
 
+  layers = gimp_image_get_layers (image_ID, &nlayers);
+
   for (i = 0; i < nlayers; i++)
     {
-      drawable = gimp_drawable_get (layers[i]);
+      gint offset_x;
+      gint offset_y;
+
       gimp_drawable_offsets (layers[i], &offset_x, &offset_y);
 
-      if ((offset_x < 0)
-          || (offset_y < 0)
-          || (offset_x+drawable->width > gimp_image_width(image_ID))
-          || (offset_y+drawable->height > gimp_image_height(image_ID)))
+      if (offset_x < 0 ||
+          offset_y < 0 ||
+          offset_x + gimp_drawable_width (layers[i]) > image_width ||
+          offset_y + gimp_drawable_height (layers[i]) > image_height)
         {
           g_free (layers);
-          gimp_drawable_detach (drawable);
 
           /* Image has illegal bounds - ask the user what it wants to do */
 
@@ -813,20 +574,13 @@ bounds_check (gint32 image_ID)
            * the user and they said yes. */
           if ((run_mode == GIMP_RUN_NONINTERACTIVE) || bad_bounds_dialog ())
             {
-              gimp_image_crop (image_ID,
-                               gimp_image_width (image_ID),
-                               gimp_image_height (image_ID),
-                               0, 0);
+              gimp_image_crop (image_ID, image_width, image_height, 0, 0);
               return TRUE;
             }
           else
             {
               return FALSE;
             }
-        }
-      else
-        {
-          gimp_drawable_detach (drawable);
         }
     }
 
@@ -1276,7 +1030,8 @@ save_dialog (gint32 image_ID)
 
   toggle = gtk_check_button_new_with_mnemonic (_("_GIF comment:"));
   gtk_container_add (GTK_CONTAINER (align), toggle);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.save_comment);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                gsvals.save_comment);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -1530,7 +1285,7 @@ bump_pixel (void)
     {
       cur_progress++;
 
-      if ((cur_progress % 16) == 0)
+      if ((cur_progress % 20) == 0)
         gimp_progress_update ((gdouble) cur_progress / (gdouble) max_progress);
 
       curx = 0;
@@ -1600,16 +1355,16 @@ gif_next_pixel (ifunptr getpixel)
 /* public */
 
 static void
-gif_encode_header (FILE    *fp,
-                  gboolean gif89,
-                  int      GWidth,
-                  int      GHeight,
-                  int      Background,
-                  int      BitsPerPixel,
-                  int      Red[],
-                  int      Green[],
-                  int      Blue[],
-                  ifunptr  get_pixel)
+gif_encode_header (FILE     *fp,
+                   gboolean  gif89,
+                   int       GWidth,
+                   int       GHeight,
+                   int       Background,
+                   int       BitsPerPixel,
+                   int       Red[],
+                   int       Green[],
+                   int       Blue[],
+                   ifunptr   get_pixel)
 {
   int B;
   int RWidth, RHeight;
@@ -1898,7 +1653,7 @@ gif_encode_image_data (FILE    *fp,
 
 
 static void
-gif_encode_close (FILE    *fp)
+gif_encode_close (FILE *fp)
 {
   /*
    * Write the GIF file terminator
@@ -1913,8 +1668,8 @@ gif_encode_close (FILE    *fp)
 
 
 static void
-gif_encode_loop_ext (FILE    *fp,
-                     guint    num_loops)
+gif_encode_loop_ext (FILE  *fp,
+                     guint  num_loops)
 {
   fputc(0x21, fp);
   fputc(0xff, fp);
