@@ -552,7 +552,7 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   toolbox = g_object_new (GIMP_TYPE_TOOLBOX,
-                          "title",          GIMP_ACRONYM,
+                          "title",          _("Toolbox"),
                           "context",        context,
                           "dialog-factory", dialog_factory,
                           NULL);

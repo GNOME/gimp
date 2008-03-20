@@ -237,14 +237,14 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  "toolbox-window-hint",
                                  TOOLBOX_WINDOW_HINT_BLURB,
                                  GIMP_TYPE_WINDOW_HINT,
-                                 GIMP_WINDOW_HINT_NORMAL,
+                                 GIMP_WINDOW_HINT_UTILITY,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DOCK_WINDOW_HINT,
                                  "dock-window-hint",
                                  DOCK_WINDOW_HINT_BLURB,
                                  GIMP_TYPE_WINDOW_HINT,
-                                 GIMP_WINDOW_HINT_NORMAL,
+                                 GIMP_WINDOW_HINT_UTILITY,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TRANSIENT_DOCKS,

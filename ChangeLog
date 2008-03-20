@@ -1,3 +1,11 @@
+2008-03-20  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpguiconfig.c: changed default values for
+	"toolbox-window-hint" and "dock-window-hint" to "utility".
+
+	* app/widgets/gimptoolbox.c (gimp_toolbox_new): changed window
+	title to "Toolbox".
+
 2008-03-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_new): make it
