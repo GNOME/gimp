@@ -848,6 +848,8 @@ gimp_plug_in_procedure_set_file_proc (GimpPlugInProcedure *proc,
                                       const gchar         *prefixes,
                                       const gchar         *magics)
 {
+  GSList *list;
+
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
   proc->file_proc = TRUE;
@@ -887,6 +889,19 @@ gimp_plug_in_procedure_set_file_proc (GimpPlugInProcedure *proc,
     }
 
   proc->prefixes_list = extensions_parse (proc->prefixes);
+
+  /* don't allow "file:" to be registered as prefix */
+  for (list = proc->prefixes_list; list; list = g_slist_next (list))
+    {
+      const gchar *prefix = list->data;
+
+      if (prefix && strcmp (prefix, "file:") == 0)
+        {
+          g_free (list->data);
+          proc->prefixes_list = g_slist_delete_link (proc->prefixes_list, list);
+          break;
+        }
+    }
 
   /*  magics  */
 

@@ -1,3 +1,10 @@
+2008-03-20  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/gimppluginprocedure.c
+	(gimp_plug_in_procedure_set_file_proc): don't allow "file:" to be
+	registered as prefix. This seems to happen with the uri-gio plug-in
+	when no gvfs backends are installed.
+
 2008-03-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.[ch]: shrink-wrap the newly filled
