@@ -1,5 +1,11 @@
 2008-03-20  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/display/gimpdisplayshell-close.c
+	(gimp_display_shell_close): gimp_exit() when closing the "no
+	image" window.
+
+2008-03-20  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/gui/gui-vtable.c: Fix stupid mistake in previous commit...
 
 2008-03-20  Martin Nordholts  <martinn@svn.gnome.org>

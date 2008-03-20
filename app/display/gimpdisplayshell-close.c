@@ -98,6 +98,10 @@ gimp_display_shell_close (GimpDisplayShell *shell,
     {
       gimp_display_shell_really_close (shell);
     }
+  else
+    {
+      gimp_exit (shell->display->gimp, FALSE);
+    }
 }
 
 
