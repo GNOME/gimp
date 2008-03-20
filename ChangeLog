@@ -1,3 +1,8 @@
+2008-03-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.[ch]: shrink-wrap the newly filled
+	empty display in an idle function.
+
 2008-03-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/uri/gimpmountoperation.c: make the dialogs transient to

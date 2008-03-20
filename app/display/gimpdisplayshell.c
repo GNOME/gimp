@@ -286,6 +286,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->icon_size              = 32;
   shell->icon_idle_id           = 0;
 
+  shell->fill_idle_id           = 0;
+
   shell->cursor_format          = GIMP_CURSOR_FORMAT_BITMAP;
   shell->current_cursor         = (GimpCursorType) -1;
   shell->tool_cursor            = GIMP_TOOL_CURSOR_NONE;
@@ -479,6 +481,12 @@ gimp_display_shell_destroy (GtkObject *object)
     {
       g_source_remove (shell->title_idle_id);
       shell->title_idle_id = 0;
+    }
+
+  if (shell->fill_idle_id)
+    {
+      g_source_remove (shell->fill_idle_id);
+      shell->fill_idle_id = 0;
     }
 
   if (shell->nav_popup)
@@ -1094,6 +1102,12 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
   g_return_if_fail (GIMP_IS_IMAGE (shell->display->image));
 
+  if (shell->fill_idle_id)
+    {
+      g_source_remove (shell->fill_idle_id);
+      shell->fill_idle_id = 0;
+    }
+
   gimp_display_shell_connect (shell);
 
   g_signal_emit (shell, display_shell_signals[RECONNECT], 0);
@@ -1113,6 +1127,12 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
   g_return_if_fail (shell->display->image == NULL);
 
+  if (shell->fill_idle_id)
+    {
+      g_source_remove (shell->fill_idle_id);
+      shell->fill_idle_id = 0;
+    }
+
   gimp_display_shell_selection_control (shell, GIMP_SELECTION_OFF);
 
   gimp_display_shell_scale (shell, GIMP_ZOOM_TO, 1.0);
@@ -1127,6 +1147,16 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
   gimp_display_shell_appearance_update (shell);
 
   gimp_display_shell_expose_full (shell);
+}
+
+static gboolean
+gimp_display_shell_fill_idle (GimpDisplayShell *shell)
+{
+  shell->fill_idle_id = 0;
+
+  gimp_display_shell_scale_shrink_wrap (shell);
+
+  return FALSE;
 }
 
 void
@@ -1149,6 +1179,10 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   gimp_statusbar_fill (GIMP_STATUSBAR (shell->statusbar));
 
   gimp_display_shell_appearance_update (shell);
+
+  shell->fill_idle_id = g_idle_add_full (G_PRIORITY_LOW,
+                                         (GSourceFunc) gimp_display_shell_fill_idle,
+                                         shell, NULL);
 }
 
 /*

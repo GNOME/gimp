@@ -135,6 +135,8 @@ struct _GimpDisplayShell
   gint              icon_size;         /*  size of the icon pixmap            */
   guint             icon_idle_id;      /*  ID of the idle-function            */
 
+  guint             fill_idle_id;      /*  display_shell_fill() idle ID       */
+
   GimpCursorFormat    cursor_format;   /*  Currently used cursor format       */
   GimpCursorType      current_cursor;  /*  Currently installed main cursor    */
   GimpToolCursorType  tool_cursor;     /*  Current Tool cursor                */
