@@ -152,7 +152,7 @@ get_protocols (void)
 
   schemes = g_vfs_get_supported_uri_schemes (g_vfs_get_default ());
 
-  for (i = 0; schemes[i]; i++)
+  for (i = 0; schemes && schemes[i]; i++)
     {
       if (string->len > 0)
         g_string_append_c (string, ',');
