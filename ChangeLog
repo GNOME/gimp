@@ -1,3 +1,10 @@
+2008-03-21  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: require glib >= 2.16.1. Don't warn about
+	deprecations for glib >= 2.19.0.
+
+	Also forgot to commit the removal of --enable-toolbox-menu.
+
 2008-03-21  Sven Neumann  <sven@gimp.org>
 
 	* app/gimp-log.[ch]: introduced log domain "menus".
