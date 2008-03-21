@@ -1,3 +1,13 @@
+2008-03-21  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-gegl-24.png: removed...
+
+	* themes/Default/images/stock-gegl-22.png: ... and added a cropped
+	version that goes better with the other tool icons.
+
+	* libgimpwidgets/gimpstock.c: changed accordingly.
+
 2008-03-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdock.c (gimp_dock_style_set): some experimental

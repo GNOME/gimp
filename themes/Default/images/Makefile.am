@@ -160,7 +160,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-edit-16.png			\
 	stock-eye-20.png			\
 	stock-floating-selection-24.png		\
-	stock-gegl-24.png			\
+	stock-gegl-22.png			\
 	stock-gravity-east-24.png		\
 	stock-gravity-north-24.png		\
 	stock-gravity-north-east-24.png		\
