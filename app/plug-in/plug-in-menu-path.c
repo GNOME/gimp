@@ -40,10 +40,8 @@ struct _MenuPathMapping
 
 static const MenuPathMapping menu_path_mappings[] =
 {
-#ifndef ENABLE_TOOLBOX_MENU
   { "<Toolbox>/Xtns", "<Image>/Xtns" },
   { "<Toolbox>/Help", "<Image>/Help" },
-#endif /* ENABLE_TOOLBOX_MENU */
   { NULL, NULL                       }
 };
 

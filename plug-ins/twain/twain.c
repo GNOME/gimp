@@ -318,7 +318,6 @@ query (void)
                              args,
                              return_vals);
 
-      gimp_plugin_menu_register (PLUG_IN_D_NAME, "<Toolbox>/File/Acquire");
       gimp_plugin_menu_register (PLUG_IN_D_NAME, "<Image>/File/Acquire");
     }
   else if (twain_run_mode == RUN_READDUMP)
@@ -338,7 +337,6 @@ query (void)
                              args,
                              return_vals);
 
-      gimp_plugin_menu_register (PLUG_IN_R_NAME, "<Toolbox>/File/Acquire");
       gimp_plugin_menu_register (PLUG_IN_R_NAME, "<Image>/File/Acquire");
     }
   else
@@ -359,7 +357,6 @@ query (void)
                              args,
                              return_vals);
 
-      gimp_plugin_menu_register (PLUG_IN_NAME, "<Toolbox>/File/Acquire");
       gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/File/Acquire");
     }
 }

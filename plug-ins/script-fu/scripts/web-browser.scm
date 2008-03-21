@@ -66,7 +66,7 @@
 )
 
 (script-fu-menu-register "gimp-help-2-concepts-paths"
-			 "<Toolbox>/Help/User Manual")
+			 "<Image>/Help/User Manual")
 
 
 (script-fu-register "gimp-help-2-using-web"
@@ -79,7 +79,7 @@
 )
 
 (script-fu-menu-register "gimp-help-2-using-web"
-			 "<Toolbox>/Help/User Manual")
+			 "<Image>/Help/User Manual")
 
 
 (script-fu-register "gimp-help-2-using-photography"
@@ -92,7 +92,7 @@
 )
 
 (script-fu-menu-register "gimp-help-2-using-photography"
-			 "<Toolbox>/Help/User Manual")
+			 "<Image>/Help/User Manual")
 
 
 (script-fu-register "gimp-help-2-using-fileformats"
@@ -105,7 +105,7 @@
 )
 
 (script-fu-menu-register "gimp-help-2-using-fileformats"
-			 "<Toolbox>/Help/User Manual")
+			 "<Image>/Help/User Manual")
 
 
 (script-fu-register "gimp-help-2-concepts-usage"
@@ -118,7 +118,7 @@
 )
 
 (script-fu-menu-register "gimp-help-2-concepts-usage"
-			 "<Toolbox>/Help/User Manual")
+			 "<Image>/Help/User Manual")
 
 
 (script-fu-register "gimp-help-2-using-docks"
@@ -131,7 +131,7 @@
 )
 
 (script-fu-menu-register "gimp-help-2-using-docks"
-			 "<Toolbox>/Help/User Manual")
+			 "<Image>/Help/User Manual")
 
 
 (script-fu-register "gimp-help-2-using-simpleobjects"
@@ -144,7 +144,7 @@
 )
 
 (script-fu-menu-register "gimp-help-2-using-simpleobjects"
-			 "<Toolbox>/Help/User Manual")
+			 "<Image>/Help/User Manual")
 
 
 (script-fu-register "gimp-help-2-using-selections"
@@ -157,7 +157,7 @@
 )
 
 (script-fu-menu-register "gimp-help-2-using-simpleobjects"
-			 "<Toolbox>/Help/User Manual")
+			 "<Image>/Help/User Manual")
 
 
 ;; Links to GIMP related web sites
@@ -185,7 +185,7 @@
 )
 
 (script-fu-menu-register "gimp-online-main-web-site"
-                         "<Toolbox>/Help/GIMP Online")
+                         "<Image>/Help/GIMP Online")
 
 
 (script-fu-register "gimp-online-developer-web-site"
@@ -198,7 +198,7 @@
 )
 
 (script-fu-menu-register "gimp-online-developer-web-site"
-                         "<Toolbox>/Help/GIMP Online")
+                         "<Image>/Help/GIMP Online")
 
 
 (script-fu-register "gimp-online-docs-web-site"
@@ -211,7 +211,7 @@
 )
 
 (script-fu-menu-register "gimp-online-docs-web-site"
-                         "<Toolbox>/Help/GIMP Online")
+                         "<Image>/Help/GIMP Online")
 
 
 (script-fu-register "gimp-online-plug-in-web-site"
@@ -224,4 +224,4 @@
 )
 
 (script-fu-menu-register "gimp-online-plug-in-web-site"
-                         "<Toolbox>/Help/GIMP Online")
+                         "<Image>/Help/GIMP Online")

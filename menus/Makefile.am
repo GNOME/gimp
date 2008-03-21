@@ -4,8 +4,7 @@ menudatadir = $(gimpdatadir)/menus
 
 menudata_in_files = \
 	dockable-menu.xml.in	\
-	image-menu.xml.in	\
-	toolbox-menu.xml.in
+	image-menu.xml.in
 
 menudata_built_files = $(menudata_in_files:.xml.in=.xml)
 
@@ -52,15 +51,9 @@ if GIMP_UNSTABLE
 DEBUG_MENU_PARAMS = --stringparam debug-menu yes
 endif
 
-if TOOLBOX_MENU
-TOOLBOX_MENU_PARAMS = --stringparam toolbox-menu yes
-else
-TOOLBOX_MENU_PARAMS = --stringparam toolbox-menu no
-endif
-
 %.xml: %.xml.in $(srcdir)/menus.xsl dialogs-menuitems.xml
 if HAVE_XSLTPROC
-	$(XSLTPROC) --xinclude $(DEBUG_MENU_PARAMS) $(TOOLBOX_MENU_PARAMS) $(srcdir)/menus.xsl $< > $(@) || rm -f $(@)
+	$(XSLTPROC) --xinclude $(DEBUG_MENU_PARAMS) $(srcdir)/menus.xsl $< > $(@) || rm -f $(@)
 else
 	@echo "*** xsltproc is required to build the menus XML files ***"; exit 1;
 endif

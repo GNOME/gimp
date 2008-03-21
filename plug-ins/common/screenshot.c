@@ -257,7 +257,6 @@ query (void)
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Toolbox>/File/Acquire");
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/Acquire");
   gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_INLINE_PIXBUF,
                              screenshot_icon);

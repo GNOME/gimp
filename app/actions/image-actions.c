@@ -43,10 +43,6 @@
 
 static const GimpActionEntry image_actions[] =
 {
-  { "toolbox-menubar", NULL,
-    N_("Toolbox Menu"), NULL, NULL, NULL,
-    GIMP_HELP_TOOLBOX },
-
   { "image-menubar", NULL,
     N_("Image Menu"), NULL, NULL, NULL,
     GIMP_HELP_IMAGE_WINDOW },

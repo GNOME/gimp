@@ -1,5 +1,45 @@
 2008-03-21  Michael Natterer  <mitch@gimp.org>
 
+	Remove the toolbox menu:
+
+	* configure.in: remove --enable-toolbox-menu option.
+
+	* menus/Makefile.am
+	* menus/toolbox-menu.xml.in: removed.
+
+	* menus/image-menu.xml.in: add the debug menu here.
+
+	* menus/menus.xsl: remove transformations depending on whether
+	there is a toolbox menu or not.
+
+	* app/menus/Makefile.am
+	* app/menus/toolbox-menu.[ch]: removed.
+
+	* app/menus/menus.c: remove the toolbox menu but keep the
+	<Toolbox> UI manager around so we can configure its actions
+	separate from normal docks.
+
+	* app/actions/image-actions.c (image_actions): remove the action
+	for the toolbox menubar.
+
+	* app/widgets/gimptoolbox.c: remove all menu code.
+
+	* app/plug-in/plug-in-menu-path.c: map plug-in registered toolbox
+	menu items to their new location in the image menu
+	unconditionally.
+
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/uniteditor.c
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/scripts/web-browser.scm
+	* plug-ins/twain/twain.c
+	* plug-ins/winsnap/winsnap.c: remove menu registrations under
+	<Toolbox>/File and change <Toolbox>/Help to <Image>/Help. Leave
+	<Toolbox>/Xtns untouched until its final location and name are
+	decided.
+
+2008-03-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdock.h (struct GimpDock): added member "ID"
 	for themeing.
 

@@ -9,7 +9,6 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:param name="debug-menu" />
-  <xsl:param name="toolbox-menu" />
 
   <xsl:output method="xml"
               version="1.0"
@@ -41,18 +40,6 @@
 
   <xsl:template match="menu[@action='debug-menu']">
     <xsl:if test="$debug-menu='yes'">
-      <xsl:call-template name="identity" />
-    </xsl:if>
-  </xsl:template>
-
-  <xsl:template match="menubar-and-popup/menu[@action='extensions-menu']">
-    <xsl:if test="$toolbox-menu='no'">
-      <xsl:call-template name="identity" />
-    </xsl:if>
-  </xsl:template>
-
-  <xsl:template match="menubar-and-popup/menu[@action='help-menu']">
-    <xsl:if test="$toolbox-menu='no'">
       <xsl:call-template name="identity" />
     </xsl:if>
   </xsl:template>

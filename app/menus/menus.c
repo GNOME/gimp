@@ -48,7 +48,6 @@
 #include "menus.h"
 #include "plug-in-menus.h"
 #include "tool-options-menu.h"
-#include "toolbox-menu.h"
 
 #include "gimp-intl.h"
 
@@ -96,6 +95,7 @@ menus_init (Gimp              *gimp,
   gimp_menu_factory_manager_register (global_menu_factory, "<Image>",
                                       "file",
                                       "context",
+                                      "debug",
                                       "help",
                                       "edit",
                                       "select",
@@ -121,7 +121,6 @@ menus_init (Gimp              *gimp,
   gimp_menu_factory_manager_register (global_menu_factory, "<Toolbox>",
                                       "file",
                                       "context",
-                                      "debug",
                                       "help",
                                       "edit",
                                       "select",
@@ -135,8 +134,6 @@ menus_init (Gimp              *gimp,
                                       "plug-in",
                                       "quick-mask",
                                       NULL,
-                                      "/toolbox-menubar",
-                                      "toolbox-menu.xml", toolbox_menu_setup,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Dock>",

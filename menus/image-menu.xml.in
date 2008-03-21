@@ -19,6 +19,15 @@
         <menuitem action="dialogs-document-history" />
       </menu>
       <menu action="file-acquire-menu" name="Acquire" />
+
+<!--  The debug-menu is automatically excluded for stable releases  -->
+      <menu action="debug-menu" name="Debug">
+        <menuitem action="debug-mem-profile" />
+        <menuitem action="debug-dump-items" />
+        <menuitem action="debug-dump-managers" />
+        <menuitem action="debug-dump-attached-data" />
+      </menu>
+
       <separator />
       <placeholder name="Save">
 	<menuitem action="file-save" />
