@@ -6,14 +6,14 @@
 # you quit GIMP. If this file isn't found, defaults are used.
 
 (session-info "toolbox" "dock"
-    (position 48 48)
+    (position 0 0)
     (size 204 720)
     (open-on-exit)
     (dock
         (book
             (dockable "gimp-tool-options"))))
 (session-info "dock" "dock"
-    (position 300 48)
+    (position -1 0)
     (size 240 720)
     (open-on-exit)
     (aux-info

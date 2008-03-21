@@ -383,52 +383,71 @@ void
 gimp_session_info_set_geometry (GimpSessionInfo *info)
 {
   GdkScreen   *screen;
-  GdkRectangle monitor;
+  GdkRectangle rect;
   gchar        geom[32];
+  gint         monitor;
+  gboolean     right_aligned  = FALSE;
+  gboolean     bottom_aligned = FALSE;
+  gboolean     use_size;
 
   g_return_if_fail (info != NULL);
   g_return_if_fail (GTK_IS_WINDOW (info->widget));
 
   screen = gtk_widget_get_screen (info->widget);
 
-  if ((! info->toplevel_entry || info->toplevel_entry->remember_size) &&
-      (info->width > 0 && info->height > 0))
-    {
-      gdk_screen_get_monitor_geometry (screen,
-                                       get_appropriate_monitor (screen,
-                                                                info->x,
-                                                                info->y,
-                                                                info->width,
-                                                                info->height),
-                                       &monitor);
+  use_size = ((! info->toplevel_entry || info->toplevel_entry->remember_size) &&
+              (info->width > 0 && info->height > 0));
 
-      info->x = CLAMP (info->x,
-                       monitor.x, monitor.x + monitor.width  - info->width);
-      info->y = CLAMP (info->y,
-                       monitor.y, monitor.y + monitor.height - info->height);
+  if (use_size)
+    {
+      monitor = get_appropriate_monitor (screen,
+                                         MAX (0, info->x),
+                                         MAX (0, info->y),
+                                         info->width,
+                                         info->height);
     }
   else
     {
-      gdk_screen_get_monitor_geometry (screen,
-                                       gdk_screen_get_monitor_at_point (screen,
-                                                                        info->x,
-                                                                        info->y),
-                                       &monitor);
-
-      info->x = CLAMP (info->x, monitor.x, monitor.x + monitor.width  - 128);
-      info->y = CLAMP (info->y, monitor.y, monitor.y + monitor.height - 128);
+      monitor = gdk_screen_get_monitor_at_point (screen,
+                                                 MAX (0, info->x),
+                                                 MAX (0, info->y));
     }
 
-  g_snprintf (geom, sizeof (geom), "+%d+%d", info->x, info->y);
+  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+
+  if (info->x < 0)
+    {
+      right_aligned = TRUE;
+      info->x = 0;
+    }
+  else
+    {
+      gint max = rect.x + rect.width - (info->width > 0 ? info->width : 128);
+
+      info->x = CLAMP (info->x, rect.x, max);
+    }
+
+  if (info->y < 0)
+    {
+      bottom_aligned = TRUE;
+      info->y = 0;
+    }
+  else
+    {
+      gint max = rect.y + rect.height - (info->height > 0 ? info->height : 128);
+
+      info->y = CLAMP (info->y, rect.y, max);
+    }
+
+  g_snprintf (geom, sizeof (geom), "%c%d%c%d",
+              right_aligned  ? '-' : '+', info->x,
+              bottom_aligned ? '-' : '+', info->y);
 
   gtk_window_parse_geometry (GTK_WINDOW (info->widget), geom);
 
-  if (! info->toplevel_entry || info->toplevel_entry->remember_size)
-    {
-      if (info->width > 0 && info->height > 0)
-        gtk_window_set_default_size (GTK_WINDOW (info->widget),
-                                     info->width, info->height);
-    }
+  if (use_size)
+    gtk_window_set_default_size (GTK_WINDOW (info->widget),
+                                 info->width, info->height);
 }
 
 void

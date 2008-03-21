@@ -1,3 +1,13 @@
+2008-03-22  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpsessioninfo.c (gimp_session_info_set_geometry):
+	deal with negative positions read from the sessionrc file and
+	interpret them as a hint to align the window with the right,
+	respective bottom edge of the screen.
+
+	* etc/sessionrc: position the toolbox in the upper left, the
+	additional dock in the upper right corner of the screen.
+
 2008-03-21  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpcanvas.c (gimp_canvas_draw_drop_zone): tweaked
