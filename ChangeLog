@@ -1,5 +1,11 @@
 2008-03-21  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimptemplate.c: increased the size of the default image
+	(to the next Fibonacci number for the development version and to
+	640x480 for GIMP 2.6).
+
+2008-03-21  Sven Neumann  <sven@gimp.org>
+
 	* etc/controllerrc: bind Alt-Cursor Key to tools-value-1 instead
 	of context-opacity (tools-value-1 is equivalent to context-opacity
 	for paint tools).
