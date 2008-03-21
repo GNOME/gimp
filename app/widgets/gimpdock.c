@@ -358,7 +358,12 @@ static void
 gimp_dock_style_set (GtkWidget *widget,
                      GtkStyle  *prev_style)
 {
-  gint default_height;
+  PangoContext         *context;
+  PangoFontDescription *font_desc;
+  gint                  font_size;
+  gint                  default_height;
+  gchar                *font_str;
+  gchar                *rc_string;
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
@@ -366,6 +371,29 @@ gimp_dock_style_set (GtkWidget *widget,
   gtk_widget_style_get (widget, "default-height", &default_height, NULL);
 
   gtk_window_set_default_size (GTK_WINDOW (widget), -1, default_height);
+
+  context = gtk_widget_get_pango_context (widget);
+  font_desc = pango_context_get_font_description (context);
+  font_desc = pango_font_description_copy (font_desc);
+
+  font_size = pango_font_description_get_size (font_desc);
+  font_size = 0.8 * font_size;
+  pango_font_description_set_size (font_desc, font_size);
+
+  font_str = pango_font_description_to_string (font_desc);
+  pango_font_description_free (font_desc);
+
+  rc_string =
+    g_strdup_printf ("style \"gimp-dock-style\""
+                     "{"
+                     "  font_name = \"%s\""
+                     "}"
+                     "widget_class \"<GimpDock>.*\" style \"gimp-dock-style\"",
+                     font_str);
+  g_free (font_str);
+
+  gtk_rc_parse_string (rc_string);
+  g_free (rc_string);
 }
 
 static void

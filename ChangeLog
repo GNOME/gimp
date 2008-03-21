@@ -1,5 +1,10 @@
 2008-03-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdock.c (gimp_dock_style_set): some experimental
+	and pretty evil code which reduces the font size in docks by 20%.
+
+2008-03-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpcanvas.c (gimp_canvas_draw_drop_zone): make sure
 	the drop label's opacity scales with its size so we don't end up
 	with tiny text at 10% opacity.
