@@ -338,11 +338,11 @@ gimp_session_info_restore (GimpSessionInfo   *info,
  * gtk+/gdk/gdkscreen.c:gdk_screen_get_monitor_at_window()
  */
 static gint
-get_appropriate_monitor (GdkScreen *screen,
-                         gint       x,
-                         gint       y,
-                         gint       w,
-                         gint       h)
+gimp_session_info_get_appropriate_monitor (GdkScreen *screen,
+                                           gint       x,
+                                           gint       y,
+                                           gint       w,
+                                           gint       h)
 {
   GdkRectangle rect;
   gint         area    = 0;
@@ -398,33 +398,10 @@ gimp_session_info_set_geometry (GimpSessionInfo *info)
   use_size = ((! info->toplevel_entry || info->toplevel_entry->remember_size) &&
               (info->width > 0 && info->height > 0));
 
-  if (use_size)
-    {
-      monitor = get_appropriate_monitor (screen,
-                                         MAX (0, info->x),
-                                         MAX (0, info->y),
-                                         info->width,
-                                         info->height);
-    }
-  else
-    {
-      monitor = gdk_screen_get_monitor_at_point (screen,
-                                                 MAX (0, info->x),
-                                                 MAX (0, info->y));
-    }
-
-  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
-
   if (info->x < 0)
     {
       right_aligned = TRUE;
       info->x = 0;
-    }
-  else
-    {
-      gint max = rect.x + rect.width - (info->width > 0 ? info->width : 128);
-
-      info->x = CLAMP (info->x, rect.x, max);
     }
 
   if (info->y < 0)
@@ -432,7 +409,30 @@ gimp_session_info_set_geometry (GimpSessionInfo *info)
       bottom_aligned = TRUE;
       info->y = 0;
     }
+
+  if (use_size)
+    {
+      monitor = gimp_session_info_get_appropriate_monitor (screen,
+                                                           info->x,
+                                                           info->y,
+                                                           info->width,
+                                                           info->height);
+    }
   else
+    {
+      monitor = gdk_screen_get_monitor_at_point (screen, info->x, info->y);
+    }
+
+  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+
+  if (! right_aligned)
+    {
+      gint max = rect.x + rect.width - (info->width > 0 ? info->width : 128);
+
+      info->x = CLAMP (info->x, rect.x, max);
+    }
+
+  if (! bottom_aligned)
     {
       gint max = rect.y + rect.height - (info->height > 0 ? info->height : 128);
 
