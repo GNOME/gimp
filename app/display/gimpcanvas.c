@@ -842,6 +842,7 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
   gint       width;
   gint       height;
   gdouble    factor;
+  gdouble    opacity;
 
   if (! canvas->drop_zone_layout)
     {
@@ -861,11 +862,13 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
                  (widget->allocation.width  / factor - width)  / 2.0,
                  (widget->allocation.height / factor - height) / 2.0);
 
+  opacity = CLAMP (1.0 / factor, 0.10, 1.0);
+
   cairo_set_source_rgba (cr,
                          color->red   / 65535.0,
                          color->green / 65535.0,
                          color->blue  / 65535.0,
-                         0.2);
+                         opacity);
 
   pango_cairo_show_layout (cr, canvas->drop_zone_layout);
 }
