@@ -862,7 +862,7 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
                  (widget->allocation.width  / factor - width)  / 2.0,
                  (widget->allocation.height / factor - height) / 2.0);
 
-  opacity = CLAMP (1.0 / factor, 0.10, 1.0);
+  opacity = CLAMP (0.5 / factor, 0.1, 1.0);
 
   cairo_set_source_rgba (cr,
                          color->red   / 65535.0,

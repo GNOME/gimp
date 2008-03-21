@@ -1,5 +1,11 @@
 2008-03-21  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpcanvas.c (gimp_canvas_draw_drop_zone): tweaked
+	opacity calculation so that the opacity is only increased with
+	smaller font sizes.
+
+2008-03-21  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimptemplate.[ch]: moved defines to the header file and
 	changed to 640x400 which is actually almost the golden mean as
 	claimed by the comment.
