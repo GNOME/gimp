@@ -1,5 +1,9 @@
 2008-03-21  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: revert new glib dependency.
+
+2008-03-21  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: require glib >= 2.16.1. Don't warn about
 	deprecations for glib >= 2.19.0.
 
