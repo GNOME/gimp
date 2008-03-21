@@ -47,6 +47,8 @@ struct _GimpDock
   GtkWidget         *vbox;
 
   GList             *dockbooks;
+
+  gint               ID; /* for themeing */
 };
 
 struct _GimpDockClass

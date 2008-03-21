@@ -1,3 +1,16 @@
+2008-03-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdock.h (struct GimpDock): added member "ID"
+	for themeing.
+
+	* app/widgets/gimpdock.c (gimp_dock_init): assign unique IDs
+	and set unique widget names based on the ID.
+
+	(gimp_dock_style_set): set individual styles for each dock based
+	on the widget name so docks on different screens get the correct
+	font size. Use PANGO_SCALE_SMALL instead of a hardcoded factor of
+	0.8.
+
 2008-03-21  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am

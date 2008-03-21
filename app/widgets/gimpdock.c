@@ -163,11 +163,18 @@ gimp_dock_class_init (GimpDockClass *klass)
 static void
 gimp_dock_init (GimpDock *dock)
 {
-  GtkWidget *separator;
+  static gint  dock_ID = 1;
+  GtkWidget   *separator;
+  gchar       *name;
 
   dock->context        = NULL;
   dock->dialog_factory = NULL;
   dock->dockbooks      = NULL;
+  dock->ID             = dock_ID++;
+
+  name = g_strdup_printf ("gimp-dock-%d", dock->ID);
+  gtk_widget_set_name (GTK_WIDGET (dock), name);
+  g_free (name);
 
   gtk_window_set_role (GTK_WINDOW (dock), "gimp-dock");
   gtk_window_set_resizable (GTK_WINDOW (dock), TRUE);
@@ -377,7 +384,7 @@ gimp_dock_style_set (GtkWidget *widget,
   font_desc = pango_font_description_copy (font_desc);
 
   font_size = pango_font_description_get_size (font_desc);
-  font_size = 0.8 * font_size;
+  font_size = PANGO_SCALE_SMALL * font_size;
   pango_font_description_set_size (font_desc, font_size);
 
   font_str = pango_font_description_to_string (font_desc);
@@ -388,8 +395,9 @@ gimp_dock_style_set (GtkWidget *widget,
                      "{"
                      "  font_name = \"%s\""
                      "}"
-                     "widget_class \"<GimpDock>.*\" style \"gimp-dock-style\"",
-                     font_str);
+                     "widget \"gimp-dock-%d.*\" style \"gimp-dock-style\"",
+                     font_str,
+                     GIMP_DOCK (widget)->ID);
   g_free (font_str);
 
   gtk_rc_parse_string (rc_string);
