@@ -1,3 +1,9 @@
+2008-03-21  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_fill_idle):
+	gtk_window_present() the image window to make sure that images
+	aren't opened into a minimized image window.
+
 2008-03-21  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: revert new glib dependency.

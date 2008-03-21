@@ -1177,6 +1177,8 @@ gimp_display_shell_fill_idle (GimpDisplayShell *shell)
 
   gimp_display_shell_scale_shrink_wrap (shell);
 
+  gtk_window_present (GTK_WINDOW (shell));
+
   return FALSE;
 }
 
