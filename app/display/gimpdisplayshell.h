@@ -20,7 +20,7 @@
 #define __GIMP_DISPLAY_SHELL_H__
 
 
-#include <gtk/gtkwindow.h>
+#include <gtk/gtkvbox.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -63,7 +63,9 @@ typedef struct _GimpDisplayShellClass  GimpDisplayShellClass;
 
 struct _GimpDisplayShell
 {
-  GtkWindow         parent_instance;
+  GtkVBox           parent_instance;
+
+  GtkWindow        *container_window;
 
   GimpDisplay      *display;
 
@@ -196,7 +198,7 @@ struct _GimpDisplayShell
 
 struct _GimpDisplayShellClass
 {
-  GtkWindowClass  parent_class;
+  GtkVBoxClass  parent_class;
 
   void (* scaled)    (GimpDisplayShell *shell);
   void (* scrolled)  (GimpDisplayShell *shell);

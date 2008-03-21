@@ -1,3 +1,11 @@
+2008-03-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/display/gimpdisplayshell.[ch]
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-progress.c: make GimpDisplayShell
+	a non-toplevel, and create a simple window to hold it.  This is
+	a transitional step toward making the image display dockable.
+	
 2008-03-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/actions/gradients-actions.c

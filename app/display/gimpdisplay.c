@@ -342,9 +342,10 @@ gimp_display_new (GimpImage       *image,
                   GimpMenuFactory *menu_factory,
                   GimpUIManager   *popup_manager)
 {
-  GimpDisplay *display;
-  Gimp        *gimp;
-  gint         ID;
+  GimpDisplay      *display;
+  Gimp             *gimp;
+  gint              ID;
+  GimpDisplayShell *shell;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -373,7 +374,10 @@ gimp_display_new (GimpImage       *image,
   /*  create the shell for the image  */
   display->shell = gimp_display_shell_new (display, unit, scale,
                                            menu_factory, popup_manager);
+  shell = GIMP_DISPLAY_SHELL (display->shell);
+  gimp_display_shell_shrink_wrap (shell);
   gtk_widget_show (display->shell);
+  gtk_widget_show (GTK_WIDGET (shell->container_window));
 
   g_signal_connect (GIMP_DISPLAY_SHELL (display->shell)->statusbar, "cancel",
                     G_CALLBACK (gimp_display_progress_canceled),
@@ -476,8 +480,10 @@ gimp_scratch_display_new (GimpImage       *image,
   height = SCALEY (shell, gimp_image_get_height (image));
   gtk_widget_set_size_request (display->shell, width,
                                height + toolbar_height + menubar_height);
-
+  gtk_window_resize (shell->container_window, width,
+                     height + toolbar_height + menubar_height);
   gtk_widget_show (display->shell);
+  gtk_widget_show (GTK_WIDGET (shell->container_window));
 
   g_signal_connect (GIMP_DISPLAY_SHELL (display->shell)->statusbar, "cancel",
                     G_CALLBACK (gimp_display_progress_canceled),
@@ -628,7 +634,9 @@ gimp_display_delete (GimpDisplay *display)
 
   /* make a new scratch image if we need one */
   if (! gimp->exiting && gimp_container_is_empty (gimp->displays))
+    {
       file_create_scratch_image (gimp);
+    }
 }
 
 gint

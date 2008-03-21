@@ -129,8 +129,12 @@ static const guint8 * gimp_display_shell_get_icc_profile
                                                    (GimpColorManaged *managed,
                                                     gsize            *len);
 
+static void      gimp_display_shell_container_window_closed
+                                                   (GtkWidget        *widget,
+                                                    GdkEvent         *event,
+                                                    GimpDisplayShell *shell);
 
-G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell, GTK_TYPE_WINDOW,
+G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell, GTK_TYPE_VBOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
                                                 gimp_display_shell_progress_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
@@ -218,6 +222,8 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 static void
 gimp_display_shell_init (GimpDisplayShell *shell)
 {
+  shell->container_window       = NULL;
+
   shell->display                = NULL;
 
   shell->menubar_manager        = NULL;
@@ -332,8 +338,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->highlight              = NULL;
   shell->mask                   = NULL;
 
-  gtk_window_set_role (GTK_WINDOW (shell), "gimp-image-window");
-  gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
 
   gtk_widget_set_events (GTK_WIDGET (shell), (GDK_POINTER_MOTION_MASK      |
                                               GDK_POINTER_MOTION_HINT_MASK |
@@ -508,6 +512,12 @@ gimp_display_shell_destroy (GtkObject *object)
 
   shell->display = NULL;
 
+  if (shell->container_window)
+    {
+      gtk_widget_destroy (GTK_WIDGET (shell->container_window));
+      shell->container_window = NULL;
+    }
+
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
@@ -590,7 +600,8 @@ gimp_display_shell_popup_menu (GtkWidget *widget)
 static void
 gimp_display_shell_real_scaled (GimpDisplayShell *shell)
 {
-  GimpContext *user_context;
+  GimpContext    *user_context;
+  GtkRequisition  requisition;
 
   if (! shell->display)
     return;
@@ -604,6 +615,10 @@ gimp_display_shell_real_scaled (GimpDisplayShell *shell)
 
   if (shell->display == gimp_context_get_display (user_context))
     gimp_ui_manager_update (shell->popup_manager, shell->display);
+
+/*   gtk_widget_size_request (GTK_WIDGET (shell), &requisition); */
+/*   gtk_window_resize (shell->window, */
+/*                      requisition.width, requisition.height); */
 }
 
 static void
@@ -654,6 +669,7 @@ gimp_display_shell_new (GimpDisplay     *display,
   GimpDisplayConfig     *display_config;
   GimpColorDisplayStack *filter;
   Gimp                  *gimp;
+  GtkWidget             *container_window;
   GtkWidget             *main_vbox;
   GtkWidget             *disp_vbox;
   GtkWidget             *upper_hbox;
@@ -714,9 +730,6 @@ gimp_display_shell_new (GimpDisplay     *display,
                                                                   "<Image>",
                                                                   display,
                                                                   FALSE);
-
-  gtk_window_add_accel_group (GTK_WINDOW (shell),
-                              gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (shell->menubar_manager)));
 
   g_signal_connect (shell->menubar_manager, "show-tooltip",
                     G_CALLBACK (gimp_display_shell_show_tooltip),
@@ -1093,6 +1106,19 @@ gimp_display_shell_new (GimpDisplay     *display,
   gtk_widget_show (GTK_WIDGET (shell->canvas));
   gtk_widget_show (main_vbox);
 
+
+  container_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  shell->container_window = GTK_WINDOW (container_window);
+  gtk_window_set_role (shell->container_window, "gimp-image-window");
+  gtk_window_set_resizable (shell->container_window, TRUE);
+  gtk_container_add (GTK_CONTAINER (container_window), GTK_WIDGET (shell));
+  gtk_window_add_accel_group (shell->container_window,
+                              gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (shell->menubar_manager)));
+
+  g_signal_connect (shell->container_window, "delete-event",
+                    G_CALLBACK (gimp_display_shell_container_window_closed),
+                    shell);
+
   filter = gimp_display_shell_filter_new (shell,
                                           gimp->config->color_management);
   if (filter)
@@ -1109,6 +1135,14 @@ gimp_display_shell_new (GimpDisplay     *display,
   gimp_display_shell_scale_changed (shell);
 
   return GTK_WIDGET (shell);
+}
+
+static void
+gimp_display_shell_container_window_closed (GtkWidget        *widget,
+                                            GdkEvent         *event,
+                                            GimpDisplayShell *shell)
+{
+  gimp_display_delete (shell->display);
 }
 
 void
@@ -1662,7 +1696,7 @@ gimp_display_shell_update_icon (GimpDisplayShell *shell)
                                      gimp_get_user_context (image->gimp),
                                      width, height);
 
-  gtk_window_set_icon (GTK_WINDOW (shell), pixbuf);
+  gtk_window_set_icon (shell->container_window, pixbuf);
 }
 
 void
@@ -1730,7 +1764,7 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
       if (width < shell->statusbar->requisition.width)
         width = shell->statusbar->requisition.width;
 
-      gtk_window_resize (GTK_WINDOW (shell),
+      gtk_window_resize (shell->container_window,
                          width  + border_x,
                          height + border_y);
     }

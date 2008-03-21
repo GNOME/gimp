@@ -97,7 +97,7 @@ gimp_display_shell_progress_get_window (GimpProgress *progress)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
 
-  return (guint32) gimp_window_get_native (GTK_WINDOW (shell));
+  return (guint32) gimp_window_get_native (shell->container_window);
 }
 
 static gboolean

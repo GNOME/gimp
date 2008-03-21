@@ -639,7 +639,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                              (gpointer) &shell->scale_dialog);
 
   gtk_window_set_transient_for (GTK_WINDOW (shell->scale_dialog),
-                                GTK_WINDOW (shell));
+                                shell->container_window);
   gtk_window_set_destroy_with_parent (GTK_WINDOW (shell->scale_dialog), TRUE);
 
   g_signal_connect (shell->scale_dialog, "response",
