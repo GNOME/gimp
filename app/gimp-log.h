@@ -27,8 +27,9 @@ typedef enum
   GIMP_LOG_DND            = 1 << 2,
   GIMP_LOG_HELP           = 1 << 3,
   GIMP_LOG_DIALOG_FACTORY = 1 << 4,
-  GIMP_LOG_SAVE_DIALOG    = 1 << 5,
-  GIMP_LOG_IMAGE_SCALE    = 1 << 6
+  GIMP_LOG_MENUS          = 1 << 5,
+  GIMP_LOG_SAVE_DIALOG    = 1 << 6,
+  GIMP_LOG_IMAGE_SCALE    = 1 << 7
 } GimpLogFlags;
 
 
@@ -74,6 +75,7 @@ void   gimp_logv     (const gchar *function,
 #define DND            GIMP_LOG_DND
 #define HELP           GIMP_LOG_HELP
 #define DIALOG_FACTORY GIMP_LOG_DIALOG_FACTORY
+#define MENUS          GIMP_LOG_MENUS
 #define SAVE_DIALOG    GIMP_LOG_SAVE_DIALOG
 #define IMAGE_SCALE    GIMP_LOG_IMAGE_SCALE
 

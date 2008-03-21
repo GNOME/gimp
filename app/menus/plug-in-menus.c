@@ -38,6 +38,7 @@
 
 #include "plug-in-menus.h"
 
+#include "gimp-log.h"
 #include "gimp-intl.h"
 
 
@@ -220,10 +221,9 @@ plug_in_menus_register_procedure (GimpPDB       *pdb,
         {
           GList *list;
 
-#if 0
-          g_print ("%s: %s\n", G_STRFUNC,
-                   gimp_object_get_name (GIMP_OBJECT (procedure)));
-#endif
+
+          GIMP_LOG (MENUS, "register procedure: %s",
+                    gimp_object_get_name (GIMP_OBJECT (procedure)));
 
           for (list = plug_in_proc->menu_paths; list; list = g_list_next (list))
             plug_in_menus_menu_path_added (plug_in_proc, list->data, manager);
@@ -249,10 +249,8 @@ plug_in_menus_unregister_procedure (GimpPDB       *pdb,
         {
           GList *list;
 
-#if 0
-          g_print ("%s: %s\n", G_STRFUNC,
+          GIMP_LOG (MENUS, "unregister procedure: %s",
                    gimp_object_get_name (GIMP_OBJECT (procedure)));
-#endif
 
           for (list = plug_in_proc->menu_paths; list; list = g_list_next (list))
             {
@@ -283,10 +281,8 @@ plug_in_menus_menu_path_added (GimpPlugInProcedure *plug_in_proc,
                                const gchar         *menu_path,
                                GimpUIManager       *manager)
 {
-#if 0
-  g_print ("%s: %s (%s)\n", G_STRFUNC,
+  GIMP_LOG (MENUS, "menu path added: %s (%s)",
            gimp_object_get_name (GIMP_OBJECT (plug_in_proc)), menu_path);
-#endif
 
   if (g_str_has_prefix (menu_path, manager->name))
     {
@@ -426,10 +422,8 @@ plug_in_menus_add_proc (GimpUIManager       *manager,
       return;
     }
 
-#if 0
-  g_print ("adding menu item for '%s' (@ %s)\n",
-           GIMP_OBJECT (proc)->name, action_path);
-#endif
+  GIMP_LOG (MENUS, "adding menu item for '%s' (@ %s)",
+            GIMP_OBJECT (proc)->name, action_path);
 
   gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
                          action_path,
@@ -515,10 +509,8 @@ plug_in_menus_build_path (GimpUIManager *manager,
           if (! gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager),
                                            action_path))
             {
-#if 0
-              g_print ("adding menu '%s' at path '%s' for action '%s'\n",
+              GIMP_LOG (MENUS, "adding menu '%s' at path '%s' for action '%s'",
                        menu_item_name, action_path, menu_path);
-#endif
 
               gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
                                      parent_action_path, menu_item_name,

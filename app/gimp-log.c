@@ -40,6 +40,7 @@ gimp_log_init (void)
         { "dnd",            GIMP_LOG_DND            },
         { "help",           GIMP_LOG_HELP           },
         { "dialog-factory", GIMP_LOG_DIALOG_FACTORY },
+        { "menus",          GIMP_LOG_MENUS          },
         { "save-dialog",    GIMP_LOG_SAVE_DIALOG    },
         { "image-scale",    GIMP_LOG_IMAGE_SCALE    }
       };
