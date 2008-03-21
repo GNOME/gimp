@@ -1,5 +1,11 @@
 2008-03-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-close.c (gimp_display_shell_close):
+	invoke the quit action instead of calling gimp_exit() so its
+	sensitivity is taken into account.
+
+2008-03-21  Michael Natterer  <mitch@gimp.org>
+
 	Remove the toolbox menu:
 
 	* configure.in: remove --enable-toolbox-menu option.

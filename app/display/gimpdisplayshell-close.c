@@ -100,7 +100,11 @@ gimp_display_shell_close (GimpDisplayShell *shell,
     }
   else
     {
-      gimp_exit (shell->display->gimp, FALSE);
+      /* Activate the action instead of simply calling gimp_exit(), so
+       * the quit action's sensitivity is taken into account.
+       */
+      gimp_ui_manager_activate_action (shell->menubar_manager,
+                                       "file", "file-quit");
     }
 }
 
