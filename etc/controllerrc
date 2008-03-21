@@ -33,10 +33,10 @@
         (map "key-down-control"  "view-scroll-bottom-border")
         (map "key-left-control"  "view-scroll-left-border")
         (map "key-right-control" "view-scroll-right-border")
-        (map "key-up-alt"        "context-opacity-increase-skip")
-        (map "key-down-alt"      "context-opacity-decrease-skip")
-        (map "key-left-alt"      "context-opacity-decrease")
-        (map "key-right-alt"     "context-opacity-increase")))
+        (map "key-up-alt"        "tools-value-1-increase-skip")
+        (map "key-down-alt"      "tools-value-1-decrease-skip")
+        (map "key-left-alt"      "tools-value-1-decrease")
+        (map "key-right-alt"     "tools-value-1-increase")))
 
 # (GimpControllerInfo "Linux Input Example"
 #    (enabled yes)

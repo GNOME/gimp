@@ -1,5 +1,11 @@
 2008-03-21  Sven Neumann  <sven@gimp.org>
 
+	* etc/controllerrc: bind Alt-Cursor Key to tools-value-1 instead
+	of context-opacity (tools-value-1 is equivalent to context-opacity
+	for paint tools).
+
+2008-03-21  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_fill_idle):
 	gtk_window_present() the image window to make sure that images
 	aren't opened into a minimized image window.
