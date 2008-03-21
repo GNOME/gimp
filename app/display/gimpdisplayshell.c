@@ -45,6 +45,7 @@
 #include "core/gimpprojection.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpsamplepoint.h"
+#include "core/gimptemplate.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
@@ -668,10 +669,7 @@ gimp_display_shell_new (GimpDisplay     *display,
 
   /*  the toplevel shell */
   shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL,
-                        "window-position", (display->image ?
-                                            GTK_WIN_POS_MOUSE :
-                                            GTK_WIN_POS_CENTER),
-                        "unit",            unit,
+                        "unit", unit,
                         NULL);
 
   shell->display = display;
@@ -683,8 +681,8 @@ gimp_display_shell_new (GimpDisplay     *display,
     }
   else
     {
-      image_width  = 640;
-      image_height = 480;
+      image_width  = GIMP_DEFAULT_IMAGE_WIDTH;
+      image_height = GIMP_DEFAULT_IMAGE_HEIGHT;
     }
 
   shell->dot_for_dot = shell->display->config->default_dot_for_dot;

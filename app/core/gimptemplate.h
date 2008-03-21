@@ -26,6 +26,20 @@
 #include "gimpviewable.h"
 
 
+/*  The default image aspect ratio is the golden mean. We use
+ *  two adjacent fibonacci numbers for the unstable series and
+ *  some less odd values for the stable version.
+ */
+
+#ifdef GIMP_UNSTABLE
+#define GIMP_DEFAULT_IMAGE_WIDTH   610
+#define GIMP_DEFAULT_IMAGE_HEIGHT  377
+#else
+#define GIMP_DEFAULT_IMAGE_WIDTH   640
+#define GIMP_DEFAULT_IMAGE_HEIGHT  400
+#endif
+
+
 #define GIMP_TYPE_TEMPLATE            (gimp_template_get_type ())
 #define GIMP_TEMPLATE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TEMPLATE, GimpTemplate))
 #define GIMP_TEMPLATE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEMPLATE, GimpTemplateClass))

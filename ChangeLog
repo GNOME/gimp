@@ -1,5 +1,13 @@
 2008-03-21  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimptemplate.[ch]: moved defines to the header file and
+	changed to 640x400 which is actually almost the golden mean as
+	claimed by the comment.
+
+	* app/display/gimpdisplayshell.c: use the defines here.
+
+2008-03-21  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimptemplate.c: increased the size of the default image
 	(to the next Fibonacci number for the development version and to
 	600x480 for GIMP 2.6).
