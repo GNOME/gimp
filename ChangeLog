@@ -1,5 +1,9 @@
 2008-03-22  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimppixbuf.c: fixed gtk-doc syntax.
+
+2008-03-22  Sven Neumann  <sven@gimp.org>
+
 	* themes/Default/gtkrc
 	* app/widgets/gimpmenudock.c: reduced minimum dock width to 200
 	pixels.
