@@ -194,9 +194,10 @@ gimp_curves_tool_init (GimpCurvesTool *tool)
 {
   gint i;
 
-  tool->curves  = g_slice_new0 (Curves);
-  tool->lut     = gimp_lut_new ();
-  tool->channel = GIMP_HISTOGRAM_VALUE;
+  tool->curves     = g_slice_new0 (Curves);
+  tool->lut        = gimp_lut_new ();
+  tool->channel    = GIMP_HISTOGRAM_VALUE;
+  tool->curve_type = GIMP_CURVE_SMOOTH;
 
   curves_init (tool->curves);
 
@@ -259,13 +260,15 @@ gimp_curves_tool_initialize (GimpTool     *tool,
 
   curves_init (c_tool->curves);
 
-  c_tool->channel = GIMP_HISTOGRAM_VALUE;
-  c_tool->color   = gimp_drawable_is_rgb (drawable);
-  c_tool->alpha   = gimp_drawable_has_alpha (drawable);
+  c_tool->curve_type = GIMP_CURVE_SMOOTH;
 
-  c_tool->selected = 0;
-  c_tool->grabbed  = FALSE;
-  c_tool->last     = 0;
+  c_tool->channel    = GIMP_HISTOGRAM_VALUE;
+  c_tool->color      = gimp_drawable_is_rgb (drawable);
+  c_tool->alpha      = gimp_drawable_has_alpha (drawable);
+
+  c_tool->selected   = 0;
+  c_tool->grabbed    = FALSE;
+  c_tool->last       = 0;
 
   GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 
