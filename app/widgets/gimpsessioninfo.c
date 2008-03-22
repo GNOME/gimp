@@ -473,8 +473,6 @@ gimp_session_info_set_geometry (GimpSessionInfo *info)
       g_snprintf (geom, sizeof (geom), "%+d%+d", info->x, info->y);
     }
 
-  g_printerr ("%s\n", geom);
-
   gtk_window_parse_geometry (GTK_WINDOW (info->widget), geom);
 
   if (use_size)
