@@ -7,14 +7,14 @@
 
 (session-info "toolbox" "dock"
     (position 0 0)
-    (size 204 720)
+    (size 170 820)
     (open-on-exit)
     (dock
         (book
             (dockable "gimp-tool-options"))))
 (session-info "dock" "dock"
-    (position -1 0)
-    (size 240 720)
+    (position -0 0)
+    (size 210 820)
     (open-on-exit)
     (aux-info
         (show-image-menu "true")
@@ -30,9 +30,7 @@
             (dockable "gimp-undo-history"
 	        (tab-style icon)))
         (book
-            (position 360)
-            (dockable "gimp-color-editor"
-	        (tab-style preview))
+            (position 420)
             (dockable "gimp-brush-grid"
 	        (tab-style preview))
             (dockable "gimp-pattern-grid"

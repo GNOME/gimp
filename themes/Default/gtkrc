@@ -39,7 +39,7 @@ style "gimp-default-style"
   GtkPaned::handle_size             = 6
   GimpDock::default_height          = 300
   GimpDockSeparator::height         = 6
-  GimpMenuDock::minimal_width       = 250
+  GimpMenuDock::minimal_width       = 200
   GimpMenuDock::menu_preview_size   = button
   GimpToolbox::tool_icon_size       = button
   GimpToolbox::button_relief        = none

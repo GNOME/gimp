@@ -1,5 +1,17 @@
 2008-03-22  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/gtkrc
+	* app/widgets/gimpmenudock.c: reduced minimum dock width to 200
+	pixels.
+
+	* etc/sessionrc: use -0 instead of -1, just like in X geometry
+	strings. Changed default dock sizes to be taller but less wide.
+
+	* app/widgets/gimpsessioninfo.c: changed code to parse -0 from the
+	sessionrc file and to deal more correctly with negative offsets.
+
+2008-03-22  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpsessioninfo.c (gimp_session_info_set_geometry):
 	deal with negative positions read from the sessionrc file and
 	interpret them as a hint to align the window with the right,

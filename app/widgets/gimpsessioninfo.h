@@ -29,6 +29,8 @@ struct _GimpSessionInfo
   gint                    y;
   gint                    width;
   gint                    height;
+  gboolean                right_align;
+  gboolean                bottom_align;
 
   /*  only valid while restoring and saving the session  */
   gboolean                open;

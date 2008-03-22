@@ -134,6 +134,38 @@ gimp_session_info_serialize (GimpConfigWriter *writer,
   gimp_config_writer_close (writer);  /* session-info */
 }
 
+/*
+ * This function is just like gimp_scanner_parse_int(), but it is allows
+ * to detect the special value '-0'. This is used as in X geometry strings.
+ */
+static gboolean
+gimp_session_info_parse_offset (GScanner *scanner,
+                                gint     *dest,
+                                gboolean *negative)
+{
+  if (g_scanner_peek_next_token (scanner) == '-')
+    {
+      *negative = TRUE;
+      g_scanner_get_next_token (scanner);
+    }
+  else
+    {
+      *negative = FALSE;
+    }
+
+  if (g_scanner_peek_next_token (scanner) != G_TOKEN_INT)
+    return FALSE;
+
+  g_scanner_get_next_token (scanner);
+
+  if (*negative)
+    *dest = -scanner->value.v_int64;
+  else
+    *dest = scanner->value.v_int64;
+
+  return TRUE;
+}
+
 GTokenType
 gimp_session_info_deserialize (GScanner *scanner,
                                gint      scope)
@@ -202,9 +234,13 @@ gimp_session_info_deserialize (GScanner *scanner,
             {
             case SESSION_INFO_POSITION:
               token = G_TOKEN_INT;
-              if (! gimp_scanner_parse_int (scanner, &info->x))
+              if (! gimp_session_info_parse_offset (scanner,
+                                                    &info->x,
+                                                    &info->right_align))
                 goto error;
-              if (! gimp_scanner_parse_int (scanner, &info->y))
+              if (! gimp_session_info_parse_offset (scanner,
+                                                    &info->y,
+                                                    &info->bottom_align))
                 goto error;
               break;
 
@@ -386,8 +422,6 @@ gimp_session_info_set_geometry (GimpSessionInfo *info)
   GdkRectangle rect;
   gchar        geom[32];
   gint         monitor;
-  gboolean     right_aligned  = FALSE;
-  gboolean     bottom_aligned = FALSE;
   gboolean     use_size;
 
   g_return_if_fail (info != NULL);
@@ -397,18 +431,6 @@ gimp_session_info_set_geometry (GimpSessionInfo *info)
 
   use_size = ((! info->toplevel_entry || info->toplevel_entry->remember_size) &&
               (info->width > 0 && info->height > 0));
-
-  if (info->x < 0)
-    {
-      right_aligned = TRUE;
-      info->x = 0;
-    }
-
-  if (info->y < 0)
-    {
-      bottom_aligned = TRUE;
-      info->y = 0;
-    }
 
   if (use_size)
     {
@@ -425,23 +447,33 @@ gimp_session_info_set_geometry (GimpSessionInfo *info)
 
   gdk_screen_get_monitor_geometry (screen, monitor, &rect);
 
-  if (! right_aligned)
-    {
-      gint max = rect.x + rect.width - (info->width > 0 ? info->width : 128);
+  info->x = CLAMP (info->x,
+                   rect.x,
+                   rect.x + rect.width - (info->width > 0 ?
+                                          info->width : 128));
+  info->y = CLAMP (info->y,
+                   rect.y,
+                   rect.y + rect.height - (info->height > 0 ?
+                                           info->height : 128));
 
-      info->x = CLAMP (info->x, rect.x, max);
+  if (info->right_align && info->bottom_align)
+    {
+      g_strlcpy (geom, "-0-0", sizeof (geom));
+    }
+  else if (info->right_align)
+    {
+      g_snprintf (geom, sizeof (geom), "-0%+d", info->y);
+    }
+  else if (info->bottom_align)
+    {
+      g_snprintf (geom, sizeof (geom), "%+d-0", info->x);
+    }
+  else
+    {
+      g_snprintf (geom, sizeof (geom), "%+d%+d", info->x, info->y);
     }
 
-  if (! bottom_aligned)
-    {
-      gint max = rect.y + rect.height - (info->height > 0 ? info->height : 128);
-
-      info->y = CLAMP (info->y, rect.y, max);
-    }
-
-  g_snprintf (geom, sizeof (geom), "%c%d%c%d",
-              right_aligned  ? '-' : '+', info->x,
-              bottom_aligned ? '-' : '+', info->y);
+  g_printerr ("%s\n", geom);
 
   gtk_window_parse_geometry (GTK_WINDOW (info->widget), geom);
 
