@@ -1,5 +1,11 @@
 2008-03-22  Sven Neumann  <sven@gimp.org>
 
+	Merged from trunk:
+
+	* libgimp/gimppixbuf.c: fixed gtk-doc syntax.
+
+2008-03-22  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcurvestool.c (gimp_curves_tool_initialize): set
 	the curve type to the type of the initial curve, which is SMOOTH.
 	Fixes bug #523873.

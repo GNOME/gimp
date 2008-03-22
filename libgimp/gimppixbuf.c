@@ -193,8 +193,8 @@ gimp_drawable_get_sub_thumbnail (gint32                  drawable_ID,
  * you will still need to add the layer to it.
  *
  * If you pass @progress_end > @progress_start to this function,
- * @gimp_progress_update() will be called for. You have to call
- * @gimp_progress_init() beforehand.
+ * gimp_progress_update() will be called for. You have to call
+ * gimp_progress_init() beforehand then.
  *
  * Returns: The newly created layer.
  *
