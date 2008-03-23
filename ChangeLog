@@ -1,5 +1,15 @@
 2008-03-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdialogfactory.c: cleanup (move variables to
+	local scopes), improve debugging outout.
+
+	(gimp_dialog_factory_remove_dialog): disconnect signal handlers
+	and unset any session management data which is attached to the
+	widget, so this function can really be used to remove a dialog
+	from the factory.
+
+2008-03-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpsessioninfo.c (gimp_session_info_get_geometry):
 	use gdk_drawable_get_size() instead of looking at
 	widget->allocation since the latter is not yet updated if this

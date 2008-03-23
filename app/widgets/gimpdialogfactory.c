@@ -54,6 +54,7 @@ static GtkWidget *
 static void     gimp_dialog_factory_set_widget_data   (GtkWidget         *dialog,
                                                        GimpDialogFactory *factory,
                                                        GimpDialogFactoryEntry *entry);
+static void     gimp_dialog_factory_unset_widget_data (GtkWidget         *dialog);
 static gboolean gimp_dialog_factory_set_user_pos      (GtkWidget         *dialog,
                                                        GdkEventConfigure *cevent,
                                                        gpointer           data);
@@ -713,7 +714,6 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 {
   GimpDialogFactory      *dialog_factory;
   GimpDialogFactoryEntry *entry;
-  GimpSessionInfo        *info;
   GList                  *list;
   gboolean                toplevel;
 
@@ -752,7 +752,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
       for (list = factory->session_infos; list; list = g_list_next (list))
         {
-          info = list->data;
+          GimpSessionInfo *info = list->data;
 
           if ((info->toplevel_entry == entry) ||
               (info->dockable_entry == entry))
@@ -791,7 +791,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
       if (! list) /*  didn't find a session info  */
         {
-          info = gimp_session_info_new ();
+          GimpSessionInfo *info = gimp_session_info_new ();
 
           info->widget = dialog;
 
@@ -829,7 +829,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
       for (list = factory->session_infos; list; list = g_list_next (list))
         {
-          info = list->data;
+          GimpSessionInfo *info = list->data;
 
           /*  take the first empty slot  */
           if (! info->toplevel_entry &&
@@ -850,7 +850,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
       if (! list) /*  didn't find a session info  */
         {
-          info = gimp_session_info_new ();
+          GimpSessionInfo *info = gimp_session_info_new ();
 
           info->widget = dialog;
 
@@ -934,7 +934,6 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
 {
   GimpDialogFactory      *dialog_factory;
   GimpDialogFactoryEntry *entry;
-  GimpSessionInfo        *session_info;
   GList                  *list;
 
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
@@ -969,7 +968,7 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
 
   for (list = factory->session_infos; list; list = g_list_next (list))
     {
-      session_info = (GimpSessionInfo *) list->data;
+      GimpSessionInfo *session_info = list->data;
 
       if (session_info->widget == dialog)
         {
@@ -979,6 +978,20 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
                     entry ? entry->identifier : "dock");
 
           session_info->widget = NULL;
+
+          gimp_dialog_factory_unset_widget_data (dialog);
+
+          g_signal_handlers_disconnect_by_func (dialog,
+                                                gimp_dialog_factory_set_user_pos,
+                                                NULL);
+          g_signal_handlers_disconnect_by_func (dialog,
+                                                gimp_dialog_factory_remove_dialog,
+                                                factory);
+
+          if (entry && entry->session_managed && GTK_WIDGET_TOPLEVEL (dialog))
+            g_signal_handlers_disconnect_by_func (dialog,
+                                                  gimp_dialog_factory_dialog_configure,
+                                                  factory);
 
           /*  don't save session info for empty docks  */
           if (GIMP_IS_DOCK (dialog))
@@ -1176,6 +1189,18 @@ gimp_dialog_factory_set_widget_data (GtkWidget               *dialog,
                         entry);
 }
 
+static void
+gimp_dialog_factory_unset_widget_data (GtkWidget *dialog)
+{
+  g_return_if_fail (GTK_IS_WIDGET (dialog));
+
+  if (! gimp_dialog_factory_key)
+    return;
+
+  g_object_set_qdata (G_OBJECT (dialog), gimp_dialog_factory_key,       NULL);
+  g_object_set_qdata (G_OBJECT (dialog), gimp_dialog_factory_entry_key, NULL);
+}
+
 static gboolean
 gimp_dialog_factory_set_user_pos (GtkWidget         *dialog,
                                   GdkEventConfigure *cevent,
@@ -1238,11 +1263,14 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
 
       if (session_info->widget == dialog)
         {
-          GIMP_LOG (DIALOG_FACTORY,
-                    "updating session info for \"%s\" from window geometry",
-                    entry->identifier);
-
           gimp_session_info_get_geometry (session_info);
+
+          GIMP_LOG (DIALOG_FACTORY,
+                    "updated session info for \"%s\" from window geometry "
+                    "(x=%d y=%d  %dx%d)",
+                    entry->identifier,
+                    session_info->x, session_info->y,
+                    session_info->width, session_info->height);
 
           break;
         }
@@ -1299,9 +1327,7 @@ gimp_dialog_factories_clear_foreach (gconstpointer      key,
 
   for (list = factory->session_infos; list; list = g_list_next (list))
     {
-      GimpSessionInfo *info;
-
-      info = (GimpSessionInfo *) list->data;
+      GimpSessionInfo *info = list->data;
 
       if (info->widget)
         continue;
