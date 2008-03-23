@@ -71,6 +71,9 @@ static void     gimp_statusbar_finalize           (GObject           *object);
 
 static void     gimp_statusbar_destroy            (GtkObject         *object);
 
+static void     gimp_statusbar_size_request       (GtkWidget         *widget,
+                                                   GtkRequisition    *requisition);
+
 static GimpProgress *
                 gimp_statusbar_progress_start     (GimpProgress      *progress,
                                                    const gchar       *message,
@@ -127,10 +130,13 @@ gimp_statusbar_class_init (GimpStatusbarClass *klass)
 {
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
 
-  object_class->finalize    = gimp_statusbar_finalize;
+  object_class->finalize     = gimp_statusbar_finalize;
 
-  gtk_object_class->destroy = gimp_statusbar_destroy;
+  gtk_object_class->destroy  = gimp_statusbar_destroy;
+
+  widget_class->size_request = gimp_statusbar_size_request;
 }
 
 static void
@@ -262,6 +268,27 @@ gimp_statusbar_destroy (GtkObject *object)
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_statusbar_size_request (GtkWidget      *widget,
+                             GtkRequisition *requisition)
+{
+  GimpStatusbar  *statusbar = GIMP_STATUSBAR (widget);
+  GtkRequisition  child_requisition;
+
+  GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
+
+  /*  also consider the children which can be invisible  */
+
+  gtk_widget_size_request (statusbar->cursor_frame, &child_requisition);
+  requisition->height = MAX (requisition->height, child_requisition.height);
+
+  gtk_widget_size_request (statusbar->unit_combo, &child_requisition);
+  requisition->height = MAX (requisition->height, child_requisition.height);
+
+  gtk_widget_size_request (statusbar->scale_combo, &child_requisition);
+  requisition->height = MAX (requisition->height, child_requisition.height);
 }
 
 static GimpProgress *
