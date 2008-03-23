@@ -1,5 +1,13 @@
 2008-03-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpsessioninfo.c (gimp_session_info_get_geometry):
+	use gdk_drawable_get_size() instead of looking at
+	widget->allocation since the latter is not yet updated if this
+	function is called from the dialog factory's "configure-event"
+	callback. Fixes remembering of dialog sizes within one session.
+
+2008-03-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpcontext.c (gimp_context_real_set_display): set the
 	image also if it is NULL.
 

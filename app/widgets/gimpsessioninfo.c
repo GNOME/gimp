@@ -492,8 +492,9 @@ gimp_session_info_get_geometry (GimpSessionInfo *info)
 
       if (! info->toplevel_entry || info->toplevel_entry->remember_size)
         {
-          info->width  = info->widget->allocation.width;
-          info->height = info->widget->allocation.height;
+          gdk_drawable_get_size (GDK_DRAWABLE (info->widget->window),
+                                 &info->width,
+                                 &info->height);
         }
       else
         {
