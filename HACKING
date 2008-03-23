@@ -72,36 +72,26 @@ the API documentation.
 
 Subversion
 ----------
-GIMP is available from GNOME Subversion. You can also grab glib, pango,
-atk, gtk+, libart, gtkhtml2 as well as intltool and gtk-doc from the
-same Subversion server. You can use the following commands to get them
-from the anonymous Subversion server:
+GIMP is available from GNOME Subversion. You can use the following
+commands to get them from the anonymous Subversion server:
 
-For getting the trunk, use:
+For getting GIMP trunk, use:
 
-    $ svn co http://svn.gnome.org/svn/<module>/trunk <module>
+    $ svn co http://svn.gnome.org/svn/gimp/trunk gimp
 
-For getting a branch, use:
+For getting a GIMP branch, use:
 
-    $ svn co http://svn.gnome.org/svn/<module>/branches/<branch> <module>
-
-
-The interesting modules and the suggested stable branches to use are:
-
-    * gimp
-    * glib        (glib-2-12)
-    * atk         (gnome-2-16)
-    * pango       (pango-1-16)
-    * gtk+        (gtk-2-10)
-    * libart_lgpl
-    * gtkhtml2
-    * intltool
-    * gtk-doc
+    $ svn co http://svn.gnome.org/svn/gimp/branches/<branch> gimp-<branch>
 
 You can read more on using GNOME's Subversion service at these URLs:
 
     http://developer.gnome.org/tools/svn.html
     http://svnbook.red-bean.com/
+
+
+You will also need relatively new stable releases of glib, pango, atk,
+gtk+, libart, gtkhtml2, etc. for building GIMP, which you can get as a
+part of recent Linux distribution releases.
 
 
 Patches
