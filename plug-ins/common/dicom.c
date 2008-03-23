@@ -544,13 +544,12 @@ dicom_loader (guint8        *pix_buffer,
   gint     samples_per_pixel = info->samples_per_pixel;
   guint16 *buf16             = (guint16 *) pix_buffer;
   gint     pix_idx;
-  guint16  max               = 0;
+  guint16  max               = 1;
 
   if (info->bpp == 16)
     {
       /* Reorder the buffer and look for max */
-      max = 0;
-      for (pix_idx=0; pix_idx < width * height * samples_per_pixel; pix_idx++)
+      for (pix_idx = 0; pix_idx < width * height * samples_per_pixel; pix_idx++)
 	{
 	  guint pix_gl = g_ntohs (GUINT16_SWAP_LE_BE (buf16[pix_idx]));
 
@@ -582,7 +581,7 @@ dicom_loader (guint8        *pix_buffer,
 
 	      for (col_idx = 0; col_idx < width * samples_per_pixel; col_idx++)
 		d[col_idx] =
-                  (guint8) (255.0 * (gdouble)(row_start[col_idx]) / max);
+                  (guint8) (255.999 * (gdouble) (row_start[col_idx]) / max);
 	    }
 	  else if (info->bpp == 8)
 	    {
