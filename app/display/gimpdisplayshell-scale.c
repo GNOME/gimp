@@ -594,8 +594,7 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
   gimp_display_shell_scale_setup (shell);
   gimp_display_shell_scaled (shell);
 
-  if (resize_window)
-    gimp_display_shell_expose_full (shell);
+  gimp_display_shell_expose_full (shell);
 
   /* re-enable the active tool */
   gimp_display_shell_resume (shell);

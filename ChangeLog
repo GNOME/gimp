@@ -1,5 +1,11 @@
 2008-03-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_resize): always need to fully expose the
+	canvas now that "redisplay" was removed.
+
+2008-03-23  Michael Natterer  <mitch@gimp.org>
+
 	Never shrink the empty display when filling it, only grow:
 
 	* app/display/gimpdisplayshell.[ch]
