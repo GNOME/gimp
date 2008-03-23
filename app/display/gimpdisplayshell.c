@@ -47,8 +47,10 @@
 #include "core/gimpsamplepoint.h"
 #include "core/gimptemplate.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
+#include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -114,6 +116,8 @@ static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
 static gboolean  gimp_display_shell_delete_event   (GtkWidget        *widget,
                                                     GdkEventAny      *aevent);
 static gboolean  gimp_display_shell_popup_menu     (GtkWidget        *widget);
+static void      gimp_display_shell_style_set      (GtkWidget        *widget,
+                                                    GtkStyle         *prev_style);
 
 static void      gimp_display_shell_real_scaled    (GimpDisplayShell *shell);
 
@@ -203,6 +207,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   widget_class->screen_changed = gimp_display_shell_screen_changed;
   widget_class->delete_event   = gimp_display_shell_delete_event;
   widget_class->popup_menu     = gimp_display_shell_popup_menu;
+  widget_class->style_set      = gimp_display_shell_style_set;
 
   klass->scaled                = gimp_display_shell_real_scaled;
   klass->scrolled              = NULL;
@@ -581,6 +586,26 @@ gimp_display_shell_popup_menu (GtkWidget *widget)
 }
 
 static void
+gimp_display_shell_style_set (GtkWidget *widget,
+                              GtkStyle  *prev_style)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
+  GtkRequisition    menubar_req;
+  GtkRequisition    statusbar_req;
+
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  gtk_widget_size_request (shell->menubar,   &menubar_req);
+  gtk_widget_size_request (shell->statusbar, &statusbar_req);
+
+#if 0
+  /*  this doesn't work  */
+  gtk_widget_set_size_request (widget, -1,
+                               menubar_req.height + statusbar_req.height);
+#endif
+}
+
+static void
 gimp_display_shell_real_scaled (GimpDisplayShell *shell)
 {
   GimpContext *user_context;
@@ -641,11 +666,12 @@ gimp_display_shell_get_icc_profile (GimpColorManaged *managed,
 /*  public functions  */
 
 GtkWidget *
-gimp_display_shell_new (GimpDisplay     *display,
-                        GimpUnit         unit,
-                        gdouble          scale,
-                        GimpMenuFactory *menu_factory,
-                        GimpUIManager   *popup_manager)
+gimp_display_shell_new (GimpDisplay       *display,
+                        GimpUnit           unit,
+                        gdouble            scale,
+                        GimpMenuFactory   *menu_factory,
+                        GimpUIManager     *popup_manager,
+                        GimpDialogFactory *display_factory)
 {
   GimpDisplayShell      *shell;
   GimpColorDisplayStack *filter;
@@ -666,6 +692,7 @@ gimp_display_shell_new (GimpDisplay     *display,
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (popup_manager), NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (display_factory), NULL);
 
   /*  the toplevel shell */
   shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL,
@@ -673,6 +700,8 @@ gimp_display_shell_new (GimpDisplay     *display,
                         NULL);
 
   shell->display = display;
+
+  shell->display_factory = display_factory;
 
   if (shell->display->image)
     {
@@ -1102,9 +1131,16 @@ gimp_display_shell_new (GimpDisplay     *display,
     }
 
   if (shell->display->image)
-    gimp_display_shell_connect (shell);
+    {
+      gimp_display_shell_connect (shell);
+    }
   else
-    gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
+    {
+      gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
+      gimp_dialog_factory_add_foreign (shell->display_factory,
+                                       "gimp-no-image-window",
+                                       GTK_WIDGET (shell));
+    }
 
   gimp_display_shell_title_init (shell);
 
@@ -1142,9 +1178,34 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
 void
 gimp_display_shell_empty (GimpDisplayShell *shell)
 {
+  GimpSessionInfo *session_info;
+  gint             width;
+  gint             height;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
   g_return_if_fail (shell->display->image == NULL);
+
+  /*  get the NIW size before adding the display to the dialog factory
+   *  so the window's current size doesn't affect the stored session
+   *  info entry.
+   */
+  session_info = gimp_dialog_factory_find_session_info (shell->display_factory,
+                                                        "gimp-no-image-window");
+  if (session_info)
+    {
+      width  = session_info->width;
+      height = session_info->height;
+    }
+  else
+    {
+      width  = GTK_WIDGET (shell)->allocation.width;
+      height = GTK_WIDGET (shell)->allocation.height;
+    }
+
+  gimp_dialog_factory_add_foreign (shell->display_factory,
+                                   "gimp-no-image-window",
+                                   GTK_WIDGET (shell));
 
   if (shell->fill_idle_id)
     {
@@ -1166,6 +1227,8 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
   gimp_display_shell_appearance_update (shell);
 
   gimp_display_shell_expose_full (shell);
+
+  gtk_window_resize (GTK_WINDOW (shell), width, height);
 }
 
 static gboolean
@@ -1192,6 +1255,9 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
   g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  gimp_dialog_factory_remove_dialog (shell->display_factory,
+                                     GTK_WIDGET (shell));
 
   gimp_display_shell_set_unit (shell, unit);
   gimp_display_shell_set_initial_scale (shell, scale,

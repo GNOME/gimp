@@ -70,6 +70,8 @@ struct _GimpDisplayShell
   GimpUIManager    *menubar_manager;
   GimpUIManager    *popup_manager;
 
+  GimpDialogFactory *display_factory;
+
   gdouble           monitor_xres;
   gdouble           monitor_yres;
 
@@ -209,7 +211,8 @@ GtkWidget * gimp_display_shell_new                 (GimpDisplay        *display,
                                                     GimpUnit            unit,
                                                     gdouble             scale,
                                                     GimpMenuFactory    *menu_factory,
-                                                    GimpUIManager      *popup_manager);
+                                                    GimpUIManager      *popup_manager,
+                                                    GimpDialogFactory  *display_factory);
 
 void        gimp_display_shell_reconnect           (GimpDisplayShell   *shell);
 

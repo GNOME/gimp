@@ -40,6 +40,7 @@
 GimpDialogFactory *global_dialog_factory  = NULL;
 GimpDialogFactory *global_dock_factory    = NULL;
 GimpDialogFactory *global_toolbox_factory = NULL;
+GimpDialogFactory *global_display_factory = NULL;
 
 
 #define FOREIGN(id,singleton,remember_size) \
@@ -257,6 +258,11 @@ dialogs_init (Gimp            *gimp,
   gimp_dialog_factory_set_constructor (global_dock_factory,
                                        dialogs_dockable_constructor);
 
+  global_display_factory = gimp_dialog_factory_new ("display",
+                                                    gimp_get_user_context (gimp),
+                                                    menu_factory,
+                                                    NULL);
+
   for (i = 0; i < G_N_ELEMENTS (toplevel_entries); i++)
     gimp_dialog_factory_register_entry (global_dialog_factory,
                                         toplevel_entries[i].identifier,
@@ -284,6 +290,17 @@ dialogs_init (Gimp            *gimp,
                                         dock_entries[i].session_managed,
                                         dock_entries[i].remember_size,
                                         dock_entries[i].remember_if_open);
+
+  gimp_dialog_factory_register_entry (global_display_factory,
+                                      "gimp-no-image-window",
+                                      NULL, NULL,
+                                      NULL, NULL,
+                                      NULL,
+                                      -1,
+                                      TRUE,
+                                      TRUE,
+                                      TRUE,
+                                      FALSE);
 }
 
 void
@@ -313,6 +330,12 @@ dialogs_exit (Gimp *gimp)
     {
       g_object_unref (global_dock_factory);
       global_dock_factory = NULL;
+    }
+
+  if (global_display_factory)
+    {
+      g_object_unref (global_display_factory);
+      global_display_factory = NULL;
     }
 }
 

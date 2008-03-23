@@ -343,12 +343,13 @@ gimp_display_progress_canceled (GimpProgress *progress,
 /*  public functions  */
 
 GimpDisplay *
-gimp_display_new (Gimp            *gimp,
-                  GimpImage       *image,
-                  GimpUnit         unit,
-                  gdouble          scale,
-                  GimpMenuFactory *menu_factory,
-                  GimpUIManager   *popup_manager)
+gimp_display_new (Gimp              *gimp,
+                  GimpImage         *image,
+                  GimpUnit           unit,
+                  gdouble            scale,
+                  GimpMenuFactory   *menu_factory,
+                  GimpUIManager     *popup_manager,
+                  GimpDialogFactory *display_factory)
 {
   GimpDisplay *display;
   gint         ID;
@@ -380,7 +381,8 @@ gimp_display_new (Gimp            *gimp,
 
   /*  create the shell for the image  */
   display->shell = gimp_display_shell_new (display, unit, scale,
-                                           menu_factory, popup_manager);
+                                           menu_factory, popup_manager,
+                                           display_factory);
   gtk_widget_show (display->shell);
 
   g_signal_connect (GIMP_DISPLAY_SHELL (display->shell)->statusbar, "cancel",

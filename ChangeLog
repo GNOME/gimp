@@ -1,5 +1,21 @@
 2008-03-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/dialogs.[ch]: added a dialog factory for displays
+	and register "gimp-no-image-window" with it.
+
+	* app/display/gimpdisplay.[ch]: add a GimpDialogFactory parameter
+	to gimp_display_new() and pass it on to gimp_display_shell_new().
+
+	* app/display/gimpdisplayshell.[ch]: keep the passed
+	GimpDialogFactory around. When the shell becomes empty, add it to
+	the dialog factory and resize it to the remembered size; when it
+	becomes non-empty, remove it from the dialog factory again.
+
+	* app/gui/gui-vtable.c: pass the display dialog factory to
+	gimp_display_new().
+
+2008-03-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdialogfactory.c: cleanup (move variables to
 	local scopes), improve debugging outout.
 

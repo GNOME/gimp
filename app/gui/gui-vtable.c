@@ -64,6 +64,8 @@
 
 #include "menus/menus.h"
 
+#include "dialogs/dialogs.h"
+
 #include "gui-message.h"
 #include "gui-vtable.h"
 #include "themes.h"
@@ -300,7 +302,8 @@ gui_display_create (Gimp      *gimp,
 
       display = gimp_display_new (gimp, image, unit, scale,
                                   global_menu_factory,
-                                  image_managers->data);
+                                  image_managers->data,
+                                  global_display_factory);
    }
 
   if (gimp_context_get_display (context) == display)
