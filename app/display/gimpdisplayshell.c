@@ -1138,7 +1138,7 @@ gimp_display_shell_new (GimpDisplay       *display,
     {
       gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
       gimp_dialog_factory_add_foreign (shell->display_factory,
-                                       "gimp-no-image-window",
+                                       "gimp-empty-image-window",
                                        GTK_WIDGET (shell));
     }
 
@@ -1191,7 +1191,7 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
    *  info entry.
    */
   session_info = gimp_dialog_factory_find_session_info (shell->display_factory,
-                                                        "gimp-no-image-window");
+                                                        "gimp-empty-image-window");
   if (session_info)
     {
       width  = session_info->width;
@@ -1204,7 +1204,7 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
     }
 
   gimp_dialog_factory_add_foreign (shell->display_factory,
-                                   "gimp-no-image-window",
+                                   "gimp-empty-image-window",
                                    GTK_WIDGET (shell));
 
   if (shell->fill_idle_id)

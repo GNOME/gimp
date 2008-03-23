@@ -292,7 +292,7 @@ dialogs_init (Gimp            *gimp,
                                         dock_entries[i].remember_if_open);
 
   gimp_dialog_factory_register_entry (global_display_factory,
-                                      "gimp-no-image-window",
+                                      "gimp-empty-image-window",
                                       NULL, NULL,
                                       NULL, NULL,
                                       NULL,
