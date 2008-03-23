@@ -782,8 +782,11 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                         toplevel ? "toplevel" : "dockable",
                         entry->identifier);
 
-              if (toplevel && entry->session_managed)
-                gimp_session_info_set_geometry (info);
+              if (toplevel && entry->session_managed &&
+                  ! GTK_WIDGET_VISIBLE (dialog))
+                {
+                  gimp_session_info_set_geometry (info);
+                }
 
               break;
             }

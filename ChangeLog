@@ -1,5 +1,12 @@
 2008-03-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdialogfactory.c (gimp_dialog_factory_add_dialog):
+	don't set the dialog's window geometry if it is already visible.
+	Fixes empty display moving and shouldn't affect anything else
+	since we always want to position dialogs before they are shown.
+
+2008-03-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_new): use the
 	right GimpDisplayOptions to set the initial visibility of the
 	shell's widgets.
