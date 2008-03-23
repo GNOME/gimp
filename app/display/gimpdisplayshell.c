@@ -675,6 +675,7 @@ gimp_display_shell_new (GimpDisplay       *display,
                         GimpDialogFactory *display_factory)
 {
   GimpDisplayShell      *shell;
+  GimpDisplayOptions    *options;
   GimpColorDisplayStack *filter;
   GtkWidget             *main_vbox;
   GtkWidget             *disp_vbox;
@@ -706,11 +707,15 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   if (shell->display->image)
     {
+      options = shell->options;
+
       image_width  = gimp_image_get_width  (shell->display->image);
       image_height = gimp_image_get_height (shell->display->image);
     }
   else
     {
+      options = shell->no_image_options;
+
       image_width  = GIMP_DEFAULT_IMAGE_WIDTH;
       image_height = GIMP_DEFAULT_IMAGE_HEIGHT;
     }
@@ -818,7 +823,7 @@ gimp_display_shell_new (GimpDisplay       *display,
     {
       gtk_box_pack_start (GTK_BOX (main_vbox), shell->menubar, FALSE, FALSE, 0);
 
-      if (shell->options->show_menubar)
+      if (options->show_menubar)
         gtk_widget_show (shell->menubar);
       else
         gtk_widget_hide (shell->menubar);
@@ -1100,7 +1105,7 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   /*  show everything  *******************************************************/
 
-  if (shell->options->show_rulers)
+  if (options->show_rulers)
     {
       gtk_widget_show (shell->origin);
       gtk_widget_show (shell->hrule);
@@ -1109,7 +1114,7 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   gtk_widget_show (GTK_WIDGET (shell->canvas));
 
-  if (shell->options->show_scrollbars)
+  if (options->show_scrollbars)
     {
       gtk_widget_show (shell->vsb);
       gtk_widget_show (shell->hsb);
@@ -1118,7 +1123,7 @@ gimp_display_shell_new (GimpDisplay       *display,
       gtk_widget_show (shell->nav_ebox);
     }
 
-  if (shell->options->show_statusbar)
+  if (options->show_statusbar)
     gtk_widget_show (shell->statusbar);
 
   gtk_widget_show (main_vbox);

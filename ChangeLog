@@ -1,5 +1,11 @@
 2008-03-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): use the
+	right GimpDisplayOptions to set the initial visibility of the
+	shell's widgets.
+
+2008-03-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpstatusbar.c: implement GtkWidget::size_request()
 	and also consider the children which can be invisible when the
 	display is empty.
