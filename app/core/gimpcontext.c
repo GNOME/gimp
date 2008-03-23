@@ -1777,12 +1777,10 @@ gimp_context_real_set_display (GimpContext *context,
 
       g_object_get (display, "image", &image, NULL);
 
-      if (image)
-        {
-          gimp_context_real_set_image (context, image);
+      gimp_context_real_set_image (context, image);
 
-          g_object_unref (image);
-        }
+      if (image)
+        g_object_unref (image);
     }
 
   g_object_notify (G_OBJECT (context), "display");

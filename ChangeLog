@@ -1,3 +1,8 @@
+2008-03-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcontext.c (gimp_context_real_set_display): set the
+	image also if it is NULL.
+
 2008-03-22  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimppixbuf.c: fixed gtk-doc syntax.
