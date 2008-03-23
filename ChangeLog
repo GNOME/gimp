@@ -1,5 +1,11 @@
 2008-03-23  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_expose): return TRUE after calling
+	gimp_display_shell_canvas_expose_image().
+
+2008-03-23  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/dialogs.c
 	* app/display/gimpdisplayshell.c: changed "gimp-no-image-window" to
 	"gimp-empty-image-window".

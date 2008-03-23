@@ -353,13 +353,21 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
   if (shell->display->image)
     {
       gimp_display_shell_canvas_expose_image (shell, eevent);
+
+      /* Return TRUE here to avoid redrawing the image when it gets the
+       * keyboard focus.
+       */
+      return TRUE;
     }
   else
     {
       gimp_display_shell_canvas_expose_drop_zone (shell, eevent);
-    }
 
-  return FALSE;
+      /* Return FALSE here so that the drag indicator is drawn around
+       * the empty canvas during DND operations.
+       */
+      return FALSE;
+    }
 }
 
 static void
