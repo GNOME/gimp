@@ -423,7 +423,7 @@ gimp_display_shell_size_changed_handler (GimpImage        *image,
 {
   gimp_display_shell_scale_resize (shell,
                                    shell->display->config->resize_windows_on_resize,
-                                   TRUE);
+                                   FALSE);
 }
 
 static void

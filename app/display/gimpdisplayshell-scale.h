@@ -43,11 +43,12 @@ void   gimp_display_shell_scale_by_values       (GimpDisplayShell *shell,
                                                  gint              offset_x,
                                                  gint              offset_y,
                                                  gboolean          resize_window);
-void   gimp_display_shell_scale_shrink_wrap     (GimpDisplayShell *shell);
+void   gimp_display_shell_scale_shrink_wrap     (GimpDisplayShell *shell,
+                                                 gboolean          grow_only);
 
 void   gimp_display_shell_scale_resize          (GimpDisplayShell *shell,
                                                  gboolean          resize_window,
-                                                 gboolean          redisplay);
+                                                 gboolean          grow_only);
 void   gimp_display_shell_set_initial_scale     (GimpDisplayShell *shell,
                                                  gdouble           scale,
                                                  gint             *display_width,

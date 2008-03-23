@@ -631,7 +631,8 @@ view_shrink_wrap_cmd_callback (GtkAction *action,
   GimpDisplay *display;
   return_if_no_display (display, data);
 
-  gimp_display_shell_scale_shrink_wrap (GIMP_DISPLAY_SHELL (display->shell));
+  gimp_display_shell_scale_shrink_wrap (GIMP_DISPLAY_SHELL (display->shell),
+                                        FALSE);
 }
 
 void

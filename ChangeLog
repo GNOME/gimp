@@ -1,5 +1,25 @@
 2008-03-23  Michael Natterer  <mitch@gimp.org>
 
+	Never shrink the empty display when filling it, only grow:
+
+	* app/display/gimpdisplayshell.[ch]
+	* app/display/gimpdisplayshell-scale.[ch]: add "gboolean
+	grow_only" parameters to shrink_wrap() APIs which restricts
+	resizing of the window to growing.
+
+	* app/display/gimpdisplayshell-scale.[ch]
+	(gimp_displaY_shell_scale_resize): remove boolean "redisplay"
+	parameter because is was always passed as TRUE. Add boolean
+	"grow_only" instead and pass it on to shrink_wrap()
+
+	* app/actions/view-commands.c
+	* app/display/gimpdisplayshell-handlers.c: pass grow_only = FALSE.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_idle_fill):
+	pass grow_only = TRUE.
+
+2008-03-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/dialogs.[ch]: added a dialog factory for displays
 	and register "gimp-no-image-window" with it.
 

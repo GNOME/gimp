@@ -1236,7 +1236,7 @@ gimp_display_shell_fill_idle (GimpDisplayShell *shell)
 {
   shell->fill_idle_id = 0;
 
-  gimp_display_shell_scale_shrink_wrap (shell);
+  gimp_display_shell_scale_shrink_wrap (shell, TRUE);
 
   gtk_window_present (GTK_WINDOW (shell));
 
@@ -1716,7 +1716,8 @@ gimp_display_shell_update_icon (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
+gimp_display_shell_shrink_wrap (GimpDisplayShell *shell,
+                                gboolean          grow_only)
 {
   GtkWidget    *widget;
   GdkScreen    *screen;
@@ -1780,9 +1781,19 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
       if (width < shell->statusbar->requisition.width)
         width = shell->statusbar->requisition.width;
 
-      gtk_window_resize (GTK_WINDOW (shell),
-                         width  + border_x,
-                         height + border_y);
+      width  = width  + border_x;
+      height = height + border_y;
+
+      if (grow_only)
+        {
+          if (width < widget->allocation.width)
+            width = widget->allocation.width;
+
+          if (height < widget->allocation.height)
+            height = widget->allocation.height;
+        }
+
+      gtk_window_resize (GTK_WINDOW (shell), width, height);
     }
 }
 

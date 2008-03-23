@@ -305,7 +305,7 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
 
       gimp_display_shell_scale_resize (shell,
                                        shell->display->config->resize_windows_on_zoom,
-                                       TRUE);
+                                       FALSE);
 
       /* re-enable the active tool */
       gimp_display_shell_resume (shell);
@@ -544,7 +544,7 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
   shell->offset_x = offset_x;
   shell->offset_y = offset_y;
 
-  gimp_display_shell_scale_resize (shell, resize_window, TRUE);
+  gimp_display_shell_scale_resize (shell, resize_window, FALSE);
 
   /* re-enable the active tool */
   gimp_display_shell_resume (shell);
@@ -555,14 +555,15 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
  * @shell: the #GimpDisplayShell
  *
  * Convenience function with the same functionality as
- * gimp_display_shell_scale_resize(@shell, TRUE, TRUE).
+ * gimp_display_shell_scale_resize(@shell, TRUE, grow_only).
  **/
 void
-gimp_display_shell_scale_shrink_wrap (GimpDisplayShell *shell)
+gimp_display_shell_scale_shrink_wrap (GimpDisplayShell *shell,
+                                      gboolean          grow_only)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp_display_shell_scale_resize (shell, TRUE, TRUE);
+  gimp_display_shell_scale_resize (shell, TRUE, grow_only);
 }
 
 /**
@@ -579,7 +580,7 @@ gimp_display_shell_scale_shrink_wrap (GimpDisplayShell *shell)
 void
 gimp_display_shell_scale_resize (GimpDisplayShell *shell,
                                  gboolean          resize_window,
-                                 gboolean          redisplay)
+                                 gboolean          grow_only)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -587,13 +588,13 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
   gimp_display_shell_pause (shell);
 
   if (resize_window)
-    gimp_display_shell_shrink_wrap (shell);
+    gimp_display_shell_shrink_wrap (shell, grow_only);
 
   gimp_display_shell_scroll_clamp_offsets (shell);
   gimp_display_shell_scale_setup (shell);
   gimp_display_shell_scaled (shell);
 
-  if (resize_window || redisplay)
+  if (resize_window)
     gimp_display_shell_expose_full (shell);
 
   /* re-enable the active tool */
