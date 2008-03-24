@@ -1960,8 +1960,8 @@ app/widgets/Makefile
 app/xcf/Makefile
 plug-ins/Makefile
 plug-ins/bmp/Makefile
-plug-ins/colormap-rotate/Makefile
-plug-ins/colormap-rotate/images/Makefile
+plug-ins/color-rotate/Makefile
+plug-ins/color-rotate/images/Makefile
 plug-ins/common/Makefile
 plug-ins/faxg3/Makefile
 plug-ins/fits/Makefile

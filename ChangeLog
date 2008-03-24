@@ -1,5 +1,14 @@
 2008-03-24  Michael Natterer  <mitch@gimp.org>
 
+	There is no colormap involved in this plug-in, rename it again...
+
+	* plug-ins/colormap-rotate -> color-rotate.
+
+	* configure.in
+	* plug-ins/Makefile.am: changed accordingly.
+
+2008-03-24  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/map-object
 	* plug-ins/gradient-flare
 	* plug-ins/ifs-compose

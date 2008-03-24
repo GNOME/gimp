@@ -51,7 +51,7 @@ SUBDIRS = \
 	$(script_fu)		\
 	$(pygimp)		\
 	bmp			\
-	colormap-rotate		\
+	color-rotate		\
 	faxg3			\
 	fits			\
 	flame			\
