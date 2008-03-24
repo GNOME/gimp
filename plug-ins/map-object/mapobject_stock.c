@@ -22,7 +22,7 @@
 
 #include "mapobject_stock.h"
 
-#include "../Lighting/images/stock-pixbufs.h"
+#include "../lighting/images/stock-pixbufs.h"
 
 
 static GtkIconFactory *mapobject_icon_factory = NULL;

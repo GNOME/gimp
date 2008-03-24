@@ -4,8 +4,8 @@ EXTRA_DIST = \
 	makefile.msc
 
 
-if BUILD_HELPBROWSER
-helpbrowser = helpbrowser
+if BUILD_HELP_BROWSER
+help_browser = help-browser
 endif
 
 if BUILD_JPEG
@@ -29,12 +29,12 @@ twain = twain
 endif
 
 if HAVE_PNG
-winicon = winicon
+win_icon = win-icon
 endif
 
 if OS_WIN32
 twain = twain
-winsnap = winsnap
+win_snap = win-snap
 if HAVE_LIBCURL
 uri = uri
 endif
@@ -49,34 +49,34 @@ endif
 
 SUBDIRS = \
 	$(script_fu)		\
-	FractalExplorer		\
-	Lighting		\
-	MapObject		\
+	$(pygimp)		\
 	bmp			\
+	colormap-rotate		\
 	faxg3			\
 	fits			\
 	flame			\
+	fli			\
+	fractal-explorer	\
 	gfig			\
-	gflare			\
-	gfli			\
 	gimpressionist		\
+	gradient-flare		\
 	help			\
-	$(helpbrowser)		\
-	ifscompose		\
+	$(help_browser)		\
+	ifs-compose		\
 	imagemap		\
 	$(jpeg)                 \
+	lighting		\
+	map-object		\
 	maze			\
 	metadata		\
 	pagecurl		\
 	$(print)		\
-	$(pygimp)		\
 	psd			\
-	rcm			\
+	selection-to-path	\
 	sgi			\
-	sel2path		\
 	$(twain)		\
 	$(uri)			\
-	$(winicon)		\
-	$(winsnap)		\
+	$(win_icon)		\
+	$(win_snap)		\
 	$(xjt)			\
 	common

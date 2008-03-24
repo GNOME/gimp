@@ -1,5 +1,26 @@
 2008-03-24  Michael Natterer  <mitch@gimp.org>
 
+	Renamed folders in plug-ins/. Unfortunately it's impossible to
+	rename the files inside at the same time, so this is just
+	part one...
+
+	* plug-ins/FractalExplorer -> fractal-explorer
+	* plug-ins/Lighting -> lighting
+	* plug-ins/MapObject -> map-object
+	* plug-ins/gflare -> gradient-flare
+	* plug-ins/gfli -> fli
+	* plug-ins/helpbrowser -> help-browser
+	* plug-ins/ifscompose -> ifs-compose
+	* plug-ins/rcm -> colormap-rotate
+	* plug-ins/sel2path -> selection-to-path
+	* plug-ins/winicon -> win-icon
+	* plug-ins/winsnap -> win-snap
+
+	* configure.in
+	* plug-ins/Makefile.am: changed accordingly.
+
+2008-03-24  Michael Natterer  <mitch@gimp.org>
+
 	Renamed tons of plug-ins to make more sense and to be consistent:
 
 	* plug-ins/common/AlienMap2.c -> alien-map.c

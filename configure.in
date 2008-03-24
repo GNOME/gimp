@@ -1208,7 +1208,7 @@ else
   have_gtkhtml2="no (GtkHtml2 support disabled)"
 fi
 
-AM_CONDITIONAL(BUILD_HELPBROWSER, test "x$have_gtkhtml2" = xyes)
+AM_CONDITIONAL(BUILD_HELP_BROWSER, test "x$have_gtkhtml2" = xyes)
 
 
 ###################
@@ -1959,39 +1959,34 @@ app/vectors/Makefile
 app/widgets/Makefile
 app/xcf/Makefile
 plug-ins/Makefile
-plug-ins/script-fu/Makefile
-plug-ins/script-fu/ftx/Makefile
-plug-ins/script-fu/re/Makefile
-plug-ins/script-fu/tinyscheme/Makefile
-plug-ins/script-fu/scripts/Makefile
-plug-ins/script-fu/scripts/images/Makefile
-plug-ins/xjt/Makefile
-plug-ins/FractalExplorer/Makefile
-plug-ins/FractalExplorer/examples/Makefile
-plug-ins/Lighting/Makefile
-plug-ins/Lighting/images/Makefile
-plug-ins/MapObject/Makefile
 plug-ins/bmp/Makefile
+plug-ins/colormap-rotate/Makefile
+plug-ins/colormap-rotate/images/Makefile
 plug-ins/common/Makefile
 plug-ins/faxg3/Makefile
 plug-ins/fits/Makefile
 plug-ins/flame/Makefile
+plug-ins/fli/Makefile
+plug-ins/fractal-explorer/Makefile
+plug-ins/fractal-explorer/examples/Makefile
 plug-ins/gfig/Makefile
 plug-ins/gfig/gfig-examples/Makefile
 plug-ins/gfig/images/Makefile
-plug-ins/gflare/Makefile
-plug-ins/gflare/gflares/Makefile
-plug-ins/gfli/Makefile
-plug-ins/gimpressionist/Makefile
+plug-ins/gradient-flare/Makefile
+plug-ins/gradient-flare/gflares/Makefile
 plug-ins/gimpressionist/Brushes/Makefile
+plug-ins/gimpressionist/Makefile
 plug-ins/gimpressionist/Paper/Makefile
 plug-ins/gimpressionist/Presets/Makefile
+plug-ins/help-browser/Makefile
 plug-ins/help/Makefile
-plug-ins/helpbrowser/Makefile
-plug-ins/ifscompose/Makefile
+plug-ins/ifs-compose/Makefile
 plug-ins/imagemap/Makefile
 plug-ins/imagemap/images/Makefile
 plug-ins/jpeg/Makefile
+plug-ins/lighting/Makefile
+plug-ins/lighting/images/Makefile
+plug-ins/map-object/Makefile
 plug-ins/maze/Makefile
 plug-ins/metadata/Makefile
 plug-ins/pagecurl/Makefile
@@ -1999,14 +1994,19 @@ plug-ins/print/Makefile
 plug-ins/psd/Makefile
 plug-ins/pygimp/Makefile
 plug-ins/pygimp/plug-ins/Makefile
-plug-ins/rcm/Makefile
-plug-ins/rcm/images/Makefile
-plug-ins/sel2path/Makefile
+plug-ins/script-fu/Makefile
+plug-ins/script-fu/ftx/Makefile
+plug-ins/script-fu/re/Makefile
+plug-ins/script-fu/scripts/Makefile
+plug-ins/script-fu/scripts/images/Makefile
+plug-ins/script-fu/tinyscheme/Makefile
+plug-ins/selection-to-path/Makefile
 plug-ins/sgi/Makefile
 plug-ins/twain/Makefile
 plug-ins/uri/Makefile
-plug-ins/winicon/Makefile
-plug-ins/winsnap/Makefile
+plug-ins/win-icon/Makefile
+plug-ins/win-snap/Makefile
+plug-ins/xjt/Makefile
 modules/Makefile
 devel-docs/Makefile
 devel-docs/app/Makefile
