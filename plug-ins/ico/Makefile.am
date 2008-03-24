@@ -16,19 +16,19 @@ AM_LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-libexec_PROGRAMS = winicon
+libexec_PROGRAMS = ico
 
-winicon_CFLAGS = $(PNG_CFLAGS)
+ico_CFLAGS = $(PNG_CFLAGS)
 
-winicon_SOURCES = \
-	icodialog.c	\
-	icodialog.h	\
-	icoload.c	\
-	icoload.h	\
-	icosave.c	\
-	icosave.h	\
-	main.c		\
-	main.h
+ico_SOURCES = \
+	ico.c		\
+	ico.h		\
+	ico-dialog.c	\
+	ico-dialog.h	\
+	ico-load.c	\
+	ico-load.h	\
+	ico-save.c	\
+	ico-save.h
 
 INCLUDES = \
 	-I$(top_srcdir)	\

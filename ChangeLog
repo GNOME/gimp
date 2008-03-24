@@ -1,5 +1,9 @@
 2008-03-24  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/ico/*: renamed all files.
+
+2008-03-24  Michael Natterer  <mitch@gimp.org>
+
 	The icon plugin should simply be "ico" just as the other file
 	plug-ins.
 

@@ -33,10 +33,10 @@
 
 /* #define ICO_DBG */
 
-#include "main.h"
-#include "icoload.h"
-#include "icosave.h"
-#include "icodialog.h"
+#include "ico.h"
+#include "ico-load.h"
+#include "ico-save.h"
+#include "ico-dialog.h"
 
 #include "libgimp/stdplugins-intl.h"
 

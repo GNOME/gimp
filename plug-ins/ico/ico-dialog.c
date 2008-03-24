@@ -27,9 +27,9 @@
 
 /* #define ICO_DBG */
 
-#include "main.h"
-#include "icodialog.h"
-#include "icosave.h"
+#include "ico.h"
+#include "ico-dialog.h"
+#include "ico-save.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -51,7 +51,7 @@ ico_dialog_new (IcoSaveInfo *info)
   GtkWidget *scrolledwindow;
   GtkWidget *warning;
 
-  dialog = gimp_dialog_new (_("Save as Windows Icon"), "winicon",
+  dialog = gimp_dialog_new (_("Save as Windows Icon"), "ico",
                             NULL, 0,
                             gimp_standard_help_func, "plug-in-winicon",
 

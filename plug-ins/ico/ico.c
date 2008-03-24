@@ -28,9 +28,9 @@
 
 /* #define ICO_DBG */
 
-#include "main.h"
-#include "icoload.h"
-#include "icosave.h"
+#include "ico.h"
+#include "ico-load.h"
+#include "ico-save.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -334,4 +334,3 @@ ico_alloc_map (gint  width,
 
   return map;
 }
-
