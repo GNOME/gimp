@@ -1,6 +1,11 @@
+2008-03-24  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: lots of files in plug-ins/common/ were renamed.
+
 2008-03-12  Åsmund Skjæveland  <aasmunds@ulrik.uio.no>
 
-	* nn.po: Added Norwegian Nynorsk translation from Kolbjørn Stuestøl <kol-stue@online.no>.
+	* nn.po: Added Norwegian Nynorsk translation from Kolbjørn
+	Stuestøl <kol-stue@online.no>.
 
 2008-03-12  Sven Neumann  <sven@gimp.org>
 
