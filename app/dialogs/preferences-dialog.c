@@ -1604,7 +1604,7 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Document History"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (object, "save-document-history",
-                          _("Save document _history on exit"),
+                          _("Keep record of used files in the Recent Documents list"),
                           GTK_BOX (vbox2));
 
 

@@ -168,17 +168,17 @@ void
 documents_remove_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context;
-  GimpImagefile       *imagefile;
-  const gchar         *uri;
+  GimpContainerEditor *editor  = GIMP_CONTAINER_EDITOR (data);
+  GimpContext         *context = gimp_container_view_get_context (editor->view);
 
-  context   = gimp_container_view_get_context (editor->view);
-  imagefile = gimp_context_get_imagefile (context);
+  if (context->gimp->config->save_document_history)
+    {
+      GimpImagefile *imagefile = gimp_context_get_imagefile (context);
+      const gchar   *uri       = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
-  uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
-
-  gtk_recent_manager_remove_item (gtk_recent_manager_get_default (), uri, NULL);
+      gtk_recent_manager_remove_item (gtk_recent_manager_get_default (),
+                                      uri, NULL);
+    }
 
   gimp_container_view_remove_active (editor->view);
 }
@@ -187,59 +187,66 @@ void
 documents_clear_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context;
-  GtkWidget           *dialog;
+  GimpContainerEditor *editor  = GIMP_CONTAINER_EDITOR (data);
+  GimpContext         *context = gimp_container_view_get_context (editor->view);
+  Gimp                *gimp    = context->gimp;
 
-  context = gimp_container_view_get_context (editor->view);
-
-  dialog = gimp_message_dialog_new (_("Clear Document History"),
-                                    GTK_STOCK_CLEAR,
-                                    GTK_WIDGET (editor),
-                                    GTK_DIALOG_MODAL |
-                                    GTK_DIALOG_DESTROY_WITH_PARENT,
-                                    gimp_standard_help_func, NULL,
-
-                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                    GTK_STOCK_CLEAR,  GTK_RESPONSE_OK,
-
-                                    NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  g_signal_connect_object (gtk_widget_get_toplevel (GTK_WIDGET (editor)),
-                           "unmap",
-                           G_CALLBACK (gtk_widget_destroy),
-                           dialog, G_CONNECT_SWAPPED);
-
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                     _("Clear the Recent Documents list?"));
-
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                             _("Clearing the document history will permanently "
-                               "remove all items from the recent documents "
-                               "list in all applications."));
-
-  if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
+  if (gimp->config->save_document_history)
     {
-      Gimp   *gimp  = context->gimp;
-      GError *error = NULL;
+      GtkWidget *dialog;
 
-      gimp_container_clear (gimp->documents);
+      dialog = gimp_message_dialog_new (_("Clear Document History"),
+                                        GTK_STOCK_CLEAR,
+                                        GTK_WIDGET (editor),
+                                        GTK_DIALOG_MODAL |
+                                        GTK_DIALOG_DESTROY_WITH_PARENT,
+                                        gimp_standard_help_func, NULL,
 
-      if (! gtk_recent_manager_purge_items (gtk_recent_manager_get_default (),
-                                            &error))
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        GTK_STOCK_CLEAR,  GTK_RESPONSE_OK,
+
+                                        NULL);
+
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
+
+      g_signal_connect_object (gtk_widget_get_toplevel (GTK_WIDGET (editor)),
+                               "unmap",
+                               G_CALLBACK (gtk_widget_destroy),
+                               dialog, G_CONNECT_SWAPPED);
+
+      gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                         _("Clear the Recent Documents list?"));
+
+      gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                 _("Clearing the document history will "
+                                   "permanently remove all items from "
+                                   "the recent documents list in all "
+                                   "applications."));
+
+      if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
         {
-          gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
-                        "%s", error->message);
-          g_clear_error (&error);
-        }
-    }
+          GError *error = NULL;
 
-  gtk_widget_destroy (dialog);
+          gimp_container_clear (gimp->documents);
+
+          if (! gtk_recent_manager_purge_items (gtk_recent_manager_get_default (),
+                                                &error))
+            {
+              gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
+                            "%s", error->message);
+              g_clear_error (&error);
+            }
+        }
+
+      gtk_widget_destroy (dialog);
+    }
+  else
+    {
+      gimp_container_clear (gimp->documents);
+    }
 }
 
 void

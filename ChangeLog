@@ -1,3 +1,12 @@
+2008-03-25  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/documents-commands.c: only fiddle with
+	GtkRecentManager when "save-document-history" is enabled.
+
+	* app/config/gimprc-blurbs.h
+	* app/dialogs/preferences-dialog.c: changed description and label
+	for the "save-document-history" option.
+
 2008-03-24  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimplanguagestore.[ch]
