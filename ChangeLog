@@ -1,5 +1,14 @@
 2008-03-24  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp-user-install.c (user_install_migrate_files): don't
+	migrate "documents".
+
+	* app/actions/documents-commands.c (documents_remove_cmd_callback)
+	(documents_remove_dangling_foreach): remove from GtkRecentManager
+	before removing the item from the documents list.
+
+2008-03-24  Sven Neumann  <sven@gimp.org>
+
 	* libgimpthumb/gimpthumbnail.c: don't reset the mime-type info
 	when we can't load a thumbnail.
 

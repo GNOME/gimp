@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimp-user-install.c
- * Copyright (C) 2000-2006 Michael Natterer and Sven Neumann
+ * Copyright (C) 2000-2008 Michael Natterer and Sven Neumann
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -494,16 +494,17 @@ user_install_migrate_files (GimpUserInstall *install)
       if (g_file_test (source, G_FILE_TEST_IS_REGULAR))
         {
           /*  skip these files for all old versions  */
-          if (g_str_has_prefix (basename, "gimpswap.") ||
-              g_str_has_prefix (basename, "pluginrc")  ||
-              g_str_has_prefix (basename, "themerc")   ||
-              g_str_has_prefix (basename, "toolrc"))
+          if (strcmp (basename, "documents") == 0      ||
+              g_str_has_prefix (basename, "gimpswap.") ||
+              strcmp (basename, "pluginrc") == 0       ||
+              strcmp (basename, "themerc") == 0        ||
+              strcmp (basename, "toolrc") == 0)
             {
               goto next_file;
             }
 
-          /*  skip menurc for gimp 2.0 since the format has changed  */
-          if (install->old_minor == 0 && g_str_has_prefix (basename, "menurc"))
+          /*  skip menurc for gimp 2.0 as the format has changed  */
+          if (install->old_minor == 0 && strcmp (basename, "menurc") == 0)
             {
               goto next_file;
             }

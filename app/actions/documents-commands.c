@@ -176,11 +176,11 @@ documents_remove_cmd_callback (GtkAction *action,
   context   = gimp_container_view_get_context (editor->view);
   imagefile = gimp_context_get_imagefile (context);
 
-  gimp_container_view_remove_active (editor->view);
-
   uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
   gtk_recent_manager_remove_item (gtk_recent_manager_get_default (), uri, NULL);
+
+  gimp_container_view_remove_active (editor->view);
 }
 
 void
@@ -288,10 +288,10 @@ documents_remove_dangling_foreach (GimpImagefile *imagefile,
     {
       const gchar *uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
-      gimp_container_remove (container, GIMP_OBJECT (imagefile));
-
       gtk_recent_manager_remove_item (gtk_recent_manager_get_default (), uri,
                                       NULL);
+
+      gimp_container_remove (container, GIMP_OBJECT (imagefile));
     }
 }
 
