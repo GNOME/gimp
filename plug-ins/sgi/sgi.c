@@ -36,7 +36,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "sgi.h"                /* SGI image library definitions */
+#include "sgi-lib.h"
 
 #include "libgimp/stdplugins-intl.h"
 

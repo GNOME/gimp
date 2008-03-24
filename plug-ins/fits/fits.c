@@ -45,7 +45,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "fitsrw.h"
+#include "fits-io.h"
 
 #include "libgimp/stdplugins-intl.h"
 

@@ -92,7 +92,7 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 
-#include "fitsrw.h"
+#include "fits-io.h"
 
 
 /* Declaration of local funtions */

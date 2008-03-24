@@ -104,9 +104,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <glib.h>
 #include <glib/gstdio.h>
 
-#include "sgi.h"
+#include "sgi-lib.h"
 
 
 /*
@@ -929,8 +930,3 @@ write_rle16(sgi_t *sgip,	/* I - SGI image to write to */
   else
     return (2 * length);
 }
-
-
-/*
- * End of "$Id$".
- */

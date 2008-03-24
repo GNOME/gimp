@@ -20,8 +20,8 @@ libexec_PROGRAMS = fits
 
 fits_SOURCES = \
 	fits.c		\
-	fitsrw.c	\
-	fitsrw.h
+	fits-io.c	\
+	fits-io.h
 
 INCLUDES = \
 	-I$(top_srcdir)	\

@@ -16,19 +16,12 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
- * Revision History:
- *
- *   see ChangeLog
  */
 
-#ifndef _SGI_H_
-#  define _SGI_H_
+#ifndef __SGI_LIB_H__
+#define __SGI_LIB_H__
 
-#  ifdef __cplusplus
-extern "C" {
-#  endif
-
+G_BEGIN_DECLS
 
 /*
  * Constants...
@@ -72,19 +65,30 @@ typedef struct
  * Prototypes...
  */
 
-extern int	sgiClose(sgi_t *sgip);
-extern int	sgiGetRow(sgi_t *sgip, unsigned short *row, int y, int z);
-extern sgi_t	*sgiOpen(char *filename, int mode, int comp, int bpp,
-		         int xsize, int ysize, int zsize);
-extern sgi_t	*sgiOpenFile(FILE *file, int mode, int comp, int bpp,
-		             int xsize, int ysize, int zsize);
-extern int	sgiPutRow(sgi_t *sgip, unsigned short *row, int y, int z);
+extern int	sgiClose     (sgi_t *sgip);
+extern int	sgiGetRow    (sgi_t *sgip,
+                              unsigned short *row,
+                              int y,
+                              int z);
+extern sgi_t	*sgiOpen     (char *filename,
+                              int mode,
+                              int comp,
+                              int bpp,
+                              int xsize,
+                              int ysize,
+                              int zsize);
+extern sgi_t	*sgiOpenFile (FILE *file,
+                              int mode,
+                              int comp,
+                              int bpp,
+                              int xsize,
+                              int ysize,
+                              int zsize);
+extern int	sgiPutRow    (sgi_t *sgip,
+                              unsigned short *row,
+                              int y,
+                              int z);
 
-#  ifdef __cplusplus
-}
-#  endif
-#endif /* !_SGI_H_ */
+G_END_DECLS
 
-/*
- * End of "$Id$".
- */
+#endif /* !__SGI_LIB_H__ */

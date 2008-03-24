@@ -21,8 +21,8 @@ libexec_PROGRAMS = bmp
 bmp_SOURCES = \
 	bmp.c		\
 	bmp.h		\
-	bmpread.c	\
-	bmpwrite.c
+	bmp-read.c	\
+	bmp-write.c
 
 INCLUDES = \
 	-I$(top_srcdir)	\

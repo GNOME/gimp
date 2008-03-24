@@ -19,9 +19,9 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = sgi
 
 sgi_SOURCES = \
-	sgi.c	\
-	sgi.h	\
-	sgilib.c
+	sgi.c		\
+	sgi-lib.c	\
+	sgi-lib.h
 
 INCLUDES = \
 	-I$(top_srcdir)	\
