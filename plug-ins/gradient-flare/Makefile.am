@@ -20,7 +20,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = gradient-flare
 
-gflare_SOURCES = gradient-flare.c
+gradient_flare_SOURCES = gradient-flare.c
 
 INCLUDES = \
 	-I$(top_srcdir)	\
