@@ -14,13 +14,13 @@ endif
 
 AM_LDFLAGS = $(mwindows)
 
-SUBDIRS = gflares
+SUBDIRS = flares
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-libexec_PROGRAMS = gflare
+libexec_PROGRAMS = gradient-flare
 
-gflare_SOURCES = gflare.c
+gflare_SOURCES = gradient-flare.c
 
 INCLUDES = \
 	-I$(top_srcdir)	\

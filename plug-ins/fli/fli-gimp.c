@@ -68,7 +68,7 @@
 #define LOAD_PROC      "file-fli-load"
 #define SAVE_PROC      "file-fli-save"
 #define INFO_PROC      "file-fli-info"
-#define PLUG_IN_BINARY "gfli"
+#define PLUG_IN_BINARY "fli"
 
 
 static void      query       (void);

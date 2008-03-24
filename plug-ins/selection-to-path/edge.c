@@ -22,7 +22,7 @@
 #include <assert.h>
 
 #include "types.h"
-#include "sel2path.h"
+#include "selection-to-path.h"
 #include "edge.h"
 
 /* We can move in any of eight directions as we are traversing

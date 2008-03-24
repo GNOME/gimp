@@ -1,3 +1,16 @@
+2008-03-24  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/map-object
+	* plug-ins/gradient-flare
+	* plug-ins/ifs-compose
+	* plug-ins/selection-to-path
+	* plug-ins/lighting
+	* plug-ins/help-browser
+	* plug-ins/fli: rename files in these folders to have no
+	underscores and match new names of the plug-ins.
+
+	* configure.in: changed accordingly.
+
 2008-03-24  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-user-install.c (user_install_migrate_files): don't

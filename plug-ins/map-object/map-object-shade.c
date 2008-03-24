@@ -9,10 +9,11 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "mapobject_apply.h"
-#include "mapobject_main.h"
-#include "mapobject_image.h"
-#include "mapobject_shade.h"
+#include "map-object-apply.h"
+#include "map-object-main.h"
+#include "map-object-image.h"
+#include "map-object-shade.h"
+
 
 gdouble            bx1, by1, bx2, by2;
 get_ray_color_func get_ray_color;

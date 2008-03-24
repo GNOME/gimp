@@ -8,10 +8,10 @@
 
 #include <libgimp/gimp.h>
 
-#include "lighting_main.h"
-#include "lighting_image.h"
-#include "lighting_preview.h"
-#include "lighting_ui.h"
+#include "lighting-main.h"
+#include "lighting-image.h"
+#include "lighting-preview.h"
+#include "lighting-ui.h"
 
 
 GimpDrawable *input_drawable,*output_drawable;

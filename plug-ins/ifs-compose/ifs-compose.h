@@ -180,7 +180,3 @@ gchar    * ifsvals_stringify    (IfsComposeVals   *vals,
 gboolean   ifsvals_parse_string (const gchar      *str,
                                  IfsComposeVals   *vals,
                                  AffElement     ***elements);
-
-
-
-

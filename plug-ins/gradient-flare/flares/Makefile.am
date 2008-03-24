@@ -1,8 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-gflaredir = $(gimpdatadir)/gflare
+flaredir = $(gimpdatadir)/gflare
 
-gflare_DATA = \
+flare_DATA = \
 	Bright_Star		\
 	Classic			\
 	Distant_Sun		\
@@ -11,4 +11,4 @@ gflare_DATA = \
 	GFlare_102		\
 	Hidden_Planet
 
-EXTRA_DIST = $(gflare_DATA)
+EXTRA_DIST = $(flare_DATA)

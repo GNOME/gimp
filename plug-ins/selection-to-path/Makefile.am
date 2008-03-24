@@ -16,28 +16,28 @@ AM_LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-libexec_PROGRAMS = sel2path
+libexec_PROGRAMS = selection-to-path
 
-sel2path_SOURCES = \
-	bitmap.h		\
-	bounding-box.h		\
-	curve.c			\
-	curve.h			\
-	edge.c			\
-	edge.h			\
-	fit.c			\
-	fit.h			\
-	global.h		\
-	math.c			\
-	pxl-outline.c		\
-	pxl-outline.h		\
-	sel2path.c		\
-	sel2path_adv_dialog.c	\
-	sel2path.h		\
-	spline.c		\
-	spline.h		\
-	types.h			\
-	vector.c		\
+selection_to_path_SOURCES = \
+	bitmap.h			\
+	bounding-box.h			\
+	curve.c				\
+	curve.h				\
+	edge.c				\
+	edge.h				\
+	fit.c				\
+	fit.h				\
+	global.h			\
+	math.c				\
+	pxl-outline.c			\
+	pxl-outline.h			\
+	selection-to-path.c		\
+	selection-to-path.h		\
+	selection-to-path-dialog.c	\
+	spline.c			\
+	spline.h			\
+	types.h				\
+	vector.c			\
 	vector.h
 
 EXTRA_DIST = \

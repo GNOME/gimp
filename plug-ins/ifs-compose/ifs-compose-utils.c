@@ -28,7 +28,7 @@
 
 #include <libgimp/gimp.h>
 
-#include "ifscompose.h"
+#include "ifs-compose.h"
 
 
 typedef struct

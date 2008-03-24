@@ -17,7 +17,7 @@ AM_LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-libexec_PROGRAMS = helpbrowser
+libexec_PROGRAMS = help-browser
 
 INCLUDES = \
 	-I$(top_srcdir)		\
@@ -37,12 +37,12 @@ LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-helpbrowser_sources = \
+help_browser_sources = \
 	gimpthrobber.c		\
 	gimpthrobber.h		\
 	gimpthrobberaction.c	\
 	gimpthrobberaction.h	\
-	helpbrowser.c		\
+	help-browser.c		\
 	dialog.c		\
 	dialog.h		\
 	queue.c			\
@@ -50,11 +50,11 @@ helpbrowser_sources = \
 	uri.c			\
 	uri.h
 
-helpbrowser_built_sources = logo-pixbuf.h
-dialog.c: $(helpbrowser_built_sources)
+help_browser_built_sources = logo-pixbuf.h
+dialog.c: $(help_browser_built_sources)
 
-helpbrowser_SOURCES = \
-	$(helpbrowser_built_sources) $(helpbrowser_sources)
+help_browser_SOURCES = \
+	$(help_browser_built_sources) $(help_browser_sources)
 
 
 $(srcdir)/logo-pixbuf.h: wilber-reading.png

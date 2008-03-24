@@ -64,7 +64,7 @@
 #define RESPONSE_RESCAN     1
 
 #define PLUG_IN_PROC        "plug-in-gflare"
-#define PLUG_IN_BINARY      "gflare"
+#define PLUG_IN_BINARY      "gradient-flare"
 
 #define GRADIENT_NAME_MAX   256
 #define GRADIENT_RESOLUTION 360

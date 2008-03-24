@@ -18,23 +18,23 @@ SUBDIRS = images
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-libexec_PROGRAMS = Lighting
+libexec_PROGRAMS = lighting
 
-Lighting_SOURCES = \
-	lighting_apply.c	\
-	lighting_apply.h	\
-	lighting_image.c	\
-	lighting_image.h	\
-	lighting_main.c		\
-	lighting_main.h		\
-	lighting_preview.c	\
-	lighting_preview.h	\
-	lighting_shade.c	\
-	lighting_shade.h	\
-	lighting_stock.c	\
-	lighting_stock.h	\
-	lighting_ui.c		\
-	lighting_ui.h
+lighting_SOURCES = \
+	lighting-apply.c	\
+	lighting-apply.h	\
+	lighting-image.c	\
+	lighting-image.h	\
+	lighting-main.c		\
+	lighting-main.h		\
+	lighting-preview.c	\
+	lighting-preview.h	\
+	lighting-shade.c	\
+	lighting-shade.h	\
+	lighting-stock.c	\
+	lighting-stock.h	\
+	lighting-ui.c		\
+	lighting-ui.h
 
 INCLUDES = \
 	-I$(top_srcdir)	\

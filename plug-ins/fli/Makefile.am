@@ -16,12 +16,12 @@ AM_LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-libexec_PROGRAMS = gfli
+libexec_PROGRAMS = fli
 
-gfli_SOURCES = \
+fli_SOURCES = \
 	fli.h	\
 	fli.c	\
-	gfli.c
+	fli-gimp.c
 
 INCLUDES = \
 	-I$(top_srcdir)	\

@@ -35,13 +35,13 @@
 #include "libgimp/gimpui.h"
 
 #include "libgimpmath/gimpmath.h"
-#
+
 #include "global.h"
 #include "types.h"
 #include "pxl-outline.h"
 #include "fit.h"
 #include "spline.h"
-#include "sel2path.h"
+#include "selection-to-path.h"
 
 #include "libgimp/stdplugins-intl.h"
 

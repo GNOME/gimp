@@ -24,7 +24,7 @@
 #include <stdlib.h>
 
 #include "global.h"
-#include "sel2path.h"
+#include "selection-to-path.h"
 #include "bitmap.h"
 #include "edge.h"
 #include "pxl-outline.h"

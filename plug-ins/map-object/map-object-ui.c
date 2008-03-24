@@ -8,12 +8,12 @@
 #include <libgimp/gimpui.h>
 
 #include "arcball.h"
-#include "mapobject_ui.h"
-#include "mapobject_image.h"
-#include "mapobject_apply.h"
-#include "mapobject_preview.h"
-#include "mapobject_main.h"
-#include "mapobject_stock.h"
+#include "map-object-ui.h"
+#include "map-object-image.h"
+#include "map-object-apply.h"
+#include "map-object-preview.h"
+#include "map-object-main.h"
+#include "map-object-stock.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -1330,9 +1330,9 @@ main_dialog (GimpDrawable *drawable)
   GimpZoomModel *model;
   gboolean       run = FALSE;
 
-  gimp_ui_init ("MapObject", FALSE);
+  gimp_ui_init ("map-object", FALSE);
 
-  appwin = gimp_dialog_new (_("Map to Object"), "MapObject",
+  appwin = gimp_dialog_new (_("Map to Object"), "map-object",
                             NULL, 0,
 			    gimp_standard_help_func, "plug-in-map-object",
 

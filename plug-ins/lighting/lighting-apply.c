@@ -8,12 +8,13 @@
 
 #include <libgimp/gimp.h>
 
-#include "lighting_main.h"
-#include "lighting_image.h"
-#include "lighting_shade.h"
-#include "lighting_apply.h"
+#include "lighting-main.h"
+#include "lighting-image.h"
+#include "lighting-shade.h"
+#include "lighting-apply.h"
 
 #include "libgimp/stdplugins-intl.h"
+
 
 /*************/
 /* Main loop */

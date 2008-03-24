@@ -9,12 +9,13 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "mapobject_main.h"
-#include "mapobject_ui.h"
-#include "mapobject_image.h"
-#include "mapobject_apply.h"
-#include "mapobject_shade.h"
-#include "mapobject_preview.h"
+#include "map-object-main.h"
+#include "map-object-ui.h"
+#include "map-object-image.h"
+#include "map-object-apply.h"
+#include "map-object-shade.h"
+#include "map-object-preview.h"
+
 
 line    linetab[WIRESIZE*2+8];
 gdouble mat[3][4];

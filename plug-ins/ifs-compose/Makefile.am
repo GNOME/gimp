@@ -16,13 +16,13 @@ AM_LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-libexec_PROGRAMS = ifscompose
+libexec_PROGRAMS = ifs-compose
 
-ifscompose_SOURCES = \
-	ifscompose.c		\
-	ifscompose.h		\
-	ifscompose_utils.c      \
-	ifscompose_storage.c
+ifs_compose_SOURCES = \
+	ifs-compose.c		\
+	ifs-compose.h		\
+	ifs-compose-utils.c	\
+	ifs-compose-storage.c
 
 EXTRA_DIST = README.ifscompose
 

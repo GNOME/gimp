@@ -34,7 +34,8 @@
 
 #include "types.h"
 
-#include "sel2path.h"
+#include "selection-to-path.h"
+
 
 #define SCALE_WIDTH  100
 #define SCALE_DIGITS 8

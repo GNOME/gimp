@@ -16,25 +16,25 @@ AM_LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-libexec_PROGRAMS = MapObject
+libexec_PROGRAMS = map-object
 
-MapObject_SOURCES = \
+map_object_SOURCES = \
 	arcball.c		\
 	arcball.h		\
-	mapobject_apply.c	\
-	mapobject_apply.h	\
-	mapobject_image.c	\
-	mapobject_image.h	\
-	mapobject_main.c	\
-	mapobject_main.h	\
-	mapobject_preview.c	\
-	mapobject_preview.h	\
-	mapobject_shade.c	\
-	mapobject_shade.h	\
-	mapobject_stock.c	\
-	mapobject_stock.h	\
-	mapobject_ui.c		\
-	mapobject_ui.h
+	map-object-apply.c	\
+	map-object-apply.h	\
+	map-object-image.c	\
+	map-object-image.h	\
+	map-object-main.c	\
+	map-object-main.h	\
+	map-object-preview.c	\
+	map-object-preview.h	\
+	map-object-shade.c	\
+	map-object-shade.h	\
+	map-object-stock.c	\
+	map-object-stock.h	\
+	map-object-ui.c		\
+	map-object-ui.h
 
 INCLUDES = \
 	-I$(top_srcdir)	\

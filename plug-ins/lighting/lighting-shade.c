@@ -6,9 +6,9 @@
 
 #include <libgimp/gimp.h>
 
-#include "lighting_main.h"
-#include "lighting_image.h"
-#include "lighting_shade.h"
+#include "lighting-main.h"
+#include "lighting-image.h"
+#include "lighting-shade.h"
 
 
 static GimpVector3 *triangle_normals[2] = { NULL, NULL };

@@ -20,14 +20,14 @@
 
 #include <gtk/gtk.h>
 
-#include "mapobject_stock.h"
+#include "lighting-stock.h"
 
-#include "../lighting/images/stock-pixbufs.h"
+#include "images/stock-pixbufs.h"
 
 
-static GtkIconFactory *mapobject_icon_factory = NULL;
+static GtkIconFactory *lighting_icon_factory = NULL;
 
-static GtkStockItem mapobject_stock_items[] =
+static GtkStockItem lighting_stock_items[] =
 {
   { STOCK_INTENSITY_AMBIENT_LOW,       NULL, 0, 0, NULL },
   { STOCK_INTENSITY_AMBIENT_HIGH,      NULL, 0, 0, NULL },
@@ -66,20 +66,20 @@ add_stock_icon (const gchar  *stock_id,
   gtk_icon_set_add_source (set, source);
   gtk_icon_source_free (source);
 
-  gtk_icon_factory_add (mapobject_icon_factory, stock_id, set);
+  gtk_icon_factory_add (lighting_icon_factory, stock_id, set);
 
   gtk_icon_set_unref (set);
 }
 
 void
-mapobject_stock_init (void)
+lighting_stock_init (void)
 {
   static gboolean initialized = FALSE;
 
   if (initialized)
     return;
 
-  mapobject_icon_factory = gtk_icon_factory_new ();
+  lighting_icon_factory = gtk_icon_factory_new ();
 
   add_stock_icon (STOCK_INTENSITY_AMBIENT_LOW,       GTK_ICON_SIZE_BUTTON,
                   stock_intensity_ambient_low);
@@ -102,10 +102,10 @@ mapobject_stock_init (void)
   add_stock_icon (STOCK_REFLECTIVITY_HIGHLIGHT_HIGH, GTK_ICON_SIZE_BUTTON,
                   stock_reflectivity_highlight_high);
 
-  gtk_icon_factory_add_default (mapobject_icon_factory);
+  gtk_icon_factory_add_default (lighting_icon_factory);
 
-  gtk_stock_add_static (mapobject_stock_items,
-                        G_N_ELEMENTS (mapobject_stock_items));
+  gtk_stock_add_static (lighting_stock_items,
+                        G_N_ELEMENTS (lighting_stock_items));
 
   initialized = TRUE;
 }

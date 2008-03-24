@@ -9,13 +9,14 @@
 #include <libgimp/gimp.h>
 #include <libgimpmath/gimpmath.h>
 
-#include "lighting_main.h"
-#include "lighting_ui.h"
-#include "lighting_image.h"
-#include "lighting_apply.h"
-#include "lighting_shade.h"
+#include "lighting-main.h"
+#include "lighting-ui.h"
+#include "lighting-image.h"
+#include "lighting-apply.h"
+#include "lighting-shade.h"
 
-#include "lighting_preview.h"
+#include "lighting-preview.h"
+
 
 #define LIGHT_SYMBOL_SIZE 8
 

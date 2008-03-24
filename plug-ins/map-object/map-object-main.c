@@ -27,11 +27,11 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "mapobject_ui.h"
-#include "mapobject_image.h"
-#include "mapobject_apply.h"
-#include "mapobject_preview.h"
-#include "mapobject_main.h"
+#include "map-object-ui.h"
+#include "map-object-image.h"
+#include "map-object-apply.h"
+#include "map-object-preview.h"
+#include "map-object-main.h"
 
 #include "libgimp/stdplugins-intl.h"
 

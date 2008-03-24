@@ -27,14 +27,15 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "lighting_ui.h"
-#include "lighting_main.h"
-#include "lighting_image.h"
-#include "lighting_apply.h"
-#include "lighting_preview.h"
-#include "lighting_stock.h"
+#include "lighting-ui.h"
+#include "lighting-main.h"
+#include "lighting-image.h"
+#include "lighting-apply.h"
+#include "lighting-preview.h"
+#include "lighting-stock.h"
 
 #include "libgimp/stdplugins-intl.h"
+
 
 extern LightingValues mapvals;
 
