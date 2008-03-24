@@ -436,7 +436,11 @@ gui_restore_callback (Gimp               *gimp,
 
   g_type_class_unref (g_type_class_ref (GIMP_TYPE_COLOR_SELECTOR_PALETTE));
 
-  (* status_callback) (NULL, _("Tool Options"), 1.0);
+  /*  initialize the document history  */
+  status_callback (NULL, _("Documents"), 0.9);
+  gimp_recent_list_load (gimp);
+
+  status_callback (NULL, _("Tool Options"), 1.0);
   gimp_tools_restore (gimp);
 }
 

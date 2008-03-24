@@ -35,6 +35,8 @@
 #include "core/gimpcontext.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
+#include "core/gimpimagefile.h"
+#include "core/gimplist.h"
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
 #include "core/gimpprogress.h"
@@ -123,6 +125,8 @@ static gboolean       gui_pdb_dialog_close     (Gimp                *gimp,
 static gboolean       gui_recent_list_add_uri  (Gimp                *gimp,
                                                 const gchar         *uri,
                                                 const gchar         *mime_type);
+static void           gui_recent_list_load     (Gimp                *gimp);
+
 
 /*  public functions  */
 
@@ -153,6 +157,7 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.pdb_dialog_set      = gui_pdb_dialog_set;
   gimp->gui.pdb_dialog_close    = gui_pdb_dialog_close;
   gimp->gui.recent_list_add_uri = gui_recent_list_add_uri;
+  gimp->gui.recent_list_load    = gui_recent_list_load;
 }
 
 
@@ -593,16 +598,11 @@ gui_recent_list_add_uri (Gimp        *gimp,
                          const gchar *uri,
                          const gchar *mime_type)
 {
-  GtkRecentManager *manager;
-  GtkRecentData     recent;
-  const gchar      *groups[2] = { "Graphics", NULL };
+  GtkRecentData  recent;
+  const gchar   *groups[2] = { "Graphics", NULL };
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (uri != NULL, FALSE);
-
-  manager = gtk_recent_manager_get_default ();
-
-  g_return_val_if_fail (manager != NULL, FALSE);
 
   /* use last part of the URI */
   recent.display_name = NULL;
@@ -616,5 +616,47 @@ gui_recent_list_add_uri (Gimp        *gimp,
   recent.groups       = (gchar **) groups;
   recent.is_private   = FALSE;
 
-  return gtk_recent_manager_add_full (manager, uri, &recent);
+  return gtk_recent_manager_add_full (gtk_recent_manager_get_default (),
+                                      uri, &recent);
+}
+
+static void
+gui_recent_list_load (Gimp *gimp)
+{
+  GList *items;
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  gimp_container_freeze (gimp->documents);
+  gimp_container_clear (gimp->documents);
+
+  items = gtk_recent_manager_get_items (gtk_recent_manager_get_default ());
+
+  for (list = items; list; list = list->next)
+    {
+      GtkRecentInfo *info = list->data;
+
+      if (gtk_recent_info_has_application (info,
+                                           "GNU Image Manipulation Program"))
+        {
+          GimpImagefile *imagefile;
+
+          imagefile = gimp_imagefile_new (gimp,
+                                          gtk_recent_info_get_uri (info));
+
+          gimp_imagefile_set_mime_type (imagefile,
+                                        gtk_recent_info_get_mime_type (info));
+
+          gimp_container_add (gimp->documents, GIMP_OBJECT (imagefile));
+          g_object_unref (imagefile);
+        }
+
+      gtk_recent_info_unref (info);
+    }
+
+  g_list_free (items);
+
+  gimp_list_reverse (GIMP_LIST (gimp->documents));
+  gimp_container_thaw (gimp->documents);
 }

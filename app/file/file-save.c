@@ -183,9 +183,6 @@ file_save (GimpImage           *image,
       /* only save a thumbnail if we are saving as XCF, see bug #25272 */
       if (GIMP_PROCEDURE (file_proc)->proc_type == GIMP_INTERNAL)
         gimp_imagefile_save_thumbnail (imagefile, file_proc->mime_type, image);
-
-      if (image->gimp->config->save_document_history)
-        gimp_recent_list_add_uri (image->gimp, uri, file_proc->mime_type);
     }
   else if (status != GIMP_PDB_CANCEL)
     {

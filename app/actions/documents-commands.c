@@ -30,7 +30,6 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimp-documents.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimagefile.h"
@@ -170,8 +169,17 @@ documents_remove_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContext         *context;
+  GimpImagefile       *imagefile;
+
+  context   = gimp_container_view_get_context (editor->view);
+  imagefile = gimp_context_get_imagefile (context);
 
   gimp_container_view_remove_active (editor->view);
+
+  gtk_recent_manager_remove_item (gtk_recent_manager_get_default (),
+                                  gimp_object_get_name (GIMP_OBJECT (imagefile)),
+                                  NULL);
 }
 
 void
@@ -207,12 +215,12 @@ documents_clear_cmd_callback (GtkAction *action,
                            dialog, G_CONNECT_SWAPPED);
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                     _("Remove all entries from the "
-                                       "document history?"));
+                                     _("Clear the Recent Documents list?"));
 
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                              _("Clearing the document history will permanently "
-                               "remove all currently listed entries."));
+                               "remove all items from the recent documents "
+                               "list in all applications."));
 
   if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
@@ -221,7 +229,8 @@ documents_clear_cmd_callback (GtkAction *action,
 
       gimp_container_clear (gimp->documents);
 
-      if (! gimp_documents_save (gimp, &error))
+      if (! gtk_recent_manager_purge_items (gtk_recent_manager_get_default (),
+                                            &error))
         {
           gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
                         "%s", error->message);

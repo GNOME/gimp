@@ -1,3 +1,40 @@
+2008-03-24  Sven Neumann  <sven@gimp.org>
+
+	Do not any longer keep the document history in two places. We only
+	use GtkRecentManager now:
+
+	* app/core/Makefile.am
+	* app/core/gimp-documents.[ch]: removed these files.
+
+	* app/core/gimpdocumentlist.c: removed code to load and save the
+	"documents" file.
+	(gimp_document_list_add_uri): call gimp_recent_list_add_uri() here.
+
+	* app/core/gimpimagefile.[ch]: added function to set the mime-type.
+
+	* app/core/gimp.c (gimp_restore): removed code to load the
+	document history.
+	(gimp_real_exit): removed code to save it.
+	
+	* app/core/gimp-gui.[ch]: extended the vtable with a method to
+	populate the document list.
+
+	* app/gui/gui-vtable.c: added code to populate the document history
+	from the list of recently used files kept by GtkRecentManager.
+
+	* app/gui/gui.c (gui_restore_callback): load the recent files here.
+
+	* app/file/file-open.c
+	* app/file/file-save.c: no need to call gimp_recent_list_add_uri()
+	any longer as gimp_document_list_add_uri() does that for us now.
+
+	* app/actions/documents-commands.c (documents_clear_cmd_callback):
+	purge the items from GtkRecentManager. Also changed the dialog to
+	emphasize that this operation now affects the document history in
+	all applications.
+
+	* docs/gimp.1.in: removed reference to "documents" file.
+
 2008-03-23  Mukund Sivaraman <muks@mukund.org>
 
 	* HACKING: Updated section on getting dependencies, as we don't

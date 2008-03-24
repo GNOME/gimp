@@ -44,7 +44,6 @@
 
 #include "gimp.h"
 #include "gimp-contexts.h"
-#include "gimp-documents.h"
 #include "gimp-gradients.h"
 #include "gimp-modules.h"
 #include "gimp-parasites.h"
@@ -624,8 +623,6 @@ static gboolean
 gimp_real_exit (Gimp     *gimp,
                 gboolean  force)
 {
-  GError *error = NULL;
-
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
 
@@ -638,13 +635,6 @@ gimp_real_exit (Gimp     *gimp,
   gimp_data_factory_data_save (gimp->palette_factory);
 
   gimp_fonts_reset (gimp);
-
-  if (gimp->config->save_document_history)
-    if (! gimp_documents_save (gimp, &error))
-      {
-        gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
-        g_clear_error (&error);
-      }
 
   gimp_templates_save (gimp);
   gimp_parasiterc_save (gimp);
@@ -816,8 +806,6 @@ void
 gimp_restore (Gimp               *gimp,
               GimpInitStatusFunc  status_callback)
 {
-  GError *error = NULL;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (status_callback != NULL);
 
@@ -849,20 +837,12 @@ gimp_restore (Gimp               *gimp,
   if (! gimp->no_fonts)
     gimp_fonts_load (gimp);
 
-  /*  initialize the document history  */
-  status_callback (NULL, _("Documents"), 0.6);
-  if (! gimp_documents_load (gimp, &error))
-    {
-      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
-      g_clear_error (&error);
-    }
-
   /*  initialize the template list  */
-  status_callback (NULL, _("Templates"), 0.7);
+  status_callback (NULL, _("Templates"), 0.6);
   gimp_templates_load (gimp);
 
   /*  initialize the module list  */
-  status_callback (NULL, _("Modules"), 0.8);
+  status_callback (NULL, _("Modules"), 0.7);
   gimp_modules_load (gimp);
 
   g_signal_emit (gimp, gimp_signals[RESTORE], 0, status_callback);

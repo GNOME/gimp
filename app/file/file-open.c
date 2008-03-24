@@ -362,9 +362,6 @@ file_open_with_proc_and_display (Gimp                *gimp,
                   gimp_imagefile_save_thumbnail (imagefile, mime_type, image);
                 }
             }
-
-          if (gimp->config->save_document_history)
-            gimp_recent_list_add_uri (gimp, uri, mime_type);
         }
 
       /*  the display owns the image now  */
@@ -448,9 +445,6 @@ file_open_layers (Gimp                *gimp,
 
           gimp_document_list_add_uri (GIMP_DOCUMENT_LIST (gimp->documents),
                                       uri, mime_type);
-
-          if (gimp->config->save_document_history)
-            gimp_recent_list_add_uri (gimp, uri, mime_type);
         }
       else
         {

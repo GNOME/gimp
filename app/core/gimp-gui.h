@@ -84,6 +84,7 @@ struct _GimpGui
   gboolean       (* recent_list_add_uri) (Gimp                *gimp,
                                           const gchar         *uri,
                                           const gchar         *mime_type);
+  void           (* recent_list_load)    (Gimp                *gimp);
 
 };
 
@@ -154,5 +155,7 @@ gboolean       gimp_pdb_dialog_close     (Gimp                *gimp,
 gboolean       gimp_recent_list_add_uri  (Gimp                *gimp,
                                           const gchar         *uri,
                                           const gchar         *mime_type);
+void           gimp_recent_list_load     (Gimp                *gimp);
+
 
 #endif  /* __GIMP_GUI_H__ */

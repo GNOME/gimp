@@ -1,4 +1,4 @@
-.TH GIMP 1 "February 23 2008" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMP 1 "March 23 2008" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 
 .SH NAME
 gimp - an image manipulation and paint program.
@@ -192,9 +192,6 @@ placed in users' home directories the first time GIMP is run.
 \fB$HOME\fP/@gimpdir@/devicerc - holds settings for input devices
 together with the tool, colors, brush, pattern and gradient
 associated to that device.
-
-\fB$HOME\fP/@gimpdir@/documents - lists all images that have been
-opened or saved using GIMP.
 
 \fB$HOME\fP/@gimpdir@/gtkrc - users set of GIMP-specific GTK config
 settings. Options such as widget color and fonts sizes can be set

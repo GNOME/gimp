@@ -184,6 +184,17 @@ gimp_imagefile_new (Gimp        *gimp,
 }
 
 void
+gimp_imagefile_set_mime_type (GimpImagefile *imagefile,
+                              const gchar   *mime_type)
+{
+  g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
+
+  g_object_set (imagefile->thumbnail,
+                "image-mimetype", mime_type,
+                NULL);
+}
+
+void
 gimp_imagefile_update (GimpImagefile *imagefile)
 {
   gchar *uri;

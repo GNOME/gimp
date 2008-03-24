@@ -62,6 +62,7 @@ gimp_gui_init (Gimp *gimp)
   gimp->gui.pdb_dialog_set      = NULL;
   gimp->gui.pdb_dialog_close    = NULL;
   gimp->gui.recent_list_add_uri = NULL;
+  gimp->gui.recent_list_load    = NULL;
 }
 
 void
@@ -429,4 +430,13 @@ gimp_recent_list_add_uri (Gimp        *gimp,
     return gimp->gui.recent_list_add_uri (gimp, uri, mime_type);
 
   return FALSE;
+}
+
+void
+gimp_recent_list_load (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->gui.recent_list_load)
+    gimp->gui.recent_list_load (gimp);
 }
