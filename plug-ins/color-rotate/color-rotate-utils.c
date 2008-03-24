@@ -41,9 +41,10 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
-#include "rcm.h"
-#include "rcm_misc.h"
-#include "rcm_gdk.h"
+#include "color-rotate.h"
+#include "color-rotate-utils.h"
+#include "color-rotate-draw.h"
+
 
 float
 arctg (float y,

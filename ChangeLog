@@ -1,5 +1,11 @@
 2008-03-24  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/color-rotate/*: renamed all files and also changed
+	function names and stuff in some files. Only the filename change
+	is 100% complete.
+
+2008-03-24  Michael Natterer  <mitch@gimp.org>
+
 	There is no colormap involved in this plug-in, rename it again...
 
 	* plug-ins/colormap-rotate -> color-rotate.

@@ -20,24 +20,24 @@
 
 #include <gtk/gtk.h>
 
-#include "rcm_stock.h"
+#include "color-rotate-stock.h"
 
-#include "images/rcm-stock-pixbufs.h"
+#include "images/color-rotate-stock-pixbufs.h"
 
 #include "libgimp/stdplugins-intl.h"
 
 
-static GtkIconFactory *rcm_icon_factory = NULL;
+static GtkIconFactory *color_rotate_icon_factory = NULL;
 
-static GtkStockItem rcm_stock_items[] =
+static GtkStockItem color_rotate_stock_items[] =
 {
-  { STOCK_COLORMAP_SWITCH_CLOCKWISE,
+  { STOCK_COLOR_ROTATE_SWITCH_CLOCKWISE,
     N_("Switch to Clockwise"),    0, 0, NULL },
-  { STOCK_COLORMAP_SWITCH_COUNTERCLOCKWISE,
+  { STOCK_COLOR_ROTATE_SWITCH_COUNTERCLOCKWISE,
     N_("Switch to C/Clockwise"),  0, 0, NULL },
-  { STOCK_COLORMAP_CHANGE_ORDER,
+  { STOCK_COLOR_ROTATE_CHANGE_ORDER,
     N_("Change Order of Arrows"), 0, 0, NULL },
-  { STOCK_COLORMAP_SELECT_ALL,
+  { STOCK_COLOR_ROTATE_SELECT_ALL,
     N_("Select All"),             0, 0, NULL }
 };
 
@@ -66,33 +66,34 @@ add_stock_icon (const gchar  *stock_id,
   gtk_icon_set_add_source (set, source);
   gtk_icon_source_free (source);
 
-  gtk_icon_factory_add (rcm_icon_factory, stock_id, set);
+  gtk_icon_factory_add (color_rotate_icon_factory, stock_id, set);
 
   gtk_icon_set_unref (set);
 }
 
 void
-rcm_stock_init (void)
+color_rotate_stock_init (void)
 {
   static gboolean initialized = FALSE;
 
   if (initialized)
     return;
 
-  rcm_icon_factory = gtk_icon_factory_new ();
+  color_rotate_icon_factory = gtk_icon_factory_new ();
 
-  add_stock_icon (STOCK_COLORMAP_SWITCH_CLOCKWISE,
-                  GTK_ICON_SIZE_BUTTON, rcm_cw);
-  add_stock_icon (STOCK_COLORMAP_SWITCH_COUNTERCLOCKWISE,
-                  GTK_ICON_SIZE_BUTTON, rcm_ccw);
-  add_stock_icon (STOCK_COLORMAP_CHANGE_ORDER,
-                  GTK_ICON_SIZE_BUTTON, rcm_a_b);
-  add_stock_icon (STOCK_COLORMAP_SELECT_ALL,
-                  GTK_ICON_SIZE_BUTTON, rcm_360);
+  add_stock_icon (STOCK_COLOR_ROTATE_SWITCH_CLOCKWISE,
+                  GTK_ICON_SIZE_BUTTON, color_rotate_cw);
+  add_stock_icon (STOCK_COLOR_ROTATE_SWITCH_COUNTERCLOCKWISE,
+                  GTK_ICON_SIZE_BUTTON, color_rotate_ccw);
+  add_stock_icon (STOCK_COLOR_ROTATE_CHANGE_ORDER,
+                  GTK_ICON_SIZE_BUTTON, color_rotate_a_b);
+  add_stock_icon (STOCK_COLOR_ROTATE_SELECT_ALL,
+                  GTK_ICON_SIZE_BUTTON, color_rotate_360);
 
-  gtk_icon_factory_add_default (rcm_icon_factory);
+  gtk_icon_factory_add_default (color_rotate_icon_factory);
 
-  gtk_stock_add_static (rcm_stock_items, G_N_ELEMENTS (rcm_stock_items));
+  gtk_stock_add_static (color_rotate_stock_items,
+                        G_N_ELEMENTS (color_rotate_stock_items));
 
   initialized = TRUE;
 }

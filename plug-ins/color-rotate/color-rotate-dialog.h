@@ -39,33 +39,9 @@
 
 /* Global defines */
 
-#define RADIUS  60
-#define MARGIN  4
-#define SUM     (2*RADIUS + 2*MARGIN)
-#define CENTER  (SUM/2)
-
-#define GRAY_RADIUS  60
-#define GRAY_MARGIN  3
-#define GRAY_SUM     (2*GRAY_RADIUS + 2*GRAY_MARGIN)
-#define GRAY_CENTER  (GRAY_SUM/2)
-
-#define LITTLE_RADIUS 3
-#define EACH_OR_BOTH  0.3
+#define MAX_PREVIEW_SIZE   150
 
 
+/* Procedures */
 
-/* Global variables */
-
-extern GdkGC *xor_gc;
-
-
-void rcm_draw_little_circle (GdkWindow *window,
-                             GdkGC     *color,
-                             gfloat     hue,
-                             gfloat     satur);
-void rcm_draw_large_circle  (GdkWindow *window,
-                             GdkGC     *color,
-                             gfloat     gray_sat);
-void rcm_draw_arrows        (GdkWindow *window,
-                             GdkGC     *color,
-                             RcmAngle  *angle);
+gboolean  color_rotate_dialog (void);

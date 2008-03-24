@@ -18,21 +18,21 @@ SUBDIRS = images
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-libexec_PROGRAMS = rcm
+libexec_PROGRAMS = color-rotate
 
-rcm_SOURCES = \
-	rcm.c		\
-	rcm.h		\
-	rcm_callback.c	\
-	rcm_callback.h	\
-	rcm_dialog.c	\
-	rcm_dialog.h	\
-	rcm_gdk.c	\
-	rcm_gdk.h	\
-	rcm_misc.c	\
-	rcm_misc.h	\
-	rcm_stock.c	\
-	rcm_stock.h
+color_rotate_SOURCES = \
+	color-rotate.c			\
+	color-rotate.h			\
+	color-rotate-callbacks.c	\
+	color-rotate-callbacks.h	\
+	color-rotate-dialog.c		\
+	color-rotate-dialog.h		\
+	color-rotate-draw.c		\
+	color-rotate-draw.h		\
+	color-rotate-utils.c		\
+	color-rotate-utils.h		\
+	color-rotate-stock.c		\
+	color-rotate-stock.h
 
 INCLUDES = \
 	-I$(top_srcdir)	\

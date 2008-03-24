@@ -41,10 +41,10 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "rcm.h"
-#include "rcm_misc.h"
-#include "rcm_dialog.h"
-#include "rcm_gdk.h"
+#include "color-rotate.h"
+#include "color-rotate-utils.h"
+#include "color-rotate-dialog.h"
+#include "color-rotate-draw.h"
 
 
 /* Global variables */
@@ -55,10 +55,10 @@ GdkGC *xor_gc;
 /* Drawing routines */
 
 void
-rcm_draw_little_circle (GdkWindow *window,
-			GdkGC     *color,
-			gfloat     hue,
-			gfloat     satur)
+color_rotate_draw_little_circle (GdkWindow *window,
+                                 GdkGC     *color,
+                                 gfloat     hue,
+                                 gfloat     satur)
 {
   gint x,y;
 
@@ -70,9 +70,9 @@ rcm_draw_little_circle (GdkWindow *window,
 }
 
 void
-rcm_draw_large_circle (GdkWindow *window,
-		       GdkGC     *color,
-		       gfloat     gray_sat)
+color_rotate_draw_large_circle (GdkWindow *window,
+                                GdkGC     *color,
+                                gfloat     gray_sat)
 {
   gint x, y;
 
@@ -93,9 +93,9 @@ rcm_draw_large_circle (GdkWindow *window,
 #define TICK 10
 
 void
-rcm_draw_arrows (GdkWindow *window,
-		 GdkGC     *color,
-		 RcmAngle  *angle)
+color_rotate_draw_arrows (GdkWindow *window,
+                          GdkGC     *color,
+                          RcmAngle  *angle)
 {
   gint   dist;
   gfloat alpha, beta, cw_ccw, delta;

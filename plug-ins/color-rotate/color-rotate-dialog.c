@@ -41,14 +41,14 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "rcm.h"
-#include "rcm_misc.h"
-#include "rcm_gdk.h"
-#include "rcm_callback.h"
-#include "rcm_dialog.h"
-#include "rcm_stock.h"
+#include "color-rotate.h"
+#include "color-rotate-utils.h"
+#include "color-rotate-draw.h"
+#include "color-rotate-callbacks.h"
+#include "color-rotate-dialog.h"
+#include "color-rotate-stock.h"
 
-#include "images/rcm-stock-pixbufs.h"
+#include "images/color-rotate-stock-pixbufs.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -250,8 +250,8 @@ rcm_create_one_circle (gint   height,
   /** Main: Circle: Buttons **/
 
   button = gtk_button_new_from_stock (st->angle->cw_ccw > 0 ?
-                                      STOCK_COLORMAP_SWITCH_CLOCKWISE :
-                                      STOCK_COLORMAP_SWITCH_COUNTERCLOCKWISE);
+                                      STOCK_COLOR_ROTATE_SWITCH_CLOCKWISE :
+                                      STOCK_COLOR_ROTATE_SWITCH_COUNTERCLOCKWISE);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (rcm_cw_ccw),
                     st);
@@ -265,7 +265,7 @@ rcm_create_one_circle (gint   height,
   st->cw_ccw_box    = NULL;
   st->cw_ccw_label  = NULL;
 
-  button = gtk_button_new_from_stock (STOCK_COLORMAP_CHANGE_ORDER);
+  button = gtk_button_new_from_stock (STOCK_COLOR_ROTATE_CHANGE_ORDER);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (rcm_a_to_b),
                     st);
@@ -278,7 +278,7 @@ rcm_create_one_circle (gint   height,
   st->a_b_box    = NULL;
   st->a_b_button = button;
 
-  button = gtk_button_new_from_stock (STOCK_COLORMAP_SELECT_ALL);
+  button = gtk_button_new_from_stock (STOCK_COLOR_ROTATE_SELECT_ALL);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (rcm_360_degrees),
                     st);
@@ -636,7 +636,7 @@ rcm_create_units (void)
 /* create and call main dialog */
 
 gboolean
-rcm_dialog (void)
+color_rotate_dialog (void)
 {
   GtkWidget *dialog;
   GtkWidget *hbox;
@@ -647,7 +647,7 @@ rcm_dialog (void)
   Current.Bna = g_new (RcmBna, 1);
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
-  rcm_stock_init ();
+  color_rotate_stock_init ();
 
   dialog = gimp_dialog_new (_("Rotate Colors"), PLUG_IN_BINARY,
                             NULL, 0,

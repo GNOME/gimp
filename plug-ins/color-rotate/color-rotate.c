@@ -41,24 +41,24 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
-#include "rcm.h"
-#include "rcm_misc.h"
-#include "rcm_dialog.h"
-#include "rcm_callback.h"
+#include "color-rotate.h"
+#include "color-rotate-utils.h"
+#include "color-rotate-dialog.h"
+#include "color-rotate-callbacks.h"
 
 #include "libgimp/stdplugins-intl.h"
 
 
 /* Forward declarations */
 
-static void  query (void);
-static void  run   (const gchar      *name,
-		    gint              nparams,
-		    const GimpParam  *param,
-		    gint             *nreturn_vals,
-		    GimpParam       **return_vals);
+static void  query        (void);
+static void  run          (const gchar      *name,
+                           gint              nparams,
+                           const GimpParam  *param,
+                           gint             *nreturn_vals,
+                           GimpParam       **return_vals);
 
-static void  rcm   (GimpDrawable     *drawable);
+static void  color_rotate (GimpDrawable     *drawable);
 
 
 /* Global variables */
@@ -135,13 +135,13 @@ run (const gchar      *name,
 
   if (gimp_drawable_is_rgb (Current.drawable->drawable_id))
     {
-      if (rcm_dialog ())
+      if (color_rotate_dialog ())
         {
           gimp_progress_init (_("Rotating the colors"));
 
           gimp_tile_cache_ntiles (2 * (Current.drawable->width /
                                        gimp_tile_width () + 1));
-          rcm (Current.drawable);
+          color_rotate (Current.drawable);
           gimp_displays_flush ();
         }
       else
@@ -164,11 +164,11 @@ run (const gchar      *name,
 /* Rotate colors of a single row */
 
 static void
-rcm_row (const guchar *src_row,
-	 guchar       *dest_row,
-	 gint          row,
-	 gint          row_width,
-	 gint          bytes)
+color_rotate_row (const guchar *src_row,
+                  guchar       *dest_row,
+                  gint          row,
+                  gint          row_width,
+                  gint          bytes)
 {
   gint     col, bytenum;
   gdouble  H, S, V;
@@ -235,7 +235,7 @@ rcm_row (const guchar *src_row,
 /* Rotate colors row by row ... */
 
 static void
-rcm (GimpDrawable *drawable)
+color_rotate (GimpDrawable *drawable)
 {
   GimpPixelRgn srcPR, destPR;
   gint         width, height;
@@ -260,7 +260,7 @@ rcm (GimpDrawable *drawable)
     {
       gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, (x2 - x1));
 
-      rcm_row (src_row, dest_row, row, (x2 - x1), bytes);
+      color_rotate_row (src_row, dest_row, row, (x2 - x1), bytes);
 
       gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, (x2 - x1));
 

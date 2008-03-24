@@ -1,14 +1,6 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for GIMP.
- *
- * Colormap-Rotation plug-in. Exchanges two color ranges.
- *
- * Copyright (C) 1999 Sven Anders (anderss@fmi.uni-passau.de)
- *                    Based on code from Pavel Grinfeld (pavel@ml.com)
- *
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -24,24 +16,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*----------------------------------------------------------------------------
- * Change log:
- *
- * Version 2.0, 04 April 1999.
- *  Nearly complete rewrite, made plug-in stable.
- *  (Works with GIMP 1.1 and GTK+ 1.2)
- *
- * Version 1.0, 27 March 1997.
- *  Initial (unstable) release by Pavel Grinfeld
- *
- *----------------------------------------------------------------------------*/
+#ifndef __COLOR_ROTATE_STOCK_H__
+#define __COLOR_ROTATE_STOCK_H__
 
 
-/* Global defines */
+#define STOCK_COLOR_ROTATE_SWITCH_CLOCKWISE        "color_rotate_cw"
+#define STOCK_COLOR_ROTATE_SWITCH_COUNTERCLOCKWISE "color_rotate_ccw"
+#define STOCK_COLOR_ROTATE_CHANGE_ORDER            "color_rotate_a_b"
+#define STOCK_COLOR_ROTATE_SELECT_ALL              "color_rotate_360"
 
-#define MAX_PREVIEW_SIZE   150
+
+void  color_rotate_stock_init (void);
 
 
-/* Procedures */
-
-gboolean  rcm_dialog (void);
+#endif /* __COLOR_ROTATE_STOCK_H__ */
