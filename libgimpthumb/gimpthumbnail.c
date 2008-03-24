@@ -751,7 +751,6 @@ static void
 gimp_thumbnail_reset_info (GimpThumbnail *thumbnail)
 {
   g_object_set (thumbnail,
-                "image-mimetype",   NULL,
                 "image-width",      0,
                 "image-height",     0,
                 "image-type",       NULL,
@@ -770,6 +769,7 @@ gimp_thumbnail_set_info_from_pixbuf (GimpThumbnail *thumbnail,
 
   gimp_thumbnail_reset_info (thumbnail);
 
+  g_free (thumbnail->image_mimetype);
   thumbnail->image_mimetype =
     g_strdup (gdk_pixbuf_get_option (pixbuf, TAG_THUMB_MIMETYPE));
 
