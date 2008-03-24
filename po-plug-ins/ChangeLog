@@ -1,5 +1,9 @@
 2008-03-24  Michael Natterer  <mitch@gimp.org>
 
+	* POTFILES.in: more renamed files.
+
+2008-03-24  Michael Natterer  <mitch@gimp.org>
+
 	* POTFILES.in: lots of files in plug-ins/ were renamed.
 
 2008-03-24  Michael Natterer  <mitch@gimp.org>

@@ -4,8 +4,8 @@
 [encoding: UTF-8]
 
 plug-ins/bmp/bmp.c
-plug-ins/bmp/bmpread.c
-plug-ins/bmp/bmpwrite.c
+plug-ins/bmp/bmp-read.c
+plug-ins/bmp/bmp-write.c
 plug-ins/color-rotate/color-rotate-dialog.c
 plug-ins/color-rotate/color-rotate-stock.c
 plug-ins/color-rotate/color-rotate.c
