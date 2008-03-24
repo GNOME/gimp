@@ -1,3 +1,16 @@
+2008-03-24  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/gimpthumbnail.c: don't reset the mime-type info
+	when we can't load a thumbnail.
+
+	* app/core/gimpimagefile.c (gimp_imagefile_get_new_pixbuf): don't
+	set a stock-id depending on the state.
+
+	* app/widgets/gimpviewrendererimagefile.[ch]: removed commented
+	out hack that used to access semi-private API from GtkFilesystem.
+	Instead lifted some code from GtkRecentManager that looks up icons
+	by mime-type.
+
 2008-03-24  Michael Natterer  <mitch@gimp.org>
 
 	Renamed folders in plug-ins/. Unfortunately it's impossible to

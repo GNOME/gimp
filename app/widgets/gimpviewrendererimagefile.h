@@ -25,8 +25,6 @@
 
 #include "gimpviewrenderer.h"
 
-/* #define ENABLE_FILE_SYSTEM_ICONS 1 */
-
 
 #define GIMP_TYPE_VIEW_RENDERER_IMAGEFILE            (gimp_view_renderer_imagefile_get_type ())
 #define GIMP_VIEW_RENDERER_IMAGEFILE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEW_RENDERER_IMAGEFILE, GimpViewRendererImagefile))
@@ -41,10 +39,6 @@ typedef struct _GimpViewRendererImagefileClass  GimpViewRendererImagefileClass;
 struct _GimpViewRendererImagefile
 {
   GimpViewRenderer parent_instance;
-
-#ifdef ENABLE_FILE_SYSTEM_ICONS
-  gpointer         file_system;
-#endif
 };
 
 struct _GimpViewRendererImagefileClass

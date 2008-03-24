@@ -417,8 +417,6 @@ gimp_imagefile_name_changed (GimpObject *object)
   if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
     GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
 
-  gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), NULL);
-
   gimp_thumbnail_set_uri (imagefile->thumbnail, gimp_object_get_name (object));
 }
 
@@ -454,39 +452,11 @@ gimp_imagefile_get_new_pixbuf (GimpViewable *viewable,
                                gint          height)
 {
   GimpImagefile *imagefile = GIMP_IMAGEFILE (viewable);
-  GdkPixbuf     *pixbuf;
-  const gchar   *stock_id  = NULL;
 
-  if (! GIMP_OBJECT (imagefile)->name)
+  if (! gimp_object_get_name (GIMP_OBJECT (imagefile)))
     return NULL;
 
-  pixbuf = gimp_imagefile_load_thumb (imagefile, width, height);
-
-  switch (imagefile->thumbnail->image_state)
-    {
-    case GIMP_THUMB_STATE_REMOTE:
-      stock_id = "gtk-network";
-      break;
-
-    case GIMP_THUMB_STATE_FOLDER:
-      stock_id = "gtk-directory";
-      break;
-
-    case GIMP_THUMB_STATE_SPECIAL:
-      stock_id = "gtk-harddisk";
-      break;
-
-    case GIMP_THUMB_STATE_NOT_FOUND:
-      stock_id = "gtk-dialog-question";
-      break;
-
-    default:
-      break;
-    }
-
-  gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), stock_id);
-
-  return pixbuf;
+  return gimp_imagefile_load_thumb (imagefile, width, height);
 }
 
 static gchar *
