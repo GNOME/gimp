@@ -1,5 +1,10 @@
 2008-03-25  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/gui-vtable.c (gui_recent_list_load): sort the list into
+	MRU order on load.
+
+2008-03-25  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/documents-commands.c: only fiddle with
 	GtkRecentManager when "save-document-history" is enabled.
 

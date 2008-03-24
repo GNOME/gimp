@@ -620,6 +620,14 @@ gui_recent_list_add_uri (Gimp        *gimp,
                                       uri, &recent);
 }
 
+static gint
+gui_recent_list_compare (gconstpointer a,
+                         gconstpointer b)
+{
+  return (gtk_recent_info_get_modified ((GtkRecentInfo *) a) -
+          gtk_recent_info_get_modified ((GtkRecentInfo *) b));
+}
+
 static void
 gui_recent_list_load (Gimp *gimp)
 {
@@ -632,6 +640,8 @@ gui_recent_list_load (Gimp *gimp)
   gimp_container_clear (gimp->documents);
 
   items = gtk_recent_manager_get_items (gtk_recent_manager_get_default ());
+
+  items = g_list_sort (items, gui_recent_list_compare);
 
   for (list = items; list; list = list->next)
     {
@@ -657,6 +667,5 @@ gui_recent_list_load (Gimp *gimp)
 
   g_list_free (items);
 
-  gimp_list_reverse (GIMP_LIST (gimp->documents));
   gimp_container_thaw (gimp->documents);
 }
