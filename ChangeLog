@@ -1,5 +1,11 @@
 2008-03-24  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/documents-commands.c
+	(documents_remove_dangling_foreach): also remove the dangling item
+	from GtkRecentManager.
+
+2008-03-24  Sven Neumann  <sven@gimp.org>
+
 	Do not any longer keep the document history in two places. We only
 	use GtkRecentManager now:
 

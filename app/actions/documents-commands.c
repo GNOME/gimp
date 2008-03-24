@@ -171,15 +171,16 @@ documents_remove_cmd_callback (GtkAction *action,
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context;
   GimpImagefile       *imagefile;
+  const gchar         *uri;
 
   context   = gimp_container_view_get_context (editor->view);
   imagefile = gimp_context_get_imagefile (context);
 
   gimp_container_view_remove_active (editor->view);
 
-  gtk_recent_manager_remove_item (gtk_recent_manager_get_default (),
-                                  gimp_object_get_name (GIMP_OBJECT (imagefile)),
-                                  NULL);
+  uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+
+  gtk_recent_manager_remove_item (gtk_recent_manager_get_default (), uri, NULL);
 }
 
 void
@@ -285,7 +286,12 @@ documents_remove_dangling_foreach (GimpImagefile *imagefile,
   if (gimp_thumbnail_peek_image (imagefile->thumbnail) ==
       GIMP_THUMB_STATE_NOT_FOUND)
     {
+      const gchar *uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+
       gimp_container_remove (container, GIMP_OBJECT (imagefile));
+
+      gtk_recent_manager_remove_item (gtk_recent_manager_get_default (), uri,
+                                      NULL);
     }
 }
 
