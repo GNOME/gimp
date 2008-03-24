@@ -1980,6 +1980,7 @@ plug-ins/gimpressionist/Paper/Makefile
 plug-ins/gimpressionist/Presets/Makefile
 plug-ins/help-browser/Makefile
 plug-ins/help/Makefile
+plug-ins/ico/Makefile
 plug-ins/ifs-compose/Makefile
 plug-ins/imagemap/Makefile
 plug-ins/imagemap/images/Makefile
@@ -2004,7 +2005,6 @@ plug-ins/selection-to-path/Makefile
 plug-ins/sgi/Makefile
 plug-ins/twain/Makefile
 plug-ins/uri/Makefile
-plug-ins/win-icon/Makefile
 plug-ins/win-snap/Makefile
 plug-ins/xjt/Makefile
 modules/Makefile

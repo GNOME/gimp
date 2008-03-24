@@ -29,7 +29,7 @@ twain = twain
 endif
 
 if HAVE_PNG
-win_icon = win-icon
+ico = ico
 endif
 
 if OS_WIN32
@@ -62,6 +62,7 @@ SUBDIRS = \
 	gradient-flare		\
 	help			\
 	$(help_browser)		\
+	$(ico)			\
 	ifs-compose		\
 	imagemap		\
 	$(jpeg)                 \
@@ -76,7 +77,6 @@ SUBDIRS = \
 	sgi			\
 	$(twain)		\
 	$(uri)			\
-	$(win_icon)		\
 	$(win_snap)		\
 	$(xjt)			\
 	common
