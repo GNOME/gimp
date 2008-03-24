@@ -1,3 +1,7 @@
+2008-03-24  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/common/mng.c: Code cleanups.
+
 2008-03-24  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/bmp/*

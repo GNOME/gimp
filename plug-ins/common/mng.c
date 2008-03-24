@@ -539,18 +539,29 @@ mng_save_image (const gchar *filename,
   rows = gimp_image_height (image_id);
   cols = gimp_image_width (image_id);
 
-  mng_simplicity_profile =
-    (MNG_SIMPLICITY_VALID | MNG_SIMPLICITY_SIMPLEFEATURES |
-     MNG_SIMPLICITY_COMPLEXFEATURES);
-  mng_simplicity_profile |= (MNG_SIMPLICITY_JNG | MNG_SIMPLICITY_DELTAPNG);     /* JNG and delta-PNG chunks exist */
+  mng_simplicity_profile = (MNG_SIMPLICITY_VALID |
+                            MNG_SIMPLICITY_SIMPLEFEATURES |
+                            MNG_SIMPLICITY_COMPLEXFEATURES);
+
+  /* JNG and delta-PNG chunks exist */
+  mng_simplicity_profile |= (MNG_SIMPLICITY_JNG |
+                             MNG_SIMPLICITY_DELTAPNG);
 
   for (i = 0; i < num_layers; i++)
     if (gimp_drawable_has_alpha (layers[i]))
       {
-        mng_simplicity_profile |= MNG_SIMPLICITY_TRANSPARENCY;  /* internal transparency exists */
-        mng_simplicity_profile |= 0x00000040;   /* validity of following */
-        mng_simplicity_profile |= 0x00000100;   /* semi-transparency exists */
-        mng_simplicity_profile |= 0x00000080;   /* background transparency should happen */
+        /* internal transparency exists */
+        mng_simplicity_profile |= MNG_SIMPLICITY_TRANSPARENCY;
+
+        /* validity of following flags */
+        mng_simplicity_profile |= 0x00000040;
+
+        /* semi-transparency exists */
+        mng_simplicity_profile |= 0x00000100;
+
+        /* background transparency should happen */
+        mng_simplicity_profile |= 0x00000080;
+
         break;
       }
 
@@ -664,22 +675,26 @@ mng_save_image (const gchar *filename,
                 gimp_context_get_background(&bgcolor);
                 gimp_rgb_get_uchar(&bgcolor, &red, &green, &blue);
 
-                if ((ret = mng_putchunk_back(handle, red, green, blue,
-                                             MNG_BACKGROUNDCOLOR_MANDATORY,
-                                             0, MNG_BACKGROUNDIMAGE_NOTILE)) != MNG_NOERROR)
+                ret = mng_putchunk_back(handle, red, green, blue,
+                                        MNG_BACKGROUNDCOLOR_MANDATORY,
+                                        0, MNG_BACKGROUNDIMAGE_NOTILE);
+                if (MNG_NOERROR != ret)
                 {
-                        g_warning("Unable to mng_putchunk_back() in mng_save_image()");
+                        g_warning("Unable to mng_putchunk_back() "
+                                  "in mng_save_image()");
                         mng_cleanup(&handle);
                         fclose(userdata->fp);
                         g_free(userdata);
                         return 0;
                 }
 
-                if ((ret = mng_putchunk_bkgd(handle, MNG_FALSE, 2, 0,
-                                             gimp_rgb_luminance_uchar(&bgcolor),
-                                             red, green, blue)) != MNG_NOERROR)
+                ret = mng_putchunk_bkgd(handle, MNG_FALSE, 2, 0,
+                                        gimp_rgb_luminance_uchar(&bgcolor),
+                                        red, green, blue);
+                if (MNG_NOERROR != ret)
                 {
-                        g_warning("Unable to mng_putchunk_bkgd() in mng_save_image()");
+                        g_warning("Unable to mng_putchunk_bkgd() "
+                                  "in mng_save_image()");
                         mng_cleanup(&handle);
                         fclose(userdata->fp);
                         g_free(userdata);
@@ -690,9 +705,9 @@ mng_save_image (const gchar *filename,
 
   if (mng_data.gama)
     {
-      if ((ret =
-           mng_putchunk_gama (handle, MNG_FALSE,
-                              (1.0 / (gimp_gamma ()) * 100000))) != MNG_NOERROR)
+      ret = mng_putchunk_gama (handle, MNG_FALSE,
+                               (1.0 / (gimp_gamma ()) * 100000));
+      if (MNG_NOERROR != ret)
         {
           g_warning ("Unable to mng_putchunk_gama() in mng_save_image()");
           mng_cleanup (&handle);
@@ -703,30 +718,35 @@ mng_save_image (const gchar *filename,
     }
 
 #if 0
-        /* how do we get this to work? */
+  /* how do we get this to work? */
 
-        if (mng_data.phys)
+  if (mng_data.phys)
+    {
+      gimp_image_get_resolution(original_image_id, &xres, &yres);
+      ret = mng_putchunk_phyg (handle, MNG_FALSE,
+                               (mng_uint32) (xres * 39.37),
+                               (mng_uint32) (yres * 39.37), 1);
+      if (MNG_NOERROR != ret)
         {
-                gimp_image_get_resolution(original_image_id, &xres, &yres);
-
-                if ((ret = mng_putchunk_phyg(handle, MNG_FALSE, (mng_uint32) (xres * 39.37), (mng_uint32) (yres * 39.37), 1)) != MNG_NOERROR)
-                {
-                        g_warning("Unable to mng_putchunk_phyg() in mng_save_image()");
-                        mng_cleanup(&handle);
-                        fclose(userdata->fp);
-                        g_free(userdata);
-                        return 0;
-                }
-
-                if ((ret = mng_putchunk_phys(handle, MNG_FALSE, (mng_uint32) (xres * 39.37), (mng_uint32) (yres * 39.37), 1)) != MNG_NOERROR)
-                {
-                        g_warning("Unable to mng_putchunk_phys() in mng_save_image()");
-                        mng_cleanup(&handle);
-                        fclose(userdata->fp);
-                        g_free(userdata);
-                        return 0;
-                }
+          g_warning("Unable to mng_putchunk_phyg() in mng_save_image()");
+          mng_cleanup(&handle);
+          fclose(userdata->fp);
+          g_free(userdata);
+          return 0;
         }
+
+      ret = mng_putchunk_phys (handle, MNG_FALSE,
+                               (mng_uint32) (xres * 39.37),
+                               (mng_uint32) (yres * 39.37), 1);
+      if (MNG_NOERROR != ret)
+        {
+          g_warning("Unable to mng_putchunk_phys() in mng_save_image()");
+          mng_cleanup(&handle);
+          fclose(userdata->fp);
+          g_free(userdata);
+          return 0;
+        }
+    }
 #endif
 
   if (mng_data.time)
@@ -1087,8 +1107,8 @@ mng_save_image (const gchar *filename,
                       fixed = layer_pixels[j];
 
                       for (k = 0; k < layer_cols; k++)
-                        fixed[k] =
-                          ((fixed[k * 2 + 1] > 127) ? layer_remap[fixed[k * 2]] : 0);
+                        fixed[k] = (fixed[k * 2 + 1] > 127) ?
+                          layer_remap[fixed[k * 2]] : 0;
                     }
                 }
               else
@@ -1224,11 +1244,12 @@ mng_save_image (const gchar *filename,
             {
               /* if this frame's palette is the same as the global palette,
                  write a 0-color palette chunk */
-              if ((ret =
-                   mng_putchunk_plte (handle,
-                                      layer_has_unique_palette ? (chunksize / 3) : 0,
-                                      (mng_palette8e *) chunkbuffer))
-                  != MNG_NOERROR)
+
+              ret = mng_putchunk_plte (handle,
+                                       (layer_has_unique_palette ?
+                                        (chunksize / 3) : 0),
+                                       (mng_palette8e *) chunkbuffer);
+              if (MNG_NOERROR != ret)
                 {
                   g_warning
                     ("Unable to mng_putchunk_plte() in mng_save_image()");
@@ -1240,12 +1261,11 @@ mng_save_image (const gchar *filename,
             }
           else if (strncmp (chunkname, "tRNS", 4) == 0)
             {
-              if ((ret =
-                   mng_putchunk_trns (handle, 0, 0, 3, chunksize,
-                                      (mng_uint8 *) chunkbuffer, 0, 0, 0, 0,
-                                      0,
-                                      (mng_uint8 *) chunkbuffer)) !=
-                  MNG_NOERROR)
+              ret = mng_putchunk_trns (handle, 0, 0, 3, chunksize,
+                                       (mng_uint8 *) chunkbuffer,
+                                       0, 0, 0, 0, 0,
+                                       (mng_uint8 *) chunkbuffer);
+              if (MNG_NOERROR != ret)
                 {
                   g_warning
                     ("Unable to mng_putchunk_trns() in mng_save_image()");
