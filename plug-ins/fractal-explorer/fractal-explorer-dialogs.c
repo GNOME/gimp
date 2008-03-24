@@ -28,8 +28,8 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "FractalExplorer.h"
-#include "Dialogs.h"
+#include "fractal-explorer.h"
+#include "fractal-explorer-dialogs.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -528,7 +528,7 @@ explorer_dialog (void)
   GSList    *group = NULL;
   gint       i;
 
-  gimp_ui_init ("fractalexplorer", TRUE);
+  gimp_ui_init ("fractal-explorer", TRUE);
 
   path = gimp_gimprc_query ("fractalexplorer-path");
 
@@ -560,7 +560,7 @@ explorer_dialog (void)
   elements    = g_new (DialogElements, 1);
 
   dialog = maindlg =
-    gimp_dialog_new ("Fractal Explorer", "fractalexplorer",
+    gimp_dialog_new ("Fractal Explorer", "fractal-explorer",
                      NULL, 0,
                      gimp_standard_help_func, HELP_ID,
 

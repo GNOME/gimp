@@ -18,13 +18,13 @@ SUBDIRS = examples
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-libexec_PROGRAMS = FractalExplorer
+libexec_PROGRAMS = fractal-explorer
 
-FractalExplorer_SOURCES = \
-	Dialogs.h		\
-	Dialogs.c		\
-	FractalExplorer.c	\
-	FractalExplorer.h
+fractal_explorer_SOURCES = \
+	fractal-explorer-dialogs.h	\
+	fractal-explorer-dialogs.c	\
+	fractal-explorer.c		\
+	fractal-explorer.h
 
 INCLUDES = \
 	-I$(top_srcdir)	\

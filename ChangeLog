@@ -1,5 +1,9 @@
 2008-03-24  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/fractal-explorer/*: renamed all files.
+
+2008-03-24  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/ico/*: renamed all files.
 
 2008-03-24  Michael Natterer  <mitch@gimp.org>
