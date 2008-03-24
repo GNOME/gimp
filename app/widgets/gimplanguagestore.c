@@ -29,38 +29,11 @@
 #include "gimplanguagestore-parser.h"
 
 
-enum
-{
-  PROP_0,
-  PROP_TRANSLATIONS
-};
-
-
-static void   gimp_language_store_set_property (GObject      *object,
-                                                guint         property_id,
-                                                const GValue *value,
-                                                GParamSpec   *pspec);
-static void   gimp_language_store_get_property (GObject      *object,
-                                                guint         property_id,
-                                                GValue       *value,
-                                                GParamSpec   *pspec);
-
 G_DEFINE_TYPE (GimpLanguageStore, gimp_language_store, GTK_TYPE_LIST_STORE)
 
 static void
 gimp_language_store_class_init (GimpLanguageStoreClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  object_class->set_property = gimp_language_store_set_property;
-  object_class->get_property = gimp_language_store_get_property;
-
-  g_object_class_install_property (object_class, PROP_TRANSLATIONS,
-                                   g_param_spec_boolean ("translations",
-                                                         NULL, NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -74,52 +47,10 @@ gimp_language_store_init (GimpLanguageStore *store)
   gimp_language_store_populate (store, NULL);
 }
 
-static void
-gimp_language_store_set_property (GObject      *object,
-                                  guint         property_id,
-                                  const GValue *value,
-                                  GParamSpec   *pspec)
-{
-  GimpLanguageStore *store = GIMP_LANGUAGE_STORE (object);
-
-  switch (property_id)
-    {
-    case PROP_TRANSLATIONS:
-      store->translations = g_value_get_boolean (value);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_language_store_get_property (GObject      *object,
-                              guint         property_id,
-                              GValue       *value,
-                              GParamSpec   *pspec)
-{
-  GimpLanguageStore *store = GIMP_LANGUAGE_STORE (object);
-
-  switch (property_id)
-    {
-    case PROP_TRANSLATIONS:
-      g_value_set_boolean (value, store->translations);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
 GtkListStore *
-gimp_language_store_new (gboolean translations)
+gimp_language_store_new (void)
 {
-  return g_object_new (GIMP_TYPE_LANGUAGE_STORE,
-                       "translations", translations,
-                       NULL);
+  return g_object_new (GIMP_TYPE_LANGUAGE_STORE, NULL);
 }
 
 void
@@ -133,6 +64,7 @@ gimp_language_store_add (GimpLanguageStore *store,
   g_return_if_fail (lang != NULL && code != NULL);
 
   gtk_list_store_append (GTK_LIST_STORE (store), &iter);
+
   gtk_list_store_set (GTK_LIST_STORE (store), &iter,
                       GIMP_LANGUAGE_STORE_LANGUAGE,  lang,
                       GIMP_LANGUAGE_STORE_ISO_639_1, code,

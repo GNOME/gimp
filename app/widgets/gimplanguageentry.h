@@ -41,6 +41,8 @@ struct _GimpLanguageEntryClass
 struct _GimpLanguageEntry
 {
   GtkEntry       parent_instance;
+
+  GtkListStore  *store;
 };
 
 

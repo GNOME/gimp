@@ -48,14 +48,12 @@ struct _GimpLanguageStoreClass
 struct _GimpLanguageStore
 {
   GtkListStore       parent_instance;
-
-  gboolean           translations;
 };
 
 
 GType          gimp_language_store_get_type (void) G_GNUC_CONST;
 
-GtkListStore * gimp_language_store_new      (gboolean  translations);
+GtkListStore * gimp_language_store_new      (void);
 void           gimp_language_store_add      (GimpLanguageStore *store,
                                              const gchar       *lang,
                                              const gchar       *code);

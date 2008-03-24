@@ -1,3 +1,8 @@
+2008-03-24  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimplanguagestore.[ch]
+	* app/widgets/gimplanguageentry.[ch]: code cleanup.
+
 2008-03-24  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/mng.c: Code cleanups.
