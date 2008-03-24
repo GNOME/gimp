@@ -3,7 +3,7 @@
  *
  * Multiple-image Network Graphics (MNG) plug-in
  *
- * Copyright (C) 2002 S. Mukund <muks@mukund.org>
+ * Copyright (C) 2002 Mukund Sivaraman <muks@mukund.org>
  * Portions are copyright of the authors of the file-gif-save, file-png-save
  * and file-jpeg-save plug-ins' code. The exact ownership of these code
  * fragments has not been determined.
@@ -1590,8 +1590,8 @@ query (void)
                           "This plug-in saves images in the Multiple-image "
                           "Network Graphics (MNG) format which can be used as "
                           "a replacement for animated GIFs, and more.",
-                          "S. Mukund <muks@mukund.org>",
-                          "S. Mukund <muks@mukund.org>",
+                          "Mukund Sivaraman <muks@mukund.org>",
+                          "Mukund Sivaraman <muks@mukund.org>",
                           "November 19, 2002",
                           N_("MNG animation"),
                           "RGB*,GRAY*,INDEXED*",

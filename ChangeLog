@@ -1,3 +1,8 @@
+2008-03-24  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/common/mng.c:
+	* plug-ins/jpeg/jpeg.c: Changed name of author.
+
 2008-03-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gradient-flare/Makefile.am: fixed variable that was
