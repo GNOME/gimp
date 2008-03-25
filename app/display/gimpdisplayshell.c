@@ -47,6 +47,7 @@
 #include "core/gimpsamplepoint.h"
 #include "core/gimptemplate.h"
 
+#include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
@@ -115,6 +116,9 @@ static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
                                                     GdkScreen        *previous);
 static gboolean  gimp_display_shell_delete_event   (GtkWidget        *widget,
                                                     GdkEventAny      *aevent);
+static gboolean
+             gimp_display_shell_window_state_event (GtkWidget        *widget,
+                                                    GdkEventWindowState *event);
 static gboolean  gimp_display_shell_popup_menu     (GtkWidget        *widget);
 static void      gimp_display_shell_style_set      (GtkWidget        *widget,
                                                     GtkStyle         *prev_style);
@@ -197,21 +201,22 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->finalize       = gimp_display_shell_finalize;
-  object_class->set_property   = gimp_display_shell_set_property;
-  object_class->get_property   = gimp_display_shell_get_property;
+  object_class->finalize           = gimp_display_shell_finalize;
+  object_class->set_property       = gimp_display_shell_set_property;
+  object_class->get_property       = gimp_display_shell_get_property;
 
-  gtk_object_class->destroy    = gimp_display_shell_destroy;
+  gtk_object_class->destroy        = gimp_display_shell_destroy;
 
-  widget_class->unrealize      = gimp_display_shell_unrealize;
-  widget_class->screen_changed = gimp_display_shell_screen_changed;
-  widget_class->delete_event   = gimp_display_shell_delete_event;
-  widget_class->popup_menu     = gimp_display_shell_popup_menu;
-  widget_class->style_set      = gimp_display_shell_style_set;
+  widget_class->unrealize          = gimp_display_shell_unrealize;
+  widget_class->screen_changed     = gimp_display_shell_screen_changed;
+  widget_class->delete_event       = gimp_display_shell_delete_event;
+  widget_class->window_state_event = gimp_display_shell_window_state_event;
+  widget_class->popup_menu         = gimp_display_shell_popup_menu;
+  widget_class->style_set          = gimp_display_shell_style_set;
 
-  klass->scaled                = gimp_display_shell_real_scaled;
-  klass->scrolled              = NULL;
-  klass->reconnect             = NULL;
+  klass->scaled                    = gimp_display_shell_real_scaled;
+  klass->scrolled                  = NULL;
+  klass->reconnect                 = NULL;
 
   g_object_class_install_property (object_class, PROP_UNIT,
                                    gimp_param_spec_unit ("unit", NULL, NULL,
@@ -364,10 +369,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                     shell);
   g_signal_connect (shell, "key-press-event",
                     G_CALLBACK (gimp_display_shell_events),
-                    shell);
-
-  g_signal_connect (shell, "window-state-event",
-                    G_CALLBACK (gimp_display_shell_window_state_event),
                     shell);
 
   gimp_help_connect (GTK_WIDGET (shell), gimp_standard_help_func,
@@ -567,6 +568,41 @@ gimp_display_shell_delete_event (GtkWidget   *widget,
   gimp_display_shell_close (shell, FALSE);
 
   return TRUE;
+}
+
+static gboolean
+gimp_display_shell_window_state_event (GtkWidget           *widget,
+                                       GdkEventWindowState *event)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
+
+  shell->window_state = event->new_window_state;
+
+  if (event->changed_mask & GDK_WINDOW_STATE_FULLSCREEN)
+    {
+      Gimp            *gimp = shell->display->gimp;
+      GimpActionGroup *group;
+      gboolean         fullscreen;
+
+      gimp_display_shell_appearance_update (shell);
+
+      fullscreen = gimp_display_shell_get_fullscreen (shell);
+
+      group = gimp_ui_manager_get_action_group (shell->menubar_manager, "view");
+      gimp_action_group_set_action_active (group,
+                                           "view-fullscreen", fullscreen);
+
+      if (shell->display ==
+          gimp_context_get_display (gimp_get_user_context (gimp)))
+        {
+          group = gimp_ui_manager_get_action_group (shell->popup_manager,
+                                                    "view");
+          gimp_action_group_set_action_active (group,
+                                               "view-fullscreen", fullscreen);
+        }
+    }
+
+  return FALSE;
 }
 
 static gboolean
