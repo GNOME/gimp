@@ -1,5 +1,10 @@
 2008-03-25  Sven Neumann  <sven@gimp.org>
 
+	* menus/image-menu.xml.in: added a placeholder "Menus" where
+	plug-ins like GAP can register a top-level menu.
+
+2008-03-25  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.[ch]: 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_init): moved
 	handling of window state events to a separate callback.
