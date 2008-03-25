@@ -832,8 +832,8 @@ gimp_statusbar_peek (GimpStatusbar *statusbar,
   GSList *list;
   guint   context_id;
 
-  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
-  g_return_if_fail (context != NULL);
+  g_return_val_if_fail (GIMP_IS_STATUSBAR (statusbar), NULL);
+  g_return_val_if_fail (context != NULL, NULL);
 
   context_id = gimp_statusbar_get_context_id (statusbar, context);
 

@@ -80,7 +80,8 @@
 
 
 #define DEFAULT_EVENT_SMOOTHING  0.98
-#define DEFAULT_EVENT_FILTER  0.5
+#define DEFAULT_EVENT_FILTER     0.50
+
 
 /*  local function prototypes  */
 
