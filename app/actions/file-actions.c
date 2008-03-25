@@ -177,7 +177,7 @@ file_actions_setup (GimpActionGroup *group)
     }
 
   gimp_action_group_add_enum_actions (group, entries, n_entries,
-                                      G_CALLBACK (file_last_opened_cmd_callback));
+                                      G_CALLBACK (file_open_recent_cmd_callback));
 
   for (i = 0; i < n_entries; i++)
     {

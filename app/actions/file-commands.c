@@ -133,7 +133,7 @@ file_open_location_cmd_callback (GtkAction *action,
 }
 
 void
-file_last_opened_cmd_callback (GtkAction *action,
+file_open_recent_cmd_callback (GtkAction *action,
                                gint       value,
                                gpointer   data)
 {
@@ -152,12 +152,17 @@ file_last_opened_cmd_callback (GtkAction *action,
 
   if (imagefile)
     {
+      GimpDisplay       *display;
+      GimpProgress      *progress;
       GimpImage         *image;
       GimpPDBStatusType  status;
       GError            *error = NULL;
+      return_if_no_display (display, data);
+
+      progress = display->image ? NULL : GIMP_PROGRESS (display);
 
       image = file_open_with_display (gimp, action_data_get_context (data),
-                                      NULL,
+                                      progress,
                                       GIMP_OBJECT (imagefile)->name, FALSE,
                                       &status, &error);
 
@@ -166,7 +171,7 @@ file_last_opened_cmd_callback (GtkAction *action,
           gchar *filename =
             file_utils_uri_display_name (GIMP_OBJECT (imagefile)->name);
 
-          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+          gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
                         _("Opening '%s' failed:\n\n%s"),
                         filename, error->message);
           g_clear_error (&error);
