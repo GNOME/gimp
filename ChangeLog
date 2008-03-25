@@ -7,9 +7,9 @@
 	(gimp_display_shell_window_state_event): when the iconfied state
 	changes, call gimp_display_shell_progress_window_state_changed().
 
-	* app/display/gimpdisplayshell-progress.[ch]: when the image
-	window is iconified, display the progress message in the window
-	title so that it appears in the task bar.
+	* app/display/gimpdisplayshell-progress.[ch]: if the image window
+	is iconified, display the progress message in the window title so
+	that it appears in the task bar.
 
 	* app/menus/plug-in-menus.c: formatting.
 
