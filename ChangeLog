@@ -1,3 +1,18 @@
+2008-03-25  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpstatusbar.[ch]: added gimp_statusbar_peek(), a
+	method to access the contents of the statusbar.
+
+	* app/display/gimpdisplayshell.c
+	(gimp_display_shell_window_state_event): when the iconfied state
+	changes, call gimp_display_shell_progress_window_state_changed().
+
+	* app/display/gimpdisplayshell-progress.[ch]: when the image
+	window is iconified, display the progress message in the window
+	title so that it appears in the task bar.
+
+	* app/menus/plug-in-menus.c: formatting.
+
 2008-03-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.[ch]: remove the window

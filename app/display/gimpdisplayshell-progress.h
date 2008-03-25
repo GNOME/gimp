@@ -22,7 +22,9 @@
 #include "core/gimpprogress.h"
 
 
-void gimp_display_shell_progress_iface_init (GimpProgressInterface *iface);
+void gimp_display_shell_progress_iface_init      (GimpProgressInterface *iface);
+
+void gimp_display_shell_progress_window_state_changed (GimpDisplayShell *shell);
 
 
 #endif /*  __GIMP_DISPLAY_SHELL_PROGRESS_H__  */

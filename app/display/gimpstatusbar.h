@@ -109,6 +109,8 @@ void        gimp_statusbar_replace_valist   (GimpStatusbar       *statusbar,
                                              const gchar         *context,
                                              const gchar         *format,
                                              va_list              args);
+const gchar * gimp_statusbar_peek           (GimpStatusbar       *statusbar,
+                                             const gchar         *context);
 void        gimp_statusbar_pop              (GimpStatusbar       *statusbar,
                                              const gchar         *context);
 

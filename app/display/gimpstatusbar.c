@@ -825,6 +825,31 @@ gimp_statusbar_replace_valist (GimpStatusbar *statusbar,
   gimp_statusbar_update (statusbar);
 }
 
+const gchar *
+gimp_statusbar_peek (GimpStatusbar *statusbar,
+                     const gchar   *context)
+{
+  GSList *list;
+  guint   context_id;
+
+  g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+  g_return_if_fail (context != NULL);
+
+  context_id = gimp_statusbar_get_context_id (statusbar, context);
+
+  for (list = statusbar->messages; list; list = list->next)
+    {
+      GimpStatusbarMsg *msg = list->data;
+
+      if (msg->context_id == context_id)
+        {
+          return msg->text;
+        }
+    }
+
+  return NULL;
+}
+
 void
 gimp_statusbar_pop (GimpStatusbar *statusbar,
                     const gchar   *context)

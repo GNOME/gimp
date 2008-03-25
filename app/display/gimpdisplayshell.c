@@ -602,6 +602,11 @@ gimp_display_shell_window_state_event (GtkWidget           *widget,
         }
     }
 
+  if (event->changed_mask & GDK_WINDOW_STATE_ICONIFIED)
+    {
+      gimp_display_shell_progress_window_state_changed (shell);
+    }
+
   return FALSE;
 }
 

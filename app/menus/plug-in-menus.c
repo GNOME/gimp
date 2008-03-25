@@ -510,7 +510,7 @@ plug_in_menus_build_path (GimpUIManager *manager,
                                            action_path))
             {
               GIMP_LOG (MENUS, "adding menu '%s' at path '%s' for action '%s'",
-                       menu_item_name, action_path, menu_path);
+                        menu_item_name, action_path, menu_path);
 
               gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
                                      parent_action_path, menu_item_name,
