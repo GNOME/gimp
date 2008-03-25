@@ -698,19 +698,25 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   /*  the toplevel shell */
   shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL,
-                        "unit", unit,
+                        "unit",            unit,
+                        /* The window position will be overridden by the
+                         * dialog factory, it is only really used on first
+                         * startup.
+                         */
+                        display->image ? NULL : "window-position",
+                        GTK_WIN_POS_CENTER,
                         NULL);
 
   shell->display = display;
 
   shell->display_factory = display_factory;
 
-  if (shell->display->image)
+  if (display->image)
     {
       options = shell->options;
 
-      image_width  = gimp_image_get_width  (shell->display->image);
-      image_height = gimp_image_get_height (shell->display->image);
+      image_width  = gimp_image_get_width  (display->image);
+      image_height = gimp_image_get_height (display->image);
     }
   else
     {
@@ -720,28 +726,28 @@ gimp_display_shell_new (GimpDisplay       *display,
       image_height = GIMP_DEFAULT_IMAGE_HEIGHT;
     }
 
-  shell->dot_for_dot = shell->display->config->default_dot_for_dot;
+  shell->dot_for_dot = display->config->default_dot_for_dot;
 
-  gimp_config_sync (G_OBJECT (shell->display->config->default_view),
+  gimp_config_sync (G_OBJECT (display->config->default_view),
                     G_OBJECT (shell->options), 0);
-  gimp_config_sync (G_OBJECT (shell->display->config->default_fullscreen_view),
+  gimp_config_sync (G_OBJECT (display->config->default_fullscreen_view),
                     G_OBJECT (shell->fullscreen_options), 0);
 
   screen = gtk_widget_get_screen (GTK_WIDGET (shell));
 
-  if (shell->display->config->monitor_res_from_gdk)
+  if (display->config->monitor_res_from_gdk)
     {
       gimp_get_screen_resolution (screen,
                                   &shell->monitor_xres, &shell->monitor_yres);
     }
   else
     {
-      shell->monitor_xres = shell->display->config->monitor_xres;
-      shell->monitor_yres = shell->display->config->monitor_yres;
+      shell->monitor_xres = display->config->monitor_xres;
+      shell->monitor_yres = display->config->monitor_yres;
     }
 
   /* adjust the initial scale -- so that window fits on screen. */
-  if (shell->display->image)
+  if (display->image)
     {
       gimp_display_shell_set_initial_scale (shell, scale,
                                             &shell_width, &shell_height);
@@ -1129,21 +1135,22 @@ gimp_display_shell_new (GimpDisplay       *display,
   gtk_widget_show (main_vbox);
 
   filter = gimp_display_shell_filter_new (shell,
-                                          GIMP_CORE_CONFIG (shell->display->config)->color_management);
+                                          display->gimp->config->color_management);
+
   if (filter)
     {
       gimp_display_shell_filter_set (shell, filter);
       g_object_unref (filter);
     }
 
-  if (shell->display->image)
+  if (display->image)
     {
       gimp_display_shell_connect (shell);
     }
   else
     {
       gimp_statusbar_empty (GIMP_STATUSBAR (shell->statusbar));
-      gimp_dialog_factory_add_foreign (shell->display_factory,
+      gimp_dialog_factory_add_foreign (display_factory,
                                        "gimp-empty-image-window",
                                        GTK_WIDGET (shell));
     }

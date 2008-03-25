@@ -1,5 +1,10 @@
 2008-03-25  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): center
+	the empty image window on first startup.
+
+2008-03-25  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/gui-vtable.c (gui_recent_list_load): sort the list into
 	MRU order on load.
 
