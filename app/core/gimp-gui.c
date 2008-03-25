@@ -238,6 +238,17 @@ gimp_get_theme_dir (Gimp *gimp)
 }
 
 GimpObject *
+gimp_get_empty_display (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (gimp->gui.get_empty_display)
+    return gimp->gui.get_empty_display (gimp);
+
+  return NULL;
+}
+
+GimpObject *
 gimp_get_display_by_ID (Gimp *gimp,
                         gint  ID)
 {

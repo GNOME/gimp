@@ -1,3 +1,12 @@
+2008-03-25  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp-gui.[ch]
+	* app/gui/gui-vtable.c: added gimp_get_empty_display() to the vtable.
+
+	* app/file/file-open.c (file_open_from_command_line): use the
+	empty display as progress window when opening an image from the
+	command-line or via the DBus interface.
+
 2008-03-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/image-actions.c: remove "image-new-from-image"

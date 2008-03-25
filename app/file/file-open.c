@@ -481,11 +481,12 @@ file_open_from_command_line (Gimp        *gimp,
   if (uri)
     {
       GimpImage         *image;
+      GimpObject        *display = gimp_get_empty_display (gimp);
       GimpPDBStatusType  status;
 
       image = file_open_with_display (gimp,
                                       gimp_get_user_context (gimp),
-                                      NULL,
+                                      GIMP_PROGRESS (display),
                                       uri, as_new,
                                       &status, &error);
 
@@ -497,7 +498,7 @@ file_open_from_command_line (Gimp        *gimp,
         {
           gchar *filename = file_utils_uri_display_name (uri);
 
-          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+          gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
                         _("Opening '%s' failed: %s"),
                         filename, error->message);
           g_clear_error (&error);

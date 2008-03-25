@@ -89,6 +89,7 @@ static gchar        * gui_get_display_name     (Gimp                *gimp,
                                                 gint                 display_ID,
                                                 gint                *monitor_number);
 static const gchar  * gui_get_theme_dir        (Gimp                *gimp);
+static GimpObject   * gui_get_empty_display    (Gimp                *gimp);
 static GimpObject   * gui_display_get_by_ID    (Gimp                *gimp,
                                                 gint                 ID);
 static gint           gui_display_get_ID       (GimpObject          *display);
@@ -101,7 +102,6 @@ static void           gui_display_delete       (GimpObject          *display);
 static void           gui_displays_reconnect   (Gimp                *gimp,
                                                 GimpImage           *old_image,
                                                 GimpImage           *new_image);
-static GimpDisplay  * gui_get_empty_display    (Gimp                *gimp);
 static GimpProgress * gui_new_progress         (Gimp                *gimp,
                                                 GimpObject          *display);
 static void           gui_free_progress        (Gimp                *gimp,
@@ -145,6 +145,7 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.get_program_class   = gui_get_program_class;
   gimp->gui.get_display_name    = gui_get_display_name;
   gimp->gui.get_theme_dir       = gui_get_theme_dir;
+  gimp->gui.get_empty_display   = gui_get_empty_display;
   gimp->gui.display_get_by_id   = gui_display_get_by_ID;
   gimp->gui.display_get_id      = gui_display_get_ID;
   gimp->gui.display_get_window  = gui_display_get_window;
@@ -261,6 +262,25 @@ gui_get_theme_dir (Gimp *gimp)
 }
 
 static GimpObject *
+gui_get_empty_display (Gimp *gimp)
+{
+  GimpObject *display = NULL;
+
+  if (gimp_container_num_children (gimp->displays) == 1)
+    {
+      display = gimp_container_get_child_by_index (gimp->displays, 0);
+
+      if (GIMP_DISPLAY (display)->image)
+        {
+          /* The display was not empty */
+          display = NULL;
+        }
+    }
+
+  return display;
+}
+
+static GimpObject *
 gui_display_get_by_ID (Gimp *gimp,
                        gint  ID)
 {
@@ -291,12 +311,11 @@ gui_display_create (Gimp      *gimp,
                     gdouble    scale)
 {
   GimpContext *context = gimp_get_user_context (gimp);
-  GimpDisplay *display = NULL;
+  GimpObject  *object  = gui_get_empty_display (gimp);
+  GimpDisplay *display = object ? GIMP_DISPLAY (object) : NULL;
 
-  if (gui_get_empty_display (gimp) != NULL)
+  if (display)
     {
-      display = gui_get_empty_display (gimp);
-
       gimp_display_fill (display, image, unit, scale);
     }
   else
@@ -339,25 +358,6 @@ gui_displays_reconnect (Gimp      *gimp,
                         GimpImage *new_image)
 {
   gimp_displays_reconnect (gimp, old_image, new_image);
-}
-
-static GimpDisplay *
-gui_get_empty_display (Gimp *gimp)
-{
-  GimpDisplay *display = NULL;
-
-  if (gimp_container_num_children (gimp->displays) == 1)
-    {
-      display = (GimpDisplay *) gimp_container_get_child_by_index (gimp->displays, 0);
-
-      if (display->image != NULL)
-        {
-          /* The display was not empty */
-          display = NULL;
-        }
-    }
-
-  return display;
 }
 
 static GimpProgress *
