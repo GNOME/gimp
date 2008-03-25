@@ -590,20 +590,27 @@ gimp_display_shell_style_set (GtkWidget *widget,
                               GtkStyle  *prev_style)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
-  GtkRequisition    menubar_req;
-  GtkRequisition    statusbar_req;
+  GtkRequisition    requisition;
   GdkGeometry       geometry;
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
-  gtk_widget_size_request (shell->menubar,   &menubar_req);
-  gtk_widget_size_request (shell->statusbar, &statusbar_req);
+  gtk_widget_size_request (shell->statusbar, &requisition);
 
-  geometry.min_width  = statusbar_req.width;
-  geometry.min_height = statusbar_req.height + menubar_req.height + 1;
+  geometry.min_width  = requisition.width;
+  geometry.min_height = requisition.height;
+
+  if (shell->menubar)
+    {
+      gtk_widget_size_request (shell->menubar, &requisition);
+
+      geometry.min_height += requisition.height + 1;
+    }
 
   gtk_window_set_geometry_hints (GTK_WINDOW (widget), NULL,
-                                 &geometry, GDK_HINT_MIN_SIZE);
+                                 &geometry,
+                                 GDK_HINT_MIN_SIZE |
+                                 GDK_HINT_USER_POS);
 }
 
 static void
