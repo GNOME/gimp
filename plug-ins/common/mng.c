@@ -11,9 +11,6 @@
  * This work was sponsored by Xinit Systems Limited, UK.
  * http://www.xinitsystems.com/
  *
- * THIS SOURCE CODE DOES NOT INCLUDE ANY FUNCTIONALITY FOR READING
- * OR WRITING CONTENT IN THE GIF IMAGE FORMAT.
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -200,7 +197,7 @@ static gboolean  respin_cmap               (png_structp       png_ptr,
                                             gint32            image_id,
                                             GimpDrawable     *drawable);
 
-static gint      mng_save_image            (const gchar      *filename,
+static gboolean  mng_save_image            (const gchar      *filename,
                                             gint32            image_id,
                                             gint32            drawable_id,
                                             gint32            original_image_id);
@@ -221,6 +218,7 @@ static mng_ptr
 myalloc (mng_size_t size)
 {
   gpointer ptr;
+
   ptr = g_try_malloc ((gulong) size);
 
   if (ptr != NULL)
@@ -293,7 +291,6 @@ parse_disposal_type_from_layer_name (const gchar *str)
 {
   guint i;
 
-
   for (i = 0; (i + 9) <= strlen (str); i++)
     {
       if (g_ascii_strncasecmp (str + i, "(combine)", 9) == 0)
@@ -316,10 +313,8 @@ parse_ms_tag_from_layer_name (const gchar *str)
   gint32 sum = 0;
   guint length = strlen (str);
 
-
   while (TRUE)
     {
-
       while ((offset < length) && (str[offset] != '('))
         offset++;
 
@@ -399,7 +394,7 @@ find_unused_ia_colour (guchar *pixels,
       return ((*colors) - 1);
     }
 
-  return (-1);
+  return -1;
 }
 
 
@@ -441,9 +436,7 @@ respin_cmap (png_structp  png_ptr,
 
   before = gimp_image_get_colormap (image_id, &colors);
 
-  /*
-   * Make sure there is something in the colormap.
-   */
+  /* Make sure there is something in the colormap */
   if (colors == 0)
     {
       before = g_new0 (guchar, 3);
@@ -475,14 +468,16 @@ respin_cmap (png_structp  png_ptr,
 
           /* Transform all pixels with a value = transparent to
            * 0 and vice versa to compensate for re-ordering in palette
-           * due to png_set_tRNS() */
+           * due to png_set_tRNS().
+           */
 
           remap[0] = transparent;
           remap[transparent] = 0;
 
           /* Copy from index 0 to index transparent - 1 to index 1 to
            * transparent of after, then from transparent+1 to colors-1
-           * unchanged, and finally from index transparent to index 0. */
+           * unchanged, and finally from index transparent to index 0.
+           */
 
           for (i = 0; i < colors; i++)
             {
@@ -496,8 +491,10 @@ respin_cmap (png_structp  png_ptr,
           return TRUE;
         }
       else
-        g_message (_("Couldn't losslessly save transparency, "
-                     "saving opacity instead."));
+        {
+          g_message (_("Couldn't losslessly save transparency, "
+                       "saving opacity instead."));
+        }
     }
 
   png_set_PLTE (png_ptr, png_info_ptr, (png_colorp) before, colors);
@@ -506,12 +503,13 @@ respin_cmap (png_structp  png_ptr,
 }
 
 
-static gint
+static gboolean
 mng_save_image (const gchar *filename,
                 gint32       image_id,
                 gint32       drawable_id,
                 gint32       original_image_id)
 {
+  gboolean        rval = FALSE;
   gint            rows, cols;
   volatile gint   i;
   time_t          t;
@@ -529,7 +527,7 @@ mng_save_image (const gchar *filename,
   layers = gimp_image_get_layers (image_id, &num_layers);
 
   if (num_layers < 1)
-    return 0;
+    return FALSE;
 
   if (num_layers > 1)
     mng_ticks_per_second = 1000;
@@ -566,87 +564,68 @@ mng_save_image (const gchar *filename,
       }
 
   userdata = g_new0 (struct mnglib_userdata_t, 1);
+  userdata->fp = g_fopen (filename, "wb");
 
-  if ((userdata->fp = g_fopen (filename, "wb")) == NULL)
+  if (NULL == userdata->fp)
     {
       g_message (_("Could not open '%s' for writing: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
-      g_free (userdata);
-      return 0;
+      goto err;
     }
 
-  if ((handle =
-       mng_initialize ((mng_ptr) userdata, myalloc, myfree,
-                       MNG_NULL)) == NULL)
+  handle = mng_initialize ((mng_ptr) userdata, myalloc, myfree, MNG_NULL);
+  if (NULL == handle)
     {
       g_warning ("Unable to mng_initialize() in mng_save_image()");
-      fclose (userdata->fp);
-      g_free (userdata);
-      return 0;
+      goto err2;
     }
 
-  if (((ret = mng_setcb_openstream (handle, myopenstream)) != MNG_NOERROR) ||
-      ((ret = mng_setcb_closestream (handle, myclosestream)) != MNG_NOERROR)
-      || ((ret = mng_setcb_writedata (handle, mywritedata)) != MNG_NOERROR))
+  if ((mng_setcb_openstream (handle, myopenstream) != MNG_NOERROR) ||
+      (mng_setcb_closestream (handle, myclosestream) != MNG_NOERROR) ||
+      (mng_setcb_writedata (handle, mywritedata) != MNG_NOERROR))
     {
       g_warning ("Unable to setup callbacks in mng_save_image()");
-      mng_cleanup (&handle);
-      fclose (userdata->fp);
-      g_free (userdata);
-      return 0;
+      goto err3;
     }
 
-  if ((ret = mng_create (handle)) != MNG_NOERROR)
+  if (mng_create (handle) != MNG_NOERROR)
     {
       g_warning ("Unable to mng_create() image in mng_save_image()");
-      mng_cleanup (&handle);
-      fclose (userdata->fp);
-      g_free (userdata);
-      return 0;
+      goto err3;
     }
 
-  if ((ret =
-       mng_putchunk_mhdr (handle, cols, rows, mng_ticks_per_second, 1,
-                          num_layers, mng_data.default_delay,
-                          mng_simplicity_profile)) != MNG_NOERROR)
+  if (mng_putchunk_mhdr (handle, cols, rows, mng_ticks_per_second, 1,
+                         num_layers, mng_data.default_delay,
+                         mng_simplicity_profile) != MNG_NOERROR)
     {
       g_warning ("Unable to mng_putchunk_mhdr() in mng_save_image()");
-      mng_cleanup (&handle);
-      fclose (userdata->fp);
-      g_free (userdata);
-      return 0;
+      goto err3;
     }
 
   if ((num_layers > 1) && (mng_data.loop))
     {
-      if ((ret =
-           mng_putchunk_term (handle, MNG_TERMACTION_REPEAT,
-                              MNG_ITERACTION_LASTFRAME,
-                              parse_ms_tag_from_layer_name
-                              (gimp_drawable_get_name (layers[0])),
-                              0x7fffffff)) != MNG_NOERROR)
+      gint32 ms =
+        parse_ms_tag_from_layer_name (gimp_drawable_get_name (layers[0]));
+
+      if (mng_putchunk_term (handle, MNG_TERMACTION_REPEAT,
+                             MNG_ITERACTION_LASTFRAME,
+                             ms, 0x7fffffff) != MNG_NOERROR)
         {
           g_warning ("Unable to mng_putchunk_term() in mng_save_image()");
-          mng_cleanup (&handle);
-          fclose (userdata->fp);
-          g_free (userdata);
-          return 0;
+          goto err3;
         }
     }
   else
     {
-      if ((ret =
-           mng_putchunk_term (handle, MNG_TERMACTION_LASTFRAME,
-                              MNG_ITERACTION_LASTFRAME,
-                              parse_ms_tag_from_layer_name
-                              (gimp_drawable_get_name (layers[0])),
-                              0x7fffffff)) != MNG_NOERROR)
+      gint32 ms =
+        parse_ms_tag_from_layer_name (gimp_drawable_get_name (layers[0]));
+
+      if (mng_putchunk_term (handle, MNG_TERMACTION_LASTFRAME,
+                             MNG_ITERACTION_LASTFRAME,
+                             ms, 0x7fffffff) != MNG_NOERROR)
         {
           g_warning ("Unable to mng_putchunk_term() in mng_save_image()");
-          mng_cleanup (&handle);
-          fclose (userdata->fp);
-          g_free (userdata);
-          return 0;
+          goto err3;
         }
     }
 
@@ -1306,11 +1285,16 @@ mng_save_image (const gchar *filename,
       return 0;
     }
 
+  rval = TRUE;
+
+ err3:
   mng_cleanup (&handle);
+ err2:
   fclose (userdata->fp);
+ err:
   g_free (userdata);
 
-  return TRUE;
+  return rval;
 }
 
 
@@ -1736,9 +1720,9 @@ run (const gchar      *name,
 
           if (values[0].data.d_status == GIMP_PDB_SUCCESS)
             {
-              if (mng_save_image
-                  (param[3].data.d_string, image_id, drawable_id,
-                   original_image_id) != 0)
+              if (mng_save_image (param[3].data.d_string,
+                                  image_id, drawable_id,
+                                  original_image_id))
                 gimp_set_data (SAVE_PROC, &mng_data, sizeof (mng_data));
               else
                 values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
