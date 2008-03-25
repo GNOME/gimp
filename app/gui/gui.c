@@ -449,6 +449,7 @@ gui_restore_after_callback (Gimp               *gimp,
                             GimpInitStatusFunc  status_callback)
 {
   GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (gimp->config);
+  GimpDisplay   *display;
 
   if (gimp->be_verbose)
     g_print ("INIT: %s\n", G_STRFUNC);
@@ -530,7 +531,8 @@ gui_restore_after_callback (Gimp               *gimp,
   color_history_restore (gimp);
 
   /*  create the empty display  */
-  gimp_create_display (gimp, NULL, GIMP_UNIT_PIXEL, 1.0);
+  display = GIMP_DISPLAY (gimp_create_display (gimp,
+                                               NULL, GIMP_UNIT_PIXEL, 1.0));
 
   gui_dbus_service_init (gimp);
 
@@ -538,6 +540,9 @@ gui_restore_after_callback (Gimp               *gimp,
     session_restore (gimp);
 
   dialogs_show_toolbox ();
+
+  /*  move keyboard focus to the display  */
+  gtk_window_present (GTK_WINDOW (display->shell));
 }
 
 static gboolean

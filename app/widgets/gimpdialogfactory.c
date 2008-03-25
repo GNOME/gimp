@@ -157,8 +157,8 @@ gimp_dialog_factory_dispose (GObject *object)
 
   if (factory->session_infos)
     {
-      g_list_foreach (factory->session_infos, (GFunc) gimp_session_info_free,
-                      NULL);
+      g_list_foreach (factory->session_infos,
+                      (GFunc) gimp_session_info_free, NULL);
       g_list_free (factory->session_infos);
       factory->session_infos = NULL;
     }
@@ -1392,19 +1392,15 @@ gimp_dialog_factories_show_foreach (gconstpointer      key,
           if (! GTK_WIDGET_VISIBLE (list->data) &&
               visibility == GIMP_DIALOG_VISIBILITY_VISIBLE)
             {
-              GtkWindow *window       = GTK_WINDOW (list->data);
-              gboolean   focus_on_map = gtk_window_get_focus_on_map (window);
+              GtkWindow *window = GTK_WINDOW (list->data);
 
-              if (focus_on_map)
-                gtk_window_set_focus_on_map (window, FALSE);
-
+              /* Don't use gtk_window_present() here, we don't want the
+               * keyboard focus to move.
+               */
               gtk_widget_show (GTK_WIDGET (window));
 
               if (GTK_WIDGET_VISIBLE (window))
                 gdk_window_raise (GTK_WIDGET (window)->window);
-
-              if (focus_on_map)
-                gtk_window_set_focus_on_map (window, TRUE);
             }
         }
     }
