@@ -1,5 +1,9 @@
 2008-03-25  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell.h: formatting.
+
+2008-03-25  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-gui.[ch]
 	* app/gui/gui-vtable.c: added gimp_get_empty_display() to the vtable.
 

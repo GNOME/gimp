@@ -63,136 +63,135 @@ typedef struct _GimpDisplayShellClass  GimpDisplayShellClass;
 
 struct _GimpDisplayShell
 {
-  GtkWindow         parent_instance;
+  GtkWindow          parent_instance;
 
-  GimpDisplay      *display;
+  GimpDisplay       *display;
 
-  GimpUIManager    *menubar_manager;
-  GimpUIManager    *popup_manager;
+  GimpUIManager     *menubar_manager;
+  GimpUIManager     *popup_manager;
 
   GimpDialogFactory *display_factory;
 
-  gdouble           monitor_xres;
-  gdouble           monitor_yres;
+  gdouble            monitor_xres;
+  gdouble            monitor_yres;
 
-  GimpUnit          unit;
+  GimpUnit           unit;
 
-  GimpZoomModel    *zoom;
-  gdouble           other_scale;       /*  scale factor entered in Zoom->Other     */
-  gboolean          dot_for_dot;       /*  is monitor resolution being ignored?    */
+  GimpZoomModel     *zoom;
+  gdouble            other_scale;      /*  scale factor entered in Zoom->Other*/
+  gboolean           dot_for_dot;      /*  ignore monitor resolution          */
 
-  gint              offset_x;          /*  offset of display image into raw image  */
-  gint              offset_y;
+  gint               offset_x;         /*  offset of display image            */
+  gint               offset_y;
 
-  gdouble           scale_x;           /*  horizontal scale factor            */
-  gdouble           scale_y;           /*  vertical scale factor              */
+  gdouble            scale_x;          /*  horizontal scale factor            */
+  gdouble            scale_y;          /*  vertical scale factor              */
 
-  gint              x_src_dec;         /*  increments for the bresenham style */
-  gint              y_src_dec;         /*  image --> display transformation   */
-  gint              x_dest_inc;
-  gint              y_dest_inc;
+  gint               x_src_dec;        /*  increments for the bresenham style */
+  gint               y_src_dec;        /*  image --> display transformation   */
+  gint               x_dest_inc;
+  gint               y_dest_inc;
 
-  gdouble           last_scale;        /*  scale used when reverting zoom     */
-  guint             last_scale_time;   /*  time when last_scale was set       */
-  gint              last_offset_x;     /*  offsets used when reverting zoom   */
-  gint              last_offset_y;
+  gdouble            last_scale;       /*  scale used when reverting zoom     */
+  guint              last_scale_time;  /*  time when last_scale was set       */
+  gint               last_offset_x;    /*  offsets used when reverting zoom   */
+  gint               last_offset_y;
 
-  gint              disp_width;        /*  width of drawing area              */
-  gint              disp_height;       /*  height of drawing area             */
-  gint              disp_xoffset;
-  gint              disp_yoffset;
+  gint               disp_width;       /*  width of drawing area              */
+  gint               disp_height;      /*  height of drawing area             */
+  gint               disp_xoffset;
+  gint               disp_yoffset;
 
-  gboolean          proximity;         /*  is a device in proximity           */
-  gboolean          snap_to_guides;    /*  should the guides be snapped to?   */
-  gboolean          snap_to_grid;      /*  should the grid be snapped to?     */
-  gboolean          snap_to_canvas;    /*  should the canvas be snapped to?   */
-  gboolean          snap_to_vectors;   /*  should the active path be snapped  */
+  gboolean           proximity;        /*  is a device in proximity           */
+  gboolean           snap_to_guides;   /*  should the guides be snapped to?   */
+  gboolean           snap_to_grid;     /*  should the grid be snapped to?     */
+  gboolean           snap_to_canvas;   /*  should the canvas be snapped to?   */
+  gboolean           snap_to_vectors;  /*  should the active path be snapped  */
 
-  Selection        *selection;         /*  Selection (marching ants)          */
+  Selection         *selection;        /*  Selection (marching ants)          */
 
-  GtkWidget        *canvas;            /*  GimpCanvas widget                  */
-  GdkGC            *grid_gc;           /*  GC for grid drawing                */
-  GdkGC            *pen_gc;            /*  GC for felt pen drawing            */
+  GtkWidget         *canvas;           /*  GimpCanvas widget                  */
+  GdkGC             *grid_gc;          /*  GC for grid drawing                */
+  GdkGC             *pen_gc;           /*  GC for felt pen drawing            */
 
-  GtkAdjustment    *hsbdata;           /*  adjustments                        */
-  GtkAdjustment    *vsbdata;
-  GtkWidget        *hsb;               /*  scroll bars                        */
-  GtkWidget        *vsb;
+  GtkAdjustment     *hsbdata;          /*  adjustments                        */
+  GtkAdjustment     *vsbdata;
+  GtkWidget         *hsb;              /*  scroll bars                        */
+  GtkWidget         *vsb;
 
-  GtkWidget        *hrule;             /*  rulers                             */
-  GtkWidget        *vrule;
+  GtkWidget         *hrule;            /*  rulers                             */
+  GtkWidget         *vrule;
 
-  GtkWidget        *origin;            /*  NW: origin                         */
-  GtkWidget        *quick_mask_button; /*  SW: quick mask button              */
-  GtkWidget        *zoom_button;       /*  NE: zoom toggle button             */
-  GtkWidget        *nav_ebox;          /*  SE: navigation event box           */
+  GtkWidget         *origin;           /*  NW: origin                         */
+  GtkWidget         *quick_mask_button;/*  SW: quick mask button              */
+  GtkWidget         *zoom_button;      /*  NE: zoom toggle button             */
+  GtkWidget         *nav_ebox;         /*  SE: navigation event box           */
 
-  GtkWidget        *menubar;           /*  menubar                            */
-  GtkWidget        *statusbar;         /*  statusbar                          */
+  GtkWidget         *menubar;          /*  menubar                            */
+  GtkWidget         *statusbar;        /*  statusbar                          */
 
-  guchar           *render_buf;        /*  buffer for rendering the image     */
+  guchar            *render_buf;       /*  buffer for rendering the image     */
 
-  guint             title_idle_id;     /*  title update idle ID               */
+  guint              title_idle_id;    /*  title update idle ID               */
 
-  gint              icon_size;         /*  size of the icon pixmap            */
-  guint             icon_idle_id;      /*  ID of the idle-function            */
+  gint               icon_size;        /*  size of the icon pixmap            */
+  guint              icon_idle_id;     /*  ID of the idle-function            */
 
-  guint             fill_idle_id;      /*  display_shell_fill() idle ID       */
+  guint              fill_idle_id;     /*  display_shell_fill() idle ID       */
 
-  GimpCursorFormat    cursor_format;   /*  Currently used cursor format       */
-  GimpCursorType      current_cursor;  /*  Currently installed main cursor    */
-  GimpToolCursorType  tool_cursor;     /*  Current Tool cursor                */
-  GimpCursorModifier  cursor_modifier; /*  Cursor modifier (plus, minus, ...) */
+  GimpCursorFormat   cursor_format;    /*  Currently used cursor format       */
+  GimpCursorType     current_cursor;   /*  Currently installed main cursor    */
+  GimpToolCursorType tool_cursor;      /*  Current Tool cursor                */
+  GimpCursorModifier cursor_modifier;  /*  Cursor modifier (plus, minus, ...) */
 
-  GimpCursorType    override_cursor;   /*  Overriding cursor                  */
-  gboolean          using_override_cursor; /*  is the cursor overridden?      */
+  GimpCursorType     override_cursor;  /*  Overriding cursor                 */
+  gboolean           using_override_cursor;
+  gboolean           draw_cursor;      /* should we draw software cursor ?    */
+  gboolean           have_cursor;      /* is cursor currently drawn ?         */
+  gint               cursor_x;         /* software cursor X value             */
+  gint               cursor_y;         /* software cursor Y value             */
 
-  gboolean          draw_cursor;       /* should we draw software cursor ?    */
-  gboolean          have_cursor;       /* is cursor currently drawn ?         */
-  gint              cursor_x;          /* software cursor X value             */
-  gint              cursor_y;          /* software cursor Y value             */
-
-  GtkWidget        *close_dialog;      /*  close dialog                       */
-  GtkWidget        *scale_dialog;      /*  scale (zoom) dialog                */
-  GtkWidget        *nav_popup;         /*  navigation popup                   */
-  GtkWidget        *grid_dialog;       /*  grid configuration dialog          */
+  GtkWidget         *close_dialog;     /*  close dialog                       */
+  GtkWidget         *scale_dialog;     /*  scale (zoom) dialog                */
+  GtkWidget         *nav_popup;        /*  navigation popup                   */
+  GtkWidget         *grid_dialog;      /*  grid configuration dialog          */
 
   GimpColorDisplayStack *filter_stack;   /* color display conversion stuff    */
   guint                  filter_idle_id;
   GtkWidget             *filters_dialog; /* color display filter dialog       */
 
-  gint              paused_count;
+  gint               paused_count;
 
-  GQuark            vectors_freeze_handler;
-  GQuark            vectors_thaw_handler;
-  GQuark            vectors_visible_handler;
+  GQuark             vectors_freeze_handler;
+  GQuark             vectors_thaw_handler;
+  GQuark             vectors_visible_handler;
 
-  GdkWindowState    window_state;      /* for fullscreen display              */
-  gboolean          zoom_on_resize;
-  gboolean          show_transform_preview;
+  GdkWindowState     window_state;     /* for fullscreen display              */
+  gboolean           zoom_on_resize;
+  gboolean           show_transform_preview;
 
   GimpDisplayOptions *options;
   GimpDisplayOptions *fullscreen_options;
   GimpDisplayOptions *no_image_options;
 
   /*  the state of gimp_display_shell_tool_events()  */
-  gboolean          space_pressed;
-  gboolean          space_release_pending;
-  const gchar      *space_shaded_tool;
-  gboolean          scrolling;
-  gint              scroll_start_x;
-  gint              scroll_start_y;
-  gboolean          button_press_before_focus;
-  guint32           last_disp_motion_time; /*  previous time of a forwarded motion event  */
-  guint32           last_read_motion_time;
+  gboolean           space_pressed;
+  gboolean           space_release_pending;
+  const gchar       *space_shaded_tool;
+  gboolean           scrolling;
+  gint               scroll_start_x;
+  gint               scroll_start_y;
+  gboolean           button_press_before_focus;
+  guint32            last_disp_motion_time; /*  previous time of a forwarded motion event  */
+  guint32            last_read_motion_time;
 
-  GdkRectangle     *highlight;         /* in image coordinates, can be NULL   */
-  GimpDrawable     *mask;
-  GimpChannelType   mask_color;
+  GdkRectangle      *highlight;        /* in image coordinates, can be NULL   */
+  GimpDrawable      *mask;
+  GimpChannelType    mask_color;
 
-  gpointer          scroll_info;
+  gpointer           scroll_info;
 
-  GimpCoords        last_coords;       /* last motion event */
+  GimpCoords         last_coords;      /* last motion event                   */
 };
 
 struct _GimpDisplayShellClass
