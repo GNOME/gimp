@@ -70,12 +70,6 @@ static const GimpActionEntry image_actions[] =
     G_CALLBACK (image_new_cmd_callback),
     GIMP_HELP_FILE_NEW },
 
-  { "image-new-from-image", GTK_STOCK_NEW,
-    N_("_New..."), NULL,
-    N_("Create a new image"),
-    G_CALLBACK (image_new_from_image_cmd_callback),
-    GIMP_HELP_FILE_NEW },
-
   { "image-resize", GIMP_STOCK_RESIZE,
     N_("Can_vas Size..."), NULL,
     N_("Adjust the image dimensions"),
@@ -201,15 +195,9 @@ static const GimpEnumActionEntry image_rotate_actions[] =
 void
 image_actions_setup (GimpActionGroup *group)
 {
-  GtkAction *action;
-
   gimp_action_group_add_actions (group,
                                  image_actions,
                                  G_N_ELEMENTS (image_actions));
-
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        "image-new-from-image");
-  gtk_action_set_accel_path (action, "<Actions>/image/image-new");
 
   gimp_action_group_add_radio_actions (group,
                                        image_convert_actions,

@@ -133,26 +133,6 @@ image_new_cmd_callback (GtkAction *action,
 
   if (dialog)
     {
-      image_new_dialog_set (dialog, NULL, NULL);
-
-      gtk_window_present (GTK_WINDOW (dialog));
-    }
-}
-
-void
-image_new_from_image_cmd_callback (GtkAction *action,
-                                   gpointer   data)
-{
-  GtkWidget *widget;
-  GtkWidget *dialog;
-  return_if_no_widget (widget, data);
-
-  dialog = gimp_dialog_factory_dialog_new (global_dialog_factory,
-                                           gtk_widget_get_screen (widget),
-                                           "gimp-image-new-dialog", -1, FALSE);
-
-  if (dialog)
-    {
       GimpImage *image = action_data_get_image (data);
 
       image_new_dialog_set (dialog, image, NULL);

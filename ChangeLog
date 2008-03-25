@@ -1,5 +1,16 @@
 2008-03-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/image-actions.c: remove "image-new-from-image"
+	action.
+
+	* app/actions/image-commands.[ch]: remove its callback and made
+	the "image-new" callback use the current image's dimensions
+	instead.
+
+	* menus/image-menu.xml.in: use the "image-new" action.
+
+2008-03-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_style_set):
 	fix to work without menubar, don't reset GDK_HINT_USER_POS.
 

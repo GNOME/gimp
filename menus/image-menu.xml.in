@@ -6,7 +6,7 @@
 
     <menu action="file-menu" name="File">
       <placeholder name="New">
-        <menuitem action="image-new-from-image" />
+        <menuitem action="image-new" />
       </placeholder>
       <placeholder name="Open">
         <menuitem action="file-open" />

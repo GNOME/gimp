@@ -22,8 +22,6 @@
 
 void   image_new_cmd_callback                 (GtkAction *action,
                                                gpointer   data);
-void   image_new_from_image_cmd_callback      (GtkAction *action,
-                                               gpointer   data);
 
 void   image_convert_cmd_callback             (GtkAction *action,
                                                GtkAction *current,
@@ -51,15 +49,15 @@ void   image_crop_cmd_callback                (GtkAction *action,
 void   image_duplicate_cmd_callback           (GtkAction *action,
                                                gpointer   data);
 
-void   image_merge_layers_cmd_callback     (GtkAction *action,
-                                            gpointer   data);
-void   image_flatten_image_cmd_callback    (GtkAction *action,
-                                            gpointer   data);
+void   image_merge_layers_cmd_callback        (GtkAction *action,
+                                               gpointer   data);
+void   image_flatten_image_cmd_callback       (GtkAction *action,
+                                               gpointer   data);
 
-void   image_configure_grid_cmd_callback   (GtkAction *action,
-                                            gpointer   data);
-void   image_properties_cmd_callback       (GtkAction *action,
-                                            gpointer   data);
+void   image_configure_grid_cmd_callback      (GtkAction *action,
+                                               gpointer   data);
+void   image_properties_cmd_callback          (GtkAction *action,
+                                               gpointer   data);
 
 
 #endif /* __IMAGE_COMMANDS_H__ */
