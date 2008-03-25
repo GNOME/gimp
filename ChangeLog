@@ -2,6 +2,10 @@
 
 	* plug-ins/common/mng.c: More code cleanups.
 
+2008-03-25  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/common/mng.c: More code cleanups.
+
 2008-03-25  Sven Neumann  <sven@gimp.org>
 
 	* app/display/Makefile.am
