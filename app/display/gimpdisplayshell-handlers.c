@@ -41,6 +41,7 @@
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-handlers.h"
+#include "gimpdisplayshell-icon.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
@@ -694,7 +695,7 @@ gimp_display_shell_idle_update_icon (gpointer data)
 
   shell->icon_idle_id = 0;
 
-  gimp_display_shell_update_icon (shell);
+  gimp_display_shell_icon_update (shell);
 
   return FALSE;
 }

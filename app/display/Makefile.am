@@ -41,6 +41,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-filter-dialog.h	\
 	gimpdisplayshell-layer-select.c		\
 	gimpdisplayshell-layer-select.h		\
+	gimpdisplayshell-icon.c			\
+	gimpdisplayshell-icon.h			\
 	gimpdisplayshell-preview.c		\
 	gimpdisplayshell-preview.h		\
 	gimpdisplayshell-progress.c		\

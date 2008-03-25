@@ -1,5 +1,14 @@
 2008-03-25  Sven Neumann  <sven@gimp.org>
 
+	* app/display/Makefile.am
+	* app/display/gimpdisplayshell-icon.[ch]: split icon code to its
+	own file.
+
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplayshell-handlers.c: changed accordingly.
+
+2008-03-25  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpstatusbar.c (gimp_statusbar_peek): fixed
 	parameter checks.
 
