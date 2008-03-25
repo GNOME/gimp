@@ -4,6 +4,7 @@
 	* app/display/gimpdisplayshell-icon.[ch]: split icon code to its
 	own file.
 
+	* app/display/gimpdisplay.c
 	* app/display/gimpdisplayshell.c
 	* app/display/gimpdisplayshell-handlers.c: changed accordingly.
 
