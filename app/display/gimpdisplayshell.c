@@ -365,8 +365,9 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   g_signal_connect (shell, "key-press-event",
                     G_CALLBACK (gimp_display_shell_events),
                     shell);
+
   g_signal_connect (shell, "window-state-event",
-                    G_CALLBACK (gimp_display_shell_events),
+                    G_CALLBACK (gimp_display_shell_window_state_event),
                     shell);
 
   gimp_help_connect (GTK_WIDGET (shell), gimp_standard_help_func,

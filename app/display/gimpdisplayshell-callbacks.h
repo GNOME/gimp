@@ -34,9 +34,12 @@
                                               GDK_PROXIMITY_OUT_MASK)
 
 
-gboolean   gimp_display_shell_events                  (GtkWidget        *widget,
-                                                       GdkEvent         *event,
-                                                       GimpDisplayShell *shell);
+gboolean   gimp_display_shell_events               (GtkWidget           *widget,
+                                                    GdkEvent            *event,
+                                                    GimpDisplayShell    *shell);
+gboolean   gimp_display_shell_window_state_event   (GtkWidget           *widget,
+                                                    GdkEventWindowState *event,
+                                                    GimpDisplayShell    *shell);
 
 void       gimp_display_shell_canvas_realize          (GtkWidget        *widget,
                                                        GimpDisplayShell *shell);

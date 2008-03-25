@@ -1,5 +1,11 @@
 2008-03-25  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.[ch]: 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_init): moved
+	handling of window state events to a separate callback.
+
+2008-03-25  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell.h: formatting.
 
 2008-03-25  Sven Neumann  <sven@gimp.org>
