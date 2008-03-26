@@ -904,6 +904,8 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
                      wilber_x, wilber_y,
                      wilber_width * 2, wilber_height * 2);
     cairo_fill (cr);
+
+    g_object_unref (pixbuf);
   }
 }
 
