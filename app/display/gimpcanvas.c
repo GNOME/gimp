@@ -871,7 +871,7 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
     }
 
   wilber_width  = cairo_image_surface_get_width (wilber) / 2;
-  wilber_height = cairo_image_surface_get_width (wilber) / 2;
+  wilber_height = cairo_image_surface_get_height (wilber) / 2;
 
   side = MIN (MIN (widget->allocation.width,
                    widget->allocation.height),
