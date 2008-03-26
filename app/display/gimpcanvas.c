@@ -828,6 +828,8 @@ void
 gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
                             cairo_t    *cr)
 {
+  static gint wilber_x      = 0;
+  static gint wilber_y      = 0;
   static gint wilber_width  = 0;
   static gint wilber_height = 0;
 
@@ -848,6 +850,8 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
       cairo_fill_extents (foo, &x1, &y1, &x2, &y2);
       cairo_destroy (foo);
 
+      wilber_x      = x1;
+      wilber_y      = y1;
       wilber_width  = (x2 - x1) / 2;
       wilber_height = (y2 - y1) / 2;
     }
@@ -868,11 +872,17 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
   /*  magic factors depend on the image used, everything else is generic
    */
   cairo_translate (cr,
-                   - wilber_width * 1.5,
-                   widget->allocation.height / factor - wilber_height * 1.7);
+                   - wilber_width * 0.6 - wilber_x,
+                   widget->allocation.height / factor
+                   - wilber_height * 1.1 - wilber_y);
 
   gimp_cairo_wilber (cr);
 
+  cairo_set_source_rgba (cr,
+                         widget->style->fg[widget->state].red   / 65535.0,
+                         widget->style->fg[widget->state].green / 65535.0,
+                         widget->style->fg[widget->state].blue  / 65535.0,
+                         0.2);
   cairo_fill (cr);
 }
 

@@ -1,3 +1,12 @@
+2008-03-26  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcairo-wilber.c: include a better Wilber path,
+	thanks to Jimmac.
+
+	* app/display/gimpcanvas.c (gimp_canvas_draw_drop_zone): undid
+	scaling "fix", instead take the offset into account. Draw with
+	transparency.
+
 2008-03-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpcanvas.c (gimp_canvas_draw_drop_zone): fix scaling.
