@@ -1,5 +1,12 @@
 2008-03-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpcanvas.[ch]: improve wilber scaling and remove
+	the drop zone layout.
+
+	* app/display/gimpdisplayshell.c: add a tooltip instead.
+
+2008-03-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	(gimp_display_shell_canvas_realize): don't set an initial cursor
 	so we get the desktop default cursor after starting GIMP.

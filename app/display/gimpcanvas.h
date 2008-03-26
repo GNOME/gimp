@@ -66,7 +66,6 @@ struct _GimpCanvas
   GdkGC             *gc[GIMP_CANVAS_NUM_STYLES];
   GdkBitmap         *stipple[GIMP_CANVAS_NUM_STIPPLES];
   PangoLayout       *layout;
-  PangoLayout       *drop_zone_layout;
 };
 
 struct _GimpCanvasClass

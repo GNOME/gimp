@@ -263,12 +263,6 @@ gimp_canvas_unrealize (GtkWidget *widget)
       canvas->layout = NULL;
     }
 
-  if (canvas->drop_zone_layout)
-    {
-      g_object_unref (canvas->drop_zone_layout);
-      canvas->drop_zone_layout = NULL;
-    }
-
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
@@ -285,12 +279,6 @@ gimp_canvas_style_set (GtkWidget *widget,
     {
       g_object_unref (canvas->layout);
       canvas->layout = NULL;
-    }
-
-  if (canvas->drop_zone_layout)
-    {
-      g_object_unref (canvas->drop_zone_layout);
-      canvas->drop_zone_layout = NULL;
     }
 }
 
@@ -839,74 +827,50 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
                             cairo_t    *cr)
 {
   GtkWidget *widget = GTK_WIDGET (canvas);
-  GdkColor  *color  = &widget->style->fg[widget->state];
+  GdkPixbuf *wilber;
+  gint       wilber_width;
+  gint       wilber_height;
+  gint       wilber_x;
+  gint       wilber_y;
   gint       width;
   gint       height;
+  gint       side;
   gdouble    factor;
-  gdouble    opacity;
 
-  if (! canvas->drop_zone_layout)
-    {
-      canvas->drop_zone_layout = gtk_widget_create_pango_layout (widget,
-                                                                 _("Drag images here"));
-      gimp_pango_layout_set_weight (canvas->drop_zone_layout,
-                                    PANGO_WEIGHT_BOLD);
-    }
+  wilber = gtk_widget_render_icon (widget,
+                                   GIMP_STOCK_WILBER,
+                                   GTK_ICON_SIZE_DIALOG,
+                                   NULL);
 
-  pango_layout_get_pixel_size (canvas->drop_zone_layout, &width, &height);
+  wilber_width  = gdk_pixbuf_get_width  (wilber) / 2;
+  wilber_height = gdk_pixbuf_get_height (wilber) / 2;
 
-  factor = 4.0 / 5.0 * MIN ((gdouble) widget->allocation.width  / width,
-                            (gdouble) widget->allocation.height / height);
+  side = MIN (MIN (widget->allocation.width,
+                   widget->allocation.height),
+              MAX (widget->allocation.width,
+                   widget->allocation.height) / 2);
+
+  width  = MAX (wilber_width,  side);
+  height = MAX (wilber_height, side);
+
+  factor = MIN ((gdouble) width  / wilber_width,
+                (gdouble) height / wilber_height);
 
   cairo_scale (cr, factor, factor);
-  cairo_move_to (cr,
-                 (widget->allocation.width  / factor - width)  / 2.0,
-                 (widget->allocation.height / factor - height) / 2.0);
 
-  opacity = CLAMP (0.5 / factor, 0.1, 1.0);
+  /*  magic factors depend on the image used, everything else is
+   *  generic
+   */
+  wilber_x = -wilber_width * 0.6;
+  wilber_y = widget->allocation.height / factor - wilber_height * 1.1;
 
-  cairo_set_source_rgba (cr,
-                         color->red   / 65535.0,
-                         color->green / 65535.0,
-                         color->blue  / 65535.0,
-                         opacity);
+  gdk_cairo_set_source_pixbuf (cr, wilber, wilber_x, wilber_y);
+  cairo_rectangle (cr,
+                   wilber_x, wilber_y,
+                   wilber_width * 2, wilber_height * 2);
+  cairo_fill (cr);
 
-  pango_cairo_show_layout (cr, canvas->drop_zone_layout);
-
-  cairo_scale (cr, 1.0 / factor, 1.0 / factor);
-
-  {
-    GdkPixbuf *pixbuf = gtk_widget_render_icon (GTK_WIDGET (canvas),
-                                                GIMP_STOCK_WILBER,
-                                                GTK_ICON_SIZE_DIALOG,
-                                                NULL);
-    gint wilber_width  = gdk_pixbuf_get_width  (pixbuf) / 2;
-    gint wilber_height = gdk_pixbuf_get_height (pixbuf) / 2;
-    gint wilber_x;
-    gint wilber_y;
-
-    width  = MAX (wilber_width,  widget->allocation.width);
-    height = MAX (wilber_height, widget->allocation.height);
-
-    factor = 0.5 * MIN ((gdouble) width  / wilber_width,
-                        (gdouble) height / wilber_height);
-
-    cairo_scale (cr, factor, factor);
-
-    /*  magic factors depend on the image used, everything else is
-     *  generic
-     */
-    wilber_x = -wilber_width * 0.6;
-    wilber_y = widget->allocation.height / factor - wilber_height * 1.1;
-
-    gdk_cairo_set_source_pixbuf (cr, pixbuf, wilber_x, wilber_y);
-    cairo_rectangle (cr,
-                     wilber_x, wilber_y,
-                     wilber_width * 2, wilber_height * 2);
-    cairo_fill (cr);
-
-    g_object_unref (pixbuf);
-  }
+  g_object_unref (wilber);
 }
 
 /**

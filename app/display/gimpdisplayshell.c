@@ -1202,6 +1202,8 @@ gimp_display_shell_new (GimpDisplay       *display,
       gimp_dialog_factory_add_foreign (display_factory,
                                        "gimp-empty-image-window",
                                        GTK_WIDGET (shell));
+      gimp_help_set_help_data (shell->canvas, _("Drop files to open them."),
+                               NULL);
     }
 
   gimp_display_shell_title_init (shell);
@@ -1288,6 +1290,8 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   gimp_display_shell_appearance_update (shell);
 
+  gimp_help_set_help_data (shell->canvas, _("Drop files to open them."), NULL);
+
   gimp_display_shell_expose_full (shell);
 
   gtk_window_resize (GTK_WINDOW (shell), width, height);
@@ -1329,6 +1333,8 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   gimp_statusbar_fill (GIMP_STATUSBAR (shell->statusbar));
 
   gimp_display_shell_appearance_update (shell);
+
+  gimp_help_set_help_data (shell->canvas, NULL, NULL);
 
   shell->fill_idle_id = g_idle_add_full (G_PRIORITY_LOW,
                                          (GSourceFunc) gimp_display_shell_fill_idle,
