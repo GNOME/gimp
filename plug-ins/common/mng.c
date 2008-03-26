@@ -1610,35 +1610,45 @@ run (const gchar      *name,
                   if ((mng_data.compression_level < 0)
                       || (mng_data.compression_level > 9))
                     {
-                      g_warning ("Parameter 'compression_level' passed to file-mng-save() must be in the range 0 - 9; Clamping it to the default value of 6.");
+                      g_warning ("Parameter 'compression_level' passed to "
+                                 "file-mng-save() must be in the range 0 - 9; "
+                                 "Clamping it to the default value of 6.");
                       mng_data.compression_level = 6;
                     }
 
                   if ((mng_data.quality < ((float) 0))
                       || (mng_data.quality > ((float) 1)))
                     {
-                      g_warning ("Parameter 'quality' passed to file-mng-save() must be in the range 0.00 - 1.00; Clamping it to the default value of 0.75.");
+                      g_warning ("Parameter 'quality' passed to "
+                                 "file-mng-save() must be in the range "
+                                 "0.00 - 1.00; Clamping it to the "
+                                 "default value of 0.75.");
                       mng_data.quality = 0.75;
                     }
 
                   if ((mng_data.smoothing < ((float) 0))
                       || (mng_data.smoothing > ((float) 1)))
                     {
-                      g_warning ("Parameter 'smoothing' passed to file-mng-save() must be in the range 0.00 - 1.00; Clamping it to the default value of 0.00.");
+                      g_warning ("Parameter 'smoothing' passed to "
+                                 "file-mng-save() must be in the "
+                                 "range 0.00 - 1.00; Clamping it to "
+                                 "the default value of 0.00.");
                       mng_data.smoothing = 0.0;
                     }
 
                   if ((mng_data.default_chunks < 0)
                       || (mng_data.default_chunks > 3))
                     {
-                      g_warning ("Parameter 'default_chunks' passed to file-mng-save() must be in the range 0 - 2.");
+                      g_warning ("Parameter 'default_chunks' passed to "
+                                 "file-mng-save() must be in the range 0 - 2.");
                       values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
                     }
 
                   if ((mng_data.default_dispose < 0)
                       || (mng_data.default_dispose > 1))
                     {
-                      g_warning ("Parameter 'default_dispose' passed to file-mng-save() must be in the range 0 - 1.");
+                      g_warning ("Parameter 'default_dispose' passed to "
+                                 "file-mng-save() must be in the range 0 - 1.");
                       values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
                     }
                 }

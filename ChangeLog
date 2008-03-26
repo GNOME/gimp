@@ -1,5 +1,9 @@
 2008-03-25  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/common/mng.c: Cleaned up the rest of the plug-in.
+
+2008-03-25  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/common/mng.c: More code cleanups.
 
 2008-03-25  Mukund Sivaraman  <muks@mukund.org>
