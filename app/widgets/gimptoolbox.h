@@ -37,8 +37,10 @@ struct _GimpToolbox
 {
   GimpImageDock  parent_instance;
 
-  GtkWidget     *menu_bar;
+  GtkWidget     *header;
+
   GtkWidget     *tool_wbox;
+
   GtkWidget     *area_wbox;
   GtkWidget     *color_area;
   GtkWidget     *foo_area;

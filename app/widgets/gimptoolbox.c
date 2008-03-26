@@ -37,6 +37,7 @@
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
+#include "gimpcairo-wilber.h"
 #include "gimpdevices.h"
 #include "gimpdialogfactory.h"
 #include "gimpdockseparator.h"
@@ -74,6 +75,9 @@ static void        gimp_toolbox_size_allocate    (GtkWidget      *widget,
                                                   GtkAllocation  *allocation);
 static void        gimp_toolbox_style_set        (GtkWidget      *widget,
                                                   GtkStyle       *previous_style);
+static gboolean    gimp_toolbox_expose_event     (GtkWidget      *widget,
+                                                  GdkEventExpose *event);
+
 static void        gimp_toolbox_book_added       (GimpDock       *dock,
                                                   GimpDockbook   *dockbook);
 static void        gimp_toolbox_book_removed     (GimpDock       *dock,
@@ -139,6 +143,7 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   widget_class->delete_event        = gimp_toolbox_delete_event;
   widget_class->size_allocate       = gimp_toolbox_size_allocate;
   widget_class->style_set           = gimp_toolbox_style_set;
+  widget_class->expose_event        = gimp_toolbox_expose_event;
 
   dock_class->book_added            = gimp_toolbox_book_added;
   dock_class->book_removed          = gimp_toolbox_book_removed;
@@ -198,6 +203,11 @@ gimp_toolbox_constructor (GType                  type,
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (main_vbox), vbox, 0);
   gtk_widget_show (vbox);
+
+  toolbox->header = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (toolbox->header), GTK_SHADOW_NONE);
+  gtk_box_pack_start (GTK_BOX (vbox), toolbox->header, FALSE, FALSE, 0);
+  gtk_widget_show (toolbox->header);
 
   toolbox->tool_wbox = gtk_hwrap_box_new (FALSE);
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->tool_wbox), GTK_JUSTIFY_TOP);
@@ -461,6 +471,56 @@ gimp_toolbox_style_set (GtkWidget *widget,
   gimp_toolbox_set_geometry (GIMP_TOOLBOX (widget));
 }
 
+static gboolean
+gimp_toolbox_expose_event (GtkWidget      *widget,
+                           GdkEventExpose *event)
+{
+  GimpToolbox  *toolbox = GIMP_TOOLBOX (widget);
+  GdkRectangle  clip_rect;
+
+  GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
+
+  if (gdk_rectangle_intersect (&event->area,
+                               &toolbox->header->allocation,
+                               &clip_rect))
+    {
+      cairo_t *cr;
+      gint     header_height;
+      gint     header_width;
+      gdouble  wilber_width;
+      gdouble  wilber_height;
+      gdouble  factor;
+
+      cr = gdk_cairo_create (widget->window);
+      gdk_cairo_rectangle (cr, &clip_rect);
+      cairo_clip (cr);
+
+      header_width  = toolbox->header->allocation.width;
+      header_height = toolbox->header->allocation.height;
+
+      gimp_cairo_wilber_get_size (cr, &wilber_width, &wilber_height);
+
+      factor = header_width / wilber_width * 0.9;
+
+      cairo_scale (cr, factor, factor);
+
+      gimp_cairo_wilber (cr,
+                         (header_width  / factor - wilber_width)  / 2.0,
+                         (header_height / factor - wilber_height) / 2.0);
+
+      cairo_set_source_rgba (cr,
+                             widget->style->fg[widget->state].red   / 65535.0,
+                             widget->style->fg[widget->state].green / 65535.0,
+                             widget->style->fg[widget->state].blue  / 65535.0,
+                             0.10);
+      cairo_fill (cr);
+
+      cairo_destroy (cr);
+    }
+
+  return FALSE;
+}
+
 static void
 gimp_toolbox_book_added (GimpDock     *dock,
                          GimpDockbook *dockbook)
@@ -498,18 +558,15 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
 
   if (tool_button)
     {
-      GtkWidget      *main_vbox;
-      GtkRequisition  menubar_requisition = { 0, 0 };
+      GtkWidget      *main_vbox = GIMP_DOCK (toolbox)->main_vbox;
       GtkRequisition  button_requisition;
       gint            border_width;
       GdkGeometry     geometry;
 
-      main_vbox = GIMP_DOCK (toolbox)->main_vbox;
-
-      if (toolbox->menu_bar)
-        gtk_widget_size_request (toolbox->menu_bar, &menubar_requisition);
-
       gtk_widget_size_request (tool_button, &button_requisition);
+
+      gtk_widget_set_size_request (toolbox->header,
+                                   -1, button_requisition.height);
 
       border_width = gtk_container_get_border_width (GTK_CONTAINER (main_vbox));
 
