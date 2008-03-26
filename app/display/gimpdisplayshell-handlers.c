@@ -47,9 +47,6 @@
 #include "gimpdisplayshell-title.h"
 
 
-#define GIMP_DISPLAY_UPDATE_ICON_TIMEOUT  1000
-
-
 /*  local function prototypes  */
 
 static void   gimp_display_shell_clean_dirty_handler        (GimpImage        *image,
@@ -118,8 +115,6 @@ static void   gimp_display_shell_ants_speed_notify_handler  (GObject          *c
 static void   gimp_display_shell_quality_notify_handler     (GObject          *config,
                                                              GParamSpec       *param_spec,
                                                              GimpDisplayShell *shell);
-
-static gboolean   gimp_display_shell_idle_update_icon       (gpointer          data);
 
 
 /*  public functions  */
@@ -271,11 +266,7 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
 
   image = shell->display->image;
 
-  if (shell->icon_idle_id)
-    {
-      g_source_remove (shell->icon_idle_id);
-      shell->icon_idle_id = 0;
-    }
+  gimp_display_shell_icon_idle_stop (shell);
 
   if (shell->grid_gc)
     {
@@ -491,14 +482,7 @@ static void
 gimp_display_shell_invalidate_preview_handler (GimpImage        *image,
                                                GimpDisplayShell *shell)
 {
-  if (shell->icon_idle_id)
-    g_source_remove (shell->icon_idle_id);
-
-  shell->icon_idle_id = g_timeout_add_full (G_PRIORITY_LOW,
-                                            GIMP_DISPLAY_UPDATE_ICON_TIMEOUT,
-                                            gimp_display_shell_idle_update_icon,
-                                            shell,
-                                            NULL);
+  gimp_display_shell_icon_idle_update (shell);
 }
 
 static void
@@ -686,16 +670,4 @@ gimp_display_shell_quality_notify_handler (GObject          *config,
                                            GimpDisplayShell *shell)
 {
   gimp_display_shell_expose_full (shell);
-}
-
-static gboolean
-gimp_display_shell_idle_update_icon (gpointer data)
-{
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-
-  shell->icon_idle_id = 0;
-
-  gimp_display_shell_icon_update (shell);
-
-  return FALSE;
 }

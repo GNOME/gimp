@@ -20,7 +20,9 @@
 #define __GIMP_DISPLAY_SHELL_ICON_H__
 
 
-void  gimp_display_shell_icon_update (GimpDisplayShell *shell);
+void  gimp_display_shell_icon_update      (GimpDisplayShell *shell);
+void  gimp_display_shell_icon_idle_update (GimpDisplayShell *shell);
+void  gimp_display_shell_icon_idle_stop   (GimpDisplayShell *shell);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_ICON_H__  */

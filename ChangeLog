@@ -1,3 +1,9 @@
+2008-03-26  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-icon.[ch]
+	* app/display/gimpdisplayshell-handlers.c: moved more icon code to
+	its new home.
+
 2008-03-25  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/mng.c: Cleaned up the rest of the plug-in.

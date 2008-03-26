@@ -31,6 +31,11 @@
 #include "gimpdisplayshell-icon.h"
 
 
+#define GIMP_DISPLAY_UPDATE_ICON_TIMEOUT  1000
+
+static gboolean   gimp_display_shell_idle_update_icon  (gpointer data);
+
+
 void
 gimp_display_shell_icon_update (GimpDisplayShell *shell)
 {
@@ -72,3 +77,41 @@ gimp_display_shell_icon_update (GimpDisplayShell *shell)
     }
 }
 
+void
+gimp_display_shell_icon_idle_update (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->icon_idle_id)
+    g_source_remove (shell->icon_idle_id);
+
+  shell->icon_idle_id = g_timeout_add_full (G_PRIORITY_LOW,
+                                            GIMP_DISPLAY_UPDATE_ICON_TIMEOUT,
+                                            gimp_display_shell_idle_update_icon,
+                                            shell,
+                                            NULL);
+}
+
+void
+gimp_display_shell_icon_idle_stop (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->icon_idle_id)
+    {
+      g_source_remove (shell->icon_idle_id);
+      shell->icon_idle_id = 0;
+    }
+}
+
+static gboolean
+gimp_display_shell_idle_update_icon (gpointer data)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
+
+  shell->icon_idle_id = 0;
+
+  gimp_display_shell_icon_update (shell);
+
+  return FALSE;
+}
