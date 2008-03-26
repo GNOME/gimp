@@ -1,3 +1,13 @@
+2008-03-26  Sven Neumann  <sven@gimp.org>
+
+	* data/images/Makefile.am: install wilber.png.
+
+	* app/display/gimpcanvas.c (gimp_canvas_draw_drop_zone): try to
+	load "wilber.png" from $prefix/share/gimp/2.0/images.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new):
+	improved tooltip.
+
 2008-03-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpcanvas.[ch]: improve wilber scaling and remove

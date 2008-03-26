@@ -20,6 +20,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -822,12 +823,36 @@ gimp_canvas_draw_rgb (GimpCanvas      *canvas,
                                 rgb_buf, rowstride, xdith, ydith);
 }
 
+static GdkPixbuf *
+gimp_canvas_drop_zone_image_load (GtkWidget *widget)
+{
+  GdkPixbuf *pixbuf;
+  gchar     *filename;
+
+  filename = g_build_filename (gimp_data_directory (), "images", "wilber.png",
+                               NULL);
+
+  pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+  g_free (filename);
+
+  if (! pixbuf)
+    {
+      pixbuf = gtk_widget_render_icon (widget,
+                                       GIMP_STOCK_WILBER,
+                                       GTK_ICON_SIZE_DIALOG,
+                                       NULL);
+    }
+
+  return pixbuf;
+}
+
 void
 gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
                             cairo_t    *cr)
 {
+  static cairo_surface_t *wilber = NULL;
+
   GtkWidget *widget = GTK_WIDGET (canvas);
-  GdkPixbuf *wilber;
   gint       wilber_width;
   gint       wilber_height;
   gint       wilber_x;
@@ -837,13 +862,16 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
   gint       side;
   gdouble    factor;
 
-  wilber = gtk_widget_render_icon (widget,
-                                   GIMP_STOCK_WILBER,
-                                   GTK_ICON_SIZE_DIALOG,
-                                   NULL);
+  if (! wilber)
+    {
+      GdkPixbuf *pixbuf = gimp_canvas_drop_zone_image_load (widget);
 
-  wilber_width  = gdk_pixbuf_get_width  (wilber) / 2;
-  wilber_height = gdk_pixbuf_get_height (wilber) / 2;
+      wilber = gimp_cairo_surface_create_from_pixbuf (pixbuf);
+      g_object_unref (pixbuf);
+    }
+
+  wilber_width  = cairo_image_surface_get_width (wilber) / 2;
+  wilber_height = cairo_image_surface_get_width (wilber) / 2;
 
   side = MIN (MIN (widget->allocation.width,
                    widget->allocation.height),
@@ -858,19 +886,16 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
 
   cairo_scale (cr, factor, factor);
 
-  /*  magic factors depend on the image used, everything else is
-   *  generic
+  /*  magic factors depend on the image used, everything else is generic
    */
   wilber_x = -wilber_width * 0.6;
   wilber_y = widget->allocation.height / factor - wilber_height * 1.1;
 
-  gdk_cairo_set_source_pixbuf (cr, wilber, wilber_x, wilber_y);
+  cairo_set_source_surface (cr, wilber, wilber_x, wilber_y);
   cairo_rectangle (cr,
                    wilber_x, wilber_y,
                    wilber_width * 2, wilber_height * 2);
   cairo_fill (cr);
-
-  g_object_unref (wilber);
 }
 
 /**

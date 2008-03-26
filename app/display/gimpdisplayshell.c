@@ -1202,7 +1202,8 @@ gimp_display_shell_new (GimpDisplay       *display,
       gimp_dialog_factory_add_foreign (display_factory,
                                        "gimp-empty-image-window",
                                        GTK_WIDGET (shell));
-      gimp_help_set_help_data (shell->canvas, _("Drop files to open them."),
+      gimp_help_set_help_data (shell->canvas,
+                               _("Drop image files here to open them."),
                                NULL);
     }
 

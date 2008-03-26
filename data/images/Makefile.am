@@ -3,7 +3,8 @@
 imagedatadir = $(gimpdatadir)/images
 
 imagedata_DATA = \
-	gimp-logo.png		\
-	gimp-splash.png
+	gimp-logo.png	\
+	gimp-splash.png	\
+	wilber.png
 
 EXTRA_DIST = $(imagedata_DATA)
