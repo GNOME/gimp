@@ -828,22 +828,29 @@ void
 gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
                             cairo_t    *cr)
 {
+  static gint wilber_width  = 0;
+  static gint wilber_height = 0;
+
   GtkWidget *widget = GTK_WIDGET (canvas);
-  gdouble    x1, y1;
-  gdouble    x2, y2;
-  gint       wilber_width;
-  gint       wilber_height;
   gint       width;
   gint       height;
   gint       side;
-  gint       factor;
+  gdouble    factor;
 
   /* first get the extents */
-  gimp_cairo_wilber (cr);
-  cairo_fill_extents (cr, &x1, &y1, &x2, &y2);
+  if (! wilber_width)
+    {
+      cairo_t *foo = gdk_cairo_create (widget->window);
+      gdouble  x1, y1;
+      gdouble  x2, y2;
 
-  wilber_width  = (x2 - x1) / 2;
-  wilber_height = (y2 - y1) / 2;
+      gimp_cairo_wilber (foo);
+      cairo_fill_extents (foo, &x1, &y1, &x2, &y2);
+      cairo_destroy (foo);
+
+      wilber_width  = (x2 - x1) / 2;
+      wilber_height = (y2 - y1) / 2;
+    }
 
   side = MIN (MIN (widget->allocation.width,
                    widget->allocation.height),
@@ -856,12 +863,13 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
   factor = MIN ((gdouble) width  / wilber_width,
                 (gdouble) height / wilber_height);
 
+  cairo_scale (cr, factor, factor);
+
   /*  magic factors depend on the image used, everything else is generic
    */
   cairo_translate (cr,
-                   wilber_width * 0.6,
-                   widget->allocation.height / factor - wilber_height * 1.1);
-  cairo_scale (cr, factor, factor);
+                   - wilber_width * 1.5,
+                   widget->allocation.height / factor - wilber_height * 1.7);
 
   gimp_cairo_wilber (cr);
 

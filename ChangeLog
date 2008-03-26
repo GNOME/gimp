@@ -1,3 +1,7 @@
+2008-03-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpcanvas.c (gimp_canvas_draw_drop_zone): fix scaling.
+
 2008-03-26  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/Makefile.am
