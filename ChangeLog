@@ -1,3 +1,9 @@
+2008-03-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpcanvas.c (gimp_canvas_draw_drop_zone): add
+	wilber image to figure the proper scale behavior. Proper image
+	still missing :)
+
 2008-03-26  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-icon.[ch]

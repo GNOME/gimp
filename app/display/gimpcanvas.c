@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
 
@@ -871,6 +872,39 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
                          opacity);
 
   pango_cairo_show_layout (cr, canvas->drop_zone_layout);
+
+  cairo_scale (cr, 1.0 / factor, 1.0 / factor);
+
+  {
+    GdkPixbuf *pixbuf = gtk_widget_render_icon (GTK_WIDGET (canvas),
+                                                GIMP_STOCK_WILBER,
+                                                GTK_ICON_SIZE_DIALOG,
+                                                NULL);
+    gint wilber_width  = gdk_pixbuf_get_width  (pixbuf) / 2;
+    gint wilber_height = gdk_pixbuf_get_height (pixbuf) / 2;
+    gint wilber_x;
+    gint wilber_y;
+
+    width  = MAX (wilber_width,  widget->allocation.width);
+    height = MAX (wilber_height, widget->allocation.height);
+
+    factor = 0.5 * MIN ((gdouble) width  / wilber_width,
+                        (gdouble) height / wilber_height);
+
+    cairo_scale (cr, factor, factor);
+
+    /*  magic factors depend on the image used, everything else is
+     *  generic
+     */
+    wilber_x = -wilber_width * 0.6;
+    wilber_y = widget->allocation.height / factor - wilber_height * 1.1;
+
+    gdk_cairo_set_source_pixbuf (cr, pixbuf, wilber_x, wilber_y);
+    cairo_rectangle (cr,
+                     wilber_x, wilber_y,
+                     wilber_width * 2, wilber_height * 2);
+    cairo_fill (cr);
+  }
 }
 
 /**
