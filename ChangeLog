@@ -1,3 +1,8 @@
+2008-03-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_empty):
+	improve tooltip here too.
+
 2008-03-26  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcairo-wilber.c: include a better Wilber path,

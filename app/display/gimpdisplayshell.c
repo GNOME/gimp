@@ -1203,7 +1203,7 @@ gimp_display_shell_new (GimpDisplay       *display,
                                        "gimp-empty-image-window",
                                        GTK_WIDGET (shell));
       gimp_help_set_help_data (shell->canvas,
-                               _("Drop image files here to open them."),
+                               _("Drop image files here to open them"),
                                NULL);
     }
 
@@ -1291,7 +1291,8 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   gimp_display_shell_appearance_update (shell);
 
-  gimp_help_set_help_data (shell->canvas, _("Drop files to open them."), NULL);
+  gimp_help_set_help_data (shell->canvas,
+                           _("Drop image files here to open them"), NULL);
 
   gimp_display_shell_expose_full (shell);
 
