@@ -510,7 +510,7 @@ mng_save_image (const gchar *filename,
                 gint32       drawable_id,
                 gint32       original_image_id)
 {
-  gboolean        rval = FALSE;
+  gboolean        ret = FALSE;
   gint            rows, cols;
   volatile gint   i;
   time_t          t;
@@ -521,7 +521,6 @@ mng_save_image (const gchar *filename,
 
   struct mnglib_userdata_t *userdata;
   mng_handle      handle;
-  mng_retcode     ret;
   guint32         mng_ticks_per_second;
   guint32         mng_simplicity_profile;
 
@@ -767,7 +766,6 @@ mng_save_image (const gchar *filename,
       guchar         *fixed;
       guchar          layer_remap[256];
 
-
       layer_name          = gimp_drawable_get_name (layers[i]);
       layer_chunks_type   = parse_chunks_type_from_layer_name (layer_name);
       layer_drawable_type = gimp_drawable_type (layers[i]);
@@ -911,9 +909,7 @@ mng_save_image (const gchar *filename,
         }
 
       png_ptr = png_create_write_struct (PNG_LIBPNG_VER_STRING,
-                                         (png_voidp) NULL,
-                                         (png_error_ptr) NULL,
-                                         (png_error_ptr) NULL);
+                                         NULL, NULL, NULL);
       if (NULL == png_ptr)
         {
           g_warning ("Unable to png_create_write_struct() in mng_save_image()");
@@ -927,25 +923,19 @@ mng_save_image (const gchar *filename,
         {
           g_warning
             ("Unable to png_create_info_struct() in mng_save_image()");
-          png_destroy_write_struct (&png_ptr, (png_infopp) NULL);
+          png_destroy_write_struct (&png_ptr, NULL);
           fclose (outfile);
           g_unlink (temp_file_name);
-          mng_cleanup (&handle);
-          fclose (userdata->fp);
-          g_free (userdata);
-          return 0;
+          goto err3;
         }
 
       if (setjmp (png_ptr->jmpbuf) != 0)
         {
           g_warning ("HRM saving PNG in mng_save_image()");
-          png_destroy_write_struct (&png_ptr, (png_infopp) NULL);
+          png_destroy_write_struct (&png_ptr, &png_info_ptr);
           fclose (outfile);
           g_unlink (temp_file_name);
-          mng_cleanup (&handle);
-          fclose (userdata->fp);
-          g_free (userdata);
-          return 0;
+          goto err3;
         }
 
       png_init_io (png_ptr, outfile);
@@ -953,7 +943,7 @@ mng_save_image (const gchar *filename,
 
       png_info_ptr->width = layer_cols;
       png_info_ptr->height = layer_rows;
-      png_info_ptr->interlace_type = ((mng_data.interlaced == 0) ? 0 : 1);
+      png_info_ptr->interlace_type = (mng_data.interlaced == 0 ? 0 : 1);
       png_info_ptr->bit_depth = 8;
 
       switch (layer_drawable_type)
@@ -985,7 +975,10 @@ mng_save_image (const gchar *filename,
           break;
         default:
           g_warning ("This can't be!\n");
-          return 0;
+          png_destroy_write_struct (&png_ptr, &png_info_ptr);
+          fclose (outfile);
+          g_unlink (temp_file_name);
+          goto err3;
         }
 
       if ((png_info_ptr->valid & PNG_INFO_PLTE) == PNG_INFO_PLTE)
@@ -1005,8 +998,8 @@ mng_save_image (const gchar *filename,
       else
         num_passes = 1;
 
-      if ((png_info_ptr->color_type == PNG_COLOR_TYPE_PALETTE)
-          && (png_info_ptr->bit_depth < 8))
+      if ((png_info_ptr->color_type == PNG_COLOR_TYPE_PALETTE) &&
+          (png_info_ptr->bit_depth < 8))
         png_set_packing (png_ptr);
 
       tile_height = gimp_tile_height ();
@@ -1016,12 +1009,13 @@ mng_save_image (const gchar *filename,
       for (j = 0; j < tile_height; j++)
         layer_pixels[j] = layer_pixel + (layer_cols * layer_bpp * j);
 
-      gimp_pixel_rgn_init (&layer_pixel_rgn, layer_drawable, 0, 0, layer_cols,
-                           layer_rows, FALSE, FALSE);
+      gimp_pixel_rgn_init (&layer_pixel_rgn, layer_drawable, 0, 0,
+                           layer_cols, layer_rows, FALSE, FALSE);
 
       for (pass = 0; pass < num_passes; pass++)
         {
-          for (begin = 0, end = tile_height; begin < layer_rows;
+          for (begin = 0, end = tile_height;
+               begin < layer_rows;
                begin += tile_height, end += tile_height)
             {
               if (end > layer_rows)
@@ -1067,16 +1061,14 @@ mng_save_image (const gchar *filename,
 
       fclose (outfile);
 
-      if ((infile = g_fopen (temp_file_name, "rb")) == NULL)
+      infile = g_fopen (temp_file_name, "rb");
+      if (NULL == infile)
         {
           g_message (_("Could not open '%s' for reading: %s"),
                      gimp_filename_to_utf8 (temp_file_name),
                      g_strerror (errno));
           g_unlink (temp_file_name);
-          mng_cleanup (&handle);
-          fclose (userdata->fp);
-          g_free (userdata);
-          return 0;
+          goto err3;
         }
 
       fseek (infile, 8L, SEEK_SET);
@@ -1104,8 +1096,10 @@ mng_save_image (const gchar *filename,
 
           chunkname[4] = 0;
 
-          chunksize = (chunksize_chars[0] << 24) | (chunksize_chars[1] << 16)
-            | (chunksize_chars[2] << 8) | chunksize_chars[3];
+          chunksize = ((chunksize_chars[0] << 24) |
+                       (chunksize_chars[1] << 16) |
+                       (chunksize_chars[2] << 8) |
+                       (chunksize_chars[3]));
 
           chunkbuffer = NULL;
 
@@ -1119,11 +1113,15 @@ mng_save_image (const gchar *filename,
 
           if (strncmp (chunkname, "IHDR", 4) == 0)
             {
-              chunkwidth = (chunkbuffer[0] << 24) | (chunkbuffer[1] << 16)
-                | (chunkbuffer[2] << 8) | chunkbuffer[3];
+              chunkwidth = ((chunkbuffer[0] << 24) |
+                            (chunkbuffer[1] << 16) |
+                            (chunkbuffer[2] << 8) |
+                            (chunkbuffer[3]));
 
-              chunkheight = (chunkbuffer[4] << 24) | (chunkbuffer[5] << 16)
-                | (chunkbuffer[6] << 8) | chunkbuffer[7];
+              chunkheight = ((chunkbuffer[4] << 24) |
+                             (chunkbuffer[5] << 16) |
+                             (chunkbuffer[6] << 8) |
+                             (chunkbuffer[7]));
 
               chunkbitdepth = chunkbuffer[8];
               chunkcolortype = chunkbuffer[9];
@@ -1131,79 +1129,61 @@ mng_save_image (const gchar *filename,
               chunkfilter = chunkbuffer[11];
               chunkinterlaced = chunkbuffer[12];
 
-              if ((ret =
-                   mng_putchunk_ihdr (handle, chunkwidth, chunkheight,
-                                      chunkbitdepth, chunkcolortype,
-                                      chunkcompression, chunkfilter,
-                                      chunkinterlaced)) != MNG_NOERROR)
+              if (mng_putchunk_ihdr (handle, chunkwidth, chunkheight,
+                                     chunkbitdepth, chunkcolortype,
+                                     chunkcompression, chunkfilter,
+                                     chunkinterlaced) != MNG_NOERROR)
                 {
-                  g_warning
-                    ("Unable to mng_putchunk_ihdr() in mng_save_image()");
-                  mng_cleanup (&handle);
-                  fclose (userdata->fp);
-                  g_free (userdata);
-                  return 0;
+                  g_warning ("Unable to mng_putchunk_ihdr() "
+                             "in mng_save_image()");
+                  goto err3;
                 }
             }
           else if (strncmp (chunkname, "IDAT", 4) == 0)
             {
-              if ((ret =
-                   mng_putchunk_idat (handle, chunksize,
-                                      chunkbuffer)) != MNG_NOERROR)
+              if (mng_putchunk_idat (handle, chunksize,
+                                     chunkbuffer) != MNG_NOERROR)
                 {
-                  g_warning
-                    ("Unable to mng_putchunk_idat() in mng_save_image()");
-                  mng_cleanup (&handle);
-                  fclose (userdata->fp);
-                  g_free (userdata);
-                  return 0;
+                  g_warning ("Unable to mng_putchunk_idat() "
+                             "in mng_save_image()");
+                  goto err3;
                 }
             }
           else if (strncmp (chunkname, "IEND", 4) == 0)
             {
-              if ((ret = mng_putchunk_iend (handle)) != MNG_NOERROR)
+              if (mng_putchunk_iend (handle) != MNG_NOERROR)
                 {
-                  g_warning
-                    ("Unable to mng_putchunk_iend() in mng_save_image()");
-                  mng_cleanup (&handle);
-                  fclose (userdata->fp);
-                  g_free (userdata);
-                  return 0;
+                  g_warning ("Unable to mng_putchunk_iend() "
+                             "in mng_save_image()");
+                  goto err3;
                 }
             }
           else if (strncmp (chunkname, "PLTE", 4) == 0)
             {
-              /* if this frame's palette is the same as the global palette,
-                 write a 0-color palette chunk */
-
-              ret = mng_putchunk_plte (handle,
-                                       (layer_has_unique_palette ?
-                                        (chunksize / 3) : 0),
-                                       (mng_palette8e *) chunkbuffer);
-              if (MNG_NOERROR != ret)
+              /* If this frame's palette is the same as the global palette,
+               * write a 0-color palette chunk.
+               */
+              if (mng_putchunk_plte (handle,
+                                     (layer_has_unique_palette ?
+                                      (chunksize / 3) : 0),
+                                     (mng_palette8e *) chunkbuffer) !=
+                  MNG_NOERROR)
                 {
-                  g_warning
-                    ("Unable to mng_putchunk_plte() in mng_save_image()");
-                  mng_cleanup (&handle);
-                  fclose (userdata->fp);
-                  g_free (userdata);
-                  return 0;
+                  g_warning ("Unable to mng_putchunk_plte() "
+                             "in mng_save_image()");
+                  goto err3;
                 }
             }
           else if (strncmp (chunkname, "tRNS", 4) == 0)
             {
-              ret = mng_putchunk_trns (handle, 0, 0, 3, chunksize,
-                                       (mng_uint8 *) chunkbuffer,
-                                       0, 0, 0, 0, 0,
-                                       (mng_uint8 *) chunkbuffer);
-              if (MNG_NOERROR != ret)
+              if (mng_putchunk_trns (handle, 0, 0, 3, chunksize,
+                                     (mng_uint8 *) chunkbuffer,
+                                     0, 0, 0, 0, 0,
+                                     (mng_uint8 *) chunkbuffer) != MNG_NOERROR)
                 {
-                  g_warning
-                    ("Unable to mng_putchunk_trns() in mng_save_image()");
-                  mng_cleanup (&handle);
-                  fclose (userdata->fp);
-                  g_free (userdata);
-                  return 0;
+                  g_warning ("Unable to mng_putchunk_trns() "
+                             "in mng_save_image()");
+                  goto err3;
                 }
             }
 
@@ -1219,25 +1199,19 @@ mng_save_image (const gchar *filename,
       g_unlink (temp_file_name);
     }
 
-  if ((ret = mng_putchunk_mend (handle)) != MNG_NOERROR)
+  if (mng_putchunk_mend (handle) != MNG_NOERROR)
     {
       g_warning ("Unable to mng_putchunk_mend() in mng_save_image()");
-      mng_cleanup (&handle);
-      fclose (userdata->fp);
-      g_free (userdata);
-      return 0;
+      goto err3;
     }
 
-  if ((ret = mng_write (handle)) != MNG_NOERROR)
+  if (mng_write (handle) != MNG_NOERROR)
     {
       g_warning ("Unable to mng_write() the image in mng_save_image()");
-      mng_cleanup (&handle);
-      fclose (userdata->fp);
-      g_free (userdata);
-      return 0;
+      goto err3;
     }
 
-  rval = TRUE;
+  ret = TRUE;
 
  err3:
   mng_cleanup (&handle);
@@ -1246,7 +1220,7 @@ mng_save_image (const gchar *filename,
  err:
   g_free (userdata);
 
-  return rval;
+  return ret;
 }
 
 
