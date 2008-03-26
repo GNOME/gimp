@@ -26,7 +26,12 @@
 #define __GIMP_CAIRO_WILBER_H__
 
 
-void gimp_cairo_wilber (cairo_t *cr);
+void  gimp_cairo_wilber          (cairo_t *cr,
+                                  gdouble  x,
+                                  gdouble  y);
+void  gimp_cairo_wilber_get_size (cairo_t *cr,
+                                  gdouble *width,
+                                  gdouble *height);
 
 
 #endif /* __GIMP_CAIRO_WILBER_H__ */

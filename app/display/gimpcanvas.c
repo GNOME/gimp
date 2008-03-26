@@ -828,61 +828,40 @@ void
 gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
                             cairo_t    *cr)
 {
-  static gint wilber_x      = 0;
-  static gint wilber_y      = 0;
-  static gint wilber_width  = 0;
-  static gint wilber_height = 0;
-
   GtkWidget *widget = GTK_WIDGET (canvas);
-  gint       width;
-  gint       height;
-  gint       side;
+  gdouble    wilber_width;
+  gdouble    wilber_height;
+  gdouble    width;
+  gdouble    height;
+  gdouble    side;
   gdouble    factor;
 
-  /* first get the extents */
-  if (! wilber_width)
-    {
-      cairo_t *foo = gdk_cairo_create (widget->window);
-      gdouble  x1, y1;
-      gdouble  x2, y2;
+  gimp_cairo_wilber_get_size (cr, &wilber_width, &wilber_height);
 
-      gimp_cairo_wilber (foo);
-      cairo_fill_extents (foo, &x1, &y1, &x2, &y2);
-      cairo_destroy (foo);
+  wilber_width  /= 2;
+  wilber_height /= 2;
 
-      wilber_x      = x1;
-      wilber_y      = y1;
-      wilber_width  = (x2 - x1) / 2;
-      wilber_height = (y2 - y1) / 2;
-    }
-
-  side = MIN (MIN (widget->allocation.width,
-                   widget->allocation.height),
-              MAX (widget->allocation.width,
-                   widget->allocation.height) / 2);
+  side = MIN (MIN (widget->allocation.width, widget->allocation.height),
+              MAX (widget->allocation.width, widget->allocation.height) / 2);
 
   width  = MAX (wilber_width,  side);
   height = MAX (wilber_height, side);
 
-  factor = MIN ((gdouble) width  / wilber_width,
-                (gdouble) height / wilber_height);
+  factor = MIN (width / wilber_width, height / wilber_height);
 
   cairo_scale (cr, factor, factor);
 
   /*  magic factors depend on the image used, everything else is generic
    */
-  cairo_translate (cr,
-                   - wilber_width * 0.6 - wilber_x,
-                   widget->allocation.height / factor
-                   - wilber_height * 1.1 - wilber_y);
-
-  gimp_cairo_wilber (cr);
+  gimp_cairo_wilber (cr,
+                     - wilber_width * 0.6,
+                     widget->allocation.height / factor - wilber_height * 1.1);
 
   cairo_set_source_rgba (cr,
                          widget->style->fg[widget->state].red   / 65535.0,
                          widget->style->fg[widget->state].green / 65535.0,
                          widget->style->fg[widget->state].blue  / 65535.0,
-                         0.2);
+                         0.15);
   cairo_fill (cr);
 }
 

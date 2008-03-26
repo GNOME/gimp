@@ -1,3 +1,9 @@
+2008-03-26  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcairo-wilber.[ch]: 
+	* app/display/gimpcanvas.c (gimp_canvas_draw_drop_zone): hide ugly
+	details behind a sane API.
+
 2008-03-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_empty):
