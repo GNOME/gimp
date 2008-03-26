@@ -93,7 +93,8 @@ static gint   save_image               (const gchar      *filename,
                                         gint32            drawable_ID,
                                         gint32            orig_image_ID);
 
-static gboolean sanity_check           (gint32            image_ID);
+static gboolean sanity_check           (const gchar      *filename,
+                                        gint32            image_ID);
 static gboolean bad_bounds_dialog      (void);
 
 static gboolean save_dialog            (gint32            image_ID);
@@ -180,9 +181,6 @@ run (const gchar      *name,
 {
   static GimpParam  values[2];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32            image_ID;
-  gint32            drawable_ID;
-  gint32            orig_image_ID;
   GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
@@ -191,13 +189,20 @@ run (const gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   if (strcmp (name, SAVE_PROC) == 0)
     {
+      const gchar *filename;
+      gint32       image_ID;
+      gint32       drawable_ID;
+      gint32       orig_image_ID;
+
       image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
+      filename    = param[3].data.d_string;
 
       /*  eventually export the image */
       switch (run_mode)
@@ -220,7 +225,7 @@ run (const gchar      *name,
           break;
         }
 
-      if (sanity_check (image_ID))
+      if (sanity_check (filename, image_ID))
         {
           switch (run_mode)
             {
@@ -531,7 +536,8 @@ parse_disposal_tag (const gchar *str)
 
 
 static gboolean
-sanity_check (gint32 image_ID)
+sanity_check (const gchar *filename,
+              gint32       image_ID)
 {
   gint32 *layers;
   gint    nlayers;
@@ -544,8 +550,8 @@ sanity_check (gint32 image_ID)
 
   if (image_width > G_MAXUSHORT || image_height > G_MAXUSHORT)
     {
-      g_message (_("The GIF format does not support images larger "
-                   "than %d x %d pixels."), G_MAXUSHORT, G_MAXUSHORT);
+      g_message (_("Unable to save '%s'.  The GIF file format does not support images that are more than %d pixels wide or tall."),
+                 gimp_filename_to_utf8 (filename), G_MAXUSHORT);
       return FALSE;
     }
 

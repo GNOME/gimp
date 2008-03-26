@@ -1528,9 +1528,9 @@ save_image (const gchar *filename,
   IFDBG printf (" Function: save_image\n");
 
   if (gimp_image_width (image_id) > 30000 ||
-      gimp_image_height(image_id) > 30000)
+      gimp_image_height (image_id) > 30000)
   {
-      g_message (_("Unable to save '%s'.  The psd file format does not support images that are more than 30000 pixels wide or tall."),
+      g_message (_("Unable to save '%s'.  The PSD file format does not support images that are more than 30,000 pixels wide or tall."),
                  gimp_filename_to_utf8 (filename));
       return FALSE;
     }
@@ -1542,7 +1542,7 @@ save_image (const gchar *filename,
       drawable = gimp_drawable_get (layers[i]);
       if (drawable->width > 30000 || drawable->height > 30000)
         {
-          g_message (_("Unable to save '%s'.  The psd file format does not support images with layers that are more than 30000 pixels wide or tall."),
+          g_message (_("Unable to save '%s'.  The PSD file format does not support images with layers that are more than 30,000 pixels wide or tall."),
                      gimp_filename_to_utf8 (filename));
           g_free (layers);
           return FALSE;
