@@ -1,5 +1,13 @@
 2008-03-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimptoolbox.[ch]: store the toolbox area's vbox in
+	the widget struct.
+
+	* app/widgets/gimptoolbox-dnd.c (gimp_toolbox_dnd_init): use it as
+	DND target instead of the wbox with the tool buttons.
+
+2008-03-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimptoolbox.[ch]: big wilber is watching you from
 	the toolbox! Removed forgotten menubar cruft.
 

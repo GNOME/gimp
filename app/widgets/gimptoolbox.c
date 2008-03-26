@@ -184,7 +184,6 @@ gimp_toolbox_constructor (GType                  type,
   GimpContext   *context;
   GimpGuiConfig *config;
   GtkWidget     *main_vbox;
-  GtkWidget     *vbox;
   GdkDisplay    *display;
   GList         *list;
 
@@ -199,15 +198,19 @@ gimp_toolbox_constructor (GType                  type,
 
   main_vbox = GIMP_DOCK (toolbox)->main_vbox;
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (main_vbox), vbox, 0);
-  gtk_widget_show (vbox);
+  toolbox->vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (main_vbox), toolbox->vbox, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (main_vbox), toolbox->vbox, 0);
+  gtk_widget_show (toolbox->vbox);
 
   toolbox->header = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (toolbox->header), GTK_SHADOW_NONE);
-  gtk_box_pack_start (GTK_BOX (vbox), toolbox->header, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (toolbox->vbox), toolbox->header,
+                      FALSE, FALSE, 0);
   gtk_widget_show (toolbox->header);
+
+  gimp_help_set_help_data (toolbox->header,
+                           _("Drop image files here to open them"), NULL);
 
   toolbox->tool_wbox = gtk_hwrap_box_new (FALSE);
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->tool_wbox), GTK_JUSTIFY_TOP);
@@ -215,7 +218,8 @@ gimp_toolbox_constructor (GType                  type,
                                  GTK_JUSTIFY_LEFT);
   gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (toolbox->tool_wbox), 5.0 / 6.0);
 
-  gtk_box_pack_start (GTK_BOX (vbox), toolbox->tool_wbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (toolbox->vbox), toolbox->tool_wbox,
+                      FALSE, FALSE, 0);
   gtk_widget_show (toolbox->tool_wbox);
 
   toolbox->area_wbox = gtk_hwrap_box_new (FALSE);
@@ -224,7 +228,8 @@ gimp_toolbox_constructor (GType                  type,
                                  GTK_JUSTIFY_LEFT);
   gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (toolbox->area_wbox), 5.0 / 6.0);
 
-  gtk_box_pack_start (GTK_BOX (vbox), toolbox->area_wbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (toolbox->vbox), toolbox->area_wbox,
+                      FALSE, FALSE, 0);
   gtk_widget_show (toolbox->area_wbox);
 
   /* We need to know when the current device changes, so we can update
@@ -288,7 +293,7 @@ gimp_toolbox_constructor (GType                  type,
 
     button = gimp_prop_check_button_new (G_OBJECT (config), "use-gegl",
                                          "Use GEGL");
-    gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (toolbox->vbox), button, FALSE, FALSE, 0);
     gtk_widget_show (button);
   }
 
