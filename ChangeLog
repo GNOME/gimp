@@ -1,5 +1,15 @@
 2008-03-26  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/gimpcairo-wilber.[ch]: new files that renders a
+	Wilber image as a Cairo path. Or at least it is supposed to do
+	this at some point...
+
+	* app/display/gimpcanvas.c (gimp_canvas_draw_drop_zone): use the
+	scalable Wilber path. Needs more work...
+
+2008-03-26  Sven Neumann  <sven@gimp.org>
+
 	* data/images/Makefile.am: install wilber.png.
 
 	* app/display/gimpcanvas.c (gimp_canvas_draw_drop_zone): try to
