@@ -1,3 +1,9 @@
+2008-03-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_realize): don't set an initial cursor
+	so we get the desktop default cursor after starting GIMP.
+
 2008-03-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/gif-save.c

@@ -51,7 +51,6 @@
 #include "widgets/gimpcontrollers.h"
 #include "widgets/gimpcontrollerkeyboard.h"
 #include "widgets/gimpcontrollerwheel.h"
-#include "widgets/gimpcursor.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpuimanager.h"
@@ -246,12 +245,6 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   g_signal_connect (shell->vsbdata, "value-changed",
                     G_CALLBACK (gimp_display_shell_vscrollbar_update),
                     shell);
-
-  /*  set the initial cursor  */
-  gimp_display_shell_set_cursor (shell,
-                                 GDK_TOP_LEFT_ARROW,
-                                 GIMP_TOOL_CURSOR_NONE,
-                                 GIMP_CURSOR_MODIFIER_NONE);
 
   /*  allow shrinking  */
   gtk_widget_set_size_request (GTK_WIDGET (shell), 0, 0);
