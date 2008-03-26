@@ -571,7 +571,8 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
       gtk_widget_size_request (tool_button, &button_requisition);
 
       gtk_widget_set_size_request (toolbox->header,
-                                   -1, button_requisition.height);
+                                   -1,
+                                   button_requisition.height * PANGO_SCALE_SMALL);
 
       border_width = gtk_container_get_border_width (GTK_CONTAINER (main_vbox));
 

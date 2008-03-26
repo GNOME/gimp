@@ -1,5 +1,9 @@
 2008-03-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimptoolbox.c: make the wilber area a bit smaller.
+
+2008-03-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimptoolbox.[ch]: store the toolbox area's vbox in
 	the widget struct.
 
