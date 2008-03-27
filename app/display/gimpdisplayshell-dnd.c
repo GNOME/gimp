@@ -161,11 +161,7 @@ static void
 gimp_display_shell_dnd_flush (GimpDisplayShell *shell,
                               GimpImage        *image)
 {
-  if (GTK_WIDGET_DRAWABLE (shell))
-    {
-      gdk_window_focus (GTK_WIDGET (shell)->window,
-                        gtk_get_current_event_time ());
-    }
+  gtk_window_present (GTK_WINDOW (shell));
 
   gimp_image_flush (image);
 
@@ -484,7 +480,8 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
         }
     }
 
-  gimp_display_shell_dnd_flush (shell, image);
+  if (image)
+    gimp_display_shell_dnd_flush (shell, image);
 }
 
 static void

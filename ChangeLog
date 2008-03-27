@@ -1,5 +1,12 @@
 2008-03-27  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-dnd.c
+	(gimp_display_shell_drop_uri_list): don't flush if there's no image.
+	(gimp_display_shell_dnd_flush): use gtk_window_present() instead of
+	gdk_window_focus().
+	
+2008-03-27  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpstatusbar.c: use a button with icon for the
 	progress cancel button.
 
