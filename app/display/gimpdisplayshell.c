@@ -865,7 +865,7 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   /*  the vbox containing all widgets  */
 
-  main_vbox = gtk_vbox_new (FALSE, 1);
+  main_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (shell), main_vbox);
 
 #ifndef GDK_WINDOWING_QUARTZ

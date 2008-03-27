@@ -19,7 +19,7 @@
 #ifndef __GIMP_STATUSBAR_H__
 #define __GIMP_STATUSBAR_H__
 
-#include <gtk/gtkhbox.h>
+#include <gtk/gtkstatusbar.h>
 
 G_BEGIN_DECLS
 
@@ -38,7 +38,7 @@ typedef struct _GimpStatusbarClass GimpStatusbarClass;
 
 struct _GimpStatusbar
 {
-  GtkHBox           parent_instance;
+  GtkStatusbar      parent_instance;
 
   GimpDisplayShell *shell;
 
@@ -53,7 +53,6 @@ struct _GimpStatusbar
   gchar             cursor_format_str[CURSOR_FORMAT_LENGTH];
   gchar             length_format_str[CURSOR_FORMAT_LENGTH];
 
-  GtkWidget        *cursor_frame;
   GtkWidget        *cursor_label;
   GtkWidget        *unit_combo;
   GtkWidget        *scale_combo;
@@ -67,7 +66,7 @@ struct _GimpStatusbar
 
 struct _GimpStatusbarClass
 {
-  GtkHBoxClass parent_class;
+  GtkStatusbarClass parent_class;
 };
 
 
