@@ -1,5 +1,11 @@
 2008-03-26  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/common/dicom.c: Forget about negative values in signed
+	data and scale positive values appropriately. Also fixed signed
+	values in the 8 bpp case, and added some comments.
+	
+2008-03-26  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/common/dicom.c: made the dicom plug-in a bit better.
 	
 	1. Parse the default little-endian encoding correctly.

@@ -570,17 +570,13 @@ dicom_loader (guint8        *pix_buffer,
 
   if (info->bpp == 16)
     {
-      /* Reorder the buffer and look for max */
+      /* Reorder the buffer; also shift the data so that the LSB
+       * of the pixel data is at the LSB of the 16-bit array entries
+       * (i.e., compensate for high_bit and bits_stored).
+       */
       for (pix_idx = 0; pix_idx < width * height * samples_per_pixel; pix_idx++)
-	{
-	  guint16 pix_gl = GUINT16_SWAP_LE_BE (buf16[pix_idx]) >>
-                          ((info->high_bit + 1) - info->bits_stored);
-
-	  if (info->is_signed)
-            buf16[pix_idx] = pix_gl + 32768;
-          else
-            buf16[pix_idx] = pix_gl;
-	}
+        buf16[pix_idx] = GUINT16_SWAP_LE_BE (buf16[pix_idx]) >>
+                         ((info->high_bit + 1) - info->bits_stored);
     }
 
   data = g_malloc (gimp_tile_height () * width * samples_per_pixel);
@@ -603,7 +599,24 @@ dicom_loader (guint8        *pix_buffer,
               row_start = buf16 + (row_idx + i) * width * samples_per_pixel;
 
 	      for (col_idx = 0; col_idx < width * samples_per_pixel; col_idx++)
-		d[col_idx] = (guint8) (row_start[col_idx] >> (info->bits_stored - 8));
+                {
+                  /* Shift it by 8 bits, or less in case bits_stored
+                   * is less than bpp.
+                   */
+                  d[col_idx] = (guint8) (row_start[col_idx] >>
+                                         (info->bits_stored - 8));
+                  if (info->is_signed)
+                    {
+                      /* If the data is negative, make it 0. Otherwise,
+                       * multiply the positive value by 2, so that the
+                       * positive values span between 0 and 254.
+                       */
+                      if (d[col_idx] > 127)
+                        d[col_idx] = 0;
+                      else
+                        d[col_idx] <<= 1;
+                    }
+                }
 	    }
 	  else if (info->bpp == 8)
 	    {
@@ -613,7 +626,24 @@ dicom_loader (guint8        *pix_buffer,
               row_start = pix_buffer +
                 (row_idx + i) * width * samples_per_pixel;
 	      for (col_idx = 0; col_idx < width * samples_per_pixel; col_idx++)
-		d[col_idx] = row_start[col_idx] << (8 - info->bits_stored);
+                {
+                  /* Shift it by 0 bits, or more in case bits_stored is
+                   * less than bpp.
+                   */
+                  d[col_idx] = row_start[col_idx] << (8 - info->bits_stored);
+
+                  if (info->is_signed)
+                    {
+                      /* If the data is negative, make it 0. Otherwise,
+                       * multiply the positive value by 2, so that the
+                       * positive values span between 0 and 254.
+                       */
+                      if (d[col_idx] > 127)
+                        d[col_idx] = 0;
+                      else
+                        d[col_idx] <<= 1;
+                    }
+                }
 	    }
 
 	  d += width * samples_per_pixel;
