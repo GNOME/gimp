@@ -1,5 +1,10 @@
 2008-03-27  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_style_set):
+	added an arbitrary number to the minimum height.
+
+2008-03-27  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpstatusbar.c: make sure that the statusbar frame
 	requests enough space to hold it's children, also the invisible ones.
 
