@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * tips-parser.h -- Parse the gimp-tips.xml file.
- * Copyright (C) 2002  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2002, 2008  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,6 @@ typedef struct _GimpTip GimpTip;
 
 struct _GimpTip
 {
-  gchar *welcome;
   gchar *thetip;
 };
 

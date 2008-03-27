@@ -1,5 +1,14 @@
 2008-03-27  Sven Neumann  <sven@gimp.org>
 
+	* data/tips/gimp-tips.dtd
+	* data/tips/gimp-tips.xml.in: simplified the gimp-tips XML format
+	as we do not any longer need a special welcome tip.
+
+	* app/dialogs/tips-dialog.c
+	* app/dialogs/tips-parser.[ch]: changed accordingly.
+
+2008-03-27  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimprc-blurbs.h: removed SHOW_TIPS_BLURB.
 
 2008-03-27  Sven Neumann  <sven@gimp.org>

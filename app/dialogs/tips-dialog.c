@@ -43,7 +43,7 @@ enum
   RESPONSE_NEXT     = 2
 };
 
-static void  tips_set_labels      (GimpTip   *tip);
+static void  tips_dialog_set_tip  (GimpTip   *tip);
 static void  tips_dialog_response (GtkWidget *dialog,
                                    gint       response);
 static void  tips_dialog_destroy  (GtkWidget *widget,
@@ -51,7 +51,6 @@ static void  tips_dialog_destroy  (GtkWidget *widget,
 
 
 static GtkWidget *tips_dialog   = NULL;
-static GtkWidget *welcome_label = NULL;
 static GtkWidget *thetip_label  = NULL;
 static GList     *tips          = NULL;
 static GList     *current_tip   = NULL;
@@ -84,19 +83,23 @@ tips_dialog_create (Gimp *gimp)
         {
           GimpTip *tip;
 
-          if (error->code == G_FILE_ERROR_NOENT)
+          if (! error)
             {
-              tip = gimp_tip_new ("<b>%s</b>",
-                                  _("Your GIMP tips file appears to be missing!"));
-              gimp_tip_set (tip,
-                            _("There should be a file called '%s'. "
-                              "Please check your installation."), filename);
+              tip = gimp_tip_new (_("<b>The GIMP tips file is empty!</b>"));
+            }
+          else if (error->code == G_FILE_ERROR_NOENT)
+            {
+              tip = gimp_tip_new (_("<b>The GIMP tips file appears to be "
+                                    "missing!</b>\n\n"
+                                    "There should be a file called '%s'. "
+                                    "Please check your installation."),
+                                  gimp_filename_to_utf8 (filename));
             }
           else
             {
-              tip = gimp_tip_new ("<b>%s</b>",
-                                  _("The GIMP tips file could not be parsed!"));
-              gimp_tip_set (tip, "%s", error->message);
+              tip = gimp_tip_new (_("<b>The GIMP tips file could not be "
+                                    "parsed:</b>\n\n%s"),
+                                  error->message);
             }
 
           tips = g_list_prepend (tips, tip);
@@ -168,12 +171,6 @@ tips_dialog_create (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
   gtk_widget_show (vbox2);
 
-  welcome_label = gtk_label_new (NULL);
-  gtk_label_set_justify (GTK_LABEL (welcome_label), GTK_JUSTIFY_LEFT);
-  gtk_label_set_line_wrap (GTK_LABEL (welcome_label), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (welcome_label), 0.5, 0.5);
-  gtk_box_pack_start (GTK_BOX (vbox2), welcome_label, FALSE, FALSE, 0);
-
   thetip_label = gtk_label_new (NULL);
   gtk_label_set_selectable (GTK_LABEL (thetip_label), TRUE);
   gtk_label_set_justify (GTK_LABEL (thetip_label), GTK_JUSTIFY_LEFT);
@@ -192,7 +189,7 @@ tips_dialog_create (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox2), image, TRUE, FALSE, 0);
   gtk_widget_show (image);
 
-  tips_set_labels (current_tip->data);
+  tips_dialog_set_tip (current_tip->data);
 
   return tips_dialog;
 }
@@ -221,12 +218,12 @@ tips_dialog_response (GtkWidget *dialog,
     {
     case RESPONSE_PREVIOUS:
       current_tip = current_tip->prev ? current_tip->prev : g_list_last (tips);
-      tips_set_labels (current_tip->data);
+      tips_dialog_set_tip (current_tip->data);
       break;
 
     case RESPONSE_NEXT:
       current_tip = current_tip->next ? current_tip->next : tips;
-      tips_set_labels (current_tip->data);
+      tips_dialog_set_tip (current_tip->data);
       break;
 
     default:
@@ -236,15 +233,9 @@ tips_dialog_response (GtkWidget *dialog,
 }
 
 static void
-tips_set_labels (GimpTip *tip)
+tips_dialog_set_tip (GimpTip *tip)
 {
   g_return_if_fail (tip != NULL);
 
-  if (tip->welcome)
-    gtk_widget_show (welcome_label);
-  else
-    gtk_widget_hide (welcome_label);
-
-  gtk_label_set_markup (GTK_LABEL (welcome_label), tip->welcome);
   gtk_label_set_markup (GTK_LABEL (thetip_label), tip->thetip);
 }
