@@ -47,7 +47,6 @@ struct _GimpGuiConfig
   gboolean             save_session_info;
   gboolean             restore_session;
   gboolean             save_tool_options;
-  gboolean             show_tips;
   gboolean             show_tooltips;
   gboolean             tearoff_menus;
   gboolean             can_change_accels;

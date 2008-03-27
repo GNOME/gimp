@@ -141,15 +141,6 @@ tips_dialog_create (Gimp *gimp)
                         gtk_image_new_from_stock (GTK_STOCK_GO_FORWARD,
                                                   GTK_ICON_SIZE_BUTTON));
 
-  button = gtk_dialog_add_button (GTK_DIALOG (tips_dialog),
-                                  GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (tips_dialog),
-                                           GTK_RESPONSE_CLOSE,
-                                           RESPONSE_PREVIOUS,
-                                           RESPONSE_NEXT,
-                                           -1);
-
   gtk_dialog_set_response_sensitive (GTK_DIALOG (tips_dialog),
                                      RESPONSE_NEXT, tips_count > 1);
   gtk_dialog_set_response_sensitive (GTK_DIALOG (tips_dialog),
@@ -200,11 +191,6 @@ tips_dialog_create (Gimp *gimp)
   image = gtk_image_new_from_stock (GIMP_STOCK_INFO, GTK_ICON_SIZE_DIALOG);
   gtk_box_pack_start (GTK_BOX (vbox2), image, TRUE, FALSE, 0);
   gtk_widget_show (image);
-
-  button = gimp_prop_check_button_new (G_OBJECT (config), "show-tips",
-                                       _("Show tip next time GIMP starts"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   tips_set_labels (current_tip->data);
 

@@ -231,11 +231,6 @@ app_run (const gchar         *full_prog_name,
         file_open_from_command_line (gimp, filenames[i], as_new);
     }
 
-#ifndef GIMP_CONSOLE_COMPILATION
-  if (! no_interface)
-    gui_post_init (gimp);
-#endif
-
   batch_run (gimp, batch_interpreter, batch_commands);
 
   loop = g_main_loop_new (NULL, FALSE);

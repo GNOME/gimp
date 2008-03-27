@@ -56,7 +56,6 @@ enum
   PROP_SAVE_SESSION_INFO,
   PROP_RESTORE_SESSION,
   PROP_SAVE_TOOL_OPTIONS,
-  PROP_SHOW_TIPS,
   PROP_SHOW_TOOLTIPS,
   PROP_TEAROFF_MENUS,
   PROP_CAN_CHANGE_ACCELS,
@@ -82,7 +81,8 @@ enum
 
   /* ignored, only for backward compatibility: */
   PROP_INFO_WINDOW_PER_DISPLAY,
-  PROP_SHOW_TOOL_TIPS
+  PROP_SHOW_TOOL_TIPS,
+  PROP_SHOW_TIPS
 };
 
 
@@ -144,10 +144,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     "save-tool-options",
                                     SAVE_TOOL_OPTIONS_BLURB,
                                     FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TIPS,
-                                    "show-tips", SHOW_TIPS_BLURB,
-                                    TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TOOLTIPS,
                                     "show-tooltips", SHOW_TOOLTIPS_BLURB,
@@ -266,7 +262,12 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     GIMP_CONFIG_PARAM_IGNORE);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TOOL_TIPS,
                                     "show-tool-tips", NULL,
-                                    TRUE,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TIPS,
+                                    "show-tips", NULL,
+                                    FALSE,
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_IGNORE);
 }
@@ -319,9 +320,6 @@ gimp_gui_config_set_property (GObject      *object,
       break;
     case PROP_SAVE_TOOL_OPTIONS:
       gui_config->save_tool_options = g_value_get_boolean (value);
-      break;
-    case PROP_SHOW_TIPS:
-      gui_config->show_tips = g_value_get_boolean (value);
       break;
     case PROP_SHOW_TOOLTIPS:
       gui_config->show_tooltips = g_value_get_boolean (value);
@@ -396,6 +394,7 @@ gimp_gui_config_set_property (GObject      *object,
 
     case PROP_INFO_WINDOW_PER_DISPLAY:
     case PROP_SHOW_TOOL_TIPS:
+    case PROP_SHOW_TIPS:
       /* ignored */
       break;
 
@@ -435,9 +434,6 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_SAVE_TOOL_OPTIONS:
       g_value_set_boolean (value, gui_config->save_tool_options);
-      break;
-    case PROP_SHOW_TIPS:
-      g_value_set_boolean (value, gui_config->show_tips);
       break;
     case PROP_SHOW_TOOLTIPS:
       g_value_set_boolean (value, gui_config->show_tooltips);
@@ -508,6 +504,7 @@ gimp_gui_config_get_property (GObject    *object,
 
     case PROP_INFO_WINDOW_PER_DISPLAY:
     case PROP_SHOW_TOOL_TIPS:
+    case PROP_SHOW_TIPS:
       /* ignored */
       break;
 
