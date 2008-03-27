@@ -154,6 +154,7 @@ static void
 gimp_statusbar_init (GimpStatusbar *statusbar)
 {
   GtkWidget     *hbox;
+  GtkWidget     *image;
   GimpUnitStore *store;
 
   statusbar->shell          = NULL;
@@ -229,12 +230,18 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                           G_CALLBACK (gimp_statusbar_progress_expose),
                           statusbar);
 
-  statusbar->cancel_button = gtk_button_new_with_label (_("Cancel"));
+  statusbar->cancel_button = gtk_button_new ();
+  gtk_button_set_relief (GTK_BUTTON (statusbar->cancel_button),
+                         GTK_RELIEF_NONE);
   gtk_widget_set_sensitive (statusbar->cancel_button, FALSE);
   gtk_box_pack_start (GTK_BOX (hbox),
                       statusbar->cancel_button, FALSE, FALSE, 0);
   GTK_WIDGET_UNSET_FLAGS (statusbar->cancel_button, GTK_CAN_FOCUS);
   /*  don't show the cancel button  */
+
+  image = gtk_image_new_from_stock (GTK_STOCK_CANCEL, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (statusbar->cancel_button), image);
+  gtk_widget_show (image);
 
   g_signal_connect (statusbar->cancel_button, "clicked",
                     G_CALLBACK (gimp_statusbar_progress_canceled),
@@ -327,7 +334,18 @@ gimp_statusbar_progress_start (GimpProgress *progress,
       gtk_widget_set_sensitive (statusbar->cancel_button, cancelable);
 
       if (cancelable)
-        gtk_widget_show (statusbar->cancel_button);
+        {
+          if (message)
+            {
+              gchar *tooltip = g_strdup_printf (_("Cancel <i>%s</i>"), message);
+
+              gimp_help_set_help_data_with_markup (statusbar->cancel_button,
+                                                   tooltip, NULL);
+              g_free (tooltip);
+            }
+
+          gtk_widget_show (statusbar->cancel_button);
+        }
 
       gtk_widget_show (statusbar->progressbar);
       gtk_widget_hide (GTK_STATUSBAR (statusbar)->label);
@@ -335,7 +353,7 @@ gimp_statusbar_progress_start (GimpProgress *progress,
       /*  This call is needed so that the progress bar is drawn in the
        *  correct place. Probably due a bug in GTK+.
        */
-      gtk_container_resize_children (GTK_CONTAINER (GTK_STATUSBAR (statusbar)->frame));
+      gtk_container_resize_children (GTK_CONTAINER (statusbar));
 
       if (! GTK_WIDGET_VISIBLE (statusbar))
         {

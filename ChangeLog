@@ -1,5 +1,10 @@
 2008-03-27  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpstatusbar.c: use a button with icon for the
+	progress cancel button.
+
+2008-03-27  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_style_set):
 	added an arbitrary number to the minimum height.
 
