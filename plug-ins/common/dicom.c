@@ -562,46 +562,52 @@ load_image (const gchar *filename)
 }
 
 static void
-dicom_loader (guint8        *pix_buffer,
-	      DicomInfo     *info,
-	      GimpPixelRgn  *pixel_rgn)
+dicom_loader (guint8       *pix_buffer,
+	      DicomInfo    *info,
+	      GimpPixelRgn *pixel_rgn)
 {
-  guchar  *data, *d;
-  gint     row_idx, i;
-  gint     start, end, scanlines;
+  guchar  *data;
+  gint     row_idx;
   gint     width             = info->width;
   gint     height            = info->height;
   gint     samples_per_pixel = info->samples_per_pixel;
   guint16 *buf16             = (guint16 *) pix_buffer;
-  gulong   pix_idx;
 
   if (info->bpp == 16)
     {
+      gulong pix_idx;
+      guint  shift = info->high_bit + 1 - info->bits_stored;
+
       /* Reorder the buffer; also shift the data so that the LSB
        * of the pixel data is at the LSB of the 16-bit array entries
        * (i.e., compensate for high_bit and bits_stored).
        */
       for (pix_idx = 0; pix_idx < width * height * samples_per_pixel; pix_idx++)
-        buf16[pix_idx] = g_htons (buf16[pix_idx]) >>
-                         ((info->high_bit + 1) - info->bits_stored);
+        buf16[pix_idx] = g_htons (buf16[pix_idx]) >> shift;
     }
 
   data = g_malloc (gimp_tile_height () * width * samples_per_pixel);
 
   for (row_idx = 0; row_idx < height; )
     {
+      guchar *d = data;
+      gint    start;
+      gint    end;
+      gint    scanlines;
+      gint    i;
+
       start = row_idx;
-      end = row_idx + gimp_tile_height ();
-      end = MIN (end, height);
+      end   = row_idx + gimp_tile_height ();
+      end   = MIN (end, height);
+
       scanlines = end - start;
-      d = data;
 
       for (i = 0; i < scanlines; i++)
 	{
 	  if (info->bpp == 16)
 	    {
-	      gint     col_idx;
 	      guint16 *row_start;
+	      gint     col_idx;
 
               row_start = buf16 + (row_idx + i) * width * samples_per_pixel;
 
@@ -627,11 +633,12 @@ dicom_loader (guint8        *pix_buffer,
 	    }
 	  else if (info->bpp == 8)
 	    {
-	      gint    col_idx;
 	      guint8 *row_start;
+	      gint    col_idx;
 
-              row_start = pix_buffer +
-                (row_idx + i) * width * samples_per_pixel;
+              row_start = (pix_buffer +
+                           (row_idx + i) * width * samples_per_pixel);
+
 	      for (col_idx = 0; col_idx < width * samples_per_pixel; col_idx++)
                 {
                   /* Shift it by 0 bits, or more in case bits_stored is
