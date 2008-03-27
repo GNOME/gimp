@@ -1,3 +1,9 @@
+2008-03-27  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/common/dicom.c: Validated samples_per_pixel, changed
+	the loop counter data type, and patched code to work on big endian
+	CPUs.
+	
 2008-03-27  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/gui.c (gui_init): disable automatic startup notification.

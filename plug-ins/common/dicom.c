@@ -501,8 +501,15 @@ load_image (const gchar *filename)
 
   if ((width > GIMP_MAX_IMAGE_SIZE) || (height > GIMP_MAX_IMAGE_SIZE))
     {
-      g_message ("'%s' has a larger image size than GIMP can handle.",
-                 gimp_filename_to_utf8 (filename));
+      g_message ("'%s' has a larger image size (%d x %d) than GIMP can handle.",
+                 gimp_filename_to_utf8 (filename), width, height);
+      gimp_quit ();
+    }
+
+  if (samples_per_pixel > 3)
+    {
+      g_message ("'%s' has samples per pixel of %d which GIMP cannot handle.",
+                 gimp_filename_to_utf8 (filename), samples_per_pixel);
       gimp_quit ();
     }
 
@@ -566,7 +573,7 @@ dicom_loader (guint8        *pix_buffer,
   gint     height            = info->height;
   gint     samples_per_pixel = info->samples_per_pixel;
   guint16 *buf16             = (guint16 *) pix_buffer;
-  gint     pix_idx;
+  gulong   pix_idx;
 
   if (info->bpp == 16)
     {
@@ -575,7 +582,7 @@ dicom_loader (guint8        *pix_buffer,
        * (i.e., compensate for high_bit and bits_stored).
        */
       for (pix_idx = 0; pix_idx < width * height * samples_per_pixel; pix_idx++)
-        buf16[pix_idx] = GUINT16_SWAP_LE_BE (buf16[pix_idx]) >>
+        buf16[pix_idx] = g_htons (buf16[pix_idx]) >>
                          ((info->high_bit + 1) - info->bits_stored);
     }
 
