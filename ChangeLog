@@ -1,5 +1,10 @@
 2008-03-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdockable.c (gimp_dockable_detach): open the new
+	dock window at the mouse pointer position.
+
+2008-03-27  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-dnd.c
 	(gimp_display_shell_drop_uri_list): don't flush if there's no image.
 	(gimp_display_shell_dnd_flush): use gtk_window_present() instead of
