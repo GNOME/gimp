@@ -1,5 +1,9 @@
 2008-03-27  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimp.c: minor improvements to the API docs.
+
+2008-03-27  Sven Neumann  <sven@gimp.org>
+
 	Properly pass the focus from the core to plug-in dialogs:
 
 	* libgimpbase/gimpprotocol.[ch]: added a user_time member to the

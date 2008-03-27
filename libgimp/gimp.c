@@ -1021,8 +1021,9 @@ gimp_destroy_paramdefs (GimpParamDef *paramdefs,
 /**
  * gimp_tile_width:
  *
- * Returns the tile width GIMP is using. This is a constant value
- * given at plug-in configuration time.
+ * Returns the tile width GIMP is using.
+ *
+ * This is a constant value given at plug-in configuration time.
  *
  * Return value: the tile_width
  **/
@@ -1035,8 +1036,9 @@ gimp_tile_width (void)
 /**
  * gimp_tile_height:
  *
- * Returns the tile height GIMP is using. This is a constant value
- * given at plug-in configuration time.
+ * Returns the tile height GIMP is using.
+ *
+ * This is a constant value given at plug-in configuration time.
  *
  * Return value: the tile_height
  **/
@@ -1049,9 +1051,10 @@ gimp_tile_height (void)
 /**
  * gimp_shm_ID:
  *
- * Returns the shared memory ID used for passing tile data between the GIMP
- * core and the plug-in. This is a constant value
- * given at plug-in configuration time.
+ * Returns the shared memory ID used for passing tile data between the
+ * GIMP core and the plug-in.
+ *
+ * This is a constant value given at plug-in configuration time.
  *
  * Return value: the shared memory ID
  **/
@@ -1065,8 +1068,9 @@ gimp_shm_ID (void)
  * gimp_shm_addr:
  *
  * Returns the address of the shared memory segment used for passing
- * tile data between the GIMP core and the plug-in. This is a constant
- * value given at plug-in configuration time.
+ * tile data between the GIMP core and the plug-in.
+ *
+ * This is a constant value given at plug-in configuration time.
  *
  * Return value: the shared memory address
  **/
@@ -1080,7 +1084,9 @@ gimp_shm_addr (void)
  * gimp_gamma:
  *
  * Returns the global gamma value GIMP and all its plug-ins should
- * use. This is a constant value given at plug-in configuration time.
+ * use.
+ *
+ * This is a constant value given at plug-in configuration time.
  *
  * NOTE: This function will always return 2.2, the gamma value for
  * sRGB. There's currently no way to change this and all operations
@@ -1098,10 +1104,9 @@ gimp_gamma (void)
  * gimp_install_cmap:
  *
  * Returns whether or not the plug-in should allocate an own colormap
- * when running on an 8 bit display. This is a constant value given at
- * plug-in configuration time.
+ * when running on an 8 bit display. See also: gimp_min_colors().
  *
- * See also: gimp_min_colors()
+ * This is a constant value given at plug-in configuration time.
  *
  * Return value: the install_cmap boolean
  **/
@@ -1115,8 +1120,9 @@ gimp_install_cmap (void)
  * gimp_min_colors:
  *
  * Returns the minimum number of colors to use when allocating an own
- * colormap on 8 bit displays. This is a constant value given at
- * plug-in configuration time.
+ * colormap on 8 bit displays.
+ *
+ * This is a constant value given at plug-in configuration time.
  *
  * See also: gimp_install_cmap()
  *
@@ -1131,8 +1137,9 @@ gimp_min_colors (void)
 /**
  * gimp_show_tool_tips:
  *
- * Returns whether or not the plug-in should show tool-tips. This is a
- * constant value given at plug-in configuration time.
+ * Returns whether or not the plug-in should show tool-tips.
+ *
+ * This is a constant value given at plug-in configuration time.
  *
  * Return value: the show_tool_tips boolean
  **/
@@ -1148,6 +1155,8 @@ gimp_show_tool_tips (void)
  * Returns whether or not GimpDialog should automatically add a help
  * button if help_func and help_id are given.
  *
+ * This is a constant value given at plug-in configuration time.
+ *
  * Return value: the show_help_button boolean
  *
  * Since: GIMP 2.2
@@ -1162,6 +1171,7 @@ gimp_show_help_button (void)
  * gimp_check_size:
  *
  * Returns the size of the checkerboard to be used in previews.
+ *
  * This is a constant value given at plug-in configuration time.
  *
  * Return value: the check_size value
@@ -1178,6 +1188,7 @@ gimp_check_size (void)
  * gimp_check_type:
  *
  * Returns the type of the checkerboard to be used in previews.
+ *
  * This is a constant value given at plug-in configuration time.
  *
  * Return value: the check_type value
@@ -1194,8 +1205,9 @@ gimp_check_type (void)
  * gimp_default_display:
  *
  * Returns the default display ID. This corresponds to the display the
- * running procedure's menu entry was invoked from. This is a
- * constant value given at plug-in configuration time.
+ * running procedure's menu entry was invoked from.
+ *
+ * This is a constant value given at plug-in configuration time.
  *
  * Return value: the default display ID
  **/
@@ -1209,6 +1221,7 @@ gimp_default_display (void)
  * gimp_wm_class:
  *
  * Returns the window manager class to be used for plug-in windows.
+ *
  * This is a constant value given at plug-in configuration time.
  *
  * Return value: the window manager class
@@ -1238,6 +1251,7 @@ gimp_display_name (void)
  * gimp_monitor_number:
  *
  * Returns the monitor number to be used for plug-in windows.
+ *
  * This is a constant value given at plug-in configuration time.
  *
  * Return value: the monitor number
@@ -1252,11 +1266,14 @@ gimp_monitor_number (void)
  * gimp_user_time:
  *
  * Returns the timestamp of the user interaction that should be set on
- * the plug-in window. This is handled transparently. Plug-in authors
- * do not have to care about this. This is a constant value given at
- * plug-in configuration time.
+ * the plug-in window. This is handled transparently, plug-in authors
+ * do not have to care about it.
+ *
+ * This is a constant value given at plug-in configuration time.
  *
  * Return value: timestamp for plug-in window
+ *
+ * Since: GIMP 2.6
  **/
 guint32
 gimp_user_time (void)
