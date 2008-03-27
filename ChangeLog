@@ -1,5 +1,11 @@
 2008-03-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/pnm.c (load_image): changed message to say
+	"Unsupported maximum value" instead of "Invalid maximum value"
+	as suggested in bug #149723.
+
+2008-03-27  Sven Neumann  <sven@gimp.org>
+
 	* data/tips/gimp-tips.dtd
 	* data/tips/gimp-tips.xml.in: simplified the gimp-tips XML format
 	as we do not any longer need a special welcome tip.

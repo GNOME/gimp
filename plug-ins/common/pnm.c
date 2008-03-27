@@ -559,7 +559,7 @@ load_image (const gchar *filename)
       CHECK_FOR_ERROR (((pnminfo->maxval<=0)
                         || (pnminfo->maxval>255 && !pnminfo->asciibody)),
                        pnminfo->jmpbuf,
-                       _("Invalid maximum value."));
+                       _("Unsupported maximum value."));
     }
 
   /* Create a new image of the proper size and associate the filename with it.
