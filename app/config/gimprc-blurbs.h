@@ -327,9 +327,6 @@ N_("When enabled, the grid is visible by default. This can also be toggled " \
 N_("When enabled, the sample points are visible by default. This can also be " \
    "toggled with the \"View->Show Sample Points\" command.")
 
-#define SHOW_TIPS_BLURB \
-N_("Enable displaying a handy GIMP tip on startup.")
-
 #define SHOW_TOOLTIPS_BLURB \
 N_("Show a tooltip when the pointer hovers over an item.")
 

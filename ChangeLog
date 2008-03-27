@@ -1,5 +1,9 @@
 2008-03-27  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimprc-blurbs.h: removed SHOW_TIPS_BLURB.
+
+2008-03-27  Sven Neumann  <sven@gimp.org>
+
 	Preparing for a revamp of the "Tip of the Day" feature:
 
 	* app/config/gimpguiconfig.[ch]: removed "show-tips" property.
