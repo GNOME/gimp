@@ -54,6 +54,9 @@ typedef struct _DicomInfo
 				    value which we need to normalize to    */
   gint       samples_per_pixel;  /* Number of image planes (0 for pbm)     */
   gint       bpp;
+  gint       bits_stored;
+  gint       high_bit;
+  gboolean   is_signed;
 } DicomInfo;
 
 /* Local function prototypes */
@@ -163,7 +166,8 @@ query (void)
                           "Dov Grobgeld",
                           "Dov Grobgeld <dov@imagic.weizmann.ac.il>",
                           "2003",
-                          N_("Digital Imaging and Communications in Medicine image"),
+                          N_("Digital Imaging and Communications in "
+                             "Medicine image"),
                           "RGB, GRAY",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
@@ -285,8 +289,10 @@ load_image (const gchar *filename)
   guint           height            = 0;
   gint            samples_per_pixel = 0;
   gint            bpp               = 0;
+  gint            bits_stored       = 0;
+  gint            high_bit          = 0;
   guint8         *pix_buf           = NULL;
-  gboolean        toggle_endian     = FALSE;
+  gboolean        is_signed         = FALSE;
 
   /* open the file */
   DICOM = g_fopen (filename, "rb");
@@ -334,7 +340,7 @@ load_image (const gchar *filename)
       guint16  ctx_us;
       guint8  *value;
       guint32  tag;
-      gboolean do_toggle_endian= FALSE;
+      gboolean do_toggle_endian = FALSE;
       gboolean implicit_encoding = FALSE;
 
       if (fread (&group_word, 1, 2, DICOM) == 0)
@@ -460,11 +466,17 @@ load_image (const gchar *filename)
 	    case 0x0011:  /* columns */
 	      width = ctx_us;
 	      break;
-	    case 0x0100:  /* bits_allocated */
+	    case 0x0100:  /* bits allocated */
 	      bpp = ctx_us;
 	      break;
-	    case 0x0103:  /* pixel representation */
-	      toggle_endian = ctx_us;
+	    case 0x0101:  /* bits stored */
+	      bits_stored = ctx_us;
+	      break;
+	    case 0x0102:  /* high bit */
+	      high_bit = ctx_us;
+	      break;
+	    case 0x0103:  /* is pixel representation signed? */
+	      is_signed = (ctx_us == 0) ? FALSE : TRUE;
 	      break;
 	    }
 	}
@@ -480,6 +492,13 @@ load_image (const gchar *filename)
         }
     }
 
+  if ((bpp != 8) && (bpp != 16))
+    {
+      g_message ("'%s' has a bpp of %d which GIMP cannot handle.",
+                 gimp_filename_to_utf8 (filename), bpp);
+      gimp_quit ();
+    }
+
   if ((width > GIMP_MAX_IMAGE_SIZE) || (height > GIMP_MAX_IMAGE_SIZE))
     {
       g_message ("'%s' has a larger image size than GIMP can handle.",
@@ -490,6 +509,10 @@ load_image (const gchar *filename)
   dicominfo->width  = width;
   dicominfo->height = height;
   dicominfo->bpp    = bpp;
+
+  dicominfo->bits_stored = bits_stored;
+  dicominfo->high_bit = high_bit;
+  dicominfo->is_signed = is_signed;
   dicominfo->samples_per_pixel = samples_per_pixel;
   dicominfo->maxval = -1;   /* External normalization factor - not used yet */
 
@@ -544,19 +567,19 @@ dicom_loader (guint8        *pix_buffer,
   gint     samples_per_pixel = info->samples_per_pixel;
   guint16 *buf16             = (guint16 *) pix_buffer;
   gint     pix_idx;
-  guint16  max               = 1;
 
   if (info->bpp == 16)
     {
       /* Reorder the buffer and look for max */
       for (pix_idx = 0; pix_idx < width * height * samples_per_pixel; pix_idx++)
 	{
-	  guint pix_gl = g_ntohs (GUINT16_SWAP_LE_BE (buf16[pix_idx]));
+	  guint16 pix_gl = GUINT16_SWAP_LE_BE (buf16[pix_idx]) >>
+                          ((info->high_bit + 1) - info->bits_stored);
 
-	  if (pix_gl > max)
-	    max = pix_gl;
-
-	  buf16[pix_idx] = pix_gl;
+	  if (info->is_signed)
+            buf16[pix_idx] = pix_gl + 32768;
+          else
+            buf16[pix_idx] = pix_gl;
 	}
     }
 
@@ -580,17 +603,17 @@ dicom_loader (guint8        *pix_buffer,
               row_start = buf16 + (row_idx + i) * width * samples_per_pixel;
 
 	      for (col_idx = 0; col_idx < width * samples_per_pixel; col_idx++)
-		d[col_idx] =
-                  (guint8) (255.999 * (gdouble) (row_start[col_idx]) / max);
+		d[col_idx] = (guint8) (row_start[col_idx] >> (info->bits_stored - 8));
 	    }
 	  else if (info->bpp == 8)
 	    {
 	      gint    col_idx;
 	      guint8 *row_start;
 
-              row_start = pix_buffer + (row_idx + i) * width * samples_per_pixel;
+              row_start = pix_buffer +
+                (row_idx + i) * width * samples_per_pixel;
 	      for (col_idx = 0; col_idx < width * samples_per_pixel; col_idx++)
-		d[col_idx] = row_start[col_idx];
+		d[col_idx] = row_start[col_idx] << (8 - info->bits_stored);
 	    }
 
 	  d += width * samples_per_pixel;

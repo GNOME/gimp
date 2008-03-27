@@ -1,3 +1,12 @@
+2008-03-26  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/common/dicom.c: made the dicom plug-in a bit better.
+	
+	1. Parse the default little-endian encoding correctly.
+	2. Handle signed pixel data.
+	3. Support "bits stored" and "high bit" meta data fields.
+	4. Throw away the bogus "max" value based metering.
+
 2008-03-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptoolbox.c: make the wilber area a bit smaller.
