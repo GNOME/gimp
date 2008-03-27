@@ -214,6 +214,9 @@ gui_init (Gimp     *gimp,
 
   the_gui_gimp = gimp;
 
+  /*  disable automatic startup notification  */
+  gtk_window_set_auto_startup_notification (FALSE);
+
   gimp_dnd_init (gimp);
 
   themes_init (gimp);
@@ -350,9 +353,8 @@ gui_initialize_after_callback (Gimp               *gimp,
 
   if (name)
     {
-      gchar *display;
+      gchar *display = gdk_get_display ();
 
-      display = gdk_get_display ();
       gimp_environ_table_add (gimp->plug_in_manager->environ_table,
                               name, display, NULL);
       g_free (display);
@@ -543,6 +545,9 @@ gui_restore_after_callback (Gimp               *gimp,
 
   /*  move keyboard focus to the display  */
   gtk_window_present (GTK_WINDOW (display->shell));
+
+  /*  indicate that the application has finished loading  */
+  gdk_notify_startup_complete ();
 }
 
 static gboolean

@@ -61,7 +61,6 @@ typedef struct
 static GimpSplash *splash = NULL;
 
 
-static void        splash_map                 (void);
 static void        splash_position_layouts    (GimpSplash     *splash,
                                                const gchar    *text1,
                                                const gchar    *text2,
@@ -123,12 +122,6 @@ splash_create (gboolean be_verbose)
   g_signal_connect_swapped (splash->window, "delete-event",
                             G_CALLBACK (exit),
                             GINT_TO_POINTER (0));
-
-  /* we don't want the splash screen to send the startup notification */
-  gtk_window_set_auto_startup_notification (FALSE);
-  g_signal_connect (splash->window, "map",
-                    G_CALLBACK (splash_map),
-                    NULL);
 
   screen = gtk_widget_get_screen (splash->window);
 
@@ -287,15 +280,6 @@ splash_area_expose (GtkWidget      *widget,
                    splash->lower_x, splash->lower_y, splash->lower);
 
   return FALSE;
-}
-
-static void
-splash_map (void)
-{
-  /*  Reenable startup notification after the splash has been shown
-   *  so that the next window that is mapped sends the notification.
-   */
-   gtk_window_set_auto_startup_notification (TRUE);
 }
 
 /* area returns the union of the previous and new ink rectangles */

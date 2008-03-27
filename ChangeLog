@@ -1,3 +1,12 @@
+2008-03-27  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/gui.c (gui_init): disable automatic startup notification.
+	(gui_restore_after_callback): notify the display enviroment that
+	the application has finished loading.
+
+	* app/gui/splash.c: no need to deal with startup notification here
+	any longer.
+
 2008-03-26  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/dicom.c: Forget about negative values in signed
