@@ -197,6 +197,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.display_name     = gimp_get_display_name (manager->gimp,
                                                        display_ID, &monitor);
       config.monitor_number   = monitor;
+      config.timestamp        = gimp_get_user_time (manager->gimp);
 
       proc_run.name    = GIMP_PROCEDURE (procedure)->original_name;
       proc_run.nparams = args->n_values;

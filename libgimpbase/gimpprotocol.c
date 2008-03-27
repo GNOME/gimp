@@ -541,6 +541,9 @@ _gp_config_read (GIOChannel      *channel,
                                (guint32 *) &config->monitor_number, 1,
                                user_data))
     goto cleanup;
+  if (! _gimp_wire_read_int32 (channel,
+                               &config->timestamp, 1, user_data))
+    goto cleanup;
 
   msg->data = config;
   return;
@@ -631,6 +634,10 @@ _gp_config_write (GIOChannel      *channel,
     return;
   if (! _gimp_wire_write_int32 (channel,
                                 (const guint32 *) &config->monitor_number, 1,
+                                user_data))
+    return;
+  if (! _gimp_wire_write_int32 (channel,
+                                (const guint32 *) &config->timestamp, 1,
                                 user_data))
     return;
 }

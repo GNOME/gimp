@@ -88,6 +88,7 @@ static const gchar  * gui_get_program_class    (Gimp                *gimp);
 static gchar        * gui_get_display_name     (Gimp                *gimp,
                                                 gint                 display_ID,
                                                 gint                *monitor_number);
+static guint32        gui_get_user_time        (Gimp                *gimp);
 static const gchar  * gui_get_theme_dir        (Gimp                *gimp);
 static GimpObject   * gui_get_empty_display    (Gimp                *gimp);
 static GimpObject   * gui_display_get_by_ID    (Gimp                *gimp,
@@ -144,6 +145,7 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.help                = gui_help;
   gimp->gui.get_program_class   = gui_get_program_class;
   gimp->gui.get_display_name    = gui_get_display_name;
+  gimp->gui.get_user_time       = gui_get_user_time;
   gimp->gui.get_theme_dir       = gui_get_theme_dir;
   gimp->gui.get_empty_display   = gui_get_empty_display;
   gimp->gui.display_get_by_id   = gui_display_get_by_ID;
@@ -253,6 +255,15 @@ gui_get_display_name (Gimp *gimp,
     return gdk_screen_make_display_name (screen);
 
   return NULL;
+}
+
+static guint32
+gui_get_user_time (Gimp *gimp)
+{
+#ifdef GDK_WINDOWING_X11
+  return gdk_x11_display_get_user_time (gdk_display_get_default ());
+#endif
+  return 0;
 }
 
 static const gchar *

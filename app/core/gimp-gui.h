@@ -45,6 +45,8 @@ struct _GimpGui
   gchar        * (* get_display_name)    (Gimp                *gimp,
                                           gint                 display_ID,
                                           gint                *monitor_number);
+  guint32        (* get_user_time)       (Gimp                *gimp);
+
   const gchar  * (* get_theme_dir)       (Gimp                *gimp);
 
   GimpObject   * (* get_empty_display)   (Gimp                *gimp);
@@ -136,6 +138,7 @@ const gchar  * gimp_get_program_class    (Gimp                *gimp);
 gchar        * gimp_get_display_name     (Gimp                *gimp,
                                           gint                 display_ID,
                                           gint                *monitor_number);
+guint32        gimp_get_user_time        (Gimp                *gimp);
 const gchar  * gimp_get_theme_dir        (Gimp                *gimp);
 
 gboolean       gimp_pdb_dialog_new       (Gimp                *gimp,

@@ -619,6 +619,7 @@ EXPORTS
 	gimp_tile_width
 	gimp_transform_2d
 	gimp_uninstall_temp_proc
+	gimp_user_time
 	gimp_vectors_bezier_stroke_conicto
 	gimp_vectors_bezier_stroke_cubicto
 	gimp_vectors_bezier_stroke_lineto

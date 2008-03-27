@@ -1,5 +1,27 @@
 2008-03-27  Sven Neumann  <sven@gimp.org>
 
+	Properly pass the focus from the core to plug-in dialogs:
+
+	* libgimpbase/gimpprotocol.[ch]: added a user_time member to the
+	GimpConfig struct. Bumped the protocol version to 0x0012.
+
+	* app/core/gimp-gui.[ch]
+	* app/gui/gui-vtable.c: added gimp_get_user_time() to get the
+	timestamp of the last user interaction.
+
+	* app/plug-in/gimppluginmanager-call.c
+	(gimp_plug_in_manager_call_run): pass the timestamp to in the
+	GimpConfig message.
+
+	* libgimp/gimp.[ch]:
+	* libgimp/gimp.def: added method to access the timestamp as set
+	in the config message.
+
+	* libgimp/gimpui.c (gimp_ui_init): construct a fake startup ID and
+	set the DESKTOP_STARTUP_ID environment variable.
+
+2008-03-27  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdockable.c (gimp_dockable_detach): open the new
 	dock window at the mouse pointer position.
 

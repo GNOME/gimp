@@ -50,6 +50,7 @@ gimp_gui_init (Gimp *gimp)
   gimp->gui.help                = NULL;
   gimp->gui.get_program_class   = NULL;
   gimp->gui.get_display_name    = NULL;
+  gimp->gui.get_user_time       = NULL;
   gimp->gui.get_theme_dir       = NULL;
   gimp->gui.display_get_by_id   = NULL;
   gimp->gui.display_get_id      = NULL;
@@ -224,6 +225,27 @@ gimp_get_display_name (Gimp *gimp,
   *monitor_number = 0;
 
   return NULL;
+}
+
+/**
+ * gimp_get_user_time:
+ * @gimp:
+ *
+ * Returns the timestamp of the last user interaction. The timestamp is
+ * taken from events caused by user interaction such as key presses or
+ * pointer movements. See gdk_x11_display_get_user_time().
+ *
+ * Return value: the timestamp of the last user interaction
+ */
+guint32
+gimp_get_user_time (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
+
+  if (gimp->gui.get_user_time)
+    return gimp->gui.get_user_time (gimp);
+
+  return 0;
 }
 
 const gchar *

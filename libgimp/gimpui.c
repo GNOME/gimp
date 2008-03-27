@@ -65,9 +65,9 @@ void
 gimp_ui_init (const gchar *prog_name,
               gboolean     preview)
 {
+  GdkScreen   *screen;
   const gchar *display_name;
   gchar       *themerc;
-  GdkScreen   *screen;
 
   g_return_if_fail (prog_name != NULL);
 
@@ -85,6 +85,17 @@ gimp_ui_init (const gchar *prog_name,
 #else
       g_setenv ("GDK_DISPLAY", display_name, TRUE);
 #endif
+    }
+
+  if (gimp_user_time ())
+    {
+      /* Construct a fake startup ID as we only want to pass the
+       * interaction timestamp, see _gdk_windowing_set_default_display().
+       */
+      gchar *startup_id = g_strdup_printf ("_TIME%u", gimp_user_time ());
+
+      g_setenv ("DESKTOP_STARTUP_ID", startup_id, TRUE);
+      g_free (startup_id);
     }
 
   gtk_init (NULL, NULL);

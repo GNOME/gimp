@@ -179,6 +179,7 @@ static gint           _gdisp_ID          = -1;
 static gchar         *_wm_class          = NULL;
 static gchar         *_display_name      = NULL;
 static gint           _monitor_number    = 0;
+static guint32        _timestamp         = 0;
 static const gchar   *progname           = NULL;
 
 static gchar          write_buffer[WRITE_BUFFER_SIZE];
@@ -1222,6 +1223,7 @@ gimp_wm_class (void)
  * gimp_display_name:
  *
  * Returns the display to be used for plug-in windows.
+ *
  * This is a constant value given at plug-in configuration time.
  *
  * Return value: the display name
@@ -1244,6 +1246,22 @@ gint
 gimp_monitor_number (void)
 {
   return _monitor_number;
+}
+
+/**
+ * gimp_user_time:
+ *
+ * Returns the timestamp of the user interaction that should be set on
+ * the plug-in window. This is handled transparently. Plug-in authors
+ * do not have to care about this. This is a constant value given at
+ * plug-in configuration time.
+ *
+ * Return value: timestamp for plug-in window
+ **/
+guint32
+gimp_user_time (void)
+{
+  return _timestamp;
 }
 
 /**
@@ -1712,6 +1730,7 @@ gimp_config (GPConfig *config)
   _wm_class         = g_strdup (config->wm_class);
   _display_name     = g_strdup (config->display_name);
   _monitor_number   = config->monitor_number;
+  _timestamp        = config->timestamp;
 
   if (config->app_name)
     g_set_application_name (config->app_name);

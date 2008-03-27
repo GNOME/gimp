@@ -27,7 +27,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0011
+#define GIMP_PROTOCOL_VERSION  0x0012
 
 
 enum
@@ -82,6 +82,7 @@ struct _GPConfig
   gchar   *wm_class;
   gchar   *display_name;
   gint32   monitor_number;
+  guint32  timestamp;
 };
 
 struct _GPTileReq
