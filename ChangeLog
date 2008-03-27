@@ -1,5 +1,13 @@
 2008-03-27  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpstatusbar.c: make sure that the statusbar frame
+	requests enough space to hold it's children, also the invisible ones.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_style_set):
+	don't add 1 pixel here, this spacing is gone.
+
+2008-03-27  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpstatusbar.[ch]: derive GimpStatusbar from
 	GtkStatusbar. Use the normal statusbar label for statusbar
 	messages and only show the progressbar when progress is active.

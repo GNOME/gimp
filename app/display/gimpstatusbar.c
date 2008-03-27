@@ -71,8 +71,9 @@ static void     gimp_statusbar_finalize           (GObject           *object);
 
 static void     gimp_statusbar_destroy            (GtkObject         *object);
 
-static void     gimp_statusbar_size_request       (GtkWidget         *widget,
-                                                   GtkRequisition    *requisition);
+static void     gimp_statusbar_frame_size_request (GtkWidget         *widget,
+                                                   GtkRequisition    *requisition,
+                                                   GimpStatusbar     *statusbar);
 
 static GimpProgress *
                 gimp_statusbar_progress_start     (GimpProgress      *progress,
@@ -130,13 +131,10 @@ gimp_statusbar_class_init (GimpStatusbarClass *klass)
 {
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
 
   object_class->finalize     = gimp_statusbar_finalize;
 
   gtk_object_class->destroy  = gimp_statusbar_destroy;
-
-  widget_class->size_request = gimp_statusbar_size_request;
 }
 
 static void
@@ -181,7 +179,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_container_add (GTK_CONTAINER (GTK_STATUSBAR (statusbar)->frame), hbox);
   gtk_widget_show (hbox);
 
-  statusbar->cursor_label = gtk_label_new ("0, 0");
+  statusbar->cursor_label = gtk_label_new ("8888, 8888");
   gtk_misc_set_alignment (GTK_MISC (statusbar->cursor_label), 0.5, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->cursor_label, FALSE, FALSE, 0);
   gtk_widget_show (statusbar->cursor_label);
@@ -241,6 +239,10 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   g_signal_connect (statusbar->cancel_button, "clicked",
                     G_CALLBACK (gimp_statusbar_progress_canceled),
                     statusbar);
+
+  g_signal_connect (GTK_STATUSBAR (statusbar)->frame, "size-request",
+                    G_CALLBACK (gimp_statusbar_frame_size_request),
+                    statusbar);
 }
 
 static void
@@ -276,21 +278,34 @@ gimp_statusbar_destroy (GtkObject *object)
 }
 
 static void
-gimp_statusbar_size_request (GtkWidget      *widget,
-                             GtkRequisition *requisition)
+gimp_statusbar_frame_size_request (GtkWidget      *widget,
+                                   GtkRequisition *requisition,
+                                   GimpStatusbar  *statusbar)
 {
-  GimpStatusbar  *statusbar = GIMP_STATUSBAR (widget);
   GtkRequisition  child_requisition;
-
-  GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
+  gint            width = 0;
 
   /*  also consider the children which can be invisible  */
 
+  gtk_widget_size_request (statusbar->cursor_label, &child_requisition);
+  width += child_requisition.width;
+  requisition->height = MAX (requisition->height, child_requisition.height);
+
   gtk_widget_size_request (statusbar->unit_combo, &child_requisition);
+  width += child_requisition.width;
   requisition->height = MAX (requisition->height, child_requisition.height);
 
   gtk_widget_size_request (statusbar->scale_combo, &child_requisition);
+  width += child_requisition.width;
   requisition->height = MAX (requisition->height, child_requisition.height);
+
+  gtk_widget_size_request (statusbar->progressbar, &child_requisition);
+  requisition->height = MAX (requisition->height, child_requisition.height);
+
+  gtk_widget_size_request (statusbar->cancel_button, &child_requisition);
+  requisition->height = MAX (requisition->height, child_requisition.height);
+
+  requisition->width = MAX (requisition->width, width + 24);
 }
 
 static GimpProgress *
@@ -1145,7 +1160,6 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
   static PangoLayout *layout = NULL;
 
   GimpImage    *image = shell->display->image;
-  GtkWidget    *parent;
   GtkTreeModel *model;
   const gchar  *text;
   gint          image_width;
@@ -1153,7 +1167,6 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
   gdouble       image_xres;
   gdouble       image_yres;
   gint          width;
-  gint          diff;
 
   if (image)
     {
@@ -1220,18 +1233,8 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
   pango_layout_set_text (layout, text, -1);
   pango_layout_get_pixel_size (layout, &width, NULL);
 
-  /*  find out how many pixels the label's parent frame is bigger than
-   *  the label itself
-   */
-  parent = gtk_widget_get_parent (statusbar->cursor_label);
-  diff = (parent->allocation.width -
-          statusbar->cursor_label->allocation.width);
-
   gtk_widget_set_size_request (statusbar->cursor_label, width, -1);
-
-  /* don't resize if this is a new display */
-  if (diff)
-    gtk_widget_set_size_request (parent, width + diff, -1);
+  gtk_widget_queue_resize (GTK_STATUSBAR (statusbar)->frame);
 
   gimp_statusbar_clear_cursor (statusbar);
 }

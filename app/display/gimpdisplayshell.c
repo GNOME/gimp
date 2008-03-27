@@ -646,7 +646,7 @@ gimp_display_shell_style_set (GtkWidget *widget,
     {
       gtk_widget_size_request (shell->menubar, &requisition);
 
-      geometry.min_height += requisition.height + 1;
+      geometry.min_height += requisition.height;
     }
 
   gtk_window_set_geometry_hints (GTK_WINDOW (widget), NULL,
