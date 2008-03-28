@@ -10,6 +10,7 @@
 
 #include <glib.h>
 
+#undef GIMP_DISABLE_DEPRECATED
 #include "gimpmd5.h"
 
 

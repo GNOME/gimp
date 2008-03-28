@@ -51,19 +51,14 @@ static void  gimp_md5_final     (GimpMD5Context *ctx,
 
 /**
  * gimp_md5_get_digest:
- * @buffer: byte buffer
+ * @buffer:      byte buffer
  * @buffer_size: buffer size (in bytes) or -1 if @buffer is nul-terminated.
- * @digest: 16 bytes buffer receiving the hash code.
+ * @digest:      16 bytes buffer receiving the hash code.
+ *
+ * This function is deprecated! Use %GChecksum from GLib instead.
  *
  * Get the md5 hash of a buffer. The result is put in the 16 bytes
- * buffer @digest.
- *
- * The MD5 algorithm takes as input a message of arbitrary length and
- * produces as output a 128-bit "fingerprint" or "message digest" of
- * the input.  It is conjectured that it is computationally infeasible
- * to produce two messages having the same message digest, or to
- * produce any message having a given prespecified target message
- * digest. For more information see RFC 1321.
+ * buffer @digest. For more information see RFC 1321.
  **/
 void
 gimp_md5_get_digest (const gchar *buffer,
