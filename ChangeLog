@@ -1,3 +1,14 @@
+2008-03-28  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: put GIO check back in as we need it to initialize
+	GIO_CFLAGS and GIO_LIBS. Renamed --without-gio to --without-gvfs.
+
+	* INSTALL: changed accordingly.
+
+	* plug-ins/uri/Makefile.am
+	* plug-ins/uri/uri-backend-gio.c
+	* plug-ins/uri/uri-backend-gvfs.c: renamed the gio backend to gvfs.
+
 2008-03-28  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/scripts/line-nova.scm (script-fu-line-nova):
@@ -15,7 +26,7 @@
 2008-03-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimphelpui.c: show a custom tooltip for menu
-	items and inform the user the she can get more help by pressing F1.
+	items and inform the user that she can get more help by pressing F1.
 
 2008-03-28  Sven Neumann  <sven@gimp.org>
 

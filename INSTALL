@@ -33,7 +33,7 @@ header files installed.
      http://svn.gnome.org/svn/gegl/trunk
 
   3. You need to have installed GTK+ version 2.12.1 or newer.  GIMP
-     also need a recent versions of GLib (>= 2.14.1) and Pango (>= 1.12.2).
+     also need a recent versions of GLib (>= 2.16.1) and Pango (>= 1.18.0).
      Sources for these can be grabbed from ftp://ftp.gtk.org/.
 
   4. We require PangoFT2, a Pango backend that uses FreeType2. Make
@@ -42,7 +42,7 @@ header files installed.
      http://www.freetype.org/.  Fontconfig from
      http://freedesktop.org/fontconfig/.  GIMP depends on freetype2
      being newer than version 2.1.7 and fontconfig 2.2.0 or newer.
-     Older versions are known to have bugs that seriously affect
+     Older versions are known to have bugs that seriously affect the
      stability of GIMP.
 
   5. We use libart2. Grab the module libart_lgpl out of GNOME SVN or
@@ -165,8 +165,8 @@ These are:
   --without-print.  If for some reason you don't want to build the Print
      plug-in based on the GtkPrint API, you can build with --without-print.
 
-  --without-gio.  If you don't want to use GIO to access remote
-     files, you can pass --without-gio to the configure script.
+  --without-gvfs.  If you don't want to use GIO/GVfs to access remote
+     files, you can pass --without-gvfs to the configure script.
 
   --without-gnomevfs.  If you don't want to use gnomevfs to access remote
      files, you can pass --without-gnomevfs to the configure script.
