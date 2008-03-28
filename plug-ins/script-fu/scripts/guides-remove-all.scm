@@ -21,7 +21,7 @@
   "Alan Horkan"
   "Alan Horkan, 2004. Public Domain."
   "April 2004"
-  ""
+  "*"
   SF-IMAGE    "Image"    0
   SF-DRAWABLE "Drawable" 0
 )

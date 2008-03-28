@@ -1,3 +1,12 @@
+2008-03-28  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/scripts/guides-from-selection.scm
+	* plug-ins/script-fu/scripts/guides-new-percent.scm
+	* plug-ins/script-fu/scripts/guides-new.scm
+	* plug-ins/script-fu/scripts/guides-remove-all.scm: use "*" as
+	image type (not "") so the menu item is disabled when there is no
+	image.
+
 2008-03-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimpmath/gimpmd5.[ch]: deprecate gimp_md5_get_digest() in

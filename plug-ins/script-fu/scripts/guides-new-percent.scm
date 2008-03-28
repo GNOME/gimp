@@ -29,7 +29,7 @@
   "Alan Horkan"
   "Alan Horkan, 2004"
   "April 2004"
-  ""
+  "*"
   SF-IMAGE      "Input Image"      0
   SF-DRAWABLE   "Input Drawable"   0
   SF-OPTION     _"Direction"       '(_"Horizontal"
