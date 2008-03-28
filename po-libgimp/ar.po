@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-22 21:41+0100\n"
+"POT-Creation-Date: 2008-03-28 14:54+0000\n"
 "PO-Revision-Date: 2007-05-02 23:01+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
@@ -622,7 +622,7 @@ msgstr "ثابت"
 msgid "Incremental"
 msgstr "ازديادي"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:218
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:224
 msgid "None"
 msgstr "لا شيء"
 
@@ -761,8 +761,8 @@ msgid "%d GB"
 msgstr "%d ج.ب."
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:210 ../modules/colorsel_cmyk_lcms.c:408
-#: ../modules/colorsel_cmyk_lcms.c:414
+#: ../modules/cdisplay_lcms.c:216 ../modules/colorsel_cmyk_lcms.c:410
+#: ../modules/colorsel_cmyk_lcms.c:416
 msgid "(invalid UTF-8 string)"
 msgstr "(غير صحيحة UTF-8 سلسة )"
 
@@ -1358,34 +1358,34 @@ msgstr "التباين"
 msgid "Contrast c_ycles:"
 msgstr "_دورات التباين:"
 
-#: ../modules/cdisplay_lcms.c:105
+#: ../modules/cdisplay_lcms.c:111
 msgid "Color management display filter using ICC color profiles"
 msgstr "مرشّح عرض إدارة الألوان باستخدام ملفات ألوان ICC"
 
-#: ../modules/cdisplay_lcms.c:166
+#: ../modules/cdisplay_lcms.c:172
 msgid "Color Management"
 msgstr "إدارة الألوان"
 
-#: ../modules/cdisplay_lcms.c:239
+#: ../modules/cdisplay_lcms.c:245
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr "هذا المرشّح يتلقى إعداداته من قسم إدارة الألوان في جدول التفضيلات."
 
-#: ../modules/cdisplay_lcms.c:253
+#: ../modules/cdisplay_lcms.c:259
 msgid "Mode of operation:"
 msgstr "نمط العملية:"
 
-#: ../modules/cdisplay_lcms.c:261
+#: ../modules/cdisplay_lcms.c:267
 #, fuzzy
 msgid "Image profile:"
 msgstr "ملف الصورة"
 
-#: ../modules/cdisplay_lcms.c:269
+#: ../modules/cdisplay_lcms.c:275
 msgid "Monitor profile:"
 msgstr "ملف المراقبة:"
 
-#: ../modules/cdisplay_lcms.c:277
+#: ../modules/cdisplay_lcms.c:283
 msgid "Print simulation profile:"
 msgstr "طباعة ملف المحاكاة:"
 
@@ -1430,38 +1430,38 @@ msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/colorsel_cmyk.c:148 ../modules/colorsel_cmyk_lcms.c:171
+#: ../modules/colorsel_cmyk.c:148 ../modules/colorsel_cmyk_lcms.c:173
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:173
+#: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:175
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:175
+#: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:177
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/colorsel_cmyk.c:154 ../modules/colorsel_cmyk_lcms.c:177
+#: ../modules/colorsel_cmyk.c:154 ../modules/colorsel_cmyk_lcms.c:179
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/colorsel_cmyk.c:158 ../modules/colorsel_cmyk_lcms.c:181
+#: ../modules/colorsel_cmyk.c:158 ../modules/colorsel_cmyk_lcms.c:183
 msgid "Cyan"
 msgstr "سيان"
 
-#: ../modules/colorsel_cmyk.c:159 ../modules/colorsel_cmyk_lcms.c:182
+#: ../modules/colorsel_cmyk.c:159 ../modules/colorsel_cmyk_lcms.c:184
 msgid "Magenta"
 msgstr "وردي"
 
-#: ../modules/colorsel_cmyk.c:160 ../modules/colorsel_cmyk_lcms.c:183
+#: ../modules/colorsel_cmyk.c:160 ../modules/colorsel_cmyk_lcms.c:185
 msgid "Yellow"
 msgstr "أصفر"
 
-#: ../modules/colorsel_cmyk.c:161 ../modules/colorsel_cmyk_lcms.c:184
+#: ../modules/colorsel_cmyk.c:161 ../modules/colorsel_cmyk_lcms.c:186
 msgid "Black"
 msgstr "أسود"
 
@@ -1478,12 +1478,12 @@ msgstr "كمية اللون الأسود التي ينبغي سحبها من ا�
 msgid "CMYK color selector (using color profile)"
 msgstr "مرشّح إثبات الألوان باستخدام ملف ألوان ICC"
 
-#: ../modules/colorsel_cmyk_lcms.c:397
+#: ../modules/colorsel_cmyk_lcms.c:399
 #, fuzzy
 msgid "Profile: (none)"
 msgstr "ال_ملف:"
 
-#: ../modules/colorsel_cmyk_lcms.c:417
+#: ../modules/colorsel_cmyk_lcms.c:419
 #, fuzzy, c-format
 msgid "Profile: %s"
 msgstr "ال_ملف:"
