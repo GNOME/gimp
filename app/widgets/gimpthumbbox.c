@@ -724,7 +724,7 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
               gchar *size;
               gchar *text;
 
-              size = gimp_memsize_to_string (thumb->image_filesize);
+              size = g_format_size_for_display (thumb->image_filesize);
               text = g_strdup_printf ("%s\n%s",
                                       size, _("Creating preview..."));
 

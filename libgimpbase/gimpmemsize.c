@@ -62,7 +62,7 @@ gimp_memsize_get_type (void)
  * Creates a string representation of a given memory size. This string
  * can be parsed by gimp_memsize_deserialize() and can thus be used in
  * config files. It should not be displayed to the user. If you need a
- * nice human-readable string please use gimp_memsize_to_string().
+ * nice human-readable string please use g_format_size_for_display().
  *
  * Return value: A newly allocated string representation of @memsize.
  *
@@ -153,77 +153,14 @@ gimp_memsize_deserialize (const gchar *string,
  * gimp_memsize_to_string:
  * @memsize: A memory size in bytes.
  *
- * This function returns a human readable, translated representation
- * of the passed @memsize. Large values are displayed using a
- * reasonable memsize unit, e.g.: "345" becomes "345 Bytes", "4500"
- * becomes "4.4 KB" and so on.
+ * This function is deprecated! Use g_format_size_for_display() instead.
  *
  * Return value: A newly allocated human-readable, translated string.
  **/
 gchar *
 gimp_memsize_to_string (guint64 memsize)
 {
-#if defined _MSC_VER && (_MSC_VER < 1300)
-/* sorry, error C2520: conversion from unsigned __int64 to double not
- *                     implemented, use signed __int64
- */
-#  define CAST_DOUBLE (gdouble)(gint64)
-#else
-#  define CAST_DOUBLE (gdouble)
-#endif
-
-  if (memsize < 1024)
-    {
-      gint bytes = (gint) memsize;
-
-      return g_strdup_printf (dngettext (GETTEXT_PACKAGE "-libgimp",
-                                         "%d Byte",
-                                         "%d Bytes", bytes), bytes);
-    }
-
-  if (memsize < 1024 * 10)
-    {
-      return g_strdup_printf (_("%.2f KB"), CAST_DOUBLE memsize / 1024.0);
-    }
-  else if (memsize < 1024 * 100)
-    {
-      return g_strdup_printf (_("%.1f KB"), CAST_DOUBLE memsize / 1024.0);
-    }
-  else if (memsize < 1024 * 1024)
-    {
-      return g_strdup_printf (_("%d KB"), (gint) memsize / 1024);
-    }
-
-  memsize /= 1024;
-
-  if (memsize < 1024 * 10)
-    {
-      return g_strdup_printf (_("%.2f MB"), CAST_DOUBLE memsize / 1024.0);
-    }
-  else if (memsize < 1024 * 100)
-    {
-      return g_strdup_printf (_("%.1f MB"), CAST_DOUBLE memsize / 1024.0);
-    }
-  else if (memsize < 1024 * 1024)
-    {
-      return g_strdup_printf (_("%d MB"), (gint) memsize / 1024);
-    }
-
-  memsize /= 1024;
-
-  if (memsize < 1024 * 10)
-    {
-      return g_strdup_printf (_("%.2f GB"), CAST_DOUBLE memsize / 1024.0);
-    }
-  else if (memsize < 1024 * 100)
-    {
-      return g_strdup_printf (_("%.1f GB"), CAST_DOUBLE memsize / 1024.0);
-    }
-  else
-    {
-      return g_strdup_printf (_("%d GB"), (gint) memsize / 1024);
-    }
-#undef CAST_DOUBLE
+  return g_format_size_for_display (memsize);
 }
 
 

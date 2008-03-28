@@ -639,7 +639,7 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
     }
 
 #ifdef ENABLE_MEMSIZE_LABEL
-  text = gimp_memsize_to_string (template->initial_size);
+  text = g_format_size_for_display (template->initial_size);
   gtk_label_set_text (GTK_LABEL (editor->memsize_label), text);
   g_free (text);
 #endif

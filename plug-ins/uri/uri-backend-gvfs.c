@@ -191,8 +191,8 @@ uri_progress_callback (goffset  current_num_bytes,
   if (total_num_bytes > 0)
     {
       const gchar *format;
-      gchar       *done  = gimp_memsize_to_string (current_num_bytes);
-      gchar       *total = gimp_memsize_to_string (total_num_bytes);
+      gchar       *done  = g_format_size_for_display (current_num_bytes);
+      gchar       *total = g_format_size_for_display (total_num_bytes);
 
       switch (progress->mode)
         {
@@ -215,7 +215,7 @@ uri_progress_callback (goffset  current_num_bytes,
   else
     {
       const gchar *format;
-      gchar       *done = gimp_memsize_to_string (current_num_bytes);
+      gchar       *done = g_format_size_for_display (current_num_bytes);
 
       switch (progress->mode)
         {

@@ -551,7 +551,7 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
 
         if (thumbnail->image_filesize > 0)
           {
-            gchar *size = gimp_memsize_to_string (thumbnail->image_filesize);
+            gchar *size = g_format_size_for_display (thumbnail->image_filesize);
 
             if (str->len > 0)
               g_string_append_c (str, '\n');

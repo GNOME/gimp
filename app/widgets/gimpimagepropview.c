@@ -309,8 +309,8 @@ static void
 gimp_image_prop_view_label_set_memsize (GtkWidget  *label,
                                         GimpObject *object)
 {
-  gchar *str = gimp_memsize_to_string (gimp_object_get_memsize (object, NULL));
-
+  gchar *str = g_format_size_for_display (gimp_object_get_memsize (object,
+                                                                   NULL));
   gtk_label_set_text (GTK_LABEL (label), str);
   g_free (str);
 }
@@ -347,7 +347,7 @@ gimp_image_prop_view_label_set_filesize (GtkWidget *label,
 
       if (g_stat (filename, &buf) == 0)
         {
-          gchar *str = gimp_memsize_to_string (buf.st_size);
+          gchar *str = g_format_size_for_display (buf.st_size);
 
           gtk_label_set_text (GTK_LABEL (label), str);
           g_free (str);
@@ -404,7 +404,7 @@ gimp_image_prop_view_label_set_undo (GtkWidget     *label,
       gchar      *str;
       gchar       buf[256];
 
-      str = gimp_memsize_to_string (gimp_object_get_memsize (object, NULL));
+      str = g_format_size_for_display (gimp_object_get_memsize (object, NULL));
       g_snprintf (buf, sizeof (buf), "%d (%s)", steps, str);
       g_free (str);
 

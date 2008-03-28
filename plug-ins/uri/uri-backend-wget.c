@@ -298,7 +298,7 @@ uri_backend_load_image (const gchar  *uri,
       /*  Start the actual download...  */
       if (size > 0)
         {
-          memsize = gimp_memsize_to_string (size);
+          memsize = g_format_size_for_display (size);
           message = g_strdup_printf (_("Downloading %s of image data"),
                                      memsize);
         }
@@ -339,7 +339,7 @@ uri_backend_load_image (const gchar  *uri,
                 }
               else
                 {
-                  memsize = gimp_memsize_to_string (kilobytes * 1024);
+                  memsize = g_format_size_for_display (kilobytes * 1024);
 
                   gimp_progress_set_text_printf
                     (_("Downloaded %s of image data"), memsize);

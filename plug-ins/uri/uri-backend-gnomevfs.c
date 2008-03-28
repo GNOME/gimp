@@ -285,7 +285,7 @@ copy_uri (const gchar  *src_uri,
       return FALSE;
     }
 
-  memsize = gimp_memsize_to_string (file_size);
+  memsize = g_format_size_for_display (file_size);
 
   gimp_progress_init_printf (file_size > 0 ?
                              copying_format_str : copied_format_str,
@@ -306,7 +306,7 @@ copy_uri (const gchar  *src_uri,
         {
           if (result != GNOME_VFS_ERROR_EOF)
             {
-              memsize = gimp_memsize_to_string (sizeof (buffer));
+              memsize = g_format_size_for_display (sizeof (buffer));
               g_set_error (error, 0, 0,
                            _("Failed to read %s from '%s': %s"),
                            memsize, src_uri,
@@ -339,7 +339,7 @@ copy_uri (const gchar  *src_uri,
             }
           else
             {
-              memsize = gimp_memsize_to_string (bytes_read);
+              memsize = g_format_size_for_display (bytes_read);
 
               gimp_progress_set_text_printf (copied_format_str, memsize);
               gimp_progress_pulse ();
@@ -355,7 +355,7 @@ copy_uri (const gchar  *src_uri,
 
       if (chunk_written < chunk_read)
         {
-          memsize = gimp_memsize_to_string (chunk_read);
+          memsize = g_format_size_for_display (chunk_read);
           g_set_error (error, 0, 0,
                        _("Failed to write %s to '%s': %s"),
                        memsize, dest_uri,

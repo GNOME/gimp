@@ -1,5 +1,24 @@
 2008-03-28  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpmemsize.[ch]: deprecate gimp_memsize_to_string()
+	in favor of g_format_size_for_display().
+
+	* app/actions/edit-commands.c
+	* app/core/gimpimagefile.c
+	* app/dialogs/image-new-dialog.c
+	* app/dialogs/image-scale-dialog.c
+	* app/display/gimpdisplayshell-title.c
+	* app/widgets/gimpimagepropview.c
+	* app/widgets/gimptemplateeditor.c
+	* app/widgets/gimpthumbbox.c
+	* plug-ins/uri/uri-backend-gnomevfs.c
+	* plug-ins/uri/uri-backend-gvfs.c
+	* plug-ins/uri/uri-backend-libcurl.c
+	* plug-ins/uri/uri-backend-wget.c: use g_format_size_for_display()
+	instead of gimp_memsize_to_string().
+
+2008-03-28  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: put GIO check back in as we need it to initialize
 	GIO_CFLAGS and GIO_LIBS. Renamed --without-gio to --without-gvfs.
 
