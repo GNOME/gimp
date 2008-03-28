@@ -1,5 +1,10 @@
 2008-03-28  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimphelpui.c: show a custom tooltip for menu
+	items and inform the user the she can get more help by pressing F1.
+
+2008-03-28  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimphelpui.c: updated documentation.
 
 2008-03-28  Sven Neumann  <sven@gimp.org>

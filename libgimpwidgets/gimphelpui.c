@@ -25,11 +25,10 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "gimpwidgetstypes.h"
-
-#include "gimpdialog.h"
-#include "gimphelpui.h"
+#include "gimpwidgets.h"
 #include "gimpwidgets-private.h"
+
+#include "libgimp/libgimp-intl.h"
 
 
 typedef enum
@@ -46,21 +45,29 @@ static gboolean tooltips_enable_called = FALSE;
 
 /*  local function prototypes  */
 
-static const gchar * gimp_help_get_help_data       (GtkWidget      *widget,
-                                                    GtkWidget     **help_widget,
-                                                    gpointer       *ret_data);
-static gboolean   gimp_help_callback               (GtkWidget      *widget,
-                                                    GimpWidgetHelpType help_type,
-                                                    GimpHelpFunc    help_func);
+static const gchar * gimp_help_get_help_data        (GtkWidget      *widget,
+                                                     GtkWidget     **help_widget,
+                                                     gpointer       *ret_data);
+static gboolean   gimp_help_callback                (GtkWidget      *widget,
+                                                     GimpWidgetHelpType help_type,
+                                                     GimpHelpFunc    help_func);
 
-static gboolean   gimp_context_help_idle_start     (gpointer        widget);
-static gboolean   gimp_context_help_button_press   (GtkWidget      *widget,
-                                                    GdkEventButton *bevent,
-                                                    gpointer        data);
-static gboolean   gimp_context_help_key_press      (GtkWidget      *widget,
-                                                    GdkEventKey    *kevent,
-                                                    gpointer        data);
-static gboolean   gimp_context_help_idle_show_help (gpointer        data);
+static void       gimp_help_menu_item_set_tooltip   (GtkWidget      *widget,
+                                                     const gchar    *tooltip,
+                                                     const gchar    *help_id);
+static gboolean   gimp_help_menu_item_query_tooltip (GtkWidget      *widget,
+                                                     gint            x,
+                                                     gint            y,
+                                                     gboolean        keyboard_mode,
+                                                     GtkTooltip     *tooltip);
+static gboolean   gimp_context_help_idle_start      (gpointer        widget);
+static gboolean   gimp_context_help_button_press    (GtkWidget      *widget,
+                                                     GdkEventButton *bevent,
+                                                     gpointer        data);
+static gboolean   gimp_context_help_key_press       (GtkWidget      *widget,
+                                                     GdkEventKey    *kevent,
+                                                     gpointer        data);
+static gboolean   gimp_context_help_idle_show_help  (gpointer        data);
 
 
 /*  public functions  */
@@ -204,7 +211,12 @@ gimp_help_set_help_data (GtkWidget   *widget,
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   if (tooltips_enabled)
-    gtk_widget_set_tooltip_text (widget, tooltip);
+    {
+      gtk_widget_set_tooltip_text (widget, tooltip);
+
+      if (GTK_IS_MENU_ITEM (widget))
+        gimp_help_menu_item_set_tooltip (widget, tooltip, help_id);
+    }
 
   g_object_set_qdata (G_OBJECT (widget), GIMP_HELP_ID, (gpointer) help_id);
 }
@@ -229,7 +241,12 @@ gimp_help_set_help_data_with_markup (GtkWidget   *widget,
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   if (tooltips_enabled)
-    gtk_widget_set_tooltip_markup (widget, tooltip);
+    {
+      gtk_widget_set_tooltip_markup (widget, tooltip);
+
+      if (GTK_IS_MENU_ITEM (widget))
+        gimp_help_menu_item_set_tooltip (widget, tooltip, help_id);
+    }
 
   g_object_set_qdata (G_OBJECT (widget), GIMP_HELP_ID, (gpointer) help_id);
 }
@@ -286,8 +303,8 @@ gimp_help_get_help_data (GtkWidget  *widget,
                          GtkWidget **help_widget,
                          gpointer   *ret_data)
 {
-  gchar    *help_id   = NULL;
-  gpointer  help_data = NULL;
+  const gchar *help_id   = NULL;
+  gpointer     help_data = NULL;
 
   for (; widget; widget = widget->parent)
     {
@@ -302,7 +319,7 @@ gimp_help_get_help_data (GtkWidget  *widget,
           if (ret_data)
             *ret_data = help_data;
 
-          return (const gchar *) help_id;
+          return help_id;
         }
     }
 
@@ -325,13 +342,8 @@ gimp_help_callback (GtkWidget          *widget,
     case GIMP_WIDGET_HELP_TYPE_HELP:
       if (help_func)
         {
-          gchar    *help_id   = NULL;
-          gpointer  help_data = NULL;
-
-          help_id   = g_object_get_qdata (G_OBJECT (widget), GIMP_HELP_ID);
-          help_data = g_object_get_data (G_OBJECT (widget), "gimp-help-data");
-
-          (* help_func) (help_id, help_data);
+          help_func (g_object_get_qdata (G_OBJECT (widget), GIMP_HELP_ID),
+                     g_object_get_data (G_OBJECT (widget), "gimp-help-data"));
         }
       return TRUE;
 
@@ -345,6 +357,79 @@ gimp_help_callback (GtkWidget          *widget,
 
   return FALSE;
 }
+
+static void
+gimp_help_menu_item_set_tooltip (GtkWidget   *widget,
+                                 const gchar *tooltip,
+                                 const gchar *help_id)
+{
+  g_return_if_fail (GTK_IS_MENU_ITEM (widget));
+
+  if (tooltip && help_id)
+    {
+      g_object_set (widget, "has-tooltip", TRUE, NULL);
+
+      g_signal_connect (widget, "query-tooltip",
+                        G_CALLBACK (gimp_help_menu_item_query_tooltip),
+                        NULL);
+    }
+  else if (! tooltip)
+    {
+      g_object_set (widget, "has-tooltip", FALSE, NULL);
+
+      g_signal_handlers_disconnect_by_func (widget,
+                                            gimp_help_menu_item_query_tooltip,
+                                            NULL);
+    }
+}
+
+static gboolean
+gimp_help_menu_item_query_tooltip (GtkWidget  *widget,
+                                   gint        x,
+                                   gint        y,
+                                   gboolean    keyboard_mode,
+                                   GtkTooltip *tooltip)
+{
+  GtkWidget *vbox;
+  GtkWidget *label;
+  gchar     *text;
+  gboolean   use_markup = TRUE;
+
+  text = gtk_widget_get_tooltip_markup (widget);
+
+  if (! text)
+    {
+      text = gtk_widget_get_tooltip_text (widget);
+      use_markup = FALSE;
+    }
+
+  if (! text)
+    return FALSE;
+
+  vbox = gtk_vbox_new (FALSE, 12);
+
+  label = gtk_label_new (text);
+  gtk_label_set_use_markup (GTK_LABEL (label), use_markup);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
+  gtk_widget_show (label);
+
+  g_free (text);
+
+  label = gtk_label_new (_("Press F1 for more help"));
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  gtk_tooltip_set_custom (tooltip, vbox);
+
+  return TRUE;
+}
+
 
 /*  Do all the actual context help calls in idle functions and check for
  *  some widget holding a grab before starting the query because strange
