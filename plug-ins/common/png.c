@@ -1184,6 +1184,7 @@ save_image (const gchar *filename,
   if (pngvals.comment)
     {
       GimpParasite *parasite;
+      gsize text_length = 0;
 
       parasite = gimp_image_parasite_find (orig_image_ID, "gimp-comment");
       if (parasite)
@@ -1207,8 +1208,9 @@ save_image (const gchar *filename,
           text->compression = PNG_TEXT_COMPRESSION_NONE;
           text->text        = g_convert (comment, -1,
                                          "ISO-8859-1", "UTF-8",
-                                         NULL, &text->text_length,
+                                         NULL, &text_length,
                                          NULL);
+          text->text_length = text_length;
 
 #endif
 

@@ -1,3 +1,9 @@
+2008-03-28  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/common/png.c: Fixed a bug where a pointer to a gint
+	is passed to a function which expects gsize, which can cause
+	out of bounds access.
+
 2008-03-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/gui.c: #include <gdk/gdkx.h>
