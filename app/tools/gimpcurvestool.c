@@ -284,7 +284,7 @@ gimp_curves_tool_button_release (GimpTool              *tool,
                                                   release_type, display);
 }
 
-gboolean
+static gboolean
 gimp_curves_tool_key_press (GimpTool    *tool,
                             GdkEventKey *kevent,
                             GimpDisplay *display)

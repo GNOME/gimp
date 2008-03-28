@@ -181,7 +181,7 @@ gimp_plug_in_proc_frame_get_return_vals (GimpPlugInProcFrame *proc_frame)
 
           /* Free the old arguments. */
           g_free (proc_frame->return_vals->values);
-          proc_frame->return_vals->values = 0;
+          proc_frame->return_vals->values = NULL;
           proc_frame->return_vals->n_values = 0;
           g_value_array_free (proc_frame->return_vals);
         }

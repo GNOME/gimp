@@ -713,12 +713,14 @@ static void
 gimp_curve_calculate (GimpCurve *curve)
 {
   gint i;
-  gint points[curve->n_points];
+  gint *points;
   gint num_pts;
   gint p1, p2, p3, p4;
 
   if (GIMP_DATA (curve)->freeze_count > 0)
     return;
+
+  points = g_newa (gint, curve->n_points);
 
   switch (curve->curve_type)
     {

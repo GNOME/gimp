@@ -1,5 +1,27 @@
 2008-03-28  Mukund Sivaraman  <muks@mukund.org>
 
+	Fixes for some Sparse reported issues in app/
+
+	* app/core/gimpdrawable-operation.c: Added prototype for
+	gegl_node_add_child().
+
+	* app/core/gimpcurve.c: Remove C99 code
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpperspectiveclonetool.c
+	* app/vectors/gimpstroke.c: Mark functions as static.
+
+	* app/base/siox.c: state is a pointer.
+
+	* app/plug-in/gimppluginprocframe.c: values is a pointer.
+
+	* app/plug-in/plug-in-rc.c: plug_in_rc_parse() returns a pointer.
+
+	* app/plug-in/gimpinterpreterdb.c: Check program[0] for '\0'
+	instead of the pointer program itself.
+
+2008-03-28  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/common/png.c: Fixed a bug where a pointer to a gint
 	is passed to a function which expects gsize, which can cause
 	out of bounds access.

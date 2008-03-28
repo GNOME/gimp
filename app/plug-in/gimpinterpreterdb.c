@@ -297,7 +297,8 @@ gimp_interpreter_db_add_binfmt_misc (GimpInterpreterDB      *db,
   type    = tokens[1];
   program = tokens[5];
 
-  if (name[0] == '\0' || program == '\0' || type[0] == '\0' || type[1] != '\0')
+  if ((name[0] == '\0') || (program[0] == '\0') ||
+      (type[0] == '\0') || (type[1] != '\0'))
     goto bail;
 
   switch (type[0])

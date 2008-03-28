@@ -102,9 +102,9 @@ plug_in_rc_parse (Gimp         *gimp,
   gint        version      = GIMP_PROTOCOL_VERSION;
   GTokenType  token;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (filename != NULL, FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   scanner = gimp_scanner_new_file (filename, error);
 

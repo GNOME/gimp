@@ -1294,7 +1294,7 @@ siox_drb (SioxState   *state,
   gpointer     pr;
   gint         row, col;
 
-  g_return_if_fail (state != 0);
+  g_return_if_fail (state != NULL);
   g_return_if_fail (mask != NULL && tile_manager_bpp (mask) == 1);
 
   pixel_region_init (&srcPR, state->pixels,

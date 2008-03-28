@@ -636,7 +636,7 @@ gimp_stroke_point_is_movable (GimpStroke *stroke,
 }
 
 
-gboolean
+static gboolean
 gimp_stroke_real_point_is_movable (GimpStroke *stroke,
                                    GimpAnchor *predec,
                                    gdouble     position)
@@ -660,7 +660,7 @@ gimp_stroke_point_move_relative (GimpStroke            *stroke,
 }
 
 
-void
+static void
 gimp_stroke_real_point_move_relative (GimpStroke           *stroke,
                                       GimpAnchor           *predec,
                                       gdouble               position,
@@ -685,7 +685,7 @@ gimp_stroke_point_move_absolute (GimpStroke            *stroke,
                                                        feature);
 }
 
-void
+static void
 gimp_stroke_real_point_move_absolute (GimpStroke           *stroke,
                                       GimpAnchor           *predec,
                                       gdouble               position,
@@ -780,7 +780,7 @@ gimp_stroke_anchor_is_insertable (GimpStroke *stroke,
                                                                position);
 }
 
-gboolean
+static gboolean
 gimp_stroke_real_anchor_is_insertable (GimpStroke *stroke,
                                        GimpAnchor *predec,
                                        gdouble     position)
@@ -802,7 +802,7 @@ gimp_stroke_anchor_insert (GimpStroke *stroke,
                                                         predec, position);
 }
 
-GimpAnchor *
+static GimpAnchor *
 gimp_stroke_real_anchor_insert (GimpStroke *stroke,
                                 GimpAnchor *predec,
                                 gdouble     position)
@@ -982,7 +982,7 @@ gimp_stroke_duplicate (const GimpStroke *stroke)
   return GIMP_STROKE_GET_CLASS (stroke)->duplicate (stroke);
 }
 
-GimpStroke *
+static GimpStroke *
 gimp_stroke_real_duplicate (const GimpStroke *stroke)
 {
   GimpStroke *new_stroke;

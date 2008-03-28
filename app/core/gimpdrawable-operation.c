@@ -32,6 +32,11 @@
 #include "gimpprogress.h"
 
 
+#warning FIXME: gegl_node_add_child() is not public API
+
+extern GeglNode *    gegl_node_add_child    (GeglNode      *self,
+                                             GeglNode      *child);
+
 void
 gimp_drawable_apply_operation (GimpDrawable *drawable,
                                GeglNode     *operation,
@@ -68,6 +73,8 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
                                 "tile-manager", gimp_drawable_get_shadow_tiles (drawable),
                                 "linear",       linear,
                                 NULL);
+
+#warning FIXME: gegl_node_add_child() is not public API
 
   gegl_node_add_child (gegl, operation);
 

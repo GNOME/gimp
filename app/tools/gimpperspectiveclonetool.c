@@ -429,7 +429,7 @@ gimp_perspective_clone_tool_prepare (GimpPerspectiveCloneTool *clone_tool,
   clone_tool->trans_info[Y3] = clone_tool->y2;
 }
 
-void
+static void
 gimp_perspective_clone_tool_recalc (GimpPerspectiveCloneTool *clone_tool,
                                     GimpDisplay              *display)
 {
