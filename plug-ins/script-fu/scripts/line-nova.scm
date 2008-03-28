@@ -19,12 +19,7 @@
         (drw-width (car (gimp-drawable-width drw)))
         (drw-height (car (gimp-drawable-height drw)))
         (drw-offsets (gimp-drawable-offsets drw))
-        (old-selection
-          (if (eq? (car (gimp-selection-is-empty img)) TRUE)
-              #f
-              (car (gimp-selection-save img))
-          )
-        )
+        (old-selection FALSE)
         (radius (max drw-height drw-width))
         (index 0)
         (dir-deg/line (/ 360 num-of-lines))
@@ -75,6 +70,14 @@
     )
 
     (gimp-image-undo-group-start img)
+
+    (set! old-selection
+	 (if (eq? (car (gimp-selection-is-empty img)) TRUE)
+	     #f
+	     (car (gimp-selection-save img))
+	 )
+    )
+
     (gimp-selection-none img)
     (srand (realtime))
     (while (< index num-of-lines)
@@ -85,6 +88,7 @@
       (set! index (+ index 1))
     )
     (gimp-edit-bucket-fill drw FG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+
     (if old-selection
       (begin
         (gimp-selection-load old-selection)
@@ -93,6 +97,7 @@
         (gimp-image-remove-channel img old-selection)
       )
     )
+
     (gimp-image-undo-group-end img)
     (gimp-displays-flush)
   )
@@ -104,7 +109,7 @@
   "Shuji Narazaki <narazaki@gimp.org>"
   "Shuji Narazaki"
   "1997,1998"
-  ""
+  "*"
   SF-IMAGE       "Image"               0
   SF-DRAWABLE    "Drawable"            0
   SF-ADJUSTMENT _"Number of lines"     '(200 40 1000 1 1 0 1)

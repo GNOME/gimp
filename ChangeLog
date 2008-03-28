@@ -1,5 +1,13 @@
 2008-03-28  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/scripts/line-nova.scm (script-fu-line-nova):
+	move the call to gimp-selection-save inside the undo group.
+
+	(script-fu-register): use "*" as image type (not "") so the menu
+	item is disabled when there is no image.
+
+2008-03-28  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: require glib >= 2.16.1. Don't warn about
 	deprecations for glib >= 2.19.0 and gtk+ >= 2.15.0. Remove check
 	for GIO but keep the --without-gio option for the URI plugin.
