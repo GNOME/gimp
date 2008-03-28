@@ -1,5 +1,9 @@
 2008-03-28  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimphelpui.c: updated documentation.
+
+2008-03-28  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/tips-parser.[ch]
 	* app/dialogs/tips-dialog.c: improved the creation of fallback
 	tips in case of an error parsing the tips file.

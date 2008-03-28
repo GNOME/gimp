@@ -178,9 +178,9 @@ gimp_help_connect (GtkWidget    *widget,
  * @tooltip: The text for this widget's tooltip (or %NULL).
  * @help_id: The @help_id for the #GtkTipsQuery tooltips inspector.
  *
- * The reason why we don't use gtk_tooltips_set_tip() is that it's
- * impossible to set a @private_tip (aka @help_id) without a visible
- * @tooltip.
+ * The reason why we don't use gtk_widget_set_tooltip_text() is that
+ * elements in the GIMP user interface should, if possible, also have
+ * a @help_id set for context-sensitive help.
  *
  * This function can be called with #NULL for @tooltip. Use this feature
  * if you want to set a help link for a widget which shouldn't have
