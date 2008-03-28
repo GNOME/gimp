@@ -1,5 +1,9 @@
 2008-03-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/gui.c: #include <gdk/gdkx.h>
+
+2008-03-28  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/scripts/guides-from-selection.scm
 	* plug-ins/script-fu/scripts/guides-new-percent.scm
 	* plug-ins/script-fu/scripts/guides-new.scm
