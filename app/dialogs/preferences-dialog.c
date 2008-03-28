@@ -1812,9 +1812,6 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add (object, "show-help-button",
                           _("Show help _buttons"),
                           GTK_BOX (vbox2));
-  prefs_check_button_add (object, "show-tips",
-                          _("Show tips on _startup"),
-                          GTK_BOX (vbox2));
 
   /*  Help Browser  */
   vbox2 = prefs_frame_new (_("Help Browser"), GTK_CONTAINER (vbox), FALSE);

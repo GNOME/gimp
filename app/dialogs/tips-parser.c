@@ -103,19 +103,33 @@ static const GMarkupParser markup_parser =
 
 
 GimpTip *
-gimp_tip_new (const gchar *format,
+gimp_tip_new (const gchar *title,
+              const gchar *format,
               ...)
 {
-  GimpTip *tip;
-  va_list  args;
+  GimpTip *tip = g_slice_new0 (GimpTip);
+  GString *str = g_string_new (NULL);
 
-  g_return_val_if_fail (format != NULL, NULL);
+  if (title)
+    {
+      g_string_append (str, "<b>");
+      g_string_append (str, title);
+      g_string_append (str, "</b>");
 
-  tip = g_slice_new0 (GimpTip);
+      if (format)
+        g_string_append (str, "\n\n");
+    }
 
-  va_start (args, format);
-  tip->thetip = g_strdup_vprintf (format, args);
-  va_end (args);
+  if (format)
+    {
+      va_list  args;
+
+      va_start (args, format);
+      g_string_append_vprintf (str, format, args);
+      va_end (args);
+    }
+
+  tip->thetip = g_string_free (str, FALSE);
 
   return tip;
 }

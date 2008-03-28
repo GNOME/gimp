@@ -61,7 +61,6 @@ tips_dialog_create (Gimp *gimp)
 {
   GimpGuiConfig *config;
   GtkWidget     *vbox;
-  GtkWidget     *vbox2;
   GtkWidget     *hbox;
   GtkWidget     *button;
   GtkWidget     *image;
@@ -85,33 +84,31 @@ tips_dialog_create (Gimp *gimp)
 
           if (! error)
             {
-              tip = gimp_tip_new (_("<b>The GIMP tips file is empty!</b>"));
+              tip = gimp_tip_new (_("The GIMP tips file is empty!"), NULL);
             }
           else if (error->code == G_FILE_ERROR_NOENT)
             {
-              tip = gimp_tip_new (_("<b>The GIMP tips file appears to be "
-                                    "missing!</b>\n\n"
-                                    "There should be a file called '%s'. "
+              tip = gimp_tip_new (_("The GIMP tips file appears to be "
+                                    "missing!"),
+                                  _("There should be a file called '%s'. "
                                     "Please check your installation."),
                                   gimp_filename_to_utf8 (filename));
             }
           else
             {
-              tip = gimp_tip_new (_("<b>The GIMP tips file could not be "
-                                    "parsed:</b>\n\n%s"),
-                                  error->message);
+              tip = gimp_tip_new (_("The GIMP tips file could not be parsed!"),
+                                  "%s", error->message);
             }
 
           tips = g_list_prepend (tips, tip);
-          g_error_free (error);
         }
       else if (error)
         {
           g_printerr ("Error while parsing '%s': %s\n",
                       filename, error->message);
-          g_error_free (error);
         }
 
+      g_clear_error (&error);
       g_free (filename);
     }
 
@@ -167,27 +164,20 @@ tips_dialog_create (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
-  vbox2 = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
-  gtk_widget_show (vbox2);
-
   thetip_label = gtk_label_new (NULL);
   gtk_label_set_selectable (GTK_LABEL (thetip_label), TRUE);
   gtk_label_set_justify (GTK_LABEL (thetip_label), GTK_JUSTIFY_LEFT);
   gtk_label_set_line_wrap (GTK_LABEL (thetip_label), TRUE);
   gtk_misc_set_alignment (GTK_MISC (thetip_label), 0.5, 0.5);
-  gtk_box_pack_start (GTK_BOX (vbox2), thetip_label, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), thetip_label, TRUE, TRUE, 0);
   gtk_widget_show (thetip_label);
 
-  gtk_container_set_focus_chain (GTK_CONTAINER (vbox2), NULL);
-
-  vbox2 = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
-  gtk_widget_show (vbox2);
-
   image = gtk_image_new_from_stock (GIMP_STOCK_INFO, GTK_ICON_SIZE_DIALOG);
-  gtk_box_pack_start (GTK_BOX (vbox2), image, TRUE, FALSE, 0);
+  gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.5);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
+
+  gtk_container_set_focus_chain (GTK_CONTAINER (hbox), NULL);
 
   tips_dialog_set_tip (current_tip->data);
 

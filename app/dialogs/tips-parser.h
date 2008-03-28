@@ -31,8 +31,9 @@ struct _GimpTip
 };
 
 
-GimpTip * gimp_tip_new        (const gchar  *format,
-                               ...) G_GNUC_PRINTF(1, 2);
+GimpTip * gimp_tip_new        (const gchar  *title,
+                               const gchar  *format,
+                               ...) G_GNUC_PRINTF(2, 3);
 void      gimp_tip_free       (GimpTip      *tip);
 
 GList   * gimp_tips_from_file (const gchar  *filename,

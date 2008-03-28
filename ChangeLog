@@ -1,3 +1,21 @@
+2008-03-28  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/tips-parser.[ch]
+	* app/dialogs/tips-dialog.c: improved the creation of fallback
+	tips in case of an error parsing the tips file.
+	(tips_dialog_create): simplified dialog layout.
+	
+	* app/dialogs/preferences-dialog.c: removed the check button for
+	the "show-tips" option.
+
+2008-03-28  Sven Neumann  <sven@gimp.org>
+
+	* data/tips/gimp-tips.dtd
+	* data/tips/gimp-tips.xml.in
+	* app/dialogs/tips-parser.[ch]: reverted some of the changes from
+	yesterday. The simplification went too far and we inadvertently
+	lost an important feature.
+
 2008-03-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/pnm.c (load_image): changed message to say
