@@ -40,8 +40,6 @@
 #include "libgimpbase/gimpwin32-io.h"
 #endif
 
-#include "libgimpmath/gimpmath.h"
-
 #include "gimpthumb-error.h"
 #include "gimpthumb-types.h"
 #include "gimpthumb-utils.h"
@@ -763,14 +761,21 @@ static const gchar *
 gimp_thumb_png_name (const gchar *uri)
 {
   static gchar name[40];
-  guchar       digest[16];
-  guchar       n;
-  gint         i;
 
-  gimp_md5_get_digest (uri, -1, digest);
+  GChecksum *checksum;
+  guchar     digest[16];
+  gsize      len = sizeof (digest);
+  gsize      i;
 
-  for (i = 0; i < 16; i++)
+  checksum = g_checksum_new (G_CHECKSUM_MD5);
+  g_checksum_update (checksum, (const guchar *) uri, -1);
+  g_checksum_get_digest (checksum, digest, &len);
+  g_checksum_free (checksum);
+
+  for (i = 0; i < len; i++)
     {
+      guchar n;
+
       n = (digest[i] >> 4) & 0xF;
       name[i * 2]     = (n > 9) ? 'a' + n - 10 : '0' + n;
 

@@ -1,5 +1,14 @@
 2008-03-28  Sven Neumann  <sven@gimp.org>
 
+	* libgimpthumb/gimpthumb-utils.c (gimp_thumb_png_name): use
+	GCheckSum instead of the MD5 routine from libgimpmath.
+
+	* gimpthumb.pc.in
+	* libgimpthumb/Makefile.am: removed libgimpmath dependency from
+	libgimpthumb.
+
+2008-03-28  Sven Neumann  <sven@gimp.org>
+
 	* app/sanity.c (sanity_check_glib): bumped glib version.
 
 2008-03-28  Sven Neumann  <sven@gimp.org>
