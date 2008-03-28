@@ -68,7 +68,12 @@ static gboolean   gimp_context_help_idle_show_help (gpointer        data);
 /**
  * gimp_help_enable_tooltips:
  *
- * This function calls gtk_tooltips_enable().
+ * Enable tooltips to be shown in the GIMP user interface.
+ *
+ * As a plug-in author, you don't need to care about this as this
+ * function is called for you from gimp_ui_init(). This ensures that
+ * the user setting from the GIMP preferences dialog is respected in
+ * all plug-in dialogs.
  **/
 void
 gimp_help_enable_tooltips (void)
@@ -83,7 +88,12 @@ gimp_help_enable_tooltips (void)
 /**
  * gimp_help_disable_tooltips:
  *
- * This function calls gtk_tooltips_disable().
+ * Disable tooltips to be shown in the GIMP user interface.
+ *
+ * As a plug-in author, you don't need to care about this as this
+ * function is called for you from gimp_ui_init(). This ensures that
+ * the user setting from the GIMP preferences dialog is respected in
+ * all plug-in dialogs.
  **/
 void
 gimp_help_disable_tooltips (void)
