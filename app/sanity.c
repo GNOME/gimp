@@ -90,7 +90,7 @@ static gchar *
 sanity_check_glib (void)
 {
 #define GLIB_REQUIRED_MAJOR 2
-#define GLIB_REQUIRED_MINOR 14
+#define GLIB_REQUIRED_MINOR 16
 #define GLIB_REQUIRED_MICRO 1
 
   const gchar *mismatch = glib_check_version (GLIB_REQUIRED_MAJOR,

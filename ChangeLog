@@ -1,5 +1,9 @@
 2008-03-28  Sven Neumann  <sven@gimp.org>
 
+	* app/sanity.c (sanity_check_glib): bumped glib version.
+
+2008-03-28  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpmemsize.[ch]: deprecate gimp_memsize_to_string()
 	in favor of g_format_size_for_display().
 
