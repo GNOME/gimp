@@ -1,3 +1,9 @@
+2008-03-28  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: require glib >= 2.16.1. Don't warn about
+	deprecations for glib >= 2.19.0 and gtk+ >= 2.15.0. Remove check
+	for GIO but keep the --without-gio option for the URI plugin.
+
 2008-03-28  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimphelpui.c: show a custom tooltip for menu

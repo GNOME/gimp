@@ -41,7 +41,7 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
 m4_define([gegl_required_version], [0.0.16])
-m4_define([glib_required_version], [2.14.1])
+m4_define([glib_required_version], [2.16.1])
 m4_define([gtk_required_version], [2.12.1])
 m4_define([gdk_pixbuf_required_version], [gtk_required_version])
 m4_define([pangoft2_required_version], [1.18.0])
@@ -436,13 +436,13 @@ AM_PATH_GLIB_2_0(glib_required_version, :,
 
 PKG_CHECK_MODULES(GMODULE_NO_EXPORT, gmodule-no-export-2.0)
 
-AC_MSG_CHECKING([if GLib is version 2.17.0 or newer])
-if $PKG_CONFIG --atleast-version=2.17.0 glib-2.0; then
-  have_glib_2_17=yes
+AC_MSG_CHECKING([if GLib is version 2.19.0 or newer])
+if $PKG_CONFIG --atleast-version=2.19.0 glib-2.0; then
+  have_glib_2_19=yes
 else
-  have_glib_2_17=no
+  have_glib_2_19=no
 fi
-AC_MSG_RESULT($have_glib_2_17)
+AC_MSG_RESULT($have_glib_2_19)
 
 
 # Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
@@ -463,11 +463,11 @@ AM_PATH_GTK_2_0(gtk_required_version, :,
 
 AC_MSG_CHECKING([if GTK+ is version 2.17.0 or newer])
 if $PKG_CONFIG --atleast-version=2.17.0 gtk+-2.0; then
-  have_gtk_2_17=yes
+  have_gtk_2_15=yes
 else
-  have_gtk_2_17=no
+  have_gtk_2_15=no
 fi
-AC_MSG_RESULT($have_gtk_2_17)
+AC_MSG_RESULT($have_gtk_2_15)
 
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= gdk_pixbuf_required_version)
 
@@ -1284,16 +1284,7 @@ uri_plugin=no
 
 AC_ARG_WITH(gio, [  --without-gio           build without GIO support])
 
-have_gio="no (disabled)"
-
-if test "x$with_gio" != xno; then
-PKG_CHECK_MODULES(GIO, gio-2.0,
-  have_gio=yes,
-  AC_MSG_RESULT([no])
-  have_gio="no (gio-2.0 not found)")
-fi
-
-AM_CONDITIONAL(HAVE_GIO, test "x$have_gio" = xyes)
+AM_CONDITIONAL(HAVE_GIO, test "x$with_gio" != xno)
 
 
 gnome_vfs_modules="gnome-vfs-2.0 >= gnome_vfs_required_version"
@@ -1348,7 +1339,7 @@ fi
 AM_CONDITIONAL(HAVE_LIBCURL, test "x$have_libcurl" = xyes)
 
 
-if test "x$have_gio" = xyes; then
+if test "x$with_gio" != xno; then
   uri_plugin="yes (using GIO)"
 elif test "x$have_gnomevfs" = xyes; then
   uri_plugin="yes (using gnome-vfs)"
@@ -1845,11 +1836,11 @@ AC_SUBST(MIME_TYPES)
 
 CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED"
 
-if test "x$have_glib_2_17" != "xyes"; then
+if test "x$have_glib_2_19" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
 fi
 
-if test "x$have_gtk_2_17" != "xyes"; then
+if test "x$have_gtk_2_15" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
 fi
 
