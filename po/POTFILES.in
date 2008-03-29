@@ -314,12 +314,14 @@ app/tools/gimpforegroundselectoptions.c
 app/tools/gimpforegroundselecttool.c
 app/tools/gimpfreeselecttool.c
 app/tools/gimpfuzzyselecttool.c
+app/tools/gimpgegltool.c
 app/tools/gimphealtool.c
 app/tools/gimphistogramoptions.c
 app/tools/gimphuesaturationtool.c
 app/tools/gimpimagemaptool.c
 app/tools/gimpinkoptions-gui.c
 app/tools/gimpinktool.c
+app/tools/gimpiscissorsoptions.c
 app/tools/gimpiscissorstool.c
 app/tools/gimplevelstool.c
 app/tools/gimpmagnifyoptions.c
@@ -340,6 +342,7 @@ app/tools/gimprectangleoptions.c
 app/tools/gimprectangleselectoptions.c
 app/tools/gimprectangleselecttool.c
 app/tools/gimprectangletool.c
+app/tools/gimpregionselectoptions.c
 app/tools/gimpregionselecttool.c
 app/tools/gimprotatetool.c
 app/tools/gimpscaletool.c

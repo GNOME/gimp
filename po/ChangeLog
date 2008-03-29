@@ -1,3 +1,7 @@
+2008-03-29  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: add new files in app/tools/
+
 2008-03-28  Djihed Afifi <djihed@gmail.com> 
 
 	* ar.po: Updated Arabic Translation by .
