@@ -326,8 +326,7 @@ gui_display_create (Gimp      *gimp,
                     gdouble    scale)
 {
   GimpContext *context = gimp_get_user_context (gimp);
-  GimpObject  *object  = gui_get_empty_display (gimp);
-  GimpDisplay *display = object ? GIMP_DISPLAY (object) : NULL;
+  GimpDisplay *display = GIMP_DISPLAY (gui_get_empty_display (gimp));
 
   if (display)
     {

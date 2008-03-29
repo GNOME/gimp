@@ -1,5 +1,11 @@
 2008-03-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/gui-vtable.c (gui_display_create): remove temporary
+	"object" variable, it's prefectly fine to say GIMP_DISPLAY() on a
+	NULL pointer.
+
+2008-03-29  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: add -Wold-style-definition to CFLAGS.
 
 2008-03-29  Sven Neumann  <sven@gimp.org>
