@@ -620,7 +620,7 @@ gimp_color_profile_store_load (GimpColorProfileStore  *store,
   if (! scanner)
     return FALSE;
 
-  g_scanner_scope_add_symbol (scanner, 0, "color-profile", 0);
+  g_scanner_scope_add_symbol (scanner, 0, "color-profile", NULL);
 
   token = G_TOKEN_LEFT_PAREN;
 

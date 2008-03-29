@@ -21,6 +21,7 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdkx.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
 

@@ -1,5 +1,16 @@
 2008-03-28  Mukund Sivaraman  <muks@mukund.org>
 
+	Fixes for some Sparse reported issues in app, libgimp*/
+
+	* app/gui/gui-vtable.c: Included <gdk/gdkx.h>
+
+	* libgimp/gimpprocview.c: author, date, copyright are pointers.
+
+	* libgimpwidgets/gimpcolorprofilestore.c: Last argument of
+	g_scanner_scope_add_symbol() is a pointer.
+
+2008-03-28  Mukund Sivaraman  <muks@mukund.org>
+
 	Fixes for some Sparse reported issues in app/
 
 	* app/core/gimpdrawable-operation.c: Added prototype for
