@@ -1,3 +1,8 @@
+2008-03-29  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/lcms.c (lcms_calculate_checksum): fixed use of
+	GChecksum.
+
 2008-03-29  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpmath/gimpmd5.c: undef GIMP_DISABLE_DEPRECATED.
