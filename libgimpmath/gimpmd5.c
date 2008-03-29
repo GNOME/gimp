@@ -27,6 +27,7 @@
 
 #include <glib.h>
 
+#undef GIMP_DISABLE_DEPRECATED
 #include "gimpmd5.h"
 
 typedef struct _GimpMD5Context GimpMD5Context;

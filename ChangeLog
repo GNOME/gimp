@@ -1,5 +1,9 @@
 2008-03-29  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpmath/gimpmd5.c: undef GIMP_DISABLE_DEPRECATED.
+
+2008-03-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/gui-vtable.c: <gdk/gdkx.h> needs #ifdef GDK_WINDOWING_X11.
 
 	* app/gui/gui.c: remove the include i accidentially added here.
