@@ -35,7 +35,7 @@
 static void move_command_destruct(Command_t *parent);
 static CmdExecuteValue_t move_command_execute(Command_t *parent);
 
-CommandClass_t move_command_class = {
+static CommandClass_t move_command_class = {
    move_command_destruct,
    move_command_execute,
    NULL,			/* move_command_undo */

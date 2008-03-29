@@ -76,11 +76,11 @@ const GimpPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-static gint    sel_x1, sel_y1, sel_x2, sel_y2;
-static gint    has_sel, sel_width, sel_height;
-static SELVALS selVals;
-GimpPixelRgn   selection_rgn;
-gboolean       retVal = TRUE;  /* Toggle if cancle button clicked */
+static gint         sel_x1, sel_y1, sel_x2, sel_y2;
+static gint         has_sel, sel_width, sel_height;
+static SELVALS      selVals;
+static GimpPixelRgn selection_rgn;
+static gboolean     retVal = TRUE;  /* Toggle if cancle button clicked */
 
 MAIN ()
 

@@ -82,7 +82,7 @@ real filter_percent = .33;
 
 /* Number of adjacent points to consider if `filter_surround' points
    defines a straight line.  (-filter-secondary-surround)  */
-unsigned filter_secondary_surround = 3;
+static unsigned filter_secondary_surround = 3;
 
 /* Number of adjacent points to consider when filtering.
   (-filter-surround)  */

@@ -1073,7 +1073,7 @@ text_handler           (GMarkupParseContext  *markup_context,
                                 (char *) size_p, decoded);
           }
         else
-          add_property_value (context, XMP_PTYPE_ALT_THUMBS, 0, NULL);
+          add_property_value (context, XMP_PTYPE_ALT_THUMBS, NULL, NULL);
       }
       break;
 

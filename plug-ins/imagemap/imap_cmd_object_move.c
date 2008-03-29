@@ -33,7 +33,7 @@ static void object_move_command_destruct(Command_t *parent);
 static CmdExecuteValue_t object_move_command_execute(Command_t *parent);
 static void object_move_command_undo(Command_t *parent);
 
-CommandClass_t object_move_command_class = {
+static CommandClass_t object_move_command_class = {
    object_move_command_destruct,
    object_move_command_execute,
    object_move_command_undo,

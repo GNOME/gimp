@@ -20,7 +20,7 @@
 
 #define LIGHT_SYMBOL_SIZE 8
 
-gint handle_xpos = 0, handle_ypos = 0;
+static gint handle_xpos = 0, handle_ypos = 0;
 
 BackBuffer backbuf = { 0, 0, 0, 0, NULL };
 

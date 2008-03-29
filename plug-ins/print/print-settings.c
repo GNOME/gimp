@@ -180,7 +180,7 @@ print_settings_key_file_from_parasite (gint32 image_ID)
   if (key_file && ! print_settings_check_version (key_file))
     {
       g_key_file_free (key_file);
-      return FALSE;
+      return NULL;
     }
 
   return key_file;

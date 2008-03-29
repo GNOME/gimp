@@ -32,7 +32,7 @@
 static CmdExecuteValue_t move_selected_command_execute(Command_t *parent);
 static void move_selected_command_undo(Command_t *parent);
 
-CommandClass_t move_selected_command_class = {
+static CommandClass_t move_selected_command_class = {
    NULL,			/* move_selected_command_destruct */
    move_selected_command_execute,
    move_selected_command_undo,

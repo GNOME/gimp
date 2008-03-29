@@ -65,6 +65,9 @@ enum CellTypes {
      MASKED
 };
 
+extern MazeValues mvals;
+extern guint      sel_w, sel_h;
+extern GRand     *gr;
 
 void  get_colors (GimpDrawable *drawable,
                   guint8       *fg,

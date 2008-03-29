@@ -32,10 +32,6 @@
 #include "imap_object.h"
 #include "imap_string.h"
 
-static Object_t* object_factory_create_object (ObjectFactory_t *factory,
-                                                gint x, gint y);
-
-
 typedef struct {
    ObjectListCallbackFunc_t func;
    gpointer data;
@@ -420,7 +416,7 @@ do_object_locked_dialog(void)
    default_dialog_show(dialog);
 }
 
-Object_t*
+static Object_t*
 object_factory_create_object(ObjectFactory_t *factory, gint x, gint y)
 {
    return factory->obj = factory->create_object(x, y);

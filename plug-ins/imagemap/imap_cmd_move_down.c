@@ -31,7 +31,7 @@
 
 static CmdExecuteValue_t move_down_command_execute(Command_t *parent);
 
-CommandClass_t move_down_command_class = {
+static CommandClass_t move_down_command_class = {
    NULL,			/* move_down_command_destruct */
    move_down_command_execute,
    NULL,			/* move_down_command_undo */

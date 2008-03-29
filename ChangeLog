@@ -1,3 +1,29 @@
+2008-03-29  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/imagemap/imap_cmd_move.c
+	* plug-ins/imagemap/imap_cmd_object_up.c
+	* plug-ins/imagemap/imap_cmd_move_up.c
+	* plug-ins/imagemap/imap_cmd_move_selected.c
+	* plug-ins/imagemap/imap_cmd_move_sash.c
+	* plug-ins/imagemap/imap_cmd_object_move.c
+	* plug-ins/imagemap/imap_cmd_object_down.c
+	* plug-ins/imagemap/imap_object.c
+	* plug-ins/imagemap/imap_cmd_move_down.c
+	* plug-ins/map-object/map-object-shade.c
+	* plug-ins/map-object/map-object-apply.c
+	* plug-ins/maze/maze.h
+	* plug-ins/maze/maze_face.c
+	* plug-ins/selection-to-path/selection-to-path.c
+	* plug-ins/selection-to-path/edge.c
+	* plug-ins/selection-to-path/pxl-outline.c
+	* plug-ins/selection-to-path/fit.c
+	* plug-ins/xjt/xjt.c
+	* plug-ins/metadata/xmp-parse.c
+	* plug-ins/print/print-draw-page.c
+	* plug-ins/print/print-settings.c
+	* plug-ins/lighting/lighting-preview.c: Cleanups / fixes for
+	issues reported by Sparse.
+
 2008-03-28  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/sinus.c

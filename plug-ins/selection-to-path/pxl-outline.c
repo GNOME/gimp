@@ -193,7 +193,7 @@ free_pixel_outline_list (pixel_outline_list_type *outline_list)
 /* Return an empty list of pixels.  */
 
 
-pixel_outline_type
+static pixel_outline_type
 new_pixel_outline (void)
 {
   pixel_outline_type pixel_outline;
@@ -221,7 +221,7 @@ append_outline_pixel (pixel_outline_type *o, coordinate_type c)
    If we're on a top edge, we use the upper-left hand corner; right edge
    => upper right; bottom edge => lower right; left edge => lower left.  */
 
-void
+static void
 append_coordinate (pixel_outline_type *o, int x, int y, edge_type edge)
 {
   coordinate_type c;

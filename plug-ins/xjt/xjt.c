@@ -98,7 +98,7 @@ typedef int pid_t;
 #define XJT_ORIENTATION_HORIZONTAL 0
 #define XJT_ORIENTATION_VERTICAL   1
 
-       gint     xjt_debug = FALSE;
+static gint     xjt_debug = FALSE;
 static pid_t    g_pid;
 static gchar   *global_parasite_prop_lines = NULL;
 static gint     global_parasite_id = 0;
@@ -348,7 +348,7 @@ typedef struct
 
 
 #define PROP_TABLE_ENTRIES 35
-t_prop_table g_prop_table[PROP_TABLE_ENTRIES] = {
+static t_prop_table g_prop_table[PROP_TABLE_ENTRIES] = {
   /* t_proptype              mnemonic   t_paramtyp             default values */
   { PROP_END,                   "*",      PTYP_NOT_SUPPORTED,       0.0,  0.0,  0.0 } ,
   { PROP_COLORMAP,              "*",      PTYP_NOT_SUPPORTED,       0.0,  0.0,  0.0 } ,

@@ -23,8 +23,9 @@
 /* Main loop */
 /*************/
 
-gdouble imat[4][4];
-gfloat  rotmat[16], a[16], b[16];
+gdouble       imat[4][4];
+gfloat        rotmat[16];
+static gfloat a[16], b[16];
 
 void
 init_compute (void)

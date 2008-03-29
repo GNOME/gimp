@@ -15,7 +15,7 @@
 #include "map-object-shade.h"
 
 
-gdouble            bx1, by1, bx2, by2;
+static gdouble     bx1, by1, bx2, by2;
 get_ray_color_func get_ray_color;
 
 typedef struct

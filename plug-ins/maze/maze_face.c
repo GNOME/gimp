@@ -66,7 +66,7 @@ typedef struct
 
 /* one buffer fits all */
 #define BUFSIZE 128
-gchar buffer[BUFSIZE];
+static gchar buffer[BUFSIZE];
 
 
 gboolean     maze_dialog         (void);

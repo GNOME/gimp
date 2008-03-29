@@ -32,7 +32,7 @@
 
 COMMAND_PROTO(move_sash_command);
 
-CommandClass_t move_sash_command_class = {
+static CommandClass_t move_sash_command_class = {
    move_sash_command_destruct,
    move_sash_command_execute,
    NULL, 			/* move_sash_command_undo */

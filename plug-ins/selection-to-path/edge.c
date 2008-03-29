@@ -199,7 +199,7 @@ next_unmarked_outline_edge (unsigned row, unsigned col,
    edge with a white pixel.  The position ROW and COL should be inside
    the bitmap CHARACTER.  */
 
-boolean
+static boolean
 is_outline_edge (edge_type edge,
 		 unsigned row, unsigned col)
 {
