@@ -644,13 +644,9 @@ gimp_menu_dock_auto_clicked (GtkWidget *widget,
 
   if (menu_dock->auto_follow_active)
     {
-      if (gimp_context_get_display (dock->dialog_factory->context))
-        gimp_context_copy_property (dock->dialog_factory->context,
+      gimp_context_copy_properties (dock->dialog_factory->context,
                                     dock->context,
-                                    GIMP_CONTEXT_PROP_DISPLAY);
-      else
-        gimp_context_copy_property (dock->dialog_factory->context,
-                                    dock->context,
-                                    GIMP_CONTEXT_PROP_IMAGE);
+                                    GIMP_CONTEXT_DISPLAY_MASK |
+                                    GIMP_CONTEXT_IMAGE_MASK);
     }
 }

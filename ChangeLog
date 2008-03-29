@@ -1,5 +1,12 @@
 2008-03-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpmenudock.c (gimp_menu_dock_auto_clicked): when
+	the "Auto" button gets enabled, always copy both display and image
+	to the local context (because there can be displays without image
+	now).
+
+2008-03-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/gui-vtable.c (gui_display_create): remove temporary
 	"object" variable, it's prefectly fine to say GIMP_DISPLAY() on a
 	NULL pointer.
