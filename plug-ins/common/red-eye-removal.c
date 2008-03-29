@@ -85,8 +85,7 @@ const GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-gint threshold = 50;
-gboolean preview_toggle = TRUE;
+static gint threshold = 50;
 
 MAIN ()
 

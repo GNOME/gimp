@@ -621,7 +621,7 @@ sinus_random_update (GObject   *unused,
 /* The note book                         */
 /*****************************************/
 
-gint
+static gint
 sinus_dialog (void)
 {
   GtkWidget *dlg;
@@ -948,7 +948,7 @@ sinus_dialog (void)
 /* Draw preview image. if DoCompute is TRUE then recompute image. */
 /******************************************************************/
 
-void
+static void
 sinus_do_preview (GtkWidget *widget)
 {
   static GtkWidget *theWidget = NULL;

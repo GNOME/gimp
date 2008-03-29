@@ -286,7 +286,7 @@ struct textures_t
   glong  n;
 };
 
-struct textures_t textures[] =
+static struct textures_t textures[] =
 {
   { 0, N_("Solid"),   SOLID   },
   { 1, N_("Checker"), CHECKER },
@@ -299,13 +299,6 @@ struct textures_t textures[] =
   { 8, N_("Spots"),   SPOTS   },
   { 0, NULL,          0       }
 };
-
-struct
-{
-  gint solid, phong, light;
-}
-settings = { 1, 1, 1 };
-
 
 static inline void vset        (GimpVector4          *v,
                                 gdouble               a,
@@ -494,8 +487,7 @@ turbulence (gdouble * point, gdouble lofreq, gdouble hifreq)
   return t - 0.3;               /* readjust to make mean value = 0.0 */
 }
 
-struct camera_t camera;
-struct world_t  world;
+static struct world_t  world;
 
 static inline void
 vcopy (GimpVector4 *a, GimpVector4 *b)

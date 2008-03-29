@@ -1,5 +1,35 @@
 2008-03-28  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/common/sinus.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/mng.c
+	* plug-ins/common/wind.c
+	* plug-ins/common/gif-save.c
+	* plug-ins/common/video.c
+	* plug-ins/common/sphere-designer.c
+	* plug-ins/common/hot.c
+	* plug-ins/common/red-eye-removal.c
+	* plug-ins/common/tile-small.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/common/glob.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/noise-randomize.c
+	* plug-ins/common/convolution-matrix.c
+	* plug-ins/common/gif-load.c
+	* plug-ins/common/psd-save.c
+	* plug-ins/common/emboss.c
+	* plug-ins/common/csource.c
+	* plug-ins/common/cml-explorer.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/pcx.c
+	* plug-ins/common/engrave.c
+	* plug-ins/common/curve-bend.c: Cleanups / fixes for issues
+	reported by Sparse.
+
+2008-03-28  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/common/lcms.c: gimp_md5_get_digest() is deprecated;
 	using GChecksum instead.
 

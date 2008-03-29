@@ -145,7 +145,7 @@ struct config_tag
 };
 
 typedef struct config_tag config_t;
-config_t config =
+static config_t config =
 {
   10,          /* threshold for derivative edge detection */
   LEFT,        /* bleed to the right */

@@ -111,7 +111,7 @@ struct
   gdouble pedestal;
   gdouble gamma;
   gdouble code[3][3];
-} mode[2] = {
+} static mode[2] = {
   {
     7.5,
     2.2,

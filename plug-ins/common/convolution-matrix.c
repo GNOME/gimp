@@ -173,7 +173,7 @@ struct
   GtkWidget *bmode[BORDER_MODES];
   GtkWidget *channels[CHANNELS];
   GtkWidget *autoset;
-} widget_set;
+} static widget_set;
 
 
 MAIN ()

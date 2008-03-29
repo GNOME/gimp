@@ -1515,7 +1515,7 @@ get_image_data (FILE   *fd,
 
 
 
-gint
+static gint
 save_image (const gchar *filename,
             gint32       image_id)
 {

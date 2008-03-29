@@ -140,7 +140,7 @@ struct mng_data_t
 /* Values of the instance of the above struct when the plug-in is
  * first invoked. */
 
-struct mng_data_t mng_data =
+static struct mng_data_t mng_data =
 {
   FALSE,                        /* interlaced */
   FALSE,                        /* bkgd */
@@ -573,7 +573,7 @@ mng_save_image (const gchar *filename,
       goto err;
     }
 
-  handle = mng_initialize ((mng_ptr) userdata, myalloc, myfree, MNG_NULL);
+  handle = mng_initialize ((mng_ptr) userdata, myalloc, myfree, NULL);
   if (NULL == handle)
     {
       g_warning ("Unable to mng_initialize() in mng_save_image()");
@@ -875,7 +875,7 @@ mng_save_image (const gchar *filename,
                              layer_offset_x + layer_cols,
                              layer_offset_y,
                              layer_offset_y + layer_rows,
-                             0, 0) != MNG_NOERROR)
+                             0, NULL) != MNG_NOERROR)
         {
           g_warning ("Unable to mng_putchunk_fram() in mng_save_image()");
           goto err3;

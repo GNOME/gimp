@@ -105,7 +105,7 @@ static gboolean comment_was_edited = FALSE;
 
 static GimpRunMode run_mode;
 #ifdef FACEHUGGERS
-GimpParasite * comment_parasite = NULL;
+static GimpParasite * comment_parasite = NULL;
 #endif
 
 /* For compression code */

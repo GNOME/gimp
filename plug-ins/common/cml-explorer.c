@@ -1749,7 +1749,7 @@ CML_dialog_advanced_panel_new (void)
   return vbox;
 }
 
-void
+static void
 preview_update (void)
 {
   if (! CML_preview_defer)

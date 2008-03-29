@@ -389,7 +389,7 @@ select_window_x11 (GdkScreen *screen)
   gint          x_scr       = GDK_SCREEN_XNUMBER (screen);
   Window        x_root      = RootWindow (x_dpy, x_scr);
   Window        x_win       = None;
-  GC            x_gc          = None;
+  GC            x_gc        = NULL;
   Cursor        x_cursor    = XCreateFontCursor (x_dpy, GDK_CROSSHAIR);
   GdkKeymapKey *keys        = NULL;
   gint          status;
@@ -593,7 +593,7 @@ select_window_x11 (GdkScreen *screen)
 
   XFreeCursor (x_dpy, x_cursor);
 
-  if (x_gc != None)
+  if (x_gc != NULL)
     XFreeGC (x_dpy, x_gc);
 
   return x_win;

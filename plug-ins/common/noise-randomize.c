@@ -90,14 +90,14 @@
  */
 #define PROG_UPDATE_TIME ((row % 12) == 0)
 
-gchar *PLUG_IN_PROC[] =
+static gchar *PLUG_IN_PROC[] =
 {
   "plug-in-randomize-hurl",
   "plug-in-randomize-pick",
   "plug-in-randomize-slur",
 };
 
-gchar *RNDM_NAME[] =
+static gchar *RNDM_NAME[] =
 {
   N_("Random Hurl"),
   N_("Random Pick"),
@@ -112,7 +112,7 @@ gchar *RNDM_NAME[] =
 
 #define SCALE_WIDTH  100
 
-gint rndm_type = RNDM_HURL;  /* hurl, pick, etc. */
+static gint rndm_type = RNDM_HURL;  /* hurl, pick, etc. */
 
 /*********************************
  *

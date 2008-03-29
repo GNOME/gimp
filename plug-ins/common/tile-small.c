@@ -156,7 +156,7 @@ typedef struct
   GtkWidget *applybut; /* The apply button  */
 } Exp_Call;
 
-Exp_Call exp_call =
+static Exp_Call exp_call =
 {
   ALL,
   -1,
@@ -174,7 +174,7 @@ typedef struct
   GtkWidget *vtoggle;
 } Reset_Call;
 
-Reset_Call res_call =
+static Reset_Call res_call =
 {
   NULL,
   NULL,

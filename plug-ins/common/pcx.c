@@ -255,7 +255,7 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-guchar mono[6]= { 0, 0, 0, 255, 255, 255 };
+static guchar mono[6]= { 0, 0, 0, 255, 255, 255 };
 
 static struct
 {

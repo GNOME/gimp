@@ -1049,7 +1049,7 @@ p_delta_gint32 (gint32  *val,
     *val  = val_from + delta;
 }
 
-void
+static void
 p_copy_points (BenderDialog *cd,
                int           outline,
                int           xy,
@@ -1068,7 +1068,7 @@ p_copy_points (BenderDialog *cd,
    }
 }
 
-void
+static void
 p_copy_yval (BenderDialog *cd,
              int           outline,
              int           argc,
@@ -2537,7 +2537,7 @@ p_put_pixel (t_GDRW *gdrw,
   gimp_pixel_fetcher_put_pixel (gdrw->pft, x, y, pixel);
 }
 
-void
+static void
 p_put_mix_pixel (t_GDRW *gdrw,
                  gint32  x,
                  gint32  y,
@@ -2622,7 +2622,7 @@ p_clear_drawable (GimpDrawable *drawable)
  * p_create_pv_image
  * ============================================================================
  */
-gint32
+static gint32
 p_create_pv_image (GimpDrawable *src_drawable,
                    gint32    *layer_id)
 {
@@ -2756,7 +2756,7 @@ p_add_layer (gint       width,
  * ============================================================================
  */
 
-void
+static void
 p_bender_calculate_iter_curve (BenderDialog *cd,
                                gint32        xmax,
                                gint32        ymax)
@@ -3149,7 +3149,7 @@ p_vertical_bend (BenderDialog *cd,
  * ============================================================================
  */
 
-gint32
+static gint32
 p_main_bend (BenderDialog *cd,
              GimpDrawable    *original_drawable,
              gint          work_on_copy)

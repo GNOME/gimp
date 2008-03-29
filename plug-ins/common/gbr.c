@@ -109,7 +109,7 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 /*  private variables  */
 
-BrushInfo info =
+static BrushInfo info =
 {
   "GIMP Brush",
   10

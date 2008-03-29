@@ -100,7 +100,7 @@ typedef struct
   GimpRGB icolor;
 } Config;
 
-Config grid_cfg =
+static Config grid_cfg =
 {
   1, 16, 8, { 0.0, 0.0, 0.0, 1.0 },    /* horizontal   */
   1, 16, 8, { 0.0, 0.0, 0.0, 1.0 },    /* vertical     */

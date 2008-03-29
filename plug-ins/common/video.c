@@ -34,9 +34,10 @@
 #define MAX_PATTERNS       9
 #define MAX_PATTERN_SIZE 108
 
-const gint   pattern_width[MAX_PATTERNS] = { 2, 4, 1, 1, 2, 3, 6, 6, 5 };
-const gint   pattern_height[MAX_PATTERNS] = { 6, 12, 3, 6, 12, 3, 6, 18, 15 };
-const gchar *pattern_name[MAX_PATTERNS] =
+static const gint   pattern_width[MAX_PATTERNS] = { 2, 4, 1, 1, 2, 3, 6, 6, 5 };
+static const gint   pattern_height[MAX_PATTERNS] = { 6, 12, 3, 6, 12, 3, 6,
+                                                     18, 15 };
+static const gchar *pattern_name[MAX_PATTERNS] =
 {
   N_("_Staggered"),
   N_("_Large staggered"),
@@ -49,7 +50,7 @@ const gchar *pattern_name[MAX_PATTERNS] =
   N_("_Dots")
 };
 
-const gint pattern[MAX_PATTERNS][MAX_PATTERN_SIZE] =
+static const gint pattern[MAX_PATTERNS][MAX_PATTERN_SIZE] =
 {
   {
     0, 1,
@@ -157,7 +158,7 @@ const gint pattern[MAX_PATTERNS][MAX_PATTERN_SIZE] =
 #define PREVIEW_HEIGHT 100
 
 /* The raw preview image */
-const guchar preview_raw[3 * PREVIEW_WIDTH * PREVIEW_HEIGHT] =
+static const guchar preview_raw[3 * PREVIEW_WIDTH * PREVIEW_HEIGHT] =
 {
 223,233,242,223,233,242,219,229,238,220,230,239,224,234,243,225,235,244,225,
 235,244,226,236,245,226,232,243,228,234,245,227,233,244,226,231,242,230,236,

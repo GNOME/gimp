@@ -333,7 +333,7 @@ struct globals_tag
 
 typedef struct globals_tag globals_t;
 
-static globals_t globals = { { 0 } };
+static globals_t globals;
 
 MAIN ()
 

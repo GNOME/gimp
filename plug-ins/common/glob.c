@@ -443,7 +443,7 @@ fnmatch_intern (const gchar *pattern,
   return FALSE;
 }
 
-gboolean
+static gboolean
 glob_fnmatch (const gchar *pattern,
               const gchar *string)
 {

@@ -156,9 +156,9 @@ static void      type_combo_callback (GimpIntComboBox *combo,
 
 
 /* LAB colorspace constants */
-const double Xn	= 0.951;
-const double Yn	= 1.0;
-const double Zn	= 1.089;
+static const double Xn  = 0.951;
+static const double Yn  = 1.0;
+static const double Zn  = 1.089;
 
 /* Maximum number of images to compose */
 #define MAX_COMPOSE_IMAGES 4

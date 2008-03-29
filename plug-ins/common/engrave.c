@@ -413,7 +413,7 @@ typedef struct
   guchar *data;
 } PixelArea;
 
-PixelArea area;
+static PixelArea area;
 
 static void
 engrave_small (GimpDrawable *drawable,

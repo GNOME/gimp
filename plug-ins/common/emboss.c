@@ -69,7 +69,7 @@ struct embossFilter
   gdouble Nz2;
   gdouble NzLz;
   gdouble bg;
-} Filter;
+} static Filter;
 
 static void     query         (void);
 static void     run           (const gchar      *name,

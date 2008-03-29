@@ -72,7 +72,7 @@ const GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-Config config =
+static Config config =
 {
   NULL,         /* file_name */
   "gimp_image", /* prefixed_name */

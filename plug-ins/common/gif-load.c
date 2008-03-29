@@ -581,7 +581,7 @@ DoExtension (FILE *fd,
   return FALSE;
 }
 
-int ZeroDataBlock = FALSE;
+static int ZeroDataBlock = FALSE;
 
 static int
 GetDataBlock (FILE          *fd,
