@@ -242,8 +242,7 @@ gimp_sample_point_editor_style_set (GtkWidget *widget,
   GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (widget);
   gint                   content_spacing;
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_style_get (widget,
                         "content-spacing", &content_spacing,

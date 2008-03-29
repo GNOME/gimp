@@ -226,8 +226,7 @@ gimp_curve_view_style_set (GtkWidget *widget,
 {
   GimpCurveView *view = GIMP_CURVE_VIEW (widget);
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   if (view->xpos_layout)
     {

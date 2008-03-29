@@ -216,7 +216,7 @@ static void
 gimp_menu_dock_style_set (GtkWidget *widget,
                           GtkStyle  *prev_style)
 {
-  GimpMenuDock *menu_dock;
+  GimpMenuDock *menu_dock        = GIMP_MENU_DOCK (widget);
   gint          minimal_width;
   GtkIconSize   menu_view_size;
   GtkSettings  *settings;
@@ -226,10 +226,7 @@ gimp_menu_dock_style_set (GtkWidget *widget,
   gint          focus_padding;
   gint          ythickness;
 
-  menu_dock = GIMP_MENU_DOCK (widget);
-
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_style_get (widget,
                         "minimal-width",     &minimal_width,
@@ -562,7 +559,7 @@ gimp_menu_dock_image_changed (GimpContext *context,
   if (image == NULL && ! gimp_container_is_empty (image_container))
     {
       image = GIMP_IMAGE (gimp_container_get_child_by_index (image_container,
-                                                              0));
+                                                             0));
 
       if (image)
         {

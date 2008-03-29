@@ -373,8 +373,7 @@ gimp_dock_style_set (GtkWidget *widget,
   gchar                *font_str;
   gchar                *rc_string;
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_style_get (widget, "default-height", &default_height, NULL);
 

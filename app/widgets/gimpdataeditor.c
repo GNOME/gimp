@@ -313,8 +313,7 @@ gimp_data_editor_style_set (GtkWidget *widget,
   GimpDataEditor *editor = GIMP_DATA_EDITOR (widget);
   gint            minimal_height;
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_style_get (widget,
                         "minimal-height", &minimal_height,

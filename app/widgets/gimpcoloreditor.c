@@ -476,8 +476,7 @@ gimp_color_editor_style_set (GtkWidget *widget,
 {
   GimpColorEditor *editor = GIMP_COLOR_EDITOR (widget);
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   if (editor->hbox)
     gimp_editor_set_box_style (GIMP_EDITOR (editor), GTK_BOX (editor->hbox));

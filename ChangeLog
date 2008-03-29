@@ -1,3 +1,23 @@
+2008-03-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpcanvas.c
+	* app/widgets/gimpcoloreditor.c
+	* app/widgets/gimpcolorframe.c
+	* app/widgets/gimpcursorview.c
+	* app/widgets/gimpcurveview.c
+	* app/widgets/gimpdataeditor.c
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpdockable.c
+	* app/widgets/gimpdockbook.c
+	* app/widgets/gimpdockseparator.c
+	* app/widgets/gimpeditor.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpmenudock.c
+	* app/widgets/gimpsamplepointeditor.c
+	* app/widgets/gimptoolbox.c: chain up unconditionally in
+	GtkWidget::style_set() because there is has a default
+	implementation.
+
 2008-03-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpmenudock.c (gimp_menu_dock_auto_clicked): when

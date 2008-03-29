@@ -436,8 +436,7 @@ gimp_toolbox_style_set (GtkWidget *widget,
   GtkReliefStyle  relief;
   GList          *list;
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, previous_style);
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, previous_style);
 
   if (! GIMP_DOCK (widget)->context)
     return;

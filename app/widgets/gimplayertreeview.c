@@ -438,8 +438,7 @@ gimp_layer_tree_view_style_set (GtkWidget *widget,
   gtk_table_set_row_spacings (GTK_TABLE (layer_view->options_box),
                               content_spacing);
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 }
 
 

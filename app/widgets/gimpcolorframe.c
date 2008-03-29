@@ -254,8 +254,7 @@ gimp_color_frame_style_set (GtkWidget *widget,
 {
   GimpColorFrame *frame = GIMP_COLOR_FRAME (widget);
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   if (frame->number_layout)
     {

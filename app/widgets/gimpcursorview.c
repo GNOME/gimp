@@ -317,8 +317,7 @@ gimp_cursor_view_style_set (GtkWidget *widget,
   GimpCursorView *view = GIMP_CURSOR_VIEW (widget);
   gint            content_spacing;
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_style_get (GTK_WIDGET (view),
                         "content-spacing", &content_spacing,

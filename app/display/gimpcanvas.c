@@ -274,8 +274,7 @@ gimp_canvas_style_set (GtkWidget *widget,
 {
   GimpCanvas *canvas = GIMP_CANVAS (widget);
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   if (canvas->layout)
     {

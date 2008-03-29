@@ -430,8 +430,7 @@ gimp_dockable_style_set (GtkWidget *widget,
   GimpDockable *dockable = GIMP_DOCKABLE (widget);
   gint          content_border;
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_style_get (widget,
                         "content-border", &content_border,
