@@ -1,5 +1,10 @@
 2008-03-29  Mukund Sivaraman  <muks@mukund.org>
 
+	* app/core/gimpdrawable-operation.c: Use #warning only if
+	compiler is gcc.
+
+2008-03-29  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/imagemap/imap_cmd_move.c
 	* plug-ins/imagemap/imap_cmd_object_up.c
 	* plug-ins/imagemap/imap_cmd_move_up.c

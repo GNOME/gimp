@@ -31,8 +31,9 @@
 #include "gimpdrawable-operation.h"
 #include "gimpprogress.h"
 
-
+#ifdef __GNUC__
 #warning FIXME: gegl_node_add_child() is not public API
+#endif
 
 extern GeglNode *    gegl_node_add_child    (GeglNode      *self,
                                              GeglNode      *child);
@@ -74,7 +75,9 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
                                 "linear",       linear,
                                 NULL);
 
+#ifdef __GNUC__
 #warning FIXME: gegl_node_add_child() is not public API
+#endif
 
   gegl_node_add_child (gegl, operation);
 
