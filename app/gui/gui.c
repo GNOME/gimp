@@ -22,10 +22,6 @@
 
 #include <gtk/gtk.h>
 
-#ifdef GDK_WINDOWING_X11
-#include <gdk/gdkx.h>
-#endif
-
 #if HAVE_DBUS_GLIB
 #define DBUS_API_SUBJECT_TO_CHANGE
 #include <dbus/dbus-glib.h>

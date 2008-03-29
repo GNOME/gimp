@@ -21,7 +21,10 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+
+#ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
+#endif
 
 #include "libgimpwidgets/gimpwidgets.h"
 
