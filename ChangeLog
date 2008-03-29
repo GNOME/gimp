@@ -1,3 +1,7 @@
+2008-03-29  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: add -Wold-style-definition to CFLAGS.
+
 2008-03-29  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpprocview.c (gimp_proc_view_new): code cleanup.
