@@ -1,5 +1,10 @@
 2008-03-28  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/common/lcms.c: gimp_md5_get_digest() is deprecated;
+	using GChecksum instead.
+
+2008-03-28  Mukund Sivaraman  <muks@mukund.org>
+
 	Fixes for some Sparse reported issues in app, libgimp*/
 
 	* app/gui/gui-vtable.c: Included <gdk/gdkx.h>

@@ -733,9 +733,16 @@ lcms_calculate_checksum (const gchar *data,
                          guchar      *digest)
 {
   if (digest)
-    gimp_md5_get_digest (data + sizeof (icHeader),
-                         len - sizeof (icHeader),
-                         digest);
+    {
+      GChecksum *md5 = g_checksum_new (G_CHECKSUM_MD5);
+      gsize length;
+
+      g_checksum_update (md5, (guchar *) data + sizeof (icHeader),
+                         len - sizeof (icHeader));
+
+      g_checksum_get_digest (md5, digest, &length);
+      g_checksum_free (md5);
+    }
 }
 
 static cmsHPROFILE
