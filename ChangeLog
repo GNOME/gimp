@@ -1,5 +1,13 @@
 2008-03-29  Sven Neumann  <sven@gimp.org>
 
+	* libgimpmath/gimpmd5.[ch]: removed implementation of the MD5
+	algorithm and delegate to GChecksum instead.
+	
+	* libgimpmath/Makefile.am
+	* libgimpmath/test-md5.c: removed test of the MD5 implementation.
+
+2008-03-29  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/lcms.c (lcms_calculate_checksum): fixed use of
 	GChecksum.
 

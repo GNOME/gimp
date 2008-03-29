@@ -87,25 +87,6 @@ libgimpmath_2_0_la_DEPENDENCIES = $(gimpmath_def) $(libgimpbase)
 libgimpmath_2_0_la_LIBADD = $(GLIB_LIBS) $(libm)
 
 
-#
-# test programs, not to be built by default and never installed
-#
-
-TESTS = test-md5$(EXEEXT)
-
-EXTRA_PROGRAMS = test-md5
-
-test_md5_DEPENDENCIES = \
-	$(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
-
-test_md5_LDADD = \
-	$(GLIB_LIBS) 		\
-	$(test_md5_DEPENDENCIES)
-
-
-CLEANFILES = $(EXTRA_PROGRAMS)
-
-
 install-data-local: install-ms-lib install-libtool-import-lib
 
 uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
