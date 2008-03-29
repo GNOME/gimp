@@ -1,5 +1,9 @@
 2008-03-29  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpprocview.c (gimp_proc_view_new): code cleanup.
+
+2008-03-29  Sven Neumann  <sven@gimp.org>
+
 	* libgimpmath/gimpmd5.[ch]: removed implementation of the MD5
 	algorithm and delegate to GChecksum instead.
 	

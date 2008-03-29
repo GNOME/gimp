@@ -190,10 +190,7 @@ gimp_proc_view_new (const gchar     *name,
   if (! author && ! date && ! copyright)
     return main_vbox;
 
-  table = gtk_table_new (((author != NULL) +
-                          (date != NULL) +
-                          (copyright != NULL)),
-                         2, FALSE);
+  table = gtk_table_new (0, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
