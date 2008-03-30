@@ -104,5 +104,5 @@ gimp_area_list_free (GSList *areas)
   for (list = areas; list; list = list->next)
     gimp_area_free (list->data);
 
-  g_slist_free (list);
+  g_slist_free (areas);
 }

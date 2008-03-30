@@ -1,5 +1,10 @@
 2008-03-30  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimparea.c (gimp_area_list_free): don't leak the memory
+	allocated for the GSList.
+
+2008-03-30  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontainertreeview.c: added a finalizer that frees
 	the memory allocated for the cell lists.
 
