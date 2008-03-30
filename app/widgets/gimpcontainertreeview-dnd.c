@@ -314,10 +314,18 @@ gimp_container_tree_view_drag_drop (GtkWidget             *widget,
       tree_view_class = GIMP_CONTAINER_TREE_VIEW_GET_CLASS (tree_view);
 
       if (src_viewable)
-        tree_view_class->drop_viewable (tree_view, src_viewable,
-                                        dest_viewable, drop_pos);
+        {
+          gboolean success = TRUE;
+
+          tree_view_class->drop_viewable (tree_view, src_viewable,
+                                          dest_viewable, drop_pos);
+
+          gtk_drag_finish (context, success, FALSE, time);
+        }
       else
-        gtk_drag_get_data (widget, context, target, time);
+        {
+          gtk_drag_get_data (widget, context, target, time);
+        }
 
       return TRUE;
     }

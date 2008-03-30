@@ -1,3 +1,12 @@
+2008-03-30  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Merged from trunk:
+
+	* app/widgets/gimpcontainertreeview-dnd.c
+	(gimp_container_tree_view_drag_drop): Make all code paths result
+	in a call to gtk_drag_finish() if we return TRUE. Fixes bug
+	#317992.
+
 2008-03-30  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
