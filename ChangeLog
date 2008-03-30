@@ -1,5 +1,10 @@
 2008-03-30  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_scale_changed):
+	never set the dest_inc and src_dec variables to zero.
+
+2008-03-30  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-cursor.[ch]: added new function
 	gimp_display_shell_unset_cursor().
 	(gimp_display_shell_real_set_cursor): deal with cursor_type -1 and

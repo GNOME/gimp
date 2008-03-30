@@ -1382,10 +1382,10 @@ gimp_display_shell_scale_changed (GimpDisplayShell *shell)
       shell->scale_x = 1.0;
       shell->scale_y = 1.0;
 
-      shell->x_dest_inc = shell->disp_width;
-      shell->y_dest_inc = shell->disp_height;
-      shell->x_src_dec  = shell->disp_width;
-      shell->y_src_dec  = shell->disp_height;
+      shell->x_dest_inc = 1;
+      shell->y_dest_inc = 1;
+      shell->x_src_dec  = 1;
+      shell->y_src_dec  = 1;
     }
 }
 
