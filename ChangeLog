@@ -1,5 +1,9 @@
 2008-03-30  Sven Neumann  <sven@gimp.org>
 
+	* app/xcf/xcf-load.c (xcf_load_image): don't leak the grid.
+
+2008-03-30  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_scale_changed):
 	never set the dest_inc and src_dec variables to zero.
 
