@@ -1,3 +1,8 @@
+2008-03-30  Sven Neumann  <sven@gimp.org>
+
+	* gimpheal.c (gimp_heal_motion): applied the same cleanups as in
+	the gimp-2-4 branch (see bug #521433).
+
 2008-03-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpcanvas.c
