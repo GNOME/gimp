@@ -162,6 +162,8 @@ xcf_load_image (Gimp    *gimp,
                                      gimp_parasite_name (parasite));
 
           gimp_image_set_grid (GIMP_IMAGE (image), grid, FALSE);
+          g_object_unref (grid);
+
         }
     }
 

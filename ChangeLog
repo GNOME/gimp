@@ -1,5 +1,11 @@
 2008-03-30  Sven Neumann  <sven@gimp.org>
 
+	Merged from trunk:
+
+	* app/xcf/xcf-load.c (xcf_load_image): don't leak the grid.
+
+2008-03-30  Sven Neumann  <sven@gimp.org>
+
 	Merged Bill's changes for bug #521433 from trunk with some minor
 	cleanups:
 
