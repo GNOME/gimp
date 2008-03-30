@@ -24,6 +24,7 @@ void   gimp_display_shell_set_cursor            (GimpDisplayShell   *shell,
                                                  GimpCursorType      cursor_type,
                                                  GimpToolCursorType  tool_cursor,
                                                  GimpCursorModifier  modifier);
+void   gimp_display_shell_unset_cursor          (GimpDisplayShell   *shell);
 void   gimp_display_shell_set_override_cursor   (GimpDisplayShell   *shell,
                                                  GimpCursorType      cursor_type);
 void   gimp_display_shell_unset_override_cursor (GimpDisplayShell   *shell);

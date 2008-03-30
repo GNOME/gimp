@@ -67,6 +67,18 @@ gimp_display_shell_set_cursor (GimpDisplayShell   *shell,
 }
 
 void
+gimp_display_shell_unset_cursor (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (! shell->using_override_cursor)
+    {
+      gimp_display_shell_real_set_cursor (shell,
+                                          (GimpCursorType) -1, 0, 0, FALSE);
+    }
+}
+
+void
 gimp_display_shell_set_override_cursor (GimpDisplayShell *shell,
                                         GimpCursorType    cursor_type)
 {
@@ -212,6 +224,16 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
   GimpCursorFormat cursor_format;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (cursor_type == (GimpCursorType) -1)
+    {
+      shell->current_cursor = cursor_type;
+
+      if (GTK_WIDGET_DRAWABLE (shell->canvas))
+        gdk_window_set_cursor (shell->canvas->window, NULL);
+
+      return;
+    }
 
   if (cursor_type != GIMP_CURSOR_NONE &&
       cursor_type != GIMP_CURSOR_BAD)

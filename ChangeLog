@@ -1,5 +1,16 @@
 2008-03-30  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-cursor.[ch]: added new function
+	gimp_display_shell_unset_cursor().
+	(gimp_display_shell_real_set_cursor): deal with cursor_type -1 and
+	change the cursor to the default desktop cursor. Fixes warnings on
+	image load.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_empty):
+	use gimp_display_shell_unset_cursor().
+
+2008-03-30  Sven Neumann  <sven@gimp.org>
+
 	* gimpheal.c (gimp_heal_motion): applied the same cleanups as in
 	the gimp-2-4 branch (see bug #521433).
 
