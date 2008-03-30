@@ -7,6 +7,18 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Changes in GIMP 2.4.6
+=====================
+
+- fixed handling of the "antialias" tool option (bug #521069)
+- when loading a TIFF image, always set a filename on it (bug #521436)
+- fixed initial state of curve type in Curves tool (bug #523873)
+- fixed potential crash in the Dicom load plug-in
+- respect the brush mask in the Heal tool (bug #521433)
+- added new translation (nn)
+- translation fixes and updates (ar, ca, el, fi, fr, it, pl, sv)
+
+
 Changes in GIMP 2.4.5
 =====================
 
