@@ -427,7 +427,6 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                   gint              paint_area_height)
 {
   GimpPaintCore *paint_core = GIMP_PAINT_CORE (source_core);
-  GimpBrushCore *brush_core = GIMP_BRUSH_CORE (source_core);
   GimpContext   *context    = GIMP_CONTEXT (paint_options);
   TempBuf       *src;
   TempBuf       *temp;
@@ -437,7 +436,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   GimpImageType  src_type;
   TempBuf       *mask_buf;
 
-  mask_buf = gimp_brush_core_get_brush_mask (brush_core,
+  mask_buf = gimp_brush_core_get_brush_mask (GIMP_BRUSH_CORE (source_core),
                                              GIMP_BRUSH_HARD);
 
   src_type = gimp_pickable_get_image_type (src_pickable);
@@ -522,13 +521,10 @@ gimp_heal_motion (GimpSourceCore   *source_core,
       /* this generally means that the source point has hit the edge of the
          layer, so it is not an error and we should not complain, just
          don't do anything */
-      g_print ("shape mismatch in gimpheal\n");
-      g_print ("src width = %d\n", srcPR->w);
-      g_print ("src height = %d\n", srcPR->h);
-      g_print ("mask width = %d\n", mask_buf->width);
-      g_print ("mask height = %d\n", mask_buf->height);
+
       temp_buf_free (src);
       temp_buf_free (temp);
+
       return;
     }
 
