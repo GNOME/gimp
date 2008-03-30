@@ -36,6 +36,7 @@
 #include "core/gimppickable.h"
 #include "core/gimpimage.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpbrush.h"
 
 #include "gimpheal.h"
 #include "gimpsourceoptions.h"
@@ -50,25 +51,60 @@
  */
 
 
-static gboolean   gimp_heal_start  (GimpPaintCore    *paint_core,
-                                    GimpDrawable     *drawable,
-                                    GimpPaintOptions *paint_options,
-                                    GimpCoords       *coords,
-                                    GError          **error);
+static gboolean     gimp_heal_start              (GimpPaintCore    *paint_core,
+                                                  GimpDrawable     *drawable,
+                                                  GimpPaintOptions *paint_options,
+                                                  GimpCoords       *coords,
+                                                  GError          **error);
 
-static void       gimp_heal_motion (GimpSourceCore   *source_core,
-                                    GimpDrawable     *drawable,
-                                    GimpPaintOptions *paint_options,
-                                    gdouble           opacity,
-                                    GimpPickable     *src_pickable,
-                                    PixelRegion      *srcPR,
-                                    gint              src_offset_x,
-                                    gint              src_offset_y,
-                                    TempBuf          *paint_area,
-                                    gint              paint_area_offset_x,
-                                    gint              paint_area_offset_y,
-                                    gint              paint_area_width,
-                                    gint              paint_area_height);
+static void         gimp_heal_class_init         (GimpHealClass    *klass);
+
+static void         gimp_heal_init               (GimpHeal         *heal);
+
+static void         gimp_heal_substitute_0_for_1 (PixelRegion      *pr);
+
+static void         gimp_heal_divide             (PixelRegion      *topPR,
+                                                  PixelRegion      *bottomPR,
+                                                  gdouble          *result);
+
+static void         gimp_heal_multiply           (gdouble          *first,
+                                                  PixelRegion      *secondPR,
+                                                  PixelRegion      *resultPR);
+
+static gdouble      gimp_heal_laplace_iteration  (gdouble          *matrix,
+                                                  gint              height,
+                                                  gint              depth,
+                                                  gint              width,
+                                                  gdouble          *solution,
+                                                  guchar           *mask);
+
+static void         gimp_heal_laplace_loop       (gdouble          *matrix,
+                                                  gint              height,
+                                                  gint              depth,
+                                                  gint              width,
+                                                  gdouble          *solution,
+                                                  guchar           *mask);
+
+static PixelRegion *gimp_heal_region             (PixelRegion      *tempPR,
+                                                  PixelRegion      *srcPR,
+                                                  TempBuf          *mask_buf);
+
+static void         gimp_heal_motion             (GimpSourceCore   *source_core,
+                                                  GimpDrawable     *drawable,
+                                                  GimpPaintOptions *paint_options,
+                                                  gdouble           opacity,
+                                                  GimpPickable     *src_pickable,
+                                                  PixelRegion      *srcPR,
+                                                  gint              src_offset_x,
+                                                  gint              src_offset_y,
+                                                  TempBuf          *paint_area,
+                                                  gint              paint_area_offset_x,
+                                                  gint              paint_area_offset_y,
+                                                  gint              paint_area_width,
+                                                  gint              paint_area_height);
+
+
+
 
 
 G_DEFINE_TYPE (GimpHeal, gimp_heal, GIMP_TYPE_SOURCE_CORE)
@@ -268,7 +304,8 @@ gimp_heal_laplace_iteration (gdouble *matrix,
                              gint     height,
                              gint     depth,
                              gint     width,
-                             gdouble *solution)
+                             gdouble *solution,
+                             guchar  *mask)
 {
   gint     rowstride = width * depth;
   gint     i, j, k;
@@ -279,10 +316,10 @@ gimp_heal_laplace_iteration (gdouble *matrix,
     {
       for (j = 0; j < width; j++)
         {
-          if ((i == 0) || (i == (height - 1)) ||
+          if ((0 == *mask) || (i == 0) || (i == (height - 1)) ||
               (j == 0) || (j == (height - 1)))
             {
-              /* do nothing at the boundary */
+              /* do nothing at the boundary or outside mask */
               for (k = 0; k < depth; k++)
                 *(solution + k) = *(matrix + k);
             }
@@ -308,6 +345,7 @@ gimp_heal_laplace_iteration (gdouble *matrix,
           /* advance pointers to data */
           matrix += depth;
           solution += depth;
+          mask++;
         }
     }
 
@@ -322,7 +360,8 @@ gimp_heal_laplace_loop (gdouble *matrix,
                         gint     height,
                         gint     depth,
                         gint     width,
-                        gdouble *solution)
+                        gdouble *solution,
+                        guchar  *mask)
 {
 #define EPSILON   0.0001
 #define MAX_ITER  500
@@ -334,8 +373,8 @@ gimp_heal_laplace_loop (gdouble *matrix,
       gdouble sqr_err;
 
       /* do one iteration and store the amount of error */
-      sqr_err = gimp_heal_laplace_iteration (matrix,
-                                             height, depth, width, solution);
+      sqr_err = gimp_heal_laplace_iteration (matrix, height, depth, width,
+                                             solution, mask);
 
       /* copy solution to matrix */
       memcpy (matrix, solution, width * height * depth * sizeof (double));
@@ -353,10 +392,12 @@ gimp_heal_laplace_loop (gdouble *matrix,
  */
 static PixelRegion *
 gimp_heal_region (PixelRegion *tempPR,
-                  PixelRegion *srcPR)
+                  PixelRegion *srcPR,
+                  TempBuf     *mask_buf)
 {
-  gdouble *i_1 = g_new (gdouble, tempPR->h * tempPR->bytes * tempPR->w);
-  gdouble *i_2 = g_new (gdouble, tempPR->h * tempPR->bytes * tempPR->w);
+  gdouble *i_1  = g_new (gdouble, tempPR->h * tempPR->bytes * tempPR->w);
+  gdouble *i_2  = g_new (gdouble, tempPR->h * tempPR->bytes * tempPR->w);
+  guchar  *mask = temp_buf_data (mask_buf);
 
   /* substitute 0's for 1's for the division and multiplication operations that
    * come later
@@ -367,7 +408,7 @@ gimp_heal_region (PixelRegion *tempPR,
   gimp_heal_divide (tempPR, srcPR, i_1);
 
   /* FIXME: is a faster implementation needed? */
-  gimp_heal_laplace_loop (i_1, tempPR->h, tempPR->bytes, tempPR->w, i_2);
+  gimp_heal_laplace_loop (i_1, tempPR->h, tempPR->bytes, tempPR->w, i_2, mask);
 
   /* multiply a double by srcPR and store in tempPR */
   gimp_heal_multiply (i_2, srcPR, tempPR);
@@ -393,6 +434,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                   gint              paint_area_width,
                   gint              paint_area_height)
 {
+  GimpHeal      *heal       = GIMP_HEAL (source_core);
   GimpPaintCore *paint_core = GIMP_PAINT_CORE (source_core);
   GimpContext   *context    = GIMP_CONTEXT (paint_options);
   TempBuf       *src;
@@ -401,6 +443,10 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   PixelRegion    tempPR;
   PixelRegion    destPR;
   GimpImageType  src_type;
+  TempBuf       *mask_buf;
+
+  mask_buf = gimp_brush_core_get_brush_mask (GIMP_BRUSH_CORE (source_core),
+                                             GIMP_BRUSH_HARD);
 
   src_type = gimp_pickable_get_image_type (src_pickable);
 
@@ -438,10 +484,10 @@ gimp_heal_motion (GimpSourceCore   *source_core,
         temp_buf_free (src);
 
       src = temp2;
-
-      /* reinitialize srcPR */
-      pixel_region_init_temp_buf (srcPR, src, 0, 0, src->width, src->height);
     }
+
+  /* reinitialize srcPR */
+  pixel_region_init_temp_buf (srcPR, src, 0, 0, src->width, src->height);
 
   /* FIXME: the area under the cursor and the source area should be x% larger
    * than the brush size.  Otherwise the brush must be a lot bigger than the
@@ -475,20 +521,24 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                               paint_area_offset_x, paint_area_offset_y,
                               paint_area_width, paint_area_height);
 
-  /* check that srcPR, tempPR, and destPR are the same size */
+  /* check that srcPR, tempPR, destPR, and mask_buf are the same size */
   if ((srcPR->w != tempPR.w) || (srcPR->w != destPR.w) ||
-      (srcPR->h != tempPR.h) || (srcPR->h != destPR.h))
+      (srcPR->h != tempPR.h) || (srcPR->h != destPR.h) ||
+      (srcPR->h != mask_buf->height) ||
+      (srcPR->w != mask_buf->width))
     {
       /* this generally means that the source point has hit the edge of the
          layer, so it is not an error and we should not complain, just
          don't do anything */
+
       temp_buf_free (src);
       temp_buf_free (temp);
+
       return;
     }
 
   /* heal tempPR using srcPR */
-  gimp_heal_region (&tempPR, srcPR);
+  gimp_heal_region (&tempPR, srcPR, mask_buf);
 
   /* reinitialize tempPR */
   pixel_region_init_temp_buf (&tempPR, temp, 0, 0, temp->width, temp->height);

@@ -126,5 +126,8 @@ void    gimp_brush_core_color_area_with_pixmap
                                         TempBuf                  *area,
                                         GimpBrushApplicationMode  mode);
 
+TempBuf * gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
+                                          GimpBrushApplicationMode  brush_hardness);
+
 
 #endif  /*  __GIMP_BRUSH_CORE_H__  */

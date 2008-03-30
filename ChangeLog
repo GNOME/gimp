@@ -1,3 +1,13 @@
+2008-03-30  Sven Neumann  <sven@gimp.org>
+
+	Merged Bill's changes for bug #521433 from trunk with some minor
+	cleanups:
+
+	* app/paint/gimpbrushcore.[ch]: made
+	gimp_brush_core_get_brush_mask() public.
+
+	* app/paint/gimpheal.c: respect the brush mask.
+
 2008-03-24  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
