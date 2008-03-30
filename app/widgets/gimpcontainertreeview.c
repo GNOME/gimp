@@ -57,6 +57,7 @@ static GObject *gimp_container_tree_view_constructor  (GType                   t
                                                        guint                   n_params,
                                                        GObjectConstructParam  *params);
 
+static void    gimp_container_tree_view_finalize      (GObject                *object);
 static void    gimp_container_tree_view_unmap         (GtkWidget              *widget);
 static gboolean  gimp_container_tree_view_popup_menu  (GtkWidget              *widget);
 
@@ -124,6 +125,7 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->constructor = gimp_container_tree_view_constructor;
+  object_class->finalize    = gimp_container_tree_view_finalize;
 
   widget_class->unmap       = gimp_container_tree_view_unmap;
   widget_class->popup_menu  = gimp_container_tree_view_popup_menu;
@@ -268,6 +270,32 @@ gimp_container_tree_view_constructor (GType                  type,
                     tree_view);
 
   return object;
+}
+
+static void
+gimp_container_tree_view_finalize (GObject *object)
+{
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (object);
+
+  if (tree_view->toggle_cells)
+    {
+      g_list_free (tree_view->toggle_cells);
+      tree_view->toggle_cells = NULL;
+    }
+
+  if (tree_view->renderer_cells)
+    {
+      g_list_free (tree_view->renderer_cells);
+      tree_view->renderer_cells = NULL;
+    }
+
+  if (tree_view->editable_cells)
+    {
+      g_list_free (tree_view->editable_cells);
+      tree_view->editable_cells = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
