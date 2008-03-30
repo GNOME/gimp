@@ -59,41 +59,42 @@ GSList *
 gimp_area_list_process (GSList   *list,
                         GimpArea *area)
 {
-  GSList *new_list;
+  GSList *retval;
   GSList *l;
-  gint    area1, area2, area3;
 
-  /*  start new list off  */
-  new_list = g_slist_prepend (NULL, area);
+  retval = g_slist_prepend (NULL, area);
 
   for (l = list; l; l = g_slist_next (l))
     {
-      GimpArea *ga2 = l->data;
+      GimpArea *this = l->data;
+      gint      area1;
+      gint      area2;
+      gint      area3;
 
       area1 = (area->x2 - area->x1) * (area->y2 - area->y1) + OVERHEAD;
-      area2 = (ga2->x2 - ga2->x1) * (ga2->y2 - ga2->y1) + OVERHEAD;
-      area3 = ((MAX (ga2->x2, area->x2) - MIN (ga2->x1, area->x1)) *
-               (MAX (ga2->y2, area->y2) - MIN (ga2->y1, area->y1)) + OVERHEAD);
+      area2 = (this->x2 - this->x1) * (this->y2 - this->y1) + OVERHEAD;
+      area3 = ((MAX (this->x2, area->x2) - MIN (this->x1, area->x1)) *
+               (MAX (this->y2, area->y2) - MIN (this->y1, area->y1)) + OVERHEAD);
 
-      if ((area1 + area2) < area3)
+      if (area1 + area2 < area3)
         {
-          new_list = g_slist_prepend (new_list, ga2);
+          retval = g_slist_prepend (retval, this);
         }
       else
         {
-          area->x1 = MIN (area->x1, ga2->x1);
-          area->y1 = MIN (area->y1, ga2->y1);
-          area->x2 = MAX (area->x2, ga2->x2);
-          area->y2 = MAX (area->y2, ga2->y2);
+          area->x1 = MIN (area->x1, this->x1);
+          area->y1 = MIN (area->y1, this->y1);
+          area->x2 = MAX (area->x2, this->x2);
+          area->y2 = MAX (area->y2, this->y2);
 
-          g_slice_free (GimpArea, ga2);
+          g_slice_free (GimpArea, this);
         }
     }
 
   if (list)
     g_slist_free (list);
 
-  return new_list;
+  return retval;
 }
 
 void
