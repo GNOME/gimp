@@ -2,6 +2,13 @@
 
 	Merged from trunk:
 
+	* app/core/gimparea.c (gimp_area_list_free): don't leak the memory
+	allocated for the GSList.
+
+2008-03-30  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
 	* app/xcf/xcf-load.c (xcf_load_image): don't leak the grid.
 
 2008-03-30  Sven Neumann  <sven@gimp.org>
