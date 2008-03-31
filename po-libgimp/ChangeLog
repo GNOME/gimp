@@ -1,5 +1,9 @@
 2008-04-01  Sven Neumann  <sven@gimp.org>
 
+	* de.po: updated German translation.
+
+2008-04-01  Sven Neumann  <sven@gimp.org>
+
 	* POTFILES.in: added libgimpwidgets/gimphelpui.c.
 
 2008-03-12  Åsmund Skjæveland  <aasmunds@ulrik.uio.no>
