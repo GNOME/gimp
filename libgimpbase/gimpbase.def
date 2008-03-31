@@ -92,6 +92,8 @@ EXPORTS
 	gimp_stack_trace_mode_get_type
 	gimp_strip_uline
 	gimp_sysconf_directory
+	gimp_text_direction_get_type
+	gimp_text_justification_get_type 
 	gimp_transfer_mode_get_type
 	gimp_transform_direction_get_type
 	gimp_transform_resize_get_type

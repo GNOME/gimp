@@ -449,6 +449,30 @@ typedef enum
 } GimpProgressCommand;
 
 
+#define GIMP_TYPE_TEXT_DIRECTION (gimp_text_direction_get_type ())
+
+GType gimp_text_direction_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_TEXT_DIRECTION_LTR,   /*< desc="From left to right" >*/
+  GIMP_TEXT_DIRECTION_RTL    /*< desc="From right to left" >*/
+} GimpTextDirection;
+
+
+#define GIMP_TYPE_TEXT_JUSTIFICATION (gimp_text_justification_get_type ())
+
+GType gimp_text_justification_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_TEXT_JUSTIFY_LEFT,    /*< desc="Left justified"  >*/
+  GIMP_TEXT_JUSTIFY_RIGHT,   /*< desc="Right justified" >*/
+  GIMP_TEXT_JUSTIFY_CENTER,  /*< desc="Centered"        >*/
+  GIMP_TEXT_JUSTIFY_FILL     /*< desc="Filled"          >*/
+} GimpTextJustification;
+
+
 #ifndef GIMP_DISABLE_DEPRECATED
 #define GIMP_TYPE_USER_DIRECTORY (gimp_user_directory_get_type ())
 

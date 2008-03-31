@@ -1,3 +1,12 @@
+2008-03-31  Sven Neumann  <sven@gimp.org>
+
+	* app/text/text-enums.[ch]
+	* libgimpbase/gimpbaseenums.[ch]: as a first step towards a new
+	text PDB API, moved GimpTextDirection and GimpTextJustification
+	enums to libgimpbase.
+
+	* libgimpbase/gimpbase.def: updated.
+
 2008-03-31  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/maze/*: renamed most files and added proper headers
