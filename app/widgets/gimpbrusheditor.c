@@ -456,6 +456,11 @@ gimp_brush_editor_notify_brush (GimpBrushGenerated   *brush,
       adj   = editor->aspect_ratio_data;
       value = brush->aspect_ratio;
     }
+  else if (! strcmp (pspec->name, "spacing"))
+    {
+      adj   = editor->spacing_data;
+      value = GIMP_BRUSH (brush)->spacing;
+    }
 
   if (adj)
     {

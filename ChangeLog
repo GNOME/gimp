@@ -1,3 +1,8 @@
+2008-03-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpbrusheditor.c (gimp_brush_editor_notify_brush):
+	Add missing code for the "spacing" property. Spotted by Jerry Baker.
+
 2008-03-30  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/widgets/gimpcontainertreeview-dnd.c
