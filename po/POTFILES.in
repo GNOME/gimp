@@ -277,7 +277,6 @@ app/plug-in/plug-in-enums.c
 app/plug-in/plug-in-icc-profile.c
 app/plug-in/plug-in-rc.c
 
-app/text/text-enums.c
 app/text/gimpfont.c
 app/text/gimptext-compat.c
 app/text/gimptextlayer.c

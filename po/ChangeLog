@@ -1,3 +1,7 @@
+2008-04-01  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed app/text/text-enums.h.
+
 2008-03-29  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: add new files in app/tools/
