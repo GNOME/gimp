@@ -11,6 +11,9 @@
 	text PDB API, moved GimpTextDirection and GimpTextJustification
 	enums to libgimpbase.
 
+	* libgimp/gimpenums.c.tail
+	* tools/pdbgen/enums.pl: regenerated.
+
 	* libgimpbase/gimpbase.def: updated.
 
 2008-03-31  Michael Natterer  <mitch@gimp.org>
