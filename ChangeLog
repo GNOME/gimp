@@ -61,8 +61,7 @@
 	* app/widgets/gimpmenudock.c
 	* app/widgets/gimpsamplepointeditor.c
 	* app/widgets/gimptoolbox.c: chain up unconditionally in
-	GtkWidget::style_set() because there is has a default
-	implementation.
+	GtkWidget::style_set() because it has a default implementation.
 
 2008-03-29  Michael Natterer  <mitch@gimp.org>
 
