@@ -1,3 +1,9 @@
+2008-04-01  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-title.c
+	(gimp_display_shell_update_title_idle): no need to translate the
+	empty string.
+
 2008-03-31  Sven Neumann  <sven@gimp.org>
 
 	* app/text/text-enums.[ch]

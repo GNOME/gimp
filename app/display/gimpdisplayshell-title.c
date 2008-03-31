@@ -114,8 +114,7 @@ gimp_display_shell_update_title_idle (gpointer data)
     {
       gdk_window_set_title (GTK_WIDGET (shell)->window, GIMP_NAME);
 
-      gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar), "title",
-                              "%s", _(" "));
+      gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar), "title", "");
     }
 
   return FALSE;
