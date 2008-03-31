@@ -29,7 +29,7 @@
 
 #include "libgimp/gimp.h"
 
-#include "maze.h"
+#include "maze-utils.h"
 
 
 /* get_colors Returns the current foreground and background colors in
@@ -51,7 +51,7 @@ get_colors (GimpDrawable *drawable,
   fg[0] = fg[1] = fg[2] = fg[3] = 255;
   bg[0] = bg[1] = bg[2] = bg[3] = 255;
 
-  switch ( gimp_drawable_type (drawable->drawable_id) )
+  switch (gimp_drawable_type (drawable->drawable_id))
     {
     case GIMP_RGB_IMAGE:
     case GIMP_RGBA_IMAGE:
@@ -106,57 +106,51 @@ get_colors (GimpDrawable *drawable,
  *  We could keep a row of each color on hand so we wouldn't have to
  *  re-fill it every time...  */
 
-#include "config.h"
-
-#include <stdlib.h>
-
-#include "libgimp/gimp.h"
-
-#include "maze.h"
-
-
 void
-drawbox( GimpPixelRgn *dest_rgn,
-	 guint x, guint y, guint w, guint h,
-	 guint8 clr[4])
+drawbox (GimpPixelRgn *dest_rgn,
+	 guint         x,
+         guint         y,
+         guint         w,
+         guint         h,
+	 guint8        clr[4])
 {
-     const guint bpp = dest_rgn->bpp;
-     const guint x_min = x * bpp;
+  const guint bpp = dest_rgn->bpp;
+  const guint x_min = x * bpp;
 
-     /* x_max = dest_rgn->bpp * MIN(dest_rgn->w, (x + w)); */
-     /* rowsize = x_max - x_min */
-     const guint rowsize = bpp * MIN(dest_rgn->w, (x + w)) - x_min;
+  /* x_max = dest_rgn->bpp * MIN(dest_rgn->w, (x + w)); */
+  /* rowsize = x_max - x_min */
+  const guint rowsize = bpp * MIN (dest_rgn->w, (x + w)) - x_min;
 
-     /* The maximum [xy] value is that of the far end of the box, or
-      * the edge of the region, whichever comes first. */
-     const guint y_max = dest_rgn->rowstride * MIN(dest_rgn->h, (y + h));
+  /* The maximum [xy] value is that of the far end of the box, or
+   * the edge of the region, whichever comes first. */
+  const guint y_max = dest_rgn->rowstride * MIN (dest_rgn->h, (y + h));
 
-     static guint8 *rowbuf;
-     static guint high_size = 0;
+  static guint8 *rowbuf;
+  static guint high_size = 0;
 
-     guint xx, yy;
+  guint xx, yy;
 
-     /* Does the row buffer need to be (re)allocated? */
-     if (high_size == 0)
-       {
-	 rowbuf = g_new (guint8, rowsize);
-       }
-     else if (rowsize > high_size)
-       {
-	 rowbuf = g_renew (guint8, rowbuf, rowsize);
-       }
+  /* Does the row buffer need to be (re)allocated? */
+  if (high_size == 0)
+    {
+      rowbuf = g_new (guint8, rowsize);
+    }
+  else if (rowsize > high_size)
+    {
+      rowbuf = g_renew (guint8, rowbuf, rowsize);
+    }
 
-     high_size = MAX(high_size, rowsize);
+  high_size = MAX (high_size, rowsize);
 
-     /* Fill the row buffer with the color. */
-     for (xx = 0; xx < rowsize; xx += bpp)
-       {
-	 memcpy (&rowbuf[xx], clr, bpp);
-       }
+  /* Fill the row buffer with the color. */
+  for (xx = 0; xx < rowsize; xx += bpp)
+    {
+      memcpy (&rowbuf[xx], clr, bpp);
+    }
 
-     /* Fill in the box in the region with rows... */
-     for (yy = dest_rgn->rowstride * y; yy < y_max; yy += dest_rgn->rowstride)
-       {
-	 memcpy (&dest_rgn->data[yy + x_min], rowbuf, rowsize);
-       }
+  /* Fill in the box in the region with rows... */
+  for (yy = dest_rgn->rowstride * y; yy < y_max; yy += dest_rgn->rowstride)
+    {
+      memcpy (&dest_rgn->data[yy + x_min], rowbuf, rowsize);
+    }
 }

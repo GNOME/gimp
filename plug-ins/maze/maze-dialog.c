@@ -32,6 +32,7 @@
 #include <libgimp/gimpui.h>
 
 #include "maze.h"
+#include "maze-dialog.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -51,7 +52,8 @@
 #define MORE  1
 #define LESS -1
 
-typedef void (* EntscaleIntCallback) (gint value, gpointer data);
+typedef void (* EntscaleIntCallback) (gint     value,
+                                      gpointer data);
 
 typedef struct
 {
@@ -67,10 +69,6 @@ typedef struct
 /* one buffer fits all */
 #define BUFSIZE 128
 static gchar buffer[BUFSIZE];
-
-
-gboolean     maze_dialog         (void);
-static void  maze_message        (const gchar *message);
 
 
 /* Looking back, it would probably have been easier to completely
@@ -117,42 +115,38 @@ static void  maze_message        (const gchar *message);
          gtk_signal_handler_block ().   (Sven)
 */
 
-static void div_button_callback   (GtkWidget *button, GtkWidget *entry);
-static void div_entry_callback    (GtkWidget *entry, GtkWidget *friend);
-static void height_width_callback (gint width, GtkWidget **div_entry);
+static void        maze_message          (const gchar *message);
+static void        div_button_callback   (GtkWidget   *button,
+                                          GtkWidget   *entry);
+static void        div_entry_callback    (GtkWidget   *entry,
+                                          GtkWidget   *friend);
+static void        height_width_callback (gint         width,
+                                          GtkWidget  **div_entry);
 
-static GtkWidget* divbox_new (guint *max,
-			      GtkWidget *friend,
-			      GtkWidget **div_entry);
-
-#if 0
-static void div_buttonl_callback (GtkObject *object);
-static void div_buttonr_callback (GtkObject *object);
-#endif
+static GtkWidget * divbox_new            (guint       *max,
+                                          GtkWidget   *friend,
+                                          GtkWidget  **div_entry);
 
 /* entscale stuff begin */
-static GtkWidget * entscale_int_new (GtkWidget           *table,
-                                     gint                 x,
-                                     gint                 y,
-                                     const gchar         *caption,
-                                     gint                *intvar,
-                                     gint                 min,
-                                     gint                 max,
-                                     gboolean             constraint,
-                                     EntscaleIntCallback  callback,
-                                     gpointer             data);
+static GtkWidget * entscale_int_new          (GtkWidget           *table,
+                                              gint                 x,
+                                              gint                 y,
+                                              const gchar         *caption,
+                                              gint                *intvar,
+                                              gint                 min,
+                                              gint                 max,
+                                              gboolean             constraint,
+                                              EntscaleIntCallback  callback,
+                                              gpointer             data);
 
-static void   entscale_int_scale_update (GtkAdjustment *adjustment,
-					 gpointer       data);
-static void   entscale_int_entry_update (GtkWidget     *widget,
-					 gpointer       data);
+static void        entscale_int_scale_update (GtkAdjustment       *adjustment,
+                                              gpointer             data);
+static void        entscale_int_entry_update (GtkWidget           *widget,
+                                              gpointer             data);
 
 
 #define ISODD(X) ((X) & 1)
 /* entscale stuff end */
-
-extern MazeValues mvals;
-extern guint      sel_w, sel_h;
 
 static GtkWidget *msg_label;
 
@@ -175,7 +169,7 @@ maze_dialog (void)
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  dialog = gimp_dialog_new (_(MAZE_TITLE), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("Maze"), PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 

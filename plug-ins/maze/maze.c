@@ -43,6 +43,9 @@
 #include "libgimp/gimpui.h"
 
 #include "maze.h"
+#include "maze-algorithms.h"
+#include "maze-dialog.h"
+#include "maze-utils.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -67,40 +70,6 @@ static void      mask_maze (gint32  selection_ID,
 			    gint    deadx,
 			    gint    deady);
 
-/* In maze_face.c */
-extern gint      maze_dialog      (void);
-
-/* In algorithms.c */
-extern void      mazegen          (gint    pos,
-				   guchar *maz,
-				   gint    x,
-				   gint    y,
-				   gint    rnd);
-extern void      mazegen_tileable (gint    pos,
-				   guchar *maz,
-				   gint    x,
-				   gint    y,
-				   gint    rnd);
-extern void      prim             (guint   pos,
-				   guchar *maz,
-				   guint   x,
-				   guint   y);
-extern void      prim_tileable    (guchar *maz,
-				   guint   x,
-				   guint   y);
-
-/* In handy.c */
-extern void      get_colors (GimpDrawable *drawable,
-			     guint8       *fg,
-			     guint8       *bg);
-
-extern void      drawbox    (GimpPixelRgn *dest_rgn,
-			     guint         x,
-			     guint         y,
-			     guint         w,
-			     guint         h,
-			     guint8        clr[4]);
-
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -124,7 +93,8 @@ MazeValues mvals =
 
 GRand *gr;
 
-guint sel_w, sel_h;
+guint sel_w;
+guint sel_h;
 
 
 MAIN ()
@@ -258,8 +228,10 @@ run (const gchar      *name,
 	gimp_displays_flush ();
 
       if (run_mode == GIMP_RUN_INTERACTIVE ||
-	  (run_mode == GIMP_RUN_WITH_LAST_VALS))
-	gimp_set_data (PLUG_IN_PROC, &mvals, sizeof (MazeValues));
+	  run_mode == GIMP_RUN_WITH_LAST_VALS)
+        {
+          gimp_set_data (PLUG_IN_PROC, &mvals, sizeof (MazeValues));
+        }
     }
   else
     {
@@ -268,13 +240,16 @@ run (const gchar      *name,
 
   values[0].data.d_status = status;
 
-  g_rand_free (gr);
   gimp_drawable_detach (drawable);
+
+  g_rand_free (gr);
 }
 
 #ifdef MAZE_DEBUG
 void
-maze_dump (guchar *maz, gint mw, gint mh)
+maze_dump (guchar *maz,
+           gint    mw,
+           gint    mh)
 {
   short xx, yy;
   int   foo = 0;
@@ -288,7 +263,9 @@ maze_dump (guchar *maz, gint mw, gint mh)
 }
 
 void
-maze_dumpX (guchar *maz, gint mw, gint mh)
+maze_dumpX (guchar *maz,
+            gint    mw,
+            gint    mh)
 {
   short xx, yy;
   int   foo = 0;
@@ -339,7 +316,7 @@ maze (GimpDrawable * drawable)
       /* On the other hand, tileable mazes must be even. */
       mw -= (mw & 1);
       mh -= (mh & 1);
-    };
+    }
 
   /* It will really suck if your tileable maze ends up with this dead
      space around it.  Oh well, life is hard. */
@@ -562,21 +539,35 @@ maze (GimpDrawable * drawable)
  * writing comments I haven't left enough to implement the code.  :)
  * Right now we only sample one point. */
 static void
-mask_maze (gint32 drawable_ID, guchar *maz, guint mw, guint mh,
-           gint x1, gint x2, gint y1, gint y2, gint deadx, gint deady)
+mask_maze (gint32  drawable_ID,
+           guchar *maz,
+           guint   mw,
+           guint   mh,
+           gint    x1,
+           gint    x2,
+           gint    y1,
+           gint    y2,
+           gint    deadx,
+           gint    deady)
 {
-  gint32 selection_ID;
+  gint32       selection_ID;
   GimpPixelRgn sel_rgn;
-  gint xx0=0, yy0=0, xoff, yoff;
-  guint xx=0, yy=0;
-  guint foo=0;
+  gint         xx0 = 0;
+  gint         yy0 = 0;
+  gint         xoff;
+  gint         yoff;
+  guint        xx = 0;
+  guint        yy = 0;
+  guint        foo = 0;
 
-  gint cur_row, cur_col;
-  gint x1half, x2half, y1half, y2half;
-  guchar *linebuf;
+  gint         cur_row, cur_col;
+  gint         x1half, x2half, y1half, y2half;
+  guchar      *linebuf;
 
-  if ((selection_ID =
-       gimp_image_get_selection (gimp_drawable_get_image (drawable_ID))) == -1)
+  selection_ID =
+    gimp_image_get_selection (gimp_drawable_get_image (drawable_ID));
+
+  if (selection_ID == -1)
     return;
 
   gimp_pixel_rgn_init (&sel_rgn, gimp_drawable_get (selection_ID),
@@ -749,7 +740,7 @@ mask_maze (gint32 drawable_ID, guchar *maz, guint mw, guint mh,
           maz_row += mw;
         }
 
-    } /* next pr sel_rgn tile thing */
+    }
 #ifdef MAZE_DEBUG
   /* maze_dump(maz,mw,mh); */
 #endif

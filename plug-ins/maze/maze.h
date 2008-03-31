@@ -19,10 +19,6 @@
 #define __MAZE_H__
 
 
-#define MAZE_TITLE N_("Maze")
-
-#define HELP_OPENS_NEW_WINDOW FALSE
-
 /* The "divbox" really should look and act more like a spinbutton.
   This flag is a small step in the direction toward the former, the
   latter leaves much to be desired. */
@@ -35,8 +31,6 @@
 /* Don't draw in anything that has less than
    this value in the selection channel. */
 #define MAZE_ALPHA_THRESHOLD 127
-
-#include "glib.h"
 
 #define PLUG_IN_PROC   "plug-in-maze"
 #define PLUG_IN_BINARY "maze"
@@ -66,18 +60,9 @@ enum CellTypes {
 };
 
 extern MazeValues mvals;
-extern guint      sel_w, sel_h;
+extern guint      sel_w;
+extern guint      sel_h;
 extern GRand     *gr;
-
-void  get_colors (GimpDrawable *drawable,
-                  guint8       *fg,
-                  guint8       *bg);
-void  drawbox    (GimpPixelRgn *dest_rgn,
-                  guint         x,
-                  guint         y,
-                  guint         w,
-                  guint         h,
-                  guint8        clr[4]);
 
 
 #endif  /* __MAZE_H__ */

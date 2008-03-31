@@ -19,11 +19,14 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = maze
 
 maze_SOURCES = \
-	algorithms.c	\
-	handy.c		\
-	maze.c		\
-	maze.h		\
-	maze_face.c
+	maze.c			\
+	maze.h			\
+	maze-algorithms.c	\
+	maze-algorithms.h	\
+	maze-dialog.c		\
+	maze-dialog.h		\
+	maze-utils.c		\
+	maze-utils.h
 
 INCLUDES = \
 	-I$(top_srcdir)	\

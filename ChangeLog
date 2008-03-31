@@ -1,5 +1,11 @@
 2008-03-31  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/maze/*: renamed most files and added proper headers
+	instead of duplicating the prototypes in each .c file that uses
+	them. Indentation, spacing, formatting, some general cleanup.
+
+2008-03-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpbrusheditor.c (gimp_brush_editor_notify_brush):
 	Add missing code for the "spacing" property. Spotted by Jerry Baker.
 
