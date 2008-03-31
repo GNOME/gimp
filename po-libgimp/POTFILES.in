@@ -41,6 +41,7 @@ libgimpwidgets/gimpcolorprofilestore.c
 libgimpwidgets/gimpcolorscales.c
 libgimpwidgets/gimpcolorselect.c
 libgimpwidgets/gimpcolorselection.c
+libgimpwidgets/gimphelpui.c
 libgimpwidgets/gimpfileentry.c
 libgimpwidgets/gimpintstore.c
 libgimpwidgets/gimpmemsizeentry.c
