@@ -1,5 +1,13 @@
 2008-04-02  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/app.pl: special treatment for gimppdberror.h to get
+	a saner include order.
+
+	* app/pdb/floating_sel_cmds.c
+	* app/pdb/image_cmds.c: regenerated.
+
+2008-04-02  Sven Neumann  <sven@gimp.org>
+
 	* app/pdb/gimppdb-utils.[ch]: added gimp_pdb_layer_is_text_layer().
 
 2008-04-02  Sven Neumann  <sven@gimp.org>

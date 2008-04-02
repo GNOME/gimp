@@ -694,8 +694,9 @@ GPL
 	my $seen = 0;
 	my $sys = 0;
 	my $base = 0;
-	my $intl = 0;
+	my $error = 0;
 	my $utils = 0;
+	my $intl = 0;
 
 	foreach (@headers) {
 	    $seen++ if /^</;
@@ -727,6 +728,9 @@ GPL
 	    elsif (/gimppdb-utils/) {
 		$utils = 1;
 	    }
+	    elsif (/gimppdberror/) {
+		$error = 1;
+	    }
 	    else {
 		$headers .= "#include $_\n";
 	    }
@@ -734,6 +738,7 @@ GPL
 
 	$headers .= "\n";
 	$headers .= "#include \"gimppdb.h\"\n";
+	$headers .= "#include \"gimppdberror.h\"\n" if $error;
 	$headers .= "#include \"gimppdb-utils.h\"\n" if $utils;
 	$headers .= "#include \"gimpprocedure.h\"\n";
 	$headers .= "#include \"internal_procs.h\"\n";

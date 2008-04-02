@@ -50,10 +50,10 @@
 #include "core/gimppickable.h"
 #include "core/gimpselection.h"
 #include "core/gimpunit.h"
-#include "gimppdberror.h"
 #include "vectors/gimpvectors.h"
 
 #include "gimppdb.h"
+#include "gimppdberror.h"
 #include "gimpprocedure.h"
 #include "internal_procs.h"
 

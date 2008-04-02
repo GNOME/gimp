@@ -28,9 +28,9 @@
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayer.h"
 #include "core/gimpparamspecs.h"
-#include "gimppdberror.h"
 
 #include "gimppdb.h"
+#include "gimppdberror.h"
 #include "gimppdb-utils.h"
 #include "gimpprocedure.h"
 #include "internal_procs.h"
