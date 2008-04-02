@@ -578,13 +578,41 @@ HELP
 
     @outargs = (
 	{ name => 'layer', type => 'boolean',
-	  desc => 'TRUE if the drawable is a layer' }
+	  desc => 'TRUE if the drawable is a layer, FALSE otherwise' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
   layer = GIMP_IS_LAYER (drawable);
+}
+CODE
+    );
+}
+
+sub drawable_is_text_layer {
+    $blurb = 'Returns whether the drawable is a text layer.';
+
+    $help = <<'HELP';
+This procedure returns TRUE if the specified drawable is a text layer.
+HELP
+
+    &marcus_pdb_misc('2008', '2.6');
+
+    @inargs = (
+        { name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    @outargs = (
+        { name => 'text_layer', type => 'boolean',
+	  desc => 'TRUE if the drawable is a text layer, FALSE otherwise.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  text_layer = gimp_drawable_is_text_layer (drawable);
 }
 CODE
     );
@@ -606,7 +634,7 @@ HELP
 
     @outargs = (
 	{ name => 'layer_mask', type => 'boolean',
-	  desc => 'TRUE if the drawable is a layer mask' }
+	  desc => 'TRUE if the drawable is a layer mask, FALSE otherwise' }
     );
 
     %invoke = (
@@ -634,7 +662,7 @@ HELP
 
     @outargs = (
 	{ name => 'channel', type => 'boolean',
-	  desc => 'TRUE if the drawable is a channel' }
+	  desc => 'TRUE if the drawable is a channel, FALSE otherwise' }
     );
 
     %invoke = (
@@ -1276,7 +1304,8 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(drawable_is_valid
-            drawable_is_layer drawable_is_layer_mask drawable_is_channel
+            drawable_is_layer drawable_is_text_layer
+	    drawable_is_layer_mask drawable_is_channel
 	    drawable_type  drawable_type_with_alpha drawable_has_alpha
             drawable_is_rgb drawable_is_gray drawable_is_indexed
             drawable_bpp

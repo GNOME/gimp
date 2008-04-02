@@ -31,6 +31,7 @@ G_BEGIN_DECLS
 
 gboolean                 gimp_drawable_is_valid           (gint32                      drawable_ID);
 gboolean                 gimp_drawable_is_layer           (gint32                      drawable_ID);
+gboolean                 gimp_drawable_is_text_layer      (gint32                      drawable_ID);
 gboolean                 gimp_drawable_is_layer_mask      (gint32                      drawable_ID);
 gboolean                 gimp_drawable_is_channel         (gint32                      drawable_ID);
 GimpImageType            gimp_drawable_type               (gint32                      drawable_ID);

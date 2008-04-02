@@ -142,6 +142,7 @@ EXPORTS
 	gimp_drawable_is_layer
 	gimp_drawable_is_layer_mask
 	gimp_drawable_is_rgb
+	gimp_drawable_is_text_layer
 	gimp_drawable_is_valid
 	gimp_drawable_mask_bounds
 	gimp_drawable_mask_intersect

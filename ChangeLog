@@ -1,5 +1,19 @@
 2008-04-02  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/stddefs.pdb: added shortcut for contributions from 
+	Marcus Heese.
+
+	* tools/pdbgen/pdb/drawable.pdb: added gimp_drawable_is_text_layer(),
+	taken from the patch attached to bug #164539.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/drawable_cmds.c
+	* libgimp/gimpdrawable_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: updated.
+
+2008-04-02  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpperspectiveclonetool.c: removed frame around the
 	mode radio buttons (bug #525747).
 
