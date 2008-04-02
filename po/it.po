@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-03-21 14:37+0100\n"
-"PO-Revision-Date: 2008-03-21 14:35+0100\n"
+"PO-Revision-Date: 2008-04-02 22:04+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -3230,7 +3230,7 @@ msgstr "Dist_urbo"
 
 #: ../app/actions/plug-in-actions.c:87
 msgid "Edge-De_tect"
-msgstr "Rilevamen_to margini"
+msgstr "Rilevamen_to contorni"
 
 #: ../app/actions/plug-in-actions.c:88
 msgid "En_hance"

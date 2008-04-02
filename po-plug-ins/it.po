@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-12-28 15:18+0100\n"
-"PO-Revision-Date: 2007-12-28 15:40+0100\n"
+"PO-Revision-Date: 2008-04-02 22:01+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -941,7 +941,7 @@ msgstr "Attiva _antialiasing"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:562
 msgid "Enable/disable jagged edges removal (antialiasing)"
-msgstr "Attiva/disattiva rimozione bordi scalettati (antialiasing)"
+msgstr "Attiva/disattiva rimozione contorni scalettati (antialiasing)"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:579 ../plug-ins/common/bumpmap.c:916
 #: ../plug-ins/common/emboss.c:523 ../plug-ins/common/fractaltrace.c:796
@@ -2073,7 +2073,7 @@ msgstr "Ottimizzazione animazione"
 
 #: ../plug-ins/common/antialias.c:84
 msgid "Antialias using the Scale3X edge-extrapolation algorithm"
-msgstr "L'antialias usa l'algoritmo Scale3X di estrapolazione-bordi"
+msgstr "L'antialias usa l'algoritmo Scale3X di estrapolazione-contorni"
 
 #: ../plug-ins/common/antialias.c:90
 msgid "_Antialias"
@@ -2330,7 +2330,7 @@ msgstr "c_astretch: cmap era NULL!  Uscita...\n"
 
 #: ../plug-ins/common/cartoon.c:142
 msgid "Simulate a cartoon by enhancing edges"
-msgstr "Simula un fumetto delineando i bordi"
+msgstr "Simula un fumetto delineando i contorni"
 
 #: ../plug-ins/common/cartoon.c:147
 msgid "Ca_rtoon..."
@@ -3520,7 +3520,7 @@ msgstr "Contorni"
 
 #: ../plug-ins/common/diffraction.c:603
 msgid "Sharp Edges"
-msgstr "Bordi affilati"
+msgstr "Contorni delineati"
 
 #: ../plug-ins/common/diffraction.c:615 ../plug-ins/common/softglow.c:681
 #: ../plug-ins/flame/flame.c:1057
@@ -3595,7 +3595,7 @@ msgstr "_Polare"
 
 #: ../plug-ins/common/displace.c:468
 msgid "Edge Behavior"
-msgstr "Comportamento bordi"
+msgstr "Comportamento contorni"
 
 #: ../plug-ins/common/displace.c:474 ../plug-ins/common/edge.c:721
 #: ../plug-ins/common/ripple.c:562 ../plug-ins/common/waves.c:280
@@ -3609,15 +3609,15 @@ msgstr "_Nero"
 
 #: ../plug-ins/common/dog.c:133
 msgid "Edge detection with control of edge thickness"
-msgstr "Rilevamento bordi con controllo di spessore bordo"
+msgstr "Rilevamento contorni con controllo dello spessore"
 
 #: ../plug-ins/common/dog.c:140
 msgid "_Difference of Gaussians..."
-msgstr "_Differenze della Gaussiana..."
+msgstr "_Differenze di gaussiane..."
 
 #: ../plug-ins/common/dog.c:231 ../plug-ins/common/dog.c:278
 msgid "DoG Edge Detect"
-msgstr "Rilevamento spigoli dog"
+msgstr "Rilevamento contorni ddg"
 
 #: ../plug-ins/common/dog.c:306
 msgid "Smoothing Parameters"
@@ -3641,19 +3641,19 @@ msgstr "_Inverti"
 
 #: ../plug-ins/common/edge.c:152
 msgid "Several simple methods for detecting edges"
-msgstr "Diversi semplici metodi di rilevamento bordi"
+msgstr "Diversi semplici metodi di rilevamento contorni"
 
 #: ../plug-ins/common/edge.c:157
 msgid "_Edge..."
-msgstr "_Spigoli..."
+msgstr "_Contorni..."
 
 #: ../plug-ins/common/edge.c:229
 msgid "Edge detection"
-msgstr "Rilevamento spigoli"
+msgstr "Rilevamento contorni"
 
 #: ../plug-ins/common/edge.c:633
 msgid "Edge Detection"
-msgstr "Rilevamento spigoli"
+msgstr "Rilevamento contorni"
 
 #: ../plug-ins/common/edge.c:667
 msgid "Sobel"
@@ -4926,7 +4926,7 @@ msgstr "Numero di pezzi in basso"
 
 #: ../plug-ins/common/jigsaw.c:2490
 msgid "Bevel Edges"
-msgstr "Bordi in rilievo"
+msgstr "Contorni in rilievo"
 
 #: ../plug-ins/common/jigsaw.c:2500
 msgid "_Bevel width:"
@@ -4934,7 +4934,7 @@ msgstr "Ampiezza _rilievo:"
 
 #: ../plug-ins/common/jigsaw.c:2504
 msgid "Degree of slope of each piece's edge"
-msgstr "Grado di decadimento dei bordi di ogni pezzo"
+msgstr "Grado di decadimento dei contorni di ogni pezzo"
 
 #: ../plug-ins/common/jigsaw.c:2517
 msgid "H_ighlight:"
@@ -4942,7 +4942,7 @@ msgstr "_Intensità luce:"
 
 #: ../plug-ins/common/jigsaw.c:2521
 msgid "The amount of highlighting on the edges of each piece"
-msgstr "Ammontare della luminosità ai bordi di ogni pezzo"
+msgstr "Ammontare della luminosità ai contorni di ogni pezzo"
 
 #. frame for primitive radio buttons
 #: ../plug-ins/common/jigsaw.c:2538
@@ -4967,7 +4967,7 @@ msgstr "Ogni pezzo ha lati curvi"
 
 #: ../plug-ins/common/laplace.c:75
 msgid "High-resolution edge detection"
-msgstr "Rilevamento bordi ad alta risoluzione"
+msgstr "Rilevamento contorni ad alta risoluzione"
 
 #: ../plug-ins/common/laplace.c:85
 msgid "_Laplace"
@@ -5541,7 +5541,7 @@ msgstr "_Mosaico..."
 #. progress bar for gradient finding
 #: ../plug-ins/common/mosaic.c:503
 msgid "Finding edges"
-msgstr "Rilevamento bordi"
+msgstr "Rilevamento contorni"
 
 #. Progress bar for rendering tiles
 #: ../plug-ins/common/mosaic.c:557
@@ -5780,7 +5780,7 @@ msgstr "Sfocatura con stima ot_timale"
 
 #: ../plug-ins/common/nlfilt.c:1051
 msgid "_Edge enhancement"
-msgstr "Rafforzamento d_ei bordi"
+msgstr "Rafforzamento d_ei contorni"
 
 #: ../plug-ins/common/nlfilt.c:1076
 msgid "A_lpha:"
@@ -6980,7 +6980,7 @@ msgstr "_Mantieni affiancabilità"
 #. Edges toggle box
 #: ../plug-ins/common/ripple.c:557
 msgid "Edges"
-msgstr "Margini"
+msgstr "Contorni"
 
 #: ../plug-ins/common/ripple.c:563
 msgid "_Blank"
@@ -7459,7 +7459,7 @@ msgstr "Dimensione _Y:"
 
 #: ../plug-ins/common/sobel.c:108
 msgid "Specialized direction-dependent edge detection"
-msgstr "Rilevamento bordi direzione dipendente specializzato"
+msgstr "Rilevamento contorni specializzato e direzione dipendente"
 
 #: ../plug-ins/common/sobel.c:121
 msgid "_Sobel..."
@@ -7467,7 +7467,7 @@ msgstr "_Sobel..."
 
 #: ../plug-ins/common/sobel.c:229
 msgid "Sobel Edge Detection"
-msgstr "Rilevamento bordi Sobel"
+msgstr "Riconoscimento contorni Sobel"
 
 #: ../plug-ins/common/sobel.c:258
 msgid "Sobel _horizontally"
@@ -7483,7 +7483,7 @@ msgstr "_Tieni conto dei risultati (solo una direzione)"
 
 #: ../plug-ins/common/sobel.c:368
 msgid "Sobel edge detecting"
-msgstr "Rilevamento bordi Sobel"
+msgstr "Rilevamento contorni Sobel"
 
 #: ../plug-ins/common/softglow.c:134
 msgid "Simulate glow by making highlights intense and fuzzy"
@@ -8239,9 +8239,7 @@ msgstr "Numero di segmenti"
 
 #: ../plug-ins/common/tiler.c:67
 msgid "Alters edges to make the image seamlessly tileable"
-msgstr ""
-"Altera i bordi per rendere l'immagine affiancabile senza soluzione di "
-"continuità"
+msgstr "Altera i contorni per rendere l'immagine affiancabile senza soluzione di continuità"
 
 #: ../plug-ins/common/tiler.c:73
 msgid "_Make Seamless"
@@ -8612,7 +8610,7 @@ msgstr "Mappa di spostamento:"
 #. Displacement Type
 #: ../plug-ins/common/warp.c:461
 msgid "On edges:"
-msgstr "Sui bordi:"
+msgstr "Sui contorni:"
 
 #: ../plug-ins/common/warp.c:472
 msgid "Wrap"
@@ -8838,7 +8836,7 @@ msgstr "_Destra"
 #. **************************************************
 #: ../plug-ins/common/wind.c:958
 msgid "Edge Affected"
-msgstr "Bordi interessati"
+msgstr "Contorni interessati"
 
 #: ../plug-ins/common/wind.c:962
 msgid "L_eading"
@@ -9991,11 +9989,11 @@ msgstr "Aggiungi un effetto ombra ad ogni tratto di pennello"
 
 #: ../plug-ins/gimpressionist/general.c:222
 msgid "Edge darken:"
-msgstr "Scurisci i bordi:"
+msgstr "Scurisci i contorni:"
 
 #: ../plug-ins/gimpressionist/general.c:226
 msgid "How much to \"darken\" the edges of each brush stroke"
-msgstr "Quanto \"scurire\" i bordi di ogni tratto di pennello"
+msgstr "Quanto \"scurire\" i contorni di ogni tratto di pennello"
 
 #: ../plug-ins/gimpressionist/general.c:231
 msgid "Shadow darken:"
