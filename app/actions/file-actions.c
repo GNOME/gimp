@@ -166,7 +166,6 @@ file_actions_setup (GimpActionGroup *group)
       entries[i].tooltip        = NULL;
       entries[i].value          = i;
       entries[i].value_variable = FALSE;
-      entries[i].help_id        = GIMP_HELP_FILE_OPEN_RECENT;
 
       if (i < 9)
         entries[i].accelerator = g_strdup_printf ("<control>%d", i + 1);

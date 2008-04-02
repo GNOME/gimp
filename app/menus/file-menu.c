@@ -20,15 +20,27 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpthumb/gimpthumb.h"
+
 #include "menus-types.h"
 
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpviewable.h"
 
+#include "widgets/gimpaction.h"
 #include "widgets/gimpuimanager.h"
 
 #include "file-menu.h"
+
+
+static gboolean file_menu_open_recent_query_tooltip (GtkWidget  *widget,
+                                                     gint        x,
+                                                     gint        y,
+                                                     gboolean    keyboard_mode,
+                                                     GtkTooltip *tooltip,
+                                                     GimpAction *action);
 
 
 void
@@ -51,8 +63,10 @@ file_menu_setup (GimpUIManager *manager,
 
   for (i = 0; i < n_entries; i++)
     {
-      gchar *action_name;
-      gchar *action_path;
+      GtkWidget *widget;
+      gchar     *action_name;
+      gchar     *action_path;
+      gchar     *full_path;
 
       action_name = g_strdup_printf ("file-open-recent-%02d", i + 1);
       action_path = g_strdup_printf ("%s/File/Open Recent/Files", ui_path);
@@ -62,7 +76,41 @@ file_menu_setup (GimpUIManager *manager,
                              GTK_UI_MANAGER_MENUITEM,
                              FALSE);
 
+      full_path = g_strconcat (action_path, "/", action_name, NULL);
+
+      widget = gtk_ui_manager_get_widget (ui_manager, full_path);
+
+      if (widget)
+        {
+          GtkAction *action;
+
+          action = gimp_ui_manager_find_action (manager, "file", action_name);
+
+          g_signal_connect_object (widget, "query-tooltip",
+                                   G_CALLBACK (file_menu_open_recent_query_tooltip),
+                                   action, 0);
+        }
+
       g_free (action_name);
       g_free (action_path);
+      g_free (full_path);
     }
+}
+
+static gboolean
+file_menu_open_recent_query_tooltip (GtkWidget  *widget,
+                                     gint        x,
+                                     gint        y,
+                                     gboolean    keyboard_mode,
+                                     GtkTooltip *tooltip,
+                                     GimpAction *action)
+{
+  gtk_tooltip_set_text (tooltip, gtk_widget_get_tooltip_text (widget));
+  gtk_tooltip_set_icon (tooltip,
+                        gimp_viewable_get_pixbuf (action->viewable,
+                                                  action->context,
+                                                  GIMP_THUMB_SIZE_NORMAL,
+                                                  GIMP_THUMB_SIZE_NORMAL));
+
+  return TRUE;
 }
