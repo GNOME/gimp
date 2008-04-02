@@ -34,6 +34,7 @@ LDADD = \
 	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTKHTML2_LIBS)	\
+	$(GIO_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 

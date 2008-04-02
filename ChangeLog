@@ -1,5 +1,9 @@
 2008-04-02  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/help-browser/Makefile.am (LDADD): added GIO_LIBS.
+
+2008-04-02  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/file-actions.c: don't set a help-id on items in the
 	Open Recent menu.
 
