@@ -41,6 +41,7 @@
     progress
     selection
     selection_tools
+    text_layer
     text_tool
     transform_tools
     undo

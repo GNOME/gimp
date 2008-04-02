@@ -66,6 +66,7 @@ void   register_procedural_db_procs      (GimpPDB *pdb);
 void   register_progress_procs           (GimpPDB *pdb);
 void   register_selection_procs          (GimpPDB *pdb);
 void   register_selection_tools_procs    (GimpPDB *pdb);
+void   register_text_layer_procs         (GimpPDB *pdb);
 void   register_text_tool_procs          (GimpPDB *pdb);
 void   register_transform_tools_procs    (GimpPDB *pdb);
 void   register_undo_procs               (GimpPDB *pdb);

@@ -1,5 +1,21 @@
 2008-04-02  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/pdb/text_layer.pdb: new text layer PDB API created
+	by Marcus Heese (see bug #164539).
+
+	* app/pdb/Makefile.am
+	* app/pdb/text_layer_cmds.c: new generated file.
+
+	* libgimp/Makefile.am
+	* libgimp/gimptextlayer_pdb.[ch]: new generated files.
+
+	* app/pdb/internal_procs.[ch]
+	* libgimp/gimp_pdb.h
+	* tools/pdbgen/groups.pl: regenerated.
+
+2008-04-02  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/app.pl: special treatment for gimppdberror.h to get
 	a saner include order.
 

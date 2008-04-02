@@ -43,6 +43,7 @@ pdb_sources = \
 	pdb/progress.pdb		\
 	pdb/selection.pdb		\
 	pdb/selection_tools.pdb		\
+	pdb/text_layer.pdb		\
 	pdb/text_tool.pdb		\
 	pdb/transform_tools.pdb		\
 	pdb/undo.pdb			\

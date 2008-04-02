@@ -109,6 +109,7 @@ PDB_WRAPPERS_C = \
 	gimpprogress_pdb.c		\
 	gimpselection_pdb.c		\
 	gimpselectiontools_pdb.c	\
+	gimptextlayer_pdb.c		\
 	gimptexttool_pdb.c		\
 	gimptransformtools_pdb.c	\
 	gimpundo_pdb.c			\
@@ -158,6 +159,7 @@ PDB_WRAPPERS_H = \
 	gimpprogress_pdb.h		\
 	gimpselection_pdb.h		\
 	gimpselectiontools_pdb.h	\
+	gimptextlayer_pdb.h		\
 	gimptexttool_pdb.h		\
 	gimptransformtools_pdb.h	\
 	gimpundo_pdb.h			\

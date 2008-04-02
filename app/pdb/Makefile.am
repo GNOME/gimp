@@ -62,6 +62,7 @@ libappinternal_procs_a_SOURCES = \
 	progress_cmds.c			\
 	selection_cmds.c		\
 	selection_tools_cmds.c		\
+	text_layer_cmds.c		\
 	text_tool_cmds.c		\
 	transform_tools_cmds.c		\
 	undo_cmds.c			\
