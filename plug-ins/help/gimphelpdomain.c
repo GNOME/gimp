@@ -44,25 +44,21 @@
 
 /*  local function prototypes  */
 
-static gboolean   domain_locale_parse      (GimpHelpDomain  *domain,
-                                            GimpHelpLocale  *locale,
-                                            GError         **error);
-
-static gchar    * domain_filename_from_uri (const gchar     *uri);
+static gboolean   domain_locale_parse (GimpHelpDomain  *domain,
+                                       GimpHelpLocale  *locale,
+                                       GError         **error);
 
 
 /*  public functions  */
 
 GimpHelpDomain *
 gimp_help_domain_new (const gchar *domain_name,
-                      const gchar *domain_uri,
-                      const gchar *domain_root)
+                      const gchar *domain_uri)
 {
   GimpHelpDomain *domain = g_slice_new0 (GimpHelpDomain);
 
   domain->help_domain = g_strdup (domain_name);
   domain->help_uri    = g_strdup (domain_uri);
-  domain->help_root   = g_strdup (domain_root);
 
   if (domain_uri)
     {
@@ -84,7 +80,6 @@ gimp_help_domain_free (GimpHelpDomain *domain)
 
   g_free (domain->help_domain);
   g_free (domain->help_uri);
-  g_free (domain->help_root);
 
   g_slice_free (GimpHelpDomain, domain);
 }
@@ -209,70 +204,19 @@ domain_locale_parse (GimpHelpDomain  *domain,
                      GimpHelpLocale  *locale,
                      GError         **error)
 {
-  gchar    *filename;
+  gchar    *uri;
   gboolean  success;
 
   g_return_val_if_fail (domain != NULL, FALSE);
   g_return_val_if_fail (locale != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! domain->help_root)
-    domain->help_root = domain_filename_from_uri (domain->help_uri);
+  uri = g_strdup_printf ("%s/%s/gimp-help.xml",
+                         domain->help_uri, locale->locale_id);
 
-  if (! domain->help_root)
-    {
-      g_set_error (error, 0, 0,
-                   "Cannot determine location of gimp-help.xml from '%s'",
-                   domain->help_uri);
-      return FALSE;
-    }
+  success = gimp_help_locale_parse (locale, uri, domain->help_domain, error);
 
-  filename = g_build_filename (domain->help_root,
-                               locale->locale_id,
-                               "gimp-help.xml",
-                               NULL);
-
-  success = gimp_help_locale_parse (locale,
-                                    filename,
-                                    domain->help_domain,
-                                    error);
-
-  g_free (filename);
+  g_free (uri);
 
   return success;
-}
-
-static gchar *
-domain_filename_from_uri (const gchar *uri)
-{
-  gchar *filename;
-  gchar *hostname;
-
-  g_return_val_if_fail (uri != NULL, NULL);
-
-  filename = g_filename_from_uri (uri, &hostname, NULL);
-
-  if (!filename)
-    return NULL;
-
-  if (hostname)
-    {
-      /*  we have a file: URI with a hostname                           */
-#ifdef G_OS_WIN32
-      /*  on Win32, create a valid UNC path and use it as the filename  */
-
-      gchar *tmp = g_build_filename ("//", hostname, filename, NULL);
-
-      g_free (filename);
-      filename = tmp;
-#else
-      /*  otherwise return NULL, caller should use URI then             */
-      g_free (filename);
-      filename = NULL;
-#endif
-
-      g_free (hostname);
-    }
-
-  return filename;
 }

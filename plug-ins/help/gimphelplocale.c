@@ -29,7 +29,8 @@
 
 #include <string.h>
 
-#include <glib.h>
+#include <glib-object.h>
+#include <gio/gio.h>
 
 #include "gimphelp.h"
 
@@ -44,7 +45,7 @@
 
 static void   locale_set_error (GError      **error,
                                 const gchar  *format,
-                                const gchar  *filename);
+                                GFile        *file);
 
 
 /*  public functions  */
@@ -103,7 +104,7 @@ typedef enum
 
 typedef struct
 {
-  const gchar       *filename;
+  GFile             *file;
   LocaleParserState  state;
   LocaleParserState  last_known_state;
   gint               markup_depth;
@@ -116,7 +117,7 @@ typedef struct
 } LocaleParser;
 
 static gboolean  locale_parser_parse       (GMarkupParseContext  *context,
-                                            GIOChannel           *io,
+                                            GInputStream         *stream,
                                             GError              **error);
 static void  locale_parser_start_element   (GMarkupParseContext  *context,
                                             const gchar          *element_name,
@@ -154,17 +155,18 @@ static const GMarkupParser markup_parser =
 
 gboolean
 gimp_help_locale_parse (GimpHelpLocale  *locale,
-                        const gchar     *filename,
+                        const gchar     *uri,
                         const gchar     *help_domain,
                         GError         **error)
 {
   GMarkupParseContext *context;
-  GIOChannel          *io;
+  GFile               *file;
+  GFileInputStream    *stream;
   LocaleParser         parser = { NULL, };
   gboolean             success;
 
   g_return_val_if_fail (locale != NULL, FALSE);
-  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (uri != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (locale->help_id_mapping)
@@ -181,21 +183,22 @@ gimp_help_locale_parse (GimpHelpLocale  *locale,
 
 #ifdef GIMP_HELP_DEBUG
   g_printerr ("help (%s): parsing '%s' for locale \"%s\"\n",
-              locale->locale_id,
-              filename,
-              help_domain);
+              locale->locale_id, uri, help_domain);
 #endif
 
-  io = g_io_channel_new_file (filename, "r", error);
-  if (! io)
+  file = g_file_new_for_uri (uri);
+
+  stream = g_file_read (file, NULL, error);
+
+  if (! stream)
     {
-      locale_set_error (error,
-                        _("Could not open '%s' for reading: %s"),
-                        filename);
+      locale_set_error (error, _("Could not open '%s' for reading: %s"), file);
+      g_object_unref (file);
+
       return FALSE;
     }
 
-  parser.filename     = filename;
+  parser.file         = file;
   parser.value        = g_string_new (NULL);
   parser.locale       = locale;
   parser.help_domain  = help_domain;
@@ -203,50 +206,45 @@ gimp_help_locale_parse (GimpHelpLocale  *locale,
 
   context = g_markup_parse_context_new (&markup_parser, 0, &parser, NULL);
 
-  success = locale_parser_parse (context, io, error);
+  success = locale_parser_parse (context, G_INPUT_STREAM (stream), error);
 
   g_markup_parse_context_free (context);
-  g_io_channel_unref (io);
+  g_object_unref (stream);
 
   g_string_free (parser.value, TRUE);
   g_free (parser.id_attr_name);
 
   if (! success)
-    locale_set_error (error, _("Parse error in '%s':\n%s"), filename);
+    locale_set_error (error, _("Parse error in '%s':\n%s"), file);
+
+  g_object_unref (file);
 
   return success;
 }
 
 static gboolean
 locale_parser_parse (GMarkupParseContext  *context,
-                     GIOChannel           *io,
+                     GInputStream         *stream,
                      GError              **error)
 {
-  GIOStatus  status;
-  gsize      len;
-  gchar      buffer[4096];
+  gssize len;
+  gchar  buffer[4096];
 
-  while (TRUE)
+  while ((len = g_input_stream_read (stream, buffer, sizeof (buffer),
+                                     NULL, error)) != -1)
     {
-      status = g_io_channel_read_chars (io,
-                                        buffer, sizeof (buffer), &len, error);
-
-      switch (status)
+      switch (len)
         {
-        case G_IO_STATUS_ERROR:
-          return FALSE;
-        case G_IO_STATUS_EOF:
+        case 0:
           return g_markup_parse_context_end_parse (context, error);
-        case G_IO_STATUS_NORMAL:
+
+        default:
           if (! g_markup_parse_context_parse (context, buffer, len, error))
             return FALSE;
-          break;
-        case G_IO_STATUS_AGAIN:
-          break;
         }
     }
 
-  return TRUE;
+  return FALSE;
 }
 
 static void
@@ -332,8 +330,11 @@ locale_parser_error (GMarkupParseContext *context,
                      gpointer             user_data)
 {
   LocaleParser *parser = (LocaleParser *) user_data;
+  gchar        *name   = g_file_get_parse_name (parser->file);
 
-  g_printerr ("help (parsing %s): %s", parser->filename, error->message);
+  g_printerr ("help (parsing %s): %s", name, error->message);
+
+  g_free (name);
 }
 
 static void
@@ -453,13 +454,14 @@ locale_parser_parse_missing (LocaleParser  *parser,
 static void
 locale_set_error (GError      **error,
                   const gchar  *format,
-                  const gchar  *filename)
+                  GFile        *file)
 {
   if (error && *error)
     {
-      gchar *name = g_filename_display_name (filename);
-      gchar *msg  = g_strdup_printf (format, name, (*error)->message);
+      gchar *name = g_file_get_parse_name (file);
+      gchar *msg;
 
+      msg = g_strdup_printf (format, name, (*error)->message);
       g_free (name);
 
       g_free ((*error)->message);

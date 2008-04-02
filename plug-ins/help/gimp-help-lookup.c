@@ -80,7 +80,7 @@ main (gint   argc,
   GError         *error = NULL;
 
   help_base = g_getenv (GIMP_HELP_ENV_URI);
-  help_root = g_build_path (G_DIR_SEPARATOR_S, gimp_data_directory (), GIMP_HELP_PREFIX, NULL);
+  help_root = g_build_filename (gimp_data_directory (), GIMP_HELP_PREFIX, NULL);
 
   context = g_option_context_new ("HELP-ID");
   g_option_context_add_main_entries (context, entries, NULL);
@@ -91,12 +91,14 @@ main (gint   argc,
       return EXIT_FAILURE;
     }
 
+  g_type_init ();
+
   if (help_base)
     uri = g_strdup (help_base);
   else
     uri = g_filename_to_uri (help_root, NULL, NULL);
 
-  gimp_help_register_domain (GIMP_HELP_DEFAULT_DOMAIN, uri, help_root);
+  gimp_help_register_domain (GIMP_HELP_DEFAULT_DOMAIN, uri);
   g_free (uri);
 
   uri = lookup (GIMP_HELP_DEFAULT_DOMAIN,

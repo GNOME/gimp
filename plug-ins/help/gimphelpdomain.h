@@ -29,14 +29,12 @@ struct _GimpHelpDomain
 {
   gchar      *help_domain;
   gchar      *help_uri;
-  gchar      *help_root;
   GHashTable *help_locales;
 };
 
 
 GimpHelpDomain * gimp_help_domain_new           (const gchar     *domain_name,
-                                                 const gchar     *domain_uri,
-                                                 const gchar     *domain_root);
+                                                 const gchar     *domain_uri);
 void             gimp_help_domain_free          (GimpHelpDomain  *domain);
 
 GimpHelpLocale * gimp_help_domain_lookup_locale (GimpHelpDomain  *domain,

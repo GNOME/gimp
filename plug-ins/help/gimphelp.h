@@ -49,8 +49,7 @@ gboolean         gimp_help_init            (gint            n_domain_names,
 void             gimp_help_exit            (void);
 
 void             gimp_help_register_domain (const gchar    *domain_name,
-                                            const gchar    *domain_uri,
-                                            const gchar    *domain_root);
+                                            const gchar    *domain_uri);
 GimpHelpDomain * gimp_help_lookup_domain   (const gchar    *domain_name);
 
 GList          * gimp_help_parse_locales   (const gchar    *help_locales);

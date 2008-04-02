@@ -35,7 +35,7 @@ help_SOURCES = help.c
 
 INCLUDES = \
 	-I$(top_srcdir)	\
-	$(GLIB_CFLAGS)	\
+	$(GIO_CFLAGS)	\
 	-I$(includedir)
 
 LDADD = \
@@ -44,7 +44,7 @@ LDADD = \
 	$(libgimpcolor)	\
 	$(libgimpbase)	\
 	$(libgimpmath)	\
-	$(GLIB_LIBS)	\
+	$(GIO_LIBS)	\
 	$(RT_LIBS)	\
 	$(INTLLIBS)
 
@@ -56,4 +56,4 @@ gimp_help_lookup_SOURCES = gimp-help-lookup.c
 gimp_help_lookup_LDADD = \
 	$(libgimphelp)	\
 	$(libgimpbase)	\
-	$(GLIB_LIBS)
+	$(GIO_LIBS)

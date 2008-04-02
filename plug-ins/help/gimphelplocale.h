@@ -43,7 +43,7 @@ const gchar    * gimp_help_locale_map        (GimpHelpLocale  *locale,
                                               const gchar     *help_id);
 
 gboolean         gimp_help_locale_parse      (GimpHelpLocale  *locale,
-                                              const gchar     *filename,
+                                              const gchar     *uri,
                                               const gchar     *help_domain,
                                               GError         **error);
 

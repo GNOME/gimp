@@ -84,13 +84,10 @@ gimp_help_init (gint    num_domain_names,
       g_free (help_root);
     }
 
-  gimp_help_register_domain (GIMP_HELP_DEFAULT_DOMAIN,
-                             default_domain_uri, NULL);
+  gimp_help_register_domain (GIMP_HELP_DEFAULT_DOMAIN, default_domain_uri);
 
   for (i = 0; i < num_domain_names; i++)
-    {
-      gimp_help_register_domain (domain_names[i], domain_uris[i], NULL);
-    }
+    gimp_help_register_domain (domain_names[i], domain_uris[i]);
 
   g_free (default_domain_uri);
 
@@ -109,8 +106,7 @@ gimp_help_exit (void)
 
 void
 gimp_help_register_domain (const gchar *domain_name,
-                           const gchar *domain_uri,
-                           const gchar *domain_root)
+                           const gchar *domain_uri)
 {
   g_return_if_fail (domain_name != NULL);
   g_return_if_fail (domain_uri != NULL);
@@ -127,8 +123,7 @@ gimp_help_register_domain (const gchar *domain_name,
 
   g_hash_table_insert (domain_hash,
                        g_strdup (domain_name),
-                       gimp_help_domain_new (domain_name,
-                                             domain_uri, domain_root));
+                       gimp_help_domain_new (domain_name, domain_uri));
 }
 
 GimpHelpDomain *

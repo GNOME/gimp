@@ -1,3 +1,11 @@
+2008-04-02  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help/Makefile.am
+	* plug-ins/help/gimphelpdomain.[ch]
+	* plug-ins/help/gimphelplocale.[ch]
+	* plug-ins/help/gimphelp.[ch]
+	* plug-ins/help/gimp-help-lookup.c: use GIO to access the help index.
+	
 2008-04-01  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-title.c
