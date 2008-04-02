@@ -1,5 +1,10 @@
 2008-04-02  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/help/gimp-help-lookup.c: fixed typos in descriptions of
+	the command-line options.
+
+2008-04-02  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help-browser/Makefile.am (LDADD): added GIO_LIBS.
 
 2008-04-02  Sven Neumann  <sven@gimp.org>

@@ -52,11 +52,11 @@ static const GOptionEntry entries[] =
   },
   { "base", 'b', 0,
     G_OPTION_ARG_STRING, &help_base,
-    "Speficies base URI", "URI"
+    "Specifies base URI", "URI"
   },
   { "root", 'r', 0,
     G_OPTION_ARG_FILENAME, &help_root,
-    "Speficies root directory for index files", "DIR"
+    "Specifies root directory for index files", "DIR"
   },
   { "lang", 'l', 0,
     G_OPTION_ARG_STRING, &help_locales,
