@@ -1,5 +1,9 @@
 2008-04-02  Sven Neumann  <sven@gimp.org>
 
+	* app/pdb/gimppdb-utils.[ch]: added gimp_pdb_layer_is_text_layer().
+
+2008-04-02  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/stddefs.pdb: fixed bug in last commit.
 
 	* app/pdb/drawable_cmds.c

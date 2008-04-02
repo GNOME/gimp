@@ -28,7 +28,10 @@
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpitem.h"
+
+#include "text/gimptextlayer.h"
 
 #include "vectors/gimpvectors.h"
 
@@ -298,7 +301,7 @@ gimp_pdb_item_is_attached (GimpItem  *item,
   if (! gimp_item_is_attached (item))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_CALLING_ERROR,
-                   _("Item '%s' (%d) cannot be used because it has not "
+                   _("Item '%s' (%d) can not be used because it has not "
                      "been added to an image"),
                    gimp_object_get_name (GIMP_OBJECT (item)),
                    gimp_item_get_ID (item));
@@ -308,6 +311,28 @@ gimp_pdb_item_is_attached (GimpItem  *item,
 
   return TRUE;
 }
+
+gboolean
+gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
+                              GError    **error)
+{
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (! gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer)))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_CALLING_ERROR,
+                   _("Layer '%s' (%d) can not be used because it is not "
+                     "a text layer"),
+                   gimp_object_get_name (GIMP_OBJECT (layer)),
+                   gimp_item_get_ID (GIMP_ITEM (layer)));
+
+      return FALSE;
+    }
+
+  return gimp_pdb_item_is_attached (GIMP_ITEM (layer), error);
+}
+
 
 GimpStroke *
 gimp_pdb_get_vectors_stroke (GimpVectors  *vectors,
