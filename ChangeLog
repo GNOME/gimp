@@ -1,5 +1,12 @@
 2008-04-02  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/stddefs.pdb: fixed bug in last commit.
+
+	* app/pdb/drawable_cmds.c
+	* libgimp/gimpdrawable_pdb.c: regenerated.
+
+2008-04-02  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/stddefs.pdb: added shortcut for contributions from 
 	Marcus Heese.
 

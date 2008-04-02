@@ -1315,7 +1315,7 @@ register_drawable_procs (GimpPDB *pdb)
                                      "This procedure returns TRUE if the specified drawable is a text layer.",
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
-                                     "",
+                                     "2008",
                                      NULL);
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",

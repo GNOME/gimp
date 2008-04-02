@@ -95,7 +95,7 @@ sub marc_pdb_misc {
 }
 
 sub marcus_pdb_misc {
-    contrib_pdb_misc('Marcus Heese', 'heese@cip.ifi.lmu.de', '', @_);
+    contrib_pdb_misc('Marcus Heese', 'heese@cip.ifi.lmu.de', @_);
 }
 
 sub martin_pdb_misc {

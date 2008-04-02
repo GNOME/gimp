@@ -104,7 +104,7 @@ gimp_drawable_is_layer (gint32 drawable_ID)
  *
  * Returns: TRUE if the drawable is a text layer, FALSE otherwise.
  *
- * Since: GIMP 2008
+ * Since: GIMP 2.6
  */
 gboolean
 gimp_drawable_is_text_layer (gint32 drawable_ID)
