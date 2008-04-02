@@ -210,8 +210,7 @@ gimp_dodge_burn_options_gui (GimpToolOptions *tool_options)
   g_free (str);
 
   /*  mode (highlights, midtones, or shadows)  */
-  frame = gimp_prop_enum_radio_frame_new (config, "mode",
-                                          _("Mode"), 0, 0);
+  frame = gimp_prop_enum_radio_frame_new (config, "mode", _("Range"), 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

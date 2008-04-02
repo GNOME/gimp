@@ -1,5 +1,12 @@
 2008-04-02  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpperspectiveclonetool.c: removed frame around the
+	mode radio buttons (bug #525747).
+
+	* app/tools/gimpdodgeburntool.c: relabelled "Mode" frame to "Range".
+
+2008-04-02  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/splash.c: use	gimp_pango_layout_set_weight().
 
 2008-04-02  Sven Neumann  <sven@gimp.org>

@@ -297,7 +297,7 @@ gimp_perspective_clone_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_RESUME:
-      /* only in the case that Mode: Modify Poligon is set " */
+      /* only in the case that "Modify Polygon" mode is set " */
       gimp_perspective_clone_tool_bounds (clone_tool, display);
       gimp_perspective_clone_tool_recalc (clone_tool, display);
       break;
@@ -948,8 +948,7 @@ gimp_perspective_clone_options_gui (GimpToolOptions *tool_options)
   paint_options = gimp_paint_options_gui (tool_options);
 
   /* radio buttons to set if you are modifying perspe plane or painting */
-  mode = gimp_prop_enum_radio_frame_new (config, "clone-mode",
-                                        _("Mode"), 0, 0);
+  mode = gimp_prop_enum_radio_box_new (config, "clone-mode", 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), mode, FALSE, FALSE, 0);
   gtk_widget_show (mode);
 
