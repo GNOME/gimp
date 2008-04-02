@@ -1,5 +1,9 @@
 2008-04-02  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimp.def: added new symbols.
+
+2008-04-02  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/Makefile.am
 	* tools/pdbgen/pdb/text_layer.pdb: new text layer PDB API created
 	by Marcus Heese (see bug #164539).
