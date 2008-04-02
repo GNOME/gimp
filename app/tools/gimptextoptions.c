@@ -43,13 +43,14 @@
 
 #include "gimptextoptions.h"
 #include "gimptooloptions-gui.h"
+#include "gimprectangleoptions.h"
 
 #include "gimp-intl.h"
 
 
 enum
 {
-  PROP_0,
+  PROP_0 = GIMP_RECTANGLE_OPTIONS_PROP_LAST + 1,
   PROP_FONT_SIZE,
   PROP_UNIT,
   PROP_HINTING,
@@ -90,7 +91,9 @@ static void  gimp_text_options_notify_text_color  (GimpText     *text,
                                                    GimpContext  *context);
 
 
-G_DEFINE_TYPE (GimpTextOptions, gimp_text_options, GIMP_TYPE_TOOL_OPTIONS)
+G_DEFINE_TYPE_WITH_CODE (GimpTextOptions, gimp_text_options, GIMP_TYPE_TOOL_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_OPTIONS,
+                                                NULL))
 
 
 static void
@@ -171,6 +174,8 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                 GIMP_VIEWABLE_MAX_BUTTON_SIZE,
                                 GIMP_VIEW_SIZE_SMALL,
                                 GIMP_PARAM_STATIC_STRINGS);
+
+  gimp_rectangle_options_install_properties (object_class);
 }
 
 static void
@@ -233,7 +238,7 @@ gimp_text_options_get_property (GObject    *object,
       break;
 
     default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      gimp_rectangle_options_get_property (object, property_id, value, pspec);
       break;
     }
 }
@@ -291,7 +296,7 @@ gimp_text_options_set_property (GObject      *object,
       break;
 
     default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      gimp_rectangle_options_set_property (object, property_id, value, pspec);
       break;
     }
 }

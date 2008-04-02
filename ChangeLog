@@ -1,3 +1,12 @@
+2008-04-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/text/gimptextlayout.c
+	* app/tools/gimptexttool.[ch]
+	* app/tools/gimprectangletool.[ch]
+	* app/tools/gimptextoptions.c: allow resizing of text
+	box.  This is work in progress, and needs some tweaks
+	and fixes.  See bug #122707.
+
 2008-04-02  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.def: added new symbols.

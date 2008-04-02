@@ -150,9 +150,6 @@ gimp_text_layout_new (GimpText  *text,
       alignment = PANGO_ALIGN_CENTER;
       break;
     case GIMP_TEXT_JUSTIFY_FILL:
-      /* FIXME: This doesn't work since the implementation is missing
-         at the Pango level.
-       */
       alignment = PANGO_ALIGN_LEFT;
       pango_layout_set_justify (layout->layout, TRUE);
       break;
@@ -206,6 +203,11 @@ gimp_text_layout_new (GimpText  *text,
     case GIMP_TEXT_BOX_DYNAMIC:
       break;
     case GIMP_TEXT_BOX_FIXED:
+      layout->extents.width =
+        PANGO_PIXELS (gimp_text_layout_pixel_size (image->gimp,
+                                                   text->box_width,
+                                                   text->box_unit,
+                                                   xres));
       layout->extents.height =
         PANGO_PIXELS (gimp_text_layout_pixel_size (image->gimp,
                                                    text->box_height,

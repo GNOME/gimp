@@ -4116,3 +4116,15 @@ gimp_rectangle_tool_adjust_coord (GimpRectangleTool *rect_tool,
         break;
     }
 }
+
+/**
+ * gimp_rectangle_tool_rectangle_is_narrow:
+ *
+ * Returns TRUE if the handles are being shown outside the
+ * rectangle, FALSE if they are inside
+ */
+gboolean
+gimp_rectangle_tool_rectangle_is_narrow (GimpRectangleTool *rect_tool)
+{
+  return GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool)->narrow_mode;
+}
