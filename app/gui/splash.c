@@ -28,6 +28,8 @@
 
 #include "gui-types.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "splash.h"
 
 #include "gimp-intl.h"
@@ -96,8 +98,6 @@ splash_create (gboolean be_verbose)
   GtkWidget          *vbox;
   GdkPixbufAnimation *pixbuf;
   GdkScreen          *screen;
-  PangoAttrList      *attrs;
-  PangoAttribute     *attr;
   GdkGCValues         values;
 
   g_return_if_fail (splash == NULL);
@@ -160,14 +160,7 @@ splash_create (gboolean be_verbose)
   splash->upper = gtk_widget_create_pango_layout (splash->area, "");
   splash->lower = gtk_widget_create_pango_layout (splash->area, "");
 
-  attrs = pango_attr_list_new ();
-  attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
-  attr->start_index = 0;
-  attr->end_index   = -1;
-  pango_attr_list_insert (attrs, attr);
-
-  pango_layout_set_attributes (splash->upper, attrs);
-  pango_attr_list_unref (attrs);
+  gimp_pango_layout_set_weight (splash->upper, PANGO_WEIGHT_BOLD);
 
   /*  this sets the initial layout positions  */
   splash_position_layouts (splash, "", "", NULL);

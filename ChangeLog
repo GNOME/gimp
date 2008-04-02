@@ -1,5 +1,9 @@
 2008-04-02  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/splash.c: use	gimp_pango_layout_set_weight().
+
+2008-04-02  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help/gimp-help-lookup.c: fixed typos in descriptions of
 	the command-line options.
 
