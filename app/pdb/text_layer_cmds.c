@@ -86,7 +86,7 @@ text_layer_new_invoker (GimpProcedure      *procedure,
 
       if (! layer)
         {
-          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_EXECUTION_ERROR,
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                        _("Failed to create text layer"));
 
           success = FALSE;

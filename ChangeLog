@@ -1,5 +1,14 @@
 2008-04-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/pdb/gimppdb-utils.c
+	* tools/pdbgen/pdb/text_layer.pdb: GIMP_PDB_CALLING_ERROR and
+	GIMP_PDB_EXECUTION_ERROR are not from the GimpPdbErrorCode
+	enum. Use GIMP_PDB_INVALID_ARGUMENT instead.
+
+	* app/pdb/text_layer_cmds.c: regenerated.
+
+2008-04-03  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/help/gimphelpdomain.h: fix include guards.
 
 2008-04-03  Michael Natterer  <mitch@gimp.org>
