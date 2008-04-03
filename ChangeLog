@@ -1,3 +1,7 @@
+2008-04-03  Jordi Mallach  <jordi@sindominio.net>
+
+	* configure.in (ALL_LINGUAS): Add Valencian-Catalan (ca@valencia).
+
 2008-04-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/text/gimptextlayout.c
