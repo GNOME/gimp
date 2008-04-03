@@ -125,7 +125,7 @@ image_convert_indexed_invoker (GimpProcedure     *procedure,
               pal = (GimpPalette *)
                 gimp_container_get_child_by_name (gimp->palette_factory->container,
                                                   palette);
-              if (pal == NULL)
+              if (pal == NULL || pal->n_colors > 256)
                 success = FALSE;
               break;
 
@@ -165,7 +165,7 @@ image_convert_set_dither_matrix_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-        gimp_image_convert_set_dither_matrix (width, height, (guchar *) matrix);
+      gimp_image_convert_set_dither_matrix (width, height, (guchar *) matrix);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

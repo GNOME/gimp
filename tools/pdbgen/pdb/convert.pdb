@@ -132,7 +132,7 @@ HELP
           pal = (GimpPalette *)
             gimp_container_get_child_by_name (gimp->palette_factory->container,
                                               palette);
-	  if (pal == NULL)
+	  if (pal == NULL || pal->n_colors > 256)
 	    success = FALSE;
 	  break;
 
@@ -177,7 +177,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-    gimp_image_convert_set_dither_matrix (width, height, (guchar *) matrix);
+  gimp_image_convert_set_dither_matrix (width, height, (guchar *) matrix);
 }
 CODE
     );
