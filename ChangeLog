@@ -1,3 +1,13 @@
+2008-04-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-convert.c (gimp_image_convert): don't accept
+	palettes with more than 256 colors.
+
+	* tools/pdbgen/pdb/convert.pdb: fail here too for palettes
+	with > 256 colors. Fixes bug #525471.
+
+	* app/pdb/convert_cmds.c: regenerated.
+
 2008-04-03  Jordi Mallach  <jordi@sindominio.net>
 
 	* configure.in (ALL_LINGUAS): Add Valencian-Catalan (ca@valencia).

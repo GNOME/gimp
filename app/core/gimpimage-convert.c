@@ -780,6 +780,8 @@ gimp_image_convert (GimpImage               *image,
     {
       g_return_val_if_fail (custom_palette == NULL ||
                             GIMP_IS_PALETTE (custom_palette), FALSE);
+      g_return_val_if_fail (custom_palette == NULL ||
+                            custom_palette->n_colors <= 256, FALSE);
 
       if (! custom_palette)
         palette_type = GIMP_MONO_PALETTE;

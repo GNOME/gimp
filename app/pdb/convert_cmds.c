@@ -26,12 +26,16 @@
 
 #include "core/gimpimage-convert.h"
 #include "core/gimpimage.h"
+#include "core/gimppalette.h"
 #include "core/gimpparamspecs.h"
 
 #include "gimppdb.h"
+#include "gimppdberror.h"
 #include "gimppdb-utils.h"
 #include "gimpprocedure.h"
 #include "internal_procs.h"
+
+#include "gimp-intl.h"
 
 
 static GValueArray *
@@ -125,7 +129,16 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
             case GIMP_CUSTOM_PALETTE:
               pal = gimp_pdb_get_palette (gimp, palette, FALSE, error);
               if (! pal)
-                success = FALSE;
+                {
+                  success = FALSE;
+                }
+              else if (pal->n_colors > 256)
+                {
+                  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                               _("Cannot convert to a palette "
+                                 "with more than 256 colors."));
+                  success = FALSE;
+                }
               break;
 
             default:
@@ -165,7 +178,7 @@ image_convert_set_dither_matrix_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-        gimp_image_convert_set_dither_matrix (width, height, (guchar *) matrix);
+      gimp_image_convert_set_dither_matrix (width, height, (guchar *) matrix);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
