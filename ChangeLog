@@ -1,5 +1,9 @@
 2008-04-03  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/help/gimphelpdomain.h: fix include guards.
+
+2008-04-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-convert.c (gimp_image_convert): don't accept
 	palettes with more than 256 colors.
 

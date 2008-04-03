@@ -21,8 +21,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __DOMAIN_H__
-#define __DOMAIN_H__
+#ifndef __GIMP_HELP_DOMAIN_H__
+#define __GIMP_HELP_DOMAIN_H__
 
 
 struct _GimpHelpDomain
@@ -47,4 +47,4 @@ gchar          * gimp_help_domain_map           (GimpHelpDomain  *domain,
 void             gimp_help_domain_exit          (void);
 
 
-#endif /* ! __DOMAIN_H__ */
+#endif /* ! __GIMP_HELP_DOMAIN_H__ */
