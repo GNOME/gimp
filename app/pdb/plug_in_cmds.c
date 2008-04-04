@@ -115,7 +115,9 @@ plugin_domain_register_invoker (GimpProcedure      *procedure,
                                               domain_name, domain_path);
         }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -146,7 +148,9 @@ plugin_help_register_invoker (GimpProcedure      *procedure,
                                             domain_name, domain_uri);
         }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -211,7 +215,9 @@ plugin_menu_branch_register_invoker (GimpProcedure      *procedure,
                                                 plug_in->prog, menu_path, menu_name);
         }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -259,7 +265,9 @@ plugin_icon_register_invoker (GimpProcedure      *procedure,
             success = FALSE;
         }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success);

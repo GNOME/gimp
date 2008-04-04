@@ -1,5 +1,11 @@
 2008-04-04  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/plug_in.pdb: cosmetics.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+2008-04-04  Sven Neumann  <sven@gimp.org>
+
 	* app/pdb/gimppdb-utils.[ch]: added test for floating items.
 
 	* tools/pdbgen/pdb/image.pdb: use it to improve error handling.

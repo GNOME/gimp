@@ -107,7 +107,9 @@ HELP
                                           domain_name, domain_path);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -142,7 +144,9 @@ HELP
                                         domain_name, domain_uri);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -213,7 +217,9 @@ HELP
                                             plug_in->prog, menu_path, menu_name);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -264,7 +270,9 @@ HELP
         success = FALSE;
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
