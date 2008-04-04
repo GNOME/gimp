@@ -272,22 +272,12 @@ void           gimp_extension_enable    (void);
  */
 void           gimp_extension_process   (guint            timeout);
 
-
-typedef void (* GimpProcedureReturn) (GimpParam  *return_vals,
-                                      gint        n_return_vals,
-                                      gpointer    user_data);
-
 /* Run a procedure in the procedure database. The parameters are
  *  specified via the variable length argument list. The return
  *  values are returned in the 'GimpParam*' array.
  */
 GimpParam    * gimp_run_procedure       (const gchar     *name,
                                          gint            *n_return_vals,
-                                         ...);
-void           gimp_run_procedure_async (const gchar     *name,
-                                         gint            *n_return_vals,
-                                         GimpProcedureReturn  retval_callback,
-                                         gpointer             retval_data,
                                          ...);
 
 /* Run a procedure in the procedure database. The parameters are
@@ -298,12 +288,6 @@ GimpParam    * gimp_run_procedure2      (const gchar     *name,
                                          gint            *n_return_vals,
                                          gint             n_params,
                                          const GimpParam *params);
-void          gimp_run_procedure2_async (const gchar     *name,
-                                         gint            *n_return_vals,
-                                         gint             n_params,
-                                         const GimpParam *params,
-                                         GimpProcedureReturn  retval_callback,
-                                         gpointer             retval_data);
 
 /* Destroy the an array of parameters. This is useful for
  *  destroying the return values returned by a call to
