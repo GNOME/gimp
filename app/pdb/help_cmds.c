@@ -75,7 +75,8 @@ register_help_procs (GimpPDB *pdb)
    * gimp-help
    */
   procedure = gimp_procedure_new (help_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-help");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-help");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-help",
                                      "Load a help page.",

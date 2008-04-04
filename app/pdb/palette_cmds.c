@@ -567,7 +567,8 @@ register_palette_procs (GimpPDB *pdb)
    * gimp-palette-new
    */
   procedure = gimp_procedure_new (palette_new_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palette-new");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-new");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-new",
                                      "Creates a new palette",
@@ -597,7 +598,8 @@ register_palette_procs (GimpPDB *pdb)
    * gimp-palette-duplicate
    */
   procedure = gimp_procedure_new (palette_duplicate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palette-duplicate");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-duplicate");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-duplicate",
                                      "Duplicates a palette",
@@ -627,7 +629,8 @@ register_palette_procs (GimpPDB *pdb)
    * gimp-palette-rename
    */
   procedure = gimp_procedure_new (palette_rename_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palette-rename");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-rename");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-rename",
                                      "Rename a palette",
@@ -664,7 +667,8 @@ register_palette_procs (GimpPDB *pdb)
    * gimp-palette-delete
    */
   procedure = gimp_procedure_new (palette_delete_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palette-delete");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-delete");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-delete",
                                      "Deletes a palette",
@@ -687,7 +691,8 @@ register_palette_procs (GimpPDB *pdb)
    * gimp-palette-is-editable
    */
   procedure = gimp_procedure_new (palette_is_editable_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palette-is-editable");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-is-editable");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-is-editable",
                                      "Tests if palette can be edited",
@@ -716,7 +721,8 @@ register_palette_procs (GimpPDB *pdb)
    * gimp-palette-get-info
    */
   procedure = gimp_procedure_new (palette_get_info_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palette-get-info");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-get-info");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-get-info",
                                      "Retrieve information about the specified palette.",
@@ -745,7 +751,8 @@ register_palette_procs (GimpPDB *pdb)
    * gimp-palette-get-columns
    */
   procedure = gimp_procedure_new (palette_get_columns_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palette-get-columns");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-get-columns");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-get-columns",
                                      "Retrieves the number of columns to use to display this palette",
@@ -774,7 +781,8 @@ register_palette_procs (GimpPDB *pdb)
    * gimp-palette-set-columns
    */
   procedure = gimp_procedure_new (palette_set_columns_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palette-set-columns");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-set-columns");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-set-columns",
                                      "Sets the number of columns to use when displaying the palette",
@@ -803,7 +811,8 @@ register_palette_procs (GimpPDB *pdb)
    * gimp-palette-add-entry
    */
   procedure = gimp_procedure_new (palette_add_entry_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palette-add-entry");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-add-entry");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-add-entry",
                                      "Adds a palette entry to the specified palette.",
@@ -846,7 +855,8 @@ register_palette_procs (GimpPDB *pdb)
    * gimp-palette-delete-entry
    */
   procedure = gimp_procedure_new (palette_delete_entry_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palette-delete-entry");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-delete-entry");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-delete-entry",
                                      "Deletes a palette entry from the specified palette.",
@@ -875,7 +885,8 @@ register_palette_procs (GimpPDB *pdb)
    * gimp-palette-entry-get-color
    */
   procedure = gimp_procedure_new (palette_entry_get_color_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palette-entry-get-color");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-entry-get-color");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-entry-get-color",
                                      "Gets the specified palette entry from the specified palette.",
@@ -911,7 +922,8 @@ register_palette_procs (GimpPDB *pdb)
    * gimp-palette-entry-set-color
    */
   procedure = gimp_procedure_new (palette_entry_set_color_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palette-entry-set-color");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-entry-set-color");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-entry-set-color",
                                      "Sets the specified palette entry in the specified palette.",
@@ -947,7 +959,8 @@ register_palette_procs (GimpPDB *pdb)
    * gimp-palette-entry-get-name
    */
   procedure = gimp_procedure_new (palette_entry_get_name_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palette-entry-get-name");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-entry-get-name");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-entry-get-name",
                                      "Gets the specified palette entry from the specified palette.",
@@ -983,7 +996,8 @@ register_palette_procs (GimpPDB *pdb)
    * gimp-palette-entry-set-name
    */
   procedure = gimp_procedure_new (palette_entry_set_name_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-palette-entry-set-name");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-palette-entry-set-name");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palette-entry-set-name",
                                      "Sets the specified palette entry in the specified palette.",

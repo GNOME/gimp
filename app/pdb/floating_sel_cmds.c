@@ -232,7 +232,8 @@ register_floating_sel_procs (GimpPDB *pdb)
    * gimp-floating-sel-remove
    */
   procedure = gimp_procedure_new (floating_sel_remove_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-floating-sel-remove");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-floating-sel-remove");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-floating-sel-remove",
                                      "Remove the specified floating selection from its associated drawable.",
@@ -254,7 +255,8 @@ register_floating_sel_procs (GimpPDB *pdb)
    * gimp-floating-sel-anchor
    */
   procedure = gimp_procedure_new (floating_sel_anchor_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-floating-sel-anchor");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-floating-sel-anchor");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-floating-sel-anchor",
                                      "Anchor the specified floating selection to its associated drawable.",
@@ -276,7 +278,8 @@ register_floating_sel_procs (GimpPDB *pdb)
    * gimp-floating-sel-to-layer
    */
   procedure = gimp_procedure_new (floating_sel_to_layer_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-floating-sel-to-layer");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-floating-sel-to-layer");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-floating-sel-to-layer",
                                      "Transforms the specified floating selection into a layer.",
@@ -298,7 +301,8 @@ register_floating_sel_procs (GimpPDB *pdb)
    * gimp-floating-sel-attach
    */
   procedure = gimp_procedure_new (floating_sel_attach_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-floating-sel-attach");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-floating-sel-attach");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-floating-sel-attach",
                                      "Attach the specified layer as floating to the specified drawable.",
@@ -326,7 +330,8 @@ register_floating_sel_procs (GimpPDB *pdb)
    * gimp-floating-sel-rigor
    */
   procedure = gimp_procedure_new (floating_sel_rigor_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-floating-sel-rigor");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-floating-sel-rigor");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-floating-sel-rigor",
                                      "Rigor the floating selection.",
@@ -354,7 +359,8 @@ register_floating_sel_procs (GimpPDB *pdb)
    * gimp-floating-sel-relax
    */
   procedure = gimp_procedure_new (floating_sel_relax_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-floating-sel-relax");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-floating-sel-relax");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-floating-sel-relax",
                                      "Relax the floating selection.",

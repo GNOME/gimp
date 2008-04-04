@@ -113,7 +113,8 @@ register_message_procs (GimpPDB *pdb)
    * gimp-message
    */
   procedure = gimp_procedure_new (message_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-message");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-message");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-message",
                                      "Displays a dialog box with a message.",
@@ -136,7 +137,8 @@ register_message_procs (GimpPDB *pdb)
    * gimp-message-get-handler
    */
   procedure = gimp_procedure_new (message_get_handler_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-message-get-handler");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-message-get-handler");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-message-get-handler",
                                      "Returns the current state of where warning messages are displayed.",
@@ -159,7 +161,8 @@ register_message_procs (GimpPDB *pdb)
    * gimp-message-set-handler
    */
   procedure = gimp_procedure_new (message_set_handler_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-message-set-handler");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-message-set-handler");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-message-set-handler",
                                      "Controls where warning messages are displayed.",

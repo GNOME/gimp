@@ -287,7 +287,8 @@ register_text_tool_procs (GimpPDB *pdb)
    * gimp-text-fontname
    */
   procedure = gimp_procedure_new (text_fontname_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-text-fontname");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-fontname");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-text-fontname",
                                      "Add text at the specified location as a floating selection or a new layer.",
@@ -372,7 +373,8 @@ register_text_tool_procs (GimpPDB *pdb)
    * gimp-text-get-extents-fontname
    */
   procedure = gimp_procedure_new (text_get_extents_fontname_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-text-get-extents-fontname");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-get-extents-fontname");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-text-get-extents-fontname",
                                      "Get extents of the bounding box for the specified text.",
@@ -439,7 +441,8 @@ register_text_tool_procs (GimpPDB *pdb)
    * gimp-text
    */
   procedure = gimp_procedure_new (text_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-text");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-text",
                                      "This procedure is deprecated! Use 'gimp-text-fontname' instead.",
@@ -573,7 +576,8 @@ register_text_tool_procs (GimpPDB *pdb)
    * gimp-text-get-extents
    */
   procedure = gimp_procedure_new (text_get_extents_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-text-get-extents");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-get-extents");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-text-get-extents",
                                      "This procedure is deprecated! Use 'gimp-text-get-extents-fontname' instead.",

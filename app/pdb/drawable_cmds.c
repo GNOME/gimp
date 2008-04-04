@@ -1252,7 +1252,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-is-valid
    */
   procedure = gimp_procedure_new (drawable_is_valid_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-is-valid");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-is-valid");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-valid",
                                      "Returns TRUE if the drawable is valid.",
@@ -1280,7 +1281,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-is-layer
    */
   procedure = gimp_procedure_new (drawable_is_layer_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-is-layer");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-is-layer");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-layer",
                                      "Returns whether the drawable is a layer.",
@@ -1308,7 +1310,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-is-text-layer
    */
   procedure = gimp_procedure_new (drawable_is_text_layer_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-is-text-layer");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-is-text-layer");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-text-layer",
                                      "Returns whether the drawable is a text layer.",
@@ -1336,7 +1339,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-is-layer-mask
    */
   procedure = gimp_procedure_new (drawable_is_layer_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-is-layer-mask");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-is-layer-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-layer-mask",
                                      "Returns whether the drawable is a layer mask.",
@@ -1364,7 +1368,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-is-channel
    */
   procedure = gimp_procedure_new (drawable_is_channel_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-is-channel");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-is-channel");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-channel",
                                      "Returns whether the drawable is a channel.",
@@ -1392,7 +1397,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-type
    */
   procedure = gimp_procedure_new (drawable_type_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-type");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-type");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-type",
                                      "Returns the drawable's type.",
@@ -1421,7 +1427,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-type-with-alpha
    */
   procedure = gimp_procedure_new (drawable_type_with_alpha_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-type-with-alpha");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-type-with-alpha");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-type-with-alpha",
                                      "Returns the drawable's type with alpha.",
@@ -1456,7 +1463,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-has-alpha
    */
   procedure = gimp_procedure_new (drawable_has_alpha_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-has-alpha");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-has-alpha");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-has-alpha",
                                      "Returns TRUE if the drawable has an alpha channel.",
@@ -1484,7 +1492,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-is-rgb
    */
   procedure = gimp_procedure_new (drawable_is_rgb_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-is-rgb");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-is-rgb");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-rgb",
                                      "Returns whether the drawable is an RGB type.",
@@ -1512,7 +1521,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-is-gray
    */
   procedure = gimp_procedure_new (drawable_is_gray_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-is-gray");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-is-gray");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-gray",
                                      "Returns whether the drawable is a grayscale type.",
@@ -1540,7 +1550,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-is-indexed
    */
   procedure = gimp_procedure_new (drawable_is_indexed_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-is-indexed");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-is-indexed");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-indexed",
                                      "Returns whether the drawable is an indexed type.",
@@ -1568,7 +1579,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-bpp
    */
   procedure = gimp_procedure_new (drawable_bpp_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-bpp");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-bpp");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-bpp",
                                      "Returns the bytes per pixel.",
@@ -1596,7 +1608,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-width
    */
   procedure = gimp_procedure_new (drawable_width_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-width");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-width");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-width",
                                      "Returns the width of the drawable.",
@@ -1624,7 +1637,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-height
    */
   procedure = gimp_procedure_new (drawable_height_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-height");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-height");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-height",
                                      "Returns the height of the drawable.",
@@ -1652,7 +1666,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-offsets
    */
   procedure = gimp_procedure_new (drawable_offsets_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-offsets");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-offsets");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-offsets",
                                      "Returns the offsets for the drawable.",
@@ -1686,7 +1701,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-delete
    */
   procedure = gimp_procedure_new (drawable_delete_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-delete");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-delete");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-delete",
                                      "Delete a drawable.",
@@ -1708,7 +1724,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-get-image
    */
   procedure = gimp_procedure_new (drawable_get_image_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-get-image");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-get-image");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-image",
                                      "Returns the drawable's image.",
@@ -1736,7 +1753,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-set-image
    */
   procedure = gimp_procedure_new (drawable_set_image_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-set-image");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-set-image");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-set-image",
                                      "This procedure is deprecated!",
@@ -1764,7 +1782,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-get-name
    */
   procedure = gimp_procedure_new (drawable_get_name_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-get-name");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-get-name");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-name",
                                      "Get the name of the specified drawable.",
@@ -1793,7 +1812,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-set-name
    */
   procedure = gimp_procedure_new (drawable_set_name_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-set-name");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-set-name");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-set-name",
                                      "Set the name of the specified drawable.",
@@ -1822,7 +1842,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-get-visible
    */
   procedure = gimp_procedure_new (drawable_get_visible_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-get-visible");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-get-visible");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-visible",
                                      "Get the visibility of the specified drawable.",
@@ -1850,7 +1871,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-set-visible
    */
   procedure = gimp_procedure_new (drawable_set_visible_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-set-visible");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-set-visible");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-set-visible",
                                      "Set the visibility of the specified drawable.",
@@ -1878,7 +1900,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-get-linked
    */
   procedure = gimp_procedure_new (drawable_get_linked_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-get-linked");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-get-linked");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-linked",
                                      "Get the linked state of the specified drawable.",
@@ -1906,7 +1929,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-set-linked
    */
   procedure = gimp_procedure_new (drawable_set_linked_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-set-linked");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-set-linked");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-set-linked",
                                      "Set the linked state of the specified drawable.",
@@ -1934,7 +1958,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-get-tattoo
    */
   procedure = gimp_procedure_new (drawable_get_tattoo_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-get-tattoo");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-get-tattoo");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-tattoo",
                                      "Get the tattoo of the specified drawable.",
@@ -1962,7 +1987,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-set-tattoo
    */
   procedure = gimp_procedure_new (drawable_set_tattoo_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-set-tattoo");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-set-tattoo");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-set-tattoo",
                                      "Set the tattoo of the specified drawable.",
@@ -1990,7 +2016,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-mask-bounds
    */
   procedure = gimp_procedure_new (drawable_mask_bounds_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-mask-bounds");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-mask-bounds");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-mask-bounds",
                                      "Find the bounding box of the current selection in relation to the specified drawable.",
@@ -2042,7 +2069,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-mask-intersect
    */
   procedure = gimp_procedure_new (drawable_mask_intersect_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-mask-intersect");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-mask-intersect");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-mask-intersect",
                                      "Find the bounding box of the current selection in relation to the specified drawable.",
@@ -2094,7 +2122,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-merge-shadow
    */
   procedure = gimp_procedure_new (drawable_merge_shadow_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-merge-shadow");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-merge-shadow");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-merge-shadow",
                                      "Merge the shadow buffer with the specified drawable.",
@@ -2122,7 +2151,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-update
    */
   procedure = gimp_procedure_new (drawable_update_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-update");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-update");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-update",
                                      "Update the specified region of the drawable.",
@@ -2168,7 +2198,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-get-pixel
    */
   procedure = gimp_procedure_new (drawable_get_pixel_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-get-pixel");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-get-pixel");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-pixel",
                                      "Gets the value of the pixel at the specified coordinates.",
@@ -2213,7 +2244,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-set-pixel
    */
   procedure = gimp_procedure_new (drawable_set_pixel_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-set-pixel");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-set-pixel");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-set-pixel",
                                      "Sets the value of the pixel at the specified coordinates.",
@@ -2258,7 +2290,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-fill
    */
   procedure = gimp_procedure_new (drawable_fill_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-fill");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-fill");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-fill",
                                      "Fill the drawable with the specified fill mode.",
@@ -2287,7 +2320,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-offset
    */
   procedure = gimp_procedure_new (drawable_offset_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-offset");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-offset");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-offset",
                                      "Offset the drawable by the specified amounts in the X and Y directions",
@@ -2334,7 +2368,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-thumbnail
    */
   procedure = gimp_procedure_new (drawable_thumbnail_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-thumbnail");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-thumbnail");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-thumbnail",
                                      "Get a thumbnail of a drawable.",
@@ -2397,7 +2432,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-sub-thumbnail
    */
   procedure = gimp_procedure_new (drawable_sub_thumbnail_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-sub-thumbnail");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-sub-thumbnail");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-sub-thumbnail",
                                      "Get a thumbnail of a sub-area of a drawable drawable.",
@@ -2484,7 +2520,8 @@ register_drawable_procs (GimpPDB *pdb)
    * gimp-drawable-foreground-extract
    */
   procedure = gimp_procedure_new (drawable_foreground_extract_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-foreground-extract");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-foreground-extract");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-foreground-extract",
                                      "Extract the foreground of a drawable using a given trimap.",

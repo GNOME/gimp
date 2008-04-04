@@ -122,7 +122,8 @@ register_font_select_procs (GimpPDB *pdb)
    * gimp-fonts-popup
    */
   procedure = gimp_procedure_new (fonts_popup_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-fonts-popup");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-fonts-popup");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-fonts-popup",
                                      "Invokes the Gimp font selection.",
@@ -159,7 +160,8 @@ register_font_select_procs (GimpPDB *pdb)
    * gimp-fonts-close-popup
    */
   procedure = gimp_procedure_new (fonts_close_popup_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-fonts-close-popup");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-fonts-close-popup");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-fonts-close-popup",
                                      "Close the font selection dialog.",
@@ -182,7 +184,8 @@ register_font_select_procs (GimpPDB *pdb)
    * gimp-fonts-set-popup
    */
   procedure = gimp_procedure_new (fonts_set_popup_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-fonts-set-popup");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-fonts-set-popup");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-fonts-set-popup",
                                      "Sets the current font in a font selection dialog.",

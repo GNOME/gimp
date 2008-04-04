@@ -676,7 +676,8 @@ register_paths_procs (GimpPDB *pdb)
    * gimp-path-list
    */
   procedure = gimp_procedure_new (path_list_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-list");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-path-list");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-list",
                                      "This procedure is deprecated! Use 'gimp-image-get-vectors' instead.",
@@ -709,7 +710,8 @@ register_paths_procs (GimpPDB *pdb)
    * gimp-path-get-current
    */
   procedure = gimp_procedure_new (path_get_current_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-get-current");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-path-get-current");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-get-current",
                                      "This procedure is deprecated! Use 'gimp-image-get-active-vectors' instead.",
@@ -738,7 +740,8 @@ register_paths_procs (GimpPDB *pdb)
    * gimp-path-set-current
    */
   procedure = gimp_procedure_new (path_set_current_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-set-current");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-path-set-current");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-set-current",
                                      "This procedure is deprecated! Use 'gimp-image-set-active-vectors' instead.",
@@ -767,7 +770,8 @@ register_paths_procs (GimpPDB *pdb)
    * gimp-path-delete
    */
   procedure = gimp_procedure_new (path_delete_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-delete");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-path-delete");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-delete",
                                      "This procedure is deprecated! Use 'gimp-image-remove-vectors' instead.",
@@ -796,7 +800,8 @@ register_paths_procs (GimpPDB *pdb)
    * gimp-path-get-points
    */
   procedure = gimp_procedure_new (path_get_points_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-get-points");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-path-get-points");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-get-points",
                                      "This procedure is deprecated! Use 'gimp-vectors-stroke-get-points' instead.",
@@ -848,7 +853,8 @@ register_paths_procs (GimpPDB *pdb)
    * gimp-path-set-points
    */
   procedure = gimp_procedure_new (path_set_points_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-set-points");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-path-set-points");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-set-points",
                                      "This procedure is deprecated! Use 'vectors-stroke-new-from-points' instead.",
@@ -894,7 +900,8 @@ register_paths_procs (GimpPDB *pdb)
    * gimp-path-stroke-current
    */
   procedure = gimp_procedure_new (path_stroke_current_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-stroke-current");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-path-stroke-current");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-stroke-current",
                                      "This procedure is deprecated! Use 'gimp-edit-stroke-vectors' instead.",
@@ -916,7 +923,8 @@ register_paths_procs (GimpPDB *pdb)
    * gimp-path-get-point-at-dist
    */
   procedure = gimp_procedure_new (path_get_point_at_dist_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-get-point-at-dist");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-path-get-point-at-dist");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-get-point-at-dist",
                                      "This procedure is deprecated! Use 'gimp-vectors-stroke-get-point-at-dist' instead.",
@@ -962,7 +970,8 @@ register_paths_procs (GimpPDB *pdb)
    * gimp-path-get-tattoo
    */
   procedure = gimp_procedure_new (path_get_tattoo_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-get-tattoo");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-path-get-tattoo");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-get-tattoo",
                                      "This procedure is deprecated! Use 'gimp-vectors-get-tattoo' instead.",
@@ -997,7 +1006,8 @@ register_paths_procs (GimpPDB *pdb)
    * gimp-path-set-tattoo
    */
   procedure = gimp_procedure_new (path_set_tattoo_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-set-tattoo");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-path-set-tattoo");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-set-tattoo",
                                      "This procedure is deprecated! Use 'gimp-vectors-set-tattoo' instead.",
@@ -1032,7 +1042,8 @@ register_paths_procs (GimpPDB *pdb)
    * gimp-get-path-by-tattoo
    */
   procedure = gimp_procedure_new (get_path_by_tattoo_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-get-path-by-tattoo");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-get-path-by-tattoo");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-get-path-by-tattoo",
                                      "This procedure is deprecated! Use 'gimp-image-get-vectors-by-tattoo' instead.",
@@ -1067,7 +1078,8 @@ register_paths_procs (GimpPDB *pdb)
    * gimp-path-get-locked
    */
   procedure = gimp_procedure_new (path_get_locked_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-get-locked");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-path-get-locked");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-get-locked",
                                      "This procedure is deprecated! Use 'gimp-vectors-get-linked' instead.",
@@ -1102,7 +1114,8 @@ register_paths_procs (GimpPDB *pdb)
    * gimp-path-set-locked
    */
   procedure = gimp_procedure_new (path_set_locked_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-set-locked");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-path-set-locked");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-set-locked",
                                      "This procedure is deprecated! Use 'gimp-vectors-set-linked' instead.",
@@ -1137,7 +1150,8 @@ register_paths_procs (GimpPDB *pdb)
    * gimp-path-to-selection
    */
   procedure = gimp_procedure_new (path_to_selection_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-to-selection");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-path-to-selection");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-to-selection",
                                      "This procedure is deprecated! Use 'gimp-vectors-to-selection' instead.",
@@ -1197,7 +1211,8 @@ register_paths_procs (GimpPDB *pdb)
    * gimp-path-import
    */
   procedure = gimp_procedure_new (path_import_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-path-import");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-path-import");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-import",
                                      "This procedure is deprecated! Use 'vectors-import-from-file' instead.",

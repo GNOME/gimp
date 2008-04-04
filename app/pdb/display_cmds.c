@@ -202,7 +202,8 @@ register_display_procs (GimpPDB *pdb)
    * gimp-display-is-valid
    */
   procedure = gimp_procedure_new (display_is_valid_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-display-is-valid");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-display-is-valid");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-display-is-valid",
                                      "Returns TRUE if the display is valid.",
@@ -230,7 +231,8 @@ register_display_procs (GimpPDB *pdb)
    * gimp-display-new
    */
   procedure = gimp_procedure_new (display_new_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-display-new");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-display-new");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-display-new",
                                      "Create a new display for the specified image.",
@@ -258,7 +260,8 @@ register_display_procs (GimpPDB *pdb)
    * gimp-display-delete
    */
   procedure = gimp_procedure_new (display_delete_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-display-delete");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-display-delete");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-display-delete",
                                      "Delete the specified display.",
@@ -280,7 +283,8 @@ register_display_procs (GimpPDB *pdb)
    * gimp-display-get-window-handle
    */
   procedure = gimp_procedure_new (display_get_window_handle_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-display-get-window-handle");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-display-get-window-handle");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-display-get-window-handle",
                                      "Get a handle to the native window for an image display.",
@@ -308,7 +312,8 @@ register_display_procs (GimpPDB *pdb)
    * gimp-displays-flush
    */
   procedure = gimp_procedure_new (displays_flush_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-displays-flush");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-displays-flush");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-displays-flush",
                                      "Flush all internal changes to the user interface",
@@ -324,7 +329,8 @@ register_display_procs (GimpPDB *pdb)
    * gimp-displays-reconnect
    */
   procedure = gimp_procedure_new (displays_reconnect_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-displays-reconnect");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-displays-reconnect");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-displays-reconnect",
                                      "Reconnect displays from one image to another image.",

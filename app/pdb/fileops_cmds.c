@@ -542,7 +542,8 @@ register_fileops_procs (GimpPDB *pdb)
    * gimp-file-load
    */
   procedure = gimp_procedure_new (file_load_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-file-load");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-file-load");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-file-load",
                                      "Loads an image file by invoking the right load handler.",
@@ -587,7 +588,8 @@ register_fileops_procs (GimpPDB *pdb)
    * gimp-file-load-layer
    */
   procedure = gimp_procedure_new (file_load_layer_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-file-load-layer");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-file-load-layer");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-file-load-layer",
                                      "Loads an image file as a layer for an existing image.",
@@ -631,7 +633,8 @@ register_fileops_procs (GimpPDB *pdb)
    * gimp-file-load-layers
    */
   procedure = gimp_procedure_new (file_load_layers_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-file-load-layers");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-file-load-layers");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-file-load-layers",
                                      "Loads an image file as layers for an existing image.",
@@ -680,7 +683,8 @@ register_fileops_procs (GimpPDB *pdb)
    * gimp-file-save
    */
   procedure = gimp_procedure_new (file_save_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-file-save");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-file-save");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-file-save",
                                      "Saves a file by extension.",
@@ -729,7 +733,8 @@ register_fileops_procs (GimpPDB *pdb)
    * gimp-file-load-thumbnail
    */
   procedure = gimp_procedure_new (file_load_thumbnail_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-file-load-thumbnail");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-file-load-thumbnail");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-file-load-thumbnail",
                                      "Loads the thumbnail for a file.",
@@ -775,7 +780,8 @@ register_fileops_procs (GimpPDB *pdb)
    * gimp-file-save-thumbnail
    */
   procedure = gimp_procedure_new (file_save_thumbnail_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-file-save-thumbnail");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-file-save-thumbnail");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-file-save-thumbnail",
                                      "Saves a thumbnail for the given image",
@@ -804,7 +810,8 @@ register_fileops_procs (GimpPDB *pdb)
    * gimp-temp-name
    */
   procedure = gimp_procedure_new (temp_name_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-temp-name");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-temp-name");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-temp-name",
                                      "Generates a unique filename.",
@@ -834,7 +841,8 @@ register_fileops_procs (GimpPDB *pdb)
    * gimp-register-magic-load-handler
    */
   procedure = gimp_procedure_new (register_magic_load_handler_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-register-magic-load-handler");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-register-magic-load-handler");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-register-magic-load-handler",
                                      "Registers a file load handler procedure.",
@@ -878,7 +886,8 @@ register_fileops_procs (GimpPDB *pdb)
    * gimp-register-load-handler
    */
   procedure = gimp_procedure_new (register_load_handler_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-register-load-handler");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-register-load-handler");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-register-load-handler",
                                      "Registers a file load handler procedure.",
@@ -915,7 +924,8 @@ register_fileops_procs (GimpPDB *pdb)
    * gimp-register-save-handler
    */
   procedure = gimp_procedure_new (register_save_handler_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-register-save-handler");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-register-save-handler");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-register-save-handler",
                                      "Registers a file save handler procedure.",
@@ -952,7 +962,8 @@ register_fileops_procs (GimpPDB *pdb)
    * gimp-register-file-handler-mime
    */
   procedure = gimp_procedure_new (register_file_handler_mime_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-register-file-handler-mime");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-register-file-handler-mime");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-register-file-handler-mime",
                                      "Associates a MIME type with a file handler procedure.",
@@ -982,7 +993,8 @@ register_fileops_procs (GimpPDB *pdb)
    * gimp-register-thumbnail-loader
    */
   procedure = gimp_procedure_new (register_thumbnail_loader_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-register-thumbnail-loader");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-register-thumbnail-loader");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-register-thumbnail-loader",
                                      "Associates a thumbnail loader with a file load procedure.",

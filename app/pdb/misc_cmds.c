@@ -103,7 +103,8 @@ register_misc_procs (GimpPDB *pdb)
    * gimp-version
    */
   procedure = gimp_procedure_new (version_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-version");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-version");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-version",
                                      "Returns the host GIMP version.",
@@ -126,7 +127,8 @@ register_misc_procs (GimpPDB *pdb)
    * gimp-getpid
    */
   procedure = gimp_procedure_new (getpid_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-getpid");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-getpid");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-getpid",
                                      "Returns the PID of the host GIMP process.",
@@ -148,7 +150,8 @@ register_misc_procs (GimpPDB *pdb)
    * gimp-quit
    */
   procedure = gimp_procedure_new (quit_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-quit");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-quit");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-quit",
                                      "Causes GIMP to exit gracefully.",

@@ -794,7 +794,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-cut
    */
   procedure = gimp_procedure_new (edit_cut_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-cut");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-cut");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-cut",
                                      "Cut from the specified drawable.",
@@ -822,7 +823,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-copy
    */
   procedure = gimp_procedure_new (edit_copy_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-copy");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-copy");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-copy",
                                      "Copy from the specified drawable.",
@@ -850,7 +852,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-copy-visible
    */
   procedure = gimp_procedure_new (edit_copy_visible_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-copy-visible");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-copy-visible");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-copy-visible",
                                      "Copy from the projection.",
@@ -878,7 +881,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-paste
    */
   procedure = gimp_procedure_new (edit_paste_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-paste");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-paste");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-paste",
                                      "Paste buffer to the specified drawable.",
@@ -912,7 +916,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-paste-as-new
    */
   procedure = gimp_procedure_new (edit_paste_as_new_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-paste-as-new");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-paste-as-new");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-paste-as-new",
                                      "Paste buffer to a new image.",
@@ -934,7 +939,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-named-cut
    */
   procedure = gimp_procedure_new (edit_named_cut_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-named-cut");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-named-cut");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-named-cut",
                                      "Cut into a named buffer.",
@@ -970,7 +976,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-named-copy
    */
   procedure = gimp_procedure_new (edit_named_copy_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-named-copy");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-named-copy");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-named-copy",
                                      "Copy into a named buffer.",
@@ -1006,7 +1013,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-named-copy-visible
    */
   procedure = gimp_procedure_new (edit_named_copy_visible_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-named-copy-visible");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-named-copy-visible");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-named-copy-visible",
                                      "Copy from the projection into a named buffer.",
@@ -1042,7 +1050,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-named-paste
    */
   procedure = gimp_procedure_new (edit_named_paste_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-named-paste");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-named-paste");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-named-paste",
                                      "Paste named buffer to the specified drawable.",
@@ -1083,7 +1092,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-named-paste-as-new
    */
   procedure = gimp_procedure_new (edit_named_paste_as_new_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-named-paste-as-new");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-named-paste-as-new");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-named-paste-as-new",
                                      "Paste named buffer to a new image.",
@@ -1112,7 +1122,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-clear
    */
   procedure = gimp_procedure_new (edit_clear_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-clear");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-clear");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-clear",
                                      "Clear selected area of drawable.",
@@ -1134,7 +1145,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-fill
    */
   procedure = gimp_procedure_new (edit_fill_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-fill");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-fill");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-fill",
                                      "Fill selected area of drawable.",
@@ -1163,7 +1175,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-bucket-fill
    */
   procedure = gimp_procedure_new (edit_bucket_fill_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-bucket-fill");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-bucket-fill");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-bucket-fill",
                                      "Fill the area specified either by the current selection if there is one, or by a seed fill starting at the specified coordinates.",
@@ -1229,7 +1242,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-bucket-fill-full
    */
   procedure = gimp_procedure_new (edit_bucket_fill_full_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-bucket-fill-full");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-bucket-fill-full");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-bucket-fill-full",
                                      "Fill the area specified either by the current selection if there is one, or by a seed fill starting at the specified coordinates.",
@@ -1308,7 +1322,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-blend
    */
   procedure = gimp_procedure_new (edit_blend_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-blend");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-blend");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-blend",
                                      "Blend between the starting and ending coordinates with the specified blend mode and gradient type.",
@@ -1424,7 +1439,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-stroke
    */
   procedure = gimp_procedure_new (edit_stroke_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-stroke");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-stroke");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-stroke",
                                      "Stroke the current selection",
@@ -1446,7 +1462,8 @@ register_edit_procs (GimpPDB *pdb)
    * gimp-edit-stroke-vectors
    */
   procedure = gimp_procedure_new (edit_stroke_vectors_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-edit-stroke-vectors");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-edit-stroke-vectors");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-stroke-vectors",
                                      "Stroke the specified vectors object",

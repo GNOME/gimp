@@ -812,7 +812,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-airbrush
    */
   procedure = gimp_procedure_new (airbrush_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-airbrush");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-airbrush");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-airbrush",
                                      "Paint in the current brush with varying pressure. Paint application is time-dependent.",
@@ -851,7 +852,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-airbrush-default
    */
   procedure = gimp_procedure_new (airbrush_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-airbrush-default");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-airbrush-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-airbrush-default",
                                      "Paint in the current brush with varying pressure. Paint application is time-dependent.",
@@ -884,7 +886,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-clone
    */
   procedure = gimp_procedure_new (clone_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-clone");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-clone");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-clone",
                                      "Clone from the source to the dest drawable using the current brush",
@@ -942,7 +945,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-clone-default
    */
   procedure = gimp_procedure_new (clone_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-clone-default");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-clone-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-clone-default",
                                      "Clone from the source to the dest drawable using the current brush",
@@ -975,7 +979,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-convolve
    */
   procedure = gimp_procedure_new (convolve_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-convolve");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-convolve");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-convolve",
                                      "Convolve (Blur, Sharpen) using the current brush.",
@@ -1021,7 +1026,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-convolve-default
    */
   procedure = gimp_procedure_new (convolve_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-convolve-default");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-convolve-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-convolve-default",
                                      "Convolve (Blur, Sharpen) using the current brush.",
@@ -1054,7 +1060,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-dodgeburn
    */
   procedure = gimp_procedure_new (dodgeburn_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-dodgeburn");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-dodgeburn");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-dodgeburn",
                                      "Dodgeburn image with varying exposure.",
@@ -1107,7 +1114,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-dodgeburn-default
    */
   procedure = gimp_procedure_new (dodgeburn_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-dodgeburn-default");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-dodgeburn-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-dodgeburn-default",
                                      "Dodgeburn image with varying exposure. This is the same as the gimp_dodgeburn() function except that the exposure, type and mode are taken from the tools option dialog. If the dialog has not been activated then the defaults as used by the dialog will be used.",
@@ -1140,7 +1148,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-eraser
    */
   procedure = gimp_procedure_new (eraser_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-eraser");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-eraser");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-eraser",
                                      "Erase using the current brush.",
@@ -1187,7 +1196,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-eraser-default
    */
   procedure = gimp_procedure_new (eraser_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-eraser-default");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-eraser-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-eraser-default",
                                      "Erase using the current brush.",
@@ -1220,7 +1230,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-heal
    */
   procedure = gimp_procedure_new (heal_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-heal");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-heal");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-heal",
                                      "Heal from the source to the dest drawable using the current brush",
@@ -1271,7 +1282,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-heal-default
    */
   procedure = gimp_procedure_new (heal_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-heal-default");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-heal-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-heal-default",
                                      "Heal from the source to the dest drawable using the current brush",
@@ -1304,7 +1316,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-paintbrush
    */
   procedure = gimp_procedure_new (paintbrush_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-paintbrush");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-paintbrush");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-paintbrush",
                                      "Paint in the current brush with optional fade out parameter and pull colors from a gradient.",
@@ -1356,7 +1369,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-paintbrush-default
    */
   procedure = gimp_procedure_new (paintbrush_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-paintbrush-default");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-paintbrush-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-paintbrush-default",
                                      "Paint in the current brush. The fade out parameter and pull colors from a gradient parameter are set from the paintbrush options dialog. If this dialog has not been activated then the dialog defaults will be used.",
@@ -1389,7 +1403,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-pencil
    */
   procedure = gimp_procedure_new (pencil_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-pencil");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pencil");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-pencil",
                                      "Paint in the current brush without sub-pixel sampling.",
@@ -1422,7 +1437,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-smudge
    */
   procedure = gimp_procedure_new (smudge_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-smudge");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-smudge");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-smudge",
                                      "Smudge image with varying pressure.",
@@ -1461,7 +1477,8 @@ register_paint_tools_procs (GimpPDB *pdb)
    * gimp-smudge-default
    */
   procedure = gimp_procedure_new (smudge_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-smudge-default");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-smudge-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-smudge-default",
                                      "Smudge image with varying pressure.",

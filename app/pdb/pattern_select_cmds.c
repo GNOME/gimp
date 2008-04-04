@@ -126,7 +126,8 @@ register_pattern_select_procs (GimpPDB *pdb)
    * gimp-patterns-popup
    */
   procedure = gimp_procedure_new (patterns_popup_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-patterns-popup");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-patterns-popup");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-patterns-popup",
                                      "Invokes the Gimp pattern selection.",
@@ -163,7 +164,8 @@ register_pattern_select_procs (GimpPDB *pdb)
    * gimp-patterns-close-popup
    */
   procedure = gimp_procedure_new (patterns_close_popup_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-patterns-close-popup");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-patterns-close-popup");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-patterns-close-popup",
                                      "Close the pattern selection dialog.",
@@ -186,7 +188,8 @@ register_pattern_select_procs (GimpPDB *pdb)
    * gimp-patterns-set-popup
    */
   procedure = gimp_procedure_new (patterns_set_popup_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-patterns-set-popup");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-patterns-set-popup");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-patterns-set-popup",
                                      "Sets the current pattern in a pattern selection dialog.",

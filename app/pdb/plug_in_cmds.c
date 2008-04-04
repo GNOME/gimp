@@ -282,7 +282,8 @@ register_plug_in_procs (GimpPDB *pdb)
    * gimp-plugins-query
    */
   procedure = gimp_procedure_new (plugins_query_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-plugins-query");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-plugins-query");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-plugins-query",
                                      "Queries the plugin database for its contents.",
@@ -371,7 +372,8 @@ register_plug_in_procs (GimpPDB *pdb)
    * gimp-plugin-domain-register
    */
   procedure = gimp_procedure_new (plugin_domain_register_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-plugin-domain-register");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-plugin-domain-register");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-plugin-domain-register",
                                      "Registers a textdomain for localisation.",
@@ -401,7 +403,8 @@ register_plug_in_procs (GimpPDB *pdb)
    * gimp-plugin-help-register
    */
   procedure = gimp_procedure_new (plugin_help_register_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-plugin-help-register");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-plugin-help-register");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-plugin-help-register",
                                      "Register a help path for a plug-in.",
@@ -431,7 +434,8 @@ register_plug_in_procs (GimpPDB *pdb)
    * gimp-plugin-menu-register
    */
   procedure = gimp_procedure_new (plugin_menu_register_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-plugin-menu-register");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-plugin-menu-register");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-plugin-menu-register",
                                      "Register an additional menu path for a plug-in procedure.",
@@ -461,7 +465,8 @@ register_plug_in_procs (GimpPDB *pdb)
    * gimp-plugin-menu-branch-register
    */
   procedure = gimp_procedure_new (plugin_menu_branch_register_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-plugin-menu-branch-register");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-plugin-menu-branch-register");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-plugin-menu-branch-register",
                                      "Register a sub-menu.",
@@ -491,7 +496,8 @@ register_plug_in_procs (GimpPDB *pdb)
    * gimp-plugin-icon-register
    */
   procedure = gimp_procedure_new (plugin_icon_register_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-plugin-icon-register");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-plugin-icon-register");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-plugin-icon-register",
                                      "Register an icon for a plug-in procedure.",

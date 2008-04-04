@@ -460,7 +460,8 @@ register_transform_tools_procs (GimpPDB *pdb)
    * gimp-flip
    */
   procedure = gimp_procedure_new (flip_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-flip");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-flip");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-flip",
                                      "This procedure is deprecated! Use 'gimp-drawable-transform-flip-simple' instead.",
@@ -497,7 +498,8 @@ register_transform_tools_procs (GimpPDB *pdb)
    * gimp-perspective
    */
   procedure = gimp_procedure_new (perspective_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-perspective");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-perspective");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-perspective",
                                      "This procedure is deprecated! Use 'gimp-drawable-transform-perspective-default' instead.",
@@ -579,7 +581,8 @@ register_transform_tools_procs (GimpPDB *pdb)
    * gimp-rotate
    */
   procedure = gimp_procedure_new (rotate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-rotate");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-rotate");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-rotate",
                                      "This procedure is deprecated! Use 'gimp-drawable-transform-rotate-default' instead.",
@@ -619,7 +622,8 @@ register_transform_tools_procs (GimpPDB *pdb)
    * gimp-scale
    */
   procedure = gimp_procedure_new (scale_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-scale");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-scale");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-scale",
                                      "This procedure is deprecated! Use 'gimp-drawable-transform-scale-default' instead.",
@@ -677,7 +681,8 @@ register_transform_tools_procs (GimpPDB *pdb)
    * gimp-shear
    */
   procedure = gimp_procedure_new (shear_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-shear");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-shear");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-shear",
                                      "This procedure is deprecated! Use 'gimp-drawable-transform-shear-default' instead.",
@@ -726,7 +731,8 @@ register_transform_tools_procs (GimpPDB *pdb)
    * gimp-transform-2d
    */
   procedure = gimp_procedure_new (transform_2d_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-transform-2d");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-transform-2d");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-transform-2d",
                                      "This procedure is deprecated! Use 'gimp-drawable-transform-2d-default' instead.",

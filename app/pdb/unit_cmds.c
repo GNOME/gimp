@@ -369,7 +369,8 @@ register_unit_procs (GimpPDB *pdb)
    * gimp-unit-get-number-of-units
    */
   procedure = gimp_procedure_new (unit_get_number_of_units_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-number-of-units");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-unit-get-number-of-units");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-number-of-units",
                                      "Returns the number of units.",
@@ -391,7 +392,8 @@ register_unit_procs (GimpPDB *pdb)
    * gimp-unit-get-number-of-built-in-units
    */
   procedure = gimp_procedure_new (unit_get_number_of_built_in_units_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-number-of-built-in-units");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-unit-get-number-of-built-in-units");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-number-of-built-in-units",
                                      "Returns the number of built-in units.",
@@ -413,7 +415,8 @@ register_unit_procs (GimpPDB *pdb)
    * gimp-unit-new
    */
   procedure = gimp_procedure_new (unit_new_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-new");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-unit-new");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-new",
                                      "Creates a new unit and returns it's integer ID.",
@@ -484,7 +487,8 @@ register_unit_procs (GimpPDB *pdb)
    * gimp-unit-get-deletion-flag
    */
   procedure = gimp_procedure_new (unit_get_deletion_flag_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-deletion-flag");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-unit-get-deletion-flag");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-deletion-flag",
                                      "Returns the deletion flag of the unit.",
@@ -514,7 +518,8 @@ register_unit_procs (GimpPDB *pdb)
    * gimp-unit-set-deletion-flag
    */
   procedure = gimp_procedure_new (unit_set_deletion_flag_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-set-deletion-flag");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-unit-set-deletion-flag");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-set-deletion-flag",
                                      "Sets the deletion flag of a unit.",
@@ -544,7 +549,8 @@ register_unit_procs (GimpPDB *pdb)
    * gimp-unit-get-identifier
    */
   procedure = gimp_procedure_new (unit_get_identifier_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-identifier");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-unit-get-identifier");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-identifier",
                                      "Returns the textual identifier of the unit.",
@@ -575,7 +581,8 @@ register_unit_procs (GimpPDB *pdb)
    * gimp-unit-get-factor
    */
   procedure = gimp_procedure_new (unit_get_factor_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-factor");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-unit-get-factor");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-factor",
                                      "Returns the factor of the unit.",
@@ -605,7 +612,8 @@ register_unit_procs (GimpPDB *pdb)
    * gimp-unit-get-digits
    */
   procedure = gimp_procedure_new (unit_get_digits_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-digits");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-unit-get-digits");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-digits",
                                      "Returns the number of digits of the unit.",
@@ -635,7 +643,8 @@ register_unit_procs (GimpPDB *pdb)
    * gimp-unit-get-symbol
    */
   procedure = gimp_procedure_new (unit_get_symbol_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-symbol");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-unit-get-symbol");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-symbol",
                                      "Returns the symbol of the unit.",
@@ -666,7 +675,8 @@ register_unit_procs (GimpPDB *pdb)
    * gimp-unit-get-abbreviation
    */
   procedure = gimp_procedure_new (unit_get_abbreviation_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-abbreviation");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-unit-get-abbreviation");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-abbreviation",
                                      "Returns the abbreviation of the unit.",
@@ -697,7 +707,8 @@ register_unit_procs (GimpPDB *pdb)
    * gimp-unit-get-singular
    */
   procedure = gimp_procedure_new (unit_get_singular_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-singular");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-unit-get-singular");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-singular",
                                      "Returns the singular form of the unit.",
@@ -728,7 +739,8 @@ register_unit_procs (GimpPDB *pdb)
    * gimp-unit-get-plural
    */
   procedure = gimp_procedure_new (unit_get_plural_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-unit-get-plural");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-unit-get-plural");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-plural",
                                      "Returns the plural form of the unit.",

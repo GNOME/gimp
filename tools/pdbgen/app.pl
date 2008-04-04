@@ -528,7 +528,8 @@ sub generate {
    * gimp-$proc->{canonical_name}
    */
   procedure = gimp_procedure_new (${name}_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-$proc->{canonical_name}");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-$proc->{canonical_name}");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-$proc->{canonical_name}",
                                      @{[ &quotewrap($proc->{blurb}, 2) ]},

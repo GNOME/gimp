@@ -476,7 +476,8 @@ register_parasite_procs (GimpPDB *pdb)
    * gimp-parasite-find
    */
   procedure = gimp_procedure_new (parasite_find_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-parasite-find");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-parasite-find");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-parasite-find",
                                      "Look up a global parasite.",
@@ -504,7 +505,8 @@ register_parasite_procs (GimpPDB *pdb)
    * gimp-parasite-attach
    */
   procedure = gimp_procedure_new (parasite_attach_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-parasite-attach");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-parasite-attach");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-parasite-attach",
                                      "Add a global parasite.",
@@ -525,7 +527,8 @@ register_parasite_procs (GimpPDB *pdb)
    * gimp-parasite-detach
    */
   procedure = gimp_procedure_new (parasite_detach_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-parasite-detach");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-parasite-detach");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-parasite-detach",
                                      "Removes a global parasite.",
@@ -548,7 +551,8 @@ register_parasite_procs (GimpPDB *pdb)
    * gimp-parasite-list
    */
   procedure = gimp_procedure_new (parasite_list_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-parasite-list");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-parasite-list");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-parasite-list",
                                      "List all parasites.",
@@ -575,7 +579,8 @@ register_parasite_procs (GimpPDB *pdb)
    * gimp-image-parasite-find
    */
   procedure = gimp_procedure_new (image_parasite_find_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-parasite-find");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-parasite-find");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-parasite-find",
                                      "Look up a parasite in an image",
@@ -609,7 +614,8 @@ register_parasite_procs (GimpPDB *pdb)
    * gimp-image-parasite-attach
    */
   procedure = gimp_procedure_new (image_parasite_attach_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-parasite-attach");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-parasite-attach");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-parasite-attach",
                                      "Add a parasite to an image.",
@@ -636,7 +642,8 @@ register_parasite_procs (GimpPDB *pdb)
    * gimp-image-parasite-detach
    */
   procedure = gimp_procedure_new (image_parasite_detach_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-parasite-detach");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-parasite-detach");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-parasite-detach",
                                      "Removes a parasite from an image.",
@@ -665,7 +672,8 @@ register_parasite_procs (GimpPDB *pdb)
    * gimp-image-parasite-list
    */
   procedure = gimp_procedure_new (image_parasite_list_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-parasite-list");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-parasite-list");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-parasite-list",
                                      "List all parasites.",
@@ -698,7 +706,8 @@ register_parasite_procs (GimpPDB *pdb)
    * gimp-drawable-parasite-find
    */
   procedure = gimp_procedure_new (drawable_parasite_find_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-parasite-find");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-parasite-find");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-parasite-find",
                                      "Look up a parasite in a drawable",
@@ -732,7 +741,8 @@ register_parasite_procs (GimpPDB *pdb)
    * gimp-drawable-parasite-attach
    */
   procedure = gimp_procedure_new (drawable_parasite_attach_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-parasite-attach");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-parasite-attach");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-parasite-attach",
                                      "Add a parasite to a drawable.",
@@ -759,7 +769,8 @@ register_parasite_procs (GimpPDB *pdb)
    * gimp-drawable-parasite-detach
    */
   procedure = gimp_procedure_new (drawable_parasite_detach_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-parasite-detach");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-parasite-detach");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-parasite-detach",
                                      "Removes a parasite from a drawable.",
@@ -788,7 +799,8 @@ register_parasite_procs (GimpPDB *pdb)
    * gimp-drawable-parasite-list
    */
   procedure = gimp_procedure_new (drawable_parasite_list_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-parasite-list");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-parasite-list");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-parasite-list",
                                      "List all parasites.",
@@ -821,7 +833,8 @@ register_parasite_procs (GimpPDB *pdb)
    * gimp-vectors-parasite-find
    */
   procedure = gimp_procedure_new (vectors_parasite_find_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-parasite-find");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-vectors-parasite-find");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-parasite-find",
                                      "Look up a parasite in a vectors object",
@@ -855,7 +868,8 @@ register_parasite_procs (GimpPDB *pdb)
    * gimp-vectors-parasite-attach
    */
   procedure = gimp_procedure_new (vectors_parasite_attach_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-parasite-attach");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-vectors-parasite-attach");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-parasite-attach",
                                      "Add a parasite to a vectors object",
@@ -882,7 +896,8 @@ register_parasite_procs (GimpPDB *pdb)
    * gimp-vectors-parasite-detach
    */
   procedure = gimp_procedure_new (vectors_parasite_detach_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-parasite-detach");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-vectors-parasite-detach");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-parasite-detach",
                                      "Removes a parasite from a vectors object",
@@ -911,7 +926,8 @@ register_parasite_procs (GimpPDB *pdb)
    * gimp-vectors-parasite-list
    */
   procedure = gimp_procedure_new (vectors_parasite_list_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-parasite-list");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-vectors-parasite-list");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-parasite-list",
                                      "List all parasites.",

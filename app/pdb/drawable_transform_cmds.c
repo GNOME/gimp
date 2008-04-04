@@ -1268,7 +1268,8 @@ register_drawable_transform_procs (GimpPDB *pdb)
    * gimp-drawable-transform-flip-simple
    */
   procedure = gimp_procedure_new (drawable_transform_flip_simple_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-transform-flip-simple");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-transform-flip-simple");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-flip-simple",
                                      "Flip the specified drawable either vertically or horizontally.",
@@ -1323,7 +1324,8 @@ register_drawable_transform_procs (GimpPDB *pdb)
    * gimp-drawable-transform-flip
    */
   procedure = gimp_procedure_new (drawable_transform_flip_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-transform-flip");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-transform-flip");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-flip",
                                      "Flip the specified drawable around a given line.",
@@ -1407,7 +1409,8 @@ register_drawable_transform_procs (GimpPDB *pdb)
    * gimp-drawable-transform-flip-default
    */
   procedure = gimp_procedure_new (drawable_transform_flip_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-transform-flip-default");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-transform-flip-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-flip-default",
                                      "Flip the specified drawable around a given line.",
@@ -1471,7 +1474,8 @@ register_drawable_transform_procs (GimpPDB *pdb)
    * gimp-drawable-transform-perspective
    */
   procedure = gimp_procedure_new (drawable_transform_perspective_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-transform-perspective");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-transform-perspective");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-perspective",
                                      "Perform a possibly non-affine transformation on the specified drawable, with extra parameters.",
@@ -1580,7 +1584,8 @@ register_drawable_transform_procs (GimpPDB *pdb)
    * gimp-drawable-transform-perspective-default
    */
   procedure = gimp_procedure_new (drawable_transform_perspective_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-transform-perspective-default");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-transform-perspective-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-perspective-default",
                                      "Perform a possibly non-affine transformation on the specified drawable, with extra parameters.",
@@ -1669,7 +1674,8 @@ register_drawable_transform_procs (GimpPDB *pdb)
    * gimp-drawable-transform-rotate-simple
    */
   procedure = gimp_procedure_new (drawable_transform_rotate_simple_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-transform-rotate-simple");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-transform-rotate-simple");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-rotate-simple",
                                      "Rotate the specified drawable about given coordinates through the specified angle.",
@@ -1728,7 +1734,8 @@ register_drawable_transform_procs (GimpPDB *pdb)
    * gimp-drawable-transform-rotate
    */
   procedure = gimp_procedure_new (drawable_transform_rotate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-transform-rotate");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-transform-rotate");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-rotate",
                                      "Rotate the specified drawable about given coordinates through the specified angle.",
@@ -1813,7 +1820,8 @@ register_drawable_transform_procs (GimpPDB *pdb)
    * gimp-drawable-transform-rotate-default
    */
   procedure = gimp_procedure_new (drawable_transform_rotate_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-transform-rotate-default");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-transform-rotate-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-rotate-default",
                                      "Rotate the specified drawable about given coordinates through the specified angle.",
@@ -1878,7 +1886,8 @@ register_drawable_transform_procs (GimpPDB *pdb)
    * gimp-drawable-transform-scale
    */
   procedure = gimp_procedure_new (drawable_transform_scale_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-transform-scale");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-transform-scale");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-scale",
                                      "Scale the specified drawable with extra parameters",
@@ -1963,7 +1972,8 @@ register_drawable_transform_procs (GimpPDB *pdb)
    * gimp-drawable-transform-scale-default
    */
   procedure = gimp_procedure_new (drawable_transform_scale_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-transform-scale-default");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-transform-scale-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-scale-default",
                                      "Scale the specified drawable with extra parameters",
@@ -2028,7 +2038,8 @@ register_drawable_transform_procs (GimpPDB *pdb)
    * gimp-drawable-transform-shear
    */
   procedure = gimp_procedure_new (drawable_transform_shear_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-transform-shear");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-transform-shear");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-shear",
                                      "Shear the specified drawable about its center by the specified magnitude, with extra parameters.",
@@ -2104,7 +2115,8 @@ register_drawable_transform_procs (GimpPDB *pdb)
    * gimp-drawable-transform-shear-default
    */
   procedure = gimp_procedure_new (drawable_transform_shear_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-transform-shear-default");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-transform-shear-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-shear-default",
                                      "Shear the specified drawable about its center by the specified magnitude, with extra parameters.",
@@ -2160,7 +2172,8 @@ register_drawable_transform_procs (GimpPDB *pdb)
    * gimp-drawable-transform-2d
    */
   procedure = gimp_procedure_new (drawable_transform_2d_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-transform-2d");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-transform-2d");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-2d",
                                      "Transform the specified drawable in 2d, with extra parameters.",
@@ -2263,7 +2276,8 @@ register_drawable_transform_procs (GimpPDB *pdb)
    * gimp-drawable-transform-2d-default
    */
   procedure = gimp_procedure_new (drawable_transform_2d_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-transform-2d-default");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-transform-2d-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-2d-default",
                                      "Transform the specified drawable in 2d, with extra parameters.",
@@ -2346,7 +2360,8 @@ register_drawable_transform_procs (GimpPDB *pdb)
    * gimp-drawable-transform-matrix
    */
   procedure = gimp_procedure_new (drawable_transform_matrix_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-transform-matrix");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-transform-matrix");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-matrix",
                                      "Transform the specified drawable in 2d, with extra parameters.",
@@ -2461,7 +2476,8 @@ register_drawable_transform_procs (GimpPDB *pdb)
    * gimp-drawable-transform-matrix-default
    */
   procedure = gimp_procedure_new (drawable_transform_matrix_default_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-transform-matrix-default");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-transform-matrix-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-matrix-default",
                                      "Transform the specified drawable in 2d, with extra parameters.",

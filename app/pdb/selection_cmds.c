@@ -521,7 +521,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-bounds
    */
   procedure = gimp_procedure_new (selection_bounds_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-bounds");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-bounds");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-bounds",
                                      "Find the bounding box of the current selection.",
@@ -573,7 +574,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-value
    */
   procedure = gimp_procedure_new (selection_value_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-value");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-value");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-value",
                                      "Find the value of the selection at the specified coordinates.",
@@ -613,7 +615,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-is-empty
    */
   procedure = gimp_procedure_new (selection_is_empty_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-is-empty");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-is-empty");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-is-empty",
                                      "Determine whether the selection is empty.",
@@ -641,7 +644,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-translate
    */
   procedure = gimp_procedure_new (selection_translate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-translate");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-translate");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-translate",
                                      "Translate the selection by the specified offsets.",
@@ -675,7 +679,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-float
    */
   procedure = gimp_procedure_new (selection_float_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-float");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-float");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-float",
                                      "Float the selection from the specified drawable with initial offsets as specified.",
@@ -715,7 +720,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-invert
    */
   procedure = gimp_procedure_new (selection_invert_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-invert");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-invert");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-invert",
                                      "Invert the selection mask.",
@@ -737,7 +743,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-sharpen
    */
   procedure = gimp_procedure_new (selection_sharpen_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-sharpen");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-sharpen");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-sharpen",
                                      "Sharpen the selection mask.",
@@ -759,7 +766,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-all
    */
   procedure = gimp_procedure_new (selection_all_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-all");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-all");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-all",
                                      "Select all of the image.",
@@ -781,7 +789,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-none
    */
   procedure = gimp_procedure_new (selection_none_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-none");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-none");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-none",
                                      "Deselect the entire image.",
@@ -803,7 +812,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-feather
    */
   procedure = gimp_procedure_new (selection_feather_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-feather");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-feather");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-feather",
                                      "Feather the image's selection",
@@ -831,7 +841,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-border
    */
   procedure = gimp_procedure_new (selection_border_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-border");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-border");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-border",
                                      "Border the image's selection",
@@ -859,7 +870,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-grow
    */
   procedure = gimp_procedure_new (selection_grow_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-grow");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-grow");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-grow",
                                      "Grow the image's selection",
@@ -887,7 +899,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-shrink
    */
   procedure = gimp_procedure_new (selection_shrink_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-shrink");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-shrink");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-shrink",
                                      "Shrink the image's selection",
@@ -915,7 +928,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-layer-alpha
    */
   procedure = gimp_procedure_new (selection_layer_alpha_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-layer-alpha");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-layer-alpha");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-layer-alpha",
                                      "Transfer the specified layer's alpha channel to the selection mask.",
@@ -937,7 +951,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-load
    */
   procedure = gimp_procedure_new (selection_load_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-load");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-load");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-load",
                                      "Transfer the specified channel to the selection mask.",
@@ -959,7 +974,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-save
    */
   procedure = gimp_procedure_new (selection_save_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-save");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-save");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-save",
                                      "Copy the selection mask to a new channel.",
@@ -987,7 +1003,8 @@ register_selection_procs (GimpPDB *pdb)
    * gimp-selection-combine
    */
   procedure = gimp_procedure_new (selection_combine_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-selection-combine");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-selection-combine");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-combine",
                                      "Combines the specified channel with the selection mask.",

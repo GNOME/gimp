@@ -607,7 +607,8 @@ register_color_procs (GimpPDB *pdb)
    * gimp-brightness-contrast
    */
   procedure = gimp_procedure_new (brightness_contrast_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brightness-contrast");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-brightness-contrast");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brightness-contrast",
                                      "Modify brightness/contrast in the specified drawable.",
@@ -641,7 +642,8 @@ register_color_procs (GimpPDB *pdb)
    * gimp-levels
    */
   procedure = gimp_procedure_new (levels_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-levels");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-levels");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-levels",
                                      "Modifies intensity levels in the specified drawable.",
@@ -700,7 +702,8 @@ register_color_procs (GimpPDB *pdb)
    * gimp-levels-auto
    */
   procedure = gimp_procedure_new (levels_auto_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-levels-auto");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-levels-auto");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-levels-auto",
                                      "This procedure is deprecated! Use 'gimp-levels-stretch' instead.",
@@ -722,7 +725,8 @@ register_color_procs (GimpPDB *pdb)
    * gimp-levels-stretch
    */
   procedure = gimp_procedure_new (levels_stretch_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-levels-stretch");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-levels-stretch");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-levels-stretch",
                                      "Automatically modifies intensity levels in the specified drawable.",
@@ -744,7 +748,8 @@ register_color_procs (GimpPDB *pdb)
    * gimp-posterize
    */
   procedure = gimp_procedure_new (posterize_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-posterize");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-posterize");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-posterize",
                                      "Posterize the specified drawable.",
@@ -772,7 +777,8 @@ register_color_procs (GimpPDB *pdb)
    * gimp-desaturate
    */
   procedure = gimp_procedure_new (desaturate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-desaturate");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-desaturate");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-desaturate",
                                      "Desaturate the contents of the specified drawable.",
@@ -794,7 +800,8 @@ register_color_procs (GimpPDB *pdb)
    * gimp-desaturate-full
    */
   procedure = gimp_procedure_new (desaturate_full_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-desaturate-full");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-desaturate-full");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-desaturate-full",
                                      "Desaturate the contents of the specified drawable, with the specified formula.",
@@ -823,7 +830,8 @@ register_color_procs (GimpPDB *pdb)
    * gimp-equalize
    */
   procedure = gimp_procedure_new (equalize_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-equalize");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-equalize");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-equalize",
                                      "Equalize the contents of the specified drawable.",
@@ -851,7 +859,8 @@ register_color_procs (GimpPDB *pdb)
    * gimp-invert
    */
   procedure = gimp_procedure_new (invert_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-invert");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-invert");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-invert",
                                      "Invert the contents of the specified drawable.",
@@ -873,7 +882,8 @@ register_color_procs (GimpPDB *pdb)
    * gimp-curves-spline
    */
   procedure = gimp_procedure_new (curves_spline_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-curves-spline");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-curves-spline");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-curves-spline",
                                      "Modifies the intensity curve(s) for specified drawable.",
@@ -913,7 +923,8 @@ register_color_procs (GimpPDB *pdb)
    * gimp-curves-explicit
    */
   procedure = gimp_procedure_new (curves_explicit_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-curves-explicit");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-curves-explicit");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-curves-explicit",
                                      "Modifies the intensity curve(s) for specified drawable.",
@@ -953,7 +964,8 @@ register_color_procs (GimpPDB *pdb)
    * gimp-color-balance
    */
   procedure = gimp_procedure_new (color_balance_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-color-balance");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-color-balance");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-color-balance",
                                      "Modify the color balance of the specified drawable.",
@@ -1006,7 +1018,8 @@ register_color_procs (GimpPDB *pdb)
    * gimp-colorize
    */
   procedure = gimp_procedure_new (colorize_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-colorize");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-colorize");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-colorize",
                                      "Render the drawable as a grayscale image seen through a colored glass.",
@@ -1046,7 +1059,8 @@ register_color_procs (GimpPDB *pdb)
    * gimp-histogram
    */
   procedure = gimp_procedure_new (histogram_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-histogram");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-histogram");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-histogram",
                                      "Returns information on the intensity histogram for the specified drawable.",
@@ -1123,7 +1137,8 @@ register_color_procs (GimpPDB *pdb)
    * gimp-hue-saturation
    */
   procedure = gimp_procedure_new (hue_saturation_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-hue-saturation");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-hue-saturation");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-hue-saturation",
                                      "Modify hue, lightness, and saturation in the specified drawable.",
@@ -1170,7 +1185,8 @@ register_color_procs (GimpPDB *pdb)
    * gimp-threshold
    */
   procedure = gimp_procedure_new (threshold_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-threshold");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-threshold");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-threshold",
                                      "Threshold the specified drawable.",

@@ -428,7 +428,8 @@ register_procedural_db_procs (GimpPDB *pdb)
    * gimp-procedural-db-temp-name
    */
   procedure = gimp_procedure_new (procedural_db_temp_name_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-procedural-db-temp-name");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-procedural-db-temp-name");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-temp-name",
                                      "Generates a unique temporary PDB name.",
@@ -451,7 +452,8 @@ register_procedural_db_procs (GimpPDB *pdb)
    * gimp-procedural-db-dump
    */
   procedure = gimp_procedure_new (procedural_db_dump_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-procedural-db-dump");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-procedural-db-dump");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-dump",
                                      "Dumps the current contents of the procedural database",
@@ -474,7 +476,8 @@ register_procedural_db_procs (GimpPDB *pdb)
    * gimp-procedural-db-query
    */
   procedure = gimp_procedure_new (procedural_db_query_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-procedural-db-query");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-procedural-db-query");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-query",
                                      "Queries the procedural database for its contents using regular expression matching.",
@@ -550,7 +553,8 @@ register_procedural_db_procs (GimpPDB *pdb)
    * gimp-procedural-db-proc-info
    */
   procedure = gimp_procedure_new (procedural_db_proc_info_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-procedural-db-proc-info");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-procedural-db-proc-info");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-proc-info",
                                      "Queries the procedural database for information on the specified procedure.",
@@ -627,7 +631,8 @@ register_procedural_db_procs (GimpPDB *pdb)
    * gimp-procedural-db-proc-arg
    */
   procedure = gimp_procedure_new (procedural_db_proc_arg_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-procedural-db-proc-arg");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-procedural-db-proc-arg");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-proc-arg",
                                      "Queries the procedural database for information on the specified procedure's argument.",
@@ -679,7 +684,8 @@ register_procedural_db_procs (GimpPDB *pdb)
    * gimp-procedural-db-proc-val
    */
   procedure = gimp_procedure_new (procedural_db_proc_val_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-procedural-db-proc-val");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-procedural-db-proc-val");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-proc-val",
                                      "Queries the procedural database for information on the specified procedure's return value.",
@@ -731,7 +737,8 @@ register_procedural_db_procs (GimpPDB *pdb)
    * gimp-procedural-db-get-data
    */
   procedure = gimp_procedure_new (procedural_db_get_data_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-procedural-db-get-data");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-procedural-db-get-data");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-get-data",
                                      "Returns data associated with the specified identifier.",
@@ -765,7 +772,8 @@ register_procedural_db_procs (GimpPDB *pdb)
    * gimp-procedural-db-get-data-size
    */
   procedure = gimp_procedure_new (procedural_db_get_data_size_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-procedural-db-get-data-size");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-procedural-db-get-data-size");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-get-data-size",
                                      "Returns size of data associated with the specified identifier.",
@@ -794,7 +802,8 @@ register_procedural_db_procs (GimpPDB *pdb)
    * gimp-procedural-db-set-data
    */
   procedure = gimp_procedure_new (procedural_db_set_data_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-procedural-db-set-data");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-procedural-db-set-data");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-procedural-db-set-data",
                                      "Associates the specified identifier with the supplied data.",

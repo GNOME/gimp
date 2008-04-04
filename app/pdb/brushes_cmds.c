@@ -246,7 +246,8 @@ register_brushes_procs (GimpPDB *pdb)
    * gimp-brushes-refresh
    */
   procedure = gimp_procedure_new (brushes_refresh_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brushes-refresh");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-brushes-refresh");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-refresh",
                                      "Refresh current brushes. This function always succeeds.",
@@ -262,7 +263,8 @@ register_brushes_procs (GimpPDB *pdb)
    * gimp-brushes-get-list
    */
   procedure = gimp_procedure_new (brushes_get_list_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brushes-get-list");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-brushes-get-list");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-get-list",
                                      "Retrieve a complete listing of the available brushes.",
@@ -296,7 +298,8 @@ register_brushes_procs (GimpPDB *pdb)
    * gimp-brushes-get-brush
    */
   procedure = gimp_procedure_new (brushes_get_brush_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brushes-get-brush");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-brushes-get-brush");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-get-brush",
                                      "This procedure is deprecated! Use 'gimp-context-get-brush' instead.",
@@ -337,7 +340,8 @@ register_brushes_procs (GimpPDB *pdb)
    * gimp-brushes-get-spacing
    */
   procedure = gimp_procedure_new (brushes_get_spacing_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brushes-get-spacing");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-brushes-get-spacing");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-get-spacing",
                                      "This procedure is deprecated! Use 'gimp-brush-get-spacing' instead.",
@@ -359,7 +363,8 @@ register_brushes_procs (GimpPDB *pdb)
    * gimp-brushes-set-spacing
    */
   procedure = gimp_procedure_new (brushes_set_spacing_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brushes-set-spacing");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-brushes-set-spacing");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-set-spacing",
                                      "This procedure is deprecated! Use 'gimp-brush-set-spacing' instead.",
@@ -381,7 +386,8 @@ register_brushes_procs (GimpPDB *pdb)
    * gimp-brushes-get-brush-data
    */
   procedure = gimp_procedure_new (brushes_get_brush_data_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-brushes-get-brush-data");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-brushes-get-brush-data");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-get-brush-data",
                                      "This procedure is deprecated! Use 'gimp-brush-get-pixels' instead.",

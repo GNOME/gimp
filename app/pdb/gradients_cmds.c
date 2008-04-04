@@ -290,7 +290,8 @@ register_gradients_procs (GimpPDB *pdb)
    * gimp-gradients-refresh
    */
   procedure = gimp_procedure_new (gradients_refresh_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradients-refresh");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-gradients-refresh");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradients-refresh",
                                      "Refresh current gradients. This function always succeeds.",
@@ -306,7 +307,8 @@ register_gradients_procs (GimpPDB *pdb)
    * gimp-gradients-get-list
    */
   procedure = gimp_procedure_new (gradients_get_list_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradients-get-list");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-gradients-get-list");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradients-get-list",
                                      "Retrieve the list of loaded gradients.",
@@ -340,7 +342,8 @@ register_gradients_procs (GimpPDB *pdb)
    * gimp-gradients-sample-uniform
    */
   procedure = gimp_procedure_new (gradients_sample_uniform_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradients-sample-uniform");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-gradients-sample-uniform");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradients-sample-uniform",
                                      "This procedure is deprecated! Use 'gimp-gradient-get-uniform-samples' instead.",
@@ -379,7 +382,8 @@ register_gradients_procs (GimpPDB *pdb)
    * gimp-gradients-sample-custom
    */
   procedure = gimp_procedure_new (gradients_sample_custom_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradients-sample-custom");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-gradients-sample-custom");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradients-sample-custom",
                                      "This procedure is deprecated! Use 'gimp-gradient-get-custom-samples' instead.",
@@ -423,7 +427,8 @@ register_gradients_procs (GimpPDB *pdb)
    * gimp-gradients-get-gradient-data
    */
   procedure = gimp_procedure_new (gradients_get_gradient_data_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradients-get-gradient-data");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-gradients-get-gradient-data");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradients-get-gradient-data",
                                      "This procedure is deprecated! Use 'gimp-gradient-get-uniform-samples' instead.",

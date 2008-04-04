@@ -133,7 +133,8 @@ register_gradient_select_procs (GimpPDB *pdb)
    * gimp-gradients-popup
    */
   procedure = gimp_procedure_new (gradients_popup_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradients-popup");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-gradients-popup");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradients-popup",
                                      "Invokes the Gimp gradients selection.",
@@ -176,7 +177,8 @@ register_gradient_select_procs (GimpPDB *pdb)
    * gimp-gradients-close-popup
    */
   procedure = gimp_procedure_new (gradients_close_popup_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradients-close-popup");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-gradients-close-popup");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradients-close-popup",
                                      "Close the gradient selection dialog.",
@@ -199,7 +201,8 @@ register_gradient_select_procs (GimpPDB *pdb)
    * gimp-gradients-set-popup
    */
   procedure = gimp_procedure_new (gradients_set_popup_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gradients-set-popup");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-gradients-set-popup");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradients-set-popup",
                                      "Sets the current gradient in a gradient selection dialog.",

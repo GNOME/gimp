@@ -207,7 +207,8 @@ register_convert_procs (GimpPDB *pdb)
    * gimp-image-convert-rgb
    */
   procedure = gimp_procedure_new (image_convert_rgb_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-convert-rgb");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-convert-rgb");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-convert-rgb",
                                      "Convert specified image to RGB color",
@@ -229,7 +230,8 @@ register_convert_procs (GimpPDB *pdb)
    * gimp-image-convert-grayscale
    */
   procedure = gimp_procedure_new (image_convert_grayscale_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-convert-grayscale");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-convert-grayscale");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-convert-grayscale",
                                      "Convert specified image to grayscale (256 intensity levels)",
@@ -251,7 +253,8 @@ register_convert_procs (GimpPDB *pdb)
    * gimp-image-convert-indexed
    */
   procedure = gimp_procedure_new (image_convert_indexed_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-convert-indexed");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-convert-indexed");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-convert-indexed",
                                      "Convert specified image to and Indexed image",
@@ -312,7 +315,8 @@ register_convert_procs (GimpPDB *pdb)
    * gimp-image-convert-set-dither-matrix
    */
   procedure = gimp_procedure_new (image_convert_set_dither_matrix_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-image-convert-set-dither-matrix");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-convert-set-dither-matrix");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-convert-set-dither-matrix",
                                      "Set dither matrix for conversion to indexed",

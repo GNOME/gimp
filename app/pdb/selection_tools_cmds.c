@@ -436,7 +436,8 @@ register_selection_tools_procs (GimpPDB *pdb)
    * gimp-by-color-select
    */
   procedure = gimp_procedure_new (by_color_select_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-by-color-select");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-by-color-select");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-by-color-select",
                                      "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
@@ -502,7 +503,8 @@ register_selection_tools_procs (GimpPDB *pdb)
    * gimp-by-color-select-full
    */
   procedure = gimp_procedure_new (by_color_select_full_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-by-color-select-full");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-by-color-select-full");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-by-color-select-full",
                                      "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
@@ -587,7 +589,8 @@ register_selection_tools_procs (GimpPDB *pdb)
    * gimp-ellipse-select
    */
   procedure = gimp_procedure_new (ellipse_select_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-ellipse-select");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-ellipse-select");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-ellipse-select",
                                      "Create an elliptical selection over the specified image.",
@@ -658,7 +661,8 @@ register_selection_tools_procs (GimpPDB *pdb)
    * gimp-free-select
    */
   procedure = gimp_procedure_new (free_select_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-free-select");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-free-select");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-free-select",
                                      "Create a polygonal selection over the specified image.",
@@ -716,7 +720,8 @@ register_selection_tools_procs (GimpPDB *pdb)
    * gimp-fuzzy-select
    */
   procedure = gimp_procedure_new (fuzzy_select_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-fuzzy-select");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-fuzzy-select");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-fuzzy-select",
                                      "Create a fuzzy selection starting at the specified coordinates on the specified drawable.",
@@ -788,7 +793,8 @@ register_selection_tools_procs (GimpPDB *pdb)
    * gimp-fuzzy-select-full
    */
   procedure = gimp_procedure_new (fuzzy_select_full_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-fuzzy-select-full");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-fuzzy-select-full");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-fuzzy-select-full",
                                      "Create a fuzzy selection starting at the specified coordinates on the specified drawable.",
@@ -879,7 +885,8 @@ register_selection_tools_procs (GimpPDB *pdb)
    * gimp-rect-select
    */
   procedure = gimp_procedure_new (rect_select_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-rect-select");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-rect-select");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-rect-select",
                                      "Create a rectangular selection over the specified image;",
@@ -944,7 +951,8 @@ register_selection_tools_procs (GimpPDB *pdb)
    * gimp-round-rect-select
    */
   procedure = gimp_procedure_new (round_rect_select_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-round-rect-select");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-round-rect-select");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-round-rect-select",
                                      "Create a rectangular selection with round corners over the specified image;",

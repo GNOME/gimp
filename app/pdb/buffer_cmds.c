@@ -276,7 +276,8 @@ register_buffer_procs (GimpPDB *pdb)
    * gimp-buffers-get-list
    */
   procedure = gimp_procedure_new (buffers_get_list_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-buffers-get-list");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-buffers-get-list");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-buffers-get-list",
                                      "Retrieve a complete listing of the available buffers.",
@@ -310,7 +311,8 @@ register_buffer_procs (GimpPDB *pdb)
    * gimp-buffer-rename
    */
   procedure = gimp_procedure_new (buffer_rename_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-buffer-rename");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-buffer-rename");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-buffer-rename",
                                      "Renames a named buffer.",
@@ -347,7 +349,8 @@ register_buffer_procs (GimpPDB *pdb)
    * gimp-buffer-delete
    */
   procedure = gimp_procedure_new (buffer_delete_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-buffer-delete");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-buffer-delete");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-buffer-delete",
                                      "Deletes a named buffer.",
@@ -370,7 +373,8 @@ register_buffer_procs (GimpPDB *pdb)
    * gimp-buffer-get-width
    */
   procedure = gimp_procedure_new (buffer_get_width_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-buffer-get-width");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-buffer-get-width");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-buffer-get-width",
                                      "Retrieves the specified buffer's width.",
@@ -399,7 +403,8 @@ register_buffer_procs (GimpPDB *pdb)
    * gimp-buffer-get-height
    */
   procedure = gimp_procedure_new (buffer_get_height_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-buffer-get-height");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-buffer-get-height");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-buffer-get-height",
                                      "Retrieves the specified buffer's height.",
@@ -428,7 +433,8 @@ register_buffer_procs (GimpPDB *pdb)
    * gimp-buffer-get-bytes
    */
   procedure = gimp_procedure_new (buffer_get_bytes_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-buffer-get-bytes");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-buffer-get-bytes");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-buffer-get-bytes",
                                      "Retrieves the specified buffer's bytes.",
@@ -457,7 +463,8 @@ register_buffer_procs (GimpPDB *pdb)
    * gimp-buffer-get-image-type
    */
   procedure = gimp_procedure_new (buffer_get_image_type_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-buffer-get-image-type");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-buffer-get-image-type");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-buffer-get-image-type",
                                      "Retrieves the specified buffer's image type.",

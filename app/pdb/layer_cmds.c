@@ -893,7 +893,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-new
    */
   procedure = gimp_procedure_new (layer_new_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-new");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-new");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-new",
                                      "Create a new layer.",
@@ -960,7 +961,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-new-from-drawable
    */
   procedure = gimp_procedure_new (layer_new_from_drawable_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-new-from-drawable");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-new-from-drawable");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-new-from-drawable",
                                      "Create a new layer by copying an existing drawable.",
@@ -994,7 +996,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-copy
    */
   procedure = gimp_procedure_new (layer_copy_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-copy");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-copy");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-copy",
                                      "Copy a layer.",
@@ -1028,7 +1031,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-add-alpha
    */
   procedure = gimp_procedure_new (layer_add_alpha_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-add-alpha");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-add-alpha");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-add-alpha",
                                      "Add an alpha channel to the layer if it doesn't already have one.",
@@ -1050,7 +1054,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-flatten
    */
   procedure = gimp_procedure_new (layer_flatten_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-flatten");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-flatten");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-flatten",
                                      "Remove the alpha channel from the layer if it has one.",
@@ -1072,7 +1077,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-scale
    */
   procedure = gimp_procedure_new (layer_scale_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-scale");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-scale");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-scale",
                                      "Scale the layer to the specified extents.",
@@ -1112,7 +1118,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-resize
    */
   procedure = gimp_procedure_new (layer_resize_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-resize");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-resize");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-resize",
                                      "Resize the layer to the specified extents.",
@@ -1158,7 +1165,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-resize-to-image-size
    */
   procedure = gimp_procedure_new (layer_resize_to_image_size_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-resize-to-image-size");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-resize-to-image-size");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-resize-to-image-size",
                                      "Resize a layer to the image size.",
@@ -1180,7 +1188,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-translate
    */
   procedure = gimp_procedure_new (layer_translate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-translate");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-translate");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-translate",
                                      "Translate the layer by the specified offsets.",
@@ -1214,7 +1223,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-set-offsets
    */
   procedure = gimp_procedure_new (layer_set_offsets_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-set-offsets");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-set-offsets");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-set-offsets",
                                      "Set the layer offsets.",
@@ -1248,7 +1258,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-create-mask
    */
   procedure = gimp_procedure_new (layer_create_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-create-mask");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-create-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-create-mask",
                                      "Create a layer mask for the specified specified layer.",
@@ -1283,7 +1294,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-get-mask
    */
   procedure = gimp_procedure_new (layer_get_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-get-mask");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-get-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-get-mask",
                                      "Get the specified layer's mask if it exists.",
@@ -1311,7 +1323,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-from-mask
    */
   procedure = gimp_procedure_new (layer_from_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-from-mask");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-from-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-from-mask",
                                      "Get the specified mask's layer.",
@@ -1339,7 +1352,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-add-mask
    */
   procedure = gimp_procedure_new (layer_add_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-add-mask");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-add-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-add-mask",
                                      "Add a layer mask to the specified layer.",
@@ -1367,7 +1381,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-remove-mask
    */
   procedure = gimp_procedure_new (layer_remove_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-remove-mask");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-remove-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-remove-mask",
                                      "Remove the specified layer mask from the layer.",
@@ -1396,7 +1411,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-is-floating-sel
    */
   procedure = gimp_procedure_new (layer_is_floating_sel_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-is-floating-sel");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-is-floating-sel");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-is-floating-sel",
                                      "Is the specified layer a floating selection?",
@@ -1424,7 +1440,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-get-lock-alpha
    */
   procedure = gimp_procedure_new (layer_get_lock_alpha_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-get-lock-alpha");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-get-lock-alpha");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-get-lock-alpha",
                                      "Get the lock alpha channel setting of the specified layer.",
@@ -1452,7 +1469,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-set-lock-alpha
    */
   procedure = gimp_procedure_new (layer_set_lock_alpha_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-set-lock-alpha");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-set-lock-alpha");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-set-lock-alpha",
                                      "Set the lock alpha channel setting of the specified layer.",
@@ -1480,7 +1498,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-get-apply-mask
    */
   procedure = gimp_procedure_new (layer_get_apply_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-get-apply-mask");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-get-apply-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-get-apply-mask",
                                      "Get the apply mask setting of the specified layer.",
@@ -1508,7 +1527,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-set-apply-mask
    */
   procedure = gimp_procedure_new (layer_set_apply_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-set-apply-mask");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-set-apply-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-set-apply-mask",
                                      "Set the apply mask setting of the specified layer.",
@@ -1536,7 +1556,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-get-show-mask
    */
   procedure = gimp_procedure_new (layer_get_show_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-get-show-mask");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-get-show-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-get-show-mask",
                                      "Get the show mask setting of the specified layer.",
@@ -1564,7 +1585,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-set-show-mask
    */
   procedure = gimp_procedure_new (layer_set_show_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-set-show-mask");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-set-show-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-set-show-mask",
                                      "Set the show mask setting of the specified layer.",
@@ -1592,7 +1614,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-get-edit-mask
    */
   procedure = gimp_procedure_new (layer_get_edit_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-get-edit-mask");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-get-edit-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-get-edit-mask",
                                      "Get the edit mask setting of the specified layer.",
@@ -1620,7 +1643,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-set-edit-mask
    */
   procedure = gimp_procedure_new (layer_set_edit_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-set-edit-mask");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-set-edit-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-set-edit-mask",
                                      "Set the edit mask setting of the specified layer.",
@@ -1648,7 +1672,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-get-opacity
    */
   procedure = gimp_procedure_new (layer_get_opacity_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-get-opacity");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-get-opacity");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-get-opacity",
                                      "Get the opacity of the specified layer.",
@@ -1676,7 +1701,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-set-opacity
    */
   procedure = gimp_procedure_new (layer_set_opacity_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-set-opacity");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-set-opacity");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-set-opacity",
                                      "Set the opacity of the specified layer.",
@@ -1704,7 +1730,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-get-mode
    */
   procedure = gimp_procedure_new (layer_get_mode_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-get-mode");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-get-mode");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-get-mode",
                                      "Get the combination mode of the specified layer.",
@@ -1733,7 +1760,8 @@ register_layer_procs (GimpPDB *pdb)
    * gimp-layer-set-mode
    */
   procedure = gimp_procedure_new (layer_set_mode_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-set-mode");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-set-mode");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-set-mode",
                                      "Set the combination mode of the specified layer.",

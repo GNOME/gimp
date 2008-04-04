@@ -234,7 +234,8 @@ register_gimprc_procs (GimpPDB *pdb)
    * gimp-gimprc-query
    */
   procedure = gimp_procedure_new (gimprc_query_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gimprc-query");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-gimprc-query");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gimprc-query",
                                      "Queries the gimprc file parser for information on a specified token.",
@@ -264,7 +265,8 @@ register_gimprc_procs (GimpPDB *pdb)
    * gimp-gimprc-set
    */
   procedure = gimp_procedure_new (gimprc_set_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-gimprc-set");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-gimprc-set");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gimprc-set",
                                      "Sets a gimprc token to a value and saves it in the gimprc.",
@@ -294,7 +296,8 @@ register_gimprc_procs (GimpPDB *pdb)
    * gimp-get-default-comment
    */
   procedure = gimp_procedure_new (get_default_comment_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-get-default-comment");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-get-default-comment");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-get-default-comment",
                                      "Get the default image comment as specified in the Preferences.",
@@ -317,7 +320,8 @@ register_gimprc_procs (GimpPDB *pdb)
    * gimp-get-default-unit
    */
   procedure = gimp_procedure_new (get_default_unit_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-get-default-unit");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-get-default-unit");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-get-default-unit",
                                      "Get the default unit (taken from the user's locale).",
@@ -341,7 +345,8 @@ register_gimprc_procs (GimpPDB *pdb)
    * gimp-get-monitor-resolution
    */
   procedure = gimp_procedure_new (get_monitor_resolution_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-get-monitor-resolution");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-get-monitor-resolution");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-get-monitor-resolution",
                                      "Get the monitor resolution as specified in the Preferences.",
@@ -369,7 +374,8 @@ register_gimprc_procs (GimpPDB *pdb)
    * gimp-get-theme-dir
    */
   procedure = gimp_procedure_new (get_theme_dir_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-get-theme-dir");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-get-theme-dir");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-get-theme-dir",
                                      "Get the directory of the current GUI theme.",
@@ -392,7 +398,8 @@ register_gimprc_procs (GimpPDB *pdb)
    * gimp-get-color-configuration
    */
   procedure = gimp_procedure_new (get_color_configuration_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-get-color-configuration");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-get-color-configuration");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-get-color-configuration",
                                      "Get a serialized version of the color management configuration.",
@@ -415,7 +422,8 @@ register_gimprc_procs (GimpPDB *pdb)
    * gimp-get-module-load-inhibit
    */
   procedure = gimp_procedure_new (get_module_load_inhibit_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-get-module-load-inhibit");
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-get-module-load-inhibit");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-get-module-load-inhibit",
                                      "Get the list of modules which should not be loaded.",
