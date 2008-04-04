@@ -54,7 +54,8 @@ image_convert_rgb_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_image_base_type (image) != GIMP_RGB)
-        success = gimp_image_convert (image, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL,
+        success = gimp_image_convert (image, GIMP_RGB,
+                                      0, 0, FALSE, FALSE, 0, NULL,
                                       NULL, error);
       else
         success = FALSE;
@@ -79,7 +80,8 @@ image_convert_grayscale_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_image_base_type (image) != GIMP_GRAY)
-        success = gimp_image_convert (image, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL,
+        success = gimp_image_convert (image, GIMP_GRAY,
+                                      0, 0, FALSE, FALSE, 0, NULL,
                                       NULL, error);
       else
         success = FALSE;
@@ -115,7 +117,7 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPalette *pal = NULL;
+      GimpPalette *palette = NULL;
 
       if (gimp_image_base_type (image) != GIMP_INDEXED)
         {
@@ -127,12 +129,12 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
               break;
 
             case GIMP_CUSTOM_PALETTE:
-              pal = gimp_pdb_get_palette (gimp, palette, FALSE, error);
-              if (! pal)
+              palette = gimp_pdb_get_palette (gimp, palette, FALSE, error);
+              if (! palette)
                 {
                   success = FALSE;
                 }
-              else if (pal->n_colors > 256)
+              else if (palette->n_colors > MAXNUMCOLORS)
                 {
                   g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                                _("Cannot convert to a palette "
@@ -146,11 +148,15 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
             }
         }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
 
       if (success)
-        success = gimp_image_convert (image, GIMP_INDEXED, num_cols, dither_type,
-                                      alpha_dither, remove_unused, palette_type, pal,
+        success = gimp_image_convert (image, GIMP_INDEXED,
+                                      num_cols, dither_type,
+                                      alpha_dither, remove_unused,
+                                      palette_type, palette,
                                       NULL, error);
     }
 
@@ -178,7 +184,7 @@ image_convert_set_dither_matrix_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_image_convert_set_dither_matrix (width, height, (guchar *) matrix);
+      gimp_image_convert_set_dither_matrix (matrix, width, height);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

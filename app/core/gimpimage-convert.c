@@ -4157,18 +4157,18 @@ delete_median_cut (QuantizeObj *quantobj)
 
 
 void
-gimp_image_convert_set_dither_matrix (gint          width,
-                                      gint          height,
-                                      const guchar *source)
+gimp_image_convert_set_dither_matrix (const guchar *matrix,
+                                      gint          width,
+                                      gint          height)
 {
   gint x;
   gint y;
 
-  /* if source is invalid, restore the default matrix */
-  if (source == NULL || width == 0 || height == 0)
+  /* if matrix is invalid, restore the default matrix */
+  if (matrix == NULL || width == 0 || height == 0)
     {
-      source = (guchar *) (&DM_ORIGINAL);
-      width = DM_WIDTH;
+      matrix = (const guchar *) DM_ORIGINAL;
+      width  = DM_WIDTH;
       height = DM_HEIGHT;
     }
 
@@ -4179,8 +4179,8 @@ gimp_image_convert_set_dither_matrix (gint          width,
     {
       for (x = 0; x < DM_WIDTH; x++)
         {
-          DM[x][y] = source[((x % width) * height) + (y % height)];
-       }
+          DM[x][y] = matrix[((x % width) * height) + (y % height)];
+        }
     }
 }
 

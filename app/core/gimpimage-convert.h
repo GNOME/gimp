@@ -37,9 +37,9 @@ gboolean   gimp_image_convert      (GimpImage               *image,
                                     GimpProgress            *progress,
                                     GError                 **error);
 
-void  gimp_image_convert_set_dither_matrix (gint           width,
-                                             gint           height,
-                                             const guchar  *source);
+void  gimp_image_convert_set_dither_matrix (const guchar *matrix,
+                                            gint          width,
+                                            gint          height);
 
 
 #endif  /*  __GIMP_IMAGE_CONVERT_H__  */
