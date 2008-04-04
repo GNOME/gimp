@@ -67,8 +67,8 @@ gimp_vectors_is_valid (gint32 vectors_ID)
  *
  * Creates a new empty vectors object.
  *
- * Creates a new empty vectors object. Needs to be added to an image
- * using gimp_image_add_vectors().
+ * Creates a new empty vectors object. The vectors object needs to be
+ * added to the image using gimp_image_add_vectors().
  *
  * Returns: the current vector object, 0 if no vector exists in the image.
  *
@@ -86,6 +86,42 @@ gimp_vectors_new (gint32       image_ID,
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
                                     GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    vectors_ID = return_vals[1].data.d_vectors;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return vectors_ID;
+}
+
+/**
+ * gimp_vectors_new_from_text_layer:
+ * @image_ID: The image.
+ * @layer_ID: The text layer.
+ *
+ * Creates a new vectors object from a text layer.
+ *
+ * Creates a new vectors object from a text layer. The vectors object
+ * needs to be added to the image using gimp_image_add_vectors().
+ *
+ * Returns: The vectors of the text layer.
+ *
+ * Since: GIMP 2.6
+ */
+gint32
+gimp_vectors_new_from_text_layer (gint32 image_ID,
+                                  gint32 layer_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 vectors_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-new-from-text-layer",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_LAYER, layer_ID,
                                     GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)

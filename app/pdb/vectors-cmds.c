@@ -28,8 +28,11 @@
 
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
+#include "core/gimplayer.h"
 #include "core/gimplist.h"
 #include "core/gimpparamspecs.h"
+#include "text/gimptext-vectors.h"
+#include "text/gimptextlayer.h"
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
 #include "vectors/gimpstroke-new.h"
@@ -88,6 +91,49 @@ vectors_new_invoker (GimpProcedure      *procedure,
   if (success)
     {
       vectors = gimp_vectors_new (image, name);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    gimp_value_set_vectors (&return_vals->values[1], vectors);
+
+  return return_vals;
+}
+
+static GValueArray *
+vectors_new_from_text_layer_invoker (GimpProcedure      *procedure,
+                                     Gimp               *gimp,
+                                     GimpContext        *context,
+                                     GimpProgress       *progress,
+                                     const GValueArray  *args,
+                                     GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  GimpLayer *layer;
+  GimpVectors *vectors = NULL;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  layer = gimp_value_get_layer (&args->values[1], gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_layer_is_text_layer (layer, error))
+        {
+          gint x, y;
+
+          vectors = gimp_text_vectors_new (image,
+                                           gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)));
+
+          gimp_item_offsets (GIMP_ITEM (layer), &x, &y);
+          gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
+        }
+      else
+        {
+          success = FALSE;
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
@@ -1377,7 +1423,7 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-new",
                                      "Creates a new empty vectors object.",
-                                     "Creates a new empty vectors object. Needs to be added to an image using 'gimp-image-add-vectors'.",
+                                     "Creates a new empty vectors object. The vectors object needs to be added to the image using 'gimp-image-add-vectors'.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",
@@ -1399,6 +1445,41 @@ register_vectors_procs (GimpPDB *pdb)
                                    gimp_param_spec_vectors_id ("vectors",
                                                                "vectors",
                                                                "the current vector object, 0 if no vector exists in the image.",
+                                                               pdb->gimp, FALSE,
+                                                               GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-vectors-new-from-text-layer
+   */
+  procedure = gimp_procedure_new (vectors_new_from_text_layer_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-vectors-new-from-text-layer");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-vectors-new-from-text-layer",
+                                     "Creates a new vectors object from a text layer.",
+                                     "Creates a new vectors object from a text layer. The vectors object needs to be added to the image using 'gimp-image-add-vectors'.",
+                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
+                                     "Marcus Heese",
+                                     "2008",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image.",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The text layer.",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_vectors_id ("vectors",
+                                                               "vectors",
+                                                               "The vectors of the text layer.",
                                                                pdb->gimp, FALSE,
                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

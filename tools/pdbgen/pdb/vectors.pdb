@@ -49,8 +49,8 @@ sub vectors_new {
     $blurb = 'Creates a new empty vectors object.';
 
     $help = <<'HELP';
-Creates a new empty vectors object. Needs to be added to an image
-using gimp_image_add_vectors().
+Creates a new empty vectors object. The vectors object needs to be added to
+the image using gimp_image_add_vectors().
 HELP
 
     &simon_pdb_misc('2005', '2.4');
@@ -72,6 +72,51 @@ HELP
         code => <<'CODE'
 {
   vectors = gimp_vectors_new (image, name);
+}
+CODE
+    );
+}
+
+# Get Vectors from text layer
+sub vectors_new_from_text_layer {
+    $blurb = 'Creates a new vectors object from a text layer.';
+
+    $help = <<'HELP';
+Creates a new vectors object from a text layer. The vectors object needs to
+be added to the image using gimp_image_add_vectors().
+HELP
+
+    &marcus_pdb_misc('2008', '2.6');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+	  desc => 'The image.' },
+        { name => 'layer', type => 'layer',
+	  desc => 'The text layer.' }
+    );
+
+    @outargs = (
+        { name => 'vectors', type => 'vectors',
+	  desc => 'The vectors of the text layer.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_layer_is_text_layer (layer, error))
+    {
+      gint x, y;
+
+      vectors = gimp_text_vectors_new (image,
+				       gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)));
+
+      gimp_item_offsets (GIMP_ITEM (layer), &x, &y);
+      gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
+    }
+  else
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -1347,6 +1392,8 @@ CODE
               "core/gimplist.h"
               "core/gimpimage.h"
               "core/gimpchannel-select.h"
+	      "text/gimptext-vectors.h"
+	      "text/gimptextlayer.h"
               "vectors/gimpanchor.h"
               "vectors/gimpstroke-new.h"
               "vectors/gimpbezierstroke.h"
@@ -1356,6 +1403,7 @@ CODE
 
 @procs = qw(vectors_is_valid
             vectors_new
+	    vectors_new_from_text_layer
             vectors_get_image
             vectors_get_name vectors_set_name
             vectors_get_visible vectors_set_visible

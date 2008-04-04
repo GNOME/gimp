@@ -32,6 +32,8 @@ G_BEGIN_DECLS
 gboolean              gimp_vectors_is_valid                  (gint32                  vectors_ID);
 gint32                gimp_vectors_new                       (gint32                  image_ID,
                                                               const gchar            *name);
+gint32                gimp_vectors_new_from_text_layer       (gint32                  image_ID,
+                                                              gint32                  layer_ID);
 gint32                gimp_vectors_get_image                 (gint32                  vectors_ID);
 gchar*                gimp_vectors_get_name                  (gint32                  vectors_ID);
 gboolean              gimp_vectors_set_name                  (gint32                  vectors_ID,

@@ -665,6 +665,7 @@ EXPORTS
 	gimp_vectors_import_from_string
 	gimp_vectors_is_valid
 	gimp_vectors_new
+	gimp_vectors_new_from_text_layer
 	gimp_vectors_parasite_attach
 	gimp_vectors_parasite_detach
 	gimp_vectors_parasite_find

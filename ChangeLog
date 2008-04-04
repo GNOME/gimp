@@ -1,5 +1,16 @@
 2008-04-04  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/vectors.pdb: added
+	gimp_vectors_new_from_text_layer().
+
+	* app/pdb/internal-procs.c
+	* app/pdb/vectors-cmds.c
+	* libgimp/gimpvectors_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: updated.
+
+2008-04-04  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpselection.c (gimp_selection_float): clear the
 	selection as gimp_selection_extract() doesn't do this for us any
 	longer (see bug #510534).
