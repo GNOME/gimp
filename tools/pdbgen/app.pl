@@ -742,7 +742,7 @@ GPL
 	$headers .= "#include \"gimppdberror.h\"\n" if $error;
 	$headers .= "#include \"gimppdb-utils.h\"\n" if $utils;
 	$headers .= "#include \"gimpprocedure.h\"\n";
-	$headers .= "#include \"internal_procs.h\"\n";
+	$headers .= "#include \"internal-procs.h\"\n";
 
 	$headers .= "\n#include \"gimp-intl.h\"\n" if $intl;
 
@@ -751,7 +751,7 @@ GPL
 	    $extra = $main::grp{$group}->{extra}->{app}
 	}
 
-	my $cfile = "$destdir/${group}_cmds.c$FILE_EXT";
+	my $cfile = "$destdir/".canonicalize(${group})."-cmds.c$FILE_EXT";
 	open CFILE, "> $cfile" or die "Can't open $cfile: $!\n";
 	print CFILE $gpl;
 	print CFILE qq/#include "config.h"\n\n/;
@@ -773,7 +773,7 @@ GPL
     }
 
     if (! $ENV{PDBGEN_GROUPS}) {
-	my $internal = "$destdir/internal_procs.h$FILE_EXT";
+	my $internal = "$destdir/internal-procs.h$FILE_EXT";
 	open IFILE, "> $internal" or die "Can't open $internal: $!\n";
 	print IFILE $gpl;
 	my $guard = "__INTERNAL_PROCS_H__";
@@ -797,14 +797,14 @@ HEADER
 	close IFILE;
 	&write_file($internal);
 
-	$internal = "$destdir/internal_procs.c$FILE_EXT";
+	$internal = "$destdir/internal-procs.c$FILE_EXT";
 	open IFILE, "> $internal" or die "Can't open $internal: $!\n";
 	print IFILE $gpl;
 	print IFILE qq@#include "config.h"\n\n@;
 	print IFILE qq@#include <glib-object.h>\n\n@;
 	print IFILE qq@#include "pdb-types.h"\n\n@;
 	print IFILE qq@#include "gimppdb.h"\n\n@;
-	print IFILE qq@#include "internal_procs.h"\n\n@;
+	print IFILE qq@#include "internal-procs.h"\n\n@;
 	chop $group_procs;
 	print IFILE "\n/* $total procedures registered total */\n\n";
 	print IFILE <<BODY;

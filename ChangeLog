@@ -1,5 +1,12 @@
 2008-04-04  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/app.pl: changed the names of the generated files.
+
+	* app/pdb/Makefile.am
+	* app/pdb/*cmds.c: renamed.
+
+2008-04-04  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/app.pl: cosmetic change in the generated code.
 
 	* app/pdb/*_cmds.c: regenerated.
