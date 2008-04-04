@@ -1300,6 +1300,7 @@ CODE
               "core/gimpdrawable-offset.h"
               "core/gimplayer.h"
               "core/gimplayermask.h"
+              "text/gimptextlayer.h"
               "gimppdb-utils.h"
               "gimp-intl.h");
 

@@ -39,6 +39,7 @@
 #include "core/gimpparamspecs.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
+#include "text/gimptextlayer.h"
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"

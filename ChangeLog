@@ -1,5 +1,11 @@
 2008-04-04  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/drawable.pdb: added missing include.
+
+	* app/pdb/drawable-cmds.c: regenerated.
+
+2008-04-04  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/app.pl: changed the names of the generated files.
 
 	* app/pdb/Makefile.am
