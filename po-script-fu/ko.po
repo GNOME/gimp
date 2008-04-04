@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-10 15:46+0000\n"
-"PO-Revision-Date: 2008-02-13 06:00+0900\n"
+"POT-Creation-Date: 2008-02-22 12:57+0000\n"
+"PO-Revision-Date: 2008-04-04 16:40+0900\n"
 "Last-Translator: Mr.Dust <like.a.dust@gmail.com>\n"
 "Language-Team: Mr.Dust <like.a.dust@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-Language: Korean\n"
 "X-Poedit-Country: KOREA, REPUBLIC OF\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -50,7 +50,7 @@ msgstr "'%s'을(를) 쓰기 모드로 열기 실패: %s"
 msgid "Script-Fu Procedure Browser"
 msgstr "스크립트-푸 프로시저 찾아보기"
 
-#: ../plug-ins/script-fu/script-fu-console.c:716
+#: ../plug-ins/script-fu/script-fu-console.c:718
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu 평가 모드는 비대화형 호출만 허용합니다."
 
@@ -1494,7 +1494,7 @@ msgstr "그림자가 있는 얼음 로고를 만듭니다."
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
 msgid "_Frosty..."
-msgstr "얼어붙은(_F)..."
+msgstr "얼어붙은 효과(_F)..."
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
 msgid "Add a jagged, fuzzy border to an image"
@@ -1630,7 +1630,7 @@ msgstr "그라디언트, 무늬, 그림자, 충돌맵이 있는 로고를 만듭
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Glo_ssy..."
-msgstr "윤기나는(_S)..."
+msgstr "윤기나는 효과(_S)..."
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Outline gradient reverse"

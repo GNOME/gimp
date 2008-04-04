@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-10 15:46+0000\n"
-"PO-Revision-Date: 2008-02-13 06:00+0900\n"
+"POT-Creation-Date: 2008-02-22 12:57+0000\n"
+"PO-Revision-Date: 2008-04-04 16:40+0900\n"
 "Last-Translator: Mr.Dust <like.a.dust@gmail.com>\n"
 "Language-Team: Mr.Dust <like.a.dust@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-Language: Korean\n"
 "X-Poedit-Country: KOREA, REPUBLIC OF\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -136,31 +136,31 @@ msgstr "대화형 김프-파이썬 해석기"
 msgid "_Console"
 msgstr "콘솔(_C)"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:52
+#: ../plug-ins/pygimp/plug-ins/foggify.py:53
 msgid "Add a layer of fog"
 msgstr "안개 레이어 더하기"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:57
+#: ../plug-ins/pygimp/plug-ins/foggify.py:58
 msgid "_Fog..."
 msgstr "안개(_F)..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Layer name"
 msgstr "레이어 이름(_L)"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "Clouds"
 msgstr "구름"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "_Fog color"
 msgstr "안개색(_F)"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
 msgid "_Turbulence"
 msgstr "휘몰아침(_T)"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:65
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Op_acity"
 msgstr "투명도(_A):"
 
@@ -241,7 +241,7 @@ msgstr "팔레트를 그라디언트로(_G)"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:57
 msgid "Slice"
-msgstr "잘라내기"
+msgstr "잘게 잘라내기"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
@@ -249,7 +249,7 @@ msgstr "안내선에 따라 이미지를 자르고, 이미지와 HTML 테이블 
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
-msgstr "잘라내기(_S)..."
+msgstr "잘게 잘라내기(_S)..."
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "Path for HTML export"
@@ -314,7 +314,4 @@ msgstr "X 축에 그림자 효과(_X)"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
 msgid "Drop shadow _Y displacement"
 msgstr "Y 축에 그림자 효과(_Y)"
-
-#~ msgid "Gimp-Python Console"
-#~ msgstr "김프-파이썬 콘솔"
 
