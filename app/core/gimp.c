@@ -31,7 +31,7 @@
 
 #include "pdb/gimppdb.h"
 #include "pdb/gimp-pdb-compat.h"
-#include "pdb/internal_procs.h"
+#include "pdb/internal-procs.h"
 
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginmanager-restore.h"

@@ -1,5 +1,9 @@
 2008-04-04  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp.c: follow renaming of internal_procs.h.
+
+2008-04-04  Sven Neumann  <sven@gimp.org>
+
 	* HACKING: updated for name change of generated files.
 
 2008-04-04  Sven Neumann  <sven@gimp.org>
