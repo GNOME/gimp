@@ -1,5 +1,11 @@
 2008-04-04  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpselection.c (gimp_selection_float): clear the
+	selection as gimp_selection_extract() doesn't do this for us any
+	longer (see bug #510534).
+
+2008-04-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/psd/psd-load.c: marked string for translation (the same
 	string exists in the TIFF loader already).
 

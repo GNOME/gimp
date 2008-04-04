@@ -827,9 +827,8 @@ gimp_selection_float (GimpChannel   *selection,
   tiles = gimp_selection_extract (selection, GIMP_PICKABLE (drawable), context,
                                   cut_image, FALSE, TRUE, NULL);
 
-  /*  Clear the selection as if we had cut the pixels  */
-  if (! cut_image)
-    gimp_channel_clear (selection, NULL, TRUE);
+  /*  Clear the selection  */
+  gimp_channel_clear (selection, NULL, TRUE);
 
   /* Create a new layer from the buffer, using the drawable's type
    *  because it may be different from the image's type if we cut from
