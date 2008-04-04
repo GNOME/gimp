@@ -34,50 +34,50 @@ gint32                gimp_text_layer_new                (gint32                
                                                           const gchar           *fontname,
                                                           gdouble                size,
                                                           GimpUnit               unit);
+gchar*                gimp_text_layer_get_text           (gint32                 layer_ID);
 gboolean              gimp_text_layer_set_text           (gint32                 layer_ID,
                                                           const gchar           *text);
+gchar*                gimp_text_layer_get_font           (gint32                 layer_ID);
 gboolean              gimp_text_layer_set_font           (gint32                 layer_ID,
                                                           const gchar           *font);
-gboolean              gimp_text_layer_set_fontsize       (gint32                 layer_ID,
+gdouble               gimp_text_layer_get_font_size      (gint32                 layer_ID,
+                                                          GimpUnit              *unit);
+gboolean              gimp_text_layer_set_font_size      (gint32                 layer_ID,
                                                           gdouble                font_size,
                                                           GimpUnit               unit);
+gboolean              gimp_text_layer_get_hinting        (gint32                 layer_ID,
+                                                          gboolean              *autohint);
 gboolean              gimp_text_layer_set_hinting        (gint32                 layer_ID,
                                                           gboolean               hinting,
                                                           gboolean               autohint);
+gboolean              gimp_text_layer_get_antialias      (gint32                 layer_ID);
 gboolean              gimp_text_layer_set_antialias      (gint32                 layer_ID,
                                                           gboolean               antialias);
+gboolean              gimp_text_layer_get_kerning        (gint32                 layer_ID);
 gboolean              gimp_text_layer_set_kerning        (gint32                 layer_ID,
                                                           gboolean               kerning);
+gchar*                gimp_text_layer_get_language       (gint32                 layer_ID);
 gboolean              gimp_text_layer_set_language       (gint32                 layer_ID,
                                                           const gchar           *language);
+GimpTextDirection     gimp_text_layer_get_base_direction (gint32                 layer_ID);
 gboolean              gimp_text_layer_set_base_direction (gint32                 layer_ID,
                                                           GimpTextDirection      direction);
+GimpTextJustification gimp_text_layer_get_justification  (gint32                 layer_ID);
 gboolean              gimp_text_layer_set_justification  (gint32                 layer_ID,
                                                           GimpTextJustification  justify);
-gboolean              gimp_text_layer_set_color          (gint32                 layer_ID,
-                                                          const GimpRGB         *color);
-gboolean              gimp_text_layer_set_indent         (gint32                 layer_ID,
-                                                          gdouble                indent);
-gboolean              gimp_text_layer_set_line_spacing   (gint32                 layer_ID,
-                                                          gdouble                line_spacing);
-gboolean              gimp_text_layer_set_letter_spacing (gint32                 layer_ID,
-                                                          gdouble                letter_spacing);
-gchar*                gimp_text_layer_get_text           (gint32                 layer_ID);
-gchar*                gimp_text_layer_get_font           (gint32                 layer_ID);
-gdouble               gimp_text_layer_get_fontsize       (gint32                 layer_ID,
-                                                          GimpUnit              *unit);
-gboolean              gimp_text_layer_get_hinting        (gint32                 layer_ID,
-                                                          gboolean              *autohint);
-gboolean              gimp_text_layer_get_antialias      (gint32                 layer_ID);
-gboolean              gimp_text_layer_get_kerning        (gint32                 layer_ID);
-gchar*                gimp_text_layer_get_language       (gint32                 layer_ID);
-GimpTextDirection     gimp_text_layer_get_base_direction (gint32                 layer_ID);
-GimpTextJustification gimp_text_layer_get_justification  (gint32                 layer_ID);
 gboolean              gimp_text_layer_get_color          (gint32                 layer_ID,
                                                           GimpRGB               *color);
+gboolean              gimp_text_layer_set_color          (gint32                 layer_ID,
+                                                          const GimpRGB         *color);
 gdouble               gimp_text_layer_get_indent         (gint32                 layer_ID);
+gboolean              gimp_text_layer_set_indent         (gint32                 layer_ID,
+                                                          gdouble                indent);
 gdouble               gimp_text_layer_get_line_spacing   (gint32                 layer_ID);
+gboolean              gimp_text_layer_set_line_spacing   (gint32                 layer_ID,
+                                                          gdouble                line_spacing);
 gdouble               gimp_text_layer_get_letter_spacing (gint32                 layer_ID);
+gboolean              gimp_text_layer_set_letter_spacing (gint32                 layer_ID,
+                                                          gdouble                letter_spacing);
 
 
 G_END_DECLS

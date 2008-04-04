@@ -1,3 +1,14 @@
+2008-04-04  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/text_layer.pdb: reorder functions so getters
+	and setters are together, rename fontsize() functions to
+	font_size(), fix get_color() implementation.
+
+	* app/pdb/text-layer-cmds.c
+	* libgimp/gimptextlayer_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: changed accordingly.
+
 2008-04-04  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/vectors.pdb: added
