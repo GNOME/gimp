@@ -251,10 +251,8 @@ plug-ins/lighting/lighting-ui.c
 plug-ins/map-object/map-object-apply.c
 plug-ins/map-object/map-object-main.c
 plug-ins/map-object/map-object-ui.c
-plug-ins/maze/algorithms.c
 plug-ins/maze/maze.c
 plug-ins/maze/maze.h
-plug-ins/maze/maze_face.c
 plug-ins/metadata/metadata.c
 plug-ins/metadata/xmp-parse.c
 plug-ins/pagecurl/pagecurl.c
