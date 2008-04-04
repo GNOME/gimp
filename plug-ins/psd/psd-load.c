@@ -304,8 +304,8 @@ read_header_block (PSDimage  *img_a,
       && img_a->color_mode != PSD_DUOTONE)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                  _("Unsupported color mode: %s"),
-                  get_psd_color_mode_name (img_a->color_mode));
+                   _("Unsupported color mode: %s"),
+                   get_psd_color_mode_name (img_a->color_mode));
       return -1;
     }
 
@@ -315,10 +315,10 @@ read_header_block (PSDimage  *img_a,
       case 16:
         IFDBG(3) g_debug ("16 Bit Data");
         if (CONVERSION_WARNINGS)
-          g_message ("Warning:\n"
-                     "The image you are loading has 16 bits per channel. GIMP "
-                     "can only handle 8 bit, so it will be converted for you. "
-                     "Information will be lost because of this conversion.");
+          g_message (_("Warning:\n"
+                       "The image you are loading has 16 bits per channel. GIMP "
+                       "can only handle 8 bit, so it will be converted for you. "
+                       "Information will be lost because of this conversion."));
         break;
 
       case 8:
@@ -1287,7 +1287,8 @@ add_layers (const gint32  image_id,
                     {
                       if (CONVERSION_WARNINGS)
                         g_message ("Warning\n"
-                                   "Layer mask partly lies outside layer boundry. The mask will be "
+                                   "The layer mask is partly outside the "
+                                   "layer boundary. The mask will be "
                                    "cropped which may result in data loss.");
                       i = 0;
                       for (rowi = 0; rowi < lm_h; ++rowi)
@@ -1648,7 +1649,7 @@ add_merged_image (const gint32  image_id,
 static gchar *
 get_psd_color_mode_name (PSDColorMode mode)
 {
-  static gchar *psd_color_mode_names[] =
+  static gchar * const psd_color_mode_names[] =
   {
     "BITMAP",
     "GRAYSCALE",
@@ -1663,13 +1664,13 @@ get_psd_color_mode_name (PSDColorMode mode)
   };
 
   static gchar *err_name = NULL;
-  if (mode >= PSD_BITMAP && mode <= PSD_LAB)
-    {
-      return psd_color_mode_names[mode];
-    }
-  g_free (err_name);
 
+  if (mode >= PSD_BITMAP && mode <= PSD_LAB)
+    return psd_color_mode_names[mode];
+
+  g_free (err_name);
   err_name = g_strdup_printf ("UNKNOWN (%d)", mode);
+
   return err_name;
 }
 
