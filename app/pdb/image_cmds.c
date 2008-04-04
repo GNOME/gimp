@@ -54,6 +54,7 @@
 
 #include "gimppdb.h"
 #include "gimppdberror.h"
+#include "gimppdb-utils.h"
 #include "gimpprocedure.h"
 #include "internal_procs.h"
 
@@ -841,15 +842,25 @@ image_add_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (! g_object_is_floating (layer) ||
-          GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))) !=
-          gimp_image_base_type (image))
+      success = gimp_pdb_image_is_base_type (image,
+                                             GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
+                                             error);
+
+      if (success)
         {
-          success = FALSE;
-        }
-      else
-        {
-          success = gimp_image_add_layer (image, layer, MAX (position, -1));
+          if (g_object_is_floating (layer))
+            {
+              success = gimp_image_add_layer (image, layer, MAX (position, -1));
+            }
+          else
+            {
+              g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                           _("Layer '%s' (%d) has already been added to an image"),
+                           gimp_object_get_name (GIMP_OBJECT (layer)),
+                           gimp_item_get_ID (GIMP_ITEM (layer)));
+
+              success = FALSE;
+            }
         }
     }
 
@@ -1847,11 +1858,11 @@ image_get_component_active_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (component == GIMP_GRAY_CHANNEL)
-        success = gimp_image_base_type (image) == GIMP_GRAY;
+        success = gimp_pdb_image_is_base_type (image, GIMP_GRAY, error);
       else if (component == GIMP_INDEXED_CHANNEL)
-        success = gimp_image_base_type (image) == GIMP_INDEXED;
+        success = gimp_pdb_image_is_base_type (image, GIMP_INDEXED, error);
       else
-        success = gimp_image_base_type (image) == GIMP_RGB;
+        success = gimp_pdb_image_is_base_type (image, GIMP_RGB, error);
 
       if (success)
         active = gimp_image_get_component_active (image, component);
@@ -1885,11 +1896,11 @@ image_set_component_active_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (component == GIMP_GRAY_CHANNEL)
-        success = gimp_image_base_type (image) == GIMP_GRAY;
+        success = gimp_pdb_image_is_base_type (image, GIMP_GRAY, error);
       else if (component == GIMP_INDEXED_CHANNEL)
-        success = gimp_image_base_type (image) == GIMP_INDEXED;
+        success = gimp_pdb_image_is_base_type (image, GIMP_INDEXED, error);
       else
-        success = gimp_image_base_type (image) == GIMP_RGB;
+        success = gimp_pdb_image_is_base_type (image, GIMP_RGB, error);
 
       if (success)
         gimp_image_set_component_active (image, component, active);
@@ -1918,11 +1929,11 @@ image_get_component_visible_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (component == GIMP_GRAY_CHANNEL)
-        success = gimp_image_base_type (image) == GIMP_GRAY;
+        success = gimp_pdb_image_is_base_type (image, GIMP_GRAY, error);
       else if (component == GIMP_INDEXED_CHANNEL)
-        success = gimp_image_base_type (image) == GIMP_INDEXED;
+        success = gimp_pdb_image_is_base_type (image, GIMP_INDEXED, error);
       else
-        success = gimp_image_base_type (image) == GIMP_RGB;
+        success = gimp_pdb_image_is_base_type (image, GIMP_RGB, error);
 
       if (success)
         visible = gimp_image_get_component_visible (image, component);
@@ -1956,11 +1967,11 @@ image_set_component_visible_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (component == GIMP_GRAY_CHANNEL)
-        success = gimp_image_base_type (image) == GIMP_GRAY;
+        success = gimp_pdb_image_is_base_type (image, GIMP_GRAY, error);
       else if (component == GIMP_INDEXED_CHANNEL)
-        success = gimp_image_base_type (image) == GIMP_INDEXED;
+        success = gimp_pdb_image_is_base_type (image, GIMP_INDEXED, error);
       else
-        success = gimp_image_base_type (image) == GIMP_RGB;
+        success = gimp_pdb_image_is_base_type (image, GIMP_RGB, error);
 
       if (success)
         gimp_image_set_component_visible (image, component, visible);

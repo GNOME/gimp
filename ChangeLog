@@ -1,5 +1,11 @@
 2008-04-04  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/image.pdb: improved error handling.
+
+	* app/pdb/image_cmds.c: regenerated.
+
+2008-04-04  Sven Neumann  <sven@gimp.org>
+
 	* app/pdb/gimppdb-utils.[ch]: added utility functions to check the
 	image base type.
 

@@ -364,8 +364,8 @@ gimp_pdb_image_is_base_type (GimpImage          *image,
     return TRUE;
 
   g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-               _("Image '%s' (%d) is of type %s, "
-                 "but an image of type %s is expected"),
+               _("Image '%s' (%d) is of type '%s', "
+                 "but an image of type '%s' is expected"),
                gimp_object_get_name (GIMP_OBJECT (image)),
                gimp_image_get_ID (image),
                gimp_pdb_enum_value_get_nick (GIMP_TYPE_IMAGE_BASE_TYPE,
@@ -387,7 +387,7 @@ gimp_pdb_image_is_not_base_type (GimpImage          *image,
     return TRUE;
 
   g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-               _("Image '%s' (%d) is already of type %s"),
+               _("Image '%s' (%d) is already of type '%s'"),
                gimp_object_get_name (GIMP_OBJECT (image)),
                gimp_image_get_ID (image),
                gimp_pdb_enum_value_get_nick (GIMP_TYPE_IMAGE_BASE_TYPE, type));
