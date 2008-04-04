@@ -963,25 +963,16 @@ HELP
 
     $invoke{code} = <<'CODE';
 {
-  success = gimp_pdb_image_is_base_type (image,
-                                         GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
-                                         error);
-
-  if (success)
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (layer), error) &&
+      gimp_pdb_image_is_base_type (image,
+				   GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
+				   error))
     {
-      if (g_object_is_floating (layer))
-        {
-          success = gimp_image_add_layer (image, layer, MAX (position, -1));
-        }
-      else
-        {
-	  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                       _("Layer '%s' (%d) has already been added to an image"),
-		       gimp_object_get_name (GIMP_OBJECT (layer)),
-		       gimp_item_get_ID (GIMP_ITEM (layer)));
-
-	  success = FALSE;
-	}
+      success = gimp_image_add_layer (image, layer, MAX (position, -1));
+    }
+  else
+    {
+      success = FALSE;
     }
 }
 CODE
@@ -1170,10 +1161,14 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (g_object_is_floating (channel))
-    success = gimp_image_add_channel (image, channel, MAX (position, -1));
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), error))
+    {
+      success = gimp_image_add_channel (image, channel, MAX (position, -1));
+    }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -1227,10 +1222,14 @@ HELP
 
     $invoke{code} = <<'CODE';
 {
-  if (g_object_is_floating (vectors))
-    success = gimp_image_add_vectors (image, vectors, MAX (position, -1));
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), error))
+    {
+      success = gimp_image_add_vectors (image, vectors, MAX (position, -1));
+    }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
 }

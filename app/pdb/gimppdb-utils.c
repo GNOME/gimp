@@ -299,18 +299,34 @@ gimp_pdb_item_is_attached (GimpItem  *item,
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! gimp_item_is_attached (item))
-    {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Item '%s' (%d) can not be used because it has not "
-                     "been added to an image"),
-                   gimp_object_get_name (GIMP_OBJECT (item)),
-                   gimp_item_get_ID (item));
+  if (gimp_item_is_attached (item))
+    return TRUE;
 
-      return FALSE;
-    }
+  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+               _("Item '%s' (%d) can not be used because it has not "
+                 "been added to an image"),
+               gimp_object_get_name (GIMP_OBJECT (item)),
+               gimp_item_get_ID (item));
 
-  return TRUE;
+  return FALSE;
+}
+
+gboolean
+gimp_pdb_item_is_floating (GimpItem  *item,
+                           GError   **error)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (g_object_is_floating (item))
+    return TRUE;
+
+  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+               _("Item '%s' (%d) has already been added to an image"),
+               gimp_object_get_name (GIMP_OBJECT (item)),
+               gimp_item_get_ID (item));
+
+  return FALSE;
 }
 
 gboolean
