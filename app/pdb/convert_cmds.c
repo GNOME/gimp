@@ -53,12 +53,16 @@ image_convert_rgb_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_image_base_type (image) != GIMP_RGB)
-        success = gimp_image_convert (image, GIMP_RGB,
-                                      0, 0, FALSE, FALSE, 0, NULL,
-                                      NULL, error);
+      if (gimp_pdb_image_is_not_base_type (image, GIMP_RGB, error))
+        {
+          success = gimp_image_convert (image, GIMP_RGB,
+                                        0, 0, FALSE, FALSE, 0, NULL,
+                                        NULL, error);
+        }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -79,12 +83,16 @@ image_convert_grayscale_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_image_base_type (image) != GIMP_GRAY)
-        success = gimp_image_convert (image, GIMP_GRAY,
-                                      0, 0, FALSE, FALSE, 0, NULL,
-                                      NULL, error);
+      if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
+        {
+          success = gimp_image_convert (image, GIMP_GRAY,
+                                        0, 0, FALSE, FALSE, 0, NULL,
+                                        NULL, error);
+        }
       else
-        success = FALSE;
+        {
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -117,9 +125,9 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpPalette *palette = NULL;
+      GimpPalette *pal = NULL;
 
-      if (gimp_image_base_type (image) != GIMP_INDEXED)
+      if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error))
         {
           switch (palette_type)
             {
@@ -129,12 +137,12 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
               break;
 
             case GIMP_CUSTOM_PALETTE:
-              palette = gimp_pdb_get_palette (gimp, palette, FALSE, error);
-              if (! palette)
+              pal = gimp_pdb_get_palette (gimp, palette, FALSE, error);
+              if (! pal)
                 {
                   success = FALSE;
                 }
-              else if (palette->n_colors > MAXNUMCOLORS)
+              else if (pal->n_colors > MAXNUMCOLORS)
                 {
                   g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                                _("Cannot convert to a palette "
@@ -156,7 +164,7 @@ image_convert_indexed_invoker (GimpProcedure      *procedure,
         success = gimp_image_convert (image, GIMP_INDEXED,
                                       num_cols, dither_type,
                                       alpha_dither, remove_unused,
-                                      palette_type, palette,
+                                      palette_type, pal,
                                       NULL, error);
     }
 
