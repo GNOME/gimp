@@ -1,3 +1,8 @@
+2008-04-05  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcolormapeditor.c (gimp_colormap_editor_draw):
+	corrected fix for bug #511926.
+
 2008-04-04  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/text_layer.pdb: reorder functions so getters
