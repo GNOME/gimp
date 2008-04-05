@@ -1245,6 +1245,7 @@ void
 gimp_display_shell_empty (GimpDisplayShell *shell)
 {
   GimpSessionInfo *session_info;
+  GimpContext     *user_context;
   gint             width;
   gint             height;
 
@@ -1298,6 +1299,15 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
   gimp_display_shell_expose_full (shell);
 
   gtk_window_resize (GTK_WINDOW (shell), width, height);
+
+  /*  update the ui managers  */
+
+  gimp_ui_manager_update (shell->menubar_manager, shell->display);
+
+  user_context = gimp_get_user_context (shell->display->gimp);
+
+  if (shell->display == gimp_context_get_display (user_context))
+    gimp_ui_manager_update (shell->popup_manager, shell->display);
 }
 
 static gboolean

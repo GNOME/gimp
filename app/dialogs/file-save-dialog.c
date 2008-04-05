@@ -156,7 +156,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
                       display = GIMP_DISPLAY_SHELL (parent)->display;
 
                       if (! display->image->dirty)
-                        gimp_display_delete (display);
+                        gimp_display_close (display);
                     }
                 }
             }

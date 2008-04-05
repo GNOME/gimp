@@ -363,7 +363,7 @@ gui_display_create (Gimp      *gimp,
 static void
 gui_display_delete (GimpObject *display)
 {
-  gimp_display_delete (GIMP_DISPLAY (display));
+  gimp_display_close (GIMP_DISPLAY (display));
 }
 
 static void

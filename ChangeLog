@@ -1,5 +1,33 @@
 2008-04-05  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplay.[ch]: added new function
+	gimp_display_close() which decides if gimp_display_delete() or
+	gimp_display_empty() needs to be called.
+
+	* app/display/gimpdisplay-foreach.[ch]: added new function
+	gimp_displays_close() and removed the 'do_quit' parameter from
+	gimp_displays_delete().
+
+	* app/gui/gui.c (gui_exit_callback): changed accordingly.
+
+	* app/display/gimpdisplayshell-close.c: removed
+	gimp_display_shell_really_close() and call gimp_display_close()
+	instead.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_empty): moved
+	code to update the ui managers here.
+
+	* app/actions/file-commands.c (file_save_cmd_callback)
+	(file_close_cmd_callback)
+	* app/dialogs/file-save-dialog.c (file_save_dialog_response)
+	* app/dialogs/quit-dialog.c (quit_close_all_dialog_response):
+	close displays instead of deleting them.
+
+	* app/gui/gui-vtable.c (gui_display_delete): call
+	gimp_display_close().
+
+2008-04-05  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcolormapeditor.c (gimp_colormap_editor_draw):
 	corrected fix for bug #511926.
 

@@ -396,6 +396,13 @@ gimp_display_new (Gimp              *gimp,
   return display;
 }
 
+/**
+ * gimp_display_delete:
+ * @display:
+ *
+ * Closes the display and removes it from the display list. You should
+ * not call this function directly, use gimp_display_close() instead.
+ */
 void
 gimp_display_delete (GimpDisplay *display)
 {
@@ -404,8 +411,7 @@ gimp_display_delete (GimpDisplay *display)
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
   /* remove the display from the list */
-  gimp_container_remove (display->gimp->displays,
-                         GIMP_OBJECT (display));
+  gimp_container_remove (display->gimp->displays, GIMP_OBJECT (display));
 
   /*  unrefs the image  */
   gimp_display_set_image (display, NULL);
@@ -432,6 +438,28 @@ gimp_display_delete (GimpDisplay *display)
     }
 
   g_object_unref (display);
+}
+
+/**
+ * gimp_display_close:
+ * @display:
+ *
+ * Closes the display. If this is the last display, it will remain
+ * open, but without an image.
+ */
+void
+gimp_display_close (GimpDisplay *display)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
+
+  if (gimp_container_num_children (display->gimp->displays) > 1)
+    {
+      gimp_display_delete (display);
+    }
+  else
+    {
+      gimp_display_empty (display);
+    }
 }
 
 gint

@@ -302,7 +302,7 @@ file_save_cmd_callback (GtkAction *action,
   if (save_mode == GIMP_SAVE_MODE_SAVE_AND_CLOSE &&
       saved && ! display->image->dirty)
     {
-      gimp_display_delete (display);
+      gimp_display_close (display);
     }
 }
 
@@ -408,7 +408,7 @@ file_close_all_cmd_callback (GtkAction *action,
 
   if (! gimp_displays_dirty (gimp))
     {
-      gimp_displays_delete (gimp, FALSE);
+      gimp_displays_close (gimp);
     }
   else
     {

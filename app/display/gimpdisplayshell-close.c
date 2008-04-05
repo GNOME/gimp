@@ -57,8 +57,6 @@ static gboolean  gimp_display_shell_close_time_changed (GimpMessageBox   *box);
 static void      gimp_display_shell_close_response     (GtkWidget        *widget,
                                                         gboolean          close,
                                                         GimpDisplayShell *shell);
-static void      gimp_display_shell_really_close       (GimpDisplayShell *shell);
-
 static void      gimp_time_since                       (guint  then,
                                                         gint  *hours,
                                                         gint  *minutes);
@@ -96,7 +94,7 @@ gimp_display_shell_close (GimpDisplayShell *shell,
     }
   else if (image)
     {
-      gimp_display_shell_really_close (shell);
+      gimp_display_close (shell->display);
     }
   else
     {
@@ -289,7 +287,7 @@ gimp_display_shell_close_response (GtkWidget        *widget,
   switch (response_id)
     {
     case GTK_RESPONSE_CLOSE:
-      gimp_display_shell_really_close (shell);
+      gimp_display_close (shell->display);
       break;
 
     case RESPONSE_SAVE:
@@ -299,28 +297,6 @@ gimp_display_shell_close_response (GtkWidget        *widget,
 
     default:
       break;
-    }
-}
-
-static void
-gimp_display_shell_really_close (GimpDisplayShell *shell)
-{
-  if (gimp_container_num_children (shell->display->gimp->displays) > 1)
-    {
-      gimp_display_delete (shell->display);
-    }
-  else
-    {
-      GimpContext *user_context;
-
-      gimp_display_empty (shell->display);
-
-      gimp_ui_manager_update (shell->menubar_manager, shell->display);
-
-      user_context = gimp_get_user_context (shell->display->gimp);
-
-      if (shell->display == gimp_context_get_display (user_context))
-        gimp_ui_manager_update (shell->popup_manager, shell->display);
     }
 }
 

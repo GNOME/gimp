@@ -67,6 +67,7 @@ GimpDisplay * gimp_display_new         (Gimp              *gimp,
                                         GimpUIManager     *popup_manager,
                                         GimpDialogFactory *display_factory);
 void          gimp_display_delete      (GimpDisplay       *display);
+void          gimp_display_close       (GimpDisplay       *display);
 
 gint          gimp_display_get_ID      (GimpDisplay       *display);
 GimpDisplay * gimp_display_get_by_ID   (Gimp              *gimp,
