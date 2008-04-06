@@ -1,5 +1,11 @@
 2008-04-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print.c (page_setup): do a query for the
+	temporary procedure installed by the 'file-print-gtk' procedure.
+	Temporary solution until bug #344818 has been addressed.
+
+2008-04-06  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpstatusbar.c: resurrected the icon in statusbar
 	messages.
 
@@ -212,7 +218,7 @@
 
 2008-04-02  Sven Neumann  <sven@gimp.org>
 
-	* tools/pdbgen/stddefs.pdb: added shortcut for contributions from 
+	* tools/pdbgen/stddefs.pdb: added shortcut for contributions from
 	Marcus Heese.
 
 	* tools/pdbgen/pdb/drawable.pdb: added gimp_drawable_is_text_layer(),
@@ -259,7 +265,7 @@
 	* plug-ins/help/gimphelplocale.[ch]
 	* plug-ins/help/gimphelp.[ch]
 	* plug-ins/help/gimp-help-lookup.c: use GIO to access the help index.
-	
+
 2008-04-01  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-title.c
@@ -379,7 +385,7 @@
 
 	* libgimpmath/gimpmd5.[ch]: removed implementation of the MD5
 	algorithm and delegate to GChecksum instead.
-	
+
 	* libgimpmath/Makefile.am
 	* libgimpmath/test-md5.c: removed test of the MD5 implementation.
 
@@ -595,7 +601,7 @@
 	* app/dialogs/tips-dialog.c: improved the creation of fallback
 	tips in case of an error parsing the tips file.
 	(tips_dialog_create): simplified dialog layout.
-	
+
 	* app/dialogs/preferences-dialog.c: removed the check button for
 	the "show-tips" option.
 
@@ -639,7 +645,7 @@
 
 	* app/dialogs/tips-dialog.c: removed some stuff that we are not
 	going to need any longer.
-	
+
 2008-03-27  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.c: minor improvements to the API docs.
@@ -677,7 +683,7 @@
 	(gimp_display_shell_drop_uri_list): don't flush if there's no image.
 	(gimp_display_shell_dnd_flush): use gtk_window_present() instead of
 	gdk_window_focus().
-	
+
 2008-03-27  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpstatusbar.c: use a button with icon for the
@@ -714,7 +720,7 @@
 	* plug-ins/common/dicom.c: Validated samples_per_pixel, changed
 	the loop counter data type, and patched code to work on big endian
 	CPUs.
-	
+
 2008-03-27  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/gui.c (gui_init): disable automatic startup notification.
@@ -729,11 +735,11 @@
 	* plug-ins/common/dicom.c: Forget about negative values in signed
 	data and scale positive values appropriately. Also fixed signed
 	values in the 8 bpp case, and added some comments.
-	
+
 2008-03-26  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/dicom.c: made the dicom plug-in a bit better.
-	
+
 	1. Parse the default little-endian encoding correctly.
 	2. Handle signed pixel data.
 	3. Support "bits stored" and "high bit" meta data fields.
@@ -758,7 +764,7 @@
 
 2008-03-26  Sven Neumann  <sven@gimp.org>
 
-	* app/widgets/gimpcairo-wilber.[ch]: 
+	* app/widgets/gimpcairo-wilber.[ch]:
 	* app/display/gimpcanvas.c (gimp_canvas_draw_drop_zone): hide ugly
 	details behind a sane API.
 
@@ -894,7 +900,7 @@
 
 2008-03-25  Sven Neumann  <sven@gimp.org>
 
-	* app/display/gimpdisplayshell-callbacks.[ch]: 
+	* app/display/gimpdisplayshell-callbacks.[ch]:
 	* app/display/gimpdisplayshell.c (gimp_display_shell_init): moved
 	handling of window state events to a separate callback.
 
@@ -1173,7 +1179,7 @@
 	* app/core/gimp.c (gimp_restore): removed code to load the
 	document history.
 	(gimp_real_exit): removed code to save it.
-	
+
 	* app/core/gimp-gui.[ch]: extended the vtable with a method to
 	populate the document list.
 
@@ -1678,7 +1684,7 @@
 
 	* app/display/gimpcanvas.c (gimp_canvas_draw_drop_zone): use a
 	bold font and paint the layout with transparency.
-	
+
 2008-03-19  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_update_icon):
@@ -2003,7 +2009,7 @@
 
 	Experimental attempt to gain a little more horizontal space for
 	the tool options:
-	
+
 	* app/widgets/gimptooloptionseditor.c: removed the shadow from the
 	viewport and the border from the vbox.
 
@@ -2053,7 +2059,7 @@
 
 2008-03-06  Sven Neumann  <sven@gimp.org>
 
-	* app/actions/tools-actions.c 
+	* app/actions/tools-actions.c
 	* app/actions/tools-commands.[ch]
 	* app/tools/gimptransformtool.c: allow to control the preview
 	opacity by actions (defaults to < to > keys).
@@ -2432,7 +2438,7 @@
 
 	* plug-ins/jpeg/jpeg-exif.c: correctly record dimensions when
 	saving an image.  Fixes bug #517077.
-	
+
 2008-02-19  Sven Neumann  <sven@gimp.org>
 
 	* app/app.c
@@ -2508,13 +2514,13 @@
 
 	Merged from weskaggs branch at Mitch's request.  Will
 	need to update devel docs.
-	
+
 	Place scale entry code into separate files, no
 	functional changes.
 
 	* libgimpwidgets/gimpscaleentry.c
 	* libgimpwidgets/gimpscaleentry.h: new files.
-	
+
 	* libgimpwidgets/gimpwidgets.[ch]
 	* libgimpwidgets/Makefile.am: changed accordingly.
 
@@ -2527,7 +2533,7 @@
 
 	* plug-ins/common/vpropagate.c:  change "darker" to "lighter"
 	in blurb, in response to comment #24 in bug #156545.
-	
+
 2008-02-13  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimpcolormapeditor.c:  change wording of new
@@ -2924,7 +2930,7 @@
 
 	* plug-ins/print/print-page-layout.c: only connect to page layout
 	changes for the lifetime of the dialog.
-	
+
 	* plug-ins/print/print-page-setup.[ch]
 	* plug-ins/print/print.c: use a	temporary procedure to notify the
 	Print procedure about changes to the page setup.
@@ -2998,7 +3004,7 @@
 	* plug-ins/print/print-settings.c
 	* plug-ins/print/print.c: first draft of a Page Setup menu entry
 	instead of the "Adjust Page Size" button (bug #513291).
-	
+
 	* plug-ins/print/print.h
 	* plug-ins/print/print-draw-page.c: removed unused code.
 
@@ -3155,7 +3161,7 @@
 	Delay GEGL initialisation until after the command-line parsing so
 	that we can detect an already running GIMP instance and delegate
 	to that without going through the GEGL and babl initialisation.
-	
+
 	* app/app.c (app_libs_init): don't add the GEGL options group
 	here.  GEGL doesn't add any command-line options and it doesn't
 	look as if it would do that anytime soon.
@@ -3411,8 +3417,8 @@
 	pygimp_set_foreground): restore support for passing in 3 args for
 	color components, for backward compatibility.
 
-2008-01-26  Joao S. O. Bueno <gwidion@mpc.com.br> 
-	
+2008-01-26  Joao S. O. Bueno <gwidion@mpc.com.br>
+
 	* plug-ins/pygimp/pygimp-colors.c (pygimp_rgb_from_pyobject): fix
 	subsequent error (calculated parameters where not used)
 
@@ -3592,7 +3598,7 @@
 
 2008-01-23  Sven Neumann  <sven@gimp.org>
 
-	* app/sanity.c 
+	* app/sanity.c
 	* app/gui/gui.c (gui_sanity_check): minor cleanup.
 
 2008-01-23  Sven Neumann  <sven@gimp.org>
@@ -3809,9 +3815,9 @@
 
 2008-01-18  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* app/base/lut-funcs.c (equalize_lut_func): Don't 
+	* app/base/lut-funcs.c (equalize_lut_func): Don't
 	equalize the alpha channel.  Fixes bug #510210.
-	
+
 2008-01-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/Makefile.am
@@ -3890,7 +3896,7 @@
 	* app/core/gimptagged.[ch]: define a simple interface for tagged
 	objects.
 
-	* app/core/gimpdata.[ch]: implement the GimpTagged interface. 
+	* app/core/gimpdata.[ch]: implement the GimpTagged interface.
 
 2008-01-17  Sven Neumann  <sven@gimp.org>
 
@@ -4382,7 +4388,7 @@
 
 	* configure.in: applied patch from Matt Smith that adds a
 	--without-hal configure option (bug #507595).
-	
+
 	* INSTALL: document the new option.
 
 2008-01-06  Sven Neumann  <sven@gimp.org>
@@ -4464,7 +4470,7 @@
 
 	**/makefile.msc app/gimpcore.def : updated so it compiles and links
 	(almost, see bug #507298)
-	
+
 2008-01-04  Sven Neumann  <sven@gimp.org>
 
 	Merged from gimp-2-4 branch:
@@ -4537,7 +4543,7 @@
 	* libgimpwidgets/wilber-48.png:
 	* libgimpwidgets/wilber-64.png:
 	* libgimpwidgets/wilber-256.png: update app icon. Add 256x256px
-		for OS X and Vista 
+	for OS X and Vista
 
 2008-01-04  Sven Neumann  <sven@gimp.org>
 
@@ -4549,7 +4555,7 @@
 	committing patch by Simon Budig to give an indication
 	when working on a layer mask, updated to fix staleness
 	and respond to "edit-changed".  Might fix bug #132204.
-	
+
 	* app/core/core-enums.[ch]: add GIMP_SELECTION_LAYER_ON.
 
 	* app/core/gimplayermask.c: add handler for "edit-changed".
@@ -4559,7 +4565,7 @@
 
 	* app/display/gimpdisplayshell-selection.c: use new style
 	when layer mask is active.
-	
+
 
 2008-01-03  Michael Natterer  <mitch@gimp.org>
 
@@ -4618,7 +4624,7 @@
 
 	* plug-ins/common/randomize.c: added previews for hurl,
 	pick, and slur.
-	
+
 2008-01-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am
@@ -4825,7 +4831,7 @@
 	* app/gegl/gegl/gegl-operation.h: ..
 	* app/gegl/gegl/gegl-types.h: updated copy from GEGL trunk.
 
-	* app/gegl/gimp-gegl.c: 
+	* app/gegl/gimp-gegl.c:
 	* app/gegl/gimpoperationtilesink.c:
 	* app/gegl/gimpoperationtilesource.c: Modified to build with direct
 	copies of GEGL headers.
@@ -5223,7 +5229,7 @@
 	* configure.in: readded some AC_SUBST() that were removed under
 	the wrong assumption they would not be needed any longer.
 	Consistently use # to mark comments in configure.in.
-	
+
 2007-12-20  Sven Neumann  <sven@gimp.org>
 
 	* app/app.c: call gegl_exit() on shutdown.
@@ -5364,7 +5370,7 @@
 2007-12-16  Bill Skaggs  <weskaggs@primate.udavis.edu>
 
 	* plug-ins/common/edge.c: reverted to state pre-12/16.
-	
+
 2007-12-17  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpprojection-construct.c (project_intensity): minor
@@ -5379,16 +5385,16 @@
 
 	* plug-ins/common/edge.c: name reverted to "Edge",
 	label in combo reverted to "Prewitt", other changes kept.
-	
+
 2007-12-16  Bill Skaggs  <weskaggs@primate.udavis.edu>
 
 	* plug-ins/common/edge.c: renamed to "Sharp Edges",
 	added "invert" option, other usability tweaks.
-	
+
 2007-12-16  Bill Skaggs  <weskaggs@primate.udavis.edu>
 
 	* menus/image-menu.xml.in: missed this yesterday
-	
+
 2007-12-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/plugin-defs.pl
@@ -5420,7 +5426,7 @@
 	Changed "Fit Image to Window" to "Fill Window", and changed
 	"fit-to" to "fill" in all the related things.  Fixes
 	bug #490364.
-	
+
 2007-12-15  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/mapcolor.c: removed
@@ -5784,7 +5790,7 @@
 	* libgimpbase/gimpwire.c (_gimp_read_read_string): NULL-terminate
 	all strings coming in over the wire protocol. Should help with bug
 	#498207.
-	(gimp_wire_register): 
+	(gimp_wire_register):
 
 2007-12-10  Sven Neumann  <sven@gimp.org>
 
@@ -5800,10 +5806,10 @@
 2007-12-09  Hans Breuer  <hans@breuer.org>
 
 	* app/gimp-log.h : an ugly but working variant for no varargs macros
-	
+
 	* app/base/base-utils.c(get_physical_memory_size) : fallback to
 	GetMemoryStatus() for older compiler/sdk
-	
+
 	* app/core/gimplayer-floating-sel.c : second argument to g_set_error()
 	is an uint32, not a pointer
 
@@ -6177,7 +6183,7 @@
 
 	* app/tools/gimprectangletool.c: initialize vars to quiet
 	stupid compile warnings.
-	
+
 2007-11-26  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpwidgets-utils.c (gimp_widget_accel_changed):
@@ -6429,7 +6435,7 @@
 	* tools/gimptool.c: Change accordingly.
 
 	* doc/gimptool.1.in: Document the --msvc-syntax option.
-	
+
 2007-11-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimp-log.[ch]: add HELP log domain.
@@ -6674,7 +6680,7 @@
 
 	* app/tools/gimppaintoptions-gui.c (gimp_paint_options_gui): show
 	the brush scale controls for all brush tools.
-	
+
 2007-11-12  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-utils.c (gimp_get_default_unit): return
@@ -7087,7 +7093,7 @@
 	* configure.in: bumped required version of GTK+ to 2.12.0.
 
 	* app/sanity.c (sanity_check_glib)
-	* app/gui/gui.c (gui_sanity_check): updated sanity checks. 
+	* app/gui/gui.c (gui_sanity_check): updated sanity checks.
 
 2007-11-02  Michael Natterer  <mitch@gimp.org>
 
@@ -7311,7 +7317,7 @@
 	* configure.in: bumped version to 2.5.0.
 
 	Created branch gimp-2-4 for bug-fixes in the stable 2.4 series.
-	
+
 2007-10-31  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.4.1 release.
@@ -7439,7 +7445,7 @@
 2007-10-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/pnm.c: formatting.
-	(pnm_load_ascii): 
+	(pnm_load_ascii):
 
 2007-10-27  Sven Neumann  <sven@gimp.org>
 
