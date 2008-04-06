@@ -95,10 +95,10 @@ static gboolean gimp_statusbar_progress_message   (GimpProgress      *progress,
 static void     gimp_statusbar_progress_canceled  (GtkWidget         *button,
                                                    GimpStatusbar     *statusbar);
 
-static void     gimp_statusbar_progress_style_set (GtkWidget         *widget,
+static void     gimp_statusbar_label_style_set    (GtkWidget         *widget,
                                                    GtkStyle          *prev_style,
                                                    GimpStatusbar     *statusbar);
-static gboolean gimp_statusbar_progress_expose    (GtkWidget         *widget,
+static gboolean gimp_statusbar_label_expose       (GtkWidget         *widget,
                                                    GdkEventExpose    *event,
                                                    GimpStatusbar     *statusbar);
 
@@ -213,22 +213,20 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                       GTK_STATUSBAR (statusbar)->label, TRUE, TRUE, 0);
   g_object_unref (GTK_STATUSBAR (statusbar)->label);
 
-  statusbar->progressbar = gtk_progress_bar_new ();
-  gtk_progress_bar_set_ellipsize (GTK_PROGRESS_BAR (statusbar->progressbar),
-                                  PANGO_ELLIPSIZE_END);
-  g_object_set (statusbar->progressbar,
-                "text-xalign", 0.0,
-                "text-yalign", 0.5,
-                NULL);
+  g_signal_connect_after (GTK_STATUSBAR (statusbar)->label, "style-set",
+                          G_CALLBACK (gimp_statusbar_label_style_set),
+                          statusbar);
+  g_signal_connect_after (GTK_STATUSBAR (statusbar)->label, "expose-event",
+                          G_CALLBACK (gimp_statusbar_label_expose),
+                          statusbar);
+
+  statusbar->progressbar = g_object_new (GTK_TYPE_PROGRESS_BAR,
+                                         "text-xalign", 0.0,
+                                         "text-yalign", 0.5,
+                                         "ellipsize",   PANGO_ELLIPSIZE_END,
+                                         NULL);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->progressbar, TRUE, TRUE, 0);
   /*  don't show the progress bar  */
-
-  g_signal_connect_after (statusbar->progressbar, "style-set",
-                          G_CALLBACK (gimp_statusbar_progress_style_set),
-                          statusbar);
-  g_signal_connect_after (statusbar->progressbar, "expose-event",
-                          G_CALLBACK (gimp_statusbar_progress_expose),
-                          statusbar);
 
   statusbar->cancel_button = gtk_button_new ();
   gtk_button_set_relief (GTK_BUTTON (statusbar->cancel_button),
@@ -1091,9 +1089,9 @@ gimp_statusbar_clear_cursor (GimpStatusbar *statusbar)
 /*  private functions  */
 
 static void
-gimp_statusbar_progress_style_set (GtkWidget     *widget,
-                                   GtkStyle      *prev_style,
-                                   GimpStatusbar *statusbar)
+gimp_statusbar_label_style_set (GtkWidget     *widget,
+                                GtkStyle      *prev_style,
+                                GimpStatusbar *statusbar)
 {
   PangoLayout *layout;
   GdkPixbuf   *pixbuf;
@@ -1106,7 +1104,7 @@ gimp_statusbar_progress_style_set (GtkWidget     *widget,
 
   pango_layout_get_pixel_size (layout, &layout_width, NULL);
 
-  while (layout_width < gdk_pixbuf_get_width (pixbuf) + 4)
+  while (layout_width < gdk_pixbuf_get_width (pixbuf) + 2)
     {
       n_spaces++;
 
@@ -1124,14 +1122,12 @@ gimp_statusbar_progress_style_set (GtkWidget     *widget,
 }
 
 static gboolean
-gimp_statusbar_progress_expose (GtkWidget      *widget,
-                                GdkEventExpose *event,
-                                GimpStatusbar  *statusbar)
+gimp_statusbar_label_expose (GtkWidget      *widget,
+                             GdkEventExpose *event,
+                             GimpStatusbar  *statusbar)
 {
   GdkPixbuf   *pixbuf;
   const gchar *stock_id = NULL;
-  gint         text_xalign;
-  gint         text_yalign;
   gint         x, y;
 
   if (statusbar->messages)
@@ -1147,21 +1143,23 @@ gimp_statusbar_progress_expose (GtkWidget      *widget,
   pixbuf = gtk_widget_render_icon (widget, stock_id,
                                    GTK_ICON_SIZE_MENU, NULL);
 
-  g_object_get (widget,
-                "text-xalign", &text_xalign,
-                "text-yalign", &text_yalign,
-                NULL);
-
-  x = (widget->style->xthickness + 2);
-  y = ((widget->allocation.height - gdk_pixbuf_get_height (pixbuf)) / 2);
-
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-    x += (widget->allocation.width - 2 * (widget->style->xthickness + 1) -
-          gdk_pixbuf_get_width (pixbuf));
+    {
+      x = (widget->allocation.width - 2 * widget->style->xthickness -
+           gdk_pixbuf_get_width (pixbuf));
+    }
+  else
+    {
+      x = widget->style->xthickness;
+    }
+
+  y = ((widget->allocation.height - gdk_pixbuf_get_height (pixbuf)) / 2);
 
   gdk_draw_pixbuf (widget->window, widget->style->black_gc,
                    pixbuf,
-                   0, 0, x, y,
+                   0, 0,
+                   widget->allocation.x + x,
+                   widget->allocation.y + y,
                    gdk_pixbuf_get_width (pixbuf),
                    gdk_pixbuf_get_height (pixbuf),
                    GDK_RGB_DITHER_NORMAL, 0, 0);
