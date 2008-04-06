@@ -131,6 +131,37 @@ CODE
     );
 }
 
+sub procedural_db_proc_exists {
+    $blurb = <<'BLURB';
+Checks if the specified procedure exists in the procedural database
+BLURB
+
+    $help = <<'HELP';
+This procedure checks if the specified procedure is registered in the
+procedural database.
+HELP
+
+    &neo_pdb_misc('2008', '2.6');
+
+    @inargs = (
+	{ name  => 'procedure_name', type  => 'string', non_empty => 1,
+	  desc  => 'The procedure name' }
+    );
+
+    @outargs = (
+	{ name => 'exists', type => 'boolean',
+	  desc => 'Whether a procedure of that name is registered' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  exists = (gimp_pdb_lookup_procedure (gimp->pdb, procedure_name) != NULL);
+}
+CODE
+    );
+}
+
 sub procedural_db_proc_info {
     $blurb = <<'BLURB';
 Queries the procedural database for information on the specified procedure.
@@ -454,6 +485,7 @@ CODE
 @procs = qw(procedural_db_temp_name
             procedural_db_dump
             procedural_db_query
+            procedural_db_proc_exists
             procedural_db_proc_info
             procedural_db_proc_arg procedural_db_proc_val
 	    procedural_db_get_data procedural_db_get_data_size
