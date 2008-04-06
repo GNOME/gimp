@@ -15,8 +15,16 @@ Changes in GIMP 2.4.6
 - fixed initial state of curve type in Curves tool (bug #523873)
 - fixed potential crash in the Dicom load plug-in
 - respect the brush mask in the Heal tool (bug #521433)
-- added new translation (nn)
-- translation fixes and updates (ar, ca, el, fi, fr, it, pl, sv)
+- plugged some minor memory leaks
+- fixed a glitch in the DND code (bug #317992)
+- gimp-image-convert() doesn't accept palettes with > 256 colors (bug #525471)
+- added new translations (ca@valencia, nn)
+- translation fixes and updates
+  (ar, ca, de, el, es, fi, fr, hu, it, ko, pl, sv)
+
+Contributors:
+
+   Sven Neumann, Michael Natterer, Martin Nordholts, Bill Skaggs
 
 
 Changes in GIMP 2.4.5
