@@ -40,6 +40,7 @@ gboolean                 gimp_procedural_db_query         (const gchar       *na
                                                            const gchar       *proc_type,
                                                            gint              *num_matches,
                                                            gchar           ***procedure_names);
+gboolean                 gimp_procedural_db_proc_exists   (const gchar       *procedure_name);
 G_GNUC_INTERNAL gboolean _gimp_procedural_db_proc_info    (const gchar       *procedure_name,
                                                            gchar            **blurb,
                                                            gchar            **help,

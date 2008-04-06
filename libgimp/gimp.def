@@ -540,6 +540,7 @@ EXPORTS
 	gimp_procedural_db_get_data
 	gimp_procedural_db_get_data_size
 	gimp_procedural_db_proc_arg
+	gimp_procedural_db_proc_exists
 	gimp_procedural_db_proc_info
 	gimp_procedural_db_proc_val
 	gimp_procedural_db_query

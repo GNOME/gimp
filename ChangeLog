@@ -1,5 +1,18 @@
 2008-04-06  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/procedural_db.pdb: added new procedure
+	gimp-procedural-db-proc-exists.
+
+	* app/pdb/internal-procs.c
+	* app/pdb/procedural-db-cmds.c
+	* libgimp/gimpproceduraldb_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: updated.
+
+	* plug-ins/print/print.c (page_setup): use the new procedure.
+
+2008-04-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print.c (page_setup): do a query for the
 	temporary procedure installed by the 'file-print-gtk' procedure.
 	Temporary solution until bug #344818 has been addressed.

@@ -294,8 +294,6 @@ page_setup (gint32 image_ID)
 {
   GtkPrintOperation  *operation;
   gchar              *name;
-  gchar             **matches;
-  gint                num_matches;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
@@ -310,19 +308,13 @@ page_setup (gint32 image_ID)
   /* now notify a running print procedure about this change */
   name = print_temp_proc_name (image_ID);
 
-  /* FIXME: There should be a better way to query for a procedure.
-   *        Also this code has a race condition. The best solution
+  /* FIXME: This code has a race condition. The best solution
    *        would be to catch the error somehow (see bug #344818).
    */
-  gimp_procedural_db_query (name,
-                            ".*", ".*", ".*", ".*", ".*", ".*",
-                            &num_matches, &matches);
-
-  if (num_matches)
+  if (gimp_procedural_db_proc_exists (name))
     {
       GimpParam *return_vals;
       gint       n_return_vals;
-      gint       i;
 
       return_vals = gimp_run_procedure (name,
                                         &n_return_vals,
@@ -330,11 +322,6 @@ page_setup (gint32 image_ID)
                                         GIMP_PDB_END);
 
       gimp_destroy_params (return_vals, n_return_vals);
-
-      for (i = 0; i < num_matches; i++)
-        g_free (matches[i]);
-
-      g_free (matches);
     }
 
   g_free (name);

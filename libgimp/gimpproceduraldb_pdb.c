@@ -163,6 +163,39 @@ gimp_procedural_db_query (const gchar   *name,
 }
 
 /**
+ * gimp_procedural_db_proc_exists:
+ * @procedure_name: The procedure name.
+ *
+ * Checks if the specified procedure exists in the procedural database
+ *
+ * This procedure checks if the specified procedure is registered in
+ * the procedural database.
+ *
+ * Returns: Whether a procedure of that name is registered.
+ *
+ * Since: GIMP 2.6
+ */
+gboolean
+gimp_procedural_db_proc_exists (const gchar *procedure_name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean exists = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-procedural-db-proc-exists",
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, procedure_name,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    exists = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return exists;
+}
+
+/**
  * _gimp_procedural_db_proc_info:
  * @procedure_name: The procedure name.
  * @blurb: A short blurb.
