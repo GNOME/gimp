@@ -57,6 +57,7 @@ plug-ins/common/diffraction.c
 plug-ins/common/displace.c
 plug-ins/common/edge-dog.c
 plug-ins/common/edge-laplace.c
+plug-ins/common/edge-neon.c
 plug-ins/common/edge-sobel.c
 plug-ins/common/edge.c
 plug-ins/common/emboss.c
@@ -88,7 +89,6 @@ plug-ins/common/mail.c
 plug-ins/common/max-rgb.c
 plug-ins/common/mng.c
 plug-ins/common/mosaic.c
-plug-ins/common/neon.c
 plug-ins/common/newsprint.c
 plug-ins/common/nl-filter.c
 plug-ins/common/noise-hsv.c
