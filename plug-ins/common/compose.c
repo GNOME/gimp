@@ -763,19 +763,20 @@ compose (const gchar  *compose_type,
 	{
           if (inputs[j].is_ID)
             {
-              gint32 *g32;
+              gint32 *layers;
 
               /* Get first layer of image */
-              g32 = gimp_image_get_layers (inputs[j].comp.ID, &num_layers);
-              if ((g32 == NULL) || (num_layers <= 0))
+              layers = gimp_image_get_layers (inputs[j].comp.ID, &num_layers);
+
+              if (! layers || (num_layers <= 0))
                 {
                   g_message (_("Error in getting layer IDs"));
                   return -1;
                 }
 
               /* Get drawable for layer */
-              drawable_src[j] = gimp_drawable_get (g32[0]);
-              g_free (g32);
+              drawable_src[j] = gimp_drawable_get (layers[0]);
+              g_free (layers);
             }
 	}
     }
@@ -784,6 +785,7 @@ compose (const gchar  *compose_type,
   for (j = 0; j < num_images; j++)
     {
       gsize s;
+
       /* Check bytes per pixel */
       if (inputs[j].is_ID)
         {
@@ -797,13 +799,14 @@ compose (const gchar  *compose_type,
             }
 
           /* Get pixel region */
-          gimp_pixel_rgn_init (&(pixel_rgn_src[j]), drawable_src[j], 0, 0,
+          gimp_pixel_rgn_init (&pixel_rgn_src[j], drawable_src[j], 0, 0,
                                width, height, FALSE, FALSE);
         }
       else
         {
           incr_src[j] = 1;
         }
+
       /* Get memory for retrieving information */
       s = tile_height * width * incr_src[j];
       src[j] = g_new (guchar, s);
@@ -823,13 +826,11 @@ compose (const gchar  *compose_type,
         }
 
       drawable_dst = gimp_drawable_get (layer_ID_dst);
-      gimp_pixel_rgn_init (&pixel_rgn_dst, drawable_dst, 0, 0,
-                           drawable_dst->width,
-                           drawable_dst->height,
+      gimp_pixel_rgn_init (&pixel_rgn_dst, drawable_dst,
+                           0, 0, drawable_dst->width, drawable_dst->height,
                            TRUE, TRUE);
-      gimp_pixel_rgn_init (&pixel_rgn_dst_read, drawable_dst, 0, 0,
-                           drawable_dst->width,
-                           drawable_dst->height,
+      gimp_pixel_rgn_init (&pixel_rgn_dst_read, drawable_dst,
+                           0, 0, drawable_dst->width, drawable_dst->height,
                            FALSE, FALSE);
       image_ID_dst = gimp_drawable_get_image (layer_ID_dst);
     }
