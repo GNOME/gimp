@@ -1,5 +1,11 @@
 2008-04-07  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print.[ch]: set the number of pages to one before
+	showing the dialog. Not that it would make a difference, but it
+	could...
+
+2008-04-07  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/procedural_db.pdb (procedural_db_proc_exists):
 	canonicalize the procedure name and also try compat names.
 

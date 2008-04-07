@@ -26,7 +26,6 @@ typedef enum
 
 typedef struct
 {
-  gint                num_pages;
   gint32              image_id;
   gint32              drawable_id;
   GimpUnit            unit;

@@ -207,12 +207,12 @@ print_image (gint32    image_ID,
 
   operation = gtk_print_operation_new ();
 
+  gtk_print_operation_set_n_pages (operation, 1);
   print_operation_set_name (operation, orig_image_ID);
 
   print_page_setup_load (operation, orig_image_ID);
 
   /* fill in the PrintData struct */
-  data.num_pages     = 1;
   data.image_id      = orig_image_ID;
   data.drawable_id   = drawable_ID;
   data.unit          = gimp_get_default_unit ();
@@ -369,7 +369,6 @@ begin_print (GtkPrintOperation *operation,
              GtkPrintContext   *context,
              PrintData         *data)
 {
-  gtk_print_operation_set_n_pages (operation, data->num_pages);
   gtk_print_operation_set_use_full_page (operation, data->use_full_page);
 
   gimp_progress_init (_("Printing"));
