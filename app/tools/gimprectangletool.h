@@ -139,11 +139,11 @@ void        gimp_rectangle_tool_constraint_size_set (GimpRectangleTool       *re
                                                      const gchar             *width_property,
                                                      const gchar             *height_property);
 gboolean    gimp_rectangle_tool_rectangle_is_new    (GimpRectangleTool       *rect_tool);
-gboolean    gimp_rectangle_tool_rectangle_is_narrow (GimpRectangleTool       *rect_tool);
 gboolean    gimp_rectangle_tool_point_in_rectangle  (GimpRectangleTool       *rect_tool,
                                                      gdouble                  x,
                                                      gdouble                  y);
-
+void        gimp_rectangle_tool_set_force_narrow    (GimpRectangleTool       *rect_tool,
+                                                     gboolean                 force_narrow);
 /*  convenience functions  */
 
 void        gimp_rectangle_tool_install_properties  (GObjectClass *klass);

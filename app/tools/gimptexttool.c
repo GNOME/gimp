@@ -230,6 +230,8 @@ gimp_text_tool_constructor (GType                  type,
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   gimp_rectangle_tool_constructor (object);
+  gimp_rectangle_tool_set_force_narrow (GIMP_RECTANGLE_TOOL (object),
+                                        TRUE);
 
   text_tool = GIMP_TEXT_TOOL (object);
   options   = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
@@ -322,7 +324,8 @@ gimp_text_tool_button_press (GimpTool        *tool,
 
   /* bail out now if the rectangle is narrow and the button
      press is outside the layer */
-  if (gimp_rectangle_tool_rectangle_is_narrow (rect_tool))
+  if (text_tool->layer &&
+      gimp_rectangle_tool_get_function (rect_tool) != GIMP_RECTANGLE_TOOL_CREATING)
     {
       GimpItem *item = GIMP_ITEM (text_tool->layer);
       gdouble   x    = coords->x - item->offset_x;
@@ -1281,6 +1284,7 @@ gimp_text_tool_rectangle_changed (GimpRectangleTool *rect_tool)
                     "y2", &y2,
                     NULL);
 
+      text_tool->text_box_fixed = TRUE;
       if (! text)
         {
           /*
@@ -1289,7 +1293,6 @@ gimp_text_tool_rectangle_changed (GimpRectangleTool *rect_tool)
            * so we need to make a special note that will remind
            * us what to do when we actually create the layer
            */
-          text_tool->text_box_fixed = TRUE;
           return TRUE;
         }
 
@@ -1349,6 +1352,9 @@ gimp_rectangle_tool_frame_item (GimpRectangleTool *rect_tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (rect_tool));
 
+  gimp_rectangle_tool_set_function (rect_tool,
+                                    GIMP_RECTANGLE_TOOL_CREATING);
+
   g_object_set (rect_tool,
                 "x1", offset_x,
                 "y1", offset_y,
@@ -1356,8 +1362,12 @@ gimp_rectangle_tool_frame_item (GimpRectangleTool *rect_tool,
                 "y2", offset_y + height,
                 NULL);
 
-  gimp_rectangle_tool_set_function (rect_tool,
-                                    GIMP_RECTANGLE_TOOL_MOVING);
+  /*
+   * kludge to force handle sizes to update.  This call may be
+   * harmful if this function is ever moved out of the text tool code.
+   */
+  gimp_rectangle_tool_set_constraint (rect_tool,
+                                      GIMP_RECTANGLE_CONSTRAIN_NONE);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (rect_tool));
 }

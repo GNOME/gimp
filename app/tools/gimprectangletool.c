@@ -180,6 +180,12 @@ struct _GimpRectangleToolPrivate
    */
   gboolean                narrow_mode;
 
+  /* Whether to force the rectangle to always be in narrow mode.  This
+   * parameter is especially useful for the text tool, where interior
+   * handles would interfere with the text.
+   */
+  gboolean                force_narrow;
+
   /* For what scale the handle sizes is calculated. We must cache this so that
    * we can differentiate between when the tool is resumed because of zoom level
    * just has changed or because the highlight has just been updated.
@@ -457,7 +463,9 @@ gimp_rectangle_tool_get_private (GimpRectangleTool *tool)
 void
 gimp_rectangle_tool_init (GimpRectangleTool *rect_tool)
 {
-  /* No need to initialize anything yet. */
+  GimpRectangleToolPrivate *private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
+
+  private->force_narrow = FALSE;
 }
 
 /**
@@ -882,8 +890,11 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
 
       gimp_rectangle_tool_update_handle_sizes (rect_tool);
 
-      /* Created rectangles should not be started in narrow-mode */
-      private->narrow_mode = FALSE;
+      if (! private->force_narrow)
+        {
+          /* Created rectangles should not be started in narrow-mode*/
+          private->narrow_mode = FALSE;
+        }
 
       /* If the rectangle is being modified we want the center on fixed_center to be
        * at the center of the currently existing rectangle, otherwise we want the
@@ -1834,10 +1845,12 @@ gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool *rect_tool)
                               &visible_rectangle_width,
                               &visible_rectangle_height);
 
-    /* Determine if we are in narrow-mode or not. */
-    private->narrow_mode = visible_rectangle_width  < NARROW_MODE_THRESHOLD ||
-                           visible_rectangle_height < NARROW_MODE_THRESHOLD;
-
+    if (! private->force_narrow)
+      {
+        /* Determine if we are in narrow-mode or not. */
+        private->narrow_mode = (visible_rectangle_width  < NARROW_MODE_THRESHOLD ||
+                                visible_rectangle_height < NARROW_MODE_THRESHOLD);
+      }
   }
 
   if (private->narrow_mode)
@@ -4118,13 +4131,25 @@ gimp_rectangle_tool_adjust_coord (GimpRectangleTool *rect_tool,
 }
 
 /**
- * gimp_rectangle_tool_rectangle_is_narrow:
+ * gimp_rectangle_tool_set_always_narrow:
  *
- * Returns TRUE if the handles are being shown outside the
- * rectangle, FALSE if they are inside
+ * Makes sure that the rectangle is always shown with handles
+ * outside.  Mainly intended for use in the text tool, where
+ * handles inside interfere with the text.  If this function
+ * is called while a rectangle is being shown, the draw tool
+ * must first be paused.
  */
-gboolean
-gimp_rectangle_tool_rectangle_is_narrow (GimpRectangleTool *rect_tool)
+void
+gimp_rectangle_tool_set_force_narrow (GimpRectangleTool *rect_tool,
+                                      gboolean           force_narrow)
 {
-  return GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool)->narrow_mode;
+  GimpRectangleToolPrivate *private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
+
+  private->force_narrow = force_narrow ? TRUE : FALSE;
+
+  if (force_narrow  && ! private->narrow_mode)
+    {
+      private->narrow_mode = TRUE;
+    }
 }
+
