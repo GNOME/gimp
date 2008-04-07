@@ -1,3 +1,10 @@
+2008-04-07  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/procedural_db.pdb (procedural_db_proc_exists):
+	canonicalize the procedure name and also try compat names.
+
+	* app/pdb/procedural-db-cmds.c: regenerated.
+
 2008-04-06  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/procedural_db.pdb: added new procedure

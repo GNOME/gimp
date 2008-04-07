@@ -145,7 +145,24 @@ procedural_db_proc_exists_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      exists = (gimp_pdb_lookup_procedure (gimp->pdb, procedure_name) != NULL);
+      GimpProcedure *procedure;
+      gchar         *canonical;
+
+      canonical = gimp_canonicalize_identifier (procedure_name);
+
+      procedure = gimp_pdb_lookup_procedure (gimp->pdb, canonical);
+
+      if (! procedure)
+        {
+          procedure_name = gimp_pdb_lookup_compat_proc_name (gimp->pdb, canonical);
+
+          if (procedure_name)
+            procedure = gimp_pdb_lookup_procedure (gimp->pdb, procedure_name);
+        }
+
+      g_free (canonical);
+
+      exists = (procedure != NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
