@@ -245,6 +245,7 @@ app/paint/paint-enums.c
 
 app/pdb/channel-cmds.c
 app/pdb/color-cmds.c
+app/pdb/convert-cmds.c
 app/pdb/drawable-cmds.c
 app/pdb/drawable-transform-cmds.c
 app/pdb/edit-cmds.c
@@ -260,6 +261,7 @@ app/pdb/paths-cmds.c
 app/pdb/procedural-db-cmds.c
 app/pdb/selection-cmds.c
 app/pdb/selection-tools-cmds.c
+app/pdb/text-layer-cmds.c
 app/pdb/transform-tools-cmds.c
 app/pdb/undo-cmds.c
 app/pdb/vectors-cmds.c
