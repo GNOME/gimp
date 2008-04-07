@@ -24,13 +24,14 @@
 
 #include "config/gimpdisplayconfig.h"
 
-#include "core/gimp.h"
 #include "core/gimpimage.h"
 
 #include "file/file-utils.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-handlers.h"
+#include "gimpdisplayshell.h"
+#include "gimpstatusbar.h"
 
 #include "gimp-intl.h"
 
@@ -149,10 +150,13 @@ gimp_display_saved_handler (GimpImage   *image,
                             const gchar *uri,
                             GimpDisplay *display)
 {
-  gchar *filename = file_utils_uri_display_name (uri);
+  GtkWidget *statusbar = GIMP_DISPLAY_SHELL (display->shell)->statusbar;
+  gchar     *filename;
 
-  gimp_message (display->gimp, G_OBJECT (display), GIMP_MESSAGE_INFO,
-                _("Image saved to '%s'"), filename);
+  filename = file_utils_uri_display_name (uri);
+
+  gimp_statusbar_push_temp (GIMP_STATUSBAR (statusbar), GTK_STOCK_SAVE,
+                            _("Image saved to '%s'"), filename);
 
   g_free (filename);
 }

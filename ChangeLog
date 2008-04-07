@@ -1,5 +1,12 @@
 2008-04-07  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplay-handlers.c (gimp_display_saved_handler):
+	use gimp_statusbar_push_temp() directly instead of going through
+	gimp_message(). Use the GTK_STOCK_SAVE icon for the statusbar
+	message.
+
+2008-04-07  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print.[ch]: set the number of pages to one before
 	showing the dialog. Not that it would make a difference, but it
 	could...
