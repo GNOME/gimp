@@ -703,9 +703,10 @@ compose (const gchar  *compose_type,
   /* Check image sizes */
   if (compose_by_drawable)
     {
-      if (0 == gimp_drawable_bpp (inputs[first_ID].comp.ID))
+      if (! gimp_drawable_is_valid (inputs[first_ID].comp.ID))
         {
-          g_message (_("Specified layer %d not found"), inputs[first_ID].comp.ID);
+          g_message (_("Specified layer %d not found"),
+                     inputs[first_ID].comp.ID);
           return -1;
         }
 
@@ -716,9 +717,10 @@ compose (const gchar  *compose_type,
 	{
           if (inputs[j].is_ID)
             {
-              if (0 == gimp_drawable_bpp (inputs[j].comp.ID))
+              if (! gimp_drawable_is_valid (inputs[j].comp.ID))
                 {
-                  g_message (_("Specified layer %d not found"), inputs[j].comp.ID);
+                  g_message (_("Specified layer %d not found"),
+                             inputs[j].comp.ID);
                   return -1;
                 }
 
@@ -786,6 +788,7 @@ compose (const gchar  *compose_type,
       if (inputs[j].is_ID)
         {
           incr_src[j] = drawable_src[j]->bpp;
+
           if ((incr_src[j] != 1) && (incr_src[j] != 2))
             {
               g_message (_("Image is not a gray image (bpp=%d)"),
@@ -813,7 +816,7 @@ compose (const gchar  *compose_type,
     {
       layer_ID_dst = composevals.source_layer_ID;
 
-      if (0 == gimp_drawable_bpp (layer_ID_dst))
+      if (! gimp_drawable_is_valid (layer_ID_dst))
         {
           g_message (_("Unable to recompose, source layer not found"));
           return -1;
