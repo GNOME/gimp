@@ -38,7 +38,7 @@
 
 
 #define PLUG_IN_PROC   "plug-in-neon"
-#define PLUG_IN_BINARY "neon"
+#define PLUG_IN_BINARY "edge-neon"
 
 
 typedef struct
@@ -52,41 +52,41 @@ typedef struct
  * Function prototypes.
  */
 
-static void      query  (void);
-static void      run    (const gchar      *name,
-                         gint              nparams,
-                         const GimpParam  *param,
-                         gint             *nreturn_vals,
-                         GimpParam       **return_vals);
+static void      query               (void);
+static void      run                 (const gchar      *name,
+                                      gint              nparams,
+                                      const GimpParam  *param,
+                                      gint             *nreturn_vals,
+                                      GimpParam       **return_vals);
 
-static void      neon                (GimpDrawable *drawable,
-                                      gdouble       radius,
-                                      gdouble       amount,
-                                      GimpPreview  *preview);
+static void      neon                (GimpDrawable     *drawable,
+                                      gdouble           radius,
+                                      gdouble           amount,
+                                      GimpPreview      *preview);
 
-static gboolean  neon_dialog         (GimpDrawable *drawable);
-static void      neon_preview_update (GimpPreview  *preview);
+static gboolean  neon_dialog         (GimpDrawable     *drawable);
+static void      neon_preview_update (GimpPreview      *preview);
 
 /*
  * Gaussian operator helper functions
  */
-static void      find_constants      (gdouble  n_p[],
-                                      gdouble  n_m[],
-                                      gdouble  d_p[],
-                                      gdouble  d_m[],
-                                      gdouble  bd_p[],
-                                      gdouble  bd_m[],
-                                      gdouble  std_dev);
-static void      transfer_pixels     (gdouble *src1,
-                                      gdouble *src2,
-                                      guchar  *dest,
-                                      gint     bytes,
-                                      gint     width);
-static void      combine_to_gradient (guchar  *dest,
-                                      guchar  *src2,
-                                      gint     bytes,
-                                      gint     width,
-                                      gdouble  amount);
+static void      find_constants      (gdouble           n_p[],
+                                      gdouble           n_m[],
+                                      gdouble           d_p[],
+                                      gdouble           d_m[],
+                                      gdouble           bd_p[],
+                                      gdouble           bd_m[],
+                                      gdouble           std_dev);
+static void      transfer_pixels     (gdouble          *src1,
+                                      gdouble          *src2,
+                                      guchar           *dest,
+                                      gint              bytes,
+                                      gint              width);
+static void      combine_to_gradient (guchar           *dest,
+                                      guchar           *src2,
+                                      gint              bytes,
+                                      gint              width,
+                                      gdouble           amount);
 
 
 /***** Local vars *****/
@@ -123,11 +123,11 @@ query (void)
   };
 
   gchar *help_string =
-    "This filter works in a manner similar to the edge"
-    "plug-in, but uses the first derivative of the gaussian"
-    "operator to achieve resolution independence. The IIR"
-    "method of calculating the effect is utilized to keep"
-    "the processing time constant between large and small"
+    "This filter works in a manner similar to the edge "
+    "plug-in, but uses the first derivative of the gaussian "
+    "operator to achieve resolution independence. The IIR "
+    "method of calculating the effect is utilized to keep "
+    "the processing time constant between large and small "
     "standard deviations.";
 
   gimp_install_procedure (PLUG_IN_PROC,

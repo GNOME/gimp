@@ -1,3 +1,13 @@
+2008-04-07  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/neon.c: renamed to...
+
+	* plug-ins/common/edge-neon.c: ...this. Some formatting cleanup.
+
+	* plug-ins/common/plugin-defs.pl: changed accordingly.
+
+	* plug-ins/common/Makefile.am: regenerated.
+
 2008-04-07  Sven Neumann  <sven@gimp.org>
 
 	* app/gegl/Makefile.am (libappgegl_a_SOURCES): added missing file.

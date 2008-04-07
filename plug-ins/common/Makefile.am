@@ -85,6 +85,7 @@ libexec_PROGRAMS = \
 	edge \
 	edge-dog \
 	edge-laplace \
+	edge-neon \
 	edge-sobel \
 	emboss \
 	engrave \
@@ -115,7 +116,6 @@ libexec_PROGRAMS = \
 	max-rgb \
 	$(MNG) \
 	mosaic \
-	neon \
 	newsprint \
 	nl-filter \
 	noise-hsv \
@@ -963,6 +963,22 @@ edge_laplace_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
+edge_neon_SOURCES = \
+	edge-neon.c
+
+edge_neon_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
 edge_sobel_SOURCES = \
 	edge-sobel.c
 
@@ -1422,22 +1438,6 @@ mosaic_SOURCES = \
 	mosaic.c
 
 mosaic_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
-neon_SOURCES = \
-	neon.c
-
-neon_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpmodule)	\
