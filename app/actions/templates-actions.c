@@ -43,7 +43,7 @@ static const GimpActionEntry templates_actions[] =
     GIMP_HELP_TEMPLATE_DIALOG },
 
   { "templates-create-image", GIMP_STOCK_IMAGE,
-    N_("_Create Image from Template..."), "",
+    N_("_Create Image from Template"), "",
     N_("Create a new image from the selected template"),
     G_CALLBACK (templates_create_image_cmd_callback),
     GIMP_HELP_TEMPLATE_IMAGE_NEW },

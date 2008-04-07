@@ -1,5 +1,11 @@
 2008-04-07  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/templates-actions.c 
+	* app/actions/templates-commands.c: when creating an image from a
+        template, skip the New Image dialog as suggested in bug #480802.
+
+2008-04-07  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/map-object/map-object-main.c (query): fixed description
 	of 'lighttype' parameter (bug #526679).
 
