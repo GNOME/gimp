@@ -209,26 +209,24 @@ gboolean
 gimp_display_shell_eval_event (GimpDisplayShell *shell,
                                GimpCoords       *coords,
 			       gdouble           inertia_factor,
-                               gdouble           filter_treshhold,
 			       guint32           time)
 {
   const gdouble  smooth_factor = 0.3;
   guint32        thistime      = time;
   gdouble        dist;
-  gdouble        filter;
+  /* Ensure that events are filtered below screen resolution */
+  gdouble        filter        = MIN (shell->scale_x, shell->scale_y) / 2.0;
   gdouble        inertia;
 
-  /* Event filtering & smoothing causes problems with cursor tracking
+  /* Smoothing causes problems with cursor tracking
    * when zoomed above screen resolution so we need to supress it.
    */
   if (shell->scale_x > 1.0 || shell->scale_y > 1.0)
     {
-     filter  = filter_treshhold / (MAX (shell->scale_x, shell->scale_y));
-     inertia = 0.0;
+      inertia = 0.0;
     }
   else
     {
-      filter  = filter_treshhold;
       inertia = inertia_factor;
     }
 
@@ -305,8 +303,10 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           coords->delta_x = sin_avg * coords->distance;
           coords->delta_y = cos_avg * coords->distance;
 
-          new_x = (shell->last_coords.x - coords->delta_x) * 0.5 + coords->x * 0.5;
-          new_y = (shell->last_coords.y - coords->delta_y) * 0.5 + coords->y * 0.5;
+          new_x =
+            (shell->last_coords.x - coords->delta_x) * 0.5 + coords->x * 0.5;
+          new_y =
+            (shell->last_coords.y - coords->delta_y) * 0.5 + coords->y * 0.5;
 
           cur_deviation = SQR (coords->x - new_x) + SQR (coords->y - new_y);
 

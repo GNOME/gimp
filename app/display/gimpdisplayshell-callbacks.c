@@ -78,10 +78,6 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_EVENT_SMOOTHING  0.98
-#define DEFAULT_EVENT_FILTER     0.50
-
-
 /*  local function prototypes  */
 
 static void       gimp_display_shell_vscrollbar_update       (GtkAdjustment    *adjustment,
@@ -1142,8 +1138,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                          */
                         if (gimp_display_shell_eval_event (shell,
                                                            &image_coords,
-                                                           DEFAULT_EVENT_SMOOTHING,
-                                                           DEFAULT_EVENT_FILTER,
+                                                           active_tool->max_coord_smooth,
                                                            history_events[i]->time))
                           {
                             tool_manager_motion_active (gimp,
@@ -1164,8 +1159,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                      */
                     if (gimp_display_shell_eval_event (shell,
                                                        &image_coords,
-                                                       DEFAULT_EVENT_SMOOTHING,
-                                                       DEFAULT_EVENT_FILTER,
+                                                       active_tool->max_coord_smooth,
                                                        time))
                       {
                         tool_manager_motion_active (gimp,
@@ -1189,7 +1183,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             if (gimp_display_shell_eval_event (shell,
                                                &image_coords,
                                                0.0,
-                                               DEFAULT_EVENT_FILTER,
                                                time))
               {
                 tool_manager_oper_update_active (gimp,
