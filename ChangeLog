@@ -1,3 +1,10 @@
+2008-04-07  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/MapObject/mapobject_main.c (query): fixed description
+	of 'lighttype' parameter (bug #526679).
+
 2008-04-03  Michael Natterer  <mitch@gimp.org>
 
 	Merged from trunk:

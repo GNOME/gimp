@@ -160,7 +160,7 @@ query (void)
     { GIMP_PDB_FLOAT,    "rotationangle-x",       "Rotation about X axis in degrees" },
     { GIMP_PDB_FLOAT,    "rotationangle-y",       "Rotation about Y axis in degrees" },
     { GIMP_PDB_FLOAT,    "rotationangle-z",       "Rotation about Z axis in degrees" },
-    { GIMP_PDB_INT32,    "lighttype",             "Type of lightsource (0=point,1=directional,3=none)" },
+    { GIMP_PDB_INT32,    "lighttype",             "Type of lightsource (0=point,1=directional,2=none)" },
     { GIMP_PDB_COLOR,    "lightcolor",            "Lightsource color (r,g,b)" },
     { GIMP_PDB_FLOAT,    "lightposition-x",       "Lightsource position (x,y,z)" },
     { GIMP_PDB_FLOAT,    "lightposition-y",       "Lightsource position (x,y,z)" },
