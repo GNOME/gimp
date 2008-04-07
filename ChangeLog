@@ -1,3 +1,12 @@
+2008-04-07  Sven Neumann  <sven@gimp.org>
+
+	* app/composite/gimp-composite-3dnow-test.c
+	* app/composite/gimp-composite-altivec-test.c
+	* app/composite/gimp-composite-mmx-test.c
+	* app/composite/gimp-composite-sse-test.c
+	* app/composite/gimp-composite-sse2-test.c
+	* app/composite/gimp-composite-vis-test.c: include <stdlib.h>
+
 2008-04-07  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/neon.c: renamed to...
