@@ -108,15 +108,15 @@ gimp_rectangle_precision_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_RECTANGLE_PRECISION_INT,    "GIMP_RECTANGLE_PRECISION_INT",    "int" },
+    { GIMP_RECTANGLE_PRECISION_INT, "GIMP_RECTANGLE_PRECISION_INT", "int" },
     { GIMP_RECTANGLE_PRECISION_DOUBLE, "GIMP_RECTANGLE_PRECISION_DOUBLE", "double" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_RECTANGLE_PRECISION_INT,    "Integer precision", NULL },
-    { GIMP_RECTANGLE_PRECISION_DOUBLE, "Double precision",  NULL },
+    { GIMP_RECTANGLE_PRECISION_INT, "GIMP_RECTANGLE_PRECISION_INT", NULL },
+    { GIMP_RECTANGLE_PRECISION_DOUBLE, "GIMP_RECTANGLE_PRECISION_DOUBLE", NULL },
     { 0, NULL, NULL }
   };
 
