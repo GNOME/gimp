@@ -1,10 +1,13 @@
+2008-04-07  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.c: formatting.
+
 2008-04-07  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* app/tools/gimprectangletool.[ch]: add "force_narrow"
-	parameter.
+	* app/tools/gimprectangletool.[ch]: add "force_narrow" parameter.
 
-	* app/tools/gimptexttool.c: Force rectangle to always
-	be narrow, and squash a few bugs.
+	* app/tools/gimptexttool.c: Force rectangle to always be narrow,
+	and squash a few bugs.
 
 2008-04-07  Sven Neumann  <sven@gimp.org>
 
