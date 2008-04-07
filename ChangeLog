@@ -1,5 +1,11 @@
 2008-04-07  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimprectangletool.[ch]:
+	* app/tools/gimptexttool.c removed out 'force-narrow' mode as it
+	is hard to use and just looks broken.
+
+2008-04-07  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangletool.c: formatting.
 
 2008-04-07  Bill Skaggs  <weskaggs@primate.ucdavis.edu>

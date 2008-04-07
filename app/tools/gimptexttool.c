@@ -230,8 +230,6 @@ gimp_text_tool_constructor (GType                  type,
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   gimp_rectangle_tool_constructor (object);
-  gimp_rectangle_tool_set_force_narrow (GIMP_RECTANGLE_TOOL (object),
-                                        TRUE);
 
   text_tool = GIMP_TEXT_TOOL (object);
   options   = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
