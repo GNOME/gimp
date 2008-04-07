@@ -1,5 +1,14 @@
 2008-04-07  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-coords.[ch]
+	* app/tools/gimppainttool.c
+	* app/tools/gimptool.[ch]: applied patch from Alexia Death as
+	attached to bug #508639. This change makes the smoothing depend on
+	the active tool.
+
+2008-04-07  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/templates-actions.c 
 	* app/actions/templates-commands.c: when creating an image from a
         template, skip the New Image dialog as suggested in bug #480802.
