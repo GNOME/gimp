@@ -1,5 +1,10 @@
 2008-04-07  Sven Neumann  <sven@gimp.org>
 
+	* app/version.c (gimp_show_library_version): tweaked verbose
+	version output.
+
+2008-04-07  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangletool.[ch]	
 	* app/tools/gimptexttool.c: removed 'force-narrow' mode as it is
 	hard to use and just looks broken.

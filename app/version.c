@@ -61,8 +61,7 @@ gimp_show_library_version (const gchar *package,
                                       run_time_micro);
 
   /* show versions of libraries used by GIMP */
-  g_print (_("using %s, "
-             "compiled against version %s, running against version %s"),
+  g_print (_("using %s version %s (compiled against version %s)"),
            package, build_time_version, run_time_version);
   g_print ("\n");
 
