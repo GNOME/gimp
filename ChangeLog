@@ -1,5 +1,20 @@
 2008-04-08  Michael Natterer  <mitch@gimp.org>
 
+	* menus/image-menu.xml.in: add placeholder "Help/Programming"
+
+	* plug-ins/common/plugin-browser.c
+	* plug-ins/common/procedure-browser.c: move the plug-in and
+	procedure browsers there.
+
+	* menus/image-menu.xml.in: moved the (now by default empty)
+	"Extensions" placeholder from "Xtns" to "Filters". Let's see what
+	cruft shows up there.
+
+	* app/plug-in/plug-in-menu-path.c: map "Xtns/Extensions" to
+	"Filters/Extensions".
+
+2008-04-08  Michael Natterer  <mitch@gimp.org>
+
 	Start getting rid of the "Xtns" menu:
 
 	* app/actions/dialogs-actions.c (dialogs_toplevel_actions):

@@ -573,6 +573,7 @@
       <menuitem action="plug-in-reset-all" />
       <separator />
       <placeholder name="Languages" />
+      <placeholder name="Extensions" />
       <separator />
       <menu action="plug-in-blur-menu" name="Blur" />
       <menu action="plug-in-enhance-menu" name="Enhance" />
@@ -608,8 +609,6 @@
     <placeholder name="Menus" />
 
     <menu action="extensions-menu" name="Xtns">
-      <placeholder name="Extensions" />
-      <separator/>
     </menu>
 
     <menu action="help-menu" name="Help">
@@ -617,6 +616,8 @@
       <menuitem action="help-context-help" />
       <menuitem action="dialogs-tips" />
       <menuitem action="dialogs-about" />
+      <separator />
+      <placeholder name="Programming" />
       <separator />
     </menu>
 
