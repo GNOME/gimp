@@ -1,3 +1,13 @@
+2008-04-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/Makefile.am
+
+	* plug-ins/pygimp/plug-ins/happy-valley-relief.py: renamed to ...
+	* plug-ins/pygimp/plug-ins/python-eval.py: ... this.
+
+	* plug-ins/pygimp/plug-ins/gimpcons.py: renamed to ...
+	* plug-ins/pygimp/plug-ins/python-console.py: ... this.
+
 2008-04-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdialogfactory.c

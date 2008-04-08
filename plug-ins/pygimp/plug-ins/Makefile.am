@@ -5,12 +5,12 @@ pluginexecdir = $(gimpplugindir)/plug-ins
 scripts = \
 	colorxhtml.py		\
 	foggify.py		\
-	gimpcons.py		\
-	happy-valley-relief.py	\
 	palette-offset.py	\
 	palette-sort.py		\
 	palette-to-gradient.py	\
-	py-slice.py
+	py-slice.py		\
+	python-console.py	\
+	python-eval.py
 
 test_scripts = \
 	benchmark-foreground-extract.py	\
