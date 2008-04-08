@@ -199,6 +199,7 @@
       <placeholder name="Preferences">
         <menuitem action="dialogs-preferences" />      
         <menuitem action="dialogs-keyboard-shortcuts" />
+        <menuitem action="dialogs-module-dialog"/>
       </placeholder>
       <separator />
     </menu>
@@ -571,6 +572,8 @@
       </menu>
       <menuitem action="plug-in-reset-all" />
       <separator />
+      <placeholder name="Languages" />
+      <separator />
       <menu action="plug-in-blur-menu" name="Blur" />
       <menu action="plug-in-enhance-menu" name="Enhance" />
       <menu action="plug-in-distorts-menu" name="Distorts" />
@@ -605,10 +608,7 @@
     <placeholder name="Menus" />
 
     <menu action="extensions-menu" name="Xtns">
-      <placeholder name="Extensions">
-	<menuitem action="dialogs-module-dialog"/>
-      </placeholder>
-      <placeholder name="Languages"/>
+      <placeholder name="Extensions" />
       <separator/>
     </menu>
 

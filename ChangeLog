@@ -1,3 +1,18 @@
+2008-04-08  Michael Natterer  <mitch@gimp.org>
+
+	Start getting rid of the "Xtns" menu:
+
+	* app/actions/dialogs-actions.c (dialogs_toplevel_actions):
+	renamed "Module Manager" to "Modules".
+
+	* menus/image-menu.xml.in: move it to "Edit/Preferences" for the
+	time being so it doesn't block the removal of the "Xtns" menu.
+
+	Move "Languages" placeholder from "Xtns" to "Filters".
+
+	* app/plug-in/plug-in-menu-path.c (menu_path_mappings): map
+	"Xtns/Languages" to "Filters/Languages".
+
 2008-04-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/mng.c (myalloc): removed a redundant (and wrong)

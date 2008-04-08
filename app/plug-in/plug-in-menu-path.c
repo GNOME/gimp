@@ -40,9 +40,10 @@ struct _MenuPathMapping
 
 static const MenuPathMapping menu_path_mappings[] =
 {
-  { "<Toolbox>/Xtns", "<Image>/Xtns" },
-  { "<Toolbox>/Help", "<Image>/Help" },
-  { NULL, NULL                       }
+  { "<Toolbox>/Xtns/Languages", "<Image>/Filters/Languages" },
+  { "<Toolbox>/Xtns",           "<Image>/Xtns"              },
+  { "<Toolbox>/Help",           "<Image>/Help"              },
+  { NULL, NULL                                              }
 };
 
 

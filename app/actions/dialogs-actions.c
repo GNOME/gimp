@@ -227,7 +227,7 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
     GIMP_HELP_KEYBOARD_SHORTCUTS },
 
   { "dialogs-module-dialog", GTK_STOCK_EXECUTE,
-    N_("_Module Manager"), NULL,
+    N_("_Modules"), NULL,
     N_("Open the module manager dialog"),
     "gimp-module-dialog",
     GIMP_HELP_MODULE_DIALOG },
