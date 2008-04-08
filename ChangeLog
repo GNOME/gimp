@@ -1,5 +1,10 @@
 2008-04-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/core/gimpdatafactory.c: don't forget writable path
+	after loading directories.
+	
+2008-04-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/core/gimpdatafactory.c (gimp_data_factory_get_save_dir):
 	simplify code.
 

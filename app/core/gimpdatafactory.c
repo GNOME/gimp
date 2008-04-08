@@ -295,6 +295,7 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
           g_free (writable_path);
           writable_path = tmp;
 
+          /* FIXME: this will leak */
           writable_list = gimp_path_parse (writable_path, 16, TRUE, NULL);
 
           g_object_set_data (G_OBJECT (factory),
@@ -307,12 +308,6 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
       gimp_datafiles_read_directories (path, G_FILE_TEST_IS_DIR,
                                        gimp_data_factory_load_data_recursive,
                                        &context);
-
-      if (writable_path)
-        {
-          gimp_path_free (writable_list);
-          g_object_set_data (G_OBJECT (factory), WRITABLE_PATH_KEY, NULL);
-        }
     }
 
   g_free (path);
