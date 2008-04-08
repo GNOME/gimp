@@ -75,9 +75,9 @@ gimp_display_shell_set_fullscreen (GimpDisplayShell *shell,
   if (fullscreen != gimp_display_shell_get_fullscreen (shell))
     {
       if (fullscreen)
-        gtk_window_fullscreen (GTK_WINDOW (shell));
+        gtk_window_fullscreen (shell->container_window);
       else
-        gtk_window_unfullscreen (GTK_WINDOW (shell));
+        gtk_window_unfullscreen (shell->container_window);
     }
 }
 
@@ -301,10 +301,11 @@ gimp_display_shell_set_show_selection (GimpDisplayShell *shell,
 
   gimp_display_shell_selection_set_hidden (shell, ! show);
 
-  SET_ACTIVE (shell->menubar_manager, "view-show-selection", show);
+  SET_ACTIVE (shell->menubar_manager, "view-hide-selection", ! show);
+  SET_ACTIVE (shell->toolbar_manager, "view-hide-selection", ! show);
 
   if (IS_ACTIVE_DISPLAY (shell))
-    SET_ACTIVE (shell->popup_manager, "view-show-selection", show);
+    SET_ACTIVE (shell->popup_manager, "view-hide-selection", ! show);
 }
 
 gboolean
@@ -405,6 +406,7 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
     gimp_display_shell_expose_full (shell);
 
   SET_ACTIVE (shell->menubar_manager, "view-show-grid", show);
+  SET_ACTIVE (shell->toolbar_manager, "view-show-grid", show);
 
   if (IS_ACTIVE_DISPLAY (shell))
     SET_ACTIVE (shell->popup_manager, "view-show-grid", show);

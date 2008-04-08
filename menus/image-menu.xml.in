@@ -231,7 +231,7 @@
           <menuitem action="view-navigation-window" />
         <menuitem action="view-display-filters" />
         <separator />
-        <menuitem action="view-show-selection" />
+        <menuitem action="view-hide-selection" />
         <menuitem action="view-show-layer-boundary" />
         <menuitem action="view-show-guides" />
         <menuitem action="view-show-grid" />

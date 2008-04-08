@@ -141,11 +141,11 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     TRUE,
     GIMP_HELP_VIEW_DOT_FOR_DOT },
 
-  { "view-show-selection", GIMP_STOCK_SELECTION_ALL,
-    N_("Show _Selection"), "<control>T",
-    N_("Display the selection outline"),
+  { "view-hide-selection", GIMP_STOCK_SELECTION_ALL,
+    N_("Hide _Selection"), "<control>T",
+    N_("Don't show the selection outline"),
     G_CALLBACK (view_toggle_selection_cmd_callback),
-    TRUE,
+    FALSE,
     GIMP_HELP_VIEW_SHOW_SELECTION },
 
   { "view-show-layer-boundary", NULL,
@@ -613,8 +613,8 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-navigation-window", display);
   SET_SENSITIVE ("view-display-filters",   display);
 
-  SET_SENSITIVE ("view-show-selection",      display);
-  SET_ACTIVE    ("view-show-selection",      display && options->show_selection);
+  SET_SENSITIVE ("view-hide-selection",      display);
+  SET_ACTIVE    ("view-hide-selection",      display && ! options->show_selection);
   SET_SENSITIVE ("view-show-layer-boundary", display);
   SET_ACTIVE    ("view-show-layer-boundary", display && options->show_layer_boundary);
   SET_SENSITIVE ("view-show-guides",         display);

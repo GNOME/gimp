@@ -9,7 +9,7 @@
     <toolitem action="view-fullscreen" />
     <separator />
     <toolitem action="view-show-grid" />
-    <toolitem action="view-show-selection" />
+    <toolitem action="view-hide-selection" />
     <toolitem action="quick-mask-toggle" />
     <separator expand="true"/>
     <toolitem action="edit-undo" />

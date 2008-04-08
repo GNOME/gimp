@@ -343,7 +343,7 @@ view_toggle_selection_cmd_callback (GtkAction *action,
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  gimp_display_shell_set_show_selection (shell, active);
+  gimp_display_shell_set_show_selection (shell, ! active);
 }
 
 void
@@ -485,6 +485,9 @@ view_toggle_grid_cmd_callback (GtkAction *action,
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
   gimp_display_shell_set_show_grid (shell, active);
+
+  /* allow show & snap to be set with a single action */
+  gimp_display_shell_set_snap_to_grid (shell, active);
 }
 
 void

@@ -1,3 +1,12 @@
+2008-04-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/display/gimpdisplayshell-appearance.c
+	* app/actions/view-actions.c
+	* app/actions/view-commands.c
+	* menus/image-toolbar.xml
+	* menus/image-menu.xml.in: tweak show grid and show selection
+	actions, and make sure updating is correct.
+	
 2008-03-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/display/gimpdisplayshell.[ch]
