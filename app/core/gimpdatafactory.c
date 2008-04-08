@@ -617,48 +617,31 @@ gimp_data_factory_data_save_single (GimpDataFactory  *factory,
 
 /*  private functions  */
 
+/*
+ * returns the workspace dir for the factory's data type
+ */
 static gchar *
 gimp_data_factory_get_save_dir (GimpDataFactory *factory)
 {
-  gchar *path;
   gchar *writable_path;
   gchar *tmp;
-  GList *path_list;
   GList *writable_list;
-  GList *list;
   gchar *writable_dir = NULL;
 
   g_object_get (factory->gimp->config,
-                factory->path_property_name,     &path,
                 factory->writable_property_name, &writable_path,
                 NULL);
-
-  tmp = gimp_config_path_expand (path, TRUE, NULL);
-  g_free (path);
-  path = tmp;
 
   tmp = gimp_config_path_expand (writable_path, TRUE, NULL);
   g_free (writable_path);
   writable_path = tmp;
 
-  path_list     = gimp_path_parse (path,          16, TRUE, NULL);
   writable_list = gimp_path_parse (writable_path, 16, TRUE, NULL);
 
-  g_free (path);
   g_free (writable_path);
 
-  for (list = writable_list; list; list = g_list_next (list))
-    {
-      GList *found = g_list_find_custom (path_list,
-                                         list->data, (GCompareFunc) strcmp);
-      if (found)
-        {
-          writable_dir = g_strdup (found->data);
-          break;
-        }
-    }
+  writable_dir = g_strdup (writable_list->data);
 
-  gimp_path_free (path_list);
   gimp_path_free (writable_list);
 
   return writable_dir;

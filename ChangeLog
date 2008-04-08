@@ -1,5 +1,13 @@
 2008-04-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/core/gimpdatafactory.c (gimp_data_factory_get_save_dir):
+	simplify code.
+
+	* app/widgets/gimpdatachooserdialog.c: remove a bit of 
+	debugging code.
+	
+2008-04-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimptexttool.c
 	* app/display/gimpdisplayshell.c
 	* app/display/gimpdisplayshell-callbacks.[ch]: fix some

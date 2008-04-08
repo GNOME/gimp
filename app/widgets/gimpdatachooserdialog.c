@@ -476,8 +476,6 @@ gimp_data_chooser_dialog_save_data (GimpDataChooserDialog *dialog,
       gtk_tree_model_get (model, &iter, 0, &dirname, -1);
     }
 
-  g_print ("dirname is %s\n", dirname);
-
   orig_filename = data_to_save->filename;
 
   g_file_get_contents (orig_filename, &contents, &length, &error);
