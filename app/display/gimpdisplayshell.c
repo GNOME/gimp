@@ -363,9 +363,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   g_signal_connect (shell, "key-press-event",
                     G_CALLBACK (gimp_display_shell_events),
                     shell);
-  g_signal_connect (shell, "window-state-event",
-                    G_CALLBACK (gimp_display_shell_events),
-                    shell);
 
   gimp_display_shell_dnd_init (shell);
 
@@ -1117,6 +1114,9 @@ gimp_display_shell_new (GimpDisplay     *display,
 
   g_signal_connect (shell->container_window, "delete-event",
                     G_CALLBACK (gimp_display_shell_container_window_closed),
+                    shell);
+  g_signal_connect (shell->container_window, "window-state-event",
+                    G_CALLBACK (gimp_display_shell_container_events),
                     shell);
 
   filter = gimp_display_shell_filter_new (shell,

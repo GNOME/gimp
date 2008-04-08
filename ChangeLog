@@ -1,5 +1,12 @@
 2008-04-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimptexttool.c
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplayshell-callbacks.[ch]: fix some
+	bugs arising from making display shell a non-toplevel.
+	
+2008-04-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/gui/gui-message.c (gui_message_error_dialog):
 	handle possibility that widget might not have a toplevel
 	ancestor.

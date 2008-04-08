@@ -38,6 +38,10 @@ gboolean   gimp_display_shell_events                  (GtkWidget        *widget,
                                                        GdkEvent         *event,
                                                        GimpDisplayShell *shell);
 
+gboolean   gimp_display_shell_container_events        (GtkWidget        *widget,
+                                                       GdkEvent         *event,
+                                                       GimpDisplayShell *shell);
+
 void       gimp_display_shell_canvas_realize          (GtkWidget        *widget,
                                                        GimpDisplayShell *shell);
 void       gimp_display_shell_canvas_size_allocate    (GtkWidget        *widget,

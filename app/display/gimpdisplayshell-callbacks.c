@@ -100,6 +100,86 @@ static GdkEvent * gimp_display_shell_compress_motion   (GimpDisplayShell *shell)
 /*  public functions  */
 
 gboolean
+gimp_display_shell_container_events (GtkWidget        *widget,
+                                     GdkEvent         *event,
+                                     GimpDisplayShell *shell)
+{
+  Gimp     *gimp;
+
+  /*  are we in destruction?  */
+  if (! shell->display || ! shell->display->shell)
+    return TRUE;
+
+  gimp = shell->display->image->gimp;
+
+  switch (event->type)
+    {
+    case GDK_WINDOW_STATE:
+      {
+        GdkEventWindowState *sevent = (GdkEventWindowState *) event;
+        GimpDisplayOptions  *options;
+        gboolean             fullscreen;
+        GimpActionGroup     *group;
+
+        shell->window_state = sevent->new_window_state;
+
+        if (! (sevent->changed_mask & GDK_WINDOW_STATE_FULLSCREEN))
+          break;
+
+        fullscreen = gimp_display_shell_get_fullscreen (shell);
+
+        gtk_widget_set_name (GTK_WIDGET (shell->menubar),
+                             fullscreen ? "gimp-menubar-fullscreen" : NULL);
+
+        options = fullscreen ? shell->fullscreen_options : shell->options;
+
+        gimp_display_shell_set_show_menubar       (shell,
+                                                   options->show_menubar);
+        gimp_display_shell_set_show_rulers        (shell,
+                                                   options->show_rulers);
+        gimp_display_shell_set_show_scrollbars    (shell,
+                                                   options->show_scrollbars);
+        gimp_display_shell_set_show_statusbar     (shell,
+                                                   options->show_statusbar);
+        gimp_display_shell_set_show_selection     (shell,
+                                                   options->show_selection);
+        gimp_display_shell_set_show_layer         (shell,
+                                                   options->show_layer_boundary);
+        gimp_display_shell_set_show_guides        (shell,
+                                                   options->show_guides);
+        gimp_display_shell_set_show_grid          (shell,
+                                                   options->show_grid);
+        gimp_display_shell_set_show_sample_points (shell,
+                                                   options->show_sample_points);
+        gimp_display_shell_set_padding            (shell,
+                                                   options->padding_mode,
+                                                   &options->padding_color);
+
+        group = gimp_ui_manager_get_action_group (shell->menubar_manager,
+                                                  "view");
+        gimp_action_group_set_action_active (group, "view-fullscreen",
+                                             fullscreen);
+
+        if (shell->display ==
+            gimp_context_get_display (gimp_get_user_context (gimp)))
+          {
+            group = gimp_ui_manager_get_action_group (shell->popup_manager,
+                                                      "view");
+            gimp_action_group_set_action_active (group, "view-fullscreen",
+                                                 fullscreen);
+          }
+      }
+      break;
+
+    default:
+      break;
+    }
+
+  return FALSE;
+}
+
+
+gboolean
 gimp_display_shell_events (GtkWidget        *widget,
                            GdkEvent         *event,
                            GimpDisplayShell *shell)
@@ -204,63 +284,6 @@ gimp_display_shell_events (GtkWidget        *widget,
 
         if (fevent->in && GIMP_DISPLAY_CONFIG (gimp->config)->activate_on_focus)
           set_display = TRUE;
-      }
-      break;
-
-    case GDK_WINDOW_STATE:
-      {
-        GdkEventWindowState *sevent = (GdkEventWindowState *) event;
-        GimpDisplayOptions  *options;
-        gboolean             fullscreen;
-        GimpActionGroup     *group;
-
-        shell->window_state = sevent->new_window_state;
-
-        if (! (sevent->changed_mask & GDK_WINDOW_STATE_FULLSCREEN))
-          break;
-
-        fullscreen = gimp_display_shell_get_fullscreen (shell);
-
-        gtk_widget_set_name (GTK_WIDGET (shell->menubar),
-                             fullscreen ? "gimp-menubar-fullscreen" : NULL);
-
-        options = fullscreen ? shell->fullscreen_options : shell->options;
-
-        gimp_display_shell_set_show_menubar       (shell,
-                                                   options->show_menubar);
-        gimp_display_shell_set_show_rulers        (shell,
-                                                   options->show_rulers);
-        gimp_display_shell_set_show_scrollbars    (shell,
-                                                   options->show_scrollbars);
-        gimp_display_shell_set_show_statusbar     (shell,
-                                                   options->show_statusbar);
-        gimp_display_shell_set_show_selection     (shell,
-                                                   options->show_selection);
-        gimp_display_shell_set_show_layer         (shell,
-                                                   options->show_layer_boundary);
-        gimp_display_shell_set_show_guides        (shell,
-                                                   options->show_guides);
-        gimp_display_shell_set_show_grid          (shell,
-                                                   options->show_grid);
-        gimp_display_shell_set_show_sample_points (shell,
-                                                   options->show_sample_points);
-        gimp_display_shell_set_padding            (shell,
-                                                   options->padding_mode,
-                                                   &options->padding_color);
-
-        group = gimp_ui_manager_get_action_group (shell->menubar_manager,
-                                                  "view");
-        gimp_action_group_set_action_active (group, "view-fullscreen",
-                                             fullscreen);
-
-        if (shell->display ==
-            gimp_context_get_display (gimp_get_user_context (gimp)))
-          {
-            group = gimp_ui_manager_get_action_group (shell->popup_manager,
-                                                      "view");
-            gimp_action_group_set_action_active (group, "view-fullscreen",
-                                                 fullscreen);
-          }
       }
       break;
 

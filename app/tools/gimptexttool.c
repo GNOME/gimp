@@ -56,6 +56,7 @@
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimptextoptions.h"
@@ -736,6 +737,7 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
   GimpTextOptions   *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
   GimpDialogFactory *dialog_factory;
   GtkWindow         *parent  = NULL;
+  GimpDisplay       *display = GIMP_TOOL (text_tool)->display;
 
   if (text_tool->editor)
     {
@@ -745,8 +747,8 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
 
   dialog_factory = gimp_dialog_factory_from_name ("toplevel");
 
-  if (GIMP_TOOL (text_tool)->display)
-    parent = GTK_WINDOW (GIMP_TOOL (text_tool)->display->shell);
+  if (display)
+    parent = GIMP_DISPLAY_SHELL (display->shell)->container_window;
 
   text_tool->editor = gimp_text_options_editor_new (parent, options,
                                                     dialog_factory->menu_factory,
