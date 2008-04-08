@@ -1,3 +1,11 @@
+2008-04-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdialogfactory.c
+	(gimp_dialog_factory_set_user_pos): set GDK_HINT_MIN_SIZE on
+	dialogs which had no previous sessionrc entry. Fixes the minimum
+	size of the very first empty display of a new GIMP installation
+	and shouldn't have any ill effects on other windows.
+
 2008-04-07  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite-3dnow-test.c

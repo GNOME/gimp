@@ -1224,6 +1224,7 @@ gimp_dialog_factory_set_user_pos (GtkWidget         *dialog,
                                         data);
 
   gtk_window_set_geometry_hints (GTK_WINDOW (dialog), NULL, NULL,
+                                 GDK_HINT_MIN_SIZE |
                                  GDK_HINT_USER_POS);
 
   return FALSE;
