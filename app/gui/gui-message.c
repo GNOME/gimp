@@ -199,8 +199,9 @@ gui_message_error_dialog (Gimp                *gimp,
     }
   else if (GTK_IS_WIDGET (handler))
     {
-      GtkWidget      *parent = GTK_WIDGET (handler);
-      GtkMessageType  type   = GTK_MESSAGE_ERROR;
+      GtkWidget      *parent    = GTK_WIDGET (handler);
+      GtkMessageType  type      = GTK_MESSAGE_ERROR;
+      GtkWidget      *toplevel;
 
       switch (severity)
         {
@@ -209,11 +210,17 @@ gui_message_error_dialog (Gimp                *gimp,
         case GIMP_MESSAGE_ERROR:   type = GTK_MESSAGE_ERROR;   break;
         }
 
-      dialog =
-        gtk_message_dialog_new (GTK_WINDOW (gtk_widget_get_toplevel (parent)),
-                                GTK_DIALOG_DESTROY_WITH_PARENT,
-                                type, GTK_BUTTONS_OK,
-                                message);
+      toplevel = gtk_widget_get_toplevel (parent);
+
+      if (GTK_WIDGET_TOPLEVEL (toplevel))
+        dialog = gtk_message_dialog_new (GTK_WINDOW (toplevel),
+                                         GTK_DIALOG_DESTROY_WITH_PARENT,
+                                         type, GTK_BUTTONS_OK,
+                                         message);
+      else
+        dialog = gtk_message_dialog_new (NULL, 0,
+                                         type, GTK_BUTTONS_OK,
+                                         message);
 
       g_signal_connect (dialog, "response",
                         G_CALLBACK (gtk_widget_destroy),

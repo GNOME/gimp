@@ -1,5 +1,11 @@
 2008-04-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/gui/gui-message.c (gui_message_error_dialog):
+	handle possibility that widget might not have a toplevel
+	ancestor.
+	
+2008-04-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* libgimpwidgets/Makefile.am: add gimpscalecontrol.h
 	to list of includes.
 	
