@@ -220,7 +220,7 @@ myalloc (mng_size_t size)
 {
   gpointer ptr;
 
-  ptr = g_try_malloc ((gulong) size);
+  ptr = g_try_malloc (size);
 
   if (ptr != NULL)
     memset (ptr, 0, size);
