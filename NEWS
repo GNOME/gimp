@@ -17,7 +17,8 @@ Changes in GIMP 2.4.6
 - respect the brush mask in the Heal tool (bug #521433)
 - plugged some minor memory leaks
 - fixed a glitch in the DND code (bug #317992)
-- gimp-image-convert() doesn't accept palettes with > 256 colors (bug #525471)
+- gimp-image-convert() must not accept palettes with > 256 colors (bug #525471)
+- fixed parameter description in the Map Object plug-in (bug #526679)
 - added new translations (ca@valencia, nn)
 - translation fixes and updates
   (ar, ca, de, el, es, fi, fr, hu, it, ko, pl, sv)
