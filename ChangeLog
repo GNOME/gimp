@@ -1,5 +1,10 @@
 2008-04-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* libgimpwidgets/Makefile.am: add gimpscalecontrol.h
+	to list of includes.
+	
+2008-04-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/display/gimpdisplayshell-appearance.c
 	* app/actions/view-actions.c
 	* app/actions/view-commands.c

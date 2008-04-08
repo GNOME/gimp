@@ -228,7 +228,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimppreviewarea.h		\
 	gimppropwidgets.h		\
 	gimpquerybox.h			\
-	gimpscalecontrol.c		\
+	gimpscalecontrol.h		\
 	gimpscaleentry.h		\
 	gimpscrolledpreview.h		\
 	gimpsizeentry.h			\
