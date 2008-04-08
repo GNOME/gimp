@@ -253,6 +253,8 @@ plug-ins/map-object/map-object-main.c
 plug-ins/map-object/map-object-ui.c
 plug-ins/maze/maze.c
 plug-ins/maze/maze.h
+plug-ins/maze/maze-algorithms.c
+plug-ins/maze/maze-dialog.c
 plug-ins/metadata/metadata.c
 plug-ins/metadata/xmp-parse.c
 plug-ins/pagecurl/pagecurl.c

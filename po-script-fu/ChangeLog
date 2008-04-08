@@ -1,3 +1,7 @@
+2008-04-08  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.skip: updated.
+
 2008-04-03  Jordi Mallach  <jordi@sindominio.net>
 
 	* ca@valencia.po: Add new Valencian-Catalan translation,
@@ -5,7 +9,8 @@
 
 2008-03-12  Åsmund Skjæveland  <aasmunds@ulrik.uio.no>
 
-	* nn.po: Added Norwegian Nynorsk translation from Kolbjørn Stuestøl <kol-stue@online.no>.
+	* nn.po: Added Norwegian Nynorsk translation from Kolbjørn
+	Stuestøl <kol-stue@online.no>.
 
 2008-03-09  Philip Withnall  <pwithnall@svn.gnome.org>
 
@@ -29,7 +34,7 @@
 
 2008-02-17  Marco Ciampa  <ciampix@libero.it>
 
-	it.po: small fix to it translation thanks to A. Falappa
+	* it.po: small fix to it translation thanks to A. Falappa
 	
 2008-02-12  Kevin Cozens  <kcozens@cvs.gnome.org>
 
@@ -47,7 +52,8 @@
 2007-12-31  Yannig Marchegay <yannig@marchegay.org>
 
 	* oc.po: Updated Occitan translation.
-2007-11-01  Sven Neumann  <sven@gimp.org>
+
+2007-11-01  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: removed hsv-graph.scm.
 
