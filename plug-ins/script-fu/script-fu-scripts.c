@@ -127,13 +127,14 @@ script_fu_find_scripts (const gchar *path)
 }
 
 pointer
-script_fu_add_script (scheme *sc, pointer a)
+script_fu_add_script (scheme  *sc,
+                      pointer  a)
 {
   GimpParamDef *args;
   SFScript     *script;
   GType         enum_type;
   GEnumValue   *enum_value;
-  gchar        *val;
+  const gchar  *val;
   gint          i;
   guchar        r, g, b;
   pointer       color_list;
@@ -144,7 +145,8 @@ script_fu_add_script (scheme *sc, pointer a)
   /*  Check the length of a  */
   if (sc->vptr->list_length (sc, a) < 7)
   {
-    g_message ("Too few arguments to script-fu-register");
+    g_message (_("Too few arguments to 'script-fu-register' call"));
+
     return sc->NIL;
   }
 
@@ -234,6 +236,8 @@ script_fu_add_script (scheme *sc, pointer a)
 
           if (a != sc->NIL)
             {
+              gchar *type_name;
+
               switch (script->arg_types[i])
                 {
                 case SF_IMAGE:
@@ -561,19 +565,20 @@ script_fu_add_script (scheme *sc, pointer a)
 
                   val =
                     sc->vptr->string_value (sc->vptr->pair_car (option_list));
-                  if (g_str_has_prefix (val, "Gimp"))
-                    val = g_strdup (val);
-                  else
-                    val = g_strconcat ("Gimp", val, NULL);
 
-                  enum_type = g_type_from_name (val);
+                  if (g_str_has_prefix (val, "Gimp"))
+                    type_name = g_strdup (val);
+                  else
+                    type_name = g_strconcat ("Gimp", val, NULL);
+
+                  enum_type = g_type_from_name (type_name);
                   if (! G_TYPE_IS_ENUM (enum_type))
                     {
-                      g_free (val);
+                      g_free (type_name);
                       return foreign_error (sc, "script-fu-register: first element in enum defaults must be the name of a registered type", 0);
                     }
 
-                  script->arg_defaults[i].sfa_enum.type_name = val;
+                  script->arg_defaults[i].sfa_enum.type_name = type_name;
 
                   option_list = sc->vptr->pair_cdr (option_list);
                   if (!sc->vptr->is_string (sc->vptr->pair_car (option_list)))

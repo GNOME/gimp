@@ -1,5 +1,11 @@
 2008-04-09  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_add_script):
+	marked a message for translation. Declare 'val' as const and use
+	an extra variable where a not const variable is needed.
+	
+2008-04-09  Sven Neumann  <sven@gimp.org>
+
 	* menus/image-menu.xml.in: moved Languages to the bottom.  Removed
 	separator from the Filters list as there was really no rule as to
 	what goes above and what goes below.
