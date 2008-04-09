@@ -384,10 +384,6 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  /* if we are running a "variable" version, we have 8 args */
-  if (nparams == 8)
-    pivals.use_map = TRUE;
-
   gr = g_rand_new ();
   /*
    *  Make sure the drawable type is appropriate.
@@ -419,6 +415,8 @@ run (const gchar      *name,
               pivals.use_map = TRUE;
               pivals.map_is_rgb = gimp_drawable_is_rgb (pivals.map_id);
             }
+          else
+            pivals.use_map = FALSE;
 
           if (pivals.randomize)
             pivals.seed = g_random_int ();
@@ -835,7 +833,6 @@ randomize_dialog (GimpDrawable *drawable)
   /*
    * sanity check
    */
-  pivals.use_map = TRUE;
   if (pivals.map_id == -1)
     pivals.map_id = pivals.drawable_id;
 
