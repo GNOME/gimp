@@ -208,8 +208,8 @@ are yes and no.
 
 .TP
 (default-image
-    (width 420)
-    (height 300)
+    (width 610)
+    (height 377)
     (unit pixels)
     (xresolution 72.000000)
     (yresolution 72.000000)
@@ -312,7 +312,7 @@ system colors allocated for GIMP.  This is an integer value.
 .TP
 (color-management
     (mode display)
-    (display-profile-from-gdk yes)
+    (display-profile-from-gdk no)
     (display-rendering-intent perceptual)
     (simulation-rendering-intent perceptual)
     (simulation-gamut-check no)
@@ -330,8 +330,8 @@ are ask, keep and convert.
 .TP
 (save-document-history yes)
 
-Add all opened and saved files to the document history on disk.  Possible
-values are yes and no.
+Keep a permanent record of all opened and saved files in the Recent Documents
+list.  Possible values are yes and no.
 
 .TP
 (transparency-size medium-checks)
@@ -353,7 +353,7 @@ This is the distance in pixels where Guide and Grid snapping activates.  This
 is an integer value.
 
 .TP
-(marching-ants-speed 100)
+(marching-ants-speed 200)
 
 Speed of marching ants in the selection outline.  This value is in
 milliseconds (less time indicates faster marching).  This is an integer value.
@@ -675,12 +675,6 @@ values are yes and no.
 Save the tool options when GIMP exits.  Possible values are yes and no.
 
 .TP
-(show-tips yes)
-
-Enable displaying a handy GIMP tip on startup.  Possible values are yes and
-no.
-
-.TP
 (show-tooltips yes)
 
 Show a tooltip when the pointer hovers over an item.  Possible values are yes
@@ -788,7 +782,7 @@ Sets the browser used by the help system.  Possible values are gimp and
 web-browser.
 
 .TP
-(web-browser "firefox %s")
+(web-browser "xdg-open %s")
 
 Sets the external web browser to be used.  This can be an absolute path or the
 name of an executable to search for in the user's PATH. If the command
@@ -796,14 +790,14 @@ contains '%s' it will be replaced with the URL, else the URL will be appended
 to the command with a space separating the two.  This is a single filename.
 
 .TP
-(toolbox-window-hint normal)
+(toolbox-window-hint utility)
 
 The window type hint that is set on the toolbox. This may affect how your
 window manager decorates and handles the toolbox window.  Possible values are
 normal, utility and keep-above.
 
 .TP
-(dock-window-hint normal)
+(dock-window-hint utility)
 
 The window type hint that is set on dock windows. This may affect the way your
 window manager decorates and handles dock windows.  Possible values are

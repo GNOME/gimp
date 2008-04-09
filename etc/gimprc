@@ -159,8 +159,8 @@
 # Sets the default image in the "File/New" dialog.  This is a parameter list.
 # 
 # (default-image
-#     (width 420)
-#     (height 300)
+#     (width 610)
+#     (height 377)
 #     (unit pixels)
 #     (xresolution 72.000000)
 #     (yresolution 72.000000)
@@ -251,7 +251,7 @@
 # 
 # (color-management
 #     (mode display)
-#     (display-profile-from-gdk yes)
+#     (display-profile-from-gdk no)
 #     (display-rendering-intent perceptual)
 #     (simulation-rendering-intent perceptual)
 #     (simulation-gamut-check no)
@@ -263,8 +263,8 @@
 # 
 # (color-profile-policy ask)
 
-# Add all opened and saved files to the document history on disk.  Possible
-# values are yes and no.
+# Keep a permanent record of all opened and saved files in the Recent
+# Documents list.  Possible values are yes and no.
 # 
 # (save-document-history yes)
 
@@ -288,7 +288,7 @@
 # milliseconds (less time indicates faster marching).  This is an integer
 # value.
 # 
-# (marching-ants-speed 100)
+# (marching-ants-speed 200)
 
 # When enabled, the image window will automatically resize itself when
 # zooming into and out of images.  Possible values are yes and no.
@@ -524,11 +524,6 @@
 # 
 # (save-tool-options no)
 
-# Enable displaying a handy GIMP tip on startup.  Possible values are yes and
-# no.
-# 
-# (show-tips yes)
-
 # Show a tooltip when the pointer hovers over an item.  Possible values are
 # yes and no.
 # 
@@ -625,19 +620,19 @@
 # appended to the command with a space separating the two.  This is a single
 # filename.
 # 
-# (web-browser "firefox %s")
+# (web-browser "xdg-open %s")
 
 # The window type hint that is set on the toolbox. This may affect how your
 # window manager decorates and handles the toolbox window.  Possible values
 # are normal, utility and keep-above.
 # 
-# (toolbox-window-hint normal)
+# (toolbox-window-hint utility)
 
 # The window type hint that is set on dock windows. This may affect the way
 # your window manager decorates and handles dock windows.  Possible values
 # are normal, utility and keep-above.
 # 
-# (dock-window-hint normal)
+# (dock-window-hint utility)
 
 # When enabled, dock windows (the toolbox and palettes) are set to be
 # transient to the active image window. Most window managers will keep the
