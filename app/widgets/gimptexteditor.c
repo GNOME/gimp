@@ -164,33 +164,37 @@ gimp_text_editor_new (const gchar     *title,
 
   if (toolbar)
     {
-      GtkToolItem *item;
-      GtkWidget   *hbox;
-      GtkWidget   *label;
-      GtkWidget   *entry;
-
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG (editor)->vbox), toolbar,
                           FALSE, FALSE, 0);
       gtk_widget_show (toolbar);
 
-      item = gtk_tool_item_new ();
-      gtk_tool_item_set_expand (item, TRUE);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
-      gtk_widget_show (GTK_WIDGET (item));
+      /*  language entry, disabled until it works  */
+      if (FALSE)
+        {
+          GtkToolItem *item;
+          GtkWidget   *hbox;
+          GtkWidget   *label;
+          GtkWidget   *entry;
 
-      hbox = gtk_hbox_new (FALSE, 6);
-      gtk_container_add (GTK_CONTAINER (item), hbox);
-      gtk_widget_show (hbox);
+          item = gtk_tool_item_new ();
+          gtk_tool_item_set_expand (item, TRUE);
+          gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
+          gtk_widget_show (GTK_WIDGET (item));
 
-      label = gtk_label_new_with_mnemonic (_("_Language:"));
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+          hbox = gtk_hbox_new (FALSE, 6);
+          gtk_container_add (GTK_CONTAINER (item), hbox);
+          gtk_widget_show (hbox);
 
-      entry = gimp_language_entry_new ();
-      gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-      gtk_widget_show (entry);
+          label = gtk_label_new_with_mnemonic (_("_Language:"));
+          gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+          gtk_widget_show (label);
 
-      gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
+          entry = gimp_language_entry_new ();
+          gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
+          gtk_widget_show (entry);
+
+          gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
+        }
     }
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -224,7 +228,7 @@ gimp_text_editor_new (const gchar     *title,
       break;
     }
 
-  gtk_widget_set_size_request (editor->view, 150, 64);
+  gtk_widget_set_size_request (editor->view, 200, 64);
 
   editor->font_toggle =
     gtk_check_button_new_with_mnemonic (_("_Use selected font"));
