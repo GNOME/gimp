@@ -307,6 +307,24 @@ Basic GIMP enumeration data types.
 @GIMP_STACK_TRACE_QUERY: 
 @GIMP_STACK_TRACE_ALWAYS: 
 
+<!-- ##### ENUM GimpTextDirection ##### -->
+<para>
+
+</para>
+
+@GIMP_TEXT_DIRECTION_LTR: 
+@GIMP_TEXT_DIRECTION_RTL: 
+
+<!-- ##### ENUM GimpTextJustification ##### -->
+<para>
+
+</para>
+
+@GIMP_TEXT_JUSTIFY_LEFT: 
+@GIMP_TEXT_JUSTIFY_RIGHT: 
+@GIMP_TEXT_JUSTIFY_CENTER: 
+@GIMP_TEXT_JUSTIFY_FILL: 
+
 <!-- ##### ENUM GimpTransferMode ##### -->
 <para>
 

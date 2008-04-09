@@ -1,3 +1,9 @@
+2008-04-09  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/libgimpbase-sections.txt: added new enums.
+
+	* libgimpbase/tmpl/gimpbaseenums.sgml: regenerated.
+
 2008-02-25  Sven Neumann  <sven@gimp.org>
 
 	* parasites.txt: document the "print-settings" and
