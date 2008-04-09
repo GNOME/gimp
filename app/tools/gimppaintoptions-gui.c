@@ -138,9 +138,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     }
 
   /*  the opacity scale  */
-  gimp_prop_opacity_entry_new (config, "opacity",
-                               GTK_TABLE (table), 0, table_row++,
-                               _("Opacity:"));
+  gimp_prop_opacity_control_new (config, "opacity",
+                                 GTK_TABLE (table), 0, table_row++,
+                                 _("Opacity:"));
 
   /*  the gradient  */
   if (tool_type == GIMP_TYPE_BLEND_TOOL)

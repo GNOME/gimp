@@ -1,5 +1,13 @@
 2008-04-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* libgimpwidgets/gimppropwidgets.[ch]: add
+	gimp_prop_opacity_control_new.
+
+	* app/tools/gimppaintoptions-gui.c
+	* app/tools/gimpforegroundselectoptions.c: use it.
+	
+2008-04-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* plug-ins/common/randomize.c: fix handling of use_mask.
 	
 2008-04-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>

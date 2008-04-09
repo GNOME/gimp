@@ -1352,6 +1352,81 @@ gimp_prop_opacity_entry_new (GObject     *config,
   lower = G_PARAM_SPEC_DOUBLE (param_spec)->minimum * 100.0;
   upper = G_PARAM_SPEC_DOUBLE (param_spec)->maximum * 100.0;
 
+  adjustment = gimp_scale_entry_new (table, column, row,
+                                     label, -1, -1,
+                                     value, lower, upper,
+                                     1.0, 10.0, 0,
+                                     TRUE, 0.0, 0.0,
+                                     tooltip,
+                                     NULL);
+
+  set_param_spec (G_OBJECT (adjustment), NULL,  param_spec);
+  g_object_set_data (G_OBJECT (adjustment),
+                     "opacity-scale", GINT_TO_POINTER (TRUE));
+
+  g_signal_connect (adjustment, "value-changed",
+                    G_CALLBACK (gimp_prop_adjustment_callback),
+                    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_adjustment_notify),
+                  adjustment);
+
+  return adjustment;
+}
+
+
+/**
+ * gimp_prop_opacity_control_new:
+ * @config:        Object to which property is attached.
+ * @property_name: Name of double property controlled by the spin button.
+ * @table:         The #GtkTable the widgets will be attached to.
+ * @column:        The column to start with.
+ * @row:           The row to attach the widgets.
+ * @label:         The text for the #GtkLabel which will appear left of the
+ *                 #GtkHScale.
+ *
+ * Creates a #GimpScaleEntry (slider and spin button) to set and
+ * display the value of the specified double property, which should
+ * represent an "opacity" variable with range 0 to 100.  See
+ * gimp_scale_entry_new() for more information.
+ *
+ * Return value:  The #GtkSpinButton's #GtkAdjustment.
+ *
+ * Since GIMP 2.6
+ */
+GtkObject *
+gimp_prop_opacity_control_new (GObject     *config,
+                               const gchar *property_name,
+                               GtkTable    *table,
+                               gint         column,
+                               gint         row,
+                               const gchar *label)
+{
+  GParamSpec  *param_spec;
+  GtkObject   *adjustment;
+  const gchar *tooltip;
+  gdouble      value;
+  gdouble      lower;
+  gdouble      upper;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_DOUBLE, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config, property_name, &value, NULL);
+
+  tooltip = dgettext (gimp_type_get_translation_domain (G_OBJECT_TYPE (config)),
+                      g_param_spec_get_blurb (param_spec));
+
+  value *= 100.0;
+  lower = G_PARAM_SPEC_DOUBLE (param_spec)->minimum * 100.0;
+  upper = G_PARAM_SPEC_DOUBLE (param_spec)->maximum * 100.0;
+
   adjustment = gimp_scale_control_new (table, column, row,
                                        label, -1, -1,
                                        value, lower, upper,

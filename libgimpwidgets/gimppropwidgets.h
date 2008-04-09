@@ -134,6 +134,13 @@ GtkObject     * gimp_prop_opacity_entry_new       (GObject       *config,
                                                    gint           row,
                                                    const gchar   *label);
 
+GtkObject     * gimp_prop_opacity_control_new     (GObject       *config,
+                                                   const gchar   *property_name,
+                                                   GtkTable      *table,
+                                                   gint           column,
+                                                   gint           row,
+                                                   const gchar   *label);
+
 
 /*  GimpParamMemsize  */
 

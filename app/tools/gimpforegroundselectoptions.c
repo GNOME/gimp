@@ -309,16 +309,16 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (inner_frame), table);
   gtk_widget_show (table);
 
-  adj = gimp_prop_opacity_entry_new (config, "sensitivity-l",
-                                     GTK_TABLE (table), 0, row++, "L");
+  adj = gimp_prop_opacity_control_new (config, "sensitivity-l",
+                                       GTK_TABLE (table), 0, row++, "L");
   gimp_scale_control_set_update_policy (adj, GTK_UPDATE_DELAYED);
 
-  adj = gimp_prop_opacity_entry_new (config, "sensitivity-a",
-                                     GTK_TABLE (table), 0, row++, "a");
+  adj = gimp_prop_opacity_control_new (config, "sensitivity-a",
+                                       GTK_TABLE (table), 0, row++, "a");
   gimp_scale_control_set_update_policy (adj, GTK_UPDATE_DELAYED);
 
-  adj = gimp_prop_opacity_entry_new (config, "sensitivity-b",
-                                     GTK_TABLE (table), 0, row++, "b");
+  adj = gimp_prop_opacity_control_new (config, "sensitivity-b",
+                                       GTK_TABLE (table), 0, row++, "b");
   gimp_scale_control_set_update_policy (adj, GTK_UPDATE_DELAYED);
 
   return vbox;
