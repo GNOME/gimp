@@ -334,4 +334,4 @@
     SF-COLOR   _"Background color" "black"
 )
 
-(script-fu-menu-register "script-fu-contactsheet" "<Toolbox>/Xtns/_Utilities")
+(script-fu-menu-register "script-fu-contactsheet" "<Image>/Filters/Combine")

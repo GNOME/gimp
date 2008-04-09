@@ -296,4 +296,4 @@
 )
 
 (script-fu-menu-register "script-fu-test-sphere"
-                         "<Toolbox>/Xtns/Languages/Script-Fu/Test")
+                         "<Image>/Filters/Languages/Script-Fu/Test")
