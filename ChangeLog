@@ -1,3 +1,36 @@
+2008-04-09  Michael Natterer  <mitch@gimp.org>
+
+	* menus/image-menu.xml.in: add "File/New" submenu and an "Acquire"
+	placeholder inside it. Removed "File/Acquire". Removed the "Xtns"
+	menu.
+
+	* app/plug-in/plug-in-menu-path.[ch] (plug_in_menu_path_map):
+	add "menu_label" parameter and add support for mapping around
+	individual menu items while preserving their translation and
+	mnemonics. Add mappings for the known menus from "Xtns" and map
+	them to "File/New".
+
+	Map everything else in "Xtns" to "Filters/Extensions".
+
+	* app/plug-in/gimppluginmanager-menu-branch.c
+	(gimp_plug_in_manager_add_menu_branch): pass the menu_label so
+	menu branches can be mapped with their translation.
+
+	* app/plug-in/gimppluginprocedure.c
+	(gimp_plug_in_procedure_add_menu_path): pass NULL because mapping
+	menu items which have no submenu makes no sense and is redundant.
+
+	* app/actions/image-actions.c: remove the "Xtns" menu action.
+
+	* app/actions/file-actions.c: add action for the "File/New" menu
+	and removed the "File/Acquire" action.
+
+	* app/actions/edit-actions.c: rename "Paste as New" to
+	"From Clipboard".
+
+	* menus/image-menu.xml.in: add the "From Clipboard" action to the
+	"File/New" menu.
+
 2008-04-09  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcontainer.[ch]: added new methods

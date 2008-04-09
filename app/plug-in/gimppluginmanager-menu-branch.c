@@ -68,7 +68,7 @@ gimp_plug_in_manager_add_menu_branch (GimpPlugInManager *manager,
   branch = g_slice_new (GimpPlugInMenuBranch);
 
   branch->prog_name  = g_strdup (prog_name);
-  branch->menu_path  = plug_in_menu_path_map (menu_path);
+  branch->menu_path  = plug_in_menu_path_map (menu_path, menu_label);
   branch->menu_label = g_strdup (menu_label);
 
   manager->menu_branches = g_slist_append (manager->menu_branches, branch);

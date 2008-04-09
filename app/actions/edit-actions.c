@@ -135,7 +135,7 @@ static const GimpActionEntry edit_actions[] =
     GIMP_HELP_EDIT_PASTE_INTO },
 
   { "edit-paste-as-new", GIMP_STOCK_PASTE_AS_NEW,
-    N_("Paste as New"), "<control><shift>V",
+    N_("From Clipboard"), "<control><shift>V",
     N_("Create a new image from the content of the clipboard"),
     G_CALLBACK (edit_paste_as_new_cmd_callback),
     GIMP_HELP_EDIT_PASTE_AS_NEW },

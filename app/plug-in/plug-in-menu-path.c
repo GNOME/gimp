@@ -22,7 +22,9 @@
 
 #include <string.h>
 
-#include "glib-object.h"
+#include <glib-object.h>
+
+#include "libgimpbase/gimpbase.h"
 
 #include "plug-in-types.h"
 
@@ -34,26 +36,46 @@ typedef struct _MenuPathMapping MenuPathMapping;
 struct _MenuPathMapping
 {
   const gchar *orig_path;
+  const gchar *label;
   const gchar *mapped_path;
 };
 
 
 static const MenuPathMapping menu_path_mappings[] =
 {
-  { "<Toolbox>/Xtns/Languages",  "<Image>/Filters/Languages"  },
-  { "<Toolbox>/Xtns/Extensions", "<Image>/Filters/Extensions" },
-  { "<Toolbox>/Xtns",            "<Image>/Xtns"               },
-  { "<Toolbox>/Help",            "<Image>/Help"               },
-  { NULL, NULL                                                }
+  { "<Toolbox>/Xtns/Languages",       NULL, "<Image>/Filters/Languages"        },
+  { "<Toolbox>/Xtns/Extensions",      NULL, "<Image>/Filters/Extensions"       },
+
+  { "<Toolbox>/Xtns/Buttons",         NULL, "<Image>/File/New/Buttons"         },
+  { "<Toolbox>/Xtns/Logos",           NULL, "<Image>/File/New/Logos"           },
+  { "<Toolbox>/Xtns/Misc",            NULL, "<Image>/File/New/Misc"            },
+  { "<Toolbox>/Xtns/Patterns",        NULL, "<Image>/File/New/Patterns"        },
+  { "<Toolbox>/Xtns/Web Page Themes", NULL, "<Image>/File/New/Web Page Themes" },
+
+  { "<Toolbox>/Xtns", "Buttons",            "<Image>/File/New"                 },
+  { "<Toolbox>/Xtns", "Logos",              "<Image>/File/New"                 },
+  { "<Toolbox>/Xtns", "Misc",               "<Image>/File/New"                 },
+  { "<Toolbox>/Xtns", "Patterns",           "<Image>/File/New"                 },
+  { "<Toolbox>/Xtns", "Web Page Themes",    "<Image>/File/New"                 },
+
+  { "<Toolbox>/Xtns",                 NULL, "<Image>/Xtns"                     },
+  { "<Toolbox>/Help",                 NULL, "<Image>/Help"                     },
+  { "<Image>/File/Acquire",           NULL, "<Image>/File/New/Acquire"         },
+  { NULL, NULL, NULL                                                           }
 };
 
 
 gchar *
-plug_in_menu_path_map (const gchar *menu_path)
+plug_in_menu_path_map (const gchar *menu_path,
+                       const gchar *menu_label)
 {
   const MenuPathMapping *mapping;
+  gchar                 *stripped_label = NULL;
 
   g_return_val_if_fail (menu_path != NULL, NULL);
+
+  if (menu_label)
+    stripped_label = gimp_strip_uline (menu_label);
 
   for (mapping = menu_path_mappings; mapping->orig_path; mapping++)
     {
@@ -61,6 +83,17 @@ plug_in_menu_path_map (const gchar *menu_path)
         {
           gint   orig_len = strlen (mapping->orig_path);
           gchar *mapped_path;
+
+          /*  if the mapping has a label, only map if the passed label
+           *  is identical and the paths' lengths match exactly.
+           */
+          if (mapping->label &&
+              (! stripped_label               ||
+               strlen (menu_path) != orig_len ||
+               strcmp (mapping->label, stripped_label)))
+            {
+              continue;
+            }
 
           if (strlen (menu_path) > orig_len)
             mapped_path = g_strconcat (mapping->mapped_path,
@@ -74,9 +107,13 @@ plug_in_menu_path_map (const gchar *menu_path)
                       menu_path, mapped_path);
 #endif
 
+          g_free (stripped_label);
+
           return mapped_path;
         }
     }
+
+  g_free (stripped_label);
 
   return g_strdup (menu_path);
 }

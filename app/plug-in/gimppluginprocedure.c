@@ -475,7 +475,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
 
   g_free (basename);
 
-  mapped_path = plug_in_menu_path_map (menu_path);
+  mapped_path = plug_in_menu_path_map (menu_path, NULL);
 
   proc->menu_paths = g_list_append (proc->menu_paths, mapped_path);
 

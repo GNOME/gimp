@@ -51,8 +51,6 @@ static const GimpActionEntry image_actions[] =
     N_("Image Menu"), NULL, NULL, NULL,
     GIMP_HELP_IMAGE_WINDOW },
 
-  { "extensions-menu",        NULL, N_("_Xtns")       },
-
   { "image-menu",             NULL, N_("_Image")      },
   { "image-mode-menu",        NULL, N_("_Mode")       },
   { "image-transform-menu",   NULL, N_("_Transform")  },

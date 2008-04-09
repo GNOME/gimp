@@ -22,7 +22,8 @@
 #define __PLUG_IN_MENU_PATH_H__
 
 
-gchar * plug_in_menu_path_map (const gchar *menu_path);
+gchar * plug_in_menu_path_map (const gchar *menu_path,
+                               const gchar *menu_label);
 
 
 #endif /* __PLUG_IN_MENU_PATH_H__ */

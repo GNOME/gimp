@@ -5,9 +5,13 @@
   <menubar-and-popup action-name="image">
 
     <menu action="file-menu" name="File">
-      <placeholder name="New">
-        <menuitem action="image-new" />
-      </placeholder>
+      <menuitem action="image-new" />
+      <menu action="file-new-menu" name="New">
+        <placeholder name="Acquire">
+          <menuitem action="edit-paste-as-new" />
+        </placeholder>
+        <separator />
+      </menu>
       <placeholder name="Open">
         <menuitem action="file-open" />
         <menuitem action="file-open-as-layers" />
@@ -18,7 +22,6 @@
         <separator />
         <menuitem action="dialogs-document-history" />
       </menu>
-      <menu action="file-acquire-menu" name="Acquire" />
 
 <!--  The debug-menu is automatically excluded for stable releases  -->
       <menu action="debug-menu" name="Debug">
@@ -601,15 +604,14 @@
 	<separator />
       </menu>
       <separator />
+      <placeholder name="Menus" />
+      <separator />
       <placeholder name="Languages" />
       <placeholder name="Extensions" />
       <separator />
     </menu>
 
     <placeholder name="Menus" />
-
-    <menu action="extensions-menu" name="Xtns">
-    </menu>
 
     <menu action="help-menu" name="Help">
       <menuitem action="help-help" />
