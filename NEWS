@@ -35,7 +35,7 @@ Core:
  - load brushes and other data files recursively (search through subdirs)
  - started work on language selector for the text tool (unfinished)
  - allow to set opacity of the transform tool preview
- - merged toolbox and image menus (still work in progress)
+ - merged toolbox menu into the image menu
  - always keep an image window around
  - improved image statusbar
  - dropped 'documents' in favor of ~/.recently-used.xbel
