@@ -103,9 +103,28 @@ plug_in_menu_path_map (const gchar *menu_path,
           else
             mapped_path = g_strdup (mapping->mapped_path);
 
-#if 0
-          g_printerr ("%s: mapped %s to %s\n", G_STRFUNC,
-                      menu_path, mapped_path);
+#if GIMP_UNSTABLE
+          {
+            gchar *orig;
+            gchar *mapped;
+
+            if (menu_label)
+              {
+                orig   = g_strdup_printf ("%s/%s", menu_path,   stripped_label);
+                mapped = g_strdup_printf ("%s/%s", mapped_path, stripped_label);
+              }
+            else
+              {
+                orig   = g_strdup (menu_path);
+                mapped = g_strdup (mapped_path);
+              }
+
+            g_printerr ("%s: mapped %s to %s\n", G_STRFUNC,
+                        orig, mapped);
+
+            g_free (orig);
+            g_free (mapped);
+          }
 #endif
 
           g_free (stripped_label);
