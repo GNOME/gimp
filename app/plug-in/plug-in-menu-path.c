@@ -119,8 +119,7 @@ plug_in_menu_path_map (const gchar *menu_path,
                 mapped = g_strdup (mapped_path);
               }
 
-            g_printerr ("%s: mapped %s to %s\n", G_STRFUNC,
-                        orig, mapped);
+            g_printerr (" mapped '%s' to '%s'\n", orig, mapped);
 
             g_free (orig);
             g_free (mapped);
