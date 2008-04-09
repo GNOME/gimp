@@ -1,5 +1,9 @@
 2008-04-09  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/twain/twain.c: register in new menu location.
+
+2008-04-09  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/plug-in-menu-path.c (plug_in_menu_path_map): removed
 	function name from debug output.
 
