@@ -193,6 +193,6 @@ register (
                   "~/segmentation/msbench/imagedata"),
       (PF_TOGGLE, "save-output",  "Save output images", False) ],
     [],
-    benchmark, menu="<Toolbox>/Xtns/Benchmark")
+    benchmark, menu="<Image>/Filters/Extensions/Benchmark")
 
 main ()

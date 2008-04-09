@@ -107,6 +107,6 @@ register(
     ],
     [],
     sphere,
-    menu="<Toolbox>/Xtns/Languages/Python-Fu/Test")
+    menu="<Image>/Filters/Languages/Python-Fu/Test")
 
 main()
