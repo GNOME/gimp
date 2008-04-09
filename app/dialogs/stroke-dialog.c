@@ -99,13 +99,13 @@ stroke_dialog_new (GimpItem    *item,
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (item), context,
                                      title, "gimp-stroke-options",
                                      stock_id,
-                                     _("Choose Stroke Style"),
+                                     _("Stroke Options"),
                                      parent,
                                      gimp_standard_help_func,
                                      help_id,
 
                                      GIMP_STOCK_RESET, RESPONSE_RESET,
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_CLOSE, GTK_RESPONSE_CANCEL,
                                      stock_id,         GTK_RESPONSE_OK,
 
                                      NULL);
@@ -312,8 +312,8 @@ stroke_dialog_response (GtkWidget  *widget,
           }
 
         gimp_image_flush (image);
+        return;
       }
-      /* fallthrough */
 
     default:
       gtk_widget_destroy (dialog);

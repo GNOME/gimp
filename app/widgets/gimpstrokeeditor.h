@@ -42,6 +42,8 @@ struct _GimpStrokeEditor
 
   GimpStrokeOptions *options;
   gdouble            resolution;
+
+  GtkWidget         *custom_dash_box;
 };
 
 struct _GimpStrokeEditorClass

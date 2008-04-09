@@ -59,7 +59,7 @@ static gboolean  gimp_stroke_editor_paint_button (GtkWidget         *widget,
                                                   GdkEventExpose    *event,
                                                   gpointer           data);
 static void      gimp_stroke_editor_dash_preset  (GtkWidget         *widget,
-                                                  GimpStrokeOptions *options);
+                                                  GimpStrokeEditor  *editor);
 
 static void      gimp_stroke_editor_combo_fill   (GimpStrokeOptions *options,
                                                   GtkComboBox       *box);
@@ -98,6 +98,7 @@ gimp_stroke_editor_class_init (GimpStrokeEditorClass *klass)
 static void
 gimp_stroke_editor_init (GimpStrokeEditor *editor)
 {
+  editor->custom_dash_box = NULL;
 }
 
 static void
@@ -161,9 +162,7 @@ gimp_stroke_editor_constructor (GType                   type,
   GtkWidget        *box;
   GtkWidget        *size;
   GtkWidget        *label;
-  GtkWidget        *frame;
   GtkWidget        *table;
-  GtkWidget        *expander;
   GtkWidget        *dash_editor;
   GtkWidget        *button;
   GtkCellRenderer  *cell;
@@ -199,49 +198,66 @@ gimp_stroke_editor_constructor (GType                   type,
   gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 
-  expander = gtk_expander_new_with_mnemonic (_("_Line Style"));
-  gtk_box_pack_start (GTK_BOX (editor), expander, FALSE, FALSE, 0);
-  gtk_widget_show (expander);
-
-  frame = gimp_frame_new ("<expander>");
-  gtk_container_add (GTK_CONTAINER (expander), frame);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (5, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 3);
   gtk_table_set_row_spacing (GTK_TABLE (table), 2, 6);
   gtk_table_set_row_spacing (GTK_TABLE (table), 4, 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_box_pack_start (GTK_BOX (editor), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  box = gimp_prop_enum_stock_box_new (G_OBJECT (editor->options), "cap-style",
-                                      "gimp-cap", 0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("_Cap style:"), 0.0, 0.5,
-                             box, 2, TRUE);
+  store = g_object_new (GIMP_TYPE_ENUM_STORE,
+                        "enum-type",      GIMP_TYPE_DASH_PRESET,
+                        "user-data-type", GIMP_TYPE_DASH_PATTERN,
+                        NULL);
 
-  box = gimp_prop_enum_stock_box_new (G_OBJECT (editor->options), "join-style",
-                                      "gimp-join", 0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("_Join style:"), 0.0, 0.5,
-                             box, 2, TRUE);
+  for (value = store->enum_class->values; value->value_name; value++)
+    {
+      GtkTreeIter  iter;
+      const gchar *desc;
 
-  gimp_prop_scale_entry_new (G_OBJECT (editor->options), "miter-limit",
-                             GTK_TABLE (table), 0, row++,
-                             _("_Miter limit:"),
-                             1.0, 1.0, 1,
-                             FALSE, 0.0, 0.0);
+      desc = gimp_enum_value_get_desc (store->enum_class, value);
 
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+      gtk_list_store_append (GTK_LIST_STORE (store), &iter);
+      gtk_list_store_set (GTK_LIST_STORE (store), &iter,
+                          GIMP_INT_STORE_VALUE, value->value,
+                          GIMP_INT_STORE_LABEL, desc,
+                          -1);
+    }
+
+  box = gimp_enum_combo_box_new_with_model (store);
+  g_object_unref (store);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (box), GIMP_DASH_LINE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Dash pattern:"), 0.0, 0.5,
-                             frame, 2, FALSE);
+                             box, 2, FALSE);
+
+  cell = g_object_new (GIMP_TYPE_CELL_RENDERER_DASHES,
+                       "xpad", 2,
+                       NULL);
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (box), cell, FALSE);
+  gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (box), cell,
+                                 "pattern", GIMP_INT_STORE_USER_DATA);
+
+  gimp_stroke_editor_combo_fill (editor->options, GTK_COMBO_BOX (box));
+
+  g_signal_connect (box, "changed",
+                    G_CALLBACK (gimp_stroke_editor_dash_preset),
+                    editor);
+  g_signal_connect_object (editor->options, "dash-info-changed",
+                           G_CALLBACK (gimp_int_combo_box_set_active),
+                           box, G_CONNECT_SWAPPED);
 
   box = gtk_hbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (frame), box);
-  gtk_widget_show (box);
+  editor->custom_dash_box = box;
+  gtk_table_attach_defaults (GTK_TABLE (table), box, 0, 3, row, row + 1);
+  row++;
+  gtk_widget_hide (box);
+
+  label = gtk_label_new (_("Custom dashes:"));
+  gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   dash_editor = gimp_dash_editor_new (editor->options);
 
@@ -275,52 +291,27 @@ gimp_stroke_editor_constructor (GType                   type,
                           NULL);
 
 
-  store = g_object_new (GIMP_TYPE_ENUM_STORE,
-                        "enum-type",      GIMP_TYPE_DASH_PRESET,
-                        "user-data-type", GIMP_TYPE_DASH_PATTERN,
-                        NULL);
-
-  for (value = store->enum_class->values; value->value_name; value++)
-    {
-      GtkTreeIter  iter;
-      const gchar *desc;
-
-      desc = gimp_enum_value_get_desc (store->enum_class, value);
-
-      gtk_list_store_append (GTK_LIST_STORE (store), &iter);
-      gtk_list_store_set (GTK_LIST_STORE (store), &iter,
-                          GIMP_INT_STORE_VALUE, value->value,
-                          GIMP_INT_STORE_LABEL, desc,
-                          -1);
-    }
-
-  box = gimp_enum_combo_box_new_with_model (store);
-  g_object_unref (store);
-
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (box), GIMP_DASH_CUSTOM);
+  box = gimp_prop_enum_stock_box_new (G_OBJECT (editor->options), "cap-style",
+                                      "gimp-cap", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Dash _preset:"), 0.0, 0.5,
-                             box, 2, FALSE);
+                             _("_Cap:"), 0.0, 0.5,
+                             box, 2, TRUE);
 
-  cell = g_object_new (GIMP_TYPE_CELL_RENDERER_DASHES,
-                       "xpad", 2,
-                       NULL);
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (box), cell, FALSE);
-  gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (box), cell,
-                                 "pattern", GIMP_INT_STORE_USER_DATA);
+  box = gimp_prop_enum_stock_box_new (G_OBJECT (editor->options), "join-style",
+                                      "gimp-join", 0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("_Join:"), 0.0, 0.5,
+                             box, 2, TRUE);
 
-  gimp_stroke_editor_combo_fill (editor->options, GTK_COMBO_BOX (box));
-
-  g_signal_connect (box, "changed",
-                    G_CALLBACK (gimp_stroke_editor_dash_preset),
-                    editor->options);
-  g_signal_connect_object (editor->options, "dash-info-changed",
-                           G_CALLBACK (gimp_int_combo_box_set_active),
-                           box, G_CONNECT_SWAPPED);
+  gimp_prop_scale_control_new (G_OBJECT (editor->options), "miter-limit",
+                             GTK_TABLE (table), 0, row++,
+                             _("_Miter limit:"),
+                             1.0, 1.0, 1,
+                             FALSE, 0.0, 0.0);
 
 
   button = gimp_prop_check_button_new (G_OBJECT (editor->options), "antialias",
-                                       _("_Antialiasing"));
+                                       _("_Antialias"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 3, row, row + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);
@@ -374,15 +365,23 @@ gimp_stroke_editor_paint_button (GtkWidget       *widget,
 }
 
 static void
-gimp_stroke_editor_dash_preset (GtkWidget         *widget,
-                                GimpStrokeOptions *options)
+gimp_stroke_editor_dash_preset (GtkWidget        *widget,
+                                GimpStrokeEditor *editor)
 {
-  gint value;
+  GimpStrokeOptions *options = editor->options;
+  gint               value;
 
-  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value) &&
-      value != GIMP_DASH_CUSTOM)
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
     {
-      gimp_stroke_options_set_dash_pattern (options, value, NULL);
+      if (value == GIMP_DASH_CUSTOM)
+        {
+          gtk_widget_show (editor->custom_dash_box);
+        }
+      else
+        {
+          gimp_stroke_options_set_dash_pattern (options, value, NULL);
+          gtk_widget_hide (editor->custom_dash_box);
+        }
     }
 }
 

@@ -1,3 +1,9 @@
+2008-04-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/dialogs/stroke-dialog.c
+	* app/widgets/gimpstrokeeditor.[ch]: make stroking a bit
+	friendlier.
+	
 2008-04-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpdatafactory.c: don't forget writable path
