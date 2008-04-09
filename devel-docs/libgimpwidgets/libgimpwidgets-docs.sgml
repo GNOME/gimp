@@ -88,6 +88,7 @@
 
   <part id="libgimpwidgets-utils">
     <title>GIMP Widgets Utilities</title>
+    <xi:include href="xml/gimpcairo-utils.xml" />
     <xi:include href="xml/gimphelpui.xml" />
     <xi:include href="xml/gimpquerybox.xml" />
     <xi:include href="xml/gimpstock.xml" />

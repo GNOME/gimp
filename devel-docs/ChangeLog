@@ -1,5 +1,13 @@
 2008-04-09  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpstock.sgml
+	* libgimpwidgets/tmpl/gimpcairo-utils.sgml: added new stock icons
+	and gimpcairo-utils.
+
+2008-04-09  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/libgimpconfig-sections.txt: added gimp_config_copy().
 
 	* libgimpconfig/tmpl/gimpconfig-iface.sgml: regenerated.
