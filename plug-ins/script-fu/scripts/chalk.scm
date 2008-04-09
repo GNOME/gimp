@@ -127,4 +127,4 @@
 )
 
 (script-fu-menu-register "script-fu-chalk-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

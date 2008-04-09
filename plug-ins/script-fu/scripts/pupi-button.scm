@@ -209,4 +209,4 @@
 )
 
 (script-fu-menu-register "script-fu-round-button"
-                         "<Toolbox>/Xtns/Buttons")
+                         "<Image>/File/New/Buttons")

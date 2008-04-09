@@ -175,4 +175,4 @@
 )
 
 (script-fu-menu-register "script-fu-carved-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

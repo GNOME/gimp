@@ -248,8 +248,8 @@ query (void)
                           "of the region to be grabbed.",
 			  "Sven Neumann <sven@gimp.org>, "
                           "Henrik Brix Andersen <brix@gimp.org>",
-			  "1998 - 2007",
-			  "v1.0 (2007/05)",
+			  "1998 - 2008",
+			  "v1.1 (2008/04)",
 			  N_("_Screenshot..."),
 			  NULL,
 			  GIMP_PLUGIN,
@@ -257,7 +257,7 @@ query (void)
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/Acquire");
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/New/Acquire");
   gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_INLINE_PIXBUF,
                              screenshot_icon);
 }

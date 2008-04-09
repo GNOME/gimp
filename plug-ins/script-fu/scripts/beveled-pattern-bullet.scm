@@ -93,4 +93,4 @@
 )
 
 (script-fu-menu-register "script-fu-beveled-pattern-bullet"
-                         "<Toolbox>/Xtns/Web Page Themes/Beveled Pattern")
+                         "<Image>/File/New/Web Page Themes/Beveled Pattern")

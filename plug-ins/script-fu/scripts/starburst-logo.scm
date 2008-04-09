@@ -117,4 +117,4 @@
 )
 
 (script-fu-menu-register "script-fu-starburst-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

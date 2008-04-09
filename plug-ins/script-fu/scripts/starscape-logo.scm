@@ -176,4 +176,4 @@
 )
 
 (script-fu-menu-register "script-fu-starscape-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

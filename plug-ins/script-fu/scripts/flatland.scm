@@ -73,4 +73,4 @@
 )
 
 (script-fu-menu-register "script-fu-flatland"
-                         "<Toolbox>/Xtns/Patterns")
+                         "<Image>/File/New/Patterns")

@@ -217,4 +217,4 @@
 )
 
 (script-fu-menu-register "script-fu-text-circle"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

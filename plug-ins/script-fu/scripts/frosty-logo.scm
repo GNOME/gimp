@@ -187,4 +187,4 @@
 )
 
 (script-fu-menu-register "script-fu-frosty-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

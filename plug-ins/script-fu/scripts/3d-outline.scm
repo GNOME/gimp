@@ -180,4 +180,4 @@
 )
 
 (script-fu-menu-register "script-fu-3d-outline-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

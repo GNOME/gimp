@@ -181,4 +181,4 @@
 )
 
 (script-fu-menu-register "script-fu-cool-metal-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

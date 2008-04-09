@@ -174,4 +174,4 @@
 )
 
 (script-fu-menu-register "script-fu-title-header"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

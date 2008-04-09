@@ -126,4 +126,4 @@
 )
 
 (script-fu-menu-register "script-fu-basic2-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

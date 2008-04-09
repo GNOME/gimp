@@ -97,4 +97,4 @@
 )
 
 (script-fu-menu-register "script-fu-alien-glow-horizontal-ruler"
-                         "<Toolbox>/Xtns/Web Page Themes/Alien Glow")
+                         "<Image>/File/New/Web Page Themes/Alien Glow")

@@ -128,4 +128,4 @@
 )
 
 (script-fu-menu-register "script-fu-chrome-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

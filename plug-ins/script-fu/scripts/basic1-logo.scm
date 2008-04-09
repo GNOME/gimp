@@ -103,4 +103,4 @@
 )
 
 (script-fu-menu-register "script-fu-basic1-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

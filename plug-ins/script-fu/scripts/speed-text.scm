@@ -98,4 +98,4 @@
 )
 
 (script-fu-menu-register "script-fu-speed-text"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

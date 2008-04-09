@@ -166,7 +166,7 @@
 )
 
 (script-fu-menu-register "script-fu-big-header-gimp-org"
-                         "<Toolbox>/Xtns/Web Page Themes/Classic.Gimp.Org")
+                         "<Image>/File/New/Web Page Themes/Classic.Gimp.Org")
 
 (script-fu-register "script-fu-small-header-gimp-org"
   _"_Small Header..."
@@ -190,4 +190,4 @@
 )
 
 (script-fu-menu-register "script-fu-small-header-gimp-org"
-                         "<Toolbox>/Xtns/Web Page Themes/Classic.Gimp.Org")
+                         "<Image>/File/New/Web Page Themes/Classic.Gimp.Org")

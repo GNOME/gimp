@@ -130,7 +130,7 @@
 )
 
 (script-fu-menu-register "script-fu-tube-button-label-gimp-org"
-                         "<Toolbox>/Xtns/Web Page Themes/Classic.Gimp.Org")
+                         "<Image>/File/New/Web Page Themes/Classic.Gimp.Org")
 
 
 (script-fu-register "script-fu-tube-subbutton-label-gimp-org"
@@ -146,7 +146,7 @@
 )
 
 (script-fu-menu-register "script-fu-tube-subbutton-label-gimp-org"
-                         "<Toolbox>/Xtns/Web Page Themes/Classic.Gimp.Org")
+                         "<Image>/File/New/Web Page Themes/Classic.Gimp.Org")
 
 
 (script-fu-register "script-fu-tube-subsubbutton-label-gimp-org"
@@ -162,7 +162,7 @@
 )
 
 (script-fu-menu-register "script-fu-tube-subsubbutton-label-gimp-org"
-                         "<Toolbox>/Xtns/Web Page Themes/Classic.Gimp.Org")
+                         "<Image>/File/New/Web Page Themes/Classic.Gimp.Org")
 
 
 (script-fu-register "script-fu-labels-gimp-org"
@@ -188,4 +188,4 @@
 )
 
 (script-fu-menu-register "script-fu-labels-gimp-org"
-                         "<Toolbox>/Xtns/Web Page Themes/Classic.Gimp.Org")
+                         "<Image>/File/New/Web Page Themes/Classic.Gimp.Org")

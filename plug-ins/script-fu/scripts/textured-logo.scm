@@ -177,4 +177,4 @@
 )
 
 (script-fu-menu-register "script-fu-textured-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

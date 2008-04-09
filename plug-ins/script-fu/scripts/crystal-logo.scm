@@ -224,4 +224,4 @@
 )
 
 (script-fu-menu-register "script-fu-crystal-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

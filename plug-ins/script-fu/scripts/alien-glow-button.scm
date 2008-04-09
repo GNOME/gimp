@@ -165,4 +165,4 @@
 )
 
 (script-fu-menu-register "script-fu-alien-glow-button"
-                         "<Toolbox>/Xtns/Web Page Themes/Alien Glow")
+                         "<Image>/File/New/Web Page Themes/Alien Glow")

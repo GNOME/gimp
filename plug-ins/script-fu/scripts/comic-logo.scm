@@ -169,4 +169,4 @@
 )
 
 (script-fu-menu-register "script-fu-comic-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

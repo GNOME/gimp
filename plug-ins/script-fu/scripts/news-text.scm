@@ -91,4 +91,4 @@
 )
 
 (script-fu-menu-register "script-fu-newsprint-text"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

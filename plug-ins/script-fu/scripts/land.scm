@@ -87,4 +87,4 @@
 )
 
 (script-fu-menu-register "script-fu-land"
-                         "<Toolbox>/Xtns/Patterns")
+                         "<Image>/File/New/Patterns")

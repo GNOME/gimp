@@ -204,4 +204,4 @@
 )
 
 (script-fu-menu-register "script-fu-chip-away-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

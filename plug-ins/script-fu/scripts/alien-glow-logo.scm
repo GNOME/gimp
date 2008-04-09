@@ -115,4 +115,4 @@
 )
 
 (script-fu-menu-register "script-fu-alien-glow-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

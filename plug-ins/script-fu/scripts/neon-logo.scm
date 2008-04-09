@@ -293,4 +293,4 @@
 )
 
 (script-fu-menu-register "script-fu-neon-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

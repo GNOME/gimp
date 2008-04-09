@@ -199,4 +199,4 @@
 )
 
 (script-fu-menu-register "script-fu-blended-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

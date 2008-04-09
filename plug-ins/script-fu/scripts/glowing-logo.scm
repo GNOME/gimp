@@ -119,4 +119,4 @@
 )
 
 (script-fu-menu-register "script-fu-glowing-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

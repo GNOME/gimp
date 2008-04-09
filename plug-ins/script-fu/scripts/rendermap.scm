@@ -92,4 +92,4 @@
 )
 
 (script-fu-menu-register "script-fu-render-map"
-                         "<Toolbox>/Xtns/Patterns")
+                         "<Image>/File/New/Patterns")

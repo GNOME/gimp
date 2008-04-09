@@ -146,4 +146,4 @@
 )
 
 (script-fu-menu-register "script-fu-gradient-bevel-logo"
-                         "<Toolbox>/Xtns/Logos")
+                         "<Image>/File/New/Logos")

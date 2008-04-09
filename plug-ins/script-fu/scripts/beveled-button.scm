@@ -158,4 +158,4 @@
 )
 
 (script-fu-menu-register "script-fu-button00"
-                         "<Toolbox>/Xtns/Buttons")
+                         "<Image>/File/New/Buttons")
