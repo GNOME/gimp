@@ -84,9 +84,11 @@ test_config_LDADD = \
 	../paint/libapppaint.a			\
 	../text/libapptext.a			\
 	libappconfig.a				\
+	../gegl/libappgegl.a			\
 	../paint-funcs/libapppaint-funcs.a	\
 	../composite/libappcomposite.a		\
 	../base/libappbase.a			\
+	../gimp-log.o				\
 	$(libgimpmodule)			\
 	$(libgimpcolor)				\
 	$(libgimpthumb)				\
@@ -96,6 +98,7 @@ test_config_LDADD = \
 	$(PANGOFT2_LIBS)			\
 	$(GDK_PIXBUF_LIBS)			\
 	$(LIBART_LIBS)				\
+	$(GEGL_LIBS)				\
 	$(GLIB_LIBS)
 
 

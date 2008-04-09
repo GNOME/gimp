@@ -1,5 +1,9 @@
 2008-04-09  Sven Neumann  <sven@gimp.org>
 
+	* app/config/Makefile.am: fixed build of test-config.
+
+2008-04-09  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/ts-helloworld.scm
 	* plug-ins/script-fu/scripts/test-sphere.scm
 	* plug-ins/script-fu/scripts/contactsheet.scm: register in new
