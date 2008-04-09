@@ -1,6 +1,9 @@
-2008-04-09  Michael Natterer  <mitch@gimp.org>
+2008-04-09  Sven Neumann  <sven@gimp.org>
 
-	* NEWS: mention some more color tool and GEGL changes.
+	* app/core/core-enums.[ch] (enum GimpUndoType): better descriptions
+	for the GIMP_UNDO_FS_RIGOR and GIMP_UNDO_FS_RELAX undo types.
+
+	* app/core/gimplayer-floating-sel.c: corrected a comment.
 
 2008-04-09  Sven Neumann  <sven@gimp.org>
 

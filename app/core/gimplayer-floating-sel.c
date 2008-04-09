@@ -98,7 +98,7 @@ floating_sel_remove (GimpLayer *layer)
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_REMOVE,
                                _("Remove Floating Selection"));
 
-  /*  store the affected area from the drawable in the backing store  */
+  /*  restore the affected area in the drawable from the backing store  */
   floating_sel_relax (layer, TRUE);
 
   /*  Invalidate the preview of the obscured drawable.  We do this here
