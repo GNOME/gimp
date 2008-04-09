@@ -129,3 +129,14 @@ High-level API functions for libgimpconfig.
 @config: 
 
 
+<!-- ##### FUNCTION gimp_config_copy ##### -->
+<para>
+
+</para>
+
+@src: 
+@dest: 
+@flags: 
+@Returns: 
+
+

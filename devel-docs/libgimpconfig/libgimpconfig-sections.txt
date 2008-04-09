@@ -12,6 +12,7 @@ gimp_config_deserialize_return
 gimp_config_duplicate
 gimp_config_is_equal_to
 gimp_config_reset
+gimp_config_copy
 <SUBSECTION Standard>
 GIMP_CONFIG
 GIMP_IS_CONFIG

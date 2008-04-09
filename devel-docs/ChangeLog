@@ -1,5 +1,11 @@
 2008-04-09  Sven Neumann  <sven@gimp.org>
 
+	* libgimpconfig/libgimpconfig-sections.txt: added gimp_config_copy().
+
+	* libgimpconfig/tmpl/gimpconfig-iface.sgml: regenerated.
+
+2008-04-09  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/libgimpbase-sections.txt: added new enums.
 
 	* libgimpbase/tmpl/gimpbaseenums.sgml: regenerated.
