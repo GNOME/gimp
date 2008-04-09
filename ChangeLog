@@ -1,5 +1,11 @@
 2008-04-09  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-enums.[ch] (enum GimpUndoType): changed
+	descriptions for the GIMP_UNDO_FS_RIGOR and GIMP_UNDO_FS_RELAX
+	undo types again.
+
+2008-04-09  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimptexteditor.c (gimp_text_editor_new): disabled
 	the language entry until it works.
 
