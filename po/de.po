@@ -7,7 +7,7 @@
 # Christian Neumair <chris@gnome-de.org>
 # Roman Joost <roman@bromeco.de>
 # Hendrik Brandt <heb@gnome-de.org>, 2004-2005, 2007, 2008.
-# Sven Neumann <sven@gimp.org>, 2004-2007.
+# Sven Neumann <sven@gimp.org>, 2004-2008.
 # Roman Joost <romanofski@gimp.org>, 2005.
 # Hendrik Richter <hendrikr@gnome.org>, 2005.
 # Jens Seidel <jseidel@cvs.gnome.org>, 2005.
@@ -18,9 +18,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-07 17:49+0200\n"
-"PO-Revision-Date: 2008-04-07 17:43+0200\n"
-"Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
+"POT-Creation-Date: 2008-04-09 16:44+0200\n"
+"PO-Revision-Date: 2008-04-09 16:52+0200\n"
+"Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -257,10 +257,10 @@ msgstr ""
 #. show versions of libraries used by GIMP
 #: ../app/version.c:64
 #, c-format
-msgid "using %s, compiled against version %s, running against version %s"
-msgstr "%s verwendet, gebaut gegen Version %s, ausgeführt gegen Version %s"
+msgid "using %s version %s (compiled against version %s)"
+msgstr "verwendet %s Version %s (gebaut gegen Version %s)"
 
-#: ../app/version.c:128 ../tools/gimp-remote.c:95
+#: ../app/version.c:127 ../tools/gimp-remote.c:95
 #, c-format
 msgid "%s version %s"
 msgstr "%s Version %s"
@@ -739,7 +739,7 @@ msgstr "Paletteneintrag bearbeiten"
 msgid "_Context"
 msgstr "_Kontext"
 
-#: ../app/actions/context-actions.c:47 ../app/actions/image-actions.c:61
+#: ../app/actions/context-actions.c:47 ../app/actions/image-actions.c:59
 msgid "_Colors"
 msgstr "_Farben"
 
@@ -760,7 +760,7 @@ msgstr "_Werkzeug"
 msgid "_Brush"
 msgstr "_Pinsel"
 
-#: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:98
+#: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:99
 #: ../app/dialogs/preferences-dialog.c:1906
 msgid "_Pattern"
 msgstr "_Muster"
@@ -856,7 +856,7 @@ msgstr ""
 #: ../app/actions/data-commands.c:133
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1388
 #: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:223
-#: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:770
+#: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:773
 #: ../app/pdb/image-cmds.c:2073 ../app/widgets/gimpdnd-xds.c:92
 msgid "Untitled"
 msgstr "Unbenannt"
@@ -1127,8 +1127,8 @@ msgid "Open the keyboard shortcuts editor"
 msgstr "Den Editor für die Tastenkombinationen öffnen"
 
 #: ../app/actions/dialogs-actions.c:230
-msgid "_Module Manager"
-msgstr "_Modulverwaltung"
+msgid "_Modules"
+msgstr "_Module"
 
 #: ../app/actions/dialogs-actions.c:231
 msgid "Open the module manager dialog"
@@ -1415,7 +1415,7 @@ msgstr "_Sichtbar"
 msgid "Toggle visibility"
 msgstr "Sichtbarkeit einstellen"
 
-#: ../app/actions/drawable-actions.c:95 ../app/actions/image-actions.c:161
+#: ../app/actions/drawable-actions.c:95 ../app/actions/image-actions.c:159
 msgid "Flip _Horizontally"
 msgstr "_Horizontal spiegeln"
 
@@ -1423,7 +1423,7 @@ msgstr "_Horizontal spiegeln"
 msgid "Flip horizontally"
 msgstr "Horizontal spiegeln"
 
-#: ../app/actions/drawable-actions.c:101 ../app/actions/image-actions.c:167
+#: ../app/actions/drawable-actions.c:101 ../app/actions/image-actions.c:165
 msgid "Flip _Vertically"
 msgstr "_Vertikal spiegeln"
 
@@ -1431,7 +1431,7 @@ msgstr "_Vertikal spiegeln"
 msgid "Flip vertically"
 msgstr "Vertikal spiegeln"
 
-#: ../app/actions/drawable-actions.c:110 ../app/actions/image-actions.c:176
+#: ../app/actions/drawable-actions.c:110 ../app/actions/image-actions.c:174
 msgid "Rotate 90° _clockwise"
 msgstr "Um 90° im _Uhrzeigersinn drehen"
 
@@ -1439,7 +1439,7 @@ msgstr "Um 90° im _Uhrzeigersinn drehen"
 msgid "Rotate 90 degrees to the right"
 msgstr "Um 90° nach rechts drehen"
 
-#: ../app/actions/drawable-actions.c:116 ../app/actions/image-actions.c:182
+#: ../app/actions/drawable-actions.c:116 ../app/actions/image-actions.c:180
 msgid "Rotate _180°"
 msgstr "Um _180° drehen"
 
@@ -1447,7 +1447,7 @@ msgstr "Um _180° drehen"
 msgid "Turn upside-down"
 msgstr "Auf den Kopf stellen"
 
-#: ../app/actions/drawable-actions.c:122 ../app/actions/image-actions.c:188
+#: ../app/actions/drawable-actions.c:122 ../app/actions/image-actions.c:186
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Um 90° _gegen den Uhrzeigersinn drehen"
 
@@ -1581,8 +1581,8 @@ msgid "Paste the content of the clipboard into the current selection"
 msgstr "Den Inhalt der Zwischenablage in die Auswahl einfügen"
 
 #: ../app/actions/edit-actions.c:138
-msgid "Paste as New"
-msgstr "Als neues Bild einfügen"
+msgid "From _Clipboard"
+msgstr "Aus _Zwischenablage"
 
 #: ../app/actions/edit-actions.c:139 ../app/actions/edit-actions.c:145
 msgid "Create a new image from the content of the clipboard"
@@ -1792,12 +1792,12 @@ msgid "_File"
 msgstr "_Datei"
 
 #: ../app/actions/file-actions.c:67
-msgid "Open _Recent"
-msgstr "_Zuletzt geöffnet"
+msgid "Ne_w"
+msgstr "Ne_u"
 
 #: ../app/actions/file-actions.c:68
-msgid "Acq_uire"
-msgstr "_Holen"
+msgid "Open _Recent"
+msgstr "_Zuletzt geöffnet"
 
 #: ../app/actions/file-actions.c:71
 msgid "_Open..."
@@ -2101,7 +2101,7 @@ msgid "(Varies)"
 msgstr "(Variiert)"
 
 #: ../app/actions/gradient-editor-actions.c:347
-#: ../app/actions/image-actions.c:143
+#: ../app/actions/image-actions.c:141
 msgid "_RGB"
 msgstr "_RGB"
 
@@ -2390,176 +2390,172 @@ msgid "Image Menu"
 msgstr "Bildmenü"
 
 #: ../app/actions/image-actions.c:54
-msgid "_Xtns"
-msgstr "E_xtras"
-
-#: ../app/actions/image-actions.c:56
 msgid "_Image"
 msgstr "_Bild"
 
-#: ../app/actions/image-actions.c:57
+#: ../app/actions/image-actions.c:55
 msgid "_Mode"
 msgstr "_Modus"
 
-#: ../app/actions/image-actions.c:58 ../app/actions/layers-actions.c:56
+#: ../app/actions/image-actions.c:56 ../app/actions/layers-actions.c:56
 msgid "_Transform"
 msgstr "_Transformation"
 
-#: ../app/actions/image-actions.c:59
+#: ../app/actions/image-actions.c:57
 msgid "_Guides"
 msgstr "_Hilfslinien"
 
-#: ../app/actions/image-actions.c:62
+#: ../app/actions/image-actions.c:60
 msgid "I_nfo"
 msgstr "_Information"
 
-#: ../app/actions/image-actions.c:63 ../app/tools/gimplevelstool.c:648
+#: ../app/actions/image-actions.c:61 ../app/tools/gimplevelstool.c:648
 #: ../app/tools/gimpthresholdtool.c:261
 msgid "_Auto"
 msgstr "_Automatisch"
 
-#: ../app/actions/image-actions.c:64 ../app/actions/plug-in-actions.c:94
+#: ../app/actions/image-actions.c:62 ../app/actions/plug-in-actions.c:95
 msgid "_Map"
 msgstr "_Abbilden"
 
-#: ../app/actions/image-actions.c:65
+#: ../app/actions/image-actions.c:63
 msgid "C_omponents"
 msgstr "_Komponenten"
 
-#: ../app/actions/image-actions.c:68
+#: ../app/actions/image-actions.c:66
 msgid "_New..."
 msgstr "_Neu …"
 
-#: ../app/actions/image-actions.c:69
+#: ../app/actions/image-actions.c:67
 msgid "Create a new image"
 msgstr "Ein neues Bild erstellen"
 
-#: ../app/actions/image-actions.c:74
+#: ../app/actions/image-actions.c:72
 msgid "Can_vas Size..."
 msgstr "_Leinwandgröße …"
 
-#: ../app/actions/image-actions.c:75
+#: ../app/actions/image-actions.c:73
 msgid "Adjust the image dimensions"
 msgstr "Bildabmessungen anpassen"
 
-#: ../app/actions/image-actions.c:80
+#: ../app/actions/image-actions.c:78
 msgid "F_it Canvas to Layers"
 msgstr "_Leinwand an Ebenen anpassen"
 
-#: ../app/actions/image-actions.c:81
+#: ../app/actions/image-actions.c:79
 msgid "Resize the image to enclose all layers"
 msgstr "Bildgröße so verändern, dass alle Ebenen hineinpassen"
 
-#: ../app/actions/image-actions.c:86
+#: ../app/actions/image-actions.c:84
 msgid "F_it Canvas to Selection"
 msgstr "Leinwand an _Auswahl anpassen"
 
-#: ../app/actions/image-actions.c:87
+#: ../app/actions/image-actions.c:85
 msgid "Resize the image to the extents of the selection"
 msgstr "Leinwand auf die Auswahlgröße zurechtschneiden"
 
-#: ../app/actions/image-actions.c:92
+#: ../app/actions/image-actions.c:90
 msgid "_Print Size..."
 msgstr "_Druckgröße …"
 
-#: ../app/actions/image-actions.c:93
+#: ../app/actions/image-actions.c:91
 msgid "Adjust the print resolution"
 msgstr "Die Druckauflösung anpassen"
 
-#: ../app/actions/image-actions.c:98
+#: ../app/actions/image-actions.c:96
 msgid "_Scale Image..."
 msgstr "Bild _skalieren"
 
-#: ../app/actions/image-actions.c:99
+#: ../app/actions/image-actions.c:97
 msgid "Change the size of the image content"
 msgstr "Die Größe des Bildinhaltes ändern"
 
-#: ../app/actions/image-actions.c:104 ../app/actions/layers-actions.c:182
+#: ../app/actions/image-actions.c:102 ../app/actions/layers-actions.c:182
 msgid "_Crop to Selection"
 msgstr "Auf Auswahl _zuschneiden"
 
 # XXX Das Bild auf die Auswahlgröße zurechtschneiden
-#: ../app/actions/image-actions.c:105
+#: ../app/actions/image-actions.c:103
 msgid "Crop the image to the extents of the selection"
 msgstr "Schneidet das Bild auf die Auswahlgröße zurecht"
 
-#: ../app/actions/image-actions.c:110
+#: ../app/actions/image-actions.c:108
 msgid "_Duplicate"
 msgstr "_Duplizieren"
 
-#: ../app/actions/image-actions.c:111
+#: ../app/actions/image-actions.c:109
 msgid "Create a duplicate of this image"
 msgstr "Ein Duplikat dieses Bildes erzeugen"
 
-#: ../app/actions/image-actions.c:116
+#: ../app/actions/image-actions.c:114
 msgid "Merge Visible _Layers..."
 msgstr "Sichtbare _Ebenen vereinen …"
 
-#: ../app/actions/image-actions.c:117 ../app/actions/layers-actions.c:135
+#: ../app/actions/image-actions.c:115 ../app/actions/layers-actions.c:135
 msgid "Merge all visible layers into one layer"
 msgstr "Alle sichtbaren Ebenen in einer Ebene vereinigen"
 
-#: ../app/actions/image-actions.c:122 ../app/actions/layers-actions.c:140
+#: ../app/actions/image-actions.c:120 ../app/actions/layers-actions.c:140
 msgid "_Flatten Image"
 msgstr "Bild z_usammenfügen"
 
-#: ../app/actions/image-actions.c:123 ../app/actions/layers-actions.c:141
+#: ../app/actions/image-actions.c:121 ../app/actions/layers-actions.c:141
 msgid "Merge all layers into one and remove transparency"
 msgstr "Alle Ebenen in einer vereinen und die Transparenz entfernen"
 
-#: ../app/actions/image-actions.c:128
+#: ../app/actions/image-actions.c:126
 msgid "Configure G_rid..."
 msgstr "_Raster konfigurieren …"
 
-#: ../app/actions/image-actions.c:129
+#: ../app/actions/image-actions.c:127
 msgid "Configure the grid for this image"
 msgstr "Das Raster für dieses Bild einstellen"
 
-#: ../app/actions/image-actions.c:134
+#: ../app/actions/image-actions.c:132
 msgid "Image Pr_operties"
 msgstr "Bild_eigenschaften"
 
-#: ../app/actions/image-actions.c:135
+#: ../app/actions/image-actions.c:133
 msgid "Display information about this image"
 msgstr "Bildinformationen anzeigen"
 
-#: ../app/actions/image-actions.c:144
+#: ../app/actions/image-actions.c:142
 msgid "Convert the image to the RGB colorspace"
 msgstr "Bild in den RGB-Farbraum umwandeln"
 
-#: ../app/actions/image-actions.c:148
+#: ../app/actions/image-actions.c:146
 msgid "_Grayscale"
 msgstr "_Graustufen"
 
-#: ../app/actions/image-actions.c:149
+#: ../app/actions/image-actions.c:147
 msgid "Convert the image to grayscale"
 msgstr "Bild in Graustufen umwandeln"
 
-#: ../app/actions/image-actions.c:153
+#: ../app/actions/image-actions.c:151
 msgid "_Indexed..."
 msgstr "I_ndiziert …"
 
-#: ../app/actions/image-actions.c:154
+#: ../app/actions/image-actions.c:152
 msgid "Convert the image to indexed colors"
 msgstr "Bild in indizierte Farben umwandeln"
 
-#: ../app/actions/image-actions.c:162
+#: ../app/actions/image-actions.c:160
 msgid "Flip image horizontally"
 msgstr "Das Bild horizontal spiegeln"
 
-#: ../app/actions/image-actions.c:168
+#: ../app/actions/image-actions.c:166
 msgid "Flip image vertically"
 msgstr "Das Bild vertikal spiegeln"
 
-#: ../app/actions/image-actions.c:177
+#: ../app/actions/image-actions.c:175
 msgid "Rotate the image 90 degrees to the right"
 msgstr "Das Bild um 90 Grad nach rechts drehen"
 
-#: ../app/actions/image-actions.c:183
+#: ../app/actions/image-actions.c:181
 msgid "Turn the image upside-down"
 msgstr "Das Bild auf den Kopf stellen"
 
-#: ../app/actions/image-actions.c:189
+#: ../app/actions/image-actions.c:187
 msgid "Rotate the image 90 degrees to the left"
 msgstr "Das Bild um 90 Grad nach links drehen"
 
@@ -3273,65 +3269,69 @@ msgstr "Ver_zerren"
 msgid "_Artistic"
 msgstr "_Künstlerisch"
 
-#: ../app/actions/plug-in-actions.c:95
+#: ../app/actions/plug-in-actions.c:94
+msgid "_Decor"
+msgstr "_Dekor"
+
+#: ../app/actions/plug-in-actions.c:96
 msgid "_Render"
 msgstr "_Render"
 
-#: ../app/actions/plug-in-actions.c:96
+#: ../app/actions/plug-in-actions.c:97
 msgid "_Clouds"
 msgstr "_Wolken"
 
-#: ../app/actions/plug-in-actions.c:97
+#: ../app/actions/plug-in-actions.c:98
 msgid "_Nature"
 msgstr "_Natur"
 
-#: ../app/actions/plug-in-actions.c:99
+#: ../app/actions/plug-in-actions.c:100
 msgid "_Web"
 msgstr "_Web"
 
-#: ../app/actions/plug-in-actions.c:100
+#: ../app/actions/plug-in-actions.c:101
 msgid "An_imation"
 msgstr "A_nimation"
 
-#: ../app/actions/plug-in-actions.c:103
+#: ../app/actions/plug-in-actions.c:104
 msgid "Reset all _Filters"
 msgstr "Alle _Filter zurücksetzen"
 
-#: ../app/actions/plug-in-actions.c:104
+#: ../app/actions/plug-in-actions.c:105
 msgid "Reset all plug-ins to their default settings"
 msgstr "Die Einstellungen aller Plugins auf die Standardwerte zurücksetzen"
 
-#: ../app/actions/plug-in-actions.c:112
+#: ../app/actions/plug-in-actions.c:113
 msgid "Re_peat Last"
 msgstr "Letzte Aktion _wiederholen"
 
-#: ../app/actions/plug-in-actions.c:113
+#: ../app/actions/plug-in-actions.c:114
 msgid "Rerun the last used plug-in using the same settings"
 msgstr "Das Plugin mit gleichen Einstellungen erneut ausführen"
 
-#: ../app/actions/plug-in-actions.c:118
+#: ../app/actions/plug-in-actions.c:119
 msgid "R_e-Show Last"
 msgstr "_Letzte Aktion anzeigen"
 
-#: ../app/actions/plug-in-actions.c:119
+#: ../app/actions/plug-in-actions.c:120
 msgid "Show the last used plug-in dialog again"
 msgstr "Das Dialogfenster des zuletzt genutzten Plugins erneut anzeigen"
 
-#: ../app/actions/plug-in-actions.c:502
+#: ../app/actions/plug-in-actions.c:503
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "»%s« _wiederholen"
 
-#: ../app/actions/plug-in-actions.c:503
+#: ../app/actions/plug-in-actions.c:504
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "»%s« _erneut anzeigen"
 
-#: ../app/actions/plug-in-actions.c:517
+#: ../app/actions/plug-in-actions.c:518
 msgid "Repeat Last"
 msgstr "Letzte Aktion wiederholen"
 
-#: ../app/actions/plug-in-actions.c:519
+#: ../app/actions/plug-in-actions.c:520
 msgid "Re-Show Last"
 msgstr "Letzte Aktion erneut anzeigen"
 
@@ -5614,12 +5614,12 @@ msgid "Reposition path"
 msgstr "Pfad verschieben"
 
 #: ../app/core/core-enums.c:924
-msgid "FS rigor"
-msgstr "FS Starre"
+msgid "Rigor floating selection"
+msgstr "Schwebende Auswahl sichern"
 
 #: ../app/core/core-enums.c:925
-msgid "FS relax"
-msgstr "FS Locker"
+msgid "Relax floating selection"
+msgstr "Schwebende Auswahl wiederherstellen"
 
 #: ../app/core/core-enums.c:928 ../app/paint/gimpink.c:95
 #: ../app/tools/gimpinktool.c:55
@@ -5631,8 +5631,8 @@ msgid "Select foreground"
 msgstr "Vordergrund auswählen"
 
 #: ../app/core/core-enums.c:932
-msgid "EEK: can't undo"
-msgstr "ACHTUNG: Konnte nicht rückgängig gemacht werden"
+msgid "Not undoable"
+msgstr "Kann nicht rückgängig gemacht werden"
 
 #: ../app/core/core-enums.c:1196
 msgid "Composite"
@@ -7000,7 +7000,8 @@ msgstr "Rasterung für _Transparenz aktivieren"
 msgid "Converting to indexed colors"
 msgstr "Bild wird in indizierte Farben umgewandelt"
 
-#: ../app/dialogs/convert-dialog.c:414
+#: ../app/dialogs/convert-dialog.c:414 ../app/pdb/convert-cmds.c:148
+#, c-format
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr ""
 "Es kann nicht in eine Palette mit mehr als 256 Farben umwandelt werden."
@@ -7279,7 +7280,7 @@ msgstr "Eine Maske zur Ebene hinzufügen"
 msgid "Initialize Layer Mask to:"
 msgstr "Ebenenmaske initialisieren nach:"
 
-#: ../app/dialogs/layer-add-mask-dialog.c:140
+#: ../app/dialogs/layer-add-mask-dialog.c:138
 msgid "In_vert mask"
 msgstr "Maske in_vertieren"
 
@@ -8913,18 +8914,14 @@ msgstr ""
 "keine schwebende Auswahl ist."
 
 #: ../app/pdb/floating-sel-cmds.c:184
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot rigor this layer because it is not a floating selection."
-msgstr ""
-"Diese Ebene konnte nicht verankert werden, da sie keine schwebende Auswahl "
-"ist."
+msgstr "Diese Ebene konnte nicht gesichert werden, da sie keine schwebende Auswahl ist."
 
 #: ../app/pdb/floating-sel-cmds.c:217
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot relax this layer because it is not a floating selection."
-msgstr ""
-"Diese Ebene konnte nicht verankert werden, da sie keine schwebende Auswahl "
-"ist."
+msgstr "Diese Ebene konnte nicht wiederhergestellt werden, da sie keine schwebende Auswahl ist."
 
 #: ../app/pdb/gimppdb-query.c:300
 #, c-format
@@ -9161,6 +9158,21 @@ msgstr ""
 msgid "Free Select"
 msgstr "Freie Auswahl"
 
+#: ../app/pdb/text-layer-cmds.c:90
+#, c-format
+msgid "Failed to create text layer"
+msgstr "Fehler beim Erstellen der Textebene"
+
+#: ../app/pdb/text-layer-cmds.c:161 ../app/pdb/text-layer-cmds.c:231
+#: ../app/pdb/text-layer-cmds.c:308 ../app/pdb/text-layer-cmds.c:386
+#: ../app/pdb/text-layer-cmds.c:457 ../app/pdb/text-layer-cmds.c:527
+#: ../app/pdb/text-layer-cmds.c:597 ../app/pdb/text-layer-cmds.c:667
+#: ../app/pdb/text-layer-cmds.c:737 ../app/pdb/text-layer-cmds.c:805
+#: ../app/pdb/text-layer-cmds.c:875 ../app/pdb/text-layer-cmds.c:945
+#: ../app/pdb/text-layer-cmds.c:1015
+msgid "Set text layer attribute"
+msgstr "Eigenschaften der Textebene setzen"
+
 #: ../app/plug-in/gimpenvirontable.c:282
 #, c-format
 msgid "Empty variable name in environment file %s"
@@ -9273,7 +9285,7 @@ msgstr ""
 "Franz jagt im komplett verwahrlosten\n"
 "Taxi quer durch Bayern. 012345689"
 
-#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:872
+#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:873
 msgid "Add Text Layer"
 msgstr "Textebene hinzufügen"
 
@@ -10822,7 +10834,7 @@ msgstr "Rechteckige Auswahl: Einen rechteckigen Bereich auswählen"
 msgid "_Rectangle Select"
 msgstr "_Rechteckige Auswahl"
 
-#: ../app/tools/gimprectangletool.c:1068 ../app/tools/gimprectangletool.c:1943
+#: ../app/tools/gimprectangletool.c:1073 ../app/tools/gimprectangletool.c:1948
 msgid "Rectangle: "
 msgstr "Rechteck: "
 
@@ -11040,15 +11052,15 @@ msgstr "Text: Eine Ebene mit Text anlegen oder bearbeiten"
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: ../app/tools/gimptexttool.c:949
+#: ../app/tools/gimptexttool.c:950
 msgid "GIMP Text Editor"
 msgstr "GIMP-Texteditor"
 
-#: ../app/tools/gimptexttool.c:1060 ../app/tools/gimptexttool.c:1063
+#: ../app/tools/gimptexttool.c:1061 ../app/tools/gimptexttool.c:1064
 msgid "Confirm Text Editing"
 msgstr "Textbearbeitung bestätigen"
 
-#: ../app/tools/gimptexttool.c:1092
+#: ../app/tools/gimptexttool.c:1093
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -11063,7 +11075,7 @@ msgstr ""
 "Sie können die Ebene bearbeiten oder eine neue Text-Ebene mit denselben "
 "Textattributen erstellen."
 
-#: ../app/tools/gimptexttool.c:1303
+#: ../app/tools/gimptexttool.c:1304
 msgid "Reshape Text Layer"
 msgstr "Textebene umgestalten"
 
@@ -12413,11 +12425,11 @@ msgstr "%d × %d PPI, %s"
 msgid "%d ppi, %s"
 msgstr "%d PPI, %s"
 
-#: ../app/widgets/gimptexteditor.c:185
+#: ../app/widgets/gimptexteditor.c:188
 msgid "_Language:"
 msgstr "S_prache:"
 
-#: ../app/widgets/gimptexteditor.c:230
+#: ../app/widgets/gimptexteditor.c:234
 msgid "_Use selected font"
 msgstr "Ausgewählte _Schriftart verwenden"
 
@@ -12798,20 +12810,3 @@ msgstr "Bitte stellen Sie sicher, dass der Werkzeugkasten sichtbar ist!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "»%s« konnte nicht gestartet werden: %s"
-
-#~ msgid ""
-#~ "If you don't save the image, changes from the last hour will be lost.If "
-#~ "you don't save the image, changes from the last %d hours will be lost."
-#~ msgstr ""
-#~ "Wenn Sie das Bilder nicht speichern, gehen die Änderungen der letzten "
-#~ "Stunde verloren.Wenn Sie das Bilder nicht speichern, gehen die Änderungen "
-#~ "der letzten %d Stunden verloren."
-
-#~ msgid ""
-#~ "If you don't save the image, changes from the last hour and %d minute "
-#~ "will be lost.If you don't save the image, changes from the last hour and %"
-#~ "d minutes will be lost."
-#~ msgstr ""
-#~ "Wenn Sie das Bild nicht speichern, gehen die Änderungen der letzten "
-#~ "Stunde und eine Minute verloren.Wenn Sie das Bild nicht speichern, gehen "
-#~ "die Änderungen der letzten Stunde und %d Minuten verloren."
