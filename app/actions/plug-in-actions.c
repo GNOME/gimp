@@ -91,6 +91,7 @@ static const GimpActionEntry plug_in_actions[] =
   { "plug-in-light-shadow-menu",      NULL, N_("_Light and Shadow") },
   { "plug-in-distorts-menu",          NULL, N_("_Distorts")         },
   { "plug-in-artistic-menu",          NULL, N_("_Artistic")         },
+  { "plug-in-decor-menu",             NULL, N_("_Decor")            },
   { "plug-in-map-menu",               NULL, N_("_Map")              },
   { "plug-in-render-menu",            NULL, N_("_Render")           },
   { "plug-in-render-clouds-menu",     NULL, N_("_Clouds")           },

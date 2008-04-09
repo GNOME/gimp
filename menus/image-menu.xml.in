@@ -572,9 +572,6 @@
       </menu>
       <menuitem action="plug-in-reset-all" />
       <separator />
-      <placeholder name="Languages" />
-      <placeholder name="Extensions" />
-      <separator />
       <menu action="plug-in-blur-menu" name="Blur" />
       <menu action="plug-in-enhance-menu" name="Enhance" />
       <menu action="plug-in-distorts-menu" name="Distorts" />
@@ -589,8 +586,8 @@
       <menu action="plug-in-edge-detect-menu" name="Edge-Detect" />
       <menu action="plug-in-generic-menu" name="Generic" />
       <menu action="plug-in-combine-menu" name="Combine" />
-      <separator />
       <menu action="plug-in-artistic-menu" name="Artistic" />
+      <menu action="plug-in-decor-menu" name="Decor" />
       <menu action="plug-in-map-menu" name="Map" />
       <menu action="plug-in-render-menu" name="Render">
 	<menu action="plug-in-render-clouds-menu" name="Clouds" />
@@ -603,6 +600,9 @@
         <placeholder name="Animators" />
 	<separator />
       </menu>
+      <separator />
+      <placeholder name="Languages" />
+      <placeholder name="Extensions" />
       <separator />
     </menu>
 

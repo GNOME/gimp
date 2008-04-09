@@ -326,28 +326,6 @@ script_fu_extension_init (void)
 
   gimp_plugin_menu_branch_register ("<Image>/Filters",
                                     N_("Alpha to _Logo"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters",
-                                    N_("An_imation"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters/Animation",
-                                    N_("_Animators"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters",
-                                    N_("_Artistic"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters",
-                                    N_("_Blur"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters",
-                                    N_("_Decor"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters",
-                                    N_("_Effects"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters",
-                                    N_("En_hance"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters",
-                                    N_("_Light and Shadow"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters/Light and Shadow",
-                                    N_("S_hadow"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters",
-                                    N_("_Render"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters/Effects",
-                                    N_("_Alchemy"));
 
   gimp_install_temp_proc ("script-fu-refresh",
                           N_("Re-read all available Script-Fu scripts"),
