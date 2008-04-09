@@ -114,6 +114,8 @@ GimpObject * gimp_container_get_child_by_name  (const GimpContainer *container,
                                                 const gchar         *name);
 GimpObject * gimp_container_get_child_by_index (const GimpContainer *container,
                                                 gint                 index);
+GimpObject * gimp_container_get_first_child    (const GimpContainer *container);
+GimpObject * gimp_container_get_last_child     (const GimpContainer *container);
 gint         gimp_container_get_child_index    (const GimpContainer *container,
                                                 const GimpObject    *object);
 

@@ -335,8 +335,9 @@ file_actions_close_all_update (GimpContainer   *images,
 
   if (n_displays == 1)
     {
-      GimpDisplay *display = (GimpDisplay *)
-        gimp_container_get_child_by_index (container, 0);
+      GimpDisplay *display;
+
+      display = GIMP_DISPLAY (gimp_container_get_first_child (container));
 
       if (! display->image)
         sensitive = FALSE;

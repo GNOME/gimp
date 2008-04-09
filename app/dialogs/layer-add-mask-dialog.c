@@ -130,9 +130,7 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
   channel = gimp_image_get_active_channel (GIMP_ITEM (layer)->image);
 
   if (! channel)
-    channel = GIMP_CHANNEL
-      (gimp_container_get_child_by_index (GIMP_ITEM (layer)->image->channels,
-                                          0));
+    channel = GIMP_CHANNEL (gimp_container_get_first_child (GIMP_ITEM (layer)->image->channels));
 
   gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo),
                                    GIMP_VIEWABLE (channel));

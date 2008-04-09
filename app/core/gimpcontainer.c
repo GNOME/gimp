@@ -783,6 +783,44 @@ gimp_container_get_child_by_index (const GimpContainer *container,
                                                                    index);
 }
 
+/**
+ * gimp_container_get_first_child:
+ * @container: a #GimpContainer
+ *
+ * Return value: the first child object stored in @container or %NULL if the
+ *               container is empty
+ */
+GimpObject *
+gimp_container_get_first_child (const GimpContainer *container)
+{
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+
+  if (container->num_children > 0)
+    return GIMP_CONTAINER_GET_CLASS (container)->get_child_by_index (container,
+                                                                     0);
+
+  return NULL;
+}
+
+/**
+ * gimp_container_get_last_child:
+ * @container: a #GimpContainer
+ *
+ * Return value: the last child object stored in @container or %NULL if the
+ *               container is empty
+ */
+GimpObject *
+gimp_container_get_last_child (const GimpContainer *container)
+{
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+
+  if (container->num_children > 0)
+    return GIMP_CONTAINER_GET_CLASS (container)->get_child_by_index (container,
+                                                                     container->num_children - 1);
+
+  return NULL;
+}
+
 gint
 gimp_container_get_child_index (const GimpContainer *container,
                                 const GimpObject    *object)

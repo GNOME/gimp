@@ -1,5 +1,20 @@
 2008-04-09  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpcontainer.[ch]: added new methods
+	gimp_container_get_{first,last}_child().
+
+	* app/actions/file-actions.c (file_actions_close_all_update)
+	* app/dialogs/layer-add-mask-dialog.c (layer_add_mask_dialog_new)
+	* app/dialogs/palette-import-dialog.c (palette_import_image_callback)
+	* app/gui/gui-vtable.c (gui_get_empty_display): 
+	* app/widgets/gimpmenudock.c (gimp_menu_dock_image_changed): use
+	the new GimpContainer methods.
+
+	* app/core/gimpundostack.c: use the new GimpContainer methods and
+	cleaned up the code.
+
+2008-04-09  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/Makefile.am
 	* plug-ins/script-fu/scripts/sphere.scm: removed Sphere
 	script. It's a nice simple example but it has no real value.

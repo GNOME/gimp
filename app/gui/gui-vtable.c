@@ -283,7 +283,7 @@ gui_get_empty_display (Gimp *gimp)
 
   if (gimp_container_num_children (gimp->displays) == 1)
     {
-      display = gimp_container_get_child_by_index (gimp->displays, 0);
+      display = gimp_container_get_first_child (gimp->displays);
 
       if (GIMP_DISPLAY (display)->image)
         {

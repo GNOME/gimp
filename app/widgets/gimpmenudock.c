@@ -558,21 +558,17 @@ gimp_menu_dock_image_changed (GimpContext *context,
 
   if (image == NULL && ! gimp_container_is_empty (image_container))
     {
-      image = GIMP_IMAGE (gimp_container_get_child_by_index (image_container,
-                                                             0));
+      image = GIMP_IMAGE (gimp_container_get_first_child (image_container));
 
-      if (image)
-        {
-          /*  this invokes this function recursively but we don't enter
-           *  the if() branch the second time
-           */
-          gimp_context_set_image (context, image);
+      /*  this invokes this function recursively but we don't enter
+       *  the if() branch the second time
+       */
+      gimp_context_set_image (context, image);
 
-          /*  stop the emission of the original signal (the emission of
-           *  the recursive signal is finished)
-           */
-          g_signal_stop_emission_by_name (context, "image-changed");
-        }
+      /*  stop the emission of the original signal (the emission of
+       *  the recursive signal is finished)
+       */
+      g_signal_stop_emission_by_name (context, "image-changed");
     }
   else if (image != NULL && ! gimp_container_is_empty (display_container))
     {

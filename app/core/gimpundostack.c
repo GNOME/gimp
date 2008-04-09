@@ -128,9 +128,7 @@ gimp_undo_stack_free (GimpUndo     *undo,
       g_object_unref (child);
     }
 
-  while (GIMP_LIST (stack->undos)->list)
-    gimp_container_remove (GIMP_CONTAINER (stack->undos),
-                           GIMP_LIST (stack->undos)->list->data);
+  gimp_container_clear (stack->undos);
 }
 
 GimpUndoStack *
@@ -150,7 +148,7 @@ gimp_undo_stack_push_undo (GimpUndoStack *stack,
   g_return_if_fail (GIMP_IS_UNDO_STACK (stack));
   g_return_if_fail (GIMP_IS_UNDO (undo));
 
-  gimp_container_add (GIMP_CONTAINER (stack->undos), GIMP_OBJECT (undo));
+  gimp_container_add (stack->undos, GIMP_OBJECT (undo));
 }
 
 GimpUndo *
@@ -163,12 +161,11 @@ gimp_undo_stack_pop_undo (GimpUndoStack       *stack,
   g_return_val_if_fail (GIMP_IS_UNDO_STACK (stack), NULL);
   g_return_val_if_fail (accum != NULL, NULL);
 
-  undo = (GimpUndo *)
-    gimp_container_get_child_by_index (GIMP_CONTAINER (stack->undos), 0);
+  undo = GIMP_UNDO (gimp_container_get_first_child (stack->undos));
 
   if (undo)
     {
-      gimp_container_remove (GIMP_CONTAINER (stack->undos), GIMP_OBJECT (undo));
+      gimp_container_remove (stack->undos, GIMP_OBJECT (undo));
       gimp_undo_pop (undo, undo_mode, accum);
 
       return undo;
@@ -182,19 +179,14 @@ gimp_undo_stack_free_bottom (GimpUndoStack *stack,
                              GimpUndoMode   undo_mode)
 {
   GimpUndo *undo;
-  gint      n_children;
 
   g_return_val_if_fail (GIMP_IS_UNDO_STACK (stack), NULL);
 
-  n_children = gimp_container_num_children (GIMP_CONTAINER (stack->undos));
-
-  undo = (GimpUndo *)
-    gimp_container_get_child_by_index (GIMP_CONTAINER (stack->undos),
-                                       n_children - 1);
+  undo = GIMP_UNDO (gimp_container_get_last_child (stack->undos));
 
   if (undo)
     {
-      gimp_container_remove (GIMP_CONTAINER (stack->undos), GIMP_OBJECT (undo));
+      gimp_container_remove (stack->undos, GIMP_OBJECT (undo));
       gimp_undo_free (undo, undo_mode);
 
       return undo;
@@ -206,13 +198,9 @@ gimp_undo_stack_free_bottom (GimpUndoStack *stack,
 GimpUndo *
 gimp_undo_stack_peek (GimpUndoStack *stack)
 {
-  GimpObject *object;
-
   g_return_val_if_fail (GIMP_IS_UNDO_STACK (stack), NULL);
 
-  object = gimp_container_get_child_by_index (GIMP_CONTAINER (stack->undos), 0);
-
-  return (object ? GIMP_UNDO (object) : NULL);
+  return GIMP_UNDO (gimp_container_get_first_child (stack->undos));
 }
 
 gint

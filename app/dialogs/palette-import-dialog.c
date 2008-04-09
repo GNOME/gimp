@@ -678,8 +678,11 @@ palette_import_image_callback (GtkWidget    *widget,
   image = gimp_context_get_image (dialog->context);
 
   if (! image)
-    image = (GimpImage *)
-      gimp_container_get_child_by_index (dialog->context->gimp->images, 0);
+    {
+      GimpContainer *images = dialog->context->gimp->images;
+
+      image = GIMP_IMAGE (gimp_container_get_first_child (images));
+    }
 
   palette_import_set_sensitive (dialog);
 
