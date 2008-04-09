@@ -21,7 +21,10 @@ Core:
  - cleaner and smaller tool options
  - enable brush scaling for the Smudge tool
  - added debugging framework that can be enabled at run-time
- - optional GEGL processing for color tools
+ - depend on GEGL and use it optionally in some color operations
+ - optional GEGL processing for all color tools
+ - add proper settings objects for all color tools
+ - add list of recently used settings to all color tools
  - added experimental GEGL tool to use arbitrary GEGL operations
  - event filtering and smoothing for better paint tool performance
  - added motion constraints in the Move Tool
