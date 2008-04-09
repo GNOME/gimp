@@ -5,24 +5,24 @@
 # Felix Natter <fnatter@gmx.net>
 # Jens Seidel <jseidel@cvs.gnome.org>
 # Roman Joost <romanofski@gimp.org>, 2004-2005.
-# Sven Neumann <sven@gimp.org>, 2004.
+# Sven Neumann <sven@gimp.org>, 2004-2008.
 # Hendrik Brandt <heb@gnome-de.org>, 2004-2008.
 # Ulf-D. Ehlert <ulfehlert@svn.gnome.org>, 2007.
 # Ulf-D. Ehlert <ulfehlert@svn.gnome.org>, 2008.
-# 
-# 
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-04 12:12+0100\n"
+"POT-Creation-Date: 2008-04-09 11:06+0200\n"
 "PO-Revision-Date: 2008-03-04 12:13+0100\n"
-"Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
+"Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:133
 #: ../plug-ins/script-fu/script-fu-console.c:200
@@ -112,7 +112,11 @@ msgstr "Skript-Fu-Farbverlaufsauswahl"
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-Fu-Pinselauswahl"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:658
+#: ../plug-ins/script-fu/script-fu-scripts.c:148
+msgid "Too few arguments to 'script-fu-register' call"
+msgstr "Zu wenig Argumente für Aufruf von »script-fu-register«"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:663
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -178,94 +182,46 @@ msgid "_Logos"
 msgstr "_Logos"
 
 #: ../plug-ins/script-fu/script-fu.c:311
-msgid "_Misc"
-msgstr "_Verschiedenes"
-
-#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Patterns"
 msgstr "_Muster"
 
-#: ../plug-ins/script-fu/script-fu.c:315
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:317
+#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Utilities"
 msgstr "_Werkzeuge"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Web Page Themes"
 msgstr "_Internet-Seiten-Designs"
 
-#: ../plug-ins/script-fu/script-fu.c:321
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Alien Glow"
 msgstr "_Alien-Glow"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Beveled Pattern"
 msgstr "A_bgeschrägt, gemustert"
 
-#: ../plug-ins/script-fu/script-fu.c:325
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:328
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
 msgstr "Alpha als _Logo"
 
-#: ../plug-ins/script-fu/script-fu.c:330
-msgid "An_imation"
-msgstr "An_imation"
-
-#: ../plug-ins/script-fu/script-fu.c:332
-msgid "_Animators"
-msgstr "_Animatoren"
-
-#: ../plug-ins/script-fu/script-fu.c:334
-msgid "_Artistic"
-msgstr "_Künstlerisch"
-
-#: ../plug-ins/script-fu/script-fu.c:336
-msgid "_Blur"
-msgstr "_Weichzeichnen"
-
-#: ../plug-ins/script-fu/script-fu.c:338
-msgid "_Decor"
-msgstr "_Dekoration"
-
-#: ../plug-ins/script-fu/script-fu.c:340
-msgid "_Effects"
-msgstr "_Effekte"
-
-#: ../plug-ins/script-fu/script-fu.c:342
-msgid "En_hance"
-msgstr "Er_weitern"
-
-#: ../plug-ins/script-fu/script-fu.c:344
-msgid "_Light and Shadow"
-msgstr "_Licht und Schatten"
-
-#: ../plug-ins/script-fu/script-fu.c:346
-msgid "S_hadow"
-msgstr "Sc_hatten"
-
-#: ../plug-ins/script-fu/script-fu.c:348
-msgid "_Render"
-msgstr "_Rendern"
-
-#: ../plug-ins/script-fu/script-fu.c:350
-msgid "_Alchemy"
-msgstr "_Zauberei"
-
-#: ../plug-ins/script-fu/script-fu.c:353
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Alle verfügbaren Skript-Fu-Skripte neu einlesen"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Refresh Scripts"
 msgstr "Skripte _auffrischen"
 
-#: ../plug-ins/script-fu/script-fu.c:381
+#: ../plug-ins/script-fu/script-fu.c:357
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -474,7 +430,6 @@ msgstr "3-_D-Truchet …"
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:1
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
@@ -1755,7 +1710,6 @@ msgid "Pattern (text)"
 msgstr "Muster (Text)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:15
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "Schatten"
 
@@ -2397,26 +2351,6 @@ msgstr "Ein Logo mit einem schnellen Texteffekt erstellen"
 msgid "Speed Text..."
 msgstr "Schneller Text …"
 
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:2
-msgid "Create a simple sphere with a drop shadow"
-msgstr "Erzeugt eine einfache Kugel mit einem Schlagschatten"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:3
-msgid "Lighting (degrees)"
-msgstr "Beleuchtung (Grad)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:4
-msgid "Radius (pixels)"
-msgstr "Radius (Pixel)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:6
-msgid "Sphere color"
-msgstr "Kugelfarbe"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:7
-msgid "_Sphere..."
-msgstr "_Kugel …"
-
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr ""
@@ -2957,4 +2891,3 @@ msgstr "Glanzlichtdeckkraft"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-Effekt …"
-
