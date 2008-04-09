@@ -660,8 +660,7 @@ void
 script_fu_error_msg (const gchar *command,
                      const gchar *msg)
 {
-  g_message (_("Error while executing\n%s\n\n%s"),
-             command, msg);
+  g_message (_("Error while executing\n%s\n\n%s"), command, msg);
 }
 
 

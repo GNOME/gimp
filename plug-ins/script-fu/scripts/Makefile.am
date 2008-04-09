@@ -88,7 +88,6 @@ scripts = \
 	slide.scm			\
 	sota-chrome-logo.scm		\
 	speed-text.scm			\
-	sphere.scm			\
 	spinning-globe.scm		\
 	spyrogimp.scm			\
 	starburst-logo.scm		\

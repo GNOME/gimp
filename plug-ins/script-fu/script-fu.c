@@ -308,8 +308,6 @@ script_fu_extension_init (void)
   gimp_plugin_menu_branch_register ("<Toolbox>/Xtns",
                                     N_("_Logos"));
   gimp_plugin_menu_branch_register ("<Toolbox>/Xtns",
-                                    N_("_Misc"));
-  gimp_plugin_menu_branch_register ("<Toolbox>/Xtns",
                                     N_("_Patterns"));
   gimp_plugin_menu_branch_register ("<Toolbox>/Xtns/Languages/Script-Fu",
                                     N_("_Test"));
