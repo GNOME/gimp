@@ -27,6 +27,16 @@ gimpvectors
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_vectors_new_from_text_layer ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@layer_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_vectors_is_valid ##### -->
 <para>
 

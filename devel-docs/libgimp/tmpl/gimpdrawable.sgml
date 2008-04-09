@@ -408,6 +408,15 @@ Functions to manipulate drawables.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_drawable_is_channel ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_drawable_is_layer ##### -->
 <para>
 
@@ -426,7 +435,7 @@ Functions to manipulate drawables.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_drawable_is_channel ##### -->
+<!-- ##### FUNCTION gimp_drawable_is_text_layer ##### -->
 <para>
 
 </para>

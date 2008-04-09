@@ -369,6 +369,14 @@ all other GIMP Library headers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_user_time ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_get_progname ##### -->
 <para>
 

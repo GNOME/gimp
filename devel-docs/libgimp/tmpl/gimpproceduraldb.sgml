@@ -26,25 +26,6 @@ Functions for querying and changing procedural database (PDB) entries.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_procedural_db_proc_info ##### -->
-<para>
-
-</para>
-
-@procedure: 
-@blurb: 
-@help: 
-@author: 
-@copyright: 
-@date: 
-@proc_type: 
-@num_args: 
-@num_values: 
-@args: 
-@return_vals: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_procedural_db_get_data ##### -->
 <para>
 
@@ -89,6 +70,34 @@ Functions for querying and changing procedural database (PDB) entries.
 @proc_type: 
 @num_matches: 
 @procedure_names: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_procedural_db_proc_exists ##### -->
+<para>
+
+</para>
+
+@procedure_name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_procedural_db_proc_info ##### -->
+<para>
+
+</para>
+
+@procedure: 
+@blurb: 
+@help: 
+@author: 
+@copyright: 
+@date: 
+@proc_type: 
+@num_args: 
+@num_values: 
+@args: 
+@return_vals: 
 @Returns: 
 
 

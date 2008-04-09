@@ -1,5 +1,17 @@
 2008-04-09  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/libgimp-sections.txt: added new symbols.
+
+	* libgimp/libgimp-docs.sgml
+	* libgimp/tmpl/gimptextlayer.sgml: added docs for new text layer API.
+
+	* libgimp/tmpl/gimp.sgml
+	* libgimp/tmpl/gimpdrawable.sgml
+	* libgimp/tmpl/gimpproceduraldb.sgml
+	* libgimp/tmpl/gimpvectors.sgml: regenerated.
+
+2008-04-09  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/libgimpwidgets-docs.sgml
 	* libgimpwidgets/libgimpwidgets-sections.txt
 	* libgimpwidgets/tmpl/gimpstock.sgml
