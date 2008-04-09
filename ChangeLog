@@ -1,5 +1,7 @@
 2008-04-09  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/border-average.c: corrected parameter description.
+
 	* plug-ins/pygimp/plug-ins/benchmark-foreground-extract.py
 	* plug-ins/pygimp/plug-ins/python-console.py
 	* plug-ins/pygimp/plug-ins/sphere.py: register in new menu locations.

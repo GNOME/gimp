@@ -92,7 +92,7 @@ query (void)
   };
   static const GimpParamDef return_vals[] =
   {
-    { GIMP_PDB_COLOR,    "borderaverage",   "Sends the average color of the specified border to the Toolbox foreground." },
+    { GIMP_PDB_COLOR,    "borderaverage",   "The average color of the specified border." },
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
