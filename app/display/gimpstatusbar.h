@@ -48,7 +48,8 @@ struct _GimpStatusbar
 
   guint             temp_context_id;
   guint             temp_timeout_id;
-  gchar            *temp_spaces;
+  gint              icon_width;
+  gchar            *icon_spaces;
 
   gchar             cursor_format_str[CURSOR_FORMAT_LENGTH];
   gchar             length_format_str[CURSOR_FORMAT_LENGTH];

@@ -262,8 +262,8 @@ gimp_statusbar_finalize (GObject *object)
   g_hash_table_destroy (statusbar->context_ids);
   statusbar->context_ids = NULL;
 
-  g_free (statusbar->temp_spaces);
-  statusbar->temp_spaces = NULL;
+  g_free (statusbar->icon_spaces);
+  statusbar->icon_spaces = NULL;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -483,17 +483,37 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
                                  const gchar         *domain,
                                  const gchar         *message)
 {
-  GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
+  GimpStatusbar *statusbar  = GIMP_STATUSBAR (progress);
+  PangoLayout   *layout;
+  gboolean       handle_msg = FALSE;
 
-  /*  we can handle only one-liners  */
-  if (strchr (message, '\n'))
-    return FALSE;
+  /*  we can only handle short one-liners  */
 
-  gimp_statusbar_push_temp (statusbar,
-                            gimp_get_message_stock_id (severity),
-                            "%s", message);
+  layout = gtk_widget_create_pango_layout (GTK_STATUSBAR (statusbar)->label,
+                                           message);
 
-  return TRUE;
+  if (pango_layout_get_line_count (layout) == 1)
+    {
+      gint width;
+
+      pango_layout_get_pixel_size (layout, &width, NULL);
+
+      width += statusbar->icon_width;
+
+      if (width < GTK_STATUSBAR (statusbar)->label->allocation.width)
+        {
+          handle_msg = TRUE;
+        }
+    }
+
+  g_object_unref (layout);
+
+  if (handle_msg)
+    gimp_statusbar_push_temp (statusbar,
+                              gimp_get_message_stock_id (severity),
+                              "%s", message);
+
+  return handle_msg;
 }
 
 static void
@@ -538,7 +558,7 @@ gimp_statusbar_update (GimpStatusbar *statusbar)
 
   if (text && statusbar->temp_timeout_id)
     {
-      gchar *temp = g_strconcat (statusbar->temp_spaces, text, NULL);
+      gchar *temp = g_strconcat (statusbar->icon_spaces, text, NULL);
 
       gimp_statusbar_set_text (statusbar, temp);
       g_free (temp);
@@ -1108,14 +1128,16 @@ gimp_statusbar_label_style_set (GtkWidget     *widget,
     {
       n_spaces++;
 
-      statusbar->temp_spaces = g_realloc (statusbar->temp_spaces, n_spaces + 1);
+      statusbar->icon_spaces = g_realloc (statusbar->icon_spaces, n_spaces + 1);
 
-      memset (statusbar->temp_spaces, ' ', n_spaces);
-      statusbar->temp_spaces[n_spaces] = '\0';
+      memset (statusbar->icon_spaces, ' ', n_spaces);
+      statusbar->icon_spaces[n_spaces] = '\0';
 
-      pango_layout_set_text (layout, statusbar->temp_spaces, -1);
+      pango_layout_set_text (layout, statusbar->icon_spaces, -1);
       pango_layout_get_pixel_size (layout, &layout_width, NULL);
     }
+
+  statusbar->icon_width = layout_width;
 
   g_object_unref (layout);
   g_object_unref (pixbuf);
