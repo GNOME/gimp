@@ -9,7 +9,8 @@
 	improved the check if the message can be shown in the statusbar.
 	Do not show messages that don't fit into the given space.
 
-	* app/gui/gui-message.c: 
+	* app/gui/gui-message.c (gui_message_error_dialog): if there's
+	already an error dialog associated with a progress, then use it.
 
 2008-04-10  Michael Natterer  <mitch@gimp.org>
 
