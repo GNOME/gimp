@@ -423,17 +423,21 @@ script_fu_add_script (scheme  *sc,
                     g_strdup (sc->vptr->string_value (sc->vptr->pair_car (a)));
 
 #ifdef G_OS_WIN32
-                  /* Replace POSIX slashes with Win32 backslashes. This
-                   * is just so script-fus can be written with only
-                   * POSIX directory separators.
-                   */
-                  val = script->arg_defaults[i].sfa_file.filename;
-                  while (*val)
-                    {
-                      if (*val == '/')
-                        *val = G_DIR_SEPARATOR;
-                      val++;
-                    }
+                  {
+                    /* Replace POSIX slashes with Win32 backslashes. This
+                     * is just so script-fus can be written with only
+                     * POSIX directory separators.
+                     */
+                    gchar *filename = script->arg_defaults[i].sfa_file.filename;
+
+                    while (*filename)
+                      {
+                        if (*filename == '/')
+                          *filename = G_DIR_SEPARATOR;
+
+                        filename++;
+                      }
+                  }
 #endif
                   script->arg_values[i].sfa_file.filename =
                     g_strdup (script->arg_defaults[i].sfa_file.filename);
