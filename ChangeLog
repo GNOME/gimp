@@ -1,3 +1,8 @@
+2008-04-10  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/python-console.py
+	* plug-ins/script-fu/scripts/ts-helloworld.scm: fix new menu paths.
+
 2008-04-09  Sven Neumann  <sven@gimp.org>
 
 	* data/images/gimp-splash.png: flattened splash image.

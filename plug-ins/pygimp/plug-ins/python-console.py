@@ -225,7 +225,7 @@ register(
     [],
     [],
     do_console,
-    menu="<Image>/Filters/Languages/Python-Fu/Python-Fu",
+    menu="<Image>/Filters/Languages/Python-Fu",
     domain=("gimp20-python", gimp.locale_directory))
 
 main()
