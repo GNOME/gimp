@@ -1,5 +1,9 @@
 2008-04-09  Sven Neumann  <sven@gimp.org>
 
+	* data/images/gimp-splash.png: flattened splash image.
+
+2008-04-09  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: bumped version to 2.5.1.
 
 2008-04-09  Sven Neumann  <sven@gimp.org>
