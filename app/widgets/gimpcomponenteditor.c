@@ -34,6 +34,7 @@
 #include "gimpcellrendererviewable.h"
 #include "gimpcomponenteditor.h"
 #include "gimpdnd.h"
+#include "gimpdocked.h"
 #include "gimpmenufactory.h"
 #include "gimpviewrendererimage.h"
 #include "gimpwidgets-utils.h"
@@ -50,6 +51,11 @@ enum
   NUM_COLUMNS
 };
 
+
+static void gimp_component_editor_docked_iface_init (GimpDockedInterface *iface);
+
+static void gimp_component_editor_set_context       (GimpDocked          *docked,
+                                                     GimpContext         *context);
 
 static void gimp_component_editor_set_image         (GimpImageEditor     *editor,
                                                      GimpImage           *image);
@@ -86,10 +92,14 @@ static GimpImage * gimp_component_editor_drag_component (GtkWidget       *widget
                                                          gpointer         data);
 
 
-G_DEFINE_TYPE (GimpComponentEditor, gimp_component_editor,
-               GIMP_TYPE_IMAGE_EDITOR)
+G_DEFINE_TYPE_WITH_CODE (GimpComponentEditor, gimp_component_editor,
+                         GIMP_TYPE_IMAGE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_component_editor_docked_iface_init))
 
 #define parent_class gimp_component_editor_parent_class
+
+static GimpDockedInterface *parent_docked_iface = NULL;
 
 
 static void
@@ -167,6 +177,42 @@ gimp_component_editor_init (GimpComponentEditor *editor)
   gimp_dnd_component_source_add (GTK_WIDGET (editor->view),
                                  gimp_component_editor_drag_component,
                                  editor);
+}
+
+static void
+gimp_component_editor_docked_iface_init (GimpDockedInterface *iface)
+{
+  parent_docked_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
+  iface->set_context = gimp_component_editor_set_context;
+}
+
+static void
+gimp_component_editor_set_context (GimpDocked  *docked,
+                                   GimpContext *context)
+{
+  GimpComponentEditor *editor = GIMP_COMPONENT_EDITOR (docked);
+  GtkTreeIter          iter;
+  gboolean             iter_valid;
+
+  parent_docked_iface->set_context (docked, context);
+
+  for (iter_valid = gtk_tree_model_get_iter_first (editor->model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (editor->model, &iter))
+    {
+      GimpViewRenderer *renderer;
+
+      gtk_tree_model_get (editor->model, &iter,
+                          COLUMN_RENDERER, &renderer,
+                          -1);
+
+      gimp_view_renderer_set_context (renderer, context);
+      g_object_unref (renderer);
+    }
 }
 
 static void

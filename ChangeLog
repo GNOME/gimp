@@ -1,5 +1,12 @@
 2008-04-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcomponenteditor.c: implement
+	GimpDocked::set_context() and set the GimpViewRenderers'
+	contexts. Unclear how this could have been missed since it
+	warned badly about NULL contexts.
+
+2008-04-10  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/pygimp/plug-ins/python-console.py
 	* plug-ins/script-fu/scripts/ts-helloworld.scm: fix new menu paths.
 
