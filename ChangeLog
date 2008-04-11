@@ -1,5 +1,10 @@
 2008-04-11  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppropwidgets.c (gimp_prop_size_entry_new):
+	reduced spacing between entry and unit menu.
+
+2008-04-11  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptextoptions.c (gimp_text_options_gui): tweaked the
 	layout to save a few pixels.
 
