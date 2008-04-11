@@ -1,5 +1,11 @@
 2008-04-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-appearance.c
+	(gimp_display_shell_appearance_update): don't show the status
+	bar's resize grip in fullscreen mode.
+
+2008-04-11  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/print/print-preview.c: unset the move cursor in
 	GtkWidget::leave_notify_event() so it always gets unset when the
 	pointer leaves the widget.
