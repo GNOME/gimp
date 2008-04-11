@@ -73,42 +73,44 @@ struct _PrintPreviewClass
 };
 
 
-static void      print_preview_finalize             (GObject        *object);
+static void      print_preview_finalize             (GObject          *object);
 
-static void      print_preview_realize              (GtkWidget      *widget);
-static void      print_preview_unrealize            (GtkWidget      *widget);
-static void      print_preview_size_request         (GtkWidget      *widget,
-                                                     GtkRequisition *requisition);
-static void      print_preview_size_allocate        (GtkWidget      *widget,
-                                                     GtkAllocation  *allocation);
-static gboolean  print_preview_expose_event         (GtkWidget      *widget,
-                                                     GdkEventExpose *event);
-static gboolean  print_preview_button_press_event   (GtkWidget      *widget,
-                                                     GdkEventButton *event);
-static gboolean  print_preview_button_release_event (GtkWidget      *widget,
-                                                     GdkEventButton *event);
-static gboolean  print_preview_motion_notify_event  (GtkWidget      *widget,
-                                                     GdkEventMotion *event);
+static void      print_preview_realize              (GtkWidget        *widget);
+static void      print_preview_unrealize            (GtkWidget        *widget);
+static void      print_preview_size_request         (GtkWidget        *widget,
+                                                     GtkRequisition   *requisition);
+static void      print_preview_size_allocate        (GtkWidget        *widget,
+                                                     GtkAllocation    *allocation);
+static gboolean  print_preview_expose_event         (GtkWidget        *widget,
+                                                     GdkEventExpose   *event);
+static gboolean  print_preview_button_press_event   (GtkWidget        *widget,
+                                                     GdkEventButton   *event);
+static gboolean  print_preview_button_release_event (GtkWidget        *widget,
+                                                     GdkEventButton   *event);
+static gboolean  print_preview_motion_notify_event  (GtkWidget        *widget,
+                                                     GdkEventMotion   *event);
+static gboolean  print_preview_leave_notify_event   (GtkWidget        *widget,
+                                                     GdkEventCrossing *event);
 
-static gboolean  print_preview_is_inside            (PrintPreview   *preview,
-                                                     gdouble         x,
-                                                     gdouble         y);
-static void      print_preview_set_inside           (PrintPreview   *preview,
-                                                     gboolean        inside);
+static gboolean  print_preview_is_inside            (PrintPreview     *preview,
+                                                     gdouble           x,
+                                                     gdouble           y);
+static void      print_preview_set_inside           (PrintPreview     *preview,
+                                                     gboolean          inside);
 
-static gdouble   print_preview_get_scale            (PrintPreview   *preview);
+static gdouble   print_preview_get_scale            (PrintPreview     *preview);
 
-static void      print_preview_get_page_size        (PrintPreview   *preview,
-                                                     gdouble        *paper_width,
-                                                     gdouble        *paper_height);
-static void      print_preview_get_page_margins     (PrintPreview   *preview,
-                                                     gdouble        *left_margin,
-                                                     gdouble        *right_margin,
-                                                     gdouble        *top_margin,
-                                                     gdouble        *bottom_margin);
-static cairo_surface_t * print_preview_get_thumbnail (GimpDrawable  *drawable,
-                                                      gint           width,
-                                                      gint           height);
+static void      print_preview_get_page_size        (PrintPreview     *preview,
+                                                     gdouble          *paper_width,
+                                                     gdouble          *paper_height);
+static void      print_preview_get_page_margins     (PrintPreview     *preview,
+                                                     gdouble          *left_margin,
+                                                     gdouble          *right_margin,
+                                                     gdouble          *top_margin,
+                                                     gdouble          *bottom_margin);
+static cairo_surface_t * print_preview_get_thumbnail (GimpDrawable    *drawable,
+                                                      gint             width,
+                                                      gint             height);
 
 
 G_DEFINE_TYPE (PrintPreview, print_preview, GTK_TYPE_EVENT_BOX)
@@ -185,6 +187,7 @@ print_preview_class_init (PrintPreviewClass *klass)
   widget_class->button_press_event   = print_preview_button_press_event;
   widget_class->button_release_event = print_preview_button_release_event;
   widget_class->motion_notify_event  = print_preview_motion_notify_event;
+  widget_class->leave_notify_event   = print_preview_leave_notify_event;
 
   klass->offsets_changed = NULL;
 }
@@ -384,6 +387,17 @@ print_preview_motion_notify_event (GtkWidget      *widget,
                                 print_preview_is_inside (preview,
                                                          event->x, event->y));
     }
+
+  return FALSE;
+}
+
+static gboolean
+print_preview_leave_notify_event (GtkWidget        *widget,
+                                  GdkEventCrossing *event)
+{
+  PrintPreview *preview = PRINT_PREVIEW (widget);
+
+  print_preview_set_inside (preview, FALSE);
 
   return FALSE;
 }

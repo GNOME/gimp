@@ -1,3 +1,9 @@
+2008-04-11  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/print/print-preview.c: unset the move cursor in
+	GtkWidget::leave_notify_event() so it always gets unset when the
+	pointer leaves the widget.
+
 2008-04-10  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_add_script):
