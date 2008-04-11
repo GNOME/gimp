@@ -80,8 +80,9 @@ gimp_display_shell_appearance_update (GimpDisplayShell *shell)
 
   fullscreen = gimp_display_shell_get_fullscreen (shell);
 
-  gtk_widget_set_name (GTK_WIDGET (shell->menubar),
-                       fullscreen ? "gimp-menubar-fullscreen" : NULL);
+  if (shell->menubar)
+    gtk_widget_set_name (GTK_WIDGET (shell->menubar),
+                         fullscreen ? "gimp-menubar-fullscreen" : NULL);
 
   gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (shell->statusbar),
                                      ! fullscreen);

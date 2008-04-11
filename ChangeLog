@@ -1,3 +1,9 @@
+2008-04-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-appearance.c
+	(gimp_display_shell_appearance_update): don't call
+	gtk_widget_set_name() on a NULL menubar.
+
 2008-04-11  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppropwidgets.c (gimp_prop_size_entry_new):
