@@ -1,5 +1,10 @@
 2008-04-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_empty):
+	unfullscreen the window before doing anything else.
+
+2008-04-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-appearance.c
 	(gimp_display_shell_appearance_update): don't show the status
 	bar's resize grip in fullscreen mode.

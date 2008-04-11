@@ -1253,12 +1253,16 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
   g_return_if_fail (shell->display->image == NULL);
 
+  gtk_window_unfullscreen (GTK_WINDOW (shell));
+
   /*  get the NIW size before adding the display to the dialog factory
    *  so the window's current size doesn't affect the stored session
    *  info entry.
    */
-  session_info = gimp_dialog_factory_find_session_info (shell->display_factory,
-                                                        "gimp-empty-image-window");
+  session_info =
+    gimp_dialog_factory_find_session_info (shell->display_factory,
+                                           "gimp-empty-image-window");
+
   if (session_info)
     {
       width  = session_info->width;
