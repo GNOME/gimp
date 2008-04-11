@@ -409,10 +409,11 @@ gimp_text_options_connect_text (GimpTextOptions *options,
 GtkWidget *
 gimp_text_options_gui (GimpToolOptions *tool_options)
 {
-  GObject         *config  = G_OBJECT (tool_options);
-  GimpTextOptions *options = GIMP_TEXT_OPTIONS (tool_options);
-  GtkWidget       *vbox    = gimp_tool_options_gui (tool_options);
+  GObject         *config    = G_OBJECT (tool_options);
+  GimpTextOptions *options   = GIMP_TEXT_OPTIONS (tool_options);
+  GtkWidget       *main_vbox = gimp_tool_options_gui (tool_options);
   GtkWidget       *table;
+  GtkWidget       *vbox;
   GtkWidget       *hbox;
   GtkWidget       *button;
   GtkWidget       *auto_button;
@@ -422,10 +423,10 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkSizeGroup    *size_group;
   gint             row = 0;
 
-  table = gtk_table_new (10, 3, FALSE);
+  table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   hbox = gimp_prop_font_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
@@ -443,27 +444,33 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   options->size_entry = entry;
 
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
   button = gimp_prop_check_button_new (config, "hinting", _("Hinting"));
-  gtk_table_attach (GTK_TABLE (table), button, 0, 3, row, row + 1,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-  row++;
 
   auto_button = gimp_prop_check_button_new (config, "autohint",
                                             _("Force auto-hinter"));
-  gtk_table_attach (GTK_TABLE (table), auto_button, 0, 3, row, row + 1,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), auto_button, FALSE, FALSE, 0);
   gtk_widget_show (auto_button);
-  row++;
 
   gtk_widget_set_sensitive (auto_button, options->hinting);
   g_object_set_data (G_OBJECT (button), "set_sensitive", auto_button);
 
   button = gimp_prop_check_button_new (config, "antialias", _("Antialiasing"));
-  gtk_table_attach (GTK_TABLE (table), button, 0, 3, row, row + 1,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-  row++;
+
+  table = gtk_table_new (5, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  row = 0;
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -501,20 +508,20 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   /*  Create a path from the current text  */
   button = gtk_button_new_with_label (_("Path from Text"));
-  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
   gtk_widget_show (button);
 
   options->to_vectors_button = button;
 
   button = gtk_button_new_with_label (_("Text along Path"));
-  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
   gtk_widget_show (button);
 
   options->along_vectors_button = button;
 
-  return vbox;
+  return main_vbox;
 }
 
 static void

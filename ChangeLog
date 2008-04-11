@@ -1,3 +1,8 @@
+2008-04-11  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptextoptions.c (gimp_text_options_gui): tweaked the
+	layout to save a few pixels.
+
 2008-04-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_empty):
