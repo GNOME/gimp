@@ -47,8 +47,7 @@
 
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
-    (gimp-image-add-layer img pattern 1)
-    (gimp-image-add-layer img bg-layer 2)
+    (script-fu-util-image-add-layers img pattern bg-layer)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear pattern)
@@ -62,7 +61,7 @@
     (set! layer2 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     (plug-in-edge RUN-NONINTERACTIVE img layer2 2 1 0)
     (set! layer3 (car (gimp-layer-copy layer2 TRUE)))
-    (gimp-image-add-layer img layer3 2)
+    (script-fu-util-image-add-layers img layer3)
     (plug-in-gauss-iir RUN-NONINTERACTIVE img layer2 bump-map-blur-radius TRUE TRUE)
 
     (gimp-selection-all img)

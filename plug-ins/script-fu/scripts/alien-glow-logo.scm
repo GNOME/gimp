@@ -23,8 +23,7 @@
 
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
-    (gimp-image-add-layer img bg-layer 1)
-    (gimp-image-add-layer img glow-layer 1)
+    (script-fu-util-image-add-layers img glow-layer bg-layer)
     (gimp-layer-set-lock-alpha logo-layer TRUE)
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill bg-layer BACKGROUND-FILL)

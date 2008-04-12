@@ -31,3 +31,17 @@
   )
 )
 
+; Add the specified layers to the image.
+; The layers will be added in the given order below the
+; active layer.
+;
+(define (script-fu-util-image-add-layers image . layers)
+  (while (not (null? layers))
+    (let ((layer (car layers)))
+      (set! layers (cdr layers))
+      (gimp-image-add-layer image layer -1)
+      (gimp-image-lower-layer image layer)
+    )
+  )
+)
+

@@ -143,12 +143,11 @@
 	(set! shadow-shrink max_shrink))
 
     (script-fu-util-image-resize-from-layer img tube-layer)
-    (gimp-image-add-layer img bg-layer 1)
+    (script-fu-util-image-add-layers img glow-layer bg-layer)
     (if (not (= shadow 0))
         (begin
-          (gimp-image-add-layer img shadow-layer 1)
+          (gimp-image-add-layer img shadow-layer -1)
           (gimp-edit-clear shadow-layer)))
-    (gimp-image-add-layer img glow-layer 1)
 
     (gimp-context-set-background '(0 0 0))
     (gimp-selection-layer-alpha tube-layer)

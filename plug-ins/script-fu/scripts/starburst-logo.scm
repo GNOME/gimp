@@ -22,9 +22,8 @@
 
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
-    (gimp-image-add-layer img bg-layer 1)
-    (gimp-image-add-layer img shadow-layer 1)
-    (gimp-image-add-layer img burst-layer 0)
+    (script-fu-util-image-add-layers img burst-layer shadow-layer bg-layer)
+    (gimp-image-raise-layer img burst-layer)
     (gimp-layer-add-mask burst-layer layer-mask)
     (gimp-layer-set-lock-alpha logo-layer TRUE)
 

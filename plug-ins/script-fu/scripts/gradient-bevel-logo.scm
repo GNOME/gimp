@@ -37,8 +37,7 @@
     (gimp-context-push)
 
     (script-fu-util-image-resize-from-layer img logo-layer)
-    (gimp-image-add-layer img bg-layer 1)
-    (gimp-image-add-layer img blur-layer 1)
+    (script-fu-util-image-add-layers img blur-layer bg-layer)
 
     (gimp-selection-all img)
     (gimp-context-set-background bg-color)

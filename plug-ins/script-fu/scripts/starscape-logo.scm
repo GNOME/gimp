@@ -75,9 +75,7 @@
 
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
-    (gimp-image-add-layer img bg-layer 1)
-    (gimp-image-add-layer img glow-layer 1)
-    (gimp-image-add-layer img shadow-layer 1)
+    (script-fu-util-image-add-layers img shadow-layer glow-layer bg-layer)
     (gimp-image-add-channel img bump-channel 0)
     (gimp-layer-set-lock-alpha logo-layer TRUE)
 

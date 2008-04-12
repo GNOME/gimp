@@ -16,8 +16,7 @@
 
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
-    (gimp-image-add-layer img shadow-layer 1)
-    (gimp-image-add-layer img bg-layer 2)
+    (script-fu-util-image-add-layers img shadow-layer bg-layer)
     (gimp-context-set-foreground text-color)
     (gimp-layer-set-lock-alpha logo-layer TRUE)
     (gimp-edit-fill logo-layer FOREGROUND-FILL)

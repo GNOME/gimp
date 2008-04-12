@@ -56,7 +56,7 @@
     (gimp-context-push)
 
     (script-fu-util-image-resize-from-layer img logo-layer)
-    (gimp-image-add-layer img bg-layer 1)
+    (script-fu-util-image-add-layers img bump-layer bg-layer)
     (gimp-layer-set-lock-alpha logo-layer TRUE)
     (gimp-context-set-pattern pattern)
 
@@ -69,8 +69,6 @@
                                100 255 FALSE 1 1)
         (gimp-edit-fill bg-layer BACKGROUND-FILL)
     )
-
-    (gimp-image-add-layer img bump-layer 1)
 
     (gimp-selection-all img)
     (gimp-edit-clear bump-layer)
@@ -96,7 +94,8 @@
      (if (= drop-shadow TRUE)
         (begin
           (let* ((shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE "Shadow layer" 100 NORMAL-MODE))))
-            (gimp-image-add-layer img shadow-layer 1)
+            (gimp-image-set-active-layer img logo-layer)
+            (script-fu-util-image-add-layers img shadow-layer)
             (gimp-selection-all img)
             (gimp-edit-clear shadow-layer)
             (gimp-selection-none img)

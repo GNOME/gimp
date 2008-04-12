@@ -21,8 +21,7 @@
     (gimp-context-push)
 
     (script-fu-util-image-resize-from-layer img logo-layer)
-    (gimp-image-add-layer img bg-layer 1)
-    (gimp-image-add-layer img glow-layer 1)
+    (script-fu-util-image-add-layers img glow-layer bg-layer)
     (gimp-layer-translate glow-layer posx posy)
 
     (gimp-selection-none img)

@@ -48,8 +48,7 @@
     (gimp-context-push)
 
     (script-fu-util-image-resize-from-layer img logo-layer)
-    (gimp-image-add-layer img bg-layer 1)
-    (gimp-image-add-layer img bands-layer 1)
+    (script-fu-util-image-add-layers img bands-layer bg-layer)
     (gimp-selection-none img)
     (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)

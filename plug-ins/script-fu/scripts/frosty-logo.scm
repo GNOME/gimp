@@ -27,10 +27,7 @@
 
     (gimp-layer-add-mask logo-layer logo-layer-mask)
     (script-fu-util-image-resize-from-layer img shadow-layer)
-    (gimp-image-add-layer img sparkle-layer 2)
-    (gimp-image-add-layer img matte-layer 3)
-    (gimp-image-add-layer img shadow-layer 4)
-    (gimp-image-add-layer img bg-layer 5)
+    (script-fu-util-image-add-layers img sparkle-layer matte-layer shadow-layer bg-layer)
     (gimp-selection-none img)
     (gimp-edit-clear sparkle-layer)
     (gimp-edit-clear matte-layer)

@@ -35,9 +35,7 @@
 
     (gimp-selection-none img)
     (gimp-image-resize img img-width img-height posx posy)
-    (gimp-image-add-layer img bg-layer 1)
-    (gimp-image-add-layer img reflect-layer 1)
-    (gimp-image-add-layer img shadow-layer 1)
+    (script-fu-util-image-add-layers img shadow-layer reflect-layer bg-layer)
     (gimp-layer-set-lock-alpha logo-layer TRUE)
 
     (gimp-context-set-background bg-color)

@@ -40,11 +40,9 @@
     (gimp-context-push)
 
     (script-fu-util-image-resize-from-layer img logo-layer)
-    (gimp-image-add-layer img bg-layer 1)
-    (gimp-image-add-layer img white-layer 1)
+    (script-fu-util-image-add-layers img black-layer white-layer bg-layer)
     (gimp-layer-translate white-layer posx posy)
     (gimp-drawable-set-name white-layer "White")
-    (gimp-image-add-layer img black-layer 1)
     (gimp-layer-translate black-layer posx posy)
     (gimp-drawable-set-name black-layer "Black")
 

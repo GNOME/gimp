@@ -1,5 +1,32 @@
 2008-04-12  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* plug-ins/script-fu/scripts/3d-outline.scm
+	* plug-ins/script-fu/scripts/alien-glow-logo.scm
+	* plug-ins/script-fu/scripts/alien-neon-logo.scm
+	* plug-ins/script-fu/scripts/basic1-logo.scm
+	* plug-ins/script-fu/scripts/basic2-logo.scm
+	* plug-ins/script-fu/scripts/blended-logo.scm
+	* plug-ins/script-fu/scripts/bovinated-logo.scm
+	* plug-ins/script-fu/scripts/chalk.scm
+	* plug-ins/script-fu/scripts/chip-away.scm
+	* plug-ins/script-fu/scripts/chrome-logo.scm
+	* plug-ins/script-fu/scripts/comic-logo.scm
+	* plug-ins/script-fu/scripts/coolmetal-logo.scm
+	* plug-ins/script-fu/scripts/frosty-logo.scm
+	* plug-ins/script-fu/scripts/glossy.scm
+	* plug-ins/script-fu/scripts/glowing-logo.scm
+	* plug-ins/script-fu/scripts/gradient-bevel-logo.scm
+	* plug-ins/script-fu/scripts/neon-logo.scm
+	* plug-ins/script-fu/scripts/script-fu-util.scm
+	* plug-ins/script-fu/scripts/starburst-logo.scm
+	* plug-ins/script-fu/scripts/starscape-logo.scm
+	* plug-ins/script-fu/scripts/t-o-p-logo.scm
+	* plug-ins/script-fu/scripts/textured-logo.scm: Applied patch from
+	Ulf-D. Ehlert that makes the Alpha to Logo-filters more gracefully
+	handle images with many layers (bug #498480).
+
+2008-04-12  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/core/gimpimage-snap.c (gimp_image_snap_rectangle): Applied
 	patch from Mark Locascio that makes the center point of rectangles
 	snap (bug #527659).
