@@ -1018,9 +1018,18 @@ gimp_iscissors_tool_cursor_update (GimpTool        *tool,
   switch (iscissors->op)
     {
     case ISCISSORS_OP_SELECT:
-      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords,
-                                                     state, display);
-      return;
+      {
+        GimpSelectionOptions *options;
+
+        options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+
+        /* Do not overwrite the modifiers for add, subtract, intersect */
+        if(options->operation == GIMP_CHANNEL_OP_REPLACE)
+          {
+            modifier = GIMP_CURSOR_MODIFIER_SELECT;
+          }
+      }
+      break;
 
     case ISCISSORS_OP_MOVE_POINT:
       modifier = GIMP_CURSOR_MODIFIER_MOVE;
@@ -1042,10 +1051,19 @@ gimp_iscissors_tool_cursor_update (GimpTool        *tool,
       break;
     }
 
-  gimp_tool_set_cursor (tool, display,
-                        GIMP_CURSOR_MOUSE,
-                        GIMP_TOOL_CURSOR_ISCISSORS,
-                        modifier);
+
+  if (modifier != GIMP_CURSOR_MODIFIER_NONE)
+    {
+      gimp_tool_set_cursor (tool, display,
+                            GIMP_CURSOR_MOUSE,
+                            GIMP_TOOL_CURSOR_ISCISSORS,
+                            modifier);
+    }
+  else
+    {
+      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords,
+                                                     state, display);
+    }
 }
 
 static gboolean

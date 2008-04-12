@@ -158,6 +158,8 @@
 #include "cursors/xbm/modifier-pattern-mask.xbm"
 #include "cursors/xbm/modifier-join.xbm"
 #include "cursors/xbm/modifier-join-mask.xbm"
+#include "cursors/xbm/modifier-select.xbm"
+#include "cursors/xbm/modifier-select-mask.xbm"
 
 
 typedef struct _GimpCursor GimpCursor;
@@ -587,6 +589,12 @@ static GimpCursor gimp_cursor_modifiers[] =
     modifier_join_width, modifier_join_height,
     0, 0,
     modifier_join, NULL, NULL, NULL
+  },
+  {
+    modifier_select_bits, modifier_select_mask_bits,
+    modifier_select_width, modifier_select_height,
+    0, 0,
+    modifier_select, NULL, NULL, NULL
   }
 };
 

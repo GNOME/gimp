@@ -30,6 +30,7 @@ CURSOR_IMAGES = \
 	modifier-pattern.png		\
 	modifier-plus.png		\
 	modifier-resize.png		\
+	modifier-select.png		\
 	\
 	tool-airbrush.png		\
 	tool-blend.png			\

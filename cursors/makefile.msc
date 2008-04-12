@@ -30,6 +30,7 @@ CURSOR_LIST = \
 	modifier_pattern		modifier-pattern.png \
 	modifier_plus		modifier-plus.png \
 	modifier_resize		modifier-resize.png \
+	modifier_select		modifier-select.png \
 	\
 	tool_airbrush		tool-airbrush.png \
 	tool_blend		tool-blend.png \

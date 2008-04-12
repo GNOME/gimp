@@ -1,5 +1,23 @@
 2008-04-12  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Applied modified patch from Daniel Hornung that changes the mouse
+	cursor to a "clicking will create a selection"-icon when hovering
+	the center of a pending Scissors Select Tool selection (bug #493370)
+
+	* app/tools/gimpiscissorstool.c
+	(gimp_iscissors_tool_cursor_update): Use the new cursor icon.
+
+	* cursors/modifier-select.png
+	* cursors/xbm/modifier-select.xbm
+	* cursors/xbm/modifier-select-mask.xbm: New cursor icon.
+
+	* cursors/makefile.msc
+	* cursors/Makefile.am 
+	* app/widgets/gimpcursor.c
+	* app/widgets/widgets-enums.h: Changed accordingly.
+
+2008-04-12  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* plug-ins/script-fu/scripts/3d-outline.scm
 	* plug-ins/script-fu/scripts/alien-glow-logo.scm
 	* plug-ins/script-fu/scripts/alien-neon-logo.scm
