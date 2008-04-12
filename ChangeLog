@@ -1,3 +1,9 @@
+2008-04-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpimage-snap.c (gimp_image_snap_rectangle): Applied
+	patch from Mark Locascio that makes the center point of rectangles
+	snap (bug #527659).
+
 2008-04-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-appearance.c

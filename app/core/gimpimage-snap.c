@@ -485,6 +485,8 @@ gimp_image_snap_rectangle (GimpImage *image,
   gdouble  nx, ny;
   gdouble  mindist_x = G_MAXDOUBLE;
   gdouble  mindist_y = G_MAXDOUBLE;
+  gdouble  x_center  = (x1 + x2) / 2.0;
+  gdouble  y_center  = (y1 + y2) / 2.0;
   gboolean snapped   = FALSE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
@@ -525,6 +527,18 @@ gimp_image_snap_rectangle (GimpImage *image,
       snapped = TRUE;
     }
 
+  /*  center, vertical  */
+  if (gimp_image_snap_x (image, x_center, &nx,
+                         MIN (epsilon_x, mindist_x),
+                         snap_to_guides,
+                         snap_to_grid,
+                         snap_to_canvas))
+    {
+      mindist_x = ABS (nx - x_center);
+      *tx1 = RINT (x1 + (nx - x_center));
+      snapped = TRUE;
+    }
+
   /*  top edge  */
   if (gimp_image_snap_y (image, y1, &ny,
                          MIN (epsilon_y, mindist_y),
@@ -546,6 +560,18 @@ gimp_image_snap_rectangle (GimpImage *image,
     {
       mindist_y = ABS (ny - y2);
       *ty1 = RINT (y1 + (ny - y2));
+      snapped = TRUE;
+    }
+
+  /*  center, horizontal  */
+  if (gimp_image_snap_y (image, y_center, &ny,
+                         MIN (epsilon_y, mindist_y),
+                         snap_to_guides,
+                         snap_to_grid,
+                         snap_to_canvas))
+    {
+      mindist_y = ABS (ny - y_center);
+      *ty1 = RINT (y1 + (ny - y_center));
       snapped = TRUE;
     }
 
