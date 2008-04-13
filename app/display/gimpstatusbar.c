@@ -33,7 +33,6 @@
 #include "core/gimpunit.h"
 #include "core/gimpprogress.h"
 
-#include "widgets/gimpuimanager.h"
 #include "widgets/gimpunitstore.h"
 #include "widgets/gimpunitcombobox.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -132,9 +131,9 @@ gimp_statusbar_class_init (GimpStatusbarClass *klass)
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
 
-  object_class->finalize     = gimp_statusbar_finalize;
+  object_class->finalize    = gimp_statusbar_finalize;
 
-  gtk_object_class->destroy  = gimp_statusbar_destroy;
+  gtk_object_class->destroy = gimp_statusbar_destroy;
 }
 
 static void
@@ -181,6 +180,11 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_widget_show (hbox);
 
   statusbar->cursor_label = gtk_label_new ("8888, 8888");
+#if 0
+  gimp_label_set_attributes (GTK_LABEL (statusbar->cursor_label),
+                             PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
+                             -1);
+#endif
   gtk_misc_set_alignment (GTK_MISC (statusbar->cursor_label), 0.5, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->cursor_label, FALSE, FALSE, 0);
   gtk_widget_show (statusbar->cursor_label);
@@ -576,23 +580,12 @@ GtkWidget *
 gimp_statusbar_new (GimpDisplayShell *shell)
 {
   GimpStatusbar *statusbar;
-  GtkAction     *action;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
   statusbar = g_object_new (GIMP_TYPE_STATUSBAR, NULL);
 
   statusbar->shell = shell;
-
-  action = gimp_ui_manager_find_action (shell->menubar_manager,
-                                        "view", "view-zoom-other");
-
-  if (action)
-    {
-      GimpScaleComboBox *combo = GIMP_SCALE_COMBO_BOX (statusbar->scale_combo);
-
-      gimp_scale_combo_box_add_action (combo, action, _("Other..."));
-    }
 
   g_signal_connect_object (shell, "scaled",
                            G_CALLBACK (gimp_statusbar_shell_scaled),

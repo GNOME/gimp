@@ -94,3 +94,12 @@ style "gimp-dockable-style" = "gimp-default-style"
 }
 
 widget "*GimpDockable.*" style "gimp-dockable-style"
+
+
+style "gimp-display-style" = "gimp-default-style"
+{
+  GimpUnitComboBox::label-scale  = 0.8333
+  GimpScaleComboBox::label-scale = 0.8333
+}
+
+widget "*GimpDisplayShell.*" style "gimp-display-style"
