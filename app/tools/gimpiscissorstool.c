@@ -1024,7 +1024,7 @@ gimp_iscissors_tool_cursor_update (GimpTool        *tool,
         options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
 
         /* Do not overwrite the modifiers for add, subtract, intersect */
-        if(options->operation == GIMP_CHANNEL_OP_REPLACE)
+        if (options->operation == GIMP_CHANNEL_OP_REPLACE)
           {
             modifier = GIMP_CURSOR_MODIFIER_SELECT;
           }
@@ -1050,7 +1050,6 @@ gimp_iscissors_tool_cursor_update (GimpTool        *tool,
     default:
       break;
     }
-
 
   if (modifier != GIMP_CURSOR_MODIFIER_NONE)
     {

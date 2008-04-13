@@ -1,3 +1,9 @@
+2008-04-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpiscissorstool.c: minor cosmetics.
+
+	* cursors/gimp-tool-cursors.xcf: add the new SELECT modifier.
+
 2008-04-12  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Applied modified patch from Daniel Hornung that changes the mouse
