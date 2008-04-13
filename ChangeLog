@@ -1,5 +1,9 @@
 2008-04-13  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptool.h: formatting.
+
+2008-04-13  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpunitcombobox.c: added "label-scale" style property.
 
 	* app/display/gimpscalecombobox.[ch]: ditto. Also removed the
