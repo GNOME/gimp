@@ -389,31 +389,6 @@ gimp_polygon_select_tool_button_release (GimpTool              *tool,
 
   switch (release_type)
     {
-    case GIMP_BUTTON_RELEASE_CLICK:
-      if (gimp_polygon_select_tool_should_close (poly_sel_tool,
-                                                 display,
-                                                 coords))
-        {
-          gimp_polygon_select_tool_commit (poly_sel_tool, display);
-          break;
-        }
-
-      /* Fall through */
-
-    case GIMP_BUTTON_RELEASE_NORMAL:
-      if (! poly_sel_tool->grabbed_point)
-        {
-          gimp_polygon_select_tool_add_point (poly_sel_tool,
-                                              coords->x, coords->y);
-        }
-      else
-        {
-          /* We don't need to do anything since the grabbed point have
-           * already been moved in _motion.
-           */
-        }
-      break;
-
     case GIMP_BUTTON_RELEASE_CANCEL:
       if (poly_sel_tool->grabbed_point)
         {
@@ -422,16 +397,38 @@ gimp_polygon_select_tool_button_release (GimpTool              *tool,
       break;
 
     case GIMP_BUTTON_RELEASE_NO_MOTION:
-      if (gimp_image_floating_sel (display->image))
+      if (poly_sel_tool->n_points == 0)
         {
-          /*  If there is a floating selection, anchor it  */
-          floating_sel_anchor (gimp_image_floating_sel (display->image));
+          if (gimp_image_floating_sel (display->image))
+            {
+              /*  If there is a floating selection, anchor it  */
+              floating_sel_anchor (gimp_image_floating_sel (display->image));
+            }
+          else
+            {
+              /*  Otherwise, clear the selection mask  */
+              gimp_channel_clear (gimp_image_get_mask (display->image), NULL, TRUE);
+            }
+
+          gimp_image_flush (display->image);
+          break;
         }
-      else
+
+      /* else fall through */
+
+    default:
+      if (gimp_polygon_select_tool_should_close (poly_sel_tool,
+                                                 display,
+                                                 coords))
         {
-          /*  Otherwise, clear the selection mask  */
-          gimp_channel_clear (gimp_image_get_mask (display->image), NULL, TRUE);
+          gimp_polygon_select_tool_commit (poly_sel_tool, display);
         }
+      else if (! poly_sel_tool->grabbed_point)
+        {
+          gimp_polygon_select_tool_add_point (poly_sel_tool,
+                                              coords->x, coords->y);
+        }
+
       break;
     }
 
