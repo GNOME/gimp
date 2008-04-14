@@ -696,7 +696,7 @@ gui_menu_show_tooltip (GimpUIManager *manager,
       GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
 
       gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "menu-tooltip",
-                           "%s", tooltip);
+                           NULL, "%s", tooltip);
     }
 }
 

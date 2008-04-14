@@ -326,7 +326,7 @@ gimp_statusbar_progress_start (GimpProgress *progress,
       statusbar->progress_active = TRUE;
       statusbar->progress_value  = 0.0;
 
-      gimp_statusbar_push (statusbar, "progress", "%s", message);
+      gimp_statusbar_push (statusbar, "progress", NULL, "%s", message);
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
       gtk_widget_set_sensitive (statusbar->cancel_button, cancelable);
 

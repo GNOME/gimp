@@ -1,5 +1,11 @@
 2008-04-14  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_show_tooltip)
+	* app/display/gimpstatusbar.c (gimp_statusbar_progress_start)
+	* app/gui/gui.c (gui_menu_show_tooltip): push a NULL stock-id.
+
+2008-04-14  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpstatusbar.c (gimp_statusbar_label_expose): added
 	a sanity check.
 
