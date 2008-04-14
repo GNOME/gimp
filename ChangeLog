@@ -1,3 +1,15 @@
+2008-04-14  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpstatusbar.[ch]: added stock-id parameters to all
+	statusbar setters.
+
+	* app/display/gimpdisplayshell-title.c: pass NULL as stock-id.
+
+	* app/tools/gimptool.c: pass the tool icon to the statusbar.
+
+	* app/tools/gimpeditselectiontool.c (gimp_edit_selection_tool_start):
+	inherit the tool-info from the parent tool.
+
 2008-04-13  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptool.h: formatting.

@@ -180,11 +180,6 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_widget_show (hbox);
 
   statusbar->cursor_label = gtk_label_new ("8888, 8888");
-#if 0
-  gimp_label_set_attributes (GTK_LABEL (statusbar->cursor_label),
-                             PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
-                             -1);
-#endif
   gtk_misc_set_alignment (GTK_MISC (statusbar->cursor_label), 0.5, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->cursor_label, FALSE, FALSE, 0);
   gtk_widget_show (statusbar->cursor_label);
@@ -541,11 +536,11 @@ gimp_statusbar_set_text (GimpStatusbar *statusbar,
 static void
 gimp_statusbar_update (GimpStatusbar *statusbar)
 {
-  const gchar *text = NULL;
+  GimpStatusbarMsg *msg = NULL;
 
   if (statusbar->messages)
     {
-      GimpStatusbarMsg *msg = statusbar->messages->data;
+      msg = statusbar->messages->data;
 
       /*  only allow progress messages while the progress is active  */
       if (statusbar->progress_active)
@@ -556,20 +551,18 @@ gimp_statusbar_update (GimpStatusbar *statusbar)
           if (context_id != msg->context_id)
             return;
         }
-
-      text = msg->text;
     }
 
-  if (text && statusbar->temp_timeout_id)
+  if (msg && msg->stock_id && msg->text)
     {
-      gchar *temp = g_strconcat (statusbar->icon_spaces, text, NULL);
+      gchar *temp = g_strconcat (statusbar->icon_spaces, msg->text, NULL);
 
       gimp_statusbar_set_text (statusbar, temp);
       g_free (temp);
     }
   else
     {
-      gimp_statusbar_set_text (statusbar, text ? text : "");
+      gimp_statusbar_set_text (statusbar, msg && msg->text ? msg->text : "");
     }
 }
 
@@ -649,6 +642,7 @@ gimp_statusbar_fill (GimpStatusbar *statusbar)
 void
 gimp_statusbar_push (GimpStatusbar *statusbar,
                      const gchar   *context,
+                     const gchar   *stock_id,
                      const gchar   *format,
                      ...)
 {
@@ -659,13 +653,14 @@ gimp_statusbar_push (GimpStatusbar *statusbar,
   g_return_if_fail (format != NULL);
 
   va_start (args, format);
-  gimp_statusbar_push_valist (statusbar, context, format, args);
+  gimp_statusbar_push_valist (statusbar, context, stock_id, format, args);
   va_end (args);
 }
 
 void
 gimp_statusbar_push_valist (GimpStatusbar *statusbar,
                             const gchar   *context,
+                            const gchar   *stock_id,
                             const gchar   *format,
                             va_list        args)
 {
@@ -706,9 +701,10 @@ gimp_statusbar_push_valist (GimpStatusbar *statusbar,
         }
     }
 
-  msg = g_slice_new0 (GimpStatusbarMsg);
+  msg = g_slice_new (GimpStatusbarMsg);
 
   msg->context_id = context_id;
+  msg->stock_id   = g_strdup (stock_id);
   msg->text       = message;
 
   if (statusbar->temp_timeout_id)
@@ -722,6 +718,7 @@ gimp_statusbar_push_valist (GimpStatusbar *statusbar,
 void
 gimp_statusbar_push_coords (GimpStatusbar *statusbar,
                             const gchar   *context,
+                            const gchar   *stock_id,
                             const gchar   *title,
                             gdouble        x,
                             const gchar   *separator,
@@ -742,6 +739,7 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
   if (shell->unit == GIMP_UNIT_PIXEL)
     {
       gimp_statusbar_push (statusbar, context,
+                           stock_id,
                            statusbar->cursor_format_str,
                            title,
                            (gint) RINT (x),
@@ -759,6 +757,7 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
       gimp_image_get_resolution (shell->display->image, &xres, &yres);
 
       gimp_statusbar_push (statusbar, context,
+                           stock_id,
                            statusbar->cursor_format_str,
                            title,
                            x * unit_factor / xres,
@@ -771,6 +770,7 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
 void
 gimp_statusbar_push_length (GimpStatusbar       *statusbar,
                             const gchar         *context,
+                            const gchar         *stock_id,
                             const gchar         *title,
                             GimpOrientationType  axis,
                             gdouble              value,
@@ -789,6 +789,7 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
   if (shell->unit == GIMP_UNIT_PIXEL)
     {
       gimp_statusbar_push (statusbar, context,
+                           stock_id,
                            statusbar->length_format_str,
                            title,
                            (gint) RINT (value),
@@ -820,6 +821,7 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
         }
 
       gimp_statusbar_push (statusbar, context,
+                           stock_id,
                            statusbar->length_format_str,
                            title,
                            value * unit_factor / resolution,
@@ -830,6 +832,7 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
 void
 gimp_statusbar_replace (GimpStatusbar *statusbar,
                         const gchar   *context,
+                        const gchar   *stock_id,
                         const gchar   *format,
                         ...)
 {
@@ -840,13 +843,14 @@ gimp_statusbar_replace (GimpStatusbar *statusbar,
   g_return_if_fail (format != NULL);
 
   va_start (args, format);
-  gimp_statusbar_replace_valist (statusbar, context, format, args);
+  gimp_statusbar_replace_valist (statusbar, context, stock_id, format, args);
   va_end (args);
 }
 
 void
 gimp_statusbar_replace_valist (GimpStatusbar *statusbar,
                                const gchar   *context,
+                               const gchar   *stock_id,
                                const gchar   *format,
                                va_list        args)
 {
@@ -869,6 +873,9 @@ gimp_statusbar_replace_valist (GimpStatusbar *statusbar,
 
       if (msg->context_id == context_id)
         {
+          g_free (msg->stock_id);
+          msg->stock_id = g_strdup (stock_id);
+
           g_free (msg->text);
           msg->text = message;
 
@@ -879,9 +886,10 @@ gimp_statusbar_replace_valist (GimpStatusbar *statusbar,
         }
     }
 
-  msg = g_slice_new0 (GimpStatusbarMsg);
+  msg = g_slice_new (GimpStatusbarMsg);
 
   msg->context_id = context_id;
+  msg->stock_id   = g_strdup (stock_id);
   msg->text       = message;
 
   if (statusbar->temp_timeout_id)

@@ -159,7 +159,9 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
   gint                   num_groups;
   const gchar           *undo_desc;
 
-  edit_select = g_object_new (GIMP_TYPE_EDIT_SELECTION_TOOL, NULL);
+  edit_select = g_object_new (GIMP_TYPE_EDIT_SELECTION_TOOL,
+                              "tool-info", parent_tool->tool_info,
+                              NULL);
 
   edit_select->propagate_release = propagate_release;
 
