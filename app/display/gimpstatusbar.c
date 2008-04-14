@@ -94,9 +94,6 @@ static gboolean gimp_statusbar_progress_message   (GimpProgress      *progress,
 static void     gimp_statusbar_progress_canceled  (GtkWidget         *button,
                                                    GimpStatusbar     *statusbar);
 
-static void     gimp_statusbar_label_style_set    (GtkWidget         *widget,
-                                                   GtkStyle          *prev_style,
-                                                   GimpStatusbar     *statusbar);
 static gboolean gimp_statusbar_label_expose       (GtkWidget         *widget,
                                                    GdkEventExpose    *event,
                                                    GimpStatusbar     *statusbar);
@@ -209,12 +206,9 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 
   /*  put the label back into our hbox  */
   gtk_box_pack_start (GTK_BOX (hbox),
-                      GTK_STATUSBAR (statusbar)->label, TRUE, TRUE, 0);
+                      GTK_STATUSBAR (statusbar)->label, TRUE, TRUE, 1);
   g_object_unref (GTK_STATUSBAR (statusbar)->label);
 
-  g_signal_connect_after (GTK_STATUSBAR (statusbar)->label, "style-set",
-                          G_CALLBACK (gimp_statusbar_label_style_set),
-                          statusbar);
   g_signal_connect_after (GTK_STATUSBAR (statusbar)->label, "expose-event",
                           G_CALLBACK (gimp_statusbar_label_expose),
                           statusbar);
@@ -254,15 +248,21 @@ gimp_statusbar_finalize (GObject *object)
 {
   GimpStatusbar *statusbar = GIMP_STATUSBAR (object);
 
+  if (statusbar->icon)
+    {
+      g_object_unref (statusbar->icon);
+      statusbar->icon = NULL;
+    }
+
   g_slist_foreach (statusbar->messages, (GFunc) gimp_statusbar_msg_free, NULL);
   g_slist_free (statusbar->messages);
   statusbar->messages = NULL;
 
-  g_hash_table_destroy (statusbar->context_ids);
-  statusbar->context_ids = NULL;
-
-  g_free (statusbar->icon_spaces);
-  statusbar->icon_spaces = NULL;
+  if (statusbar->context_ids)
+    {
+      g_hash_table_destroy (statusbar->context_ids);
+      statusbar->context_ids = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -414,7 +414,7 @@ gimp_statusbar_progress_set_text (GimpProgress *progress,
     {
       GtkWidget *bar = statusbar->progressbar;
 
-      gimp_statusbar_replace (statusbar, "progress", "%s", message);
+      gimp_statusbar_replace (statusbar, "progress", NULL, "%s", message);
 
       if (GTK_WIDGET_DRAWABLE (bar))
         gdk_window_process_updates (bar->window, TRUE);
@@ -483,13 +483,14 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
                                  const gchar         *message)
 {
   GimpStatusbar *statusbar  = GIMP_STATUSBAR (progress);
+  GtkWidget     *label      = GTK_STATUSBAR (statusbar)->label;
   PangoLayout   *layout;
+  const gchar   *stock_id   = gimp_get_message_stock_id (severity);
   gboolean       handle_msg = FALSE;
 
   /*  we can only handle short one-liners  */
 
-  layout = gtk_widget_create_pango_layout (GTK_STATUSBAR (statusbar)->label,
-                                           message);
+  layout = gtk_widget_create_pango_layout (label, message);
 
   if (pango_layout_get_line_count (layout) == 1)
     {
@@ -497,20 +498,31 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
 
       pango_layout_get_pixel_size (layout, &width, NULL);
 
-      width += statusbar->icon_width;
-
-      if (width < GTK_STATUSBAR (statusbar)->label->allocation.width)
+      if (width < label->allocation.width)
         {
-          handle_msg = TRUE;
+          if (stock_id)
+            {
+              GdkPixbuf *pixbuf;
+
+              pixbuf = gtk_widget_render_icon (label, stock_id,
+                                               GTK_ICON_SIZE_MENU, NULL);
+
+              handle_msg = (width + gdk_pixbuf_get_width (pixbuf) <
+                            label->allocation.width);
+
+              g_object_unref (pixbuf);
+            }
+          else
+            {
+              handle_msg = TRUE;
+            }
         }
     }
 
   g_object_unref (layout);
 
   if (handle_msg)
-    gimp_statusbar_push_temp (statusbar,
-                              gimp_get_message_stock_id (severity),
-                              "%s", message);
+    gimp_statusbar_push_temp (statusbar, stock_id, "%s", message);
 
   return handle_msg;
 }
@@ -525,12 +537,61 @@ gimp_statusbar_progress_canceled (GtkWidget     *button,
 
 static void
 gimp_statusbar_set_text (GimpStatusbar *statusbar,
+                         const gchar   *stock_id,
                          const gchar   *text)
 {
   if (statusbar->progress_active)
-    gtk_progress_bar_set_text (GTK_PROGRESS_BAR (statusbar->progressbar), text);
+    {
+      gtk_progress_bar_set_text (GTK_PROGRESS_BAR (statusbar->progressbar),
+                                 text);
+    }
   else
-    gtk_label_set_text (GTK_LABEL (GTK_STATUSBAR (statusbar)->label), text);
+    {
+      GtkLabel *label = GTK_LABEL (GTK_STATUSBAR (statusbar)->label);
+
+      if (statusbar->icon)
+        g_object_unref (statusbar->icon);
+
+      if (stock_id)
+        statusbar->icon = gtk_widget_render_icon (GTK_WIDGET (label),
+                                                  stock_id,
+                                                  GTK_ICON_SIZE_MENU, NULL);
+      else
+        statusbar->icon = NULL;
+
+      if (statusbar->icon)
+        {
+          PangoAttrList  *attrs;
+          PangoAttribute *attr;
+          PangoRectangle  rect;
+          gchar          *tmp;
+
+          tmp = g_strconcat (" ", text, NULL);
+          gtk_label_set_text (label, tmp);
+          g_free (tmp);
+
+          rect.x      = 0;
+          rect.y      = 0;
+          rect.width  = PANGO_SCALE * (gdk_pixbuf_get_width (statusbar->icon) +
+                                       2);
+          rect.height = PANGO_SCALE * gdk_pixbuf_get_height (statusbar->icon);
+
+          attrs = pango_attr_list_new ();
+
+          attr = pango_attr_shape_new (&rect, &rect);
+          attr->start_index = 0;
+          attr->end_index   = 1;
+          pango_attr_list_insert (attrs, attr);
+
+          gtk_label_set_attributes (label, attrs);
+          pango_attr_list_unref (attrs);
+        }
+      else
+        {
+          gtk_label_set_text (label, text);
+          gtk_label_set_attributes (label, NULL);
+        }
+    }
 }
 
 static void
@@ -553,16 +614,13 @@ gimp_statusbar_update (GimpStatusbar *statusbar)
         }
     }
 
-  if (msg && msg->stock_id && msg->text)
+  if (msg && msg->text)
     {
-      gchar *temp = g_strconcat (statusbar->icon_spaces, msg->text, NULL);
-
-      gimp_statusbar_set_text (statusbar, temp);
-      g_free (temp);
+      gimp_statusbar_set_text (statusbar, msg->stock_id, msg->text);
     }
   else
     {
-      gimp_statusbar_set_text (statusbar, msg && msg->text ? msg->text : "");
+      gimp_statusbar_set_text (statusbar, NULL, "");
     }
 }
 
@@ -1109,86 +1167,30 @@ gimp_statusbar_clear_cursor (GimpStatusbar *statusbar)
 
 /*  private functions  */
 
-static void
-gimp_statusbar_label_style_set (GtkWidget     *widget,
-                                GtkStyle      *prev_style,
-                                GimpStatusbar *statusbar)
-{
-  PangoLayout *layout;
-  GdkPixbuf   *pixbuf;
-  gint         n_spaces = 1;
-  gint         layout_width;
-
-  layout = gtk_widget_create_pango_layout (widget, " ");
-  pixbuf = gtk_widget_render_icon (widget, GIMP_STOCK_WARNING,
-                                   GTK_ICON_SIZE_MENU, NULL);
-
-  pango_layout_get_pixel_size (layout, &layout_width, NULL);
-
-  while (layout_width < gdk_pixbuf_get_width (pixbuf) + 2)
-    {
-      n_spaces++;
-
-      statusbar->icon_spaces = g_realloc (statusbar->icon_spaces, n_spaces + 1);
-
-      memset (statusbar->icon_spaces, ' ', n_spaces);
-      statusbar->icon_spaces[n_spaces] = '\0';
-
-      pango_layout_set_text (layout, statusbar->icon_spaces, -1);
-      pango_layout_get_pixel_size (layout, &layout_width, NULL);
-    }
-
-  statusbar->icon_width = layout_width;
-
-  g_object_unref (layout);
-  g_object_unref (pixbuf);
-}
-
 static gboolean
 gimp_statusbar_label_expose (GtkWidget      *widget,
                              GdkEventExpose *event,
                              GimpStatusbar  *statusbar)
 {
-  GdkPixbuf   *pixbuf;
-  const gchar *stock_id = NULL;
-  gint         x, y;
-
-  if (statusbar->messages)
+  if (statusbar->icon)
     {
-      GimpStatusbarMsg *msg = statusbar->messages->data;
+      PangoRectangle  rect;
+      gint            x, y;
 
-      stock_id = msg->stock_id;
+      gtk_label_get_layout_offsets (GTK_LABEL (widget), &x, &y);
+
+      pango_layout_index_to_pos (gtk_label_get_layout (GTK_LABEL (widget)), 0,
+                                 &rect);
+
+      gdk_draw_pixbuf (widget->window, widget->style->black_gc,
+                       statusbar->icon,
+                       0, 0,
+                       x + PANGO_PIXELS (rect.x),
+                       y + PANGO_PIXELS (rect.y),
+                       gdk_pixbuf_get_width (statusbar->icon),
+                       gdk_pixbuf_get_height (statusbar->icon),
+                       GDK_RGB_DITHER_NORMAL, 0, 0);
     }
-
-  if (! stock_id)
-    return FALSE;
-
-  pixbuf = gtk_widget_render_icon (widget, stock_id, GTK_ICON_SIZE_MENU, NULL);
-
-  g_return_val_if_fail (pixbuf != NULL, FALSE);
-
-  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-    {
-      x = (widget->allocation.width - 2 * widget->style->xthickness -
-           gdk_pixbuf_get_width (pixbuf));
-    }
-  else
-    {
-      x = widget->style->xthickness;
-    }
-
-  y = ((widget->allocation.height - gdk_pixbuf_get_height (pixbuf)) / 2);
-
-  gdk_draw_pixbuf (widget->window, widget->style->black_gc,
-                   pixbuf,
-                   0, 0,
-                   widget->allocation.x + x,
-                   widget->allocation.y + y,
-                   gdk_pixbuf_get_width (pixbuf),
-                   gdk_pixbuf_get_height (pixbuf),
-                   GDK_RGB_DITHER_NORMAL, 0, 0);
-
-  g_object_unref (pixbuf);
 
   return FALSE;
 }
