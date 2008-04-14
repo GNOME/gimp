@@ -223,9 +223,22 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
         {
           gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                         "Plug-In \"%s\"\n(%s)\n\n"
-                        "requested invalid drawable (killing)",
+                        "tried writing to invalid drawable %d (killing)",
                         gimp_object_get_name (GIMP_OBJECT (plug_in)),
-                        gimp_filename_to_utf8 (plug_in->prog));
+                        gimp_filename_to_utf8 (plug_in->prog),
+                        tile_info->drawable_ID);
+          gimp_plug_in_close (plug_in, TRUE);
+          return;
+        }
+      else if (gimp_item_is_removed (GIMP_ITEM (drawable)))
+        {
+          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                        "Plug-In \"%s\"\n(%s)\n\n"
+                        "tried writing to drawable %d which was removed "
+                        "from the image (killing)",
+                        gimp_object_get_name (GIMP_OBJECT (plug_in)),
+                        gimp_filename_to_utf8 (plug_in->prog),
+                        tile_info->drawable_ID);
           gimp_plug_in_close (plug_in, TRUE);
           return;
         }
@@ -279,9 +292,22 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
         {
           gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                         "Plug-In \"%s\"\n(%s)\n\n"
-                        "requested invalid drawable (killing)",
+                        "tried reading from invalid drawable %d (killing)",
                         gimp_object_get_name (GIMP_OBJECT (plug_in)),
-                        gimp_filename_to_utf8 (plug_in->prog));
+                        gimp_filename_to_utf8 (plug_in->prog),
+                        tile_req->drawable_ID);
+          gimp_plug_in_close (plug_in, TRUE);
+          return;
+        }
+      else if (gimp_item_is_removed (GIMP_ITEM (drawable)))
+        {
+          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                        "Plug-In \"%s\"\n(%s)\n\n"
+                        "tried reading from drawable %d which was removed "
+                        "from the image (killing)",
+                        gimp_object_get_name (GIMP_OBJECT (plug_in)),
+                        gimp_filename_to_utf8 (plug_in->prog),
+                        tile_req->drawable_ID);
           gimp_plug_in_close (plug_in, TRUE);
           return;
         }

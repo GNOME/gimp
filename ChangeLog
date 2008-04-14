@@ -1,3 +1,11 @@
+2008-04-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_tile_req):
+	made messages about killed plug-ins due to invalid tile requests
+	more verbose. They are good for debugging only and not translated,
+	so more info can't hurt. Also fail (kill the plug-in) if a tile is
+	requested that lives on the undo stack.
+
 2008-04-14  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimppolygonselecttool.c: formatting.
