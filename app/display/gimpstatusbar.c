@@ -46,11 +46,13 @@
 #include "gimp-intl.h"
 
 
-/* maximal width of the string holding the cursor-coordinates for
- * the status line
- */
-#define CURSOR_LEN       256
+/*  maximal width of the string holding the cursor-coordinates  */
+#define CURSOR_LEN        256
 
+/*  spacing between the icon and the statusbar label            */
+#define ICON_SPACING        2
+
+/*  timeout (in milliseconds) for temporary statusbar messages  */
 #define MESSAGE_TIMEOUT  5000
 
 
@@ -507,10 +509,11 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
               pixbuf = gtk_widget_render_icon (label, stock_id,
                                                GTK_ICON_SIZE_MENU, NULL);
 
-              handle_msg = (width + gdk_pixbuf_get_width (pixbuf) <
-                            label->allocation.width);
+              width += ICON_SPACING + gdk_pixbuf_get_width (pixbuf);
 
               g_object_unref (pixbuf);
+
+              handle_msg = (width < label->allocation.width);
             }
           else
             {
@@ -573,7 +576,7 @@ gimp_statusbar_set_text (GimpStatusbar *statusbar,
           rect.x      = 0;
           rect.y      = 0;
           rect.width  = PANGO_SCALE * (gdk_pixbuf_get_width (statusbar->icon) +
-                                       2);
+                                       ICON_SPACING);
           rect.height = PANGO_SCALE * gdk_pixbuf_get_height (statusbar->icon);
 
           attrs = pango_attr_list_new ();

@@ -1,3 +1,8 @@
+2008-04-14  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpstatusbar.c: introduced a #define for the spacing
+	between the icon and the statusbar label.
+
 2008-04-14  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimpmemsize.c: #undef GIMP_DISABLE_DEPRECATED so
