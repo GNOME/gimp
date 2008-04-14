@@ -1163,8 +1163,9 @@ gimp_statusbar_label_expose (GtkWidget      *widget,
   if (! stock_id)
     return FALSE;
 
-  pixbuf = gtk_widget_render_icon (widget, stock_id,
-                                   GTK_ICON_SIZE_MENU, NULL);
+  pixbuf = gtk_widget_render_icon (widget, stock_id, GTK_ICON_SIZE_MENU, NULL);
+
+  g_return_val_if_fail (pixbuf != NULL, FALSE);
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
     {
