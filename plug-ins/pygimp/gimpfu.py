@@ -289,7 +289,9 @@ def _query():
          on_query, on_run) = _registered_plugins_[plugin]
 
         def make_params(params):
-            return [(_type_mapping[x[0]], x[1], x[2]) for x in params]
+            return [(_type_mapping[x[0]],
+                     x[1],
+                     _string.replace(x[2], "_", "")) for x in params]
 
         params = make_params(params)
         # add the run mode argument ...

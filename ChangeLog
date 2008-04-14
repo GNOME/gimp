@@ -1,5 +1,10 @@
 2008-04-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/gimpfu.py (_query.make_params): strip mnemonics
+	from parameter names before passing them to gimp.install_procedure().
+
+2008-04-14  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimpplugin-message.c: renamed
 	gimp_plug_in_handle_tile_req() to gimp_plug_in_handle_tile_request().
 
