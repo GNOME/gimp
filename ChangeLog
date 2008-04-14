@@ -1,5 +1,10 @@
 2008-04-14  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpstatusbar.c (gimp_statusbar_label_expose): fixed
+	icon placement for right-to-left render direction.
+
+2008-04-14  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpstatusbar.[ch]: rewritten the code that draws
 	the icon in the statusbar label. The new code gives nicer spacing.
 

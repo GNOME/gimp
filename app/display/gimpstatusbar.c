@@ -1182,11 +1182,15 @@ gimp_statusbar_label_expose (GtkWidget      *widget,
       pango_layout_index_to_pos (gtk_label_get_layout (GTK_LABEL (widget)), 0,
                                  &rect);
 
+      /*  the rectangle width is negative when rendering right-to-left  */
+      x += PANGO_PIXELS (rect.x) + (rect.width < 0 ?
+                                    PANGO_PIXELS (rect.width) : 0);
+      y += PANGO_PIXELS (rect.y);
+
       gdk_draw_pixbuf (widget->window, widget->style->black_gc,
                        statusbar->icon,
                        0, 0,
-                       x + PANGO_PIXELS (rect.x),
-                       y + PANGO_PIXELS (rect.y),
+                       x, y,
                        gdk_pixbuf_get_width (statusbar->icon),
                        gdk_pixbuf_get_height (statusbar->icon),
                        GDK_RGB_DITHER_NORMAL, 0, 0);
