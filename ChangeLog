@@ -1,3 +1,8 @@
+2008-04-14  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/gimpmemsize.c: #undef GIMP_DISABLE_DEPRECATED so
+	gimp_memsize_to_string() sees its own prototype.
+
 2008-04-14  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpstatusbar.c (gimp_statusbar_label_expose): fixed
