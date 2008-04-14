@@ -82,5 +82,8 @@ void      jpeg_setup_exif_for_save      (ExifData      *exif_data,
 
 void      jpeg_exif_rotate              (gint32         image_ID,
                                          gint           orientation);
+void      jpeg_exif_rotate_query        (gint32         image_ID,
+                                         gint           orientation);
+
 #endif /* HAVE_EXIF */
 

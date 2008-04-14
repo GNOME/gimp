@@ -54,7 +54,7 @@
 #define JPEG_EXIF_ROTATE_PARASITE  "exif-orientation-rotate"
 
 
-static gboolean  jpeg_exif_rotate_query (gint32 image_ID);
+static gboolean  jpeg_exif_rotate_query_dialog (gint32 image_ID);
 
 
 /*  Replacement for exif_data_new_from_file() to work around
@@ -87,9 +87,7 @@ gint
 jpeg_exif_get_orientation (ExifData *exif_data)
 {
   ExifEntry *entry;
-  gint       byte_order;
-
-  byte_order = exif_data_get_byte_order (exif_data);
+  gint       byte_order = exif_data_get_byte_order (exif_data);
 
   /* get orientation and rotate image accordingly if necessary */
   if ((entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_0],
@@ -97,6 +95,7 @@ jpeg_exif_get_orientation (ExifData *exif_data)
     {
       return exif_get_short (entry->data, byte_order);
     }
+
   return 0;
 }
 
@@ -181,55 +180,26 @@ jpeg_setup_exif_for_save (ExifData     *exif_data,
   /* should set components configuration, don't know how */
 
   /*
-   *remove entries that don't apply to jpeg
-   *(may have come from tiff or raw)
-  */
-  gimp_exif_data_remove_entry(exif_data, EXIF_IFD_0, EXIF_TAG_COMPRESSION);
-  gimp_exif_data_remove_entry(exif_data, EXIF_IFD_0, EXIF_TAG_IMAGE_WIDTH);
-  gimp_exif_data_remove_entry(exif_data, EXIF_IFD_0, EXIF_TAG_IMAGE_LENGTH);
-  gimp_exif_data_remove_entry(exif_data, EXIF_IFD_0, EXIF_TAG_BITS_PER_SAMPLE);
-  gimp_exif_data_remove_entry(exif_data, EXIF_IFD_0, EXIF_TAG_SAMPLES_PER_PIXEL);
-  gimp_exif_data_remove_entry(exif_data, EXIF_IFD_0, EXIF_TAG_PHOTOMETRIC_INTERPRETATION);
-  gimp_exif_data_remove_entry(exif_data, EXIF_IFD_0, EXIF_TAG_STRIP_OFFSETS);
-  gimp_exif_data_remove_entry(exif_data, EXIF_IFD_0, EXIF_TAG_PLANAR_CONFIGURATION);
-  gimp_exif_data_remove_entry(exif_data, EXIF_IFD_0, EXIF_TAG_YCBCR_SUB_SAMPLING);
+   * remove entries that don't apply to jpeg
+   * (may have come from tiff or raw)
+   */
+  gimp_exif_data_remove_entry (exif_data, EXIF_IFD_0, EXIF_TAG_COMPRESSION);
+  gimp_exif_data_remove_entry (exif_data, EXIF_IFD_0, EXIF_TAG_IMAGE_WIDTH);
+  gimp_exif_data_remove_entry (exif_data, EXIF_IFD_0, EXIF_TAG_IMAGE_LENGTH);
+  gimp_exif_data_remove_entry (exif_data, EXIF_IFD_0, EXIF_TAG_BITS_PER_SAMPLE);
+  gimp_exif_data_remove_entry (exif_data, EXIF_IFD_0, EXIF_TAG_SAMPLES_PER_PIXEL);
+  gimp_exif_data_remove_entry (exif_data, EXIF_IFD_0, EXIF_TAG_PHOTOMETRIC_INTERPRETATION);
+  gimp_exif_data_remove_entry (exif_data, EXIF_IFD_0, EXIF_TAG_STRIP_OFFSETS);
+  gimp_exif_data_remove_entry (exif_data, EXIF_IFD_0, EXIF_TAG_PLANAR_CONFIGURATION);
+  gimp_exif_data_remove_entry (exif_data, EXIF_IFD_0, EXIF_TAG_YCBCR_SUB_SAMPLING);
 
   /* should set thumbnail attributes */
 }
-
 
 void
 jpeg_exif_rotate (gint32 image_ID,
                   gint   orientation)
 {
-  GimpParasite *parasite;
-  gboolean      query = load_interactive;
-
-  if (orientation < 2 || orientation > 8)
-    return;
-
-  parasite = gimp_parasite_find (JPEG_EXIF_ROTATE_PARASITE);
-
-  if (parasite)
-    {
-      if (strncmp (gimp_parasite_data (parasite), "yes",
-                   gimp_parasite_data_size (parasite)) == 0)
-        {
-          query = FALSE;
-        }
-      else if (strncmp (gimp_parasite_data (parasite), "no",
-                        gimp_parasite_data_size (parasite)) == 0)
-        {
-          gimp_parasite_free (parasite);
-          return;
-        }
-
-      gimp_parasite_free (parasite);
-    }
-
-  if (query && ! jpeg_exif_rotate_query (image_ID))
-    return;
-
   switch (orientation)
     {
     case 1:  /* standard orientation, do nothing */
@@ -269,13 +239,48 @@ jpeg_exif_rotate (gint32 image_ID,
       jpeg_swap_original_settings (image_ID);
       break;
 
-    default: /* can't happen                     */
+    default: /* shouldn't happen                 */
       break;
     }
 }
 
+void
+jpeg_exif_rotate_query (gint32 image_ID,
+                        gint   orientation)
+{
+  GimpParasite *parasite;
+  gboolean      query = load_interactive;
+
+  if (orientation < 2 || orientation > 8)
+    return;
+
+  parasite = gimp_parasite_find (JPEG_EXIF_ROTATE_PARASITE);
+
+  if (parasite)
+    {
+      if (strncmp (gimp_parasite_data (parasite), "yes",
+                   gimp_parasite_data_size (parasite)) == 0)
+        {
+          query = FALSE;
+        }
+      else if (strncmp (gimp_parasite_data (parasite), "no",
+                        gimp_parasite_data_size (parasite)) == 0)
+        {
+          gimp_parasite_free (parasite);
+          return;
+        }
+
+      gimp_parasite_free (parasite);
+    }
+
+  if (query && ! jpeg_exif_rotate_query_dialog (image_ID))
+    return;
+
+  jpeg_exif_rotate (image_ID, orientation);
+}
+
 static gboolean
-jpeg_exif_rotate_query (gint32 image_ID)
+jpeg_exif_rotate_query_dialog (gint32 image_ID)
 {
   GtkWidget *dialog;
   GtkWidget *hbox;

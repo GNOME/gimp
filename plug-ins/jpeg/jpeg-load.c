@@ -231,6 +231,8 @@ load_image (const gchar *filename,
     {
       image_ID = gimp_image_new (cinfo.output_width, cinfo.output_height,
                                  image_type);
+
+      gimp_image_undo_disable (image_ID);
       gimp_image_set_filename (image_ID, filename);
 
       jpeg_load_resolution (image_ID, &cinfo);
@@ -462,13 +464,13 @@ load_image (const gchar *filename,
 
   /* Detach from the drawable and add it to the image.
    */
-  if (!preview)
+  if (! preview)
     gimp_drawable_detach (drawable);
+
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
 #ifdef HAVE_EXIF
-  if (orientation > 0)
-    jpeg_exif_rotate (image_ID, orientation);
+  jpeg_exif_rotate_query (image_ID, orientation);
 #endif
 
   return image_ID;
@@ -610,6 +612,7 @@ load_thumbnail_image (const gchar *filename,
   gint             tile_height;
   gint             scanlines;
   gint             i, start, end;
+  gint             orientation;
   my_src_ptr       src;
   FILE            *infile;
 
@@ -619,8 +622,10 @@ load_thumbnail_image (const gchar *filename,
   if (! ((exif_data) && (exif_data->data) && (exif_data->size > 0)))
     return -1;
 
+  orientation = jpeg_exif_get_orientation (exif_data);
+
   cinfo.err = jpeg_std_error (&jerr.pub);
-  jerr.pub.error_exit = my_error_exit;
+  jerr.pub.error_exit     = my_error_exit;
   jerr.pub.output_message = my_output_message;
 
   gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
@@ -745,6 +750,8 @@ load_thumbnail_image (const gchar *filename,
 
   image_ID = gimp_image_new (cinfo.output_width, cinfo.output_height,
                              image_type);
+
+  gimp_image_undo_disable (image_ID);
   gimp_image_set_filename (image_ID, filename);
 
   jpeg_load_resolution (image_ID, &cinfo);
@@ -881,6 +888,8 @@ load_thumbnail_image (const gchar *filename,
       exif_data_unref (exif_data);
       exif_data = NULL;
     }
+
+  jpeg_exif_rotate (image_ID, orientation);
 
   return image_ID;
 }

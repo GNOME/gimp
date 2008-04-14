@@ -1,5 +1,12 @@
 2008-04-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/jpeg/jpeg.h
+	* plug-ins/jpeg/jpeg-exif.c
+	* plug-ins/jpeg/jpeg-load.c: rotate the thumbnail according to the
+	EXIF orientation as required by the updated thumbnail spec.
+
+2008-04-14  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_show_tooltip)
 	* app/display/gimpstatusbar.c (gimp_statusbar_progress_start)
 	* app/gui/gui.c (gui_menu_show_tooltip): push a NULL stock-id.
