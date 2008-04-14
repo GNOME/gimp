@@ -53,8 +53,8 @@
 /*  local function prototypes  */
 
 static void gimp_plug_in_handle_quit             (GimpPlugIn      *plug_in);
-static void gimp_plug_in_handle_tile_req         (GimpPlugIn      *plug_in,
-                                                  GPTileReq       *tile_req);
+static void gimp_plug_in_handle_tile_request     (GimpPlugIn      *plug_in,
+                                                  GPTileReq       *request);
 static void gimp_plug_in_handle_proc_run         (GimpPlugIn      *plug_in,
                                                   GPProcRun       *proc_run);
 static void gimp_plug_in_handle_proc_return      (GimpPlugIn      *plug_in,
@@ -95,7 +95,7 @@ gimp_plug_in_handle_message (GimpPlugIn      *plug_in,
       break;
 
     case GP_TILE_REQ:
-      gimp_plug_in_handle_tile_req (plug_in, msg->data);
+      gimp_plug_in_handle_tile_request (plug_in, msg->data);
       break;
 
     case GP_TILE_ACK:
@@ -165,8 +165,8 @@ gimp_plug_in_handle_quit (GimpPlugIn *plug_in)
 }
 
 static void
-gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
-                              GPTileReq  *tile_req)
+gimp_plug_in_handle_tile_request (GimpPlugIn *plug_in,
+                                  GPTileReq  *request)
 {
   GPTileData       tile_data;
   GPTileData      *tile_info;
@@ -175,9 +175,9 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
   TileManager     *tm;
   Tile            *tile;
 
-  g_return_if_fail (tile_req != NULL);
+  g_return_if_fail (request != NULL);
 
-  if (tile_req->drawable_ID == -1)
+  if (request->drawable_ID == -1)
     {
       /*  this branch communicates with libgimp/gimptile.c:gimp_tile_put()  */
 
@@ -193,7 +193,7 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
       if (! gp_tile_data_write (plug_in->my_write, &tile_data, plug_in))
         {
           gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "plug_in_handle_tile_req: ERROR");
+                        "plug_in_handle_tile_request: ERROR");
           gimp_plug_in_close (plug_in, TRUE);
           return;
         }
@@ -201,7 +201,7 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
       if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
         {
           gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "plug_in_handle_tile_req: ERROR");
+                        "plug_in_handle_tile_request: ERROR");
           gimp_plug_in_close (plug_in, TRUE);
           return;
         }
@@ -276,7 +276,7 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
       if (! gp_tile_ack_write (plug_in->my_write, plug_in))
         {
           gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "plug_in_handle_tile_req: ERROR");
+                        "plug_in_handle_tile_request: ERROR");
           gimp_plug_in_close (plug_in, TRUE);
           return;
         }
@@ -286,7 +286,7 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
       /*  this branch communicates with libgimp/gimptile.c:gimp_tile_get()  */
 
       drawable = (GimpDrawable *) gimp_item_get_by_ID (plug_in->manager->gimp,
-                                                       tile_req->drawable_ID);
+                                                       request->drawable_ID);
 
       if (! GIMP_IS_DRAWABLE (drawable))
         {
@@ -295,7 +295,7 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
                         "tried reading from invalid drawable %d (killing)",
                         gimp_object_get_name (GIMP_OBJECT (plug_in)),
                         gimp_filename_to_utf8 (plug_in->prog),
-                        tile_req->drawable_ID);
+                        request->drawable_ID);
           gimp_plug_in_close (plug_in, TRUE);
           return;
         }
@@ -307,17 +307,17 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
                         "from the image (killing)",
                         gimp_object_get_name (GIMP_OBJECT (plug_in)),
                         gimp_filename_to_utf8 (plug_in->prog),
-                        tile_req->drawable_ID);
+                        request->drawable_ID);
           gimp_plug_in_close (plug_in, TRUE);
           return;
         }
 
-      if (tile_req->shadow)
+      if (request->shadow)
         tm = gimp_drawable_get_shadow_tiles (drawable);
       else
         tm = gimp_drawable_get_tiles (drawable);
 
-      tile = tile_manager_get (tm, tile_req->tile_num, TRUE, FALSE);
+      tile = tile_manager_get (tm, request->tile_num, TRUE, FALSE);
 
       if (! tile)
         {
@@ -330,9 +330,9 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
           return;
         }
 
-      tile_data.drawable_ID = tile_req->drawable_ID;
-      tile_data.tile_num    = tile_req->tile_num;
-      tile_data.shadow      = tile_req->shadow;
+      tile_data.drawable_ID = request->drawable_ID;
+      tile_data.tile_num    = request->tile_num;
+      tile_data.shadow      = request->shadow;
       tile_data.bpp         = tile_bpp (tile);
       tile_data.width       = tile_ewidth (tile);
       tile_data.height      = tile_eheight (tile);
@@ -348,7 +348,7 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
       if (! gp_tile_data_write (plug_in->my_write, &tile_data, plug_in))
         {
           gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "plug_in_handle_tile_req: ERROR");
+                        "plug_in_handle_tile_request: ERROR");
           gimp_plug_in_close (plug_in, TRUE);
           return;
         }
@@ -358,7 +358,7 @@ gimp_plug_in_handle_tile_req (GimpPlugIn *plug_in,
       if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
         {
           gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "plug_in_handle_tile_req: ERROR");
+                        "plug_in_handle_tile_request: ERROR");
           gimp_plug_in_close (plug_in, TRUE);
           return;
         }
