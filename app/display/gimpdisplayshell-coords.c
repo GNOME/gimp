@@ -211,12 +211,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 			       gdouble           inertia_factor,
 			       guint32           time)
 {
-  const gdouble  smooth_factor = 0.3;
-  guint32        thistime      = time;
-  gdouble        dist;
-  /* Ensure that events are filtered below screen resolution */
-  gdouble        filter        = MIN (shell->scale_x, shell->scale_y) / 2.0;
-  gdouble        inertia;
+  gdouble inertia;
 
   /* Smoothing causes problems with cursor tracking
    * when zoomed above screen resolution so we need to supress it.
@@ -243,16 +238,22 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
     {
       gdouble dx = coords->delta_x = shell->last_coords.x - coords->x;
       gdouble dy = coords->delta_y = shell->last_coords.y - coords->y;
+      gdouble filter;
+      gdouble dist;
 
-      /* Events with distances less than the filter_threshold are not
-         worth handling.
+#define SMOOTH_FACTOR 0.3
+
+      /* Events with distances less than the screen resolution are not
+       * worth handling.
        */
+      filter = MIN (1 / shell->scale_x, 1 / shell->scale_y) / 2.0;
+
       if (fabs (dx) < filter && fabs (dy) < filter)
         return FALSE;
 
-      coords->delta_time = thistime - shell->last_disp_motion_time;
-      coords->delta_time = (shell->last_coords.delta_time * (1 - smooth_factor)
-                            + coords->delta_time * smooth_factor);
+      coords->delta_time = time - shell->last_disp_motion_time;
+      coords->delta_time = (shell->last_coords.delta_time * (1 - SMOOTH_FACTOR)
+                            + coords->delta_time * SMOOTH_FACTOR);
       coords->distance = dist = sqrt (SQR (dx) + SQR (dy));
 
       /* If even smoothed time resolution does not allow to guess for speed,
@@ -268,8 +269,8 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
             (coords->distance / (gdouble) coords->delta_time) / 10;
 
           /* A little smooth on this too, feels better in tools this way. */
-          coords->velocity = (shell->last_coords.velocity * (1 - smooth_factor)
-                              + coords->velocity * smooth_factor);
+          coords->velocity = (shell->last_coords.velocity * (1 - SMOOTH_FACTOR)
+                              + coords->velocity * SMOOTH_FACTOR);
           /* Speed needs upper limit */
           coords->velocity = MIN (coords->velocity, 1.0);
         }
@@ -341,7 +342,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 #endif
     }
 
-  shell->last_coords = *coords;
+  shell->last_coords           = *coords;
   shell->last_disp_motion_time = time;
 
   return TRUE;

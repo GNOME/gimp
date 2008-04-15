@@ -1,3 +1,11 @@
+2008-04-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-coords.c
+	(gimp_display_shell_eval_event): fix calculation of filter
+	distance, it was missing a 1 / zoom_factor. Moved variables to
+	local scope. Remove resundant thistime variable. Turned const
+	gdouble into a #define.
+
 2008-04-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py (_query.make_params): strip mnemonics
