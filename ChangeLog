@@ -1,3 +1,9 @@
+2008-04-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-coords.c
+	(gimp_display_shell_eval_event): remove local "inertia" variable
+	and simply modify the passed "inertia_factor" when needed.
+
 2008-04-16  Sven Neumann  <sven@gimp.org>
 
 	* app/config/test-config.c: initialize the units vtable in

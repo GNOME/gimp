@@ -211,18 +211,12 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 			       gdouble           inertia_factor,
 			       guint32           time)
 {
-  gdouble inertia;
-
   /* Smoothing causes problems with cursor tracking
    * when zoomed above screen resolution so we need to supress it.
    */
   if (shell->scale_x > 1.0 || shell->scale_y > 1.0)
     {
-      inertia = 0.0;
-    }
-  else
-    {
-      inertia = inertia_factor;
+      inertia_factor = 0.0;
     }
 
   if (shell->last_disp_motion_time == 0)
@@ -275,12 +269,12 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           coords->velocity = MIN (coords->velocity, 1.0);
         }
 
-      if (inertia > 0 && coords->distance > 0)
+      if (inertia_factor > 0 && coords->distance > 0)
         {
           /* Apply smoothing to X and Y. */
 
           /* This tells how far from the pointer can stray from the line */
-          gdouble max_deviation = SQR (20 * inertia);
+          gdouble max_deviation = SQR (20 * inertia_factor);
           gdouble cur_deviation = max_deviation;
           gdouble sin_avg;
           gdouble sin_old;
@@ -293,13 +287,13 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 
           sin_new = coords->delta_x / coords->distance;
           sin_old = shell->last_coords.delta_x / shell->last_coords.distance;
-          sin_avg = sin (asin (sin_old) * inertia +
-                         asin (sin_new) * (1 - inertia));
+          sin_avg = sin (asin (sin_old) * inertia_factor +
+                         asin (sin_new) * (1 - inertia_factor));
 
           cos_new = coords->delta_y / coords->distance;
           cos_old = shell->last_coords.delta_y / shell->last_coords.distance;
-          cos_avg = cos (acos (cos_old) * inertia +
-                         acos (cos_new) * (1 - inertia));
+          cos_avg = cos (acos (cos_old) * inertia_factor +
+                         acos (cos_new) * (1 - inertia_factor));
 
           coords->delta_x = sin_avg * coords->distance;
           coords->delta_y = cos_avg * coords->distance;
@@ -338,7 +332,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
                   shell->last_coords.velocity,
                   coords->pressure,
                   coords->distance - dist,
-                  inertia);
+                  inertia_factor);
 #endif
     }
 
