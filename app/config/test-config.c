@@ -27,6 +27,7 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpbase/gimpbase-private.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core/core-types.h"
@@ -40,6 +41,8 @@ static void  notify_callback      (GObject     *object,
 static void  output_unknown_token (const gchar *key,
                                    const gchar *value,
                                    gpointer     data);
+
+static void  units_init           (void);
 
 
 int
@@ -68,6 +71,8 @@ main (int   argc,
     }
 
   g_type_init ();
+
+  units_init ();
 
   g_print ("\nTesting GimpConfig ...\n");
 
@@ -236,10 +241,10 @@ output_unknown_token (const gchar *key,
 }
 
 
-/* some dummy funcs so we can properly link this beast */
+/* minimal dummy units implementation  */
 
-const gchar *
-gimp_unit_get_identifier (GimpUnit unit)
+static const gchar *
+unit_get_identifier (GimpUnit unit)
 {
   switch (unit)
     {
@@ -258,8 +263,19 @@ gimp_unit_get_identifier (GimpUnit unit)
     }
 }
 
-gint
-gimp_unit_get_number_of_units (void)
+static gint
+unit_get_number_of_units (void)
 {
   return GIMP_UNIT_END;
+}
+
+static void
+units_init (void)
+{
+  GimpUnitVtable vtable;
+
+  vtable.unit_get_number_of_units = unit_get_number_of_units;
+  vtable.unit_get_identifier      = unit_get_identifier;
+
+  gimp_base_init (&vtable);
 }
