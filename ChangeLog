@@ -1,3 +1,9 @@
+2008-04-16  Sven Neumann  <sven@gimp.org>
+
+	* app/config/test-config.c: initialize the units vtable in
+	libgimpbase instead of trying to override symbols from it.
+	Fixes bug #528160.
+
 2008-04-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-coords.c
