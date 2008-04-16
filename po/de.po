@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-09 16:44+0200\n"
-"PO-Revision-Date: 2008-04-09 16:52+0200\n"
+"POT-Creation-Date: 2008-04-16 13:02+0200\n"
+"PO-Revision-Date: 2008-04-16 13:03+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3271,7 +3271,7 @@ msgstr "_Künstlerisch"
 
 #: ../app/actions/plug-in-actions.c:94
 msgid "_Decor"
-msgstr "_Dekor"
+msgstr "_Dekoration"
 
 #: ../app/actions/plug-in-actions.c:96
 msgid "_Render"
@@ -4399,7 +4399,7 @@ msgstr "Blau"
 msgid "Alpha"
 msgstr "Alpha"
 
-#: ../app/base/base-enums.c:60 ../app/display/gimpdisplayshell-title.c:232
+#: ../app/base/base-enums.c:60 ../app/display/gimpdisplayshell-title.c:233
 #: ../app/widgets/widgets-enums.c:84
 msgid "RGB"
 msgstr "RGB"
@@ -6557,7 +6557,7 @@ msgid_plural "%d × %d pixels"
 msgstr[0] "%d × %d Pixel"
 msgstr[1] "%d × %d Pixel"
 
-#: ../app/core/gimpimagefile.c:628 ../app/display/gimpdisplayshell-title.c:324
+#: ../app/core/gimpimagefile.c:628 ../app/display/gimpdisplayshell-title.c:325
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -6802,7 +6802,7 @@ msgstr ""
 msgid "Please wait"
 msgstr "Bitte warten"
 
-#: ../app/core/gimpselection.c:150 ../app/tools/gimpeditselectiontool.c:199
+#: ../app/core/gimpselection.c:150 ../app/tools/gimpeditselectiontool.c:201
 msgid "Move Selection"
 msgstr "Auswahl verschieben"
 
@@ -8540,7 +8540,7 @@ msgid "Navigate the image display"
 msgstr "In der Bildansicht navigieren"
 
 #: ../app/display/gimpdisplayshell.c:1207
-#: ../app/display/gimpdisplayshell.c:1297 ../app/widgets/gimptoolbox.c:213
+#: ../app/display/gimpdisplayshell.c:1301 ../app/widgets/gimptoolbox.c:213
 msgid "Drop image files here to open them"
 msgstr "Ziehen Sie Bilddateien hierher, um sie zu öffnen"
 
@@ -8646,48 +8646,44 @@ msgstr "Skalierung:"
 msgid "Zoom:"
 msgstr "Maßstab:"
 
-#: ../app/display/gimpdisplayshell-title.c:232
+#: ../app/display/gimpdisplayshell-title.c:233
 msgid "RGB-empty"
 msgstr "RGB leer"
 
-#: ../app/display/gimpdisplayshell-title.c:235
+#: ../app/display/gimpdisplayshell-title.c:236
 msgid "grayscale-empty"
 msgstr "Graustufen leer"
 
-#: ../app/display/gimpdisplayshell-title.c:235
+#: ../app/display/gimpdisplayshell-title.c:236
 msgid "grayscale"
 msgstr "Graustufen"
 
-#: ../app/display/gimpdisplayshell-title.c:238
+#: ../app/display/gimpdisplayshell-title.c:239
 msgid "indexed-empty"
 msgstr "indiziert leer"
 
-#: ../app/display/gimpdisplayshell-title.c:238
+#: ../app/display/gimpdisplayshell-title.c:239
 msgid "indexed"
 msgstr "indiziert"
 
-#: ../app/display/gimpdisplayshell-title.c:292
+#: ../app/display/gimpdisplayshell-title.c:293
 msgid "(modified)"
 msgstr "(verändert)"
 
-#: ../app/display/gimpdisplayshell-title.c:297
+#: ../app/display/gimpdisplayshell-title.c:298
 msgid "(clean)"
 msgstr "(bereinigt)"
 
-#: ../app/display/gimpdisplayshell-title.c:336
-#: ../app/display/gimpdisplayshell-title.c:348
+#: ../app/display/gimpdisplayshell-title.c:337
+#: ../app/display/gimpdisplayshell-title.c:349
 #: ../app/widgets/gimpactiongroup.c:803
 msgid "(none)"
 msgstr "(kein)"
 
-#: ../app/display/gimpstatusbar.c:338
+#: ../app/display/gimpstatusbar.c:339
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "<i>%s</i> abbrechen"
-
-#: ../app/display/gimpstatusbar.c:574
-msgid "Other..."
-msgstr "Weitere …"
 
 #: ../app/file/file-open.c:131 ../app/file/file-save.c:111
 #, c-format
@@ -8916,12 +8912,16 @@ msgstr ""
 #: ../app/pdb/floating-sel-cmds.c:184
 #, c-format
 msgid "Cannot rigor this layer because it is not a floating selection."
-msgstr "Diese Ebene konnte nicht gesichert werden, da sie keine schwebende Auswahl ist."
+msgstr ""
+"Diese Ebene konnte nicht gesichert werden, da sie keine schwebende Auswahl "
+"ist."
 
 #: ../app/pdb/floating-sel-cmds.c:217
 #, c-format
 msgid "Cannot relax this layer because it is not a floating selection."
-msgstr "Diese Ebene konnte nicht wiederhergestellt werden, da sie keine schwebende Auswahl ist."
+msgstr ""
+"Diese Ebene konnte nicht wiederhergestellt werden, da sie keine schwebende "
+"Auswahl ist."
 
 #: ../app/pdb/gimppdb-query.c:300
 #, c-format
@@ -9193,7 +9193,7 @@ msgstr "Ungültiger Interpreterverweis in Interpreterdatei %s: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Ungültige binäre Formatzeichenkette in Interpreterdatei %s"
 
-#: ../app/plug-in/gimpplugin-message.c:451
+#: ../app/plug-in/gimpplugin-message.c:477
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -9993,13 +9993,13 @@ msgstr "Umfang"
 msgid "Exposure:"
 msgstr "Belichtung:"
 
-#: ../app/tools/gimpeditselectiontool.c:203
-#: ../app/tools/gimpeditselectiontool.c:1173
+#: ../app/tools/gimpeditselectiontool.c:205
+#: ../app/tools/gimpeditselectiontool.c:1175
 msgid "Move Floating Selection"
 msgstr "Schwebende Auswahl bewegen"
 
-#: ../app/tools/gimpeditselectiontool.c:411
-#: ../app/tools/gimpeditselectiontool.c:679
+#: ../app/tools/gimpeditselectiontool.c:413
+#: ../app/tools/gimpeditselectiontool.c:681
 msgid "Move: "
 msgstr "Verschieben: "
 
@@ -10337,7 +10337,7 @@ msgid "Adjustment"
 msgstr "Justierung"
 
 #: ../app/tools/gimpinkoptions-gui.c:68 ../app/tools/gimpinkoptions-gui.c:93
-#: ../app/tools/gimprectangleoptions.c:983 ../app/tools/gimptextoptions.c:441
+#: ../app/tools/gimprectangleoptions.c:983 ../app/tools/gimptextoptions.c:442
 msgid "Size:"
 msgstr "Größe:"
 
@@ -10759,7 +10759,7 @@ msgstr "Polygonauswahl: Ein Polygon freihand auswählen"
 msgid "_Polygon Select"
 msgstr "_Polygonauswahl"
 
-#: ../app/tools/gimppolygonselecttool.c:575
+#: ../app/tools/gimppolygonselecttool.c:574
 msgid "command|Polygon Select"
 msgstr "Polygonauswahl"
 
@@ -10898,7 +10898,7 @@ msgstr "_Skalieren"
 msgid "command|Scale"
 msgstr "Skalieren"
 
-#: ../app/tools/gimpselectionoptions.c:258 ../app/tools/gimptextoptions.c:462
+#: ../app/tools/gimpselectionoptions.c:258 ../app/tools/gimptextoptions.c:463
 msgid "Antialiasing"
 msgstr "Kanten glätten"
 
@@ -11011,36 +11011,36 @@ msgstr "Zeilenabstand"
 msgid "Adjust letter spacing"
 msgstr "Zeichenabstand"
 
-#: ../app/tools/gimptextoptions.c:434
+#: ../app/tools/gimptextoptions.c:435
 msgid "Font:"
 msgstr "Schrift:"
 
-#: ../app/tools/gimptextoptions.c:446
+#: ../app/tools/gimptextoptions.c:451
 msgid "Hinting"
 msgstr "Hinting"
 
-#: ../app/tools/gimptextoptions.c:453
+#: ../app/tools/gimptextoptions.c:456
 msgid "Force auto-hinter"
 msgstr "Auto-Hinting erzwingen"
 
-#: ../app/tools/gimptextoptions.c:470
+#: ../app/tools/gimptextoptions.c:477
 msgid "Text Color"
 msgstr "Textfarbe"
 
-#: ../app/tools/gimptextoptions.c:475
+#: ../app/tools/gimptextoptions.c:482
 msgid "Color:"
 msgstr "Farbe:"
 
-#: ../app/tools/gimptextoptions.c:481
+#: ../app/tools/gimptextoptions.c:488
 msgid "Justify:"
 msgstr "Ausrichtung:"
 
 #. Create a path from the current text
-#: ../app/tools/gimptextoptions.c:503
+#: ../app/tools/gimptextoptions.c:510
 msgid "Path from Text"
 msgstr "Pfad aus Text"
 
-#: ../app/tools/gimptextoptions.c:510
+#: ../app/tools/gimptextoptions.c:517
 msgid "Text along Path"
 msgstr "Text an Pfad"
 
