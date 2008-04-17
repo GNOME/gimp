@@ -1,5 +1,9 @@
 2008-04-17  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: add G_DISABLE_SINGLE_INCLUDES to CPPFLAGS.
+
+2008-04-17  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: remove AC_HEADER_DIRENT, we use GDir all over the
 	place now.
 
