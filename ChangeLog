@@ -1,3 +1,8 @@
+2008-04-17  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: remove AC_HEADER_DIRENT, we use GDir all over the
+	place now.
+
 2008-04-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-coords.c

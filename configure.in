@@ -365,7 +365,6 @@ if test "x$os_win32" = xyes; then
 fi
 
 
-AC_HEADER_DIRENT
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_HEADER_TIME
