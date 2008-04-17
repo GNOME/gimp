@@ -28,7 +28,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
-#include "core/gimpdrawable.h"
+#include "core/gimpitem.h"
 #include "core/gimpundostack.h"
 
 #include "gimpplugin.h"
@@ -42,15 +42,36 @@ typedef struct _GimpPlugInCleanupImage GimpPlugInCleanupImage;
 struct _GimpPlugInCleanupImage
 {
   GimpImage *image;
+  gint       image_ID;
+
   gint       undo_group_count;
+};
+
+
+typedef struct _GimpPlugInCleanupItem GimpPlugInCleanupItem;
+
+struct _GimpPlugInCleanupItem
+{
+  GimpItem *item;
+  gint      item_ID;
 };
 
 
 /*  local function prototypes  */
 
 static GimpPlugInCleanupImage *
-         gimp_plug_in_cleanup_get_image (GimpPlugInProcFrame *proc_frame,
-                                         GimpImage           *image);
+              gimp_plug_in_cleanup_image_new  (GimpImage              *image);
+static void   gimp_plug_in_cleanup_image_free (GimpPlugInCleanupImage *cleanup);
+static GimpPlugInCleanupImage *
+              gimp_plug_in_cleanup_image_get  (GimpPlugInProcFrame    *proc_frame,
+                                               GimpImage              *image);
+
+static GimpPlugInCleanupItem *
+              gimp_plug_in_cleanup_item_new   (GimpItem               *item);
+static void   gimp_plug_in_cleanup_item_free  (GimpPlugInCleanupItem  *item);
+static GimpPlugInCleanupItem *
+              gimp_plug_in_cleanup_item_get   (GimpPlugInProcFrame    *proc_frame,
+                                               GimpItem               *item);
 
 
 /*  public functions  */
@@ -66,16 +87,16 @@ gimp_plug_in_cleanup_undo_group_start (GimpPlugIn *plug_in,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
   proc_frame = gimp_plug_in_get_proc_frame (plug_in);
-  cleanup    = gimp_plug_in_cleanup_get_image (proc_frame, image);
+  cleanup    = gimp_plug_in_cleanup_image_get (proc_frame, image);
 
   if (! cleanup)
     {
-      cleanup = g_slice_new0 (GimpPlugInCleanupImage);
+      cleanup = gimp_plug_in_cleanup_image_new (image);
 
-      cleanup->image            = image;
       cleanup->undo_group_count = image->group_count;
 
-      proc_frame->cleanups = g_list_prepend (proc_frame->cleanups, cleanup);
+      proc_frame->image_cleanups = g_list_prepend (proc_frame->image_cleanups,
+                                                   cleanup);
     }
 
   return TRUE;
@@ -92,15 +113,16 @@ gimp_plug_in_cleanup_undo_group_end (GimpPlugIn *plug_in,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
   proc_frame = gimp_plug_in_get_proc_frame (plug_in);
-  cleanup    = gimp_plug_in_cleanup_get_image (proc_frame, image);
+  cleanup    = gimp_plug_in_cleanup_image_get (proc_frame, image);
 
   if (! cleanup)
     return FALSE;
 
   if (cleanup->undo_group_count == image->group_count - 1)
     {
-      proc_frame->cleanups = g_list_remove (proc_frame->cleanups, cleanup);
-      g_slice_free (GimpPlugInCleanupImage, cleanup);
+      proc_frame->image_cleanups = g_list_remove (proc_frame->image_cleanups,
+                                                  cleanup);
+      gimp_plug_in_cleanup_image_free (cleanup);
     }
 
   return TRUE;
@@ -115,17 +137,17 @@ gimp_plug_in_cleanup (GimpPlugIn          *plug_in,
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (proc_frame != NULL);
 
-  for (list = proc_frame->cleanups; list; list = g_list_next (list))
+  for (list = proc_frame->image_cleanups; list; list = g_list_next (list))
     {
       GimpPlugInCleanupImage *cleanup = list->data;
       GimpImage              *image   = cleanup->image;
 
-      if (! gimp_container_have (plug_in->manager->gimp->images,
-                                 (GimpObject *) image))
-        continue;
+      if (gimp_image_get_by_ID (plug_in->manager->gimp,
+                                cleanup->image_ID) != image)
+        goto free_image_cleanup;
 
       if (image->pushing_undo_group == GIMP_UNDO_GROUP_NONE)
-        continue;
+        goto free_image_cleanup;
 
       if (cleanup->undo_group_count != image->group_count)
         {
@@ -143,27 +165,95 @@ gimp_plug_in_cleanup (GimpPlugIn          *plug_in,
             }
         }
 
-      g_slice_free (GimpPlugInCleanupImage, cleanup);
+    free_image_cleanup:
+      gimp_plug_in_cleanup_image_free (cleanup);
     }
 
-  g_list_free (proc_frame->cleanups);
-  proc_frame->cleanups = NULL;
+  g_list_free (proc_frame->image_cleanups);
+  proc_frame->image_cleanups = NULL;
+
+  for (list = proc_frame->item_cleanups; list; list = g_list_next (list))
+    {
+      GimpPlugInCleanupItem *cleanup = list->data;
+      GimpItem              *item    = cleanup->item;
+
+      if (gimp_item_get_by_ID (plug_in->manager->gimp,
+                               cleanup->item_ID) != item)
+        goto free_item_cleanup;
+
+    free_item_cleanup:
+      gimp_plug_in_cleanup_item_free (cleanup);
+    }
+
+  g_list_free (proc_frame->item_cleanups);
+  proc_frame->item_cleanups = NULL;
 }
 
 
 /*  private functions  */
 
 static GimpPlugInCleanupImage *
-gimp_plug_in_cleanup_get_image (GimpPlugInProcFrame *proc_frame,
+gimp_plug_in_cleanup_image_new (GimpImage *image)
+{
+  GimpPlugInCleanupImage *cleanup = g_slice_new0 (GimpPlugInCleanupImage);
+
+  cleanup->image    = image;
+  cleanup->image_ID = gimp_image_get_ID (image);
+
+  return cleanup;
+}
+
+static void
+gimp_plug_in_cleanup_image_free (GimpPlugInCleanupImage *cleanup)
+{
+  g_slice_free (GimpPlugInCleanupImage, cleanup);
+}
+
+static GimpPlugInCleanupImage *
+gimp_plug_in_cleanup_image_get (GimpPlugInProcFrame *proc_frame,
                                 GimpImage           *image)
 {
   GList *list;
 
-  for (list = proc_frame->cleanups; list; list = g_list_next (list))
+  for (list = proc_frame->image_cleanups; list; list = g_list_next (list))
     {
       GimpPlugInCleanupImage *cleanup = list->data;
 
       if (cleanup->image == image)
+        return cleanup;
+    }
+
+  return NULL;
+}
+
+static GimpPlugInCleanupItem *
+gimp_plug_in_cleanup_item_new (GimpItem *item)
+{
+  GimpPlugInCleanupItem *cleanup = g_slice_new0 (GimpPlugInCleanupItem);
+
+  cleanup->item    = item;
+  cleanup->item_ID = gimp_item_get_ID (item);
+
+  return cleanup;
+}
+
+static void
+gimp_plug_in_cleanup_item_free (GimpPlugInCleanupItem *cleanup)
+{
+  g_slice_free (GimpPlugInCleanupItem, cleanup);
+}
+
+static GimpPlugInCleanupItem *
+gimp_plug_in_cleanup_item_get (GimpPlugInProcFrame *proc_frame,
+                               GimpItem            *item)
+{
+  GList *list;
+
+  for (list = proc_frame->item_cleanups; list; list = g_list_next (list))
+    {
+      GimpPlugInCleanupItem *cleanup = list->data;
+
+      if (cleanup->item == item)
         return cleanup;
     }
 

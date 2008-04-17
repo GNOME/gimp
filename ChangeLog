@@ -1,5 +1,18 @@
 2008-04-17  Michael Natterer  <mitch@gimp.org>
 
+	Add some infrastructure that will be used soon:
+
+	* app/plug-in/gimppluginprocframe.[ch]: replace "cleanup" list
+	by two lists "image_cleanups" and "item_cleanups" and call
+	gimp_plug_in_cleanup() if any of them is non-NULL.
+
+	* app/plug-in/gimpplugin-cleanup.c: add private new() and free()
+	functions for GimpPlugInCleanupImage structs and add the same
+	infrastructure for GimpPlugInCleanupItem structs which are
+	currently unused.
+
+2008-04-17  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: add G_DISABLE_SINGLE_INCLUDES to CPPFLAGS.
 
 2008-04-17  Michael Natterer  <mitch@gimp.org>

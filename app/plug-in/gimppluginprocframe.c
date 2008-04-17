@@ -125,7 +125,7 @@ gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
       proc_frame->main_loop = NULL;
     }
 
-  if (proc_frame->cleanups)
+  if (proc_frame->image_cleanups || proc_frame->item_cleanups)
     gimp_plug_in_cleanup (plug_in, proc_frame);
 }
 

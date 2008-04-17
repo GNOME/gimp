@@ -39,7 +39,8 @@ struct _GimpPlugInProcFrame
   gulong         progress_cancel_id;
 
   /*  lists of things to clean up on dispose  */
-  GList         *cleanups;
+  GList         *image_cleanups;
+  GList         *item_cleanups;
 };
 
 
