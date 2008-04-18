@@ -1,3 +1,8 @@
+2008-04-18  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpblendtool.c (gimp_blend_tool_draw): don't draw the
+	handles on pixel centers, we don't blend between pixel centers.
+
 2008-04-17  Michael Natterer  <mitch@gimp.org>
 
 	Add some infrastructure that will be used soon:

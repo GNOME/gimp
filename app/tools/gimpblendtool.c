@@ -22,7 +22,6 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -360,8 +359,8 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
   /*  Draw start target  */
   gimp_draw_tool_draw_handle (draw_tool,
                               GIMP_HANDLE_CROSS,
-                              floor (blend_tool->start_x) + 0.5,
-                              floor (blend_tool->start_y) + 0.5,
+                              blend_tool->start_x,
+                              blend_tool->start_y,
                               TARGET_SIZE,
                               TARGET_SIZE,
                               GTK_ANCHOR_CENTER,
@@ -370,8 +369,8 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
   /*  Draw end target  */
   gimp_draw_tool_draw_handle (draw_tool,
                               GIMP_HANDLE_CROSS,
-                              floor (blend_tool->end_x) + 0.5,
-                              floor (blend_tool->end_y) + 0.5,
+                              blend_tool->end_x,
+                              blend_tool->end_y,
                               TARGET_SIZE,
                               TARGET_SIZE,
                               GTK_ANCHOR_CENTER,
@@ -379,10 +378,10 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
 
   /*  Draw the line between the start and end coords  */
   gimp_draw_tool_draw_line (draw_tool,
-                            floor (blend_tool->start_x) + 0.5,
-                            floor (blend_tool->start_y) + 0.5,
-                            floor (blend_tool->end_x) + 0.5,
-                            floor (blend_tool->end_y) + 0.5,
+                            blend_tool->start_x,
+                            blend_tool->start_y,
+                            blend_tool->end_x,
+                            blend_tool->end_y,
                             FALSE);
 }
 
