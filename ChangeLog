@@ -1,3 +1,8 @@
+2008-04-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdata.c: prototype indentation and minor declatation
+	and function reordering for the sake of consistency.
+
 2008-04-18  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpblendtool.c (gimp_blend_tool_draw): don't draw the

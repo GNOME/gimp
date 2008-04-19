@@ -63,35 +63,36 @@ enum
 };
 
 
-static void      gimp_data_class_init        (GimpDataClass       *klass);
-static void      gimp_data_tagged_iface_init (GimpTaggedInterface *iface);
+static void      gimp_data_class_init        (GimpDataClass         *klass);
+static void      gimp_data_tagged_iface_init (GimpTaggedInterface   *iface);
 
-static GObject * gimp_data_constructor     (GType                  type,
-                                            guint                  n_params,
-                                            GObjectConstructParam *params);
+static void      gimp_data_init              (GimpData              *data,
+                                              GimpDataClass         *data_class);
 
-static void      gimp_data_init         (GimpData      *data,
-                                         GimpDataClass *data_class);
-static void      gimp_data_finalize     (GObject       *object);
-static void      gimp_data_set_property (GObject       *object,
-                                         guint          property_id,
-                                         const GValue  *value,
-                                         GParamSpec    *pspec);
-static void      gimp_data_get_property (GObject       *object,
-                                         guint          property_id,
-                                         GValue        *value,
-                                         GParamSpec    *pspec);
+static GObject * gimp_data_constructor       (GType                  type,
+                                              guint                  n_params,
+                                              GObjectConstructParam *params);
 
-static gint64    gimp_data_get_memsize  (GimpObject    *object,
-                                         gint64        *gui_size);
+static void      gimp_data_finalize          (GObject               *object);
+static void      gimp_data_set_property      (GObject               *object,
+                                              guint                  property_id,
+                                              const GValue          *value,
+                                              GParamSpec            *pspec);
+static void      gimp_data_get_property      (GObject               *object,
+                                              guint                  property_id,
+                                              GValue                *value,
+                                              GParamSpec            *pspec);
 
-static void      gimp_data_real_dirty   (GimpData      *data);
+static gint64    gimp_data_get_memsize       (GimpObject            *object,
+                                              gint64                *gui_size);
 
-static gboolean  gimp_data_add_tag      (GimpTagged    *tagged,
-                                         GimpTag        tag);
-static gboolean  gimp_data_remove_tag   (GimpTagged    *tagged,
-                                         GimpTag        tag);
-static GList *   gimp_data_get_tags     (GimpTagged    *tagged);
+static void      gimp_data_real_dirty        (GimpData              *data);
+
+static gboolean  gimp_data_add_tag           (GimpTagged            *tagged,
+                                              GimpTag                tag);
+static gboolean  gimp_data_remove_tag        (GimpTagged            *tagged,
+                                              GimpTag                tag);
+static GList *   gimp_data_get_tags          (GimpTagged            *tagged);
 
 
 static guint data_signals[LAST_SIGNAL] = { 0 };
@@ -131,7 +132,7 @@ gimp_data_get_type (void)
                                           &data_info, 0);
 
       g_type_add_interface_static (data_type, GIMP_TYPE_TAGGED, &tagged_info);
-  }
+    }
 
   return data_type;
 }
@@ -217,6 +218,20 @@ gimp_data_init (GimpData      *data,
 
   /*  freeze the data object during construction  */
   gimp_data_freeze (data);
+}
+
+static GObject *
+gimp_data_constructor (GType                  type,
+                       guint                  n_params,
+                       GObjectConstructParam *params)
+{
+  GObject *object;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  gimp_data_thaw (GIMP_DATA (object));
+
+  return object;
 }
 
 static void
@@ -307,20 +322,6 @@ gimp_data_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static GObject *
-gimp_data_constructor (GType                  type,
-                       guint                  n_params,
-                       GObjectConstructParam *params)
-{
-  GObject *object;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  gimp_data_thaw (GIMP_DATA (object));
-
-  return object;
 }
 
 static gint64
