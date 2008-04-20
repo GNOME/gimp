@@ -1,3 +1,13 @@
+2008-04-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-levels.[ch]: replaced unused parameter
+	"context" by "progress" and pass the progress on internally.
+	Factor common code out to gimp_drawable_levels_internal().
+
+	* tools/pdbgen/pdb/color.pdb: pass progress instead of context.
+
+	* app/pdb/color-cmds.c: regenerated.
+
 2008-04-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/psp.c: untabified.

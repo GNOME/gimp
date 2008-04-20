@@ -115,7 +115,7 @@ levels_invoker (GimpProcedure      *procedure,
         success = FALSE;
 
       if (success)
-        gimp_drawable_levels (drawable, context,
+        gimp_drawable_levels (drawable, progress,
                               channel,
                               low_input, high_input,
                               gamma,
@@ -145,7 +145,7 @@ levels_auto_invoker (GimpProcedure      *procedure,
         success = FALSE;
 
       if (success)
-        gimp_drawable_levels_stretch (drawable, context);
+        gimp_drawable_levels_stretch (drawable, progress);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -171,7 +171,7 @@ levels_stretch_invoker (GimpProcedure      *procedure,
         success = FALSE;
 
       if (success)
-        gimp_drawable_levels_stretch (drawable, context);
+        gimp_drawable_levels_stretch (drawable, progress);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

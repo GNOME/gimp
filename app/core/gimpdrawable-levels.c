@@ -34,7 +34,6 @@
 #include "gimp.h"
 #include "gimpimage.h"
 
-#include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-histogram.h"
 #include "gimpdrawable-levels.h"
@@ -42,15 +41,25 @@
 
 #include "gimp-intl.h"
 
+
+/*  local function prototypes  */
+
+static void   gimp_drawable_levels_internal (GimpDrawable     *drawable,
+                                             GimpProgress     *progress,
+                                             GimpLevelsConfig *config);
+
+
+/*  public functions  */
+
 void
-gimp_drawable_levels (GimpDrawable   *drawable,
-                      GimpContext    *context,
-                      gint32          channel,
-                      gint32          low_input,
-                      gint32          high_input,
-                      gdouble         gamma,
-                      gint32          low_output,
-                      gint32          high_output)
+gimp_drawable_levels (GimpDrawable *drawable,
+                      GimpProgress *progress,
+                      gint32        channel,
+                      gint32        low_input,
+                      gint32        high_input,
+                      gdouble       gamma,
+                      gint32        low_output,
+                      gint32        high_output)
 {
   GimpLevelsConfig *config;
 
@@ -86,6 +95,48 @@ gimp_drawable_levels (GimpDrawable   *drawable,
                 "high-output", high_output / 255.0,
                 NULL);
 
+  gimp_drawable_levels_internal (drawable, progress, config);
+
+  g_object_unref (config);
+}
+
+void
+gimp_drawable_levels_stretch (GimpDrawable *drawable,
+                              GimpProgress *progress)
+{
+  GimpLevelsConfig *config;
+  GimpHistogram    *histogram;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (! gimp_drawable_is_indexed (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+
+  if (! gimp_drawable_mask_intersect (drawable, NULL, NULL, NULL, NULL))
+    return;
+
+  config = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
+
+  histogram = gimp_histogram_new ();
+  gimp_drawable_calculate_histogram (drawable, histogram);
+
+  gimp_levels_config_stretch (config, histogram,
+                              gimp_drawable_is_rgb (drawable));
+
+  gimp_histogram_unref (histogram);
+
+  gimp_drawable_levels_internal (drawable, progress, config);
+
+  g_object_unref (config);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_drawable_levels_internal (GimpDrawable     *drawable,
+                               GimpProgress     *progress,
+                               GimpLevelsConfig *config)
+{
   if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
     {
       GeglNode *levels;
@@ -99,7 +150,7 @@ gimp_drawable_levels (GimpDrawable   *drawable,
                      NULL);
 
       gimp_drawable_apply_operation (drawable, levels, TRUE,
-                                     NULL, _("Levels"));
+                                     progress, _("Levels"));
 
       g_object_unref (levels);
     }
@@ -137,83 +188,4 @@ gimp_drawable_levels (GimpDrawable   *drawable,
 
       gimp_drawable_update (drawable, x, y, width, height);
     }
-
-  g_object_unref (config);
-}
-
-void
-gimp_drawable_levels_stretch (GimpDrawable *drawable,
-                              GimpContext  *context)
-{
-  GimpLevelsConfig *config;
-  GimpHistogram    *histogram;
-  gint              x, y;
-  gint              width, height;
-
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (! gimp_drawable_is_indexed (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (GIMP_IS_CONTEXT  (context));
-
-  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-    return;
-
-  config = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
-
-  histogram = gimp_histogram_new ();
-  gimp_drawable_calculate_histogram (drawable, histogram);
-
-  gimp_levels_config_stretch (config, histogram,
-                              gimp_drawable_is_rgb (drawable));
-
-  gimp_histogram_unref (histogram);
-
-  if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
-    {
-      GeglNode *levels;
-
-      levels = g_object_new (GEGL_TYPE_NODE,
-                             "operation", "gimp-levels",
-                             NULL);
-
-      gegl_node_set (levels,
-                     "config", config,
-                     NULL);
-
-      gimp_drawable_apply_operation (drawable, levels, TRUE,
-                                     NULL, _("Levels"));
-
-      g_object_unref (levels);
-    }
-  else
-    {
-      PixelRegion  srcPR, destPR;
-      Levels       levels;
-      GimpLut     *lut;
-
-      gimp_levels_config_to_cruft (config, &levels,
-                                   gimp_drawable_is_rgb (drawable));
-
-      lut  = gimp_lut_new ();
-      gimp_lut_setup (lut,
-                      (GimpLutFunc) levels_lut_func,
-                      &levels,
-                      gimp_drawable_bytes (drawable));
-
-      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                         x, y, width, height, FALSE);
-      pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                         x, y, width, height, TRUE);
-
-      pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
-                                      lut, 2, &srcPR, &destPR);
-
-      gimp_lut_free (lut);
-
-      gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
-
-      gimp_drawable_update (drawable, x, y, width, height);
-    }
-
-  g_object_unref (config);
 }

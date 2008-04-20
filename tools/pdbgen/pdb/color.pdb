@@ -103,7 +103,7 @@ HELP
     success = FALSE;
 
   if (success)
-    gimp_drawable_levels (drawable, context,
+    gimp_drawable_levels (drawable, progress,
                           channel,
                           low_input, high_input,
                           gamma,
@@ -141,7 +141,7 @@ HELP
     success = FALSE;
 
   if (success)
-    gimp_drawable_levels_stretch (drawable, context);
+    gimp_drawable_levels_stretch (drawable, progress);
 }
 CODE
     );
@@ -164,7 +164,7 @@ sub levels_auto {
     success = FALSE;
 
   if (success)
-    gimp_drawable_levels_stretch (drawable, context);
+    gimp_drawable_levels_stretch (drawable, progress);
 }
 CODE
     );

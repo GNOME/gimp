@@ -21,7 +21,7 @@
 
 
 void   gimp_drawable_levels         (GimpDrawable *drawable,
-                                     GimpContext  *context,
+                                     GimpProgress *progress,
                                      gint32        channel,
                                      gint32        low_input,
                                      gint32        high_input,
@@ -30,7 +30,7 @@ void   gimp_drawable_levels         (GimpDrawable *drawable,
                                      gint32        high_output);
 
 void   gimp_drawable_levels_stretch (GimpDrawable *drawable,
-                                     GimpContext  *context);
+                                     GimpProgress *progress);
 
 
 #endif  /*  __GIMP_DRAWABLE_LEVELS_H__  */
