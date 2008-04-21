@@ -7,10 +7,10 @@
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: libgimp HEAD\n"
+"Project-Id-Version: libgimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-26 04:57+0300\n"
-"PO-Revision-Date: 2007-10-19 03:15+0300\n"
+"POT-Creation-Date: 2008-04-21 19:59+0400\n"
+"PO-Revision-Date: 2008-04-09 18:58+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -324,15 +324,15 @@ msgstr "Возвращаемые значения"
 msgid "Additional Information"
 msgstr "Дополнительная информация"
 
-#: ../libgimp/gimpprocview.c:210
+#: ../libgimp/gimpprocview.c:209
 msgid "Author:"
 msgstr "Автор:"
 
-#: ../libgimp/gimpprocview.c:222
+#: ../libgimp/gimpprocview.c:221
 msgid "Date:"
 msgstr "Дата:"
 
-#: ../libgimp/gimpprocview.c:234
+#: ../libgimp/gimpprocview.c:233
 msgid "Copyright:"
 msgstr "Авторские права:"
 
@@ -712,58 +712,29 @@ msgstr "Расширение GIMP"
 msgid "Temporary Procedure"
 msgstr "Временная процедура"
 
-#: ../libgimpbase/gimpmemsize.c:180
-#, c-format
-msgid "%d Byte"
-msgid_plural "%d Bytes"
-msgstr[0] "%d байт"
-msgstr[1] "%d байта"
-msgstr[2] "%d байт"
+#: ../libgimpbase/gimpbaseenums.c:1047
+msgid "From left to right"
+msgstr "Слева направо"
 
-#: ../libgimpbase/gimpmemsize.c:186
-#, c-format
-msgid "%.2f KB"
-msgstr "%.2f Кбайт"
+#: ../libgimpbase/gimpbaseenums.c:1048
+msgid "From right to left"
+msgstr "Справа налево"
 
-#: ../libgimpbase/gimpmemsize.c:190
-#, c-format
-msgid "%.1f KB"
-msgstr "%.1f Кбайт"
+#: ../libgimpbase/gimpbaseenums.c:1078
+msgid "Left justified"
+msgstr "Выключка влево"
 
-#: ../libgimpbase/gimpmemsize.c:194
-#, c-format
-msgid "%d KB"
-msgstr "%d Кбайт"
+#: ../libgimpbase/gimpbaseenums.c:1079
+msgid "Right justified"
+msgstr "Выключка вправо"
 
-#: ../libgimpbase/gimpmemsize.c:201
-#, c-format
-msgid "%.2f MB"
-msgstr "%.2f Мбайт"
+#: ../libgimpbase/gimpbaseenums.c:1080
+msgid "Centered"
+msgstr "Выключка по центру"
 
-#: ../libgimpbase/gimpmemsize.c:205
-#, c-format
-msgid "%.1f MB"
-msgstr "%.1f Мбайт"
-
-#: ../libgimpbase/gimpmemsize.c:209
-#, c-format
-msgid "%d MB"
-msgstr "%d Мбайт"
-
-#: ../libgimpbase/gimpmemsize.c:216
-#, c-format
-msgid "%.2f GB"
-msgstr "%.2f Гбайт"
-
-#: ../libgimpbase/gimpmemsize.c:220
-#, c-format
-msgid "%.1f GB"
-msgstr "%.1f Гбайт"
-
-#: ../libgimpbase/gimpmemsize.c:224
-#, c-format
-msgid "%d GB"
-msgstr "%d Гбайт"
+#: ../libgimpbase/gimpbaseenums.c:1081
+msgid "Filled"
+msgstr "Полная выключка"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
 #: ../modules/cdisplay_lcms.c:187 ../modules/colorsel_cmyk_lcms.c:411
@@ -966,7 +937,7 @@ msgstr "Сбой при загрузке"
 msgid "Not loaded"
 msgstr "Не загружен"
 
-#: ../libgimpthumb/gimpthumb-utils.c:125
+#: ../libgimpthumb/gimpthumb-utils.c:123
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -976,7 +947,7 @@ msgstr ""
 "Файлы предварительного просмотра будут храниться в каталоге для временных "
 "файлов (%s)."
 
-#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
+#: ../libgimpthumb/gimpthumb-utils.c:247 ../libgimpthumb/gimpthumb-utils.c:315
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Не удалось создать каталог файлов предварительного просмотра '%s'."
@@ -1042,6 +1013,10 @@ msgstr ""
 #: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
 msgstr "HTML-р_азметка:"
+
+#: ../libgimpwidgets/gimphelpui.c:420
+msgid "Press F1 for more help"
+msgstr "Нажмите F1 для получения полной справки"
 
 #: ../libgimpwidgets/gimpfileentry.c:174
 msgid "Open a file selector to browse your folders"
@@ -1861,3 +1836,36 @@ msgstr "GIMP"
 #: ../modules/controller_midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "Контроллер входящих MIDI-событий"
+
+#~ msgid "%d Byte"
+#~ msgid_plural "%d Bytes"
+#~ msgstr[0] "%d байт"
+#~ msgstr[1] "%d байта"
+#~ msgstr[2] "%d байт"
+
+#~ msgid "%.2f KB"
+#~ msgstr "%.2f Кбайт"
+
+#~ msgid "%.1f KB"
+#~ msgstr "%.1f Кбайт"
+
+#~ msgid "%d KB"
+#~ msgstr "%d Кбайт"
+
+#~ msgid "%.2f MB"
+#~ msgstr "%.2f Мбайт"
+
+#~ msgid "%.1f MB"
+#~ msgstr "%.1f Мбайт"
+
+#~ msgid "%d MB"
+#~ msgstr "%d Мбайт"
+
+#~ msgid "%.2f GB"
+#~ msgstr "%.2f Гбайт"
+
+#~ msgid "%.1f GB"
+#~ msgstr "%.1f Гбайт"
+
+#~ msgid "%d GB"
+#~ msgstr "%d Гбайт"
