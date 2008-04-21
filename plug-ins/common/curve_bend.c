@@ -745,7 +745,7 @@ run (const gchar      *name,
               p_copy_yval (cd, OUTLINE_UPPER,
                            param[16].data.d_int32,
                            param[17].data.d_int8array);
-              p_copy_yval (cd, OUTLINE_UPPER,
+              p_copy_yval (cd, OUTLINE_LOWER,
                            param[18].data.d_int32,
                            param[19].data.d_int8array);
             }
