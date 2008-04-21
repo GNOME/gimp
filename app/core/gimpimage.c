@@ -31,7 +31,6 @@
 #include "core-types.h"
 
 #include "base/temp-buf.h"
-#include "base/tile-manager.h"
 
 #include "config/gimpcoreconfig.h"
 
@@ -588,8 +587,6 @@ gimp_image_init (GimpImage *image)
 
   image->tattoo_state          = 0;
 
-  image->shadow                = NULL;
-
   image->projection            = gimp_projection_new (image);
 
   image->guides                = NULL;
@@ -869,9 +866,6 @@ gimp_image_finalize (GObject *object)
       image->projection = NULL;
     }
 
-  if (image->shadow)
-    gimp_image_free_shadow_tiles (image);
-
   if (image->colormap)
     {
       g_free (image->colormap);
@@ -985,8 +979,6 @@ gimp_image_get_memsize (GimpObject *object,
 
   if (gimp_image_get_colormap (image))
     memsize += GIMP_IMAGE_COLORMAP_SIZE;
-
-  memsize += tile_manager_get_memsize (image->shadow, FALSE);
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (image->projection),
                                       gui_size);
@@ -2260,48 +2252,6 @@ gimp_image_transform_temp_buf (const GimpImage *dest_image,
     }
 
   return ret_buf;
-}
-
-
-/*  shadow tiles  */
-
-TileManager *
-gimp_image_get_shadow_tiles (GimpImage *image,
-                             gint       width,
-                             gint       height,
-                             gint       bpp)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  if (image->shadow)
-    {
-      if ((width  != tile_manager_width  (image->shadow)) ||
-          (height != tile_manager_height (image->shadow)) ||
-          (bpp    != tile_manager_bpp    (image->shadow)))
-        {
-          gimp_image_free_shadow_tiles (image);
-        }
-      else
-        {
-          return image->shadow;
-        }
-    }
-
-  image->shadow = tile_manager_new (width, height, bpp);
-
-  return image->shadow;
-}
-
-void
-gimp_image_free_shadow_tiles (GimpImage *image)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-
-  if (image->shadow)
-    {
-      tile_manager_unref (image->shadow);
-      image->shadow = NULL;
-    }
 }
 
 

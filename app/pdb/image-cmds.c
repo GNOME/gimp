@@ -316,7 +316,6 @@ image_free_shadow_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_image_free_shadow_tiles (image);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -2595,12 +2594,12 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-free-shadow");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-free-shadow",
-                                     "Free the specified image's shadow data (if it exists).",
-                                     "This procedure is intended as a memory saving device. If any shadow memory has been allocated, it will be freed automatically on a call to 'gimp-image-delete'.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'gimp-drawable-free-shadow' instead.",
+                                     "This procedure is deprecated! Use 'gimp-drawable-free-shadow' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-free-shadow");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",

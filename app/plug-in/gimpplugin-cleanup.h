@@ -27,6 +27,11 @@ gboolean   gimp_plug_in_cleanup_undo_group_start (GimpPlugIn          *plug_in,
 gboolean   gimp_plug_in_cleanup_undo_group_end   (GimpPlugIn          *plug_in,
                                                   GimpImage           *image);
 
+gboolean   gimp_plug_in_cleanup_add_shadow       (GimpPlugIn          *plug_in,
+                                                  GimpDrawable        *drawable);
+gboolean   gimp_plug_in_cleanup_remove_shadow    (GimpPlugIn          *plug_in,
+                                                  GimpDrawable        *drawable);
+
 void       gimp_plug_in_cleanup                  (GimpPlugIn          *plug_in,
                                                   GimpPlugInProcFrame *proc_frame);
 

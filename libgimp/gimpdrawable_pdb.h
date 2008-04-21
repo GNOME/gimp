@@ -76,6 +76,7 @@ gboolean                 gimp_drawable_mask_intersect     (gint32               
                                                            gint                       *height);
 gboolean                 gimp_drawable_merge_shadow       (gint32                      drawable_ID,
                                                            gboolean                    undo);
+gboolean                 gimp_drawable_free_shadow        (gint32                      drawable_ID);
 gboolean                 gimp_drawable_update             (gint32                      drawable_ID,
                                                            gint                        x,
                                                            gint                        y,

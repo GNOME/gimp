@@ -38,6 +38,7 @@ struct _GimpDrawable
   GimpItem       parent_instance;
 
   TileManager   *tiles;              /* tiles for drawable data        */
+  TileManager   *shadow;             /* shadow buffer tiles            */
 
   gint           bytes;              /* bytes per pixel                */
   GimpImageType  type;               /* type of drawable               */
@@ -184,11 +185,6 @@ void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
                                                   gint                y2,
                                                   TileManager        *tiles,
                                                   gboolean            sparse);
-
-TileManager   * gimp_drawable_get_shadow_tiles   (GimpDrawable       *drawable);
-void            gimp_drawable_merge_shadow       (GimpDrawable       *drawable,
-                                                  gboolean            push_undo,
-                                                  const gchar        *undo_desc);
 
 void            gimp_drawable_fill               (GimpDrawable       *drawable,
                                                   const GimpRGB      *color,

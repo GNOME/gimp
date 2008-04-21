@@ -35,6 +35,7 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
 #include "gimpdrawable-colorize.h"
+#include "gimpdrawable-shadow.h"
 
 #include "gimp-intl.h"
 
@@ -96,7 +97,9 @@ gimp_drawable_colorize (GimpDrawable *drawable,
           pixel_regions_process_parallel ((PixelProcessorFunc) colorize,
                                           &cruft, 2, &srcPR, &destPR);
 
-          gimp_drawable_merge_shadow (drawable, TRUE, _("Colorize"));
+          gimp_drawable_merge_shadow_tiles (drawable, TRUE, _("Colorize"));
+          gimp_drawable_free_shadow_tiles (drawable);
+
           gimp_drawable_update (drawable, x, y, width, height);
         }
     }

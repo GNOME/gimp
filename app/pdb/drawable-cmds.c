@@ -32,11 +32,13 @@
 #include "core/gimpdrawable-foreground-extract.h"
 #include "core/gimpdrawable-offset.h"
 #include "core/gimpdrawable-preview.h"
+#include "core/gimpdrawable-shadow.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparamspecs.h"
+#include "plug-in/gimpplugin-cleanup.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
 #include "text/gimptextlayer.h"
@@ -851,10 +853,35 @@ drawable_merge_shadow_invoker (GimpProcedure      *procedure,
           if (gimp->plug_in_manager->current_plug_in)
             undo_desc = gimp_plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);
 
-          gimp_drawable_merge_shadow (drawable, undo, undo_desc);
+          gimp_drawable_merge_shadow_tiles (drawable, undo, undo_desc);
         }
       else
         success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
+drawable_free_shadow_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+
+  if (success)
+    {
+      if (gimp->plug_in_manager->current_plug_in)
+        gimp_plug_in_cleanup_remove_shadow (gimp->plug_in_manager->current_plug_in,
+                                            drawable);
+
+      gimp_drawable_free_shadow_tiles (drawable);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -2128,7 +2155,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-merge-shadow",
                                      "Merge the shadow buffer with the specified drawable.",
-                                     "This procedure combines the contents of the image's shadow buffer (for temporary processing) with the specified drawable. The 'undo' parameter specifies whether to add an undo step for the operation. Requesting no undo is useful for such applications as 'auto-apply'.",
+                                     "This procedure combines the contents of the drawable's shadow buffer (for temporary processing) with the specified drawable. The 'undo' parameter specifies whether to add an undo step for the operation. Requesting no undo is useful for such applications as 'auto-apply'.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -2145,6 +2172,29 @@ register_drawable_procs (GimpPDB *pdb)
                                                      "Push merge to undo stack?",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-free-shadow
+   */
+  procedure = gimp_procedure_new (drawable_free_shadow_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-free-shadow");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-drawable-free-shadow",
+                                     "Free the specified drawable's shadow data (if it exists).",
+                                     "This procedure is intended as a memory saving device. If any shadow memory has been allocated, it will be freed automatically when the drawable is removed from the image, or when the plug-in procedure which allocated it returns.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2008",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

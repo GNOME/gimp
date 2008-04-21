@@ -26,9 +26,10 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpdrawable-shadow.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
-#include "core/gimpitem.h"
 #include "core/gimpundostack.h"
 
 #include "gimpplugin.h"
@@ -54,6 +55,8 @@ struct _GimpPlugInCleanupItem
 {
   GimpItem *item;
   gint      item_ID;
+
+  gboolean  shadow_tiles;
 };
 
 
@@ -128,6 +131,58 @@ gimp_plug_in_cleanup_undo_group_end (GimpPlugIn *plug_in,
   return TRUE;
 }
 
+gboolean
+gimp_plug_in_cleanup_add_shadow (GimpPlugIn   *plug_in,
+                                 GimpDrawable *drawable)
+{
+  GimpPlugInProcFrame   *proc_frame;
+  GimpPlugInCleanupItem *cleanup;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+  cleanup    = gimp_plug_in_cleanup_item_get (proc_frame, GIMP_ITEM (drawable));
+
+  if (! cleanup)
+    {
+      cleanup = gimp_plug_in_cleanup_item_new (GIMP_ITEM (drawable));
+
+      proc_frame->item_cleanups = g_list_prepend (proc_frame->item_cleanups,
+                                                  cleanup);
+    }
+
+  cleanup->shadow_tiles = TRUE;
+
+  return TRUE;
+}
+
+gboolean
+gimp_plug_in_cleanup_remove_shadow (GimpPlugIn   *plug_in,
+                                    GimpDrawable *drawable)
+{
+  GimpPlugInProcFrame   *proc_frame;
+  GimpPlugInCleanupItem *cleanup;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+  cleanup    = gimp_plug_in_cleanup_item_get (proc_frame, GIMP_ITEM (drawable));
+
+  if (! cleanup)
+    return FALSE;
+
+  if (! cleanup->shadow_tiles)
+    return FALSE;
+
+  proc_frame->item_cleanups = g_list_remove (proc_frame->item_cleanups,
+                                             cleanup);
+  gimp_plug_in_cleanup_item_free (cleanup);
+
+  return TRUE;
+}
+
 void
 gimp_plug_in_cleanup (GimpPlugIn          *plug_in,
                       GimpPlugInProcFrame *proc_frame)
@@ -180,6 +235,17 @@ gimp_plug_in_cleanup (GimpPlugIn          *plug_in,
       if (gimp_item_get_by_ID (plug_in->manager->gimp,
                                cleanup->item_ID) != item)
         goto free_item_cleanup;
+
+      if (cleanup->shadow_tiles)
+        {
+          GimpProcedure *proc = proc_frame->procedure;
+
+          g_printerr ("Plug-In '%s' didn't free shadow tiles of drawable '%s'.\n",
+                      gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc)),
+                      gimp_object_get_name (GIMP_OBJECT (item)));
+
+          gimp_drawable_free_shadow_tiles (GIMP_DRAWABLE (item));
+        }
 
     free_item_cleanup:
       gimp_plug_in_cleanup_item_free (cleanup);

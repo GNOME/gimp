@@ -125,8 +125,6 @@ struct _GimpImage
 
   GimpTattoo         tattoo_state;          /*  the last used tattoo         */
 
-  TileManager       *shadow;                /*  shadow buffer tiles          */
-
   GimpProjection    *projection;            /*  projection layers & channels */
 
   GList             *guides;                /*  guides                       */
@@ -377,15 +375,6 @@ TempBuf       * gimp_image_transform_temp_buf    (const GimpImage    *dest_image
                                                   GimpImageType       dest_type,
                                                   TempBuf            *temp_buf,
                                                   gboolean           *new_buf);
-
-
-/*  shadow tiles  */
-
-TileManager   * gimp_image_get_shadow_tiles      (GimpImage          *image,
-                                                  gint                width,
-                                                  gint                height,
-                                                  gint                bpp);
-void            gimp_image_free_shadow_tiles     (GimpImage          *image);
 
 
 /*  parasites  */

@@ -29,6 +29,7 @@
 
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
+#include "gimpdrawable-shadow.h"
 #include "gimpprogress.h"
 
 #ifdef __GNUC__
@@ -75,10 +76,6 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
                                 "linear",       linear,
                                 NULL);
 
-#ifdef __GNUC__
-#warning FIXME: gegl_node_add_child() is not public API
-#endif
-
   gegl_node_add_child (gegl, operation);
 
   gegl_node_link_many (input, operation, output, NULL);
@@ -94,7 +91,9 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
 
   g_object_unref (processor);
 
-  gimp_drawable_merge_shadow (drawable, TRUE, undo_desc);
+  gimp_drawable_merge_shadow_tiles (drawable, TRUE, undo_desc);
+  gimp_drawable_free_shadow_tiles (drawable);
+
   gimp_drawable_update (drawable, rect.x, rect.y, rect.width, rect.height);
 
   if (progress)

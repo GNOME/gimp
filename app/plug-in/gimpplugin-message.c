@@ -35,11 +35,13 @@
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdrawable-shadow.h"
 
 #include "pdb/gimppdb.h"
 #include "pdb/gimp-pdb-compat.h"
 
 #include "gimpplugin.h"
+#include "gimpplugin-cleanup.h"
 #include "gimpplugin-message.h"
 #include "gimppluginmanager.h"
 #include "gimpplugindef.h"
@@ -244,9 +246,15 @@ gimp_plug_in_handle_tile_request (GimpPlugIn *plug_in,
         }
 
       if (tile_info->shadow)
-        tm = gimp_drawable_get_shadow_tiles (drawable);
+        {
+          tm = gimp_drawable_get_shadow_tiles (drawable);
+
+          gimp_plug_in_cleanup_add_shadow (plug_in, drawable);
+        }
       else
-        tm = gimp_drawable_get_tiles (drawable);
+        {
+          tm = gimp_drawable_get_tiles (drawable);
+        }
 
       tile = tile_manager_get (tm, tile_info->tile_num, TRUE, TRUE);
 
@@ -313,9 +321,15 @@ gimp_plug_in_handle_tile_request (GimpPlugIn *plug_in,
         }
 
       if (request->shadow)
-        tm = gimp_drawable_get_shadow_tiles (drawable);
+        {
+          tm = gimp_drawable_get_shadow_tiles (drawable);
+
+          gimp_plug_in_cleanup_add_shadow (plug_in, drawable);
+        }
       else
-        tm = gimp_drawable_get_tiles (drawable);
+        {
+          tm = gimp_drawable_get_tiles (drawable);
+        }
 
       tile = tile_manager_get (tm, request->tile_num, TRUE, FALSE);
 

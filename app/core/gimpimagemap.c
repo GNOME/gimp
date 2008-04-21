@@ -30,6 +30,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimpdrawable.h"
+#include "gimpdrawable-shadow.h"
 #include "gimpimage.h"
 #include "gimpimagemap.h"
 #include "gimpmarshal.h"
@@ -216,6 +217,8 @@ gimp_image_map_finalize (GObject *object)
 
   if (image_map->drawable)
     {
+      gimp_drawable_free_shadow_tiles (image_map->drawable);
+
       g_object_unref (image_map->drawable);
       image_map->drawable = NULL;
     }
@@ -687,8 +690,6 @@ gimp_image_map_abort (GimpImageMap *image_map)
 static gboolean
 gimp_image_map_do (GimpImageMap *image_map)
 {
-  GimpImage *image;
-
   if (! gimp_item_is_attached (GIMP_ITEM (image_map->drawable)))
     {
       image_map->idle_id = 0;
@@ -707,8 +708,6 @@ gimp_image_map_do (GimpImageMap *image_map)
 
      return FALSE;
     }
-
-  image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
 
   if (image_map->gegl)
     {
@@ -758,7 +757,9 @@ gimp_image_map_do (GimpImageMap *image_map)
                                  &image_map->destPR);
 
 
-          pixel_region_init (&srcPR, image->shadow, x, y, w, h, FALSE);
+          pixel_region_init (&srcPR,
+                             gimp_drawable_get_shadow_tiles (image_map->drawable),
+                             x, y, w, h, FALSE);
 
           gimp_drawable_apply_region (image_map->drawable, &srcPR,
                                       FALSE, NULL,
@@ -791,16 +792,13 @@ gimp_image_map_data_written (GObject             *operation,
                              const GeglRectangle *extent,
                              GimpImageMap        *image_map)
 {
-  GimpImage   *image;
-  PixelRegion  srcPR;
-  PixelRegion  destPR;
+  PixelRegion srcPR;
+  PixelRegion destPR;
 
 #if 0
   g_print ("%s: rect = { %d, %d, %d, %d }\n",
            G_STRFUNC, extent->x, extent->y, extent->width, extent->height);
 #endif
-
-  image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
 
   /* Reset to initial drawable conditions. */
   pixel_region_init (&srcPR, image_map->undo_tiles,
@@ -818,7 +816,8 @@ gimp_image_map_data_written (GObject             *operation,
   copy_region (&srcPR, &destPR);
 
   /* Apply the result of the gegl graph. */
-  pixel_region_init (&srcPR, image->shadow,
+  pixel_region_init (&srcPR,
+                     gimp_drawable_get_shadow_tiles (image_map->drawable),
                      extent->x,
                      extent->y,
                      extent->width,

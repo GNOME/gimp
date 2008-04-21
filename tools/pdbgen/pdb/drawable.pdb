@@ -51,8 +51,8 @@ sub drawable_merge_shadow {
     $blurb = 'Merge the shadow buffer with the specified drawable.';
 
     $help = <<'HELP';
-This procedure combines the contents of the image's shadow buffer (for
-temporary processing) with the specified drawable. The 'undo'
+This procedure combines the contents of the drawable's shadow buffer
+(for temporary processing) with the specified drawable. The 'undo'
 parameter specifies whether to add an undo step for the operation.
 Requesting no undo is useful for such applications as 'auto-apply'.
 HELP
@@ -67,7 +67,9 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("plug-in/gimpplugin.h" "plug-in/gimppluginmanager.h") ],
+	headers => [ qw("core/gimpdrawable-shadow.h"
+                        "plug-in/gimpplugin.h"
+                        "plug-in/gimppluginmanager.h") ],
 	code    => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), error))
@@ -77,10 +79,41 @@ HELP
       if (gimp->plug_in_manager->current_plug_in)
         undo_desc = gimp_plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);
 
-      gimp_drawable_merge_shadow (drawable, undo, undo_desc);
+      gimp_drawable_merge_shadow_tiles (drawable, undo, undo_desc);
     }
   else
     success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_free_shadow {
+    $blurb = "Free the specified drawable's shadow data (if it exists).";
+
+    $help = <<'HELP';
+This procedure is intended as a memory saving device. If any shadow
+memory has been allocated, it will be freed automatically when the
+drawable is removed from the image, or when the plug-in procedure
+which allocated it returns.
+HELP
+
+    &mitch_pdb_misc('2008', '2.6');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    %invoke = (
+	headers => [ qw("plug-in/gimpplugin-cleanup.h") ],
+	code => <<'CODE'
+{
+  if (gimp->plug_in_manager->current_plug_in)
+    gimp_plug_in_cleanup_remove_shadow (gimp->plug_in_manager->current_plug_in,
+                                        drawable);
+
+  gimp_drawable_free_shadow_tiles (drawable);
 }
 CODE
     );
@@ -1322,6 +1355,7 @@ CODE
             drawable_mask_bounds
             drawable_mask_intersect
             drawable_merge_shadow
+            drawable_free_shadow
             drawable_update
             drawable_get_pixel drawable_set_pixel
 	    drawable_fill

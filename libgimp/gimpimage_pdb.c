@@ -26,6 +26,9 @@
 #include <string.h>
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_IMAGE_PDB_H__
+#include "gimpimage_pdb.h"
 
 /**
  * gimp_image_is_valid:
@@ -300,11 +303,8 @@ gimp_image_height (gint32 image_ID)
  * gimp_image_free_shadow:
  * @image_ID: The image.
  *
- * Free the specified image's shadow data (if it exists).
- *
- * This procedure is intended as a memory saving device. If any shadow
- * memory has been allocated, it will be freed automatically on a call
- * to gimp_image_delete().
+ * This procedure is deprecated! Use gimp_drawable_free_shadow()
+ * instead.
  *
  * Returns: TRUE on success.
  */

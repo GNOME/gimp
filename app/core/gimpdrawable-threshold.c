@@ -35,6 +35,7 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
 #include "gimpdrawable-threshold.h"
+#include "gimpdrawable-shadow.h"
 
 #include "gimp-intl.h"
 
@@ -95,7 +96,9 @@ gimp_drawable_threshold (GimpDrawable *drawable,
           pixel_regions_process_parallel ((PixelProcessorFunc) threshold,
                                           &cruft, 2, &srcPR, &destPR);
 
-          gimp_drawable_merge_shadow (drawable, TRUE, _("Threshold"));
+          gimp_drawable_merge_shadow_tiles (drawable, TRUE, _("Threshold"));
+          gimp_drawable_free_shadow_tiles (drawable);
+
           gimp_drawable_update (drawable, x, y, width, height);
         }
     }

@@ -37,6 +37,7 @@
 #include "gimpcontext.h"
 #include "gimpdrawable-combine.h"
 #include "gimpdrawable-preview.h"
+#include "gimpdrawable-shadow.h"
 #include "gimpdrawable-transform.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
@@ -74,6 +75,7 @@ static gboolean   gimp_drawable_get_size           (GimpViewable      *viewable,
                                                     gint              *height);
 static void       gimp_drawable_invalidate_preview (GimpViewable      *viewable);
 
+static void       gimp_drawable_removed            (GimpItem          *item);
 static GimpItem * gimp_drawable_duplicate          (GimpItem          *item,
                                                     GType              new_type);
 static void       gimp_drawable_translate          (GimpItem          *item,
@@ -200,6 +202,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   viewable_class->invalidate_preview = gimp_drawable_invalidate_preview;
   viewable_class->get_preview        = gimp_drawable_get_preview;
 
+  item_class->removed                = gimp_drawable_removed;
   item_class->duplicate              = gimp_drawable_duplicate;
   item_class->translate              = gimp_drawable_translate;
   item_class->scale                  = gimp_drawable_scale;
@@ -225,6 +228,7 @@ static void
 gimp_drawable_init (GimpDrawable *drawable)
 {
   drawable->tiles         = NULL;
+  drawable->shadow        = NULL;
   drawable->bytes         = 0;
   drawable->type          = -1;
   drawable->has_alpha     = FALSE;
@@ -255,6 +259,8 @@ gimp_drawable_finalize (GObject *object)
       drawable->tiles = NULL;
     }
 
+  gimp_drawable_free_shadow_tiles (drawable);
+
   if (drawable->preview_cache)
     gimp_preview_cache_invalidate (&drawable->preview_cache);
 
@@ -270,6 +276,7 @@ gimp_drawable_get_memsize (GimpObject *object,
 
   memsize += tile_manager_get_memsize (gimp_drawable_get_tiles (drawable),
                                        FALSE);
+  memsize += tile_manager_get_memsize (drawable->shadow, FALSE);
 
   *gui_size += gimp_preview_cache_get_memsize (drawable->preview_cache);
 
@@ -302,6 +309,17 @@ gimp_drawable_invalidate_preview (GimpViewable *viewable)
 
   if (drawable->preview_cache)
     gimp_preview_cache_invalidate (&drawable->preview_cache);
+}
+
+static void
+gimp_drawable_removed (GimpItem *item)
+{
+  GimpDrawable *drawable = GIMP_DRAWABLE (item);
+
+  gimp_drawable_free_shadow_tiles (drawable);
+
+  if (GIMP_ITEM_CLASS (parent_class)->removed)
+    GIMP_ITEM_CLASS (parent_class)->removed (item);
 }
 
 static GimpItem *
@@ -1054,55 +1072,6 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
   GIMP_DRAWABLE_GET_CLASS (drawable)->push_undo (drawable, undo_desc,
                                                  tiles, sparse,
                                                  x, y, width, height);
-}
-
-TileManager *
-gimp_drawable_get_shadow_tiles (GimpDrawable *drawable)
-{
-  GimpItem *item;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-
-  item = GIMP_ITEM (drawable);
-
-  g_return_val_if_fail (gimp_item_is_attached (item), NULL);
-
-  return gimp_image_get_shadow_tiles (gimp_item_get_image (item),
-                                      gimp_item_width  (item),
-                                      gimp_item_height (item),
-                                      drawable->bytes);
-}
-
-void
-gimp_drawable_merge_shadow (GimpDrawable *drawable,
-                            gboolean      push_undo,
-                            const gchar  *undo_desc)
-{
-  GimpImage *image;
-  gint       x, y, width, height;
-
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  g_return_if_fail (image->shadow != NULL);
-
-  /*  A useful optimization here is to limit the update to the
-   *  extents of the selection mask, as it cannot extend beyond
-   *  them.
-   */
-  if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-    {
-      PixelRegion shadowPR;
-
-      pixel_region_init (&shadowPR, image->shadow,
-                         x, y, width, height, FALSE);
-      gimp_drawable_apply_region (drawable, &shadowPR,
-                                  push_undo, undo_desc,
-                                  GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
-                                  NULL, x, y);
-    }
 }
 
 void

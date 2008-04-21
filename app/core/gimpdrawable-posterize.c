@@ -36,6 +36,7 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
 #include "gimpdrawable-posterize.h"
+#include "gimpdrawable-shadow.h"
 
 #include "gimp-intl.h"
 
@@ -96,7 +97,9 @@ gimp_drawable_posterize (GimpDrawable *drawable,
 
           gimp_lut_free (lut);
 
-          gimp_drawable_merge_shadow (drawable, TRUE, _("Posterize"));
+          gimp_drawable_merge_shadow_tiles (drawable, TRUE, _("Posterize"));
+          gimp_drawable_free_shadow_tiles (drawable);
+
           gimp_drawable_update (drawable, x, y, width, height);
         }
     }

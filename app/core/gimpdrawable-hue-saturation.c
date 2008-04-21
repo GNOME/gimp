@@ -33,8 +33,9 @@
 #include "gimpimage.h"
 
 #include "gimpdrawable.h"
-#include "gimpdrawable-operation.h"
 #include "gimpdrawable-hue-saturation.h"
+#include "gimpdrawable-operation.h"
+#include "gimpdrawable-shadow.h"
 
 #include "gimp-intl.h"
 
@@ -101,7 +102,10 @@ gimp_drawable_hue_saturation (GimpDrawable *drawable,
           pixel_regions_process_parallel ((PixelProcessorFunc) hue_saturation,
                                           &cruft, 2, &srcPR, &destPR);
 
-          gimp_drawable_merge_shadow (drawable, TRUE, _("Hue_Saturation"));
+          gimp_drawable_merge_shadow_tiles (drawable, TRUE,
+                                            _("Hue_Saturation"));
+          gimp_drawable_free_shadow_tiles (drawable);
+
           gimp_drawable_update (drawable, x, y, width, height);
         }
     }

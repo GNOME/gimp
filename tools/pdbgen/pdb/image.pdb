@@ -385,15 +385,7 @@ CODE
 }
 
 sub image_free_shadow {
-    $blurb = "Free the specified image's shadow data (if it exists).";
-
-    $help = <<'HELP';
-This procedure is intended as a memory saving device. If any shadow memory has
-been allocated, it will be freed automatically on a call to
-gimp_image_delete().
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-drawable-free-shadow');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -403,7 +395,6 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_image_free_shadow_tiles (image);
 }
 CODE
     );

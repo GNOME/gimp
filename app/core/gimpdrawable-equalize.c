@@ -32,6 +32,7 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-equalize.h"
 #include "gimpdrawable-histogram.h"
+#include "gimpdrawable-shadow.h"
 #include "gimpimage.h"
 
 #include "gimp-intl.h"
@@ -74,7 +75,8 @@ gimp_drawable_equalize (GimpDrawable *drawable,
   gimp_lut_free (lut);
   gimp_histogram_unref (hist);
 
-  gimp_drawable_merge_shadow (drawable, TRUE, _("Equalize"));
+  gimp_drawable_merge_shadow_tiles (drawable, TRUE, _("Equalize"));
+  gimp_drawable_free_shadow_tiles (drawable);
 
   gimp_drawable_update (drawable, x, y, width, height);
 }

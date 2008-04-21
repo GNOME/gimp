@@ -39,7 +39,9 @@ gboolean                 gimp_image_delete                   (gint32            
 GimpImageBaseType        gimp_image_base_type                (gint32                image_ID);
 gint                     gimp_image_width                    (gint32                image_ID);
 gint                     gimp_image_height                   (gint32                image_ID);
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean                 gimp_image_free_shadow              (gint32                image_ID);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gboolean                 gimp_image_resize                   (gint32                image_ID,
                                                               gint                  new_width,
                                                               gint                  new_height,
