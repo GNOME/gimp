@@ -68,13 +68,17 @@ static void   gimp_plug_in_cleanup_image_free (GimpPlugInCleanupImage *cleanup);
 static GimpPlugInCleanupImage *
               gimp_plug_in_cleanup_image_get  (GimpPlugInProcFrame    *proc_frame,
                                                GimpImage              *image);
+static void   gimp_plug_in_cleanup_image      (GimpPlugInProcFrame    *proc_frame,
+                                               GimpPlugInCleanupImage *cleanup);
 
 static GimpPlugInCleanupItem *
               gimp_plug_in_cleanup_item_new   (GimpItem               *item);
-static void   gimp_plug_in_cleanup_item_free  (GimpPlugInCleanupItem  *item);
+static void   gimp_plug_in_cleanup_item_free  (GimpPlugInCleanupItem  *cleanup);
 static GimpPlugInCleanupItem *
               gimp_plug_in_cleanup_item_get   (GimpPlugInProcFrame    *proc_frame,
                                                GimpItem               *item);
+static void   gimp_plug_in_cleanup_item       (GimpPlugInProcFrame    *proc_frame,
+                                               GimpPlugInCleanupItem  *cleanup);
 
 
 /*  public functions  */
@@ -195,32 +199,13 @@ gimp_plug_in_cleanup (GimpPlugIn          *plug_in,
   for (list = proc_frame->image_cleanups; list; list = g_list_next (list))
     {
       GimpPlugInCleanupImage *cleanup = list->data;
-      GimpImage              *image   = cleanup->image;
 
       if (gimp_image_get_by_ID (plug_in->manager->gimp,
-                                cleanup->image_ID) != image)
-        goto free_image_cleanup;
-
-      if (image->pushing_undo_group == GIMP_UNDO_GROUP_NONE)
-        goto free_image_cleanup;
-
-      if (cleanup->undo_group_count != image->group_count)
+                                cleanup->image_ID) == cleanup->image)
         {
-          GimpProcedure *proc = proc_frame->procedure;
-
-          g_message ("Plug-In '%s' left image undo in inconsistent state, "
-                     "closing open undo groups.",
-                     gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc)));
-
-          while (image->pushing_undo_group != GIMP_UNDO_GROUP_NONE &&
-                 cleanup->undo_group_count < image->group_count)
-            {
-              if (! gimp_image_undo_group_end (image))
-                break;
-            }
+          gimp_plug_in_cleanup_image (proc_frame, cleanup);
         }
 
-    free_image_cleanup:
       gimp_plug_in_cleanup_image_free (cleanup);
     }
 
@@ -230,24 +215,13 @@ gimp_plug_in_cleanup (GimpPlugIn          *plug_in,
   for (list = proc_frame->item_cleanups; list; list = g_list_next (list))
     {
       GimpPlugInCleanupItem *cleanup = list->data;
-      GimpItem              *item    = cleanup->item;
 
       if (gimp_item_get_by_ID (plug_in->manager->gimp,
-                               cleanup->item_ID) != item)
-        goto free_item_cleanup;
-
-      if (cleanup->shadow_tiles)
+                               cleanup->item_ID) == cleanup->item)
         {
-          GimpProcedure *proc = proc_frame->procedure;
-
-          g_printerr ("Plug-In '%s' didn't free shadow tiles of drawable '%s'.\n",
-                      gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc)),
-                      gimp_object_get_name (GIMP_OBJECT (item)));
-
-          gimp_drawable_free_shadow_tiles (GIMP_DRAWABLE (item));
+          gimp_plug_in_cleanup_item (proc_frame, cleanup);
         }
 
-    free_item_cleanup:
       gimp_plug_in_cleanup_item_free (cleanup);
     }
 
@@ -292,6 +266,32 @@ gimp_plug_in_cleanup_image_get (GimpPlugInProcFrame *proc_frame,
   return NULL;
 }
 
+static void
+gimp_plug_in_cleanup_image (GimpPlugInProcFrame    *proc_frame,
+                            GimpPlugInCleanupImage *cleanup)
+{
+  GimpImage *image = cleanup->image;
+
+  if (image->pushing_undo_group == GIMP_UNDO_GROUP_NONE)
+    return;
+
+  if (cleanup->undo_group_count != image->group_count)
+    {
+      GimpProcedure *proc = proc_frame->procedure;
+
+      g_message ("Plug-In '%s' left image undo in inconsistent state, "
+                 "closing open undo groups.",
+                 gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc)));
+
+      while (image->pushing_undo_group != GIMP_UNDO_GROUP_NONE &&
+             cleanup->undo_group_count < image->group_count)
+        {
+          if (! gimp_image_undo_group_end (image))
+            break;
+        }
+    }
+}
+
 static GimpPlugInCleanupItem *
 gimp_plug_in_cleanup_item_new (GimpItem *item)
 {
@@ -324,4 +324,22 @@ gimp_plug_in_cleanup_item_get (GimpPlugInProcFrame *proc_frame,
     }
 
   return NULL;
+}
+
+static void
+gimp_plug_in_cleanup_item (GimpPlugInProcFrame   *proc_frame,
+                           GimpPlugInCleanupItem *cleanup)
+{
+  GimpItem *item = cleanup->item;
+
+  if (cleanup->shadow_tiles)
+    {
+      GimpProcedure *proc = proc_frame->procedure;
+
+      g_printerr ("Plug-In '%s' didn't free shadow tiles of drawable '%s'.\n",
+                  gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc)),
+                  gimp_object_get_name (GIMP_OBJECT (item)));
+
+      gimp_drawable_free_shadow_tiles (GIMP_DRAWABLE (item));
+    }
 }

@@ -1,5 +1,11 @@
 2008-04-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/gimpplugin-cleanup.c: do the actual cleanup in
+	utility functions and reduce gimp_plug_in_cleanup() to merely
+	iterating the cleanup lists.
+
+2008-04-21  Michael Natterer  <mitch@gimp.org>
+
 	Move the shadow tiles from the image to the drawable.
 	Fixes bug #100469.
 
