@@ -121,18 +121,34 @@
 /* Block identifiers.
  */
 typedef enum {
-  PSP_IMAGE_BLOCK = 0,          /* General Image Attributes Block (main) */
-  PSP_CREATOR_BLOCK,            /* Creator Data Block (main) */
-  PSP_COLOR_BLOCK,              /* Color Palette Block (main and sub) */
-  PSP_LAYER_START_BLOCK,        /* Layer Bank Block (main) */
-  PSP_LAYER_BLOCK,              /* Layer Block (sub) */
-  PSP_CHANNEL_BLOCK,            /* Channel Block (sub) */
-  PSP_SELECTION_BLOCK,          /* Selection Block (main) */
-  PSP_ALPHA_BANK_BLOCK,         /* Alpha Bank Block (main) */
-  PSP_ALPHA_CHANNEL_BLOCK,      /* Alpha Channel Block (sub) */
-  PSP_THUMBNAIL_BLOCK,          /* Thumbnail Block (main) */
-  PSP_EXTENDED_DATA_BLOCK,      /* Extended Data Block (main) */
-  PSP_TUBE_BLOCK                /* Picture Tube Data Block (main) */
+  PSP_IMAGE_BLOCK = 0,                  /* General Image Attributes Block (main) */
+  PSP_CREATOR_BLOCK,                    /* Creator Data Block (main) */
+  PSP_COLOR_BLOCK,                      /* Color Palette Block (main and sub) */
+  PSP_LAYER_START_BLOCK,                /* Layer Bank Block (main) */
+  PSP_LAYER_BLOCK,                      /* Layer Block (sub) */
+  PSP_CHANNEL_BLOCK,                    /* Channel Block (sub) */
+  PSP_SELECTION_BLOCK,                  /* Selection Block (main) */
+  PSP_ALPHA_BANK_BLOCK,                 /* Alpha Bank Block (main) */
+  PSP_ALPHA_CHANNEL_BLOCK,              /* Alpha Channel Block (sub) */
+  PSP_THUMBNAIL_BLOCK,                  /* Thumbnail Block (main) */
+  PSP_EXTENDED_DATA_BLOCK,              /* Extended Data Block (main) */
+  PSP_TUBE_BLOCK,                       /* Picture Tube Data Block (main) */
+  PSP_ADJUSTMENT_EXTENSION_BLOCK,       /* Adjustment Layer Extension Block (sub) (since PSP6)*/
+  PSP_VECTOR_EXTENSION_BLOCK,           /* Vector Layer Extension Block (sub) (since PSP6) */
+  PSP_SHAPE_BLOCK,                      /* Vector Shape Block (sub) (since PSP6) */
+  PSP_PAINTSTYLE_BLOCK,                 /* Paint Style Block (sub) (since PSP6) */
+  PSP_COMPOSITE_IMAGE_BANK_BLOCK,       /* Composite Image Bank (main) (since PSP6) */
+  PSP_COMPOSITE_ATTRIBUTES_BLOCK,       /* Composite Image Attributes (sub) (since PSP6) */
+  PSP_JPEG_BLOCK,                       /* JPEG Image Block (sub) (since PSP6) */
+  PSP_LINESTYLE_BLOCK,                  /* Line Style Block (sub) (since PSP7) */
+  PSP_TABLE_BANK_BLOCK,                 /* Table Bank Block (main) (since PSP7) */
+  PSP_TABLE_BLOCK,                      /* Table Block (sub) (since PSP7) */
+  PSP_PAPER_BLOCK,                      /* Vector Table Paper Block (sub) (since PSP7) */
+  PSP_PATTERN_BLOCK,                    /* Vector Table Pattern Block (sub) (since PSP7) */
+  PSP_GRADIENT_BLOCK,                   /* Vector Table Gradient Block (not used) (since PSP8) */
+  PSP_GROUP_EXTENSION_BLOCK,            /* Group Layer Block (sub) (since PSP8) */
+  PSP_MASK_EXTENSION_BLOCK,             /* Mask Layer Block (sub) (since PSP8) */
+  PSP_BRUSH_BLOCK,                      /* Brush Data Block (main) (since PSP8) */
 } PSPBlockID;
 
 /* Bitmap type.
@@ -143,8 +159,229 @@ typedef enum {
   PSP_DIB_USER_MASK,            /* Layer user mask bitmap */
   PSP_DIB_SELECTION,            /* Selection mask bitmap */
   PSP_DIB_ALPHA_MASK,           /* Alpha channel mask bitmap */
-  PSP_DIB_THUMBNAIL             /* Thumbnail bitmap */
+  PSP_DIB_THUMBNAIL,            /* Thumbnail bitmap */
+  PSP_DIB_THUMBNAIL_TRANS_MASK, /* Thumbnail transparency mask (since PSP6) */
+  PSP_DIB_ADJUSTMENT_LAYER,     /* Adjustment layer bitmap (since PSP6) */
+  PSP_DIB_COMPOSITE,            /* Composite image bitmap (since PSP6) */
+  PSP_DIB_COMPOSITE_TRANS_MASK, /* Composite image transparency (since PSP6) */
+  PSP_DIB_PAPER,                /* Paper bitmap (since PSP7) */
+  PSP_DIB_PATTERN,              /* Pattern bitmap (since PSP7) */
+  PSP_DIB_PATTERN_TRANS_MASK,   /* Pattern transparency mask (since PSP7) */
 } PSPDIBType;
+
+/* Type of image in the composite image bank block. (since PSP6)
+ */
+typedef enum {
+  PSP_IMAGE_COMPOSITE = 0,      /* Composite Image */
+  PSP_IMAGE_THUMBNAIL,          /* Thumbnail Image */
+} PSPCompositeImageType;
+
+/* Graphic contents flags. (since PSP6)
+ */
+typedef enum {
+  /* Layer types */
+  keGCRasterLayers     = 0x00000001,    /* At least one raster layer */
+  keGCVectorLayers     = 0x00000002,    /* At least one vector layer */
+  keGCAdjustmentLayers = 0x00000004,    /* At least one adjustment layer */
+
+  /* Additional attributes */
+  keGCThumbnail              = 0x01000000,      /* Has a thumbnail */
+  keGCThumbnailTransparency  = 0x02000000,      /* Thumbnail transp. */
+  keGCComposite              = 0x04000000,      /* Has a composite image */
+  keGCCompositeTransparency  = 0x08000000,      /* Composite transp. */
+  keGCFlatImage              = 0x10000000,      /* Just a background */
+  keGCSelection              = 0x20000000,      /* Has a selection */
+  keGCFloatingSelectionLayer = 0x40000000,      /* Has float. selection */
+  keGCAlphaChannels          = 0x80000000,      /* Has alpha channel(s) */
+} PSPGraphicContents;
+
+/* Character style flags. (since PSP6)
+ */
+typedef enum {
+  keStyleItalic      = 0x00000001,      /* Italic property bit */
+  keStyleStruck      = 0x00000002,      /* Strike­out property bit */
+  keStyleUnderlined  = 0x00000004,      /* Underlined property bit */
+  keStyleWarped      = 0x00000008,      /* Warped property bit (since PSP8) */
+  keStyleAntiAliased = 0x00000010,      /* Anti­aliased property bit (since PSP8) */
+} PSPCharacterProperties;
+
+/* Table type. (since PSP7)
+ */
+typedef enum {
+  keTTUndefined = 0,     /* Undefined table type */
+  keTTGradientTable,     /* Gradient table type */
+  keTTPaperTable,        /* Paper table type */
+  keTTPatternTable       /* Pattern table type */
+} PSPTableType;
+
+/* Layer flags. (since PSP6)
+ */
+typedef enum {
+  keVisibleFlag      = 0x00000001,      /* Layer is visible */
+  keMaskPresenceFlag = 0x00000002,      /* Layer has a mask */
+} PSPLayerProperties;
+
+/* Shape property flags. (since PSP6)
+ */
+typedef enum {
+  keShapeAntiAliased = 0x00000001,      /* Shape is anti­aliased */
+  keShapeSelected    = 0x00000002,      /* Shape is selected */
+  keShapeVisible     = 0x00000004,      /* Shape is visible */
+} PSPShapeProperties;
+
+/* Polyline node type flags. (since PSP7)
+ */
+typedef enum {
+  keNodeUnconstrained     = 0x0000,     /* Default node type */
+  keNodeSmooth            = 0x0001,     /* Node is smooth */
+  keNodeSymmetric         = 0x0002,     /* Node is symmetric */
+  keNodeAligned           = 0x0004,     /* Node is aligned */
+  keNodeActive            = 0x0008,     /* Node is active */
+  keNodeLocked            = 0x0010,     /* Node is locked */
+  keNodeSelected          = 0x0020,     /* Node is selected */
+  keNodeVisible           = 0x0040,     /* Node is visible */
+  keNodeClosed            = 0x0080,     /* Node is closed */
+
+  /* TODO: This might be a thinko in the spec document only or in the image
+   *       format itself. Need to investigate that later
+   */
+  keNodeLockedPSP6        = 0x0016,     /* Node is locked */
+  keNodeSelectedPSP6      = 0x0032,     /* Node is selected */
+  keNodeVisiblePSP6       = 0x0064,     /* Node is visible */
+  keNodeClosedPSP6        = 0x0128,     /* Node is closed */
+
+} PSPPolylineNodeTypes;
+
+/* Blend modes. (since PSP6)
+ */
+typedef enum {
+  PSP_BLEND_NORMAL,
+  PSP_BLEND_DARKEN,
+  PSP_BLEND_LIGHTEN,
+  PSP_BLEND_HUE,
+  PSP_BLEND_SATURATION,
+  PSP_BLEND_COLOR,
+  PSP_BLEND_LUMINOSITY,
+  PSP_BLEND_MULTIPLY,
+  PSP_BLEND_SCREEN,
+  PSP_BLEND_DISSOLVE,
+  PSP_BLEND_OVERLAY,
+  PSP_BLEND_HARD_LIGHT,
+  PSP_BLEND_SOFT_LIGHT,
+  PSP_BLEND_DIFFERENCE,
+  PSP_BLEND_DODGE,
+  PSP_BLEND_BURN,
+  PSP_BLEND_EXCLUSION,
+  PSP_BLEND_TRUE_HUE, /* since PSP8 */
+  PSP_BLEND_TRUE_SATURATION, /* since PSP8 */
+  PSP_BLEND_TRUE_COLOR, /* since PSP8 */
+  PSP_BLEND_TRUE_LIGHTNESS, /* since PSP8 */
+  PSP_BLEND_ADJUST = 255,
+} PSPBlendModes;
+
+/* Adjustment layer types. (since PSP6)
+ */
+typedef enum {
+  keAdjNone = 0,        /* Undefined adjustment layer type */
+  keAdjLevel,           /* Level adjustment */
+  keAdjCurve,           /* Curve adjustment */
+  keAdjBrightContrast,  /* Brightness­contrast adjustment */
+  keAdjColorBal,        /* Color balance adjustment */
+  keAdjHSL,             /* HSL adjustment */
+  keAdjChannelMixer,    /* Channel mixer adjustment */
+  keAdjInvert,          /* Invert adjustment */
+  keAdjThreshold,       /* Threshold adjustment */
+  keAdjPoster           /* Posterize adjustment */
+} PSPAdjustmentLayerType;
+
+/* Vector shape types. (since PSP6)
+ */
+typedef enum {
+  keVSTUnknown = 0,     /* Undefined vector type */
+  keVSTText,            /* Shape represents lines of text */
+  keVSTPolyline,        /* Shape represents a multiple segment line */
+  keVSTEllipse,         /* Shape represents an ellipse (or circle) */
+  keVSTPolygon,         /* Shape represents a closed polygon */
+  keVSTGroup,           /* Shape represents a group shape (since PSP7) */
+} PSPVectorShapeType;
+
+/* Text element types. (since PSP6)
+ */
+typedef enum {
+  keTextElemUnknown = 0,        /* Undefined text element type */
+  keTextElemChar,               /* A single character code */
+  keTextElemCharStyle,          /* A character style change */
+  keTextElemLineStyle           /* A line style change */
+} PSPTextElementType;
+
+/* Text alignment types. (since PSP6)
+ */
+typedef enum {
+  keTextAlignmentLeft = 0,      /* Left text alignment */
+  keTextAlignmentCenter,        /* Center text alignment */
+  keTextAlignmentRight          /* Right text alignment */
+} PSPTextAlignment;
+
+/* Paint style types. (since PSP6)
+ */
+typedef enum {
+  keStyleNone     = 0x0000,     /* No paint style info applies */
+  keStyleColor    = 0x0001,     /* Color paint style info */
+  keStyleGradient = 0x0002,     /* Gradient paint style info */
+  keStylePattern  = 0x0004,     /* Pattern paint style info (since PSP7) */
+  keStylePaper    = 0x0008,     /* Paper paint style info (since PSP7) */
+  keStylePen      = 0x0010,     /* Organic pen paint style info (since PSP7) */
+} PSPPaintStyleType;
+
+/* Gradient type. (since PSP7)
+ */
+typedef enum {
+  keSGTLinear = 0,      /* Linera gradient type */
+  keSGTRadial,          /* Radial gradient type */
+  keSGTRectangular,     /* Rectangulat gradient type */
+  keSGTSunburst         /* Sunburst gradient type */
+} PSPStyleGradientType;
+
+/* Paint Style Cap Type (Start & End). (since PSP7)
+ */
+typedef enum {
+  keSCTCapFlat = 0,             /* Flat cap type (was round in psp6) */
+  keSCTCapRound,                /* Round cap type (was square in psp6) */
+  keSCTCapSquare,               /* Square cap type (was flat in psp6) */
+  keSCTCapArrow,                /* Arrow cap type */
+  keSCTCapCadArrow,             /* Cad arrow cap type */
+  keSCTCapCurvedTipArrow,       /* Curved tip arrow cap type */
+  keSCTCapRingBaseArrow,        /* Ring base arrow cap type */
+  keSCTCapFluerDelis,           /* Fluer deLis cap type */
+  keSCTCapFootball,             /* Football cap type */
+  keSCTCapXr71Arrow,            /* Xr71 arrow cap type */
+  keSCTCapLilly,                /* Lilly cap type */
+  keSCTCapPinapple,             /* Pinapple cap type */
+  keSCTCapBall,                 /* Ball cap type */
+  keSCTCapTulip                 /* Tulip cap type */
+} PSPStyleCapType;
+
+/* Paint Style Join Type. (since PSP7)
+ */
+typedef enum {
+  keSJTJoinMiter = 0,
+  keSJTJoinRound,
+  keSJTJoinBevel
+} PSPStyleJoinType;
+
+/* Organic pen type. (since PSP7)
+ */
+typedef enum {
+  keSPTOrganicPenNone = 0,      /* Undefined pen type */
+  keSPTOrganicPenMesh,          /* Mesh pen type */
+  keSPTOrganicPenSand,          /* Sand pen type */
+  keSPTOrganicPenCurlicues,     /* Curlicues pen type */
+  keSPTOrganicPenRays,          /* Rays pen type */
+  keSPTOrganicPenRipple,        /* Ripple pen type */
+  keSPTOrganicPenWave,          /* Wave pen type */
+  keSPTOrganicPen               /* Generic pen type */
+} PSPStylePenType;
+
 
 /* Channel types.
  */
@@ -163,13 +400,13 @@ typedef enum {
   PSP_METRIC_CM                 /* Resolution is in centimeters */
 } PSP_METRIC;
 
-
 /* Possible types of compression.
  */
 typedef enum {
   PSP_COMP_NONE = 0,            /* No compression */
   PSP_COMP_RLE,                 /* RLE compression */
-  PSP_COMP_LZ77                 /* LZ77 compression */
+  PSP_COMP_LZ77,                /* LZ77 compression */
+  PSP_COMP_JPEG                 /* JPEG compression (only used by thumbnail and composite image) (since PSP6) */
 } PSPCompression;
 
 /* Picture tube placement mode.
@@ -194,7 +431,10 @@ typedef enum {
 /* Extended data field types.
  */
 typedef enum {
-  PSP_XDATA_TRNS_INDEX = 0      /* Transparency index field */
+  PSP_XDATA_TRNS_INDEX = 0,     /* Transparency index field */
+  PSP_XDATA_GRID,               /* Image grid information (since PSP7) */
+  PSP_XDATA_GUIDE,              /* Image guide information (since PSP7) */
+  PSP_XDATA_EXIF,               /* Image EXIF information (since PSP8) */
 } PSPExtendedDataID;
 
 /* Creator field types.
@@ -210,6 +450,21 @@ typedef enum {
   PSP_CRTR_FLD_APP_VER          /* Creating app version field */
 } PSPCreatorFieldID;
 
+/* Grid units type. (since PSP7)
+ */
+typedef enum {
+  keGridUnitsPixels = 0,        /* Grid units is pixels */
+  keGridUnitsInches,            /* Grid units is inches */
+  keGridUnitsCentimeters        /* Grid units is centimeters */
+} PSPGridUnitsType;
+
+/* Guide orientation type. (since PSP7)
+ */
+typedef enum  {
+  keHorizontalGuide = 0,
+  keVerticalGuide
+} PSPGuideOrientationType;
+
 /* Creator application identifiers.
  */
 typedef enum {
@@ -222,7 +477,19 @@ typedef enum {
 typedef enum {
   PSP_LAYER_NORMAL = 0,         /* Normal layer */
   PSP_LAYER_FLOATING_SELECTION  /* Floating selection layer */
-} PSPLayerType;
+} PSPLayerTypePSP5;
+
+/* Layer types. (since PSP6)
+ */
+typedef enum {
+  keGLTUndefined = 0,           /* Undefined layer type */
+  keGLTRaster,                  /* Standard raster layer */
+  keGLTFloatingRasterSelection, /* Floating selection (raster layer) */
+  keGLTVector,                  /* Vector layer */
+  keGLTAdjustment,              /* Adjustment layer */
+  keGLTMask                     /* Mask layer (since PSP8) */
+} PSPLayerTypePSP6;
+
 
 /* Truth values.
  */
@@ -236,32 +503,6 @@ typedef gboolean PSP_BOOLEAN;
 #endif
 
 /* End of cut&paste from psp spec */
-
-/* The following have been reverse engineered.
- * If a new version of the spec becomes available,
- * change to use the type and constant names from it.
- */
-typedef enum {
-  PSP_BLEND_NORMAL = 0,
-  PSP_BLEND_DARKEN,
-  PSP_BLEND_LIGHTEN,
-  PSP_BLEND_HUE,
-  PSP_BLEND_SATURATION,
-  PSP_BLEND_COLOR,
-  PSP_BLEND_LUMINANCE,
-  PSP_BLEND_MULTIPLY,
-  PSP_BLEND_SCREEN,
-  PSP_BLEND_DISSOLVE,
-  PSP_BLEND_OVERLAY,
-  PSP_BLEND_HARD_LIGHT,
-  PSP_BLEND_SOFT_LIGHT,
-  PSP_BLEND_DIFFERENCE,
-  PSP_BLEND_DODGE,
-  PSP_BLEND_BURN,
-  PSP_BLEND_EXCLUSION
-} PSPLayerBlendModes;
-
-/* End of reverse engineered types */
 
 /* We store the various PSP data in own structures.
  * We cannot use structs intended to be direct copies of the file block
@@ -362,7 +603,7 @@ query (void)
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-psp");
   gimp_register_magic_load_handler (LOAD_PROC,
-                                    "psp,tub",
+                                    "psp,tub,pspimage",
                                     "",
                                     "0,string,Paint\\040Shop\\040Pro\\040Image\\040File\n\032");
 
@@ -435,6 +676,9 @@ save_dialog (void)
   return run;
 }
 
+/* This helper method is used to get the name of the block for the known block
+ * types. The enum PSPBlockID must cover the input values.
+ */
 static gchar *
 block_name (gint id)
 {
@@ -451,11 +695,18 @@ block_name (gint id)
     "ALPHA_CHANNEL",
     "THUMBNAIL",
     "EXTENDED_DATA",
-    "TUBE"
+    "TUBE",
+    "ADJUSTMENT_EXTENSION",
+    "VECTOR_EXTENSION_BLOCK",
+    "SHAPE_BLOCK",
+    "PAINTSTYLE_BLOCK",
+    "COMPOSITE_IMAGE_BANK_BLOCK",
+    "COMPOSITE_ATTRIBUTES_BLOCK",
+    "JPEG_BLOCK",
   };
   static gchar *err_name = NULL;
 
-  if (id >= 0 && id <= PSP_TUBE_BLOCK)
+  if (id >= 0 && id <= PSP_JPEG_BLOCK)
     return block_names[id];
 
   g_free (err_name);
@@ -464,6 +715,9 @@ block_name (gint id)
   return err_name;
 }
 
+/* This helper method is used during loading. It verifies the block we are
+ * reading has a valid header. Fills the variables init_len and total_len
+ */
 static gint
 read_block_header (FILE    *f,
                    guint32 *init_len,
@@ -512,6 +766,7 @@ read_block_header (FILE    *f,
   return GUINT16_FROM_LE (id);
 }
 
+/* Read the PSP_IMAGE_BLOCK */
 static gint
 read_general_image_attribute_block (FILE     *f,
                                     guint     init_len,
@@ -520,6 +775,7 @@ read_general_image_attribute_block (FILE     *f,
 {
   gchar buf[6];
   guint64 res;
+  gchar graphics_content[4];
 
   if (init_len < 38 || total_len < 38)
     {
@@ -528,7 +784,14 @@ read_general_image_attribute_block (FILE     *f,
     }
 
   if (psp_ver_major >= 4)
-    fseek (f, 4, SEEK_CUR);
+    {
+      /* TODO: This causes the chunk size to be ignored. Better verify if it is
+       *       valid since it might create read offset problems with the
+       *       "expansion field" (which follows after the "graphics content" and
+       *       is of unkown size).
+       */
+      fseek (f, 4, SEEK_CUR);
+    }
 
   if (fread (&ia->width, 4, 1, f) < 1
       || fread (&ia->height, 4, 1, f) < 1
@@ -540,7 +803,8 @@ read_general_image_attribute_block (FILE     *f,
       || fread (&ia->greyscale, 1, 1, f) < 1
       || fread (buf, 4, 1, f) < 1 /* Skip total image size */
       || fread (&ia->active_layer, 4, 1, f) < 1
-      || fread (&ia->layer_count, 2, 1, f) < 1)
+      || fread (&ia->layer_count, 2, 1, f) < 1
+      || (psp_ver_major >= 4 && fread (graphics_content, 4, 1, f) < 1))
     {
       g_message ("Error reading general image attribute block");
       return -1;
@@ -586,6 +850,41 @@ try_fseek (FILE  *f,
     }
   return 0;
 }
+
+static gint
+read_extended_data_block (FILE     *f,
+                          gint      image_ID,
+                          guint     total_len,
+                          PSPimage *ia)
+{
+  long data_start;
+  guchar buf[4];
+  guint16 keyword;
+  guint32 length;
+
+  data_start = ftell (f);
+
+  while (ftell (f) < data_start + total_len)
+    {
+      if (fread (buf, 4, 1, f) < 1
+          || fread (&keyword, 2, 1, f) < 1
+          || fread (&length, 4, 1, f) < 1)
+        {
+          g_message ("Error reading extended data chunk");
+          return -1;
+        }
+      if (memcmp (buf, "~FL\0", 4) != 0)
+        {
+          g_message ("Invalid extended data chunk header");
+          return -1;
+        }
+      /* TODO Read keyword and assign it to PSPExtendedDataID */
+    }
+
+  return 0;
+}
+
+
 
 static gint
 read_creator_block (FILE     *f,
@@ -729,7 +1028,7 @@ swab_rect (guint32 *rect)
 }
 
 static GimpLayerModeEffects
-gimp_layer_mode_from_psp_blend_mode (PSPLayerBlendModes mode)
+gimp_layer_mode_from_psp_blend_mode (PSPBlendModes mode)
 {
   switch (mode)
     {
@@ -745,7 +1044,7 @@ gimp_layer_mode_from_psp_blend_mode (PSPLayerBlendModes mode)
       return GIMP_SATURATION_MODE;
     case PSP_BLEND_COLOR:
       return GIMP_COLOR_MODE;
-    case PSP_BLEND_LUMINANCE:
+    case PSP_BLEND_LUMINOSITY:
       return GIMP_VALUE_MODE;   /* ??? */
     case PSP_BLEND_MULTIPLY:
       return GIMP_MULTIPLY_MODE;
@@ -756,20 +1055,33 @@ gimp_layer_mode_from_psp_blend_mode (PSPLayerBlendModes mode)
     case PSP_BLEND_OVERLAY:
       return GIMP_OVERLAY_MODE;
     case PSP_BLEND_HARD_LIGHT:
+      return GIMP_HARDLIGHT_MODE;
     case PSP_BLEND_SOFT_LIGHT:
-      return -1;
+      return GIMP_SOFTLIGHT_MODE;
     case PSP_BLEND_DIFFERENCE:
       return GIMP_DIFFERENCE_MODE;
     case PSP_BLEND_DODGE:
+      return GIMP_DODGE_MODE;
     case PSP_BLEND_BURN:
+      return GIMP_BURN_MODE;
     case PSP_BLEND_EXCLUSION:
+      return -1;                /* ??? */
+    case PSP_BLEND_ADJUST:
+      return -1;                /* ??? */
+    case PSP_BLEND_TRUE_HUE:
+      return -1;                /* ??? */
+    case PSP_BLEND_TRUE_SATURATION:
+      return -1;                /* ??? */
+    case PSP_BLEND_TRUE_COLOR:
+      return -1;                /* ??? */
+    case PSP_BLEND_TRUE_LIGHTNESS:
       return -1;                /* ??? */
     }
   return -1;
 }
 
 static gchar *
-blend_mode_name (PSPLayerBlendModes mode)
+blend_mode_name (PSPBlendModes mode)
 {
   static gchar *blend_mode_names[] =
   {
@@ -779,7 +1091,7 @@ blend_mode_name (PSPLayerBlendModes mode)
     "HUE",
     "SATURATION",
     "COLOR",
-    "LUMINANCE",
+    "LUMINOSITY",
     "MULTIPLY",
     "SCREEN",
     "DISSOLVE",
@@ -793,6 +1105,7 @@ blend_mode_name (PSPLayerBlendModes mode)
   };
   static gchar *err_name = NULL;
 
+  /* TODO: what about PSP_BLEND_ADJUST? */
   if (mode >= 0 && mode <= PSP_BLEND_EXCLUSION)
     return blend_mode_names[mode];
 
@@ -1409,6 +1722,8 @@ compression_name (gint compression)
   return NULL;
 }
 
+/* The main function for loading PSP-images
+ */
 static gint32
 load_image (const gchar *filename)
 {
@@ -1434,7 +1749,7 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  /* Read thePSP File Header */
+  /* Read the PSP File Header and determine file version */
   if (fread (buf, 32, 1, f) < 1
       || fread (&psp_ver_major, 2, 1, f) < 1
       || fread (&psp_ver_minor, 2, 1, f) < 1)
@@ -1464,13 +1779,11 @@ load_image (const gchar *filename)
                  psp_ver_major, psp_ver_minor);
       goto error;
     }
-  else if (psp_ver_major == 3)
+  else if ((psp_ver_major == 3)
+        || (psp_ver_major == 4)
+        || (psp_ver_major == 5)
+        || (psp_ver_major == 6))
     ; /* OK */
-  else if (psp_ver_major == 4 && psp_ver_minor == 0)
-    g_message ("Warning: PSP file format version "
-               "4.0. Support for this format version "
-               "is based on reverse engineering, "
-               "as no documentation has been made available");
   else
     {
       g_message ("Unsupported PSP file format version %d.%d",
@@ -1557,9 +1870,18 @@ load_image (const gchar *filename)
                 goto error;
               break;
 
+            case PSP_COMPOSITE_IMAGE_BANK_BLOCK:
+              break;            /* Not yet implemented */
+
             case PSP_LAYER_BLOCK:
             case PSP_CHANNEL_BLOCK:
             case PSP_ALPHA_CHANNEL_BLOCK:
+            case PSP_ADJUSTMENT_EXTENSION_BLOCK:
+            case PSP_VECTOR_EXTENSION_BLOCK:
+            case PSP_SHAPE_BLOCK:
+            case PSP_PAINTSTYLE_BLOCK:
+            case PSP_COMPOSITE_ATTRIBUTES_BLOCK:
+            case PSP_JPEG_BLOCK:
               g_message ("Sub-block %s should not occur "
                          "at main level of file",
                          block_name (id));
