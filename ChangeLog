@@ -1,3 +1,8 @@
+2008-04-21  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpmath/gimpmd5.c (gimp_md5_get_digest): moving a cast to
+	the right parameter fixes two warnings.
+
 2008-04-21  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/curve-bend.c (run): fixed handling of

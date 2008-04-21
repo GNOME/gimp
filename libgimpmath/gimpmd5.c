@@ -37,7 +37,7 @@ gimp_md5_get_digest (const gchar *buffer,
 
   checksum = g_checksum_new (G_CHECKSUM_MD5);
 
-  g_checksum_update (checksum, buffer, buffer_size);
-  g_checksum_get_digest (checksum, (const guchar *) digest, &len);
+  g_checksum_update (checksum, (const guchar *) buffer, buffer_size);
+  g_checksum_get_digest (checksum, digest, &len);
   g_checksum_free (checksum);
 }
