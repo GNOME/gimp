@@ -289,27 +289,33 @@ gimp_statusbar_frame_size_request (GtkWidget      *widget,
                                    GimpStatusbar  *statusbar)
 {
   GtkRequisition  child_requisition;
-  gint            width = 0;
+  gint            width   = 0;
+  gint            padding = 2 * widget->style->ythickness;
 
   /*  also consider the children which can be invisible  */
 
   gtk_widget_size_request (statusbar->cursor_label, &child_requisition);
   width += child_requisition.width;
-  requisition->height = MAX (requisition->height, child_requisition.height);
+  requisition->height = MAX (requisition->height,
+                             padding + child_requisition.height);
 
   gtk_widget_size_request (statusbar->unit_combo, &child_requisition);
   width += child_requisition.width;
-  requisition->height = MAX (requisition->height, child_requisition.height);
+  requisition->height = MAX (requisition->height,
+                             padding + child_requisition.height);
 
   gtk_widget_size_request (statusbar->scale_combo, &child_requisition);
   width += child_requisition.width;
-  requisition->height = MAX (requisition->height, child_requisition.height);
+  requisition->height = MAX (requisition->height,
+                             padding + child_requisition.height);
 
   gtk_widget_size_request (statusbar->progressbar, &child_requisition);
-  requisition->height = MAX (requisition->height, child_requisition.height);
+  requisition->height = MAX (requisition->height,
+                             padding + child_requisition.height);
 
   gtk_widget_size_request (statusbar->cancel_button, &child_requisition);
-  requisition->height = MAX (requisition->height, child_requisition.height);
+  requisition->height = MAX (requisition->height,
+                             padding + child_requisition.height);
 
   requisition->width = MAX (requisition->width, width + 24);
 }

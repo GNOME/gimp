@@ -1,3 +1,8 @@
+2008-04-22  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpstatusbar.c (gimp_statusbar_frame_size_request):
+	take vertical padding into account to avoid resizing the statusbar.
+
 2008-04-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/gimpplugin-cleanup.c: do the actual cleanup in
