@@ -1,5 +1,11 @@
 2008-04-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/view-actions.c (view_actions_update): simplify call
+	to window_actions_update() (we already have a local "shell"
+	variable that is NULL when there is no display).
+
+2008-04-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/sanity.c: add check for the GEGL version.
 
 2008-04-22  Sven Neumann  <sven@gimp.org>

@@ -661,7 +661,7 @@ view_actions_update (GimpActionGroup *group,
       GIMP_IS_GIMP (group->user_data))
     {
       /*  see view_actions_setup()  */
-      window_actions_update (group, display ? display->shell : NULL);
+      window_actions_update (group, GTK_WIDGET (shell));
     }
 
 #undef SET_ACTIVE
