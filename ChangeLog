@@ -1,3 +1,7 @@
+2008-04-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/sanity.c: add check for the GEGL version.
+
 2008-04-22  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpstatusbar.c (gimp_statusbar_frame_size_request):

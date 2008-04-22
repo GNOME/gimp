@@ -22,6 +22,7 @@
 #include <fontconfig/fontconfig.h>
 #include <pango/pango.h>
 #include <pango/pangoft2.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -35,6 +36,7 @@ static gchar * sanity_check_glib              (void);
 static gchar * sanity_check_pango             (void);
 static gchar * sanity_check_fontconfig        (void);
 static gchar * sanity_check_freetype          (void);
+static gchar * sanity_check_gegl              (void);
 static gchar * sanity_check_filename_encoding (void);
 
 
@@ -56,6 +58,9 @@ sanity_check (void)
 
   if (! abort_message)
     abort_message = sanity_check_freetype ();
+
+  if (! abort_message)
+    abort_message = sanity_check_gegl ();
 
   if (! abort_message)
     abort_message = sanity_check_filename_encoding ();
@@ -238,6 +243,44 @@ sanity_check_freetype (void)
 #undef FT_REQUIRED_MAJOR
 #undef FT_REQUIRED_MINOR
 #undef FT_REQUIRED_MICRO
+
+  return NULL;
+}
+
+static gchar *
+sanity_check_gegl (void)
+{
+  gint gegl_major_version;
+  gint gegl_minor_version;
+  gint gegl_micro_version;
+
+#define GEGL_REQUIRED_MAJOR 0
+#define GEGL_REQUIRED_MINOR 0
+#define GEGL_REQUIRED_MICRO 16
+
+  gegl_get_version (&gegl_major_version,
+                    &gegl_minor_version,
+                    &gegl_micro_version);
+
+  if (gegl_major_version < GEGL_REQUIRED_MAJOR ||
+      gegl_minor_version < GEGL_REQUIRED_MINOR ||
+      gegl_micro_version < GEGL_REQUIRED_MICRO)
+    {
+      return g_strdup_printf
+        ("GEGL version too old!\n\n"
+         "GIMP requires GEGL version %d.%d.%d or later.\n"
+         "Installed GEGL version is %d.%d.%d.\n\n"
+         "Somehow you or your software packager managed\n"
+         "to install GIMP with an older GEGL version.\n\n"
+         "Please upgrade to GEGL version %d.%d.%d or later.",
+         GEGL_REQUIRED_MAJOR, GEGL_REQUIRED_MINOR, GEGL_REQUIRED_MICRO,
+         gegl_major_version, gegl_minor_version, gegl_micro_version,
+         GEGL_REQUIRED_MAJOR, GEGL_REQUIRED_MINOR, GEGL_REQUIRED_MICRO);
+    }
+
+#undef GEGL_REQUIRED_MAJOR
+#undef GEGL_REQUIRED_MINOR
+#undef GEGL_REQUIRED_MICRO
 
   return NULL;
 }
