@@ -1,3 +1,8 @@
+2008-04-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpnumberpairentry.c
+	(gimp_number_pair_entry_modify_font): formatting.
+
 2008-04-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/view-actions.c (view_actions_update): simplify call

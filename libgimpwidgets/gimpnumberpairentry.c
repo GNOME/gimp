@@ -723,9 +723,13 @@ gimp_number_pair_entry_modify_font (GimpNumberPairEntry *entry,
 
   if (! rc_style->font_desc)
     {
-      PangoContext *context = gtk_widget_get_pango_context (GTK_WIDGET (entry));
+      PangoContext         *context;
+      PangoFontDescription *font_desc;
 
-      rc_style->font_desc = pango_font_description_copy (pango_context_get_font_description (context));
+      context = gtk_widget_get_pango_context (GTK_WIDGET (entry));
+      font_desc = pango_context_get_font_description (context);
+
+      rc_style->font_desc = pango_font_description_copy (font_desc);
     }
 
   pango_font_description_set_style (rc_style->font_desc,
