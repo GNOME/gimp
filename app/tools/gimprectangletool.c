@@ -89,6 +89,8 @@ typedef enum
 } SideToResize;
 
 
+#define FEQUAL(a,b) (fabs ((a) - (b)) < 0.0001)
+
 #define GIMP_RECTANGLE_TOOL_GET_PRIVATE(obj) \
   (gimp_rectangle_tool_get_private (GIMP_RECTANGLE_TOOL (obj)))
 
@@ -2209,19 +2211,23 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
 
   if (! strcmp (pspec->name, "x"))
     {
-      if (private->x1 != options_private->x)
-        gimp_rectangle_tool_synthesize_motion (rect_tool,
-                                               GIMP_RECTANGLE_TOOL_MOVING,
-                                               options_private->x,
-                                               private->y1);
+      if (! FEQUAL (private->x1, options_private->x))
+        {
+          gimp_rectangle_tool_synthesize_motion (rect_tool,
+                                                 GIMP_RECTANGLE_TOOL_MOVING,
+                                                 options_private->x,
+                                                 private->y1);
+        }
     }
   else if (! strcmp (pspec->name, "y"))
     {
-      if (private->y1 != options_private->y)
-        gimp_rectangle_tool_synthesize_motion (rect_tool,
-                                               GIMP_RECTANGLE_TOOL_MOVING,
-                                               private->x1,
-                                               options_private->y);
+      if (! FEQUAL (private->y1, options_private->y))
+        {
+          gimp_rectangle_tool_synthesize_motion (rect_tool,
+                                                 GIMP_RECTANGLE_TOOL_MOVING,
+                                                 private->x1,
+                                                 options_private->y);
+        }
     }
   else if (! strcmp (pspec->name, "width"))
     {
@@ -2230,7 +2236,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
        */
       gdouble x2;
 
-      if (private->x2 - private->x1 != options_private->width)
+      if (! FEQUAL (private->x2 - private->x1, options_private->width))
         {
           if (options_private->fixed_center)
             {
@@ -2255,7 +2261,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
        */
       gdouble y2;
 
-      if (private->y2 - private->y1 != options_private->height)
+      if (! FEQUAL (private->y2 - private->y1, options_private->height))
         {
           if (options_private->fixed_center)
             {
@@ -2286,12 +2292,12 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
        * immedieately switch width and height of the pending
        * rectangle.
        */
-      if (options_private->fixed_rule_active                   &&
-          tool->display                              != NULL   &&
-          tool->button_press_state                   == 0      &&
-          tool->active_modifier_state                == 0      &&
-          options_private->desired_fixed_size_width  == height &&
-          options_private->desired_fixed_size_height == width)
+      if (options_private->fixed_rule_active                          &&
+          tool->display                                       != NULL &&
+          tool->button_press_state                            == 0    &&
+          tool->active_modifier_state                         == 0    &&
+          FEQUAL (options_private->desired_fixed_size_width,  height) &&
+          FEQUAL (options_private->desired_fixed_size_height, width))
         {
           gdouble x = private->x1;
           gdouble y = private->y1;
