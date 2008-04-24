@@ -2,7 +2,8 @@
 
 	* app/tools/gimprectangletool.c
 	(gimp_rectangle_tool_options_notify): Do appropriate equal and
-	not-equal comparions for floting point numbers. Fixes bug #527863.
+	not-equal comparisons for floting point numbers. Fixes
+	bug #527863.
 
 2008-04-23  Sven Neumann  <sven@gimp.org>
 
