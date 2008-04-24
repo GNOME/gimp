@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-03-21 14:37+0100\n"
-"PO-Revision-Date: 2008-04-02 22:04+0200\n"
+"PO-Revision-Date: 2008-04-24 22:16+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -5099,7 +5099,7 @@ msgstr "il valore per il token %s non è una stringa UTF-8 valida"
 #: ../app/core/core-enums.c:504 ../app/paint/paint-enums.c:81
 #: ../app/widgets/gimpimagepropview.c:415
 msgid "None"
-msgstr "Nessuno"
+msgstr "Nessuna"
 
 #: ../app/core/core-enums.c:54
 msgid "Floyd-Steinberg (normal)"
@@ -11876,11 +11876,11 @@ msgstr "Interrogazione in corso..."
 
 #: ../app/widgets/gimpimagepropview.c:121
 msgid "Pixel dimensions:"
-msgstr "Dimensioni dei punti:"
+msgstr "Dimensioni in pixel:"
 
 #: ../app/widgets/gimpimagepropview.c:124
 msgid "Print size:"
-msgstr "Dimensione di stampa:"
+msgstr "Dimensioni di stampa:"
 
 #: ../app/widgets/gimpimagepropview.c:127
 msgid "Resolution:"
@@ -11908,11 +11908,11 @@ msgstr "Dimensione in memoria:"
 
 #: ../app/widgets/gimpimagepropview.c:152
 msgid "Undo steps:"
-msgstr "Annulla azioni:"
+msgstr "Azioni annullabili:"
 
 #: ../app/widgets/gimpimagepropview.c:155
 msgid "Redo steps:"
-msgstr "Ripeti azioni:"
+msgstr "Azioni ripetibili:"
 
 #: ../app/widgets/gimpimagepropview.c:160
 msgid "Number of pixels:"
