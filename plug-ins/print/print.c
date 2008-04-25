@@ -116,8 +116,8 @@ query (void)
 
   gimp_install_procedure (PAGE_SETUP_PROC_NAME,
                           N_("Adjust page size and orientation for printing"),
-                          "Adjust page size and orientation for printing for "
-                          "printing the image using the GTK+ Print API.",
+                          "Adjust page size and orientation for printing the "
+                          "image using the GTK+ Print API.",
                           "Bill Skaggs, Sven Neumann, Stefan Röllin",
                           "Sven Neumann <sven@gimp.org>",
                           "2008",
