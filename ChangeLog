@@ -1,5 +1,11 @@
 2008-04-25  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimptoolbox.c: do not any longer accept
+	middle-mouse-button paste on the toolbox buttons but use the
+	toolbox drop area for that.
+
+2008-04-25  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/dock-actions.c (dock_actions): removed default
 	keyboard shortcut for "dock-close".
 

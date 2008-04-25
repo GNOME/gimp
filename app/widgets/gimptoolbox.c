@@ -65,35 +65,37 @@
 
 /*  local function prototypes  */
 
-static GObject   * gimp_toolbox_constructor      (GType           type,
-                                                  guint           n_params,
-                                                  GObjectConstructParam *params);
+static GObject   * gimp_toolbox_constructor        (GType           type,
+                                                    guint           n_params,
+                                                    GObjectConstructParam *params);
 
-static gboolean    gimp_toolbox_delete_event     (GtkWidget      *widget,
-                                                  GdkEventAny    *event);
-static void        gimp_toolbox_size_allocate    (GtkWidget      *widget,
-                                                  GtkAllocation  *allocation);
-static void        gimp_toolbox_style_set        (GtkWidget      *widget,
-                                                  GtkStyle       *previous_style);
-static gboolean    gimp_toolbox_expose_event     (GtkWidget      *widget,
-                                                  GdkEventExpose *event);
+static gboolean    gimp_toolbox_delete_event       (GtkWidget      *widget,
+                                                    GdkEventAny    *event);
+static void        gimp_toolbox_size_allocate      (GtkWidget      *widget,
+                                                    GtkAllocation  *allocation);
+static void        gimp_toolbox_style_set          (GtkWidget      *widget,
+                                                    GtkStyle       *previous_style);
+static gboolean    gimp_toolbox_button_press_event (GtkWidget      *widget,
+                                                    GdkEventButton *event);
+static gboolean    gimp_toolbox_expose_event       (GtkWidget      *widget,
+                                                    GdkEventExpose *event);
 
-static void        gimp_toolbox_book_added       (GimpDock       *dock,
-                                                  GimpDockbook   *dockbook);
-static void        gimp_toolbox_book_removed     (GimpDock       *dock,
-                                                  GimpDockbook   *dockbook);
-static void        gimp_toolbox_set_geometry     (GimpToolbox    *toolbox);
+static void        gimp_toolbox_book_added         (GimpDock       *dock,
+                                                    GimpDockbook   *dockbook);
+static void        gimp_toolbox_book_removed       (GimpDock       *dock,
+                                                    GimpDockbook   *dockbook);
+static void        gimp_toolbox_set_geometry       (GimpToolbox    *toolbox);
 
-static void        toolbox_separator_expand      (GimpToolbox    *toolbox);
-static void        toolbox_separator_collapse    (GimpToolbox    *toolbox);
-static void        toolbox_create_tools          (GimpToolbox    *toolbox,
-                                                  GimpContext    *context);
-static GtkWidget * toolbox_create_color_area     (GimpToolbox    *toolbox,
-                                                  GimpContext    *context);
-static GtkWidget * toolbox_create_foo_area       (GimpToolbox    *toolbox,
-                                                  GimpContext    *context);
-static GtkWidget * toolbox_create_image_area     (GimpToolbox    *toolbox,
-                                                  GimpContext    *context);
+static void        toolbox_separator_expand        (GimpToolbox    *toolbox);
+static void        toolbox_separator_collapse      (GimpToolbox    *toolbox);
+static void        toolbox_create_tools            (GimpToolbox    *toolbox,
+                                                    GimpContext    *context);
+static GtkWidget * toolbox_create_color_area       (GimpToolbox    *toolbox,
+                                                    GimpContext    *context);
+static GtkWidget * toolbox_create_foo_area         (GimpToolbox    *toolbox,
+                                                    GimpContext    *context);
+static GtkWidget * toolbox_create_image_area       (GimpToolbox    *toolbox,
+                                                    GimpContext    *context);
 
 static void        toolbox_area_notify           (GimpGuiConfig  *config,
                                                   GParamSpec     *pspec,
@@ -143,6 +145,7 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   widget_class->delete_event        = gimp_toolbox_delete_event;
   widget_class->size_allocate       = gimp_toolbox_size_allocate;
   widget_class->style_set           = gimp_toolbox_style_set;
+  widget_class->button_press_event  = gimp_toolbox_button_press_event;
   widget_class->expose_event        = gimp_toolbox_expose_event;
 
   dock_class->book_added            = gimp_toolbox_book_added;
@@ -473,6 +476,25 @@ gimp_toolbox_style_set (GtkWidget *widget,
     }
 
   gimp_toolbox_set_geometry (GIMP_TOOLBOX (widget));
+}
+
+static gboolean
+gimp_toolbox_button_press_event (GtkWidget      *widget,
+                                 GdkEventButton *event)
+{
+  if (event->type == GDK_BUTTON_PRESS && event->button == 2)
+    {
+      GtkClipboard *clipboard;
+
+      clipboard = gtk_widget_get_clipboard (widget, GDK_SELECTION_PRIMARY);
+      gtk_clipboard_request_text (clipboard,
+                                  toolbox_paste_received,
+                                  g_object_ref (GIMP_DOCK (widget)->context));
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static gboolean
@@ -888,16 +910,6 @@ toolbox_tool_button_press (GtkWidget      *widget,
                                         gtk_widget_get_screen (widget),
                                         "gimp-tool-options",
                                         -1);
-    }
-  else if (event->type == GDK_BUTTON_PRESS && event->button == 2)
-    {
-      GimpContext  *context = GIMP_DOCK (toolbox)->context;
-      GtkClipboard *clipboard;
-
-      clipboard = gtk_widget_get_clipboard (widget, GDK_SELECTION_PRIMARY);
-      gtk_clipboard_request_text (clipboard,
-                                  toolbox_paste_received,
-                                  g_object_ref (context));
     }
 
   return FALSE;
