@@ -139,15 +139,14 @@ gimp_cell_renderer_toggle_init (GimpCellRendererToggle *toggle)
 static void
 gimp_cell_renderer_toggle_finalize (GObject *object)
 {
-  GimpCellRendererToggle *toggle;
-
-  toggle = GIMP_CELL_RENDERER_TOGGLE (object);
+  GimpCellRendererToggle *toggle = GIMP_CELL_RENDERER_TOGGLE (object);
 
   if (toggle->stock_id)
     {
       g_free (toggle->stock_id);
       toggle->stock_id = NULL;
     }
+
   if (toggle->pixbuf)
     {
       g_object_unref (toggle->pixbuf);
@@ -262,6 +261,7 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer *cell,
                        (cell_area->width - calc_width));
           *x_offset = MAX (*x_offset, 0);
         }
+
       if (y_offset)
         {
           *y_offset = cell->yalign * (cell_area->height - calc_height);

@@ -1,3 +1,8 @@
+2008-04-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdock.c
+	* libgimpwidgets/gimpcellrenderertoggle.c: minor cosmetics.
+
 2008-04-25  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimptoolbox.c: do not any longer accept

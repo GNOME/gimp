@@ -78,7 +78,7 @@ static void      gimp_dock_get_property      (GObject               *object,
 static void      gimp_dock_destroy           (GtkObject             *object);
 
 static gboolean  gimp_dock_delete_event      (GtkWidget             *widget,
-                                              GdkEventAny              *event);
+                                              GdkEventAny           *event);
 static gboolean  gimp_dock_key_press_event   (GtkWidget             *widget,
                                               GdkEventKey           *kevent);
 
