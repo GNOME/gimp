@@ -41,8 +41,6 @@
 void
 gimp_gegl_init (void)
 {
-  gegl_init (NULL, NULL);
-
   g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_BALANCE);
   g_type_class_ref (GIMP_TYPE_OPERATION_COLORIZE);
   g_type_class_ref (GIMP_TYPE_OPERATION_CURVES);

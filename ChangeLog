@@ -1,3 +1,10 @@
+2008-04-25  Sven Neumann  <sven@gimp.org>
+
+	* app/app.c
+	* app/gegl/gimp-gegl.c: reverted change from 2008-01-31. Use the
+	GEGL option group again now that GEGL provides some commmand-line
+	options.
+
 2008-04-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintoptions.[ch]: reorder jitter options stuff to
