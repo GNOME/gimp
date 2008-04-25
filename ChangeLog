@@ -1,5 +1,10 @@
 2008-04-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintoptions.[ch]: reorder jitter options stuff to
+	be consistently ordered all over the place.
+
+2008-04-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdock.c
 	* libgimpwidgets/gimpcellrenderertoggle.c: minor cosmetics.
 

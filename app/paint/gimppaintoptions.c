@@ -63,10 +63,12 @@
 enum
 {
   PROP_0,
+
   PROP_PAINT_INFO,
   PROP_BRUSH_SCALE,
   PROP_APPLICATION_MODE,
   PROP_HARD,
+
   PROP_PRESSURE_EXPANDED,
   PROP_PRESSURE_OPACITY,
   PROP_PRESSURE_HARDNESS,
@@ -74,16 +76,19 @@ enum
   PROP_PRESSURE_SIZE,
   PROP_PRESSURE_INVERSE_SIZE,
   PROP_PRESSURE_COLOR,
+
   PROP_USE_FADE,
   PROP_FADE_LENGTH,
   PROP_FADE_UNIT,
+
+  PROP_USE_JITTER,
+  PROP_JITTER_AMOUNT,
+
   PROP_USE_GRADIENT,
   PROP_GRADIENT_REVERSE,
   PROP_GRADIENT_REPEAT,
   PROP_GRADIENT_LENGTH,
   PROP_GRADIENT_UNIT,
-  PROP_USE_JITTER,
-  PROP_JITTER_AMOUNT,
 
   PROP_BRUSH_VIEW_TYPE,
   PROP_BRUSH_VIEW_SIZE,
@@ -260,8 +265,8 @@ gimp_paint_options_init (GimpPaintOptions *options)
 
   options->pressure_options = g_slice_new0 (GimpPressureOptions);
   options->fade_options     = g_slice_new0 (GimpFadeOptions);
-  options->gradient_options = g_slice_new0 (GimpGradientOptions);
   options->jitter_options   = g_slice_new0 (GimpJitterOptions);
+  options->gradient_options = g_slice_new0 (GimpGradientOptions);
 }
 
 static void
@@ -274,8 +279,8 @@ gimp_paint_options_finalize (GObject *object)
 
   g_slice_free (GimpPressureOptions, options->pressure_options);
   g_slice_free (GimpFadeOptions,     options->fade_options);
-  g_slice_free (GimpGradientOptions, options->gradient_options);
   g_slice_free (GimpJitterOptions,   options->jitter_options);
+  g_slice_free (GimpGradientOptions, options->gradient_options);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -286,16 +291,11 @@ gimp_paint_options_set_property (GObject      *object,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpPaintOptions    *options = GIMP_PAINT_OPTIONS (object);
-  GimpPressureOptions *pressure_options;
-  GimpFadeOptions     *fade_options;
-  GimpGradientOptions *gradient_options;
-  GimpJitterOptions   *jitter_options;
-
-  pressure_options = options->pressure_options;
-  fade_options     = options->fade_options;
-  gradient_options = options->gradient_options;
-  jitter_options   = options->jitter_options;
+  GimpPaintOptions    *options          = GIMP_PAINT_OPTIONS (object);
+  GimpPressureOptions *pressure_options = options->pressure_options;
+  GimpFadeOptions     *fade_options     = options->fade_options;
+  GimpJitterOptions   *jitter_options   = options->jitter_options;
+  GimpGradientOptions *gradient_options = options->gradient_options;
 
   switch (property_id)
     {
@@ -401,16 +401,11 @@ gimp_paint_options_get_property (GObject    *object,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpPaintOptions    *options = GIMP_PAINT_OPTIONS (object);
-  GimpPressureOptions *pressure_options;
-  GimpFadeOptions     *fade_options;
-  GimpGradientOptions *gradient_options;
-  GimpJitterOptions   *jitter_options;
-
-  pressure_options = options->pressure_options;
-  fade_options     = options->fade_options;
-  gradient_options = options->gradient_options;
-  jitter_options   = options->jitter_options;
+  GimpPaintOptions    *options          = GIMP_PAINT_OPTIONS (object);
+  GimpPressureOptions *pressure_options = options->pressure_options;
+  GimpFadeOptions     *fade_options     = options->fade_options;
+  GimpJitterOptions   *jitter_options   = options->jitter_options;
+  GimpGradientOptions *gradient_options = options->gradient_options;
 
   switch (property_id)
     {

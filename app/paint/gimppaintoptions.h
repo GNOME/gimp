@@ -32,8 +32,8 @@
 
 typedef struct _GimpPressureOptions GimpPressureOptions;
 typedef struct _GimpFadeOptions     GimpFadeOptions;
-typedef struct _GimpGradientOptions GimpGradientOptions;
 typedef struct _GimpJitterOptions   GimpJitterOptions;
+typedef struct _GimpGradientOptions GimpGradientOptions;
 
 struct _GimpPressureOptions
 {
@@ -94,8 +94,8 @@ struct _GimpPaintOptions
 
   GimpPressureOptions      *pressure_options;
   GimpFadeOptions          *fade_options;
-  GimpGradientOptions      *gradient_options;
   GimpJitterOptions        *jitter_options;
+  GimpGradientOptions      *gradient_options;
 
   GimpViewType              brush_view_type;
   GimpViewSize              brush_view_size;
@@ -119,14 +119,14 @@ gdouble            gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
                                                 GimpImage        *image,
                                                 gdouble           pixel_dist);
 
+gdouble          gimp_paint_options_get_jitter (GimpPaintOptions *paint_options,
+                                                GimpImage        *image);
+
 gboolean gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
                                                 GimpImage        *image,
                                                 gdouble           pressure,
                                                 gdouble           pixel_dist,
                                                 GimpRGB          *color);
-
-gdouble          gimp_paint_options_get_jitter (GimpPaintOptions *paint_options,
-                                                GimpImage        *image);
 
 GimpBrushApplicationMode
              gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options);
