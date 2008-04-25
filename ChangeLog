@@ -1,5 +1,18 @@
 2008-04-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintoptions.c (gimp_paint_options_get_jitter):
+	add g_return_if_fail().
+
+	* app/paint/gimpheal.c (gimp_heal_motion)
+	* app/paint/gimpdodgeburn.c (gimp_dodge_burn_motion): free stuff
+	right after it's not used any longer, instead of at the end of the
+	function.
+
+	* app/paint/gimppaintbrush.c (_gimp_paintbrush_motion): move a
+	statement to improve consistency with other motion() functions.
+
+2008-04-25  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/print/print.c (query): fix help string of the page
 	setup procedure.
 

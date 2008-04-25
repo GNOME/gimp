@@ -531,10 +531,14 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   /* heal tempPR using srcPR */
   gimp_heal_region (&tempPR, srcPR, mask_buf);
 
+  temp_buf_free (src);
+
   /* reinitialize tempPR */
   pixel_region_init_temp_buf (&tempPR, temp, 0, 0, temp->width, temp->height);
 
   copy_region (&tempPR, &destPR);
+
+  temp_buf_free (temp);
 
   /* check the brush pressure */
   if (paint_options->pressure_options->opacity)
@@ -547,7 +551,4 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                   gimp_context_get_opacity (context),
                                   gimp_paint_options_get_brush_mode (paint_options),
                                   GIMP_PAINT_INCREMENTAL);
-
-  temp_buf_free (src);
-  temp_buf_free (temp);
 }

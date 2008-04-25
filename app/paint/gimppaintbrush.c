@@ -121,11 +121,11 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  paint_appl_mode = paint_options->application_mode;
-
   area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
   if (! area)
     return;
+
+  paint_appl_mode = paint_options->application_mode;
 
   /* optionally take the color from the current gradient */
   if (gimp_paint_options_get_gradient_color (paint_options, image,

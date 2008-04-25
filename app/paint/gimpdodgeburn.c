@@ -234,6 +234,8 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   else
     copy_region (&tempPR, &destPR);
 
+  g_free (temp_data);
+
   if (pressure_options->opacity)
     opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
@@ -243,8 +245,6 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                                   gimp_context_get_opacity (context),
                                   gimp_paint_options_get_brush_mode (paint_options),
                                   GIMP_PAINT_CONSTANT);
-
-  g_free (temp_data);
 }
 
 static void

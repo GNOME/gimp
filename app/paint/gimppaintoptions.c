@@ -611,6 +611,8 @@ gimp_paint_options_get_jitter (GimpPaintOptions *paint_options,
 {
   GimpJitterOptions *jitter_options;
 
+  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), 0.0);
+
   jitter_options = paint_options->jitter_options;
 
   if (jitter_options->use_jitter)
