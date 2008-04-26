@@ -230,32 +230,33 @@ gimp_get_subtype_classes (GType  type,
 {
   GObjectClass *klass;
   GType        *ops;
-  guint         children;
-  gint          no;
+  guint         n_ops;
+  gint          i;
 
   if (!type)
     return classes;
 
   klass = g_type_class_ref (type);
-  ops = g_type_children (type, &children);
+  ops = g_type_children (type, &n_ops);
 
-  /* only add classes which have a name, this avoids 
+  /* only add classes which have a name, this avoids
    * the abstract base classes
    */
-  if (GEGL_OPERATION_CLASS (klass)->name != NULL)
+  if (GEGL_OPERATION_CLASS (klass)->name)
     classes = g_list_prepend (classes, klass);
 
-  for (no=0; no<children; no++)
-    classes = gimp_get_subtype_classes (ops[no], classes);
+  for (i = 0; i < n_ops; i++)
+    classes = gimp_get_subtype_classes (ops[i], classes);
 
   if (ops)
     g_free (ops);
+
   return classes;
 }
 
-static
-gint gimp_gegl_tool_compare_operation_names (GeglOperationClass *a,
-                                             GeglOperationClass *b)
+static gint
+gimp_gegl_tool_compare_operation_names (GeglOperationClass *a,
+                                        GeglOperationClass *b)
 {
   return strcmp (a->name, b->name);
 }
@@ -263,16 +264,17 @@ gint gimp_gegl_tool_compare_operation_names (GeglOperationClass *a,
 static GList *
 gimp_get_geglopclasses (void)
 {
-  GList *opclasses = NULL;
+  GList *opclasses;
 
   opclasses = gimp_get_subtype_classes (GEGL_TYPE_OPERATION, NULL);
-  opclasses = g_list_sort (opclasses, (GCompareFunc)
-                                      gimp_gegl_tool_compare_operation_names);
+
+  opclasses = g_list_sort (opclasses,
+                           (GCompareFunc)
+                           gimp_gegl_tool_compare_operation_names);
 
   return opclasses;
 }
 
-/**/
 
 /*****************/
 /*  Gegl dialog  */
@@ -303,20 +305,23 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   store = gtk_list_store_new (1, G_TYPE_STRING);
 
   opclasses = gimp_get_geglopclasses ();
+
   for (iter = opclasses; iter; iter=iter->next)
     {
       GeglOperationClass *opclass = GEGL_OPERATION_CLASS (iter->data);
-      if (strstr (opclass->categories, "color") ||
+
+      if (strstr (opclass->categories, "color")   ||
           strstr (opclass->categories, "enhance") ||
-          strstr (opclass->categories, "misc") ||
-          strstr (opclass->categories, "blur") ||
-          strstr (opclass->categories, "edge") ||
-          strstr (opclass->categories, "render") 
-          )
+          strstr (opclass->categories, "misc")    ||
+          strstr (opclass->categories, "blur")    ||
+          strstr (opclass->categories, "edge")    ||
+          strstr (opclass->categories, "render"))
+
         gtk_list_store_insert_with_values (store, NULL, -1,
                                            0, opclass->name,
                                            -1);
-    } 
+    }
+
   g_list_free (opclasses);
 
   combo = gtk_combo_box_new_with_model (GTK_TREE_MODEL (store));

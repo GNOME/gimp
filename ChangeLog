@@ -1,3 +1,7 @@
+2008-04-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpgegltool.c: clean up last commit.
+
 2008-04-26  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* plug-ins/flame/libifs.c: Applied patch from Aurimas Juška. Use
