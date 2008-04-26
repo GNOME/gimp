@@ -1,3 +1,9 @@
+2008-04-26  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_options_notify): Simplifications and
+	cleanups.
+
 2008-04-26  Michael Natterer  <mitch@gimp.org>
 
 	* menus/image-menu.xml.in: the gegl tool was missing from the

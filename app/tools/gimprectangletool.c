@@ -2209,77 +2209,65 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
   if (! tool->display)
     return;
 
-  if (! strcmp (pspec->name, "x"))
+  if (strcmp (pspec->name, "x") == 0 && ! FEQUAL (private->x1, options_private->x))
     {
-      if (! FEQUAL (private->x1, options_private->x))
-        {
-          gimp_rectangle_tool_synthesize_motion (rect_tool,
-                                                 GIMP_RECTANGLE_TOOL_MOVING,
-                                                 options_private->x,
-                                                 private->y1);
-        }
+      gimp_rectangle_tool_synthesize_motion (rect_tool,
+                                             GIMP_RECTANGLE_TOOL_MOVING,
+                                             options_private->x,
+                                             private->y1);
     }
-  else if (! strcmp (pspec->name, "y"))
+  else if (strcmp (pspec->name, "y") == 0 && ! FEQUAL (private->y1, options_private->y))
     {
-      if (! FEQUAL (private->y1, options_private->y))
-        {
-          gimp_rectangle_tool_synthesize_motion (rect_tool,
-                                                 GIMP_RECTANGLE_TOOL_MOVING,
-                                                 private->x1,
-                                                 options_private->y);
-        }
+      gimp_rectangle_tool_synthesize_motion (rect_tool,
+                                             GIMP_RECTANGLE_TOOL_MOVING,
+                                             private->x1,
+                                             options_private->y);
     }
-  else if (! strcmp (pspec->name, "width"))
+  else if (strcmp (pspec->name, "width") == 0 && ! FEQUAL (private->x2 - private->x1, options_private->width))
     {
       /* Calculate x2, y2 that will create a rectangle of given width, for the
        * current options.
        */
       gdouble x2;
 
-      if (! FEQUAL (private->x2 - private->x1, options_private->width))
+      if (options_private->fixed_center)
         {
-          if (options_private->fixed_center)
-            {
-              x2 = private->center_x_on_fixed_center +
-                options_private->width / 2;
-            }
-          else
-            {
-              x2 = private->x1 + options_private->width;
-            }
-
-          gimp_rectangle_tool_synthesize_motion (rect_tool,
-                                                 GIMP_RECTANGLE_TOOL_RESIZING_RIGHT,
-                                                 x2,
-                                                 private->y2);
+          x2 = private->center_x_on_fixed_center +
+               options_private->width / 2;
         }
+      else
+        {
+          x2 = private->x1 + options_private->width;
+        }
+
+      gimp_rectangle_tool_synthesize_motion (rect_tool,
+                                             GIMP_RECTANGLE_TOOL_RESIZING_RIGHT,
+                                             x2,
+                                             private->y2);
     }
-  else if (! strcmp (pspec->name, "height"))
+  else if (strcmp (pspec->name, "height") == 0 && ! FEQUAL (private->y2 - private->y1, options_private->height))
     {
       /* Calculate x2, y2 that will create a rectangle of given height, for the
        * current options.
        */
       gdouble y2;
 
-      if (! FEQUAL (private->y2 - private->y1, options_private->height))
+      if (options_private->fixed_center)
         {
-          if (options_private->fixed_center)
-            {
-              y2 = private->center_y_on_fixed_center +
-                options_private->height / 2;
-            }
-          else
-            {
-              y2 = private->y1 + options_private->height;
-            }
-
-          gimp_rectangle_tool_synthesize_motion (rect_tool,
-                                                 GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM,
-                                                 private->x2,
-                                                 y2);
+          y2 = private->center_y_on_fixed_center +
+               options_private->height / 2;
         }
+      else
+        {
+          y2 = private->y1 + options_private->height;
+        }
+
+      gimp_rectangle_tool_synthesize_motion (rect_tool,
+                                             GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM,
+                                             private->x2,
+                                             y2);
     }
-  else if (! strcmp (pspec->name, "desired-fixed-size-width"))
+  else if (strcmp (pspec->name, "desired-fixed-size-width") == 0)
     {
       /* We are only interested in when width and height swaps, so
        * it's enough to only check e.g. for width.
@@ -2316,7 +2304,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
                         NULL);
         }
     }
-  else if (! strcmp (pspec->name, "aspect-numerator"))
+  else if (strcmp (pspec->name, "aspect-numerator") == 0)
     {
       /* We are only interested in when numerator and denominator
        * swaps, so it's enough to only check e.g. for numerator.
@@ -2366,7 +2354,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
                                                  new_y2);
         }
     }
-  else if (! strcmp (pspec->name, "highlight"))
+  else if (strcmp (pspec->name, "highlight") == 0)
     {
       gimp_rectangle_tool_update_highlight (rect_tool);
     }
