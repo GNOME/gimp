@@ -2189,41 +2189,44 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
                                     GParamSpec           *pspec,
                                     GimpRectangleTool    *rect_tool)
 {
-  GimpTool                    *tool    = GIMP_TOOL (rect_tool);
-  GimpRectangleToolPrivate    *private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+  GimpTool                    *tool;
+  GimpRectangleToolPrivate    *private;
   GimpRectangleOptionsPrivate *options_private;
 
+  tool = GIMP_TOOL (rect_tool);
+
+  if (!tool->display)
+    return;
+
+  private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
   options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
-  if (! strcmp (pspec->name, "guide"))
+  if (strcmp (pspec->name, "guide") == 0)
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (rect_tool));
 
       private->guide = options_private->guide;
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (rect_tool));
-
-      return;
     }
-
-  if (! tool->display)
-    return;
-
-  if (strcmp (pspec->name, "x") == 0 && ! FEQUAL (private->x1, options_private->x))
+  else if (strcmp  (pspec->name, "x") == 0 &&
+           !FEQUAL (private->x1, options_private->x))
     {
       gimp_rectangle_tool_synthesize_motion (rect_tool,
                                              GIMP_RECTANGLE_TOOL_MOVING,
                                              options_private->x,
                                              private->y1);
     }
-  else if (strcmp (pspec->name, "y") == 0 && ! FEQUAL (private->y1, options_private->y))
+  else if (strcmp  (pspec->name, "y") == 0 &&
+           !FEQUAL (private->y1, options_private->y))
     {
       gimp_rectangle_tool_synthesize_motion (rect_tool,
                                              GIMP_RECTANGLE_TOOL_MOVING,
                                              private->x1,
                                              options_private->y);
     }
-  else if (strcmp (pspec->name, "width") == 0 && ! FEQUAL (private->x2 - private->x1, options_private->width))
+  else if (strcmp  (pspec->name, "width") == 0 &&
+           !FEQUAL (private->x2 - private->x1, options_private->width))
     {
       /* Calculate x2, y2 that will create a rectangle of given width, for the
        * current options.
@@ -2245,7 +2248,8 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
                                              x2,
                                              private->y2);
     }
-  else if (strcmp (pspec->name, "height") == 0 && ! FEQUAL (private->y2 - private->y1, options_private->height))
+  else if (strcmp  (pspec->name, "height") == 0 &&
+           !FEQUAL (private->y2 - private->y1, options_private->height))
     {
       /* Calculate x2, y2 that will create a rectangle of given height, for the
        * current options.

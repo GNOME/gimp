@@ -1,6 +1,12 @@
 2008-04-26  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_options_notify): Some more simplifications
+	and cleanups.
+	
+2008-04-26  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c
 	(gimp_rectangle_tool_options_notify): Simplifications and
 	cleanups.
 
