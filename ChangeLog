@@ -15,42 +15,6 @@
 	relevant categories, the list of relevant categories is hard coded
 	for now.
 
-2008-04-26  Øyvind Kolås  <pippin@gimp.org>
-
-	reviewed by: <delete if not using a buddy>
-
-	* app/gui/gui.c: (gui_sanity_check):
-	* app/tools/gimpgegltool.c: (gimp_get_subtype_classes),
-	(gimp_gegl_tool_compare_operation_names), (gimp_get_geglopclasses),
-	(gimp_gegl_tool_dialog):
-	* configure.in:
-	* libgimpmath/gimpmd5.c: (gimp_md5_get_digest):
-	* libgimpthumb/gimpthumb-utils.c: (gimp_thumb_png_name):
-	* plug-ins/imagemap/imap_cern_lex.c: (yy_get_next_buffer),
-	(cern_ensure_buffer_stack):
-	* plug-ins/imagemap/imap_csim_lex.c: (yy_get_next_buffer),
-	(csim_ensure_buffer_stack):
-	* plug-ins/imagemap/imap_ncsa_lex.c: (yy_get_next_buffer),
-	(ncsa_ensure_buffer_stack):
-
-2008-04-26  Øyvind Kolås  <pippin@gimp.org>
-
-	reviewed by: <delete if not using a buddy>
-
-	* app/gui/gui.c: (gui_sanity_check):
-	* app/tools/gimpgegltool.c: (type_get_subtype_classes),
-	(compare_operation_names), (get_opclasses),
-	(gimp_gegl_tool_dialog):
-	* configure.in:
-	* libgimpmath/gimpmd5.c: (gimp_md5_get_digest):
-	* libgimpthumb/gimpthumb-utils.c: (gimp_thumb_png_name):
-	* plug-ins/imagemap/imap_cern_lex.c: (yy_get_next_buffer),
-	(cern_ensure_buffer_stack):
-	* plug-ins/imagemap/imap_csim_lex.c: (yy_get_next_buffer),
-	(csim_ensure_buffer_stack):
-	* plug-ins/imagemap/imap_ncsa_lex.c: (yy_get_next_buffer),
-	(ncsa_ensure_buffer_stack):
-
 2008-04-26  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c
