@@ -28,6 +28,8 @@
 
 #define CHOOSE_XFORM_GRAIN 100
 
+static int    flam3_random_bit(void);
+static double flam3_random01(void);
 
 /*
  * run the function system described by CP forward N generations.
@@ -114,7 +116,7 @@ void iterate(cp, n, fuse, points)
 
       v = vari[2];
       if (v > 0.0) {
-	 /* complex */
+	 /* spherical */
 	 double nx, ny;
 	 double r2 = tx * tx + ty * ty + 1e-6;
 	 nx = tx / r2;
@@ -154,6 +156,7 @@ void iterate(cp, n, fuse, points)
 
       v = vari[5];
       if (v > 0.0) {
+	 /* polar */
 	 double nx, ny;
 	 if (tx < -EPS || tx > EPS ||
 	     ty < -EPS || ty > EPS)
@@ -178,6 +181,318 @@ void iterate(cp, n, fuse, points)
 	 p[1] += v * ny;
       }
 
+      v = vari[7];
+      if (v > 0.0) {
+         /* folded handkerchief */
+         double theta, r2, nx, ny;
+         if (tx < -EPS || tx > EPS ||
+             ty < -EPS || ty > EPS)
+            theta = atan2( tx, ty );
+         else
+            theta = 0.0;
+         r2 = sqrt( tx * tx + ty * ty);
+         nx = sin(theta + r2) * r2;
+         ny = cos(theta - r2) * r2;
+         p[0] += v * nx;
+         p[1] += v * ny;
+      }
+      
+      v = vari[8];
+      if (v > 0.0) {
+         /* heart */
+         double theta, r2, nx, ny;
+         if (tx < -EPS || tx > EPS ||
+             ty < -EPS || ty > EPS)
+            theta = atan2( tx, ty );
+         else
+            theta = 0.0;
+         r2 = sqrt( tx * tx + ty * ty );
+         theta *= r2;
+         nx = sin(theta) * r2;
+         ny = cos(theta) * -r2;
+         p[0] += v * nx;
+         p[1] += v * ny;
+      }
+
+      v = vari[9];
+      if (v > 0.0) {
+         /* disc */
+         double theta, r2, nx, ny;
+         if ( tx < -EPS || tx > EPS ||
+              ty < - EPS || ty > EPS)
+            theta = atan2( tx, ty );
+         else
+            theta = 0.0;
+         nx = tx * G_PI;
+         ny = ty * G_PI;
+         r2 = sqrt( nx * nx * ny * ny );
+         p[0] += v * sin(r2) * theta / G_PI;
+         p[1] += v * cos(r2) * theta / G_PI;
+      }
+
+      v = vari[10];
+      if ( v > 0.0 ) {
+         /* spiral */
+         double theta, r2;
+         if (tx < -EPS || tx > EPS ||
+             ty < -EPS || ty > EPS)
+            theta = atan2( tx, ty );
+         else
+            theta = 0.0;
+         r2 = sqrt( tx * tx + ty * ty ) + 1e-6;
+         p[0] += v * ( cos(theta) + sin(r2)) / r2;
+         p[1] += v * ( cos(theta) + cos(r2)) / r2;
+      }
+
+      v = vari[11];
+      if (v > 0.0) {
+         /* hyperbolic */
+         double theta, r2;
+         if (tx < -EPS || tx > EPS ||
+             ty < -EPS || ty > EPS)
+            theta = atan2( tx, ty );
+         else
+            theta = 0.0;
+         r2 = sqrt( tx * tx + ty * ty) + 1e-6;
+         p[0] += v * sin(theta) / r2;
+         p[1] += v * cos(theta) * r2;
+      }
+
+      v = vari[12];
+      if (v > 0.0 ) {
+         double theta, r2;
+         /* diamond */
+         if ( tx < -EPS || tx > EPS ||
+              ty < -EPS || ty > EPS)
+            theta = atan2( tx, ty );
+         else
+            theta = 0.0;
+         r2 = sqrt( tx * tx + ty * ty );
+         p[0] += v * sin(theta) * cos(r2);
+         p[1] += v * cos(theta) * sin(r2);
+      }
+
+      v = vari[13];
+      if ( v > 0.0 ) {
+         /* ex */
+         double theta, r2, n0, n1, m0, m1;
+         if ( tx < -EPS || tx > EPS ||
+              ty < -EPS || ty > EPS)
+            theta = atan2( tx, ty );
+         else
+            theta = 0.0;
+         r2 = sqrt( tx * tx + ty * ty );
+         n0 = sin(theta + r2);
+         n1 = cos(theta - r2);
+         m0 = n0 * n0 * n0 * r2;
+         m1 = n1 * n1 * n1 * r2;
+         p[0] += v * (m0 + m1);
+         p[1] += v * (m0 - m1);
+      }
+
+      v = vari[14];
+      if ( v > 0.0) {
+         double theta, r2, nx, ny;
+         /* julia */
+         if (tx < -EPS || tx > EPS ||
+             ty < -EPS || ty > EPS)
+            theta = atan2( tx, ty );
+         else
+            theta = 0.0;
+         if (flam3_random_bit()) theta += G_PI;
+         r2 = pow( tx * tx + ty * ty, 0.25);
+         nx = r2 * cos(theta);
+         ny = r2 * sin(theta);
+         p[0] += v * nx;
+         p[1] += v * ny;
+      }
+
+      v = vari[15];
+      if ( v > 0.0 ) {
+         /* waves */
+         double dx, dy, nx, ny;
+         dx = coef[2][0];
+         dy = coef[2][1];
+         nx = tx + coef[1][0] * sin(ty / ((dx*dx)+EPS));
+         ny = ty + coef[1][1] * sin(tx / ((dy*dy)+EPS));
+         p[0] += v * nx;
+         p[1] += v * ny;
+      }
+      
+      v = vari[16];
+      if ( v > 0.0 ) {
+         /* fisheye */
+         double theta, r2, nx, ny;
+         if (tx < -EPS || tx > EPS ||
+             ty < -EPS || ty > EPS)
+            theta = atan2( tx, ty );
+         else
+            theta = 0.0;
+         r2 = sqrt( tx * tx + ty * ty );
+         r2 = 2 * r2 / (r2 + 1);
+         nx = r2 * cos(theta);
+         ny = r2 * sin(theta);
+         p[0] += v * nx;
+         p[1] += v * ny;
+      }
+
+      v = vari[17];
+      if (v > 0.0) {
+         /* popcorn */
+         double dx, dy, nx, ny;
+         dx = tan(3*ty);
+         dy = tan(3*tx);
+         nx = tx + coef[2][0] * sin(dx);
+         ny = ty + coef[2][1] * sin(dy);
+         p[0] += v * nx;
+         p[1] += v * ny;
+      }
+
+      v = vari[18];
+      if (v > 0.0) {
+         /* exponential */
+         double dx, dy, nx, ny;
+         dx = exp( tx - 1.0);
+         dy = G_PI * ty;
+         nx = cos(dy) * dx;
+         ny = sin(dy) * dx;
+         p[0] += v * nx;
+         p[1] += v * ny;
+      }
+
+      v = vari[19];
+      if (v > 0.0) {
+         /* power */
+         double theta, r2, tsin, tcos, nx, ny;
+         if (tx < -EPS || tx > EPS ||
+             ty < -EPS || ty > EPS)
+            theta = atan2( tx, ty );
+         else
+            theta = 0.0;
+         tsin = sin(theta);
+         tcos = cos(theta);
+         r2 = sqrt( tx * tx + ty * ty );
+         r2 = pow( r2, tsin);
+         nx = r2 * tcos;;
+         ny = r2 * tsin;
+         p[0] += v * nx;
+         p[1] += v * ny;
+      }
+
+      v = vari[20];
+      if (v > 0.0) {
+         /* cosine */
+         double nx, ny;
+         nx = cos(tx * G_PI) * cosh(ty);
+         ny = -sin(tx * G_PI) * sinh(ty);
+         p[0] += v * nx;
+         p[1] += v * ny;
+      }
+
+      v = vari[21];
+      if (v > 0.0) {
+         /* rings */
+         double theta, r2, dx, nx, ny;
+         if (tx < -EPS || tx > EPS ||
+             ty < -EPS || ty > EPS)
+            theta = atan2( tx, ty );
+         else
+            theta = 0;
+         dx = coef[2][0];
+         dx = dx * dx + EPS;
+         r2 = sqrt( tx * tx + ty * ty );
+         r2 = fmod( r2 + dx, 2 * dx) - dx + r2 * (1-dx);
+         nx = cos(theta) * r2;
+         ny = sin(theta) * r2;
+         p[0] += v * nx;
+         p[1] += v * ny;
+      }
+
+      v = vari[22];
+      if (v > 0.0) {
+         /* fan */
+         double theta, r2, dx, dy, dx2, nx, ny;
+         if (tx < -EPS || tx > EPS ||
+             ty < -EPS || ty > EPS)
+            theta = atan2( tx, ty );
+         else
+            theta = 0.0;
+         dx = coef[2][0];
+         dy = coef[2][1];
+         dx = G_PI * (dx * dx + EPS);
+         dx2 = dx / 2;
+         r2 = sqrt( tx * tx + ty * ty );
+         theta += (fmod(theta + dy, dx) > dx2) ? -dx2: dx2;
+         nx = cos(theta) * r2;
+         ny = sin(theta) * r2;
+         p[0] += v * nx;
+         p[1] += v * ny;
+      }
+
+      v = vari[23];
+      if (v > 0.0) {
+         /* eyefish */
+         double r2;
+         r2 = 2.0 * v / ( sqrt( tx * tx + ty * ty ) + 1.0 );
+         p[0] += r2 * tx;
+         p[1] += r2 * ty;
+      }
+
+      v = vari[24];
+      if (v > 0.0) {
+         /* bubble */
+         double r2;
+         r2 = v / ( (tx * tx + ty * ty) / 4 + 1 );
+         p[0] += r2 * tx;
+         p[1] += r2 * ty;
+      }
+
+      v = vari[25];
+      if (v > 0.0) {
+         /* cylinder */
+         double nx;
+         nx = sin(tx);
+         p[0] += v * nx;
+         p[1] += v * ty;
+      }
+
+      v = vari[26];
+      if (v > 0.0) {
+         /* noise */
+         double rx, sinr, cosr, nois;
+         rx = flam3_random01() * 2 * G_PI;
+         sinr = sin(rx);
+         cosr = cos(rx);
+         nois = flam3_random01();
+         p[0] += v * nois * tx * cosr;
+         p[1] += v * nois * ty * sinr;
+      }
+
+      v = vari[27];
+      if (v > 0.0) {
+         /* blur */
+         double rx, sinr, cosr, nois;
+         rx = flam3_random01() * 2 * G_PI;
+         sinr = sin(rx);
+         cosr = cos(rx);
+         nois = flam3_random01();
+         p[0] += v * nois * cosr;
+         p[1] += v * nois * sinr;
+      }
+
+      v = vari[28];
+      if (v > 0.0) {
+         /* gaussian */
+         double ang, sina, cosa, r2;
+         ang = flam3_random01() * 2 * G_PI;
+         sina = sin(ang);
+         cosa = cos(ang);
+         r2 = v * ( flam3_random01() + flam3_random01() + flam3_random01() +
+                    flam3_random01() - 2.0 );
+         p[0] += r2 * cosa;
+         p[1] += r2 * sina;
+      }
+      
       /* if fuse over, store it */
       if (i >= 0) {
 	 points[i][0] = p[0];
@@ -1172,3 +1487,23 @@ main()
    }
 }
 #endif
+
+static int flam3_random_bit(void)
+{
+   static int n = 0;
+   static int l;
+   if (0 == n) {
+      l = random();
+      n = 20;
+   }
+   else {
+      l = l >> 1;
+      n--;
+   }
+   return l & 1;
+}
+
+static double flam3_random01(void)
+{
+   return (random() & 0xfffffff) / (double) 0xfffffff;
+}

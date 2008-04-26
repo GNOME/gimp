@@ -1,3 +1,10 @@
+2008-04-26  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* plug-ins/flame/flame.c
+	* plug-ins/flame/libifs.[ch]: Applied
+	modified patch by Luis Barrancos that adds 22 new variations to
+	the flame plugin (bug #389004).
+
 2008-04-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintoptions.c (gimp_paint_options_get_jitter):

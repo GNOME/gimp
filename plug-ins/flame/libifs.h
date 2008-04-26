@@ -31,7 +31,7 @@
 
 #define variation_random (-1)
 
-#define NVARS   7
+#define NVARS   29
 #define NXFORMS 6
 
 typedef double point[3];
