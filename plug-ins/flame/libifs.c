@@ -1493,7 +1493,7 @@ static int flam3_random_bit(void)
    static int n = 0;
    static int l;
    if (0 == n) {
-      l = random();
+      l = rand();
       n = 20;
    }
    else {
@@ -1505,5 +1505,5 @@ static int flam3_random_bit(void)
 
 static double flam3_random01(void)
 {
-   return (random() & 0xfffffff) / (double) 0xfffffff;
+   return (rand() & 0xfffffff) / (double) 0xfffffff;
 }

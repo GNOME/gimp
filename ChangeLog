@@ -1,3 +1,8 @@
+2008-04-26  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* plug-ins/flame/libifs.c: Applied patch from Aurimas Juška. Use
+	the standard rand() instead of random().
+
 2008-04-26  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/tools/gimpgegltool.c: (gimp_get_subtype_classes),
