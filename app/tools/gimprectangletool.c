@@ -2193,11 +2193,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
   GimpRectangleToolPrivate    *private;
   GimpRectangleOptionsPrivate *options_private;
 
-  tool = GIMP_TOOL (rect_tool);
-
-  if (!tool->display)
-    return;
-
+  tool            = GIMP_TOOL (rect_tool);
   private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
   options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
