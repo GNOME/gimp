@@ -21,6 +21,7 @@
 #include <string.h>
 
 #include <gegl.h>
+#include <gegl-plugin.h>
 #include <gegl-paramspecs.h>
 #include <gtk/gtk.h>
 
@@ -220,6 +221,58 @@ gimp_gegl_tool_map (GimpImageMapTool *image_map_tool)
   g_free (pspecs);
 }
 
+/* Builds a GList of the class structures of all subtypes
+ * of type.
+ */
+static GList *
+gimp_get_subtype_classes (GType  type,
+                          GList *classes)
+{
+  GObjectClass *klass;
+  GType        *ops;
+  guint         children;
+  gint          no;
+
+  if (!type)
+    return classes;
+
+  klass = g_type_class_ref (type);
+  ops = g_type_children (type, &children);
+
+  /* only add classes which have a name, this avoids 
+   * the abstract base classes
+   */
+  if (GEGL_OPERATION_CLASS (klass)->name != NULL)
+    classes = g_list_prepend (classes, klass);
+
+  for (no=0; no<children; no++)
+    classes = gimp_get_subtype_classes (ops[no], classes);
+
+  if (ops)
+    g_free (ops);
+  return classes;
+}
+
+static
+gint gimp_gegl_tool_compare_operation_names (GeglOperationClass *a,
+                                             GeglOperationClass *b)
+{
+  return strcmp (a->name, b->name);
+}
+
+static GList *
+gimp_get_geglopclasses (void)
+{
+  GList *opclasses = NULL;
+
+  opclasses = gimp_get_subtype_classes (GEGL_TYPE_OPERATION, NULL);
+  opclasses = g_list_sort (opclasses, (GCompareFunc)
+                                      gimp_gegl_tool_compare_operation_names);
+
+  return opclasses;
+}
+
+/**/
 
 /*****************/
 /*  Gegl dialog  */
@@ -234,9 +287,8 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget       *hbox;
   GtkWidget       *label;
   GtkWidget       *combo;
-  gchar          **operations;
-  guint            n_operations;
-  gint             i;
+  GList           *opclasses;
+  GList           *iter;
 
   /*  The operation combo box  */
   hbox = gtk_hbox_new (FALSE, 6);
@@ -250,14 +302,22 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
 
   store = gtk_list_store_new (1, G_TYPE_STRING);
 
-  operations = gegl_list_operations (&n_operations);
-
-  for (i = 0; i < n_operations; i++)
-    gtk_list_store_insert_with_values (store, NULL, -1,
-                                       0, operations[i],
-                                       -1);
-
-  g_free (operations);
+  opclasses = gimp_get_geglopclasses ();
+  for (iter = opclasses; iter; iter=iter->next)
+    {
+      GeglOperationClass *opclass = GEGL_OPERATION_CLASS (iter->data);
+      if (strstr (opclass->categories, "color") ||
+          strstr (opclass->categories, "enhance") ||
+          strstr (opclass->categories, "misc") ||
+          strstr (opclass->categories, "blur") ||
+          strstr (opclass->categories, "edge") ||
+          strstr (opclass->categories, "render") 
+          )
+        gtk_list_store_insert_with_values (store, NULL, -1,
+                                           0, opclass->name,
+                                           -1);
+    } 
+  g_list_free (opclasses);
 
   combo = gtk_combo_box_new_with_model (GTK_TREE_MODEL (store));
   cell = gtk_cell_renderer_text_new ();
