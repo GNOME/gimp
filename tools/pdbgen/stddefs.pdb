@@ -75,7 +75,7 @@ sub jay_pdb_misc {
 }
 
 sub joao_pdb_misc {
-    contrib_pdb_misc('Jo\xc3\xa3o S. O. Bueno Calligaris', '', @_);
+    contrib_pdb_misc('Jo\xc3\xa3o S. O. Bueno', '', @_);
 }
 
 sub josh_pdb_misc {
