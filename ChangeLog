@@ -1,3 +1,8 @@
+2008-04-26  Michael Natterer  <mitch@gimp.org>
+
+	* menus/image-menu.xml.in: the gegl tool was missing from the
+	"Tools" menu.
+
 2008-04-26  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* plug-ins/flame/flame.c
