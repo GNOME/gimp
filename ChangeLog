@@ -1,6 +1,6 @@
-2008-04-28 Joao S. O. Bueno
+2008-04-28  Joao S. O. Bueno <gwidion@mpc.com.br>
 
-        * app/pdb/drawable-transform-cmds.c
+	* app/pdb/drawable-transform-cmds.c
 	* app/pdb/vectors-cmds.c: regenerated
 
 2008-04-28  Sven Neumann  <sven@gimp.org>
@@ -29,9 +29,9 @@
 	* menus/image-menu.xml.in: removed GEGL tool from the Colors menu
 	and also moved it out of the color tools menu.
 
-2008-04-26 João S. O. Bueno <gwidion@mpc.com.br>
+2008-04-26  João S. O. Bueno <gwidion@mpc.com.br>
 
-        * AUTHORS
+	* AUTHORS
 	* authors.xml
 	* tools/pdb/stddefs.pdb: Fix my name back to single
 	  name in most important files.
@@ -64,7 +64,7 @@
 	* app/tools/gimprectangletool.c
 	(gimp_rectangle_tool_options_notify): Some more simplifications
 	and cleanups.
-	
+
 2008-04-26  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c
@@ -419,7 +419,7 @@
 	* cursors/xbm/modifier-select-mask.xbm: New cursor icon.
 
 	* cursors/makefile.msc
-	* cursors/Makefile.am 
+	* cursors/Makefile.am
 	* app/widgets/gimpcursor.c
 	* app/widgets/widgets-enums.h: Changed accordingly.
 
@@ -633,7 +633,7 @@
 	* app/actions/file-actions.c (file_actions_close_all_update)
 	* app/dialogs/layer-add-mask-dialog.c (layer_add_mask_dialog_new)
 	* app/dialogs/palette-import-dialog.c (palette_import_image_callback)
-	* app/gui/gui-vtable.c (gui_get_empty_display): 
+	* app/gui/gui-vtable.c (gui_get_empty_display):
 	* app/widgets/gimpmenudock.c (gimp_menu_dock_image_changed): use
 	the new GimpContainer methods.
 
@@ -654,7 +654,7 @@
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_add_script):
 	marked a message for translation. Declare 'val' as const and use
 	an extra variable where a not const variable is needed.
-	
+
 2008-04-09  Sven Neumann  <sven@gimp.org>
 
 	* menus/image-menu.xml.in: moved Languages to the bottom.  Removed
@@ -751,7 +751,7 @@
 
 2008-04-07  Sven Neumann  <sven@gimp.org>
 
-	* app/tools/gimprectangletool.[ch]	
+	* app/tools/gimprectangletool.[ch]
 	* app/tools/gimptexttool.c: removed 'force-narrow' mode as it is
 	hard to use and just looks broken.
 
@@ -782,9 +782,9 @@
 
 2008-04-07  Sven Neumann  <sven@gimp.org>
 
-	* app/actions/templates-actions.c 
+	* app/actions/templates-actions.c
 	* app/actions/templates-commands.c: when creating an image from a
-        template, skip the New Image dialog as suggested in bug #480802.
+	template, skip the New Image dialog as suggested in bug #480802.
 
 2008-04-07  Sven Neumann  <sven@gimp.org>
 
@@ -2663,7 +2663,7 @@
 2008-03-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/uri/Makefile.am
-        * plug-ins/uri/gimpmountoperation.[ch]: added a temporary copy of
+	* plug-ins/uri/gimpmountoperation.[ch]: added a temporary copy of
 	GtkMountOperation until we depend on the next stable GTK+ release.
 	Converted to GIMP namespace to avoid symbol collisions.
 
@@ -4982,7 +4982,7 @@
 
 2008-01-09 Joao S. O. Bueno <gwidion@mpc.com.br>
 
-        * plug-ins/pygimp/pygimp-vectors.c: Allow Vectors.remove_stroke
+	* plug-ins/pygimp/pygimp-vectors.c: Allow Vectors.remove_stroke
 	method to accept VectorStroke objects besides stroke IDs. Fix
 	method names in error strings.
 
@@ -8411,10 +8411,10 @@
 
 2007-10-24  Simon Budig  <simon@gimp.org>
 
-        * app/display/gimpdisplayshell.h: change the PROJ_ROUND macro
+	* app/display/gimpdisplayshell.h: change the PROJ_ROUND macro
 	to do proper rounding. Seems to work well.
 
 2007-10-24  Sven Neumann  <sven@gimp.org>
-            Michael Natterer  <mitch@gimp.org>
+	    Michael Natterer  <mitch@gimp.org>
 
 	* Made 2.4.0 release.
