@@ -172,8 +172,19 @@ hue_saturation (HueSaturation *hs,
 
           if (use_secondary_hue)
             {
-              r = hs->hue_transfer[hue][r] * primary_intensity +
-                  hs->hue_transfer[secondary_hue][r] * secondary_intensity;
+	      /*  find nearest hue on the circle
+               *  between primary and secondary hue
+               */
+              gint diff;
+
+              diff = hs->hue_transfer[hue][r] - hs->hue_transfer[secondary_hue][r];
+              if (diff < -127 || diff >= 128)
+                r = (gint) (hs->hue_transfer[hue][r] * primary_intensity +
+                            (hs->hue_transfer[secondary_hue][r] + 255) * secondary_intensity) % 255;
+              else
+                r = hs->hue_transfer[hue][r] * primary_intensity +
+                    hs->hue_transfer[secondary_hue][r] * secondary_intensity;
+
               g = hs->saturation_transfer[hue][g] * primary_intensity +
                   hs->saturation_transfer[secondary_hue][g] * secondary_intensity;
               b = hs->lightness_transfer[hue][b] * primary_intensity +
