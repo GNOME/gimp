@@ -22,7 +22,7 @@
 #ifndef __GIMP_SCALE_COMBO_BOX_H__
 #define __GIMP_SCALE_COMBO_BOX_H__
 
-#include <gtk/gtkcombobox.h>
+#include <gtk/gtkcomboboxentry.h>
 
 
 #define GIMP_TYPE_SCALE_COMBO_BOX            (gimp_scale_combo_box_get_type ())
@@ -37,12 +37,12 @@ typedef struct _GimpScaleComboBoxClass  GimpScaleComboBoxClass;
 
 struct _GimpScaleComboBoxClass
 {
-  GtkComboBoxClass  parent_instance;
+  GtkComboBoxEntryClass  parent_instance;
 };
 
 struct _GimpScaleComboBox
 {
-  GtkComboBox       parent_instance;
+  GtkComboBoxEntry  parent_instance;
 
   GtkTreePath      *last_path;
   GList            *mru;

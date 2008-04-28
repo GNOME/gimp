@@ -1,5 +1,11 @@
 2008-04-28  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpscalecombobox.[ch]: derive from GtkComboBoxEntry.
+	Needs some more work with respect to input validation and focus
+	handling...
+
+2008-04-28  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
 	* app/widgets/gimpwindow.[ch]: added GimpWindow class and moved
