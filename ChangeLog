@@ -1,4 +1,5 @@
 2008-04-28 Joao S. O. Bueno
+
         * app/pdb/drawable-transform-cmds.c
 	* app/pdb/vectors-cmds.c: regenerated
 
@@ -29,6 +30,7 @@
 	and also moved it out of the color tools menu.
 
 2008-04-26 João S. O. Bueno <gwidion@mpc.com.br>
+
         * AUTHORS
 	* authors.xml
 	* tools/pdb/stddefs.pdb: Fix my name back to single
