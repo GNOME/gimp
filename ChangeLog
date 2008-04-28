@@ -1,5 +1,15 @@
 2008-04-28  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpwindow.[ch]: added GimpWindow class and moved
+	key-press-event handler from GimpDock to this class.
+
+	* app/widgets/gimpdock.[ch]:
+	* app/display/gimpdisplayshell.[ch]: derive from GimpWindow.
+
+2008-04-28  Sven Neumann  <sven@gimp.org>
+
 	* app/base/hue-saturation.c (hue_saturation): applied patch from
 	Michael Deal that fixes use of the overlap option (bug #527085).
 

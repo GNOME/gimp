@@ -23,7 +23,7 @@
 #define __GIMP_DOCK_H__
 
 
-#include <gtk/gtkwindow.h>
+#include "widgets/gimpwindow.h"
 
 
 #define GIMP_TYPE_DOCK            (gimp_dock_get_type ())
@@ -38,7 +38,7 @@ typedef struct _GimpDockClass GimpDockClass;
 
 struct _GimpDock
 {
-  GtkWindow          parent_instance;
+  GimpWindow         parent_instance;
 
   GimpDialogFactory *dialog_factory;
   GimpContext       *context;
@@ -53,7 +53,7 @@ struct _GimpDock
 
 struct _GimpDockClass
 {
-  GtkWindowClass parent_class;
+  GimpWindowClass    parent_class;
 
   /*  virtual functions  */
   void    (* setup)        (GimpDock       *dock,

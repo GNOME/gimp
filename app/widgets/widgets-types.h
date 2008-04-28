@@ -180,6 +180,7 @@ typedef struct _GimpTemplateEditor           GimpTemplateEditor;
 typedef struct _GimpThumbBox                 GimpThumbBox;
 typedef struct _GimpUnitStore                GimpUnitStore;
 typedef struct _GimpUnitComboBox             GimpUnitComboBox;
+typedef struct _GimpWindow                   GimpWindow;
 
 
 /*  views  */
