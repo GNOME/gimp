@@ -44,6 +44,7 @@ struct _GimpScaleComboBox
 {
   GtkComboBoxEntry  parent_instance;
 
+  gdouble           scale;
   GtkTreePath      *last_path;
   GList            *mru;
 };

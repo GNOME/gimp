@@ -1,4 +1,11 @@
-2008-04-28  Joao S. O. Bueno <gwidion@mpc.com.br>
+2008-04-28  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpscalecombobox.c: keep the current scale value,
+	beep and reset the entry when the user input cannot be parsed.
+	Also changed the input parser to interpret a single number as a
+	percentage.
+
+2008-04-28  Joao S. O. Bueno  <gwidion@mpc.com.br>
 
 	* app/pdb/drawable-transform-cmds.c
 	* app/pdb/vectors-cmds.c: regenerated
@@ -29,7 +36,7 @@
 	* menus/image-menu.xml.in: removed GEGL tool from the Colors menu
 	and also moved it out of the color tools menu.
 
-2008-04-26  João S. O. Bueno <gwidion@mpc.com.br>
+2008-04-26  João S. O. Bueno  <gwidion@mpc.com.br>
 
 	* AUTHORS
 	* authors.xml
@@ -4243,7 +4250,7 @@
 	pygimp_set_foreground): restore support for passing in 3 args for
 	color components, for backward compatibility.
 
-2008-01-26  Joao S. O. Bueno <gwidion@mpc.com.br>
+2008-01-26  Joao S. O. Bueno  <gwidion@mpc.com.br>
 
 	* plug-ins/pygimp/pygimp-colors.c (pygimp_rgb_from_pyobject): fix
 	subsequent error (calculated parameters where not used)
@@ -4980,7 +4987,7 @@
 
 	* app/tools/gimpcolorbalancetool.c: use it.
 
-2008-01-09 Joao S. O. Bueno <gwidion@mpc.com.br>
+2008-01-09  Joao S. O. Bueno  <gwidion@mpc.com.br>
 
 	* plug-ins/pygimp/pygimp-vectors.c: Allow Vectors.remove_stroke
 	method to accept VectorStroke objects besides stroke IDs. Fix
