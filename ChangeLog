@@ -1,3 +1,8 @@
+2008-04-28  Sven Neumann  <sven@gimp.org>
+
+	* menus/image-menu.xml.in: removed GEGL tool from the Colors menu
+	and also moved it out of the color tools menu.
+
 2008-04-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpgegltool.c: clean up last commit.

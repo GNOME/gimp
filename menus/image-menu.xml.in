@@ -478,7 +478,6 @@
       <menuitem action="tools-levels" />
       <menuitem action="tools-curves" />
       <menuitem action="tools-posterize" />
-      <menuitem action="tools-gegl" />
       <separator />
       <menuitem action="drawable-desaturate" />
       <placeholder name="Invert">
@@ -546,13 +545,13 @@
 	<menuitem action="tools-levels" />
 	<menuitem action="tools-curves" />
 	<menuitem action="tools-posterize" />
-	<menuitem action="tools-gegl" />
       </menu>
       <menuitem action="tools-vector" />
       <menuitem action="tools-color-picker" />
       <menuitem action="tools-zoom" />
       <menuitem action="tools-measure" />
       <menuitem action="tools-text" />
+      <menuitem action="tools-gegl" />
       <separator />
       <menuitem action="dialogs-toolbox" />
       <menuitem action="context-colors-default" />
