@@ -2038,8 +2038,8 @@ register_vectors_procs (GimpPDB *pdb)
                                      "gimp-vectors-stroke-rotate",
                                      "rotates the given stroke.",
                                      "Rotates the given stroke around given center by angle (in degrees).",
-                                     "Jo\xc3\xa3o S. O. Bueno Calligaris",
-                                     "Jo\xc3\xa3o S. O. Bueno Calligaris",
+                                     "Jo\xc3\xa3o S. O. Bueno",
+                                     "Jo\xc3\xa3o S. O. Bueno",
                                      "2006",
                                      NULL);
   gimp_procedure_add_argument (procedure,
@@ -2085,8 +2085,8 @@ register_vectors_procs (GimpPDB *pdb)
                                      "gimp-vectors-stroke-flip",
                                      "flips the given stroke.",
                                      "Rotates the given stroke around given center by angle (in degrees).",
-                                     "Jo\xc3\xa3o S. O. Bueno Calligaris",
-                                     "Jo\xc3\xa3o S. O. Bueno Calligaris",
+                                     "Jo\xc3\xa3o S. O. Bueno",
+                                     "Jo\xc3\xa3o S. O. Bueno",
                                      "2006",
                                      NULL);
   gimp_procedure_add_argument (procedure,
@@ -2129,8 +2129,8 @@ register_vectors_procs (GimpPDB *pdb)
                                      "gimp-vectors-stroke-flip-free",
                                      "flips the given stroke about an arbitrary axis.",
                                      "Flips the given stroke about an arbitrary axis. Axis is defined by two coordinates in the image (in pixels), through which the flipping axis passes.",
-                                     "Jo\xc3\xa3o S. O. Bueno Calligaris",
-                                     "Jo\xc3\xa3o S. O. Bueno Calligaris",
+                                     "Jo\xc3\xa3o S. O. Bueno",
+                                     "Jo\xc3\xa3o S. O. Bueno",
                                      "2006",
                                      NULL);
   gimp_procedure_add_argument (procedure,

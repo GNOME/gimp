@@ -1,3 +1,7 @@
+2008-04-28 Joao S. O. Bueno
+        * app/pdb/drawable-transform-cmds.c
+	* app/pdb/vectors-cmds.c: regenerated
+
 2008-04-28  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpscalecombobox.[ch]: derive from GtkComboBoxEntry.
@@ -23,6 +27,12 @@
 
 	* menus/image-menu.xml.in: removed GEGL tool from the Colors menu
 	and also moved it out of the color tools menu.
+
+2008-04-26 João S. O. Bueno <gwidion@mpc.com.br>
+        * AUTHORS
+	* authors.xml
+	* tools/pdb/stddefs.pdb: Fix my name back to single
+	  name in most important files.
 
 2008-04-26  Michael Natterer  <mitch@gimp.org>
 
