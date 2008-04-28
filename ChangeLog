@@ -1,5 +1,10 @@
 2008-04-28  Sven Neumann  <sven@gimp.org>
 
+	* app/base/hue-saturation.c (hue_saturation): applied patch from
+	Michael Deal that fixes use of the overlap option (bug #527085).
+
+2008-04-28  Sven Neumann  <sven@gimp.org>
+
 	* menus/image-menu.xml.in: removed GEGL tool from the Colors menu
 	and also moved it out of the color tools menu.
 
