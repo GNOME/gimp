@@ -1,5 +1,11 @@
 2008-04-29  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/gtkrc
+	* themes/Small/gtkrc: reduce the minimum array size for
+	GtkComboBox widgets in the image window.
+
+2008-04-29  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpscalecombobox.[ch]: added signal "entry-activated".
 
 	* app/display/gimpstatusbar.c (gimp_statusbar_new): connect to the

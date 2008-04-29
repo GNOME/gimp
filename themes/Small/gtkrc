@@ -97,6 +97,7 @@ style "gimp-display-style" = "gimp-default-style"
 {
   GimpUnitComboBox::label-scale  = 0.8333
   GimpScaleComboBox::label-scale = 0.8333
+  GtkComboBox::arrow-size        = 8
 }
 
 widget "*GimpDisplayShell.*" style "gimp-display-style"
