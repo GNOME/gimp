@@ -77,7 +77,13 @@ gimp_window_key_press_event (GtkWidget   *widget,
 
   /* chain up, bypassing gtk_window_key_press(), to invoke binding set */
   if (! handled)
-    handled = GTK_WIDGET_CLASS (g_type_class_peek (g_type_parent (GTK_TYPE_WINDOW)))->key_press_event (widget, event);
+    {
+      GtkWidgetClass *widget_class;
+
+      widget_class = g_type_class_peek_static (g_type_parent (GTK_TYPE_WINDOW));
+
+      handled = widget_class->key_press_event (widget, event);
+    }
 
   return handled;
 }
