@@ -1,5 +1,14 @@
 2008-04-29  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpscalecombobox.[ch]: added signal "entry-activated".
+
+	* app/display/gimpstatusbar.c (gimp_statusbar_new): connect to the
+	new signal and move the focus to the canvas.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): comment.
+
+2008-04-29  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpwindow.c (gimp_window_key_press_event): formatting.
 
 2008-04-28  Sven Neumann  <sven@gimp.org>

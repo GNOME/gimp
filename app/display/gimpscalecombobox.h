@@ -38,6 +38,8 @@ typedef struct _GimpScaleComboBoxClass  GimpScaleComboBoxClass;
 struct _GimpScaleComboBoxClass
 {
   GtkComboBoxEntryClass  parent_instance;
+
+  void (* entry_activated) (GimpScaleComboBox *combo_box);
 };
 
 struct _GimpScaleComboBox

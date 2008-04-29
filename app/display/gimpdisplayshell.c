@@ -1184,6 +1184,8 @@ gimp_display_shell_new (GimpDisplay       *display,
 
   gtk_widget_show (main_vbox);
 
+  /*  add display filter for color management  */
+
   filter = gimp_display_shell_filter_new (shell,
                                           display->gimp->config->color_management);
 

@@ -30,6 +30,8 @@
 
 #include "display-types.h"
 
+#include "core/gimpmarshal.h"
+
 #include "gimpscalecombobox.h"
 
 
@@ -41,6 +43,12 @@ enum
   LABEL,
   PERSISTENT,
   NUM_COLUMNS
+};
+
+enum
+{
+  ENTRY_ACTIVATED,
+  LAST_SIGNAL
 };
 
 
@@ -64,6 +72,8 @@ G_DEFINE_TYPE (GimpScaleComboBox, gimp_scale_combo_box,
 
 #define parent_class gimp_scale_combo_box_parent_class
 
+static guint scale_combo_box_signals[LAST_SIGNAL] = { 0 };
+
 
 static void
 gimp_scale_combo_box_class_init (GimpScaleComboBoxClass *klass)
@@ -71,9 +81,20 @@ gimp_scale_combo_box_class_init (GimpScaleComboBoxClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->finalize = gimp_scale_combo_box_finalize;
+  scale_combo_box_signals[ENTRY_ACTIVATED] =
+    g_signal_new ("entry-activated",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpScaleComboBoxClass, entry_activated),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  object_class->finalize  = gimp_scale_combo_box_finalize;
 
   widget_class->style_set = gimp_scale_combo_box_style_set;
+
+  klass->entry_activated  = NULL;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_double ("label-scale",
@@ -295,10 +316,12 @@ gimp_scale_combo_box_entry_activate (GtkEntry          *entry,
     }
   else
     {
-      gtk_widget_error_bell (GTK_WIDGET (combo_box));
+      gtk_widget_error_bell (GTK_WIDGET (entry));
 
       gimp_scale_combo_box_set_scale (combo_box, combo_box->scale);
     }
+
+  g_signal_emit (combo_box, scale_combo_box_signals[ENTRY_ACTIVATED], 0);
 }
 
 static void

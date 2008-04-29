@@ -651,6 +651,10 @@ gimp_statusbar_new (GimpDisplayShell *shell)
                            G_CALLBACK (gimp_statusbar_shell_scaled),
                            statusbar, 0);
 
+  g_signal_connect_object (statusbar->scale_combo, "entry-activated",
+                           G_CALLBACK (gtk_widget_grab_focus),
+                           shell->canvas, G_CONNECT_SWAPPED);
+
   return GTK_WIDGET (statusbar);
 }
 
