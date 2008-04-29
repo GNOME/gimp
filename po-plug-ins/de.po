@@ -19,14 +19,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-04 15:59+0200\n"
-"PO-Revision-Date: 2008-04-04 16:01+0200\n"
+"POT-Creation-Date: 2008-04-29 12:00+0200\n"
+"PO-Revision-Date: 2008-04-29 14:08+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);"
 
 #: ../plug-ins/bmp/bmp.c:124 ../plug-ins/bmp/bmp.c:143
 msgid "Windows BMP image"
@@ -48,7 +48,7 @@ msgstr "Fehlerhafte Palette"
 #: ../plug-ins/common/pcx.c:344 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:703 ../plug-ins/common/pnm.c:480
 #: ../plug-ins/common/poppler.c:527 ../plug-ins/common/postscript.c:1023
-#: ../plug-ins/common/postscript.c:3031 ../plug-ins/common/psp.c:1432
+#: ../plug-ins/common/postscript.c:3031 ../plug-ins/common/psp.c:1747
 #: ../plug-ins/common/raw.c:243 ../plug-ins/common/raw.c:645
 #: ../plug-ins/common/sphere-designer.c:2002 ../plug-ins/common/sunras.c:378
 #: ../plug-ins/common/svg.c:321 ../plug-ins/common/svg.c:702
@@ -61,7 +61,7 @@ msgstr "Fehlerhafte Palette"
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:931
 #: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:195
 #: ../plug-ins/ico/ico-load.c:651 ../plug-ins/ico/ico-load.c:728
-#: ../plug-ins/jpeg/jpeg-load.c:111 ../plug-ins/jpeg/jpeg-load.c:821
+#: ../plug-ins/jpeg/jpeg-load.c:111 ../plug-ins/jpeg/jpeg-load.c:828
 #: ../plug-ins/lighting/lighting-ui.c:1354 ../plug-ins/psd/psd-load.c:125
 #: ../plug-ins/psd/psd-thumb-load.c:78
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:271
@@ -133,7 +133,7 @@ msgstr "Nicht unterstützte oder ungültige Bildhöhe: %d"
 #.
 #: ../plug-ins/bmp/bmp-read.c:559 ../plug-ins/common/blinds.c:277
 #: ../plug-ins/common/cel.c:349 ../plug-ins/common/cel.c:352
-#: ../plug-ins/common/compose.c:931 ../plug-ins/common/decompose.c:723
+#: ../plug-ins/common/compose.c:935 ../plug-ins/common/decompose.c:723
 #: ../plug-ins/common/dicom.c:533 ../plug-ins/common/film.c:746
 #: ../plug-ins/common/gif-load.c:879 ../plug-ins/common/pcx.c:393
 #: ../plug-ins/common/pcx.c:399 ../plug-ins/common/pix.c:368
@@ -143,8 +143,8 @@ msgstr "Nicht unterstützte oder ungültige Bildhöhe: %d"
 #: ../plug-ins/common/tiff-load.c:963 ../plug-ins/common/tile.c:267
 #: ../plug-ins/common/xbm.c:880 ../plug-ins/faxg3/faxg3.c:464
 #: ../plug-ins/fits/fits.c:511 ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:140 ../plug-ins/jpeg/jpeg-load.c:249
-#: ../plug-ins/jpeg/jpeg-load.c:752 ../plug-ins/psd/psd-image-res-load.c:995
+#: ../plug-ins/gimpressionist/general.c:140 ../plug-ins/jpeg/jpeg-load.c:251
+#: ../plug-ins/jpeg/jpeg-load.c:759 ../plug-ins/psd/psd-image-res-load.c:995
 #: ../plug-ins/psd/psd-load.c:1511 ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:568 ../plug-ins/win-snap/winsnap.c:1154
 msgid "Background"
@@ -521,7 +521,7 @@ msgstr "Sichtbare Ebenen ausrichten"
 #. if and how to center the image on the page
 #: ../plug-ins/common/align-layers.c:422 ../plug-ins/common/align-layers.c:453
 #: ../plug-ins/common/cml-explorer.c:166 ../plug-ins/common/postscript.c:3230
-#: ../plug-ins/common/postscript.c:3242 ../plug-ins/common/psp.c:418
+#: ../plug-ins/common/postscript.c:3242 ../plug-ins/common/psp.c:659
 #: ../plug-ins/fits/fits.c:1026
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:999
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1040
@@ -851,7 +851,7 @@ msgstr "Selektiver Gaußscher Weichzeichner"
 
 #: ../plug-ins/common/blur-gauss-selective.c:211
 #: ../plug-ins/common/blur-gauss.c:445 ../plug-ins/common/cartoon.c:229
-#: ../plug-ins/common/edge-dog.c:251 ../plug-ins/common/neon.c:225
+#: ../plug-ins/common/edge-dog.c:251 ../plug-ins/common/edge-neon.c:225
 #: ../plug-ins/common/photocopy.c:241 ../plug-ins/common/softglow.c:221
 #: ../plug-ins/gradient-flare/gradient-flare.c:965 ../plug-ins/sgi/sgi.c:520
 #: ../plug-ins/xjt/xjt.c:1688
@@ -950,7 +950,7 @@ msgstr "Unschärfezentrum"
 
 #: ../plug-ins/common/blur-motion.c:1094 ../plug-ins/common/lens-flare.c:772
 #: ../plug-ins/common/nova.c:463 ../plug-ins/common/tile-paper.c:282
-#: ../plug-ins/flame/flame.c:1228
+#: ../plug-ins/flame/flame.c:1250
 #: ../plug-ins/gradient-flare/gradient-flare.c:2679
 #: ../plug-ins/lighting/lighting-ui.c:477
 msgid "_X:"
@@ -958,7 +958,7 @@ msgstr "_X:"
 
 #: ../plug-ins/common/blur-motion.c:1099 ../plug-ins/common/lens-flare.c:777
 #: ../plug-ins/common/nova.c:468 ../plug-ins/common/tile-paper.c:291
-#: ../plug-ins/flame/flame.c:1242
+#: ../plug-ins/flame/flame.c:1264
 #: ../plug-ins/gradient-flare/gradient-flare.c:2683
 #: ../plug-ins/lighting/lighting-ui.c:492
 msgid "_Y:"
@@ -1537,7 +1537,7 @@ msgstr "Anfangsversatz:"
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "Anfangszahl für Zufallszahlen (nur für »Aus Anfangszahl«-Modi)"
 
-#: ../plug-ins/common/cml-explorer.c:1372
+#: ../plug-ins/common/cml-explorer.c:1372 ../plug-ins/maze/maze-dialog.c:261
 msgid "Seed:"
 msgstr "Anfangszahl:"
 
@@ -2049,57 +2049,57 @@ msgstr "Es konnten keine Ebenen in Bild %d gefunden werden"
 msgid "Composing"
 msgstr "Zusammensetzen"
 
-#: ../plug-ins/common/compose.c:697 ../plug-ins/common/compose.c:1731
+#: ../plug-ins/common/compose.c:697 ../plug-ins/common/compose.c:1735
 msgid "At least one image is needed to compose"
 msgstr "Es wird mindestens ein Bild zum Zusammensetzen benötigt"
 
-#: ../plug-ins/common/compose.c:708 ../plug-ins/common/compose.c:721
+#: ../plug-ins/common/compose.c:708 ../plug-ins/common/compose.c:722
 #, c-format
 msgid "Specified layer %d not found"
 msgstr "Die angegebene Ebene %d wurde nicht gefunden"
 
-#: ../plug-ins/common/compose.c:728
+#: ../plug-ins/common/compose.c:730
 msgid "Drawables have different size"
 msgstr "Die Ebenen haben unterschiedliche Größen"
 
-#: ../plug-ins/common/compose.c:753
+#: ../plug-ins/common/compose.c:755
 msgid "Images have different size"
 msgstr "Die Bilder haben unterschiedliche Größen"
 
-#: ../plug-ins/common/compose.c:770
+#: ../plug-ins/common/compose.c:773
 msgid "Error in getting layer IDs"
 msgstr "Fehler beim Herausfinden der Ebenen-IDs"
 
-#: ../plug-ins/common/compose.c:791
+#: ../plug-ins/common/compose.c:796
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "Das Bild ist kein Graustufenbild (bpp=%d)"
 
-#: ../plug-ins/common/compose.c:818
+#: ../plug-ins/common/compose.c:824
 msgid "Unable to recompose, source layer not found"
 msgstr ""
 "Es konnte nicht wieder zusammengefügt werden, da die Ursprungsebene nicht "
 "gefunden wurde"
 
-#: ../plug-ins/common/compose.c:1484
+#: ../plug-ins/common/compose.c:1488
 msgid "Compose"
 msgstr "Zusammensetzen"
 
 #. Compose type combo
-#: ../plug-ins/common/compose.c:1511
+#: ../plug-ins/common/compose.c:1515
 msgid "Compose Channels"
 msgstr "Kanäle zusammensetzen"
 
-#: ../plug-ins/common/compose.c:1521 ../plug-ins/common/decompose.c:1515
+#: ../plug-ins/common/compose.c:1525 ../plug-ins/common/decompose.c:1515
 msgid "Color _model:"
 msgstr "Farb_modus:"
 
 #. Channel representation table
-#: ../plug-ins/common/compose.c:1553
+#: ../plug-ins/common/compose.c:1557
 msgid "Channel Representations"
 msgstr "Kanal-Zuweisungen"
 
-#: ../plug-ins/common/compose.c:1616
+#: ../plug-ins/common/compose.c:1620
 msgid "Mask value"
 msgstr "Maskenwert"
 
@@ -2861,7 +2861,7 @@ msgstr "A_npassend"
 msgid "R_ecursive"
 msgstr "Re_kursiv"
 
-#: ../plug-ins/common/despeckle.c:493 ../plug-ins/common/neon.c:730
+#: ../plug-ins/common/despeckle.c:493 ../plug-ins/common/edge-neon.c:730
 #: ../plug-ins/common/nl-filter.c:1088 ../plug-ins/common/nova.c:366
 #: ../plug-ins/common/unsharp-mask.c:678 ../plug-ins/common/whirl-pinch.c:588
 #: ../plug-ins/gradient-flare/gradient-flare.c:2712
@@ -2965,7 +2965,7 @@ msgid "Sharp Edges"
 msgstr "Scharfe Kanten"
 
 #: ../plug-ins/common/diffraction.c:615 ../plug-ins/common/softglow.c:681
-#: ../plug-ins/flame/flame.c:1058
+#: ../plug-ins/flame/flame.c:1080
 msgid "_Brightness:"
 msgstr "_Helligkeit:"
 
@@ -3093,6 +3093,26 @@ msgstr "Laplace"
 #: ../plug-ins/common/edge-laplace.c:321
 msgid "Cleanup"
 msgstr "Aufräumen"
+
+#: ../plug-ins/common/edge-neon.c:134
+msgid "Simulate the glowing boundary of a neon light"
+msgstr "Den leuchtenden Rand eines Neon-Lichtes simulieren"
+
+#: ../plug-ins/common/edge-neon.c:139
+msgid "_Neon..."
+msgstr "_Neon …"
+
+#: ../plug-ins/common/edge-neon.c:211
+msgid "Neon"
+msgstr "Neon"
+
+#: ../plug-ins/common/edge-neon.c:693
+msgid "Neon Detection"
+msgstr "Neon-Kantenfinder"
+
+#: ../plug-ins/common/edge-neon.c:745 ../plug-ins/common/unsharp-mask.c:691
+msgid "_Amount:"
+msgstr "_Menge:"
 
 #: ../plug-ins/common/edge-sobel.c:108
 msgid "Specialized direction-dependent edge detection"
@@ -4399,7 +4419,7 @@ msgstr "_Beibehalten"
 msgid "_Convert"
 msgstr "_Konvertieren"
 
-#: ../plug-ins/common/lcms.c:1261 ../plug-ins/jpeg/jpeg-exif.c:372
+#: ../plug-ins/common/lcms.c:1261 ../plug-ins/jpeg/jpeg-exif.c:377
 msgid "_Don't ask me again"
 msgstr "_Nicht erneut fragen"
 
@@ -4516,7 +4536,7 @@ msgstr "_Bild:"
 msgid "_Edge:"
 msgstr "_Kanten:"
 
-#: ../plug-ins/common/lens-distortion.c:548 ../plug-ins/flame/flame.c:1214
+#: ../plug-ins/common/lens-distortion.c:548 ../plug-ins/flame/flame.c:1236
 msgid "_Zoom:"
 msgstr "_Vergrößerung:"
 
@@ -4822,26 +4842,6 @@ msgstr "_VG/HG-Beleuchtung"
 msgid "Unable to add additional point.\n"
 msgstr "Es konnte kein Kontrollpunkt hinzugefügt werden.\n"
 
-#: ../plug-ins/common/neon.c:134
-msgid "Simulate the glowing boundary of a neon light"
-msgstr "Den leuchtenden Rand eines Neon-Lichtes simulieren"
-
-#: ../plug-ins/common/neon.c:139
-msgid "_Neon..."
-msgstr "_Neon …"
-
-#: ../plug-ins/common/neon.c:211
-msgid "Neon"
-msgstr "Neon"
-
-#: ../plug-ins/common/neon.c:693
-msgid "Neon Detection"
-msgstr "Neon-Kantenfinder"
-
-#: ../plug-ins/common/neon.c:745 ../plug-ins/common/unsharp-mask.c:691
-msgid "_Amount:"
-msgstr "_Menge:"
-
 #: ../plug-ins/common/newsprint.c:127
 msgid "Round"
 msgstr "Rund"
@@ -4850,7 +4850,7 @@ msgstr "Rund"
 msgid "Line"
 msgstr "Linie"
 
-#: ../plug-ins/common/newsprint.c:145
+#: ../plug-ins/common/newsprint.c:145 ../plug-ins/flame/flame.c:759
 msgid "Diamond"
 msgstr "Karo"
 
@@ -5931,24 +5931,24 @@ msgstr ""
 "»%s« konnte nicht gespeichert werden. Das PSD-Dateiformat unterstützt keine "
 "Bilder mit Ebenen die höher oder breiter als 30.000 Pixel sind."
 
-#: ../plug-ins/common/psp.c:356 ../plug-ins/common/psp.c:380
+#: ../plug-ins/common/psp.c:597 ../plug-ins/common/psp.c:621
 msgid "Paint Shop Pro image"
 msgstr "Paint-Shop-Pro-Bild"
 
-#: ../plug-ins/common/psp.c:397
+#: ../plug-ins/common/psp.c:638
 msgid "Save as PSP"
 msgstr "Als PSP speichern"
 
 #. file save type
-#: ../plug-ins/common/psp.c:414
+#: ../plug-ins/common/psp.c:655
 msgid "Data Compression"
 msgstr "Kompressionsgrad"
 
-#: ../plug-ins/common/psp.c:419
+#: ../plug-ins/common/psp.c:660
 msgid "RLE"
 msgstr "RLE"
 
-#: ../plug-ins/common/psp.c:420
+#: ../plug-ins/common/psp.c:661
 msgid "LZ77"
 msgstr "LZ77"
 
@@ -6714,7 +6714,7 @@ msgstr "Eidechse"
 msgid "Phong"
 msgstr "Phong"
 
-#: ../plug-ins/common/sphere-designer.c:296
+#: ../plug-ins/common/sphere-designer.c:296 ../plug-ins/flame/flame.c:773
 msgid "Noise"
 msgstr "Rauschen"
 
@@ -6722,7 +6722,7 @@ msgstr "Rauschen"
 msgid "Wood"
 msgstr "Holz"
 
-#: ../plug-ins/common/sphere-designer.c:298
+#: ../plug-ins/common/sphere-designer.c:298 ../plug-ins/flame/flame.c:757
 msgid "Spiral"
 msgstr "Spirale"
 
@@ -7817,7 +7817,7 @@ msgid "Smear"
 msgstr "Verwischen"
 
 #: ../plug-ins/common/warp.c:501 ../plug-ins/fits/fits.c:1002
-#: ../plug-ins/flame/flame.c:1152 ../plug-ins/gfig/gfig-dialog.c:1460
+#: ../plug-ins/flame/flame.c:1174 ../plug-ins/gfig/gfig-dialog.c:1460
 msgid "Black"
 msgstr "Schwarz"
 
@@ -7906,7 +7906,7 @@ msgstr "Bild mit Wellen verzerren"
 msgid "_Waves..."
 msgstr "_Wellen …"
 
-#: ../plug-ins/common/waves.c:248
+#: ../plug-ins/common/waves.c:248 ../plug-ins/flame/flame.c:762
 msgid "Waves"
 msgstr "Wellen"
 
@@ -8337,57 +8337,134 @@ msgstr "Polar"
 msgid "Bent"
 msgstr "Gebogen"
 
+#: ../plug-ins/flame/flame.c:754
+msgid "Handkerchief"
+msgstr "Taschentuch"
+
+#: ../plug-ins/flame/flame.c:755
+msgid "Heart"
+msgstr "Herz"
+
+#: ../plug-ins/flame/flame.c:756
+msgid "Disc"
+msgstr "Scheibe"
+
+#: ../plug-ins/flame/flame.c:758
+msgid "Hyperbolic"
+msgstr "Hyperbolisch"
+
+#: ../plug-ins/flame/flame.c:760
+msgid "Ex"
+msgstr ""
+
+#: ../plug-ins/flame/flame.c:761
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:844
+msgid "Julia"
+msgstr "Julia"
+
+#: ../plug-ins/flame/flame.c:763
+msgid "Fisheye"
+msgstr "Fischauge"
+
+#: ../plug-ins/flame/flame.c:764
+msgid "Popcorn"
+msgstr "Popcorn"
+
+#: ../plug-ins/flame/flame.c:765
+msgid "Exponential"
+msgstr "Exponential"
+
 #: ../plug-ins/flame/flame.c:766
+msgid "Power"
+msgstr "Potenz"
+
+#: ../plug-ins/flame/flame.c:767
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:997
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1038
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1079
+msgid "Cosine"
+msgstr "Kosinus"
+
+#: ../plug-ins/flame/flame.c:768
+msgid "Rings"
+msgstr "Ringe"
+
+#: ../plug-ins/flame/flame.c:769
+msgid "Fan"
+msgstr "Fächer"
+
+#: ../plug-ins/flame/flame.c:770
+msgid "Eyefish"
+msgstr "Augenfish"
+
+#: ../plug-ins/flame/flame.c:771
+msgid "Bubble"
+msgstr "Blase"
+
+#: ../plug-ins/flame/flame.c:772 ../plug-ins/map-object/map-object-ui.c:491
+msgid "Cylinder"
+msgstr "Zylinder"
+
+#: ../plug-ins/flame/flame.c:774
+msgid "Blur"
+msgstr "Weichzeichnen"
+
+#: ../plug-ins/flame/flame.c:775
+#, fuzzy
+msgid "Gaussian"
+msgstr "Gaußscher Weichzeichner"
+
+#: ../plug-ins/flame/flame.c:788
 msgid "_Variation:"
 msgstr "_Variation:"
 
-#: ../plug-ins/flame/flame.c:788
+#: ../plug-ins/flame/flame.c:810
 msgid "Load Flame"
 msgstr "Flamme laden"
 
-#: ../plug-ins/flame/flame.c:803
+#: ../plug-ins/flame/flame.c:825
 msgid "Save Flame"
 msgstr "Flamme speichern"
 
-#: ../plug-ins/flame/flame.c:945
+#: ../plug-ins/flame/flame.c:967
 msgid "Flame"
 msgstr "Flamme"
 
-#: ../plug-ins/flame/flame.c:1046
+#: ../plug-ins/flame/flame.c:1068
 msgid "_Rendering"
 msgstr "_Rendern"
 
-#: ../plug-ins/flame/flame.c:1072
+#: ../plug-ins/flame/flame.c:1094
 msgid "Co_ntrast:"
 msgstr "Ko_ntrast:"
 
-#: ../plug-ins/flame/flame.c:1086
+#: ../plug-ins/flame/flame.c:1108
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
-#: ../plug-ins/flame/flame.c:1100
+#: ../plug-ins/flame/flame.c:1122
 msgid "Sample _density:"
 msgstr "Stichproben_dichte:"
 
 # TODO !
-#: ../plug-ins/flame/flame.c:1111
+#: ../plug-ins/flame/flame.c:1133
 msgid "Spa_tial oversample:"
 msgstr "_Räumliche Hochrechnung:"
 
 # TODO !
-#: ../plug-ins/flame/flame.c:1122
+#: ../plug-ins/flame/flame.c:1144
 msgid "Spatial _filter radius:"
 msgstr "Räumlicher _Filterradius:"
 
-#: ../plug-ins/flame/flame.c:1141
+#: ../plug-ins/flame/flame.c:1163
 msgid "Color_map:"
 msgstr "Farb_palette:"
 
-#: ../plug-ins/flame/flame.c:1183
+#: ../plug-ins/flame/flame.c:1205
 msgid "Custom gradient"
 msgstr "Eigener Farbverlauf"
 
-#: ../plug-ins/flame/flame.c:1209
+#: ../plug-ins/flame/flame.c:1231
 msgid "C_amera"
 msgstr "K_amera"
 
@@ -8521,10 +8598,6 @@ msgstr "Fraktaltyp"
 msgid "Mandelbrot"
 msgstr "Mandelbrot"
 
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:844
-msgid "Julia"
-msgstr "Julia"
-
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:846
 msgid "Barnsley 1"
 msgstr "Barnsley 1"
@@ -8597,12 +8670,6 @@ msgstr "Farbfunktion"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1077
 msgid "Sine"
 msgstr "Sinus"
-
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:997
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1038
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1079
-msgid "Cosine"
-msgstr "Kosinus"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1004
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1045
@@ -9237,7 +9304,8 @@ msgstr "Kanten zeichnen"
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Die Pinselstriche bis zum Rand des Bildes fortsetzen"
 
-#: ../plug-ins/gimpressionist/general.c:213
+#. Tileable checkbox
+#: ../plug-ins/gimpressionist/general.c:213 ../plug-ins/maze/maze-dialog.c:278
 msgid "Tileable"
 msgstr "Nahtlos"
 
@@ -10168,7 +10236,7 @@ msgstr "Komprimiert (PNG)"
 msgid "Icon #%i"
 msgstr "Symbol Nr. %i"
 
-#: ../plug-ins/ico/ico-load.c:722 ../plug-ins/jpeg/jpeg-load.c:626
+#: ../plug-ins/ico/ico-load.c:722 ../plug-ins/jpeg/jpeg-load.c:631
 #: ../plug-ins/psd/psd-thumb-load.c:83
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -11092,23 +11160,23 @@ msgstr "Map-Dateiformat"
 msgid "View Source"
 msgstr "Quelle zeigen"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:288
+#: ../plug-ins/jpeg/jpeg-exif.c:293
 msgid "Rotate Image?"
 msgstr "Bild drehen?"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:291
+#: ../plug-ins/jpeg/jpeg-exif.c:296
 msgid "_Keep Orientation"
 msgstr "Ausrichtung _beibehalten"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:347
+#: ../plug-ins/jpeg/jpeg-exif.c:352
 msgid "According to the EXIF data, this image is rotated."
 msgstr "Den EXIF-Daten zufolge ist das Bild gedreht."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:362
+#: ../plug-ins/jpeg/jpeg-exif.c:367
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Soll GIMP für Sie das Bild in die Standardausrichtung drehen?"
 
-#: ../plug-ins/jpeg/jpeg-load.c:241
+#: ../plug-ins/jpeg/jpeg-load.c:243
 msgid "JPEG preview"
 msgstr "JPEG-Vorschau"
 
@@ -11596,10 +11664,6 @@ msgstr "Kugel"
 msgid "Box"
 msgstr "Quader"
 
-#: ../plug-ins/map-object/map-object-ui.c:491
-msgid "Cylinder"
-msgstr "Zylinder"
-
 #: ../plug-ins/map-object/map-object-ui.c:501
 msgid "Type of object to map to"
 msgstr "Art des Objektes, auf das abgebildet wird"
@@ -11804,6 +11868,57 @@ msgstr "_Labyrinth …"
 msgid "Drawing maze"
 msgstr "Labyrinth wird gezeichnet"
 
+#: ../plug-ins/maze/maze-algorithms.c:279
+msgid "Constructing maze using Prim's Algorithm"
+msgstr "Labyrinth wird mit Hilfe des Primzahl-Algorithmus erstellt"
+
+#: ../plug-ins/maze/maze-algorithms.c:488
+msgid "Constructing tileable maze using Prim's Algorithm"
+msgstr "Nahtloses Labyrinth wird mit Hilfe des Primzahl-Algorithmus erstellt"
+
+#: ../plug-ins/maze/maze-dialog.c:172
+msgid "Maze"
+msgstr "Labyrinth"
+
+#. The maze size frame
+#: ../plug-ins/maze/maze-dialog.c:194
+msgid "Maze Size"
+msgstr "Labyrinthgröße"
+
+#. entscale == Entry and Scale pair function found in pixelize.c
+#: ../plug-ins/maze/maze-dialog.c:208
+msgid "Width (pixels):"
+msgstr "Breite (Pixel):"
+
+#: ../plug-ins/maze/maze-dialog.c:220 ../plug-ins/maze/maze-dialog.c:236
+msgid "Pieces:"
+msgstr "Stücke:"
+
+#: ../plug-ins/maze/maze-dialog.c:225
+msgid "Height (pixels):"
+msgstr "Höhe (Pixel):"
+
+#. The maze algorithm frame
+#: ../plug-ins/maze/maze-dialog.c:244
+msgid "Algorithm"
+msgstr "Algorithmus"
+
+#: ../plug-ins/maze/maze-dialog.c:270
+msgid "Depth first"
+msgstr "Tiefe zuerst"
+
+#: ../plug-ins/maze/maze-dialog.c:271
+msgid "Prim's algorithm"
+msgstr "Primzahl-Algorithmus"
+
+#: ../plug-ins/maze/maze-dialog.c:390
+msgid ""
+"Selection size is not even.\n"
+"Tileable maze won't work perfectly."
+msgstr ""
+"Die Größe der Auswahl ist ungerade.\n"
+"Nahtloses Labyrinth wird kein perfektes Ergebnis liefern."
+
 #: ../plug-ins/metadata/xmp-parse.c:240
 #, c-format
 msgid "Error: No XMP packet found"
@@ -11989,11 +12104,11 @@ msgstr "S_eite einrichten"
 msgid "Image Settings"
 msgstr "Bildeigenschaften"
 
-#: ../plug-ins/print/print.c:341
+#: ../plug-ins/print/print.c:345
 msgid "An error occurred while trying to print:"
 msgstr "Beim Versuch zu Drucken ist ein Fehler aufgetreten:"
 
-#: ../plug-ins/print/print.c:371
+#: ../plug-ins/print/print.c:374
 msgid "Printing"
 msgstr "Drucken"
 
@@ -12376,48 +12491,3 @@ msgstr "Fehler: XJT-Eigenschaften-Datei »%s« konnte nicht gelesen werden."
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fehler: Die XJT-Eigenschaften-Datei »%s« ist leer."
 
-#~ msgid "Constructing maze using Prim's Algorithm"
-#~ msgstr "Labyrinth wird mit Hilfe des Primzahl-Algorithmus erstellt"
-
-#~ msgid "Constructing tileable maze using Prim's Algorithm"
-#~ msgstr ""
-#~ "Nahtloses Labyrinth wird mit Hilfe des Primzahl-Algorithmus erstellt"
-
-#~ msgid "Maze"
-#~ msgstr "Labyrinth"
-
-#~ msgid "Maze Size"
-#~ msgstr "Labyrinthgröße"
-
-#~ msgid "Width (pixels):"
-#~ msgstr "Breite (Pixel):"
-
-#~ msgid "Pieces:"
-#~ msgstr "Stücke:"
-
-#~ msgid "Height (pixels):"
-#~ msgstr "Höhe (Pixel):"
-
-#~ msgid "Algorithm"
-#~ msgstr "Algorithmus"
-
-#~ msgid "Depth first"
-#~ msgstr "Tiefe zuerst"
-
-#~ msgid "Prim's algorithm"
-#~ msgstr "Primzahl-Algorithmus"
-
-#~ msgid ""
-#~ "Selection size is not even.\n"
-#~ "Tileable maze won't work perfectly."
-#~ msgstr ""
-#~ "Die Größe der Auswahl ist ungerade.\n"
-#~ "Nahtloses Labyrinth wird kein perfektes Ergebnis liefern."
-
-#~ msgid "The GIF format does not support images larger than %d x %d pixels."
-#~ msgstr ""
-#~ "Das GIF Dateiformat unterstützt keine Bilder, die höher oder breiter als "
-#~ "30.000 Pixel sind."
-
-#~ msgid "Downloading %s of image data..."
-#~ msgstr "%s an Bilddaten werden heruntergeladen …"
