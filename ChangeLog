@@ -1,3 +1,8 @@
+2008-04-30  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpscalecombobox.c: install a "key-press-event"
+	handler and reset the entry when the Escape key is pressed.
+
 2008-04-29  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/gtkrc

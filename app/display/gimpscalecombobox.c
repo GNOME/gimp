@@ -24,6 +24,7 @@
 #include "stdlib.h"
 
 #include <gtk/gtk.h>
+#include "gdk/gdkkeysyms.h"
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
@@ -52,19 +53,22 @@ enum
 };
 
 
-static void   gimp_scale_combo_box_finalize       (GObject           *object);
+static void      gimp_scale_combo_box_finalize        (GObject           *object);
 
-static void   gimp_scale_combo_box_style_set      (GtkWidget         *widget,
-                                                   GtkStyle          *prev_style);
+static void      gimp_scale_combo_box_style_set       (GtkWidget         *widget,
+                                                       GtkStyle          *prev_style);
 
-static void   gimp_scale_combo_box_changed        (GimpScaleComboBox *combo_box);
-static void   gimp_scale_combo_box_entry_activate (GtkEntry          *entry,
-                                                   GimpScaleComboBox *combo_box);
+static void      gimp_scale_combo_box_changed         (GimpScaleComboBox *combo_box);
+static void      gimp_scale_combo_box_entry_activate  (GtkWidget         *entry,
+                                                       GimpScaleComboBox *combo_box);
+static gboolean  gimp_scale_combo_box_entry_key_press (GtkWidget         *entry,
+                                                       GdkEventKey       *event,
+                                                       GimpScaleComboBox *combo_box);
 
-static void   gimp_scale_combo_box_scale_iter_set (GtkListStore  *store,
-                                                   GtkTreeIter   *iter,
-                                                   gdouble        scale,
-                                                   gboolean       persistent);
+static void      gimp_scale_combo_box_scale_iter_set  (GtkListStore      *store,
+                                                       GtkTreeIter       *iter,
+                                                       gdouble            scale,
+                                                       gboolean           persistent);
 
 
 G_DEFINE_TYPE (GimpScaleComboBox, gimp_scale_combo_box,
@@ -166,6 +170,9 @@ gimp_scale_combo_box_init (GimpScaleComboBox *combo_box)
 
   g_signal_connect (entry, "activate",
                     G_CALLBACK (gimp_scale_combo_box_entry_activate),
+                    combo_box);
+  g_signal_connect (entry, "key-press-event",
+                    G_CALLBACK (gimp_scale_combo_box_entry_key_press),
                     combo_box);
 }
 
@@ -303,25 +310,43 @@ gimp_scale_combo_box_parse_text (const gchar *text,
 }
 
 static void
-gimp_scale_combo_box_entry_activate (GtkEntry          *entry,
+gimp_scale_combo_box_entry_activate (GtkWidget         *entry,
                                      GimpScaleComboBox *combo_box)
 {
-  gdouble scale;
+  const gchar *text = gtk_entry_get_text (GTK_ENTRY (entry));
+  gdouble      scale;
 
-  if (gimp_scale_combo_box_parse_text (gtk_entry_get_text (entry), &scale) &&
-      scale >= 1.0 / 256.0 &&
+  if (gimp_scale_combo_box_parse_text (text, &scale) &&
+      scale >= 1.0 / 256.0                           &&
       scale <= 256.0)
     {
       gimp_scale_combo_box_set_scale (combo_box, scale);
     }
   else
     {
-      gtk_widget_error_bell (GTK_WIDGET (entry));
+      gtk_widget_error_bell (entry);
 
       gimp_scale_combo_box_set_scale (combo_box, combo_box->scale);
     }
 
   g_signal_emit (combo_box, scale_combo_box_signals[ENTRY_ACTIVATED], 0);
+}
+
+static gboolean
+gimp_scale_combo_box_entry_key_press (GtkWidget         *entry,
+                                      GdkEventKey       *event,
+                                      GimpScaleComboBox *combo_box)
+{
+  if (event->keyval == GDK_Escape)
+    {
+      gimp_scale_combo_box_set_scale (combo_box, combo_box->scale);
+
+      g_signal_emit (combo_box, scale_combo_box_signals[ENTRY_ACTIVATED], 0);
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static void
