@@ -346,6 +346,15 @@ gimp_scale_combo_box_entry_key_press (GtkWidget         *entry,
       return TRUE;
     }
 
+  if (event->keyval == GDK_Tab    ||
+      event->keyval == GDK_KP_Tab ||
+      event->keyval == GDK_ISO_Left_Tab)
+    {
+      gimp_scale_combo_box_entry_activate (entry, combo_box);
+
+      return TRUE;
+    }
+
   return FALSE;
 }
 

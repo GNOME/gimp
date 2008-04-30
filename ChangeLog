@@ -1,5 +1,11 @@
 2008-04-30  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpscalecombobox.c
+	(gimp_scale_combo_box_entry_key_press): also handle the Tab keys
+	and call the "activate" handler when Tab is pressed.
+
+2008-04-30  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpscalecombobox.c: install a "key-press-event"
 	handler and reset the entry when the Escape key is pressed.
 
