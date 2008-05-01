@@ -1156,6 +1156,7 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
   GimpRectangleOptions        *options;
   GimpRectangleOptionsPrivate *options_private;
   GimpRectangleToolPrivate    *private;
+  gboolean                     button1_down;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
@@ -1164,6 +1165,7 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
   private         = gimp_rectangle_tool_get_private (rect_tool);
   options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
   options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+  button1_down    = state & GDK_BUTTON1_MASK;
 
   gimp_draw_tool_pause (draw_tool);
 
@@ -1187,7 +1189,7 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
       /* Only change the shape if the mouse is still down (i.e. the user is
        * still editing the rectangle.
        */
-      if (state & GDK_BUTTON1_MASK)
+      if (button1_down)
         {
           if (!options_private->fixed_rule_active)
             {
@@ -1223,9 +1225,8 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
           gimp_rectangle_tool_update_highlight (rect_tool);
 
           gimp_rectangle_tool_rectangle_changed (rect_tool);
-
         }
-      else if (state & GDK_BUTTON1_MASK)
+      else if (button1_down)
         {
           /* If we are leaving fixed_center mode we want to set the
            * "other side" where it should be. Don't do anything if we

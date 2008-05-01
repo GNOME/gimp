@@ -1,3 +1,8 @@
+2008-05-01  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_active_modifier_key): Minor simplification.
+
 2008-04-30  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpcroptool.c: Align static function prototpyes.
