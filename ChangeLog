@@ -1,3 +1,7 @@
+2008-05-02  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* plug-ins/flame/libifs.c: Use g_random_int() instead of rand().
+
 2008-05-01  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c
