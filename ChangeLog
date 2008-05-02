@@ -1,5 +1,16 @@
 2008-05-02  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* gimptexttool.c
+	* gimptexttool.h:
+	* gimprectangletool.c
+	* gimprectangletool.h
+	* gimprectangleselecttool.c: Renamed the "rectangle-changed"
+	signal to "rectangle-change-complete" which is much better name
+	since the signal is not emited when the rectangle is changed, but
+	when the change is complete.
+
+2008-05-02  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* plug-ins/flame/libifs.c: Use g_random_int() instead of rand().
 
 2008-05-01  Martin Nordholts  <martinn@svn.gnome.org>

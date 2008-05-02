@@ -75,7 +75,7 @@ struct _GimpRectangleToolInterface
   void     (* cancel)            (GimpRectangleTool *rect_tool);
 
   /*  signals  */
-  gboolean (* rectangle_changed) (GimpRectangleTool *rect_tool);
+  gboolean (* rectangle_change_complete) (GimpRectangleTool *rect_tool);
 };
 
 

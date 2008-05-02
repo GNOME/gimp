@@ -53,7 +53,7 @@
 
 enum
 {
-  RECTANGLE_CHANGED,
+  RECTANGLE_CHANGE_COMPLETE,
   LAST_SIGNAL
 };
 
@@ -224,7 +224,8 @@ static void          gimp_rectangle_tool_shell_scrolled       (GimpDisplayShell 
 
 static void          gimp_rectangle_tool_check_function       (GimpRectangleTool        *rect_tool);
 
-static void          gimp_rectangle_tool_rectangle_changed    (GimpRectangleTool        *rect_tool);
+static void          gimp_rectangle_tool_rectangle_change_complete
+                                                              (GimpRectangleTool        *rect_tool);
 
 static void          gimp_rectangle_tool_auto_shrink          (GimpRectangleTool        *rect_tool);
 
@@ -357,12 +358,12 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *iface)
 
   if (! initialized)
     {
-      gimp_rectangle_tool_signals[RECTANGLE_CHANGED] =
-        g_signal_new ("rectangle-changed",
+      gimp_rectangle_tool_signals[RECTANGLE_CHANGE_COMPLETE] =
+        g_signal_new ("rectangle-change-complete",
                       G_TYPE_FROM_INTERFACE (iface),
                       G_SIGNAL_RUN_FIRST,
                       G_STRUCT_OFFSET (GimpRectangleToolInterface,
-                                       rectangle_changed),
+                                       rectangle_change_complete),
                       NULL, NULL,
                       gimp_marshal_VOID__VOID,
                       G_TYPE_NONE, 0);
@@ -413,9 +414,9 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *iface)
                                                               GIMP_RECTANGLE_PRECISION_INT,
                                                               GIMP_PARAM_READWRITE));
 
-      iface->execute           = NULL;
-      iface->cancel            = NULL;
-      iface->rectangle_changed = NULL;
+      iface->execute                   = NULL;
+      iface->cancel                    = NULL;
+      iface->rectangle_change_complete = NULL;
 
       initialized = TRUE;
     }
@@ -519,7 +520,7 @@ gimp_rectangle_tool_set_constraint (GimpRectangleTool       *tool,
   gimp_rectangle_tool_update_highlight (tool);
   gimp_rectangle_tool_update_handle_sizes (tool);
 
-  gimp_rectangle_tool_rectangle_changed (tool);
+  gimp_rectangle_tool_rectangle_change_complete (tool);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
@@ -961,7 +962,7 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
   switch (release_type)
     {
     case GIMP_BUTTON_RELEASE_NORMAL:
-      gimp_rectangle_tool_rectangle_changed (rect_tool);
+      gimp_rectangle_tool_rectangle_change_complete (rect_tool);
       break;
 
     case GIMP_BUTTON_RELEASE_CANCEL:
@@ -1205,7 +1206,7 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
 
           gimp_rectangle_tool_update_highlight (rect_tool);
 
-          gimp_rectangle_tool_rectangle_changed (rect_tool);
+          gimp_rectangle_tool_rectangle_change_complete (rect_tool);
         }
     }
 
@@ -1224,7 +1225,7 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
 
           gimp_rectangle_tool_update_highlight (rect_tool);
 
-          gimp_rectangle_tool_rectangle_changed (rect_tool);
+          gimp_rectangle_tool_rectangle_change_complete (rect_tool);
         }
       else if (button1_down)
         {
@@ -1240,7 +1241,7 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
 
           gimp_rectangle_tool_update_highlight (rect_tool);
 
-          gimp_rectangle_tool_rectangle_changed (rect_tool);
+          gimp_rectangle_tool_rectangle_change_complete (rect_tool);
         }
     }
 
@@ -1461,7 +1462,7 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
-  gimp_rectangle_tool_rectangle_changed (rect_tool);
+  gimp_rectangle_tool_rectangle_change_complete (rect_tool);
 
   /*  Evil hack to suppress oper updates. We do this because we don't
    *  want the rectangle tool to change function while the rectangle
@@ -2182,7 +2183,7 @@ gimp_rectangle_tool_synthesize_motion (GimpRectangleTool *rect_tool,
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (rect_tool));
 
-  gimp_rectangle_tool_rectangle_changed (rect_tool);
+  gimp_rectangle_tool_rectangle_change_complete (rect_tool);
 }
 
 static void
@@ -2408,10 +2409,10 @@ gimp_rectangle_tool_set_function (GimpRectangleTool     *rect_tool,
 }
 
 static void
-gimp_rectangle_tool_rectangle_changed (GimpRectangleTool *rect_tool)
+gimp_rectangle_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
 {
   g_signal_emit (rect_tool,
-                 gimp_rectangle_tool_signals[RECTANGLE_CHANGED], 0);
+                 gimp_rectangle_tool_signals[RECTANGLE_CHANGE_COMPLETE], 0);
 }
 
 static void
@@ -2464,7 +2465,7 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rect_tool)
 
       gimp_rectangle_tool_update_int_rect (rect_tool);
 
-      gimp_rectangle_tool_rectangle_changed (rect_tool);
+      gimp_rectangle_tool_rectangle_change_complete (rect_tool);
 
       gimp_rectangle_tool_update_handle_sizes (rect_tool);
       gimp_rectangle_tool_update_highlight (rect_tool);

@@ -53,7 +53,7 @@ struct _GimpTextTool
   GtkWidget     *editor;
   GtkWidget     *confirm_dialog;
 
-  gboolean       handle_rectangle_changed;
+  gboolean       handle_rectangle_change_complete;
   gboolean       text_box_fixed;
 };
 

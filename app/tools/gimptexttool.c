@@ -133,9 +133,10 @@ static gboolean  gimp_text_tool_set_drawable   (GimpTextTool      *text_tool,
                                                 GimpDrawable      *drawable,
                                                 gboolean           confirm);
 
-static gboolean  gimp_text_tool_rectangle_changed (GimpRectangleTool *rect_tool);
-void             gimp_rectangle_tool_frame_item   (GimpRectangleTool *rect_tool,
-                                                   GimpItem          *item);
+static gboolean  gimp_text_tool_rectangle_change_complete
+                                               (GimpRectangleTool *rect_tool);
+void             gimp_rectangle_tool_frame_item(GimpRectangleTool *rect_tool,
+                                                GimpItem          *item);
 
 G_DEFINE_TYPE_WITH_CODE (GimpTextTool, gimp_text_tool,
                          GIMP_TYPE_DRAW_TOOL,
@@ -193,7 +194,7 @@ gimp_text_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface)
 {
   iface->execute           = NULL;
   iface->cancel            = NULL;
-  iface->rectangle_changed = gimp_text_tool_rectangle_changed;
+  iface->rectangle_change_complete = gimp_text_tool_rectangle_change_complete;
 }
 
 static void
@@ -215,7 +216,7 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   gimp_tool_control_set_action_object_1 (tool->control,
                                          "context/context-font-select-set");
 
-  text_tool->handle_rectangle_changed = TRUE;
+  text_tool->handle_rectangle_change_complete = TRUE;
 }
 
 static GObject *
@@ -375,13 +376,13 @@ gimp_text_tool_button_press (GimpTool        *tool,
  *    yet exists there, we want to create one with the right shape.
  * 2) If the user has modified the rectangle for an existing text layer,
  *    we want to change its shape accordingly.  We do this by falling
- *    through to code that causes the "rectangle-changed" signal to
- *    be emitted.
+ *    through to code that causes the "rectangle-change-complete" signal
+ *    to be emitted.
  * 3) If the rectangle that has been swept out is too small, we want to
  *    use dynamic text.
  * 4) Otherwise, we want to use the new rectangle that the user has
  *    created as our text box.  This again is done by causing
- *    "rectangle-changed" to be emitted.
+ *    "rectangle-change-complete" to be emitted.
  */
 static void
 gimp_text_tool_button_release (GimpTool              *tool,
@@ -410,10 +411,10 @@ gimp_text_tool_button_release (GimpTool              *tool,
           /* user has clicked on an existing text layer */
 
           gimp_tool_control_halt (tool->control);
-          text_tool->handle_rectangle_changed = FALSE;
+          text_tool->handle_rectangle_change_complete = FALSE;
           gimp_rectangle_tool_frame_item (rect_tool,
                                           GIMP_ITEM (text_tool->layer));
-          text_tool->handle_rectangle_changed = TRUE;
+          text_tool->handle_rectangle_change_complete = TRUE;
           return;
         }
       else
@@ -429,7 +430,7 @@ gimp_text_tool_button_release (GimpTool              *tool,
         g_object_set (text_tool->proxy,
                       "box-mode", GIMP_TEXT_BOX_DYNAMIC,
                       NULL);
-      text_tool->handle_rectangle_changed = FALSE;
+      text_tool->handle_rectangle_change_complete = FALSE;
     }
   else
     {
@@ -438,7 +439,7 @@ gimp_text_tool_button_release (GimpTool              *tool,
 
   gimp_rectangle_tool_button_release (tool, coords, time, state,
                                       release_type, display);
-  text_tool->handle_rectangle_changed = TRUE;
+  text_tool->handle_rectangle_change_complete = TRUE;
 }
 
 static void
@@ -626,10 +627,10 @@ gimp_text_tool_text_notify (GimpText     *text,
     {
       GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (text_tool);
 
-      text_tool->handle_rectangle_changed = FALSE;
+      text_tool->handle_rectangle_change_complete = FALSE;
       gimp_rectangle_tool_frame_item (rect_tool,
                                       GIMP_ITEM (text_tool->layer));
-      text_tool->handle_rectangle_changed = TRUE;
+      text_tool->handle_rectangle_change_complete = TRUE;
     }
 }
 
@@ -772,10 +773,10 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
    * shape of the rectangle */
   if (layer->text->box_mode == GIMP_TEXT_BOX_DYNAMIC)
     {
-      text_tool->handle_rectangle_changed = FALSE;
+      text_tool->handle_rectangle_change_complete = FALSE;
       gimp_rectangle_tool_frame_item (GIMP_RECTANGLE_TOOL (text_tool),
                                       GIMP_ITEM (layer));
-      text_tool->handle_rectangle_changed = TRUE;
+      text_tool->handle_rectangle_change_complete = TRUE;
     }
 
   gimp_image_flush (image);
@@ -914,10 +915,10 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
     }
   else
     {
-      text_tool->handle_rectangle_changed = FALSE;
+      text_tool->handle_rectangle_change_complete = FALSE;
       gimp_rectangle_tool_frame_item (GIMP_RECTANGLE_TOOL (text_tool),
                                       GIMP_ITEM (layer));
-      text_tool->handle_rectangle_changed = TRUE;
+      text_tool->handle_rectangle_change_complete = TRUE;
     }
 
   gimp_image_undo_group_end (image);
@@ -1123,10 +1124,10 @@ gimp_text_tool_layer_changed (GimpImage    *image,
     {
       if (! gimp_rectangle_tool_rectangle_is_new (rect_tool))
         {
-          text_tool->handle_rectangle_changed = FALSE;
+          text_tool->handle_rectangle_change_complete = FALSE;
           gimp_rectangle_tool_frame_item (rect_tool,
                                           GIMP_ITEM (text_tool->layer));
-          text_tool->handle_rectangle_changed = TRUE;
+          text_tool->handle_rectangle_change_complete = TRUE;
         }
     }
 }
@@ -1265,7 +1266,7 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
 }
 
 static gboolean
-gimp_text_tool_rectangle_changed (GimpRectangleTool *rect_tool)
+gimp_text_tool_rectangle_change_complete (GimpRectangleTool *rect_tool)
 {
   GimpTextTool   *text_tool     = GIMP_TEXT_TOOL (rect_tool);
   GimpText       *text          = text_tool->text;
@@ -1273,7 +1274,7 @@ gimp_text_tool_rectangle_changed (GimpRectangleTool *rect_tool)
   GimpItem       *item ;
   gint            x1, y1, x2, y2;
 
-  if (text_tool->handle_rectangle_changed)
+  if (text_tool->handle_rectangle_change_complete)
     {
       g_object_get (rect_tool,
                     "x1", &x1,

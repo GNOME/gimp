@@ -127,7 +127,7 @@ static gboolean gimp_rectangle_select_tool_execute        (GimpRectangleTool    
                                                            gint                   w,
                                                            gint                   h);
 static void     gimp_rectangle_select_tool_cancel         (GimpRectangleTool     *rect_tool);
-static gboolean gimp_rectangle_select_tool_rectangle_changed
+static gboolean gimp_rectangle_select_tool_rectangle_change_complete
                                                           (GimpRectangleTool     *rect_tool);
 static void     gimp_rectangle_select_tool_real_select    (GimpRectangleSelectTool *rect_sel_tool,
                                                            GimpChannelOps         operation,
@@ -202,9 +202,9 @@ gimp_rectangle_select_tool_class_init (GimpRectangleSelectToolClass *klass)
 static void
 gimp_rectangle_select_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface)
 {
-  iface->execute           = gimp_rectangle_select_tool_execute;
-  iface->cancel            = gimp_rectangle_select_tool_cancel;
-  iface->rectangle_changed = gimp_rectangle_select_tool_rectangle_changed;
+  iface->execute                   = gimp_rectangle_select_tool_execute;
+  iface->cancel                    = gimp_rectangle_select_tool_cancel;
+  iface->rectangle_change_complete = gimp_rectangle_select_tool_rectangle_change_complete;
 }
 
 static void
@@ -826,7 +826,7 @@ gimp_rectangle_select_tool_cancel (GimpRectangleTool *rectangle)
 }
 
 static gboolean
-gimp_rectangle_select_tool_rectangle_changed (GimpRectangleTool *rectangle)
+gimp_rectangle_select_tool_rectangle_change_complete (GimpRectangleTool *rectangle)
 {
   GimpTool                       *tool;
   GimpRectangleSelectTool        *rect_sel_tool;
@@ -908,7 +908,7 @@ gimp_rectangle_select_tool_round_corners_notify (GimpRectangleSelectOptions *opt
   priv->round_corners = options->round_corners;
   priv->corner_radius = options->corner_radius;
 
-  gimp_rectangle_select_tool_rectangle_changed (rect_tool);
+  gimp_rectangle_select_tool_rectangle_change_complete (rect_tool);
 
   gimp_draw_tool_resume (draw_tool);
 }
