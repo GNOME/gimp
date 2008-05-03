@@ -1,32 +1,32 @@
-# translation of pt_BR.po to
+# translation of pt_BR.po to Brazilian Portuguese
 # Marcia Norie Nakaza <norie@conectiva.com.br>, 2000.
 # Alexandre Folle de Menezes <afmenez@terra.com.br>, 2003.
 # Luis Henrique Sestari Rocha <subdirect@bol.com.br>, 2004.
-# Joao S. O. Bueno Calligaris <gwidion@mpc.com.br>, 2004, 2007.
+# Joao S. O. Bueno <gwidion@mpc.com.br>, 2004, 2007, 2008.
+# translation of pt_BR.po to
 # gimp-libgimp: translation to Brazilian Portuguese (pt_BR)
-# Copyright (C) 2000-2003, 2004, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2000-2003, 2004, 2007, 2008 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-libgimp package.
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-19 00:17-0300\n"
-"PO-Revision-Date: 2007-08-19 23:35-0300\n"
-"Last-Translator: Joao S. O. Bueno Calligaris <gwidion@mpc.com.br>\n"
-"Language-Team:  <GNOME-l10n-br <Gnome-l10n-BR@listas.cipsga.org.br>>\n"
+"POT-Creation-Date: 2008-05-02 23:53-0300\n"
+"PO-Revision-Date: 2008-05-02 23:59-0300\n"
+"Last-Translator: Joao S. O. Bueno <gwidion@mpc.com.br>\n"
+"Language-Team: Brazilian Portuguese <GNOME-l10n-br <Gnome-l10n-BR@listas.cipsga.org.br>>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
-# Revisado por Joao S. O. Bueno <gwidion@mpc.com.br>, em 23/03/2004
 #: ../libgimp/gimpbrushselectbutton.c:170
 msgid "Brush Selection"
 msgstr "Seleção de Pincel"
 
-#: ../libgimp/gimpbrushselectbutton.c:911
-#: ../libgimp/gimppatternselectbutton.c:712
+#: ../libgimp/gimpbrushselectbutton.c:913
+#: ../libgimp/gimppatternselectbutton.c:714
 msgid "_Browse..."
 msgstr "_Procurar..."
 
@@ -297,7 +297,7 @@ msgstr "Não foram encontrados resultados para sua busca"
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedimento foi encontrado"
-msgstr[1] "%d procedimentos foram encontrado"
+msgstr[1] "%d procedimentos foram encontrados"
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
@@ -402,7 +402,7 @@ msgstr "Substituir a seleção atual"
 
 #: ../libgimpbase/gimpbaseenums.c:130
 msgid "Intersect with the current selection"
-msgstr " Fazer intersecção com a seleção atual"
+msgstr "Fazer intersecção com a seleção atual"
 
 #: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Red"
@@ -590,7 +590,7 @@ msgstr "RGB-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:530
 msgid "Grayscale-alpha"
-msgstr "Tons de cinzas-alfa"
+msgstr "Tons de cinza-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:532
 msgid "Indexed-alpha"
@@ -620,7 +620,7 @@ msgstr "Constante"
 msgid "Incremental"
 msgstr "Incremental"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:214
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:224
 msgid "None"
 msgstr "Nenhum"
 
@@ -757,51 +757,64 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:407
+#: ../modules/cdisplay_lcms.c:216 ../modules/colorsel_cmyk_lcms.c:410
+#: ../modules/colorsel_cmyk_lcms.c:416
 msgid "(invalid UTF-8 string)"
 msgstr "(string UTF-8 inválida)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:40
+#: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "Mode of operation for color management."
 msgstr "Modo de operação para o  gerenciamento de cores."
 
-#: ../libgimpconfig/gimpcolorconfig.c:42
+#: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "The color profile of your (primary) monitor."
 msgstr "O perfil de cor do seu monitor (primário)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:44
+#: ../libgimpconfig/gimpcolorconfig.c:46
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Quando habilitado, o GIMP vai tentar usar o perfil de cores do monitor "
-"usado pelo sistema de janelas. O perfil do monitor configurado será usado "
-"nos casos em que isso não funcione."
+"Quando habilitado, o GIMP vai tentar usar o perfil de cores do monitor usado "
+"pelo sistema de janelas. O perfil do monitor configurado será usado nos "
+"casos em que isso não funcione."
 
-#: ../libgimpconfig/gimpcolorconfig.c:48
+#: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The default RGB working space color profile."
 msgstr "O perfil de cores padrão do espaço de cores RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "O perfil de cores CMYK usado para converter entre RGB e CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr "O perfil de cores usado para simular uma versão impressa (softproof)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "Sets how colors are mapped for your display."
 msgstr "Configura como as cores são mapeadas para a sua tela."
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
 msgstr ""
 "Configura como as cores são convertidas do espaço de trabalho RGB para o "
 "dispositivo de simulação de impressão."
+
+#: ../libgimpconfig/gimpcolorconfig.c:61
+msgid ""
+"When enabled, the print simulation will mark colors which can not be "
+"represented in the target color space."
+msgstr ""
+"Quando habilitado, a simulação exibirá as cores que não podem ser representadas "
+"no espaço de cores de destino"
+
+#: ../libgimpconfig/gimpcolorconfig.c:64
+msgid "The color to use for marking colors which are out of gamut."
+msgstr "Cor que será utilizada para marcar cores fora do gamut"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -860,7 +873,7 @@ msgstr "ao analisar palavra-chave '%s': %s"
 #: ../libgimpconfig/gimpconfig-iface.c:454
 #: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
-#: ../libgimpwidgets/gimpcolorprofilestore.c:593
+#: ../libgimpwidgets/gimpcolorprofilestore.c:654
 msgid "fatal parse error"
 msgstr "erro fatal de análise"
 
@@ -909,6 +922,7 @@ msgid "Could not create '%s': %s"
 msgstr "Impossível criar '%s': %s"
 
 #: ../libgimpconfig/gimpscanner.c:255
+#, c-format
 msgid "invalid UTF-8 string"
 msgstr "string UTF-8 inválida"
 
@@ -955,6 +969,7 @@ msgid "Failed to create thumbnail folder '%s'."
 msgstr "Falha ao criar diretório de miniaturas '%s'."
 
 #: ../libgimpthumb/gimpthumbnail.c:498
+#, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "A miniatura não contém uma tag Thumb::URI"
 
@@ -983,11 +998,11 @@ msgstr "Pre_to"
 msgid "_White"
 msgstr "_Branco"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:142
+#: ../libgimpwidgets/gimpcolorprofilestore.c:144
 msgid "Select color profile from disk..."
 msgstr "Selecionar perfil de cores do disco..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:278
+#: ../libgimpwidgets/gimpcolorprofilestore.c:280
 msgid "profile|None"
 msgstr "Nenhum"
 
@@ -1008,7 +1023,7 @@ msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr ""
-"Notação de cor hexadecimal, como a usada em HTML e CSS.Esta entrada também "
+"Notação de cor hexadecimal, como a usada em HTML e CSS. Esta entrada também "
 "aceita nomes de cores do CSS."
 
 #: ../libgimpwidgets/gimpcolorselection.c:292
@@ -1107,7 +1122,7 @@ msgstr "Tamanho do Xadrez"
 msgid "Check Style"
 msgstr "Estilo do Xadrez"
 
-#. toggle button to (des)activate the instant preview
+#. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "_Pré-visualização"
@@ -1195,15 +1210,15 @@ msgstr "_Inclinar"
 msgid "More..."
 msgstr "Mais..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:577
+#: ../libgimpwidgets/gimpunitmenu.c:581
 msgid "Unit Selection"
 msgstr "Seleção de Unidade"
 
-#: ../libgimpwidgets/gimpunitmenu.c:626
+#: ../libgimpwidgets/gimpunitmenu.c:629
 msgid "Unit"
 msgstr "Unidade"
 
-#: ../libgimpwidgets/gimpunitmenu.c:630
+#: ../libgimpwidgets/gimpunitmenu.c:633
 msgid "Factor"
 msgstr "Fator"
 
@@ -1339,59 +1354,67 @@ msgstr "Contraste"
 msgid "Contrast c_ycles:"
 msgstr "C_iclos de Contraste:"
 
-#: ../modules/cdisplay_lcms.c:105
+#: ../modules/cdisplay_lcms.c:111
 msgid "Color management display filter using ICC color profiles"
 msgstr "Filtro de gerenciamento de cores para a tela usando perfis de cor ICC"
 
-#: ../modules/cdisplay_lcms.c:166
+#: ../modules/cdisplay_lcms.c:172
 msgid "Color Management"
 msgstr "Gerenciamento de Cores"
 
-#: ../modules/cdisplay_lcms.c:235
+#: ../modules/cdisplay_lcms.c:245
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
-"Este filtro se é configurado a partir da sessão \"Gerenciamento de Cores\" no "
-"diálogo de preferências."
+"Este filtro se é configurado a partir da sessão \"Gerenciamento de Cores\" "
+"no diálogo de preferências."
 
-#: ../modules/cdisplay_lcms.c:249
+#: ../modules/cdisplay_lcms.c:259
 msgid "Mode of operation:"
 msgstr "Modo de operação:"
 
-#: ../modules/cdisplay_lcms.c:256
+#: ../modules/cdisplay_lcms.c:267
 msgid "Image profile:"
 msgstr "Perfil para imagens:"
 
-#: ../modules/cdisplay_lcms.c:263
+#: ../modules/cdisplay_lcms.c:275
 msgid "Monitor profile:"
 msgstr "Perfil para o monitor:"
 
-#: ../modules/cdisplay_lcms.c:270
+#: ../modules/cdisplay_lcms.c:283
 msgid "Print simulation profile:"
 msgstr "Perfil de simulação de impressão:"
 
-#: ../modules/cdisplay_proof.c:102
+#: ../modules/cdisplay_proof.c:103
 msgid "Color proof filter using ICC color profile"
 msgstr "Filtro de prova de cores usando perfil de cor ICC"
 
-#: ../modules/cdisplay_proof.c:179
+#: ../modules/cdisplay_proof.c:180
 msgid "Color Proof"
 msgstr "Prova de Cores"
 
-#: ../modules/cdisplay_proof.c:306
-msgid "_Intent:"
-msgstr "_Intenção:"
-
-#: ../modules/cdisplay_proof.c:310
+#: ../modules/cdisplay_proof.c:340
 msgid "Choose an ICC Color Profile"
 msgstr "Escolha um perfil de cor ICC"
 
-#: ../modules/cdisplay_proof.c:313
+#: ../modules/cdisplay_proof.c:367
+msgid "All files (*.*)"
+msgstr "Todos os arquivos (*.*) "
+
+#: ../modules/cdisplay_proof.c:372
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "Perfil de cores ICC (*.icc, *.icm)"
+
+#: ../modules/cdisplay_proof.c:430
 msgid "_Profile:"
 msgstr "_Perfil:"
 
-#: ../modules/cdisplay_proof.c:318
+#: ../modules/cdisplay_proof.c:436
+msgid "_Intent:"
+msgstr "_Intenção:"
+
+#: ../modules/cdisplay_proof.c:441
 msgid "_Black Point Compensation"
 msgstr "_Compensação de Ponto Negro"
 
@@ -1404,38 +1427,38 @@ msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/colorsel_cmyk.c:148 ../modules/colorsel_cmyk_lcms.c:171
+#: ../modules/colorsel_cmyk.c:148 ../modules/colorsel_cmyk_lcms.c:173
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:173
+#: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:175
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:175
+#: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:177
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/colorsel_cmyk.c:154 ../modules/colorsel_cmyk_lcms.c:177
+#: ../modules/colorsel_cmyk.c:154 ../modules/colorsel_cmyk_lcms.c:179
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/colorsel_cmyk.c:158 ../modules/colorsel_cmyk_lcms.c:181
+#: ../modules/colorsel_cmyk.c:158 ../modules/colorsel_cmyk_lcms.c:183
 msgid "Cyan"
 msgstr "Ciano"
 
-#: ../modules/colorsel_cmyk.c:159 ../modules/colorsel_cmyk_lcms.c:182
+#: ../modules/colorsel_cmyk.c:159 ../modules/colorsel_cmyk_lcms.c:184
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../modules/colorsel_cmyk.c:160 ../modules/colorsel_cmyk_lcms.c:183
+#: ../modules/colorsel_cmyk.c:160 ../modules/colorsel_cmyk_lcms.c:185
 msgid "Yellow"
 msgstr "Amarelo"
 
-#: ../modules/colorsel_cmyk.c:161 ../modules/colorsel_cmyk_lcms.c:184
+#: ../modules/colorsel_cmyk.c:161 ../modules/colorsel_cmyk_lcms.c:186
 msgid "Black"
 msgstr "Preto"
 
@@ -1451,11 +1474,11 @@ msgstr "A percentagem de preto para puxar das tintas coloridas."
 msgid "CMYK color selector (using color profile)"
 msgstr "Seletor de cores CMYK  (usando perfil de cor)"
 
-#: ../modules/colorsel_cmyk_lcms.c:396
+#: ../modules/colorsel_cmyk_lcms.c:399
 msgid "Profile: (none)"
 msgstr "Perfil: (nenhum)"
 
-#: ../modules/colorsel_cmyk_lcms.c:409
+#: ../modules/colorsel_cmyk_lcms.c:419
 #, c-format
 msgid "Profile: %s"
 msgstr "Perfil: %s"
@@ -1788,7 +1811,9 @@ msgstr "Canal:"
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
-msgstr "O canal MIDI do qual ler eventos. Deixe em -1 para ler de todos os canais MIDI"
+msgstr ""
+"O canal MIDI do qual ler eventos. Deixe em -1 para ler de todos os canais "
+"MIDI"
 
 #: ../modules/controller_midi.c:259
 msgid "MIDI"
