@@ -571,8 +571,10 @@ gen_convolve_matrix (gdouble   radius,
       sum = 0;
       for (j = 1; j <= 50; j++)
         {
-          if (base_x + 0.02 * j <= radius)
-            sum += exp (- SQR (base_x + 0.02 * j) / (2 * SQR (std_dev)));
+          gdouble r = base_x + 0.02 * j;
+
+          if (r <= radius)
+            sum += exp (- SQR (r) / (2 * SQR (std_dev)));
         }
 
       cmatrix[i] = sum / 50;
@@ -586,7 +588,7 @@ gen_convolve_matrix (gdouble   radius,
    * even if the center point is weighted slightly higher than others. */
   sum = 0;
   for (j = 0; j <= 50; j++)
-    sum += exp (- SQR (0.5 + 0.02 * j) / (2 * SQR (std_dev)));
+    sum += exp (- SQR (- 0.5 + 0.02 * j) / (2 * SQR (std_dev)));
 
   cmatrix[matrix_length / 2] = sum / 51;
 
