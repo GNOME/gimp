@@ -19,9 +19,13 @@ Changes in GIMP 2.4.6
 - fixed a glitch in the DND code (bug #317992)
 - gimp-image-convert() must not accept palettes with > 256 colors (bug #525471)
 - fixed parameter description in the Map Object plug-in (bug #526679)
+- fixed compilation of unit tests on Mac OS X (bug #528160)
+- fixed handling of "argc-lower-val-y" PDB parameter in Curve Bend plug-in
+- fixed overlap problem in Hue-Saturation tool (bug #528160)
+- fixed asymmetry in Unsharp Mask plug-in (bug #530077)
 - added new translations (ca@valencia, nn)
 - translation fixes and updates
-  (ar, ca, de, el, es, fi, fr, hu, it, ko, pl, sv)
+  (ar, ca, de, el, es, fi, fr, hu, it, ko, pl, pt_BR, sv)
 
 Contributors:
 
