@@ -1,5 +1,12 @@
 2008-05-05  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimppainttool.c
+	* app/display/gimpdisplayshell-coords.c: applied patch from Alexia
+	Death which changes the maximum smoothing for paint tools to more
+	conservative default and adds velocity dependent smooth suppression.
+
+2008-05-05  Sven Neumann  <sven@gimp.org>
+
 	* configure.in (ALL_LINGUAS): added Icelandic (is).
 
 2008-05-02  Martin Nordholts  <martinn@svn.gnome.org>

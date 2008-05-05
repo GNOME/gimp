@@ -268,6 +268,8 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           /* Speed needs upper limit */
           coords->velocity = MIN (coords->velocity, 1.0);
         }
+      /* High speed -> less smooth*/
+      inertia_factor *= (1 - coords->velocity);
 
       if (inertia_factor > 0 && coords->distance > 0)
         {
