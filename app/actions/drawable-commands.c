@@ -138,10 +138,10 @@ drawable_levels_stretch_cmd_callback (GtkAction *action,
 {
   GimpImage    *image;
   GimpDrawable *drawable;
-  GimpContext  *context;
+  GimpDisplay  *display;
   GtkWidget    *widget;
   return_if_no_drawable (image, drawable, data);
-  return_if_no_context (context, data);
+  return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
   if (! gimp_drawable_is_rgb (drawable))
@@ -151,7 +151,7 @@ drawable_levels_stretch_cmd_callback (GtkAction *action,
       return;
     }
 
-  gimp_drawable_levels_stretch (drawable, context);
+  gimp_drawable_levels_stretch (drawable, GIMP_PROGRESS (display));
   gimp_image_flush (image);
 }
 

@@ -1,3 +1,9 @@
+2008-05-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/drawable-commands.c
+	(drawable_levels_stretch_cmd_callback): the second parameter of
+	gimp_drawable_levels_stretch() is now a GimpProgress.
+
 2008-05-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/unsharp-mask.c (gen_convolve_matrix): fixed
