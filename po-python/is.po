@@ -1,0 +1,116 @@
+# Icelandic translation of The GIMP. This is a compendium. 
+# Copyright (C) 2008 Free Software Foundation, Inc.
+# Anna Jonna Ármansdóttir <annajonna@gmail.com>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp.trunk.is\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-05-05 01:29+0000\n"
+"PO-Revision-Date: 2008-05-05 00:47+0000\n"
+"Last-Translator: Anna Jonna Ármansdóttir <annajonna@gmail.com>\n"
+"Language-Team: Icelandic\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=1;\n"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+msgid "Saving as colored XHTML"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+msgid "Entry box"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+msgid "_File to read or characters to use"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
+msgid "_Turbulence"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+msgid "Offset the colors in a palette"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+msgid "Palette"
+msgstr "Litaspjald"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+msgid "Sort the colors in a palette"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "RGB"
+msgstr "RGB"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+msgid "HSV"
+msgstr "HSV"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+msgid "Red or Hue"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+msgid "_Ascending"
+msgstr "_Hækkandi"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
+msgid "Create a repeating gradient using colors from the palette"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
+msgid "Palette to _Repeating Gradient"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+msgid "Path for HTML export"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Space between table elements"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+msgid "Javascript for onmouseover and clicked"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+msgid "Skip animation for table caps"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:50
+msgid "_Browse..."
+msgstr "_Flakka..."
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Gat ekki opnað '%s' fyrir ritun: %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:218
+msgid "Interactive GIMP Python interpreter"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+msgid "Add a drop shadow to a layer, and optionally bevel it"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+msgid "Drop shadow _X displacement"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
+msgid "Drop shadow _Y displacement"
+msgstr ""

@@ -1,3 +1,7 @@
+2008-05-05  Sven Neumann  <sven@gimp.org>
+
+	* configure.in (ALL_LINGUAS): added Icelandic (is).
+
 2008-05-02  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* gimptexttool.[ch]
