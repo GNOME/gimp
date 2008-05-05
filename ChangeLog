@@ -1,5 +1,10 @@
 2008-05-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/blinds.c (MAX_FANS): increased the maximum
+	number of blinds to 100.
+
+2008-05-05  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimppainttool.c
 	* app/display/gimpdisplayshell-coords.c: applied patch from Alexia
 	Death which changes the maximum smoothing for paint tools to a more

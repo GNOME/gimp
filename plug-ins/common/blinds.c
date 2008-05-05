@@ -46,7 +46,7 @@
 
 #define SCALE_WIDTH    150
 
-#define MAX_FANS        10
+#define MAX_FANS       100
 
 #define HORIZONTAL       0
 #define VERTICAL         1
