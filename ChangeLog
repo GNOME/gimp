@@ -2,7 +2,7 @@
 
 	* app/tools/gimppainttool.c
 	* app/display/gimpdisplayshell-coords.c: applied patch from Alexia
-	Death which changes the maximum smoothing for paint tools to more
+	Death which changes the maximum smoothing for paint tools to a more
 	conservative default and adds velocity dependent smooth suppression.
 
 2008-05-05  Sven Neumann  <sven@gimp.org>
