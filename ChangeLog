@@ -1,5 +1,10 @@
 2008-05-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/unsharp-mask.c (gen_convolve_matrix): fixed
+	algorithm to calculate the center value. Fixes bug #530077.
+
+2008-05-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/blinds.c (MAX_FANS): increased the maximum
 	number of blinds to 100.
 
