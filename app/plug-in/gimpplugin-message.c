@@ -57,6 +57,10 @@
 static void gimp_plug_in_handle_quit             (GimpPlugIn      *plug_in);
 static void gimp_plug_in_handle_tile_request     (GimpPlugIn      *plug_in,
                                                   GPTileReq       *request);
+static void gimp_plug_in_handle_tile_put         (GimpPlugIn      *plug_in,
+                                                  GPTileReq       *request);
+static void gimp_plug_in_handle_tile_get         (GimpPlugIn      *plug_in,
+                                                  GPTileReq       *request);
 static void gimp_plug_in_handle_proc_run         (GimpPlugIn      *plug_in,
                                                   GPProcRun       *proc_run);
 static void gimp_plug_in_handle_proc_return      (GimpPlugIn      *plug_in,
@@ -170,6 +174,18 @@ static void
 gimp_plug_in_handle_tile_request (GimpPlugIn *plug_in,
                                   GPTileReq  *request)
 {
+  g_return_if_fail (request != NULL);
+
+  if (request->drawable_ID == -1)
+    gimp_plug_in_handle_tile_put (plug_in, request);
+  else
+    gimp_plug_in_handle_tile_get (plug_in, request);
+}
+
+static void
+gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
+                              GPTileReq  *request)
+{
   GPTileData       tile_data;
   GPTileData      *tile_info;
   GimpWireMessage  msg;
@@ -177,216 +193,216 @@ gimp_plug_in_handle_tile_request (GimpPlugIn *plug_in,
   TileManager     *tm;
   Tile            *tile;
 
-  g_return_if_fail (request != NULL);
+  tile_data.drawable_ID = -1;
+  tile_data.tile_num    = 0;
+  tile_data.shadow      = 0;
+  tile_data.bpp         = 0;
+  tile_data.width       = 0;
+  tile_data.height      = 0;
+  tile_data.use_shm     = (plug_in->manager->shm != NULL);
+  tile_data.data        = NULL;
 
-  if (request->drawable_ID == -1)
+  if (! gp_tile_data_write (plug_in->my_write, &tile_data, plug_in))
     {
-      /*  this branch communicates with libgimp/gimptile.c:gimp_tile_put()  */
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "plug_in_handle_tile_request: ERROR");
+      gimp_plug_in_close (plug_in, TRUE);
+      return;
+    }
 
-      tile_data.drawable_ID = -1;
-      tile_data.tile_num    = 0;
-      tile_data.shadow      = 0;
-      tile_data.bpp         = 0;
-      tile_data.width       = 0;
-      tile_data.height      = 0;
-      tile_data.use_shm     = (plug_in->manager->shm != NULL);
-      tile_data.data        = NULL;
+  if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "plug_in_handle_tile_request: ERROR");
+      gimp_plug_in_close (plug_in, TRUE);
+      return;
+    }
 
-      if (! gp_tile_data_write (plug_in->my_write, &tile_data, plug_in))
-        {
-          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "plug_in_handle_tile_request: ERROR");
-          gimp_plug_in_close (plug_in, TRUE);
-          return;
-        }
+  if (msg.type != GP_TILE_DATA)
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "expected tile data and received: %d", msg.type);
+      gimp_plug_in_close (plug_in, TRUE);
+      return;
+    }
 
-      if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
-        {
-          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "plug_in_handle_tile_request: ERROR");
-          gimp_plug_in_close (plug_in, TRUE);
-          return;
-        }
+  tile_info = msg.data;
 
-      if (msg.type != GP_TILE_DATA)
-        {
-          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "expected tile data and received: %d", msg.type);
-          gimp_plug_in_close (plug_in, TRUE);
-          return;
-        }
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (plug_in->manager->gimp,
+                                                   tile_info->drawable_ID);
 
-      tile_info = msg.data;
+  if (! GIMP_IS_DRAWABLE (drawable))
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "tried writing to invalid drawable %d (killing)",
+                    gimp_object_get_name (GIMP_OBJECT (plug_in)),
+                    gimp_filename_to_utf8 (plug_in->prog),
+                    tile_info->drawable_ID);
+      gimp_plug_in_close (plug_in, TRUE);
+      return;
+    }
+  else if (gimp_item_is_removed (GIMP_ITEM (drawable)))
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "tried writing to drawable %d which was removed "
+                    "from the image (killing)",
+                    gimp_object_get_name (GIMP_OBJECT (plug_in)),
+                    gimp_filename_to_utf8 (plug_in->prog),
+                    tile_info->drawable_ID);
+      gimp_plug_in_close (plug_in, TRUE);
+      return;
+    }
 
-      drawable = (GimpDrawable *) gimp_item_get_by_ID (plug_in->manager->gimp,
-                                                       tile_info->drawable_ID);
+  if (tile_info->shadow)
+    {
+      tm = gimp_drawable_get_shadow_tiles (drawable);
 
-      if (! GIMP_IS_DRAWABLE (drawable))
-        {
-          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "Plug-In \"%s\"\n(%s)\n\n"
-                        "tried writing to invalid drawable %d (killing)",
-                        gimp_object_get_name (GIMP_OBJECT (plug_in)),
-                        gimp_filename_to_utf8 (plug_in->prog),
-                        tile_info->drawable_ID);
-          gimp_plug_in_close (plug_in, TRUE);
-          return;
-        }
-      else if (gimp_item_is_removed (GIMP_ITEM (drawable)))
-        {
-          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "Plug-In \"%s\"\n(%s)\n\n"
-                        "tried writing to drawable %d which was removed "
-                        "from the image (killing)",
-                        gimp_object_get_name (GIMP_OBJECT (plug_in)),
-                        gimp_filename_to_utf8 (plug_in->prog),
-                        tile_info->drawable_ID);
-          gimp_plug_in_close (plug_in, TRUE);
-          return;
-        }
-
-      if (tile_info->shadow)
-        {
-          tm = gimp_drawable_get_shadow_tiles (drawable);
-
-          gimp_plug_in_cleanup_add_shadow (plug_in, drawable);
-        }
-      else
-        {
-          tm = gimp_drawable_get_tiles (drawable);
-        }
-
-      tile = tile_manager_get (tm, tile_info->tile_num, TRUE, TRUE);
-
-      if (! tile)
-        {
-          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "Plug-In \"%s\"\n(%s)\n\n"
-                        "requested invalid tile (killing)",
-                        gimp_object_get_name (GIMP_OBJECT (plug_in)),
-                        gimp_filename_to_utf8 (plug_in->prog));
-          gimp_plug_in_close (plug_in, TRUE);
-          return;
-        }
-
-      if (tile_data.use_shm)
-        memcpy (tile_data_pointer (tile, 0, 0),
-                gimp_plug_in_shm_get_addr (plug_in->manager->shm),
-                tile_size (tile));
-      else
-        memcpy (tile_data_pointer (tile, 0, 0),
-                tile_info->data,
-                tile_size (tile));
-
-      tile_release (tile, TRUE);
-      gimp_wire_destroy (&msg);
-
-      if (! gp_tile_ack_write (plug_in->my_write, plug_in))
-        {
-          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "plug_in_handle_tile_request: ERROR");
-          gimp_plug_in_close (plug_in, TRUE);
-          return;
-        }
+      gimp_plug_in_cleanup_add_shadow (plug_in, drawable);
     }
   else
     {
-      /*  this branch communicates with libgimp/gimptile.c:gimp_tile_get()  */
-
-      drawable = (GimpDrawable *) gimp_item_get_by_ID (plug_in->manager->gimp,
-                                                       request->drawable_ID);
-
-      if (! GIMP_IS_DRAWABLE (drawable))
-        {
-          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "Plug-In \"%s\"\n(%s)\n\n"
-                        "tried reading from invalid drawable %d (killing)",
-                        gimp_object_get_name (GIMP_OBJECT (plug_in)),
-                        gimp_filename_to_utf8 (plug_in->prog),
-                        request->drawable_ID);
-          gimp_plug_in_close (plug_in, TRUE);
-          return;
-        }
-      else if (gimp_item_is_removed (GIMP_ITEM (drawable)))
-        {
-          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "Plug-In \"%s\"\n(%s)\n\n"
-                        "tried reading from drawable %d which was removed "
-                        "from the image (killing)",
-                        gimp_object_get_name (GIMP_OBJECT (plug_in)),
-                        gimp_filename_to_utf8 (plug_in->prog),
-                        request->drawable_ID);
-          gimp_plug_in_close (plug_in, TRUE);
-          return;
-        }
-
-      if (request->shadow)
-        {
-          tm = gimp_drawable_get_shadow_tiles (drawable);
-
-          gimp_plug_in_cleanup_add_shadow (plug_in, drawable);
-        }
-      else
-        {
-          tm = gimp_drawable_get_tiles (drawable);
-        }
-
-      tile = tile_manager_get (tm, request->tile_num, TRUE, FALSE);
-
-      if (! tile)
-        {
-          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "Plug-In \"%s\"\n(%s)\n\n"
-                        "requested invalid tile (killing)",
-                        gimp_object_get_name (GIMP_OBJECT (plug_in)),
-                        gimp_filename_to_utf8 (plug_in->prog));
-          gimp_plug_in_close (plug_in, TRUE);
-          return;
-        }
-
-      tile_data.drawable_ID = request->drawable_ID;
-      tile_data.tile_num    = request->tile_num;
-      tile_data.shadow      = request->shadow;
-      tile_data.bpp         = tile_bpp (tile);
-      tile_data.width       = tile_ewidth (tile);
-      tile_data.height      = tile_eheight (tile);
-      tile_data.use_shm     = (plug_in->manager->shm != NULL);
-
-      if (tile_data.use_shm)
-        memcpy (gimp_plug_in_shm_get_addr (plug_in->manager->shm),
-                tile_data_pointer (tile, 0, 0),
-                tile_size (tile));
-      else
-        tile_data.data = tile_data_pointer (tile, 0, 0);
-
-      if (! gp_tile_data_write (plug_in->my_write, &tile_data, plug_in))
-        {
-          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "plug_in_handle_tile_request: ERROR");
-          gimp_plug_in_close (plug_in, TRUE);
-          return;
-        }
-
-      tile_release (tile, FALSE);
-
-      if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
-        {
-          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "plug_in_handle_tile_request: ERROR");
-          gimp_plug_in_close (plug_in, TRUE);
-          return;
-        }
-
-      if (msg.type != GP_TILE_ACK)
-        {
-          gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "expected tile ack and received: %d", msg.type);
-          gimp_plug_in_close (plug_in, TRUE);
-          return;
-        }
-
-      gimp_wire_destroy (&msg);
+      tm = gimp_drawable_get_tiles (drawable);
     }
+
+  tile = tile_manager_get (tm, tile_info->tile_num, TRUE, TRUE);
+
+  if (! tile)
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "requested invalid tile (killing)",
+                    gimp_object_get_name (GIMP_OBJECT (plug_in)),
+                    gimp_filename_to_utf8 (plug_in->prog));
+      gimp_plug_in_close (plug_in, TRUE);
+      return;
+    }
+
+  if (tile_data.use_shm)
+    memcpy (tile_data_pointer (tile, 0, 0),
+            gimp_plug_in_shm_get_addr (plug_in->manager->shm),
+            tile_size (tile));
+  else
+    memcpy (tile_data_pointer (tile, 0, 0),
+            tile_info->data,
+            tile_size (tile));
+
+  tile_release (tile, TRUE);
+  gimp_wire_destroy (&msg);
+
+  if (! gp_tile_ack_write (plug_in->my_write, plug_in))
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "plug_in_handle_tile_request: ERROR");
+      gimp_plug_in_close (plug_in, TRUE);
+      return;
+    }
+}
+
+static void
+gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
+                              GPTileReq  *request)
+{
+  GPTileData       tile_data;
+  GimpWireMessage  msg;
+  GimpDrawable    *drawable;
+  TileManager     *tm;
+  Tile            *tile;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (plug_in->manager->gimp,
+                                                   request->drawable_ID);
+
+  if (! GIMP_IS_DRAWABLE (drawable))
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "tried reading from invalid drawable %d (killing)",
+                    gimp_object_get_name (GIMP_OBJECT (plug_in)),
+                    gimp_filename_to_utf8 (plug_in->prog),
+                    request->drawable_ID);
+      gimp_plug_in_close (plug_in, TRUE);
+      return;
+    }
+  else if (gimp_item_is_removed (GIMP_ITEM (drawable)))
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "tried reading from drawable %d which was removed "
+                    "from the image (killing)",
+                    gimp_object_get_name (GIMP_OBJECT (plug_in)),
+                    gimp_filename_to_utf8 (plug_in->prog),
+                    request->drawable_ID);
+      gimp_plug_in_close (plug_in, TRUE);
+      return;
+    }
+
+  if (request->shadow)
+    {
+      tm = gimp_drawable_get_shadow_tiles (drawable);
+
+      gimp_plug_in_cleanup_add_shadow (plug_in, drawable);
+    }
+  else
+    {
+      tm = gimp_drawable_get_tiles (drawable);
+    }
+
+  tile = tile_manager_get (tm, request->tile_num, TRUE, FALSE);
+
+  if (! tile)
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "requested invalid tile (killing)",
+                    gimp_object_get_name (GIMP_OBJECT (plug_in)),
+                    gimp_filename_to_utf8 (plug_in->prog));
+      gimp_plug_in_close (plug_in, TRUE);
+      return;
+    }
+
+  tile_data.drawable_ID = request->drawable_ID;
+  tile_data.tile_num    = request->tile_num;
+  tile_data.shadow      = request->shadow;
+  tile_data.bpp         = tile_bpp (tile);
+  tile_data.width       = tile_ewidth (tile);
+  tile_data.height      = tile_eheight (tile);
+  tile_data.use_shm     = (plug_in->manager->shm != NULL);
+
+  if (tile_data.use_shm)
+    memcpy (gimp_plug_in_shm_get_addr (plug_in->manager->shm),
+            tile_data_pointer (tile, 0, 0),
+            tile_size (tile));
+  else
+    tile_data.data = tile_data_pointer (tile, 0, 0);
+
+  if (! gp_tile_data_write (plug_in->my_write, &tile_data, plug_in))
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "plug_in_handle_tile_request: ERROR");
+      gimp_plug_in_close (plug_in, TRUE);
+      return;
+    }
+
+  tile_release (tile, FALSE);
+
+  if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "plug_in_handle_tile_request: ERROR");
+      gimp_plug_in_close (plug_in, TRUE);
+      return;
+    }
+
+  if (msg.type != GP_TILE_ACK)
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "expected tile ack and received: %d", msg.type);
+      gimp_plug_in_close (plug_in, TRUE);
+      return;
+    }
+
+  gimp_wire_destroy (&msg);
 }
 
 static void

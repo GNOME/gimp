@@ -1,5 +1,11 @@
 2008-05-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/gimpplugin-message.c: split
+	gimp_plug_in_handle_tile_request() into two functions:
+	gimp_plug_in_handle_tile_put() and gimp_plug_in_handle_tile_get().
+
+2008-05-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/gimpplugin-message.c
 	(gimp_plug_in_handle_proc_install): show an error message instead
 	of crashing when a plug-in registers a prodecure with a NULL
