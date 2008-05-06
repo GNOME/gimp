@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-17 22:11+0100\n"
-"PO-Revision-Date: 2008-02-17 22:11+0100\n"
+"POT-Creation-Date: 2008-05-06 11:55+0200\n"
+"PO-Revision-Date: 2008-05-06 11:58+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -318,15 +318,15 @@ msgstr "Valori di ritorno"
 msgid "Additional Information"
 msgstr "Informazioni aggiuntive"
 
-#: ../libgimp/gimpprocview.c:210
+#: ../libgimp/gimpprocview.c:209
 msgid "Author:"
 msgstr "Autore:"
 
-#: ../libgimp/gimpprocview.c:222
+#: ../libgimp/gimpprocview.c:221
 msgid "Date:"
 msgstr "Data:"
 
-#: ../libgimp/gimpprocview.c:234
+#: ../libgimp/gimpprocview.c:233
 msgid "Copyright:"
 msgstr "Copyright:"
 
@@ -706,57 +706,29 @@ msgstr "Estensione di GIMP"
 msgid "Temporary Procedure"
 msgstr "Procedura temporanea"
 
-#: ../libgimpbase/gimpmemsize.c:180
-#, c-format
-msgid "%d Byte"
-msgid_plural "%d Bytes"
-msgstr[0] "%d byte"
-msgstr[1] "%d byte"
+#: ../libgimpbase/gimpbaseenums.c:1047
+msgid "From left to right"
+msgstr "Da sinistra a destra"
 
-#: ../libgimpbase/gimpmemsize.c:186
-#, c-format
-msgid "%.2f KB"
-msgstr "%.2f kB"
+#: ../libgimpbase/gimpbaseenums.c:1048
+msgid "From right to left"
+msgstr "Da destra a sinistra"
 
-#: ../libgimpbase/gimpmemsize.c:190
-#, c-format
-msgid "%.1f KB"
-msgstr "%.1f kB"
+#: ../libgimpbase/gimpbaseenums.c:1078
+msgid "Left justified"
+msgstr "Giustificato a sinistra"
 
-#: ../libgimpbase/gimpmemsize.c:194
-#, c-format
-msgid "%d KB"
-msgstr "%d kB"
+#: ../libgimpbase/gimpbaseenums.c:1079
+msgid "Right justified"
+msgstr "Giustificato a destra"
 
-#: ../libgimpbase/gimpmemsize.c:201
-#, c-format
-msgid "%.2f MB"
-msgstr "%.2f MB"
+#: ../libgimpbase/gimpbaseenums.c:1080
+msgid "Centered"
+msgstr "Centrato"
 
-#: ../libgimpbase/gimpmemsize.c:205
-#, c-format
-msgid "%.1f MB"
-msgstr "%.1f MB"
-
-#: ../libgimpbase/gimpmemsize.c:209
-#, c-format
-msgid "%d MB"
-msgstr "%d MB"
-
-#: ../libgimpbase/gimpmemsize.c:216
-#, c-format
-msgid "%.2f GB"
-msgstr "%.2f GB"
-
-#: ../libgimpbase/gimpmemsize.c:220
-#, c-format
-msgid "%.1f GB"
-msgstr "%.1f GB"
-
-#: ../libgimpbase/gimpmemsize.c:224
-#, c-format
-msgid "%d GB"
-msgstr "%d GB"
+#: ../libgimpbase/gimpbaseenums.c:1081
+msgid "Filled"
+msgstr "Riempito"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
 #: ../modules/cdisplay_lcms.c:187 ../modules/colorsel_cmyk_lcms.c:411
@@ -959,7 +931,7 @@ msgstr "Caricamento fallito"
 msgid "Not loaded"
 msgstr "Non caricato"
 
-#: ../libgimpthumb/gimpthumb-utils.c:125
+#: ../libgimpthumb/gimpthumb-utils.c:123
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -969,7 +941,7 @@ msgstr ""
 "Le miniature saranno perciò memorizzate nella cartella per i file temporanei "
 "(%s)."
 
-#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
+#: ../libgimpthumb/gimpthumb-utils.c:247 ../libgimpthumb/gimpthumb-utils.c:315
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Fallita la creazione della cartella per le miniature \"%s\"."
@@ -1035,6 +1007,10 @@ msgstr ""
 #: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
 msgstr "_Notazione HTML:"
+
+#: ../libgimpwidgets/gimphelpui.c:420
+msgid "Press F1 for more help"
+msgstr "Premere F1 per ulteriore aiuto"
 
 #: ../libgimpwidgets/gimpfileentry.c:174
 msgid "Open a file selector to browse your folders"
