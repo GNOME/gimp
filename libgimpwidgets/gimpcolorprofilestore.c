@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpprofilestore.c
- * Copyright (C) 2004-2007  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2004-2008  Sven Neumann <sven@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -590,9 +590,11 @@ gimp_color_profile_store_load_profile (GimpColorProfileStore *store,
     {
       gchar *filename = g_filename_from_uri (uri, NULL, NULL);
 
-      if (filename)
-        gimp_color_profile_store_history_insert (store, &iter,
-                                                 filename, label, index);
+      if (filename && g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+        {
+          gimp_color_profile_store_history_insert (store, &iter,
+                                                   filename, label, index);
+        }
 
       g_free (filename);
       g_free (label);
