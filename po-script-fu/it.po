@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-17 19:37+0100\n"
-"PO-Revision-Date: 2008-02-17 19:38+0100\n"
+"POT-Creation-Date: 2008-05-06 12:16+0200\n"
+"PO-Revision-Date: 2008-05-06 12:17+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -270,7 +270,7 @@ msgstr "Pr_ofilo 3D..."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
-msgstr "Mappa a sbalzo (livello alfa) raggio di sfocatura"
+msgstr "Raggio di sfocatura mappa a sbalzo (livello alfa)"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Create a logo with outlined text and a drop shadow"
