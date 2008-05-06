@@ -1,5 +1,12 @@
 2008-05-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/3d-outline.scm: applied patch from
+	 Ulf-D. Ehlert. Makes the vacated region, which is created when
+	 specifying a non-zero shadow offset, to be filled with the
+	 background color (white) instead of transparency (bug #530216).
+
+2008-05-06  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorprofilestore.c
 	(gimp_color_profile_store_load_profile): check if the file exists
 	before adding it to the history. Fixes bug #528958.
