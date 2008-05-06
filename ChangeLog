@@ -1,3 +1,11 @@
+2008-05-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/gimpplugin-message.c
+	(gimp_plug_in_handle_proc_install): show an error message instead
+	of crashing when a plug-in registers a prodecure with a NULL
+	argument or return value name. Also introduce two macros which
+	make the utf-8 validation of all strings much more readable.
+
 2008-05-06  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/gbr.c: improved procedure blurb and help.

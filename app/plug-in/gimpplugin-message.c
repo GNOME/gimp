@@ -583,10 +583,11 @@ static void
 gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
                                   GPProcInstall *proc_install)
 {
-  GimpPlugInProcedure *proc        = NULL;
-  GimpProcedure       *procedure   = NULL;
+  GimpPlugInProcedure *proc       = NULL;
+  GimpProcedure       *procedure  = NULL;
   gchar               *canonical;
-  gboolean             valid_utf8  = FALSE;
+  gboolean             null_name  = FALSE;
+  gboolean             valid_utf8 = FALSE;
   gint                 i;
 
   g_return_if_fail (proc_install != NULL);
@@ -620,37 +621,59 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
 
   /*  Sanity check strings for UTF-8 validity  */
 
-  if ((proc_install->menu_path == NULL ||
-       g_utf8_validate (proc_install->menu_path, -1, NULL)) &&
-      (g_utf8_validate (canonical, -1, NULL))               &&
-      (proc_install->blurb == NULL ||
-       g_utf8_validate (proc_install->blurb, -1, NULL))     &&
-      (proc_install->help == NULL ||
-       g_utf8_validate (proc_install->help, -1, NULL))      &&
-      (proc_install->author == NULL ||
-       g_utf8_validate (proc_install->author, -1, NULL))    &&
-      (proc_install->copyright == NULL ||
-       g_utf8_validate (proc_install->copyright, -1, NULL)) &&
-      (proc_install->date == NULL ||
-       g_utf8_validate (proc_install->date, -1, NULL)))
+#define VALIDATE(str)         (g_utf8_validate ((str), -1, NULL))
+#define VALIDATE_OR_NULL(str) ((str) == NULL || g_utf8_validate ((str), -1, NULL))
+
+  if (VALIDATE_OR_NULL (proc_install->menu_path) &&
+      VALIDATE         (canonical)               &&
+      VALIDATE_OR_NULL (proc_install->blurb)     &&
+      VALIDATE_OR_NULL (proc_install->help)      &&
+      VALIDATE_OR_NULL (proc_install->author)    &&
+      VALIDATE_OR_NULL (proc_install->copyright) &&
+      VALIDATE_OR_NULL (proc_install->date))
     {
+      null_name  = FALSE;
       valid_utf8 = TRUE;
 
-      for (i = 0; i < proc_install->nparams && valid_utf8; i++)
+      for (i = 0; i < proc_install->nparams && valid_utf8 && !null_name; i++)
         {
-          if (! (g_utf8_validate (proc_install->params[i].name, -1, NULL) &&
-                 (proc_install->params[i].description == NULL ||
-                  g_utf8_validate (proc_install->params[i].description, -1, NULL))))
-            valid_utf8 = FALSE;
+          if (! proc_install->params[i].name)
+            {
+              null_name = TRUE;
+            }
+          else if (! (VALIDATE         (proc_install->params[i].name) &&
+                      VALIDATE_OR_NULL (proc_install->params[i].description)))
+            {
+              valid_utf8 = FALSE;
+            }
         }
 
-      for (i = 0; i < proc_install->nreturn_vals && valid_utf8; i++)
+      for (i = 0; i < proc_install->nreturn_vals && valid_utf8 && !null_name; i++)
         {
-          if (! (g_utf8_validate (proc_install->return_vals[i].name, -1, NULL) &&
-                 (proc_install->return_vals[i].description == NULL ||
-                  g_utf8_validate (proc_install->return_vals[i].description, -1, NULL))))
-            valid_utf8 = FALSE;
+          if (! proc_install->return_vals[i].name)
+            {
+              null_name = TRUE;
+            }
+          else if (! (VALIDATE         (proc_install->return_vals[i].name) &&
+                      VALIDATE_OR_NULL (proc_install->return_vals[i].description)))
+            {
+              valid_utf8 = FALSE;
+            }
         }
+    }
+
+#undef VALIDATE
+#undef VALIDATE_OR_NULL
+
+  if (null_name)
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "attempted to install a procedure NULL parameter name.",
+                    gimp_object_get_name (GIMP_OBJECT (plug_in)),
+                    gimp_filename_to_utf8 (plug_in->prog));
+      g_free (canonical);
+      return;
     }
 
   if (! valid_utf8)
