@@ -1,3 +1,9 @@
+2008-05-06  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorprofilestore.c
+	(gimp_color_profile_store_load_profile): check if the file exists
+	before adding it to the history. Fixes bug #528958.
+
 2008-05-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/drawable-commands.c
