@@ -1,5 +1,12 @@
 2008-05-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/gbr.c: improved procedure blurb and help.
+
+	* libgimpcolor/gimpcolorspace.c: inline gimp_hsl_value() and
+	gimp_hsl_value_int().
+
+2008-05-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/3d-outline.scm: applied patch from
 	 Ulf-D. Ehlert. Makes the vacated region, which is created when
 	 specifying a non-zero shadow offset, to be filled with the

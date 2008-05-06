@@ -235,7 +235,7 @@ gimp_rgb_to_hsl (const GimpRGB *rgb,
   hsl->a = rgb->a;
 }
 
-static gdouble
+static inline gdouble
 gimp_hsl_value (gdouble n1,
                 gdouble n2,
                 gdouble hue)
@@ -781,7 +781,7 @@ gimp_rgb_to_l_int (gint red,
   return ROUND ((max + min) / 2.0);
 }
 
-static gint
+static inline gint
 gimp_hsl_value_int (gdouble n1,
                     gdouble n2,
                     gdouble hue)

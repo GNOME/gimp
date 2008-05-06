@@ -144,8 +144,8 @@ query (void)
   };
 
   gimp_install_procedure (LOAD_PROC,
+                          "Loads GIMP brushes",
                           "Loads GIMP brushes (1 or 4 bpp and old .gpb format)",
-                          "FIXME: write help",
                           "Tim Newsome, Jens Lautenbacher, Sven Neumann",
                           "Tim Newsome, Jens Lautenbacher, Sven Neumann",
                           "1997-2005",
@@ -165,8 +165,8 @@ query (void)
 				    "20, string, GIMP");
 
   gimp_install_procedure (SAVE_PROC,
-                          "saves files in the .gbr file format",
-                          "Yeah!",
+                          "Saves files in the GIMP brush file format",
+                          "Saves files in the GIMP brush file format",
                           "Tim Newsome, Jens Lautenbacher, Sven Neumann",
                           "Tim Newsome, Jens Lautenbacher, Sven Neumann",
                           "1997-2000",
