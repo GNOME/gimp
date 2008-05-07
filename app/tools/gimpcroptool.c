@@ -84,9 +84,9 @@ static GimpRectangleConstraint
 static void      gimp_crop_tool_options_notify            (GimpCropOptions            *options,
                                                            GParamSpec                 *pspec,
                                                            GimpCropTool               *crop_tool);
-static void      gimp_crop_tool_image_changed             (GimpContext                *gimp_context,
+static void      gimp_crop_tool_image_changed             (GimpCropTool               *crop_tool,
                                                            GimpImage                  *image,
-                                                           GimpCropTool               *crop_tool);
+                                                           GimpContext                *context);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpCropTool, gimp_crop_tool, GIMP_TYPE_DRAW_TOOL,
@@ -183,7 +183,8 @@ gimp_crop_tool_constructor (GType                  type,
 
   g_signal_connect_object (gimp_context, "image-changed",
                            G_CALLBACK (gimp_crop_tool_image_changed),
-                           crop_tool, 0);
+                           crop_tool,
+                           G_CONNECT_SWAPPED);
 
 
   options = GIMP_CROP_TOOL_GET_OPTIONS (object);
@@ -393,9 +394,9 @@ gimp_crop_tool_options_notify (GimpCropOptions *options,
 }
 
 static void
-gimp_crop_tool_image_changed (GimpContext  *gimp_context,
+gimp_crop_tool_image_changed (GimpCropTool *crop_tool,
                               GimpImage    *image,
-                              GimpCropTool *crop_tool)
+                              GimpContext  *context)
 {
   gimp_crop_tool_update_option_defaults (GIMP_CROP_TOOL (crop_tool),
                                          FALSE);
