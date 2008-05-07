@@ -3,19 +3,19 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Khaled Hosny <khaledhosny@eglug.org>, 2006, 2007.
-# Anas Husseini <anas_h_34@hotmail.com>, 2007.
+# Anas Husseini <anas_h_34@hotmail.com>, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-22 21:41+0100\n"
-"PO-Revision-Date: 2007-05-02 23:01+0300\n"
-"Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
-"Language-Team: Arabic <doc@arabeyes.org>\n"
+"POT-Creation-Date: 2008-05-07 21:25+0100\n"
+"PO-Revision-Date: 2008-04-19 22:37+0300\n"
+"Last-Translator: \n"
+"Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: KAider 0.1\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : n>=3 && n<=10 ? 2 : "
 "3\n"
 
@@ -316,15 +316,15 @@ msgstr "القيم الإرجاعية"
 msgid "Additional Information"
 msgstr "بيانات إضافية"
 
-#: ../libgimp/gimpprocview.c:210
+#: ../libgimp/gimpprocview.c:209
 msgid "Author:"
 msgstr "المؤلف:"
 
-#: ../libgimp/gimpprocview.c:222
+#: ../libgimp/gimpprocview.c:221
 msgid "Date:"
 msgstr "التاريخ:"
 
-#: ../libgimp/gimpprocview.c:234
+#: ../libgimp/gimpprocview.c:233
 msgid "Copyright:"
 msgstr "حقوق النسخ:"
 
@@ -332,437 +332,405 @@ msgstr "حقوق النسخ:"
 msgid "percent"
 msgstr "بالمئة"
 
-#: ../libgimpbase/gimpbaseenums.c:27
+#: ../libgimpbase/gimpbaseenums.c:28
 msgid "_White (full opacity)"
 msgstr "أبي_ض (عتامة كاملة)"
 
-#: ../libgimpbase/gimpbaseenums.c:28
+#: ../libgimpbase/gimpbaseenums.c:29
 msgid "_Black (full transparency)"
 msgstr "أسو_د (شفافية كاملة)"
 
-#: ../libgimpbase/gimpbaseenums.c:29
+#: ../libgimpbase/gimpbaseenums.c:30
 msgid "Layer's _alpha channel"
 msgstr "قناة أل_فا الخاصة بالطبقة"
 
-#: ../libgimpbase/gimpbaseenums.c:30
+#: ../libgimpbase/gimpbaseenums.c:31
 msgid "_Transfer layer's alpha channel"
 msgstr "ا_نقل قناة ألفا الخاصة بالطبقة"
 
-#: ../libgimpbase/gimpbaseenums.c:31
+#: ../libgimpbase/gimpbaseenums.c:32
 msgid "_Selection"
 msgstr "الا_ختيار"
 
-#: ../libgimpbase/gimpbaseenums.c:32
+#: ../libgimpbase/gimpbaseenums.c:33
 msgid "_Grayscale copy of layer"
 msgstr "نسخة _رمادية التدرج من الطبقة"
 
-#: ../libgimpbase/gimpbaseenums.c:33
+#: ../libgimpbase/gimpbaseenums.c:34
 msgid "C_hannel"
 msgstr "ال_قناة"
 
-#: ../libgimpbase/gimpbaseenums.c:63
+#: ../libgimpbase/gimpbaseenums.c:64
 msgid "FG to BG (RGB)"
 msgstr "صدر الصورة إلى الخلفية (RGB)"
 
-#: ../libgimpbase/gimpbaseenums.c:64
+#: ../libgimpbase/gimpbaseenums.c:65
 msgid "FG to BG (HSV)"
 msgstr "صدر الصورة إلى الخلفية (HSV)"
 
-#: ../libgimpbase/gimpbaseenums.c:65
+#: ../libgimpbase/gimpbaseenums.c:66
 msgid "FG to transparent"
 msgstr "صدر الصورة إلى شفاف"
 
-#: ../libgimpbase/gimpbaseenums.c:66
+#: ../libgimpbase/gimpbaseenums.c:67
 msgid "Custom gradient"
 msgstr "تدرج مخصص"
 
-#: ../libgimpbase/gimpbaseenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:96
 msgid "FG color fill"
 msgstr "لون ملء صدر الصورة"
 
-#: ../libgimpbase/gimpbaseenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:97
 msgid "BG color fill"
 msgstr "لون ملء الخلفية"
 
-#: ../libgimpbase/gimpbaseenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:98
 msgid "Pattern fill"
 msgstr "لون تعبئة النموذج"
 
-#: ../libgimpbase/gimpbaseenums.c:127
+#: ../libgimpbase/gimpbaseenums.c:128
 msgid "Add to the current selection"
 msgstr "أضف إلى التحديد الحالي"
 
-#: ../libgimpbase/gimpbaseenums.c:128
+#: ../libgimpbase/gimpbaseenums.c:129
 msgid "Subtract from the current selection"
 msgstr "أزل من التحديد الحالي"
 
-#: ../libgimpbase/gimpbaseenums.c:129
+#: ../libgimpbase/gimpbaseenums.c:130
 msgid "Replace the current selection"
 msgstr "استبدل التحديد الحالي"
 
-#: ../libgimpbase/gimpbaseenums.c:130
+#: ../libgimpbase/gimpbaseenums.c:131
 msgid "Intersect with the current selection"
 msgstr "تقاطع مع التحديد الحالي"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Red"
 msgstr "أحمر"
 
-#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Green"
 msgstr "أخضر"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:128
+#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Blue"
 msgstr "أزرق"
 
-#: ../libgimpbase/gimpbaseenums.c:165
+#: ../libgimpbase/gimpbaseenums.c:166
 msgid "Gray"
 msgstr "رمادي"
 
-#: ../libgimpbase/gimpbaseenums.c:166 ../libgimpbase/gimpbaseenums.c:531
+#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpbase/gimpbaseenums.c:532
 msgid "Indexed"
 msgstr "مفهرس"
 
-#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libgimpbase/gimpbaseenums.c:168 ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Alpha"
 msgstr "ألفا"
 
-#: ../libgimpbase/gimpbaseenums.c:196
+#: ../libgimpbase/gimpbaseenums.c:197
 msgid "Small"
 msgstr "صغير"
 
-#: ../libgimpbase/gimpbaseenums.c:197
+#: ../libgimpbase/gimpbaseenums.c:198
 msgid "Medium"
 msgstr "وسط"
 
-#: ../libgimpbase/gimpbaseenums.c:198
+#: ../libgimpbase/gimpbaseenums.c:199
 msgid "Large"
 msgstr "كبير"
 
-#: ../libgimpbase/gimpbaseenums.c:230
+#: ../libgimpbase/gimpbaseenums.c:231
 msgid "Light checks"
 msgstr "مربعات خفيفة"
 
-#: ../libgimpbase/gimpbaseenums.c:231
+#: ../libgimpbase/gimpbaseenums.c:232
 msgid "Mid-tone checks"
 msgstr "مربعات متوسطة النغمة"
 
-#: ../libgimpbase/gimpbaseenums.c:232
+#: ../libgimpbase/gimpbaseenums.c:233
 msgid "Dark checks"
 msgstr "مربعات داكنة"
 
-#: ../libgimpbase/gimpbaseenums.c:233
+#: ../libgimpbase/gimpbaseenums.c:234
 msgid "White only"
 msgstr "أبيض فقط"
 
-#: ../libgimpbase/gimpbaseenums.c:234
+#: ../libgimpbase/gimpbaseenums.c:235
 msgid "Gray only"
 msgstr "رمادي فقط"
 
-#: ../libgimpbase/gimpbaseenums.c:235
+#: ../libgimpbase/gimpbaseenums.c:236
 msgid "Black only"
 msgstr "أسود فقط"
 
-#: ../libgimpbase/gimpbaseenums.c:263
-#, fuzzy
-msgid "Image"
-msgstr "الصور"
-
 #: ../libgimpbase/gimpbaseenums.c:264
-#, fuzzy
-msgid "Pattern"
-msgstr "لون تعبئة النموذج"
+msgid "Image"
+msgstr "صورة"
 
-#: ../libgimpbase/gimpbaseenums.c:293
+#: ../libgimpbase/gimpbaseenums.c:265
+msgid "Pattern"
+msgstr "نمط"
+
+#: ../libgimpbase/gimpbaseenums.c:294
 msgid "Lightness"
 msgstr "الخفة"
 
-#: ../libgimpbase/gimpbaseenums.c:294
+#: ../libgimpbase/gimpbaseenums.c:295
 msgid "Luminosity"
 msgstr "الإضاءة"
 
-#: ../libgimpbase/gimpbaseenums.c:295
+#: ../libgimpbase/gimpbaseenums.c:296
 msgid "Average"
 msgstr "متوسط"
 
-#: ../libgimpbase/gimpbaseenums.c:323
+#: ../libgimpbase/gimpbaseenums.c:324
 msgid "Dodge"
 msgstr "تجنب"
 
-#: ../libgimpbase/gimpbaseenums.c:324
+#: ../libgimpbase/gimpbaseenums.c:325
 msgid "Burn"
 msgstr "حرق"
 
-#: ../libgimpbase/gimpbaseenums.c:388
+#: ../libgimpbase/gimpbaseenums.c:389
 msgid "gradient|Linear"
 msgstr "تدرج|خطي"
 
-#: ../libgimpbase/gimpbaseenums.c:389
+#: ../libgimpbase/gimpbaseenums.c:390
 msgid "Bi-linear"
 msgstr "خطي مزدوج"
 
-#: ../libgimpbase/gimpbaseenums.c:390
+#: ../libgimpbase/gimpbaseenums.c:391
 msgid "Radial"
 msgstr "نصف-قطري"
 
-#: ../libgimpbase/gimpbaseenums.c:391 ../libgimpwidgets/gimpwidgetsenums.c:24
+#: ../libgimpbase/gimpbaseenums.c:392 ../libgimpwidgets/gimpwidgetsenums.c:24
 msgid "Square"
 msgstr "مربع"
 
-#: ../libgimpbase/gimpbaseenums.c:392
+#: ../libgimpbase/gimpbaseenums.c:393
 msgid "Conical (sym)"
 msgstr "مخروطي (متناظر)"
 
-#: ../libgimpbase/gimpbaseenums.c:393
+#: ../libgimpbase/gimpbaseenums.c:394
 msgid "Conical (asym)"
 msgstr "مخروطي (غير متناظر)"
 
-#: ../libgimpbase/gimpbaseenums.c:394
+#: ../libgimpbase/gimpbaseenums.c:395
 msgid "Shaped (angular)"
 msgstr "شكلي (ذو زوايا)"
 
-#: ../libgimpbase/gimpbaseenums.c:395
+#: ../libgimpbase/gimpbaseenums.c:396
 msgid "Shaped (spherical)"
 msgstr "شكلي (كروي)"
 
-#: ../libgimpbase/gimpbaseenums.c:396
+#: ../libgimpbase/gimpbaseenums.c:397
 msgid "Shaped (dimpled)"
 msgstr "شكلي (ذو غمازات)"
 
-#: ../libgimpbase/gimpbaseenums.c:397
+#: ../libgimpbase/gimpbaseenums.c:398
 msgid "Spiral (cw)"
 msgstr "لولبي"
 
-#: ../libgimpbase/gimpbaseenums.c:398
+#: ../libgimpbase/gimpbaseenums.c:399
 msgid "Spiral (ccw)"
 msgstr "لولبي 2"
 
-#: ../libgimpbase/gimpbaseenums.c:429
+#: ../libgimpbase/gimpbaseenums.c:430
 msgid "Intersections (dots)"
 msgstr "الالتقاءات (نقط)"
 
-#: ../libgimpbase/gimpbaseenums.c:430
+#: ../libgimpbase/gimpbaseenums.c:431
 msgid "Intersections (crosshairs)"
 msgstr "الالتقاءات (تقاطعات)"
 
-#: ../libgimpbase/gimpbaseenums.c:431
+#: ../libgimpbase/gimpbaseenums.c:432
 msgid "Dashed"
 msgstr "متقطع"
 
-#: ../libgimpbase/gimpbaseenums.c:432
+#: ../libgimpbase/gimpbaseenums.c:433
 msgid "Double dashed"
 msgstr "متقطع مزدوج"
 
-#: ../libgimpbase/gimpbaseenums.c:433
+#: ../libgimpbase/gimpbaseenums.c:434
 msgid "Solid"
 msgstr "صلب"
 
-#: ../libgimpbase/gimpbaseenums.c:462
+#: ../libgimpbase/gimpbaseenums.c:463
 msgid "Stock ID"
 msgstr "معرف المخزون"
 
-#: ../libgimpbase/gimpbaseenums.c:463
+#: ../libgimpbase/gimpbaseenums.c:464
 msgid "Inline pixbuf"
 msgstr "تخزين البسكلات المؤقت الفوري"
 
-#: ../libgimpbase/gimpbaseenums.c:464
+#: ../libgimpbase/gimpbaseenums.c:465
 msgid "Image file"
 msgstr "ملف الصورة"
 
-#: ../libgimpbase/gimpbaseenums.c:493
+#: ../libgimpbase/gimpbaseenums.c:494
 msgid "RGB color"
 msgstr "لون RBG"
 
-#: ../libgimpbase/gimpbaseenums.c:494 ../libgimpbase/gimpbaseenums.c:529
+#: ../libgimpbase/gimpbaseenums.c:495 ../libgimpbase/gimpbaseenums.c:530
 msgid "Grayscale"
 msgstr "تدرج رمادي"
 
-#: ../libgimpbase/gimpbaseenums.c:495
+#: ../libgimpbase/gimpbaseenums.c:496
 msgid "Indexed color"
 msgstr "لون مفهرس"
 
-#: ../libgimpbase/gimpbaseenums.c:527
+#: ../libgimpbase/gimpbaseenums.c:528
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:528
+#: ../libgimpbase/gimpbaseenums.c:529
 msgid "RGB-alpha"
 msgstr "ألفا-RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:530
+#: ../libgimpbase/gimpbaseenums.c:531
 msgid "Grayscale-alpha"
 msgstr "ألفا-تدرج رمادي"
 
-#: ../libgimpbase/gimpbaseenums.c:532
+#: ../libgimpbase/gimpbaseenums.c:533
 msgid "Indexed-alpha"
 msgstr "ألفا-مفهرسة"
 
-#: ../libgimpbase/gimpbaseenums.c:562
+#: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|None"
 msgstr "إدراج|لا شيء"
 
-#: ../libgimpbase/gimpbaseenums.c:563
+#: ../libgimpbase/gimpbaseenums.c:564
 msgid "interpolation|Linear"
 msgstr "إدراج|خطي"
 
-#: ../libgimpbase/gimpbaseenums.c:564
+#: ../libgimpbase/gimpbaseenums.c:565
 msgid "Cubic"
 msgstr "مكعبي"
 
-#: ../libgimpbase/gimpbaseenums.c:565
+#: ../libgimpbase/gimpbaseenums.c:566
 msgid "Sinc (Lanczos3)"
 msgstr "جيبي (لانسزوس 3)"
 
-#: ../libgimpbase/gimpbaseenums.c:593
+#: ../libgimpbase/gimpbaseenums.c:594
 msgid "Constant"
 msgstr "ثابت"
 
-#: ../libgimpbase/gimpbaseenums.c:594
+#: ../libgimpbase/gimpbaseenums.c:595
 msgid "Incremental"
 msgstr "ازديادي"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:218
+#: ../libgimpbase/gimpbaseenums.c:624 ../modules/cdisplay_lcms.c:195
 msgid "None"
 msgstr "لا شيء"
 
-#: ../libgimpbase/gimpbaseenums.c:624
+#: ../libgimpbase/gimpbaseenums.c:625
 msgid "Sawtooth wave"
 msgstr "موجة أسنان منشار"
 
-#: ../libgimpbase/gimpbaseenums.c:625
+#: ../libgimpbase/gimpbaseenums.c:626
 msgid "Triangular wave"
 msgstr "موجة مثلثة"
 
-#: ../libgimpbase/gimpbaseenums.c:654
+#: ../libgimpbase/gimpbaseenums.c:655
 msgid "Run interactively"
 msgstr "تشغيل بالنمط التفاعلي"
 
-#: ../libgimpbase/gimpbaseenums.c:655
+#: ../libgimpbase/gimpbaseenums.c:656
 msgid "Run non-interactively"
 msgstr "تشغيل بالنمط غير التفاعلي"
 
-#: ../libgimpbase/gimpbaseenums.c:656
+#: ../libgimpbase/gimpbaseenums.c:657
 msgid "Run with last used values"
 msgstr "تشغيل مع آخر القيم المستخدمة"
 
-#: ../libgimpbase/gimpbaseenums.c:684
+#: ../libgimpbase/gimpbaseenums.c:685
 msgid "Pixels"
 msgstr "بكسلات"
 
-#: ../libgimpbase/gimpbaseenums.c:685
+#: ../libgimpbase/gimpbaseenums.c:686
 msgid "Points"
 msgstr "نقاط"
 
-#: ../libgimpbase/gimpbaseenums.c:714
+#: ../libgimpbase/gimpbaseenums.c:715
 msgid "Shadows"
 msgstr "ظلال"
 
-#: ../libgimpbase/gimpbaseenums.c:715
+#: ../libgimpbase/gimpbaseenums.c:716
 msgid "Midtones"
 msgstr "نغمات متوسطة"
 
-#: ../libgimpbase/gimpbaseenums.c:716
+#: ../libgimpbase/gimpbaseenums.c:717
 msgid "Highlights"
 msgstr "تحديدات لونية"
 
-#: ../libgimpbase/gimpbaseenums.c:744
+#: ../libgimpbase/gimpbaseenums.c:745
 msgid "Normal (Forward)"
 msgstr "عادي (إلى الأمام)"
 
-#: ../libgimpbase/gimpbaseenums.c:745
+#: ../libgimpbase/gimpbaseenums.c:746
 msgid "Corrective (Backward)"
 msgstr "تصحيحي (إلى الخلف)"
 
-#: ../libgimpbase/gimpbaseenums.c:775
+#: ../libgimpbase/gimpbaseenums.c:776
 msgid "Adjust"
 msgstr "تعديل"
 
-#: ../libgimpbase/gimpbaseenums.c:776
+#: ../libgimpbase/gimpbaseenums.c:777
 msgid "Clip"
 msgstr "مقطع"
 
-#: ../libgimpbase/gimpbaseenums.c:777
+#: ../libgimpbase/gimpbaseenums.c:778
 msgid "Crop to result"
 msgstr "اقتطاع إلى النتيجة"
 
-#: ../libgimpbase/gimpbaseenums.c:778
+#: ../libgimpbase/gimpbaseenums.c:779
 msgid "Crop with aspect"
 msgstr "اقتطاع مع مظهر"
 
-#: ../libgimpbase/gimpbaseenums.c:881
+#: ../libgimpbase/gimpbaseenums.c:882
 msgid "Internal GIMP procedure"
 msgstr "إجراء جِمب داخلي"
 
-#: ../libgimpbase/gimpbaseenums.c:882
+#: ../libgimpbase/gimpbaseenums.c:883
 msgid "GIMP Plug-In"
 msgstr "ملحق جِمب"
 
-#: ../libgimpbase/gimpbaseenums.c:883
+#: ../libgimpbase/gimpbaseenums.c:884
 msgid "GIMP Extension"
 msgstr "امتداد جِمب"
 
-#: ../libgimpbase/gimpbaseenums.c:884
+#: ../libgimpbase/gimpbaseenums.c:885
 msgid "Temporary Procedure"
 msgstr "إجراء مؤقت"
 
-#: ../libgimpbase/gimpmemsize.c:180
-#, c-format
-msgid "%d Byte"
-msgid_plural "%d Bytes"
-msgstr[0] "%d بايت"
-msgstr[1] "%d بايتات"
-msgstr[2] "%d بايتات"
-msgstr[3] "%d بايت"
+#: ../libgimpbase/gimpbaseenums.c:1047
+msgid "From left to right"
+msgstr "من اليسار إلى اليمين"
 
-#: ../libgimpbase/gimpmemsize.c:186
-#, c-format
-msgid "%.2f KB"
-msgstr "%.2f ك.ب."
+#: ../libgimpbase/gimpbaseenums.c:1048
+msgid "From right to left"
+msgstr "من اليمين إلى اليسار"
 
-#: ../libgimpbase/gimpmemsize.c:190
-#, c-format
-msgid "%.1f KB"
-msgstr "%.1f ك.ب."
+#: ../libgimpbase/gimpbaseenums.c:1078
+msgid "Left justified"
+msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:194
-#, c-format
-msgid "%d KB"
-msgstr "%d ك.ب."
+#: ../libgimpbase/gimpbaseenums.c:1079
+msgid "Right justified"
+msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:201
-#, c-format
-msgid "%.2f MB"
-msgstr "%.2f م.ب."
+#: ../libgimpbase/gimpbaseenums.c:1080
+msgid "Centered"
+msgstr "مركز"
 
-#: ../libgimpbase/gimpmemsize.c:205
-#, c-format
-msgid "%.1f MB"
-msgstr "%.1f م.ب."
-
-#: ../libgimpbase/gimpmemsize.c:209
-#, c-format
-msgid "%d MB"
-msgstr "%d م.ب."
-
-#: ../libgimpbase/gimpmemsize.c:216
-#, c-format
-msgid "%.2f GB"
-msgstr "%.2f ج.ب."
-
-#: ../libgimpbase/gimpmemsize.c:220
-#, c-format
-msgid "%.1f GB"
-msgstr "%.1f ج.ب."
-
-#: ../libgimpbase/gimpmemsize.c:224
-#, c-format
-msgid "%d GB"
-msgstr "%d ج.ب."
+#: ../libgimpbase/gimpbaseenums.c:1081
+msgid "Filled"
+msgstr "مملوء"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:210 ../modules/colorsel_cmyk_lcms.c:408
-#: ../modules/colorsel_cmyk_lcms.c:414
+#: ../modules/cdisplay_lcms.c:187 ../modules/colorsel_cmyk_lcms.c:411
+#: ../modules/colorsel_cmyk_lcms.c:417
 msgid "(invalid UTF-8 string)"
 msgstr "(غير صحيحة UTF-8 سلسة )"
 
@@ -871,10 +839,10 @@ msgstr "قيمة '%ld' غير مقبولة من أجل %s"
 msgid "while parsing token '%s': %s"
 msgstr "يجري تحليل المعطيات '%s': %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:454
-#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpconfig-iface.c:474
+#: ../libgimpconfig/gimpconfig-iface.c:487 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
-#: ../libgimpwidgets/gimpcolorprofilestore.c:654
+#: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr "خطأ تحليل فادح"
 
@@ -955,7 +923,7 @@ msgstr "فشل التحميل"
 msgid "Not loaded"
 msgstr "غير محمل"
 
-#: ../libgimpthumb/gimpthumb-utils.c:125
+#: ../libgimpthumb/gimpthumb-utils.c:123
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -964,7 +932,7 @@ msgstr ""
 "لم يمكن تعيين مجلد منزل صالح.\n"
 "الصور المصغرة سيتم تخزينها في مجلد الملفات المؤقتة (%s) بدلاً عن ذلك."
 
-#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
+#: ../libgimpthumb/gimpthumb-utils.c:247 ../libgimpthumb/gimpthumb-utils.c:315
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "فشل إنشاء ملف الصور المصغرة '%s'."
@@ -1001,11 +969,11 @@ msgstr "أبي_ض"
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:144
 msgid "Select color profile from disk..."
-msgstr ""
+msgstr "انتق مواصفات اللون من القرص..."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
 msgid "profile|None"
-msgstr ""
+msgstr "profile|لا شيء"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
@@ -1030,6 +998,10 @@ msgstr ""
 #: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
 msgstr "_طريقة تدوين HTML:"
+
+#: ../libgimpwidgets/gimphelpui.c:420
+msgid "Press F1 for more help"
+msgstr "انقر F1 للمزيد من المساعدة"
 
 #: ../libgimpwidgets/gimpfileentry.c:174
 msgid "Open a file selector to browse your folders"
@@ -1061,7 +1033,7 @@ msgstr "جيجابايت"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:269
-#: ../libgimpwidgets/gimppageselector.c:1171
+#: ../libgimpwidgets/gimppageselector.c:1166
 msgid "Nothing selected"
 msgstr "لم يتم اختيار شيء"
 
@@ -1081,18 +1053,18 @@ msgstr "افتح ال_صفحات كـ"
 msgid "Page 000"
 msgstr "الصفحة 000"
 
-#: ../libgimpwidgets/gimppageselector.c:512
-#: ../libgimpwidgets/gimppageselector.c:749
+#: ../libgimpwidgets/gimppageselector.c:508
+#: ../libgimpwidgets/gimppageselector.c:744
 #, c-format
 msgid "Page %d"
 msgstr "الصفحة %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1176
+#: ../libgimpwidgets/gimppageselector.c:1171
 msgid "One page selected"
 msgstr "تم اختيار صفحة واحدة"
 
-#: ../libgimpwidgets/gimppageselector.c:1183
-#: ../libgimpwidgets/gimppageselector.c:1187
+#: ../libgimpwidgets/gimppageselector.c:1178
+#: ../libgimpwidgets/gimppageselector.c:1182
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -1129,7 +1101,7 @@ msgstr "نمط المربعات"
 msgid "_Preview"
 msgstr "_عاين"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1901
+#: ../libgimpwidgets/gimppropwidgets.c:1859
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1190,23 +1162,23 @@ msgstr "تباعد الأ_سطر"
 msgid "_Resize"
 msgstr "غيِّر الحج_م"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:319
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:321
 msgid "_Scale"
 msgstr "مق_ياس"
 
-#: ../libgimpwidgets/gimpstock.c:295
+#: ../libgimpwidgets/gimpstock.c:296
 msgid "Cr_op"
 msgstr "ا_قتطع"
 
-#: ../libgimpwidgets/gimpstock.c:314
+#: ../libgimpwidgets/gimpstock.c:315
 msgid "_Transform"
 msgstr "حوِّ_ل"
 
-#: ../libgimpwidgets/gimpstock.c:318
+#: ../libgimpwidgets/gimpstock.c:320
 msgid "_Rotate"
 msgstr "_دوِّر"
 
-#: ../libgimpwidgets/gimpstock.c:320
+#: ../libgimpwidgets/gimpstock.c:322
 msgid "_Shear"
 msgstr "قُ_ص"
 
@@ -1226,7 +1198,7 @@ msgstr "الوحدة"
 msgid "Factor"
 msgstr "العامل"
 
-#: ../libgimpwidgets/gimpwidgets.c:1005
+#: ../libgimpwidgets/gimpwidgets.c:511
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -1234,15 +1206,15 @@ msgstr ""
 "استخدم هذه القيمة لبذرة مولد الأرقام العشوائية - هذا سيسمح لك بتكرار عملية "
 "\"عشوائية\" معطاة"
 
-#: ../libgimpwidgets/gimpwidgets.c:1009
+#: ../libgimpwidgets/gimpwidgets.c:515
 msgid "_New Seed"
 msgstr "بذرة _جديدة"
 
-#: ../libgimpwidgets/gimpwidgets.c:1022
+#: ../libgimpwidgets/gimpwidgets.c:528
 msgid "Seed random number generator with a generated random number"
 msgstr "بذر مولد ارقام عشوائية برقم عشوائي مولد"
 
-#: ../libgimpwidgets/gimpwidgets.c:1026
+#: ../libgimpwidgets/gimpwidgets.c:532
 msgid "_Randomize"
 msgstr "ع_شوائي"
 
@@ -1322,154 +1294,153 @@ msgstr "دوترانوبيا (فقدان الشعور باللون الأخضر)
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "تريتانوبيا (فقدان الشعور باللون الأزرق)"
 
-#: ../modules/cdisplay_colorblind.c:200
+#: ../modules/cdisplay_colorblind.c:198
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "مرشّح محاكاة عجز الألوان (خزارزمية بريتيل-فيينو-مولون)"
 
-#: ../modules/cdisplay_colorblind.c:292
+#: ../modules/cdisplay_colorblind.c:261
 msgid "Color Deficient Vision"
 msgstr "عجز رؤية الألوان"
 
-#: ../modules/cdisplay_colorblind.c:507
+#: ../modules/cdisplay_colorblind.c:483
 msgid "Color _deficiency type:"
 msgstr "نوع عج_ز الألوان"
 
-#: ../modules/cdisplay_gamma.c:91
+#: ../modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
 msgstr "مرشّح عرض ألوان جاما"
 
-#: ../modules/cdisplay_gamma.c:160
+#: ../modules/cdisplay_gamma.c:129
 msgid "Gamma"
 msgstr "جاما"
 
-#: ../modules/cdisplay_gamma.c:253
+#: ../modules/cdisplay_gamma.c:232
 msgid "_Gamma:"
 msgstr "_جاما:"
 
-#: ../modules/cdisplay_highcontrast.c:91
+#: ../modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
 msgstr "مرشّح عرض ألوان التباين العالي"
 
-#: ../modules/cdisplay_highcontrast.c:160
+#: ../modules/cdisplay_highcontrast.c:129
 msgid "Contrast"
 msgstr "التباين"
 
-#: ../modules/cdisplay_highcontrast.c:253
+#: ../modules/cdisplay_highcontrast.c:232
 msgid "Contrast c_ycles:"
 msgstr "_دورات التباين:"
 
-#: ../modules/cdisplay_lcms.c:105
+#: ../modules/cdisplay_lcms.c:106
 msgid "Color management display filter using ICC color profiles"
 msgstr "مرشّح عرض إدارة الألوان باستخدام ملفات ألوان ICC"
 
-#: ../modules/cdisplay_lcms.c:166
+#: ../modules/cdisplay_lcms.c:138
 msgid "Color Management"
 msgstr "إدارة الألوان"
 
-#: ../modules/cdisplay_lcms.c:239
+#: ../modules/cdisplay_lcms.c:216
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr "هذا المرشّح يتلقى إعداداته من قسم إدارة الألوان في جدول التفضيلات."
 
-#: ../modules/cdisplay_lcms.c:253
+#: ../modules/cdisplay_lcms.c:230
 msgid "Mode of operation:"
 msgstr "نمط العملية:"
 
-#: ../modules/cdisplay_lcms.c:261
-#, fuzzy
+#: ../modules/cdisplay_lcms.c:237
 msgid "Image profile:"
-msgstr "ملف الصورة"
+msgstr "مواصفات الصورة:"
 
-#: ../modules/cdisplay_lcms.c:269
+#: ../modules/cdisplay_lcms.c:245
 msgid "Monitor profile:"
 msgstr "ملف المراقبة:"
 
-#: ../modules/cdisplay_lcms.c:277
+#: ../modules/cdisplay_lcms.c:253
 msgid "Print simulation profile:"
 msgstr "طباعة ملف المحاكاة:"
 
-#: ../modules/cdisplay_proof.c:103
+#: ../modules/cdisplay_proof.c:101
 msgid "Color proof filter using ICC color profile"
 msgstr "مرشّح إثبات الألوان باستخدام ملف ألوان ICC"
 
-#: ../modules/cdisplay_proof.c:180
+#: ../modules/cdisplay_proof.c:149
 msgid "Color Proof"
 msgstr "إثبات الألوان"
 
-#: ../modules/cdisplay_proof.c:340
+#: ../modules/cdisplay_proof.c:315
 msgid "Choose an ICC Color Profile"
 msgstr "اختر ملف ألوان ICC"
 
-#: ../modules/cdisplay_proof.c:367
+#: ../modules/cdisplay_proof.c:342
 msgid "All files (*.*)"
-msgstr ""
+msgstr "كل الملفات (*.*)"
 
-#: ../modules/cdisplay_proof.c:372
+#: ../modules/cdisplay_proof.c:347
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr ""
 
-#: ../modules/cdisplay_proof.c:430
+#: ../modules/cdisplay_proof.c:405
 msgid "_Profile:"
 msgstr "ال_ملف:"
 
-#: ../modules/cdisplay_proof.c:436
+#: ../modules/cdisplay_proof.c:411
 msgid "_Intent:"
 msgstr "ال_عزم على:"
 
-#: ../modules/cdisplay_proof.c:441
+#: ../modules/cdisplay_proof.c:416
 msgid "_Black Point Compensation"
 msgstr "تعويض النق_طة السوداء"
 
-#: ../modules/colorsel_cmyk.c:73
+#: ../modules/colorsel_cmyk.c:71
 msgid "CMYK color selector"
 msgstr "منتقي ألوان CMYK"
 
-#: ../modules/colorsel_cmyk.c:130 ../modules/colorsel_cmyk_lcms.c:154
+#: ../modules/colorsel_cmyk.c:102 ../modules/colorsel_cmyk_lcms.c:154
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/colorsel_cmyk.c:148 ../modules/colorsel_cmyk_lcms.c:171
+#: ../modules/colorsel_cmyk.c:125 ../modules/colorsel_cmyk_lcms.c:173
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:173
+#: ../modules/colorsel_cmyk.c:127 ../modules/colorsel_cmyk_lcms.c:175
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:175
+#: ../modules/colorsel_cmyk.c:129 ../modules/colorsel_cmyk_lcms.c:177
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/colorsel_cmyk.c:154 ../modules/colorsel_cmyk_lcms.c:177
+#: ../modules/colorsel_cmyk.c:131 ../modules/colorsel_cmyk_lcms.c:179
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/colorsel_cmyk.c:158 ../modules/colorsel_cmyk_lcms.c:181
+#: ../modules/colorsel_cmyk.c:135 ../modules/colorsel_cmyk_lcms.c:183
 msgid "Cyan"
 msgstr "سيان"
 
-#: ../modules/colorsel_cmyk.c:159 ../modules/colorsel_cmyk_lcms.c:182
+#: ../modules/colorsel_cmyk.c:136 ../modules/colorsel_cmyk_lcms.c:184
 msgid "Magenta"
 msgstr "وردي"
 
-#: ../modules/colorsel_cmyk.c:160 ../modules/colorsel_cmyk_lcms.c:183
+#: ../modules/colorsel_cmyk.c:137 ../modules/colorsel_cmyk_lcms.c:185
 msgid "Yellow"
 msgstr "أصفر"
 
-#: ../modules/colorsel_cmyk.c:161 ../modules/colorsel_cmyk_lcms.c:184
+#: ../modules/colorsel_cmyk.c:138 ../modules/colorsel_cmyk_lcms.c:186
 msgid "Black"
 msgstr "أسود"
 
-#: ../modules/colorsel_cmyk.c:195
+#: ../modules/colorsel_cmyk.c:172
 msgid "Black _pullout:"
 msgstr "الس_حب الأسود:"
 
-#: ../modules/colorsel_cmyk.c:212
+#: ../modules/colorsel_cmyk.c:189
 msgid "The percentage of black to pull out of the colored inks."
 msgstr "كمية اللون الأسود التي ينبغي سحبها من الحبر الملون"
 
@@ -1478,33 +1449,32 @@ msgstr "كمية اللون الأسود التي ينبغي سحبها من ا�
 msgid "CMYK color selector (using color profile)"
 msgstr "مرشّح إثبات الألوان باستخدام ملف ألوان ICC"
 
-#: ../modules/colorsel_cmyk_lcms.c:397
-#, fuzzy
+#: ../modules/colorsel_cmyk_lcms.c:399
 msgid "Profile: (none)"
-msgstr "ال_ملف:"
+msgstr "مواصفات: (لا شيء)"
 
-#: ../modules/colorsel_cmyk_lcms.c:417
-#, fuzzy, c-format
+#: ../modules/colorsel_cmyk_lcms.c:420
+#, c-format
 msgid "Profile: %s"
-msgstr "ال_ملف:"
+msgstr "مواصفات: %s"
 
-#: ../modules/colorsel_triangle.c:104
+#: ../modules/colorsel_triangle.c:102
 msgid "Painter-style triangle color selector"
 msgstr "منتقي ألوان بأسلوب مثلث الطابعة"
 
-#: ../modules/colorsel_triangle.c:170
+#: ../modules/colorsel_triangle.c:138
 msgid "Triangle"
 msgstr "مثلث"
 
-#: ../modules/colorsel_water.c:84
+#: ../modules/colorsel_water.c:82
 msgid "Watercolor style color selector"
 msgstr "منتقي ألوان نمط اللون المائي"
 
-#: ../modules/colorsel_water.c:150
+#: ../modules/colorsel_water.c:118
 msgid "Watercolor"
 msgstr "لون مائي"
 
-#: ../modules/colorsel_water.c:213
+#: ../modules/colorsel_water.c:186
 msgid "Pressure"
 msgstr "الضغط"
 
@@ -1597,12 +1567,12 @@ msgid "Button Gear Up"
 msgstr "تحريك العجلة إلى الأعلى"
 
 #: ../modules/controller_linux_input.c:90
-#: ../modules/controller_dx_dinput.c:469
+#: ../modules/controller_dx_dinput.c:443
 msgid "X Move Left"
 msgstr "تحرك سيني يسارا"
 
 #: ../modules/controller_linux_input.c:91
-#: ../modules/controller_dx_dinput.c:472
+#: ../modules/controller_dx_dinput.c:446
 msgid "X Move Right"
 msgstr "تحرك سيني يمينا"
 
@@ -1617,12 +1587,12 @@ msgid "Y Move Back"
 msgstr "تحرك صادي بعيدا"
 
 #: ../modules/controller_linux_input.c:94
-#: ../modules/controller_dx_dinput.c:487
+#: ../modules/controller_dx_dinput.c:461
 msgid "Z Move Up"
 msgstr "تحرك عيني لأعلى"
 
 #: ../modules/controller_linux_input.c:95
-#: ../modules/controller_dx_dinput.c:490
+#: ../modules/controller_dx_dinput.c:464
 msgid "Z Move Down"
 msgstr "تحرك عيني لأسفل"
 
@@ -1637,22 +1607,22 @@ msgid "X Axis Tilt Back"
 msgstr "انحراف محور س البعيد"
 
 #: ../modules/controller_linux_input.c:99
-#: ../modules/controller_dx_dinput.c:505
+#: ../modules/controller_dx_dinput.c:479
 msgid "Y Axis Tilt Right"
 msgstr "انحراف محور ص يمينا"
 
 #: ../modules/controller_linux_input.c:100
-#: ../modules/controller_dx_dinput.c:508
+#: ../modules/controller_dx_dinput.c:482
 msgid "Y Axis Tilt Left"
 msgstr "انحراف محور ص يسارا"
 
 #: ../modules/controller_linux_input.c:101
-#: ../modules/controller_dx_dinput.c:514
+#: ../modules/controller_dx_dinput.c:488
 msgid "Z Axis Turn Left"
 msgstr "التفاف محور ع يسارا"
 
 #: ../modules/controller_linux_input.c:102
-#: ../modules/controller_dx_dinput.c:517
+#: ../modules/controller_dx_dinput.c:491
 msgid "Z Axis Turn Right"
 msgstr "التفاف محور ع يمينا"
 
@@ -1680,179 +1650,213 @@ msgstr "العجلة تستدير يساراً"
 msgid "Wheel Turn Right"
 msgstr "العجلة تستدير يميناً"
 
-#: ../modules/controller_linux_input.c:179
+#: ../modules/controller_linux_input.c:178
 msgid "Linux input event controller"
 msgstr "متحكم لينكس بأحداث الدخْل"
 
-#: ../modules/controller_linux_input.c:249
-#: ../modules/controller_dx_dinput.c:227 ../modules/controller_midi.c:245
+#: ../modules/controller_linux_input.c:218
+#: ../modules/controller_dx_dinput.c:196 ../modules/controller_midi.c:212
 msgid "Device:"
 msgstr "الجهاز:"
 
-#: ../modules/controller_linux_input.c:250
+#: ../modules/controller_linux_input.c:219
 msgid "The name of the device to read Linux Input events from."
 msgstr "اسم الجهاز الذي يقرأ لينكس أحداث الدخْل منه."
 
-#: ../modules/controller_linux_input.c:261
+#: ../modules/controller_linux_input.c:230
 msgid "Linux Input"
 msgstr "دخْل لينكس"
 
-#: ../modules/controller_linux_input.c:539
+#: ../modules/controller_linux_input.c:513
 msgid "Linux Input Events"
 msgstr "أحداث دخْل لينكس"
 
-#: ../modules/controller_linux_input.c:551
-#: ../modules/controller_dx_dinput.c:1122 ../modules/controller_midi.c:533
+#: ../modules/controller_linux_input.c:525
+#: ../modules/controller_dx_dinput.c:1095 ../modules/controller_midi.c:505
 msgid "No device configured"
 msgstr "لم يُعدّ أي جهاز"
 
-#: ../modules/controller_linux_input.c:577 ../modules/controller_midi.c:482
-#: ../modules/controller_midi.c:508
+#: ../modules/controller_linux_input.c:551 ../modules/controller_midi.c:454
+#: ../modules/controller_midi.c:480
 #, c-format
 msgid "Reading from %s"
 msgstr "يجري القراءة من %s"
 
-#: ../modules/controller_linux_input.c:595
-#: ../modules/controller_linux_input.c:649 ../modules/controller_midi.c:464
-#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
+#: ../modules/controller_linux_input.c:569
+#: ../modules/controller_linux_input.c:623 ../modules/controller_midi.c:436
+#: ../modules/controller_midi.c:497 ../modules/controller_midi.c:568
 #, c-format
 msgid "Device not available: %s"
 msgstr "الجهاز غير متاح: %s"
 
-#: ../modules/controller_linux_input.c:614
-#: ../modules/controller_dx_dinput.c:1147
+#: ../modules/controller_linux_input.c:588
+#: ../modules/controller_dx_dinput.c:1120
 msgid "Device not available"
 msgstr "الجهاز غير متاح"
 
-#: ../modules/controller_linux_input.c:658 ../modules/controller_midi.c:605
+#: ../modules/controller_linux_input.c:632 ../modules/controller_midi.c:577
 msgid "End of file"
 msgstr "نهاية الملف"
 
-#: ../modules/controller_dx_dinput.c:157
+#: ../modules/controller_dx_dinput.c:156
 msgid "DirectX DirectInput event controller"
 msgstr "متحكم أحداث DirectInput لـ DirectX"
 
-#: ../modules/controller_dx_dinput.c:228
+#: ../modules/controller_dx_dinput.c:197
 msgid "The device to read DirectInput events from."
 msgstr "الجهاز الذي ينبغي قراءة أحداث DirectInput منه."
 
-#: ../modules/controller_dx_dinput.c:237
+#: ../modules/controller_dx_dinput.c:206
 msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
-#: ../modules/controller_dx_dinput.c:446
+#: ../modules/controller_dx_dinput.c:420
 #, c-format
 msgid "Button %d"
 msgstr "الزر %d"
 
-#: ../modules/controller_dx_dinput.c:449
+#: ../modules/controller_dx_dinput.c:423
 #, c-format
 msgid "Button %d Press"
 msgstr "ضغط الزر %d"
 
-#: ../modules/controller_dx_dinput.c:452
+#: ../modules/controller_dx_dinput.c:426
 #, c-format
 msgid "Button %d Release"
 msgstr "ترك ضغط الزر %d"
 
-#: ../modules/controller_dx_dinput.c:478
+#: ../modules/controller_dx_dinput.c:452
 msgid "Y Move Away"
 msgstr "تحرك صادي بعيدا"
 
-#: ../modules/controller_dx_dinput.c:481
+#: ../modules/controller_dx_dinput.c:455
 msgid "Y Move Near"
 msgstr "تحرك صادي قريبا"
 
-#: ../modules/controller_dx_dinput.c:496
+#: ../modules/controller_dx_dinput.c:470
 msgid "X Axis Tilt Away"
 msgstr "انحراف محور س البعيد"
 
-#: ../modules/controller_dx_dinput.c:499
+#: ../modules/controller_dx_dinput.c:473
 msgid "X Axis Tilt Near"
 msgstr "انحراف محور س قريبا"
 
-#: ../modules/controller_dx_dinput.c:528
+#: ../modules/controller_dx_dinput.c:502
 #, c-format
 msgid "Slider %d Increase"
 msgstr "زيادة المزلاق %d"
 
-#: ../modules/controller_dx_dinput.c:531
+#: ../modules/controller_dx_dinput.c:505
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "نقصان المزلاق %d"
 
-#: ../modules/controller_dx_dinput.c:541
+#: ../modules/controller_dx_dinput.c:515
 #, c-format
 msgid "POV %d X View"
 msgstr "عرض POV %d X"
 
-#: ../modules/controller_dx_dinput.c:544
+#: ../modules/controller_dx_dinput.c:518
 #, c-format
 msgid "POV %d Y View"
 msgstr "عرض POV %d Y"
 
-#: ../modules/controller_dx_dinput.c:547
+#: ../modules/controller_dx_dinput.c:521
 #, c-format
 msgid "POV %d Return"
 msgstr "عائد POV %d"
 
-#: ../modules/controller_dx_dinput.c:1111
+#: ../modules/controller_dx_dinput.c:1084
 msgid "DirectInput Events"
 msgstr "أحداث DirectInput"
 
-#: ../modules/controller_midi.c:167
+#: ../modules/controller_midi.c:164
 msgid "MIDI event controller"
 msgstr "متحكم أحداث MIDI"
 
-#: ../modules/controller_midi.c:236
+#: ../modules/controller_midi.c:203
 msgid "The name of the device to read MIDI events from."
 msgstr "اسم الجهاز الذي ينبغي قراءة أحداث MIDI منه."
 
-#: ../modules/controller_midi.c:239
+#: ../modules/controller_midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "أدخل 'alsa' لاستخدام مسلسِل ALSA."
 
-#: ../modules/controller_midi.c:254
+#: ../modules/controller_midi.c:221
 msgid "Channel:"
 msgstr "القناة:"
 
-#: ../modules/controller_midi.c:255
+#: ../modules/controller_midi.c:222
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
 msgstr ""
 "قناة MIDI التي ينبغي قراءة الأحداث منها. حدد -1 للقراءة من جميع قنوات MIDI."
 
-#: ../modules/controller_midi.c:259
+#: ../modules/controller_midi.c:226
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:383
+#: ../modules/controller_midi.c:355
 #, c-format
 msgid "Note %02x on"
 msgstr "الإشارة %02x مضاءة"
 
-#: ../modules/controller_midi.c:386
+#: ../modules/controller_midi.c:358
 #, c-format
 msgid "Note %02x off"
 msgstr "الإشارة %02x مطفأة"
 
-#: ../modules/controller_midi.c:389
+#: ../modules/controller_midi.c:361
 #, c-format
 msgid "Controller %03d"
 msgstr "المتحكم %03d"
 
-#: ../modules/controller_midi.c:436
+#: ../modules/controller_midi.c:408
 msgid "MIDI Events"
 msgstr "أحداث MIDI"
 
-#: ../modules/controller_midi.c:454
+#: ../modules/controller_midi.c:426
 msgid "GIMP"
 msgstr "جِمب"
 
-#: ../modules/controller_midi.c:456
+#: ../modules/controller_midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "متحكم دخْل جِمب MIDI"
+
+#~ msgid "%d Byte"
+#~ msgid_plural "%d Bytes"
+#~ msgstr[0] "%d بايت"
+#~ msgstr[1] "%d بايتات"
+#~ msgstr[2] "%d بايتات"
+#~ msgstr[3] "%d بايت"
+
+#~ msgid "%.2f KB"
+#~ msgstr "%.2f ك.ب."
+
+#~ msgid "%.1f KB"
+#~ msgstr "%.1f ك.ب."
+
+#~ msgid "%d KB"
+#~ msgstr "%d ك.ب."
+
+#~ msgid "%.2f MB"
+#~ msgstr "%.2f م.ب."
+
+#~ msgid "%.1f MB"
+#~ msgstr "%.1f م.ب."
+
+#~ msgid "%d MB"
+#~ msgstr "%d م.ب."
+
+#~ msgid "%.2f GB"
+#~ msgstr "%.2f ج.ب."
+
+#~ msgid "%.1f GB"
+#~ msgstr "%.1f ج.ب."
+
+#~ msgid "%d GB"
+#~ msgstr "%d ج.ب."
 
 #~ msgid "Image source"
 #~ msgstr "مصدر الصورة"
