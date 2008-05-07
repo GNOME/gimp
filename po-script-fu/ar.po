@@ -1,19 +1,20 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# , 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-28 14:53+0000\n"
-"PO-Revision-Date: 2007-10-22 23:20+0100\n"
-"Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
-"Language-Team: Arabic\n"
+"POT-Creation-Date: 2008-05-07 21:38+0100\n"
+"PO-Revision-Date: 2008-04-19 20:45+0300\n"
+"Last-Translator: \n"
+"Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KAider 0.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:133
 #: ../plug-ins/script-fu/script-fu-console.c:200
@@ -136,8 +137,9 @@ msgid "Interactive console for Script-Fu development"
 msgstr "وحدة التحكم التفاعلية لتطوير سكربت-فو"
 
 #: ../plug-ins/script-fu/script-fu.c:116
+#, fuzzy
 msgid "Script-Fu _Console"
-msgstr "_وحدة تحكم سكربت-فو"
+msgstr "وحدة تحكم سكربت-فو"
 
 #: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
@@ -2846,6 +2848,12 @@ msgstr "إعتام التمييز اللوني"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "تأثير-_Xach..."
+
+#~ msgid "Too few arguments to 'script-fu-register' call"
+#~ msgstr "معطيات قليلة جدا لاستدعاء 'سكربت-فو'"
+
+#~ msgid "_Console"
+#~ msgstr "_كونسول"
 
 #~ msgid "BG opacity"
 #~ msgstr "عتمة الخلفية"

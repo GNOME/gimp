@@ -1,22 +1,23 @@
 # Arabic translations for gimp-plug-ins package.
 # Copyright (C) 2006 THE gimp-plug-ins'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp-plug-ins package.
-# Anas Husseini, <anas_h_34@hotmail.com>, 2007.
 #
+# Anas Husseini, <anas_h_34@hotmail.com>, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: Project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-28 14:52+0000\n"
-"PO-Revision-Date: 2007-05-07 08:52+0200\n"
-"Last-Translator: Anas Husseini <anas_h_34@hotmail.com>\n"
-"Language-Team: Arabic <doc@arabeyes.org>\n"
+"POT-Creation-Date: 2008-05-07 21:38+0100\n"
+"PO-Revision-Date: 2008-04-19 22:45+0300\n"
+"Last-Translator: \n"
+"Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n == 0 ? 0 : n == 1 ? 1 : n == 2 ? 2 : n >= "
 "3 && n <= 10 ? 3 : n >= 11 && n <= 99 ? 4 : 5;\n"
 "X-Poedit-Language: Arabic\n"
+"X-Generator: KAider 0.1\n"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:547
 #: ../plug-ins/gfig/gfig-dialog.c:274 ../plug-ins/gflare/gflare.c:883
@@ -949,7 +950,7 @@ msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "جودة إزالة التسنين. كلما كان أعلى كلما كان أفضل، ولكن أبطأ"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:591 ../plug-ins/common/redeye.c:173
-#: ../plug-ins/common/unsharp.c:704 ../plug-ins/common/wind.c:1006
+#: ../plug-ins/common/unsharp.c:706 ../plug-ins/common/wind.c:1006
 #: ../plug-ins/imagemap/imap_preferences.c:441
 msgid "_Threshold:"
 msgstr "العتب_ة:"
@@ -1180,14 +1181,14 @@ msgid "Unsupported or invalid bitdepth."
 msgstr "عمق البتات غير مدعوم أو غير صالح."
 
 #: ../plug-ins/bmp/bmpread.c:550 ../plug-ins/common/pcx.c:376
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported or invalid image width: %d"
-msgstr "عمق البتات غير مدعوم أو غير صالح."
+msgstr "عرض الصورة غير مدعوم أو غير صالح: %d"
 
 #: ../plug-ins/bmp/bmpread.c:555 ../plug-ins/common/pcx.c:381
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported or invalid image height: %d"
-msgstr "عمق البتات غير مدعوم أو غير صالح."
+msgstr "ارتفاع الصورة غير مدعوم أو غير صالح: %d"
 
 #.
 #. * Create the "background" layer to hold the image...
@@ -1953,32 +1954,28 @@ msgid "Rewind the animation"
 msgstr "إرجاع الصور المتحركة إلى الخلف"
 
 #: ../plug-ins/common/animationplay.c:465
-#, fuzzy
 msgid "Faster"
-msgstr "ريش"
+msgstr "أسرع"
 
 #: ../plug-ins/common/animationplay.c:465
 msgid "Increase the speed of the animation"
 msgstr ""
 
 #: ../plug-ins/common/animationplay.c:470
-#, fuzzy
 msgid "Slower"
-msgstr "_سفلي"
+msgstr "أبطأ"
 
 #: ../plug-ins/common/animationplay.c:470
 msgid "Decrease the speed of the animation"
 msgstr ""
 
 #: ../plug-ins/common/animationplay.c:475
-#, fuzzy
 msgid "Reset speed"
-msgstr "إعادة ضبط الترتيب"
+msgstr "إعادة ضبط السرعة"
 
 #: ../plug-ins/common/animationplay.c:475
-#, fuzzy
 msgid "Reset the speed of the animation"
-msgstr "إرجاع الصور المتحركة إلى الخلف"
+msgstr "إعادة ضبط سرعة التحريكة"
 
 #: ../plug-ins/common/animationplay.c:483
 #: ../plug-ins/common/animationplay.c:1445
@@ -3408,7 +3405,7 @@ msgstr "م_عاودة"
 
 #: ../plug-ins/common/despeckle.c:462 ../plug-ins/common/neon.c:730
 #: ../plug-ins/common/nlfilt.c:1088 ../plug-ins/common/nova.c:366
-#: ../plug-ins/common/unsharp.c:678 ../plug-ins/common/whirlpinch.c:588
+#: ../plug-ins/common/unsharp.c:680 ../plug-ins/common/whirlpinch.c:588
 #: ../plug-ins/gflare/gflare.c:2712 ../plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
 msgstr "ن_صف القطر:"
@@ -4948,9 +4945,8 @@ msgid "Cleanup"
 msgstr "تنظيف"
 
 #: ../plug-ins/common/lcms.c:222
-#, fuzzy
 msgid "Set a color profile on the image"
-msgstr "استخدم لون الصورة"
+msgstr "عين مواصفات اللون على الصورة"
 
 #: ../plug-ins/common/lcms.c:229
 #, fuzzy
@@ -4963,14 +4959,12 @@ msgid "Assign default RGB Profile"
 msgstr "تطبيق ملف RGB الافتراضي"
 
 #: ../plug-ins/common/lcms.c:252
-#, fuzzy
 msgid "Apply a color profile on the image"
-msgstr "تطبيق ملف الألوان"
+msgstr "تطبيق مواصفات اللون على الصورة"
 
 #: ../plug-ins/common/lcms.c:262
-#, fuzzy
 msgid "_Convert to Color Profile..."
-msgstr "تحديد ملف الألوان"
+msgstr "_تحويل إلى مواصفات اللون..."
 
 #: ../plug-ins/common/lcms.c:280
 #, fuzzy
@@ -4978,9 +4972,8 @@ msgid "Convert to default RGB Profile"
 msgstr "تحديد ملف RGB الافتراضي"
 
 #: ../plug-ins/common/lcms.c:294
-#, fuzzy
 msgid "Image Color Profile Information"
-msgstr "معلومات ملف الألوان"
+msgstr "معلومات مواصفات لون الصورة"
 
 #: ../plug-ins/common/lcms.c:308
 msgid "Color Profile Information"
@@ -5043,14 +5036,12 @@ msgid "_Don't ask me again"
 msgstr "لا ت_سألني مجدداً"
 
 #: ../plug-ins/common/lcms.c:1317
-#, fuzzy
 msgid "Select destination profile"
-msgstr "لون الهدف الثاني"
+msgstr "انتق هدف المواصفات"
 
 #: ../plug-ins/common/lcms.c:1344
-#, fuzzy
 msgid "All files (*.*)"
-msgstr "كل الب_لاطات"
+msgstr "كل الملفات (*.*)"
 
 #: ../plug-ins/common/lcms.c:1349
 msgid "ICC color profile (*.icc, *.icm)"
@@ -5073,21 +5064,19 @@ msgstr "تطبيق ملف الألوان"
 
 #: ../plug-ins/common/lcms.c:1451
 msgid "_Assign"
-msgstr ""
+msgstr "ت_عيين"
 
 #: ../plug-ins/common/lcms.c:1468
-#, fuzzy
 msgid "Current Color Profile"
-msgstr "تحديد ملف الألوان"
+msgstr "مواصفات الألوان الحالي"
 
 #: ../plug-ins/common/lcms.c:1483
-#, fuzzy
 msgid "Convert to"
-msgstr "ت_حويل"
+msgstr "تحويل إلى"
 
 #: ../plug-ins/common/lcms.c:1483
 msgid "Assign"
-msgstr ""
+msgstr "تعيين"
 
 #: ../plug-ins/common/lcms.c:1507
 #, fuzzy
@@ -5220,8 +5209,9 @@ msgid "_Mail Image..."
 msgstr "إرسال الصورة بال_بريد..."
 
 #: ../plug-ins/common/mail.c:524
+#, fuzzy
 msgid "Send as Mail"
-msgstr "إرسال كرسالة"
+msgstr "إرسال كرسالةإرسالة بالبريد..."
 
 #: ../plug-ins/common/mail.c:529
 msgid "_Send"
@@ -5613,7 +5603,7 @@ msgstr "نيون"
 msgid "Neon Detection"
 msgstr "استكشاف النيون"
 
-#: ../plug-ins/common/neon.c:745 ../plug-ins/common/unsharp.c:691
+#: ../plug-ins/common/neon.c:745 ../plug-ins/common/unsharp.c:693
 msgid "_Amount:"
 msgstr "م_قدار:"
 
@@ -6025,9 +6015,9 @@ msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr ""
 
 #: ../plug-ins/common/pcx.c:730
-#, fuzzy, c-format
+#, c-format
 msgid "Writing to file '%s' failed: %s"
-msgstr "فشل في تحميل ملف سطح المكتب '%s': %s"
+msgstr "فشلت كتابة الملف '%s': %s"
 
 #: ../plug-ins/common/photocopy.c:153
 msgid "Simulate color distortion produced by a copy machine"
@@ -6306,8 +6296,9 @@ msgid "Image height is larger than GIMP can handle."
 msgstr ""
 
 #: ../plug-ins/common/pnm.c:562
+#, fuzzy
 msgid "Invalid maximum value."
-msgstr "القيمة العليا غير صالحة."
+msgstr "القيمة العليا غير مدعومة."
 
 #: ../plug-ins/common/pnm.c:767
 msgid "Error reading file."
@@ -6698,7 +6689,7 @@ msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "خطأ. لم يمكن تحويل نوع صورة GIMP الأساسي إلى نمط PSD"
 
 #: ../plug-ins/common/psd-save.c:1533
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
 "more than 30000 pixels wide or tall."
@@ -6707,7 +6698,7 @@ msgstr ""
 "طولاً أو عرضاً."
 
 #: ../plug-ins/common/psd-save.c:1545
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
 "layers that are more than 30000 pixels wide or tall."
@@ -6913,30 +6904,36 @@ msgid "Retinex Image Enhancement"
 msgstr "تحسين صورة الشبكية العينية"
 
 #: ../plug-ins/common/retinex.c:318
+#, fuzzy
 msgid "Level"
-msgstr "المستوى"
+msgstr "ال_مستوى:"
 
 #: ../plug-ins/common/retinex.c:322
+#, fuzzy
 msgid "_Uniform"
 msgstr "متما_ثل"
 
 #: ../plug-ins/common/retinex.c:324
+#, fuzzy
 msgid "_Low"
-msgstr "منخف_ض"
+msgstr "منخفض"
 
 #: ../plug-ins/common/retinex.c:326
+#, fuzzy
 msgid "_High"
-msgstr "عا_ل"
+msgstr "عال"
 
 #: ../plug-ins/common/retinex.c:351
 msgid "_Scale:"
 msgstr "_تدرج:"
 
 #: ../plug-ins/common/retinex.c:366
+#, fuzzy
 msgid "_Scale division:"
-msgstr "ت_قسيم التدرج:"
+msgstr "مقياس ال_قسمة:"
 
 #: ../plug-ins/common/retinex.c:381
+#, fuzzy
 msgid "_Dynamic:"
 msgstr "_ديناميكي:"
 
@@ -8071,9 +8068,9 @@ msgid "Import from TIFF"
 msgstr "استيراد من TIFF"
 
 #: ../plug-ins/common/tiff-load.c:746
-#, fuzzy, c-format
+#, c-format
 msgid "%s-%d-of-%d-pages"
-msgstr "%s-صفحات"
+msgstr "صفحات %s-%d-من-%d"
 
 #: ../plug-ins/common/tiff-load.c:981
 msgid "TIFF Channel"
@@ -8324,9 +8321,8 @@ msgid "Create or alter units used in GIMP"
 msgstr "إنشاء أو تبديل الوحدات المستخدمة في GIMP"
 
 #: ../plug-ins/common/uniteditor.c:150
-#, fuzzy
 msgid "U_nits"
-msgstr "الوحدات"
+msgstr "ال_وحدات"
 
 #: ../plug-ins/common/uniteditor.c:209
 msgid "Add a New Unit"
@@ -8384,7 +8380,7 @@ msgstr "إزالة ح_دة القناع..."
 msgid "Merging"
 msgstr "جاري الدمج"
 
-#: ../plug-ins/common/unsharp.c:642
+#: ../plug-ins/common/unsharp.c:644
 msgid "Unsharp Mask"
 msgstr "إزالة حدة القناع"
 
@@ -8502,6 +8498,7 @@ msgid "_Value Propagate..."
 msgstr "انتشار ال_قيمة..."
 
 #: ../plug-ins/common/vpropagate.c:245
+#, fuzzy
 msgid "Shrink darker areas of the image"
 msgstr "تقليص المناطق المظلمة من الصورة"
 
@@ -8510,6 +8507,7 @@ msgid "E_rode"
 msgstr "تآ_كل"
 
 #: ../plug-ins/common/vpropagate.c:257
+#, fuzzy
 msgid "Grow darker areas of the image"
 msgstr "تنمية البقع المظلمة من الصورة"
 
@@ -11505,19 +11503,19 @@ msgstr "نمذجة فرعية:"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1084
 msgid "1x1,1x1,1x1 (best quality)"
-msgstr ""
+msgstr "1x1،1x1،1x1 (أفضل دقة)"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1085
 msgid "2x1,1x1,1x1 (4:2:2)"
-msgstr ""
+msgstr "2x1,1x1,1x1 (4:2:2)"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1086
 msgid "1x2,1x1,1x1"
-msgstr ""
+msgstr "1x2،1x1،1x1"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1087
 msgid "2x2,1x1,1x1 (smallest file)"
-msgstr ""
+msgstr "2x2،1x1،1x1 (أصغر ملف)"
 
 #. DCT method
 #: ../plug-ins/jpeg/jpeg-save.c:1111
@@ -11743,6 +11741,7 @@ msgid "Printable area:"
 msgstr "المساحة القابلة للطباعة"
 
 #: ../plug-ins/print/print-page-layout.c:148
+#, fuzzy
 msgid "_Adjust Page Size and Orientation"
 msgstr "_ضبط حجم الصفحة والاتجاه"
 
@@ -11759,34 +11758,28 @@ msgid "_Y resolution:"
 msgstr "استبانة _Y:"
 
 #: ../plug-ins/print/print-page-layout.c:432
-#, fuzzy
 msgid "_Left:"
-msgstr "اليسار:"
+msgstr "ي_سار:"
 
 #: ../plug-ins/print/print-page-layout.c:451
-#, fuzzy
 msgid "_Right:"
-msgstr "اليمين:"
+msgstr "ي_مين:"
 
 #: ../plug-ins/print/print-page-layout.c:505
-#, fuzzy
 msgid "C_enter:"
-msgstr "الوسط"
+msgstr "وس_ط:"
 
 #: ../plug-ins/print/print-page-layout.c:513
-#, fuzzy
 msgid "Horizontally"
 msgstr "أفقي"
 
 #: ../plug-ins/print/print-page-layout.c:514
-#, fuzzy
 msgid "Vertically"
 msgstr "عمودي"
 
 #: ../plug-ins/print/print-page-layout.c:515
-#, fuzzy
 msgid "Both"
-msgstr "ك_لاهما"
+msgstr "كلاهما"
 
 #: ../plug-ins/print/print.c:89
 msgid "Print the image"
@@ -11797,9 +11790,8 @@ msgid "_Print..."
 msgstr "_طباعة..."
 
 #: ../plug-ins/print/print.c:213
-#, fuzzy
 msgid "Image Settings"
-msgstr "اختيار الصورة"
+msgstr "إعدادات الصورة"
 
 #: ../plug-ins/print/print.c:253
 msgid "An error occurred while trying to print:"
@@ -11990,9 +11982,9 @@ msgid "Downloaded %s of image data"
 msgstr "حُمل %s من بيانات الصورة"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:181
-#, c-format
+#, fuzzy, c-format
 msgid "Uploading %s of image data..."
-msgstr "رفع %s من بيانات الصورة..."
+msgstr "رفع %s من بيانات الصورة"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:182
 #, c-format
@@ -12226,6 +12218,143 @@ msgstr "خطأ: لم يمكن قراءة ملف خاصية XJT '%s'."
 msgid "Error: XJT property file '%s' is empty."
 msgstr "خطأ: ملف خاصية XJT '%s' فارغ."
 
+#~ msgid ""
+#~ "Unable to save '%s'.  The GIF file format does not support images that "
+#~ "are more than %d pixels wide or tall."
+#~ msgstr ""
+#~ "لا يمكن حفظ '%s'. تنسيق ملف الجي.آي.إف  لا يدعم الصور أكثر من %d بكسل عرض "
+#~ "أو طول."
+
+#~ msgid "Send the image by email"
+#~ msgstr "إرسال الصورة بالبريد الإلكتروني"
+
+#~ msgid "Send by E_mail..."
+#~ msgstr "إرسالة بال_بريد..."
+
+#~ msgid "_To:"
+#~ msgstr "_إلى:"
+
+#~ msgid "_From:"
+#~ msgstr "_من:"
+
+#, fuzzy
+#~ msgid "Phase _shift:"
+#~ msgstr "إزاحة _طور الأحمر:"
+
+#~ msgid "Mouse Pointer"
+#~ msgstr "مؤشر الفأرة"
+
+#~ msgid "Could not open '%s' for reading"
+#~ msgstr "تعذر فتح '%s' للقراءة"
+
+#, fuzzy
+#~ msgid "Heart"
+#~ msgstr "تبقيع"
+
+#, fuzzy
+#~ msgid "Disc"
+#~ msgstr "نقل"
+
+#, fuzzy
+#~ msgid "Exponential"
+#~ msgstr "أ_سي:"
+
+#, fuzzy
+#~ msgid "Power"
+#~ msgstr "أبطأ"
+
+#, fuzzy
+#~ msgid "Rings"
+#~ msgstr "الراديان"
+
+#, fuzzy
+#~ msgid "Bubble"
+#~ msgstr "أزرق"
+
+#, fuzzy
+#~ msgid "Blur"
+#~ msgstr "_غشاوة"
+
+#, fuzzy
+#~ msgid "Gaussian"
+#~ msgstr "غشاوة غوسية"
+
+#~ msgid "Page Set_up"
+#~ msgstr "إ_عداد الصفحة"
+
+#~ msgid ""
+#~ "Error loading PSD file:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "فشل تحميل ملف بي إس دي:\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid "Not a valid photoshop document file"
+#~ msgstr "ليس ملف مستند فوتوشوب صالح"
+
+#~ msgid "Unsupported file format version: %d"
+#~ msgstr "إصدار نسق الملف غير مدعوم: %d"
+
+#~ msgid "Too many channels in file: %d"
+#~ msgstr "قنوات كثيرة جدا في الملف: %d"
+
+#~ msgid "Unsupported color mode: %s"
+#~ msgstr "نمط اللون غير مدعوم: %s"
+
+#~ msgid "Unsupported bit depth: %d"
+#~ msgstr "عمق البت غير مدعوم: %d"
+
+#~ msgid "The file is corrupt!"
+#~ msgstr "الملف فاسد!"
+
+#~ msgid "Too many channels in layer: %d"
+#~ msgstr "قنوات كثيرة جدا في الطبقة: %d"
+
+#~ msgid "Unsupported or invalid layer height: %d"
+#~ msgstr "ارتفاع الطبقة غير مدعوم أو غير صحيح: %d"
+
+#~ msgid "Unsupported or invalid layer width: %d"
+#~ msgstr "عرض الطبقة غير مدعوم أو غير صحيح: %d"
+
+#~ msgid "Unsupported compression mode: %d"
+#~ msgstr "نمط الضغط غير مدعوم: %d"
+
+#~ msgid "Extra"
+#~ msgstr "إضافي"
+
+#, fuzzy
+#~ msgid "Unexpected end of file"
+#~ msgstr "وُجهت نهاية ملف سابقة لأوانها."
+
+#~ msgid "Co_nnect"
+#~ msgstr "ات_صال"
+
+#~ msgid "Connect _anonymously"
+#~ msgstr "الاتصال كمجهول"
+
+#~ msgid "Connect as u_ser:"
+#~ msgstr "الاتصال ك_مستخدم:"
+
+#~ msgid "_Username:"
+#~ msgstr "اسم ال_مستخدم:"
+
+#~ msgid "_Domain:"
+#~ msgstr "ن_طاق:"
+
+#~ msgid "_Password:"
+#~ msgstr "_كلمة السر:"
+
+#~ msgid "_Remember forever"
+#~ msgstr "_تذكر إلى الأبد"
+
+#~ msgid "Downloading image (%s of %s)"
+#~ msgstr "جاري تنزيل الصورة (%s من %s)"
+
+#~ msgid "Uploading image (%s of %s)"
+#~ msgstr "جاري رفع الصورة  (%s من %s)"
+
 #~ msgid "Smoothness of Aliasing"
 #~ msgstr "صقل التسنين"
 
@@ -12267,9 +12396,6 @@ msgstr "خطأ: ملف خاصية XJT '%s' فارغ."
 
 #~ msgid "Description _writer:"
 #~ msgstr "_كاتب الوصف:"
-
-#~ msgid "_Keywords:"
-#~ msgstr "الك_لمات الأساسية:"
 
 #~ msgid "Empty"
 #~ msgstr "فارغ"
@@ -12376,10 +12502,6 @@ msgstr "خطأ: ملف خاصية XJT '%s' فارغ."
 #, fuzzy
 #~ msgid "Do you really want to overwrite?"
 #~ msgstr "الملف موجود. هل تريد تنميقه؟"
-
-#, fuzzy
-#~ msgid "Page Setup"
-#~ msgstr "<b>الصفحة الرئيسية</b>"
 
 #, fuzzy
 #~ msgid "Show image info header"
