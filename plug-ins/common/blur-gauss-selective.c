@@ -339,7 +339,7 @@ matrixmult_mmx (const guchar  *src,
 
   g_assert (has_alpha ? (bytes == 4) : (bytes == 3 || bytes == 1));
 
-  imat = g_new (gushort, 2 * numrad + 3);
+  imat = g_newa (gushort, 2 * numrad + 3);
 
   fsum = 0.0;
   for (y = 1 - numrad; y < numrad; y++)
@@ -566,16 +566,14 @@ matrixmult_mmx (const guchar  *src,
             }
         }
 
-      if (!(y % 10) && !preview_mode)
+      if (!(y % 16) && !preview_mode)
         {
           asm volatile ("emms");
-          gimp_progress_update ((double)y / (double)height);
+          gimp_progress_update ((gdouble) y / (gdouble) height);
         }
     }
 
   asm volatile ("emms");
-
-  g_free (imat);
 }
 #endif /* ARCH_X86 && USE_MMX && __GNUC__ */
 
@@ -599,15 +597,17 @@ matrixmult_int (const guchar  *src,
   gint        i, j, b, x, y, d;
 
 #ifdef HAVE_ACCEL
-  GimpCpuAccelFlags cpu = gimp_cpu_accel_get_support ();
+  if (has_alpha ? (bytes == 4) : (bytes == 3 || bytes == 1))
+    {
+      GimpCpuAccelFlags cpu = gimp_cpu_accel_get_support ();
 
-  if ((has_alpha ? (bytes == 4) : (bytes == 3 || bytes == 1))
-      && (cpu & (GIMP_CPU_ACCEL_X86_MMXEXT | GIMP_CPU_ACCEL_X86_SSE)))
-    return matrixmult_mmx (src, dest, width, height, mat, numrad,
-                           bytes, has_alpha, maxdelta, preview_mode);
+      if (cpu & (GIMP_CPU_ACCEL_X86_MMXEXT | GIMP_CPU_ACCEL_X86_SSE))
+        return matrixmult_mmx (src, dest, width, height, mat, numrad,
+                               bytes, has_alpha, maxdelta, preview_mode);
+    }
 #endif
 
-  imat = g_new (gushort, 2 * numrad);
+  imat = g_newa (gushort, 2 * numrad);
 
   fsum = 0.0;
   for (y = 1 - numrad; y < numrad; y++)
@@ -688,11 +688,9 @@ matrixmult_int (const guchar  *src,
             }
         }
 
-      if (!(y % 10) && !preview_mode)
+      if (!(y % 16) && !preview_mode)
         gimp_progress_update ((gdouble) y / (gdouble) height);
     }
-
-  g_free (imat);
 }
 
 /* Force compilation of several versions with inlined constants. */
