@@ -7,6 +7,33 @@ This is the unstable development branch of GIMP.  Here we are working
 towards the next stable release, which will be GIMP 2.6.
 
 
+Changes in GIMP 2.5.1
+=====================
+
+ - further improvements to the status bar
+ - made the center point of rectangles snap to the grid and rulers
+ - improved Alpha to Logo filters
+ - better cursor feedback in the Intelligent Scissors tool
+ - rotate JPEG thumbnails according to the EXIF orientation
+ - tweaked behavior of the new Polygon Selection tool
+ - improved event smoothing for paint tools
+ - prepared PSP plug-in to deal with newer versions of the file format
+ - allow plug-ins to work in parallel on different layers of the same image
+ - pass through GEGL command-line options
+ - added 22 new variations to the Flame plugin
+ - only show operations from relevant categories in the GEGL tool
+ - added new translation (Icelandic)
+ - bug fixes and code cleanup
+
+
+Contributors:
+
+  Sven Neumann, Michael Natterer, Martin Nordholts, Øyvind Kolås,
+  Alexia Death, Ulf-D. Ehlert, Daniel Hornung, Michael Deal, Aurimas Juška,
+  Luis Barrancos
+
+
+
 Changes in GIMP 2.5.0
 =====================
 
