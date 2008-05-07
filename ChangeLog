@@ -1,5 +1,10 @@
 2008-05-07  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimpplugin-cleanup.c (gimp_plug_in_cleanup_item):
+	commented out debug message.
+
+2008-05-07  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/blur-gauss-selective.c: allocate temporary
 	memory on the stack. Minor code cleanups.
 
