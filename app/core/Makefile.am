@@ -10,7 +10,7 @@ INCLUDES = \
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
 	$(GDK_PIXBUF_CFLAGS)	\
-	$(LIBART_CFLAGS)	\
+	$(CAIRO_CFLAGS)		\
 	$(GLIB_CFLAGS)		\
 	$(GEGL_CFLAGS)		\
 	-I$(includedir)

@@ -30,10 +30,6 @@ void      gimp_scan_convert_set_clip_rectangle (GimpScanConvert *sc,
                                                 gint             y,
                                                 gint             width,
                                                 gint             height);
-void      gimp_scan_convert_add_points         (GimpScanConvert *sc,
-                                                guint            n_points,
-                                                GimpVector2     *points,
-                                                gboolean         new_polygon);
 void      gimp_scan_convert_add_polyline       (GimpScanConvert *sc,
                                                 guint            n_points,
                                                 GimpVector2     *points,

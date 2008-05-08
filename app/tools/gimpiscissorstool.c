@@ -499,34 +499,48 @@ iscissors_convert (GimpIscissorsTool *iscissors,
   GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (iscissors);
   GimpScanConvert      *sc;
   GList                *list;
+  GimpVector2          *points = NULL;
+  guint                 n_total_points = 0;
 
   sc = gimp_scan_convert_new ();
+
+  for (list = g_queue_peek_tail_link (iscissors->curves);
+       list;
+       list = g_list_previous (list))
+    {
+      ICurve *icurve = list->data;
+
+      n_total_points += icurve->points->len;
+    }
+
+  points = g_new (GimpVector2, n_total_points);
+  n_total_points = 0;
 
   /* go over the curves in reverse order, adding the points we have */
   for (list = g_queue_peek_tail_link (iscissors->curves);
        list;
        list = g_list_previous (list))
     {
-      ICurve      *icurve = list->data;
-      GimpVector2 *points;
-      guint        n_points;
-      gint         i;
+      ICurve *icurve = list->data;
+      gint    i;
+      guint   n_points;
 
       n_points = icurve->points->len;
-      points   = g_new (GimpVector2, n_points);
 
-      for (i = 0; i < n_points; i ++)
+      for (i = 0; i < n_points; i++)
         {
           guint32  packed = GPOINTER_TO_INT (g_ptr_array_index (icurve->points,
                                                                 i));
 
-          points[i].x = packed & 0x0000ffff;
-          points[i].y = packed >> 16;
+          points[n_total_points+i].x = packed & 0x0000ffff;
+          points[n_total_points+i].y = packed >> 16;
         }
 
-      gimp_scan_convert_add_points (sc, n_points, points, FALSE);
-      g_free (points);
+      n_total_points += n_points;
     }
+
+  gimp_scan_convert_add_polyline (sc, n_total_points, points, TRUE);
+  g_free (points);
 
   if (iscissors->mask)
     g_object_unref (iscissors->mask);

@@ -480,7 +480,7 @@ if test "x$GDK_PIXBUF_CSOURCE" = xno; then
   AC_MSG_ERROR(Could not find gdk-pixbuf-csource in your PATH)
 fi
 
-PKG_CHECK_MODULES(LIBART, libart-2.0)
+PKG_CHECK_MODULES(CAIRO, cairo)
 
 PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version)
 

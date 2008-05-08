@@ -1,3 +1,18 @@
+2008-05-09  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpscanconvert.[ch]: removed Libart usage,
+	  replaced with Cairo. Dashed strokes do not yet work again, will
+	  happen tomorrow. Also the blending modes need a second look at.
+
+	  Also removed deprecated API which made it unnecessarily complicated.
+
+	* app/tools/gimpiscissorstool.c: use the current API.
+
+	* app/core/Makefile.am
+	* app/Makefile.am
+	* configure.in: removed libart dependency, added cairo dependency
+	  where necessary.
+
 2008-05-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c
