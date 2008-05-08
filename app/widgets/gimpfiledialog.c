@@ -55,6 +55,12 @@
 #include "gimp-intl.h"
 
 
+struct _GimpFileDialogState
+{
+  gchar *filter_name;
+};
+
+
 static void     gimp_file_dialog_progress_iface_init (GimpProgressInterface *iface);
 static gboolean gimp_file_dialog_delete_event        (GtkWidget        *widget,
                                                       GdkEventAny      *event);
@@ -487,6 +493,63 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
   basename = file_utils_uri_display_basename (uri);
   gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
   g_free (basename);
+}
+
+GimpFileDialogState *
+gimp_file_dialog_get_state (GimpFileDialog *dialog)
+{
+  GimpFileDialogState *state;
+  GtkFileFilter       *filter;
+
+  g_return_val_if_fail (GIMP_IS_FILE_DIALOG (dialog), NULL);
+
+  state = g_slice_new0 (GimpFileDialogState);
+
+  filter = gtk_file_chooser_get_filter (GTK_FILE_CHOOSER (dialog));
+
+  if (filter)
+    state->filter_name = g_strdup (gtk_file_filter_get_name (filter));
+
+  return state;
+}
+
+void
+gimp_file_dialog_set_state (GimpFileDialog      *dialog,
+                            GimpFileDialogState *state)
+{
+  g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
+  g_return_if_fail (state != NULL);
+
+  if (state->filter_name)
+    {
+      GSList *filters;
+      GSList *list;
+
+      filters = gtk_file_chooser_list_filters (GTK_FILE_CHOOSER (dialog));
+
+      for (list = filters; list; list = list->next)
+        {
+          GtkFileFilter *filter = GTK_FILE_FILTER (list->data);
+          const gchar   *name   = gtk_file_filter_get_name (filter);
+
+          if (name && strcmp (state->filter_name, name) == 0)
+            {
+              gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
+              break;
+            }
+        }
+
+      g_slist_free (filters);
+    }
+}
+
+void
+gimp_file_dialog_state_destroy (GimpFileDialogState *state)
+{
+  g_return_if_fail (state != NULL);
+
+  g_free (state->filter_name);
+  g_slice_free (GimpFileDialogState, state);
 }
 
 

@@ -60,6 +60,9 @@ struct _GimpFileDialogClass
 };
 
 
+typedef struct _GimpFileDialogState GimpFileDialogState;
+
+
 GType       gimp_file_dialog_get_type      (void) G_GNUC_CONST;
 
 GtkWidget * gimp_file_dialog_new           (Gimp                 *gimp,
@@ -79,6 +82,12 @@ void        gimp_file_dialog_set_image     (GimpFileDialog       *dialog,
                                             GimpImage            *image,
                                             gboolean              save_a_copy,
                                             gboolean              close_after_saving);
+
+GimpFileDialogState * gimp_file_dialog_get_state     (GimpFileDialog      *dialog);
+void                  gimp_file_dialog_set_state     (GimpFileDialog      *dialog,
+                                                      GimpFileDialogState *state);
+void                  gimp_file_dialog_state_destroy (GimpFileDialogState *state);
+
 
 G_END_DECLS
 

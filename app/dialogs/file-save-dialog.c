@@ -77,8 +77,9 @@ static gboolean  file_save_dialog_save_image    (GtkWidget            *save_dial
 GtkWidget *
 file_save_dialog_new (Gimp *gimp)
 {
-  GtkWidget   *dialog;
-  const gchar *uri;
+  GtkWidget           *dialog;
+  GimpFileDialogState *state;
+  const gchar         *uri;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -87,6 +88,11 @@ file_save_dialog_new (Gimp *gimp)
                                  _("Save Image"), "gimp-file-save",
                                  GTK_STOCK_SAVE,
                                  GIMP_HELP_FILE_SAVE);
+
+  state = g_object_get_data (G_OBJECT (gimp), "gimp-file-save-dialog-state");
+
+  if (state)
+    gimp_file_dialog_set_state (GIMP_FILE_DIALOG (dialog), state);
 
   uri = g_object_get_data (G_OBJECT (gimp), "gimp-file-save-last-uri");
 
@@ -115,20 +121,20 @@ file_save_dialog_response (GtkWidget *save_dialog,
   gchar               *uri;
   gchar               *basename;
   GimpPlugInProcedure *save_proc;
-  gulong               handler_id;
+
+  g_object_set_data_full (G_OBJECT (gimp), "gimp-file-save-dialog-state",
+                          gimp_file_dialog_get_state (dialog),
+                          (GDestroyNotify) gimp_file_dialog_state_destroy);
 
   if (response_id != GTK_RESPONSE_OK)
     {
       if (! dialog->busy)
-        gtk_widget_hide (save_dialog);
+        gtk_widget_destroy (save_dialog);
 
       return;
     }
 
   gimp_file_dialog_set_sensitive (dialog, FALSE);
-  handler_id = g_signal_connect (dialog, "destroy",
-                                 G_CALLBACK (gtk_widget_destroyed),
-                                 &dialog);
 
   if (file_save_dialog_check_uri (save_dialog, gimp,
                                   &uri, &basename, &save_proc))
@@ -141,14 +147,14 @@ file_save_dialog_response (GtkWidget *save_dialog,
         {
           if (dialog)
             {
-              gtk_widget_hide (save_dialog);
+              GtkWindow *parent;
+
+              parent = gtk_window_get_transient_for (GTK_WINDOW (dialog));
+
+              gtk_widget_destroy (save_dialog);
 
               if (dialog->close_after_saving)
                 {
-                  GtkWindow *parent;
-
-                  parent = gtk_window_get_transient_for (GTK_WINDOW (dialog));
-
                   if (GIMP_IS_DISPLAY_SHELL (parent))
                     {
                       GimpDisplay *display;
@@ -164,13 +170,6 @@ file_save_dialog_response (GtkWidget *save_dialog,
 
       g_free (uri);
       g_free (basename);
-    }
-
-  /* dialog may have been destroyed while save plugin was running */
-  if (dialog)
-    {
-      gimp_file_dialog_set_sensitive (dialog, TRUE);
-      g_signal_handler_disconnect (dialog, handler_id);
     }
 }
 

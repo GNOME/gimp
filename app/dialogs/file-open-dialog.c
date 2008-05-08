@@ -66,7 +66,8 @@ static gboolean   file_open_dialog_open_layers (GtkWidget           *open_dialog
 GtkWidget *
 file_open_dialog_new (Gimp *gimp)
 {
-  GtkWidget *dialog;
+  GtkWidget           *dialog;
+  GimpFileDialogState *state;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -77,6 +78,11 @@ file_open_dialog_new (Gimp *gimp)
                                  GIMP_HELP_FILE_OPEN);
 
   gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (dialog), TRUE);
+
+  state = g_object_get_data (G_OBJECT (gimp), "gimp-file-open-dialog-state");
+
+  if (state)
+    gimp_file_dialog_set_state (GIMP_FILE_DIALOG (dialog), state);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (file_open_dialog_response),
@@ -98,10 +104,14 @@ file_open_dialog_response (GtkWidget *open_dialog,
   GSList         *list;
   gboolean        success = FALSE;
 
+  g_object_set_data_full (G_OBJECT (gimp), "gimp-file-open-dialog-state",
+                          gimp_file_dialog_get_state (dialog),
+                          (GDestroyNotify) gimp_file_dialog_state_destroy);
+
   if (response_id != GTK_RESPONSE_OK)
     {
       if (! dialog->busy)
-        gtk_widget_hide (open_dialog);
+        gtk_widget_destroy (open_dialog);
 
       return;
     }
@@ -155,13 +165,11 @@ file_open_dialog_response (GtkWidget *open_dialog,
 
   if (success)
     {
-      gtk_widget_hide (open_dialog);
-
       if (dialog->image)
         gimp_image_flush (dialog->image);
-    }
 
-  gimp_file_dialog_set_sensitive (dialog, TRUE);
+      gtk_widget_destroy (open_dialog);
+    }
 
   g_slist_foreach (uris, (GFunc) g_free, NULL);
   g_slist_free (uris);

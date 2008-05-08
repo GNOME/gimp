@@ -1,5 +1,15 @@
 2008-05-08  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpfiledialog.[ch]: added infrastructure to access
+	and set some state information of the GtkFileChooser.
+
+	* app/dialogs/file-open-dialog.c
+	* app/dialogs/file-save-dialog.c: don't keep the file-chooser
+	dialogs around. Instead keep the state attached to the Gimp object
+	(one state for load, one for save dialogs). Closes bug #528811.
+
+2008-05-08  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/widgets-types.h 
 	* app/widgets/gimpfiledialog.c: formatting.
 
