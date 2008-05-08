@@ -117,6 +117,7 @@ gimp_scale_combo_box_init (GimpScaleComboBox *combo_box)
   GtkCellLayout   *layout;
   GtkCellRenderer *cell;
   GtkTreeIter      iter;
+  GtkBorder        border = { 0, 0, 0, 0 };
   gint             i;
 
   combo_box->scale     = 1.0;
@@ -138,6 +139,7 @@ gimp_scale_combo_box_init (GimpScaleComboBox *combo_box)
                 "xalign",             1.0,
                 "width-chars",        7,
                 "truncate-multiline", TRUE,
+                "inner-border",       &border,
                 NULL);
 
   layout = GTK_CELL_LAYOUT (combo_box);
