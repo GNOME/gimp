@@ -1,5 +1,10 @@
 2008-05-08  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/gtkrc 
+	* themes/Small/gtkrc: further shrink the status-bar widgets.
+
+2008-05-08  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpscalecombobox.c (gimp_scale_combo_box_init):
 	removed the entry's inner border to save some precious space in
 	the status-bar.
