@@ -223,7 +223,9 @@ typedef struct _GimpRadioActionEntry         GimpRadioActionEntry;
 typedef struct _GimpEnumActionEntry          GimpEnumActionEntry;
 typedef struct _GimpStringActionEntry        GimpStringActionEntry;
 typedef struct _GimpPlugInActionEntry        GimpPlugInActionEntry;
+
 typedef struct _GimpDialogFactoryEntry       GimpDialogFactoryEntry;
+
 typedef struct _GimpSessionInfo              GimpSessionInfo;
 typedef struct _GimpSessionInfoBook          GimpSessionInfoBook;
 typedef struct _GimpSessionInfoDockable      GimpSessionInfoDockable;
