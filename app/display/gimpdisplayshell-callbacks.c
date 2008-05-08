@@ -193,9 +193,6 @@ gimp_display_shell_events (GtkWidget        *widget,
       }
 
     case GDK_BUTTON_PRESS:
-      gtk_widget_grab_focus (widget);
-      /* fall through */
-
     case GDK_SCROLL:
       set_display = TRUE;
       break;
@@ -685,13 +682,27 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GdkEventButton *bevent = (GdkEventButton *) event;
         GdkEventMask    event_mask;
 
+        /*  focus the widget if it isn't; if the toplevel window
+         *  already has focus, this will generate a FOCUS_IN on the
+         *  canvas immediately, therefore we do this before logging
+         *  the BUTTON_PRESS.
+         */
+        if (! GTK_WIDGET_HAS_FOCUS (canvas))
+          gtk_widget_grab_focus (canvas);
+
         GIMP_LOG (TOOL_EVENTS, "event (display %p): BUTTON_PRESS (%d)",
                   display, bevent->button);
 
+        /*  if the toplevel window didn't have focus, the above
+         *  gtk_widget_grab_focus() didn't set the canvas' HAS_FOCUS
+         *  flags, so check for it here again.
+         *
+         *  this happens in "click to focus" mode.
+         */
         if (! GTK_WIDGET_HAS_FOCUS (canvas))
           {
-            /*  in "click to focus" mode, the BUTTON_PRESS arrives before
-             *  FOCUS_IN, so we have to update the tool's modifier state here
+            /*  do the things a FOCUS_IN event would do and set a flag
+             *  preventing it from doing the same.
              */
             gimp_display_shell_update_focus (shell, &image_coords, state);
 
@@ -819,12 +830,13 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                       "/dummy-menubar/image-popup",
                                       GTK_WIDGET (shell),
                                       NULL, NULL, NULL, NULL);
-            return_val = TRUE;
             break;
 
           default:
             break;
           }
+
+        return_val = TRUE;
       }
       break;
 
@@ -890,6 +902,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           default:
             break;
           }
+
+        return_val = TRUE;
       }
       break;
 
@@ -1196,6 +1210,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             shell->last_read_motion_time = time;
           }
+
+        return_val = TRUE;
       }
       break;
 
