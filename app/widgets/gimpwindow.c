@@ -60,7 +60,7 @@ gimp_window_key_press_event (GtkWidget   *widget,
    */
 
   /* text widgets get all key events first */
-  if (G_UNLIKELY (GTK_IS_EDITABLE (focus) || GTK_IS_TEXT_VIEW (focus)))
+  if (GTK_IS_EDITABLE (focus) || GTK_IS_TEXT_VIEW (focus))
     handled = gtk_window_propagate_key_event (window, event);
 
   /* invoke control/alt accelerators */

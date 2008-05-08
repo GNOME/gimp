@@ -193,6 +193,9 @@ gimp_display_shell_events (GtkWidget        *widget,
       }
 
     case GDK_BUTTON_PRESS:
+      gtk_widget_grab_focus (widget);
+      /* fall through */
+
     case GDK_SCROLL:
       set_display = TRUE;
       break;

@@ -1,5 +1,14 @@
 2008-05-08  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_events): move the focus to the canvas on
+	button-press events.
+
+	* app/widgets/gimpwindow.c (gimp_window_key_press_event): removed
+	a G_UNLIKELY() statement that is somewhat bogus here.
+
+2008-05-08  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpfiledialog.[ch]: added infrastructure to access
 	and set some state information of the GtkFileChooser.
 
