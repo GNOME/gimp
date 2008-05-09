@@ -77,6 +77,9 @@ static void   gimp_scan_convert_render_internal  (GimpScanConvert *sc,
                                                   gboolean         antialias,
                                                   guchar           value);
 
+static gint   gimp_cairo_stride_for_width        (gint             width);
+
+
 /*  public functions  */
 
 /**
@@ -438,7 +441,6 @@ gimp_scan_convert_render_internal (GimpScanConvert *sc,
   cairo_t         *cr;
   cairo_surface_t *surface;
   cairo_path_t     path;
-  gint             i;
 
   x = 0;
   y = 0;
@@ -469,32 +471,37 @@ gimp_scan_convert_render_internal (GimpScanConvert *sc,
        pr = pixel_regions_process (pr))
     {
       guchar *tmp_buf = NULL;
-      int     tmp_rs  = 0;
+      gint    stride;
 
       sc->buf       = maskPR.data;
       sc->rowstride = maskPR.rowstride;
       sc->x0        = off_x + maskPR.x;
       sc->x1        = off_x + maskPR.x + maskPR.w;
 
-      if (maskPR.rowstride % 4 != 0)
+      stride = gimp_cairo_stride_for_width (maskPR.w);
+
+      g_assert (stride > 0);
+
+      if (maskPR.rowstride != stride)
         {
-          /* this is necessary to work around a cairo bug
-           * for rowstride % 4 != 0 */
-          tmp_rs = ((maskPR.rowstride + 3) / 4) * 4;
-          tmp_buf = g_slice_alloc0 (tmp_rs * maskPR.h);
+          tmp_buf = g_alloca (stride * maskPR.h);
+          memset (tmp_buf, 0, stride * maskPR.h);
         }
 
-      surface = cairo_image_surface_create_for_data (tmp_buf ? tmp_buf : maskPR.data,
+      surface = cairo_image_surface_create_for_data (tmp_buf ?
+                                                     tmp_buf : maskPR.data,
                                                      CAIRO_FORMAT_A8,
                                                      maskPR.w, maskPR.h,
-                                                     tmp_buf ? tmp_rs : maskPR.rowstride);
+                                                     stride);
+
       cairo_surface_set_device_offset (surface,
                                        -off_x - maskPR.x,
                                        -off_y - maskPR.y);
       cr = cairo_create (surface);
       cairo_set_source_rgb (cr, value / 255.0, value / 255.0, value / 255.0);
       cairo_append_path (cr, &path);
-      cairo_set_antialias (cr, sc->antialias ? CAIRO_ANTIALIAS_GRAY : CAIRO_ANTIALIAS_NONE);
+      cairo_set_antialias (cr,
+                           sc->antialias ? CAIRO_ANTIALIAS_GRAY : CAIRO_ANTIALIAS_NONE);
       if (sc->do_stroke)
         {
           cairo_set_line_cap (cr, sc->cap == GIMP_CAP_BUTT ? CAIRO_LINE_CAP_BUTT :
@@ -503,7 +510,11 @@ gimp_scan_convert_render_internal (GimpScanConvert *sc,
           cairo_set_line_join (cr, sc->join == GIMP_JOIN_MITER ? CAIRO_LINE_JOIN_MITER :
                                    sc->join == GIMP_JOIN_ROUND ? CAIRO_LINE_JOIN_ROUND :
                                    CAIRO_LINE_JOIN_BEVEL);
+
+#ifdef __GNUC__
 #warning  cairo_set_dash() still missing!
+#endif
+
           cairo_set_line_width (cr, sc->width);
           cairo_scale (cr, 1.0, sc->ratio_xy);
           cairo_stroke (cr);
@@ -513,22 +524,44 @@ gimp_scan_convert_render_internal (GimpScanConvert *sc,
           cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
           cairo_fill (cr);
         }
+
       cairo_surface_flush (surface);
       cairo_destroy (cr);
       cairo_surface_destroy (surface);
 
       if (tmp_buf)
         {
-          for (i = 0; i < maskPR.h; i++)
-            memcpy (maskPR.data + i * maskPR.rowstride,
-                    tmp_buf + i * tmp_rs,
-                    maskPR.w);
+          guchar       *dest = maskPR.data;
+          const guchar *src  = tmp_buf;
+          gint          i;
 
-          g_slice_free1 (tmp_rs * maskPR.h, tmp_buf);
+          for (i = 0; i < maskPR.h; i++)
+            {
+              memcpy (dest, src, maskPR.w);
+
+              src  += stride;
+              dest += maskPR.rowstride;
+            }
         }
     }
 }
 
+static gint
+gimp_cairo_stride_for_width (gint width)
+{
+#ifdef __GNUC__
+#warning use cairo_format_stride_for_width() as soon as we depend on cairo 1.6
+#endif
+#if 0
+  return cairo_format_stride_for_width (CAIRO_FORMAT_A8, width);
+#endif
+
+#define CAIRO_STRIDE_ALIGNMENT (sizeof (guint32))
+#define CAIRO_STRIDE_FOR_WIDTH_BPP(w,bpp) \
+   (((bpp)*(w)+7)/8 + CAIRO_STRIDE_ALIGNMENT-1) & ~(CAIRO_STRIDE_ALIGNMENT-1)
+
+  return CAIRO_STRIDE_FOR_WIDTH_BPP (width, 8);
+}
 
 static inline void
 compose (GimpChannelOps  op,

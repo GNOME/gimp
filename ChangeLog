@@ -1,5 +1,12 @@
 2008-05-09  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: check for a minimum required cairo version (1.4.14).
+
+	* app/core/gimpscanconvert.c: copied some code from cairo until
+	we depend on cairo 1.6.
+
+2008-05-09  Sven Neumann  <sven@gimp.org>
+
 	* HACKING
 	* INSTALL: removed mentions of libart, added a link for cairo.
 
