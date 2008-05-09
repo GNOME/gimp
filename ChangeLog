@@ -1,3 +1,11 @@
+2008-05-09  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpcroptool.[ch]: Keep track of the current image and
+	manage a subscription to "size-changed" so that default aspect
+	ratio is properly updated.
+	(gimp_crop_tool_execute): No need to explicitly call
+	gimp_crop_tool_update_option_defaults() any longer.
+
 2008-05-09  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpscanconvert.[ch]: expose the internal most

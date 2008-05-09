@@ -87,6 +87,7 @@ static void      gimp_crop_tool_options_notify            (GimpCropOptions      
 static void      gimp_crop_tool_image_changed             (GimpCropTool               *crop_tool,
                                                            GimpImage                  *image,
                                                            GimpContext                *context);
+static void      gimp_crop_tool_image_size_changed        (GimpCropTool               *crop_tool);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpCropTool, gimp_crop_tool, GIMP_TYPE_DRAW_TOOL,
@@ -155,6 +156,8 @@ gimp_crop_tool_init (GimpCropTool *crop_tool)
 
   gimp_tool_control_set_wants_click (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_CROP);
+
+  crop_tool->current_image = NULL;
 }
 
 static GObject *
@@ -185,6 +188,13 @@ gimp_crop_tool_constructor (GType                  type,
                            G_CALLBACK (gimp_crop_tool_image_changed),
                            crop_tool,
                            G_CONNECT_SWAPPED);
+
+  /* Make sure we are connected to "size-changed" for the initial
+   * image.
+   */
+  gimp_crop_tool_image_changed (crop_tool,
+                                gimp_context_get_image (gimp_context),
+                                gimp_context);
 
 
   options = GIMP_CROP_TOOL_GET_OPTIONS (object);
@@ -303,9 +313,6 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
 
       gimp_image_flush (image);
 
-      gimp_crop_tool_update_option_defaults (GIMP_CROP_TOOL (tool),
-                                             TRUE);
-
       return TRUE;
     }
 
@@ -398,6 +405,30 @@ gimp_crop_tool_image_changed (GimpCropTool *crop_tool,
                               GimpImage    *image,
                               GimpContext  *context)
 {
+  if (crop_tool->current_image)
+    {
+      g_signal_handlers_disconnect_by_func (crop_tool->current_image,
+                                            gimp_crop_tool_image_size_changed,
+                                            NULL);
+    }
+
+  if (image)
+    {
+      g_signal_connect_object (image, "size-changed",
+                               G_CALLBACK (gimp_crop_tool_image_size_changed),
+                               crop_tool,
+                               G_CONNECT_SWAPPED);
+    }
+
+  crop_tool->current_image = image;
+
   gimp_crop_tool_update_option_defaults (GIMP_CROP_TOOL (crop_tool),
+                                         FALSE);
+}
+
+static void
+gimp_crop_tool_image_size_changed (GimpCropTool *crop_tool)
+{
+  gimp_crop_tool_update_option_defaults (crop_tool,
                                          FALSE);
 }
