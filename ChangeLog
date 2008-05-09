@@ -1,3 +1,7 @@
+2008-05-09  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: lowered minimum required cairo version to 1.4.10.
+
 2008-05-09  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpscanconvert.[ch]: kind of resurrect the
