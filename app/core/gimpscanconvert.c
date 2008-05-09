@@ -114,6 +114,9 @@ gimp_scan_convert_free (GimpScanConvert *sc)
   if (sc->path_data)
     g_array_free (sc->path_data, TRUE);
 
+  if (sc->dash_info)
+    g_array_free (sc->dash_info, TRUE);
+
   g_slice_free (GimpScanConvert, sc);
 }
 
@@ -179,9 +182,9 @@ gimp_scan_convert_add_polyline (GimpScanConvert *sc,
                                 GimpVector2     *points,
                                 gboolean         closed)
 {
-  GimpVector2  prev = { 0.0, 0.0, };
+  GimpVector2        prev = { 0.0, 0.0, };
   cairo_path_data_t  pd;
-  gint         i;
+  gint               i;
 
   g_return_if_fail (sc != NULL);
   g_return_if_fail (points != NULL);
@@ -253,89 +256,76 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
   sc->join  = join;
   sc->cap   = cap;
   sc->miter = miter;
-  sc->dash_offset = dash_offset;
-  if (dash_info && dash_info->len)
-    g_printerr ("Dashing not yet implemented\n");
+  if (sc->dash_info)
+    {
+      g_array_free (sc->dash_info, TRUE);
+      sc->dash_info = NULL;
+    }
 
-#if 0
   if (dash_info && dash_info->len >= 2)
     {
-      ArtVpath     *dash_vpath;
-      ArtVpathDash  dash;
+      gint          n_dashes;
       gdouble      *dashes;
       gint          i;
 
-      dash.offset = dash_offset * MAX (width, 1.0);
+      dash_offset = dash_offset * MAX (width, 1.0);
 
+      n_dashes = dash_info->len;
       dashes = g_new (gdouble, dash_info->len);
 
       for (i = 0; i < dash_info->len ; i++)
         dashes[i] = MAX (width, 1.0) * g_array_index (dash_info, gdouble, i);
 
-      dash.n_dash = dash_info->len;
-      dash.dash = dashes;
-
       /* correct 0.0 in the first element (starts with a gap) */
 
-      if (dash.dash[0] == 0.0)
+      if (dashes[0] == 0.0)
         {
           gdouble first;
 
-          first = dash.dash[1];
+          first = dashes[1];
 
           /* shift the pattern to really starts with a dash and
            * use the offset to skip into it.
            */
           for (i = 0; i < dash_info->len - 2; i++)
             {
-              dash.dash[i] = dash.dash[i+2];
-              dash.offset += dash.dash[i];
+              dashes[i] = dashes[i+2];
+              dash_offset += dashes[i];
             }
 
           if (dash_info->len % 2 == 1)
             {
-              dash.dash[dash_info->len - 2] = first;
-              dash.n_dash --;
+              dashes[dash_info->len - 2] = first;
+              n_dashes --;
             }
-          else
-            {
-              if (dash_info->len < 3)
-                {
-                  /* empty stroke */
-                  art_free (sc->vpath);
-                  sc->vpath = NULL;
-                }
-              else
-                {
-                  dash.dash [dash_info->len - 3] += first;
-                  dash.n_dash -= 2;
-                }
-            }
+          else if (dash_info->len > 2)
+           {
+             dashes [dash_info->len - 3] += first;
+             n_dashes -= 2;
+           }
         }
 
       /* correct odd number of dash specifiers */
 
-      if (dash.n_dash % 2 == 1)
+      if (n_dashes % 2 == 1)
         {
           gdouble last;
 
-          last = dash.dash[dash.n_dash - 1];
-          dash.dash[0] += last;
-          dash.offset += last;
-          dash.n_dash --;
+          last = dashes[n_dashes - 1];
+          dashes[0]   += last;
+          dash_offset += last;
+          n_dashes --;
         }
 
-
-      if (sc->vpath)
+      if (n_dashes >= 2)
         {
-          dash_vpath = art_vpath_dash (sc->vpath, &dash);
-          art_free (sc->vpath);
-          sc->vpath = dash_vpath;
+          sc->dash_info = g_array_sized_new (FALSE, FALSE, sizeof (gdouble), n_dashes);
+          sc->dash_info = g_array_append_vals (sc->dash_info, dashes, n_dashes);
+          sc->dash_offset = dash_offset;
         }
 
       g_free (dashes);
     }
-#endif
 }
 
 
@@ -511,11 +501,9 @@ gimp_scan_convert_render_internal (GimpScanConvert *sc,
                                    sc->join == GIMP_JOIN_ROUND ? CAIRO_LINE_JOIN_ROUND :
                                    CAIRO_LINE_JOIN_BEVEL);
 
-#ifdef __GNUC__
-#warning  cairo_set_dash() still missing!
-#endif
-
           cairo_set_line_width (cr, sc->width);
+          if (sc->dash_info)
+            cairo_set_dash (cr, (double *) sc->dash_info->data, sc->dash_info->len, sc->dash_offset);
           cairo_scale (cr, 1.0, sc->ratio_xy);
           cairo_stroke (cr);
         }

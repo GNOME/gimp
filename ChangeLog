@@ -1,3 +1,7 @@
+2008-05-09  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpscanconvert.c: resurrect dashed strokes.
+
 2008-05-09  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: check for a minimum required cairo version (1.4.14).
