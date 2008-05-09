@@ -45,9 +45,7 @@ header files installed.
      Older versions are known to have bugs that seriously affect the
      stability of GIMP.
 
-  5. We use libart2. Grab the module libart_lgpl out of GNOME SVN or
-     fetch the tarball from
-     ftp://ftp.gnome.org/pub/gnome/sources/libart_lgpl/
+  5. We use cairo, which is hosted at http://www.cairographics.org/.
 
   6. We use dbus-glib if available. Grab it from
      http://dbus.freedesktop.org/releases/dbus-glib/

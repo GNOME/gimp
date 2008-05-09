@@ -1,3 +1,8 @@
+2008-05-09  Sven Neumann  <sven@gimp.org>
+
+	* HACKING
+	* INSTALL: removed mentions of libart, added a link for cairo.
+
 2008-05-09  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpscanconvert.[ch]: removed Libart usage,

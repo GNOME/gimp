@@ -90,7 +90,7 @@ You can read more on using GNOME's Subversion service at these URLs:
 
 
 You will also need relatively new stable releases of glib, pango, atk,
-gtk+, libart, gtkhtml2, etc. for building GIMP, which you can get as a
+gtk+, cairo, gtkhtml2, etc. for building GIMP, which you can get as a
 part of recent Linux distribution releases.
 
 
