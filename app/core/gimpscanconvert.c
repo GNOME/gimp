@@ -58,17 +58,7 @@ struct _GimpScanConvert
   GArray         *path_data;
 };
 
-
 /* private functions */
-
-static void   gimp_scan_convert_render_internal  (GimpScanConvert *sc,
-                                                  TileManager     *tile_manager,
-                                                  gint             off_x,
-                                                  gint             off_y,
-                                                  gboolean         replace,
-                                                  gboolean         antialias,
-                                                  guchar           value);
-
 static gint   gimp_cairo_stride_for_width        (gint             width);
 
 
@@ -329,8 +319,8 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
  * @off_y:        vertical offset into the @tile_manager
  * @antialias:    whether to apply antialiasiing
  *
- * Actually renders the @sc to a mask. This function expects a tile
- * manager of depth 1.
+ * This is a wrapper around gimp_scan_convert_render_full() that replaces the
+ * content of the @tile_manager with a rendered form of the path passed in.
  *
  * You cannot add additional polygons after this command.
  */
@@ -341,11 +331,8 @@ gimp_scan_convert_render (GimpScanConvert *sc,
                           gint             off_y,
                           gboolean         antialias)
 {
-  g_return_if_fail (sc != NULL);
-  g_return_if_fail (tile_manager != NULL);
-
-  gimp_scan_convert_render_internal (sc, tile_manager, off_x, off_y,
-                                     TRUE, antialias, 255);
+  gimp_scan_convert_render_full (sc, tile_manager, off_x, off_y,
+                                 TRUE, antialias, 255);
 }
 
 /**
@@ -356,10 +343,9 @@ gimp_scan_convert_render (GimpScanConvert *sc,
  * @off_y:        vertical offset into the @tile_manager
  * @value:        value to use for covered pixels
  *
- * A variant of gimp_scan_convert_render() that doesn't do
- * antialiasing but gives control over the value that should be used
- * for pixels covered by the scan conversion . Uncovered pixels are
- * set to zero.
+ * This is a wrapper around gimp_scan_convert_render_full() that doesn't do
+ * antialiasing but gives control over the value that should be used for pixels
+ * covered by the scan conversion. Uncovered pixels are set to zero.
  *
  * You cannot add additional polygons after this command.
  */
@@ -370,11 +356,8 @@ gimp_scan_convert_render_value (GimpScanConvert *sc,
                                 gint             off_y,
                                 guchar           value)
 {
-  g_return_if_fail (sc != NULL);
-  g_return_if_fail (tile_manager != NULL);
-
-  gimp_scan_convert_render_internal (sc, tile_manager, off_x, off_y,
-                                     TRUE, FALSE, value);
+  gimp_scan_convert_render_full (sc, tile_manager, off_x, off_y,
+                                 TRUE, FALSE, value);
 }
 
 /**
@@ -384,8 +367,8 @@ gimp_scan_convert_render_value (GimpScanConvert *sc,
  * @off_x:        horizontal offset into the @tile_manager
  * @off_y:        vertical offset into the @tile_manager
  *
- * This is a variant of gimp_scan_convert_render() that composes the
- * (aliased) scan conversion with the content of the @tile_manager.
+ * This is a wrapper around of gimp_scan_convert_render_full() that composes
+ * the (aliased) scan conversion on top of the content of the @tile_manager.
  *
  * You cannot add additional polygons after this command.
  */
@@ -395,11 +378,8 @@ gimp_scan_convert_compose (GimpScanConvert *sc,
                            gint             off_x,
                            gint             off_y)
 {
-  g_return_if_fail (sc != NULL);
-  g_return_if_fail (tile_manager != NULL);
-
-  gimp_scan_convert_render_internal (sc, tile_manager, off_x, off_y,
-                                     FALSE, FALSE, 255);
+  gimp_scan_convert_render_full (sc, tile_manager, off_x, off_y,
+                                 FALSE, FALSE, 255);
 }
 
 /**
@@ -410,8 +390,9 @@ gimp_scan_convert_compose (GimpScanConvert *sc,
  * @off_y:        vertical offset into the @tile_manager
  * @value:        value to use for covered pixels
  *
- * This is a variant of gimp_scan_convert_render() that composes the
- * (aliased) scan conversion with the content of the @tile_manager.
+ * This is a wrapper around gimp_scan_convert_render_full() that
+ * composes the (aliased) scan conversion with value @value on top of the
+ * content of the @tile_manager.
  *
  * You cannot add additional polygons after this command.
  */
@@ -422,21 +403,38 @@ gimp_scan_convert_compose_value (GimpScanConvert *sc,
                                  gint             off_y,
                                  gint             value)
 {
-  g_return_if_fail (sc != NULL);
-  g_return_if_fail (tile_manager != NULL);
-
-  gimp_scan_convert_render_internal (sc, tile_manager, off_x, off_y,
-                                     FALSE, FALSE, value);
+  gimp_scan_convert_render_full (sc, tile_manager, off_x, off_y,
+                                 FALSE, FALSE, value);
 }
 
-static void
-gimp_scan_convert_render_internal (GimpScanConvert *sc,
-                                   TileManager     *tile_manager,
-                                   gint             off_x,
-                                   gint             off_y,
-                                   gboolean         replace,
-                                   gboolean         antialias,
-                                   guchar           value)
+/**
+ * gimp_scan_convert_render_full:
+ * @sc:           a #GimpScanConvert context
+ * @tile_manager: the #TileManager to render to
+ * @off_x:        horizontal offset into the @tile_manager
+ * @off_y:        vertical offset into the @tile_manager
+ * @replace:      if true the original content of the @tile_manager gets destroyed
+ * @antialias:    if true the rendering happens antialiased
+ * @value:        value to use for covered pixels
+ *
+ * This function renders the area described by the path to the @tile_manager,
+ * taking the offset @off_x and @off_y in the tilemanager into account.
+ * The rendering can happen antialiased and be rendered on top of existing
+ * content or replacing it completely. The @value specifies the opacity value
+ * to be used for the objects in the @sc.
+ *
+ * This function expects a tile manager of depth 1.
+ *
+ * You cannot add additional polygons after this command.
+ */
+void
+gimp_scan_convert_render_full (GimpScanConvert *sc,
+                               TileManager     *tile_manager,
+                               gint             off_x,
+                               gint             off_y,
+                               gboolean         replace,
+                               gboolean         antialias,
+                               guchar           value)
 {
   PixelRegion      maskPR;
   gpointer         pr;
@@ -446,6 +444,9 @@ gimp_scan_convert_render_internal (GimpScanConvert *sc,
   cairo_t         *cr;
   cairo_surface_t *surface;
   cairo_path_t     path;
+
+  g_return_if_fail (sc != NULL);
+  g_return_if_fail (tile_manager != NULL);
 
   x = 0;
   y = 0;
@@ -517,6 +518,7 @@ gimp_scan_convert_render_internal (GimpScanConvert *sc,
       cairo_set_source_rgba (cr, 0, 0, 0, value / 255.0);
       cairo_append_path (cr, &path);
       cairo_set_antialias (cr, antialias ? CAIRO_ANTIALIAS_GRAY : CAIRO_ANTIALIAS_NONE);
+      cairo_set_miter_limit (cr, sc->miter);
       if (sc->do_stroke)
         {
           cairo_set_line_cap (cr, sc->cap == GIMP_CAP_BUTT ? CAIRO_LINE_CAP_BUTT :
