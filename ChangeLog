@@ -1,5 +1,13 @@
 2008-05-09  Simon Budig  <simon@gimp.org>
 
+	* app/core/gimpscanconvert.[ch]: kind of resurrect the
+	blending modes, although now implemented as compositing
+	on top of the existing content of a mask.
+
+	* app/tools/gimpforegroundselecttool.c: changed accordingly
+
+2008-05-09  Simon Budig  <simon@gimp.org>
+
 	* app/core/gimpscanconvert.c: resurrect dashed strokes.
 
 2008-05-09  Sven Neumann  <sven@gimp.org>

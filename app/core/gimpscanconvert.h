@@ -52,10 +52,14 @@ void      gimp_scan_convert_render_value       (GimpScanConvert *sc,
                                                 gint             off_y,
                                                 guchar           value);
 void      gimp_scan_convert_compose            (GimpScanConvert *sc,
-                                                GimpChannelOps   op,
                                                 TileManager     *tile_manager,
                                                 gint             off_x,
                                                 gint             off_y);
+void      gimp_scan_convert_compose_value      (GimpScanConvert *sc,
+                                                TileManager     *tile_manager,
+                                                gint             off_x,
+                                                gint             off_y,
+                                                gint             value);
 
 
 #endif /* __GIMP_SCAN_CONVERT_H__ */

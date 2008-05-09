@@ -56,24 +56,16 @@ struct _GimpScanConvert
 
   guint           num_nodes;
   GArray         *path_data;
-
-  /* stuff necessary for the rendering callback */
-  GimpChannelOps  op;
-  guchar         *buf;
-  gint            rowstride;
-  gint            x0, x1;
-  gboolean        antialias;
-  gboolean        value;
 };
 
 
 /* private functions */
 
 static void   gimp_scan_convert_render_internal  (GimpScanConvert *sc,
-                                                  GimpChannelOps   op,
                                                   TileManager     *tile_manager,
                                                   gint             off_x,
                                                   gint             off_y,
+                                                  gboolean         replace,
                                                   gboolean         antialias,
                                                   guchar           value);
 
@@ -352,9 +344,8 @@ gimp_scan_convert_render (GimpScanConvert *sc,
   g_return_if_fail (sc != NULL);
   g_return_if_fail (tile_manager != NULL);
 
-  gimp_scan_convert_render_internal (sc, GIMP_CHANNEL_OP_REPLACE,
-                                     tile_manager, off_x, off_y,
-                                     antialias, 255);
+  gimp_scan_convert_render_internal (sc, tile_manager, off_x, off_y,
+                                     TRUE, antialias, 255);
 }
 
 /**
@@ -382,9 +373,8 @@ gimp_scan_convert_render_value (GimpScanConvert *sc,
   g_return_if_fail (sc != NULL);
   g_return_if_fail (tile_manager != NULL);
 
-  gimp_scan_convert_render_internal (sc, GIMP_CHANNEL_OP_REPLACE,
-                                     tile_manager, off_x, off_y,
-                                     FALSE, value);
+  gimp_scan_convert_render_internal (sc, tile_manager, off_x, off_y,
+                                     TRUE, FALSE, value);
 }
 
 /**
@@ -401,7 +391,6 @@ gimp_scan_convert_render_value (GimpScanConvert *sc,
  */
 void
 gimp_scan_convert_compose (GimpScanConvert *sc,
-                           GimpChannelOps   op,
                            TileManager     *tile_manager,
                            gint             off_x,
                            gint             off_y)
@@ -409,17 +398,43 @@ gimp_scan_convert_compose (GimpScanConvert *sc,
   g_return_if_fail (sc != NULL);
   g_return_if_fail (tile_manager != NULL);
 
-  gimp_scan_convert_render_internal (sc, op,
-                                     tile_manager, off_x, off_y,
-                                     FALSE, 255);
+  gimp_scan_convert_render_internal (sc, tile_manager, off_x, off_y,
+                                     FALSE, FALSE, 255);
+}
+
+/**
+ * gimp_scan_convert_compose_value:
+ * @sc:           a #GimpScanConvert context
+ * @tile_manager: the #TileManager to render to
+ * @off_x:        horizontal offset into the @tile_manager
+ * @off_y:        vertical offset into the @tile_manager
+ * @value:        value to use for covered pixels
+ *
+ * This is a variant of gimp_scan_convert_render() that composes the
+ * (aliased) scan conversion with the content of the @tile_manager.
+ *
+ * You cannot add additional polygons after this command.
+ */
+void
+gimp_scan_convert_compose_value (GimpScanConvert *sc,
+                                 TileManager     *tile_manager,
+                                 gint             off_x,
+                                 gint             off_y,
+                                 gint             value)
+{
+  g_return_if_fail (sc != NULL);
+  g_return_if_fail (tile_manager != NULL);
+
+  gimp_scan_convert_render_internal (sc, tile_manager, off_x, off_y,
+                                     FALSE, FALSE, value);
 }
 
 static void
 gimp_scan_convert_render_internal (GimpScanConvert *sc,
-                                   GimpChannelOps   op,
                                    TileManager     *tile_manager,
                                    gint             off_x,
                                    gint             off_y,
+                                   gboolean         replace,
                                    gboolean         antialias,
                                    guchar           value)
 {
@@ -448,10 +463,6 @@ gimp_scan_convert_render_internal (GimpScanConvert *sc,
 
   g_return_if_fail (maskPR.bytes == 1);
 
-  sc->antialias = antialias;
-  sc->value     = value;
-  sc->op        = op;
-
   path.status   = CAIRO_STATUS_SUCCESS;
   path.data     = (cairo_path_data_t *) sc->path_data->data;
   path.num_data = sc->path_data->len;
@@ -463,19 +474,28 @@ gimp_scan_convert_render_internal (GimpScanConvert *sc,
       guchar *tmp_buf = NULL;
       gint    stride;
 
-      sc->buf       = maskPR.data;
-      sc->rowstride = maskPR.rowstride;
-      sc->x0        = off_x + maskPR.x;
-      sc->x1        = off_x + maskPR.x + maskPR.w;
-
       stride = gimp_cairo_stride_for_width (maskPR.w);
 
       g_assert (stride > 0);
 
       if (maskPR.rowstride != stride)
         {
-          tmp_buf = g_alloca (stride * maskPR.h);
-          memset (tmp_buf, 0, stride * maskPR.h);
+          const guchar *src = maskPR.data;
+          guchar       *dest;
+          gint          i;
+
+          dest = tmp_buf = g_alloca (stride * maskPR.h);
+
+          if (!replace)
+            {
+              for (i = 0; i < maskPR.h; i++)
+                {
+                  memcpy (dest, src, maskPR.w);
+
+                  src  += maskPR.rowstride;
+                  dest += stride;
+                }
+            }
         }
 
       surface = cairo_image_surface_create_for_data (tmp_buf ?
@@ -488,10 +508,15 @@ gimp_scan_convert_render_internal (GimpScanConvert *sc,
                                        -off_x - maskPR.x,
                                        -off_y - maskPR.y);
       cr = cairo_create (surface);
-      cairo_set_source_rgb (cr, value / 255.0, value / 255.0, value / 255.0);
+      cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
+      if (replace)
+        {
+          cairo_set_source_rgba (cr, 0, 0, 0, 0);
+          cairo_paint (cr);
+        }
+      cairo_set_source_rgba (cr, 0, 0, 0, value / 255.0);
       cairo_append_path (cr, &path);
-      cairo_set_antialias (cr,
-                           sc->antialias ? CAIRO_ANTIALIAS_GRAY : CAIRO_ANTIALIAS_NONE);
+      cairo_set_antialias (cr, antialias ? CAIRO_ANTIALIAS_GRAY : CAIRO_ANTIALIAS_NONE);
       if (sc->do_stroke)
         {
           cairo_set_line_cap (cr, sc->cap == GIMP_CAP_BUTT ? CAIRO_LINE_CAP_BUTT :
@@ -513,7 +538,6 @@ gimp_scan_convert_render_internal (GimpScanConvert *sc,
           cairo_fill (cr);
         }
 
-      cairo_surface_flush (surface);
       cairo_destroy (cr);
       cairo_surface_destroy (surface);
 
@@ -549,36 +573,5 @@ gimp_cairo_stride_for_width (gint width)
    (((bpp)*(w)+7)/8 + CAIRO_STRIDE_ALIGNMENT-1) & ~(CAIRO_STRIDE_ALIGNMENT-1)
 
   return CAIRO_STRIDE_FOR_WIDTH_BPP (width, 8);
-}
-
-static inline void
-compose (GimpChannelOps  op,
-         guchar         *buf,
-         guchar          value,
-         gint            len)
-{
-  switch (op)
-    {
-    case GIMP_CHANNEL_OP_ADD:
-      if (value)
-        memset (buf, value, len);
-      break;
-    case GIMP_CHANNEL_OP_SUBTRACT:
-      if (value)
-        memset (buf, 0, len);
-      break;
-    case GIMP_CHANNEL_OP_REPLACE:
-      memset (buf, value, len);
-      break;
-    case GIMP_CHANNEL_OP_INTERSECT:
-      do
-        {
-          if (*buf)
-            *buf = value;
-          buf++;
-        }
-      while (--len);
-      break;
-    }
 }
 
