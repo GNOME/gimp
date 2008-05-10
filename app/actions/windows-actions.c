@@ -76,6 +76,9 @@ windows_actions_setup (GimpActionGroup *group)
                                  windows_actions,
                                  G_N_ELEMENTS (windows_actions));
 
+  gimp_action_group_set_action_hide_empty (group, "windows-images-menu",
+                                           FALSE);
+
   g_signal_connect_object (group->gimp->displays, "add",
                            G_CALLBACK (windows_actions_display_add),
                            group, 0);
@@ -173,7 +176,7 @@ windows_actions_image_notify (GimpDisplay      *display,
         gchar       *escaped;
         gchar       *title;
 
-        uri = gimp_object_get_name (GIMP_OBJECT (display->image));
+        uri = gimp_image_get_uri (display->image);
 
         filename = file_utils_uri_display_name (uri);
         basename = file_utils_uri_display_basename (uri);
