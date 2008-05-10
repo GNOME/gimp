@@ -210,7 +210,11 @@ gimp_init (Gimp *gimp)
   gimp->next_item_ID        = 1;
   gimp->item_table          = g_hash_table_new (g_direct_hash, NULL);
 
-  gimp->displays            = gimp_list_new_weak (GIMP_TYPE_OBJECT, FALSE);
+  gimp->displays            = g_object_new (GIMP_TYPE_LIST,
+                                            "children-type", GIMP_TYPE_OBJECT,
+                                            "policy",        GIMP_CONTAINER_POLICY_WEAK,
+                                            "append",        TRUE,
+                                            NULL);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->displays), "displays");
 
   gimp->next_display_ID     = 1;

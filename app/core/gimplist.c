@@ -35,7 +35,8 @@ enum
 {
   PROP_0,
   PROP_UNIQUE_NAMES,
-  PROP_SORT_FUNC
+  PROP_SORT_FUNC,
+  PROP_APPEND
 };
 
 
@@ -116,6 +117,13 @@ gimp_list_class_init (GimpListClass *klass)
                                                          NULL, NULL,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_APPEND,
+                                   g_param_spec_boolean ("append",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -124,6 +132,7 @@ gimp_list_init (GimpList *list)
   list->list         = NULL;
   list->unique_names = FALSE;
   list->sort_func    = NULL;
+  list->append       = FALSE;
 }
 
 static void
@@ -142,6 +151,10 @@ gimp_list_set_property (GObject      *object,
     case PROP_SORT_FUNC:
       gimp_list_set_sort_func (list, g_value_get_pointer (value));
       break;
+    case PROP_APPEND:
+      list->append = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -164,6 +177,10 @@ gimp_list_get_property (GObject    *object,
     case PROP_SORT_FUNC:
       g_value_set_pointer (value, list->sort_func);
       break;
+    case PROP_APPEND:
+      g_value_set_boolean (value, list->append);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -209,6 +226,8 @@ gimp_list_add (GimpContainer *container,
 
   if (list->sort_func)
     list->list = g_list_insert_sorted (list->list, object, list->sort_func);
+  else if (list->append)
+    list->list = g_list_append (list->list, object);
   else
     list->list = g_list_prepend (list->list, object);
 }

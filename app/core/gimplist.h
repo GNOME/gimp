@@ -43,6 +43,7 @@ struct _GimpList
   GList         *list;
   gboolean       unique_names;
   GCompareFunc   sort_func;
+  gboolean       append;
 };
 
 struct _GimpListClass

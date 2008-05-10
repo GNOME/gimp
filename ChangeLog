@@ -1,5 +1,14 @@
 2008-05-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimplist.[ch]: add boolean "append" property which
+	makes gimp_container_add() append to the list instead of the
+	default prepend.
+
+	* app/core/gimp.c: create the display list with append = TRUE so
+	the images menu is in a proper order.
+
+2008-05-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/windows-actions.c: don't hide the empty images menu,
 	use gimp_image_get_uri() instead of the object's name.
 
