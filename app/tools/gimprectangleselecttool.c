@@ -821,6 +821,8 @@ gimp_rectangle_select_tool_cancel (GimpRectangleTool *rectangle)
         }
     }
 
+  gimp_rectangle_select_tool_update_option_defaults (rect_sel_tool, TRUE);
+
   priv->undo = NULL;
   priv->redo = NULL;
 }

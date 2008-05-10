@@ -1,3 +1,9 @@
+2008-05-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangleselecttool.c
+	(gimp_rectangle_select_tool_cancel): Don't forget updating the
+	default apsect ratio when cancelling a rectangle select.
+
 2008-05-10  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.c (gimp_text_tool_confirm_response):
