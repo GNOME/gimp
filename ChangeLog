@@ -2,6 +2,14 @@
 
 	Merged from trunk:
 
+	* app/tools/gimpcroptool.c: Add a GimpRectangleTool::cancel()
+	implementation that updates default aspect ratio when cancelling a
+	crop.
+
+2008-05-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Merged from trunk:
+
 	* app/tools/gimpcroptool.[ch]: Keep track of the current image and
 	manage a subscription to "size-changed" so that default aspect
 	ratio is properly updated. (Bug #532057.)

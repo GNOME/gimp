@@ -94,6 +94,7 @@ static void   gimp_crop_tool_image_changed       (GimpContext           *gimp_co
                                                   GimpCropTool          *crop_tool);
 
 static void   gimp_crop_tool_image_size_changed  (GimpCropTool          *crop_tool);
+static void   gimp_crop_tool_cancel              (GimpRectangleTool     *rect_tool);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpCropTool, gimp_crop_tool, GIMP_TYPE_DRAW_TOOL,
@@ -151,6 +152,7 @@ static void
 gimp_crop_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface)
 {
   iface->execute = gimp_crop_tool_execute;
+  iface->cancel  = gimp_crop_tool_cancel;
 }
 
 static void
@@ -434,4 +436,11 @@ gimp_crop_tool_image_size_changed (GimpCropTool *crop_tool)
 {
   gimp_crop_tool_update_option_defaults (crop_tool,
                                          FALSE);
+}
+
+static void
+gimp_crop_tool_cancel (GimpRectangleTool *rect_tool)
+{
+  gimp_crop_tool_update_option_defaults (GIMP_CROP_TOOL (rect_tool),
+                                         TRUE);
 }
