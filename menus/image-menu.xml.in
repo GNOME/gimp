@@ -553,13 +553,14 @@
       <menuitem action="tools-text" />
       <menuitem action="tools-gegl" />
       <separator />
-      <menuitem action="dialogs-toolbox" />
+      <menuitem action="windows-show-toolbox" />
       <menuitem action="context-colors-default" />
       <menuitem action="context-colors-swap" />
     </menu>
 
-    <menu action="dialogs-menu" name="Dialogs">
-      <menu action="dialogs-new-dock-menu" name="Create New Dock">
+    <menu action="windows-menu" name="Windows">
+      <menu action="windows-images-menu" name="Images" />
+      <menu action="windows-new-dock-menu" name="Create New Dock">
 	<menuitem action="dialogs-new-dock-lcp" />
 	<menuitem action="dialogs-new-dock-data" />
 	<menuitem action="dialogs-new-dock-stuff" />

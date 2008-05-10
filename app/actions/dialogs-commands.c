@@ -50,13 +50,6 @@ static void   dialogs_create_dock (GdkScreen           *screen,
 /*  public functions  */
 
 void
-dialogs_show_toolbox_cmd_callback (GtkAction *action,
-                                   gpointer   data)
-{
-  dialogs_show_toolbox ();
-}
-
-void
 dialogs_create_toplevel_cmd_callback (GtkAction   *action,
                                       const gchar *value,
                                       gpointer     data)
@@ -140,24 +133,6 @@ dialogs_create_stuff_cmd_callback (GtkAction *action,
 
   dialogs_create_dock (gtk_widget_get_screen (widget), FALSE,
                        tabs, G_N_ELEMENTS (tabs));
-}
-
-void
-dialogs_show_toolbox (void)
-{
-  if (! global_toolbox_factory->open_dialogs)
-    {
-      GtkWidget *toolbox;
-
-      toolbox = gimp_dialog_factory_dock_new (global_toolbox_factory,
-                                              gdk_screen_get_default ());
-
-      gtk_widget_show (toolbox);
-    }
-  else
-    {
-      gimp_dialog_factory_show_toolbox (global_toolbox_factory);
-    }
 }
 
 

@@ -35,9 +35,6 @@
 
 static const GimpActionEntry dialogs_actions[] =
 {
-  { "dialogs-menu",          NULL, N_("_Dialogs")         },
-  { "dialogs-new-dock-menu", NULL, N_("Create New Doc_k") },
-
   { "dialogs-new-dock-lcp", NULL,
     N_("_Layers, Channels & Paths"), NULL,
     N_("Open a Layers, Channels & Paths dock"),
@@ -54,13 +51,7 @@ static const GimpActionEntry dialogs_actions[] =
     N_("_Misc. Stuff"), NULL,
     N_("Open a dock containing miscellaneous dialogs"),
     G_CALLBACK (dialogs_create_stuff_cmd_callback),
-    GIMP_HELP_DOCK },
-
-  { "dialogs-toolbox", NULL,
-    N_("Tool_box"), "<control>B",
-    N_("Raise the toolbox"),
-    G_CALLBACK (dialogs_show_toolbox_cmd_callback),
-    GIMP_HELP_TOOLBOX }
+    GIMP_HELP_DOCK }
 };
 
 const GimpStringActionEntry dialogs_dockable_actions[] =

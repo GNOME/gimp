@@ -1,5 +1,38 @@
 2008-05-10  Michael Natterer  <mitch@gimp.org>
 
+	Start changing the "Dialogs" menu to "Windows", still incomplete.
+	Addresses bug #309707.
+
+	* app/actions/Makefile.am
+	* app/actions/windows-actions.[ch]
+	* app/actions/windows-commands.[ch]: new files which currently
+	hold the "show toolbox" action and callback and new code which
+	maintains automatically generated actions for accessing (raising)
+	all open images.
+
+	* app/actions/actions.c: register the new "windows" action group.
+
+	* app/actions/dialogs-actions.c
+	* app/actions/dialogs-commands.[ch]: remove "show toolbox"
+	action and callback and also the action for the "Disalogs" menu.
+
+	* app/menus/Makefile.am
+	* app/menus/windows-menu.[ch]: new files which create and destroy
+	the menu items for the image window actions.
+
+	* app/menus/menus.c: register the "windows" action group with
+	all UI managers that have the "dialogs" action group.
+
+	* app/menus/image-menu.c (image_menu_setup): call
+	windows_menu_setup().
+
+	* app/gui/gui.c: s/dialogs_show_toolbox/windows_show_toolbox/g
+
+	* menus/image-menu.xml.in: some minor s/dialogs/windows/
+	and add the "Images" submenu.
+
+2008-05-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplay.c (gimp_display_set_image): emit
 	notify::image.
 

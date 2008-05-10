@@ -152,7 +152,11 @@ libappactions_a_SOURCES = \
 	window-actions.c		\
 	window-actions.h		\
 	window-commands.c		\
-	window-commands.h
+	window-commands.h		\
+	windows-actions.c		\
+	windows-actions.h		\
+	windows-commands.c		\
+	windows-commands.h
 
 
 EXTRA_DIST = \

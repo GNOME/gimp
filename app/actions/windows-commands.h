@@ -16,35 +16,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include "config.h"
-
-#include <string.h>
-
-#include <gtk/gtk.h>
-
-#include "menus-types.h"
-
-#include "file-menu.h"
-#include "image-menu.h"
-#include "plug-in-menus.h"
-#include "window-menu.h"
-#include "windows-menu.h"
+#ifndef __WINDOWS_COMMANDS_H__
+#define __WINDOWS_COMMANDS_H__
 
 
-void
-image_menu_setup (GimpUIManager *manager,
-                  const gchar   *ui_path)
-{
-  gchar *path;
+void   windows_show_toolbox_cmd_callback (GtkAction *action,
+                                          gpointer   data);
+void   windows_show_display_cmd_callback (GtkAction *action,
+                                          gpointer   data);
 
-  if (! strcmp (ui_path, "/dummy-menubar"))
-    ui_path = "/dummy-menubar/image-popup";
+void   windows_show_toolbox              (void);
 
-  file_menu_setup (manager, ui_path);
-  windows_menu_setup (manager, ui_path);
-  plug_in_menus_setup (manager, ui_path);
 
-  path = g_strconcat (ui_path, "/View", NULL);
-  window_menu_setup (manager, "view", path);
-  g_free (path);
-}
+#endif /* __WINDOWS_COMMANDS_H__ */

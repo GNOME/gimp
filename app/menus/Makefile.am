@@ -17,7 +17,9 @@ libappmenus_a_SOURCES = \
 	tool-options-menu.c	\
 	tool-options-menu.h	\
 	window-menu.c		\
-	window-menu.h
+	window-menu.h		\
+	windows-menu.c		\
+	windows-menu.h
 
 
 EXTRA_DIST = \

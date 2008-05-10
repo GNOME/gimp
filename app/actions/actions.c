@@ -83,6 +83,7 @@
 #include "tools-actions.h"
 #include "vectors-actions.h"
 #include "view-actions.h"
+#include "windows-actions.h"
 
 #include "gimp-intl.h"
 
@@ -203,7 +204,10 @@ static GimpActionFactoryEntry action_groups[] =
     vectors_actions_update },
   { "view", N_("View"), GIMP_STOCK_VISIBLE,
     view_actions_setup,
-    view_actions_update }
+    view_actions_update },
+  { "windows", N_("Windows"), NULL,
+    windows_actions_setup,
+    windows_actions_update }
 };
 
 

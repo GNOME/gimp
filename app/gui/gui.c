@@ -72,7 +72,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "actions/actions.h"
-#include "actions/dialogs-commands.h"
+#include "actions/windows-commands.h"
 
 #include "menus/menus.h"
 
@@ -530,7 +530,7 @@ gui_restore_after_callback (Gimp               *gimp,
   if (gui_config->restore_session)
     session_restore (gimp);
 
-  dialogs_show_toolbox ();
+  windows_show_toolbox ();
 
   /*  move keyboard focus to the display  */
   gtk_window_present (GTK_WINDOW (display->shell));
@@ -759,7 +759,7 @@ gui_display_remove (GimpContainer *displays)
   /* show the toolbox when the last image window is closed */
 
   if (gimp_container_is_empty (displays))
-    dialogs_show_toolbox ();
+    windows_show_toolbox ();
 }
 
 static void
