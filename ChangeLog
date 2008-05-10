@@ -1,5 +1,11 @@
 2008-05-10  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptexttool.c (gimp_text_tool_confirm_response):
+	rerender the text layer as suggested in bug #532078.
+	(gimp_text_tool_confirm_dialog): minor dialog improvements.
+
+2008-05-10  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/flame/libifs.c: removed trailing whitespace.
 
 2008-05-10  Sven Neumann  <sven@gimp.org>

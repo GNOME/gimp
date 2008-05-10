@@ -1030,8 +1030,13 @@ gimp_text_tool_confirm_response (GtkWidget    *widget,
           gimp_text_tool_create_layer (text_tool, layer->text);
           break;
 
-        case GTK_RESPONSE_OK:
+        case GTK_RESPONSE_ACCEPT:
           gimp_text_tool_connect (text_tool, layer, layer->text);
+
+          /*  cause the text layer to be rerendered  */
+          if (text_tool->proxy)
+            g_object_notify (G_OBJECT (text_tool->proxy), "text");
+
           gimp_text_tool_editor (text_tool);
           break;
 
@@ -1064,12 +1069,11 @@ gimp_text_tool_confirm_dialog (GimpTextTool *text_tool)
                                      GIMP_STOCK_TEXT_LAYER,
                                      _("Confirm Text Editing"),
                                      tool->display->shell,
-                                     gimp_standard_help_func,
-                                     tool->tool_info->help_id,
+                                     gimp_standard_help_func, NULL,
 
-                                     GTK_STOCK_NEW,    RESPONSE_NEW,
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_EDIT,   GTK_RESPONSE_OK,
+                                     _("Create _New Layer"), RESPONSE_NEW,
+                                     GTK_STOCK_CANCEL,       GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_EDIT,         GTK_RESPONSE_ACCEPT,
 
                                      NULL);
 
