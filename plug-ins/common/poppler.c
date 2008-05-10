@@ -675,7 +675,15 @@ get_thumbnail (PopplerDocument *doc,
   if (! page)
     return NULL;
 
+  /* XXX: Remove conditional when we depend on poppler 0.8.0, but also
+   * add configure check to make sure POPPLER_WITH_GDK is enabled!
+   */
+#ifdef POPPLER_WITH_GDK
+  pixbuf = poppler_page_get_thumbnail_pixbuf (page);
+#else
   pixbuf = poppler_page_get_thumbnail (page);
+#endif
+
 
   if (! pixbuf)
     {

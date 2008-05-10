@@ -1,3 +1,7 @@
+2008-05-10  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/poppler.c: Support poppler 0.8.x.
+
 2008-05-10  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c
