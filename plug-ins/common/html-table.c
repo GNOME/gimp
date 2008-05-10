@@ -62,23 +62,23 @@
 
 
 #define SAVE_PROC      "file-gtm-save"
-#define PLUG_IN_BINARY "gtm"
+#define PLUG_IN_BINARY "html-table"
 
 /* Typedefs */
 
 typedef struct
 {
-  gchar captiontxt[256];
-  gchar cellcontent[256];
-  gchar clwidth[256];
-  gchar clheight[256];
-  gint  fulldoc;
-  gint  caption;
-  gint  border;
-  gint  spantags;
-  gint  tdcomp;
-  gint  cellpadding;
-  gint  cellspacing;
+  gchar    captiontxt[256];
+  gchar    cellcontent[256];
+  gchar    clwidth[256];
+  gchar    clheight[256];
+  gboolean fulldoc;
+  gboolean caption;
+  gint     border;
+  gboolean spantags;
+  gboolean tdcomp;
+  gint     cellpadding;
+  gint     cellspacing;
 } GTMValues;
 
 /* Variables */
@@ -87,40 +87,40 @@ static GTMValues gtmvals =
 {
   "Made with GIMP Table Magic",  /* caption text */
   "&nbsp;",  /* cellcontent text */
-  "",    /* cell width text */
-  "",    /* cell height text */
-  1,     /* fulldoc */
-  0,     /* caption */
-  2,     /* border */
-  0,     /* spantags */
-  0,     /* tdcomp */
-  4,     /* cellpadding */
-  0      /* cellspacing */
+  "",        /* cell width text */
+  "",        /* cell height text */
+  TRUE,      /* fulldoc */
+  FALSE,     /* caption */
+  2,         /* border */
+  FALSE,     /* spantags */
+  FALSE,     /* tdcomp */
+  4,         /* cellpadding */
+  0          /* cellspacing */
 };
 
 /* Declare some local functions */
 
-static void   query      (void);
-static void   run        (const gchar      *name,
-                          gint              nparams,
-                          const GimpParam  *param,
-                          gint             *nreturn_vals,
-                          GimpParam       **return_vals);
+static void     query                    (void);
+static void     run                      (const gchar      *name,
+                                          gint              nparams,
+                                          const GimpParam  *param,
+                                          gint             *nreturn_vals,
+                                          GimpParam       **return_vals);
 
-static gboolean save_image          (const gchar  *filename,
-                                     GimpDrawable *drawable);
-static gboolean save_dialog         (gint32        image_ID);
+static gboolean save_image               (const gchar      *filename,
+                                          GimpDrawable     *drawable);
+static gboolean save_dialog              (gint32            image_ID);
 
-static gboolean color_comp             (guchar    *buffer,
-                                        guchar    *buf2);
-static void   gtm_caption_callback     (GtkWidget *widget,
-                                        gpointer   data);
-static void   gtm_cellcontent_callback (GtkWidget *widget,
-                                        gpointer   data);
-static void   gtm_clwidth_callback     (GtkWidget *widget,
-                                        gpointer   data);
-static void   gtm_clheight_callback    (GtkWidget *widget,
-                                        gpointer   data);
+static gboolean color_comp               (guchar           *buffer,
+                                          guchar           *buf2);
+static void     gtm_caption_callback     (GtkWidget        *widget,
+                                          gpointer          data);
+static void     gtm_cellcontent_callback (GtkWidget        *widget,
+                                          gpointer          data);
+static void     gtm_clwidth_callback     (GtkWidget        *widget,
+                                          gpointer          data);
+static void     gtm_clheight_callback    (GtkWidget        *widget,
+                                          gpointer          data);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -265,10 +265,10 @@ save_image (const gchar  *filename,
     {
       height = g_strdup_printf (" HEIGHT=\"%s\" ", gtmvals.clheight);
     }
-  
+
   if (! width)
     width = g_strdup (" ");
-  
+
   if (! height)
     height = g_strdup (" ");
 
@@ -651,7 +651,9 @@ static gboolean
 color_comp (guchar *buffer,
 	    guchar *buf2)
 {
-  return buffer[0] == buf2[0] && buffer[1] == buf2[1] && buffer[2] == buf2[2];
+  return (buffer[0] == buf2[0] &&
+          buffer[1] == buf2[1] &&
+          buffer[2] == buf2[2]);
 }
 
 /*  Save interface functions  */

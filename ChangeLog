@@ -1,3 +1,12 @@
+2008-05-10  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/gtm.c: renamed...
+
+	* plug-ins/common/html-table.c: ...to this and cleaned it up.
+
+	* plugin-defs.pl: changed accordingly.
+	* Makefile.am: regenerated.
+
 2008-05-10  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/poppler.c: Support poppler 0.8.x.

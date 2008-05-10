@@ -101,10 +101,10 @@ libexec_PROGRAMS = \
 	glob \
 	gradient-map \
 	grid \
-	gtm \
 	guillotine \
 	header \
 	hot \
+	html-table \
 	illusion \
 	iwarp \
 	jigsaw \
@@ -1210,22 +1210,6 @@ grid_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-gtm_SOURCES = \
-	gtm.c
-
-gtm_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
 guillotine_SOURCES = \
 	guillotine.c
 
@@ -1259,6 +1243,22 @@ hot_SOURCES = \
 	hot.c
 
 hot_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+html_table_SOURCES = \
+	html-table.c
+
+html_table_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpmodule)	\
