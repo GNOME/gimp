@@ -1,3 +1,12 @@
+2008-05-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_button_press): Active the tool control
+	earlier.
+	(gimp_rectangle_tool_synthesize_motion): Bail out if the tool
+	control is active, we don't want to synthesize a motion in this
+	case as it emits unwanted rectangle-changed signals.
+
 2008-05-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdialogfactory.[ch]: add signals "dock-added" and

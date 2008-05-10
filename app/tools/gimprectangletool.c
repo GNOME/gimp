@@ -841,6 +841,8 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
 
   gimp_draw_tool_pause (draw_tool);
 
+  gimp_tool_control_activate (tool->control);
+
   if (display != tool->display)
     {
       if (gimp_draw_tool_is_active (draw_tool))
@@ -928,8 +930,6 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
   private->rect_adjusting = gimp_rectangle_tool_rect_adjusting_func (rect_tool);
 
   gimp_rectangle_tool_update_highlight (rect_tool);
-
-  gimp_tool_control_activate (tool->control);
 
   gimp_draw_tool_resume (draw_tool);
 }
@@ -2159,6 +2159,17 @@ gimp_rectangle_tool_synthesize_motion (GimpRectangleTool *rect_tool,
   GimpRectangleToolPrivate *private;
   GimpRectangleFunction     old_function;
 
+  /* We don't want to synthesize motions if the tool control is active
+   * since that means the mouse button is down and the rectangle will
+   * get updated in _motion anyway. The reason we want to prevent this
+   * function from executing is that is emits the rectangle-changed
+   * signal which we don't want in the middle of a rectangle change.
+   */
+  if (gimp_tool_control_is_active (GIMP_TOOL (rect_tool)->control))
+    {
+      return;
+    }
+ 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rect_tool);
 
   old_function = private->function;
