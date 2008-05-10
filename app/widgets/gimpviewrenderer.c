@@ -713,13 +713,13 @@ gimp_view_renderer_real_draw (GimpViewRenderer   *renderer,
     }
   else if (renderer->surface)
     {
-      cairo_content_t content = cairo_surface_get_content (renderer->surface);
-      gint            width   = renderer->width;
-      gint            height  = renderer->height;
+      cairo_content_t content  = cairo_surface_get_content (renderer->surface);
+      gint            width    = renderer->width;
+      gint            height   = renderer->height;
+      gint            offset_x = area->x + (area->width  - width)  / 2;
+      gint            offset_y = area->y + (area->height - height) / 2;
 
-      cairo_translate (cr,
-                       area->x + (area->width  - width)  / 2,
-                       area->y + (area->height - height) / 2);
+      cairo_translate (cr, offset_x, offset_y);
 
       cairo_rectangle (cr, 0, 0, width, height);
 
@@ -739,6 +739,8 @@ gimp_view_renderer_real_draw (GimpViewRenderer   *renderer,
 
       cairo_set_source_surface (cr, renderer->surface, 0, 0);
       cairo_fill (cr);
+
+      cairo_translate (cr, - offset_x, - offset_y);
     }
 }
 

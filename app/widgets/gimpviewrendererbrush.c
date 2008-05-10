@@ -193,8 +193,8 @@ gimp_view_renderer_brush_draw (GimpViewRenderer   *renderer,
 #define INDICATOR_WIDTH  7
 #define INDICATOR_HEIGHT 7
 
-  if (renderer->width  >= INDICATOR_WIDTH  * 2 &&
-      renderer->height >= INDICATOR_HEIGHT * 2)
+  if (renderer->width  > 2 * INDICATOR_WIDTH &&
+      renderer->height > 2 * INDICATOR_HEIGHT)
     {
       gboolean  pipe      = GIMP_IS_BRUSH_PIPE (renderer->viewable);
       gboolean  generated = GIMP_IS_BRUSH_GENERATED (renderer->viewable);
@@ -218,7 +218,7 @@ gimp_view_renderer_brush_draw (GimpViewRenderer   *renderer,
 
       gimp_viewable_get_size (renderer->viewable, &brush_width, &brush_height);
 
-      if (renderer->width  < brush_width || renderer->height < brush_height)
+      if (renderer->width < brush_width || renderer->height < brush_height)
         {
           cairo_move_to (cr,
                          area->x + area->width  - INDICATOR_WIDTH + 1,
