@@ -1,3 +1,9 @@
+2008-05-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpcroptool.c: Add a GimpRectangleTool::cancel()
+	implementation that updates default aspect ratio when cancelling a
+	crop.
+
 2008-05-09  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpcroptool.[ch]: Keep track of the current image and
