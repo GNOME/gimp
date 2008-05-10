@@ -127,7 +127,7 @@ query (void)
                           "Nick Lamb <njl195@zepler.org.uk>",
                           "January 1997",
                           N_("ZSoft PCX image"),
-			  NULL,
+                          NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
@@ -135,9 +135,9 @@ query (void)
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-pcx");
   gimp_register_magic_load_handler (LOAD_PROC,
-				    "pcx,pcc",
-				    "",
-				    "0&,byte,10,2&,byte,1,3&,byte,>0,3,byte,<9");
+                                    "pcx,pcc",
+                                    "",
+                                    "0&,byte,10,2&,byte,1,3&,byte,>0,3,byte,<9");
 
   gimp_install_procedure (SAVE_PROC,
                           "Saves files in ZSoft PCX file format",
@@ -146,7 +146,7 @@ query (void)
                           "Nick Lamb <njl195@zepler.org.uk>",
                           "January 1997",
                           N_("ZSoft PCX image"),
-			  "INDEXED, RGB, GRAY",
+                          "INDEXED, RGB, GRAY",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -184,15 +184,15 @@ run (const gchar      *name,
       image_ID = load_image (param[1].data.d_string);
 
       if (image_ID != -1)
-	{
-	  *nreturn_vals = 2;
-	  values[1].type = GIMP_PDB_IMAGE;
-	  values[1].data.d_image = image_ID;
-	}
+        {
+          *nreturn_vals = 2;
+          values[1].type = GIMP_PDB_IMAGE;
+          values[1].data.d_image = image_ID;
+        }
       else
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
@@ -201,51 +201,51 @@ run (const gchar      *name,
 
       /*  eventually export the image */
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "PCX",
-				      (GIMP_EXPORT_CAN_HANDLE_RGB |
-				       GIMP_EXPORT_CAN_HANDLE_GRAY |
-				       GIMP_EXPORT_CAN_HANDLE_INDEXED));
-	  if (export == GIMP_EXPORT_CANCEL)
-	    {
-	      values[0].data.d_status = GIMP_PDB_CANCEL;
-	      return;
-	    }
-	  break;
-	default:
-	  break;
-	}
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
+          export = gimp_export_image (&image_ID, &drawable_ID, "PCX",
+                                      (GIMP_EXPORT_CAN_HANDLE_RGB |
+                                       GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                       GIMP_EXPORT_CAN_HANDLE_INDEXED));
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
+            }
+          break;
+        default:
+          break;
+        }
 
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	  break;
+        {
+        case GIMP_RUN_INTERACTIVE:
+          break;
 
-	case GIMP_RUN_NONINTERACTIVE:
-	  if (nparams != 5)
-	    status = GIMP_PDB_CALLING_ERROR;
-	  break;
+        case GIMP_RUN_NONINTERACTIVE:
+          if (nparams != 5)
+            status = GIMP_PDB_CALLING_ERROR;
+          break;
 
-	case GIMP_RUN_WITH_LAST_VALS:
-	  break;
+        case GIMP_RUN_WITH_LAST_VALS:
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  if (! save_image (param[3].data.d_string, image_ID, drawable_ID))
-	    {
-	      status = GIMP_PDB_EXECUTION_ERROR;
-	    }
-	}
+        {
+          if (! save_image (param[3].data.d_string, image_ID, drawable_ID))
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
     }
   else
     {
@@ -391,13 +391,13 @@ load_image (const gchar *filename)
     {
       image= gimp_image_new (width, height, GIMP_RGB);
       layer= gimp_layer_new (image, _("Background"), width, height,
-			     GIMP_RGB_IMAGE, 100, GIMP_NORMAL_MODE);
+                             GIMP_RGB_IMAGE, 100, GIMP_NORMAL_MODE);
     }
   else
     {
       image= gimp_image_new (width, height, GIMP_INDEXED);
       layer= gimp_layer_new (image, _("Background"), width, height,
-			     GIMP_INDEXED_IMAGE, 100, GIMP_NORMAL_MODE);
+                             GIMP_INDEXED_IMAGE, 100, GIMP_NORMAL_MODE);
     }
   gimp_image_set_filename (image, filename);
   gimp_image_add_layer (image, layer, 0);
@@ -448,10 +448,10 @@ load_image (const gchar *filename)
 
 static void
 load_8 (FILE    *fp,
-	gint     width,
-	gint     height,
-	guchar  *buffer,
-	guint16  bytes)
+        gint     width,
+        gint     height,
+        guchar  *buffer,
+        guint16  bytes)
 {
   gint    row;
   guchar *line = g_new (guchar, bytes);
@@ -468,10 +468,10 @@ load_8 (FILE    *fp,
 
 static void
 load_24 (FILE    *fp,
-	 gint     width,
-	 gint     height,
-	 guchar  *buffer,
-	 guint16  bytes)
+         gint     width,
+         gint     height,
+         guchar  *buffer,
+         guint16  bytes)
 {
   gint    x, y, c;
   guchar *line = g_new (guchar, bytes);
@@ -479,13 +479,13 @@ load_24 (FILE    *fp,
   for (y = 0; y < height; buffer += width * 3, ++y)
     {
       for (c = 0; c < 3; ++c)
-	{
-	  readline (fp, line, bytes);
-	  for (x = 0; x < width; ++x)
-	    {
-	      buffer[x * 3 + c] = line[x];
-	    }
-	}
+        {
+          readline (fp, line, bytes);
+          for (x = 0; x < width; ++x)
+            {
+              buffer[x * 3 + c] = line[x];
+            }
+        }
       gimp_progress_update ((double) y / (double) height);
     }
 
@@ -494,10 +494,10 @@ load_24 (FILE    *fp,
 
 static void
 load_1 (FILE    *fp,
-	gint     width,
-	gint     height,
-	guchar  *buffer,
-	guint16  bytes)
+        gint     width,
+        gint     height,
+        guchar  *buffer,
+        guint16  bytes)
 {
   gint    x, y;
   guchar *line = g_new (guchar, bytes);
@@ -506,12 +506,12 @@ load_1 (FILE    *fp,
     {
       readline (fp, line, bytes);
       for (x = 0; x < width; ++x)
-	{
-	  if (line[x / 8] & (128 >> (x % 8)))
-	    buffer[x] = 1;
-	  else
-	    buffer[x] = 0;
-	}
+        {
+          if (line[x / 8] & (128 >> (x % 8)))
+            buffer[x] = 1;
+          else
+            buffer[x] = 0;
+        }
       gimp_progress_update ((double) y / (double) height);
     }
 
@@ -520,10 +520,10 @@ load_1 (FILE    *fp,
 
 static void
 load_4 (FILE    *fp,
-	gint     width,
-	gint     height,
-	guchar  *buffer,
-	guint16  bytes)
+        gint     width,
+        gint     height,
+        guchar  *buffer,
+        guint16  bytes)
 {
   gint    x, y, c;
   guchar *line = g_new (guchar, bytes);
@@ -533,14 +533,14 @@ load_4 (FILE    *fp,
       for (x = 0; x < width; ++x)
         buffer[x] = 0;
       for (c = 0; c < 4; ++c)
-	{
-	  readline(fp, line, bytes);
-	  for (x = 0; x < width; ++x)
-	    {
-	      if (line[x / 8] & (128 >> (x % 8)))
-		buffer[x] += (1 << c);
-	    }
-	}
+        {
+          readline(fp, line, bytes);
+          for (x = 0; x < width; ++x)
+            {
+              if (line[x / 8] & (128 >> (x % 8)))
+                buffer[x] += (1 << c);
+            }
+        }
       gimp_progress_update ((double) y / (double) height);
     }
 
@@ -549,31 +549,31 @@ load_4 (FILE    *fp,
 
 static void
 readline (FILE   *fp,
-	  guchar *buffer,
-	  gint    bytes)
+          guchar *buffer,
+          gint    bytes)
 {
   static guchar count = 0, value = 0;
 
   if (pcx_header.compression)
     {
       while (bytes--)
-	{
-	  if (count == 0)
-	    {
-	      value = fgetc (fp);
-	      if (value < 0xc0)
-		{
-		  count = 1;
-		}
-	      else
-		{
-		  count = value - 0xc0;
-		  value = fgetc (fp);
-		}
-	    }
-	  count--;
-	  *(buffer++) = value;
-	}
+        {
+          if (count == 0)
+            {
+              value = fgetc (fp);
+              if (value < 0xc0)
+                {
+                  count = 1;
+                }
+              else
+                {
+                  count = value - 0xc0;
+                  value = fgetc (fp);
+                }
+            }
+          count--;
+          *(buffer++) = value;
+        }
     }
   else
     {
@@ -583,8 +583,8 @@ readline (FILE   *fp,
 
 static gint
 save_image (const gchar *filename,
-	    gint32       image,
-	    gint32       layer)
+            gint32       image,
+            gint32       layer)
 {
   FILE          *fp;
   GimpPixelRgn   pixel_rgn;
@@ -696,11 +696,11 @@ save_image (const gchar *filename,
       fputc (0x0c, fp);
       fwrite (cmap, colors, 3, fp);
       for (i = colors; i < 256; i++)
-	{
-	  fputc (0, fp);
+        {
           fputc (0, fp);
           fputc (0, fp);
-	}
+          fputc (0, fp);
+        }
       break;
 
     case GIMP_RGB_IMAGE:
@@ -711,11 +711,11 @@ save_image (const gchar *filename,
       save_8 (fp, width, height, pixels);
       fputc (0x0c, fp);
       for (i = 0; i < 256; i++)
-	{
-	  fputc ((guchar) i, fp);
+        {
           fputc ((guchar) i, fp);
           fputc ((guchar) i, fp);
-	}
+          fputc ((guchar) i, fp);
+        }
       break;
 
     default:
@@ -736,9 +736,9 @@ save_image (const gchar *filename,
 
 static void
 save_8 (FILE   *fp,
-	gint    width,
-	gint    height,
-	guchar *buffer)
+        gint    width,
+        gint    height,
+        guchar *buffer)
 {
   int row;
 
@@ -752,9 +752,9 @@ save_8 (FILE   *fp,
 
 static void
 save_24 (FILE   *fp,
-	 gint    width,
-	 gint    height,
-	 guchar *buffer)
+         gint    width,
+         gint    height,
+         guchar *buffer)
 {
   int     x, y, c;
   guchar *line;
@@ -764,13 +764,13 @@ save_24 (FILE   *fp,
   for (y = 0; y < height; ++y)
     {
       for (c = 0; c < 3; ++c)
-	{
-	  for (x = 0; x < width; ++x)
-	    {
-	      line[x] = buffer[(3*x) + c];
-	    }
-	  writeline (fp, line, width);
-	}
+        {
+          for (x = 0; x < width; ++x)
+            {
+              line[x] = buffer[(3*x) + c];
+            }
+          writeline (fp, line, width);
+        }
       buffer += width * 3;
       gimp_progress_update ((double) y / (double) height);
     }
@@ -779,8 +779,8 @@ save_24 (FILE   *fp,
 
 static void
 writeline (FILE   *fp,
-	   guchar *buffer,
-	   gint    bytes)
+           guchar *buffer,
+           gint    bytes)
 {
   guchar  value, count;
   guchar *finish = buffer + bytes;
@@ -791,18 +791,18 @@ writeline (FILE   *fp,
       count = 1;
 
       while (buffer < finish && count < 63 && *buffer == value)
-	{
-	  count++; buffer++;
-	}
+        {
+          count++; buffer++;
+        }
 
       if (value < 0xc0 && count == 1)
-	{
-	  fputc (value, fp);
-	}
+        {
+          fputc (value, fp);
+        }
       else
-	{
-	  fputc (0xc0 + count, fp);
-	  fputc (value, fp);
-	}
+        {
+          fputc (0xc0 + count, fp);
+          fputc (value, fp);
+        }
     }
 }
