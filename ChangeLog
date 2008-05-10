@@ -1,3 +1,7 @@
+2008-05-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpactiongroup.h: fix parameter name.
+
 2008-05-10  DindinX  <dindinx@mitch.org>
 
 	* plug-ins/flame/cmap.c
