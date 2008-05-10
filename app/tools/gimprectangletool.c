@@ -1159,8 +1159,6 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
                                                  private->lasty);
 
           gimp_rectangle_tool_update_highlight (rectangle);
-
-          gimp_rectangle_tool_rectangle_changed (rectangle);
         }
     }
 
@@ -1184,8 +1182,14 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
 
           gimp_rectangle_tool_update_highlight (rectangle);
 
-          gimp_rectangle_tool_rectangle_changed (rectangle);
-
+          /* Only emit the rectangle-changed signal if the button is
+           * not down. If it is down, the signal will and shall be
+           * emited on _button_release instead.
+           */
+          if (! (state & GDK_BUTTON1_MASK))
+            {
+              gimp_rectangle_tool_rectangle_changed (rectangle);
+            }
         }
       else if (state & GDK_BUTTON1_MASK)
         {
@@ -1200,8 +1204,6 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
                                                     private->other_side_y);
 
           gimp_rectangle_tool_update_highlight (rectangle);
-
-          gimp_rectangle_tool_rectangle_changed (rectangle);
         }
     }
 

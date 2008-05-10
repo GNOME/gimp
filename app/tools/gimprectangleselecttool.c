@@ -755,14 +755,14 @@ gimp_rect_select_tool_cancel (GimpRectangleTool *rectangle)
 static gboolean
 gimp_rect_select_tool_rectangle_changed (GimpRectangleTool *rectangle)
 {
-  GimpTool *tool = GIMP_TOOL (rectangle);
+  GimpTool           *tool        = GIMP_TOOL (rectangle);
+  GimpRectSelectTool *rect_select = GIMP_RECT_SELECT_TOOL (tool);
 
   /* prevent change in selection from halting the tool */
   gimp_tool_control_set_preserve (tool->control, TRUE);
 
   if (tool->display && ! gimp_tool_control_is_active (tool->control))
     {
-      GimpRectSelectTool *rect_select = GIMP_RECT_SELECT_TOOL (tool);
       GimpImage          *image       = tool->display->image;
       GimpUndo           *undo;
       gint                x1, y1, x2, y2;
@@ -810,6 +810,8 @@ gimp_rect_select_tool_rectangle_changed (GimpRectangleTool *rectangle)
     }
 
   gimp_tool_control_set_preserve (tool->control, FALSE);
+
+  gimp_rect_select_tool_update_option_defaults (rect_select, FALSE);
 
   return TRUE;
 }

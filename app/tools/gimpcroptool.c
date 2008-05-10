@@ -77,6 +77,7 @@ static gboolean   gimp_crop_tool_execute         (GimpRectangleTool     *rectang
                                                   gint                   y,
                                                   gint                   w,
                                                   gint                   h);
+static gboolean gimp_crop_tool_rectangle_changed (GimpRectangleTool     *rectangle);
 
 static void   gimp_crop_tool_update_option_defaults
                                                  (GimpCropTool          *crop_tool,
@@ -151,8 +152,9 @@ gimp_crop_tool_class_init (GimpCropToolClass *klass)
 static void
 gimp_crop_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface)
 {
-  iface->execute = gimp_crop_tool_execute;
-  iface->cancel  = gimp_crop_tool_cancel;
+  iface->execute           = gimp_crop_tool_execute;
+  iface->cancel            = gimp_crop_tool_cancel;
+  iface->rectangle_changed = gimp_crop_tool_rectangle_changed;
 }
 
 static void
@@ -320,6 +322,20 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
 
       return TRUE;
     }
+
+  return TRUE;
+}
+
+/**
+ * gimp_crop_tool_rectangle_changed:
+ * @rectangle:
+ *
+ * Returns: 
+ **/
+static gboolean
+gimp_crop_tool_rectangle_changed (GimpRectangleTool *rectangle)
+{
+  gimp_crop_tool_update_option_defaults (GIMP_CROP_TOOL (rectangle), FALSE);
 
   return TRUE;
 }

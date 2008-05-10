@@ -1,5 +1,14 @@
 2008-05-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangletool.c: Fix emission of rectangle-changed
+	signal.
+
+	* app/tools/gimpcroptool.c
+	* app/tools/gimprectangleselecttool.c: Use the rectangle-changed
+	signal to update the default aspect ratio. Fixes bug #530519.
+
+2008-05-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Merged from trunk:
 
 	* app/tools/gimprectangletool.c
