@@ -516,7 +516,6 @@ gimp_transform_tool_key_press (GimpTool    *tool,
           gimp_transform_tool_response (NULL, GTK_RESPONSE_OK, trans_tool);
           return TRUE;
 
-        case GDK_Delete:
         case GDK_BackSpace:
           gimp_transform_tool_response (NULL, RESPONSE_RESET, trans_tool);
           return TRUE;

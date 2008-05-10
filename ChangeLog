@@ -1,3 +1,13 @@
+2008-05-10  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_events) (gimp_display_shell_canvas_tool_events):
+	don't reserve Delete for use by tools. Fixes bug #532116.
+
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimptransformtool.c: don't use Delete (you can still
+	use the Backspace key to achieve the same).
+
 2008-05-10  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/imagemap/Makefile.am: tweak the rules for rebuilding the

@@ -487,7 +487,6 @@ gimp_image_map_tool_key_press (GimpTool    *tool,
           gimp_image_map_tool_response (NULL, GTK_RESPONSE_OK, image_map_tool);
           return TRUE;
 
-        case GDK_Delete:
         case GDK_BackSpace:
           gimp_image_map_tool_response (NULL, RESPONSE_RESET, image_map_tool);
           return TRUE;

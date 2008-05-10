@@ -174,7 +174,7 @@ gimp_display_shell_events (GtkWidget        *widget,
           case GDK_Return:
           case GDK_KP_Enter:
           case GDK_ISO_Enter:
-          case GDK_BackSpace: case GDK_Delete:
+          case GDK_BackSpace:
             break;
 
           case GDK_Escape:
@@ -1258,7 +1258,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               case GDK_KP_Enter:
               case GDK_ISO_Enter:
               case GDK_BackSpace:
-              case GDK_Delete:
               case GDK_Escape:
               case GDK_Left:
               case GDK_Right:
