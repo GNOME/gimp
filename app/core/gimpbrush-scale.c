@@ -119,20 +119,16 @@ gimp_brush_scale_buf_up (TempBuf *brush_buf,
   TempBuf     *dest_brush_buf;
 
   pixel_region_init_temp_buf (&source_region, brush_buf,
-                              0, 0,
-                              brush_buf->width,
-                              brush_buf->height);
+                              0, 0, brush_buf->width, brush_buf->height);
 
   dest_brush_buf = temp_buf_new (dest_width, dest_height, brush_buf->bytes,
                                  0, 0, NULL);
 
   pixel_region_init_temp_buf (&dest_region, dest_brush_buf,
-                              0, 0,
-                              dest_width,
-                              dest_height);
+                              0, 0, dest_width, dest_height);
 
-  scale_region (&source_region, &dest_region, GIMP_INTERPOLATION_LINEAR,
-                NULL, NULL);
+  scale_region (&source_region, &dest_region,
+                GIMP_INTERPOLATION_LINEAR, NULL, NULL);
 
   return dest_brush_buf;
 }
@@ -176,9 +172,9 @@ gimp_brush_scale_mask_down (TempBuf *brush_mask,
   dx = dx0 = 0;
   dy = dy0 = 0;
 
-  for (i=0; i<dest_height; i++)
+  for (i = 0; i < dest_height; i++)
     {
-      for (j=0; j<dest_width; j++)
+      for (j = 0; j < dest_width; j++)
         {
           value  = 0;
 
@@ -334,7 +330,7 @@ gimp_brush_scale_pixmap_down (TempBuf *pixmap,
   dx = dx0 = 0;
   dy = dy0 = 0;
 
-  for (i=0; i<dest_height; i++)
+  for (i = 0; i < dest_height; i++)
     {
       for (j=0; j<dest_width; j++)
         {

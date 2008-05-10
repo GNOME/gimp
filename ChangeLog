@@ -1,5 +1,9 @@
 2008-05-10  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpbrush-scale.c: formatting.
+
+2008-05-10  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpviewrenderer.c (gimp_view_renderer_real_draw):
 	reset the translation on the cairo context. Resurrects brush
 	emblems which were drawn in the wrong position.
