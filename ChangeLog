@@ -2,6 +2,17 @@
 
 	Merged from trunk:
 
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_button_press): Active the tool control
+	earlier.
+	(gimp_rectangle_tool_synthesize_motion): Bail out if the tool
+	control is active, we don't want to synthesize a motion in this
+	case as it emits unwanted rectangle-changed signals.
+
+2008-05-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Merged from trunk:
+
 	* app/tools/gimprectangleselecttool.c
 	(gimp_rectangle_select_tool_cancel): Don't forget updating the
 	default aspect ratio when cancelling a rectangle select.
