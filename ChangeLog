@@ -2,7 +2,7 @@
 
 	* app/tools/gimprectangleselecttool.c
 	(gimp_rectangle_select_tool_cancel): Don't forget updating the
-	default apsect ratio when cancelling a rectangle select.
+	default aspect ratio when cancelling a rectangle select.
 
 2008-05-10  Sven Neumann  <sven@gimp.org>
 
