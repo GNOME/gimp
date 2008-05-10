@@ -42,7 +42,8 @@ gimp_log_init (void)
         { "dialog-factory", GIMP_LOG_DIALOG_FACTORY },
         { "menus",          GIMP_LOG_MENUS          },
         { "save-dialog",    GIMP_LOG_SAVE_DIALOG    },
-        { "image-scale",    GIMP_LOG_IMAGE_SCALE    }
+        { "image-scale",    GIMP_LOG_IMAGE_SCALE    },
+        { "shadow-tiles",   GIMP_LOG_SHADOW_TILES   }
       };
 
       gimp_log_flags = g_parse_debug_string (env_log_val,

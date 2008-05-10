@@ -1,5 +1,12 @@
 2008-05-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimp-log.[ch]: add SHADOW_TILES log domain.
+
+	* app/plug-in/gimpplugin-cleanup.c (gimp_plug_in_cleanup_item):
+	turn commented-out g_printerr() into a GIMP_LOG()
+
+2008-05-10  Michael Natterer  <mitch@gimp.org>
+
 	Applied modified patch from Alexia Death which adds velocity
 	support to paint tools in the spirit of the pressure support we
 	already have. Fixes bug #529431.
@@ -10,7 +17,7 @@
 
 	* app/paint/gimppaintoptions.[ch]: add velocity options in the
 	same way as there are pressure options. Add utility functions
-	which return dynamic opatity and dynamic rate according to the the
+	which return dynamic opatity and dynamic rate according to the
 	option's settings and some GimpCoords' pressure and velocity.
 
 	* app/tools/gimppaintoptions-gui.c: add GUI for the velocity
