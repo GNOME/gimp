@@ -1,3 +1,8 @@
+2008-05-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplay.c (gimp_display_set_image): emit
+	notify::image.
+
 2008-05-10  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangleselecttool.c
