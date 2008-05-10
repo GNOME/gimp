@@ -1,5 +1,9 @@
 2008-05-10  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/flame/libifs.c: removed trailing whitespace.
+
+2008-05-10  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpbrush-scale.c: formatting.
 
 2008-05-10  Sven Neumann  <sven@gimp.org>

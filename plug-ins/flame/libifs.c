@@ -196,7 +196,7 @@ void iterate(cp, n, fuse, points)
          p[0] += v * nx;
          p[1] += v * ny;
       }
-      
+
       v = vari[8];
       if (v > 0.0) {
          /* heart */
@@ -318,7 +318,7 @@ void iterate(cp, n, fuse, points)
          p[0] += v * nx;
          p[1] += v * ny;
       }
-      
+
       v = vari[16];
       if ( v > 0.0 ) {
          /* fisheye */
@@ -492,7 +492,7 @@ void iterate(cp, n, fuse, points)
          p[0] += r2 * cosa;
          p[1] += r2 * sina;
       }
-      
+
       /* if fuse over, store it */
       if (i >= 0) {
 	 points[i][0] = p[0];
