@@ -23,13 +23,16 @@ Changes in GIMP 2.4.6
 - fixed handling of "argc-lower-val-y" PDB parameter in Curve Bend plug-in
 - fixed overlap problem in Hue-Saturation tool (bug #528160)
 - fixed asymmetry in Unsharp Mask plug-in (bug #530077)
+- don't show non-existant color profiles in the selector (bug #528958)
+- fixed issues with default aspect ratio in the Crop tool (bug #532057)
 - added new translations (ca@valencia, nn)
 - translation fixes and updates
   (ar, ca, de, el, es, fi, fr, hu, it, ko, pl, pt_BR, sv)
 
 Contributors:
 
-   Sven Neumann, Michael Natterer, Martin Nordholts, Bill Skaggs
+   Sven Neumann, Michael Natterer, Martin Nordholts, Bill Skaggs,
+   Michael Deal
 
 
 Changes in GIMP 2.4.5
