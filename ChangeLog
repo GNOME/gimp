@@ -1,4 +1,14 @@
+2008-05-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Merged from trunk:
+
+	* app/tools/gimprectangleselecttool.c
+	(gimp_rectangle_select_tool_cancel): Don't forget updating the
+	default aspect ratio when cancelling a rectangle select.
+
 2008-05-10  Manish Singh  <yosh@gimp.org>
+
+	Merged from trunk:
 
 	* plug-ins/common/poppler.c: Support poppler 0.8.x.
 
