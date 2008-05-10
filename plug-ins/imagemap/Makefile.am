@@ -157,32 +157,49 @@ CLEANFILES = y.tab.c y.tab.h
 LEX=flex
 YACC=bison -y
 
-imap_cern_lex.c: imap_cern.l
+REBUILD_FILES = \
+	imap_cern_lex.c.rebuild \
+	imap_csim_lex.c.rebuild \
+	imap_ncsa_lex.c.rebuild \
+	imap_cern_parse.c.rebuild \
+	imap_csim_parse.c.rebuild \
+	imap_ncsa_parse.c.rebuild \
+	imap_cern_parse.h.rebuild \
+	imap_csim_parse.h.rebuild \
+	imap_ncsa_parse.h.rebuild
+
+rebuild-parsers: $(REBUILD_FILES)
+	@list='$(REBUILD_FILES)'; for p in $$list; do \
+	  newfile="`echo $$p | sed -e 's|.rebuild||'`"; \
+	  cp $$p $(srcdir)/$$newfile; \
+	done
+
+imap_cern_lex.c.rebuild: imap_cern.l
 	@$(RM) $@
 	$(LEX) $(LFLAGS) -Pcern_ -i -t $< > $@
-imap_csim_lex.c: imap_csim.l
+imap_csim_lex.c.rebuild: imap_csim.l
 	@$(RM) $@
 	$(LEX) $(LFLAGS) -Pcsim_ -i -t $< > $@
-imap_ncsa_lex.c: imap_ncsa.l
+imap_ncsa_lex.c.rebuild: imap_ncsa.l
 	@$(RM) $@
 	$(LEX) $(LFLAGS) -Pncsa_ -i -t $< > $@
 
-imap_cern_parse.c: imap_cern.y
+imap_cern_parse.c.rebuild: imap_cern.y
 	$(YACC) $(YFLAGS) -d -p cern_ $<
 	mv -f y.tab.c $@
-imap_csim_parse.c: imap_csim.y
+imap_csim_parse.c.rebuild: imap_csim.y
 	$(YACC) $(YFLAGS) -d -p csim_ $<
 	mv -f y.tab.c $@
-imap_ncsa_parse.c: imap_ncsa.y
+imap_ncsa_parse.c.rebuild: imap_ncsa.y
 	$(YACC) $(YFLAGS) -d -p ncsa_ $<
 	mv -f y.tab.c $@
 
-imap_cern_parse.h: imap_cern.y
+imap_cern_parse.h.rebuild: imap_cern.y
 	$(YACC) $(YFLAGS) -d -p cern_ $<
 	mv -f y.tab.h $@
-imap_csim_parse.h: imap_csim.y
+imap_csim_parse.h.rebuild: imap_csim.y
 	$(YACC) $(YFLAGS) -d -p csim_ $<
 	mv -f y.tab.h $@
-imap_ncsa_parse.h: imap_ncsa.y
+imap_ncsa_parse.h.rebuild: imap_ncsa.y
 	$(YACC) $(YFLAGS) -d -p ncsa_ $<
 	mv -f y.tab.h $@

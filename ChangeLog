@@ -1,3 +1,9 @@
+2008-05-10  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/imagemap/Makefile.am: tweak the rules for rebuilding the
+	parser files from lex/yacc source so that they are explicit instead
+	of potentially being run implicitly because the file dates are off.
+
 2008-05-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimp-log.[ch]: add SHADOW_TILES log domain.
