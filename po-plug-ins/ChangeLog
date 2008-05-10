@@ -1,3 +1,9 @@
+2008-05-10  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: gtm.c was renamed to html-table.c.
+
+	* de.po: updated German translation.
+
 2008-05-7  Djihed Afifi <djihed@gmail.com> 
 
 	* ar.po: Updated Arabic Translation by .
