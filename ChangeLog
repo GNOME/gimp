@@ -2,6 +2,15 @@
 
 	Merged from trunk:
 
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_button_release): Update the tool options
+	after a release; the rectangle might change if a rubber-banding is
+	cancelled.
+
+2008-05-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Merged from trunk:
+
 	* app/tools/gimpcroptool.c: Add a GimpRectangleTool::cancel()
 	implementation that updates default aspect ratio when cancelling a
 	crop.
