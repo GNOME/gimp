@@ -31,6 +31,7 @@
 #include "widgets-types.h"
 
 #include "core/gimpcontext.h"
+#include "core/gimpmarshal.h"
 
 #include "gimpcursor.h"
 #include "gimpdialogfactory.h"
@@ -41,6 +42,14 @@
 #include "gimpsessioninfo.h"
 
 #include "gimp-log.h"
+
+
+enum
+{
+  DOCK_ADDED,
+  DOCK_REMOVED,
+  LAST_SIGNAL
+};
 
 
 static void   gimp_dialog_factory_dispose             (GObject           *object);
@@ -91,6 +100,8 @@ G_DEFINE_TYPE (GimpDialogFactory, gimp_dialog_factory, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_dialog_factory_parent_class
 
+static guint factory_signals[LAST_SIGNAL] = { 0 };
+
 static gboolean dialogs_shown = TRUE;  /* FIXME */
 
 
@@ -103,6 +114,26 @@ gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass)
   object_class->finalize = gimp_dialog_factory_finalize;
 
   klass->factories = g_hash_table_new (g_str_hash, g_str_equal);
+
+  factory_signals[DOCK_ADDED] =
+    g_signal_new ("dock-added",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpDialogFactoryClass, dock_added),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_DOCK);
+
+  factory_signals[DOCK_REMOVED] =
+    g_signal_new ("dock-removed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpDialogFactoryClass, dock_removed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_DOCK);
 }
 
 static void
@@ -872,6 +903,8 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
           factory->session_infos = g_list_append (factory->session_infos, info);
         }
+
+      g_signal_emit (factory, factory_signals[DOCK_ADDED], 0, dialog);
     }
 
   factory->open_dialogs = g_list_prepend (factory->open_dialogs, dialog);
@@ -996,13 +1029,15 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
                                                   gimp_dialog_factory_dialog_configure,
                                                   factory);
 
-          /*  don't save session info for empty docks  */
           if (GIMP_IS_DOCK (dialog))
             {
+              /*  don't save session info for empty docks  */
               factory->session_infos = g_list_remove (factory->session_infos,
                                                       session_info);
-
               gimp_session_info_free (session_info);
+
+              g_signal_emit (factory, factory_signals[DOCK_REMOVED], 0,
+                             dialog);
             }
 
           break;

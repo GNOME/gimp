@@ -1,5 +1,14 @@
 2008-05-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdialogfactory.[ch]: add signals "dock-added" and
+	"dock-removed".
+
+	(gimp_dialog_factory_add_dialog)
+	(gimp_dialog_factory_remove_dialog): emit them when docks get
+	added and removed.
+
+2008-05-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/windows-actions.c: renamed the "Create New Dock"
 	submenu to simply "Docks". Its contents are about ti change soon.
 
