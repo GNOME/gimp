@@ -27,6 +27,8 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-coords.h"
 
+/* Velocity unit is screen pixels per millisecond we pass to tools as 1. */
+#define VELOCITY_UNIT 3.0
 
 /*  public functions  */
 
@@ -259,12 +261,22 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
         }
       else
         {
-          coords->velocity =
-            (coords->distance / (gdouble) coords->delta_time) / 10;
+          /* We need to calculate the velocity in screen coordinates
+           * for human interaction
+           */
+          gdouble screen_distance = (coords->distance *
+                                     MIN (shell->scale_x, shell->scale_y));
 
-          /* A little smooth on this too, feels better in tools this way. */
-          coords->velocity = (shell->last_coords.velocity * (1 - SMOOTH_FACTOR)
-                              + coords->velocity * SMOOTH_FACTOR);
+          /* Calculate raw valocity */
+          coords->velocity = ((screen_distance / (gdouble) coords->delta_time) /
+                              VELOCITY_UNIT);
+
+          /* Adding velocity dependent smooth, feels better in tools this way. */
+          coords->velocity = (shell->last_coords.velocity *
+                              (1 - MIN (SMOOTH_FACTOR, coords->velocity)) +
+                              coords->velocity *
+                              MIN (SMOOTH_FACTOR, coords->velocity));
+
           /* Speed needs upper limit */
           coords->velocity = MIN (coords->velocity, 1.0);
         }

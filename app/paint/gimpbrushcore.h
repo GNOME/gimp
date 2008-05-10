@@ -27,8 +27,6 @@
 #define BRUSH_CORE_SOLID_SUBSAMPLE  2
 #define BRUSH_CORE_JITTER_LUTSIZE   360
 
-#define PRESSURE_SCALE              1.5
-
 
 #define GIMP_TYPE_BRUSH_CORE            (gimp_brush_core_get_type ())
 #define GIMP_BRUSH_CORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH_CORE, GimpBrushCore))
@@ -128,5 +126,6 @@ void    gimp_brush_core_color_area_with_pixmap
 
 TempBuf * gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
                                           GimpBrushApplicationMode  brush_hardness);
+
 
 #endif  /*  __GIMP_BRUSH_CORE_H__  */

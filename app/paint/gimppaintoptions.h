@@ -31,11 +31,23 @@
 
 
 typedef struct _GimpPressureOptions GimpPressureOptions;
+typedef struct _GimpVelocityOptions GimpVelocityOptions;
 typedef struct _GimpFadeOptions     GimpFadeOptions;
 typedef struct _GimpJitterOptions   GimpJitterOptions;
 typedef struct _GimpGradientOptions GimpGradientOptions;
 
 struct _GimpPressureOptions
+{
+  gboolean  expanded;
+  gboolean  opacity;
+  gboolean  hardness;
+  gboolean  rate;
+  gboolean  size;
+  gboolean  inverse_size;
+  gboolean  color;
+};
+
+struct _GimpVelocityOptions
 {
   gboolean  expanded;
   gboolean  opacity;
@@ -76,6 +88,8 @@ struct _GimpGradientOptions
 #define GIMP_IS_PAINT_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAINT_OPTIONS))
 #define GIMP_PAINT_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAINT_OPTIONS, GimpPaintOptionsClass))
 
+#define GIMP_PAINT_PRESSURE_SCALE 1.5
+#define GIMP_PAINT_VELOCITY_SCALE 1.0
 
 typedef struct _GimpPaintOptionsClass GimpPaintOptionsClass;
 
@@ -93,6 +107,7 @@ struct _GimpPaintOptions
   gboolean                  hard;
 
   GimpPressureOptions      *pressure_options;
+  GimpVelocityOptions      *velocity_options;
   GimpFadeOptions          *fade_options;
   GimpJitterOptions        *jitter_options;
   GimpGradientOptions      *gradient_options;
@@ -124,12 +139,23 @@ gdouble          gimp_paint_options_get_jitter (GimpPaintOptions *paint_options,
 
 gboolean gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
                                                 GimpImage        *image,
-                                                gdouble           pressure,
+                                                gdouble           grad_point,
                                                 gdouble           pixel_dist,
                                                 GimpRGB          *color);
 
 GimpBrushApplicationMode
              gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options);
+
+gdouble    gimp_paint_options_get_dynamics_mix (gdouble          mix1,
+                                                gdouble          mix2);
+
+gdouble gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
+                                                const GimpCoords *coords,
+                                                gboolean          use_pressure);
+
+gdouble    gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
+                                                const GimpCoords *coords,
+                                                gboolean          use_pressure);
 
 
 #endif  /*  __GIMP_PAINT_OPTIONS_H__  */

@@ -1,3 +1,53 @@
+2008-05-10  Michael Natterer  <mitch@gimp.org>
+
+	Applied modified patch from Alexia Death which adds velocity
+	support to paint tools in the spirit of the pressure support we
+	already have. Fixes bug #529431.
+
+	* app/display/gimpdisplayshell-coords.c
+	(gimp_display_shell_eval_event): tweak velocity calculation to
+	work in screen coordinates.
+
+	* app/paint/gimppaintoptions.[ch]: add velocity options in the
+	same way as there are pressure options. Add utility functions
+	which return dynamic opatity and dynamic rate according to the the
+	option's settings and some GimpCoords' pressure and velocity.
+
+	* app/tools/gimppaintoptions-gui.c: add GUI for the velocity
+	options.
+
+	* app/paint/gimpbrushcore.h: remove PRESSURE_SCALE define, it's
+	now in gimppaintoptions.h.
+
+	* app/paint/gimpbrushcore.c (gimp_brush_core_interpolate):
+	inerpolate velocity too.
+
+	(gimp_brush_core_calc_brush_scale): take velocity into account.
+
+	(gimp_brush_core_get_brush_mask): always pressurize the mask in
+	the GIMP_BRUSH_PRESSURE because there always is velocity (unlike
+	pressure which is only there on tablets).
+
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimpheal.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimpsmudge.c: get opacity and rate from the new paint
+	options utility functions which take both pressure and velocity
+	into account.
+
+	* app/paint/gimppaintbrush.c: take velocity into account when
+	calculating the gradient color offset.
+
+	* app/paint/gimpairbrush.c: do some additional fiddling with
+	velocity in the asynchronous airbrush timeout.
+
+	* app/paint/gimpairbrushoptions.c: override the velocity-size
+	property and have it default to FALSE.
+
 2008-05-10  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpcroptool.c: Add a GimpRectangleTool::cancel()
@@ -69,8 +119,7 @@
 	(gimp_display_shell_canvas_tool_events): call it here instead and
 	add comments about how BUTTON_PRESS and FOCUS_IN interact.
 
-	Also return TRUE from BUTTON_PRESS, BUTTON_RELEASE and
-	MOTION_NOTIFY.
+	Return TRUE from BUTTON_PRESS, BUTTON_RELEASE and MOTION_NOTIFY.
 
 2008-05-08  Sven Neumann  <sven@gimp.org>
 

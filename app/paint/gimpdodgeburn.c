@@ -162,15 +162,14 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                         GimpDrawable     *drawable,
                         GimpPaintOptions *paint_options)
 {
-  GimpDodgeBurn        *dodgeburn        = GIMP_DODGE_BURN (paint_core);
-  GimpContext          *context          = GIMP_CONTEXT (paint_options);
-  GimpPressureOptions  *pressure_options = paint_options->pressure_options;
-  GimpImage            *image;
-  TempBuf              *area;
-  TempBuf              *orig;
-  PixelRegion           srcPR, destPR, tempPR;
-  guchar               *temp_data;
-  gdouble               opacity;
+  GimpDodgeBurn *dodgeburn = GIMP_DODGE_BURN (paint_core);
+  GimpContext   *context   = GIMP_CONTEXT (paint_options);
+  GimpImage     *image;
+  TempBuf       *area;
+  TempBuf       *orig;
+  PixelRegion    srcPR, destPR, tempPR;
+  guchar        *temp_data;
+  gdouble        opacity;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -236,8 +235,9 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
 
   g_free (temp_data);
 
-  if (pressure_options->opacity)
-    opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
+  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options,
+                                                     &paint_core->cur_coords,
+                                                     paint_core->use_pressure);
 
   /* Replace the newly dodgedburned area (canvas_buf) to the image */
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,

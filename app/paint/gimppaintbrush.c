@@ -108,11 +108,13 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   GimpBrushCore            *brush_core       = GIMP_BRUSH_CORE (paint_core);
   GimpContext              *context          = GIMP_CONTEXT (paint_options);
   GimpPressureOptions      *pressure_options = paint_options->pressure_options;
+  GimpVelocityOptions      *velocity_options = paint_options->velocity_options;
   GimpImage                *image;
   GimpRGB                   gradient_color;
   TempBuf                  *area;
   guchar                    col[MAX_CHANNELS];
   GimpPaintApplicationMode  paint_appl_mode;
+  gdouble                   colmix = 0.0;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -125,11 +127,28 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   if (! area)
     return;
 
+  if (paint_core->use_pressure &&
+      pressure_options->color  &&
+      velocity_options->color)
+    {
+      colmix = (paint_core->cur_coords.pressure * 0.5 +
+                paint_core->cur_coords.velocity * 0.5);
+    }
+  else if (paint_core->use_pressure &&
+           pressure_options->color)
+    {
+      colmix = paint_core->cur_coords.pressure;
+    }
+  else if (velocity_options->color)
+    {
+      colmix = paint_core->cur_coords.velocity;
+    }
+
   paint_appl_mode = paint_options->application_mode;
 
   /* optionally take the color from the current gradient */
   if (gimp_paint_options_get_gradient_color (paint_options, image,
-                                             paint_core->cur_coords.pressure,
+                                             colmix,
                                              paint_core->pixel_dist,
                                              &gradient_color))
     {
@@ -169,8 +188,9 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                     area->bytes);
     }
 
-  if (paint_core->use_pressure && pressure_options->opacity)
-    opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
+  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options,
+                                                     &paint_core->cur_coords,
+                                                     paint_core->use_pressure);
 
   /* finally, let the brush core paste the colored area on the canvas */
   gimp_brush_core_paste_canvas (brush_core, drawable,

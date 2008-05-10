@@ -54,6 +54,9 @@
 static GtkWidget * pressure_options_gui (GimpPressureOptions *pressure,
                                          GimpPaintOptions    *paint_options,
                                          GType                tool_type);
+static GtkWidget * velocity_options_gui (GimpVelocityOptions *pressure,
+                                         GimpPaintOptions    *paint_options,
+                                         GType                tool_type);
 static GtkWidget * fade_options_gui     (GimpFadeOptions     *fade,
                                          GimpPaintOptions    *paint_options,
                                          GType                tool_type);
@@ -64,6 +67,7 @@ static GtkWidget * gradient_options_gui (GimpGradientOptions *gradient,
 static GtkWidget * jitter_options_gui   (GimpJitterOptions   *jitter,
                                          GimpPaintOptions    *paint_options,
                                          GType                tool_type);
+
 
 /*  public functions  */
 
@@ -145,6 +149,14 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     }
 
   frame = pressure_options_gui (options->pressure_options,
+                                options, tool_type);
+  if (frame)
+    {
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+    }
+
+  frame = velocity_options_gui (options->velocity_options,
                                 options, tool_type);
   if (frame)
     {
@@ -310,6 +322,113 @@ pressure_options_gui (GimpPressureOptions *pressure,
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL))
     {
       button = gimp_prop_check_button_new (config, "pressure-color",
+                                           _("Color"));
+      gtk_container_add (GTK_CONTAINER (wbox), button);
+      gtk_widget_show (button);
+    }
+
+  return frame;
+}
+
+static GtkWidget *
+velocity_options_gui (GimpVelocityOptions *velocity,
+                      GimpPaintOptions    *paint_options,
+                      GType                tool_type)
+{
+  GObject   *config = G_OBJECT (paint_options);
+  GtkWidget *frame  = NULL;
+  GtkWidget *wbox   = NULL;
+  GtkWidget *button;
+
+  if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
+    {
+      GtkWidget *inner_frame;
+
+      frame = gimp_prop_expander_new (G_OBJECT (paint_options),
+                                      "velocity-expanded",
+                                      _("Velocity sensitivity"));
+
+      inner_frame = gimp_frame_new ("<expander>");
+      gtk_container_add (GTK_CONTAINER (frame), inner_frame);
+      gtk_widget_show (inner_frame);
+
+      wbox = gtk_hwrap_box_new (FALSE);
+      gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (wbox), 4);
+      gtk_container_add (GTK_CONTAINER (inner_frame), wbox);
+      gtk_widget_show (wbox);
+    }
+
+  /*  the opacity toggle  */
+  if ((g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) &&
+      (tool_type != GIMP_TYPE_AIRBRUSH_TOOL))            ||
+      tool_type == GIMP_TYPE_CLONE_TOOL                  ||
+      tool_type == GIMP_TYPE_HEAL_TOOL                   ||
+      tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL      ||
+      tool_type == GIMP_TYPE_DODGE_BURN_TOOL             ||
+      tool_type == GIMP_TYPE_ERASER_TOOL)
+    {
+      button = gimp_prop_check_button_new (config, "velocity-opacity",
+                                           _("Opacity"));
+      gtk_container_add (GTK_CONTAINER (wbox), button);
+      gtk_widget_show (button);
+    }
+
+  /*  the pressure toggle  */
+  if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL          ||
+      tool_type == GIMP_TYPE_CLONE_TOOL             ||
+      tool_type == GIMP_TYPE_HEAL_TOOL              ||
+      tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL ||
+      tool_type == GIMP_TYPE_CONVOLVE_TOOL          ||
+      tool_type == GIMP_TYPE_DODGE_BURN_TOOL        ||
+      tool_type == GIMP_TYPE_PAINTBRUSH_TOOL        ||
+      tool_type == GIMP_TYPE_SMUDGE_TOOL)
+    {
+      button = gimp_prop_check_button_new (config, "velocity-hardness",
+                                           _("Hardness"));
+      gtk_container_add (GTK_CONTAINER (wbox), button);
+      gtk_widget_show (button);
+    }
+
+  /*  the rate toggle */
+  if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL ||
+      tool_type == GIMP_TYPE_CONVOLVE_TOOL ||
+      tool_type == GIMP_TYPE_SMUDGE_TOOL)
+    {
+      button = gimp_prop_check_button_new (config, "velocity-rate",
+                                           _("Rate"));
+      gtk_container_add (GTK_CONTAINER (wbox), button);
+      gtk_widget_show (button);
+    }
+
+  /*  the size toggle  */
+  if (tool_type == GIMP_TYPE_CLONE_TOOL             ||
+      tool_type == GIMP_TYPE_HEAL_TOOL              ||
+      tool_type == GIMP_TYPE_PERSPECTIVE_CLONE_TOOL ||
+      tool_type == GIMP_TYPE_CONVOLVE_TOOL          ||
+      tool_type == GIMP_TYPE_DODGE_BURN_TOOL        ||
+      tool_type == GIMP_TYPE_ERASER_TOOL            ||
+      tool_type == GIMP_TYPE_PAINTBRUSH_TOOL        ||
+      tool_type == GIMP_TYPE_PENCIL_TOOL)
+    {
+      button = gimp_prop_check_button_new (config, "velocity-size",
+                                           _("Size"));
+      gtk_container_add (GTK_CONTAINER (wbox), button);
+      gtk_widget_show (button);
+    }
+
+  /* the inverse size toggle */
+  if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL)
+    {
+      button = gimp_prop_check_button_new (config, "velocity-inverse-size",
+                                           _("Size"));
+      gtk_container_add (GTK_CONTAINER (wbox), button);
+      gtk_widget_show (button);
+    }
+
+  /*  the color toggle  */
+  if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL))
+    {
+      button = gimp_prop_check_button_new (config, "velocity-color",
                                            _("Color"));
       gtk_container_add (GTK_CONTAINER (wbox), button);
       gtk_widget_show (button);

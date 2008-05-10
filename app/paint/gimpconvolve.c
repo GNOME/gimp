@@ -118,11 +118,10 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                       GimpDrawable     *drawable,
                       GimpPaintOptions *paint_options)
 {
-  GimpConvolve        *convolve         = GIMP_CONVOLVE (paint_core);
-  GimpBrushCore       *brush_core       = GIMP_BRUSH_CORE (paint_core);
-  GimpConvolveOptions *options          = GIMP_CONVOLVE_OPTIONS (paint_options);
-  GimpContext         *context          = GIMP_CONTEXT (paint_options);
-  GimpPressureOptions *pressure_options = paint_options->pressure_options;
+  GimpConvolve        *convolve   = GIMP_CONVOLVE (paint_core);
+  GimpBrushCore       *brush_core = GIMP_BRUSH_CORE (paint_core);
+  GimpConvolveOptions *options    = GIMP_CONVOLVE_OPTIONS (paint_options);
+  GimpContext         *context    = GIMP_CONTEXT (paint_options);
   GimpImage           *image;
   TempBuf             *area;
   PixelRegion          srcPR;
@@ -154,8 +153,9 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 
   rate = options->rate;
 
-  if (pressure_options->rate)
-    rate *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
+  rate *= gimp_paint_options_get_dynamic_rate (paint_options,
+                                               &paint_core->cur_coords,
+                                               paint_core->use_pressure);
 
   gimp_convolve_calculate_matrix (convolve, options->type, rate);
 

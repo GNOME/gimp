@@ -540,9 +540,9 @@ gimp_heal_motion (GimpSourceCore   *source_core,
 
   temp_buf_free (temp);
 
-  /* check the brush pressure */
-  if (paint_options->pressure_options->opacity)
-    opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
+  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options,
+                                                     &paint_core->cur_coords,
+                                                     paint_core->use_pressure);
 
   /* replace the canvas with our healed data */
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core),

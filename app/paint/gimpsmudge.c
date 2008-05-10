@@ -228,16 +228,16 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                     GimpDrawable     *drawable,
                     GimpPaintOptions *paint_options)
 {
-  GimpSmudge          *smudge           = GIMP_SMUDGE (paint_core);
-  GimpSmudgeOptions   *options          = GIMP_SMUDGE_OPTIONS (paint_options);
-  GimpContext         *context          = GIMP_CONTEXT (paint_options);
-  GimpPressureOptions *pressure_options = paint_options->pressure_options;
-  GimpImage           *image;
-  TempBuf             *area;
-  PixelRegion          srcPR, destPR, tempPR;
-  gdouble              rate;
-  gdouble              opacity;
-  gint                 x, y, w, h;
+  GimpSmudge        *smudge  = GIMP_SMUDGE (paint_core);
+  GimpSmudgeOptions *options = GIMP_SMUDGE_OPTIONS (paint_options);
+  GimpContext       *context = GIMP_CONTEXT (paint_options);
+  GimpImage         *image;
+  TempBuf           *area;
+  PixelRegion        srcPR, destPR, tempPR;
+  gdouble            rate;
+  gdouble            opacity;
+  gdouble            dynamic_rate;
+  gint               x, y, w, h;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -261,12 +261,11 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                      area->x, area->y, area->width, area->height, FALSE);
 
-  /* Enable pressure sensitive rate */
-  if (pressure_options->rate)
-    rate = MIN (options->rate / 100.0 * PRESSURE_SCALE *
-                paint_core->cur_coords.pressure, 1.0);
-  else
-    rate = options->rate / 100.0;
+  /* Enable dynamic rate */
+  dynamic_rate = gimp_paint_options_get_dynamic_rate (paint_options,
+                                                      &paint_core->cur_coords,
+                                                      paint_core->use_pressure);
+  rate = (options->rate / 100.0) * dynamic_rate;
 
   /* The tempPR will be the built up buffer (for smudge) */
   pixel_region_init_data (&tempPR, smudge->accum_data,
@@ -305,8 +304,9 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   else
     copy_region (&tempPR, &destPR);
 
-  if (pressure_options->opacity)
-    opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
+  opacity *= gimp_paint_options_get_dynamic_opacity (paint_options,
+                                                     &paint_core->cur_coords,
+                                                     paint_core->use_pressure);
 
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                   MIN (opacity, GIMP_OPACITY_OPAQUE),

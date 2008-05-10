@@ -136,14 +136,17 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
 
       if (options->rate != 0.0)
         {
-          gdouble timeout;
+          gdouble dynamic_rate;
+          gint    timeout;
 
           airbrush->drawable      = drawable;
           airbrush->paint_options = paint_options;
 
-          timeout = (paint_options->pressure_options->rate ?
-                  (10000 / (options->rate * PRESSURE_SCALE * paint_core->cur_coords.pressure)) :
-            (10000 / options->rate));
+          dynamic_rate = gimp_paint_options_get_dynamic_rate (paint_options,
+                                                              &paint_core->cur_coords,
+                                                              paint_core->use_pressure);
+
+          timeout = 10000 / (options->rate * dynamic_rate);
 
           airbrush->timeout_id = g_timeout_add (timeout,
                                                 gimp_airbrush_timeout,
@@ -173,17 +176,26 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
   GimpAirbrushOptions *options = GIMP_AIRBRUSH_OPTIONS (paint_options);
   gdouble              opacity;
   gboolean             saved_pressure;
+  gboolean             saved_velocity;
 
   opacity = options->pressure / 100.0;
 
   saved_pressure = paint_options->pressure_options->hardness;
+  saved_velocity = paint_options->velocity_options->hardness;
 
   if (saved_pressure)
-    opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
+    opacity *= GIMP_PAINT_PRESSURE_SCALE * paint_core->cur_coords.pressure;
+
+  if (saved_velocity)
+    opacity *= MAX (0.0, 1 - GIMP_PAINT_VELOCITY_SCALE * paint_core->cur_coords.velocity);
 
   paint_options->pressure_options->hardness = FALSE;
+  paint_options->velocity_options->hardness = FALSE;
+
   _gimp_paintbrush_motion (paint_core, drawable, paint_options, opacity);
+
   paint_options->pressure_options->hardness = saved_pressure;
+  paint_options->velocity_options->hardness = saved_velocity;
 }
 
 static gboolean
