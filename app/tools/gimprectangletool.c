@@ -1004,6 +1004,7 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
 
   gimp_rectangle_tool_update_highlight (rect_tool);
   gimp_rectangle_tool_update_handle_sizes (rect_tool);
+  gimp_rectangle_tool_update_options (rect_tool, display);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
