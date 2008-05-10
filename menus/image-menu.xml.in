@@ -560,7 +560,11 @@
 
     <menu action="windows-menu" name="Windows">
       <menu action="windows-images-menu" name="Images" />
-      <menu action="windows-new-dock-menu" name="Create New Dock">
+      <menu action="windows-docks-menu" name="Docks">
+	<placeholder name="Docks">
+	  <menuitem action="windows-show-toolbox" />
+	</placeholder>
+	<separator />
 	<menuitem action="dialogs-new-dock-lcp" />
 	<menuitem action="dialogs-new-dock-data" />
 	<menuitem action="dialogs-new-dock-stuff" />

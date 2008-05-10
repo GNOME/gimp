@@ -55,9 +55,9 @@ static void   windows_actions_image_notify   (GimpDisplay      *display,
 
 static const GimpActionEntry windows_actions[] =
 {
-  { "windows-menu",          NULL, N_("_Windows")         },
-  { "windows-images-menu",   NULL, N_("_Images")          },
-  { "windows-new-dock-menu", NULL, N_("Create New Doc_k") },
+  { "windows-menu",        NULL, N_("_Windows") },
+  { "windows-images-menu", NULL, N_("_Images")  },
+  { "windows-docks-menu",  NULL, N_("Doc_ks")   },
 
   { "windows-show-toolbox", NULL,
     N_("Tool_box"), "<control>B",

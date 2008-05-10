@@ -1,5 +1,13 @@
 2008-05-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/windows-actions.c: renamed the "Create New Dock"
+	submenu to simply "Docks". Its contents are about ti change soon.
+
+	* menus/image-menu.xml.in: changed accordingly. Added a "Docks"
+	placeholder inside and add the "show toolbox" menu item there.
+
+2008-05-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplist.[ch]: add boolean "append" property which
 	makes gimp_container_add() append to the list instead of the
 	default prepend.
