@@ -970,6 +970,7 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
       private->y1 = private->saved_y1;
       private->x2 = private->saved_x2;
       private->y2 = private->saved_y2;
+      gimp_rectangle_tool_update_int_rect (rect_tool);
 
       /* If the first created rectangle was canceled, halt the tool */
       if (gimp_rectangle_tool_rectangle_is_new (rect_tool))
