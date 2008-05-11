@@ -91,26 +91,11 @@ gimp_operation_curves_process (GeglOperation *operation,
   if (! config)
     return FALSE;
 
-  while (samples--)
-    {
-      gint channel;
-
-      for (channel = 0; channel < 4; channel++)
-        {
-          gdouble value;
-
-          value = gimp_curve_map (config->curve[channel + 1], src[channel]);
-
-          /* don't apply the overall curve to the alpha channel */
-          if (channel != ALPHA_PIX)
-            value = gimp_curve_map (config->curve[0], value);
-
-          dest[channel] = value;
-        }
-
-      src  += 4;
-      dest += 4;
-    }
+  gimp_curve_map_pixels (config->curve[0],
+                         config->curve[1],
+                         config->curve[2],
+                         config->curve[3],
+                         config->curve[4], src, dest, samples);
 
   return TRUE;
 }

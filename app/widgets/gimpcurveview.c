@@ -370,7 +370,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
   gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
 
   x = 0.0;
-  y = 1.0 - gimp_curve_map (view->curve, 0.0);
+  y = 1.0 - gimp_curve_map_value (view->curve, 0.0);
 
   cairo_move_to (cr,
                  border + (gdouble) width  * x,
@@ -379,7 +379,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
   for (i = 1; i < 256; i++)
     {
       x = (gdouble) i / 255.0;
-      y = 1.0 - gimp_curve_map (view->curve, x);
+      y = 1.0 - gimp_curve_map_value (view->curve, x);
 
       cairo_line_to (cr,
                      border + (gdouble) width  * x,

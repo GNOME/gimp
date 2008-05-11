@@ -661,8 +661,8 @@ gimp_curve_set_curve (GimpCurve *curve,
 }
 
 gdouble
-gimp_curve_map (GimpCurve *curve,
-                gdouble    value)
+gimp_curve_map_value (GimpCurve *curve,
+                      gdouble    value)
 {
   g_return_val_if_fail (GIMP_IS_CURVE (curve), 0.0);
 
@@ -680,6 +680,41 @@ gimp_curve_map (GimpCurve *curve,
       gdouble f     = value * (gdouble) (curve->n_samples - 1) - index;
 
       return (1.0 - f) * curve->samples[index] + f  * curve->samples[index + 1];
+    }
+}
+
+void
+gimp_curve_map_pixels (GimpCurve *curve_all,
+                       GimpCurve *curve_red,
+                       GimpCurve *curve_green,
+                       GimpCurve *curve_blue,
+                       GimpCurve *curve_alpha,
+                       gfloat    *src,
+                       gfloat    *dest,
+                       glong      samples)
+{
+  g_return_if_fail (GIMP_IS_CURVE (curve_all));
+  g_return_if_fail (GIMP_IS_CURVE (curve_red));
+  g_return_if_fail (GIMP_IS_CURVE (curve_green));
+  g_return_if_fail (GIMP_IS_CURVE (curve_blue));
+  g_return_if_fail (GIMP_IS_CURVE (curve_alpha));
+
+  while (samples--)
+    {
+      dest[0] = gimp_curve_map_value (curve_all,
+                                      gimp_curve_map_value (curve_red,
+                                                            src[0]));
+      dest[1] = gimp_curve_map_value (curve_all,
+                                      gimp_curve_map_value (curve_green,
+                                                            src[1]));
+      dest[2] = gimp_curve_map_value (curve_all,
+                                      gimp_curve_map_value (curve_blue,
+                                                            src[2]));
+      /* don't apply the overall curve to the alpha channel */
+      dest[3] = gimp_curve_map_value (curve_alpha, src[3]);
+
+      src  += 4;
+      dest += 4;
     }
 }
 

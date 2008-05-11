@@ -1,3 +1,15 @@
+2008-05-11  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpcurve.[ch]: renamed gimp_curve_map() to
+	gimp_curve_map_value(). Added new function gimp_curve_map_pixels()
+	which will allow for better optimization.
+
+	* app/gegl/gimpoperationcurves.c (gimp_operation_curves_process):
+	use gimp_curve_map_pixels().
+
+	* app/tools/gimpcurvestool.c
+	* app/widgets/gimpcurveview.c: follow API change.
+
 2008-05-11  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpcroptool.[ch]: No need to expose definitions of

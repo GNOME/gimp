@@ -257,7 +257,7 @@ gimp_curves_tool_button_release (GimpTool              *tool,
                                     closest);
 
       gimp_curve_set_point (curve, closest,
-                            value, gimp_curve_map (curve, value));
+                            value, gimp_curve_map_value (curve, value));
     }
   else if (state & GDK_CONTROL_MASK)
     {
@@ -275,7 +275,7 @@ gimp_curves_tool_button_release (GimpTool              *tool,
                                         closest);
 
           gimp_curve_set_point (curve, closest,
-                                value, gimp_curve_map (curve, value));
+                                value, gimp_curve_map_value (curve, value));
         }
     }
 
