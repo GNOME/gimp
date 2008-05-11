@@ -1,3 +1,21 @@
+2008-05-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c: Fix emission of
+	rectangle-change-complete signals.
+
+	* app/tools/gimpcroptool.c
+	* app/tools/gimprectangleselecttool.c:
+	Use the rectangle-change-complete signal to update the default
+	aspect ratio. Fixes bug #530519.
+
+	* app/tools/gimpcroptool.c
+	(gimp_crop_tool_button_release)
+	(gimp_crop_tool_options_notify)
+	* app/tools/gimprectangleselecttool.c
+	(gimp_rectangle_select_tool_button_release): No need to explicitly
+	update option defaults since it is handled through the
+	rectangle-change-complete signal now.
+
 2008-05-11  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcurve.[ch] (gimp_curve_map): minor cleanup.

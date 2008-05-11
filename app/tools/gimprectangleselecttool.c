@@ -492,8 +492,6 @@ gimp_rectangle_select_tool_button_release (GimpTool              *tool,
     }
 
   priv->redo = NULL;
-
-  gimp_rectangle_select_tool_update_option_defaults (rect_sel_tool, FALSE);
 }
 
 static void
@@ -890,6 +888,8 @@ gimp_rectangle_select_tool_rectangle_change_complete (GimpRectangleTool *rectang
     }
 
   gimp_tool_control_set_preserve (tool->control, FALSE);
+
+  gimp_rectangle_select_tool_update_option_defaults (rect_sel_tool, FALSE);
 
   return TRUE;
 }

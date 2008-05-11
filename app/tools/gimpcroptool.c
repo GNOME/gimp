@@ -89,6 +89,7 @@ static void      gimp_crop_tool_image_changed             (GimpCropTool         
                                                            GimpContext                *context);
 static void      gimp_crop_tool_image_size_changed        (GimpCropTool               *crop_tool);
 static void      gimp_crop_tool_cancel                    (GimpRectangleTool          *rect_tool);
+static gboolean  gimp_crop_tool_rectangle_change_complete (GimpRectangleTool          *rect_tool);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpCropTool, gimp_crop_tool, GIMP_TYPE_DRAW_TOOL,
@@ -145,8 +146,9 @@ gimp_crop_tool_class_init (GimpCropToolClass *klass)
 static void
 gimp_crop_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface)
 {
-  iface->execute = gimp_crop_tool_execute;
-  iface->cancel  = gimp_crop_tool_cancel;
+  iface->execute                   = gimp_crop_tool_execute;
+  iface->cancel                    = gimp_crop_tool_cancel;
+  iface->rectangle_change_complete = gimp_crop_tool_rectangle_change_complete;
 }
 
 static void
@@ -257,10 +259,6 @@ gimp_crop_tool_button_release (GimpTool              *tool,
                                       state,
                                       release_type,
                                       display);
-
-  gimp_crop_tool_update_option_defaults (GIMP_CROP_TOOL (tool),
-                                         FALSE);
-
 }
 
 static void
@@ -317,6 +315,20 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
 
       return TRUE;
     }
+
+  return TRUE;
+}
+
+/**
+ * gimp_crop_tool_rectangle_change_complete:
+ * @rectangle:
+ *
+ * Returns: 
+ **/
+static gboolean
+gimp_crop_tool_rectangle_change_complete (GimpRectangleTool *rectangle)
+{
+  gimp_crop_tool_update_option_defaults (GIMP_CROP_TOOL (rectangle), FALSE);
 
   return TRUE;
 }
@@ -397,9 +409,6 @@ gimp_crop_tool_options_notify (GimpCropOptions *options,
 {
   gimp_rectangle_tool_set_constraint (GIMP_RECTANGLE_TOOL (crop_tool),
                                       gimp_crop_tool_get_constraint (crop_tool));
-
-  gimp_crop_tool_update_option_defaults (crop_tool,
-                                         FALSE);
 }
 
 static void
