@@ -77,7 +77,7 @@ gimp_operation_levels_init (GimpOperationLevels *self)
 
 static inline gdouble
 gimp_operation_levels_map (gdouble value,
-                           gdouble gamma,
+                           gdouble inv_gamma,
                            gdouble low_input,
                            gdouble high_input,
                            gdouble low_output,
@@ -89,12 +89,12 @@ gimp_operation_levels_map (gdouble value,
   else
     value = (value - low_input);
 
-  if (gamma != 0.0)
+  if (inv_gamma != 1.0)
     {
       if (value >= 0.0)
-        value =  pow ( value, 1.0 / gamma);
+        value =  pow ( value, inv_gamma);
       else
-        value = -pow (-value, 1.0 / gamma);
+        value = -pow (-value, inv_gamma);
     }
 
   /*  determine the output intensity  */
@@ -116,20 +116,27 @@ gimp_operation_levels_process (GeglOperation *operation,
   GimpLevelsConfig         *config = GIMP_LEVELS_CONFIG (point->config);
   gfloat                   *src    = in_buf;
   gfloat                   *dest   = out_buf;
+  gfloat                    inv_gamma[5];
+  gint                      channel;
 
   if (! config)
     return FALSE;
 
+  for (channel = 0; channel < 5; channel++)
+    {
+      g_return_val_if_fail (config->gamma[channel] != 0.0, FALSE);
+
+      inv_gamma[channel] = 1.0 / config->gamma[channel];
+    }
+
   while (samples--)
     {
-      gint channel;
-
       for (channel = 0; channel < 4; channel++)
         {
           gdouble value;
 
           value = gimp_operation_levels_map (src[channel],
-                                             config->gamma[channel + 1],
+                                             inv_gamma[channel + 1],
                                              config->low_input[channel + 1],
                                              config->high_input[channel + 1],
                                              config->low_output[channel + 1],
@@ -138,7 +145,7 @@ gimp_operation_levels_process (GeglOperation *operation,
           /* don't apply the overall curve to the alpha channel */
           if (channel != ALPHA_PIX)
             value = gimp_operation_levels_map (value,
-                                               config->gamma[0],
+                                               inv_gamma[0],
                                                config->low_input[0],
                                                config->high_input[0],
                                                config->low_output[0],

@@ -1,3 +1,8 @@
+2008-05-11  Sven Neumann  <sven@gimp.org>
+
+	* app/gegl/gimpoperationlevels.c (gimp_operation_levels_map):
+	optimized for the case where gamma is 1.0.
+
 2008-05-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpaction.[ch]: add an "ellipsize" property that is
