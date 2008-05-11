@@ -38,12 +38,13 @@ typedef struct _GimpActionClass GimpActionClass;
 
 struct _GimpAction
 {
-  GtkAction     parent_instance;
+  GtkAction           parent_instance;
 
-  GimpContext  *context;
+  GimpContext        *context;
 
-  GimpRGB      *color;
-  GimpViewable *viewable;
+  GimpRGB            *color;
+  GimpViewable       *viewable;
+  PangoEllipsizeMode  ellipsize;
 };
 
 struct _GimpActionClass

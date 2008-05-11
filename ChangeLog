@@ -1,5 +1,13 @@
 2008-05-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpaction.[ch]: add an "ellipsize" property that is
+	applied to all proxy menu items' labels.
+
+	* app/actions/windows-actions.c: set the dock actions to
+	PANGO_ELLIPSIZE_END because their labels can be insanely long.
+
+2008-05-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpaction.c (gimp_action_set_proxy): small cleanup.
 
 2008-05-11  Michael Natterer  <mitch@gimp.org>

@@ -261,6 +261,10 @@ windows_actions_dock_added (GimpDialogFactory *factory,
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                         action_name);
 
+  g_object_set (action,
+                "ellipsize", PANGO_ELLIPSIZE_END,
+                NULL);
+
   g_object_set_data (G_OBJECT (action), "dock", dock);
 
   g_free (action_name);
