@@ -1,5 +1,18 @@
 2008-05-11  Sven Neumann  <sven@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/gimpcurve.[ch]:
+	* app/core/gimpcurve-map.[ch]: split curve map functions into
+	seperate files.
+
+	* app/gegl/gimpoperationcurves.c
+	* app/tools/gimpcurvestool.c
+	* app/widgets/gimpcurveview.c: changed accordingly.
+
+	* app/Makefile.am (AM_LDFLAGS): make it link.
+
+2008-05-11  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpcurve.[ch]: renamed gimp_curve_map() to
 	gimp_curve_map_value(). Added new function gimp_curve_map_pixels()
 	which will allow for better optimization.

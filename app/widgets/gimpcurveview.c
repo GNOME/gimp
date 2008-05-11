@@ -28,6 +28,7 @@
 #include "widgets-types.h"
 
 #include "core/gimpcurve.h"
+#include "core/gimpcurve-map.h"
 #include "core/gimpmarshal.h"
 
 #include "gimpcurveview.h"

@@ -36,6 +36,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcurve.h"
+#include "core/gimpcurve-map.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpimage.h"

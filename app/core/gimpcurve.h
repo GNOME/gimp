@@ -87,18 +87,6 @@ void            gimp_curve_set_curve         (GimpCurve     *curve,
                                               gdouble        x,
                                               gdouble        y);
 
-gdouble         gimp_curve_map_value         (GimpCurve     *curve,
-                                              gdouble        value);
-void            gimp_curve_map_pixels        (GimpCurve     *curve_all,
-                                              GimpCurve     *curve_red,
-                                              GimpCurve     *curve_green,
-                                              GimpCurve     *curve_blue,
-                                              GimpCurve     *curve_alpha,
-                                              gfloat        *src,
-                                              gfloat        *dest,
-                                              glong          samples);
-
-
 void            gimp_curve_get_uchar         (GimpCurve     *curve,
                                               gint           n_samples,
                                               guchar        *samples);
