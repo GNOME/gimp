@@ -43,6 +43,19 @@
 #include "gimp-intl.h"
 
 
+struct _GimpCropTool
+{
+  GimpDrawTool  parent_instance;
+
+  GimpImage    *current_image;
+};
+
+struct _GimpCropToolClass
+{
+  GimpDrawToolClass parent_class;
+};
+
+
 static void      gimp_crop_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface);
 
 static GObject * gimp_crop_tool_constructor               (GType                       type,

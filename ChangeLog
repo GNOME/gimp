@@ -1,5 +1,10 @@
 2008-05-11  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimpcroptool.[ch]: No need to expose definitions of
+	GimpCropTool or GimpCropToolClass.
+
+2008-05-11  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangletool.c: Fix emission of
 	rectangle-change-complete signals.
 
