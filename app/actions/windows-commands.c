@@ -52,6 +52,15 @@ windows_show_display_cmd_callback (GtkAction *action,
 }
 
 void
+windows_show_dock_cmd_callback (GtkAction *action,
+                                gpointer   data)
+{
+  GtkWindow *dock = g_object_get_data (G_OBJECT (action), "dock");
+
+  gtk_window_present (dock);
+}
+
+void
 windows_show_toolbox (void)
 {
   if (! global_toolbox_factory->open_dialogs)

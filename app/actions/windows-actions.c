@@ -32,9 +32,13 @@
 #include "file/file-utils.h"
 
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
+
+#include "dialogs/dialogs.h"
 
 #include "windows-actions.h"
 #include "windows-commands.h"
@@ -42,15 +46,25 @@
 #include "gimp-intl.h"
 
 
-static void   windows_actions_display_add    (GimpContainer    *container,
-                                              GimpDisplay      *display,
-                                              GimpActionGroup  *group);
-static void   windows_actions_display_remove (GimpContainer    *container,
-                                              GimpDisplay      *display,
-                                              GimpActionGroup  *group);
-static void   windows_actions_image_notify   (GimpDisplay      *display,
-                                              const GParamSpec *unused,
-                                              GimpActionGroup  *group);
+static void   windows_actions_display_add    (GimpContainer     *container,
+                                              GimpDisplay       *display,
+                                              GimpActionGroup   *group);
+static void   windows_actions_display_remove (GimpContainer     *container,
+                                              GimpDisplay       *display,
+                                              GimpActionGroup   *group);
+static void   windows_actions_image_notify   (GimpDisplay       *display,
+                                              const GParamSpec  *unused,
+                                              GimpActionGroup   *group);
+
+static void   windows_actions_dock_added     (GimpDialogFactory *factory,
+                                              GimpDock          *dock,
+                                              GimpActionGroup   *group);
+static void   windows_actions_dock_removed   (GimpDialogFactory *factory,
+                                              GimpDock          *dock,
+                                              GimpActionGroup   *group);
+static void   windows_actions_dock_notify    (GimpDock          *dock,
+                                              const GParamSpec  *pspec,
+                                              GimpActionGroup   *group);
 
 
 static const GimpActionEntry windows_actions[] =
@@ -93,6 +107,23 @@ windows_actions_setup (GimpActionGroup *group)
       GimpDisplay *display = list->data;
 
       windows_actions_display_add (group->gimp->displays, display, group);
+    }
+
+  g_signal_connect_object (global_dock_factory, "dock-added",
+                           G_CALLBACK (windows_actions_dock_added),
+                           group, 0);
+  g_signal_connect_object (global_dock_factory, "dock-removed",
+                           G_CALLBACK (windows_actions_dock_removed),
+                           group, 0);
+
+  for (list = global_dock_factory->open_dialogs;
+       list;
+       list = g_list_next (list))
+    {
+      GimpDock *dock = list->data;
+
+      if (GIMP_IS_DOCK (dock))
+        windows_actions_dock_added (global_dock_factory, dock, group);
     }
 }
 
@@ -206,4 +237,70 @@ windows_actions_image_notify (GimpDisplay      *display,
     {
       windows_actions_display_remove (group->gimp->displays, display, group);
     }
+}
+
+static void
+windows_actions_dock_added (GimpDialogFactory *factory,
+                            GimpDock          *dock,
+                            GimpActionGroup   *group)
+{
+  GtkAction       *action;
+  GimpActionEntry  entry;
+  gchar           *action_name = g_strdup_printf ("windows-dock-%04d", dock->ID);
+
+  entry.name        = action_name;
+  entry.stock_id    = NULL;
+  entry.label       = "";
+  entry.accelerator = NULL;
+  entry.tooltip     = NULL;
+  entry.callback    = G_CALLBACK (windows_show_dock_cmd_callback);
+  entry.help_id     = NULL;
+
+  gimp_action_group_add_actions (group, &entry, 1);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                        action_name);
+
+  g_object_set_data (G_OBJECT (action), "dock", dock);
+
+  g_free (action_name);
+
+  g_signal_connect_object (dock, "notify::title",
+                           G_CALLBACK (windows_actions_dock_notify),
+                           group, 0);
+
+  if (gtk_window_get_title (GTK_WINDOW (dock)))
+    windows_actions_dock_notify (dock, NULL, group);
+}
+
+static void
+windows_actions_dock_removed (GimpDialogFactory *factory,
+                              GimpDock          *dock,
+                              GimpActionGroup   *group)
+{
+  GtkAction *action;
+  gchar     *action_name = g_strdup_printf ("windows-dock-%04d", dock->ID);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+
+  if (action)
+    gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
+
+  g_free (action_name);
+}
+
+static void
+windows_actions_dock_notify (GimpDock         *dock,
+                             const GParamSpec *pspec,
+                             GimpActionGroup  *group)
+{
+  GtkAction *action;
+  gchar     *action_name = g_strdup_printf ("windows-dock-%04d", dock->ID);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+
+  if (action)
+    g_object_set (action,
+                  "label", gtk_window_get_title (GTK_WINDOW (dock)),
+                  NULL);
 }
