@@ -1,5 +1,9 @@
 2008-05-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpaction.c (gimp_action_set_proxy): small cleanup.
+
+2008-05-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/windows-commands.[ch]
 	* app/actions/windows-actions.c
 	* app/menus/windows-menu.c: add dynamic actions and menu items for

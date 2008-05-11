@@ -366,7 +366,7 @@ gimp_action_set_proxy (GimpAction *action,
 
       image = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (proxy));
 
-      if (image && (GIMP_IS_VIEW (image) || GIMP_IS_COLOR_AREA (image)))
+      if (GIMP_IS_VIEW (image) || GIMP_IS_COLOR_AREA (image))
         {
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), NULL);
           g_object_notify (G_OBJECT (action), "stock-id");
