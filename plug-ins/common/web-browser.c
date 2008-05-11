@@ -139,7 +139,7 @@ browser_open_url (const gchar *url)
   if (browser == NULL || ! strlen (browser))
     {
       g_message (_("Web browser not specified.\n"
-                   "Please specify a web browser using the Preferences Dialog."));
+                   "Please specify a web browser using the Preferences dialog."));
       g_free (browser);
       return FALSE;
     }
@@ -158,7 +158,8 @@ browser_open_url (const gchar *url)
   /* parse the cmd line */
   if (! g_shell_parse_argv (cmd, NULL, &argv, &error))
     {
-      g_message (_("Could not parse specified web browser command:\n%s"),
+      g_message (_("Could not parse the web browser command specified in the "
+                   "Preferences dialog:\n\n%s"),
                  error->message);
       g_error_free (error);
       return FALSE;
@@ -171,7 +172,8 @@ browser_open_url (const gchar *url)
 
   if (! retval)
     {
-      g_message (_("Could not execute specified web browser:\n%s"),
+      g_message (_("Could not execute the web browser specified in the "
+                   "Preferences dialog:\n\n%s"),
                  error->message);
       g_error_free (error);
     }
