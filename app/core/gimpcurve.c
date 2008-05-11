@@ -662,30 +662,25 @@ gimp_curve_set_curve (GimpCurve *curve,
 
 gdouble
 gimp_curve_map (GimpCurve *curve,
-                gdouble    x)
+                gdouble    value)
 {
-  gdouble value;
-
   g_return_val_if_fail (GIMP_IS_CURVE (curve), 0.0);
 
-  if (x < 0.0)
+  if (value < 0.0)
     {
-      value = curve->samples[0];
+      return curve->samples[0];
     }
-  else if (x >= 1.0)
+  else if (value >= 1.0)
     {
-      value = curve->samples[curve->n_samples - 1];
+      return curve->samples[curve->n_samples - 1];
     }
   else /* interpolate the curve */
     {
-      gint    index = floor (x * (gdouble) (curve->n_samples - 1));
-      gdouble f     = x * (gdouble) (curve->n_samples - 1) - index;
+      gint    index = floor (value * (gdouble) (curve->n_samples - 1));
+      gdouble f     = value * (gdouble) (curve->n_samples - 1) - index;
 
-      value = ((1.0 - f) * curve->samples[index    ] +
-                      f  * curve->samples[index + 1]);
+      return (1.0 - f) * curve->samples[index] + f  * curve->samples[index + 1];
     }
-
-  return value;
 }
 
 void

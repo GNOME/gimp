@@ -88,7 +88,7 @@ void            gimp_curve_set_curve         (GimpCurve     *curve,
                                               gdouble        y);
 
 gdouble         gimp_curve_map               (GimpCurve     *curve,
-                                              gdouble        x);
+                                              gdouble        value);
 
 void            gimp_curve_get_uchar         (GimpCurve     *curve,
                                               gint           n_samples,

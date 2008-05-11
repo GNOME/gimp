@@ -1,5 +1,9 @@
 2008-05-11  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpcurve.[ch] (gimp_curve_map): minor cleanup.
+
+2008-05-11  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/web-browser.c (browser_open_url): improved error
 	messages as suggested in bug #522483.
 
