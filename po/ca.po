@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-06 20:50+0100\n"
+"POT-Creation-Date: 2008-05-12 14:01+0200\n"
 "PO-Revision-Date: 2008-02-29 19:09+0100\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
@@ -5811,8 +5811,7 @@ msgstr ""
 #: ../app/core/gimpbrush-load.c:252
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr ""
-"El fitxer del pinzell «%s» està malament: és una versió desconeguda %d."
+msgstr "El fitxer del pinzell «%s» està malament: és una versió desconeguda %d."
 
 #: ../app/core/gimpbrush-load.c:268 ../app/core/gimpbrush-load.c:388
 #: ../app/core/gimpbrush-load.c:720
@@ -5873,16 +5872,16 @@ msgstr "El fitxer del pinzell «%s» està malament: no és un fitxer del GIMP."
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
 msgstr ""
-"El fitxer del pinzell «%s» està malament: es desconeix la versió de pinzell "
-"a la línia %d."
+"El fitxer del pinzell «%s» està malament: es desconeix la versió de pinzell a "
+"la línia %d."
 
 #: ../app/core/gimpbrushgenerated-load.c:150
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr ""
-"El fitxer del pinzell «%s» està malament: es desconeix la forma del pinzell "
-"a la línia %d."
+"El fitxer del pinzell «%s» està malament: es desconeix la forma del pinzell a "
+"la línia %d."
 
 #: ../app/core/gimpbrushgenerated-load.c:226
 #, c-format
@@ -6219,27 +6218,27 @@ msgstr "Canvia l'entrada del mapa de color"
 msgid "Add Color to Colormap"
 msgstr "Afegeix color al mapa de color"
 
-#: ../app/core/gimpimage-convert.c:788
+#: ../app/core/gimpimage-convert.c:790
 msgid "Cannot convert image: palette is empty."
 msgstr "No s'ha pogut convertir la imatge perquè la paleta està buida."
 
-#: ../app/core/gimpimage-convert.c:802
+#: ../app/core/gimpimage-convert.c:804
 msgid "Convert Image to RGB"
 msgstr "Converteix la imatge a RGB"
 
-#: ../app/core/gimpimage-convert.c:806
+#: ../app/core/gimpimage-convert.c:808
 msgid "Convert Image to Grayscale"
 msgstr "Converteix la imatge a escala de grisos"
 
-#: ../app/core/gimpimage-convert.c:810
+#: ../app/core/gimpimage-convert.c:812
 msgid "Convert Image to Indexed"
 msgstr "Converteix la imatge a indexat"
 
-#: ../app/core/gimpimage-convert.c:892
+#: ../app/core/gimpimage-convert.c:894
 msgid "Converting to indexed colors (stage 2)"
 msgstr "S'està convertint a colors indexats (2ª etapa)"
 
-#: ../app/core/gimpimage-convert.c:937
+#: ../app/core/gimpimage-convert.c:939
 msgid "Converting to indexed colors (stage 3)"
 msgstr "S'està convertint a colors indexats (3ª etapa)"
 
@@ -6701,8 +6700,7 @@ msgstr ""
 #: ../app/core/gimppattern-load.c:162
 #, c-format
 msgid "Fatal parse error in pattern file '%s': File appears truncated."
-msgstr ""
-"El fitxer del patró «%s» està malament: manca la part final del fitxer."
+msgstr "El fitxer del patró «%s» està malament: manca la part final del fitxer."
 
 #: ../app/core/gimppattern-load.c:104
 #, c-format
@@ -6718,8 +6716,8 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"El fitxer del patró «%s» està malament: no es permet una profunditat de "
-"patró %d.\n"
+"El fitxer del patró «%s» està malament: no es permet una profunditat de patró "
+"%d.\n"
 "Els patrons del GIMP han de ser en GRIS o en RGB."
 
 #: ../app/core/gimppattern-load.c:139
@@ -8663,7 +8661,7 @@ msgstr "Inici del GIMP"
 msgid "Airbrush"
 msgstr "Vaporitzador"
 
-#: ../app/paint/gimpbrushcore.c:356
+#: ../app/paint/gimpbrushcore.c:354
 #, c-format
 msgid "No brushes available for use with this tool."
 msgstr "No es disposa de cap pinzell per a utilitzar amb aquesta eina."
@@ -8690,11 +8688,11 @@ msgstr "Ferro roent"
 msgid "Eraser"
 msgstr "Goma d'esborrar"
 
-#: ../app/paint/gimpheal.c:87 ../app/tools/gimphealtool.c:53
+#: ../app/paint/gimpheal.c:123 ../app/tools/gimphealtool.c:53
 msgid "Heal"
 msgstr "Cicatritza"
 
-#: ../app/paint/gimpheal.c:126
+#: ../app/paint/gimpheal.c:162
 #, c-format
 msgid "Healing does not operate on indexed layers."
 msgstr "La cicatrització no funciona en capes indexades."
@@ -8854,8 +8852,8 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"La funció «%s» ha retornat un id invàlid per al paràmetre «%s». Segurament "
-"un connector està intentant treballar amb una capa que ja no existeix."
+"La funció «%s» ha retornat un id invàlid per al paràmetre «%s». Segurament un "
+"connector està intentant treballar amb una capa que ja no existeix."
 
 #: ../app/pdb/gimpprocedure.c:571
 #, c-format
@@ -8863,9 +8861,8 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"La funció «%s» s'ha cridat amb un id invàlid per al paràmetre «%s». "
-"Segurament un connector està intentant treballar amb una capa que ja no "
-"existeix."
+"La funció «%s» s'ha cridat amb un id invàlid per al paràmetre «%s». Segurament "
+"un connector està intentant treballar amb una capa que ja no existeix."
 
 #: ../app/pdb/gimpprocedure.c:587
 #, c-format
@@ -8873,8 +8870,8 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"La funció «%s» ha retornat un id invàlid per al paràmetre «%s». Segurament "
-"un connector està intentant treballar amb una imatge que ja no existeix."
+"La funció «%s» ha retornat un id invàlid per al paràmetre «%s». Segurament un "
+"connector està intentant treballar amb una imatge que ja no existeix."
 
 #: ../app/pdb/gimpprocedure.c:599
 #, c-format
@@ -8882,9 +8879,8 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"La funció «%s» s'ha cridat amb un id invàlid per al paràmetre «%s». "
-"Segurament un connector està intentant treballar amb una imatge que ja no "
-"existeix."
+"La funció «%s» s'ha cridat amb un id invàlid per al paràmetre «%s». Segurament "
+"un connector està intentant treballar amb una imatge que ja no existeix."
 
 #: ../app/pdb/gimpprocedure.c:619
 #, c-format
@@ -8892,8 +8888,8 @@ msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
-"La funció «%s» ha retornat «%s» com a valor de retorn «%s» (núm. %d, de "
-"tipus %s). Aquest valor no és permès."
+"La funció «%s» ha retornat «%s» com a valor de retorn «%s» (núm. %d, de tipus %"
+"s). Aquest valor no és permès."
 
 #: ../app/pdb/gimpprocedure.c:632
 #, c-format
@@ -8901,8 +8897,8 @@ msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
 "s). This value is out of range."
 msgstr ""
-"La funció «%s» s'ha cridat amb el valor «%s» per al paràmetre «%s» (núm. %d, "
-"de tipus %s). Aquest valor no és permès."
+"La funció «%s» s'ha cridat amb el valor «%s» per al paràmetre «%s» (núm. %d, de "
+"tipus %s). Aquest valor no és permès."
 
 #: ../app/pdb/image_cmds.c:2061
 msgid ""
@@ -9255,7 +9251,7 @@ msgstr "Profunditat màxima:"
 
 #: ../app/tools/gimpblendoptions.c:262
 #: ../app/tools/gimpbucketfilloptions.c:287
-#: ../app/tools/gimpselectionoptions.c:416
+#: ../app/tools/gimpselectionoptions.c:403
 msgid "Threshold:"
 msgstr "Llindar:"
 
@@ -9320,7 +9316,7 @@ msgid "Base filled area on all visible layers"
 msgstr "Àrea base plena en totes les capes visibles"
 
 #: ../app/tools/gimpbucketfilloptions.c:112
-#: ../app/tools/gimpselectionoptions.c:128
+#: ../app/tools/gimpselectionoptions.c:125
 msgid "Maximum color difference"
 msgstr ""
 "Selecciona tots els colors semblants que no superin aquest llindar de "
@@ -9357,7 +9353,7 @@ msgstr "Omple àrees transparents"
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpperspectiveclonetool.c:965
-#: ../app/tools/gimpselectionoptions.c:404
+#: ../app/tools/gimpselectionoptions.c:391
 msgid "Sample merged"
 msgstr "Mostra fusionada"
 
@@ -9514,7 +9510,7 @@ msgstr "Mitjana de la mostra"
 
 #: ../app/tools/gimpcoloroptions.c:171
 #: ../app/tools/gimprectangleselectoptions.c:166
-#: ../app/tools/gimpselectionoptions.c:375
+#: ../app/tools/gimpselectionoptions.c:362
 #: ../app/widgets/gimpbrusheditor.c:154
 msgid "Radius:"
 msgstr "Radi:"
@@ -9631,19 +9627,19 @@ msgstr "Només la capa actual"
 msgid "Allow growing"
 msgstr "Permet créixer"
 
-#: ../app/tools/gimpcroptool.c:115
+#: ../app/tools/gimpcroptool.c:119
 msgid "Crop"
 msgstr "Escapça"
 
-#: ../app/tools/gimpcroptool.c:116
+#: ../app/tools/gimpcroptool.c:120
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr "Eina Escapça: elimina el marc de la imatge o de la capa"
 
-#: ../app/tools/gimpcroptool.c:117
+#: ../app/tools/gimpcroptool.c:121
 msgid "_Crop"
 msgstr "Es_capça"
 
-#: ../app/tools/gimpcroptool.c:242
+#: ../app/tools/gimpcroptool.c:257
 msgid "Click or press Enter to crop"
 msgstr "Cliqueu o premeu la tecla de retorn per a escapçar"
 
@@ -9675,43 +9671,43 @@ msgstr "Desa les corbes"
 msgid "Save curves settings to file"
 msgstr "Desa els paràmetres de les corbes al fitxer"
 
-#: ../app/tools/gimpcurvestool.c:253
+#: ../app/tools/gimpcurvestool.c:254
 #, c-format
 msgid "Curves does not operate on indexed layers."
 msgstr "L'eina Corbes de color no funciona en capes indexades."
 
-#: ../app/tools/gimpcurvestool.c:355
+#: ../app/tools/gimpcurvestool.c:358
 msgid "Click to add a control point"
 msgstr "Cliqueu per a afegir un punt de control"
 
-#: ../app/tools/gimpcurvestool.c:360
+#: ../app/tools/gimpcurvestool.c:363
 msgid "Click to add control points to all channels"
 msgstr "Cliqueu per a afegir un punt de control a tots els canals"
 
-#: ../app/tools/gimpcurvestool.c:555 ../app/tools/gimplevelstool.c:365
+#: ../app/tools/gimpcurvestool.c:558 ../app/tools/gimplevelstool.c:365
 msgid "Cha_nnel:"
 msgstr "Ca_nal:"
 
-#: ../app/tools/gimpcurvestool.c:577 ../app/tools/gimplevelstool.c:387
+#: ../app/tools/gimpcurvestool.c:580 ../app/tools/gimplevelstool.c:387
 msgid "R_eset Channel"
 msgstr "_Inicialitza el canal"
 
 #. Horizontal button box for load / save
-#: ../app/tools/gimpcurvestool.c:681 ../app/tools/gimplevelstool.c:581
+#: ../app/tools/gimpcurvestool.c:684 ../app/tools/gimplevelstool.c:581
 msgid "All Channels"
 msgstr "Tots els canals"
 
 #. The radio box for selecting the curve type
-#: ../app/tools/gimpcurvestool.c:699
+#: ../app/tools/gimpcurvestool.c:702
 msgid "Curve Type"
 msgstr "Tipus de corba"
 
-#: ../app/tools/gimpcurvestool.c:753 ../app/tools/gimplevelstool.c:672
+#: ../app/tools/gimpcurvestool.c:756 ../app/tools/gimplevelstool.c:672
 #, c-format
 msgid "not a GIMP Levels file"
 msgstr "no és un fitxer de nivells del GIMP "
 
-#: ../app/tools/gimpcurvestool.c:767 ../app/tools/gimplevelstool.c:711
+#: ../app/tools/gimpcurvestool.c:770 ../app/tools/gimplevelstool.c:711
 #, c-format
 msgid "parse error"
 msgstr "Error en l'anàlisi del fitxer"
@@ -9846,15 +9842,20 @@ msgstr ""
 msgid "_Flip"
 msgstr "_Capgira"
 
-#: ../app/tools/gimpforegroundselectoptions.c:77
+#: ../app/tools/gimpforegroundselectoptions.c:79
+#: ../app/tools/gimpselectionoptions.c:100
+msgid "Smooth edges"
+msgstr "Arrodoneix les vores"
+
+#: ../app/tools/gimpforegroundselectoptions.c:85
 msgid "Select a single contiguous area"
 msgstr "Selecciona una única regió contigua"
 
-#: ../app/tools/gimpforegroundselectoptions.c:86
+#: ../app/tools/gimpforegroundselectoptions.c:96
 msgid "Size of the brush used for refinements"
 msgstr "Mida del pinzell utilitzat per a concretar la selecció"
 
-#: ../app/tools/gimpforegroundselectoptions.c:91
+#: ../app/tools/gimpforegroundselectoptions.c:102
 msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
@@ -9862,55 +9863,55 @@ msgstr ""
 "Si doneu un valor petit aleshores la selecció serà més fina però pot ser que "
 "es facin forats"
 
-#: ../app/tools/gimpforegroundselectoptions.c:107
+#: ../app/tools/gimpforegroundselectoptions.c:121
 msgid "Sensitivity for brightness component"
 msgstr "Sensibilitat a la component brillantor"
 
-#: ../app/tools/gimpforegroundselectoptions.c:112
+#: ../app/tools/gimpforegroundselectoptions.c:127
 msgid "Sensitivity for red/green component"
 msgstr "Sensibilitat a la component verda/vermella"
 
-#: ../app/tools/gimpforegroundselectoptions.c:117
+#: ../app/tools/gimpforegroundselectoptions.c:133
 msgid "Sensitivity for yellow/blue component"
 msgstr "Sensibilitat a la component groga/blava"
 
 #. single / multiple objects
-#: ../app/tools/gimpforegroundselectoptions.c:231
+#: ../app/tools/gimpforegroundselectoptions.c:276
 msgid "Contiguous"
 msgstr "Contigua"
 
 #. foreground / background
-#: ../app/tools/gimpforegroundselectoptions.c:236
+#: ../app/tools/gimpforegroundselectoptions.c:281
 #, c-format
 msgid "Interactive refinement  (%s)"
 msgstr "Refinament interactiu (%s)"
 
-#: ../app/tools/gimpforegroundselectoptions.c:240
+#: ../app/tools/gimpforegroundselectoptions.c:285
 msgid "Mark background"
 msgstr "Marca el fons"
 
-#: ../app/tools/gimpforegroundselectoptions.c:241
+#: ../app/tools/gimpforegroundselectoptions.c:286
 msgid "Mark foreground"
 msgstr "Marca el primer pla"
 
-#: ../app/tools/gimpforegroundselectoptions.c:257
+#: ../app/tools/gimpforegroundselectoptions.c:302
 msgid "Small brush"
 msgstr "Pinzell petit"
 
-#: ../app/tools/gimpforegroundselectoptions.c:265
+#: ../app/tools/gimpforegroundselectoptions.c:310
 msgid "Large brush"
 msgstr "Pinzell gros"
 
-#: ../app/tools/gimpforegroundselectoptions.c:289
+#: ../app/tools/gimpforegroundselectoptions.c:334
 msgid "Smoothing:"
 msgstr "Suavitzat:"
 
-#: ../app/tools/gimpforegroundselectoptions.c:295
+#: ../app/tools/gimpforegroundselectoptions.c:340
 msgid "Preview color:"
 msgstr "Mostra del color:"
 
 #. granularity
-#: ../app/tools/gimpforegroundselectoptions.c:298
+#: ../app/tools/gimpforegroundselectoptions.c:343
 msgid "Color Sensitivity"
 msgstr "Sensibilitat als canvis de color"
 
@@ -10356,7 +10357,7 @@ msgid "_Paintbrush"
 msgstr "_Pinzell"
 
 #: ../app/tools/gimppaintoptions-gui.c:99
-#: ../app/tools/gimpselectionoptions.c:341
+#: ../app/tools/gimpselectionoptions.c:331
 #: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:273
 msgid "Mode:"
 msgstr "Mode:"
@@ -10572,7 +10573,7 @@ msgstr "Eina Selecció rectangular: selecciona una regió rectangular"
 msgid "_Rectangle Select"
 msgstr "Selecció _rectangular"
 
-#: ../app/tools/gimprectangletool.c:1032 ../app/tools/gimprectangletool.c:1880
+#: ../app/tools/gimprectangletool.c:1033 ../app/tools/gimprectangletool.c:1883
 msgid "Rectangle: "
 msgstr "Rectangle: "
 
@@ -10620,36 +10621,32 @@ msgstr "E_scala"
 msgid "command|Scale"
 msgstr "Escala"
 
-#: ../app/tools/gimpselectionoptions.c:103
-msgid "Smooth edges"
-msgstr "Arrodoneix les vores"
-
-#: ../app/tools/gimpselectionoptions.c:117
+#: ../app/tools/gimpselectionoptions.c:114
 msgid "Allow completely transparent regions to be selected"
 msgstr "Permet seleccionar regions completament transparents"
 
-#: ../app/tools/gimpselectionoptions.c:123
+#: ../app/tools/gimpselectionoptions.c:120
 msgid "Base selection on all visible layers"
 msgstr "Obté el color resultant de fusionar les capes"
 
-#: ../app/tools/gimpselectionoptions.c:349 ../app/tools/gimptextoptions.c:457
+#: ../app/tools/gimpselectionoptions.c:339 ../app/tools/gimptextoptions.c:457
 msgid "Antialiasing"
 msgstr "Suavitzat"
 
 # Quim: opció en el diàleg selecció, per fer que les puntes de la selecció rectangular siguin arrodonides
-#: ../app/tools/gimpselectionoptions.c:367
+#: ../app/tools/gimpselectionoptions.c:354
 msgid "Feather edges"
 msgstr "Arrodoneix les vores"
 
-#: ../app/tools/gimpselectionoptions.c:384
+#: ../app/tools/gimpselectionoptions.c:371
 msgid "Interactive boundary"
 msgstr "Vora interactiva"
 
-#: ../app/tools/gimpselectionoptions.c:398
+#: ../app/tools/gimpselectionoptions.c:385
 msgid "Select transparent areas"
 msgstr "Àrees transparents"
 
-#: ../app/tools/gimpselectionoptions.c:423
+#: ../app/tools/gimpselectionoptions.c:410
 msgid "Select by:"
 msgstr "Canal:"
 
@@ -11567,8 +11564,8 @@ msgstr ""
 "Si se suprimeix aquest controlador de la llista, també se suprimiran tots "
 "els esdeveniments que li hagueu configurat.\n"
 "\n"
-"Si no voleu perdre tota la informació, és millor que només feu «inhabilita "
-"el controlador»."
+"Si no voleu perdre tota la informació, és millor que només feu «inhabilita el "
+"controlador»."
 
 #: ../app/widgets/gimpcontrollerlist.c:631
 msgid "Configure Input Controller"
@@ -12440,7 +12437,7 @@ msgstr "Finestra flotant"
 msgid "Keep above"
 msgstr "Sempre per sobre"
 
-#: ../app/xcf/xcf-load.c:275
+#: ../app/xcf/xcf-load.c:277
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -12448,7 +12445,7 @@ msgstr ""
 "Aquest fitxer XCF està malmès! S'ha intentat llegir el màxim que s'ha pogut, "
 "però està incomplet."
 
-#: ../app/xcf/xcf-load.c:284
+#: ../app/xcf/xcf-load.c:286
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -12456,7 +12453,7 @@ msgstr ""
 "Aquest fitxer XCF està malmès! Ni tan sols s'ha pogut salvar cap informació "
 "parcial de la imatge."
 
-#: ../app/xcf/xcf-load.c:316
+#: ../app/xcf/xcf-load.c:318
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
