@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-05-06 11:55+0200\n"
-"PO-Revision-Date: 2008-05-06 11:58+0200\n"
+"PO-Revision-Date: 2008-05-12 02:26+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -716,11 +716,11 @@ msgstr "Da destra a sinistra"
 
 #: ../libgimpbase/gimpbaseenums.c:1078
 msgid "Left justified"
-msgstr "Giustificato a sinistra"
+msgstr "Allineato a sinistra"
 
 #: ../libgimpbase/gimpbaseenums.c:1079
 msgid "Right justified"
-msgstr "Giustificato a destra"
+msgstr "Allineato a destra"
 
 #: ../libgimpbase/gimpbaseenums.c:1080
 msgid "Centered"
@@ -728,7 +728,7 @@ msgstr "Centrato"
 
 #: ../libgimpbase/gimpbaseenums.c:1081
 msgid "Filled"
-msgstr "Riempito"
+msgstr "Giustificato"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
 #: ../modules/cdisplay_lcms.c:187 ../modules/colorsel_cmyk_lcms.c:411
