@@ -69,61 +69,40 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
                                  cairo_t            *cr,
                                  const GdkRectangle *area)
 {
-  GimpVectors  *vectors = GIMP_VECTORS (renderer->viewable);
-  GimpStroke   *stroke;
-  gdouble       xscale;
-  gdouble       yscale;
-  gint          x, y;
+  GimpVectors    *vectors = GIMP_VECTORS (renderer->viewable);
+  GimpBezierDesc *bezdesc;
+  gdouble         xscale;
+  gdouble         yscale;
+  gint            x, y;
 
   gdk_cairo_set_source_color (cr, &widget->style->white);
 
   x = area->x + (area->width  - renderer->width)  / 2;
   y = area->y + (area->height - renderer->height) / 2;
 
-  cairo_rectangle (cr, x, y, renderer->width, renderer->height);
+  cairo_translate (cr, x, y);
+  cairo_rectangle (cr, 0, 0, renderer->width, renderer->height);
   cairo_clip_preserve (cr);
   cairo_fill (cr);
 
-  cairo_set_line_width (cr, 1.0);
+  xscale = (gdouble) renderer->width / (gdouble) gimp_item_width  (GIMP_ITEM (vectors));
+  yscale = (gdouble) renderer->height / (gdouble) gimp_item_height (GIMP_ITEM (vectors));
+  cairo_scale (cr, xscale, yscale);
+
+  /* determine line width */
+  xscale = yscale = 0.5;
+  cairo_device_to_user_distance (cr, &xscale, &yscale);
+
+  cairo_set_line_width (cr, MAX (xscale, yscale));
   gdk_cairo_set_source_color (cr, &widget->style->black);
 
-  xscale = (gdouble) gimp_item_width  (GIMP_ITEM (vectors)) / (gdouble) renderer->width;
-  yscale = (gdouble) gimp_item_height (GIMP_ITEM (vectors)) / (gdouble) renderer->height;
+  bezdesc = gimp_vectors_make_bezier (vectors);
 
-  for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
-       stroke != NULL;
-       stroke = gimp_vectors_stroke_get_next (vectors, stroke))
+  if (bezdesc)
     {
-      GArray *coordinates;
-
-      coordinates = gimp_stroke_interpolate (stroke,
-                                             MIN (xscale, yscale) / 2,
-                                             NULL);
-      if (! coordinates)
-        continue;
-
-      if (coordinates->len > 0)
-        {
-          GimpCoords *coords = &(g_array_index (coordinates, GimpCoords, 0));
-          gdouble     cx     = x + ROUND (coords->x / xscale);
-          gdouble     cy     = y + ROUND (coords->y / yscale);
-          gint        i;
-
-          cairo_move_to (cr, cx, cy);
-
-          for (i = 1; i < coordinates->len; i++)
-            {
-              coords = &(g_array_index (coordinates, GimpCoords, i));
-
-              cx = x + ROUND (coords->x / xscale) + 0.5;
-              cy = y + ROUND (coords->y / yscale) + 0.5;
-
-              cairo_line_to (cr, cx, cy);
-            }
-
-          cairo_stroke (cr);
-        }
-
-      g_array_free (coordinates, TRUE);
+      cairo_append_path (cr, (cairo_path_t *) bezdesc);
+      cairo_stroke (cr);
+      g_free (bezdesc->data);
+      g_free (bezdesc);
     }
 }

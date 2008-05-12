@@ -1,3 +1,18 @@
+2008-05-12  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpvectors.[ch]
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpbezierstroke.c: Implement functionality to
+	get a bezier description a la moveto/curveto/closepath.
+
+	* app/vectors/vectors-types.h: implement an evil hack to avoid
+	the inclusion of cairo.h in most C files...
+
+	* app/vectors/Makefile.am: link against cairo
+
+	* app/widgets/gimpviewrenderervectors.c: use the new functionality
+	for preview rendering.
+
 2008-05-11  Sven Neumann  <sven@gimp.org>
 
 	* app/core/Makefile.am

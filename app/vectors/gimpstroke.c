@@ -129,7 +129,7 @@ static GArray *     gimp_stroke_real_interpolate     (const GimpStroke *stroke,
                                                       gdouble           precision,
                                                       gboolean         *closed);
 static GimpStroke * gimp_stroke_real_duplicate       (const GimpStroke *stroke);
-static GimpStroke * gimp_stroke_real_make_bezier     (const GimpStroke *stroke);
+static GimpBezierDesc * gimp_stroke_real_make_bezier (const GimpStroke *stroke);
 
 static void         gimp_stroke_real_translate       (GimpStroke       *stroke,
                                                       gdouble           offset_x,
@@ -1006,7 +1006,7 @@ gimp_stroke_real_duplicate (const GimpStroke *stroke)
 }
 
 
-GimpStroke *
+GimpBezierDesc *
 gimp_stroke_make_bezier (const GimpStroke *stroke)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
@@ -1014,7 +1014,7 @@ gimp_stroke_make_bezier (const GimpStroke *stroke)
   return GIMP_STROKE_GET_CLASS (stroke)->make_bezier (stroke);
 }
 
-static GimpStroke *
+static GimpBezierDesc *
 gimp_stroke_real_make_bezier (const GimpStroke *stroke)
 {
   g_printerr ("gimp_stroke_make_bezier: default implementation\n");

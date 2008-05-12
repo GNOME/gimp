@@ -35,5 +35,10 @@ typedef struct _GimpVectorsPropUndo GimpVectorsPropUndo;
 typedef struct _GimpStroke          GimpStroke;
 typedef struct _GimpBezierStroke    GimpBezierStroke;
 
+#ifdef CAIRO_VERSION
+typedef cairo_path_t GimpBezierDesc;
+#else
+typedef void * GimpBezierDesc;
+#endif
 
 #endif /* __VECTORS_TYPES_H__ */

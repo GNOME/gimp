@@ -149,7 +149,7 @@ struct _GimpStrokeClass
 
   GimpStroke  * (* duplicate)            (const GimpStroke      *stroke);
 
-  GimpStroke  * (* make_bezier)          (const GimpStroke      *stroke);
+  GimpBezierDesc * (* make_bezier)       (const GimpStroke      *stroke);
 
   void          (* translate)            (GimpStroke            *stroke,
                                           gdouble                offset_x,
@@ -177,8 +177,6 @@ struct _GimpStrokeClass
   GArray      * (* get_draw_lines)       (const GimpStroke      *stroke);
   GArray      * (* control_points_get)   (const GimpStroke      *stroke,
                                           gboolean              *ret_closed);
-
-  void          (* art_stroke)           (const GimpStroke      *stroke);
 };
 
 
@@ -312,7 +310,7 @@ GArray     * gimp_stroke_interpolate          (const GimpStroke      *stroke,
 GimpStroke * gimp_stroke_duplicate            (const GimpStroke      *stroke);
 
 /* creates a bezier approximation. */
-GimpStroke * gimp_stroke_make_bezier          (const GimpStroke      *stroke);
+GimpBezierDesc * gimp_stroke_make_bezier      (const GimpStroke      *stroke);
 
 void         gimp_stroke_translate            (GimpStroke            *stroke,
                                                gdouble                offset_x,

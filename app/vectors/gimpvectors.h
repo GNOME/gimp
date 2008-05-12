@@ -24,7 +24,6 @@
 
 #include "core/gimpitem.h"
 
-
 #define GIMP_TYPE_VECTORS            (gimp_vectors_get_type ())
 #define GIMP_VECTORS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VECTORS, GimpVectors))
 #define GIMP_VECTORS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VECTORS, GimpVectorsClass))
@@ -79,7 +78,7 @@ struct _GimpVectorsClass
                                        gdouble            precision,
                                        gint               max_points,
                                        GimpCoords        *ret_coords);
-  GimpVectors * (* make_bezier)       (const GimpVectors *vectors);
+  GimpBezierDesc * (* make_bezier)    (const GimpVectors *vectors);
 };
 
 
@@ -173,8 +172,8 @@ gint            gimp_vectors_interpolate        (const GimpVectors  *vectors,
 
 /* usually overloaded */
 
-/* creates a bezier approximation. */
+/* creates a bezier representation. */
 
-GimpVectors   * gimp_vectors_make_bezier        (const GimpVectors  *vectors);
+GimpBezierDesc * gimp_vectors_make_bezier       (const GimpVectors  *vectors);
 
 #endif /* __GIMP_VECTORS_H__ */

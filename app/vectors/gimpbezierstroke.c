@@ -22,6 +22,7 @@
 #include "config.h"
 
 #include <glib-object.h>
+#include <cairo/cairo.h>
 
 #include "libgimpmath/gimpmath.h"
 
@@ -130,6 +131,8 @@ static GArray *
     gimp_bezier_stroke_interpolate         (const GimpStroke      *stroke,
                                             const gdouble          precision,
                                             gboolean              *closed);
+static GimpBezierDesc *
+    gimp_bezier_stroke_make_bezier         (const GimpStroke      *stroke);
 
 static void gimp_bezier_stroke_finalize    (GObject               *object);
 
@@ -185,6 +188,7 @@ gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
   stroke_class->extend               = gimp_bezier_stroke_extend;
   stroke_class->connect_stroke       = gimp_bezier_stroke_connect_stroke;
   stroke_class->interpolate          = gimp_bezier_stroke_interpolate;
+  stroke_class->make_bezier          = gimp_bezier_stroke_make_bezier;
 }
 
 static void
@@ -1437,6 +1441,94 @@ gimp_bezier_stroke_anchor_convert (GimpStroke            *stroke,
                  "unimplemented anchor conversion %d\n", feature);
     }
 }
+
+
+static GimpBezierDesc *
+gimp_bezier_stroke_make_bezier (const GimpStroke *stroke)
+{
+  GArray *points, *cmd_array;
+  GimpBezierDesc *bezdesc;
+  cairo_path_data_t  pathdata;
+  gint num_cmds, i;
+
+  points = gimp_stroke_control_points_get (stroke, NULL);
+
+  g_return_val_if_fail (points && points->len % 3 == 0, NULL);
+  if (points->len < 3)
+    return NULL;
+
+  /* Moveto + (n-1) * curveto + (if closed) curveto + closepath */
+  num_cmds = 2 + (points->len / 3 - 1) * 4;
+  if (stroke->closed)
+    num_cmds += 1 + 4;
+
+  cmd_array = g_array_sized_new (FALSE, FALSE,
+                                 sizeof (cairo_path_data_t),
+                                 num_cmds);
+
+  pathdata.header.type = CAIRO_PATH_MOVE_TO;
+  pathdata.header.length = 2;
+  g_array_append_val (cmd_array, pathdata);
+  pathdata.point.x = g_array_index (points, GimpAnchor, 1).position.x;
+  pathdata.point.y = g_array_index (points, GimpAnchor, 1).position.y;
+  g_array_append_val (cmd_array, pathdata);
+
+  for (i = 2; i+2 < points->len; i += 3)
+    {
+      pathdata.header.type = CAIRO_PATH_CURVE_TO;
+      pathdata.header.length = 4;
+      g_array_append_val (cmd_array, pathdata);
+
+      pathdata.point.x = g_array_index (points, GimpAnchor, i).position.x;
+      pathdata.point.y = g_array_index (points, GimpAnchor, i).position.y;
+      g_array_append_val (cmd_array, pathdata);
+
+      pathdata.point.x = g_array_index (points, GimpAnchor, i+1).position.x;
+      pathdata.point.y = g_array_index (points, GimpAnchor, i+1).position.y;
+      g_array_append_val (cmd_array, pathdata);
+
+      pathdata.point.x = g_array_index (points, GimpAnchor, i+2).position.x;
+      pathdata.point.y = g_array_index (points, GimpAnchor, i+2).position.y;
+      g_array_append_val (cmd_array, pathdata);
+    }
+
+  if (stroke->closed)
+    {
+      pathdata.header.type = CAIRO_PATH_CURVE_TO;
+      pathdata.header.length = 4;
+      g_array_append_val (cmd_array, pathdata);
+
+      pathdata.point.x = g_array_index (points, GimpAnchor, i).position.x;
+      pathdata.point.y = g_array_index (points, GimpAnchor, i).position.y;
+      g_array_append_val (cmd_array, pathdata);
+
+      pathdata.point.x = g_array_index (points, GimpAnchor, 0).position.x;
+      pathdata.point.y = g_array_index (points, GimpAnchor, 0).position.y;
+      g_array_append_val (cmd_array, pathdata);
+
+      pathdata.point.x = g_array_index (points, GimpAnchor, 1).position.x;
+      pathdata.point.y = g_array_index (points, GimpAnchor, 1).position.y;
+      g_array_append_val (cmd_array, pathdata);
+
+      pathdata.header.type = CAIRO_PATH_CLOSE_PATH;
+      pathdata.header.length = 1;
+      g_array_append_val (cmd_array, pathdata);
+    }
+
+  if (cmd_array->len != num_cmds)
+    g_printerr ("miscalculated path cmd length! (%d vs. %d)\n",
+                cmd_array->len, num_cmds);
+
+  bezdesc = g_new (GimpBezierDesc, 1);
+  bezdesc->status = CAIRO_STATUS_SUCCESS;
+  bezdesc->data = (cairo_path_data_t *) cmd_array->data;
+  bezdesc->num_data = cmd_array->len;
+  g_array_free (points, TRUE);
+  g_array_free (cmd_array, FALSE);
+
+  return bezdesc;
+}
+
 
 static GArray *
 gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,

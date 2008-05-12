@@ -22,6 +22,7 @@
 #include "config.h"
 
 #include <glib-object.h>
+#include <cairo/cairo.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
@@ -135,7 +136,7 @@ static gint       gimp_vectors_real_interpolate     (const GimpVectors *vectors,
                                                      gdouble            precision,
                                                      gint               max_points,
                                                      GimpCoords        *ret_coords);
-static GimpVectors * gimp_vectors_real_make_bezier  (const GimpVectors *vectors);
+static GimpBezierDesc * gimp_vectors_real_make_bezier (const GimpVectors *vectors);
 
 
 G_DEFINE_TYPE (GimpVectors, gimp_vectors, GIMP_TYPE_ITEM)
@@ -1013,7 +1014,7 @@ gimp_vectors_real_interpolate (const GimpVectors *vectors,
 }
 
 
-GimpVectors *
+GimpBezierDesc *
 gimp_vectors_make_bezier (const GimpVectors *vectors)
 {
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
@@ -1021,11 +1022,38 @@ gimp_vectors_make_bezier (const GimpVectors *vectors)
   return GIMP_VECTORS_GET_CLASS (vectors)->make_bezier (vectors);
 }
 
-static GimpVectors *
+static GimpBezierDesc *
 gimp_vectors_real_make_bezier (const GimpVectors *vectors)
 {
-  g_printerr ("gimp_vectors_make_bezier: default implementation\n");
+  GimpStroke     *cur_stroke;
+  GArray         *cmd_array;
+  GimpBezierDesc *bezdesc;
+  GimpBezierDesc *ret_bezdesc = NULL;
 
-  return NULL;
+  cmd_array = g_array_new (FALSE, FALSE, sizeof (cairo_path_data_t));
+
+  for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+       cur_stroke;
+       cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
+    {
+      bezdesc = gimp_stroke_make_bezier (cur_stroke);
+      if (bezdesc)
+        {
+          cmd_array = g_array_append_vals (cmd_array, bezdesc->data,
+                                           bezdesc->num_data);
+          g_free (bezdesc->data);
+          g_free (bezdesc);
+        }
+    }
+
+  if (cmd_array->len > 0)
+    {
+      ret_bezdesc = g_new (GimpBezierDesc, 1);
+      ret_bezdesc->num_data = cmd_array->len;
+      ret_bezdesc->data = (cairo_path_data_t *) cmd_array->data;
+      g_array_free (cmd_array, FALSE);
+    }
+
+  return ret_bezdesc;
 }
 
