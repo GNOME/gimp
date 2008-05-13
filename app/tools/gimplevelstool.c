@@ -34,6 +34,9 @@
 #include "gegl/gimplevelsconfig.h"
 #include "gegl/gimpoperationlevels.h"
 
+#include "core/gimp.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpimage.h"
@@ -47,6 +50,7 @@
 
 #include "gimphistogramoptions.h"
 #include "gimplevelstool.h"
+#include "tool_manager.h"
 
 #include "gimp-intl.h"
 
@@ -117,6 +121,9 @@ static void       levels_low_output_changed       (GtkAdjustment     *adjustment
 static void       levels_high_output_changed      (GtkAdjustment     *adjustment,
                                                    GimpLevelsTool    *tool);
 static void       levels_input_picker_toggled     (GtkWidget         *widget,
+                                                   GimpLevelsTool    *tool);
+
+static void       levels_to_curves_callback       (GtkWidget         *widget,
                                                    GimpLevelsTool    *tool);
 
 
@@ -620,11 +627,11 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  all channels frame  */
   frame = gimp_frame_new (_("All Channels"));
-  gtk_box_pack_end (GTK_BOX (image_map_tool->main_vbox), frame,
-                    FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), frame,
+                      FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
@@ -671,6 +678,17 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   g_signal_connect (image_map_tool->shell, "unmap",
                     G_CALLBACK (gimp_levels_tool_dialog_unmap),
+                    tool);
+
+  button = gtk_button_new_from_stock (GIMP_STOCK_TOOL_LEVELS);
+  gtk_button_set_label (GTK_BUTTON (button),
+                        _("Edit this Settings as Curves"));
+  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), button,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (levels_to_curves_callback),
                     tool);
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->channel_menu),
@@ -1112,4 +1130,38 @@ gimp_levels_tool_color_picked (GimpColorTool      *color_tool,
       levels_input_adjust_by_color (tool->config,
                                     value, tool->config->channel, color);
     }
+}
+
+static void
+levels_to_curves_callback (GtkWidget      *widget,
+                           GimpLevelsTool *tool)
+{
+  GimpCurvesConfig *curves;
+  GimpDisplay      *display;
+  GimpContext      *user_context;
+  GimpToolInfo     *tool_info;
+  GimpTool         *new_tool;
+
+  curves = gimp_levels_config_to_curves_config (tool->config);
+
+  display = GIMP_TOOL (tool)->display;
+
+  user_context = gimp_get_user_context (display->gimp);
+
+  tool_info = gimp_container_get_child_by_name (display->gimp->tool_info_list,
+                                                "gimp-curves-tool");
+
+  g_object_ref (tool);
+
+  gimp_context_set_tool (user_context, tool_info);
+  tool_manager_initialize_active (display->gimp, display);
+
+  new_tool = tool_manager_get_active (display->gimp);
+
+  gimp_config_copy (GIMP_CONFIG (curves),
+                    GIMP_CONFIG (GIMP_IMAGE_MAP_TOOL (new_tool)->config),
+                    0);
+
+  g_object_unref (tool);
+  g_object_unref (curves);
 }

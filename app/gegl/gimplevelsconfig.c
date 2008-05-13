@@ -38,6 +38,9 @@
 /*  temp cruft  */
 #include "base/levels.h"
 
+#include "core/gimpcurve.h"
+
+#include "gimpcurvesconfig.h"
 #include "gimplevelsconfig.h"
 
 #include "gimp-intl.h"
@@ -520,6 +523,58 @@ gimp_levels_config_adjust_by_colors (GimpLevelsConfig     *config,
     }
 
   g_object_thaw_notify (G_OBJECT (config));
+}
+
+GimpCurvesConfig *
+gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
+{
+  GimpCurvesConfig     *curves;
+  GimpHistogramChannel  channel;
+
+  g_return_val_if_fail (GIMP_IS_LEVELS_CONFIG (config), NULL);
+
+  curves = g_object_new (GIMP_TYPE_CURVES_CONFIG, NULL);
+
+  for (channel = GIMP_HISTOGRAM_VALUE;
+       channel <= GIMP_HISTOGRAM_ALPHA;
+       channel++)
+    {
+      GimpCurve *curve = curves->curve[channel];
+      gint       border_point;
+      gint       point;
+
+      if (config->low_input[channel]  > 0.0 ||
+          config->low_output[channel] > 0.0)
+        {
+          border_point = gimp_curve_get_closest_point (curve, 0.0);
+          point = gimp_curve_get_closest_point (curve,
+                                                config->low_input[channel]);
+
+          gimp_curve_set_point (curve, point,
+                                config->low_input[channel],
+                                config->low_output[channel]);
+
+          if (point != border_point)
+            gimp_curve_set_point (curve, border_point, -1, -1);
+        }
+
+      if (config->high_input[channel]  < 1.0 ||
+          config->high_output[channel] < 1.0)
+        {
+          border_point = gimp_curve_get_closest_point (curve, 1.0);
+          point = gimp_curve_get_closest_point (curve,
+                                                config->high_input[channel]);
+
+          gimp_curve_set_point (curve, point,
+                                config->high_input[channel],
+                                config->high_output[channel]);
+
+          if (point != border_point)
+            gimp_curve_set_point (curve, border_point, -1, -1);
+        }
+    }
+
+  return curves;
 }
 
 gboolean

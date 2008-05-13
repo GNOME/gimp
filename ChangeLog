@@ -1,3 +1,16 @@
+2008-05-13  Michael Natterer  <mitch@gimp.org>
+
+	First prototype of a button in the levels tool dialog that will
+	jump the the curves tool with the same settings:
+
+	* app/gegl/gimplevelsconfig.[ch]: add new function
+	gimp_levels_config_to_curves_config() which converts a
+	GimpLevelsConfig to a GimpCurvesConfig. Still lacks support
+	for gamma.
+
+	* app/tools/gimplevelstool.c: add "Edit this Settings as Curves"
+	button and jump to curves when clicked. Still ugly.
+
 2008-05-13  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcurve-map.c (gimp_curve_map_pixels): use memcpy()

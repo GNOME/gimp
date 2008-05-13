@@ -73,6 +73,9 @@ void       gimp_levels_config_adjust_by_colors (GimpLevelsConfig      *config,
                                                 const GimpRGB         *gray,
                                                 const GimpRGB         *white);
 
+GimpCurvesConfig *
+           gimp_levels_config_to_curves_config (GimpLevelsConfig      *config);
+
 gboolean   gimp_levels_config_load_cruft       (GimpLevelsConfig      *config,
                                                 gpointer               fp,
                                                 GError               **error);
