@@ -1,5 +1,10 @@
 2008-05-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpsessioninfo.c: turn "info != NULL" checks into
+	"GIMP_IS_SESSION_INFO (info)".
+
+2008-05-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpsessioninfo.[ch]: turn into a GimpObject
 	subclass. No logical changes yet.
 

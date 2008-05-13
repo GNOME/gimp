@@ -127,7 +127,7 @@ gimp_session_info_serialize (GimpConfigWriter *writer,
 {
   const gchar *dialog_name;
 
-  g_return_if_fail (info != NULL);
+  g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (factory_name != NULL);
   g_return_if_fail (writer != NULL);
 
@@ -374,7 +374,7 @@ gimp_session_info_restore (GimpSessionInfo   *info,
   GdkDisplay *display;
   GdkScreen  *screen = NULL;
 
-  g_return_if_fail (info != NULL);
+  g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
 
   display = gdk_display_get_default ();
@@ -465,7 +465,7 @@ gimp_session_info_set_geometry (GimpSessionInfo *info)
   gint         monitor;
   gboolean     use_size;
 
-  g_return_if_fail (info != NULL);
+  g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (GTK_IS_WINDOW (info->widget));
 
   screen = gtk_widget_get_screen (info->widget);
@@ -524,7 +524,7 @@ gimp_session_info_set_geometry (GimpSessionInfo *info)
 void
 gimp_session_info_get_geometry (GimpSessionInfo *info)
 {
-  g_return_if_fail (info != NULL);
+  g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (GTK_IS_WINDOW (info->widget));
 
   if (info->widget->window)
