@@ -49,10 +49,19 @@ gimp_curve_map_value (GimpCurve *curve,
     }
   else  /* interpolate the curve */
     {
-      gint    index = floor (value * (gdouble) (curve->n_samples - 1));
-      gdouble f     = value * (gdouble) (curve->n_samples - 1) - index;
+      gdouble f;
+      gint    index;
 
-      return (1.0 - f) * curve->samples[index] + f  * curve->samples[index + 1];
+      /*  map value to the sample space  */
+      value = value * (curve->n_samples - 1);
+
+      /*  determine the indices of the closest sample points  */
+      index = (gint) value;
+
+      /*  calculate the position between the sample points  */
+      f = value - index;
+
+      return (1.0 - f) * curve->samples[index] + f * curve->samples[index + 1];
     }
 }
 

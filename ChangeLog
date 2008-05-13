@@ -1,4 +1,9 @@
-2008-05-11  Sven Neumann  <sven@gimp.org>
+2008-05-13  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpcurve-map.c (gimp_curve_map_value): simplified the
+	general case.
+
+2008-05-13  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcurve.[ch]: keep a boolean flag to identify an
 	identity mapping. Set it to TRUE when the curve is reset.
