@@ -203,35 +203,25 @@ gimp_session_info_aux_set_props (GObject *object,
 
 void
 gimp_session_info_aux_serialize (GimpConfigWriter *writer,
-                                 GtkWidget        *widget)
+                                 GList            *aux_info)
 {
-  GList *aux_info;
+  GList *list;
 
   g_return_if_fail (writer != NULL);
-  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_if_fail (aux_info != NULL);
 
-  aux_info = gimp_session_info_aux_get_list (widget);
+  gimp_config_writer_open (writer, "aux-info");
 
-  if (aux_info)
+  for (list = aux_info; list; list = g_list_next (list))
     {
-      GList *list;
+      GimpSessionInfoAux *aux = list->data;
 
-      gimp_config_writer_open (writer, "aux-info");
-
-      for (list = aux_info; list; list = g_list_next (list))
-        {
-          GimpSessionInfoAux *aux = list->data;
-
-          gimp_config_writer_open (writer, aux->name);
-          gimp_config_writer_string (writer, aux->value);
-          gimp_config_writer_close (writer);
-        }
-
+      gimp_config_writer_open (writer, aux->name);
+      gimp_config_writer_string (writer, aux->value);
       gimp_config_writer_close (writer);
-
-      g_list_foreach (aux_info, (GFunc) gimp_session_info_aux_free, NULL);
-      g_list_free (aux_info);
     }
+
+  gimp_config_writer_close (writer);
 }
 
 GTokenType

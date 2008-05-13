@@ -1,3 +1,36 @@
+2008-05-14  Michael Natterer  <mitch@gimp.org>
+
+	Made session info serialization independent from widgets so it can
+	be used on stored dock layouts which are not open:
+
+	* app/widgets/gimpsessioninfo-book.[ch]
+	* app/widgets/gimpsessioninfo-dock.[ch]
+	* app/widgets/gimpsessioninfo-dockable.[ch]: add from_widget()
+	functions which return newly allocated session info structs.
+	Changed serialize() functions to take these structs instead of
+	widgets. Changed deserialize() functions to return the structs
+	instead of appending them to lists in their parent structs. Don't
+	free anything in restore().
+
+	* app/widgets/gimpsessioninfo-aux.[ch]
+	(gimp_session_info_aux_serialize): take a GList of aux_info
+	instead of a widget.
+
+	* app/widgets/gimpsessioninfo.[ch]: add new functions get_info()
+	which collects above session info details from dialogs and
+	clear_info() which clears that info. Call clear_info() from
+	finalize(). Don't free anything in restore().
+
+	* app/widgets/gimpdialogfactory.c
+	(gimp_dialog_factories_save_foreach): collect the session info
+	detials from the dialogs before serializing because serialize()
+	doesn't know about the widget any longer. Clear the infos after
+	serializing.
+
+	(gimp_dialog_factories_restore_foreach): clear the session info
+	details after creating the dialogs because restore() doesn't clear
+	the info by itself any longer.
+
 2008-05-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpsessioninfo.c: turn "info != NULL" checks into

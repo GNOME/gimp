@@ -37,16 +37,19 @@ struct _GimpSessionInfoBook
 
 GimpSessionInfoBook *
              gimp_session_info_book_new         (void);
-void         gimp_session_info_book_free        (GimpSessionInfoBook *info);
+void         gimp_session_info_book_free        (GimpSessionInfoBook  *info);
 
-void         gimp_session_info_book_serialize   (GimpConfigWriter    *writer,
-                                                 GimpDockbook        *dockbook);
-GTokenType   gimp_session_info_book_deserialize (GScanner            *scanner,
-                                                 gint                 scope,
-                                                 GimpSessionInfo     *info);
+void         gimp_session_info_book_serialize   (GimpConfigWriter     *writer,
+                                                 GimpSessionInfoBook  *book);
+GTokenType   gimp_session_info_book_deserialize (GScanner             *scanner,
+                                                 gint                  scope,
+                                                 GimpSessionInfoBook **book);
 
-void         gimp_session_info_book_restore     (GimpSessionInfoBook *info,
-                                                 GimpDock            *dock);
+GimpSessionInfoBook *
+             gimp_session_info_book_from_widget (GimpDockbook         *dockbook);
+
+void         gimp_session_info_book_restore     (GimpSessionInfoBook  *info,
+                                                 GimpDock             *dock);
 
 
 #endif  /* __GIMP_SESSION_INFO_BOOK_H__ */

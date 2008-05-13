@@ -81,19 +81,7 @@ gimp_session_info_finalize (GObject *object)
 {
   GimpSessionInfo *info = GIMP_SESSION_INFO (object);
 
-  if (info->aux_info)
-    {
-      g_list_foreach (info->aux_info,
-                      (GFunc) gimp_session_info_aux_free, NULL);
-      g_list_free (info->aux_info);
-    }
-
-   if (info->books)
-     {
-       g_list_foreach (info->books,
-                       (GFunc) gimp_session_info_book_free, NULL);
-       g_list_free (info->books);
-     }
+  gimp_session_info_clear_info (info);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -131,9 +119,6 @@ gimp_session_info_serialize (GimpConfigWriter *writer,
   g_return_if_fail (factory_name != NULL);
   g_return_if_fail (writer != NULL);
 
-  if (info->widget)
-    gimp_session_info_get_geometry (info);
-
   if (info->toplevel_entry)
     dialog_name = info->toplevel_entry->identifier;
   else
@@ -166,10 +151,11 @@ gimp_session_info_serialize (GimpConfigWriter *writer,
 
   if (info->widget)
     {
-      gimp_session_info_aux_serialize (writer, info->widget);
+      if (info->aux_info)
+        gimp_session_info_aux_serialize (writer, info->aux_info);
 
-      if (! info->toplevel_entry)
-        gimp_session_info_dock_serialize (writer, GIMP_DOCK (info->widget));
+      if (info->books)
+        gimp_session_info_dock_serialize (writer, info->books);
     }
 
   gimp_config_writer_close (writer);  /* session-info */
@@ -405,10 +391,6 @@ gimp_session_info_restore (GimpSessionInfo   *info,
     {
       gimp_session_info_dock_restore (info, factory, screen);
     }
-
-  g_list_foreach (info->aux_info, (GFunc) gimp_session_info_aux_free, NULL);
-  g_list_free (info->aux_info);
-  info->aux_info = NULL;
 }
 
 /* This function mostly lifted from
@@ -580,4 +562,40 @@ gimp_session_info_get_geometry (GimpSessionInfo *info)
       if (screen != gdk_display_get_default_screen (display))
         info->screen = gdk_screen_get_number (screen);
     }
+}
+
+void
+gimp_session_info_get_info (GimpSessionInfo *info)
+{
+  g_return_if_fail (GIMP_IS_SESSION_INFO (info));
+  g_return_if_fail (GTK_IS_WIDGET (info->widget));
+
+  gimp_session_info_get_geometry (info);
+
+  info->aux_info = gimp_session_info_aux_get_list (info->widget);
+
+  if (! info->toplevel_entry)
+    info->books = gimp_session_info_dock_from_widget (GIMP_DOCK (info->widget));
+}
+
+void
+gimp_session_info_clear_info (GimpSessionInfo *info)
+{
+  g_return_if_fail (GIMP_IS_SESSION_INFO (info));
+
+  if (info->aux_info)
+    {
+      g_list_foreach (info->aux_info,
+                      (GFunc) gimp_session_info_aux_free, NULL);
+      g_list_free (info->aux_info);
+      info->aux_info = NULL;
+    }
+
+   if (info->books)
+     {
+       g_list_foreach (info->books,
+                       (GFunc) gimp_session_info_book_free, NULL);
+       g_list_free (info->books);
+       info->books = NULL;
+     }
 }

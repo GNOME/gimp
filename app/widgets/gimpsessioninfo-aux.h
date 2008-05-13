@@ -42,7 +42,7 @@ void         gimp_session_info_aux_set_props      (GObject             *object,
                                                    ...) G_GNUC_NULL_TERMINATED;
 
 void         gimp_session_info_aux_serialize      (GimpConfigWriter    *writer,
-                                                   GtkWidget           *widget);
+                                                   GList               *aux_info);
 GTokenType   gimp_session_info_aux_deserialize    (GScanner            *scanner,
                                                    GList              **aux_list);
 

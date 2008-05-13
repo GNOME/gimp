@@ -1336,7 +1336,13 @@ gimp_dialog_factories_save_foreach (gconstpointer      key,
           (info->toplevel_entry && ! info->toplevel_entry->session_managed))
         continue;
 
+      if (info->widget)
+        gimp_session_info_get_info (info);
+
       gimp_session_info_serialize (writer, info, GIMP_OBJECT (factory)->name);
+
+      if (info->widget)
+        gimp_session_info_clear_info (info);
     }
 }
 
@@ -1352,7 +1358,10 @@ gimp_dialog_factories_restore_foreach (gconstpointer      key,
       GimpSessionInfo *info = infos->data;
 
       if (info->open)
-        gimp_session_info_restore (info, factory);
+        {
+          gimp_session_info_restore (info, factory);
+          gimp_session_info_clear_info (info);
+        }
     }
 }
 

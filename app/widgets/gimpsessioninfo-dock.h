@@ -24,10 +24,12 @@
 
 
 void         gimp_session_info_dock_serialize   (GimpConfigWriter  *writer,
-                                                 GimpDock          *dock);
+                                                 GList             *books);
 GTokenType   gimp_session_info_dock_deserialize (GScanner          *scanner,
                                                  gint               scope,
                                                  GimpSessionInfo   *info);
+
+GList      * gimp_session_info_dock_from_widget (GimpDock          *dock);
 
 void         gimp_session_info_dock_restore     (GimpSessionInfo   *info,
                                                  GimpDialogFactory *factory,

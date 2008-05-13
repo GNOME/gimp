@@ -86,5 +86,8 @@ void              gimp_session_info_restore      (GimpSessionInfo   *info,
 void              gimp_session_info_set_geometry (GimpSessionInfo   *info);
 void              gimp_session_info_get_geometry (GimpSessionInfo   *info);
 
+void              gimp_session_info_get_info     (GimpSessionInfo   *info);
+void              gimp_session_info_clear_info   (GimpSessionInfo   *info);
+
 
 #endif  /* __GIMP_SESSION_INFO_H__ */

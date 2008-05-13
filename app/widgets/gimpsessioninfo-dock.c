@@ -45,17 +45,17 @@ enum
 
 void
 gimp_session_info_dock_serialize (GimpConfigWriter *writer,
-                                  GimpDock         *dock)
+                                  GList            *books)
 {
-  GList *books;
+  GList *list;
 
   g_return_if_fail (writer != NULL);
-  g_return_if_fail (GIMP_IS_DOCK (dock));
+  g_return_if_fail (books != NULL);
 
   gimp_config_writer_open (writer, "dock");
 
-  for (books = dock->dockbooks; books; books = g_list_next (books))
-    gimp_session_info_book_serialize (writer, books->data);
+  for (list = books; list; list = g_list_next (list))
+    gimp_session_info_book_serialize (writer, list->data);
 
   gimp_config_writer_close (writer);
 }
@@ -88,13 +88,18 @@ gimp_session_info_dock_deserialize (GScanner        *scanner,
         case G_TOKEN_SYMBOL:
           switch (GPOINTER_TO_INT (scanner->value.v_symbol))
             {
+              GimpSessionInfoBook *book;
+
             case SESSION_INFO_BOOK:
               g_scanner_set_scope (scanner, scope + 1);
               token = gimp_session_info_book_deserialize (scanner, scope + 1,
-                                                          info);
+                                                          &book);
 
               if (token == G_TOKEN_LEFT_PAREN)
-                g_scanner_set_scope (scanner, scope);
+                {
+                  info->books = g_list_append (info->books, book);
+                  g_scanner_set_scope (scanner, scope);
+                }
               else
                 return token;
 
@@ -118,6 +123,26 @@ gimp_session_info_dock_deserialize (GScanner        *scanner,
   g_scanner_scope_remove_symbol (scanner, scope, "book");
 
   return token;
+}
+
+GList *
+gimp_session_info_dock_from_widget (GimpDock *dock)
+{
+  GList *list;
+  GList *infos = NULL;
+
+  g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
+
+  for (list = dock->dockbooks; list; list = g_list_next (list))
+    {
+      GimpSessionInfoBook *book;
+
+      book = gimp_session_info_book_from_widget (list->data);
+
+      infos = g_list_prepend (infos, book);
+    }
+
+  return g_list_reverse (infos);
 }
 
 static void
@@ -180,10 +205,6 @@ gimp_session_info_dock_restore (GimpSessionInfo   *info,
                                     GINT_TO_POINTER (book_info->position));
         }
     }
-
-  g_list_foreach (info->books, (GFunc) gimp_session_info_book_free, NULL);
-  g_list_free (info->books);
-  info->books = NULL;
 
   gtk_widget_show (GTK_WIDGET (dock));
 }
