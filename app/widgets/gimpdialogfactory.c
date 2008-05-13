@@ -188,8 +188,7 @@ gimp_dialog_factory_dispose (GObject *object)
 
   if (factory->session_infos)
     {
-      g_list_foreach (factory->session_infos,
-                      (GFunc) gimp_session_info_free, NULL);
+      g_list_foreach (factory->session_infos, (GFunc) g_object_unref, NULL);
       g_list_free (factory->session_infos);
       factory->session_infos = NULL;
     }
@@ -1034,7 +1033,7 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
               /*  don't save session info for empty docks  */
               factory->session_infos = g_list_remove (factory->session_infos,
                                                       session_info);
-              gimp_session_info_free (session_info);
+              g_object_unref (session_info);
 
               g_signal_emit (factory, factory_signals[DOCK_REMOVED], 0,
                              dialog);

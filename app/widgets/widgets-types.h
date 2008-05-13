@@ -215,6 +215,14 @@ typedef struct _GimpCellRendererViewable     GimpCellRendererViewable;
 typedef struct _GimpDialogFactory            GimpDialogFactory;
 
 
+/*  session management objects and structs  */
+
+typedef struct _GimpSessionInfo              GimpSessionInfo;
+typedef struct _GimpSessionInfoBook          GimpSessionInfoBook;
+typedef struct _GimpSessionInfoDockable      GimpSessionInfoDockable;
+typedef struct _GimpSessionInfoAux           GimpSessionInfoAux;
+
+
 /*  structs  */
 
 typedef struct _GimpActionEntry              GimpActionEntry;
@@ -225,11 +233,6 @@ typedef struct _GimpStringActionEntry        GimpStringActionEntry;
 typedef struct _GimpPlugInActionEntry        GimpPlugInActionEntry;
 
 typedef struct _GimpDialogFactoryEntry       GimpDialogFactoryEntry;
-
-typedef struct _GimpSessionInfo              GimpSessionInfo;
-typedef struct _GimpSessionInfoBook          GimpSessionInfoBook;
-typedef struct _GimpSessionInfoDockable      GimpSessionInfoDockable;
-typedef struct _GimpSessionInfoAux           GimpSessionInfoAux;
 
 
 /*  function types  */

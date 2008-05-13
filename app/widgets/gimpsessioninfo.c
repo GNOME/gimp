@@ -49,18 +49,37 @@ enum
 #define DEFAULT_SCREEN  -1
 
 
-/*  public functions  */
+static void    gimp_session_info_finalize    (GObject    *object);
 
-GimpSessionInfo *
-gimp_session_info_new (void)
+static gint64  gimp_session_info_get_memsize (GimpObject *object,
+                                              gint64     *gui_size);
+
+
+G_DEFINE_TYPE (GimpSessionInfo, gimp_session_info, GIMP_TYPE_OBJECT)
+
+#define parent_class gimp_session_info_parent_class
+
+
+static void
+gimp_session_info_class_init (GimpSessionInfoClass *klass)
 {
-  return g_slice_new0 (GimpSessionInfo);
+  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+
+  object_class->finalize         = gimp_session_info_finalize;
+
+  gimp_object_class->get_memsize = gimp_session_info_get_memsize;
 }
 
-void
-gimp_session_info_free (GimpSessionInfo *info)
+static void
+gimp_session_info_init (GimpSessionInfo *info)
 {
-  g_return_if_fail (info != NULL);
+}
+
+static void
+gimp_session_info_finalize (GObject *object)
+{
+  GimpSessionInfo *info = GIMP_SESSION_INFO (object);
 
   if (info->aux_info)
     {
@@ -76,7 +95,29 @@ gimp_session_info_free (GimpSessionInfo *info)
        g_list_free (info->books);
      }
 
-   g_slice_free (GimpSessionInfo, info);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static gint64
+gimp_session_info_get_memsize (GimpObject *object,
+                               gint64     *gui_size)
+{
+#if 0
+  GimpSessionInfo *info    = GIMP_SESSION_INFO (object);
+#endif
+  gint64           memsize = 0;
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
+}
+
+
+/*  public functions  */
+
+GimpSessionInfo *
+gimp_session_info_new (void)
+{
+  return g_object_new (GIMP_TYPE_SESSION_INFO, NULL);
 }
 
 void
@@ -308,13 +349,13 @@ gimp_session_info_deserialize (GScanner *scanner,
       if (!skip && g_scanner_peek_next_token (scanner) == token)
         factory->session_infos = g_list_append (factory->session_infos, info);
       else
-        gimp_session_info_free (info);
+        g_object_unref (info);
     }
   else
     {
     error:
       if (info)
-        gimp_session_info_free (info);
+        g_object_unref (info);
     }
 
   g_scanner_scope_remove_symbol (scanner, scope, "position");

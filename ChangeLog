@@ -1,5 +1,13 @@
 2008-05-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpsessioninfo.[ch]: turn into a GimpObject
+	subclass. No logical changes yet.
+
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpdialogfactory.c: changed accordingly.
+
+2008-05-13  Michael Natterer  <mitch@gimp.org>
+
 	First prototype of a button in the levels tool dialog that will
 	jump the the curves tool with the same settings:
 
