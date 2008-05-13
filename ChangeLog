@@ -1,3 +1,9 @@
+2008-05-13  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpcurve-map.c (gimp_curve_map_pixels): create a
+	bitmask that represents the curves that need to be applied and
+	optimize the most common cases.
+
 2008-05-13  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/vectors-types.h: add a comment explaining the hack.

@@ -75,27 +75,108 @@ gimp_curve_map_pixels (GimpCurve *curve_all,
                        gfloat    *dest,
                        glong      samples)
 {
+  guint mask = 0;
+
   g_return_if_fail (GIMP_IS_CURVE (curve_all));
   g_return_if_fail (GIMP_IS_CURVE (curve_red));
   g_return_if_fail (GIMP_IS_CURVE (curve_green));
   g_return_if_fail (GIMP_IS_CURVE (curve_blue));
   g_return_if_fail (GIMP_IS_CURVE (curve_alpha));
 
-  while (samples--)
-    {
-      dest[0] = gimp_curve_map_value (curve_all,
-                                      gimp_curve_map_value (curve_red,
-                                                            src[0]));
-      dest[1] = gimp_curve_map_value (curve_all,
-                                      gimp_curve_map_value (curve_green,
-                                                            src[1]));
-      dest[2] = gimp_curve_map_value (curve_all,
-                                      gimp_curve_map_value (curve_blue,
-                                                            src[2]));
-      /* don't apply the overall curve to the alpha channel */
-      dest[3] = gimp_curve_map_value (curve_alpha, src[3]);
+  mask |= (gimp_curve_is_identity (curve_all)   ? 0 : 1) << 0;
+  mask |= (gimp_curve_is_identity (curve_red)   ? 0 : 1) << 1;
+  mask |= (gimp_curve_is_identity (curve_green) ? 0 : 1) << 2;
+  mask |= (gimp_curve_is_identity (curve_blue)  ? 0 : 1) << 3;
+  mask |= (gimp_curve_is_identity (curve_alpha) ? 0 : 1) << 4;
 
-      src  += 4;
-      dest += 4;
+  switch (mask)
+    {
+    case 0:  /*  all curves are identity, nothing to do      */
+      break;
+
+    case 1:  /*  only the overall curve needs to be applied  */
+      while (samples--)
+        {
+          dest[0] = gimp_curve_map_value (curve_all, src[0]);
+          dest[1] = gimp_curve_map_value (curve_all, src[1]);
+          dest[2] = gimp_curve_map_value (curve_all, src[2]);
+          /* don't apply the overall curve to the alpha channel */
+          dest[3] = src[3];
+
+          src  += 4;
+          dest += 4;
+        }
+      break;
+
+    case 2:  /*  only the red curve needs to be applied      */
+      while (samples--)
+        {
+          dest[0] = gimp_curve_map_value (curve_red, src[0]);
+          dest[1] = src[1];
+          dest[2] = src[2];
+          dest[3] = src[3];
+
+          src  += 4;
+          dest += 4;
+        }
+      break;
+
+   case 4:  /*  only the green curve needs to be applied     */
+      while (samples--)
+        {
+          dest[0] = src[0];
+          dest[1] = gimp_curve_map_value (curve_green, src[1]);
+          dest[2] = src[2];
+          dest[3] = src[3];
+
+          src  += 4;
+          dest += 4;
+        }
+      break;
+
+    case 8:  /*  only the blue curve needs to be applied     */
+      while (samples--)
+        {
+          dest[0] = src[0];
+          dest[1] = src[1];
+          dest[2] = gimp_curve_map_value (curve_green, src[2]);
+          dest[3] = src[3];
+
+          src  += 4;
+          dest += 4;
+        }
+      break;
+
+     case 16: /*  only the alpha curve needs to be applied   */
+      while (samples--)
+        {
+          dest[0] = src[0];
+          dest[1] = src[1];
+          dest[2] = src[2];
+          dest[3] = gimp_curve_map_value (curve_alpha, src[3]);
+
+          src  += 4;
+          dest += 4;
+        }
+      break;
+
+    default: /*  apply all curves                            */
+      while (samples--)
+        {
+          dest[0] = gimp_curve_map_value (curve_all,
+                                          gimp_curve_map_value (curve_red,
+                                                                src[0]));
+          dest[1] = gimp_curve_map_value (curve_all,
+                                          gimp_curve_map_value (curve_green,
+                                                                src[1]));
+          dest[2] = gimp_curve_map_value (curve_all,
+                                          gimp_curve_map_value (curve_blue,
+                                                                src[2]));
+          /* don't apply the overall curve to the alpha channel */
+          dest[3] = gimp_curve_map_value (curve_alpha, src[3]);
+
+          src  += 4;
+          dest += 4;
+        }
     }
 }
