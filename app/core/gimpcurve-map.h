@@ -22,7 +22,7 @@
 
 gdouble         gimp_curve_map_value         (GimpCurve     *curve,
                                               gdouble        value);
-void            gimp_curve_map_pixels        (GimpCurve     *curve_all,
+void            gimp_curve_map_pixels        (GimpCurve     *curve_colors,
                                               GimpCurve     *curve_red,
                                               GimpCurve     *curve_green,
                                               GimpCurve     *curve_blue,
