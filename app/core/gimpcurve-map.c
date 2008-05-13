@@ -38,6 +38,12 @@ enum
   CURVE_ALPHA  = 1 << 4
 };
 
+static guint  gimp_curve_get_apply_mask (GimpCurve *curve_colors,
+                                         GimpCurve *curve_red,
+                                         GimpCurve *curve_green,
+                                         GimpCurve *curve_blue,
+                                         GimpCurve *curve_alpha);
+
 
 gdouble
 gimp_curve_map_value (GimpCurve *curve,
@@ -86,21 +92,17 @@ gimp_curve_map_pixels (GimpCurve *curve_colors,
                        gfloat    *dest,
                        glong      samples)
 {
-  guint mask = CURVE_NONE;
-
   g_return_if_fail (GIMP_IS_CURVE (curve_colors));
   g_return_if_fail (GIMP_IS_CURVE (curve_red));
   g_return_if_fail (GIMP_IS_CURVE (curve_green));
   g_return_if_fail (GIMP_IS_CURVE (curve_blue));
   g_return_if_fail (GIMP_IS_CURVE (curve_alpha));
 
-  if (! gimp_curve_is_identity (curve_colors)) mask |= CURVE_COLORS;
-  if (! gimp_curve_is_identity (curve_red))    mask |= CURVE_RED;
-  if (! gimp_curve_is_identity (curve_green))  mask |= CURVE_GREEN;
-  if (! gimp_curve_is_identity (curve_blue))   mask |= CURVE_BLUE;
-  if (! gimp_curve_is_identity (curve_alpha))  mask |= CURVE_ALPHA;
-
-  switch (mask)
+  switch (gimp_curve_get_apply_mask (curve_colors,
+                                     curve_red,
+                                     curve_green,
+                                     curve_blue,
+                                     curve_alpha))
     {
     case CURVE_NONE:
       break;
@@ -184,7 +186,7 @@ gimp_curve_map_pixels (GimpCurve *curve_colors,
         }
       break;
 
-    default: /*  apply all curves                            */
+    default:
       while (samples--)
         {
           dest[0] = gimp_curve_map_value (curve_colors,
@@ -202,5 +204,21 @@ gimp_curve_map_pixels (GimpCurve *curve_colors,
           src  += 4;
           dest += 4;
         }
+      break;
     }
 }
+
+static guint
+gimp_curve_get_apply_mask (GimpCurve *curve_colors,
+                           GimpCurve *curve_red,
+                           GimpCurve *curve_green,
+                           GimpCurve *curve_blue,
+                           GimpCurve *curve_alpha)
+{
+  return ((gimp_curve_is_identity (curve_colors) ? 0 : CURVE_COLORS) |
+          (gimp_curve_is_identity (curve_red)    ? 0 : CURVE_RED)    |
+          (gimp_curve_is_identity (curve_green)  ? 0 : CURVE_GREEN)  |
+          (gimp_curve_is_identity (curve_blue)   ? 0 : CURVE_BLUE)   |
+          (gimp_curve_is_identity (curve_alpha)  ? 0 : CURVE_ALPHA));
+}
+
