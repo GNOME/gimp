@@ -45,6 +45,8 @@ struct _GimpCurve
 
   gint           n_samples;
   gdouble       *samples;
+
+  gboolean       identity;  /* whether the curve is an identiy mapping */
 };
 
 struct _GimpCurveClass
@@ -86,6 +88,8 @@ void            gimp_curve_get_point         (GimpCurve     *curve,
 void            gimp_curve_set_curve         (GimpCurve     *curve,
                                               gdouble        x,
                                               gdouble        y);
+
+gboolean        gimp_curve_is_identity       (GimpCurve     *curve);
 
 void            gimp_curve_get_uchar         (GimpCurve     *curve,
                                               gint           n_samples,

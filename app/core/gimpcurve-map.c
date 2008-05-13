@@ -34,6 +34,11 @@ gimp_curve_map_value (GimpCurve *curve,
 {
   g_return_val_if_fail (GIMP_IS_CURVE (curve), 0.0);
 
+  if (curve->identity)
+    {
+      return value;
+    }
+
   if (value < 0.0)
     {
       return curve->samples[0];
@@ -42,7 +47,7 @@ gimp_curve_map_value (GimpCurve *curve,
     {
       return curve->samples[curve->n_samples - 1];
     }
-  else /* interpolate the curve */
+  else  /* interpolate the curve */
     {
       gint    index = floor (value * (gdouble) (curve->n_samples - 1));
       gdouble f     = value * (gdouble) (curve->n_samples - 1) - index;

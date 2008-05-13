@@ -161,6 +161,7 @@ gimp_curve_class_init (GimpCurveClass *klass)
 static void
 gimp_curve_init (GimpCurve *curve)
 {
+  curve->identity = FALSE;
 }
 
 static void
@@ -316,7 +317,11 @@ gimp_curve_get_description (GimpViewable  *viewable,
 static void
 gimp_curve_dirty (GimpData *data)
 {
-  gimp_curve_calculate (GIMP_CURVE (data));
+  GimpCurve *curve = GIMP_CURVE (data);
+
+  curve->identity = FALSE;
+
+  gimp_curve_calculate (curve);
 
   GIMP_DATA_CLASS (parent_class)->dirty (data);
 }
@@ -410,6 +415,8 @@ gimp_curve_reset (GimpCurve *curve,
   g_object_thaw_notify (G_OBJECT (curve));
 
   gimp_data_dirty (GIMP_DATA (curve));
+
+  curve->identity = TRUE;
 }
 
 void
@@ -660,6 +667,23 @@ gimp_curve_set_curve (GimpCurve *curve,
   gimp_data_dirty (GIMP_DATA (curve));
 }
 
+/**
+ * gimp_curve_is_identity:
+ * @curve: a #GimpCurve object
+ *
+ * If this function returns %TRUE, then the curve maps each value to
+ * itself. If it returns %FALSE, then this assumption can not be made.
+ *
+ * Return value: %TRUE if the curve is an identity mapping, %FALSE otherwise.
+ **/
+gboolean
+gimp_curve_is_identity (GimpCurve *curve)
+{
+  g_return_val_if_fail (GIMP_IS_CURVE (curve), FALSE);
+
+  return curve->identity;
+}
+
 void
 gimp_curve_get_uchar (GimpCurve *curve,
                       gint       n_samples,
@@ -684,10 +708,10 @@ gimp_curve_get_uchar (GimpCurve *curve,
 static void
 gimp_curve_calculate (GimpCurve *curve)
 {
-  gint i;
   gint *points;
-  gint num_pts;
-  gint p1, p2, p3, p4;
+  gint  i;
+  gint  num_pts;
+  gint  p1, p2, p3, p4;
 
   if (GIMP_DATA (curve)->freeze_count > 0)
     return;
@@ -720,6 +744,10 @@ gimp_curve_calculate (GimpCurve *curve)
 
           for (i = boundary; i < curve->n_samples; i++)
             curve->samples[i] = point.y;
+        }
+      else
+        {
+          curve->identity = TRUE;
         }
 
       for (i = 0; i < num_pts - 1; i++)
