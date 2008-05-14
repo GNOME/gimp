@@ -204,7 +204,7 @@ windows_menu_dock_added (GimpDialogFactory *factory,
   ui_path = g_object_get_data (G_OBJECT (manager), "image-menu-ui-path");
 
   action_name = g_strdup_printf ("windows-dock-%04d", dock->ID);
-  action_path = g_strdup_printf ("%s/Windows/Docks/Docks", ui_path);
+  action_path = g_strdup_printf ("%s/Windows/Docks", ui_path);
 
   merge_key = g_strdup_printf ("windows-dock-%04d-merge-id", dock->ID);
   merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));

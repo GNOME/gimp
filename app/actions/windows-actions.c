@@ -69,9 +69,9 @@ static void   windows_actions_dock_notify    (GimpDock          *dock,
 
 static const GimpActionEntry windows_actions[] =
 {
-  { "windows-menu",        NULL, N_("_Windows") },
-  { "windows-images-menu", NULL, N_("_Images")  },
-  { "windows-docks-menu",  NULL, N_("Doc_ks")   },
+  { "windows-menu",         NULL, N_("_Windows")          },
+  { "windows-docks-menu",   NULL, N_("Recent Doc_ks")     },
+  { "windows-dialogs-menu", NULL, N_("_Dockable Dialogs") },
 
   { "windows-show-toolbox", NULL,
     N_("Tool_box"), "<control>B",
@@ -89,9 +89,6 @@ windows_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group,
                                  windows_actions,
                                  G_N_ELEMENTS (windows_actions));
-
-  gimp_action_group_set_action_hide_empty (group, "windows-images-menu",
-                                           FALSE);
 
   g_signal_connect_object (group->gimp->displays, "add",
                            G_CALLBACK (windows_actions_display_add),

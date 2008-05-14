@@ -1,5 +1,14 @@
 2008-05-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/menus/windows-menu.c
+	* app/actions/windows-actions.c
+	* menus/image-menu.xml.in: move the list of dockable dialogs and
+	the list of recent docks to submenus and keep the list of open
+	image windows and docks at the "Windows" menu toplevel. The list
+	of recent docks doesn't exist yet, its contents are fake.
+
+2008-05-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimpcurvesconfig.c (gimp_curves_config_copy): also
 	copy curve->identity.
 
