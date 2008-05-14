@@ -1,3 +1,11 @@
+2008-05-14  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/core/gimpbrushclipboard.c
+	(gimp_brush_clipboard_buffer_changed): for an opaque buffer,
+	initialize the brush mask with 255 instead of 0.  Fixes bug #532886.
+
 2008-05-10  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c: Fix emission of rectangle-changed

@@ -231,7 +231,12 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
         }
       else
         {
-          temp_buf_data_clear (brush->mask);
+          PixelRegion maskPR;
+          guchar      opaque = OPAQUE_OPACITY;
+
+          pixel_region_init_temp_buf (&maskPR, brush->mask,
+                                      0, 0, width, height);
+          color_region (&maskPR, &opaque);
         }
 
       /*  copy the color channels into the brush's pixmap  */
