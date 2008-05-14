@@ -1,3 +1,8 @@
+2008-05-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/gimpcurvesconfig.c (gimp_curves_config_copy): also
+	copy curve->identity.
+
 2008-05-14  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py: Add PF_OPTION. Fixes bug #523142.
