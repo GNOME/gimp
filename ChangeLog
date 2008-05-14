@@ -1,5 +1,12 @@
 2008-05-14  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpbrushclipboard.c
+	(gimp_brush_clipboard_buffer_changed): fixed handling of opaque
+	buffers and initialize the brush mask with 255 instead of 0.
+	Fixes bug #532886.
+
+2008-05-14  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gradient-flare/gradient-flare.c
 	(calc_sample_one_gradient): use G_STRUCT_OFFSET() instead of a
 	hand-made macro which caused a compiler warning (spotted by gymp,
