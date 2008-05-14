@@ -69,9 +69,9 @@ static void   windows_actions_dock_notify    (GimpDock          *dock,
 
 static const GimpActionEntry windows_actions[] =
 {
-  { "windows-menu",         NULL, N_("_Windows")          },
-  { "windows-docks-menu",   NULL, N_("Recent Doc_ks")     },
-  { "windows-dialogs-menu", NULL, N_("_Dockable Dialogs") },
+  { "windows-menu",         NULL, N_("_Windows")               },
+  { "windows-docks-menu",   NULL, N_("_Recently Closed Docks") },
+  { "windows-dialogs-menu", NULL, N_("_Dockable Dialogs")      },
 
   { "windows-show-toolbox", NULL,
     N_("Tool_box"), "<control>B",
