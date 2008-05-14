@@ -59,7 +59,6 @@
 #endif
 
 #define LUMINOSITY(PIX) (GIMP_RGB_LUMINANCE (PIX[0], PIX[1], PIX[2]) + 0.5)
-#define OFFSETOF(t,f)   ((int) ((char*) &((t*) 0)->f))
 
 #define RESPONSE_RESCAN     1
 
@@ -1763,21 +1762,67 @@ calc_init_progress (void)
 static int
 calc_sample_one_gradient (void)
 {
-  static struct {
-    guchar      **values;
-    gint        name_offset;
-    gint        hue_offset;
-    gint        gray;
+  static struct
+  {
+    guchar **values;
+    gint     name_offset;
+    gint     hue_offset;
+    gint     gray;
   } table[] = {
-    { &calc.glow_radial, OFFSETOF (GFlare, glow_radial), OFFSETOF (GFlare, glow_hue), FALSE },
-    { &calc.glow_angular, OFFSETOF (GFlare, glow_angular), 0, FALSE },
-    { &calc.glow_angular_size, OFFSETOF (GFlare, glow_angular_size), 0, TRUE },
-    { &calc.rays_radial, OFFSETOF (GFlare, rays_radial), OFFSETOF (GFlare, rays_hue), FALSE },
-    { &calc.rays_angular, OFFSETOF (GFlare, rays_angular), 0, FALSE },
-    { &calc.rays_angular_size, OFFSETOF (GFlare, rays_angular_size), 0, TRUE },
-    { &calc.sflare_radial, OFFSETOF (GFlare, sflare_radial), OFFSETOF (GFlare, sflare_hue), FALSE },
-    { &calc.sflare_sizefac, OFFSETOF (GFlare, sflare_sizefac), 0, TRUE },
-    { &calc.sflare_probability, OFFSETOF (GFlare, sflare_probability), 0, TRUE },
+    {
+      &calc.glow_radial,
+      G_STRUCT_OFFSET (GFlare, glow_radial),
+      G_STRUCT_OFFSET (GFlare, glow_hue),
+      FALSE
+    },
+    {
+      &calc.glow_angular,
+      G_STRUCT_OFFSET (GFlare, glow_angular),
+      0,
+      FALSE
+    },
+    {
+      &calc.glow_angular_size,
+      G_STRUCT_OFFSET (GFlare, glow_angular_size),
+      0,
+      TRUE
+    },
+    {
+      &calc.rays_radial,
+      G_STRUCT_OFFSET (GFlare, rays_radial),
+      G_STRUCT_OFFSET (GFlare, rays_hue),
+      FALSE
+    },
+    {
+      &calc.rays_angular,
+      G_STRUCT_OFFSET (GFlare, rays_angular),
+      0,
+      FALSE
+    },
+    {
+      &calc.rays_angular_size,
+      G_STRUCT_OFFSET (GFlare, rays_angular_size),
+      0,
+      TRUE
+    },
+    {
+      &calc.sflare_radial,
+      G_STRUCT_OFFSET (GFlare, sflare_radial),
+      G_STRUCT_OFFSET (GFlare, sflare_hue),
+      FALSE
+    },
+    {
+      &calc.sflare_sizefac,
+      G_STRUCT_OFFSET (GFlare, sflare_sizefac),
+      0,
+      TRUE
+    },
+    {
+      &calc.sflare_probability,
+      G_STRUCT_OFFSET (GFlare, sflare_probability),
+      0,
+      TRUE
+    }
   };
   GFlare        *gflare = calc.gflare;
   GradientName  *grad_name;

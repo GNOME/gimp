@@ -1,3 +1,10 @@
+2008-05-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gradient-flare/gradient-flare.c
+	(calc_sample_one_gradient): use G_STRUCT_OFFSET() instead of a
+	hand-made macro which caused a compiler warning (spotted by gymp,
+	bug #532853).
+
 2008-05-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpsessioninfo-book.[ch]: remove widget member from
