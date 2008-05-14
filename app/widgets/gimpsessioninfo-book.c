@@ -201,13 +201,11 @@ gimp_session_info_book_from_widget (GimpDockbook *dockbook)
 
   info = gimp_session_info_book_new ();
 
-  info->widget = GTK_WIDGET (dockbook);
-
-  if (GTK_IS_VPANED (info->widget->parent))
+  if (GTK_IS_VPANED (GTK_WIDGET (dockbook)->parent))
     {
-      GtkPaned *paned = GTK_PANED (info->widget->parent);
+      GtkPaned *paned = GTK_PANED (GTK_WIDGET (dockbook)->parent);
 
-      if (info->widget == gtk_paned_get_child2 (paned))
+      if (GTK_WIDGET (dockbook) == gtk_paned_get_child2 (paned))
         info->position = gtk_paned_get_position (paned);
     }
 
@@ -232,21 +230,19 @@ gimp_session_info_book_from_widget (GimpDockbook *dockbook)
   return info;
 }
 
-void
+GimpDockbook *
 gimp_session_info_book_restore (GimpSessionInfoBook *info,
                                 GimpDock            *dock)
 {
   GtkWidget *dockbook;
   GList     *pages;
 
-  g_return_if_fail (info != NULL);
-  g_return_if_fail (GIMP_IS_DOCK (dock));
+  g_return_val_if_fail (info != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
   dockbook = gimp_dockbook_new (dock->dialog_factory->menu_factory);
 
   gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), -1);
-
-  info->widget = dockbook;
 
   for (pages = info->dockables; pages; pages = g_list_next (pages))
     {
@@ -269,4 +265,6 @@ gimp_session_info_book_restore (GimpSessionInfoBook *info,
     {
       gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook), 0);
     }
- }
+
+  return GIMP_DOCKBOOK (dockbook);
+}

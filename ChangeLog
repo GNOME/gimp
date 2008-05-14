@@ -1,5 +1,14 @@
 2008-05-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpsessioninfo-book.[ch]: remove widget member from
+	struct GimpSessionInfoBook. Return the created GimpDockbook from
+	restore().
+
+	* app/widgets/gimpsessioninfo-dock.c (restore): use the returned
+	book instead of the struct member.
+
+2008-05-14  Michael Natterer  <mitch@gimp.org>
+
 	Made session info serialization independent from widgets so it can
 	be used on stored dock layouts which are not open:
 

@@ -188,12 +188,11 @@ gimp_session_info_dock_restore (GimpSessionInfo   *info,
     gimp_session_info_aux_set_list (GTK_WIDGET (dock), info->aux_info);
 
   for (books = info->books; books; books = g_list_next (books))
-    gimp_session_info_book_restore (books->data, dock);
-
-  for (books = info->books; books; books = g_list_next (books))
     {
       GimpSessionInfoBook *book_info = books->data;
-      GtkWidget           *dockbook  = book_info->widget;
+      GtkWidget           *dockbook;
+
+      dockbook = GTK_WIDGET (gimp_session_info_book_restore (book_info, dock));
 
       if (GTK_IS_VPANED (dockbook->parent))
         {

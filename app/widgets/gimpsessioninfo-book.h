@@ -25,13 +25,11 @@
 
 struct _GimpSessionInfoBook
 {
-  gint       position;
-  gint       current_page;
-
-  GtkWidget *widget;
+  gint   position;
+  gint   current_page;
 
   /*  list of GimpSessionInfoDockable  */
-  GList     *dockables;
+  GList *dockables;
 };
 
 
@@ -48,7 +46,7 @@ GTokenType   gimp_session_info_book_deserialize (GScanner             *scanner,
 GimpSessionInfoBook *
              gimp_session_info_book_from_widget (GimpDockbook         *dockbook);
 
-void         gimp_session_info_book_restore     (GimpSessionInfoBook  *info,
+GimpDockbook * gimp_session_info_book_restore   (GimpSessionInfoBook  *info,
                                                  GimpDock             *dock);
 
 
