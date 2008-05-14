@@ -748,7 +748,7 @@ sel_gauss (GimpDrawable *drawable,
 
   numrad = (gint) (radius + 1.0);
   mat = g_new (gdouble, numrad);
-  init_matrix(radius, mat, numrad);
+  init_matrix (radius, mat, numrad);
 
   src  = g_new (guchar, width * height * bytes);
   dest = g_new (guchar, width * height * bytes);

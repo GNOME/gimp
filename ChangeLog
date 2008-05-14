@@ -1,5 +1,9 @@
 2008-05-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/blur-gauss-selective.c: formatting.
+
+2008-05-14  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcurveview.c (gimp_curve_view_motion_notify):
 	fixed use of uninitialized value.
 
