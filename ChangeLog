@@ -1,5 +1,10 @@
 2008-05-14  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcurveview.c (gimp_curve_view_motion_notify):
+	fixed use of uninitialized value.
+
+2008-05-14  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/windows-actions.c (windows_actions): relabeled
 	submenu to "Recently Closed Docks".
 

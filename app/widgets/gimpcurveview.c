@@ -626,6 +626,7 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
   gint            width, height;
   gdouble         x;
   gdouble         y;
+  gdouble         point_x;
   gint            closest_point;
 
   if (! curve)
@@ -645,12 +646,10 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
 
   switch (gimp_curve_get_curve_type (curve))
     {
-      gdouble point_x;
-
     case GIMP_CURVE_SMOOTH:
       if (! view->grabbed) /*  If no point is grabbed...  */
         {
-          gimp_curve_get_point (curve, closest_point, &x, NULL);
+          gimp_curve_get_point (curve, closest_point, &point_x, NULL);
 
           if (point_x >= 0.0)
             new_cursor = GDK_FLEUR;
