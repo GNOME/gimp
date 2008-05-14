@@ -25,6 +25,8 @@ Changes in GIMP 2.4.6
 - fixed asymmetry in Unsharp Mask plug-in (bug #530077)
 - don't show non-existant color profiles in the selector (bug #528958)
 - fixed issues with default aspect ratio in the Crop tool (bug #532057)
+- fixed compilation of the PDF import plug-in with libpoppler 0.8
+- fixed bug in clipboard brush code (bug #532886)
 - added new translations (ca@valencia, nn)
 - translation fixes and updates
   (ar, ca, de, el, es, fi, fr, hu, it, ko, pl, pt_BR, sv)
