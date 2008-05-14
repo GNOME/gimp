@@ -1,9 +1,8 @@
 2008-05-14  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpbrushclipboard.c
-	(gimp_brush_clipboard_buffer_changed): fixed handling of opaque
-	buffers and initialize the brush mask with 255 instead of 0.
-	Fixes bug #532886.
+	(gimp_brush_clipboard_buffer_changed): for an opaque buffer,
+	initialize the brush mask with 255 instead of 0.  Fixes bug #532886.
 
 2008-05-14  Sven Neumann  <sven@gimp.org>
 
