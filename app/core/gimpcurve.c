@@ -161,7 +161,11 @@ gimp_curve_class_init (GimpCurveClass *klass)
 static void
 gimp_curve_init (GimpCurve *curve)
 {
-  curve->identity = FALSE;
+  curve->n_points  = 0;
+  curve->points    = NULL;
+  curve->n_samples = 0;
+  curve->samples   = NULL;
+  curve->identity  = FALSE;
 }
 
 static void
@@ -881,8 +885,9 @@ gimp_curve_plot (GimpCurve *curve,
           3 * y2 * (1-t) * t     * t     +
               y3 * t     * t     * t;
 
-      index = ROUND (x0 * (gdouble) (curve->n_samples - 1)) + i;
+      index = i + ROUND (x0 * (gdouble) (curve->n_samples - 1));
 
-      curve->samples[index] = CLAMP (y, 0.0, 1.0);
+      if (index < curve->n_samples)
+        curve->samples[index] = CLAMP (y, 0.0, 1.0);
     }
 }

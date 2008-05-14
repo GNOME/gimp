@@ -1,5 +1,11 @@
 2008-05-14  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpcurve.c (gimp_curve_plot): don't write over the end
+	of the samples array.  Someone should review this code. It looks
+	as if the loop could be rewritten in a safer and cleaner way.
+
+2008-05-14  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/blur-gauss-selective.c: formatting.
 
 2008-05-14  Sven Neumann  <sven@gimp.org>
