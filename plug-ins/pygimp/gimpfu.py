@@ -126,6 +126,7 @@ PF_TEXT        = 1009
 PF_PALETTE     = 1010
 PF_FILENAME    = 1011
 PF_DIRNAME     = 1012
+PF_OPTION      = 1013
 
 _type_mapping = {
     PF_INT8        : PDB_INT8,
@@ -161,6 +162,7 @@ _type_mapping = {
     PF_PALETTE     : PDB_STRING,
     PF_FILENAME    : PDB_STRING,
     PF_DIRNAME     : PDB_STRING,
+    PF_OPTION      : PDB_INT32,
 }
 
 _obj_mapping = {
@@ -197,6 +199,7 @@ _obj_mapping = {
     PF_PALETTE     : str,
     PF_FILENAME    : str,
     PF_DIRNAME     : str,
+    PF_OPTION      : int,
 }
 
 _registered_plugins_ = {}
@@ -546,6 +549,23 @@ def _interact(proc_name, start_params):
         def get_value(self):
             return self.active_value
 
+    class ComboEntry(gtk.ComboBox):
+        def __init__(self, default=0, items=()):
+            store = gtk.ListStore(str)    
+            for item in items:
+                store.append([item])
+
+            gtk.ComboBox.__init__(self, model=store)
+
+            cell = gtk.CellRendererText()
+            self.pack_start(cell)
+            self.set_attributes(cell, text=0)
+
+            self.set_active(default)
+
+        def get_value(self):
+            return self.get_active()
+
     def FileSelector(default=''):
        if default and default.endswith('/'):
            selector = DirnameSelector
@@ -599,6 +619,7 @@ def _interact(proc_name, start_params):
             PF_SLIDER      : SliderEntry,
             PF_SPINNER     : SpinnerEntry,
             PF_RADIO       : RadioEntry,
+            PF_OPTION      : ComboEntry,
 
             PF_FONT        : gimpui.FontSelector,
             PF_FILE        : FileSelector,
@@ -684,7 +705,7 @@ def _interact(proc_name, start_params):
         table.attach(label, 1, 2, i, i+1, xoptions=gtk.FILL)
         label.show()
 
-        if pf_type in (PF_SPINNER, PF_SLIDER, PF_RADIO):
+        if pf_type in (PF_SPINNER, PF_SLIDER, PF_RADIO, PF_OPTION):
             wid = _edit_mapping[pf_type](def_val, params[i][4])
         else:
             wid = _edit_mapping[pf_type](def_val)
