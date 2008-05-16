@@ -1,5 +1,14 @@
 2008-05-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/dialogs.c (dialogs_load_recent_docks): reverse the
+	list after loading so it keeps its order.
+
+	* app/menus/windows-menu.c (windows_menu_setup)
+	(windows_menu_recent_add): keep the recent docks menu in MRU
+	order.
+
+2008-05-16  Michael Natterer  <mitch@gimp.org>
+
 	Implement the presistent menu of recently closed docks, still
 	somewhat hackish but fully functional. Fixes bug #132744.
 

@@ -119,9 +119,9 @@ windows_menu_setup (GimpUIManager *manager,
                            G_CALLBACK (windows_menu_recent_remove),
                            manager, 0);
 
-  for (list = GIMP_LIST (global_recent_docks)->list;
+  for (list = g_list_last (GIMP_LIST (global_recent_docks)->list);
        list;
-       list = g_list_next (list))
+       list = g_list_previous (list))
     {
       GimpSessionInfo *info = list->data;
 
@@ -293,7 +293,7 @@ windows_menu_recent_add (GimpContainer   *container,
   gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
                          action_path, action_name, action_name,
                          GTK_UI_MANAGER_MENUITEM,
-                         FALSE);
+                         TRUE);
 
   g_free (merge_key);
   g_free (action_path);

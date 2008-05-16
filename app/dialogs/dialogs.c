@@ -376,6 +376,8 @@ dialogs_load_recent_docks (Gimp *gimp)
       g_clear_error (&error);
     }
 
+  gimp_list_reverse (GIMP_LIST (global_recent_docks));
+
   g_free (filename);
 }
 
