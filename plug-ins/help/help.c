@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * The GIMP Help plug-in
- * Copyright (C) 1999-2004 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
  *                         Michael Natterer <mitch@gimp.org>
  *                         Henrik Brix Andersen <brix@gimp.org>
  *
@@ -105,7 +105,7 @@ query (void)
 			  "Michael Natterer <mitch@gimp.org>, "
                           "Henrik Brix Andersen <brix@gimp.org>",
                           "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
-                          "1999-2004",
+                          "1999-2008",
                           NULL,
                           "",
                           GIMP_EXTENSION,
@@ -185,7 +185,7 @@ temp_proc_install (void)
 			  "Michael Natterer <mitch@gimp.org>"
                           "Henrik Brix Andersen <brix@gimp.org",
 			  "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
-			  "1999-2004",
+			  "1999-2008",
                           NULL,
                           "",
                           GIMP_TEMPORARY,
@@ -263,12 +263,13 @@ load_help_idle (gpointer data)
 
   if (domain)
     {
-      GList    *locales = gimp_help_parse_locales (idle_help->help_locales);
+      GList    *locales;
       gchar    *full_uri;
       gboolean  fatal_error;
 
+      locales  = gimp_help_parse_locales (idle_help->help_locales);
       full_uri = gimp_help_domain_map (domain, locales, idle_help->help_id,
-                                       NULL, &fatal_error);
+                                       NULL, NULL, &fatal_error);
 
       g_list_foreach (locales, (GFunc) g_free, NULL);
       g_list_free (locales);

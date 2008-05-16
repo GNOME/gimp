@@ -25,7 +25,10 @@ libgimphelp_a_SOURCES = \
 	gimphelpitem.c		\
 	gimphelpitem.h		\
 	gimphelplocale.c	\
-	gimphelplocale.h
+	gimphelplocale.h	\
+	gimphelpprogress.c	\
+	gimphelpprogress.h	\
+	gimphelpprogress-private.h
 
 libexecdir = $(gimpplugindir)/plug-ins
 

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * The GIMP Help plug-in
- * Copyright (C) 1999-2004 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
  *                         Michael Natterer <mitch@gimp.org>
  *                         Henrik Brix Andersen <brix@gimp.org>
  *
@@ -30,6 +30,7 @@
 #include <string.h>
 
 #include <glib-object.h>
+#include <gio/gio.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -44,9 +45,10 @@
 
 /*  local function prototypes  */
 
-static gboolean   domain_locale_parse (GimpHelpDomain  *domain,
-                                       GimpHelpLocale  *locale,
-                                       GError         **error);
+static gboolean   domain_locale_parse (GimpHelpDomain    *domain,
+                                       GimpHelpLocale    *locale,
+                                       GimpHelpProgress  *progress,
+                                       GError           **error);
 
 
 /*  public functions  */
@@ -85,8 +87,9 @@ gimp_help_domain_free (GimpHelpDomain *domain)
 }
 
 GimpHelpLocale *
-gimp_help_domain_lookup_locale (GimpHelpDomain *domain,
-                                const gchar    *locale_id)
+gimp_help_domain_lookup_locale (GimpHelpDomain    *domain,
+                                const gchar       *locale_id,
+                                GimpHelpProgress  *progress)
 {
   GimpHelpLocale *locale = NULL;
 
@@ -104,17 +107,18 @@ gimp_help_domain_lookup_locale (GimpHelpDomain *domain,
   locale = gimp_help_locale_new (locale_id);
   g_hash_table_insert (domain->help_locales, g_strdup (locale_id), locale);
 
-  domain_locale_parse (domain, locale, NULL);
+  domain_locale_parse (domain, locale, progress, NULL);
 
   return locale;
 }
 
 gchar *
-gimp_help_domain_map (GimpHelpDomain  *domain,
-                      GList           *help_locales,
-                      const gchar     *help_id,
-                      GimpHelpLocale **ret_locale,
-                      gboolean        *fatal_error)
+gimp_help_domain_map (GimpHelpDomain    *domain,
+                      GList             *help_locales,
+                      const gchar       *help_id,
+                      GimpHelpProgress  *progress,
+                      GimpHelpLocale   **ret_locale,
+                      gboolean          *fatal_error)
 {
   GimpHelpLocale *locale = NULL;
   const gchar    *ref    = NULL;
@@ -131,7 +135,8 @@ gimp_help_domain_map (GimpHelpDomain  *domain,
   for (list = help_locales; list && !ref; list = list->next)
     {
       locale = gimp_help_domain_lookup_locale (domain,
-                                               (const gchar *) list->data);
+                                               (const gchar *) list->data,
+                                               progress);
       ref = gimp_help_locale_map (locale, help_id);
     }
 
@@ -139,7 +144,8 @@ gimp_help_domain_map (GimpHelpDomain  *domain,
   for (list = help_locales; list && !ref; list = list->next)
     {
       locale = gimp_help_domain_lookup_locale (domain,
-                                               (const gchar *) list->data);
+                                               (const gchar *) list->data,
+                                               progress);
       ref = locale->help_missing;
     }
 
@@ -163,23 +169,28 @@ gimp_help_domain_map (GimpHelpDomain  *domain,
 #endif
 
       locale = gimp_help_domain_lookup_locale (domain,
-                                               GIMP_HELP_DEFAULT_LOCALE);
+                                               GIMP_HELP_DEFAULT_LOCALE, NULL);
 
-      if (! domain_locale_parse (domain, locale, &error))
+      if (! domain_locale_parse (domain, locale, NULL, &error))
         {
-          if (error->code == G_FILE_ERROR_NOENT)
+          switch (error->code)
             {
+            case G_IO_ERROR_NOT_FOUND:
               g_message ("%s\n\n%s",
-                         _("The GIMP help files are not found."),
+                         _("The GIMP user manual is not available."),
                          _("Please install the additional help package or use "
                            "the online user manual at http://docs.gimp.org/."));
-            }
-          else
-            {
+              break;
+
+            case G_IO_ERROR_CANCELLED:
+              break;
+
+            default:
               g_message ("%s\n\n%s\n\n%s",
-                         _("There is a problem with the GIMP help files."),
+                         _("There is a problem with the GIMP user manual."),
                          error->message,
                          _("Please check your installation."));
+              break;
             }
 
           g_error_free (error);
@@ -200,9 +211,10 @@ gimp_help_domain_map (GimpHelpDomain  *domain,
 /*  private functions  */
 
 static gboolean
-domain_locale_parse (GimpHelpDomain  *domain,
-                     GimpHelpLocale  *locale,
-                     GError         **error)
+domain_locale_parse (GimpHelpDomain    *domain,
+                     GimpHelpLocale    *locale,
+                     GimpHelpProgress  *progress,
+                     GError           **error)
 {
   gchar    *uri;
   gboolean  success;
@@ -214,7 +226,8 @@ domain_locale_parse (GimpHelpDomain  *domain,
   uri = g_strdup_printf ("%s/%s/gimp-help.xml",
                          domain->help_uri, locale->locale_id);
 
-  success = gimp_help_locale_parse (locale, uri, domain->help_domain, error);
+  success = gimp_help_locale_parse (locale, uri, domain->help_domain,
+                                    progress, error);
 
   g_free (uri);
 

@@ -21,14 +21,32 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_HELP_TYPES_H__
-#define __GIMP_HELP_TYPES_H__
+#ifndef __GIMP_HELP_PROGRESS_H__
+#define __GIMP_HELP_PROGRESS_H__
 
 
-typedef struct _GimpHelpDomain    GimpHelpDomain;
-typedef struct _GimpHelpItem      GimpHelpItem;
-typedef struct _GimpHelpLocale    GimpHelpLocale;
-typedef struct _GimpHelpProgress  GimpHelpProgress;
+typedef struct
+{
+  void  (* start)           (const gchar *message,
+                             gboolean     cancelable,
+                             gpointer     user_data);
+  void  (* end)             (gpointer     user_data);
+  void  (* set_value)       (gdouble      percentage,
+                             gpointer     user_data);
+
+  /* Padding for future expansion. Must be initialized with NULL! */
+  void  (* _gimp_reserved1) (void);
+  void  (* _gimp_reserved2) (void);
+  void  (* _gimp_reserved3) (void);
+  void  (* _gimp_reserved4) (void);
+} GimpHelpProgressVTable;
 
 
-#endif /* ! __GIMP_HELP_TYPES_H__ */
+GimpHelpProgress * gimp_help_progress_new    (const GimpHelpProgressVTable *vtable,
+                                              gpointer                      user_data);
+void               gimp_help_progress_free   (GimpHelpProgress *progress);
+
+void               gimp_help_progress_cancel (GimpHelpProgress *progress);
+
+
+#endif /* ! __GIMP_HELP_PROGRESS_H__ */

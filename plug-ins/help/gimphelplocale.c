@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * The GIMP Help plug-in
- * Copyright (C) 1999-2004 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
  *                         Michael Natterer <mitch@gimp.org>
  *                         Henrik Brix Andersen <brix@gimp.org>
  *
@@ -33,6 +33,7 @@
 #include <gio/gio.h>
 
 #include "gimphelp.h"
+#include "gimphelpprogress-private.h"
 
 #ifdef DISABLE_NLS
 #define _(String)  (String)
@@ -117,7 +118,10 @@ typedef struct
 } LocaleParser;
 
 static gboolean  locale_parser_parse       (GMarkupParseContext  *context,
+                                            GimpHelpProgress     *progress,
                                             GInputStream         *stream,
+                                            goffset               size,
+                                            GCancellable         *cancellable,
                                             GError              **error);
 static void  locale_parser_start_element   (GMarkupParseContext  *context,
                                             const gchar          *element_name,
@@ -154,15 +158,18 @@ static const GMarkupParser markup_parser =
 };
 
 gboolean
-gimp_help_locale_parse (GimpHelpLocale  *locale,
-                        const gchar     *uri,
-                        const gchar     *help_domain,
-                        GError         **error)
+gimp_help_locale_parse (GimpHelpLocale    *locale,
+                        const gchar       *uri,
+                        const gchar       *help_domain,
+                        GimpHelpProgress  *progress,
+                        GError           **error)
 {
   GMarkupParseContext *context;
   GFile               *file;
   GFileInputStream    *stream;
-  LocaleParser         parser = { NULL, };
+  GCancellable        *cancellable = NULL;
+  LocaleParser         parser      = { NULL, };
+  goffset              size        = 0;
   gboolean             success;
 
   g_return_val_if_fail (locale != NULL, FALSE);
@@ -188,7 +195,38 @@ gimp_help_locale_parse (GimpHelpLocale  *locale,
 
   file = g_file_new_for_uri (uri);
 
-  stream = g_file_read (file, NULL, error);
+  if (progress)
+    {
+      gchar *name = g_file_get_parse_name (file);
+
+      cancellable = g_cancellable_new ();
+      _gimp_help_progress_start (progress, cancellable,
+                                 _("Loading index from '%s'"), name);
+
+      g_object_unref (cancellable);
+      g_free (name);
+    }
+
+  if (progress)
+    {
+      GFileInfo *info = g_file_query_info (file,
+                                           G_FILE_ATTRIBUTE_STANDARD_SIZE, 0,
+                                           cancellable, error);
+      if (! info)
+        {
+          locale_set_error (error, _("Could not open '%s' for reading: %s"),
+                            file);
+          g_object_unref (file);
+
+          return FALSE;
+        }
+
+      size = g_file_info_get_size (info);
+
+      g_object_unref (info);
+    }
+
+  stream = g_file_read (file, cancellable, error);
 
   if (! stream)
     {
@@ -206,7 +244,12 @@ gimp_help_locale_parse (GimpHelpLocale  *locale,
 
   context = g_markup_parse_context_new (&markup_parser, 0, &parser, NULL);
 
-  success = locale_parser_parse (context, G_INPUT_STREAM (stream), error);
+  success = locale_parser_parse (context, progress,
+                                 G_INPUT_STREAM (stream), size,
+                                 cancellable, error);
+
+  if (progress)
+    _gimp_help_progress_finish (progress);
 
   g_markup_parse_context_free (context);
   g_object_unref (stream);
@@ -224,14 +267,18 @@ gimp_help_locale_parse (GimpHelpLocale  *locale,
 
 static gboolean
 locale_parser_parse (GMarkupParseContext  *context,
+                     GimpHelpProgress     *progress,
                      GInputStream         *stream,
+                     goffset               size,
+                     GCancellable         *cancellable,
                      GError              **error)
 {
-  gssize len;
-  gchar  buffer[4096];
+  gssize  len;
+  goffset done = 0;
+  gchar   buffer[4096];
 
   while ((len = g_input_stream_read (stream, buffer, sizeof (buffer),
-                                     NULL, error)) != -1)
+                                     cancellable, error)) != -1)
     {
       switch (len)
         {
@@ -239,6 +286,16 @@ locale_parser_parse (GMarkupParseContext  *context,
           return g_markup_parse_context_end_parse (context, error);
 
         default:
+          done += len;
+
+          if (progress)
+            {
+              if (size > 0)
+                _gimp_help_progress_update (progress, (gdouble) done / size);
+              else
+                _gimp_help_progress_pulse (progress);
+            }
+
           if (! g_markup_parse_context_parse (context, buffer, len, error))
             return FALSE;
         }

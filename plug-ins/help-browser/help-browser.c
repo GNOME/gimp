@@ -2,11 +2,11 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * The GIMP Help Browser
- * Copyright (C) 1999-2004 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
  *                         Michael Natterer <mitch@gimp.org>
  *                         Henrik Brix Andersen <brix@gimp.org>
  *
- * Some code & ideas stolen from the GNOME help browser.
+ * Some code & ideas taken from the GNOME help browser.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,14 +87,14 @@ query (void)
   };
 
   gimp_install_procedure (GIMP_HELP_BROWSER_EXT_PROC,
-                          "Browse the GIMP help pages",
+                          "Browse the GIMP user manual",
                           "A small and simple HTML browser optimized for "
-			  "browsing the GIMP help pages.",
+			  "browsing the GIMP user manual.",
                           "Sven Neumann <sven@gimp.org>, "
 			  "Michael Natterer <mitch@gimp.org>"
                           "Henrik Brix Andersen <brix@gimp.org>",
 			  "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
-                          "1999-2004",
+                          "1999-2008",
                           NULL,
                           "",
                           GIMP_EXTENSION,
@@ -184,7 +184,7 @@ temp_proc_install (void)
 			  "Michael Natterer <mitch@gimp.org>"
                           "Henrik Brix Andersen <brix@gimp.org>",
 			  "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
-			  "1999-2004",
+			  "1999-2008",
 			  NULL,
 			  "",
 			  GIMP_TEMPORARY,
@@ -232,7 +232,7 @@ temp_proc_run (const gchar      *name,
           gchar          *full_uri;
           gboolean        fatal_error;
 
-          full_uri = gimp_help_domain_map (domain, locales, help_id,
+          full_uri = gimp_help_domain_map (domain, locales, help_id, NULL,
                                            &locale, &fatal_error);
 
           if (full_uri)

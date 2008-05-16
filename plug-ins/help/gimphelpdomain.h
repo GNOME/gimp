@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * The GIMP Help plug-in
- * Copyright (C) 1999-2004 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
  *                         Michael Natterer <mitch@gimp.org>
  *                         Henrik Brix Andersen <brix@gimp.org>
  *
@@ -33,17 +33,19 @@ struct _GimpHelpDomain
 };
 
 
-GimpHelpDomain * gimp_help_domain_new           (const gchar     *domain_name,
-                                                 const gchar     *domain_uri);
-void             gimp_help_domain_free          (GimpHelpDomain  *domain);
+GimpHelpDomain * gimp_help_domain_new           (const gchar       *domain_name,
+                                                 const gchar       *domain_uri);
+void             gimp_help_domain_free          (GimpHelpDomain    *domain);
 
-GimpHelpLocale * gimp_help_domain_lookup_locale (GimpHelpDomain  *domain,
-                                                 const gchar     *locale_id);
-gchar          * gimp_help_domain_map           (GimpHelpDomain  *domain,
-                                                 GList           *help_locales,
-                                                 const gchar     *help_id,
-                                                 GimpHelpLocale **locale,
-                                                 gboolean        *fatal_error);
+GimpHelpLocale * gimp_help_domain_lookup_locale (GimpHelpDomain    *domain,
+                                                 const gchar       *locale_id,
+                                                 GimpHelpProgress  *progress);
+gchar          * gimp_help_domain_map           (GimpHelpDomain    *domain,
+                                                 GList             *help_locales,
+                                                 const gchar       *help_id,
+                                                 GimpHelpProgress  *progress,
+                                                 GimpHelpLocale   **locale,
+                                                 gboolean          *fatal_error);
 void             gimp_help_domain_exit          (void);
 
 
