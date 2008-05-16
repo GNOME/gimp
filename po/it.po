@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-21 14:37+0100\n"
-"PO-Revision-Date: 2008-04-24 22:16+0200\n"
+"POT-Creation-Date: 2008-05-16 23:09+0200\n"
+"PO-Revision-Date: 2008-05-16 23:09+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2656,7 +2656,7 @@ msgstr "_Modalità livelli"
 
 #: ../app/actions/layers-actions.c:62
 msgid "Te_xt Tool"
-msgstr "Sr_umento testo"
+msgstr "Str_umento testo"
 
 #: ../app/actions/layers-actions.c:63
 msgid "Activate the text tool on this text layer"
@@ -6192,27 +6192,27 @@ msgstr "Cambia voce mappa colore"
 msgid "Add Color to Colormap"
 msgstr "Aggiungi colore alla mappa colore"
 
-#: ../app/core/gimpimage-convert.c:788
+#: ../app/core/gimpimage-convert.c:790
 msgid "Cannot convert image: palette is empty."
 msgstr "Impossibile convertire l'immagine: la tavolozza è vuota."
 
-#: ../app/core/gimpimage-convert.c:802
+#: ../app/core/gimpimage-convert.c:804
 msgid "Convert Image to RGB"
 msgstr "Converti in RGB"
 
-#: ../app/core/gimpimage-convert.c:806
+#: ../app/core/gimpimage-convert.c:808
 msgid "Convert Image to Grayscale"
 msgstr "Converti in scala di grigi"
 
-#: ../app/core/gimpimage-convert.c:810
+#: ../app/core/gimpimage-convert.c:812
 msgid "Convert Image to Indexed"
 msgstr "Converti in indicizzata"
 
-#: ../app/core/gimpimage-convert.c:892
+#: ../app/core/gimpimage-convert.c:894
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Conversione in colori indicizzati (fase 2)"
 
-#: ../app/core/gimpimage-convert.c:937
+#: ../app/core/gimpimage-convert.c:939
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Conversione in colori indicizzati (fase 3)"
 
@@ -8632,7 +8632,7 @@ msgstr "Avvio di GIMP"
 msgid "Airbrush"
 msgstr "Aerografo"
 
-#: ../app/paint/gimpbrushcore.c:356
+#: ../app/paint/gimpbrushcore.c:354
 #, c-format
 msgid "No brushes available for use with this tool."
 msgstr "Nessun pennello disponibile da usare con questo strumento."
@@ -8658,11 +8658,11 @@ msgstr "Scherma/Brucia"
 msgid "Eraser"
 msgstr "Gomma"
 
-#: ../app/paint/gimpheal.c:87 ../app/tools/gimphealtool.c:53
+#: ../app/paint/gimpheal.c:123 ../app/tools/gimphealtool.c:53
 msgid "Heal"
 msgstr "Cerotto"
 
-#: ../app/paint/gimpheal.c:126
+#: ../app/paint/gimpheal.c:162
 #, c-format
 msgid "Healing does not operate on indexed layers."
 msgstr "Il cerotto non agisce su livelli indicizzati."
@@ -9585,20 +9585,20 @@ msgstr "Solo livello corrente"
 msgid "Allow growing"
 msgstr "Permetti la crescita"
 
-#: ../app/tools/gimpcroptool.c:115
+#: ../app/tools/gimpcroptool.c:119
 msgid "Crop"
 msgstr "Ritaglia"
 
-#: ../app/tools/gimpcroptool.c:116
+#: ../app/tools/gimpcroptool.c:120
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr ""
 "Strumento ritaglia: elimina le aree di contorno dall'immagine o dal livello"
 
-#: ../app/tools/gimpcroptool.c:117
+#: ../app/tools/gimpcroptool.c:121
 msgid "_Crop"
 msgstr "Rita_glia"
 
-#: ../app/tools/gimpcroptool.c:242
+#: ../app/tools/gimpcroptool.c:257
 msgid "Click or press Enter to crop"
 msgstr "Fare clic o premere invio per ritagliare"
 
@@ -9630,43 +9630,43 @@ msgstr "Salva curve"
 msgid "Save curves settings to file"
 msgstr "Salvataggio impostazioni curve su file"
 
-#: ../app/tools/gimpcurvestool.c:253
+#: ../app/tools/gimpcurvestool.c:254
 #, c-format
 msgid "Curves does not operate on indexed layers."
 msgstr "Curve non agisce su livelli indicizzati."
 
-#: ../app/tools/gimpcurvestool.c:355
+#: ../app/tools/gimpcurvestool.c:358
 msgid "Click to add a control point"
 msgstr "Fare clic per aggiungere un punto di controllo"
 
-#: ../app/tools/gimpcurvestool.c:360
+#: ../app/tools/gimpcurvestool.c:363
 msgid "Click to add control points to all channels"
 msgstr "Fare clic per aggiungere punti di controllo a tutti i canali"
 
-#: ../app/tools/gimpcurvestool.c:555 ../app/tools/gimplevelstool.c:365
+#: ../app/tools/gimpcurvestool.c:558 ../app/tools/gimplevelstool.c:365
 msgid "Cha_nnel:"
 msgstr "Ca_nale:"
 
-#: ../app/tools/gimpcurvestool.c:577 ../app/tools/gimplevelstool.c:387
+#: ../app/tools/gimpcurvestool.c:580 ../app/tools/gimplevelstool.c:387
 msgid "R_eset Channel"
 msgstr "R_eimposta canale"
 
 #. Horizontal button box for load / save
-#: ../app/tools/gimpcurvestool.c:681 ../app/tools/gimplevelstool.c:581
+#: ../app/tools/gimpcurvestool.c:684 ../app/tools/gimplevelstool.c:581
 msgid "All Channels"
 msgstr "Tutti i canali"
 
 #. The radio box for selecting the curve type
-#: ../app/tools/gimpcurvestool.c:699
+#: ../app/tools/gimpcurvestool.c:702
 msgid "Curve Type"
 msgstr "Tipo di curva"
 
-#: ../app/tools/gimpcurvestool.c:753 ../app/tools/gimplevelstool.c:672
+#: ../app/tools/gimpcurvestool.c:756 ../app/tools/gimplevelstool.c:672
 #, c-format
 msgid "not a GIMP Levels file"
 msgstr "non è un file livelli di GIMP"
 
-#: ../app/tools/gimpcurvestool.c:767 ../app/tools/gimplevelstool.c:711
+#: ../app/tools/gimpcurvestool.c:770 ../app/tools/gimplevelstool.c:711
 #, c-format
 msgid "parse error"
 msgstr "errore di analisi"
@@ -10524,7 +10524,7 @@ msgstr ""
 msgid "_Rectangle Select"
 msgstr "_Rettangolare"
 
-#: ../app/tools/gimprectangletool.c:1032 ../app/tools/gimprectangletool.c:1880
+#: ../app/tools/gimprectangletool.c:1033 ../app/tools/gimprectangletool.c:1883
 msgid "Rectangle: "
 msgstr "Rettangolo: "
 
@@ -12375,7 +12375,7 @@ msgstr "Finestra utilità"
 msgid "Keep above"
 msgstr "Mantieni sopra"
 
-#: ../app/xcf/xcf-load.c:275
+#: ../app/xcf/xcf-load.c:277
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -12383,7 +12383,7 @@ msgstr ""
 "Questo file XCF è danneggiato! È stato caricato tutto quello che si è "
 "potuto, ma è incompleto."
 
-#: ../app/xcf/xcf-load.c:284
+#: ../app/xcf/xcf-load.c:286
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -12391,7 +12391,7 @@ msgstr ""
 "Questo file XCF è danneggiato! Non è stato possibile ripristinare neanche "
 "una parte di esso."
 
-#: ../app/xcf/xcf-load.c:316
+#: ../app/xcf/xcf-load.c:318
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
