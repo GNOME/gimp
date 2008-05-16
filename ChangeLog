@@ -1,5 +1,10 @@
 2008-05-16  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayoptions.c: disable rulers by default as
+	suggested by Peter. Please give feedback.
+
+2008-05-16  Sven Neumann  <sven@gimp.org>
+
         * plug-ins/help/Makefile.am
 	* plug-ins/help/gimphelpprogress.[ch]
 	* plug-ins/help/gimphelpprogress-private.h: new files providing a
