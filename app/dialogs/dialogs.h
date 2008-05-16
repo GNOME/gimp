@@ -25,12 +25,17 @@ extern GimpDialogFactory *global_dock_factory;
 extern GimpDialogFactory *global_toolbox_factory;
 extern GimpDialogFactory *global_display_factory;
 
+extern GimpContainer     *global_recent_docks;
 
-void        dialogs_init        (Gimp            *gimp,
-                                 GimpMenuFactory *menu_factory);
-void        dialogs_exit        (Gimp            *gimp);
 
-GtkWidget * dialogs_get_toolbox (void);
+void        dialogs_init              (Gimp            *gimp,
+                                       GimpMenuFactory *menu_factory);
+void        dialogs_exit              (Gimp            *gimp);
+
+void        dialogs_load_recent_docks (Gimp            *gimp);
+void        dialogs_save_recent_docks (Gimp            *gimp);
+
+GtkWidget * dialogs_get_toolbox       (void);
 
 
 #endif /* __DIALOGS_H__ */

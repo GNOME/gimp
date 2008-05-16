@@ -26,6 +26,8 @@ void   windows_show_display_cmd_callback (GtkAction *action,
                                           gpointer   data);
 void   windows_show_dock_cmd_callback    (GtkAction *action,
                                           gpointer   data);
+void   windows_open_recent_cmd_callback  (GtkAction *action,
+                                          gpointer   data);
 
 void   windows_show_toolbox              (void);
 

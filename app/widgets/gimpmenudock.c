@@ -501,7 +501,7 @@ gimp_menu_dock_update_title_idle (GimpMenuDock *menu_dock)
       g_list_free (children);
 
       if (g_list_next (list))
-        g_string_append (title, " | ");
+        g_string_append (title, " - ");
     }
 
   gtk_window_set_title (GTK_WINDOW (menu_dock), title->str);

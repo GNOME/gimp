@@ -20,16 +20,20 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "dialogs-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimplist.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
+#include "widgets/gimpsessioninfo.h"
 
 #include "dialogs.h"
 #include "dialogs-constructors.h"
@@ -41,6 +45,8 @@ GimpDialogFactory *global_dialog_factory  = NULL;
 GimpDialogFactory *global_dock_factory    = NULL;
 GimpDialogFactory *global_toolbox_factory = NULL;
 GimpDialogFactory *global_display_factory = NULL;
+
+GimpContainer     *global_recent_docks    = NULL;
 
 
 #define FOREIGN(id,singleton,remember_size) \
@@ -301,6 +307,8 @@ dialogs_init (Gimp            *gimp,
                                       TRUE,
                                       TRUE,
                                       FALSE);
+
+  global_recent_docks = gimp_list_new (GIMP_TYPE_SESSION_INFO, FALSE);
 }
 
 void
@@ -337,6 +345,64 @@ dialogs_exit (Gimp *gimp)
       g_object_unref (global_display_factory);
       global_display_factory = NULL;
     }
+
+  if (global_recent_docks)
+    {
+      g_object_unref (global_recent_docks);
+      global_recent_docks = NULL;
+    }
+}
+
+void
+dialogs_load_recent_docks (Gimp *gimp)
+{
+  gchar  *filename;
+  GError *error = NULL;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  filename = gimp_personal_rc_file ("dockrc");
+
+  if (gimp->be_verbose)
+    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (global_recent_docks),
+                                      filename,
+                                      NULL, &error))
+    {
+      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
+        gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
+
+      g_clear_error (&error);
+    }
+
+  g_free (filename);
+}
+
+void
+dialogs_save_recent_docks (Gimp *gimp)
+{
+  gchar  *filename;
+  GError *error = NULL;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  filename = gimp_personal_rc_file ("dockrc");
+
+  if (gimp->be_verbose)
+    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (global_recent_docks),
+                                       filename,
+                                       "recently closed docks",
+                                       "end of recently closed docks",
+                                       NULL, &error))
+    {
+      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
+      g_clear_error (&error);
+    }
+
+  g_free (filename);
 }
 
 GtkWidget *

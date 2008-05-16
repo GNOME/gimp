@@ -27,12 +27,5 @@ void   dialogs_create_dockable_cmd_callback (GtkAction   *action,
                                              const gchar *value,
                                              gpointer     data);
 
-void   dialogs_create_lc_cmd_callback       (GtkAction   *action,
-                                             gpointer     data);
-void   dialogs_create_data_cmd_callback     (GtkAction   *action,
-                                             gpointer     data);
-void   dialogs_create_stuff_cmd_callback    (GtkAction   *action,
-                                             gpointer     data);
-
 
 #endif /* __DIALOGS_COMMANDS_H__ */

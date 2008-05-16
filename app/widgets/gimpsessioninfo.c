@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpsessioninfo.c
- * Copyright (C) 2001-2007 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2008 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,13 +49,25 @@ enum
 #define DEFAULT_SCREEN  -1
 
 
-static void    gimp_session_info_finalize    (GObject    *object);
+static void     gimp_session_info_config_iface_init (GimpConfigInterface *iface);
 
-static gint64  gimp_session_info_get_memsize (GimpObject *object,
-                                              gint64     *gui_size);
+static void     gimp_session_info_finalize          (GObject          *object);
+
+static gint64   gimp_session_info_get_memsize       (GimpObject       *object,
+                                                     gint64           *gui_size);
+
+static gboolean gimp_session_info_serialize         (GimpConfig       *config,
+                                                     GimpConfigWriter *writer,
+                                                     gpointer          data);
+static gboolean gimp_session_info_deserialize       (GimpConfig       *config,
+                                                     GScanner         *scanner,
+                                                     gint              nest_level,
+                                                     gpointer          data);
 
 
-G_DEFINE_TYPE (GimpSessionInfo, gimp_session_info, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_CODE (GimpSessionInfo, gimp_session_info, GIMP_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_session_info_config_iface_init))
 
 #define parent_class gimp_session_info_parent_class
 
@@ -74,6 +86,14 @@ gimp_session_info_class_init (GimpSessionInfoClass *klass)
 static void
 gimp_session_info_init (GimpSessionInfo *info)
 {
+  info->screen = DEFAULT_SCREEN;
+}
+
+static void
+gimp_session_info_config_iface_init (GimpConfigInterface *iface)
+{
+  iface->serialize   = gimp_session_info_serialize;
+  iface->deserialize = gimp_session_info_deserialize;
 }
 
 static void
@@ -99,34 +119,12 @@ gimp_session_info_get_memsize (GimpObject *object,
                                                                   gui_size);
 }
 
-
-/*  public functions  */
-
-GimpSessionInfo *
-gimp_session_info_new (void)
+static gboolean
+gimp_session_info_serialize (GimpConfig       *config,
+                             GimpConfigWriter *writer,
+                             gpointer          data)
 {
-  return g_object_new (GIMP_TYPE_SESSION_INFO, NULL);
-}
-
-void
-gimp_session_info_serialize (GimpConfigWriter *writer,
-                             GimpSessionInfo  *info,
-                             const gchar      *factory_name)
-{
-  const gchar *dialog_name;
-
-  g_return_if_fail (GIMP_IS_SESSION_INFO (info));
-  g_return_if_fail (factory_name != NULL);
-  g_return_if_fail (writer != NULL);
-
-  if (info->toplevel_entry)
-    dialog_name = info->toplevel_entry->identifier;
-  else
-    dialog_name = "dock";
-
-  gimp_config_writer_open (writer, "session-info");
-  gimp_config_writer_string (writer, factory_name);
-  gimp_config_writer_string (writer, dialog_name);
+  GimpSessionInfo *info = GIMP_SESSION_INFO (config);
 
   gimp_config_writer_open (writer, "position");
   gimp_config_writer_printf (writer, "%d %d", info->x, info->y);
@@ -149,16 +147,13 @@ gimp_session_info_serialize (GimpConfigWriter *writer,
       gimp_config_writer_close (writer);
     }
 
-  if (info->widget)
-    {
-      if (info->aux_info)
-        gimp_session_info_aux_serialize (writer, info->aux_info);
+  if (info->aux_info)
+    gimp_session_info_aux_serialize (writer, info->aux_info);
 
-      if (info->books)
-        gimp_session_info_dock_serialize (writer, info->books);
-    }
+  if (info->books)
+    gimp_session_info_dock_serialize (writer, info->books);
 
-  gimp_config_writer_close (writer);  /* session-info */
+  return TRUE;
 }
 
 /*
@@ -193,56 +188,30 @@ gimp_session_info_parse_offset (GScanner *scanner,
   return TRUE;
 }
 
-GTokenType
-gimp_session_info_deserialize (GScanner *scanner,
-                               gint      scope)
+static gboolean
+gimp_session_info_deserialize (GimpConfig *config,
+                               GScanner   *scanner,
+                               gint        nest_level,
+                               gpointer    data)
 {
-  GimpDialogFactory *factory;
-  GimpSessionInfo   *info = NULL;
-  GTokenType         token;
-  gboolean           skip = FALSE;
-  gchar             *factory_name;
-  gchar             *entry_name;
+  GimpSessionInfo *info = GIMP_SESSION_INFO (config);
+  GTokenType       token;
+  guint            scope_id;
+  guint            old_scope_id;
 
-  g_return_val_if_fail (scanner != NULL, G_TOKEN_LEFT_PAREN);
+  scope_id = g_type_qname (G_TYPE_FROM_INSTANCE (config));
+  old_scope_id = g_scanner_set_scope (scanner, scope_id);
 
-  g_scanner_scope_add_symbol (scanner, scope, "position",
+  g_scanner_scope_add_symbol (scanner, scope_id, "position",
                               GINT_TO_POINTER (SESSION_INFO_POSITION));
-  g_scanner_scope_add_symbol (scanner, scope, "size",
+  g_scanner_scope_add_symbol (scanner, scope_id, "size",
                               GINT_TO_POINTER (SESSION_INFO_SIZE));
-  g_scanner_scope_add_symbol (scanner, scope, "open-on-exit",
+  g_scanner_scope_add_symbol (scanner, scope_id, "open-on-exit",
                               GINT_TO_POINTER (SESSION_INFO_OPEN));
-  g_scanner_scope_add_symbol (scanner, scope, "aux-info",
+  g_scanner_scope_add_symbol (scanner, scope_id, "aux-info",
                               GINT_TO_POINTER (SESSION_INFO_AUX));
-  g_scanner_scope_add_symbol (scanner, scope, "dock",
+  g_scanner_scope_add_symbol (scanner, scope_id, "dock",
                               GINT_TO_POINTER (SESSION_INFO_DOCK));
-
-  token = G_TOKEN_STRING;
-
-  if (! gimp_scanner_parse_string (scanner, &factory_name))
-    goto error;
-
-  factory = gimp_dialog_factory_from_name (factory_name);
-  g_free (factory_name);
-
-  if (! factory)
-    goto error;
-
-  if (! gimp_scanner_parse_string (scanner, &entry_name))
-    goto error;
-
-  info = gimp_session_info_new ();
-
-  info->screen = DEFAULT_SCREEN;
-
-  if (strcmp (entry_name, "dock"))
-    {
-      info->toplevel_entry = gimp_dialog_factory_find_entry (factory,
-                                                             entry_name);
-      skip = (info->toplevel_entry == NULL);
-    }
-
-  g_free (entry_name);
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -302,12 +271,12 @@ gimp_session_info_deserialize (GScanner *scanner,
               if (info->toplevel_entry)
                 goto error;
 
-              g_scanner_set_scope (scanner, scope + 1);
-              token = gimp_session_info_dock_deserialize (scanner, scope + 1,
+              g_scanner_set_scope (scanner, scope_id + 1);
+              token = gimp_session_info_dock_deserialize (scanner, scope_id + 1,
                                                           info);
 
               if (token == G_TOKEN_LEFT_PAREN)
-                g_scanner_set_scope (scanner, scope);
+                g_scanner_set_scope (scanner, scope_id);
               else
                 goto error;
 
@@ -328,29 +297,26 @@ gimp_session_info_deserialize (GScanner *scanner,
         }
     }
 
-  if (token == G_TOKEN_LEFT_PAREN)
-    {
-      token = G_TOKEN_RIGHT_PAREN;
+ error:
 
-      if (!skip && g_scanner_peek_next_token (scanner) == token)
-        factory->session_infos = g_list_append (factory->session_infos, info);
-      else
-        g_object_unref (info);
-    }
-  else
-    {
-    error:
-      if (info)
-        g_object_unref (info);
-    }
+  g_scanner_scope_remove_symbol (scanner, scope_id, "position");
+  g_scanner_scope_remove_symbol (scanner, scope_id, "size");
+  g_scanner_scope_remove_symbol (scanner, scope_id, "open-on-exit");
+  g_scanner_scope_remove_symbol (scanner, scope_id, "aux-info");
+  g_scanner_scope_remove_symbol (scanner, scope_id, "dock");
 
-  g_scanner_scope_remove_symbol (scanner, scope, "position");
-  g_scanner_scope_remove_symbol (scanner, scope, "size");
-  g_scanner_scope_remove_symbol (scanner, scope, "open-on-exit");
-  g_scanner_scope_remove_symbol (scanner, scope, "aux-info");
-  g_scanner_scope_remove_symbol (scanner, scope, "dock");
+  g_scanner_set_scope (scanner, old_scope_id);
 
-  return token;
+  return gimp_config_deserialize_return (scanner, token, nest_level);
+}
+
+
+/*  public functions  */
+
+GimpSessionInfo *
+gimp_session_info_new (void)
+{
+  return g_object_new (GIMP_TYPE_SESSION_INFO, NULL);
 }
 
 void

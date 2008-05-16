@@ -559,11 +559,7 @@
     </menu>
 
     <menu action="windows-menu" name="Windows">
-      <menu action="windows-docks-menu" name="Recent Docks">
-	<menuitem action="dialogs-new-dock-lcp" />
-	<menuitem action="dialogs-new-dock-data" />
-	<menuitem action="dialogs-new-dock-stuff" />
-      </menu>
+      <menu action="windows-docks-menu" name="Recently Closed Docks" />
       <menu action="windows-dialogs-menu" name="Dockable Dialogs">
 	<xi:include href="dialogs-menuitems.xml" />
       </menu>

@@ -74,12 +74,6 @@ GType             gimp_session_info_get_type     (void) G_GNUC_CONST;
 
 GimpSessionInfo * gimp_session_info_new          (void);
 
-void              gimp_session_info_serialize    (GimpConfigWriter  *writer,
-                                                  GimpSessionInfo   *info,
-                                                  const gchar       *factory_name);
-GTokenType        gimp_session_info_deserialize  (GScanner          *scanner,
-                                                  gint               scope);
-
 void              gimp_session_info_restore      (GimpSessionInfo   *info,
                                                   GimpDialogFactory *factory);
 

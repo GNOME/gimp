@@ -45,6 +45,7 @@ struct _GimpAction
   GimpRGB            *color;
   GimpViewable       *viewable;
   PangoEllipsizeMode  ellipsize;
+  gint                max_width_chars;
 };
 
 struct _GimpActionClass

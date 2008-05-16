@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpdialogfactory.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2008 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -913,7 +914,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                            factory,
                            G_CONNECT_SWAPPED);
 
-  if (entry && entry->session_managed && toplevel)
+  if ((entry && entry->session_managed && toplevel) || GIMP_IS_DOCK (dialog))
     g_signal_connect_object (dialog, "configure-event",
                              G_CALLBACK (gimp_dialog_factory_dialog_configure),
                              factory,
@@ -1281,7 +1282,7 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
 
   dialog_factory = gimp_dialog_factory_from_widget (dialog, &entry);
 
-  if (! dialog_factory || ! entry)
+  if (! dialog_factory || (! entry && ! GIMP_IS_DOCK (dialog)))
     {
       g_warning ("%s: dialog was not created by a GimpDialogFactory",
                  G_STRFUNC);
@@ -1306,7 +1307,7 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
           GIMP_LOG (DIALOG_FACTORY,
                     "updated session info for \"%s\" from window geometry "
                     "(x=%d y=%d  %dx%d)",
-                    entry->identifier,
+                    entry ? entry->identifier : "dock",
                     session_info->x, session_info->y,
                     session_info->width, session_info->height);
 
@@ -1339,7 +1340,19 @@ gimp_dialog_factories_save_foreach (gconstpointer      key,
       if (info->widget)
         gimp_session_info_get_info (info);
 
-      gimp_session_info_serialize (writer, info, GIMP_OBJECT (factory)->name);
+      gimp_config_writer_open (writer, "session-info");
+      gimp_config_writer_string (writer,
+                                 gimp_object_get_name (GIMP_OBJECT (factory)));
+      gimp_config_writer_string (writer,
+                                 info->toplevel_entry ?
+                                 info->toplevel_entry->identifier :
+                                 "dock");
+
+      GIMP_CONFIG_GET_INTERFACE (info)->serialize (GIMP_CONFIG (info),
+                                                   writer,
+                                                   NULL);
+
+      gimp_config_writer_close (writer);
 
       if (info->widget)
         gimp_session_info_clear_info (info);

@@ -66,6 +66,13 @@ static void   windows_actions_dock_notify    (GimpDock          *dock,
                                               const GParamSpec  *pspec,
                                               GimpActionGroup   *group);
 
+static void   windows_actions_recent_add     (GimpContainer     *container,
+                                              GimpSessionInfo   *info,
+                                              GimpActionGroup   *group);
+static void   windows_actions_recent_remove  (GimpContainer     *container,
+                                              GimpSessionInfo   *info,
+                                              GimpActionGroup   *group);
+
 
 static const GimpActionEntry windows_actions[] =
 {
@@ -89,6 +96,8 @@ windows_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group,
                                  windows_actions,
                                  G_N_ELEMENTS (windows_actions));
+
+  gimp_action_group_set_action_hide_empty (group, "windows-docks-menu", FALSE);
 
   g_signal_connect_object (group->gimp->displays, "add",
                            G_CALLBACK (windows_actions_display_add),
@@ -121,6 +130,22 @@ windows_actions_setup (GimpActionGroup *group)
 
       if (GIMP_IS_DOCK (dock))
         windows_actions_dock_added (global_dock_factory, dock, group);
+    }
+
+  g_signal_connect_object (global_recent_docks, "add",
+                           G_CALLBACK (windows_actions_recent_add),
+                           group, 0);
+  g_signal_connect_object (global_recent_docks, "remove",
+                           G_CALLBACK (windows_actions_recent_remove),
+                           group, 0);
+
+  for (list = GIMP_LIST (global_recent_docks)->list;
+       list;
+       list = g_list_next (list))
+    {
+      GimpSessionInfo *info = list->data;
+
+      windows_actions_recent_add (global_recent_docks, info, group);
     }
 }
 
@@ -304,4 +329,73 @@ windows_actions_dock_notify (GimpDock         *dock,
     g_object_set (action,
                   "label", gtk_window_get_title (GTK_WINDOW (dock)),
                   NULL);
+}
+
+static void
+windows_actions_recent_add (GimpContainer   *container,
+                            GimpSessionInfo *info,
+                            GimpActionGroup *group)
+{
+  GtkAction       *action;
+  GimpActionEntry  entry;
+  gint             info_id;
+  static gint      info_id_counter = 1;
+  gchar           *action_name;
+
+  info_id = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (info),
+                                                "recent-action-id"));
+
+  if (! info_id)
+    {
+      info_id = info_id_counter++;
+
+      g_object_set_data (G_OBJECT (info), "recent-action-id",
+                         GINT_TO_POINTER (info_id));
+    }
+
+  action_name = g_strdup_printf ("windows-recent-%04d", info_id);
+
+  entry.name        = action_name;
+  entry.stock_id    = NULL;
+  entry.label       = gimp_object_get_name (GIMP_OBJECT (info));
+  entry.accelerator = NULL;
+  entry.tooltip     = NULL;
+  entry.callback    = G_CALLBACK (windows_open_recent_cmd_callback);
+  entry.help_id     = NULL;
+
+  gimp_action_group_add_actions (group, &entry, 1);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                        action_name);
+
+  g_object_set (action,
+                "ellipsize",       PANGO_ELLIPSIZE_END,
+                "max-width-chars", 30,
+                NULL);
+
+  g_object_set_data (G_OBJECT (action), "info", info);
+
+  g_free (action_name);
+}
+
+static void
+windows_actions_recent_remove (GimpContainer   *container,
+                               GimpSessionInfo *info,
+                               GimpActionGroup *group)
+{
+  GtkAction *action;
+  gint       info_id;
+  gchar     *action_name;
+
+  info_id = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (info),
+                                                "recent-action-id"));
+
+  action_name = g_strdup_printf ("windows-recent-%04d", info_id);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+
+  if (action)
+    gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
+
+  g_free (action_name);
 }

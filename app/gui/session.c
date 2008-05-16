@@ -48,6 +48,8 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpsessioninfo.h"
 
+#include "dialogs/dialogs.h"
+
 #include "session.h"
 
 #include "gimp-intl.h"
@@ -124,13 +126,55 @@ session_init (Gimp *gimp)
         case G_TOKEN_SYMBOL:
           if (scanner->value.v_symbol == GINT_TO_POINTER (SESSION_INFO))
             {
-              g_scanner_set_scope (scanner, SESSION_INFO);
-              token = gimp_session_info_deserialize (scanner, SESSION_INFO);
+              GimpDialogFactory *factory;
+              GimpSessionInfo   *info;
+              gchar             *factory_name;
+              gchar             *entry_name;
+              gboolean           skip = FALSE;
 
-              if (token == G_TOKEN_RIGHT_PAREN)
-                g_scanner_set_scope (scanner, 0);
-              else
+              token = G_TOKEN_STRING;
+
+              if (! gimp_scanner_parse_string (scanner, &factory_name))
                 break;
+
+              factory = gimp_dialog_factory_from_name (factory_name);
+              g_free (factory_name);
+
+              if (! factory)
+                break;
+
+              if (! gimp_scanner_parse_string (scanner, &entry_name))
+                break;
+
+              info = gimp_session_info_new ();
+
+              if (strcmp (entry_name, "dock"))
+                {
+                  info->toplevel_entry = gimp_dialog_factory_find_entry (factory,
+                                                                         entry_name);
+                  skip = (info->toplevel_entry == NULL);
+                }
+
+              if (GIMP_CONFIG_GET_INTERFACE (info)->deserialize (GIMP_CONFIG (info),
+                                                                 scanner,
+                                                                 1,
+                                                                 NULL))
+                {
+                  if (! skip)
+                    {
+                      factory->session_infos =
+                        g_list_append (factory->session_infos, info);
+                    }
+                  else
+                    {
+                      g_object_unref (info);
+                    }
+                }
+              else
+                {
+                  g_object_unref (info);
+                  break;
+                }
             }
           else if (scanner->value.v_symbol == GINT_TO_POINTER (LAST_TIP_SHOWN))
             {
@@ -170,6 +214,8 @@ session_init (Gimp *gimp)
 
   gimp_scanner_destroy (scanner);
   g_free (filename);
+
+  dialogs_load_recent_docks (gimp);
 }
 
 void
@@ -236,6 +282,8 @@ session_save (Gimp     *gimp,
       gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR, "%s", error->message);
       g_clear_error (&error);
     }
+
+  dialogs_save_recent_docks (gimp);
 
   sessionrc_deleted = FALSE;
 }

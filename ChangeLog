@@ -1,3 +1,44 @@
+2008-05-16  Michael Natterer  <mitch@gimp.org>
+
+	Implement the presistent menu of recently closed docks, still
+	somewhat hackish but fully functional. Fixes bug #132744.
+
+	* app/actions/dialogs-actions.c
+	* app/actions/dialogs-commands.[ch]
+	* menus/image-menu.xml.in: remove the menu items that were
+	creating the hardcoded preconfigured docks.
+
+	* app/dialogs/dialogs.[ch]: add GimpContainer of recently closed
+	docks and API to load and save it.
+
+	* app/gui/session.c: call the recent dock load and save functions.
+
+	* app/widgets/gimpsessioninfo.[ch]: implement the GimpConfig interface
+	and (de)serialize via proper interface methods.
+
+	* app/gui/session.c
+	* app/widgets/gimpdialogfactory.c: use the GimpConfig API
+	to (de)serialize session infos and added the code that was
+	formerly in the info's (de)serialize functions but didn't belong
+	there.
+
+	* app/widgets/gimpaction.[ch]: add "max-width-chars" property and
+	set it on proxy menu item labels.
+
+	* app/actions/windows-actions.[ch]
+	* app/actions/windows-commands.[ch]
+	* app/menus/windows-menu.c: add actions and menu of recently
+	closed docks and code to restore the dock when the menu items are
+	selected. Use above new action property to ensure a minimum
+	width of the menu.
+
+	* app/widgets/gimpmenudock.c: use '-' instead of '|' for
+	separating notebooks in the window title. Menu items don't like	'|'.
+
+	* app/widgets/gimpdock.c: removed the confirmation dialog when
+	closing docks and simply add them to the recent docks container.
+	This code is totally misplaced and will move to another file soon.
+
 2008-05-14  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcurve.c (gimp_curve_plot): don't write over the end

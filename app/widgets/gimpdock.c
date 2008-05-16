@@ -38,9 +38,11 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimpdockseparator.h"
-#include "gimpmessagebox.h"
-#include "gimpmessagedialog.h"
 #include "gimpwidgets-utils.h"
+
+#include "gimpsessioninfo.h" /* FIXME */
+#include "core/gimpcontainer.h" /* FIXME */
+#include "dialogs/dialogs.h" /* FIXME */
 
 #include "gimp-intl.h"
 
@@ -277,8 +279,7 @@ static gboolean
 gimp_dock_delete_event (GtkWidget   *widget,
                         GdkEventAny *event)
 {
-  GimpDock *dock   = GIMP_DOCK (widget);
-  gboolean  retval = FALSE;
+  GimpDock *dock = GIMP_DOCK (widget);
   GList    *list;
   gint      n;
 
@@ -287,39 +288,20 @@ gimp_dock_delete_event (GtkWidget   *widget,
 
   if (n > 1)
     {
-      GtkWidget *dialog =
-        gimp_message_dialog_new (_("Close all Tabs?"),
-                                 GIMP_STOCK_WARNING,
-                                 widget, GTK_DIALOG_MODAL,
-                                 NULL, NULL,
+      GimpSessionInfo *info = gimp_session_info_new ();
 
-                                 GTK_STOCK_CANCEL,    GTK_RESPONSE_CANCEL,
-                                 _("Close all Tabs"), GTK_RESPONSE_OK,
+      gimp_object_set_name (GIMP_OBJECT (info),
+                            gtk_window_get_title (GTK_WINDOW (widget)));
 
-                                 NULL);
+      info->widget = widget;
+      gimp_session_info_get_info (info);
+      info->widget = NULL;
 
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                               GTK_RESPONSE_OK,
-                                               GTK_RESPONSE_CANCEL,
-                                               -1);
-
-      gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                         _("Close all tabs?"));
-
-      gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                 ngettext ("This window has %d tab open. "
-                                           "Closing the window will also close "
-                                           "all its tabs.",
-                                           "This window has %d tabs open. "
-                                           "Closing the window will also close "
-                                           "all its tabs.", n), n);
-
-      retval = (gimp_dialog_run (GIMP_DIALOG (dialog)) != GTK_RESPONSE_OK);
-
-      gtk_widget_destroy (dialog);
+      gimp_container_add (global_recent_docks, GIMP_OBJECT (info));
+      g_object_unref (info);
     }
 
-  return retval;
+  return FALSE;
 }
 
 static void

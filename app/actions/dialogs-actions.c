@@ -33,27 +33,6 @@
 #include "gimp-intl.h"
 
 
-static const GimpActionEntry dialogs_actions[] =
-{
-  { "dialogs-new-dock-lcp", NULL,
-    N_("_Layers, Channels & Paths"), NULL,
-    N_("Open a Layers, Channels & Paths dock"),
-    G_CALLBACK (dialogs_create_lc_cmd_callback),
-    GIMP_HELP_DOCK },
-
-  { "dialogs-new-dock-data", NULL,
-    N_("_Brushes, Patterns & Gradients"), NULL,
-    N_("Open a Brushes, Patterns & Gradients dock"),
-    G_CALLBACK (dialogs_create_data_cmd_callback),
-    GIMP_HELP_DOCK },
-
-  { "dialogs-new-dock-stuff", NULL,
-    N_("_Misc. Stuff"), NULL,
-    N_("Open a dock containing miscellaneous dialogs"),
-    G_CALLBACK (dialogs_create_stuff_cmd_callback),
-    GIMP_HELP_DOCK }
-};
-
 const GimpStringActionEntry dialogs_dockable_actions[] =
 {
   { "dialogs-tool-options", GIMP_STOCK_TOOL_OPTIONS,
@@ -240,10 +219,6 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
 void
 dialogs_actions_setup (GimpActionGroup *group)
 {
-  gimp_action_group_add_actions (group,
-                                 dialogs_actions,
-                                 G_N_ELEMENTS (dialogs_actions));
-
   gimp_action_group_add_string_actions (group,
                                         dialogs_dockable_actions,
                                         G_N_ELEMENTS (dialogs_dockable_actions),

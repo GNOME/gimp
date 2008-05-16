@@ -47,7 +47,8 @@ enum
   PROP_CONTEXT,
   PROP_COLOR,
   PROP_VIEWABLE,
-  PROP_ELLIPSIZE
+  PROP_ELLIPSIZE,
+  PROP_MAX_WIDTH_CHARS
 };
 
 
@@ -110,6 +111,12 @@ gimp_action_class_init (GimpActionClass *klass)
                                                       PANGO_TYPE_ELLIPSIZE_MODE,
                                                       PANGO_ELLIPSIZE_NONE,
                                                       GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_MAX_WIDTH_CHARS,
+                                   g_param_spec_int ("max-width-chars",
+                                                     NULL, NULL,
+                                                     -1, G_MAXINT, -1,
+                                                     GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -168,6 +175,9 @@ gimp_action_get_property (GObject    *object,
     case PROP_ELLIPSIZE:
       g_value_set_enum (value, action->ellipsize);
       break;
+    case PROP_MAX_WIDTH_CHARS:
+      g_value_set_int (value, action->max_width_chars);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -205,6 +215,10 @@ gimp_action_set_property (GObject      *object,
       break;
     case PROP_ELLIPSIZE:
       action->ellipsize = g_value_get_enum (value);
+      set_proxy = TRUE;
+      break;
+    case PROP_MAX_WIDTH_CHARS:
+      action->max_width_chars = g_value_get_int (value);
       set_proxy = TRUE;
       break;
 
@@ -392,11 +406,14 @@ gimp_action_set_proxy (GimpAction *action,
     }
 
   {
-    GtkWidget *label = gtk_bin_get_child (GTK_BIN (proxy));
+    GtkWidget *child = gtk_bin_get_child (GTK_BIN (proxy));
 
-    if (GTK_IS_LABEL (label))
+    if (GTK_IS_LABEL (child))
       {
-        gtk_label_set_ellipsize (GTK_LABEL (label), action->ellipsize);
+        GtkLabel *label = GTK_LABEL (child);
+
+        gtk_label_set_ellipsize (label, action->ellipsize);
+        gtk_label_set_max_width_chars (label, action->max_width_chars);
       }
   }
 }

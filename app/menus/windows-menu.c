@@ -59,6 +59,13 @@ static void   windows_menu_dock_removed   (GimpDialogFactory *factory,
                                            GimpDock          *dock,
                                            GimpUIManager     *manager);
 
+static void   windows_menu_recent_add     (GimpContainer     *container,
+                                           GimpSessionInfo   *info,
+                                           GimpUIManager     *manager);
+static void   windows_menu_recent_remove  (GimpContainer     *container,
+                                           GimpSessionInfo   *info,
+                                           GimpUIManager     *manager);
+
 
 void
 windows_menu_setup (GimpUIManager *manager,
@@ -103,6 +110,22 @@ windows_menu_setup (GimpUIManager *manager,
 
       if (GIMP_IS_DOCK (dock))
         windows_menu_dock_added (global_dock_factory, dock, manager);
+    }
+
+  g_signal_connect_object (global_recent_docks, "add",
+                           G_CALLBACK (windows_menu_recent_add),
+                           manager, 0);
+  g_signal_connect_object (global_recent_docks, "remove",
+                           G_CALLBACK (windows_menu_recent_remove),
+                           manager, 0);
+
+  for (list = GIMP_LIST (global_recent_docks)->list;
+       list;
+       list = g_list_next (list))
+    {
+      GimpSessionInfo *info = list->data;
+
+      windows_menu_recent_add (global_recent_docks, info, manager);
     }
 }
 
@@ -229,6 +252,67 @@ windows_menu_dock_removed (GimpDialogFactory *factory,
 {
   gchar *merge_key = g_strdup_printf ("windows-dock-%04d-merge-id", dock->ID);
   guint  merge_id;
+
+  merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
+                                                  merge_key));
+
+  if (merge_id)
+    gtk_ui_manager_remove_ui (GTK_UI_MANAGER (manager), merge_id);
+
+  g_object_set_data (G_OBJECT (manager), merge_key, NULL);
+
+  g_free (merge_key);
+}
+
+static void
+windows_menu_recent_add (GimpContainer   *container,
+                         GimpSessionInfo *info,
+                         GimpUIManager   *manager)
+{
+  const gchar *ui_path;
+  gchar       *action_name;
+  gchar       *action_path;
+  gint         info_id;
+  gchar       *merge_key;
+  guint        merge_id;
+
+  ui_path = g_object_get_data (G_OBJECT (manager), "image-menu-ui-path");
+
+  info_id = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (info),
+                                                "recent-action-id"));
+
+  action_name = g_strdup_printf ("windows-recent-%04d", info_id);
+  action_path = g_strdup_printf ("%s/Windows/Recently Closed Docks", ui_path);
+
+  merge_key = g_strdup_printf ("windows-recent-%04d-merge-id", info_id);
+  merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
+
+  g_object_set_data (G_OBJECT (manager), merge_key,
+                     GUINT_TO_POINTER (merge_id));
+
+  gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
+                         action_path, action_name, action_name,
+                         GTK_UI_MANAGER_MENUITEM,
+                         FALSE);
+
+  g_free (merge_key);
+  g_free (action_path);
+  g_free (action_name);
+}
+
+static void
+windows_menu_recent_remove (GimpContainer   *container,
+                            GimpSessionInfo *info,
+                            GimpUIManager   *manager)
+{
+  gint   info_id;
+  gchar *merge_key;
+  guint  merge_id;
+
+  info_id = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (info),
+                                                "recent-action-id"));
+
+  merge_key = g_strdup_printf ("windows-recent-%04d-merge-id", info_id);
 
   merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
                                                   merge_key));
