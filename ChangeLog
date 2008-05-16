@@ -1,3 +1,11 @@
+2008-05-16  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	Merged from trunk:
+
+	* plug-ins/script-fu/tinyscheme/scheme.c: Added extra checks to stop
+	bad syntax in LET from causing a segmentation fault in Linux.
+	See bug #508020.
+
 2008-05-14  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
