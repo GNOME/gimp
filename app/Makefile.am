@@ -90,7 +90,8 @@ INCLUDES = \
 	$(GEGL_CFLAGS)		\
 	-I$(includedir)
 
-AM_LDFLAGS = $(munix) \
+AM_LDFLAGS = \
+	$(munix)				\
 	$(CARBON_LDFLAGS)			\
 	-u $(SYMPREFIX)xcf_init			\
 	-u $(SYMPREFIX)internal_procs_init	\

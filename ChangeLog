@@ -1,3 +1,7 @@
+2008-05-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am: formatting.
+
 2008-05-16  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayoptions.c: disable rulers by default as
