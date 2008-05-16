@@ -176,10 +176,10 @@ plug-ins/common/gif-save.c
 plug-ins/common/gih.c
 plug-ins/common/gradient-map.c
 plug-ins/common/grid.c
-plug-ins/common/gtm.c
 plug-ins/common/guillotine.c
 plug-ins/common/header.c
 plug-ins/common/hot.c
+plug-ins/common/html-table.c
 plug-ins/common/illusion.c
 plug-ins/common/iwarp.c
 plug-ins/common/jigsaw.c

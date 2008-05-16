@@ -70,6 +70,7 @@ app/actions/vectors-commands.c
 app/actions/view-actions.c
 app/actions/view-commands.c
 app/actions/window-actions.c
+app/actions/windows-actions.c
 
 app/base/base-enums.c
 app/base/tile-swap.c

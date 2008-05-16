@@ -1,3 +1,10 @@
+2008-05-16  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in 
+	* POTFILES.skip: updated.
+
+	* de.po: updated German translation.
+
 2008-05-12  Marco Ciampa  <ciampix@libero.it>
 
 	* it.po: updated italian translation.
