@@ -80,6 +80,9 @@ struct _GimpImageMap
   GeglProcessor         *processor;
 
   guint                  idle_id;
+
+  GTimer                *timer;
+  gulong                 pixel_count;
 };
 
 
@@ -152,6 +155,11 @@ gimp_image_map_init (GimpImageMap *image_map)
   image_map->apply_data    = NULL;
   image_map->PRI           = NULL;
   image_map->idle_id       = 0;
+  image_map->timer         = g_timer_new ();
+  image_map->pixel_count   = 0;
+
+  if (image_map->timer)
+    g_timer_stop (image_map->timer);
 }
 
 static void
@@ -221,6 +229,12 @@ gimp_image_map_finalize (GObject *object)
 
       g_object_unref (image_map->drawable);
       image_map->drawable = NULL;
+    }
+
+  if (image_map->timer)
+    {
+      g_timer_destroy (image_map->timer);
+      image_map->timer = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -550,6 +564,12 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                                                &image_map->destPR);
     }
 
+  if (image_map->timer)
+    {
+      image_map->pixel_count = 0;
+      g_timer_reset (image_map->timer);
+    }
+
   /*  Start the intermittant work procedure  */
   image_map->idle_id = g_idle_add ((GSourceFunc) gimp_image_map_do, image_map);
 }
@@ -711,8 +731,25 @@ gimp_image_map_do (GimpImageMap *image_map)
 
   if (image_map->gegl)
     {
-      if (! gegl_processor_work (image_map->processor, NULL))
+      gboolean pending;
+
+      if (image_map->timer)
+        g_timer_continue (image_map->timer);
+
+      pending = gegl_processor_work (image_map->processor, NULL);
+
+      if (image_map->timer)
+        g_timer_stop (image_map->timer);
+
+      if (! pending)
         {
+          if (image_map->timer)
+            g_printerr ("%s: %g MPixels/sec\n",
+                        image_map->undo_desc,
+                        (gdouble) image_map->pixel_count /
+                        (1000000.0 *
+                         g_timer_elapsed (image_map->timer, NULL)));
+
           g_object_unref (image_map->processor);
           image_map->processor = NULL;
 
@@ -736,6 +773,9 @@ gimp_image_map_do (GimpImageMap *image_map)
           PixelRegion  srcPR;
           PixelRegion  destPR;
           gint         x, y, w, h;
+
+          if (image_map->timer)
+            g_timer_continue (image_map->timer);
 
           x = image_map->destPR.x;
           y = image_map->destPR.y;
@@ -771,8 +811,21 @@ gimp_image_map_do (GimpImageMap *image_map)
 
           image_map->PRI = pixel_regions_process (image_map->PRI);
 
+          if (image_map->timer)
+            {
+              g_timer_stop (image_map->timer);
+              image_map->pixel_count += w * h;
+            }
+
           if (image_map->PRI == NULL)
             {
+              if (image_map->timer)
+                g_printerr ("%s: %g MPixels/sec\n",
+                            image_map->undo_desc,
+                            (gdouble) image_map->pixel_count /
+                            (1000000.0 *
+                             g_timer_elapsed (image_map->timer, NULL)));
+
               image_map->idle_id = 0;
 
               g_signal_emit (image_map, image_map_signals[FLUSH], 0);
@@ -833,4 +886,7 @@ gimp_image_map_data_written (GObject             *operation,
   gimp_drawable_update (image_map->drawable,
                         extent->x, extent->y,
                         extent->width, extent->height);
+
+  if (image_map->timer)
+    image_map->pixel_count += extent->width * extent->height;
 }

@@ -1,3 +1,8 @@
+2008-05-16  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagemap.c: added some basic benchmarking code.
+	Will become optional but for now it is enabled by default.
+
 2008-05-16  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.c: Added extra checks to stop
