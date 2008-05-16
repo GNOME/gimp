@@ -2763,7 +2763,7 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
           sc->args = cons(sc, sc->value, sc->args);
           if (is_pair(sc->code)) { /* continue */
                if (!is_pair(car(sc->code)) || !is_pair(cdar(sc->code))) {
-                    Error_1(sc,"Bad syntax of binding spec in let :",car(sc->code));
+                    Error_1(sc, "Bad syntax of binding spec in let :", car(sc->code));
                }
                s_save(sc,OP_LET1, sc->args, cdr(sc->code));
                sc->code = cadar(sc->code);
@@ -2783,6 +2783,8 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
                new_slot_in_env(sc, caar(x), car(y));
           }
           if (is_symbol(car(sc->code))) {    /* named let */
+               if (!is_pair(cadr(sc->code)))
+                    Error_1(sc, "Bad syntax of binding spec in let :", car(sc->code));
                for (x = cadr(sc->code), sc->args = sc->NIL; x != sc->NIL; x = cdr(x)) {
 
                     sc->args = cons(sc, caar(x), sc->args);

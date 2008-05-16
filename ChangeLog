@@ -1,3 +1,9 @@
+2008-05-16  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme.c: Added extra checks to stop
+	bad syntax in LET from causing a segmentation fault in Linux.
+	See bug #508020.
+
 2008-05-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am: formatting.
@@ -9,7 +15,7 @@
 
 2008-05-16  Sven Neumann  <sven@gimp.org>
 
-        * plug-ins/help/Makefile.am
+	* plug-ins/help/Makefile.am
 	* plug-ins/help/gimphelpprogress.[ch]
 	* plug-ins/help/gimphelpprogress-private.h: new files providing a
 	simple framework for progress indication and cancellation.
