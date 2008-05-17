@@ -451,6 +451,10 @@ gimp_image_map_apply (GimpImageMap        *image_map,
         {
           image_map->gegl = gegl_node_new ();
 
+          if (g_object_class_find_property (
+              G_OBJECT_GET_CLASS (image_map->gegl), "dont-cache"))
+            g_object_set (image_map->gegl, "dont-cache", TRUE, NULL);
+
           image_map->input =
             gegl_node_new_child (image_map->gegl,
                                  "operation", "gimp-tilemanager-source",
