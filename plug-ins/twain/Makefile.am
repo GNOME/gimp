@@ -22,7 +22,7 @@ endif
 
 
 if HAVE_MAC_TWAIN
-maclink = -framework Carbon -framework TWAIN
+twain_LDFLAGS = -framework Carbon -framework TWAIN
 
 twainplatform = tw_mac.c
 
@@ -31,7 +31,7 @@ twaindata_DATA = gimp-twain.png
 endif
 
 
-AM_LDFLAGS = $(winlink) $(maclink)
+AM_LDFLAGS = $(winlink)
 
 twain_SOURCES = \
 	tw_func.c	\

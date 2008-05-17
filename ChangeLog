@@ -1,3 +1,9 @@
+2008-05-17  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/twain/Makefile.am: add -framework options to
+	twain_LDFLAGS instead of AM_LDFLAGS to make whatever layer/version
+	of autofoo happy on all macs.
+
 2008-05-16  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagemap.c: added some basic benchmarking code.
