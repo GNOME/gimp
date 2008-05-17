@@ -212,7 +212,7 @@ windows_actions_image_notify (GimpDisplay      *display,
           entry.accelerator = NULL;
           entry.tooltip     = NULL;
           entry.callback    = G_CALLBACK (windows_show_display_cmd_callback);
-          entry.help_id     = NULL;
+          entry.help_id     = GIMP_HELP_WINDOWS_SHOW_IMAGE_WINDOW;
 
           gimp_action_group_add_actions (group, &entry, 1);
 
@@ -276,7 +276,7 @@ windows_actions_dock_added (GimpDialogFactory *factory,
   entry.accelerator = NULL;
   entry.tooltip     = NULL;
   entry.callback    = G_CALLBACK (windows_show_dock_cmd_callback);
-  entry.help_id     = NULL;
+  entry.help_id     = GIMP_HELP_WINDOWS_SHOW_DOCK;
 
   gimp_action_group_add_actions (group, &entry, 1);
 
@@ -362,7 +362,7 @@ windows_actions_recent_add (GimpContainer   *container,
   entry.accelerator = NULL;
   entry.tooltip     = gimp_object_get_name (GIMP_OBJECT (info));
   entry.callback    = G_CALLBACK (windows_open_recent_cmd_callback);
-  entry.help_id     = NULL;
+  entry.help_id     = GIMP_HELP_WINDOWS_OPEN_RECENT_DOCK;
 
   gimp_action_group_add_actions (group, &entry, 1);
 
