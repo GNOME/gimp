@@ -93,6 +93,9 @@ void    gimp_image_map_tool_preview    (GimpImageMapTool *image_map_tool);
 /* temp hack for the gegl tool */
 void    gimp_image_map_tool_create_map (GimpImageMapTool *image_map_tool);
 
+void    gimp_image_map_tool_edit_as    (GimpImageMapTool *image_map_tool,
+                                        const gchar      *new_tool_id,
+                                        GimpConfig       *config);
 
 
 #endif  /*  __GIMP_IMAGE_MAP_TOOL_H__  */

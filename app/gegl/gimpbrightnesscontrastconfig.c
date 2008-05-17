@@ -23,11 +23,13 @@
 
 #include <gegl.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "gegl-types.h"
 
 #include "gimpbrightnesscontrastconfig.h"
+#include "gimplevelsconfig.h"
 
 
 enum
@@ -153,4 +155,48 @@ gimp_brightness_contrast_config_set_node (GimpBrightnessContrastConfig *config,
                  "brightness", brightness,
                  "contrast",   contrast,
                  NULL);
+}
+
+GimpLevelsConfig *
+gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *config)
+{
+  GimpLevelsConfig *levels;
+  gdouble           brightness;
+  gdouble           contrast;
+  gdouble           value;
+
+  g_return_val_if_fail (GIMP_IS_BRIGHTNESS_CONTRAST_CONFIG (config), NULL);
+
+  levels = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
+
+  brightness = config->brightness / 2.0;
+  contrast   = (config->contrast < 0 ?
+                (config->contrast + 1.0) :
+                config->contrast * 4.0 + 1.0);
+
+  value = -0.5 * contrast + brightness + 0.5;
+
+  if (value < 0.0)
+    {
+      value = 0.0;
+
+      levels->low_input[GIMP_HISTOGRAM_VALUE] =
+        (-0.5 - brightness) / contrast + 0.5;
+    }
+
+  levels->low_output[GIMP_HISTOGRAM_VALUE] = value;
+
+  value = 0.5 * contrast + brightness + 0.5;
+
+  if (value > 1.0)
+    {
+      value = 1.0;
+
+      levels->high_input[GIMP_HISTOGRAM_VALUE] =
+        (0.5 - brightness) / contrast + 0.5;
+    }
+
+  levels->high_output[GIMP_HISTOGRAM_VALUE] = value;
+
+  return levels;
 }

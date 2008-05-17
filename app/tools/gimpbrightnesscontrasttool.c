@@ -37,6 +37,7 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-constructors.h"
 
 #include "display/gimpdisplay.h"
 
@@ -86,6 +87,9 @@ static void   brightness_contrast_config_notify            (GObject             
 static void   brightness_contrast_brightness_changed       (GtkAdjustment              *adj,
                                                             GimpBrightnessContrastTool *bc_tool);
 static void   brightness_contrast_contrast_changed         (GtkAdjustment              *adj,
+                                                            GimpBrightnessContrastTool *bc_tool);
+
+static void   brightness_contrast_to_levels_callback       (GtkWidget                  *widget,
                                                             GimpBrightnessContrastTool *bc_tool);
 
 
@@ -292,6 +296,7 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *im_tool)
   GimpBrightnessContrastConfig *config  = bc_tool->config;
   GtkWidget                    *table;
   GtkWidget                    *slider;
+  GtkWidget                    *button;
   GtkObject                    *data;
 
   /*  The table containing sliders  */
@@ -330,6 +335,16 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *im_tool)
 
   g_signal_connect (data, "value-changed",
                     G_CALLBACK (brightness_contrast_contrast_changed),
+                    bc_tool);
+
+  button = gimp_stock_button_new (GIMP_STOCK_TOOL_LEVELS,
+                                  _("Edit this Settings as Levels"));
+  gtk_box_pack_start (GTK_BOX (im_tool->main_vbox), button,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (brightness_contrast_to_levels_callback),
                     bc_tool);
 }
 
@@ -385,4 +400,19 @@ brightness_contrast_contrast_changed (GtkAdjustment              *adjustment,
                     "contrast", value,
                     NULL);
     }
+}
+
+static void
+brightness_contrast_to_levels_callback (GtkWidget                  *widget,
+                                        GimpBrightnessContrastTool *bc_tool)
+{
+  GimpLevelsConfig *levels;
+
+  levels = gimp_brightness_contrast_config_to_levels_config (bc_tool->config);
+
+  gimp_image_map_tool_edit_as (GIMP_IMAGE_MAP_TOOL (bc_tool),
+                               "gimp-levels-tool",
+                               GIMP_CONFIG (levels));
+
+  g_object_unref (levels);
 }

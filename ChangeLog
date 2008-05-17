@@ -1,3 +1,14 @@
+2008-05-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpimagemaptool.[ch]: add gimp_image_map_tool_edit_as().
+
+	* app/tools/gimplevelstool.c (levels_to_curves_callback): use it.
+
+	* app/gegl/gimpbrightnesscontrastconfig.[ch]: add
+	gimp_brightness_contrast_config_to_levels_config().
+
+	* app/tools/gimpbrightnesscontrasttool.c: implement "Edit as Levels".
+
 2008-05-17  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/core/gimpdrawable-operation.c:

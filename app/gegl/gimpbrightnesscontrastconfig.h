@@ -55,5 +55,8 @@ GType   gimp_brightness_contrast_config_get_type (void) G_GNUC_CONST;
 void    gimp_brightness_contrast_config_set_node (GimpBrightnessContrastConfig *config,
                                                   GeglNode                     *node);
 
+GimpLevelsConfig *
+gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *config);
+
 
 #endif /* __GIMP_BRIGHTNESS_CONTRAST_CONFIG_H__ */

@@ -34,9 +34,6 @@
 #include "gegl/gimplevelsconfig.h"
 #include "gegl/gimpoperationlevels.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimpimage.h"
@@ -51,7 +48,6 @@
 
 #include "gimphistogramoptions.h"
 #include "gimplevelstool.h"
-#include "tool_manager.h"
 
 #include "gimp-intl.h"
 
@@ -681,7 +677,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (gimp_levels_tool_dialog_unmap),
                     tool);
 
-  button = gimp_stock_button_new (GIMP_STOCK_TOOL_LEVELS,
+  button = gimp_stock_button_new (GIMP_STOCK_TOOL_CURVES,
                                   _("Edit this Settings as Curves"));
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), button,
                       FALSE, FALSE, 0);
@@ -1137,31 +1133,12 @@ levels_to_curves_callback (GtkWidget      *widget,
                            GimpLevelsTool *tool)
 {
   GimpCurvesConfig *curves;
-  GimpDisplay      *display;
-  GimpContext      *user_context;
-  GimpToolInfo     *tool_info;
-  GimpTool         *new_tool;
 
   curves = gimp_levels_config_to_curves_config (tool->config);
 
-  display = GIMP_TOOL (tool)->display;
+  gimp_image_map_tool_edit_as (GIMP_IMAGE_MAP_TOOL (tool),
+                               "gimp-curves-tool",
+                               GIMP_CONFIG (curves));
 
-  user_context = gimp_get_user_context (display->gimp);
-
-  tool_info = gimp_container_get_child_by_name (display->gimp->tool_info_list,
-                                                "gimp-curves-tool");
-
-  g_object_ref (tool);
-
-  gimp_context_set_tool (user_context, tool_info);
-  tool_manager_initialize_active (display->gimp, display);
-
-  new_tool = tool_manager_get_active (display->gimp);
-
-  gimp_config_copy (GIMP_CONFIG (curves),
-                    GIMP_CONFIG (GIMP_IMAGE_MAP_TOOL (new_tool)->config),
-                    0);
-
-  g_object_unref (tool);
   g_object_unref (curves);
 }

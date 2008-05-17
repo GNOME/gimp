@@ -54,6 +54,7 @@
 #include "gimpcoloroptions.h"
 #include "gimpimagemaptool.h"
 #include "gimptoolcontrol.h"
+#include "tool_manager.h"
 
 #include "gimp-intl.h"
 
@@ -1062,4 +1063,36 @@ gimp_image_map_tool_gegl_notify (GObject          *config,
 
       gimp_image_map_tool_preview (im_tool);
     }
+}
+
+void
+gimp_image_map_tool_edit_as (GimpImageMapTool *im_tool,
+                             const gchar      *new_tool_id,
+                             GimpConfig       *config)
+{
+  GimpDisplay  *display;
+  GimpContext  *user_context;
+  GimpToolInfo *tool_info;
+  GimpTool     *new_tool;
+
+  g_return_if_fail (GIMP_IS_IMAGE_MAP_TOOL (im_tool));
+  g_return_if_fail (new_tool_id);
+  g_return_if_fail (GIMP_IS_CONFIG (config));
+
+  display = GIMP_TOOL (im_tool)->display;
+
+  user_context = gimp_get_user_context (display->gimp);
+
+  tool_info = (GimpToolInfo *)
+    gimp_container_get_child_by_name (display->gimp->tool_info_list,
+                                      new_tool_id);
+
+  gimp_context_set_tool (user_context, tool_info);
+  tool_manager_initialize_active (display->gimp, display);
+
+  new_tool = tool_manager_get_active (display->gimp);
+
+  gimp_config_copy (config,
+                    GIMP_CONFIG (GIMP_IMAGE_MAP_TOOL (new_tool)->config),
+                    0);
 }
