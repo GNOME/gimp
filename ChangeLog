@@ -1,5 +1,12 @@
 2008-05-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/file-save-dialog.c (file_save_dialog_response): fix
+	crash (don't dereference dialog after it has been destroyed). Also
+	put back code that sets the dialog back to sensitive if it still
+	exists.
+
+2008-05-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimagefile.c
 	* app/tools/gimpaligntool.c
 	* app/tools/gimpselectiontool.c

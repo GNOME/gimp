@@ -121,6 +121,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
   gchar               *uri;
   gchar               *basename;
   GimpPlugInProcedure *save_proc;
+  gulong               handler_id;
 
   g_object_set_data_full (G_OBJECT (gimp), "gimp-file-save-dialog-state",
                           gimp_file_dialog_get_state (dialog),
@@ -135,6 +136,9 @@ file_save_dialog_response (GtkWidget *save_dialog,
     }
 
   gimp_file_dialog_set_sensitive (dialog, FALSE);
+  handler_id = g_signal_connect (dialog, "destroy",
+                                 G_CALLBACK (gtk_widget_destroyed),
+                                 &dialog);
 
   if (file_save_dialog_check_uri (save_dialog, gimp,
                                   &uri, &basename, &save_proc))
@@ -151,8 +155,6 @@ file_save_dialog_response (GtkWidget *save_dialog,
 
               parent = gtk_window_get_transient_for (GTK_WINDOW (dialog));
 
-              gtk_widget_destroy (save_dialog);
-
               if (dialog->close_after_saving)
                 {
                   if (GIMP_IS_DISPLAY_SHELL (parent))
@@ -165,11 +167,19 @@ file_save_dialog_response (GtkWidget *save_dialog,
                         gimp_display_close (display);
                     }
                 }
+
+              gtk_widget_destroy (save_dialog);
             }
         }
 
       g_free (uri);
       g_free (basename);
+    }
+
+  if (dialog)
+    {
+      gimp_file_dialog_set_sensitive (dialog, TRUE);
+      g_signal_handler_disconnect (dialog, handler_id);
     }
 }
 
