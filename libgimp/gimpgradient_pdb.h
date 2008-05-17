@@ -35,6 +35,7 @@ gboolean gimp_gradient_is_editable                         (const gchar         
 gchar*   gimp_gradient_rename                              (const gchar               *name,
                                                             const gchar               *new_name);
 gboolean gimp_gradient_delete                              (const gchar               *name);
+gint     gimp_gradient_get_number_of_segments              (const gchar               *name);
 gboolean gimp_gradient_get_uniform_samples                 (const gchar               *name,
                                                             gint                       num_samples,
                                                             gboolean                   reverse,

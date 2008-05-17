@@ -264,6 +264,45 @@ gradient_delete_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+gradient_get_number_of_segments_invoker (GimpProcedure      *procedure,
+                                         Gimp               *gimp,
+                                         GimpContext        *context,
+                                         GimpProgress       *progress,
+                                         const GValueArray  *args,
+                                         GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  const gchar *name;
+  gint32 num_segments = 0;
+
+  name = g_value_get_string (&args->values[0]);
+
+  if (success)
+    {
+      GimpGradient        *gradient;
+      GimpGradientSegment *seg;
+
+      gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
+
+      if (gradient)
+        {
+          for (seg = gradient->segments; seg; seg = seg->next)
+            num_segments++;
+        }
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_int (&return_vals->values[1], num_segments);
+
+  return return_vals;
+}
+
+static GValueArray *
 gradient_get_uniform_samples_invoker (GimpProcedure      *procedure,
                                       Gimp               *gimp,
                                       GimpContext        *context,
@@ -1498,6 +1537,36 @@ register_gradient_procs (GimpPDB *pdb)
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-gradient-get-number-of-segments
+   */
+  procedure = gimp_procedure_new (gradient_get_number_of_segments_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-gradient-get-number-of-segments");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-gradient-get-number-of-segments",
+                                     "Returns the number of segments of the specified gradient",
+                                     "This procedure returns the number of segments of the specified gradient.",
+                                     "Lars-Peter Clausen <lars@metafoo.de>",
+                                     "Lars-Peter Clausen",
+                                     "2008",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The gradient name",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("num-segments",
+                                                          "num segments",
+                                                          "Number of segments",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -176,6 +176,48 @@ CODE
     );
 }
 
+sub gradient_get_number_of_segments {
+    $blurb = 'Returns the number of segments of the specified gradient';
+
+    $help = <<'HELP';
+This procedure returns the number of segments of the specified gradient.
+HELP
+
+    $author    = 'Lars-Peter Clausen <lars@metafoo.de>';
+    $copyright = 'Lars-Peter Clausen';
+    $date      = '2008';
+    $since     = '2.6';
+
+
+    @inargs = (
+        { name => 'name', type => 'string', non_empty => 1,
+          desc => 'The gradient name' }
+    );
+
+    @outargs = (
+        { name => 'num_segments', type => 'int32',
+          init => 0, desc => 'Number of segments' }
+    );
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *seg;
+
+  gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
+
+  if (gradient)
+    {
+      for (seg = gradient->segments; seg; seg = seg->next)
+        num_segments++;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub gradient_get_uniform_samples {
     $blurb = 'Sample the specified in uniform parts.';
 
@@ -1385,8 +1427,9 @@ CODE
 @procs = qw(gradient_new
             gradient_duplicate
             gradient_is_editable
-	    gradient_rename
+            gradient_rename
             gradient_delete
+            gradient_get_number_of_segments
             gradient_get_uniform_samples gradient_get_custom_samples
             gradient_segment_get_left_color gradient_segment_set_left_color
             gradient_segment_get_right_color gradient_segment_set_right_color

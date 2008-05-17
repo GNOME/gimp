@@ -1,5 +1,17 @@
 2008-05-17  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/gradient.pdb: applied patch from Lars-Peter
+	Clausen which adds gimp-gradient-get-number-of-segments. Fixes
+	bug #533474.
+
+	* app/pdb/gradient-cmds.c
+	* app/pdb/internal-procs.c
+	* libgimp/gimpgradient_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: add the new symbol.
+
+2008-05-17  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/twain/Makefile.am: add -framework options to
 	twain_LDFLAGS instead of AM_LDFLAGS to make whatever layer/version
 	of autofoo happy on all macs.

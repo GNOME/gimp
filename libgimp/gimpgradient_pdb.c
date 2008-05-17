@@ -190,6 +190,39 @@ gimp_gradient_delete (const gchar *name)
 }
 
 /**
+ * gimp_gradient_get_number_of_segments:
+ * @name: The gradient name.
+ *
+ * Returns the number of segments of the specified gradient
+ *
+ * This procedure returns the number of segments of the specified
+ * gradient.
+ *
+ * Returns: Number of segments.
+ *
+ * Since: GIMP 2.6
+ */
+gint
+gimp_gradient_get_number_of_segments (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint num_segments = 0;
+
+  return_vals = gimp_run_procedure ("gimp-gradient-get-number-of-segments",
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    num_segments = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return num_segments;
+}
+
+/**
  * gimp_gradient_get_uniform_samples:
  * @name: The gradient name.
  * @num_samples: The number of samples to take.
