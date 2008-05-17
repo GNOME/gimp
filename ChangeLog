@@ -1,3 +1,7 @@
+2008-05-17  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimagemap.c: fixed issues with the profiling code.
+
 2008-05-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpimagemaptool.[ch]: add gimp_image_map_tool_edit_as().

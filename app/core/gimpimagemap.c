@@ -82,7 +82,7 @@ struct _GimpImageMap
   guint                  idle_id;
 
   GTimer                *timer;
-  gulong                 pixel_count;
+  guint64                pixel_count;
 };
 
 
@@ -571,7 +571,8 @@ gimp_image_map_apply (GimpImageMap        *image_map,
   if (image_map->timer)
     {
       image_map->pixel_count = 0;
-      g_timer_reset (image_map->timer);
+      g_timer_start (image_map->timer);
+      g_timer_stop (image_map->timer);
     }
 
   /*  Start the intermittant work procedure  */
