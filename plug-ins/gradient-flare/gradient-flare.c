@@ -714,7 +714,7 @@ static void ed_make_page_sflare   (GFlareEditor *ed,
 static void ed_put_gradient_menu  (GtkWidget    *table,
                                    gint          x,
                                    gint          y,
-                                   gchar        *caption,
+                                   const gchar  *caption,
                                    GradientMenu *gm);
 static void ed_mode_menu_callback (GtkWidget    *widget,
                                    gpointer      data);
@@ -3974,7 +3974,7 @@ static void
 ed_put_gradient_menu (GtkWidget    *table,
                       gint          x,
                       gint          y,
-                      gchar        *caption,
+                      const gchar  *caption,
                       GradientMenu *gm)
 {
   GtkWidget *label;

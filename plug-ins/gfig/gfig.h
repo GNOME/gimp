@@ -182,11 +182,11 @@ void draw_sqr    (GdkPoint *p,
 
 void       list_button_update   (GFigObj *obj);
 
-GtkWidget *num_sides_widget     (gchar *d_title,
-                                 gint  *num_sides,
-                                 gint  *which_way,
-                                 gint   adj_min,
-                                 gint   adj_max);
+GtkWidget *num_sides_widget     (const gchar *d_title,
+                                 gint        *num_sides,
+                                 gint        *which_way,
+                                 gint         adj_min,
+                                 gint         adj_max);
 
 void    setup_undo              (void);
 void    draw_grid_clear         (void);

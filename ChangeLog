@@ -1,5 +1,29 @@
 2008-05-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimagefile.c
+	* app/tools/gimpaligntool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimpvectortool.c
+	* plug-ins/color-rotate/color-rotate-dialog.c
+	* plug-ins/common/noise-rgb.c
+	* plug-ins/common/value-propagate.c
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig.h
+	* plug-ins/gimpressionist/general.c
+	* plug-ins/gimpressionist/gimpressionist.h
+	* plug-ins/gimpressionist/orientation.c
+	* plug-ins/gimpressionist/size.c
+	* plug-ins/gimpressionist/utils.c
+	* plug-ins/gradient-flare/gradient-flare.c
+	* plug-ins/ifs-compose/ifs-compose.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_preferences.c: in latest GLib _() returns
+	"const gchar*" as it should. Add const qualifiers to local utility
+	functions and some explicit casts to fix the warnings caused by
+	this.
+
+2008-05-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/windows-actions.c: add tooltips to the menu items of
 	open and recently closed docks.
 

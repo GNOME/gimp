@@ -1678,11 +1678,11 @@ select_button_clicked_eq (void)
 /* Special case for now - options on poly/star/spiral button */
 
 GtkWidget *
-num_sides_widget (gchar *d_title,
-                  gint  *num_sides,
-                  gint  *which_way,
-                  gint   adj_min,
-                  gint   adj_max)
+num_sides_widget (const gchar *d_title,
+                  gint        *num_sides,
+                  gint        *which_way,
+                  gint         adj_min,
+                  gint         adj_max)
 {
   GtkWidget *table;
   GtkObject *size_data;

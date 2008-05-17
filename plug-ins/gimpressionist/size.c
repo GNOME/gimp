@@ -75,11 +75,11 @@ create_sizemap_dialog_helper (GtkWidget *widget)
 }
 
 static void
-create_size_radio_button (GtkWidget  *box,
-                          int         orient_type,
-                          gchar      *label,
-                          gchar      *help_string,
-                          GSList    **radio_group)
+create_size_radio_button (GtkWidget    *box,
+                          int           orient_type,
+                          const gchar  *label,
+                          const gchar  *help_string,
+                          GSList      **radio_group)
 {
   create_radio_button (box, orient_type, size_store, label,
                        help_string, radio_group, sizeradio);

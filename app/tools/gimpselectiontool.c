@@ -233,7 +233,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
 
   if (proximity)
     {
-      gchar           *status      = NULL;
+      const gchar     *status      = NULL;
       gboolean         free_status = FALSE;
       GdkModifierType  modifiers   = (GDK_SHIFT_MASK | GDK_CONTROL_MASK);
 
@@ -316,7 +316,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
         gimp_tool_push_status (tool, display, status);
 
       if (free_status)
-        g_free (status);
+        g_free ((gchar *) status);
     }
 }
 

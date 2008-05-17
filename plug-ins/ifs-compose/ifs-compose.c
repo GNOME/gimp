@@ -226,13 +226,13 @@ static void recompute_center_cb           (GtkWidget *widget,
 
 static void ifs_compose                   (GimpDrawable *drawable);
 
-static ColorMap *color_map_create         (gchar     *name,
-                                           GimpRGB   *orig_color,
-                                           GimpRGB   *data,
-                                           gboolean   fixed_point);
-static void color_map_color_changed_cb    (GtkWidget *widget,
-                                           ColorMap  *color_map);
-static void color_map_update              (ColorMap  *color_map);
+static ColorMap *color_map_create         (const gchar  *name,
+                                           GimpRGB      *orig_color,
+                                           GimpRGB      *data,
+                                           gboolean      fixed_point);
+static void color_map_color_changed_cb    (GtkWidget    *widget,
+                                           ColorMap     *color_map);
+static void color_map_update              (ColorMap     *color_map);
 
 /* interface functions */
 static void simple_color_toggled          (GtkWidget *widget, gpointer data);
@@ -1980,10 +1980,10 @@ val_changed_update (void)
 #define COLOR_SAMPLE_SIZE 30
 
 static ColorMap *
-color_map_create (gchar    *name,
-                  GimpRGB  *orig_color,
-                  GimpRGB  *data,
-                  gboolean  fixed_point)
+color_map_create (const gchar *name,
+                  GimpRGB     *orig_color,
+                  GimpRGB     *data,
+                  gboolean     fixed_point)
 {
   GtkWidget *frame;
   GtkWidget *arrow;

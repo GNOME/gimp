@@ -191,8 +191,8 @@ rcm_create_previews (void)
 /* Main: One circles with values and buttons */
 
 static RcmCircle*
-rcm_create_one_circle (gint   height,
-		       gchar *label_content)
+rcm_create_one_circle (gint         height,
+		       const gchar *label_content)
 {
   GtkWidget     *frame, *button_table, *legend_table;
   GtkWidget     *label, *button, *entry;

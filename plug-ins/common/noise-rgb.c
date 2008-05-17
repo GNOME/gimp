@@ -380,7 +380,7 @@ noisify (GimpPreview *preview)
 static void
 noisify_add_channel (GtkWidget    *table,
                      gint          channel,
-                     gchar        *name,
+                     const gchar  *name,
                      GimpDrawable *drawable,
                      GtkWidget    *preview)
 {
@@ -407,7 +407,7 @@ noisify_add_channel (GtkWidget    *table,
 static void
 noisify_add_alpha_channel (GtkWidget    *table,
                            gint          channel,
-                           gchar        *name,
+                           const gchar  *name,
                            GimpDrawable *drawable,
                            GtkWidget    *preview)
 {

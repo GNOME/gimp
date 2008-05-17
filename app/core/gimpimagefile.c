@@ -525,12 +525,12 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
       break;
 
     case GIMP_THUMB_STATE_FOLDER:
-      imagefile->description = _("Folder");
+      imagefile->description = (gchar *) _("Folder");
       imagefile->static_desc = TRUE;
       break;
 
     case GIMP_THUMB_STATE_SPECIAL:
-      imagefile->description = _("Special File");
+      imagefile->description = (gchar *) _("Special File");
       imagefile->static_desc = TRUE;
       break;
 

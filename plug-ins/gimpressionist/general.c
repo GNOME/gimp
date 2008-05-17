@@ -114,11 +114,11 @@ select_color (GtkWidget *widget, gpointer data)
 }
 
 static GtkWidget *
-create_general_button (GtkWidget  *box,
-                       int         idx,
-                       gchar      *label,
-                       gchar      *help_string,
-                       GSList    **radio_group)
+create_general_button (GtkWidget    *box,
+                       int           idx,
+                       const gchar  *label,
+                       const gchar  *help_string,
+                       GSList      **radio_group)
 {
   return create_radio_button (box, idx, general_bg_callback, label,
                               help_string, radio_group, general_bg_radio);

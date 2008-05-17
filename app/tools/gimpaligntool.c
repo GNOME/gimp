@@ -570,8 +570,8 @@ gimp_align_tool_status_update (GimpTool        *tool,
 
   if (proximity)
     {
-      gchar    *status = NULL;
-      gboolean  free_status = FALSE;
+      const gchar *status      = NULL;
+      gboolean     free_status = FALSE;
 
       if (! align_tool->selected_objects)
         {
@@ -634,7 +634,7 @@ gimp_align_tool_status_update (GimpTool        *tool,
         gimp_tool_push_status (tool, display, status);
 
       if (free_status)
-        g_free (status);
+        g_free ((gchar *) status);
     }
 }
 

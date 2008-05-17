@@ -323,7 +323,7 @@ set_button_colors(PreferencesDialog_t *dialog, ColorSelData_t *colors)
 }
 
 static GtkWidget*
-create_tab(GtkWidget *notebook, gchar *label, gint rows, gint cols)
+create_tab(GtkWidget *notebook, const gchar *label, gint rows, gint cols)
 {
    GtkWidget *table;
    GtkWidget *vbox;

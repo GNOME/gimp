@@ -78,7 +78,7 @@ static void         prepare_row                (GimpPixelRgn  *pixel_rgn,
 static void    vpropagate_toggle_button_update (GtkWidget     *widget,
                                                 gpointer       data);
 static GtkWidget *  gtk_table_add_toggle       (GtkWidget     *table,
-                                                gchar         *name,
+                                                const gchar   *name,
                                                 gint           x1,
                                                 gint           x2,
                                                 gint           y,
@@ -1246,13 +1246,13 @@ vpropagate_toggle_button_update (GtkWidget *widget,
 }
 
 static GtkWidget *
-gtk_table_add_toggle (GtkWidget *table,
-                      gchar     *name,
-                      gint       x1,
-                      gint       x2,
-                      gint       y,
-                      GCallback  update,
-                      gint      *value)
+gtk_table_add_toggle (GtkWidget   *table,
+                      const gchar *name,
+                      gint         x1,
+                      gint         x2,
+                      gint         y,
+                      GCallback    update,
+                      gint        *value)
 {
   GtkWidget *toggle;
 

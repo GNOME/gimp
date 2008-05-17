@@ -394,13 +394,13 @@ readdirintolist (char *subdir, GtkWidget *view, char *selected)
  *      to create a new group.
  * */
 GtkWidget *
-create_radio_button (GtkWidget   *box,
-                     int          orient_type,
-                     void       (*callback) (GtkWidget *wg, void *d),
-                     gchar       *label,
-                     gchar       *help_string,
-                     GSList     **radio_group,
-                     GtkWidget  **buttons_array)
+create_radio_button (GtkWidget    *box,
+                     int           orient_type,
+                     void        (*callback) (GtkWidget *wg, void *d),
+                     const gchar  *label,
+                     const gchar  *help_string,
+                     GSList      **radio_group,
+                     GtkWidget   **buttons_array)
 {
   GtkWidget *tmpw;
 

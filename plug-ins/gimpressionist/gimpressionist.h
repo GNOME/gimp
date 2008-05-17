@@ -165,7 +165,8 @@ void restore_default_values (void);
 
 GtkWidget *create_radio_button (GtkWidget *box, int orient_type,
                                 void (*callback)(GtkWidget *wg, void *d),
-                                gchar *label, gchar *help_string,
+                                const gchar *label,
+                                const gchar *help_string,
                                 GSList **radio_group,
                                 GtkWidget **buttons_array
                                );

@@ -1137,20 +1137,23 @@ gimp_vector_tool_status_update (GimpTool        *tool,
 
   if (proximity)
     {
-      gchar    *status = NULL;
-      gboolean  free_status = FALSE;
+      const gchar *status      = NULL;
+      gboolean     free_status = FALSE;
 
       switch (vector_tool->function)
         {
         case VECTORS_SELECT_VECTOR:
           status = _("Click to pick path to edit");
           break;
+
         case VECTORS_CREATE_VECTOR:
           status = _("Click to create a new path");
           break;
+
         case VECTORS_CREATE_STROKE:
           status = _("Click to create a new component of the path");
           break;
+
         case VECTORS_ADD_ANCHOR:
           status = gimp_suggest_modifiers (_("Click or Click-Drag to create "
                                              "a new anchor"),
@@ -1158,6 +1161,7 @@ gimp_vector_tool_status_update (GimpTool        *tool,
                                            NULL, NULL, NULL);
           free_status = TRUE;
           break;
+
         case VECTORS_MOVE_ANCHOR:
           if (options->edit_mode != GIMP_VECTOR_MODE_EDIT)
             {
@@ -1170,9 +1174,11 @@ gimp_vector_tool_status_update (GimpTool        *tool,
           else
             status = _("Click-Drag to move the anchor around");
           break;
+
         case VECTORS_MOVE_ANCHORSET:
           status = _("Click-Drag to move the anchors around");
           break;
+
         case VECTORS_MOVE_HANDLE:
           status = gimp_suggest_modifiers (_("Click-Drag to move the handle "
                                              "around"),
@@ -1180,6 +1186,7 @@ gimp_vector_tool_status_update (GimpTool        *tool,
                                            NULL, NULL, NULL);
           free_status = TRUE;
           break;
+
         case VECTORS_MOVE_CURVE:
           if (GIMP_VECTOR_TOOL_GET_OPTIONS (tool)->polygonal)
             status = gimp_suggest_modifiers (_("Click-Drag to move the "
@@ -1193,6 +1200,7 @@ gimp_vector_tool_status_update (GimpTool        *tool,
                                              _("%s: symmetrical"), NULL, NULL);
           free_status = TRUE;
           break;
+
         case VECTORS_MOVE_STROKE:
           status = gimp_suggest_modifiers (_("Click-Drag to move the "
                                              "component around"),
@@ -1200,9 +1208,11 @@ gimp_vector_tool_status_update (GimpTool        *tool,
                                            NULL, NULL, NULL);
           free_status = TRUE;
           break;
+
         case VECTORS_MOVE_VECTORS:
           status = _("Click-Drag to move the path around");
           break;
+
         case VECTORS_INSERT_ANCHOR:
           status = gimp_suggest_modifiers (_("Click-Drag to insert an anchor "
                                              "on the path"),
@@ -1210,19 +1220,24 @@ gimp_vector_tool_status_update (GimpTool        *tool,
                                            NULL, NULL, NULL);
           free_status = TRUE;
           break;
+
         case VECTORS_DELETE_ANCHOR:
           status = _("Click to delete this anchor");
           break;
+
         case VECTORS_CONNECT_STROKES:
           status = _("Click to connect this anchor "
                      "with the selected endpoint");
           break;
+
         case VECTORS_DELETE_SEGMENT:
           status = _("Click to open up the path");
           break;
+
         case VECTORS_CONVERT_EDGE:
           status = _("Click to make this node angular");
           break;
+
         case VECTORS_FINISHED:
           status = NULL;
           break;
@@ -1232,7 +1247,7 @@ gimp_vector_tool_status_update (GimpTool        *tool,
         gimp_tool_push_status (tool, display, status);
 
       if (free_status)
-        g_free (status);
+        g_free ((gchar *) status);
     }
 }
 
