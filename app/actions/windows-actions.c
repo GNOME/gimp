@@ -327,7 +327,8 @@ windows_actions_dock_notify (GimpDock         *dock,
 
   if (action)
     g_object_set (action,
-                  "label", gtk_window_get_title (GTK_WINDOW (dock)),
+                  "label",   gtk_window_get_title (GTK_WINDOW (dock)),
+                  "tooltip", gtk_window_get_title (GTK_WINDOW (dock)),
                   NULL);
 }
 
@@ -359,7 +360,7 @@ windows_actions_recent_add (GimpContainer   *container,
   entry.stock_id    = NULL;
   entry.label       = gimp_object_get_name (GIMP_OBJECT (info));
   entry.accelerator = NULL;
-  entry.tooltip     = NULL;
+  entry.tooltip     = gimp_object_get_name (GIMP_OBJECT (info));
   entry.callback    = G_CALLBACK (windows_open_recent_cmd_callback);
   entry.help_id     = NULL;
 

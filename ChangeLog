@@ -1,5 +1,14 @@
 2008-05-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/windows-actions.c: add tooltips to the menu items of
+	open and recently closed docks.
+
+	* app/widgets/gimpaction.c: connect to "notify::tooltip" and make
+	sure gimp_help_set_help_data() gets called when the action's
+	tooltip changes.
+
+2008-05-17  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/gradient.pdb: applied patch from Lars-Peter
 	Clausen which adds gimp-gradient-get-number-of-segments. Fixes
 	bug #533474.

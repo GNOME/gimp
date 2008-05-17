@@ -52,19 +52,25 @@ enum
 };
 
 
-static void   gimp_action_finalize      (GObject      *object);
-static void   gimp_action_set_property  (GObject      *object,
-                                         guint         prop_id,
-                                         const GValue *value,
-                                         GParamSpec   *pspec);
-static void   gimp_action_get_property  (GObject      *object,
-                                         guint         prop_id,
-                                         GValue       *value,
-                                         GParamSpec   *pspec);
-static void   gimp_action_connect_proxy (GtkAction    *action,
-                                         GtkWidget    *proxy);
-static void   gimp_action_set_proxy     (GimpAction   *action,
-                                         GtkWidget    *proxy);
+static void   gimp_action_finalize          (GObject          *object);
+static void   gimp_action_set_property      (GObject          *object,
+                                             guint             prop_id,
+                                             const GValue     *value,
+                                             GParamSpec       *pspec);
+static void   gimp_action_get_property      (GObject          *object,
+                                             guint             prop_id,
+                                             GValue           *value,
+                                             GParamSpec       *pspec);
+
+static void   gimp_action_connect_proxy     (GtkAction        *action,
+                                             GtkWidget        *proxy);
+static void   gimp_action_set_proxy         (GimpAction       *action,
+                                             GtkWidget        *proxy);
+static void   gimp_action_set_proxy_tooltip (GimpAction       *action,
+                                             GtkWidget        *proxy);
+static void   gimp_action_tooltip_notify    (GimpAction       *action,
+                                             const GParamSpec *pspec,
+                                             gpointer          data);
 
 
 G_DEFINE_TYPE (GimpAction, gimp_action, GTK_TYPE_ACTION)
@@ -125,6 +131,10 @@ gimp_action_init (GimpAction *action)
   action->color     = NULL;
   action->viewable  = NULL;
   action->ellipsize = PANGO_ELLIPSIZE_NONE;
+
+  g_signal_connect (action, "notify::tooltip",
+                    G_CALLBACK (gimp_action_tooltip_notify),
+                    NULL);
 }
 
 static void
@@ -247,6 +257,7 @@ gimp_action_connect_proxy (GtkAction *action,
   GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
 
   gimp_action_set_proxy (GIMP_ACTION (action), proxy);
+  gimp_action_set_proxy_tooltip (GIMP_ACTION (action), proxy);
 }
 
 
@@ -278,41 +289,11 @@ gimp_action_name_compare (GimpAction  *action1,
 /*  private functions  */
 
 static void
-gimp_action_set_proxy_tooltip (GimpAction *action,
-                               GtkWidget  *proxy)
-{
-  gchar *tooltip;
-
-  g_object_get (action, "tooltip", &tooltip, NULL);
-
-  if (tooltip)
-    {
-      gimp_help_set_help_data (proxy, tooltip,
-                               g_object_get_qdata (G_OBJECT (proxy),
-                                                   GIMP_HELP_ID));
-      g_free (tooltip);
-    }
-}
-
-static void
 gimp_action_set_proxy (GimpAction *action,
                        GtkWidget  *proxy)
 {
   if (! GTK_IS_IMAGE_MENU_ITEM (proxy))
     return;
-
-#ifdef DISABLE_MENU_TOOLTIPS
-  /*  This is not quite the correct check, but works fine to enable
-   *  tooltips only for the "Open Recent" menu items, since they are
-   *  the only ones having both a viewable and a tooltip. --mitch
-   */
-  if (action->viewable)
-    {
-      gimp_action_set_proxy_tooltip (action, proxy);
-    }
-#else
-  gimp_action_set_proxy_tooltip (action, proxy);
-#endif
 
   if (action->color)
     {
@@ -416,4 +397,36 @@ gimp_action_set_proxy (GimpAction *action,
         gtk_label_set_max_width_chars (label, action->max_width_chars);
       }
   }
+}
+
+static void
+gimp_action_set_proxy_tooltip (GimpAction *action,
+                               GtkWidget  *proxy)
+{
+  gchar *tooltip;
+
+  g_object_get (action, "tooltip", &tooltip, NULL);
+
+  if (tooltip)
+    {
+      gimp_help_set_help_data (proxy, tooltip,
+                               g_object_get_qdata (G_OBJECT (proxy),
+                                                   GIMP_HELP_ID));
+      g_free (tooltip);
+    }
+}
+
+static void
+gimp_action_tooltip_notify (GimpAction       *action,
+                            const GParamSpec *pspec,
+                            gpointer          data)
+{
+  GSList *list;
+
+  for (list = gtk_action_get_proxies (GTK_ACTION (action));
+       list;
+       list = g_slist_next (list))
+    {
+      gimp_action_set_proxy_tooltip (action, list->data);
+    }
 }
