@@ -20,8 +20,11 @@
 #define __GIMP_WIDGETS_CONSTRUCTORS_H__
 
 
-GtkWidget * gimp_paint_mode_menu_new (gboolean with_behind_mode,
-                                      gboolean with_replace_modes);
+GtkWidget * gimp_paint_mode_menu_new (gboolean     with_behind_mode,
+                                      gboolean     with_replace_modes);
+
+GtkWidget * gimp_stock_button_new    (const gchar *stock_id,
+                                      const gchar *label);
 
 
 #endif  /*  __GIMP_WIDGETS_CONSTRUCTORS_H__  */

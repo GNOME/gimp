@@ -1,5 +1,14 @@
 2008-05-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpwidgets-constructors.[ch]: add new function
+	gimp_stock_button_new() which creates a button with icon and label
+	which is *not* the stock_id's label.
+
+	* app/dialogs/preferences-dialog.c (prefs_button_add)
+	* app/tools/gimplevelstool.c (gimp_levels_tool_dialog): use it.
+
+2008-05-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimphelp-ids.h: add help IDs for the stuff in the
 	Windows menu.
 

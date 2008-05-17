@@ -49,6 +49,7 @@
 #include "widgets/gimpprofilechooserdialog.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptemplateeditor.h"
+#include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "menus/menus.h"
@@ -1070,25 +1071,8 @@ prefs_button_add (const gchar *stock_id,
                   GtkBox      *box)
 {
   GtkWidget *button;
-  GtkWidget *hbox;
-  GtkWidget *image;
-  GtkWidget *lab;
 
-  button = gtk_button_new ();
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (button), hbox);
-  gtk_widget_show (hbox);
-
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
-
-  lab = gtk_label_new_with_mnemonic (label);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (lab), button);
-  gtk_box_pack_start (GTK_BOX (hbox), lab, TRUE, TRUE, 0);
-  gtk_widget_show (lab);
-
+  button = gimp_stock_button_new (stock_id, label);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

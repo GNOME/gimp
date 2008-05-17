@@ -45,6 +45,7 @@
 #include "widgets/gimphandlebar.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogramview.h"
+#include "widgets/gimpwidgets-constructors.h"
 
 #include "display/gimpdisplay.h"
 
@@ -680,9 +681,8 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (gimp_levels_tool_dialog_unmap),
                     tool);
 
-  button = gtk_button_new_from_stock (GIMP_STOCK_TOOL_LEVELS);
-  gtk_button_set_label (GTK_BUTTON (button),
-                        _("Edit this Settings as Curves"));
+  button = gimp_stock_button_new (GIMP_STOCK_TOOL_LEVELS,
+                                  _("Edit this Settings as Curves"));
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), button,
                       FALSE, FALSE, 0);
   gtk_widget_show (button);
