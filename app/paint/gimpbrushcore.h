@@ -58,6 +58,7 @@ struct _GimpBrushCore
   TempBuf       *last_scale_brush;
   gint           last_scale_width;
   gint           last_scale_height;
+  gdouble        last_scale;
 
   TempBuf       *scale_pixmap;
   TempBuf       *last_scale_pixmap;

@@ -1325,12 +1325,12 @@ gimp_brush_core_scale_mask (GimpBrushCore *core,
     return brush->mask;
 
   gimp_brush_scale_size (brush, core->scale, &width, &height);
-
-  if (! core->cache_invalid                 &&
-      core->scale_brush                     &&
-      brush->mask == core->last_scale_brush &&
-      width       == core->last_scale_width &&
-      height      == core->last_scale_height)
+  if (! core->cache_invalid                      &&
+      core->scale_brush                          &&
+      core->last_scale == core->scale            &&
+      brush->mask      == core->last_scale_brush &&
+      width            == core->last_scale_width &&
+      height           == core->last_scale_height)
     {
       return core->scale_brush;
     }
@@ -1338,6 +1338,7 @@ gimp_brush_core_scale_mask (GimpBrushCore *core,
   core->last_scale_brush  = brush->mask;
   core->last_scale_width  = width;
   core->last_scale_height = height;
+  core->last_scale        = core->scale;
 
   if (core->scale_brush)
     temp_buf_free (core->scale_brush);

@@ -1,5 +1,14 @@
 2008-05-18  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Applied patch from Alexia Death that makes velocity dynamics
+	controlled scale properly recalculate the brush mask when
+	necessary (bug #533618).
+
+	* app/paint/gimpbrushcore.[ch] (gimp_brush_core_scale_mask): A
+	change in scale requires a recalculation of the cached brush mask.
+
+2008-05-18  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Merged the Polygon Select Tool capabilities with the Free Select
 	Tool. Among the things still to do is improved help texts, more
 	suitable graphics, and cursor mangement, but the core
