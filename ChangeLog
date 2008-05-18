@@ -1,5 +1,10 @@
 2008-05-18  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* plug-ins/script-fu/tinyscheme/scheme.c: Commited patch from gymp
+	that removes bogus FIXME (bug #533647).
+
+2008-05-18  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Applied patch from Alexia Death that makes velocity dynamics
 	controlled scale properly recalculate the brush mask when
 	necessary (bug #533618).

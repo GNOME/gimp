@@ -2152,9 +2152,6 @@ static int eqv(pointer a, pointer b) {
 
 #if !defined(USE_ALIST_ENV) || !defined(USE_OBJECT_LIST)
 
-#ifdef __GNUC__
-#warning FIXME: Update hash_fn() to handle UTF-8 coded keys
-#endif
 static int hash_fn(const char *key, int table_size)
 {
   unsigned int hashed = 0;
