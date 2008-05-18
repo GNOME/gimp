@@ -1,5 +1,19 @@
 2008-05-18  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpconfig/gimpconfig-serialize.[ch]
+	* libgimpconfig/gimpconfig.def: add
+	gimp_config_serialize_property_by_name().
+
+	* app/gegl/gimpcolorbalanceconfig.c
+	* app/gegl/gimpcurvesconfig.c
+	* app/gegl/gimphuesaturationconfig.c
+	* app/gegl/gimplevelsconfig.c: implement serialize() and
+	deserialize() and make sure the properties which change when the
+	channel/range property changes are handled correctly. Not too
+	ugly but it's still a hack...
+
+2008-05-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpimagemaptool.c: made the lists of recent settings
 	persistent. Note that the settings of tools that modify multiple
 	channels or ranges are saved incompletely because their settings

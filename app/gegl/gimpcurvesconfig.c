@@ -64,6 +64,13 @@ static void     gimp_curves_config_set_property (GObject          *object,
                                                  const GValue     *value,
                                                  GParamSpec       *pspec);
 
+static gboolean gimp_curves_config_serialize    (GimpConfig       *config,
+                                                 GimpConfigWriter *writer,
+                                                 gpointer          data);
+static gboolean gimp_curves_config_deserialize  (GimpConfig       *config,
+                                                 GScanner         *scanner,
+                                                 gint              nest_level,
+                                                 gpointer          data);
 static gboolean gimp_curves_config_equal        (GimpConfig       *a,
                                                  GimpConfig       *b);
 static void     gimp_curves_config_reset        (GimpConfig       *config);
@@ -111,9 +118,11 @@ gimp_curves_config_class_init (GimpCurvesConfigClass *klass)
 static void
 gimp_curves_config_iface_init (GimpConfigInterface *iface)
 {
-  iface->equal = gimp_curves_config_equal;
-  iface->reset = gimp_curves_config_reset;
-  iface->copy  = gimp_curves_config_copy;
+  iface->serialize   = gimp_curves_config_serialize;
+  iface->deserialize = gimp_curves_config_deserialize;
+  iface->equal       = gimp_curves_config_equal;
+  iface->reset       = gimp_curves_config_reset;
+  iface->copy        = gimp_curves_config_copy;
 }
 
 static void
@@ -214,6 +223,54 @@ gimp_curves_config_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static gboolean
+gimp_curves_config_serialize (GimpConfig       *config,
+                              GimpConfigWriter *writer,
+                              gpointer          data)
+{
+  GimpCurvesConfig     *c_config = GIMP_CURVES_CONFIG (config);
+  GimpHistogramChannel  channel;
+  GimpHistogramChannel  old_channel;
+  gboolean              success = TRUE;
+
+  old_channel = c_config->channel;
+
+  for (channel = GIMP_HISTOGRAM_VALUE;
+       channel <= GIMP_HISTOGRAM_ALPHA;
+       channel++)
+    {
+      c_config->channel = channel;
+
+      success = gimp_config_serialize_properties (config, writer);
+
+      if (! success)
+        break;
+    }
+
+  c_config->channel = old_channel;
+
+  return success;
+}
+
+static gboolean
+gimp_curves_config_deserialize (GimpConfig *config,
+                                GScanner   *scanner,
+                                gint        nest_level,
+                                gpointer    data)
+{
+  GimpCurvesConfig     *c_config = GIMP_CURVES_CONFIG (config);
+  GimpHistogramChannel  old_channel;
+  gboolean              success = TRUE;
+
+  old_channel = c_config->channel;
+
+  success = gimp_config_deserialize_properties (config, scanner, nest_level);
+
+  g_object_set (config, "channel", old_channel, NULL);
+
+  return success;
 }
 
 static gboolean

@@ -46,21 +46,28 @@ enum
 
 static void     gimp_hue_saturation_config_iface_init   (GimpConfigInterface *iface);
 
-static void     gimp_hue_saturation_config_get_property (GObject      *object,
-                                                         guint         property_id,
-                                                         GValue       *value,
-                                                         GParamSpec   *pspec);
-static void     gimp_hue_saturation_config_set_property (GObject      *object,
-                                                         guint         property_id,
-                                                         const GValue *value,
-                                                         GParamSpec   *pspec);
+static void     gimp_hue_saturation_config_get_property (GObject          *object,
+                                                         guint             property_id,
+                                                         GValue           *value,
+                                                         GParamSpec       *pspec);
+static void     gimp_hue_saturation_config_set_property (GObject          *object,
+                                                         guint             property_id,
+                                                         const GValue     *value,
+                                                         GParamSpec       *pspec);
 
-static gboolean gimp_hue_saturation_config_equal        (GimpConfig   *a,
-                                                         GimpConfig   *b);
-static void     gimp_hue_saturation_config_reset        (GimpConfig   *config);
-static gboolean gimp_hue_saturation_config_copy         (GimpConfig   *src,
-                                                         GimpConfig   *dest,
-                                                         GParamFlags   flags);
+static gboolean gimp_hue_saturation_config_serialize    (GimpConfig       *config,
+                                                         GimpConfigWriter *writer,
+                                                         gpointer          data);
+static gboolean gimp_hue_saturation_config_deserialize  (GimpConfig       *config,
+                                                         GScanner         *scanner,
+                                                         gint              nest_level,
+                                                         gpointer          data);
+static gboolean gimp_hue_saturation_config_equal        (GimpConfig       *a,
+                                                         GimpConfig       *b);
+static void     gimp_hue_saturation_config_reset        (GimpConfig       *config);
+static gboolean gimp_hue_saturation_config_copy         (GimpConfig       *src,
+                                                         GimpConfig       *dest,
+                                                         GParamFlags       flags);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpHueSaturationConfig, gimp_hue_saturation_config,
@@ -112,9 +119,11 @@ gimp_hue_saturation_config_class_init (GimpHueSaturationConfigClass *klass)
 static void
 gimp_hue_saturation_config_iface_init (GimpConfigInterface *iface)
 {
-  iface->equal = gimp_hue_saturation_config_equal;
-  iface->reset = gimp_hue_saturation_config_reset;
-  iface->copy  = gimp_hue_saturation_config_copy;
+  iface->serialize   = gimp_hue_saturation_config_serialize;
+  iface->deserialize = gimp_hue_saturation_config_deserialize;
+  iface->equal       = gimp_hue_saturation_config_equal;
+  iface->reset       = gimp_hue_saturation_config_reset;
+  iface->copy        = gimp_hue_saturation_config_copy;
 }
 
 static void
@@ -196,6 +205,63 @@ gimp_hue_saturation_config_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static gboolean
+gimp_hue_saturation_config_serialize (GimpConfig       *config,
+                                      GimpConfigWriter *writer,
+                                      gpointer          data)
+{
+  GimpHueSaturationConfig *hs_config = GIMP_HUE_SATURATION_CONFIG (config);
+  GimpHueRange             range;
+  GimpHueRange             old_range;
+  gboolean                 success = TRUE;
+
+  old_range = hs_config->range;
+
+  for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)
+    {
+      hs_config->range = range;
+
+      success = (gimp_config_serialize_property_by_name (config, "range",
+                                                         writer) &&
+                 gimp_config_serialize_property_by_name (config, "hue",
+                                                         writer) &&
+                 gimp_config_serialize_property_by_name (config, "saturation",
+                                                         writer) &&
+                 gimp_config_serialize_property_by_name (config, "lightness",
+                                                         writer));
+
+      if (! success)
+        break;
+    }
+
+  if (success)
+    success = gimp_config_serialize_property_by_name (config, "overlap",
+                                                      writer);
+
+  hs_config->range = old_range;
+
+  return success;
+}
+
+static gboolean
+gimp_hue_saturation_config_deserialize (GimpConfig *config,
+                                        GScanner   *scanner,
+                                        gint        nest_level,
+                                        gpointer    data)
+{
+  GimpHueSaturationConfig *hs_config = GIMP_HUE_SATURATION_CONFIG (config);
+  GimpHueRange             old_range;
+  gboolean                 success = TRUE;
+
+  old_range = hs_config->range;
+
+  success = gimp_config_deserialize_properties (config, scanner, nest_level);
+
+  g_object_set (config, "range", old_range, NULL);
+
+  return success;
 }
 
 static gboolean

@@ -309,6 +309,34 @@ gimp_config_serialize_property (GimpConfig       *config,
 }
 
 /**
+ * gimp_config_serialize_property_by_name:
+ * @config:    a #GimpConfig.
+ * @prop_name: the property's name.
+ * @writer:    a #GimpConfigWriter.
+ *
+ * This function serializes a single object property to the @writer.
+ *
+ * Returns: %TRUE if serialization succeeded, %FALSE otherwise
+ *
+ * Since: GIMP 2.6
+ **/
+gboolean
+gimp_config_serialize_property_by_name (GimpConfig       *config,
+                                        const gchar      *prop_name,
+                                        GimpConfigWriter *writer)
+{
+  GParamSpec *pspec;
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                        prop_name);
+
+  if (! pspec)
+    return FALSE;
+
+  return gimp_config_serialize_property (config, pspec, writer);
+}
+
+/**
  * gimp_config_serialize_value:
  * @value: a #GValue.
  * @str: a #Gstring.

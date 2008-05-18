@@ -36,6 +36,9 @@ gboolean  gimp_config_serialize_changed_properties (GimpConfig       *config,
 gboolean  gimp_config_serialize_property           (GimpConfig       *config,
                                                     GParamSpec       *param_spec,
                                                     GimpConfigWriter *writer);
+gboolean  gimp_config_serialize_property_by_name   (GimpConfig       *config,
+                                                    const gchar      *prop_name,
+                                                    GimpConfigWriter *writer);
 gboolean  gimp_config_serialize_value              (const GValue     *value,
                                                     GString          *str,
                                                     gboolean          escaped);
