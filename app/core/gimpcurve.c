@@ -127,6 +127,7 @@ gimp_curve_class_init (GimpCurveClass *klass)
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
+  GParamSpec        *array_spec;
 
   object_class->finalize           = gimp_curve_finalize;
   object_class->set_property       = gimp_curve_set_property;
@@ -156,22 +157,28 @@ gimp_curve_class_init (GimpCurveClass *klass)
                                 "The number of points",
                                 17, 17, 17, 0);
 
+  array_spec = g_param_spec_double ("point", NULL, NULL,
+                                    -1.0, 1.0, 0.0, GIMP_PARAM_READWRITE);
   g_object_class_install_property (object_class, PROP_POINTS,
-                                   g_param_spec_boolean ("points", NULL, NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
+                                   g_param_spec_value_array ("points",
+                                                             NULL, NULL,
+                                                             array_spec,
+                                                             GIMP_PARAM_STATIC_STRINGS |
+                                                             GIMP_CONFIG_PARAM_FLAGS));
 
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_N_SAMPLES,
                                  "n-samples",
                                  "The number of samples",
                                  256, 256, 256, 0);
 
+  array_spec = g_param_spec_double ("sample", NULL, NULL,
+                                    0.0, 1.0, 0.0, GIMP_PARAM_READWRITE);
   g_object_class_install_property (object_class, PROP_SAMPLES,
-                                   g_param_spec_boolean ("samples", NULL, NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
+                                   g_param_spec_value_array ("samples",
+                                                             NULL, NULL,
+                                                             array_spec,
+                                                             GIMP_PARAM_STATIC_STRINGS |
+                                                             GIMP_CONFIG_PARAM_FLAGS));
 }
 
 static void
@@ -233,6 +240,22 @@ gimp_curve_set_property (GObject      *object,
       break;
 
     case PROP_POINTS:
+      {
+        GValueArray *array = g_value_get_boxed (value);
+        gint         i;
+
+        if (! array)
+          break;
+
+        for (i = 0; i < curve->n_points && i * 2 < array->n_values; i++)
+          {
+            GValue *x = g_value_array_get_nth (array, i * 2);
+            GValue *y = g_value_array_get_nth (array, i * 2 + 1);
+
+            curve->points[i].x = g_value_get_double (x);
+            curve->points[i].y = g_value_get_double (y);
+          }
+      }
       break;
 
     case PROP_N_SAMPLES:
@@ -240,6 +263,20 @@ gimp_curve_set_property (GObject      *object,
       break;
 
     case PROP_SAMPLES:
+      {
+        GValueArray *array = g_value_get_boxed (value);
+        gint         i;
+
+        if (! array)
+          break;
+
+        for (i = 0; i < curve->n_samples && i < array->n_values; i++)
+          {
+            GValue *v = g_value_array_get_nth (array, i);
+
+            curve->samples[i] = g_value_get_double (v);
+          }
+      }
       break;
 
     default:
@@ -267,6 +304,26 @@ gimp_curve_get_property (GObject    *object,
       break;
 
     case PROP_POINTS:
+      {
+        GValueArray *array = g_value_array_new (curve->n_points * 2);
+        GValue       v     = { 0, };
+        gint         i;
+
+        g_value_init (&v, G_TYPE_DOUBLE);
+
+        for (i = 0; i < curve->n_points; i++)
+          {
+            g_value_set_double (&v, curve->points[i].x);
+            g_value_array_append (array, &v);
+
+            g_value_set_double (&v, curve->points[i].y);
+            g_value_array_append (array, &v);
+          }
+
+        g_value_unset (&v);
+
+        g_value_take_boxed (value, array);
+      }
       break;
 
     case PROP_N_SAMPLES:
@@ -274,6 +331,23 @@ gimp_curve_get_property (GObject    *object,
       break;
 
     case PROP_SAMPLES:
+      {
+        GValueArray *array = g_value_array_new (curve->n_samples);
+        GValue       v     = { 0, };
+        gint         i;
+
+        g_value_init (&v, G_TYPE_DOUBLE);
+
+        for (i = 0; i < curve->n_samples; i++)
+          {
+            g_value_set_double (&v, curve->samples[i]);
+            g_value_array_append (array, &v);
+          }
+
+        g_value_unset (&v);
+
+        g_value_take_boxed (value, array);
+      }
       break;
 
     default:
@@ -385,7 +459,13 @@ gimp_curve_deserialize (GimpConfig *config,
                         gint        nest_level,
                         gpointer    data)
 {
-  return gimp_config_deserialize_properties (config, scanner, nest_level);
+  gboolean success;
+
+  success = gimp_config_deserialize_properties (config, scanner, nest_level);
+
+  GIMP_CURVE (config)->identity = FALSE;
+
+  return success;
 }
 
 static gboolean
