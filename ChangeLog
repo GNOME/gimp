@@ -1,5 +1,12 @@
 2008-05-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpimagemaptool.c: made the lists of recent settings
+	persistent. Note that the settings of tools that modify multiple
+	channels or ranges are saved incompletely because their settings
+	still lack custom serialize() implementations. Work in progress.
+
+2008-05-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimptoolinfo.[ch]: add
 	gimp_tool_info_build_options_filename() which creates a filename
 	under $GIMPDIR/tool-options/ with an optional suffix.

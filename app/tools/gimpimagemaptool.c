@@ -328,6 +328,33 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
           GtkWidget *label;
           GtkWidget *combo;
 
+          if (gimp_container_num_children (klass->recent_settings) == 0)
+            {
+              gchar  *filename;
+              GError *error = NULL;
+
+              filename = gimp_tool_info_build_options_filename (tool->tool_info,
+                                                                ".settings");
+
+              if (tool->tool_info->gimp->be_verbose)
+                g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+
+              if (! gimp_config_deserialize_file (GIMP_CONFIG (klass->recent_settings),
+                                                  filename,
+                                                  NULL, &error))
+                {
+                  if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
+                    gimp_message (tool->tool_info->gimp, NULL, GIMP_MESSAGE_ERROR,
+                                  "%s", error->message);
+
+                  g_clear_error (&error);
+                }
+
+              gimp_list_reverse (GIMP_LIST (klass->recent_settings));
+
+              g_free (filename);
+            }
+
           hbox = gtk_hbox_new (FALSE, 4);
           gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,
                               FALSE, FALSE, 0);
@@ -648,6 +675,7 @@ gimp_image_map_tool_flush (GimpImageMap     *image_map,
 static void
 gimp_image_map_tool_add_recent (GimpImageMapTool *image_map_tool)
 {
+  GimpTool      *tool   = GIMP_TOOL (image_map_tool);
   GimpContainer *recent;
   GimpConfig    *current;
   GimpConfig    *config = NULL;
@@ -656,6 +684,8 @@ gimp_image_map_tool_add_recent (GimpImageMapTool *image_map_tool)
   struct tm      tm;
   gchar          buf[64];
   gchar         *name;
+  gchar         *filename;
+  GError        *error = NULL;
 
   recent  = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool)->recent_settings;
   current = GIMP_CONFIG (image_map_tool->config);
@@ -686,6 +716,25 @@ gimp_image_map_tool_add_recent (GimpImageMapTool *image_map_tool)
   name = g_locale_to_utf8 (buf, -1, NULL, NULL, NULL);
   gimp_object_set_name (GIMP_OBJECT (config), name);
   g_free (name);
+
+  filename = gimp_tool_info_build_options_filename (tool->tool_info,
+                                                    ".settings");
+
+  if (tool->tool_info->gimp->be_verbose)
+    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (recent),
+                                       filename,
+                                       "tool settings",
+                                       "end of tool settings",
+                                       NULL, &error))
+    {
+      gimp_message (tool->tool_info->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "%s", error->message);
+      g_clear_error (&error);
+    }
+
+  g_free (filename);
 }
 
 static void
