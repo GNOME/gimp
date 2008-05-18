@@ -1,3 +1,9 @@
+2008-05-18  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme.c: Reverting previous change.
+	I figured it would break something. It breaks the 'while' macro by
+	preventing use of a named let.
+
 2008-05-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpcurve.c: implement (de)serializing of the points

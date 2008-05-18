@@ -2780,8 +2780,6 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
                new_slot_in_env(sc, caar(x), car(y));
           }
           if (is_symbol(car(sc->code))) {    /* named let */
-               if (!is_pair(cadr(sc->code)))
-                    Error_1(sc, "Bad syntax of binding spec in let :", car(sc->code));
                for (x = cadr(sc->code), sc->args = sc->NIL; x != sc->NIL; x = cdr(x)) {
 
                     sc->args = cons(sc, caar(x), sc->args);
