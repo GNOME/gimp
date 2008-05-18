@@ -186,8 +186,8 @@ gimp_stroke_options_set_property (GObject      *object,
         GArray      *pattern;
 
         pattern = gimp_dash_pattern_from_value_array (value_array);
-        gimp_stroke_options_set_dash_pattern (options, GIMP_DASH_CUSTOM,
-                                              pattern);
+        gimp_stroke_options_take_dash_pattern (options, GIMP_DASH_CUSTOM,
+                                               pattern);
       }
       break;
 
@@ -247,7 +247,7 @@ gimp_stroke_options_get_property (GObject    *object,
 }
 
 /**
- * gimp_stroke_options_set_dash_pattern:
+ * gimp_stroke_options_take_dash_pattern:
  * @options: a #GimpStrokeOptions object
  * @preset: a value out of the #GimpDashPreset enum
  * @pattern: a #GArray or %NULL if @preset is not %GIMP_DASH_CUSTOM
@@ -258,9 +258,9 @@ gimp_stroke_options_get_property (GObject    *object,
  * of the passed pattern.
  */
 void
-gimp_stroke_options_set_dash_pattern (GimpStrokeOptions *options,
-                                      GimpDashPreset     preset,
-                                      GArray            *pattern)
+gimp_stroke_options_take_dash_pattern (GimpStrokeOptions *options,
+                                       GimpDashPreset     preset,
+                                       GArray            *pattern)
 {
   g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
   g_return_if_fail (preset == GIMP_DASH_CUSTOM || pattern == NULL);

@@ -1,5 +1,14 @@
 2008-05-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpstrokeoptions.[ch]: renamed public function
+	set_dash_pattern() to take_dash_pattern() to clarify memory
+	management of the passed GArray.
+
+	* app/widgets/gimpdasheditor.c
+	* app/widgets/gimpstrokeeditor.c: changed accordingly.
+
+2008-05-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpcurve.c: implement the GimpConfig interface and add
 	the code for equal(), reset() and copy() from GimpCurvesConfig.
 

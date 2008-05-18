@@ -479,8 +479,8 @@ update_options_from_segments (GimpDashEditor *editor)
                                                          editor->n_segments,
                                                          editor->dash_length);
 
-  gimp_stroke_options_set_dash_pattern (editor->stroke_options,
-                                        GIMP_DASH_CUSTOM, pattern);
+  gimp_stroke_options_take_dash_pattern (editor->stroke_options,
+                                         GIMP_DASH_CUSTOM, pattern);
 }
 
 static void

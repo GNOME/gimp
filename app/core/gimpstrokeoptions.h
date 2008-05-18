@@ -65,11 +65,11 @@ struct _GimpStrokeOptionsClass
 };
 
 
-GType  gimp_stroke_options_get_type         (void) G_GNUC_CONST;
+GType  gimp_stroke_options_get_type          (void) G_GNUC_CONST;
 
-void   gimp_stroke_options_set_dash_pattern (GimpStrokeOptions *options,
-                                             GimpDashPreset     preset,
-                                             GArray            *pattern);
+void   gimp_stroke_options_take_dash_pattern (GimpStrokeOptions *options,
+                                              GimpDashPreset     preset,
+                                              GArray            *pattern);
 
 
 #endif  /*  __GIMP_STROKE_OPTIONS_H__  */

@@ -382,7 +382,7 @@ gimp_stroke_editor_dash_preset (GtkWidget         *widget,
   if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value) &&
       value != GIMP_DASH_CUSTOM)
     {
-      gimp_stroke_options_set_dash_pattern (options, value, NULL);
+      gimp_stroke_options_take_dash_pattern (options, value, NULL);
     }
 }
 
