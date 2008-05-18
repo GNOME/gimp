@@ -1,3 +1,35 @@
+2008-05-18  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Merged the Polygon Select Tool capabilities with the Free Select
+	Tool. Among the things still to do is improved help texts, more
+	suitable graphics, and cursor mangement, but the core
+	functionality is in place. Thanks to Alexia Death for initial
+	testing. It will also be neccesary to do some work to adapt the
+	Foreground Select Tool to the new Free Select Tool implementation.
+
+	Quick instructions on how the tool works:
+
+	 o A click adds a polygonal segment, a drag adds a free-hand
+	   segment
+	 o Return-key commits, Escape-key cancels, Backspace-key removes
+	   last segment
+	 o You can grab and move segment vertices
+	 o You can cancel both a move, and the creation of a segment
+
+	* app/tools/gimpfreeselecttool.[ch]: More or less
+	reimplemented. We keep a sequential array of all the points in the
+	polygon (including the free segments), and we have another array
+	with point indices that we use to represent the segments. On top
+	of this we have a few helper functions that tries to abstract away
+	the pretty raw nature of the implementation.
+
+	* app/tools/gimpforegroundselecttool.[ch]: Keep track on its own
+	last_coord, and adjust to the new implementation of the Free
+	Select Tool. Still needs some work, for example handling that the
+	Free Select Tool now resets GimpTool::display.
+	(gimp_foreground_select_tool_key_press): Pass on key event to
+	parent class when appropriate. (Bails out too early though...)
+	
 2008-05-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/gimpcurvesconfig.c (gimp_curves_config_set_property):

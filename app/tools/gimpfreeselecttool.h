@@ -20,6 +20,8 @@
 #define __GIMP_FREE_SELECT_TOOL_H__
 
 
+#include "libgimpmath/gimpmath.h"
+
 #include "gimpselectiontool.h"
 
 
@@ -38,11 +40,46 @@ struct _GimpFreeSelectTool
 {
   GimpSelectionTool  parent_instance;
 
-  GimpCoords         last_coords;
+  /* Index of grabbed segment index. */
+  gint               grabbed_segment_index;
 
+  gboolean           button1_down;
+
+  /* We need to keep track of a number of points when we move a
+   * segment vertex
+   */
+  GimpVector2       *saved_points_lower_segment;
+  GimpVector2       *saved_points_higher_segment;
+  gint               n_saved_points_lower_segment;
+  gint               n_saved_points_higher_segment;
+
+  /* Keeps track wether or not a modification of the polygon has been
+   * made between _button_press and _button_release
+   */
+  gboolean           polygon_modified;
+
+  /* Point which is used to draw the polygon but which is not part of
+   * it yet
+   */
+  GimpVector2        pending_point;
+  gboolean           show_pending_point;
+
+  /* The points of the polygon */
   GimpVector2       *points;
-  gint               num_points;
-  gint               max_segs;
+  gint               max_n_points;
+
+  /* The number of points actually in use */
+  gint               n_points;
+
+
+  /* Any int array containing the indices for the points in the
+   * polygon that connects different segments together
+   */
+  gint              *segment_indices;
+  gint               max_n_segment_indices;
+
+  /* The number of segment indices actually in use */
+  gint               n_segment_indices;
 };
 
 struct _GimpFreeSelectToolClass

@@ -292,7 +292,7 @@ gimp_foreground_select_tool_oper_update (GimpTool        *tool,
   if (fg_select->mask && gimp_draw_tool_is_active (draw_tool))
     gimp_draw_tool_stop (draw_tool);
 
-  GIMP_FREE_SELECT_TOOL (tool)->last_coords = *coords;
+  fg_select->last_coords = *coords;
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
@@ -396,20 +396,29 @@ gimp_foreground_select_tool_key_press (GimpTool    *tool,
   if (display != tool->display)
     return FALSE;
 
-  switch (kevent->keyval)
+  if (fg_select->state)
     {
-    case GDK_Return:
-    case GDK_KP_Enter:
-    case GDK_ISO_Enter:
-      gimp_foreground_select_tool_apply (fg_select, display);
-      return TRUE;
+      switch (kevent->keyval)
+        {
+        case GDK_Return:
+        case GDK_KP_Enter:
+        case GDK_ISO_Enter:
+          gimp_foreground_select_tool_apply (fg_select, display);
+          return TRUE;
 
-    case GDK_Escape:
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
-      return TRUE;
+        case GDK_Escape:
+          gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+          return TRUE;
 
-    default:
-      return FALSE;
+        default:
+          return FALSE;
+        }
+    }
+  else
+    {
+      return GIMP_TOOL_CLASS (parent_class)->key_press (tool,
+                                                        kevent,
+                                                        display);
     }
 }
 
@@ -434,7 +443,7 @@ gimp_foreground_select_tool_button_press (GimpTool        *tool,
 
       gimp_tool_control_activate (tool->control);
 
-      GIMP_FREE_SELECT_TOOL (tool)->last_coords = *coords;
+      fg_select->last_coords = *coords;
 
       g_return_if_fail (fg_select->stroke == NULL);
       fg_select->stroke = g_array_new (FALSE, FALSE, sizeof (GimpVector2));
@@ -505,7 +514,7 @@ gimp_foreground_select_tool_motion (GimpTool        *tool,
 
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-      GIMP_FREE_SELECT_TOOL (tool)->last_coords = *coords;
+      fg_select->last_coords = *coords;
 
       if (last->x != (gint) coords->x || last->y != (gint) coords->y)
         {
@@ -567,10 +576,9 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 
   if (fg_select->mask)
     {
-      GimpFreeSelectTool *sel   = GIMP_FREE_SELECT_TOOL (tool);
       GimpDisplayShell   *shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
-      gint                x     = sel->last_coords.x;
-      gint                y     = sel->last_coords.y;
+      gint                x     = fg_select->last_coords.x;
+      gint                y     = fg_select->last_coords.y;
       gdouble             radius;
 
       radius = (options->stroke_width / shell->scale_y) / 2;
@@ -630,7 +638,9 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   scan_convert = gimp_scan_convert_new ();
 
   gimp_scan_convert_add_polyline (scan_convert,
-                                  free_sel->num_points, free_sel->points, TRUE);
+                                  free_sel->n_points,
+                                  free_sel->points,
+                                  TRUE);
 
   mask = gimp_channel_new (image,
                            gimp_image_get_width (image),
