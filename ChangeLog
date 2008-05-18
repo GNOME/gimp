@@ -1,5 +1,13 @@
 2008-05-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpcurve.c: implement the GimpConfig interface and add
+	the code for equal(), reset() and copy() from GimpCurvesConfig.
+
+	* app/gegl/gimpcurvesconfig.c: remove the copied code and use
+	GimpConfig methods to compare, reset and copy curve objects.
+
+2008-05-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimpbrushcore.c: clean up last patch.
 
 2008-05-18  Martin Nordholts  <martinn@svn.gnome.org>

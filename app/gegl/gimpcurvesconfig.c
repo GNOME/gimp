@@ -233,13 +233,8 @@ gimp_curves_config_equal (GimpConfig *a,
 
       if (a_curve && b_curve)
         {
-          if (a_curve->curve_type != b_curve->curve_type)
-            return FALSE;
-
-          if (memcmp (a_curve->points, b_curve->points,
-                      sizeof (GimpVector2) * b_curve->n_points) ||
-              memcmp (a_curve->samples, b_curve->samples,
-                      sizeof (gdouble) * b_curve->n_samples))
+          if (! gimp_config_is_equal_to (GIMP_CONFIG (a_curve),
+                                         GIMP_CONFIG (b_curve)))
             return FALSE;
         }
       else if (a_curve || b_curve)
@@ -283,20 +278,9 @@ gimp_curves_config_copy (GimpConfig  *src,
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
     {
-      GimpCurve *src_curve  = src_config->curve[channel];
-      GimpCurve *dest_curve = dest_config->curve[channel];
-
-      if (src_curve && dest_curve)
-        {
-          gimp_config_sync (G_OBJECT (src_curve), G_OBJECT (dest_curve), 0);
-
-          memcpy (dest_curve->points, src_curve->points,
-                  sizeof (GimpVector2) * src_curve->n_points);
-          memcpy (dest_curve->samples, src_curve->samples,
-                  sizeof (gdouble) * src_curve->n_samples);
-
-          dest_curve->identity = src_curve->identity;
-        }
+      gimp_config_copy (GIMP_CONFIG (src_config->curve[channel]),
+                        GIMP_CONFIG (dest_config->curve[channel]),
+                        flags);
     }
 
   g_object_notify (G_OBJECT (dest), "curve");
@@ -323,7 +307,7 @@ gimp_curves_config_reset_channel (GimpCurvesConfig *config)
 {
   g_return_if_fail (GIMP_IS_CURVES_CONFIG (config));
 
-  gimp_curve_reset (config->curve[config->channel], TRUE);
+  gimp_config_reset (GIMP_CONFIG (config->curve[config->channel]));
 }
 
 #define GIMP_CURVE_N_CRUFT_POINTS 17
