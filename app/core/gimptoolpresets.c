@@ -200,25 +200,6 @@ gimp_tool_presets_notify (GimpToolPresets *presets)
   g_signal_emit (presets, gimp_tool_presets_signals[CHANGED], 0);
 }
 
-static gchar *
-gimp_tool_presets_build_filename (GimpToolPresets *presets)
-{
-  const gchar *name;
-  gchar       *filename;
-  gchar       *basename;
-
-  name = gimp_object_get_name (GIMP_OBJECT (presets->tool_info));
-
-  basename = g_strconcat (name, ".presets", NULL);
-  filename = g_build_filename (gimp_directory (),
-                               "tool-options",
-                               basename,
-                               NULL);
-  g_free (basename);
-
-  return filename;
-}
-
 GimpToolPresets *
 gimp_tool_presets_new (GimpToolInfo *tool_info)
 {
@@ -264,7 +245,8 @@ gimp_tool_presets_save (GimpToolPresets  *presets,
 
   gimp = presets->tool_info->gimp;
 
-  filename = gimp_tool_presets_build_filename (presets);
+  filename = gimp_tool_info_build_options_filename (presets->tool_info,
+                                                    ".presets");
 
   if (! gimp_container_is_empty (GIMP_CONTAINER (presets)))
     {
@@ -320,7 +302,8 @@ gimp_tool_presets_load (GimpToolPresets  *presets,
 
   gimp_container_clear (GIMP_CONTAINER (presets));
 
-  filename = gimp_tool_presets_build_filename (presets);
+  filename = gimp_tool_info_build_options_filename (presets->tool_info,
+                                                    ".presets");
 
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));

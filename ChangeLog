@@ -1,5 +1,15 @@
 2008-05-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimptoolinfo.[ch]: add
+	gimp_tool_info_build_options_filename() which creates a filename
+	under $GIMPDIR/tool-options/ with an optional suffix.
+
+	* app/core/gimptooloptions.c
+	* app/core/gimptoolpresets.c: use it and remove own build_filename()
+	functions.
+
+2008-05-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpstrokeoptions.[ch]: renamed public function
 	set_dash_pattern() to take_dash_pattern() to clarify memory
 	management of the passed GArray.
