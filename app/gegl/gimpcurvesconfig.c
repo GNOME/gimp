@@ -204,6 +204,8 @@ gimp_curves_config_set_property (GObject      *object,
                     sizeof (GimpVector2) * src_curve->n_points);
             memcpy (dest_curve->samples, src_curve->samples,
                     sizeof (gdouble) * src_curve->n_samples);
+
+            dest_curve->identity = src_curve->identity;
           }
       }
       break;
