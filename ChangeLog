@@ -1,3 +1,11 @@
+2008-05-19  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/layer.pdb: corrected description of
+	gimp-layer-set-show-mask procedure.
+
+	* app/pdb/layer-cmds.c
+	* libgimp/gimplayer_pdb.c: regenerated.
+
 2008-05-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpcurve.c
