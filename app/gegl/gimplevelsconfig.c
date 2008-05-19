@@ -710,14 +710,16 @@ gimp_levels_config_load_cruft (GimpLevelsConfig  *config,
 }
 
 gboolean
-gimp_levels_config_save_cruft (GimpLevelsConfig *config,
-                               gpointer          fp)
+gimp_levels_config_save_cruft (GimpLevelsConfig  *config,
+                               gpointer           fp,
+                               GError           **error)
 {
   FILE *file = fp;
   gint  i;
 
   g_return_val_if_fail (GIMP_IS_LEVELS_CONFIG (config), FALSE);
   g_return_val_if_fail (file != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   fprintf (file, "# GIMP Levels File\n");
 

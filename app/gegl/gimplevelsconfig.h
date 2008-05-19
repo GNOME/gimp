@@ -80,7 +80,8 @@ gboolean   gimp_levels_config_load_cruft       (GimpLevelsConfig      *config,
                                                 gpointer               fp,
                                                 GError               **error);
 gboolean   gimp_levels_config_save_cruft       (GimpLevelsConfig      *config,
-                                                gpointer               fp);
+                                                gpointer               fp,
+                                                GError               **error);
 
 
 /*  temp cruft  */

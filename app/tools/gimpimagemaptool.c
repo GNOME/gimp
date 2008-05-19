@@ -634,32 +634,64 @@ gimp_image_map_tool_create_map (GimpImageMapTool *tool)
 }
 
 static gboolean
-gimp_image_map_tool_settings_load (GimpImageMapTool  *tool,
-                                   gpointer           file,
-                                   GError           **error)
+gimp_image_map_tool_settings_load (GimpImageMapTool *tool,
+                                   const gchar      *filename)
 {
   GimpImageMapToolClass *tool_class = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool);
+  GError                *error      = NULL;
 
   g_return_val_if_fail (tool_class->settings_load != NULL, FALSE);
 
-  if (tool_class->settings_load (tool, file, error))
+  if (! tool_class->settings_load (tool, filename, &error))
     {
-      gimp_image_map_tool_preview (tool);
-      return TRUE;
+      gimp_message (GIMP_TOOL (tool)->tool_info->gimp, G_OBJECT (tool->shell),
+                    GIMP_MESSAGE_ERROR, error->message);
+      g_clear_error (&error);
+
+      return FALSE;
     }
 
-  return FALSE;
+  gimp_image_map_tool_preview (tool);
+
+  g_object_set (GIMP_TOOL_GET_OPTIONS (tool),
+                "settings", filename,
+                NULL);
+
+  return TRUE;
 }
 
 static gboolean
 gimp_image_map_tool_settings_save (GimpImageMapTool *tool,
-                                   gpointer          file)
+                                   const gchar      *filename)
 {
   GimpImageMapToolClass *tool_class = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool);
+  GError                *error      = NULL;
+  gchar                 *display_name;
 
   g_return_val_if_fail (tool_class->settings_save != NULL, FALSE);
 
-  return tool_class->settings_save (tool, file);
+  if (! tool_class->settings_save (tool, filename, &error))
+    {
+      gimp_message (GIMP_TOOL (tool)->tool_info->gimp, G_OBJECT (tool->shell),
+                    GIMP_MESSAGE_ERROR, error->message);
+      g_clear_error (&error);
+
+      return FALSE;
+    }
+
+  display_name = g_filename_display_name (filename);
+  gimp_message (GIMP_TOOL (tool)->tool_info->gimp,
+                G_OBJECT (GIMP_TOOL (tool)->display),
+                GIMP_MESSAGE_INFO,
+                _("Settings saved to '%s'"),
+                display_name);
+  g_free (display_name);
+
+  g_object_set (GIMP_TOOL_GET_OPTIONS (tool),
+                "settings", filename,
+                NULL);
+
+  return TRUE;
 }
 
 static void
@@ -870,61 +902,6 @@ gimp_image_map_tool_preview (GimpImageMapTool *image_map_tool)
 }
 
 static void
-gimp_image_map_tool_load_save (GimpImageMapTool *tool,
-                               const gchar      *filename,
-                               gboolean          save)
-{
-  FILE   *file;
-  GError *error = NULL;
-
-  file = g_fopen (filename, save ? "wt" : "rt");
-
-  if (! file)
-    {
-      const gchar *format = save ?
-        _("Could not open '%s' for writing: %s") :
-        _("Could not open '%s' for reading: %s");
-
-      gimp_message (GIMP_TOOL (tool)->tool_info->gimp, G_OBJECT (tool->shell),
-                    GIMP_MESSAGE_ERROR,
-                    format,
-                    gimp_filename_to_utf8 (filename),
-                    g_strerror (errno));
-      return;
-    }
-
-  g_object_set (GIMP_TOOL_GET_OPTIONS (tool),
-                "settings", filename,
-                NULL);
-
-  if (save)
-    {
-      if (gimp_image_map_tool_settings_save (tool, file))
-        {
-          gchar *name = g_filename_display_name (filename);
-
-          gimp_message (GIMP_TOOL (tool)->tool_info->gimp,
-                        G_OBJECT (GIMP_TOOL (tool)->display),
-                        GIMP_MESSAGE_INFO,
-                        _("Settings saved to '%s'"),
-                        name);
-          g_free (name);
-        }
-    }
-  else if (! gimp_image_map_tool_settings_load (tool, file, &error))
-    {
-      gimp_message (GIMP_TOOL (tool)->tool_info->gimp, G_OBJECT (tool->shell),
-                    GIMP_MESSAGE_ERROR,
-                    _("Error reading '%s': %s"),
-                    gimp_filename_to_utf8 (filename),
-                    error->message);
-      g_error_free (error);
-    }
-
-  fclose (file);
-}
-
-static void
 settings_dialog_response (GtkWidget        *dialog,
                           gint              response_id,
                           GimpImageMapTool *tool)
@@ -939,7 +916,10 @@ settings_dialog_response (GtkWidget        *dialog,
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      gimp_image_map_tool_load_save (tool, filename, save);
+      if (save)
+        gimp_image_map_tool_settings_save (tool, filename);
+      else
+        gimp_image_map_tool_settings_load (tool, filename);
 
       g_free (filename);
     }
@@ -976,7 +956,7 @@ gimp_image_map_tool_load_ext_clicked (GtkWidget        *widget,
 
       if (filename)
         {
-          gimp_image_map_tool_load_save (tool, filename, FALSE);
+          gimp_image_map_tool_settings_load (tool, filename);
           g_free (filename);
         }
       else
@@ -1010,7 +990,7 @@ gimp_image_map_tool_save_ext_clicked (GtkWidget        *widget,
 
       if (filename)
         {
-          gimp_image_map_tool_load_save (tool, filename, TRUE);
+          gimp_image_map_tool_settings_save (tool, filename);
           g_free (filename);
         }
       else

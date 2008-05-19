@@ -1,3 +1,22 @@
+2008-05-19  Michael Natterer  <mitch@gimp.org>
+
+	Unabstract image map tool settings load/save a bit before it's
+	turned into generic load/save for all image map tools:
+
+	* app/gegl/gimpcurvesconfig.[ch]
+	* app/gegl/gimplevelsconfig.[ch]: add GError** to save_cruft()
+	functions.
+
+	* app/tools/gimpimagemaptool.[ch]: add GError to
+	::settings_save(), changed "file" parameter of ::settings_load()
+	and ::settings_save() to "filename", removed
+	gimp_image_map_tool_load_save() utility function and moved the
+	code to the settings_load() and settings_save() utility functions.
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c: changed accordingly. Open and close
+	the settings files here.
+
 2008-05-19  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/psd-save.c (save_layer_and_mask): corrected

@@ -79,10 +79,11 @@ struct _GimpImageMapToolClass
   void       (* reset)         (GimpImageMapTool  *image_map_tool);
 
   gboolean   (* settings_load) (GimpImageMapTool  *image_map_tool,
-                                gpointer           file,
+                                const gchar       *filename,
                                 GError           **error);
   gboolean   (* settings_save) (GimpImageMapTool  *image_map_tool,
-                                gpointer           file);
+                                const gchar       *filename,
+                                GError           **error);
 };
 
 

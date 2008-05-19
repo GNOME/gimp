@@ -18,9 +18,13 @@
 
 #include "config.h"
 
+#include <errno.h>
+
+#include <glib/gstdio.h>
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -91,10 +95,11 @@ static void       gimp_curves_tool_map            (GimpImageMapTool     *image_m
 static void       gimp_curves_tool_dialog         (GimpImageMapTool     *image_map_tool);
 static void       gimp_curves_tool_reset          (GimpImageMapTool     *image_map_tool);
 static gboolean   gimp_curves_tool_settings_load  (GimpImageMapTool     *image_map_tool,
-                                                   gpointer              fp,
+                                                   const gchar          *filename,
                                                    GError              **error);
 static gboolean   gimp_curves_tool_settings_save  (GimpImageMapTool     *image_map_tool,
-                                                   gpointer              fp);
+                                                   const gchar          *filename,
+                                                   GError              **error);
 
 static void       gimp_curves_tool_config_notify  (GObject              *object,
                                                    GParamSpec           *pspec,
@@ -596,21 +601,56 @@ gimp_curves_tool_reset (GimpImageMapTool *image_map_tool)
 
 static gboolean
 gimp_curves_tool_settings_load (GimpImageMapTool  *image_map_tool,
-                                gpointer           fp,
+                                const gchar       *filename,
                                 GError           **error)
 {
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (image_map_tool);
+  FILE           *file;
+  gboolean        success;
 
-  return gimp_curves_config_load_cruft (tool->config, fp, error);
+  file = g_fopen (filename, "rt");
+
+  if (! file)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename),
+                   g_strerror (errno));
+      return FALSE;
+    }
+
+  success = gimp_curves_config_load_cruft (tool->config, file, error);
+
+  fclose (file);
+
+  return success;
 }
 
 static gboolean
-gimp_curves_tool_settings_save (GimpImageMapTool *image_map_tool,
-                                gpointer          fp)
+gimp_curves_tool_settings_save (GimpImageMapTool  *image_map_tool,
+                                const gchar       *filename,
+                                GError           **error)
 {
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (image_map_tool);
+  FILE           *file;
+  gboolean        success;
 
-  return gimp_curves_config_save_cruft (tool->config, fp);
+  file = g_fopen (filename, "wt");
+
+  if (! file)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename),
+                   g_strerror (errno));
+      return FALSE;
+    }
+
+  success = gimp_curves_config_save_cruft (tool->config, file, error);
+
+  fclose (file);
+
+  return success;
 }
 
 static void

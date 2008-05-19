@@ -433,14 +433,16 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
 }
 
 gboolean
-gimp_curves_config_save_cruft (GimpCurvesConfig *config,
-                               gpointer          fp)
+gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
+                               gpointer           fp,
+                               GError           **error)
 {
   FILE *file = fp;
   gint  i;
 
   g_return_val_if_fail (GIMP_IS_CURVES_CONFIG (config), FALSE);
   g_return_val_if_fail (file != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   fprintf (file, "# GIMP Curves File\n");
 
