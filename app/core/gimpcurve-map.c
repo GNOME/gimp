@@ -107,7 +107,7 @@ gimp_curve_map_pixels (GimpCurve *curve_colors,
                                      curve_alpha))
     {
     case CURVE_NONE:
-      memcpy (dest, src, 4 * sizeof (gfloat));
+      memcpy (dest, src, samples * 4 * sizeof (gfloat));
       break;
 
     case CURVE_COLORS:

@@ -1,3 +1,8 @@
+2008-05-19  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpcurve-map.c (gimp_curve_map_pixels): fixed the call
+	to memcpy() in the CURVE_NONE case.
+
 2008-05-18  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.c: Reverting previous change.
