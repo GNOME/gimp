@@ -1,5 +1,10 @@
 2008-05-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/psd-save.c (save_layer_and_mask): corrected
+	"layer mask disabled" flag in layer mask data section (bug #526811).
+
+2008-05-19  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimpperspectiveclone.c: removed unused import.
 
 2008-05-19  Sven Neumann  <sven@gimp.org>
