@@ -580,11 +580,11 @@ gimp_curve_reset (GimpCurve *curve,
       g_object_notify (G_OBJECT (curve), "curve-type");
     }
 
+  curve->identity = TRUE;
+
   g_object_thaw_notify (G_OBJECT (curve));
 
   gimp_data_dirty (GIMP_DATA (curve));
-
-  curve->identity = TRUE;
 }
 
 void
@@ -675,6 +675,9 @@ gimp_curve_set_n_points (GimpCurve *curve,
 
       g_object_notify (G_OBJECT (curve), "points");
 
+      if (curve->curve_type == GIMP_CURVE_SMOOTH)
+        curve->identity = TRUE;
+
       g_object_thaw_notify (G_OBJECT (curve));
     }
 }
@@ -708,6 +711,9 @@ gimp_curve_set_n_samples (GimpCurve *curve,
         curve->samples[i] = (gdouble) i / (gdouble) (curve->n_samples - 1);
 
       g_object_notify (G_OBJECT (curve), "samples");
+
+      if (curve->curve_type == GIMP_CURVE_FREE)
+        curve->identity = TRUE;
 
       g_object_thaw_notify (G_OBJECT (curve));
     }
@@ -912,10 +918,6 @@ gimp_curve_calculate (GimpCurve *curve)
 
           for (i = boundary; i < curve->n_samples; i++)
             curve->samples[i] = point.y;
-        }
-      else
-        {
-          curve->identity = TRUE;
         }
 
       for (i = 0; i < num_pts - 1; i++)

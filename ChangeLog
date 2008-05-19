@@ -1,3 +1,12 @@
+2008-05-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcurve.c
+	(gimp_curve_set_n_points)
+	(gimp_curve_set_n_samples): set "identity" to TRUE if appropriate.
+
+	(gimp_curve_calculate): don't set it to TRUE when there are no
+	control points.
+
 2008-05-19  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcurve-map.c (gimp_curve_map_pixels): fixed the call
