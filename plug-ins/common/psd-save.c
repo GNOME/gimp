@@ -1129,18 +1129,20 @@ save_layer_and_mask (FILE   *fd,
       mask = gimp_layer_get_mask (PSDImageData.lLayers[i]);
       if (mask  >= 0)
         {
+          gboolean apply = gimp_layer_get_apply_mask (PSDImageData.lLayers[i]);
+
           IFDBG printf ("\t\tLayer mask size: %d\n", 20);
-          write_gint32  (fd, 20,                        "Layer mask size");
-          write_gint32  (fd, 0,                         "Layer mask top");
-          write_gint32  (fd, 0,                         "Layer mask left");
-          write_gint32  (fd, gimp_drawable_height(mask),"Layer mask bottom");
-          write_gint32  (fd, gimp_drawable_width(mask), "Layer mask right");
-          write_gchar  (fd, 0,                         "lmask default color");
-          flags = (1                                        | /* relative */
-                   (gimp_layer_get_apply_mask(PSDImageData.lLayers[i]) << 1) | /* disabled?*/
-                   (0 << 2)                                   /* invert   */);
-          write_gchar  (fd, flags,                      "layer mask flags");
-          write_gint16 (fd, 0,                          "Layer mask Padding");
+          write_gint32 (fd, 20,                        "Layer mask size");
+          write_gint32 (fd, 0,                         "Layer mask top");
+          write_gint32 (fd, 0,                         "Layer mask left");
+          write_gint32 (fd, gimp_drawable_height(mask),"Layer mask bottom");
+          write_gint32 (fd, gimp_drawable_width(mask), "Layer mask right");
+          write_gchar  (fd, 0,                         "Layer mask default color");
+          flags = (1                    |  /* position relative to layer */
+                   (apply ? 0 : 1) << 1 |  /* layer mask disabled        */
+                   0 << 2);                /* invert layer mask          */
+          write_gchar  (fd, flags,                     "Layer mask flags");
+          write_gint16 (fd, 0,                         "Layer mask Padding");
         }
       else
         {
