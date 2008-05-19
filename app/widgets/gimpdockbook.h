@@ -60,20 +60,20 @@ struct _GimpDockbookClass
 };
 
 
-GType       gimp_dockbook_get_type       (void) G_GNUC_CONST;
+GType       gimp_dockbook_get_type          (void) G_GNUC_CONST;
 
-GtkWidget * gimp_dockbook_new            (GimpMenuFactory  *menu_factory);
+GtkWidget * gimp_dockbook_new               (GimpMenuFactory  *menu_factory);
 
-void        gimp_dockbook_add            (GimpDockbook     *dockbook,
-                                          GimpDockable     *dockable,
-                                          gint              position);
-void        gimp_dockbook_remove         (GimpDockbook     *dockbook,
-                                          GimpDockable     *dockable);
+void        gimp_dockbook_add               (GimpDockbook     *dockbook,
+                                             GimpDockable     *dockable,
+                                             gint              position);
+void        gimp_dockbook_remove            (GimpDockbook     *dockbook,
+                                             GimpDockable     *dockable);
 
-GtkWidget * gimp_dockbook_get_tab_widget (GimpDockbook     *dockbook,
-                                          GimpDockable     *dockable);
-gboolean    gimp_dockbook_drop_dockable  (GimpDockbook     *dockbook,
-                                          GtkWidget        *drag_source);
+GtkWidget * gimp_dockbook_create_tab_widget (GimpDockbook     *dockbook,
+                                             GimpDockable     *dockable);
+gboolean    gimp_dockbook_drop_dockable     (GimpDockbook     *dockbook,
+                                             GtkWidget        *drag_source);
 
 
 #endif /* __GIMP_DOCKBOOK_H__ */

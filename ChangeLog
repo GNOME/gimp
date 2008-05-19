@@ -1,3 +1,24 @@
+2008-05-19  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdockable.[ch]
+	* app/widgets/gimpdockbook.[ch]: added a "locked" propery to
+	GimpDockable. A locked dockable cannot be moved by drag-n-drop.
+	Allows users to protect their dockables from accidental changes,
+	mainly when working with a tablet.
+
+	* app/widgets/gimpsessioninfo-dockable.[ch]: store the "locked"
+	property in the session info.
+
+	* app/actions/dockable-actions.c
+	* app/actions/dockable-commands.[ch]: added an action for toggling
+	the "locked" state.
+
+	* app/widgets/gimphelp-ids.h: new help-id "gimp-dock-tab-lock".
+
+	* menus/dockable-menu.xml.in: show the new menu item.
+
+	* app/actions/plug-in-actions.c: formatting.
+
 2008-05-19  Michael Natterer  <mitch@gimp.org>
 
 	Unabstract image map tool settings load/save a bit before it's

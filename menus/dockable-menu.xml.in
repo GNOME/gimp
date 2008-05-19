@@ -9,6 +9,7 @@
     </menu>
     <menuitem action="dockable-close-tab" />
     <menuitem action="dockable-detach-tab" />
+    <menuitem action="dockable-lock-tab" />
     <separator />
     <menu action="dockable-preview-size-menu">
       <menuitem action="dockable-preview-size-tiny" />

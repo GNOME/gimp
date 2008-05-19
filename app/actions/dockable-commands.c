@@ -40,6 +40,9 @@
 #include "dockable-commands.h"
 
 
+static GimpDockable * dockable_get_current (GimpDockbook *dockbook);
+
+
 /*  public functions  */
 
 void
@@ -83,13 +86,7 @@ dockable_close_tab_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
-  GimpDockable *dockable;
-  gint          page_num;
-
-  page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
-
-  dockable = (GimpDockable *)
-    gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
+  GimpDockable *dockable = dockable_get_current (dockbook);
 
   if (dockable)
     gimp_dockbook_remove (dockbook, dockable);
@@ -100,16 +97,25 @@ dockable_detach_tab_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
-  GimpDockable *dockable;
-  gint          page_num;
-
-  page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
-
-  dockable = (GimpDockable *)
-    gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
+  GimpDockable *dockable = dockable_get_current (dockbook);
 
   if (dockable)
     gimp_dockable_detach (dockable);
+}
+
+void
+dockable_lock_tab_cmd_callback (GtkAction *action,
+                                gpointer   data)
+{
+  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
+  GimpDockable *dockable = dockable_get_current (dockbook);
+
+  if (dockable)
+    {
+      gboolean lock = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+      gimp_dockable_set_locked (dockable, lock);
+    }
 }
 
 void
@@ -219,16 +225,10 @@ dockable_view_size_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
-  GimpDockable *dockable;
+  GimpDockable *dockable = dockable_get_current (dockbook);
   gint          view_size;
-  gint          page_num;
 
   view_size = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
-
-  page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
-
-  dockable = (GimpDockable *)
-    gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
 
   if (dockable)
     {
@@ -253,17 +253,11 @@ dockable_tab_style_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
-  GimpDockable *dockable;
+  GimpDockable *dockable = dockable_get_current (dockbook);
   GimpTabStyle  tab_style;
-  gint          page_num;
 
   tab_style = (GimpTabStyle)
     gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
-
-  page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
-
-  dockable = (GimpDockable *)
-    gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
 
   if (dockable && dockable->tab_style != tab_style)
     {
@@ -271,7 +265,7 @@ dockable_tab_style_cmd_callback (GtkAction *action,
 
       gimp_dockable_set_tab_style (dockable, tab_style);
 
-      tab_widget = gimp_dockbook_get_tab_widget (dockbook, dockable);
+      tab_widget = gimp_dockbook_create_tab_widget (dockbook, dockable);
 
       gtk_notebook_set_tab_label (GTK_NOTEBOOK (dockbook),
                                   GTK_WIDGET (dockable),
@@ -284,13 +278,7 @@ dockable_show_button_bar_cmd_callback (GtkAction *action,
                                        gpointer   data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
-  GimpDockable *dockable;
-  gint          page_num;
-
-  page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
-
-  dockable = (GimpDockable *)
-    gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
+  GimpDockable *dockable = dockable_get_current (dockbook);
 
   if (dockable)
     {
@@ -302,4 +290,13 @@ dockable_show_button_bar_cmd_callback (GtkAction *action,
 
       gimp_docked_set_show_button_bar (docked, show);
     }
+}
+
+static GimpDockable *
+dockable_get_current (GimpDockbook *dockbook)
+{
+  gint page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
+
+  return (GimpDockable *) gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook),
+                                                     page_num);
 }

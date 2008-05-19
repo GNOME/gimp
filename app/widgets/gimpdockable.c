@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -36,12 +38,27 @@
 #include "gimpdockbook.h"
 #include "gimpdocked.h"
 #include "gimphelp-ids.h"
+#include "gimpsessioninfo-aux.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_LOCKED
+};
+
+static void       gimp_dockable_set_property      (GObject        *object,
+                                                   guint           property_id,
+                                                   const GValue   *value,
+                                                   GParamSpec     *pspec);
+static void       gimp_dockable_get_property      (GObject        *object,
+                                                   guint           property_id,
+                                                   GValue         *value,
+                                                   GParamSpec     *pspec);
 static void       gimp_dockable_destroy           (GtkObject      *object);
 static void       gimp_dockable_size_request      (GtkWidget      *widget,
                                                    GtkRequisition *requisition);
@@ -76,6 +93,8 @@ static void       gimp_dockable_forall            (GtkContainer   *container,
                                                    GtkCallback     callback,
                                                    gpointer        callback_data);
 
+static void       gimp_dockable_cursor_setup      (GimpDockable   *dockable);
+
 static void       gimp_dockable_get_title_area    (GimpDockable   *dockable,
                                                    GdkRectangle   *area);
 static void       gimp_dockable_clear_title_area  (GimpDockable   *dockable);
@@ -100,11 +119,15 @@ static const GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_DIALOG };
 static void
 gimp_dockable_class_init (GimpDockableClass *klass)
 {
-  GtkObjectClass    *object_class    = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass    *widget_class    = GTK_WIDGET_CLASS (klass);
-  GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
+  GObjectClass      *object_class     = G_OBJECT_CLASS (klass);
+  GtkObjectClass    *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass    *widget_class     = GTK_WIDGET_CLASS (klass);
+  GtkContainerClass *container_class  = GTK_CONTAINER_CLASS (klass);
 
-  object_class->destroy       = gimp_dockable_destroy;
+  object_class->set_property  = gimp_dockable_set_property;
+  object_class->get_property  = gimp_dockable_get_property;
+
+  gtk_object_class->destroy   = gimp_dockable_destroy;
 
   widget_class->size_request  = gimp_dockable_size_request;
   widget_class->size_allocate = gimp_dockable_size_allocate;
@@ -121,6 +144,11 @@ gimp_dockable_class_init (GimpDockableClass *klass)
   container_class->remove     = gimp_dockable_remove;
   container_class->child_type = gimp_dockable_child_type;
   container_class->forall     = gimp_dockable_forall;
+
+  g_object_class_install_property (object_class, PROP_LOCKED,
+                                   g_param_spec_boolean ("locked", NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("content-border",
@@ -175,7 +203,7 @@ gimp_dockable_init (GimpDockable *dockable)
                      dialog_target_table, G_N_ELEMENTS (dialog_target_table),
                      GDK_ACTION_MOVE);
 
-  /*  Filter out all button_press events not coming from the event window
+  /*  Filter out all button-press events not coming from the event window
       over the title area.  This keeps events that originate from widgets
       in the dockable to start a drag.
    */
@@ -185,6 +213,44 @@ gimp_dockable_init (GimpDockable *dockable)
   g_signal_connect (dockable, "button-release-event",
                     G_CALLBACK (gimp_dockable_button_release),
                     NULL);
+}
+
+static void
+gimp_dockable_set_property (GObject      *object,
+                            guint         property_id,
+                            const GValue *value,
+                            GParamSpec   *pspec)
+{
+  GimpDockable *dockable = GIMP_DOCKABLE (object);
+
+  switch (property_id)
+    {
+    case PROP_LOCKED:
+      gimp_dockable_set_locked (dockable, g_value_get_boolean (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_dockable_get_property (GObject    *object,
+                            guint       property_id,
+                            GValue     *value,
+                            GParamSpec *pspec)
+{
+  GimpDockable *dockable = GIMP_DOCKABLE (object);
+
+  switch (property_id)
+    {
+    case PROP_LOCKED:
+      g_value_set_boolean (value, dockable->locked);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -344,7 +410,6 @@ gimp_dockable_realize (GtkWidget *widget)
     {
       GdkWindowAttr  attributes;
       GdkRectangle   area;
-      GdkCursor     *cursor;
 
       gimp_dockable_get_title_area (dockable, &area);
 
@@ -367,12 +432,9 @@ gimp_dockable_realize (GtkWidget *widget)
                                                 GDK_WA_NOREDIR));
 
       gdk_window_set_user_data (dockable->title_window, widget);
-
-      cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
-                                           GDK_HAND2);
-      gdk_window_set_cursor (dockable->title_window, cursor);
-      gdk_cursor_unref (cursor);
     }
+
+  gimp_dockable_cursor_setup (dockable);
 }
 
 static void
@@ -742,6 +804,7 @@ gimp_dockable_new (const gchar *name,
   return GTK_WIDGET (dockable);
 }
 
+
 void
 gimp_dockable_set_aux_info (GimpDockable *dockable,
                             GList        *aux_info)
@@ -770,6 +833,32 @@ gimp_dockable_get_aux_info (GimpDockable *dockable)
 
   return NULL;
 }
+
+
+void
+gimp_dockable_set_locked (GimpDockable *dockable,
+                          gboolean      lock)
+{
+  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
+
+  if (dockable->locked != lock)
+    {
+      dockable->locked = lock ? TRUE : FALSE;
+
+      gimp_dockable_cursor_setup (dockable);
+
+      g_object_notify (G_OBJECT (dockable), "locked");
+    }
+}
+
+gboolean
+gimp_dockable_is_locked (GimpDockable *dockable)
+{
+  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), FALSE);
+
+  return dockable->locked;
+}
+
 
 void
 gimp_dockable_set_tab_style (GimpDockable *dockable,
@@ -939,7 +1028,34 @@ gimp_dockable_blink_cancel (GimpDockable *dockable)
     }
 }
 
+
 /*  private functions  */
+
+static void
+gimp_dockable_cursor_setup (GimpDockable *dockable)
+{
+  if (! GTK_WIDGET_REALIZED (dockable))
+    return;
+
+  if (! dockable->title_window)
+    return;
+
+  /*  only show a hand cursor for unlocked dockables  */
+
+  if (gimp_dockable_is_locked (dockable))
+    {
+      gdk_window_set_cursor (dockable->title_window, NULL);
+    }
+  else
+    {
+      GdkDisplay *display = gtk_widget_get_display (GTK_WIDGET (dockable));
+      GdkCursor  *cursor;
+
+      cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
+      gdk_window_set_cursor (dockable->title_window, cursor);
+      gdk_cursor_unref (cursor);
+    }
+}
 
 static void
 gimp_dockable_get_title_area (GimpDockable *dockable,

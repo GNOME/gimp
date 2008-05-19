@@ -38,6 +38,7 @@
 
 enum
 {
+  SESSION_INFO_DOCKABLE_LOCKED,
   SESSION_INFO_DOCKABLE_TAB_STYLE,
   SESSION_INFO_DOCKABLE_VIEW_SIZE,
   SESSION_INFO_DOCKABLE_AUX
@@ -89,6 +90,12 @@ gimp_session_info_dockable_serialize (GimpConfigWriter        *writer,
   gimp_config_writer_open (writer, "dockable");
   gimp_config_writer_string (writer, info->identifier);
 
+  if (info->locked)
+    {
+      gimp_config_writer_open (writer, "locked");
+      gimp_config_writer_close (writer);
+    }
+
   enum_value = g_enum_get_value (enum_class, info->tab_style);
 
   if (enum_value)
@@ -126,6 +133,8 @@ gimp_session_info_dockable_deserialize (GScanner                 *scanner,
   g_return_val_if_fail (scanner != NULL, G_TOKEN_LEFT_PAREN);
   g_return_val_if_fail (dockable != NULL, G_TOKEN_LEFT_PAREN);
 
+  g_scanner_scope_add_symbol (scanner, scope, "locked",
+                              GINT_TO_POINTER (SESSION_INFO_DOCKABLE_LOCKED));
   g_scanner_scope_add_symbol (scanner, scope, "tab-style",
                               GINT_TO_POINTER (SESSION_INFO_DOCKABLE_TAB_STYLE));
   g_scanner_scope_add_symbol (scanner, scope, "preview-size",
@@ -156,6 +165,10 @@ gimp_session_info_dockable_deserialize (GScanner                 *scanner,
         case G_TOKEN_SYMBOL:
           switch (GPOINTER_TO_INT (scanner->value.v_symbol))
             {
+            case SESSION_INFO_DOCKABLE_LOCKED:
+              info->locked = TRUE;
+              break;
+
             case SESSION_INFO_DOCKABLE_TAB_STYLE:
               token = G_TOKEN_IDENTIFIER;
               if (g_scanner_peek_next_token (scanner) != token)
@@ -206,6 +219,7 @@ gimp_session_info_dockable_deserialize (GScanner                 *scanner,
 
   g_type_class_unref (enum_class);
 
+  g_scanner_scope_remove_symbol (scanner, scope, "locked");
   g_scanner_scope_remove_symbol (scanner, scope, "tab-style");
   g_scanner_scope_remove_symbol (scanner, scope, "preview-size");
   g_scanner_scope_remove_symbol (scanner, scope, "aux-info");
@@ -237,6 +251,7 @@ gimp_session_info_dockable_from_widget (GimpDockable *dockable)
 
   info = gimp_session_info_dockable_new ();
 
+  info->locked     = dockable->locked;
   info->identifier = g_strdup (entry->identifier);
   info->tab_style  = dockable->tab_style;
   info->view_size  = -1;
@@ -278,6 +293,7 @@ gimp_session_info_dockable_restore (GimpSessionInfoDockable *info,
 
   if (dockable)
     {
+      gimp_dockable_set_locked    (GIMP_DOCKABLE (dockable), info->locked);
       gimp_dockable_set_tab_style (GIMP_DOCKABLE (dockable), info->tab_style);
 
       if (info->aux_info)

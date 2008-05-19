@@ -506,8 +506,10 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
       gimp_action_group_set_action_label (group, "plug-in-repeat", repeat);
       gimp_action_group_set_action_label (group, "plug-in-reshow", reshow);
 
-      gimp_action_group_set_action_sensitive (group, "plug-in-repeat", sensitive);
-      gimp_action_group_set_action_sensitive (group, "plug-in-reshow", sensitive);
+      gimp_action_group_set_action_sensitive (group,
+                                              "plug-in-repeat", sensitive);
+      gimp_action_group_set_action_sensitive (group,
+                                              "plug-in-reshow", sensitive);
 
       g_free (repeat);
       g_free (reshow);

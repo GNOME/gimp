@@ -48,6 +48,7 @@ struct _GimpDockable
   gchar        *stock_id;
   gchar        *help_id;
   GimpTabStyle  tab_style;
+  gboolean      locked;
 
   GimpDockbook *dockbook;
 
@@ -81,6 +82,10 @@ GtkWidget     * gimp_dockable_new             (const gchar    *name,
 void            gimp_dockable_set_aux_info    (GimpDockable   *dockable,
                                                GList          *aux_info);
 GList         * gimp_dockable_get_aux_info    (GimpDockable   *dockable);
+
+void            gimp_dockable_set_locked      (GimpDockable   *dockable,
+                                               gboolean        lock);
+gboolean        gimp_dockable_is_locked       (GimpDockable   *dockable);
 
 void            gimp_dockable_set_tab_style   (GimpDockable   *dockable,
                                                GimpTabStyle    tab_style);

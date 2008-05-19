@@ -27,6 +27,8 @@ void   dockable_close_tab_cmd_callback       (GtkAction   *action,
                                               gpointer     data);
 void   dockable_detach_tab_cmd_callback      (GtkAction   *action,
                                               gpointer     data);
+void   dockable_lock_tab_cmd_callback        (GtkAction   *action,
+                                              gpointer     data);
 
 void   dockable_toggle_view_cmd_callback     (GtkAction   *action,
                                               GtkAction   *current,

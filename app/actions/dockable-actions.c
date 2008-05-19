@@ -104,6 +104,12 @@ static const GimpRadioActionEntry dockable_tab_style_actions[] =
 
 static const GimpToggleActionEntry dockable_toggle_actions[] =
 {
+  { "dockable-lock-tab", NULL,
+    N_("Loc_k Tab to Dock"), NULL, NULL,
+    G_CALLBACK (dockable_lock_tab_cmd_callback),
+    FALSE,
+    GIMP_HELP_DOCK_TAB_LOCK },
+
   { "dockable-show-button-bar", NULL,
     N_("Show _Button Bar"), NULL, NULL,
     G_CALLBACK (dockable_show_button_bar_cmd_callback),
@@ -175,6 +181,7 @@ dockable_actions_update (GimpActionGroup *group,
   GimpViewType            view_type           = -1;
   gboolean                list_view_available = FALSE;
   gboolean                grid_view_available = FALSE;
+  gboolean                locked              = FALSE;
   GimpViewSize            view_size           = -1;
   GimpTabStyle            tab_style           = -1;
   gint                    n_pages             = 0;
@@ -250,7 +257,13 @@ dockable_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,sensitive) \
         gimp_action_group_set_action_sensitive (group, action, (sensitive) != 0)
 
-  SET_SENSITIVE ("dockable-detach-tab", n_pages > 1 || n_books > 1);
+
+  locked = gimp_dockable_is_locked (dockable);
+
+  SET_SENSITIVE ("dockable-detach-tab", (! locked &&
+                                         (n_pages > 1 || n_books > 1)));
+
+  SET_ACTIVE ("dockable-lock-tab", locked);
 
   SET_VISIBLE ("dockable-preview-size-menu", view_size != -1);
 

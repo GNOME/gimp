@@ -26,6 +26,7 @@
 struct _GimpSessionInfoDockable
 {
   gchar        *identifier;
+  gboolean      locked;
   GimpTabStyle  tab_style;
   gint          view_size;
 

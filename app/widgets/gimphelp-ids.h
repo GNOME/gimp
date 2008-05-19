@@ -452,6 +452,7 @@
 
 #define GIMP_HELP_DOCK_TAB_ADD                    "gimp-dock-tab-add"
 #define GIMP_HELP_DOCK_TAB_CLOSE                  "gimp-dock-tab-close"
+#define GIMP_HELP_DOCK_TAB_LOCK                   "gimp-dock-tab-lock"
 #define GIMP_HELP_DOCK_TAB_MENU                   "gimp-dock-tab-menu"
 #define GIMP_HELP_DOCK_TAB_DETACH                 "gimp-dock-tab-detach"
 #define GIMP_HELP_DOCK_PREVIEW_SIZE               "gimp-dock-preview-size"
