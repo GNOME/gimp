@@ -37,7 +37,6 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimppattern.h"
 #include "core/gimppickable.h"
 #include "core/gimp-transform-region.h"
 
