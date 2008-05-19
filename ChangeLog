@@ -1,5 +1,9 @@
 2008-05-19  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimpperspectiveclone.c: removed unused import.
+
+2008-05-19  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/layer.pdb: corrected description of
 	gimp-layer-set-show-mask procedure.
 
