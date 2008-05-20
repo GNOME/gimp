@@ -221,8 +221,9 @@ gimp_free_select_tool_should_close (GimpFreeSelectTool *fst,
 {
   gdouble dist;
 
-  if (fst->polygon_modified ||
-      fst->n_segment_indices <= 1)
+  if (fst->polygon_modified       ||
+      fst->n_segment_indices <= 1 ||
+      GIMP_TOOL (fst)->display == NULL)
     return FALSE;
 
   dist = gimp_draw_tool_calc_distance_square (GIMP_DRAW_TOOL (fst),
@@ -245,23 +246,26 @@ gimp_free_select_tool_select_closest_segment_point (GimpFreeSelectTool *fst,
   gint          grabbed_segment_index = INVALID_INDEX;
   gint          i;
 
-  for (i = 0; i < fst->n_segment_indices; i++)
+  if (GIMP_TOOL (fst)->display != NULL)
     {
-      gdouble      dist;
-      GimpVector2 *point;
-
-      point = &fst->points[fst->segment_indices[i]];
-
-      dist = gimp_draw_tool_calc_distance_square (draw_tool,
-                                                  display,
-                                                  coords->x,
-                                                  coords->y,
-                                                  point->x,
-                                                  point->y);
-
-      if (dist < shortest_dist)
+      for (i = 0; i < fst->n_segment_indices; i++)
         {
-          grabbed_segment_index = i;
+          gdouble      dist;
+          GimpVector2 *point;
+
+          point = &fst->points[fst->segment_indices[i]];
+
+          dist = gimp_draw_tool_calc_distance_square (draw_tool,
+                                                      display,
+                                                      coords->x,
+                                                      coords->y,
+                                                      point->x,
+                                                      point->y);
+
+          if (dist < shortest_dist)
+            {
+              grabbed_segment_index = i;
+            }
         }
     }
 
@@ -733,6 +737,47 @@ gimp_free_select_tool_prepare_for_move (GimpFreeSelectTool *fst)
 }
 
 static void
+gimp_free_select_tool_status_update (GimpFreeSelectTool *fst,
+                                     GimpDisplay        *display,
+                                     GimpCoords         *coords,
+                                     gboolean            proximity)
+{
+  GimpTool *tool = GIMP_TOOL (fst);
+
+  gimp_tool_pop_status (tool, display);
+
+  if (proximity)
+    {
+      const gchar *status_text = NULL;
+
+      if (gimp_free_select_tool_is_point_grabbed (fst))
+        {
+          if (gimp_free_select_tool_should_close (fst, display, coords))
+            {
+              status_text = _("Click to complete selection");
+            }
+          else
+            {
+              status_text = _("Click-Drag to move segment vertex");
+            }
+        }
+      else if (fst->n_points >= 3)
+        {
+          status_text = _("Return commits, Escape cancels, Backspace removes last segment");
+        }
+      else
+        {
+          status_text = _("Click-Drag creates free segment, Click creates polygonal segment");
+        }
+
+      if (status_text)
+        {
+          gimp_tool_push_status (tool, display, status_text);
+        }
+    }
+}
+
+static void
 gimp_free_select_tool_control (GimpTool       *tool,
                                GimpToolAction  action,
                                GimpDisplay    *display)
@@ -760,9 +805,6 @@ gimp_free_select_tool_oper_update (GimpTool        *tool,
 {
   GimpFreeSelectTool *fst;
   gboolean            hovering_first_point;
-
-  if (tool->display != display)
-    return;
 
   fst = GIMP_FREE_SELECT_TOOL (tool);
 
@@ -798,6 +840,8 @@ gimp_free_select_tool_oper_update (GimpTool        *tool,
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+
+  gimp_free_select_tool_status_update (fst, display, coords, proximity);
 }
 
 static void
