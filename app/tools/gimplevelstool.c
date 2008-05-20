@@ -683,7 +683,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                     tool);
 
   button = gimp_stock_button_new (GIMP_STOCK_TOOL_CURVES,
-                                  _("Edit this Settings as Curves"));
+                                  _("Edit these Settings as Curves"));
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), button,
                       FALSE, FALSE, 0);
   gtk_widget_show (button);

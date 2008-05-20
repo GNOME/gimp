@@ -1,3 +1,8 @@
+2008-05-20  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpbrightnesscontrasttool.c 
+	* app/tools/gimplevelstool.c: fixed grammar.
+
 2008-05-19  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdockable.[ch]
