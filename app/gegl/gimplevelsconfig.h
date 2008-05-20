@@ -23,7 +23,7 @@
 #define __GIMP_LEVELS_CONFIG_H__
 
 
-#include "core/gimpviewable.h"
+#include "core/gimpimagemapconfig.h"
 
 
 #define GIMP_TYPE_LEVELS_CONFIG            (gimp_levels_config_get_type ())
@@ -38,7 +38,7 @@ typedef struct _GimpLevelsConfigClass GimpLevelsConfigClass;
 
 struct _GimpLevelsConfig
 {
-  GimpViewable          parent_instance;
+  GimpImageMapConfig    parent_instance;
 
   GimpHistogramChannel  channel;
 
@@ -53,7 +53,7 @@ struct _GimpLevelsConfig
 
 struct _GimpLevelsConfigClass
 {
-  GimpViewableClass  parent_class;
+  GimpImageMapConfigClass  parent_class;
 };
 
 

@@ -73,7 +73,7 @@ static gboolean gimp_color_balance_config_copy         (GimpConfig       *src,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpColorBalanceConfig, gimp_color_balance_config,
-                         GIMP_TYPE_VIEWABLE,
+                         GIMP_TYPE_IMAGE_MAP_CONFIG,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_color_balance_config_iface_init))
 

@@ -71,7 +71,7 @@ static gboolean gimp_hue_saturation_config_copy         (GimpConfig       *src,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpHueSaturationConfig, gimp_hue_saturation_config,
-                         GIMP_TYPE_VIEWABLE,
+                         GIMP_TYPE_IMAGE_MAP_CONFIG,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_hue_saturation_config_iface_init))
 

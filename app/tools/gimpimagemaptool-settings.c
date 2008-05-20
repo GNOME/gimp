@@ -34,6 +34,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpimagemapconfig.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
@@ -49,6 +50,13 @@
 
 /*  local function prototypes  */
 
+static void gimp_image_map_tool_recent_deserialize (GimpImageMapTool  *im_tool);
+static void gimp_image_map_tool_recent_serialize   (GimpImageMapTool  *im_tool);
+
+static gboolean
+            gimp_image_map_tool_row_separator_func (GtkTreeModel      *model,
+                                                    GtkTreeIter       *iter,
+                                                    gpointer           data);
 static void   gimp_image_map_tool_recent_selected  (GimpContainerView *view,
                                                     GimpViewable      *object,
                                                     gpointer           insert_data,
@@ -91,31 +99,7 @@ gimp_image_map_tool_add_settings_gui (GimpImageMapTool *image_map_tool)
   tool_info = GIMP_TOOL (image_map_tool)->tool_info;
 
   if (gimp_container_num_children (klass->recent_settings) == 0)
-    {
-      gchar  *filename;
-      GError *error = NULL;
-
-      filename = gimp_tool_info_build_options_filename (tool_info,
-                                                        ".settings");
-
-      if (tool_info->gimp->be_verbose)
-        g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
-
-      if (! gimp_config_deserialize_file (GIMP_CONFIG (klass->recent_settings),
-                                          filename,
-                                          NULL, &error))
-        {
-          if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
-            gimp_message (tool_info->gimp, NULL, GIMP_MESSAGE_ERROR,
-                          "%s", error->message);
-
-          g_clear_error (&error);
-        }
-
-      gimp_list_reverse (GIMP_LIST (klass->recent_settings));
-
-      g_free (filename);
-    }
+    gimp_image_map_tool_recent_deserialize (image_map_tool);
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,
@@ -129,6 +113,9 @@ gimp_image_map_tool_add_settings_gui (GimpImageMapTool *image_map_tool)
   combo = gimp_container_combo_box_new (klass->recent_settings,
                                         GIMP_CONTEXT (tool_info->tool_options),
                                         16, 0);
+  gtk_combo_box_set_row_separator_func (GTK_COMBO_BOX (combo),
+                                        gimp_image_map_tool_row_separator_func,
+                                        NULL, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
@@ -195,17 +182,10 @@ gimp_image_map_tool_add_settings_gui (GimpImageMapTool *image_map_tool)
 void
 gimp_image_map_tool_add_recent_settings (GimpImageMapTool *image_map_tool)
 {
-  GimpTool      *tool   = GIMP_TOOL (image_map_tool);
   GimpContainer *recent;
   GimpConfig    *current;
   GimpConfig    *config = NULL;
   GList         *list;
-  time_t         now;
-  struct tm      tm;
-  gchar          buf[64];
-  gchar         *name;
-  gchar         *filename;
-  GError        *error = NULL;
 
   recent  = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool)->recent_settings;
   current = GIMP_CONFIG (image_map_tool->config);
@@ -214,48 +194,29 @@ gimp_image_map_tool_add_recent_settings (GimpImageMapTool *image_map_tool)
     {
       config = list->data;
 
-      if (gimp_config_is_equal_to (config, current))
+      if (GIMP_IMAGE_MAP_CONFIG (config)->time > 0 &&
+          gimp_config_is_equal_to (config, current))
         {
-          gimp_container_reorder (recent, GIMP_OBJECT (config), 0);
+          g_object_set (current,
+                        "time", (guint) time (NULL),
+                        NULL);
           break;
         }
-
-      config = NULL;
     }
 
-  if (! config)
+  if (! list)
     {
       config = gimp_config_duplicate (current);
+      g_object_set (config,
+                    "time", (guint) time (NULL),
+                    NULL);
+
       gimp_container_insert (recent, GIMP_OBJECT (config), 0);
       g_object_unref (config);
     }
 
-  now = time (NULL);
-  tm = *localtime (&now);
-  strftime (buf, sizeof (buf), "%Y-%m-%d %T", &tm);
 
-  name = g_locale_to_utf8 (buf, -1, NULL, NULL, NULL);
-  gimp_object_set_name (GIMP_OBJECT (config), name);
-  g_free (name);
-
-  filename = gimp_tool_info_build_options_filename (tool->tool_info,
-                                                    ".settings");
-
-  if (tool->tool_info->gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
-
-  if (! gimp_config_serialize_to_file (GIMP_CONFIG (recent),
-                                       filename,
-                                       "tool settings",
-                                       "end of tool settings",
-                                       NULL, &error))
-    {
-      gimp_message (tool->tool_info->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "%s", error->message);
-      g_clear_error (&error);
-    }
-
-  g_free (filename);
+  gimp_image_map_tool_recent_serialize (image_map_tool);
 }
 
 gboolean
@@ -304,6 +265,108 @@ gimp_image_map_tool_real_settings_save (GimpImageMapTool *tool,
 
 
 /*  private functions  */
+
+static void
+gimp_image_map_tool_separator_add (GimpContainer *container)
+{
+  GimpObject *sep = g_object_new (GIMP_TYPE_IMAGE_MAP_CONFIG, NULL);
+
+  gimp_container_add (container, sep);
+  g_object_unref (sep);
+
+  g_object_set_data (G_OBJECT (container), "separator", sep);
+}
+
+static void
+gimp_image_map_tool_separator_remove (GimpContainer *container)
+{
+  GimpObject *sep = g_object_get_data (G_OBJECT (container), "separator");
+
+  gimp_container_remove (container, sep);
+
+  g_object_set_data (G_OBJECT (container), "separator", NULL);
+}
+
+static void
+gimp_image_map_tool_recent_deserialize (GimpImageMapTool *im_tool)
+{
+  GimpImageMapToolClass *klass     = GIMP_IMAGE_MAP_TOOL_GET_CLASS (im_tool);
+  GimpToolInfo          *tool_info = GIMP_TOOL (im_tool)->tool_info;
+  gchar                 *filename;
+  GError                *error     = NULL;
+
+  filename = gimp_tool_info_build_options_filename (tool_info,
+                                                    ".settings");
+
+  if (tool_info->gimp->be_verbose)
+    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (klass->recent_settings),
+                                      filename,
+                                      NULL, &error))
+    {
+      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
+        gimp_message (tool_info->gimp, NULL, GIMP_MESSAGE_ERROR,
+                      "%s", error->message);
+
+      g_clear_error (&error);
+    }
+
+  g_free (filename);
+
+  gimp_image_map_tool_separator_add (klass->recent_settings);
+}
+
+static void
+gimp_image_map_tool_recent_serialize (GimpImageMapTool *im_tool)
+{
+  GimpImageMapToolClass *klass     = GIMP_IMAGE_MAP_TOOL_GET_CLASS (im_tool);
+  GimpToolInfo          *tool_info = GIMP_TOOL (im_tool)->tool_info;
+  gchar                 *filename;
+  GError                *error     = NULL;
+
+  gimp_image_map_tool_separator_remove (klass->recent_settings);
+
+  filename = gimp_tool_info_build_options_filename (tool_info,
+                                                    ".settings");
+
+  if (tool_info->gimp->be_verbose)
+    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (klass->recent_settings),
+                                       filename,
+                                       "tool settings",
+                                       "end of tool settings",
+                                       NULL, &error))
+    {
+      gimp_message (tool_info->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "%s", error->message);
+      g_clear_error (&error);
+    }
+
+  g_free (filename);
+
+  gimp_image_map_tool_separator_add (klass->recent_settings);
+}
+
+static gboolean
+gimp_image_map_tool_row_separator_func (GtkTreeModel *model,
+                                        GtkTreeIter  *iter,
+                                        gpointer      data)
+{
+  gchar *name = NULL;
+
+#ifdef __GNUC__
+#warning FIXME: dont use magic model column
+#endif
+  gtk_tree_model_get (model, iter,
+                      1, &name,
+                      -1);
+
+  g_free (name);
+
+  return name == NULL;
+}
 
 static void
 gimp_image_map_tool_recent_selected (GimpContainerView *view,
@@ -482,9 +545,11 @@ gimp_image_map_tool_favorite_callback (GtkWidget   *query_box,
 
   config = gimp_config_duplicate (GIMP_CONFIG (tool->config));
   gimp_object_set_name (GIMP_OBJECT (config), string);
-  gimp_container_insert (GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->recent_settings,
-                         GIMP_OBJECT (config), 0);
+  gimp_container_add (GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->recent_settings,
+                      GIMP_OBJECT (config));
   g_object_unref (config);
+
+  gimp_image_map_tool_recent_serialize (tool);
 }
 
 static gboolean

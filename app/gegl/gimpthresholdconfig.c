@@ -52,7 +52,7 @@ static void   gimp_threshold_config_set_property (GObject      *object,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpThresholdConfig, gimp_threshold_config,
-                         GIMP_TYPE_VIEWABLE,
+                         GIMP_TYPE_IMAGE_MAP_CONFIG,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_threshold_config_parent_class

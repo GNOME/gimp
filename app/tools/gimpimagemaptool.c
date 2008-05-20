@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -33,6 +35,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpimagemap.h"
+#include "core/gimpimagemapconfig.h"
 #include "core/gimplist.h"
 #include "core/gimppickable.h"
 #include "core/gimpprojection.h"
@@ -170,7 +173,9 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
 static void
 gimp_image_map_tool_base_init (GimpImageMapToolClass *klass)
 {
-  klass->recent_settings = gimp_list_new (GIMP_TYPE_VIEWABLE, FALSE);
+  klass->recent_settings = gimp_list_new (GIMP_TYPE_VIEWABLE, TRUE);
+  gimp_list_set_sort_func (GIMP_LIST (klass->recent_settings),
+                           (GCompareFunc) gimp_image_map_config_compare);
 }
 
 static void

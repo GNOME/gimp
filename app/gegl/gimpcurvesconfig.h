@@ -23,7 +23,7 @@
 #define __GIMP_CURVES_CONFIG_H__
 
 
-#include "core/gimpviewable.h"
+#include "core/gimpimagemapconfig.h"
 
 
 #define GIMP_TYPE_CURVES_CONFIG            (gimp_curves_config_get_type ())
@@ -38,7 +38,7 @@ typedef struct _GimpCurvesConfigClass GimpCurvesConfigClass;
 
 struct _GimpCurvesConfig
 {
-  GimpViewable          parent_instance;
+  GimpImageMapConfig    parent_instance;
 
   GimpHistogramChannel  channel;
 
@@ -47,7 +47,7 @@ struct _GimpCurvesConfig
 
 struct _GimpCurvesConfigClass
 {
-  GimpViewableClass  parent_class;
+  GimpImageMapConfigClass  parent_class;
 };
 
 

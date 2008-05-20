@@ -23,7 +23,7 @@
 #define __GIMP_THRESHOLD_CONFIG_H__
 
 
-#include "core/gimpviewable.h"
+#include "core/gimpimagemapconfig.h"
 
 
 #define GIMP_TYPE_THRESHOLD_CONFIG            (gimp_threshold_config_get_type ())
@@ -38,15 +38,15 @@ typedef struct _GimpThresholdConfigClass GimpThresholdConfigClass;
 
 struct _GimpThresholdConfig
 {
-  GimpViewable  parent_instance;
+  GimpImageMapConfig  parent_instance;
 
-  gdouble       low;
-  gdouble       high;
+  gdouble             low;
+  gdouble             high;
 };
 
 struct _GimpThresholdConfigClass
 {
-  GimpViewableClass  parent_class;
+  GimpImageMapConfigClass  parent_class;
 };
 
 

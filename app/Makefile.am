@@ -91,12 +91,13 @@ INCLUDES = \
 	-I$(includedir)
 
 AM_LDFLAGS = \
-	$(munix)				\
-	$(CARBON_LDFLAGS)			\
-	-u $(SYMPREFIX)xcf_init			\
-	-u $(SYMPREFIX)internal_procs_init	\
-	-u $(SYMPREFIX)gimp_coords_mix		\
-	-u $(SYMPREFIX)gimp_curve_map_pixels	\
+	$(munix)					\
+	$(CARBON_LDFLAGS)				\
+	-u $(SYMPREFIX)xcf_init				\
+	-u $(SYMPREFIX)internal_procs_init		\
+	-u $(SYMPREFIX)gimp_coords_mix			\
+	-u $(SYMPREFIX)gimp_curve_map_pixels		\
+	-u $(SYMPREFIX)gimp_image_map_config_get_type	\
 	-u $(SYMPREFIX)gimp_plug_in_manager_restore
 
 gimp_2_5_LDFLAGS = $(AM_LDFLAGS) $(mwindows) 

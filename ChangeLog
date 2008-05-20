@@ -1,5 +1,33 @@
 2008-05-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpimagemapconfig.[ch]: new GimpViewable subclass
+	which has a "time" property. Sets the object's name to a date
+	string if a time != 0 gets set. Has a compare function which first
+	sorts the objects with a timestamp in MRU order and then the
+	objects without timestamp by name.
+
+	* app/gegl/gimpbrightnesscontrastconfig.[ch]
+	* app/gegl/gimpcolorbalanceconfig.[ch]
+	* app/gegl/gimpcolorizeconfig.[ch]
+	* app/gegl/gimpcurvesconfig.[ch]
+	* app/gegl/gimphuesaturationconfig.[ch]
+	* app/gegl/gimplevelsconfig.[ch]
+	* app/gegl/gimpposterizeconfig.[ch]
+	* app/gegl/gimpthresholdconfig.[ch]: derive from GimpImageMapConfig.
+
+	* app/tools/gimpimagemaptool.c: sort the settings container with
+	above compare function.
+
+	* app/tools/gimpimagemaptool-settings.c: add utility functions
+	for loading and saving the settings container. In the settings
+	combo, add a separator between MRU items and favorites.
+
+	* app/Makefile.am: make the thing link.
+
+2008-05-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplist.c (gimp_list_uniquefy_name): don't crash if an
 	object has a NULL name. Move variables to local scopes. Remove
 	redundant casts.
