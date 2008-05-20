@@ -1,3 +1,9 @@
+2008-05-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimplist.c (gimp_list_uniquefy_name): don't crash if an
+	object has a NULL name. Move variables to local scopes. Remove
+	redundant casts.
+
 2008-05-20  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpfreeselecttool.c: Increase handle size to 12

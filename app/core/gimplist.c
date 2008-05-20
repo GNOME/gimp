@@ -487,24 +487,25 @@ static void
 gimp_list_uniquefy_name (GimpList   *gimp_list,
                          GimpObject *object)
 {
-  GList *list;
-  GList *list2;
-  gint   unique_ext = 0;
-  gchar *new_name   = NULL;
-  gchar *ext;
+  GList       *list;
+  const gchar *name = gimp_object_get_name (object);
 
-  g_return_if_fail (GIMP_IS_LIST (gimp_list));
-  g_return_if_fail (GIMP_IS_OBJECT (object));
+  if (! name)
+    return;
 
   for (list = gimp_list->list; list; list = g_list_next (list))
     {
-      GimpObject *object2 = GIMP_OBJECT (list->data);
+      GimpObject  *object2 = list->data;
+      const gchar *name2   = gimp_object_get_name (object2);
 
       if (object != object2 &&
-          strcmp (gimp_object_get_name (GIMP_OBJECT (object)),
-                  gimp_object_get_name (GIMP_OBJECT (object2))) == 0)
+          name2             &&
+          ! strcmp (name, name2))
         {
-          ext = strrchr (object->name, '#');
+          GList *list2;
+          gchar *ext        = strrchr (name, '#');
+          gchar *new_name   = NULL;
+          gint   unique_ext = 0;
 
           if (ext)
             {
@@ -526,10 +527,6 @@ gimp_list_uniquefy_name (GimpList   *gimp_list,
 
               g_free (ext_str);
             }
-          else
-            {
-              unique_ext = 0;
-            }
 
           do
             {
@@ -537,16 +534,16 @@ gimp_list_uniquefy_name (GimpList   *gimp_list,
 
               g_free (new_name);
 
-              new_name = g_strdup_printf ("%s#%d", object->name, unique_ext);
+              new_name = g_strdup_printf ("%s#%d", name, unique_ext);
 
               for (list2 = gimp_list->list; list2; list2 = g_list_next (list2))
                 {
-                  object2 = GIMP_OBJECT (list2->data);
+                  object2 = list2->data;
+                  name2   = gimp_object_get_name (object2);
 
-                  if (object == object2)
-                    continue;
-
-                  if (! strcmp (object2->name, new_name))
+                  if (object != object2 &&
+                      name2             &&
+                      ! strcmp (new_name, name2))
                     break;
                 }
             }
