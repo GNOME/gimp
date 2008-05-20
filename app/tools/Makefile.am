@@ -90,6 +90,8 @@ libapptools_a_sources = \
 	gimpimagemapoptions.h		\
 	gimpimagemaptool.c		\
 	gimpimagemaptool.h		\
+	gimpimagemaptool-settings.c	\
+	gimpimagemaptool-settings.h	\
 	gimpinkoptions-gui.c		\
 	gimpinkoptions-gui.h		\
 	gimpinktool.c			\

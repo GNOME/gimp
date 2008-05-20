@@ -106,16 +106,21 @@ gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  object_class->finalize       = gimp_color_balance_tool_finalize;
+  object_class->finalize           = gimp_color_balance_tool_finalize;
 
-  tool_class->initialize       = gimp_color_balance_tool_initialize;
+  tool_class->initialize           = gimp_color_balance_tool_initialize;
 
-  im_tool_class->shell_desc    = _("Adjust Color Balance");
+  im_tool_class->shell_desc        = _("Adjust Color Balance");
+  im_tool_class->settings_name     = "color-balance";
+  im_tool_class->load_dialog_title = _("Load Color Balance Settings");
+  im_tool_class->load_button_tip   = _("Load color balance settings from file");
+  im_tool_class->save_dialog_title = _("Save Color Balance Settings");
+  im_tool_class->save_button_tip   = _("Save color balance settings to file");
 
-  im_tool_class->get_operation = gimp_color_balance_tool_get_operation;
-  im_tool_class->map           = gimp_color_balance_tool_map;
-  im_tool_class->dialog        = gimp_color_balance_tool_dialog;
-  im_tool_class->reset         = gimp_color_balance_tool_reset;
+  im_tool_class->get_operation     = gimp_color_balance_tool_get_operation;
+  im_tool_class->map               = gimp_color_balance_tool_map;
+  im_tool_class->dialog            = gimp_color_balance_tool_dialog;
+  im_tool_class->reset             = gimp_color_balance_tool_reset;
 }
 
 static void

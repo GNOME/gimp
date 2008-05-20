@@ -114,16 +114,21 @@ gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  object_class->finalize       = gimp_hue_saturation_tool_finalize;
+  object_class->finalize           = gimp_hue_saturation_tool_finalize;
 
-  tool_class->initialize       = gimp_hue_saturation_tool_initialize;
+  tool_class->initialize           = gimp_hue_saturation_tool_initialize;
 
-  im_tool_class->shell_desc    = _("Adjust Hue / Lightness / Saturation");
+  im_tool_class->shell_desc        = _("Adjust Hue / Lightness / Saturation");
+  im_tool_class->settings_name     = "hue-saturation";
+  im_tool_class->load_dialog_title = _("Load Hue-Saturation Settings");
+  im_tool_class->load_button_tip   = _("Load hue-saturation settings from file");
+  im_tool_class->save_dialog_title = _("Save Hue-Saturation Settings");
+  im_tool_class->save_button_tip   = _("Save hue-saturation settings to file");
 
-  im_tool_class->get_operation = gimp_hue_saturation_tool_get_operation;
-  im_tool_class->map           = gimp_hue_saturation_tool_map;
-  im_tool_class->dialog        = gimp_hue_saturation_tool_dialog;
-  im_tool_class->reset         = gimp_hue_saturation_tool_reset;
+  im_tool_class->get_operation     = gimp_hue_saturation_tool_get_operation;
+  im_tool_class->map               = gimp_hue_saturation_tool_map;
+  im_tool_class->dialog            = gimp_hue_saturation_tool_dialog;
+  im_tool_class->reset             = gimp_hue_saturation_tool_reset;
 }
 
 static void

@@ -1,3 +1,26 @@
+2008-05-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/Makefile.am
+	* app/tools/gimpimagemaptool-settings.[ch]: new files containing
+	all the recent settings and settings load/save GUI and code.  Got
+	rid of shortcut loading/saving using shift+click. Added default
+	implementations of ::settings_load() and ::settings_save().
+	The GUI is currently horrible, work in progress!
+
+	* app/tools/gimpimagemaptool.c: removed the settings code here.
+
+	* app/tools/gimpcurvestool.c * app/tools/gimplevelstool.c: don't
+	pack the load and save buttons, this is done generically for all
+	tools now.
+
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c: set the load/save related members
+	of GimpImageMapToolClass.
+
 2008-05-20  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/Makefile.am

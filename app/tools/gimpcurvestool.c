@@ -422,7 +422,6 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget        *table;
   GtkWidget        *button;
   GtkWidget        *bar;
-  gint              padding;
 
   vbox = image_map_tool->main_vbox;
 
@@ -546,24 +545,6 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  /*  Horizontal button box for load / save */
-  frame = gimp_frame_new (_("All Channels"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  bbox = gtk_hbutton_box_new ();
-  gtk_box_set_spacing (GTK_BOX (bbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), bbox);
-  gtk_widget_show (bbox);
-
-  gtk_box_pack_start (GTK_BOX (bbox), image_map_tool->load_button,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (image_map_tool->load_button);
-
-  gtk_box_pack_start (GTK_BOX (bbox), image_map_tool->save_button,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (image_map_tool->save_button);
-
   /*  The radio box for selecting the curve type  */
   frame = gimp_frame_new (_("Curve Type"));
   gtk_box_pack_end (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
@@ -574,13 +555,6 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
                                   G_CALLBACK (curves_curve_type_callback),
                                   tool,
                                   &tool->curve_type);
-
-  gtk_widget_style_get (bbox, "child-internal-pad-x", &padding, NULL);
-
-  gimp_enum_stock_box_set_child_padding (hbox, padding, -1);
-
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 }

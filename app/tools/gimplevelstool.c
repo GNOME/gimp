@@ -637,19 +637,6 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  hbbox = gtk_hbutton_box_new ();
-  gtk_box_set_spacing (GTK_BOX (hbbox), 4);
-  gtk_box_pack_start (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
-
-  gtk_box_pack_start (GTK_BOX (hbbox), image_map_tool->load_button,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (image_map_tool->load_button);
-
-  gtk_box_pack_start (GTK_BOX (hbbox), image_map_tool->save_button,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (image_map_tool->save_button);
-
   hbbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_end (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
