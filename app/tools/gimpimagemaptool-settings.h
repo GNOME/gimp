@@ -22,7 +22,9 @@
 #define __GIMP_IMAGE_MAP_TOOL_SETTINGS_H__
 
 
-gboolean gimp_image_map_tool_dialog_add_settings (GimpImageMapTool *image_map_tool);
+gboolean gimp_image_map_tool_add_settings_gui    (GimpImageMapTool *image_map_tool);
+
+void     gimp_image_map_tool_add_recent_settings (GimpImageMapTool *image_map_tool);
 
 gboolean gimp_image_map_tool_real_settings_load  (GimpImageMapTool *tool,
                                                   const gchar      *filename,

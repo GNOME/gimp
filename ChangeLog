@@ -1,5 +1,12 @@
 2008-05-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpimagemaptool.c: remove
+	gimp_image_map_tool_add_recent()...
+
+	* app/tools/gimpimagemaptool-settings.[ch]: ...and add it here.
+
+2008-05-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_add_recent):
 	unref the new settings object after adding it to the recent
 	container.

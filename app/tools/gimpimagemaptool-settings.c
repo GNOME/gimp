@@ -77,7 +77,7 @@ static gboolean gimp_image_map_tool_settings_save  (GimpImageMapTool  *tool,
 /*  public functions  */
 
 gboolean
-gimp_image_map_tool_dialog_add_settings (GimpImageMapTool *image_map_tool)
+gimp_image_map_tool_add_settings_gui (GimpImageMapTool *image_map_tool)
 {
   GimpImageMapToolClass *klass;
   GimpToolInfo          *tool_info;
@@ -190,6 +190,72 @@ gimp_image_map_tool_dialog_add_settings (GimpImageMapTool *image_map_tool)
                              klass->save_button_tip, NULL);
 
   return TRUE;
+}
+
+void
+gimp_image_map_tool_add_recent_settings (GimpImageMapTool *image_map_tool)
+{
+  GimpTool      *tool   = GIMP_TOOL (image_map_tool);
+  GimpContainer *recent;
+  GimpConfig    *current;
+  GimpConfig    *config = NULL;
+  GList         *list;
+  time_t         now;
+  struct tm      tm;
+  gchar          buf[64];
+  gchar         *name;
+  gchar         *filename;
+  GError        *error = NULL;
+
+  recent  = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool)->recent_settings;
+  current = GIMP_CONFIG (image_map_tool->config);
+
+  for (list = GIMP_LIST (recent)->list; list; list = g_list_next (list))
+    {
+      config = list->data;
+
+      if (gimp_config_is_equal_to (config, current))
+        {
+          gimp_container_reorder (recent, GIMP_OBJECT (config), 0);
+          break;
+        }
+
+      config = NULL;
+    }
+
+  if (! config)
+    {
+      config = gimp_config_duplicate (current);
+      gimp_container_insert (recent, GIMP_OBJECT (config), 0);
+      g_object_unref (config);
+    }
+
+  now = time (NULL);
+  tm = *localtime (&now);
+  strftime (buf, sizeof (buf), "%Y-%m-%d %T", &tm);
+
+  name = g_locale_to_utf8 (buf, -1, NULL, NULL, NULL);
+  gimp_object_set_name (GIMP_OBJECT (config), name);
+  g_free (name);
+
+  filename = gimp_tool_info_build_options_filename (tool->tool_info,
+                                                    ".settings");
+
+  if (tool->tool_info->gimp->be_verbose)
+    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (recent),
+                                       filename,
+                                       "tool settings",
+                                       "end of tool settings",
+                                       NULL, &error))
+    {
+      gimp_message (tool->tool_info->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "%s", error->message);
+      g_clear_error (&error);
+    }
+
+  g_free (filename);
 }
 
 gboolean
