@@ -1,5 +1,15 @@
 2008-05-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_add_recent):
+	unref the new settings object after adding it to the recent
+	container.
+
+	* app/tools/gimpimagemaptool-settings.c: add a "Save to Favorites"
+	button which pops a string entry dialog and saves the current
+	settings to the recent container.
+
+2008-05-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/Makefile.am
 	* app/tools/gimpimagemaptool-settings.[ch]: new files containing
 	all the recent settings and settings load/save GUI and code.  Got

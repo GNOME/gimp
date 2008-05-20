@@ -544,6 +544,7 @@ gimp_image_map_tool_add_recent (GimpImageMapTool *image_map_tool)
     {
       config = gimp_config_duplicate (current);
       gimp_container_insert (recent, GIMP_OBJECT (config), 0);
+      g_object_unref (config);
     }
 
   now = time (NULL);

@@ -49,24 +49,29 @@
 
 /*  local function prototypes  */
 
-static void   gimp_image_map_tool_recent_selected (GimpContainerView *view,
-                                                   GimpViewable      *object,
-                                                   gpointer           insert_data,
-                                                   GimpImageMapTool  *tool);
+static void   gimp_image_map_tool_recent_selected  (GimpContainerView *view,
+                                                    GimpViewable      *object,
+                                                    gpointer           insert_data,
+                                                    GimpImageMapTool  *tool);
 
-static void   gimp_image_map_tool_load_clicked    (GtkWidget         *widget,
-                                                   GimpImageMapTool  *tool);
-static void   gimp_image_map_tool_save_clicked    (GtkWidget         *widget,
-                                                   GimpImageMapTool  *tool);
+static void   gimp_image_map_tool_favorite_clicked (GtkWidget         *widget,
+                                                    GimpImageMapTool  *tool);
+static void   gimp_image_map_tool_load_clicked     (GtkWidget         *widget,
+                                                    GimpImageMapTool  *tool);
+static void   gimp_image_map_tool_save_clicked     (GtkWidget         *widget,
+                                                    GimpImageMapTool  *tool);
 
-static void   gimp_image_map_tool_settings_dialog (GimpImageMapTool  *im_tool,
-                                                   const gchar       *title,
-                                                   gboolean           save);
+static void   gimp_image_map_tool_settings_dialog  (GimpImageMapTool  *im_tool,
+                                                    const gchar       *title,
+                                                    gboolean           save);
 
-static gboolean gimp_image_map_tool_settings_load (GimpImageMapTool  *tool,
-                                                   const gchar       *filename);
-static gboolean gimp_image_map_tool_settings_save (GimpImageMapTool  *tool,
-                                                   const gchar       *filename);
+static void  gimp_image_map_tool_favorite_callback (GtkWidget         *query_box,
+                                                    const gchar       *string,
+                                                    gpointer           data);
+static gboolean gimp_image_map_tool_settings_load  (GimpImageMapTool  *tool,
+                                                    const gchar       *filename);
+static gboolean gimp_image_map_tool_settings_save  (GimpImageMapTool  *tool,
+                                                    const gchar       *filename);
 
 
 /*  public functions  */
@@ -79,6 +84,7 @@ gimp_image_map_tool_dialog_add_settings (GimpImageMapTool *image_map_tool)
   GtkWidget             *hbox;
   GtkWidget             *label;
   GtkWidget             *combo;
+  GtkWidget             *button;
 
   klass = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool);
 
@@ -139,6 +145,15 @@ gimp_image_map_tool_dialog_add_settings (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,
                       FALSE, FALSE, 0);
   gtk_widget_show (hbox);
+
+  button = gtk_button_new_with_mnemonic (_("Save to _Favorites"));
+  gtk_box_pack_start (GTK_BOX (hbox), button,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (gimp_image_map_tool_favorite_clicked),
+                    image_map_tool);
 
   image_map_tool->load_button = g_object_new (GIMP_TYPE_BUTTON,
                                               "label",         GTK_STOCK_OPEN,
@@ -237,6 +252,23 @@ gimp_image_map_tool_recent_selected (GimpContainerView *view,
 
       gimp_container_view_select_item (view, NULL);
     }
+}
+
+static void
+gimp_image_map_tool_favorite_clicked (GtkWidget        *widget,
+                                      GimpImageMapTool *tool)
+{
+  GtkWidget *dialog;
+
+  dialog = gimp_query_string_box (_("Save Settings to Favorites"),
+                                  tool->shell,
+                                  gimp_standard_help_func,
+                                  NULL, /*GIMP_HELP_TOOL_OPTIONS_DIALOG, */
+                                  _("Enter a name for the saved settings"),
+                                  _("Saved Settings"),
+                                  G_OBJECT (tool->shell), "hide",
+                                  gimp_image_map_tool_favorite_callback, tool);
+  gtk_widget_show (dialog);
 }
 
 static void
@@ -372,6 +404,21 @@ gimp_image_map_tool_settings_dialog (GimpImageMapTool *tool,
                      GIMP_TOOL (tool)->tool_info->help_id, NULL);
 
   gtk_widget_show (tool->settings_dialog);
+}
+
+static void
+gimp_image_map_tool_favorite_callback (GtkWidget   *query_box,
+                                       const gchar *string,
+                                       gpointer     data)
+{
+  GimpImageMapTool *tool = GIMP_IMAGE_MAP_TOOL (data);
+  GimpConfig       *config;
+
+  config = gimp_config_duplicate (GIMP_CONFIG (tool->config));
+  gimp_object_set_name (GIMP_OBJECT (config), string);
+  gimp_container_insert (GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->recent_settings,
+                         GIMP_OBJECT (config), 0);
+  g_object_unref (config);
 }
 
 static gboolean
