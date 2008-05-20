@@ -35,7 +35,9 @@
 #include "gimpaction.h"
 #include "gimpenumaction.h"
 #include "gimppluginaction.h"
+#include "gimpradioaction.h"
 #include "gimpstringaction.h"
+#include "gimptoggleaction.h"
 
 #include "gimp-intl.h"
 
@@ -400,8 +402,8 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
       if (! group->mnemonics)
         label = gimp_strip_uline (label);
 
-      action = gtk_toggle_action_new (entries[i].name, label, tooltip,
-                                      entries[i].stock_id);
+      action = gimp_toggle_action_new (entries[i].name, label, tooltip,
+                                       entries[i].stock_id);
 
       if (! group->mnemonics)
         g_free (label);
@@ -452,9 +454,9 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
       if (! group->mnemonics)
         label = gimp_strip_uline (label);
 
-      action = gtk_radio_action_new (entries[i].name, label, tooltip,
-                                     entries[i].stock_id,
-                                     entries[i].value);
+      action = gimp_radio_action_new (entries[i].name, label, tooltip,
+                                      entries[i].stock_id,
+                                      entries[i].value);
 
       if (! group->mnemonics)
         g_free (label);

@@ -105,7 +105,8 @@ static const GimpRadioActionEntry dockable_tab_style_actions[] =
 static const GimpToggleActionEntry dockable_toggle_actions[] =
 {
   { "dockable-lock-tab", NULL,
-    N_("Loc_k Tab to Dock"), NULL, NULL,
+    N_("Loc_k Tab to Dock"), NULL,
+    N_("Protect this tab from being dragged with the mouse pointer"),
     G_CALLBACK (dockable_lock_tab_cmd_callback),
     FALSE,
     GIMP_HELP_DOCK_TAB_LOCK },

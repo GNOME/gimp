@@ -1,5 +1,18 @@
 2008-05-20  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/gimptoggleaction.[ch]
+	* app/widgets/gimpradioaction.[ch]: added new action types derived
+	from GtkToggleAction and GtkRadioAction. These types override the
+	"connect_proxy" method to enable tooltips in menus.
+
+	* app/widgets/gimpactiongroup.c: use the new action types.
+
+	* app/actions/dockable-actions.c: added a tooltip for the
+	"dockable-lock-tab" action.
+
+2008-05-20  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpbrightnesscontrasttool.c 
 	* app/tools/gimplevelstool.c: fixed grammar.
 

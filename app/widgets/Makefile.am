@@ -233,6 +233,8 @@ libappwidgets_a_sources = \
 	gimpprogressdialog.h		\
 	gimppropwidgets.c		\
 	gimppropwidgets.h		\
+	gimpradioaction.c		\
+	gimpradioaction.h		\
 	gimprender.c			\
 	gimprender.h			\
 	gimpsamplepointeditor.c		\
@@ -265,6 +267,8 @@ libappwidgets_a_sources = \
 	gimptexteditor.h		\
 	gimpthumbbox.c			\
 	gimpthumbbox.h			\
+	gimptoggleaction.c		\
+	gimptoggleaction.h		\
 	gimptoolbox.c			\
 	gimptoolbox.h			\
 	gimptoolbox-color-area.c	\
