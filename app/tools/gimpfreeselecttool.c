@@ -47,7 +47,7 @@
 #include "gimp-intl.h"
 
 
-#define HANDLE_SIZE             10
+#define HANDLE_SIZE             12
 #define POINT_GRAB_THRESHOLD_SQ SQR(HANDLE_SIZE / 2)
 #define N_ITEMS_PER_ALLOC       1024
 #define INVALID_INDEX           (-1)

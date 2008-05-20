@@ -1,5 +1,10 @@
 2008-05-20  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimpfreeselecttool.c: Increase handle size to 12
+	pixels (the same size as for the Paths Tool).
+
+2008-05-20  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Added statusbar help-messages for the Free Select Tool.
 
 	* app/tools/gimpfreeselecttool.c
