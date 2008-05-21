@@ -1,3 +1,9 @@
+2008-05-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/gimpoperationdesaturate.c
+	(gimp_operation_desaturate_process): bail out if there is no
+	config object.
+
 2008-05-21  Sven Neumann  <sven@gimp.org>
 
 	Add Desaturate as an image-map tool with live preview (bug #533808):

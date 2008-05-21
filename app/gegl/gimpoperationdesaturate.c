@@ -85,6 +85,9 @@ gimp_operation_desaturate_process (GeglOperation *operation,
   gfloat                   *src    = in_buf;
   gfloat                   *dest   = out_buf;
 
+  if (! config)
+    return FALSE;
+
   switch (config->mode)
     {
     case GIMP_DESATURATE_LIGHTNESS:
