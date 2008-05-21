@@ -624,6 +624,8 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
   GimpDrawable                *drawable;
   GimpScanConvert             *scan_convert;
   GimpChannel                 *mask;
+  const GimpVector2           *points;
+  gint                         n_points;
 
   drawable  = gimp_image_get_active_drawable (image);
   fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
@@ -640,9 +642,13 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 
   scan_convert = gimp_scan_convert_new ();
 
+  gimp_free_select_get_points (free_sel,
+                               &points,
+                               &n_points);
+
   gimp_scan_convert_add_polyline (scan_convert,
-                                  free_sel->n_points,
-                                  free_sel->points,
+                                  n_points,
+                                  points,
                                   TRUE);
 
   mask = gimp_channel_new (image,

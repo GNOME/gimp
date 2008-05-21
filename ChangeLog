@@ -1,3 +1,13 @@
+2008-05-21  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpfreeselecttool.[ch]: Don't expose implementation
+	details.
+
+	* app/tools/gimpforegroundselecttool.c
+	(gimp_foreground_select_tool_select): Use new
+	gimp_free_select_get_points() functions since we don't know
+	anything about how the Free Select Tool is implemented any longer.
+
 2008-05-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpimagemaptool.[ch]
