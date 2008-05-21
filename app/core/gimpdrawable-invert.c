@@ -24,7 +24,6 @@
 
 #include "base/gimplut.h"
 #include "base/lut-funcs.h"
-#include "base/pixel-processor.h"
 
 /* temp */
 #include "gimp.h"

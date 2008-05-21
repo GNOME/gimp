@@ -23,7 +23,6 @@
 #include "core-types.h"
 
 #include "base/desaturate.h"
-#include "base/pixel-processor.h"
 
 #include "gegl/gimpdesaturateconfig.h"
 

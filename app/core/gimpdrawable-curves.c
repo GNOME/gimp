@@ -24,7 +24,6 @@
 
 #include "base/curves.h"
 #include "base/gimplut.h"
-#include "base/pixel-processor.h"
 
 #include "gegl/gimpcurvesconfig.h"
 

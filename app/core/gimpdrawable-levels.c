@@ -25,8 +25,6 @@
 #include "base/gimphistogram.h"
 #include "base/gimplut.h"
 #include "base/levels.h"
-#include "base/pixel-processor.h"
-#include "base/pixel-region.h"
 
 #include "gegl/gimplevelsconfig.h"
 
@@ -38,7 +36,8 @@
 #include "gimpdrawable-histogram.h"
 #include "gimpdrawable-levels.h"
 #include "gimpdrawable-operation.h"
-#include "gimpdrawable-shadow.h"
+#include "gimpdrawable-process.h"
+#include "gimpprogress.h"
 
 #include "gimp-intl.h"
 
@@ -67,6 +66,7 @@ gimp_drawable_levels (GimpDrawable *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (! gimp_drawable_is_indexed (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
                     channel <= GIMP_HISTOGRAM_ALPHA);
   g_return_if_fail (low_input   >= 0   && low_input   <= 255);
@@ -111,6 +111,7 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (! gimp_drawable_is_indexed (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   if (! gimp_drawable_mask_intersect (drawable, NULL, NULL, NULL, NULL))
     return;
@@ -157,14 +158,8 @@ gimp_drawable_levels_internal (GimpDrawable     *drawable,
     }
   else
     {
-      PixelRegion  srcPR, destPR;
-      Levels       levels;
-      GimpLut     *lut;
-      gint         x, y;
-      gint         width, height;
-
-      if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-        return;
+      Levels   levels;
+      GimpLut *lut;
 
       gimp_levels_config_to_cruft (config, &levels,
                                    gimp_drawable_is_rgb (drawable));
@@ -175,19 +170,9 @@ gimp_drawable_levels_internal (GimpDrawable     *drawable,
                       &levels,
                       gimp_drawable_bytes (drawable));
 
-      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                         x, y, width, height, FALSE);
-      pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                         x, y, width, height, TRUE);
-
-      pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
-                                      lut, 2, &srcPR, &destPR);
+      gimp_drawable_process (drawable, progress, _("Levels"),
+                             (PixelProcessorFunc) gimp_lut_process, lut);
 
       gimp_lut_free (lut);
-
-      gimp_drawable_merge_shadow_tiles (drawable, TRUE, _("Levels"));
-      gimp_drawable_free_shadow_tiles (drawable);
-
-      gimp_drawable_update (drawable, x, y, width, height);
     }
 }

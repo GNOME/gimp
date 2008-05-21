@@ -76,9 +76,10 @@ typedef struct _TilePyramid         TilePyramid;
 
 /*  functions  */
 
-typedef void   (* TileValidateProc)  (TileManager *tm,
-                                      Tile        *tile,
-                                      gpointer     user_data);
+typedef void (* TileValidateProc)   (TileManager *tm,
+                                     Tile        *tile,
+                                     gpointer     user_data);
+typedef void (* PixelProcessorFunc) (void);
 
 
 #endif /* __BASE_TYPES_H__ */

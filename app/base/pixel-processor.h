@@ -25,7 +25,6 @@
 #define GIMP_MAX_NUM_THREADS  16
 
 
-typedef void (* PixelProcessorFunc)         (void);
 typedef void (* PixelProcessorProgressFunc) (gpointer  progress_data,
                                              gdouble   fraction);
 
