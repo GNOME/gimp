@@ -1,3 +1,10 @@
+2008-05-21  Sven Neumann  <sven@gimp.org>
+
+	* app/base/Makefile.am
+	* app/base/desaturate.[ch]: moved legacy desaturate code here.
+
+	* app/core/gimpdrawable-desaturate.c: use the code in app/base.
+
 2008-05-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/gegl/gimpoperationdesaturate.c

@@ -24,6 +24,7 @@
 
 #include "core-types.h"
 
+#include "base/desaturate.h"
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 
@@ -39,19 +40,6 @@
 #include "gimpdrawable-shadow.h"
 
 #include "gimp-intl.h"
-
-
-static void  desaturate_region_lightness  (gpointer     data,
-                                           PixelRegion *srcPR,
-                                           PixelRegion *destPR);
-
-static void  desaturate_region_luminosity (gpointer     data,
-                                           PixelRegion *srcPR,
-                                           PixelRegion *destPR);
-
-static void  desaturate_region_average    (gpointer     data,
-                                           PixelRegion *srcPR,
-                                           PixelRegion *destPR);
 
 
 void
@@ -131,123 +119,5 @@ gimp_drawable_desaturate (GimpDrawable       *drawable,
       gimp_drawable_free_shadow_tiles (drawable);
 
       gimp_drawable_update (drawable, x, y, width, height);
-    }
-}
-
-static void
-desaturate_region_lightness (gpointer     data,
-                             PixelRegion *srcPR,
-                             PixelRegion *destPR)
-{
-  const guchar *src       = srcPR->data;
-  guchar       *dest      = destPR->data;
-  gint          h         = srcPR->h;
-  gboolean      has_alpha = GPOINTER_TO_INT (data);
-
-  while (h--)
-    {
-      const guchar *s = src;
-      guchar       *d = dest;
-      gint          j;
-
-      for (j = 0; j < srcPR->w; j++)
-        {
-          gint min, max;
-          gint lightness;
-
-          max = MAX (s[RED_PIX], s[GREEN_PIX]);
-          max = MAX (max, s[BLUE_PIX]);
-          min = MIN (s[RED_PIX], s[GREEN_PIX]);
-          min = MIN (min, s[BLUE_PIX]);
-
-          lightness = (max + min) / 2;
-
-          d[RED_PIX]   = lightness;
-          d[GREEN_PIX] = lightness;
-          d[BLUE_PIX]  = lightness;
-
-          if (has_alpha)
-            d[ALPHA_PIX] = s[ALPHA_PIX];
-
-          d += destPR->bytes;
-          s += srcPR->bytes;
-        }
-
-      src += srcPR->rowstride;
-      dest += destPR->rowstride;
-    }
-}
-
-static void
-desaturate_region_luminosity (gpointer     data,
-                              PixelRegion *srcPR,
-                              PixelRegion *destPR)
-{
-  const guchar *src       = srcPR->data;
-  guchar       *dest      = destPR->data;
-  gint          h         = srcPR->h;
-  gboolean      has_alpha = GPOINTER_TO_INT (data);
-
-  while (h--)
-    {
-      const guchar *s = src;
-      guchar       *d = dest;
-      gint          j;
-
-      for (j = 0; j < srcPR->w; j++)
-        {
-          gint luminosity = GIMP_RGB_LUMINANCE (s[RED_PIX],
-                                                s[GREEN_PIX],
-                                                s[BLUE_PIX]) + 0.5;
-
-          d[RED_PIX]   = luminosity;
-          d[GREEN_PIX] = luminosity;
-          d[BLUE_PIX]  = luminosity;
-
-          if (has_alpha)
-            d[ALPHA_PIX] = s[ALPHA_PIX];
-
-          d += destPR->bytes;
-          s += srcPR->bytes;
-        }
-
-      src += srcPR->rowstride;
-      dest += destPR->rowstride;
-    }
-}
-
-static void
-desaturate_region_average (gpointer     data,
-                           PixelRegion *srcPR,
-                           PixelRegion *destPR)
-{
-  const guchar *src       = srcPR->data;
-  guchar       *dest      = destPR->data;
-  gint          h         = srcPR->h;
-  gboolean      has_alpha = GPOINTER_TO_INT (data);
-
-  while (h--)
-    {
-      const guchar *s = src;
-      guchar       *d = dest;
-      gint          j;
-
-      for (j = 0; j < srcPR->w; j++)
-        {
-          gint average = (s[RED_PIX] + s[GREEN_PIX] + s[BLUE_PIX] + 1) / 3;
-
-          d[RED_PIX]   = average;
-          d[GREEN_PIX] = average;
-          d[BLUE_PIX]  = average;
-
-          if (has_alpha)
-            d[ALPHA_PIX] = s[ALPHA_PIX];
-
-          d += destPR->bytes;
-          s += srcPR->bytes;
-        }
-
-      src += srcPR->rowstride;
-      dest += destPR->rowstride;
     }
 }
