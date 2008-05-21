@@ -271,6 +271,8 @@ gimp_foreground_select_tool_control (GimpTool       *tool,
             gimp_drawable_foreground_extract_siox_done (fg_select->state);
             fg_select->state = NULL;
           }
+
+        tool->display = NULL;
       }
       break;
     }
@@ -441,7 +443,8 @@ gimp_foreground_select_tool_button_press (GimpTool        *tool,
       if (gimp_draw_tool_is_active (draw_tool) && draw_tool->display != display)
         gimp_draw_tool_stop (draw_tool);
 
-      gimp_tool_control_activate (tool->control);
+      if (! gimp_tool_control_is_active (tool->control))
+        gimp_tool_control_activate (tool->control);
 
       fg_select->last_coords = *coords;
 

@@ -597,8 +597,6 @@ gimp_free_select_tool_commit (GimpFreeSelectTool *fst,
       gimp_free_select_tool_select (fst, display);
     }
 
-  gimp_free_select_tool_halt (fst);
-
   gimp_image_flush (display->image);
 }
 
@@ -1094,5 +1092,7 @@ gimp_free_select_tool_real_select (GimpFreeSelectTool *fst,
                                options->feather_radius,
                                options->feather_radius,
                                TRUE);
+
+  gimp_free_select_tool_halt (fst);
 }
 

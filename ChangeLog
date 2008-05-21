@@ -1,3 +1,21 @@
+2008-05-21  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Made the Foreground Select Tool work again.
+
+	* app/tools/gimpforegroundselecttool.c
+	(gimp_foreground_select_tool_control): Set tool->display =
+	NULL when halting the tool.
+
+	(gimp_foreground_select_tool_button_press): Only activate the
+	tool control if it is not active (it might be actived already
+	by the Free Select Tool).
+
+	* app/tools/gimpfreeselecttool.c
+	(gimp_free_select_tool_commit): Don't _halt explicitly
+	here. If a tool implementation wants to halt in this
+	situation, let them do that in their
+	GimpFreeSelectTool::select() instead.
+
 2008-05-21  Sven Neumann  <sven@gimp.org>
 
 	* app/core/Makefile.am
@@ -17,8 +35,8 @@
 2008-05-21  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpfreeselecttool.c
-	(gimp_free_select_tool_status_update): Slightly improve one of the
-	status bar messages.
+	(gimp_free_select_tool_status_update): Slightly improve one of
+	the status bar messages.
 
 2008-05-21  Sven Neumann  <sven@gimp.org>
 
