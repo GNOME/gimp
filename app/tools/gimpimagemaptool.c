@@ -198,8 +198,9 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
 
   image_map_tool->shell           = NULL;
   image_map_tool->main_vbox       = NULL;
-  image_map_tool->load_button     = NULL;
-  image_map_tool->save_button     = NULL;
+  image_map_tool->favorites_menu  = NULL;
+  image_map_tool->load_item       = NULL;
+  image_map_tool->save_item       = NULL;
   image_map_tool->settings_dialog = NULL;
 }
 
@@ -244,10 +245,11 @@ gimp_image_map_tool_finalize (GObject *object)
   if (image_map_tool->shell)
     {
       gtk_widget_destroy (image_map_tool->shell);
-      image_map_tool->shell       = NULL;
-      image_map_tool->main_vbox   = NULL;
-      image_map_tool->load_button = NULL;
-      image_map_tool->save_button = NULL;
+      image_map_tool->shell          = NULL;
+      image_map_tool->main_vbox      = NULL;
+      image_map_tool->favorites_menu = NULL;
+      image_map_tool->load_item      = NULL;
+      image_map_tool->save_item      = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);

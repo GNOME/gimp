@@ -1,5 +1,12 @@
 2008-05-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpimagemaptool.[ch]
+	* app/tools/gimpimagemaptool-settings.c: turn the ugly row of
+	favorites options buttons into a menu that's attached to an arrow
+	button right of the favorites combo.
+
+2008-05-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpcurvestool.c: remove unused variable.
 
 2008-05-21  Martin Nordholts  <martinn@svn.gnome.org>
