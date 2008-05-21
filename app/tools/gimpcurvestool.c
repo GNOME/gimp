@@ -417,7 +417,6 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget        *hbox;
   GtkWidget        *hbox2;
   GtkWidget        *label;
-  GtkWidget        *bbox;
   GtkWidget        *frame;
   GtkWidget        *table;
   GtkWidget        *button;

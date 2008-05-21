@@ -1,3 +1,7 @@
+2008-05-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpcurvestool.c: remove unused variable.
+
 2008-05-21  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/core/gimpscanconvert.c (gimp_scan_convert_add_polyline):
