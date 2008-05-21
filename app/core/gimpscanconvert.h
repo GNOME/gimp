@@ -22,52 +22,52 @@
 
 GimpScanConvert * gimp_scan_convert_new        (void);
 
-void      gimp_scan_convert_free               (GimpScanConvert *sc);
-void      gimp_scan_convert_set_pixel_ratio    (GimpScanConvert *sc,
-                                                gdouble          ratio_xy);
-void      gimp_scan_convert_set_clip_rectangle (GimpScanConvert *sc,
-                                                gint             x,
-                                                gint             y,
-                                                gint             width,
-                                                gint             height);
-void      gimp_scan_convert_add_polyline       (GimpScanConvert *sc,
-                                                guint            n_points,
-                                                GimpVector2     *points,
-                                                gboolean         closed);
-void      gimp_scan_convert_stroke             (GimpScanConvert *sc,
-                                                gdouble          width,
-                                                GimpJoinStyle    join,
-                                                GimpCapStyle     cap,
-                                                gdouble          miter,
-                                                gdouble          dash_offset,
-                                                GArray          *dash_info);
-void      gimp_scan_convert_render_full        (GimpScanConvert *sc,
-                                                TileManager     *tile_manager,
-                                                gint             off_x,
-                                                gint             off_y,
-                                                gboolean         replace,
-                                                gboolean         antialias,
-                                                guchar           value);
+void      gimp_scan_convert_free               (GimpScanConvert   *sc);
+void      gimp_scan_convert_set_pixel_ratio    (GimpScanConvert   *sc,
+                                                gdouble            ratio_xy);
+void      gimp_scan_convert_set_clip_rectangle (GimpScanConvert   *sc,
+                                                gint               x,
+                                                gint               y,
+                                                gint               width,
+                                                gint               height);
+void      gimp_scan_convert_add_polyline       (GimpScanConvert   *sc,
+                                                guint              n_points,
+                                                const GimpVector2 *points,
+                                                gboolean           closed);
+void      gimp_scan_convert_stroke             (GimpScanConvert   *sc,
+                                                gdouble            width,
+                                                GimpJoinStyle      join,
+                                                GimpCapStyle       cap,
+                                                gdouble            miter,
+                                                gdouble            dash_offset,
+                                                GArray            *dash_info);
+void      gimp_scan_convert_render_full        (GimpScanConvert   *sc,
+                                                TileManager       *tile_manager,
+                                                gint               off_x,
+                                                gint               off_y,
+                                                gboolean           replace,
+                                                gboolean           antialias,
+                                                guchar             value);
 
-void      gimp_scan_convert_render             (GimpScanConvert *sc,
-                                                TileManager     *tile_manager,
-                                                gint             off_x,
-                                                gint             off_y,
-                                                gboolean         antialias);
-void      gimp_scan_convert_render_value       (GimpScanConvert *sc,
-                                                TileManager     *tile_manager,
-                                                gint             off_x,
-                                                gint             off_y,
-                                                guchar           value);
-void      gimp_scan_convert_compose            (GimpScanConvert *sc,
-                                                TileManager     *tile_manager,
-                                                gint             off_x,
-                                                gint             off_y);
-void      gimp_scan_convert_compose_value      (GimpScanConvert *sc,
-                                                TileManager     *tile_manager,
-                                                gint             off_x,
-                                                gint             off_y,
-                                                gint             value);
+void      gimp_scan_convert_render             (GimpScanConvert   *sc,
+                                                TileManager       *tile_manager,
+                                                gint               off_x,
+                                                gint               off_y,
+                                                gboolean           antialias);
+void      gimp_scan_convert_render_value       (GimpScanConvert   *sc,
+                                                TileManager       *tile_manager,
+                                                gint               off_x,
+                                                gint               off_y,
+                                                guchar             value);
+void      gimp_scan_convert_compose            (GimpScanConvert   *sc,
+                                                TileManager       *tile_manager,
+                                                gint               off_x,
+                                                gint               off_y);
+void      gimp_scan_convert_compose_value      (GimpScanConvert   *sc,
+                                                TileManager       *tile_manager,
+                                                gint               off_x,
+                                                gint               off_y,
+                                                gint               value);
 
 
 #endif /* __GIMP_SCAN_CONVERT_H__ */

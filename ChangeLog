@@ -1,3 +1,8 @@
+2008-05-21  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/core/gimpscanconvert.c (gimp_scan_convert_add_polyline):
+	constify the points argument.
+
 2008-05-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/pixel-processor.h: remove PixelProcessorFunc typedef.

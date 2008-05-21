@@ -159,10 +159,10 @@ gimp_scan_convert_set_clip_rectangle (GimpScanConvert *sc,
  * specify open polygons.
  */
 void
-gimp_scan_convert_add_polyline (GimpScanConvert *sc,
-                                guint            n_points,
-                                GimpVector2     *points,
-                                gboolean         closed)
+gimp_scan_convert_add_polyline (GimpScanConvert   *sc,
+                                guint              n_points,
+                                const GimpVector2 *points,
+                                gboolean           closed)
 {
   GimpVector2        prev = { 0.0, 0.0, };
   cairo_path_data_t  pd;
