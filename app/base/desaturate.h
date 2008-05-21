@@ -20,7 +20,7 @@
 #define __DESATURATE_H__
 
 
-void  desaturate_region (GimpDesaturateMode  mode,
+void  desaturate_region (GimpDesaturateMode *mode,
                          PixelRegion        *srcPR,
                          PixelRegion        *destPR);
 

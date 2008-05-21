@@ -1,5 +1,14 @@
 2008-05-21  Sven Neumann  <sven@gimp.org>
 
+	* app/base/desaturate.[ch]: changed to take a pointer as first
+	argument as all PixelProcessor functions.
+
+	* app/core/gimpdrawable-desaturate.c: changed accordingly.
+
+	* app/tools/gimpdesaturatetool.[ch]: added legacy code path.
+
+2008-05-21  Sven Neumann  <sven@gimp.org>
+
 	* app/base/Makefile.am
 	* app/base/desaturate.[ch]: moved legacy desaturate code here.
 

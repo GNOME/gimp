@@ -40,14 +40,15 @@ static void  desaturate_region_average    (PixelRegion    *srcPR,
 
 
 void
-desaturate_region (GimpDesaturateMode  mode,
+desaturate_region (GimpDesaturateMode *mode,
                    PixelRegion        *srcPR,
                    PixelRegion        *destPR)
 {
+  g_return_if_fail (mode != NULL);
   g_return_if_fail (srcPR->bytes == destPR->bytes);
   g_return_if_fail (srcPR->bytes == 3 || srcPR->bytes == 4);
 
-  switch (mode)
+  switch (*mode)
     {
     case GIMP_DESATURATE_LIGHTNESS:
       desaturate_region_lightness (srcPR, destPR, srcPR->bytes == 4);

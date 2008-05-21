@@ -27,8 +27,7 @@
 
 #include "tools-types.h"
 
-#include "base/gimplut.h"
-#include "base/lut-funcs.h"
+#include "base/desaturate.h"
 
 #include "gegl/gimpdesaturateconfig.h"
 
@@ -106,6 +105,10 @@ gimp_desaturate_tool_class_init (GimpDesaturateToolClass *klass)
 static void
 gimp_desaturate_tool_init (GimpDesaturateTool *desaturate_tool)
 {
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (desaturate_tool);
+
+  im_tool->apply_func = (GimpImageMapApplyFunc) desaturate_region;
+  im_tool->apply_data = &desaturate_tool->mode;
 }
 
 static gboolean
@@ -114,7 +117,7 @@ gimp_desaturate_tool_initialize (GimpTool     *tool,
                                 GError      **error)
 {
   GimpDesaturateTool *desaturate_tool = GIMP_DESATURATE_TOOL (tool);
-  GimpDrawable      *drawable;
+  GimpDrawable       *drawable;
 
   drawable = gimp_image_get_active_drawable (display->image);
 
@@ -145,7 +148,7 @@ gimp_desaturate_tool_get_operation (GimpImageMapTool  *image_map_tool,
                                     GObject          **config)
 {
   GimpDesaturateTool *desaturate_tool = GIMP_DESATURATE_TOOL (image_map_tool);
-  GeglNode          *node;
+  GeglNode           *node;
 
   node = g_object_new (GEGL_TYPE_NODE,
                        "operation", "gimp-desaturate",
@@ -169,6 +172,9 @@ gimp_desaturate_tool_get_operation (GimpImageMapTool  *image_map_tool,
 static void
 gimp_desaturate_tool_map (GimpImageMapTool *image_map_tool)
 {
+  GimpDesaturateTool *desaturate_tool = GIMP_DESATURATE_TOOL (image_map_tool);
+
+  desaturate_tool->mode = desaturate_tool->config->mode;
 }
 
 
@@ -195,9 +201,9 @@ gimp_desaturate_tool_dialog (GimpImageMapTool *image_map_tool)
 }
 
 static void
-gimp_desaturate_tool_config_notify (GObject           *object,
-                                    GParamSpec        *pspec,
-                                   GimpDesaturateTool *desaturate_tool)
+gimp_desaturate_tool_config_notify (GObject            *object,
+                                    GParamSpec         *pspec,
+                                    GimpDesaturateTool *desaturate_tool)
 {
   GimpDesaturateConfig *config = GIMP_DESATURATE_CONFIG (object);
 

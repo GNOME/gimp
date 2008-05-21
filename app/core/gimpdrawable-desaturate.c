@@ -88,7 +88,7 @@ gimp_drawable_desaturate (GimpDrawable       *drawable,
                          x, y, width, height, TRUE);
 
       pixel_regions_process_parallel ((PixelProcessorFunc) desaturate_region,
-                                      GINT_TO_POINTER (mode),
+                                      &mode,
                                       2, &srcPR, &destPR);
 
       gimp_drawable_merge_shadow_tiles (drawable, TRUE, _("Desaturate"));
