@@ -1,3 +1,12 @@
+2008-05-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-process.c (gimp_drawable_process): add
+	missing include and missing call to gimp_drawable_mask_intersect().
+
+2008-05-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/gegl/gimpdesaturateconfig.c: use a stock_id that exists.
+
 2008-05-21  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Made the Foreground Select Tool work again.

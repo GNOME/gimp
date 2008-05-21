@@ -26,8 +26,10 @@
 #include "base/pixel-region.h"
 
 #include "gimpdrawable.h"
+#include "gimpdrawable-process.h"
 #include "gimpdrawable-shadow.h"
 #include "gimpprogress.h"
+
 
 void
 gimp_drawable_process (GimpDrawable       *drawable,
@@ -36,22 +38,26 @@ gimp_drawable_process (GimpDrawable       *drawable,
                        PixelProcessorFunc  func,
                        gpointer            data)
 {
-  PixelRegion  srcPR, destPR;
-  gint         x, y, width, height;
+  gint x, y, width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                     x, y, width, height, FALSE);
-  pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                     x, y, width, height, TRUE);
+  if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+    {
+      PixelRegion srcPR, destPR;
 
-  pixel_regions_process_parallel (func, data, 2, &srcPR, &destPR);
+      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
+                         x, y, width, height, FALSE);
+      pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
+                         x, y, width, height, TRUE);
 
-  gimp_drawable_merge_shadow_tiles (drawable, TRUE, undo_desc);
-  gimp_drawable_free_shadow_tiles (drawable);
+      pixel_regions_process_parallel (func, data, 2, &srcPR, &destPR);
 
-  gimp_drawable_update (drawable, x, y, width, height);
+      gimp_drawable_merge_shadow_tiles (drawable, TRUE, undo_desc);
+      gimp_drawable_free_shadow_tiles (drawable);
+
+      gimp_drawable_update (drawable, x, y, width, height);
+    }
 }
