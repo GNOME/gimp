@@ -1,5 +1,12 @@
 2008-05-21  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimpforegroundselecttool.c
+	(gimp_foreground_select_tool_oper_update): "Draw a rough circle
+	around the object to extract" -> "Rougly outline the object to
+	extract".
+
+2008-05-21  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimpfreeselecttool.[ch]: Don't expose implementation
 	details.
 
