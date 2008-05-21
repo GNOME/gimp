@@ -225,7 +225,7 @@ desaturate_invoker (GimpProcedure      *procedure,
         success = FALSE;
 
       if (success)
-        gimp_drawable_desaturate (drawable, GIMP_DESATURATE_LIGHTNESS);
+        gimp_drawable_desaturate (drawable, progress, GIMP_DESATURATE_LIGHTNESS);
     }
 
   return gimp_procedure_get_return_values (procedure, success);
@@ -253,7 +253,7 @@ desaturate_full_invoker (GimpProcedure      *procedure,
         success = FALSE;
 
       if (success)
-        gimp_drawable_desaturate (drawable, desaturate_mode);
+        gimp_drawable_desaturate (drawable, progress, desaturate_mode);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

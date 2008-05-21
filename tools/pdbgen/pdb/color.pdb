@@ -227,7 +227,7 @@ HELP
     success = FALSE;
 
   if (success)
-    gimp_drawable_desaturate (drawable, GIMP_DESATURATE_LIGHTNESS);
+    gimp_drawable_desaturate (drawable, progress, GIMP_DESATURATE_LIGHTNESS);
 }
 CODE
     );
@@ -264,7 +264,7 @@ HELP
     success = FALSE;
 
   if (success)
-    gimp_drawable_desaturate (drawable, desaturate_mode);
+    gimp_drawable_desaturate (drawable, progress, desaturate_mode);
 }
 CODE
     );

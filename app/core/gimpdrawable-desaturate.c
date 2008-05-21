@@ -20,13 +20,10 @@
 
 #include <gegl.h>
 
-#include "libgimpcolor/gimpcolor.h"
-
 #include "core-types.h"
 
 #include "base/desaturate.h"
 #include "base/pixel-processor.h"
-#include "base/pixel-region.h"
 
 #include "gegl/gimpdesaturateconfig.h"
 
@@ -37,17 +34,20 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-desaturate.h"
 #include "gimpdrawable-operation.h"
-#include "gimpdrawable-shadow.h"
+#include "gimpdrawable-process.h"
+#include "gimpprogress.h"
 
 #include "gimp-intl.h"
 
 
 void
 gimp_drawable_desaturate (GimpDrawable       *drawable,
+                          GimpProgress       *progress,
                           GimpDesaturateMode  mode)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_drawable_is_rgb (drawable));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
 
   if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
@@ -70,30 +70,13 @@ gimp_drawable_desaturate (GimpDrawable       *drawable,
       g_object_unref (config);
 
       gimp_drawable_apply_operation (drawable, desaturate, TRUE,
-                                     NULL, _("Desaturate"));
+                                     progress, _("Desaturate"));
 
       g_object_unref  (desaturate);
     }
   else
     {
-      PixelRegion  srcPR, destPR;
-      gint         x, y, width, height;
-
-      if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-        return;
-
-      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                         x, y, width, height, FALSE);
-      pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                         x, y, width, height, TRUE);
-
-      pixel_regions_process_parallel ((PixelProcessorFunc) desaturate_region,
-                                      &mode,
-                                      2, &srcPR, &destPR);
-
-      gimp_drawable_merge_shadow_tiles (drawable, TRUE, _("Desaturate"));
-      gimp_drawable_free_shadow_tiles (drawable);
-
-      gimp_drawable_update (drawable, x, y, width, height);
+      gimp_drawable_process (drawable, progress, _("Desaturate"),
+                             (PixelProcessorFunc) desaturate_region, &mode);
     }
 }

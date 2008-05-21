@@ -1,3 +1,19 @@
+2008-05-21  Sven Neumann  <sven@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/gimpdrawable-process.[ch]: new file holding code to
+	apply a PixelProcessor to the full drawable.
+
+	* app/core/gimpdrawable-desaturate.c
+	* app/core/gimpdrawable-invert.c: use the new helper function.
+
+	* app/core/gimpdrawable-desaturate.[ch] (gimp_drawable_desaturate):
+	take a GimpProgress parameter.
+
+	* tools/pdbgen/pdb/color.pdb: changed accordingly.
+
+	* app/pdb/color-cmds.c: regenerated.
+
 2008-05-21  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpfreeselecttool.c
@@ -12,7 +28,7 @@
 2008-05-21  Sven Neumann  <sven@gimp.org>
 
 	* app/base/desaturate.[ch]: changed to take a pointer as first
-	argument as all PixelProcessor functions.
+	argument like all PixelProcessor functions.
 
 	* app/core/gimpdrawable-desaturate.c: changed accordingly.
 

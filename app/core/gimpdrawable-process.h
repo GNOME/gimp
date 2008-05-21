@@ -16,13 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DRAWABLE_DESATURATE_H__
-#define __GIMP_DRAWABLE_DESATURATE_H__
+#ifndef __GIMP_DRAWABLE_PROCESS_H__
+#define __GIMP_DRAWABLE_PROCESS_H__
 
 
-void   gimp_drawable_desaturate (GimpDrawable       *drawable,
-                                 GimpProgress       *progress,
-                                 GimpDesaturateMode  mode);
+void  gimp_drawable_process (GimpDrawable       *drawable,
+                             GimpProgress       *progress,
+                             const gchar        *undo_desc,
+                             PixelProcessorFunc  func,
+                             gpointer            data);
 
 
-#endif  /*  __GIMP_DRAWABLE_DESATURATE_H__  */
+#endif  /*  __GIMP_DRAWABLE_PROCESS_H__  */

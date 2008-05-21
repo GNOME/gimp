@@ -25,7 +25,6 @@
 #include "base/curves.h"
 #include "base/gimplut.h"
 #include "base/pixel-processor.h"
-#include "base/pixel-region.h"
 
 #include "gegl/gimpcurvesconfig.h"
 
@@ -37,7 +36,7 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-curves.h"
 #include "gimpdrawable-operation.h"
-#include "gimpdrawable-shadow.h"
+#include "gimpdrawable-process.h"
 
 #include "gimp-intl.h"
 
@@ -171,40 +170,20 @@ gimp_drawable_curves (GimpDrawable     *drawable,
     }
   else
     {
-      gint x, y, width, height;
+      GimpLut *lut = gimp_lut_new ();
+      Curves   cruft;
 
-      /* The application should occur only within selection bounds */
-      if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-        {
-          Curves       cruft;
-          PixelRegion  srcPR, destPR;
-          GimpLut     *lut;
+      gimp_curves_config_to_cruft (config, &cruft,
+                                   gimp_drawable_is_rgb (drawable));
 
-          lut = gimp_lut_new ();
+      gimp_lut_setup (lut,
+                      (GimpLutFunc) curves_lut_func,
+                      &cruft,
+                      gimp_drawable_bytes (drawable));
 
-          gimp_curves_config_to_cruft (config, &cruft,
-                                       gimp_drawable_is_rgb (drawable));
+      gimp_drawable_process (drawable, progress, _("Curves"),
+                             (PixelProcessorFunc) gimp_lut_process, lut);
 
-          gimp_lut_setup (lut,
-                          (GimpLutFunc) curves_lut_func,
-                          &cruft,
-                          gimp_drawable_bytes (drawable));
-
-          pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                             x, y, width, height, FALSE);
-          pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                             x, y, width, height, TRUE);
-
-          pixel_regions_process_parallel ((PixelProcessorFunc)
-                                          gimp_lut_process,
-                                          lut, 2, &srcPR, &destPR);
-
-          gimp_lut_free (lut);
-
-          gimp_drawable_merge_shadow_tiles (drawable, TRUE, _("Curves"));
-          gimp_drawable_free_shadow_tiles (drawable);
-
-          gimp_drawable_update (drawable, x, y, width, height);
-        }
+      gimp_lut_free (lut);
     }
 }

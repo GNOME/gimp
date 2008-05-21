@@ -18,53 +18,40 @@
 
 #include "config.h"
 
-#include <gegl.h>
+#include <glib-object.h>
 
 #include "core-types.h"
 
-#include "base/gimplut.h"
-#include "base/lut-funcs.h"
 #include "base/pixel-processor.h"
-
-/* temp */
-#include "gimp.h"
-#include "gimpimage.h"
+#include "base/pixel-region.h"
 
 #include "gimpdrawable.h"
-#include "gimpdrawable-invert.h"
-#include "gimpdrawable-operation.h"
-#include "gimpdrawable-process.h"
+#include "gimpdrawable-shadow.h"
 #include "gimpprogress.h"
 
-#include "gimp-intl.h"
-
-
 void
-gimp_drawable_invert (GimpDrawable *drawable,
-                      GimpProgress *progress)
+gimp_drawable_process (GimpDrawable       *drawable,
+                       GimpProgress       *progress,
+                       const gchar        *undo_desc,
+                       PixelProcessorFunc  func,
+                       gpointer            data)
 {
+  PixelRegion  srcPR, destPR;
+  gint         x, y, width, height;
+
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
-    {
-      GeglNode *invert;
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
+                     x, y, width, height, FALSE);
+  pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
+                     x, y, width, height, TRUE);
 
-      invert = g_object_new (GEGL_TYPE_NODE, "operation", "invert", NULL);
+  pixel_regions_process_parallel (func, data, 2, &srcPR, &destPR);
 
-      gimp_drawable_apply_operation (drawable, invert, TRUE,
-                                     progress, _("Invert"));
+  gimp_drawable_merge_shadow_tiles (drawable, TRUE, undo_desc);
+  gimp_drawable_free_shadow_tiles (drawable);
 
-      g_object_unref (invert);
-    }
-  else
-    {
-      GimpLut *lut = invert_lut_new (gimp_drawable_bytes (drawable));
-
-      gimp_drawable_process (drawable, progress, _("Invert"),
-                             (PixelProcessorFunc) gimp_lut_process, lut);
-
-      gimp_lut_free (lut);
-    }
+  gimp_drawable_update (drawable, x, y, width, height);
 }

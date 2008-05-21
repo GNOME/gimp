@@ -145,6 +145,8 @@ libappcore_a_sources = \
 	gimpdrawable-posterize.h		\
 	gimpdrawable-preview.c			\
 	gimpdrawable-preview.h			\
+	gimpdrawable-process.c			\
+	gimpdrawable-process.h			\
 	gimpdrawable-shadow.c			\
 	gimpdrawable-shadow.h			\
 	gimpdrawable-stroke.c			\
