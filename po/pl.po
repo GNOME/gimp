@@ -40,16 +40,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-4.pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-18 14:32+0200\n"
-"PO-Revision-Date: 2008-05-08 13:41+0200\n"
-"Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
+"POT-Creation-Date: 2008-05-22 01:35+0200\n"
+"PO-Revision-Date: 2008-05-21 17:31+0100\n"
+"Last-Translator: Piotr Zaryk (Aviary.pl) <pzaryk@aviary.pl>\n"
 "Language-Team: Polish <gnome-l10n@lists.aviary.pl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%"
-"100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
 
 #: ../app/about.h:24
 msgid "GIMP"
@@ -288,27 +288,27 @@ msgstr ""
 msgid "%s version %s"
 msgstr "%s wersja %s"
 
-#: ../app/actions/actions.c:100 ../app/dialogs/dialogs.c:223
+#: ../app/actions/actions.c:100 ../app/dialogs/dialogs.c:224
 #: ../app/widgets/gimpbrusheditor.c:90
 msgid "Brush Editor"
 msgstr "Edytor pędzli"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:103 ../app/core/gimp.c:824
-#: ../app/dialogs/dialogs.c:156 ../app/dialogs/preferences-dialog.c:2691
+#: ../app/dialogs/dialogs.c:157 ../app/dialogs/preferences-dialog.c:2691
 msgid "Brushes"
 msgstr "Pędzle"
 
-#: ../app/actions/actions.c:106 ../app/dialogs/dialogs.c:168
+#: ../app/actions/actions.c:106 ../app/dialogs/dialogs.c:169
 msgid "Buffers"
 msgstr "Bufory"
 
-#: ../app/actions/actions.c:109 ../app/dialogs/dialogs.c:181
+#: ../app/actions/actions.c:109 ../app/dialogs/dialogs.c:182
 msgid "Channels"
 msgstr "Kanały"
 
 #: ../app/actions/actions.c:112 ../app/dialogs/convert-dialog.c:174
-#: ../app/dialogs/dialogs.c:189
+#: ../app/dialogs/dialogs.c:190
 msgid "Colormap"
 msgstr "Paleta kolorów"
 
@@ -316,7 +316,7 @@ msgstr "Paleta kolorów"
 msgid "Context"
 msgstr "Kontekst"
 
-#: ../app/actions/actions.c:118 ../app/dialogs/dialogs.c:149
+#: ../app/actions/actions.c:118 ../app/dialogs/dialogs.c:150
 msgid "Pointer Information"
 msgstr "Informacje o wskaźniku"
 
@@ -337,7 +337,7 @@ msgid "Dockable"
 msgstr "Element dokowalny"
 
 #. Document History
-#: ../app/actions/actions.c:133 ../app/dialogs/dialogs.c:170
+#: ../app/actions/actions.c:133 ../app/dialogs/dialogs.c:171
 #: ../app/dialogs/preferences-dialog.c:1588
 msgid "Document History"
 msgstr "Historia dokumentów"
@@ -350,7 +350,7 @@ msgstr "Obszar rysowania"
 msgid "Edit"
 msgstr "Edycja"
 
-#: ../app/actions/actions.c:142 ../app/dialogs/dialogs.c:145
+#: ../app/actions/actions.c:142 ../app/dialogs/dialogs.c:146
 msgid "Error Console"
 msgstr "Konsola błędów"
 
@@ -358,19 +358,19 @@ msgstr "Konsola błędów"
 msgid "File"
 msgstr "Plik"
 
-#: ../app/actions/actions.c:148 ../app/dialogs/dialogs.c:164
+#: ../app/actions/actions.c:148 ../app/dialogs/dialogs.c:165
 #: ../app/dialogs/preferences-dialog.c:2707
 msgid "Fonts"
 msgstr "Czcionki"
 
-#: ../app/actions/actions.c:151 ../app/dialogs/dialogs.c:227
+#: ../app/actions/actions.c:151 ../app/dialogs/dialogs.c:228
 #: ../app/widgets/gimpgradienteditor.c:276
 msgid "Gradient Editor"
 msgstr "Edytor gradientów"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:154 ../app/core/gimp.c:836
-#: ../app/dialogs/dialogs.c:160 ../app/dialogs/preferences-dialog.c:2703
+#: ../app/dialogs/dialogs.c:161 ../app/dialogs/preferences-dialog.c:2703
 msgid "Gradients"
 msgstr "Gradienty"
 
@@ -384,29 +384,29 @@ msgid "Image"
 msgstr "Obraz"
 
 #. list & grid views
-#: ../app/actions/actions.c:163 ../app/dialogs/dialogs.c:154
+#: ../app/actions/actions.c:163 ../app/dialogs/dialogs.c:155
 msgid "Images"
 msgstr "Obrazy"
 
-#: ../app/actions/actions.c:166 ../app/dialogs/dialogs.c:177
+#: ../app/actions/actions.c:166 ../app/dialogs/dialogs.c:178
 #: ../app/dialogs/resize-dialog.c:286
 msgid "Layers"
 msgstr "Warstwy"
 
-#: ../app/actions/actions.c:169 ../app/dialogs/dialogs.c:231
+#: ../app/actions/actions.c:169 ../app/dialogs/dialogs.c:232
 #: ../app/widgets/gimppaletteeditor.c:155
 msgid "Palette Editor"
 msgstr "Edytor palety"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:172 ../app/core/gimp.c:832
-#: ../app/dialogs/dialogs.c:162 ../app/dialogs/preferences-dialog.c:2699
+#: ../app/dialogs/dialogs.c:163 ../app/dialogs/preferences-dialog.c:2699
 msgid "Palettes"
 msgstr "Palety"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:175 ../app/core/gimp.c:828
-#: ../app/dialogs/dialogs.c:158 ../app/dialogs/preferences-dialog.c:2695
+#: ../app/dialogs/dialogs.c:159 ../app/dialogs/preferences-dialog.c:2695
 msgid "Patterns"
 msgstr "Desenie"
 
@@ -419,7 +419,7 @@ msgstr "Wtyczki"
 msgid "Quick Mask"
 msgstr "Szybka maska"
 
-#: ../app/actions/actions.c:184 ../app/dialogs/dialogs.c:205
+#: ../app/actions/actions.c:184 ../app/dialogs/dialogs.c:206
 msgid "Sample Points"
 msgstr "Punkty wzorcowe"
 
@@ -429,7 +429,7 @@ msgstr "Zaznaczenie"
 
 #. initialize the template list
 #: ../app/actions/actions.c:190 ../app/core/gimp.c:845
-#: ../app/dialogs/dialogs.c:172
+#: ../app/dialogs/dialogs.c:173
 msgid "Templates"
 msgstr "Szablony"
 
@@ -437,16 +437,16 @@ msgstr "Szablony"
 msgid "Text Editor"
 msgstr "Edytor tekstowy"
 
-#: ../app/actions/actions.c:196 ../app/dialogs/dialogs.c:137
+#: ../app/actions/actions.c:196 ../app/dialogs/dialogs.c:138
 #: ../app/dialogs/preferences-dialog.c:1827 ../app/gui/gui.c:434
 msgid "Tool Options"
 msgstr "Opcje narzędzia"
 
-#: ../app/actions/actions.c:199 ../app/dialogs/dialogs.c:166
+#: ../app/actions/actions.c:199 ../app/dialogs/dialogs.c:167
 msgid "Tools"
 msgstr "Narzędzia"
 
-#: ../app/actions/actions.c:202 ../app/dialogs/dialogs.c:185
+#: ../app/actions/actions.c:202 ../app/dialogs/dialogs.c:186
 #: ../app/tools/gimpvectortool.c:160
 msgid "Paths"
 msgstr "Ścieżki"
@@ -986,7 +986,7 @@ msgstr "_Historia operacji"
 msgid "Open the undo history dialog"
 msgstr "Otwiera okno historii cofnięć"
 
-#: ../app/actions/dialogs-actions.c:99 ../app/dialogs/dialogs.c:149
+#: ../app/actions/dialogs-actions.c:99 ../app/dialogs/dialogs.c:150
 msgid "Pointer"
 msgstr "Wskaźnik"
 
@@ -1245,14 +1245,22 @@ msgid "St_atus & Text"
 msgstr "S_tan i tekst"
 
 #: ../app/actions/dockable-actions.c:108
+msgid "Loc_k Tab to Dock"
+msgstr ""
+
+#: ../app/actions/dockable-actions.c:109
+msgid "Protect this tab from being dragged with the mouse pointer"
+msgstr ""
+
+#: ../app/actions/dockable-actions.c:115
 msgid "Show _Button Bar"
 msgstr "Wyświetl _pasek przycisków"
 
-#: ../app/actions/dockable-actions.c:117
+#: ../app/actions/dockable-actions.c:124
 msgid "View as _List"
 msgstr "Wyświetl jako _listę"
 
-#: ../app/actions/dockable-actions.c:122
+#: ../app/actions/dockable-actions.c:129
 msgid "View as _Grid"
 msgstr "Wyświetl jako _siatkę"
 
@@ -1349,114 +1357,102 @@ msgid ""
 msgstr "Wyczyszczenie historii dokumentów. usunie na stałe wszystkie pozycje."
 
 #: ../app/actions/drawable-actions.c:45
-msgid "_Desaturate..."
-msgstr "_Desaturacja..."
-
-#: ../app/actions/drawable-actions.c:46
-msgid "Turn colors into shades of gray"
-msgstr "Zamienia kolory na odcienie szarości"
-
-#: ../app/actions/drawable-actions.c:51
 msgid "_Equalize"
 msgstr "Z_równanie"
 
-#: ../app/actions/drawable-actions.c:52
+#: ../app/actions/drawable-actions.c:46
 msgid "Automatic contrast enhancement"
 msgstr "Rozszerzenie automatycznego kontrastu"
 
-#: ../app/actions/drawable-actions.c:57
+#: ../app/actions/drawable-actions.c:51
 msgid "In_vert"
 msgstr "In_wersja"
 
-#: ../app/actions/drawable-actions.c:58
+#: ../app/actions/drawable-actions.c:52
 msgid "Invert the colors"
 msgstr "Odwraca kolory"
 
-#: ../app/actions/drawable-actions.c:63
+#: ../app/actions/drawable-actions.c:57
 msgid "_White Balance"
 msgstr "_Balans bieli"
 
-#: ../app/actions/drawable-actions.c:64
+#: ../app/actions/drawable-actions.c:58
 msgid "Automatic white balance correction"
 msgstr "Automatyczna korekcja balansu bieli"
 
-#: ../app/actions/drawable-actions.c:69
+#: ../app/actions/drawable-actions.c:63
 msgid "_Offset..."
 msgstr "_Przesunięcie..."
 
-#: ../app/actions/drawable-actions.c:70
+#: ../app/actions/drawable-actions.c:64
 msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr "Przesuwa piksele, opcjonalnie otaczając je ramkami"
 
-#: ../app/actions/drawable-actions.c:78 ../app/actions/vectors-actions.c:153
+#: ../app/actions/drawable-actions.c:72 ../app/actions/vectors-actions.c:153
 msgid "_Linked"
 msgstr "_Dowiązany"
 
-#: ../app/actions/drawable-actions.c:79
+#: ../app/actions/drawable-actions.c:73
 msgid "Toggle the linked state"
 msgstr "Przełącza stan dowiązania"
 
-#: ../app/actions/drawable-actions.c:85 ../app/actions/vectors-actions.c:147
+#: ../app/actions/drawable-actions.c:79 ../app/actions/vectors-actions.c:147
 msgid "_Visible"
 msgstr "_Widoczny"
 
-#: ../app/actions/drawable-actions.c:86
+#: ../app/actions/drawable-actions.c:80
 msgid "Toggle visibility"
 msgstr "Przełącza widoczność"
 
-#: ../app/actions/drawable-actions.c:95 ../app/actions/image-actions.c:159
+#: ../app/actions/drawable-actions.c:89 ../app/actions/image-actions.c:159
 msgid "Flip _Horizontally"
 msgstr "Odbij po_ziomo"
 
-#: ../app/actions/drawable-actions.c:96
+#: ../app/actions/drawable-actions.c:90
 msgid "Flip horizontally"
 msgstr "Odbija poziomo"
 
-#: ../app/actions/drawable-actions.c:101 ../app/actions/image-actions.c:165
+#: ../app/actions/drawable-actions.c:95 ../app/actions/image-actions.c:165
 msgid "Flip _Vertically"
 msgstr "Odbij p_ionowo"
 
-#: ../app/actions/drawable-actions.c:102
+#: ../app/actions/drawable-actions.c:96
 msgid "Flip vertically"
 msgstr "Odbija pionowo"
 
-#: ../app/actions/drawable-actions.c:110 ../app/actions/image-actions.c:174
+#: ../app/actions/drawable-actions.c:104 ../app/actions/image-actions.c:174
 msgid "Rotate 90° _clockwise"
 msgstr "Obróć o 90° w _prawo"
 
-#: ../app/actions/drawable-actions.c:111
+#: ../app/actions/drawable-actions.c:105
 msgid "Rotate 90 degrees to the right"
 msgstr "Obraca o 90 stopni w zgodnie z ruchem wskazówek zegara"
 
-#: ../app/actions/drawable-actions.c:116 ../app/actions/image-actions.c:180
+#: ../app/actions/drawable-actions.c:110 ../app/actions/image-actions.c:180
 msgid "Rotate _180°"
 msgstr "Obróć o _180°"
 
-#: ../app/actions/drawable-actions.c:117
+#: ../app/actions/drawable-actions.c:111
 msgid "Turn upside-down"
 msgstr "Odwraca do góry nogami"
 
-#: ../app/actions/drawable-actions.c:122 ../app/actions/image-actions.c:186
+#: ../app/actions/drawable-actions.c:116 ../app/actions/image-actions.c:186
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Obróć o 90° w _lewo"
 
-#: ../app/actions/drawable-actions.c:123
+#: ../app/actions/drawable-actions.c:117
 msgid "Rotate 90 degrees to the left"
 msgstr "Obraca o 90 stopni przeciwnie do ruchu wskazówek zegara"
 
-#: ../app/actions/drawable-commands.c:76
-msgid "Desaturate operates only on RGB color layers."
-msgstr "Desaturacja jest możliwa tylko na warstwach RGB."
-
-#: ../app/actions/drawable-commands.c:104
+#: ../app/actions/drawable-commands.c:62
 msgid "Equalize does not operate on indexed layers."
 msgstr "Zrównywanie nie jest możliwe na warstwach indeksowanych."
 
-#: ../app/actions/drawable-commands.c:127
+#: ../app/actions/drawable-commands.c:85
 msgid "Invert does not operate on indexed layers."
 msgstr "Inwersja nie jest możliwa na warstwach indeksowanych."
 
-#: ../app/actions/drawable-commands.c:150
+#: ../app/actions/drawable-commands.c:108
 msgid "White Balance operates only on RGB color layers."
 msgstr "Bilans bieli możliwy jest tylko na warstwach RGB."
 
@@ -2396,8 +2392,8 @@ msgstr "Pro_wadnice"
 msgid "I_nfo"
 msgstr "I_nformacje"
 
-#: ../app/actions/image-actions.c:61 ../app/tools/gimplevelstool.c:652
-#: ../app/tools/gimpthresholdtool.c:261
+#: ../app/actions/image-actions.c:61 ../app/tools/gimplevelstool.c:644
+#: ../app/tools/gimpthresholdtool.c:266
 msgid "_Auto"
 msgstr "_Automatycznie"
 
@@ -3317,11 +3313,11 @@ msgstr "_Powtórz \"%s\""
 msgid "R_e-Show \"%s\""
 msgstr "_Wyświetl ponownie \"%s\""
 
-#: ../app/actions/plug-in-actions.c:518
+#: ../app/actions/plug-in-actions.c:520
 msgid "Repeat Last"
 msgstr "Powtórz ostatni"
 
-#: ../app/actions/plug-in-actions.c:520
+#: ../app/actions/plug-in-actions.c:522
 msgid "Re-Show Last"
 msgstr "Wyświetl ponownie ostatni"
 
@@ -3653,7 +3649,8 @@ msgstr "Otwiera plik tekstowy (UTF-8)"
 #: ../app/core/gimppalette-load.c:271 ../app/core/gimppalette-load.c:315
 #: ../app/core/gimppalette-load.c:369 ../app/core/gimppalette-load.c:457
 #: ../app/core/gimppalette-load.c:600 ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpimagemaptool.c:837 ../app/xcf/xcf.c:329
+#: ../app/tools/gimpcurvestool.c:589 ../app/tools/gimplevelstool.c:725
+#: ../app/xcf/xcf.c:329
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Nie można otworzyć \"%s\" do odczytu: %s"
@@ -4393,20 +4390,20 @@ msgid "Value"
 msgstr "Wartość"
 
 #: ../app/base/base-enums.c:56 ../app/core/core-enums.c:1197
-#: ../app/tools/gimpcolorbalancetool.c:290
-#: ../app/tools/gimphuesaturationtool.c:248
+#: ../app/tools/gimpcolorbalancetool.c:295
+#: ../app/tools/gimphuesaturationtool.c:253
 msgid "Red"
 msgstr "Czerwony"
 
 #: ../app/base/base-enums.c:57 ../app/core/core-enums.c:1198
-#: ../app/tools/gimpcolorbalancetool.c:299
-#: ../app/tools/gimphuesaturationtool.c:250
+#: ../app/tools/gimpcolorbalancetool.c:304
+#: ../app/tools/gimphuesaturationtool.c:255
 msgid "Green"
 msgstr "Zielony"
 
 #: ../app/base/base-enums.c:58 ../app/core/core-enums.c:1199
-#: ../app/tools/gimpcolorbalancetool.c:308
-#: ../app/tools/gimphuesaturationtool.c:252
+#: ../app/tools/gimpcolorbalancetool.c:313
+#: ../app/tools/gimphuesaturationtool.c:257
 msgid "Blue"
 msgstr "Niebieski"
 
@@ -4536,8 +4533,9 @@ msgstr "Nie można zmienić rozmiaru pliku wymiany: %s"
 #: ../app/config/gimpconfig-file.c:68 ../app/core/gimpbrushgenerated-save.c:63
 #: ../app/core/gimpcurve-save.c:53 ../app/core/gimpgradient-save.c:51
 #: ../app/core/gimpgradient-save.c:145 ../app/core/gimppalette-save.c:56
-#: ../app/gui/themes.c:239 ../app/tools/gimpimagemaptool.c:836
-#: ../app/vectors/gimpvectors-export.c:83 ../app/xcf/xcf.c:421
+#: ../app/gui/themes.c:239 ../app/tools/gimpcurvestool.c:616
+#: ../app/tools/gimplevelstool.c:752 ../app/vectors/gimpvectors-export.c:83
+#: ../app/xcf/xcf.c:421
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nie można otworzyć \"%s\" do zapisu: %s"
@@ -4547,7 +4545,7 @@ msgstr "Nie można otworzyć \"%s\" do zapisu: %s"
 msgid "Error writing '%s': %s"
 msgstr "Błąd zapisu '%s': %s"
 
-#: ../app/config/gimpconfig-file.c:90 ../app/tools/gimpimagemaptool.c:869
+#: ../app/config/gimpconfig-file.c:90
 #, c-format
 msgid "Error reading '%s': %s"
 msgstr "Błąd odczytu '%s': %s"
@@ -5171,7 +5169,7 @@ msgstr "Dowolna paleta"
 msgid "First item"
 msgstr "Pierwszy obiekt"
 
-#: ../app/core/core-enums.c:213 ../app/dialogs/dialogs.c:197
+#: ../app/core/core-enums.c:213 ../app/dialogs/dialogs.c:198
 #: ../app/tools/tools-enums.c:210
 msgid "Selection"
 msgstr "Zaznaczenie"
@@ -5678,7 +5676,7 @@ msgid "Convert to RGB workspace"
 msgstr "Konwertuj do obszaru roboczego RGB"
 
 # c-format
-#: ../app/core/gimp-contexts.c:155 ../app/core/gimptooloptions.c:239
+#: ../app/core/gimp-contexts.c:155 ../app/core/gimptooloptions.c:231
 #: ../app/gui/session.c:305 ../app/menus/menus.c:430
 #: ../app/widgets/gimpdevices.c:258
 #, c-format
@@ -6038,7 +6036,7 @@ msgstr "Ustawienie krycia kanału"
 msgid "Selection Mask"
 msgstr "Maska zaznaczenia"
 
-#: ../app/core/gimpdata.c:526 ../app/core/gimptoolpresets.c:297
+#: ../app/core/gimpdata.c:526 ../app/core/gimptoolpresets.c:279
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "Nie można usunąć \"%s\": %s"
@@ -6113,14 +6111,14 @@ msgstr "Balans kolorów"
 msgid "Colorize"
 msgstr "Barwienie"
 
-#: ../app/core/gimpdrawable-curves.c:168 ../app/core/gimpdrawable-curves.c:204
-#: ../app/tools/gimpcurvestool.c:131
+#: ../app/core/gimpdrawable-curves.c:166 ../app/core/gimpdrawable-curves.c:183
+#: ../app/tools/gimpcurvestool.c:136
 msgid "Curves"
 msgstr "Krzywe"
 
-#: ../app/core/gimpdrawable-desaturate.c:76
-#: ../app/core/gimpdrawable-desaturate.c:121
-#: ../app/dialogs/desaturate-dialog.c:63
+#: ../app/core/gimpdrawable-desaturate.c:72
+#: ../app/core/gimpdrawable-desaturate.c:78
+#: ../app/tools/gimpdesaturatetool.c:77
 msgid "Desaturate"
 msgstr "Desaturacja"
 
@@ -6142,12 +6140,12 @@ msgstr "Odcień i nasycenie"
 msgid "Hue_Saturation"
 msgstr "Odcień i nasycenie"
 
-#: ../app/core/gimpdrawable-invert.c:60 ../app/core/gimpdrawable-invert.c:85
+#: ../app/core/gimpdrawable-invert.c:56 ../app/core/gimpdrawable-invert.c:64
 msgid "Invert"
 msgstr "Inwersja"
 
-#: ../app/core/gimpdrawable-levels.c:154 ../app/core/gimpdrawable-levels.c:188
-#: ../app/tools/gimplevelstool.c:141
+#: ../app/core/gimpdrawable-levels.c:155 ../app/core/gimpdrawable-levels.c:173
+#: ../app/tools/gimplevelstool.c:146
 msgid "Levels"
 msgstr "Poziomy"
 
@@ -6333,13 +6331,10 @@ msgstr "Usunięcie prowadnicy"
 msgid "Move Guide"
 msgstr "Przesunięcie prowadnicy"
 
+# TO NIE JEST MIEJSCE NA WPISYWANIE TŁUMACZY!
 #: ../app/core/gimpimage-item-list.c:53
 msgid "Translate Items"
-msgstr ""
-"GNOME PL Team\n"
-" Bartosz Kosiorek\n"
-" Paweł Dziekoński\n"
-" Artur Polaczyński"
+msgstr "Przemieszcza obiekty"
 
 #: ../app/core/gimpimage-item-list.c:80
 msgid "Flip Items"
@@ -7020,48 +7015,36 @@ msgstr "Konwertowanie na kolory indeksowane"
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Nie można dokonać konwersji na paletę z więcej niż 256 kolorami."
 
-#: ../app/dialogs/desaturate-dialog.c:65
-msgid "Remove Colors"
-msgstr "Usunięcie kolorów"
-
-#: ../app/dialogs/desaturate-dialog.c:75
-msgid "_Desaturate"
-msgstr "_Desaturacja"
-
-#: ../app/dialogs/desaturate-dialog.c:97
-msgid "Choose shade of gray based on:"
-msgstr "Wybieranie odcienia szarości opartego na:"
-
 #: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:171
 #: ../app/gui/gui-message.c:148
 msgid "GIMP Message"
 msgstr "Komunikat programu GIMP"
 
-#: ../app/dialogs/dialogs.c:141
+#: ../app/dialogs/dialogs.c:142
 msgid "Devices"
 msgstr "Urządzenia"
 
-#: ../app/dialogs/dialogs.c:141
+#: ../app/dialogs/dialogs.c:142
 msgid "Device Status"
 msgstr "Stan urządzenia"
 
-#: ../app/dialogs/dialogs.c:145
+#: ../app/dialogs/dialogs.c:146
 msgid "Errors"
 msgstr "Błędy"
 
-#: ../app/dialogs/dialogs.c:170
+#: ../app/dialogs/dialogs.c:171
 msgid "History"
 msgstr "Historia"
 
-#: ../app/dialogs/dialogs.c:172
+#: ../app/dialogs/dialogs.c:173
 msgid "Image Templates"
 msgstr "Szablony obrazów"
 
-#: ../app/dialogs/dialogs.c:193
+#: ../app/dialogs/dialogs.c:194
 msgid "Histogram"
 msgstr "Histogram"
 
-#: ../app/dialogs/dialogs.c:197
+#: ../app/dialogs/dialogs.c:198
 msgid "Selection Editor"
 msgstr "Edytor zaznaczenia"
 
@@ -7069,27 +7052,27 @@ msgstr "Edytor zaznaczenia"
 # app/gui/dialogs-constructors.c - "Cofnięcia"
 # app/pdb/internal_procs.c -  "Cofanie"
 # app/widgets/gimpundoeditor.c - "Cofa operację"
-#: ../app/dialogs/dialogs.c:201
+#: ../app/dialogs/dialogs.c:202
 msgid "Undo"
 msgstr "Cofnięcie"
 
-#: ../app/dialogs/dialogs.c:201
+#: ../app/dialogs/dialogs.c:202
 msgid "Undo History"
 msgstr "Historia operacji"
 
-#: ../app/dialogs/dialogs.c:211
+#: ../app/dialogs/dialogs.c:212
 msgid "Navigation"
 msgstr "Nawigacja"
 
-#: ../app/dialogs/dialogs.c:211
+#: ../app/dialogs/dialogs.c:212
 msgid "Display Navigation"
 msgstr "Nawigacja obrazem"
 
-#: ../app/dialogs/dialogs.c:217
+#: ../app/dialogs/dialogs.c:218
 msgid "FG/BG"
 msgstr "Kolory"
 
-#: ../app/dialogs/dialogs.c:217
+#: ../app/dialogs/dialogs.c:218
 msgid "FG/BG Color"
 msgstr "Kolor pierwszoplanowy/tła"
 
@@ -8691,7 +8674,7 @@ msgstr "(niezmodyfikowany)"
 
 #: ../app/display/gimpdisplayshell-title.c:337
 #: ../app/display/gimpdisplayshell-title.c:349
-#: ../app/widgets/gimpactiongroup.c:803
+#: ../app/widgets/gimpactiongroup.c:805
 msgid "(none)"
 msgstr "(brak)"
 
@@ -8750,16 +8733,16 @@ msgstr "\"%s:\" nie jest poprawnym znacznikiem URI"
 msgid "Invalid character sequence in URI"
 msgstr "Niepoprawna ciąg znaków w URI"
 
-#: ../app/gegl/gimpcurvesconfig.c:351
+#: ../app/gegl/gimpcurvesconfig.c:392
 #, fuzzy
 msgid "not a GIMP Curves file"
 msgstr "nie jest plikiem Poziomów GIMP-a"
 
-#: ../app/gegl/gimpcurvesconfig.c:365 ../app/gegl/gimplevelsconfig.c:651
+#: ../app/gegl/gimpcurvesconfig.c:406 ../app/gegl/gimplevelsconfig.c:708
 msgid "parse error"
 msgstr "błąd przy analizie składniowej"
 
-#: ../app/gegl/gimplevelsconfig.c:604
+#: ../app/gegl/gimplevelsconfig.c:661
 msgid "not a GIMP Levels file"
 msgstr "nie jest plikiem Poziomów GIMP-a"
 
@@ -8776,7 +8759,7 @@ msgstr "Uruchamianie programu GIMP"
 msgid "Airbrush"
 msgstr "Aerograf"
 
-#: ../app/paint/gimpbrushcore.c:356
+#: ../app/paint/gimpbrushcore.c:357
 msgid "No brushes available for use with this tool."
 msgstr "Brak dostępnych pędzli dla tego narzędzia."
 
@@ -8816,12 +8799,12 @@ msgstr "Pędzel"
 msgid "Pencil"
 msgstr "Ołówek"
 
-#: ../app/paint/gimpperspectiveclone.c:95 ../app/paint/paint-enums.c:52
+#: ../app/paint/gimpperspectiveclone.c:94 ../app/paint/paint-enums.c:52
 #: ../app/tools/gimpperspectiveclonetool.c:127
 msgid "Perspective Clone"
 msgstr "Klon perspektywy"
 
-#: ../app/paint/gimpperspectiveclone.c:160
+#: ../app/paint/gimpperspectiveclone.c:159
 msgid "Perspective Clone does not operate on indexed layers."
 msgstr "Klon perspektywy nie jest możliwy na warstwach indeksowanych."
 
@@ -9138,7 +9121,7 @@ msgstr ""
 "Rozdzielczość obrazu przekracza dopuszczalny zakres. Użyto rozdzielczości "
 "domyślnej."
 
-#: ../app/pdb/selection-tools-cmds.c:215 ../app/tools/gimpfreeselecttool.c:111
+#: ../app/pdb/selection-tools-cmds.c:215 ../app/tools/gimpfreeselecttool.c:159
 msgid "Free Select"
 msgstr "Zaznaczenie odręczne"
 
@@ -9337,7 +9320,7 @@ msgstr ""
 "Niektóre właściwości tekstu mogą być niepoprawne. Jeśli tekst nie będzie "
 "modyfikowany, nie ma to większego znaczenia."
 
-#: ../app/tools/gimp-tools.c:325
+#: ../app/tools/gimp-tools.c:327
 msgid ""
 "This tool has\n"
 "no options."
@@ -9526,20 +9509,40 @@ msgstr "Jas_ność i kontrast"
 msgid "Adjust Brightness and Contrast"
 msgstr "Modyfikacja jasności i kontrastu"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:180
+#: ../app/tools/gimpbrightnesscontrasttool.c:134
+#, fuzzy
+msgid "Load Brightness-Contrast settings"
+msgstr "Jasność i kontrast"
+
+#: ../app/tools/gimpbrightnesscontrasttool.c:135
+#, fuzzy
+msgid "Load brightness-contrast settings from file"
+msgstr "Odczyt ustawień krzywych z pliku"
+
+#: ../app/tools/gimpbrightnesscontrasttool.c:136
+#, fuzzy
+msgid "Save Brightness-Contrast settings"
+msgstr "Jasność i kontrast"
+
+#: ../app/tools/gimpbrightnesscontrasttool.c:137
+#, fuzzy
+msgid "Save brightness-contrast settings to file"
+msgstr "Zapis ustawień krzywych w pliku"
+
+#: ../app/tools/gimpbrightnesscontrasttool.c:185
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Nie można modyfikować jasności i kontrastu na warstwach indeksowanych."
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:312
+#: ../app/tools/gimpbrightnesscontrasttool.c:317
 msgid "_Brightness:"
 msgstr "_Jasność:"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:327
+#: ../app/tools/gimpbrightnesscontrasttool.c:332
 msgid "Con_trast:"
 msgstr "_Kontrast:"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:341
-msgid "Edit this Settings as Levels"
+#: ../app/tools/gimpbrightnesscontrasttool.c:346
+msgid "Edit these Settings as Levels"
 msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:100
@@ -9667,38 +9670,58 @@ msgstr "_Balans kolorów..."
 msgid "Adjust Color Balance"
 msgstr "Modyfikacja balansu kolorów"
 
-#: ../app/tools/gimpcolorbalancetool.c:160
+#: ../app/tools/gimpcolorbalancetool.c:115
+#, fuzzy
+msgid "Load Color Balance Settings"
+msgstr "Balans kolorów"
+
+#: ../app/tools/gimpcolorbalancetool.c:116
+#, fuzzy
+msgid "Load color balance settings from file"
+msgstr "Odczyt ustawień krzywych z pliku"
+
+#: ../app/tools/gimpcolorbalancetool.c:117
+#, fuzzy
+msgid "Save Color Balance Settings"
+msgstr "Balans kolorów"
+
+#: ../app/tools/gimpcolorbalancetool.c:118
+#, fuzzy
+msgid "Save color balance settings to file"
+msgstr "Zapis ustawień krzywych w pliku"
+
+#: ../app/tools/gimpcolorbalancetool.c:165
 msgid "Color Balance operates only on RGB color layers."
 msgstr "Zmiana balansu koloru jest możliwa tylko na warstwach RGB."
 
-#: ../app/tools/gimpcolorbalancetool.c:264
+#: ../app/tools/gimpcolorbalancetool.c:269
 msgid "Select Range to Adjust"
 msgstr "Wybór modyfikowanego zakresu"
 
-#: ../app/tools/gimpcolorbalancetool.c:273 ../app/tools/gimplevelstool.c:163
+#: ../app/tools/gimpcolorbalancetool.c:278 ../app/tools/gimplevelstool.c:168
 msgid "Adjust Color Levels"
 msgstr "Modyfikacja poziomów kolorów"
 
-#: ../app/tools/gimpcolorbalancetool.c:290
-#: ../app/tools/gimphuesaturationtool.c:251
+#: ../app/tools/gimpcolorbalancetool.c:295
+#: ../app/tools/gimphuesaturationtool.c:256
 msgid "Cyan"
 msgstr "Niebieskozielony"
 
-#: ../app/tools/gimpcolorbalancetool.c:299
-#: ../app/tools/gimphuesaturationtool.c:253
+#: ../app/tools/gimpcolorbalancetool.c:304
+#: ../app/tools/gimphuesaturationtool.c:258
 msgid "Magenta"
 msgstr "Purpurowy"
 
-#: ../app/tools/gimpcolorbalancetool.c:308
-#: ../app/tools/gimphuesaturationtool.c:249
+#: ../app/tools/gimpcolorbalancetool.c:313
+#: ../app/tools/gimphuesaturationtool.c:254
 msgid "Yellow"
 msgstr "Żółty"
 
-#: ../app/tools/gimpcolorbalancetool.c:319
+#: ../app/tools/gimpcolorbalancetool.c:324
 msgid "R_eset Range"
 msgstr "R_esetuj zakres"
 
-#: ../app/tools/gimpcolorbalancetool.c:328
+#: ../app/tools/gimpcolorbalancetool.c:333
 msgid "Preserve _luminosity"
 msgstr "Zachowanie _luminancji"
 
@@ -9714,26 +9737,45 @@ msgstr "_Barwienie..."
 msgid "Colorize the Image"
 msgstr "Barwienie obrazu"
 
-#: ../app/tools/gimpcolorizetool.c:152
+#: ../app/tools/gimpcolorizetool.c:110
+msgid "Load Colorize Settings"
+msgstr ""
+
+#: ../app/tools/gimpcolorizetool.c:111
+#, fuzzy
+msgid "Load colorize settings from file"
+msgstr "Odczyt ustawień krzywych z pliku"
+
+#: ../app/tools/gimpcolorizetool.c:112
+#, fuzzy
+msgid "Save Colorsize Settings"
+msgstr "Zapis opcji narzędzia"
+
+#: ../app/tools/gimpcolorizetool.c:113
+#, fuzzy
+msgid "Save colorize settings to file"
+msgstr "Zapis ustawień krzywych w pliku"
+
+#: ../app/tools/gimpcolorizetool.c:157
 msgid "Colorize operates only on RGB color layers."
 msgstr "Barwienie obrazu jest możliwe tylko na warstwach RGB."
 
-#: ../app/tools/gimpcolorizetool.c:214
+#: ../app/tools/gimpcolorizetool.c:219
 msgid "Select Color"
 msgstr "Wybór koloru"
 
-#: ../app/tools/gimpcolorizetool.c:232
-#: ../app/tools/gimphuesaturationtool.c:384
+#: ../app/tools/gimpcolorizetool.c:237
+#: ../app/tools/gimphuesaturationtool.c:389
 msgid "_Hue:"
 msgstr "_Odcień:"
 
-#: ../app/tools/gimpcolorizetool.c:247
-#: ../app/tools/gimphuesaturationtool.c:422
+#: ../app/tools/gimpcolorizetool.c:252
+#: ../app/tools/gimphuesaturationtool.c:427
 msgid "_Saturation:"
 msgstr "_Nasycenie:"
 
-#: ../app/tools/gimpcolorizetool.c:262
-#: ../app/tools/gimphuesaturationtool.c:403
+#: ../app/tools/gimpcolorizetool.c:267
+#: ../app/tools/gimphuesaturationtool.c:408
 msgid "_Lightness:"
 msgstr "_Jasność:"
 
@@ -9875,64 +9917,100 @@ msgstr "_Kadruj"
 msgid "Click or press Enter to crop"
 msgstr "Kliknij lub niciśnij Enter, aby wykadrować"
 
-#: ../app/tools/gimpcurvestool.c:132
+#: ../app/tools/gimpcurvestool.c:137
 msgid "Curves Tool: Adjust color curves"
 msgstr "Krzywe: Modyfikacja krzywych kolorów"
 
-#: ../app/tools/gimpcurvestool.c:133
+#: ../app/tools/gimpcurvestool.c:138
 msgid "_Curves..."
 msgstr "_Krzywe..."
 
-#: ../app/tools/gimpcurvestool.c:159
+#: ../app/tools/gimpcurvestool.c:164
 msgid "Adjust Color Curves"
 msgstr "Modyfikacja krzywych kolorów"
 
-#: ../app/tools/gimpcurvestool.c:161
+#: ../app/tools/gimpcurvestool.c:166
 msgid "Load Curves"
 msgstr "Odczyt krzywych"
 
-#: ../app/tools/gimpcurvestool.c:162
+#: ../app/tools/gimpcurvestool.c:167
 msgid "Load curves settings from file"
 msgstr "Odczyt ustawień krzywych z pliku"
 
-#: ../app/tools/gimpcurvestool.c:163
+#: ../app/tools/gimpcurvestool.c:168
 msgid "Save Curves"
 msgstr "Zapis krzywych"
 
-#: ../app/tools/gimpcurvestool.c:164
+#: ../app/tools/gimpcurvestool.c:169
 msgid "Save curves settings to file"
 msgstr "Zapis ustawień krzywych w pliku"
 
-#: ../app/tools/gimpcurvestool.c:214
+#: ../app/tools/gimpcurvestool.c:219
 msgid "Curves does not operate on indexed layers."
 msgstr "Narzędzie Krzywe nie operuje na warstwach indeksowanych."
 
-#: ../app/tools/gimpcurvestool.c:316
+#: ../app/tools/gimpcurvestool.c:321
 msgid "Click to add a control point"
 msgstr "Kliknij, aby dodać punkt kontrolny"
 
-#: ../app/tools/gimpcurvestool.c:321
+#: ../app/tools/gimpcurvestool.c:326
 msgid "Click to add control points to all channels"
 msgstr "Kliknij, aby dodać punkty kontrolne do wszystkich kanałów"
 
-#: ../app/tools/gimpcurvestool.c:429 ../app/tools/gimplevelstool.c:365
+#: ../app/tools/gimpcurvestool.c:432 ../app/tools/gimplevelstool.c:370
 msgid "Cha_nnel:"
 msgstr "Ka_nał:"
 
-#: ../app/tools/gimpcurvestool.c:453 ../app/tools/gimplevelstool.c:387
+#: ../app/tools/gimpcurvestool.c:456 ../app/tools/gimplevelstool.c:392
 msgid "R_eset Channel"
 msgstr "R_esetuj kanał"
 
-#. Horizontal button box for load / save
-#. all channels frame
-#: ../app/tools/gimpcurvestool.c:545 ../app/tools/gimplevelstool.c:626
-msgid "All Channels"
-msgstr "Wszystkie kanały"
-
 #. The radio box for selecting the curve type
-#: ../app/tools/gimpcurvestool.c:563
+#: ../app/tools/gimpcurvestool.c:548
 msgid "Curve Type"
 msgstr "Typ krzywej"
+
+#: ../app/tools/gimpdesaturatetool.c:78
+#, fuzzy
+msgid "Desaturate Tool: Turn colors into shades of gray"
+msgstr "Zamienia kolory na odcienie szarości"
+
+#: ../app/tools/gimpdesaturatetool.c:79
+msgid "_Desaturate..."
+msgstr "_Desaturacja..."
+
+#: ../app/tools/gimpdesaturatetool.c:93
+#, fuzzy
+msgid "Desaturate (Remove Colors)"
+msgstr "Usunięcie kolorów"
+
+#: ../app/tools/gimpdesaturatetool.c:95
+msgid "Load Desaturate Settings"
+msgstr ""
+
+#: ../app/tools/gimpdesaturatetool.c:96
+#, fuzzy
+msgid "Load desaturate settings from file"
+msgstr "Odczyt ustawień krzywych z pliku"
+
+#: ../app/tools/gimpdesaturatetool.c:97
+#, fuzzy
+msgid "Save Desaturate Settings"
+msgstr "_Zapisz ustawienia urządzeń wejściowych"
+
+#: ../app/tools/gimpdesaturatetool.c:98
+#, fuzzy
+msgid "Save desaturate settings to file"
+msgstr "Zapis ustawień krzywych w pliku"
+
+#: ../app/tools/gimpdesaturatetool.c:130
+#, fuzzy
+msgid "Desaturate does only operate on RGB layers."
+msgstr "Desaturacja jest możliwa tylko na warstwach RGB."
+
+#: ../app/tools/gimpdesaturatetool.c:193
+msgid "Choose shade of gray based on:"
+msgstr "Wybieranie odcienia szarości opartego na:"
 
 #: ../app/tools/gimpdodgeburntool.c:73
 msgid "Dodge / Burn"
@@ -10151,35 +10229,54 @@ msgstr ""
 msgid "F_oreground Select"
 msgstr "Zaznaczenie _pierwszego planu"
 
-#: ../app/tools/gimpforegroundselecttool.c:310
+#: ../app/tools/gimpforegroundselecttool.c:312
 msgid "Add more strokes or press Enter to accept the selection"
 msgstr ""
 "Zrób więcej pociągnięć lub naciśnij \"Enter\", aby zaakceptować zaznaczenie"
 
-#: ../app/tools/gimpforegroundselecttool.c:312
+#: ../app/tools/gimpforegroundselecttool.c:314
 msgid "Mark foreground by painting on the object to extract"
 msgstr "Zaznacz pierwszy plan, poprzez odrysowanie obiektu do wydobycia"
 
-#: ../app/tools/gimpforegroundselecttool.c:323
-msgid "Draw a rough circle around the object to extract"
+#: ../app/tools/gimpforegroundselecttool.c:325
+#, fuzzy
+msgid "Rougly outline the object to extract"
 msgstr "Rysuj nierówne koło wokół obiektu do wydobycia"
 
-#: ../app/tools/gimpforegroundselecttool.c:755
+#: ../app/tools/gimpforegroundselecttool.c:764
 msgid "command|Foreground Select"
 msgstr "Zaznaczenie pierwszego planu"
 
-#: ../app/tools/gimpfreeselecttool.c:112
+#: ../app/tools/gimpfreeselecttool.c:160
 #, fuzzy
 msgid ""
 "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
 msgstr ""
 "Odręczne zaznaczanie obszarów: Pozwala odręcznie zaznaczyć obszar obrazu"
 
-#: ../app/tools/gimpfreeselecttool.c:113
+#: ../app/tools/gimpfreeselecttool.c:161
 msgid "_Free Select"
 msgstr "Zaznaczenie od_ręczne"
 
-#: ../app/tools/gimpfreeselecttool.c:1044
+#: ../app/tools/gimpfreeselecttool.c:835
+#, fuzzy
+msgid "Click to complete selection"
+msgstr "Kliknij i przeciągnij, aby utworzyć nowe zaznaczenie"
+
+#: ../app/tools/gimpfreeselecttool.c:839
+#, fuzzy
+msgid "Click-Drag to move segment vertex"
+msgstr "Kliknij i przeciągnij, aby przemieścić komponent"
+
+#: ../app/tools/gimpfreeselecttool.c:844
+msgid "Return commits, Escape cancels, Backspace removes last segment"
+msgstr ""
+
+#: ../app/tools/gimpfreeselecttool.c:848
+msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
+msgstr ""
+
+#: ../app/tools/gimpfreeselecttool.c:1167
 msgid "command|Free Select"
 msgstr "Zaznaczenie odręczne"
 
@@ -10260,83 +10357,116 @@ msgstr "Odc_ień i nasycenie..."
 msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Modyfikacja odcienia / jasności / nasycenia"
 
-#: ../app/tools/gimphuesaturationtool.c:168
+#: ../app/tools/gimphuesaturationtool.c:123
+#, fuzzy
+msgid "Load Hue-Saturation Settings"
+msgstr "Odcień i nasycenie"
+
+#: ../app/tools/gimphuesaturationtool.c:124
+#, fuzzy
+msgid "Load hue-saturation settings from file"
+msgstr "Odczyt ustawień krzywych z pliku"
+
+#: ../app/tools/gimphuesaturationtool.c:125
+#, fuzzy
+msgid "Save Hue-Saturation Settings"
+msgstr "Odcień i nasycenie"
+
+#: ../app/tools/gimphuesaturationtool.c:126
+#, fuzzy
+msgid "Save hue-saturation settings to file"
+msgstr "Zapis ustawień krzywych w pliku"
+
+#: ../app/tools/gimphuesaturationtool.c:173
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Zmiany odcienia i nasycenia kolorów są możliwe tylko na warstwach RGB."
 
-#: ../app/tools/gimphuesaturationtool.c:247
+#: ../app/tools/gimphuesaturationtool.c:252
 msgid "M_aster"
 msgstr "Łączn_ie"
 
-#: ../app/tools/gimphuesaturationtool.c:247
+#: ../app/tools/gimphuesaturationtool.c:252
 msgid "Adjust all colors"
 msgstr "Dopasowanie wszystkich kolorów"
 
-#: ../app/tools/gimphuesaturationtool.c:248
+#: ../app/tools/gimphuesaturationtool.c:253
 msgid "_R"
 msgstr "_R"
 
-#: ../app/tools/gimphuesaturationtool.c:249
+#: ../app/tools/gimphuesaturationtool.c:254
 msgid "_Y"
 msgstr "_Y"
 
-#: ../app/tools/gimphuesaturationtool.c:250
+#: ../app/tools/gimphuesaturationtool.c:255
 msgid "_G"
 msgstr "_G"
 
-#: ../app/tools/gimphuesaturationtool.c:251
+#: ../app/tools/gimphuesaturationtool.c:256
 msgid "_C"
 msgstr "_C"
 
-#: ../app/tools/gimphuesaturationtool.c:252
+#: ../app/tools/gimphuesaturationtool.c:257
 msgid "_B"
 msgstr "_B"
 
-#: ../app/tools/gimphuesaturationtool.c:253
+#: ../app/tools/gimphuesaturationtool.c:258
 msgid "_M"
 msgstr "_M"
 
-#: ../app/tools/gimphuesaturationtool.c:256
+#: ../app/tools/gimphuesaturationtool.c:261
 msgid "Select Primary Color to Adjust"
 msgstr "Modyfikacja wybranego koloru podstawowego"
 
-#: ../app/tools/gimphuesaturationtool.c:347
+#: ../app/tools/gimphuesaturationtool.c:352
 msgid "_Overlap:"
 msgstr "_Pokrywanie:"
 
-#: ../app/tools/gimphuesaturationtool.c:366
+#: ../app/tools/gimphuesaturationtool.c:371
 msgid "Adjust Selected Color"
 msgstr "Dopasowanie zaznaczonego koloru"
 
-#: ../app/tools/gimphuesaturationtool.c:443
+#: ../app/tools/gimphuesaturationtool.c:448
 msgid "R_eset Color"
 msgstr "R_esetuj kolor"
 
-#: ../app/tools/gimpimagemaptool.c:336
+#: ../app/tools/gimpimagemaptool-settings.c:115
 msgid "Recent Settings:"
 msgstr ""
 
-#: ../app/tools/gimpimagemaptool.c:346
+#: ../app/tools/gimpimagemaptool-settings.c:128
 #, fuzzy
 msgid "Pick a setting from the list"
 msgstr "Kliknij na dowolny obraz, aby dodać kolor do palety"
 
-#: ../app/tools/gimpimagemaptool.c:357
-msgid "_Preview"
-msgstr "_Podgląd"
+#: ../app/tools/gimpimagemaptool-settings.c:155
+#, fuzzy
+msgid "Save to _Favorites"
+msgstr "Zapisz do kanał_u"
 
-#: ../app/tools/gimpimagemaptool.c:389
-msgid "Quick Load"
-msgstr "Szybki odczyt"
+#: ../app/tools/gimpimagemaptool-settings.c:423
+#, fuzzy
+msgid "Save Settings to Favorites"
+msgstr "Zapis ustawień krzywych w pliku"
 
-#: ../app/tools/gimpimagemaptool.c:418
-msgid "Quick Save"
-msgstr "Szybki zapis"
+#. GIMP_HELP_TOOL_OPTIONS_DIALOG,
+#: ../app/tools/gimpimagemaptool-settings.c:427
+#, fuzzy
+msgid "Enter a name for the saved settings"
+msgstr "Wprowadź nazwę zapisywanych opcji"
 
-#: ../app/tools/gimpimagemaptool.c:860
+#: ../app/tools/gimpimagemaptool-settings.c:428
+#, fuzzy
+msgid "Saved Settings"
+msgstr "Zapisane opcje"
+
+#: ../app/tools/gimpimagemaptool-settings.c:636
 #, c-format
 msgid "Settings saved to '%s'"
 msgstr "Ustawienie zapisane do \"%s\""
+
+#: ../app/tools/gimpimagemaptool.c:315
+msgid "_Preview"
+msgstr "_Podgląd"
 
 #. adjust sliders
 #: ../app/tools/gimpinkoptions-gui.c:56
@@ -10429,66 +10559,71 @@ msgstr "Naciśnij Enter, aby przekonwerterować do zaznaczenia"
 msgid "Click or Click-Drag to add a point"
 msgstr "Kliknij lub kliknij i przeciągnij, aby dodać punkt."
 
-#: ../app/tools/gimplevelstool.c:142
+#: ../app/tools/gimplevelstool.c:147
 msgid "Levels Tool: Adjust color levels"
 msgstr "Poziomy: Modyfikacja poziomów kolorów"
 
-#: ../app/tools/gimplevelstool.c:143
+#: ../app/tools/gimplevelstool.c:148
 msgid "_Levels..."
 msgstr "_Poziomy..."
 
-#: ../app/tools/gimplevelstool.c:165
+#: ../app/tools/gimplevelstool.c:170
 msgid "Load Levels"
 msgstr "Odczyt poziomów"
 
-#: ../app/tools/gimplevelstool.c:166
+#: ../app/tools/gimplevelstool.c:171
 msgid "Load levels settings from file"
 msgstr "Odczyt ustawień poziomów z pliku"
 
-#: ../app/tools/gimplevelstool.c:167
+#: ../app/tools/gimplevelstool.c:172
 msgid "Save Levels"
 msgstr "Zapis poziomów"
 
-#: ../app/tools/gimplevelstool.c:168
+#: ../app/tools/gimplevelstool.c:173
 msgid "Save levels settings to file"
 msgstr "Zapis ustawień poziomów w pliku"
 
-#: ../app/tools/gimplevelstool.c:221
+#: ../app/tools/gimplevelstool.c:226
 msgid "Levels does not operate on indexed layers."
 msgstr "Narzędzie poziomy, nie operuje na warstwach indeksowanych."
 
-#: ../app/tools/gimplevelstool.c:303
+#: ../app/tools/gimplevelstool.c:308
 msgid "Pick black point"
 msgstr "Wybór czarnego punktu"
 
-#: ../app/tools/gimplevelstool.c:307
+#: ../app/tools/gimplevelstool.c:312
 msgid "Pick gray point"
 msgstr "Wybór szarego punktu"
 
-#: ../app/tools/gimplevelstool.c:311
+#: ../app/tools/gimplevelstool.c:316
 msgid "Pick white point"
 msgstr "Wybór białego punktu"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:402
+#: ../app/tools/gimplevelstool.c:407
 msgid "Input Levels"
 msgstr "Poziomy wejściowe"
 
-#: ../app/tools/gimplevelstool.c:506
+#: ../app/tools/gimplevelstool.c:511
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:548
+#: ../app/tools/gimplevelstool.c:553
 msgid "Output Levels"
 msgstr "Poziomy wyjściowe"
 
-#: ../app/tools/gimplevelstool.c:654
+#. all channels frame
+#: ../app/tools/gimplevelstool.c:631
+msgid "All Channels"
+msgstr "Wszystkie kanały"
+
+#: ../app/tools/gimplevelstool.c:646
 msgid "Adjust levels automatically"
 msgstr "Dopasowuje poziomy automatycznie"
 
-#: ../app/tools/gimplevelstool.c:681
-msgid "Edit this Settings as Curves"
+#: ../app/tools/gimplevelstool.c:673
+msgid "Edit these Settings as Curves"
 msgstr ""
 
 #: ../app/tools/gimpmagnifyoptions.c:167
@@ -10806,11 +10941,30 @@ msgstr "_Redukcja kolorów..."
 msgid "Posterize (Reduce Number of Colors)"
 msgstr "Redukcja kolorów (zmniejszenie ilości kolorów)"
 
-#: ../app/tools/gimpposterizetool.c:151
+#: ../app/tools/gimpposterizetool.c:105
+msgid "Load Posterize Settings"
+msgstr ""
+
+#: ../app/tools/gimpposterizetool.c:106
+#, fuzzy
+msgid "Load posterize settings from file"
+msgstr "Odczyt ustawień krzywych z pliku"
+
+#: ../app/tools/gimpposterizetool.c:107
+#, fuzzy
+msgid "Save Posterize Settings"
+msgstr "_Zapisz ustawienia urządzeń wejściowych"
+
+#: ../app/tools/gimpposterizetool.c:108
+#, fuzzy
+msgid "Save posterize settings to file"
+msgstr "Zapis ustawień krzywych w pliku"
+
+#: ../app/tools/gimpposterizetool.c:156
 msgid "Posterize does not operate on indexed layers."
 msgstr "Redukcja kolorów nie jest możliwa na warstwach indeksowanych."
 
-#: ../app/tools/gimpposterizetool.c:224
+#: ../app/tools/gimpposterizetool.c:229
 msgid "Posterize _levels:"
 msgstr "_Poziomy redukcji kolorów:"
 
@@ -11133,11 +11287,31 @@ msgstr "P_rogowanie..."
 msgid "Apply Threshold"
 msgstr "Progowanie"
 
-#: ../app/tools/gimpthresholdtool.c:158
+#: ../app/tools/gimpthresholdtool.c:111
+#, fuzzy
+msgid "Load Threshold Settings"
+msgstr "Odczyt ustawień krzywych z pliku"
+
+#: ../app/tools/gimpthresholdtool.c:112
+#, fuzzy
+msgid "Load threshold settings from file"
+msgstr "Odczyt ustawień krzywych z pliku"
+
+#: ../app/tools/gimpthresholdtool.c:113
+#, fuzzy
+msgid "Save Threshold Settings"
+msgstr "Zapis opcji narzędzia"
+
+#: ../app/tools/gimpthresholdtool.c:114
+#, fuzzy
+msgid "Save threshold settings to file"
+msgstr "Zapis ustawień krzywych w pliku"
+
+#: ../app/tools/gimpthresholdtool.c:163
 msgid "Threshold does not operate on indexed layers."
 msgstr "Progowanie nie jest możliwe na warstwach indeksowanych."
 
-#: ../app/tools/gimpthresholdtool.c:263
+#: ../app/tools/gimpthresholdtool.c:268
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Automatycznie znajduje optymalny próg binaryzacji"
 
@@ -11474,7 +11648,7 @@ msgstr "Nie odnaleziono ścieżek w buforze"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Nie można zaimportować ścieżek z pliku \"%s\": %s"
 
-#: ../app/widgets/gimpactiongroup.c:800
+#: ../app/widgets/gimpactiongroup.c:802
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -11992,7 +12166,7 @@ msgstr "Plik o nazwie \"%s\" już istnieje."
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Czy chcesz zastąpić istniejący plik zapisywanym właśnie obrazem?"
 
-#: ../app/widgets/gimpdockable.c:166
+#: ../app/widgets/gimpdockable.c:194
 msgid "Configure this tab"
 msgstr "Konfiguruj tę kartę"
 
@@ -12877,6 +13051,9 @@ msgstr "Nie można uruchomić \"%s\": %s"
 #~ msgid "EEK: can't undo"
 #~ msgstr "EEK: Nie można cofnąć"
 
+#~ msgid "_Desaturate"
+#~ msgstr "_Desaturacja"
+
 #~ msgid "Save document _history on exit"
 #~ msgstr "Zapisz _historię dokumentu przy wyjściu"
 
@@ -12906,6 +13083,12 @@ msgstr "Nie można uruchomić \"%s\": %s"
 
 #~ msgid "Mode"
 #~ msgstr "Tryb"
+
+#~ msgid "Quick Load"
+#~ msgstr "Szybki odczyt"
+
+#~ msgid "Quick Save"
+#~ msgstr "Szybki zapis"
 
 #~ msgid "Close all Tabs?"
 #~ msgstr "Zamknąć wszystkie karty?"
