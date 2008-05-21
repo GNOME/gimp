@@ -49,11 +49,11 @@ GimpDialogFactory *global_display_factory = NULL;
 GimpContainer     *global_recent_docks    = NULL;
 
 
-#define FOREIGN(id,singleton,remember_size) \
+#define FOREIGN(id, singleton, remember_size) \
   { id, NULL, NULL, NULL, NULL, \
     NULL, 0, singleton,  TRUE, remember_size, FALSE }
 
-#define TOPLEVEL(id,new_func,singleton,session_managed,remember_size) \
+#define TOPLEVEL(id, new_func, singleton, session_managed, remember_size) \
   { id, NULL, NULL, NULL, NULL, \
     new_func, 0, singleton, session_managed, remember_size, FALSE }
 
@@ -62,11 +62,12 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
 {
   /*  foreign toplevels without constructor  */
   FOREIGN ("gimp-brightness-contrast-tool-dialog", TRUE,  FALSE),
+  FOREIGN ("gimp-color-balance-tool-dialog",       TRUE,  FALSE),
   FOREIGN ("gimp-color-picker-tool-dialog",        TRUE,  TRUE),
   FOREIGN ("gimp-colorize-tool-dialog",            TRUE,  FALSE),
   FOREIGN ("gimp-crop-tool-dialog",                TRUE,  FALSE),
   FOREIGN ("gimp-curves-tool-dialog",              TRUE,  TRUE),
-  FOREIGN ("gimp-color-balance-tool-dialog",       TRUE,  FALSE),
+  FOREIGN ("gimp-desaturate-tool-dialog",          TRUE,  FALSE),
   FOREIGN ("gimp-gegl-tool-dialog",                TRUE,  FALSE),
   FOREIGN ("gimp-hue-saturation-tool-dialog",      TRUE,  FALSE),
   FOREIGN ("gimp-levels-tool-dialog",              TRUE,  TRUE),

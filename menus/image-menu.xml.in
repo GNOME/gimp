@@ -479,7 +479,7 @@
       <menuitem action="tools-curves" />
       <menuitem action="tools-posterize" />
       <separator />
-      <menuitem action="drawable-desaturate" />
+      <menuitem action="tools-desaturate" />
       <placeholder name="Invert">
         <menuitem action="drawable-invert" />
       </placeholder>

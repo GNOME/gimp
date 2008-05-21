@@ -27,6 +27,8 @@
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 
+#include "gegl/gimpdesaturateconfig.h"
+
 /* temp */
 #include "gimp.h"
 #include "gimpimage.h"
@@ -63,14 +65,21 @@ gimp_drawable_desaturate (GimpDrawable       *drawable,
   if (gimp_use_gegl (GIMP_ITEM (drawable)->image->gimp))
     {
       GeglNode *desaturate;
+      GObject  *config;
 
       desaturate = g_object_new (GEGL_TYPE_NODE,
                                  "operation", "gimp-desaturate",
                                  NULL);
 
+      config = g_object_new (GIMP_TYPE_DESATURATE_CONFIG,
+                             "mode", mode,
+                             NULL);
+
       gegl_node_set (desaturate,
-                     "mode", mode,
+                     "config", config,
                      NULL);
+
+      g_object_unref (config);
 
       gimp_drawable_apply_operation (drawable, desaturate, TRUE,
                                      NULL, _("Desaturate"));

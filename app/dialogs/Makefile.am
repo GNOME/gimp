@@ -26,8 +26,6 @@ libappdialogs_a_sources = \
 	channel-options-dialog.h	\
 	convert-dialog.c		\
 	convert-dialog.h		\
-	desaturate-dialog.c		\
-	desaturate-dialog.h		\
 	fade-dialog.c			\
 	fade-dialog.h			\
 	file-open-dialog.c		\

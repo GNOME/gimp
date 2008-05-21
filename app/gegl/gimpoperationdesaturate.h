@@ -22,8 +22,8 @@
 #ifndef __GIMP_OPERATION_DESATURATE_H__
 #define __GIMP_OPERATION_DESATURATE_H__
 
-#include <gegl-plugin.h>
-#include <operation/gegl-operation-point-filter.h>
+
+#include "gimpoperationpointfilter.h"
 
 
 #define GIMP_TYPE_OPERATION_DESATURATE           (gimp_operation_desaturate_get_type ())
@@ -36,14 +36,12 @@ typedef struct _GimpOperationDesaturateClass GimpOperationDesaturateClass;
 
 struct _GimpOperationDesaturate
 {
-  GeglOperationPointFilter  parent_instance;
-
-  GimpDesaturateMode        mode;
+  GimpOperationPointFilter  parent_instance;
 };
 
 struct _GimpOperationDesaturateClass
 {
-  GeglOperationPointFilterClass  parent_class;
+  GimpOperationPointFilterClass  parent_class;
 };
 
 

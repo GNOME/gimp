@@ -50,6 +50,7 @@
 #include "gimpconvolvetool.h"
 #include "gimpcroptool.h"
 #include "gimpcurvestool.h"
+#include "gimpdesaturatetool.h"
 #include "gimpdodgeburntool.h"
 #include "gimpellipseselecttool.h"
 #include "gimperasertool.h"
@@ -125,6 +126,7 @@ gimp_tools_init (Gimp *gimp)
     gimp_colorize_tool_register,
     gimp_hue_saturation_tool_register,
     gimp_color_balance_tool_register,
+    gimp_desaturate_tool_register,
 
     /*  paint tools  */
 

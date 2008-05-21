@@ -1,5 +1,42 @@
 2008-05-21  Sven Neumann  <sven@gimp.org>
 
+	Add Desaturate as an image-map tool with live preview (bug #533808):
+
+	* app/gegl/Makefile.am
+	* app/gegl/gegl-types.h
+	* app/gegl/gimpdesaturateconfig.[ch]: added config object for the
+	desaturate point filter.
+	
+	* app/gegl/gimpoperationdesaturate.[ch]: derive from
+	GimpOperationPointFilter. Unrolled the inner loop.
+
+	* app/core/gimpdrawable-desaturate.c: changed accordingly.
+
+	* app/tools/Makefile.am
+	* app/tools/gimpdesaturatetool.[ch]: added desaturate as an
+	imagemap tool. So far only the GEGL code path is implemented.
+
+	* app/tools/gimp-tools.c: register the new tool.
+
+	* app/dialogs/dialogs.c: register the new tool dialog.
+
+	* app/dialogs/Makefile.am
+	* app/dialogs/desaturate-dialog.[ch]: removed the desaturate dialog.
+
+	* app/actions/drawable-actions.c
+	* app/actions/drawable-commands.[ch]: removed action
+	"drawable-desaturate".
+
+	* app/widgets/gimphelp-ids.h: changed help IDs accordingly.
+
+	* menus/image-menu.xml.in: replaced "drawable-desaturate" with
+	"tools-desaturate".
+
+	* libgimpwidgets/gimpstock.h: added a define for
+	GIMP_STOCK_TOOL_DESATURATE.
+
+2008-05-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/jpeg/jpeg-save.c (save_dialog): changed badly chosen
 	mnemonic, resolved a conflicting mnemonic and added some more.
 

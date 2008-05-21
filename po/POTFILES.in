@@ -164,7 +164,6 @@ app/core/gimpunit.c
 app/dialogs/about-dialog.c
 app/dialogs/channel-options-dialog.c
 app/dialogs/convert-dialog.c
-app/dialogs/desaturate-dialog.c
 app/dialogs/dialogs-constructors.c
 app/dialogs/dialogs.c
 app/dialogs/fade-dialog.c
@@ -306,6 +305,7 @@ app/tools/gimpconvolvetool.c
 app/tools/gimpcropoptions.c
 app/tools/gimpcroptool.c
 app/tools/gimpcurvestool.c
+app/tools/gimpdesaturatetool.c
 app/tools/gimpdodgeburntool.c
 app/tools/gimpeditselectiontool.c
 app/tools/gimpellipseselecttool.c
@@ -320,6 +320,7 @@ app/tools/gimpgegltool.c
 app/tools/gimphealtool.c
 app/tools/gimphistogramoptions.c
 app/tools/gimphuesaturationtool.c
+app/tools/gimpimagemaptool-settings.c
 app/tools/gimpimagemaptool.c
 app/tools/gimpinkoptions-gui.c
 app/tools/gimpinktool.c

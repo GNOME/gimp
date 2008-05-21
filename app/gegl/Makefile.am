@@ -17,6 +17,8 @@ libappgegl_a_SOURCES = \
 	gimpcolorizeconfig.h		\
 	gimpcurvesconfig.c		\
 	gimpcurvesconfig.h		\
+	gimpdesaturateconfig.c		\
+	gimpdesaturateconfig.h		\
 	gimphuesaturationconfig.c	\
 	gimphuesaturationconfig.h	\
 	gimplevelsconfig.c		\

@@ -41,12 +41,6 @@
 
 static const GimpActionEntry drawable_actions[] =
 {
-  { "drawable-desaturate", GIMP_STOCK_CONVERT_GRAYSCALE,
-    N_("_Desaturate..."), NULL,
-    N_("Turn colors into shades of gray"),
-    G_CALLBACK (drawable_desaturate_cmd_callback),
-    GIMP_HELP_LAYER_DESATURATE },
-
   { "drawable-equalize", NULL,
     N_("_Equalize"), NULL,
     N_("Automatic contrast enhancement"),
@@ -190,7 +184,6 @@ drawable_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("drawable-desaturate",     drawable &&   is_rgb);
   SET_SENSITIVE ("drawable-equalize",       drawable && ! is_indexed);
   SET_SENSITIVE ("drawable-invert",         drawable && ! is_indexed);
   SET_SENSITIVE ("drawable-levels-stretch", drawable &&   is_rgb);
