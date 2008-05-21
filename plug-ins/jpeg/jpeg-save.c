@@ -877,7 +877,7 @@ save_dialog (void)
                            _("Enable preview to obtain the file size."), NULL);
 
   pg.preview = toggle =
-    gtk_check_button_new_with_mnemonic (_("Show _preview in image window"));
+    gtk_check_button_new_with_mnemonic (_("Sho_w preview in image window"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.preview);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -918,7 +918,7 @@ save_dialog (void)
   gtk_widget_show (table2);
 
   pg.smoothing = entry = gimp_scale_entry_new (GTK_TABLE (table2), 0, 0,
-                                               _("_Smoothing:"),
+                                               _("S_moothing:"),
                                                100, 0, jsvals.smoothing,
                                                0.0, 1.0, 0.01, 0.1, 2,
                                                TRUE, 0.0, 0.0,
@@ -947,7 +947,7 @@ save_dialog (void)
   gtk_widget_show (spinbutton);
 
   pg.use_restart_markers = toggle =
-    gtk_check_button_new_with_label (_("Use restart markers"));
+    gtk_check_button_new_with_mnemonic (_("Use _restart markers"));
   gtk_table_attach (GTK_TABLE (table), toggle, 2, 4, 1, 2, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
@@ -963,7 +963,7 @@ save_dialog (void)
                             G_CALLBACK (save_restart_update),
                             pg.scale_data);
 
-  pg.optimize = toggle = gtk_check_button_new_with_label (_("Optimize"));
+  pg.optimize = toggle = gtk_check_button_new_with_mnemonic (_("_Optimize"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
@@ -976,7 +976,8 @@ save_dialog (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.optimize);
 
-  pg.progressive = toggle = gtk_check_button_new_with_label (_("Progressive"));
+  pg.progressive = toggle =
+    gtk_check_button_new_with_mnemonic (_("_Progressive"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 1, 2, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
@@ -991,7 +992,8 @@ save_dialog (void)
                                 jsvals.progressive);
 
 #ifdef HAVE_EXIF
-  pg.save_exif = toggle = gtk_check_button_new_with_label (_("Save EXIF data"));
+  pg.save_exif = toggle =
+    gtk_check_button_new_with_mnemonic (_("Save _EXIF data"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
@@ -1008,7 +1010,7 @@ save_dialog (void)
   gtk_widget_set_sensitive (toggle, exif_data != NULL);
 
   pg.save_thumbnail = toggle =
-    gtk_check_button_new_with_label (_("Save thumbnail"));
+    gtk_check_button_new_with_mnemonic (_("Save _thumbnail"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 3, 4, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
@@ -1024,7 +1026,8 @@ save_dialog (void)
 #endif /* HAVE_EXIF */
 
   /* XMP metadata */
-  pg.save_xmp = toggle = gtk_check_button_new_with_label (_("Save XMP data"));
+  pg.save_xmp = toggle =
+    gtk_check_button_new_with_mnemonic (_("Save _XMP data"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 4, 5, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
@@ -1039,8 +1042,8 @@ save_dialog (void)
 
   /* custom quantization tables - now used also for original quality */
   pg.use_orig_quality = toggle =
-    gtk_check_button_new_with_label (_("Use quality settings from original "
-                                       "image"));
+    gtk_check_button_new_with_mnemonic (_("_Use quality settings from original "
+                                          "image"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 4, 5, 6, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
@@ -1069,7 +1072,7 @@ save_dialog (void)
                     pg.quality);
 
   /* Subsampling */
-  label = gtk_label_new (_("Subsampling:"));
+  label = gtk_label_new_with_mnemonic (_("Su_bsampling:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
@@ -1084,6 +1087,8 @@ save_dialog (void)
   gtk_table_attach (GTK_TABLE (table), combo, 3, 6, 2, 3,
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (combo);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), jsvals.subsmp,
                               G_CALLBACK (subsampling_changed),
@@ -1103,7 +1108,7 @@ save_dialog (void)
 
 
   /* DCT method */
-  label = gtk_label_new (_("DCT method:"));
+  label = gtk_label_new_with_mnemonic (_("_DCT method:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 3, 4,
                     GTK_FILL, GTK_FILL, 0, 0);
@@ -1117,6 +1122,8 @@ save_dialog (void)
   gtk_table_attach (GTK_TABLE (table), combo, 3, 6, 3, 4,
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (combo);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (gimp_int_combo_box_get_active),
@@ -1170,7 +1177,7 @@ save_dialog (void)
                             G_CALLBACK (load_gui_defaults),
                             &pg);
 
-  button = gtk_button_new_with_mnemonic (_("S_ave Defaults"));
+  button = gtk_button_new_with_mnemonic (_("Sa_ve Defaults"));
   gtk_table_attach (GTK_TABLE (tabledefaults),
                     button, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
   gtk_widget_show (button);
