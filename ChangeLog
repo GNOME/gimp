@@ -1,3 +1,9 @@
+2008-05-21  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpfreeselecttool.c
+	(gimp_free_select_tool_status_update): Slightly improve one of the
+	status bar messages.
+
 2008-05-21  Sven Neumann  <sven@gimp.org>
 
 	* menus/image-menu.xml.in: moved "tools-desaturate" to the other

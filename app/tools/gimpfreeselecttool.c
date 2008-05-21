@@ -767,7 +767,7 @@ gimp_free_select_tool_status_update (GimpFreeSelectTool *fst,
         }
       else
         {
-          status_text = _("Click-Drag creates free segment, Click creates polygonal segment");
+          status_text = _("Click-Drag adds a free segment, Click adds a polygonal segment");
         }
 
       if (status_text)
