@@ -1,5 +1,11 @@
 2008-05-21  Sven Neumann  <sven@gimp.org>
 
+	* menus/image-menu.xml.in: moved "tools-desaturate" into the
+	separator with the other color tools. Added it to the
+	"tools-color-menu".
+
+2008-05-21  Sven Neumann  <sven@gimp.org>
+
 	* app/base/desaturate.[ch]: changed to take a pointer as first
 	argument as all PixelProcessor functions.
 
