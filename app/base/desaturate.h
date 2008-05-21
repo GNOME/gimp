@@ -20,15 +20,9 @@
 #define __DESATURATE_H__
 
 
-void  desaturate_region_lightness  (gpointer     data,
-                                    PixelRegion *srcPR,
-                                    PixelRegion *destPR);
-void  desaturate_region_luminosity (gpointer     data,
-                                    PixelRegion *srcPR,
-                                    PixelRegion *destPR);
-void  desaturate_region_average    (gpointer     data,
-                                    PixelRegion *srcPR,
-                                    PixelRegion *destPR);
+void  desaturate_region (GimpDesaturateMode  mode,
+                         PixelRegion        *srcPR,
+                         PixelRegion        *destPR);
 
 
 #endif  /*  __DESATURATE_H__  */

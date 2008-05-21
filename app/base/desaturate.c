@@ -28,15 +28,49 @@
 #include "pixel-region.h"
 
 
+static void  desaturate_region_lightness  (PixelRegion    *srcPR,
+                                           PixelRegion    *destPR,
+                                           const gboolean  has_alpha);
+static void  desaturate_region_luminosity (PixelRegion    *srcPR,
+                                           PixelRegion    *destPR,
+                                           const gboolean  has_alpha);
+static void  desaturate_region_average    (PixelRegion    *srcPR,
+                                           PixelRegion    *destPR,
+                                           const gboolean  has_alpha);
+
+
 void
-desaturate_region_lightness (gpointer     data,
-                             PixelRegion *srcPR,
-                             PixelRegion *destPR)
+desaturate_region (GimpDesaturateMode  mode,
+                   PixelRegion        *srcPR,
+                   PixelRegion        *destPR)
 {
-  const guchar *src       = srcPR->data;
-  guchar       *dest      = destPR->data;
-  gint          h         = srcPR->h;
-  gboolean      has_alpha = GPOINTER_TO_INT (data);
+  g_return_if_fail (srcPR->bytes == destPR->bytes);
+  g_return_if_fail (srcPR->bytes == 3 || srcPR->bytes == 4);
+
+  switch (mode)
+    {
+    case GIMP_DESATURATE_LIGHTNESS:
+      desaturate_region_lightness (srcPR, destPR, srcPR->bytes == 4);
+      break;
+
+    case GIMP_DESATURATE_LUMINOSITY:
+      desaturate_region_luminosity (srcPR, destPR, srcPR->bytes == 4);
+      break;
+
+    case GIMP_DESATURATE_AVERAGE:
+      desaturate_region_average (srcPR, destPR, srcPR->bytes == 4);
+      break;
+    }
+}
+
+static void
+desaturate_region_lightness (PixelRegion    *srcPR,
+                             PixelRegion    *destPR,
+                             const gboolean  has_alpha)
+{
+  const guchar *src  = srcPR->data;
+  guchar       *dest = destPR->data;
+  gint          h    = srcPR->h;
 
   while (h--)
     {
@@ -72,15 +106,14 @@ desaturate_region_lightness (gpointer     data,
     }
 }
 
-void
-desaturate_region_luminosity (gpointer     data,
-                              PixelRegion *srcPR,
-                              PixelRegion *destPR)
+static void
+desaturate_region_luminosity (PixelRegion    *srcPR,
+                              PixelRegion    *destPR,
+                              const gboolean  has_alpha)
 {
-  const guchar *src       = srcPR->data;
-  guchar       *dest      = destPR->data;
-  gint          h         = srcPR->h;
-  gboolean      has_alpha = GPOINTER_TO_INT (data);
+  const guchar *src  = srcPR->data;
+  guchar       *dest = destPR->data;
+  gint          h    = srcPR->h;
 
   while (h--)
     {
@@ -110,15 +143,14 @@ desaturate_region_luminosity (gpointer     data,
     }
 }
 
-void
-desaturate_region_average (gpointer     data,
-                           PixelRegion *srcPR,
-                           PixelRegion *destPR)
+static void
+desaturate_region_average (PixelRegion    *srcPR,
+                           PixelRegion    *destPR,
+                           const gboolean  has_alpha)
 {
-  const guchar *src       = srcPR->data;
-  guchar       *dest      = destPR->data;
-  gint          h         = srcPR->h;
-  gboolean      has_alpha = GPOINTER_TO_INT (data);
+  const guchar *src  = srcPR->data;
+  guchar       *dest = destPR->data;
+  gint          h    = srcPR->h;
 
   while (h--)
     {

@@ -76,43 +76,19 @@ gimp_drawable_desaturate (GimpDrawable       *drawable,
     }
   else
     {
-      PixelRegion         srcPR, destPR;
-      PixelProcessorFunc  function;
-      gint                x, y;
-      gint                width, height;
-      gboolean            has_alpha;
+      PixelRegion  srcPR, destPR;
+      gint         x, y, width, height;
 
       if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         return;
-
-      switch (mode)
-        {
-        case GIMP_DESATURATE_LIGHTNESS:
-          function = (PixelProcessorFunc) desaturate_region_lightness;
-          break;
-
-          break;
-        case GIMP_DESATURATE_LUMINOSITY:
-          function = (PixelProcessorFunc) desaturate_region_luminosity;
-          break;
-
-        case GIMP_DESATURATE_AVERAGE:
-          function = (PixelProcessorFunc) desaturate_region_average;
-          break;
-
-        default:
-          g_return_if_reached ();
-          return;
-        }
-
-      has_alpha = gimp_drawable_has_alpha (drawable);
 
       pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                          x, y, width, height, FALSE);
       pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
                          x, y, width, height, TRUE);
 
-      pixel_regions_process_parallel (function, GINT_TO_POINTER (has_alpha),
+      pixel_regions_process_parallel ((PixelProcessorFunc) desaturate_region,
+                                      GINT_TO_POINTER (mode),
                                       2, &srcPR, &destPR);
 
       gimp_drawable_merge_shadow_tiles (drawable, TRUE, _("Desaturate"));
