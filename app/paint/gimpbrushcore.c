@@ -636,6 +636,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
                                          p * delta_wheel);
       paint_core->cur_coords.velocity = (paint_core->last_coords.velocity +
                                          p * delta_velocity);
+      paint_core->cur_coords.random   = g_random_double_range (0.0, 1.0);
 
       if (core->jitter > 0.0)
         {
@@ -669,7 +670,6 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   paint_core->cur_coords.ytilt    = paint_core->last_coords.ytilt    + delta_ytilt;
   paint_core->cur_coords.wheel    = paint_core->last_coords.wheel    + delta_wheel;
   paint_core->cur_coords.velocity = paint_core->last_coords.velocity + delta_velocity;
-  paint_core->cur_coords.random   = g_random_double_range (0.0, 1.0);
 
   paint_core->distance   = total;
   paint_core->pixel_dist = pixel_initial + pixel_dist;

@@ -1,5 +1,10 @@
 2008-05-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpbrushcore.c (gimp_brush_core_interpolate): move
+	generating the random axis to the right place.
+
+2008-05-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintoptions.[ch]: replace the pressure-expanded,
 	velocity-expanded and random-expanded properties by a single
 	dynamics-expanded property.
