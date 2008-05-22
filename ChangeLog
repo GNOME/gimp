@@ -1,3 +1,9 @@
+2008-05-22  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpfreeselecttool.c
+	(gimp_free_select_tool_cursor_update): Don't return in the middle
+	of the function.
+
 2008-05-21  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpforegroundselecttool.c

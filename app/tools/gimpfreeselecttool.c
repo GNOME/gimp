@@ -937,10 +937,14 @@ gimp_free_select_tool_cursor_update (GimpTool        *tool,
                             gimp_tool_control_get_tool_cursor (tool->control),
                             GIMP_CURSOR_MODIFIER_MOVE);
 
-      return;
     }
-
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+  else
+    {
+      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool,
+                                                     coords,
+                                                     state,
+                                                     display);
+    }
 }
 
 static void
