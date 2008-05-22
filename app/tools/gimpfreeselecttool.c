@@ -43,6 +43,7 @@
 #include "gimpfreeselecttool.h"
 #include "gimpselectionoptions.h"
 #include "gimptoolcontrol.h"
+#include "tools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -102,6 +103,8 @@ typedef struct _Private
   /* The selection operation active when the tool was started */
   GimpChannelOps     operation_at_start;
 
+  gboolean           constrain_angle;
+
 } Private;
 
 
@@ -136,6 +139,11 @@ static void     gimp_free_select_tool_motion         (GimpTool              *too
                                                       GimpDisplay           *display);
 static gboolean gimp_free_select_tool_key_press      (GimpTool              *tool,
                                                       GdkEventKey           *kevent,
+                                                      GimpDisplay           *display);
+static void     gimp_free_select_tool_modifier_key   (GimpTool              *tool,
+                                                      GdkModifierType        key,
+                                                      gboolean               press,
+                                                      GdkModifierType        state,
                                                       GimpDisplay           *display);
 static void     gimp_free_select_tool_draw           (GimpDrawTool          *draw_tool);
 static void     gimp_free_select_tool_real_select    (GimpFreeSelectTool    *fst,
@@ -184,6 +192,7 @@ gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
   tool_class->button_release = gimp_free_select_tool_button_release;
   tool_class->motion         = gimp_free_select_tool_motion;
   tool_class->key_press      = gimp_free_select_tool_key_press;
+  tool_class->modifier_key   = gimp_free_select_tool_modifier_key;
 
   draw_tool_class->draw      = gimp_free_select_tool_draw;
 
@@ -223,6 +232,8 @@ gimp_free_select_tool_init (GimpFreeSelectTool *fst)
   priv->segment_indices               = NULL;
   priv->n_segment_indices             = 0;
   priv->max_n_segment_indices         = 0;
+
+  priv->constrain_angle               = FALSE;
 }
 
 static void
@@ -261,6 +272,17 @@ gimp_free_select_tool_get_grabbed_point (GimpFreeSelectTool *fst)
   Private *priv = GET_PRIVATE (fst);
 
   return priv->points[priv->segment_indices[priv->grabbed_segment_index]];
+}
+
+static void
+gimp_free_select_tool_get_last_point (GimpFreeSelectTool *fst,
+                                      gdouble            *start_point_x,
+                                      gdouble            *start_point_y)
+{
+  Private *priv = GET_PRIVATE (fst);
+
+  *start_point_x = priv->points[priv->segment_indices[priv->n_segment_indices - 1]].x;
+  *start_point_y = priv->points[priv->segment_indices[priv->n_segment_indices - 1]].y;
 }
 
 static void
@@ -923,6 +945,20 @@ gimp_free_select_tool_oper_update (GimpTool        *tool,
         {
           priv->pending_point.x = coords->x;
           priv->pending_point.y = coords->y;
+
+          if (priv->constrain_angle && priv->n_points > 0)
+            {
+              gdouble start_point_x;
+              gdouble start_point_y;
+
+              gimp_free_select_tool_get_last_point (fst,
+                                                    &start_point_x,
+                                                    &start_point_y);
+              
+              gimp_tool_motion_constrain (start_point_x, start_point_y,
+                                          &priv->pending_point.x, &priv->pending_point.y,
+                                          GIMP_TOOL_CONSTRAIN_15_DEGREES);
+            }
         }
     }
 
@@ -985,14 +1021,30 @@ gimp_free_select_tool_button_press (GimpTool        *tool,
     }
   else
     {
+      GimpVector2 point_to_add;
+
+      /* Note that we add the pending point (unless it is the first
+       * point we add) because the pending point is setup correctly
+       * with regards to angle constraints.
+       */
+      if (priv->n_points > 0)
+        {
+          point_to_add = priv->pending_point;
+        }
+      else
+        {
+          point_to_add.x = coords->x;
+          point_to_add.y = coords->y;
+        }
+
       /* No point was grabbed, add a new point and mark this as a
        * segment divider. For a line segment, this will be the only
        * new point. For a free segment, this will be the first point
        * of the free segment.
        */
       gimp_free_select_tool_add_point (fst,
-                                       coords->x,
-                                       coords->y);
+                                       point_to_add.x,
+                                       point_to_add.y);
       gimp_free_select_tool_add_segment_index (fst,
                                                priv->n_points - 1);
     }
@@ -1131,6 +1183,24 @@ gimp_free_select_tool_key_press (GimpTool    *tool,
     }
 
   return FALSE;
+}
+
+static void
+gimp_free_select_tool_modifier_key (GimpTool        *tool,
+                                    GdkModifierType  key,
+                                    gboolean         press,
+                                    GdkModifierType  state,
+                                    GimpDisplay     *display)
+{
+  Private *priv = GET_PRIVATE (tool);
+
+  priv->constrain_angle = state & GDK_CONTROL_MASK ? TRUE : FALSE;
+
+  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool,
+                                                key,
+                                                press,
+                                                state,
+                                                display);
 }
 
 static void

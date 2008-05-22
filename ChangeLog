@@ -1,5 +1,11 @@
 2008-05-22  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimpfreeselecttool.c: Base a start of a new segment on
+	the pending point, and enable 15 degree constraints on the pending
+	point when Ctrl is being held down.
+
+2008-05-22  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/core/gimpcurve-load.c (gimp_curve_load)
 	* app/paint/gimppaintbrush.c (_gimp_paintbrush_motion): Remove
 	unused variables.
