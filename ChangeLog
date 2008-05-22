@@ -1,3 +1,13 @@
+2008-05-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpimagemaptool.c: check if the tool class has
+	the "settings_name" string set to decide whether to add
+	the settings GUI.
+
+	* app/tools/gimpdesaturatetool.c
+	* app/tools/gimpposterizetool.c: don't set any settings
+	strings. Presets make no sense for tools with just one parameter.
+
 2008-05-22  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-operation.[ch]

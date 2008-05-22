@@ -88,16 +88,13 @@ gimp_desaturate_tool_class_init (GimpDesaturateToolClass *klass)
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  tool_class->initialize             = gimp_desaturate_tool_initialize;
+  tool_class->initialize       = gimp_desaturate_tool_initialize;
 
-  im_tool_class->shell_desc          = _("Desaturate (Remove Colors)");
-  im_tool_class->settings_name       = "desaturate";
-  im_tool_class->import_dialog_title = _("Import Desaturate Settings");
-  im_tool_class->export_dialog_title = _("Export Desaturate Settings");
+  im_tool_class->shell_desc    = _("Desaturate (Remove Colors)");
 
-  im_tool_class->get_operation       = gimp_desaturate_tool_get_operation;
-  im_tool_class->map                 = gimp_desaturate_tool_map;
-  im_tool_class->dialog              = gimp_desaturate_tool_dialog;
+  im_tool_class->get_operation = gimp_desaturate_tool_get_operation;
+  im_tool_class->map           = gimp_desaturate_tool_map;
+  im_tool_class->dialog        = gimp_desaturate_tool_dialog;
 }
 
 static void

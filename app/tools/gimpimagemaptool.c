@@ -304,7 +304,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
       gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell)->vbox), vbox);
 
-      if (image_map_tool->config)
+      if (klass->settings_name)
         gimp_image_map_tool_add_settings_gui (image_map_tool);
 
       /*  The preview toggle  */
