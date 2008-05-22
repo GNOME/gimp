@@ -1,5 +1,14 @@
 2008-05-22  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimp-tools.c (gimp_tools_init): added a call to
+	gimp_tool_options_create_folder().
+
+	* app/core/gimp-user-install.c (gimp_user_install_items): no need
+	to create the tool-options folder here if we are doing that on
+	each startup.
+
+2008-05-22  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcurvestool.c (gimp_curves_tool_dialog): use a
 	combo-box for the curve type.
 

@@ -94,7 +94,6 @@ gimp_user_install_items[] =
   { "templates",       USER_INSTALL_MKDIR },
   { "themes",          USER_INSTALL_MKDIR },
   { "tmp",             USER_INSTALL_MKDIR },
-  { "tool-options",    USER_INSTALL_MKDIR },
   { "curves",          USER_INSTALL_MKDIR },
   { "levels",          USER_INSTALL_MKDIR },
   { "fractalexplorer", USER_INSTALL_MKDIR },

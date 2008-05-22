@@ -184,6 +184,8 @@ gimp_tools_init (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
+  gimp_tool_options_create_folder ();
+
   tool_manager_init (gimp);
 
   gimp_container_freeze (gimp->tool_info_list);
