@@ -226,7 +226,11 @@ gimp_posterize_tool_dialog (GimpImageMapTool *image_map_tool)
                                2.0, 256.0, 1.0, 10.0, 0,
                                TRUE, 0.0, 0.0,
                                NULL, NULL);
+
+  gimp_scale_entry_set_logarithmic (data, TRUE);
+
   posterize_tool->levels_data = GTK_ADJUSTMENT (data);
+
   slider = GIMP_SCALE_ENTRY_SCALE (data);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
 

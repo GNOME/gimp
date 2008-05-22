@@ -1,3 +1,8 @@
+2008-05-22  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpposterizetool.c (gimp_posterize_tool_dialog):
+	use a logarithmic slider.
+
 2008-05-22  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpfreeselecttool.c: Remember the selection operation
