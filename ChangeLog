@@ -1,5 +1,10 @@
 2008-05-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimppaintoptions-gui.c: factor out a utility function
+	that creates a dynamics check button.
+
+2008-05-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimppaintoptions-gui.c: first version of a matrix of
 	toggles for the dynamics parameters instead of three expanders.
 

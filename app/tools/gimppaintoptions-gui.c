@@ -377,6 +377,23 @@ tool_has_color_dynamics (GType tool_type)
   return (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL));
 }
 
+static GtkWidget *
+dynamics_check_button_new (GObject     *config,
+                           const gchar *property_name,
+                           GtkTable    *table,
+                           gint         column,
+                           gint         row)
+{
+  GtkWidget *button;
+
+  button = gimp_prop_check_button_new (config, property_name, NULL);
+  gtk_table_attach (table, button, column, column + 1, row, row + 1,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (button);
+
+  return button;
+}
+
 static void
 pressure_options_gui (GimpPressureOptions *pressure,
                       GimpPaintOptions    *paint_options,
@@ -392,11 +409,8 @@ pressure_options_gui (GimpPressureOptions *pressure,
   /*  the opacity toggle  */
   if (tool_has_opacity_dynamics (tool_type))
     {
-      button = gimp_prop_check_button_new (config, "pressure-opacity", NULL);
-      gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_widget_show (button);
-
+      button = dynamics_check_button_new (config, "pressure-opacity",
+                                          table, column, row);
       g_signal_connect (button, "size-allocate",
                         G_CALLBACK (toggle_allocate),
                         labels[column - 1]);
@@ -406,11 +420,8 @@ pressure_options_gui (GimpPressureOptions *pressure,
   /*  the pressure toggle  */
   if (tool_has_pressure_dynamics (tool_type))
     {
-      button = gimp_prop_check_button_new (config, "pressure-hardness", NULL);
-      gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_widget_show (button);
-
+      button = dynamics_check_button_new (config, "pressure-hardness",
+                                          table, column, row);
       g_signal_connect (button, "size-allocate",
                         G_CALLBACK (toggle_allocate),
                         labels[column - 1]);
@@ -420,11 +431,8 @@ pressure_options_gui (GimpPressureOptions *pressure,
   /*  the rate toggle */
   if (tool_has_rate_dynamics (tool_type))
     {
-      button = gimp_prop_check_button_new (config, "pressure-rate", NULL);
-      gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_widget_show (button);
-
+      button = dynamics_check_button_new (config, "pressure-rate",
+                                          table, column, row);
       g_signal_connect (button, "size-allocate",
                         G_CALLBACK (toggle_allocate),
                         labels[column - 1]);
@@ -435,13 +443,11 @@ pressure_options_gui (GimpPressureOptions *pressure,
   if (tool_has_size_dynamics (tool_type))
     {
       if (tool_type != GIMP_TYPE_AIRBRUSH_TOOL)
-        button = gimp_prop_check_button_new (config, "pressure-size", NULL);
+        button = dynamics_check_button_new (config, "pressure-size",
+                                            table, column, row);
       else
-        button = gimp_prop_check_button_new (config, "pressure-inverse-size", NULL);
-
-      gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_widget_show (button);
+        button = dynamics_check_button_new (config, "pressure-inverse-size",
+                                            table, column, row);
 
       g_signal_connect (button, "size-allocate",
                         G_CALLBACK (toggle_allocate),
@@ -452,11 +458,8 @@ pressure_options_gui (GimpPressureOptions *pressure,
   /*  the color toggle  */
   if (tool_has_color_dynamics (tool_type))
     {
-      button = gimp_prop_check_button_new (config, "pressure-color", NULL);
-      gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_widget_show (button);
-
+      button = dynamics_check_button_new (config, "pressure-color",
+                                          table, column, row);
       g_signal_connect (button, "size-allocate",
                         G_CALLBACK (toggle_allocate),
                         labels[column - 1]);
@@ -471,66 +474,44 @@ velocity_options_gui (GimpVelocityOptions *velocity,
                       GtkTable            *table,
                       gint                 row)
 {
-  GObject   *config = G_OBJECT (paint_options);
-  GtkWidget *button;
-  gint       column = 1;
+  GObject *config = G_OBJECT (paint_options);
+  gint     column = 1;
 
   /*  the opacity toggle  */
   if (tool_has_opacity_dynamics (tool_type))
     {
-      button = gimp_prop_check_button_new (config, "velocity-opacity", NULL);
-      gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_widget_show (button);
-
-      column++;
+      dynamics_check_button_new (config, "velocity-opacity",
+                                 table, column++, row);
     }
 
   /*  the pressure toggle  */
   if (tool_has_pressure_dynamics (tool_type))
     {
-      button = gimp_prop_check_button_new (config, "velocity-hardness", NULL);
-      gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_widget_show (button);
-
-      column++;
+      dynamics_check_button_new (config, "velocity-hardness",
+                                 table, column++, row);
     }
 
   /*  the rate toggle */
   if (tool_has_rate_dynamics (tool_type))
     {
-      button = gimp_prop_check_button_new (config, "velocity-rate", NULL);
-      gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_widget_show (button);
-
-      column++;
+      dynamics_check_button_new (config, "velocity-rate",
+                                 table, column++, row);
     }
 
   /*  the size toggle  */
   if (tool_has_size_dynamics (tool_type))
     {
-      button = gimp_prop_check_button_new (config, "velocity-size", NULL);
-      gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_widget_show (button);
-
-      column++;
+      dynamics_check_button_new (config, "velocity-size",
+                                 table, column++, row);
     }
 
   /*  the color toggle  */
   if (tool_has_color_dynamics (tool_type))
     {
-      button = gimp_prop_check_button_new (config, "velocity-color", NULL);
-      gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_widget_show (button);
-
-      column++;
+      dynamics_check_button_new (config, "velocity-color",
+                                 table, column++, row);
     }
 }
-
 
 static void
 random_options_gui (GimpRandomOptions *random,
@@ -539,63 +520,42 @@ random_options_gui (GimpRandomOptions *random,
                     GtkTable          *table,
                     gint               row)
 {
-  GObject   *config = G_OBJECT (paint_options);
-  GtkWidget *button;
-  gint       column = 1;
+  GObject*config = G_OBJECT (paint_options);
+  gint    column = 1;
 
   /*  the opacity toggle  */
   if (tool_has_opacity_dynamics (tool_type))
     {
-      button = gimp_prop_check_button_new (config, "random-opacity", NULL);
-      gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_widget_show (button);
-
-      column++;
+      dynamics_check_button_new (config, "random-opacity",
+                                 table, column++, row);
     }
 
   /*  the pressure toggle  */
   if (tool_has_pressure_dynamics (tool_type))
     {
-      button = gimp_prop_check_button_new (config, "random-hardness", NULL);
-      gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_widget_show (button);
-
-      column++;
+      dynamics_check_button_new (config, "random-hardness",
+                                 table, column++, row);
     }
 
   /*  the rate toggle */
   if (tool_has_rate_dynamics (tool_type))
     {
-      button = gimp_prop_check_button_new (config, "random-rate", NULL);
-      gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_widget_show (button);
-
-      column++;
+      dynamics_check_button_new (config, "random-rate",
+                                 table, column++, row);
     }
 
   /*  the size toggle  */
   if (tool_has_size_dynamics (tool_type))
     {
-      button = gimp_prop_check_button_new (config, "random-size", NULL);
-      gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_widget_show (button);
-
-      column++;
+      dynamics_check_button_new (config, "random-size",
+                                 table, column++, row);
     }
 
   /*  the color toggle  */
   if (tool_has_color_dynamics (tool_type))
     {
-      button = gimp_prop_check_button_new (config, "random-color", NULL);
-      gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_widget_show (button);
-
-      column++;
+      dynamics_check_button_new (config, "random-color",
+                                 table, column++, row);
     }
 }
 
