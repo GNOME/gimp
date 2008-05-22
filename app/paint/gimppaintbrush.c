@@ -105,10 +105,8 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                          GimpPaintOptions *paint_options,
                          gdouble           opacity)
 {
-  GimpBrushCore            *brush_core       = GIMP_BRUSH_CORE (paint_core);
-  GimpContext              *context          = GIMP_CONTEXT (paint_options);
-  GimpPressureOptions      *pressure_options = paint_options->pressure_options;
-  GimpVelocityOptions      *velocity_options = paint_options->velocity_options;
+  GimpBrushCore            *brush_core = GIMP_BRUSH_CORE (paint_core);
+  GimpContext              *context    = GIMP_CONTEXT (paint_options);
   GimpImage                *image;
   GimpRGB                   gradient_color;
   TempBuf                  *area;

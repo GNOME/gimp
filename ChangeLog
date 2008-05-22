@@ -1,5 +1,11 @@
 2008-05-22  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/core/gimpcurve-load.c (gimp_curve_load)
+	* app/paint/gimppaintbrush.c (_gimp_paintbrush_motion): Remove
+	unused variables.
+
+2008-05-22  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimpfreeselecttool.[ch]
 	* app/tools/gimpforegroundselecttool.c: Fix that some
 	gimp_free_select_tool_-functions had the wrong name.

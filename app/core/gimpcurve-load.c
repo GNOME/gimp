@@ -41,8 +41,7 @@ GList *
 gimp_curve_load (const gchar  *filename,
                  GError      **error)
 {
-  GimpCurve *curve;
-  FILE      *file;
+  FILE *file;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (g_path_is_absolute (filename), NULL);
