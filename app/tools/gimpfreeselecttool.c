@@ -232,7 +232,7 @@ gimp_free_select_tool_finalize (GObject *object)
   priv->points       = NULL;
   priv->n_points     = 0;
   priv->max_n_points = 0;
-      
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -258,7 +258,7 @@ gimp_free_select_tool_get_grabbed_point (GimpFreeSelectTool *fst)
 
   return priv->points[priv->segment_indices[priv->grabbed_segment_index]];
 }
-                                         
+
 static void
 gimp_free_select_tool_cleanup_after_move (GimpFreeSelectTool *fst)
 {
@@ -756,11 +756,11 @@ gimp_free_select_tool_handle_cancel (GimpFreeSelectTool *fst)
 {
   if (gimp_free_select_tool_is_point_grabbed (fst))
     {
-      gimp_free_select_tool_revert_to_saved_state (fst);      
+      gimp_free_select_tool_revert_to_saved_state (fst);
     }
   else
     {
-      gimp_free_select_tool_remove_last_segment (fst);      
+      gimp_free_select_tool_remove_last_segment (fst);
     }
 }
 
@@ -888,7 +888,7 @@ gimp_free_select_tool_oper_update (GimpTool        *tool,
   gimp_free_select_tool_select_closest_segment_point (fst,
                                                       display,
                                                       coords);
-  hovering_first_point = 
+  hovering_first_point =
     gimp_free_select_tool_should_close (fst,
                                         display,
                                         coords);
@@ -1031,7 +1031,7 @@ gimp_free_select_tool_button_release (GimpTool              *tool,
           gimp_free_select_tool_cleanup_after_move (fst);
         }
       break;
-      
+
     case GIMP_BUTTON_RELEASE_CANCEL:
       gimp_free_select_tool_handle_cancel (fst);
       break;
@@ -1065,7 +1065,7 @@ gimp_free_select_tool_motion (GimpTool        *tool,
   if (gimp_free_select_tool_is_point_grabbed (fst))
     {
       priv->polygon_modified = TRUE;
-      
+
       gimp_free_select_tool_move_segment_vertex_to (fst,
                                                     priv->grabbed_segment_index,
                                                     coords->x,

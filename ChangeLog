@@ -1,3 +1,7 @@
+2008-05-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpfreeselecttool.c: delete trailing whitespace.
+
 2008-05-22  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimp-tools.c (gimp_tools_init): added a call to
