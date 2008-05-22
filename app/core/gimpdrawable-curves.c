@@ -162,9 +162,8 @@ gimp_drawable_curves (GimpDrawable     *drawable,
                      "config", config,
                      NULL);
 
-      gimp_drawable_apply_operation (drawable, node, TRUE,
-                                     progress, _("Curves"));
-
+      gimp_drawable_apply_operation (drawable, progress, _("Curves"),
+                                     node, TRUE);
       g_object_unref (node);
     }
   else
@@ -180,9 +179,7 @@ gimp_drawable_curves (GimpDrawable     *drawable,
                       &cruft,
                       gimp_drawable_bytes (drawable));
 
-      gimp_drawable_process (drawable, progress, _("Curves"),
-                             (PixelProcessorFunc) gimp_lut_process, lut);
-
+      gimp_drawable_process_lut (drawable, progress, _("Curves"), lut);
       gimp_lut_free (lut);
     }
 }

@@ -70,9 +70,8 @@ gimp_drawable_colorize (GimpDrawable *drawable,
                      "config", config,
                      NULL);
 
-      gimp_drawable_apply_operation (drawable, node, TRUE,
-                                     progress, _("Colorize"));
-
+      gimp_drawable_apply_operation (drawable, progress, _("Colorize"),
+                                     node, TRUE);
       g_object_unref (node);
     }
   else

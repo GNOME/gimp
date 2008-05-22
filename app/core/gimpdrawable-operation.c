@@ -36,15 +36,16 @@
 #warning FIXME: gegl_node_add_child() is not public API
 #endif
 
-extern GeglNode *    gegl_node_add_child    (GeglNode      *self,
-                                             GeglNode      *child);
+extern GeglNode * gegl_node_add_child (GeglNode *self,
+                                       GeglNode *child);
+
 
 void
 gimp_drawable_apply_operation (GimpDrawable *drawable,
-                               GeglNode     *operation,
-                               gboolean      linear,
                                GimpProgress *progress,
-                               const gchar  *undo_desc)
+                               const gchar  *undo_desc,
+                               GeglNode     *operation,
+                               gboolean      linear)
 {
   GeglNode      *gegl;
   GeglNode      *input;
@@ -55,9 +56,9 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (GEGL_IS_NODE (operation));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (undo_desc != NULL);
+  g_return_if_fail (GEGL_IS_NODE (operation));
 
   if (! gimp_drawable_mask_intersect (drawable,
                                       &rect.x,     &rect.y,

@@ -52,18 +52,15 @@ gimp_drawable_invert (GimpDrawable *drawable,
 
       invert = g_object_new (GEGL_TYPE_NODE, "operation", "invert", NULL);
 
-      gimp_drawable_apply_operation (drawable, invert, TRUE,
-                                     progress, _("Invert"));
-
+      gimp_drawable_apply_operation (drawable, progress, _("Invert"),
+                                     invert, TRUE);
       g_object_unref (invert);
     }
   else
     {
       GimpLut *lut = invert_lut_new (gimp_drawable_bytes (drawable));
 
-      gimp_drawable_process (drawable, progress, _("Invert"),
-                             (PixelProcessorFunc) gimp_lut_process, lut);
-
+      gimp_drawable_process_lut (drawable, progress, _("Invert"), lut);
       gimp_lut_free (lut);
     }
 }

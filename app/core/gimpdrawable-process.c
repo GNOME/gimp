@@ -22,6 +22,7 @@
 
 #include "core-types.h"
 
+#include "base/gimplut.h"
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
 
@@ -43,6 +44,7 @@ gimp_drawable_process (GimpDrawable       *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (undo_desc != NULL);
 
   if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     {
@@ -60,4 +62,13 @@ gimp_drawable_process (GimpDrawable       *drawable,
 
       gimp_drawable_update (drawable, x, y, width, height);
     }
+}
+void
+gimp_drawable_process_lut (GimpDrawable *drawable,
+                           GimpProgress *progress,
+                           const gchar  *undo_desc,
+                           GimpLut      *lut)
+{
+  gimp_drawable_process (drawable, progress, undo_desc,
+                         (PixelProcessorFunc) gimp_lut_process, lut);
 }

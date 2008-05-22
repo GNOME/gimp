@@ -50,8 +50,6 @@ gimp_drawable_equalize (GimpDrawable *drawable,
   lut = equalize_lut_new (hist, gimp_drawable_bytes (drawable));
   gimp_histogram_unref (hist);
 
-  gimp_drawable_process (drawable, NULL, _("Equalize"),
-                         (PixelProcessorFunc) gimp_lut_process, lut);
-
+  gimp_drawable_process_lut (drawable, NULL, _("Equalize"), lut);
   gimp_lut_free (lut);
 }

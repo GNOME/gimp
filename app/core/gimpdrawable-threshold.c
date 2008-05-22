@@ -68,9 +68,8 @@ gimp_drawable_threshold (GimpDrawable *drawable,
                      "config", config,
                      NULL);
 
-      gimp_drawable_apply_operation (drawable, node, TRUE,
-                                     progress, _("Threshold"));
-
+      gimp_drawable_apply_operation (drawable, progress, _("Threshold"),
+                                     node, TRUE);
       g_object_unref (node);
     }
   else

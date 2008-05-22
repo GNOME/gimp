@@ -67,9 +67,8 @@ gimp_drawable_brightness_contrast (GimpDrawable *drawable,
                            NULL);
       gimp_brightness_contrast_config_set_node (config, node);
 
-      gimp_drawable_apply_operation (drawable, node, TRUE,
-                                     progress, _("Brightness_Contrast"));
-
+      gimp_drawable_apply_operation (drawable, progress,
+                                     _("Brightness_Contrast"), node, TRUE);
       g_object_unref (node);
     }
   else
@@ -80,9 +79,8 @@ gimp_drawable_brightness_contrast (GimpDrawable *drawable,
                                          config->contrast,
                                          gimp_drawable_bytes (drawable));
 
-      gimp_drawable_process (drawable, progress, _("Brightness-Contrast"),
-                             (PixelProcessorFunc) gimp_lut_process, lut);
-
+      gimp_drawable_process_lut (drawable, progress, _("Brightness-Contrast"),
+                                 lut);
       gimp_lut_free (lut);
     }
 

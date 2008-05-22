@@ -151,28 +151,23 @@ gimp_drawable_levels_internal (GimpDrawable     *drawable,
                      "config", config,
                      NULL);
 
-      gimp_drawable_apply_operation (drawable, levels, TRUE,
-                                     progress, _("Levels"));
+      gimp_drawable_apply_operation (drawable, progress, _("Levels"),
+                                     levels, TRUE);
 
       g_object_unref (levels);
     }
   else
     {
       Levels   levels;
-      GimpLut *lut;
+      GimpLut *lut = gimp_lut_new ();
 
       gimp_levels_config_to_cruft (config, &levels,
                                    gimp_drawable_is_rgb (drawable));
-
-      lut = gimp_lut_new ();
       gimp_lut_setup (lut,
-                      (GimpLutFunc) levels_lut_func,
-                      &levels,
+                      (GimpLutFunc) levels_lut_func, &levels,
                       gimp_drawable_bytes (drawable));
 
-      gimp_drawable_process (drawable, progress, _("Levels"),
-                             (PixelProcessorFunc) gimp_lut_process, lut);
-
+      gimp_drawable_process_lut (drawable, progress, _("Levels"), lut);
       gimp_lut_free (lut);
     }
 }

@@ -26,10 +26,10 @@
 
 
 void   gimp_drawable_apply_operation (GimpDrawable *drawable,
-                                      GeglNode     *operation,
-                                      gboolean      linear,
                                       GimpProgress *progress,
-                                      const gchar  *undo_desc);
+                                      const gchar  *undo_desc,
+                                      GeglNode     *operation,
+                                      gboolean      linear);
 
 
 #endif /* __GIMP_DRAWABLE_OPERATION_H__ */

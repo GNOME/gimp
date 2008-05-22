@@ -67,9 +67,8 @@ gimp_drawable_posterize (GimpDrawable *drawable,
                      "config", config,
                      NULL);
 
-      gimp_drawable_apply_operation (drawable, node, TRUE,
-                                     progress, _("Posterize"));
-
+      gimp_drawable_apply_operation (drawable, progress, _("Posterize"),
+                                     node, TRUE);
       g_object_unref (node);
     }
   else
@@ -78,9 +77,7 @@ gimp_drawable_posterize (GimpDrawable *drawable,
 
       lut = posterize_lut_new (config->levels, gimp_drawable_bytes (drawable));
 
-      gimp_drawable_process (drawable, progress, _("Posterize"),
-                             (PixelProcessorFunc) gimp_lut_process, lut);
-
+      gimp_drawable_process_lut (drawable, progress, _("Posterize"), lut);
       gimp_lut_free (lut);
     }
 

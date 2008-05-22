@@ -68,9 +68,8 @@ gimp_drawable_desaturate (GimpDrawable       *drawable,
 
       g_object_unref (config);
 
-      gimp_drawable_apply_operation (drawable, desaturate, TRUE,
-                                     progress, _("Desaturate"));
-
+      gimp_drawable_apply_operation (drawable, progress, _("Desaturate"),
+                                     desaturate, TRUE);
       g_object_unref  (desaturate);
     }
   else
