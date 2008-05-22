@@ -32,6 +32,7 @@
 
 typedef struct _GimpPressureOptions GimpPressureOptions;
 typedef struct _GimpVelocityOptions GimpVelocityOptions;
+typedef struct _GimpRandomOptions   GimpRandomOptions;
 typedef struct _GimpFadeOptions     GimpFadeOptions;
 typedef struct _GimpJitterOptions   GimpJitterOptions;
 typedef struct _GimpGradientOptions GimpGradientOptions;
@@ -48,6 +49,17 @@ struct _GimpPressureOptions
 };
 
 struct _GimpVelocityOptions
+{
+  gboolean  expanded;
+  gboolean  opacity;
+  gboolean  hardness;
+  gboolean  rate;
+  gboolean  size;
+  gboolean  inverse_size;
+  gboolean  color;
+};
+
+struct _GimpRandomOptions
 {
   gboolean  expanded;
   gboolean  opacity;
@@ -108,6 +120,7 @@ struct _GimpPaintOptions
 
   GimpPressureOptions      *pressure_options;
   GimpVelocityOptions      *velocity_options;
+  GimpRandomOptions        *random_options;
   GimpFadeOptions          *fade_options;
   GimpJitterOptions        *jitter_options;
   GimpGradientOptions      *gradient_options;
@@ -146,14 +159,25 @@ gboolean gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
 GimpBrushApplicationMode
              gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options);
 
-gdouble    gimp_paint_options_get_dynamics_mix (gdouble          mix1,
-                                                gdouble          mix2);
 
 gdouble gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
                                                 const GimpCoords *coords,
                                                 gboolean          use_pressure);
 
-gdouble    gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
+gdouble gimp_paint_options_get_dynamic_size    (GimpPaintOptions *paint_options,
+                                                const GimpCoords *coords,
+                                                gboolean          use_pressure,
+                                                gboolean          use_dynamics);
+
+gdouble gimp_paint_options_get_dynamic_rate    (GimpPaintOptions *paint_options,
+                                                const GimpCoords *coords,
+                                                gboolean          use_pressure);
+
+gdouble gimp_paint_options_get_dynamic_color   (GimpPaintOptions *paint_options,
+                                                const GimpCoords *coords,
+                                                gboolean          use_pressure);
+
+gdouble gimp_paint_options_get_dynamic_hardness(GimpPaintOptions *paint_options,
                                                 const GimpCoords *coords,
                                                 gboolean          use_pressure);
 

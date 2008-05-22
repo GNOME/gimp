@@ -36,7 +36,8 @@ enum
   PROP_0,
   PROP_RATE,
   PROP_PRESSURE,
-  PROP_VELOCITY_SIZE
+  PROP_VELOCITY_SIZE,
+  PROP_VELOCITY_HARDNESS
 };
 
 
@@ -71,10 +72,16 @@ gimp_airbrush_options_class_init (GimpAirbrushOptionsClass *klass)
                                    0.0, 100.0, AIRBRUSH_DEFAULT_PRESSURE,
                                    GIMP_PARAM_STATIC_STRINGS);
 
-  /* override velocity size because its unavaliable to the airbrush */
+  /* override velocity size because its unnatural as a default for airbrush */
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY_SIZE,
                                     "velocity-size", NULL,
                                     FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  
+  /* override velocity hardness to default to a true, because that is natural for airbrush */
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY_HARDNESS,
+                                    "velocity-hardness", NULL,
+                                    TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
 }
 
@@ -102,6 +109,9 @@ gimp_airbrush_options_set_property (GObject      *object,
     case PROP_VELOCITY_SIZE:
       GIMP_PAINT_OPTIONS (options)->velocity_options->size = g_value_get_boolean (value);
       break;
+    case PROP_VELOCITY_HARDNESS:
+      GIMP_PAINT_OPTIONS (options)->velocity_options->hardness = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -127,6 +137,9 @@ gimp_airbrush_options_get_property (GObject    *object,
       break;
     case PROP_VELOCITY_SIZE:
       g_value_set_boolean (value, GIMP_PAINT_OPTIONS (options)->velocity_options->size);
+      break;
+    case PROP_VELOCITY_HARDNESS:
+      g_value_set_boolean (value, GIMP_PAINT_OPTIONS (options)->velocity_options->hardness);
       break;
 
     default:

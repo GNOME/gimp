@@ -172,6 +172,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
   gint               y;
   PixelRegion        destPR;
   GimpPattern       *pattern = NULL;
+  gdouble            hardness;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -239,11 +240,16 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                                                      &paint_core->cur_coords,
                                                      paint_core->use_pressure);
 
+  hardness = gimp_paint_options_get_dynamic_hardness (paint_options,
+                                                      &paint_core->cur_coords,
+                                                      paint_core->use_pressure);
+
   gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                 MIN (opacity, GIMP_OPACITY_OPAQUE),
                                 gimp_context_get_opacity (context),
                                 gimp_context_get_paint_mode (context),
                                 gimp_paint_options_get_brush_mode (paint_options),
+                                hardness,
 
                                 /* In fixed mode, paint incremental so the
                                  * individual brushes are properly applied

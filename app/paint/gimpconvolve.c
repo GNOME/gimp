@@ -211,6 +211,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                                   MIN (opacity, GIMP_OPACITY_OPAQUE),
                                   gimp_context_get_opacity (context),
                                   gimp_paint_options_get_brush_mode (paint_options),
+                                  1.0,
                                   GIMP_PAINT_INCREMENTAL);
 }
 

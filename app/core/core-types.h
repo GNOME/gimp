@@ -204,6 +204,7 @@ struct _GimpCoords
   gdouble delta_y;
   gdouble distance;
   gdouble velocity;
+  gdouble random;
 };
 
 

@@ -170,6 +170,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   PixelRegion    srcPR, destPR, tempPR;
   guchar        *temp_data;
   gdouble        opacity;
+  gdouble        hardness;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -239,11 +240,16 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                                                      &paint_core->cur_coords,
                                                      paint_core->use_pressure);
 
+  hardness = gimp_paint_options_get_dynamic_hardness (paint_options,
+                                                      &paint_core->cur_coords,
+                                                      paint_core->use_pressure);
+
   /* Replace the newly dodgedburned area (canvas_buf) to the image */
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                   MIN (opacity, GIMP_OPACITY_OPAQUE),
                                   gimp_context_get_opacity (context),
                                   gimp_paint_options_get_brush_mode (paint_options),
+                                  hardness,
                                   GIMP_PAINT_CONSTANT);
 }
 

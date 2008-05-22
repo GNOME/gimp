@@ -226,7 +226,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
       /* First pair is invalid to do any velocity calculation,
        * so we apply constant values.
        */
-      coords->velocity   = 100;
+      coords->velocity   = 1.0;
       coords->delta_time = 0.001;
       coords->distance   = 1;
     }
@@ -251,6 +251,8 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
       coords->delta_time = (shell->last_coords.delta_time * (1 - SMOOTH_FACTOR)
                             + coords->delta_time * SMOOTH_FACTOR);
       coords->distance = dist = sqrt (SQR (dx) + SQR (dy));
+
+      coords->random = g_random_double_range (0.0, 1.0);
 
       /* If even smoothed time resolution does not allow to guess for speed,
        * use last velocity.

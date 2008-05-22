@@ -810,6 +810,23 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
                 if (initialized)
                   {
+                    /* Use the last evaluated dynamic axes instead of
+                     * the button_press event's ones because the click
+                     * is usually at the same spot as the last motion
+                     * event which would give us bogus dynamics.
+                     */
+                    GimpCoords tmp_coords;
+
+                    tmp_coords = shell->last_coords;
+
+                    tmp_coords.x        = image_coords.x;
+                    tmp_coords.y        = image_coords.y;
+                    tmp_coords.pressure = image_coords.pressure;
+                    tmp_coords.xtilt    = image_coords.xtilt;
+                    tmp_coords.ytilt    = image_coords.ytilt;
+
+                    image_coords = tmp_coords;
+
                     tool_manager_button_press_active (gimp,
                                                       &image_coords,
                                                       time, state, display);

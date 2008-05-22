@@ -435,9 +435,15 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   PixelRegion    destPR;
   GimpImageType  src_type;
   TempBuf       *mask_buf;
+  gdouble        hardness;
+
+  hardness = gimp_paint_options_get_dynamic_hardness (paint_options,
+                                                      &paint_core->cur_coords,
+                                                      paint_core->use_pressure);
 
   mask_buf = gimp_brush_core_get_brush_mask (GIMP_BRUSH_CORE (source_core),
-                                             GIMP_BRUSH_HARD);
+                                             GIMP_BRUSH_HARD,
+                                             hardness);
 
   src_type = gimp_pickable_get_image_type (src_pickable);
 
@@ -550,5 +556,6 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                   MIN (opacity, GIMP_OPACITY_OPAQUE),
                                   gimp_context_get_opacity (context),
                                   gimp_paint_options_get_brush_mode (paint_options),
+                                  hardness,
                                   GIMP_PAINT_INCREMENTAL);
 }

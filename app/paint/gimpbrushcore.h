@@ -111,12 +111,14 @@ void    gimp_brush_core_paste_canvas   (GimpBrushCore            *core,
                                         gdouble                   image_opacity,
                                         GimpLayerModeEffects      paint_mode,
                                         GimpBrushApplicationMode  brush_hardness,
+                                        gdouble                   dynamic_hardness,
                                         GimpPaintApplicationMode  mode);
 void    gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                         GimpDrawable             *drawable,
                                         gdouble                   brush_opacity,
                                         gdouble                   image_opacity,
                                         GimpBrushApplicationMode  brush_hardness,
+                                        gdouble                   dynamic_hardness,
                                         GimpPaintApplicationMode  mode);
 
 void    gimp_brush_core_color_area_with_pixmap
@@ -126,7 +128,8 @@ void    gimp_brush_core_color_area_with_pixmap
                                           GimpBrushApplicationMode  mode);
 
 TempBuf * gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
-                                          GimpBrushApplicationMode  brush_hardness);
+                                          GimpBrushApplicationMode  brush_hardness,
+                                          gdouble                   dynamic_hardness);
 
 
 #endif  /*  __GIMP_BRUSH_CORE_H__  */

@@ -1,3 +1,40 @@
+2008-05-22  Michael Natterer  <mitch@gimp.org>
+
+	Applied slightly modified and fixed patch from Alexia Death which
+	adds a "random" axis to the paint dynamics and fixes some issues
+	in the previous paint dynamics commits. Fixes bug #529431.
+
+	* app/core/core-types.h: add a "random" axis to GimpCoords.
+
+	* app/display/gimpdisplayshell-coords.c: set it to a random value.
+
+	* app/display/gimpdisplayshell-callbacks.c: on button_press,
+	use the dynamics from the last motion event to avoid blotches
+	at the beginning of paint strokes.
+
+	* app/paint/gimppaintoptions.[ch]: add random properties the same
+	way we do pressure and velocity. Add get_dynamic_size(),
+	get_dynamic_color() and get_dynamic_hardness() functions which
+	look at all dynamic parameters of the passed coords.
+
+	* app/tools/gimppaintoptions-gui.c: add gui for the random options.
+
+	* app/paint/gimpbrushcore.[ch]: remove calc_brush_scale() and use
+	gimp_paint_options_get_dynamic_size_instead().
+	Add "dynamic_hardness" parameters to paste_canvas(),
+	replace_canvas() and get_brush_mask().
+
+	* app/paint/gimpairbrushoptions.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimpheal.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimpsmudge.c: calculate the dynamic hardness and pass
+	it to above brush core functions. Use the get_dynamic_color() to
+	calculate the gradient color.
+
 2008-05-22  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpposterizetool.c (gimp_posterize_tool_dialog):

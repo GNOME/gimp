@@ -85,11 +85,6 @@ static TempBuf *gimp_brush_core_get_paint_area    (GimpPaintCore    *paint_core,
 static void     gimp_brush_core_real_set_brush    (GimpBrushCore    *core,
                                                    GimpBrush        *brush);
 
-static gdouble  gimp_brush_core_calc_brush_scale  (GimpBrushCore    *core,
-                                                   GimpPaintOptions *paint_options,
-                                                   gdouble           pressure,
-                                                   gdouble           velocity);
-
 static inline void rotate_pointers                (gulong          **p,
                                                    guint32           n);
 static TempBuf * gimp_brush_core_subsample_mask   (GimpBrushCore    *core,
@@ -358,9 +353,10 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
       return FALSE;
     }
 
-  core->scale = gimp_brush_core_calc_brush_scale (core, paint_options,
-                                                  coords->pressure,
-                                                  coords->velocity);
+  core->scale = gimp_paint_options_get_dynamic_size (paint_options,
+                                                     coords,
+                                                     paint_core->use_pressure,
+                                                     GIMP_BRUSH_CORE_GET_CLASS (core)->handles_scaling_brush);
 
   core->spacing = (gdouble) gimp_brush_get_spacing (core->main_brush) / 100.0;
 
@@ -673,6 +669,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   paint_core->cur_coords.ytilt    = paint_core->last_coords.ytilt    + delta_ytilt;
   paint_core->cur_coords.wheel    = paint_core->last_coords.wheel    + delta_wheel;
   paint_core->cur_coords.velocity = paint_core->last_coords.velocity + delta_velocity;
+  paint_core->cur_coords.random   = g_random_double_range (0.0, 1.0);
 
   paint_core->distance   = total;
   paint_core->pixel_dist = pixel_initial + pixel_dist;
@@ -693,9 +690,10 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_scaling_brush)
     {
-      core->scale = gimp_brush_core_calc_brush_scale (core, paint_options,
-                                                      paint_core->cur_coords.pressure,
-                                                      paint_core->cur_coords.velocity);
+      core->scale = gimp_paint_options_get_dynamic_size (paint_options,
+                                                         &paint_core->cur_coords,
+                                                         paint_core->use_pressure,
+                                                         TRUE);
     }
   /* else use scale from start(), we don't support on-the-fly scaling */
 
@@ -833,10 +831,12 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
                               gdouble                   image_opacity,
                               GimpLayerModeEffects      paint_mode,
                               GimpBrushApplicationMode  brush_hardness,
+                              gdouble                   dynamic_hardness,
                               GimpPaintApplicationMode  mode)
 {
   TempBuf *brush_mask = gimp_brush_core_get_brush_mask (core,
-                                                        brush_hardness);
+                                                        brush_hardness,
+                                                        dynamic_hardness);
 
   if (brush_mask)
     {
@@ -875,10 +875,12 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                 gdouble                   brush_opacity,
                                 gdouble                   image_opacity,
                                 GimpBrushApplicationMode  brush_hardness,
+                                gdouble                   dynamic_hardness,
                                 GimpPaintApplicationMode  mode)
 {
   TempBuf *brush_mask = gimp_brush_core_get_brush_mask (core,
-                                                        brush_hardness);
+                                                        brush_hardness,
+                                                        dynamic_hardness);
 
   if (brush_mask)
     {
@@ -926,53 +928,6 @@ gimp_brush_core_invalidate_cache (GimpBrush     *brush,
 /************************************************************
  *             LOCAL FUNCTION DEFINITIONS                   *
  ************************************************************/
-
-static gdouble
-gimp_brush_core_calc_brush_scale (GimpBrushCore    *core,
-                                  GimpPaintOptions *paint_options,
-                                  gdouble           pressure,
-                                  gdouble           velocity)
-{
-  gdouble scale = 1.0;
-
-  if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_scaling_brush)
-    {
-      if (! (GIMP_PAINT_CORE (core)->use_pressure           &&
-             (paint_options->pressure_options->inverse_size ||
-              paint_options->pressure_options->size)))
-        {
-          pressure = -1;
-        }
-      else if (paint_options->pressure_options->inverse_size)
-        {
-          pressure = 1.0 - 0.9 * pressure;
-        }
-
-      if (paint_options->velocity_options->size)
-        {
-          velocity = 1.0 - sqrt (velocity);
-        }
-      else if (paint_options->velocity_options->inverse_size)
-        {
-          velocity = sqrt (velocity);
-        }
-      else
-        {
-          velocity = -1;
-        }
-
-      scale = gimp_paint_options_get_dynamics_mix (pressure, velocity);
-
-      if (scale < 1 / 64.0)
-        scale = 1 / 8.0;
-      else
-        scale = sqrt (scale);
-    }
-
-  scale *= paint_options->brush_scale;
-
-  return scale;
-}
 
 static inline void
 rotate_pointers (gulong  **p,
@@ -1393,12 +1348,11 @@ gimp_brush_core_scale_pixmap (GimpBrushCore *core,
 
 TempBuf *
 gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
-                                GimpBrushApplicationMode  brush_hardness)
+                                GimpBrushApplicationMode  brush_hardness,
+                                gdouble                   dynamic_hardness)
 {
   GimpPaintCore *paint_core = GIMP_PAINT_CORE (core);
   TempBuf       *mask;
-  gdouble        pressure;
-  gdouble        velocity;
 
   mask = gimp_brush_core_scale_mask (core, core->brush);
 
@@ -1420,17 +1374,10 @@ gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
       break;
 
     case GIMP_BRUSH_PRESSURE:
-      if (! paint_core->use_pressure)
-        pressure = -1.0;
-      else
-        pressure = GIMP_PAINT_PRESSURE_SCALE * paint_core->cur_coords.pressure;
-
-      velocity = GIMP_PAINT_VELOCITY_SCALE * paint_core->cur_coords.velocity;
-
       mask = gimp_brush_core_pressurize_mask (core, mask,
                                               paint_core->cur_coords.x,
                                               paint_core->cur_coords.y,
-                                              gimp_paint_options_get_dynamics_mix (pressure, velocity));
+                                              dynamic_hardness);
       break;
 
     default:

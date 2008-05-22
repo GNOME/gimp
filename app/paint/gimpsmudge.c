@@ -238,6 +238,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   gdouble            opacity;
   gdouble            dynamic_rate;
   gint               x, y, w, h;
+  gdouble            hardness;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -308,10 +309,15 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                                                      &paint_core->cur_coords,
                                                      paint_core->use_pressure);
 
+  hardness = gimp_paint_options_get_dynamic_hardness (paint_options,
+                                                      &paint_core->cur_coords,
+                                                      paint_core->use_pressure);
+
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                   MIN (opacity, GIMP_OPACITY_OPAQUE),
                                   gimp_context_get_opacity (context),
                                   gimp_paint_options_get_brush_mode (paint_options),
+                                  hardness,
                                   GIMP_PAINT_INCREMENTAL);
 }
 

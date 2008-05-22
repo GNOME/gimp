@@ -54,6 +54,14 @@
 #define DEFAULT_VELOCITY_INVERSE_SIZE FALSE
 #define DEFAULT_VELOCITY_COLOR        FALSE
 
+#define DEFAULT_RANDOM_EXPANDED       FALSE
+#define DEFAULT_RANDOM_OPACITY        FALSE
+#define DEFAULT_RANDOM_HARDNESS       FALSE
+#define DEFAULT_RANDOM_RATE           FALSE
+#define DEFAULT_RANDOM_SIZE           FALSE
+#define DEFAULT_RANDOM_INVERSE_SIZE   FALSE
+#define DEFAULT_RANDOM_COLOR          FALSE
+
 #define DEFAULT_USE_FADE              FALSE
 #define DEFAULT_FADE_LENGTH           100.0
 #define DEFAULT_FADE_UNIT             GIMP_UNIT_PIXEL
@@ -93,6 +101,14 @@ enum
   PROP_VELOCITY_INVERSE_SIZE,
   PROP_VELOCITY_COLOR,
 
+  PROP_RANDOM_EXPANDED,
+  PROP_RANDOM_OPACITY,
+  PROP_RANDOM_HARDNESS,
+  PROP_RANDOM_RATE,
+  PROP_RANDOM_SIZE,
+  PROP_RANDOM_INVERSE_SIZE,
+  PROP_RANDOM_COLOR,
+
   PROP_USE_FADE,
   PROP_FADE_LENGTH,
   PROP_FADE_UNIT,
@@ -115,17 +131,21 @@ enum
 };
 
 
-static void   gimp_paint_options_finalize     (GObject      *object);
-static void   gimp_paint_options_set_property (GObject      *object,
-                                               guint         property_id,
-                                               const GValue *value,
-                                               GParamSpec   *pspec);
-static void   gimp_paint_options_get_property (GObject      *object,
-                                               guint         property_id,
-                                               GValue       *value,
-                                               GParamSpec   *pspec);
-static void   gimp_paint_options_notify       (GObject      *object,
-                                               GParamSpec   *pspec);
+static void    gimp_paint_options_finalize         (GObject      *object);
+static void    gimp_paint_options_set_property     (GObject      *object,
+                                                    guint         property_id,
+                                                    const GValue *value,
+                                                    GParamSpec   *pspec);
+static void    gimp_paint_options_get_property     (GObject      *object,
+                                                    guint         property_id,
+                                                    GValue       *value,
+                                                    GParamSpec   *pspec);
+static void    gimp_paint_options_notify           (GObject      *object,
+                                                    GParamSpec   *pspec);
+
+static gdouble gimp_paint_options_get_dynamics_mix (gdouble       mix1,
+                                                    gdouble       mix2,
+                                                    gdouble       mix3);
 
 
 G_DEFINE_TYPE (GimpPaintOptions, gimp_paint_options, GIMP_TYPE_TOOL_OPTIONS)
@@ -222,6 +242,35 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     DEFAULT_VELOCITY_INVERSE_SIZE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_EXPANDED,
+                                    "random-expanded", NULL,
+                                    DEFAULT_RANDOM_EXPANDED,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_OPACITY,
+                                    "random-opacity", NULL,
+                                    DEFAULT_RANDOM_OPACITY,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_HARDNESS,
+                                    "random-hardness", NULL,
+                                    DEFAULT_RANDOM_HARDNESS,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_RATE,
+                                    "random-rate", NULL,
+                                    DEFAULT_RANDOM_RATE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_SIZE,
+                                    "random-size", NULL,
+                                    DEFAULT_RANDOM_SIZE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_COLOR,
+                                    "random-color", NULL,
+                                    DEFAULT_RANDOM_COLOR,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_INVERSE_SIZE,
+                                    "random-inverse-size", NULL,
+                                    DEFAULT_RANDOM_INVERSE_SIZE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_FADE,
                                     "use-fade", NULL,
                                     DEFAULT_USE_FADE,
@@ -310,6 +359,7 @@ gimp_paint_options_init (GimpPaintOptions *options)
 
   options->pressure_options = g_slice_new0 (GimpPressureOptions);
   options->velocity_options = g_slice_new0 (GimpVelocityOptions);
+  options->random_options   = g_slice_new0 (GimpRandomOptions);
   options->fade_options     = g_slice_new0 (GimpFadeOptions);
   options->jitter_options   = g_slice_new0 (GimpJitterOptions);
   options->gradient_options = g_slice_new0 (GimpGradientOptions);
@@ -325,6 +375,7 @@ gimp_paint_options_finalize (GObject *object)
 
   g_slice_free (GimpPressureOptions, options->pressure_options);
   g_slice_free (GimpVelocityOptions, options->velocity_options);
+  g_slice_free (GimpRandomOptions,   options->random_options);
   g_slice_free (GimpFadeOptions,     options->fade_options);
   g_slice_free (GimpJitterOptions,   options->jitter_options);
   g_slice_free (GimpGradientOptions, options->gradient_options);
@@ -341,6 +392,7 @@ gimp_paint_options_set_property (GObject      *object,
   GimpPaintOptions    *options          = GIMP_PAINT_OPTIONS (object);
   GimpPressureOptions *pressure_options = options->pressure_options;
   GimpVelocityOptions *velocity_options = options->velocity_options;
+  GimpRandomOptions   *random_options   = options->random_options;
   GimpFadeOptions     *fade_options     = options->fade_options;
   GimpJitterOptions   *jitter_options   = options->jitter_options;
   GimpGradientOptions *gradient_options = options->gradient_options;
@@ -403,6 +455,28 @@ gimp_paint_options_set_property (GObject      *object,
       break;
     case PROP_VELOCITY_COLOR:
       velocity_options->color = g_value_get_boolean (value);
+      break;
+
+    case PROP_RANDOM_EXPANDED:
+      random_options->expanded = g_value_get_boolean (value);
+      break;
+    case PROP_RANDOM_OPACITY:
+      random_options->opacity = g_value_get_boolean (value);
+      break;
+    case PROP_RANDOM_HARDNESS:
+      random_options->hardness = g_value_get_boolean (value);
+      break;
+    case PROP_RANDOM_RATE:
+      random_options->rate = g_value_get_boolean (value);
+      break;
+    case PROP_RANDOM_SIZE:
+      random_options->size = g_value_get_boolean (value);
+      break;
+    case PROP_RANDOM_INVERSE_SIZE:
+      random_options->inverse_size = g_value_get_boolean (value);
+      break;
+    case PROP_RANDOM_COLOR:
+      random_options->color = g_value_get_boolean (value);
       break;
 
     case PROP_USE_FADE:
@@ -474,6 +548,7 @@ gimp_paint_options_get_property (GObject    *object,
   GimpPaintOptions    *options          = GIMP_PAINT_OPTIONS (object);
   GimpPressureOptions *pressure_options = options->pressure_options;
   GimpVelocityOptions *velocity_options = options->velocity_options;
+  GimpRandomOptions   *random_options   = options->random_options;
   GimpFadeOptions     *fade_options     = options->fade_options;
   GimpJitterOptions   *jitter_options   = options->jitter_options;
   GimpGradientOptions *gradient_options = options->gradient_options;
@@ -536,6 +611,28 @@ gimp_paint_options_get_property (GObject    *object,
       break;
     case PROP_VELOCITY_COLOR:
       g_value_set_boolean (value, velocity_options->color);
+      break;
+
+    case PROP_RANDOM_EXPANDED:
+      g_value_set_boolean (value, random_options->expanded);
+      break;
+    case PROP_RANDOM_OPACITY:
+      g_value_set_boolean (value, random_options->opacity);
+      break;
+    case PROP_RANDOM_HARDNESS:
+      g_value_set_boolean (value, random_options->hardness);
+      break;
+    case PROP_RANDOM_RATE:
+      g_value_set_boolean (value, random_options->rate);
+      break;
+    case PROP_RANDOM_SIZE:
+      g_value_set_boolean (value, random_options->size);
+      break;
+    case PROP_RANDOM_INVERSE_SIZE:
+      g_value_set_boolean (value, random_options->inverse_size);
+      break;
+    case PROP_RANDOM_COLOR:
+      g_value_set_boolean (value, random_options->color);
       break;
 
     case PROP_USE_FADE:
@@ -721,8 +818,6 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
                                        gdouble           pixel_dist,
                                        GimpRGB          *color)
 {
-  GimpPressureOptions *pressure_options;
-  GimpVelocityOptions *velocity_options;
   GimpGradientOptions *gradient_options;
   GimpGradient        *gradient;
 
@@ -730,13 +825,13 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (color != NULL, FALSE);
 
-  pressure_options = paint_options->pressure_options;
-  velocity_options = paint_options->velocity_options;
   gradient_options = paint_options->gradient_options;
 
   gradient = gimp_context_get_gradient (GIMP_CONTEXT (paint_options));
 
-  if (pressure_options->color || velocity_options->color)
+  if (paint_options->pressure_options->color ||
+      paint_options->velocity_options->color ||
+      paint_options->random_options->color)
     {
       gimp_gradient_get_color_at (gradient, GIMP_CONTEXT (paint_options),
                                   NULL, grad_point,
@@ -810,7 +905,8 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
     return GIMP_BRUSH_HARD;
 
   if (paint_options->pressure_options->hardness ||
-      paint_options->velocity_options->hardness)
+      paint_options->velocity_options->hardness ||
+      paint_options->random_options->hardness)
     return GIMP_BRUSH_PRESSURE;
 
   return GIMP_BRUSH_SOFT;
@@ -818,28 +914,38 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
 
 
 /* Calculates dynamics mix to be used for same parameter
- * (velocity/pressure) mix Needed in may places and tools.
+ * (velocity/pressure/random) mix Needed in may places and tools.
  */
-gdouble
+static gdouble
 gimp_paint_options_get_dynamics_mix (gdouble mix1,
-                                     gdouble mix2)
+                                     gdouble mix2,
+                                     gdouble mix3)
 {
-  gdouble mixpv = 1.0;
+  gdouble mixpv = 0.0;
+  gint    dyn   = 0;
 
-  if ((mix1 >= 0) && (mix2 >= 0))
+  if (mix1 >= 0)
     {
-      mixpv = (mix1 + mix2) * 0.5;
-    }
-  else if (mix1 >= 0)
-    {
-      mixpv = mix1;
-    }
-  else if (mix2 >= 0)
-    {
-      mixpv = mix2;
+      mixpv += mix1;
+      dyn++;
     }
 
-  return mixpv;
+  if (mix2 >= 0)
+    {
+      mixpv += mix2;
+      dyn++;
+    }
+
+  if (mix3 >= 0)
+    {
+      mixpv += mix3;
+      dyn++;
+    }
+
+  if (dyn == 0)
+    return 1.0;
+  else
+    return mixpv / (gdouble) dyn;
 }
 
 gdouble
@@ -853,22 +959,77 @@ gimp_paint_options_get_dynamic_opacity (GimpPaintOptions *paint_options,
   g_return_val_if_fail (coords != NULL, 1.0);
 
   if (paint_options->pressure_options->opacity ||
-      paint_options->velocity_options->opacity)
+      paint_options->velocity_options->opacity ||
+      paint_options->random_options->opacity)
     {
       gdouble pressure = -1.0;
       gdouble velocity = -1.0;
+      gdouble random   = -1.0;
 
       if (paint_options->pressure_options->opacity && use_pressure)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
 
       if (paint_options->velocity_options->opacity)
         velocity = GIMP_PAINT_VELOCITY_SCALE * (1 - coords->velocity);
+      if (paint_options->random_options->opacity)
+        random = coords->random;
 
-      opacity = gimp_paint_options_get_dynamics_mix (pressure, velocity);
+      opacity = gimp_paint_options_get_dynamics_mix (pressure, velocity, random);
     }
 
   return opacity;
 }
+
+gdouble
+gimp_paint_options_get_dynamic_size (GimpPaintOptions *paint_options,
+                                     const GimpCoords *coords,
+                                     gboolean          use_pressure,
+                                     gboolean          use_dynamics)
+{
+  gdouble scale =  1.0;
+
+  if (use_dynamics)
+    {
+      gdouble pressure = -1.0;
+      gdouble velocity = -1.0;
+      gdouble random   = -1.0;
+
+      if (paint_options->pressure_options->inverse_size)
+        {
+          pressure = 1.0 - 0.9 * coords->pressure;
+        }
+
+      if (paint_options->velocity_options->size)
+        {
+          velocity = 1.0 - sqrt (coords->velocity);
+        }
+      else if (paint_options->velocity_options->inverse_size)
+        {
+          velocity = sqrt (coords->velocity);
+        }
+
+      if (paint_options->random_options->size)
+        {
+          random = 1.0 - coords->random;
+        }
+      else if (paint_options->random_options->inverse_size)
+        {
+          random = coords->random;
+        }
+
+      scale = gimp_paint_options_get_dynamics_mix (pressure, velocity, random);
+
+      if (scale < 1 / 64.0)
+        scale = 1 / 8.0;
+      else
+        scale = sqrt (scale);
+    }
+
+  scale *= paint_options->brush_scale;
+
+  return scale;
+}
+
 
 gdouble
 gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
@@ -881,10 +1042,12 @@ gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
   g_return_val_if_fail (coords != NULL, 1.0);
 
   if (paint_options->pressure_options->rate ||
-      paint_options->velocity_options->rate)
+      paint_options->velocity_options->rate ||
+      paint_options->random_options->rate)
     {
       gdouble pressure = -1.0;
       gdouble velocity = -1.0;
+      gdouble random   = -1.0;
 
       if (paint_options->pressure_options->rate && use_pressure)
         pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
@@ -892,8 +1055,78 @@ gimp_paint_options_get_dynamic_rate (GimpPaintOptions *paint_options,
       if (paint_options->velocity_options->rate)
         velocity = GIMP_PAINT_VELOCITY_SCALE * (1 - coords->velocity);
 
-      rate = gimp_paint_options_get_dynamics_mix (pressure, velocity);
+      if (paint_options->random_options->rate)
+        random = coords->random;
+
+      rate = gimp_paint_options_get_dynamics_mix (pressure, velocity, random);
     }
 
   return rate;
+}
+
+
+gdouble
+gimp_paint_options_get_dynamic_color (GimpPaintOptions *paint_options,
+                                      const GimpCoords *coords,
+                                      gboolean          use_pressure)
+{
+  gdouble color = 1.0;
+
+  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), 1.0);
+  g_return_val_if_fail (coords != NULL, 1.0);
+
+  if (paint_options->pressure_options->color ||
+      paint_options->velocity_options->color ||
+      paint_options->random_options->color)
+    {
+      gdouble pressure = -1.0;
+      gdouble velocity = -1.0;
+      gdouble random   = -1.0;
+
+      if (paint_options->pressure_options->color && use_pressure)
+        pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
+
+      if (paint_options->velocity_options->color)
+        velocity = GIMP_PAINT_VELOCITY_SCALE * coords->velocity;
+
+      if (paint_options->random_options->color)
+        random = coords->random;
+
+      color = gimp_paint_options_get_dynamics_mix (pressure, velocity, random);
+    }
+
+  return color;
+}
+
+gdouble
+gimp_paint_options_get_dynamic_hardness (GimpPaintOptions *paint_options,
+                                         const GimpCoords *coords,
+                                         gboolean          use_pressure)
+{
+  gdouble hardness = 1.0;
+
+  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), 1.0);
+  g_return_val_if_fail (coords != NULL, 1.0);
+
+  if (paint_options->pressure_options->rate ||
+      paint_options->velocity_options->rate ||
+      paint_options->random_options->rate)
+    {
+      gdouble pressure = -1.0;
+      gdouble velocity = -1.0;
+      gdouble random   = -1.0;
+
+      if (paint_options->pressure_options->hardness && use_pressure)
+        pressure = GIMP_PAINT_PRESSURE_SCALE * coords->pressure;
+
+      if (paint_options->velocity_options->hardness)
+        velocity = GIMP_PAINT_VELOCITY_SCALE * (1 - coords->velocity);
+
+      if (paint_options->random_options->hardness)
+        random = coords->random;
+
+      hardness = gimp_paint_options_get_dynamics_mix (pressure, velocity, random);
+    }
+
+  return hardness;
 }
