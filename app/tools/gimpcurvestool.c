@@ -556,6 +556,8 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
                               tool);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 }
 
 static void
