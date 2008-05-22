@@ -2781,7 +2781,10 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
           }
           if (is_symbol(car(sc->code))) {    /* named let */
                for (x = cadr(sc->code), sc->args = sc->NIL; x != sc->NIL; x = cdr(x)) {
-
+                    if (!is_pair(x))
+                        Error_1(sc, "Bad syntax of binding in let :", x);
+                    if (!is_list(sc, car(x)))
+                        Error_1(sc, "Bad syntax of binding in let :", car(x));
                     sc->args = cons(sc, caar(x), sc->args);
                }
                x = mk_closure(sc, cons(sc, reverse_in_place(sc, sc->NIL, sc->args), cddr(sc->code)), sc->envir);
@@ -3505,62 +3508,62 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
 }
 
 static int is_list(scheme *sc, pointer a) {
-        pointer slow, fast;
+    pointer slow, fast;
 
-        slow = fast = a;
-        while (1)
+    slow = fast = a;
+    while (1)
+    {
+        if (fast == sc->NIL)
+                return 1;
+        if (!is_pair(fast))
+                return 0;
+        fast = cdr(fast);
+        if (fast == sc->NIL)
+                return 1;
+        if (!is_pair(fast))
+                return 0;
+        fast = cdr(fast);
+
+        slow = cdr(slow);
+        if (fast == slow)
         {
-                if (fast == sc->NIL)
-                        return 1;
-                if (!is_pair(fast))
-                        return 0;
-                fast = cdr(fast);
-                if (fast == sc->NIL)
-                        return 1;
-                if (!is_pair(fast))
-                        return 0;
-                fast = cdr(fast);
-
-                slow = cdr(slow);
-                if (fast == slow)
-                {
-                        /* the fast pointer has looped back around and caught up
-                           with the slow pointer, hence the structure is circular,
-                           not of finite length, and therefore not a list */
-                        return 0;
-                }
+            /* the fast pointer has looped back around and caught up
+               with the slow pointer, hence the structure is circular,
+               not of finite length, and therefore not a list */
+            return 0;
         }
+    }
 }
 
 static int list_length(scheme *sc, pointer a) {
     int i=0;
-        pointer slow, fast;
+    pointer slow, fast;
 
-        slow = fast = a;
-        while (1)
+    slow = fast = a;
+    while (1)
+    {
+        if (fast == sc->NIL)
+                return i;
+        if (!is_pair(fast))
+                return i;
+        fast = cdr(fast);
+        ++i;
+        if (fast == sc->NIL)
+                return i;
+        if (!is_pair(fast))
+                return i;
+        ++i;
+        fast = cdr(fast);
+
+        slow = cdr(slow);
+        if (fast == slow)
         {
-                if (fast == sc->NIL)
-                        return i;
-                if (!is_pair(fast))
-                        return i;
-                fast = cdr(fast);
-                ++i;
-                if (fast == sc->NIL)
-                        return i;
-                if (!is_pair(fast))
-                        return i;
-                ++i;
-                fast = cdr(fast);
-
-                slow = cdr(slow);
-                if (fast == slow)
-                {
-                        /* the fast pointer has looped back around and caught up
-                           with the slow pointer, hence the structure is circular,
-                           not of finite length, and therefore not a list */
-                        return -1;
-                }
+            /* the fast pointer has looped back around and caught up
+               with the slow pointer, hence the structure is circular,
+               not of finite length, and therefore not a list */
+            return -1;
         }
+    }
 }
 
 static pointer opexe_3(scheme *sc, enum scheme_opcodes op) {
