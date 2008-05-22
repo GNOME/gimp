@@ -22,8 +22,6 @@
 
 #include "core-types.h"
 
-#include "base/pixel-processor.h"
-#include "base/pixel-region.h"
 #include "base/threshold.h"
 
 #include "gegl/gimpthresholdconfig.h"
@@ -35,7 +33,7 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
 #include "gimpdrawable-threshold.h"
-#include "gimpdrawable-shadow.h"
+#include "gimpdrawable-process.h"
 
 #include "gimp-intl.h"
 
@@ -77,30 +75,13 @@ gimp_drawable_threshold (GimpDrawable *drawable,
     }
   else
     {
-      gint x, y, width, height;
+      Threshold cruft;
 
-      /* The application should occur only within selection bounds */
-      if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-        {
-          Threshold   cruft;
-          PixelRegion srcPR, destPR;
+      gimp_threshold_config_to_cruft (config, &cruft,
+                                      gimp_drawable_is_rgb (drawable));
 
-          gimp_threshold_config_to_cruft (config, &cruft,
-                                          gimp_drawable_is_rgb (drawable));
-
-          pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                             x, y, width, height, FALSE);
-          pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                             x, y, width, height, TRUE);
-
-          pixel_regions_process_parallel ((PixelProcessorFunc) threshold,
-                                          &cruft, 2, &srcPR, &destPR);
-
-          gimp_drawable_merge_shadow_tiles (drawable, TRUE, _("Threshold"));
-          gimp_drawable_free_shadow_tiles (drawable);
-
-          gimp_drawable_update (drawable, x, y, width, height);
-        }
+      gimp_drawable_process (drawable, progress, _("Threshold"),
+                             (PixelProcessorFunc) threshold, &cruft);
     }
 
   g_object_unref (config);

@@ -23,8 +23,6 @@
 #include "core-types.h"
 
 #include "base/color-balance.h"
-#include "base/pixel-processor.h"
-#include "base/pixel-region.h"
 
 #include "gegl/gimpcolorbalanceconfig.h"
 
@@ -35,7 +33,7 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-color-balance.h"
 #include "gimpdrawable-operation.h"
-#include "gimpdrawable-shadow.h"
+#include "gimpdrawable-process.h"
 
 #include "gimp-intl.h"
 
@@ -86,29 +84,12 @@ gimp_drawable_color_balance (GimpDrawable     *drawable,
     }
   else
     {
-      gint x, y, width, height;
+      ColorBalance cruft;
 
-      /* The application should occur only within selection bounds */
-      if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-        {
-          ColorBalance cruft;
-          PixelRegion  srcPR, destPR;
+      gimp_color_balance_config_to_cruft (config, &cruft);
 
-          gimp_color_balance_config_to_cruft (config, &cruft);
-
-          pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                             x, y, width, height, FALSE);
-          pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                             x, y, width, height, TRUE);
-
-          pixel_regions_process_parallel ((PixelProcessorFunc) color_balance,
-                                          &cruft, 2, &srcPR, &destPR);
-
-          gimp_drawable_merge_shadow_tiles (drawable, TRUE, _("Color Balance"));
-          gimp_drawable_free_shadow_tiles (drawable);
-
-          gimp_drawable_update (drawable, x, y, width, height);
-        }
+      gimp_drawable_process (drawable, progress, _("Color Balance"),
+                             (PixelProcessorFunc) color_balance, &cruft);
     }
 
   g_object_unref (config);

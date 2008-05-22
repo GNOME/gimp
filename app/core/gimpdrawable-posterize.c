@@ -24,8 +24,6 @@
 
 #include "base/gimplut.h"
 #include "base/lut-funcs.h"
-#include "base/pixel-processor.h"
-#include "base/pixel-region.h"
 
 #include "gegl/gimpposterizeconfig.h"
 
@@ -36,7 +34,7 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
 #include "gimpdrawable-posterize.h"
-#include "gimpdrawable-shadow.h"
+#include "gimpdrawable-process.h"
 
 #include "gimp-intl.h"
 
@@ -76,32 +74,14 @@ gimp_drawable_posterize (GimpDrawable *drawable,
     }
   else
     {
-      gint x, y, width, height;
+      GimpLut *lut;
 
-      /* The application should occur only within selection bounds */
-      if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
-        {
-          GimpLut     *lut;
-          PixelRegion  srcPR, destPR;
+      lut = posterize_lut_new (config->levels, gimp_drawable_bytes (drawable));
 
-          lut = posterize_lut_new (config->levels,
-                                   gimp_drawable_bytes (drawable));
+      gimp_drawable_process (drawable, progress, _("Posterize"),
+                             (PixelProcessorFunc) gimp_lut_process, lut);
 
-          pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                             x, y, width, height, FALSE);
-          pixel_region_init (&destPR, gimp_drawable_get_shadow_tiles (drawable),
-                             x, y, width, height, TRUE);
-
-          pixel_regions_process_parallel ((PixelProcessorFunc) gimp_lut_process,
-                                          lut, 2, &srcPR, &destPR);
-
-          gimp_lut_free (lut);
-
-          gimp_drawable_merge_shadow_tiles (drawable, TRUE, _("Posterize"));
-          gimp_drawable_free_shadow_tiles (drawable);
-
-          gimp_drawable_update (drawable, x, y, width, height);
-        }
+      gimp_lut_free (lut);
     }
 
   g_object_unref (config);

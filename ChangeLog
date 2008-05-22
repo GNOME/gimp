@@ -1,3 +1,13 @@
+2008-05-22  Sven Neumann  <sven@gimp.org>
+
+	* core/gimpdrawable-brightness-contrast.c
+	* core/gimpdrawable-color-balance.c
+	* core/gimpdrawable-colorize.c
+	* core/gimpdrawable-equalize.c
+	* core/gimpdrawable-hue-saturation.c
+	* core/gimpdrawable-posterize.c
+	* core/gimpdrawable-threshold.c: ported to gimp_drawable_process().
+
 2008-05-22  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpfreeselecttool.c
