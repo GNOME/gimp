@@ -87,20 +87,6 @@ static GtkWidget * jitter_options_gui   (GimpJitterOptions   *jitter,
 
 /*  public functions  */
 
-static void
-toggle_allocate (GtkWidget     *toggle,
-                 GtkAllocation *allocation,
-                 GtkWidget     *label)
-{
-  gint x;
-  gint y;
-
-  x = toggle->allocation.x + toggle->allocation.width - label->allocation.width;
-  y = label->parent->allocation.height - label->allocation.height;
-
-  gtk_fixed_move (GTK_FIXED (label->parent), label, x, y);
-}
-
 GtkWidget *
 gimp_paint_options_gui (GimpToolOptions *tool_options)
 {
@@ -212,11 +198,21 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
   if (n_dynamics > 0)
     {
+      GtkWidget *inner_frame;
       GtkWidget *fixed;
       gint       i;
 
+      frame = gimp_prop_expander_new (config, "dynamics-expanded",
+                                      _("Dynamics sensitivity"));
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+
+      inner_frame = gimp_frame_new ("<expander>");
+      gtk_container_add (GTK_CONTAINER (frame), inner_frame);
+      gtk_widget_show (inner_frame);
+
       table = gtk_table_new (4, n_dynamics + 1, FALSE);
-      gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+      gtk_container_add (GTK_CONTAINER (inner_frame), table);
       gtk_widget_show (table);
 
       label = gtk_label_new (_("Pressure:"));
@@ -395,6 +391,19 @@ dynamics_check_button_new (GObject     *config,
 }
 
 static void
+dynamics_check_button_size_allocate (GtkWidget     *toggle,
+                                     GtkAllocation *allocation,
+                                     GtkWidget     *label)
+{
+  GtkWidget *fixed = label->parent;
+  gint       x     = (allocation->x + allocation->width -
+                      label->allocation.width - fixed->allocation.x);
+  gint       y     = (fixed->allocation.height - label->allocation.height);
+
+  gtk_fixed_move (GTK_FIXED (fixed), label, x, y);
+}
+
+static void
 pressure_options_gui (GimpPressureOptions *pressure,
                       GimpPaintOptions    *paint_options,
                       GType                tool_type,
@@ -411,7 +420,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
       button = dynamics_check_button_new (config, "pressure-opacity",
                                           table, column, row);
       g_signal_connect (button, "size-allocate",
-                        G_CALLBACK (toggle_allocate),
+                        G_CALLBACK (dynamics_check_button_size_allocate),
                         labels[column - 1]);
       column++;
     }
@@ -421,7 +430,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
       button = dynamics_check_button_new (config, "pressure-hardness",
                                           table, column, row);
       g_signal_connect (button, "size-allocate",
-                        G_CALLBACK (toggle_allocate),
+                        G_CALLBACK (dynamics_check_button_size_allocate),
                         labels[column - 1]);
       column++;
     }
@@ -431,7 +440,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
       button = dynamics_check_button_new (config, "pressure-rate",
                                           table, column, row);
       g_signal_connect (button, "size-allocate",
-                        G_CALLBACK (toggle_allocate),
+                        G_CALLBACK (dynamics_check_button_size_allocate),
                         labels[column - 1]);
       column++;
     }
@@ -446,7 +455,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
                                             table, column, row);
 
       g_signal_connect (button, "size-allocate",
-                        G_CALLBACK (toggle_allocate),
+                        G_CALLBACK (dynamics_check_button_size_allocate),
                         labels[column - 1]);
       column++;
     }
@@ -456,7 +465,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
       button = dynamics_check_button_new (config, "pressure-color",
                                           table, column, row);
       g_signal_connect (button, "size-allocate",
-                        G_CALLBACK (toggle_allocate),
+                        G_CALLBACK (dynamics_check_button_size_allocate),
                         labels[column - 1]);
       column++;
     }

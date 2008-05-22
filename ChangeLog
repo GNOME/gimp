@@ -1,5 +1,14 @@
 2008-05-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintoptions.[ch]: replace the pressure-expanded,
+	velocity-expanded and random-expanded properties by a single
+	dynamics-expanded property.
+
+	* app/tools/gimppaintoptions-gui.c: pack the toggle matrix into an
+	expander, some cleanup.
+
+2008-05-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimppaintoptions-gui.c: revert accidential change of
 	all occurences of "hardness" to "pressure" in strings and function
 	names.

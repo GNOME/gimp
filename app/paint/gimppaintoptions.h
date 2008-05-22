@@ -39,7 +39,6 @@ typedef struct _GimpGradientOptions GimpGradientOptions;
 
 struct _GimpPressureOptions
 {
-  gboolean  expanded;
   gboolean  opacity;
   gboolean  hardness;
   gboolean  rate;
@@ -50,7 +49,6 @@ struct _GimpPressureOptions
 
 struct _GimpVelocityOptions
 {
-  gboolean  expanded;
   gboolean  opacity;
   gboolean  hardness;
   gboolean  rate;
@@ -61,7 +59,6 @@ struct _GimpVelocityOptions
 
 struct _GimpRandomOptions
 {
-  gboolean  expanded;
   gboolean  opacity;
   gboolean  hardness;
   gboolean  rate;
@@ -118,9 +115,11 @@ struct _GimpPaintOptions
 
   gboolean                  hard;
 
+  gboolean                  dynamics_expanded;
   GimpPressureOptions      *pressure_options;
   GimpVelocityOptions      *velocity_options;
   GimpRandomOptions        *random_options;
+
   GimpFadeOptions          *fade_options;
   GimpJitterOptions        *jitter_options;
   GimpGradientOptions      *gradient_options;

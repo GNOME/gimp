@@ -38,7 +38,8 @@
 #define DEFAULT_APPLICATION_MODE      GIMP_PAINT_CONSTANT
 #define DEFAULT_HARD                  FALSE
 
-#define DEFAULT_PRESSURE_EXPANDED     FALSE
+#define DEFAULT_DYNAMICS_EXPANDED     FALSE
+
 #define DEFAULT_PRESSURE_OPACITY      TRUE
 #define DEFAULT_PRESSURE_HARDNESS     FALSE
 #define DEFAULT_PRESSURE_RATE         FALSE
@@ -46,7 +47,6 @@
 #define DEFAULT_PRESSURE_INVERSE_SIZE FALSE
 #define DEFAULT_PRESSURE_COLOR        FALSE
 
-#define DEFAULT_VELOCITY_EXPANDED     FALSE
 #define DEFAULT_VELOCITY_OPACITY      FALSE
 #define DEFAULT_VELOCITY_HARDNESS     FALSE
 #define DEFAULT_VELOCITY_RATE         FALSE
@@ -54,7 +54,6 @@
 #define DEFAULT_VELOCITY_INVERSE_SIZE FALSE
 #define DEFAULT_VELOCITY_COLOR        FALSE
 
-#define DEFAULT_RANDOM_EXPANDED       FALSE
 #define DEFAULT_RANDOM_OPACITY        FALSE
 #define DEFAULT_RANDOM_HARDNESS       FALSE
 #define DEFAULT_RANDOM_RATE           FALSE
@@ -85,7 +84,8 @@ enum
   PROP_APPLICATION_MODE,
   PROP_HARD,
 
-  PROP_PRESSURE_EXPANDED,
+  PROP_DYNAMICS_EXPANDED,
+
   PROP_PRESSURE_OPACITY,
   PROP_PRESSURE_HARDNESS,
   PROP_PRESSURE_RATE,
@@ -93,7 +93,6 @@ enum
   PROP_PRESSURE_INVERSE_SIZE,
   PROP_PRESSURE_COLOR,
 
-  PROP_VELOCITY_EXPANDED,
   PROP_VELOCITY_OPACITY,
   PROP_VELOCITY_HARDNESS,
   PROP_VELOCITY_RATE,
@@ -101,7 +100,6 @@ enum
   PROP_VELOCITY_INVERSE_SIZE,
   PROP_VELOCITY_COLOR,
 
-  PROP_RANDOM_EXPANDED,
   PROP_RANDOM_OPACITY,
   PROP_RANDOM_HARDNESS,
   PROP_RANDOM_RATE,
@@ -184,10 +182,11 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     DEFAULT_HARD,
                                     GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_EXPANDED,
-                                    "pressure-expanded", NULL,
-                                    DEFAULT_PRESSURE_EXPANDED,
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DYNAMICS_EXPANDED,
+                                    "dynamics-expanded", NULL,
+                                    DEFAULT_DYNAMICS_EXPANDED,
                                     GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_OPACITY,
                                     "pressure-opacity", NULL,
                                     DEFAULT_PRESSURE_OPACITY,
@@ -213,10 +212,6 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     DEFAULT_PRESSURE_INVERSE_SIZE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY_EXPANDED,
-                                    "velocity-expanded", NULL,
-                                    DEFAULT_VELOCITY_EXPANDED,
-                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY_OPACITY,
                                     "velocity-opacity", NULL,
                                     DEFAULT_VELOCITY_OPACITY,
@@ -242,10 +237,6 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     DEFAULT_VELOCITY_INVERSE_SIZE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_EXPANDED,
-                                    "random-expanded", NULL,
-                                    DEFAULT_RANDOM_EXPANDED,
-                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RANDOM_OPACITY,
                                     "random-opacity", NULL,
                                     DEFAULT_RANDOM_OPACITY,
@@ -413,9 +404,10 @@ gimp_paint_options_set_property (GObject      *object,
       options->hard = g_value_get_boolean (value);
       break;
 
-    case PROP_PRESSURE_EXPANDED:
-      pressure_options->expanded = g_value_get_boolean (value);
+    case PROP_DYNAMICS_EXPANDED:
+      options->dynamics_expanded = g_value_get_boolean (value);
       break;
+
     case PROP_PRESSURE_OPACITY:
       pressure_options->opacity = g_value_get_boolean (value);
       break;
@@ -435,9 +427,6 @@ gimp_paint_options_set_property (GObject      *object,
       pressure_options->color = g_value_get_boolean (value);
       break;
 
-    case PROP_VELOCITY_EXPANDED:
-      velocity_options->expanded = g_value_get_boolean (value);
-      break;
     case PROP_VELOCITY_OPACITY:
       velocity_options->opacity = g_value_get_boolean (value);
       break;
@@ -457,9 +446,6 @@ gimp_paint_options_set_property (GObject      *object,
       velocity_options->color = g_value_get_boolean (value);
       break;
 
-    case PROP_RANDOM_EXPANDED:
-      random_options->expanded = g_value_get_boolean (value);
-      break;
     case PROP_RANDOM_OPACITY:
       random_options->opacity = g_value_get_boolean (value);
       break;
@@ -569,9 +555,10 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_boolean (value, options->hard);
       break;
 
-    case PROP_PRESSURE_EXPANDED:
-      g_value_set_boolean (value, pressure_options->expanded);
+    case PROP_DYNAMICS_EXPANDED:
+      g_value_set_boolean (value, options->dynamics_expanded);
       break;
+
     case PROP_PRESSURE_OPACITY:
       g_value_set_boolean (value, pressure_options->opacity);
       break;
@@ -591,9 +578,6 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_boolean (value, pressure_options->color);
       break;
 
-    case PROP_VELOCITY_EXPANDED:
-      g_value_set_boolean (value, velocity_options->expanded);
-      break;
     case PROP_VELOCITY_OPACITY:
       g_value_set_boolean (value, velocity_options->opacity);
       break;
@@ -613,9 +597,6 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_boolean (value, velocity_options->color);
       break;
 
-    case PROP_RANDOM_EXPANDED:
-      g_value_set_boolean (value, random_options->expanded);
-      break;
     case PROP_RANDOM_OPACITY:
       g_value_set_boolean (value, random_options->opacity);
       break;
