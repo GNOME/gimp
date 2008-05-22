@@ -179,7 +179,7 @@ gimp_image_map_tool_add_settings_gui (GimpImageMapTool *image_map_tool)
 
   gimp_image_map_tool_menu_item_add (image_map_tool,
                                      GTK_STOCK_ADD,
-                                     _("Save Settings to _Favorites"),
+                                     _("Add Settings to _Favorites"),
                                      G_CALLBACK (gimp_image_map_tool_favorite_activate));
 
   image_map_tool->import_item =
