@@ -146,28 +146,26 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->constructor = gimp_image_map_tool_constructor;
-  object_class->finalize    = gimp_image_map_tool_finalize;
+  object_class->constructor  = gimp_image_map_tool_constructor;
+  object_class->finalize     = gimp_image_map_tool_finalize;
 
-  tool_class->initialize    = gimp_image_map_tool_initialize;
-  tool_class->control       = gimp_image_map_tool_control;
-  tool_class->key_press     = gimp_image_map_tool_key_press;
+  tool_class->initialize     = gimp_image_map_tool_initialize;
+  tool_class->control        = gimp_image_map_tool_control;
+  tool_class->key_press      = gimp_image_map_tool_key_press;
 
-  color_tool_class->pick    = gimp_image_map_tool_pick_color;
+  color_tool_class->pick     = gimp_image_map_tool_pick_color;
 
-  klass->shell_desc         = NULL;
-  klass->settings_name      = NULL;
-  klass->load_dialog_title  = NULL;
-  klass->load_button_tip    = NULL;
-  klass->save_dialog_title  = NULL;
-  klass->save_button_tip    = NULL;
+  klass->shell_desc          = NULL;
+  klass->settings_name       = NULL;
+  klass->import_dialog_title = NULL;
+  klass->export_dialog_title = NULL;
 
-  klass->get_operation      = NULL;
-  klass->map                = NULL;
-  klass->dialog             = NULL;
-  klass->reset              = NULL;
-  klass->settings_load      = gimp_image_map_tool_real_settings_load;
-  klass->settings_save      = gimp_image_map_tool_real_settings_save;
+  klass->get_operation       = NULL;
+  klass->map                 = NULL;
+  klass->dialog              = NULL;
+  klass->reset               = NULL;
+  klass->settings_import     = gimp_image_map_tool_real_settings_import;
+  klass->settings_export     = gimp_image_map_tool_real_settings_export;
 }
 
 static void
@@ -199,8 +197,8 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
   image_map_tool->shell           = NULL;
   image_map_tool->main_vbox       = NULL;
   image_map_tool->favorites_menu  = NULL;
-  image_map_tool->load_item       = NULL;
-  image_map_tool->save_item       = NULL;
+  image_map_tool->import_item     = NULL;
+  image_map_tool->export_item     = NULL;
   image_map_tool->settings_dialog = NULL;
 }
 
@@ -248,8 +246,8 @@ gimp_image_map_tool_finalize (GObject *object)
       image_map_tool->shell          = NULL;
       image_map_tool->main_vbox      = NULL;
       image_map_tool->favorites_menu = NULL;
-      image_map_tool->load_item      = NULL;
-      image_map_tool->save_item      = NULL;
+      image_map_tool->import_item    = NULL;
+      image_map_tool->export_item    = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);

@@ -94,10 +94,10 @@ static GeglNode * gimp_curves_tool_get_operation  (GimpImageMapTool     *image_m
 static void       gimp_curves_tool_map            (GimpImageMapTool     *image_map_tool);
 static void       gimp_curves_tool_dialog         (GimpImageMapTool     *image_map_tool);
 static void       gimp_curves_tool_reset          (GimpImageMapTool     *image_map_tool);
-static gboolean   gimp_curves_tool_settings_load  (GimpImageMapTool     *image_map_tool,
+static gboolean   gimp_curves_tool_settings_import(GimpImageMapTool     *image_map_tool,
                                                    const gchar          *filename,
                                                    GError              **error);
-static gboolean   gimp_curves_tool_settings_save  (GimpImageMapTool     *image_map_tool,
+static gboolean   gimp_curves_tool_settings_export(GimpImageMapTool     *image_map_tool,
                                                    const gchar          *filename,
                                                    GError              **error);
 
@@ -152,28 +152,26 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
   GimpColorToolClass    *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class    = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  object_class->finalize           = gimp_curves_tool_finalize;
+  object_class->finalize             = gimp_curves_tool_finalize;
 
-  tool_class->initialize           = gimp_curves_tool_initialize;
-  tool_class->button_release       = gimp_curves_tool_button_release;
-  tool_class->key_press            = gimp_curves_tool_key_press;
-  tool_class->oper_update          = gimp_curves_tool_oper_update;
+  tool_class->initialize             = gimp_curves_tool_initialize;
+  tool_class->button_release         = gimp_curves_tool_button_release;
+  tool_class->key_press              = gimp_curves_tool_key_press;
+  tool_class->oper_update            = gimp_curves_tool_oper_update;
 
-  color_tool_class->picked         = gimp_curves_tool_color_picked;
+  color_tool_class->picked           = gimp_curves_tool_color_picked;
 
-  im_tool_class->shell_desc        = _("Adjust Color Curves");
-  im_tool_class->settings_name     = "curves";
-  im_tool_class->load_dialog_title = _("Load Curves");
-  im_tool_class->load_button_tip   = _("Load curves settings from file");
-  im_tool_class->save_dialog_title = _("Save Curves");
-  im_tool_class->save_button_tip   = _("Save curves settings to file");
+  im_tool_class->shell_desc          = _("Adjust Color Curves");
+  im_tool_class->settings_name       = "curves";
+  im_tool_class->import_dialog_title = _("Import Curves");
+  im_tool_class->export_dialog_title = _("Export Curves");
 
-  im_tool_class->get_operation     = gimp_curves_tool_get_operation;
-  im_tool_class->map               = gimp_curves_tool_map;
-  im_tool_class->dialog            = gimp_curves_tool_dialog;
-  im_tool_class->reset             = gimp_curves_tool_reset;
-  im_tool_class->settings_load     = gimp_curves_tool_settings_load;
-  im_tool_class->settings_save     = gimp_curves_tool_settings_save;
+  im_tool_class->get_operation       = gimp_curves_tool_get_operation;
+  im_tool_class->map                 = gimp_curves_tool_map;
+  im_tool_class->dialog              = gimp_curves_tool_dialog;
+  im_tool_class->reset               = gimp_curves_tool_reset;
+  im_tool_class->settings_import     = gimp_curves_tool_settings_import;
+  im_tool_class->settings_export     = gimp_curves_tool_settings_export;
 }
 
 static void
@@ -575,9 +573,9 @@ gimp_curves_tool_reset (GimpImageMapTool *image_map_tool)
 }
 
 static gboolean
-gimp_curves_tool_settings_load (GimpImageMapTool  *image_map_tool,
-                                const gchar       *filename,
-                                GError           **error)
+gimp_curves_tool_settings_import (GimpImageMapTool  *image_map_tool,
+                                  const gchar       *filename,
+                                  GError           **error)
 {
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (image_map_tool);
   FILE           *file;
@@ -602,9 +600,9 @@ gimp_curves_tool_settings_load (GimpImageMapTool  *image_map_tool,
 }
 
 static gboolean
-gimp_curves_tool_settings_save (GimpImageMapTool  *image_map_tool,
-                                const gchar       *filename,
-                                GError           **error)
+gimp_curves_tool_settings_export (GimpImageMapTool  *image_map_tool,
+                                  const gchar       *filename,
+                                  GError           **error)
 {
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (image_map_tool);
   FILE           *file;

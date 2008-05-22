@@ -96,20 +96,18 @@ gimp_posterize_tool_class_init (GimpPosterizeToolClass *klass)
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  object_class->finalize           = gimp_posterize_tool_finalize;
+  object_class->finalize             = gimp_posterize_tool_finalize;
 
-  tool_class->initialize           = gimp_posterize_tool_initialize;
+  tool_class->initialize             = gimp_posterize_tool_initialize;
 
-  im_tool_class->shell_desc        = _("Posterize (Reduce Number of Colors)");
-  im_tool_class->settings_name     = "posterize";
-  im_tool_class->load_dialog_title = _("Load Posterize Settings");
-  im_tool_class->load_button_tip   = _("Load posterize settings from file");
-  im_tool_class->save_dialog_title = _("Save Posterize Settings");
-  im_tool_class->save_button_tip   = _("Save posterize settings to file");
+  im_tool_class->shell_desc          = _("Posterize (Reduce Number of Colors)");
+  im_tool_class->settings_name       = "posterize";
+  im_tool_class->import_dialog_title = _("Import Posterize Settings");
+  im_tool_class->export_dialog_title = _("Export Posterize Settings");
 
-  im_tool_class->get_operation     = gimp_posterize_tool_get_operation;
-  im_tool_class->map               = gimp_posterize_tool_map;
-  im_tool_class->dialog            = gimp_posterize_tool_dialog;
+  im_tool_class->get_operation       = gimp_posterize_tool_get_operation;
+  im_tool_class->map                 = gimp_posterize_tool_map;
+  im_tool_class->dialog              = gimp_posterize_tool_dialog;
 }
 
 static void

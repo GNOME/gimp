@@ -87,10 +87,10 @@ static void       gimp_levels_tool_dialog         (GimpImageMapTool  *im_tool);
 static void       gimp_levels_tool_dialog_unmap   (GtkWidget         *dialog,
                                                    GimpLevelsTool    *tool);
 static void       gimp_levels_tool_reset          (GimpImageMapTool  *im_tool);
-static gboolean   gimp_levels_tool_settings_load  (GimpImageMapTool  *im_tool,
+static gboolean   gimp_levels_tool_settings_import(GimpImageMapTool  *im_tool,
                                                    const gchar       *filename,
                                                    GError           **error);
-static gboolean   gimp_levels_tool_settings_save  (GimpImageMapTool  *im_tool,
+static gboolean   gimp_levels_tool_settings_export(GimpImageMapTool  *im_tool,
                                                    const gchar       *filename,
                                                    GError           **error);
 
@@ -159,25 +159,23 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
   GimpColorToolClass    *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class    = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  object_class->finalize           = gimp_levels_tool_finalize;
+  object_class->finalize             = gimp_levels_tool_finalize;
 
-  tool_class->initialize           = gimp_levels_tool_initialize;
+  tool_class->initialize             = gimp_levels_tool_initialize;
 
-  color_tool_class->picked         = gimp_levels_tool_color_picked;
+  color_tool_class->picked           = gimp_levels_tool_color_picked;
 
-  im_tool_class->shell_desc        = _("Adjust Color Levels");
-  im_tool_class->settings_name     = "levels";
-  im_tool_class->load_dialog_title = _("Load Levels");
-  im_tool_class->load_button_tip   = _("Load levels settings from file");
-  im_tool_class->save_dialog_title = _("Save Levels");
-  im_tool_class->save_button_tip   = _("Save levels settings to file");
+  im_tool_class->shell_desc          = _("Adjust Color Levels");
+  im_tool_class->settings_name       = "levels";
+  im_tool_class->import_dialog_title = _("Import Levels");
+  im_tool_class->export_dialog_title = _("Export Levels");
 
-  im_tool_class->get_operation     = gimp_levels_tool_get_operation;
-  im_tool_class->map               = gimp_levels_tool_map;
-  im_tool_class->dialog            = gimp_levels_tool_dialog;
-  im_tool_class->reset             = gimp_levels_tool_reset;
-  im_tool_class->settings_load     = gimp_levels_tool_settings_load;
-  im_tool_class->settings_save     = gimp_levels_tool_settings_save;
+  im_tool_class->get_operation       = gimp_levels_tool_get_operation;
+  im_tool_class->map                 = gimp_levels_tool_map;
+  im_tool_class->dialog              = gimp_levels_tool_dialog;
+  im_tool_class->reset               = gimp_levels_tool_reset;
+  im_tool_class->settings_import     = gimp_levels_tool_settings_import;
+  im_tool_class->settings_export     = gimp_levels_tool_settings_export;
 }
 
 static void
@@ -709,9 +707,9 @@ gimp_levels_tool_reset (GimpImageMapTool *image_map_tool)
 }
 
 static gboolean
-gimp_levels_tool_settings_load (GimpImageMapTool  *image_map_tool,
-                                const gchar       *filename,
-                                GError           **error)
+gimp_levels_tool_settings_import (GimpImageMapTool  *image_map_tool,
+                                  const gchar       *filename,
+                                  GError           **error)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
   FILE           *file;
@@ -736,9 +734,9 @@ gimp_levels_tool_settings_load (GimpImageMapTool  *image_map_tool,
 }
 
 static gboolean
-gimp_levels_tool_settings_save (GimpImageMapTool  *image_map_tool,
-                                const gchar       *filename,
-                                GError           **error)
+gimp_levels_tool_settings_export (GimpImageMapTool  *image_map_tool,
+                                  const gchar       *filename,
+                                  GError           **error)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
   FILE           *file;

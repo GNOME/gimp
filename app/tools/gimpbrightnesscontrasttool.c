@@ -122,23 +122,21 @@ gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass
   GimpToolClass         *tool_class    = GIMP_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
-  object_class->finalize           = gimp_brightness_contrast_tool_finalize;
+  object_class->finalize             = gimp_brightness_contrast_tool_finalize;
 
-  tool_class->initialize           = gimp_brightness_contrast_tool_initialize;
-  tool_class->button_press         = gimp_brightness_contrast_tool_button_press;
-  tool_class->button_release       = gimp_brightness_contrast_tool_button_release;
-  tool_class->motion               = gimp_brightness_contrast_tool_motion;
+  tool_class->initialize             = gimp_brightness_contrast_tool_initialize;
+  tool_class->button_press           = gimp_brightness_contrast_tool_button_press;
+  tool_class->button_release         = gimp_brightness_contrast_tool_button_release;
+  tool_class->motion                 = gimp_brightness_contrast_tool_motion;
 
-  im_tool_class->shell_desc        = _("Adjust Brightness and Contrast");
-  im_tool_class->settings_name     = "brightness-contrast";
-  im_tool_class->load_dialog_title = _("Load Brightness-Contrast settings");
-  im_tool_class->load_button_tip   = _("Load brightness-contrast settings from file");
-  im_tool_class->save_dialog_title = _("Save Brightness-Contrast settings");
-  im_tool_class->save_button_tip   = _("Save brightness-contrast settings to file");
+  im_tool_class->shell_desc          = _("Adjust Brightness and Contrast");
+  im_tool_class->settings_name       = "brightness-contrast";
+  im_tool_class->import_dialog_title = _("Import Brightness-Contrast settings");
+  im_tool_class->export_dialog_title = _("Export Brightness-Contrast settings");
 
-  im_tool_class->get_operation     = gimp_brightness_contrast_tool_get_operation;
-  im_tool_class->map               = gimp_brightness_contrast_tool_map;
-  im_tool_class->dialog            = gimp_brightness_contrast_tool_dialog;
+  im_tool_class->get_operation       = gimp_brightness_contrast_tool_get_operation;
+  im_tool_class->map                 = gimp_brightness_contrast_tool_map;
+  im_tool_class->dialog              = gimp_brightness_contrast_tool_dialog;
 }
 
 static void

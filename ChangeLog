@@ -1,5 +1,23 @@
 2008-05-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpimagemaptool.[ch]: s/save/export/g,
+	s/load/import/g, removed button tooltip members.
+
+	* app/tools/gimpimagemaptool-settings.[ch]
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpdesaturatetool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c: changed accordingly.
+
+	* app/tools/gimpimagemaptool-settings.c: clean up menu item creation.
+
+2008-05-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpfreeselecttool.c: delete trailing whitespace.
 
 2008-05-22  Sven Neumann  <sven@gimp.org>

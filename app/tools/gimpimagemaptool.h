@@ -52,8 +52,8 @@ struct _GimpImageMapTool
   GtkWidget             *shell;
   GtkWidget             *main_vbox;
   GtkWidget             *favorites_menu;
-  GtkWidget             *load_item;
-  GtkWidget             *save_item;
+  GtkWidget             *import_item;
+  GtkWidget             *export_item;
 
   /* settings file dialog */
   GtkWidget             *settings_dialog;
@@ -65,26 +65,24 @@ struct _GimpImageMapToolClass
 
   const gchar        *shell_desc;
   const gchar        *settings_name;
-  const gchar        *load_button_tip;
-  const gchar        *load_dialog_title;
-  const gchar        *save_button_tip;
-  const gchar        *save_dialog_title;
+  const gchar        *import_dialog_title;
+  const gchar        *export_dialog_title;
 
   GimpContainer      *recent_settings;
 
   /* virtual functions */
-  GeglNode * (* get_operation) (GimpImageMapTool  *image_map_tool,
-                                GObject          **config);
-  void       (* map)           (GimpImageMapTool  *image_map_tool);
-  void       (* dialog)        (GimpImageMapTool  *image_map_tool);
-  void       (* reset)         (GimpImageMapTool  *image_map_tool);
+  GeglNode * (* get_operation)   (GimpImageMapTool  *image_map_tool,
+                                  GObject          **config);
+  void       (* map)             (GimpImageMapTool  *image_map_tool);
+  void       (* dialog)          (GimpImageMapTool  *image_map_tool);
+  void       (* reset)           (GimpImageMapTool  *image_map_tool);
 
-  gboolean   (* settings_load) (GimpImageMapTool  *image_map_tool,
-                                const gchar       *filename,
-                                GError           **error);
-  gboolean   (* settings_save) (GimpImageMapTool  *image_map_tool,
-                                const gchar       *filename,
-                                GError           **error);
+  gboolean   (* settings_import) (GimpImageMapTool  *image_map_tool,
+                                  const gchar       *filename,
+                                  GError           **error);
+  gboolean   (* settings_export) (GimpImageMapTool  *image_map_tool,
+                                  const gchar       *filename,
+                                  GError           **error);
 };
 
 
