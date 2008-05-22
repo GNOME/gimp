@@ -98,6 +98,10 @@ typedef struct _Private
 
   /* The number of segment indices actually in use */
   gint               n_segment_indices;
+
+  /* The selection operation active when the tool was started */
+  GimpChannelOps     operation_at_start;
+
 } Private;
 
 
@@ -452,8 +456,10 @@ gimp_free_select_tool_start (GimpFreeSelectTool *fst,
                              GimpCoords         *coords,
                              GimpDisplay        *display)
 {
-  GimpTool     *tool      = GIMP_TOOL (fst);
-  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpTool             *tool      = GIMP_TOOL (fst);
+  GimpDrawTool         *draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpSelectionOptions *options   = GIMP_SELECTION_TOOL_GET_OPTIONS (fst);
+  Private              *priv      = GET_PRIVATE (fst);
 
   gimp_free_select_tool_halt (fst);
 
@@ -462,6 +468,10 @@ gimp_free_select_tool_start (GimpFreeSelectTool *fst,
   tool->display = display;
 
   gimp_draw_tool_start (draw_tool, display);
+
+  /* We want to apply the selection operation that was current when
+   * the tool was started, so we save this information */
+  priv->operation_at_start = options->operation;
 
   gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (fst),
                                   coords);
@@ -1171,7 +1181,7 @@ gimp_free_select_tool_real_select (GimpFreeSelectTool *fst,
                                Q_("command|Free Select"),
                                priv->n_points,
                                priv->points,
-                               options->operation,
+                               priv->operation_at_start,
                                options->antialias,
                                options->feather,
                                options->feather_radius,

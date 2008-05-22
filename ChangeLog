@@ -1,3 +1,11 @@
+2008-05-22  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpfreeselecttool.c: Remember the selection operation
+	in use when the tool was started, and use that when doing the
+	selection. Improvements are still to be made with regards to
+	synchronizing the tool options with the selection operation
+	actually used.
+
 2008-05-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpimagemaptool.c: check if the tool class has
