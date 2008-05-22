@@ -421,6 +421,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget        *table;
   GtkWidget        *button;
   GtkWidget        *bar;
+  GtkWidget        *combo;
 
   vbox = image_map_tool->main_vbox;
 
@@ -539,23 +540,22 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 
   gtk_widget_show (table);
 
-
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  /*  The radio box for selecting the curve type  */
-  frame = gimp_frame_new (_("Curve Type"));
-  gtk_box_pack_end (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  label = gtk_label_new_with_mnemonic (_("Curve _type:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-  hbox = gimp_enum_stock_box_new (GIMP_TYPE_CURVE_TYPE,
-                                  "gimp-curve", GTK_ICON_SIZE_MENU,
-                                  G_CALLBACK (curves_curve_type_callback),
-                                  tool,
-                                  &tool->curve_type);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
+  tool->curve_type = combo = gimp_enum_combo_box_new (GIMP_TYPE_CURVE_TYPE);
+  gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (combo),
+                                        "gimp-curve");
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), 0,
+                              G_CALLBACK (curves_curve_type_callback),
+                              tool);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+  gtk_widget_show (combo);
 }
 
 static void
@@ -682,13 +682,13 @@ gimp_curves_tool_config_notify (GObject        *object,
 
       gimp_curve_view_set_curve (GIMP_CURVE_VIEW (tool->graph), curve);
 
-      gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (tool->curve_type),
-                                       curve->curve_type);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->curve_type),
+                                     curve->curve_type);
     }
   else if (! strcmp (pspec->name, "curve"))
     {
-      gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (tool->curve_type),
-                                       curve->curve_type);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->curve_type),
+                                     curve->curve_type);
     }
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
@@ -748,16 +748,14 @@ static void
 curves_curve_type_callback (GtkWidget      *widget,
                             GimpCurvesTool *tool)
 {
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
-    {
-      GimpCurvesConfig *config = tool->config;
-      GimpCurveType     curve_type;
+  gint value;
 
-      gimp_radio_button_update (widget, &curve_type);
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
+    {
+      GimpCurvesConfig *config     = tool->config;
+      GimpCurveType     curve_type = value;
 
       if (config->curve[config->channel]->curve_type != curve_type)
-        {
-          gimp_curve_set_curve_type (config->curve[config->channel], curve_type);
-        }
+        gimp_curve_set_curve_type (config->curve[config->channel], curve_type);
     }
 }

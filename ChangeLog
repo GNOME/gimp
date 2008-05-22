@@ -1,5 +1,10 @@
 2008-05-22  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcurvestool.c (gimp_curves_tool_dialog): use a
+	combo-box for the curve type.
+
+2008-05-22  Sven Neumann  <sven@gimp.org>
+
 	* core/gimpdrawable-brightness-contrast.c
 	* core/gimpdrawable-color-balance.c
 	* core/gimpdrawable-colorize.c
