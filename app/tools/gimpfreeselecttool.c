@@ -241,11 +241,11 @@ gimp_free_select_tool_finalize (GObject *object)
 }
 
 static void
-gimp_free_select_get_segment (GimpFreeSelectTool  *fst,
-                              GimpVector2        **points,
-                              gint                *n_points,
-                              gint                 segment_start,
-                              gint                 segment_end)
+gimp_free_select_tool_get_segment (GimpFreeSelectTool  *fst,
+                                   GimpVector2        **points,
+                                   gint                *n_points,
+                                   gint                 segment_start,
+                                   gint                 segment_end)
 {
   Private *priv = GET_PRIVATE (fst);
 
@@ -604,11 +604,11 @@ gimp_free_select_tool_move_segment_vertex_to (GimpFreeSelectTool *fst,
   /* Handle the segment before the grabbed point */
   if (segment_index > 0)
     {
-      gimp_free_select_get_segment (fst,
-                                    &dest,
-                                    &n_points,
-                                    priv->grabbed_segment_index - 1,
-                                    priv->grabbed_segment_index);
+      gimp_free_select_tool_get_segment (fst,
+                                         &dest,
+                                         &n_points,
+                                         priv->grabbed_segment_index - 1,
+                                         priv->grabbed_segment_index);
 
       dest_start_target = &dest[0];
       dest_end_target   = &cursor_point;
@@ -624,11 +624,11 @@ gimp_free_select_tool_move_segment_vertex_to (GimpFreeSelectTool *fst,
   /* Handle the segment after the grabbed point */
   if (segment_index < priv->n_segment_indices - 1)
     {
-      gimp_free_select_get_segment (fst,
-                                    &dest,
-                                    &n_points,
-                                    priv->grabbed_segment_index,
-                                    priv->grabbed_segment_index + 1);
+      gimp_free_select_tool_get_segment (fst,
+                                         &dest,
+                                         &n_points,
+                                         priv->grabbed_segment_index,
+                                         priv->grabbed_segment_index + 1);
 
       dest_start_target = &cursor_point;
       dest_end_target   = &dest[n_points - 1];
@@ -736,11 +736,11 @@ gimp_free_select_tool_revert_to_saved_state (GimpFreeSelectTool *fst)
 
   if (priv->grabbed_segment_index > 0)
     {
-      gimp_free_select_get_segment (fst,
-                                    &source,
-                                    &n_points,
-                                    priv->grabbed_segment_index - 1,
-                                    priv->grabbed_segment_index);
+      gimp_free_select_tool_get_segment (fst,
+                                         &source,
+                                         &n_points,
+                                         priv->grabbed_segment_index - 1,
+                                         priv->grabbed_segment_index);
 
       memcpy (source,
               priv->saved_points_lower_segment,
@@ -749,11 +749,11 @@ gimp_free_select_tool_revert_to_saved_state (GimpFreeSelectTool *fst)
 
   if (priv->grabbed_segment_index < priv->n_segment_indices - 1)
     {
-      gimp_free_select_get_segment (fst,
-                                    &source,
-                                    &n_points,
-                                    priv->grabbed_segment_index,
-                                    priv->grabbed_segment_index + 1);
+      gimp_free_select_tool_get_segment (fst,
+                                         &source,
+                                         &n_points,
+                                         priv->grabbed_segment_index,
+                                         priv->grabbed_segment_index + 1);
 
       memcpy (source,
               priv->saved_points_higher_segment,
@@ -794,11 +794,11 @@ gimp_free_select_tool_prepare_for_move (GimpFreeSelectTool *fst)
 
   if (priv->grabbed_segment_index > 0)
     {
-      gimp_free_select_get_segment (fst,
-                                    &source,
-                                    &n_points,
-                                    priv->grabbed_segment_index - 1,
-                                    priv->grabbed_segment_index);
+      gimp_free_select_tool_get_segment (fst,
+                                         &source,
+                                         &n_points,
+                                         priv->grabbed_segment_index - 1,
+                                         priv->grabbed_segment_index);
 
       priv->saved_points_lower_segment = g_new0 (GimpVector2, n_points);
 
@@ -809,11 +809,11 @@ gimp_free_select_tool_prepare_for_move (GimpFreeSelectTool *fst)
 
   if (priv->grabbed_segment_index < priv->n_segment_indices - 1)
     {
-      gimp_free_select_get_segment (fst,
-                                    &source,
-                                    &n_points,
-                                    priv->grabbed_segment_index,
-                                    priv->grabbed_segment_index + 1);
+      gimp_free_select_tool_get_segment (fst,
+                                         &source,
+                                         &n_points,
+                                         priv->grabbed_segment_index,
+                                         priv->grabbed_segment_index + 1);
 
       priv->saved_points_higher_segment = g_new0 (GimpVector2, n_points);
 
@@ -1192,9 +1192,9 @@ gimp_free_select_tool_real_select (GimpFreeSelectTool *fst,
 }
 
 void
-gimp_free_select_get_points (GimpFreeSelectTool  *fst,
-                             const GimpVector2  **points,
-                             gint                *n_points)
+gimp_free_select_tool_get_points (GimpFreeSelectTool  *fst,
+                                  const GimpVector2  **points,
+                                  gint                *n_points)
 {
   Private *priv = GET_PRIVATE (fst);
 

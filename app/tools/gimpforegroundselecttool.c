@@ -642,9 +642,9 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 
   scan_convert = gimp_scan_convert_new ();
 
-  gimp_free_select_get_points (free_sel,
-                               &points,
-                               &n_points);
+  gimp_free_select_tool_get_points (free_sel,
+                                    &points,
+                                    &n_points);
 
   gimp_scan_convert_add_polyline (scan_convert,
                                   n_points,

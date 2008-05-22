@@ -1,3 +1,9 @@
+2008-05-22  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpfreeselecttool.[ch]
+	* app/tools/gimpforegroundselecttool.c: Fix that some
+	gimp_free_select_tool_-functions had the wrong name.
+
 2008-05-22  Michael Natterer  <mitch@gimp.org>
 
 	Applied slightly modified and fixed patch from Alexia Death which
