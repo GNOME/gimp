@@ -27,6 +27,7 @@ Changes in GIMP 2.4.6
 - fixed issues with default aspect ratio in the Crop tool (bug #532057)
 - fixed compilation of the PDF import plug-in with libpoppler 0.8
 - fixed bug in clipboard brush code (bug #532886)
+- corrected layer mask flag in PSD save plug-in (bug #526811)
 - added new translations (ca@valencia, nn)
 - translation fixes and updates
   (ar, ca, de, el, es, fi, fr, hu, it, ko, pl, pt_BR, sv)
@@ -34,7 +35,7 @@ Changes in GIMP 2.4.6
 Contributors:
 
    Sven Neumann, Michael Natterer, Martin Nordholts, Bill Skaggs,
-   Michael Deal
+   Manish Singh, Kevin Cozens, Michael Deal
 
 
 Changes in GIMP 2.4.5
