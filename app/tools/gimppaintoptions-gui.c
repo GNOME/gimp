@@ -52,7 +52,7 @@
 
 
 static gboolean    tool_has_opacity_dynamics  (GType          tool_type);
-static gboolean    tool_has_pressure_dynamics (GType          tool_type);
+static gboolean    tool_has_hardness_dynamics (GType          tool_type);
 static gboolean    tool_has_rate_dynamics     (GType          tool_type);
 static gboolean    tool_has_size_dynamics     (GType          tool_type);
 static gboolean    tool_has_color_dynamics    (GType          tool_type);
@@ -186,9 +186,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       n_dynamics++;
     }
 
-  if (tool_has_pressure_dynamics (tool_type))
+  if (tool_has_hardness_dynamics (tool_type))
     {
-      dynamics_labels[n_dynamics] = gtk_label_new (_("Pressure"));
+      dynamics_labels[n_dynamics] = gtk_label_new (_("Hardness"));
       n_dynamics++;
     }
 
@@ -337,7 +337,7 @@ tool_has_opacity_dynamics (GType tool_type)
 }
 
 static gboolean
-tool_has_pressure_dynamics (GType tool_type)
+tool_has_hardness_dynamics (GType tool_type)
 {
   return (tool_type == GIMP_TYPE_AIRBRUSH_TOOL          ||
           tool_type == GIMP_TYPE_CLONE_TOOL             ||
@@ -406,7 +406,6 @@ pressure_options_gui (GimpPressureOptions *pressure,
   GtkWidget *button;
   gint       column = 1;
 
-  /*  the opacity toggle  */
   if (tool_has_opacity_dynamics (tool_type))
     {
       button = dynamics_check_button_new (config, "pressure-opacity",
@@ -417,8 +416,7 @@ pressure_options_gui (GimpPressureOptions *pressure,
       column++;
     }
 
-  /*  the pressure toggle  */
-  if (tool_has_pressure_dynamics (tool_type))
+  if (tool_has_hardness_dynamics (tool_type))
     {
       button = dynamics_check_button_new (config, "pressure-hardness",
                                           table, column, row);
@@ -428,7 +426,6 @@ pressure_options_gui (GimpPressureOptions *pressure,
       column++;
     }
 
-  /*  the rate toggle */
   if (tool_has_rate_dynamics (tool_type))
     {
       button = dynamics_check_button_new (config, "pressure-rate",
@@ -439,7 +436,6 @@ pressure_options_gui (GimpPressureOptions *pressure,
       column++;
     }
 
-  /*  the size toggle  */
   if (tool_has_size_dynamics (tool_type))
     {
       if (tool_type != GIMP_TYPE_AIRBRUSH_TOOL)
@@ -455,7 +451,6 @@ pressure_options_gui (GimpPressureOptions *pressure,
       column++;
     }
 
-  /*  the color toggle  */
   if (tool_has_color_dynamics (tool_type))
     {
       button = dynamics_check_button_new (config, "pressure-color",
@@ -477,35 +472,30 @@ velocity_options_gui (GimpVelocityOptions *velocity,
   GObject *config = G_OBJECT (paint_options);
   gint     column = 1;
 
-  /*  the opacity toggle  */
   if (tool_has_opacity_dynamics (tool_type))
     {
       dynamics_check_button_new (config, "velocity-opacity",
                                  table, column++, row);
     }
 
-  /*  the pressure toggle  */
-  if (tool_has_pressure_dynamics (tool_type))
+  if (tool_has_hardness_dynamics (tool_type))
     {
       dynamics_check_button_new (config, "velocity-hardness",
                                  table, column++, row);
     }
 
-  /*  the rate toggle */
   if (tool_has_rate_dynamics (tool_type))
     {
       dynamics_check_button_new (config, "velocity-rate",
                                  table, column++, row);
     }
 
-  /*  the size toggle  */
   if (tool_has_size_dynamics (tool_type))
     {
       dynamics_check_button_new (config, "velocity-size",
                                  table, column++, row);
     }
 
-  /*  the color toggle  */
   if (tool_has_color_dynamics (tool_type))
     {
       dynamics_check_button_new (config, "velocity-color",
@@ -523,35 +513,30 @@ random_options_gui (GimpRandomOptions *random,
   GObject*config = G_OBJECT (paint_options);
   gint    column = 1;
 
-  /*  the opacity toggle  */
   if (tool_has_opacity_dynamics (tool_type))
     {
       dynamics_check_button_new (config, "random-opacity",
                                  table, column++, row);
     }
 
-  /*  the pressure toggle  */
-  if (tool_has_pressure_dynamics (tool_type))
+  if (tool_has_hardness_dynamics (tool_type))
     {
       dynamics_check_button_new (config, "random-hardness",
                                  table, column++, row);
     }
 
-  /*  the rate toggle */
   if (tool_has_rate_dynamics (tool_type))
     {
       dynamics_check_button_new (config, "random-rate",
                                  table, column++, row);
     }
 
-  /*  the size toggle  */
   if (tool_has_size_dynamics (tool_type))
     {
       dynamics_check_button_new (config, "random-size",
                                  table, column++, row);
     }
 
-  /*  the color toggle  */
   if (tool_has_color_dynamics (tool_type))
     {
       dynamics_check_button_new (config, "random-color",

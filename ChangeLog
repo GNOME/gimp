@@ -1,5 +1,11 @@
 2008-05-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimppaintoptions-gui.c: revert accidential change of
+	all occurences of "hardness" to "pressure" in strings and function
+	names.
+
+2008-05-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimppaintoptions-gui.c: factor out a utility function
 	that creates a dynamics check button.
 
