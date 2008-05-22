@@ -1,3 +1,8 @@
+2008-05-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimppaintoptions-gui.c: first version of a matrix of
+	toggles for the dynamics parameters instead of three expanders.
+
 2008-05-22  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpfreeselecttool.c: Base a start of a new segment on
