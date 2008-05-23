@@ -1,3 +1,9 @@
+2008-05-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimppaintoptions-gui.c: left-align the labels in the
+	new dynamics matrix. Add some code for RTL layout that doesn't
+	work properly yet.
+
 2008-05-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpbrushcore.c (gimp_brush_core_interpolate): move

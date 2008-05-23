@@ -201,6 +201,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       GtkWidget *inner_frame;
       GtkWidget *fixed;
       gint       i;
+      gboolean   rtl = gtk_widget_get_direction (vbox) == GTK_TEXT_DIR_RTL;
 
       frame = gimp_prop_expander_new (config, "dynamics-expanded",
                                       _("Dynamics sensitivity"));
@@ -216,32 +217,32 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (table);
 
       label = gtk_label_new (_("Pressure:"));
-      gtk_table_attach (GTK_TABLE (table), label,
-                        0, 1, 1, 2,
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
       label = gtk_label_new (_("Velocity:"));
-      gtk_table_attach (GTK_TABLE (table), label,
-                        0, 1, 2, 3,
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
       label = gtk_label_new (_("Random:"));
-      gtk_table_attach (GTK_TABLE (table), label,
-                        0, 1, 3, 4,
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
       fixed = gtk_fixed_new ();
-      gtk_table_attach (GTK_TABLE (table), fixed,
-                        0, 6, 0, 1,
+      gtk_table_attach (GTK_TABLE (table), fixed, 0, 6, 0, 1,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (fixed);
 
       for (i = 0; i < n_dynamics; i++)
         {
-          gtk_label_set_angle (GTK_LABEL (dynamics_labels[i]), 315);
+          gtk_label_set_angle (GTK_LABEL (dynamics_labels[i]),
+                               rtl ? 45 : 315);
           gtk_misc_set_alignment (GTK_MISC (dynamics_labels[i]), 1.0, 1.0);
           gtk_fixed_put (GTK_FIXED (fixed), dynamics_labels[i], 0, 0);
           gtk_widget_show (dynamics_labels[i]);
@@ -396,9 +397,15 @@ dynamics_check_button_size_allocate (GtkWidget     *toggle,
                                      GtkWidget     *label)
 {
   GtkWidget *fixed = label->parent;
-  gint       x     = (allocation->x + allocation->width -
-                      label->allocation.width - fixed->allocation.x);
-  gint       y     = (fixed->allocation.height - label->allocation.height);
+  gint       x, y;
+
+  if (gtk_widget_get_direction (label) == GTK_TEXT_DIR_LTR)
+    x = (allocation->x + allocation->width -
+         label->allocation.width - fixed->allocation.x);
+  else
+    x = allocation->x + fixed->allocation.x;
+
+  y = (fixed->allocation.height - label->allocation.height);
 
   gtk_fixed_move (GTK_FIXED (fixed), label, x, y);
 }
