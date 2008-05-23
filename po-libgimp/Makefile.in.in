@@ -13,6 +13,7 @@
 #   Makefile.in.in and po2tbl.sed.in for use with glib-gettextize
 
 GETTEXT_PACKAGE = @GETTEXT_PACKAGE@-libgimp
+XGETTEXT_KEYWORDS=--keyword=_ --keyword=N_ --keyword=Q_:1g --keyword=C_:1c,2
 
 PACKAGE = @PACKAGE@
 VERSION = @VERSION@
