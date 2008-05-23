@@ -4,6 +4,12 @@
 	new dynamics matrix. Add some code for RTL layout that doesn't
 	work properly yet.
 
+2008-05-22  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+        * plug-ins/script-fu/tinyscheme/scheme.c: Added extra check to stop
+        "(let x 5)" syntax from causing a segfault in Linux. See bug #508020.
+        Removed some excess whitespace.
+
 2008-05-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpbrushcore.c (gimp_brush_core_interpolate): move
