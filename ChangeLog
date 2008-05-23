@@ -1,3 +1,11 @@
+2008-05-23  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpfreeselecttool.c
+	(gimp_free_select_tool_draw): Draw handles within HANDLE_SIZE * 7
+	distance from cursor instead of only showing the hovered handle.
+	(gimp_free_select_tool_oper_update): Remember last coordinates
+	given here, so we can do above calculations.
+
 2008-05-23  Michael Natterer  <mitch@gimp.org>
 
 	Stop including single headers from gtk+ to be prepared

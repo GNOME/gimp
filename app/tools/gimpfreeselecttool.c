@@ -50,6 +50,7 @@
 
 #define HANDLE_SIZE             12
 #define POINT_GRAB_THRESHOLD_SQ SQR(HANDLE_SIZE / 2)
+#define POINT_SHOW_THRESHOLD_SQ SQR(HANDLE_SIZE * 7)
 #define N_ITEMS_PER_ALLOC       1024
 #define INVALID_INDEX           (-1)
 
@@ -104,6 +105,9 @@ typedef struct _Private
   GimpChannelOps     operation_at_start;
 
   gboolean           constrain_angle;
+
+  /* Last _oper_update coords */
+  GimpVector2        last_coords;
 
 } Private;
 
@@ -264,14 +268,6 @@ gimp_free_select_tool_get_segment (GimpFreeSelectTool  *fst,
   *n_points = priv->segment_indices[segment_end] -
               priv->segment_indices[segment_start] +
               1;
-}
-
-static GimpVector2
-gimp_free_select_tool_get_grabbed_point (GimpFreeSelectTool *fst)
-{
-  Private *priv = GET_PRIVATE (fst);
-
-  return priv->points[priv->segment_indices[priv->grabbed_segment_index]];
 }
 
 static void
@@ -927,6 +923,9 @@ gimp_free_select_tool_oper_update (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
+  priv->last_coords.x = coords->x;
+  priv->last_coords.y = coords->y;
+
   if (priv->n_points == 0 ||
       (gimp_free_select_tool_is_point_grabbed (fst) &&
        ! hovering_first_point))
@@ -1208,23 +1207,44 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpFreeSelectTool *fst  = GIMP_FREE_SELECT_TOOL (draw_tool);
   Private            *priv = GET_PRIVATE (fst);
+  GimpTool           *tool = GIMP_TOOL (draw_tool);
+
+  if (! tool->display)
+    return;
 
   gimp_draw_tool_draw_lines (draw_tool,
                              priv->points, priv->n_points,
                              FALSE, FALSE);
 
-  if (gimp_free_select_tool_is_point_grabbed (fst) &&
-      ! priv->button1_down)
+  /* Draw handles around segment vertices in the proximity */
+  if (! priv->button1_down)
     {
-      GimpVector2 grabbed_point;
+      gint i;
 
-      grabbed_point = gimp_free_select_tool_get_grabbed_point (fst);
+      for (i = 0; i < priv->n_segment_indices; i++)
+        {
+          gdouble      dist;
+          GimpVector2 *point;
 
-      gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_CIRCLE,
-                                  grabbed_point.x,
-                                  grabbed_point.y,
-                                  HANDLE_SIZE, HANDLE_SIZE,
-                                  GTK_ANCHOR_CENTER, FALSE);
+          point = &priv->points[priv->segment_indices[i]];
+
+          dist  = gimp_draw_tool_calc_distance_square (draw_tool,
+                                                       tool->display,
+                                                       priv->last_coords.x,
+                                                       priv->last_coords.y,
+                                                       point->x,
+                                                       point->y);
+
+          if (dist < POINT_SHOW_THRESHOLD_SQ)
+            {
+              gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_CIRCLE,
+                                          point->x,
+                                          point->y,
+                                          HANDLE_SIZE, HANDLE_SIZE,
+                                          GTK_ANCHOR_CENTER, FALSE);
+
+            }
+        }
     }
 
   if (priv->show_pending_point)
