@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -55,7 +57,7 @@ gimp_channel_select_rectangle (GimpChannel    *channel,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
 
   if (push_undo)
-    gimp_channel_push_undo (channel, Q_("command|Rectangle Select"));
+    gimp_channel_push_undo (channel, C_("command", "Rectangle Select"));
 
   /*  if applicable, replace the current selection  */
   if (op == GIMP_CHANNEL_OP_REPLACE)
@@ -106,7 +108,7 @@ gimp_channel_select_ellipse (GimpChannel    *channel,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
 
   if (push_undo)
-    gimp_channel_push_undo (channel, Q_("command|Ellipse Select"));
+    gimp_channel_push_undo (channel, C_("command", "Ellipse Select"));
 
   /*  if applicable, replace the current selection  */
   if (op == GIMP_CHANNEL_OP_REPLACE)
@@ -160,7 +162,7 @@ gimp_channel_select_round_rect (GimpChannel         *channel,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
 
   if (push_undo)
-    gimp_channel_push_undo (channel, Q_("command|Rounded Rectangle Select"));
+    gimp_channel_push_undo (channel, C_("command", "Rounded Rectangle Select"));
 
   /*  if applicable, replace the current selection  */
   if (op == GIMP_CHANNEL_OP_REPLACE)
@@ -515,7 +517,7 @@ gimp_channel_select_fuzzy (GimpChannel         *channel,
   if (! sample_merged)
     gimp_item_offsets (GIMP_ITEM (drawable), &add_on_x, &add_on_y);
 
-  gimp_channel_select_channel (channel, Q_("command|Fuzzy Select"),
+  gimp_channel_select_channel (channel, C_("command", "Fuzzy Select"),
                                add_on, add_on_x, add_on_y,
                                op,
                                feather,
@@ -562,7 +564,7 @@ gimp_channel_select_by_color (GimpChannel         *channel,
   if (! sample_merged)
     gimp_item_offsets (GIMP_ITEM (drawable), &add_on_x, &add_on_y);
 
-  gimp_channel_select_channel (channel, Q_("command|Select by Color"),
+  gimp_channel_select_channel (channel, C_("command", "Select by Color"),
                                add_on, add_on_x, add_on_y,
                                op,
                                feather,

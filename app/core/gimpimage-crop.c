@@ -123,7 +123,7 @@ gimp_image_crop (GimpImage   *image,
 
       if (crop_layers)
         gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CROP,
-                                     Q_("command|Crop Image"));
+                                     C_("command", "Crop Image"));
       else
         gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_RESIZE,
                                      _("Resize Image"));

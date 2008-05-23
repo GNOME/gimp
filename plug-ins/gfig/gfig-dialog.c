@@ -490,7 +490,7 @@ gfig_dialog (void)
   gtk_widget_show (toggle);
 
   /* "snap to grid" checkbutton at bottom of style frame */
-  toggle = gtk_check_button_new_with_label (Q_("checkbutton|Snap to grid"));
+  toggle = gtk_check_button_new_with_label (C_("checkbutton", "Snap to grid"));
   gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),

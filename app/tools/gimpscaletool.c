@@ -103,7 +103,7 @@ gimp_scale_tool_init (GimpScaleTool *scale_tool)
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_RESIZE);
 
-  tr_tool->undo_desc       = Q_("command|Scale");
+  tr_tool->undo_desc       = C_("command", "Scale");
   tr_tool->progress_text   = _("Scaling");
 
   tr_tool->use_grid        = TRUE;

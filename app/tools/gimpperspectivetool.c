@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -94,7 +96,7 @@ gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_PERSPECTIVE);
 
-  tr_tool->undo_desc     = Q_("command|Perspective");
+  tr_tool->undo_desc     = C_("command", "Perspective");
   tr_tool->progress_text = _("Perspective transformation");
 
   tr_tool->use_grid      = TRUE;

@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include <glib-object.h>
 
@@ -624,7 +625,8 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
 
   /* Start a transform undo group */
   gimp_image_undo_group_start (image,
-                               GIMP_UNDO_GROUP_TRANSFORM, Q_("command|Flip"));
+                               GIMP_UNDO_GROUP_TRANSFORM,
+                               C_("command", "Flip"));
 
   /* Cut/Copy from the specified drawable */
   orig_tiles = gimp_drawable_transform_cut (drawable, context, &new_layer);
@@ -710,7 +712,8 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
 
   /* Start a transform undo group */
   gimp_image_undo_group_start (image,
-                               GIMP_UNDO_GROUP_TRANSFORM, Q_("command|Rotate"));
+                               GIMP_UNDO_GROUP_TRANSFORM,
+                               C_("command", "Rotate"));
 
   /* Cut/Copy from the specified drawable */
   orig_tiles = gimp_drawable_transform_cut (drawable, context, &new_layer);

@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include <gtk/gtk.h>
 
@@ -106,7 +107,7 @@ gimp_shear_tool_init (GimpShearTool *shear_tool)
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_SHEAR);
 
-  tr_tool->undo_desc     = Q_("command|Shear");
+  tr_tool->undo_desc     = C_("command", "Shear");
   tr_tool->progress_text = _("Shearing");
 
   tr_tool->use_grid      = TRUE;

@@ -1248,7 +1248,7 @@ gimp_free_select_tool_real_select (GimpFreeSelectTool *fst,
   Private              *priv    = GET_PRIVATE (fst);
 
   gimp_channel_select_polygon (gimp_image_get_mask (display->image),
-                               Q_("command|Free Select"),
+                               C_("command", "Free Select"),
                                priv->n_points,
                                priv->points,
                                priv->operation_at_start,

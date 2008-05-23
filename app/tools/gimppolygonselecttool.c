@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -571,7 +573,7 @@ gimp_polygon_select_tool_real_select (GimpPolygonSelectTool *poly_sel_tool,
   options = GIMP_SELECTION_TOOL_GET_OPTIONS (poly_sel_tool);
 
   gimp_channel_select_polygon (gimp_image_get_mask (display->image),
-                               Q_("command|Polygon Select"),
+                               C_("command", "Polygon Select"),
                                poly_sel_tool->n_points,
                                poly_sel_tool->points,
                                options->operation,

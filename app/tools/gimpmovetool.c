@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -122,7 +124,7 @@ gimp_move_tool_register (GimpToolRegisterCallback  callback,
                 gimp_move_options_gui,
                 0,
                 "gimp-move-tool",
-                Q_("tool|Move"),
+                C_("tool", "Move"),
                 _("Move Tool: Move layers, selections, and other objects"),
                 N_("_Move"), "M",
                 NULL, GIMP_HELP_TOOL_MOVE,

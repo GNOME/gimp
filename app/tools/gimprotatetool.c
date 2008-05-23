@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -110,7 +112,7 @@ gimp_rotate_tool_init (GimpRotateTool *rotate_tool)
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_ROTATE);
 
-  tr_tool->undo_desc     = Q_("command|Rotate");
+  tr_tool->undo_desc     = C_("command", "Rotate");
   tr_tool->progress_text = _("Rotating");
 
   tr_tool->use_grid      = TRUE;

@@ -1,5 +1,27 @@
 2008-05-23  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpchannel-select.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpimage-crop.c
+	* app/dialogs/image-scale-dialog.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpforegroundselecttool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimppolygonselecttool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c
+	* libgimpwidgets/gimpcolorprofilestore.c
+	* plug-ins/gfig/gfig-dialog.c: use C_() instead of Q_() for
+	translations with context.
+
+2008-05-23  Sven Neumann  <sven@gimp.org>
+
 	* autogen.sh (GLIB_REQUIRED_VERSION): require glib-gettextize 2.16.
 
 	* libgimp/libgimp-intl.h

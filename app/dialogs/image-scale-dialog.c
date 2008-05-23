@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -106,7 +108,7 @@ image_scale_dialog_new (GimpImage             *image,
 
   dialog->image  = image;
   dialog->dialog = scale_dialog_new (GIMP_VIEWABLE (image), context,
-                                     Q_("dialog-title|Scale Image"),
+                                     C_("dialog-title", "Scale Image"),
                                      "gimp-image-scale",
                                      parent,
                                      gimp_standard_help_func,

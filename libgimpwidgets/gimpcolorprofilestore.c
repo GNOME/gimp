@@ -277,7 +277,7 @@ gimp_color_profile_store_add (GimpColorProfileStore *store,
   g_return_if_fail (label != NULL || filename == NULL);
 
   if (! filename && ! label)
-    label = Q_("profile|None");
+    label = C_("profile", "None");
 
   gimp_color_profile_store_get_separator (store, &separator, TRUE);
 

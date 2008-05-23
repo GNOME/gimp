@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -109,7 +111,7 @@ gimp_flip_tool_init (GimpFlipTool *flip_tool)
   gimp_tool_control_set_toggle_tool_cursor (tool->control,
                                             GIMP_TOOL_CURSOR_FLIP_VERTICAL);
 
-  tr_tool->undo_desc = Q_("command|Flip");
+  tr_tool->undo_desc = C_("command", "Flip");
 }
 
 static void

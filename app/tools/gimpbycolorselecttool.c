@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -77,7 +79,7 @@ gimp_by_color_select_tool_class_init (GimpByColorSelectToolClass *klass)
 
   region_class = GIMP_REGION_SELECT_TOOL_CLASS (klass);
 
-  region_class->undo_desc = Q_("command|Select by Color");
+  region_class->undo_desc = C_("command", "Select by Color");
   region_class->get_mask  = gimp_by_color_select_tool_get_mask;
 }
 
