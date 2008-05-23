@@ -23,9 +23,6 @@
 #define __GIMP_CONTAINER_COMBO_BOX_H__
 
 
-#include <gtk/gtkcombobox.h>
-
-
 #define GIMP_TYPE_CONTAINER_COMBO_BOX            (gimp_container_combo_box_get_type ())
 #define GIMP_CONTAINER_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_COMBO_BOX, GimpContainerComboBox))
 #define GIMP_CONTAINER_COMBO_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_COMBO_BOX, GimpContainerComboBoxClass))

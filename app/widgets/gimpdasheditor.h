@@ -23,9 +23,6 @@
 #define __GIMP_DASH_EDITOR_H__
 
 
-#include <gtk/gtkdrawingarea.h>
-
-
 #define GIMP_TYPE_DASH_EDITOR            (gimp_dash_editor_get_type ())
 #define GIMP_DASH_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DASH_EDITOR, GimpDashEditor))
 #define GIMP_DASH_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DASH_EDITOR, GimpDashEditorClass))

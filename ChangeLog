@@ -1,3 +1,32 @@
+2008-05-23  Michael Natterer  <mitch@gimp.org>
+
+	Stop including single headers from gtk+ to be prepared
+	for the upcoming GTK_DISABLE_SINGLE_INCLUDES:
+
+	* configure.in: add -DGTK_DISABLE_SINGLE_INCLUDES to CPPFLAGS.
+
+	* app/display/gimpcanvas.h
+	* app/display/gimpscalecombobox.h
+	* app/display/gimpstatusbar.h
+	* app/widgets/*.h
+	* libgimp/gimpprogressbar.h
+	* libgimp/gimpselectbutton.h
+	* libgimpwidgets/*.h
+	* libgimpwidgets/gimpstock.c
+	* plug-ins/uri/gimpmountoperation.h: remove inclusion of parent
+	classes and single files from gtk+.
+
+	* app/widgets/gtkwrapbox.h
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpfontmenu.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimppalettemenu.c
+	* libgimp/gimppatternmenu.c
+	* libgimp/gimpselectbutton.c: #include <gtk/gtk.h>
+
+	* plug-ins/common/poppler.c: undef GTK_DISABLE_SINGLE_INCLUDES
+	when including <poppler.h>.
+
 2008-05-23  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpimagemaptool-settings.c: string change.

@@ -25,8 +25,6 @@
 #ifndef __GIMP_PIXMAP_H__
 #define __GIMP_PIXMAP_H__
 
-#include <gtk/gtkimage.h>
-
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */

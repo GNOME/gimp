@@ -23,9 +23,6 @@
 #define __GIMP_CONTAINER_POPUP_H__
 
 
-#include <gtk/gtkwindow.h>
-
-
 #define GIMP_TYPE_CONTAINER_POPUP            (gimp_container_popup_get_type ())
 #define GIMP_CONTAINER_POPUP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_POPUP, GimpContainerPopup))
 #define GIMP_CONTAINER_POPUP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_POPUP, GimpContainerPopupClass))

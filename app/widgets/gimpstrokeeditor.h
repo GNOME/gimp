@@ -23,9 +23,6 @@
 #define __GIMP_STROKE_EDITOR_H__
 
 
-#include <gtk/gtkvbox.h>
-
-
 #define GIMP_TYPE_STROKE_EDITOR            (gimp_stroke_editor_get_type ())
 #define GIMP_STROKE_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_STROKE_EDITOR, GimpStrokeEditor))
 #define GIMP_STROKE_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_STROKE_EDITOR, GimpStrokeEditorClass))

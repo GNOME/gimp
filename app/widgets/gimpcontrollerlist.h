@@ -23,9 +23,6 @@
 #define __GIMP_CONTROLLER_LIST_H__
 
 
-#include <gtk/gtkvbox.h>
-
-
 #define GIMP_TYPE_CONTROLLER_LIST            (gimp_controller_list_get_type ())
 #define GIMP_CONTROLLER_LIST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTROLLER_LIST, GimpControllerList))
 #define GIMP_CONTROLLER_LIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTROLLER_LIST, GimpControllerListClass))

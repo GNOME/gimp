@@ -23,9 +23,6 @@
 #define __GIMP_FG_BG_EDITOR_H__
 
 
-#include <gtk/gtkdrawingarea.h>
-
-
 #define GIMP_TYPE_FG_BG_EDITOR            (gimp_fg_bg_editor_get_type ())
 #define GIMP_FG_BG_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FG_BG_EDITOR, GimpFgBgEditor))
 #define GIMP_FG_BG_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FG_BG_EDITOR, GimpFgBgEditorClass))

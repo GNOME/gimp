@@ -27,10 +27,8 @@
 #ifndef __GIMP_MOUNT_OPERATION_H__
 #define __GIMP_MOUNT_OPERATION_H__
 
-#include <glib.h>
 #include <gio/gio.h>
-#include <gdk/gdkscreen.h>
-#include <gtk/gtkwindow.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
@@ -77,4 +75,3 @@ GdkScreen       *gimp_mount_operation_get_screen (GimpMountOperation *op);
 G_END_DECLS
 
 #endif /* __GIMP_MOUNT_OPERATION_H__ */
-

@@ -19,9 +19,8 @@
 #ifndef __GIMP_STATUSBAR_H__
 #define __GIMP_STATUSBAR_H__
 
-#include <gtk/gtkstatusbar.h>
-
 G_BEGIN_DECLS
+
 
 /*  maximal length of the format string for the cursor-coordinates  */
 #define CURSOR_FORMAT_LENGTH 32

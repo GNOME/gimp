@@ -26,7 +26,9 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#undef GTK_DISABLE_SINGLE_INCLUDES
 #include <poppler.h>
+#define GTK_DISABLE_SINGLE_INCLUDES
 
 #include "libgimp/stdplugins-intl.h"
 

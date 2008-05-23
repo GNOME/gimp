@@ -22,8 +22,6 @@
 #ifndef __GIMP_PROGRESS_BOX_H__
 #define __GIMP_PROGRESS_BOX_H__
 
-#include <gtk/gtkvbox.h>
-
 G_BEGIN_DECLS
 
 

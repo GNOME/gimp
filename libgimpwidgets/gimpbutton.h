@@ -23,8 +23,6 @@
 #ifndef __GIMP_BUTTON_H__
 #define __GIMP_BUTTON_H__
 
-#include <gtk/gtkbutton.h>
-
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */

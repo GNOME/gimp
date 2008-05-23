@@ -23,8 +23,6 @@
 #ifndef __GIMP_ENUM__LABEL_H__
 #define __GIMP_ENUM__LABEL_H__
 
-#include <gtk/gtklabel.h>
-
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_ENUM_LABEL            (gimp_enum_label_get_type ())

@@ -23,9 +23,6 @@
 #define __GIMP_CELL_RENDERER_DASHES_H__
 
 
-#include <gtk/gtkcellrenderer.h>
-
-
 #define GIMP_TYPE_CELL_RENDERER_DASHES            (gimp_cell_renderer_dashes_get_type ())
 #define GIMP_CELL_RENDERER_DASHES(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CELL_RENDERER_DASHES, GimpCellRendererDashes))
 #define GIMP_CELL_RENDERER_DASHES_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CELL_RENDERER_DASHES, GimpCellRendererDashesClass))

@@ -23,9 +23,6 @@
 #define __GIMP_DOCK_SEPARATOR_H__
 
 
-#include <gtk/gtkeventbox.h>
-
-
 #define GIMP_TYPE_DOCK_SEPARATOR            (gimp_dock_separator_get_type ())
 #define GIMP_DOCK_SEPARATOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCK_SEPARATOR, GimpDockSeparator))
 #define GIMP_DOCK_SEPARATOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCK_SEPARATOR, GimpDockSeparatorClass))

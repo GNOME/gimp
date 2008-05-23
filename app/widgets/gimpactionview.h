@@ -23,9 +23,6 @@
 #define __GIMP_ACTION_VIEW_H__
 
 
-#include <gtk/gtktreeview.h>
-
-
 enum
 {
   GIMP_ACTION_VIEW_COLUMN_ACTION,

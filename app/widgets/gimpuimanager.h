@@ -22,8 +22,6 @@
 #ifndef __GIMP_UI_MANAGER_H__
 #define __GIMP_UI_MANAGER_H__
 
-#include <gtk/gtkuimanager.h>
-
 
 typedef struct _GimpUIManagerUIEntry GimpUIManagerUIEntry;
 

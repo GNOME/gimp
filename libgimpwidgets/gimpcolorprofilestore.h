@@ -23,8 +23,6 @@
 #ifndef __GIMP_COLOR_PROFILE_STORE_H__
 #define __GIMP_COLOR_PROFILE_STORE_H__
 
-#include <gtk/gtkliststore.h>
-
 G_BEGIN_DECLS
 
 

@@ -22,8 +22,6 @@
 #ifndef __GIMP_ACTION_GROUP_H__
 #define __GIMP_ACTION_GROUP_H__
 
-#include <gtk/gtkactiongroup.h>
-
 
 #define GIMP_TYPE_ACTION_GROUP              (gimp_action_group_get_type ())
 #define GIMP_ACTION_GROUP(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ACTION_GROUP, GimpActionGroup))

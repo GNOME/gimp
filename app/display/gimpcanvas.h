@@ -20,9 +20,6 @@
 #define __GIMP_CANVAS_H__
 
 
-#include <gtk/gtkdrawingarea.h>
-
-
 typedef enum
 {
   GIMP_CANVAS_STYLE_BLACK,

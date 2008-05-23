@@ -20,8 +20,6 @@
 #ifndef __GIMP_PREVIEW_AREA_H__
 #define __GIMP_PREVIEW_AREA_H__
 
-#include <gtk/gtkdrawingarea.h>
-
 G_BEGIN_DECLS
 
 

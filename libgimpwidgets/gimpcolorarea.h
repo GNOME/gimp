@@ -28,8 +28,6 @@
 #ifndef __GIMP_COLOR_AREA_H__
 #define __GIMP_COLOR_AREA_H__
 
-#include <gtk/gtkdrawingarea.h>
-
 G_BEGIN_DECLS
 
 

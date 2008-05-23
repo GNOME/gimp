@@ -20,9 +20,6 @@
 #define __GIMP_HANDLE_BAR_H__
 
 
-#include <gtk/gtkmisc.h>
-
-
 #define GIMP_TYPE_HANDLE_BAR            (gimp_handle_bar_get_type ())
 #define GIMP_HANDLE_BAR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HANDLE_BAR, GimpHandleBar))
 #define GIMP_HANDLE_BAR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HANDLE_BAR, GimpHandleBarClass))

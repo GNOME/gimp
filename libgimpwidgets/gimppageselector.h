@@ -23,8 +23,6 @@
 #ifndef __GIMP_PAGE_SELECTOR_H__
 #define __GIMP_PAGE_SELECTOR_H__
 
-#include <gtk/gtkvbox.h>
-
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_PAGE_SELECTOR            (gimp_page_selector_get_type ())

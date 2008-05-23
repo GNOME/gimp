@@ -23,9 +23,6 @@
 #define __GIMP_CONTAINER_EDITOR_H__
 
 
-#include <gtk/gtkvbox.h>
-
-
 #define GIMP_TYPE_CONTAINER_EDITOR            (gimp_container_editor_get_type ())
 #define GIMP_CONTAINER_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_EDITOR, GimpContainerEditor))
 #define GIMP_CONTAINER_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_EDITOR, GimpContainerEditorClass))

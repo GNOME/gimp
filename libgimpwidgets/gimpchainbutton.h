@@ -31,8 +31,6 @@
 #ifndef __GIMP_CHAIN_BUTTON_H__
 #define __GIMP_CHAIN_BUTTON_H__
 
-#include <gtk/gtktable.h>
-
 G_BEGIN_DECLS
 
 

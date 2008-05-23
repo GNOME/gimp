@@ -23,9 +23,6 @@
 #define __GIMP_ACTION_H__
 
 
-#include <gtk/gtkaction.h>
-
-
 #define GIMP_TYPE_ACTION            (gimp_action_get_type ())
 #define GIMP_ACTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ACTION, GimpAction))
 #define GIMP_ACTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ACTION, GimpActionClass))

@@ -22,7 +22,10 @@
 
 #include "config.h"
 
+#include <gtk/gtk.h>
+
 #include "gimp.h"
+
 #include "gimpuitypes.h"
 #include "gimpselectbutton.h"
 

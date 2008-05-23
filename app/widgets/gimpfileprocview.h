@@ -23,9 +23,6 @@
 #define __GIMP_FILE_PROC_VIEW_H__
 
 
-#include <gtk/gtktreeview.h>
-
-
 #define GIMP_TYPE_FILE_PROC_VIEW            (gimp_file_proc_view_get_type ())
 #define GIMP_FILE_PROC_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FILE_PROC_VIEW, GimpFileProcView))
 #define GIMP_FILE_PROC_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FILE_PROC_VIEW, GimpFileProcViewClass))

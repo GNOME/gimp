@@ -29,8 +29,6 @@
 #ifndef __GIMP_COLOR_SCALE_H__
 #define __GIMP_COLOR_SCALE_H__
 
-#include <gtk/gtkscale.h>
-
 G_BEGIN_DECLS
 
 

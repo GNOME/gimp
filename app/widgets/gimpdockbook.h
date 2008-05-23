@@ -23,9 +23,6 @@
 #define __GIMP_DOCKBOOK_H__
 
 
-#include <gtk/gtknotebook.h>
-
-
 #define GIMP_TYPE_DOCKBOOK            (gimp_dockbook_get_type ())
 #define GIMP_DOCKBOOK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCKBOOK, GimpDockbook))
 #define GIMP_DOCKBOOK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCKBOOK, GimpDockbookClass))

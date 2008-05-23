@@ -27,8 +27,6 @@
 #undef GTK_DISABLE_DEPRECATED
 #include <gtk/gtkoptionmenu.h>
 #define GTK_DISABLE_DEPRECATED
-#else
-#include <gtk/gtkoptionmenu.h>
 #endif
 
 G_BEGIN_DECLS

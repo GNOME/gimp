@@ -20,9 +20,6 @@
 #define __GIMP_HISTOGRAM_VIEW_H__
 
 
-#include <gtk/gtkdrawingarea.h>
-
-
 #define GIMP_TYPE_HISTOGRAM_VIEW            (gimp_histogram_view_get_type ())
 #define GIMP_HISTOGRAM_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HISTOGRAM_VIEW, GimpHistogramView))
 #define GIMP_HISTOGRAM_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HISTOGRAM_VIEW, GimpHistogramViewClass))

@@ -23,9 +23,6 @@
 #define __GIMP_CONTAINER_ENTRY_H__
 
 
-#include <gtk/gtkentry.h>
-
-
 enum
 {
   GIMP_CONTAINER_ENTRY_COLUMN_RENDERER,

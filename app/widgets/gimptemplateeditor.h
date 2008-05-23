@@ -23,9 +23,6 @@
 #define __GIMP_TEMPLATE_EDITOR_H__
 
 
-#include <gtk/gtkvbox.h>
-
-
 #define GIMP_TYPE_TEMPLATE_EDITOR            (gimp_template_editor_get_type ())
 #define GIMP_TEMPLATE_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TEMPLATE_EDITOR, GimpTemplateEditor))
 #define GIMP_TEMPLATE_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEMPLATE_EDITOR, GimpTemplateEditorClass))

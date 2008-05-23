@@ -22,9 +22,6 @@
 #define  __GIMP_BLOB_EDITOR_H__
 
 
-#include "gtk/gtkdrawingarea.h"
-
-
 #define GIMP_TYPE_BLOB_EDITOR            (gimp_blob_editor_get_type ())
 #define GIMP_BLOB_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BLOB_EDITOR, GimpBlobEditor))
 #define GIMP_BLOB_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BLOB_EDITOR, GimpBlobEditorClass))

@@ -23,8 +23,6 @@
 #ifndef __GIMP_PROGRESS_BAR_H__
 #define __GIMP_PROGRESS_BAR_H__
 
-#include <gtk/gtkprogressbar.h>
-
 G_BEGIN_DECLS
 
 

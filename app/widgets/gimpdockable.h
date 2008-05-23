@@ -23,9 +23,6 @@
 #define __GIMP_DOCKABLE_H__
 
 
-#include <gtk/gtkbin.h>
-
-
 #define GIMP_DOCKABLE_DRAG_OFFSET (-6)
 
 

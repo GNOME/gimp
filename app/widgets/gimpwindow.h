@@ -22,9 +22,6 @@
 #define __GIMP_WINDOW_H__
 
 
-#include <gtk/gtkwindow.h>
-
-
 #define GIMP_TYPE_WINDOW            (gimp_window_get_type ())
 #define GIMP_WINDOW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_WINDOW, GimpWindow))
 #define GIMP_WINDOW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_WINDOW, GimpWindowClass))
@@ -46,7 +43,7 @@ struct _GimpWindowClass
 };
 
 
-GType   gimp_window_get_type     (void) G_GNUC_CONST;
+GType   gimp_window_get_type (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_WINDOW_H__ */

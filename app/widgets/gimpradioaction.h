@@ -24,9 +24,6 @@
 #define __GIMP_RADIO_ACTION_H__
 
 
-#include <gtk/gtkradioaction.h>
-
-
 #define GIMP_TYPE_RADIO_ACTION            (gimp_radio_action_get_type ())
 #define GIMP_RADIO_ACTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RADIO_ACTION, GimpRadioAction))
 #define GIMP_RADIO_ACTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_RADIO_ACTION, GimpRadioActionClass))

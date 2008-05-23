@@ -20,8 +20,6 @@
 #ifndef __GIMP_PICK_BUTTON_H__
 #define __GIMP_PICK_BUTTON_H__
 
-#include <gtk/gtkbutton.h>
-
 G_BEGIN_DECLS
 
 

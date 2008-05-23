@@ -23,8 +23,7 @@
 #ifndef __GTK_WRAP_BOX_H__
 #define __GTK_WRAP_BOX_H__
 
-
-#include <gtk/gtkcontainer.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 

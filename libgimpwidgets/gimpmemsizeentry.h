@@ -23,8 +23,6 @@
 #ifndef __GIMP_MEMSIZE_ENTRY_H__
 #define __GIMP_MEMSIZE_ENTRY_H__
 
-#include <gtk/gtkhbox.h>
-
 G_BEGIN_DECLS
 
 

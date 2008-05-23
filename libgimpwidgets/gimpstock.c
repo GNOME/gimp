@@ -23,7 +23,6 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
-#include <gtk/gtkiconfactory.h>
 
 #include "gimpstock.h"
 

@@ -23,8 +23,6 @@
 #ifndef __GIMP_STRING_COMBO_BOX_H__
 #define __GIMP_STRING_COMBO_BOX_H__
 
-#include <gtk/gtkcombobox.h>
-
 G_BEGIN_DECLS
 
 

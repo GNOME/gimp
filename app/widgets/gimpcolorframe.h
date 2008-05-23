@@ -20,9 +20,6 @@
 #define __GIMP_COLOR_FRAME_H__
 
 
-#include <gtk/gtkframe.h>
-
-
 #define GIMP_COLOR_FRAME_ROWS 5
 
 

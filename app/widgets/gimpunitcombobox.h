@@ -22,8 +22,6 @@
 #ifndef __GIMP_UNIT_COMBO_BOX_H__
 #define __GIMP_UNIT_COMBO_BOX_H__
 
-#include <gtk/gtkcombobox.h>
-
 
 #define GIMP_TYPE_UNIT_COMBO_BOX            (gimp_unit_combo_box_get_type ())
 #define GIMP_UNIT_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_UNIT_COMBO_BOX, GimpUnitComboBox))

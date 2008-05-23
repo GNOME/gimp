@@ -23,8 +23,6 @@
 #ifndef __GIMP_COLOR_PROFILE_COMBO_BOX_H__
 #define __GIMP_COLOR_PROFILE_COMBO_BOX_H__
 
-#include <gtk/gtkcombobox.h>
-
 G_BEGIN_DECLS
 
 #define GIMP_TYPE_COLOR_PROFILE_COMBO_BOX            (gimp_color_profile_combo_box_get_type ())
