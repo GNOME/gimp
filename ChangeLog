@@ -1,3 +1,14 @@
+2008-05-23  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh (GLIB_REQUIRED_VERSION): require glib-gettextize 2.16.
+
+	* libgimp/libgimp-intl.h
+	* plug-ins/pygimp/pygimp-intl.h: synced with gi18n-lib.h from glib
+	2.16. This adds support for the C_() macro.
+
+	* plug-ins/script-fu/script-fu-intl.h: just include gi18n.h instead
+	of duplicating things from this header.
+
 2008-05-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimppaintoptions-gui.c: left-align the labels in the

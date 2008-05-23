@@ -26,16 +26,8 @@
 #error "config.h must be included prior to script-fu-intl.h"
 #endif
 
-#include <libintl.h>
+#include <glib/gi18n.h>
 
-
-#define _(String) gettext (String)
-
-#ifdef gettext_noop
-#    define N_(String) gettext_noop (String)
-#else
-#    define N_(String) (String)
-#endif
 
 #ifndef HAVE_BIND_TEXTDOMAIN_CODESET
 #    define bind_textdomain_codeset(Domain, Codeset) (Domain)

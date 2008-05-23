@@ -29,8 +29,9 @@
 #include <libintl.h>
 
 
-#define _(String) dgettext (GETTEXT_PACKAGE "-libgimp", String)
-#define Q_(String) g_strip_context ((String), dgettext (GETTEXT_PACKAGE "-libgimp", String))
+#define  _(String) dgettext (GETTEXT_PACKAGE "-libgimp", String)
+#define Q_(String) g_dpgettext (GETTEXT_PACKAGE "-libgimp", String, 0)
+#define C_(Context,String) g_dpgettext (GETTEXT_PACKAGE "-libgimp", Context "\004" String, strlen (Context) + 1)
 
 #undef gettext
 #define gettext(String) dgettext (GETTEXT_PACKAGE "-libgimp", String)

@@ -29,7 +29,9 @@
 #include <libintl.h>
 
 
-#define _(String) dgettext (GETTEXT_PACKAGE "-python", String)
+#define  _(String) dgettext (GETTEXT_PACKAGE "-python", String)
+#define Q_(String) g_dpgettext (GETTEXT_PACKAGE "-python", String, 0)
+#define C_(Context,String) g_dpgettext (GETTEXT_PACKAGE "-python", Context "\004" String, strlen (Context) + 1)
 
 #undef gettext
 #define gettext(String) dgettext (GETTEXT_PACKAGE "-python", String)
