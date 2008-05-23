@@ -433,11 +433,10 @@ gimp_image_map_tool_favorite_activate (GtkWidget        *widget,
 {
   GtkWidget *dialog;
 
-  dialog = gimp_query_string_box (_("Save Settings to Favorites"),
+  dialog = gimp_query_string_box (_("Add Settings to Favorites"),
                                   tool->shell,
-                                  gimp_standard_help_func,
-                                  NULL, /*GIMP_HELP_TOOL_OPTIONS_DIALOG, */
-                                  _("Enter a name for the saved settings"),
+                                  gimp_standard_help_func, NULL,
+                                  _("Enter a name for the settings"),
                                   _("Saved Settings"),
                                   G_OBJECT (tool->shell), "hide",
                                   gimp_image_map_tool_favorite_callback, tool);

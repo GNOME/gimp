@@ -1,5 +1,9 @@
 2008-05-23  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpimagemaptool-settings.c: string change.
+
+2008-05-23  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpchannel-select.c
 	* app/core/gimpdrawable-bucket-fill.c
 	* app/core/gimpdrawable-transform.c
