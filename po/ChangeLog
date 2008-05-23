@@ -1,5 +1,9 @@
 2008-05-23  Sven Neumann  <sven@gimp.org>
 
+	* de.po: updated German translation.
+
+2008-05-23  Sven Neumann  <sven@gimp.org>
+
 	* Makefile.in.in: set XGETTEXT_KEYWORDS for use of msgctxtid.
 
 2008-05-22  Wadim Dziedzic  <wadimd@svn.gnome.org>
