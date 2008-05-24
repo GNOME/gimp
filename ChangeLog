@@ -1,5 +1,10 @@
 2008-05-24  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* menus/image-menu.xml.in: Also Remove the Polygon Select Tool
+	action from here.
+
+2008-05-24  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Kill the Polygon Select Tool. The Free Select Tool now provides a
 	superset of the old Polygon Select Tool functionality. We still
 	keep the tool icons etc around though, they might come in useful
