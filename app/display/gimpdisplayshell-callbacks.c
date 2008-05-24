@@ -1204,11 +1204,19 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                     gimp_display_shell_autoscroll_start (shell, state, mevent);
                   }
 
+                /* gdk_device_get_history() has several quirks. First is
+                 * that events with borderline timestamps at both ends
+                 * are included. Because of that we need to add 1 to
+                 * lower border. The second is due to poor X event
+                 * resolution. We need to do -1 to ensure that the
+                 * amount of events between timestamps is final or
+                 * risk loosing some.
+                 */
                 if (gimp_tool_control_get_motion_mode (active_tool->control) ==
                     GIMP_MOTION_MODE_EXACT &&
                     gdk_device_get_history (mevent->device, mevent->window,
-                                            shell->last_motion_time,
-                                            mevent->time,
+                                            shell->last_motion_time + 1,
+                                            mevent->time - 1,
                                             &history_events,
                                             &n_history_events))
                   {

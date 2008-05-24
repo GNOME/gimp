@@ -1,3 +1,12 @@
+2008-05-24  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): fixed use of
+	gdk_device_get_history(). Fixes airbrush tool with tablets on
+	newer X.org releases.
+
 2008-05-19  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
