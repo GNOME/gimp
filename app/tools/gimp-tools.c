@@ -71,7 +71,6 @@
 #include "gimppenciltool.h"
 #include "gimpperspectiveclonetool.h"
 #include "gimpperspectivetool.h"
-#include "gimppolygonselecttool.h"
 #include "gimpposterizetool.h"
 #include "gimpthresholdtool.h"
 #include "gimprectangleselecttool.h"
@@ -172,7 +171,6 @@ gimp_tools_init (Gimp *gimp)
     gimp_iscissors_tool_register,
     gimp_by_color_select_tool_register,
     gimp_fuzzy_select_tool_register,
-    gimp_polygon_select_tool_register,
     gimp_free_select_tool_register,
     gimp_ellipse_select_tool_register,
     gimp_rectangle_select_tool_register

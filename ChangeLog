@@ -1,3 +1,20 @@
+2008-05-24  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Kill the Polygon Select Tool. The Free Select Tool now provides a
+	superset of the old Polygon Select Tool functionality. We still
+	keep the tool icons etc around though, they might come in useful
+	in the future.
+
+	* app/tools/gimppolygonselecttool.[ch]: Removed.
+
+	* app/tools/Makefile.am: Removed gimppolygonselecttool.[ch].
+
+	* app/tools/gimp-tools.c (gimp_tools_init): Don't register the
+	Polygon Select Tool.
+
+	* app/widgets/gimphelp-ids.h: Remove
+	GIMP_HELP_TOOL_POLYGON_SELECT.
+
 2008-05-23  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpfreeselecttool.c
