@@ -16,7 +16,7 @@ Beta software can be found at alpha.gnu.org.
     * pkg-config 0.16.0 (or preferably a newer version)
         - http://www.freedesktop.org/software/pkgconfig/
 
-    * intltoolize 0.31.1 (or preferably a newer version)
+    * intltoolize 0.35.5 (or preferably a newer version)
         - ftp://ftp.gnome.org/pub/gnome/sources/intltool/
 
     * gtkdocize
