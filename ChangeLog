@@ -1,3 +1,9 @@
+2008-05-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimppaintoptions-gui.c: fix dynamics grid label
+	positions for RTL mode by attaching the fixed to the table *after*
+	the toggle buttons (eek). See comment in the code.
+
 2008-05-24  Sven Neumann  <sven@gimp.org>
 
 	* HACKING: note that we need intltool 0.35.5 or newer.

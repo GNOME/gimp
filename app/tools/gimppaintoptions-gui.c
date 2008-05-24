@@ -234,6 +234,23 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
+      pressure_options_gui (options->pressure_options,
+                            options, tool_type,
+                            GTK_TABLE (table), 1,
+                            dynamics_labels);
+
+      velocity_options_gui (options->velocity_options,
+                            options, tool_type,
+                            GTK_TABLE (table), 2);
+
+      random_options_gui (options->random_options,
+                          options, tool_type,
+                          GTK_TABLE (table), 3);
+
+      /* EEK: pack the fixed *after* the buttons so the table calls
+       * size-allocates on it *before* it places the toggles. Fixes
+       * label positions in RTL mode.
+       */
       fixed = gtk_fixed_new ();
       gtk_table_attach (GTK_TABLE (table), fixed, 0, 6, 0, 1,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -247,19 +264,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
           gtk_fixed_put (GTK_FIXED (fixed), dynamics_labels[i], 0, 0);
           gtk_widget_show (dynamics_labels[i]);
         }
-
-      pressure_options_gui (options->pressure_options,
-                            options, tool_type,
-                            GTK_TABLE (table), 1,
-                            dynamics_labels);
-
-      velocity_options_gui (options->velocity_options,
-                            options, tool_type,
-                            GTK_TABLE (table), 2);
-
-      random_options_gui (options->random_options,
-                          options, tool_type,
-                          GTK_TABLE (table), 3);
     }
 
   frame = fade_options_gui (options->fade_options,
@@ -400,12 +404,13 @@ dynamics_check_button_size_allocate (GtkWidget     *toggle,
   gint       x, y;
 
   if (gtk_widget_get_direction (label) == GTK_TEXT_DIR_LTR)
-    x = (allocation->x + allocation->width -
-         label->allocation.width - fixed->allocation.x);
+    x = allocation->x + allocation->width - label->allocation.width;
   else
-    x = allocation->x + fixed->allocation.x;
+    x = allocation->x;
 
-  y = (fixed->allocation.height - label->allocation.height);
+  x -= fixed->allocation.x;
+
+  y = fixed->allocation.height - label->allocation.height;
 
   gtk_fixed_move (GTK_FIXED (fixed), label, x, y);
 }
