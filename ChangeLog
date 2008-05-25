@@ -1,6 +1,11 @@
 2008-05-25  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpfreeselecttool.c
+	(gimp_free_select_tool_button_release): Remove invalid comment.
+
+2008-05-25  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpfreeselecttool.c
 	(gimp_free_select_tool_handle_click): A click might have slightly
 	adjusted the points, so revert before doing the selection.
 	(gimp_free_select_tool_revert_to_saved_state): Move definition up

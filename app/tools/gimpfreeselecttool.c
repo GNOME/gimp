@@ -1152,7 +1152,6 @@ gimp_free_select_tool_button_release (GimpTool              *tool,
                                                    coords,
                                                    display);
 
-      /* No need to be clever, we can cleanup even if no move was done */
       if (priv->polygon_modified)
         {
           gimp_free_select_tool_cleanup_after_move (fst);
