@@ -1,6 +1,11 @@
 2008-05-25  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpfreeselecttool.c
+	(gimp_free_select_tool_revert_to_saved_state): Name cleanup.
+
+2008-05-25  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpfreeselecttool.c
 	(gimp_free_select_tool_prepare_for_move)
 	(gimp_free_select_tool_revert_to_saved_state)
 	(gimp_free_select_tool_move_segment_vertex_to): Handle the special

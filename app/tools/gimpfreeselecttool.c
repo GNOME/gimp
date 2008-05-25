@@ -784,7 +784,7 @@ static void
 gimp_free_select_tool_revert_to_saved_state (GimpFreeSelectTool *fst)
 {
   Private     *priv = GET_PRIVATE (fst);
-  GimpVector2 *source;
+  GimpVector2 *dest;
   gint         n_points;
 
   /* Without a point grab we have no sensible information to fall back
@@ -798,12 +798,12 @@ gimp_free_select_tool_revert_to_saved_state (GimpFreeSelectTool *fst)
   if (priv->grabbed_segment_index > 0)
     {
       gimp_free_select_tool_get_segment (fst,
-                                         &source,
+                                         &dest,
                                          &n_points,
                                          priv->grabbed_segment_index - 1,
                                          priv->grabbed_segment_index);
 
-      memcpy (source,
+      memcpy (dest,
               priv->saved_points_lower_segment,
               sizeof (GimpVector2) * n_points);
     }
@@ -811,12 +811,12 @@ gimp_free_select_tool_revert_to_saved_state (GimpFreeSelectTool *fst)
   if (priv->grabbed_segment_index < priv->n_segment_indices - 1)
     {
       gimp_free_select_tool_get_segment (fst,
-                                         &source,
+                                         &dest,
                                          &n_points,
                                          priv->grabbed_segment_index,
                                          priv->grabbed_segment_index + 1);
 
-      memcpy (source,
+      memcpy (dest,
               priv->saved_points_higher_segment,
               sizeof (GimpVector2) * n_points);
     }
