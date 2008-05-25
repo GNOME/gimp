@@ -64,6 +64,7 @@ typedef struct _Private
   /* Index of grabbed segment index. */
   gint               grabbed_segment_index;
 
+  /* Wether or not button 1 is down. */
   gboolean           button1_down;
 
   /* We need to keep track of a number of points when we move a
@@ -105,6 +106,9 @@ typedef struct _Private
   /* The selection operation active when the tool was started */
   GimpChannelOps     operation_at_start;
 
+  /* Wether or not to constrain the angle for newly created polygonal
+   * segments.
+   */
   gboolean           constrain_angle;
 
   /* Wether or not to supress handles (so that new segments can be

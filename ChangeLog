@@ -1,5 +1,10 @@
 2008-05-25  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimpfreeselecttool.c: For completeness, comment on
+	some uncommented instance-private variables.
+
+2008-05-25  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimpfreeselecttool.c
 	(gimp_free_select_tool_cursor_update): Properly update the cursor.
 
