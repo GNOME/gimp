@@ -725,6 +725,14 @@ gimp_free_select_tool_move_segment_vertex_to (GimpFreeSelectTool *fst,
                                          priv->saved_points_higher_segment,
                                          n_points);
     }
+
+  /* Handle when there only is one point */
+  if (segment_index == 0 &&
+      priv->n_segment_indices == 1)
+    {
+      priv->points[0].x = new_x;
+      priv->points[0].y = new_y;
+    }
 }
 
 /**
@@ -811,6 +819,12 @@ gimp_free_select_tool_revert_to_saved_state (GimpFreeSelectTool *fst)
       memcpy (source,
               priv->saved_points_higher_segment,
               sizeof (GimpVector2) * n_points);
+    }
+
+  if (priv->grabbed_segment_index == 0 &&
+      priv->n_segment_indices     == 1)
+    {
+      priv->points[0] = *priv->saved_points_lower_segment;
     }
 }
 
@@ -938,6 +952,14 @@ gimp_free_select_tool_prepare_for_move (GimpFreeSelectTool *fst)
       memcpy (priv->saved_points_higher_segment,
               source,
               sizeof (GimpVector2) * n_points);
+    }
+
+  /* A special-case when there only is one point */
+  if (priv->grabbed_segment_index == 0 &&
+      priv->n_segment_indices     == 1)
+    {
+      priv->saved_points_lower_segment  = g_new0 (GimpVector2, 1);
+      *priv->saved_points_lower_segment = priv->points[0];
     }
 }
 
