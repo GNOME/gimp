@@ -706,55 +706,6 @@ gimp_free_select_tool_commit (GimpFreeSelectTool *fst,
 }
 
 static void
-gimp_free_select_tool_handle_click (GimpFreeSelectTool *fst,
-                                    GimpCoords         *coords,
-                                    GimpDisplay        *display)
-{
-  /*  If there is a floating selection, anchor it  */
-  if (gimp_image_floating_sel (display->image))
-    {
-      floating_sel_anchor (gimp_image_floating_sel (display->image));
-      gimp_free_select_tool_halt (fst);
-    }
-  else
-    {
-      /* First finish of the line segment if no point was grabbed */
-      if (! gimp_free_select_tool_is_point_grabbed (fst))
-        {
-          gimp_free_select_tool_finish_line_segment (fst);
-        }
-
-      /* After the segments are up to date, see if it's commiting time */
-      if (gimp_free_select_tool_should_close (fst,
-                                              display,
-                                              coords))
-        {
-          gimp_free_select_tool_commit (fst, display);
-        }
-    }
-}
-
-static void
-gimp_free_select_tool_handle_normal_release (GimpFreeSelectTool *fst,
-                                             GimpCoords         *coords,
-                                             GimpDisplay        *display)
-{
-  /* First finish of the free segment if no point was grabbed */
-  if (! gimp_free_select_tool_is_point_grabbed (fst))
-    {
-      gimp_free_select_tool_finish_free_segment (fst);
-    }
-
-  /* After the segments are up to date, see if it's commiting time */
-  if (gimp_free_select_tool_should_close (fst,
-                                          display,
-                                          coords))
-    {
-      gimp_free_select_tool_commit (fst, display);
-    }
-}
-
-static void
 gimp_free_select_tool_revert_to_saved_state (GimpFreeSelectTool *fst)
 {
   Private     *priv = GET_PRIVATE (fst);
@@ -785,6 +736,61 @@ gimp_free_select_tool_revert_to_saved_state (GimpFreeSelectTool *fst)
       memcpy (source,
               priv->saved_points_higher_segment,
               sizeof (GimpVector2) * n_points);
+    }
+}
+
+static void
+gimp_free_select_tool_handle_click (GimpFreeSelectTool *fst,
+                                    GimpCoords         *coords,
+                                    GimpDisplay        *display)
+{
+  /*  If there is a floating selection, anchor it  */
+  if (gimp_image_floating_sel (display->image))
+    {
+      floating_sel_anchor (gimp_image_floating_sel (display->image));
+      gimp_free_select_tool_halt (fst);
+    }
+  else
+    {
+      /* First finish of the line segment if no point was grabbed */
+      if (! gimp_free_select_tool_is_point_grabbed (fst))
+        {
+          gimp_free_select_tool_finish_line_segment (fst);
+        }
+
+      /* After the segments are up to date, see if it's commiting time */
+      if (gimp_free_select_tool_should_close (fst,
+                                              display,
+                                              coords))
+        {
+          /* We can get a click notification even though the end point
+           * has been moved a few pixels. Since a move will change the
+           * free selection, revert it before doing the commit.
+           */
+          gimp_free_select_tool_revert_to_saved_state (fst);
+          
+          gimp_free_select_tool_commit (fst, display);
+        }
+    }
+}
+
+static void
+gimp_free_select_tool_handle_normal_release (GimpFreeSelectTool *fst,
+                                             GimpCoords         *coords,
+                                             GimpDisplay        *display)
+{
+  /* First finish of the free segment if no point was grabbed */
+  if (! gimp_free_select_tool_is_point_grabbed (fst))
+    {
+      gimp_free_select_tool_finish_free_segment (fst);
+    }
+
+  /* After the segments are up to date, see if it's commiting time */
+  if (gimp_free_select_tool_should_close (fst,
+                                          display,
+                                          coords))
+    {
+      gimp_free_select_tool_commit (fst, display);
     }
 }
 
