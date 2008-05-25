@@ -1115,24 +1115,34 @@ gimp_free_select_tool_cursor_update (GimpTool        *tool,
 {
   GimpFreeSelectTool *fst = GIMP_FREE_SELECT_TOOL (tool);
 
-  if (gimp_free_select_tool_is_point_grabbed (fst) &&
-      ! gimp_free_select_tool_should_close (fst,
-                                            display,
-                                            NO_CLICK_TIME_AVAILABLE,
-                                            coords))
-    {
-      gimp_tool_set_cursor (tool, display,
-                            gimp_tool_control_get_cursor (tool->control),
-                            gimp_tool_control_get_tool_cursor (tool->control),
-                            GIMP_CURSOR_MODIFIER_MOVE);
-
-    }
-  else
+  if (tool->display == NULL)
     {
       GIMP_TOOL_CLASS (parent_class)->cursor_update (tool,
                                                      coords,
                                                      state,
                                                      display);
+    }
+  else
+    {
+      GimpCursorModifier modifier;
+
+      if (gimp_free_select_tool_is_point_grabbed (fst) &&
+          ! gimp_free_select_tool_should_close (fst,
+                                                display,
+                                                NO_CLICK_TIME_AVAILABLE,
+                                                coords))
+        {
+          modifier = GIMP_CURSOR_MODIFIER_MOVE;
+        }
+      else
+        {
+          modifier = GIMP_CURSOR_MODIFIER_NONE;
+        }
+
+      gimp_tool_set_cursor (tool, display,
+                            gimp_tool_control_get_cursor (tool->control),
+                            gimp_tool_control_get_tool_cursor (tool->control),
+                            modifier);
     }
 }
 

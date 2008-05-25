@@ -1,5 +1,10 @@
 2008-05-25  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimpfreeselecttool.c
+	(gimp_free_select_tool_cursor_update): Properly update the cursor.
+
+2008-05-25  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Added support for supressing handles by holding Shift in the Free
 	Select Tool so that new segments can be created where handles
 	would otherwise obstruct.
