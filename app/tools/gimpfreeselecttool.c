@@ -107,6 +107,11 @@ typedef struct _Private
 
   gboolean           constrain_angle;
 
+  /* Wether or not to supress handles (so that new segments can be
+   * created immediately after an existing segment vertex.
+   */
+  gboolean           supress_handles;
+
   /* Last _oper_update coords */
   GimpVector2        last_coords;
 
@@ -245,6 +250,7 @@ gimp_free_select_tool_init (GimpFreeSelectTool *fst)
   priv->max_n_segment_indices         = 0;
 
   priv->constrain_angle               = FALSE;
+  priv->supress_handles               = FALSE;
 
   priv->last_click_time               = NO_CLICK_TIME_AVAILABLE;
 }
@@ -369,13 +375,14 @@ gimp_free_select_tool_should_close (GimpFreeSelectTool *fst,
                      dist_from_last_point < double_click_distance;
     }
 
-  return dist < POINT_GRAB_THRESHOLD_SQ || double_click;
+  return (! priv->supress_handles && dist < POINT_GRAB_THRESHOLD_SQ) || 
+         double_click;
 }
 
 static void
-gimp_free_select_tool_select_closest_segment_point (GimpFreeSelectTool *fst,
-                                                    GimpDisplay        *display,
-                                                    GimpCoords         *coords)
+gimp_free_select_tool_handle_segment_selection (GimpFreeSelectTool *fst,
+                                                GimpDisplay        *display,
+                                                GimpCoords         *coords)
 {
   Private      *priv                  = GET_PRIVATE (fst);
   GimpDrawTool *draw_tool             = GIMP_DRAW_TOOL (fst);
@@ -383,7 +390,8 @@ gimp_free_select_tool_select_closest_segment_point (GimpFreeSelectTool *fst,
   gint          grabbed_segment_index = INVALID_INDEX;
   gint          i;
 
-  if (GIMP_TOOL (fst)->display != NULL)
+  if (GIMP_TOOL (fst)->display != NULL &&
+      ! priv->supress_handles)
     {
       for (i = 0; i < priv->n_segment_indices; i++)
         {
@@ -1034,9 +1042,9 @@ gimp_free_select_tool_oper_update (GimpTool        *tool,
   Private            *priv = GET_PRIVATE (fst);
   gboolean            hovering_first_point;
 
-  gimp_free_select_tool_select_closest_segment_point (fst,
-                                                      display,
-                                                      coords);
+  gimp_free_select_tool_handle_segment_selection (fst,
+                                                  display,
+                                                  coords);
   hovering_first_point =
     gimp_free_select_tool_should_close (fst,
                                         display,
@@ -1337,9 +1345,16 @@ gimp_free_select_tool_modifier_key (GimpTool        *tool,
                                     GdkModifierType  state,
                                     GimpDisplay     *display)
 {
-  Private *priv = GET_PRIVATE (tool);
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+  Private      *priv      = GET_PRIVATE (tool);
+
+  gimp_draw_tool_pause (draw_tool);
 
   priv->constrain_angle = state & GDK_CONTROL_MASK ? TRUE : FALSE;
+
+  priv->supress_handles = state & GDK_SHIFT_MASK   ? TRUE : FALSE;
+
+  gimp_draw_tool_resume (draw_tool);
 
   GIMP_TOOL_CLASS (parent_class)->modifier_key (tool,
                                                 key,
@@ -1363,7 +1378,8 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
                              FALSE, FALSE);
 
   /* Draw handles around segment vertices in the proximity */
-  if (! priv->button1_down)
+  if (! priv->button1_down &&
+      ! priv->supress_handles)
     {
       gint i;
 

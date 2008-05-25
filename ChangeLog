@@ -1,5 +1,25 @@
 2008-05-25  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Added support for supressing handles by holding Shift in the Free
+	Select Tool so that new segments can be created where handles
+	would otherwise obstruct.
+
+	* app/tools/gimpfreeselecttool.c
+	(gimp_free_select_tool_handle_segment_selection): Renamed, and
+	only select segment vertices if handles are not supressed.
+
+	(gimp_free_select_tool_modifier_key): Make Shift toggle supressing
+	handles.
+
+	(gimp_free_select_tool_draw): Don't draw the handles if they are
+	supressed.
+
+	(gimp_free_select_tool_should_close): Only accept distance from
+	start point as a reason to close the polygon if the handles are
+	not supressed.
+
+2008-05-25  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Added support for double-clicking in the Free Select Tool. A
 	double-click will commit the selection.
 
