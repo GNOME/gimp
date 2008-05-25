@@ -710,18 +710,27 @@ gimp_free_select_tool_handle_click (GimpFreeSelectTool *fst,
                                     GimpCoords         *coords,
                                     GimpDisplay        *display)
 {
-  /* First finish of the line segment if no point was grabbed */
-  if (! gimp_free_select_tool_is_point_grabbed (fst))
+  /*  If there is a floating selection, anchor it  */
+  if (gimp_image_floating_sel (display->image))
     {
-      gimp_free_select_tool_finish_line_segment (fst);
+      floating_sel_anchor (gimp_image_floating_sel (display->image));
+      gimp_free_select_tool_halt (fst);
     }
-
-  /* After the segments are up to date, see if it's commiting time */
-  if (gimp_free_select_tool_should_close (fst,
-                                          display,
-                                          coords))
+  else
     {
-      gimp_free_select_tool_commit (fst, display);
+      /* First finish of the line segment if no point was grabbed */
+      if (! gimp_free_select_tool_is_point_grabbed (fst))
+        {
+          gimp_free_select_tool_finish_line_segment (fst);
+        }
+
+      /* After the segments are up to date, see if it's commiting time */
+      if (gimp_free_select_tool_should_close (fst,
+                                              display,
+                                              coords))
+        {
+          gimp_free_select_tool_commit (fst, display);
+        }
     }
 }
 
@@ -841,6 +850,36 @@ gimp_free_select_tool_prepare_for_move (GimpFreeSelectTool *fst)
     }
 }
 
+static gboolean
+gimp_free_select_tool_delegate_button_press (GimpFreeSelectTool *fst,
+                                             GimpCoords         *coords,
+                                             GimpDisplay        *display)
+{
+  GimpTool *tool                   = GIMP_TOOL (fst);
+  gboolean  button_press_delegated = FALSE;
+
+  /* Only consider delegating if the tool is not active */
+  if (tool->display == NULL)
+    {
+      tool->display = display;
+      gimp_tool_control_activate (tool->control);
+
+      button_press_delegated =
+        gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (fst), coords);
+
+      if (! button_press_delegated)
+        {
+          /* Nope, the selection mask edit stuff was not interested, reset
+           * the situation
+           */
+          gimp_tool_control_halt (tool->control);
+          tool->display = NULL;
+        }
+    }
+
+  return button_press_delegated;
+}
+
 static void
 gimp_free_select_tool_status_update (GimpFreeSelectTool *fst,
                                      GimpDisplay        *display,
@@ -867,7 +906,7 @@ gimp_free_select_tool_status_update (GimpFreeSelectTool *fst,
               status_text = _("Click-Drag to move segment vertex");
             }
         }
-      else if (priv->n_points >= 3)
+      else if (priv->n_segment_indices >= 3)
         {
           status_text = _("Return commits, Escape cancels, Backspace removes last segment");
         }
@@ -963,7 +1002,18 @@ gimp_free_select_tool_oper_update (GimpTool        *tool,
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
-  gimp_free_select_tool_status_update (fst, display, coords, proximity);
+  if (tool->display == NULL)
+    {
+      GIMP_TOOL_CLASS (parent_class)->oper_update (tool,
+                                                   coords,
+                                                   state,
+                                                   proximity,
+                                                   display);
+    }
+  else
+    {
+      gimp_free_select_tool_status_update (fst, display, coords, proximity);
+    }
 }
 
 static void
@@ -1002,6 +1052,16 @@ gimp_free_select_tool_button_press (GimpTool        *tool,
   GimpDrawTool       *draw_tool = GIMP_DRAW_TOOL (tool);
   GimpFreeSelectTool *fst       = GIMP_FREE_SELECT_TOOL (tool);
   Private            *priv      = GET_PRIVATE (fst);
+
+  /* First of all handle delegation to the selection mask edit logic
+   * if appropriate
+   */
+  if (gimp_free_select_tool_delegate_button_press (fst,
+                                                   coords,
+                                                   display))
+    {
+      return;
+    }
 
   gimp_draw_tool_pause (draw_tool);
 

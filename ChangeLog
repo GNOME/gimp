@@ -1,3 +1,25 @@
+2008-05-25  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Make moving selection mask/pixels within the selection work for
+	the Free Select Tool, as well as interaction with any resulting
+	floating selection.
+
+	* app/tools/gimpfreeselecttool.c
+	(gimp_free_select_tool_handle_click): Handle floating selections.
+	(gimp_free_select_tool_status_update): Show the inital
+	instructions until there are 3 or more segment vertices, rather
+	than 3 or more points.
+
+	(gimp_free_select_tool_oper_update): When there is no active tool,
+	show selection tool status bar help messages instead of the tool
+	specific ones.
+
+	(gimp_free_select_tool_delegate_button_press): New helper function
+	to decide wether to delgate operation to the selection tool.
+
+	(gimp_free_select_tool_button_press): Handle delegation to the
+	selection tool.
+
 2008-05-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimppaintoptions-gui.c: fix dynamics grid label
