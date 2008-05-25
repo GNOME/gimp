@@ -53,6 +53,7 @@
 #define POINT_SHOW_THRESHOLD_SQ SQR(HANDLE_SIZE * 7)
 #define N_ITEMS_PER_ALLOC       1024
 #define INVALID_INDEX           (-1)
+#define NO_CLICK_TIME_AVAILABLE 0
 
 #define GET_PRIVATE(fst)  \
    (G_TYPE_INSTANCE_GET_PRIVATE ((fst), GIMP_TYPE_FREE_SELECT_TOOL, Private))
@@ -108,6 +109,12 @@ typedef struct _Private
 
   /* Last _oper_update coords */
   GimpVector2        last_coords;
+
+  /* A double-click commits the selection, keep track of last
+   * click-time and click-position.
+   */
+  guint32            last_click_time;
+  GimpCoords         last_click_coord;
 
 } Private;
 
@@ -238,6 +245,8 @@ gimp_free_select_tool_init (GimpFreeSelectTool *fst)
   priv->max_n_segment_indices         = 0;
 
   priv->constrain_angle               = FALSE;
+
+  priv->last_click_time               = NO_CLICK_TIME_AVAILABLE;
 }
 
 static void
@@ -293,14 +302,32 @@ gimp_free_select_tool_cleanup_after_move (GimpFreeSelectTool *fst)
   priv->saved_points_higher_segment = NULL;
 }
 
+static void
+gimp_free_select_tool_get_double_click_settings (gint *double_click_time,
+                                                 gint *double_click_distance)
+{
+  GdkScreen *screen = gdk_screen_get_default ();
+
+  if (screen != NULL)
+    {
+      GtkSettings *settings = gtk_settings_get_for_screen (screen);
+
+      g_object_get (settings,
+                    "gtk-double-click-time",     double_click_time,
+                    "gtk-double-click-distance", double_click_distance,
+                    NULL);
+    }
+}
 
 static gboolean
 gimp_free_select_tool_should_close (GimpFreeSelectTool *fst,
                                     GimpDisplay        *display,
+                                    guint32             time,
                                     GimpCoords         *coords)
 {
-  Private *priv = GET_PRIVATE (fst);
-  gdouble  dist;
+  Private  *priv         = GET_PRIVATE (fst);
+  gboolean  double_click = FALSE;
+  gdouble   dist         = G_MAXDOUBLE;
 
   if (priv->polygon_modified       ||
       priv->n_segment_indices <= 1 ||
@@ -314,7 +341,35 @@ gimp_free_select_tool_should_close (GimpFreeSelectTool *fst,
                                               priv->points[0].x,
                                               priv->points[0].y);
 
-  return dist < POINT_GRAB_THRESHOLD_SQ;
+  /* Handle double-click. It must be within GTK+ global double-click
+   * time since last click, and it must be within GTK+ global
+   * double-click distance away from the last point
+   */
+  if (time != NO_CLICK_TIME_AVAILABLE)
+    {
+      gint    double_click_time;
+      gint    double_click_distance;
+      gint    click_time_passed;
+      gdouble dist_from_last_point;
+
+      click_time_passed = time - priv->last_click_time;
+
+      dist_from_last_point =
+        gimp_draw_tool_calc_distance_square (GIMP_DRAW_TOOL (fst),
+                                             display,
+                                             coords->x,
+                                             coords->y,
+                                             priv->last_click_coord.x,
+                                             priv->last_click_coord.y);
+
+      gimp_free_select_tool_get_double_click_settings (&double_click_time,
+                                                       &double_click_distance);
+
+      double_click = click_time_passed    < double_click_time &&
+                     dist_from_last_point < double_click_distance;
+    }
+
+  return dist < POINT_GRAB_THRESHOLD_SQ || double_click;
 }
 
 static void
@@ -712,6 +767,14 @@ gimp_free_select_tool_revert_to_saved_state (GimpFreeSelectTool *fst)
   GimpVector2 *source;
   gint         n_points;
 
+  /* Without a point grab we have no sensible information to fall back
+   * on, bail out
+   */
+  if (! gimp_free_select_tool_is_point_grabbed (fst))
+    {
+      return;
+    }
+
   if (priv->grabbed_segment_index > 0)
     {
       gimp_free_select_tool_get_segment (fst,
@@ -742,8 +805,11 @@ gimp_free_select_tool_revert_to_saved_state (GimpFreeSelectTool *fst)
 static void
 gimp_free_select_tool_handle_click (GimpFreeSelectTool *fst,
                                     GimpCoords         *coords,
+                                    guint32             time,
                                     GimpDisplay        *display)
 {
+  Private *priv = GET_PRIVATE (fst);
+
   /*  If there is a floating selection, anchor it  */
   if (gimp_image_floating_sel (display->image))
     {
@@ -758,9 +824,12 @@ gimp_free_select_tool_handle_click (GimpFreeSelectTool *fst,
           gimp_free_select_tool_finish_line_segment (fst);
         }
 
-      /* After the segments are up to date, see if it's commiting time */
+      /* After the segments are up to date and we have handled
+       * double-click, see if it's commiting time
+       */
       if (gimp_free_select_tool_should_close (fst,
                                               display,
+                                              time,
                                               coords))
         {
           /* We can get a click notification even though the end point
@@ -771,6 +840,9 @@ gimp_free_select_tool_handle_click (GimpFreeSelectTool *fst,
           
           gimp_free_select_tool_commit (fst, display);
         }
+
+      priv->last_click_time  = time;
+      priv->last_click_coord = *coords;
     }
 }
 
@@ -788,6 +860,7 @@ gimp_free_select_tool_handle_normal_release (GimpFreeSelectTool *fst,
   /* After the segments are up to date, see if it's commiting time */
   if (gimp_free_select_tool_should_close (fst,
                                           display,
+                                          NO_CLICK_TIME_AVAILABLE,
                                           coords))
     {
       gimp_free_select_tool_commit (fst, display);
@@ -903,7 +976,10 @@ gimp_free_select_tool_status_update (GimpFreeSelectTool *fst,
 
       if (gimp_free_select_tool_is_point_grabbed (fst))
         {
-          if (gimp_free_select_tool_should_close (fst, display, coords))
+          if (gimp_free_select_tool_should_close (fst,
+                                                  display,
+                                                  NO_CLICK_TIME_AVAILABLE,
+                                                  coords))
             {
               status_text = _("Click to complete selection");
             }
@@ -964,6 +1040,7 @@ gimp_free_select_tool_oper_update (GimpTool        *tool,
   hovering_first_point =
     gimp_free_select_tool_should_close (fst,
                                         display,
+                                        NO_CLICK_TIME_AVAILABLE,
                                         coords);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
@@ -1031,7 +1108,10 @@ gimp_free_select_tool_cursor_update (GimpTool        *tool,
   GimpFreeSelectTool *fst = GIMP_FREE_SELECT_TOOL (tool);
 
   if (gimp_free_select_tool_is_point_grabbed (fst) &&
-      ! gimp_free_select_tool_should_close (fst, display, coords))
+      ! gimp_free_select_tool_should_close (fst,
+                                            display,
+                                            NO_CLICK_TIME_AVAILABLE,
+                                            coords))
     {
       gimp_tool_set_cursor (tool, display,
                             gimp_tool_control_get_cursor (tool->control),
@@ -1144,6 +1224,7 @@ gimp_free_select_tool_button_release (GimpTool              *tool,
 
       gimp_free_select_tool_handle_click (fst,
                                           coords,
+                                          time,
                                           display);
       break;
 

@@ -1,5 +1,25 @@
 2008-05-25  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Added support for double-clicking in the Free Select Tool. A
+	double-click will commit the selection.
+
+	* app/tools/gimpfreeselecttool.c
+	(gimp_free_select_tool_get_double_click_info): Helper function to
+	retrive GTK+ double-click settings.
+
+	(gimp_free_select_tool_should_close): Take double-clicking into
+	account.
+
+	(gimp_free_select_tool_revert_to_saved_state): Bail out if needed.
+
+	(gimp_free_select_tool_button_release): Pass on time when
+	clicking.
+
+	(gimp_free_select_tool_handle_click): Pass time to this function,
+	and modify it to handle double-clicks.
+
+2008-05-25  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimpfreeselecttool.c
 	(gimp_free_select_tool_button_release): Remove invalid comment.
 
