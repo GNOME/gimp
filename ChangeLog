@@ -1,3 +1,7 @@
+2008-05-26  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimp.def: added gimp_drawable_free_shadow().
+
 2008-05-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpscalebutton.c (gimp_scale_button_new): use
