@@ -1,4 +1,4 @@
-/* -*- Mode: C; c-basic-offset: 4 -*-
+/* -*- Mode: C; c-basic-offset: 3 -*-
     Gimp-Python - allows the writing of Gimp plugins in Python.
     Copyright (C) 1997-2002  James Henstridge <james@daa.com.au>
 
@@ -1778,16 +1778,16 @@ static struct _PyGimp_Functions pygimp_api_functions = {
 };
 
 
-/* Initialization function for the module (*must* be called initgimp) */
+/* Initialization function for the module (*must* be called init_gimp) */
 
 static char gimp_module_documentation[] =
 "This module provides interfaces to allow you to write gimp plugins"
 ;
 
-void initgimp(void);
+void init_gimp(void);
 
 PyMODINIT_FUNC
-initgimp(void)
+init_gimp(void)
 {
     PyObject *m;
 
@@ -1883,7 +1883,7 @@ initgimp(void)
     PyUnicode_SetDefaultEncoding("utf-8");
 
     /* Create the module and add the functions */
-    m = Py_InitModule4("gimp", gimp_methods,
+    m = Py_InitModule4("_gimp", gimp_methods,
                        gimp_module_documentation,
                        NULL, PYTHON_API_VERSION);
 

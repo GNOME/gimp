@@ -1,6 +1,6 @@
 !IFNDEF MODULE
 
-MODULES = gimp _gimpenums gimpcolor _gimpui
+MODULES = _gimp _gimpenums gimpcolor _gimpui
 
 all : sub-all
 
@@ -16,7 +16,7 @@ MODULE=$(MODULE)
 #OPTIMIZE = -Od -Op
 #DEBUG=1
 
-!IFDEF OBJ_gimp
+!IFDEF OBJ__gimp
 OBJECTS = \
   gimpmodule.obj \
   pygimp-image.obj \

@@ -1,3 +1,14 @@
+2008-05-28  Lars-Peter Clausen  <lars@metafoo.de>
+
+	Changed the 'gimp' module to folder with a __init__.py so that it is
+	able to contain submodules. Renamed the C based 'gimp' module to '_gimp'.
+	__init__.py imports all symbols from _gimp.
+
+	* plug-ins/pygimp/Makefile.am
+	* plug-ins/pygimp/makefile.msc
+	* plug-ins/pygimp/gimpmodule.c
+	* plug-ins/pygimp/__init__.py
+
 2008-05-24  Sven Neumann  <sven@gimp.org>
 
 	* HACKING: note that we need intltool 0.35.5 or newer.

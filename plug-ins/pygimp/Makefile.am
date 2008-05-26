@@ -25,11 +25,14 @@ INCLUDES = -I$(top_srcdir) $(PYTHON_INCLUDES) $(PYGTK_CFLAGS) $(GTK_CFLAGS)
 pygimpbase = python
 
 pygimpdir = $(gimpplugindir)/$(pygimpbase)
+pygimpmoduledir = $(pygimpdir)/gimp
 
-pygimp_LTLIBRARIES = gimp.la _gimpenums.la gimpcolor.la _gimpui.la \
+pygimp_LTLIBRARIES = _gimpenums.la gimpcolor.la _gimpui.la \
 	gimpthumb.la
 
-gimp_la_SOURCES = \
+pygimpmodule_LTLIBRARIES = _gimp.la
+
+_gimp_la_SOURCES = \
 	gimpmodule.c		\
 	pygimp-display.c	\
 	pygimp-drawable.c	\
@@ -43,10 +46,10 @@ gimp_la_SOURCES = \
 	pygimp-intl.h		\
 	pygimp-util.h
 
-gimp_la_LDFLAGS = -module -avoid-version $(no_undefined) \
-	-export-symbols-regex initgimp
+_gimp_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+	-export-symbols-regex init_gimp
 
-gimp_la_LIBADD = \
+_gimp_la_LIBADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
@@ -122,6 +125,9 @@ pygimp_PYTHON = \
 	gimpui.py
 
 pygimp_DATA = pygimp-logo.png
+
+pygimpmodule_PYTHON = \
+	__init__.py 
 
 codegen_files = \
 	gimpcolor-types.defs	\
