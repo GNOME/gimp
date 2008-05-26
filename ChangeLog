@@ -1,5 +1,15 @@
 2008-05-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintoptions.[ch]: replace the identical
+	GimpPressureOptions, GimpVelocityOptions and GimpRandomOptions
+	struct by a single GimpDynamicOptions struct.
+
+	* app/tools/gimppaintoptions-gui.c: don't pass the various
+	sub-structs to the _options_gui() function because they are not
+	needed.
+
+2008-05-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/gegl/gimpcolorbalanceconfig.c
 	* app/gegl/gimpcurvesconfig.c
 	* app/gegl/gimphuesaturationconfig.c

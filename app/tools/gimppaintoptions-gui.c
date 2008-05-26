@@ -51,38 +51,32 @@
 #include "gimp-intl.h"
 
 
-static gboolean    tool_has_opacity_dynamics  (GType          tool_type);
-static gboolean    tool_has_hardness_dynamics (GType          tool_type);
-static gboolean    tool_has_rate_dynamics     (GType          tool_type);
-static gboolean    tool_has_size_dynamics     (GType          tool_type);
-static gboolean    tool_has_color_dynamics    (GType          tool_type);
+static gboolean    tool_has_opacity_dynamics  (GType       tool_type);
+static gboolean    tool_has_hardness_dynamics (GType       tool_type);
+static gboolean    tool_has_rate_dynamics     (GType       tool_type);
+static gboolean    tool_has_size_dynamics     (GType       tool_type);
+static gboolean    tool_has_color_dynamics    (GType       tool_type);
 
-static void        pressure_options_gui (GimpPressureOptions *pressure,
-                                         GimpPaintOptions    *paint_options,
-                                         GType                tool_type,
-                                         GtkTable            *table,
-                                         gint                 row,
-                                         GtkWidget           *labels[]);
-static void        velocity_options_gui (GimpVelocityOptions *velocity,
-                                         GimpPaintOptions    *paint_options,
-                                         GType                tool_type,
-                                         GtkTable            *table,
-                                         gint                 row);
-static void        random_options_gui   (GimpRandomOptions   *random,
-                                         GimpPaintOptions    *paint_options,
-                                         GType                tool_type,
-                                         GtkTable            *table,
-                                         gint                 row);
-static GtkWidget * fade_options_gui     (GimpFadeOptions     *fade,
-                                         GimpPaintOptions    *paint_options,
-                                         GType                tool_type);
-static GtkWidget * gradient_options_gui (GimpGradientOptions *gradient,
-                                         GimpPaintOptions    *paint_options,
-                                         GType                tool_type,
-                                         GtkWidget           *incremental_toggle);
-static GtkWidget * jitter_options_gui   (GimpJitterOptions   *jitter,
-                                         GimpPaintOptions    *paint_options,
-                                         GType                tool_type);
+static void        pressure_options_gui (GimpPaintOptions *paint_options,
+                                         GType             tool_type,
+                                         GtkTable         *table,
+                                         gint              row,
+                                         GtkWidget        *labels[]);
+static void        velocity_options_gui (GimpPaintOptions *paint_options,
+                                         GType             tool_type,
+                                         GtkTable         *table,
+                                         gint              row);
+static void        random_options_gui   (GimpPaintOptions *paint_options,
+                                         GType             tool_type,
+                                         GtkTable         *table,
+                                         gint              row);
+static GtkWidget * fade_options_gui     (GimpPaintOptions *paint_options,
+                                         GType             tool_type);
+static GtkWidget * gradient_options_gui (GimpPaintOptions *paint_options,
+                                         GType             tool_type,
+                                         GtkWidget        *incremental_toggle);
+static GtkWidget * jitter_options_gui   (GimpPaintOptions *paint_options,
+                                         GType             tool_type);
 
 
 /*  public functions  */
@@ -234,17 +228,14 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
-      pressure_options_gui (options->pressure_options,
-                            options, tool_type,
+      pressure_options_gui (options, tool_type,
                             GTK_TABLE (table), 1,
                             dynamics_labels);
 
-      velocity_options_gui (options->velocity_options,
-                            options, tool_type,
+      velocity_options_gui (options, tool_type,
                             GTK_TABLE (table), 2);
 
-      random_options_gui (options->random_options,
-                          options, tool_type,
+      random_options_gui (options, tool_type,
                           GTK_TABLE (table), 3);
 
       /* EEK: pack the fixed *after* the buttons so the table calls
@@ -266,16 +257,14 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
         }
     }
 
-  frame = fade_options_gui (options->fade_options,
-                            options, tool_type);
+  frame = fade_options_gui (options, tool_type);
   if (frame)
     {
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
     }
 
-  frame = jitter_options_gui (options->jitter_options,
-                              options, tool_type);
+  frame = jitter_options_gui (options, tool_type);
   if (frame)
     {
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -311,8 +300,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (button);
     }
 
-  frame = gradient_options_gui (options->gradient_options,
-                                options, tool_type,
+  frame = gradient_options_gui (options, tool_type,
                                 incremental_toggle);
   if (frame)
     {
@@ -416,12 +404,11 @@ dynamics_check_button_size_allocate (GtkWidget     *toggle,
 }
 
 static void
-pressure_options_gui (GimpPressureOptions *pressure,
-                      GimpPaintOptions    *paint_options,
-                      GType                tool_type,
-                      GtkTable            *table,
-                      gint                 row,
-                      GtkWidget           *labels[])
+pressure_options_gui (GimpPaintOptions *paint_options,
+                      GType             tool_type,
+                      GtkTable         *table,
+                      gint              row,
+                      GtkWidget        *labels[])
 {
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *button;
@@ -484,11 +471,10 @@ pressure_options_gui (GimpPressureOptions *pressure,
 }
 
 static void
-velocity_options_gui (GimpVelocityOptions *velocity,
-                      GimpPaintOptions    *paint_options,
-                      GType                tool_type,
-                      GtkTable            *table,
-                      gint                 row)
+velocity_options_gui (GimpPaintOptions *paint_options,
+                      GType             tool_type,
+                      GtkTable         *table,
+                      gint              row)
 {
   GObject *config = G_OBJECT (paint_options);
   gint     column = 1;
@@ -525,11 +511,10 @@ velocity_options_gui (GimpVelocityOptions *velocity,
 }
 
 static void
-random_options_gui (GimpRandomOptions *random,
-                    GimpPaintOptions  *paint_options,
-                    GType              tool_type,
-                    GtkTable          *table,
-                    gint               row)
+random_options_gui (GimpPaintOptions *paint_options,
+                    GType             tool_type,
+                    GtkTable         *table,
+                    gint              row)
 {
   GObject*config = G_OBJECT (paint_options);
   gint    column = 1;
@@ -566,8 +551,7 @@ random_options_gui (GimpRandomOptions *random,
 }
 
 static GtkWidget *
-fade_options_gui (GimpFadeOptions  *fade,
-                  GimpPaintOptions *paint_options,
+fade_options_gui (GimpPaintOptions *paint_options,
                   GType             tool_type)
 {
   GObject   *config = G_OBJECT (paint_options);
@@ -609,9 +593,8 @@ fade_options_gui (GimpFadeOptions  *fade,
 }
 
 static GtkWidget *
-jitter_options_gui (GimpJitterOptions  *jitter,
-                    GimpPaintOptions   *paint_options,
-                    GType               tool_type)
+jitter_options_gui (GimpPaintOptions *paint_options,
+                    GType             tool_type)
 {
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame  = NULL;
@@ -638,10 +621,9 @@ jitter_options_gui (GimpJitterOptions  *jitter,
 }
 
 static GtkWidget *
-gradient_options_gui (GimpGradientOptions *gradient,
-                      GimpPaintOptions    *paint_options,
-                      GType                tool_type,
-                      GtkWidget           *incremental_toggle)
+gradient_options_gui (GimpPaintOptions *paint_options,
+                      GType             tool_type,
+                      GtkWidget        *incremental_toggle)
 {
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame  = NULL;
@@ -665,7 +647,7 @@ gradient_options_gui (GimpGradientOptions *gradient,
       if (incremental_toggle)
         {
           gtk_widget_set_sensitive (incremental_toggle,
-                                    ! gradient->use_gradient);
+                                    ! paint_options->gradient_options->use_gradient);
           g_object_set_data (G_OBJECT (button), "inverse_sensitive",
                              incremental_toggle);
         }

@@ -30,34 +30,12 @@
                                         GIMP_CONTEXT_BRUSH_MASK
 
 
-typedef struct _GimpPressureOptions GimpPressureOptions;
-typedef struct _GimpVelocityOptions GimpVelocityOptions;
-typedef struct _GimpRandomOptions   GimpRandomOptions;
+typedef struct _GimpDynamicOptions  GimpDynamicOptions;
 typedef struct _GimpFadeOptions     GimpFadeOptions;
 typedef struct _GimpJitterOptions   GimpJitterOptions;
 typedef struct _GimpGradientOptions GimpGradientOptions;
 
-struct _GimpPressureOptions
-{
-  gboolean  opacity;
-  gboolean  hardness;
-  gboolean  rate;
-  gboolean  size;
-  gboolean  inverse_size;
-  gboolean  color;
-};
-
-struct _GimpVelocityOptions
-{
-  gboolean  opacity;
-  gboolean  hardness;
-  gboolean  rate;
-  gboolean  size;
-  gboolean  inverse_size;
-  gboolean  color;
-};
-
-struct _GimpRandomOptions
+struct _GimpDynamicOptions
 {
   gboolean  opacity;
   gboolean  hardness;
@@ -116,9 +94,9 @@ struct _GimpPaintOptions
   gboolean                  hard;
 
   gboolean                  dynamics_expanded;
-  GimpPressureOptions      *pressure_options;
-  GimpVelocityOptions      *velocity_options;
-  GimpRandomOptions        *random_options;
+  GimpDynamicOptions        *pressure_options;
+  GimpDynamicOptions        *velocity_options;
+  GimpDynamicOptions        *random_options;
 
   GimpFadeOptions          *fade_options;
   GimpJitterOptions        *jitter_options;

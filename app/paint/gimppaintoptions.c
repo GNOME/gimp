@@ -348,9 +348,9 @@ gimp_paint_options_init (GimpPaintOptions *options)
 {
   options->application_mode_save = DEFAULT_APPLICATION_MODE;
 
-  options->pressure_options = g_slice_new0 (GimpPressureOptions);
-  options->velocity_options = g_slice_new0 (GimpVelocityOptions);
-  options->random_options   = g_slice_new0 (GimpRandomOptions);
+  options->pressure_options = g_slice_new0 (GimpDynamicOptions);
+  options->velocity_options = g_slice_new0 (GimpDynamicOptions);
+  options->random_options   = g_slice_new0 (GimpDynamicOptions);
   options->fade_options     = g_slice_new0 (GimpFadeOptions);
   options->jitter_options   = g_slice_new0 (GimpJitterOptions);
   options->gradient_options = g_slice_new0 (GimpGradientOptions);
@@ -364,9 +364,9 @@ gimp_paint_options_finalize (GObject *object)
   if (options->paint_info)
     g_object_unref (options->paint_info);
 
-  g_slice_free (GimpPressureOptions, options->pressure_options);
-  g_slice_free (GimpVelocityOptions, options->velocity_options);
-  g_slice_free (GimpRandomOptions,   options->random_options);
+  g_slice_free (GimpDynamicOptions,  options->pressure_options);
+  g_slice_free (GimpDynamicOptions,  options->velocity_options);
+  g_slice_free (GimpDynamicOptions,  options->random_options);
   g_slice_free (GimpFadeOptions,     options->fade_options);
   g_slice_free (GimpJitterOptions,   options->jitter_options);
   g_slice_free (GimpGradientOptions, options->gradient_options);
@@ -381,9 +381,9 @@ gimp_paint_options_set_property (GObject      *object,
                                  GParamSpec   *pspec)
 {
   GimpPaintOptions    *options          = GIMP_PAINT_OPTIONS (object);
-  GimpPressureOptions *pressure_options = options->pressure_options;
-  GimpVelocityOptions *velocity_options = options->velocity_options;
-  GimpRandomOptions   *random_options   = options->random_options;
+  GimpDynamicOptions  *pressure_options = options->pressure_options;
+  GimpDynamicOptions  *velocity_options = options->velocity_options;
+  GimpDynamicOptions  *random_options   = options->random_options;
   GimpFadeOptions     *fade_options     = options->fade_options;
   GimpJitterOptions   *jitter_options   = options->jitter_options;
   GimpGradientOptions *gradient_options = options->gradient_options;
@@ -532,9 +532,9 @@ gimp_paint_options_get_property (GObject    *object,
                                  GParamSpec *pspec)
 {
   GimpPaintOptions    *options          = GIMP_PAINT_OPTIONS (object);
-  GimpPressureOptions *pressure_options = options->pressure_options;
-  GimpVelocityOptions *velocity_options = options->velocity_options;
-  GimpRandomOptions   *random_options   = options->random_options;
+  GimpDynamicOptions  *pressure_options = options->pressure_options;
+  GimpDynamicOptions  *velocity_options = options->velocity_options;
+  GimpDynamicOptions  *random_options   = options->random_options;
   GimpFadeOptions     *fade_options     = options->fade_options;
   GimpJitterOptions   *jitter_options   = options->jitter_options;
   GimpGradientOptions *gradient_options = options->gradient_options;
