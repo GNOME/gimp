@@ -50,6 +50,11 @@ GtkWidget * gimp_prop_color_button_new    (GObject     *config,
                                            GimpColorAreaType  type);
 
 
+/*  GParamDouble  */
+GtkWidget * gimp_prop_scale_button_new    (GObject     *config,
+                                           const gchar *property_name);
+
+
 /*  GParamObject (GimpViewable)  */
 
 GtkWidget * gimp_prop_view_new            (GObject     *config,
