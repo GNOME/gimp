@@ -111,11 +111,17 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
 }
 
 GtkWidget *
-gimp_scale_button_new (gdouble min,
-                       gdouble max,
-                       gdouble step)
+gimp_scale_button_new (gdouble value,
+                       gdouble min,
+                       gdouble max)
 {
-  GtkObject *adj = gtk_adjustment_new (min, min, max, step, step, 0);
+  GtkObject *adj;
+  gdouble    step;
+
+  g_return_val_if_fail (value >= min && value <= max, NULL);
+
+  step = (max - min) / 10.0;
+  adj  = gtk_adjustment_new (value, min, max, step, step, 0);
 
   return g_object_new (GIMP_TYPE_SCALE_BUTTON,
                        "adjustment", adj,

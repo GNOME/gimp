@@ -366,8 +366,6 @@ gimp_prop_scale_button_new (GObject     *config,
   GParamSpec *param_spec;
   GtkWidget  *button;
   gdouble     value;
-  gdouble     min;
-  gdouble     max;
 
   param_spec = check_param_spec_w (config, property_name,
                                    G_TYPE_PARAM_DOUBLE, G_STRFUNC);
@@ -379,12 +377,9 @@ gimp_prop_scale_button_new (GObject     *config,
                 param_spec->name, &value,
                 NULL);
 
-  min = G_PARAM_SPEC_DOUBLE (param_spec)->minimum;
-  max = G_PARAM_SPEC_DOUBLE (param_spec)->maximum;
-
-  button = gimp_scale_button_new (min, max, (max - min) / 10.0);
-
-  gtk_scale_button_set_value (GTK_SCALE_BUTTON (button), value);
+  button = gimp_scale_button_new (value,
+                                  G_PARAM_SPEC_DOUBLE (param_spec)->minimum,
+                                  G_PARAM_SPEC_DOUBLE (param_spec)->maximum);
 
   set_param_spec (G_OBJECT (button), button, param_spec);
 

@@ -46,9 +46,9 @@ struct _GimpScaleButtonClass
 
 GType       gimp_scale_button_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_scale_button_new      (gdouble min,
-                                        gdouble max,
-                                        gdouble step);
+GtkWidget * gimp_scale_button_new      (gdouble value,
+                                        gdouble min,
+                                        gdouble max);
 
 
 #endif  /* __GIMP_SCALE_BUTTON_H__ */
