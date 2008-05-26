@@ -1,5 +1,23 @@
 2008-05-26  Michael Natterer  <mitch@gimp.org>
 
+	Applied modified patch from Alexia Death. Addresses bug #534770:
+
+	* app/paint/gimppaintoptions.[ch]: add properties for scaling
+	the effects of pressure, velocity and hardness and honor them
+	in the various get_dynamic_foo() functions.
+
+	(gimp_paint_options_get_dynamic_size): look at
+	pressure_options->size again, that code got lost in one of the
+	earlier patches.
+
+	* app/tools/gimppaintoptions-gui.c: add GimpScaleButtons to the
+	table for the new properties.
+
+	* app/display/gimpdisplayshell-coords.c: don't let "velocity"
+	reach 1.0, use 0.9999 instead.
+
+2008-05-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimppaintoptions-gui.c: remove unused includes.
 
 2008-05-26  Michael Natterer  <mitch@gimp.org>

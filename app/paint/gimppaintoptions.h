@@ -43,6 +43,7 @@ struct _GimpDynamicOptions
   gboolean  size;
   gboolean  inverse_size;
   gboolean  color;
+  gdouble   prescale;
 };
 
 struct _GimpFadeOptions

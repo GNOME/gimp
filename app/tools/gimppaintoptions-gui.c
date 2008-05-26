@@ -204,7 +204,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_container_add (GTK_CONTAINER (frame), inner_frame);
       gtk_widget_show (inner_frame);
 
-      table = gtk_table_new (4, n_dynamics + 1, FALSE);
+      table = gtk_table_new (4, n_dynamics + 2, FALSE);
       gtk_container_add (GTK_CONTAINER (inner_frame), table);
       gtk_widget_show (table);
 
@@ -411,6 +411,7 @@ pressure_options_gui (GimpPaintOptions *paint_options,
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *button;
   gint       column = 1;
+  GtkWidget *scalebutton;
 
   if (tool_has_opacity_dynamics (tool_type))
     {
@@ -466,6 +467,11 @@ pressure_options_gui (GimpPaintOptions *paint_options,
                         labels[column - 1]);
       column++;
     }
+
+   scalebutton = gimp_prop_scale_button_new (config, "pressure-prescale");
+   gtk_table_attach (table, scalebutton, column, column + 1, row, row + 1,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+   gtk_widget_show (scalebutton);
 }
 
 static void
@@ -474,8 +480,9 @@ velocity_options_gui (GimpPaintOptions *paint_options,
                       GtkTable         *table,
                       gint              row)
 {
-  GObject *config = G_OBJECT (paint_options);
-  gint     column = 1;
+  GObject   *config = G_OBJECT (paint_options);
+  gint       column = 1;
+  GtkWidget *scalebutton;
 
   if (tool_has_opacity_dynamics (tool_type))
     {
@@ -506,6 +513,11 @@ velocity_options_gui (GimpPaintOptions *paint_options,
       dynamics_check_button_new (config, "velocity-color",
                                  table, column++, row);
     }
+
+  scalebutton = gimp_prop_scale_button_new (config, "velocity-prescale");
+  gtk_table_attach (table, scalebutton, column, column + 1, row, row + 1,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (scalebutton);
 }
 
 static void
@@ -514,8 +526,9 @@ random_options_gui (GimpPaintOptions *paint_options,
                     GtkTable         *table,
                     gint              row)
 {
-  GObject*config = G_OBJECT (paint_options);
-  gint    column = 1;
+  GObject   *config = G_OBJECT (paint_options);
+  gint       column = 1;
+  GtkWidget *scalebutton;
 
   if (tool_has_opacity_dynamics (tool_type))
     {
@@ -546,6 +559,11 @@ random_options_gui (GimpPaintOptions *paint_options,
       dynamics_check_button_new (config, "random-color",
                                  table, column++, row);
     }
+
+   scalebutton = gimp_prop_scale_button_new (config, "random-prescale");
+   gtk_table_attach (table, scalebutton, column, column + 1, row, row + 1,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+   gtk_widget_show (scalebutton);
 }
 
 static GtkWidget *
