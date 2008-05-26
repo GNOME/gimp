@@ -65,9 +65,9 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
   gint           steps;
   gint           i;
 
-  adj = gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
-
   steps = MIN (widget->allocation.width, widget->allocation.height) / 2;
+
+  adj = gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
 
   if (steps < 1)
     return TRUE;
@@ -80,10 +80,12 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
   gdk_cairo_rectangle (cr, &event->area);
   cairo_clip (cr);
 
-  cairo_set_line_width (cr, 1.0);
+  cairo_set_line_width (cr, 0.5);
 
-  cairo_translate (cr, widget->allocation.x + 0.5, widget->allocation.y + 0.5);
-  cairo_scale (cr, 1.0, -2.0);
+  cairo_translate (cr,
+                   widget->allocation.x + 0.5,
+                   widget->allocation.y + widget->allocation.height + 0.5);
+  cairo_scale (cr, 2.0, -2.0);
 
   for (i = 0; i < value; i++)
     {
@@ -100,7 +102,7 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
       cairo_line_to (cr, i, i);
     }
 
-  gdk_cairo_set_source_color (cr, &widget->style->light[widget->state]);
+  gdk_cairo_set_source_color (cr, &widget->style->fg[GTK_STATE_INSENSITIVE]);
   cairo_stroke (cr);
 
   cairo_destroy (cr);
