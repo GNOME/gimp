@@ -341,6 +341,7 @@ gimp_prop_color_button_notify (GObject    *config,
 /******************/
 
 static void   gimp_prop_scale_button_callback (GtkWidget  *widget,
+                                               gdouble     value,
                                                GObject    *config);
 static void   gimp_prop_scale_button_notify   (GObject    *config,
                                                GParamSpec *param_spec,
@@ -403,23 +404,21 @@ gimp_prop_scale_button_new (GObject     *config,
 
 static void
 gimp_prop_scale_button_callback (GtkWidget *button,
+                                 gdouble    value,
                                  GObject   *config)
 {
   GParamSpec *param_spec;
-  gdouble     value;
 
   param_spec = get_param_spec (G_OBJECT (button));
   if (! param_spec)
     return;
-
-  value = gtk_scale_button_get_value (GTK_SCALE_BUTTON (button));
 
   g_signal_handlers_block_by_func (config,
                                    gimp_prop_scale_button_notify,
                                    button);
 
   g_object_set (config,
-                param_spec->name, &value,
+                param_spec->name, value,
                 NULL);
 
   g_signal_handlers_unblock_by_func (config,
