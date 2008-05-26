@@ -83,32 +83,32 @@ _ = t.ugettext
 class error(RuntimeError): pass
 class CancelError(RuntimeError): pass
 
-PF_INT8        = PDB_INT8
-PF_INT16       = PDB_INT16
-PF_INT32       = PDB_INT32
+PF_INT8        = int(PDB_INT8)
+PF_INT16       = int(PDB_INT16)
+PF_INT32       = int(PDB_INT32)
 PF_INT         = PF_INT32
-PF_FLOAT       = PDB_FLOAT
-PF_STRING      = PDB_STRING
+PF_FLOAT       = int(PDB_FLOAT)
+PF_STRING      = int(PDB_STRING)
 PF_VALUE       = PF_STRING
-#PF_INT8ARRAY   = PDB_INT8ARRAY
-#PF_INT16ARRAY  = PDB_INT16ARRAY
-#PF_INT32ARRAY  = PDB_INT32ARRAY
+#PF_INT8ARRAY   = int(PDB_INT8ARRAY)
+#PF_INT16ARRAY  = int(PDB_INT16ARRAY)
+#PF_INT32ARRAY  = int(PDB_INT32ARRAY)
 #PF_INTARRAY    = PF_INT32ARRAY
-#PF_FLOATARRAY  = PDB_FLOATARRAY
-#PF_STRINGARRAY = PDB_STRINGARRAY
-PF_COLOR       = PDB_COLOR
+#PF_FLOATARRAY  = int(PDB_FLOATARRAY)
+#PF_STRINGARRAY = int(PDB_STRINGARRAY)
+PF_COLOR       = int(PDB_COLOR)
 PF_COLOUR      = PF_COLOR
-PF_REGION      = PDB_REGION
-PF_DISPLAY     = PDB_DISPLAY
-PF_IMAGE       = PDB_IMAGE
-PF_LAYER       = PDB_LAYER
-PF_CHANNEL     = PDB_CHANNEL
-PF_DRAWABLE    = PDB_DRAWABLE
-PF_VECTORS     = PDB_VECTORS
-#PF_SELECTION   = PDB_SELECTION
-#PF_BOUNDARY    = PDB_BOUNDARY
-#PF_PATH        = PDB_PATH
-#PF_STATUS      = PDB_STATUS
+PF_REGION      = int(PDB_REGION)
+PF_DISPLAY     = int(PDB_DISPLAY)
+PF_IMAGE       = int(PDB_IMAGE)
+PF_LAYER       = int(PDB_LAYER)
+PF_CHANNEL     = int(PDB_CHANNEL)
+PF_DRAWABLE    = int(PDB_DRAWABLE)
+PF_VECTORS     = int(PDB_VECTORS)
+#PF_SELECTION   = int(PDB_SELECTION)
+#PF_BOUNDARY    = int(PDB_BOUNDARY)
+#PF_PATH        = int(PDB_PATH)
+#PF_STATUS      = int(PDB_STATUS)
 
 PF_TOGGLE      = 1000
 PF_BOOL        = PF_TOGGLE
@@ -237,7 +237,7 @@ def register(proc_name, blurb, help, author, copyright, date, label,
             raise error, ("result definition must contain at least 3 elements "
                           "(%s given: %s)" % (len(ent), ent))
 
-        if type(ent[0]) != type(42):
+        if type(ent[0]) != int:
             raise error, "result types must be integers"
 
         if not letterCheck(ent[1]):

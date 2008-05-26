@@ -1,5 +1,10 @@
 2008-05-26  Lars-Peter Clausen  <lars@metafoo.de>
 
+	* plug-ins/pygimp/gimpfu.py: Convert PDB_* enums to int when assigned
+	to PB_* constants
+
+2008-05-26  Lars-Peter Clausen  <lars@metafoo.de>
+
 	* plug-ins/pygimp/gimpenumsmodule.c: Use GEnum objects rather then
 	integer values for enums
 	* plug-ins/pygimp/ pygimp-pdb.c:
