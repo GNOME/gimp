@@ -239,6 +239,8 @@ libappwidgets_a_sources = \
 	gimprender.h			\
 	gimpsamplepointeditor.c		\
 	gimpsamplepointeditor.h		\
+	gimpscalebutton.c		\
+	gimpscalebutton.h		\
 	gimpselectiondata.c		\
 	gimpselectiondata.h		\
 	gimpselectioneditor.c		\

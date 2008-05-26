@@ -1,5 +1,12 @@
 2008-05-26  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpscalebutton.[ch]: added simple scale button widget
+	derived from GtkScaleButton.
+
+2008-05-26  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/jpeg/jpeg-save.c (save_image): fixed logic that decides
 	if an EXIF block should be written (bug #529469).
 
