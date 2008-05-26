@@ -1,5 +1,25 @@
 2008-05-26  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetstypes.h
+
+	* libgimpwidgets/gimpruler.[ch]
+	* libgimpwidgets/gimphruler.[ch]
+	* libgimpwidgets/gimpvruler.[ch]: added ruler widgets. These are
+	mostly copied from GTK+ and work as a drop-in replacement for
+	GtkRuler and friends.
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/dialogs/resolution-calibrate-dialog.c
+	* plug-ins/imagemap/imap_preview.c
+	* plug-ins/gfig/gfig-preview.c: use the GimpRuler widgets.
+
+2008-05-26  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimp.def: added gimp_drawable_free_shadow().
 
 2008-05-26  Michael Natterer  <mitch@gimp.org>

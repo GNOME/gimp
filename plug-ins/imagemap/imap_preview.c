@@ -411,9 +411,9 @@ static void
 scroll_adj_changed (GtkAdjustment *adj,
                     GtkRuler      *ruler)
 {
-  gtk_ruler_set_range (ruler,
-                       adj->value, adj->value + adj->page_size,
-                       G_MAXDOUBLE, adj->page_size);
+  gimp_ruler_set_range (ruler,
+                        adj->value, adj->value + adj->page_size,
+                        G_MAXDOUBLE, adj->page_size);
 }
 
 Preview_t*
@@ -474,7 +474,7 @@ make_preview(GimpDrawable *drawable)
    gtk_widget_show(arrow);
 
    /* Create horizontal ruler */
-   data->hruler = ruler = gtk_hruler_new();
+   data->hruler = ruler = gimp_hruler_new();
    g_signal_connect_swapped(preview, "motion-notify-event",
 			    G_CALLBACK(GTK_WIDGET_GET_CLASS(ruler)->motion_notify_event),
 			    ruler);
@@ -484,7 +484,7 @@ make_preview(GimpDrawable *drawable)
    gtk_widget_show(ruler);
 
    /* Create vertical ruler */
-   data->vruler = ruler = gtk_vruler_new();
+   data->vruler = ruler = gimp_vruler_new();
    g_signal_connect_swapped(preview, "motion-notify-event",
 			    G_CALLBACK(GTK_WIDGET_GET_CLASS(ruler)->motion_notify_event),
 			    ruler);

@@ -99,8 +99,8 @@ make_preview (void)
                     GTK_FILL , GTK_FILL , 0, 0);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  ruler = gtk_hruler_new ();
-  gtk_ruler_set_range (GTK_RULER (ruler), 0, preview_width, 0, PREVIEW_SIZE);
+  ruler = gimp_hruler_new ();
+  gimp_ruler_set_range (GIMP_RULER (ruler), 0, preview_width, 0, PREVIEW_SIZE);
   g_signal_connect_swapped (gfig_context->preview, "motion-notify-event",
                             G_CALLBACK (GTK_WIDGET_CLASS (G_OBJECT_GET_CLASS (ruler))->motion_notify_event),
                             ruler);
@@ -108,8 +108,8 @@ make_preview (void)
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ruler);
 
-  ruler = gtk_vruler_new ();
-  gtk_ruler_set_range (GTK_RULER (ruler), 0, preview_height, 0, PREVIEW_SIZE);
+  ruler = gimp_vruler_new ();
+  gimp_ruler_set_range (GIMP_RULER (ruler), 0, preview_height, 0, PREVIEW_SIZE);
   g_signal_connect_swapped (gfig_context->preview, "motion-notify-event",
                             G_CALLBACK (GTK_WIDGET_CLASS (G_OBJECT_GET_CLASS (ruler))->motion_notify_event),
                             ruler);

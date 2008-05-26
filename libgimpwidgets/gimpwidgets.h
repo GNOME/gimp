@@ -54,6 +54,7 @@
 #include <libgimpwidgets/gimpframe.h>
 #include <libgimpwidgets/gimphelpui.h>
 #include <libgimpwidgets/gimphintbox.h>
+#include <libgimpwidgets/gimphruler.h>
 #include <libgimpwidgets/gimpintcombobox.h>
 #include <libgimpwidgets/gimpintstore.h>
 #include <libgimpwidgets/gimpmemsizeentry.h>
@@ -67,12 +68,14 @@
 #include <libgimpwidgets/gimppreviewarea.h>
 #include <libgimpwidgets/gimppropwidgets.h>
 #include <libgimpwidgets/gimpquerybox.h>
+#include <libgimpwidgets/gimpruler.h>
 #include <libgimpwidgets/gimpscaleentry.h>
 #include <libgimpwidgets/gimpscrolledpreview.h>
 #include <libgimpwidgets/gimpsizeentry.h>
 #include <libgimpwidgets/gimpstock.h>
 #include <libgimpwidgets/gimpstringcombobox.h>
 #include <libgimpwidgets/gimpunitmenu.h>
+#include <libgimpwidgets/gimpvruler.h>
 #include <libgimpwidgets/gimpzoommodel.h>
 
 #include <libgimpwidgets/gimpoldwidgets.h>
