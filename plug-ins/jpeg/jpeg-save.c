@@ -268,11 +268,6 @@ save_image (const gchar *filename,
   gboolean  has_alpha;
   gint      rowstride, yend;
   gint      i, j;
-#ifdef HAVE_EXIF
-  guchar   *thumbnail_buffer        = NULL;
-  gint      thumbnail_buffer_length = 0;
-  ExifData *exif_data_tmp           = NULL;
-#endif
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
@@ -503,11 +498,14 @@ save_image (const gchar *filename,
 #ifdef HAVE_EXIF
 
   /* Create the thumbnail JPEG in a buffer */
-  if (jsvals.save_exif || jsvals.save_thumbnail)
+  if ((jsvals.save_exif && exif_data) || jsvals.save_thumbnail)
     {
-      guchar *exif_buf = NULL;
-      guint   exif_buf_len;
-      gdouble quality  = MIN (75.0, jsvals.quality);
+      ExifData *exif_data_tmp           = NULL;
+      guchar   *exif_buf                = NULL;
+      guchar   *thumbnail_buffer        = NULL;
+      gint      thumbnail_buffer_length = 0;
+      guint     exif_buf_len;
+      gdouble   quality                 = MIN (75.0, jsvals.quality);
 
       if ( (! jsvals.save_exif) || (! exif_data))
         exif_data_tmp = exif_data_new ();
