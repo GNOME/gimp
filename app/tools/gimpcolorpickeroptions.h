@@ -39,7 +39,6 @@ struct _GimpColorPickerOptions
   GimpColorOptions   parent_instance;
 
   GimpColorPickMode  pick_mode;
-  gboolean           add_to_palette; /* unused */
   gboolean           use_info_window;
 };
 

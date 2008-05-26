@@ -77,12 +77,7 @@ enum
   PROP_TOOLBOX_WINDOW_HINT,
   PROP_DOCK_WINDOW_HINT,
   PROP_TRANSIENT_DOCKS,
-  PROP_CURSOR_FORMAT,
-
-  /* ignored, only for backward compatibility: */
-  PROP_INFO_WINDOW_PER_DISPLAY,
-  PROP_SHOW_TOOL_TIPS,
-  PROP_SHOW_TIPS
+  PROP_CURSOR_FORMAT
 };
 
 
@@ -252,24 +247,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  GIMP_TYPE_CURSOR_FORMAT,
                                  GIMP_CURSOR_FORMAT_PIXBUF,
                                  GIMP_PARAM_STATIC_STRINGS);
-
-  /*  only for backward compatibility:  */
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INFO_WINDOW_PER_DISPLAY,
-                                    "info-window-per-display",
-                                    NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_IGNORE);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TOOL_TIPS,
-                                    "show-tool-tips", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_IGNORE);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TIPS,
-                                    "show-tips", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void
@@ -392,12 +369,6 @@ gimp_gui_config_set_property (GObject      *object,
       gui_config->cursor_format = g_value_get_enum (value);
       break;
 
-    case PROP_INFO_WINDOW_PER_DISPLAY:
-    case PROP_SHOW_TOOL_TIPS:
-    case PROP_SHOW_TIPS:
-      /* ignored */
-      break;
-
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -500,12 +471,6 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_CURSOR_FORMAT:
       g_value_set_enum (value, gui_config->cursor_format);
-      break;
-
-    case PROP_INFO_WINDOW_PER_DISPLAY:
-    case PROP_SHOW_TOOL_TIPS:
-    case PROP_SHOW_TIPS:
-      /* ignored */
       break;
 
     default:

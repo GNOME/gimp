@@ -1,3 +1,11 @@
+2008-05-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpbaseconfig.c
+	* app/config/gimpguiconfig.c
+	* app/tools/gimpcolorpickeroptions.[ch]: remove unused compat
+	properties because the config parser silently skips unknown
+	properties now.
+
 2008-05-26  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimppropwidgets.c
