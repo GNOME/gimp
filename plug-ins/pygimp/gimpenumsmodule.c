@@ -100,7 +100,7 @@ add_registered_enums(PyObject *m)
     pyg_enum_add_constants(m, GIMP_TYPE_CHECK_TYPE, "GIMP_");
 
     for (i = 0; i < num_names; i++)
-	pyg_enum_add_constants(m, g_type_from_name(names[i]), "GIMP_");
+	pyg_enum_add(m, names[i], "GIMP_", g_type_from_name(names[i]));
 }
 
 

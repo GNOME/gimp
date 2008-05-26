@@ -1,4 +1,19 @@
-2008-05-28  Lars-Peter Clausen  <lars@metafoo.de>
+2008-05-26  Lars-Peter Clausen  <lars@metafoo.de>
+
+	* plug-ins/pygimp/gimpenumsmodule.c: Use GEnum objects rather then
+	integer values for enums
+	* plug-ins/pygimp/ pygimp-pdb.c:
+	Added docstrings for the properties of a GimpPDBFunction object.
+	(pygimp_pdb_function_new): Set the docstring of a GimpPDBFunction
+	object to proc_help.
+	When gimpenums is available set the type of the arguments to a
+	GimpPDBArgType enum instead of a integer value.
+	(pdb_getattro): Fix a bug where a pdb object returned a list of all pdb
+	functions instead of the actual value for all properties starting with
+	a underscore.
+	
+
+2008-05-26  Lars-Peter Clausen  <lars@metafoo.de>
 
 	Changed the 'gimp' module to folder with a __init__.py so that it is
 	able to contain submodules. Renamed the C based 'gimp' module to '_gimp'.

@@ -677,7 +677,7 @@ pdb_getattro(PyGimpPDB *self, PyObject *attr)
     }
 
     if (attr_name[0] == '_') {
-        if (strcmp(attr_name, "__members__")) {
+        if (strcmp(attr_name, "__members__") == 0) {
             return build_procedure_list();
         } else {
             return PyObject_GenericGetAttr((PyObject *)self, attr);
@@ -785,17 +785,36 @@ pf_dealloc(PyGimpPDBFunction *self)
 
 #define OFF(x) offsetof(PyGimpPDBFunction, x)
 static struct PyMemberDef pf_members[] = {
-    {"proc_name",      T_OBJECT, OFF(proc_name),      RO},
-    {"proc_blurb",     T_OBJECT, OFF(proc_blurb),     RO},
-    {"proc_help",      T_OBJECT, OFF(proc_help),      RO},
-    {"proc_author",    T_OBJECT, OFF(proc_author),    RO},
-    {"proc_copyright", T_OBJECT, OFF(proc_copyright), RO},
-    {"proc_date",      T_OBJECT, OFF(proc_date),      RO},
-    {"proc_type",      T_OBJECT, OFF(proc_type),      RO},
-    {"nparams",        T_INT,    OFF(nparams),        RO},
-    {"nreturn_vals",   T_INT,    OFF(nreturn_vals),   RO},
-    {"params",         T_OBJECT, OFF(py_params),      RO},
-    {"return_vals",    T_OBJECT, OFF(py_return_vals), RO},
+    {"proc_name",      T_OBJECT, OFF(proc_name),      RO,
+     "The name of the procedure."},
+    {"proc_blurb",     T_OBJECT, OFF(proc_blurb),     RO,
+     "A short piece of information about the procedure."},
+    {"proc_help",      T_OBJECT, OFF(proc_help),      RO,
+     "More detailed information about the procedure."},
+    {"proc_author",    T_OBJECT, OFF(proc_author),    RO,
+     "The author of the procedure."},
+    {"proc_copyright", T_OBJECT, OFF(proc_copyright), RO,
+     "The copyright holder for the procedure (usually the same as the author)."},
+    {"proc_date",      T_OBJECT, OFF(proc_date),      RO,
+     "The date when the procedure was written."},
+    {"proc_type",      T_OBJECT, OFF(proc_type),      RO,
+     "The type of procedure. This will be one of PROC_PLUG_IN, "\
+     "PROC_EXTENSION or PROC_TEMPORARY."},
+    {"nparams",        T_INT,    OFF(nparams),        RO,
+     "The number of parameters the procedure takes."},
+    {"nreturn_vals",   T_INT,    OFF(nreturn_vals),   RO,
+     "The number of return values the procedure gives."},
+    {"params",         T_OBJECT, OFF(py_params),      RO,
+     "A description of parameters of the procedure. It takes the form of a "\
+     "tuple of 3-tuples, where each 3-tuple describes a parameter. The items "\
+     "in the 3-tuple are a parameter type (one of the GimpPDBArgType constants), a "\
+     "name for the parameter, and a description of the parameter. "},
+    {"return_vals",    T_OBJECT, OFF(py_return_vals), RO,
+     "A description of return values of the procedure. It takes the form of a "\
+     "tuple of 3-tuples, where each 3-tuple describes a return value. The "\
+     "items in the 3-tuple are a return value type (one of the GimpPDBArgType "\
+     "constants), a name for the return value, and a description of the "\
+     "return value. "},
     {NULL}  /* Sentinel */
 };
 #undef OFF
@@ -991,6 +1010,66 @@ PyTypeObject PyGimpPDBFunction_Type = {
     (newfunc)0,				/* tp_new */
 };
 
+/*
+ * pygim_pdb_build_param_info_tuple:
+ * @n_params: Number of elements in @params.
+ * @params:   A array of GimpParamDef for which a description is created.
+ *
+ * Creates a  tuple with of 3-tuples in the form of (type, name, description)
+ * describing the passed pdb parameter definitions. When gimpenums is
+ * available type is a gimpenums.GimpPDBArgType else a integer, name and
+ * description are strings.
+ *
+ * Return value: A python tuple with @n_params elements of 3-tuples
+ *               describing @params or NULL if an error accured.
+ */
+static PyObject *
+pygimp_pdb_build_param_info_tuple(int n_params, GimpParamDef *params)
+{
+    PyObject *result;
+    PyObject *gimpenums;
+    PyObject *pdb_arg_type;
+    int i;
+    PyObject *arglist;
+    PyObject* type;
+
+    result = PyTuple_New(n_params);
+    
+    gimpenums = PyImport_ImportModule("gimpenums");
+
+    if(gimpenums == NULL ||
+       (pdb_arg_type = PyObject_GetAttrString(gimpenums, "GimpPDBArgType")) == NULL) {
+        PyErr_Clear();
+        for(i = 0; i < n_params; ++i)
+        PyTuple_SetItem(result, i,
+                Py_BuildValue("(iss)",
+                          params[i].type,
+                          params[i].name,
+                          params[i].description));
+    } else {
+        for(i = 0; i < n_params; ++i) {
+            if(!(arglist = Py_BuildValue("(i)", params[i].type))) break;
+            if(!(type = PyEval_CallObject(pdb_arg_type, arglist))) break;
+            PyTuple_SetItem(result, i,
+                    Py_BuildValue("(Oss)",
+                              type,
+                              params[i].name,
+                              params[i].description));
+            Py_DECREF(type);
+            Py_DECREF(arglist);
+        }
+        
+        if(i != n_params) {
+            Py_XDECREF(arglist);
+            Py_DECREF(result);
+            result = NULL;
+        }
+        Py_DECREF(pdb_arg_type);
+        Py_DECREF(gimpenums);
+    }
+    return result;
+}
+
 PyObject *
 pygimp_pdb_function_new(const char *name, const char *blurb, const char *help,
 			const char *author, const char *copyright,
@@ -999,7 +1078,6 @@ pygimp_pdb_function_new(const char *name, const char *blurb, const char *help,
 			GimpParamDef *params, GimpParamDef *return_vals)
 {
     PyGimpPDBFunction *self;
-    int i;
 
     self = PyObject_NEW(PyGimpPDBFunction, &PyGimpPDBFunction_Type);
 
@@ -1018,22 +1096,10 @@ pygimp_pdb_function_new(const char *name, const char *blurb, const char *help,
     self->nreturn_vals = n_return_vals;
     self->params = params;
     self->return_vals = return_vals;
+    PyDict_SetItemString(self->ob_type->tp_dict, "__doc__", PyString_FromString(help ? help : ""));
 
-    self->py_params = PyTuple_New(n_params);
-    for (i = 0; i < n_params; i++)
-	PyTuple_SetItem(self->py_params, i,
-			Py_BuildValue("(iss)",
-				      params[i].type,
-				      params[i].name,
-				      params[i].description));
-
-    self->py_return_vals = PyTuple_New(n_return_vals);
-    for (i = 0; i < n_return_vals; i++)
-	PyTuple_SetItem(self->py_return_vals, i,
-			Py_BuildValue("(iss)",
-				      return_vals[i].type,
-				      return_vals[i].name,
-				      return_vals[i].description));
+    self->py_params = pygimp_pdb_build_param_info_tuple(n_params, params);
+    self->py_return_vals = pygimp_pdb_build_param_info_tuple(n_return_vals, return_vals);
 
     return (PyObject *)self;
 }
