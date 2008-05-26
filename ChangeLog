@@ -1,5 +1,10 @@
 2008-05-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpscalebutton.c (gimp_scale_button_new): use
+	GTK_ICON_SIZE_MENU for the scale button.
+
+2008-05-26  Michael Natterer  <mitch@gimp.org>
+
 	Applied modified patch from Alexia Death. Addresses bug #534770:
 
 	* app/paint/gimppaintoptions.[ch]: add properties for scaling

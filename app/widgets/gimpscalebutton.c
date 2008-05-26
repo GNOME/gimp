@@ -125,6 +125,6 @@ gimp_scale_button_new (gdouble value,
 
   return g_object_new (GIMP_TYPE_SCALE_BUTTON,
                        "adjustment", adj,
+                       "size",       GTK_ICON_SIZE_MENU,
                        NULL);
 }
-
