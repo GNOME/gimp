@@ -275,21 +275,21 @@ static gboolean
 gimp_color_balance_config_equal (GimpConfig *a,
                                  GimpConfig *b)
 {
-  GimpColorBalanceConfig *a_config = GIMP_COLOR_BALANCE_CONFIG (a);
-  GimpColorBalanceConfig *b_config = GIMP_COLOR_BALANCE_CONFIG (b);
+  GimpColorBalanceConfig *config_a = GIMP_COLOR_BALANCE_CONFIG (a);
+  GimpColorBalanceConfig *config_b = GIMP_COLOR_BALANCE_CONFIG (b);
   GimpTransferMode        range;
 
   for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
     {
-      if (a_config->cyan_red[range]      != b_config->cyan_red[range]      ||
-          a_config->magenta_green[range] != b_config->magenta_green[range] ||
-          a_config->yellow_blue[range]   != b_config->yellow_blue[range])
+      if (config_a->cyan_red[range]      != config_b->cyan_red[range]      ||
+          config_a->magenta_green[range] != config_b->magenta_green[range] ||
+          config_a->yellow_blue[range]   != config_b->yellow_blue[range])
         return FALSE;
     }
 
   /* don't compare "range" */
 
-  if (a_config->preserve_luminosity != b_config->preserve_luminosity)
+  if (config_a->preserve_luminosity != config_b->preserve_luminosity)
     return FALSE;
 
   return TRUE;

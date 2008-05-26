@@ -277,24 +277,24 @@ static gboolean
 gimp_curves_config_equal (GimpConfig *a,
                           GimpConfig *b)
 {
-  GimpCurvesConfig     *a_config = GIMP_CURVES_CONFIG (a);
-  GimpCurvesConfig     *b_config = GIMP_CURVES_CONFIG (b);
+  GimpCurvesConfig     *config_a = GIMP_CURVES_CONFIG (a);
+  GimpCurvesConfig     *config_b = GIMP_CURVES_CONFIG (b);
   GimpHistogramChannel  channel;
 
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
     {
-      GimpCurve *a_curve = a_config->curve[channel];
-      GimpCurve *b_curve = b_config->curve[channel];
+      GimpCurve *curve_a = config_a->curve[channel];
+      GimpCurve *curve_b = config_b->curve[channel];
 
-      if (a_curve && b_curve)
+      if (curve_a && curve_b)
         {
-          if (! gimp_config_is_equal_to (GIMP_CONFIG (a_curve),
-                                         GIMP_CONFIG (b_curve)))
+          if (! gimp_config_is_equal_to (GIMP_CONFIG (curve_a),
+                                         GIMP_CONFIG (curve_b)))
             return FALSE;
         }
-      else if (a_curve || b_curve)
+      else if (curve_a || curve_b)
         {
           return FALSE;
         }

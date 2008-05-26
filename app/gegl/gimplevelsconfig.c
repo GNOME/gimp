@@ -288,19 +288,19 @@ static gboolean
 gimp_levels_config_equal (GimpConfig *a,
                           GimpConfig *b)
 {
-  GimpLevelsConfig     *a_config = GIMP_LEVELS_CONFIG (a);
-  GimpLevelsConfig     *b_config = GIMP_LEVELS_CONFIG (b);
+  GimpLevelsConfig     *config_a = GIMP_LEVELS_CONFIG (a);
+  GimpLevelsConfig     *config_b = GIMP_LEVELS_CONFIG (b);
   GimpHistogramChannel  channel;
 
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
     {
-      if (a_config->gamma[channel]       != b_config->gamma[channel]      ||
-          a_config->low_input[channel]   != b_config->low_input[channel]  ||
-          a_config->high_input[channel]  != b_config->high_input[channel] ||
-          a_config->low_output[channel]  != b_config->low_output[channel] ||
-          a_config->high_output[channel] != b_config->high_output[channel])
+      if (config_a->gamma[channel]       != config_b->gamma[channel]      ||
+          config_a->low_input[channel]   != config_b->low_input[channel]  ||
+          config_a->high_input[channel]  != config_b->high_input[channel] ||
+          config_a->low_output[channel]  != config_b->low_output[channel] ||
+          config_a->high_output[channel] != config_b->high_output[channel])
         return FALSE;
     }
 

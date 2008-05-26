@@ -1,5 +1,13 @@
 2008-05-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimpcolorbalanceconfig.c
+	* app/gegl/gimpcurvesconfig.c
+	* app/gegl/gimphuesaturationconfig.c
+	* app/gegl/gimplevelsconfig.c (equal): sanitize local variable
+	names: s/a_config/config_a/, s/b_config/config_b/.
+
+2008-05-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpbaseconfig.c
 	* app/config/gimpguiconfig.c
 	* app/tools/gimpcolorpickeroptions.[ch]: remove unused compat
