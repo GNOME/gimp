@@ -90,7 +90,7 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
   for (i = 0; i < value; i++)
     {
       cairo_move_to (cr, 0, i);
-      cairo_line_to (cr, i, i);
+      cairo_line_to (cr, i + 0.5, i);
     }
 
   gdk_cairo_set_source_color (cr, &widget->style->fg[widget->state]);
@@ -99,7 +99,7 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
   for ( ; i < steps; i++)
     {
       cairo_move_to (cr, 0, i);
-      cairo_line_to (cr, i, i);
+      cairo_line_to (cr, i + 0.5, i);
     }
 
   gdk_cairo_set_source_color (cr, &widget->style->fg[GTK_STATE_INSENSITIVE]);
