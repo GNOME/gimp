@@ -1,5 +1,11 @@
 2008-05-26  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimppropwidgets.c
+	* app/widgets/gimpscalebutton.[ch]: some fiddling to get the step
+	and page sizes right.
+
+2008-05-26  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimppropwidgets.[ch]: support for GimpScaleButton.
 
 2008-05-26  Sven Neumann  <sven@gimp.org>
