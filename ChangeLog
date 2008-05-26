@@ -1,5 +1,9 @@
 2008-05-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimppaintoptions-gui.c: remove unused includes.
+
+2008-05-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintoptions.[ch]: replace the identical
 	GimpPressureOptions, GimpVelocityOptions and GimpRandomOptions
 	struct by a single GimpDynamicOptions struct.

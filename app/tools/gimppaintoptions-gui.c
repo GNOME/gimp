@@ -31,11 +31,9 @@
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewablebox.h"
 #include "widgets/gimpwidgets-utils.h"
-#include "widgets/gtkhwrapbox.h"
 
 #include "gimpairbrushtool.h"
 #include "gimpblendtool.h"
-#include "gimpbucketfilltool.h"
 #include "gimpclonetool.h"
 #include "gimpconvolvetool.h"
 #include "gimpdodgeburntool.h"
