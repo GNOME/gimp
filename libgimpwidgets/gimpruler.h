@@ -55,13 +55,13 @@ struct _GimpRulerClass
 
 struct _GimpRulerMetric
 {
-  gchar   *metric_name;
-  gchar   *abbrev;
+  const gchar *metric_name;
+  const gchar *abbrev;
   /* This should be points_per_unit. This is the size of the unit
    * in 1/72nd's of an inch and has nothing to do with screen pixels */
-  gdouble  pixels_per_unit;
-  gdouble  ruler_scale[10];
-  gint     subdivide[5];        /* five possible modes of subdivision */
+  gdouble      pixels_per_unit;
+  gdouble      ruler_scale[10];
+  gint         subdivide[5];        /* five possible modes of subdivision */
 };
 
 
@@ -83,10 +83,10 @@ void           gimp_ruler_get_range  (GimpRuler      *ruler,
                                       gdouble        *position,
                                       gdouble        *max_size);
 
-GdkDrawable     * _gimp_ruler_get_backing_store   (GimpRuler   *ruler) G_GNUC_INTERNAL;
-GimpRulerMetric * _gimp_ruler_get_metric          (GimpRuler   *ruler) G_GNUC_INTERNAL;
-PangoLayout     * _gimp_ruler_create_pango_layout (GtkWidget   *widget,
-                                                   const gchar *text)  G_GNUC_INTERNAL;
+GdkDrawable           * _gimp_ruler_get_backing_store   (GimpRuler   *ruler) G_GNUC_INTERNAL;
+const GimpRulerMetric * _gimp_ruler_get_metric          (GimpRuler   *ruler) G_GNUC_INTERNAL;
+PangoLayout           * _gimp_ruler_create_pango_layout (GtkWidget   *widget,
+                                                         const gchar *text)  G_GNUC_INTERNAL;
 
 G_END_DECLS
 

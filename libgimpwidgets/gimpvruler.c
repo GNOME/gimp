@@ -30,7 +30,7 @@
 #include "gimpvruler.h"
 
 
-#define RULER_WIDTH           14
+#define RULER_WIDTH           13
 #define MINIMUM_INCR          5
 #define MAXIMUM_SUBDIVIDE     5
 #define MAXIMUM_SCALES        10
@@ -88,7 +88,7 @@ gimp_vruler_new (void)
 
 static gint
 gimp_vruler_motion_notify (GtkWidget      *widget,
-			  GdkEventMotion *event)
+                          GdkEventMotion *event)
 {
   GimpRuler *ruler = GIMP_RULER (widget);
   gdouble    lower;
@@ -112,28 +112,27 @@ gimp_vruler_motion_notify (GtkWidget      *widget,
 static void
 gimp_vruler_draw_ticks (GimpRuler *ruler)
 {
-  GtkWidget       *widget = GTK_WIDGET (ruler);
-  GimpRulerMetric *metric;
-  GdkDrawable     *backing_store;
-  cairo_t         *cr;
-  gint             i, j;
-  gint             width, height;
-  gint             xthickness;
-  gint             ythickness;
-  gint             length, ideal_length;
-  gdouble          lower, upper; /* Upper and lower limits, in ruler units */
-  gdouble          increment;	 /* Number of pixels per unit */
-  gint             scale;        /* Number of units per major unit */
-  gdouble          subd_incr;
-  gdouble          start, end, cur;
-  gchar            unit_str[32];
-  gint             digit_height;
-  gint             digit_offset;
-  gint             text_height;
-  gint             pos;
-  gdouble          max_size;
-  PangoLayout     *layout;
-  PangoRectangle   logical_rect, ink_rect;
+  GtkWidget             *widget = GTK_WIDGET (ruler);
+  const GimpRulerMetric *metric;
+  GdkDrawable    *backing_store;
+  cairo_t        *cr;
+  gint            i, j;
+  gint            width, height;
+  gint            xthickness;
+  gint            ythickness;
+  gint            length, ideal_length;
+  gdouble         lower, upper; /* Upper and lower limits, in ruler units */
+  gdouble         increment;     /* Number of pixels per unit */
+  gint            scale;        /* Number of units per major unit */
+  gdouble         start, end, cur;
+  gchar           unit_str[32];
+  gint            digit_height;
+  gint            digit_offset;
+  gint            text_height;
+  gint            pos;
+  gdouble         max_size;
+  PangoLayout    *layout;
+  PangoRectangle  logical_rect, ink_rect;
 
   if (! GTK_WIDGET_DRAWABLE (widget))
     return;
@@ -149,23 +148,23 @@ gimp_vruler_draw_ticks (GimpRuler *ruler)
   digit_height = PANGO_PIXELS (ink_rect.height) + 2;
   digit_offset = ink_rect.y;
 
-  width = widget->allocation.height;
+  width  = widget->allocation.height;
   height = widget->allocation.width - ythickness * 2;
 
   gtk_paint_box (widget->style, backing_store,
-		 GTK_STATE_NORMAL, GTK_SHADOW_OUT,
-		 NULL, widget, "vruler",
-		 0, 0,
-		  widget->allocation.width, widget->allocation.height);
+                 GTK_STATE_NORMAL, GTK_SHADOW_OUT,
+                 NULL, widget, "vruler",
+                 0, 0,
+                  widget->allocation.width, widget->allocation.height);
 
   cr = gdk_cairo_create (backing_store);
   gdk_cairo_set_source_color (cr, &widget->style->fg[widget->state]);
 
   cairo_rectangle (cr,
-		   height + xthickness,
-		   ythickness,
-		   1,
-		   widget->allocation.height - 2 * ythickness);
+                   height + xthickness,
+                   ythickness,
+                   1,
+                   widget->allocation.height - 2 * ythickness);
 
   gimp_ruler_get_range (ruler, &lower, &upper, NULL, &max_size);
 
@@ -190,7 +189,7 @@ gimp_vruler_draw_ticks (GimpRuler *ruler)
   text_height = strlen (unit_str) * digit_height + 1;
 
   for (scale = 0; scale < MAXIMUM_SCALES; scale++)
-    if (metric->ruler_scale[scale] * fabs(increment) > 2 * text_height)
+    if (metric->ruler_scale[scale] * fabs (increment) > 2 * text_height)
       break;
 
   if (scale == MAXIMUM_SCALES)
@@ -200,60 +199,61 @@ gimp_vruler_draw_ticks (GimpRuler *ruler)
   length = 0;
   for (i = MAXIMUM_SUBDIVIDE - 1; i >= 0; i--)
     {
-      subd_incr = (gdouble) metric->ruler_scale[scale] /
-	          (gdouble) metric->subdivide[i];
-      if (subd_incr * fabs(increment) <= MINIMUM_INCR)
-	continue;
+      gdouble subd_incr = ((gdouble) metric->ruler_scale[scale] /
+                           (gdouble) metric->subdivide[i]);
+
+      if (subd_incr * fabs (increment) <= MINIMUM_INCR)
+        continue;
 
       /* Calculate the length of the tickmarks. Make sure that
        * this length increases for each set of ticks
        */
       ideal_length = height / (i + 1) - 1;
       if (ideal_length > ++length)
-	length = ideal_length;
+        length = ideal_length;
 
       if (lower < upper)
-	{
-	  start = floor (lower / subd_incr) * subd_incr;
-	  end   = ceil  (upper / subd_incr) * subd_incr;
-	}
+        {
+          start = floor (lower / subd_incr) * subd_incr;
+          end   = ceil  (upper / subd_incr) * subd_incr;
+        }
       else
-	{
-	  start = floor (upper / subd_incr) * subd_incr;
-	  end   = ceil  (lower / subd_incr) * subd_incr;
-	}
+        {
+          start = floor (upper / subd_incr) * subd_incr;
+          end   = ceil  (lower / subd_incr) * subd_incr;
+        }
 
       for (cur = start; cur <= end; cur += subd_incr)
-	{
-	  pos = ROUND ((cur - lower) * increment);
+        {
+          pos = ROUND ((cur - lower) * increment);
 
-	  cairo_rectangle (cr,
-			   height + xthickness - length, pos,
-			   length,                       1);
+          cairo_rectangle (cr,
+                           height + xthickness - length, pos,
+                           length,                       1);
 
-	  /* draw label */
-	  if (i == 0)
-	    {
-	      g_snprintf (unit_str, sizeof (unit_str), "%d", (int) cur);
+          /* draw label */
+          if (i == 0)
+            {
+              g_snprintf (unit_str, sizeof (unit_str), "%d", (int) cur);
 
-	      for (j = 0; j < (int) strlen (unit_str); j++)
-		{
-		  pango_layout_set_text (layout, unit_str + j, 1);
-		  pango_layout_get_extents (layout, NULL, &logical_rect);
+              for (j = 0; j < (int) strlen (unit_str); j++)
+                {
+                  pango_layout_set_text (layout, unit_str + j, 1);
+                  pango_layout_get_extents (layout, NULL, &logical_rect);
 
                   gtk_paint_layout (widget->style,
                                     backing_store,
                                     GTK_WIDGET_STATE (widget),
-				    FALSE,
+                                    FALSE,
                                     NULL,
                                     widget,
                                     "vruler",
                                     xthickness + 1,
                                     pos + digit_height * j + 2 + PANGO_PIXELS (logical_rect.y - digit_offset),
                                     layout);
-		}
-	    }
-	}
+                }
+            }
+        }
     }
 
   cairo_fill (cr);
@@ -288,41 +288,41 @@ gimp_vruler_draw_pos (GimpRuler *ruler)
       bs_width = bs_height / 2 + 1;
 
       if ((bs_width > 0) && (bs_height > 0))
-	{
+        {
           GdkDrawable *backing_store = _gimp_ruler_get_backing_store (ruler);
-	  cairo_t     *cr            = gdk_cairo_create (widget->window);
+          cairo_t     *cr            = gdk_cairo_create (widget->window);
           gdouble      lower;
           gdouble      upper;
           gdouble      position;
           gdouble      increment;
 
-	  /*  If a backing store exists, restore the ruler  */
-	  if (backing_store)
-	    gdk_draw_drawable (widget->window,
-			       widget->style->black_gc,
-			       backing_store,
+          /*  If a backing store exists, restore the ruler  */
+          if (backing_store)
+            gdk_draw_drawable (widget->window,
+                               widget->style->black_gc,
+                               backing_store,
                                priv->xsrc, priv->ysrc,
-			       priv->xsrc, priv->ysrc,
+                               priv->xsrc, priv->ysrc,
                                bs_width, bs_height);
 
           gimp_ruler_get_range (ruler, &lower, &upper, &position, NULL);
 
-	  increment = (gdouble) height / (upper - lower);
+          increment = (gdouble) height / (upper - lower);
 
-	  x = (width + bs_width) / 2 + xthickness;
-	  y = ROUND ((position - lower) * increment) + (ythickness - bs_height) / 2 - 1;
+          x = (width + bs_width) / 2 + xthickness;
+          y = ROUND ((position - lower) * increment) + (ythickness - bs_height) / 2 - 1;
 
-	  gdk_cairo_set_source_color (cr, &widget->style->fg[widget->state]);
+          gdk_cairo_set_source_color (cr, &widget->style->fg[widget->state]);
 
-	  cairo_move_to (cr, x,            y);
-	  cairo_line_to (cr, x + bs_width, y + bs_height / 2.);
-	  cairo_line_to (cr, x,            y + bs_height);
-	  cairo_fill (cr);
+          cairo_move_to (cr, x,            y);
+          cairo_line_to (cr, x + bs_width, y + bs_height / 2.);
+          cairo_line_to (cr, x,            y + bs_height);
+          cairo_fill (cr);
 
-	  cairo_destroy (cr);
+          cairo_destroy (cr);
 
-	  priv->xsrc = x;
-	  priv->ysrc = y;
-	}
+          priv->xsrc = x;
+          priv->ysrc = y;
+        }
     }
 }

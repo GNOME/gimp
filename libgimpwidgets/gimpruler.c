@@ -71,11 +71,20 @@ static void gimp_ruler_get_property  (GObject        *object,
                                       GValue         *value,
                                       GParamSpec     *pspec);
 
-static const GimpRulerMetric ruler_metrics[] =
+static const GimpRulerMetric const ruler_metrics[] =
 {
-  { "Pixel", "Pi", 1.0, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
-  { "Inches", "In", 72.0, { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 }, { 1, 2, 4, 8, 16 }},
-  { "Centimeters", "Cn", 28.35, { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }},
+  {
+    "Pixel", "Pi", 1.0,
+    { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }
+  },
+  {
+    "Inches", "In", 72.0,
+    { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 }, { 1, 2, 4, 8, 16 }
+  },
+  {
+    "Centimeters", "Cn", 28.35,
+    { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000 }, { 1, 5, 10, 50, 100 }
+  }
 };
 
 G_DEFINE_TYPE (GimpRuler, gimp_ruler, GTK_TYPE_WIDGET)
@@ -106,50 +115,50 @@ gimp_ruler_class_init (GimpRulerClass *klass)
   g_object_class_install_property (object_class,
                                    PROP_LOWER,
                                    g_param_spec_double ("lower",
-							"Lower",
-							"Lower limit of ruler",
-							-G_MAXDOUBLE,
-							G_MAXDOUBLE,
-							0.0,
-							GIMP_PARAM_READWRITE));
+                                                        "Lower",
+                                                        "Lower limit of ruler",
+                                                        -G_MAXDOUBLE,
+                                                        G_MAXDOUBLE,
+                                                        0.0,
+                                                        GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
                                    PROP_UPPER,
                                    g_param_spec_double ("upper",
-							"Upper",
-							"Upper limit of ruler",
-							-G_MAXDOUBLE,
-							G_MAXDOUBLE,
-							0.0,
-							GIMP_PARAM_READWRITE));
+                                                        "Upper",
+                                                        "Upper limit of ruler",
+                                                        -G_MAXDOUBLE,
+                                                        G_MAXDOUBLE,
+                                                        0.0,
+                                                        GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
                                    PROP_POSITION,
                                    g_param_spec_double ("position",
                                                         "Position",
-							"Position of mark on the ruler",
-							-G_MAXDOUBLE,
-							G_MAXDOUBLE,
-							0.0,
-							GIMP_PARAM_READWRITE));
+                                                        "Position of mark on the ruler",
+                                                        -G_MAXDOUBLE,
+                                                        G_MAXDOUBLE,
+                                                        0.0,
+                                                        GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
                                    PROP_MAX_SIZE,
                                    g_param_spec_double ("max-size",
-							"Max Size",
-							"Maximum size of the ruler",
-							-G_MAXDOUBLE,
-							G_MAXDOUBLE,
-							0.0,
-							GIMP_PARAM_READWRITE));
+                                                        "Max Size",
+                                                        "Maximum size of the ruler",
+                                                        -G_MAXDOUBLE,
+                                                        G_MAXDOUBLE,
+                                                        0.0,
+                                                        GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class,
                                    PROP_METRIC,
                                    g_param_spec_enum ("metric",
-						      "Metric",
-						      "The metric used for the ruler",
-						      GTK_TYPE_METRIC_TYPE,
-						      GTK_PIXELS,
-						      GIMP_PARAM_READWRITE));
+                                                      "Metric",
+                                                      "The metric used for the ruler",
+                                                      GTK_TYPE_METRIC_TYPE,
+                                                      GTK_PIXELS,
+                                                      GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -396,7 +405,7 @@ _gimp_ruler_get_backing_store (GimpRuler *ruler)
   return GIMP_RULER_GET_PRIVATE (ruler)->backing_store;
 }
 
-GimpRulerMetric *
+const GimpRulerMetric *
 _gimp_ruler_get_metric (GimpRuler *ruler)
 {
   return GIMP_RULER_GET_PRIVATE (ruler)->metric;
@@ -444,8 +453,8 @@ gimp_ruler_realize (GtkWidget *widget)
   attributes.colormap    = gtk_widget_get_colormap (widget);
   attributes.event_mask  = gtk_widget_get_events (widget);
   attributes.event_mask |= (GDK_EXPOSURE_MASK |
-			    GDK_POINTER_MOTION_MASK |
-			    GDK_POINTER_MOTION_HINT_MASK);
+                            GDK_POINTER_MOTION_MASK |
+                            GDK_POINTER_MOTION_HINT_MASK);
 
   attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
 
@@ -492,8 +501,8 @@ gimp_ruler_size_allocate (GtkWidget     *widget,
   if (GTK_WIDGET_REALIZED (widget))
     {
       gdk_window_move_resize (widget->window,
-			      allocation->x, allocation->y,
-			      allocation->width, allocation->height);
+                              allocation->x, allocation->y,
+                              allocation->width, allocation->height);
 
       gimp_ruler_make_pixmap (ruler);
     }
@@ -511,11 +520,11 @@ gimp_ruler_expose (GtkWidget      *widget,
       gimp_ruler_draw_ticks (ruler);
 
       gdk_draw_drawable (widget->window,
-			 priv->non_gr_exp_gc,
-			 priv->backing_store,
-			 0, 0, 0, 0,
-			 widget->allocation.width,
-			 widget->allocation.height);
+                         priv->non_gr_exp_gc,
+                         priv->backing_store,
+                         0, 0, 0, 0,
+                         widget->allocation.width,
+                         widget->allocation.height);
 
       gimp_ruler_draw_pos (ruler);
     }
@@ -536,8 +545,8 @@ gimp_ruler_make_pixmap (GimpRuler *ruler)
     {
       gdk_drawable_get_size (priv->backing_store, &width, &height);
       if ((width == widget->allocation.width) &&
-	  (height == widget->allocation.height))
-	return;
+          (height == widget->allocation.height))
+        return;
 
       g_object_unref (priv->backing_store);
     }
