@@ -1,4 +1,4 @@
-# French translation of gimp-tiny-fu.
+# French translation of gimp-script-fu.
 # Copyright (C) 2000-2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
@@ -6,7 +6,7 @@
 # Christophe Merlet <redfox@redfoxcenter.org>, 2000-2004.
 # Raymond Ostertag <r.ostertag@caramail.com>, 2002-2007.
 # Jean-Louis Berliet <jl.berliet@free.fr>, 2004.
-# Julien Hardelin, 2007.
+# Julien Hardelin, 2007-2008.
 # Jonathan Ernst <jonathan@ernstfamily.ch>, 2007.
 # Stéphane Raimbault <stephane.raimbault@gmail.com>, 2007
 # Laurent Monin <gimp@norz.org>, 2007
@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-30 22:36+0200\n"
-"PO-Revision-Date: 2007-09-25 22:44+0200\n"
-"Last-Translator: Laurent Monin <gimp@norz.org>\n"
+"POT-Creation-Date: 2008-05-27 23:17+0200\n"
+"PO-Revision-Date: 2008-05-18 15:42+0100\n"
+"Last-Translator: Julien Hardelin <jm.hard@wanadoo.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -53,7 +53,7 @@ msgstr "Impossible d'ouvrir « %s » pour écrire : %s"
 msgid "Script-Fu Procedure Browser"
 msgstr "Navigateur de procédures Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:716
+#: ../plug-ins/script-fu/script-fu-console.c:718
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "Le mode d'évaluation de Script-Fu autorise uniquement un appel non-interactif"
@@ -111,7 +111,11 @@ msgstr "Sélection du dégradé Script-Fu"
 msgid "Script-Fu Brush Selection"
 msgstr "Sélection de la brosse Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:658
+#: ../plug-ins/script-fu/script-fu-scripts.c:148
+msgid "Too few arguments to 'script-fu-register' call"
+msgstr "Trop peu de paramètres pour l'appel à « script-fu-register »"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:667
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -145,8 +149,8 @@ msgid "Interactive console for Script-Fu development"
 msgstr "Console interactive pour le développement de Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:116
-msgid "Script-Fu _Console"
-msgstr "_Console Script-Fu"
+msgid "_Console"
+msgstr "_Console"
 
 #: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
@@ -169,102 +173,50 @@ msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:307
-msgid "_Buttons"
-msgstr "_Boutons"
-
-#: ../plug-ins/script-fu/script-fu.c:309
-msgid "_Logos"
-msgstr "_Logos"
-
-#: ../plug-ins/script-fu/script-fu.c:311
-msgid "_Misc"
-msgstr "_Divers"
-
-#: ../plug-ins/script-fu/script-fu.c:313
-msgid "_Patterns"
-msgstr "_Motifs"
-
-#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:317
-msgid "_Utilities"
-msgstr "_Utilitaires"
+#: ../plug-ins/script-fu/script-fu.c:310
+msgid "_Buttons"
+msgstr "_Boutons"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: ../plug-ins/script-fu/script-fu.c:312
+msgid "_Logos"
+msgstr "_Logos"
+
+#: ../plug-ins/script-fu/script-fu.c:314
+msgid "_Patterns"
+msgstr "_Motifs"
+
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Web Page Themes"
 msgstr "_Thèmes de page Web"
 
-#: ../plug-ins/script-fu/script-fu.c:321
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Alien Glow"
 msgstr "Lueur _extérieure"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Beveled Pattern"
 msgstr "Motif _biseauté"
 
-#: ../plug-ins/script-fu/script-fu.c:325
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:328
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
 msgstr "Alpha vers _logo"
 
-#: ../plug-ins/script-fu/script-fu.c:330
-msgid "An_imation"
-msgstr "An_imation"
-
-#: ../plug-ins/script-fu/script-fu.c:332
-msgid "_Animators"
-msgstr "_Animateurs"
-
-#: ../plug-ins/script-fu/script-fu.c:334
-msgid "_Artistic"
-msgstr "A_rtistique"
-
-#: ../plug-ins/script-fu/script-fu.c:336
-msgid "_Blur"
-msgstr "_Flou"
-
-#: ../plug-ins/script-fu/script-fu.c:338
-msgid "_Decor"
-msgstr "Dé_coration"
-
-#: ../plug-ins/script-fu/script-fu.c:340
-msgid "_Effects"
-msgstr "_Effets"
-
-#: ../plug-ins/script-fu/script-fu.c:342
-msgid "En_hance"
-msgstr "A_mélioration"
-
-#: ../plug-ins/script-fu/script-fu.c:344
-msgid "_Light and Shadow"
-msgstr "_Ombres et lumières"
-
-#: ../plug-ins/script-fu/script-fu.c:346
-msgid "S_hadow"
-msgstr "_Ombre"
-
-#: ../plug-ins/script-fu/script-fu.c:348
-msgid "_Render"
-msgstr "_Rendu"
-
-#: ../plug-ins/script-fu/script-fu.c:350
-msgid "_Alchemy"
-msgstr "A_lchimie"
-
-#: ../plug-ins/script-fu/script-fu.c:353
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Relire tous les scripts Script-Fu disponibles"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Refresh Scripts"
 msgstr "_Actualiser les scripts"
 
-#: ../plug-ins/script-fu/script-fu.c:381
+#: ../plug-ins/script-fu/script-fu.c:357
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -279,7 +231,7 @@ msgstr "_Contour 3D..."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
-msgstr "Bosselage (calque alpha) rayon de flou"
+msgstr "Rayon de flou du bosselage (calque alpha)"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Create a logo with outlined text and a drop shadow"
@@ -473,7 +425,6 @@ msgstr "3_D Truchet..."
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:1
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
@@ -954,11 +905,11 @@ msgstr "Crée un logo avec un texte dans le style « tache bovine »"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 msgid "Spots density X"
-msgstr "Densité de points en X"
+msgstr "Densité de taches en X"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:9
 msgid "Spots density Y"
-msgstr "Densité de points en Y"
+msgstr "Densité de taches en Y"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
 msgid "Add glowing"
@@ -1103,7 +1054,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
-msgstr "Quantité de flou"
+msgstr "Importance du flou"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:3
 msgid "Chip Awa_y..."
@@ -1740,7 +1691,6 @@ msgid "Pattern (text)"
 msgstr "Motif (texte)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:15
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "Ombre"
 
@@ -1883,46 +1833,6 @@ msgstr "Supprimer tous les guides horizontaux et verticaux"
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
 msgstr "_Enlever tous les guides"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:1
-msgid "BG opacity"
-msgstr "Opacité de l'Ar. Plan"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid "Create a graph of the Hue, Saturation, and Value distributions"
-msgstr "Crée un graphique de distribution de la teinte, saturation et valeur"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
-msgid "Draw _HSV Graph..."
-msgstr "Dessiner un graphique _TSV..."
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:4
-msgid "End X"
-msgstr "Fin X"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:5
-msgid "End Y"
-msgstr "Fin Y"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:6
-msgid "From top-left to bottom-right"
-msgstr "Depuis de haut-gauche vers bas-droit"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:7
-msgid "Graph scale"
-msgstr "Échelle du graphe"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:8
-msgid "Start X"
-msgstr "Début X"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:9
-msgid "Start Y"
-msgstr "Début Y"
-
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:10
-msgid "Use selection bounds instead of values below"
-msgstr "Utiliser le contour de la sélection au lieu des valeurs ci-dessous"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
@@ -2178,7 +2088,7 @@ msgstr "Ajoute un effet « prédateur » à la région sélectionnée (ou alph
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge amount"
-msgstr "Quantité d'arêtes"
+msgstr "Nombre d'arêtes"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:4
 msgid "Pixel amount"
@@ -2414,26 +2324,6 @@ msgstr "Crée un logo avec un effet de texte accéléré"
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
 msgid "Speed Text..."
 msgstr "Texte accéléré..."
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:2
-msgid "Create a simple sphere with a drop shadow"
-msgstr "Crée une simple sphère avec une ombre portée"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:3
-msgid "Lighting (degrees)"
-msgstr "Éclairage (degrés)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:4
-msgid "Radius (pixels)"
-msgstr "Rayon (pixels)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:6
-msgid "Sphere color"
-msgstr "Couleur de la sphère"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:7
-msgid "_Sphere..."
-msgstr "_Sphère..."
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Create an animation by mapping the current image onto a spinning sphere"
@@ -2968,6 +2858,91 @@ msgstr "Opacité d'éclairage"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Effet _Xach..."
+
+#~ msgid "_Misc"
+#~ msgstr "_Divers"
+
+#~ msgid "_Utilities"
+#~ msgstr "_Utilitaires"
+
+#~ msgid "An_imation"
+#~ msgstr "An_imation"
+
+#~ msgid "_Animators"
+#~ msgstr "_Animateurs"
+
+#~ msgid "_Artistic"
+#~ msgstr "A_rtistique"
+
+#~ msgid "_Blur"
+#~ msgstr "_Flou"
+
+#~ msgid "_Decor"
+#~ msgstr "Dé_coration"
+
+#~ msgid "_Effects"
+#~ msgstr "_Effets"
+
+#~ msgid "En_hance"
+#~ msgstr "A_mélioration"
+
+#~ msgid "_Light and Shadow"
+#~ msgstr "_Ombres et lumières"
+
+#~ msgid "S_hadow"
+#~ msgstr "_Ombre"
+
+#~ msgid "_Render"
+#~ msgstr "_Rendu"
+
+#~ msgid "_Alchemy"
+#~ msgstr "A_lchimie"
+
+#~ msgid "BG opacity"
+#~ msgstr "Opacité de l'Ar. Plan"
+
+#~ msgid "Create a graph of the Hue, Saturation, and Value distributions"
+#~ msgstr ""
+#~ "Crée un graphique de distribution de la teinte, saturation et valeur"
+
+#~ msgid "Draw _HSV Graph..."
+#~ msgstr "Dessiner un graphique _TSV..."
+
+#~ msgid "End X"
+#~ msgstr "Fin X"
+
+#~ msgid "End Y"
+#~ msgstr "Fin Y"
+
+#~ msgid "From top-left to bottom-right"
+#~ msgstr "Depuis de haut-gauche vers bas-droit"
+
+#~ msgid "Graph scale"
+#~ msgstr "Échelle du graphe"
+
+#~ msgid "Start X"
+#~ msgstr "Début X"
+
+#~ msgid "Start Y"
+#~ msgstr "Début Y"
+
+#~ msgid "Use selection bounds instead of values below"
+#~ msgstr "Utiliser le contour de la sélection au lieu des valeurs ci-dessous"
+
+#~ msgid "Create a simple sphere with a drop shadow"
+#~ msgstr "Crée une simple sphère avec une ombre portée"
+
+#~ msgid "Lighting (degrees)"
+#~ msgstr "Éclairage (degrés)"
+
+#~ msgid "Radius (pixels)"
+#~ msgstr "Rayon (pixels)"
+
+#~ msgid "Sphere color"
+#~ msgstr "Couleur de la sphère"
+
+#~ msgid "_Sphere..."
+#~ msgstr "_Sphère..."
 
 #~ msgid "Darken only\\n(Better, but only for images with a lot of white)"
 #~ msgstr ""

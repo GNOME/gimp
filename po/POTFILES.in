@@ -339,7 +339,6 @@ app/tools/gimppainttool.c
 app/tools/gimppenciltool.c
 app/tools/gimpperspectiveclonetool.c
 app/tools/gimpperspectivetool.c
-app/tools/gimppolygonselecttool.c
 app/tools/gimpposterizetool.c
 app/tools/gimprectangleoptions.c
 app/tools/gimprectangleselectoptions.c
