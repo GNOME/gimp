@@ -1,4 +1,4 @@
-# French translation of gimp-tiny-fu.
+# French translation of gimp-python.
 # Copyright (C) 2000-2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-07 15:38+0200\n"
-"PO-Revision-Date: 2007-09-07 15:34+0200\n"
-"Last-Translator: Laurent Monin <gimp@norz.org>\n"
+"POT-Creation-Date: 2008-05-27 20:47+0200\n"
+"PO-Revision-Date: 2008-05-18 15:44+0100\n"
+"Last-Translator: Julien Hardelin <jm.hard@wanadoo.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -131,31 +131,31 @@ msgstr "Interpréteur interactif GIMP-python"
 msgid "_Console"
 msgstr "_Console"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+#: ../plug-ins/pygimp/plug-ins/foggify.py:53
 msgid "Add a layer of fog"
 msgstr "Ajouter un calque de brouillard"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pygimp/plug-ins/foggify.py:58
 msgid "_Fog..."
 msgstr "_Brouillard..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Layer name"
 msgstr "_Nom de calque"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "Clouds"
 msgstr "Nuages"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "_Fog color"
 msgstr "_Couleur de brouillard"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
 msgid "_Turbulence"
 msgstr "_Turbulence"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Op_acity"
 msgstr "Op_acité"
 
@@ -266,11 +266,11 @@ msgstr "Format de l'image"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Separate image folder"
-msgstr "Dossier séparé pour l'image"
+msgstr "Dossier séparé pour les images"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Folder for image export"
-msgstr "Dossier pour l'exportation de l'image"
+msgstr "Dossier pour l'exportation des images"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Space between table elements"

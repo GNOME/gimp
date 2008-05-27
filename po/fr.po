@@ -18,9 +18,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: The GIMP gimp-2-4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-05 22:52+0100\n"
-"PO-Revision-Date: 2008-03-05 22:53+0100\n"
-"Last-Translator: Stéphane Raimbault <stephane.raimbault@gmail.com>\n"
+"POT-Creation-Date: 2008-05-27 20:43+0200\n"
+"PO-Revision-Date: 2008-05-17 21:33+0100\n"
+"Last-Translator: Julien Hardelin <jm.hard@wanadoo.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -948,7 +948,7 @@ msgstr "Ouvre la boîte de dialogue Chemins"
 
 #: ../app/actions/dialogs-actions.c:99
 msgid "Color_map"
-msgstr "_Palette des couleurs"
+msgstr "_Palette des couleurs indexées"
 
 #: ../app/actions/dialogs-actions.c:100
 msgid "Open the colormap dialog"
@@ -2755,7 +2755,7 @@ msgstr "Transforme ce calque de texte en calque normal"
 
 #: ../app/actions/layers-actions.c:152
 msgid "Text to _Path"
-msgstr "Texte le long d'un _chemin"
+msgstr "Texte vers _chemin"
 
 #: ../app/actions/layers-actions.c:153
 msgid "Create a path from this text layer"
@@ -3078,7 +3078,7 @@ msgstr "Nouvelle palette"
 
 #: ../app/actions/palettes-actions.c:54
 msgid "_Import Palette..."
-msgstr "_Importer la palette..."
+msgstr "_Importer une palette..."
 
 #: ../app/actions/palettes-actions.c:55
 msgid "Import palette"
@@ -4921,9 +4921,9 @@ msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
-"Si cette option est activée, par défaut, les points d'échantillonage seront "
+"Si cette option est activée, par défaut, les points d'échantillonnage seront "
 "visibles. L'affichage de ces derniers peut aussi être contrôlé via le menu "
-"« Affichage -> Afficher les points d'échantillonage »."
+"« Affichage -> Afficher les points d'échantillonnage »."
 
 #: ../app/config/gimprc-blurbs.h:330
 msgid "Enable displaying a handy GIMP tip on startup."
@@ -5409,7 +5409,7 @@ msgstr "Guide"
 
 #: ../app/core/core-enums.c:861 ../app/core/core-enums.c:893
 msgid "Sample Point"
-msgstr "Point d'échantillonage"
+msgstr "Point d'échantillonnage"
 
 #: ../app/core/core-enums.c:862 ../app/core/core-enums.c:894
 msgid "Layer/Channel"
@@ -6218,27 +6218,27 @@ msgstr "Modifier l'entrée de la palette des couleurs"
 msgid "Add Color to Colormap"
 msgstr "Ajouter la couleur à la palette de couleurs"
 
-#: ../app/core/gimpimage-convert.c:788
+#: ../app/core/gimpimage-convert.c:790
 msgid "Cannot convert image: palette is empty."
 msgstr "Impossible de convertir l'image : la palette est vide."
 
-#: ../app/core/gimpimage-convert.c:802
+#: ../app/core/gimpimage-convert.c:804
 msgid "Convert Image to RGB"
 msgstr "Convertir l'image en RVB"
 
-#: ../app/core/gimpimage-convert.c:806
+#: ../app/core/gimpimage-convert.c:808
 msgid "Convert Image to Grayscale"
 msgstr "Convertir l'image en niveaux de gris"
 
-#: ../app/core/gimpimage-convert.c:810
+#: ../app/core/gimpimage-convert.c:812
 msgid "Convert Image to Indexed"
 msgstr "Convertir l'image en couleurs indexées"
 
-#: ../app/core/gimpimage-convert.c:892
+#: ../app/core/gimpimage-convert.c:894
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Convertir en couleurs indexées (étape 2)"
 
-#: ../app/core/gimpimage-convert.c:937
+#: ../app/core/gimpimage-convert.c:939
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Convertir en couleurs indexées (étape 3)"
 
@@ -6318,11 +6318,11 @@ msgstr "Ajouter un point d'échantillonnage"
 
 #: ../app/core/gimpimage-sample-points.c:98 ../app/tools/gimpcolortool.c:425
 msgid "Remove Sample Point"
-msgstr "Supprimer le point d'échantillonage"
+msgstr "Supprimer le point d'échantillonnage"
 
 #: ../app/core/gimpimage-sample-points.c:135
 msgid "Move Sample Point"
-msgstr "Déplacer le point d'échantillonage"
+msgstr "Déplacer le point d'échantillonnage"
 
 #: ../app/core/gimpimage-undo-push.c:855
 #, c-format
@@ -8622,7 +8622,6 @@ msgid "Other..."
 msgstr "Autre..."
 
 #: ../app/file/file-open.c:129 ../app/file/file-save.c:111
-#, c-format
 msgid "Not a regular file"
 msgstr "Le fichier n'est pas un fichier ordinaire."
 
@@ -8639,7 +8638,6 @@ msgid "%s plug-In could not open image"
 msgstr "Le greffon %s n'a pas pu ouvrir l'image"
 
 #: ../app/file/file-open.c:474
-#, c-format
 msgid "Image doesn't contain any layers"
 msgstr "L'image ne contient aucun calque"
 
@@ -8657,7 +8655,6 @@ msgstr ""
 "dans la boîte de dialogue Préférences."
 
 #: ../app/file/file-procedure.c:200
-#, c-format
 msgid "Unknown file type"
 msgstr "Type de fichier inconnu"
 
@@ -8672,7 +8669,6 @@ msgid "'%s:' is not a valid URI scheme"
 msgstr "« %s » n'est pas un schéma URI valide"
 
 #: ../app/file/file-utils.c:88 ../app/file/file-utils.c:122
-#, c-format
 msgid "Invalid character sequence in URI"
 msgstr "Séquence de caractères non valide dans l'URI"
 
@@ -8684,8 +8680,7 @@ msgstr "Lancement de GIMP"
 msgid "Airbrush"
 msgstr "Aérographe"
 
-#: ../app/paint/gimpbrushcore.c:356
-#, c-format
+#: ../app/paint/gimpbrushcore.c:354
 msgid "No brushes available for use with this tool."
 msgstr "Aucune brosse disponible pour être utilisée avec cet outil."
 
@@ -8694,7 +8689,6 @@ msgid "Clone"
 msgstr "Clonage"
 
 #: ../app/paint/gimpclone.c:141
-#, c-format
 msgid "No patterns available for use with this tool."
 msgstr "Aucune motif disponible pour être utilisé avec cet outil."
 
@@ -8710,12 +8704,11 @@ msgstr "Éclaircir/Assombrir"
 msgid "Eraser"
 msgstr "Gomme"
 
-#: ../app/paint/gimpheal.c:87 ../app/tools/gimphealtool.c:53
+#: ../app/paint/gimpheal.c:123 ../app/tools/gimphealtool.c:53
 msgid "Heal"
 msgstr "Correcteur"
 
-#: ../app/paint/gimpheal.c:126
-#, c-format
+#: ../app/paint/gimpheal.c:162
 msgid "Healing does not operate on indexed layers."
 msgstr "Le correcteur ne fonctionne pas sur des calques en couleurs indexées."
 
@@ -8733,7 +8726,6 @@ msgid "Perspective Clone"
 msgstr "Clonage en perspective"
 
 #: ../app/paint/gimpperspectiveclone.c:160
-#, c-format
 msgid "Perspective Clone does not operate on indexed layers."
 msgstr ""
 "Le clonage en perspective ne fonctionne pas sur les calques en couleurs "
@@ -8744,7 +8736,6 @@ msgid "Smudge"
 msgstr "Barbouillage"
 
 #: ../app/paint/gimpsourcecore.c:227
-#, c-format
 msgid "Set a source image first."
 msgstr "Définissez d'abord une image source"
 
@@ -9265,7 +9256,7 @@ msgstr "Profondeur max :"
 
 #: ../app/tools/gimpblendoptions.c:262
 #: ../app/tools/gimpbucketfilloptions.c:287
-#: ../app/tools/gimpselectionoptions.c:416
+#: ../app/tools/gimpselectionoptions.c:403
 msgid "Threshold:"
 msgstr "Seuil :"
 
@@ -9279,7 +9270,6 @@ msgid "Blen_d"
 msgstr "_Dégradé"
 
 #: ../app/tools/gimpblendtool.c:163
-#, c-format
 msgid "Blend does not operate on indexed layers."
 msgstr "Le dégradé ne fonctionne pas sur des calques en couleurs indexées."
 
@@ -9311,7 +9301,6 @@ msgid "Adjust Brightness and Contrast"
 msgstr "Ajuster la luminosité et le contraste"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:169
-#, c-format
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr ""
 "Luminosité-Contraste ne fonctionne pas sur des calques en couleurs indexées."
@@ -9333,7 +9322,7 @@ msgid "Base filled area on all visible layers"
 msgstr "Remplit une région à partir d'une base sur tous les calques visibles"
 
 #: ../app/tools/gimpbucketfilloptions.c:112
-#: ../app/tools/gimpselectionoptions.c:128
+#: ../app/tools/gimpselectionoptions.c:125
 msgid "Maximum color difference"
 msgstr "Différence maximale de couleur"
 
@@ -9368,7 +9357,7 @@ msgstr "Remplir les régions transparentes"
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpperspectiveclonetool.c:965
-#: ../app/tools/gimpselectionoptions.c:404
+#: ../app/tools/gimpselectionoptions.c:391
 msgid "Sample merged"
 msgstr "Échantillonner sur tous les calques"
 
@@ -9450,7 +9439,6 @@ msgid "Adjust Color Balance"
 msgstr "Ajuster la balance des couleurs"
 
 #: ../app/tools/gimpcolorbalancetool.c:153
-#, c-format
 msgid "Color Balance operates only on RGB color layers."
 msgstr "La balance des couleurs fonctionne seulement sur des calques RVB."
 
@@ -9498,7 +9486,6 @@ msgid "Colorize the Image"
 msgstr "Colorier l'image"
 
 #: ../app/tools/gimpcolorizetool.c:148
-#, c-format
 msgid "Colorize operates only on RGB color layers."
 msgstr "Colorier ne fonctionne que sur des calques RVB."
 
@@ -9527,7 +9514,7 @@ msgstr "Moyenne du voisinage"
 
 #: ../app/tools/gimpcoloroptions.c:171
 #: ../app/tools/gimprectangleselectoptions.c:166
-#: ../app/tools/gimpselectionoptions.c:375
+#: ../app/tools/gimpselectionoptions.c:362
 #: ../app/widgets/gimpbrusheditor.c:154
 msgid "Radius:"
 msgstr "Rayon :"
@@ -9648,21 +9635,21 @@ msgstr "Calque actuel seulement"
 msgid "Allow growing"
 msgstr "Autoriser l'agrandissement"
 
-#: ../app/tools/gimpcroptool.c:115
+#: ../app/tools/gimpcroptool.c:119
 msgid "Crop"
 msgstr "Découpage"
 
-#: ../app/tools/gimpcroptool.c:116
+#: ../app/tools/gimpcroptool.c:120
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr ""
 "Outil de découpage : supprime les régions en bordure d'une image ou d'un "
 "calque"
 
-#: ../app/tools/gimpcroptool.c:117
+#: ../app/tools/gimpcroptool.c:121
 msgid "_Crop"
 msgstr "Déc_oupage"
 
-#: ../app/tools/gimpcroptool.c:242
+#: ../app/tools/gimpcroptool.c:257
 msgid "Click or press Enter to crop"
 msgstr "Cliquer ou appuyer sur Entrée pour découper"
 
@@ -9694,44 +9681,41 @@ msgstr "Enregistrement des courbes"
 msgid "Save curves settings to file"
 msgstr "Enregistre les courbes dans le fichier"
 
-#: ../app/tools/gimpcurvestool.c:253
-#, c-format
+#: ../app/tools/gimpcurvestool.c:254
 msgid "Curves does not operate on indexed layers."
 msgstr "Courbes ne fonctionne pas sur des calques en couleurs indexées."
 
-#: ../app/tools/gimpcurvestool.c:355
+#: ../app/tools/gimpcurvestool.c:358
 msgid "Click to add a control point"
 msgstr "Cliquez pour ajouter un point de contrôle."
 
-#: ../app/tools/gimpcurvestool.c:360
+#: ../app/tools/gimpcurvestool.c:363
 msgid "Click to add control points to all channels"
 msgstr "Cliquez pour ajouter des points de contrôle à tous les canaux."
 
-#: ../app/tools/gimpcurvestool.c:555 ../app/tools/gimplevelstool.c:365
+#: ../app/tools/gimpcurvestool.c:558 ../app/tools/gimplevelstool.c:365
 msgid "Cha_nnel:"
 msgstr "Ca_nal :"
 
-#: ../app/tools/gimpcurvestool.c:577 ../app/tools/gimplevelstool.c:387
+#: ../app/tools/gimpcurvestool.c:580 ../app/tools/gimplevelstool.c:387
 msgid "R_eset Channel"
 msgstr "Ré_initialiser le canal"
 
 #. Horizontal button box for load / save
-#: ../app/tools/gimpcurvestool.c:681 ../app/tools/gimplevelstool.c:581
+#: ../app/tools/gimpcurvestool.c:684 ../app/tools/gimplevelstool.c:581
 msgid "All Channels"
 msgstr "Tous les canaux"
 
 #. The radio box for selecting the curve type
-#: ../app/tools/gimpcurvestool.c:699
+#: ../app/tools/gimpcurvestool.c:702
 msgid "Curve Type"
 msgstr "Type de courbe"
 
-#: ../app/tools/gimpcurvestool.c:753 ../app/tools/gimplevelstool.c:672
-#, c-format
+#: ../app/tools/gimpcurvestool.c:756 ../app/tools/gimplevelstool.c:672
 msgid "not a GIMP Levels file"
 msgstr "pas un fichier de niveaux GIMP"
 
-#: ../app/tools/gimpcurvestool.c:767 ../app/tools/gimplevelstool.c:711
-#, c-format
+#: ../app/tools/gimpcurvestool.c:770 ../app/tools/gimplevelstool.c:711
 msgid "parse error"
 msgstr "erreur d'analyse"
 
@@ -9866,15 +9850,20 @@ msgstr ""
 msgid "_Flip"
 msgstr "_Retourner"
 
-#: ../app/tools/gimpforegroundselectoptions.c:77
+#: ../app/tools/gimpforegroundselectoptions.c:79
+#: ../app/tools/gimpselectionoptions.c:100
+msgid "Smooth edges"
+msgstr "Lisser les contours"
+
+#: ../app/tools/gimpforegroundselectoptions.c:85
 msgid "Select a single contiguous area"
 msgstr "Sélectionne une région contiguë"
 
-#: ../app/tools/gimpforegroundselectoptions.c:86
+#: ../app/tools/gimpforegroundselectoptions.c:96
 msgid "Size of the brush used for refinements"
 msgstr "Taille de la brosse utilisée pour l'affinage"
 
-#: ../app/tools/gimpforegroundselectoptions.c:91
+#: ../app/tools/gimpforegroundselectoptions.c:102
 msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
@@ -9882,55 +9871,55 @@ msgstr ""
 "De petites valeurs donnent une bordure de sélection plus précise mais "
 "peuvent aussi introduire des cassures dans la sélection"
 
-#: ../app/tools/gimpforegroundselectoptions.c:107
+#: ../app/tools/gimpforegroundselectoptions.c:121
 msgid "Sensitivity for brightness component"
 msgstr "Sensibilité pour la composante lumineuse"
 
-#: ../app/tools/gimpforegroundselectoptions.c:112
+#: ../app/tools/gimpforegroundselectoptions.c:127
 msgid "Sensitivity for red/green component"
 msgstr "Sensibilité pour la composante rouge/vert"
 
-#: ../app/tools/gimpforegroundselectoptions.c:117
+#: ../app/tools/gimpforegroundselectoptions.c:133
 msgid "Sensitivity for yellow/blue component"
 msgstr "Sensibilité pour la composante bleu/jaune"
 
 #. single / multiple objects
-#: ../app/tools/gimpforegroundselectoptions.c:231
+#: ../app/tools/gimpforegroundselectoptions.c:276
 msgid "Contiguous"
 msgstr "Contiguë"
 
 #. foreground / background
-#: ../app/tools/gimpforegroundselectoptions.c:236
+#: ../app/tools/gimpforegroundselectoptions.c:281
 #, c-format
 msgid "Interactive refinement  (%s)"
 msgstr "Affinage interactif (%s)"
 
-#: ../app/tools/gimpforegroundselectoptions.c:240
+#: ../app/tools/gimpforegroundselectoptions.c:285
 msgid "Mark background"
 msgstr "Marquer l'arrière-plan"
 
-#: ../app/tools/gimpforegroundselectoptions.c:241
+#: ../app/tools/gimpforegroundselectoptions.c:286
 msgid "Mark foreground"
 msgstr "Marquer le premier plan"
 
-#: ../app/tools/gimpforegroundselectoptions.c:257
+#: ../app/tools/gimpforegroundselectoptions.c:302
 msgid "Small brush"
 msgstr "Petite brosse"
 
-#: ../app/tools/gimpforegroundselectoptions.c:265
+#: ../app/tools/gimpforegroundselectoptions.c:310
 msgid "Large brush"
 msgstr "Grande brosse"
 
-#: ../app/tools/gimpforegroundselectoptions.c:289
+#: ../app/tools/gimpforegroundselectoptions.c:334
 msgid "Smoothing:"
 msgstr "Lissage :"
 
-#: ../app/tools/gimpforegroundselectoptions.c:295
+#: ../app/tools/gimpforegroundselectoptions.c:340
 msgid "Preview color:"
 msgstr "Couleur d'aperçu :"
 
 #. granularity
-#: ../app/tools/gimpforegroundselectoptions.c:298
+#: ../app/tools/gimpforegroundselectoptions.c:343
 msgid "Color Sensitivity"
 msgstr "Sensibilité à la couleur"
 
@@ -10032,7 +10021,6 @@ msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Ajuster la teinte / luminosité / saturation"
 
 #: ../app/tools/gimphuesaturationtool.c:173
-#, c-format
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Teinte-Saturation opère seulement sur des calques RVB."
 
@@ -10214,7 +10202,6 @@ msgid "Save levels settings to file"
 msgstr "Enregistre les paramètres de niveaux dans le fichier"
 
 #: ../app/tools/gimplevelstool.c:236
-#, c-format
 msgid "Levels does not operate on indexed layers."
 msgstr "Niveaux ne fonctionne pas sur des calques en couleurs indexées."
 
@@ -10377,7 +10364,7 @@ msgid "_Paintbrush"
 msgstr "_Pinceau"
 
 #: ../app/tools/gimppaintoptions-gui.c:99
-#: ../app/tools/gimpselectionoptions.c:341
+#: ../app/tools/gimpselectionoptions.c:331
 #: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:273
 msgid "Mode:"
 msgstr "Mode :"
@@ -10527,7 +10514,6 @@ msgid "Posterize (Reduce Number of Colors)"
 msgstr "Postériser (Réduire le nombre de couleurs)"
 
 #: ../app/tools/gimpposterizetool.c:140
-#, c-format
 msgid "Posterize does not operate on indexed layers."
 msgstr "Postériser ne fonctionne pas sur les calques en couleurs indexées."
 
@@ -10586,7 +10572,7 @@ msgstr ""
 msgid "_Rectangle Select"
 msgstr "Sélection _rectangulaire"
 
-#: ../app/tools/gimprectangletool.c:1032 ../app/tools/gimprectangletool.c:1880
+#: ../app/tools/gimprectangletool.c:1033 ../app/tools/gimprectangletool.c:1883
 msgid "Rectangle: "
 msgstr "Rectangle :"
 
@@ -10636,35 +10622,31 @@ msgstr "É_tirer / Rétrécir"
 msgid "command|Scale"
 msgstr "Étirer / Rétrécir"
 
-#: ../app/tools/gimpselectionoptions.c:103
-msgid "Smooth edges"
-msgstr "Lisser les contours"
-
-#: ../app/tools/gimpselectionoptions.c:117
+#: ../app/tools/gimpselectionoptions.c:114
 msgid "Allow completely transparent regions to be selected"
 msgstr "Permet aux régions complètement transparentes d'être sélectionnables"
 
-#: ../app/tools/gimpselectionoptions.c:123
+#: ../app/tools/gimpselectionoptions.c:120
 msgid "Base selection on all visible layers"
 msgstr "Sélection basée sur tous les calques visibles"
 
-#: ../app/tools/gimpselectionoptions.c:349 ../app/tools/gimptextoptions.c:457
+#: ../app/tools/gimpselectionoptions.c:339 ../app/tools/gimptextoptions.c:457
 msgid "Antialiasing"
 msgstr "Lissage"
 
-#: ../app/tools/gimpselectionoptions.c:367
+#: ../app/tools/gimpselectionoptions.c:354
 msgid "Feather edges"
 msgstr "Adoucir les bords"
 
-#: ../app/tools/gimpselectionoptions.c:384
+#: ../app/tools/gimpselectionoptions.c:371
 msgid "Interactive boundary"
 msgstr "Contour interactif"
 
-#: ../app/tools/gimpselectionoptions.c:398
+#: ../app/tools/gimpselectionoptions.c:385
 msgid "Select transparent areas"
 msgstr "Sélectionne des régions transparentes"
 
-#: ../app/tools/gimpselectionoptions.c:423
+#: ../app/tools/gimpselectionoptions.c:410
 msgid "Select by:"
 msgstr "Sélectionner par :"
 
@@ -10852,7 +10834,6 @@ msgid "Apply Threshold"
 msgstr "Appliquer les seuils"
 
 #: ../app/tools/gimpthresholdtool.c:148
-#, c-format
 msgid "Threshold does not operate on indexed layers."
 msgstr "Les seuils ne fonctionnent pas sur les calques en couleurs indexées."
 
@@ -11183,7 +11164,6 @@ msgid "No paths found in '%s'"
 msgstr "Aucun chemin trouvé dans « %s »"
 
 #: ../app/vectors/gimpvectors-import.c:339
-#, c-format
 msgid "No paths found in the buffer"
 msgstr "Aucun chemin trouvé dans le tampon"
 
@@ -11571,7 +11551,6 @@ msgid "Remove Controller '%s'?"
 msgstr "Enlever le contrôleur « %s » ?"
 
 #: ../app/widgets/gimpcontrollerlist.c:571
-#, c-format
 msgid ""
 "Removing this controller from the list of active controllers will "
 "permanently delete all event mappings you have configured.\n"
@@ -12448,7 +12427,7 @@ msgstr "Fenêtre utilitaire"
 msgid "Keep above"
 msgstr "Garder au-dessus"
 
-#: ../app/xcf/xcf-load.c:275
+#: ../app/xcf/xcf-load.c:277
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -12456,14 +12435,14 @@ msgstr ""
 "Le fichier XCF est corrompu ! Toutes les données valides ont été chargées "
 "mais le résultat reste incomplet."
 
-#: ../app/xcf/xcf-load.c:284
+#: ../app/xcf/xcf-load.c:286
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr ""
 "Le fichier XCF est corrompu ! Aucune donnée exploitable n'a pu être extraite."
 
-#: ../app/xcf/xcf-load.c:316
+#: ../app/xcf/xcf-load.c:318
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"

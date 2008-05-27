@@ -1,4 +1,4 @@
-# French translation of gimp-tiny-fu.
+# French translation of gimp-script-fu.
 # Copyright (C) 2000-2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-30 22:36+0200\n"
-"PO-Revision-Date: 2007-09-25 22:44+0200\n"
-"Last-Translator: Laurent Monin <gimp@norz.org>\n"
+"PO-Revision-Date: 2008-05-18 15:42+0100\n"
+"Last-Translator: Julien Hardelin <jm.hard@wanadoo.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -279,7 +279,7 @@ msgstr "_Contour 3D..."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
-msgstr "Bosselage (calque alpha) rayon de flou"
+msgstr "Rayon de flou du bosselage (calque alpha)"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Create a logo with outlined text and a drop shadow"
@@ -954,11 +954,11 @@ msgstr "Crée un logo avec un texte dans le style « tache bovine »"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 msgid "Spots density X"
-msgstr "Densité de points en X"
+msgstr "Densité de taches en X"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:9
 msgid "Spots density Y"
-msgstr "Densité de points en Y"
+msgstr "Densité de taches en Y"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
 msgid "Add glowing"
@@ -1103,7 +1103,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
-msgstr "Quantité de flou"
+msgstr "Importance du flou"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:3
 msgid "Chip Awa_y..."
@@ -2178,7 +2178,7 @@ msgstr "Ajoute un effet « prédateur » à la région sélectionnée (ou alph
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge amount"
-msgstr "Quantité d'arêtes"
+msgstr "Nombre d'arêtes"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:4
 msgid "Pixel amount"
@@ -2968,47 +2968,3 @@ msgstr "Opacité d'éclairage"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Effet _Xach..."
-
-#~ msgid "Darken only\\n(Better, but only for images with a lot of white)"
-#~ msgstr ""
-#~ "Assombrir seulement\\n(meilleur, mais uniquement sur les images avec "
-#~ "beaucoup de blanc)"
-
-#~ msgid "Apply generated layermask"
-#~ msgstr "Appliquer le masque de calque généré"
-
-#~ msgid "Clear unselected maskarea"
-#~ msgstr "Effacer les zones non sélectionnées du masque "
-
-#~ msgid ""
-#~ "Create a layermask that fades the edges of the selected region (or alpha)"
-#~ msgstr ""
-#~ "Crée un masque de calque qui estompe progressivement les bords de la "
-#~ "région sélectionnée (ou alpha)"
-
-#~ msgid "Fade from %"
-#~ msgstr "Estompement depuis %"
-
-#~ msgid "Fade to %"
-#~ msgstr "Estompement vers %"
-
-#~ msgid "Use growing selection"
-#~ msgstr "Utiliser une sélection croissante"
-
-#~ msgid "_Fade to Layer Mask..."
-#~ msgstr "_Estompement vers masque de calque..."
-
-#~ msgid "/Script-Fu/"
-#~ msgstr "/Script-Fu/"
-
-#~ msgid "This procedure is deprecated! use 'gimp-edit-copy-visible' instead."
-#~ msgstr ""
-#~ "Cette procédure est obsolète ! Utilisez « gimp-edit-copy-visible » à la "
-#~ "place."
-
-#~ msgid ""
-#~ "Round the corners of the current selection (deprecated, use Rounded "
-#~ "Rectangle)"
-#~ msgstr ""
-#~ "Arrondit les coins de la sélection courante (obsolète, utilisez rectangle "
-#~ "arrondi)"
