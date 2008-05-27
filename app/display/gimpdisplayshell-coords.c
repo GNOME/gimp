@@ -279,8 +279,8 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
                               coords->velocity *
                               MIN (SMOOTH_FACTOR, coords->velocity));
 
-          /* Speed needs upper limit but allowing it to be 1.0 is no good in tools*/
-          coords->velocity = MIN (coords->velocity, 0.9999);
+          /* Speed needs upper limit */
+          coords->velocity = MIN (coords->velocity, 1.0);
         }
       /* High speed -> less smooth*/
       inertia_factor *= (1 - coords->velocity);

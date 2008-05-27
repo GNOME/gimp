@@ -1,3 +1,8 @@
+2008-05-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-coords.c: revert velocity limit to
+	1.0, this part of the patch shouldn't have been applied.
+
 2008-05-27  Sven Neumann  <sven@gimp.org>
 
 	* app/paint/gimpconvolve.c: make Convolve work with very thin
