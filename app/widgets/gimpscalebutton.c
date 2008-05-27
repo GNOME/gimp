@@ -82,15 +82,25 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
 
   cairo_set_line_width (cr, 0.5);
 
-  cairo_translate (cr,
-                   widget->allocation.x,
-                   widget->allocation.y + widget->allocation.height + 0.5);
-  cairo_scale (cr, 2.0, -2.0);
+  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+    {
+      cairo_translate (cr,
+                       widget->allocation.x + widget->allocation.width - 0.5,
+                       widget->allocation.y + widget->allocation.height);
+      cairo_scale (cr, -2.0, -2.0);
+    }
+  else
+    {
+      cairo_translate (cr,
+                       widget->allocation.x + 0.5,
+                       widget->allocation.y + widget->allocation.height);
+      cairo_scale (cr, 2.0, -2.0);
+    }
 
   for (i = 0; i < value; i++)
     {
-      cairo_move_to (cr, 0, i);
-      cairo_line_to (cr, i + 0.5, i);
+      cairo_move_to (cr, i, 0);
+      cairo_line_to (cr, i, i + 0.5);
     }
 
   gdk_cairo_set_source_color (cr, &widget->style->fg[widget->state]);
@@ -98,8 +108,8 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
 
   for ( ; i < steps; i++)
     {
-      cairo_move_to (cr, 0, i);
-      cairo_line_to (cr, i + 0.5, i);
+      cairo_move_to (cr, i, 0);
+      cairo_line_to (cr, i, i + 0.5);
     }
 
   gdk_cairo_set_source_color (cr, &widget->style->fg[GTK_STATE_INSENSITIVE]);

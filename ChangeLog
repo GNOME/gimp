@@ -1,3 +1,9 @@
+2008-05-27  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpscalebutton.c (gimp_scale_button_image_expose):
+	rotated the button graphics and fixed it for 'right-to-left'
+	rendering.
+
 2008-05-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-coords.c: revert velocity limit to
