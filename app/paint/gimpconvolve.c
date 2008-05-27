@@ -57,6 +57,8 @@ static void    gimp_convolve_motion           (GimpPaintCore     *paint_core,
 
 static void    gimp_convolve_calculate_matrix (GimpConvolve      *convolve,
                                                GimpConvolveType   type,
+                                               gint               radius_x,
+                                               gint               radius_y,
                                                gdouble            rate);
 static gdouble gimp_convolve_sum_matrix       (const gfloat      *matrix);
 
@@ -137,11 +139,6 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   if (gimp_drawable_is_indexed (drawable))
     return;
 
-  /* If the brush is smaller than the convolution matrix, don't convolve */
-  if (brush_core->brush->mask->width  < 3 ||
-      brush_core->brush->mask->height < 3)
-    return;
-
   opacity = gimp_paint_options_get_fade (paint_options, image,
                                          paint_core->pixel_dist);
   if (opacity == 0.0)
@@ -157,7 +154,10 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                                                &paint_core->cur_coords,
                                                paint_core->use_pressure);
 
-  gimp_convolve_calculate_matrix (convolve, options->type, rate);
+  gimp_convolve_calculate_matrix (convolve, options->type,
+                                  brush_core->brush->mask->width / 2,
+                                  brush_core->brush->mask->height / 2,
+                                  rate);
 
   /*  configure the source pixel region  */
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
@@ -218,10 +218,17 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 static void
 gimp_convolve_calculate_matrix (GimpConvolve    *convolve,
                                 GimpConvolveType type,
+                                gint             radius_x,
+                                gint             radius_y,
                                 gdouble          rate)
 {
   /*  find percent of tool pressure  */
-  gdouble percent = MIN (rate / 100.0, 1.0);
+  const gdouble percent = MIN (rate / 100.0, 1.0);
+
+  convolve->matrix[0] = (radius_x && radius_y) ? 1.0 : 0.0;
+  convolve->matrix[1] = (radius_y)             ? 1.0 : 0.0;
+  convolve->matrix[2] = (radius_x && radius_y) ? 1.0 : 0.0;
+  convolve->matrix[3] = (radius_x)             ? 1.0 : 0.0;
 
   /*  get the appropriate convolution matrix and size and divisor  */
   switch (type)
@@ -237,6 +244,11 @@ gimp_convolve_calculate_matrix (GimpConvolve    *convolve,
     case GIMP_CUSTOM_CONVOLVE:
       break;
     }
+
+  convolve->matrix[5] = (radius_x)             ? 1.0 : 0.0;
+  convolve->matrix[6] = (radius_x && radius_y) ? 1.0 : 0.0;
+  convolve->matrix[7] = (radius_y)             ? 1.0 : 0.0;
+  convolve->matrix[8] = (radius_x && radius_y) ? 1.0 : 0.0;
 
   convolve->matrix_divisor = gimp_convolve_sum_matrix (convolve->matrix);
 }

@@ -1,3 +1,8 @@
+2008-05-27  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimpconvolve.c: make Convolve work with very thin
+	brushes, then convolving only in one direction (bug #533791).
+
 2008-05-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/Makefile.am
