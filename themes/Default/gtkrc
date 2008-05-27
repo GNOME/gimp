@@ -61,14 +61,6 @@ style "gimp-default-style"
 class "GtkWidget" style "gimp-default-style"
 
 
-style "gimp-tiny-font-style"
-{
-  font_name = "sans 8"
-}
-
-class "*Ruler*" style "gimp-tiny-font-style"
-
-
 style "gimp-tool-dialog-style" = "gimp-default-style"
 {
   GtkDialog::action_area_border = 6

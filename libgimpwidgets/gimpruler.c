@@ -402,6 +402,29 @@ _gimp_ruler_get_metric (GimpRuler *ruler)
   return GIMP_RULER_GET_PRIVATE (ruler)->metric;
 }
 
+PangoLayout *
+_gimp_ruler_create_pango_layout (GtkWidget   *widget,
+                                 const gchar *text)
+{
+  PangoLayout    *layout;
+  PangoAttrList  *attrs;
+  PangoAttribute *attr;
+
+  layout = gtk_widget_create_pango_layout (widget, text);
+
+  attrs = pango_attr_list_new ();
+
+  attr = pango_attr_scale_new (PANGO_SCALE_X_SMALL);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
+
+  pango_layout_set_attributes (layout, attrs);
+  pango_attr_list_unref (attrs);
+
+  return layout;
+}
+
 static void
 gimp_ruler_realize (GtkWidget *widget)
 {

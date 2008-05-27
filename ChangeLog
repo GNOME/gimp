@@ -1,3 +1,12 @@
+2008-05-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpruler.[ch]
+	* libgimpwidgets/gimphruler.c (gimp_hruler_draw_ticks)
+	* libgimpwidgets/gimpvruler.c (gimp_vruler_draw_ticks): use an
+	extra small font for the tick labels.
+
+	* themes/Default/gtkrc: don't hardcode a font size for the rulers.
+
 2008-05-27  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: add -DGDK_PIXBUF_DISABLE_SINGLE_INCLUDES to

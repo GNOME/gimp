@@ -83,8 +83,10 @@ void           gimp_ruler_get_range  (GimpRuler      *ruler,
                                       gdouble        *position,
                                       gdouble        *max_size);
 
-GdkDrawable     * _gimp_ruler_get_backing_store (GimpRuler *ruler) G_GNUC_INTERNAL;
-GimpRulerMetric * _gimp_ruler_get_metric        (GimpRuler *ruler) G_GNUC_INTERNAL;
+GdkDrawable     * _gimp_ruler_get_backing_store   (GimpRuler   *ruler) G_GNUC_INTERNAL;
+GimpRulerMetric * _gimp_ruler_get_metric          (GimpRuler   *ruler) G_GNUC_INTERNAL;
+PangoLayout     * _gimp_ruler_create_pango_layout (GtkWidget   *widget,
+                                                   const gchar *text)  G_GNUC_INTERNAL;
 
 G_END_DECLS
 
