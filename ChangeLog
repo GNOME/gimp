@@ -1,5 +1,9 @@
 2008-05-27  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayoptions.c: reenabled rulers by default.
+
+2008-05-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpruler.[ch]
 	* libgimpwidgets/gimphruler.c (gimp_hruler_draw_ticks)
 	* libgimpwidgets/gimpvruler.c (gimp_vruler_draw_ticks): use an
