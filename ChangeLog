@@ -1,5 +1,10 @@
 2008-05-27  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: add -DGDK_PIXBUF_DISABLE_SINGLE_INCLUDES to
+	CPPFLAGS.
+
+2008-05-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimppaintoptions-gui.c: don't add the gradient box for
 	the blend tool. Clean up the code by moving the checks for the
 	tool type out of the utility functions into the main
