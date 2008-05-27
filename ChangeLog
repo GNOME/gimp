@@ -1,3 +1,9 @@
+2008-05-27  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/help-browser/dialog.c: undef
+	GDK_PIXBUF_DISABLE_SINGLE_INCLUDES around including
+	<libgtkhtml/gtkhtml.h>.
+
 2008-05-27  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayoptions.c: reenabled rulers by default.

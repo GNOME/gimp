@@ -34,7 +34,9 @@
 
 #include <gtk/gtk.h>
 
+#undef GDK_PIXBUF_DISABLE_SINGLE_INCLUDES
 #include <libgtkhtml/gtkhtml.h>
+#define GDK_PIXBUF_DISABLE_SINGLE_INCLUDES
 
 #include "libgimpwidgets/gimpwidgets.h"
 
