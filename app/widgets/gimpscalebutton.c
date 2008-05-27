@@ -28,30 +28,70 @@
 #include "gimpscalebutton.h"
 
 
-static gboolean  gimp_scale_button_image_expose (GtkWidget       *widget,
-                                                 GdkEventExpose  *event,
-                                                 GimpScaleButton *button);
+static void      gimp_scale_button_value_changed  (GtkScaleButton  *button,
+                                                   gdouble          value);
+static void      gimp_scale_button_update_tooltip (GimpScaleButton *button);
+static gboolean  gimp_scale_button_image_expose   (GtkWidget       *widget,
+                                                   GdkEventExpose  *event,
+                                                   GimpScaleButton *button);
 
 
 G_DEFINE_TYPE (GimpScaleButton, gimp_scale_button, GTK_TYPE_SCALE_BUTTON)
+
+#define parent_class gimp_scale_button_parent_class
 
 
 static void
 gimp_scale_button_class_init (GimpScaleButtonClass *klass)
 {
+  GtkScaleButtonClass *button_class = GTK_SCALE_BUTTON_CLASS (klass);
 
+  button_class->value_changed = gimp_scale_button_value_changed;
 }
 
 static void
 gimp_scale_button_init (GimpScaleButton *button)
 {
-  GtkWidget *image;
-
-  image = gtk_bin_get_child (GTK_BIN (button));
+  GtkWidget *image = gtk_bin_get_child (GTK_BIN (button));
 
   g_signal_connect (image, "expose-event",
                     G_CALLBACK (gimp_scale_button_image_expose),
                     button);
+
+  /* GtkScaleButton doesn't emit "value-changed" when the adjustment changes */
+  g_signal_connect (button, "notify::adjustment",
+                    G_CALLBACK (gimp_scale_button_update_tooltip),
+                    NULL);
+
+  gimp_scale_button_update_tooltip (button);
+}
+
+static void
+gimp_scale_button_value_changed (GtkScaleButton *button,
+                                 gdouble         value)
+{
+  if (GTK_SCALE_BUTTON_CLASS (parent_class)->value_changed)
+    GTK_SCALE_BUTTON_CLASS (parent_class)->value_changed (button, value);
+
+  gimp_scale_button_update_tooltip (GIMP_SCALE_BUTTON (button));
+}
+
+static void
+gimp_scale_button_update_tooltip (GimpScaleButton *button)
+{
+  GtkAdjustment *adj;
+  gchar         *text;
+
+  adj = gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
+
+  /*  use U+2009 THIN SPACE to seperate the percent sign from the number */
+
+  text = g_strdup_printf ("%d\342\200\211%%",
+                          (gint) (0.5 + ((adj->value - adj->lower) * 100.0 /
+                                         (adj->upper - adj->lower))));
+
+  gtk_widget_set_tooltip_text (GTK_WIDGET (button), text);
+  g_free (text);
 }
 
 static gboolean

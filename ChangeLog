@@ -9,6 +9,10 @@
 
 2008-05-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpscalebutton.c: display a tooltip showing the value.
+
+2008-05-27  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpscalebutton.c (gimp_scale_button_image_expose):
 	rotated the button graphics and fixed it for 'right-to-left'
 	rendering.
