@@ -33,7 +33,6 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpairbrushtool.h"
-#include "gimpblendtool.h"
 #include "gimpclonetool.h"
 #include "gimpconvolvetool.h"
 #include "gimpdodgeburntool.h"
@@ -146,18 +145,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gimp_scale_entry_set_logarithmic (adj, TRUE);
     }
 
-  /*  the gradient  */
-  if (tool_type == GIMP_TYPE_BLEND_TOOL)
-    {
-      button = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
-                                           "gradient-view-type",
-                                           "gradient-view-size",
-                                           "gradient-reverse");
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
-                                 _("Gradient:"), 0.0, 0.5,
-                                 button, 2, TRUE);
-    }
-
   if (tool_has_opacity_dynamics (tool_type))
     {
       dynamics_labels[n_dynamics] = gtk_label_new (_("Opacity"));
@@ -255,16 +242,13 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
         }
     }
 
-  frame = fade_options_gui (options, tool_type);
-  if (frame)
+  if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
+      frame = fade_options_gui (options, tool_type);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
-    }
 
-  frame = jitter_options_gui (options, tool_type);
-  if (frame)
-    {
+      frame = jitter_options_gui (options, tool_type);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
     }
@@ -298,10 +282,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (button);
     }
 
-  frame = gradient_options_gui (options, tool_type,
-                                incremental_toggle);
-  if (frame)
+  if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL))
     {
+      frame = gradient_options_gui (options, tool_type, incremental_toggle);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
     }
@@ -571,39 +554,35 @@ fade_options_gui (GimpPaintOptions *paint_options,
                   GType             tool_type)
 {
   GObject   *config = G_OBJECT (paint_options);
-  GtkWidget *frame  = NULL;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkWidget *spinbutton;
+  GtkWidget *menu;
 
-  if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
-    {
-      GtkWidget *table;
-      GtkWidget *spinbutton;
-      GtkWidget *menu;
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
 
-      table = gtk_table_new (1, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  frame = gimp_prop_expanding_frame_new (config, "use-fade",
+                                         _("Fade out"),
+                                         table, NULL);
 
-      frame = gimp_prop_expanding_frame_new (config, "use-fade",
-                                             _("Fade out"),
-                                             table, NULL);
+  /*  the fade-out sizeentry  */
+  spinbutton = gimp_prop_spin_button_new (config, "fade-length",
+                                          1.0, 50.0, 0);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 6);
 
-      /*  the fade-out sizeentry  */
-      spinbutton = gimp_prop_spin_button_new (config, "fade-length",
-                                              1.0, 50.0, 0);
-      gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 6);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Length:"), 0.0, 0.5,
+                             spinbutton, 1, FALSE);
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                 _("Length:"), 0.0, 0.5,
-                                 spinbutton, 1, FALSE);
+  /*  the fade-out unitmenu  */
+  menu = gimp_prop_unit_menu_new (config, "fade-unit", "%a");
+  gtk_table_attach (GTK_TABLE (table), menu, 2, 3, 0, 1,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (menu);
 
-      /*  the fade-out unitmenu  */
-      menu = gimp_prop_unit_menu_new (config, "fade-unit", "%a");
-      gtk_table_attach (GTK_TABLE (table), menu, 2, 3, 0, 1,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (menu);
-
-      g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
-      gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 0);
-    }
+  g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
+  gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 0);
 
   return frame;
 }
@@ -613,25 +592,21 @@ jitter_options_gui (GimpPaintOptions *paint_options,
                     GType             tool_type)
 {
   GObject   *config = G_OBJECT (paint_options);
-  GtkWidget *frame  = NULL;
+  GtkWidget *frame;
+  GtkWidget *table;
 
-  if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
-    {
-      GtkWidget *table;
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
 
-      table = gtk_table_new (1, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  frame = gimp_prop_expanding_frame_new (config, "use-jitter",
+                                         _("Apply Jitter"),
+                                         table, NULL);
 
-      frame = gimp_prop_expanding_frame_new (config, "use-jitter",
-                                             _("Apply Jitter"),
-                                             table, NULL);
-
-      gimp_prop_scale_entry_new (config, "jitter-amount",
-                                 GTK_TABLE (table), 0, 0,
-                                 _("Amount:"),
-                                 0.01, 0.1, 2,
-                                 TRUE, 0.0, 5.0);
-    }
+  gimp_prop_scale_entry_new (config, "jitter-amount",
+                             GTK_TABLE (table), 0, 0,
+                             _("Amount:"),
+                             0.01, 0.1, 2,
+                             TRUE, 0.0, 5.0);
 
   return frame;
 }
@@ -642,65 +617,61 @@ gradient_options_gui (GimpPaintOptions *paint_options,
                       GtkWidget        *incremental_toggle)
 {
   GObject   *config = G_OBJECT (paint_options);
-  GtkWidget *frame  = NULL;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkWidget *spinbutton;
+  GtkWidget *button;
+  GtkWidget *menu;
+  GtkWidget *combo;
 
-  if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL))
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+
+  frame = gimp_prop_expanding_frame_new (config, "use-gradient",
+                                         _("Use color from gradient"),
+                                         table, &button);
+
+  if (incremental_toggle)
     {
-      GtkWidget *table;
-      GtkWidget *spinbutton;
-      GtkWidget *button;
-      GtkWidget *menu;
-      GtkWidget *combo;
-
-      table = gtk_table_new (3, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-
-      frame = gimp_prop_expanding_frame_new (config, "use-gradient",
-                                             _("Use color from gradient"),
-                                             table, &button);
-
-      if (incremental_toggle)
-        {
-          gtk_widget_set_sensitive (incremental_toggle,
-                                    ! paint_options->gradient_options->use_gradient);
-          g_object_set_data (G_OBJECT (button), "inverse_sensitive",
-                             incremental_toggle);
-        }
-
-      /*  the gradient view  */
-      button = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (config), 2,
-                                           "gradient-view-type",
-                                           "gradient-view-size",
-                                           "gradient-reverse");
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                 _("Gradient:"), 0.0, 0.5,
-                                 button, 2, TRUE);
-
-      /*  the gradient length scale  */
-      spinbutton = gimp_prop_spin_button_new (config, "gradient-length",
-                                              1.0, 50.0, 0);
-      gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 6);
-
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                 _("Length:"), 0.0, 0.5,
-                                 spinbutton, 1, FALSE);
-
-      /*  the gradient unitmenu  */
-      menu = gimp_prop_unit_menu_new (config, "gradient-unit", "%a");
-      gtk_table_attach (GTK_TABLE (table), menu, 2, 3, 1, 2,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (menu);
-
-      g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
-      gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 0);
-
-      /*  the repeat type  */
-      combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                                 _("Repeat:"), 0.0, 0.5,
-                                 combo, 2, FALSE);
+      gtk_widget_set_sensitive (incremental_toggle,
+                                ! paint_options->gradient_options->use_gradient);
+      g_object_set_data (G_OBJECT (button), "inverse_sensitive",
+                         incremental_toggle);
     }
+
+  /*  the gradient view  */
+  button = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (config), 2,
+                                       "gradient-view-type",
+                                       "gradient-view-size",
+                                       "gradient-reverse");
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Gradient:"), 0.0, 0.5,
+                             button, 2, TRUE);
+
+  /*  the gradient length scale  */
+  spinbutton = gimp_prop_spin_button_new (config, "gradient-length",
+                                          1.0, 50.0, 0);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 6);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                             _("Length:"), 0.0, 0.5,
+                             spinbutton, 1, FALSE);
+
+  /*  the gradient unitmenu  */
+  menu = gimp_prop_unit_menu_new (config, "gradient-unit", "%a");
+  gtk_table_attach (GTK_TABLE (table), menu, 2, 3, 1, 2,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (menu);
+
+  g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
+  gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 0);
+
+  /*  the repeat type  */
+  combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                             _("Repeat:"), 0.0, 0.5,
+                             combo, 2, FALSE);
 
   return frame;
 }

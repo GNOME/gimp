@@ -28,6 +28,7 @@
 #include "core/gimpdatafactory.h"
 
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpviewablebox.h"
 
 #include "gimpblendoptions.h"
 #include "gimppaintoptions-gui.h"
@@ -205,6 +206,15 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   GtkWidget *button;
 
   table = g_object_get_data (G_OBJECT (vbox), GIMP_PAINT_OPTIONS_TABLE_KEY);
+
+  /*  the gradient  */
+  button = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
+                                       "gradient-view-type",
+                                       "gradient-view-size",
+                                       "gradient-reverse");
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                             _("Gradient:"), 0.0, 0.5,
+                             button, 2, TRUE);
 
   /*  the offset scale  */
   gimp_prop_scale_entry_new (config, "offset",

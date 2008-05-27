@@ -1,3 +1,12 @@
+2008-05-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimppaintoptions-gui.c: don't add the gradient box for
+	the blend tool. Clean up the code by moving the checks for the
+	tool type out of the utility functions into the main
+	gimp_paint_options_gui() function.
+
+	* app/tools/gimpblendoptions.c: add the gradient box here.
+
 2008-05-27  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpscalebutton.c (gimp_scale_button_image_expose):
