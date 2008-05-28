@@ -32,7 +32,6 @@ G_BEGIN_DECLS
 
 
 typedef struct _GimpRulerClass   GimpRulerClass;
-typedef struct _GimpRulerMetric  GimpRulerMetric;
 
 struct _GimpRuler
 {
@@ -53,35 +52,28 @@ struct _GimpRulerClass
   void (*_gimp_reserved4) (void);
 };
 
-struct _GimpRulerMetric
-{
-  gdouble  ruler_scale[16];
-  gint     subdivide[5];        /* five possible modes of subdivision */
-};
+
+GType     gimp_ruler_get_type   (void) G_GNUC_CONST;
+
+void      gimp_ruler_set_unit     (GimpRuler *ruler,
+                                   GimpUnit   unit);
+GimpUnit  gimp_ruler_get_unit     (GimpRuler *ruler);
+void      gimp_ruler_set_position (GimpRuler *ruler,
+                                   gdouble    position);
+gdouble   gimp_ruler_get_position (GimpRuler *ruler);
+void      gimp_ruler_set_range    (GimpRuler *ruler,
+                                   gdouble    lower,
+                                   gdouble    upper,
+                                   gdouble    max_size);
+void      gimp_ruler_get_range    (GimpRuler *ruler,
+                                   gdouble   *lower,
+                                   gdouble   *upper,
+                                   gdouble   *max_size);
 
 
-GType    gimp_ruler_get_type   (void) G_GNUC_CONST;
-
-void     gimp_ruler_set_position (GimpRuler *ruler,
-                                  gdouble    position);
-gdouble  gimp_ruler_get_position (GimpRuler *ruler);
-void     gimp_ruler_set_range    (GimpRuler *ruler,
-                                  gdouble    lower,
-                                  gdouble    upper,
-                                  gdouble    max_size);
-void     gimp_ruler_get_range    (GimpRuler *ruler,
-                                  gdouble   *lower,
-                                  gdouble   *upper,
-                                  gdouble   *max_size);
-
-void     gimp_ruler_draw_ticks   (GimpRuler *ruler);
-void     gimp_ruler_draw_pos     (GimpRuler *ruler);
-
-
-GdkDrawable           * _gimp_ruler_get_backing_store   (GimpRuler   *ruler) G_GNUC_INTERNAL;
-const GimpRulerMetric * _gimp_ruler_get_metric          (GimpRuler   *ruler) G_GNUC_INTERNAL;
-PangoLayout           * _gimp_ruler_create_pango_layout (GtkWidget   *widget,
-                                                         const gchar *text)  G_GNUC_INTERNAL;
+GdkDrawable * _gimp_ruler_get_backing_store   (GimpRuler   *ruler) G_GNUC_INTERNAL;
+PangoLayout * _gimp_ruler_create_pango_layout (GtkWidget   *widget,
+                                               const gchar *text)  G_GNUC_INTERNAL;
 
 
 G_END_DECLS

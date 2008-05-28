@@ -35,6 +35,17 @@
 #define MAXIMUM_SUBDIVIDE     5
 
 
+static const struct
+{
+  gdouble  ruler_scale[16];
+  gint     subdivide[5];        /* five possible modes of subdivision */
+} ruler_metric =
+{
+  { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
+  { 1, 5, 10, 50, 100 }
+};
+
+
 typedef struct
 {
   gint xsrc;
@@ -99,11 +110,9 @@ gimp_hruler_motion_notify (GtkWidget      *widget,
 
   gimp_ruler_get_range (ruler, &lower, &upper, NULL);
 
-  position = lower + ((upper - lower) * x) / widget->allocation.width;
-
-  g_object_set (ruler, "position", position, NULL);
-
-  gimp_ruler_draw_pos (ruler);
+  gimp_ruler_set_position (ruler,
+                           lower +
+                           ((upper - lower) * x) / widget->allocation.width);
 
   return FALSE;
 }
@@ -111,8 +120,7 @@ gimp_hruler_motion_notify (GtkWidget      *widget,
 static void
 gimp_hruler_draw_ticks (GimpRuler *ruler)
 {
-  GtkWidget             *widget = GTK_WIDGET (ruler);
-  const GimpRulerMetric *metric;
+  GtkWidget      *widget = GTK_WIDGET (ruler);
   GdkDrawable    *backing_store;
   cairo_t        *cr;
   gint            i;
@@ -167,8 +175,6 @@ gimp_hruler_draw_ticks (GimpRuler *ruler)
 
   gimp_ruler_get_range (ruler, &lower, &upper, &max_size);
 
-  metric = _gimp_ruler_get_metric (ruler);
-
   if ((upper - lower) == 0)
     goto out;
 
@@ -183,19 +189,19 @@ gimp_hruler_draw_ticks (GimpRuler *ruler)
   g_snprintf (unit_str, sizeof (unit_str), "%d", scale);
   text_width = strlen (unit_str) * digit_height + 1;
 
-  for (scale = 0; scale < G_N_ELEMENTS (metric->ruler_scale); scale++)
-    if (metric->ruler_scale[scale] * fabs (increment) > 2 * text_width)
+  for (scale = 0; scale < G_N_ELEMENTS (ruler_metric.ruler_scale); scale++)
+    if (ruler_metric.ruler_scale[scale] * fabs (increment) > 2 * text_width)
       break;
 
-  if (scale == G_N_ELEMENTS (metric->ruler_scale))
-    scale = G_N_ELEMENTS (metric->ruler_scale) - 1;
+  if (scale == G_N_ELEMENTS (ruler_metric.ruler_scale))
+    scale = G_N_ELEMENTS (ruler_metric.ruler_scale) - 1;
 
   /* drawing starts here */
   length = 0;
   for (i = MAXIMUM_SUBDIVIDE - 1; i >= 0; i--)
     {
-      gdouble subd_incr = ((gdouble) metric->ruler_scale[scale] /
-                           (gdouble) metric->subdivide[i]);
+      gdouble subd_incr = ((gdouble) ruler_metric.ruler_scale[scale] /
+                           (gdouble) ruler_metric.subdivide[i]);
 
       if (subd_incr * fabs (increment) <= MINIMUM_INCR)
         continue;

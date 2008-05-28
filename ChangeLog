@@ -1,5 +1,15 @@
 2008-05-28  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpruler.[ch]
+	* libgimpwidgets/gimphruler.c
+	* libgimpwidgets/gimpvruler.c: removed GimpRulerMetric struct from
+	public API. Removed gimp_ruler_draw_pos() and gimp_ruler_draw_ticks()
+	methods. Added a "unit" property with getter and setter.
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
+2008-05-28  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpruler.[ch]: started to sanitize the ruler API.
 
 	* app/dialogs/resolution-calibrate-dialog.c

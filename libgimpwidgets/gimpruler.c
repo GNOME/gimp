@@ -21,6 +21,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "gimpwidgetstypes.h"
 
 #include "gimpruler.h"
@@ -31,51 +33,43 @@
  */
 typedef struct
 {
+  GimpUnit   unit;
+  gdouble    lower;
+  gdouble    upper;
+  gdouble    position;
+  gdouble    max_size;
+
   GdkPixmap *backing_store;
   GdkGC     *non_gr_exp_gc;
-
-  /* The upper limit of the ruler (in points) */
-  gdouble    lower;
-  /* The lower limit of the ruler */
-  gdouble    upper;
-  /* The position of the mark on the ruler */
-  gdouble    position;
-  /* The maximum size of the ruler */
-  gdouble    max_size;
 } GimpRulerPrivate;
 
 enum
 {
   PROP_0,
+  PROP_UNIT,
   PROP_LOWER,
   PROP_UPPER,
   PROP_POSITION,
   PROP_MAX_SIZE
 };
 
-static void gimp_ruler_realize       (GtkWidget      *widget);
-static void gimp_ruler_unrealize     (GtkWidget      *widget);
-static void gimp_ruler_size_allocate (GtkWidget      *widget,
-                                      GtkAllocation  *allocation);
-static gint gimp_ruler_expose        (GtkWidget      *widget,
-                                      GdkEventExpose *event);
-static void gimp_ruler_make_pixmap   (GimpRuler      *ruler);
-static void gimp_ruler_set_property  (GObject        *object,
-                                      guint            prop_id,
-                                      const GValue   *value,
-                                      GParamSpec     *pspec);
-static void gimp_ruler_get_property  (GObject        *object,
-                                      guint           prop_id,
-                                      GValue         *value,
-                                      GParamSpec     *pspec);
-
-static const GimpRulerMetric ruler_metric =
-{
-  {
-    { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
-    { 1, 5, 10, 50, 100 }
-  }
-};
+static void  gimp_ruler_realize       (GtkWidget      *widget);
+static void  gimp_ruler_unrealize     (GtkWidget      *widget);
+static void  gimp_ruler_size_allocate (GtkWidget      *widget,
+                                       GtkAllocation  *allocation);
+static gint  gimp_ruler_expose        (GtkWidget      *widget,
+                                       GdkEventExpose *event);
+static void  gimp_ruler_draw_ticks    (GimpRuler      *ruler);
+static void  gimp_ruler_draw_pos      (GimpRuler      *ruler);
+static void  gimp_ruler_make_pixmap   (GimpRuler      *ruler);
+static void  gimp_ruler_set_property  (GObject        *object,
+                                       guint            prop_id,
+                                       const GValue   *value,
+                                       GParamSpec     *pspec);
+static void  gimp_ruler_get_property  (GObject        *object,
+                                       guint           prop_id,
+                                       GValue         *value,
+                                       GParamSpec     *pspec);
 
 G_DEFINE_TYPE (GimpRuler, gimp_ruler, GTK_TYPE_WIDGET)
 
@@ -101,6 +95,15 @@ gimp_ruler_class_init (GimpRulerClass *klass)
   klass->draw_pos   = NULL;
 
   g_type_class_add_private (object_class, sizeof (GimpRulerPrivate));
+
+  g_object_class_install_property (object_class,
+                                   PROP_LOWER,
+                                   gimp_param_spec_unit ("unit",
+                                                         "Unit",
+                                                         "Unit of ruler",
+                                                         TRUE, TRUE,
+                                                         GIMP_UNIT_PIXEL,
+                                                         GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
                                    PROP_LOWER,
@@ -148,11 +151,13 @@ gimp_ruler_init (GimpRuler *ruler)
 {
   GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (ruler);
 
-  priv->backing_store = NULL;
+  priv->unit          = GIMP_PIXELS;
   priv->lower         = 0;
   priv->upper         = 0;
   priv->position      = 0;
   priv->max_size      = 0;
+  priv->backing_store = NULL;
+  priv->non_gr_exp_gc = NULL;
 }
 
 static void
@@ -166,6 +171,9 @@ gimp_ruler_set_property (GObject      *object,
 
   switch (prop_id)
     {
+    case PROP_UNIT:
+      gimp_ruler_set_unit (ruler, g_value_get_int (value));
+      break;
     case PROP_LOWER:
       gimp_ruler_set_range (ruler,
                             g_value_get_double (value),
@@ -204,6 +212,9 @@ gimp_ruler_get_property (GObject      *object,
 
   switch (prop_id)
     {
+    case PROP_UNIT:
+      g_value_set_int (value, priv->unit);
+      break;
     case PROP_LOWER:
       g_value_set_double (value, priv->lower);
       break;
@@ -222,6 +233,59 @@ gimp_ruler_get_property (GObject      *object,
     }
 }
 
+/**
+ * gimp_ruler_set_position:
+ * @ruler: a #GimpRuler
+ * @unit:  the #GimpUnit to set the ruler to
+ *
+ * This sets the unit of the ruler.
+ *
+ * Since: GIMP 2.8
+ */
+void
+gimp_ruler_set_unit (GimpRuler *ruler,
+                     GimpUnit   unit)
+{
+  GimpRulerPrivate *priv;
+
+  g_return_if_fail (GIMP_IS_RULER (ruler));
+
+  priv = GIMP_RULER_GET_PRIVATE (ruler);
+
+  if (priv->unit != unit)
+    {
+      priv->unit = unit;
+      g_object_notify (G_OBJECT (ruler), "unit");
+
+      gtk_widget_queue_draw (GTK_WIDGET (ruler));
+    }
+}
+
+/**
+ * gimp_ruler_get_unit:
+ * @ruler: a #GimpRuler
+ *
+ * Return value: the unit currently used in the @ruler widget.
+ *
+ * Since: GIMP 2.8
+ **/
+GimpUnit
+gimp_ruler_get_unit (GimpRuler *ruler)
+{
+  g_return_val_if_fail (GIMP_IS_RULER (ruler), 0);
+
+  return GIMP_RULER_GET_PRIVATE (ruler)->unit;
+}
+
+/**
+ * gimp_ruler_set_position:
+ * @ruler: a #GimpRuler
+ * @position: the position to set the ruler to
+ *
+ * This sets the position of the ruler.
+ *
+ * Since: GIMP 2.8
+ */
 void
 gimp_ruler_set_position (GimpRuler *ruler,
                          gdouble    position)
@@ -236,13 +300,19 @@ gimp_ruler_set_position (GimpRuler *ruler,
     {
       priv->position = position;
       g_object_notify (G_OBJECT (ruler), "position");
-    }
 
-  if (GTK_WIDGET_DRAWABLE (ruler))
-    gtk_widget_queue_draw (GTK_WIDGET (ruler));
+      gimp_ruler_draw_pos (ruler);
+    }
 }
 
-
+/**
+ * gimp_ruler_get_position:
+ * @ruler: a #GimpRuler
+ *
+ * Return value: the current position of the @ruler widget.
+ *
+ * Since: GIMP 2.8
+ **/
 gdouble
 gimp_ruler_get_position (GimpRuler *ruler)
 {
@@ -253,7 +323,7 @@ gimp_ruler_get_position (GimpRuler *ruler)
 
 /**
  * gimp_ruler_set_range:
- * @ruler: the gtkruler
+ * @ruler: a #GimpRuler
  * @lower: the lower limit of the ruler
  * @upper: the upper limit of the ruler
  * @max_size: the maximum size of the ruler used when calculating the space to
@@ -293,8 +363,7 @@ gimp_ruler_set_range (GimpRuler *ruler,
     }
   g_object_thaw_notify (G_OBJECT (ruler));
 
-  if (GTK_WIDGET_DRAWABLE (ruler))
-    gtk_widget_queue_draw (GTK_WIDGET (ruler));
+  gtk_widget_queue_draw (GTK_WIDGET (ruler));
 }
 
 /**
@@ -302,8 +371,8 @@ gimp_ruler_set_range (GimpRuler *ruler,
  * @ruler: a #GimpRuler
  * @lower: location to store lower limit of the ruler, or %NULL
  * @upper: location to store upper limit of the ruler, or %NULL
- * @max_size: location to store the maximum size of the ruler used when calculating
- *            the space to leave for the text, or %NULL.
+ * @max_size: location to store the maximum size of the ruler used when
+ *            calculating the space to leave for the text, or %NULL.
  *
  * Retrieves values indicating the range and current position of a #GimpRuler.
  * See gimp_ruler_set_range().
@@ -330,35 +399,10 @@ gimp_ruler_get_range (GimpRuler *ruler,
     *max_size = priv->max_size;
 }
 
-void
-gimp_ruler_draw_ticks (GimpRuler *ruler)
-{
-  g_return_if_fail (GIMP_IS_RULER (ruler));
-
-  if (GIMP_RULER_GET_CLASS (ruler)->draw_ticks)
-    GIMP_RULER_GET_CLASS (ruler)->draw_ticks (ruler);
-}
-
-void
-gimp_ruler_draw_pos (GimpRuler *ruler)
-{
-  g_return_if_fail (GIMP_IS_RULER (ruler));
-
-  if (GIMP_RULER_GET_CLASS (ruler)->draw_pos)
-     GIMP_RULER_GET_CLASS (ruler)->draw_pos (ruler);
-}
-
-
 GdkDrawable *
 _gimp_ruler_get_backing_store (GimpRuler *ruler)
 {
   return GIMP_RULER_GET_PRIVATE (ruler)->backing_store;
-}
-
-const GimpRulerMetric *
-_gimp_ruler_get_metric (GimpRuler *ruler)
-{
-  return &ruler_metric;
 }
 
 PangoLayout *
@@ -480,6 +524,24 @@ gimp_ruler_expose (GtkWidget      *widget,
     }
 
   return FALSE;
+}
+
+static void
+gimp_ruler_draw_ticks (GimpRuler *ruler)
+{
+  g_return_if_fail (GIMP_IS_RULER (ruler));
+
+  if (GIMP_RULER_GET_CLASS (ruler)->draw_ticks)
+    GIMP_RULER_GET_CLASS (ruler)->draw_ticks (ruler);
+}
+
+static void
+gimp_ruler_draw_pos (GimpRuler *ruler)
+{
+  g_return_if_fail (GIMP_IS_RULER (ruler));
+
+  if (GIMP_RULER_GET_CLASS (ruler)->draw_pos)
+     GIMP_RULER_GET_CLASS (ruler)->draw_pos (ruler);
 }
 
 static void
