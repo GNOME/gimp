@@ -305,10 +305,10 @@ EXPORTS
 	gimp_random_seed_new
 	gimp_ruler_draw_pos
 	gimp_ruler_draw_ticks
-	gimp_ruler_get_metric
+	gimp_ruler_get_position
 	gimp_ruler_get_range
 	gimp_ruler_get_type
-	gimp_ruler_set_metric
+	gimp_ruler_set_position
 	gimp_ruler_set_range
 	gimp_scale_entry_get_logarithmic
 	gimp_scale_entry_new

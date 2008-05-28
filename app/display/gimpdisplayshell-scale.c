@@ -91,7 +91,6 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   GimpImage *image;
   gdouble    lower;
   gdouble    upper;
-  gdouble    position;
   gdouble    max_size;
   gfloat     sx, sy;
   gint       image_width;
@@ -138,8 +137,6 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
 
   /* horizontal ruler */
 
-  gimp_ruler_get_range (GIMP_RULER (shell->hrule),
-                        &lower, &upper, &position, &max_size);
   lower = 0;
 
   if (image)
@@ -176,13 +173,10 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
       shell->disp_xoffset = 0;
     }
 
-  gimp_ruler_set_range (GIMP_RULER (shell->hrule),
-                        lower, upper, position, max_size);
+  gimp_ruler_set_range (GIMP_RULER (shell->hrule), lower, upper, max_size);
 
   /* vertical ruler */
 
-  gimp_ruler_get_range (GIMP_RULER (shell->vrule),
-                        &lower, &upper, &position, &max_size);
   lower = 0;
 
   if (image)
@@ -219,8 +213,7 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
       shell->disp_yoffset = 0;
     }
 
-  gimp_ruler_set_range (GIMP_RULER (shell->vrule),
-                        lower, upper, position, max_size);
+  gimp_ruler_set_range (GIMP_RULER (shell->vrule), lower, upper, max_size);
 
 
 #if 0

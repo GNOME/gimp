@@ -31,18 +31,17 @@
  */
 typedef struct
 {
-  GdkPixmap       *backing_store;
-  GdkGC           *non_gr_exp_gc;
-  GimpRulerMetric *metric;
+  GdkPixmap *backing_store;
+  GdkGC     *non_gr_exp_gc;
 
   /* The upper limit of the ruler (in points) */
-  gdouble          lower;
+  gdouble    lower;
   /* The lower limit of the ruler */
-  gdouble          upper;
+  gdouble    upper;
   /* The position of the mark on the ruler */
-  gdouble          position;
+  gdouble    position;
   /* The maximum size of the ruler */
-  gdouble          max_size;
+  gdouble    max_size;
 } GimpRulerPrivate;
 
 enum
@@ -51,8 +50,7 @@ enum
   PROP_LOWER,
   PROP_UPPER,
   PROP_POSITION,
-  PROP_MAX_SIZE,
-  PROP_METRIC
+  PROP_MAX_SIZE
 };
 
 static void gimp_ruler_realize       (GtkWidget      *widget);
@@ -71,21 +69,10 @@ static void gimp_ruler_get_property  (GObject        *object,
                                       GValue         *value,
                                       GParamSpec     *pspec);
 
-static const GimpRulerMetric const ruler_metrics[] =
+static const GimpRulerMetric ruler_metric =
 {
   {
-    "Pixel", "Pi", 1.0,
     { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
-    { 1, 5, 10, 50, 100 }
-  },
-  {
-    "Inches", "In", 72.0,
-    { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768 },
-    { 1, 2, 4, 8, 16 }
-  },
-  {
-    "Centimeters", "Cm", 28.35,
-    { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000, 2550, 5000, 10000, 25000, 50000, 100000 },
     { 1, 5, 10, 50, 100 }
   }
 };
@@ -154,14 +141,6 @@ gimp_ruler_class_init (GimpRulerClass *klass)
                                                         G_MAXDOUBLE,
                                                         0.0,
                                                         GIMP_PARAM_READWRITE));
-  g_object_class_install_property (object_class,
-                                   PROP_METRIC,
-                                   g_param_spec_enum ("metric",
-                                                      "Metric",
-                                                      "The metric used for the ruler",
-                                                      GTK_TYPE_METRIC_TYPE,
-                                                      GTK_PIXELS,
-                                                      GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -174,8 +153,6 @@ gimp_ruler_init (GimpRuler *ruler)
   priv->upper         = 0;
   priv->position      = 0;
   priv->max_size      = 0;
-
-  gimp_ruler_set_metric (ruler, GTK_PIXELS);
 }
 
 static void
@@ -190,23 +167,25 @@ gimp_ruler_set_property (GObject      *object,
   switch (prop_id)
     {
     case PROP_LOWER:
-      gimp_ruler_set_range (ruler, g_value_get_double (value), priv->upper,
-                            priv->position, priv->max_size);
+      gimp_ruler_set_range (ruler,
+                            g_value_get_double (value),
+                            priv->upper,
+                            priv->max_size);
       break;
     case PROP_UPPER:
-      gimp_ruler_set_range (ruler, priv->lower, g_value_get_double (value),
-                            priv->position, priv->max_size);
+      gimp_ruler_set_range (ruler,
+                            priv->lower,
+                            g_value_get_double (value),
+                            priv->max_size);
       break;
     case PROP_POSITION:
-      gimp_ruler_set_range (ruler, priv->lower, priv->upper,
-                            g_value_get_double (value), priv->max_size);
+      gimp_ruler_set_position (ruler, g_value_get_double (value));
       break;
     case PROP_MAX_SIZE:
-      gimp_ruler_set_range (ruler, priv->lower, priv->upper,
-                            priv->position,  g_value_get_double (value));
-      break;
-    case PROP_METRIC:
-      gimp_ruler_set_metric (ruler, g_value_get_enum (value));
+      gimp_ruler_set_range (ruler,
+                            priv->lower,
+                            priv->upper,
+                            g_value_get_double (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -237,9 +216,6 @@ gimp_ruler_get_property (GObject      *object,
     case PROP_MAX_SIZE:
       g_value_set_double (value, priv->max_size);
       break;
-    case PROP_METRIC:
-      g_value_set_enum (value, gimp_ruler_get_metric (ruler));
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -247,8 +223,8 @@ gimp_ruler_get_property (GObject      *object,
 }
 
 void
-gimp_ruler_set_metric (GimpRuler     *ruler,
-                       GtkMetricType  metric)
+gimp_ruler_set_position (GimpRuler *ruler,
+                         gdouble    position)
 {
   GimpRulerPrivate *priv;
 
@@ -256,41 +232,23 @@ gimp_ruler_set_metric (GimpRuler     *ruler,
 
   priv = GIMP_RULER_GET_PRIVATE (ruler);
 
-  priv->metric = (GimpRulerMetric *) &ruler_metrics[metric];
+  if (priv->position != position)
+    {
+      priv->position = position;
+      g_object_notify (G_OBJECT (ruler), "position");
+    }
 
   if (GTK_WIDGET_DRAWABLE (ruler))
     gtk_widget_queue_draw (GTK_WIDGET (ruler));
-
-  g_object_notify (G_OBJECT (ruler), "metric");
 }
 
-/**
- * gimp_ruler_get_metric:
- * @ruler: a #GimpRuler
- *
- * Gets the units used for a #GimpRuler. See gimp_ruler_set_metric().
- *
- * Return value: the units currently used for @ruler
- *
- * Since: GIMP 2.8
- **/
-GtkMetricType
-gimp_ruler_get_metric (GimpRuler *ruler)
+
+gdouble
+gimp_ruler_get_position (GimpRuler *ruler)
 {
-  GimpRulerPrivate *priv;
-  gint              i;
+  g_return_val_if_fail (GIMP_IS_RULER (ruler), 0.0);
 
-  g_return_val_if_fail (GIMP_IS_RULER (ruler), 0);
-
-  priv = GIMP_RULER_GET_PRIVATE (ruler);
-
-  for (i = 0; i < G_N_ELEMENTS (ruler_metrics); i++)
-    if (priv->metric == &ruler_metrics[i])
-      return i;
-
-  g_assert_not_reached ();
-
-  return 0;
+  return GIMP_RULER_GET_PRIVATE (ruler)->position;
 }
 
 /**
@@ -298,7 +256,6 @@ gimp_ruler_get_metric (GimpRuler *ruler)
  * @ruler: the gtkruler
  * @lower: the lower limit of the ruler
  * @upper: the upper limit of the ruler
- * @position: the mark on the ruler
  * @max_size: the maximum size of the ruler used when calculating the space to
  * leave for the text
  *
@@ -310,7 +267,6 @@ void
 gimp_ruler_set_range (GimpRuler *ruler,
                       gdouble    lower,
                       gdouble    upper,
-                      gdouble    position,
                       gdouble    max_size)
 {
   GimpRulerPrivate *priv;
@@ -330,11 +286,6 @@ gimp_ruler_set_range (GimpRuler *ruler,
       priv->upper = upper;
       g_object_notify (G_OBJECT (ruler), "upper");
     }
-  if (priv->position != position)
-    {
-      priv->position = position;
-      g_object_notify (G_OBJECT (ruler), "position");
-    }
   if (priv->max_size != max_size)
     {
       priv->max_size = max_size;
@@ -351,7 +302,6 @@ gimp_ruler_set_range (GimpRuler *ruler,
  * @ruler: a #GimpRuler
  * @lower: location to store lower limit of the ruler, or %NULL
  * @upper: location to store upper limit of the ruler, or %NULL
- * @position: location to store the current position of the mark on the ruler, or %NULL
  * @max_size: location to store the maximum size of the ruler used when calculating
  *            the space to leave for the text, or %NULL.
  *
@@ -364,7 +314,6 @@ void
 gimp_ruler_get_range (GimpRuler *ruler,
                       gdouble   *lower,
                       gdouble   *upper,
-                      gdouble   *position,
                       gdouble   *max_size)
 {
   GimpRulerPrivate *priv;
@@ -377,8 +326,6 @@ gimp_ruler_get_range (GimpRuler *ruler,
     *lower = priv->lower;
   if (upper)
     *upper = priv->upper;
-  if (position)
-    *position = priv->position;
   if (max_size)
     *max_size = priv->max_size;
 }
@@ -411,7 +358,7 @@ _gimp_ruler_get_backing_store (GimpRuler *ruler)
 const GimpRulerMetric *
 _gimp_ruler_get_metric (GimpRuler *ruler)
 {
-  return GIMP_RULER_GET_PRIVATE (ruler)->metric;
+  return &ruler_metric;
 }
 
 PangoLayout *

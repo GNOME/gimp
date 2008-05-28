@@ -404,7 +404,7 @@ preview_size_allocate (GtkWidget *widget,
 {
   Preview_t * preview = preview_void;
 
-  render_preview(preview, &preview->src_rgn);
+  render_preview (preview, &preview->src_rgn);
 }
 
 static void
@@ -412,8 +412,7 @@ scroll_adj_changed (GtkAdjustment *adj,
                     GtkRuler      *ruler)
 {
   gimp_ruler_set_range (ruler,
-                        adj->value, adj->value + adj->page_size,
-                        G_MAXDOUBLE, adj->page_size);
+                        adj->value, adj->value + adj->page_size, adj->upper);
 }
 
 Preview_t*

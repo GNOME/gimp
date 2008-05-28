@@ -97,7 +97,7 @@ gimp_hruler_motion_notify (GtkWidget      *widget,
   gdk_event_request_motions (event);
   x = event->x;
 
-  gimp_ruler_get_range (ruler, &lower, &upper, NULL, NULL);
+  gimp_ruler_get_range (ruler, &lower, &upper, NULL);
 
   position = lower + ((upper - lower) * x) / widget->allocation.width;
 
@@ -165,12 +165,9 @@ gimp_hruler_draw_ticks (GimpRuler *ruler)
                    widget->allocation.width - 2 * xthickness,
                    1);
 
-  gimp_ruler_get_range (ruler, &lower, &upper, NULL, &max_size);
+  gimp_ruler_get_range (ruler, &lower, &upper, &max_size);
 
   metric = _gimp_ruler_get_metric (ruler);
-
-  upper = upper / metric->pixels_per_unit;
-  lower = lower / metric->pixels_per_unit;
 
   if ((upper - lower) == 0)
     goto out;
@@ -182,7 +179,7 @@ gimp_hruler_draw_ticks (GimpRuler *ruler)
    *  text_width = gdk_string_width(font, unit_str), so that the result
    *  for the scale looks consistent with an accompanying vruler
    */
-  scale = ceil (max_size / metric->pixels_per_unit);
+  scale = ceil (max_size);
   g_snprintf (unit_str, sizeof (unit_str), "%d", scale);
   text_width = strlen (unit_str) * digit_height + 1;
 
@@ -300,7 +297,9 @@ gimp_hruler_draw_pos (GimpRuler *ruler)
                                priv->xsrc, priv->ysrc,
                                bs_width, bs_height);
 
-          gimp_ruler_get_range (ruler, &lower, &upper, &position, NULL);
+          position = gimp_ruler_get_position (ruler);
+
+          gimp_ruler_get_range (ruler, &lower, &upper, NULL);
 
           increment = (gdouble) width / (upper - lower);
 

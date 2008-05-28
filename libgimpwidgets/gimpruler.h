@@ -55,38 +55,34 @@ struct _GimpRulerClass
 
 struct _GimpRulerMetric
 {
-  const gchar *metric_name;
-  const gchar *abbrev;
-  /* This should be points_per_unit. This is the size of the unit
-   * in 1/72nd's of an inch and has nothing to do with screen pixels */
-  gdouble      pixels_per_unit;
-  gdouble      ruler_scale[16];
-  gint         subdivide[5];        /* five possible modes of subdivision */
+  gdouble  ruler_scale[16];
+  gint     subdivide[5];        /* five possible modes of subdivision */
 };
 
 
-GType          gimp_ruler_get_type   (void) G_GNUC_CONST;
-void           gimp_ruler_set_metric (GimpRuler      *ruler,
-                                      GtkMetricType   metric);
-void           gimp_ruler_set_range  (GimpRuler      *ruler,
-                                      gdouble         lower,
-                                      gdouble         upper,
-                                      gdouble         position,
-                                      gdouble         max_size);
-void           gimp_ruler_draw_ticks (GimpRuler      *ruler);
-void           gimp_ruler_draw_pos   (GimpRuler      *ruler);
+GType    gimp_ruler_get_type   (void) G_GNUC_CONST;
 
-GtkMetricType  gimp_ruler_get_metric (GimpRuler      *ruler);
-void           gimp_ruler_get_range  (GimpRuler      *ruler,
-                                      gdouble        *lower,
-                                      gdouble        *upper,
-                                      gdouble        *position,
-                                      gdouble        *max_size);
+void     gimp_ruler_set_position (GimpRuler *ruler,
+                                  gdouble    position);
+gdouble  gimp_ruler_get_position (GimpRuler *ruler);
+void     gimp_ruler_set_range    (GimpRuler *ruler,
+                                  gdouble    lower,
+                                  gdouble    upper,
+                                  gdouble    max_size);
+void     gimp_ruler_get_range    (GimpRuler *ruler,
+                                  gdouble   *lower,
+                                  gdouble   *upper,
+                                  gdouble   *max_size);
+
+void     gimp_ruler_draw_ticks   (GimpRuler *ruler);
+void     gimp_ruler_draw_pos     (GimpRuler *ruler);
+
 
 GdkDrawable           * _gimp_ruler_get_backing_store   (GimpRuler   *ruler) G_GNUC_INTERNAL;
 const GimpRulerMetric * _gimp_ruler_get_metric          (GimpRuler   *ruler) G_GNUC_INTERNAL;
 PangoLayout           * _gimp_ruler_create_pango_layout (GtkWidget   *widget,
                                                          const gchar *text)  G_GNUC_INTERNAL;
+
 
 G_END_DECLS
 
