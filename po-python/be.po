@@ -3,14 +3,13 @@ msgstr ""
 "Project-Id-Version: gimp 2.4.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-05-16 20:20+0300\n"
-"PO-Revision-Date: 2008-05-10 20:18+0300\n"
+"PO-Revision-Date: 2008-05-24 11:48+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: belarusian <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Poedit-Language: belarusian\n"
 "X-Poedit-Country: belarus\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -28,16 +27,19 @@ msgstr "Здарылася памылка пад час працы %s"
 msgid "_More Information"
 msgstr "_Болей зьвестак"
 
-#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
+#: ../plug-ins/pygimp/gimpfu.py:506
+#: ../plug-ins/pygimp/gimpfu.py:518
 #: ../plug-ins/pygimp/gimpfu.py:524
 msgid "No"
 msgstr "Не"
 
-#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:516
+#: ../plug-ins/pygimp/gimpfu.py:524
 msgid "Yes"
 msgstr "Так"
 
-#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:558
+#: ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
 msgstr "Выбар файла Python-Fu"
 
@@ -109,12 +111,12 @@ msgstr "Агладальнік працэдураў Python"
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Немагчыма адкрыць '%s' на запіс: %s"
+msgstr "Немагчыма адкрыць «%s» на запіс: %s"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
 #, python-format
 msgid "Could not write to '%s': %s"
-msgstr "Немагчыма запісаць '%s': %s"
+msgstr "Немагчыма запісаць «%s»: %s"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
 msgid "Save Python-Fu Console Output"
@@ -177,11 +179,11 @@ msgstr "_Зрушэньне"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
 msgid "Sort the colors in a palette"
-msgstr "Сартаваць колеры ў палітры"
+msgstr "Упарадкоўвае колеры ў палітры"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
 msgid "_Sort Palette..."
-msgstr "_Сартаваць палітру"
+msgstr "_Упарадкаваць палітру"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
 msgid "Color _model"
@@ -197,7 +199,7 @@ msgstr "HSV"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
 msgid "Channel to _sort"
-msgstr "_Сартаваць канал"
+msgstr "_Упарадкаваць канал"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
@@ -213,7 +215,7 @@ msgstr "Сіні ці Яркасьць"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
 msgid "_Ascending"
-msgstr "_Узрастальны"
+msgstr "_З павелічэньнем"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
@@ -237,8 +239,7 @@ msgstr "Наразаньне"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr ""
-"Разразае відарыс па накіроўных, стварае відарысы й фрагмэнт з табліцай HTML"
+msgstr "Разразае відарыс па накіроўных, стварае відарысы й фрагмэнт з табліцай HTML"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
@@ -307,3 +308,4 @@ msgstr "Зрух падаючага ценю па _X"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
 msgid "Drop shadow _Y displacement"
 msgstr "Зрух падаючага ценю па _Y"
+
