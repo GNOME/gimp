@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.4.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-05-16 20:20+0300\n"
-"PO-Revision-Date: 2008-05-16 21:17+0300\n"
+"PO-Revision-Date: 2008-05-28 22:35+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "Агладальнік працэдур Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:718
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
-msgstr "Рэжым ацэнкі Script-Fu дазваляе толькі неінтэрктыўны выклік"
+msgstr "Рэжым ацэнкі Script-Fu дазваляе толькі неінтэрактыўны выклік"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:191
 msgid "Script-Fu cannot process two scripts at the same time."
@@ -180,7 +180,7 @@ msgstr "_Праверка"
 
 #: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Utilities"
-msgstr ""
+msgstr "_Службовыя"
 
 #: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Web Page Themes"
@@ -188,21 +188,19 @@ msgstr "_Тэмы для Web-старонак"
 
 #: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Alien Glow"
-msgstr ""
+msgstr "_Іншаплянэтнае зарыва"
 
 #: ../plug-ins/script-fu/script-fu.c:323
-#, fuzzy
 msgid "_Beveled Pattern"
-msgstr "_Новы ўзор"
+msgstr "_Скошаны ўзор"
 
 #: ../plug-ins/script-fu/script-fu.c:325
 msgid "_Classic.Gimp.Org"
 msgstr "_Клясычны.Gimp.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:328
-#, fuzzy
 msgid "Alpha to _Logo"
-msgstr "Альфу ў вылучэньне"
+msgstr "Альфа ў _лягатып"
 
 #: ../plug-ins/script-fu/script-fu.c:330
 msgid "An_imation"
@@ -266,7 +264,7 @@ msgstr "3D _контур..."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
-msgstr ""
+msgstr "Радыюс размыцьця мапы паверхні (альфапласта)"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Create a logo with outlined text and a drop shadow"
@@ -274,9 +272,8 @@ msgstr "Стварае лягатып з абрысаваным тэкстам �
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:6
-#, fuzzy
 msgid "Default bumpmap settings"
-msgstr "Настаўленьні захаваныя ў '%s'"
+msgstr "Дапомныя настаўленьні мапы паверхні"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:5
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
@@ -360,11 +357,11 @@ msgstr "Памер шрыфта (у піксэлях)"
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:7
 #, fuzzy
 msgid "Outline blur radius"
-msgstr "Пстрыкні, каб размыць"
+msgstr "Радыюс размыцьця ценю"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
 msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
-msgstr ""
+msgstr "Абляймаваць вылучаную вобласьць (ці тэкст) узорам і дадаць падаючы цень"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -465,7 +462,6 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:1
-#, fuzzy
 msgid "Background color"
 msgstr "Колер асноведзі"
 
@@ -475,32 +471,29 @@ msgid "Block size"
 msgstr "Памер блёку"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:4
+#, fuzzy
 msgid "Create an image filled with a 3D Truchet pattern"
-msgstr ""
+msgstr "Стварыць відарыс, запоўнены ўзорам тапаграфічнай мапы"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
-#, fuzzy
 msgid "End blend"
-msgstr "Нечаканы канец файла"
+msgstr "Канец гадыента"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:6
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:5
-#, fuzzy
 msgid "Number of X tiles"
-msgstr "Колькасьць піксэляў:"
+msgstr "Колькасьць элемэнтаў па X"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:7
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:6
-#, fuzzy
 msgid "Number of Y tiles"
-msgstr "Колькасьць піксэляў:"
+msgstr "Колькасьць элемэнтаў па Y"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:8
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:16
-#, fuzzy
 msgid "Start blend"
-msgstr "Немагчыма выканаць '%s': %s"
+msgstr "Пачатак градыента"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:9
 msgid "Supersample"
@@ -513,19 +506,17 @@ msgid "Thickness"
 msgstr "Гушчыня"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
-#, fuzzy
 msgid "Add B_evel..."
-msgstr "_Дадаць укладку "
+msgstr "_Дадаць скос..."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
 msgid "Add a beveled border to an image"
-msgstr ""
+msgstr "Дадаць скошаную рамку да відарыса"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
-#, fuzzy
 msgid "Keep bump layer"
-msgstr "_Зьмяніць атрыбуты пласта"
+msgstr "Пакінуць пласт паверхні"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
@@ -538,31 +529,32 @@ msgstr "Працаваць з копіяй"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:1
 msgid "Add _Border..."
-msgstr "_Дадаць мяжу..."
+msgstr "_Дадаць рамку..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Add a border around an image"
-msgstr "Дадаць мяжу вакол відарыса"
+msgstr "Дадаць рамку вакол відарыса"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:3
 msgid "Border X size"
-msgstr "Памер мяжы па X"
+msgstr "Памер рамкі па X"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border Y size"
-msgstr "Памер мяжы па Y"
+msgstr "Памер рамкі па Y"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:5
 msgid "Border color"
-msgstr "Колер мяжы"
+msgstr "Колер рамкі"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:6
+#, fuzzy
 msgid "Delta value on color"
-msgstr ""
+msgstr "Усталяваць профіль колераў на відарыс"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
 msgid "Create an arrow graphic with an eerie glow for web pages"
-msgstr ""
+msgstr "Стварыць стрэлку са злавесным зарывам для www-старонак"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -587,9 +579,8 @@ msgstr "Сплюшчыць відарыс"
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
-#, fuzzy
 msgid "Glow color"
-msgstr "_Рэдагаваць колер..."
+msgstr "Колер зарыва"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
@@ -630,20 +621,20 @@ msgstr "Вышыня панэлі:"
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 #, fuzzy
 msgid "Bar length"
-msgstr "Прабел"
+msgstr "Даўжыня цыліндра"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
 msgid "Create an Hrule graphic with an eerie glow for web pages"
-msgstr ""
+msgstr "Старыць лінейку са злавесным зарывам для web-старонкі"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
 msgid "_Hrule..."
-msgstr ""
+msgstr "_Лінейка..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 msgid "Create a bullet graphic with an eerie glow for web pages"
-msgstr ""
+msgstr "Стварыць кулю са злавесным зарывам для www-старонак"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -663,18 +654,16 @@ msgstr "_Кнопка..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "Create a button graphic with an eerie glow for web pages"
-msgstr ""
+msgstr "Стварыць кнопку са злавесным зарывам для www-старонак"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
-#, fuzzy
 msgid "Glow radius"
-msgstr "Радыюс цыліндра"
+msgstr "Радыюс зарыва"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:6
-#, fuzzy
 msgid "Padding"
-msgstr "_Колер вакол палатна"
+msgstr "Запаўненьне"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:7
@@ -693,32 +682,31 @@ msgstr "Колер тэксту"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
 msgid "Add an eerie glow around the selected region (or alpha)"
-msgstr ""
+msgstr "Дадаць злавеснае зарыва вакол вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
 msgid "Alien _Glow..."
-msgstr ""
+msgstr "_Іншаплянэтнае зарыва..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 msgid "Create a logo with an alien glow around the text"
-msgstr ""
+msgstr "Стварыць лягатып з іншаплянэтным зарывам вакол тэксту"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
-#, fuzzy
 msgid "Glow size (pixels * 4)"
-msgstr "Ачысьціць выбраныя піксэлі"
+msgstr "Памер зарыва (піксэлі * 4)"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
 msgid "Add psychedelic outlines to the selected region (or alpha)"
-msgstr ""
+msgstr "Дадаць псыхадэлічныя абрысы да вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "Alien _Neon..."
-msgstr ""
+msgstr "_Іншаплянэтны нэон..."
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Create a logo with psychedelic outlines around the text"
-msgstr ""
+msgstr "Стварыць лягатып з псыхадэлічнымі абрысамі вакол тэкста"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
 msgid "Fade away"
@@ -738,11 +726,11 @@ msgstr "Шырыня прагалаў"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
 msgid "Add a gradient effect, a drop shadow, and a background to the selected region (or alpha)"
-msgstr ""
+msgstr "Дадаць эфэкт градыента, падаючы цень і асноведзь да вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 msgid "Create a plain text logo with a gradient effect, a drop shadow, and a background"
-msgstr ""
+msgstr "Стварыць просты тэкставы лягатып з градыентам, падаючым ценем і асноведзьдзю"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 #, fuzzy
@@ -751,7 +739,7 @@ msgstr "Асноўныя выборы"
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:1
 msgid "Add a shadow and a highlight to the selected region (or alpha)"
-msgstr ""
+msgstr "Дадаць цень і асьветленьне да вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 msgid "B_asic II..."
@@ -759,18 +747,17 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:4
 msgid "Create a simple logo with a shadow and a highlight"
-msgstr ""
+msgstr "Стварыць просты лягатып зь ценем і асьветленьнем"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:1
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:1
-#, fuzzy
 msgid "Bevel width"
-msgstr "Шырыня лініі:"
+msgstr "Шырыня скосу"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
 msgid "Create a simple, beveled button graphic for webpages"
-msgstr ""
+msgstr "Стварыць простую скошаную кнопку для www-старонкі"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
 msgid "Lower-right color"
@@ -779,14 +766,12 @@ msgstr "Правы ніжні колер"
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:11
-#, fuzzy
 msgid "Pressed"
-msgstr "Кнопка, націсутая _першай:"
+msgstr "Націснутая"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:8
-#, fuzzy
 msgid "Simple _Beveled Button..."
-msgstr "_Паказваць панэль кнопак"
+msgstr "_Простая скошаная кнопка"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:11
 msgid "Upper-left color"
@@ -794,11 +779,11 @@ msgstr "Верхні левы колер"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "Create a beveled pattern arrow for webpages"
-msgstr ""
+msgstr "Стварыць скошаную, запоўненую ўзорам стрэлку для web-старонкі"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "Create a beveled pattern bullet for webpages"
-msgstr ""
+msgstr "Стварыць скошаную, запоўненую ўзорам кулю для web-старонкі"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -807,17 +792,16 @@ msgstr "Дыямэтар"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:4
-#, fuzzy
 msgid "Transparent background"
-msgstr "Колер _асноведзі"
+msgstr "Празрыстая асноведзь"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
 msgid "Create a beveled pattern button for webpages"
-msgstr ""
+msgstr "Стварыць скошаную, запоўненую ўзорам кнопку для web-старонкі"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "Create a beveled pattern heading for webpages"
-msgstr ""
+msgstr "Стварыць скошаны, запоўнены ўзорам загаловак для web-старонкі"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
 msgid "H_eading..."
@@ -825,7 +809,7 @@ msgstr "_Загаловак..."
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "Create a beveled pattern hrule for webpages"
-msgstr ""
+msgstr "Стварыць скошаную, запоўненую ўзорам лінейку для web-старонкі"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -856,53 +840,47 @@ msgstr "Прамежкавыя кадры"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
 msgid "Looped"
-msgstr ""
+msgstr "Цыклічная"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
-#, fuzzy
 msgid "Max. blur radius"
-msgstr "Пстрыкні, каб размыць"
+msgstr "Макс. радыюс размыцьця"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
-#, fuzzy
 msgid "_Blend..."
-msgstr "Градыент"
+msgstr "_Градыент..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
 msgid "Add blended backgrounds, highlights, and shadows to the selected region (or alpha)"
-msgstr ""
+msgstr "Дадаць градыентную асноведзь, асьветленьні й цені да вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
-msgstr ""
+msgstr "_Градыентны..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
-#, fuzzy
 msgid "Blend mode"
-msgstr "_Рэжыму рысаваньня"
+msgstr "Рэжым градыента"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "Create a logo with blended backgrounds, highlights, and shadows"
-msgstr ""
+msgstr "Стварыць лягатып з градыентнай асноведзьдзю, асьветленьнем і ценямі"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "Custom Gradient"
 msgstr "Свой градыент"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:8
-#, fuzzy
 msgid "FG-BG-HSV"
-msgstr "Колеры асноведзі й рысаваньня"
+msgstr "КР-КА-HSV"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:9
-#, fuzzy
 msgid "FG-BG-RGB"
-msgstr "Колеры асноведзі й рысаваньня"
+msgstr "КР-КА-RGB"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:10
-#, fuzzy
 msgid "FG-Transparent"
-msgstr "_Зрабіць празрыстым"
+msgstr "КР-празрысты"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:13
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:7
@@ -929,13 +907,12 @@ msgstr "Зрух (піксэляў)"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
 msgid "Add 'cow spots' to the selected region (or alpha)"
-msgstr ""
+msgstr "Дадаць «каровіны плямы» да вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
-#, fuzzy
 msgid "Background Color"
-msgstr "Колер _асноведзі"
+msgstr "Колер асноведзі"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
 msgid "Bo_vination..."
@@ -943,15 +920,17 @@ msgstr "_Каровіна скура..."
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Create a logo with text in the style of 'cow spots'"
-msgstr ""
+msgstr "Стварыць лягатып з тэкстам у стылі «каровіны плямы»"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+#, fuzzy
 msgid "Spots density X"
-msgstr ""
+msgstr "Гушчыня нітак"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:9
+#, fuzzy
 msgid "Spots density Y"
-msgstr ""
+msgstr "Гушчыня нітак"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
 #, fuzzy
@@ -961,7 +940,7 @@ msgstr "_Дадаць укладку "
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 #, fuzzy
 msgid "After glow"
-msgstr "Уставіць пасьля"
+msgstr "_Іншаплянэтнае зарыва"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 #, fuzzy
@@ -1010,7 +989,7 @@ msgstr "Колер 3"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:4
 msgid "Create an image filled with a camouflage pattern"
-msgstr ""
+msgstr "Стварыць відарыс, запоўнены камуфляжным узорам"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:6
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:6
@@ -1032,23 +1011,21 @@ msgid "_Camouflage..."
 msgstr "_Камуфляж..."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
-#, fuzzy
 msgid "Carve white areas"
-msgstr "_Маскаваць вылучаныя вобласьці"
+msgstr "Выгравіраваць белыя вобласьці"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
-#, fuzzy
 msgid "Image to carve"
-msgstr "Абрэзаны да відарыса"
+msgstr "Відарыс у гравюру"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
+#, fuzzy
 msgid "Stencil C_arve..."
-msgstr ""
+msgstr "_Хром праз трафарэт..."
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
-#, fuzzy
 msgid "Background Image"
-msgstr "_Адкрыць відарыс"
+msgstr "Відарыс асноведзі"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
 #, fuzzy
@@ -1064,9 +1041,8 @@ msgid "Create a logo with text raised above or carved in to the specified backgr
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
-#, fuzzy
 msgid "Padding around text"
-msgstr "_Статус і тэкст"
+msgstr "Запаўненьне вакол тэкста"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:2
 msgid "Chalk color"
@@ -1074,19 +1050,20 @@ msgstr "Колер крэйды"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:3
 msgid "Create a chalk drawing effect for the selected region (or alpha)"
-msgstr ""
+msgstr "Стварае эфэкт рысаваньня крэйдай для вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:4
 msgid "Create a logo resembling chalk scribbled on a blackboard"
-msgstr ""
+msgstr "Стварыць лягатып, падобны на рысаваньне крэйдай па дошцы"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:8
 msgid "_Chalk..."
 msgstr "_Крэйда..."
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
+#, fuzzy
 msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Дадаць просты эфэкт хрому да вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
@@ -1099,7 +1076,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:4
 #, fuzzy
 msgid "Chip amount"
-msgstr "Пазнач ступень размыцьця"
+msgstr "Узровень размыцьця"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Create a logo resembling a chipped wood carving"
@@ -1110,110 +1087,100 @@ msgid "Drop shadow"
 msgstr "Падаючы цень"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:7
-#, fuzzy
 msgid "Fill BG with pattern"
-msgstr "Запоўніць колерам _рысаваньня"
+msgstr "Запоўніць асноведзь узорам"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:10
 msgid "Invert"
 msgstr "Інвэртаваць"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:11
-#, fuzzy
 msgid "Keep background"
-msgstr "Колер _асноведзі"
+msgstr "Пакінуць асноведзь"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:1
 msgid "Add a chrome effect to the selected region (or alpha) using a specified (grayscale) stencil"
-msgstr ""
+msgstr "Дадаць эфэкт хрому да вылучанай вобласьці (ці тэксту), ужываюцчы вызначаны (шэры) трафарэт"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
-#, fuzzy
 msgid "Chrome balance"
-msgstr "_Вага белага"
+msgstr "Вага хрому"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
-#, fuzzy
 msgid "Chrome factor"
-msgstr "Маштаб: %d:1"
+msgstr "Каэфіцыент хрому"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
-#, fuzzy
 msgid "Chrome lightness"
-msgstr "Адценьне / Сьветласьць / Насычанасьць"
+msgstr "Сьветласьць хрому"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
-#, fuzzy
 msgid "Chrome saturation"
-msgstr "Адценьне й насычанасьць"
+msgstr "Насычанасьць хрому"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
-#, fuzzy
 msgid "Chrome white areas"
-msgstr "_Маскаваць вылучаныя вобласьці"
+msgstr "Храмаваць белыя вобласьці"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
-#, fuzzy
 msgid "Environment map"
-msgstr "_Мапа колераў"
+msgstr "Мапа асяродзьдзя"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
-#, fuzzy
 msgid "Highlight balance"
-msgstr "_Вага белага"
+msgstr "Вага асьвятленьня"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
 msgid "Stencil C_hrome..."
-msgstr ""
+msgstr "_Хром праз трафарэт..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 msgid "Add a simple chrome effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Дадаць просты эфэкт хрому да вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 msgid "C_hrome..."
-msgstr ""
+msgstr "_Хром..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
 msgid "Create a simplistic, but cool, chromed logo"
-msgstr ""
+msgstr "Стварыць спрошчаны, але круты храмаваны лягатып"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 msgid "Offsets (pixels * 2)"
 msgstr "Зрушэньні (піксэлі × 2)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:1
+#, fuzzy
 msgid "Circuit seed"
-msgstr ""
+msgstr "_Новы лік"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
 msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
-msgstr ""
+msgstr "Запоўніць вылучаную вобласьць (ці тэкст) дарожкамі як на электрычнай плаце"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
 #: ../plug-ins/script-fu/scripts/lava.scm.h:3
 #: ../plug-ins/script-fu/scripts/predator.scm.h:3
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
-#, fuzzy
 msgid "Keep selection"
-msgstr "_Рэдактар вылучэньня"
+msgstr "Пакінуць вылучэньне"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:4
 msgid "No background (only for separate layer)"
-msgstr ""
+msgstr "Няма асноведзі (толькі для асобнага пласта)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:5
-#, fuzzy
 msgid "Oilify mask size"
-msgstr "_Памер палатна..."
+msgstr "Памер маскі алея"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:6
 #: ../plug-ins/script-fu/scripts/lava.scm.h:6
@@ -1223,11 +1190,11 @@ msgstr "Асобны пласт"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:7
 msgid "_Circuit..."
-msgstr ""
+msgstr "_Дарожкі..."
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:1
 msgid "Add a cloth-like texture to the selected region (or alpha)"
-msgstr ""
+msgstr "Дадаць тэкстуру тканіны да вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:2
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:1
@@ -1235,14 +1202,12 @@ msgid "Azimuth"
 msgstr "Азімут"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:3
-#, fuzzy
 msgid "Blur X"
-msgstr "_Размыцьцё"
+msgstr "Размыцьцё X"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:4
-#, fuzzy
 msgid "Blur Y"
-msgstr "_Размыцьцё"
+msgstr "Размыцьцё Y"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:5
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:5
@@ -1256,36 +1221,35 @@ msgstr "Вышыня"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:7
 msgid "_Clothify..."
-msgstr ""
+msgstr "_Тканіна..."
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:1
 msgid "Add realistic looking coffee stains to the image"
-msgstr ""
+msgstr "Дадаць рэалістычныя плямы ад кавы да відарыса"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
-#, fuzzy
 msgid "Darken only"
-msgstr "Толькі цёмнае"
+msgstr "Зацямніць толькі"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
-msgstr ""
+msgstr "Плямы"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:4
 msgid "_Coffee Stain..."
-msgstr ""
+msgstr "_Плямы ад кавы..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
 msgid "Add a comic-book effect to the selected region (or alpha) by outlining and filling with a gradient"
-msgstr ""
+msgstr "Дадаць камічны эфэкт да вылучанай вобласьці (ці тэксту) абляймаваўшы й запоўніўшы градыентам"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
-msgstr ""
+msgstr "_Комікс..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
 msgid "Create a comic-book style logo by outlining and filling with a gradient"
-msgstr ""
+msgstr "Стварыць лягатып ў стылі комікса абляймаваўшы й запоўніўшы градыентам"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 msgid "Outline color"
@@ -1298,26 +1262,24 @@ msgstr "Памер контура"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
 msgid "Add a metallic effect to the selected region (or alpha) with reflections and perspective shadows"
-msgstr ""
+msgstr "Дадаць мэталічны эфэкт да вылучанай вобласьці (ці тэксту) з адлюстраваньнямі й аксанамэтрычнымі ценямі"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
-msgstr ""
+msgstr "Халодны _мэтал..."
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 msgid "Create a metallic logo with reflections and perspective shadows"
-msgstr ""
+msgstr "Стварыць мэталічны лягатып з адлюстраваньнямі й аксанамэтрычнымі ценямі"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
-#, fuzzy
 msgid "Effect size (pixels)"
-msgstr "Ачысьціць выбраныя піксэлі"
+msgstr "Памер эфэкта (у піксэлях)"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
-#, fuzzy
 msgid "Background image"
-msgstr "_Адкрыць відарыс"
+msgstr "Відарыс асноведзі"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 msgid "Create a logo with a crystal/gel effect displacing the image underneath"
@@ -1325,7 +1287,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
-msgstr ""
+msgstr "Крышталь..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
 #, fuzzy
@@ -1355,7 +1317,7 @@ msgstr "Вэртыкальнае згладжваньне"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:6
 msgid "Spread"
-msgstr ""
+msgstr "Распаўсюдзіць"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (bigger 1<-->255 smaller)"
@@ -1367,7 +1329,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 msgid "Add a drop shadow to the selected region (or alpha)"
-msgstr ""
+msgstr "Дадаць падаючы цень да вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
@@ -1433,9 +1395,8 @@ msgid "Even/odd"
 msgstr "(Ня)цотны"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:7
-#, fuzzy
 msgid "Fill with BG"
-msgstr "Запоўніць колерам _асноведзі"
+msgstr "Запоўніць колерам асноведзі"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:8
 msgid "Odd"
@@ -1455,7 +1416,7 @@ msgstr "_Выдаліць кожны іншы радок..."
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "Create an image filled with a Land Pattern"
-msgstr ""
+msgstr "Стварыць відарыс, запоўнены ўзорам зямлі"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:2
 #: ../plug-ins/script-fu/scripts/land.scm.h:2
@@ -1476,7 +1437,7 @@ msgstr "Шырыня відарыса"
 #: ../plug-ins/script-fu/scripts/land.scm.h:7
 #, fuzzy
 msgid "Random seed"
-msgstr "Выпадковы шум"
+msgstr "_Новы лік"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:6
 #: ../plug-ins/script-fu/scripts/land.scm.h:8
@@ -1492,7 +1453,7 @@ msgstr "Маштаб:"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:8
 msgid "_Flatland..."
-msgstr ""
+msgstr "_Раўніна..."
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:1
 msgid "Active colors"
@@ -1504,7 +1465,7 @@ msgstr "Чорным па белым"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Create an image filled with previews of fonts matching a fontname filter"
-msgstr ""
+msgstr "Стварыць відарыс, запоўнены аглядамі шрыфтоў, чые імёны адпавядаюць фільтру"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
 msgid "Font _size (pixels)"
@@ -1516,25 +1477,23 @@ msgstr "_Стварыць мапу шрыфтоў..."
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "Use font _name as text"
-msgstr ""
+msgstr "Ужываць _назву шрыфта ў якасьці тэксту"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:7
-#, fuzzy
 msgid "_Border (pixels)"
-msgstr "Колькасьць піксэляў:"
+msgstr "_Рамка (у піксэлях)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:8
 msgid "_Color scheme"
 msgstr "_Схема колераў"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:9
-#, fuzzy
 msgid "_Filter (regexp)"
-msgstr "%s (для рэгвыраза `%s')"
+msgstr "_Фільтар (рэг. выраз)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:10
 msgid "_Labels"
-msgstr ""
+msgstr "_Пазнакі"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:11
 msgid "_Text"
@@ -1542,15 +1501,15 @@ msgstr "_Тэкст"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
 msgid "Add a frost effect to the selected region (or alpha) with an added drop shadow"
-msgstr ""
+msgstr "Дадаць эфэкт шэрані да вылучанай вобласьці (ці тэксту) з падаючым ценем"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
-msgstr ""
+msgstr "Стварыць лягатып у шэрамі з падаючым ценем"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
 msgid "_Frosty..."
-msgstr ""
+msgstr "_Шэрань..."
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
 msgid "Add a jagged, fuzzy border to an image"
@@ -1561,14 +1520,13 @@ msgid "Add shadow"
 msgstr "Дадаць цень"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
-#, fuzzy
 msgid "Blur border"
-msgstr "Абляймаваць вылучэньне"
+msgstr "Размыць рамку"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
 msgid "Border size"
-msgstr "Памер мяжы"
+msgstr "Памер рамкі"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
@@ -1590,11 +1548,11 @@ msgstr "Аўтаабразаньне"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "Create an image of a large header using the gimp.org webpage theme"
-msgstr ""
+msgstr "Стварыць відарыс вялікага загалоўку, выкарыстоўваючы тэму пляцоўкі gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "Create an image of a small header using the gimp.org webpage theme"
-msgstr ""
+msgstr "Стварыць відарыс малога загалоўку, выкарыстоўваючы тэму пляцоўкі gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
 msgid "Dark color"
@@ -1602,9 +1560,8 @@ msgstr "Цёмны колер"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:7
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
-#, fuzzy
 msgid "Highlight color"
-msgstr "_Рэдагаваць колер..."
+msgstr "Колер асьветленьня"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
@@ -1618,15 +1575,13 @@ msgstr "Колькасьць колераў"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-#, fuzzy
 msgid "Remove background"
-msgstr "Колер _асноведзі"
+msgstr "Прыбраць асноведзь"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
-#, fuzzy
 msgid "Select-by-color threshold"
-msgstr "Вылучыць паводле колера"
+msgstr "Парог вылучальніка колера"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
@@ -1677,35 +1632,31 @@ msgstr "_Паказваць панэль кнопак"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "Add gradients, patterns, shadows, and bump maps to the selected region (or alpha)"
-msgstr ""
+msgstr "Дадаць градыенты, узоры, цені й мапы паверхняў да вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
-#, fuzzy
 msgid "Blend gradient (outline)"
-msgstr "Адлюстроўваць контур вылучэньня"
+msgstr "Градыент (контур)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:4
-#, fuzzy
 msgid "Blend gradient (text)"
-msgstr "_Статус і тэкст"
+msgstr "Градыент (тэкст)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Create a logo with gradients, patterns, shadows, and bump maps"
-msgstr ""
+msgstr "Стварыць лягатып з градыентамі, узорамі, ценямі й мапамі паверхняў"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Glo_ssy..."
-msgstr ""
+msgstr "_Ільсьняны..."
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:10
-#, fuzzy
 msgid "Outline gradient reverse"
-msgstr "Мэню рэдактара градыента"
+msgstr "Контурны градыент у адваротным парадку"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:12
-#, fuzzy
 msgid "Pattern (outline)"
-msgstr "Шырыня контура:"
+msgstr "Узор (контур)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:13
 #, fuzzy
@@ -1713,9 +1664,8 @@ msgid "Pattern (overlay)"
 msgstr "_Новы ўзор"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:14
-#, fuzzy
 msgid "Pattern (text)"
-msgstr "Рэдактар тэксту"
+msgstr "Узор (тэкст)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:15
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:5
@@ -1723,17 +1673,16 @@ msgid "Shadow"
 msgstr "Цень"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:19
-#, fuzzy
 msgid "Text gradient reverse"
-msgstr "Мэню рэдактара градыента"
+msgstr "Тэкставы градыент у адваротным парадку"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use pattern for outline instead of gradient"
-msgstr ""
+msgstr "Ужываць для абрыса ўзор замест градыента"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:21
 msgid "Use pattern for text instead of gradient"
-msgstr ""
+msgstr "Ужываць для тэкста ўзор замест градыента"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:22
 #, fuzzy
@@ -1742,59 +1691,54 @@ msgstr "_Капіяваць месцаразьмяшчэньне ўзора"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "Add a glowing hot metal effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Дадаць эфэкт распаленага дабяла мэталу да вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
 msgid "Create a logo that looks like glowing hot metal"
-msgstr ""
+msgstr "Стварыць лягатып, які выглядае як распалены дабяла мэтал"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-#, fuzzy
 msgid "Effect size (pixels * 3)"
-msgstr "Ачысьціць выбраныя піксэлі"
+msgstr "Памер эфэкта (піксэлі * 3)"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 msgid "Glo_wing Hot..."
-msgstr ""
+msgstr "_Распалены дабяла..."
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Дадаць эфэкт бліскучага выгляду й скосу да вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
-#, fuzzy
 msgid "Bevel height (sharpness)"
-msgstr "Найбольшая вышыня вакна"
+msgstr "Вышыня скосу (рэзкасьць)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
-#, fuzzy
 msgid "Border size (pixels)"
-msgstr "Ачысьціць выбраныя піксэлі"
+msgstr "Памер мяжы (у піксэлях)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 msgid "Create a logo with a shiny look and beveled edges"
-msgstr ""
+msgstr "Стварыць лягатып з сонечным выгладам і скошанымі краямі"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
-#, fuzzy
 msgid "Gradient Beve_l..."
-msgstr "Рэдактар градыентаў"
+msgstr "_Скос градыентаў..."
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "Create an image filled with an example of the current gradient"
-msgstr ""
+msgstr "Стварыць відарыс, запоўнены прыкладам бягучага градыента"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
-#, fuzzy
 msgid "Custom _Gradient..."
-msgstr "Свой градыент"
+msgstr "Свой _градыент..."
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
 msgid "Draw a grid as specified by the lists of X and Y locations using the current brush"
-msgstr ""
+msgstr "Рысаваць бягучым пэндзлем сетку як вызначана сьпісам становішчаў па X і Y"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X divisions"
@@ -1809,13 +1753,12 @@ msgid "_Grid..."
 msgstr "_Сетка..."
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
-#, fuzzy
 msgid "New Guides from _Selection"
-msgstr "Прыбраць размытасьць мяжы вылучэньня"
+msgstr "Новыя накіроўныя з _вылучэньня"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "Add a guide at the position specified as a percentage of the image size"
-msgstr ""
+msgstr "Дадаць накіроўную ў становішчы, вызначаныя як адсотак памеру відарыса"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:2
@@ -1829,12 +1772,12 @@ msgstr "Гарызантальны"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:4
 msgid "New Guide (by _Percent)..."
-msgstr ""
+msgstr "Новая накіроўная (паводле _адсотка)..."
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Position (in %)"
-msgstr "_Інвэртаваць"
+msgstr "Становішча (у %)"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:7
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:6
@@ -1843,40 +1786,35 @@ msgstr "Вэртыкальны"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:1
 msgid "Add a guide at the orientation and position specified (in pixels)"
-msgstr ""
+msgstr "Дадаць накіроўную ў напрамку й становішчы вызначаным (у піксэлях)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
-#, fuzzy
 msgid "New _Guide..."
-msgstr "Прыбраць накіроўную"
+msgstr "_Новая накіроўная..."
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
 msgid "Position"
 msgstr "Становішча"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
-#, fuzzy
 msgid "Remove all horizontal and vertical guides"
-msgstr "Пстрыкні, каб разьмесьціць вэртыкальныя й гарызантальныя накіроўныя"
+msgstr "Прыбірае ўсе вэртыкальныя й гарызантальныя накіроўныя"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
-#, fuzzy
 msgid "_Remove all Guides"
-msgstr "Прыбраць усе скароты клявіятуры"
+msgstr "_Прыбраць усе накіроўныя"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
-msgstr ""
+msgstr "Стварыць лягатып з двухколерным неахайным тэкстам"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
-#, fuzzy
 msgid "Frame color"
-msgstr "_Рэдагаваць колер..."
+msgstr "Колер кадра"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
-#, fuzzy
 msgid "Frame size"
-msgstr "_Памер папярэдняга прагляду"
+msgstr "Памер кадра"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
 msgid "Imigre-_26..."
@@ -1884,26 +1822,23 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:1
 msgid "Create an image filled with a topographic map pattern"
-msgstr ""
+msgstr "Стварыць відарыс, запоўнены ўзорам тапаграфічнай мапы"
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:6
-#, fuzzy
 msgid "Land height"
-msgstr "_Вышыня (у піксэлях):"
+msgstr "Вышыня зямлі"
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:10
-#, fuzzy
 msgid "Sea depth"
-msgstr "Найбольшая глыбіня:"
+msgstr "Глыбіня мора"
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:11
 msgid "_Land..."
-msgstr ""
+msgstr "_Зямля..."
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:1
-#, fuzzy
 msgid "Fill the current selection with lava"
-msgstr "Перасячы гэты канал зь бягучым вылучэньнем"
+msgstr "Запоўніць бягучае вылучэньне лявай"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:4
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
@@ -1911,8 +1846,9 @@ msgid "Roughness"
 msgstr "Шурпатасьць"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:5
+#, fuzzy
 msgid "Seed"
-msgstr ""
+msgstr "_Новы лік"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:8
 msgid "Use current gradient"
@@ -1942,92 +1878,85 @@ msgstr "Радыюс цыліндра"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:5
 msgid "Randomness"
-msgstr ""
+msgstr "Выпадковасьць"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:6
-#, fuzzy
 msgid "Sharpness (degrees)"
-msgstr "15 градусаў  (%s)"
+msgstr "Рэзкасьць (ступень)"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:1
-#, fuzzy
 msgid "Create a rectangular brush"
-msgstr "Мэню рэдактара пэндзля"
+msgstr "Стварыць прастакутны пэндзаль"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "Create a rectangular brush with feathered edges"
-msgstr ""
+msgstr "Стварыць прастакутны пэндзаль зь мяккімі краямі"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
-#, fuzzy
 msgid "Create an elliptical brush"
-msgstr "Мэню рэдактара пэндзля"
+msgstr "Стварыць эліптычны пэндзаль"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid "Create an elliptical brush with feathered edges"
-msgstr ""
+msgstr "Стварыць эліптычны пэндзаль зь мяккімі краямі"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "Elli_ptical, Feathered..."
-msgstr ""
+msgstr "_Эліптычны, зьмякчаны..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
 msgid "Feathering"
-msgstr ""
+msgstr "Зьмякчэньне"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
 msgid "Name"
 msgstr "Назва"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
-#, fuzzy
 msgid "Re_ctangular, Feathered..."
-msgstr "_Паўтарыць апошні"
+msgstr "_Прастакутны, зьмякчаны"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:10
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:5
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:4
-#, fuzzy
 msgid "Spacing"
-msgstr "Інтэрвал"
+msgstr "Прагал"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:12
 msgid "_Elliptical..."
-msgstr ""
+msgstr "_Эліптычны..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:13
 msgid "_Rectangular..."
-msgstr ""
+msgstr "_Прастакутны..."
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "Convert the selected region (or alpha) into a neon-sign like object"
-msgstr ""
+msgstr "Ператварыць вылучаную вобласьць (ці тэкст) у аб'ект, падобны на нэонавы знак"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
 msgid "Create a logo in the style of a neon sign"
-msgstr ""
+msgstr "Стварыць лягатым у стылі нэонавага знаку"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create shadow"
 msgstr "Стварыць цень"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
-#, fuzzy
 msgid "Effect size (pixels * 5)"
-msgstr "Ачысьціць выбраныя піксэлі"
+msgstr "Памер эфэкта (піксэлі * 5)"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:9
 msgid "N_eon..."
-msgstr ""
+msgstr "_Нэон..."
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:3
-#, fuzzy
 msgid "Cell size (pixels)"
-msgstr "Ачысьціць выбраныя піксэлі"
+msgstr "Памер ячэі (у піксэлях)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:4
 msgid "Create a logo in the style of newspaper printing"
-msgstr ""
+msgstr "Стварыць лягатып ў стылі газэтнага друку"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:4
@@ -2045,11 +1974,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Make an image look like an old photo"
-msgstr ""
+msgstr "Зрабіць, каб відарыс выглядаў як стары фатаздымак"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:4
 msgid "Mottle"
-msgstr ""
+msgstr "Плямка"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:5
 msgid "Sepia"
@@ -2099,7 +2028,7 @@ msgstr "Назва ўзора"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
 msgid "Add a perspective shadow to the selected region (or alpha)"
-msgstr ""
+msgstr "Дадаць пэрспэктыўны цень да вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
 msgid "Angle"
@@ -2111,20 +2040,19 @@ msgstr "Інтэрпаляцыя"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
 msgid "Relative distance of horizon"
-msgstr ""
+msgstr "Адносная адлегласьць да далягладу"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
 msgid "Relative length of shadow"
 msgstr "Адносная даўжыня ценю"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
-#, fuzzy
 msgid "_Perspective..."
-msgstr "Пэрспэктыва"
+msgstr "_Пэрспэктыва..."
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:1
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Дадаць эфэкт «Драпежнік» да вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:2
 #, fuzzy
@@ -2134,7 +2062,7 @@ msgstr "Пазнач ступень згладжваньня краёў"
 #: ../plug-ins/script-fu/scripts/predator.scm.h:4
 #, fuzzy
 msgid "Pixel amount"
-msgstr "Вымеры піксэля:"
+msgstr "Узровень размыцьця"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:5
 msgid "Pixelize"
@@ -2149,54 +2077,44 @@ msgid "Create images, each containing an oval button graphic"
 msgstr "Стварэньне відарысаў, кожны ўтрымлівае намаляваную эліптычную кнопку"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:5
-#, fuzzy
 msgid "Lower color"
-msgstr "_Рэдагаваць колер..."
+msgstr "Ніжні колер"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:6
-#, fuzzy
 msgid "Lower color (active)"
-msgstr "Рэдагаваць актыўны пэндзаль"
+msgstr "Ніжні колер (актыўная)"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:7
-#, fuzzy
 msgid "Not pressed"
-msgstr "Не загружаны"
+msgstr "Не націснутая"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:8
-#, fuzzy
 msgid "Not pressed (active)"
-msgstr "Рэдагаваць актыўны пэндзаль"
+msgstr "Не націснутая (актыўная)"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:9
-#, fuzzy
 msgid "Padding X"
-msgstr "_Колер вакол палатна"
+msgstr "Запаўненьне па X"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:10
-#, fuzzy
 msgid "Padding Y"
-msgstr "_Колер вакол палатна"
+msgstr "Запаўненьне па Y"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:12
-#, fuzzy
 msgid "Round ratio"
-msgstr "Маштаб"
+msgstr "Каэфіцыент скругленьня"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:15
-#, fuzzy
 msgid "Text color (active)"
-msgstr "Рэдагаваць актыўны пэндзаль"
+msgstr "Колер тэксту (актыўны)"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:16
-#, fuzzy
 msgid "Upper color"
-msgstr "_Рэдагаваць колер..."
+msgstr "Верхні колер"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:17
-#, fuzzy
 msgid "Upper color (active)"
-msgstr "Рэдагаваць актыўны пэндзаль"
+msgstr "Верхні колер (актыўная)"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:18
 msgid "_Round Button..."
@@ -2216,19 +2134,16 @@ msgid "Detail in Middle"
 msgstr "Выраўнаваць сярэдзіну мэты"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:8
-#, fuzzy
 msgid "Render _Map..."
-msgstr "_Мапа колераў"
+msgstr "_Стварыць мапу..."
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:9
-#, fuzzy
 msgid "Tile"
-msgstr "Побач па _вэртыкалі"
+msgstr "Мазаіка"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:1
-#, fuzzy
 msgid "Reverse Layer Order"
-msgstr "_Вернуць парадак і бачнасьць"
+msgstr "Зваротны парадак пластоў"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:2
 msgid "Reverse the order of layers in the image"
@@ -2240,10 +2155,9 @@ msgstr "Чорны"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Create a multi-layer image by adding a ripple effect to the current image"
-msgstr ""
+msgstr "Стварыць шматпластавы відарыс, дадаўшы эфэкт рабізны да бягучага відарыса"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
-#, fuzzy
 msgid "Edge behavior"
 msgstr "Паводзіны краю"
 
@@ -2254,11 +2168,11 @@ msgstr "Колькасьць кадраў"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling strength"
-msgstr ""
+msgstr "Сіла рабізны"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:6
 msgid "Smear"
-msgstr ""
+msgstr "Пляма"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 #, fuzzy
@@ -2267,17 +2181,15 @@ msgstr "Вакно да памераў відарыса"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:8
 msgid "_Rippling..."
-msgstr ""
+msgstr "Пакрыцьцё _рабізной..."
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:1
-#, fuzzy
 msgid "Add background"
-msgstr "Дадаць бягучы колер асноведзі"
+msgstr "Дадаць асноведзь"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:2
-#, fuzzy
 msgid "Add drop-shadow"
-msgstr "_Сьвятло і цень"
+msgstr "Дадаць падаючы цень"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:4
 #, fuzzy
@@ -2286,16 +2198,15 @@ msgstr "Радыюс цыліндра"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid "Round the corners of an image and optionally add a drop-shadow and background"
-msgstr ""
+msgstr "Скругліць куты відарыса й, па выбары, дадаць падаючы цень і асноведзь"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
-#, fuzzy
 msgid "_Round Corners..."
-msgstr "Закругленыя куты"
+msgstr "Закругленыя _куты..."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
 msgid "Change the colormap of an image to the colors in a specified palette."
-msgstr ""
+msgstr "Зьмяніць мапу колераў відарыса на колеры ў вызначанай палітры."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
 msgid "Palette"
@@ -2307,38 +2218,32 @@ msgid "Se_t Colormap..."
 msgstr "Мэню мапы колераў"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
-#, fuzzy
 msgid "Convert a selection to a brush"
-msgstr "Націсьні Enter, каб ператварыць вылучэньне"
+msgstr "Ператварыць вылучэньне ў пэндзаль"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:5
-#, fuzzy
 msgid "To _Brush..."
-msgstr "Рэдактар пэндзляў"
+msgstr "У _пэндзаль..."
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
-#, fuzzy
 msgid "Convert a selection to an image"
-msgstr "Ператварыць відарыс у шэрыя колеры"
+msgstr "Ператварыць вылучэньне ў відарыс"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:2
-#, fuzzy
 msgid "To _Image"
-msgstr "Абрэзаны да відарыса"
+msgstr "У відарыс"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-#, fuzzy
 msgid "Convert a selection to a pattern"
-msgstr "Націсьні Enter, каб ператварыць вылучэньне"
+msgstr "Ператварыць вылучэньне ва ўзор"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
-#, fuzzy
 msgid "To _Pattern..."
-msgstr "_Новы ўзор"
+msgstr "Ва _ўзор..."
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "Concave"
-msgstr ""
+msgstr "Увагнуць"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:3
 #, no-c-format
@@ -2346,18 +2251,16 @@ msgid "Radius (%)"
 msgstr "Радыюс (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
-#, fuzzy
 msgid "Round the corners of the current selection"
-msgstr "Дадаць гэты да бягучага вылучэньня"
+msgstr "Закругліць куты бягучага вылучэньня"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
-#, fuzzy
 msgid "Rounded R_ectangle..."
-msgstr "Закругленыя куты"
+msgstr "Закруглены _прастакутнік..."
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-msgstr ""
+msgstr "Дадаць да відарыса кадр, дзірачкі для зорачкі й меткі як на сляйдзе"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Font color"
@@ -2369,24 +2272,25 @@ msgstr "Колькасьць"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:7
 msgid "_Slide..."
-msgstr ""
+msgstr "_Сляйд..."
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+#, fuzzy
 msgid "Create a State Of The Art chromed logo"
-msgstr ""
+msgstr "Стварыць прост, але круты храмаваны лягатып"
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
+#, fuzzy
 msgid "SOTA Chrome..."
-msgstr ""
+msgstr "Вага хрому"
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
 msgid "Create a logo with a speedy text effect"
-msgstr ""
+msgstr "Стварыць лягатып з эфэктам шпаркага тэксту"
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
-#, fuzzy
 msgid "Speed Text..."
-msgstr "Рэдактар тэксту"
+msgstr "Шпаркі тэкст..."
 
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:2
 msgid "Create a simple sphere with a drop shadow"
@@ -2458,14 +2362,12 @@ msgid "Frame"
 msgstr "Кадр"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
-#, fuzzy
 msgid "Gradient: Loop Sawtooth"
-msgstr "Мэню рэдактара градыента"
+msgstr "Градыент: паўтараць зубец пілы"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:11
-#, fuzzy
 msgid "Gradient: Loop Triangle"
-msgstr "Мэню рэдактара градыента"
+msgstr "Градыент: паўтараць трохкутнік"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Hexagon"
@@ -2485,14 +2387,12 @@ msgid "Lissajous"
 msgstr "Лісажу"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:16
-#, fuzzy
 msgid "Margin (pixels)"
-msgstr "Колькасьць піксэляў:"
+msgstr "Палі (у піксэлях)"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:17
-#, fuzzy
 msgid "Outer teeth"
-msgstr "Вонкавая сьцяна"
+msgstr "Вонкавыя зубы"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 msgid "Pencil"
@@ -2567,7 +2467,7 @@ msgstr "_Рэдагаваць колер..."
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:3
 msgid "Create a logo using a starburst gradient"
-msgstr ""
+msgstr "Стварыць лягатып выкарыстоўваючы градыент «выбухнуўшая зорка»"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:4
 msgid "Effect size (pixels * 30)"
@@ -2575,20 +2475,19 @@ msgstr "Памер эфэкта (піксэлі × 30)"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:5
 msgid "Fill the selected region (or alpha) with a starburst gradient and add a shadow"
-msgstr ""
+msgstr "Запоўніць вылучаную вобласьць (ці тэкст) градыентам «выбухнуўшая зорка» й дадаць цень"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
 msgid "Starb_urst..."
-msgstr ""
+msgstr "_Выбухнуўшая зорка..."
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-#, fuzzy
 msgid "Effect size (pixels * 4)"
-msgstr "Ачысьціць выбраныя піксэлі"
+msgstr "Памер эфэкта (піксэлі * 4)"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
 msgid "Fill the selected region (or alpha) with a rock-like texture, a nova glow, and shadow"
@@ -2608,28 +2507,25 @@ msgid "Swirl-_Tile..."
 msgstr "Побач па _вэртыкалі"
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:10
-#, fuzzy
 msgid "Whirl amount"
-msgstr "Пазнач ступень размыцьця"
+msgstr "Ступень віраваньня"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
+#, fuzzy
 msgid "Create an image filled with a swirly pattern"
-msgstr ""
+msgstr "Стварыць відарыс, запоўнены камуфляжным узорам"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
-#, fuzzy
 msgid "Number of times to whirl"
-msgstr "_Колькасьць працэсараў для працы: "
+msgstr "_Колькі разоў закруціць "
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
-#, fuzzy
 msgid "Quarter size"
-msgstr "_Памер папярэдняга прагляду"
+msgstr "Чвэрць памеру"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
-#, fuzzy
 msgid "Whirl angle"
-msgstr "Кут павароту:"
+msgstr "Кут віраваньня"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:5
 msgid "_Swirly..."
@@ -2637,26 +2533,23 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 msgid "Add a Trace of Particles effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Дадаць эфэкт «Сьляды часьцінак» да вылучанай вобласьці (ці тэксту)"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
-#, fuzzy
 msgid "Base color"
-msgstr "_Рэдагаваць колер..."
+msgstr "Базавы колер"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 msgid "Create a logo using a Trace Of Particles effect"
-msgstr ""
+msgstr "Стварыць лягатым, ужываючы эфэкт «Сьляды часьцінак»"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
-#, fuzzy
 msgid "Edge only"
-msgstr "Толькі цёмнае"
+msgstr "Толькі край"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
-#, fuzzy
 msgid "Edge width"
-msgstr "Шырыня лініі:"
+msgstr "Шырыня края"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
 #, fuzzy
@@ -2665,16 +2558,15 @@ msgstr "_Часьціня дыскрэтызацыі:"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
 msgid "_Particle Trace..."
-msgstr ""
+msgstr "_Сьляды часьцінак..."
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
-#, fuzzy
 msgid "Antialias"
-msgstr "_Згладзіць"
+msgstr "Згладзіць"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid "Create a logo by rendering the specified text along the perimeter of a circle"
-msgstr ""
+msgstr "Стварыць лягатып, ствараючы вызначаны тэкст вакол акружнасьці"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 #, fuzzy
@@ -2688,74 +2580,65 @@ msgstr "Рэдактар тэксту"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
 msgid "Create a textured logo with highlights, shadows, and a mosaic background"
-msgstr ""
+msgstr "Стварыць тэкстураваны лягатып з асьветленьнямі, ценямі й мазайкавай асноведзьдзю"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
-#, fuzzy
 msgid "Ending blend"
-msgstr "_Непразрыстасьць канцоў градыента"
+msgstr "Канец градыента"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid "Fill the selected region (or alpha) with a texture and add highlights, shadows, and a mosaic background"
-msgstr ""
+msgstr "Запоўніць вылучаную вобласьць (ці тэкст) тэкстурай і дадаць асьветленьні, цені й мазайкавую асноведзь"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
 msgstr "Шасьцікутнікі"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:9
-#, fuzzy
 msgid "Mosaic tile type"
-msgstr "Тып левага колеру"
+msgstr "Тып мазаікі"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:10
 msgid "Octagons"
 msgstr "Васьмікутнікі"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:12
-#, fuzzy
 msgid "Squares"
 msgstr "Квадраты"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:13
-#, fuzzy
 msgid "Starting blend"
-msgstr "Выкананьне пашырэньняў"
+msgstr "Пачатак градыента"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:15
-#, fuzzy
 msgid "Text pattern"
-msgstr "_Новы ўзор"
+msgstr "Тэкставы ўзор"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:16
 msgid "_Textured..."
-msgstr ""
+msgstr "_Тэкстураваны..."
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:1
-#, fuzzy
 msgid "Blur horizontally"
-msgstr "Размыцьцё па _гарызанталі"
+msgstr "Размыцьцё па гарызанталі"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
-#, fuzzy
 msgid "Blur type"
-msgstr "Тып відарыса"
+msgstr "Тып размыцьця"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:4
-#, fuzzy
 msgid "Blur vertically"
-msgstr "Размыцьцё па _вэртыкалі"
+msgstr "Размыцьцё па вэртыкалі"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:5
 msgid "IIR"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:6
-#, fuzzy
 msgid "RLE"
 msgstr "RLE"
 
@@ -2766,19 +2649,18 @@ msgstr "Размыцьцё / Рэзкасьць"
 
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "Create a decorative web title header"
-msgstr ""
+msgstr "Стварыць дэкаратыўны загаловак www-пляцоўкі"
 
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:6
-#, fuzzy
 msgid "Web Title Header..."
-msgstr "Каманды вакна загалоўкаў:"
+msgstr "Загаловак плацоўкі..."
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:3
+#, fuzzy
 msgid "Create an image filled with a Truchet pattern"
-msgstr ""
+msgstr "Стварыць відарыс, запоўнены камуфляжным узорам"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:4
-#, fuzzy
 msgid "Foreground color"
 msgstr "Колер рысаваньня"
 
@@ -2800,17 +2682,15 @@ msgstr "Амплітуда"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:2
 msgid "Create a multi-layer image with an effect like a stone was thrown into the current image"
-msgstr ""
+msgstr "Стварыць шматпластавы відарыс з эфэктам, нібыта ў бягучы відарыс быў кінуты камень"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
-#, fuzzy
 msgid "Invert direction"
-msgstr "Інвэртаваць колеры"
+msgstr "Інвэртаваць напрамак"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:5
-#, fuzzy
 msgid "Wavelength"
-msgstr "_Даўжыня хвалі:"
+msgstr "Даўжыня хвалі"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:6
 msgid "_Waves..."
@@ -2821,52 +2701,44 @@ msgid "Create a new layer filled with a weave effect to be used as an overlay or
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
-#, fuzzy
 msgid "Ribbon spacing"
-msgstr "_Міжлітарны інтэрвал"
+msgstr "Прагалы між стужкамі"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:3
-#, fuzzy
 msgid "Ribbon width"
-msgstr "Шырыня лініі:"
+msgstr "Шырыня стужкі"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:4
-#, fuzzy
 msgid "Shadow darkness"
-msgstr "Колер ценю:"
+msgstr "Цёмнасьць ценю"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:5
-#, fuzzy
 msgid "Shadow depth"
-msgstr "Найбольшая глыбіня:"
+msgstr "Глыбіня ценю"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:6
-#, fuzzy
 msgid "Thread density"
-msgstr "Канец ніткі."
+msgstr "Гушчыня нітак"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:7
-#, fuzzy
 msgid "Thread intensity"
-msgstr "Канец ніткі."
+msgstr "Яркасьць нітак"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:8
-#, fuzzy
 msgid "Thread length"
-msgstr "Канец ніткі."
+msgstr "Даўжыня нітак"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:9
 msgid "_Weave..."
-msgstr ""
+msgstr "_Пляценьне..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "Bookmark to the GIMP web site"
 msgstr "Закладка на пляцоўку GIMP"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
-#, fuzzy
 msgid "Bookmark to the user manual"
-msgstr "Адкрыць кіраўніцтва карыстальніка GIMP"
+msgstr "Закладка ў кіраўніцтве карыстальніка"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "Create and Use _Selections"
@@ -2921,48 +2793,41 @@ msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
-#, fuzzy
 msgid "Drop shadow X offset"
-msgstr "Зрушыць маску пласта"
+msgstr "Зрух падаючаца ценю па X"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:3
-#, fuzzy
 msgid "Drop shadow Y offset"
-msgstr "Зрушыць маску пласта"
+msgstr "Зрух падаючаца ценю па Y"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:4
 msgid "Drop shadow blur radius"
 msgstr "Радыюс размыцьця падаючага ценю"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:5
-#, fuzzy
 msgid "Drop shadow color"
-msgstr "Рэдагаваць колер канала"
+msgstr "Колер падаючага ценю"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:6
-#, fuzzy
 msgid "Drop shadow opacity"
-msgstr "Пазнач непразрыстасьць пласта"
+msgstr "Непразрыстасьць падаючага ценю"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
-#, fuzzy
 msgid "Highlight X offset"
-msgstr "Зрушыць пласт"
+msgstr "Зрух асьветленьня па X"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
-#, fuzzy
 msgid "Highlight Y offset"
-msgstr "Зрушыць пласт"
+msgstr "Зрух асьветленьня па Y"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
-#, fuzzy
 msgid "Highlight opacity"
-msgstr "_Непразрыстасьць запаўненьня:"
+msgstr "Непразрыстасьць асьветленьня"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 #, fuzzy
 msgid "_Xach-Effect..."
-msgstr "Адкінуць эфэкт маскі пласта"
+msgstr "Эфэкт лінзы"
 
 #, fuzzy
 #~ msgid "BG opacity"
