@@ -174,6 +174,7 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
     }
 
   gimp_ruler_set_range (GIMP_RULER (shell->hrule), lower, upper, max_size);
+  gimp_ruler_set_unit (GIMP_RULER (shell->hrule), shell->unit);
 
   /* vertical ruler */
 
@@ -214,7 +215,7 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
     }
 
   gimp_ruler_set_range (GIMP_RULER (shell->vrule), lower, upper, max_size);
-
+  gimp_ruler_set_unit (GIMP_RULER (shell->vrule), shell->unit);
 
 #if 0
   g_printerr ("offset_x:     %d\n"

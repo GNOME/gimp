@@ -30,14 +30,13 @@
 #include "gimpvruler.h"
 
 
-#define RULER_WIDTH           13
-#define MINIMUM_INCR          5
-#define MAXIMUM_SUBDIVIDE     5
+#define RULER_WIDTH   13
+#define MINIMUM_INCR   5
 
 static const struct
 {
   gdouble  ruler_scale[16];
-  gint     subdivide[5];        /* five possible modes of subdivision */
+  gint     subdivide[5];
 } ruler_metric =
 {
   { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
@@ -137,6 +136,7 @@ gimp_vruler_draw_ticks (GimpRuler *ruler)
   gint            text_height;
   gint            pos;
   gdouble         max_size;
+  GimpUnit        unit;
   PangoLayout    *layout;
   PangoRectangle  logical_rect, ink_rect;
 
@@ -196,14 +196,26 @@ gimp_vruler_draw_ticks (GimpRuler *ruler)
   if (scale ==  G_N_ELEMENTS (ruler_metric.ruler_scale))
     scale = G_N_ELEMENTS (ruler_metric.ruler_scale) - 1;
 
+  unit = gimp_ruler_get_unit (ruler);
+
   /* drawing starts here */
   length = 0;
-  for (i = MAXIMUM_SUBDIVIDE - 1; i >= 0; i--)
+  for (i = G_N_ELEMENTS (ruler_metric.subdivide) - 1; i >= 0; i--)
     {
-      gdouble subd_incr = ((gdouble) ruler_metric.ruler_scale[scale] /
-                           (gdouble) ruler_metric.subdivide[i]);
+      gdouble subd_incr;
+
+      /* hack to get proper subdivisions at full pixels */
+      if (unit == GIMP_UNIT_PIXEL && scale == 1 && i == 1)
+        subd_incr = 1.0;
+      else
+        subd_incr = ((gdouble) ruler_metric.ruler_scale[scale] /
+                     (gdouble) ruler_metric.subdivide[i]);
 
       if (subd_incr * fabs (increment) <= MINIMUM_INCR)
+        continue;
+
+      /* don't subdivide pixels */
+      if (unit == GIMP_UNIT_PIXEL && subd_incr < 1)
         continue;
 
       /* Calculate the length of the tickmarks. Make sure that

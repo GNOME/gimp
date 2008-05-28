@@ -1,5 +1,14 @@
 2008-05-28  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_setup): set the display unit on the ruler.
+
+	* libgimpwidgets/gimphruler.c (gimp_hruler_draw_ticks)
+	* libgimpwidgets/gimpvruler.c (gimp_vruler_draw_ticks): hack around
+	to get nicer subdivisions for rulers showing pixels.
+
+2008-05-28  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpruler.[ch]
 	* libgimpwidgets/gimphruler.c
 	* libgimpwidgets/gimpvruler.c: removed GimpRulerMetric struct from
