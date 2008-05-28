@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.4.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-05-16 20:20+0300\n"
-"PO-Revision-Date: 2008-05-16 21:06+0300\n"
+"PO-Revision-Date: 2008-05-28 21:20+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
@@ -13,6 +13,7 @@ msgstr ""
 "X-Poedit-Language: Belarusian\n"
 "X-Poedit-Country: Belarus\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: /home/globus/build/gimp-2.4.1/po\n"
 
 #: ../libgimp/gimpbrushselectbutton.c:170
 msgid "Brush Selection"
@@ -201,7 +202,7 @@ msgstr "Выбар шрыфта"
 
 #: ../libgimp/gimpfontselectbutton.c:145
 msgid "Sans"
-msgstr ""
+msgstr "Sans"
 
 #: ../libgimp/gimpgradientselectbutton.c:148
 msgid "Gradient Selection"
@@ -332,7 +333,7 @@ msgstr "Аўтарскія правы:"
 
 #: ../libgimp/gimpunitcache.c:57
 msgid "percent"
-msgstr "працэнт"
+msgstr "адсотак"
 
 #: ../libgimpbase/gimpbaseenums.c:27
 msgid "_White (full opacity)"
@@ -363,33 +364,28 @@ msgid "C_hannel"
 msgstr "_Канал"
 
 #: ../libgimpbase/gimpbaseenums.c:63
-#, fuzzy
 msgid "FG to BG (RGB)"
-msgstr "Ператварыць відарыс у RGB"
+msgstr "КР у КА (RGB)"
 
 #: ../libgimpbase/gimpbaseenums.c:64
-#, fuzzy
 msgid "FG to BG (HSV)"
-msgstr "Адкрыць дыялёг колераў асноведзі й рысаваньня"
+msgstr "КР у КА (HSV)"
 
 #: ../libgimpbase/gimpbaseenums.c:65
-#, fuzzy
 msgid "FG to transparent"
-msgstr "Заліць празрыстыя вобласьці"
+msgstr "КР у празрысты"
 
 #: ../libgimpbase/gimpbaseenums.c:66
 msgid "Custom gradient"
 msgstr "Свой градыент"
 
 #: ../libgimpbase/gimpbaseenums.c:95
-#, fuzzy
 msgid "FG color fill"
-msgstr "Запоўніць колерам _рысаваньня"
+msgstr "Колерам рысаваньня"
 
 #: ../libgimpbase/gimpbaseenums.c:96
-#, fuzzy
 msgid "BG color fill"
-msgstr "Запоўніць колерам _асноведзі"
+msgstr "Колерам асноведзі"
 
 #: ../libgimpbase/gimpbaseenums.c:97
 msgid "Pattern fill"
@@ -523,11 +519,11 @@ msgstr "Квадрат"
 
 #: ../libgimpbase/gimpbaseenums.c:392
 msgid "Conical (sym)"
-msgstr "Канічны (сым.)"
+msgstr "Канічны (сымэтр.)"
 
 #: ../libgimpbase/gimpbaseenums.c:393
 msgid "Conical (asym)"
-msgstr "Каічны (несым.)"
+msgstr "Канічны (несымэтр.)"
 
 #: ../libgimpbase/gimpbaseenums.c:394
 msgid "Shaped (angular)"
@@ -570,11 +566,8 @@ msgid "Solid"
 msgstr "Суцэльны"
 
 #: ../libgimpbase/gimpbaseenums.c:462
-#, fuzzy
 msgid "Stock ID"
 msgstr ""
-"\n"
-"  Id выклікальніка:\t"
 
 #: ../libgimpbase/gimpbaseenums.c:463
 msgid "Inline pixbuf"
@@ -591,7 +584,7 @@ msgstr "Колер RGB"
 #: ../libgimpbase/gimpbaseenums.c:494
 #: ../libgimpbase/gimpbaseenums.c:529
 msgid "Grayscale"
-msgstr "Шэры"
+msgstr "Адценьні шэрага"
 
 #: ../libgimpbase/gimpbaseenums.c:495
 msgid "Indexed color"
@@ -627,7 +620,7 @@ msgstr "Кубічная"
 
 #: ../libgimpbase/gimpbaseenums.c:565
 msgid "Sinc (Lanczos3)"
-msgstr ""
+msgstr "Sinc (Lanczos3)"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -680,7 +673,7 @@ msgstr "Паўтоны"
 
 #: ../libgimpbase/gimpbaseenums.c:716
 msgid "Highlights"
-msgstr ""
+msgstr "Сьветлыя ўчасткі"
 
 #: ../libgimpbase/gimpbaseenums.c:744
 msgid "Normal (Forward)"
@@ -733,47 +726,47 @@ msgstr[2] "%d байтаў"
 #: ../libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.2f KB"
-msgstr "%.2f KB"
+msgstr "%.2f кБ"
 
 #: ../libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%.1f KB"
-msgstr "%.1f KB"
+msgstr "%.1f кБ"
 
 #: ../libgimpbase/gimpmemsize.c:194
 #, c-format
 msgid "%d KB"
-msgstr "%d KB"
+msgstr "%d кБ"
 
 #: ../libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.2f MB"
-msgstr "%.2f MB"
+msgstr "%.2f МБ"
 
 #: ../libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%.1f MB"
-msgstr "%.1f MB"
+msgstr "%.1f МБ"
 
 #: ../libgimpbase/gimpmemsize.c:209
 #, c-format
 msgid "%d MB"
-msgstr "%d MB"
+msgstr "%d МБ"
 
 #: ../libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.2f GB"
-msgstr "%.2f GB"
+msgstr "%.2f ГБ"
 
 #: ../libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%.1f GB"
-msgstr "%.1f GB"
+msgstr "%.1f ГБ"
 
 #: ../libgimpbase/gimpmemsize.c:224
 #, c-format
 msgid "%d GB"
-msgstr "%d GB"
+msgstr "%d ГБ"
 
 #: ../libgimpbase/gimputils.c:170
 #: ../libgimpbase/gimputils.c:175
@@ -804,9 +797,8 @@ msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "Профіль колераў CMYK для ператварэньня між RGB і CMYK."
 
 #: ../libgimpconfig/gimpcolorconfig.c:54
-#, fuzzy
 msgid "The color profile used for simulating a printed version (softproof)."
-msgstr "Профіль колераў для ўдаваньня друкаванай вэрсіі (softproof)."
+msgstr "Профіль для ўдаваньня друкаванай вэрсіі (колерапробы)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "Sets how colors are mapped for your display."
@@ -818,11 +810,11 @@ msgstr "Вызначае, як колеры ператвараюцца з пра
 
 #: ../libgimpconfig/gimpcolorconfig.c:61
 msgid "When enabled, the print simulation will mark colors which can not be represented in the target color space."
-msgstr "Калі задзейнічана, удаваньне друку будзе пазначыць колеры, якія немагчыма адлюстраваць у мэтавай прасторы колераў. "
+msgstr "Калі задзейнічана, удаваньне друку будзе пазначаць колеры, якія немагчыма адлюстраваць у мэтавай прасторы колераў. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color to use for marking colors which are out of gamut."
-msgstr "Колер, якім пазначаць колерыя, якія не трапляюць у дыяпазон."
+msgstr "Колер, якім пазначаць колеры, якія не трапляюць у дыяпазон."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -993,12 +985,10 @@ msgid "_Search:"
 msgstr "_Пошук: "
 
 #: ../libgimpwidgets/gimpcolorbutton.c:118
-#, fuzzy
 msgid "_Foreground Color"
 msgstr "Колер _рысаваньня"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:122
-#, fuzzy
 msgid "_Background Color"
 msgstr "Колер _асноведзі"
 
@@ -1109,7 +1099,7 @@ msgstr[2] "выбрана %d старонак"
 
 #: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Writable"
-msgstr "Запісвальны"
+msgstr "Запіс"
 
 #: ../libgimpwidgets/gimppatheditor.c:223
 msgid "Folder"
@@ -1154,7 +1144,7 @@ msgstr "_Дубляваць"
 
 #: ../libgimpwidgets/gimpstock.c:116
 msgid "_Edit"
-msgstr "_Праца"
+msgstr "_Зьмяніць"
 
 #: ../libgimpwidgets/gimpstock.c:117
 msgid "Linked"
@@ -1179,7 +1169,7 @@ msgstr "Бачны"
 #: ../libgimpwidgets/gimpstock.c:157
 #: ../libgimpwidgets/gimpstock.c:161
 msgid "_Stroke"
-msgstr "_Нарысаваць контур"
+msgstr "_Абрысаваць"
 
 #: ../libgimpwidgets/gimpstock.c:173
 msgid "L_etter Spacing"
@@ -1388,12 +1378,11 @@ msgstr "Профіль удаваньня друкаркі:"
 
 #: ../modules/cdisplay_proof.c:103
 msgid "Color proof filter using ICC color profile"
-msgstr ""
+msgstr "Фільтар колерапробы з выкарыстаньнем профіля ICC"
 
 #: ../modules/cdisplay_proof.c:180
-#, fuzzy
 msgid "Color Proof"
-msgstr "Колер асноведзі"
+msgstr "Колепраба"
 
 #: ../modules/cdisplay_proof.c:340
 msgid "Choose an ICC Color Profile"
@@ -1473,13 +1462,12 @@ msgid "Black"
 msgstr "Чорны"
 
 #: ../modules/colorsel_cmyk.c:195
-#, fuzzy
 msgid "Black _pullout:"
-msgstr "Чорна-белае"
+msgstr "Выхад _чорнага:"
 
 #: ../modules/colorsel_cmyk.c:212
 msgid "The percentage of black to pull out of the colored inks."
-msgstr ""
+msgstr "Адсотак выхаду чорнага колеру з каляровых чарнілаў."
 
 #: ../modules/colorsel_cmyk_lcms.c:91
 msgid "CMYK color selector (using color profile)"
@@ -1555,9 +1543,8 @@ msgid "Button 9"
 msgstr "Кнопка 9"
 
 #: ../modules/controller_linux_input.c:68
-#, fuzzy
 msgid "Button Mouse"
-msgstr "Кола мышы"
+msgstr ""
 
 #: ../modules/controller_linux_input.c:69
 msgid "Button Left"
@@ -1596,14 +1583,12 @@ msgid "Button Wheel"
 msgstr "Кола мышы"
 
 #: ../modules/controller_linux_input.c:81
-#, fuzzy
 msgid "Button Gear Down"
-msgstr "Ctrl+F, Page Down"
+msgstr "Кнопка запаволеньня"
 
 #: ../modules/controller_linux_input.c:84
-#, fuzzy
 msgid "Button Gear Up"
-msgstr "Ctrl+B, Page Up"
+msgstr "Кнопка паскарэньня"
 
 #: ../modules/controller_linux_input.c:90
 #: ../modules/controller_dx_dinput.c:469
@@ -1634,38 +1619,32 @@ msgid "Z Move Down"
 msgstr "Уніз па Z"
 
 #: ../modules/controller_linux_input.c:97
-#, fuzzy
 msgid "X Axis Tilt Forward"
-msgstr "Наперад на 5 зьяваў"
+msgstr "Вось X нахіленая наперад"
 
 #: ../modules/controller_linux_input.c:98
-#, fuzzy
 msgid "X Axis Tilt Back"
-msgstr "Назад на адзін кадр"
+msgstr "Вось X нахіленая назад"
 
 #: ../modules/controller_linux_input.c:99
 #: ../modules/controller_dx_dinput.c:505
-#, fuzzy
 msgid "Y Axis Tilt Right"
-msgstr "Зьлева направа"
+msgstr "Вось Y нахіленая ўправа"
 
 #: ../modules/controller_linux_input.c:100
 #: ../modules/controller_dx_dinput.c:508
-#, fuzzy
 msgid "Y Axis Tilt Left"
-msgstr "[n] h, <стрэлка-ўлева>, Ctrl+H"
+msgstr "Вось Y нахіленая ўлева"
 
 #: ../modules/controller_linux_input.c:101
 #: ../modules/controller_dx_dinput.c:514
-#, fuzzy
 msgid "Z Axis Turn Left"
-msgstr "[n] h, <стрэлка-ўлева>, Ctrl+H"
+msgstr "Вось Z павернутая ўлева"
 
 #: ../modules/controller_linux_input.c:102
 #: ../modules/controller_dx_dinput.c:517
-#, fuzzy
 msgid "Z Axis Turn Right"
-msgstr "Зьлева направа"
+msgstr "Вось Z павернутая ўправа"
 
 #: ../modules/controller_linux_input.c:104
 msgid "Horiz. Wheel Turn Back"
@@ -1676,14 +1655,12 @@ msgid "Horiz. Wheel Turn Forward"
 msgstr "Паварот гарыз. кола наперад"
 
 #: ../modules/controller_linux_input.c:106
-#, fuzzy
 msgid "Dial Turn Left"
-msgstr "[n] h, <стрэлка-ўлева>, Ctrl+H"
+msgstr "Паварот дыску ўлева"
 
 #: ../modules/controller_linux_input.c:107
-#, fuzzy
 msgid "Dial Turn Right"
-msgstr "Зьлева направа"
+msgstr "Паварот дыску ўправа"
 
 #: ../modules/controller_linux_input.c:108
 msgid "Wheel Turn Left"
@@ -1775,22 +1752,20 @@ msgid "Button %d Release"
 msgstr "Кнопка %d адпушчаная"
 
 #: ../modules/controller_dx_dinput.c:478
-#, fuzzy
 msgid "Y Move Away"
-msgstr "Пераматаць наперад"
+msgstr "Аддаленьне Y"
 
 #: ../modules/controller_dx_dinput.c:481
-#, fuzzy
 msgid "Y Move Near"
-msgstr "Пераматаць наперад"
+msgstr "Набліжэньне Y"
 
 #: ../modules/controller_dx_dinput.c:496
 msgid "X Axis Tilt Away"
-msgstr ""
+msgstr "Нахіл восі X далей"
 
 #: ../modules/controller_dx_dinput.c:499
 msgid "X Axis Tilt Near"
-msgstr ""
+msgstr "Нахіл восі X бліжэй"
 
 #: ../modules/controller_dx_dinput.c:528
 #, c-format
@@ -1803,19 +1778,19 @@ msgid "Slider %d Decrease"
 msgstr "Зьмяншэньне сьлізгача %d"
 
 #: ../modules/controller_dx_dinput.c:541
-#, fuzzy, c-format
+#, c-format
 msgid "POV %d X View"
-msgstr "Паказ сьпісу"
+msgstr ""
 
 #: ../modules/controller_dx_dinput.c:544
-#, fuzzy, c-format
+#, c-format
 msgid "POV %d Y View"
-msgstr "Паказ сьпісу"
+msgstr ""
 
 #: ../modules/controller_dx_dinput.c:547
-#, fuzzy, c-format
+#, c-format
 msgid "POV %d Return"
-msgstr "Вернуць значэньні"
+msgstr ""
 
 #: ../modules/controller_dx_dinput.c:1111
 msgid "DirectInput Events"
