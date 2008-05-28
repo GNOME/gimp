@@ -33,7 +33,6 @@
 #define RULER_HEIGHT          13
 #define MINIMUM_INCR          5
 #define MAXIMUM_SUBDIVIDE     5
-#define MAXIMUM_SCALES        10
 
 
 typedef struct
@@ -187,12 +186,12 @@ gimp_hruler_draw_ticks (GimpRuler *ruler)
   g_snprintf (unit_str, sizeof (unit_str), "%d", scale);
   text_width = strlen (unit_str) * digit_height + 1;
 
-  for (scale = 0; scale < MAXIMUM_SCALES; scale++)
+  for (scale = 0; scale < G_N_ELEMENTS (metric->ruler_scale); scale++)
     if (metric->ruler_scale[scale] * fabs (increment) > 2 * text_width)
       break;
 
-  if (scale == MAXIMUM_SCALES)
-    scale = MAXIMUM_SCALES - 1;
+  if (scale == G_N_ELEMENTS (metric->ruler_scale))
+    scale = G_N_ELEMENTS (metric->ruler_scale) - 1;
 
   /* drawing starts here */
   length = 0;

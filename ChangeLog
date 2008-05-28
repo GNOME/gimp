@@ -1,3 +1,10 @@
+2008-05-28  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpruler.[ch]
+	* libgimpwidgets/gimphruler.c
+	* libgimpwidgets/gimpvruler.c: enlarge the array of scales to
+	prevent ruler numbers from overlapping (bug #535039).
+
 2008-05-27  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/help-browser/dialog.c: undef
