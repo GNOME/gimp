@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.4.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-05-16 20:19+0300\n"
-"PO-Revision-Date: 2008-05-16 21:04+0300\n"
+"PO-Revision-Date: 2008-05-28 20:11+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
@@ -13,6 +13,7 @@ msgstr ""
 "X-Poedit-Country: BELARUS\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-Basepath: /home/globus/build/gimp-2.4.1/po\n"
 
 #: ../app/about.h:24
 msgid "GIMP"
@@ -450,7 +451,7 @@ msgstr "Дубляваць пэндзаль"
 
 #: ../app/actions/brushes-actions.c:65
 msgid "Copy Brush _Location"
-msgstr "_Капіяваць месцаразьмяшчэньне пэндзля"
+msgstr "_Капіяваць месца пэндзля"
 
 #: ../app/actions/brushes-actions.c:66
 msgid "Copy brush file location to clipboard"
@@ -682,7 +683,7 @@ msgstr "Копія каналу %s"
 #: ../app/pdb/selection_cmds.c:423
 #: ../app/pdb/selection_cmds.c:486
 msgid "Channel to Selection"
-msgstr "Канал у выбар"
+msgstr "Канал у вылучэньне"
 
 #: ../app/actions/colormap-actions.c:43
 msgid "Colormap Menu"
@@ -817,15 +818,13 @@ msgstr "Мэню зьвестак аб курсоры"
 #: ../app/actions/cursor-info-actions.c:47
 #: ../app/actions/sample-points-actions.c:47
 #: ../app/widgets/gimpcursorview.c:192
-#, fuzzy
 msgid "_Sample Merged"
-msgstr "Іграю ўзор #%d (%s)"
+msgstr "_Аб'яднаная проба"
 
 #: ../app/actions/cursor-info-actions.c:48
 #: ../app/actions/sample-points-actions.c:48
-#, fuzzy
 msgid "Sample Merged"
-msgstr "Іграю ўзор #%d (%s)"
+msgstr "Аб'яднаная проба"
 
 #: ../app/actions/data-commands.c:107
 #: ../app/actions/documents-commands.c:311
@@ -1297,7 +1296,7 @@ msgstr "Адкрыць дыялёг відарыса"
 
 #: ../app/actions/documents-actions.c:64
 msgid "Copy Image _Location"
-msgstr "_Капіяваць месцаразьмяшчэньне відарыса"
+msgstr "_Капіяваць месца відарыса"
 
 #: ../app/actions/documents-actions.c:65
 msgid "Copy image location to clipboard"
@@ -1393,7 +1392,7 @@ msgstr "_Зрушэньне..."
 
 #: ../app/actions/drawable-actions.c:70
 msgid "Shift the pixels, optionally wrapping them at the borders"
-msgstr "Зрушыць піксэлі, неабавязкова загортваючы іх на межах"
+msgstr "Зрушыць піксэлі, загортваючы іх, калі выбрана, ля межаў"
 
 #: ../app/actions/drawable-actions.c:78
 #: ../app/actions/vectors-actions.c:153
@@ -1416,20 +1415,20 @@ msgstr "Пераключыць бачнасьць"
 #: ../app/actions/drawable-actions.c:95
 #: ../app/actions/image-actions.c:171
 msgid "Flip _Horizontally"
-msgstr "_Гарызантальны пераварот"
+msgstr "Перакуліць _гарызантальна"
 
 #: ../app/actions/drawable-actions.c:96
 msgid "Flip horizontally"
-msgstr "Гарызантальны пераварот"
+msgstr "Перакуліць гарызантальна"
 
 #: ../app/actions/drawable-actions.c:101
 #: ../app/actions/image-actions.c:177
 msgid "Flip _Vertically"
-msgstr "_Вэртыкальны пераварот"
+msgstr "Перакуліць _вэртыкальна"
 
 #: ../app/actions/drawable-actions.c:102
 msgid "Flip vertically"
-msgstr "Вэртыкальны пераварот"
+msgstr "Перакуліць вэртыкальна"
 
 #: ../app/actions/drawable-actions.c:110
 #: ../app/actions/image-actions.c:186
@@ -1447,7 +1446,7 @@ msgstr "Павернуць на _180°"
 
 #: ../app/actions/drawable-actions.c:117
 msgid "Turn upside-down"
-msgstr "Перавернуць дагары нагамі"
+msgstr "Перакуліць дагары нагамі"
 
 #: ../app/actions/drawable-actions.c:122
 #: ../app/actions/image-actions.c:198
@@ -1535,11 +1534,11 @@ msgstr "Прыбраць усе дзеяньні з гісторыі адмен�
 #: ../app/actions/edit-actions.c:102
 #: ../app/actions/edit-actions.c:304
 msgid "_Fade..."
-msgstr "_Зьмяншэньне..."
+msgstr "_Зьмяніць..."
 
 #: ../app/actions/edit-actions.c:103
 msgid "Modify paint mode and opacity of the last pixel manipulation"
-msgstr "Зьямніць рэжым рысаваньня й непразрыстасьць апошняй маніпуляцыі зь піксэлямі"
+msgstr "Зьмяніць рэжым рысаваньня й непразрыстасьць апошняй маніпуляцыі зь піксэлямі"
 
 #: ../app/actions/edit-actions.c:108
 msgid "Cu_t"
@@ -1663,17 +1662,17 @@ msgstr "Запоўніць вылучэньне актыўным узорам"
 #: ../app/actions/edit-actions.c:275
 #, c-format
 msgid "_Undo %s"
-msgstr "_Адмяніць %s"
+msgstr "_Адмяніць «%s»"
 
 #: ../app/actions/edit-actions.c:280
 #, c-format
 msgid "_Redo %s"
-msgstr "_Паўтарыць %s"
+msgstr "_Паўтарыць «%s»"
 
 #: ../app/actions/edit-actions.c:291
 #, c-format
 msgid "_Fade %s..."
-msgstr "_Зьмяншэньне %s..."
+msgstr "_Зьмяніць «%s»..."
 
 #: ../app/actions/edit-commands.c:133
 msgid "Clear Undo History"
@@ -1927,7 +1926,7 @@ msgstr "Вернуць відарыс"
 #: ../app/actions/file-commands.c:381
 #, c-format
 msgid "Revert '%s' to '%s'?"
-msgstr "Ці вернуць '%s' да '%s'?"
+msgstr "Ці вернуць «%s» да «%s»?"
 
 #: ../app/actions/file-commands.c:387
 msgid "By reverting the image to the state saved on disk, you will lose all changes, including all undo information."
@@ -2106,7 +2105,7 @@ msgstr "HSV (_Адценьне за стрэлкай)"
 #: ../app/actions/gradient-editor-actions.c:370
 #: ../app/actions/view-actions.c:273
 msgid "Zoom In"
-msgstr "Набліжэньне"
+msgstr "Наблізіць"
 
 #: ../app/actions/gradient-editor-actions.c:371
 #: ../app/actions/palette-editor-actions.c:88
@@ -2118,7 +2117,7 @@ msgstr "Набліжэньне"
 #: ../app/actions/gradient-editor-actions.c:376
 #: ../app/actions/view-actions.c:267
 msgid "Zoom Out"
-msgstr "Аддаленьне"
+msgstr "Аддаліць"
 
 #: ../app/actions/gradient-editor-actions.c:377
 #: ../app/actions/palette-editor-actions.c:94
@@ -2129,40 +2128,40 @@ msgstr "Аддаленьне"
 
 #: ../app/actions/gradient-editor-actions.c:382
 msgid "Zoom All"
-msgstr "Наблізіць усё"
+msgstr "Маштабаваць усё"
 
 #: ../app/actions/gradient-editor-actions.c:383
 #: ../app/actions/palette-editor-actions.c:100
 msgid "Zoom all"
-msgstr "Наблізіць усё"
+msgstr "Маштабаваньне ўсяго"
 
 #: ../app/actions/gradient-editor-actions.c:773
 msgid "_Blending Function for Segment"
-msgstr "_Градыентная функцыя адрэзка"
+msgstr "_Градыентная функцыя сэгмэнта"
 
 #: ../app/actions/gradient-editor-actions.c:775
 msgid "Coloring _Type for Segment"
-msgstr "_Функцыя фарбаваньня сэгмэнта"
+msgstr "_Тып фарбаваньня сэгмэнта"
 
 #: ../app/actions/gradient-editor-actions.c:778
 msgid "_Flip Segment"
-msgstr "_Перавернуць адрэзак"
+msgstr "_Перакуліць сэгмэнт"
 
 #: ../app/actions/gradient-editor-actions.c:780
 msgid "_Replicate Segment..."
-msgstr "_Размножыць адрэзак..."
+msgstr "_Размножыць сэгмэнт..."
 
 #: ../app/actions/gradient-editor-actions.c:782
 msgid "Split Segment at _Midpoint"
-msgstr "Падзяліць адрэзак _пасярэдзіне"
+msgstr "Падзяліць сэгмэнт _пасярэдзіне"
 
 #: ../app/actions/gradient-editor-actions.c:784
 msgid "Split Segment _Uniformly..."
-msgstr "_Падзяліць адрэзак на роўныя часткі"
+msgstr "_Падзяліць сэгмэнт на роўныя часткі"
 
 #: ../app/actions/gradient-editor-actions.c:786
 msgid "_Delete Segment"
-msgstr "_Выдаліць адрэзак"
+msgstr "_Выдаліць сэгмэнт"
 
 #: ../app/actions/gradient-editor-actions.c:788
 msgid "Re-_center Segment's Midpoint"
@@ -2178,11 +2177,11 @@ msgstr "_Градыентная функцыя вылучэньня"
 
 #: ../app/actions/gradient-editor-actions.c:797
 msgid "Coloring _Type for Selection"
-msgstr "_Функцыя фарбаваньня вылучэньня"
+msgstr "_Тып фарбаваньня вылучэньня"
 
 #: ../app/actions/gradient-editor-actions.c:800
 msgid "_Flip Selection"
-msgstr "_Перавернуць вылучэньне"
+msgstr "_Перакуліць вылучэньне"
 
 #: ../app/actions/gradient-editor-actions.c:802
 msgid "_Replicate Selection..."
@@ -2190,11 +2189,11 @@ msgstr "_Размножыць вылучэньне..."
 
 #: ../app/actions/gradient-editor-actions.c:804
 msgid "Split Segments at _Midpoints"
-msgstr "Падзяліць адрэзкі _пасярэдзіне"
+msgstr "Падзяліць сэгмэнты _пасярэдзіне"
 
 #: ../app/actions/gradient-editor-actions.c:806
 msgid "Split Segments _Uniformly..."
-msgstr "_Падзяліць адрэзкі на роўныя часткі..."
+msgstr "_Падзяліць сэгмэнты на аднастайна..."
 
 #: ../app/actions/gradient-editor-actions.c:808
 msgid "_Delete Selection"
@@ -2210,27 +2209,27 @@ msgstr "_Пераразьмеркаваць ручкі ў вылучэньні"
 
 #: ../app/actions/gradient-editor-commands.c:86
 msgid "Left Endpoint Color"
-msgstr "Канцавы колер зьлева"
+msgstr "Крайні левы колер"
 
 #: ../app/actions/gradient-editor-commands.c:88
 msgid "Gradient Segment's Left Endpoint Color"
-msgstr "Левы канцавы колер адрэзка градыента"
+msgstr "Крайні левы колер сэгмэнта градыента"
 
 #: ../app/actions/gradient-editor-commands.c:237
 msgid "Right Endpoint Color"
-msgstr "Канцавы колер справа"
+msgstr "Крайні правы колер"
 
 #: ../app/actions/gradient-editor-commands.c:239
 msgid "Gradient Segment's Right Endpoint Color"
-msgstr "Правы канцавы колер адрэзка градыента"
+msgstr "Крайні правы колер сэгмэнта градыента"
 
 #: ../app/actions/gradient-editor-commands.c:453
 msgid "Replicate Segment"
-msgstr "Размножыць адрэзак"
+msgstr "Размножыць сэгмэнт"
 
 #: ../app/actions/gradient-editor-commands.c:454
 msgid "Replicate Gradient Segment"
-msgstr "Размножыць адрэзак градыента"
+msgstr "Размножыць сэгмэнт градыента"
 
 #: ../app/actions/gradient-editor-commands.c:458
 msgid "Replicate Selection"
@@ -2250,7 +2249,7 @@ msgid ""
 "to replicate the selected segment."
 msgstr ""
 "Выберы колькі разоў\n"
-"памнажаць вылучаны адрэзак."
+"размножыць вылучаны сэгмэнт."
 
 #: ../app/actions/gradient-editor-commands.c:495
 msgid ""
@@ -2258,23 +2257,23 @@ msgid ""
 "to replicate the selection."
 msgstr ""
 "Выберы колькі разоў\n"
-"памнажаць вылучэньне."
+"размножыць вылучэньне."
 
 #: ../app/actions/gradient-editor-commands.c:554
 msgid "Split Segment Uniformly"
-msgstr "Падзяліць адрэзак на роўныя часткі"
+msgstr "Падзяліць сэгмэнт на роўныя часткі"
 
 #: ../app/actions/gradient-editor-commands.c:555
 msgid "Split Gradient Segment Uniformly"
-msgstr "Падзяліць адрэзак градыента на роўныя часткі"
+msgstr "Падзяліць сэгмэнт градыента аднастайна"
 
 #: ../app/actions/gradient-editor-commands.c:559
 msgid "Split Segments Uniformly"
-msgstr "Падзяліць адрэзкі на роўныя часткі"
+msgstr "Падзяліць сэгмэнты аднастайна"
 
 #: ../app/actions/gradient-editor-commands.c:560
 msgid "Split Gradient Segments Uniformly"
-msgstr "Падзяліць адрэзкі градыента на роўныя часткі"
+msgstr "Падзяліць сэгмэнты градыента аднастайна"
 
 #: ../app/actions/gradient-editor-commands.c:573
 msgid "Split"
@@ -2286,7 +2285,7 @@ msgid ""
 "in which to split the selected segment."
 msgstr ""
 "Выберы колькасьць аднолькавых частак,\n"
-"на якія падзяліць выбраны адрэзак."
+"на якія падзяліць выбраны сэгмэнт."
 
 #: ../app/actions/gradient-editor-commands.c:597
 msgid ""
@@ -2294,7 +2293,7 @@ msgid ""
 "in which to split the segments in the selection."
 msgstr ""
 "Выберы колькасьць аднолькавых частак,\n"
-"на якія падзяліць адрэзкі ў вылучэньні."
+"на якія падзяліць сэгмэнты ў вылучэньні."
 
 #: ../app/actions/gradients-actions.c:44
 msgid "Gradients Menu"
@@ -2318,7 +2317,7 @@ msgstr "Дубляваць градыент"
 
 #: ../app/actions/gradients-actions.c:60
 msgid "Copy Gradient _Location"
-msgstr "_Капіяваць месцаразьмяшчэньне градыента"
+msgstr "_Капіяваць месца градыента"
 
 #: ../app/actions/gradients-actions.c:61
 msgid "Copy gradient file location to clipboard"
@@ -2393,7 +2392,7 @@ msgstr "_Пашырэньні"
 
 #: ../app/actions/image-actions.c:60
 msgid "_Image"
-msgstr "_Відарыс"
+msgstr "Від_арыс"
 
 #: ../app/actions/image-actions.c:61
 msgid "_Mode"
@@ -2402,7 +2401,7 @@ msgstr "_Рэжым"
 #: ../app/actions/image-actions.c:62
 #: ../app/actions/layers-actions.c:56
 msgid "_Transform"
-msgstr "_Ператварыць"
+msgstr "_Ператварэньне"
 
 #: ../app/actions/image-actions.c:63
 msgid "_Guides"
@@ -2421,7 +2420,7 @@ msgstr "_Аўта"
 #: ../app/actions/image-actions.c:68
 #: ../app/actions/plug-in-actions.c:94
 msgid "_Map"
-msgstr "_Мапа"
+msgstr "П_ератварэньне"
 
 #: ../app/actions/image-actions.c:69
 msgid "C_omponents"
@@ -2551,11 +2550,11 @@ msgstr "Ператварыць відарыс у шэрыя колеры"
 
 #: ../app/actions/image-actions.c:172
 msgid "Flip image horizontally"
-msgstr "Гарызантальны пераварот відарыса"
+msgstr "Перакуліць відарыс гарызантальна"
 
 #: ../app/actions/image-actions.c:178
 msgid "Flip image vertically"
-msgstr "Вэртыкальны пераварот відарыса"
+msgstr "Перакуліць відарыс вэртыкальна"
 
 #: ../app/actions/image-actions.c:187
 msgid "Rotate the image 90 degrees to the right"
@@ -2563,7 +2562,7 @@ msgstr "Павернуць відарыс на 90 градусаў управа"
 
 #: ../app/actions/image-actions.c:193
 msgid "Turn the image upside-down"
-msgstr "Перавернуць відарыс дагары нагамі"
+msgstr "Перакуліць відарыс дагары нагамі"
 
 #: ../app/actions/image-actions.c:199
 msgid "Rotate the image 90 degrees to the left"
@@ -2587,7 +2586,7 @@ msgstr "Вызначэньне разрозьненьня друкаваньня
 #: ../app/pdb/drawable_transform_cmds.c:144
 #: ../app/pdb/drawable_transform_cmds.c:217
 msgid "Flipping"
-msgstr "Пераварочваньне"
+msgstr "Перакульваньне"
 
 #: ../app/actions/image-commands.c:395
 #: ../app/pdb/drawable_transform_cmds.c:511
@@ -2657,7 +2656,7 @@ msgstr "Мэню пластоў"
 
 #: ../app/actions/layers-actions.c:51
 msgid "_Layer"
-msgstr "_Пласт"
+msgstr "П_ласт"
 
 #: ../app/actions/layers-actions.c:52
 msgid "Stac_k"
@@ -2697,7 +2696,7 @@ msgstr "_Зьмяніць атрыбуты пласта"
 
 #: ../app/actions/layers-actions.c:69
 msgid "Edit the layer's name"
-msgstr "Зьямніць назву пласта"
+msgstr "Зьмяніць назву пласта"
 
 #: ../app/actions/layers-actions.c:74
 msgid "_New Layer..."
@@ -2817,7 +2816,7 @@ msgstr "Вызначыць вымеры пласта"
 
 #: ../app/actions/layers-actions.c:170
 msgid "Layer to _Image Size"
-msgstr "_Пласт да памераў выявы"
+msgstr "Пласт да памераў _відарыса"
 
 #: ../app/actions/layers-actions.c:171
 msgid "Resize the layer to the size of the image"
@@ -3069,9 +3068,8 @@ msgid "Edit Active Palette"
 msgstr "Рэдагаваць актыўную палітру"
 
 #: ../app/actions/palette-editor-actions.c:72
-#, fuzzy
 msgid "New Color from _FG"
-msgstr "_Дадаць колер з рысунка"
+msgstr "Новы колер зь _пярэдняга пляну"
 
 #: ../app/actions/palette-editor-actions.c:73
 msgid "New color from foreground color"
@@ -3145,7 +3143,7 @@ msgstr "Аб'яднаць палітры"
 
 #: ../app/actions/palettes-actions.c:72
 msgid "Copy Palette _Location"
-msgstr "_Капіяваць месцаразьмяшчэньне палітры"
+msgstr "_Капіяваць месца палітры"
 
 #: ../app/actions/palettes-actions.c:73
 msgid "Copy palette file location to clipboard"
@@ -3213,7 +3211,7 @@ msgstr "Дубляваць узор"
 
 #: ../app/actions/patterns-actions.c:65
 msgid "Copy Pattern _Location"
-msgstr "_Капіяваць месцаразьмяшчэньне ўзора"
+msgstr "_Капіяваць месца ўзора"
 
 #: ../app/actions/patterns-actions.c:66
 msgid "Copy pattern file location to clipboard"
@@ -3261,11 +3259,11 @@ msgstr "_Шум"
 
 #: ../app/actions/plug-in-actions.c:87
 msgid "Edge-De_tect"
-msgstr "_Вызначыць краі"
+msgstr "Вызначэньне _краёў"
 
 #: ../app/actions/plug-in-actions.c:88
 msgid "En_hance"
-msgstr "_Палепшыць"
+msgstr "_Паляпшэньне"
 
 #: ../app/actions/plug-in-actions.c:89
 msgid "C_ombine"
@@ -3273,15 +3271,15 @@ msgstr "_Спалучэньне"
 
 #: ../app/actions/plug-in-actions.c:90
 msgid "_Generic"
-msgstr "_Звычайны"
+msgstr "_Звычайныя"
 
 #: ../app/actions/plug-in-actions.c:91
 msgid "_Light and Shadow"
-msgstr "_Сьвятло і цень"
+msgstr "Сьвятло й _цень"
 
 #: ../app/actions/plug-in-actions.c:92
 msgid "_Distorts"
-msgstr "_Скрыўленьне"
+msgstr "Ск_рыўленьне"
 
 #: ../app/actions/plug-in-actions.c:93
 msgid "_Artistic"
@@ -3289,7 +3287,7 @@ msgstr "_Мастацкія"
 
 #: ../app/actions/plug-in-actions.c:95
 msgid "_Render"
-msgstr "_Апрацаваць"
+msgstr "Ствар_эньне"
 
 #: ../app/actions/plug-in-actions.c:96
 msgid "_Clouds"
@@ -3305,7 +3303,7 @@ msgstr "_Web"
 
 #: ../app/actions/plug-in-actions.c:100
 msgid "An_imation"
-msgstr "_Анімацыя"
+msgstr "Ан_імацыя"
 
 #: ../app/actions/plug-in-actions.c:103
 msgid "Reset all _Filters"
@@ -3408,7 +3406,7 @@ msgstr "Мэню рэдактара вылучэньня"
 
 #: ../app/actions/select-actions.c:47
 msgid "_Select"
-msgstr "_Вылучэньні"
+msgstr "В_ылучэньні"
 
 #: ../app/actions/select-actions.c:50
 msgid "select|_All"
@@ -3452,7 +3450,7 @@ msgstr "Размыць мяжу вылучэньня, каб яна паступ
 
 #: ../app/actions/select-actions.c:80
 msgid "_Sharpen"
-msgstr "_Рэзкасьць"
+msgstr "Павялічыць _рэзкасьць"
 
 #: ../app/actions/select-actions.c:81
 msgid "Remove fuzzyness from the selection"
@@ -3464,7 +3462,7 @@ msgstr "_Зьменшыць..."
 
 #: ../app/actions/select-actions.c:87
 msgid "Contract the selection"
-msgstr "ЗЎьменшыць вылучэньне"
+msgstr "Зьменшыць вылучэньне"
 
 #: ../app/actions/select-actions.c:92
 msgid "_Grow..."
@@ -3480,7 +3478,7 @@ msgstr "_Мяжа..."
 
 #: ../app/actions/select-actions.c:99
 msgid "Replace the selection by its border"
-msgstr "Замяніць вылучжэньне ягонай мяжой"
+msgstr "Замяніць вылучэньне ягонай аблямоўкай"
 
 #: ../app/actions/select-actions.c:104
 msgid "Save to _Channel"
@@ -3513,11 +3511,11 @@ msgstr "Немагчыма зрабіць вылучаную вобласьць 
 #: ../app/actions/select-commands.c:148
 #: ../app/core/gimpselection.c:170
 msgid "Feather Selection"
-msgstr "Размыць вылучанэньне"
+msgstr "Размыць вылучэньне"
 
 #: ../app/actions/select-commands.c:152
 msgid "Feather selection by"
-msgstr "Размыць вылучанэньне на"
+msgstr "Размыць вылучэньне на"
 
 #: ../app/actions/select-commands.c:183
 #: ../app/core/gimpselection.c:177
@@ -3526,11 +3524,11 @@ msgstr "Зьменшыць вылучаную вобласьць"
 
 #: ../app/actions/select-commands.c:187
 msgid "Shrink selection by"
-msgstr "Зьменшыцьвылучаную вобласьць на"
+msgstr "Зьменшыць вылучаную вобласьць на"
 
 #: ../app/actions/select-commands.c:196
 msgid "_Shrink from image border"
-msgstr "_Зьменшыць ад меж відарыса"
+msgstr "_Зьменшыць ад межаў відарыса"
 
 #: ../app/actions/select-commands.c:217
 #: ../app/core/gimpselection.c:176
@@ -3544,16 +3542,16 @@ msgstr "Павялічыць вылучаную вобласьць на"
 #: ../app/actions/select-commands.c:241
 #: ../app/core/gimpselection.c:175
 msgid "Border Selection"
-msgstr "Абляймаваць вылучэньне"
+msgstr "Аблямаваць вылучэньне"
 
 #: ../app/actions/select-commands.c:245
 msgid "Border selection by"
-msgstr "Абляймаваць вылучэньне на"
+msgstr "Аблямаваць вылучэньне на"
 
 #. Feather button
 #: ../app/actions/select-commands.c:255
 msgid "_Feather border"
-msgstr "_Размытая абляймоўка"
+msgstr "_Зьмякчыць аблямоўку"
 
 #. Edge lock button
 #: ../app/actions/select-commands.c:268
@@ -3657,9 +3655,8 @@ msgid "Clear all text"
 msgstr "Ачысьціць увесь тэкст"
 
 #: ../app/actions/text-editor-actions.c:59
-#, fuzzy
 msgid "LTR"
-msgstr "LTR"
+msgstr "Л→П"
 
 #: ../app/actions/text-editor-actions.c:60
 #: ../app/text/text-enums.c:51
@@ -3668,12 +3665,12 @@ msgstr "Зьлева направа"
 
 #: ../app/actions/text-editor-actions.c:65
 msgid "RTL"
-msgstr ""
+msgstr "П→Л"
 
 #: ../app/actions/text-editor-actions.c:66
 #: ../app/text/text-enums.c:52
 msgid "From right to left"
-msgstr "права налева"
+msgstr "Справа налева"
 
 #: ../app/actions/text-editor-commands.c:63
 msgid "Open Text File (UTF-8)"
@@ -3790,7 +3787,7 @@ msgstr "_Ператварэньне"
 
 #: ../app/actions/tools-actions.c:54
 msgid "_Color Tools"
-msgstr "Працы з _колерам"
+msgstr "Праца з _колерам"
 
 #: ../app/actions/tools-actions.c:57
 msgid "R_aise Tool"
@@ -4102,7 +4099,7 @@ msgstr "Вернуць папярэдні маштаб"
 
 #: ../app/actions/view-actions.c:105
 msgid "Na_vigation Window"
-msgstr "Выкно _навігацыі"
+msgstr "Вакно _навігацыі"
 
 #: ../app/actions/view-actions.c:106
 msgid "Show an overview window for this image"
@@ -4146,7 +4143,7 @@ msgstr "_Паказваць мяжу пласта"
 
 #: ../app/actions/view-actions.c:147
 msgid "Draw a border around the active layer"
-msgstr "Рысаваць мяжу вакол актыўнага пласта"
+msgstr "Рысаваць рамку вакол актыўнага пласта"
 
 #: ../app/actions/view-actions.c:153
 msgid "Show _Guides"
@@ -4714,11 +4711,11 @@ msgstr "Калі задзейнічана, ідзе апытаньне пасл�
 
 #: ../app/config/gimprc-blurbs.h:245
 msgid "Sets whether GIMP should create previews of layers and channels. Previews in the layers and channels dialog are nice to have but they can slow things down when working with large images."
-msgstr "Вызначае, ці мусіць GIMP ствараць папярэднія прагляды пластоў і каналаў. Вельмі зручна мець папярэднія прагляды ў дыялёгах пластоў і каналаў, але яны могуць запаволіць працу пры апрацоўваньні вялікіх відарысаў."
+msgstr "Вызначае, ці мусіць GIMP ствараць агляды пластоў і каналаў. Вельмі зручна мець агляды ў дыялёгах пластоў і каналаў, але яны могуць запаволіць працу пры апрацоўваньні вялікіх відарысаў."
 
 #: ../app/config/gimprc-blurbs.h:250
 msgid "Sets the preview size used for layers and channel previews in newly created dialogs."
-msgstr "Вызначае памер папярэдніх праглядаў у наваствораных дыялёгах пластоў і каналаў."
+msgstr "Вызначае памер аглядаў у наваствораных дыялёгах пластоў і каналаў."
 
 #: ../app/config/gimprc-blurbs.h:254
 msgid "When enabled, the image window will automatically resize itself whenever the physical image size changes."
@@ -4742,7 +4739,7 @@ msgstr "Дадаваць усе адкрытыя й захаваныя файл�
 
 #: ../app/config/gimprc-blurbs.h:272
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
-msgstr "Захоўваць месцаразьмяшчэньні й памеры галоўных дыялёгаў пад час выхаду з GIMP."
+msgstr "Захоўваць месцы й памеры галоўных дыялёгаў пад час выхаду з GIMP."
 
 #: ../app/config/gimprc-blurbs.h:275
 msgid "Save the tool options when GIMP exits."
@@ -4762,39 +4759,39 @@ msgstr "Калі задзейнічана, курсор мышы будзе ба
 
 #: ../app/config/gimprc-blurbs.h:294
 msgid "When enabled, the menubar is visible by default. This can also be toggled with the \"View->Show Menubar\" command."
-msgstr "Калі задзейнічана, то бачны радок мэню. Можа быць пераключана праз «Від->Паказваць мэню»."
+msgstr "Калі задзейнічана, то бачны радок мэню. Можа быць пераключана праз «Від→Паказваць мэню»."
 
 #: ../app/config/gimprc-blurbs.h:298
 msgid "When enabled, the rulers are visible by default. This can also be toggled with the \"View->Show Rulers\" command."
-msgstr "Калі задзейнічана, то бачныя лінейкі. Можа быць пераключана праз «Від->Паказваць лінейкі»."
+msgstr "Калі задзейнічана, то бачныя лінейкі. Можа быць пераключана праз «Від→Паказваць лінейкі»."
 
 #: ../app/config/gimprc-blurbs.h:302
 msgid "When enabled, the scrollbars are visible by default. This can also be toggled with the \"View->Show Scrollbars\" command."
-msgstr "Калі задзейнічана, то бачныя палосы пракручваньня. Можа быць пераключана праз «Від->Паказваць палосы пракручваньня»."
+msgstr "Калі задзейнічана, то бачныя палосы пракручваньня. Можа быць пераключана праз «Від→Паказваць палосы пракручваньня»."
 
 #: ../app/config/gimprc-blurbs.h:306
 msgid "When enabled, the statusbar is visible by default. This can also be toggled with the \"View->Show Statusbar\" command."
-msgstr "Калі задзейнічана, то бачны радок стану. Можа быць пераключана праз «Від->Паказваць радок стану»."
+msgstr "Калі задзейнічана, то бачны радок стану. Можа быць пераключана праз «Від→Паказваць радок стану»."
 
 #: ../app/config/gimprc-blurbs.h:310
 msgid "When enabled, the selection is visible by default. This can also be toggled with the \"View->Show Selection\" command."
-msgstr "Калі задзейнічана, то бачнае вылучэньне. Можа быць пераключана праз «Від->Паказваць вылучэньне»."
+msgstr "Калі задзейнічана, то бачнае вылучэньне. Можа быць пераключана праз «Від→Паказваць вылучэньне»."
 
 #: ../app/config/gimprc-blurbs.h:314
 msgid "When enabled, the layer boundary is visible by default. This can also be toggled with the \"View->Show Layer Boundary\" command."
-msgstr "Калі задзейнічана, то бачныя межы пласта. Можа быць пераключана праз «Від->Паказваць межы пласта»."
+msgstr "Калі задзейнічана, то бачныя межы пласта. Можа быць пераключана праз «Від→Паказваць межы пласта»."
 
 #: ../app/config/gimprc-blurbs.h:318
 msgid "When enabled, the guides are visible by default. This can also be toggled with the \"View->Show Guides\" command."
-msgstr "Калі задзейнічана, то бачныя накіроўныя. Можа быць пераключана праз «Від->Паказваць накіроўныя»."
+msgstr "Калі задзейнічана, то бачныя накіроўныя. Можа быць пераключана праз «Від→Паказваць накіроўныя»."
 
 #: ../app/config/gimprc-blurbs.h:322
 msgid "When enabled, the grid is visible by default. This can also be toggled with the \"View->Show Grid\" command."
-msgstr "Калі задзейнічана, то бачная сетка. Можа быць пераключана праз «Від->Паказваць сетку»."
+msgstr "Калі задзейнічана, то бачная сетка. Можа быць пераключана праз «Від→Паказваць сетку»."
 
 #: ../app/config/gimprc-blurbs.h:326
 msgid "When enabled, the sample points are visible by default. This can also be toggled with the \"View->Show Sample Points\" command."
-msgstr "Калі задзейнічана, то пункты-прыклады. Можа быць пераключана праз «Від->Паказваць пункты-прыклады»."
+msgstr "Калі задзейнічана, то пункты-прыклады. Можа быць пераключана праз «Від→Паказваць пункты-прыклады»."
 
 #: ../app/config/gimprc-blurbs.h:330
 msgid "Enable displaying a handy GIMP tip on startup."
@@ -4874,7 +4871,7 @@ msgstr "Вызначае аб'ём памяці для кожнага відар
 
 #: ../app/config/gimprc-blurbs.h:419
 msgid "Sets the size of the previews in the Undo History."
-msgstr "Вызначае памер папярэдніх праглядаў у гісторыі адменаў."
+msgstr "Вызначае памер аглядаў у гісторыі адменаў."
 
 #: ../app/config/gimprc-blurbs.h:422
 msgid "When enabled, pressing F1 will open the help browser."
@@ -5166,7 +5163,7 @@ msgstr "Зьмяніць вымеры відарыса"
 
 #: ../app/core/core-enums.c:851
 msgid "Flip image"
-msgstr "Пераварот відарыса"
+msgstr "Перакуліць відарыс"
 
 #: ../app/core/core-enums.c:852
 msgid "Rotate image"
@@ -5314,12 +5311,12 @@ msgstr "Рысаваць"
 #: ../app/core/core-enums.c:883
 #: ../app/core/core-enums.c:928
 msgid "Attach parasite"
-msgstr "Дадаць шум"
+msgstr "Дадаць паразыты"
 
 #: ../app/core/core-enums.c:884
 #: ../app/core/core-enums.c:929
 msgid "Remove parasite"
-msgstr "Прыбраць шум"
+msgstr "Прыбраць паразыты"
 
 #: ../app/core/core-enums.c:885
 msgid "Import paths"
@@ -5420,11 +5417,11 @@ msgstr "Пераставіць шлях"
 
 #: ../app/core/core-enums.c:922
 msgid "FS rigor"
-msgstr ""
+msgstr "Замацаваньне ПВ"
 
 #: ../app/core/core-enums.c:923
 msgid "FS relax"
-msgstr ""
+msgstr "Вызваленьне ПВ"
 
 #: ../app/core/core-enums.c:926
 #: ../app/paint/gimpink.c:109
@@ -5433,9 +5430,8 @@ msgid "Ink"
 msgstr "Пяро"
 
 #: ../app/core/core-enums.c:927
-#, fuzzy
 msgid "Select foreground"
-msgstr "Колер рысаваньня"
+msgstr "Вылучальнік пярэдняга пляну"
 
 #: ../app/core/core-enums.c:930
 msgid "EEK: can't undo"
@@ -5508,22 +5504,20 @@ msgid "Global Buffer"
 msgstr "Глябальны буфэр"
 
 #: ../app/core/gimp-gradients.c:61
-#, fuzzy
 msgid "FG to BG (RGB)"
-msgstr "Ператварыць відарыс у RGB"
+msgstr "КР у КА (RGB)"
 
 #: ../app/core/gimp-gradients.c:66
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr ""
+msgstr "КР у КА (HSV начыч. супр. стр.)"
 
 #: ../app/core/gimp-gradients.c:71
 msgid "FG to BG (HSV clockwise hue)"
-msgstr ""
+msgstr "КР у КА (HSV насыч. па стр.)"
 
 #: ../app/core/gimp-gradients.c:76
-#, fuzzy
 msgid "FG to Transparent"
-msgstr "Заліць празрыстыя вобласьці"
+msgstr "КР у празрысты"
 
 #: ../app/core/gimp-user-install.c:197
 #, c-format
@@ -5568,7 +5562,7 @@ msgstr "Пошук файлаў з даньнямі"
 
 #: ../app/core/gimp.c:820
 msgid "Parasites"
-msgstr "Шумы"
+msgstr "Паразыты"
 
 #. initialize the list of fonts
 #: ../app/core/gimp.c:840
@@ -5729,7 +5723,7 @@ msgstr "Недакладны вылучальнік"
 #: ../app/core/gimpchannel-select.c:565
 #: ../app/tools/gimpbycolorselecttool.c:80
 msgid "command|Select by Color"
-msgstr "Вылучыць паводле колера"
+msgstr "Вылучыць колер"
 
 #: ../app/core/gimpchannel.c:257
 msgid "Channel"
@@ -5741,7 +5735,7 @@ msgstr "Перайменаваць канал"
 
 #: ../app/core/gimpchannel.c:259
 msgid "Move Channel"
-msgstr "Перасунуць канал"
+msgstr "Пасунуць канал"
 
 #: ../app/core/gimpchannel.c:260
 msgid "Scale Channel"
@@ -5753,7 +5747,7 @@ msgstr "Зьмяніць вымеры канала"
 
 #: ../app/core/gimpchannel.c:262
 msgid "Flip Channel"
-msgstr "Перавернуць канал"
+msgstr "Перакуліць канал"
 
 #: ../app/core/gimpchannel.c:263
 msgid "Rotate Channel"
@@ -5769,9 +5763,8 @@ msgid "Stroke Channel"
 msgstr "Абвесьці канал"
 
 #: ../app/core/gimpchannel.c:286
-#, fuzzy
 msgid "Feather Channel"
-msgstr "Атрыбуты канала"
+msgstr "Зьмякчыць канал"
 
 #: ../app/core/gimpchannel.c:287
 msgid "Sharpen Channel"
@@ -5790,9 +5783,8 @@ msgid "Invert Channel"
 msgstr "Інвэртаваць канал"
 
 #: ../app/core/gimpchannel.c:291
-#, fuzzy
 msgid "Border Channel"
-msgstr "Атрыбуты канала"
+msgstr "Абляймаваць канал"
 
 #: ../app/core/gimpchannel.c:292
 msgid "Grow Channel"
@@ -5889,9 +5881,8 @@ msgid "Equalize"
 msgstr "Ураўнаважыць"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:138
-#, fuzzy
 msgid "Foreground Extraction"
-msgstr "Колер рысаваньня"
+msgstr "Здабываньне зь пярэдняга пляну"
 
 #: ../app/core/gimpdrawable-invert.c:61
 msgid "Invert"
@@ -5904,9 +5895,8 @@ msgid "Levels"
 msgstr "Узроўні"
 
 #: ../app/core/gimpdrawable-offset.c:316
-#, fuzzy
 msgid "Offset Drawable"
-msgstr "Зрушыць канал"
+msgstr "Зрушыць вобласьць рысаваньня"
 
 #: ../app/core/gimpdrawable-stroke.c:320
 msgid "Render Stroke"
@@ -5915,7 +5905,7 @@ msgstr "Нарысаваць контур"
 #: ../app/core/gimpdrawable-transform.c:627
 #: ../app/tools/gimpfliptool.c:112
 msgid "command|Flip"
-msgstr "Пераварот"
+msgstr "Перакуленьне"
 
 #: ../app/core/gimpdrawable-transform.c:713
 #: ../app/tools/gimprotatetool.c:113
@@ -6072,11 +6062,11 @@ msgstr "Перасунуць накіроўную"
 
 #: ../app/core/gimpimage-item-list.c:53
 msgid "Translate Items"
-msgstr "Hleb Valoshka"
+msgstr "Перанесьці элемэнты"
 
 #: ../app/core/gimpimage-item-list.c:80
 msgid "Flip Items"
-msgstr "Перавернуць элемэнты"
+msgstr "Перакуліць элемэнты"
 
 #: ../app/core/gimpimage-item-list.c:107
 msgid "Rotate Items"
@@ -6143,11 +6133,11 @@ msgstr "Зьмяніць адзінкі вымярэньня відарыса"
 
 #: ../app/core/gimpimage.c:2361
 msgid "Attach Parasite to Image"
-msgstr "Дадаць шум да відарыса"
+msgstr "Дадаць паразыты да відарыса"
 
 #: ../app/core/gimpimage.c:2399
 msgid "Remove Parasite from Image"
-msgstr "Прыбраць шум зь відарыса"
+msgstr "Прыбраць паразыты зь відарыса"
 
 #: ../app/core/gimpimage.c:2857
 msgid "Add Layer"
@@ -6286,15 +6276,15 @@ msgstr "Загрузка папярэдняга прагляду..."
 
 #: ../app/core/gimpimagefile.c:599
 msgid "Preview is out of date"
-msgstr "Папярэдні прагляд састарэў"
+msgstr "Агляд састарэў"
 
 #: ../app/core/gimpimagefile.c:605
 msgid "Cannot create preview"
-msgstr "Немагчыма стварыць папярэдні прагляд"
+msgstr "Немагчыма стварыць агляд"
 
 #: ../app/core/gimpimagefile.c:615
 msgid "(Preview may be out of date)"
-msgstr "(Магчыма, папярэдні прагляд ужо састарэў)"
+msgstr "(Магчыма, агляд ужо састарэў)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:624
@@ -6324,16 +6314,16 @@ msgstr "Не магчыма адкрыць мініятуру '%s': %s"
 
 #: ../app/core/gimpitem.c:1132
 msgid "Attach Parasite"
-msgstr "Дадаць шум"
+msgstr "Дадаць паразыты"
 
 #: ../app/core/gimpitem.c:1142
 msgid "Attach Parasite to Item"
-msgstr "Дадаць шум да элемэнта."
+msgstr "Дадаць паразыты да элемэнта"
 
 #: ../app/core/gimpitem.c:1184
 #: ../app/core/gimpitem.c:1191
 msgid "Remove Parasite from Item"
-msgstr "Прыбраць шум з элемэнта"
+msgstr "Прыбраць паразыты з элемэнта"
 
 #: ../app/core/gimplayer-floating-sel.c:99
 msgid "Remove Floating Selection"
@@ -6376,7 +6366,7 @@ msgstr "Зьмяніць вымеры пласта"
 
 #: ../app/core/gimplayer.c:253
 msgid "Flip Layer"
-msgstr "Перавернуць пласт"
+msgstr "Перакуліць пласт"
 
 #: ../app/core/gimplayer.c:254
 msgid "Rotate Layer"
@@ -6643,11 +6633,11 @@ msgstr "цыцэра"
 
 #: ../app/core/gimpunit.c:71
 msgid "percent"
-msgstr "працэнт"
+msgstr "адсотак"
 
 #: ../app/core/gimpunit.c:71
 msgid "plural|percent"
-msgstr "множны|працэнт"
+msgstr "множны|адсоткі"
 
 #: ../app/dialogs/about-dialog.c:125
 msgid "Visit the GIMP website"
@@ -6658,7 +6648,7 @@ msgstr "Наведаць старонку GIMP"
 #.
 #: ../app/dialogs/about-dialog.c:132
 msgid "translator-credits"
-msgstr "Hleb Valoshka"
+msgstr "Глеб Валошка"
 
 #: ../app/dialogs/about-dialog.c:531
 msgid "GIMP is brought to you by"
@@ -6781,9 +6771,8 @@ msgid "Display Navigation"
 msgstr "Паказаць навігацыю"
 
 #: ../app/dialogs/dialogs.c:209
-#, fuzzy
 msgid "FG/BG"
-msgstr "Колеры асноведзі й рысаваньня"
+msgstr "КР/КА"
 
 #: ../app/dialogs/dialogs.c:209
 msgid "FG/BG Color"
@@ -6792,11 +6781,11 @@ msgstr "Колеры асноведзі й рысаваньня"
 #: ../app/dialogs/fade-dialog.c:110
 #, c-format
 msgid "Fade %s"
-msgstr "Зьмяншэньне %s"
+msgstr "Зьмяненьне «%s»"
 
 #: ../app/dialogs/fade-dialog.c:123
 msgid "_Fade"
-msgstr "_Зьмяншэньне"
+msgstr "_Зьмяніць"
 
 #: ../app/dialogs/fade-dialog.c:157
 msgid "_Mode:"
@@ -6947,7 +6936,7 @@ msgstr "Настаўленьне скаротаў клявіятуры"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:81
 msgid "To edit a shortcut key, click on the corresponding row and type a new accelerator, or press backspace to clear."
-msgstr "Каб рэдагаваць скарот, пстрыкні па адпаведным радку й увядзі новы скарот, ці націсьні \"забой\", каб ачысьціць."
+msgstr "Каб рэдагаваць скарот, пстрыкні па адпаведным радку й увядзі новы скарот, ці націсьні «BackSpace», каб ачысьціць."
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:89
 #: ../app/dialogs/preferences-dialog.c:1669
@@ -7112,9 +7101,8 @@ msgid "Edge Behavior"
 msgstr "Паводзіны краю"
 
 #: ../app/dialogs/offset-dialog.c:222
-#, fuzzy
 msgid "_Wrap around"
-msgstr "Пераносіць радкі"
+msgstr "_Загарнуць"
 
 #: ../app/dialogs/offset-dialog.c:225
 msgid "Fill with _background color"
@@ -7142,9 +7130,8 @@ msgid "I_mage"
 msgstr "_Відарыс"
 
 #: ../app/dialogs/palette-import-dialog.c:241
-#, fuzzy
 msgid "Sample _Merged"
-msgstr "Іграю ўзор #%d (%s)"
+msgstr "_Аб'яднаная проба"
 
 #: ../app/dialogs/palette-import-dialog.c:253
 msgid "_Selected Pixels only"
@@ -7187,7 +7174,7 @@ msgstr "_Інтэрвал:"
 #. The "Preview" frame
 #: ../app/dialogs/palette-import-dialog.c:363
 msgid "Preview"
-msgstr "Папярэдні прагляд"
+msgstr "Агляд"
 
 #: ../app/dialogs/palette-import-dialog.c:384
 msgid "The selected source contains no colors."
@@ -7292,23 +7279,23 @@ msgstr "Спажываньне рэсурсаў"
 
 #: ../app/dialogs/preferences-dialog.c:1571
 msgid "Minimal number of _undo levels:"
-msgstr "_Найменшая колькасьць крокаў адмены:"
+msgstr "Найменш _крокаў адмены:"
 
 #: ../app/dialogs/preferences-dialog.c:1574
 msgid "Maximum undo _memory:"
-msgstr "_Максымум памяці адмены:"
+msgstr "Найбольш _памяці адмены:"
 
 #: ../app/dialogs/preferences-dialog.c:1577
 msgid "Tile cache _size:"
-msgstr "_Памер кэшу:"
+msgstr "Памер к_эшу:"
 
 #: ../app/dialogs/preferences-dialog.c:1580
 msgid "Maximum _new image size:"
-msgstr "Найбольшы памер _новага відарыса:"
+msgstr "Новы _відарыс ня большы за:"
 
 #: ../app/dialogs/preferences-dialog.c:1585
 msgid "Number of _processors to use:"
-msgstr "_Колькасьць працэсараў для працы: "
+msgstr "Колькасьць пра_цэсараў: "
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1590
@@ -7321,7 +7308,7 @@ msgstr "Памер _мініятураў:"
 
 #: ../app/dialogs/preferences-dialog.c:1599
 msgid "Maximum _filesize for thumbnailing:"
-msgstr "Найбольшы памер _файла з мініятурай:"
+msgstr "Найбольшы памер м_ініятуры:"
 
 #. File Saving
 #: ../app/dialogs/preferences-dialog.c:1603
@@ -7347,7 +7334,7 @@ msgstr "Інтэрфэйс"
 #. Previews
 #: ../app/dialogs/preferences-dialog.c:1635
 msgid "Previews"
-msgstr "Папярэднія прагляды"
+msgstr "Агляды"
 
 #: ../app/dialogs/preferences-dialog.c:1638
 msgid "_Enable layer & channel previews"
@@ -7614,7 +7601,7 @@ msgstr "Дапомны фармат"
 
 #: ../app/dialogs/preferences-dialog.c:2172
 msgid "Show zoom percentage"
-msgstr "Паказ маштабу ў працэнтах"
+msgstr "Паказ маштабу ў атсотках"
 
 #: ../app/dialogs/preferences-dialog.c:2173
 msgid "Show zoom ratio"
@@ -7722,9 +7709,8 @@ msgid "_Display rendering intent:"
 msgstr "_Мэта перадачы колера для экрана: "
 
 #: ../app/dialogs/preferences-dialog.c:2482
-#, fuzzy
 msgid "_Softproof rendering intent:"
-msgstr "_Мэта перадачы колера для экрана: "
+msgstr "_Мэта перадачы колера для праверкі: "
 
 #: ../app/dialogs/preferences-dialog.c:2495
 msgid "Mark out of gamut colors"
@@ -7806,15 +7792,15 @@ msgstr "Разьмяшчэньне вакон"
 
 #: ../app/dialogs/preferences-dialog.c:2631
 msgid "_Save window positions on exit"
-msgstr "_Захоўваць месцаразьмяшчэньні вакон пад час выхаду"
+msgstr "_Захоўваць месцы вакон пад час выхаду"
 
 #: ../app/dialogs/preferences-dialog.c:2635
 msgid "Save Window Positions _Now"
-msgstr "Захаваць месцаразьмяшчэньні вакон з_араз"
+msgstr "Захаваць месцы вакон з_араз"
 
 #: ../app/dialogs/preferences-dialog.c:2642
 msgid "_Reset Saved Window Positions to Default Values"
-msgstr "_Вернуць захаваныя месцаразьмяшчэньні вакон да пачатковых значэньняў"
+msgstr "_Вернуць захаваныя месцы вакон да пачатковых значэньняў"
 
 #: ../app/dialogs/preferences-dialog.c:2657
 msgid "Folders"
@@ -7993,7 +7979,7 @@ msgstr "Калі закрыеш зараз гэтыя відарысы, зьме
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
-msgstr[0] "Незамацаваныя зьмены ў %0dадным відарысе:"
+msgstr[0] "Незамацаваныя зьмены ў адным відарысе:"
 msgstr[1] "Незамацаваныя зьмены ў %d відарысах:"
 msgstr[2] "Незамацаваныя зьмены ў %d відарысах:"
 
@@ -8003,12 +7989,12 @@ msgstr "_Адкінуць зьмены"
 
 #: ../app/dialogs/resize-dialog.c:119
 msgid "Canvas Size"
-msgstr "Памер палатна:"
+msgstr "Памер палатна"
 
 #: ../app/dialogs/resize-dialog.c:130
 #: ../app/dialogs/scale-dialog.c:109
 msgid "Layer Size"
-msgstr "Памер пласта:"
+msgstr "Памер пласта"
 
 #: ../app/dialogs/resize-dialog.c:294
 msgid "Resize _layers:"
@@ -8209,9 +8195,8 @@ msgid "Zoom image when window size changes"
 msgstr "Маштабаваць відарыс, калі зьмяняецца памер вакна"
 
 #: ../app/display/gimpdisplayshell.c:1053
-#, fuzzy
 msgid "Navigate the image display"
-msgstr "Адлюстроўваць сетку відарыса"
+msgstr "Навігацыя па відарысе"
 
 #: ../app/display/gimpdisplayshell-close.c:125
 #: ../app/display/gimpdisplayshell-close.c:202
@@ -8232,7 +8217,7 @@ msgstr "Ці замацаваць зьмены відарыса  «%s» пера
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
-msgstr[0] "Калі не запішаш відарыс, то зьмены за апошнюю %0dгадзіну будуць страчаныя."
+msgstr[0] "Калі не запішаш відарыс, то зьмены за апошнюю гадзіну будуць страчаныя."
 msgstr[1] "Калі не запішаш відарыс, то зьмены за апошнія %d гадзіны будуць страчаныя."
 msgstr[2] "Калі не запішаш відарыс, то зьмены за апошнія %d гадзін будуць страчаныя."
 
@@ -8248,7 +8233,7 @@ msgstr[2] "Калі не захаваеш відарыс, то зьмянень�
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
-msgstr[0] "Калі не захаваеш відарыс, то зьмяненьні за апошнюю %0dхвіліну будуць страчаныя."
+msgstr[0] "Калі не захаваеш відарыс, то зьмяненьні за апошнюю хвіліну будуць страчаныя."
 msgstr[1] "Калі не захаваеш відарыс, то зьмяненьні за апошнія %d хвіліны будуць страчаныя."
 msgstr[2] "Калі не захаваеш відарыс, то зьмяненьні за апошнія %d хвілін будуць страчаныя."
 
@@ -8302,23 +8287,20 @@ msgid "Zoom:"
 msgstr "Маштаб:"
 
 #: ../app/display/gimpdisplayshell-title.c:226
-#, fuzzy
 msgid "RGB-empty"
-msgstr "Пусты канал"
+msgstr "RGB-пусты"
 
 #: ../app/display/gimpdisplayshell-title.c:229
-#, fuzzy
 msgid "grayscale-empty"
-msgstr "Пусты канал"
+msgstr "шэры-пусты"
 
 #: ../app/display/gimpdisplayshell-title.c:229
 msgid "grayscale"
 msgstr "шэры"
 
 #: ../app/display/gimpdisplayshell-title.c:232
-#, fuzzy
 msgid "indexed-empty"
-msgstr "Пусты канал"
+msgstr "індэксаваны-пусты"
 
 #: ../app/display/gimpdisplayshell-title.c:232
 msgid "indexed"
@@ -8431,11 +8413,11 @@ msgstr "Сьцірка"
 #: ../app/paint/gimpheal.c:87
 #: ../app/tools/gimphealtool.c:53
 msgid "Heal"
-msgstr "Лячыць"
+msgstr "Гаючы пэндзяль"
 
 #: ../app/paint/gimpheal.c:126
 msgid "Healing does not operate on indexed layers."
-msgstr "Лячэньне не працуе на індэксаваных пластах."
+msgstr "Гаючы пэндзаль не працуе на індэксаваных пластах."
 
 #: ../app/paint/gimppaintbrush.c:63
 #: ../app/tools/gimppaintbrushtool.c:51
@@ -8451,7 +8433,7 @@ msgstr "Аловак"
 #: ../app/paint/paint-enums.c:52
 #: ../app/tools/gimpperspectiveclonetool.c:127
 msgid "Perspective Clone"
-msgstr "Клонаваньне з пэрспэктывай"
+msgstr "Кланаваньне з пэрспэктывай"
 
 #: ../app/paint/gimpperspectiveclone.c:160
 msgid "Perspective Clone does not operate on indexed layers."
@@ -8459,9 +8441,8 @@ msgstr "Клонаваньне з пэрспэктывай не працуе н�
 
 #: ../app/paint/gimpsmudge.c:78
 #: ../app/tools/gimpsmudgetool.c:53
-#, fuzzy
 msgid "Smudge"
-msgstr "Пляма"
+msgstr "Пэцкаль"
 
 #: ../app/paint/gimpsourcecore.c:227
 msgid "Set a source image first."
@@ -8473,7 +8454,7 @@ msgstr "Зьмяніць пэрспэктыву"
 
 #: ../app/paint/paint-enums.c:82
 msgid "Aligned"
-msgstr "З выраўноўваньнем"
+msgstr "З раўнаваньнем"
 
 #: ../app/paint/paint-enums.c:83
 msgid "Registered"
@@ -8577,6 +8558,8 @@ msgid ""
 "PDB calling error for procedure '%s':\n"
 "Argument #%d type mismatch (expected %s, got %s)"
 msgstr ""
+"Памылка выкліку працэдуры PDB '%s':\n"
+"Неадпаведны тып парамэтру #%d (замест %s атрыманы %s)"
 
 #: ../app/pdb/gimpprocedure.c:515
 #, c-format
@@ -8655,6 +8638,10 @@ msgid ""
 "\n"
 "The dying plug-in may have messed up GIMP's internal state. You may want to save your images and restart GIMP to be on the safe side."
 msgstr ""
+"Аварыя дадатка: «%s»\n"
+"(%s)\n"
+"\n"
+"Памерлы дадатак мог пашкодзіць нутраны стан GIMP'а.Зараз найлепей захаваць відарысы й перазапусьціць GIMP, каб працаваць бясьпечна."
 
 #: ../app/plug-in/gimppluginmanager-restore.c:222
 msgid "Searching Plug-Ins"
@@ -8764,7 +8751,7 @@ msgstr "Зьмяніць вымеры тэкставага пласта"
 
 #: ../app/text/gimptextlayer.c:143
 msgid "Flip Text Layer"
-msgstr "Перавернуць тэкставы пласт"
+msgstr "Перакуліць тэкставы пласт"
 
 #: ../app/text/gimptextlayer.c:144
 msgid "Rotate Text Layer"
@@ -8794,6 +8781,10 @@ msgid ""
 "\n"
 "Some text properties may be wrong. Unless you want to edit the text layer, you don't need to worry about this."
 msgstr ""
+"Праблемы пад час аналізу тэкставых паразытаў пласта «%s»:\n"
+"%s\n"
+"\n"
+"Некаторыя тэкставыя ўласьцівасьці  могуць быць няправільнымі. Але, калі не мяркуеш рэдагаваць тэкст, ня варта турбавацца пра гэта."
 
 #: ../app/tools/gimp-tools.c:314
 msgid ""
@@ -8824,7 +8815,7 @@ msgstr "Націсканьне:"
 #: ../app/tools/gimpaligntool.c:134
 #: ../app/tools/gimpaligntool.c:752
 msgid "Align"
-msgstr "Раўняць"
+msgstr "Раўнаваньне"
 
 #: ../app/tools/gimpaligntool.c:135
 msgid "Alignment Tool: Align or arrange layers and other objects"
@@ -8832,15 +8823,15 @@ msgstr "Раўнавальнік: выраўноўвае або ўпарадко
 
 #: ../app/tools/gimpaligntool.c:136
 msgid "_Align"
-msgstr "_Раўняць"
+msgstr "_Раўнаваць"
 
 #: ../app/tools/gimpaligntool.c:585
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
-msgstr ""
+msgstr "Пстрыкні па пласьце, шляху ці накіроўнай, або пстрыкні й пацягні, каб выбраць  некалькі пластоў"
 
 #: ../app/tools/gimpaligntool.c:594
 msgid "Click to pick this layer as first item"
-msgstr ""
+msgstr "Пстрыкні, каб выбраць гэты пласт першым элемэнтам"
 
 #: ../app/tools/gimpaligntool.c:602
 msgid "Click to add this layer to the list"
@@ -8848,7 +8839,7 @@ msgstr "Пстрыкні, каб дадаць гэты пласт да сьпі�
 
 #: ../app/tools/gimpaligntool.c:606
 msgid "Click to pick this guide as first item"
-msgstr ""
+msgstr "Пстрыкні, каб выбраць гэтую накіроўную першым элемэнтам"
 
 #: ../app/tools/gimpaligntool.c:614
 msgid "Click to add this guide to the list"
@@ -8856,7 +8847,7 @@ msgstr "Пстрыкні, каб дадаць гэтую накіроўную д
 
 #: ../app/tools/gimpaligntool.c:618
 msgid "Click to pick this path as first item"
-msgstr ""
+msgstr "Пстрыкні, каб выбраць гэты шлях першым элемэнтам"
 
 #: ../app/tools/gimpaligntool.c:626
 msgid "Click to add this path to the list"
@@ -9045,17 +9036,16 @@ msgstr "Заліць празрыстыя вобласьці"
 #: ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpperspectiveclonetool.c:965
 #: ../app/tools/gimpselectionoptions.c:404
-#, fuzzy
 msgid "Sample merged"
-msgstr "Іграю ўзор #%d (%s)"
+msgstr "Аб'яднаная проба"
 
 #: ../app/tools/gimpbucketfilloptions.c:294
 msgid "Fill by:"
-msgstr "Запаўненьне:"
+msgstr "Запоўніць:"
 
 #: ../app/tools/gimpbucketfilltool.c:80
 msgid "Bucket Fill"
-msgstr "Запоўніць зь вядра"
+msgstr "Вядро"
 
 #: ../app/tools/gimpbucketfilltool.c:81
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
@@ -9063,11 +9053,11 @@ msgstr "Вядро: запаўняе вылучаную вобласьць ко�
 
 #: ../app/tools/gimpbucketfilltool.c:82
 msgid "_Bucket Fill"
-msgstr "_Запоўніць зь вядра"
+msgstr "_Вядро"
 
 #: ../app/tools/gimpbycolorselecttool.c:65
 msgid "Select by Color"
-msgstr "Вылучальнік паводле колера"
+msgstr "Вылучальнік колера"
 
 #: ../app/tools/gimpbycolorselecttool.c:66
 msgid "Select by Color Tool: Select regions with similar colors"
@@ -9075,7 +9065,7 @@ msgstr "Вылучальнік колера: вылучае вобласьці �
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "_By Color Select"
-msgstr "_Вылучэньне паводле колера"
+msgstr "Вылучыць _колер"
 
 #: ../app/tools/gimpclonetool.c:62
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
@@ -9083,7 +9073,7 @@ msgstr "Клон: сэлекцыйнае капіяваньне зь відар�
 
 #: ../app/tools/gimpclonetool.c:63
 msgid "_Clone"
-msgstr "_Кланаваць"
+msgstr "_Клон"
 
 #: ../app/tools/gimpclonetool.c:86
 #: ../app/tools/gimpclonetool.c:89
@@ -9109,7 +9099,7 @@ msgstr "Крыніца"
 #: ../app/tools/gimphealtool.c:111
 #: ../app/tools/gimpperspectiveclonetool.c:979
 msgid "Alignment:"
-msgstr "Выраўнаньне:"
+msgstr "Раўнаваньне:"
 
 #: ../app/tools/gimpcolorbalancetool.c:93
 msgid "Color Balance Tool: Adjust color distribution"
@@ -9128,9 +9118,8 @@ msgid "Color Balance operates only on RGB color layers."
 msgstr "Вага колераў працуе толькі на пластах з RGB колерамі."
 
 #: ../app/tools/gimpcolorbalancetool.c:236
-#, fuzzy
 msgid "Select Range to Adjust"
-msgstr "Выберы для рэгуляваньня асноўны колер"
+msgstr "Выберы дыяпазон для рэгуляваньня"
 
 #: ../app/tools/gimpcolorbalancetool.c:243
 #: ../app/tools/gimplevelstool.c:179
@@ -9153,9 +9142,8 @@ msgid "Yellow"
 msgstr "Жоўты"
 
 #: ../app/tools/gimpcolorbalancetool.c:283
-#, fuzzy
 msgid "R_eset Range"
-msgstr "Пераход колераў"
+msgstr "_Вернуць дыяпазон"
 
 #: ../app/tools/gimpcolorbalancetool.c:292
 msgid "Preserve _luminosity"
@@ -9197,9 +9185,8 @@ msgid "_Lightness:"
 msgstr "_Сьветласьць:"
 
 #: ../app/tools/gimpcoloroptions.c:161
-#, fuzzy
 msgid "Sample average"
-msgstr "Сярэдняе колераў"
+msgstr "Сярэдняе пробы"
 
 #: ../app/tools/gimpcoloroptions.c:171
 #: ../app/tools/gimprectangleselectoptions.c:166
@@ -9210,9 +9197,9 @@ msgstr "_Радыюс:"
 
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:165
-#, fuzzy, c-format
+#, c-format
 msgid "Pick Mode  (%s)"
-msgstr "Пераключэньне рэжыму"
+msgstr "Рэжым выбару (%s)"
 
 #. the use_info_window toggle button
 #: ../app/tools/gimpcolorpickeroptions.c:174
@@ -9221,9 +9208,8 @@ msgid "Use info window  (%s)"
 msgstr "Ужываць вакно зьвестак (%s)"
 
 #: ../app/tools/gimpcolorpickertool.c:96
-#, fuzzy
 msgid "Color Picker"
-msgstr "_Піпетка"
+msgstr "Піпетка"
 
 #: ../app/tools/gimpcolorpickertool.c:97
 msgid "Color Picker Tool: Set colors from image pixels"
@@ -9253,9 +9239,8 @@ msgstr "Пстрыкні па любым відарысе, каб дадаць �
 
 #. tool->display->shell
 #: ../app/tools/gimpcolorpickertool.c:318
-#, fuzzy
 msgid "Color Picker Information"
-msgstr "Зьвесткі пра ідэаграмы CJK"
+msgstr "Зьвесткі зь піпеткі"
 
 #: ../app/tools/gimpcolortool.c:255
 #: ../app/tools/gimpcolortool.c:432
@@ -9263,9 +9248,8 @@ msgid "Move Sample Point: "
 msgstr "Пасунуць пункт-прыклад:"
 
 #: ../app/tools/gimpcolortool.c:426
-#, fuzzy
 msgid "Cancel Sample Point"
-msgstr "Мэню пунктаў-прыкладаў"
+msgstr "Адмяніць пункт-прыклад"
 
 #: ../app/tools/gimpcolortool.c:433
 msgid "Add Sample Point: "
@@ -9471,7 +9455,7 @@ msgstr "Перасунуць плаваючаеы вылучэньне"
 #: ../app/tools/gimpeditselectiontool.c:396
 #: ../app/tools/gimpeditselectiontool.c:664
 msgid "Move: "
-msgstr "Перасоўваньне:"
+msgstr "Перасоўваньне: "
 
 #: ../app/tools/gimpellipseselecttool.c:68
 msgid "Ellipse Select"
@@ -9483,7 +9467,7 @@ msgstr "Вылучальнік эліпсаў: вылучае эліптычну
 
 #: ../app/tools/gimpellipseselecttool.c:70
 msgid "_Ellipse Select"
-msgstr "_Вылучыць эліпс"
+msgstr "Вылучыць _эліпс"
 
 #: ../app/tools/gimperasertool.c:67
 msgid "Eraser Tool: Erase to background or transparency using a brush"
@@ -9502,9 +9486,9 @@ msgid "Click to erase the line"
 msgstr "Пстрыкні, каб выдаліць лінію"
 
 #: ../app/tools/gimperasertool.c:99
-#, fuzzy, c-format
+#, c-format
 msgid "%s to pick a background color"
-msgstr "Колер асноведзі:"
+msgstr "%s, каб выбраць колер асноведзі"
 
 #. the anti_erase toggle
 #: ../app/tools/gimperasertool.c:146
@@ -9514,29 +9498,29 @@ msgstr "Анты зьнішчэньне (%s)"
 
 #: ../app/tools/gimpflipoptions.c:129
 msgid "Affect:"
-msgstr "Узьдзеяньне на:"
+msgstr "Узьдзеяньне на: "
 
 #. tool toggle
 #: ../app/tools/gimpflipoptions.c:135
 #, c-format
 msgid "Flip Type  (%s)"
-msgstr "Тып перавароту (%s)"
+msgstr "Тып перакульваньня (%s)"
 
 #: ../app/tools/gimpfliptool.c:77
 msgid "Flip"
-msgstr "Пераварочвальнік"
+msgstr "Перакульнік"
 
 #: ../app/tools/gimpfliptool.c:78
 msgid "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
-msgstr "Пераварочвальнік: пераварочвае пласт, вылучэньне або шлях па гарызанталі або вэртыкалі"
+msgstr "Перакульнік: перакульвае пласт, вылучэньне або шлях па гарызанталі або вэртыкалі"
 
 #: ../app/tools/gimpfliptool.c:80
 msgid "_Flip"
-msgstr "_Пераварот"
+msgstr "Пера_куліць"
 
 #: ../app/tools/gimpforegroundselectoptions.c:77
 msgid "Select a single contiguous area"
-msgstr "Выберы адну сумежную вобласьць"
+msgstr "Выбраць адну сумежную вобласьць"
 
 #: ../app/tools/gimpforegroundselectoptions.c:86
 msgid "Size of the brush used for refinements"
@@ -9561,7 +9545,7 @@ msgstr "Адчувальнасьць жоўтага/сіняга складні�
 #. single / multiple objects
 #: ../app/tools/gimpforegroundselectoptions.c:231
 msgid "Contiguous"
-msgstr "Прылеглы"
+msgstr "Сумежная вобласьць"
 
 #. foreground / background
 #: ../app/tools/gimpforegroundselectoptions.c:236
@@ -9570,14 +9554,12 @@ msgid "Interactive refinement  (%s)"
 msgstr "Інтэрактыўнае ачышчэньне (%s)"
 
 #: ../app/tools/gimpforegroundselectoptions.c:240
-#, fuzzy
 msgid "Mark background"
-msgstr "Колер асноведзі"
+msgstr "Пазначыць асноведзь"
 
 #: ../app/tools/gimpforegroundselectoptions.c:241
-#, fuzzy
 msgid "Mark foreground"
-msgstr "Колер рысаваньня"
+msgstr "Пазначыць пярэдні плян"
 
 #: ../app/tools/gimpforegroundselectoptions.c:257
 msgid "Small brush"
@@ -9593,7 +9575,7 @@ msgstr "Згладжваньне:"
 
 #: ../app/tools/gimpforegroundselectoptions.c:295
 msgid "Preview color:"
-msgstr "Папярэдні праглад колера:"
+msgstr "Колер агляду:"
 
 #. granularity
 #: ../app/tools/gimpforegroundselectoptions.c:298
@@ -9601,35 +9583,32 @@ msgid "Color Sensitivity"
 msgstr "Успрымальнасьць колера"
 
 #: ../app/tools/gimpforegroundselecttool.c:145
-#, fuzzy
 msgid "Foreground Select"
-msgstr "Выберы выяву"
+msgstr "Вылучальнік пярэдняга пляну"
 
 #: ../app/tools/gimpforegroundselecttool.c:146
 msgid "Foreground Select Tool: Select a region containing foreground objects"
-msgstr ""
+msgstr "Вылучальнік пярэдняга пляну: вылучае вобласьць, якая ўтрымлівае аб'ект пярэдняга пляну"
 
 #: ../app/tools/gimpforegroundselecttool.c:147
-#, fuzzy
 msgid "F_oreground Select"
-msgstr "Выберы выяву"
+msgstr "Вылучальнік _пярэдняга пляну"
 
 #: ../app/tools/gimpforegroundselecttool.c:310
 msgid "Add more strokes or press Enter to accept the selection"
-msgstr "Дадай болей абляймовак, або націсьні Enter, каб прыняць выбар"
+msgstr "Дадай болей мазкоў, або націсьні Enter, каб прыняць выбар"
 
 #: ../app/tools/gimpforegroundselecttool.c:312
 msgid "Mark foreground by painting on the object to extract"
-msgstr ""
+msgstr "Пазнач пярэдні плян, рысуючы на аб'екце, які трэба здабыць"
 
 #: ../app/tools/gimpforegroundselecttool.c:323
 msgid "Draw a rough circle around the object to extract"
 msgstr "Нарысуй няроўную акружнасьць вакол аб'екта для выманьня"
 
 #: ../app/tools/gimpforegroundselecttool.c:745
-#, fuzzy
 msgid "command|Foreground Select"
-msgstr "каманда|Свабодны выбіральнік"
+msgstr "Вылучальнік пярэдняга пляну"
 
 #: ../app/tools/gimpfreeselecttool.c:98
 msgid "Free Select Tool: Select a hand-drawn region"
@@ -9679,9 +9658,8 @@ msgid "Click to set a new heal source"
 msgstr "Пстрыкні, каб вызначыць новую крыніцу лячэньня"
 
 #: ../app/tools/gimphistogramoptions.c:127
-#, fuzzy
 msgid "Histogram Scale"
-msgstr "Маштаб лініі:\n"
+msgstr "Шкала гістаграмы"
 
 #: ../app/tools/gimphuesaturationtool.c:113
 msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
@@ -9749,7 +9727,7 @@ msgstr "_Вернуць колер"
 
 #: ../app/tools/gimpimagemaptool.c:233
 msgid "_Preview"
-msgstr "_Папярэдні прагляд"
+msgstr "_Агляд"
 
 #: ../app/tools/gimpimagemaptool.c:265
 msgid "Quick Load"
@@ -9822,7 +9800,7 @@ msgstr "Нажніцы: вызначае фігуры з дапамогай ра
 
 #: ../app/tools/gimpiscissorstool.c:280
 msgid "Intelligent _Scissors"
-msgstr "Разумныя _нажніцы"
+msgstr "_Разумныя нажніцы"
 
 #: ../app/tools/gimpiscissorstool.c:919
 #: ../app/tools/gimpmeasuretool.c:602
@@ -9861,7 +9839,7 @@ msgstr "Узроўні: рэгулюе ўзроўні колераў"
 
 #: ../app/tools/gimplevelstool.c:159
 msgid "_Levels..."
-msgstr "_Узроўні"
+msgstr "_Узроўні..."
 
 #: ../app/tools/gimplevelstool.c:181
 msgid "Load Levels"
@@ -9884,19 +9862,16 @@ msgid "Levels does not operate on indexed layers."
 msgstr "Узроўні працуюць на індэксаваных пластах."
 
 #: ../app/tools/gimplevelstool.c:303
-#, fuzzy
 msgid "Pick black point"
-msgstr "Пункт канца"
+msgstr "Выберы чорны пункт"
 
 #: ../app/tools/gimplevelstool.c:307
-#, fuzzy
 msgid "Pick gray point"
-msgstr "Пункт канца"
+msgstr "Выберы шэры пункт"
 
 #: ../app/tools/gimplevelstool.c:311
-#, fuzzy
 msgid "Pick white point"
-msgstr "Пункт канца"
+msgstr "Выберы белы пункт"
 
 #. Input levels frame
 #: ../app/tools/gimplevelstool.c:402
@@ -9905,7 +9880,7 @@ msgstr "Уваходныя ўзроўні"
 
 #: ../app/tools/gimplevelstool.c:489
 msgid "Gamma"
-msgstr "Гамма"
+msgstr "Гама (Ступень кантраснасьці)"
 
 #. Output levels frame
 #: ../app/tools/gimplevelstool.c:516
@@ -9923,9 +9898,9 @@ msgstr "Аўтамычна мяняць вымеры вакна"
 #. tool toggle
 #: ../app/tools/gimpmagnifyoptions.c:172
 #: ../app/tools/gimpmoveoptions.c:184
-#, fuzzy, c-format
+#, c-format
 msgid "Tool Toggle  (%s)"
-msgstr "Па крузе"
+msgstr "Пераключыць інструмэнт (%s)"
 
 #: ../app/tools/gimpmagnifytool.c:86
 msgid "Zoom"
@@ -9933,7 +9908,7 @@ msgstr "Маштаб"
 
 #: ../app/tools/gimpmagnifytool.c:87
 msgid "Zoom Tool: Adjust the zoom level"
-msgstr "Маштаб: рэгулюе маштаб"
+msgstr "Маштаб: рэгулюе маштаб адлюстраваньня"
 
 #: ../app/tools/gimpmagnifytool.c:88
 msgid "tool|_Zoom"
@@ -10001,9 +9976,8 @@ msgid "Move selection"
 msgstr "Перасунуць выбар"
 
 #: ../app/tools/gimpmoveoptions.c:149
-#, fuzzy
 msgid "Pick a path"
-msgstr "Няправільны шлях: %s\n"
+msgstr "Веберы шлях"
 
 #: ../app/tools/gimpmoveoptions.c:150
 msgid "Move the active path"
@@ -10011,7 +9985,7 @@ msgstr "Перасоўвае актыўны шлях"
 
 #: ../app/tools/gimpmoveoptions.c:178
 msgid "Move:"
-msgstr "Перасунуць:"
+msgstr "Перасунуць: "
 
 #: ../app/tools/gimpmovetool.c:125
 msgid "tool|Move"
@@ -10051,7 +10025,7 @@ msgstr "_Пэндзаль"
 #: ../app/widgets/gimpbrushselect.c:190
 #: ../app/widgets/gimplayertreeview.c:273
 msgid "Mode:"
-msgstr "Рэжым:"
+msgstr "Рэжым: "
 
 #: ../app/tools/gimppaintoptions-gui.c:114
 #: ../app/widgets/gimpbrushselect.c:177
@@ -10132,9 +10106,9 @@ msgid "Click to draw the line"
 msgstr "Пстрыкні, каб працягнуць лінію"
 
 #: ../app/tools/gimppainttool.c:134
-#, fuzzy, c-format
+#, c-format
 msgid "%s to pick a color"
-msgstr "Колер асноведзі:"
+msgstr "%s, каб выбраць колер"
 
 #: ../app/tools/gimppainttool.c:647
 #, c-format
@@ -10167,7 +10141,7 @@ msgstr "Пэрспэктыва: зьмяняе пэрспэктыву пласт
 
 #: ../app/tools/gimpperspectivetool.c:70
 msgid "_Perspective"
-msgstr "_Пэрспэктыва"
+msgstr "П_эрспэктыва"
 
 #: ../app/tools/gimpperspectivetool.c:97
 msgid "command|Perspective"
@@ -10229,12 +10203,11 @@ msgstr "Падсьвечваньне"
 #. Auto Shrink
 #: ../app/tools/gimprectangleoptions.c:1037
 msgid "Auto Shrink"
-msgstr "Аўтазьменшэньне"
+msgstr "Аўтазьмяншэньне"
 
 #: ../app/tools/gimprectangleoptions.c:1044
-#, fuzzy
 msgid "Shrink merged"
-msgstr "Зьменшыць выбар"
+msgstr "Аб'яднанае зьмяншэньне"
 
 #: ../app/tools/gimprectangleselectoptions.c:154
 msgid "Rounded corners"
@@ -10250,7 +10223,7 @@ msgstr "Вылучальнік прастакутнікаў: вылучае пр
 
 #: ../app/tools/gimprectangleselecttool.c:143
 msgid "_Rectangle Select"
-msgstr "_Прастакутны вылучальнік"
+msgstr "Вылучыць _прастакутнік"
 
 #: ../app/tools/gimprectangletool.c:1032
 #: ../app/tools/gimprectangletool.c:1880
@@ -10267,11 +10240,11 @@ msgstr "Павернуць"
 
 #: ../app/tools/gimprotatetool.c:86
 msgid "Rotate Tool: Rotate the layer, selection or path"
-msgstr "Інструмэнт павароту: паварочвае пласт, вылучэньне або шлях"
+msgstr "Паварот: паварочвае пласт, вылучэньне або шлях"
 
 #: ../app/tools/gimprotatetool.c:87
 msgid "_Rotate"
-msgstr "_Павернуць"
+msgstr "Па_вернуць"
 
 #: ../app/tools/gimprotatetool.c:142
 msgid "_Angle:"
@@ -10295,7 +10268,7 @@ msgstr "Зьмяненьне памеру: зьмяняе памер пласт�
 
 #: ../app/tools/gimpscaletool.c:80
 msgid "_Scale"
-msgstr "_Зьямніць"
+msgstr "_Зьмяніць памер"
 
 #: ../app/tools/gimpscaletool.c:106
 msgid "command|Scale"
@@ -10320,20 +10293,19 @@ msgstr "Згладжваньне"
 
 #: ../app/tools/gimpselectionoptions.c:367
 msgid "Feather edges"
-msgstr "Размыць краі"
+msgstr "Зьмякчаць краі"
 
 #: ../app/tools/gimpselectionoptions.c:384
-#, fuzzy
 msgid "Interactive boundary"
-msgstr "Камандная абалонка"
+msgstr "Інтэрактыўныя межы"
 
 #: ../app/tools/gimpselectionoptions.c:398
 msgid "Select transparent areas"
-msgstr "Вылучыць празрыстыя вобласьці"
+msgstr "Вылучаць празрыстыя вобласьці"
 
 #: ../app/tools/gimpselectionoptions.c:423
 msgid "Select by:"
-msgstr "Выбраць паводле:"
+msgstr "Вылучаць:"
 
 #: ../app/tools/gimpselectiontool.c:251
 msgid "Click-Drag to replace the current selection"
@@ -10381,7 +10353,7 @@ msgstr "Нахіл: нахіляе пласт, вылучэньне або шл�
 
 #: ../app/tools/gimpsheartool.c:83
 msgid "S_hear"
-msgstr "_Нахіл"
+msgstr "_Нахіліць"
 
 #: ../app/tools/gimpsheartool.c:109
 msgid "command|Shear"
@@ -10396,24 +10368,20 @@ msgid "Shear magnitude _Y:"
 msgstr "Нахіл па _Y:"
 
 #: ../app/tools/gimpsmudgetool.c:54
-#, fuzzy
 msgid "Smudge Tool: Smudge selectively using a brush"
-msgstr "Пэндзаль: рысуе згладажаныя штрыхі пэндзлем"
+msgstr "Пэцкаль: запэцквае пэндзлем выбранае месца"
 
 #: ../app/tools/gimpsmudgetool.c:55
-#, fuzzy
 msgid "_Smudge"
-msgstr "Пляма"
+msgstr "_Пэцкаль"
 
 #: ../app/tools/gimpsmudgetool.c:74
-#, fuzzy
 msgid "Click to smudge"
-msgstr "Пстрыкні, каб забрудзіць"
+msgstr "Пстрыкні, каб запэцкаць"
 
 #: ../app/tools/gimpsmudgetool.c:75
-#, fuzzy
 msgid "Click to smudge the line"
-msgstr "Пстрыкні, каб забрудзіць лінію"
+msgstr "Пстрыкні, каб запэцкаць лінію"
 
 #: ../app/tools/gimptextoptions.c:114
 msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
@@ -10441,7 +10409,7 @@ msgstr "Шрыфт:"
 
 #: ../app/tools/gimptextoptions.c:441
 msgid "Hinting"
-msgstr "Намінак"
+msgstr "Намінкі"
 
 #: ../app/tools/gimptextoptions.c:448
 msgid "Force auto-hinter"
@@ -10457,7 +10425,7 @@ msgstr "Колер:"
 
 #: ../app/tools/gimptextoptions.c:476
 msgid "Justify:"
-msgstr "Выраўноўваньне:"
+msgstr "Раўнаваньне:"
 
 #. Create a path from the current text
 #: ../app/tools/gimptextoptions.c:498
@@ -10517,7 +10485,7 @@ msgstr "Аўтаматычна адрэгуляваць для аптымаль�
 
 #: ../app/tools/gimptransformoptions.c:249
 msgid "Transform:"
-msgstr "Ператварыць:"
+msgstr "Ператварыць: "
 
 #: ../app/tools/gimptransformoptions.c:255
 msgid "Direction"
@@ -10534,7 +10502,7 @@ msgstr "Абразаньне:"
 
 #: ../app/tools/gimptransformoptions.c:291
 msgid "Preview:"
-msgstr "Папярэдні прагляд:"
+msgstr "Агляд:"
 
 #: ../app/tools/gimptransformoptions.c:332
 #, c-format
@@ -10542,9 +10510,9 @@ msgid "15 degrees  (%s)"
 msgstr "15 градусаў  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:336
-#, fuzzy, c-format
+#, c-format
 msgid "Keep aspect  (%s)"
-msgstr "_Прапорцыі"
+msgstr "Захоўваць прапорцыі (%s)"
 
 #: ../app/tools/gimptransformtool.c:235
 msgid "Transforming"
@@ -10648,9 +10616,8 @@ msgid "Move Anchors"
 msgstr "Перасунуць вузлы"
 
 #: ../app/tools/gimpvectortool.c:1146
-#, fuzzy
 msgid "Click to pick path to edit"
-msgstr "Пстрыкні, каб стварыць новы шлях"
+msgstr "Пстрыкні, каб выбраць шлях для рэдагаваньня"
 
 #: ../app/tools/gimpvectortool.c:1149
 msgid "Click to create a new path"
@@ -10733,11 +10700,11 @@ msgstr "Адцэнтраваць радкі"
 
 #: ../app/tools/tools-enums.c:60
 msgid "Rule of thirds"
-msgstr "Правіла трэцяў"
+msgstr "Правіла трацін"
 
 #: ../app/tools/tools-enums.c:61
 msgid "Golden sections"
-msgstr "Залатое сячэньне"
+msgstr "Залатое сечыва"
 
 #: ../app/tools/tools-enums.c:120
 msgid "Aspect ratio"
@@ -10816,7 +10783,7 @@ msgstr "Зьмяніць вымеры шляха"
 #: ../app/vectors/gimpvectors.c:196
 #: ../app/vectors/gimpvectors.c:412
 msgid "Flip Path"
-msgstr "Перавернуць шлях"
+msgstr "Перакуліць шлях"
 
 #: ../app/vectors/gimpvectors.c:197
 #: ../app/vectors/gimpvectors.c:443
@@ -11527,18 +11494,16 @@ msgid "Line _style:"
 msgstr "_Стыль лініі:"
 
 #: ../app/widgets/gimpgrideditor.c:213
-#, fuzzy
 msgid "Change grid foreground color"
-msgstr "Колер рысаваньня:"
+msgstr "Зьмяніць колер рысаваньня сеткі"
 
 #: ../app/widgets/gimpgrideditor.c:220
 msgid "_Foreground color:"
 msgstr "Колер рысаваньня:"
 
 #: ../app/widgets/gimpgrideditor.c:224
-#, fuzzy
 msgid "Change grid background color"
-msgstr "Ужываць свой колер _асноведзі:"
+msgstr "Зьмяніць колер асноведзі сеткі"
 
 #: ../app/widgets/gimpgrideditor.c:231
 msgid "_Background color:"
@@ -11578,7 +11543,7 @@ msgstr "Сярэдзіна:"
 
 #: ../app/widgets/gimphistogrameditor.c:99
 msgid "Std dev:"
-msgstr "Стд прыст:"
+msgstr "Стд адхіленьне:"
 
 #: ../app/widgets/gimphistogrameditor.c:100
 msgid "Median:"
@@ -11704,7 +11669,7 @@ msgstr "Аўта"
 
 #: ../app/widgets/gimpmenudock.c:170
 msgid "When enabled the dialog automatically follows the image you are working on."
-msgstr "Калі задзейнічана, дыялёг аўтаматычна адсочае відарыс, зь якім ты працуеш."
+msgstr "Калі задзейнічана, дыялёг аўтаматычна адсочвае відарыс, зь якім ты працуеш."
 
 #: ../app/widgets/gimpmessagebox.c:437
 #, c-format
@@ -11779,12 +11744,11 @@ msgstr "_Граніца простага:"
 
 #: ../app/widgets/gimpstrokeeditor.c:239
 msgid "Dash pattern:"
-msgstr "Узор рысак: "
+msgstr "Узор мазкоў: "
 
 #: ../app/widgets/gimpstrokeeditor.c:302
-#, fuzzy
 msgid "Dash _preset:"
-msgstr "Зададзены час"
+msgstr "_Набор мазкоў:"
 
 #: ../app/widgets/gimpstrokeeditor.c:323
 msgid "_Antialiasing"
@@ -11805,7 +11769,7 @@ msgstr "_Прастора колераў:"
 
 #: ../app/widgets/gimptemplateeditor.c:370
 msgid "_Fill with:"
-msgstr "_Запоўніць:"
+msgstr "_Запаўняльнік:"
 
 #: ../app/widgets/gimptemplateeditor.c:380
 msgid "Comme_nt:"
@@ -11844,7 +11808,7 @@ msgstr ""
 
 #: ../app/widgets/gimpthumbbox.c:347
 msgid "Pr_eview"
-msgstr "_Папярэдні прагляд"
+msgstr "_Агляд"
 
 #: ../app/widgets/gimpthumbbox.c:402
 #: ../app/widgets/gimpthumbbox.c:466
@@ -11864,11 +11828,11 @@ msgstr "Стварэньне папярэдняга прагляду..."
 
 #: ../app/widgets/gimptoolbox-color-area.c:135
 msgid "Change Foreground Color"
-msgstr "Зьмяніць колер рысаваньня"
+msgstr "Зьмяненьне колера рысаваньня"
 
 #: ../app/widgets/gimptoolbox-color-area.c:140
 msgid "Change Background Color"
-msgstr "Зьмяніць колер асноведзі"
+msgstr "Зьмяненьне колера асноведзі"
 
 #: ../app/widgets/gimptoolbox-image-area.c:112
 #: ../app/widgets/gimptoolbox-image-area.c:117
@@ -11909,7 +11873,7 @@ msgstr ""
 
 #: ../app/widgets/gimptoolbox.c:689
 msgid "Foreground & background colors.  The black and white squares reset colors.  The arrows swap colors. Click to open the color selection dialog."
-msgstr "Колеры рысаваньня й асноведзі. Чорны і белы квадрацікі вяртаюць колеры. Стрэлкі абменьваюць колеры. Пстрыкні, каб выбраць колер."
+msgstr "Колеры рысаваньня й асноведзі. Чорны й белы квадрацікі вяртаюць колеры. Стрэлкі абменьваюць колеры. Пстрыкні, каб выбраць колер."
 
 #: ../app/widgets/gimptooloptionseditor.c:157
 msgid "Save options to..."
