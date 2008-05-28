@@ -5,7 +5,7 @@
 	* app/dialogs/resolution-calibrate-dialog.c
 	* app/display/gimpdisplayshell-scale.c
 	* plug-ins/gfig/gfig-preview.c
-	* plug-ins/imagemap/imap_preview.c
+	* plug-ins/imagemap/imap_preview.c: changed accordingly.
 
 	* libgimpwidgets/gimpwidgets.def: updated.
 
