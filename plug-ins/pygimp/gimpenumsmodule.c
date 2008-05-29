@@ -110,10 +110,10 @@ static char gimpenums_doc[] =
 "This module provides interfaces to allow you to write gimp plugins"
 ;
 
-void init_gimpenums(void);
+void init_enums(void);
 
 PyMODINIT_FUNC
-init_gimpenums(void)
+init_enums(void)
 {
     PyObject *m;
 
@@ -124,7 +124,7 @@ init_gimpenums(void)
     gimp_enums_init();
 
     /* Create the module and add the functions */
-    m = Py_InitModule3("_gimpenums", NULL, gimpenums_doc);
+    m = Py_InitModule3("_enums", NULL, gimpenums_doc);
 
     add_misc_enums(m);
     add_registered_enums(m);

@@ -44,10 +44,10 @@ static char gimpui_doc[] =
 "This module provides interfaces to allow you to write gimp plugins"
 ;
 
-void init_gimpui(void);
+void init_ui(void);
 
 PyMODINIT_FUNC
-init_gimpui(void)
+init_ui(void)
 {
     PyObject *m, *d;
     PyObject *av;
@@ -71,7 +71,7 @@ init_gimpui(void)
     init_pygimpcolor();
     init_pygimp();
 
-    m = Py_InitModule3("_gimpui", gimpui_functions, gimpui_doc);
+    m = Py_InitModule3("_ui", gimpui_functions, gimpui_doc);
     d = PyModule_GetDict(m);
 
     gimpui_register_classes(d);

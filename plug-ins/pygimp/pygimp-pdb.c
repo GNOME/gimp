@@ -331,7 +331,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
     }
 
     if (PyTuple_Size(tuple) != nparams) {
-	PyErr_SetString(PyExc_TypeError, "wrong number of parameters");
+	PyErr_SetString(PyExc_TypeError, "takes exactly %d arguments (%d given)");
         Py_DECREF(tuple);
 	return NULL;
     }
@@ -1035,7 +1035,7 @@ pygimp_pdb_build_param_info_tuple(int n_params, GimpParamDef *params)
 
     result = PyTuple_New(n_params);
     
-    gimpenums = PyImport_ImportModule("gimpenums");
+    gimpenums = PyImport_ImportModule("gimp.enums");
 
     if(gimpenums == NULL ||
        (pdb_arg_type = PyObject_GetAttrString(gimpenums, "GimpPDBArgType")) == NULL) {

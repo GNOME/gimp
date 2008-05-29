@@ -63,7 +63,7 @@ struct _PyGimpColor_Functions *_PyGimpColor_API;
 #define pygimp_rgb_from_pyobject (_PyGimpColor_API->rgb_from_pyobject)
 
 #define init_pygimpcolor() G_STMT_START { \
-    PyObject *gimpcolormodule = PyImport_ImportModule("gimpcolor"); \
+    PyObject *gimpcolormodule = PyImport_ImportModule("gimp.color"); \
     if (gimpcolormodule != NULL) { \
 	PyObject *mdict = PyModule_GetDict(gimpcolormodule); \
 	PyObject *cobject = PyDict_GetItemString(mdict, "_PyGimpColor_API"); \

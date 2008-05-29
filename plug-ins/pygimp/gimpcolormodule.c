@@ -392,17 +392,17 @@ static char gimpcolor_doc[] =
 "This module provides interfaces to allow you to write gimp plugins"
 ;
 
-void initgimpcolor(void);
+void initcolor(void);
 
 PyMODINIT_FUNC
-initgimpcolor(void)
+initcolor(void)
 {
     PyObject *m, *d;
 
     pygimp_init_pygobject();
 
     /* Create the module and add the functions */
-    m = Py_InitModule3("gimpcolor", gimpcolor_methods, gimpcolor_doc);
+    m = Py_InitModule3("color", gimpcolor_methods, gimpcolor_doc);
 
     d = PyModule_GetDict(m);
 

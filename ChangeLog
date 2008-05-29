@@ -1,7 +1,30 @@
+2008-05-29  Lars-Peter Clausen  <lars@metafoo.de>
+
+	Move gimpenums, gimpshelf, gimpui, gimpcolor to the gimp package and remove
+	the leading gimp. So they are now accessed as gimp.enums.
+	The old modules import everything from the new ones.
+
+	* plug-ins/pygimp/gimpcolor.py
+	* plug-ins/pygimp/gimpshelf.py
+	* plug-ins/pygimp/gimpui.py
+	* plug-ins/pygimp/gimpenums.py
+	* plug-ins/pygimp/gimpthumb.py
+	* plug-ins/pygimp/enums.py
+	* plug-ins/pygimp/ui.py
+	* plug-ins/pygimp/shelf.py
+	* plug-ins/pygimp/gimpfu.py
+	* plug-ins/pygimp/gimpthumbmodule.c
+	* plug-ins/pygimp/gimpenumsmodule.c
+	* plug-ins/pygimp/pygimpcolor-api.h
+	* plug-ins/pygimp/gimpuimodule.c
+	* plug-ins/pygimp/gimpcolormodule.c
+	* plug-ins/pygimp/pygimp-pdb.c
+	* plug-ins/pygimp/Makefile.am
+
 2008-05-26  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/gimpfu.py: Convert PDB_* enums to int when assigned
-	to PB_* constants
+	to PF_* constants
 
 2008-05-26  Lars-Peter Clausen  <lars@metafoo.de>
 

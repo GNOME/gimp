@@ -72,8 +72,7 @@ are installed.
 
 import string as _string
 import gimp
-import gimpcolor
-from gimpenums import *
+from gimp.enums import *
 pdb = gimp.pdb
 
 import gettext
@@ -176,7 +175,7 @@ _obj_mapping = {
     #PF_INT32ARRAY  : list,
     #PF_FLOATARRAY  : list,
     #PF_STRINGARRAY : list,
-    PF_COLOR       : gimpcolor.RGB,
+    PF_COLOR       : gimp.color.RGB,
     PF_REGION      : int,
     PF_DISPLAY     : gimp.Display,
     PF_IMAGE       : gimp.Image,
@@ -320,7 +319,6 @@ def _query():
             on_query()
 
 def _get_defaults(proc_name):
-    import gimpshelf
     (blurb, help, author, copyright, date,
      label, imagetypes, plugin_type,
      params, results, function, menu, domain,
@@ -328,17 +326,16 @@ def _get_defaults(proc_name):
 
     key = "python-fu-save--" + proc_name
 
-    if gimpshelf.shelf.has_key(key):
-        return gimpshelf.shelf[key]
+    if gimp.shelf.shelf.has_key(key):
+        return gimp.shelf.shelf[key]
     else:
         # return the default values
         return [x[3] for x in params]
 
 def _set_defaults(proc_name, defaults):
-    import gimpshelf
 
     key = "python-fu-save--" + proc_name
-    gimpshelf.shelf[key] = defaults
+    gimp.shelf.shelf[key] = defaults
 
 def _interact(proc_name, start_params):
     (blurb, help, author, copyright, date,
@@ -360,7 +357,6 @@ def _interact(proc_name, start_params):
     import pygtk
     pygtk.require('2.0')
 
-    import gimpui
     import gtk
 #    import pango
 
@@ -607,13 +603,13 @@ def _interact(proc_name, start_params):
             #PF_INT32ARRAY  : ArrayEntry,
             #PF_FLOATARRAY  : ArrayEntry,
             #PF_STRINGARRAY : ArrayEntry,
-            PF_COLOR       : gimpui.ColorSelector,
+            PF_COLOR       : gimp.ui.ColorSelector,
             PF_REGION      : IntEntry,  # should handle differently ...
-            PF_IMAGE       : gimpui.ImageSelector,
-            PF_LAYER       : gimpui.LayerSelector,
-            PF_CHANNEL     : gimpui.ChannelSelector,
-            PF_DRAWABLE    : gimpui.DrawableSelector,
-            PF_VECTORS     : gimpui.VectorsSelector,
+            PF_IMAGE       : gimp.ui.ImageSelector,
+            PF_LAYER       : gimp.ui.LayerSelector,
+            PF_CHANNEL     : gimp.ui.ChannelSelector,
+            PF_DRAWABLE    : gimp.ui.DrawableSelector,
+            PF_VECTORS     : gimp.ui.VectorsSelector,
 
             PF_TOGGLE      : ToggleEntry,
             PF_SLIDER      : SliderEntry,
@@ -621,14 +617,14 @@ def _interact(proc_name, start_params):
             PF_RADIO       : RadioEntry,
             PF_OPTION      : ComboEntry,
 
-            PF_FONT        : gimpui.FontSelector,
+            PF_FONT        : gimp.ui.FontSelector,
             PF_FILE        : FileSelector,
             PF_FILENAME    : FilenameSelector,
             PF_DIRNAME     : DirnameSelector,
-            PF_BRUSH       : gimpui.BrushSelector,
-            PF_PATTERN     : gimpui.PatternSelector,
-            PF_GRADIENT    : gimpui.GradientSelector,
-            PF_PALETTE     : gimpui.PaletteSelector,
+            PF_BRUSH       : gimp.ui.BrushSelector,
+            PF_PATTERN     : gimp.ui.PatternSelector,
+            PF_GRADIENT    : gimp.ui.GradientSelector,
+            PF_PALETTE     : gimp.ui.PaletteSelector,
             PF_TEXT        : TextEntry
     }
 
@@ -637,7 +633,7 @@ def _interact(proc_name, start_params):
 
     tooltips = gtk.Tooltips()
 
-    dialog = gimpui.Dialog(proc_name, 'python-fu', None, 0, None, proc_name,
+    dialog = gimp.ui.Dialog(proc_name, 'python-fu', None, 0, None, proc_name,
                            (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
                             gtk.STOCK_OK, gtk.RESPONSE_OK))
 
@@ -658,7 +654,7 @@ def _interact(proc_name, start_params):
             except ValueError:
                 trans = gettext.translation(domain, fallback=True)
             blurb = trans.ugettext(blurb)
-        box = gimpui.HintBox(blurb)
+        box = gimp.ui.HintBox(blurb)
         vbox.pack_start(box, expand=False)
         box.show()
 
@@ -728,7 +724,7 @@ def _interact(proc_name, start_params):
     vbox.pack_end(progress_vbox, expand=False)
     progress_vbox.show()
 
-    progress = gimpui.ProgressBar()
+    progress = gimp.ui.ProgressBar()
     progress_vbox.pack_start(progress)
     progress.show()
 

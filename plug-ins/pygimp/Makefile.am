@@ -27,10 +27,8 @@ pygimpbase = python
 pygimpdir = $(gimpplugindir)/$(pygimpbase)
 pygimpmoduledir = $(pygimpdir)/gimp
 
-pygimp_LTLIBRARIES = _gimpenums.la gimpcolor.la _gimpui.la \
-	gimpthumb.la
 
-pygimpmodule_LTLIBRARIES = _gimp.la
+pygimpmodule_LTLIBRARIES = _gimp.la color.la thumb.la _ui.la _enums.la
 
 _gimp_la_SOURCES = \
 	gimpmodule.c		\
@@ -57,13 +55,13 @@ _gimp_la_LIBADD = \
 	$(PYLINK_LIBS)		\
 	$(RT_LIBS)
 
-_gimpenums_la_SOURCES = \
+_enums_la_SOURCES = \
 	gimpenumsmodule.c
 
-_gimpenums_la_LDFLAGS = -module -avoid-version $(no_undefined) \
-	-export-symbols-regex init_gimpenums
+_enums_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+	-export-symbols-regex init_enums
 
-_gimpenums_la_LIBADD = \
+_enums_la_LIBADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
@@ -71,28 +69,28 @@ _gimpenums_la_LIBADD = \
 	$(PYLINK_LIBS)		\
 	$(RT_LIBS)
 
-gimpcolor_la_SOURCES = \
+color_la_SOURCES = \
 	gimpcolormodule.c	\
 	pygimp-colors.c		\
 	pygimpcolor.h		\
 	pygimpcolor-api.h
 
-gimpcolor_la_LDFLAGS = -module -avoid-version $(no_undefined) \
-	-export-symbols-regex initgimpcolor
+color_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+	-export-symbols-regex initcolor
 
-gimpcolor_la_LIBADD = \
+color_la_LIBADD = \
 	$(libgimpcolor)		\
 	$(GLIB_LIBS)		\
 	$(PYLINK_LIBS)
 
-_gimpui_la_SOURCES = \
+_ui_la_SOURCES = \
 	gimpuimodule.c		\
 	gimpui.c
 
-_gimpui_la_LDFLAGS = -module -avoid-version $(no_undefined) \
-	-export-symbols-regex init_gimpui
+_ui_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+	-export-symbols-regex init_ui
 
-_gimpui_la_LIBADD = \
+_ui_la_LIBADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpconfig)	\
@@ -105,14 +103,14 @@ _gimpui_la_LIBADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-gimpthumb_la_SOURCES = \
+thumb_la_SOURCES = \
 	gimpthumbmodule.c \
 	gimpthumb.c
 
-gimpthumb_la_LDFLAGS = -module -avoid-version $(no_undefined) \
-	-export-symbols-regex initgimpthumb
+thumb_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+	-export-symbols-regex initthumb
 
-gimpthumb_la_LIBADD = \
+thumb_la_LIBADD = \
 	$(libgimpthumb)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(PYLINK_LIBS)
@@ -122,12 +120,18 @@ pygimp_PYTHON = \
 	gimpfu.py	\
 	gimpplugin.py	\
 	gimpshelf.py	\
-	gimpui.py
+	gimpui.py	\
+	gimpthumb.py	\
+	gimpcolor.py
 
 pygimp_DATA = pygimp-logo.png
 
 pygimpmodule_PYTHON = \
-	__init__.py 
+	__init__.py \
+	context.py	\
+	ui.py	\
+	shelf.py	\
+	enums.py
 
 codegen_files = \
 	gimpcolor-types.defs	\

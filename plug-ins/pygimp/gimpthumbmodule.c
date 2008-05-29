@@ -42,16 +42,16 @@ static char gimpthumb_doc[] =
 "This module provides interfaces to allow you to write gimp plugins"
 ;
 
-void initgimpthumb(void);
+void initthumb(void);
 
 PyMODINIT_FUNC
-initgimpthumb(void)
+initthumb(void)
 {
     PyObject *m, *d;
     
     pygimp_init_pygobject();
 
-    m = Py_InitModule3("gimpthumb", gimpthumb_functions, gimpthumb_doc);
+    m = Py_InitModule3("thumb", gimpthumb_functions, gimpthumb_doc);
     d = PyModule_GetDict(m);
 
     gimpthumb_register_classes(d);
