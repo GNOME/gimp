@@ -1,6 +1,11 @@
 2008-05-29  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpscalecombobox.c (gimp_scale_combo_box_init):
+	reverted last change.
+
+2008-05-29  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpscalecombobox.c (gimp_scale_combo_box_init):
 	unset the entry's frame instead of reducing the inner border.
 
 2008-05-29  Sven Neumann  <sven@gimp.org>
