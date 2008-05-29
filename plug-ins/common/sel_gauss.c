@@ -454,7 +454,8 @@ matrixmult_mmx (const guchar  *src,
                   fr += d * (gushort) rowfact;
                 }
 
-              dest[dix] = r / fr;
+              if (fr)
+                dest[dix] = r / fr;
             }
           else
             {

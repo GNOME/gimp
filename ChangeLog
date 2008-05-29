@@ -1,3 +1,10 @@
+2008-05-29  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/common/sel_gauss.c (matrixmult_mmx): avoid division by
+	zero in the grayscale code path (bug #529280).
+
 2008-05-26  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
