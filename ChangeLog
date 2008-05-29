@@ -1,3 +1,8 @@
+2008-05-29  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpshelf.py: fix _vectors_id to return a tuple
+	for the ID. Spotted and fixed by Joao.
+
 2008-05-29  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.4.7 (interface age 7).

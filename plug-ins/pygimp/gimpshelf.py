@@ -52,7 +52,7 @@ def _display_id(obj):
     return gimp._id2display, (obj.ID,)
 
 def _vectors_id(obj):
-    return gimp._id2vectors, int(obj.ID)
+    return gimp._id2vectors, (int(obj.ID),)
 
 copy_reg.pickle(gimp.Image,   _image_id,    gimp._id2image)
 copy_reg.pickle(gimp.Layer,   _drawable_id, gimp._id2drawable)
