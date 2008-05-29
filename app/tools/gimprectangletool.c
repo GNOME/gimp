@@ -1074,8 +1074,17 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       h = pub_y2 - pub_y1;
 
       if (w > 0.0 && h > 0.0)
-        gimp_tool_push_status_coords (tool, display,
-                                      _("Rectangle: "), w, " × ", h, NULL);
+        {
+          gchar *aspect_text;
+
+          aspect_text = g_strdup_printf ("  %.2f",
+                                         w / (gdouble) h);
+
+          gimp_tool_push_status_coords (tool, display,
+                                        _("Rectangle: "), w, " × ", h, aspect_text);
+
+          g_free (aspect_text);
+        }
     }
 
   if (private->function == GIMP_RECTANGLE_TOOL_CREATING)
