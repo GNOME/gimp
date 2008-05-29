@@ -1,5 +1,12 @@
 2008-05-29  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/blur-gauss-selective.c (matrixmult_mmx): avoid
+	division by zero in the grayscale code path (bug #529280).
+
+2008-05-29  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/blur-gauss-selective.c (matrixmult_mmx): avoid
+	division by zero in the grayscale code path.
 	* plug-ins/imagemap/imap_preview.c (scroll_adj_changed): fixed
 	ruler type.
 
