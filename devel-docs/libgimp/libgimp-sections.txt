@@ -295,6 +295,7 @@ gimp_drawable_get_thumbnail_data
 gimp_drawable_get_sub_thumbnail_data
 gimp_drawable_get_color_uchar
 gimp_drawable_merge_shadow
+gimp_drawable_free_shadow
 gimp_drawable_fill
 gimp_drawable_update
 gimp_drawable_mask_bounds
@@ -426,6 +427,7 @@ gimp_gradient_delete
 gimp_gradient_is_editable
 gimp_gradient_get_uniform_samples
 gimp_gradient_get_custom_samples
+gimp_gradient_get_number_of_segments
 gimp_gradient_segment_get_left_color
 gimp_gradient_segment_set_left_color
 gimp_gradient_segment_get_right_color

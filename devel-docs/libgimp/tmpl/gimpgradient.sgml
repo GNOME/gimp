@@ -90,6 +90,15 @@ Functions operating on a single gradient.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_gradient_get_number_of_segments ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_gradient_segment_get_left_color ##### -->
 <para>
 

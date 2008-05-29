@@ -84,6 +84,7 @@ gimp_param_config_path_get_type
 gimp_config_serialize_properties
 gimp_config_serialize_changed_properties
 gimp_config_serialize_property
+gimp_config_serialize_property_by_name
 gimp_config_serialize_value
 </SECTION>
 

@@ -248,6 +248,15 @@ Functions to manipulate drawables.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_drawable_free_shadow ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_drawable_fill ##### -->
 <para>
 
