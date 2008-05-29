@@ -1,5 +1,10 @@
 2008-05-29  Lars-Peter Clausen  <lars@metafoo.de>
 
+	* plug-ins/pygimp/__init__.py: Added wrapper objects for Brushes and Palettes
+	* plug-ins/pygimp/gimpshelf.py: Forgot that one in last commit
+
+2008-05-29  Lars-Peter Clausen  <lars@metafoo.de>
+
 	Move gimpenums, gimpshelf, gimpui, gimpcolor to the gimp package and remove
 	the leading gimp. So they are now accessed as gimp.enums.
 	The old modules import everything from the new ones.
