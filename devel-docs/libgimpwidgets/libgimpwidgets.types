@@ -1,4 +1,5 @@
 #include <gtk/gtk.h>
+#undef GIMP_DISABLE_DEPRECATED
 #include <libgimpwidgets/gimpwidgets.h>
 #include <libgimpwidgets/gimpcontroller.h>
 
@@ -28,6 +29,7 @@ gimp_enum_store_get_type
 gimp_file_entry_get_type
 gimp_frame_get_type
 gimp_hint_box_get_type
+gimp_hruler_get_type
 gimp_int_combo_box_get_type
 gimp_int_store_get_type
 gimp_memsize_entry_get_type
@@ -39,8 +41,10 @@ gimp_pick_button_get_type
 gimp_pixmap_get_type
 gimp_preview_area_get_type
 gimp_preview_get_type
+gimp_ruler_get_type
 gimp_scrolled_preview_get_type
 gimp_size_entry_get_type
 gimp_string_combo_box_get_type
 gimp_unit_menu_get_type
+gimp_vruler_get_type
 gimp_zoom_model_get_type

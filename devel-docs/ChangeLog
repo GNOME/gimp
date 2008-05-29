@@ -1,5 +1,17 @@
 2008-05-29  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types
+	* libgimpwidgets/libgimpwidgets-docs.sgml: added GimpRuler API,
+	updated stock icons.
+
+	* libgimpwidgets/tmpl/gimphruler.sgml
+	* libgimpwidgets/tmpl/gimpruler.sgml
+	* libgimpwidgets/tmpl/gimpstock.sgml
+	* libgimpwidgets/tmpl/gimpvruler.sgml: regenerated.
+
+2008-05-29  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/libgimp-sections.txt
 	* libgimpconfig/libgimpconfig-sections.txt: added new symbols.
 

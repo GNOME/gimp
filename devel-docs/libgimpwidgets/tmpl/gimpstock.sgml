@@ -1189,6 +1189,13 @@ RTL variant
 
 
 
+<!-- ##### MACRO GIMP_STOCK_TOOL_DESATURATE ##### -->
+<para xml:base="../gimpstock.xml">
+<inlinegraphic fileref="stock-convert-grayscale-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_TOOL_DODGE ##### -->
 <para xml:base="../gimpstock.xml">
 <inlinegraphic fileref="stock-tool-dodge-22.png" format="png"></inlinegraphic>
@@ -1337,14 +1344,6 @@ RTL variant
 <para xml:base="../gimpstock.xml">
 <inlinegraphic fileref="stock-tool-perspective-clone-22.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-tool-perspective-clone-16.png" format="png"></inlinegraphic>
-</para>
-
-
-
-<!-- ##### MACRO GIMP_STOCK_TOOL_POLYGON_SELECT ##### -->
-<para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-polygon-select-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-polygon-select-16.png" format="png"></inlinegraphic>
 </para>
 
 
