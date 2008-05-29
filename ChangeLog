@@ -1,5 +1,18 @@
 2008-05-29  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/images/Makefile.am (STOCK_TOOL_IMAGES): 
+	* themes/Default/images/tools/stock-tool-polygon-select-16.png
+	* themes/Default/images/tools/stock-tool-polygon-select-22.png:
+	removed unused tool icon.
+
+	* libgimpwidgets/gimpstock.[ch]: don't register
+	GIMP_STOCK_TOOL_POLYGON_SELECT.
+
+	* libgimpwidgets/gimphruler.c
+	* libgimpwidgets/gimpvruler.c: added missing API docs.
+
+2008-05-29  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/blur-gauss-selective.c (matrixmult_mmx): avoid
 	division by zero in the grayscale code path (bug #529280).
 

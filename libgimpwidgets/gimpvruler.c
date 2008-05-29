@@ -87,12 +87,20 @@ gimp_vruler_init (GimpVRuler *vruler)
   widget->requisition.height = widget->style->ythickness * 2 + 1;
 }
 
+/**
+ * gimp_vruler_new:
+ *
+ * Creates a new vertical ruler.
+ *
+ * Return value: a new #GimpVRuler widget.
+ *
+ * Since: GIMP 2.8
+ **/
 GtkWidget*
 gimp_vruler_new (void)
 {
   return g_object_new (GIMP_TYPE_VRULER, NULL);
 }
-
 
 static gint
 gimp_vruler_motion_notify (GtkWidget      *widget,

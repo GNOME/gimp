@@ -87,7 +87,15 @@ gimp_hruler_init (GimpHRuler *hruler)
   widget->requisition.height = widget->style->ythickness * 2 + RULER_HEIGHT;
 }
 
-
+/**
+ * gimp_hruler_new:
+ *
+ * Creates a new horizontal ruler.
+ *
+ * Return value: a new #GimpHRuler widget.
+ *
+ * Since: GIMP 2.8
+ **/
 GtkWidget*
 gimp_hruler_new (void)
 {
