@@ -1,5 +1,9 @@
 2008-05-29  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.4.6 release.
+
+2008-05-29  Sven Neumann  <sven@gimp.org>
+
 	Merged from trunk:
 
 	* plug-ins/common/sel_gauss.c (matrixmult_mmx): avoid division by

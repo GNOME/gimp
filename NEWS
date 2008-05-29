@@ -29,6 +29,8 @@ Changes in GIMP 2.4.6
 - fixed bug in clipboard brush code (bug #532886)
 - corrected layer mask flag in PSD save plug-in (bug #526811)
 - fixed an issue with tablets and newer X.Org releases
+- keep the JPEG save plug-in from writing an empty EXIF tag (bug #529469)
+- fixed crash in Selective Gaussion Blur plug-in (bug #529280)
 - added new translations (Belarusian, Catalan, Norwegian Nynorsk)
 - translation fixes and updates
   (ar, ca, de, el, es, fi, fr, hu, it, ko, pl, pt_BR, ro, sv)
