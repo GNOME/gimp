@@ -1,5 +1,10 @@
 2008-05-29  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpscalecombobox.c (gimp_scale_combo_box_init):
+	unset the entry's frame instead of reducing the inner border.
+
+2008-05-29  Sven Neumann  <sven@gimp.org>
+
 	* themes/Default/images/Makefile.am (STOCK_TOOL_IMAGES): 
 	* themes/Default/images/tools/stock-tool-polygon-select-16.png
 	* themes/Default/images/tools/stock-tool-polygon-select-22.png:
