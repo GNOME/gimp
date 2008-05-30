@@ -1,5 +1,9 @@
 2008-05-30  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/module-dialog.c: some more internal cleanups.
+
+2008-05-30  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/module-dialog.c: cleaned up the UI a bit. Removed
 	some information and a button that was not really useful. Only
 	show the error state when there is actually an error.

@@ -40,25 +40,34 @@
 
 
 #define RESPONSE_REFRESH  1
-#define NUM_INFO_LINES    5
 
 enum
 {
   COLUMN_NAME,
-  COLUMN_ENABLE,
+  COLUMN_ENABLED,
   COLUMN_MODULE,
   NUM_COLUMNS
+};
+
+enum
+{
+  INFO_AUTHOR,
+  INFO_VERSION,
+  INFO_DATE,
+  INFO_COPYRIGHT,
+  INFO_LOCATION,
+  NUM_INFOS
 };
 
 typedef struct
 {
   Gimp         *gimp;
 
-  GimpModule   *last_update;
+  GimpModule   *selected;
   GtkListStore *list;
 
   GtkWidget    *table;
-  GtkWidget    *label[NUM_INFO_LINES];
+  GtkWidget    *label[NUM_INFOS];
   GtkWidget    *error_box;
   GtkWidget    *error_label;
 } ModuleDialog;
@@ -165,7 +174,7 @@ module_dialog_new (Gimp *gimp)
 
   col = gtk_tree_view_column_new ();
   gtk_tree_view_column_pack_start (col, rend, FALSE);
-  gtk_tree_view_column_add_attribute (col, rend, "active", COLUMN_ENABLE);
+  gtk_tree_view_column_add_attribute (col, rend, "active", COLUMN_ENABLED);
 
   gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
 
@@ -178,7 +187,7 @@ module_dialog_new (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (listbox), view);
   gtk_widget_show (view);
 
-  dialog->table = gtk_table_new (2, NUM_INFO_LINES, FALSE);
+  dialog->table = gtk_table_new (2, NUM_INFOS, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (dialog->table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), dialog->table, FALSE, FALSE, 0);
   gtk_widget_show (dialog->table);
@@ -198,7 +207,7 @@ module_dialog_new (Gimp *gimp)
 
   dialog_info_init (dialog, dialog->table);
 
-  dialog_info_update (gimp->module_db, dialog->last_update, dialog);
+  dialog_info_update (gimp->module_db, dialog->selected, dialog);
 
   sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
@@ -274,12 +283,12 @@ dialog_select_callback (GtkTreeSelection *sel,
   if (module)
     g_object_unref (module);
 
-  if (dialog->last_update == module)
+  if (dialog->selected == module)
     return;
 
-  dialog->last_update = module;
+  dialog->selected = module;
 
-  dialog_info_update (dialog->gimp->module_db, dialog->last_update, dialog);
+  dialog_info_update (dialog->gimp->module_db, dialog->selected, dialog);
 }
 
 static void
@@ -289,7 +298,6 @@ dialog_enabled_toggled (GtkCellRendererToggle *celltoggle,
 {
   GtkTreePath *path;
   GtkTreeIter  iter;
-  gboolean     enable = FALSE;
   GimpModule  *module = NULL;
 
   path = gtk_tree_path_new_from_string (path_string);
@@ -303,43 +311,46 @@ dialog_enabled_toggled (GtkCellRendererToggle *celltoggle,
   gtk_tree_path_free (path);
 
   gtk_tree_model_get (GTK_TREE_MODEL (dialog->list), &iter,
-                      COLUMN_ENABLE, &enable,
                       COLUMN_MODULE, &module,
                       -1);
 
   if (module)
     {
+      gimp_module_set_load_inhibit (module, ! module->load_inhibit);
       g_object_unref (module);
 
-      gimp_module_set_load_inhibit (module, enable);
-
       dialog->gimp->write_modulerc = TRUE;
+   }
+}
 
-      gtk_list_store_set (GTK_LIST_STORE (dialog->list), &iter,
-                          COLUMN_ENABLE, ! enable,
-                          -1);
-    }
+static void
+dialog_list_item_update (ModuleDialog *dialog,
+                         GtkTreeIter  *iter,
+                         GimpModule   *module)
+{
+  gtk_list_store_set (dialog->list, iter,
+                      COLUMN_NAME,   (module->info ?
+                                      gettext (module->info->purpose) :
+                                      gimp_filename_to_utf8 (module->filename)),
+                      COLUMN_ENABLED, ! module->load_inhibit,
+                      COLUMN_MODULE,  module,
+                      -1);
 }
 
 static void
 make_list_item (gpointer data,
                 gpointer user_data)
 {
-  GimpModule   *module  = data;
+  GimpModule   *module = data;
   ModuleDialog *dialog = user_data;
   GtkTreeIter   iter;
 
-  if (! dialog->last_update)
-    dialog->last_update = module;
+  if (! dialog->selected)
+    dialog->selected = module;
 
   gtk_list_store_append (dialog->list, &iter);
-  gtk_list_store_set (dialog->list, &iter,
-                      COLUMN_NAME,   (module->info ?
-                                      gettext (module->info->purpose) :
-                                      gimp_filename_to_utf8 (module->filename)),
-                      COLUMN_ENABLE, ! module->load_inhibit,
-                      COLUMN_MODULE, module,
-                      -1);
+
+  dialog_list_item_update (dialog, &iter, module);
 }
 
 static void
@@ -390,20 +401,39 @@ dialog_info_update (GimpModuleDB *db,
                     GimpModule   *module,
                     ModuleDialog *dialog)
 {
-  GTypeModule *g_type_module;
-  const gchar *text[NUM_INFO_LINES] = { NULL, };
-  gchar       *location             = NULL;
-  gint         i;
+  GtkTreeModel *model           = GTK_TREE_MODEL (dialog->list);
+  GtkTreeIter   iter;
+  const gchar  *text[NUM_INFOS] = { NULL, };
+  gchar        *location        = NULL;
+  gboolean      iter_valid;
+  gint          i;
 
-  g_type_module = G_TYPE_MODULE (module);
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      GimpModule *this;
+
+      gtk_tree_model_get (model, &iter,
+                          COLUMN_MODULE, &this,
+                          -1);
+      if (this)
+        g_object_unref (this);
+
+      if (this == module)
+        break;
+    }
+
+  if (iter_valid)
+    dialog_list_item_update (dialog, &iter, module);
 
   /* only update the info if we're actually showing it */
-  if (module != dialog->last_update)
+  if (module != dialog->selected)
     return;
 
   if (! module)
     {
-      for (i = 0; i < NUM_INFO_LINES; i++)
+      for (i = 0; i < NUM_INFOS; i++)
         gtk_label_set_text (GTK_LABEL (dialog->label[i]), NULL);
 
       gtk_label_set_text (GTK_LABEL (dialog->error_label), NULL);
@@ -417,18 +447,19 @@ dialog_info_update (GimpModuleDB *db,
 
   if (module->info)
     {
-      text[0] = module->info->author;
-      text[1] = module->info->version;
-      text[2] = module->info->date;
-      text[3] = module->info->copyright;
-      text[4] = module->on_disk ? location : _("Only in memory");
+      text[INFO_AUTHOR]    = module->info->author;
+      text[INFO_VERSION]   = module->info->version;
+      text[INFO_DATE]      = module->info->date;
+      text[INFO_COPYRIGHT] = module->info->copyright;
+      text[INFO_LOCATION]  = module->on_disk ? location : _("Only in memory");
     }
   else
     {
-      text[4] = module->on_disk ? location : _("No longer available");
+      text[INFO_LOCATION]  = (module->on_disk ?
+                              location : _("No longer available"));
     }
 
-  for (i = 0; i < NUM_INFO_LINES; i++)
+  for (i = 0; i < NUM_INFOS; i++)
     gtk_label_set_text (GTK_LABEL (dialog->label[i]),
                         text[i] ? text[i] : "--");
 
@@ -452,7 +483,7 @@ dialog_info_init (ModuleDialog *dialog,
   GtkWidget *label;
   gint       i;
 
-  static const gchar * const text[] =
+  const gchar * const text[] =
   {
     N_("Author:"),
     N_("Version:"),
