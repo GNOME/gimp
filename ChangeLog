@@ -1,3 +1,21 @@
+2008-05-30  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Made moving the selection mask in the varoius ways automatically
+	commit any pending rectangle/ellipse selection. Fixes bug #349340.
+
+	* app/tools/gimprectangleselecttool.c
+	(gimp_rectangle_select_tool_oper_update): Don't disable support
+	for moving the selection mask.
+
+	(gimp_rectangle_select_tool_button_press): Handle delegation to
+	the selection tool.
+
+	(gimp_rectangle_select_tool_delegate_button_press): New helper
+	function.
+
+	(gimp_rectangle_select_tool_execute): Guard against NULL
+	tool->display:s.
+
 2008-05-30  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/module-dialog.c: tell the user that a restart is
