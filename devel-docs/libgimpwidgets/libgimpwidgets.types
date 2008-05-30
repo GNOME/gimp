@@ -1,5 +1,4 @@
 #include <gtk/gtk.h>
-#undef GIMP_DISABLE_DEPRECATED
 #include <libgimpwidgets/gimpwidgets.h>
 #include <libgimpwidgets/gimpcontroller.h>
 

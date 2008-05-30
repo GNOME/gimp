@@ -1,3 +1,12 @@
+2008-05-30  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/Makefile.am (GTKDOC_CFLAGS)
+	* libgimpwidgets/Makefile.am (GTKDOC_CFLAGS): undef
+	GTK_DISABLE_SINGLE_INCLUDES and GIMP_DISABLE_DEPRECATED here.
+
+	* libgimpwidgets/libgimpwidgets.types: don't try to #define or
+	#undef anything here.
+
 2008-05-29  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt

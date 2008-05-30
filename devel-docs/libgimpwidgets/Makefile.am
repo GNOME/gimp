@@ -46,11 +46,13 @@ extra_files =
 # CFLAGS and LDFLAGS for compiling scan program. Only needed
 # if $(DOC_MODULE).types is non-empty.
 GTKDOC_CFLAGS = \
-	@CFLAGS@		\
-	-I$(top_srcdir) 	\
-	-I$(top_builddir) 	\
-	@GTK_CFLAGS@		\
-	-DGIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
+	@CFLAGS@					\
+	-I$(top_srcdir) 				\
+	-I$(top_builddir) 				\
+	@GTK_CFLAGS@					\
+	-DGIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION	\
+	-UGTK_DISABLE_SINGLE_INCLUDES			\
+	-UGIMP_DISABLE_DEPRECATED
 
 GTKDOC_LIBS = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la		\
