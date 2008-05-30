@@ -1,5 +1,10 @@
 2008-05-30  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/module-dialog.c: tell the user that a restart is
+	needed for the changes to take effect.
+
+2008-05-30  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/module-dialog.c: some more internal cleanups.
 
 2008-05-30  Sven Neumann  <sven@gimp.org>

@@ -3,6 +3,7 @@
  *
  * module-dialog.c
  * (C) 1999 Austin Donnelly <austin@gimp.org>
+ * (C) 2008 Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,6 +67,7 @@ typedef struct
   GimpModule   *selected;
   GtkListStore *list;
 
+  GtkWidget    *hint;
   GtkWidget    *table;
   GtkWidget    *label[NUM_INFOS];
   GtkWidget    *error_box;
@@ -144,6 +146,13 @@ module_dialog_new (Gimp *gimp)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell)->vbox), vbox);
   gtk_widget_show (vbox);
+
+  dialog->hint = gimp_hint_box_new (_("You will have to restart GIMP "
+                                      "for the changes to take effect."));
+  gtk_box_pack_start (GTK_BOX (vbox), dialog->hint, FALSE, FALSE, 0);
+
+  if (gimp->write_modulerc)
+    gtk_widget_show (dialog->hint);
 
   listbox = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (listbox),
@@ -320,6 +329,7 @@ dialog_enabled_toggled (GtkCellRendererToggle *celltoggle,
       g_object_unref (module);
 
       dialog->gimp->write_modulerc = TRUE;
+      gtk_widget_show (dialog->hint);
    }
 }
 
