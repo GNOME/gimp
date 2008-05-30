@@ -4,9 +4,6 @@
 	some information and a button that was not really useful. Only
 	show the error state when there is actually an error.
 
-	* app/actions/dialogs-actions.c: changed menu item to "Module
-	Manager".
-
 2008-05-29  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpshelf.py: fix _vectors_id to return a tuple
