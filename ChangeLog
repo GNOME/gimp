@@ -1,3 +1,9 @@
+2008-05-31  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprotatetool.c (gimp_rotate_tool_key_press):
+	Implemented this function to support rotating with arrow keys. See
+	bug #387779.
+
 2008-05-30  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Made moving the selection mask in the varoius ways automatically
