@@ -1,5 +1,24 @@
 2008-05-31  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Add keyboard shortcut support for reseting to default value of
+	e.g. brush scale. Fixes bug #493030.
+
+	* app/actions/actions.[ch]: Make action_select_value() take a
+	default-parameter and add support for it. Also use default_value
+	from gint and gdouble param specs.
+
+	* app/actions/actions-types.h: Added
+	GIMP_ACTION_SELECT_SET_TO_DEFAULT.
+
+	* app/actions/tools-actions.c: Add _SET_TO_DEFAULT actions.
+
+	* app/actions/view-commands.c:
+	* app/actions/layers-commands.c:
+	* app/actions/context-commands.c: Pass defaults to
+	action_select_property().
+
+2008-05-31  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprotatetool.c (gimp_rotate_tool_key_press):
 	Implemented this function to support rotating with arrow keys. See
 	bug #387779.
@@ -112,7 +131,7 @@
 	* libgimpwidgets/gimpwidgets.def: updated.
 
 2008-05-28  Sven Neumann  <sven@gimp.org>
-	
+
 	* libgimpwidgets/gimpruler.[ch]
 	* libgimpwidgets/gimphruler.c
 	* libgimpwidgets/gimpvruler.c: enlarge the array of scales to

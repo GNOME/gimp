@@ -376,6 +376,7 @@ action_select_value (GimpActionSelectType  select_type,
                      gdouble               value,
                      gdouble               min,
                      gdouble               max,
+                     gdouble               def,
                      gdouble               small_inc,
                      gdouble               inc,
                      gdouble               skip_inc,
@@ -384,6 +385,10 @@ action_select_value (GimpActionSelectType  select_type,
 {
   switch (select_type)
     {
+    case GIMP_ACTION_SELECT_SET_TO_DEFAULT:
+      value = def;
+      break;
+
     case GIMP_ACTION_SELECT_FIRST:
       value = min;
       break;
@@ -477,6 +482,7 @@ action_select_property (GimpActionSelectType  select_type,
                                    value,
                                    G_PARAM_SPEC_DOUBLE (pspec)->minimum,
                                    G_PARAM_SPEC_DOUBLE (pspec)->maximum,
+                                   G_PARAM_SPEC_DOUBLE (pspec)->default_value,
                                    small_inc, inc, skip_inc, 0, wrap);
 
       g_object_set (object, property_name, value, NULL);
@@ -491,6 +497,7 @@ action_select_property (GimpActionSelectType  select_type,
                                    value,
                                    G_PARAM_SPEC_INT (pspec)->minimum,
                                    G_PARAM_SPEC_INT (pspec)->maximum,
+                                   G_PARAM_SPEC_INT (pspec)->default_value,
                                    small_inc, inc, skip_inc, 0, wrap);
 
       g_object_set (object, property_name, value, NULL);
