@@ -1,6 +1,10 @@
+2008-06-01  Lars-Peter Clausen  <lars@metafoo.de>
+
+	* plug-ins/pygimp/__init__.py: Added wrapper for Palettes
+
 2008-05-29  Lars-Peter Clausen  <lars@metafoo.de>
 
-	* plug-ins/pygimp/__init__.py: Added wrapper objects for Brushes and Palettes
+	* plug-ins/pygimp/__init__.py: Added wrapper objects for Brushes and Patterns
 	* plug-ins/pygimp/gimpshelf.py: Forgot that one in last commit
 
 2008-05-29  Lars-Peter Clausen  <lars@metafoo.de>

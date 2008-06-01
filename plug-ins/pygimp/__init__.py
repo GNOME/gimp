@@ -41,7 +41,7 @@ class GimpNamedObject(object):
         self._name = name
 
     def __str__(self):
-        """The representation of a GimpNamedObject is its name.
+        """The string representation of a GimpNamedObject is its name.
            That whay it can be passed to functions that exspect the name of a
            object."""
         return self._name
@@ -203,3 +203,144 @@ class Pattern(GimpNamedObject):
     doc="""A tupel containing the pixel values for the pattern. It length is
     bpp*widht*height.""")
 
+class Palette(GimpNamedObject):
+    """A gimp Palette object. A Palette instance provides a list like interface
+       to access the palette entries.
+       Caution using gimp.pdb.gimp_palette_* functions paralell to gimp.Palette
+       instances can cause data inconsistency."""
+
+    __metaclass__ = GimpNamedObjectMeta("gimp_palette_rename",
+    "gimp_palette_delete", "gimp_palette_duplicate")
+
+    def __init__(self, name):
+        """Creates a new Palette
+            name - The name for the palette"""
+        GimpNamedObject.__init__(self, pdb.gimp_palette_new(name))
+
+        # Dictionary of PaletteEntry instances that are bound to this Palette.
+        # The key is the index of the entry.
+        self._bound_entries = {}
+
+    def __len__(self):
+        """Returns the number of entries in the palette"""
+        return pdb.gimp_palette_get_info(self)
+
+    def __getitem__(self, key):
+        if isinstance(key, int):
+            if key < 0:
+                key += self.__len__()
+            if key < 0 or key >= self.__len__():
+                raise IndexError("index out of range")
+
+            if self._bound_entries.has_key(key):
+                return self._bound_entries[key]
+
+            entry = PaletteEntry(pdb.gimp_palette_entry_get_name(self,key),
+                                 pdb.gimp_palette_entry_get_color(self, key))
+
+            # Bind entry to palette
+            entry._bound_to.append((self, key))
+            self._bound_entries[key] = entry
+
+            return entry
+
+        raise TypeError
+
+    def __setitem__(self, key, value):
+        if isinstance(key, int):
+            if key < 0:
+                key += self.__len__()
+            if key < 0 or key >= self.__len__():
+                raise IndexError("index out of range")
+
+            if isinstance(value, PaletteEntry):
+                if self._bound_entries.has_key(key):
+                    self._bound_entries[key]._bound_to.remove((self, key))
+                
+                # Bind entry to palette
+                value._bound_to.append((self, key))
+                self._bound_entries[key] = value
+
+                pdb.gimp_palette_entry_set_name(self, key, value.name)
+                pdb.gimp_palette_entry_set_color(self, key, value.color)
+            else:
+                pdb.gimp_palette_entry_set_color(self, key, value)
+        else:
+            raise TypeError
+
+    def __delitem__(self, key):
+        """Removes palette entry with index 'key' from the palette"""
+        if isinstance(self, key):
+            if key < 0:
+                key += self.__len__()
+            if key < 0 or key >= self.__len__():
+                raise IndexError("index out of range")
+
+            pdb.gimp_palette_delete_entry(self, key)
+            if self._bound_entries.has_key(key):
+                self._bound_entries[key]._bound_to.remove((self, key))
+                del self._bound_entries[key]
+
+                # Decrease index of all folowing entries
+                for index, entry in self._bound_entries.items():
+                    if index > key:
+                        entry._bound_to.remove((self, index))
+                        entry._bound_to.append((self, index-1))
+
+                        del self._bound_entries[index]
+                        self._bound_entries[index-1] = entry
+        else:
+            raise TypeError
+
+
+    def append(self, entry):
+        """Appends a entry to the palette.
+           entry - A PaletteEntry instance."""
+        pdb.gimp_palette_add_entry(self, entry.name, entry.color)
+        index = self.__len__() - 1
+        entry._bound_to.append((self, index))
+        self._bound_entries[index] = entry
+
+    editable = property(fget=lambda self:bool(pdb.gimp_palette_is_editable(self)),
+                        doc="""True if the palette is editable.""")
+    columns = property(fget=lambda self:pdb.gimp_palette_get_columns(self),
+                       fset=lambda self, val:pdb.gimp_palette_set_columns(self, val),
+                       doc="""Number of columes to use when the palette is
+                       being displayed.""")
+    @classmethod
+    def _id2obj(cls, name):
+        obj = super(Palette, cls)._id2obj(name)
+        obj._bound_entries = {}
+        return obj
+
+class PaletteEntry(object):
+    """A palette entry object."""
+    def __init__(self, name, color):
+        """Creates a new palette entry.
+           name - Name of the entry
+           color - Color of the entry"""
+        self.__name = name
+        self.__color = color
+
+        # List of tuples to what Palettes a entry is bound. (palette, entry
+        # index)
+        self._bound_to = []
+
+    def __repr__(self):
+        return "<gimp.PaletteEntry '%s - (%d, %d, %d)'>" % self.__name,
+        self.__color[0], self.__color[1], self.__color[2]
+
+    def __set_name(self, name):
+        self.__name = name
+        for gradient, index in self._bound_to:
+            pdb.gimp_palette_entry_set_name(gradient, index, name)
+
+    def __set_color(self, color):
+        self.__color = color
+        for gradient, index in self._bound_to:
+            pdb.gimp_palette_entry_set_color(gradient, index, color)
+
+    name = property(fget=lambda self:self.__name, fset=__set_name,
+                    doc="""Name of the entry.""")
+    color = property(fget=lambda self:self.__color, fset=__set_color,
+                     doc="""Color of the entry.""")
