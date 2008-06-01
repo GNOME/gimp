@@ -1,3 +1,9 @@
+2008-06-01  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* plug-ins/common/gif-load.c (GetCode): Applied patch from Rik
+	Snel that fixes loading of .gif files that contains 1-byte data
+	blocks. (Bug #535888.)
+
 2008-05-31  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Add keyboard shortcut support for reseting to default value of
