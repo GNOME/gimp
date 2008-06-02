@@ -1,3 +1,10 @@
+2008-06-02  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/tools-actions.c: added a few more actions to set
+	tool values to default values. Added "backslash" as the default
+	shortcut for "tools-value-2-set-to-default", which is effectively
+	"Reset Brush Scale" (bug #493030).
+
 2008-06-01  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* plug-ins/common/gif-load.c (GetCode): Applied patch from 
