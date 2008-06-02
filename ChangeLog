@@ -2,9 +2,9 @@
 
 	Merged from trunk:
 
-	* plug-ins/common/gif-load.c (GetCode): Applied patch from Rik
-	Snel that fixes loading of .gif files that contains 1-byte data
-	blocks. (Bug #535888.)
+	* plug-ins/common/gif-load.c (GetCode): Applied patch from 
+	Rik Snel that fixes loading of .gif files that contains 1-byte
+	data blocks. (Bug #535888.)
 
 2008-05-29  Manish Singh  <yosh@gimp.org>
 
