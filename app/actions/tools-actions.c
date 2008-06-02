@@ -358,6 +358,9 @@ static const GimpEnumActionEntry tools_transform_preview_opacity_actions[] =
     NULL },
 };
 
+/* tools-value-1 is effectively used to control
+ * opacity of the active tool
+ */
 static const GimpEnumActionEntry tools_value_1_actions[] =
 {
   { "tools-value-1-set", GIMP_STOCK_TOOL_OPTIONS,
@@ -394,6 +397,9 @@ static const GimpEnumActionEntry tools_value_1_actions[] =
     NULL },
 };
 
+/* tools-value-2 is effectively used to control
+ * the tip size of the active tool
+ */
 static const GimpEnumActionEntry tools_value_2_actions[] =
 {
   { "tools-value-2-set", GIMP_STOCK_TOOL_OPTIONS,
