@@ -223,6 +223,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
 {
   GimpHueSaturationTool   *hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
   GimpHueSaturationConfig *config  = hs_tool->config;
+  GtkWidget               *main_vbox;
   GtkWidget               *vbox;
   GtkWidget               *abox;
   GtkWidget               *table;
@@ -256,9 +257,10 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
     { N_("_M"),      N_("Magenta"),           3, 2, 4, 2 }
   };
 
+  main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
+
   frame = gimp_frame_new (_("Select Primary Color to Adjust"));
-  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), frame,
-                      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 6);
@@ -367,8 +369,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
                     hs_tool);
 
   frame = gimp_frame_new (_("Adjust Selected Color"));
-  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), frame,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /*  The table containing sliders  */

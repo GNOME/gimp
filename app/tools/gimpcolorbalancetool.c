@@ -253,15 +253,18 @@ create_levels_scale (gdouble        value,
 }
 
 static void
-gimp_color_balance_tool_dialog (GimpImageMapTool *im_tool)
+gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  GimpColorBalanceTool   *cb_tool = GIMP_COLOR_BALANCE_TOOL (im_tool);
+  GimpColorBalanceTool   *cb_tool = GIMP_COLOR_BALANCE_TOOL (image_map_tool);
   GimpColorBalanceConfig *config  = cb_tool->config;
+  GtkWidget              *main_vbox;
   GtkWidget              *vbox;
   GtkWidget              *hbox;
   GtkWidget              *table;
   GtkWidget              *button;
   GtkWidget              *frame;
+
+  main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
 
   frame = gimp_enum_radio_frame_new (GIMP_TYPE_TRANSFER_MODE,
                                      gtk_label_new (_("Select Range to Adjust")),
@@ -270,11 +273,11 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *im_tool)
                                      &cb_tool->range_radio);
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (cb_tool->range_radio),
                                    config->range);
-  gtk_box_pack_start (GTK_BOX (im_tool->main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   frame = gimp_frame_new (_("Adjust Color Levels"));
-  gtk_box_pack_start (GTK_BOX (im_tool->main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 4);
@@ -331,7 +334,7 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *im_tool)
     gtk_check_button_new_with_mnemonic (_("Preserve _luminosity"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cb_tool->preserve_toggle),
                                 config->preserve_luminosity);
-  gtk_box_pack_end (GTK_BOX (im_tool->main_vbox), cb_tool->preserve_toggle,
+  gtk_box_pack_end (GTK_BOX (main_vbox), cb_tool->preserve_toggle,
                     FALSE, FALSE, 0);
   gtk_widget_show (cb_tool->preserve_toggle);
 

@@ -54,6 +54,7 @@ struct _GimpImageMapTool
   GtkWidget             *favorites_menu;
   GtkWidget             *import_item;
   GtkWidget             *export_item;
+  GtkSizeGroup          *label_group;
 
   /* settings file dialog */
   GtkWidget             *settings_dialog;
@@ -96,6 +97,10 @@ void    gimp_image_map_tool_create_map (GimpImageMapTool *image_map_tool);
 void    gimp_image_map_tool_edit_as    (GimpImageMapTool *image_map_tool,
                                         const gchar      *new_tool_id,
                                         GimpConfig       *config);
+
+/* accessors for derived classes */
+GtkWidget    * gimp_image_map_tool_dialog_get_vbox        (GimpImageMapTool *tool);
+GtkSizeGroup * gimp_image_map_tool_dialog_get_label_group (GimpImageMapTool *tool);
 
 
 #endif  /*  __GIMP_IMAGE_MAP_TOOL_H__  */

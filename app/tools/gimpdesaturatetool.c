@@ -181,7 +181,10 @@ static void
 gimp_desaturate_tool_dialog (GimpImageMapTool *image_map_tool)
 {
   GimpDesaturateTool *desaturate_tool = GIMP_DESATURATE_TOOL (image_map_tool);
+  GtkWidget          *main_vbox;
   GtkWidget          *frame;
+
+  main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
 
   /*  The table containing sliders  */
   frame = gimp_enum_radio_frame_new (GIMP_TYPE_DESATURATE_MODE,
@@ -190,8 +193,7 @@ gimp_desaturate_tool_dialog (GimpImageMapTool *image_map_tool)
                                      desaturate_tool,
                                      &desaturate_tool->button);
 
-  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), frame,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 }
 

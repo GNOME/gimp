@@ -130,7 +130,7 @@ gimp_image_map_tool_add_settings_gui (GimpImageMapTool *image_map_tool)
   if (gimp_container_num_children (klass->recent_settings) == 0)
     gimp_image_map_tool_recent_deserialize (image_map_tool);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,
                       FALSE, FALSE, 0);
   gtk_widget_show (hbox);
@@ -138,6 +138,10 @@ gimp_image_map_tool_add_settings_gui (GimpImageMapTool *image_map_tool)
   label = gtk_label_new_with_mnemonic (_("Pre_sets:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  image_map_tool->label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+  gtk_size_group_add_widget (image_map_tool->label_group, label);
+  g_object_unref (image_map_tool->label_group);
 
   combo = gimp_container_combo_box_new (klass->recent_settings,
                                         GIMP_CONTEXT (tool_info->tool_options),

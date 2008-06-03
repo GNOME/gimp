@@ -679,3 +679,20 @@ gimp_image_map_tool_edit_as (GimpImageMapTool *im_tool,
                     GIMP_CONFIG (GIMP_IMAGE_MAP_TOOL (new_tool)->config),
                     0);
 }
+
+GtkWidget *
+gimp_image_map_tool_dialog_get_vbox (GimpImageMapTool *tool)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool), NULL);
+
+  return tool->main_vbox;
+}
+
+
+GtkSizeGroup *
+gimp_image_map_tool_dialog_get_label_group (GimpImageMapTool *tool)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool), NULL);
+
+  return tool->label_group;
+}

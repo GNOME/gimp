@@ -226,8 +226,8 @@ gimp_histogram_scale_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_HISTOGRAM_SCALE_LINEAR, N_("Linear"), NULL },
-    { GIMP_HISTOGRAM_SCALE_LOGARITHMIC, N_("Logarithmic"), NULL },
+    { GIMP_HISTOGRAM_SCALE_LINEAR, N_("Linear histogram"), NULL },
+    { GIMP_HISTOGRAM_SCALE_LOGARITHMIC, N_("Logarithmic histogram"), NULL },
     { 0, NULL, NULL }
   };
 

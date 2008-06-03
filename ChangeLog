@@ -1,3 +1,26 @@
+2008-06-03  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/widgets-enums.[ch]: changed descriptions for
+	GimpHistogramScale enum.
+
+	* app/tools/gimpimagemaptool.[ch]
+
+	* app/tools/gimpimagemaptool-settings.c: added a GtkSizeGroup for
+	aligning with the "Presets" label. Added an accessor for the
+	dialog's vbox.
+
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpdesaturatetool.c
+	* app/tools/gimpgegltool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c: use the new accessor. Minor
+	dialog cleanups in a few places.
+
 2008-06-02  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/tools-actions.c: added a few more actions to set

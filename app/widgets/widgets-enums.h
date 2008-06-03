@@ -112,8 +112,8 @@ GType gimp_histogram_scale_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_HISTOGRAM_SCALE_LINEAR,       /*< desc="Linear"      >*/
-  GIMP_HISTOGRAM_SCALE_LOGARITHMIC   /*< desc="Logarithmic" >*/
+  GIMP_HISTOGRAM_SCALE_LINEAR,       /*< desc="Linear histogram"      >*/
+  GIMP_HISTOGRAM_SCALE_LOGARITHMIC   /*< desc="Logarithmic histogram" >*/
 } GimpHistogramScale;
 
 

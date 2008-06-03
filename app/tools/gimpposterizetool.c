@@ -209,15 +209,17 @@ static void
 gimp_posterize_tool_dialog (GimpImageMapTool *image_map_tool)
 {
   GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (image_map_tool);
+  GtkWidget         *main_vbox;
   GtkWidget         *table;
   GtkWidget         *slider;
   GtkObject         *data;
 
+  main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
+
   /*  The table containing sliders  */
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), table,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
