@@ -1,3 +1,9 @@
+2008-06-03  Lars-Peter Clausen <lars@metafoo.de>
+
+	Added wrapper for GimpNumberPairEntry
+	* plug-ins/pygimp/gimpui.defs
+	* plug-ins/pygimp/gimpui.override
+
 2008-06-01  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/__init__.py: Added wrapper for Palettes

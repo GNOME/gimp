@@ -1287,3 +1287,65 @@ _wrap_gimp_proc_browser_dialog_new(PyGObject *self, PyObject *args, PyObject *kw
 }
 %%
 new-constructor GIMP_TYPE_PROC_BROWSER_DIALOG
+%%
+override gimp_number_pair_entry_get_values noargs
+static PyObject*
+_wrap_gimp_number_pair_entry_get_values(PyGObject *self)
+{
+    gdouble left, right;
+
+    gimp_number_pair_entry_get_values(GIMP_NUMBER_PAIR_ENTRY(self->obj), &left, &right);
+
+    return Py_BuildValue("(dd)", left, right);   
+}
+%%
+override gimp_number_pair_entry_get_default_values noargs
+static PyObject*
+_wrap_gimp_number_pair_entry_get_default_values(PyGObject *self)
+{
+    gdouble left, right;
+
+    gimp_number_pair_entry_get_default_values(GIMP_NUMBER_PAIR_ENTRY(self->obj), &left, &right);
+
+    return Py_BuildValue("(dd)", left, right);
+}
+%%
+override gimp_number_pair_entry_get_aspect noargs
+static PyObject*
+_wrap_gimp_number_pair_entry_get_aspect(PyGObject *self)
+{
+    GimpAspectType aspect;
+
+    aspect =
+        gimp_number_pair_entry_get_aspect(GIMP_NUMBER_PAIR_ENTRY(self->obj));
+
+    return pyg_enum_from_gtype(GIMP_TYPE_ASPECT_TYPE, aspect);
+}
+%%
+override gimp_number_pair_entry_set_aspect kwargs
+static PyObject*
+_wrap_gimp_number_pair_entry_set_aspect(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_aspect;
+    GimpAspectType aspect;
+
+    static char *kwlist[] = {"aspect", NULL};
+
+    if(!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                    "O:GimpNumberPairEntry.set_aspect",
+                                    kwlist, &py_aspect))
+        return NULL;
+
+    if(pyg_enum_get_value(GIMP_TYPE_ASPECT_TYPE, py_aspect, (gint*)&aspect))
+    {
+        Py_XDECREF(py_aspect);
+        return NULL;
+    }
+
+    gimp_number_pair_entry_set_aspect(GIMP_NUMBER_PAIR_ENTRY(self->obj), aspect);
+
+    Py_DECREF(py_aspect);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}

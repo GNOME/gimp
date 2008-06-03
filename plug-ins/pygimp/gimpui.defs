@@ -343,6 +343,13 @@
   (gtype-id "GIMP_TYPE_IMAGE_COMBO_BOX")
 )
 
+(define-object NumberPairEntry
+  (in-module "Gimp")
+  (parent "GtkEntry")
+  (c-name "GimpNumberPairEntry")
+  (gtype-id "GIMP_TYPE_NUMBER_PAIR_ENTRY")
+)
+
 ;; Enumerations and flags ...
 
 (define-enum ChainPosition
@@ -3681,6 +3688,125 @@
   (of-object "GimpZoomPreview")
   (c-name "gimp_zoom_preview_get_factor")
   (return-type "gdouble")
+)
+
+;; From gimpnumberpairentry.h
+
+(define-function gimp_number_pair_entry_get_type
+  (c-name "gimp_number_pair_entry_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_number_pair_entry_new
+  (c-name "gimp_number_pair_entry_new")
+  (is-constructor-of "GimpNumberPairEntry")
+  (return-type "GtkWidget*")
+  (parameters
+    '("const-gchar*" "separators")
+    '("gboolean" "allow_simplification")
+    '("gdouble" "min_valid_value")
+    '("gdouble" "max_valid_value")
+  )
+)
+
+(define-method set_default_values
+  (of-object "GimpNumberPairEntry")
+  (c-name "gimp_number_pair_entry_set_default_values")
+  (return-type "none")
+  (parameters
+    '("gdouble" "left")
+    '("gdouble" "right")
+  )
+)
+
+(define-method get_default_values
+  (of-object "GimpNumberPairEntry")
+  (c-name "gimp_number_pair_entry_get_default_values")
+  (return-type "none")
+  (parameters
+    '("gdouble*" "left")
+    '("gdouble*" "right")
+  )
+)
+
+(define-method set_values
+  (of-object "GimpNumberPairEntry")
+  (c-name "gimp_number_pair_entry_set_values")
+  (return-type "none")
+  (parameters
+    '("gdouble" "left")
+    '("gdouble" "right")
+  )
+)
+
+(define-method get_values
+  (of-object "GimpNumberPairEntry")
+  (c-name "gimp_number_pair_entry_get_values")
+  (return-type "none")
+  (parameters
+    '("gdouble*" "left")
+    '("gdouble*" "right")
+  )
+)
+
+(define-method set_default_text
+  (of-object "GimpNumberPairEntry")
+  (c-name "gimp_number_pair_entry_set_default_text")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "string")
+  )
+)
+
+(define-method get_default_text
+  (of-object "GimpNumberPairEntry")
+  (c-name "gimp_number_pair_entry_get_default_text")
+  (return-type "const-gchar*")
+)
+
+(define-method set_ratio
+  (of-object "GimpNumberPairEntry")
+  (c-name "gimp_number_pair_entry_set_ratio")
+  (return-type "none")
+  (parameters
+    '("gdouble" "ratio")
+  )
+)
+
+(define-method get_ratio
+  (of-object "GimpNumberPairEntry")
+  (c-name "gimp_number_pair_entry_get_ratio")
+  (return-type "gdouble")
+)
+
+(define-method set_aspect
+  (of-object "GimpNumberPairEntry")
+  (c-name "gimp_number_pair_entry_set_aspect")
+  (return-type "none")
+  (parameters
+    '("GimpAspectType" "aspect")
+  )
+)
+
+(define-method get_aspect
+  (of-object "GimpNumberPairEntry")
+  (c-name "gimp_number_pair_entry_get_aspect")
+  (return-type "GimpAspectType")
+)
+
+(define-method set_user_override
+  (of-object "GimpNumberPairEntry")
+  (c-name "gimp_number_pair_entry_set_user_override")
+  (return-type "none")
+  (parameters
+    '("gboolean" "user_override")
+  )
+)
+
+(define-method get_user_override
+  (of-object "GimpNumberPairEntry")
+  (c-name "gimp_number_pair_entry_get_user_override")
+  (return-type "gboolean")
 )
 
 
