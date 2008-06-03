@@ -204,7 +204,7 @@ gimp_channel_combo_box_init (GimpChannelComboBox *combo_box)
  * @data:       a pointer that is passed to @constraint
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
- * channels. See gimp_drawable_combo_box() for more info.
+ * channels. See gimp_drawable_combo_box_new() for more information.
  *
  * Return value: a new #GimpIntComboBox.
  *
@@ -247,7 +247,7 @@ gimp_layer_combo_box_init (GimpLayerComboBox *combo_box)
  * @data:       a pointer that is passed to @constraint
  *
  * Creates a new #GimpIntComboBox filled with all currently opened
- * layers. See gimp_drawable_combo_box() for more info.
+ * layers. See gimp_drawable_combo_box_new() for more information.
  *
  * Return value: a new #GimpIntComboBox.
  *

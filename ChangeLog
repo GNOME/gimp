@@ -1,5 +1,9 @@
 2008-06-03  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpitemcombobox.c: fixed comments.
+
+2008-06-03  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/widgets-enums.[ch]: changed descriptions for
 	GimpHistogramScale enum.
 
