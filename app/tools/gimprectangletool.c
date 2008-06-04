@@ -4095,8 +4095,8 @@ gimp_rectangle_tool_update_int_rect (GimpRectangleTool *rect_tool)
  * @pub_x2:
  * @pub_y2:
  *
- * Returns the rectangle as it appears to be publicly (based on
- * integer or double precision-mode.
+ * This function returns the rectangle as it appears to be publicly
+ * (based on integer or double precision-mode).
  **/
 static void
 gimp_rectangle_tool_get_public_rect (GimpRectangleTool *rect_tool,

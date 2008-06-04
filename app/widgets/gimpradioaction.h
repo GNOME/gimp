@@ -32,8 +32,18 @@
 #define GIMP_RADIO_ACTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GIMP_TYPE_RADIO_ACTION, GimpRadioActionClass))
 
 
-typedef GtkRadioAction      GimpRadioAction;
-typedef GtkRadioActionClass GimpRadioActionClass;
+typedef struct _GimpRadioAction      GimpRadioAction;
+typedef struct _GimpRadioActionClass GimpRadioActionClass;
+
+struct _GimpRadioAction
+{
+  GtkRadioAction  parent_instance;
+};
+
+struct _GimpRadioActionClass
+{
+  GtkRadioActionClass  parent_class;
+};
 
 
 GType            gimp_radio_action_get_type (void) G_GNUC_CONST;

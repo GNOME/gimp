@@ -1,3 +1,12 @@
+2008-06-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-scale.c
+	* app/gegl/gimpoperationdesaturate.h
+	* app/tools/gimprectangletool.c
+	* app/widgets/gimpradioaction.h
+	* app/widgets/gimptoggleaction.h: various fixes tpo make gtk-doc
+	happy.
+
 2008-06-04  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcropoptions.c

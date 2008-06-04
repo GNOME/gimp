@@ -26,10 +26,12 @@
 #include "gimpoperationpointfilter.h"
 
 
-#define GIMP_TYPE_OPERATION_DESATURATE           (gimp_operation_desaturate_get_type ())
-#define GIMP_OPERATION_DESATURATE(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_DESATURATE, GimpOperationDesaturate))
-#define GIMP_OPERATION_DESATURATE_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_DESATURATE, GimpOperationDesaturateClass))
-#define GIMP_OPERATION_DESATURATE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_DESATURATE, GimpOperationDesaturateClass))
+#define GIMP_TYPE_OPERATION_DESATURATE            (gimp_operation_desaturate_get_type ())
+#define GIMP_OPERATION_DESATURATE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_DESATURATE, GimpOperationDesaturate))
+#define GIMP_OPERATION_DESATURATE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_DESATURATE, GimpOperationDesaturateClass))
+#define GIMP_IS_OPERATION_DESATURATE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_DESATURATE))
+#define GIMP_IS_OPERATION_DESATURATE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_DESATURATE))
+#define GIMP_OPERATION_DESATURATE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_DESATURATE, GimpOperationDesaturateClass))
 
 
 typedef struct _GimpOperationDesaturateClass GimpOperationDesaturateClass;

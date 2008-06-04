@@ -564,7 +564,7 @@ gimp_display_shell_scale_shrink_wrap (GimpDisplayShell *shell,
  * gimp_display_shell_scale_resize:
  * @shell:          the #GimpDisplayShell
  * @resize_window:  whether the display window should be resized
- * @redisplay:      whether the display window should be redrawn
+ * @grow_only:      whether shrinking of the window is allowed or not
  *
  * Function commonly called after a change in display scale to make the changes
  * visible to the user. If @resize_window is %TRUE then the display window is
