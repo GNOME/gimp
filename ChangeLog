@@ -1,5 +1,13 @@
 2008-06-04  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcropoptions.c
+	* app/tools/gimprectangleoptions.c
+	* app/tools/gimprectangleselectoptions.c: fixed handling of the
+	"highlight" property that needs different default values for the
+	Crop and Rectangle Select tools (bug #536582).
+
+2008-06-04  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimpairbrushoptions.c: removed trailing whitespace.
 
 2008-06-04  Sven Neumann  <sven@gimp.org>
