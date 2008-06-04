@@ -1,3 +1,16 @@
+2008-06-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/app-docs.sgml
+	* app/app-sections.txt
+	* app/app.types: a zillion updates.
+
+2008-06-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am (GTKDOC_CFLAGS)
+	* app/app.types: make it build again after
+	GTK_DISABLE_SINGLE_INCLUDES and app/ type renaming.
+
 2008-05-30  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/Makefile.am (GTKDOC_CFLAGS)
