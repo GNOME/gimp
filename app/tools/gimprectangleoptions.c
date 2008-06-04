@@ -116,13 +116,6 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
                                                                  GIMP_PARAM_STATIC_STRINGS));
 
       g_object_interface_install_property (iface,
-                                           g_param_spec_boolean ("highlight",
-                                                                 NULL, NULL,
-                                                                 TRUE,
-                                                                 GIMP_CONFIG_PARAM_FLAGS |
-                                                                 GIMP_PARAM_STATIC_STRINGS));
-
-      g_object_interface_install_property (iface,
                                            g_param_spec_enum ("guide",
                                                               NULL, NULL,
                                                               GIMP_TYPE_RECTANGLE_GUIDE,
@@ -397,9 +390,6 @@ gimp_rectangle_options_install_properties (GObjectClass *klass)
   g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_SHRINK_MERGED,
                                     "shrink-merged");
-  g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
-                                    "highlight");
   g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_GUIDE,
                                     "guide");
