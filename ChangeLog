@@ -1,3 +1,10 @@
+2008-06-04  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL: updated GEGL version and also mention babl.
+
+	* app/gegl/gimp-gegl.c (gimp_gegl_init): configure the GEGL tile
+	size to match the GIMP tile size.
+
 2008-06-04  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: depend on GEGL >= 0.0.17, add check for

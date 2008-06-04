@@ -25,6 +25,8 @@
 
 #include "gegl-types.h"
 
+#include "base/tile.h"
+
 #include "gimp-gegl.h"
 #include "gimpoperationcolorbalance.h"
 #include "gimpoperationcolorize.h"
@@ -41,6 +43,11 @@
 void
 gimp_gegl_init (void)
 {
+  g_object_set (gegl_config (),
+                "tile-width",  TILE_WIDTH,
+                "tile-height", TILE_HEIGHT,
+                NULL);
+
   g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_BALANCE);
   g_type_class_ref (GIMP_TYPE_OPERATION_COLORIZE);
   g_type_class_ref (GIMP_TYPE_OPERATION_CURVES);

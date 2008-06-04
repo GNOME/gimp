@@ -28,9 +28,12 @@ header files installed.
   1. You need to have installed a recent version of pkg-config available
      from http://www.freedesktop.org/software/pkgconfig/.  
 
-  2. You need to have GEGL version 0.0.16 or newer. You can get it from
-     http://gegl.org/ or check it out from the subversion repository:
-     http://svn.gnome.org/svn/gegl/trunk
+  2. You need to have GEGL version 0.0.17 or newer and babl version
+     0.0.21 or newer. You can get it from http://gegl.org/ or check
+     it out from the subversion repository:
+
+       http://svn.gnome.org/svn/babl/trunk
+       http://svn.gnome.org/svn/gegl/trunk
 
   3. You need to have installed GTK+ version 2.12.1 or newer.  GIMP
      also need a recent versions of GLib (>= 2.16.1) and Pango (>= 1.18.0).
