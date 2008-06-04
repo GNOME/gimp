@@ -1,3 +1,8 @@
+2008-06-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/tga.c: changed user interface for specifying the
+	origin. Fixed header for origin at top-left (bug #450070).
+
 2008-06-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-scale.c
