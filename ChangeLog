@@ -1,5 +1,11 @@
 2008-06-04  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable-operation.c (gimp_drawable_apply_operation):
+	no need to check for the 'dont-cache' property now that we depend
+	on the newer GEGL.
+
+2008-06-04  Sven Neumann  <sven@gimp.org>
+
 	* INSTALL: updated GEGL version and also mention babl.
 
 	* app/gegl/gimp-gegl.c (gimp_gegl_init): configure the GEGL tile

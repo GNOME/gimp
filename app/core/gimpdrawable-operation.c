@@ -65,14 +65,13 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
                                       &rect.width, &rect.height))
     return;
 
-  gegl   = gegl_node_new ();
+  gegl = gegl_node_new ();
 
-  /* If the dont-cache property exist on the node object, we set it to
-   * false causing children of the node to not do any caching either,
-   * unless explicitly re-enabled.
+  /* Disable caching on all children of the node unless explicitly re-enabled.
    */
-  if (g_object_class_find_property (G_OBJECT_GET_CLASS (gegl), "dont-cache"))
-    g_object_set (gegl, "dont-cache", TRUE, NULL);
+  g_object_set (gegl,
+                "dont-cache", TRUE,
+                NULL);
 
   input  = gegl_node_new_child (gegl,
                                 "operation",    "gimp-tilemanager-source",
