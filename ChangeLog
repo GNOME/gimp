@@ -1,5 +1,9 @@
 2008-06-04  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimpairbrushoptions.c: removed trailing whitespace.
+
+2008-06-04  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable-operation.c (gimp_drawable_apply_operation):
 	no need to check for the 'dont-cache' property now that we depend
 	on the newer GEGL.
