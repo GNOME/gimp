@@ -34,7 +34,8 @@
 static gboolean  gimp_operation_desaturate_process (GeglOperation *operation,
                                                     void          *in_buf,
                                                     void          *out_buf,
-                                                    glong          samples);
+                                                    glong          samples,
+                                                    GeglRectangle *roi);
 
 
 G_DEFINE_TYPE (GimpOperationDesaturate, gimp_operation_desaturate,
@@ -78,7 +79,8 @@ static gboolean
 gimp_operation_desaturate_process (GeglOperation *operation,
                                    void          *in_buf,
                                    void          *out_buf,
-                                   glong          samples)
+                                   glong          samples,
+                                   GeglRectangle *roi)
 {
   GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
   GimpDesaturateConfig     *config = GIMP_DESATURATE_CONFIG (point->config);

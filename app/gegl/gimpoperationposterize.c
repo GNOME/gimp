@@ -35,7 +35,8 @@
 static gboolean gimp_operation_posterize_process (GeglOperation *operation,
                                                   void          *in_buf,
                                                   void          *out_buf,
-                                                  glong          samples);
+                                                  glong          samples,
+                                                  GeglRectangle *roi);
 
 
 G_DEFINE_TYPE (GimpOperationPosterize, gimp_operation_posterize,
@@ -79,7 +80,8 @@ static gboolean
 gimp_operation_posterize_process (GeglOperation *operation,
                                   void          *in_buf,
                                   void          *out_buf,
-                                  glong          samples)
+                                  glong          samples,
+                                  GeglRectangle *roi)
 {
   GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
   GimpPosterizeConfig      *config = GIMP_POSTERIZE_CONFIG (point->config);

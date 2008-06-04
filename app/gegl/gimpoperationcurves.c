@@ -38,7 +38,8 @@
 static gboolean gimp_operation_curves_process (GeglOperation *operation,
                                                void          *in_buf,
                                                void          *out_buf,
-                                               glong          samples);
+                                               glong          samples,
+                                               GeglRectangle *roi);
 
 
 G_DEFINE_TYPE (GimpOperationCurves, gimp_operation_curves,
@@ -82,7 +83,8 @@ static gboolean
 gimp_operation_curves_process (GeglOperation *operation,
                                void          *in_buf,
                                void          *out_buf,
-                               glong          samples)
+                               glong          samples,
+                               GeglRectangle *roi)
 {
   GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
   GimpCurvesConfig         *config = GIMP_CURVES_CONFIG (point->config);

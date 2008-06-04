@@ -40,7 +40,8 @@ m4_define([gimp_stable],
 m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
-m4_define([gegl_required_version], [0.0.16])
+m4_define([babl_required_version], [0.0.21])
+m4_define([gegl_required_version], [0.0.17])
 m4_define([glib_required_version], [2.16.1])
 m4_define([gtk_required_version], [2.12.1])
 m4_define([gdk_pixbuf_required_version], [gtk_required_version])
@@ -427,6 +428,10 @@ AC_SUBST(ISO_CODES_LOCALEDIR)
 ###############################
 # Checks for required libraries
 ###############################
+
+
+PKG_CHECK_MODULES(BABL, babl >= babl_required_version, :,
+  AC_MSG_ERROR([Test for BABL failed. Please get it from http://gegl.org/]))
 
 
 PKG_CHECK_MODULES(GEGL, gegl >= gegl_required_version, :,

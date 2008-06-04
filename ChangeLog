@@ -1,3 +1,20 @@
+2008-06-04  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: depend on GEGL >= 0.0.17, add check for
+	BABL => 0.0.21.
+
+	* app/sanity.c: bump GEGL sanity check and add BABL check.
+
+	* app/gegl/gimpoperationcolorbalance.c
+	* app/gegl/gimpoperationcolorize.c
+	* app/gegl/gimpoperationcurves.c
+	* app/gegl/gimpoperationdesaturate.c
+	* app/gegl/gimpoperationhuesaturation.c
+	* app/gegl/gimpoperationlevels.c
+	* app/gegl/gimpoperationposterize.c
+	* app/gegl/gimpoperationthreshold.c: adapt to new process()
+	signature.
+
 2008-06-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpitemcombobox.c: fixed comments.

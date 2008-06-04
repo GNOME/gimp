@@ -34,7 +34,8 @@
 static gboolean gimp_operation_threshold_process (GeglOperation *operation,
                                                   void          *in_buf,
                                                   void          *out_buf,
-                                                  glong          samples);
+                                                  glong          samples,
+                                                  GeglRectangle *roi);
 
 
 G_DEFINE_TYPE (GimpOperationThreshold, gimp_operation_threshold,
@@ -78,7 +79,8 @@ static gboolean
 gimp_operation_threshold_process (GeglOperation *operation,
                                   void          *in_buf,
                                   void          *out_buf,
-                                  glong          samples)
+                                  glong          samples,
+                                  GeglRectangle *roi)
 {
   GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
   GimpThresholdConfig      *config = GIMP_THRESHOLD_CONFIG (point->config);

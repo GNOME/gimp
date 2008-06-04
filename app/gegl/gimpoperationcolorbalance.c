@@ -35,7 +35,8 @@
 static gboolean gimp_operation_color_balance_process (GeglOperation *operation,
                                                       void          *in_buf,
                                                       void          *out_buf,
-                                                      glong          samples);
+                                                      glong          samples,
+                                                      GeglRectangle *roi);
 
 
 G_DEFINE_TYPE (GimpOperationColorBalance, gimp_operation_color_balance,
@@ -115,7 +116,8 @@ static gboolean
 gimp_operation_color_balance_process (GeglOperation *operation,
                                       void          *in_buf,
                                       void          *out_buf,
-                                      glong          samples)
+                                      glong          samples,
+                                      GeglRectangle *roi)
 {
   GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
   GimpColorBalanceConfig   *config = GIMP_COLOR_BALANCE_CONFIG (point->config);

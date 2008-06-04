@@ -34,7 +34,8 @@
 static gboolean gimp_operation_colorize_process (GeglOperation *operation,
                                                  void          *in_buf,
                                                  void          *out_buf,
-                                                 glong          samples);
+                                                 glong          samples,
+                                                 GeglRectangle *roi);
 
 
 G_DEFINE_TYPE (GimpOperationColorize, gimp_operation_colorize,
@@ -78,7 +79,8 @@ static gboolean
 gimp_operation_colorize_process (GeglOperation *operation,
                                  void          *in_buf,
                                  void          *out_buf,
-                                 glong          samples)
+                                 glong          samples,
+                                 GeglRectangle *roi)
 {
   GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
   GimpColorizeConfig       *config = GIMP_COLORIZE_CONFIG (point->config);
