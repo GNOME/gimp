@@ -1,3 +1,9 @@
+2008-06-05  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/dialogs-actions.c (dialogs_dockable_actions): added
+	actions to open/focus the brush, gradient and palette editors
+	(bug #436131).
+
 2008-06-04  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/red-eye-removal.c: fixed weird handling of the

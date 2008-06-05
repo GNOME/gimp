@@ -119,6 +119,12 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-brush-grid|gimp-brush-list",
     GIMP_HELP_BRUSH_DIALOG },
 
+  { "dialogs-brush-editor", NULL,
+    N_("Brush Editor"), NULL,
+    N_("Open the brush editor"),
+    "gimp-brush-editor",
+    GIMP_HELP_BRUSH_EDIT },
+
   { "dialogs-patterns", GIMP_STOCK_PATTERN,
     N_("P_atterns"), "<control><shift>P",
     N_("Open the patterns dialog"),
@@ -131,11 +137,23 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-gradient-list|gimp-gradient-grid",
     GIMP_HELP_GRADIENT_DIALOG },
 
+  { "dialogs-gradient-editor", NULL,
+    N_("Gradient Editor"), NULL,
+    N_("Open the gradient editor"),
+    "gimp-gradient-editor",
+    GIMP_HELP_GRADIENT_EDIT },
+
   { "dialogs-palettes", GIMP_STOCK_PALETTE,
     N_("Pal_ettes"), NULL,
     N_("Open the palettes dialog"),
     "gimp-palette-list|gimp-palette-grid",
     GIMP_HELP_PALETTE_DIALOG },
+
+  { "dialogs-palette-editor", NULL,
+    N_("Palette Editor"), NULL,
+    N_("Open the palette editor"),
+    "gimp-palette-editor",
+    GIMP_HELP_PALETTE_EDIT },
 
   { "dialogs-fonts", GIMP_STOCK_FONT,
     N_("_Fonts"), NULL,
