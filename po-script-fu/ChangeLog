@@ -1,3 +1,8 @@
+2008-06-06  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.skip: fixed the insanity using a new feature in
+	intltool 0.40.0 that allows us to skip whole directories.
+
 2008-05-27  Claude Paroz  <claude@2xlibre.net>
 
 	* fr.po: Updated French translation by Julien Hardelin.
