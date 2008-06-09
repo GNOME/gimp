@@ -1429,8 +1429,8 @@
   (c-name "gimp_frame_new")
   (is-constructor-of "GimpFrame")
   (return-type "GtkWidget*")
-  (parameters
-    '("const-gchar*" "label")
+  (properties
+    '("label")
   )
 )
 
@@ -3243,7 +3243,6 @@
 )
 
 
-
 ;; From ../../libgimp/gimpaspectpreview.h
 
 (define-function gimp_aspect_preview_get_type
@@ -3701,11 +3700,11 @@
   (c-name "gimp_number_pair_entry_new")
   (is-constructor-of "GimpNumberPairEntry")
   (return-type "GtkWidget*")
-  (parameters
-    '("const-gchar*" "separators")
-    '("gboolean" "allow_simplification")
-    '("gdouble" "min_valid_value")
-    '("gdouble" "max_valid_value")
+  (properties
+    '("separators")
+    '("allow-simplification" (argname "allow_simplification"))
+    '("min-valid-value" (argname "min_valid_value"))
+    '("max-valid-value" (argname "max_valid_value"))
   )
 )
 
@@ -3807,6 +3806,111 @@
   (of-object "GimpNumberPairEntry")
   (c-name "gimp_number_pair_entry_get_user_override")
   (return-type "gboolean")
+)
+
+
+;; -*- scheme -*-
+; object definitions ...
+(define-object ColorProfileStore
+  (in-module "Gimp")
+  (parent "GtkListStore")
+  (c-name "GimpColorProfileStore")
+  (gtype-id "GIMP_TYPE_COLOR_PROFILE_STORE")
+)
+
+;; Enumerations and flags ...
+
+
+;; From gimpcolorprofilestore.h
+
+(define-function gimp_color_profile_store_get_type
+  (c-name "gimp_color_profile_store_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_color_profile_store_new
+  (c-name "gimp_color_profile_store_new")
+  (is-constructor-of "GimpColorProfileStore")
+  (return-type "GtkListStore*")
+  (properties
+    '("history")
+  )
+)
+
+(define-method add
+  (of-object "GimpColorProfileStore")
+  (c-name "gimp_color_profile_store_add")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "filename")
+    '("const-gchar*" "label")
+  )
+)
+
+
+;; -*- scheme -*-
+; object definitions ...
+(define-object ColorProfileComboBox
+  (in-module "Gimp")
+  (parent "GtkComboBox")
+  (c-name "GimpColorProfileComboBox")
+  (gtype-id "GIMP_TYPE_COLOR_PROFILE_COMBO_BOX")
+)
+
+;; Enumerations and flags ...
+
+
+;; From gimpcolorprofilecombobox.h
+
+(define-function gimp_color_profile_combo_box_get_type
+  (c-name "gimp_color_profile_combo_box_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_color_profile_combo_box_new
+  (c-name "gimp_color_profile_combo_box_new")
+  (is-constructor-of "GimpColorProfileComboBox")
+  (return-type "GtkWidget*")
+  (parameters
+    '("GtkWidget*" "dialog")
+    '("const-gchar*" "history")
+  )
+)
+
+(define-function gimp_color_profile_combo_box_new_with_model
+  (c-name "gimp_color_profile_combo_box_new_with_model")
+  (is-constructor-of "GimpColorProfileComboBox")
+  (return-type "GtkWidget*")
+  (properties
+    '("dialog")
+    '("model")
+  )
+)
+
+(define-method add
+  (of-object "GimpColorProfileComboBox")
+  (c-name "gimp_color_profile_combo_box_add")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "filename")
+    '("const-gchar*" "label")
+  )
+)
+
+(define-method set_active
+  (of-object "GimpColorProfileComboBox")
+  (c-name "gimp_color_profile_combo_box_set_active")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "filename")
+    '("const-gchar*" "label")
+  )
+)
+
+(define-method get_active
+  (of-object "GimpColorProfileComboBox")
+  (c-name "gimp_color_profile_combo_box_get_active")
+  (return-type "gchar*")
 )
 
 
