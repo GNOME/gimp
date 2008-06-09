@@ -31,6 +31,11 @@ try:
 except:
     pass
 
+
+def _prop(func):
+    """Helper function for creating properties"""
+    return property(doc=func.__doc__, *func())
+
 class GimpNamedObject(object):
     """
     GimpNamedObject is a bases class for wrappers around gimp objetcs.
@@ -344,3 +349,264 @@ class PaletteEntry(object):
                     doc="""Name of the entry.""")
     color = property(fget=lambda self:self.__color, fset=__set_color,
                      doc="""Color of the entry.""")
+
+class Gradient(GimpNamedObject):
+    """A gimp Gradient object."""
+
+    __metaclass__ = GimpNamedObjectMeta("gimp_gradient_rename",
+                                        "gimp_gradient_delete",
+                                        "gimp_gradient_duplicate")
+
+    def __init__(self, name):
+        """Creates a new Gradient.
+          name - The name for the gradient"""
+        GimpNamedObject.__init__(self, pdb.gimp_gradient_new(name))
+
+
+    def get_custom_samples(self, positions, reverse=False):
+        """Samples the gradient in custom positions.
+           Returns a list of samples as gimp.color.RGB
+           positions - A list of positions to sample along the gradient.
+           reverse - Whether to use the reverse gradient or not."""
+
+        samples = pdb.gimp_gradient_get_custom_samples(self, len(positions),
+                                                    positions, reverse)[1]
+        return map(color.RGB, *(iter(samples),)*4)
+
+    def get_uniform_samples(self, num_samples, reverse=False):
+        """Samples the specfied uniform parts.
+           Returns a list of samples as gimp.color.RGB.
+           num_samples - Number of samples to return. 2 <= num_samples.
+           reverse - Whether to use the reverse gradient or not."""
+           
+        samples = pdb.gimp_gradient_get_uniform_samples(self, num_samples,
+                                                        reverse)[1]
+        return map(color.RGB,*(iter(samples),)*4)
+
+    segments = property(
+        fget=lambda self: GradientSegmentRange(self, 0, 
+                               pdb.gimp_gradient_get_number_of_segments(self)),
+        fdel=lambda self:pdb.gimp_gradient_segment_range_delete(self, 0, -1),
+        doc="""A gimp.GradientSegmentRange used to access the segemnts of the
+               gradient.""")
+    editable = property(
+        fget=lambda self: pdb.gimp_gradient_is_editable(self) == 1,
+        doc="""True if the segment is editable, otherwise False.""")
+
+class GradientSegment(object):
+
+    def __init__(self, gradient, index):
+        self.gradient = gradient
+        self.index = index
+
+    def __repr__(self):
+        return "<gimp.GradientSegment (%s, %d)>" % (str(self.gradient),
+                                                   self.index)
+    @_prop
+    def blending_function():
+        """The segments blending function.
+           A enum value of gimp.enums.GimpGradientSegmentType."""
+        def get(self):
+            return enums.GimpGradientSegmentType(
+                   pdb.gimp_gradient_segment_get_blending_function(
+                                                    self.gradient, self.index))
+        def set(self, value):
+            pdb.gimp_gradient_segment_range_set_blending_function(self.gradient,
+                                            self.index, self.index, value)
+        return (get,set)
+    
+    @_prop
+    def coloring_type():
+        """The segments coloring type.
+           A enum value of gimp.enums.GimpGradientSegmentColor"""
+        def get(self):
+            return enums.GimpGradientSegmentColor(
+                   pdb.gimp_gradient_segment_get_coloring_type(self.gradient,
+                                                               self.index))
+        def set(self, value):
+            pdb.gimp_gradient_segment_range_set_coloring_type(self.gradient,
+                                                 self.index, self.index, value)
+        return (get,set)
+    
+    def get_left_color(self):
+        return pdb.gimp_gradient_segment_get_left_color(self.gradient,
+                                                        self.index)[0]
+    def set_left_color(self, color):
+        # Get opacity from color
+        if hasattr(color, "a"):
+           opacity = color.a
+        elif len(color) < 4:
+            opacity = 100
+        elif isinstance(color[3], float):
+            opacity = int(color[3] * 100)
+        else:
+            opacity = int(int(color[3]) / 2.55)
+        opacity = min(max(opacity, 0), 100)
+        pdb.gimp_gradient_segment_set_left_color(self.gradient, self.index,
+                                                 color, opacity)
+    def get_right_color(self):
+        return pdb.gimp_gradient_segment_get_right_color(self.gradient,
+                                                        self.index)[0]
+    def set_right_color(self, color):
+        # Get opacity from color
+        if hasattr(color, "a"):
+           opacity = color.a
+        elif len(color) < 4:
+            opacity = 100
+        elif isinstance(color[3], float):
+            opacity = int(color[3] * 100)
+        else:
+            opacity = int(int(color[3]) / 2.55)
+        opacity = min(max(opacity, 0), 100)
+        pdb.gimp_gradient_segment_set_right_color(self.gradient, self.index,
+                                                  color, opacity)
+    @_prop
+    def left_pos():
+        """The left endpoint position of the segment."""
+        def get(self):
+            return pdb.gimp_gradient_segment_get_left_pos(self.gradient,
+                                                          self.index)
+        def set(self, value):
+            pdb.gimp_gradient_segment_set_left_pos(self.gradient, self.index,
+                                                   min(max(value), 0.0, 1.0))
+        return (get, set)
+
+    @_prop
+    def middle_pos():
+        """The middle point position of the segment."""
+        def get(self):
+            return pdb.gimp_gradient_segment_get_middle_pos(self.gradient,
+                                                            self.index)
+        def set(self, value):
+            pdb.gimp_gradient_segment_set_middle_pos(self.gradient, self.index,
+                                                     min(max(value, 0.0), 1.0))
+        return (get, set)
+
+    @_prop
+    def right_pos():
+        """The right endpoint position of the segment."""
+        def get(self):
+            return pdb.gimp_gradient_segment_get_right_pos(self.gradient,
+                                                           self.index)
+        def set(self, value):
+            pdb.gimp_gradient_segment_set_right_pos(self.gradient, self.index,
+                                                    min(max(value, 0.0), 1.0))
+        return (get, set)
+
+
+class GradientSegmentRange(object):
+    
+    def __init__(self, gradient, start, end):
+        self.gradient = gradient
+        self.start = start
+        self.end = end
+
+    def __repr__(self):
+        return "<gimp.GradientSegmentRange (%s, %d, %d)>"% (str(self.gradient),
+                                                          self.start, self.end)
+    
+    def __len__(self):
+        return self.end - self.start
+
+    def __getitem__(self, key):
+        if isinstance(key, slice):
+            start, end, step = key.indices(len(self))
+            if step != 1:
+                raise IndexError
+            if start > end:
+                start = end
+            return GradientSegmentRange(self.gradient, start+self.start,
+                                        end+self.start)
+        elif isinstance(key, int):
+            if key < 0:
+                key += len(self)
+            if key < 0 or key >= len(self):
+                raise IndexError("index out of range")
+
+            return GradientSegment(self.gradient, self.start + key)
+        else:
+            raise TypeError
+
+    def __delitem__(self, key):
+        if isinstance(key, slice):
+            start, end, step = key.indices(len(self))
+            if step != 1:
+                raise IndexError
+            if start > end:
+                start = end
+        elif isinstance(key, int):
+            if key < 0:
+                key += len(self)
+            if key < 0 or key >= len(self):
+                raise IndexError("index out of range")
+            start = key
+            end = start + 1
+        else:
+            raise TypeError
+
+        pdb.gimp_gradient_segment_range_delete(self.gradient,
+                                      self.start + start, self.start + end - 1)
+
+    def blend_colors(self):
+        """Blends the colors (but not the opacity) of the segment range. Using
+           it, the colors' transition will be uniform across the range."""
+        return pdb.gimp_gradient_segment_range_blend_colors(self.gradient,
+                                                          self.start, self.end)
+
+    def blend_opacity(self):
+        """Blends the opacity (but not the colors) of the segment range. Using
+           it, the opacity's transition will be uniform across the range."""
+        return pdb.gimp_gradient_segment_range_blend_opacity(self.gradient,
+                                                          self.start, self.end)
+
+    def flip(self):
+        """Flips the segment range."""
+        return pdb.gimp_gradient_segment_range_flip(self.gradient, self.start,
+                                                    self.end)
+
+    def move(self, offset, compress_neighbors = True):
+        """Move the position of an entire segment range.
+           offset - The offset to move the segment range (-1 <= delta <= 1)
+           compress_neighbores - Whether or not to compress the neighboring
+           segments."""
+        return pdb.gimp_gradient_segment_range_move(self.gradient, self.start,
+                                          self.end, offset, compress_neighbors)
+
+    def redistribute_handles(self):
+        """Uniformly redistribute the segment range's handles."""
+        return pdb.gimp_gradient_segment_range_redistribute_handles(
+                                           self.gradient, self.start, self.end)
+
+    def replicate(self, num_replications):
+        """Replicates the segment range.
+           num_replications - The number of replications (2 <= num_replications
+           <= 20)"""
+        return pdb.gimp_gradient_segment_range_replicate(self.gradient,
+                                        self.start, self.end, num_replications)
+
+    def set_blending_function(self, blending_function):
+        """Sets the blending function for each segment in the segment range.
+           blending_function - A enum value of 
+           gimp.enums.GimpGradientSegmentType."""
+        return pdb.gimp_gradient_segment_range_set_blending_function(
+                        self.gradient, self.start, self.end, blending_function)
+
+    def set_coloring_type(self, coloring_type):
+        """Sets the coloring type for each segment in the segment range.
+           coloring_type - A enum value of gimp.enums.GimpGradientSegmentColor.
+           """
+        return pdb.gimp_gradient_segment_range_set_coloring_type(self.gradient,
+                                           self.start, self.end, coloring_type)
+
+    def split_midpoint(self):
+        """Splits each segment in the segment range at the segment midpoint."""
+        return pdb.gimp_gradient_segment_range_split_midpoint(self.gradient,
+                                                          self.start, self.end)
+
+    def split_uniform(self, num_splits = 1):
+        """Splits each segment in the segment range uniformly.
+           num_splits - Number of splits per segment."""
+        return pdb.gimp_gradient_segment_range_split_uniform(self.gradient,
+                                              self.start, self.end, num_splits)
+
+

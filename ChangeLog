@@ -1,3 +1,9 @@
+2008-06-09  Lars-Peter Clausen <lars@metafoo.de>
+
+	* plug-ins/pygimp/__init.py__: Added wrapper for gradients
+	* plug-ins/pygimp/context.py: Added context submodule which provides a
+	  wrapper around all gimp_context_[get|set]* functions.
+
 2008-06-03  Lars-Peter Clausen <lars@metafoo.de>
 
 	Added wrapper for GimpNumberPairEntry
@@ -10,13 +16,14 @@
 
 2008-05-29  Lars-Peter Clausen  <lars@metafoo.de>
 
-	* plug-ins/pygimp/__init__.py: Added wrapper objects for Brushes and Patterns
+	* plug-ins/pygimp/__init__.py: Added wrapper objects for Brushes and
+	  Patterns
 	* plug-ins/pygimp/gimpshelf.py: Forgot that one in last commit
 
 2008-05-29  Lars-Peter Clausen  <lars@metafoo.de>
 
-	Move gimpenums, gimpshelf, gimpui, gimpcolor to the gimp package and remove
-	the leading gimp. So they are now accessed as gimp.enums.
+	Move gimpenums, gimpshelf, gimpui, gimpcolor to the gimp package and
+	remove the leading gimp. So they are now accessed as gimp.enums.
 	The old modules import everything from the new ones.
 
 	* plug-ins/pygimp/gimpcolor.py
@@ -59,7 +66,8 @@
 2008-05-26  Lars-Peter Clausen  <lars@metafoo.de>
 
 	Changed the 'gimp' module to folder with a __init__.py so that it is
-	able to contain submodules. Renamed the C based 'gimp' module to '_gimp'.
+	able to contain submodules. Renamed the C based 'gimp' module to
+	'_gimp'.
 	__init__.py imports all symbols from _gimp.
 
 	* plug-ins/pygimp/Makefile.am
