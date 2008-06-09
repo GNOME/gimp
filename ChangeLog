@@ -1,3 +1,9 @@
+2008-06-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintoptions.c: set DEFAULT_VELOCITY_SIZE to FALSE
+	so the paint tools behave as before and the brush outline is
+	meaningful at least in the default setup.
+
 2008-06-05  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/dialogs-actions.c (dialogs_dockable_actions): added
