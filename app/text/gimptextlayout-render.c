@@ -37,6 +37,7 @@
 #include "gimptextlayout.h"
 #include "gimptextlayout-render.h"
 
+/* test comment for soc-2008-text project experimental svn commit */
 
 /* for compatibility with older freetype versions */
 #ifndef FT_LOAD_TARGET_MONO

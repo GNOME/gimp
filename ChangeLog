@@ -1,3 +1,8 @@
+2008-06-09  Daniel Eddeland <danedde@svn.gnome.org>
+
+	* app/text/gimptextlayout-render.c: Added a temporary comment for
+	trying out the svn commit.
+
 2008-05-26  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	Creating soc-2008-text branch starting from rev 25808
