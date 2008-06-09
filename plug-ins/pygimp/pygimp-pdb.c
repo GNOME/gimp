@@ -1049,7 +1049,10 @@ pygimp_pdb_build_param_info_tuple(int n_params, GimpParamDef *params)
     } else {
         for(i = 0; i < n_params; ++i) {
             if(!(arglist = Py_BuildValue("(i)", params[i].type))) break;
-            if(!(type = PyEval_CallObject(pdb_arg_type, arglist))) break;
+            if(!(type = PyEval_CallObject(pdb_arg_type, arglist))) {
+                Py_DECREF(arglist);
+                break;
+            }
             PyTuple_SetItem(result, i,
                     Py_BuildValue("(Oss)",
                               type,
@@ -1060,7 +1063,6 @@ pygimp_pdb_build_param_info_tuple(int n_params, GimpParamDef *params)
         }
         
         if(i != n_params) {
-            Py_XDECREF(arglist);
             Py_DECREF(result);
             result = NULL;
         }

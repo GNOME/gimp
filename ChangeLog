@@ -1,4 +1,9 @@
 2008-06-09  Lars-Peter Clausen <lars@metafoo.de>
+	Fixed some compiler warnings
+	* plug-ins/pygimp/pygimp-colors.c
+	* plug-ins/pygimp/pygimp-pdb.c
+
+2008-06-09  Lars-Peter Clausen <lars@metafoo.de>
 	Added wrapper for GimpColorProfileStore and GimpColorProfileCombobox
 	* plug-ins/pygimp/gimpui.defs
 	* plug-ins/pygimp/gimpui.override
