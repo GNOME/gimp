@@ -1,5 +1,18 @@
 2008-06-10  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: removed check for gtkhtml2 and added a check for
+	wekbit instead.
+
+	* INSTALL: document the changed dependency.
+
+	* plug-ins/help-browser/Makefile.am
+	* plug-ins/help-browser/dialog.[ch]: ported the help-browser to
+	webkit. Offers the same functionality as before and some more.
+
+	* plug-ins/help-browser/help-browser.c: some cleanup.
+
+2008-06-10  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help/gimphelplocale.c: added some sanity checks.
 
 2008-06-10  Michael Natterer  <mitch@gimp.org>
