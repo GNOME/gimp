@@ -1,8 +1,13 @@
 2008-06-10  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/help/help.c (load_help_idle): show progress while
+	loading the help index.
+
+2008-06-10  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpguiconfig.c (DEFAULT_WEB_BROWSER): reverted
 	change for bug #522483. 'xdg-open' doesn't do the right thing for
-	file:/// URIs.
+	file: URIs.
 
 2008-06-10  Sven Neumann  <sven@gimp.org>
 

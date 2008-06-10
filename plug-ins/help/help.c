@@ -71,6 +71,8 @@ static void     load_help         (const gchar      *procedure,
                                    const gchar      *help_id);
 static gboolean load_help_idle    (gpointer          data);
 
+static GimpHelpProgress * load_help_progress_new (void);
+
 
 /*  local variables  */
 
@@ -263,13 +265,14 @@ load_help_idle (gpointer data)
 
   if (domain)
     {
-      GList    *locales;
-      gchar    *full_uri;
-      gboolean  fatal_error;
+      GimpHelpProgress *progress = load_help_progress_new ();
+      GList            *locales;
+      gchar            *full_uri;
+      gboolean          fatal_error;
 
       locales  = gimp_help_parse_locales (idle_help->help_locales);
       full_uri = gimp_help_domain_map (domain, locales, idle_help->help_id,
-                                       NULL, NULL, &fatal_error);
+                                       progress, NULL, &fatal_error);
 
       g_list_foreach (locales, (GFunc) g_free, NULL);
       g_list_free (locales);
@@ -297,6 +300,8 @@ load_help_idle (gpointer data)
         {
           g_main_loop_quit (main_loop);
         }
+
+      gimp_help_progress_free (progress);
     }
 
   g_free (idle_help->procedure);
@@ -307,4 +312,38 @@ load_help_idle (gpointer data)
   g_slice_free (IdleHelp, idle_help);
 
   return FALSE;
+}
+
+static void
+load_help_progress_start (const gchar *message,
+                          gboolean     cancelable,
+                          gpointer     user_data)
+{
+  gimp_progress_init (message);
+}
+
+static void
+load_help_progress_update (gdouble  value,
+                           gpointer user_data)
+{
+  gimp_progress_update (value);
+}
+
+static void
+load_help_progress_end (gpointer user_data)
+{
+  gimp_progress_end ();
+}
+
+static GimpHelpProgress *
+load_help_progress_new (void)
+{
+  static const GimpHelpProgressVTable vtable =
+  {
+    load_help_progress_start,
+    load_help_progress_end,
+    load_help_progress_update
+  };
+
+  return gimp_help_progress_new (&vtable, NULL);
 }
