@@ -1,3 +1,9 @@
+2008-06-10  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/gimpplugin.c
+	* app/plug-in/gimppluginmanager-call.c
+	* app/widgets/gimphelp.c: formatting.
+
 2008-06-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimppaintoptions.c: set DEFAULT_VELOCITY_SIZE to FALSE

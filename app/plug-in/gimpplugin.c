@@ -459,7 +459,7 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
         }
 
       /* Wait for the process to exit. This will happen
-       *  immediately if it was just killed.
+       * immediately if it was just killed.
        */
       waitpid (plug_in->pid, &status, 0);
 

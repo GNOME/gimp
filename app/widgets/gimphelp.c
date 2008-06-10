@@ -64,20 +64,20 @@ struct _GimpIdleHelp
 
 /*  local function prototypes  */
 
-static gint      gimp_idle_help          (GimpIdleHelp  *idle_help);
+static gint       gimp_idle_help          (GimpIdleHelp  *idle_help);
 
-static gboolean  gimp_help_browser       (Gimp          *gimp);
-static void      gimp_help_browser_error (Gimp          *gimp,
-                                          const gchar   *title,
-                                          const gchar   *primary,
-                                          const gchar   *text);
+static gboolean   gimp_help_browser       (Gimp          *gimp);
+static void       gimp_help_browser_error (Gimp          *gimp,
+                                           const gchar   *title,
+                                           const gchar   *primary,
+                                           const gchar   *text);
 
-static void      gimp_help_call          (Gimp          *gimp,
-                                          const gchar   *procedure_name,
-                                          const gchar   *help_domain,
-                                          const gchar   *help_locales,
-                                          const gchar   *help_id);
-static gchar *   gimp_help_get_locales   (GimpGuiConfig *config);
+static void       gimp_help_call          (Gimp          *gimp,
+                                           const gchar   *procedure_name,
+                                           const gchar   *help_domain,
+                                           const gchar   *help_locales,
+                                           const gchar   *help_id);
+static gchar    * gimp_help_get_locales   (GimpGuiConfig *config);
 
 
 /*  public functions  */
