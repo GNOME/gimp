@@ -1,5 +1,11 @@
 2008-06-10  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpguiconfig.c (DEFAULT_WEB_BROWSER): reverted
+	change for bug #522483. 'xdg-open' doesn't do the right thing for
+	file:/// URIs.
+
+2008-06-10  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-gui.[ch]
 	* app/widgets/gimphelp.[ch]
 	* app/gui/gui-vtable.c
