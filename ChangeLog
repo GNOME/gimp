@@ -1,3 +1,9 @@
+2008-06-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpthumbbox.c (gimp_thumb_box_new): don't set a
+	width request on the info label. It broke horizontal label
+	positioning and didn't serve any purpose I can remember.
+
 2008-06-10  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/help/help.c (load_help_idle): show progress while
