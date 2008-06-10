@@ -1,5 +1,18 @@
 2008-06-10  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp-gui.[ch]
+	* app/widgets/gimphelp.[ch]
+	* app/gui/gui-vtable.c
+	* app/gui/gui.c: added a GimpProgress parameter to gimp_help().
+
+	* app/actions/help-commands.c
+	* app/widgets/gimpuimanager.c
+	* tools/pdbgen/pdb/help.pdb: changed accordingly.
+
+	* app/pdb/help-cmds.c: regenerated.
+
+2008-06-10  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimpplugin.c
 	* app/plug-in/gimppluginmanager-call.c
 	* app/widgets/gimphelp.c: formatting.

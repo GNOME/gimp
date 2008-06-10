@@ -25,11 +25,12 @@
 
 /*  the main help function
  *
- *  there should be no need to use it in the common case
+ *  there should be no need to use it directly
  */
-void   gimp_help_show (Gimp        *gimp,
-                       const gchar *help_domain,
-                       const gchar *help_id);
+void   gimp_help_show (Gimp         *gimp,
+                       GimpProgress *progress,
+                       const gchar  *help_domain,
+                       const gchar  *help_id);
 
 
 #endif /* __GIMP_HELP_H__ */

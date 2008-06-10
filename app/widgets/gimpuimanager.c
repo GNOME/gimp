@@ -937,9 +937,7 @@ gimp_ui_manager_item_key_press (GtkWidget     *widget,
 
   while (! help_id)
     {
-      GtkWidget *menu_item;
-
-      menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
+      GtkWidget *menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
 
       /*  first, get the help page from the item...
        */
@@ -1021,7 +1019,7 @@ gimp_ui_manager_item_key_press (GtkWidget     *widget,
           help_string = g_strdup (help_id);
         }
 
-      gimp_help (manager->gimp, help_domain, help_string);
+      gimp_help (manager->gimp, NULL, help_domain, help_string);
 
       g_free (help_domain);
       g_free (help_string);

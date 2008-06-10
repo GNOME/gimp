@@ -34,8 +34,9 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimp-utils.h"
 #include "core/gimpparamspecs.h"
+#include "core/gimpprogress.h"
+#include "core/gimp-utils.h"
 
 #include "pdb/gimppdb.h"
 #include "pdb/gimpprocedure.h"
@@ -55,10 +56,11 @@ typedef struct _GimpIdleHelp GimpIdleHelp;
 
 struct _GimpIdleHelp
 {
-  Gimp  *gimp;
-  gchar *help_domain;
-  gchar *help_locales;
-  gchar *help_id;
+  Gimp         *gimp;
+  GimpProgress *progress;
+  gchar        *help_domain;
+  gchar        *help_locales;
+  gchar        *help_id;
 };
 
 
@@ -73,6 +75,7 @@ static void       gimp_help_browser_error (Gimp          *gimp,
                                            const gchar   *text);
 
 static void       gimp_help_call          (Gimp          *gimp,
+                                           GimpProgress  *progress,
                                            const gchar   *procedure_name,
                                            const gchar   *help_domain,
                                            const gchar   *help_locales,
@@ -83,13 +86,15 @@ static gchar    * gimp_help_get_locales   (GimpGuiConfig *config);
 /*  public functions  */
 
 void
-gimp_help_show (Gimp        *gimp,
-                const gchar *help_domain,
-                const gchar *help_id)
+gimp_help_show (Gimp         *gimp,
+                GimpProgress *progress,
+                const gchar  *help_domain,
+                const gchar  *help_id)
 {
   GimpGuiConfig *config;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   config = GIMP_GUI_CONFIG (gimp->config);
 
@@ -97,7 +102,8 @@ gimp_help_show (Gimp        *gimp,
     {
       GimpIdleHelp *idle_help = g_slice_new0 (GimpIdleHelp);
 
-      idle_help->gimp = gimp;
+      idle_help->gimp     = gimp;
+      idle_help->progress = progress;
 
       if (help_domain && strlen (help_domain))
         idle_help->help_domain = g_strdup (help_domain);
@@ -143,6 +149,7 @@ gimp_idle_help (GimpIdleHelp *idle_help)
 
   if (procedure_name)
     gimp_help_call (idle_help->gimp,
+                    idle_help->progress,
                     procedure_name,
                     idle_help->help_domain,
                     idle_help->help_locales,
@@ -280,11 +287,12 @@ gimp_help_browser_error (Gimp        *gimp,
 }
 
 static void
-gimp_help_call (Gimp        *gimp,
-                const gchar *procedure_name,
-                const gchar *help_domain,
-                const gchar *help_locales,
-                const gchar *help_id)
+gimp_help_call (Gimp         *gimp,
+                GimpProgress *progress,
+                const gchar  *procedure_name,
+                const gchar  *help_domain,
+                const gchar  *help_locales,
+                const gchar  *help_id)
 {
   GimpProcedure *procedure;
 
@@ -303,7 +311,7 @@ gimp_help_call (Gimp        *gimp,
       return_vals =
         gimp_pdb_execute_procedure_by_name (gimp->pdb,
                                             gimp_get_user_context (gimp),
-                                            NULL, &error,
+                                            progress, &error,
                                             procedure_name,
                                             G_TYPE_STRING, help_domain,
                                             G_TYPE_STRING, help_locales,
@@ -352,8 +360,8 @@ gimp_help_call (Gimp        *gimp,
       gimp_value_take_stringarray (&args->values[3], help_uris, n_domains);
 
       gimp_procedure_execute_async (procedure, gimp,
-                                    gimp_get_user_context (gimp),
-                                    NULL, args, NULL, &error);
+                                    gimp_get_user_context (gimp), progress,
+                                    args, NULL, &error);
 
       g_value_array_free (args);
 
@@ -382,7 +390,7 @@ gimp_help_call (Gimp        *gimp,
       return_vals =
         gimp_pdb_execute_procedure_by_name (gimp->pdb,
                                             gimp_get_user_context (gimp),
-                                            NULL, &error,
+                                            progress, &error,
                                             "extension-gimp-help-temp",
                                             G_TYPE_STRING, procedure_name,
                                             G_TYPE_STRING, help_domain,
