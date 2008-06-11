@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-02 21:41+0400\n"
-"PO-Revision-Date: 2008-06-02 21:45+0300\n"
+"POT-Creation-Date: 2008-06-11 20:14+0400\n"
+"PO-Revision-Date: 2008-06-11 21:22+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -57,7 +57,7 @@ msgstr "Неправильная цветовая карта"
 #: ../plug-ins/common/sunras.c:378
 #: ../plug-ins/common/svg.c:321
 #: ../plug-ins/common/svg.c:702
-#: ../plug-ins/common/tga.c:423
+#: ../plug-ins/common/tga.c:428
 #: ../plug-ins/common/tiff-load.c:288
 #: ../plug-ins/common/xbm.c:720
 #: ../plug-ins/common/xwd.c:420
@@ -69,8 +69,8 @@ msgstr "Неправильная цветовая карта"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1863
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:931
 #: ../plug-ins/gfig/gfig.c:434
-#: ../plug-ins/help/gimphelplocale.c:217
-#: ../plug-ins/help/gimphelplocale.c:233
+#: ../plug-ins/help/gimphelplocale.c:222
+#: ../plug-ins/help/gimphelplocale.c:238
 #: ../plug-ins/ico/ico-load.c:651
 #: ../plug-ins/ico/ico-load.c:728
 #: ../plug-ins/jpeg/jpeg-load.c:111
@@ -105,7 +105,7 @@ msgstr "Не удалось открыть '%s' для записи: %s"
 #: ../plug-ins/common/postscript.c:1029
 #: ../plug-ins/common/raw.c:650
 #: ../plug-ins/common/sunras.c:470
-#: ../plug-ins/common/tga.c:428
+#: ../plug-ins/common/tga.c:433
 #: ../plug-ins/common/tiff-load.c:570
 #: ../plug-ins/common/wmf.c:992
 #: ../plug-ins/common/xbm.c:725
@@ -188,7 +188,7 @@ msgstr "Неподдерживаемая высота изображения: %d
 #: ../plug-ins/common/raw.c:691
 #: ../plug-ins/common/smooth-palette.c:257
 #: ../plug-ins/common/sunras.c:956
-#: ../plug-ins/common/tga.c:1029
+#: ../plug-ins/common/tga.c:1034
 #: ../plug-ins/common/tiff-load.c:963
 #: ../plug-ins/common/tile.c:267
 #: ../plug-ins/common/xbm.c:880
@@ -249,7 +249,7 @@ msgstr "Альфа-канал будет проигнорирован."
 #: ../plug-ins/common/raw.c:555
 #: ../plug-ins/common/sphere-designer.c:2112
 #: ../plug-ins/common/sunras.c:544
-#: ../plug-ins/common/tga.c:1133
+#: ../plug-ins/common/tga.c:1138
 #: ../plug-ins/common/tiff-save.c:671
 #: ../plug-ins/common/xbm.c:1016
 #: ../plug-ins/common/xwd.c:598
@@ -285,7 +285,7 @@ msgstr "Не удалось открыть '%s' для записи: %s"
 #: ../plug-ins/common/postscript.c:1201
 #: ../plug-ins/common/psd-save.c:1564
 #: ../plug-ins/common/sunras.c:549
-#: ../plug-ins/common/tga.c:1138
+#: ../plug-ins/common/tga.c:1143
 #: ../plug-ins/common/tiff-save.c:681
 #: ../plug-ins/common/xbm.c:1021
 #: ../plug-ins/common/xpm.c:623
@@ -3445,7 +3445,7 @@ msgstr "Сборка изображений"
 
 #: ../plug-ins/common/film.c:425
 #: ../plug-ins/common/guillotine.c:185
-#: ../plug-ins/help-browser/dialog.c:1146
+#: ../plug-ins/help-browser/dialog.c:1038
 msgid "Untitled"
 msgstr "Безымянное"
 
@@ -6228,19 +6228,19 @@ msgstr "Planar (RRR,GGG,BBB)"
 msgid "Indexed Palette Type"
 msgstr "Тип индексированной палитры"
 
-#: ../plug-ins/common/red-eye-removal.c:106
+#: ../plug-ins/common/red-eye-removal.c:105
 msgid "Remove the red eye effect caused by camera flashes"
 msgstr "Убрать эффект красных глаз, создаваемый фотовспышкой"
 
-#: ../plug-ins/common/red-eye-removal.c:117
+#: ../plug-ins/common/red-eye-removal.c:116
 msgid "_Red Eye Removal..."
 msgstr "Удалить эффект _красных глаз..."
 
-#: ../plug-ins/common/red-eye-removal.c:144
+#: ../plug-ins/common/red-eye-removal.c:142
 msgid "Red Eye Removal"
 msgstr "Удаление эффекта красных глаз"
 
-#: ../plug-ins/common/red-eye-removal.c:172
+#: ../plug-ins/common/red-eye-removal.c:170
 #: ../plug-ins/common/unsharp-mask.c:706
 #: ../plug-ins/common/wind.c:1006
 #: ../plug-ins/imagemap/imap_preferences.c:441
@@ -6248,15 +6248,15 @@ msgstr "Удаление эффекта красных глаз"
 msgid "_Threshold:"
 msgstr "_Порог:"
 
-#: ../plug-ins/common/red-eye-removal.c:178
+#: ../plug-ins/common/red-eye-removal.c:176
 msgid "Threshold for the red eye color to remove."
 msgstr "Порог удаляемого цвета красных глаз"
 
-#: ../plug-ins/common/red-eye-removal.c:183
+#: ../plug-ins/common/red-eye-removal.c:181
 msgid "Manually selecting the eyes may improve the results."
 msgstr "Выделение области глаз может улучшить результат"
 
-#: ../plug-ins/common/red-eye-removal.c:316
+#: ../plug-ins/common/red-eye-removal.c:301
 msgid "Removing red eye"
 msgstr "Удалить эффект красных глаз"
 
@@ -7211,34 +7211,41 @@ msgstr "Импортировать элементы контура из SVG, т�
 msgid "Merge imported paths"
 msgstr "Объединить импортированные контуры"
 
-#: ../plug-ins/common/tga.c:238
-#: ../plug-ins/common/tga.c:257
+#: ../plug-ins/common/tga.c:243
+#: ../plug-ins/common/tga.c:262
 msgid "TarGA image"
 msgstr "TarGA image"
 
-#: ../plug-ins/common/tga.c:434
+#: ../plug-ins/common/tga.c:439
 #, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "Невозможно прочесть сноску из \"%s\""
 
-#: ../plug-ins/common/tga.c:450
+#: ../plug-ins/common/tga.c:455
 #, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "Невозможно прочесть расширение из %s"
 
-#: ../plug-ins/common/tga.c:1323
+#: ../plug-ins/common/tga.c:1336
 msgid "Save as TGA"
 msgstr "Сохранить как TGA"
 
 #. rle
-#: ../plug-ins/common/tga.c:1346
+#: ../plug-ins/common/tga.c:1359
 msgid "_RLE compression"
 msgstr "RLE сжатие"
 
-#. origin
-#: ../plug-ins/common/tga.c:1356
-msgid "Or_igin at bottom left"
-msgstr "Начало внизу слева"
+#: ../plug-ins/common/tga.c:1373
+msgid "Or_igin:"
+msgstr "_Начало координат:"
+
+#: ../plug-ins/common/tga.c:1377
+msgid "Bottom left"
+msgstr "Снизу слева"
+
+#: ../plug-ins/common/tga.c:1378
+msgid "Top left"
+msgstr "Вверху слева"
 
 #: ../plug-ins/common/threshold-alpha.c:85
 msgid "Make transparency all-or-nothing"
@@ -8104,13 +8111,14 @@ msgstr ""
 "Необходимо указать его в диалоге настройки программы."
 
 #: ../plug-ins/common/web-browser.c:161
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Could not parse the web browser command specified in the Preferences dialog:\n"
 "\n"
 "%s"
 msgstr ""
 "Невозможно разобрать команду указанного просмотрщика:\n"
+"\n"
 "%s"
 
 #: ../plug-ins/common/web-browser.c:175
@@ -10241,37 +10249,45 @@ msgstr "Случайное зерно:"
 msgid "_Second Flares"
 msgstr "Вторичные вспышки"
 
-#: ../plug-ins/help-browser/dialog.c:219
+#: ../plug-ins/help-browser/dialog.c:197
 msgid "GIMP Help Browser"
 msgstr "Просмотрщик справки GIMP"
 
-#: ../plug-ins/help-browser/dialog.c:314
+#: ../plug-ins/help-browser/dialog.c:292
 msgid "Drag and drop this icon to a web browser"
 msgstr "Перетащите эту иконку в веб-браузер"
 
-#: ../plug-ins/help-browser/dialog.c:705
+#: ../plug-ins/help-browser/dialog.c:576
 msgid "Go back one page"
 msgstr "Назад на одну страницу"
 
-#: ../plug-ins/help-browser/dialog.c:710
+#: ../plug-ins/help-browser/dialog.c:581
 msgid "Go forward one page"
 msgstr "Вперед на одну страницу"
 
-#: ../plug-ins/help-browser/dialog.c:715
+#: ../plug-ins/help-browser/dialog.c:586
 msgid "Go to the index page"
 msgstr "К содержанию"
 
-#: ../plug-ins/help-browser/dialog.c:750
+#: ../plug-ins/help-browser/dialog.c:591
+msgid "Reload"
+msgstr "Обновить"
+
+#: ../plug-ins/help-browser/dialog.c:591
+msgid "Reload current page"
+msgstr "Повторно загрузить эту страницу"
+
+#: ../plug-ins/help-browser/dialog.c:596
+msgid "Stop"
+msgstr "Остановить"
+
+#: ../plug-ins/help-browser/dialog.c:596
+msgid "Stop loading this page"
+msgstr "Остановить загрузку этой страницы"
+
+#: ../plug-ins/help-browser/dialog.c:631
 msgid "Visit the GIMP documentation website"
 msgstr "Посетите сайт документации GIMP"
-
-#: ../plug-ins/help-browser/dialog.c:826
-msgid "Document not found"
-msgstr "Документ не найден"
-
-#: ../plug-ins/help-browser/dialog.c:828
-msgid "The requested URL could not be loaded:"
-msgstr "Невозможно открыть запрашиваемый URL:"
 
 #: ../plug-ins/help/gimphelpdomain.c:180
 msgid "The GIMP user manual is not available."
@@ -10294,12 +10310,12 @@ msgstr "Пожалуйста, проверьте вашу установку."
 msgid "Help ID '%s' unknown"
 msgstr "Неизвестный ID в системе помощи - '%s'"
 
-#: ../plug-ins/help/gimphelplocale.c:204
+#: ../plug-ins/help/gimphelplocale.c:209
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "Загружается содержание из '%s'"
 
-#: ../plug-ins/help/gimphelplocale.c:261
+#: ../plug-ins/help/gimphelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -12603,6 +12619,12 @@ msgstr "Ошибка: невозможно прочитать файл свой�
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Ошибка: файл свойств XJT '%s' пуст"
 
+#~ msgid "Or_igin at bottom left"
+#~ msgstr "Начало внизу слева"
+#~ msgid "Document not found"
+#~ msgstr "Документ не найден"
+#~ msgid "The requested URL could not be loaded:"
+#~ msgstr "Невозможно открыть запрашиваемый URL:"
 #~ msgid "checkbutton|Snap to grid"
 #~ msgstr "Прилипать к сетке"
 #~ msgid "_Smoothing:"
