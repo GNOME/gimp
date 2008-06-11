@@ -1,7 +1,11 @@
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: fixed check for webkit zoom API. 
+
 2008-06-10  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/help-browser/queue.[ch]: removed, we don't need this
-	any longer.
+	code any longer.
 
 2008-06-10  Sven Neumann  <sven@gimp.org>
 
