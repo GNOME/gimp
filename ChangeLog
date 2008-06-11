@@ -1,5 +1,10 @@
 2008-06-11  Sven Neumann  <sven@gimp.org>
 
+	* cursors/Makefile.am (EXTRA_DIST): added missing modifier-select
+	XBM files.
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
 	* app/gegl/gimpoperationcolorbalance.c
 	* app/gegl/gimpoperationcolorize.c
 	* app/gegl/gimpoperationcurves.c
