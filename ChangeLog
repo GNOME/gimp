@@ -1,5 +1,11 @@
 2008-06-11  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: use IT_PO_SUBDIR() to define the extra po
+	directories.  Removed extra AC_CONFIG_COMMANDS that became
+	obsolete by this change.
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
 	* autogen.sh: bumped INTLTOOL_REQUIRED_VERSION to 0.35.5. We
 	actually need 0.40.0 on the system where the tarball is rolled,
 	however 0.35.5 should be good enough for almost everyone.
