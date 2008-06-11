@@ -219,8 +219,462 @@
   )
 )
 
+(define-enum SelectCriterion
+  (in-module "Gimp")
+  (c-name "GimpSelectCriterion")
+  (gtype-id "GIMP_TYPE_SELECT_CRITERION")
+  (values
+    '("composite" "GIMP_SELECT_CRITERION_COMPOSITE")
+    '("r" "GIMP_SELECT_CRITERION_R")
+    '("g" "GIMP_SELECT_CRITERION_G")
+    '("b" "GIMP_SELECT_CRITERION_B")
+    '("h" "GIMP_SELECT_CRITERION_H")
+    '("s" "GIMP_SELECT_CRITERION_S")
+    '("v" "GIMP_SELECT_CRITERION_V")
+  )
+)
 
-;; From ../../libgimp/gimpenums.h
+(define-enum AddMaskType
+  (in-module "Gimp")
+  (c-name "GimpAddMaskType")
+  (gtype-id "GIMP_TYPE_ADD_MASK_TYPE")
+  (values
+    '("white-mask" "GIMP_ADD_WHITE_MASK")
+    '("black-mask" "GIMP_ADD_BLACK_MASK")
+    '("alpha-mask" "GIMP_ADD_ALPHA_MASK")
+    '("alpha-transfer-mask" "GIMP_ADD_ALPHA_TRANSFER_MASK")
+    '("selection-mask" "GIMP_ADD_SELECTION_MASK")
+    '("copy-mask" "GIMP_ADD_COPY_MASK")
+    '("channel-mask" "GIMP_ADD_CHANNEL_MASK")
+  )
+)
+
+(define-enum BlendMode
+  (in-module "Gimp")
+  (c-name "GimpBlendMode")
+  (gtype-id "GIMP_TYPE_BLEND_MODE")
+  (values
+    '("fg-bg-rgb-mode" "GIMP_FG_BG_RGB_MODE")
+    '("fg-bg-hsv-mode" "GIMP_FG_BG_HSV_MODE")
+    '("fg-transparent-mode" "GIMP_FG_TRANSPARENT_MODE")
+    '("custom-mode" "GIMP_CUSTOM_MODE")
+  )
+)
+
+(define-enum BucketFillMode
+  (in-module "Gimp")
+  (c-name "GimpBucketFillMode")
+  (gtype-id "GIMP_TYPE_BUCKET_FILL_MODE")
+  (values
+    '("fg-bucket-fill" "GIMP_FG_BUCKET_FILL")
+    '("bg-bucket-fill" "GIMP_BG_BUCKET_FILL")
+    '("pattern-bucket-fill" "GIMP_PATTERN_BUCKET_FILL")
+  )
+)
+
+(define-enum ChannelOps
+  (in-module "Gimp")
+  (c-name "GimpChannelOps")
+  (gtype-id "GIMP_TYPE_CHANNEL_OPS")
+  (values
+    '("add" "GIMP_CHANNEL_OP_ADD")
+    '("subtract" "GIMP_CHANNEL_OP_SUBTRACT")
+    '("replace" "GIMP_CHANNEL_OP_REPLACE")
+    '("intersect" "GIMP_CHANNEL_OP_INTERSECT")
+  )
+)
+
+(define-enum ChannelType
+  (in-module "Gimp")
+  (c-name "GimpChannelType")
+  (gtype-id "GIMP_TYPE_CHANNEL_TYPE")
+  (values
+    '("red-channel" "GIMP_RED_CHANNEL")
+    '("green-channel" "GIMP_GREEN_CHANNEL")
+    '("blue-channel" "GIMP_BLUE_CHANNEL")
+    '("gray-channel" "GIMP_GRAY_CHANNEL")
+    '("indexed-channel" "GIMP_INDEXED_CHANNEL")
+    '("alpha-channel" "GIMP_ALPHA_CHANNEL")
+  )
+)
+
+(define-enum CheckSize
+  (in-module "Gimp")
+  (c-name "GimpCheckSize")
+  (gtype-id "GIMP_TYPE_CHECK_SIZE")
+  (values
+    '("small-checks" "GIMP_CHECK_SIZE_SMALL_CHECKS")
+    '("medium-checks" "GIMP_CHECK_SIZE_MEDIUM_CHECKS")
+    '("large-checks" "GIMP_CHECK_SIZE_LARGE_CHECKS")
+  )
+)
+
+(define-enum CheckType
+  (in-module "Gimp")
+  (c-name "GimpCheckType")
+  (gtype-id "GIMP_TYPE_CHECK_TYPE")
+  (values
+    '("light-checks" "GIMP_CHECK_TYPE_LIGHT_CHECKS")
+    '("gray-checks" "GIMP_CHECK_TYPE_GRAY_CHECKS")
+    '("dark-checks" "GIMP_CHECK_TYPE_DARK_CHECKS")
+    '("white-only" "GIMP_CHECK_TYPE_WHITE_ONLY")
+    '("gray-only" "GIMP_CHECK_TYPE_GRAY_ONLY")
+    '("black-only" "GIMP_CHECK_TYPE_BLACK_ONLY")
+  )
+)
+
+(define-enum CloneType
+  (in-module "Gimp")
+  (c-name "GimpCloneType")
+  (gtype-id "GIMP_TYPE_CLONE_TYPE")
+  (values
+    '("image-clone" "GIMP_IMAGE_CLONE")
+    '("pattern-clone" "GIMP_PATTERN_CLONE")
+  )
+)
+
+(define-enum DesaturateMode
+  (in-module "Gimp")
+  (c-name "GimpDesaturateMode")
+  (gtype-id "GIMP_TYPE_DESATURATE_MODE")
+  (values
+    '("lightness" "GIMP_DESATURATE_LIGHTNESS")
+    '("luminosity" "GIMP_DESATURATE_LUMINOSITY")
+    '("average" "GIMP_DESATURATE_AVERAGE")
+  )
+)
+
+(define-enum DodgeBurnType
+  (in-module "Gimp")
+  (c-name "GimpDodgeBurnType")
+  (gtype-id "GIMP_TYPE_DODGE_BURN_TYPE")
+  (values
+    '("dodge" "GIMP_DODGE")
+    '("burn" "GIMP_BURN")
+  )
+)
+
+(define-enum ForegroundExtractMode
+  (in-module "Gimp")
+  (c-name "GimpForegroundExtractMode")
+  (gtype-id "GIMP_TYPE_FOREGROUND_EXTRACT_MODE")
+  (values
+    '("x" "GIMP_FOREGROUND_EXTRACT_SIOX")
+  )
+)
+
+(define-enum GradientType
+  (in-module "Gimp")
+  (c-name "GimpGradientType")
+  (gtype-id "GIMP_TYPE_GRADIENT_TYPE")
+  (values
+    '("linear" "GIMP_GRADIENT_LINEAR")
+    '("bilinear" "GIMP_GRADIENT_BILINEAR")
+    '("radial" "GIMP_GRADIENT_RADIAL")
+    '("square" "GIMP_GRADIENT_SQUARE")
+    '("conical-symmetric" "GIMP_GRADIENT_CONICAL_SYMMETRIC")
+    '("conical-asymmetric" "GIMP_GRADIENT_CONICAL_ASYMMETRIC")
+    '("shapeburst-angular" "GIMP_GRADIENT_SHAPEBURST_ANGULAR")
+    '("shapeburst-spherical" "GIMP_GRADIENT_SHAPEBURST_SPHERICAL")
+    '("shapeburst-dimpled" "GIMP_GRADIENT_SHAPEBURST_DIMPLED")
+    '("spiral-clockwise" "GIMP_GRADIENT_SPIRAL_CLOCKWISE")
+    '("spiral-anticlockwise" "GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE")
+  )
+)
+
+(define-enum GridStyle
+  (in-module "Gimp")
+  (c-name "GimpGridStyle")
+  (gtype-id "GIMP_TYPE_GRID_STYLE")
+  (values
+    '("dots" "GIMP_GRID_DOTS")
+    '("intersections" "GIMP_GRID_INTERSECTIONS")
+    '("on-off-dash" "GIMP_GRID_ON_OFF_DASH")
+    '("double-dash" "GIMP_GRID_DOUBLE_DASH")
+    '("solid" "GIMP_GRID_SOLID")
+  )
+)
+
+(define-enum IconType
+  (in-module "Gimp")
+  (c-name "GimpIconType")
+  (gtype-id "GIMP_TYPE_ICON_TYPE")
+  (values
+    '("stock-id" "GIMP_ICON_TYPE_STOCK_ID")
+    '("inline-pixbuf" "GIMP_ICON_TYPE_INLINE_PIXBUF")
+    '("image-file" "GIMP_ICON_TYPE_IMAGE_FILE")
+  )
+)
+
+(define-enum ImageBaseType
+  (in-module "Gimp")
+  (c-name "GimpImageBaseType")
+  (gtype-id "GIMP_TYPE_IMAGE_BASE_TYPE")
+  (values
+    '("rgb" "GIMP_RGB")
+    '("gray" "GIMP_GRAY")
+    '("indexed" "GIMP_INDEXED")
+  )
+)
+
+(define-enum ImageType
+  (in-module "Gimp")
+  (c-name "GimpImageType")
+  (gtype-id "GIMP_TYPE_IMAGE_TYPE")
+  (values
+    '("rgb-image" "GIMP_RGB_IMAGE")
+    '("rgba-image" "GIMP_RGBA_IMAGE")
+    '("gray-image" "GIMP_GRAY_IMAGE")
+    '("graya-image" "GIMP_GRAYA_IMAGE")
+    '("indexed-image" "GIMP_INDEXED_IMAGE")
+    '("indexeda-image" "GIMP_INDEXEDA_IMAGE")
+  )
+)
+
+(define-enum InterpolationType
+  (in-module "Gimp")
+  (c-name "GimpInterpolationType")
+  (gtype-id "GIMP_TYPE_INTERPOLATION_TYPE")
+  (values
+    '("none" "GIMP_INTERPOLATION_NONE")
+    '("linear" "GIMP_INTERPOLATION_LINEAR")
+    '("cubic" "GIMP_INTERPOLATION_CUBIC")
+    '("lanczos" "GIMP_INTERPOLATION_LANCZOS")
+  )
+)
+
+(define-enum PaintApplicationMode
+  (in-module "Gimp")
+  (c-name "GimpPaintApplicationMode")
+  (gtype-id "GIMP_TYPE_PAINT_APPLICATION_MODE")
+  (values
+    '("constant" "GIMP_PAINT_CONSTANT")
+    '("incremental" "GIMP_PAINT_INCREMENTAL")
+  )
+)
+
+(define-enum RepeatMode
+  (in-module "Gimp")
+  (c-name "GimpRepeatMode")
+  (gtype-id "GIMP_TYPE_REPEAT_MODE")
+  (values
+    '("none" "GIMP_REPEAT_NONE")
+    '("sawtooth" "GIMP_REPEAT_SAWTOOTH")
+    '("triangular" "GIMP_REPEAT_TRIANGULAR")
+  )
+)
+
+(define-enum RunMode
+  (in-module "Gimp")
+  (c-name "GimpRunMode")
+  (gtype-id "GIMP_TYPE_RUN_MODE")
+  (values
+    '("interactive" "GIMP_RUN_INTERACTIVE")
+    '("noninteractive" "GIMP_RUN_NONINTERACTIVE")
+    '("with-last-vals" "GIMP_RUN_WITH_LAST_VALS")
+  )
+)
+
+(define-enum SizeType
+  (in-module "Gimp")
+  (c-name "GimpSizeType")
+  (gtype-id "GIMP_TYPE_SIZE_TYPE")
+  (values
+    '("ixels" "GIMP_PIXELS")
+    '("oints" "GIMP_POINTS")
+  )
+)
+
+(define-enum TransferMode
+  (in-module "Gimp")
+  (c-name "GimpTransferMode")
+  (gtype-id "GIMP_TYPE_TRANSFER_MODE")
+  (values
+    '("shadows" "GIMP_SHADOWS")
+    '("midtones" "GIMP_MIDTONES")
+    '("highlights" "GIMP_HIGHLIGHTS")
+  )
+)
+
+(define-enum TransformDirection
+  (in-module "Gimp")
+  (c-name "GimpTransformDirection")
+  (gtype-id "GIMP_TYPE_TRANSFORM_DIRECTION")
+  (values
+    '("forward" "GIMP_TRANSFORM_FORWARD")
+    '("backward" "GIMP_TRANSFORM_BACKWARD")
+  )
+)
+
+(define-enum TransformResize
+  (in-module "Gimp")
+  (c-name "GimpTransformResize")
+  (gtype-id "GIMP_TYPE_TRANSFORM_RESIZE")
+  (values
+    '("adjust" "GIMP_TRANSFORM_RESIZE_ADJUST")
+    '("clip" "GIMP_TRANSFORM_RESIZE_CLIP")
+    '("crop" "GIMP_TRANSFORM_RESIZE_CROP")
+    '("crop-with-aspect" "GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT")
+  )
+)
+
+(define-enum Unit
+  (in-module "Gimp")
+  (c-name "GimpUnit")
+  (gtype-id "GIMP_TYPE_UNIT")
+  (values
+    '("pixel" "GIMP_UNIT_PIXEL")
+    '("inch" "GIMP_UNIT_INCH")
+    '("mm" "GIMP_UNIT_MM")
+    '("point" "GIMP_UNIT_POINT")
+    '("pica" "GIMP_UNIT_PICA")
+    '("end" "GIMP_UNIT_END")
+    '("percent" "GIMP_UNIT_PERCENT")
+  )
+)
+
+(define-enum PDBArgType
+  (in-module "Gimp")
+  (c-name "GimpPDBArgType")
+  (gtype-id "GIMP_TYPE_PDB_ARG_TYPE")
+  (values
+    '("int32" "GIMP_PDB_INT32")
+    '("int16" "GIMP_PDB_INT16")
+    '("int8" "GIMP_PDB_INT8")
+    '("float" "GIMP_PDB_FLOAT")
+    '("string" "GIMP_PDB_STRING")
+    '("int32array" "GIMP_PDB_INT32ARRAY")
+    '("int16array" "GIMP_PDB_INT16ARRAY")
+    '("int8array" "GIMP_PDB_INT8ARRAY")
+    '("floatarray" "GIMP_PDB_FLOATARRAY")
+    '("stringarray" "GIMP_PDB_STRINGARRAY")
+    '("color" "GIMP_PDB_COLOR")
+    '("region" "GIMP_PDB_REGION")
+    '("display" "GIMP_PDB_DISPLAY")
+    '("image" "GIMP_PDB_IMAGE")
+    '("layer" "GIMP_PDB_LAYER")
+    '("channel" "GIMP_PDB_CHANNEL")
+    '("drawable" "GIMP_PDB_DRAWABLE")
+    '("selection" "GIMP_PDB_SELECTION")
+    '("boundary" "GIMP_PDB_BOUNDARY")
+    '("vectors" "GIMP_PDB_VECTORS")
+    '("parasite" "GIMP_PDB_PARASITE")
+    '("status" "GIMP_PDB_STATUS")
+    '("end" "GIMP_PDB_END")
+    '("path" "GIMP_PDB_PATH")
+  )
+)
+
+(define-enum PDBProcType
+  (in-module "Gimp")
+  (c-name "GimpPDBProcType")
+  (gtype-id "GIMP_TYPE_PDB_PROC_TYPE")
+  (values
+    '("internal" "GIMP_INTERNAL")
+    '("plugin" "GIMP_PLUGIN")
+    '("extension" "GIMP_EXTENSION")
+    '("temporary" "GIMP_TEMPORARY")
+  )
+)
+
+(define-enum PDBStatusType
+  (in-module "Gimp")
+  (c-name "GimpPDBStatusType")
+  (gtype-id "GIMP_TYPE_PDB_STATUS_TYPE")
+  (values
+    '("execution-error" "GIMP_PDB_EXECUTION_ERROR")
+    '("calling-error" "GIMP_PDB_CALLING_ERROR")
+    '("pass-through" "GIMP_PDB_PASS_THROUGH")
+    '("success" "GIMP_PDB_SUCCESS")
+    '("cancel" "GIMP_PDB_CANCEL")
+  )
+)
+
+(define-enum MessageHandlerType
+  (in-module "Gimp")
+  (c-name "GimpMessageHandlerType")
+  (gtype-id "GIMP_TYPE_MESSAGE_HANDLER_TYPE")
+  (values
+    '("message-box" "GIMP_MESSAGE_BOX")
+    '("console" "GIMP_CONSOLE")
+    '("error-console" "GIMP_ERROR_CONSOLE")
+  )
+)
+
+(define-enum StackTraceMode
+  (in-module "Gimp")
+  (c-name "GimpStackTraceMode")
+  (gtype-id "GIMP_TYPE_STACK_TRACE_MODE")
+  (values
+    '("never" "GIMP_STACK_TRACE_NEVER")
+    '("query" "GIMP_STACK_TRACE_QUERY")
+    '("always" "GIMP_STACK_TRACE_ALWAYS")
+  )
+)
+
+(define-enum ProgressCommand
+  (in-module "Gimp")
+  (c-name "GimpProgressCommand")
+  (gtype-id "GIMP_TYPE_PROGRESS_COMMAND")
+  (values
+    '("start" "GIMP_PROGRESS_COMMAND_START")
+    '("end" "GIMP_PROGRESS_COMMAND_END")
+    '("set-text" "GIMP_PROGRESS_COMMAND_SET_TEXT")
+    '("set-value" "GIMP_PROGRESS_COMMAND_SET_VALUE")
+    '("pulse" "GIMP_PROGRESS_COMMAND_PULSE")
+    '("get-window" "GIMP_PROGRESS_COMMAND_GET_WINDOW")
+  )
+)
+
+(define-enum TextDirection
+  (in-module "Gimp")
+  (c-name "GimpTextDirection")
+  (gtype-id "GIMP_TYPE_TEXT_DIRECTION")
+  (values
+    '("ltr" "GIMP_TEXT_DIRECTION_LTR")
+    '("rtl" "GIMP_TEXT_DIRECTION_RTL")
+  )
+)
+
+(define-enum TextJustification
+  (in-module "Gimp")
+  (c-name "GimpTextJustification")
+  (gtype-id "GIMP_TYPE_TEXT_JUSTIFICATION")
+  (values
+    '("left" "GIMP_TEXT_JUSTIFY_LEFT")
+    '("right" "GIMP_TEXT_JUSTIFY_RIGHT")
+    '("center" "GIMP_TEXT_JUSTIFY_CENTER")
+    '("fill" "GIMP_TEXT_JUSTIFY_FILL")
+  )
+)
+
+(define-enum UserDirectory
+  (in-module "Gimp")
+  (c-name "GimpUserDirectory")
+  (gtype-id "GIMP_TYPE_USER_DIRECTORY")
+  (values
+    '("desktop" "GIMP_USER_DIRECTORY_DESKTOP")
+    '("documents" "GIMP_USER_DIRECTORY_DOCUMENTS")
+    '("download" "GIMP_USER_DIRECTORY_DOWNLOAD")
+    '("music" "GIMP_USER_DIRECTORY_MUSIC")
+    '("pictures" "GIMP_USER_DIRECTORY_PICTURES")
+    '("public-share" "GIMP_USER_DIRECTORY_PUBLIC_SHARE")
+    '("templates" "GIMP_USER_DIRECTORY_TEMPLATES")
+    '("videos" "GIMP_USER_DIRECTORY_VIDEOS")
+  )
+)
+
+(define-enum VectorsStrokeType
+  (in-module "Gimp")
+  (c-name "GimpVectorsStrokeType")
+  (gtype-id "GIMP_TYPE_VECTORS_STROKE_TYPE")
+  (values
+    '("r" "GIMP_VECTORS_STROKE_TYPE_BEZIER")
+  )
+)
+
+
+;; From gimpenums.h
 
 (define-function gimp_brush_application_mode_get_type
   (c-name "gimp_brush_application_mode_get_type")
@@ -307,6 +761,11 @@
   (return-type "GType")
 )
 
+(define-function gimp_select_criterion_get_type
+  (c-name "gimp_select_criterion_get_type")
+  (return-type "GType")
+)
+
 (define-function gimp_enums_init
   (c-name "gimp_enums_init")
   (return-type "none")
@@ -318,6 +777,180 @@
   (parameters
     '("gint*" "n_type_names")
   )
+)
+
+
+
+;; From gimpbaseenums.h
+
+(define-function gimp_add_mask_type_get_type
+  (c-name "gimp_add_mask_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_blend_mode_get_type
+  (c-name "gimp_blend_mode_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_bucket_fill_mode_get_type
+  (c-name "gimp_bucket_fill_mode_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_channel_ops_get_type
+  (c-name "gimp_channel_ops_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_channel_type_get_type
+  (c-name "gimp_channel_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_check_size_get_type
+  (c-name "gimp_check_size_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_check_type_get_type
+  (c-name "gimp_check_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_clone_type_get_type
+  (c-name "gimp_clone_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_desaturate_mode_get_type
+  (c-name "gimp_desaturate_mode_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_dodge_burn_type_get_type
+  (c-name "gimp_dodge_burn_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_foreground_extract_mode_get_type
+  (c-name "gimp_foreground_extract_mode_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_gradient_type_get_type
+  (c-name "gimp_gradient_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_grid_style_get_type
+  (c-name "gimp_grid_style_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_icon_type_get_type
+  (c-name "gimp_icon_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_image_base_type_get_type
+  (c-name "gimp_image_base_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_image_type_get_type
+  (c-name "gimp_image_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_interpolation_type_get_type
+  (c-name "gimp_interpolation_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_paint_application_mode_get_type
+  (c-name "gimp_paint_application_mode_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_repeat_mode_get_type
+  (c-name "gimp_repeat_mode_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_run_mode_get_type
+  (c-name "gimp_run_mode_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_size_type_get_type
+  (c-name "gimp_size_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_transfer_mode_get_type
+  (c-name "gimp_transfer_mode_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_transform_direction_get_type
+  (c-name "gimp_transform_direction_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_transform_resize_get_type
+  (c-name "gimp_transform_resize_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_pdb_arg_type_get_type
+  (c-name "gimp_pdb_arg_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_pdb_proc_type_get_type
+  (c-name "gimp_pdb_proc_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_pdb_status_type_get_type
+  (c-name "gimp_pdb_status_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_message_handler_type_get_type
+  (c-name "gimp_message_handler_type_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_stack_trace_mode_get_type
+  (c-name "gimp_stack_trace_mode_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_progress_command_get_type
+  (c-name "gimp_progress_command_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_text_direction_get_type
+  (c-name "gimp_text_direction_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_text_justification_get_type
+  (c-name "gimp_text_justification_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_user_directory_get_type
+  (c-name "gimp_user_directory_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_vectors_stroke_type_get_type
+  (c-name "gimp_vectors_stroke_type_get_type")
+  (return-type "GType")
 )
 
 

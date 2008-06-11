@@ -1895,6 +1895,15 @@
   (return-type "GType")
 )
 
+(define-function gimp_preview_new
+  (c-name "gimp_preview_new")
+  (is-constructor-of "GimpPreview")
+  (return-type "GtkWidget*")
+  (properties
+    '("update")
+  )
+)
+
 (define-method set_update
   (of-object "GimpPreview")
   (c-name "gimp_preview_set_update")
@@ -3657,12 +3666,13 @@
   (return-type "GType")
 )
 
-(define-function gimp_zoom_preview_new
-  (c-name "gimp_zoom_preview_new")
+(define-function gimp_zoom_preview_new_with_model
+  (c-name "gimp_zoom_preview_new_with_model")
   (is-constructor-of "GimpZoomPreview")
   (return-type "GtkWidget*")
   (properties
     '("drawable")
+    '("model")
   )
 )
 

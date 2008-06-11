@@ -1,4 +1,3 @@
-%%
 headers
 #include <Python.h>
 
@@ -9,7 +8,7 @@ headers
 #include <libgimp/gimpui.h>
 
 #define NO_IMPORT_PYGIMP
-#include "pygimp-api.h"
+#include "pygimp.h"
 
 #define NO_IMPORT_PYGIMPCOLOR
 #include "pygimpcolor-api.h"
@@ -18,6 +17,11 @@ typedef struct {
     PyObject *constraint;
     PyObject *user_data;
 } PyGimpConstraintData;
+
+typedef struct {
+    PyObject *sensitivity_func;
+    PyObject *user_data;
+} PyGimpIntSensitivityData;
 %%
 modulename gimpui
 %%
@@ -48,9 +52,11 @@ import gtk.ListStore as PyGtkListStore_Type
 import gtk.TreeModel as PyGtkTreeModel_Type
 import gtk.CellRenderer as PyGtkCellRenderer_Type
 import gtk.CellRendererToggle as PyGtkCellRendererToggle_Type
+import gimp.Parasite as PyGimpParasite_Type
 %%
 ignore
   gimp_dialog_add_buttons
+  gimp_int_combo_box_connect
 %%
 ignore-glob
   *_get_type
@@ -1085,7 +1091,9 @@ _wrap_gimp_int_combo_box_new(PyGObject *self, PyObject *args, PyObject *kwargs)
         }
 
         gimp_int_combo_box_append(GIMP_INT_COMBO_BOX(self->obj),
+                                  GIMP_INT_STORE_LABEL,
                                   PyString_AsString(label),
+                                  GIMP_INT_STORE_VALUE,
                                   PyInt_AsLong(value),
                                   -1);
     }
@@ -1094,6 +1102,87 @@ _wrap_gimp_int_combo_box_new(PyGObject *self, PyObject *args, PyObject *kwargs)
 }
 %%
 new-constructor GIMP_TYPE_INT_COMBO_BOX
+%%
+override gimp_int_combo_box_set_sensitivity kwargs
+static gboolean
+pygimp_int_combo_box_sensitivity_marshal(gint value, gpointer user_data)
+{
+    PyObject *py_value;
+    PyGimpIntSensitivityData *data;
+    PyObject *ret;
+    gboolean res;
+
+    data = user_data;
+
+    py_value = PyInt_FromLong(value);
+
+    ret = PyObject_CallFunctionObjArgs(data->sensitivity_func, py_value, data->user_data, NULL);
+    
+    if(!ret) {
+        PyErr_Print();
+        res = FALSE;
+    } else {
+        res = PyObject_IsTrue(ret);
+        Py_DECREF(ret);
+    }
+
+    Py_DECREF(py_value);
+
+    return res;
+}
+
+static void
+pygimp_int_combo_box_sensitivity_data_destroy(gpointer user_data)
+{
+    PyGimpIntSensitivityData *data;
+    data = user_data;
+
+    Py_DECREF(data->sensitivity_func);
+    Py_XDECREF(data->user_data);
+
+    g_free(data);
+}
+
+static PyObject *
+_wrap_gimp_int_combo_box_set_sensitivity(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_sensitivity_func;
+    PyObject *py_user_data = NULL;
+    PyGimpIntSensitivityData *data;
+
+    static char *kwlist[] = { "sensitivity_func", "user_data", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, 
+                                     "O|O:GimpIntComboBox.set_sensitivity",
+                                     kwlist, &py_sensitivity_func,
+                                     &py_user_data))
+        return NULL;
+
+    if(!PyCallable_Check(py_sensitivity_func)) {
+        PyErr_SetString(PyExc_TypeError, "first argument must be callable.");
+        return NULL;
+    }
+
+    data = g_new(PyGimpIntSensitivityData, 1);
+
+    data->sensitivity_func = py_sensitivity_func;
+    Py_INCREF(data->sensitivity_func);
+    
+   if(py_user_data == NULL || py_user_data == Py_None)
+        data->user_data = NULL;
+    else {
+       data->user_data = py_user_data;
+       Py_INCREF(data->user_data);
+    }
+
+    gimp_int_combo_box_set_sensitivity(GIMP_INT_COMBO_BOX(self->obj),
+                                 pygimp_int_combo_box_sensitivity_marshal,
+                                 data,
+                                 pygimp_int_combo_box_sensitivity_data_destroy);
+    
+    Py_INCREF(Py_None);
+    return Py_None;
+}
 %%
 override gimp_int_combo_box_get_active noargs
 static PyObject *
@@ -1128,6 +1217,130 @@ _wrap_gimp_int_combo_box_set_active(PyGObject *self, PyObject *args, PyObject *k
         return NULL;
     }
 
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
+override gimp_int_combo_box_append kwargs
+static PyObject *
+_wrap_gimp_int_combo_box_append(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_items;
+    int i, len;
+
+static char *kwlist[] = { "items", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O:gimpui.IntComboBox.append",
+                                     kwlist,
+                                     &py_items))
+        return NULL; 
+
+    if (py_items == NULL || py_items == Py_None)
+        len = 0;
+    else if (PyTuple_Check(py_items))
+        len = PyTuple_Size(py_items);
+    else {
+        PyErr_SetString(PyExc_TypeError,
+                        "items must be a tuple containing label/value pairs "
+                        "or None");
+        return NULL;
+    }
+
+    if (len % 2) {
+        PyErr_SetString(PyExc_RuntimeError,
+                        "items tuple must contain label/value pairs");
+        return NULL;
+    }
+
+    for (i = 0; i < len; i += 2) {
+        PyObject *label = PyTuple_GetItem(py_items, i);
+        PyObject *value = PyTuple_GetItem(py_items, i + 1);
+
+        if (!PyString_Check(label)) {
+            PyErr_SetString(PyExc_RuntimeError,
+                            "first member of each label/value pair "
+                            "must be a string");
+            return NULL;
+        }
+
+        if (!PyInt_Check(value)) {
+            PyErr_SetString(PyExc_RuntimeError,
+                            "second member of each label/value pair "
+                            "must be a number");
+            return NULL;
+        }
+
+        gimp_int_combo_box_append(GIMP_INT_COMBO_BOX(self->obj),
+                                  GIMP_INT_STORE_LABEL,
+                                  PyString_AsString(label),
+                                  GIMP_INT_STORE_VALUE,
+                                  PyInt_AsLong(value),
+                                  -1);
+    }
+    
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
+override gimp_int_combo_box_prepend kwargs
+static PyObject *
+_wrap_gimp_int_combo_box_prepend(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyObject *py_items;
+    int i, len;
+
+    static char *kwlist[] = { "items", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O:gimpui.IntComboBox.prepend",
+                                     kwlist,
+                                     &py_items))
+        return NULL; 
+
+    if (py_items == NULL || py_items == Py_None)
+        len = 0;
+    else if (PyTuple_Check(py_items))
+        len = PyTuple_Size(py_items);
+    else {
+        PyErr_SetString(PyExc_TypeError,
+                        "items must be a tuple containing label/value pairs "
+                        "or None");
+        return NULL;
+    }
+
+    if (len % 2) {
+        PyErr_SetString(PyExc_RuntimeError,
+                        "items tuple must contain label/value pairs");
+        return NULL;
+    }
+
+    for (i = 0; i < len; i += 2) {
+        PyObject *label = PyTuple_GetItem(py_items, i);
+        PyObject *value = PyTuple_GetItem(py_items, i + 1);
+
+        if (!PyString_Check(label)) {
+            PyErr_SetString(PyExc_RuntimeError,
+                            "first member of each label/value pair "
+                            "must be a string");
+            return NULL;
+        }
+
+        if (!PyInt_Check(value)) {
+            PyErr_SetString(PyExc_RuntimeError,
+                            "second member of each label/value pair "
+                            "must be a number");
+            return NULL;
+        }
+
+        gimp_int_combo_box_prepend(GIMP_INT_COMBO_BOX(self->obj),
+                                  GIMP_INT_STORE_LABEL,
+                                  PyString_AsString(label),
+                                  GIMP_INT_STORE_VALUE,
+                                  PyInt_AsLong(value),
+                                  -1);
+    }
+    
     Py_INCREF(Py_None);
     return Py_None;
 }
@@ -1292,7 +1505,7 @@ _wrap_gimp_proc_browser_dialog_new(PyGObject *self, PyObject *args, PyObject *kw
 new-constructor GIMP_TYPE_PROC_BROWSER_DIALOG
 %%
 override gimp_number_pair_entry_get_values noargs
-static PyObject*
+static PyObject *
 _wrap_gimp_number_pair_entry_get_values(PyGObject *self)
 {
     gdouble left, right;
@@ -1303,7 +1516,7 @@ _wrap_gimp_number_pair_entry_get_values(PyGObject *self)
 }
 %%
 override gimp_number_pair_entry_get_default_values noargs
-static PyObject*
+static PyObject *
 _wrap_gimp_number_pair_entry_get_default_values(PyGObject *self)
 {
     gdouble left, right;
@@ -1314,7 +1527,7 @@ _wrap_gimp_number_pair_entry_get_default_values(PyGObject *self)
 }
 %%
 override gimp_number_pair_entry_get_aspect noargs
-static PyObject*
+static PyObject *
 _wrap_gimp_number_pair_entry_get_aspect(PyGObject *self)
 {
     GimpAspectType aspect;
@@ -1326,7 +1539,7 @@ _wrap_gimp_number_pair_entry_get_aspect(PyGObject *self)
 }
 %%
 override gimp_number_pair_entry_set_aspect kwargs
-static PyObject*
+static PyObject *
 _wrap_gimp_number_pair_entry_set_aspect(PyGObject *self, PyObject *args, PyObject *kwargs)
 {
     PyObject *py_aspect;
@@ -1339,7 +1552,7 @@ _wrap_gimp_number_pair_entry_set_aspect(PyGObject *self, PyObject *args, PyObjec
                                     kwlist, &py_aspect))
         return NULL;
 
-    if(pyg_enum_get_value(GIMP_TYPE_ASPECT_TYPE, py_aspect, (gint*)&aspect))
+    if (pyg_enum_get_value(GIMP_TYPE_ASPECT_TYPE, py_aspect, (gint*)&aspect))
     {
         Py_XDECREF(py_aspect);
         return NULL;
@@ -1352,3 +1565,97 @@ _wrap_gimp_number_pair_entry_set_aspect(PyGObject *self, PyObject *args, PyObjec
     Py_INCREF(Py_None);
     return Py_None;
 }
+%%
+override gimp_page_selector_get_selected_pages noargs
+static PyObject *
+_wrap_gimp_page_selector_get_selected_pages(PyGObject *self) 
+{
+    gint *selected_pages;
+    gint n_selected_pages;
+    PyObject *py_selected_pages;
+    int i;
+
+    selected_pages = gimp_page_selector_get_selected_pages(GIMP_PAGE_SELECTOR (self->obj), &n_selected_pages);
+    
+    py_selected_pages = PyTuple_New(n_selected_pages);
+    for (i = 0; i < n_selected_pages; ++i)
+        PyTuple_SetItem(py_selected_pages, i, PyInt_FromLong(selected_pages[i]));
+
+    g_free(selected_pages);
+
+    return py_selected_pages;
+}
+%%
+override gimp_preview_get_position noargs
+static PyObject *
+_wrap_gimp_preview_get_position(PyGObject *self)
+{
+    gint x;
+    gint y;
+  
+    gimp_preview_get_position(GIMP_PREVIEW(self->obj), &x, &y);
+
+    return Py_BuildValue("(ii)", x, y);
+}
+%%
+override gimp_preview_get_size noargs
+static PyObject *
+_wrap_gimp_preview_get_size(PyGObject *self)
+{
+    gint width;
+    gint height;
+  
+    gimp_preview_get_size(GIMP_PREVIEW(self->obj), &width, &height);
+
+    return Py_BuildValue("(ii)", width, height);
+}
+%%
+override gimp_zoom_model_get_fraction noargs
+static PyObject *
+_wrap_gimp_zoom_model_get_fraction(PyGObject *self)
+{
+    gint numerator;
+    gint denominator;
+
+    gimp_zoom_model_get_fraction(GIMP_ZOOM_MODEL(self->obj), &numerator, &denominator);
+
+    return Py_BuildValue("(ii)", numerator, denominator);
+}
+%%
+override gimp_drawable_preview_get_drawable noargs
+static PyObject *
+_wrap_gimp_drawable_preview_get_drawable(PyGObject *self)
+{
+    GimpDrawable *drawable;
+    drawable = gimp_drawable_preview_get_drawable(GIMP_DRAWABLE_PREVIEW(self->obj));
+    return pygimp_drawable_new(drawable, -1);
+}
+%%
+override gimp_zoom_preview_get_drawable noargs
+static PyObject *
+_wrap_gimp_zoom_preview_get_drawable(PyGObject *self)
+{
+    GimpDrawable *drawable;
+    drawable = gimp_zoom_preview_get_drawable(GIMP_ZOOM_PREVIEW(self->obj));
+    return pygimp_drawable_new(drawable, -1);
+}
+%%
+override gimp_drawable_preview_draw_region kwargs
+static PyObject *
+_wrap_gimp_drawable_preview_draw_region(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    PyGimpPixelRgn *pypixelrgn;
+
+    static char *kwlist[] = {"drawable", NULL};
+
+    if(!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                    "O!:GimpDrawablePreview.draw_region",
+                                    kwlist, PyGimpPixelRgn_Type, &pypixelrgn))
+        return NULL;
+
+    gimp_drawable_preview_draw_region(GIMP_DRAWABLE_PREVIEW(self->obj), &pypixelrgn->pr);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+

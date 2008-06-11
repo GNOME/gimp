@@ -385,7 +385,7 @@ class Gradient(GimpNamedObject):
 
     segments = property(
         fget=lambda self: GradientSegmentRange(self, 0, 
-                               pdb.gimp_gradient_get_number_of_segments(self)),
+                         pdb.gimp_gradient_get_number_of_segments(self) - 1),
         fdel=lambda self:pdb.gimp_gradient_segment_range_delete(self, 0, -1),
         doc="""A gimp.GradientSegmentRange used to access the segemnts of the
                gradient.""")
@@ -493,7 +493,6 @@ class GradientSegment(object):
                                                     min(max(value, 0.0), 1.0))
         return (get, set)
 
-
 class GradientSegmentRange(object):
     
     def __init__(self, gradient, start, end):
@@ -506,7 +505,7 @@ class GradientSegmentRange(object):
                                                           self.start, self.end)
     
     def __len__(self):
-        return self.end - self.start
+        return self.end - self.start + 1
 
     def __getitem__(self, key):
         if isinstance(key, slice):
@@ -516,7 +515,7 @@ class GradientSegmentRange(object):
             if start > end:
                 start = end
             return GradientSegmentRange(self.gradient, start+self.start,
-                                        end+self.start)
+                                        end+self.start-1)
         elif isinstance(key, int):
             if key < 0:
                 key += len(self)
@@ -528,6 +527,9 @@ class GradientSegmentRange(object):
             raise TypeError
 
     def __delitem__(self, key):
+        # A gradient has at least one segment
+        if len(self.gradient) == 1:
+            return
         if isinstance(key, slice):
             start, end, step = key.indices(len(self))
             if step != 1:
@@ -543,7 +545,9 @@ class GradientSegmentRange(object):
             end = start + 1
         else:
             raise TypeError
-
+        # A gradient has at leat one segment. Trying to delete all fails.
+        if start == 0 and end == len(self.gradient):
+            start = 1
         pdb.gimp_gradient_segment_range_delete(self.gradient,
                                       self.start + start, self.start + end - 1)
 
