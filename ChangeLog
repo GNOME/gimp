@@ -1,5 +1,9 @@
 2008-06-11  Sven Neumann  <sven@gimp.org>
 
+	* app/config/Makefile.am: make test-config link properly.
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: use IT_PO_SUBDIR() to define the extra po
 	directories.  Removed extra AC_CONFIG_COMMANDS that became
 	obsolete by this change.

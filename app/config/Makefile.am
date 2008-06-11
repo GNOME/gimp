@@ -65,10 +65,11 @@ TESTS = test-config
 test_config_DEPENDENCIES = $(gimpconfig_libs)
 
 test_config_LDFLAGS = \
-	-u $(SYMPREFIX)xcf_init			\
-	-u $(SYMPREFIX)internal_procs_init	\
-	-u $(SYMPREFIX)gimp_coords_mix		\
-	-u $(SYMPREFIX)gimp_plug_in_manager_restore
+	-u $(SYMPREFIX)xcf_init				\
+	-u $(SYMPREFIX)internal_procs_init		\
+	-u $(SYMPREFIX)gimp_coords_mix			\
+	-u $(SYMPREFIX)gimp_plug_in_manager_restore	\
+	-u $(SYMPREFIX)gimp_image_map_config_get_type
 
 test_config_LDADD = \
 	../widgets/widgets-enums.o		\
@@ -83,8 +84,8 @@ test_config_LDADD = \
 	../vectors/libappvectors.a		\
 	../paint/libapppaint.a			\
 	../text/libapptext.a			\
-	libappconfig.a				\
 	../gegl/libappgegl.a			\
+	libappconfig.a				\
 	../paint-funcs/libapppaint-funcs.a	\
 	../composite/libappcomposite.a		\
 	../base/libappbase.a			\
@@ -95,6 +96,7 @@ test_config_LDADD = \
 	$(libgimpmath)				\
 	$(libgimpconfig)			\
 	$(libgimpbase)				\
+	$(CAIRO_LIBS)				\
 	$(PANGOFT2_LIBS)			\
 	$(GDK_PIXBUF_LIBS)			\
 	$(LIBART_LIBS)				\
