@@ -32,11 +32,11 @@
 #include "gimpoperationhuesaturation.h"
 
 
-static gboolean gimp_operation_hue_saturation_process (GeglOperation *operation,
-                                                       void          *in_buf,
-                                                       void          *out_buf,
-                                                       glong          samples,
-                                                       GeglRectangle *roi);
+static gboolean gimp_operation_hue_saturation_process (GeglOperation       *operation,
+                                                       void                *in_buf,
+                                                       void                *out_buf,
+                                                       glong                samples,
+                                                       const GeglRectangle *roi);
 
 
 G_DEFINE_TYPE (GimpOperationHueSaturation, gimp_operation_hue_saturation,
@@ -125,11 +125,11 @@ map_lightness (GimpHueSaturationConfig *config,
 }
 
 static gboolean
-gimp_operation_hue_saturation_process (GeglOperation *operation,
-                                       void          *in_buf,
-                                       void          *out_buf,
-                                       glong          samples,
-                                       GeglRectangle *roi)
+gimp_operation_hue_saturation_process (GeglOperation       *operation,
+                                       void                *in_buf,
+                                       void                *out_buf,
+                                       glong                samples,
+                                       const GeglRectangle *roi)
 {
   GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
   GimpHueSaturationConfig  *config = GIMP_HUE_SATURATION_CONFIG (point->config);

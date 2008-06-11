@@ -1,5 +1,19 @@
 2008-06-11  Sven Neumann  <sven@gimp.org>
 
+	* app/gegl/gimpoperationcolorbalance.c
+	* app/gegl/gimpoperationcolorize.c
+	* app/gegl/gimpoperationcurves.c
+	* app/gegl/gimpoperationdesaturate.c
+	* app/gegl/gimpoperationhuesaturation.c
+	* app/gegl/gimpoperationlevels.c
+	* app/gegl/gimpoperationposterize.c
+	* app/gegl/gimpoperationthreshold.c
+	* app/gegl/gimpoperationtilesink.c
+	* app/gegl/gimpoperationtilesource.c: added const to GeglRectangle*
+	argument.
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: fixed check for webkit zoom API. 
 
 2008-06-10  Sven Neumann  <sven@gimp.org>

@@ -83,7 +83,7 @@ gimp_operation_tile_source_class_init (GimpOperationTileSourceClass *klass)
   operation_class->description        = "GIMP TileManager source";
   operation_class->prepare            = gimp_operation_tile_source_prepare;
   operation_class->get_bounding_box   = gimp_operation_tile_source_get_bounding_box;
-  operation_class->get_cached_region = NULL; /* the default source is
+  operation_class->get_cached_region  = NULL; /* the default source is
                                                  expanding to agressivly
                                                  make use of available caching,
                                                  this behavior is at least a
@@ -238,7 +238,7 @@ gimp_operation_tile_source_process (GeglOperation       *operation,
        pr;
        pr = pixel_regions_process (pr))
     {
-      GeglRectangle rect = { srcPR.x, srcPR.y, srcPR.w, srcPR.h };
+      const GeglRectangle rect = { srcPR.x, srcPR.y, srcPR.w, srcPR.h };
 
       gegl_buffer_set (output, &rect, format, srcPR.data, srcPR.rowstride);
     }

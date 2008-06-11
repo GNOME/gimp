@@ -218,14 +218,13 @@ gimp_operation_tile_sink_process (GeglOperation       *operation,
        pr;
        pr = pixel_regions_process (pr))
     {
-      GeglRectangle rect = { destPR.x, destPR.y, destPR.w, destPR.h };
+      const GeglRectangle rect = { destPR.x, destPR.y, destPR.w, destPR.h };
 
       gegl_buffer_get (input,
                        1.0, &rect, format, destPR.data, destPR.rowstride);
     }
 
-  g_signal_emit (operation, tile_sink_signals[DATA_WRITTEN], 0,
-                 result);
+  g_signal_emit (operation, tile_sink_signals[DATA_WRITTEN], 0, result);
 
   return TRUE;
 }
