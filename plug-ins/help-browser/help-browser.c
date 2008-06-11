@@ -64,6 +64,8 @@ static gboolean  help_browser_show_help (const gchar      *help_domain,
                                          const gchar      *help_locales,
                                          const gchar      *help_id);
 
+static GimpHelpProgress * help_browser_progress_new (void);
+
 
 /*  local variables  */
 
@@ -248,13 +250,25 @@ help_browser_show_help (const gchar *help_domain,
 
   if (domain)
     {
-      GList          *locales = gimp_help_parse_locales (help_locales);
-      GimpHelpLocale *locale;
-      gchar          *uri;
-      gboolean        fatal_error;
+      GimpHelpProgress *progress = NULL;
+      GimpHelpLocale   *locale;
+      GList            *locales;
+      gchar            *uri;
+      gboolean          fatal_error;
 
-      uri = gimp_help_domain_map (domain, locales, help_id, NULL,
-                                  &locale, &fatal_error);
+      locales = gimp_help_parse_locales (help_locales);
+
+      if (! g_str_has_prefix (domain->help_uri, "file:"))
+        progress = help_browser_progress_new ();
+
+      uri = gimp_help_domain_map (domain, locales, help_id,
+                                  progress, &locale, &fatal_error);
+
+      if (progress)
+        gimp_help_progress_free (progress);
+
+      g_list_foreach (locales, (GFunc) g_free, NULL);
+      g_list_free (locales);
 
       if (uri)
         {
@@ -267,10 +281,42 @@ help_browser_show_help (const gchar *help_domain,
         {
           success = FALSE;
         }
-
-      g_list_foreach (locales, (GFunc) g_free, NULL);
-      g_list_free (locales);
     }
 
   return success;
+}
+
+
+static void
+help_browser_progress_start (const gchar *message,
+                             gboolean     cancelable,
+                             gpointer     user_data)
+{
+  gimp_progress_init (message);
+}
+
+static void
+help_browser_progress_update (gdouble  value,
+                              gpointer user_data)
+{
+  gimp_progress_update (value);
+}
+
+static void
+help_browser_progress_end (gpointer user_data)
+{
+  gimp_progress_end ();
+}
+
+static GimpHelpProgress *
+help_browser_progress_new (void)
+{
+  static const GimpHelpProgressVTable vtable =
+  {
+    help_browser_progress_start,
+    help_browser_progress_end,
+    help_browser_progress_update
+  };
+
+  return gimp_help_progress_new (&vtable, NULL);
 }

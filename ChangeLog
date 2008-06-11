@@ -1,5 +1,13 @@
 2008-06-11  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/help/help.c (load_help_idle): don't show progress for
+	local help lookups, they are fast enough.
+
+	* plug-ins/help-browser/help-browser.c: added the same progress
+	code here. Might want to move it to the dialog window later.
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: reverted last change (use of IT_PO_SUBDIR).
 
 2008-06-11  Sven Neumann  <sven@gimp.org>

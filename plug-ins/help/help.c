@@ -265,43 +265,48 @@ load_help_idle (gpointer data)
 
   if (domain)
     {
-      GimpHelpProgress *progress = load_help_progress_new ();
+      GimpHelpProgress *progress = NULL;
       GList            *locales;
-      gchar            *full_uri;
+      gchar            *uri;
       gboolean          fatal_error;
 
-      locales  = gimp_help_parse_locales (idle_help->help_locales);
-      full_uri = gimp_help_domain_map (domain, locales, idle_help->help_id,
-                                       progress, NULL, &fatal_error);
+      locales = gimp_help_parse_locales (idle_help->help_locales);
+
+      if (! g_str_has_prefix (domain->help_uri, "file:"))
+        progress = load_help_progress_new ();
+
+      uri = gimp_help_domain_map (domain, locales, idle_help->help_id,
+                                  progress, NULL, &fatal_error);
+
+      if (progress)
+        gimp_help_progress_free (progress);
 
       g_list_foreach (locales, (GFunc) g_free, NULL);
       g_list_free (locales);
 
-      if (full_uri)
+      if (uri)
         {
           GimpParam *return_vals;
           gint       n_return_vals;
 
 #ifdef GIMP_HELP_DEBUG
           g_printerr ("help: calling '%s' for '%s'\n",
-                      idle_help->procedure, full_uri);
+                      idle_help->procedure, uri);
 #endif
 
           return_vals = gimp_run_procedure (idle_help->procedure,
                                             &n_return_vals,
-                                            GIMP_PDB_STRING, full_uri,
+                                            GIMP_PDB_STRING, uri,
                                             GIMP_PDB_END);
 
           gimp_destroy_params (return_vals, n_return_vals);
 
-          g_free (full_uri);
+          g_free (uri);
         }
       else if (fatal_error)
         {
           g_main_loop_quit (main_loop);
         }
-
-      gimp_help_progress_free (progress);
     }
 
   g_free (idle_help->procedure);
