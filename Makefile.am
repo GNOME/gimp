@@ -70,19 +70,11 @@ EXTRA_DIST = \
 	config.h.win32		\
 	gimp-zip.in		\
 	gimpdefs.msc		\
-	intltool-extract.in	\
-	intltool-merge.in	\
-	intltool-update.in	\
 	makefile.msc		\
 	mkinstalldirs
 
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
-
-DISTCLEANFILES = \
-	intltool-extract	\
-	intltool-merge		\
-	intltool-update
 
 
 gimpinstall-@GIMP_TOOL_VERSION@:
