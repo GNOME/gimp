@@ -1,5 +1,9 @@
 2008-06-11  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: reverted last change (use of IT_PO_SUBDIR).
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
 	* desktop/gimp.desktop.in.in: removed deprecated field "Encoding".
 
 2008-06-11  Sven Neumann  <sven@gimp.org>

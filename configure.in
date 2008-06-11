@@ -407,13 +407,6 @@ fi
 ALL_LINGUAS="ar bg ca ca@valencia cs da de dz el en_CA en_GB eo es et eu fa fi fr ga gl gu he hu hr id is it ja km ko lt mk ms nb ne nl nn oc pa pl pt pt_BR ro ru rw sk sl sr sr@Latn sv tr tt uk vi xh yi zh_CN zh_TW"
 
 IT_PROG_INTLTOOL(0.35.5)
-
-IT_PO_SUBDIR([po-libgimp])
-IT_PO_SUBDIR([po-plug-ins])
-IT_PO_SUBDIR([po-python])
-IT_PO_SUBDIR([po-script-fu])
-IT_PO_SUBDIR([po-tips])
-
 AM_GLIB_GNU_GETTEXT
 
 
@@ -2077,6 +2070,13 @@ gimp-gimp_pkgconfig_version.pc:gimp.pc.in
 gimpthumb-gimp_pkgconfig_version.pc:gimpthumb.pc.in
 gimpui-gimp_pkgconfig_version.pc:gimpui.pc.in
 )
+
+AC_CONFIG_COMMANDS([sed-po-makefiles],
+[sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile
+sed -e "/POTFILES =/r po-python/POTFILES" po-python/Makefile.in > po-python/Makefile
+sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile
+sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile
+sed -e "/POTFILES =/r po-tips/POTFILES" po-tips/Makefile.in > po-tips/Makefile])
 
 AC_OUTPUT
 
