@@ -1,5 +1,10 @@
 2008-06-11  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: removed redundant calls to AC_MSG_RESULT() from
+	inside PKG_CHECK_MODULES().
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
 	* cursors/Makefile.am (EXTRA_DIST): added missing modifier-select
 	XBM files.
 
