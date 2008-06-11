@@ -1,5 +1,9 @@
 2008-06-11  Sven Neumann  <sven@gimp.org>
 
+	* desktop/gimp.desktop.in.in: removed deprecated field "Encoding".
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
 	* app/config/Makefile.am: make test-config link properly.
 
 2008-06-11  Sven Neumann  <sven@gimp.org>
