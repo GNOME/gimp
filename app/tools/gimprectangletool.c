@@ -1077,12 +1077,11 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
         {
           gchar *aspect_text;
 
-          aspect_text = g_strdup_printf ("  %.2f",
-                                         w / (gdouble) h);
+          aspect_text = g_strdup_printf ("  (1:%.2f)", w / (gdouble) h);
 
           gimp_tool_push_status_coords (tool, display,
-                                        _("Rectangle: "), w, " × ", h, aspect_text);
-
+                                        _("Rectangle: "),
+                                        w, " × ", h, aspect_text);
           g_free (aspect_text);
         }
     }
