@@ -350,9 +350,7 @@ gimp_help_call (Gimp         *gimp,
         /*  FIXME: error msg  */
         return;
 
-      n_domains = gimp_plug_in_manager_get_help_domains (gimp->plug_in_manager,
-                                                         &help_domains,
-                                                         &help_uris);
+      n_domains = gimp_help_get_help_domains (gimp, &help_domains, &help_uris);
 
       args = gimp_procedure_get_arguments (procedure);
       gimp_value_array_truncate (args, 4);
