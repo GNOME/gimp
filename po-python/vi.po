@@ -1,36 +1,313 @@
-# Vietnamese translation for GIMP Script-FU.
-# Copyright © 2006 Gnome i18n Project for Vietnamese.
-# T.M.Thanh <tmthanh@yahoo.com>, 2002.
-# Clytie Siddall <clytie@riverland.net.au>, 2005-2006.
-# 
+# Vietnamese translation for GIMP Python.
+# Copyright © 2008 Free Software Foundation, Inc.
+# Clytie Siddall <clytie@riverland.net.au>, 2008.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python Gnome HEAD\n"
+"Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-13 21:07+0200\n"
-"PO-Revision-Date: 2006-08-23 20:30+0930\n"
+"POT-Creation-Date: 2007-11-01 03:28+0000\n"
+"PO-Revision-Date: 2008-06-12 22:55+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
-"Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
+"Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: LocFactoryEditor 1.6fc1\n"
+"X-Generator: LocFactoryEditor 1.7b3\n"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+#: ../plug-ins/pygimp/gimpfu.py:380
+msgid "Missing exception information"
+msgstr "Thiếu thông tin ngoại lệ"
+
+#: ../plug-ins/pygimp/gimpfu.py:389
+#, python-format
+msgid "An error occured running %s"
+msgstr "Gặp lỗi khi chạy « %s »"
+
+#: ../plug-ins/pygimp/gimpfu.py:400
+msgid "_More Information"
+msgstr "Thông tin thê_m"
+
+#: ../plug-ins/pygimp/gimpfu.py:506
+#: ../plug-ins/pygimp/gimpfu.py:518
+#: ../plug-ins/pygimp/gimpfu.py:524
+msgid "No"
+msgstr "Không"
+
+#: ../plug-ins/pygimp/gimpfu.py:516
+#: ../plug-ins/pygimp/gimpfu.py:524
+msgid "Yes"
+msgstr "Có"
+
+#: ../plug-ins/pygimp/gimpfu.py:558
+#: ../plug-ins/pygimp/gimpui.py:222
+msgid "Python-Fu File Selection"
+msgstr "Lựa chọn tập tin Python-Fu"
+
+#: ../plug-ins/pygimp/gimpfu.py:569
+msgid "Python-Fu Folder Selection"
+msgstr "Lựa chọn thư mục Python-Fu"
+
+#: ../plug-ins/pygimp/gimpfu.py:659
+#, python-format
+msgid "Invalid input for '%s'"
+msgstr "Dữ liệu nhập không hợp lệ cho « %s »"
+
+#: ../plug-ins/pygimp/gimpui.py:175
+msgid "Python-Fu Color Selection"
+msgstr "Lựa chọn màu sắc Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+msgid "Saving as colored XHTML"
+msgstr "Đang lưu dạng XHTML màu"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+msgid "Save as colored XHTML"
+msgstr "Lưu dạng XHTML màu"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+msgid "Colored XHTML"
+msgstr "XHTML màu"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+msgid "Character _source"
+msgstr "N_guồn ký tự"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+msgid "Source code"
+msgstr "Mã nguồn"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+msgid "Text file"
+msgstr "Tập tin văn bản"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+msgid "Entry box"
+msgstr "Hộp nhập liệu"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+msgid "_File to read or characters to use"
+msgstr "_Tập tin cần đọc hay các ký tự cần dùng"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+msgid "Fo_nt size in pixels"
+msgstr "Kích cỡ phô_ng chữ (theo điểm ảnh)"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
+msgid "_Write a separate CSS file"
+msgstr "_Ghi tập tin sơ CSS riêng"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
 msgstr "Bàn giao tiếp Python"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
 msgid "_Browse..."
 msgstr "_Duyệt..."
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
-#, fuzzy
-msgid "Gimp-Python Console"
-msgstr "Bàn giao tiếp Python"
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
+msgid "Python Procedure Browser"
+msgstr "Bộ duyệt Thủ tục Python"
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
-#, fuzzy
-msgid "Interactive Python Development"
-msgstr "Bàn giao tiếp tương tác để phát triển Python"
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Không thể mở « %s » để ghi: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Không thể ghi vào « %s »: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
+msgid "Save Python-Fu Console Output"
+msgstr "Lưu kết xuất bàn giao tiếp Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
+msgid "Interactive Gimp-Python interpreter"
+msgstr "Bộ dịch GIMP-Python tương tác"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
+msgid "_Console"
+msgstr "_Bản giao tiếp"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:52
+msgid "Add a layer of fog"
+msgstr "Thêm một lớp sương mù"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:57
+msgid "_Fog..."
+msgstr "_Sương mù..."
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+msgid "_Layer name"
+msgstr "Tên _lớp"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+msgid "Clouds"
+msgstr "Mây"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+msgid "_Fog color"
+msgstr "Màu _sương mù"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+msgid "_Turbulence"
+msgstr "_Hỗn loạn"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:65
+msgid "Op_acity"
+msgstr "Đụ_c:"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+msgid "Offset the colors in a palette"
+msgstr "Bù màu sắc trong bảng chọn"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+msgid "_Offset Palette..."
+msgstr "_Bảng chọn bù..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+msgid "Palette"
+msgstr "Bảng chọn"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
+msgid "Off_set"
+msgstr "_Bù"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+msgid "Sort the colors in a palette"
+msgstr "Sắp xếp màu sắc trong bảng chọn"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+msgid "_Sort Palette..."
+msgstr "Bảng chọn _sắp xếp..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+msgid "Color _model"
+msgstr "_Mẫu màu"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "RGB"
+msgstr "RGB"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+msgid "HSV"
+msgstr "HSV"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+msgid "Channel to _sort"
+msgstr "Kênh cần _sắp xếp"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+msgid "Red or Hue"
+msgstr "Đỏ hay Sắc màu"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+msgid "Green or Saturation"
+msgstr "Lục hay Bão hòa"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+msgid "Blue or Value"
+msgstr "Xanh hay Giá trị"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+msgid "_Ascending"
+msgstr "_Tăng dần"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "Tạo một dải màu lặp lại dùng màu sắc từ bảng chọn"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
+msgid "Palette to _Repeating Gradient"
+msgstr "Bảng chọn tới dải màu _lặp lại"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
+msgid "Create a gradient using colors from the palette"
+msgstr "Tạo một dải màu dùng màu sắc từ bảng chọn"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
+msgid "Palette to _Gradient"
+msgstr "Bảng chọn tới _dải màu"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
+msgid "Slice"
+msgstr "Cắt ra"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr "Cắt một ảnh theo các nét dẫn, tạo ảnh và một đoạn bảng HTML"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
+msgid "_Slice..."
+msgstr "_Cắc ra..."
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+msgid "Path for HTML export"
+msgstr "Đường dẫn xuất dạng HTML"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+msgid "Filename for export"
+msgstr "Tên tập tin để xuất"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+msgid "Image name prefix"
+msgstr "Tiền tố tên ảnh"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+msgid "Image format"
+msgstr "Định dạng ảnh"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+msgid "Separate image folder"
+msgstr "Thư mục ảnh riêng"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+msgid "Folder for image export"
+msgstr "Thư mục để xuất ảnh"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Space between table elements"
+msgstr "Khoảng cách giữa các ô bảng"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+msgid "Javascript for onmouseover and clicked"
+msgstr ""
+"Javascript cho onmouseover và cú nhấn"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+msgid "Skip animation for table caps"
+msgstr "Bỏ qua hoạt họa chữ hoa bảng"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+msgid "Add a drop shadow to a layer, and optionally bevel it"
+msgstr "Thêm một bóng thả vào lớp, tùy chọn cũng làm cho xiên góc"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+msgid "_Drop Shadow and Bevel..."
+msgstr "_Bóng thả và cạnh xiên..."
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+msgid "_Shadow blur"
+msgstr "_Mờ bóng"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+msgid "_Bevel"
+msgstr "Cạnh _xiên"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+msgid "_Drop shadow"
+msgstr "_Bóng thả"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+msgid "Drop shadow _X displacement"
+msgstr "Khoảng bù _X của bóng thả"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
+msgid "Drop shadow _Y displacement"
+msgstr "Khoảng bù _Y của bóng thả"
