@@ -39,7 +39,7 @@ LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-help_browser_sources = \
+help_browser_SOURCES = \
 	gimpthrobber.c		\
 	gimpthrobber.h		\
 	gimpthrobberaction.c	\
@@ -49,17 +49,3 @@ help_browser_sources = \
 	dialog.h		\
 	uri.c			\
 	uri.h
-
-help_browser_built_sources = logo-pixbuf.h
-dialog.c: $(help_browser_built_sources)
-
-help_browser_SOURCES = \
-	$(help_browser_built_sources) $(help_browser_sources)
-
-
-$(srcdir)/logo-pixbuf.h: wilber-reading.png
-	$(GDK_PIXBUF_CSOURCE) --raw --name=logo_data $< > $(@F)
-
-EXTRA_DIST = wilber-reading.png
-
-CLEANFILES = logo-pixbuf.h

@@ -1,3 +1,21 @@
+2008-06-12  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help-browser/Makefile.am
+	* plug-ins/help-browser/wilber-reading.svg
+	* plug-ins/help-browser/wilber-reading.png: removed here...
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-user-manual.svg
+	* themes/Default/images/stock-user-manual-16.png
+	* themes/Default/images/stock-user-manual-24.png
+	* themes/Default/images/stock-user-manual-32.png
+	* themes/Default/images/stock-user-manual-64.png
+	* libgimpwidgets/gimpstock.[ch]: ... and added as stock icon.
+
+	* plug-ins/help-browser/dialog.c
+	* plug-ins/help-browser/gimpthrobber.c: changed accordingly.
+	Set the toolbar style to GTK_TOOLBAR_ICONS.
+
 2008-06-12  Michael Natterer  <mitch@gimp.org>
 
 	* modules/controller_midi.c: applied patch from S. Fielding which

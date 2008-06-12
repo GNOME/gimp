@@ -55,8 +55,6 @@
 #include "dialog.h"
 #include "uri.h"
 
-#include "logo-pixbuf.h"
-
 #include "libgimp/stdplugins-intl.h"
 
 #ifndef _O_BINARY
@@ -107,6 +105,8 @@ static void       copy_location_callback (GtkAction         *action,
 
 static void       update_actions         (void);
 
+static void       window_set_icons       (GtkWidget         *window);
+
 static void       row_activated          (GtkTreeView       *tree_view,
                                           GtkTreePath       *path,
                                           GtkTreeViewColumn *column);
@@ -150,16 +150,15 @@ static GdkCursor    *busy_cursor    = NULL;
 void
 browser_dialog_open (void)
 {
-  GtkWidget       *window;
-  GtkWidget       *vbox;
-  GtkWidget       *toolbar;
-  GtkWidget       *paned;
-  GtkWidget       *scrolled;
-  GtkWidget       *button;
-  GtkToolItem     *item;
-  GtkAction       *action;
-  GdkPixbuf       *pixbuf;
-  DialogData       data = { 720, 560, 240, 1.0 };
+  GtkWidget   *window;
+  GtkWidget   *vbox;
+  GtkWidget   *toolbar;
+  GtkWidget   *paned;
+  GtkWidget   *scrolled;
+  GtkWidget   *button;
+  GtkToolItem *item;
+  GtkAction   *action;
+  DialogData   data = { 720, 560, 240, 1.0 };
 
   gimp_ui_init ("helpbrowser", TRUE);
 
@@ -176,9 +175,7 @@ browser_dialog_open (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  pixbuf = gdk_pixbuf_new_from_inline (-1, logo_data, FALSE, NULL);
-  gtk_window_set_icon (GTK_WINDOW (window), pixbuf);
-  g_object_unref (pixbuf);
+  window_set_icons (window);
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (window), vbox);
@@ -187,6 +184,7 @@ browser_dialog_open (void)
   ui_manager = ui_manager_new (window);
 
   toolbar = gtk_ui_manager_get_widget (ui_manager, "/help-browser-toolbar");
+  gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS);
   gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, FALSE, 0);
   gtk_widget_show (toolbar);
 
@@ -218,8 +216,6 @@ browser_dialog_open (void)
 
   button = gtk_ui_manager_get_widget (ui_manager,
                                       "/help-browser-toolbar/website");
-  gimp_throbber_set_image (GIMP_THROBBER (button),
-                           gtk_image_new_from_pixbuf (pixbuf));
 
   /*  the horizontal paned  */
   paned = gtk_hpaned_new ();
@@ -311,6 +307,27 @@ browser_dialog_load (const gchar *uri)
   select_index (uri);
 
   gtk_window_present (GTK_WINDOW (gtk_widget_get_toplevel (view)));
+}
+
+static void
+window_set_icons (GtkWidget *window)
+{
+  const GtkIconSize sizes[] = { GTK_ICON_SIZE_MENU,
+                                GTK_ICON_SIZE_BUTTON,
+                                GTK_ICON_SIZE_DND,
+                                GTK_ICON_SIZE_DIALOG };
+  GList *list = NULL;
+  gint   i;
+
+  for (i = 0; i < G_N_ELEMENTS (sizes); i++)
+    list = g_list_prepend (list,
+                           gtk_widget_render_icon (window,
+                                                   GIMP_STOCK_USER_MANUAL,
+                                                   sizes[i], NULL));
+
+  gtk_window_set_icon_list (GTK_WINDOW (window), list);
+  g_list_foreach (list, (GFunc) g_object_unref, NULL);
+  g_list_free (list);
 }
 
 static void
@@ -507,12 +524,12 @@ ui_manager_new (GtkWidget *window)
     },
     {
       "reload", GTK_STOCK_REFRESH,
-       N_("Reload"), "<control>R", N_("Reload current page"),
+       N_("_Reload"), "<control>R", N_("Reload current page"),
       G_CALLBACK (reload_callback)
     },
     {
       "stop", GTK_STOCK_CANCEL,
-       N_("Stop"), "Escape", N_("Stop loading this page"),
+       N_("_Stop"), "Escape", N_("Stop loading this page"),
       G_CALLBACK (stop_callback)
     },
     {
@@ -522,7 +539,7 @@ ui_manager_new (GtkWidget *window)
     },
     {
       "copy-location", GTK_STOCK_COPY,
-      N_("Copy location"), "",
+      N_("C_opy location"), "",
       N_("Copy the location of this page to the clipboard"),
       G_CALLBACK (copy_location_callback)
     },
@@ -559,7 +576,7 @@ ui_manager_new (GtkWidget *window)
   action = gimp_throbber_action_new ("website",
                                      "docs.gimp.org",
                                      _("Visit the GIMP documentation website"),
-                                     GIMP_STOCK_WILBER);
+                                     GIMP_STOCK_USER_MANUAL);
   g_signal_connect_closure (action, "activate",
                             g_cclosure_new (G_CALLBACK (website_callback),
                                             NULL, NULL),

@@ -199,7 +199,7 @@ gimp_throbber_construct_contents (GtkToolItem *tool_item)
   else
     {
       image = gtk_image_new_from_stock (button->priv->stock_id,
-                                        GTK_ICON_SIZE_BUTTON);
+                                        GTK_ICON_SIZE_DND);
     }
 
   gtk_container_add (GTK_CONTAINER (button->priv->button), image);
