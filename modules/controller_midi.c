@@ -869,17 +869,20 @@ midi_alsa_dispatch (GSource     *source,
       switch (event->type)
         {
         case SND_SEQ_EVENT_NOTEON:
-          midi_event (midi, midi->channel, event->data.note.note,
+          midi_event (midi, event->data.note.channel,
+                      event->data.note.note,
                       (gdouble) event->data.note.velocity / 127.0);
           break;
 
         case SND_SEQ_EVENT_NOTEOFF:
-          midi_event (midi, midi->channel, event->data.note.note + 128,
+          midi_event (midi, event->data.note.channel,
+                      event->data.note.note + 128,
                       (gdouble) event->data.note.velocity / 127.0);
           break;
 
         case SND_SEQ_EVENT_CONTROLLER:
-          midi_event (midi, midi->channel, event->data.control.param + 256,
+          midi_event (midi, event->data.control.channel,
+                      event->data.control.param + 256,
                       (gdouble) event->data.control.value / 127.0);
           break;
 

@@ -1,3 +1,11 @@
+2008-06-12  Michael Natterer  <mitch@gimp.org>
+
+	Merged from trunk:
+
+	* modules/controller_midi.c: applied patch from S. Fielding which
+	passes the right MIDI channel from the ALSA event to midi_event().
+	Fixes bug #537960.
+
 2008-06-04  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
