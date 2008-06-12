@@ -1,3 +1,9 @@
+2008-06-12  Michael Natterer  <mitch@gimp.org>
+
+	* modules/controller_midi.c: applied patch from S. Fielding which
+	passes the right MIDI channel from the ALSA event to midi_event().
+	Fixes bug #537960.
+
 2008-06-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/help-browser/dialog.c: use GTK_STOCK_HOME for the
@@ -167,7 +173,7 @@
 	* app/gegl/gimpoperationdesaturate.h
 	* app/tools/gimprectangletool.c
 	* app/widgets/gimpradioaction.h
-	* app/widgets/gimptoggleaction.h: various fixes tpo make gtk-doc
+	* app/widgets/gimptoggleaction.h: various fixes to make gtk-doc
 	happy.
 
 2008-06-04  Sven Neumann  <sven@gimp.org>
