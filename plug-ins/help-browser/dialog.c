@@ -92,7 +92,7 @@ static void       reload_callback        (GtkAction         *action,
                                           gpointer           data);
 static void       stop_callback          (GtkAction         *action,
                                           gpointer           data);
-static void       index_callback         (GtkAction         *action,
+static void       home_callback          (GtkAction         *action,
                                           gpointer           data);
 static void       zoom_in_callback       (GtkAction         *action,
                                           gpointer           data);
@@ -516,13 +516,14 @@ ui_manager_new (GtkWidget *window)
       G_CALLBACK (stop_callback)
     },
     {
-      "index", GTK_STOCK_INDEX,
+      "home", GTK_STOCK_HOME,
       NULL, "<alt>Home", N_("Go to the index page"),
-      G_CALLBACK (index_callback)
+      G_CALLBACK (home_callback)
     },
     {
       "copy-location", GTK_STOCK_COPY,
-      N_("Copy location"), "", N_("Copy the location of this page to the clipboard"),
+      N_("Copy location"), "",
+      N_("Copy the location of this page to the clipboard"),
       G_CALLBACK (copy_location_callback)
     },
     {
@@ -578,7 +579,7 @@ ui_manager_new (GtkWidget *window)
                                      "  <toolbar name=\"help-browser-toolbar\">"
                                      "    <toolitem action=\"reload\" />"
                                      "    <toolitem action=\"stop\" />"
-                                     "    <toolitem action=\"index\" />"
+                                     "    <toolitem action=\"home\" />"
                                      "    <separator name=\"space\" />"
                                      "    <toolitem action=\"website\" />"
                                      "  </toolbar>"
@@ -601,7 +602,7 @@ ui_manager_new (GtkWidget *window)
                                      "    <menuitem action=\"reload\" />"
                                      "    <menuitem action=\"stop\" />"
                                      "    <separator />"
-                                     "    <menuitem action=\"index\" />"
+                                     "    <menuitem action=\"home\" />"
                                      "    <menuitem action=\"copy-location\" />"
 #ifdef HAVE_WEBKIT_ZOOM_API
                                      "    <separator />"
@@ -652,8 +653,8 @@ stop_callback (GtkAction *action,
 }
 
 static void
-index_callback (GtkAction *action,
-                gpointer   data)
+home_callback (GtkAction *action,
+               gpointer   data)
 {
   GtkTreeModel   *model  = gtk_tree_view_get_model (GTK_TREE_VIEW (tree_view));
   GimpHelpDomain *domain = g_object_get_data (G_OBJECT (model), "domain");

@@ -1,5 +1,14 @@
 2008-06-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/help-browser/dialog.c: use GTK_STOCK_HOME for the
+	button that navigates to the index page.
+
+	* plug-ins/help-browser/gimpthrobber.c
+	(gimp_throbber_construct_contents): deal better with toolbar style
+	GTK_TOOLBAR_ICONS.
+
+2008-06-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help-browser/dialog.c: removed the title
 	combo-box. Instead display the title in the window title. Added
 	"copy-location" action to the right-click menu as a replacement

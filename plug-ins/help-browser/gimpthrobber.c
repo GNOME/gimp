@@ -169,8 +169,9 @@ gimp_throbber_init (GimpThrobber *button)
 static void
 gimp_throbber_construct_contents (GtkToolItem *tool_item)
 {
-  GimpThrobber *button = GIMP_THROBBER (tool_item);
-  GtkWidget    *image;
+  GimpThrobber    *button = GIMP_THROBBER (tool_item);
+  GtkWidget       *image;
+  GtkToolbarStyle  style;
 
   if (button->priv->image && button->priv->image->parent)
     gtk_container_remove (GTK_CONTAINER (button->priv->image->parent),
@@ -179,10 +180,17 @@ gimp_throbber_construct_contents (GtkToolItem *tool_item)
   if (gtk_bin_get_child (GTK_BIN (button->priv->button)))
     gtk_widget_destroy (gtk_bin_get_child (GTK_BIN (button->priv->button)));
 
-  if (gtk_tool_item_get_toolbar_style (tool_item) == GTK_TOOLBAR_TEXT)
+  style = gtk_tool_item_get_toolbar_style (tool_item);
+
+  if (style == GTK_TOOLBAR_TEXT)
     {
       image = gtk_image_new_from_stock (button->priv->stock_id,
                                         GTK_ICON_SIZE_MENU);
+    }
+  else if (style == GTK_TOOLBAR_ICONS)
+    {
+      image = gtk_image_new_from_stock (button->priv->stock_id,
+                                        GTK_ICON_SIZE_LARGE_TOOLBAR);
     }
   else if (button->priv->image)
     {
