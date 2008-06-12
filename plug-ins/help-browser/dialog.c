@@ -66,10 +66,11 @@
 
 typedef struct
 {
-  gint     width;
-  gint     height;
-  gint     paned_position;
-  gdouble  zoom;
+  gint      width;
+  gint      height;
+  gint      paned_position;
+  gboolean  show_index;
+  gdouble   zoom;
 } DialogData;
 
 enum
@@ -92,6 +93,10 @@ static void       stop_callback          (GtkAction         *action,
                                           gpointer           data);
 static void       home_callback          (GtkAction         *action,
                                           gpointer           data);
+static void       copy_location_callback (GtkAction         *action,
+                                          gpointer           data);
+static void       show_index_callback    (GtkAction         *action,
+                                          gpointer           data);
 static void       zoom_in_callback       (GtkAction         *action,
                                           gpointer           data);
 static void       zoom_out_callback      (GtkAction         *action,
@@ -99,8 +104,6 @@ static void       zoom_out_callback      (GtkAction         *action,
 static void       close_callback         (GtkAction         *action,
                                           gpointer           data);
 static void       website_callback       (GtkAction         *action,
-                                          gpointer           data);
-static void       copy_location_callback (GtkAction         *action,
                                           gpointer           data);
 
 static void       update_actions         (void);
@@ -138,6 +141,7 @@ static void       select_index           (const gchar       *uri);
 static GHashTable   *uri_hash_table = NULL;
 
 static GtkWidget    *view           = NULL;
+static GtkWidget    *sidebar        = NULL;
 static GtkWidget    *tree_view      = NULL;
 static GtkUIManager *ui_manager     = NULL;
 static GtkWidget    *button_prev    = NULL;
@@ -158,7 +162,7 @@ browser_dialog_open (void)
   GtkWidget   *button;
   GtkToolItem *item;
   GtkAction   *action;
-  DialogData   data = { 720, 560, 240, 1.0 };
+  DialogData   data = { 720, 560, 240, TRUE, 1.0 };
 
   gimp_ui_init ("helpbrowser", TRUE);
 
@@ -227,7 +231,11 @@ browser_dialog_open (void)
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_paned_add1 (GTK_PANED (paned), scrolled);
   gtk_paned_set_position (GTK_PANED (paned), data.paned_position);
-  gtk_widget_show (scrolled);
+
+  sidebar = scrolled;
+
+  if (data.show_index)
+    gtk_widget_show (sidebar);
 
   tree_view = gtk_tree_view_new ();
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tree_view), FALSE);
@@ -565,13 +573,29 @@ ui_manager_new (GtkWidget *window)
     }
   };
 
+  static const GtkToggleActionEntry toggle_actions[] =
+  {
+    {
+      "show-index", NULL,
+      N_("S_how Index"), "<control>I",
+      N_("Toggle the visibility of the sidebar"),
+      G_CALLBACK (show_index_callback), FALSE
+    }
+  };
+
   GtkUIManager   *ui_manager = gtk_ui_manager_new ();
   GtkActionGroup *group      = gtk_action_group_new ("Actions");
   GtkAction      *action;
   GError         *error      = NULL;
 
   gtk_action_group_set_translation_domain (group, NULL);
-  gtk_action_group_add_actions (group, actions, G_N_ELEMENTS (actions), NULL);
+  gtk_action_group_add_actions (group,
+                                actions, G_N_ELEMENTS (actions),
+                                NULL);
+  gtk_action_group_add_toggle_actions (group,
+                                       toggle_actions,
+                                       G_N_ELEMENTS (toggle_actions),
+                                       NULL);
 
   action = gimp_throbber_action_new ("website",
                                      "docs.gimp.org",
@@ -621,6 +645,7 @@ ui_manager_new (GtkWidget *window)
                                      "    <separator />"
                                      "    <menuitem action=\"home\" />"
                                      "    <menuitem action=\"copy-location\" />"
+                                     "    <menuitem action=\"show-index\" />"
 #ifdef HAVE_WEBKIT_ZOOM_API
                                      "    <separator />"
                                      "    <menuitem action=\"zoom-in\" />"
@@ -693,9 +718,10 @@ static void
 copy_location_callback (GtkAction *action,
                         gpointer   data)
 {
-  WebKitWebFrame *frame = webkit_web_view_get_main_frame (WEBKIT_WEB_VIEW (view));
+  WebKitWebFrame *frame;
   const gchar    *uri;
 
+  frame = webkit_web_view_get_main_frame (WEBKIT_WEB_VIEW (view));
   uri = webkit_web_frame_get_uri (frame);
 
   if (uri)
@@ -705,6 +731,20 @@ copy_location_callback (GtkAction *action,
       clipboard = gtk_clipboard_get_for_display (gtk_widget_get_display (view),
                                                  GDK_SELECTION_CLIPBOARD);
       gtk_clipboard_set_text (clipboard, uri, -1);
+    }
+}
+
+static void
+show_index_callback (GtkAction *action,
+                     gpointer   data)
+{
+  if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)))
+    {
+      gtk_widget_show (sidebar);
+    }
+  else
+    {
+      gtk_widget_hide (sidebar);
     }
 }
 
@@ -839,6 +879,12 @@ update_actions (void)
 
   frame = webkit_web_view_get_main_frame (WEBKIT_WEB_VIEW (view));
   gtk_action_set_sensitive (action, webkit_web_frame_get_uri (frame) != NULL);
+
+  /*  update the show-index action  */
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/help-browser-popup/show-index");
+  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
+                                GTK_WIDGET_VISIBLE (sidebar));
 }
 
 static void
@@ -876,11 +922,12 @@ static void
 dialog_unmap (GtkWidget *window,
               GtkWidget *paned)
 {
-  DialogData  data;
+  DialogData data;
 
   gtk_window_get_size (GTK_WINDOW (window), &data.width, &data.height);
 
   data.paned_position = gtk_paned_get_position (GTK_PANED (paned));
+  data.show_index     = GTK_WIDGET_VISIBLE (sidebar);
 
 #ifdef HAVE_WEBKIT_ZOOM_API
   data.zoom = (view ?
