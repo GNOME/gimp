@@ -40,7 +40,8 @@ libappconfig_a_SOURCES = \
 	gimpxmlparser.h
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Config\"
+	-DG_LOG_DOMAIN=\"Gimp-Config\"	\
+	-DGIMP_APP_VERSION_STRING=\"$(GIMP_APP_VERSION)\"
 
 INCLUDES = \
 	-I$(top_builddir)	\

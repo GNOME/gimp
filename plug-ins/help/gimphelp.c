@@ -55,9 +55,7 @@ gimp_help_init (gint    num_domain_names,
                 gint    num_domain_uris,
                 gchar **domain_uris)
 {
-  const gchar *default_env_domain_uri;
-  gchar       *default_domain_uri;
-  gint         i;
+  gint i;
 
   if (num_domain_names != num_domain_uris)
     {
@@ -66,30 +64,8 @@ gimp_help_init (gint    num_domain_names,
       return FALSE;
     }
 
-  /*  set default values  */
-  default_env_domain_uri = g_getenv (GIMP_HELP_ENV_URI);
-
-  if (default_env_domain_uri)
-    {
-      default_domain_uri = g_strdup (default_env_domain_uri);
-    }
-  else
-    {
-      gchar *help_root = g_build_filename (gimp_data_directory (),
-                                           GIMP_HELP_PREFIX,
-                                           NULL);
-
-      default_domain_uri = g_filename_to_uri (help_root, NULL, NULL);
-
-      g_free (help_root);
-    }
-
-  gimp_help_register_domain (GIMP_HELP_DEFAULT_DOMAIN, default_domain_uri);
-
   for (i = 0; i < num_domain_names; i++)
     gimp_help_register_domain (domain_names[i], domain_uris[i]);
-
-  g_free (default_domain_uri);
 
   return TRUE;
 }
@@ -160,7 +136,7 @@ gimp_help_parse_locales (const gchar *help_locales)
   if (*s)
     locales = g_list_append (locales, g_strdup (s));
 
-  /*  if the list doesn't contain the default domain yet, append it  */
+  /*  if the list doesn't contain the default locale yet, append it  */
   for (list = locales; list; list = list->next)
     if (strcmp ((const gchar *) list->data, GIMP_HELP_DEFAULT_LOCALE) == 0)
       break;

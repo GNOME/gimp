@@ -1,5 +1,20 @@
 2008-06-12  Sven Neumann  <sven@gimp.org>
 
+	Added basic support for using the online user manual:
+
+	* app/widgets/gimphelp.c
+	* plug-ins/help/gimphelp.c: moved some help logic to the core. The
+	default help domain is now constructed in the core and passed to
+	the help plug-ins just like the plug-in help domains.
+
+	* app/config/Makefile.am
+	* app/config/gimprc-blurbs.h
+	* app/config/gimpguiconfig.[ch]: added gimprc properties to
+	specify the location of the online user manual and to decide if it
+	should be used instead of a locally installed copy.
+
+2008-06-12  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_motion):
 	try to make the display of the aspect ratio somewhat more obvious.
 
