@@ -1,3 +1,8 @@
+2008-06-13  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/preferences-dialog.c: added a preliminary user
+	interface to control the 'user-manual-online' property.
+
 2008-06-13  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_motion):
