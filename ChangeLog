@@ -1,3 +1,8 @@
+2008-06-13  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptextoptions.c (gimp_text_options_class_init):
+	we need to define the 'highlight' property here as well.
+
 2008-06-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/Makefile.am
