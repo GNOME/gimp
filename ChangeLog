@@ -1,5 +1,11 @@
 2008-06-13  Sven Neumann  <sven@gimp.org>
 
+	* configure.in
+	* app/sanity.c (BABL_REQUIRED_MICRO): depend on the newest
+	released babl, version 0.0.22.
+
+2008-06-13  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help-browser/dialog.c: added a toggle action to
 	show/hide the index sidebar, bound to Ctrl-I.
 
