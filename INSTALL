@@ -28,8 +28,8 @@ header files installed.
   1. You need to have installed a recent version of pkg-config available
      from http://www.freedesktop.org/software/pkgconfig/.  
 
-  2. You need to have GEGL version 0.0.17 or newer and babl version
-     0.0.21 or newer. You can get it from http://gegl.org/ or check
+  2. You need to have GEGL version 0.0.18 or newer and babl version
+     0.0.22 or newer. You can get it from http://gegl.org/ or check
      it out from the subversion repository:
 
        http://svn.gnome.org/svn/babl/trunk

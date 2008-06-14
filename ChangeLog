@@ -1,3 +1,10 @@
+2008-06-14  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* configure.in (gegl_required_version)
+	* app/sanity.c (GEGL_REQUIRED_MICRO): depend on the newest
+	released GEGL, version 0.0.18.
+
 2008-06-13  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/preferences-dialog.c: added a preliminary user
@@ -29,7 +36,7 @@
 
 2008-06-13  Sven Neumann  <sven@gimp.org>
 
-	* configure.in
+	* configure.in (babl_required_version)
 	* app/sanity.c (BABL_REQUIRED_MICRO): depend on the newest
 	released babl, version 0.0.22.
 
