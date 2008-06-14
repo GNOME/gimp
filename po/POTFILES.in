@@ -420,6 +420,7 @@ app/widgets/gimpprogressdialog.c
 app/widgets/gimppropwidgets.c
 app/widgets/gimpselectiondata.c
 app/widgets/gimpselectioneditor.c
+app/widgets/gimpsettingsbox.c
 app/widgets/gimpsizebox.c
 app/widgets/gimpstrokeeditor.c
 app/widgets/gimptemplateeditor.c
