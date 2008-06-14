@@ -375,7 +375,7 @@
 
 2008-05-30  Martin Nordholts  <martinn@svn.gnome.org>
 
-	Made moving the selection mask in the varoius ways automatically
+	Made moving the selection mask in the various ways automatically
 	commit any pending rectangle/ellipse selection. Fixes bug #349340.
 
 	* app/tools/gimprectangleselecttool.c
