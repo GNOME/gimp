@@ -46,6 +46,12 @@ typedef struct {
     gint32 ID;
 } PyGimpVectors;
 
+typedef struct {
+    PyObject_HEAD
+    GimpPixelRgn pr;
+    PyGimpDrawable *drawable; /* keep the drawable around */
+} PyGimpPixelRgn;
+
 struct _PyGimp_Functions {
     PyTypeObject *Image_Type;
     PyObject *(* image_new)(gint32 ID);
@@ -66,6 +72,11 @@ struct _PyGimp_Functions {
     PyObject *(* vectors_new)(gint32 ID);
 
     PyObject *pygimp_error;
+
+    PyTypeObject *PixelRgn_Type;
+    PyObject *(* pixel_rgn_new)(PyGimpDrawable *drw, int x, int y,
+                                   int w, int h, int dirty, int shadow);
+
 };
 
 #ifndef _INSIDE_PYGIMP_
@@ -89,6 +100,8 @@ struct _PyGimp_Functions *_PyGimp_API;
 #define PyGimpVectors_Type      (_PyGimp_API->Vectors_Type)
 #define pygimp_vectors_new      (_PyGimp_API->vectors_new)
 #define pygimp_error            (_PyGimp_API->pygimp_error)
+#define PyGimpPixelRgn_Type     (_PyGimp_API->PixelRgn_Type)
+#define pygimp_pixel_rgn_new    (_PyGimp_API->pixel_rgn_new)
 
 #define init_pygimp() G_STMT_START { \
     PyObject *gimpmodule = PyImport_ImportModule("gimp"); \

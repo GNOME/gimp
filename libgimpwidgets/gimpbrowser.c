@@ -223,8 +223,9 @@ gimp_browser_add_search_types (GimpBrowser *browser,
   else
     {
       gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (browser->search_type_combo),
-                                 first_type_label, first_type_id,
-                                 NULL);
+                                 GIMP_INT_STORE_LABEL, first_type_label,
+                                 GIMP_INT_STORE_VALUE, first_type_id,
+                                 -1);
     }
 }
 

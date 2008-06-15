@@ -53,6 +53,12 @@ enum
   NUM_COLUMNS
 };
 
+enum
+{
+    PROP_0,
+    PROP_TITLE,
+    PROP_PATH
+};
 
 static void   gimp_path_editor_new_clicked        (GtkWidget           *widget,
                                                    GimpPathEditor      *editor);
@@ -67,6 +73,14 @@ static void   gimp_path_editor_selection_changed  (GtkTreeSelection    *sel,
 static void   gimp_path_editor_writable_toggled   (GtkCellRendererToggle *toggle,
                                                    gchar               *path_str,
                                                    GimpPathEditor      *editor);
+static void   gimp_path_editor_set_property       (GObject      *object,
+                                                   guint         property_id,
+                                                   const GValue *value,
+                                                   GParamSpec   *pspec);
+static void   gimp_path_editor_get_property       (GObject      *object,
+                                                   guint         property_id,
+                                                   GValue       *value,
+                                                   GParamSpec   *pspec);
 
 
 G_DEFINE_TYPE (GimpPathEditor, gimp_path_editor, GTK_TYPE_VBOX)
@@ -79,6 +93,11 @@ static guint gimp_path_editor_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_path_editor_class_init (GimpPathEditorClass *klass)
 {
+  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+
+  gobject_class->set_property = gimp_path_editor_set_property;
+  gobject_class->get_property = gimp_path_editor_get_property;
+  
   /**
    * GimpPathEditor::path-changed:
    *
@@ -109,6 +128,17 @@ gimp_path_editor_class_init (GimpPathEditorClass *klass)
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
+
+
+  g_object_class_install_property (gobject_class, PROP_TITLE,
+                                  g_param_spec_string ("title", NULL, NULL, "",
+                                                      G_PARAM_CONSTRUCT_ONLY |
+                                                      G_PARAM_WRITABLE));
+  g_object_class_install_property (gobject_class, PROP_PATH,
+                                   g_param_spec_string ("path", NULL, NULL, "",
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
 
   klass->path_changed     = NULL;
   klass->writable_changed = NULL;
@@ -252,26 +282,8 @@ GtkWidget *
 gimp_path_editor_new (const gchar *title,
                       const gchar *path)
 {
-  GimpPathEditor *editor;
+  return g_object_new (GIMP_TYPE_PATH_EDITOR, "title", title, "path", path, NULL);
 
-  g_return_val_if_fail (title != NULL, NULL);
-
-  editor = g_object_new (GIMP_TYPE_PATH_EDITOR, NULL);
-
-  editor->file_entry = gimp_file_entry_new (title, "", TRUE, TRUE);
-  gtk_widget_set_sensitive (editor->file_entry, FALSE);
-  gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->file_entry,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (editor->file_entry);
-
-  g_signal_connect (editor->file_entry, "filename-changed",
-                    G_CALLBACK (gimp_path_editor_file_entry_changed),
-                    editor);
-
-  if (path)
-    gimp_path_editor_set_path (editor, path);
-
-  return GTK_WIDGET (editor);
 }
 
 /**
@@ -826,4 +838,55 @@ gimp_path_editor_writable_toggled (GtkCellRendererToggle *toggle,
     }
 
   gtk_tree_path_free (path);
+}
+
+static void
+gimp_path_editor_get_property (GObject    *object,
+                              guint       property_id,
+                              GValue     *value,
+                              GParamSpec *pspec)
+{
+  GimpPathEditor *editor = GIMP_PATH_EDITOR (object);
+
+  switch (property_id)
+    {
+    case PROP_PATH:
+        g_value_take_string (value, gimp_path_editor_get_path (editor));
+      break;
+
+    default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_path_editor_set_property (GObject      *object,
+                              guint         property_id,
+                              const GValue *value,
+                              GParamSpec   *pspec)
+{
+  GimpPathEditor *editor = GIMP_PATH_EDITOR (object);
+
+  switch (property_id)
+    {
+    case PROP_TITLE:
+      editor->file_entry = gimp_file_entry_new (g_value_get_string (value), "", TRUE, TRUE);
+      gtk_widget_set_sensitive (editor->file_entry, FALSE);
+      gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->file_entry,
+                          TRUE, TRUE, 0);
+      gtk_widget_show (editor->file_entry);
+
+      g_signal_connect (editor->file_entry, "filename-changed",
+                        G_CALLBACK (gimp_path_editor_file_entry_changed),
+                        editor);
+
+      break;
+    case PROP_PATH:
+        gimp_path_editor_set_path(editor, g_value_get_string (value));
+      break;
+    default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }

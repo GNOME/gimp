@@ -1,0 +1,2 @@
+#!/bin/sh
+gimp-2.5 -i --batch-interpreter python-fu-eval -b "-" < testui.py

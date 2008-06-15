@@ -1775,6 +1775,8 @@ static struct _PyGimp_Functions pygimp_api_functions = {
     pygimp_channel_new,
     &PyGimpVectors_Type,
     pygimp_vectors_new,
+    &PyGimpPixelRgn_Type,
+    pygimp_pixel_rgn_new
 };
 
 

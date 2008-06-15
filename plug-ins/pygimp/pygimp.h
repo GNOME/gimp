@@ -80,12 +80,6 @@ extern PyTypeObject PyGimpTile_Type;
 #define pygimp_tile_check(v) (PyObject_TypeCheck(v, &PyGimpTile_Type))
 PyObject *pygimp_tile_new(GimpTile *tile, PyGimpDrawable *drw);
 
-typedef struct {
-    PyObject_HEAD
-    GimpPixelRgn pr;
-    PyGimpDrawable *drawable; /* keep the drawable around */
-} PyGimpPixelRgn;
-
 extern PyTypeObject PyGimpPixelRgn_Type;
 #define pygimp_pixel_rgn_check(v) (PyObject_TypeCheck(v, &PyGimpPixelRgn_Type))
 PyObject *pygimp_pixel_rgn_new(PyGimpDrawable *drw, int x, int y,
