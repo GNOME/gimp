@@ -620,7 +620,18 @@
 # appended to the command with a space separating the two.  This is a single
 # filename.
 # 
-# (web-browser "xdg-open %s")
+# (web-browser "firefox %s")
+
+# When enabled, the online user manual will be used by the help system.
+# Otherwise the locally installed copy is used.  Possible values are yes and
+# no.
+# 
+# (user-manual-online no)
+
+# The location of the online user manual. This is used if
+# 'user-manual-online' is enabled.  This is a string value.
+# 
+# (user-manual-online-uri "http://docs.gimp.org/2.5")
 
 # The window type hint that is set on the toolbox. This may affect how your
 # window manager decorates and handles the toolbox window.  Possible values
