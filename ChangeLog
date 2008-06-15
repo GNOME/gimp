@@ -1,5 +1,12 @@
 2008-06-15  Lars-Peter Clausen  <lars@metafoo.de>
 
+	* plug-ins/pygimp/plug-ins/python-fu-eval.py: Moved execution into
+	global namespace. Fixes import statements inside of evaled code.
+	* plug-ins/pygimp/testui.py: Cleaned use of import statements.
+	* plug-ins/pygimp/testui: Redirect stderr to stdout
+
+2008-06-15  Lars-Peter Clausen  <lars@metafoo.de>
+
 	* plug-ins/pygimp/gimpui.defs: Regenerated file
 	* plug-ins/pygimp/gimpui.defs:
 	Fixed or added the following wrapper functions:

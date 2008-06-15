@@ -23,7 +23,7 @@ def code_eval(code):
     if code == '-':
         import sys
         code = sys.stdin
-    exec code
+    exec code in globals()
  
 register(
         "python-fu-eval",

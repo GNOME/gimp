@@ -1,5 +1,7 @@
 import unittest
 import gimp
+import gtk
+import gobject
 
 class TestAllWidgetFunctions(unittest.TestCase):
     
@@ -20,7 +22,6 @@ class TestAllWidgetFunctions(unittest.TestCase):
         getter()
 
     def testButton(self):
-        import gtk
         button = gimp.ui.Button()
         button.extended_clicked(gtk.gdk.BUTTON1_MASK)
 
@@ -32,7 +33,6 @@ class TestAllWidgetFunctions(unittest.TestCase):
         pass
 
     def testBrowser(self):
-        import gtk
         browser = gimp.ui.Browser()
         browser.add_search_types((".gif", 1), (".png", 2))
         browser.set_widget(gtk.Button("some label"))
@@ -54,7 +54,6 @@ class TestAllWidgetFunctions(unittest.TestCase):
         ccb = gimp.ui.ChannelComboBox(lambda value, data: False, "Some Data")
 
     def testColorArea(self):
-        import gtk
         ca = gimp.ui.ColorArea(gimp.color.RGB(255, 0, 0), gimp.ui.COLOR_AREA_FLAT,
                                gtk.gdk.BUTTON1_MASK)
         ca.set_color(gimp.color.RGB(255, 0, 0))
@@ -91,7 +90,6 @@ class TestAllWidgetFunctions(unittest.TestCase):
         page = cn.set_has_page(gimp._ui.ColorSelector.__gtype__, False)
 
     def testColorProfileComboBox(self):
-        import gtk
         cps = gimp.ui.ColorProfileStore("history")
         cpcb = gimp.ui.ColorProfileComboBox(gtk.Dialog(), cps)
         cpcb.add("Some/filename", "Some label")
@@ -103,7 +101,6 @@ class TestAllWidgetFunctions(unittest.TestCase):
         cps.add("Some/filename", "Some label")
         
     def testColorScale(self):
-        import gtk
         cs = gimp.ui.ColorScale(gtk.ORIENTATION_VERTICAL, gimp.ui.COLOR_SELECTOR_SATURATION)
         cs.set_channel(gimp.ui.COLOR_SELECTOR_GREEN)
         cs.set_color(gimp.color.RGB(1,2,3), gimp.color.HSV(3,2,1))
@@ -201,7 +198,6 @@ class TestAllWidgetFunctions(unittest.TestCase):
         self._testBoolGetterSetter(npe.set_user_override, npe.get_user_override)
 
     def testOffsetAreas(self):
-        import gtk
         oa = gimp.ui.OffsetArea(200, 100)
         oa.set_pixbuf(gtk.gdk.pixbuf_new_from_file("../../data/images/wilber.png"))
         oa.set_size(10,20)
@@ -284,7 +280,6 @@ class TestAllWidgetFunctions(unittest.TestCase):
     def testSizeEntry(self):
         return
         # FIXME
-        import gtk
         se = gimp.ui.SizeEntry(3, gimp.enums.UNIT_PIXEL, "%a", True, False, True, 100,
                                gimp.ui.SIZE_ENTRY_UPDATE_NONE)
         se.add_field(gtk.SpinButton(), gtk.SpinButton())
@@ -308,8 +303,6 @@ class TestAllWidgetFunctions(unittest.TestCase):
         # se.get_help_widget(0) 
 
     def testStringComboBox(self):
-        import gtk
-        import gobject
 
         scb = gimp.ui.StringComboBox(gtk.ListStore(gobject.TYPE_STRING,
                                      gobject.TYPE_STRING), 0, 1)
