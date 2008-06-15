@@ -1,3 +1,31 @@
+2008-06-15  Lars-Peter Clausen  <lars@metafoo.de>
+
+	* plug-ins/pygimp/gimpui.defs: Regenerated file
+	* plug-ins/pygimp/gimpui.defs:
+	Fixed or added the following wrapper functions:
+	gimp_browser_add_search_types
+	gimp_preview_transform
+	gimp_preview_untransform
+	gimp_int_store_lookup_by_value
+	gimp_memsize_entry_new
+	gimp_memsize_entry_set_value
+	gimp_color_area_get_color
+	gimp_color_hex_entry_get_color
+	gimp_color_notebook_get_color
+	gimp_color_selection_get_color
+	gimp_color_selection_get_old_color
+	gimp_enum_store_new
+	* libgimpwidgets/gimpbrowser.c  (gimp_browser_add_search_types):
+	Fixed usage of gimp_int_combo_box_append
+	* libgimwidgets/gimppatheditor.c: Changed constructor to use properties
+	* plug-ins/pygimp/testui{.py}: Added a script that calls every wrapped
+	method to ensure that it does not crash and accepts the expected
+	arguments.
+	* plug-ins/pygimp/gimpmodule.c:
+	* plug-ins/pygimp/pygimp-api.h:
+	* plug-ins/pygimp/pygimp.h:
+	Moved PyGimpPixelRgn into the API struct
+
 2008-06-11  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/__init__.py: Fixed gradient range issues.
