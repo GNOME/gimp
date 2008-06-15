@@ -1,5 +1,17 @@
 2008-06-15  Lars-Peter Clausen  <lars@metafoo.de>
 
+	* plug-ins/pygimp/pygimp-image.c:
+	* plug-ins/pygimp/pygimp-drawable.c:
+	* plug-ins/pygimp/pygimp-vectors.c:
+	Added checks to (pygimp_{image,drawable,layer,channel,vectores}_new) to
+	ensure that a python object only gets created when the object id is
+	valid, otherwise return None.
+	* plug-ins/pygimp/pygimp-display:
+	(disp_repr): Changed repr string to match the rest of pygimp.
+	(pygimp_display_new): Check if a display id is valid.
+
+2008-06-15  Lars-Peter Clausen  <lars@metafoo.de>
+
 	* plug-ins/pygimp/plug-ins/python-fu-eval.py: Moved execution into
 	global namespace. Fixes import statements inside of evaled code.
 	* plug-ins/pygimp/testui.py: Cleaned use of import statements.
