@@ -1,3 +1,13 @@
+2008-06-15  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: in the check for xfixes, add "true" as
+	action-if-not-found so it doesn't bail out when xfixes is not
+	found.
+
+	There seems to be something fishy with the PKG_CHECK_MODULES()
+	macro since adding a simple comma should also count as empty 4th
+	argument.
+
 2008-06-15  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.5.2.
