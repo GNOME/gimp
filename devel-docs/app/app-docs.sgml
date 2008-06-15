@@ -623,7 +623,6 @@
 
     <chapter id="app-display-utils">
       <title>Misc. Widgets &amp; Utilities</title>
-      <xi:include href="xml/gimpdbusservice.xml" />
       <xi:include href="xml/gimpnavigationeditor.xml" />
       <xi:include href="xml/gimpstatusbar.xml" />
     </chapter>
@@ -1003,6 +1002,7 @@
       <xi:include href="xml/gimpcairo-wilber.xml" />
       <xi:include href="xml/gimpclipboard.xml" />
       <xi:include href="xml/gimpcursor.xml" />
+      <xi:include href="xml/gimpdbusservice.xml" />
       <xi:include href="xml/gimpdnd.xml" />
       <xi:include href="xml/gimpdnd-xds.xml" />
       <xi:include href="xml/gimppixbuf.xml" />

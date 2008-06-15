@@ -1,3 +1,7 @@
+2008-06-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/app-docs.sgml: GimpDBusService was in the wrong chapter.
+
 2008-06-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt
