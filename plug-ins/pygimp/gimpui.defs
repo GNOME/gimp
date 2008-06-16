@@ -91,6 +91,13 @@
   (gtype-id "GIMP_TYPE_COLOR_SCALE")
 )
 
+(define-object ColorScales
+  (in-module "Gimp")
+  (parent "GimpColorSelector")
+  (c-name "GimpColorScales")
+  (gtype-id "GIMP_TYPE_COLOR_SCALES")
+)
+
 (define-object ColorSelection
   (in-module "Gimp")
   (parent "GtkVBox")
@@ -131,6 +138,13 @@
   (parent "GtkFrame")
   (c-name "GimpFrame")
   (gtype-id "GIMP_TYPE_FRAME")
+)
+
+(define-object HintBox
+  (in-module "Gimp")
+  (parent "GtkHBox")
+  (c-name "GimpHintBox")
+  (gtype-id "GIMP_TYPE_HINT_BOX")
 )
 
 (define-object IntComboBox
@@ -1341,7 +1355,7 @@
   (return-type "gint")
 )
 
-(define-function gimp_dialogs_show_help_button
+(function gimp_dialogs_show_help_button
   (c-name "gimp_dialogs_show_help_button")
   (return-type "none")
   (parameters
@@ -1349,6 +1363,13 @@
   )
 )
 
+;; from gimpui.h
+
+(define-method set_transient
+  (of-object "GimpDialog")
+  (c-name "gimp_window_set_transient")
+  (return-type "none")
+)
 
 
 ;; From gimpenumcombobox.h

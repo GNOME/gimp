@@ -33,7 +33,7 @@ extern PyObject *pygimp_error;
 
 PyObject *pygimp_param_to_tuple(int nparams, const GimpParam *params);
 GimpParam *pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype,
-                                   int nparams);
+                                   int nparams, const gchar *error_prefix);
 
 
 extern PyTypeObject PyGimpPDB_Type;

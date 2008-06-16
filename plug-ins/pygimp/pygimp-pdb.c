@@ -308,8 +308,36 @@ pygimp_param_to_tuple(int nparams, const GimpParam *params)
     return args;
 }
 
+/**
+ * Helper function to set a python exception when a wrong type was passed.
+ * n            - The parameter number which is set in the exception string
+ *                starting at 1. Pass 0 to omit.
+ * expected     - A string holding the expected types name.
+ * got          - The python object that was passed instead.
+ * error_prefix - A string that prefixes the exception string. Should be the
+ *                name of the function which was called.
+ */
+static void
+pygimp_set_type_error(int n, gchar *expected, PyObject *got, const gchar *error_prefix)
+{
+    static const gchar *positions[] = {"first", "second"};
+    
+    if(n < 1)
+        PyErr_Format(PyExc_TypeError, "%sExpected %s, got %s "
+                     "instead.", error_prefix ? error_prefix : "", expected,
+                     got->ob_type->tp_name);
+     if(n < 3)
+        PyErr_Format(PyExc_TypeError, "%sExpected %s as %s parameter, got %s "
+                     "instead.", error_prefix ? error_prefix : "", expected,
+                     positions[n-1], got->ob_type->tp_name);
+    else
+        PyErr_Format(PyExc_TypeError, "%sExpected %s as %drd parameter, got %s "
+                     "instead.", error_prefix ? error_prefix : "", expected,
+                     n + 1, got->ob_type->tp_name);
+}
+
 GimpParam *
-pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
+pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams, const gchar* error_prefix)
 {
     PyObject *tuple, *item, *x, *y, *w, *h;
     GimpParam *ret;
@@ -317,31 +345,31 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
     gint32 *i32a; gint16 *i16a; guint8 *i8a; gdouble *fa; gchar **sa;
 
     if (nparams == 0)
-	tuple = PyTuple_New(0);
+        tuple = PyTuple_New(0);
     else if (!PyTuple_Check(args) && nparams == 1)
-	tuple = Py_BuildValue("(O)", args);
+        tuple = Py_BuildValue("(O)", args);
     else {
-	Py_INCREF(args);
-	tuple = args;
+        if (!PyTuple_Check(args)) {
+            PyErr_SetString(PyExc_TypeError, "wrong type of parameter");
+            return NULL;
+        }
+        Py_INCREF(args);
+        tuple = args;
     }
-    if (!PyTuple_Check(tuple)) {
-	PyErr_SetString(PyExc_TypeError, "wrong type of parameter");
-        Py_DECREF(tuple);
-	return NULL;
-    }
-
+    
     if (PyTuple_Size(tuple) != nparams) {
-	PyErr_SetString(PyExc_TypeError, "takes exactly %d arguments (%d given)");
+        PyErr_Format(PyExc_TypeError, "%stakes exactly %d arguments (%d given)",
+                     error_prefix ? error_prefix : "", nparams, PyTuple_Size(tuple));
         Py_DECREF(tuple);
-	return NULL;
+        return NULL;
     }
 
     ret = g_new(GimpParam, nparams+1);
     for (i = 0; i <= nparams; i++)
 	ret[i].type = GIMP_PDB_STATUS;
-#define check(expr) if (expr) { \
-	    PyErr_SetString(PyExc_TypeError, "wrong parameter type"); \
-	    Py_DECREF(tuple); \
+#define check(expr, expected) if (expr) { \
+	    pygimp_set_type_error(i, expected, item, error_prefix); \
+        Py_DECREF(tuple); \
 	    gimp_destroy_params(ret, nparams); \
 	    return NULL; \
 	}
@@ -356,22 +384,22 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	item = PyTuple_GetItem(tuple, i-1);
 	switch (ptype[i-1].type) {
 	case GIMP_PDB_INT32:
-	    check((x = PyNumber_Int(item)) == NULL);
+	    check((x = PyNumber_Int(item)) == NULL, "int");
 	    ret[i].data.d_int32 = (gint32)PyInt_AsLong(x);
 	    Py_DECREF(x);
 	    break;
 	case GIMP_PDB_INT16:
-	    check((x = PyNumber_Int(item)) == NULL);
+	    check((x = PyNumber_Int(item)) == NULL, "int");
 	    ret[i].data.d_int16 = (gint16)PyInt_AsLong(x);
 	    Py_DECREF(x);
 	    break;
 	case GIMP_PDB_INT8:
-	    check((x = PyNumber_Int(item)) == NULL);
+	    check((x = PyNumber_Int(item)) == NULL, "int");
 	    ret[i].data.d_int8 = (guint8)PyInt_AsLong(x);
 	    Py_DECREF(x);
 	    break;
 	case GIMP_PDB_FLOAT:
-	    check((x = PyNumber_Float(item)) == NULL);
+	    check((x = PyNumber_Float(item)) == NULL, "float");
 	    ret[i].data.d_float = PyFloat_AsDouble(x);
 	    Py_DECREF(x);
 	    break;
@@ -380,12 +408,12 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 		ret[i].data.d_string = NULL;
 		break;
 	    }
-	    check((x = PyObject_Str(item)) == NULL);
+	    check((x = PyObject_Str(item)) == NULL, "str");
 	    ret[i].data.d_string = g_strdup(PyString_AsString(x));
 	    Py_DECREF(x);
 	    break;
 	case GIMP_PDB_INT32ARRAY:
-	    check(!PySequence_Check(item));
+	    check(!PySequence_Check(item), "sequence");
 	    len = PySequence_Length(item);
 	    i32a = g_new(gint32, len);
 	    for (j = 0; j < len; j++) {
@@ -398,7 +426,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    ret[i].data.d_int32array = i32a;
 	    break;
 	case GIMP_PDB_INT16ARRAY:
-	    check(!PySequence_Check(item));
+	    check(!PySequence_Check(item), "sequence");
 	    len = PySequence_Length(item);
 	    i16a = g_new(gint16, len);
 	    for (j = 0; j < len; j++) {
@@ -411,7 +439,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    ret[i].data.d_int16array = i16a;
 	    break;
 	case GIMP_PDB_INT8ARRAY:
-	    check(!PySequence_Check(item));
+	    check(!PySequence_Check(item), "sequence");
 	    len = PySequence_Length(item);
 	    i8a = g_new(guint8, len);
 	    for (j = 0; j < len; j++) {
@@ -424,7 +452,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    ret[i].data.d_int8array = i8a;
 	    break;
 	case GIMP_PDB_FLOATARRAY:
-	    check(!PySequence_Check(item));
+	    check(!PySequence_Check(item), "sequence");
 	    len = PySequence_Length(item);
 	    fa = g_new(gdouble, len);
 	    for (j = 0; j < len; j++) {
@@ -437,7 +465,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    ret[i].data.d_floatarray = fa;
 	    break;
 	case GIMP_PDB_STRINGARRAY:
-	    check(!PySequence_Check(item));
+	    check(!PySequence_Check(item), "sequence");
 	    len = PySequence_Length(item);
 	    sa = g_new(gchar *, len);
 	    for (j = 0; j < len; j++) {
@@ -458,6 +486,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
                 GimpRGB rgb;
 
                 if (!pygimp_rgb_from_pyobject(item, &rgb)) {
+                    pygimp_set_type_error(i, "color", item, error_prefix);
                     Py_DECREF(tuple);
                     gimp_destroy_params(ret, nparams);
                     return NULL;
@@ -468,20 +497,20 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 	    break;
 	case GIMP_PDB_REGION:
 	    check(!PySequence_Check(item) ||
-		  PySequence_Length(item) < 4);
+		  PySequence_Length(item) < 4, "sequence");
 	    x = PySequence_GetItem(item, 0);
 	    y = PySequence_GetItem(item, 1);
 	    w = PySequence_GetItem(item, 2);
 	    h = PySequence_GetItem(item, 3);
 	    check(!PyInt_Check(x) || !PyInt_Check(y) ||
-		  !PyInt_Check(w) || !PyInt_Check(h));
+		  !PyInt_Check(w) || !PyInt_Check(h), "int");
 	    ret[i].data.d_region.x = PyInt_AsLong(x);
 	    ret[i].data.d_region.y = PyInt_AsLong(y);
 	    ret[i].data.d_region.width = PyInt_AsLong(w);
 	    ret[i].data.d_region.height = PyInt_AsLong(h);
 	    break;
 	case GIMP_PDB_DISPLAY:
-	    check(!pygimp_display_check(item));
+	    check(!pygimp_display_check(item), "gimp.Display");
 	    ret[i].data.d_display = ((PyGimpDisplay *)item)->ID;
 	    break;
 	case GIMP_PDB_IMAGE:
@@ -489,7 +518,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 		ret[i].data.d_image = -1;
 		break;
 	    }
-	    check(!pygimp_image_check(item));
+	    check(!pygimp_image_check(item), "gimp.Image");
 	    ret[i].data.d_image = ((PyGimpImage *)item)->ID;
 	    break;
 	case GIMP_PDB_LAYER:
@@ -497,7 +526,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 		ret[i].data.d_layer = -1;
 		break;
 	    }
-	    check(!pygimp_layer_check(item));
+	    check(!pygimp_layer_check(item), "gimp.Layer");
 	    ret[i].data.d_layer = ((PyGimpLayer *)item)->ID;
 	    break;
 	case GIMP_PDB_CHANNEL:
@@ -505,7 +534,7 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 		ret[i].data.d_channel = -1;
 		break;
 	    }
-	    check(!pygimp_channel_check(item));
+	    check(!pygimp_channel_check(item), "gimp.Channel");
 	    ret[i].data.d_channel = ((PyGimpChannel *)item)->ID;
 	    break;
 	case GIMP_PDB_DRAWABLE:
@@ -513,26 +542,26 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 		ret[i].data.d_channel = -1;
 		break;
 	    }
-	    check(!pygimp_drawable_check(item));
+	    check(!pygimp_drawable_check(item), "gimp.Drawable");
 	    ret[i].data.d_channel = ((PyGimpDrawable *)item)->ID;
 	    break;
 	case GIMP_PDB_SELECTION:
-	    check(!pygimp_layer_check(item));
+	    check(!pygimp_layer_check(item), "gimp.Layer");
 	    ret[i].data.d_selection = ((PyGimpLayer *)item)->ID;
 	    break;
 	case GIMP_PDB_BOUNDARY:
-	    check(!PyInt_Check(item));
+	    check(!PyInt_Check(item), "int");
 	    ret[i].data.d_boundary = PyInt_AsLong(item);
 	    break;
 	case GIMP_PDB_VECTORS:
-	    check(!pygimp_vectors_check(item));
+	    check(!pygimp_vectors_check(item), "gimp.Vectors");
 	    ret[i].data.d_vectors = ((PyGimpVectors *)item)->ID;
 	    break;
 	case GIMP_PDB_PARASITE:
 	    /* can't do anything, since size of GimpParasite is not known */
 	    break;
 	case GIMP_PDB_STATUS:
-	    check(!PyInt_Check(item));
+	    check(!PyInt_Check(item), "int");
 	    ret[i].data.d_status = PyInt_AsLong(item);
 	    break;
 	case GIMP_PDB_END:
@@ -833,10 +862,12 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
     int nret;
     PyObject *t = NULL, *r;
     GimpRunMode run_mode = GIMP_RUN_NONINTERACTIVE;
-
+    gchar *error_prefix;
 #if PG_DEBUG > 0
     g_printerr("--- %s --- ", PyString_AsString(self->proc_name));
 #endif
+
+    error_prefix = g_strdup_printf("%s: ", self->name);
 
     if (kwargs) {
         int len, pos;
@@ -870,41 +901,46 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
     }
 
     if (self->nparams > 0 && !strcmp(self->params[0].name, "run-mode")) {
-	params = pygimp_param_from_tuple(args, self->params + 1,
-					 self->nparams - 1);
+        params = pygimp_param_from_tuple(args, self->params + 1,
+                                         self->nparams - 1, error_prefix);
 
-	if (params == NULL)
-	    return NULL;
+        if (params == NULL) {
+            g_free(error_prefix);
+            return NULL;
+        }
 
-	params[0].type = self->params[0].type;
-	params[0].data.d_int32 = run_mode;
+        params[0].type = self->params[0].type;
+        params[0].data.d_int32 = run_mode;
 
-#if PG_DEBUG > 1
-	pygimp_param_print(self->nparams, params);
-#endif
+    #if PG_DEBUG > 1
+        pygimp_param_print(self->nparams, params);
+    #endif
 
-	ret = gimp_run_procedure2(self->name, &nret, self->nparams, params);
+        ret = gimp_run_procedure2(self->name, &nret, self->nparams, params);
     } else {
-	params = pygimp_param_from_tuple(args, self->params, self->nparams);
+        params = pygimp_param_from_tuple(args, self->params, self->nparams, error_prefix);
 
-	if (params == NULL)
-	    return NULL;
+        if (params == NULL) {
+            g_free(error_prefix);
+            return NULL;
+        }
 
-#if PG_DEBUG > 1
-	pygimp_param_print(self->nparams, params+1);
-#endif
+    #if PG_DEBUG > 1
+        pygimp_param_print(self->nparams, params+1);
+    #endif
 
-	ret = gimp_run_procedure2(self->name, &nret, self->nparams, params + 1);
+        ret = gimp_run_procedure2(self->name, &nret, self->nparams, params + 1);
     }
 
     gimp_destroy_params(params, self->nparams);
 
     if (!ret) {
-	PyErr_SetString(pygimp_error, "no status returned");
-#if PG_DEBUG >= 1
-	g_printerr("ret == NULL\n");
-#endif
-	return NULL;
+        PyErr_Format(pygimp_error, "%sNo status returned", error_prefix);
+        #if PG_DEBUG >= 1
+            g_printerr("ret == NULL\n");
+        #endif
+        g_free(error_prefix);
+        return NULL;
     }
 
     switch(ret[0].data.d_status) {
@@ -913,7 +949,8 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
 	g_printerr("execution error\n");
 #endif
 	gimp_destroy_params(ret, nret);
-	PyErr_SetString(PyExc_RuntimeError, "execution error");
+	PyErr_Format(PyExc_RuntimeError, "%sExecution error", error_prefix);
+    g_free(error_prefix);
 	return NULL;
 	break;
 
@@ -922,7 +959,8 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
 	g_printerr("calling error\n");
 #endif
 	gimp_destroy_params(ret, nret);
-	PyErr_SetString(PyExc_TypeError, "invalid arguments");
+	PyErr_Format(PyExc_TypeError, "%sInvalid arguments", error_prefix);
+    g_free(error_prefix);
 	return NULL;
 	break;
 
@@ -934,7 +972,8 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
 	gimp_destroy_params(ret, nret);
 
 	if (t == NULL) {
-	    PyErr_SetString(pygimp_error, "could not make return value");
+	    PyErr_Format(pygimp_error, "%sCould not make return value", error_prefix);
+        g_free(error_prefix);
 	    return NULL;
 	}
 	break;
@@ -944,10 +983,13 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
 	g_printerr("unknown - %i (type %i)\n",
                    ret[0].data.d_status, ret[0].type);
 #endif
-	PyErr_SetString(pygimp_error, "unknown return code");
+	PyErr_SetString(pygimp_error, "%sUnknown return code");
+    g_free(error_prefix);
 	return NULL;
 	break;
     }
+
+    g_free(error_prefix);
 
     if (PyTuple_Size(t) == 1) {
 	r = PyTuple_GetItem(t, 0);

@@ -21,9 +21,6 @@ class TestAllWidgetFunctions(unittest.TestCase):
         setter(gimp.color.RGB(1,2,3))
         getter()
 
-    def testButton(self):
-        button = gimp.ui.Button()
-        button.extended_clicked(gtk.gdk.BUTTON1_MASK)
 
     def testAspectPreview(self):
         # FIXME
@@ -44,6 +41,21 @@ class TestAllWidgetFunctions(unittest.TestCase):
         # FIXME
         bs.set_brush(str(gimp.context.get_brush()), 1.0, 10, gimp.enums.NORMAL_MODE)
         brush = bs.get_brush()
+
+    def testButton(self):
+        button = gimp.ui.Button()
+        button.extended_clicked(gtk.gdk.BUTTON1_MASK)
+
+    def testCellRendererColor(self):
+        crc = gimp.ui.CellRendererColor()
+        crc.props.color = gimp.color.RGB(255,0,0)
+        crc.props.opaque = True
+        crc.props.icon_size = 10
+
+    def testCellRendererToggle(self):
+        crt = gimp.ui.CellRendererToggle("Some stock id")
+        crt.props.stock_id = "foobar"
+        crt.props.stock_size = 2
 
     def testChainButton(self):
         cb = gimp.ui.ChainButton(gimp.ui.CHAIN_TOP)
@@ -120,7 +132,7 @@ class TestAllWidgetFunctions(unittest.TestCase):
                                 ("foo", 1, "bar", 2))
         dialog.add_button("batz", 2)
         # dialog.run()
-
+        dialog.set_transient()
     def testDrawableComboBox(self):
         dcb = gimp.ui.DrawableComboBox(lambda value: True)
         dcb = gimp.ui.DrawableComboBox(lambda value, data: False, "Some data")
@@ -157,6 +169,9 @@ class TestAllWidgetFunctions(unittest.TestCase):
         gsb.set_gradient(str(gimp.context.get_gradient()))
         gradient = gsb.get_gradient()
 
+    def testHintBox(self):
+        hb = gimp.ui.HintBox("Some hint")
+    
     def testImageComboBox(self):
         icb = gimp.ui.ImageComboBox(lambda value: True)
         icb = gimp.ui.ImageComboBox(lambda value, data: False, "Some data")

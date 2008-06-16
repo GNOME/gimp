@@ -162,7 +162,7 @@ pygimp_run_proc(const char *name, int nparams, const GimpParam *params,
         return;
     }
 
-    *return_vals = pygimp_param_from_tuple(ret, rv, nrv);
+    *return_vals = pygimp_param_from_tuple(ret, rv, nrv, NULL);
     g_free(rv);
 
     if (*return_vals == NULL) {
