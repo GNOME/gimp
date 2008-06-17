@@ -172,6 +172,8 @@ class ColorSelector(ColorButton):
             color = default
         elif isinstance(default, tuple):
             color = apply(gimpcolor.RGB, default)
+        elif isinstance(default, str):
+            color = gimpcolor.rgb_parse_css(default)
         ColorButton.__init__(self, _("Python-Fu Color Selection"), 100, 20,
                              color, COLOR_AREA_FLAT)
     def get_value(self):
