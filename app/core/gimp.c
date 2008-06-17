@@ -58,6 +58,7 @@
 #include "gimpbuffer.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
+#include "gimptagcache.h"
 #include "gimpdocumentlist.h"
 #include "gimpgradient.h"
 #include "gimpgradient-load.h"
@@ -229,6 +230,8 @@ gimp_init (Gimp *gimp)
   gimp->pattern_factory     = NULL;
   gimp->gradient_factory    = NULL;
   gimp->palette_factory     = NULL;
+
+  gimp->tag_cache           = NULL;
 
   gimp->pdb                 = gimp_pdb_new (gimp);
 
@@ -465,6 +468,9 @@ gimp_get_memsize (GimpObject *object,
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->palette_factory),
                                       gui_size);
 
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->tag_cache),
+                                      gui_size);
+
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->pdb), gui_size);
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->tool_info_list),
@@ -575,6 +581,8 @@ gimp_real_initialize (Gimp               *gimp,
                            gimp_palette_get_standard);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->palette_factory),
                                "palette factory");
+
+  gimp->tag_cache = gimp_tag_cache_new (gimp);
 
   gimp_paint_init (gimp);
 
@@ -848,6 +856,17 @@ gimp_restore (Gimp               *gimp,
   /*  initialize the module list  */
   status_callback (NULL, _("Modules"), 0.7);
   gimp_modules_load (gimp);
+
+  /* update tag cache */
+  status_callback (NULL, _("Updating tag cache"), 0.8);
+  gimp_container_foreach (gimp->brush_factory->container,
+                          gimp_tag_cache_update, gimp->tag_cache);
+  gimp_container_foreach (gimp->pattern_factory->container,
+                          gimp_tag_cache_update, gimp->tag_cache);
+  gimp_container_foreach (gimp->palette_factory->container,
+                          gimp_tag_cache_update, gimp->tag_cache);
+  gimp_container_foreach (gimp->gradient_factory->container,
+                          gimp_tag_cache_update, gimp->tag_cache);
 
   g_signal_emit (gimp, gimp_signals[RESTORE], 0, status_callback);
 }
