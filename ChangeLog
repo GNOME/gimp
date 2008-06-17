@@ -1,3 +1,13 @@
+2008-06-17  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimp.c
+	* app/core/gimp.h: integrated GimpTagCache.
+	* app/core/gimptagcache.c
+	* app/core/gimptagcache.h: added GimpTagCache which currently doesn't
+	  have any real functionality.
+
 2008-06-05  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/dialogs-actions.c (dialogs_dockable_actions): added
