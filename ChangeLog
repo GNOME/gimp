@@ -1,3 +1,8 @@
+2008-06-20  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpfreeselecttool.c (gimp_free_select_tool_finalize):
+	Plug leak.
+
 2008-06-20  Michael Natterer  <mitch@gimp.org>
 
 	Latest GTK+ trunk deprecations showed some uglyness in gimp:

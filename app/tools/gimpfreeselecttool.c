@@ -266,10 +266,7 @@ gimp_free_select_tool_finalize (GObject *object)
   Private            *priv = GET_PRIVATE (fst);
 
   g_free (priv->points);
-
-  priv->points       = NULL;
-  priv->n_points     = 0;
-  priv->max_n_points = 0;
+  g_free (priv->segment_indices);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
