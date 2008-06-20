@@ -1,5 +1,12 @@
 2008-06-20  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimpfreeselecttool.c: Don't alloc/free
+	saved_points_(lower|higher)_segment on each move, instead realloc
+	on demand and free on tool destruction, just as we do e.g. for
+	points.
+
+2008-06-20  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimpfreeselecttool.c: Remove
 	n_saved_points_(lower|higher)_segment, we don't need them.
 

@@ -72,6 +72,8 @@ typedef struct _Private
    */
   GimpVector2       *saved_points_lower_segment;
   GimpVector2       *saved_points_higher_segment;
+  gint               max_n_saved_points_lower_segment;
+  gint               max_n_saved_points_higher_segment;
 
   /* Keeps track wether or not a modification of the polygon has been
    * made between _button_press and _button_release
@@ -230,29 +232,31 @@ gimp_free_select_tool_init (GimpFreeSelectTool *fst)
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_FREE_SELECT);
 
-  priv->grabbed_segment_index         = INVALID_INDEX;
+  priv->grabbed_segment_index             = INVALID_INDEX;
 
-  priv->button1_down                  = FALSE;
+  priv->button1_down                      = FALSE;
 
-  priv->saved_points_lower_segment    = NULL;
-  priv->saved_points_higher_segment   = NULL;
+  priv->saved_points_lower_segment        = NULL;
+  priv->saved_points_higher_segment       = NULL;
+  priv->max_n_saved_points_lower_segment  = 0;
+  priv->max_n_saved_points_higher_segment = 0;
 
-  priv->polygon_modified              = FALSE;
+  priv->polygon_modified                  = FALSE;
 
-  priv->show_pending_point            = FALSE;
+  priv->show_pending_point                = FALSE;
 
-  priv->points                        = NULL;
-  priv->n_points                      = 0;
-  priv->max_n_points                  = 0;
+  priv->points                            = NULL;
+  priv->n_points                          = 0;
+  priv->max_n_points                      = 0;
 
-  priv->segment_indices               = NULL;
-  priv->n_segment_indices             = 0;
-  priv->max_n_segment_indices         = 0;
+  priv->segment_indices                   = NULL;
+  priv->n_segment_indices                 = 0;
+  priv->max_n_segment_indices             = 0;
 
-  priv->constrain_angle               = FALSE;
-  priv->supress_handles               = FALSE;
+  priv->constrain_angle                   = FALSE;
+  priv->supress_handles                   = FALSE;
 
-  priv->last_click_time               = NO_CLICK_TIME_AVAILABLE;
+  priv->last_click_time                   = NO_CLICK_TIME_AVAILABLE;
 }
 
 static void
@@ -263,6 +267,8 @@ gimp_free_select_tool_finalize (GObject *object)
 
   g_free (priv->points);
   g_free (priv->segment_indices);
+  g_free (priv->saved_points_lower_segment);
+  g_free (priv->saved_points_higher_segment);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -291,18 +297,6 @@ gimp_free_select_tool_get_last_point (GimpFreeSelectTool *fst,
 
   *start_point_x = priv->points[priv->segment_indices[priv->n_segment_indices - 1]].x;
   *start_point_y = priv->points[priv->segment_indices[priv->n_segment_indices - 1]].y;
-}
-
-static void
-gimp_free_select_tool_cleanup_after_move (GimpFreeSelectTool *fst)
-{
-  Private *priv = GET_PRIVATE (fst);
-
-  g_free (priv->saved_points_lower_segment);
-  priv->saved_points_lower_segment = NULL;
-
-  g_free (priv->saved_points_higher_segment);
-  priv->saved_points_higher_segment = NULL;
 }
 
 static void
@@ -925,7 +919,13 @@ gimp_free_select_tool_prepare_for_move (GimpFreeSelectTool *fst)
                                          priv->grabbed_segment_index - 1,
                                          priv->grabbed_segment_index);
 
-      priv->saved_points_lower_segment = g_new0 (GimpVector2, n_points);
+      if (n_points > priv->max_n_saved_points_lower_segment)
+        {
+          priv->max_n_saved_points_lower_segment = n_points;
+
+          priv->saved_points_lower_segment = g_realloc (priv->saved_points_lower_segment,
+                                                        sizeof (GimpVector2) * n_points);
+        }
 
       memcpy (priv->saved_points_lower_segment,
               source,
@@ -940,7 +940,13 @@ gimp_free_select_tool_prepare_for_move (GimpFreeSelectTool *fst)
                                          priv->grabbed_segment_index,
                                          priv->grabbed_segment_index + 1);
 
-      priv->saved_points_higher_segment = g_new0 (GimpVector2, n_points);
+      if (n_points > priv->max_n_saved_points_higher_segment)
+        {
+          priv->max_n_saved_points_higher_segment = n_points;
+
+          priv->saved_points_higher_segment = g_realloc (priv->saved_points_higher_segment,
+                                                         sizeof (GimpVector2) * n_points);
+        }
 
       memcpy (priv->saved_points_higher_segment,
               source,
@@ -951,7 +957,13 @@ gimp_free_select_tool_prepare_for_move (GimpFreeSelectTool *fst)
   if (priv->grabbed_segment_index == 0 &&
       priv->n_segment_indices     == 1)
     {
-      priv->saved_points_lower_segment  = g_new0 (GimpVector2, 1);
+      if (priv->max_n_saved_points_lower_segment == 0)
+        {
+          priv->max_n_saved_points_lower_segment = 1;
+          
+          priv->saved_points_lower_segment = g_new0 (GimpVector2, 1);
+        }
+
       *priv->saved_points_lower_segment = priv->points[0];
     }
 }
@@ -1269,11 +1281,6 @@ gimp_free_select_tool_button_release (GimpTool              *tool,
       gimp_free_select_tool_handle_normal_release (fst,
                                                    coords,
                                                    display);
-
-      if (priv->polygon_modified)
-        {
-          gimp_free_select_tool_cleanup_after_move (fst);
-        }
       break;
 
     case GIMP_BUTTON_RELEASE_CANCEL:
