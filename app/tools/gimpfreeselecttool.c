@@ -72,8 +72,6 @@ typedef struct _Private
    */
   GimpVector2       *saved_points_lower_segment;
   GimpVector2       *saved_points_higher_segment;
-  gint               n_saved_points_lower_segment;
-  gint               n_saved_points_higher_segment;
 
   /* Keeps track wether or not a modification of the polygon has been
    * made between _button_press and _button_release
@@ -238,8 +236,6 @@ gimp_free_select_tool_init (GimpFreeSelectTool *fst)
 
   priv->saved_points_lower_segment    = NULL;
   priv->saved_points_higher_segment   = NULL;
-  priv->n_saved_points_lower_segment  = 0;
-  priv->n_saved_points_higher_segment = 0;
 
   priv->polygon_modified              = FALSE;
 

@@ -1,5 +1,10 @@
 2008-06-20  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimpfreeselecttool.c: Remove
+	n_saved_points_(lower|higher)_segment, we don't need them.
+
+2008-06-20  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimpfreeselecttool.c (gimp_free_select_tool_finalize):
 	Plug leak.
 
