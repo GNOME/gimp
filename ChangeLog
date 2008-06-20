@@ -1,5 +1,19 @@
 2008-06-20  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Make angle constraints with the Free Select Tool by using Ctrl
+	work also when moving vertices, not only when creating new ones.
+
+	* app/tools/gimpfreeselecttool.c
+	(gimp_free_select_tool_active_modifier_key): Implement.
+
+	(gimp_free_select_tool_update_motion): Put motion logic here so we
+	can apply it from both _motion and _active_modifier_key.
+
+	(gimp_free_select_tool_modifier_key): Ignore key presses from
+	another display.
+
+2008-06-20  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimpfreeselecttool.c: Don't alloc/free
 	saved_points_(lower|higher)_segment on each move, instead realloc
 	on demand and free on tool destruction, just as we do e.g. for

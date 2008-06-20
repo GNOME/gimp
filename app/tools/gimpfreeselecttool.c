@@ -116,7 +116,7 @@ typedef struct _Private
    */
   gboolean           supress_handles;
 
-  /* Last _oper_update coords */
+  /* Last _oper_update or _motion coords */
   GimpVector2        last_coords;
 
   /* A double-click commits the selection, keep track of last
@@ -128,46 +128,51 @@ typedef struct _Private
 } Private;
 
 
-static void     gimp_free_select_tool_finalize       (GObject               *object);
-static void     gimp_free_select_tool_control        (GimpTool              *tool,
-                                                      GimpToolAction         action,
-                                                      GimpDisplay           *display);
-static void     gimp_free_select_tool_oper_update    (GimpTool              *tool,
-                                                      GimpCoords            *coords,
-                                                      GdkModifierType        state,
-                                                      gboolean               proximity,
-                                                      GimpDisplay           *display);
-static void     gimp_free_select_tool_cursor_update  (GimpTool              *tool,
-                                                      GimpCoords            *coords,
-                                                      GdkModifierType        state,
-                                                      GimpDisplay           *display);
-static void     gimp_free_select_tool_button_press   (GimpTool              *tool,
-                                                      GimpCoords            *coords,
-                                                      guint32                time,
-                                                      GdkModifierType        state,
-                                                      GimpDisplay           *display);
-static void     gimp_free_select_tool_button_release (GimpTool              *tool,
-                                                      GimpCoords            *coords,
-                                                      guint32                time,
-                                                      GdkModifierType        state,
-                                                      GimpButtonReleaseType  release_type,
-                                                      GimpDisplay           *display);
-static void     gimp_free_select_tool_motion         (GimpTool              *tool,
-                                                      GimpCoords            *coords,
-                                                      guint32                time,
-                                                      GdkModifierType        state,
-                                                      GimpDisplay           *display);
-static gboolean gimp_free_select_tool_key_press      (GimpTool              *tool,
-                                                      GdkEventKey           *kevent,
-                                                      GimpDisplay           *display);
-static void     gimp_free_select_tool_modifier_key   (GimpTool              *tool,
-                                                      GdkModifierType        key,
-                                                      gboolean               press,
-                                                      GdkModifierType        state,
-                                                      GimpDisplay           *display);
-static void     gimp_free_select_tool_draw           (GimpDrawTool          *draw_tool);
-static void     gimp_free_select_tool_real_select    (GimpFreeSelectTool    *fst,
-                                                      GimpDisplay           *display);
+static void     gimp_free_select_tool_finalize            (GObject               *object);
+static void     gimp_free_select_tool_control             (GimpTool              *tool,
+                                                           GimpToolAction         action,
+                                                           GimpDisplay           *display);
+static void     gimp_free_select_tool_oper_update         (GimpTool              *tool,
+                                                           GimpCoords            *coords,
+                                                           GdkModifierType        state,
+                                                           gboolean               proximity,
+                                                           GimpDisplay           *display);
+static void     gimp_free_select_tool_cursor_update       (GimpTool              *tool,
+                                                           GimpCoords            *coords,
+                                                           GdkModifierType        state,
+                                                           GimpDisplay           *display);
+static void     gimp_free_select_tool_button_press        (GimpTool              *tool,
+                                                           GimpCoords            *coords,
+                                                           guint32                time,
+                                                           GdkModifierType        state,
+                                                           GimpDisplay           *display);
+static void     gimp_free_select_tool_button_release      (GimpTool              *tool,
+                                                           GimpCoords            *coords,
+                                                           guint32                time,
+                                                           GdkModifierType        state,
+                                                           GimpButtonReleaseType  release_type,
+                                                           GimpDisplay           *display);
+static void     gimp_free_select_tool_motion              (GimpTool              *tool,
+                                                           GimpCoords            *coords,
+                                                           guint32                time,
+                                                           GdkModifierType        state,
+                                                           GimpDisplay           *display);
+static gboolean gimp_free_select_tool_key_press           (GimpTool              *tool,
+                                                           GdkEventKey           *kevent,
+                                                           GimpDisplay           *display);
+static void     gimp_free_select_tool_modifier_key        (GimpTool              *tool,
+                                                           GdkModifierType        key,
+                                                           gboolean               press,
+                                                           GdkModifierType        state,
+                                                           GimpDisplay           *display);
+static void     gimp_free_select_tool_active_modifier_key (GimpTool              *tool,
+                                                           GdkModifierType        key,
+                                                           gboolean               press,
+                                                           GdkModifierType        state,
+                                                           GimpDisplay           *display);
+static void     gimp_free_select_tool_draw                (GimpDrawTool          *draw_tool);
+static void     gimp_free_select_tool_real_select         (GimpFreeSelectTool    *fst,
+                                                           GimpDisplay           *display);
 
 
 G_DEFINE_TYPE (GimpFreeSelectTool, gimp_free_select_tool,
@@ -203,20 +208,21 @@ gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  object_class->finalize     = gimp_free_select_tool_finalize;
+  object_class->finalize          = gimp_free_select_tool_finalize;
 
-  tool_class->control        = gimp_free_select_tool_control;
-  tool_class->oper_update    = gimp_free_select_tool_oper_update;
-  tool_class->cursor_update  = gimp_free_select_tool_cursor_update;
-  tool_class->button_press   = gimp_free_select_tool_button_press;
-  tool_class->button_release = gimp_free_select_tool_button_release;
-  tool_class->motion         = gimp_free_select_tool_motion;
-  tool_class->key_press      = gimp_free_select_tool_key_press;
-  tool_class->modifier_key   = gimp_free_select_tool_modifier_key;
+  tool_class->control             = gimp_free_select_tool_control;
+  tool_class->oper_update         = gimp_free_select_tool_oper_update;
+  tool_class->cursor_update       = gimp_free_select_tool_cursor_update;
+  tool_class->button_press        = gimp_free_select_tool_button_press;
+  tool_class->button_release      = gimp_free_select_tool_button_release;
+  tool_class->motion              = gimp_free_select_tool_motion;
+  tool_class->key_press           = gimp_free_select_tool_key_press;
+  tool_class->modifier_key        = gimp_free_select_tool_modifier_key;
+  tool_class->active_modifier_key = gimp_free_select_tool_active_modifier_key;
 
-  draw_tool_class->draw      = gimp_free_select_tool_draw;
+  draw_tool_class->draw           = gimp_free_select_tool_draw;
 
-  klass->select              = gimp_free_select_tool_real_select;
+  klass->select                   = gimp_free_select_tool_real_select;
 
   g_type_class_add_private (klass, sizeof (Private));
 }
@@ -289,14 +295,28 @@ gimp_free_select_tool_get_segment (GimpFreeSelectTool  *fst,
 }
 
 static void
+gimp_free_select_tool_get_segment_point (GimpFreeSelectTool *fst,
+                                         gdouble            *start_point_x,
+                                         gdouble            *start_point_y,
+                                         gint                segment_index)
+{
+  Private *priv = GET_PRIVATE (fst);
+
+  *start_point_x = priv->points[priv->segment_indices[segment_index]].x;
+  *start_point_y = priv->points[priv->segment_indices[segment_index]].y;
+}
+
+static void
 gimp_free_select_tool_get_last_point (GimpFreeSelectTool *fst,
                                       gdouble            *start_point_x,
                                       gdouble            *start_point_y)
 {
   Private *priv = GET_PRIVATE (fst);
 
-  *start_point_x = priv->points[priv->segment_indices[priv->n_segment_indices - 1]].x;
-  *start_point_y = priv->points[priv->segment_indices[priv->n_segment_indices - 1]].y;
+  gimp_free_select_tool_get_segment_point (fst,
+                                           start_point_x,
+                                           start_point_y,
+                                           priv->n_segment_indices - 1);
 }
 
 static void
@@ -999,6 +1019,61 @@ gimp_free_select_tool_delegate_button_press (GimpFreeSelectTool *fst,
 }
 
 static void
+gimp_free_select_tool_update_motion (GimpFreeSelectTool *fst,
+                                     gdouble             new_x,
+                                     gdouble             new_y)
+{
+  Private *priv = GET_PRIVATE (fst);
+
+  if (gimp_free_select_tool_is_point_grabbed (fst))
+    {
+      priv->polygon_modified = TRUE;
+
+      if (priv->constrain_angle           &&
+          priv->grabbed_segment_index > 0 &&
+          priv->n_points              > 0 )
+        {
+          gdouble start_point_x;
+          gdouble start_point_y;
+
+          gimp_free_select_tool_get_segment_point (fst,
+                                                   &start_point_x,
+                                                   &start_point_y,
+                                                   priv->grabbed_segment_index - 1);
+              
+          gimp_tool_motion_constrain (start_point_x,
+                                      start_point_y,
+                                      &new_x,
+                                      &new_y,
+                                      GIMP_TOOL_CONSTRAIN_15_DEGREES);
+        }
+
+      gimp_free_select_tool_move_segment_vertex_to (fst,
+                                                    priv->grabbed_segment_index,
+                                                    new_x,
+                                                    new_y);
+
+      /* We also must update the pending point if we are moving the
+       * first point
+       */
+      if (priv->grabbed_segment_index == 0)
+        {
+          priv->pending_point.x = new_x;
+          priv->pending_point.y = new_y;
+        }
+    }
+  else
+    {
+      /* Don't show the pending point while we are adding points */
+      priv->show_pending_point = FALSE;
+
+      gimp_free_select_tool_add_point (fst,
+                                       new_x,
+                                       new_y);
+    }
+}
+
+static void
 gimp_free_select_tool_status_update (GimpFreeSelectTool *fst,
                                      GimpDisplay        *display,
                                      GimpCoords         *coords,
@@ -1313,33 +1388,12 @@ gimp_free_select_tool_motion (GimpTool        *tool,
 
   gimp_draw_tool_pause (draw_tool);
 
-  if (gimp_free_select_tool_is_point_grabbed (fst))
-    {
-      priv->polygon_modified = TRUE;
+  priv->last_coords.x = coords->x;
+  priv->last_coords.y = coords->y;
 
-      gimp_free_select_tool_move_segment_vertex_to (fst,
-                                                    priv->grabbed_segment_index,
-                                                    coords->x,
-                                                    coords->y);
-
-      /* We also must update the pending point if we are moving the
-       * first point
-       */
-      if (priv->grabbed_segment_index == 0)
-        {
-          priv->pending_point.x = coords->x;
-          priv->pending_point.y = coords->y;
-        }
-    }
-  else
-    {
-      /* Don't show the pending point while we are adding points */
-      priv->show_pending_point = FALSE;
-
-      gimp_free_select_tool_add_point (fst,
+  gimp_free_select_tool_update_motion (fst,
                                        coords->x,
                                        coords->y);
-    }
 
   gimp_draw_tool_resume (draw_tool);
 }
@@ -1384,6 +1438,9 @@ gimp_free_select_tool_modifier_key (GimpTool        *tool,
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
   Private      *priv      = GET_PRIVATE (tool);
 
+  if (tool->display != display)
+    return;
+
   gimp_draw_tool_pause (draw_tool);
 
   priv->constrain_angle = state & GDK_CONTROL_MASK ? TRUE : FALSE;
@@ -1397,6 +1454,42 @@ gimp_free_select_tool_modifier_key (GimpTool        *tool,
                                                 press,
                                                 state,
                                                 display);
+}
+
+static void
+gimp_free_select_tool_active_modifier_key (GimpTool        *tool,
+                                           GdkModifierType  key,
+                                           gboolean         press,
+                                           GdkModifierType  state,
+                                           GimpDisplay     *display)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+  Private      *priv      = GET_PRIVATE (tool);
+
+  if (tool->display != display)
+    return;
+
+  gimp_draw_tool_pause (draw_tool);
+
+  priv->constrain_angle = state & GDK_CONTROL_MASK ? TRUE : FALSE;
+
+  /* If we didn't came here due to a mouse release, immediately update
+   * the position of the thing we move.
+   */
+  if (state & GDK_BUTTON1_MASK)
+    {
+      gimp_free_select_tool_update_motion (GIMP_FREE_SELECT_TOOL (tool),
+                                           priv->last_coords.x,
+                                           priv->last_coords.y);
+    }
+
+  gimp_draw_tool_resume (draw_tool);
+
+  GIMP_TOOL_CLASS (parent_class)->active_modifier_key (tool,
+                                                       key,
+                                                       press,
+                                                       state,
+                                                       display);
 }
 
 static void
