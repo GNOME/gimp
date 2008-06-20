@@ -60,6 +60,7 @@ struct _GimpData
   time_t        mtime;
 
   GList        *tags;
+  gchar        *internal_name;
 };
 
 struct _GimpDataClass
@@ -102,7 +103,8 @@ const gchar * gimp_data_get_mime_type    (GimpData     *data);
 
 GimpData    * gimp_data_duplicate        (GimpData     *data);
 
-void          gimp_data_make_internal    (GimpData     *data);
+void          gimp_data_make_internal    (GimpData     *data,
+                                          const gchar  *internal_name);
 
 gint          gimp_data_name_compare     (GimpData     *data1,
                                           GimpData     *data2);

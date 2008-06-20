@@ -93,6 +93,9 @@ static gboolean  gimp_data_add_tag           (GimpTagged            *tagged,
 static gboolean  gimp_data_remove_tag        (GimpTagged            *tagged,
                                               GimpTag                tag);
 static GList *   gimp_data_get_tags          (GimpTagged            *tagged);
+static gchar *   gimp_data_get_identifier    (GimpTagged            *tagged);
+static gboolean  gimp_data_get_digest        (GimpTagged            *tagged,
+                                              guchar                 digest[16]);
 
 
 static guint data_signals[LAST_SIGNAL] = { 0 };
@@ -191,9 +194,11 @@ gimp_data_class_init (GimpDataClass *klass)
 static void
 gimp_data_tagged_iface_init (GimpTaggedInterface *iface)
 {
-  iface->add_tag    = gimp_data_add_tag;
-  iface->remove_tag = gimp_data_remove_tag;
-  iface->get_tags   = gimp_data_get_tags;
+  iface->add_tag        = gimp_data_add_tag;
+  iface->remove_tag     = gimp_data_remove_tag;
+  iface->get_tags       = gimp_data_get_tags;
+  iface->get_identifier = gimp_data_get_identifier;
+  iface->get_digest     = gimp_data_get_digest;
 }
 
 static void
@@ -209,6 +214,7 @@ gimp_data_init (GimpData      *data,
   data->freeze_count = 0;
   data->mtime        = 0;
   data->tags         = NULL;
+  data->internal_name = NULL;
 
   /*  look at the passed class pointer, not at GIMP_DATA_GET_CLASS(data)
    *  here, because the latter is always GimpDataClass itself
@@ -249,6 +255,12 @@ gimp_data_finalize (GObject *object)
     {
       g_list_free (data->tags);
       data->tags = NULL;
+    }
+
+  if (data->internal_name)
+    {
+      g_free (data->internal_name);
+      data->internal_name = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -392,6 +404,28 @@ static GList *
 gimp_data_get_tags (GimpTagged *tagged)
 {
   return GIMP_DATA (tagged)->tags;
+}
+
+static gchar*
+gimp_data_get_identifier (GimpTagged *tagged)
+{
+  GimpData *data = GIMP_DATA (tagged);
+
+  if (data->internal)
+    {
+      return data->internal_name;
+    }
+  else
+    {
+      return data->filename;
+    }
+}
+
+static gboolean
+gimp_data_get_digest (GimpTagged *tagged,
+                      guchar      digest[16])
+{
+  return FALSE;
 }
 
 /**
@@ -710,9 +744,13 @@ gimp_data_duplicate (GimpData *data)
  * saved to disk.  Note that if you do this, later calls to
  * gimp_data_save() and gimp_data_delete_from_disk() will
  * automatically return successfully without giving any warning.
+ *
+ * Internal name should be untranslated globally unique string
+ * identifying internal object.
  **/
 void
-gimp_data_make_internal (GimpData *data)
+gimp_data_make_internal (GimpData      *data,
+                         const gchar   *internal_name)
 {
   g_return_if_fail (GIMP_IS_DATA (data));
 
@@ -721,6 +759,8 @@ gimp_data_make_internal (GimpData *data)
       g_free (data->filename);
       data->filename = NULL;
     }
+
+  data->internal_name = g_strdup (internal_name);
 
   data->internal  = TRUE;
   data->writable  = FALSE;

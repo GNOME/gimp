@@ -108,6 +108,5 @@ void
 gimp_tag_cache_update (GimpTaggedInterface *tagged,
                        GimpTagCache        *cache)
 {
-    GimpData *data = GIMP_DATA(tagged);
-    printf("resource received: %s\n", data->filename); 
+    printf("resource received: %s\n", gimp_tagged_get_identifier (tagged)); 
 }

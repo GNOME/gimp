@@ -1,3 +1,23 @@
+2008-06-20  Aurimas Juška   <aurisj@svn.gnome.org>
+
+	* app/core/gimpdata.[ch]
+	* app/core/gimptagcache.c (gimp_tag_cache_update)
+	* app/core/gimptagged.[ch]: extended object identification
+	  capabilities. Each tagged object now provides unique
+	  identification string. In case it can change between sessions,
+	  objects can provide digest calculation which would help to remap
+	  to new identification string.
+
+	* app/core/gimp-gradients.c
+	* app/core/gimp.c
+	* app/core/gimpbrush.c
+	* app/core/gimpcurve.c
+	* app/core/gimpgradient.c (gimp_gradient_get_standard)
+	* app/core/gimppalette.c (gimp_palette_get_standard)
+	* app/core/gimppattern.c (gimp_pattern_get_standard): provide
+	  unique name for internal objects.
+
+
 2008-06-17  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/core/Makefile.am

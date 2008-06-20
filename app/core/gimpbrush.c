@@ -380,7 +380,8 @@ gimp_brush_get_standard (void)
       standard_brush = gimp_brush_new ("Standard");
 
       standard_brush->dirty = FALSE;
-      gimp_data_make_internal (standard_brush);
+      gimp_data_make_internal (standard_brush,
+                               "gimp-brush-standard");
 
       /*  set ref_count to 2 --> never swap the standard brush  */
       g_object_ref (standard_brush);
