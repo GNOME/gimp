@@ -80,7 +80,7 @@ struct _GimpThrobberPrivate
 GType
 gimp_throbber_get_type (void)
 {
-  static GtkType type = 0;
+  static GType type = 0;
 
   if (!type)
     {
@@ -101,6 +101,7 @@ gimp_throbber_get_type (void)
                                      "GimpThrobber",
                                      &type_info, 0);
     }
+
   return type;
 }
 

@@ -204,7 +204,7 @@ static void           fp_create_table_entry      (GtkWidget     **box,
 
 static void         fp_frames_checkbutton_in_box (GtkWidget      *vbox,
                                                   const gchar    *label,
-                                                  GtkSignalFunc   func,
+                                                  GCallback       func,
                                                   GtkWidget      *frame,
                                                   gboolean        clicked);
 
@@ -698,19 +698,19 @@ fp_create_control (void)
   gtk_widget_show (box);
 
   fp_frames_checkbutton_in_box (box, _("_Hue"),
-                                GTK_SIGNAL_FUNC (fp_show_hide_frame),
+                                G_CALLBACK (fp_show_hide_frame),
                                 fp_frames.palette,
                                 fpvals.visible_frames & HUE);
   fp_frames_checkbutton_in_box (box, _("_Saturation"),
-                                GTK_SIGNAL_FUNC (fp_show_hide_frame),
+                                G_CALLBACK (fp_show_hide_frame),
                                 fp_frames.satur,
                                 fpvals.visible_frames & SATURATION);
   fp_frames_checkbutton_in_box (box, _("_Value"),
-                                GTK_SIGNAL_FUNC (fp_show_hide_frame),
+                                G_CALLBACK (fp_show_hide_frame),
                                 fp_frames.lnd,
                                 fpvals.visible_frames & VALUE);
   fp_frames_checkbutton_in_box (box, _("A_dvanced"),
-                                GTK_SIGNAL_FUNC (fp_show_hide_frame),
+                                G_CALLBACK (fp_show_hide_frame),
                                 AW.window,
                                 FALSE);
   gtk_widget_show (frame);
@@ -897,7 +897,7 @@ fp_create_preview (GtkWidget **preview,
 static void
 fp_frames_checkbutton_in_box (GtkWidget     *vbox,
                               const gchar   *label,
-                              GtkSignalFunc  function,
+                              GCallback      function,
                               GtkWidget     *frame,
                               gboolean       clicked)
 {
@@ -909,7 +909,7 @@ fp_frames_checkbutton_in_box (GtkWidget     *vbox,
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (function),
+                    function,
                     frame);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), clicked);

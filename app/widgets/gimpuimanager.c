@@ -569,7 +569,7 @@ gimp_ui_manager_ui_popup (GimpUIManager        *manager,
                           GtkWidget            *parent,
                           GimpMenuPositionFunc  position_func,
                           gpointer              position_data,
-                          GtkDestroyNotify      popdown_func,
+                          GDestroyNotify        popdown_func,
                           gpointer              popdown_data)
 {
   GtkWidget *widget;
