@@ -24,6 +24,7 @@
 #include <glib-object.h>
 
 #define PANGO_ENABLE_ENGINE
+#include <cairo.h>
 #include <pango/pangoft2.h>
 
 #include <ft2build.h>

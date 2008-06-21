@@ -22,7 +22,8 @@
 #include "config.h"
 
 #include <glib-object.h>
-#include <pango/pangoft2.h>
+#include <cairo.h>
+#include <pango/pangocairo.h>
 
 #include "text-types.h"
 
@@ -302,9 +303,9 @@ gimp_text_layout_position (GimpTextLayout *layout)
 #endif
 }
 
-
+/*
 static void
-gimp_text_ft2_subst_func (FcPattern *pattern,
+gimp_text_cairo_subst_func (cairo_font_options_t *options,
                           gpointer   data)
 {
   GimpText *text = GIMP_TEXT (data);
@@ -313,25 +314,25 @@ gimp_text_ft2_subst_func (FcPattern *pattern,
   FcPatternAddBool (pattern, FC_AUTOHINT,  text->autohint);
   FcPatternAddBool (pattern, FC_ANTIALIAS, text->antialias);
 }
-
+*/
 static PangoContext *
 gimp_text_get_pango_context (GimpText *text,
                              gdouble   xres,
                              gdouble   yres)
 {
   PangoContext    *context;
-  PangoFT2FontMap *fontmap;
+  PangoCairoFontMap *fontmap;
 
-  fontmap = PANGO_FT2_FONT_MAP (pango_ft2_font_map_new ());
+  fontmap = PANGO_CAIRO_FONT_MAP (pango_cairo_font_map_new ());
 
-  pango_ft2_font_map_set_resolution (fontmap, xres, yres);
-
-  pango_ft2_font_map_set_default_substitute (fontmap,
-                                             gimp_text_ft2_subst_func,
+  pango_cairo_font_map_set_resolution (fontmap, xres);
+/*
+  pango_cairo_font_map_set_default_substitute (fontmap,
+                                             gimp_text_cairo_subst_func,
                                              g_object_ref (text),
                                              (GDestroyNotify) g_object_unref);
-
-  context = pango_ft2_font_map_create_context (fontmap);
+*/
+  context = pango_cairo_font_map_create_context (fontmap);
   g_object_unref (fontmap);
 
   /*  Workaround for bug #143542 (PangoFT2Fontmap leak),
@@ -341,9 +342,12 @@ gimp_text_get_pango_context (GimpText *text,
    *  font_map cache to be flushed, thereby removing the circular
    *  reference that causes the leak.
    */
+
+  /*
   g_object_weak_ref (G_OBJECT (context),
-                     (GWeakNotify) pango_ft2_font_map_substitute_changed,
+                     (GWeakNotify) pango_cairo_font_map_substitute_changed,
                      fontmap);
+*/
 
   if (text->language)
     pango_context_set_language (context,

@@ -24,7 +24,8 @@
 #include <glib-object.h>
 
 #define PANGO_ENABLE_ENGINE
-#include <pango/pangoft2.h>
+#include <cairo.h>
+#include <pango/pangocairo.h>
 
 #include "text-types.h"
 
@@ -36,104 +37,47 @@
 #define FT_LOAD_TARGET_MONO  FT_LOAD_MONOCHROME
 #endif
 
-
+/*
 void
 gimp_text_render_bitmap (PangoFont  *font,
                          PangoGlyph  glyph,
-                         FT_Int32    flags,
-                         FT_Matrix  *trafo,
+                         cairo_font_options_t *flags,
+                         cairo_matrix_t  *trafo,
                          gint        x,
                          gint        y,
-                         FT_Bitmap  *bitmap)
+                         cairo_surface_t *surface)
+*/
+void
+gimp_text_render_bitmap (PangoFont  *font,
+                         PangoGlyph glyph,
+                         cairo_font_options_t *options,
+                         cairo_matrix_t  *trafo,
+                         gint        x,
+                         gint        y,
+                         cairo_t *cr)
 {
-  FT_Face       face;
-  gint          y_start, y_limit, x_start, x_limit;
-  gint          ix, iy;
-  const guchar *src;
-  guchar       *dest;
 
-  face = pango_fc_font_lock_face (PANGO_FC_FONT (font));
+  cairo_scaled_font_t *cfont;
+  cairo_glyph_t cglyph;
 
-  FT_Set_Transform (face, trafo, NULL);
+  cfont = pango_cairo_font_get_scaled_font ( (PangoCairoFont*) font);
 
-  FT_Load_Glyph (face, (FT_UInt) glyph, flags);
-  FT_Render_Glyph (face->glyph,
-                   (flags & FT_LOAD_TARGET_MONO ?
-                    ft_render_mode_mono : ft_render_mode_normal));
 
   x = PANGO_PIXELS (x);
   y = PANGO_PIXELS (y);
 
-  x_start = MAX (0, - (x + face->glyph->bitmap_left));
-  x_limit = MIN (face->glyph->bitmap.width,
-                 bitmap->width - (x + face->glyph->bitmap_left));
+  cglyph.x = x;
+  cglyph.y = y;
+  cglyph.index = glyph;
 
-  y_start = MAX (0,  - (y - face->glyph->bitmap_top));
-  y_limit = MIN (face->glyph->bitmap.rows,
-                 bitmap->rows - (y - face->glyph->bitmap_top));
+  cairo_set_scaled_font (cr, cfont);
+  cairo_set_font_options (cr, options);
 
-  src = face->glyph->bitmap.buffer + y_start * face->glyph->bitmap.pitch;
+  cairo_transform (cr, trafo);
+  cairo_move_to (cr, x, y);
 
-  dest = bitmap->buffer +
-    (y_start + y - face->glyph->bitmap_top) * bitmap->pitch +
-    x_start + x + face->glyph->bitmap_left;
+  cairo_set_source_rgb (cr, 0.5, 0.5, 0.5);
 
-  switch (face->glyph->bitmap.pixel_mode)
-    {
-    case ft_pixel_mode_grays:
-      src += x_start;
-      for (iy = y_start; iy < y_limit; iy++)
-        {
-          const guchar *s = src;
-          guchar       *d = dest;
+  cairo_show_glyphs (cr, &cglyph, 1);  
 
-          for (ix = x_start; ix < x_limit; ix++)
-            {
-              switch (*s)
-                {
-                case 0:
-                  break;
-                case 0xff:
-                  *d = 0xff;
-                default:
-                  *d = MIN ((gushort) *d + (const gushort) *s, 0xff);
-                  break;
-                }
-
-              s++;
-              d++;
-            }
-
-          dest += bitmap->pitch;
-          src  += face->glyph->bitmap.pitch;
-        }
-      break;
-
-    case ft_pixel_mode_mono:
-      src += x_start / 8;
-      for (iy = y_start; iy < y_limit; iy++)
-        {
-          const guchar *s = src;
-          guchar       *d = dest;
-
-          for (ix = x_start; ix < x_limit; ix++)
-            {
-              if ((*s) & (1 << (7 - (ix % 8))))
-                *d |= 0xff;
-
-              if ((ix % 8) == 7)
-                s++;
-              d++;
-            }
-
-          dest += bitmap->pitch;
-          src  += face->glyph->bitmap.pitch;
-        }
-      break;
-
-    default:
-      break;
-    }
-
-  pango_fc_font_unlock_face (PANGO_FC_FONT (font));
 }

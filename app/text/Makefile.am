@@ -10,6 +10,7 @@ INCLUDES = \
 	-I$(top_srcdir)/app	\
 	$(GDK_PIXBUF_CFLAGS)	\
 	$(PANGOFT2_CFLAGS)	\
+	$(PANGOCAIRO_CFLAGS)	\
 	$(GLIB_CFLAGS)		\
 	-I$(includedir)
 

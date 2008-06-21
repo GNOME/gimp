@@ -24,7 +24,8 @@
 #include "config.h"
 
 #include <glib-object.h>
-#include <pango/pangoft2.h>
+#include <cairo.h>
+#include <pango/pangocairo.h>
 #include <pango/pango-font.h>
 
 #include "text-types.h"
@@ -37,7 +38,6 @@
 #include "gimptextlayout.h"
 #include "gimptextlayout-render.h"
 
-/* test comment for soc-2008-text project experimental svn commit */
 
 /* for compatibility with older freetype versions */
 #ifndef FT_LOAD_TARGET_MONO
@@ -62,9 +62,9 @@ static void  gimp_text_layout_render_glyphs  (GimpTextLayout     *layout,
                                               gint                x,
                                               gint                y,
                                               gpointer            render_data);
-static FT_Int32   gimp_text_layout_render_flags (GimpTextLayout  *layout);
+static cairo_font_options_t   *gimp_text_layout_render_flags (GimpTextLayout  *layout);
 static void       gimp_text_layout_render_trafo (GimpTextLayout  *layout,
-                                                 FT_Matrix       *trafo);
+                                                 cairo_matrix_t       *trafo);
 
 
 
@@ -146,9 +146,10 @@ gimp_text_layout_render_glyphs (GimpTextLayout     *layout,
                                 gpointer            render_data)
 {
   PangoGlyphInfo *gi;
-  FT_Int32        flags;
-  FT_Matrix       trafo;
-  FT_Vector       pos;
+  cairo_font_options_t *flags;
+  cairo_matrix_t trafo;
+  double pos_x;
+  double pos_y;
   gint            i;
   gint            x_position = 0;
 
@@ -159,13 +160,14 @@ gimp_text_layout_render_glyphs (GimpTextLayout     *layout,
     {
       if (gi->glyph != PANGO_GLYPH_EMPTY)
         {
-          pos.x = x + x_position + gi->geometry.x_offset;
-          pos.y = y + gi->geometry.y_offset;
 
-          FT_Vector_Transform (&pos, &trafo);
+          pos_x = x + x_position + gi->geometry.x_offset;
+          pos_y = y + gi->geometry.y_offset;
 
+          cairo_matrix_transform_point (&trafo, &pos_x, &pos_y);
+          
           render_func (font, gi->glyph, flags, &trafo,
-                       pos.x, pos.y,
+                       pos_x, pos_y,
                        render_data);
         }
 
@@ -173,12 +175,27 @@ gimp_text_layout_render_glyphs (GimpTextLayout     *layout,
     }
 }
 
-static FT_Int32
+static cairo_font_options_t *
 gimp_text_layout_render_flags (GimpTextLayout *layout)
 {
   GimpText *text  = layout->text;
-  gint      flags;
+  cairo_font_options_t *flags;
 
+  flags = cairo_font_options_create ();
+
+  if (text->antialias)
+    cairo_font_options_set_antialias (flags, CAIRO_ANTIALIAS_DEFAULT);
+  else
+    cairo_font_options_set_antialias (flags, CAIRO_ANTIALIAS_NONE);
+
+  if (!text->hinting)
+    cairo_font_options_set_hint_style (flags, CAIRO_HINT_STYLE_NONE);
+
+  if (text->autohint)
+    cairo_font_options_set_antialias (flags, CAIRO_HINT_STYLE_DEFAULT);
+
+
+/*
   if (text->antialias)
     flags = FT_LOAD_NO_BITMAP;
   else
@@ -189,18 +206,26 @@ gimp_text_layout_render_flags (GimpTextLayout *layout)
 
   if (text->autohint)
     flags |= FT_LOAD_FORCE_AUTOHINT;
-
+*/
   return flags;
 }
 
 static void
 gimp_text_layout_render_trafo (GimpTextLayout *layout,
-                               FT_Matrix      *trafo)
+                               cairo_matrix_t *trafo)
 {
   GimpText *text = layout->text;
 
+/*
   trafo->xx = text->transformation.coeff[0][0] * 65536.0 / layout->yres * layout->xres;
   trafo->xy = text->transformation.coeff[0][1] * 65536.0;
   trafo->yx = text->transformation.coeff[1][0] * 65536.0 / layout->yres * layout->xres;
   trafo->yy = text->transformation.coeff[1][1] * 65536.0;
+  */
+  trafo->xx = text->transformation.coeff[0][0] * 1.0 / layout->yres * layout->xres;
+  trafo->xy = text->transformation.coeff[0][1] * 1.0;
+  trafo->yx = text->transformation.coeff[1][0] * 1.0 / layout->yres * layout->xres;
+  trafo->yy = text->transformation.coeff[1][1] * 1.0;
+  trafo->x0 = 0;
+  trafo->y0 = 0;
 }

@@ -24,7 +24,7 @@
 #include <string.h>
 
 #include <glib-object.h>
-#include <pango/pangoft2.h>
+#include <pango/pangocairo.h>
 
 #include "libgimpconfig/gimpconfig.h"
 
@@ -577,8 +577,9 @@ gimp_text_layer_render (GimpTextLayer *layer)
     gimp_object_set_name_safe (GIMP_OBJECT (layer),
                                layer->text->text ?
                                layer->text->text : _("Empty Text Layer"));
-
+  
   gimp_text_layer_render_layout (layer, layout);
+  
   g_object_unref (layout);
 
   g_object_thaw_notify (G_OBJECT (drawable));
@@ -593,39 +594,45 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   GimpDrawable *drawable = GIMP_DRAWABLE (layer);
   GimpItem     *item     = GIMP_ITEM (layer);
   TileManager  *mask;
-  FT_Bitmap     bitmap;
+  cairo_t *cr;
+  cairo_surface_t *surface;
   PixelRegion   textPR;
   PixelRegion   maskPR;
   gint          i;
+  gint  pitch;
 
   gimp_drawable_fill (drawable, &layer->text->color, NULL);
 
-  bitmap.width = gimp_item_width  (item);
-  bitmap.rows  = gimp_item_height (item);
-  bitmap.pitch = bitmap.width;
-  if (bitmap.pitch & 3)
-    bitmap.pitch += 4 - (bitmap.pitch & 3);
+  pitch = gimp_item_width (item);
 
-  bitmap.buffer = g_malloc0 (bitmap.rows * bitmap.pitch);
+  if (pitch & 3)
+    pitch += 4 - (pitch & 3);
+
+
+  surface = cairo_image_surface_create ( CAIRO_FORMAT_A8,
+        pitch, gimp_item_height (item));
+
+  cr = cairo_create (surface);
 
   gimp_text_layout_render (layout,
                            (GimpTextRenderFunc) gimp_text_render_bitmap,
-                           &bitmap);
+                           cr);
 
-  mask = tile_manager_new (bitmap.width, bitmap.rows, 1);
-  pixel_region_init (&maskPR, mask, 0, 0, bitmap.width, bitmap.rows, TRUE);
+  mask = tile_manager_new (cairo_image_surface_get_width (surface), cairo_image_surface_get_height (surface), 1);
+  pixel_region_init (&maskPR, mask, 0, 0, cairo_image_surface_get_width (surface), cairo_image_surface_get_height (surface), TRUE);
 
-  for (i = 0; i < bitmap.rows; i++)
+  for (i = 0; i < cairo_image_surface_get_height (surface); i++)
     pixel_region_set_row (&maskPR,
-                          0, i, bitmap.width,
-                          bitmap.buffer + i * bitmap.pitch);
+                          0, i, cairo_image_surface_get_width (surface),
+                          cairo_image_surface_get_data (surface) + i * cairo_image_surface_get_stride (surface));
 
-  g_free (bitmap.buffer);
+  cairo_destroy (cr);
+  cairo_surface_destroy (surface);
 
   pixel_region_init (&textPR, gimp_drawable_get_tiles (drawable),
-                     0, 0, bitmap.width, bitmap.rows, TRUE);
+                     0, 0, cairo_image_surface_get_width (surface), cairo_image_surface_get_height (surface), TRUE);
   pixel_region_init (&maskPR, mask,
-                     0, 0, bitmap.width, bitmap.rows, FALSE);
+                     0, 0, cairo_image_surface_get_width (surface), cairo_image_surface_get_height (surface), FALSE);
 
   apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
 
