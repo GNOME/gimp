@@ -34,8 +34,9 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimp-utils.h"
 #include "core/gimpparamspecs.h"
+#include "core/gimpprogress.h"
+#include "core/gimp-utils.h"
 
 #include "pdb/gimppdb.h"
 #include "pdb/gimpprocedure.h"
@@ -55,41 +56,50 @@ typedef struct _GimpIdleHelp GimpIdleHelp;
 
 struct _GimpIdleHelp
 {
-  Gimp  *gimp;
-  gchar *help_domain;
-  gchar *help_locales;
-  gchar *help_id;
+  Gimp         *gimp;
+  GimpProgress *progress;
+  gchar        *help_domain;
+  gchar        *help_locales;
+  gchar        *help_id;
 };
 
 
 /*  local function prototypes  */
 
-static gint      gimp_idle_help          (GimpIdleHelp  *idle_help);
+static gint       gimp_idle_help          (GimpIdleHelp  *idle_help);
 
-static gboolean  gimp_help_browser       (Gimp          *gimp);
-static void      gimp_help_browser_error (Gimp          *gimp,
-                                          const gchar   *title,
-                                          const gchar   *primary,
-                                          const gchar   *text);
+static gboolean   gimp_help_browser       (Gimp          *gimp);
+static void       gimp_help_browser_error (Gimp          *gimp,
+                                           const gchar   *title,
+                                           const gchar   *primary,
+                                           const gchar   *text);
 
-static void      gimp_help_call          (Gimp          *gimp,
-                                          const gchar   *procedure_name,
-                                          const gchar   *help_domain,
-                                          const gchar   *help_locales,
-                                          const gchar   *help_id);
-static gchar *   gimp_help_get_locales   (GimpGuiConfig *config);
+static void       gimp_help_call          (Gimp          *gimp,
+                                           GimpProgress  *progress,
+                                           const gchar   *procedure_name,
+                                           const gchar   *help_domain,
+                                           const gchar   *help_locales,
+                                           const gchar   *help_id);
+
+static gint       gimp_help_get_help_domains       (Gimp    *gimp,
+                                                    gchar ***domain_names,
+                                                    gchar ***domain_uris);
+static gchar    * gimp_help_get_default_domain_uri (Gimp    *gimp);
+static gchar    * gimp_help_get_locales            (Gimp    *gimp);
 
 
 /*  public functions  */
 
 void
-gimp_help_show (Gimp        *gimp,
-                const gchar *help_domain,
-                const gchar *help_id)
+gimp_help_show (Gimp         *gimp,
+                GimpProgress *progress,
+                const gchar  *help_domain,
+                const gchar  *help_id)
 {
   GimpGuiConfig *config;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   config = GIMP_GUI_CONFIG (gimp->config);
 
@@ -97,12 +107,13 @@ gimp_help_show (Gimp        *gimp,
     {
       GimpIdleHelp *idle_help = g_slice_new0 (GimpIdleHelp);
 
-      idle_help->gimp = gimp;
+      idle_help->gimp     = gimp;
+      idle_help->progress = progress;
 
       if (help_domain && strlen (help_domain))
         idle_help->help_domain = g_strdup (help_domain);
 
-      idle_help->help_locales = gimp_help_get_locales (config);
+      idle_help->help_locales = gimp_help_get_locales (gimp);
 
       if (help_id && strlen (help_id))
         idle_help->help_id = g_strdup (help_id);
@@ -143,6 +154,7 @@ gimp_idle_help (GimpIdleHelp *idle_help)
 
   if (procedure_name)
     gimp_help_call (idle_help->gimp,
+                    idle_help->progress,
                     procedure_name,
                     idle_help->help_domain,
                     idle_help->help_locales,
@@ -195,9 +207,7 @@ gimp_help_browser (Gimp *gimp)
           return FALSE;
         }
 
-      n_domains = gimp_plug_in_manager_get_help_domains (gimp->plug_in_manager,
-                                                         &help_domains,
-                                                         &help_uris);
+      n_domains = gimp_help_get_help_domains (gimp, &help_domains, &help_uris);
 
       args = gimp_procedure_get_arguments (procedure);
       gimp_value_array_truncate (args, 5);
@@ -280,11 +290,12 @@ gimp_help_browser_error (Gimp        *gimp,
 }
 
 static void
-gimp_help_call (Gimp        *gimp,
-                const gchar *procedure_name,
-                const gchar *help_domain,
-                const gchar *help_locales,
-                const gchar *help_id)
+gimp_help_call (Gimp         *gimp,
+                GimpProgress *progress,
+                const gchar  *procedure_name,
+                const gchar  *help_domain,
+                const gchar  *help_locales,
+                const gchar  *help_id)
 {
   GimpProcedure *procedure;
 
@@ -303,7 +314,7 @@ gimp_help_call (Gimp        *gimp,
       return_vals =
         gimp_pdb_execute_procedure_by_name (gimp->pdb,
                                             gimp_get_user_context (gimp),
-                                            NULL, &error,
+                                            progress, &error,
                                             procedure_name,
                                             G_TYPE_STRING, help_domain,
                                             G_TYPE_STRING, help_locales,
@@ -339,9 +350,7 @@ gimp_help_call (Gimp        *gimp,
         /*  FIXME: error msg  */
         return;
 
-      n_domains = gimp_plug_in_manager_get_help_domains (gimp->plug_in_manager,
-                                                         &help_domains,
-                                                         &help_uris);
+      n_domains = gimp_help_get_help_domains (gimp, &help_domains, &help_uris);
 
       args = gimp_procedure_get_arguments (procedure);
       gimp_value_array_truncate (args, 4);
@@ -352,8 +361,8 @@ gimp_help_call (Gimp        *gimp,
       gimp_value_take_stringarray (&args->values[3], help_uris, n_domains);
 
       gimp_procedure_execute_async (procedure, gimp,
-                                    gimp_get_user_context (gimp),
-                                    NULL, args, NULL, &error);
+                                    gimp_get_user_context (gimp), progress,
+                                    args, NULL, &error);
 
       g_value_array_free (args);
 
@@ -382,7 +391,7 @@ gimp_help_call (Gimp        *gimp,
       return_vals =
         gimp_pdb_execute_procedure_by_name (gimp->pdb,
                                             gimp_get_user_context (gimp),
-                                            NULL, &error,
+                                            progress, &error,
                                             "extension-gimp-help-temp",
                                             G_TYPE_STRING, procedure_name,
                                             G_TYPE_STRING, help_domain,
@@ -401,9 +410,62 @@ gimp_help_call (Gimp        *gimp,
     }
 }
 
-static gchar *
-gimp_help_get_locales (GimpGuiConfig *config)
+static gint
+gimp_help_get_help_domains (Gimp    *gimp,
+                            gchar ***domain_names,
+                            gchar ***domain_uris)
 {
+  gchar **plug_in_domains = NULL;
+  gchar **plug_in_uris    = NULL;
+  gint    i, n_domains;
+
+  n_domains = gimp_plug_in_manager_get_help_domains (gimp->plug_in_manager,
+                                                     &plug_in_domains,
+                                                     &plug_in_uris);
+
+  *domain_names = g_new0 (gchar *, n_domains + 1);
+  *domain_uris  = g_new0 (gchar *, n_domains + 1);
+
+  *domain_names[0] = g_strdup ("http://www.gimp.org/help");
+  *domain_uris[0]  = gimp_help_get_default_domain_uri (gimp);
+
+  for (i = 0; i < n_domains; i++)
+    {
+      *domain_names[i + 1] = plug_in_domains[i];
+      *domain_uris[i + 1]  = plug_in_uris[i];
+    }
+
+  g_free (plug_in_domains);
+  g_free (plug_in_uris);
+
+  return n_domains + 1;
+}
+
+static gchar *
+gimp_help_get_default_domain_uri (Gimp *gimp)
+{
+  GimpGuiConfig *config = GIMP_GUI_CONFIG (gimp->config);
+  gchar         *dir;
+  gchar         *uri;
+
+  if (g_getenv ("GIMP2_HELP_URI"))
+    return g_strdup (g_getenv ("GIMP2_HELP_URI"));
+
+  if (config->user_manual_online)
+    return g_strdup (config->user_manual_online_uri);
+
+  dir = g_build_filename (gimp_data_directory (), "help", NULL);
+  uri = g_filename_to_uri (dir, NULL, NULL);
+  g_free (dir);
+
+  return uri;
+}
+
+static gchar *
+gimp_help_get_locales (Gimp *gimp)
+{
+  GimpGuiConfig *config = GIMP_GUI_CONFIG (gimp->config);
+
   if (config->help_locales && strlen (config->help_locales))
     return g_strdup (config->help_locales);
 

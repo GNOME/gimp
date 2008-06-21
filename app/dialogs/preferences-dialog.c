@@ -1797,6 +1797,18 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Show help _buttons"),
                           GTK_BOX (vbox2));
 
+  {
+    GtkWidget *combo;
+
+    table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+    combo = prefs_boolean_combo_box_add (object, "user-manual-online",
+                                         _("Use the online version"),
+                                         _("Use a locally installed copy"),
+                                         _("User manual:"),
+                                         GTK_TABLE (table), 0, size_group);
+    gimp_help_set_help_data (combo, NULL, NULL);
+  }
+
   /*  Help Browser  */
   vbox2 = prefs_frame_new (_("Help Browser"), GTK_CONTAINER (vbox), FALSE);
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));

@@ -131,6 +131,8 @@ EXTRA_DIST = \
 	xbm/modifier-pattern-mask.xbm		\
 	xbm/modifier-join.xbm			\
 	xbm/modifier-join-mask.xbm		\
+	xbm/modifier-select.xbm			\
+	xbm/modifier-select-mask.xbm		\
 	\
 	xbm/tool-rect-select.xbm		\
 	xbm/tool-rect-select-mask.xbm		\

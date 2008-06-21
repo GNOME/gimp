@@ -296,7 +296,7 @@ gui_help_func (const gchar *help_id,
 {
   g_return_if_fail (GIMP_IS_GIMP (the_gui_gimp));
 
-  gimp_help (the_gui_gimp, NULL, help_id);
+  gimp_help (the_gui_gimp, NULL, NULL, help_id);
 }
 
 static gboolean

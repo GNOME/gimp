@@ -64,6 +64,8 @@ gimp_help_locale_new (const gchar *locale_id)
 void
 gimp_help_locale_free (GimpHelpLocale *locale)
 {
+  g_return_if_fail (locale != NULL);
+
   if (locale->help_id_mapping)
     g_hash_table_destroy (locale->help_id_mapping);
 
@@ -79,6 +81,9 @@ const gchar *
 gimp_help_locale_map (GimpHelpLocale *locale,
                       const gchar    *help_id)
 {
+  g_return_val_if_fail (locale != NULL, NULL);
+  g_return_val_if_fail (help_id != NULL, NULL);
+
   if (locale->help_id_mapping)
     {
       GimpHelpItem *item = g_hash_table_lookup (locale->help_id_mapping,

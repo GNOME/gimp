@@ -61,6 +61,7 @@ static const MenuPathMapping menu_path_mappings[] =
   { "<Toolbox>/Xtns",                 NULL, "<Image>/Filters/Extensions"       },
   { "<Toolbox>/Help",                 NULL, "<Image>/Help"                     },
 
+  { "<Toolbox>/File/Acquire",         NULL, "<Image>/File/New/Acquire"         },
   { "<Image>/File/Acquire",           NULL, "<Image>/File/New/Acquire"         },
   { NULL, NULL, NULL                                                           }
 };

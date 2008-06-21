@@ -71,6 +71,8 @@ static void     load_help         (const gchar      *procedure,
                                    const gchar      *help_id);
 static gboolean load_help_idle    (gpointer          data);
 
+static GimpHelpProgress * load_help_progress_new (void);
+
 
 /*  local variables  */
 
@@ -263,35 +265,43 @@ load_help_idle (gpointer data)
 
   if (domain)
     {
-      GList    *locales;
-      gchar    *full_uri;
-      gboolean  fatal_error;
+      GimpHelpProgress *progress = NULL;
+      GList            *locales;
+      gchar            *uri;
+      gboolean          fatal_error;
 
-      locales  = gimp_help_parse_locales (idle_help->help_locales);
-      full_uri = gimp_help_domain_map (domain, locales, idle_help->help_id,
-                                       NULL, NULL, &fatal_error);
+      locales = gimp_help_parse_locales (idle_help->help_locales);
+
+      if (! g_str_has_prefix (domain->help_uri, "file:"))
+        progress = load_help_progress_new ();
+
+      uri = gimp_help_domain_map (domain, locales, idle_help->help_id,
+                                  progress, NULL, &fatal_error);
+
+      if (progress)
+        gimp_help_progress_free (progress);
 
       g_list_foreach (locales, (GFunc) g_free, NULL);
       g_list_free (locales);
 
-      if (full_uri)
+      if (uri)
         {
           GimpParam *return_vals;
           gint       n_return_vals;
 
 #ifdef GIMP_HELP_DEBUG
           g_printerr ("help: calling '%s' for '%s'\n",
-                      idle_help->procedure, full_uri);
+                      idle_help->procedure, uri);
 #endif
 
           return_vals = gimp_run_procedure (idle_help->procedure,
                                             &n_return_vals,
-                                            GIMP_PDB_STRING, full_uri,
+                                            GIMP_PDB_STRING, uri,
                                             GIMP_PDB_END);
 
           gimp_destroy_params (return_vals, n_return_vals);
 
-          g_free (full_uri);
+          g_free (uri);
         }
       else if (fatal_error)
         {
@@ -307,4 +317,38 @@ load_help_idle (gpointer data)
   g_slice_free (IdleHelp, idle_help);
 
   return FALSE;
+}
+
+static void
+load_help_progress_start (const gchar *message,
+                          gboolean     cancelable,
+                          gpointer     user_data)
+{
+  gimp_progress_init (message);
+}
+
+static void
+load_help_progress_update (gdouble  value,
+                           gpointer user_data)
+{
+  gimp_progress_update (value);
+}
+
+static void
+load_help_progress_end (gpointer user_data)
+{
+  gimp_progress_end ();
+}
+
+static GimpHelpProgress *
+load_help_progress_new (void)
+{
+  static const GimpHelpProgressVTable vtable =
+  {
+    load_help_progress_start,
+    load_help_progress_end,
+    load_help_progress_update
+  };
+
+  return gimp_help_progress_new (&vtable, NULL);
 }

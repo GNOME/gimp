@@ -65,6 +65,8 @@ struct _GimpGuiConfig
   gchar               *help_locales;
   GimpHelpBrowserType  help_browser;
   gchar               *web_browser;
+  gboolean             user_manual_online;
+  gchar               *user_manual_online_uri;
   GimpWindowHint       toolbox_window_hint;
   GimpWindowHint       dock_window_hint;
   gboolean             transient_docks;

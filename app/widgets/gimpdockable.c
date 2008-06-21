@@ -1245,7 +1245,7 @@ gimp_dockable_show_menu (GimpDockable *dockable)
   gimp_ui_manager_ui_popup (dockbook_ui_manager, "/dockable-popup",
                             GTK_WIDGET (dockable),
                             gimp_dockable_menu_position, dockable,
-                            (GtkDestroyNotify) gimp_dockable_menu_end, dockable);
+                            (GDestroyNotify) gimp_dockable_menu_end, dockable);
 
   return TRUE;
 }

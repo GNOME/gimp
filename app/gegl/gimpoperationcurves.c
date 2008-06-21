@@ -35,11 +35,11 @@
 #include "gimpoperationcurves.h"
 
 
-static gboolean gimp_operation_curves_process (GeglOperation *operation,
-                                               void          *in_buf,
-                                               void          *out_buf,
-                                               glong          samples,
-                                               GeglRectangle *roi);
+static gboolean gimp_operation_curves_process (GeglOperation       *operation,
+                                               void                *in_buf,
+                                               void                *out_buf,
+                                               glong                samples,
+                                               const GeglRectangle *roi);
 
 
 G_DEFINE_TYPE (GimpOperationCurves, gimp_operation_curves,
@@ -80,11 +80,11 @@ gimp_operation_curves_init (GimpOperationCurves *self)
 }
 
 static gboolean
-gimp_operation_curves_process (GeglOperation *operation,
-                               void          *in_buf,
-                               void          *out_buf,
-                               glong          samples,
-                               GeglRectangle *roi)
+gimp_operation_curves_process (GeglOperation       *operation,
+                               void                *in_buf,
+                               void                *out_buf,
+                               glong                samples,
+                               const GeglRectangle *roi)
 {
   GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
   GimpCurvesConfig         *config = GIMP_CURVES_CONFIG (point->config);

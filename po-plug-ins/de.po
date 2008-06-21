@@ -19,9 +19,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-10 12:56+0200\n"
-"PO-Revision-Date: 2008-05-10 13:02+0200\n"
-"Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
+"POT-Creation-Date: 2008-06-11 08:26+0200\n"
+"PO-Revision-Date: 2008-06-11 08:42+0200\n"
+"Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,23 +47,23 @@ msgstr "Fehlerhafte Palette"
 #: ../plug-ins/common/mng.c:1067 ../plug-ins/common/pat.c:317
 #: ../plug-ins/common/pcx.c:344 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:703 ../plug-ins/common/pnm.c:480
-#: ../plug-ins/common/poppler.c:527 ../plug-ins/common/postscript.c:1023
+#: ../plug-ins/common/poppler.c:529 ../plug-ins/common/postscript.c:1023
 #: ../plug-ins/common/postscript.c:3031 ../plug-ins/common/psp.c:1747
 #: ../plug-ins/common/raw.c:243 ../plug-ins/common/raw.c:645
 #: ../plug-ins/common/sphere-designer.c:2002 ../plug-ins/common/sunras.c:378
 #: ../plug-ins/common/svg.c:321 ../plug-ins/common/svg.c:702
-#: ../plug-ins/common/tga.c:423 ../plug-ins/common/tiff-load.c:288
+#: ../plug-ins/common/tga.c:428 ../plug-ins/common/tiff-load.c:288
 #: ../plug-ins/common/xbm.c:720 ../plug-ins/common/xwd.c:420
 #: ../plug-ins/faxg3/faxg3.c:219 ../plug-ins/fits/fits.c:345
 #: ../plug-ins/flame/flame.c:411 ../plug-ins/fli/fli-gimp.c:429
 #: ../plug-ins/fli/fli-gimp.c:464
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1863
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:931
-#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:195
-#: ../plug-ins/ico/ico-load.c:651 ../plug-ins/ico/ico-load.c:728
-#: ../plug-ins/jpeg/jpeg-load.c:111 ../plug-ins/jpeg/jpeg-load.c:828
-#: ../plug-ins/lighting/lighting-ui.c:1354 ../plug-ins/psd/psd-load.c:125
-#: ../plug-ins/psd/psd-thumb-load.c:78
+#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:222
+#: ../plug-ins/help/gimphelplocale.c:238 ../plug-ins/ico/ico-load.c:651
+#: ../plug-ins/ico/ico-load.c:728 ../plug-ins/jpeg/jpeg-load.c:111
+#: ../plug-ins/jpeg/jpeg-load.c:828 ../plug-ins/lighting/lighting-ui.c:1354
+#: ../plug-ins/psd/psd-load.c:125 ../plug-ins/psd/psd-thumb-load.c:78
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:271
 #: ../plug-ins/uri/uri-backend-libcurl.c:186 ../plug-ins/xjt/xjt.c:2545
 #: ../plug-ins/xjt/xjt.c:2553
@@ -80,9 +80,9 @@ msgstr "Datei »%s« konnte nicht zum Lesen geöffnet werden: %s"
 #: ../plug-ins/common/gif-load.c:314 ../plug-ins/common/gih.c:654
 #: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:349
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:710
-#: ../plug-ins/common/pnm.c:485 ../plug-ins/common/poppler.c:572
+#: ../plug-ins/common/pnm.c:485 ../plug-ins/common/poppler.c:574
 #: ../plug-ins/common/postscript.c:1029 ../plug-ins/common/raw.c:650
-#: ../plug-ins/common/sunras.c:470 ../plug-ins/common/tga.c:428
+#: ../plug-ins/common/sunras.c:470 ../plug-ins/common/tga.c:433
 #: ../plug-ins/common/tiff-load.c:570 ../plug-ins/common/wmf.c:992
 #: ../plug-ins/common/xbm.c:725 ../plug-ins/common/xpm.c:343
 #: ../plug-ins/common/xwd.c:506 ../plug-ins/faxg3/faxg3.c:204
@@ -139,7 +139,7 @@ msgstr "Nicht unterstützte oder ungültige Bildhöhe: %d"
 #: ../plug-ins/common/pcx.c:399 ../plug-ins/common/pix.c:368
 #: ../plug-ins/common/png.c:831 ../plug-ins/common/pnm.c:571
 #: ../plug-ins/common/raw.c:691 ../plug-ins/common/smooth-palette.c:257
-#: ../plug-ins/common/sunras.c:956 ../plug-ins/common/tga.c:1029
+#: ../plug-ins/common/sunras.c:956 ../plug-ins/common/tga.c:1034
 #: ../plug-ins/common/tiff-load.c:963 ../plug-ins/common/tile.c:267
 #: ../plug-ins/common/xbm.c:880 ../plug-ins/faxg3/faxg3.c:464
 #: ../plug-ins/fits/fits.c:511 ../plug-ins/gfig/gfig-dialog.c:1284
@@ -176,16 +176,16 @@ msgstr "Alpha-Kanal wird ignoriert."
 #: ../plug-ins/common/mng.c:904 ../plug-ins/common/pat.c:447
 #: ../plug-ins/common/pcx.c:645 ../plug-ins/common/pix.c:508
 #: ../plug-ins/common/png.c:1245 ../plug-ins/common/pnm.c:958
-#: ../plug-ins/common/postscript.c:1196 ../plug-ins/common/psd-save.c:1557
+#: ../plug-ins/common/postscript.c:1196 ../plug-ins/common/psd-save.c:1559
 #: ../plug-ins/common/raw.c:528 ../plug-ins/common/raw.c:555
 #: ../plug-ins/common/sphere-designer.c:2112 ../plug-ins/common/sunras.c:544
-#: ../plug-ins/common/tga.c:1133 ../plug-ins/common/tiff-save.c:671
+#: ../plug-ins/common/tga.c:1138 ../plug-ins/common/tiff-save.c:671
 #: ../plug-ins/common/xbm.c:1016 ../plug-ins/common/xwd.c:598
 #: ../plug-ins/fits/fits.c:457 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fli/fli-gimp.c:715
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1546
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ico/ico-save.c:1020
-#: ../plug-ins/ifs-compose/ifs-compose.c:2376 ../plug-ins/jpeg/jpeg-save.c:325
+#: ../plug-ins/ifs-compose/ifs-compose.c:2376 ../plug-ins/jpeg/jpeg-save.c:320
 #: ../plug-ins/lighting/lighting-ui.c:1211
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:282 ../plug-ins/xjt/xjt.c:1280
 #: ../plug-ins/xjt/xjt.c:1714
@@ -201,12 +201,12 @@ msgstr "Datei »%s« konnte nicht zum Schreiben geöffnet werden: %s"
 #: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:607
 #: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1252
 #: ../plug-ins/common/pnm.c:963 ../plug-ins/common/postscript.c:1201
-#: ../plug-ins/common/psd-save.c:1562 ../plug-ins/common/sunras.c:549
-#: ../plug-ins/common/tga.c:1138 ../plug-ins/common/tiff-save.c:681
+#: ../plug-ins/common/psd-save.c:1564 ../plug-ins/common/sunras.c:549
+#: ../plug-ins/common/tga.c:1143 ../plug-ins/common/tiff-save.c:681
 #: ../plug-ins/common/xbm.c:1021 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:603 ../plug-ins/fits/fits.c:462
 #: ../plug-ins/fli/fli-gimp.c:684 ../plug-ins/ico/ico-save.c:1015
-#: ../plug-ins/jpeg/jpeg-save.c:283 ../plug-ins/sgi/sgi.c:537
+#: ../plug-ins/jpeg/jpeg-save.c:278 ../plug-ins/sgi/sgi.c:537
 #: ../plug-ins/xjt/xjt.c:1697
 #, c-format
 msgid "Saving '%s'"
@@ -220,7 +220,7 @@ msgstr "Als BMP speichern"
 msgid "_Run-Length Encoded"
 msgstr "_RL-kodiert"
 
-#: ../plug-ins/bmp/bmp-write.c:826 ../plug-ins/jpeg/jpeg-save.c:892
+#: ../plug-ins/bmp/bmp-write.c:826 ../plug-ins/jpeg/jpeg-save.c:890
 msgid "_Advanced Options"
 msgstr "_Erweiterte Optionen"
 
@@ -556,7 +556,7 @@ msgid "Left edge"
 msgstr "Linker Rand"
 
 #: ../plug-ins/common/align-layers.c:440 ../plug-ins/common/align-layers.c:470
-#: ../plug-ins/gradient-flare/gradient-flare.c:2667
+#: ../plug-ins/gradient-flare/gradient-flare.c:2712
 msgid "Center"
 msgstr "Mitte"
 
@@ -853,7 +853,7 @@ msgstr "Selektiver Gaußscher Weichzeichner"
 #: ../plug-ins/common/blur-gauss.c:445 ../plug-ins/common/cartoon.c:229
 #: ../plug-ins/common/edge-dog.c:251 ../plug-ins/common/edge-neon.c:225
 #: ../plug-ins/common/photocopy.c:241 ../plug-ins/common/softglow.c:221
-#: ../plug-ins/gradient-flare/gradient-flare.c:965 ../plug-ins/sgi/sgi.c:520
+#: ../plug-ins/gradient-flare/gradient-flare.c:964 ../plug-ins/sgi/sgi.c:520
 #: ../plug-ins/xjt/xjt.c:1688
 msgid "Cannot operate on indexed color images."
 msgstr "Es kann nicht mit Bildern im indizierten Farbmodus gearbeitet werden."
@@ -951,7 +951,7 @@ msgstr "Unschärfezentrum"
 #: ../plug-ins/common/blur-motion.c:1094 ../plug-ins/common/lens-flare.c:772
 #: ../plug-ins/common/nova.c:463 ../plug-ins/common/tile-paper.c:282
 #: ../plug-ins/flame/flame.c:1250
-#: ../plug-ins/gradient-flare/gradient-flare.c:2679
+#: ../plug-ins/gradient-flare/gradient-flare.c:2724
 #: ../plug-ins/lighting/lighting-ui.c:477
 msgid "_X:"
 msgstr "_X:"
@@ -959,7 +959,7 @@ msgstr "_X:"
 #: ../plug-ins/common/blur-motion.c:1099 ../plug-ins/common/lens-flare.c:777
 #: ../plug-ins/common/nova.c:468 ../plug-ins/common/tile-paper.c:291
 #: ../plug-ins/flame/flame.c:1264
-#: ../plug-ins/gradient-flare/gradient-flare.c:2683
+#: ../plug-ins/gradient-flare/gradient-flare.c:2728
 #: ../plug-ins/lighting/lighting-ui.c:492
 msgid "_Y:"
 msgstr "_Y:"
@@ -2864,7 +2864,7 @@ msgstr "Re_kursiv"
 #: ../plug-ins/common/despeckle.c:493 ../plug-ins/common/edge-neon.c:730
 #: ../plug-ins/common/nl-filter.c:1088 ../plug-ins/common/nova.c:366
 #: ../plug-ins/common/unsharp-mask.c:680 ../plug-ins/common/whirl-pinch.c:588
-#: ../plug-ins/gradient-flare/gradient-flare.c:2712
+#: ../plug-ins/gradient-flare/gradient-flare.c:2757
 #: ../plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
 msgstr "_Radius:"
@@ -3257,7 +3257,7 @@ msgid "Composing images"
 msgstr "Bilder werden kombiniert"
 
 #: ../plug-ins/common/film.c:425 ../plug-ins/common/guillotine.c:185
-#: ../plug-ins/help-browser/dialog.c:1144
+#: ../plug-ins/help-browser/dialog.c:1038
 msgid "Untitled"
 msgstr "Unbenannt"
 
@@ -3593,7 +3593,7 @@ msgstr "Ungültige UTF-8-Zeichenkette in der Pinseldatei »%s«"
 
 #: ../plug-ins/common/gbr.c:425 ../plug-ins/common/gih.c:499
 #: ../plug-ins/common/gih.c:1158
-#: ../plug-ins/gradient-flare/gradient-flare.c:3017
+#: ../plug-ins/gradient-flare/gradient-flare.c:3062
 msgid "Unnamed"
 msgstr "Unbenannt"
 
@@ -4249,7 +4249,7 @@ msgid "Thresho_ld:"
 msgstr "Sc_hwellwert:"
 
 #: ../plug-ins/common/iwarp.c:1214 ../plug-ins/common/sinus.c:771
-#: ../plug-ins/gradient-flare/gradient-flare.c:2821
+#: ../plug-ins/gradient-flare/gradient-flare.c:2866
 msgid "_Settings"
 msgstr "_Einstellungen"
 
@@ -4923,7 +4923,7 @@ msgstr "Z_ellgröße:"
 
 #. screen settings
 #: ../plug-ins/common/newsprint.c:1298
-#: ../plug-ins/gradient-flare/gradient-flare.c:555
+#: ../plug-ins/gradient-flare/gradient-flare.c:554
 msgid "Screen"
 msgstr "Schirm"
 
@@ -5512,11 +5512,11 @@ msgstr "Farb_werte aus Transparenz speichern"
 msgid "Co_mpression level:"
 msgstr "_Kompressionsgrad:"
 
-#: ../plug-ins/common/png.c:1897 ../plug-ins/jpeg/jpeg-save.c:1164
+#: ../plug-ins/common/png.c:1897 ../plug-ins/jpeg/jpeg-save.c:1169
 msgid "_Load Defaults"
 msgstr "Standardwerte _laden"
 
-#: ../plug-ins/common/png.c:1905 ../plug-ins/jpeg/jpeg-save.c:1173
+#: ../plug-ins/common/png.c:1905
 msgid "S_ave Defaults"
 msgstr "Standardwerte _speichern"
 
@@ -5657,42 +5657,42 @@ msgstr ""
 "Wenn angeklickt, wird das Bild kreisförmig auf ein Rechteck abgebildet. "
 "Andernfalls wird das Bild auf einen Kreis abgebildet."
 
-#: ../plug-ins/common/poppler.c:285
+#: ../plug-ins/common/poppler.c:287
 msgid "Portable Document Format"
 msgstr "Portable-Document-Format"
 
-#: ../plug-ins/common/poppler.c:606
+#: ../plug-ins/common/poppler.c:608
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/poppler.c:608 ../plug-ins/common/postscript.c:1111
+#: ../plug-ins/common/poppler.c:610 ../plug-ins/common/postscript.c:1111
 #, c-format
 msgid "%s-pages"
 msgstr "%s-Seiten"
 
-#: ../plug-ins/common/poppler.c:794
+#: ../plug-ins/common/poppler.c:796
 msgid "Import from PDF"
 msgstr "Aus PDF importieren"
 
-#: ../plug-ins/common/poppler.c:799 ../plug-ins/common/postscript.c:3083
+#: ../plug-ins/common/poppler.c:801 ../plug-ins/common/postscript.c:3083
 #: ../plug-ins/common/tiff-load.c:451
 msgid "_Import"
 msgstr "_Importieren"
 
-#: ../plug-ins/common/poppler.c:865
+#: ../plug-ins/common/poppler.c:867
 msgid "_Width (pixels):"
 msgstr "_Breite (Pixel):"
 
-#: ../plug-ins/common/poppler.c:866
+#: ../plug-ins/common/poppler.c:868
 msgid "_Height (pixels):"
 msgstr "_Höhe (Pixel):"
 
-#: ../plug-ins/common/poppler.c:868
+#: ../plug-ins/common/poppler.c:870
 msgid "_Resolution:"
 msgstr "A_uflösung:"
 
-#: ../plug-ins/common/poppler.c:1142
+#: ../plug-ins/common/poppler.c:1144
 #, c-format
 msgid "pixels/%s"
 msgstr "Pixel/%s"
@@ -5913,7 +5913,7 @@ msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Fehler: Der GIMP-Basisbildtyp kann nicht in den PSD-Modus umgewandelt werden"
 
-#: ../plug-ins/common/psd-save.c:1533
+#: ../plug-ins/common/psd-save.c:1535
 #, c-format
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images that are "
@@ -5922,7 +5922,7 @@ msgstr ""
 "»%s« konnte nicht gespeichert werden. Das PSD-Dateiformat unterstützt keine "
 "Bilder die höher oder breiter als 30.000 Pixel sind."
 
-#: ../plug-ins/common/psd-save.c:1545
+#: ../plug-ins/common/psd-save.c:1547
 #, c-format
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images with "
@@ -6056,36 +6056,36 @@ msgstr "Planar (RRR,GGG,BBB)"
 msgid "Indexed Palette Type"
 msgstr "Indizierter Palettentyp"
 
-#: ../plug-ins/common/red-eye-removal.c:106
+#: ../plug-ins/common/red-eye-removal.c:105
 msgid "Remove the red eye effect caused by camera flashes"
 msgstr "Entfernt die durch Kamerablitzlichter verursachten roten Augen"
 
-#: ../plug-ins/common/red-eye-removal.c:117
+#: ../plug-ins/common/red-eye-removal.c:116
 msgid "_Red Eye Removal..."
 msgstr "_Rote Augen entfernen …"
 
-#: ../plug-ins/common/red-eye-removal.c:144
+#: ../plug-ins/common/red-eye-removal.c:142
 msgid "Red Eye Removal"
 msgstr "Rote Augen entfernen"
 
-#: ../plug-ins/common/red-eye-removal.c:172
+#: ../plug-ins/common/red-eye-removal.c:170
 #: ../plug-ins/common/unsharp-mask.c:706 ../plug-ins/common/wind.c:1006
 #: ../plug-ins/imagemap/imap_preferences.c:441
 #: ../plug-ins/map-object/map-object-ui.c:585
 msgid "_Threshold:"
 msgstr "_Schwellwert:"
 
-#: ../plug-ins/common/red-eye-removal.c:178
+#: ../plug-ins/common/red-eye-removal.c:176
 msgid "Threshold for the red eye color to remove."
 msgstr "Schwellwert für die Rötung, die entfernt wird."
 
-#: ../plug-ins/common/red-eye-removal.c:183
+#: ../plug-ins/common/red-eye-removal.c:181
 msgid "Manually selecting the eyes may improve the results."
 msgstr ""
 "Das Ergebnis kann möglicherweise verbessert werden, wenn Sie die Augen per "
 "Hand auswählen."
 
-#: ../plug-ins/common/red-eye-removal.c:316
+#: ../plug-ins/common/red-eye-removal.c:301
 msgid "Removing red eye"
 msgstr "Rote Augen werden entfernt"
 
@@ -7031,33 +7031,40 @@ msgstr ""
 msgid "Merge imported paths"
 msgstr "Importierte Pfade zusammenfügen"
 
-#: ../plug-ins/common/tga.c:238 ../plug-ins/common/tga.c:257
+#: ../plug-ins/common/tga.c:243 ../plug-ins/common/tga.c:262
 msgid "TarGA image"
 msgstr "TarGA-Bild"
 
-#: ../plug-ins/common/tga.c:434
+#: ../plug-ins/common/tga.c:439
 #, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "Das Dateiende von »%s« konnte nicht gelesen werden"
 
-#: ../plug-ins/common/tga.c:450
+#: ../plug-ins/common/tga.c:455
 #, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "Die Erweiterung von »%s« konnte nicht gelesen werden"
 
-#: ../plug-ins/common/tga.c:1323
+#: ../plug-ins/common/tga.c:1336
 msgid "Save as TGA"
 msgstr "Als TGA speichern"
 
 #. rle
-#: ../plug-ins/common/tga.c:1346
+#: ../plug-ins/common/tga.c:1359
 msgid "_RLE compression"
 msgstr "_RLE-Kompression"
 
-#. origin
-#: ../plug-ins/common/tga.c:1356
-msgid "Or_igin at bottom left"
-msgstr "Ur_sprung unten links"
+#: ../plug-ins/common/tga.c:1373
+msgid "Or_igin:"
+msgstr "Or_iginal:"
+
+#: ../plug-ins/common/tga.c:1377
+msgid "Bottom left"
+msgstr "Unten links"
+
+#: ../plug-ins/common/tga.c:1378
+msgid "Top left"
+msgstr "Open links"
 
 #: ../plug-ins/common/threshold-alpha.c:85
 msgid "Make transparency all-or-nothing"
@@ -7933,7 +7940,7 @@ msgstr "Wellen"
 #: ../plug-ins/common/web-browser.c:141
 msgid ""
 "Web browser not specified.\n"
-"Please specify a web browser using the Preferences Dialog."
+"Please specify a web browser using the Preferences dialog."
 msgstr ""
 "Kein Internet-Browser angegeben.\n"
 "Bitte legen Sie in den Einstellungen einen Internet-Browser fest."
@@ -7941,16 +7948,19 @@ msgstr ""
 #: ../plug-ins/common/web-browser.c:161
 #, c-format
 msgid ""
-"Could not parse specified web browser command:\n"
+"Could not parse the web browser command specified in the Preferences "
+"dialog:\n"
+"\n"
 "%s"
 msgstr ""
 "Der angegebene Internet-Browser-Befehl konnte nicht analysiert werden:\n"
 "%s"
 
-#: ../plug-ins/common/web-browser.c:174
+#: ../plug-ins/common/web-browser.c:175
 #, c-format
 msgid ""
-"Could not execute specified web browser:\n"
+"Could not execute the web browser specified in the Preferences dialog:\n"
+"\n"
 "%s"
 msgstr ""
 "Der eingestellte Internet-Browser konnte nicht gestartet werden:\n"
@@ -8492,7 +8502,7 @@ msgstr "GFLI-1.3-Animation speichern"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:547
 #: ../plug-ins/gfig/gfig-dialog.c:274 ../plug-ins/gimpressionist/utils.c:143
-#: ../plug-ins/gradient-flare/gradient-flare.c:883
+#: ../plug-ins/gradient-flare/gradient-flare.c:882
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -8779,7 +8789,7 @@ msgid "Rendering fractal"
 msgstr "Fraktal wird berechnet"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:758
-#: ../plug-ins/gradient-flare/gradient-flare.c:3154
+#: ../plug-ins/gradient-flare/gradient-flare.c:3199
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Wollen Sie »%s« wirklich aus der Liste und von der Festplatte löschen?"
@@ -8894,7 +8904,8 @@ msgstr "Bild zeigen"
 
 #. "snap to grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:493
-msgid "checkbutton|Snap to grid"
+msgctxt "checkbutton"
+msgid "Snap to grid"
 msgstr "Am Gitter ausrichten"
 
 #. "show grid" checkbutton at bottom of style frame
@@ -9089,7 +9100,7 @@ msgid "Grid type:"
 msgstr "Rastertyp:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1459
-#: ../plug-ins/gradient-flare/gradient-flare.c:552
+#: ../plug-ins/gradient-flare/gradient-flare.c:551
 msgid "Normal"
 msgstr "Normal"
 
@@ -9265,7 +9276,7 @@ msgid "Adds random noise to the color"
 msgstr "Fügt der Farbe ein zufälliges Rauschen hinzu"
 
 #: ../plug-ins/gimpressionist/general.c:134
-#: ../plug-ins/gradient-flare/gradient-flare.c:3483
+#: ../plug-ins/gradient-flare/gradient-flare.c:3528
 msgid "_General"
 msgstr "_Allgemein"
 
@@ -9840,46 +9851,46 @@ msgstr ""
 "Voronoi-Modus: Nur der SMVektor, der einem Punkt am nächsten ist, hat "
 "Einfluss"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:553
+#: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
 msgstr "Addieren"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:554
+#: ../plug-ins/gradient-flare/gradient-flare.c:553
 msgid "Overlay"
 msgstr "Überlagern"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:809
+#: ../plug-ins/gradient-flare/gradient-flare.c:808
 msgid "Produce a lense flare effect using gradients"
 msgstr "Erstellt einen Linsenreflexeffekt unter Verwendung von Verläufen"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:814
+#: ../plug-ins/gradient-flare/gradient-flare.c:813
 msgid "_Gradient Flare..."
 msgstr "_Verlaufsaufhellung …"
 
 #.
 #. *    Dialog Shell
 #.
-#: ../plug-ins/gradient-flare/gradient-flare.c:953
-#: ../plug-ins/gradient-flare/gradient-flare.c:2311
+#: ../plug-ins/gradient-flare/gradient-flare.c:952
+#: ../plug-ins/gradient-flare/gradient-flare.c:2356
 msgid "Gradient Flare"
 msgstr "Verlaufsaufhellung"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:1264
+#: ../plug-ins/gradient-flare/gradient-flare.c:1263
 #, c-format
 msgid "Failed to open GFlare file '%s': %s"
 msgstr "Fehler beim Öffnen der GFlare-Datei »%s«: %s"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:1272
+#: ../plug-ins/gradient-flare/gradient-flare.c:1271
 #, c-format
 msgid "'%s' is not a valid GFlare file."
 msgstr "»%s« ist keine gültige GFlare Datei."
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:1326
+#: ../plug-ins/gradient-flare/gradient-flare.c:1325
 #, c-format
 msgid "invalid formatted GFlare file: %s\n"
 msgstr "Ungültiges Format in GFlare Datei: %s\n"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:1451
+#: ../plug-ins/gradient-flare/gradient-flare.c:1450
 #, c-format
 msgid ""
 "GFlare '%s' is not saved. If you add a new entry in '%s', like:\n"
@@ -9892,21 +9903,21 @@ msgstr ""
 "und den Ordner »%s« erstellen, dann können Sie ihre eigenen GFlares in diesen "
 "Ordner speichern."
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:1484
+#: ../plug-ins/gradient-flare/gradient-flare.c:1483
 #, c-format
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "GFlare-Datei »%s« konnte nicht geschrieben werden: %s"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2368
+#: ../plug-ins/gradient-flare/gradient-flare.c:2413
 msgid "A_uto update preview"
 msgstr "A_utomatische Vorschau"
 
 # TODO
-#: ../plug-ins/gradient-flare/gradient-flare.c:2419
+#: ../plug-ins/gradient-flare/gradient-flare.c:2464
 msgid "`Default' is created."
 msgstr "»Standard« wurde erstellt."
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2420
+#: ../plug-ins/gradient-flare/gradient-flare.c:2465
 msgid "Default"
 msgstr "Standard"
 
@@ -9916,250 +9927,258 @@ msgstr "Standard"
 #.
 #. *    Scales
 #.
-#: ../plug-ins/gradient-flare/gradient-flare.c:2699
-#: ../plug-ins/gradient-flare/gradient-flare.c:3536
-#: ../plug-ins/gradient-flare/gradient-flare.c:3641
-#: ../plug-ins/gradient-flare/gradient-flare.c:3778
+#: ../plug-ins/gradient-flare/gradient-flare.c:2744
+#: ../plug-ins/gradient-flare/gradient-flare.c:3581
+#: ../plug-ins/gradient-flare/gradient-flare.c:3686
+#: ../plug-ins/gradient-flare/gradient-flare.c:3823
 msgid "Parameters"
 msgstr "Parameter"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2725
+#: ../plug-ins/gradient-flare/gradient-flare.c:2770
 msgid "Ro_tation:"
 msgstr "_Drehung:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2737
+#: ../plug-ins/gradient-flare/gradient-flare.c:2782
 msgid "_Hue rotation:"
 msgstr "_Farbton-Rotation:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2749
+#: ../plug-ins/gradient-flare/gradient-flare.c:2794
 msgid "Vector _angle:"
 msgstr "Vektor_winkel:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2761
+#: ../plug-ins/gradient-flare/gradient-flare.c:2806
 msgid "Vector _length:"
 msgstr "Vektor_länge:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2782
+#: ../plug-ins/gradient-flare/gradient-flare.c:2827
 msgid "A_daptive supersampling"
 msgstr "A_daptive Hochrechnung"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2801
+#: ../plug-ins/gradient-flare/gradient-flare.c:2846
 msgid "_Max depth:"
 msgstr "_Maximale Tiefe:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2811
+#: ../plug-ins/gradient-flare/gradient-flare.c:2856
 msgid "_Threshold"
 msgstr "_Schwellwert"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:2949
+#: ../plug-ins/gradient-flare/gradient-flare.c:2994
 msgid "S_elector"
 msgstr "_Auswahl"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3013
+#: ../plug-ins/gradient-flare/gradient-flare.c:3058
 msgid "New Gradient Flare"
 msgstr "Neue Farbverlaufsaufhellung"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3016
+#: ../plug-ins/gradient-flare/gradient-flare.c:3061
 msgid "Enter a name for the new GFlare"
 msgstr "Geben Sie einen Namen für das neue GFlare an"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3036
+#: ../plug-ins/gradient-flare/gradient-flare.c:3081
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "Der Name »%s« wird bereits verwendet."
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3092
+#: ../plug-ins/gradient-flare/gradient-flare.c:3137
 msgid "Copy Gradient Flare"
 msgstr "Farbverlaufsaufhellung kopieren"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3095
+#: ../plug-ins/gradient-flare/gradient-flare.c:3140
 msgid "Enter a name for the copied GFlare"
 msgstr "Geben Sie einen Namen für das kopierte GFlare an"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3117
+#: ../plug-ins/gradient-flare/gradient-flare.c:3162
 #, c-format
 msgid "The name `%s' is used already!"
 msgstr "Der Name »%s« ist bereits in Verwendung."
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3148
+#: ../plug-ins/gradient-flare/gradient-flare.c:3193
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr ""
 "Es konnte nicht gelöscht werden, da es zumindest ein GFlare geben muss."
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3158
+#: ../plug-ins/gradient-flare/gradient-flare.c:3203
 msgid "Delete Gradient Flare"
 msgstr "Verlaufsaufhellung löschen"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3230
+#: ../plug-ins/gradient-flare/gradient-flare.c:3275
 #, c-format
 msgid "not found %s in gflares_list"
 msgstr "%s konnte nicht in gflares_list gefunden werden"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3271
+#: ../plug-ins/gradient-flare/gradient-flare.c:3316
 msgid "Gradient Flare Editor"
 msgstr "Editor für Verlaufsaufhellungen"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3275
+#: ../plug-ins/gradient-flare/gradient-flare.c:3320
 msgid "Rescan Gradients"
 msgstr "Verläufe neu einlesen"
 
 #. Glow
-#: ../plug-ins/gradient-flare/gradient-flare.c:3400
+#: ../plug-ins/gradient-flare/gradient-flare.c:3445
 msgid "Glow Paint Options"
 msgstr "Zeichenoptionen für Glühen"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3411
-#: ../plug-ins/gradient-flare/gradient-flare.c:3439
-#: ../plug-ins/gradient-flare/gradient-flare.c:3467
+#: ../plug-ins/gradient-flare/gradient-flare.c:3456
+#: ../plug-ins/gradient-flare/gradient-flare.c:3484
+#: ../plug-ins/gradient-flare/gradient-flare.c:3512
 msgid "Opacity:"
 msgstr "Deckkraft:"
 
 # TODO ??
-#: ../plug-ins/gradient-flare/gradient-flare.c:3424
-#: ../plug-ins/gradient-flare/gradient-flare.c:3452
-#: ../plug-ins/gradient-flare/gradient-flare.c:3480
+#: ../plug-ins/gradient-flare/gradient-flare.c:3469
+#: ../plug-ins/gradient-flare/gradient-flare.c:3497
+#: ../plug-ins/gradient-flare/gradient-flare.c:3525
 msgid "Paint mode:"
 msgstr "Zeichenmodus:"
 
 #. Rays
-#: ../plug-ins/gradient-flare/gradient-flare.c:3428
+#: ../plug-ins/gradient-flare/gradient-flare.c:3473
 msgid "Rays Paint Options"
 msgstr "Zeichenoptionen für Strahlen"
 
 #. Rays
-#: ../plug-ins/gradient-flare/gradient-flare.c:3456
+#: ../plug-ins/gradient-flare/gradient-flare.c:3501
 msgid "Second Flares Paint Options"
 msgstr "Zeichenoptionen für zweites Flare"
 
 #.
 #. *  Gradient Menus
 #.
-#: ../plug-ins/gradient-flare/gradient-flare.c:3509
-#: ../plug-ins/gradient-flare/gradient-flare.c:3612
-#: ../plug-ins/gradient-flare/gradient-flare.c:3751
+#: ../plug-ins/gradient-flare/gradient-flare.c:3554
+#: ../plug-ins/gradient-flare/gradient-flare.c:3657
+#: ../plug-ins/gradient-flare/gradient-flare.c:3796
 msgid "Gradients"
 msgstr "Farbverläufe"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3520
-#: ../plug-ins/gradient-flare/gradient-flare.c:3625
-#: ../plug-ins/gradient-flare/gradient-flare.c:3762
+#: ../plug-ins/gradient-flare/gradient-flare.c:3565
+#: ../plug-ins/gradient-flare/gradient-flare.c:3670
+#: ../plug-ins/gradient-flare/gradient-flare.c:3807
 msgid "Radial gradient:"
 msgstr "Strahlenförmiger Farbverlauf:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3524
-#: ../plug-ins/gradient-flare/gradient-flare.c:3629
+#: ../plug-ins/gradient-flare/gradient-flare.c:3569
+#: ../plug-ins/gradient-flare/gradient-flare.c:3674
 msgid "Angular gradient:"
 msgstr "Winkeliger Farbverlauf:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3528
-#: ../plug-ins/gradient-flare/gradient-flare.c:3633
+#: ../plug-ins/gradient-flare/gradient-flare.c:3573
+#: ../plug-ins/gradient-flare/gradient-flare.c:3678
 msgid "Angular size gradient:"
 msgstr "Umfangs-Farbverlauf:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3548
-#: ../plug-ins/gradient-flare/gradient-flare.c:3653
-#: ../plug-ins/gradient-flare/gradient-flare.c:3790
+#: ../plug-ins/gradient-flare/gradient-flare.c:3593
+#: ../plug-ins/gradient-flare/gradient-flare.c:3698
+#: ../plug-ins/gradient-flare/gradient-flare.c:3835
 msgid "Size (%):"
 msgstr "Größe (%):"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3560
-#: ../plug-ins/gradient-flare/gradient-flare.c:3665
-#: ../plug-ins/gradient-flare/gradient-flare.c:3802
+#: ../plug-ins/gradient-flare/gradient-flare.c:3605
+#: ../plug-ins/gradient-flare/gradient-flare.c:3710
+#: ../plug-ins/gradient-flare/gradient-flare.c:3847
 msgid "Rotation:"
 msgstr "Rotation:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3572
-#: ../plug-ins/gradient-flare/gradient-flare.c:3678
-#: ../plug-ins/gradient-flare/gradient-flare.c:3815
+#: ../plug-ins/gradient-flare/gradient-flare.c:3617
+#: ../plug-ins/gradient-flare/gradient-flare.c:3723
+#: ../plug-ins/gradient-flare/gradient-flare.c:3860
 msgid "Hue rotation:"
 msgstr "Farbton-Rotation:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3586
+#: ../plug-ins/gradient-flare/gradient-flare.c:3631
 msgid "G_low"
 msgstr "G_lühen"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3690
+#: ../plug-ins/gradient-flare/gradient-flare.c:3735
 msgid "# of Spikes:"
 msgstr "Strahlenanzahl:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3702
+#: ../plug-ins/gradient-flare/gradient-flare.c:3747
 msgid "Spike thickness:"
 msgstr "Strahldicke:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3716
+#: ../plug-ins/gradient-flare/gradient-flare.c:3761
 msgid "_Rays"
 msgstr "St_rahlen"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3766
+#: ../plug-ins/gradient-flare/gradient-flare.c:3811
 msgid "Size factor gradient:"
 msgstr "Größenfaktor für Farbverläufe:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3770
+#: ../plug-ins/gradient-flare/gradient-flare.c:3815
 msgid "Probability gradient:"
 msgstr "Wahrscheinlichkeitsverlauf:"
 
 #.
 #. *    Shape Radio Button Frame
 #.
-#: ../plug-ins/gradient-flare/gradient-flare.c:3832
+#: ../plug-ins/gradient-flare/gradient-flare.c:3877
 msgid "Shape of Second Flares"
 msgstr "Form des zweiten Flare"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3840
+#: ../plug-ins/gradient-flare/gradient-flare.c:3885
 #: ../plug-ins/imagemap/imap_menu.c:222
 msgid "Circle"
 msgstr "Kreis"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3857
+#: ../plug-ins/gradient-flare/gradient-flare.c:3902
 #: ../plug-ins/imagemap/imap_menu.c:224
 msgid "Polygon"
 msgstr "Polygon"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3890
+#: ../plug-ins/gradient-flare/gradient-flare.c:3935
 msgid "Random seed:"
 msgstr "Zufälliger Anfangswert:"
 
-#: ../plug-ins/gradient-flare/gradient-flare.c:3904
+#: ../plug-ins/gradient-flare/gradient-flare.c:3949
 msgid "_Second Flares"
 msgstr "_Zweites Flare"
 
-#: ../plug-ins/help-browser/dialog.c:217
+#: ../plug-ins/help-browser/dialog.c:197
 msgid "GIMP Help Browser"
 msgstr "GIMP-Hilfe-Browser"
 
-#: ../plug-ins/help-browser/dialog.c:312
+#: ../plug-ins/help-browser/dialog.c:292
 msgid "Drag and drop this icon to a web browser"
 msgstr "Dieses Symbol auf ein Browser-Fenster ziehen und fallen lassen."
 
-#: ../plug-ins/help-browser/dialog.c:703
+#: ../plug-ins/help-browser/dialog.c:576
 msgid "Go back one page"
 msgstr "Eine Seite zurück gehen"
 
-#: ../plug-ins/help-browser/dialog.c:708
+#: ../plug-ins/help-browser/dialog.c:581
 msgid "Go forward one page"
 msgstr "Eine Seite weiter gehen"
 
-#: ../plug-ins/help-browser/dialog.c:713
+#: ../plug-ins/help-browser/dialog.c:586
 msgid "Go to the index page"
 msgstr "Zum Inhaltsverzeichnis"
 
-#: ../plug-ins/help-browser/dialog.c:748
+#: ../plug-ins/help-browser/dialog.c:591
+msgid "Reload"
+msgstr "Neu Laden"
+
+#: ../plug-ins/help-browser/dialog.c:591
+msgid "Reload current page"
+msgstr "Diese Seite erneut laden"
+
+#: ../plug-ins/help-browser/dialog.c:596
+msgid "Stop"
+msgstr "Stopp"
+
+#: ../plug-ins/help-browser/dialog.c:596
+msgid "Stop loading this page"
+msgstr "Laden dieser Seite stoppen"
+
+#: ../plug-ins/help-browser/dialog.c:631
 msgid "Visit the GIMP documentation website"
 msgstr "Besuchen Sie die GIMP-Dokumentations-Internet-Seite"
 
-#: ../plug-ins/help-browser/dialog.c:824
-msgid "Document not found"
-msgstr "Dokument nicht gefunden"
+#: ../plug-ins/help/gimphelpdomain.c:180
+msgid "The GIMP user manual is not available."
+msgstr "Das GIMP Benutzerhandbuch ist nicht vorhanden."
 
-#: ../plug-ins/help-browser/dialog.c:826
-msgid "The requested URL could not be loaded:"
-msgstr "Die angegebene Adresse konnte nicht geladen werden:"
-
-#: ../plug-ins/help/gimphelpdomain.c:173
-msgid "The GIMP help files are not found."
-msgstr "Die GIMP-Hilfedateien wurden nicht gefunden."
-
-#: ../plug-ins/help/gimphelpdomain.c:174
+#: ../plug-ins/help/gimphelpdomain.c:181
 msgid ""
 "Please install the additional help package or use the online user manual at "
 "http://docs.gimp.org/."
@@ -10167,20 +10186,25 @@ msgstr ""
 "Bitte installieren Sie das separat erhältliche Hilfepaket oder verwenden Sie "
 "das Online-Benutzerhandbuch unter http://docs.gimp.org/de/."
 
-#: ../plug-ins/help/gimphelpdomain.c:180
-msgid "There is a problem with the GIMP help files."
-msgstr "Es gibt ein Problem mit den GIMP-Hilfedateien."
+#: ../plug-ins/help/gimphelpdomain.c:190
+msgid "There is a problem with the GIMP user manual."
+msgstr "Es gibt ein Problem mit dem GIMP Benutzerhandbuch"
 
-#: ../plug-ins/help/gimphelpdomain.c:182
+#: ../plug-ins/help/gimphelpdomain.c:192
 msgid "Please check your installation."
 msgstr "Bitte überprüfen Sie Ihre Installation."
 
-#: ../plug-ins/help/gimphelpdomain.c:192
+#: ../plug-ins/help/gimphelpdomain.c:203
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Hilfe-ID »%s« ist unbekannt"
 
-#: ../plug-ins/help/gimphelplocale.c:218
+#: ../plug-ins/help/gimphelplocale.c:209
+#, c-format
+msgid "Loading index from '%s'"
+msgstr "Lade Index aus »%s«"
+
+#: ../plug-ins/help/gimphelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -11184,72 +11208,71 @@ msgstr "JPEG-Vorschau"
 msgid "File size: %02.01f kB"
 msgstr "Dateigröße: %02.01f kB"
 
-#: ../plug-ins/jpeg/jpeg-save.c:673
+#: ../plug-ins/jpeg/jpeg-save.c:671
 msgid "Calculating file size..."
 msgstr "Dateigröße wird berechnet …"
 
-#: ../plug-ins/jpeg/jpeg-save.c:764 ../plug-ins/jpeg/jpeg-save.c:868
+#: ../plug-ins/jpeg/jpeg-save.c:762 ../plug-ins/jpeg/jpeg-save.c:866
 msgid "File size: unknown"
 msgstr "Dateigröße: unbekannt"
 
-#: ../plug-ins/jpeg/jpeg-save.c:819
+#: ../plug-ins/jpeg/jpeg-save.c:817
 msgid "Save as JPEG"
 msgstr "Als JPEG speichern"
 
-#: ../plug-ins/jpeg/jpeg-save.c:854
+#: ../plug-ins/jpeg/jpeg-save.c:852
 msgid "_Quality:"
 msgstr "_Qualität:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:858
+#: ../plug-ins/jpeg/jpeg-save.c:856
 msgid "JPEG quality parameter"
 msgstr "JPEG-Qualitätseinstellungen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:877
+#: ../plug-ins/jpeg/jpeg-save.c:875
 msgid "Enable preview to obtain the file size."
 msgstr "Vorschau aktivieren, um die Dateigröße zu ermitteln."
 
-#: ../plug-ins/jpeg/jpeg-save.c:880
-msgid "Show _preview in image window"
+#: ../plug-ins/jpeg/jpeg-save.c:878
+msgid "Sho_w preview in image window"
 msgstr "_Vorschau im Bildfenster anzeigen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:921
-msgid "_Smoothing:"
+#: ../plug-ins/jpeg/jpeg-save.c:919
+msgid "S_moothing:"
 msgstr "_Glättung:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:934
+#: ../plug-ins/jpeg/jpeg-save.c:932
 msgid "Frequency (rows):"
 msgstr "Frequenz (Zeilen):"
 
-#: ../plug-ins/jpeg/jpeg-save.c:950
-msgid "Use restart markers"
-msgstr "Startmarkierungen verwenden"
+#: ../plug-ins/jpeg/jpeg-save.c:948
+msgid "Use _restart markers"
+msgstr "Start_markierungen verwenden"
 
-#: ../plug-ins/jpeg/jpeg-save.c:966 ../plug-ins/xjt/xjt.c:877
-msgid "Optimize"
-msgstr "Optimieren"
+#: ../plug-ins/jpeg/jpeg-save.c:964
+msgid "_Optimize"
+msgstr "_Optimieren"
 
-#: ../plug-ins/jpeg/jpeg-save.c:979
-msgid "Progressive"
-msgstr "Progressiv"
+#: ../plug-ins/jpeg/jpeg-save.c:978
+msgid "_Progressive"
+msgstr "_Progressiv"
 
 #: ../plug-ins/jpeg/jpeg-save.c:994
-msgid "Save EXIF data"
-msgstr "EXIF-Daten speichern"
+msgid "Save _EXIF data"
+msgstr "_EXIF-Daten speichern"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1011
-msgid "Save thumbnail"
-msgstr "Vorschau speichern"
+msgid "Save _thumbnail"
+msgstr "Vo_rschau speichern"
 
-#. XMP metadata
-#: ../plug-ins/jpeg/jpeg-save.c:1027
-msgid "Save XMP data"
-msgstr "XMP-Daten speichern"
+#: ../plug-ins/jpeg/jpeg-save.c:1028
+msgid "Save _XMP data"
+msgstr "_XMP-Daten speichern"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1042
-msgid "Use quality settings from original image"
-msgstr "Qualitätseinstellungen des Originalbildes verwenden"
+#: ../plug-ins/jpeg/jpeg-save.c:1043
+msgid "_Use quality settings from original image"
+msgstr "Q_ualitätseinstellungen des Originalbildes verwenden"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1048
+#: ../plug-ins/jpeg/jpeg-save.c:1049
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -11260,46 +11283,50 @@ msgstr ""
 "Option für etwa gleiche Qualität und Dateigröße."
 
 #. Subsampling
-#: ../plug-ins/jpeg/jpeg-save.c:1072
-msgid "Subsampling:"
-msgstr "Zwischenschritte:"
+#: ../plug-ins/jpeg/jpeg-save.c:1073
+msgid "Su_bsampling:"
+msgstr "_Zwischenschritte:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1079
+#: ../plug-ins/jpeg/jpeg-save.c:1080
 msgid "1x1,1x1,1x1 (best quality)"
 msgstr "1×1,1×1,1×1 (höchste Qualität)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1080
+#: ../plug-ins/jpeg/jpeg-save.c:1081
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr "2×1,1×1,1×1 (4:2:2)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1081
+#: ../plug-ins/jpeg/jpeg-save.c:1082
 msgid "1x2,1x1,1x1"
 msgstr "1×2,1×1,1×1"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1082
+#: ../plug-ins/jpeg/jpeg-save.c:1083
 msgid "2x2,1x1,1x1 (smallest file)"
 msgstr "2×2,1×1,1×1 (kleinste Dateigröße)"
 
 #. DCT method
-#: ../plug-ins/jpeg/jpeg-save.c:1106
-msgid "DCT method:"
-msgstr "DCT-Methode:"
+#: ../plug-ins/jpeg/jpeg-save.c:1109
+msgid "_DCT method:"
+msgstr "_DCT-Methode:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1112
+#: ../plug-ins/jpeg/jpeg-save.c:1115
 msgid "Fast Integer"
 msgstr "Schnelle Ganzzahlen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1113
+#: ../plug-ins/jpeg/jpeg-save.c:1116
 msgid "Integer"
 msgstr "Ganzzahlen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1114
+#: ../plug-ins/jpeg/jpeg-save.c:1117
 msgid "Floating-Point"
 msgstr "Fließkommazahlen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1128
+#: ../plug-ins/jpeg/jpeg-save.c:1133
 msgid "Comment"
 msgstr "Kommentar"
+
+#: ../plug-ins/jpeg/jpeg-save.c:1178
+msgid "Sa_ve Defaults"
+msgstr "Standardwerte _speichern"
 
 #: ../plug-ins/jpeg/jpeg.c:137 ../plug-ins/jpeg/jpeg.c:175
 msgid "JPEG image"
@@ -12462,6 +12489,10 @@ msgstr "Warnung: nicht unterstützte Einheit %d in XJT gespeichert"
 #: ../plug-ins/xjt/xjt.c:854
 msgid "Save as XJT"
 msgstr "Als XJT speichern"
+
+#: ../plug-ins/xjt/xjt.c:877
+msgid "Optimize"
+msgstr "Optimieren"
 
 #: ../plug-ins/xjt/xjt.c:887
 msgid "Clear transparent"

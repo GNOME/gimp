@@ -263,6 +263,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_WILBER_EEK               "gimp-wilber-eek"
 #define GIMP_STOCK_FRAME                    "gimp-frame"
 #define GIMP_STOCK_TEXTURE                  "gimp-texture"
+#define GIMP_STOCK_USER_MANUAL              "gimp-user-manual"
 
 
 /*  missing icons:  */

@@ -190,14 +190,16 @@ gimp_show_message (Gimp                *gimp,
 }
 
 void
-gimp_help (Gimp        *gimp,
-           const gchar *help_domain,
-           const gchar *help_id)
+gimp_help (Gimp         *gimp,
+           GimpProgress *progress,
+           const gchar  *help_domain,
+           const gchar  *help_id)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   if (gimp->gui.help)
-    gimp->gui.help (gimp, help_domain, help_id);
+    gimp->gui.help (gimp, progress, help_domain, help_id);
 }
 
 const gchar *

@@ -429,13 +429,12 @@ gimp_thumb_box_new (GimpContext *context)
   gtk_widget_size_request (box->progress, &progress_requisition);
 
   gtk_widget_set_size_request (box->info,
-                               progress_requisition.width,
-                               info_requisition.height);
+                               -1, info_requisition.height);
   gtk_widget_set_size_request (box->filename,
                                progress_requisition.width, -1);
 
-  gtk_widget_set_size_request (box->progress, -1,
-                               progress_requisition.height);
+  gtk_widget_set_size_request (box->progress,
+                               -1, progress_requisition.height);
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), "");
 
   return GTK_WIDGET (box);

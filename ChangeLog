@@ -18,6 +18,53 @@
 	  unique name for internal objects.
 
 
+2008-06-20  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Make angle constraints with the Free Select Tool by using Ctrl
+	work also when moving vertices, not only when creating new ones.
+
+	* app/tools/gimpfreeselecttool.c
+	(gimp_free_select_tool_active_modifier_key): Implement.
+
+	(gimp_free_select_tool_update_motion): Put motion logic here so we
+	can apply it from both _motion and _active_modifier_key.
+
+	(gimp_free_select_tool_modifier_key): Ignore key presses from
+	another display.
+
+2008-06-20  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpfreeselecttool.c: Don't alloc/free
+	saved_points_(lower|higher)_segment on each move, instead realloc
+	on demand and free on tool destruction, just as we do e.g. for
+	points.
+
+2008-06-20  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpfreeselecttool.c: Remove
+	n_saved_points_(lower|higher)_segment, we don't need them.
+
+2008-06-20  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpfreeselecttool.c (gimp_free_select_tool_finalize):
+	Plug leak.
+
+2008-06-20  Michael Natterer  <mitch@gimp.org>
+
+	Latest GTK+ trunk deprecations showed some uglyness in gimp:
+
+	* app/tools/gimpeditselectiontool.h: we were still using GTK_CHECK
+	macros here, use proper G_TYPE type checking instead.
+
+	* app/widgets/gimpuimanager.c
+	* app/widgets/gimpdockable.c: s/GtkDestroyNotify/GDestroyNotify/.
+
+	* plug-ins/help-browser/gimpthrobber.c: s/GtkType/GType/.
+
+	* plug-ins/common/filter-pack.c
+	* plug-ins/common/sample-colorize.c
+	* plug-ins/imagemap/imap_main.c: s/GtkSignalFunc/GCallback/.
+
 2008-06-17  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/core/Makefile.am
@@ -28,6 +75,268 @@
 	* app/core/gimptagcache.h: added GimpTagCache which currently doesn't
 	  have any real functionality.
 
+2008-06-15  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: in the check for xfixes, add "true" as
+	action-if-not-found so it doesn't bail out when xfixes is not
+	found.
+
+	There seems to be something fishy with the PKG_CHECK_MODULES()
+	macro since adding a simple comma should also count as empty 4th
+	argument.
+
+2008-06-15  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version to 2.5.2.
+
+2008-06-15  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.5.1 development release.
+
+2008-06-14  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* configure.in (gegl_required_version)
+	* app/sanity.c (GEGL_REQUIRED_MICRO): depend on the newest
+	released GEGL, version 0.0.18.
+
+2008-06-13  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/preferences-dialog.c: added a preliminary user
+	interface to control the 'user-manual-online' property.
+
+2008-06-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_motion):
+	Correct the improved display of the rectangle ratio.
+
+2008-06-13  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptextoptions.c (gimp_text_options_class_init):
+	we need to define the 'highlight' property here as well.
+
+2008-06-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpsettingsbox.[ch]: new widget containing the
+	combo and menu button for the image map tool settings plus most of
+	their logic. Has "import" and "export" signals that might go away
+	if I figure a way to nicely abstract that. Contains some minor
+	bugfixes and cosmetic improvements compared to the old code.
+
+	* app/tools/gimpimagemaptool.[ch]
+	* app/tools/gimpimagemaptool-settings.[ch]: changed accordingly,
+	mostly removal of lots of code that is now in the widget.
+
+2008-06-13  Sven Neumann  <sven@gimp.org>
+
+	* configure.in (babl_required_version)
+	* app/sanity.c (BABL_REQUIRED_MICRO): depend on the newest
+	released babl, version 0.0.22.
+
+2008-06-13  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help-browser/dialog.c: added a toggle action to
+	show/hide the index sidebar, bound to Ctrl-I.
+
+2008-06-12  Sven Neumann  <sven@gimp.org>
+
+	Added basic support for using the online user manual:
+
+	* app/widgets/gimphelp.c
+	* plug-ins/help/gimphelp.c: moved some help logic to the core. The
+	default help domain is now constructed in the core and passed to
+	the help plug-ins just like the plug-in help domains.
+
+	* app/config/Makefile.am
+	* app/config/gimprc-blurbs.h
+	* app/config/gimpguiconfig.[ch]: added gimprc properties to
+	specify the location of the online user manual and to decide if it
+	should be used instead of a locally installed copy.
+
+2008-06-12  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_motion):
+	try to make the display of the aspect ratio somewhat more obvious.
+
+2008-06-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-menu-path.c (menu_path_mappings): also map
+	<Toolbox>/File/Acquire to <Image>/File/New/Acquire.
+
+2008-06-12  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help-browser/Makefile.am
+	* plug-ins/help-browser/wilber-reading.svg
+	* plug-ins/help-browser/wilber-reading.png: removed here...
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-user-manual.svg
+	* themes/Default/images/stock-user-manual-16.png
+	* themes/Default/images/stock-user-manual-24.png
+	* themes/Default/images/stock-user-manual-32.png
+	* themes/Default/images/stock-user-manual-64.png
+	* libgimpwidgets/gimpstock.[ch]: ... and added as stock icon.
+
+	* plug-ins/help-browser/dialog.c
+	* plug-ins/help-browser/gimpthrobber.c: changed accordingly.
+	Set the toolbar style to GTK_TOOLBAR_ICONS.
+
+2008-06-12  Michael Natterer  <mitch@gimp.org>
+
+	* modules/controller_midi.c: applied patch from S. Fielding which
+	passes the right MIDI channel from the ALSA event to midi_event().
+	Fixes bug #537960.
+
+2008-06-12  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help-browser/dialog.c: use GTK_STOCK_HOME for the
+	button that navigates to the index page.
+
+	* plug-ins/help-browser/gimpthrobber.c
+	(gimp_throbber_construct_contents): deal better with toolbar style
+	GTK_TOOLBAR_ICONS.
+
+2008-06-12  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help-browser/dialog.c: removed the title
+	combo-box. Instead display the title in the window title. Added
+	"copy-location" action to the right-click menu as a replacement
+	for the drag source that was also removed.
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help/help.c (load_help_idle): don't show progress for
+	local help lookups, they are fast enough.
+
+	* plug-ins/help-browser/help-browser.c: added the same progress
+	code here. Might want to move it to the dialog window later.
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: reverted last change (use of IT_PO_SUBDIR).
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
+	* desktop/gimp.desktop.in.in: removed deprecated field "Encoding".
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
+	* app/config/Makefile.am: make test-config link properly.
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: use IT_PO_SUBDIR() to define the extra po
+	directories.  Removed extra AC_CONFIG_COMMANDS that became
+	obsolete by this change.
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh: bumped INTLTOOL_REQUIRED_VERSION to 0.35.5. We
+	actually need 0.40.0 on the system where the tarball is rolled,
+	however 0.35.5 should be good enough for almost everyone.
+
+	* configure.in: use IT_PROG_INTLTOOL with minimum version instead
+	of the deprecated AC_PROG_INTLTOOL.
+
+	* Makefile.am (EXTRA_DIST): removed intltool-foo.in files as
+	intltool 0.40.0 does not install these any longer. Removed them
+	from DISTCLEANFILES as well.
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: removed redundant calls to AC_MSG_RESULT() from
+	inside PKG_CHECK_MODULES().
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
+	* cursors/Makefile.am (EXTRA_DIST): added missing modifier-select
+	XBM files.
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
+	* app/gegl/gimpoperationcolorbalance.c
+	* app/gegl/gimpoperationcolorize.c
+	* app/gegl/gimpoperationcurves.c
+	* app/gegl/gimpoperationdesaturate.c
+	* app/gegl/gimpoperationhuesaturation.c
+	* app/gegl/gimpoperationlevels.c
+	* app/gegl/gimpoperationposterize.c
+	* app/gegl/gimpoperationthreshold.c
+	* app/gegl/gimpoperationtilesink.c
+	* app/gegl/gimpoperationtilesource.c: added const to GeglRectangle*
+	argument.
+
+2008-06-11  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: fixed check for webkit zoom API. 
+
+2008-06-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help-browser/queue.[ch]: removed, we don't need this
+	code any longer.
+
+2008-06-10  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: removed check for gtkhtml2 and added a check for
+	wekbit instead.
+
+	* INSTALL: document the changed dependency.
+
+	* plug-ins/help-browser/Makefile.am
+	* plug-ins/help-browser/dialog.[ch]: ported the help-browser to
+	webkit. Offers the same functionality as before and some more.
+
+	* plug-ins/help-browser/help-browser.c: some cleanup.
+
+2008-06-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help/gimphelplocale.c: added some sanity checks.
+
+2008-06-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpthumbbox.c (gimp_thumb_box_new): don't set a
+	width request on the info label. It broke horizontal label
+	positioning and didn't serve any purpose I can remember.
+
+2008-06-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help/help.c (load_help_idle): show progress while
+	loading the help index.
+
+2008-06-10  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpguiconfig.c (DEFAULT_WEB_BROWSER): reverted
+	change for bug #522483. 'xdg-open' doesn't do the right thing for
+	file: URIs.
+
+2008-06-10  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp-gui.[ch]
+	* app/widgets/gimphelp.[ch]
+	* app/gui/gui-vtable.c
+	* app/gui/gui.c: added a GimpProgress parameter to gimp_help().
+
+	* app/actions/help-commands.c
+	* app/widgets/gimpuimanager.c
+	* tools/pdbgen/pdb/help.pdb: changed accordingly.
+
+	* app/pdb/help-cmds.c: regenerated.
+
+2008-06-10  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/gimpplugin.c
+	* app/plug-in/gimppluginmanager-call.c
+	* app/widgets/gimphelp.c: formatting.
+
+2008-06-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintoptions.c: set DEFAULT_VELOCITY_SIZE to FALSE
+	so the paint tools behave as before and the brush outline is
+	meaningful at least in the default setup.
+
+>>>>>>> .merge-right.r25970
 2008-06-05  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/dialogs-actions.c (dialogs_dockable_actions): added
@@ -50,7 +359,7 @@
 	* app/gegl/gimpoperationdesaturate.h
 	* app/tools/gimprectangletool.c
 	* app/widgets/gimpradioaction.h
-	* app/widgets/gimptoggleaction.h: various fixes tpo make gtk-doc
+	* app/widgets/gimptoggleaction.h: various fixes to make gtk-doc
 	happy.
 
 2008-06-04  Sven Neumann  <sven@gimp.org>
@@ -162,7 +471,7 @@
 
 2008-05-30  Martin Nordholts  <martinn@svn.gnome.org>
 
-	Made moving the selection mask in the varoius ways automatically
+	Made moving the selection mask in the various ways automatically
 	commit any pending rectangle/ellipse selection. Fixes bug #349340.
 
 	* app/tools/gimprectangleselecttool.c

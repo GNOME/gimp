@@ -51,9 +51,7 @@ struct _GimpImageMapTool
   /* dialog */
   GtkWidget             *shell;
   GtkWidget             *main_vbox;
-  GtkWidget             *favorites_menu;
-  GtkWidget             *import_item;
-  GtkWidget             *export_item;
+  GtkWidget             *settings_box;
   GtkSizeGroup          *label_group;
 
   /* settings file dialog */

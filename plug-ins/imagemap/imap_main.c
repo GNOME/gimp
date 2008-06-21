@@ -1309,10 +1309,10 @@ dialog(GimpDrawable *drawable)
    gtk_box_pack_start(GTK_BOX(hbox), tools, FALSE, FALSE, 0);
 
    _preview = make_preview(drawable);
-   add_preview_motion_event(_preview, (GtkSignalFunc) preview_move);
-   add_enter_notify_event(_preview, (GtkSignalFunc) preview_enter);
-   add_leave_notify_event(_preview, (GtkSignalFunc) preview_leave);
-   add_preview_button_press_event(_preview, (GtkSignalFunc) button_press);
+   add_preview_motion_event(_preview, G_CALLBACK (preview_move));
+   add_enter_notify_event(_preview, G_CALLBACK (preview_enter));
+   add_leave_notify_event(_preview, G_CALLBACK (preview_leave));
+   add_preview_button_press_event(_preview, G_CALLBACK (button_press));
    gtk_container_add(GTK_CONTAINER(hbox), _preview->window);
 
    object_list_add_geometry_cb(_shapes, geometry_changed, NULL);

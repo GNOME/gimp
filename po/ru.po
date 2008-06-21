@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-02 21:41+0400\n"
-"PO-Revision-Date: 2008-06-02 04:04+0300\n"
+"POT-Creation-Date: 2008-06-11 21:23+0400\n"
+"PO-Revision-Date: 2008-06-11 17:24+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -212,7 +212,7 @@ msgstr "Вывод GIMP. Вы можете свернуть это окно, н�
 msgid "Another GIMP instance is already running."
 msgstr "Уже запущена другая копия GIMP"
 
-#: ../app/sanity.c:300
+#: ../app/sanity.c:342
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -223,7 +223,7 @@ msgstr ""
 "\n"
 "Проверьте значение переменной окружения G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:319
+#: ../app/sanity.c:361
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -251,8 +251,8 @@ msgstr "используя %s версии %s (собранной с верси�
 msgid "%s version %s"
 msgstr "%s версии %s"
 
-#: ../app/actions/actions.c:100 ../app/dialogs/dialogs.c:224
-#: ../app/widgets/gimpbrusheditor.c:90
+#: ../app/actions/actions.c:100 ../app/actions/dialogs-actions.c:123
+#: ../app/dialogs/dialogs.c:224 ../app/widgets/gimpbrusheditor.c:90
 msgid "Brush Editor"
 msgstr "Редактор кистей"
 
@@ -326,8 +326,8 @@ msgstr "Файл"
 msgid "Fonts"
 msgstr "Шрифты"
 
-#: ../app/actions/actions.c:151 ../app/dialogs/dialogs.c:228
-#: ../app/widgets/gimpgradienteditor.c:276
+#: ../app/actions/actions.c:151 ../app/actions/dialogs-actions.c:141
+#: ../app/dialogs/dialogs.c:228 ../app/widgets/gimpgradienteditor.c:276
 msgid "Gradient Editor"
 msgstr "Редактор градиентов"
 
@@ -356,8 +356,8 @@ msgstr "Изображения"
 msgid "Layers"
 msgstr "Слои"
 
-#: ../app/actions/actions.c:169 ../app/dialogs/dialogs.c:232
-#: ../app/widgets/gimppaletteeditor.c:155
+#: ../app/actions/actions.c:169 ../app/actions/dialogs-actions.c:153
+#: ../app/dialogs/dialogs.c:232 ../app/widgets/gimppaletteeditor.c:155
 msgid "Palette Editor"
 msgstr "Редактор палитры образцов"
 
@@ -977,123 +977,135 @@ msgstr "_Кисти"
 msgid "Open the brushes dialog"
 msgstr "Открыть диалог кистей"
 
-#: ../app/actions/dialogs-actions.c:123
+#: ../app/actions/dialogs-actions.c:124
+msgid "Open the brush editor"
+msgstr "Открыть редактор кистей"
+
+#: ../app/actions/dialogs-actions.c:129
 msgid "P_atterns"
 msgstr "_Текстуры"
 
-#: ../app/actions/dialogs-actions.c:124
+#: ../app/actions/dialogs-actions.c:130
 msgid "Open the patterns dialog"
 msgstr "Открыть диалог текстур"
 
-#: ../app/actions/dialogs-actions.c:129
+#: ../app/actions/dialogs-actions.c:135
 msgid "_Gradients"
 msgstr "_Градиенты"
 
-#: ../app/actions/dialogs-actions.c:130
+#: ../app/actions/dialogs-actions.c:136
 msgid "Open the gradients dialog"
 msgstr "Открыть диалог градиентов"
 
-#: ../app/actions/dialogs-actions.c:135
+#: ../app/actions/dialogs-actions.c:142
+msgid "Open the gradient editor"
+msgstr "Открыть редактор градиентов"
+
+#: ../app/actions/dialogs-actions.c:147
 msgid "Pal_ettes"
 msgstr "О_бразцы цветов"
 
-#: ../app/actions/dialogs-actions.c:136
+#: ../app/actions/dialogs-actions.c:148
 msgid "Open the palettes dialog"
 msgstr "Открыть диалог цветовых образцов"
 
-#: ../app/actions/dialogs-actions.c:141
+#: ../app/actions/dialogs-actions.c:154
+msgid "Open the palette editor"
+msgstr "Открыть редактор цветовых образцов"
+
+#: ../app/actions/dialogs-actions.c:159
 msgid "_Fonts"
 msgstr "_Шрифты"
 
-#: ../app/actions/dialogs-actions.c:142
+#: ../app/actions/dialogs-actions.c:160
 msgid "Open the fonts dialog"
 msgstr "Открыть диалог шрифтов"
 
-#: ../app/actions/dialogs-actions.c:147
+#: ../app/actions/dialogs-actions.c:165
 msgid "B_uffers"
 msgstr "_Буферы"
 
-#: ../app/actions/dialogs-actions.c:148
+#: ../app/actions/dialogs-actions.c:166
 msgid "Open the named buffers dialog"
 msgstr "Открыть диалог именованных буферов обмена"
 
-#: ../app/actions/dialogs-actions.c:153
+#: ../app/actions/dialogs-actions.c:171
 msgid "_Images"
 msgstr "_Изображения"
 
-#: ../app/actions/dialogs-actions.c:154
+#: ../app/actions/dialogs-actions.c:172
 msgid "Open the images dialog"
 msgstr "Открыть диалог изображений"
 
-#: ../app/actions/dialogs-actions.c:159
+#: ../app/actions/dialogs-actions.c:177
 msgid "Document Histor_y"
 msgstr "Не_давние изображения"
 
-#: ../app/actions/dialogs-actions.c:160
+#: ../app/actions/dialogs-actions.c:178
 msgid "Open the document history dialog"
 msgstr "Открыть диалог со списком открывавшихся изображений"
 
-#: ../app/actions/dialogs-actions.c:165
+#: ../app/actions/dialogs-actions.c:183
 msgid "_Templates"
 msgstr "_Шаблоны"
 
-#: ../app/actions/dialogs-actions.c:166
+#: ../app/actions/dialogs-actions.c:184
 msgid "Open the image templates dialog"
 msgstr "Открыть диалог с шаблонами документов"
 
-#: ../app/actions/dialogs-actions.c:171
+#: ../app/actions/dialogs-actions.c:189
 msgid "T_ools"
 msgstr "_Инструменты"
 
-#: ../app/actions/dialogs-actions.c:172
+#: ../app/actions/dialogs-actions.c:190
 msgid "Open the tools dialog"
 msgstr "Открыть диалог выбора отображаемых инструментов"
 
-#: ../app/actions/dialogs-actions.c:177
+#: ../app/actions/dialogs-actions.c:195
 msgid "Error Co_nsole"
 msgstr "Конс_оль ошибок"
 
-#: ../app/actions/dialogs-actions.c:178
+#: ../app/actions/dialogs-actions.c:196
 msgid "Open the error console"
 msgstr "Открыть консоль ошибок"
 
-#: ../app/actions/dialogs-actions.c:188
+#: ../app/actions/dialogs-actions.c:206
 msgid "_Preferences"
 msgstr "_Параметры"
 
-#: ../app/actions/dialogs-actions.c:189
+#: ../app/actions/dialogs-actions.c:207
 msgid "Open the preferences dialog"
 msgstr "Открыть диалог параметров программы"
 
-#: ../app/actions/dialogs-actions.c:194
+#: ../app/actions/dialogs-actions.c:212
 msgid "_Keyboard Shortcuts"
-msgstr "К_лавиатурные комбинации..."
+msgstr "Комбинации к_лавиш"
 
-#: ../app/actions/dialogs-actions.c:195
+#: ../app/actions/dialogs-actions.c:213
 msgid "Open the keyboard shortcuts editor"
 msgstr "Открыть диалог настройки клавиатурных комбинаций"
 
-#: ../app/actions/dialogs-actions.c:200
+#: ../app/actions/dialogs-actions.c:218
 msgid "_Modules"
-msgstr "_Модули..."
+msgstr "_Модули"
 
-#: ../app/actions/dialogs-actions.c:201
+#: ../app/actions/dialogs-actions.c:219
 msgid "Open the module manager dialog"
 msgstr "Открыть диалог управления модулями"
 
-#: ../app/actions/dialogs-actions.c:206
+#: ../app/actions/dialogs-actions.c:224
 msgid "_Tip of the Day"
 msgstr "_Совет дня"
 
-#: ../app/actions/dialogs-actions.c:207
+#: ../app/actions/dialogs-actions.c:225
 msgid "Show the tip of the day"
 msgstr "Показывать совет дня"
 
-#: ../app/actions/dialogs-actions.c:212
+#: ../app/actions/dialogs-actions.c:230
 msgid "_About"
 msgstr "О прог_рамме"
 
-#: ../app/actions/dialogs-actions.c:213 ../app/dialogs/about-dialog.c:114
+#: ../app/actions/dialogs-actions.c:231 ../app/dialogs/about-dialog.c:114
 #: ../app/gui/gui.c:484
 msgid "About GIMP"
 msgstr "О GIMP"
@@ -2344,7 +2356,7 @@ msgstr "_Направляющие"
 msgid "I_nfo"
 msgstr "_Инфо"
 
-#: ../app/actions/image-actions.c:61 ../app/tools/gimplevelstool.c:642
+#: ../app/actions/image-actions.c:61 ../app/tools/gimplevelstool.c:645
 #: ../app/tools/gimpthresholdtool.c:264
 msgid "_Auto"
 msgstr "_Авто"
@@ -3594,7 +3606,7 @@ msgstr "Открыть текствый файл (UTF-8)"
 #: ../app/core/gimppalette-load.c:271 ../app/core/gimppalette-load.c:315
 #: ../app/core/gimppalette-load.c:369 ../app/core/gimppalette-load.c:457
 #: ../app/core/gimppalette-load.c:600 ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpcurvestool.c:589 ../app/tools/gimplevelstool.c:723
+#: ../app/tools/gimpcurvestool.c:593 ../app/tools/gimplevelstool.c:725
 #: ../app/xcf/xcf.c:329
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -4003,7 +4015,7 @@ msgstr "Окно _навигации"
 
 #: ../app/actions/view-actions.c:106
 msgid "Show an overview window for this image"
-msgstr "Показать окно просмотра для изображения"
+msgstr "Показать обзорное окно для этого изображения"
 
 #: ../app/actions/view-actions.c:111
 msgid "Display _Filters..."
@@ -4328,20 +4340,20 @@ msgid "Value"
 msgstr "Яркость"
 
 #: ../app/base/base-enums.c:56 ../app/core/core-enums.c:1197
-#: ../app/tools/gimpcolorbalancetool.c:293
-#: ../app/tools/gimphuesaturationtool.c:251
+#: ../app/tools/gimpcolorbalancetool.c:296
+#: ../app/tools/gimphuesaturationtool.c:252
 msgid "Red"
 msgstr "Красный"
 
 #: ../app/base/base-enums.c:57 ../app/core/core-enums.c:1198
-#: ../app/tools/gimpcolorbalancetool.c:302
-#: ../app/tools/gimphuesaturationtool.c:253
+#: ../app/tools/gimpcolorbalancetool.c:305
+#: ../app/tools/gimphuesaturationtool.c:254
 msgid "Green"
 msgstr "Зеленый"
 
 #: ../app/base/base-enums.c:58 ../app/core/core-enums.c:1199
-#: ../app/tools/gimpcolorbalancetool.c:311
-#: ../app/tools/gimphuesaturationtool.c:255
+#: ../app/tools/gimpcolorbalancetool.c:314
+#: ../app/tools/gimphuesaturationtool.c:256
 msgid "Blue"
 msgstr "Синий"
 
@@ -4471,8 +4483,8 @@ msgstr "Не удалось изменить размер файла подка�
 #: ../app/config/gimpconfig-file.c:68 ../app/core/gimpbrushgenerated-save.c:63
 #: ../app/core/gimpcurve-save.c:53 ../app/core/gimpgradient-save.c:51
 #: ../app/core/gimpgradient-save.c:145 ../app/core/gimppalette-save.c:56
-#: ../app/gui/themes.c:239 ../app/tools/gimpcurvestool.c:616
-#: ../app/tools/gimplevelstool.c:750 ../app/vectors/gimpvectors-export.c:83
+#: ../app/gui/themes.c:239 ../app/tools/gimpcurvestool.c:620
+#: ../app/tools/gimplevelstool.c:752 ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:421
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -4507,9 +4519,9 @@ msgid ""
 "receives the focus. This is useful for window managers using \"click to focus"
 "\"."
 msgstr ""
-"При включении этой опции изображение становится активным, когда его окно "
-"получает фокус. Это полезно в работе с оконными менеджерами в которых для "
-"придания фокуса окну по нему надо кликнуть мышкой."
+"Если включено, изображение становится активным, когда его окно получает "
+"фокус. Это полезно в работе с оконными менеджерами, в которых для придания "
+"фокуса окну его нужно щелкнуть мышкой."
 
 #: ../app/config/gimprc-blurbs.h:23
 msgid ""
@@ -4529,7 +4541,7 @@ msgstr "Как обрабатывать встроенные цветовые с
 
 #: ../app/config/gimprc-blurbs.h:36
 msgid "Ask for confirmation before closing an image without saving."
-msgstr "Запрашивать подтверждение перед  закрытим несохраненного изображения."
+msgstr "Запрашивать подтверждение перед  закрытием несохраненного изображения."
 
 #: ../app/config/gimprc-blurbs.h:39
 msgid "Sets the pixel format to use for mouse pointers."
@@ -4552,8 +4564,7 @@ msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
 msgstr ""
-"При включении этой функции каждый пиксел изображения будет соответствовать "
-"пикселу на экране"
+"Если включено, каждый пиксел изображения соответствует экранному пикселу."
 
 #: ../app/config/gimprc-blurbs.h:75
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
@@ -4709,7 +4720,7 @@ msgid ""
 msgstr ""
 "Если включено, X-сервер определяет позицию мыши после каждого движения. Это "
 "означает, что  рисование большими кистями будет более точным, но медленным. "
-"Однако на некоторых Х-серверах включение этой опции обеспечивет более "
+"Однако на некоторых Х-серверах включение этой опции обеспечивает более "
 "быструю работу."
 
 #: ../app/config/gimprc-blurbs.h:245
@@ -4718,15 +4729,15 @@ msgid ""
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
 msgstr ""
-"Указывает, надо ли создавать предпросмотр слоев и каналов. Предпросмотр "
-"слоев и каналов — приятная вещь, но эта функция может существенно замедлить "
-"работу с большими изображениями."
+"Указывает, надо ли создавать эскиз слоев и каналов. Эскиз слоев и каналов — "
+"приятная вещь, но ее использование может существенно замедлить работу с "
+"большими изображениями."
 
 #: ../app/config/gimprc-blurbs.h:250
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
-msgstr "Устанавливает размер просмотра для слоев и каналов."
+msgstr "Устанавливает размер эскиза слоев и каналов."
 
 #: ../app/config/gimprc-blurbs.h:254
 msgid ""
@@ -4770,8 +4781,8 @@ msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr ""
-"При включении этой опции все инструменты для рисования показывают очертания "
-"текущей кисти."
+"Если включено, все инструменты для рисования показывают очертания активной "
+"кисти."
 
 #: ../app/config/gimprc-blurbs.h:286
 msgid ""
@@ -4779,87 +4790,87 @@ msgid ""
 "related help page.  Without this button, the help page can still be reached "
 "by pressing F1."
 msgstr ""
-"При включении этой опции во всех диалогах будет отображаться кнопка "
-"«Справка», нажав на которую можно обратиться к системе помощи. Если эта опция "
-"отключена, систему помощи можно вызвать кнопкой F1."
+"Если включено, во всех диалогах отображается кнопка «Справка», по нажатию "
+"которой вызывается система помощи. Если выключено, справочную систему можно "
+"вызвать нажатием клавиши F1."
 
 #: ../app/config/gimprc-blurbs.h:291
 msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
-msgstr "Если включить, то во время рисования виден курсор инструмента."
+msgstr "Если включено, при рисовании виден курсор инструмента."
 
 #: ../app/config/gimprc-blurbs.h:295
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr ""
-"При включении этой функции панель меню включена по умолчанию. Это так же "
-"можно сделать командой «Вид→Показывать панель меню»."
+"Если включено, панель меню по умолчанию отображается. Это также можно "
+"сделать командой «Вид→ Показывать панель меню»."
 
 #: ../app/config/gimprc-blurbs.h:299
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
-"При включении этой функции линейки включены по умолчанию. Это так же можно "
-"сделать командой «Вид→Показывать линейки»."
+"Если включено, линейки по умолчанию отображаются. Это также можно сделать "
+"командой «Вид→ Показывать линейки»."
 
 #: ../app/config/gimprc-blurbs.h:303
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
-"При включении этой функции полосы прокрутки включены по умолчанию. Это так "
-"же можно сделать командой «Вид→Показывать полосы прокрутки»."
+"Если включено, полосы прокрутки по умолчанию отображаются. Это также можно "
+"сделать командой «Вид→ Показывать полосы прокрутки»."
 
 #: ../app/config/gimprc-blurbs.h:307
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 msgstr ""
-"При включении этой функции строка состояния включена по умолчанию. Это так "
-"же можно сделать командой «Вид→Показывать строку состояния»."
+"Если включено, строка состояния по умолчанию отображается. Это также можно "
+"сделать командой «Вид→ Показывать строку состояния»."
 
 #: ../app/config/gimprc-blurbs.h:311
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr ""
-"При включении этой функции показ выделения области включен по умолчанию. Это "
-"так же можно сделать командой «Вид→Показывать выделение»."
+"Если включено, выделение области по умолчанию отображается. Это также можно "
+"сделать командой «Вид→ Показывать выделение»."
 
 #: ../app/config/gimprc-blurbs.h:315
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
-"При включении этой функции показ границы слоя включен по умолчанию. Это так "
-"же можно сделать командой «Вид→Показывать границы слоя»."
+"Если включено, граница слоя по умолчанию отображается. Это также можно "
+"сделать командой «Вид→ Показывать границы слоя»."
 
 #: ../app/config/gimprc-blurbs.h:319
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
-"При включении этой функции направляющие включены по умолчанию. Это так же "
-"можно сделать командой «Вид→Показывать направляющие»."
+"Если включено, направляющие по умолчанию отображаются. Это также можно "
+"сделать командой «Вид→ Показывать направляющие»."
 
 #: ../app/config/gimprc-blurbs.h:323
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
-"При включении этой функции сетка включена по умолчанию. Это так же можно "
-"сделать командой «Вид→Показывать сетку»."
+"Если включено, сетка по умолчанию отображается. Это также можно сделать "
+"командой «Вид→ Показывать сетку»."
 
 #: ../app/config/gimprc-blurbs.h:327
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
-"Если включено, то образцовые точки показываются по умолчанию. Это также "
-"можно сделать командой «Вид→Показывать образцовые точки»."
+"Если включено, образцовые точки по умолчанию отображаются. Это также можно "
+"сделать командой «Вид→ Показывать образцовые точки»."
 
 #: ../app/config/gimprc-blurbs.h:331
 msgid "Show a tooltip when the pointer hovers over an item."
@@ -4894,24 +4905,24 @@ msgid ""
 "transient to the active image window. Most window managers will keep the "
 "dock windows above the image window then, but it may also have other effects."
 msgstr ""
-"При включении этой опции все панели располагаются поверх окна изображения. В "
-"некоторых оконных менеджерах могут проявиться и другие эффекты."
+"Если включено, все панели располагаются поверх окна изображения. В некоторых "
+"оконных менеджерах могут проявиться и другие эффекты."
 
 #: ../app/config/gimprc-blurbs.h:355
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
 msgstr ""
-"При включении этой опции клавиши быстрого доступа к подсвеченному пункту "
+"Если включено, комбинации клавиш для быстрого доступа к подсвеченному пункту "
 "меню можно менять «на лету»."
 
 #: ../app/config/gimprc-blurbs.h:359
 msgid "Save changed keyboard shortcuts when GIMP exits."
-msgstr "Сохранить измененные клавиши быстрого доступа при выходе из GIMP."
+msgstr "Сохранить измененные комбинации клавиши при выходе из GIMP."
 
 #: ../app/config/gimprc-blurbs.h:362
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr "Восстановить сохраненные клавиши быстрого доступа при запуске GIMP."
+msgstr "Восстановить сохраненные комбинации клавиш при запуске GIMP."
 
 #: ../app/config/gimprc-blurbs.h:365
 msgid ""
@@ -5552,11 +5563,11 @@ msgstr "Ошибка"
 
 #: ../app/core/core-enums.c:1260
 msgid "Ask what to do"
-msgstr "Подтверждать действие"
+msgstr "Спрашивать, что делать"
 
 #: ../app/core/core-enums.c:1261
 msgid "Keep embedded profile"
-msgstr "Сохранить встраиваемый профиль"
+msgstr "Сохранять встроенный профиль"
 
 #: ../app/core/core-enums.c:1262
 msgid "Convert to RGB workspace"
@@ -5956,7 +5967,7 @@ msgid "Color Balance"
 msgstr "Цветовой баланс"
 
 #: ../app/core/gimpdrawable-colorize.c:73
-#: ../app/core/gimpdrawable-colorize.c:83 ../app/tools/gimpcolorizetool.c:89
+#: ../app/core/gimpdrawable-colorize.c:83 ../app/tools/gimpcolorizetool.c:90
 msgid "Colorize"
 msgstr "Тонировать"
 
@@ -7066,7 +7077,7 @@ msgstr "Вы действительно хотите это сделать?"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:50
 msgid "Configure Keyboard Shortcuts"
-msgstr "Настроить клавиши быстрого доступа"
+msgstr "Настройка комбинаций клавиш"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:83
 msgid ""
@@ -7079,7 +7090,7 @@ msgstr ""
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:91
 #: ../app/dialogs/preferences-dialog.c:1644
 msgid "_Save keyboard shortcuts on exit"
-msgstr "_Сохранять быстрые клавиши при выходе"
+msgstr "_Сохранять комбинации клавиш при выходе"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:83
 msgid "Add a Mask to the Layer"
@@ -7301,16 +7312,15 @@ msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
-"При следующем запуске GIMP будут использованы клавиши быстрого доступа по "
-"умолчанию."
+"При следующем запуске GIMP будут использованы типовые комбинации клавиш."
 
 #: ../app/dialogs/preferences-dialog.c:581
 msgid "Remove all Keyboard Shortcuts"
-msgstr "Удалить все клавиши быстрого доступа"
+msgstr "Удалить все комбинации клавиш"
 
 #: ../app/dialogs/preferences-dialog.c:603
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
-msgstr "Действительно удалить все клавиши быстрого доступа из всех меню?"
+msgstr "Действительно удалить все комбинации клавиш из всех меню?"
 
 #: ../app/dialogs/preferences-dialog.c:644
 msgid ""
@@ -7382,7 +7392,7 @@ msgstr "Установить свой цвет фона вокруг изобр�
 
 #: ../app/dialogs/preferences-dialog.c:1410
 msgid "Preferences"
-msgstr "Настройки"
+msgstr "Параметры"
 
 #: ../app/dialogs/preferences-dialog.c:1522
 #: ../app/dialogs/preferences-dialog.c:2727
@@ -7433,7 +7443,7 @@ msgstr "Сохранение изображений"
 
 #: ../app/dialogs/preferences-dialog.c:1581
 msgid "Confirm closing of unsa_ved images"
-msgstr "Запрашивать подтверждение при закрытии несохраненных изображений."
+msgstr "Требовать подтверждение при закрытии несохраненных _изображений"
 
 #: ../app/dialogs/preferences-dialog.c:1591
 msgid "Keep record of used files in the Recent Documents list"
@@ -7475,23 +7485,23 @@ msgstr "Показывать _мнемонические клавиши"
 
 #: ../app/dialogs/preferences-dialog.c:1633
 msgid "_Use dynamic keyboard shortcuts"
-msgstr "_Использовать динамические клавиатурные комбинации"
+msgstr "_Использовать динамические комбинации клавиш"
 
 #: ../app/dialogs/preferences-dialog.c:1637
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "Настроить _клавиши быстрого доступа..."
+msgstr "Настроить _комбинации клавиш..."
 
 #: ../app/dialogs/preferences-dialog.c:1648
 msgid "Save Keyboard Shortcuts _Now"
-msgstr "Сохранить клавиши быстрого доступа сейчас"
+msgstr "Сохранить комбинации клавиш _сейчас"
 
 #: ../app/dialogs/preferences-dialog.c:1655
 msgid "_Reset Keyboard Shortcuts to Default Values"
-msgstr "_Восстановить исходные клавиатурные комбинации"
+msgstr "_Восстановить исходные комбинации клавиш"
 
 #: ../app/dialogs/preferences-dialog.c:1664
 msgid "Remove _All Keyboard Shortcuts"
-msgstr "Удалить все клавиши _быстрого доступа"
+msgstr "Удалить все ком_бинации клавиш"
 
 #: ../app/dialogs/preferences-dialog.c:1676
 #: ../app/dialogs/preferences-dialog.c:1715
@@ -7594,15 +7604,15 @@ msgstr "Внешний вид"
 
 #: ../app/dialogs/preferences-dialog.c:1929
 msgid "Show _foreground & background color"
-msgstr "Показать цвет _переднего плана и фона"
+msgstr "Показывать цвет _переднего плана и фона"
 
 #: ../app/dialogs/preferences-dialog.c:1933
 msgid "Show active _brush, pattern & gradient"
-msgstr "Показать используемые _кисти, текстуры и градиенты"
+msgstr "Показывать активные _кисти, текстуры и градиенты"
 
 #: ../app/dialogs/preferences-dialog.c:1937
 msgid "Show active _image"
-msgstr "Показать активное _изображение"
+msgstr "Показывать активное _изображение"
 
 #: ../app/dialogs/preferences-dialog.c:1950
 msgid "Default New Image"
@@ -9322,15 +9332,15 @@ msgstr "Экспортировать параметры яркости-конт�
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Яркость-Контраст не действует на индексированные слои."
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:315
+#: ../app/tools/gimpbrightnesscontrasttool.c:320
 msgid "_Brightness:"
 msgstr "_Яркость:"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:330
+#: ../app/tools/gimpbrightnesscontrasttool.c:335
 msgid "Con_trast:"
 msgstr "_Контраст:"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:344
+#: ../app/tools/gimpbrightnesscontrasttool.c:349
 msgid "Edit these Settings as Levels"
 msgstr "Изменить эти параметры как уровни"
 
@@ -9467,78 +9477,78 @@ msgstr "Экспортировать параметры цветового ба�
 msgid "Color Balance operates only on RGB color layers."
 msgstr "Цветовой баланс действует только на изображения в формате RGB."
 
-#: ../app/tools/gimpcolorbalancetool.c:267
+#: ../app/tools/gimpcolorbalancetool.c:270
 msgid "Select Range to Adjust"
 msgstr "Выберите изменяемую область"
 
-#: ../app/tools/gimpcolorbalancetool.c:276 ../app/tools/gimplevelstool.c:168
+#: ../app/tools/gimpcolorbalancetool.c:279 ../app/tools/gimplevelstool.c:168
 msgid "Adjust Color Levels"
 msgstr "Коррекция цветовых уровней"
 
-#: ../app/tools/gimpcolorbalancetool.c:293
-#: ../app/tools/gimphuesaturationtool.c:254
+#: ../app/tools/gimpcolorbalancetool.c:296
+#: ../app/tools/gimphuesaturationtool.c:255
 msgid "Cyan"
 msgstr "Голубой"
 
-#: ../app/tools/gimpcolorbalancetool.c:302
-#: ../app/tools/gimphuesaturationtool.c:256
+#: ../app/tools/gimpcolorbalancetool.c:305
+#: ../app/tools/gimphuesaturationtool.c:257
 msgid "Magenta"
 msgstr "Пурпурный"
 
-#: ../app/tools/gimpcolorbalancetool.c:311
-#: ../app/tools/gimphuesaturationtool.c:252
+#: ../app/tools/gimpcolorbalancetool.c:314
+#: ../app/tools/gimphuesaturationtool.c:253
 msgid "Yellow"
 msgstr "Желтый"
 
-#: ../app/tools/gimpcolorbalancetool.c:322
+#: ../app/tools/gimpcolorbalancetool.c:325
 msgid "R_eset Range"
 msgstr "_Восстановить область"
 
-#: ../app/tools/gimpcolorbalancetool.c:331
+#: ../app/tools/gimpcolorbalancetool.c:334
 msgid "Preserve _luminosity"
 msgstr "Сохранить _яркость"
 
-#: ../app/tools/gimpcolorizetool.c:90
+#: ../app/tools/gimpcolorizetool.c:91
 msgid "Colorize Tool: Colorize the image"
 msgstr "Тонирование: окрашивание изображения"
 
-#: ../app/tools/gimpcolorizetool.c:91
+#: ../app/tools/gimpcolorizetool.c:92
 msgid "Colori_ze..."
 msgstr "Тон_ировать..."
 
-#: ../app/tools/gimpcolorizetool.c:108
+#: ../app/tools/gimpcolorizetool.c:109
 msgid "Colorize the Image"
 msgstr "Тонирование изображения"
 
-#: ../app/tools/gimpcolorizetool.c:110
+#: ../app/tools/gimpcolorizetool.c:111
 msgid "Import Colorize Settings"
 msgstr "Импортировать параметры тонирования"
 
-#: ../app/tools/gimpcolorizetool.c:111
+#: ../app/tools/gimpcolorizetool.c:112
 msgid "Export Colorsize Settings"
 msgstr "Экспортировать параметры тонирования"
 
-#: ../app/tools/gimpcolorizetool.c:155
+#: ../app/tools/gimpcolorizetool.c:156
 #, c-format
 msgid "Colorize operates only on RGB color layers."
 msgstr "Тонирование действует только на цветные изображения в формате RGB."
 
-#: ../app/tools/gimpcolorizetool.c:217
+#: ../app/tools/gimpcolorizetool.c:221
 msgid "Select Color"
 msgstr "Выбрать цвет"
 
-#: ../app/tools/gimpcolorizetool.c:235
-#: ../app/tools/gimphuesaturationtool.c:387
+#: ../app/tools/gimpcolorizetool.c:238
+#: ../app/tools/gimphuesaturationtool.c:388
 msgid "_Hue:"
 msgstr "_Тон:"
 
-#: ../app/tools/gimpcolorizetool.c:250
-#: ../app/tools/gimphuesaturationtool.c:425
+#: ../app/tools/gimpcolorizetool.c:253
+#: ../app/tools/gimphuesaturationtool.c:426
 msgid "_Saturation:"
 msgstr "_Насыщенность:"
 
-#: ../app/tools/gimpcolorizetool.c:265
-#: ../app/tools/gimphuesaturationtool.c:406
+#: ../app/tools/gimpcolorizetool.c:268
+#: ../app/tools/gimphuesaturationtool.c:407
 msgid "_Lightness:"
 msgstr "_Освещенность:"
 
@@ -9547,7 +9557,7 @@ msgid "Sample average"
 msgstr "Выборочное среднее"
 
 #: ../app/tools/gimpcoloroptions.c:171
-#: ../app/tools/gimprectangleselectoptions.c:167
+#: ../app/tools/gimprectangleselectoptions.c:176
 #: ../app/tools/gimpselectionoptions.c:281
 #: ../app/widgets/gimpbrusheditor.c:154
 msgid "Radius:"
@@ -9655,11 +9665,11 @@ msgstr "%s для размывания"
 msgid "Convolve Type  (%s)"
 msgstr "Вид действия (%s)"
 
-#: ../app/tools/gimpcropoptions.c:148
+#: ../app/tools/gimpcropoptions.c:161
 msgid "Current layer only"
 msgstr "Только текущий слой"
 
-#: ../app/tools/gimpcropoptions.c:154
+#: ../app/tools/gimpcropoptions.c:167
 msgid "Allow growing"
 msgstr "Разрешить наращивание"
 
@@ -9712,15 +9722,15 @@ msgstr "Нажмите, чтобы добавить контрольную то�
 msgid "Click to add control points to all channels"
 msgstr "Нажмите, чтобы добавить контрольные точки ко всем каналам"
 
-#: ../app/tools/gimpcurvestool.c:431 ../app/tools/gimplevelstool.c:368
+#: ../app/tools/gimpcurvestool.c:433 ../app/tools/gimplevelstool.c:372
 msgid "Cha_nnel:"
 msgstr "_Канал:"
 
-#: ../app/tools/gimpcurvestool.c:455 ../app/tools/gimplevelstool.c:390
+#: ../app/tools/gimpcurvestool.c:459 ../app/tools/gimplevelstool.c:396
 msgid "R_eset Channel"
 msgstr "_Восстановить"
 
-#: ../app/tools/gimpcurvestool.c:545
+#: ../app/tools/gimpcurvestool.c:549
 msgid "Curve _type:"
 msgstr "Тип _кривой:"
 
@@ -9741,7 +9751,7 @@ msgstr "Обесцвечивание"
 msgid "Desaturate does only operate on RGB layers."
 msgstr "Обесцвечивание работает действует со слоями в режиме RGB"
 
-#: ../app/tools/gimpdesaturatetool.c:188
+#: ../app/tools/gimpdesaturatetool.c:191
 msgid "Choose shade of gray based on:"
 msgstr "Основа оттенков серого:"
 
@@ -10030,12 +10040,12 @@ msgstr "Опера_ция GEGL..."
 msgid "GEGL operations do not operate on indexed layers."
 msgstr "Операции GEGL не применимы к индексированным слоям."
 
-#: ../app/tools/gimpgegltool.c:301
+#: ../app/tools/gimpgegltool.c:305
 msgid "_Operation:"
 msgstr "_Операция:"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:346
+#: ../app/tools/gimpgegltool.c:352
 msgid "Operation Settings"
 msgstr "Параметры"
 
@@ -10089,51 +10099,51 @@ msgstr "Экспортировать параметры тона-насыщен�
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Тон-Насыщенность действует только в слоях RGB."
 
-#: ../app/tools/gimphuesaturationtool.c:250
+#: ../app/tools/gimphuesaturationtool.c:251
 msgid "M_aster"
 msgstr "_Все сразу"
 
-#: ../app/tools/gimphuesaturationtool.c:250
+#: ../app/tools/gimphuesaturationtool.c:251
 msgid "Adjust all colors"
 msgstr "Изменять все цвета"
 
-#: ../app/tools/gimphuesaturationtool.c:251
+#: ../app/tools/gimphuesaturationtool.c:252
 msgid "_R"
 msgstr "R"
 
-#: ../app/tools/gimphuesaturationtool.c:252
+#: ../app/tools/gimphuesaturationtool.c:253
 msgid "_Y"
 msgstr "Y"
 
-#: ../app/tools/gimphuesaturationtool.c:253
+#: ../app/tools/gimphuesaturationtool.c:254
 msgid "_G"
 msgstr "_G"
 
-#: ../app/tools/gimphuesaturationtool.c:254
+#: ../app/tools/gimphuesaturationtool.c:255
 msgid "_C"
 msgstr "_C"
 
-#: ../app/tools/gimphuesaturationtool.c:255
+#: ../app/tools/gimphuesaturationtool.c:256
 msgid "_B"
 msgstr "_B"
 
-#: ../app/tools/gimphuesaturationtool.c:256
+#: ../app/tools/gimphuesaturationtool.c:257
 msgid "_M"
 msgstr "_M"
 
-#: ../app/tools/gimphuesaturationtool.c:259
+#: ../app/tools/gimphuesaturationtool.c:262
 msgid "Select Primary Color to Adjust"
 msgstr "Выберите основной цвет для изменения"
 
-#: ../app/tools/gimphuesaturationtool.c:350
+#: ../app/tools/gimphuesaturationtool.c:352
 msgid "_Overlap:"
 msgstr "Пере_крытие:"
 
-#: ../app/tools/gimphuesaturationtool.c:369
+#: ../app/tools/gimphuesaturationtool.c:371
 msgid "Adjust Selected Color"
 msgstr "Изменение выбранного цвета"
 
-#: ../app/tools/gimphuesaturationtool.c:446
+#: ../app/tools/gimphuesaturationtool.c:447
 msgid "R_eset Color"
 msgstr "Восстановить _цвет"
 
@@ -10141,35 +10151,35 @@ msgstr "Восстановить _цвет"
 msgid "Pre_sets:"
 msgstr "_Предустановки:"
 
-#: ../app/tools/gimpimagemaptool-settings.c:153
+#: ../app/tools/gimpimagemaptool-settings.c:157
 msgid "Pick a setting from the list"
 msgstr "Выберите параметр из списка"
 
-#: ../app/tools/gimpimagemaptool-settings.c:182
+#: ../app/tools/gimpimagemaptool-settings.c:186
 msgid "Add Settings to _Favorites"
 msgstr "_Добавить параметры в избранное"
 
-#: ../app/tools/gimpimagemaptool-settings.c:188
+#: ../app/tools/gimpimagemaptool-settings.c:192
 msgid "_Import Settings from File"
 msgstr "_Открыть параметры из файла"
 
-#: ../app/tools/gimpimagemaptool-settings.c:194
+#: ../app/tools/gimpimagemaptool-settings.c:198
 msgid "_Export Settings to File"
 msgstr "_Сохранить параметры в файл"
 
-#: ../app/tools/gimpimagemaptool-settings.c:436
+#: ../app/tools/gimpimagemaptool-settings.c:440
 msgid "Add Settings to Favorites"
 msgstr "Добавка параметров в избранное"
 
-#: ../app/tools/gimpimagemaptool-settings.c:439
+#: ../app/tools/gimpimagemaptool-settings.c:443
 msgid "Enter a name for the settings"
 msgstr "Дайте имя сохраняемым параметрам"
 
-#: ../app/tools/gimpimagemaptool-settings.c:440
+#: ../app/tools/gimpimagemaptool-settings.c:444
 msgid "Saved Settings"
 msgstr "Сохраненные параметры"
 
-#: ../app/tools/gimpimagemaptool-settings.c:648
+#: ../app/tools/gimpimagemaptool-settings.c:652
 #, c-format
 msgid "Settings saved to '%s'"
 msgstr "Настройки сохранены в '%s'"
@@ -10184,7 +10194,7 @@ msgid "Adjustment"
 msgstr "Коррекция"
 
 #: ../app/tools/gimpinkoptions-gui.c:68 ../app/tools/gimpinkoptions-gui.c:93
-#: ../app/tools/gimprectangleoptions.c:983 ../app/tools/gimptextoptions.c:442
+#: ../app/tools/gimprectangleoptions.c:973 ../app/tools/gimptextoptions.c:442
 msgid "Size:"
 msgstr "Размер:"
 
@@ -10302,29 +10312,29 @@ msgid "Pick white point"
 msgstr "Выбор белой точки"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:405
+#: ../app/tools/gimplevelstool.c:411
 msgid "Input Levels"
 msgstr "Уровни на входе"
 
-#: ../app/tools/gimplevelstool.c:509
+#: ../app/tools/gimplevelstool.c:514
 msgid "Gamma"
 msgstr "Гамма"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:551
+#: ../app/tools/gimplevelstool.c:556
 msgid "Output Levels"
 msgstr "Уровни на выходе"
 
 #. all channels frame
-#: ../app/tools/gimplevelstool.c:629
+#: ../app/tools/gimplevelstool.c:633
 msgid "All Channels"
 msgstr "Все каналы"
 
-#: ../app/tools/gimplevelstool.c:644
+#: ../app/tools/gimplevelstool.c:647
 msgid "Adjust levels automatically"
 msgstr "Подобрать уровни автоматически"
 
-#: ../app/tools/gimplevelstool.c:671
+#: ../app/tools/gimplevelstool.c:674
 msgid "Edit these Settings as Curves"
 msgstr "Изменить эти параметры как кривые"
 
@@ -10603,7 +10613,7 @@ msgstr "Постеризация (Уменьшение количества цв
 msgid "Posterize does not operate on indexed layers."
 msgstr "Инструмент постеризации не работает с индексированными слоями."
 
-#: ../app/tools/gimpposterizetool.c:224
+#: ../app/tools/gimpposterizetool.c:226
 msgid "Posterize _levels:"
 msgstr "_Уровни постеризации:"
 
@@ -10612,36 +10622,36 @@ msgid "Use all visible layers when shrinking the selection"
 msgstr "Использовать все видимые слои при сокращении выделения"
 
 #. Current, as in what is currently in use.
-#: ../app/tools/gimprectangleoptions.c:739
+#: ../app/tools/gimprectangleoptions.c:729
 msgid "Current"
 msgstr "Активное"
 
-#: ../app/tools/gimprectangleoptions.c:817
+#: ../app/tools/gimprectangleoptions.c:807
 msgid "Expand from center"
 msgstr "Рисовать из центра"
 
-#: ../app/tools/gimprectangleoptions.c:840
+#: ../app/tools/gimprectangleoptions.c:830
 msgid "Fixed:"
 msgstr "Фикс.:"
 
-#: ../app/tools/gimprectangleoptions.c:973
+#: ../app/tools/gimprectangleoptions.c:963
 msgid "Position:"
 msgstr "Позиция:"
 
-#: ../app/tools/gimprectangleoptions.c:991
+#: ../app/tools/gimprectangleoptions.c:981
 msgid "Highlight"
 msgstr "Затемнить невыделенное"
 
 #. Auto Shrink
-#: ../app/tools/gimprectangleoptions.c:1001
+#: ../app/tools/gimprectangleoptions.c:991
 msgid "Auto Shrink"
 msgstr "Автосокращение выделения"
 
-#: ../app/tools/gimprectangleoptions.c:1008
+#: ../app/tools/gimprectangleoptions.c:998
 msgid "Shrink merged"
 msgstr "Во всех слоях"
 
-#: ../app/tools/gimprectangleselectoptions.c:155
+#: ../app/tools/gimprectangleselectoptions.c:164
 msgid "Rounded corners"
 msgstr "Закруглённые углы"
 
@@ -11267,7 +11277,7 @@ msgstr "Действие"
 
 #: ../app/widgets/gimpactionview.c:341
 msgid "Shortcut"
-msgstr "Клавиши быстрого доступа"
+msgstr "Комбинация"
 
 #: ../app/widgets/gimpactionview.c:365
 msgid "Name"
@@ -11275,7 +11285,7 @@ msgstr "Название"
 
 #: ../app/widgets/gimpactionview.c:497 ../app/widgets/gimpactionview.c:701
 msgid "Changing shortcut failed."
-msgstr "Не удалось изменить клавиши быстрого доступа."
+msgstr "Не удалось изменить комбинацию клавиш."
 
 #: ../app/widgets/gimpactionview.c:539
 msgid "Conflicting Shortcuts"
@@ -11932,28 +11942,28 @@ msgstr "Цвет _фона:"
 msgid "Spacing"
 msgstr "Ячейки"
 
-#: ../app/widgets/gimphelp.c:189
+#: ../app/widgets/gimphelp.c:196
 msgid "Help browser not found"
 msgstr "Программа просмотра справки отсутствует"
 
-#: ../app/widgets/gimphelp.c:190
+#: ../app/widgets/gimphelp.c:197
 msgid "Could not find GIMP help browser."
 msgstr "Не удалось найти программу просмотра справки GIMP"
 
-#: ../app/widgets/gimphelp.c:191
+#: ../app/widgets/gimphelp.c:198
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation."
 msgstr "В Вашей установке GIMP отсутствует просмотрщик справочной системы."
 
-#: ../app/widgets/gimphelp.c:232
+#: ../app/widgets/gimphelp.c:239
 msgid "Help browser doesn't start"
 msgstr "Программа просмотра справки не запускается"
 
-#: ../app/widgets/gimphelp.c:233
+#: ../app/widgets/gimphelp.c:240
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Не удалось запустить программу просмотра справки GIMP"
 
-#: ../app/widgets/gimphelp.c:259
+#: ../app/widgets/gimphelp.c:266
 msgid "Use _web browser instead"
 msgstr "Использовать внешний просмотрщик"
 
@@ -12091,8 +12101,8 @@ msgstr "Авто"
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
-"При включении этой функции содержимое диалога меняется в соответствии с тем, "
-"какое изображение активно в данный момент."
+"Если включено, содержимое диалога меняется в соответствии с тем, какое "
+"изображение активно в данный момент."
 
 #: ../app/widgets/gimpmessagebox.c:437
 #, c-format
@@ -12237,16 +12247,16 @@ msgstr ""
 msgid "Pr_eview"
 msgstr "_Предпросмотр"
 
-#: ../app/widgets/gimpthumbbox.c:402 ../app/widgets/gimpthumbbox.c:467
+#: ../app/widgets/gimpthumbbox.c:402 ../app/widgets/gimpthumbbox.c:466
 msgid "No selection"
 msgstr "Нет выделения"
 
-#: ../app/widgets/gimpthumbbox.c:595 ../app/widgets/gimpthumbbox.c:616
+#: ../app/widgets/gimpthumbbox.c:594 ../app/widgets/gimpthumbbox.c:615
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Миниатюра %d из %d"
 
-#: ../app/widgets/gimpthumbbox.c:729 ../app/widgets/gimpthumbbox.c:739
+#: ../app/widgets/gimpthumbbox.c:728 ../app/widgets/gimpthumbbox.c:738
 msgid "Creating preview..."
 msgstr "Создание пред. просмотра..."
 
@@ -12447,12 +12457,12 @@ msgid "Web browser"
 msgstr "Внешний просмотрщик"
 
 #: ../app/widgets/widgets-enums.c:229
-msgid "Linear"
-msgstr "Линейное"
+msgid "Linear histogram"
+msgstr "Линейная гистограмма"
 
 #: ../app/widgets/widgets-enums.c:230
-msgid "Logarithmic"
-msgstr "Логарифмическое"
+msgid "Logarithmic histogram"
+msgstr "Логарифмическая гистограмма"
 
 #: ../app/widgets/widgets-enums.c:263
 msgid "Icon"
@@ -12593,6 +12603,9 @@ msgstr "Убедитесь, что панель инструментов вид�
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Невозможно запустить '%s': %s"
+
+#~ msgid "Linear"
+#~ msgstr "Линейное"
 
 #~ msgctxt "command"
 #~ msgid "Rectangle Select"

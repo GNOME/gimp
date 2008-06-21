@@ -1428,7 +1428,7 @@ smp_dialog (void)
   gtk_widget_show (check_button);
 
   g_signal_connect (check_button, "toggled",
-                    (GtkSignalFunc)smp_toggle_callback ,
+                    G_CALLBACK (smp_toggle_callback),
                     &g_di.sample_show_selection);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
                                 g_di.sample_show_selection);
@@ -1439,7 +1439,7 @@ smp_dialog (void)
   gtk_widget_show (check_button);
 
   g_signal_connect (check_button, "toggled",
-                    (GtkSignalFunc)smp_toggle_callback ,
+                    G_CALLBACK (smp_toggle_callback),
                     &g_di.sample_show_color);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
                                 g_di.sample_show_color);

@@ -91,7 +91,8 @@ static void  gimp_text_options_notify_text_color  (GimpText     *text,
                                                    GimpContext  *context);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpTextOptions, gimp_text_options, GIMP_TYPE_TOOL_OPTIONS,
+G_DEFINE_TYPE_WITH_CODE (GimpTextOptions, gimp_text_options,
+                         GIMP_TYPE_TOOL_OPTIONS,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_OPTIONS,
                                                 NULL))
 
@@ -103,6 +104,15 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
 
   object_class->set_property = gimp_text_options_set_property;
   object_class->get_property = gimp_text_options_get_property;
+
+  /* The 'highlight' property is defined here because we want different
+   * default values for the Crop, Text and the Rectangle Select tools.
+   */
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
+                                    "highlight", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
                                  "font-size-unit", NULL,

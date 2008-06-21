@@ -31,11 +31,11 @@
 #include "gimpoperationcolorize.h"
 
 
-static gboolean gimp_operation_colorize_process (GeglOperation *operation,
-                                                 void          *in_buf,
-                                                 void          *out_buf,
-                                                 glong          samples,
-                                                 GeglRectangle *roi);
+static gboolean gimp_operation_colorize_process (GeglOperation       *operation,
+                                                 void                *in_buf,
+                                                 void                *out_buf,
+                                                 glong                samples,
+                                                 const GeglRectangle *roi);
 
 
 G_DEFINE_TYPE (GimpOperationColorize, gimp_operation_colorize,
@@ -76,11 +76,11 @@ gimp_operation_colorize_init (GimpOperationColorize *self)
 }
 
 static gboolean
-gimp_operation_colorize_process (GeglOperation *operation,
-                                 void          *in_buf,
-                                 void          *out_buf,
-                                 glong          samples,
-                                 GeglRectangle *roi)
+gimp_operation_colorize_process (GeglOperation       *operation,
+                                 void                *in_buf,
+                                 void                *out_buf,
+                                 glong                samples,
+                                 const GeglRectangle *roi)
 {
   GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
   GimpColorizeConfig       *config = GIMP_COLORIZE_CONFIG (point->config);
