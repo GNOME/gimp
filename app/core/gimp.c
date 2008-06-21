@@ -263,6 +263,10 @@ gimp_dispose (GObject *object)
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
 
+  /* cache must be saved before any tagged objects
+   * are destroyed. */
+  gimp_tag_cache_save (gimp->tag_cache);
+
   if (gimp->brush_factory)
     gimp_data_factory_data_free (gimp->brush_factory);
 
@@ -861,6 +865,10 @@ gimp_restore (Gimp               *gimp,
 
   /* update tag cache */
   status_callback (NULL, _("Updating tag cache"), 0.8);
+  gimp_tag_cache_load (gimp->tag_cache);
+  gimp_tag_cache_add_container (gimp->tag_cache,
+                                gimp->brush_factory->container);
+  /*
   gimp_container_foreach (gimp->brush_factory->container,
                           gimp_tag_cache_update, gimp->tag_cache);
   gimp_container_foreach (gimp->pattern_factory->container,
@@ -868,7 +876,7 @@ gimp_restore (Gimp               *gimp,
   gimp_container_foreach (gimp->palette_factory->container,
                           gimp_tag_cache_update, gimp->tag_cache);
   gimp_container_foreach (gimp->gradient_factory->container,
-                          gimp_tag_cache_update, gimp->tag_cache);
+                          gimp_tag_cache_update, gimp->tag_cache);*/
 
   g_signal_emit (gimp, gimp_signals[RESTORE], 0, status_callback);
 }

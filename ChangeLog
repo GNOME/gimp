@@ -1,3 +1,14 @@
+2008-06-21  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/core/gimptagcache.[ch]: extended cache system
+	functionality and added tag cache saving to file.
+
+	* app/core/gimp.c: further integration of
+	gimp tag cache.
+
+	* app/core/gimptagged.[ch]: fixed repeated get
+	in function name.
+
 2008-06-20  Aurimas Juška   <aurisj@svn.gnome.org>
 
 	* app/core/gimpdata.[ch]

@@ -40,14 +40,29 @@
 
 #include "gimp-intl.h"
 
+#define GIMP_TAG_CACHE_FILE     ".tag-cache.xml"
 
-#define WRITABLE_PATH_KEY "gimp-data-cache-writable-path"
+
+static void    gimp_tag_cache_finalize          (GObject              *object);
+
+static gint64  gimp_tag_cache_get_memsize       (GimpObject           *object,
+                                                 gint64               *gui_size);
+static void    gimp_tag_cache_object_initialize (GimpTagged           *tagged,
+                                                 GimpTagCache         *cache);
+static void    gimp_tag_cache_object_add        (GimpContainer        *container,
+                                                 GimpTagged           *tagged,
+                                                 GimpTagCache         *cache);
+static void    gimp_tag_cache_object_remove     (GimpContainer        *container,
+                                                 GimpTagged           *tagged,
+                                                 GimpTagCache         *cache);
+static void    gimp_tag_cache_tag_added         (GimpTagged           *tagged,
+                                                 GimpTag               tag,
+                                                 GimpTagCache         *cache);
+static void    gimp_tag_cache_tag_removed       (GimpTagged           *tagged,
+                                                 GimpTag               tag,
+                                                 GimpTagCache         *cache);
 
 
-static void    gimp_tag_cache_finalize     (GObject              *object);
-
-static gint64  gimp_tag_cache_get_memsize  (GimpObject           *object,
-                                               gint64               *gui_size);
 
 G_DEFINE_TYPE (GimpTagCache, gimp_tag_cache, GIMP_TYPE_OBJECT)
 
@@ -69,21 +84,62 @@ static void
 gimp_tag_cache_init (GimpTagCache *cache)
 {
   cache->gimp                   = NULL;
+
+  cache->records                = NULL;
+  cache->tag_to_object          = NULL;
+  cache->new_objects            = NULL;
 }
 
 static void
 gimp_tag_cache_finalize (GObject *object)
 {
   GimpTagCache *cache = GIMP_TAG_CACHE (object);
+  gint          i;
+
+  if (cache->records)
+    {
+      for (i = 0; i < cache->records->len; i++)
+        {
+          GimpTagCacheRecord *rec =
+              &g_array_index (cache->records, GimpTagCacheRecord, i);
+          g_slist_free (rec->tags);
+        }
+      g_array_free (cache->records, TRUE);
+      cache->records = NULL;
+    }
+
+  if (cache->tag_to_object)
+    {
+      GList *values;
+      GList *iterator;
+
+      values = g_hash_table_get_values (cache->tag_to_object);
+      iterator = values;
+      while (iterator)
+        {
+          g_slist_free (iterator->data);
+          iterator = g_list_next (iterator);
+        }
+      g_list_free (values);
+
+      g_hash_table_destroy (cache->tag_to_object);
+      cache->tag_to_object = NULL;
+    }
+
+  if (cache->new_objects)
+    {
+      g_slist_free (cache->new_objects);
+      cache->new_objects = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gint64
 gimp_tag_cache_get_memsize (GimpObject *object,
-                               gint64     *gui_size)
+                            gint64     *gui_size)
 {
-  GimpTagCache *cache = GIMP_TAG_CACHE (object);
+  /*GimpTagCache *cache = GIMP_TAG_CACHE (object);*/
   gint64           memsize = 0;
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
@@ -100,13 +156,213 @@ gimp_tag_cache_new (Gimp       *gimp)
   cache = g_object_new (GIMP_TYPE_TAG_CACHE, NULL);
 
   cache->gimp                   = gimp;
+  cache->records                = g_array_new (FALSE, FALSE, sizeof(GimpTagCacheRecord));
+  cache->tag_to_object          = g_hash_table_new (g_int_hash, g_int_equal);
+  cache->new_objects            = NULL;
 
   return cache;
 }
 
 void
-gimp_tag_cache_update (GimpTaggedInterface *tagged,
-                       GimpTagCache        *cache)
+gimp_tag_cache_add_container (GimpTagCache     *cache,
+                              GimpContainer    *container)
 {
-    printf("resource received: %s\n", gimp_tagged_get_identifier (tagged)); 
+    gimp_container_foreach (container, (GFunc) gimp_tag_cache_object_initialize, cache);
+
+    g_signal_connect (container, "add",
+                      G_CALLBACK (gimp_tag_cache_object_add), cache);
+    g_signal_connect (container, "remove",
+                      G_CALLBACK (gimp_tag_cache_object_remove), cache);
+}
+
+static void
+gimp_tag_cache_object_add (GimpContainer       *container,
+                           GimpTagged          *tagged,
+                           GimpTagCache        *cache)
+{
+  const char           *identifier;
+  GQuark                identifier_quark = 0;
+  GSList               *tag_iterator;
+  gint                  i;
+  gboolean              cache_hit = FALSE;
+
+  identifier = gimp_tagged_get_identifier (tagged);
+
+  if (identifier)
+    {
+      identifier_quark = g_quark_from_string (identifier);
+
+      for (i = 0; i < cache->records->len; i++)
+        {
+          GimpTagCacheRecord *rec = &g_array_index (cache->records, GimpTagCacheRecord, i);
+
+          if (rec->identifier == identifier_quark)
+            {
+              tag_iterator = rec->tags;
+              while (tag_iterator)
+                {
+                  gimp_tagged_add_tag (tagged, GPOINTER_TO_UINT (tag_iterator->data));
+                  tag_iterator = g_slist_next (tag_iterator);
+                }
+              cache_hit = TRUE;
+              break;
+            }
+        }
+    }
+
+  if (! cache_hit)
+  {
+      cache->new_objects = g_slist_prepend (cache->new_objects, tagged);
+  }
+
+  g_signal_connect (tagged, "tag-added",
+                    G_CALLBACK (gimp_tag_cache_tag_added), cache);
+  g_signal_connect (tagged, "tag-removed",
+                    G_CALLBACK (gimp_tag_cache_tag_removed), cache);
+}
+
+static void
+gimp_tag_cache_object_remove (GimpContainer    *container,
+                              GimpTagged       *tagged,
+                              GimpTagCache     *cache)
+{
+  GList        *tag_list;
+
+  tag_list = gimp_tagged_get_tags (tagged);
+  while (tag_list)
+    {
+      GSList *object_list = g_hash_table_lookup (cache->tag_to_object, tag_list->data);
+      object_list = g_slist_remove (object_list, GIMP_TAGGED (tagged));
+      g_hash_table_insert (cache->tag_to_object, tag_list->data, object_list);
+
+      tag_list = g_list_next (tag_list);
+    }
+
+  g_signal_handlers_disconnect_by_func (tagged,
+                                        G_CALLBACK (gimp_tag_cache_tag_added), cache);
+  g_signal_handlers_disconnect_by_func (tagged,
+                                        G_CALLBACK (gimp_tag_cache_tag_removed), cache);
+
+  cache->new_objects = g_slist_remove (cache->new_objects, tagged);
+}
+
+static void
+gimp_tag_cache_object_initialize (GimpTagged          *tagged,
+                                  GimpTagCache        *cache)
+{
+  gimp_tag_cache_object_add (NULL, tagged, cache);
+}
+
+static void
+gimp_tag_cache_tag_added (GimpTagged           *tagged,
+                          GimpTag               tag,
+                          GimpTagCache         *cache)
+{
+  printf ("tag added\n");
+}
+
+static void
+gimp_tag_cache_tag_removed (GimpTagged           *tagged,
+                            GimpTag               tag,
+                            GimpTagCache         *cache)
+{
+  printf ("tag removed\n");
+}
+
+void
+gimp_tag_cache_save (GimpTagCache      *cache)
+{
+  GString      *buf;
+  GSList       *saved_records;
+  GSList       *iterator;
+  gchar        *filename;
+  GError       *error;
+  gint          i;
+
+  printf ("saving cache to disk ...\n");
+
+  saved_records = NULL;
+  for (i = 0; i < cache->records->len; i++)
+    {
+      GimpTagCacheRecord *current_record = &g_array_index(cache->records, GimpTagCacheRecord, i);
+      if (current_record->referenced
+          || current_record->tags)
+        {
+          GimpTagCacheRecord *record_copy = (GimpTagCacheRecord*) g_malloc (sizeof (GimpTagCacheRecord));
+          record_copy->identifier = current_record->identifier;
+          record_copy->tags = g_slist_copy (current_record->tags);
+          saved_records = g_slist_prepend (saved_records, record_copy);
+        }
+    }
+
+  iterator = cache->new_objects;
+  while (iterator)
+    {
+      GimpTagged *tagged = GIMP_TAGGED (iterator->data);
+      const char *identifier;
+
+      identifier = gimp_tagged_get_identifier (tagged);
+      if (identifier)
+        {
+          GList        *tag_iterator;
+          GimpTagCacheRecord *record_copy = (GimpTagCacheRecord*) g_malloc (sizeof (GimpTagCacheRecord));
+          record_copy->identifier = g_quark_from_string (identifier);
+          record_copy->tags = NULL;
+          tag_iterator = gimp_tagged_get_tags (tagged);
+          while (tag_iterator)
+            {
+              record_copy->tags = g_slist_prepend (record_copy->tags, tag_iterator->data);
+              tag_iterator = g_list_next (tag_iterator);
+            }
+          saved_records = g_slist_prepend (saved_records, record_copy);
+        }
+      iterator = g_slist_next (iterator);
+    }
+
+  buf = g_string_new ("");
+  g_string_append (buf, "<?xml version='1.0' encoding='UTF-8'?>\n");
+  g_string_append (buf, "<tag_cache>\n");
+  iterator = saved_records;
+  while (iterator)
+    {
+      GimpTagCacheRecord *cache_rec = (GimpTagCacheRecord*) iterator->data;
+      GSList             *tag_iterator;
+
+      g_string_append_printf (buf, "\t<resource identifier=\"%s\">\n", g_quark_to_string (cache_rec->identifier));
+      tag_iterator = cache_rec->tags;
+      while (tag_iterator)
+        {
+          g_string_append_printf (buf, "\t\t<tag>%s</tag>\n", g_quark_to_string (GPOINTER_TO_UINT (tag_iterator->data)));
+        }
+      g_string_append (buf, "\t</resource>\n");
+      iterator = g_slist_next (iterator);
+    }
+  g_string_append (buf, "</tag_cache>\n");
+
+  filename = g_build_filename (gimp_directory (), GIMP_TAG_CACHE_FILE, NULL);
+  printf ("writing tag cache to %s\n", filename);
+  error = NULL;
+  if (!g_file_set_contents (filename, buf->str, buf->len, &error))
+    {
+      printf ("Error while saving tag cache: %s\n", error->message);
+      g_error_free (error);
+    }
+
+  g_free (filename);
+  g_string_free (buf, TRUE);
+
+  iterator = saved_records;
+  while (iterator)
+    {
+      GimpTagCacheRecord *cache_rec = (GimpTagCacheRecord*) iterator->data;
+      g_slist_free (cache_rec->tags);
+      g_free (cache_rec);
+      iterator = g_slist_next (iterator);
+    }
+  g_slist_free (saved_records);
+}
+
+void
+gimp_tag_cache_load (GimpTagCache      *cache)
+{
 }

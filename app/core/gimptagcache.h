@@ -34,13 +34,25 @@
 #define GIMP_TAG_CACHE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TAG_CACHE, GimpTagCacheClass))
 
 
+typedef struct _GimpTagCacheRecord GimpTagCacheRecord;
 typedef struct _GimpTagCacheClass  GimpTagCacheClass;
+
+struct _GimpTagCacheRecord
+{
+  GQuark                identifier;
+  GSList               *tags;
+  guint                 referenced : 1;
+};
 
 struct _GimpTagCache
 {
-  GimpObject       parent_instance;
+  GimpObject            parent_instance;
 
-  Gimp             *gimp;
+  Gimp                 *gimp;
+
+  GArray               *records;
+  GHashTable           *tag_to_object;
+  GSList               *new_objects;
 };
 
 struct _GimpTagCacheClass
@@ -51,10 +63,12 @@ struct _GimpTagCacheClass
 
 GType           gimp_tag_cache_get_type (void) G_GNUC_CONST;
 
-GimpTagCache *  gimp_tag_cache_new      (Gimp                   *gimp);
+GimpTagCache *  gimp_tag_cache_new           (Gimp             *gimp);
 
-void            gimp_tag_cache_update   (GimpTaggedInterface    *tagged,
-                                         GimpTagCache           *cache);
+void            gimp_tag_cache_save          (GimpTagCache     *cache);
+void            gimp_tag_cache_load          (GimpTagCache     *cache);
 
+void            gimp_tag_cache_add_container (GimpTagCache     *cache,
+                                              GimpContainer    *container);
 
 #endif  /*  __GIMP_TAG_CACHE_H__  */

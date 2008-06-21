@@ -60,7 +60,7 @@ void       gimp_tagged_add_tag            (GimpTagged *tagged,
                                            GimpTag     tag);
 void       gimp_tagged_remove_tag         (GimpTagged *tagged,
                                            GimpTag     tag);
-GList    * gimp_tagged_get_get_tags       (GimpTagged *tagged);
+GList    * gimp_tagged_get_tags           (GimpTagged *tagged);
 
 gchar    * gimp_tagged_get_identifier     (GimpTagged *tagged);
 gboolean   gimp_tagged_get_digest         (GimpTagged *tagged,
