@@ -1,3 +1,10 @@
+2008-06-21  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpfreeselecttool.c
+	(gimp_free_select_tool_update_motion): When applying angle
+	constraints on the first segment vertex, base on the last segment
+	vertex rather than not applying any constraint at all.
+
 2008-06-20  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Make angle constraints with the Free Select Tool by using Ctrl
