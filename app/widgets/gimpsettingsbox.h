@@ -41,6 +41,7 @@ struct _GimpSettingsBox
   GtkWidget     *menu;
   GtkWidget     *import_item;
   GtkWidget     *export_item;
+  GtkWidget     *editor_dialog;
 
   Gimp          *gimp;
   GObject       *config;

@@ -1,3 +1,14 @@
+2008-06-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpsettingseditor.[ch]: skeleton of a widget to
+	manage the list of saved settings for the image map tools. Does
+	absolutely nothing yet apart from displaying the list of settings.
+
+	* app/widgets/gimpsettingsbox.[ch]: add "Manage Settings" menu item
+	and show a dialog containing the new widget.
+
 2008-06-21  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpfreeselecttool.c

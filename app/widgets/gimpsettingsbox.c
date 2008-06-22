@@ -35,6 +35,7 @@
 #include "gimpcontainercombobox.h"
 #include "gimpcontainerview.h"
 #include "gimpsettingsbox.h"
+#include "gimpsettingseditor.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -94,10 +95,17 @@ static void  gimp_settings_box_import_activate   (GtkWidget         *widget,
                                                   GimpSettingsBox   *box);
 static void  gimp_settings_box_export_activate   (GtkWidget         *widget,
                                                   GimpSettingsBox   *box);
+static void  gimp_settings_box_manage_activate   (GtkWidget         *widget,
+                                                  GimpSettingsBox   *box);
 
 static void  gimp_settings_box_favorite_callback (GtkWidget         *query_box,
                                                   const gchar       *string,
                                                   gpointer           data);
+static void  gimp_settings_box_toplevel_unmap    (GtkWidget         *widget,
+                                                  GimpSettingsBox   *box);
+static void  gimp_settings_box_manage_response   (GtkWidget         *widget,
+                                                  gint               response_id,
+                                                  GimpSettingsBox   *box);
 
 
 G_DEFINE_TYPE (GimpSettingsBox, gimp_settings_box, GTK_TYPE_HBOX)
@@ -244,6 +252,11 @@ gimp_settings_box_constructor (GType                  type,
                                      _("_Export Settings to File..."),
                                      G_CALLBACK (gimp_settings_box_export_activate));
 
+  gimp_settings_box_menu_item_add (box,
+                                   GTK_STOCK_EDIT,
+                                   _("_Manage Settings..."),
+                                   G_CALLBACK (gimp_settings_box_manage_activate));
+
   return object;
 }
 
@@ -268,6 +281,18 @@ gimp_settings_box_finalize (GObject *object)
     {
       g_free (box->filename);
       box->filename = NULL;
+    }
+
+  if (box->editor_dialog)
+    {
+      GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
+
+      if (toplevel)
+        g_signal_handlers_disconnect_by_func (toplevel,
+                                              gimp_settings_box_toplevel_unmap,
+                                              box);
+
+      gtk_widget_destroy (box->editor_dialog);
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -519,6 +544,50 @@ gimp_settings_box_export_activate (GtkWidget       *widget,
 }
 
 static void
+gimp_settings_box_manage_activate (GtkWidget       *widget,
+                                   GimpSettingsBox *box)
+{
+  GtkWidget *toplevel;
+  GtkWidget *editor;
+
+  if (box->editor_dialog)
+    {
+      gtk_window_present (GTK_WINDOW (box->editor_dialog));
+      return;
+    }
+
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
+
+  box->editor_dialog = gimp_dialog_new (_("Manage Saved Settings"),
+                                        "gimp-settings-editor-dialog",
+                                        toplevel, 0,
+                                        NULL, NULL,
+                                        GTK_STOCK_CLOSE,
+                                        GTK_RESPONSE_CLOSE,
+                                        NULL);
+
+  g_object_add_weak_pointer (G_OBJECT (box->editor_dialog),
+                             (gpointer) &box->editor_dialog);
+  g_signal_connect (toplevel, "unmap",
+                    G_CALLBACK (gimp_settings_box_toplevel_unmap),
+                    box);
+
+  g_signal_connect (box->editor_dialog, "response",
+                    G_CALLBACK (gimp_settings_box_manage_response),
+                    box);
+
+  editor = gimp_settings_editor_new (box->gimp,
+                                     box->config,
+                                     box->container);
+  gtk_container_set_border_width (GTK_CONTAINER (editor), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (box->editor_dialog)->vbox),
+                     editor);
+  gtk_widget_show (editor);
+
+  gtk_widget_show (box->editor_dialog);
+}
+
+static void
 gimp_settings_box_favorite_callback (GtkWidget   *query_box,
                                      const gchar *string,
                                      gpointer     data)
@@ -532,6 +601,29 @@ gimp_settings_box_favorite_callback (GtkWidget   *query_box,
   g_object_unref (config);
 
   gimp_settings_box_serialize (box);
+}
+
+static void
+gimp_settings_box_toplevel_unmap (GtkWidget       *widget,
+                                  GimpSettingsBox *box)
+{
+  gtk_dialog_response (GTK_DIALOG (box->editor_dialog),
+                       GTK_RESPONSE_CLOSE);
+}
+
+static void
+gimp_settings_box_manage_response (GtkWidget       *widget,
+                                   gint             response_id,
+                                   GimpSettingsBox *box)
+{
+  GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
+
+  if (toplevel)
+    g_signal_handlers_disconnect_by_func (toplevel,
+                                          gimp_settings_box_toplevel_unmap,
+                                          box);
+
+  gtk_widget_destroy (widget);
 }
 
 
