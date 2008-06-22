@@ -43,6 +43,15 @@
 #define GIMP_TAG_CACHE_FILE     ".tag-cache.xml"
 
 
+typedef struct _ParseData ParseData;
+
+struct _ParseData
+{
+  GArray               *records;
+  GimpTagCacheRecord    current_record;
+};
+
+
 static void    gimp_tag_cache_finalize          (GObject              *object);
 
 static gint64  gimp_tag_cache_get_memsize       (GimpObject           *object,
@@ -62,6 +71,30 @@ static void    gimp_tag_cache_tag_removed       (GimpTagged           *tagged,
                                                  GimpTag               tag,
                                                  GimpTagCache         *cache);
 
+static void    gimp_tag_cache_load_start_element(GMarkupParseContext *context,
+                                                  const gchar         *element_name,
+                                                  const gchar        **attribute_names,
+                                                  const gchar        **attribute_values,
+                                                  gpointer             user_data,
+                                                  GError             **error);
+static void    gimp_tag_cache_load_end_element  (GMarkupParseContext *context,
+                                                 const gchar         *element_name,
+                                                 gpointer             user_data,
+                                                 GError             **error);
+static void    gimp_tag_cache_load_text         (GMarkupParseContext *context,
+                                                 const gchar         *text,
+                                                 gsize                text_len,
+                                                 gpointer             user_data,
+                                                 GError             **error);
+static  void   gimp_tag_cache_load_error        (GMarkupParseContext *context,
+                                                 GError              *error,
+                                                 gpointer             user_data);
+
+static const gchar*  attribute_name_to_value    (const gchar  **attribute_names,
+                                                 const gchar  **attribute_values,
+                                                 const gchar   *name);
+
+static GQuark  gimp_tag_cache_get_error_domain  (void);
 
 
 G_DEFINE_TYPE (GimpTagCache, gimp_tag_cache, GIMP_TYPE_OBJECT)
@@ -157,7 +190,7 @@ gimp_tag_cache_new (Gimp       *gimp)
 
   cache->gimp                   = gimp;
   cache->records                = g_array_new (FALSE, FALSE, sizeof(GimpTagCacheRecord));
-  cache->tag_to_object          = g_hash_table_new (g_int_hash, g_int_equal);
+  cache->tag_to_object          = g_hash_table_new (g_direct_hash, g_direct_equal);
   cache->new_objects            = NULL;
 
   return cache;
@@ -186,6 +219,11 @@ gimp_tag_cache_object_add (GimpContainer       *container,
   gint                  i;
   gboolean              cache_hit = FALSE;
 
+  g_signal_connect (tagged, "tag-added",
+                    G_CALLBACK (gimp_tag_cache_tag_added), cache);
+  g_signal_connect (tagged, "tag-removed",
+                    G_CALLBACK (gimp_tag_cache_tag_removed), cache);
+
   identifier = gimp_tagged_get_identifier (tagged);
 
   if (identifier)
@@ -201,9 +239,13 @@ gimp_tag_cache_object_add (GimpContainer       *container,
               tag_iterator = rec->tags;
               while (tag_iterator)
                 {
+                  printf ("assigning cached tag: %s to %s\n",
+                          g_quark_to_string (GPOINTER_TO_UINT (tag_iterator->data)),
+                          identifier);
                   gimp_tagged_add_tag (tagged, GPOINTER_TO_UINT (tag_iterator->data));
                   tag_iterator = g_slist_next (tag_iterator);
                 }
+              rec->referenced = TRUE;
               cache_hit = TRUE;
               break;
             }
@@ -214,11 +256,6 @@ gimp_tag_cache_object_add (GimpContainer       *container,
   {
       cache->new_objects = g_slist_prepend (cache->new_objects, tagged);
   }
-
-  g_signal_connect (tagged, "tag-added",
-                    G_CALLBACK (gimp_tag_cache_tag_added), cache);
-  g_signal_connect (tagged, "tag-removed",
-                    G_CALLBACK (gimp_tag_cache_tag_removed), cache);
 }
 
 static void
@@ -258,6 +295,15 @@ gimp_tag_cache_tag_added (GimpTagged           *tagged,
                           GimpTag               tag,
                           GimpTagCache         *cache)
 {
+  GSList *object_list = g_hash_table_lookup (cache->tag_to_object, GUINT_TO_POINTER (tag));
+  if (! g_slist_find (object_list, GIMP_TAGGED (tagged)))
+    {
+      printf ("backlink: tag %s => %s\n", g_quark_to_string (tag),
+              gimp_tagged_get_identifier (tagged));
+      object_list = g_slist_append (object_list, GIMP_TAGGED (tagged));
+      g_hash_table_insert (cache->tag_to_object, GUINT_TO_POINTER (tag), object_list);
+    }
+
   printf ("tag added\n");
 }
 
@@ -328,11 +374,14 @@ gimp_tag_cache_save (GimpTagCache      *cache)
       GimpTagCacheRecord *cache_rec = (GimpTagCacheRecord*) iterator->data;
       GSList             *tag_iterator;
 
-      g_string_append_printf (buf, "\t<resource identifier=\"%s\">\n", g_quark_to_string (cache_rec->identifier));
+      g_string_append_printf (buf, "\t<resource identifier=\"%s\">\n",
+                              g_quark_to_string (cache_rec->identifier));
       tag_iterator = cache_rec->tags;
       while (tag_iterator)
         {
-          g_string_append_printf (buf, "\t\t<tag>%s</tag>\n", g_quark_to_string (GPOINTER_TO_UINT (tag_iterator->data)));
+          g_string_append_printf (buf, "\t\t<tag>%s</tag>\n",
+                                  g_quark_to_string (GPOINTER_TO_UINT (tag_iterator->data)));
+          tag_iterator = g_slist_next (tag_iterator);
         }
       g_string_append (buf, "\t</resource>\n");
       iterator = g_slist_next (iterator);
@@ -365,4 +414,169 @@ gimp_tag_cache_save (GimpTagCache      *cache)
 void
 gimp_tag_cache_load (GimpTagCache      *cache)
 {
+  gchar                *filename;
+  gchar                *buffer;
+  gsize                 length;
+  GError               *error;
+  GMarkupParser         markup_parser;
+  GMarkupParseContext  *parse_context;
+  ParseData             parse_data;
+
+  /* clear any previous records */
+  cache->records = g_array_set_size (cache->records, 0);
+
+  filename = g_build_filename (gimp_directory (), GIMP_TAG_CACHE_FILE, NULL);
+  printf ("reading tag cache to %s\n", filename);
+  error = NULL;
+  if (!g_file_get_contents (filename, &buffer, &length, &error))
+    {
+      printf ("Error while reading tag cache: %s\n", error->message);
+      g_error_free (error);
+      g_free (filename);
+      return;
+    }
+  g_free (filename);
+
+
+  parse_data.records = g_array_new (FALSE, FALSE, sizeof (GimpTagCacheRecord));
+  memset (&parse_data.current_record, 0, sizeof (GimpTagCacheRecord));
+
+  markup_parser.start_element = gimp_tag_cache_load_start_element;
+  markup_parser.end_element = gimp_tag_cache_load_end_element;
+  markup_parser.text = gimp_tag_cache_load_text;
+  markup_parser.passthrough = NULL;
+  markup_parser.error = gimp_tag_cache_load_error;
+  parse_context = g_markup_parse_context_new (&markup_parser, 0,
+                                              &parse_data, NULL);
+  if (! g_markup_parse_context_parse (parse_context, buffer, length, &error))
+    {
+      printf ("Failed to parse tag cache.\n");
+    }
+  else
+    {
+      cache->records = g_array_append_vals (cache->records,
+                                            parse_data.records->data,
+                                            parse_data.records->len);
+    }
+
+  g_array_free (parse_data.records, TRUE);
+  g_free (buffer);
 }
+
+static  void
+gimp_tag_cache_load_start_element  (GMarkupParseContext *context,
+                                    const gchar         *element_name,
+                                    const gchar        **attribute_names,
+                                    const gchar        **attribute_values,
+                                    gpointer             user_data,
+                                    GError             **error)
+{
+  ParseData            *parse_data = (ParseData*) user_data;
+
+  if (! strcmp (element_name, "resource"))
+    {
+      const gchar      *identifier;
+
+      identifier = attribute_name_to_value (attribute_names, attribute_values,
+                                            "identifier");
+
+      if (! identifier)
+        {
+          GQuark domain;
+          g_set_error (error, domain, 1001, "Resource tag does not contain required attribute identifier.");
+          return;
+        }
+
+      printf ("loading element %s\n", identifier);
+
+      memset (&parse_data->current_record, 0, sizeof (GimpTagCacheRecord));
+
+      parse_data->current_record.identifier = g_quark_from_string (identifier);
+    }
+}
+
+static void
+gimp_tag_cache_load_end_element (GMarkupParseContext *context,
+                                 const gchar         *element_name,
+                                 gpointer             user_data,
+                                 GError             **error)
+{
+  ParseData            *parse_data = (ParseData*) user_data;
+
+  if (! strcmp (element_name, "resource"))
+    {
+      parse_data->records = g_array_append_val (parse_data->records,
+                                                parse_data->current_record);
+      memset (&parse_data->current_record, 0, sizeof (GimpTagCacheRecord));
+    }
+}
+
+static void
+gimp_tag_cache_load_text (GMarkupParseContext *context,
+                          const gchar         *text,
+                          gsize                text_len,
+                          gpointer             user_data,
+                          GError             **error)
+{
+  ParseData            *parse_data = (ParseData*) user_data;
+  const gchar          *current_element;
+  gchar                 buffer[2048];
+  GQuark                tag_quark;
+
+  current_element = g_markup_parse_context_get_element (context);
+  if (current_element
+      && ! strcmp (current_element, "tag"))
+    {
+      if (text_len >= sizeof (buffer))
+        {
+          g_set_error (error, gimp_tag_cache_get_error_domain (), 1002,
+                       "Tag value is too long.");
+          return;
+        }
+
+      memcpy (buffer, text, text_len);
+      buffer[text_len] = '\0';
+
+      printf ("assigning tag %s to %s\n", buffer,
+              g_quark_to_string (parse_data->current_record.identifier));
+
+      tag_quark = g_quark_from_string (buffer);
+      parse_data->current_record.tags = g_slist_append (parse_data->current_record.tags,
+                                                        GUINT_TO_POINTER (tag_quark));
+    }
+}
+
+static  void
+gimp_tag_cache_load_error (GMarkupParseContext *context,
+                           GError              *error,
+                           gpointer             user_data)
+{
+  printf ("Tag cache parse error: %s\n", error->message);
+}
+
+static const gchar*
+attribute_name_to_value (const gchar  **attribute_names,
+                         const gchar  **attribute_values,
+                         const gchar   *name)
+{
+  while (*attribute_names)
+    {
+      if (! strcmp (*attribute_names, name))
+        {
+          return *attribute_values;
+        }
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  return NULL;
+}
+
+static GQuark
+gimp_tag_cache_get_error_domain (void)
+{
+  return g_quark_from_static_string ("gimp-tag-cache-error-quark");
+}
+
+
