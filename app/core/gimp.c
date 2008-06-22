@@ -263,10 +263,6 @@ gimp_dispose (GObject *object)
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
 
-  /* cache must be saved before any tagged objects
-   * are destroyed. */
-  gimp_tag_cache_save (gimp->tag_cache);
-
   if (gimp->brush_factory)
     gimp_data_factory_data_free (gimp->brush_factory);
 
@@ -354,6 +350,12 @@ gimp_finalize (GObject *object)
     {
       g_object_unref (gimp->fonts);
       gimp->fonts = NULL;
+    }
+
+  if (gimp->tag_cache)
+    {
+      g_object_unref (gimp->tag_cache);
+      gimp->tag_cache = NULL;
     }
 
   if (gimp->named_buffers)
@@ -646,6 +648,8 @@ gimp_real_exit (Gimp     *gimp,
 
   gimp_plug_in_manager_exit (gimp->plug_in_manager);
   gimp_modules_unload (gimp);
+
+  gimp_tag_cache_save (gimp->tag_cache);
 
   gimp_data_factory_data_save (gimp->brush_factory);
   gimp_data_factory_data_save (gimp->pattern_factory);

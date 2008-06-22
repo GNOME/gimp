@@ -1,5 +1,9 @@
 2008-06-22  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/core/gimp.c: save and uninitialize tag cache properly.
+
+2008-06-22  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/core/gimptagcache.c: added tag cache loading from file
 	functionality. Improved tag assignment to objects.
 
