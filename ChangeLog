@@ -1,3 +1,9 @@
+2008-06-23  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpfreeselecttool.c
+	(gimp_free_select_tool_modifier_key): Make switching selection
+	mode through modifier keys work again.
+
 2008-06-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/Makefile.am

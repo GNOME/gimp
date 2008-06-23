@@ -1451,16 +1451,16 @@ gimp_free_select_tool_modifier_key (GimpTool        *tool,
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
   Private      *priv      = GET_PRIVATE (tool);
 
-  if (tool->display != display)
-    return;
+  if (tool->display == display)
+    {
+      gimp_draw_tool_pause (draw_tool);
 
-  gimp_draw_tool_pause (draw_tool);
+      priv->constrain_angle = state & GDK_CONTROL_MASK ? TRUE : FALSE;
 
-  priv->constrain_angle = state & GDK_CONTROL_MASK ? TRUE : FALSE;
+      priv->supress_handles = state & GDK_SHIFT_MASK   ? TRUE : FALSE;
 
-  priv->supress_handles = state & GDK_SHIFT_MASK   ? TRUE : FALSE;
-
-  gimp_draw_tool_resume (draw_tool);
+      gimp_draw_tool_resume (draw_tool);
+    }
 
   GIMP_TOOL_CLASS (parent_class)->modifier_key (tool,
                                                 key,
