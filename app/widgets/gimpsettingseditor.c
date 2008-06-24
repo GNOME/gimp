@@ -63,6 +63,11 @@ static void      gimp_settings_editor_get_property  (GObject           *object,
                                                      GValue            *value,
                                                      GParamSpec        *pspec);
 
+static gboolean
+            gimp_settings_editor_row_separator_func (GtkTreeModel      *model,
+                                                     GtkTreeIter       *iter,
+                                                     gpointer           data);
+
 
 G_DEFINE_TYPE (GimpSettingsEditor, gimp_settings_editor, GTK_TYPE_VBOX)
 
@@ -127,6 +132,9 @@ gimp_settings_editor_constructor (GType                  type,
   view = gimp_container_tree_view_new (editor->container,
                                        gimp_get_user_context (editor->gimp),
                                        16, 0);
+  gtk_tree_view_set_row_separator_func (GIMP_CONTAINER_TREE_VIEW (view)->view,
+                                        gimp_settings_editor_row_separator_func,
+                                        view, NULL);
   gtk_container_add (GTK_CONTAINER (editor), view);
   gtk_widget_show (view);
 
@@ -207,6 +215,22 @@ gimp_settings_editor_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static gboolean
+gimp_settings_editor_row_separator_func (GtkTreeModel *model,
+                                         GtkTreeIter  *iter,
+                                         gpointer      data)
+{
+  GimpContainerTreeView *view = GIMP_CONTAINER_TREE_VIEW (data);
+  gchar                 *name = NULL;
+
+  gtk_tree_model_get (model, iter,
+                      view->model_column_name, &name,
+                      -1);
+  g_free (name);
+
+  return name == NULL;
 }
 
 

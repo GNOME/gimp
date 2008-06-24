@@ -459,13 +459,9 @@ gimp_settings_box_row_separator_func (GtkTreeModel *model,
 {
   gchar *name = NULL;
 
-#ifdef __GNUC__
-#warning FIXME: dont use magic model column
-#endif
   gtk_tree_model_get (model, iter,
-                      1, &name,
+                      GIMP_CONTAINER_COMBO_BOX_COLUMN_NAME, &name,
                       -1);
-
   g_free (name);
 
   return name == NULL;

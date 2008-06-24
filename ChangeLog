@@ -1,3 +1,14 @@
+2008-06-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainercombobox.[ch]: made the model column
+	enum public and namespaced it.
+
+	* app/widgets/gimpsettingsbox.c: use the enum value instead of a
+	magic number.
+
+	* app/widgets/gimpsettingseditor.c: add a separator between
+	recently used settings and favorites.
+
 2008-06-23  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpfreeselecttool.c
