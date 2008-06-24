@@ -1,5 +1,14 @@
 2008-06-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpsettingseditor.[ch]: enable renaming the
+	settings objects by editing them directly in the list (renaming a
+	recent setting moves it to the favorites section). Enable deleting
+	settings. None of these changes is saved yet (need to trigger a
+	save by confirming the tool or storing the current settings as
+	favorite).
+
+2008-06-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpitemtreeview.c (gimp_item_tree_view_name_edited):
 	don't dereference a NULL GError.
 

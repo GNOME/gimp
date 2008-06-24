@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -31,10 +33,12 @@
 
 #include "core/gimp.h"
 #include "core/gimplist.h"
+#include "core/gimpviewable.h"
 
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
 #include "gimpsettingseditor.h"
+#include "gimpviewrenderer.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -50,23 +54,33 @@ enum
 };
 
 
-static GObject * gimp_settings_editor_constructor   (GType              type,
-                                                     guint              n_params,
+static GObject * gimp_settings_editor_constructor   (GType                type,
+                                                     guint                n_params,
                                                      GObjectConstructParam *params);
-static void      gimp_settings_editor_finalize      (GObject           *object);
-static void      gimp_settings_editor_set_property  (GObject           *object,
-                                                     guint              property_id,
-                                                     const GValue      *value,
-                                                     GParamSpec        *pspec);
-static void      gimp_settings_editor_get_property  (GObject           *object,
-                                                     guint              property_id,
-                                                     GValue            *value,
-                                                     GParamSpec        *pspec);
+static void      gimp_settings_editor_finalize      (GObject             *object);
+static void      gimp_settings_editor_set_property  (GObject             *object,
+                                                     guint                property_id,
+                                                     const GValue        *value,
+                                                     GParamSpec          *pspec);
+static void      gimp_settings_editor_get_property  (GObject             *object,
+                                                     guint                property_id,
+                                                     GValue              *value,
+                                                     GParamSpec          *pspec);
 
 static gboolean
-            gimp_settings_editor_row_separator_func (GtkTreeModel      *model,
-                                                     GtkTreeIter       *iter,
-                                                     gpointer           data);
+            gimp_settings_editor_row_separator_func (GtkTreeModel        *model,
+                                                     GtkTreeIter         *iter,
+                                                     gpointer             data);
+static void gimp_settings_editor_select_item        (GimpContainerView   *view,
+                                                     GimpViewable        *viewable,
+                                                     gpointer             insert_data,
+                                                     GimpSettingsEditor  *editor);
+static void gimp_settings_editor_delete_clicked     (GtkWidget           *widget,
+                                                     GimpSettingsEditor  *editor);
+static void gimp_settings_editor_name_edited        (GtkCellRendererText *cell,
+                                                     const gchar         *path_str,
+                                                     const gchar         *new_name,
+                                                     GimpSettingsEditor  *editor);
 
 
 G_DEFINE_TYPE (GimpSettingsEditor, gimp_settings_editor, GTK_TYPE_VBOX)
@@ -117,9 +131,9 @@ gimp_settings_editor_constructor (GType                  type,
                                   guint                  n_params,
                                   GObjectConstructParam *params)
 {
-  GObject            *object;
-  GimpSettingsEditor *editor;
-  GtkWidget          *view;
+  GObject               *object;
+  GimpSettingsEditor    *editor;
+  GimpContainerTreeView *tree_view;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -129,14 +143,42 @@ gimp_settings_editor_constructor (GType                  type,
   g_assert (GIMP_IS_CONFIG (editor->config));
   g_assert (GIMP_IS_CONTAINER (editor->container));
 
-  view = gimp_container_tree_view_new (editor->container,
-                                       gimp_get_user_context (editor->gimp),
-                                       16, 0);
-  gtk_tree_view_set_row_separator_func (GIMP_CONTAINER_TREE_VIEW (view)->view,
+  editor->view = gimp_container_tree_view_new (editor->container,
+                                               gimp_get_user_context (editor->gimp),
+                                               16, 0);
+  gtk_container_add (GTK_CONTAINER (editor), editor->view);
+  gtk_widget_show (editor->view);
+
+  tree_view = GIMP_CONTAINER_TREE_VIEW (editor->view);
+
+  gtk_tree_view_set_row_separator_func (tree_view->view,
                                         gimp_settings_editor_row_separator_func,
-                                        view, NULL);
-  gtk_container_add (GTK_CONTAINER (editor), view);
-  gtk_widget_show (view);
+                                        editor->view, NULL);
+
+  g_signal_connect (tree_view, "select-item",
+                    G_CALLBACK (gimp_settings_editor_select_item),
+                    editor);
+
+  tree_view->name_cell->mode = GTK_CELL_RENDERER_MODE_EDITABLE;
+  GTK_CELL_RENDERER_TEXT (tree_view->name_cell)->editable = TRUE;
+
+  tree_view->editable_cells = g_list_prepend (tree_view->editable_cells,
+                                              tree_view->name_cell);
+
+  g_signal_connect (tree_view->name_cell, "edited",
+                    G_CALLBACK (gimp_settings_editor_name_edited),
+                    editor);
+
+  editor->delete_button =
+    gimp_editor_add_button (GIMP_EDITOR (tree_view),
+                            GTK_STOCK_DELETE,
+                            _("Delete the selected setting"),
+                            NULL,
+                            G_CALLBACK (gimp_settings_editor_delete_clicked),
+                            NULL,
+                            editor);
+
+  gtk_widget_set_sensitive (editor->delete_button, FALSE);
 
   return object;
 }
@@ -231,6 +273,90 @@ gimp_settings_editor_row_separator_func (GtkTreeModel *model,
   g_free (name);
 
   return name == NULL;
+}
+
+static void
+gimp_settings_editor_select_item (GimpContainerView  *view,
+                                  GimpViewable       *viewable,
+                                  gpointer            insert_data,
+                                  GimpSettingsEditor *editor)
+{
+  editor->selected_setting = G_OBJECT (viewable);
+
+  gtk_widget_set_sensitive (editor->delete_button,
+                            editor->selected_setting != NULL);
+}
+
+static void
+gimp_settings_editor_delete_clicked (GtkWidget          *widget,
+                                     GimpSettingsEditor *editor)
+{
+  if (editor->selected_setting)
+    gimp_container_remove (editor->container,
+                           GIMP_OBJECT (editor->selected_setting));
+}
+
+static void
+gimp_settings_editor_name_edited (GtkCellRendererText *cell,
+                                  const gchar         *path_str,
+                                  const gchar         *new_name,
+                                  GimpSettingsEditor  *editor)
+{
+  GimpContainerTreeView *tree_view;
+  GtkTreePath           *path;
+  GtkTreeIter            iter;
+
+  tree_view = GIMP_CONTAINER_TREE_VIEW (editor->view);
+
+  path = gtk_tree_path_new_from_string (path_str);
+
+  if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
+    {
+      GimpViewRenderer *renderer;
+      GimpObject       *object;
+      const gchar      *old_name;
+      gchar            *name;
+
+      gtk_tree_model_get (tree_view->model, &iter,
+                          tree_view->model_column_renderer, &renderer,
+                          -1);
+
+      object = GIMP_OBJECT (renderer->viewable);
+
+      old_name = gimp_object_get_name (object);
+
+      if (! old_name) old_name = "";
+      if (! new_name) new_name = "";
+
+      name = g_strstrip (g_strdup (new_name));
+
+      if (strlen (name) && strcmp (old_name, name))
+        {
+          guint t;
+
+          g_object_get (object, "time", &t, NULL);
+
+          if (t > 0)
+            g_object_set (object, "time", 0, NULL);
+
+          /*  set name after time so the object is reordered correctly  */
+          gimp_object_take_name (object, name);
+        }
+      else
+        {
+          g_free (name);
+
+          name = gimp_viewable_get_description (renderer->viewable, NULL);
+          gtk_list_store_set (GTK_LIST_STORE (tree_view->model), &iter,
+                              tree_view->model_column_name, name,
+                              -1);
+          g_free (name);
+        }
+
+      g_object_unref (renderer);
+    }
+
+  gtk_tree_path_free (path);
 }
 
 

@@ -40,6 +40,10 @@ struct _GimpSettingsEditor
   Gimp          *gimp;
   GObject       *config;
   GimpContainer *container;
+  GObject       *selected_setting;
+
+  GtkWidget     *view;
+  GtkWidget     *delete_button;
 };
 
 struct _GimpSettingsEditorClass
