@@ -186,6 +186,7 @@ gimp_settings_box_constructor (GType                  type,
   GObject         *object;
   GimpSettingsBox *box;
   GtkWidget       *button;
+  GtkWidget       *image;
   GtkWidget       *arrow;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
@@ -218,6 +219,21 @@ gimp_settings_box_constructor (GType                  type,
 
   button = gtk_button_new ();
   GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
+  gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  image = gtk_image_new_from_stock (GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+
+  gimp_help_set_help_data (button, _("Add settings to favorites."), NULL);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (gimp_settings_box_favorite_activate),
+                    box);
+
+  button = gtk_button_new ();
+  GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
@@ -235,11 +251,6 @@ gimp_settings_box_constructor (GType                  type,
   box->menu = gtk_menu_new ();
   gtk_menu_attach_to_widget (GTK_MENU (box->menu), button, NULL);
 
-  gimp_settings_box_menu_item_add (box,
-                                   GTK_STOCK_ADD,
-                                   _("Add Settings to _Favorites..."),
-                                   G_CALLBACK (gimp_settings_box_favorite_activate));
-
   box->import_item =
     gimp_settings_box_menu_item_add (box,
                                      GTK_STOCK_OPEN,
@@ -251,6 +262,8 @@ gimp_settings_box_constructor (GType                  type,
                                      GTK_STOCK_SAVE,
                                      _("_Export Settings to File..."),
                                      G_CALLBACK (gimp_settings_box_export_activate));
+
+  gimp_settings_box_menu_item_add (box, NULL, NULL, NULL);
 
   gimp_settings_box_menu_item_add (box,
                                    GTK_STOCK_EDIT,
@@ -436,18 +449,26 @@ gimp_settings_box_menu_item_add (GimpSettingsBox *box,
                                  GCallback        callback)
 {
   GtkWidget *item;
-  GtkWidget *image;
 
-  item = gtk_image_menu_item_new_with_mnemonic (label);
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_MENU);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
+  if (label)
+    {
+      GtkWidget *image;
+
+      item = gtk_image_menu_item_new_with_mnemonic (label);
+      image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_MENU);
+      gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
+
+      g_signal_connect (item, "activate",
+                        callback,
+                        box);
+    }
+  else
+    {
+      item = gtk_separator_menu_item_new ();
+    }
 
   gtk_menu_shell_append (GTK_MENU_SHELL (box->menu), item);
   gtk_widget_show (item);
-
-  g_signal_connect (item, "activate",
-                    callback,
-                    box);
 
   return item;
 }

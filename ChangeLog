@@ -1,3 +1,10 @@
+2008-06-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpsettingsbox.c (gimp_settings_box_constructor):
+	move "Add to favorites" out of the menu into a small button
+	showing a '+' icon. Add a separator between the import/export and
+	the manage menu items.
+
 2008-06-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpsettingseditor.[ch]: enable renaming the
