@@ -2,17 +2,17 @@
 # gimp-script-fu translation to Catalan.
 # Copyright © 2000, 2001, 2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
 #
-# Softcatala <gnome@llistes.softcatala.org>, 2000-2007.
-# Quim Perez i Noguer <noguer a osona.com>, 2005-2007.
+# Softcatala <gimp a llistes.softcatala.org>, 2000-2008.
+# Quim Perez i Noguer <noguer a gmail.com>, 2005-2008.
 # Xavier Conde Rueda <xavi.conde a gmail.com>, 2004-2007.
 # Jordi Jover, jordijn@softcatala.org, 2002.
-# Joaquim Perez <noguer@gmail.com>, 2007, 2008.
+# Joaquim Perez <noguer@gmail.com>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-06 21:46+0100\n"
-"PO-Revision-Date: 2008-02-29 19:09+0100\n"
+"POT-Creation-Date: 2008-06-24 19:26+0200\n"
+"PO-Revision-Date: 2008-05-22 19:27+0200\n"
 "Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -112,7 +112,11 @@ msgstr "Funció de selecció del degradat"
 msgid "Script-Fu Brush Selection"
 msgstr "Funció de selecció del pinzell"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:658
+#: ../plug-ins/script-fu/script-fu-scripts.c:148
+msgid "Too few arguments to 'script-fu-register' call"
+msgstr "Falten paràmetres per a fer la crida al «script-fu-register»"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:667
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -172,102 +176,50 @@ msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:307
-msgid "_Buttons"
-msgstr "_Botons"
-
-#: ../plug-ins/script-fu/script-fu.c:309
-msgid "_Logos"
-msgstr "_Logotips i rètols"
-
-#: ../plug-ins/script-fu/script-fu.c:311
-msgid "_Misc"
-msgstr "_Varis"
-
-#: ../plug-ins/script-fu/script-fu.c:313
-msgid "_Patterns"
-msgstr "_Patrons"
-
-#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:317
-msgid "_Utilities"
-msgstr "_Utilitats"
+#: ../plug-ins/script-fu/script-fu.c:310
+msgid "_Buttons"
+msgstr "_Botons"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: ../plug-ins/script-fu/script-fu.c:312
+msgid "_Logos"
+msgstr "_Logotips i rètols"
+
+#: ../plug-ins/script-fu/script-fu.c:314
+msgid "_Patterns"
+msgstr "_Patrons"
+
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Web Page Themes"
 msgstr "_Temes de pàgina web"
 
-#: ../plug-ins/script-fu/script-fu.c:321
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Alien Glow"
 msgstr "Lluentor estil _Àlien"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Beveled Pattern"
 msgstr "Patró amb _relleu"
 
-#: ../plug-ins/script-fu/script-fu.c:325
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Classic.Gimp.Org"
 msgstr "_Clàssic.Gimp.org"
 
-#: ../plug-ins/script-fu/script-fu.c:328
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
 msgstr "Capa transparent a _logotip"
 
-#: ../plug-ins/script-fu/script-fu.c:330
-msgid "An_imation"
-msgstr "An_imació"
-
-#: ../plug-ins/script-fu/script-fu.c:332
-msgid "_Animators"
-msgstr "_Animadors"
-
-#: ../plug-ins/script-fu/script-fu.c:334
-msgid "_Artistic"
-msgstr "_Artístic"
-
-#: ../plug-ins/script-fu/script-fu.c:336
-msgid "_Blur"
-msgstr "_Difumina"
-
-#: ../plug-ins/script-fu/script-fu.c:338
-msgid "_Decor"
-msgstr "_Decora"
-
-#: ../plug-ins/script-fu/script-fu.c:340
-msgid "_Effects"
-msgstr "_Efectes"
-
-#: ../plug-ins/script-fu/script-fu.c:342
-msgid "En_hance"
-msgstr "_Millora"
-
-#: ../plug-ins/script-fu/script-fu.c:344
-msgid "_Light and Shadow"
-msgstr "_Llums i ombres"
-
-#: ../plug-ins/script-fu/script-fu.c:346
-msgid "S_hadow"
-msgstr "_Ombra"
-
-#: ../plug-ins/script-fu/script-fu.c:348
-msgid "_Render"
-msgstr "_Compon"
-
-#: ../plug-ins/script-fu/script-fu.c:350
-msgid "_Alchemy"
-msgstr "_Alquímia"
-
-#: ../plug-ins/script-fu/script-fu.c:353
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Torna a carregar totes les funcions disponibles"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Refresh Scripts"
 msgstr "_Actualitza les funcions"
 
-#: ../plug-ins/script-fu/script-fu.c:381
+#: ../plug-ins/script-fu/script-fu.c:357
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -476,7 +428,6 @@ msgstr "Canonades 3_D..."
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:1
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
@@ -1755,7 +1706,6 @@ msgid "Pattern (text)"
 msgstr "Patró (text)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:15
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "Ombra"
 
@@ -2389,26 +2339,6 @@ msgstr "Crea un logotip emprant un efecte de text en moviment"
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
 msgid "Speed Text..."
 msgstr "Text en moviment..."
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:2
-msgid "Create a simple sphere with a drop shadow"
-msgstr "Crea una esfera simple amb una ombra"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:3
-msgid "Lighting (degrees)"
-msgstr "Il·luminació (graus)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:4
-msgid "Radius (pixels)"
-msgstr "Radi (píxels)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:6
-msgid "Sphere color"
-msgstr "Color de l'esfera"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:7
-msgid "_Sphere..."
-msgstr "_Esfera..."
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Create an animation by mapping the current image onto a spinning sphere"
