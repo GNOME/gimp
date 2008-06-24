@@ -75,6 +75,10 @@ static void gimp_settings_editor_select_item        (GimpContainerView   *view,
                                                      GimpViewable        *viewable,
                                                      gpointer             insert_data,
                                                      GimpSettingsEditor  *editor);
+static void gimp_settings_editor_import_clicked     (GtkWidget           *widget,
+                                                     GimpSettingsEditor  *editor);
+static void gimp_settings_editor_export_clicked     (GtkWidget           *widget,
+                                                     GimpSettingsEditor  *editor);
 static void gimp_settings_editor_delete_clicked     (GtkWidget           *widget,
                                                      GimpSettingsEditor  *editor);
 static void gimp_settings_editor_name_edited        (GtkCellRendererText *cell,
@@ -146,6 +150,7 @@ gimp_settings_editor_constructor (GType                  type,
   editor->view = gimp_container_tree_view_new (editor->container,
                                                gimp_get_user_context (editor->gimp),
                                                16, 0);
+  gtk_widget_set_size_request (editor->view, 200, 200);
   gtk_container_add (GTK_CONTAINER (editor), editor->view);
   gtk_widget_show (editor->view);
 
@@ -168,6 +173,24 @@ gimp_settings_editor_constructor (GType                  type,
   g_signal_connect (tree_view->name_cell, "edited",
                     G_CALLBACK (gimp_settings_editor_name_edited),
                     editor);
+
+  editor->import_button =
+    gimp_editor_add_button (GIMP_EDITOR (tree_view),
+                            GTK_STOCK_OPEN,
+                            _("Import setting from a file."),
+                            NULL,
+                            G_CALLBACK (gimp_settings_editor_import_clicked),
+                            NULL,
+                            editor);
+
+  editor->export_button =
+    gimp_editor_add_button (GIMP_EDITOR (tree_view),
+                            GTK_STOCK_SAVE,
+                            _("Export the selected setting to a file."),
+                            NULL,
+                            G_CALLBACK (gimp_settings_editor_export_clicked),
+                            NULL,
+                            editor);
 
   editor->delete_button =
     gimp_editor_add_button (GIMP_EDITOR (tree_view),
@@ -283,8 +306,22 @@ gimp_settings_editor_select_item (GimpContainerView  *view,
 {
   editor->selected_setting = G_OBJECT (viewable);
 
+  gtk_widget_set_sensitive (editor->export_button,
+                            editor->selected_setting != NULL);
   gtk_widget_set_sensitive (editor->delete_button,
                             editor->selected_setting != NULL);
+}
+
+static void
+gimp_settings_editor_import_clicked (GtkWidget          *widget,
+                                     GimpSettingsEditor *editor)
+{
+}
+
+static void
+gimp_settings_editor_export_clicked (GtkWidget          *widget,
+                                     GimpSettingsEditor *editor)
+{
 }
 
 static void

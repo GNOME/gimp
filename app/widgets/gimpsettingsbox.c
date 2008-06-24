@@ -602,7 +602,7 @@ gimp_settings_box_manage_activate (GtkWidget       *widget,
   editor = gimp_settings_editor_new (box->gimp,
                                      box->config,
                                      box->container);
-  gtk_container_set_border_width (GTK_CONTAINER (editor), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (box->editor_dialog)->vbox),
                      editor);
   gtk_widget_show (editor);

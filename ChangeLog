@@ -1,5 +1,12 @@
 2008-06-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpsettingseditor.[ch]: add dummy import and export
+	buttons, give the list a minimum size.
+
+	* app/widgets/gimpsettingsbox.c: use the correct dialog border.
+
+2008-06-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpsettingsbox.c (gimp_settings_box_constructor):
 	tweak buttons to look the same and have no spacing between them.
 

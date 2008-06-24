@@ -43,6 +43,8 @@ struct _GimpSettingsEditor
   GObject       *selected_setting;
 
   GtkWidget     *view;
+  GtkWidget     *import_button;
+  GtkWidget     *export_button;
   GtkWidget     *delete_button;
 };
 
