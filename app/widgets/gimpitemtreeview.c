@@ -874,10 +874,13 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
                               -1);
           g_free (name);
 
-          gimp_message (view->image->gimp, G_OBJECT (view),
-                        GIMP_MESSAGE_WARNING,
-                        "%s", error->message);
-          g_clear_error (&error);
+          if (error)
+            {
+              gimp_message (view->image->gimp, G_OBJECT (view),
+                            GIMP_MESSAGE_WARNING,
+                            "%s", error->message);
+              g_clear_error (&error);
+            }
         }
 
       g_object_unref (renderer);

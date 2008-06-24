@@ -1,5 +1,10 @@
 2008-06-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpitemtreeview.c (gimp_item_tree_view_name_edited):
+	don't dereference a NULL GError.
+
+2008-06-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainercombobox.[ch]: made the model column
 	enum public and namespaced it.
 
