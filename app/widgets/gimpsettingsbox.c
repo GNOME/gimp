@@ -185,6 +185,7 @@ gimp_settings_box_constructor (GType                  type,
 {
   GObject         *object;
   GimpSettingsBox *box;
+  GtkWidget       *hbox2;
   GtkWidget       *button;
   GtkWidget       *image;
   GtkWidget       *arrow;
@@ -217,9 +218,14 @@ gimp_settings_box_constructor (GType                  type,
                           G_CALLBACK (gimp_settings_box_setting_selected),
                           box);
 
+  hbox2 = gtk_hbox_new (TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (box), hbox2, FALSE, FALSE, 0);
+  gtk_widget_show (hbox2);
+
   button = gtk_button_new ();
   GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
-  gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+  gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   image = gtk_image_new_from_stock (GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
@@ -235,7 +241,7 @@ gimp_settings_box_constructor (GType                  type,
   button = gtk_button_new ();
   GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_FOCUS);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-  gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   arrow = gtk_image_new_from_stock (GIMP_STOCK_MENU_LEFT, GTK_ICON_SIZE_MENU);

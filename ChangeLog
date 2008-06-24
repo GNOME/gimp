@@ -1,6 +1,11 @@
 2008-06-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpsettingsbox.c (gimp_settings_box_constructor):
+	tweak buttons to look the same and have no spacing between them.
+
+2008-06-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpsettingsbox.c (gimp_settings_box_constructor):
 	move "Add to favorites" out of the menu into a small button
 	showing a '+' icon. Add a separator between the import/export and
 	the manage menu items.
