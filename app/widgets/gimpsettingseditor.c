@@ -329,8 +329,34 @@ gimp_settings_editor_delete_clicked (GtkWidget          *widget,
                                      GimpSettingsEditor *editor)
 {
   if (editor->selected_setting)
-    gimp_container_remove (editor->container,
-                           GIMP_OBJECT (editor->selected_setting));
+    {
+      GimpObject *new = NULL;
+      gint        index;
+
+      index = gimp_container_get_child_index (editor->container,
+                                              GIMP_OBJECT (editor->selected_setting));
+
+      if (index != -1)
+        {
+          new = gimp_container_get_child_by_index (editor->container,
+                                                   index + 1);
+
+          if (! new && index > 0)
+            new = gimp_container_get_child_by_index (editor->container,
+                                                     index - 1);
+
+          /*  don't select the separator  */
+          if (new && ! gimp_object_get_name (new))
+            new = NULL;
+        }
+
+      gimp_container_remove (editor->container,
+                             GIMP_OBJECT (editor->selected_setting));
+
+      if (new)
+        gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
+                                         GIMP_VIEWABLE (new));
+    }
 }
 
 static void

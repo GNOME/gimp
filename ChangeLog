@@ -1,5 +1,11 @@
 2008-06-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpsettingseditor.c
+	(gimp_settings_editor_delete_clicked): select a neighboring item
+	after deleting the selected one.
+
+2008-06-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpsettingseditor.[ch]: add dummy import and export
 	buttons, give the list a minimum size.
 
