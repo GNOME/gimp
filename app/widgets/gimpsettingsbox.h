@@ -41,20 +41,29 @@ struct _GimpSettingsBox
   GtkWidget     *menu;
   GtkWidget     *import_item;
   GtkWidget     *export_item;
+  GtkWidget     *file_dialog;
   GtkWidget     *editor_dialog;
 
   Gimp          *gimp;
   GObject       *config;
   GimpContainer *container;
   gchar         *filename;
+
+  gchar         *import_dialog_title;
+  gchar         *export_dialog_title;
+  gchar         *file_dialog_help_id;
+  gchar         *default_folder;
+  gchar         *last_filename;
 };
 
 struct _GimpSettingsBoxClass
 {
   GtkHBoxClass  parent_class;
 
-  void (* import) (GimpSettingsBox *box);
-  void (* export) (GimpSettingsBox *box);
+  void (* import) (GimpSettingsBox *box,
+                   const gchar     *filename);
+  void (* export) (GimpSettingsBox *box,
+                   const gchar     *filename);
 };
 
 
@@ -63,7 +72,12 @@ GType       gimp_settings_box_get_type    (void) G_GNUC_CONST;
 GtkWidget * gimp_settings_box_new         (Gimp            *gimp,
                                            GObject         *config,
                                            GimpContainer   *container,
-                                           const gchar     *filename);
+                                           const gchar     *filename,
+                                           const gchar     *import_dialog_title,
+                                           const gchar     *export_dialog_title,
+                                           const gchar     *file_dialog_help_id,
+                                           const gchar     *default_folder,
+                                           const gchar     *last_filename);
 
 void        gimp_settings_box_add_current (GimpSettingsBox *box);
 

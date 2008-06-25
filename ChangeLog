@@ -1,5 +1,22 @@
 2008-06-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpmarshal.list: add marshaller BOOLEAN__STRING for
+	the change below.
+
+	* app/widgets/gimpsettingsbox.[ch]: add the import/export dialogs
+	here. Add a bunch of parameters to new() to be used by the
+	dialogs, they are not properties yet. Changed import() and
+	export() signals to pass the selected filename and return a
+	boolean indicating success.
+
+	* app/tools/gimpimagemaptool-settings.c: remove the dialog code
+	here and connect the import/export functions directly to above
+	GimpSettingsBox signals.
+
+	* app/tools/gimpimagemaptool.[ch]: remove file dialog member.
+
+2008-06-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpcurvestool.c (gimp_curves_tool_settings_import):
 	parse the first line of the file manually and detect whether we
 	are importing an old curves file or a GimpConfig one.
