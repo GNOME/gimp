@@ -1,5 +1,11 @@
 2008-06-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpsettingsbox.c: make sure the file dialog goes
+	away when the settings box' toplevel is hidden. Set the
+	alternative button order on the file dialog.
+
+2008-06-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpmarshal.list: add marshaller BOOLEAN__STRING for
 	the change below.
 

@@ -108,11 +108,11 @@ static void  gimp_settings_box_file_dialog       (GimpSettingsBox   *box,
 static void  gimp_settings_box_file_response     (GtkWidget         *dialog,
                                                   gint               response_id,
                                                   GimpSettingsBox   *box);
-static void  gimp_settings_box_toplevel_unmap    (GtkWidget         *widget,
-                                                  GimpSettingsBox   *box);
 static void  gimp_settings_box_manage_response   (GtkWidget         *widget,
                                                   gint               response_id,
                                                   GimpSettingsBox   *box);
+static void  gimp_settings_box_toplevel_unmap    (GtkWidget         *toplevel,
+                                                  GtkWidget         *dialog);
 
 
 G_DEFINE_TYPE (GimpSettingsBox, gimp_settings_box, GTK_TYPE_HBOX)
@@ -327,9 +327,21 @@ gimp_settings_box_finalize (GObject *object)
       if (toplevel)
         g_signal_handlers_disconnect_by_func (toplevel,
                                               gimp_settings_box_toplevel_unmap,
-                                              box);
+                                              box->editor_dialog);
 
       gtk_widget_destroy (box->editor_dialog);
+    }
+
+  if (box->file_dialog)
+    {
+      GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
+
+      if (toplevel)
+        g_signal_handlers_disconnect_by_func (toplevel,
+                                              gimp_settings_box_toplevel_unmap,
+                                              box->file_dialog);
+
+      gtk_widget_destroy (box->file_dialog);
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -611,7 +623,7 @@ gimp_settings_box_manage_activate (GtkWidget       *widget,
                              (gpointer) &box->editor_dialog);
   g_signal_connect (toplevel, "unmap",
                     G_CALLBACK (gimp_settings_box_toplevel_unmap),
-                    box);
+                    box->editor_dialog);
 
   g_signal_connect (box->editor_dialog, "response",
                     G_CALLBACK (gimp_settings_box_manage_response),
@@ -677,12 +689,20 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
 
                                  NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   g_object_set_data (G_OBJECT (dialog), "save", GINT_TO_POINTER (save));
 
   gtk_window_set_role (GTK_WINDOW (dialog), "gimp-import-export-settings");
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
 
   g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &box->file_dialog);
+  g_signal_connect (toplevel, "unmap",
+                    G_CALLBACK (gimp_settings_box_toplevel_unmap),
+                    dialog);
 
   gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
@@ -729,7 +749,13 @@ gimp_settings_box_file_response (GtkWidget       *dialog,
                                  gint             response_id,
                                  GimpSettingsBox *box)
 {
-  gboolean save;
+  GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
+  gboolean   save;
+
+  if (toplevel)
+    g_signal_handlers_disconnect_by_func (toplevel,
+                                          gimp_settings_box_toplevel_unmap,
+                                          dialog);
 
   save = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog), "save"));
 
@@ -765,15 +791,7 @@ gimp_settings_box_file_response (GtkWidget       *dialog,
 }
 
 static void
-gimp_settings_box_toplevel_unmap (GtkWidget       *widget,
-                                  GimpSettingsBox *box)
-{
-  gtk_dialog_response (GTK_DIALOG (box->editor_dialog),
-                       GTK_RESPONSE_CLOSE);
-}
-
-static void
-gimp_settings_box_manage_response (GtkWidget       *widget,
+gimp_settings_box_manage_response (GtkWidget       *dialog,
                                    gint             response_id,
                                    GimpSettingsBox *box)
 {
@@ -782,9 +800,16 @@ gimp_settings_box_manage_response (GtkWidget       *widget,
   if (toplevel)
     g_signal_handlers_disconnect_by_func (toplevel,
                                           gimp_settings_box_toplevel_unmap,
-                                          box);
+                                          dialog);
 
-  gtk_widget_destroy (widget);
+  gtk_widget_destroy (dialog);
+}
+
+static void
+gimp_settings_box_toplevel_unmap (GtkWidget *toplevel,
+                                  GtkWidget *dialog)
+{
+  gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_DELETE_EVENT);
 }
 
 
