@@ -37,16 +37,6 @@
 #define FT_LOAD_TARGET_MONO  FT_LOAD_MONOCHROME
 #endif
 
-/*
-void
-gimp_text_render_bitmap (PangoFont  *font,
-                         PangoGlyph  glyph,
-                         cairo_font_options_t *flags,
-                         cairo_matrix_t  *trafo,
-                         gint        x,
-                         gint        y,
-                         cairo_surface_t *surface)
-*/
 void
 gimp_text_render_bitmap (PangoFont  *font,
                          PangoGlyph glyph,
@@ -74,7 +64,6 @@ gimp_text_render_bitmap (PangoFont  *font,
   cairo_set_font_options (cr, options);
 
   cairo_transform (cr, trafo);
-  cairo_move_to (cr, x, y);
 
   cairo_set_source_rgb (cr, 0.5, 0.5, 0.5);
 

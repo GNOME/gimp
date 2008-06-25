@@ -594,23 +594,22 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   GimpDrawable *drawable = GIMP_DRAWABLE (layer);
   GimpItem     *item     = GIMP_ITEM (layer);
   TileManager  *mask;
-  cairo_t *cr;
+  cairo_t       *cr;
   cairo_surface_t *surface;
   PixelRegion   textPR;
   PixelRegion   maskPR;
   gint          i;
-  gint  pitch;
+  gint          width, height;
 
   gimp_drawable_fill (drawable, &layer->text->color, NULL);
 
-  pitch = gimp_item_width (item);
 
-  if (pitch & 3)
-    pitch += 4 - (pitch & 3);
+  width = gimp_item_width (item);
+  height = gimp_item_height (item);
 
 
   surface = cairo_image_surface_create ( CAIRO_FORMAT_A8,
-        pitch, gimp_item_height (item));
+        width, height);
 
   cr = cairo_create (surface);
 
@@ -618,21 +617,21 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
                            (GimpTextRenderFunc) gimp_text_render_bitmap,
                            cr);
 
-  mask = tile_manager_new (cairo_image_surface_get_width (surface), cairo_image_surface_get_height (surface), 1);
-  pixel_region_init (&maskPR, mask, 0, 0, cairo_image_surface_get_width (surface), cairo_image_surface_get_height (surface), TRUE);
+  mask = tile_manager_new ( width, height, 1);
+  pixel_region_init (&maskPR, mask, 0, 0, width, height, TRUE);
 
-  for (i = 0; i < cairo_image_surface_get_height (surface); i++)
+  for (i = 0; i < height; i++)
     pixel_region_set_row (&maskPR,
-                          0, i, cairo_image_surface_get_width (surface),
+                          0, i, width,
                           cairo_image_surface_get_data (surface) + i * cairo_image_surface_get_stride (surface));
 
   cairo_destroy (cr);
   cairo_surface_destroy (surface);
 
   pixel_region_init (&textPR, gimp_drawable_get_tiles (drawable),
-                     0, 0, cairo_image_surface_get_width (surface), cairo_image_surface_get_height (surface), TRUE);
+                     0, 0, width, height, TRUE);
   pixel_region_init (&maskPR, mask,
-                     0, 0, cairo_image_surface_get_width (surface), cairo_image_surface_get_height (surface), FALSE);
+                     0, 0, width, height, FALSE);
 
   apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
 

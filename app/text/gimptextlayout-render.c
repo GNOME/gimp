@@ -187,26 +187,14 @@ gimp_text_layout_render_flags (GimpTextLayout *layout)
     cairo_font_options_set_antialias (flags, CAIRO_ANTIALIAS_DEFAULT);
   else
     cairo_font_options_set_antialias (flags, CAIRO_ANTIALIAS_NONE);
-
+/*
+ * commented because there's no real autohint support in cairo as in ft2
+  if (text->autohint)
+    cairo_font_options_set_hint_style (flags, CAIRO_HINT_STYLE_DEFAULT);
+*/
   if (!text->hinting)
     cairo_font_options_set_hint_style (flags, CAIRO_HINT_STYLE_NONE);
 
-  if (text->autohint)
-    cairo_font_options_set_antialias (flags, CAIRO_HINT_STYLE_DEFAULT);
-
-
-/*
-  if (text->antialias)
-    flags = FT_LOAD_NO_BITMAP;
-  else
-    flags = FT_LOAD_TARGET_MONO;
-
-  if (!text->hinting)
-   flags |= FT_LOAD_NO_HINTING;
-
-  if (text->autohint)
-    flags |= FT_LOAD_FORCE_AUTOHINT;
-*/
   return flags;
 }
 
@@ -216,12 +204,6 @@ gimp_text_layout_render_trafo (GimpTextLayout *layout,
 {
   GimpText *text = layout->text;
 
-/*
-  trafo->xx = text->transformation.coeff[0][0] * 65536.0 / layout->yres * layout->xres;
-  trafo->xy = text->transformation.coeff[0][1] * 65536.0;
-  trafo->yx = text->transformation.coeff[1][0] * 65536.0 / layout->yres * layout->xres;
-  trafo->yy = text->transformation.coeff[1][1] * 65536.0;
-  */
   trafo->xx = text->transformation.coeff[0][0] * 1.0 / layout->yres * layout->xres;
   trafo->xy = text->transformation.coeff[0][1] * 1.0;
   trafo->yx = text->transformation.coeff[1][0] * 1.0 / layout->yres * layout->xres;
