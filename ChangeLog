@@ -1,5 +1,11 @@
 2008-06-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/gegl/gimpcurvesconfig.c (gimp_curves_config_load_cruft):
+	set any parsed negative value as -1 in the curves object because
+	that's the only negative value allowed.
+
+2008-06-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpsettingseditor.c
 	(gimp_settings_editor_delete_clicked): select a neighboring item
 	after deleting the selected one.
