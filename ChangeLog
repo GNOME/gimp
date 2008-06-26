@@ -1,3 +1,8 @@
+2008-06-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpscalebutton.c (gimp_scale_button_init): hide the
+	popup's plus and minus buttons, they are completely pointless.
+
 2008-06-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpsettingsbox.c: make sure the file dialog goes
