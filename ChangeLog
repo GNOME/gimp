@@ -1,3 +1,13 @@
+2008-06-27  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpfilteredcontainer.[ch]: added GimpFilteredContainer
+	which can be used to filter containers based on object tags.
+
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimpdatafactoryview.[ch]: simple tag query from GUI.
+
 2008-06-22  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/core/gimp.c: save and uninitialize tag cache properly.
