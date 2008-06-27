@@ -308,7 +308,7 @@ gimp_text_get_pango_context (GimpText *text,
                              gdouble   xres,
                              gdouble   yres)
 {
-  PangoContext    *context;
+  PangoContext      *context;
   PangoCairoFontMap *fontmap;
 
   fontmap = PANGO_CAIRO_FONT_MAP (pango_cairo_font_map_new ());

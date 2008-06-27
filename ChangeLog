@@ -1,3 +1,13 @@
+2008-06-28  Daniel Eddeland <danedde@svn.gnome.org>
+
+	* app/text/gimptext-bitmap.c
+	* app/text/gimptext-private.h
+	* app/text/gimptext-bitmap.h
+	* app/text/gimptextlayer.c
+	* app/text/gimptextlayout.c
+	* app/text/gimptextlayout-render.c
+	* app/text/gimptext-vectors.c: minor beauty changes (spacing).
+
 2008-06-27  Daniel Eddeland <danedde@svn.gnome.org>
 
 	* app/text/gimptext-vectors.c: fixed "Text-to-path" crash.

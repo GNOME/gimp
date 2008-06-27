@@ -23,13 +23,13 @@
 #define __GIMP_TEXT_BITMAP_H__
 
 
-void  gimp_text_render_bitmap (PangoFont  *font,
-                               PangoGlyph glyph,
+void  gimp_text_render_bitmap (PangoFont            *font,
+                               PangoGlyph            glyph,
                                cairo_font_options_t *options,
-                               cairo_matrix_t  *trafo,
-                               gint        x,
-                               gint        y,
-                               cairo_t *cr);
+                               cairo_matrix_t       *trafo,
+                               gint                  x,
+                               gint                  y,
+                               cairo_t              *cr);
 
 
 #endif /* __GIMP_TEXT_BITMAP_H__ */

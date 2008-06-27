@@ -38,17 +38,17 @@
 #endif
 
 void
-gimp_text_render_bitmap (PangoFont  *font,
-                         PangoGlyph glyph,
+gimp_text_render_bitmap (PangoFont            *font,
+                         PangoGlyph            glyph,
                          cairo_font_options_t *options,
-                         cairo_matrix_t  *trafo,
-                         gint        x,
-                         gint        y,
-                         cairo_t *cr)
+                         cairo_matrix_t       *trafo,
+                         gint                  x,
+                         gint                  y,
+                         cairo_t              *cr)
 {
 
   cairo_scaled_font_t *cfont;
-  cairo_glyph_t cglyph;
+  cairo_glyph_t        cglyph;
 
   cfont = pango_cairo_font_get_scaled_font ( (PangoCairoFont*) font);
 

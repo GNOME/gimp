@@ -591,15 +591,15 @@ static void
 gimp_text_layer_render_layout (GimpTextLayer  *layer,
                                GimpTextLayout *layout)
 {
-  GimpDrawable *drawable = GIMP_DRAWABLE (layer);
-  GimpItem     *item     = GIMP_ITEM (layer);
-  TileManager  *mask;
-  cairo_t       *cr;
+  GimpDrawable    *drawable = GIMP_DRAWABLE (layer);
+  GimpItem        *item     = GIMP_ITEM (layer);
+  TileManager     *mask;
+  cairo_t         *cr;
   cairo_surface_t *surface;
-  PixelRegion   textPR;
-  PixelRegion   maskPR;
-  gint          i;
-  gint          width, height;
+  PixelRegion      textPR;
+  PixelRegion      maskPR;
+  gint             i;
+  gint             width, height;
 
   gimp_drawable_fill (drawable, &layer->text->color, NULL);
 

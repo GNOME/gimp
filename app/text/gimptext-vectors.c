@@ -63,13 +63,13 @@ struct _RenderContext
 };
 
 
-static void  gimp_text_render_vectors (PangoFont     *font,
-                                       PangoGlyph     glyph,
+static void  gimp_text_render_vectors (PangoFont            *font,
+                                       PangoGlyph            glyph,
                                        cairo_font_options_t *options,
-                                       cairo_matrix_t     *cmatrix,
-                                       gint           x,
-                                       gint           y,
-                                       RenderContext *context);
+                                       cairo_matrix_t       *cmatrix,
+                                       gint                  x,
+                                       gint                  y,
+                                       RenderContext        *context);
 
 
 GimpVectors *
@@ -218,13 +218,13 @@ cubicto (const FT_Vector *ftcontrol1,
 
 
 static void
-gimp_text_render_vectors (PangoFont     *font,
-                          PangoGlyph     pango_glyph,
+gimp_text_render_vectors (PangoFont            *font,
+                          PangoGlyph            pango_glyph,
                           cairo_font_options_t *options,
-                          cairo_matrix_t     *matrix,
-                          gint           x,
-                          gint           y,
-                          RenderContext *context)
+                          cairo_matrix_t       *matrix,
+                          gint                  x,
+                          gint                  y,
+                          RenderContext        *context)
 {
   const FT_Outline_Funcs  outline_funcs =
   {
@@ -238,9 +238,7 @@ gimp_text_render_vectors (PangoFont     *font,
 
   FT_Face   face;
   FT_Glyph  glyph;
-
-  FT_Int32 flags;
-
+  FT_Int32  flags;
    
   /* 
    * Since gimp is partly ported to pangocairo (but not fully) the flags are generated from a cairo_font_options_t like this.
@@ -269,7 +267,6 @@ gimp_text_render_vectors (PangoFont     *font,
 
       context->offset_x = (gdouble) x / PANGO_SCALE;
       context->offset_y = (gdouble) y / PANGO_SCALE;
-
       
       FT_Outline_Decompose (&outline_glyph->outline, &outline_funcs, context); 
     }
