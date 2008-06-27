@@ -235,7 +235,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       for (i = 0; i < n_dynamics; i++)
         {
           gtk_label_set_angle (GTK_LABEL (dynamics_labels[i]),
-                               rtl ? 45 : 315);
+                               rtl ? 315 : 45);
           gtk_misc_set_alignment (GTK_MISC (dynamics_labels[i]), 1.0, 1.0);
           gtk_fixed_put (GTK_FIXED (fixed), dynamics_labels[i], 0, 0);
           gtk_widget_show (dynamics_labels[i]);
@@ -373,9 +373,9 @@ dynamics_check_button_size_allocate (GtkWidget     *toggle,
   gint       x, y;
 
   if (gtk_widget_get_direction (label) == GTK_TEXT_DIR_LTR)
-    x = allocation->x + allocation->width - label->allocation.width;
-  else
     x = allocation->x;
+  else
+    x = allocation->x + allocation->width - label->allocation.width;
 
   x -= fixed->allocation.x;
 

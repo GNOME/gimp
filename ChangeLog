@@ -1,3 +1,9 @@
+2008-06-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimppaintoptions-gui.c (gimp_paint_options_gui): swap
+	the angles of the dynamics matrix' labels in RTL and LTR mode so
+	the beginning of the words are aligned and on bottom.
+
 2008-06-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpscalebutton.c (gimp_scale_button_init): hide the
