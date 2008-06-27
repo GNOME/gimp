@@ -41,6 +41,7 @@ struct _GimpDataFactoryView
   GimpContainerEditor  parent_instance;
 
   GimpDataFactory     *factory;
+  GimpContainer       *filtered_container;
 
   GtkWidget           *edit_button;
   GtkWidget           *new_button;
