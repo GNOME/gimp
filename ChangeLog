@@ -1,3 +1,7 @@
+2008-06-27  Daniel Eddeland <danedde@svn.gnome.org>
+
+	* app/text/gimptext-vectors.c: fixed "Text-to-path" crash.
+
 2008-06-25  Daniel Eddeland <danedde@svn.gnome.org>
 
 	* app/text/gimptext-bitmap.c

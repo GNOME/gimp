@@ -65,8 +65,8 @@ struct _RenderContext
 
 static void  gimp_text_render_vectors (PangoFont     *font,
                                        PangoGlyph     glyph,
-                                       FT_Int32       flags,
-                                       FT_Matrix     *matrix,
+                                       cairo_font_options_t *options,
+                                       cairo_matrix_t     *cmatrix,
                                        gint           x,
                                        gint           y,
                                        RenderContext *context);
@@ -220,8 +220,8 @@ cubicto (const FT_Vector *ftcontrol1,
 static void
 gimp_text_render_vectors (PangoFont     *font,
                           PangoGlyph     pango_glyph,
-                          FT_Int32       flags,
-                          FT_Matrix     *trafo,
+                          cairo_font_options_t *options,
+                          cairo_matrix_t     *matrix,
                           gint           x,
                           gint           y,
                           RenderContext *context)
@@ -239,20 +239,39 @@ gimp_text_render_vectors (PangoFont     *font,
   FT_Face   face;
   FT_Glyph  glyph;
 
+  FT_Int32 flags;
+
+   
+  /* 
+   * Since gimp is partly ported to pangocairo (but not fully) the flags are generated from a cairo_font_options_t like this.
+   * All FT2 functions should later be replaced with pangocairo, getting rid of this eyesore. 
+   * */
+
+  if (cairo_font_options_get_antialias (options) != CAIRO_ANTIALIAS_NONE)
+    flags = FT_LOAD_NO_BITMAP;
+  else
+    flags = FT_LOAD_TARGET_MONO;
+ 
+  if (cairo_font_options_get_hint_style (options) == CAIRO_HINT_STYLE_NONE)
+    flags |= FT_LOAD_NO_HINTING;
+
   face = pango_fc_font_lock_face (PANGO_FC_FONT (font));
 
   FT_Load_Glyph (face, (FT_UInt) pango_glyph, flags);
 
   FT_Get_Glyph (face->glyph, &glyph);
 
+
   if (face->glyph->format == FT_GLYPH_FORMAT_OUTLINE)
     {
+        
       FT_OutlineGlyph outline_glyph = (FT_OutlineGlyph) glyph;
 
       context->offset_x = (gdouble) x / PANGO_SCALE;
       context->offset_y = (gdouble) y / PANGO_SCALE;
 
-      FT_Outline_Decompose (&outline_glyph->outline, &outline_funcs, context);
+      
+      FT_Outline_Decompose (&outline_glyph->outline, &outline_funcs, context); 
     }
 
   FT_Done_Glyph (glyph);
