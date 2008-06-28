@@ -820,7 +820,7 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
 #endif
 
     if (kwargs) {
-        Py_ssize_t len, pos;
+        int len, pos;
         PyObject *key, *val;
 
         len = PyDict_Size(kwargs);

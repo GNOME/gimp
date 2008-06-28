@@ -1,5 +1,12 @@
 2008-06-28  Michael Natterer  <mitch@gimp.org>
 
+	* pygimp-pdb.c:
+	* pygimp-tile.c:
+	* pygimp-colors.c: revert last patch because Py_ssize_t is
+	undefined in some (older?) pythons. Needs more investigation.
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpviewrendererimagefile.c
 	(gimp_view_renderer_imagefile_get_icon): add widget parameter so
 	we can get the right icon theme for the screen. If building

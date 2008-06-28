@@ -157,7 +157,7 @@ tile_subscript(PyGimpTile *self, PyObject *sub)
 {
     GimpTile *tile = self->tile;
     int bpp = tile->bpp;
-    Py_ssize_t x, y;
+    long x, y;
 
     if (PyInt_Check(sub)) {
 	x = PyInt_AsLong(sub);
@@ -193,7 +193,7 @@ tile_ass_sub(PyGimpTile *self, PyObject *v, PyObject *w)
 {
     GimpTile *tile = self->tile;
     int bpp = tile->bpp, i;
-    Py_ssize_t x, y;
+    long x, y;
     guchar *pix, *data;
 	
     if (w == NULL) {
@@ -306,7 +306,7 @@ PyTypeObject PyGimpTile_Type = {
 static PyObject *
 pr_resize(PyGimpPixelRgn *self, PyObject *args)
 {
-    Py_ssize_t x, y, w, h;
+    int x, y, w, h;
 
     if (!PyArg_ParseTuple(args, "iiii:resize", &x, &y, &w, &h))
 	return NULL;
@@ -371,7 +371,7 @@ pr_subscript(PyGimpPixelRgn *self, PyObject *key)
     GimpPixelRgn *pr = &(self->pr);
     int bpp = pr->bpp;
     PyObject *x, *y;
-    Py_ssize_t x1, y1, x2, y2, xs, ys;
+    int x1, y1, x2, y2, xs, ys;
 
     if (!PyTuple_Check(key) || PyTuple_Size(key) != 2) {
 	PyErr_SetString(PyExc_TypeError, "subscript must be a 2-tuple");
@@ -480,7 +480,7 @@ pr_ass_sub(PyGimpPixelRgn *self, PyObject *v, PyObject *w)
     int bpp = pr->bpp;
     PyObject *x, *y;
     guchar *buf;
-    Py_ssize_t len, x1, x2, xs, y1, y2, ys;
+    int len, x1, x2, xs, y1, y2, ys;
 	
     if (w == NULL) {
 	PyErr_SetString(PyExc_TypeError, "can't delete subscripts");
