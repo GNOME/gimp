@@ -158,8 +158,10 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
       tree_view = GIMP_CONTAINER_TREE_VIEW (editor->view);
 
-      tree_view->name_cell->mode = GTK_CELL_RENDERER_MODE_EDITABLE;
-      GTK_CELL_RENDERER_TEXT (tree_view->name_cell)->editable = TRUE;
+      g_object_set (tree_view->name_cell,
+                    "mode",     GTK_CELL_RENDERER_MODE_EDITABLE,
+                    "editable", TRUE,
+                    NULL);
 
       tree_view->editable_cells = g_list_prepend (tree_view->editable_cells,
                                                   tree_view->name_cell);

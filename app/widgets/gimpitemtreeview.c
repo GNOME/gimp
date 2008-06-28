@@ -283,8 +283,10 @@ gimp_item_tree_view_constructor (GType                  type,
   item_view       = GIMP_ITEM_TREE_VIEW (object);
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (object);
 
-  tree_view->name_cell->mode = GTK_CELL_RENDERER_MODE_EDITABLE;
-  GTK_CELL_RENDERER_TEXT (tree_view->name_cell)->editable = TRUE;
+  g_object_set (tree_view->name_cell,
+                "mode",     GTK_CELL_RENDERER_MODE_EDITABLE,
+                "editable", TRUE,
+                NULL);
 
   tree_view->editable_cells = g_list_prepend (tree_view->editable_cells,
                                               tree_view->name_cell);

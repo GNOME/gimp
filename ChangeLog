@@ -1,5 +1,54 @@
 2008-06-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpactionview.c
+	* app/widgets/gimpblobeditor.c
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimpcellrendererdashes.c
+	* app/widgets/gimpcellrendererviewable.c
+	* app/widgets/gimpcolorbar.c
+	* app/widgets/gimpcoloreditor.c
+	* app/widgets/gimpcolorframe.c
+	* app/widgets/gimpcomponenteditor.c
+	* app/widgets/gimpcontainerbox.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpcurveview.c
+	* app/widgets/gimpdasheditor.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpdockable.c
+	* app/widgets/gimpdockseparator.c
+	* app/widgets/gimpfgbgeditor.c
+	* app/widgets/gimpfgbgview.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimphandlebar.c
+	* app/widgets/gimphistogrambox.c
+	* app/widgets/gimphistogramview.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimpmenudock.c
+	* app/widgets/gimpmessagebox.c
+	* app/widgets/gimppaletteview.c
+	* app/widgets/gimpscalebutton.c
+	* app/widgets/gimpsessioninfo-book.c
+	* app/widgets/gimpsessioninfo-dock.c
+	* app/widgets/gimpsettingseditor.c
+	* app/widgets/gimpstrokeeditor.c
+	* app/widgets/gimptemplateeditor.c
+	* app/widgets/gimptemplateview.c
+	* app/widgets/gimpthumbbox.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimptooloptionseditor.c
+	* app/widgets/gimptoolview.c
+	* app/widgets/gimpuimanager.c
+	* app/widgets/gimpviewabledialog.c
+	* app/widgets/gimpviewrenderervectors.c
+	* app/widgets/gimpwidgets-utils.c: use accessors instead of
+	accessing members of GTK+ widgets directly.
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/uri/uri-backend-gvfs.c (uri_progress_callback): fix
 	progress display by making sure gimp_progress_update() gets a
 	gdouble passed.

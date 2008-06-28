@@ -106,6 +106,7 @@ gimp_container_box_set_size_request (GimpContainerBox *box,
 {
   GimpContainerView      *view;
   GtkScrolledWindowClass *sw_class;
+  GtkStyle               *sw_style;
   GtkRequisition          req;
   gint                    view_size;
   gint                    scrollbar_width;
@@ -134,11 +135,12 @@ gimp_container_box_set_size_request (GimpContainerBox *box,
                            &req);
   scrollbar_width += req.width;
 
-  border_x = GTK_CONTAINER (box)->border_width;
-  border_y = GTK_CONTAINER (box)->border_width;
+  border_x = border_y = gtk_container_get_border_width (GTK_CONTAINER (box));
 
-  border_x += box->scrolled_win->style->xthickness * 2 + scrollbar_width;
-  border_y += box->scrolled_win->style->ythickness * 2;
+  sw_style = gtk_widget_get_style (box->scrolled_win);
+
+  border_x += sw_style->xthickness * 2 + scrollbar_width;
+  border_y += sw_style->ythickness * 2;
 
   gtk_widget_set_size_request (box->scrolled_win,
                                width  > 0 ? width  + border_x : -1,

@@ -164,8 +164,10 @@ gimp_settings_editor_constructor (GType                  type,
                     G_CALLBACK (gimp_settings_editor_select_item),
                     editor);
 
-  tree_view->name_cell->mode = GTK_CELL_RENDERER_MODE_EDITABLE;
-  GTK_CELL_RENDERER_TEXT (tree_view->name_cell)->editable = TRUE;
+  g_object_set (tree_view->name_cell,
+                "mode",     GTK_CELL_RENDERER_MODE_EDITABLE,
+                "editable", TRUE,
+                NULL);
 
   tree_view->editable_cells = g_list_prepend (tree_view->editable_cells,
                                               tree_view->name_cell);

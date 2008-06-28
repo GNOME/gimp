@@ -339,7 +339,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
                         GdkEventExpose *event)
 {
   GimpCurveView *view  = GIMP_CURVE_VIEW (widget);
-  GtkStyle      *style = widget->style;
+  GtkStyle      *style = gtk_widget_get_style (widget);
   cairo_t       *cr;
   gint           border;
   gint           width;

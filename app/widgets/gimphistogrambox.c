@@ -245,8 +245,9 @@ gimp_histogram_box_border_notify (GimpHistogramView *view,
                                   GParamSpec        *pspec,
                                   GimpHistogramBox  *box)
 {
-  gtk_container_set_border_width (GTK_CONTAINER (box->color_bar->parent),
-                                  view->border_width);
+  GtkWidget *vbox = gtk_widget_get_parent (box->color_bar);
+
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), view->border_width);
 }
 
 

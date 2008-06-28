@@ -105,6 +105,7 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
                                 GdkEventExpose  *event,
                                 GimpScaleButton *button)
 {
+  GtkStyle      *style = gtk_widget_get_style (widget);
   GtkAdjustment *adj;
   cairo_t       *cr;
   gint           value;
@@ -149,7 +150,7 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
       cairo_line_to (cr, i, i + 0.5);
     }
 
-  gdk_cairo_set_source_color (cr, &widget->style->fg[widget->state]);
+  gdk_cairo_set_source_color (cr, &style->fg[widget->state]);
   cairo_stroke (cr);
 
   for ( ; i < steps; i++)
@@ -158,7 +159,7 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
       cairo_line_to (cr, i, i + 0.5);
     }
 
-  gdk_cairo_set_source_color (cr, &widget->style->fg[GTK_STATE_INSENSITIVE]);
+  gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_INSENSITIVE]);
   cairo_stroke (cr);
 
   cairo_destroy (cr);

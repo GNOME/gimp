@@ -188,6 +188,7 @@ gimp_blob_editor_expose (GtkWidget      *widget,
                          GdkEventExpose *event)
 {
   GimpBlobEditor *editor = GIMP_BLOB_EDITOR (widget);
+  GtkStyle       *style  = gtk_widget_get_style (widget);
   cairo_t        *cr;
   GdkRectangle    rect;
   gint            r0;
@@ -208,10 +209,10 @@ gimp_blob_editor_expose (GtkWidget      *widget,
 
   cairo_rectangle (cr,
                    rect.x + 0.5, rect.y + 0.5, rect.width - 1, rect.width - 1);
-  gdk_cairo_set_source_color (cr, &widget->style->light[widget->state]);
+  gdk_cairo_set_source_color (cr, &style->light[widget->state]);
   cairo_fill_preserve (cr);
 
-  gdk_cairo_set_source_color (cr, &widget->style->dark[widget->state]);
+  gdk_cairo_set_source_color (cr, &style->dark[widget->state]);
   cairo_set_line_width (cr, 1);
   cairo_stroke (cr);
 
@@ -319,6 +320,7 @@ gimp_blob_editor_draw_blob (GimpBlobEditor *editor,
                             gdouble         radius)
 {
   GtkWidget *widget   = GTK_WIDGET (editor);
+  GtkStyle  *style    = gtk_widget_get_style (widget);
   Blob      *blob;
   BlobFunc   function = blob_ellipse;
   gint       i;
@@ -373,6 +375,6 @@ gimp_blob_editor_draw_blob (GimpBlobEditor *editor,
 
   g_free (blob);
 
-  gdk_cairo_set_source_color (cr, &widget->style->fg[widget->state]);
+  gdk_cairo_set_source_color (cr, &style->fg[widget->state]);
   cairo_fill (cr);
 }

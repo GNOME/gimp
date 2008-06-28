@@ -798,7 +798,7 @@ static void
 gradient_editor_instant_update_update (GtkWidget          *widget,
                                        GimpGradientEditor *editor)
 {
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       editor->instant_update = TRUE;
       gtk_range_set_update_policy (GTK_RANGE (editor->scrollbar),
@@ -1746,6 +1746,7 @@ control_draw (GimpGradientEditor *editor,
               gdouble             left,
               gdouble             right)
 {
+  GtkStyle               *control_style;
   GimpGradientSegment    *seg;
   GradientEditorDragMode  handle;
   gint                    sel_l;
@@ -1758,16 +1759,18 @@ control_draw (GimpGradientEditor *editor,
 
   /* Draw selection */
 
+  control_style = gtk_widget_get_style (editor->control);
+
   sel_l = control_calc_p_pos (editor, editor->control_sel_l->left);
   sel_r = control_calc_p_pos (editor, editor->control_sel_r->right);
 
   gdk_cairo_set_source_color (cr,
-                              &editor->control->style->base[GTK_STATE_NORMAL]);
+                              &control_style->base[GTK_STATE_NORMAL]);
   cairo_rectangle (cr, 0, 0, width, height);
   cairo_fill (cr);
 
   gdk_cairo_set_source_color (cr,
-                              &editor->control->style->base[GTK_STATE_SELECTED]);
+                              &control_style->base[GTK_STATE_SELECTED]);
   cairo_rectangle (cr, sel_l, 0, sel_r - sel_l + 1, height);
   cairo_fill (cr);
 
@@ -1835,11 +1838,12 @@ control_draw_normal_handle (GimpGradientEditor *editor,
                             gint                height,
                             gboolean            selected)
 {
-  GtkStateType state = selected ? GTK_STATE_SELECTED : GTK_STATE_NORMAL;
+  GtkStyle     *style = gtk_widget_get_style (editor->control);
+  GtkStateType  state = selected ? GTK_STATE_SELECTED : GTK_STATE_NORMAL;
 
   control_draw_handle (cr,
-                       &editor->control->style->text_aa[state],
-                       &editor->control->style->black,
+                       &style->text_aa[state],
+                       &style->black,
                        control_calc_p_pos (editor, pos), height);
 }
 
@@ -1850,11 +1854,12 @@ control_draw_middle_handle (GimpGradientEditor *editor,
                             gint                height,
                             gboolean            selected)
 {
-  GtkStateType state = selected ? GTK_STATE_SELECTED : GTK_STATE_NORMAL;
+  GtkStyle     *style = gtk_widget_get_style (editor->control);
+  GtkStateType  state = selected ? GTK_STATE_SELECTED : GTK_STATE_NORMAL;
 
   control_draw_handle (cr,
-                       &editor->control->style->text_aa[state],
-                       &editor->control->style->white,
+                       &style->text_aa[state],
+                       &style->white,
                        control_calc_p_pos (editor, pos), height);
 }
 

@@ -465,13 +465,13 @@ gimp_dock_add_book (GimpDock     *dock,
       else
         old_book = g_list_nth_data (dock->dockbooks, index - 1);
 
-      parent = old_book->parent;
+      parent = gtk_widget_get_parent (old_book);
 
       if ((old_length > 1) && (index > 0))
         {
           GtkWidget *grandparent;
 
-          grandparent = parent->parent;
+          grandparent = gtk_widget_get_parent (parent);
 
           old_book = parent;
           parent   = grandparent;
@@ -553,8 +553,8 @@ gimp_dock_remove_book (GimpDock     *dock,
       GtkWidget *parent;
       GtkWidget *grandparent;
 
-      parent      = GTK_WIDGET (dockbook)->parent;
-      grandparent = parent->parent;
+      parent      = gtk_widget_get_parent (GTK_WIDGET (dockbook));
+      grandparent = gtk_widget_get_parent (parent);
 
       if (index == 0)
         other_book = gtk_paned_get_child2 (GTK_PANED (parent));

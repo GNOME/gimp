@@ -341,8 +341,10 @@ gimp_action_view_new (GimpUIManager *manager,
       gtk_tree_view_column_set_title (column, _("Shortcut"));
 
       cell = gtk_cell_renderer_accel_new ();
-      cell->mode = GTK_CELL_RENDERER_MODE_EDITABLE;
-      GTK_CELL_RENDERER_TEXT (cell)->editable = TRUE;
+      g_object_set (cell,
+                    "mode",     GTK_CELL_RENDERER_MODE_EDITABLE,
+                    "editable", TRUE,
+                    NULL);
       gtk_tree_view_column_pack_start (column, cell, TRUE);
       gtk_tree_view_column_set_attributes (column, cell,
                                            "accel-key",

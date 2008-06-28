@@ -168,7 +168,7 @@ gimp_brush_select_constructor (GType                  type,
   gtk_widget_show (dialog->view);
 
   /*  Create the frame and the table for the options  */
-  table = GIMP_BRUSH_FACTORY_VIEW (dialog->view)->spacing_scale->parent;
+  table = gtk_widget_get_parent (GIMP_BRUSH_FACTORY_VIEW (dialog->view)->spacing_scale);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
 
