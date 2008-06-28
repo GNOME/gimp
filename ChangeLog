@@ -1,3 +1,8 @@
+2008-06-28  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gtkscalebutton.h: Remove uses of GSEAL macro to make
+	the thing compile on systems without bleeding edge GTK+.
+
 2008-06-28  Michael Natterer  <mitch@gimp.org>
 
 	This is completely evil:

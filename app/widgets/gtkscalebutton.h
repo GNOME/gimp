@@ -55,11 +55,11 @@ struct _GtkScaleButton
 {
   GtkButton parent;
 
-  GtkWidget *GSEAL (plus_button);
-  GtkWidget *GSEAL (minus_button);
+  GtkWidget *plus_button;
+  GtkWidget *minus_button;
 
   /*< private >*/
-  GtkScaleButtonPrivate *GSEAL (priv);
+  GtkScaleButtonPrivate *priv;
 };
 
 struct _GtkScaleButtonClass
