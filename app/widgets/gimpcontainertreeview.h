@@ -117,5 +117,10 @@ GtkWidget * gimp_container_tree_view_new      (GimpContainer *container,
                                                gint           view_size,
                                                gint           view_border_width);
 
+void
+ gimp_container_tree_view_connect_name_edited (GimpContainerTreeView *tree_view,
+                                               GCallback              callback,
+                                               gpointer               data);
+
 
 #endif  /*  __GIMP_CONTAINER_TREE_VIEW_H__  */

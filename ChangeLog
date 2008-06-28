@@ -1,5 +1,17 @@
 2008-06-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainertreeview.[ch]: add new function
+	gimp_container_tree_view_connect_name_edited() which makes the
+	name cell editable and connects a passed "edited" callback.
+
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimpsettingseditor.c
+	* app/widgets/gimptemplateview.c: use it instead of having the
+	same code four times.
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpactionview.c
 	* app/widgets/gimpblobeditor.c
 	* app/widgets/gimpbrushfactoryview.c

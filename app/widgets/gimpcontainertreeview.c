@@ -400,6 +400,28 @@ gimp_container_tree_view_new (GimpContainer *container,
   return GTK_WIDGET (tree_view);
 }
 
+void
+gimp_container_tree_view_connect_name_edited (GimpContainerTreeView *tree_view,
+                                              GCallback              callback,
+                                              gpointer               data)
+{
+  g_return_if_fail (GIMP_IS_CONTAINER_TREE_VIEW (tree_view));
+  g_return_if_fail (callback != NULL);
+
+  g_object_set (tree_view->name_cell,
+                "mode",     GTK_CELL_RENDERER_MODE_EDITABLE,
+                "editable", TRUE,
+                NULL);
+
+  if (! g_list_find (tree_view->editable_cells, tree_view->name_cell))
+    tree_view->editable_cells = g_list_prepend (tree_view->editable_cells,
+                                                tree_view->name_cell);
+
+  g_signal_connect (tree_view->name_cell, "edited",
+                    callback,
+                    data);
+}
+
 static void
 gimp_container_tree_view_set (GimpContainerTreeView *tree_view,
                               GtkTreeIter           *iter,

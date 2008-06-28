@@ -164,17 +164,9 @@ gimp_settings_editor_constructor (GType                  type,
                     G_CALLBACK (gimp_settings_editor_select_item),
                     editor);
 
-  g_object_set (tree_view->name_cell,
-                "mode",     GTK_CELL_RENDERER_MODE_EDITABLE,
-                "editable", TRUE,
-                NULL);
-
-  tree_view->editable_cells = g_list_prepend (tree_view->editable_cells,
-                                              tree_view->name_cell);
-
-  g_signal_connect (tree_view->name_cell, "edited",
-                    G_CALLBACK (gimp_settings_editor_name_edited),
-                    editor);
+  gimp_container_tree_view_connect_name_edited (tree_view,
+                                                G_CALLBACK (gimp_settings_editor_name_edited),
+                                                editor);
 
   editor->import_button =
     gimp_editor_add_button (GIMP_EDITOR (tree_view),
