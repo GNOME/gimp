@@ -1,10 +1,20 @@
 2008-08-16  Lars-Peter Clausen  <lars@metafoo.de>
 
+	* plug-ins/pygimp/pygimp-pdb.c: Fix typo
+	* plug-ins/pygimp/__init__.py: pixel propertys now return a tuple of
+	gimp.Color. Fixed gradient range index issues.
+	* plug-ins/pygimp/Makefile: Added tools.py
+	* plug-ins/pygimp/tools.py: New module that provides functions for
+	paint and select tools
+
+2008-08-16  Lars-Peter Clausen  <lars@metafoo.de>
+
 	* plug-ins/pygimp/gimpmodule.c
 	* plug-ins/pygimp/pygimp.h
 	* plug-ins/pygimp/pygimp-pdb.c: Set more descriptive exceptions when a 
 	pdb call fails.
-	* plug-ins/pygimp/gimpui.defs: Readded some defintions that got lost during the regeneration.
+	* plug-ins/pygimp/gimpui.defs: Readded some defintions that got lost
+	during the regeneration.
 	* plug-ins/pygimp/testui.py: Test for the readded defintions.
 
 2008-06-15  Lars-Peter Clausen  <lars@metafoo.de>

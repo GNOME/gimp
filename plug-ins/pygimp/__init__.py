@@ -1,4 +1,4 @@
-# -*- Mode: Python; py-indent-offset: 3 -*-
+# -*- Mode: Python; py-indent-offset: 4 -*-
 # Gimp-Python - allows the writing of Gimp plugins in Python.
 # Copyright (C) 2008 Lars-Peter Clausen <lars@metafoo.de>
 #
@@ -35,6 +35,10 @@ except:
 def _prop(func):
     """Helper function for creating properties"""
     return property(doc=func.__doc__, *func())
+
+def _pack_pixels(pixel, bpp):
+    """Packs a tuple of pixel data into a tuple of bpp sized tuples"""
+    return zip(*(iter(pixel),)*bpp)
 
 class GimpNamedObject(object):
     """
@@ -141,14 +145,16 @@ class Brush(GimpNamedObject):
     mask_bpp = property(fget=lambda self:pdb.gimp_brush_get_info(self)[2],
                         doc="""The number of bits per pixel of the brushes mask
                              property.""")
-    mask = property(fget=lambda self:pdb.gimp_brush_get_pixels(self)[4],
-                    doc="""The brushes mask. A height-tuple of width-tuples""")
+    mask = property(fget=lambda self: 
+               _pack_pixels(pdb.gimp_brush_get_pixels(self)[4], self.mask_bpp),
+               doc="""The brushes mask. A height-tuple of width-tuples""")
     pixel_bpp = property(fget=lambda self:pdb.gimp_brush_get_info(self)[3],
                         doc="""The number of bits per pixel of the brushes pixel
                              property.""")
-    pixel = property(fget=lambda self:pdb.gimp_brush_get_pixels(self)[7],
-                    doc="""The brushes pixel data. A height-tuple of
-                           width-tuples""")
+    pixel = property(fget=lambda self:
+              _pack_pixels(pdb.gimp_brush_get_pixels(self)[7], self.pixel_bpp),
+              doc="""The brushes pixel data. A height-tuple of
+                     width-tuples""")
     spacing = property(fget=lambda self:pdb.gimp_brush_get_spacing(self),
                    fset=lambda self, val:pdb.gimp_brush_set_spacing(self, val),
                    doc="""The brushes spacing. Valid values are 0 <= spacing <=
@@ -172,7 +178,7 @@ class GeneratedBrush(Brush):
                      fset=lambda self, val:pdb.gimp_brush_set_angle(self, val),
                      doc="""The brushes rotation angle in degrees.""")
     aspect_ratio = property(
-                    fget=lambda self:pdb.gimp_brush_get_aspect_ratio(self),
+               fget=lambda self:pdb.gimp_brush_get_aspect_ratio(self),
                fset=lambda self,val:pdb.gimp_brush_set_aspect_ratio(self, val),
                doc="""The brushes aspect ratio.""")
     hardness = property(fget=lambda self:pdb.gimp_brush_get_hardness(self),
@@ -204,9 +210,10 @@ class Pattern(GimpNamedObject):
     doc="""Height of the pattern in pixels""")
     pixel_bpp = property(fget=lambda self:pdb.gimp_pattern_get_info(self)[2],
     doc="""Bytes per pixel of the pixels attribute""")
-    pixels = property(fget=lambda self:pdb.gimp_pattern_get_pixels(self)[4],
-    doc="""A tupel containing the pixel values for the pattern. It length is
-    bpp*widht*height.""")
+    pixels = property(fget=lambda self:
+             _pack_pixels(pdb.gimp_pattern_get_pixels(self)[4], self.pixel_bpp),
+             doc="""A tupel containing the pixel values for the pattern. It length is
+        bpp*widht*height.""")
 
 class Palette(GimpNamedObject):
     """A gimp Palette object. A Palette instance provides a list like interface
@@ -381,11 +388,10 @@ class Gradient(GimpNamedObject):
            
         samples = pdb.gimp_gradient_get_uniform_samples(self, num_samples,
                                                         reverse)[1]
-        return map(color.RGB,*(iter(samples),)*4)
+        return map(color.RGB, *(iter(samples),)*4)
 
     segments = property(
-        fget=lambda self: GradientSegmentRange(self, 0, 
-                         pdb.gimp_gradient_get_number_of_segments(self) - 1),
+        fget=lambda self: GradientSegmentRange(self, 0, -1),
         fdel=lambda self:pdb.gimp_gradient_segment_range_delete(self, 0, -1),
         doc="""A gimp.GradientSegmentRange used to access the segemnts of the
                gradient.""")
@@ -501,10 +507,15 @@ class GradientSegmentRange(object):
         self.end = end
 
     def __repr__(self):
+        end = self.end + 1
+        if end < 0:
+            end = pdb.gimp_gradient_get_number_of_segments(self.gradient)
         return "<gimp.GradientSegmentRange (%s, %d, %d)>"% (str(self.gradient),
-                                                          self.start, self.end)
+                                                          self.start, end)
     
     def __len__(self):
+        if self.end < 0:
+            return pdb.gimp_gradient_get_number_of_segments(self.gradient) - self.start
         return self.end - self.start + 1
 
     def __getitem__(self, key):

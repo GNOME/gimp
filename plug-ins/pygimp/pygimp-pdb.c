@@ -320,20 +320,20 @@ pygimp_param_to_tuple(int nparams, const GimpParam *params)
 static void
 pygimp_set_type_error(int n, gchar *expected, PyObject *got, const gchar *error_prefix)
 {
-    static const gchar *positions[] = {"first", "second"};
+    static const gchar *positions[] = {"first", "second", "third"};
     
     if(n < 1)
         PyErr_Format(PyExc_TypeError, "%sExpected %s, got %s "
                      "instead.", error_prefix ? error_prefix : "", expected,
                      got->ob_type->tp_name);
-     if(n < 3)
-        PyErr_Format(PyExc_TypeError, "%sExpected %s as %s parameter, got %s "
-                     "instead.", error_prefix ? error_prefix : "", expected,
-                     positions[n-1], got->ob_type->tp_name);
+     if(n < 4)
+        PyErr_Format(PyExc_TypeError, "%s%s argument must be %s, not %s.",
+                     error_prefix ? error_prefix : "", positions[n-1],
+                     expected, got->ob_type->tp_name);
     else
-        PyErr_Format(PyExc_TypeError, "%sExpected %s as %drd parameter, got %s "
-                     "instead.", error_prefix ? error_prefix : "", expected,
-                     n + 1, got->ob_type->tp_name);
+        PyErr_Format(PyExc_TypeError, "%s%dth argument must be %s, not %s.",
+                     error_prefix ? error_prefix : "", n, expected,
+                     got->ob_type->tp_name);
 }
 
 GimpParam *
@@ -780,7 +780,7 @@ pygimp_pdb_function_new_from_proc_db(char *name)
 
     if (!gimp_procedural_db_proc_info (name, &b, &h, &a, &c, &d, &pt,
 				       &np, &nr, &p, &r)) {
-	PyErr_SetString(pygimp_error, "procedure not found");
+	PyErr_Format(pygimp_error, "%s: Procedure not found", name);
 	return NULL;
     }
 

@@ -131,7 +131,8 @@ pygimpmodule_PYTHON = \
 	context.py	\
 	ui.py	\
 	shelf.py	\
-	enums.py
+	enums.py	\
+	tools.py
 
 codegen_files = \
 	gimpcolor-types.defs	\
