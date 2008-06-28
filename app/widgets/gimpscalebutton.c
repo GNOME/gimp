@@ -21,6 +21,9 @@
 
 #include "config.h"
 
+#define __GTK_SCALE_BUTTON_H__
+#define __GTK_VOLUME_BUTTON_H__
+
 #include <gtk/gtk.h>
 
 #include "widgets-types.h"
@@ -88,7 +91,7 @@ gimp_scale_button_update_tooltip (GimpScaleButton *button)
   GtkAdjustment *adj;
   gchar         *text;
 
-  adj = gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
+  adj = gimp_gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
 
   /*  use U+2009 THIN SPACE to seperate the percent sign from the number */
 
@@ -114,7 +117,7 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
 
   steps = MIN (widget->allocation.width, widget->allocation.height) / 2;
 
-  adj = gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
+  adj = gimp_gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
 
   if (steps < 1)
     return TRUE;
@@ -181,7 +184,8 @@ gimp_scale_button_new (gdouble value,
   adj  = gtk_adjustment_new (value, min, max, step, step, 0);
 
   return g_object_new (GIMP_TYPE_SCALE_BUTTON,
-                       "adjustment", adj,
-                       "size",       GTK_ICON_SIZE_MENU,
+                       "orientation", GTK_ORIENTATION_HORIZONTAL,
+                       "adjustment",  adj,
+                       "size",        GTK_ICON_SIZE_MENU,
                        NULL);
 }

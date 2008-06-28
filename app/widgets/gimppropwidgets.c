@@ -25,6 +25,9 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define __GTK_SCALE_BUTTON_H__
+#define __GTK_VOLUME_BUTTON_H__
+
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -433,7 +436,7 @@ gimp_prop_scale_button_notify (GObject    *config,
                                    gimp_prop_scale_button_callback,
                                    config);
 
-  gtk_scale_button_set_value (GTK_SCALE_BUTTON (button), value);
+  gimp_gtk_scale_button_set_value (GTK_SCALE_BUTTON (button), value);
 
   g_signal_handlers_unblock_by_func (button,
                                      gimp_prop_scale_button_callback,

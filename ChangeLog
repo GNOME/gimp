@@ -1,5 +1,18 @@
 2008-06-28  Michael Natterer  <mitch@gimp.org>
 
+	This is completely evil:
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpscalebutton.[ch]: copy GtkScaleButton from GTK+
+	upstream trunk and hack around until symbol conflicts are gone
+	and it builds.
+
+	* app/widgets/gimppropwidgets.c
+	* app/widgets/gtkscalebutton.[ch]: use the hacked version instead
+	of the one from GTK+. Set the orientation to horizontal.
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/animation-play.c
 	* plug-ins/common/cml-explorer.c
 	* plug-ins/common/convolution-matrix.c

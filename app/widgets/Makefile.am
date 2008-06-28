@@ -341,6 +341,8 @@ libappwidgets_a_sources = \
 	gimpwidgets-utils.h		\
 	gimpwindow.c			\
 	gimpwindow.h			\
+	gtkscalebutton.c		\
+	gtkscalebutton.h		\
 	gtkwrapbox.c			\
 	gtkwrapbox.h			\
 	gtkhwrapbox.c			\
