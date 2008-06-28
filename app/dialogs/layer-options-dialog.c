@@ -239,7 +239,7 @@ static void
 layer_options_dialog_toggle_rename (GtkWidget          *widget,
                                     LayerOptionsDialog *options)
 {
-  if (GTK_TOGGLE_BUTTON (widget)->active &&
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)) &&
       gimp_drawable_is_text_layer (GIMP_DRAWABLE (options->layer)))
     {
       GimpTextLayer *text_layer = GIMP_TEXT_LAYER (options->layer);

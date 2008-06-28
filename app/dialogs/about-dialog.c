@@ -288,14 +288,15 @@ about_dialog_anim_expose (GtkWidget       *widget,
                           GdkEventExpose  *event,
                           GimpAboutDialog *dialog)
 {
-  GdkGC *text_gc;
-  gint   x, y;
-  gint   width, height;
+  GtkStyle *style = gtk_widget_get_style (widget);
+  GdkGC    *text_gc;
+  gint      x, y;
+  gint      width, height;
 
   if (! dialog->visible)
     return FALSE;
 
-  text_gc = widget->style->text_gc[GTK_STATE_NORMAL];
+  text_gc = style->text_gc[GTK_STATE_NORMAL];
 
   pango_layout_get_pixel_size (dialog->layout, &width, &height);
 
@@ -366,6 +367,7 @@ decorate_text (GimpAboutDialog *dialog,
                gint             anim_type,
                gdouble          time)
 {
+  GtkStyle       *style = gtk_widget_get_style (dialog->anim_area);
   const gchar    *text;
   const gchar    *ptr;
   gint            letter_count = 0;
@@ -379,8 +381,8 @@ decorate_text (GimpAboutDialog *dialog,
   PangoRectangle  lrect = {0, 0, 0, 0};
   GdkColor        mix;
 
-  mix_colors (dialog->anim_area->style->bg + GTK_STATE_NORMAL,
-              dialog->anim_area->style->fg + GTK_STATE_NORMAL, &mix, time);
+  mix_colors (style->bg + GTK_STATE_NORMAL,
+              style->fg + GTK_STATE_NORMAL, &mix, time);
 
   text = pango_layout_get_text (dialog->layout);
   g_return_if_fail (text != NULL);
@@ -476,8 +478,8 @@ decorate_text (GimpAboutDialog *dialog,
           else
             pos = ((gdouble) (letter_count - border)) / 15;
 
-          mix_colors (dialog->anim_area->style->fg + GTK_STATE_NORMAL,
-                      dialog->anim_area->style->bg + GTK_STATE_NORMAL,
+          mix_colors (style->fg + GTK_STATE_NORMAL,
+                      style->bg + GTK_STATE_NORMAL,
                       &mix, pos);
 
           ptr = g_utf8_next_char (ptr);

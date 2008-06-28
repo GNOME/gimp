@@ -633,11 +633,11 @@ view_actions_update (GimpActionGroup *group,
 
       if (shell->canvas)
         {
-          GimpRGB color;
+          GtkStyle *style = gtk_widget_get_style (shell->canvas);
+          GimpRGB   color;
 
           gtk_widget_ensure_style (shell->canvas);
-          gimp_rgb_set_gdk_color (&color,
-                                  shell->canvas->style->bg + GTK_STATE_NORMAL);
+          gimp_rgb_set_gdk_color (&color, style->bg + GTK_STATE_NORMAL);
           gimp_rgb_set_alpha (&color, GIMP_OPACITY_OPAQUE);
 
           SET_COLOR ("view-padding-color-theme",  &color);

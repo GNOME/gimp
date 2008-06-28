@@ -1,5 +1,18 @@
 2008-06-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/layers-commands.c
+	* app/actions/view-actions.c
+	* app/dialogs/about-dialog.c
+	* app/dialogs/layer-options-dialog.c
+	* app/dialogs/preferences-dialog.c
+	* app/display/gimpcanvas.c
+	* app/display/gimpdisplayshell-appearance.c
+	* app/display/gimpnavigationeditor.c
+	* modules/colorsel_water.c: use accessors instead of accessing
+	members of GTK+ widgets directly.
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpgradientselectbutton.c
 	* libgimp/gimpmenu.c
 	* libgimpwidgets/gimpbrowser.c

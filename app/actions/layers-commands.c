@@ -988,7 +988,7 @@ layers_edit_layer_response (GtkWidget          *widget,
         {
           g_object_set (layer,
                         "auto-rename",
-                        GTK_TOGGLE_BUTTON (dialog->rename_toggle)->active,
+                        gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->rename_toggle)),
                         NULL);
         }
     }

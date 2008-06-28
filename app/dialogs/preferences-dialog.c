@@ -437,7 +437,7 @@ prefs_resolution_source_callback (GtkWidget *widget,
 
   gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
 
-  from_gdk = GTK_TOGGLE_BUTTON (widget)->active;
+  from_gdk = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
 
   if (from_gdk)
     {
