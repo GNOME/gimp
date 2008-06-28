@@ -1,3 +1,11 @@
+2008-06-28  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* pygimp-pdb.c:
+	* pygimp-tile.c:
+	* pygimp-colors.c: Applied patch from Ed Swartz that makes use of
+	Py_ssize_t:s instead of int:s to better utilize 64-bit
+	systems. (Bug #540629.)
+
 2008-06-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainertreeview.[ch]: add new function

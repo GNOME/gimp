@@ -562,7 +562,7 @@ rgb_subscript(PyObject *self, PyObject *item)
 	    return NULL;
 	return rgb_getitem(self, i);
     } else if (PySlice_Check(item)) {
-	int start, stop, step, slicelength, cur, i;
+        Py_ssize_t start, stop, step, slicelength, cur, i;
 	PyObject *ret;
 
 	if (PySlice_GetIndicesEx((PySliceObject*)item, 4,
@@ -1085,7 +1085,7 @@ hsv_subscript(PyObject *self, PyObject *item)
 	    return NULL;
 	return hsv_getitem(self, i);
     } else if (PySlice_Check(item)) {
-	int start, stop, step, slicelength, cur, i;
+        Py_ssize_t start, stop, step, slicelength, cur, i;
 	PyObject *ret;
 
 	if (PySlice_GetIndicesEx((PySliceObject*)item, 4,
@@ -1598,7 +1598,7 @@ hsl_subscript(PyObject *self, PyObject *item)
             return NULL;
         return hsl_getitem(self, i);
     } else if (PySlice_Check(item)) {
-        int start, stop, step, slicelength, cur, i;
+        Py_ssize_t start, stop, step, slicelength, cur, i;
         PyObject *ret;
 
         if (PySlice_GetIndicesEx((PySliceObject*)item, 4,
@@ -2104,7 +2104,7 @@ cmyk_subscript(PyObject *self, PyObject *item)
             return NULL;
         return cmyk_getitem(self, i);
     } else if (PySlice_Check(item)) {
-        int start, stop, step, slicelength, cur, i;
+        Py_ssize_t start, stop, step, slicelength, cur, i;
         PyObject *ret;
 
         if (PySlice_GetIndicesEx((PySliceObject*)item, 5,
