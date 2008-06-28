@@ -220,6 +220,7 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer *cell,
                                     gint            *height)
 {
   GimpCellRendererToggle *toggle = GIMP_CELL_RENDERER_TOGGLE (cell);
+  GtkStyle               *style  = gtk_widget_get_style (widget);
   gint                    calc_width;
   gint                    calc_height;
   gint                    pixbuf_width;
@@ -242,9 +243,9 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer *cell,
   pixbuf_height = gdk_pixbuf_get_height (toggle->pixbuf);
 
   calc_width  = (pixbuf_width +
-                 (gint) cell->xpad * 2 + widget->style->xthickness * 2);
+                 (gint) cell->xpad * 2 + style->xthickness * 2);
   calc_height = (pixbuf_height +
-                 (gint) cell->ypad * 2 + widget->style->ythickness * 2);
+                 (gint) cell->ypad * 2 + style->ythickness * 2);
 
   if (width)
     *width  = calc_width;
@@ -280,6 +281,7 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
                                   GtkCellRendererState  flags)
 {
   GimpCellRendererToggle *toggle = GIMP_CELL_RENDERER_TOGGLE (cell);
+  GtkStyle               *style  = gtk_widget_get_style (widget);
   GdkRectangle            toggle_rect;
   GdkRectangle            draw_rect;
   GtkStateType            state;
@@ -328,7 +330,7 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
 
   if (gdk_rectangle_intersect (expose_area, cell_area, &draw_rect) &&
       (flags & GTK_CELL_RENDERER_PRELIT))
-    gtk_paint_shadow (widget->style,
+    gtk_paint_shadow (style,
                       window,
                       state,
                       active ? GTK_SHADOW_IN : GTK_SHADOW_OUT,
@@ -339,14 +341,14 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
 
   if (active)
     {
-      toggle_rect.x      += widget->style->xthickness;
-      toggle_rect.y      += widget->style->ythickness;
-      toggle_rect.width  -= widget->style->xthickness * 2;
-      toggle_rect.height -= widget->style->ythickness * 2;
+      toggle_rect.x      += style->xthickness;
+      toggle_rect.y      += style->ythickness;
+      toggle_rect.width  -= style->xthickness * 2;
+      toggle_rect.height -= style->ythickness * 2;
 
       if (gdk_rectangle_intersect (&draw_rect, &toggle_rect, &draw_rect))
         gdk_draw_pixbuf (window,
-                         widget->style->black_gc,
+                         style->black_gc,
                          toggle->pixbuf,
                          /* pixbuf 0, 0 is at toggle_rect.x, toggle_rect.y */
                          draw_rect.x - toggle_rect.x,

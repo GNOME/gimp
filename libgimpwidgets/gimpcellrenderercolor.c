@@ -237,7 +237,8 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
 
   if (rect.width > 2 && rect.height > 2)
     {
-      cairo_t      *cr = gdk_cairo_create (window);
+      cairo_t      *cr    = gdk_cairo_create (window);
+      GtkStyle     *style = gtk_widget_get_style (widget);
       GtkStateType  state;
 
       cairo_rectangle (cr,
@@ -285,13 +286,13 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
         }
 
       cairo_set_line_width (cr, 1);
-      gdk_cairo_set_source_color (cr, &widget->style->fg[state]);
+      gdk_cairo_set_source_color (cr, &style->fg[state]);
       cairo_stroke_preserve (cr);
 
       if (state == GTK_STATE_SELECTED &&
           gimp_cairo_set_focus_line_pattern (cr, widget))
         {
-          gdk_cairo_set_source_color (cr, &widget->style->fg[GTK_STATE_NORMAL]);
+          gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_NORMAL]);
           cairo_stroke (cr);
         }
 

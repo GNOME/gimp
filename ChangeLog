@@ -1,5 +1,26 @@
 2008-06-28  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimpgradientselectbutton.c
+	* libgimp/gimpmenu.c
+	* libgimpwidgets/gimpbrowser.c
+	* libgimpwidgets/gimpcellrenderercolor.c
+	* libgimpwidgets/gimpcellrenderertoggle.c
+	* libgimpwidgets/gimpchainbutton.c
+	* libgimpwidgets/gimpcolorarea.c
+	* libgimpwidgets/gimpcolorscale.c
+	* libgimpwidgets/gimpcolorscales.c
+	* libgimpwidgets/gimpcolorselect.c
+	* libgimpwidgets/gimpenumwidgets.c
+	* libgimpwidgets/gimpframe.c
+	* libgimpwidgets/gimphelpui.c
+	* libgimpwidgets/gimpoffsetarea.c
+	* libgimpwidgets/gimppreviewarea.c
+	* libgimpwidgets/gimppropwidgets.c
+	* libgimpwidgets/gimpscrolledpreview.c: use accessors instead of
+	accessing members of GTK+ widgets directly.
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimplanguagestore-parser.c: include
 	"libgimpbase/gimpbase.h" instead of "libgimpbase/gimpenv.h".
 

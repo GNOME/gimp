@@ -323,7 +323,8 @@ static gboolean
 gimp_color_area_expose (GtkWidget      *widget,
                         GdkEventExpose *event)
 {
-  GimpColorArea *area = GIMP_COLOR_AREA (widget);
+  GimpColorArea *area  = GIMP_COLOR_AREA (widget);
+  GtkStyle      *style = gtk_widget_get_style (widget);
   guchar        *buf;
 
   if (! area->buf || ! GTK_WIDGET_DRAWABLE (widget))
@@ -335,7 +336,7 @@ gimp_color_area_expose (GtkWidget      *widget,
   buf = area->buf + event->area.y * area->rowstride + event->area.x * 3;
 
   gdk_draw_rgb_image_dithalign (widget->window,
-                                widget->style->black_gc,
+                                style->black_gc,
                                 event->area.x,
                                 event->area.y,
                                 event->area.width,
@@ -348,7 +349,7 @@ gimp_color_area_expose (GtkWidget      *widget,
 
   if (area->draw_border)
     gdk_draw_rectangle (widget->window,
-                        widget->style->fg_gc[widget->state],
+                        style->fg_gc[widget->state],
                         FALSE,
                         0, 0,
                         area->width - 1, area->height - 1);
@@ -505,18 +506,21 @@ _gimp_color_area_render_buf (GtkWidget         *widget,
                              guint              rowstride,
                              GimpRGB           *color)
 {
-  guint    x, y;
-  guint    check_size = 0;
-  guchar   light[3];
-  guchar   dark[3];
-  guchar   opaque[3];
-  guchar   insens[3];
-  guchar  *p;
-  gdouble  frac;
+  GtkStyle *style;
+  guint     x, y;
+  guint     check_size = 0;
+  guchar    light[3];
+  guchar    dark[3];
+  guchar    opaque[3];
+  guchar    insens[3];
+  guchar   *p;
+  gdouble   frac;
 
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (buf != NULL);
   g_return_if_fail (color != NULL);
+
+  style = gtk_widget_get_style (widget);
 
   switch (type)
     {
@@ -535,9 +539,9 @@ _gimp_color_area_render_buf (GtkWidget         *widget,
 
   gimp_rgb_get_uchar (color, opaque, opaque + 1, opaque + 2);
 
-  insens[0] = widget->style->bg[GTK_STATE_INSENSITIVE].red   >> 8;
-  insens[1] = widget->style->bg[GTK_STATE_INSENSITIVE].green >> 8;
-  insens[2] = widget->style->bg[GTK_STATE_INSENSITIVE].blue  >> 8;
+  insens[0] = style->bg[GTK_STATE_INSENSITIVE].red   >> 8;
+  insens[1] = style->bg[GTK_STATE_INSENSITIVE].green >> 8;
+  insens[2] = style->bg[GTK_STATE_INSENSITIVE].blue  >> 8;
 
   if (insensitive || check_size == 0 || color->a == 1.0)
     {
