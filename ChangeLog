@@ -1,5 +1,10 @@
 2008-06-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimplanguagestore-parser.c: include
+	"libgimpbase/gimpbase.h" instead of "libgimpbase/gimpenv.h".
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdbusservice.c: eek, include "gimpuimanager.h"
 	not "gimpuimanager.c".
 
