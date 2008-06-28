@@ -1,5 +1,11 @@
 2008-06-28  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/uri/uri-backend-gvfs.c (uri_progress_callback): fix
+	progress display by making sure gimp_progress_update() gets a
+	gdouble passed.
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/layers-commands.c
 	* app/actions/view-actions.c
 	* app/dialogs/about-dialog.c
