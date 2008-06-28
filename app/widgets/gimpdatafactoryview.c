@@ -44,6 +44,7 @@
 #include "gimpcontainergridview.h"
 #include "gimpcontainertreeview.h"
 #include "gimpdnd.h"
+#include "gimptagentry.h"
 #include "gimpviewrenderer.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
@@ -57,9 +58,6 @@ static void gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
                                                      const gchar         *path,
                                                      const gchar         *name,
                                                      GimpDataFactoryView *view);
-static void   gimp_data_factory_view_query_tag      (GtkEntry            *entry,
-                                                     GimpDataFactoryView *factory_view);
-
 
 G_DEFINE_TYPE (GimpDataFactoryView, gimp_data_factory_view,
                GIMP_TYPE_CONTAINER_EDITOR)
@@ -136,7 +134,6 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 {
   GimpContainerEditor *editor;
   gchar               *str;
-  GtkWidget           *tag_query_box;
   GtkWidget           *tag_query_entry;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), FALSE);
@@ -224,24 +221,17 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 
-  tag_query_box = gtk_hbox_new (FALSE, 0);
-  gtk_widget_show (tag_query_box);
-
-  tag_query_entry = gtk_entry_new ();
-  gtk_box_pack_end (GTK_BOX (tag_query_box), tag_query_entry,
-                    TRUE, TRUE, 0);
-  g_signal_connect (tag_query_entry, "activate",
-                    G_CALLBACK (gimp_data_factory_view_query_tag),
-                    factory_view);
+  tag_query_entry = gimp_tag_entry_new (GIMP_FILTERED_CONTAINER (factory_view->filtered_container),
+                                        GIMP_TAG_ENTRY_MODE_QUERY);
   gtk_widget_show (tag_query_entry);
 
   editor = GIMP_CONTAINER_EDITOR (factory_view);
 
   gtk_box_pack_start (GTK_BOX (editor->view),
-                      tag_query_box,
+                      tag_query_entry,
                       FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (editor->view),
-                         tag_query_box, 0);
+                         tag_query_entry, 0);
 
 
   return TRUE;
@@ -317,23 +307,4 @@ gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
   gtk_tree_path_free (path);
 }
 
-static void
-gimp_data_factory_view_query_tag (GtkEntry                     *entry,
-                                  GimpDataFactoryView          *factory_view)
-{
-  GimpContainerEditor          *editor;
-  GQuark                        tag;
-  GList                        *tag_list = NULL;
-
-  editor = GIMP_CONTAINER_EDITOR (factory_view);
-
-  if (strlen (gtk_entry_get_text (entry)) > 0)
-    {
-      tag = g_quark_from_string (gtk_entry_get_text (entry));
-      tag_list = g_list_append (tag_list, GUINT_TO_POINTER (tag));
-    }
-
-  gimp_filtered_container_set_filter (GIMP_FILTERED_CONTAINER (factory_view->filtered_container),
-                                      tag_list);
-}
 

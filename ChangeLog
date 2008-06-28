@@ -1,5 +1,13 @@
 2008-06-28  Aurimas Juška  <aurisj@svn.gnome.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimptagentry.[ch]: added GimpTagEntry widget.
+
+	* app/widgets/gimpdatafactoryview.c: use GimpTagEntry instead of GtkEntry.
+
+2008-06-28  Aurimas Juška  <aurisj@svn.gnome.org>
+
 	* app/core/gimpfilteredcontainer.c: detect source container changes.
 
 2008-06-27  Aurimas Juška  <aurisj@svn.gnome.org>

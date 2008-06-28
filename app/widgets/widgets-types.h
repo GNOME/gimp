@@ -178,6 +178,7 @@ typedef struct _GimpScaleButton              GimpScaleButton;
 typedef struct _GimpSettingsBox              GimpSettingsBox;
 typedef struct _GimpSizeBox                  GimpSizeBox;
 typedef struct _GimpStrokeEditor             GimpStrokeEditor;
+typedef struct _GimpTagEntry                 GimpTagEntry;
 typedef struct _GimpTemplateEditor           GimpTemplateEditor;
 typedef struct _GimpThumbBox                 GimpThumbBox;
 typedef struct _GimpUnitStore                GimpUnitStore;
