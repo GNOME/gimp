@@ -1,3 +1,14 @@
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpviewrendererimagefile.c
+	(gimp_view_renderer_imagefile_get_icon): add widget parameter so
+	we can get the right icon theme for the screen. If building
+	against GTK+ >= 2.13.4, use GFile to get proper file type icons.
+
+	(gimp_view_renderer_imagefile_render): pass the widget.
+
+	(get_icon_fallback): remove this unused function.
+
 2008-06-28  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/widgets/gtkscalebutton.h: Remove uses of GSEAL macro to make
