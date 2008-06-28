@@ -253,11 +253,15 @@ static void
 show (void)
 {
   if (GTK_WIDGET_DRAWABLE (drawing_area))
-    gdk_draw_rgb_32_image (drawing_area->window,
-                           drawing_area->style->white_gc,
-                           0, 0, IWIDTH, IHEIGHT,
-                           GDK_RGB_DITHER_NORMAL,
-                           disp, IWIDTH * 4);
+    {
+      GtkStyle *style = gtk_widget_get_style (drawing_area);
+
+      gdk_draw_rgb_32_image (drawing_area->window,
+                             style->white_gc,
+                             0, 0, IWIDTH, IHEIGHT,
+                             GDK_RGB_DITHER_NORMAL,
+                             disp, IWIDTH * 4);
+    }
 }
 
 

@@ -1488,8 +1488,9 @@ static void
 bender_update (BenderDialog *cd,
                int           update)
 {
-  gint i;
-  gint other;
+  GtkStyle *graph_style = gtk_widget_get_style (cd->graph);
+  gint      i;
+  gint      other;
 
   if (update & UP_PREVIEW)
     {
@@ -1524,16 +1525,16 @@ bender_update (BenderDialog *cd,
       GdkPoint points[256];
 
       /*  Clear the pixmap  */
-      gdk_draw_rectangle (cd->pixmap, cd->graph->style->bg_gc[GTK_STATE_NORMAL],
+      gdk_draw_rectangle (cd->pixmap, graph_style->bg_gc[GTK_STATE_NORMAL],
                           TRUE, 0, 0, GRAPH_WIDTH + RADIUS * 2, GRAPH_HEIGHT + RADIUS * 2);
 
       /*  Draw the grid lines  */
       for (i = 0; i < 5; i++)
         {
-          gdk_draw_line (cd->pixmap, cd->graph->style->dark_gc[GTK_STATE_NORMAL],
+          gdk_draw_line (cd->pixmap, graph_style->dark_gc[GTK_STATE_NORMAL],
                          RADIUS, i * (GRAPH_HEIGHT / 4) + RADIUS,
                          GRAPH_WIDTH + RADIUS, i * (GRAPH_HEIGHT / 4) + RADIUS);
-          gdk_draw_line (cd->pixmap, cd->graph->style->dark_gc[GTK_STATE_NORMAL],
+          gdk_draw_line (cd->pixmap, graph_style->dark_gc[GTK_STATE_NORMAL],
                          i * (GRAPH_WIDTH / 4) + RADIUS, RADIUS,
                          i * (GRAPH_WIDTH / 4) + RADIUS, GRAPH_HEIGHT + RADIUS);
         }
@@ -1546,7 +1547,7 @@ bender_update (BenderDialog *cd,
           points[i].x = i + RADIUS;
           points[i].y = 255 - cd->curve[other][i] + RADIUS;
         }
-      gdk_draw_points (cd->pixmap, cd->graph->style->dark_gc[GTK_STATE_NORMAL], points, 256);
+      gdk_draw_points (cd->pixmap, graph_style->dark_gc[GTK_STATE_NORMAL], points, 256);
 
 
       /*  Draw the active curve  */
@@ -1555,7 +1556,7 @@ bender_update (BenderDialog *cd,
           points[i].x = i + RADIUS;
           points[i].y = 255 - cd->curve[cd->outline][i] + RADIUS;
         }
-      gdk_draw_points (cd->pixmap, cd->graph->style->black_gc, points, 256);
+      gdk_draw_points (cd->pixmap, graph_style->black_gc, points, 256);
 
       /*  Draw the points  */
       if (cd->curve_type == SMOOTH)
@@ -1563,13 +1564,13 @@ bender_update (BenderDialog *cd,
           for (i = 0; i < 17; i++)
             {
               if (cd->points[cd->outline][i][0] != -1)
-                gdk_draw_arc (cd->pixmap, cd->graph->style->black_gc, TRUE,
+                gdk_draw_arc (cd->pixmap, graph_style->black_gc, TRUE,
                               (cd->points[cd->outline][i][0] * 255.0),
                               255 - (cd->points[cd->outline][i][1] * 255.0),
                               RADIUS * 2, RADIUS * 2, 0, 23040);
             }
         }
-      gdk_draw_drawable (cd->graph->window, cd->graph->style->black_gc, cd->pixmap,
+      gdk_draw_drawable (cd->graph->window, graph_style->black_gc, cd->pixmap,
                          0, 0, 0, 0, GRAPH_WIDTH + RADIUS * 2, GRAPH_HEIGHT + RADIUS * 2);
     }
 }

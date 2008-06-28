@@ -433,6 +433,7 @@ domap3(unsigned char *src, unsigned char *dest,
 static void
 render_frame (void)
 {
+  GtkStyle *style;
   int i;
   static int frame = 0;
   unsigned char* tmp;
@@ -443,6 +444,8 @@ render_frame (void)
 
   if (! GTK_WIDGET_DRAWABLE (drawing_area))
     return;
+
+  style = gtk_widget_get_style (drawing_area);
 
   pixels = width*height*(rgb_mode?3:1);
 
@@ -477,7 +480,7 @@ render_frame (void)
 	     );
 
       gdk_draw_rgb_image (drawing_area->window,
-			  drawing_area->style->white_gc,
+                          style->white_gc,
 			  0, 0, width, height,
 			  GDK_RGB_DITHER_NORMAL,
 			  preview_data1, width * 3);
@@ -533,7 +536,7 @@ render_frame (void)
 	     );
 
       gdk_draw_gray_image (drawing_area->window,
-			   drawing_area->style->white_gc,
+                           style->white_gc,
 			   0, 0, width, height,
 			   GDK_RGB_DITHER_NORMAL,
 			   preview_data1, width);

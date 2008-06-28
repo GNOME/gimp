@@ -594,7 +594,7 @@ static void
 dialog_adaptive_callback (GtkWidget *widget,
                           gpointer   data)
 {
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     filter_type |= FILTER_ADAPTIVE;
   else
     filter_type &= ~FILTER_ADAPTIVE;
@@ -606,7 +606,7 @@ static void
 dialog_recursive_callback (GtkWidget *widget,
                            gpointer   data)
 {
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     filter_type |= FILTER_RECURSIVE;
   else
     filter_type &= ~FILTER_RECURSIVE;

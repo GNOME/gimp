@@ -658,7 +658,7 @@ fp_change_current_range (GtkWidget *widget,
 {
   gimp_radio_button_update (widget, data);
 
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       fp_refresh_previews (fpvals.visible_frames);
       if (AW.window && GTK_WIDGET_VISIBLE (AW.window))
@@ -814,7 +814,7 @@ fp_change_current_pixels_by (GtkWidget *widget,
 {
   gimp_radio_button_update (widget, data);
 
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       fp_refresh_previews (fpvals.visible_frames);
       if (AW.window && GTK_WIDGET_VISIBLE (AW.window) && AW.range_preview)
@@ -849,7 +849,7 @@ fp_change_selection (GtkWidget *widget,
 {
   gimp_radio_button_update (widget, data);
 
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       fp_redraw_all_windows ();
     }
@@ -997,7 +997,7 @@ fp_show_hide_frame (GtkWidget *button,
   if (frame == NULL)
     return;
 
-  if (GTK_TOGGLE_BUTTON (button)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
     {
       if (!GTK_WIDGET_VISIBLE (frame))
         {
@@ -1475,19 +1475,21 @@ draw_slider (GdkWindow *window,
 static void
 draw_it (GtkWidget *widget)
 {
+  GtkStyle *style = gtk_widget_get_style (AW.aliasing_graph);
+
   draw_slider (AW.aliasing_graph->window,
-               AW.aliasing_graph->style->black_gc,
-               AW.aliasing_graph->style->dark_gc[GTK_STATE_NORMAL],
+               style->black_gc,
+               style->dark_gc[GTK_STATE_NORMAL],
                fpvals.cutoff[SHADOWS]);
 
   draw_slider (AW.aliasing_graph->window,
-               AW.aliasing_graph->style->black_gc,
-               AW.aliasing_graph->style->dark_gc[GTK_STATE_NORMAL],
+               style->black_gc,
+               style->dark_gc[GTK_STATE_NORMAL],
                fpvals.cutoff[MIDTONES]);
 
   draw_slider (AW.aliasing_graph->window,
-               AW.aliasing_graph->style->black_gc,
-               AW.aliasing_graph->style->dark_gc[GTK_STATE_SELECTED],
+               style->black_gc,
+               style->dark_gc[GTK_STATE_SELECTED],
                fpvals.offset);
 }
 

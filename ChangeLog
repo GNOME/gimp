@@ -1,3 +1,22 @@
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/animation-play.c
+	* plug-ins/common/cml-explorer.c
+	* plug-ins/common/convolution-matrix.c
+	* plug-ins/common/curve-bend.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/filter-pack.c
+	* plug-ins/common/gee-zoom.c
+	* plug-ins/common/gee.c
+	* plug-ins/common/lens-flare.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/postscript.c
+	* plug-ins/common/sample-colorize.c
+	* plug-ins/common/sphere-designer.c
+	* plug-ins/common/tile-small.c: use accessors instead of accessing
+	members of GTK+ widgets directly.
+
 2008-06-28  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* pygimp-pdb.c:
