@@ -1,5 +1,11 @@
 2008-06-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/tools-commands.c (tools_activate_enum_action):
+	simply call gimp_enum_action_selected() instead of poking around
+	in the action's internals calling gimp_action_activate()
+
+2008-06-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpaction.c (gimp_action_set_proxy): simplify the
 	logic of setting "color" or "viewable" previews on menuitems.
 
