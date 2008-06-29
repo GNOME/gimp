@@ -1,5 +1,11 @@
 2008-06-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpgegltool.c (gimp_gegl_tool_dialog): remove size
+	group code because the size group doesn't exist if there is no
+	settings box.
+
+2008-06-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/channel-options-dialog.c
 	* app/dialogs/palette-import-dialog.c
 	* app/display/gimpdisplayshell-callbacks.c
