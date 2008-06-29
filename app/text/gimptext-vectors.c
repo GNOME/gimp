@@ -25,11 +25,8 @@
 
 #define PANGO_ENABLE_ENGINE
 #include <cairo.h>
-#include <pango/pangoft2.h>
+#include <pango/pangocairo.h>
 
-#include <ft2build.h>
-#include FT_GLYPH_H
-#include FT_OUTLINE_H
 
 #include "text-types.h"
 
@@ -109,11 +106,12 @@ gimp_text_vectors_new (GimpImage *image,
 
 static inline void
 gimp_text_vector_coords (RenderContext   *context,
-                         const FT_Vector *vector,
+                         const double x,
+                         const double y,
                          GimpCoords      *coords)
 {
-  coords->x        = context->offset_x + (gdouble) vector->x / 64.0;
-  coords->y        = context->offset_y - (gdouble) vector->y / 64.0;
+  coords->x        = context->offset_x + (gdouble) x;
+  coords->y        = context->offset_y + (gdouble) y;
   coords->pressure = GIMP_COORDS_DEFAULT_PRESSURE;
   coords->xtilt    = GIMP_COORDS_DEFAULT_TILT;
   coords->ytilt    = GIMP_COORDS_DEFAULT_TILT;
@@ -121,17 +119,18 @@ gimp_text_vector_coords (RenderContext   *context,
 }
 
 static gint
-moveto (const FT_Vector *to,
+moveto (const double x,
+        const double y,
         gpointer         data)
 {
   RenderContext *context = data;
   GimpCoords     start;
 
 #if GIMP_TEXT_DEBUG
-  g_printerr ("moveto  %f, %f\n", to->x / 64.0, to->y / 64.0);
+  g_printerr ("moveto  %f, %f\n", x, y);
 #endif
 
-  gimp_text_vector_coords (context, to, &start);
+  gimp_text_vector_coords (context, x, y, &start);
 
   if (context->stroke)
     gimp_stroke_close (context->stroke);
@@ -145,20 +144,21 @@ moveto (const FT_Vector *to,
 }
 
 static gint
-lineto (const FT_Vector *to,
+lineto (const double x,
+        const double y,
         gpointer         data)
 {
   RenderContext *context = data;
   GimpCoords     end;
 
 #if GIMP_TEXT_DEBUG
-  g_printerr ("lineto  %f, %f\n", to->x / 64.0, to->y / 64.0);
+  g_printerr ("lineto  %f, %f\n", x, y);
 #endif
 
   if (! context->stroke)
     return 0;
 
-  gimp_text_vector_coords (context, to, &end);
+  gimp_text_vector_coords (context, x, y, &end);
 
   gimp_bezier_stroke_lineto (context->stroke, &end);
 
@@ -166,33 +166,12 @@ lineto (const FT_Vector *to,
 }
 
 static gint
-conicto (const FT_Vector *ftcontrol,
-         const FT_Vector *to,
-         gpointer         data)
-{
-  RenderContext *context = data;
-  GimpCoords     control;
-  GimpCoords     end;
-
-#if GIMP_TEXT_DEBUG
-  g_printerr ("conicto %f, %f\n", to->x / 64.0, to->y / 64.0);
-#endif
-
-  if (! context->stroke)
-    return 0;
-
-  gimp_text_vector_coords (context, ftcontrol, &control);
-  gimp_text_vector_coords (context, to, &end);
-
-  gimp_bezier_stroke_conicto (context->stroke, &control, &end);
-
-  return 0;
-}
-
-static gint
-cubicto (const FT_Vector *ftcontrol1,
-         const FT_Vector *ftcontrol2,
-         const FT_Vector *to,
+cubicto (const double x1,
+         const double y1,
+         const double x2,
+         const double y2,
+         const double x3,
+         const double y3,
          gpointer         data)
 {
   RenderContext *context = data;
@@ -201,15 +180,15 @@ cubicto (const FT_Vector *ftcontrol1,
   GimpCoords     end;
 
 #if GIMP_TEXT_DEBUG
-  g_printerr ("cubicto %f, %f\n", to->x / 64.0, to->y / 64.0);
+  g_printerr ("cubicto %f, %f\n", x3, y3);
 #endif
 
   if (! context->stroke)
     return 0;
 
-  gimp_text_vector_coords (context, ftcontrol1, &control1);
-  gimp_text_vector_coords (context, ftcontrol2, &control2);
-  gimp_text_vector_coords (context, to, &end);
+  gimp_text_vector_coords (context, x1, y1, &control1);
+  gimp_text_vector_coords (context, x2, y2, &control2);
+  gimp_text_vector_coords (context, x3, y3, &end);
 
   gimp_bezier_stroke_cubicto (context->stroke, &control1, &control2, &end);
 
@@ -226,52 +205,64 @@ gimp_text_render_vectors (PangoFont            *font,
                           gint                  y,
                           RenderContext        *context)
 {
-  const FT_Outline_Funcs  outline_funcs =
+  cairo_surface_t     *surface;
+  cairo_t             *cr;
+  cairo_path_t        *cpath;
+  cairo_path_data_t   *data;
+  cairo_scaled_font_t *cfont;
+  cairo_glyph_t        cglyph;
+
+  int i;
+
+  context->offset_x = (gdouble) x / PANGO_SCALE;
+  context->offset_y = (gdouble) y / PANGO_SCALE;
+
+  cglyph.x =     0;
+  cglyph.y =     0;
+  cglyph.index = pango_glyph;
+
+  surface = cairo_image_surface_create ( CAIRO_FORMAT_A8, 2, 2);
+  cr = cairo_create (surface);
+
+  cfont = pango_cairo_font_get_scaled_font ( (PangoCairoFont*) font);
+
+  cairo_set_scaled_font (cr, cfont);
+  cairo_set_font_options (cr, options);
+
+  cairo_transform (cr, matrix);
+
+  cairo_glyph_path (cr, &cglyph, 1);
+
+  cpath = cairo_copy_path (cr);
+
+  for(i=0;i<cpath->num_data; i+=cpath->data[i].header.length)
   {
-    moveto,
-    lineto,
-    conicto,
-    cubicto,
-    0,
-    0
-  };
-
-  FT_Face   face;
-  FT_Glyph  glyph;
-  FT_Int32  flags;
-   
-  /* 
-   * Since gimp is partly ported to pangocairo (but not fully) the flags are generated from a cairo_font_options_t like this.
-   * All FT2 functions should later be replaced with pangocairo, getting rid of this eyesore. 
-   * */
-
-  if (cairo_font_options_get_antialias (options) != CAIRO_ANTIALIAS_NONE)
-    flags = FT_LOAD_NO_BITMAP;
-  else
-    flags = FT_LOAD_TARGET_MONO;
- 
-  if (cairo_font_options_get_hint_style (options) == CAIRO_HINT_STYLE_NONE)
-    flags |= FT_LOAD_NO_HINTING;
-
-  face = pango_fc_font_lock_face (PANGO_FC_FONT (font));
-
-  FT_Load_Glyph (face, (FT_UInt) pango_glyph, flags);
-
-  FT_Get_Glyph (face->glyph, &glyph);
-
-
-  if (face->glyph->format == FT_GLYPH_FORMAT_OUTLINE)
+    data = &cpath->data[i];
+    switch (data->header.type)
     {
-        
-      FT_OutlineGlyph outline_glyph = (FT_OutlineGlyph) glyph;
-
-      context->offset_x = (gdouble) x / PANGO_SCALE;
-      context->offset_y = (gdouble) y / PANGO_SCALE;
-      
-      FT_Outline_Decompose (&outline_glyph->outline, &outline_funcs, context); 
+    case CAIRO_PATH_MOVE_TO:
+      moveto(data[1].point.x, data[1].point.y, context);
+      break;
+    case CAIRO_PATH_LINE_TO:
+      lineto(data[1].point.x, data[1].point.y, context);
+      break;
+    case CAIRO_PATH_CURVE_TO:
+      cubicto(data[1].point.x, data[1].point.y,
+              data[2].point.x, data[2].point.y,
+              data[3].point.x, data[3].point.y,
+              context);
+      break;
+    case CAIRO_PATH_CLOSE_PATH:
+      /*pathclose function goes here*/
+      break;
     }
+  }
 
-  FT_Done_Glyph (glyph);
+  cairo_path_destroy (cpath);
 
-  pango_fc_font_unlock_face (PANGO_FC_FONT (font));
+  cairo_destroy (cr);
+  cairo_surface_destroy (surface);
+
 }
+
+
