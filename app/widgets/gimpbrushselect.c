@@ -332,7 +332,7 @@ gimp_brush_select_opacity_update (GtkAdjustment   *adjustment,
                                   GimpBrushSelect *select)
 {
   gimp_context_set_opacity (GIMP_PDB_DIALOG (select)->context,
-                            adjustment->value / 100.0);
+                            gtk_adjustment_get_value (adjustment) / 100.0);
 }
 
 static void
@@ -353,9 +353,11 @@ static void
 gimp_brush_select_spacing_update (GtkAdjustment   *adjustment,
                                   GimpBrushSelect *select)
 {
-  if (select->spacing != adjustment->value)
+  gdouble value = gtk_adjustment_get_value (adjustment);
+
+  if (select->spacing != value)
     {
-      select->spacing = adjustment->value;
+      select->spacing = value;
 
       gimp_pdb_dialog_run_callback (GIMP_PDB_DIALOG (select), FALSE);
     }

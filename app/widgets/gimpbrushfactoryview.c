@@ -242,7 +242,7 @@ gimp_brush_factory_view_spacing_update (GtkAdjustment        *adjustment,
                                        gimp_brush_factory_view_spacing_changed,
                                        view);
 
-      gimp_brush_set_spacing (brush, adjustment->value);
+      gimp_brush_set_spacing (brush, gtk_adjustment_get_value (adjustment));
 
       g_signal_handlers_unblock_by_func (brush,
                                          gimp_brush_factory_view_spacing_changed,

@@ -823,7 +823,8 @@ palette_editor_columns_changed (GtkAdjustment     *adj,
     {
       GimpPalette *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 
-      gimp_palette_set_columns (palette, ROUND (adj->value));
+      gimp_palette_set_columns (palette,
+                                ROUND (gtk_adjustment_get_value (adj)));
     }
 }
 

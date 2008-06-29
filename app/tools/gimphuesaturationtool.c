@@ -568,12 +568,11 @@ static void
 hue_saturation_hue_changed (GtkAdjustment         *adjustment,
                             GimpHueSaturationTool *hs_tool)
 {
-  GimpHueSaturationConfig *config = hs_tool->config;
-  gdouble                  value  = adjustment->value / 180.0;
+  gdouble value = gtk_adjustment_get_value (adjustment) / 180.0;
 
-  if (config->hue[config->range] != value)
+  if (hs_tool->config->hue[hs_tool->config->range] != value)
     {
-      g_object_set (config,
+      g_object_set (hs_tool->config,
                     "hue", value,
                     NULL);
     }
@@ -583,12 +582,11 @@ static void
 hue_saturation_lightness_changed (GtkAdjustment         *adjustment,
                                   GimpHueSaturationTool *hs_tool)
 {
-  GimpHueSaturationConfig *config = hs_tool->config;
-  gdouble                  value  = adjustment->value / 100.0;
+  gdouble value = gtk_adjustment_get_value (adjustment) / 100.0;
 
-  if (config->lightness[config->range] != value)
+  if (hs_tool->config->lightness[hs_tool->config->range] != value)
     {
-      g_object_set (config,
+      g_object_set (hs_tool->config,
                     "lightness", value,
                     NULL);
     }
@@ -598,12 +596,11 @@ static void
 hue_saturation_saturation_changed (GtkAdjustment         *adjustment,
                                    GimpHueSaturationTool *hs_tool)
 {
-  GimpHueSaturationConfig *config = hs_tool->config;
-  gdouble                  value  = adjustment->value / 100.0;
+  gdouble value = gtk_adjustment_get_value (adjustment) / 100.0;
 
-  if (config->saturation[config->range] != value)
+  if (hs_tool->config->saturation[hs_tool->config->range] != value)
     {
-      g_object_set (config,
+      g_object_set (hs_tool->config,
                     "saturation", value,
                     NULL);
     }
@@ -613,12 +610,11 @@ static void
 hue_saturation_overlap_changed (GtkAdjustment         *adjustment,
                                 GimpHueSaturationTool *hs_tool)
 {
-  GimpHueSaturationConfig *config = hs_tool->config;
-  gdouble                  value  = adjustment->value / 100.0;
+  gdouble value = gtk_adjustment_get_value (adjustment) / 100.0;
 
-  if (config->overlap != value)
+  if (hs_tool->config->overlap != value)
     {
-      g_object_set (config,
+      g_object_set (hs_tool->config,
                     "overlap", value,
                     NULL);
     }

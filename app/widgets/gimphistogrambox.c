@@ -193,28 +193,30 @@ static void
 gimp_histogram_box_low_adj_update (GtkAdjustment    *adjustment,
                                    GimpHistogramBox *box)
 {
-  if ((gdouble) box->view->start == adjustment->value)
-    return;
+  gint value = ROUND (gtk_adjustment_get_value (adjustment));
 
-  box->high_adj->lower = adjustment->value;
-  gtk_adjustment_changed (box->high_adj);
+  if (box->view->start != value)
+    {
+      box->high_adj->lower = value;
+      gtk_adjustment_changed (box->high_adj);
 
-  gimp_histogram_view_set_range (box->view,
-                                 adjustment->value, box->view->end);
+      gimp_histogram_view_set_range (box->view, value, box->view->end);
+    }
 }
 
 static void
 gimp_histogram_box_high_adj_update (GtkAdjustment    *adjustment,
                                     GimpHistogramBox *box)
 {
-  if ((gdouble) box->view->end == adjustment->value)
-    return;
+  gint value = ROUND (gtk_adjustment_get_value (value));
 
-  box->low_adj->upper = adjustment->value;
-  gtk_adjustment_changed (box->low_adj);
+  if (box->view->end != value)
+    {
+      box->low_adj->upper = value;
+      gtk_adjustment_changed (box->low_adj);
 
-  gimp_histogram_view_set_range (box->view,
-                                 box->view->start, adjustment->value);
+      gimp_histogram_view_set_range (box->view, box->view->start, value);
+    }
 }
 
 static void

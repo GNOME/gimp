@@ -541,7 +541,7 @@ gimp_navigation_editor_scroll (GimpNavigationView   *view,
 
       g_assert (adj != NULL);
 
-      value = adj->value;
+      value = gtk_adjustment_get_value (adj);
 
       switch (direction)
         {
@@ -566,7 +566,8 @@ static void
 gimp_navigation_editor_zoom_adj_changed (GtkAdjustment        *adj,
                                          GimpNavigationEditor *editor)
 {
-  gimp_display_shell_scale (editor->shell, GIMP_ZOOM_TO, pow (2.0, adj->value));
+  gimp_display_shell_scale (editor->shell, GIMP_ZOOM_TO,
+                            pow (2.0, gtk_adjustment_get_value (adj)));
 }
 
 static void

@@ -1,5 +1,28 @@
 2008-06-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/dialogs/channel-options-dialog.c
+	* app/dialogs/palette-import-dialog.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpnavigationeditor.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpposterizetool.c
+	* app/widgets/gimpbrusheditor.c
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimpbrushselect.c
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpcontainertreeview-dnd.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimphistogrambox.c
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimpscalebutton.c: replace adjustment->value by
+	gtk_adjustment_get_value (adjustment).
+
+2008-06-29  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/color-rotate/color-rotate-callbacks.c
 	* plug-ins/gfig/gfig-grid.c
 	* plug-ins/gimpressionist/general.c

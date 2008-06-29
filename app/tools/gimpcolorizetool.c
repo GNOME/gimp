@@ -312,7 +312,7 @@ static void
 colorize_hue_changed (GtkAdjustment    *adjustment,
                       GimpColorizeTool *col_tool)
 {
-  gdouble value = adjustment->value / 360.0;
+  gdouble value = gtk_adjustment_get_value (adjustment) / 360.0;
 
   if (col_tool->config->hue != value)
     {
@@ -326,7 +326,7 @@ static void
 colorize_saturation_changed (GtkAdjustment    *adjustment,
                              GimpColorizeTool *col_tool)
 {
-  gdouble value = adjustment->value / 100.0;
+  gdouble value = gtk_adjustment_get_value (adjustment) / 100.0;
 
   if (col_tool->config->saturation != value)
     {
@@ -340,7 +340,7 @@ static void
 colorize_lightness_changed (GtkAdjustment    *adjustment,
                             GimpColorizeTool *col_tool)
 {
-  gdouble value = adjustment->value / 100.0;
+  gdouble value = gtk_adjustment_get_value (adjustment) / 100.0;
 
   if (col_tool->config->lightness != value)
     {

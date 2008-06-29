@@ -386,7 +386,9 @@ brightness_contrast_brightness_changed (GtkAdjustment              *adjustment,
                                         GimpBrightnessContrastTool *bc_tool)
 {
   GimpBrightnessContrastConfig *config = bc_tool->config;
-  gdouble                       value  = adjustment->value / 127.0;
+  gdouble                       value;
+
+  value = gtk_adjustment_get_value (adjustment) / 127.0;
 
   if (config->brightness != value)
     {
@@ -401,7 +403,9 @@ brightness_contrast_contrast_changed (GtkAdjustment              *adjustment,
                                       GimpBrightnessContrastTool *bc_tool)
 {
   GimpBrightnessContrastConfig *config = bc_tool->config;
-  gdouble                       value  = adjustment->value / 127.0;
+  gdouble                       value;
+
+  value = gtk_adjustment_get_value (adjustment) / 127.0;
 
   if (config->contrast != value)
     {

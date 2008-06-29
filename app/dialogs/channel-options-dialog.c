@@ -191,7 +191,7 @@ channel_options_opacity_update (GtkAdjustment *adjustment,
   GimpRGB  color;
 
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (data), &color);
-  gimp_rgb_set_alpha (&color, adjustment->value / 100.0);
+  gimp_rgb_set_alpha (&color, gtk_adjustment_get_value (adjustment) / 100.0);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (data), &color);
 }
 

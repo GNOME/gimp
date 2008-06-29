@@ -586,7 +586,7 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
 
   adjustment = GTK_ADJUSTMENT (editor->scroll_data);
 
-  old_value     = adjustment->value;
+  old_value     = gtk_adjustment_get_value (adjustment);
   old_page_size = adjustment->page_size;
 
   switch (zoom_type)
@@ -776,8 +776,9 @@ gradient_editor_scrollbar_update (GtkAdjustment      *adjustment,
                           editor->zoom_factor);
 
   str2 = g_strdup_printf (_("Displaying [%0.4f, %0.4f]"),
-                          adjustment->value,
-                          adjustment->value + adjustment->page_size);
+                          gtk_adjustment_get_value (adjustment),
+                          gtk_adjustment_get_value (adjustment) +
+                          adjustment->page_size);
 
   gradient_editor_set_hint (editor, str1, str2, NULL, NULL);
 
@@ -787,8 +788,8 @@ gradient_editor_scrollbar_update (GtkAdjustment      *adjustment,
   renderer = GIMP_VIEW_RENDERER_GRADIENT (GIMP_VIEW (data_editor->view)->renderer);
 
   gimp_view_renderer_gradient_set_offsets (renderer,
-                                           adjustment->value,
-                                           adjustment->value +
+                                           gtk_adjustment_get_value (adjustment),
+                                           gtk_adjustment_get_value (adjustment) +
                                            adjustment->page_size,
                                            editor->instant_update);
   gimp_gradient_editor_update (editor);
@@ -923,7 +924,7 @@ view_events (GtkWidget          *widget,
         else
           {
             GtkAdjustment *adj   = GTK_ADJUSTMENT (editor->scroll_data);
-            gfloat         value = adj->value;
+            gfloat         value = gtk_adjustment_get_value (adj);
 
             switch (sevent->direction)
               {
@@ -1122,9 +1123,10 @@ control_events (GtkWidget          *widget,
 
             gfloat new_value;
 
-            new_value = adj->value + ((sevent->direction == GDK_SCROLL_UP) ?
-                                      - adj->page_increment / 2 :
-                                      adj->page_increment / 2);
+            new_value = (gtk_adjustment_get_value (adj) +
+                         ((sevent->direction == GDK_SCROLL_UP) ?
+                          - adj->page_increment / 2 :
+                          adj->page_increment / 2));
 
             new_value = CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
 
@@ -1238,8 +1240,9 @@ control_expose (GtkWidget          *widget,
                 GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data),
                 cr,
                 width, height,
-                adj->value,
-                adj->value + adj->page_size);
+                gtk_adjustment_get_value (adj),
+                gtk_adjustment_get_value (adj) +
+                adj->page_size);
 
   cairo_destroy (cr);
 

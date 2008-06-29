@@ -90,14 +90,21 @@ gimp_scale_button_update_tooltip (GimpScaleButton *button)
 {
   GtkAdjustment *adj;
   gchar         *text;
+  gdouble        value;
+  gdouble        lower;
+  gdouble        upper;
 
   adj = gimp_gtk_scale_button_get_adjustment (GTK_SCALE_BUTTON (button));
+
+  value = gtk_adjustment_get_value (adj);
+  lower = adj->lower;
+  upper = adj->upper;
 
   /*  use U+2009 THIN SPACE to seperate the percent sign from the number */
 
   text = g_strdup_printf ("%d\342\200\211%%",
-                          (gint) (0.5 + ((adj->value - adj->lower) * 100.0 /
-                                         (adj->upper - adj->lower))));
+                          (gint) (0.5 + ((value - lower) * 100.0 /
+                                         (upper - lower))));
 
   gtk_widget_set_tooltip_text (GTK_WIDGET (button), text);
   g_free (text);
