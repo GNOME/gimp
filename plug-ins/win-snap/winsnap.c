@@ -817,7 +817,7 @@ snap_toggle_update (GtkWidget *widget,
 {
   gint *toggle_val = (gint *) radio_button;
 
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     *toggle_val = TRUE;
   else
     *toggle_val = FALSE;

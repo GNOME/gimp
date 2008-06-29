@@ -534,27 +534,28 @@ draw_grid_iso (GdkGC *drawgc)
 static GdkGC *
 gfig_get_grid_gc (GtkWidget *w, gint gctype)
 {
+  GtkStyle *style = gtk_widget_get_style (w);
   switch (gctype)
     {
     case GFIG_BLACK_GC:
-      return (w->style->black_gc);
+      return style->black_gc;
     case GFIG_WHITE_GC:
-      return (w->style->white_gc);
+      return style->white_gc;
     case GFIG_GREY_GC:
-      return (grid_hightlight_drawgc);
+      return grid_hightlight_drawgc;
     case GTK_STATE_NORMAL:
-      return (w->style->bg_gc[GTK_STATE_NORMAL]);
+      return style->bg_gc[GTK_STATE_NORMAL];
     case GTK_STATE_ACTIVE:
-      return (w->style->bg_gc[GTK_STATE_ACTIVE]);
+      return style->bg_gc[GTK_STATE_ACTIVE];
     case GTK_STATE_PRELIGHT:
-      return (w->style->bg_gc[GTK_STATE_PRELIGHT]);
+      return style->bg_gc[GTK_STATE_PRELIGHT];
     case GTK_STATE_SELECTED:
-      return (w->style->bg_gc[GTK_STATE_SELECTED]);
+      return style->bg_gc[GTK_STATE_SELECTED];
     case GTK_STATE_INSENSITIVE:
-      return (w->style->bg_gc[GTK_STATE_INSENSITIVE]);
+      return style->bg_gc[GTK_STATE_INSENSITIVE];
     default:
       g_warning ("Unknown type for grid colouring\n");
-      return (w->style->bg_gc[GTK_STATE_PRELIGHT]);
+      return style->bg_gc[GTK_STATE_PRELIGHT];
     }
 }
 

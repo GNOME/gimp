@@ -62,10 +62,10 @@ general_bg_callback (GtkWidget *wg, void *d)
 void
 general_store (void)
 {
-  pcvals.general_paint_edges = GTK_TOGGLE_BUTTON (general_paint_edges)->active;
+  pcvals.general_paint_edges = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (general_paint_edges));
   pcvals.general_dark_edge = GTK_ADJUSTMENT (general_dark_edge_adjust)->value;
-  pcvals.general_tileable = GTK_TOGGLE_BUTTON (general_tileable)->active;
-  pcvals.general_drop_shadow = GTK_TOGGLE_BUTTON (general_drop_shadow)->active;
+  pcvals.general_tileable = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (general_tileable));
+  pcvals.general_drop_shadow = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (general_drop_shadow));
   pcvals.general_shadow_darkness = GTK_ADJUSTMENT (general_shadow_adjust)->value;
   pcvals.general_shadow_depth = GTK_ADJUSTMENT (general_shadow_depth)->value;
   pcvals.general_shadow_blur = GTK_ADJUSTMENT (general_shadow_blur)->value;

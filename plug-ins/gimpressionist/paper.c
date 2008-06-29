@@ -61,7 +61,7 @@ static void paper_update_preview (void)
         {
           for (j = 0; j < p.width; j++)
             buf[j] = p.col[k + j * 3];
-          if (GTK_TOGGLE_BUTTON (paper_invert)->active)
+          if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (paper_invert)))
             for (j = 0; j < p.width; j++)
               buf[j] = 255 - buf[j];
         }
@@ -119,9 +119,9 @@ paper_restore (void)
 void
 paper_store (void)
 {
-  pcvals.paper_invert = GTK_TOGGLE_BUTTON (paper_invert)->active;
-  pcvals.paper_invert = GTK_TOGGLE_BUTTON (paper_invert)->active;
-  pcvals.paper_overlay = GTK_TOGGLE_BUTTON (paper_overlay)->active;
+  pcvals.paper_invert = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (paper_invert));
+  pcvals.paper_invert = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (paper_invert));
+  pcvals.paper_overlay = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (paper_overlay));
 }
 
 void

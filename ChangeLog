@@ -1,3 +1,20 @@
+2008-06-29  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/color-rotate/color-rotate-callbacks.c
+	* plug-ins/gfig/gfig-grid.c
+	* plug-ins/gimpressionist/general.c
+	* plug-ins/gimpressionist/orientmap.c
+	* plug-ins/gimpressionist/paper.c
+	* plug-ins/gimpressionist/placement.c
+	* plug-ins/gimpressionist/sizemap.c
+	* plug-ins/gimpressionist/utils.c
+	* plug-ins/ifs-compose/ifs-compose.c
+	* plug-ins/imagemap/imap_grid.c
+	* plug-ins/jpeg/jpeg-save.c
+	* plug-ins/print/print-preview.c
+	* plug-ins/win-snap/winsnap.c: use accessors instead of accessing
+	members of GTK+ widgets directly.
+
 2008-06-28  Michael Natterer  <mitch@gimp.org>
 
 	* pygimp-pdb.c:

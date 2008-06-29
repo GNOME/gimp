@@ -352,22 +352,31 @@ draw_crosses(GdkWindow *window, GdkGC* gc, gint width, gint height)
 void
 draw_grid(GtkWidget *preview)
 {
-   if (grid_snap && grid_type != GRID_HIDDEN) {
+  if (grid_snap && grid_type != GRID_HIDDEN)
+    {
       gint width = preview_get_width(preview);
       gint height = preview_get_height(preview);
 
-      if (!grid_gc) {
-	 grid_gc = gdk_gc_new(preview->window);
+      if (!grid_gc)
+        {
+          grid_gc = gdk_gc_new(preview->window);
 
-	 gdk_gc_set_line_attributes(grid_gc, 1, GDK_LINE_ON_OFF_DASH,
-				    GDK_CAP_BUTT, GDK_JOIN_BEVEL);
-      }
+          gdk_gc_set_line_attributes(grid_gc, 1, GDK_LINE_ON_OFF_DASH,
+                                     GDK_CAP_BUTT, GDK_JOIN_BEVEL);
+        }
+
       if (grid_type == GRID_LINES)
-	 draw_lines(preview->window, grid_gc, width, height);
+        {
+          draw_lines(preview->window, grid_gc, width, height);
+        }
       else
-	 draw_crosses(preview->window, preview->style->black_gc, width,
-		      height);
-   }
+        {
+          GtkStyle *style = gtk_widget_get_style (preview);
+
+          draw_crosses(preview->window, style->black_gc, width,
+                       height);
+        }
+    }
 }
 
 void
