@@ -179,6 +179,11 @@ gimp_filtered_container_object_matches (GimpFilteredContainer          *filtered
   filter_tag = filtered_container->filter;
   while (filter_tag)
     {
+      if (! filter_tag->data)
+        {
+          return FALSE;
+        }
+
       object_tag = gimp_tagged_get_tags (GIMP_TAGGED (object));
       while (object_tag)
         {

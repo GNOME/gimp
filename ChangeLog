@@ -1,3 +1,8 @@
+2008-06-29  Aurimas Juška  <aurisj@svn.gnome.org>
+
+	* app/core/gimpfilteredcontainer.c
+	* app/widgets/gimptagentry.c: multiple tag querying support.
+
 2008-06-28  Aurimas Juška  <aurisj@svn.gnome.org>
 
 	* app/widgets/Makefile.am

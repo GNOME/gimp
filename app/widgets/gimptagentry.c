@@ -38,7 +38,9 @@
 static void     gimp_tag_entry_changed         (GtkEntry          *entry,
                                                 GimpTagEntry      *view);
 
-static void     gimp_tag_entry_query_tag       (GtkEntry             *entry);
+static void     gimp_tag_entry_query_tag       (GimpTagEntry      *entry);
+
+static gchar ** gimp_tag_entry_parse_tags      (GimpTagEntry      *entry);
 
 G_DEFINE_TYPE (GimpTagEntry, gimp_tag_entry, GTK_TYPE_ENTRY);
 
@@ -54,27 +56,6 @@ gimp_tag_entry_class_init (GimpTagEntryClass *klass)
 static void
 gimp_tag_entry_init (GimpTagEntry *entry)
 {
-/*  completion = g_object_new (GTK_TYPE_ENTRY_COMPLETION,
-                             "inline-completion",  TRUE,
-                             "popup-single-match", FALSE,
-                             "popup-set-width",    FALSE,
-                             NULL);
-
-  store = gtk_list_store_new (GIMP_TAG_ENTRY_NUM_COLUMNS,
-                              GIMP_TYPE_VIEW_RENDERER,
-                              G_TYPE_STRING);
-
-  gtk_entry_completion_set_model (completion, GTK_TREE_MODEL (store));
-  g_object_unref (store);
-
-  gtk_entry_set_completion (GTK_ENTRY (entry), completion);
-
-  g_signal_connect (completion, "match-selected",
-                    G_CALLBACK (gimp_tag_entry_match_selected),
-                    entry);
-
-  g_object_unref (completion); */
-
   g_signal_connect (entry, "changed",
                     G_CALLBACK (gimp_tag_entry_changed),
                     entry);
@@ -114,29 +95,51 @@ gimp_tag_entry_changed (GtkEntry          *entry,
 }
 
 static void
-gimp_tag_entry_match_selected (GtkEntryCompletion *widget,
-                               GtkTreeModel       *model,
-                               GtkTreeIter        *iter,
-                               GimpTagEntry       *view)
-{
-}
-
-static void
-gimp_tag_entry_query_tag (GtkEntry             *entry)
+gimp_tag_entry_query_tag (GimpTagEntry         *entry)
 {
   GimpTagEntry                 *tag_entry;
-  GQuark                        tag;
-  GList                        *tag_list = NULL;
+  gchar                       **parsed_tags;
+  gint                          count;
+  gint                          i;
+  GimpTag                       tag;
+  GList                        *query_list = NULL;
 
-  tag_entry = GIMP_TAG_ENTRY (entry);
-
-  if (strlen (gtk_entry_get_text (entry)) > 0)
+  parsed_tags = gimp_tag_entry_parse_tags (entry);
+  count = g_strv_length (parsed_tags);
+  for (i = 0; i < count; i++)
     {
-      tag = g_quark_from_string (gtk_entry_get_text (entry));
-      tag_list = g_list_append (tag_list, GUINT_TO_POINTER (tag));
+      if (strlen (parsed_tags[i]) > 0)
+        {
+          tag = g_quark_try_string (parsed_tags[i]);
+          query_list = g_list_append (query_list, GUINT_TO_POINTER (tag));
+        }
     }
+  g_strfreev (parsed_tags);
 
   gimp_filtered_container_set_filter (GIMP_FILTERED_CONTAINER (tag_entry->tagged_container),
-                                      tag_list);
+                                      query_list);
+}
+
+static gchar **
+gimp_tag_entry_parse_tags (GimpTagEntry        *entry)
+{
+  const gchar          *tag_str;
+  gchar               **split_tags;
+  gchar               **parsed_tags;
+  gint                  length;
+  gint                  i;
+
+  tag_str = gtk_entry_get_text (GIMP_TAG_ENTRY (entry));
+  split_tags = g_strsplit (tag_str, ",", 0);
+  length = g_strv_length (split_tags);
+  parsed_tags = g_malloc ((length + 1) * sizeof (gchar **));
+  for (i = 0; i < length; i++)
+    {
+      parsed_tags[i] = g_strdup (g_strstrip (split_tags[i]));
+    }
+  parsed_tags[length] = NULL;
+
+  g_strfreev (split_tags);
+  return parsed_tags;
 }
 
