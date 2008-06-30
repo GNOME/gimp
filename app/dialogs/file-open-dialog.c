@@ -170,6 +170,10 @@ file_open_dialog_response (GtkWidget *open_dialog,
 
       gtk_widget_destroy (open_dialog);
     }
+  else
+    {
+      gimp_file_dialog_set_sensitive (dialog, TRUE);
+    }
 
   g_slist_foreach (uris, (GFunc) g_free, NULL);
   g_slist_free (uris);

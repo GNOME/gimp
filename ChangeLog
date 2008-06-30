@@ -1,3 +1,9 @@
+2008-06-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/file-open-dialog.c (file_open_dialog_response):
+	restore code that sets the dialog back to sensitive when opening
+	fails because it stays open. Fixes bug #540801.
+
 2008-06-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpgegltool.c (gimp_gegl_tool_dialog): remove size
