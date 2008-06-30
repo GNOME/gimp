@@ -21,6 +21,10 @@
 #  include <config.h>
 #endif
 
+#ifdef GIMP_DISABLE_DEPRECATED
+#  undef GIMP_DISABLE_DEPRECATED
+#endif
+
 #include "pygimp.h"
 
 static PyObject *

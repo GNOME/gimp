@@ -68,9 +68,9 @@ rgb_set(PyObject *self, PyObject *args, PyObject *kwargs)
 	SET_MEMBER(b);
     }
 
-    if (a)
+    if (a) {
 	SET_MEMBER(a);
-
+    }
 #undef SET_MEMBER
 
     *rgb = tmprgb;
@@ -440,10 +440,10 @@ rgb_set_ ## m(PyObject *self, PyObject *value, void *closure)		\
     return 0;								\
 }
 
-MEMBER_ACCESSOR(r);
-MEMBER_ACCESSOR(g);
-MEMBER_ACCESSOR(b);
-MEMBER_ACCESSOR(a);
+MEMBER_ACCESSOR(r)
+MEMBER_ACCESSOR(g)
+MEMBER_ACCESSOR(b)
+MEMBER_ACCESSOR(a)
 
 #undef MEMBER_ACCESSOR
 
@@ -542,11 +542,11 @@ rgb_slice(PyObject *self, int start, int end)
 static PySequenceMethods rgb_as_sequence = {
     (inquiry)rgb_length,
     (binaryfunc)0,
-    (intargfunc)0,
-    (intargfunc)rgb_getitem,
-    (intintargfunc)rgb_slice,
-    (intobjargproc)rgb_setitem,
-    (intintobjargproc)0,
+    0,
+    rgb_getitem,
+    rgb_slice,
+    rgb_setitem,
+    0,
     (objobjproc)0,
 };
 
@@ -852,9 +852,9 @@ hsv_set(PyObject *self, PyObject *args, PyObject *kwargs)
 	SET_MEMBER(v, 100.0);
     }
 
-    if (a)
+    if (a) {
 	SET_MEMBER(a, 255.0);
-
+    }
 #undef SET_MEMBER
 
     *hsv = tmphsv;
@@ -963,10 +963,10 @@ hsv_set_ ## m(PyObject *self, PyObject *value, void *closure)		\
     return 0;								\
 }
 
-MEMBER_ACCESSOR(h, 360.0);
-MEMBER_ACCESSOR(s, 100.0);
-MEMBER_ACCESSOR(v, 100.0);
-MEMBER_ACCESSOR(a, 255.0);
+MEMBER_ACCESSOR(h, 360.0)
+MEMBER_ACCESSOR(s, 100.0)
+MEMBER_ACCESSOR(v, 100.0)
+MEMBER_ACCESSOR(a, 255.0)
 
 #undef MEMBER_ACCESSOR
 
@@ -1065,11 +1065,11 @@ hsv_slice(PyObject *self, int start, int end)
 static PySequenceMethods hsv_as_sequence = {
     (inquiry)hsv_length,
     (binaryfunc)0,
-    (intargfunc)0,
-    (intargfunc)hsv_getitem,
-    (intintargfunc)hsv_slice,
-    (intobjargproc)hsv_setitem,
-    (intintobjargproc)0,
+    0,
+    hsv_getitem,
+    hsv_slice,
+    hsv_setitem,
+    0,
     (objobjproc)0,
 };
 
@@ -1375,9 +1375,9 @@ hsl_set(PyObject *self, PyObject *args, PyObject *kwargs)
 	SET_MEMBER(l, 100.0);
     }
 
-    if (a)
+    if (a) {
 	SET_MEMBER(a, 255.0);
-
+    }
 #undef SET_MEMBER
 
     *hsl = tmphsl;
@@ -1476,10 +1476,10 @@ hsl_set_ ## m(PyObject *self, PyObject *value, void *closure)		\
     return 0;								\
 }
 
-MEMBER_ACCESSOR(h, 360.0);
-MEMBER_ACCESSOR(s, 100.0);
-MEMBER_ACCESSOR(l, 100.0);
-MEMBER_ACCESSOR(a, 255.0);
+MEMBER_ACCESSOR(h, 360.0)
+MEMBER_ACCESSOR(s, 100.0)
+MEMBER_ACCESSOR(l, 100.0)
+MEMBER_ACCESSOR(a, 255.0)
 
 #undef MEMBER_ACCESSOR
 
@@ -1578,11 +1578,11 @@ hsl_slice(PyObject *self, int start, int end)
 static PySequenceMethods hsl_as_sequence = {
     (inquiry)hsl_length,
     (binaryfunc)0,
-    (intargfunc)0,
-    (intargfunc)hsl_getitem,
-    (intintargfunc)hsl_slice,
-    (intobjargproc)hsl_setitem,
-    (intintobjargproc)0,
+    0,
+    hsl_getitem,
+    hsl_slice,
+    hsl_setitem,
+    0,
     (objobjproc)0,
 };
 
@@ -1890,9 +1890,9 @@ cmyk_set(PyObject *self, PyObject *args, PyObject *kwargs)
 	SET_MEMBER(k);
     }
 
-    if (a)
+    if (a) {
 	SET_MEMBER(a);
-
+    }
 #undef SET_MEMBER
 
     *cmyk = tmpcmyk;
@@ -1977,11 +1977,11 @@ cmyk_set_ ## m(PyObject *self, PyObject *value, void *closure)		\
     return 0;								\
 }
 
-MEMBER_ACCESSOR(c);
-MEMBER_ACCESSOR(m);
-MEMBER_ACCESSOR(y);
-MEMBER_ACCESSOR(k);
-MEMBER_ACCESSOR(a);
+MEMBER_ACCESSOR(c)
+MEMBER_ACCESSOR(m)
+MEMBER_ACCESSOR(y)
+MEMBER_ACCESSOR(k)
+MEMBER_ACCESSOR(a)
 
 #undef MEMBER_ACCESSOR
 
@@ -2084,11 +2084,11 @@ cmyk_slice(PyObject *self, int start, int end)
 static PySequenceMethods cmyk_as_sequence = {
     (inquiry)cmyk_length,
     (binaryfunc)0,
-    (intargfunc)0,
-    (intargfunc)cmyk_getitem,
-    (intintargfunc)cmyk_slice,
-    (intobjargproc)cmyk_setitem,
-    (intintobjargproc)0,
+    0,
+    cmyk_getitem,
+    cmyk_slice,
+    cmyk_setitem,
+    0,
     (objobjproc)0,
 };
 

@@ -60,7 +60,7 @@ def clone(drawable, strokes, src_drawable = None, src_x = 0, src_y = 0,
                         len(strokes), strokes)
 
 def convolve(drawable, strokes, pressure = 50,
-             convolve_type = gimp.enums.CONVOLVE_BLUR):
+             convolve_type = gimp.enums.BLUR_CONVOLE):
     if drawable == None:
         drawable = _active_drawable()
     strokes = sum(map(list, strokes), [])

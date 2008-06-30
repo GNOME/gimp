@@ -1,4 +1,14 @@
-2008-08-16  Lars-Peter Clausen  <lars@metafoo.de>
+2008-08-30  Lars-Peter Clausen  <lars@metafoo.de>
+
+	* plug-ins/pygimp/tools.py: Fixed typo
+	* plug-ins/pygimp/gimpmodule.c: Fixed wrong function and type pointers
+	in _PyGimp_Functions.
+	* plug-ins/pygimp/pygimp-colors.c:
+	* plug-ins/pygimp/pygimp-image.c:
+	* plug-ins/pygimp/gimpui.defs:
+	Fixed compiler warnings
+
+2008-08-28  Lars-Peter Clausen  <lars@metafoo.de>
 
 	* plug-ins/pygimp/pygimp-pdb.c: Fix typo
 	* plug-ins/pygimp/__init__.py: pixel propertys now return a tuple of
