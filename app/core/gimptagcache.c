@@ -119,6 +119,7 @@ gimp_tag_cache_init (GimpTagCache *cache)
   cache->gimp                   = NULL;
 
   cache->records                = NULL;
+  cache->containers             = NULL;
   cache->tag_to_object          = NULL;
   cache->new_objects            = NULL;
 }
@@ -135,7 +136,7 @@ gimp_tag_cache_finalize (GObject *object)
         {
           GimpTagCacheRecord *rec =
               &g_array_index (cache->records, GimpTagCacheRecord, i);
-          g_slist_free (rec->tags);
+          g_list_free (rec->tags);
         }
       g_array_free (cache->records, TRUE);
       cache->records = NULL;
@@ -200,12 +201,13 @@ void
 gimp_tag_cache_add_container (GimpTagCache     *cache,
                               GimpContainer    *container)
 {
-    gimp_container_foreach (container, (GFunc) gimp_tag_cache_object_initialize, cache);
+  cache->containers = g_list_append (cache->containers, container);
+  gimp_container_foreach (container, (GFunc) gimp_tag_cache_object_initialize, cache);
 
-    g_signal_connect (container, "add",
-                      G_CALLBACK (gimp_tag_cache_object_add), cache);
-    g_signal_connect (container, "remove",
-                      G_CALLBACK (gimp_tag_cache_object_remove), cache);
+  g_signal_connect (container, "add",
+                    G_CALLBACK (gimp_tag_cache_object_add), cache);
+  g_signal_connect (container, "remove",
+                    G_CALLBACK (gimp_tag_cache_object_remove), cache);
 }
 
 static void
@@ -215,7 +217,7 @@ gimp_tag_cache_object_add (GimpContainer       *container,
 {
   const char           *identifier;
   GQuark                identifier_quark = 0;
-  GSList               *tag_iterator;
+  GList                *tag_iterator;
   gint                  i;
   gboolean              cache_hit = FALSE;
 
@@ -243,7 +245,7 @@ gimp_tag_cache_object_add (GimpContainer       *container,
                           g_quark_to_string (GPOINTER_TO_UINT (tag_iterator->data)),
                           identifier);
                   gimp_tagged_add_tag (tagged, GPOINTER_TO_UINT (tag_iterator->data));
-                  tag_iterator = g_slist_next (tag_iterator);
+                  tag_iterator = g_list_next (tag_iterator);
                 }
               rec->referenced = TRUE;
               cache_hit = TRUE;
@@ -315,12 +317,29 @@ gimp_tag_cache_tag_removed (GimpTagged           *tagged,
   printf ("tag removed\n");
 }
 
+static void
+tagged_to_cache_record_foreach (GimpTagged     *tagged,
+                                GList         **cache_records)
+{
+  const char           *identifier;
+  GimpTagCacheRecord   *cache_rec;
+
+  identifier = gimp_tagged_get_identifier (tagged);
+  if (identifier)
+    {
+      cache_rec = (GimpTagCacheRecord*) g_malloc (sizeof (GimpTagCacheRecord));
+      cache_rec->identifier = g_quark_from_string (identifier);
+      cache_rec->tags = g_list_copy (gimp_tagged_get_tags (tagged));
+      *cache_records = g_list_append (*cache_records, cache_rec);
+    }
+}
+
 void
 gimp_tag_cache_save (GimpTagCache      *cache)
 {
   GString      *buf;
-  GSList       *saved_records;
-  GSList       *iterator;
+  GList        *saved_records;
+  GList        *iterator;
   gchar        *filename;
   GError       *error;
   gint          i;
@@ -331,38 +350,24 @@ gimp_tag_cache_save (GimpTagCache      *cache)
   for (i = 0; i < cache->records->len; i++)
     {
       GimpTagCacheRecord *current_record = &g_array_index(cache->records, GimpTagCacheRecord, i);
-      if (current_record->referenced
-          || current_record->tags)
+      if (! current_record->referenced
+          && current_record->tags)
         {
+          /* keep tagged objects which have tags assigned
+           * but were not loaded. */
           GimpTagCacheRecord *record_copy = (GimpTagCacheRecord*) g_malloc (sizeof (GimpTagCacheRecord));
           record_copy->identifier = current_record->identifier;
-          record_copy->tags = g_slist_copy (current_record->tags);
-          saved_records = g_slist_prepend (saved_records, record_copy);
+          record_copy->tags = g_list_copy (current_record->tags);
+          saved_records = g_list_append (saved_records, record_copy);
         }
     }
 
-  iterator = cache->new_objects;
+  iterator = cache->containers;
   while (iterator)
     {
-      GimpTagged *tagged = GIMP_TAGGED (iterator->data);
-      const char *identifier;
-
-      identifier = gimp_tagged_get_identifier (tagged);
-      if (identifier)
-        {
-          GList        *tag_iterator;
-          GimpTagCacheRecord *record_copy = (GimpTagCacheRecord*) g_malloc (sizeof (GimpTagCacheRecord));
-          record_copy->identifier = g_quark_from_string (identifier);
-          record_copy->tags = NULL;
-          tag_iterator = gimp_tagged_get_tags (tagged);
-          while (tag_iterator)
-            {
-              record_copy->tags = g_slist_prepend (record_copy->tags, tag_iterator->data);
-              tag_iterator = g_list_next (tag_iterator);
-            }
-          saved_records = g_slist_prepend (saved_records, record_copy);
-        }
-      iterator = g_slist_next (iterator);
+      gimp_container_foreach (GIMP_CONTAINER (iterator->data),
+                              (GFunc) tagged_to_cache_record_foreach, &saved_records);
+      iterator = g_list_next (iterator);
     }
 
   buf = g_string_new ("");
@@ -372,7 +377,7 @@ gimp_tag_cache_save (GimpTagCache      *cache)
   while (iterator)
     {
       GimpTagCacheRecord *cache_rec = (GimpTagCacheRecord*) iterator->data;
-      GSList             *tag_iterator;
+      GList              *tag_iterator;
 
       g_string_append_printf (buf, "\t<resource identifier=\"%s\">\n",
                               g_quark_to_string (cache_rec->identifier));
@@ -381,10 +386,10 @@ gimp_tag_cache_save (GimpTagCache      *cache)
         {
           g_string_append_printf (buf, "\t\t<tag>%s</tag>\n",
                                   g_quark_to_string (GPOINTER_TO_UINT (tag_iterator->data)));
-          tag_iterator = g_slist_next (tag_iterator);
+          tag_iterator = g_list_next (tag_iterator);
         }
       g_string_append (buf, "\t</resource>\n");
-      iterator = g_slist_next (iterator);
+      iterator = g_list_next (iterator);
     }
   g_string_append (buf, "</tag_cache>\n");
 
@@ -404,11 +409,11 @@ gimp_tag_cache_save (GimpTagCache      *cache)
   while (iterator)
     {
       GimpTagCacheRecord *cache_rec = (GimpTagCacheRecord*) iterator->data;
-      g_slist_free (cache_rec->tags);
+      g_list_free (cache_rec->tags);
       g_free (cache_rec);
-      iterator = g_slist_next (iterator);
+      iterator = g_list_next (iterator);
     }
-  g_slist_free (saved_records);
+  g_list_free (saved_records);
 }
 
 void
@@ -541,7 +546,7 @@ gimp_tag_cache_load_text (GMarkupParseContext *context,
               g_quark_to_string (parse_data->current_record.identifier));
 
       tag_quark = g_quark_from_string (buffer);
-      parse_data->current_record.tags = g_slist_append (parse_data->current_record.tags,
+      parse_data->current_record.tags = g_list_append (parse_data->current_record.tags,
                                                         GUINT_TO_POINTER (tag_quark));
     }
 }

@@ -40,7 +40,7 @@ typedef struct _GimpTagCacheClass  GimpTagCacheClass;
 struct _GimpTagCacheRecord
 {
   GQuark                identifier;
-  GSList               *tags;
+  GList                *tags;
   guint                 referenced : 1;
 };
 
@@ -51,6 +51,7 @@ struct _GimpTagCache
   Gimp                 *gimp;
 
   GArray               *records;
+  GList                *containers;
   GHashTable           *tag_to_object;
   GSList               *new_objects;
 };
