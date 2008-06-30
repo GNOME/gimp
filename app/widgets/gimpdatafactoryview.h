@@ -43,6 +43,10 @@ struct _GimpDataFactoryView
   GimpDataFactory     *factory;
   GimpContainer       *filtered_container;
 
+  GtkWidget           *query_tag_entry;
+  GtkWidget           *assign_tag_entry;
+  GList               *selected_items;
+
   GtkWidget           *edit_button;
   GtkWidget           *new_button;
   GtkWidget           *duplicate_button;

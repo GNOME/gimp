@@ -54,6 +54,8 @@
 
 static void   gimp_data_factory_view_activate_item  (GimpContainerEditor *editor,
                                                      GimpViewable        *viewable);
+static void   gimp_data_factory_view_select_item    (GimpContainerEditor *editor,
+                                                     GimpViewable        *viewable);
 static void gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
                                                      const gchar         *path,
                                                      const gchar         *name,
@@ -70,6 +72,7 @@ gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
 {
   GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
+  editor_class->select_item   = gimp_data_factory_view_select_item;
   editor_class->activate_item = gimp_data_factory_view_activate_item;
 }
 
@@ -83,6 +86,8 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
   view->refresh_button   = NULL;
 
   view->filtered_container = NULL;
+
+  view->selected_items   = NULL;
 }
 
 GtkWidget *
@@ -134,7 +139,6 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 {
   GimpContainerEditor *editor;
   gchar               *str;
-  GtkWidget           *tag_query_entry;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), FALSE);
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
@@ -221,20 +225,57 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   gimp_ui_manager_update (GIMP_EDITOR (editor->view)->ui_manager, editor);
 
-  tag_query_entry = gimp_tag_entry_new (GIMP_FILTERED_CONTAINER (factory_view->filtered_container),
-                                        GIMP_TAG_ENTRY_MODE_QUERY);
-  gtk_widget_show (tag_query_entry);
-
   editor = GIMP_CONTAINER_EDITOR (factory_view);
 
+  factory_view->query_tag_entry =
+      gimp_tag_entry_new (GIMP_FILTERED_CONTAINER (factory_view->filtered_container),
+                          GIMP_TAG_ENTRY_MODE_QUERY);
+  gtk_widget_show (factory_view->query_tag_entry);
   gtk_box_pack_start (GTK_BOX (editor->view),
-                      tag_query_entry,
+                      factory_view->query_tag_entry,
                       FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (editor->view),
-                         tag_query_entry, 0);
+                         factory_view->query_tag_entry, 0);
 
+  factory_view->assign_tag_entry =
+      gimp_tag_entry_new (GIMP_FILTERED_CONTAINER (factory_view->filtered_container),
+                          GIMP_TAG_ENTRY_MODE_ASSIGN);
+  gimp_tag_entry_set_selected_items (GIMP_TAG_ENTRY (factory_view->assign_tag_entry),
+                                     factory_view->selected_items);
+  g_list_free (factory_view->selected_items);
+  factory_view->selected_items = NULL;
+  gtk_widget_show (factory_view->assign_tag_entry);
+  gtk_box_pack_end (GTK_BOX (editor->view),
+                    factory_view->assign_tag_entry,
+                    FALSE, FALSE, 0);
 
   return TRUE;
+}
+
+static void
+gimp_data_factory_view_select_item (GimpContainerEditor *editor,
+                                    GimpViewable        *viewable)
+{
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (editor);
+  GList               *active_items = NULL;
+
+  if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
+    GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
+
+  if (view->assign_tag_entry)
+    {
+      if (viewable)
+        {
+          active_items = g_list_append (active_items, viewable);
+        }
+      gimp_tag_entry_set_selected_items (GIMP_TAG_ENTRY (view->assign_tag_entry),
+                                         active_items);
+      g_list_free (active_items);
+    }
+  else
+    {
+      active_items = g_list_append (active_items, viewable);
+    }
 }
 
 static void
