@@ -61,15 +61,6 @@ static void    gimp_tag_cache_object_initialize (GimpTagged           *tagged,
 static void    gimp_tag_cache_object_add        (GimpContainer        *container,
                                                  GimpTagged           *tagged,
                                                  GimpTagCache         *cache);
-static void    gimp_tag_cache_object_remove     (GimpContainer        *container,
-                                                 GimpTagged           *tagged,
-                                                 GimpTagCache         *cache);
-static void    gimp_tag_cache_tag_added         (GimpTagged           *tagged,
-                                                 GimpTag               tag,
-                                                 GimpTagCache         *cache);
-static void    gimp_tag_cache_tag_removed       (GimpTagged           *tagged,
-                                                 GimpTag               tag,
-                                                 GimpTagCache         *cache);
 
 static void    gimp_tag_cache_load_start_element(GMarkupParseContext *context,
                                                   const gchar         *element_name,
@@ -120,8 +111,6 @@ gimp_tag_cache_init (GimpTagCache *cache)
 
   cache->records                = NULL;
   cache->containers             = NULL;
-  cache->tag_to_object          = NULL;
-  cache->new_objects            = NULL;
 }
 
 static void
@@ -140,30 +129,6 @@ gimp_tag_cache_finalize (GObject *object)
         }
       g_array_free (cache->records, TRUE);
       cache->records = NULL;
-    }
-
-  if (cache->tag_to_object)
-    {
-      GList *values;
-      GList *iterator;
-
-      values = g_hash_table_get_values (cache->tag_to_object);
-      iterator = values;
-      while (iterator)
-        {
-          g_slist_free (iterator->data);
-          iterator = g_list_next (iterator);
-        }
-      g_list_free (values);
-
-      g_hash_table_destroy (cache->tag_to_object);
-      cache->tag_to_object = NULL;
-    }
-
-  if (cache->new_objects)
-    {
-      g_slist_free (cache->new_objects);
-      cache->new_objects = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -191,8 +156,6 @@ gimp_tag_cache_new (Gimp       *gimp)
 
   cache->gimp                   = gimp;
   cache->records                = g_array_new (FALSE, FALSE, sizeof(GimpTagCacheRecord));
-  cache->tag_to_object          = g_hash_table_new (g_direct_hash, g_direct_equal);
-  cache->new_objects            = NULL;
 
   return cache;
 }
@@ -206,8 +169,6 @@ gimp_tag_cache_add_container (GimpTagCache     *cache,
 
   g_signal_connect (container, "add",
                     G_CALLBACK (gimp_tag_cache_object_add), cache);
-  g_signal_connect (container, "remove",
-                    G_CALLBACK (gimp_tag_cache_object_remove), cache);
 }
 
 static void
@@ -219,16 +180,11 @@ gimp_tag_cache_object_add (GimpContainer       *container,
   GQuark                identifier_quark = 0;
   GList                *tag_iterator;
   gint                  i;
-  gboolean              cache_hit = FALSE;
-
-  g_signal_connect (tagged, "tag-added",
-                    G_CALLBACK (gimp_tag_cache_tag_added), cache);
-  g_signal_connect (tagged, "tag-removed",
-                    G_CALLBACK (gimp_tag_cache_tag_removed), cache);
 
   identifier = gimp_tagged_get_identifier (tagged);
 
-  if (identifier)
+  if (identifier
+      && !gimp_tagged_get_tags (tagged))
     {
       identifier_quark = g_quark_from_string (identifier);
 
@@ -248,41 +204,10 @@ gimp_tag_cache_object_add (GimpContainer       *container,
                   tag_iterator = g_list_next (tag_iterator);
                 }
               rec->referenced = TRUE;
-              cache_hit = TRUE;
               break;
             }
         }
     }
-
-  if (! cache_hit)
-  {
-      cache->new_objects = g_slist_prepend (cache->new_objects, tagged);
-  }
-}
-
-static void
-gimp_tag_cache_object_remove (GimpContainer    *container,
-                              GimpTagged       *tagged,
-                              GimpTagCache     *cache)
-{
-  GList        *tag_list;
-
-  tag_list = gimp_tagged_get_tags (tagged);
-  while (tag_list)
-    {
-      GSList *object_list = g_hash_table_lookup (cache->tag_to_object, tag_list->data);
-      object_list = g_slist_remove (object_list, GIMP_TAGGED (tagged));
-      g_hash_table_insert (cache->tag_to_object, tag_list->data, object_list);
-
-      tag_list = g_list_next (tag_list);
-    }
-
-  g_signal_handlers_disconnect_by_func (tagged,
-                                        G_CALLBACK (gimp_tag_cache_tag_added), cache);
-  g_signal_handlers_disconnect_by_func (tagged,
-                                        G_CALLBACK (gimp_tag_cache_tag_removed), cache);
-
-  cache->new_objects = g_slist_remove (cache->new_objects, tagged);
 }
 
 static void
@@ -290,31 +215,6 @@ gimp_tag_cache_object_initialize (GimpTagged          *tagged,
                                   GimpTagCache        *cache)
 {
   gimp_tag_cache_object_add (NULL, tagged, cache);
-}
-
-static void
-gimp_tag_cache_tag_added (GimpTagged           *tagged,
-                          GimpTag               tag,
-                          GimpTagCache         *cache)
-{
-  GSList *object_list = g_hash_table_lookup (cache->tag_to_object, GUINT_TO_POINTER (tag));
-  if (! g_slist_find (object_list, GIMP_TAGGED (tagged)))
-    {
-      printf ("backlink: tag %s => %s\n", g_quark_to_string (tag),
-              gimp_tagged_get_identifier (tagged));
-      object_list = g_slist_append (object_list, GIMP_TAGGED (tagged));
-      g_hash_table_insert (cache->tag_to_object, GUINT_TO_POINTER (tag), object_list);
-    }
-
-  printf ("tag added\n");
-}
-
-static void
-gimp_tag_cache_tag_removed (GimpTagged           *tagged,
-                            GimpTag               tag,
-                            GimpTagCache         *cache)
-{
-  printf ("tag removed\n");
 }
 
 static void

@@ -52,8 +52,6 @@ struct _GimpTagCache
 
   GArray               *records;
   GList                *containers;
-  GHashTable           *tag_to_object;
-  GSList               *new_objects;
 };
 
 struct _GimpTagCacheClass
