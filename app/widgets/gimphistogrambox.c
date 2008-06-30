@@ -208,7 +208,7 @@ static void
 gimp_histogram_box_high_adj_update (GtkAdjustment    *adjustment,
                                     GimpHistogramBox *box)
 {
-  gint value = ROUND (gtk_adjustment_get_value (value));
+  gint value = ROUND (gtk_adjustment_get_value (adjustment));
 
   if (box->view->end != value)
     {
