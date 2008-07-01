@@ -46,6 +46,8 @@ static void     gimp_tag_entry_assign_tags     (GimpTagEntry      *tag_entry);
 static void     gimp_tag_entry_item_set_tags   (GimpTagged        *entry,
                                                 GList             *tags);
 
+static void     gimp_tag_entry_load_selection  (GimpTagEntry      *tag_entry);
+
 static gchar ** gimp_tag_entry_parse_tags      (GimpTagEntry      *entry);
 
 G_DEFINE_TYPE (GimpTagEntry, gimp_tag_entry, GTK_TYPE_ENTRY);
@@ -238,5 +240,39 @@ gimp_tag_entry_set_selected_items (GimpTagEntry            *entry,
     }
 
   entry->selected_items = g_list_copy (items);
+
+  gimp_tag_entry_load_selection (entry);
+}
+
+static void
+gimp_tag_entry_load_selection (GimpTagEntry             *tag_entry)
+{
+  GimpTagged   *selected_item;
+  GList        *tag_iterator;
+  gint          insert_pos;
+  GimpTag       tag;
+  gchar        *text;
+
+  gtk_editable_delete_text (GTK_EDITABLE (tag_entry), 0, -1);
+
+  if (! tag_entry->selected_items)
+    {
+      return;
+    }
+
+  selected_item = GIMP_TAGGED (tag_entry->selected_items->data);
+  insert_pos = 0;
+
+  tag_iterator = gimp_tagged_get_tags (selected_item);
+  while (tag_iterator)
+    {
+      tag = GPOINTER_TO_UINT (tag_iterator->data);
+      text = g_strdup_printf ("%s, ", g_quark_to_string (tag));
+      gtk_editable_insert_text (GTK_EDITABLE (tag_entry), text, strlen (text),
+                                &insert_pos);
+      g_free (text);
+
+      tag_iterator = g_list_next (tag_iterator);
+    }
 }
 
