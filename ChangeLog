@@ -1,3 +1,11 @@
+2008-07-01  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/stock-gegl-16.png
+	* themes/Default/images/stock-gegl-22.png: changed GEGL stock icon
+	based on the new GEGL logo.
+
+	* themes/Default/images/stock-gegl.svg: added SVG version.
+
 2008-06-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimphistogrambox.c
