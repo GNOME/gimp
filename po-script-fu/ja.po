@@ -1,16 +1,16 @@
 # GIMP Script-Fu Japanese message catalog
-# Copyright (C) 2000,2003 Free Software Foundation, Inc.
+# Copyright (C) 2000,2003,2005,2008 Free Software Foundation, Inc.
 # Shirasaki Yasuhiro <yasuhiro@gnome.gr.jp>, 2000
 # Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2000
 # KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003.
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2003.
 # Tadashi Jokagi <elf2000@users.sourceforge.net>, 2005.
 # OKANO Takayoshi <kano@na.rim.or.jp>, 2005.
-# Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>, 2008
+# Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>, 2008.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.5\n"
+"Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-07-02 23:10+0900\n"
 "PO-Revision-Date: 2008-06-14 21:34+0900\n"
