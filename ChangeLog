@@ -1,3 +1,16 @@
+2008-07-03  Lars-Peter Clausen  <lars@metafoo.de>
+
+	* plug-ins/pygimp/pygimp-drawable.c
+	* plug-ins/pygimp/pygimp-vectors.c
+	* plug-ins/pygimp/pygimp-display.c
+	* plug-ins/pygimp/pygimp-image.c: Added checks to ensure that a python
+	object only is created if its id is valid. Fixes bug #536403.
+	* plug-ins/pygimp/pygimp-pdb.c
+	* plug-ins/pygimp/pygimp-tile.c
+	* plug-ins/pygimp/pygimp-colors.c
+	* plug-ins/pygimp/pygimp.h: Fix crashing when pygimp is used with
+	python-2.5 on 64 bit systems. Fixes bug #540629.
+
 2008-07-03  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpsettingsbox.c (gimp_settings_box_constructor)

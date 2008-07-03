@@ -20,6 +20,7 @@
 
 #define NO_IMPORT_PYGOBJECT
 
+#include "pygimp.h"
 #include "pygimpcolor.h"
 
 #include <libgimpmath/gimpmath.h>
@@ -459,14 +460,14 @@ static PyGetSetDef rgb_getsets[] = {
     { NULL, (getter)0, (setter)0 },
 };
 
-static int
+static Py_ssize_t 
 rgb_length(PyObject *self)
 {
     return 4;
 }
 
 static PyObject *
-rgb_getitem(PyObject *self, int pos)
+rgb_getitem(PyObject *self, Py_ssize_t pos)
 {
     GimpRGB *rgb;
     double val;
@@ -495,7 +496,7 @@ rgb_getitem(PyObject *self, int pos)
 }
 
 static int
-rgb_setitem(PyObject *self, int pos, PyObject *value)
+rgb_setitem(PyObject *self, Py_ssize_t pos, PyObject *value)
 {
     if (pos < 0)
         pos += 4;
@@ -517,10 +518,10 @@ rgb_setitem(PyObject *self, int pos, PyObject *value)
 }
 
 static PyObject *
-rgb_slice(PyObject *self, int start, int end)
+rgb_slice(PyObject *self, Py_ssize_t start, Py_ssize_t end)
 {
     PyTupleObject *ret;
-    int i;
+    Py_ssize_t i;
 
     if (start < 0)
 	start = 0;
@@ -540,13 +541,13 @@ rgb_slice(PyObject *self, int start, int end)
 }
 
 static PySequenceMethods rgb_as_sequence = {
-    (inquiry)rgb_length,
+    rgb_length,
     (binaryfunc)0,
-    (intargfunc)0,
-    (intargfunc)rgb_getitem,
-    (intintargfunc)rgb_slice,
-    (intobjargproc)rgb_setitem,
-    (intintobjargproc)0,
+    0,
+    rgb_getitem,
+    rgb_slice,
+    rgb_setitem,
+    0,
     (objobjproc)0,
 };
 
@@ -562,7 +563,7 @@ rgb_subscript(PyObject *self, PyObject *item)
 	    return NULL;
 	return rgb_getitem(self, i);
     } else if (PySlice_Check(item)) {
-	int start, stop, step, slicelength, cur, i;
+	Py_ssize_t start, stop, step, slicelength, cur, i;
 	PyObject *ret;
 
 	if (PySlice_GetIndicesEx((PySliceObject*)item, 4,
@@ -608,7 +609,7 @@ rgb_subscript(PyObject *self, PyObject *item)
 }
 
 static PyMappingMethods rgb_as_mapping = {
-    (inquiry)rgb_length,
+    rgb_length,
     (binaryfunc)rgb_subscript,
     (objobjargproc)0
 };
@@ -982,14 +983,14 @@ static PyGetSetDef hsv_getsets[] = {
     { NULL, (getter)0, (setter)0 },
 };
 
-static int
+static Py_ssize_t 
 hsv_length(PyObject *self)
 {
     return 4;
 }
 
 static PyObject *
-hsv_getitem(PyObject *self, int pos)
+hsv_getitem(PyObject *self, Py_ssize_t pos)
 {
     GimpHSV *hsv;
     double val, scale_factor;
@@ -1040,10 +1041,10 @@ hsv_setitem(PyObject *self, int pos, PyObject *value)
 }
 
 static PyObject *
-hsv_slice(PyObject *self, int start, int end)
+hsv_slice(PyObject *self, Py_ssize_t start, Py_ssize_t end)
 {
     PyTupleObject *ret;
-    int i;
+    Py_ssize_t i;
 
     if (start < 0)
 	start = 0;
@@ -1063,13 +1064,13 @@ hsv_slice(PyObject *self, int start, int end)
 }
 
 static PySequenceMethods hsv_as_sequence = {
-    (inquiry)hsv_length,
+    hsv_length,
     (binaryfunc)0,
-    (intargfunc)0,
-    (intargfunc)hsv_getitem,
-    (intintargfunc)hsv_slice,
-    (intobjargproc)hsv_setitem,
-    (intintobjargproc)0,
+    0,
+    hsv_getitem,
+    hsv_slice,
+    hsv_setitem,
+    0,
     (objobjproc)0,
 };
 
@@ -1085,7 +1086,7 @@ hsv_subscript(PyObject *self, PyObject *item)
 	    return NULL;
 	return hsv_getitem(self, i);
     } else if (PySlice_Check(item)) {
-	int start, stop, step, slicelength, cur, i;
+	Py_ssize_t start, stop, step, slicelength, cur, i;
 	PyObject *ret;
 
 	if (PySlice_GetIndicesEx((PySliceObject*)item, 4,
@@ -1131,7 +1132,7 @@ hsv_subscript(PyObject *self, PyObject *item)
 }
 
 static PyMappingMethods hsv_as_mapping = {
-    (inquiry)hsv_length,
+    hsv_length,
     (binaryfunc)hsv_subscript,
     (objobjargproc)0
 };
@@ -1495,14 +1496,14 @@ static PyGetSetDef hsl_getsets[] = {
     { NULL, (getter)0, (setter)0 },
 };
 
-static int
+static Py_ssize_t
 hsl_length(PyObject *self)
 {
     return 4;
 }
 
 static PyObject *
-hsl_getitem(PyObject *self, int pos)
+hsl_getitem(PyObject *self, Py_ssize_t pos)
 {
     GimpHSL *hsl;
     double val, scale_factor;
@@ -1553,10 +1554,10 @@ hsl_setitem(PyObject *self, int pos, PyObject *value)
 }
 
 static PyObject *
-hsl_slice(PyObject *self, int start, int end)
+hsl_slice(PyObject *self, Py_ssize_t start, Py_ssize_t end)
 {
     PyTupleObject *ret;
-    int i;
+    Py_ssize_t i;
 
     if (start < 0)
         start = 0;
@@ -1576,13 +1577,13 @@ hsl_slice(PyObject *self, int start, int end)
 }
 
 static PySequenceMethods hsl_as_sequence = {
-    (inquiry)hsl_length,
+    hsl_length,
     (binaryfunc)0,
-    (intargfunc)0,
-    (intargfunc)hsl_getitem,
-    (intintargfunc)hsl_slice,
-    (intobjargproc)hsl_setitem,
-    (intintobjargproc)0,
+    0,
+    hsl_getitem,
+    hsl_slice,
+    hsl_setitem,
+    0,
     (objobjproc)0,
 };
 
@@ -1598,7 +1599,7 @@ hsl_subscript(PyObject *self, PyObject *item)
             return NULL;
         return hsl_getitem(self, i);
     } else if (PySlice_Check(item)) {
-        int start, stop, step, slicelength, cur, i;
+        Py_ssize_t start, stop, step, slicelength, cur, i;
         PyObject *ret;
 
         if (PySlice_GetIndicesEx((PySliceObject*)item, 4,
@@ -1644,7 +1645,7 @@ hsl_subscript(PyObject *self, PyObject *item)
 }
 
 static PyMappingMethods hsl_as_mapping = {
-    (inquiry)hsl_length,
+    hsl_length,
     (binaryfunc)hsl_subscript,
     (objobjargproc)0
 };
@@ -1999,14 +2000,14 @@ static PyGetSetDef cmyk_getsets[] = {
     { NULL, (getter)0, (setter)0 },
 };
 
-static int
+static Py_ssize_t
 cmyk_length(PyObject *self)
 {
     return 5;
 }
 
 static PyObject *
-cmyk_getitem(PyObject *self, int pos)
+cmyk_getitem(PyObject *self, Py_ssize_t pos)
 {
     GimpCMYK *cmyk;
     double val;
@@ -2059,10 +2060,10 @@ cmyk_setitem(PyObject *self, int pos, PyObject *value)
 }
 
 static PyObject *
-cmyk_slice(PyObject *self, int start, int end)
+cmyk_slice(PyObject *self, Py_ssize_t start, Py_ssize_t end)
 {
     PyTupleObject *ret;
-    int i;
+    Py_ssize_t i;
 
     if (start < 0)
         start = 0;
@@ -2082,13 +2083,13 @@ cmyk_slice(PyObject *self, int start, int end)
 }
 
 static PySequenceMethods cmyk_as_sequence = {
-    (inquiry)cmyk_length,
+    cmyk_length,
     (binaryfunc)0,
-    (intargfunc)0,
-    (intargfunc)cmyk_getitem,
-    (intintargfunc)cmyk_slice,
-    (intobjargproc)cmyk_setitem,
-    (intintobjargproc)0,
+    0,
+    cmyk_getitem,
+    cmyk_slice,
+    cmyk_setitem,
+    0,
     (objobjproc)0,
 };
 
@@ -2104,7 +2105,7 @@ cmyk_subscript(PyObject *self, PyObject *item)
             return NULL;
         return cmyk_getitem(self, i);
     } else if (PySlice_Check(item)) {
-        int start, stop, step, slicelength, cur, i;
+        Py_ssize_t start, stop, step, slicelength, cur, i;
         PyObject *ret;
 
         if (PySlice_GetIndicesEx((PySliceObject*)item, 5,
@@ -2153,7 +2154,7 @@ cmyk_subscript(PyObject *self, PyObject *item)
 }
 
 static PyMappingMethods cmyk_as_mapping = {
-    (inquiry)cmyk_length,
+    cmyk_length,
     (binaryfunc)cmyk_subscript,
     (objobjargproc)0
 };
