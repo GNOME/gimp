@@ -640,38 +640,39 @@ draw_explict_sel (void)
 {
   if (exp_call.type == EXPLICT)
     {
-      gdouble x,y;
-      gdouble width  = (gdouble) preview_width / (gdouble) itvals.numtiles;
-      gdouble height = (gdouble) preview_height / (gdouble) itvals.numtiles;
+      GtkStyle *style = gtk_widget_get_style (tint.preview);
+      gdouble   x,y;
+      gdouble   width  = (gdouble) preview_width / (gdouble) itvals.numtiles;
+      gdouble   height = (gdouble) preview_height / (gdouble) itvals.numtiles;
 
       x = width * (exp_call.x - 1);
       y = height * (exp_call.y - 1);
 
-      gdk_gc_set_function (tint.preview->style->black_gc, GDK_INVERT);
+      gdk_gc_set_function (style->black_gc, GDK_INVERT);
 
       gdk_draw_rectangle (tint.preview->window,
-                          tint.preview->style->black_gc,
+                          style->black_gc,
                           0,
                           (gint) x,
                           (gint) y,
                           (gint) width,
                           (gint) height);
       gdk_draw_rectangle (tint.preview->window,
-                          tint.preview->style->black_gc,
+                          style->black_gc,
                           0,
                           (gint) x + 1,
                           (gint) y + 1,
                           (gint) width - 2,
                           (gint) height - 2);
       gdk_draw_rectangle (tint.preview->window,
-                          tint.preview->style->black_gc,
+                          style->black_gc,
                           0,
                           (gint) x + 2,
                           (gint) y + 2,
                           (gint) width - 4,
                           (gint) height - 4);
 
-      gdk_gc_set_function (tint.preview->style->black_gc, GDK_COPY);
+      gdk_gc_set_function (style->black_gc, GDK_COPY);
     }
 }
 
@@ -812,7 +813,7 @@ tileit_radio_update (GtkWidget *widget,
 {
   gimp_radio_button_update (widget, data);
 
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       switch (exp_call.type)
         {

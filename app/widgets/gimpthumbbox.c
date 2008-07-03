@@ -171,22 +171,23 @@ static void
 gimp_thumb_box_style_set (GtkWidget *widget,
                           GtkStyle  *prev_style)
 {
-  GimpThumbBox *box = GIMP_THUMB_BOX (widget);
+  GimpThumbBox *box   = GIMP_THUMB_BOX (widget);
+  GtkStyle     *style = gtk_widget_get_style (widget);
   GtkWidget    *ebox;
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_modify_bg (box->preview, GTK_STATE_NORMAL,
-                        &widget->style->base[GTK_STATE_NORMAL]);
+                        &style->base[GTK_STATE_NORMAL]);
   gtk_widget_modify_bg (box->preview, GTK_STATE_INSENSITIVE,
-                        &widget->style->base[GTK_STATE_NORMAL]);
+                        &style->base[GTK_STATE_NORMAL]);
 
   ebox = gtk_bin_get_child (GTK_BIN (widget));
 
   gtk_widget_modify_bg (ebox, GTK_STATE_NORMAL,
-                        &widget->style->base[GTK_STATE_NORMAL]);
+                        &style->base[GTK_STATE_NORMAL]);
   gtk_widget_modify_bg (ebox, GTK_STATE_INSENSITIVE,
-                        &widget->style->base[GTK_STATE_NORMAL]);
+                        &style->base[GTK_STATE_NORMAL]);
 }
 
 static GimpProgress *
@@ -429,13 +430,12 @@ gimp_thumb_box_new (GimpContext *context)
   gtk_widget_size_request (box->progress, &progress_requisition);
 
   gtk_widget_set_size_request (box->info,
-                               progress_requisition.width,
-                               info_requisition.height);
+                               -1, info_requisition.height);
   gtk_widget_set_size_request (box->filename,
                                progress_requisition.width, -1);
 
-  gtk_widget_set_size_request (box->progress, -1,
-                               progress_requisition.height);
+  gtk_widget_set_size_request (box->progress,
+                               -1, progress_requisition.height);
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), "");
 
   return GTK_WIDGET (box);

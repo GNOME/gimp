@@ -32,8 +32,18 @@
 #define GIMP_TOGGLE_ACTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GIMP_TYPE_TOGGLE_ACTION, GimpToggleActionClass))
 
 
-typedef GtkToggleAction      GimpToggleAction;
-typedef GtkToggleActionClass GimpToggleActionClass;
+typedef struct _GimpToggleAction      GimpToggleAction;
+typedef struct _GimpToggleActionClass GimpToggleActionClass;
+
+struct _GimpToggleAction
+{
+  GtkToggleAction  parent_instance;
+};
+
+struct _GimpToggleActionClass
+{
+  GtkToggleActionClass  parent_class;
+};
 
 
 GType             gimp_toggle_action_get_type (void) G_GNUC_CONST;

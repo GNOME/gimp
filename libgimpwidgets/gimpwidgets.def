@@ -157,6 +157,8 @@ EXPORTS
 	gimp_help_set_help_data_with_markup
 	gimp_hint_box_get_type
 	gimp_hint_box_new
+	gimp_hruler_get_type
+	gimp_hruler_new
 	gimp_int_adjustment_update
 	gimp_int_combo_box_append
 	gimp_int_combo_box_connect
@@ -301,6 +303,13 @@ EXPORTS
 	gimp_radio_group_new2
 	gimp_radio_group_set_active
 	gimp_random_seed_new
+	gimp_ruler_get_position
+	gimp_ruler_get_range
+	gimp_ruler_get_type
+	gimp_ruler_get_unit
+	gimp_ruler_set_position
+	gimp_ruler_set_range
+	gimp_ruler_set_unit
 	gimp_scale_entry_get_logarithmic
 	gimp_scale_entry_new
 	gimp_scale_entry_set_logarithmic
@@ -349,6 +358,8 @@ EXPORTS
 	gimp_unit_menu_set_pixel_digits
 	gimp_unit_menu_set_unit
 	gimp_unit_menu_update
+	gimp_vruler_get_type
+	gimp_vruler_new
 	gimp_widgets_init
 	gimp_zoom_button_new
 	gimp_zoom_model_get_factor

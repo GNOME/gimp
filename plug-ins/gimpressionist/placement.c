@@ -55,7 +55,7 @@ place_type_input (int in)
 void
 place_store (void)
 {
-  pcvals.placement_center = GTK_TOGGLE_BUTTON (placement_center)->active;
+  pcvals.placement_center = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (placement_center));
 }
 
 void

@@ -46,19 +46,25 @@
 
 /*  forward declarations  */
 
-static void   query             (void);
-static void   run               (const gchar      *name,
-                                 gint              nparams,
-                                 const GimpParam  *param,
-                                 gint             *nreturn_vals,
-                                 GimpParam       **return_vals);
+static void      query                  (void);
+static void      run                    (const gchar      *name,
+                                         gint              nparams,
+                                         const GimpParam  *param,
+                                         gint             *nreturn_vals,
+                                         GimpParam       **return_vals);
 
-static void   temp_proc_install (void);
-static void   temp_proc_run     (const gchar      *name,
-                                 gint              nparams,
-                                 const GimpParam  *param,
-                                 gint             *nreturn_vals,
-                                 GimpParam       **return_vals);
+static void      temp_proc_install      (void);
+static void      temp_proc_run          (const gchar      *name,
+                                         gint              nparams,
+                                         const GimpParam  *param,
+                                         gint             *nreturn_vals,
+                                         GimpParam       **return_vals);
+
+static gboolean  help_browser_show_help (const gchar      *help_domain,
+                                         const gchar      *help_locales,
+                                         const gchar      *help_id);
+
+static GimpHelpProgress * help_browser_progress_new (void);
 
 
 /*  local variables  */
@@ -110,7 +116,7 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   GimpRunMode        run_mode = param[0].data.d_int32;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
 
   static GimpParam   values[1];
 
@@ -209,7 +215,6 @@ temp_proc_run (const gchar      *name,
   /*  make sure all the arguments are there  */
   if (nparams == 3)
     {
-      GimpHelpDomain *domain;
       const gchar    *help_domain  = GIMP_HELP_DEFAULT_DOMAIN;
       const gchar    *help_locales = NULL;
       const gchar    *help_id      = GIMP_HELP_DEFAULT_ID;
@@ -223,36 +228,95 @@ temp_proc_run (const gchar      *name,
       if (param[2].data.d_string && strlen (param[2].data.d_string))
         help_id = param[2].data.d_string;
 
-      domain = gimp_help_lookup_domain (help_domain);
-
-      if (domain)
+      if (! help_browser_show_help (help_domain, help_locales, help_id))
         {
-          GList          *locales = gimp_help_parse_locales (help_locales);
-          GimpHelpLocale *locale;
-          gchar          *full_uri;
-          gboolean        fatal_error;
-
-          full_uri = gimp_help_domain_map (domain, locales, help_id, NULL,
-                                           &locale, &fatal_error);
-
-          if (full_uri)
-            {
-              browser_dialog_load (full_uri, TRUE);
-              browser_dialog_make_index (domain, locale);
-              browser_dialog_goto_index (full_uri);
-
-              g_free (full_uri);
-            }
-          else if (fatal_error)
-            {
-              gtk_main_quit ();
-            }
-
-          g_list_foreach (locales, (GFunc) g_free, NULL);
-          g_list_free (locales);
+          gtk_main_quit ();
         }
     }
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
+}
+
+static gboolean
+help_browser_show_help (const gchar *help_domain,
+                        const gchar *help_locales,
+                        const gchar *help_id)
+{
+  GimpHelpDomain *domain;
+  gboolean        success = TRUE;
+
+  domain = gimp_help_lookup_domain (help_domain);
+
+  if (domain)
+    {
+      GimpHelpProgress *progress = NULL;
+      GimpHelpLocale   *locale;
+      GList            *locales;
+      gchar            *uri;
+      gboolean          fatal_error;
+
+      locales = gimp_help_parse_locales (help_locales);
+
+      if (! g_str_has_prefix (domain->help_uri, "file:"))
+        progress = help_browser_progress_new ();
+
+      uri = gimp_help_domain_map (domain, locales, help_id,
+                                  progress, &locale, &fatal_error);
+
+      if (progress)
+        gimp_help_progress_free (progress);
+
+      g_list_foreach (locales, (GFunc) g_free, NULL);
+      g_list_free (locales);
+
+      if (uri)
+        {
+          browser_dialog_make_index (domain, locale);
+          browser_dialog_load (uri);
+
+          g_free (uri);
+        }
+      else if (fatal_error)
+        {
+          success = FALSE;
+        }
+    }
+
+  return success;
+}
+
+
+static void
+help_browser_progress_start (const gchar *message,
+                             gboolean     cancelable,
+                             gpointer     user_data)
+{
+  gimp_progress_init (message);
+}
+
+static void
+help_browser_progress_update (gdouble  value,
+                              gpointer user_data)
+{
+  gimp_progress_update (value);
+}
+
+static void
+help_browser_progress_end (gpointer user_data)
+{
+  gimp_progress_end ();
+}
+
+static GimpHelpProgress *
+help_browser_progress_new (void)
+{
+  static const GimpHelpProgressVTable vtable =
+  {
+    help_browser_progress_start,
+    help_browser_progress_end,
+    help_browser_progress_update
+  };
+
+  return gimp_help_progress_new (&vtable, NULL);
 }

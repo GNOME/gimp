@@ -207,7 +207,8 @@ uri_progress_callback (goffset  current_num_bytes,
         }
 
       gimp_progress_set_text_printf (format, done, total);
-      gimp_progress_update (current_num_bytes / total_num_bytes);
+      gimp_progress_update ((gdouble) current_num_bytes /
+                            (gdouble) total_num_bytes);
 
       g_free (total);
       g_free (done);

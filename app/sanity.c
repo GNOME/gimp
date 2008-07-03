@@ -36,6 +36,7 @@ static gchar * sanity_check_glib              (void);
 static gchar * sanity_check_pango             (void);
 static gchar * sanity_check_fontconfig        (void);
 static gchar * sanity_check_freetype          (void);
+static gchar * sanity_check_babl              (void);
 static gchar * sanity_check_gegl              (void);
 static gchar * sanity_check_filename_encoding (void);
 
@@ -58,6 +59,9 @@ sanity_check (void)
 
   if (! abort_message)
     abort_message = sanity_check_freetype ();
+
+  if (! abort_message)
+    abort_message = sanity_check_babl ();
 
   if (! abort_message)
     abort_message = sanity_check_gegl ();
@@ -248,6 +252,44 @@ sanity_check_freetype (void)
 }
 
 static gchar *
+sanity_check_babl (void)
+{
+  gint babl_major_version;
+  gint babl_minor_version;
+  gint babl_micro_version;
+
+#define BABL_REQUIRED_MAJOR 0
+#define BABL_REQUIRED_MINOR 0
+#define BABL_REQUIRED_MICRO 22
+
+  babl_get_version (&babl_major_version,
+                    &babl_minor_version,
+                    &babl_micro_version);
+
+  if (babl_major_version < BABL_REQUIRED_MAJOR ||
+      babl_minor_version < BABL_REQUIRED_MINOR ||
+      babl_micro_version < BABL_REQUIRED_MICRO)
+    {
+      return g_strdup_printf
+        ("BABL version too old!\n\n"
+         "GIMP requires BABL version %d.%d.%d or later.\n"
+         "Installed BABL version is %d.%d.%d.\n\n"
+         "Somehow you or your software packager managed\n"
+         "to install GIMP with an older BABL version.\n\n"
+         "Please upgrade to BABL version %d.%d.%d or later.",
+         BABL_REQUIRED_MAJOR, BABL_REQUIRED_MINOR, BABL_REQUIRED_MICRO,
+         babl_major_version, babl_minor_version, babl_micro_version,
+         BABL_REQUIRED_MAJOR, BABL_REQUIRED_MINOR, BABL_REQUIRED_MICRO);
+    }
+
+#undef BABL_REQUIRED_MAJOR
+#undef BABL_REQUIRED_MINOR
+#undef BABL_REQUIRED_MICRO
+
+  return NULL;
+}
+
+static gchar *
 sanity_check_gegl (void)
 {
   gint gegl_major_version;
@@ -256,7 +298,7 @@ sanity_check_gegl (void)
 
 #define GEGL_REQUIRED_MAJOR 0
 #define GEGL_REQUIRED_MINOR 0
-#define GEGL_REQUIRED_MICRO 16
+#define GEGL_REQUIRED_MICRO 18
 
   gegl_get_version (&gegl_major_version,
                     &gegl_minor_version,

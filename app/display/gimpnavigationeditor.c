@@ -220,6 +220,7 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
                               gint              click_x,
                               gint              click_y)
 {
+  GtkStyle             *style = gtk_widget_get_style (widget);
   GimpNavigationEditor *editor;
   GimpNavigationView   *view;
   GdkScreen            *screen;
@@ -271,12 +272,12 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
   x = (x_org + click_x -
        view->p_x -
        0.5 * (view->p_width  - BORDER_PEN_WIDTH) -
-       2   * widget->style->xthickness);
+       2   * style->xthickness);
 
   y = (y_org + click_y -
        view->p_y -
        0.5 * (view->p_height - BORDER_PEN_WIDTH) -
-       2   * widget->style->ythickness);
+       2   * style->ythickness);
 
   /* If the popup doesn't fit into the screen, we have a problem.
    * We move the popup onscreen and risk that the pointer is not
@@ -290,10 +291,10 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
 
   x = CLAMP (x, 0, (gdk_screen_get_width (screen)  -
                     GIMP_VIEW (view)->renderer->width  -
-                    4 * widget->style->xthickness));
+                    4 * style->xthickness));
   y = CLAMP (y, 0, (gdk_screen_get_height (screen) -
                     GIMP_VIEW (view)->renderer->height -
-                    4 * widget->style->ythickness));
+                    4 * style->ythickness));
 
   gtk_window_move (GTK_WINDOW (shell->nav_popup), x, y);
   gtk_widget_show (shell->nav_popup);
@@ -540,7 +541,7 @@ gimp_navigation_editor_scroll (GimpNavigationView   *view,
 
       g_assert (adj != NULL);
 
-      value = adj->value;
+      value = gtk_adjustment_get_value (adj);
 
       switch (direction)
         {
@@ -565,7 +566,8 @@ static void
 gimp_navigation_editor_zoom_adj_changed (GtkAdjustment        *adj,
                                          GimpNavigationEditor *editor)
 {
-  gimp_display_shell_scale (editor->shell, GIMP_ZOOM_TO, pow (2.0, adj->value));
+  gimp_display_shell_scale (editor->shell, GIMP_ZOOM_TO,
+                            pow (2.0, gtk_adjustment_get_value (adj)));
 }
 
 static void

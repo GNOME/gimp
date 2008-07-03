@@ -360,10 +360,11 @@ gimp_stroke_editor_paint_button (GtkWidget       *widget,
                                  GdkEventExpose  *event,
                                  gpointer         data)
 {
+  GtkStyle      *style = gtk_widget_get_style (widget);
   GtkAllocation *alloc = &widget->allocation;
   gint           w     = MIN (alloc->width, alloc->height) * 2 / 3;
 
-  gtk_paint_arrow (widget->style, widget->window,
+  gtk_paint_arrow (style, widget->window,
                    widget->state, GTK_SHADOW_IN,
                    &event->area, widget, NULL,
                    data ? GTK_ARROW_LEFT : GTK_ARROW_RIGHT, TRUE,

@@ -440,7 +440,7 @@ static void
 gimp_color_select_channel_toggled (GtkWidget       *widget,
                                    GimpColorSelect *select)
 {
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       GimpColorSelector        *selector = GIMP_COLOR_SELECTOR (select);
       GimpColorSelectorChannel  channel;

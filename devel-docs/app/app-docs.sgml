@@ -32,6 +32,7 @@
     <xi:include href="xml/errors.xml" />
     <xi:include href="xml/sanity.xml" />
     <xi:include href="xml/units.xml" />
+    <xi:include href="xml/version.xml" />
     <xi:include href="xml/about.xml" />
     <xi:include href="xml/gimp-log.xml" />
   </part>
@@ -61,7 +62,7 @@
       <xi:include href="xml/base.xml" />
     </chapter>
 
-    <chapter id="app-base-utils">
+    <chapter id="app-base-utilities">
       <title>Base Utilities</title>
       <xi:include href="xml/base-utils.xml" />
       <xi:include href="xml/boundary.xml" />
@@ -77,6 +78,7 @@
       <xi:include href="xml/color-balance.xml" />
       <xi:include href="xml/colorize.xml" />
       <xi:include href="xml/curves.xml" />
+      <xi:include href="xml/desaturate.xml" />
       <xi:include href="xml/hue-saturation.xml" />
       <xi:include href="xml/levels.xml" />
       <xi:include href="xml/lut-funcs.xml" />
@@ -129,6 +131,40 @@
     </chapter>
   </part>
 
+  <part id="app-gegl-part">
+    <title>GEGL</title>
+    <xi:include href="xml/gimp-gegl.xml" />
+    <xi:include href="xml/gimp-gegl-utils.xml" />
+
+    <chapter id="app-gegl-operations">
+      <title>Operations</title>
+      <xi:include href="xml/gimpoperationcolorbalance.xml" />
+      <xi:include href="xml/gimpoperationcolorize.xml" />
+      <xi:include href="xml/gimpoperationcurves.xml" />
+      <xi:include href="xml/gimpoperationdesaturate.xml" />
+      <xi:include href="xml/gimpoperationhuesaturation.xml" />
+      <xi:include href="xml/gimpoperationlevels.xml" />
+      <xi:include href="xml/gimpoperationpointfilter.xml" />
+      <xi:include href="xml/gimpoperationposterize.xml" />
+      <xi:include href="xml/gimpoperationthreshold.xml" />
+      <xi:include href="xml/gimpoperationtilesink.xml" />
+      <xi:include href="xml/gimpoperationtilesource.xml" />
+   </chapter>
+
+    <chapter id="app-gegl-config">
+      <title>Config Objects</title>
+      <xi:include href="xml/gimpbrightnesscontrastconfig.xml" />
+      <xi:include href="xml/gimpcolorbalanceconfig.xml" />
+      <xi:include href="xml/gimpcolorizeconfig.xml" />
+      <xi:include href="xml/gimpcurvesconfig.xml" />
+      <xi:include href="xml/gimpdesaturateconfig.xml" />
+      <xi:include href="xml/gimphuesaturationconfig.xml" />
+      <xi:include href="xml/gimplevelsconfig.xml" />
+      <xi:include href="xml/gimpposterizeconfig.xml" />
+      <xi:include href="xml/gimpthresholdconfig.xml" />
+    </chapter>
+  </part>
+
   <part id="app-core-part">
     <title>Core</title>
     <xi:include href="xml/core-types.xml" />
@@ -156,7 +192,6 @@
       <title>The GIMP Application Instance Object</title>
       <xi:include href="xml/gimp.xml" />
       <xi:include href="xml/gimp-contexts.xml" />
-      <xi:include href="xml/gimp-documents.xml" />
       <xi:include href="xml/gimp-edit.xml" />
       <xi:include href="xml/gimp-gradients.xml" />
       <xi:include href="xml/gimp-gui.xml" />
@@ -203,6 +238,7 @@
       <xi:include href="xml/gimpbrushgenerated-save.xml" />
       <xi:include href="xml/gimpbrushpipe.xml" />
       <xi:include href="xml/gimpcurve.xml" />
+      <xi:include href="xml/gimpcurve-map.xml" />
       <xi:include href="xml/gimpcurve-load.xml" />
       <xi:include href="xml/gimpcurve-save.xml" />
       <xi:include href="xml/gimpgradient.xml" />
@@ -221,17 +257,26 @@
       <title>Drawable Objects</title>
       <xi:include href="xml/gimpdrawable.xml" />
       <xi:include href="xml/gimpdrawable-blend.xml" />
+      <xi:include href="xml/gimpdrawable-brightness-contrast.xml" />
       <xi:include href="xml/gimpdrawable-bucket-fill.xml" />
+      <xi:include href="xml/gimpdrawable-color-balance.xml" />
+      <xi:include href="xml/gimpdrawable-colorize.xml" />
       <xi:include href="xml/gimpdrawable-combine.xml" />
       <xi:include href="xml/gimpdrawable-convert.xml" />
+      <xi:include href="xml/gimpdrawable-curves.xml" />
       <xi:include href="xml/gimpdrawable-desaturate.xml" />
       <xi:include href="xml/gimpdrawable-equalize.xml" />
       <xi:include href="xml/gimpdrawable-foreground-extract.xml" />
       <xi:include href="xml/gimpdrawable-histogram.xml" />
+      <xi:include href="xml/gimpdrawable-hue-saturation.xml" />
       <xi:include href="xml/gimpdrawable-invert.xml" />
       <xi:include href="xml/gimpdrawable-levels.xml" />
       <xi:include href="xml/gimpdrawable-offset.xml" />
+      <xi:include href="xml/gimpdrawable-operation.xml" />
+      <xi:include href="xml/gimpdrawable-process.xml" />
       <xi:include href="xml/gimpdrawable-preview.xml" />
+      <xi:include href="xml/gimpdrawable-shadow.xml" />
+      <xi:include href="xml/gimpdrawable-threshold.xml" />
       <xi:include href="xml/gimpdrawable-transform.xml" />
       <xi:include href="xml/gimpchannel.xml" />
       <xi:include href="xml/gimpchannel-combine.xml" />
@@ -299,6 +344,7 @@
       <xi:include href="xml/gimpguide.xml" />
       <xi:include href="xml/gimpimagefile.xml" />
       <xi:include href="xml/gimpimagemap.xml" />
+      <xi:include href="xml/gimpimagemapconfig.xml" />
       <xi:include href="xml/gimpparasitelist.xml" />
       <xi:include href="xml/gimppdbprogress.xml" />
       <xi:include href="xml/gimpprojection.xml" />
@@ -311,6 +357,7 @@
       <title>Interfaces</title>
       <xi:include href="xml/gimppickable.xml" />
       <xi:include href="xml/gimpprogress.xml" />
+      <xi:include href="xml/gimptagged.xml" />
     </chapter>
 
     <chapter id="app-core-misc-utils">
@@ -561,6 +608,7 @@
       <xi:include href="xml/gimpdisplayshell-filter-dialog.xml" />
       <xi:include href="xml/gimpdisplayshell-filter.xml" />
       <xi:include href="xml/gimpdisplayshell-handlers.xml" />
+      <xi:include href="xml/gimpdisplayshell-icon.xml" />
       <xi:include href="xml/gimpdisplayshell-layer-select.xml" />
       <xi:include href="xml/gimpdisplayshell-preview.xml" />
       <xi:include href="xml/gimpdisplayshell-render.xml" />
@@ -575,7 +623,6 @@
 
     <chapter id="app-display-utils">
       <title>Misc. Widgets &amp; Utilities</title>
-      <xi:include href="xml/gimpdbusservice.xml" />
       <xi:include href="xml/gimpnavigationeditor.xml" />
       <xi:include href="xml/gimpstatusbar.xml" />
     </chapter>
@@ -618,13 +665,15 @@
       <title>Selection Tools</title>
       <xi:include href="xml/gimpselectionoptions.xml" />
       <xi:include href="xml/gimpselectiontool.xml" />
+      <xi:include href="xml/gimpregionselectoptions.xml" />
       <xi:include href="xml/gimpregionselecttool.xml" />
-      <xi:include href="xml/gimprectselectoptions.xml" />
-      <xi:include href="xml/gimprectselecttool.xml" />
+      <xi:include href="xml/gimprectangleselectoptions.xml" />
+      <xi:include href="xml/gimprectangleselecttool.xml" />
       <xi:include href="xml/gimpellipseselecttool.xml" />
       <xi:include href="xml/gimpfreeselecttool.xml" />
       <xi:include href="xml/gimpfuzzyselecttool.xml" />
       <xi:include href="xml/gimpbycolorselecttool.xml" />
+      <xi:include href="xml/gimpiscissorsoptions.xml" />
       <xi:include href="xml/gimpiscissorstool.xml" />
       <xi:include href="xml/gimpforegroundselectoptions.xml" />
       <xi:include href="xml/gimpforegroundselecttool.xml" />
@@ -660,11 +709,13 @@
     <chapter id="app-tools-color-correction">
       <title>Color Correction Tools</title>
       <xi:include href="xml/gimpimagemaptool.xml" />
+      <xi:include href="xml/gimpimagemaptool-settings.xml" />
       <xi:include href="xml/gimpimagemapoptions.xml" />
       <xi:include href="xml/gimpbrightnesscontrasttool.xml" />
       <xi:include href="xml/gimpcolorbalancetool.xml" />
       <xi:include href="xml/gimpcolorizetool.xml" />
       <xi:include href="xml/gimpcurvestool.xml" />
+      <xi:include href="xml/gimpdesaturatetool.xml" />
       <xi:include href="xml/gimphuesaturationtool.xml" />
       <xi:include href="xml/gimplevelstool.xml" />
       <xi:include href="xml/gimpposterizetool.xml" />
@@ -693,6 +744,7 @@
       <title>Text and Vector Tools</title>
       <xi:include href="xml/gimpaligntool.xml" />
       <xi:include href="xml/gimpalignoptions.xml" />
+      <xi:include href="xml/gimpgegltool.xml" />
       <xi:include href="xml/gimprectangletool.xml" />
       <xi:include href="xml/gimprectangleoptions.xml" />
       <xi:include href="xml/gimptexttool.xml" />
@@ -740,6 +792,7 @@
 
     <chapter id="app-widgets-docks">
       <title>Dock Windows &amp; Widgets</title>
+      <xi:include href="xml/gimpwindow.xml" />
       <xi:include href="xml/gimpdock.xml" />
       <xi:include href="xml/gimpimagedock.xml" />
       <xi:include href="xml/gimpmenudock.xml" />
@@ -831,7 +884,9 @@
       <xi:include href="xml/gimpaction.xml" />
       <xi:include href="xml/gimpenumaction.xml" />
       <xi:include href="xml/gimppluginaction.xml" />
+      <xi:include href="xml/gimpradioaction.xml" />
       <xi:include href="xml/gimpstringaction.xml" />
+      <xi:include href="xml/gimptoggleaction.xml" />
       <xi:include href="xml/gimpmenufactory.xml" />
       <xi:include href="xml/gimpuimanager.xml" />
     </chapter>
@@ -877,12 +932,16 @@
       <xi:include href="xml/gimphandlebar.xml" />
       <xi:include href="xml/gimphistogrambox.xml" />
       <xi:include href="xml/gimphistogramview.xml" />
+      <xi:include href="xml/gimplanguageentry.xml" />
+      <xi:include href="xml/gimplanguagestore.xml" />
+      <xi:include href="xml/gimplanguagestore-parser.xml" />
       <xi:include href="xml/gimpimagecommenteditor.xml" />
       <xi:include href="xml/gimpimageparasiteview.xml" />
       <xi:include href="xml/gimpimageprofileview.xml" />
       <xi:include href="xml/gimpimagepropview.xml" />
       <xi:include href="xml/gimpmessagebox.xml" />
       <xi:include href="xml/gimpprogressbox.xml" />
+      <xi:include href="xml/gimpscalebutton.xml" />
       <xi:include href="xml/gimpsizebox.xml" />
       <xi:include href="xml/gimpstrokeeditor.xml" />
       <xi:include href="xml/gimptemplateeditor.xml" />
@@ -928,20 +987,26 @@
       <xi:include href="xml/gimpwidgets-constructors.xml" />
     </chapter>
 
-    <chapter id="app-widgets-misc-utilities">
-      <title>Misc. Utilities</title>
-      <xi:include href="xml/gimpclipboard.xml" />
-      <xi:include href="xml/gimpcursor.xml" />
+    <chapter id="app-widgets-session-management">
+      <title>Session Management</title>
       <xi:include href="xml/gimpdialogfactory.xml" />
-      <xi:include href="xml/gimpdnd.xml" />
-      <xi:include href="xml/gimpdnd-xds.xml" />
-      <xi:include href="xml/gimppixbuf.xml" />
-      <xi:include href="xml/gimpselectiondata.xml" />
       <xi:include href="xml/gimpsessioninfo.xml" />
       <xi:include href="xml/gimpsessioninfo-aux.xml" />
       <xi:include href="xml/gimpsessioninfo-book.xml" />
       <xi:include href="xml/gimpsessioninfo-dock.xml" />
       <xi:include href="xml/gimpsessioninfo-dockable.xml" />
+    </chapter>
+
+    <chapter id="app-widgets-misc-utilities">
+      <title>Misc. Utilities</title>
+      <xi:include href="xml/gimpcairo-wilber.xml" />
+      <xi:include href="xml/gimpclipboard.xml" />
+      <xi:include href="xml/gimpcursor.xml" />
+      <xi:include href="xml/gimpdbusservice.xml" />
+      <xi:include href="xml/gimpdnd.xml" />
+      <xi:include href="xml/gimpdnd-xds.xml" />
+      <xi:include href="xml/gimppixbuf.xml" />
+      <xi:include href="xml/gimpselectiondata.xml" />
       <xi:include href="xml/gimphelp.xml" />
       <xi:include href="xml/gimpwidgets-utils.xml" />
     </chapter>
@@ -996,6 +1061,8 @@
       <xi:include href="xml/vectors-commands.xml" />
       <xi:include href="xml/view-actions.xml" />
       <xi:include href="xml/view-commands.xml" />
+      <xi:include href="xml/windows-actions.xml" />
+      <xi:include href="xml/windows-commands.xml" />
     </chapter>
 
     <chapter id="app-actions-data-factory-actions">
@@ -1069,10 +1136,10 @@
       <xi:include href="xml/file-menu.xml" />
       <xi:include href="xml/image-menu.xml" />
       <xi:include href="xml/plug-in-menus.xml" />
-      <xi:include href="xml/toolbox-menu.xml" />
       <xi:include href="xml/tool-options-menu.xml" />
       <xi:include href="xml/dockable-menu.xml" />
       <xi:include href="xml/window-menu.xml" />
+      <xi:include href="xml/windows-menu.xml" />
     </chapter>
   </part>
 
@@ -1091,7 +1158,6 @@
       <xi:include href="xml/about-dialog.xml" />
       <xi:include href="xml/channel-options-dialog.xml" />
       <xi:include href="xml/convert-dialog.xml" />
-      <xi:include href="xml/desaturate-dialog.xml" />
       <xi:include href="xml/fade-dialog.xml" />
       <xi:include href="xml/file-open-dialog.xml" />
       <xi:include href="xml/file-open-location-dialog.xml" />

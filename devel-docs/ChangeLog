@@ -1,3 +1,55 @@
+2008-06-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/app-docs.sgml: GimpDBusService was in the wrong chapter.
+
+2008-06-12  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpstock.sgml: added new stock icon.
+
+2008-06-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/app-docs.sgml
+	* app/app-sections.txt
+	* app/app.types: a zillion updates.
+
+2008-06-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am (GTKDOC_CFLAGS)
+	* app/app.types: make it build again after
+	GTK_DISABLE_SINGLE_INCLUDES and app/ type renaming.
+
+2008-05-30  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/Makefile.am (GTKDOC_CFLAGS)
+	* libgimpwidgets/Makefile.am (GTKDOC_CFLAGS): undef
+	GTK_DISABLE_SINGLE_INCLUDES and GIMP_DISABLE_DEPRECATED here.
+
+	* libgimpwidgets/libgimpwidgets.types: don't try to #define or
+	#undef anything here.
+
+2008-05-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types
+	* libgimpwidgets/libgimpwidgets-docs.sgml: added GimpRuler API,
+	updated stock icons.
+
+	* libgimpwidgets/tmpl/gimphruler.sgml
+	* libgimpwidgets/tmpl/gimpruler.sgml
+	* libgimpwidgets/tmpl/gimpstock.sgml
+	* libgimpwidgets/tmpl/gimpvruler.sgml: regenerated.
+
+2008-05-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimpconfig/libgimpconfig-sections.txt: added new symbols.
+
+	* libgimp/tmpl/gimpdrawable.sgml
+	* libgimp/tmpl/gimpgradient.sgml
+	* libgimpconfig/tmpl/gimpconfig-serialize.sgml: regenerated.
+
 2008-04-09  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added new symbols.

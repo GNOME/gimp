@@ -60,7 +60,7 @@ help_invoker (GimpProcedure      *procedure,
                                                 manager->current_plug_in->prog,
                                                 NULL);
 
-      gimp_help (gimp, help_domain, help_id);
+      gimp_help (gimp, progress, help_domain, help_id);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

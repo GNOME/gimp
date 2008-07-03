@@ -437,7 +437,7 @@ prefs_resolution_source_callback (GtkWidget *widget,
 
   gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
 
-  from_gdk = GTK_TOGGLE_BUTTON (widget)->active;
+  from_gdk = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
 
   if (from_gdk)
     {
@@ -1796,6 +1796,18 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add (object, "show-help-button",
                           _("Show help _buttons"),
                           GTK_BOX (vbox2));
+
+  {
+    GtkWidget *combo;
+
+    table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+    combo = prefs_boolean_combo_box_add (object, "user-manual-online",
+                                         _("Use the online version"),
+                                         _("Use a locally installed copy"),
+                                         _("User manual:"),
+                                         GTK_TABLE (table), 0, size_group);
+    gimp_help_set_help_data (combo, NULL, NULL);
+  }
 
   /*  Help Browser  */
   vbox2 = prefs_frame_new (_("Help Browser"), GTK_CONTAINER (vbox), FALSE);

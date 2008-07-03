@@ -333,6 +333,34 @@ gimp_rectangle_select_tool_draw (GimpDrawTool *draw_tool)
     }
 }
 
+static gboolean
+gimp_rectangle_select_tool_delegate_button_press (GimpRectangleSelectTool *rect_sel_tool,
+                                                  GimpCoords              *coords,
+                                                  GimpDisplay             *display)
+{
+  GimpTool    *tool                   = GIMP_TOOL (rect_sel_tool);
+  gboolean     button_press_delegated = FALSE;
+  GimpDisplay *old_display            = tool->display;
+
+  tool->display = display;
+  if (! gimp_tool_control_is_active (tool->control))
+    {
+      gimp_tool_control_activate (tool->control);
+    }
+
+  button_press_delegated
+    = gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (tool),
+                                      coords);
+
+  if (gimp_tool_control_is_active (tool->control))
+    {
+      gimp_tool_control_halt (tool->control);
+    }
+  tool->display = old_display;
+
+  return button_press_delegated;
+}
+
 static void
 gimp_rectangle_select_tool_button_press (GimpTool        *tool,
                                          GimpCoords      *coords,
@@ -352,31 +380,27 @@ gimp_rectangle_select_tool_button_press (GimpTool        *tool,
   priv          = GIMP_RECTANGLE_SELECT_TOOL_GET_PRIVATE (rect_sel_tool);
 
   if (tool->display && display != tool->display)
-    gimp_rectangle_tool_cancel (GIMP_RECTANGLE_TOOL (tool));
+    {
+      gimp_rectangle_tool_cancel (GIMP_RECTANGLE_TOOL (tool));
+    }
+
+  if (gimp_rectangle_select_tool_delegate_button_press (rect_sel_tool,
+                                                        coords,
+                                                        display))
+    {
+      /* In some cases we want to finnish the rectangle select tool
+       * and hand over responsability to the selection tool
+       */
+      gimp_rectangle_tool_execute (rectangle);
+      gimp_rectangle_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+      gimp_rectangle_select_tool_update_option_defaults (rect_sel_tool,
+                                                         TRUE);
+      return;
+    }
 
   function = gimp_rectangle_tool_get_function (rectangle);
 
   priv->saved_show_selection = gimp_display_shell_get_show_selection (shell);
-
-  if (function == GIMP_RECTANGLE_TOOL_INACTIVE)
-    {
-      GimpDisplay *old_display = tool->display;
-      gboolean     edit_started;
-
-      tool->display = display;
-      gimp_tool_control_activate (tool->control);
-
-      edit_started = gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (tool),
-                                                     coords);
-
-      if (gimp_tool_control_is_active (tool->control))
-        gimp_tool_control_halt (tool->control);
-
-      tool->display = old_display;
-
-      if (edit_started)
-        return;
-    }
 
   /* if the shift or ctrl keys are down, we don't want to adjust, we
    * want to create a new rectangle, regardless of pointer loc */
@@ -528,11 +552,6 @@ gimp_rectangle_select_tool_oper_update (GimpTool        *tool,
   gimp_rectangle_tool_oper_update (tool, coords, state, proximity, display);
 
   function = gimp_rectangle_tool_get_function (GIMP_RECTANGLE_TOOL (tool));
-
-  if (function == GIMP_RECTANGLE_TOOL_INACTIVE)
-    GIMP_SELECTION_TOOL (tool)->allow_move = TRUE;
-  else
-    GIMP_SELECTION_TOOL (tool)->allow_move = FALSE;
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
@@ -717,15 +736,16 @@ gimp_rectangle_select_tool_execute (GimpRectangleTool *rectangle,
                                     gint               w,
                                     gint               h)
 {
+  GimpTool                       *tool = GIMP_TOOL (rectangle);
   GimpRectangleSelectTool        *rect_sel_tool;
   GimpRectangleSelectToolPrivate *priv;
 
   rect_sel_tool = GIMP_RECTANGLE_SELECT_TOOL (rectangle);
   priv          = GIMP_RECTANGLE_SELECT_TOOL_GET_PRIVATE (rect_sel_tool);
 
-  if (w == 0 && h == 0)
+  if (w == 0 && h == 0 && tool->display != NULL)
     {
-      GimpImage   *image     = GIMP_TOOL (rectangle)->display->image;
+      GimpImage   *image     = tool->display->image;
       GimpChannel *selection = gimp_image_get_mask (image);
       gint         pressx;
       gint         pressy;

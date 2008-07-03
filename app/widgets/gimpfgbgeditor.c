@@ -286,6 +286,7 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
                           GdkEventExpose *eevent)
 {
   GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
+  GtkStyle       *style  = gtk_widget_get_style (widget);
   gint            width, height;
   gint            default_w, default_h;
   gint            swap_w, swap_h;
@@ -348,14 +349,14 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
       gimp_context_get_background (editor->context, &color);
       gimp_fg_bg_editor_draw_rect (editor,
                                    widget->window,
-                                   widget->style->fg_gc[0],
+                                   style->fg_gc[0],
                                    (width - rect_w),
                                    (height - rect_h),
                                    rect_w, rect_h,
                                    &color);
     }
 
-  gtk_paint_shadow (widget->style, widget->window, GTK_STATE_NORMAL,
+  gtk_paint_shadow (style, widget->window, GTK_STATE_NORMAL,
                     editor->active_color == GIMP_ACTIVE_COLOR_FOREGROUND ?
                     GTK_SHADOW_OUT : GTK_SHADOW_IN,
                     NULL, widget, NULL,
@@ -371,13 +372,13 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
       gimp_context_get_foreground (editor->context, &color);
       gimp_fg_bg_editor_draw_rect (editor,
                                    widget->window,
-                                   widget->style->fg_gc[0],
+                                   style->fg_gc[0],
                                    0, 0,
                                    rect_w, rect_h,
                                    &color);
     }
 
-  gtk_paint_shadow (widget->style, widget->window, GTK_STATE_NORMAL,
+  gtk_paint_shadow (style, widget->window, GTK_STATE_NORMAL,
                     editor->active_color == GIMP_ACTIVE_COLOR_BACKGROUND ?
                     GTK_SHADOW_OUT : GTK_SHADOW_IN,
                     NULL, widget, NULL,

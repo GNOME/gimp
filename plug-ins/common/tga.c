@@ -97,17 +97,22 @@
 #define SAVE_PROC      "file-tga-save"
 #define PLUG_IN_BINARY "tga"
 
+typedef enum
+{
+  ORIGIN_TOP_LEFT    = 0,
+  ORIGIN_BOTTOM_LEFT = 1
+} TgaOrigin;
 
 typedef struct _TgaSaveVals
 {
-  gint rle;
-  gint origin;
+  gboolean   rle;
+  TgaOrigin  origin;
 } TgaSaveVals;
 
 static TgaSaveVals tsvals =
 {
-  1,    /* rle = ON */
-  1,    /* origin = bottom left */
+  TRUE,                 /* rle    */
+  ORIGIN_BOTTOM_LEFT    /* origin */
 };
 
 
@@ -467,28 +472,28 @@ load_image (const gchar *filename)
   switch (header[2])
     {
     case 1:
-      info.imageType = TGA_TYPE_MAPPED;
+      info.imageType        = TGA_TYPE_MAPPED;
       info.imageCompression = TGA_COMP_NONE;
       break;
     case 2:
-      info.imageType = TGA_TYPE_COLOR;
+      info.imageType        = TGA_TYPE_COLOR;
       info.imageCompression = TGA_COMP_NONE;
       break;
     case 3:
-      info.imageType = TGA_TYPE_GRAY;
+      info.imageType        = TGA_TYPE_GRAY;
       info.imageCompression = TGA_COMP_NONE;
       break;
 
     case 9:
-      info.imageType = TGA_TYPE_MAPPED;
+      info.imageType        = TGA_TYPE_MAPPED;
       info.imageCompression = TGA_COMP_RLE;
       break;
     case 10:
-      info.imageType = TGA_TYPE_COLOR;
+      info.imageType        = TGA_TYPE_COLOR;
       info.imageCompression = TGA_COMP_RLE;
       break;
     case 11:
-      info.imageType = TGA_TYPE_GRAY;
+      info.imageType        = TGA_TYPE_GRAY;
       info.imageCompression = TGA_COMP_RLE;
       break;
 
@@ -1058,8 +1063,8 @@ ReadImage (FILE        *fp,
               read_line (fp, row, buffer, info, drawable, convert_cmap);
             }
 
-          gimp_progress_update ((double) (i + tileheight) /
-                                (double) info->height);
+          gimp_progress_update ((gdouble) (i + tileheight) /
+                                (gdouble) info->height);
           gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0,
                                    info->height - i - tileheight,
                                    info->width, tileheight);
@@ -1077,8 +1082,8 @@ ReadImage (FILE        *fp,
               read_line (fp, row, buffer, info, drawable, convert_cmap);
             }
 
-          gimp_progress_update ((double) (i + tileheight) /
-                                (double) info->height);
+          gimp_progress_update ((gdouble) (i + tileheight) /
+                                (gdouble) info->height);
           gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i,
                                    info->width, tileheight);
         }
@@ -1178,8 +1183,8 @@ save_image (const gchar *filename,
       header[3] = header[4] = header[5] = header[6] = header[7] = 0;
     }
 
-  header[8]  = header[9]  = 0; /* xorigin */
-  header[10] = header[11] = 0; /* yorigin */
+  header[8]  = header[9]  = 0;                          /* xorigin */
+  header[10] = header[11] = tsvals.origin ? 0 : height; /* yorigin */
 
   header[12] = width % 256;
   header[13] = width / 256;
@@ -1194,25 +1199,25 @@ save_image (const gchar *filename,
     case GIMP_INDEXEDA_IMAGE:
       out_bpp = 1;
       header[16] = 8; /* bpp */
-      header[17] = (tsvals.origin) ? 0 :  0x20; /* alpha + orientation */
+      header[17] = tsvals.origin ? 0 : 0x20; /* alpha + orientation */
       break;
 
     case GIMP_GRAYA_IMAGE:
       out_bpp = 2;
       header[16] = 16; /* bpp */
-      header[17] = (tsvals.origin) ? 8 : 0x28; /* alpha + orientation */
+      header[17] = tsvals.origin ? 8 : 0x28; /* alpha + orientation */
       break;
 
     case GIMP_RGB_IMAGE:
       out_bpp = 3;
       header[16] = 24; /* bpp */
-      header[17] = (tsvals.origin) ? 0 : 0x20; /* alpha + orientation */
+      header[17] = tsvals.origin ? 0 : 0x20; /* alpha + orientation */
       break;
 
     case GIMP_RGBA_IMAGE:
       out_bpp = 4;
       header[16] = 32; /* bpp */
-      header[17] = (tsvals.origin) ? 8 : 0x28; /* alpha + orientation */
+      header[17] = tsvals.origin ? 8 : 0x28; /* alpha + orientation */
       break;
     }
 
@@ -1239,6 +1244,7 @@ save_image (const gchar *filename,
           fputc (gimp_cmap[(i * 3) + 0], fp);
           fputc (255, fp);
         }
+
       fputc (0, fp);
       fputc (0, fp);
       fputc (0, fp);
@@ -1256,11 +1262,13 @@ save_image (const gchar *filename,
     {
       if (tsvals.origin)
         {
-          gimp_pixel_rgn_get_row (&pixel_rgn, pixels, 0, height-(row+1), width);
+          gimp_pixel_rgn_get_row (&pixel_rgn,
+                                  pixels, 0, height - (row + 1), width);
         }
       else
         {
-          gimp_pixel_rgn_get_row (&pixel_rgn, pixels, 0, row, width);
+          gimp_pixel_rgn_get_row (&pixel_rgn,
+                                  pixels, 0, row, width);
         }
 
       if (dtype == GIMP_RGB_IMAGE)
@@ -1295,11 +1303,14 @@ save_image (const gchar *filename,
           fwrite (data, width * out_bpp, 1, fp);
         }
 
-      gimp_progress_update ((gdouble) row / (gdouble) height);
+      if (row % 16 == 0)
+        gimp_progress_update ((gdouble) row / (gdouble) height);
     }
 
   gimp_drawable_detach (drawable);
+
   g_free (data);
+  g_free (pixels);
 
   /* footer must be the last thing written to file */
   memset (footer, 0, 8); /* No extensions, no developer directory */
@@ -1315,9 +1326,11 @@ static gboolean
 save_dialog (void)
 {
   GtkWidget *dialog;
+  GtkWidget *label;
   GtkWidget *toggle;
-  GtkWidget *origin;
+  GtkWidget *combo;
   GtkWidget *vbox;
+  GtkWidget *hbox;
   gboolean   run;
 
   dialog = gimp_dialog_new (_("Save as TGA"), PLUG_IN_BINARY,
@@ -1353,14 +1366,26 @@ save_dialog (void)
                     &tsvals.rle);
 
   /*  origin  */
-  origin = gtk_check_button_new_with_mnemonic (_("Or_igin at bottom left"));
-  gtk_box_pack_start (GTK_BOX (vbox), origin, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (origin), tsvals.origin);
-  gtk_widget_show (origin);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  g_signal_connect (origin, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &tsvals.origin);
+  label = gtk_label_new_with_mnemonic (_("Or_igin:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  combo = gimp_int_combo_box_new (_("Bottom left"), ORIGIN_BOTTOM_LEFT,
+                                  _("Top left"),    ORIGIN_TOP_LEFT,
+                                  NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+  gtk_widget_show (combo);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
+
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                              tsvals.origin,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &tsvals.origin);
 
   gtk_widget_show (dialog);
 

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-21 01:27+0400\n"
-"PO-Revision-Date: 2008-05-21 03:33+0300\n"
+"POT-Creation-Date: 2008-06-11 20:14+0400\n"
+"PO-Revision-Date: 2008-06-11 21:22+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr "Неправильная цветовая карта"
 #: ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:703
 #: ../plug-ins/common/pnm.c:480
-#: ../plug-ins/common/poppler.c:527
+#: ../plug-ins/common/poppler.c:529
 #: ../plug-ins/common/postscript.c:1023
 #: ../plug-ins/common/postscript.c:3031
 #: ../plug-ins/common/psp.c:1747
@@ -57,7 +57,7 @@ msgstr "Неправильная цветовая карта"
 #: ../plug-ins/common/sunras.c:378
 #: ../plug-ins/common/svg.c:321
 #: ../plug-ins/common/svg.c:702
-#: ../plug-ins/common/tga.c:423
+#: ../plug-ins/common/tga.c:428
 #: ../plug-ins/common/tiff-load.c:288
 #: ../plug-ins/common/xbm.c:720
 #: ../plug-ins/common/xwd.c:420
@@ -69,8 +69,8 @@ msgstr "Неправильная цветовая карта"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1863
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:931
 #: ../plug-ins/gfig/gfig.c:434
-#: ../plug-ins/help/gimphelplocale.c:217
-#: ../plug-ins/help/gimphelplocale.c:233
+#: ../plug-ins/help/gimphelplocale.c:222
+#: ../plug-ins/help/gimphelplocale.c:238
 #: ../plug-ins/ico/ico-load.c:651
 #: ../plug-ins/ico/ico-load.c:728
 #: ../plug-ins/jpeg/jpeg-load.c:111
@@ -101,11 +101,11 @@ msgstr "Не удалось открыть '%s' для записи: %s"
 #: ../plug-ins/common/pix.c:334
 #: ../plug-ins/common/png.c:710
 #: ../plug-ins/common/pnm.c:485
-#: ../plug-ins/common/poppler.c:572
+#: ../plug-ins/common/poppler.c:574
 #: ../plug-ins/common/postscript.c:1029
 #: ../plug-ins/common/raw.c:650
 #: ../plug-ins/common/sunras.c:470
-#: ../plug-ins/common/tga.c:428
+#: ../plug-ins/common/tga.c:433
 #: ../plug-ins/common/tiff-load.c:570
 #: ../plug-ins/common/wmf.c:992
 #: ../plug-ins/common/xbm.c:725
@@ -188,7 +188,7 @@ msgstr "Неподдерживаемая высота изображения: %d
 #: ../plug-ins/common/raw.c:691
 #: ../plug-ins/common/smooth-palette.c:257
 #: ../plug-ins/common/sunras.c:956
-#: ../plug-ins/common/tga.c:1029
+#: ../plug-ins/common/tga.c:1034
 #: ../plug-ins/common/tiff-load.c:963
 #: ../plug-ins/common/tile.c:267
 #: ../plug-ins/common/xbm.c:880
@@ -249,7 +249,7 @@ msgstr "Альфа-канал будет проигнорирован."
 #: ../plug-ins/common/raw.c:555
 #: ../plug-ins/common/sphere-designer.c:2112
 #: ../plug-ins/common/sunras.c:544
-#: ../plug-ins/common/tga.c:1133
+#: ../plug-ins/common/tga.c:1138
 #: ../plug-ins/common/tiff-save.c:671
 #: ../plug-ins/common/xbm.c:1016
 #: ../plug-ins/common/xwd.c:598
@@ -260,7 +260,7 @@ msgstr "Альфа-канал будет проигнорирован."
 #: ../plug-ins/gfig/gfig.c:794
 #: ../plug-ins/ico/ico-save.c:1020
 #: ../plug-ins/ifs-compose/ifs-compose.c:2376
-#: ../plug-ins/jpeg/jpeg-save.c:325
+#: ../plug-ins/jpeg/jpeg-save.c:320
 #: ../plug-ins/lighting/lighting-ui.c:1211
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:282
 #: ../plug-ins/xjt/xjt.c:1280
@@ -285,7 +285,7 @@ msgstr "Не удалось открыть '%s' для записи: %s"
 #: ../plug-ins/common/postscript.c:1201
 #: ../plug-ins/common/psd-save.c:1564
 #: ../plug-ins/common/sunras.c:549
-#: ../plug-ins/common/tga.c:1138
+#: ../plug-ins/common/tga.c:1143
 #: ../plug-ins/common/tiff-save.c:681
 #: ../plug-ins/common/xbm.c:1021
 #: ../plug-ins/common/xpm.c:623
@@ -293,7 +293,7 @@ msgstr "Не удалось открыть '%s' для записи: %s"
 #: ../plug-ins/fits/fits.c:462
 #: ../plug-ins/fli/fli-gimp.c:684
 #: ../plug-ins/ico/ico-save.c:1015
-#: ../plug-ins/jpeg/jpeg-save.c:283
+#: ../plug-ins/jpeg/jpeg-save.c:278
 #: ../plug-ins/sgi/sgi.c:537
 #: ../plug-ins/xjt/xjt.c:1697
 #, c-format
@@ -309,7 +309,7 @@ msgid "_Run-Length Encoded"
 msgstr "_RLE-кодирование"
 
 #: ../plug-ins/bmp/bmp-write.c:826
-#: ../plug-ins/jpeg/jpeg-save.c:892
+#: ../plug-ins/jpeg/jpeg-save.c:890
 msgid "_Advanced Options"
 msgstr "_Дополнительные параметры"
 
@@ -3445,7 +3445,7 @@ msgstr "Сборка изображений"
 
 #: ../plug-ins/common/film.c:425
 #: ../plug-ins/common/guillotine.c:185
-#: ../plug-ins/help-browser/dialog.c:1144
+#: ../plug-ins/help-browser/dialog.c:1038
 msgid "Untitled"
 msgstr "Безымянное"
 
@@ -5696,12 +5696,11 @@ msgid "Co_mpression level:"
 msgstr "Степень сжатия:"
 
 #: ../plug-ins/common/png.c:1897
-#: ../plug-ins/jpeg/jpeg-save.c:1164
+#: ../plug-ins/jpeg/jpeg-save.c:1169
 msgid "_Load Defaults"
 msgstr "З_агрузить исходные параметры"
 
 #: ../plug-ins/common/png.c:1905
-#: ../plug-ins/jpeg/jpeg-save.c:1173
 msgid "S_ave Defaults"
 msgstr "_Запомнить эти параметры"
 
@@ -5833,44 +5832,44 @@ msgstr "В _полярное"
 msgid "If unchecked the image will be circularly mapped onto a rectangle.  If checked the image will be mapped onto a circle."
 msgstr "Если не отмечено, то изображение будет отображено в прямоугольник. Если отмечено – в круг."
 
-#: ../plug-ins/common/poppler.c:285
+#: ../plug-ins/common/poppler.c:287
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
-#: ../plug-ins/common/poppler.c:606
+#: ../plug-ins/common/poppler.c:608
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/poppler.c:608
+#: ../plug-ins/common/poppler.c:610
 #: ../plug-ins/common/postscript.c:1111
 #, c-format
 msgid "%s-pages"
 msgstr "%s-страниц"
 
-#: ../plug-ins/common/poppler.c:794
+#: ../plug-ins/common/poppler.c:796
 msgid "Import from PDF"
 msgstr "Импорт из PDF"
 
-#: ../plug-ins/common/poppler.c:799
+#: ../plug-ins/common/poppler.c:801
 #: ../plug-ins/common/postscript.c:3083
 #: ../plug-ins/common/tiff-load.c:451
 msgid "_Import"
 msgstr "_Импортировать"
 
-#: ../plug-ins/common/poppler.c:865
+#: ../plug-ins/common/poppler.c:867
 msgid "_Width (pixels):"
 msgstr "_Ширина (пикселов):"
 
-#: ../plug-ins/common/poppler.c:866
+#: ../plug-ins/common/poppler.c:868
 msgid "_Height (pixels):"
 msgstr "_Высота (пикселов):"
 
-#: ../plug-ins/common/poppler.c:868
+#: ../plug-ins/common/poppler.c:870
 msgid "_Resolution:"
 msgstr "_Разрешение:"
 
-#: ../plug-ins/common/poppler.c:1142
+#: ../plug-ins/common/poppler.c:1144
 #, c-format
 msgid "pixels/%s"
 msgstr "точек растра/%s"
@@ -6229,19 +6228,19 @@ msgstr "Planar (RRR,GGG,BBB)"
 msgid "Indexed Palette Type"
 msgstr "Тип индексированной палитры"
 
-#: ../plug-ins/common/red-eye-removal.c:106
+#: ../plug-ins/common/red-eye-removal.c:105
 msgid "Remove the red eye effect caused by camera flashes"
 msgstr "Убрать эффект красных глаз, создаваемый фотовспышкой"
 
-#: ../plug-ins/common/red-eye-removal.c:117
+#: ../plug-ins/common/red-eye-removal.c:116
 msgid "_Red Eye Removal..."
 msgstr "Удалить эффект _красных глаз..."
 
-#: ../plug-ins/common/red-eye-removal.c:144
+#: ../plug-ins/common/red-eye-removal.c:142
 msgid "Red Eye Removal"
 msgstr "Удаление эффекта красных глаз"
 
-#: ../plug-ins/common/red-eye-removal.c:172
+#: ../plug-ins/common/red-eye-removal.c:170
 #: ../plug-ins/common/unsharp-mask.c:706
 #: ../plug-ins/common/wind.c:1006
 #: ../plug-ins/imagemap/imap_preferences.c:441
@@ -6249,15 +6248,15 @@ msgstr "Удаление эффекта красных глаз"
 msgid "_Threshold:"
 msgstr "_Порог:"
 
-#: ../plug-ins/common/red-eye-removal.c:178
+#: ../plug-ins/common/red-eye-removal.c:176
 msgid "Threshold for the red eye color to remove."
 msgstr "Порог удаляемого цвета красных глаз"
 
-#: ../plug-ins/common/red-eye-removal.c:183
+#: ../plug-ins/common/red-eye-removal.c:181
 msgid "Manually selecting the eyes may improve the results."
 msgstr "Выделение области глаз может улучшить результат"
 
-#: ../plug-ins/common/red-eye-removal.c:316
+#: ../plug-ins/common/red-eye-removal.c:301
 msgid "Removing red eye"
 msgstr "Удалить эффект красных глаз"
 
@@ -7212,34 +7211,41 @@ msgstr "Импортировать элементы контура из SVG, т�
 msgid "Merge imported paths"
 msgstr "Объединить импортированные контуры"
 
-#: ../plug-ins/common/tga.c:238
-#: ../plug-ins/common/tga.c:257
+#: ../plug-ins/common/tga.c:243
+#: ../plug-ins/common/tga.c:262
 msgid "TarGA image"
 msgstr "TarGA image"
 
-#: ../plug-ins/common/tga.c:434
+#: ../plug-ins/common/tga.c:439
 #, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "Невозможно прочесть сноску из \"%s\""
 
-#: ../plug-ins/common/tga.c:450
+#: ../plug-ins/common/tga.c:455
 #, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "Невозможно прочесть расширение из %s"
 
-#: ../plug-ins/common/tga.c:1323
+#: ../plug-ins/common/tga.c:1336
 msgid "Save as TGA"
 msgstr "Сохранить как TGA"
 
 #. rle
-#: ../plug-ins/common/tga.c:1346
+#: ../plug-ins/common/tga.c:1359
 msgid "_RLE compression"
 msgstr "RLE сжатие"
 
-#. origin
-#: ../plug-ins/common/tga.c:1356
-msgid "Or_igin at bottom left"
-msgstr "Начало внизу слева"
+#: ../plug-ins/common/tga.c:1373
+msgid "Or_igin:"
+msgstr "_Начало координат:"
+
+#: ../plug-ins/common/tga.c:1377
+msgid "Bottom left"
+msgstr "Снизу слева"
+
+#: ../plug-ins/common/tga.c:1378
+msgid "Top left"
+msgstr "Вверху слева"
 
 #: ../plug-ins/common/threshold-alpha.c:85
 msgid "Make transparency all-or-nothing"
@@ -8097,32 +8103,33 @@ msgid "Waving"
 msgstr "Создание волн"
 
 #: ../plug-ins/common/web-browser.c:141
-#, fuzzy
 msgid ""
 "Web browser not specified.\n"
 "Please specify a web browser using the Preferences dialog."
 msgstr ""
 "Просмотрщик не указан.\n"
-"Необходимо указать его в диалоге Настройки."
+"Необходимо указать его в диалоге настройки программы."
 
 #: ../plug-ins/common/web-browser.c:161
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Could not parse the web browser command specified in the Preferences dialog:\n"
 "\n"
 "%s"
 msgstr ""
 "Невозможно разобрать команду указанного просмотрщика:\n"
+"\n"
 "%s"
 
 #: ../plug-ins/common/web-browser.c:175
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Could not execute the web browser specified in the Preferences dialog:\n"
 "\n"
 "%s"
 msgstr ""
-"Невозможно запустить указанный просмотрщик:\n"
+"Невозможно запустить указанный в параметрах GIMP просмотрщик:\n"
+"\n"
 "%s"
 
 #: ../plug-ins/common/whirl-pinch.c:138
@@ -9058,7 +9065,8 @@ msgstr "Показать изображение"
 
 #. "snap to grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:493
-msgid "checkbutton|Snap to grid"
+msgctxt "checkbutton"
+msgid "Snap to grid"
 msgstr "Прилипать к сетке"
 
 #. "show grid" checkbutton at bottom of style frame
@@ -10241,37 +10249,45 @@ msgstr "Случайное зерно:"
 msgid "_Second Flares"
 msgstr "Вторичные вспышки"
 
-#: ../plug-ins/help-browser/dialog.c:217
+#: ../plug-ins/help-browser/dialog.c:197
 msgid "GIMP Help Browser"
 msgstr "Просмотрщик справки GIMP"
 
-#: ../plug-ins/help-browser/dialog.c:312
+#: ../plug-ins/help-browser/dialog.c:292
 msgid "Drag and drop this icon to a web browser"
 msgstr "Перетащите эту иконку в веб-браузер"
 
-#: ../plug-ins/help-browser/dialog.c:703
+#: ../plug-ins/help-browser/dialog.c:576
 msgid "Go back one page"
 msgstr "Назад на одну страницу"
 
-#: ../plug-ins/help-browser/dialog.c:708
+#: ../plug-ins/help-browser/dialog.c:581
 msgid "Go forward one page"
 msgstr "Вперед на одну страницу"
 
-#: ../plug-ins/help-browser/dialog.c:713
+#: ../plug-ins/help-browser/dialog.c:586
 msgid "Go to the index page"
 msgstr "К содержанию"
 
-#: ../plug-ins/help-browser/dialog.c:748
+#: ../plug-ins/help-browser/dialog.c:591
+msgid "Reload"
+msgstr "Обновить"
+
+#: ../plug-ins/help-browser/dialog.c:591
+msgid "Reload current page"
+msgstr "Повторно загрузить эту страницу"
+
+#: ../plug-ins/help-browser/dialog.c:596
+msgid "Stop"
+msgstr "Остановить"
+
+#: ../plug-ins/help-browser/dialog.c:596
+msgid "Stop loading this page"
+msgstr "Остановить загрузку этой страницы"
+
+#: ../plug-ins/help-browser/dialog.c:631
 msgid "Visit the GIMP documentation website"
 msgstr "Посетите сайт документации GIMP"
-
-#: ../plug-ins/help-browser/dialog.c:824
-msgid "Document not found"
-msgstr "Документ не найден"
-
-#: ../plug-ins/help-browser/dialog.c:826
-msgid "The requested URL could not be loaded:"
-msgstr "Невозможно открыть запрашиваемый URL:"
 
 #: ../plug-ins/help/gimphelpdomain.c:180
 msgid "The GIMP user manual is not available."
@@ -10294,14 +10310,12 @@ msgstr "Пожалуйста, проверьте вашу установку."
 msgid "Help ID '%s' unknown"
 msgstr "Неизвестный ID в системе помощи - '%s'"
 
-#: ../plug-ins/help/gimphelplocale.c:204
-#, fuzzy, c-format
+#: ../plug-ins/help/gimphelplocale.c:209
+#, c-format
 msgid "Loading index from '%s'"
-msgstr ""
-"Ошибка считывания заголовка файла BMP\n"
-"из \"%s\""
+msgstr "Загружается содержание из '%s'"
 
-#: ../plug-ins/help/gimphelplocale.c:261
+#: ../plug-ins/help/gimphelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -11299,118 +11313,120 @@ msgstr "Просмотр JPEG"
 msgid "File size: %02.01f kB"
 msgstr "Размер файла: %02.01f Кб"
 
-#: ../plug-ins/jpeg/jpeg-save.c:673
+#: ../plug-ins/jpeg/jpeg-save.c:671
 msgid "Calculating file size..."
 msgstr "Рассчитывается размер файла..."
 
-#: ../plug-ins/jpeg/jpeg-save.c:764
-#: ../plug-ins/jpeg/jpeg-save.c:868
+#: ../plug-ins/jpeg/jpeg-save.c:762
+#: ../plug-ins/jpeg/jpeg-save.c:866
 msgid "File size: unknown"
 msgstr "Размер: неизвестен"
 
-#: ../plug-ins/jpeg/jpeg-save.c:819
+#: ../plug-ins/jpeg/jpeg-save.c:817
 msgid "Save as JPEG"
 msgstr "Сохранить как JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:854
+#: ../plug-ins/jpeg/jpeg-save.c:852
 msgid "_Quality:"
 msgstr "_Качество:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:858
+#: ../plug-ins/jpeg/jpeg-save.c:856
 msgid "JPEG quality parameter"
 msgstr "Качество изображения JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:877
+#: ../plug-ins/jpeg/jpeg-save.c:875
 msgid "Enable preview to obtain the file size."
 msgstr "Включите пред. просмотр, чтобы видеть размер файла."
 
-#: ../plug-ins/jpeg/jpeg-save.c:880
-msgid "Show _preview in image window"
+#: ../plug-ins/jpeg/jpeg-save.c:878
+msgid "Sho_w preview in image window"
 msgstr "Просмотр _в окне изображения"
 
-#: ../plug-ins/jpeg/jpeg-save.c:921
-msgid "_Smoothing:"
-msgstr "С_глаживание:"
+#: ../plug-ins/jpeg/jpeg-save.c:919
+msgid "S_moothing:"
+msgstr "Сг_лаживание:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:934
+#: ../plug-ins/jpeg/jpeg-save.c:932
 msgid "Frequency (rows):"
 msgstr "Частота (строки):"
 
-#: ../plug-ins/jpeg/jpeg-save.c:950
-msgid "Use restart markers"
-msgstr "Использовать маркеры перезапуска"
+#: ../plug-ins/jpeg/jpeg-save.c:948
+msgid "Use _restart markers"
+msgstr "Использовать _маркеры перезапуска"
 
-#: ../plug-ins/jpeg/jpeg-save.c:966
-#: ../plug-ins/xjt/xjt.c:877
-msgid "Optimize"
-msgstr "Оптимизировать"
+#: ../plug-ins/jpeg/jpeg-save.c:964
+msgid "_Optimize"
+msgstr "О_птимизировать"
 
-#: ../plug-ins/jpeg/jpeg-save.c:979
-msgid "Progressive"
-msgstr "Прогрессивная"
+#: ../plug-ins/jpeg/jpeg-save.c:978
+msgid "_Progressive"
+msgstr "Про_грессивная"
 
 #: ../plug-ins/jpeg/jpeg-save.c:994
-msgid "Save EXIF data"
-msgstr "Сохранить данные EXIF"
+msgid "Save _EXIF data"
+msgstr "Сохранить данные _Exif"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1011
-msgid "Save thumbnail"
-msgstr "Сохранить предпросмотр"
+msgid "Save _thumbnail"
+msgstr "Сохранить _эскиз"
 
-#. XMP metadata
-#: ../plug-ins/jpeg/jpeg-save.c:1027
-msgid "Save XMP data"
-msgstr "Сохранить данные XPM"
+#: ../plug-ins/jpeg/jpeg-save.c:1028
+msgid "Save _XMP data"
+msgstr "Сохранить данные _XMP"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1042
-msgid "Use quality settings from original image"
-msgstr "Использовать качественные характеристики исходного изображения"
+#: ../plug-ins/jpeg/jpeg-save.c:1043
+msgid "_Use quality settings from original image"
+msgstr "Использовать _качественные характеристики исходного изображения"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1048
+#: ../plug-ins/jpeg/jpeg-save.c:1049
 msgid "If the original image was loaded from a JPEG file using non-standard quality settings (quantization tables), enable this option to get almost the same quality and file size."
 msgstr "Если исходное изображение было загружено из файла JPEG, в котором нестандартные параметры качества (таблицы квантования), используйте этот параметр для получения максимально схожего качества и размера файла."
 
 #. Subsampling
-#: ../plug-ins/jpeg/jpeg-save.c:1072
-msgid "Subsampling:"
-msgstr "Субвыборка:"
+#: ../plug-ins/jpeg/jpeg-save.c:1073
+msgid "Su_bsampling:"
+msgstr "С_убвыборка:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1079
+#: ../plug-ins/jpeg/jpeg-save.c:1080
 msgid "1x1,1x1,1x1 (best quality)"
 msgstr "1x1,1x1,1x1 (наилучшее качество)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1080
+#: ../plug-ins/jpeg/jpeg-save.c:1081
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr "2x1,1x1,1x1 (4:2:2)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1081
+#: ../plug-ins/jpeg/jpeg-save.c:1082
 msgid "1x2,1x1,1x1"
 msgstr "1x2,1x1,1x1"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1082
+#: ../plug-ins/jpeg/jpeg-save.c:1083
 msgid "2x2,1x1,1x1 (smallest file)"
 msgstr "2x2,1x1,1x1 (наименьший размер файла)"
 
 #. DCT method
-#: ../plug-ins/jpeg/jpeg-save.c:1106
-msgid "DCT method:"
-msgstr "Метод DCT:"
+#: ../plug-ins/jpeg/jpeg-save.c:1109
+msgid "_DCT method:"
+msgstr "_Метод DCT:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1112
+#: ../plug-ins/jpeg/jpeg-save.c:1115
 msgid "Fast Integer"
 msgstr "Быстрое целое"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1113
+#: ../plug-ins/jpeg/jpeg-save.c:1116
 msgid "Integer"
 msgstr "Целое"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1114
+#: ../plug-ins/jpeg/jpeg-save.c:1117
 msgid "Floating-Point"
 msgstr "С плавающей точкой"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1128
+#: ../plug-ins/jpeg/jpeg-save.c:1133
 msgid "Comment"
 msgstr "Комментарий"
+
+#: ../plug-ins/jpeg/jpeg-save.c:1178
+msgid "Sa_ve Defaults"
+msgstr "_Запомнить эти параметры"
 
 #: ../plug-ins/jpeg/jpeg.c:137
 #: ../plug-ins/jpeg/jpeg.c:175
@@ -12571,6 +12587,10 @@ msgstr "Внимание: в XJT сохранена единица неподд�
 msgid "Save as XJT"
 msgstr "Сохранить как XJT"
 
+#: ../plug-ins/xjt/xjt.c:877
+msgid "Optimize"
+msgstr "Оптимизировать"
+
 #: ../plug-ins/xjt/xjt.c:887
 msgid "Clear transparent"
 msgstr "Очистить прозрачное"
@@ -12599,6 +12619,16 @@ msgstr "Ошибка: невозможно прочитать файл свой�
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Ошибка: файл свойств XJT '%s' пуст"
 
+#~ msgid "Or_igin at bottom left"
+#~ msgstr "Начало внизу слева"
+#~ msgid "Document not found"
+#~ msgstr "Документ не найден"
+#~ msgid "The requested URL could not be loaded:"
+#~ msgstr "Невозможно открыть запрашиваемый URL:"
+#~ msgid "checkbutton|Snap to grid"
+#~ msgstr "Прилипать к сетке"
+#~ msgid "_Smoothing:"
+#~ msgstr "С_глаживание:"
 #~ msgid "The GIMP help files are not found."
 #~ msgstr "Файлы помощи GIMP не найдены."
 #~ msgid "Printable area:"

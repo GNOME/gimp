@@ -243,13 +243,16 @@ gimp_message_box_size_request (GtkWidget      *widget,
   if (box->image && GTK_WIDGET_VISIBLE (box->image))
     {
       GtkRequisition  child_requisition;
+      gint            border_width;
 
       gtk_widget_size_request (box->image, &child_requisition);
+
+      border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
       requisition->width  += child_requisition.width + GIMP_MESSAGE_BOX_SPACING;
       requisition->height = MAX (requisition->height,
                                  child_requisition.height +
-                                 2 * GTK_CONTAINER (widget)->border_width);
+                                 2 * border_width);
     }
 }
 
@@ -268,25 +271,28 @@ gimp_message_box_size_allocate (GtkWidget     *widget,
     {
       GtkRequisition  child_requisition;
       GtkAllocation   child_allocation;
+      gint            border_width;
       gint            height;
 
       gtk_widget_size_request (box->image, &child_requisition);
 
-      width  = MIN (allocation->width - 2 * container->border_width,
+      border_width = gtk_container_get_border_width (container);
+
+      width  = MIN (allocation->width - 2 * border_width,
                     child_requisition.width + GIMP_MESSAGE_BOX_SPACING);
       width  = MAX (1, width);
 
-      height = allocation->height - 2 * container->border_width;
+      height = allocation->height - 2 * border_width;
       height = MAX (1, height);
 
       if (rtl)
-        child_allocation.x  = (allocation->width       -
-                               container->border_width -
+        child_allocation.x  = (allocation->width -
+                               border_width      -
                                child_requisition.width);
       else
-        child_allocation.x  = allocation->x + container->border_width;
+        child_allocation.x  = allocation->x + border_width;
 
-      child_allocation.y      = allocation->y + container->border_width;
+      child_allocation.y      = allocation->y + border_width;
       child_allocation.width  = width;
       child_allocation.height = height;
 

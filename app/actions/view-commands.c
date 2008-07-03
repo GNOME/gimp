@@ -161,7 +161,7 @@ view_zoom_cmd_callback (GtkAction *action,
 
         scale = action_select_value ((GimpActionSelectType) value,
                                      scale,
-                                     0.0, 512.0,
+                                     0.0, 512.0, 1.0,
                                      1.0 / 8.0, 1.0, 16.0, 0.0,
                                      FALSE);
 
@@ -259,6 +259,7 @@ view_scroll_horizontal_cmd_callback (GtkAction *action,
                                 shell->hsbdata->lower,
                                 shell->hsbdata->upper -
                                 shell->hsbdata->page_size,
+                                shell->hsbdata->lower,
                                 1,
                                 shell->hsbdata->step_increment,
                                 shell->hsbdata->page_increment,
@@ -284,6 +285,7 @@ view_scroll_vertical_cmd_callback (GtkAction *action,
                                 shell->vsbdata->lower,
                                 shell->vsbdata->upper -
                                 shell->vsbdata->page_size,
+                                shell->vsbdata->lower,
                                 1,
                                 shell->vsbdata->step_increment,
                                 shell->vsbdata->page_increment,

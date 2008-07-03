@@ -307,7 +307,8 @@ gimp_toolbox_constructor (GType                  type,
 
   gimp_toolbox_dnd_init (GIMP_TOOLBOX (toolbox));
 
-  gimp_toolbox_style_set (GTK_WIDGET (toolbox), GTK_WIDGET (toolbox)->style);
+  gimp_toolbox_style_set (GTK_WIDGET (toolbox),
+                          gtk_widget_get_style (GTK_WIDGET (toolbox)));
 
   toolbox_separator_expand (toolbox);
 
@@ -510,12 +511,13 @@ gimp_toolbox_expose_event (GtkWidget      *widget,
                                &toolbox->header->allocation,
                                &clip_rect))
     {
-      cairo_t *cr;
-      gint     header_height;
-      gint     header_width;
-      gdouble  wilber_width;
-      gdouble  wilber_height;
-      gdouble  factor;
+      GtkStyle *style = gtk_widget_get_style (widget);
+      cairo_t  *cr;
+      gint      header_height;
+      gint      header_width;
+      gdouble   wilber_width;
+      gdouble   wilber_height;
+      gdouble   factor;
 
       cr = gdk_cairo_create (widget->window);
       gdk_cairo_rectangle (cr, &clip_rect);
@@ -535,9 +537,9 @@ gimp_toolbox_expose_event (GtkWidget      *widget,
                          (header_height / factor - wilber_height) / 2.0);
 
       cairo_set_source_rgba (cr,
-                             widget->style->fg[widget->state].red   / 65535.0,
-                             widget->style->fg[widget->state].green / 65535.0,
-                             widget->style->fg[widget->state].blue  / 65535.0,
+                             style->fg[widget->state].red   / 65535.0,
+                             style->fg[widget->state].green / 65535.0,
+                             style->fg[widget->state].blue  / 65535.0,
                              0.10);
       cairo_fill (cr);
 
@@ -811,7 +813,8 @@ toolbox_area_notify (GimpGuiConfig *config,
                      GParamSpec    *pspec,
                      GtkWidget     *area)
 {
-  gboolean visible;
+  GtkWidget *parent = gtk_widget_get_parent (area);
+  gboolean   visible;
 
   if (config->toolbox_color_area ||
       config->toolbox_foo_area   ||
@@ -819,18 +822,18 @@ toolbox_area_notify (GimpGuiConfig *config,
     {
       GtkRequisition req;
 
-      gtk_widget_show (area->parent);
+      gtk_widget_show (parent);
 
 #ifdef __GNUC__
 #warning FIXME: fix GtkWrapBox child requisition/allocation instead of hacking badly (bug #162500).
 #endif
       gtk_widget_size_request (area, &req);
-      gtk_widget_set_size_request (area->parent, req.width, req.height);
+      gtk_widget_set_size_request (parent, req.width, req.height);
     }
   else
     {
-      gtk_widget_hide (area->parent);
-      gtk_widget_set_size_request (area->parent, -1, -1);
+      gtk_widget_hide (parent);
+      gtk_widget_set_size_request (parent, -1, -1);
     }
 
   g_object_get (config, pspec->name, &visible, NULL);
@@ -847,7 +850,8 @@ toolbox_tool_changed (GimpContext  *context,
       GtkWidget *toolbox_button = g_object_get_data (G_OBJECT (tool_info),
                                                      TOOL_BUTTON_DATA_KEY);
 
-      if (toolbox_button && ! GTK_TOGGLE_BUTTON (toolbox_button)->active)
+      if (toolbox_button &&
+          ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toolbox_button)))
         {
           g_signal_handlers_block_by_func (toolbox_button,
                                            toolbox_tool_button_toggled,
@@ -895,7 +899,7 @@ toolbox_tool_button_toggled (GtkWidget    *widget,
 {
   GtkWidget *toolbox = gtk_widget_get_toplevel (widget);
 
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     gimp_context_set_tool (GIMP_DOCK (toolbox)->context, tool_info);
 }
 

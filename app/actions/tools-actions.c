@@ -114,6 +114,10 @@ static const GimpEnumActionEntry tools_color_average_radius_actions[] =
     "Set Color Picker Radius", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
+  { "tools-color-average-set-to-default", GIMP_STOCK_TOOL_COLOR_PICKER,
+    "Set Color Picker Radius To Default Value", NULL, NULL,
+    GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
+    NULL },
   { "tools-color-average-radius-minimum", GIMP_STOCK_TOOL_COLOR_PICKER,
     "Minimize Color Picker Radius", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
@@ -147,6 +151,10 @@ static const GimpEnumActionEntry tools_paint_brush_scale_actions[] =
   { "tools-paint-brush-scale-set", GIMP_STOCK_TOOL_PAINTBRUSH,
     "Set Brush Scale", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-paint-brush-scale-set-to-default", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Set Brush Scale To Default Value", NULL, NULL,
+    GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
     NULL },
   { "tools-paint-brush-scale-minimum", GIMP_STOCK_TOOL_PAINTBRUSH,
     "Minimize Brush Scale", NULL, NULL,
@@ -211,6 +219,10 @@ static const GimpEnumActionEntry tools_ink_blob_aspect_actions[] =
   { "tools-ink-blob-aspect-set", GIMP_STOCK_TOOL_INK,
     "Set Ink Blob Aspect", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-ink-blob-aspect-set-to-default", GIMP_STOCK_TOOL_INK,
+    "Set Ink Blob Aspect To Default Value", NULL, NULL,
+    GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
     NULL },
   { "tools-ink-blob-aspect-minimum", GIMP_STOCK_TOOL_INK,
     "Minimize Ink Blob Aspect", NULL, NULL,
@@ -277,6 +289,11 @@ static const GimpEnumActionEntry tools_foreground_select_brush_size_actions[] =
     "Set Foreground Select Brush Size", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
+  { "tools-foreground-select-brush-size-set-to-default",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Set Foreground Select Brush Size to Default Value", NULL, NULL,
+    GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
+    NULL },
   { "tools-foreground-select-brush-size-minimum",
     GIMP_STOCK_TOOL_FOREGROUND_SELECT,
     "Minimize Foreground Select Brush Size", NULL, NULL,
@@ -341,11 +358,18 @@ static const GimpEnumActionEntry tools_transform_preview_opacity_actions[] =
     NULL },
 };
 
+/* tools-value-1 is effectively used to control
+ * opacity of the active tool
+ */
 static const GimpEnumActionEntry tools_value_1_actions[] =
 {
   { "tools-value-1-set", GIMP_STOCK_TOOL_OPTIONS,
     "Set Value 1", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-value-1-set-to-default", GIMP_STOCK_TOOL_OPTIONS,
+    "Set Value 1 To Default Value", NULL, NULL,
+    GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
     NULL },
   { "tools-value-1-minimum", GIMP_STOCK_TOOL_OPTIONS,
     "Minimize Value 1", NULL, NULL,
@@ -373,11 +397,18 @@ static const GimpEnumActionEntry tools_value_1_actions[] =
     NULL },
 };
 
+/* tools-value-2 is effectively used to control
+ * the tip size of the active tool
+ */
 static const GimpEnumActionEntry tools_value_2_actions[] =
 {
   { "tools-value-2-set", GIMP_STOCK_TOOL_OPTIONS,
     "Set Value 2", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-value-2-set-to-default", GIMP_STOCK_TOOL_OPTIONS,
+    "Set Value 2 To Default Value", "backslash", NULL,
+    GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
     NULL },
   { "tools-value-2-minimum", GIMP_STOCK_TOOL_OPTIONS,
     "Minimize Value 2", NULL, NULL,
@@ -411,6 +442,10 @@ static const GimpEnumActionEntry tools_value_3_actions[] =
     "Set Value 3", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
+  { "tools-value-3-set-to-default", GIMP_STOCK_TOOL_OPTIONS,
+    "Set Value 3 To Default Value", NULL, NULL,
+    GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
+    NULL },
   { "tools-value-3-minimum", GIMP_STOCK_TOOL_OPTIONS,
     "Minimize Value 3", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
@@ -442,6 +477,10 @@ static const GimpEnumActionEntry tools_value_4_actions[] =
   { "tools-value-4-set", GIMP_STOCK_TOOL_OPTIONS,
     "Set Value 4", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-value-4-set-to-default", GIMP_STOCK_TOOL_OPTIONS,
+    "Set Value 4 To Default Value", NULL, NULL,
+    GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
     NULL },
   { "tools-value-4-minimum", GIMP_STOCK_TOOL_OPTIONS,
     "Minimize Value 4", NULL, NULL,

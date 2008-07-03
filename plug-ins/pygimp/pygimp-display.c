@@ -46,7 +46,7 @@ pygimp_display_new(gint32 ID)
 {
     PyGimpDisplay *self;
 
-    if (ID == -1) {
+    if (!gimp_display_is_valid(ID)) {
         Py_INCREF(Py_None);
         return Py_None;
     }

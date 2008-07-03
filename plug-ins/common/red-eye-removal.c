@@ -59,7 +59,7 @@ static void     run                   (const gchar      *name,
 static void     remove_redeye         (GimpDrawable     *drawable);
 static void     remove_redeye_preview (GimpDrawable     *drawable,
                                        GimpPreview      *preview);
-static void      redeye_inner_loop    (const guchar     *src,
+static void     redeye_inner_loop     (const guchar     *src,
                                        guchar           *dest,
                                        gint              width,
                                        gint              height,
@@ -76,6 +76,7 @@ static void      redeye_inner_loop    (const guchar     *src,
 
 #define PLUG_IN_PROC    "plug-in-red-eye-removal"
 #define PLUG_IN_BINARY  "red-eye-removal"
+
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -99,8 +100,6 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"               },
     { GIMP_PDB_INT32,    "threshold", "Red eye threshold in percent" }
   };
-
-  gimp_set_data (PLUG_IN_PROC, &threshold, sizeof (threshold));
 
   gimp_install_procedure (PLUG_IN_PROC,
                           N_("Remove the red eye effect caused by camera "
@@ -129,8 +128,7 @@ query (void)
  */
 static gboolean
 dialog (gint32        image_id,
-        GimpDrawable *drawable,
-        gint         *current_threshold)
+        GimpDrawable *drawable)
 {
   GtkWidget *dialog;
   GtkWidget *preview;
@@ -218,7 +216,6 @@ run (const gchar      *name,
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint32             threshold;
   gint32             image_ID;
 
   run_mode = param[0].data.d_int32;
@@ -241,15 +238,8 @@ run (const gchar      *name,
       case GIMP_RUN_INTERACTIVE:
         gimp_get_data (PLUG_IN_PROC, &threshold);
 
-        if (strncmp (name, PLUG_IN_PROC, strlen (PLUG_IN_PROC)) == 0)
-          {
-            if (! dialog (image_ID, drawable, &threshold))
-              status = GIMP_PDB_CANCEL;
-          }
-        else
-          {
-            threshold = 50;
-          }
+        if (! dialog (image_ID, drawable))
+          status = GIMP_PDB_CANCEL;
         break;
 
       case GIMP_RUN_WITH_LAST_VALS:
@@ -260,8 +250,7 @@ run (const gchar      *name,
         break;
     }
 
-  /*  Make sure that the drawable is RGB color.
-   *  Greyscale images don't have the red eye effect. */
+  /*  Make sure that the drawable is RGB color.  */
   if (status == GIMP_PDB_SUCCESS &&
       gimp_drawable_is_rgb (drawable->drawable_id))
     {
@@ -270,12 +259,8 @@ run (const gchar      *name,
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
 
-      /* if we ran in auto mode don't reset the threshold */
-      if (run_mode == GIMP_RUN_INTERACTIVE
-          && strncmp (name, PLUG_IN_PROC, strlen (PLUG_IN_PROC)) == 0)
-      {
+      if (run_mode == GIMP_RUN_INTERACTIVE)
         gimp_set_data (PLUG_IN_PROC, &threshold, sizeof (threshold));
-      }
     }
   else
     {
@@ -283,9 +268,9 @@ run (const gchar      *name,
     }
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   gimp_drawable_detach (drawable);
@@ -335,7 +320,7 @@ remove_redeye (GimpDrawable *drawable)
       progress += src_rgn.w * src_rgn.h;
 
       if (i % 16 == 0)
-        gimp_progress_update ((double) progress / (double) max_progress);
+        gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
     }
 
   gimp_drawable_flush (drawable);
@@ -375,13 +360,13 @@ redeye_inner_loop (const guchar *src,
                    gint          height,
                    gint          bpp,
                    gboolean      has_alpha,
-                   int           rowstride)
+                   gint          rowstride)
 {
-  const gint    red   = 0;
-  const gint    green = 1;
-  const gint    blue  = 2;
-  const gint    alpha = 3;
-  gint          x, y;
+  const gint red   = 0;
+  const gint green = 1;
+  const gint blue  = 2;
+  const gint alpha = 3;
+  gint       x, y;
 
   for (y = 0; y < height; y++)
     {

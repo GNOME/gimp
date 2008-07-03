@@ -123,7 +123,9 @@ gimp_cell_renderer_viewable_class_init (GimpCellRendererViewableClass *klass)
 static void
 gimp_cell_renderer_viewable_init (GimpCellRendererViewable *cellviewable)
 {
-  GTK_CELL_RENDERER (cellviewable)->mode = GTK_CELL_RENDERER_MODE_ACTIVATABLE;
+  g_object_set (cellviewable,
+                "mode", GTK_CELL_RENDERER_MODE_ACTIVATABLE,
+                NULL);
 }
 
 static void

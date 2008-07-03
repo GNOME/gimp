@@ -829,7 +829,9 @@ gimp_colormap_adjustment_changed (GtkAdjustment      *adjustment,
 
   if (HAVE_COLORMAP (image))
     {
-      gimp_colormap_editor_set_index (editor, adjustment->value + 0.5, NULL);
+      gint index = ROUND (gtk_adjustment_get_value (adjustment));
+
+      gimp_colormap_editor_set_index (editor, index, NULL);
 
       gimp_colormap_editor_update_entries (editor);
     }

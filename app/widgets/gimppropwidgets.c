@@ -25,6 +25,9 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define __GTK_SCALE_BUTTON_H__
+#define __GTK_VOLUME_BUTTON_H__
+
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -365,10 +368,7 @@ gimp_prop_scale_button_new (GObject     *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *button;
-  GtkObject  *adj;
   gdouble     value;
-  gdouble     lower;
-  gdouble     upper;
 
   param_spec = check_param_spec_w (config, property_name,
                                    G_TYPE_PARAM_DOUBLE, G_STRFUNC);
@@ -380,14 +380,9 @@ gimp_prop_scale_button_new (GObject     *config,
                 param_spec->name, &value,
                 NULL);
 
-  lower = G_PARAM_SPEC_DOUBLE (param_spec)->minimum;
-  upper = G_PARAM_SPEC_DOUBLE (param_spec)->maximum;
-
-  button = gimp_scale_button_new ();
-
-  adj = gtk_adjustment_new (value, lower, upper, (upper - lower) / 10.0, 0, 0);
-  gtk_scale_button_set_adjustment (GTK_SCALE_BUTTON (button),
-                                   GTK_ADJUSTMENT (adj));
+  button = gimp_scale_button_new (value,
+                                  G_PARAM_SPEC_DOUBLE (param_spec)->minimum,
+                                  G_PARAM_SPEC_DOUBLE (param_spec)->maximum);
 
   set_param_spec (G_OBJECT (button), button, param_spec);
 
@@ -441,7 +436,7 @@ gimp_prop_scale_button_notify (GObject    *config,
                                    gimp_prop_scale_button_callback,
                                    config);
 
-  gtk_scale_button_set_value (GTK_SCALE_BUTTON (button), value);
+  gimp_gtk_scale_button_set_value (GTK_SCALE_BUTTON (button), value);
 
   g_signal_handlers_unblock_by_func (button,
                                      gimp_prop_scale_button_callback,

@@ -24,6 +24,10 @@
 
 #include "actions-types.h"
 
+#include "core/gimpprogress.h"
+
+#include "widgets/gimphelp.h"
+
 #include "actions.h"
 #include "help-commands.h"
 
@@ -32,7 +36,12 @@ void
 help_help_cmd_callback (GtkAction *action,
                         gpointer   data)
 {
-  gimp_standard_help_func (NULL, NULL);
+  Gimp        *gimp;
+  GimpDisplay *display;
+  return_if_no_gimp (gimp, data);
+  return_if_no_display (display, data);
+
+  gimp_help_show (gimp, GIMP_PROGRESS (display), NULL, NULL);
 }
 
 void

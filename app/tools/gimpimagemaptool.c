@@ -42,6 +42,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpsettingsbox.h"
 #include "widgets/gimptooldialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -171,7 +172,7 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
 static void
 gimp_image_map_tool_base_init (GimpImageMapToolClass *klass)
 {
-  klass->recent_settings = gimp_list_new (GIMP_TYPE_VIEWABLE, TRUE);
+  klass->recent_settings = gimp_list_new (GIMP_TYPE_IMAGE_MAP_CONFIG, TRUE);
   gimp_list_set_sort_func (GIMP_LIST (klass->recent_settings),
                            (GCompareFunc) gimp_image_map_config_compare);
 }
@@ -189,17 +190,15 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
                                      GIMP_DIRTY_DRAWABLE        |
                                      GIMP_DIRTY_SELECTION);
 
-  image_map_tool->drawable        = NULL;
-  image_map_tool->operation       = NULL;
-  image_map_tool->config          = NULL;
-  image_map_tool->image_map       = NULL;
+  image_map_tool->drawable     = NULL;
+  image_map_tool->operation    = NULL;
+  image_map_tool->config       = NULL;
+  image_map_tool->image_map    = NULL;
 
-  image_map_tool->shell           = NULL;
-  image_map_tool->main_vbox       = NULL;
-  image_map_tool->favorites_menu  = NULL;
-  image_map_tool->import_item     = NULL;
-  image_map_tool->export_item     = NULL;
-  image_map_tool->settings_dialog = NULL;
+  image_map_tool->shell        = NULL;
+  image_map_tool->main_vbox    = NULL;
+  image_map_tool->settings_box = NULL;
+  image_map_tool->label_group  = NULL;
 }
 
 static GObject *
@@ -243,11 +242,10 @@ gimp_image_map_tool_finalize (GObject *object)
   if (image_map_tool->shell)
     {
       gtk_widget_destroy (image_map_tool->shell);
-      image_map_tool->shell          = NULL;
-      image_map_tool->main_vbox      = NULL;
-      image_map_tool->favorites_menu = NULL;
-      image_map_tool->import_item    = NULL;
-      image_map_tool->export_item    = NULL;
+      image_map_tool->shell        = NULL;
+      image_map_tool->main_vbox    = NULL;
+      image_map_tool->settings_box = NULL;
+      image_map_tool->label_group  = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -549,7 +547,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
           gimp_image_flush (tool->display->image);
 
           if (image_map_tool->config)
-            gimp_image_map_tool_add_recent_settings (image_map_tool);
+            gimp_settings_box_add_current (GIMP_SETTINGS_BOX (image_map_tool->settings_box));
         }
 
       tool->display  = NULL;
@@ -678,4 +676,21 @@ gimp_image_map_tool_edit_as (GimpImageMapTool *im_tool,
   gimp_config_copy (config,
                     GIMP_CONFIG (GIMP_IMAGE_MAP_TOOL (new_tool)->config),
                     0);
+}
+
+GtkWidget *
+gimp_image_map_tool_dialog_get_vbox (GimpImageMapTool *tool)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool), NULL);
+
+  return tool->main_vbox;
+}
+
+
+GtkSizeGroup *
+gimp_image_map_tool_dialog_get_label_group (GimpImageMapTool *tool)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool), NULL);
+
+  return tool->label_group;
 }

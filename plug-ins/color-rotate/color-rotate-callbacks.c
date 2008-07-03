@@ -84,11 +84,13 @@ void
 rcm_360_degrees (GtkWidget *button,
 		 RcmCircle *circle)
 {
+  GtkStyle *style = gtk_widget_get_style (circle->preview);
+
   circle->action_flag = DO_NOTHING;
   gtk_widget_queue_draw (circle->preview);
   circle->angle->beta = circle->angle->alpha-circle->angle->cw_ccw * 0.001;
   color_rotate_draw_arrows (circle->preview->window,
-                            circle->preview->style->black_gc,
+                            style->black_gc,
                             circle->angle);
   circle->action_flag = VIRGIN;
   rcm_render_preview (Current.Bna->after);
@@ -115,13 +117,15 @@ void
 rcm_a_to_b (GtkWidget *button,
 	    RcmCircle *circle)
 {
+  GtkStyle *style = gtk_widget_get_style (circle->preview);
+
   circle->action_flag = DO_NOTHING;
   gtk_widget_queue_draw (circle->preview);
 
   SWAP (circle->angle->alpha, circle->angle->beta);
 
   color_rotate_draw_arrows (circle->preview->window,
-                            circle->preview->style->black_gc,
+                            style->black_gc,
                             circle->angle);
 
   circle->action_flag = VIRGIN;
@@ -152,7 +156,7 @@ void
 rcm_switch_to_degrees (GtkWidget *button,
 		       gpointer  *value)
 {
-  if (GTK_TOGGLE_BUTTON (button)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
     {
       Current.Units = DEGREES;
 
@@ -203,7 +207,7 @@ void
 rcm_switch_to_radians (GtkWidget *button,
 		       gpointer  *value)
 {
-  if (GTK_TOGGLE_BUTTON (button)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
     {
       Current.Units = RADIANS;
 
@@ -254,7 +258,7 @@ void
 rcm_switch_to_radians_over_PI (GtkWidget *button,
 			       gpointer  *value)
 {
-  if (GTK_TOGGLE_BUTTON (button)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
     {
       Current.Units = RADIANS_OVER_PI;
 
@@ -291,22 +295,24 @@ void
 rcm_switch_to_gray_to (GtkWidget *button,
 		       gpointer  *value)
 {
-  if (! GTK_TOGGLE_BUTTON (button)->active)
-    return;
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
+    {
+      Current.Gray_to_from = GRAY_TO;
 
-  Current.Gray_to_from = GRAY_TO;
-  rcm_render_preview (Current.Bna->after);
+      rcm_render_preview (Current.Bna->after);
+    }
 }
 
 void
 rcm_switch_to_gray_from (GtkWidget *button,
 			 gpointer  *value)
 {
-  if (! GTK_TOGGLE_BUTTON (button)->active)
-    return;
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
+    {
+      Current.Gray_to_from = GRAY_FROM;
 
-  Current.Gray_to_from = GRAY_FROM;
-  rcm_render_preview (Current.Bna->after);
+      rcm_render_preview (Current.Bna->after);
+    }
 }
 
 
@@ -316,7 +322,7 @@ void
 rcm_preview_as_you_drag (GtkWidget *button,
 			 gpointer  *value)
 {
-  Current.RealTime = GTK_TOGGLE_BUTTON (button)->active;
+  Current.RealTime = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
 }
 
 void
@@ -348,8 +354,10 @@ rcm_expose_event (GtkWidget *widget,
 {
   if (circle->action_flag == VIRGIN)
     {
+      GtkStyle *style = gtk_widget_get_style (widget);
+
       color_rotate_draw_arrows (widget->window,
-                                widget->style->black_gc,
+                                style->black_gc,
                                 circle->angle);
     }
 
@@ -383,10 +391,12 @@ rcm_button_press_event (GtkWidget *widget,
 
       if (*(circle->target) != clicked_angle)
         {
+          GtkStyle *style = gtk_widget_get_style (widget);
+
           *(circle->target) = clicked_angle;
           gtk_widget_queue_draw (circle->preview);
           color_rotate_draw_arrows (widget->window,
-                                    widget->style->black_gc,
+                                    style->black_gc,
                                     circle->angle);
 
           gtk_spin_button_set_value (GTK_SPIN_BUTTON (circle->alpha_entry),
@@ -414,9 +424,11 @@ rcm_release_event (GtkWidget *widget,
 {
   if (circle->action_flag == DRAGING)
     {
+      GtkStyle *style = gtk_widget_get_style (widget);
+
       gtk_widget_queue_draw (circle->preview);
       color_rotate_draw_arrows (widget->window,
-                                widget->style->black_gc,
+                                style->black_gc,
                                 circle->angle);
     }
 
@@ -505,11 +517,15 @@ rcm_gray_expose_event (GtkWidget *widget,
 {
   if (circle->action_flag == VIRGIN)
     {
-      color_rotate_draw_little_circle (widget->window, widget->style->black_gc,
+      GtkStyle *style = gtk_widget_get_style (widget);
+
+      color_rotate_draw_little_circle (widget->window,
+                                       style->black_gc,
                                        circle->hue, circle->satur);
 
       color_rotate_draw_large_circle (widget->window,
-                                      widget->style->black_gc, circle->gray_sat);
+                                      style->black_gc,
+                                      circle->gray_sat);
     }
 
   return TRUE;
@@ -520,6 +536,7 @@ rcm_gray_button_press_event (GtkWidget *widget,
 			     GdkEvent  *event,
 			     RcmGray   *circle)
 {
+  GtkStyle       *style = gtk_widget_get_style (widget);
   GdkEventButton *bevent;
   int             x, y;
 
@@ -535,11 +552,12 @@ rcm_gray_button_press_event (GtkWidget *widget,
     circle->satur = 1;
 
   gtk_widget_queue_draw (circle->preview);
-  color_rotate_draw_little_circle (widget->window, widget->style->black_gc,
+  color_rotate_draw_little_circle (widget->window,
+                                   style->black_gc,
                                    circle->hue, circle->satur);
 
   color_rotate_draw_large_circle (circle->preview->window,
-                                  circle->preview->style->black_gc,
+                                  gtk_widget_get_style (circle->preview)->black_gc,
                                   circle->gray_sat);
 
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (circle->hue_entry),
@@ -560,10 +578,14 @@ rcm_gray_release_event (GtkWidget *widget,
 			RcmGray   *circle)
 {
   if (circle->action_flag == DRAGING)
-    color_rotate_draw_little_circle (widget->window,
-                                     widget->style->black_gc,
-                                     circle->hue,
-                                     circle->satur);
+    {
+      GtkStyle *style = gtk_widget_get_style (widget);
+
+      color_rotate_draw_little_circle (widget->window,
+                                       style->black_gc,
+                                       circle->hue,
+                                       circle->satur);
+    }
 
   circle->action_flag = VIRGIN;
 
@@ -587,9 +609,11 @@ rcm_gray_motion_notify_event (GtkWidget *widget,
 
   if (circle->action_flag == DRAG_START)
     {
+      GtkStyle *style = gtk_widget_get_style (circle->preview);
+
       gtk_widget_queue_draw (circle->preview);
       color_rotate_draw_large_circle (circle->preview->window,
-                                      circle->preview->style->black_gc,
+                                      style->black_gc,
                                       circle->gray_sat);
 
       circle->action_flag = DRAGING;
@@ -634,6 +658,7 @@ rcm_set_alpha (GtkWidget *entry,
 	       gpointer   data)
 {
   RcmCircle *circle = data;
+  GtkStyle  *style  = gtk_widget_get_style (circle->preview);
 
   if (circle->action_flag != VIRGIN)
     return;
@@ -644,7 +669,7 @@ rcm_set_alpha (GtkWidget *entry,
   gtk_widget_queue_draw (circle->preview);
 
   color_rotate_draw_arrows (circle->preview->window,
-                            circle->preview->style->black_gc,
+                            style->black_gc,
                             circle->angle);
 
   rcm_render_preview (Current.Bna->after);
@@ -655,6 +680,7 @@ rcm_set_beta (GtkWidget *entry,
 	      gpointer   data)
 {
   RcmCircle *circle = data;
+  GtkStyle  *style  = gtk_widget_get_style (circle->preview);
 
   if (circle->action_flag != VIRGIN)
     return;
@@ -665,7 +691,7 @@ rcm_set_beta (GtkWidget *entry,
   gtk_widget_queue_draw (circle->preview);
 
   color_rotate_draw_arrows (circle->preview->window,
-                            circle->preview->style->black_gc,
+                            style->black_gc,
                             circle->angle);
 
   rcm_render_preview (Current.Bna->after);
@@ -675,10 +701,11 @@ void
 rcm_set_hue (GtkWidget *entry,
 	     gpointer   data)
 {
-  RcmGray *circle = data;
+  RcmGray  *circle = data;
+  GtkStyle *style  = gtk_widget_get_style (circle->preview);
 
-  if (circle->action_flag != VIRGIN
-      ) return;
+  if (circle->action_flag != VIRGIN)
+    return;
 
   circle->hue = (gtk_spin_button_get_value (GTK_SPIN_BUTTON (entry)) /
                  rcm_units_factor(Current.Units));
@@ -686,11 +713,11 @@ rcm_set_hue (GtkWidget *entry,
   gtk_widget_queue_draw (circle->preview);
 
   color_rotate_draw_little_circle (circle->preview->window,
-                                   circle->preview->style->black_gc,
+                                   style->black_gc,
                                    circle->hue, circle->satur);
 
   color_rotate_draw_large_circle (circle->preview->window,
-                                  circle->preview->style->black_gc,
+                                  style->black_gc,
                                   circle->gray_sat);
 
   rcm_render_preview (Current.Bna->after);
@@ -700,7 +727,8 @@ void
 rcm_set_satur (GtkWidget *entry,
 	       gpointer   data)
 {
-  RcmGray *circle = data;
+  RcmGray  *circle = data;
+  GtkStyle *style  = gtk_widget_get_style (circle->preview);
 
   if (circle->action_flag != VIRGIN)
     return;
@@ -710,11 +738,11 @@ rcm_set_satur (GtkWidget *entry,
   gtk_widget_queue_draw (circle->preview);
 
   color_rotate_draw_little_circle (circle->preview->window,
-                                   circle->preview->style->black_gc,
+                                   style->black_gc,
                                    circle->hue, circle->satur);
 
   color_rotate_draw_large_circle (circle->preview->window,
-                                  circle->preview->style->black_gc,
+                                  style->black_gc,
                                   circle->gray_sat);
 
   rcm_render_preview (Current.Bna->after);
@@ -724,14 +752,15 @@ void
 rcm_set_gray_sat (GtkWidget *entry,
 		  gpointer   data)
 {
-  RcmGray *circle = data;
+  RcmGray  *circle = data;
+  GtkStyle *style  = gtk_widget_get_style (circle->preview);
 
   circle->gray_sat = gtk_spin_button_get_value (GTK_SPIN_BUTTON (entry));
 
   gtk_widget_queue_draw (circle->preview);
 
   color_rotate_draw_large_circle (circle->preview->window,
-                                  circle->preview->style->black_gc,
+                                  style->black_gc,
                                   circle->gray_sat);
 
   rcm_render_preview (Current.Bna->after);

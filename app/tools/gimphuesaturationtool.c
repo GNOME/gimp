@@ -223,6 +223,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
 {
   GimpHueSaturationTool   *hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
   GimpHueSaturationConfig *config  = hs_tool->config;
+  GtkWidget               *main_vbox;
   GtkWidget               *vbox;
   GtkWidget               *abox;
   GtkWidget               *table;
@@ -256,9 +257,10 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
     { N_("_M"),      N_("Magenta"),           3, 2, 4, 2 }
   };
 
+  main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
+
   frame = gimp_frame_new (_("Select Primary Color to Adjust"));
-  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), frame,
-                      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 6);
@@ -367,8 +369,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
                     hs_tool);
 
   frame = gimp_frame_new (_("Adjust Selected Color"));
-  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), frame,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /*  The table containing sliders  */
@@ -567,12 +568,11 @@ static void
 hue_saturation_hue_changed (GtkAdjustment         *adjustment,
                             GimpHueSaturationTool *hs_tool)
 {
-  GimpHueSaturationConfig *config = hs_tool->config;
-  gdouble                  value  = adjustment->value / 180.0;
+  gdouble value = gtk_adjustment_get_value (adjustment) / 180.0;
 
-  if (config->hue[config->range] != value)
+  if (hs_tool->config->hue[hs_tool->config->range] != value)
     {
-      g_object_set (config,
+      g_object_set (hs_tool->config,
                     "hue", value,
                     NULL);
     }
@@ -582,12 +582,11 @@ static void
 hue_saturation_lightness_changed (GtkAdjustment         *adjustment,
                                   GimpHueSaturationTool *hs_tool)
 {
-  GimpHueSaturationConfig *config = hs_tool->config;
-  gdouble                  value  = adjustment->value / 100.0;
+  gdouble value = gtk_adjustment_get_value (adjustment) / 100.0;
 
-  if (config->lightness[config->range] != value)
+  if (hs_tool->config->lightness[hs_tool->config->range] != value)
     {
-      g_object_set (config,
+      g_object_set (hs_tool->config,
                     "lightness", value,
                     NULL);
     }
@@ -597,12 +596,11 @@ static void
 hue_saturation_saturation_changed (GtkAdjustment         *adjustment,
                                    GimpHueSaturationTool *hs_tool)
 {
-  GimpHueSaturationConfig *config = hs_tool->config;
-  gdouble                  value  = adjustment->value / 100.0;
+  gdouble value = gtk_adjustment_get_value (adjustment) / 100.0;
 
-  if (config->saturation[config->range] != value)
+  if (hs_tool->config->saturation[hs_tool->config->range] != value)
     {
-      g_object_set (config,
+      g_object_set (hs_tool->config,
                     "saturation", value,
                     NULL);
     }
@@ -612,12 +610,11 @@ static void
 hue_saturation_overlap_changed (GtkAdjustment         *adjustment,
                                 GimpHueSaturationTool *hs_tool)
 {
-  GimpHueSaturationConfig *config = hs_tool->config;
-  gdouble                  value  = adjustment->value / 100.0;
+  gdouble value = gtk_adjustment_get_value (adjustment) / 100.0;
 
-  if (config->overlap != value)
+  if (hs_tool->config->overlap != value)
     {
-      g_object_set (config,
+      g_object_set (hs_tool->config,
                     "overlap", value,
                     NULL);
     }

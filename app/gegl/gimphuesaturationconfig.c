@@ -268,21 +268,21 @@ static gboolean
 gimp_hue_saturation_config_equal (GimpConfig *a,
                                   GimpConfig *b)
 {
-  GimpHueSaturationConfig *a_config = GIMP_HUE_SATURATION_CONFIG (a);
-  GimpHueSaturationConfig *b_config = GIMP_HUE_SATURATION_CONFIG (b);
+  GimpHueSaturationConfig *config_a = GIMP_HUE_SATURATION_CONFIG (a);
+  GimpHueSaturationConfig *config_b = GIMP_HUE_SATURATION_CONFIG (b);
   GimpHueRange             range;
 
   for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)
     {
-      if (a_config->hue[range]        != b_config->hue[range]        ||
-          a_config->saturation[range] != b_config->saturation[range] ||
-          a_config->lightness[range]  != b_config->lightness[range])
+      if (config_a->hue[range]        != config_b->hue[range]        ||
+          config_a->saturation[range] != config_b->saturation[range] ||
+          config_a->lightness[range]  != config_b->lightness[range])
         return FALSE;
     }
 
   /* don't compare "range" */
 
-  if (a_config->overlap != b_config->overlap)
+  if (config_a->overlap != config_b->overlap)
     return FALSE;
 
   return TRUE;

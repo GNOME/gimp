@@ -222,16 +222,16 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
   GimpThresholdTool   *t_tool       = GIMP_THRESHOLD_TOOL (image_map_tool);
   GimpToolOptions     *tool_options = GIMP_TOOL_GET_OPTIONS (image_map_tool);
   GimpThresholdConfig *config       = t_tool->config;
-  GtkWidget           *vbox;
+  GtkWidget           *main_vbox;
   GtkWidget           *hbox;
   GtkWidget           *menu;
   GtkWidget           *box;
   GtkWidget           *button;
 
-  vbox = image_map_tool->main_vbox;
+  main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
 
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   menu = gimp_prop_enum_stock_box_new (G_OBJECT (tool_options),
@@ -241,7 +241,7 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (menu);
 
   box = gimp_histogram_box_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), box, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), box, TRUE, TRUE, 0);
   gtk_widget_show (box);
 
   t_tool->histogram_box = GIMP_HISTOGRAM_BOX (box);
@@ -258,7 +258,7 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
                                        t_tool->histogram_box->view);
 
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   button = gtk_button_new_with_mnemonic (_("_Auto"));

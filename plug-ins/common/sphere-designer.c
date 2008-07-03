@@ -2292,10 +2292,11 @@ static gboolean
 expose_event (GtkWidget      *widget,
               GdkEventExpose *event)
 {
-  guchar *data = img + event->area.y * 3 * PREVIEWSIZE + event->area.x * 3;
+  GtkStyle *style = gtk_widget_get_style (widget);
+  guchar   *data  = img + event->area.y * 3 * PREVIEWSIZE + event->area.x * 3;
 
   gdk_draw_rgb_image_dithalign (widget->window,
-                                widget->style->white_gc,
+                                style->white_gc,
                                 event->area.x, event->area.y,
                                 event->area.width, event->area.height,
                                 GDK_RGB_DITHER_MAX,

@@ -72,13 +72,15 @@ gimp_airbrush_options_class_init (GimpAirbrushOptionsClass *klass)
                                    0.0, 100.0, AIRBRUSH_DEFAULT_PRESSURE,
                                    GIMP_PARAM_STATIC_STRINGS);
 
-  /* override velocity size because its unnatural as a default for airbrush */
+  /* override velocity-size because its unnatural as a default for airbrush */
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY_SIZE,
                                     "velocity-size", NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
-  
-  /* override velocity hardness to default to a true, because that is natural for airbrush */
+
+  /* override velocity-hardness to default to a true,
+   * because that is natural for airbrush
+   */
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_VELOCITY_HARDNESS,
                                     "velocity-hardness", NULL,
                                     TRUE,

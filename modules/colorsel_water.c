@@ -204,14 +204,15 @@ static void
 select_area_expose (GtkWidget      *widget,
                     GdkEventExpose *event)
 {
-  gdouble  width  = widget->allocation.width;
-  gdouble  height = widget->allocation.height;
-  gdouble  dx     = 1.0 / width;
-  gdouble  dy     = 1.0 / height;
-  guchar  *buf    = g_alloca (3 * event->area.width * event->area.height);
-  guchar  *dest   = buf;
-  gdouble  y;
-  gint     i, j;
+  GtkStyle *style  = gtk_widget_get_style (widget);
+  gdouble   width  = widget->allocation.width;
+  gdouble   height = widget->allocation.height;
+  gdouble   dx     = 1.0 / width;
+  gdouble   dy     = 1.0 / height;
+  guchar   *buf    = g_alloca (3 * event->area.width * event->area.height);
+  guchar   *dest   = buf;
+  gdouble   y;
+  gint      i, j;
 
   for (j = 0, y = event->area.y / height; j < event->area.height; j++, y += dy)
     {
@@ -246,7 +247,7 @@ select_area_expose (GtkWidget      *widget,
     }
 
   gdk_draw_rgb_image_dithalign (widget->window,
-                                widget->style->fg_gc[widget->state],
+                                style->fg_gc[widget->state],
                                 event->area.x, event->area.y,
                                 event->area.width, event->area.height,
                                 GDK_RGB_DITHER_MAX,

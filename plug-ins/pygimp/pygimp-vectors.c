@@ -981,7 +981,7 @@ pygimp_vectors_new(gint32 ID)
 {
     PyGimpVectors *self;
 
-    if (ID == -1) {
+    if (!gimp_vectors_is_valid(ID)) {
         Py_INCREF(Py_None);
         return Py_None;
     }

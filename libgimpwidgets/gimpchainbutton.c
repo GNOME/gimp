@@ -443,7 +443,8 @@ gimp_chain_line_expose_event (GtkWidget       *widget,
       points[2] = buf;
     }
 
-  gtk_paint_polygon (widget->style, widget->window, GTK_STATE_NORMAL,
+  gtk_paint_polygon (gtk_widget_get_style (widget),
+                     widget->window, GTK_STATE_NORMAL,
                      shadow,
                      &event->area,
                      widget,

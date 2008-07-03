@@ -89,10 +89,12 @@ void
 gimp_display_shell_scale_setup (GimpDisplayShell *shell)
 {
   GimpImage *image;
-  GtkRuler  *hruler;
-  GtkRuler  *vruler;
+  gdouble    lower;
+  gdouble    upper;
+  gdouble    max_size;
   gfloat     sx, sy;
-  gint       image_width, image_height;
+  gint       image_width;
+  gint       image_height;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -133,95 +135,87 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   gtk_adjustment_changed (shell->hsbdata);
   gtk_adjustment_changed (shell->vsbdata);
 
-  hruler = GTK_RULER (shell->hrule);
-  vruler = GTK_RULER (shell->vrule);
+  /* horizontal ruler */
 
-  hruler->lower = 0;
-
-  if (image)
-    {
-      hruler->upper    = img2real (shell, TRUE,
-                                   FUNSCALEX (shell, shell->disp_width));
-      hruler->max_size = img2real (shell, TRUE,
-                                   MAX (image_width, image_height));
-    }
-  else
-    {
-      hruler->upper    = image_width;
-      hruler->max_size = MAX (image_width, image_height);
-    }
-
-  vruler->lower = 0;
+  lower = 0;
 
   if (image)
     {
-      vruler->upper    = img2real (shell, FALSE,
-                                   FUNSCALEY (shell, shell->disp_height));
-      vruler->max_size = img2real (shell, FALSE,
-                                   MAX (image_width, image_height));
+      upper    = img2real (shell, TRUE, FUNSCALEX (shell, shell->disp_width));
+      max_size = img2real (shell, TRUE, MAX (image_width, image_height));
     }
   else
     {
-      vruler->upper    = image_height;
-      vruler->max_size = MAX (image_width, image_height);
+      upper    = image_width;
+      max_size = MAX (image_width, image_height);
     }
 
   if (image && sx < shell->disp_width)
     {
       shell->disp_xoffset = (shell->disp_width - sx) / 2;
 
-      hruler->lower -= img2real (shell, TRUE,
-                                 FUNSCALEX (shell,
-                                            (gdouble) shell->disp_xoffset));
-      hruler->upper -= img2real (shell, TRUE,
-                                 FUNSCALEX (shell,
-                                            (gdouble) shell->disp_xoffset));
+      lower -= img2real (shell, TRUE,
+                         FUNSCALEX (shell, (gdouble) shell->disp_xoffset));
+      upper -= img2real (shell, TRUE,
+                         FUNSCALEX (shell, (gdouble) shell->disp_xoffset));
     }
   else if (image)
     {
       shell->disp_xoffset = 0;
 
-      hruler->lower += img2real (shell, TRUE,
-                                 FUNSCALEX (shell,
-                                            (gdouble) shell->offset_x));
-      hruler->upper += img2real (shell, TRUE,
-                                 FUNSCALEX (shell,
-                                            (gdouble) shell->offset_x));
+      lower += img2real (shell, TRUE,
+                         FUNSCALEX (shell, (gdouble) shell->offset_x));
+      upper += img2real (shell, TRUE,
+                         FUNSCALEX (shell, (gdouble) shell->offset_x));
     }
   else
     {
       shell->disp_xoffset = 0;
+    }
+
+  gimp_ruler_set_range (GIMP_RULER (shell->hrule), lower, upper, max_size);
+  gimp_ruler_set_unit (GIMP_RULER (shell->hrule), shell->unit);
+
+  /* vertical ruler */
+
+  lower = 0;
+
+  if (image)
+    {
+      upper    = img2real (shell, FALSE, FUNSCALEY (shell, shell->disp_height));
+      max_size = img2real (shell, FALSE, MAX (image_width, image_height));
+    }
+  else
+    {
+      upper    = image_height;
+      max_size = MAX (image_width, image_height);
     }
 
   if (image && sy < shell->disp_height)
     {
       shell->disp_yoffset = (shell->disp_height - sy) / 2;
 
-      vruler->lower -= img2real (shell, FALSE,
-                                 FUNSCALEY (shell,
-                                            (gdouble) shell->disp_yoffset));
-      vruler->upper -= img2real (shell, FALSE,
-                                 FUNSCALEY (shell,
-                                            (gdouble) shell->disp_yoffset));
+      lower -= img2real (shell, FALSE,
+                         FUNSCALEY (shell, (gdouble) shell->disp_yoffset));
+      upper -= img2real (shell, FALSE,
+                         FUNSCALEY (shell, (gdouble) shell->disp_yoffset));
     }
   else if (image)
     {
       shell->disp_yoffset = 0;
 
-      vruler->lower += img2real (shell, FALSE,
-                                 FUNSCALEY (shell,
-                                            (gdouble) shell->offset_y));
-      vruler->upper += img2real (shell, FALSE,
-                                 FUNSCALEY (shell,
-                                            (gdouble) shell->offset_y));
+      lower += img2real (shell, FALSE,
+                         FUNSCALEY (shell, (gdouble) shell->offset_y));
+      upper += img2real (shell, FALSE,
+                         FUNSCALEY (shell, (gdouble) shell->offset_y));
     }
   else
     {
       shell->disp_yoffset = 0;
     }
 
-  gtk_widget_queue_draw (GTK_WIDGET (hruler));
-  gtk_widget_queue_draw (GTK_WIDGET (vruler));
+  gimp_ruler_set_range (GIMP_RULER (shell->vrule), lower, upper, max_size);
+  gimp_ruler_set_unit (GIMP_RULER (shell->vrule), shell->unit);
 
 #if 0
   g_printerr ("offset_x:     %d\n"
@@ -240,8 +234,8 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
  * gimp_display_shell_scale_revert:
  * @shell:     the #GimpDisplayShell
  *
- * Reverts the display to the previously used scale. If no previous scale exist
- * then the call does nothing.
+ * Reverts the display to the previously used scale. If no previous
+ * scale exist, then the call does nothing.
  *
  * Return value: %TRUE if the scale was reverted, otherwise %FALSE.
  **/
@@ -570,7 +564,7 @@ gimp_display_shell_scale_shrink_wrap (GimpDisplayShell *shell,
  * gimp_display_shell_scale_resize:
  * @shell:          the #GimpDisplayShell
  * @resize_window:  whether the display window should be resized
- * @redisplay:      whether the display window should be redrawn
+ * @grow_only:      whether shrinking of the window is allowed or not
  *
  * Function commonly called after a change in display scale to make the changes
  * visible to the user. If @resize_window is %TRUE then the display window is

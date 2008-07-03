@@ -201,12 +201,13 @@ gimp_menu_dock_destroy (GtkObject *object)
   /*  remove the image menu and the auto button manually here because
    *  of weird cross-connections with GimpDock's context
    */
-  if (GIMP_DOCK (dock)->main_vbox &&
-      dock->image_combo           &&
-      dock->image_combo->parent)
+  if (GIMP_DOCK (dock)->main_vbox && dock->image_combo)
     {
-      gtk_container_remove (GTK_CONTAINER (GIMP_DOCK (dock)->main_vbox),
-                            dock->image_combo->parent);
+      GtkWidget *parent = gtk_widget_get_parent (dock->image_combo);
+
+      if (parent)
+        gtk_container_remove (GTK_CONTAINER (GIMP_DOCK (dock)->main_vbox),
+                              parent);
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -217,6 +218,7 @@ gimp_menu_dock_style_set (GtkWidget *widget,
                           GtkStyle  *prev_style)
 {
   GimpMenuDock *menu_dock        = GIMP_MENU_DOCK (widget);
+  GtkStyle     *button_style;
   gint          minimal_width;
   GtkIconSize   menu_view_size;
   GtkSettings  *settings;
@@ -244,7 +246,8 @@ gimp_menu_dock_style_set (GtkWidget *widget,
                         "focus-padding",    &focus_padding,
                         NULL);
 
-  ythickness = menu_dock->auto_button->style->ythickness;
+  button_style = gtk_widget_get_style (widget);
+  ythickness = button_style->ythickness;
 
   gtk_widget_set_size_request (widget, minimal_width, -1);
 
@@ -452,12 +455,16 @@ void
 gimp_menu_dock_set_show_image_menu (GimpMenuDock *menu_dock,
                                     gboolean      show)
 {
+  GtkWidget *parent;
+
   g_return_if_fail (GIMP_IS_MENU_DOCK (menu_dock));
 
+  parent = gtk_widget_get_parent (menu_dock->image_combo);
+
   if (show)
-    gtk_widget_show (menu_dock->image_combo->parent);
+    gtk_widget_show (parent);
   else
-    gtk_widget_hide (menu_dock->image_combo->parent);
+    gtk_widget_hide (parent);
 
   menu_dock->show_image_menu = show ? TRUE : FALSE;
 }

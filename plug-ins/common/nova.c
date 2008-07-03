@@ -518,33 +518,34 @@ nova_center_create (GimpDrawable *drawable,
 static void
 nova_center_cursor_draw (NovaCenter *center)
 {
-  GtkWidget *prvw = center->preview->area;
+  GtkWidget *prvw  = center->preview->area;
+  GtkStyle  *style = gtk_widget_get_style (prvw);
   gint       width, height;
 
   gimp_preview_get_size (center->preview, &width, &height);
 
-  gdk_gc_set_function (prvw->style->black_gc, GDK_INVERT);
+  gdk_gc_set_function (style->black_gc, GDK_INVERT);
 
   if (show_cursor)
     {
       if (center->cursor_drawn)
         {
           gdk_draw_line (prvw->window,
-                         prvw->style->black_gc,
+                         style->black_gc,
                          center->oldx, 1, center->oldx,
                          height - 1);
           gdk_draw_line (prvw->window,
-                         prvw->style->black_gc,
+                         style->black_gc,
                          1, center->oldy,
                          width - 1, center->oldy);
         }
 
       gdk_draw_line (prvw->window,
-                     prvw->style->black_gc,
+                     style->black_gc,
                      center->curx, 1, center->curx,
                      height - 1);
       gdk_draw_line (prvw->window,
-                     prvw->style->black_gc,
+                     style->black_gc,
                      1, center->cury,
                      width - 1, center->cury);
     }
@@ -554,7 +555,7 @@ nova_center_cursor_draw (NovaCenter *center)
   center->oldy         = center->cury;
   center->cursor_drawn = TRUE;
 
-  gdk_gc_set_function (prvw->style->black_gc, GDK_COPY);
+  gdk_gc_set_function (style->black_gc, GDK_COPY);
 }
 
 /*

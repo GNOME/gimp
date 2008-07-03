@@ -407,6 +407,7 @@ print_preview_expose_event (GtkWidget      *widget,
                             GdkEventExpose *event)
 {
   PrintPreview *preview = PRINT_PREVIEW (widget);
+  GtkStyle     *style   = gtk_widget_get_style (widget);
   cairo_t      *cr;
   gdouble       paper_width;
   gdouble       paper_height;
@@ -442,10 +443,10 @@ print_preview_expose_event (GtkWidget      *widget,
   /* draw page background */
   cairo_rectangle (cr, 0, 0, scale * paper_width, scale * paper_height);
 
-  gdk_cairo_set_source_color (cr, &widget->style->black);
+  gdk_cairo_set_source_color (cr, &style->black);
   cairo_stroke_preserve (cr);
 
-  gdk_cairo_set_source_color (cr, &widget->style->white);
+  gdk_cairo_set_source_color (cr, &style->white);
   cairo_fill (cr);
 
   /* draw page_margins */
@@ -455,7 +456,7 @@ print_preview_expose_event (GtkWidget      *widget,
                    scale * (paper_width - left_margin - right_margin),
                    scale * (paper_height - top_margin - bottom_margin));
 
-  gdk_cairo_set_source_color (cr, &widget->style->mid[widget->state]);
+  gdk_cairo_set_source_color (cr, &style->mid[widget->state]);
   cairo_stroke (cr);
 
   cairo_translate (cr,
@@ -469,7 +470,7 @@ print_preview_expose_event (GtkWidget      *widget,
                        scale * preview->image_width,
                        scale * preview->image_height);
 
-      gdk_cairo_set_source_color (cr, &widget->style->black);
+      gdk_cairo_set_source_color (cr, &style->black);
       cairo_stroke (cr);
     }
 

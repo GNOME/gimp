@@ -122,6 +122,8 @@ libgimpwidgets_2_0_la_sources = \
 	gimphelpui.h			\
 	gimphintbox.c			\
 	gimphintbox.h			\
+	gimphruler.c			\
+	gimphruler.h			\
 	gimpintcombobox.c		\
 	gimpintcombobox.h		\
 	gimpintstore.c			\
@@ -150,6 +152,8 @@ libgimpwidgets_2_0_la_sources = \
 	gimppropwidgets.h		\
 	gimpquerybox.c			\
 	gimpquerybox.h			\
+	gimpruler.c			\
+	gimpruler.h			\
 	gimpscaleentry.c		\
 	gimpscaleentry.h		\
 	gimpscrolledpreview.c		\
@@ -162,6 +166,8 @@ libgimpwidgets_2_0_la_sources = \
 	gimpstringcombobox.h		\
 	gimpunitmenu.c			\
 	gimpunitmenu.h			\
+	gimpvruler.c			\
+	gimpvruler.h			\
 	gimpzoommodel.c			\
 	gimpzoommodel.h			\
 	gimpwidgets-private.c		\
@@ -212,6 +218,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpframe.h			\
 	gimphelpui.h			\
 	gimphintbox.h			\
+	gimphruler.h			\
 	gimpintcombobox.h		\
 	gimpintstore.h			\
 	gimpmemsizeentry.h		\
@@ -226,12 +233,14 @@ libgimpwidgetsinclude_HEADERS = \
 	gimppreviewarea.h		\
 	gimppropwidgets.h		\
 	gimpquerybox.h			\
+	gimpruler.h			\
 	gimpscaleentry.h		\
 	gimpscrolledpreview.h		\
 	gimpsizeentry.h			\
 	gimpstock.h			\
 	gimpstringcombobox.h		\
 	gimpunitmenu.h			\
+	gimpvruler.h			\
 	gimpzoommodel.h
 
 libgimpwidgets_2_0_la_LDFLAGS = \

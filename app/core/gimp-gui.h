@@ -38,6 +38,7 @@ struct _GimpGui
                                           const gchar         *domain,
                                           const gchar         *message);
   void           (* help)                (Gimp                *gimp,
+                                          GimpProgress        *progress,
                                           const gchar         *help_domain,
                                           const gchar         *help_id);
 
@@ -126,6 +127,7 @@ void           gimp_show_message         (Gimp                *gimp,
                                           const gchar         *domain,
                                           const gchar         *message);
 void           gimp_help                 (Gimp                *gimp,
+                                          GimpProgress        *progress,
                                           const gchar         *help_domain,
                                           const gchar         *help_id);
 

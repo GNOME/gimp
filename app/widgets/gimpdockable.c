@@ -312,9 +312,12 @@ gimp_dockable_size_request (GtkWidget      *widget,
   GimpDockable   *dockable  = GIMP_DOCKABLE (widget);
   GtkWidget      *child     = gtk_bin_get_child (GTK_BIN (widget));
   GtkRequisition  child_requisition;
+  gint            border_width;
 
-  requisition->width  = container->border_width * 2;
-  requisition->height = container->border_width * 2;
+  border_width = gtk_container_get_border_width (container);
+
+  requisition->width  = border_width * 2;
+  requisition->height = border_width * 2;
 
   if (dockable->menu_button && GTK_WIDGET_VISIBLE (dockable->menu_button))
     {
@@ -345,8 +348,11 @@ gimp_dockable_size_allocate (GtkWidget     *widget,
 
   GtkRequisition  button_requisition = { 0, };
   GtkAllocation   child_allocation;
+  gint            border_width;
 
   widget->allocation = *allocation;
+
+  border_width = gtk_container_get_border_width (container);
 
   if (dockable->menu_button && GTK_WIDGET_VISIBLE (dockable->menu_button))
     {
@@ -355,12 +361,12 @@ gimp_dockable_size_allocate (GtkWidget     *widget,
       if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR)
         child_allocation.x    = (allocation->x +
                                  allocation->width -
-                                 container->border_width -
+                                 border_width -
                                  button_requisition.width);
       else
-        child_allocation.x    = allocation->x + container->border_width;
+        child_allocation.x    = allocation->x + border_width;
 
-      child_allocation.y      = allocation->y + container->border_width;
+      child_allocation.y      = allocation->y + border_width;
       child_allocation.width  = button_requisition.width;
       child_allocation.height = button_requisition.height;
 
@@ -369,13 +375,13 @@ gimp_dockable_size_allocate (GtkWidget     *widget,
 
   if (child && GTK_WIDGET_VISIBLE (child))
     {
-      child_allocation.x      = allocation->x + container->border_width;
-      child_allocation.y      = allocation->y + container->border_width;
+      child_allocation.x      = allocation->x + border_width;
+      child_allocation.y      = allocation->y + border_width;
       child_allocation.width  = MAX (allocation->width  -
-                                     container->border_width * 2,
+                                     border_width * 2,
                                      0);
       child_allocation.height = MAX (allocation->height -
-                                     container->border_width * 2 -
+                                     border_width * 2 -
                                      button_requisition.height,
                                      0);
 
@@ -541,6 +547,7 @@ gimp_dockable_expose_event (GtkWidget      *widget,
   if (GTK_WIDGET_DRAWABLE (widget))
     {
       GimpDockable *dockable = GIMP_DOCKABLE (widget);
+      GtkStyle     *style    = gtk_widget_get_style (widget);
       GdkRectangle  title_area;
       GdkRectangle  expose_area;
 
@@ -555,7 +562,7 @@ gimp_dockable_expose_event (GtkWidget      *widget,
 
           if (dockable->blink_counter & 1)
             {
-              gtk_paint_box (widget->style, widget->window,
+              gtk_paint_box (style, widget->window,
                              GTK_STATE_SELECTED, GTK_SHADOW_NONE,
                              &expose_area, widget, "",
                              title_area.x, title_area.y,
@@ -583,7 +590,7 @@ gimp_dockable_expose_event (GtkWidget      *widget,
 
           text_y = title_area.y + (title_area.height - layout_height) / 2;
 
-          gtk_paint_layout (widget->style, widget->window,
+          gtk_paint_layout (style, widget->window,
                             (dockable->blink_counter & 1) ?
                             GTK_STATE_SELECTED : widget->state, TRUE,
                             &expose_area, widget, NULL,
@@ -1062,7 +1069,7 @@ gimp_dockable_get_title_area (GimpDockable *dockable,
                               GdkRectangle *area)
 {
   GtkWidget *widget = GTK_WIDGET (dockable);
-  gint       border = GTK_CONTAINER (dockable)->border_width;
+  gint       border = gtk_container_get_border_width (GTK_CONTAINER (dockable));
 
   area->x      = widget->allocation.x + border;
   area->y      = widget->allocation.y + border;
@@ -1245,7 +1252,7 @@ gimp_dockable_show_menu (GimpDockable *dockable)
   gimp_ui_manager_ui_popup (dockbook_ui_manager, "/dockable-popup",
                             GTK_WIDGET (dockable),
                             gimp_dockable_menu_position, dockable,
-                            (GtkDestroyNotify) gimp_dockable_menu_end, dockable);
+                            (GDestroyNotify) gimp_dockable_menu_end, dockable);
 
   return TRUE;
 }

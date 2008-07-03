@@ -347,12 +347,12 @@ gimp_brush_editor_update_brush (GtkAdjustment   *adjustment,
 
   brush = GIMP_BRUSH_GENERATED (GIMP_DATA_EDITOR (editor)->data);
 
-  radius   = editor->radius_data->value;
-  spikes   = ROUND (editor->spikes_data->value);
-  hardness = editor->hardness_data->value;
-  ratio    = editor->aspect_ratio_data->value;
-  angle    = editor->angle_data->value;
-  spacing  = editor->spacing_data->value;
+  radius   = gtk_adjustment_get_value (editor->radius_data);
+  spikes   = ROUND (gtk_adjustment_get_value (editor->spikes_data));
+  hardness = gtk_adjustment_get_value (editor->hardness_data);
+  ratio    = gtk_adjustment_get_value (editor->aspect_ratio_data);
+  angle    = gtk_adjustment_get_value (editor->angle_data);
+  spacing  = gtk_adjustment_get_value (editor->spacing_data);
 
   if (radius   != gimp_brush_generated_get_radius       (brush) ||
       spikes   != gimp_brush_generated_get_spikes       (brush) ||

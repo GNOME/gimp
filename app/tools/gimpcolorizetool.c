@@ -45,7 +45,8 @@
 #include "gimp-intl.h"
 
 
-#define SLIDER_WIDTH 200
+#define SLIDER_WIDTH  200
+#define SPINNER_WIDTH 4
 
 
 /*  local function prototypes  */
@@ -208,19 +209,21 @@ static void
 gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
 {
   GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (image_map_tool);
+  GtkWidget        *main_vbox;
   GtkWidget        *table;
   GtkWidget        *slider;
   GtkWidget        *frame;
   GtkWidget        *vbox;
   GtkObject        *data;
 
+  main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
+
   frame = gimp_frame_new (_("Select Color"));
-  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), frame,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /*  The table containing sliders  */
-  vbox = gtk_vbox_new (FALSE, 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -232,7 +235,7 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  Create the hue scale widget  */
   data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                               _("_Hue:"), SLIDER_WIDTH, -1,
+                               _("_Hue:"), SLIDER_WIDTH, SPINNER_WIDTH,
                                col_tool->config->hue * 360.0,
                                0.0, 360.0, 1.0, 15.0, 0,
                                TRUE, 0.0, 0.0,
@@ -247,7 +250,7 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  Create the saturation scale widget  */
   data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                               _("_Saturation:"), SLIDER_WIDTH, -1,
+                               _("_Saturation:"), SLIDER_WIDTH, SPINNER_WIDTH,
                                col_tool->config->saturation * 100.0,
                                0.0, 100.0, 1.0, 10.0, 0,
                                TRUE, 0.0, 0.0,
@@ -262,7 +265,7 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  Create the lightness scale widget  */
   data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                               _("_Lightness:"), SLIDER_WIDTH, -1,
+                               _("_Lightness:"), SLIDER_WIDTH, SPINNER_WIDTH,
                                col_tool->config->lightness * 100.0,
                                -100.0, 100.0, 1.0, 10.0, 0,
                                TRUE, 0.0, 0.0,
@@ -309,7 +312,7 @@ static void
 colorize_hue_changed (GtkAdjustment    *adjustment,
                       GimpColorizeTool *col_tool)
 {
-  gdouble value = adjustment->value / 360.0;
+  gdouble value = gtk_adjustment_get_value (adjustment) / 360.0;
 
   if (col_tool->config->hue != value)
     {
@@ -323,7 +326,7 @@ static void
 colorize_saturation_changed (GtkAdjustment    *adjustment,
                              GimpColorizeTool *col_tool)
 {
-  gdouble value = adjustment->value / 100.0;
+  gdouble value = gtk_adjustment_get_value (adjustment) / 100.0;
 
   if (col_tool->config->saturation != value)
     {
@@ -337,7 +340,7 @@ static void
 colorize_lightness_changed (GtkAdjustment    *adjustment,
                             GimpColorizeTool *col_tool)
 {
-  gdouble value = adjustment->value / 100.0;
+  gdouble value = gtk_adjustment_get_value (adjustment) / 100.0;
 
   if (col_tool->config->lightness != value)
     {

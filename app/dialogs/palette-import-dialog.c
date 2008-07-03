@@ -726,7 +726,8 @@ palette_import_columns_changed (GtkAdjustment *adj,
                                 ImportDialog  *dialog)
 {
   if (dialog->palette)
-    gimp_palette_set_columns (dialog->palette, ROUND (adj->value));
+    gimp_palette_set_columns (dialog->palette,
+                              ROUND (gtk_adjustment_get_value (adj)));
 }
 
 /*  functions & callbacks to keep the import dialog uptodate  ****************/
@@ -772,9 +773,9 @@ palette_import_make_palette (ImportDialog *dialog)
   if (! palette_name || ! strlen (palette_name))
     palette_name = _("Untitled");
 
-  n_colors  = ROUND (dialog->num_colors->value);
-  n_columns = ROUND (dialog->columns->value);
-  threshold = ROUND (dialog->threshold->value);
+  n_colors  = ROUND (gtk_adjustment_get_value (dialog->num_colors));
+  n_columns = ROUND (gtk_adjustment_get_value (dialog->columns));
+  threshold = ROUND (gtk_adjustment_get_value (dialog->threshold));
 
   switch (dialog->import_type)
     {

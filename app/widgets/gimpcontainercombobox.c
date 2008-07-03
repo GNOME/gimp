@@ -43,12 +43,6 @@ enum
   PROP_ELLIPSIZE = GIMP_CONTAINER_VIEW_PROP_LAST + 1
 };
 
-enum
-{
-  COLUMN_RENDERER,
-  COLUMN_NAME,
-  NUM_COLUMNS
-};
 
 static void     gimp_container_combo_box_view_iface_init (GimpContainerViewInterface *iface);
 
@@ -144,7 +138,7 @@ gimp_container_combo_box_init (GimpContainerComboBox *combo_box)
   GtkCellLayout   *layout;
   GtkCellRenderer *cell;
 
-  store = gtk_list_store_new (NUM_COLUMNS,
+  store = gtk_list_store_new (GIMP_CONTAINER_COMBO_BOX_N_COLUMNS,
                               GIMP_TYPE_VIEW_RENDERER,
                               G_TYPE_STRING);
 
@@ -157,7 +151,8 @@ gimp_container_combo_box_init (GimpContainerComboBox *combo_box)
   cell = gimp_cell_renderer_viewable_new ();
   gtk_cell_layout_pack_start (layout, cell, FALSE);
   gtk_cell_layout_set_attributes (layout, cell,
-                                  "renderer", COLUMN_RENDERER,
+                                  "renderer",
+                                  GIMP_CONTAINER_COMBO_BOX_COLUMN_RENDERER,
                                   NULL);
 
   combo_box->viewable_renderer = cell;
@@ -165,7 +160,8 @@ gimp_container_combo_box_init (GimpContainerComboBox *combo_box)
   cell = gtk_cell_renderer_text_new ();
   gtk_cell_layout_pack_start (layout, cell, TRUE);
   gtk_cell_layout_set_attributes (layout, cell,
-                                  "text", COLUMN_NAME,
+                                  "text",
+                                  GIMP_CONTAINER_COMBO_BOX_COLUMN_NAME,
                                   NULL);
 
   combo_box->text_renderer = cell;
@@ -277,8 +273,8 @@ gimp_container_combo_box_set (GimpContainerComboBox *combo_box,
                     view);
 
   gtk_list_store_set (GTK_LIST_STORE (model), iter,
-                      COLUMN_RENDERER, renderer,
-                      COLUMN_NAME,     name,
+                      GIMP_CONTAINER_COMBO_BOX_COLUMN_RENDERER, renderer,
+                      GIMP_CONTAINER_COMBO_BOX_COLUMN_NAME,     name,
                       -1);
 
   g_object_unref (renderer);
@@ -308,7 +304,7 @@ gimp_container_combo_box_set_context (GimpContainerView *view,
           GimpViewRenderer *renderer;
 
           gtk_tree_model_get (model, &iter,
-                              COLUMN_RENDERER, &renderer,
+                              GIMP_CONTAINER_COMBO_BOX_COLUMN_RENDERER, &renderer,
                               -1);
 
           gimp_view_renderer_set_context (renderer, context);
@@ -429,7 +425,7 @@ gimp_container_combo_box_rename_item (GimpContainerView *view,
       gchar *name = gimp_viewable_get_description (viewable, NULL);
 
       gtk_list_store_set (GTK_LIST_STORE (model), iter,
-                          COLUMN_NAME, name,
+                          GIMP_CONTAINER_COMBO_BOX_COLUMN_NAME, name,
                           -1);
 
       g_free (name);
@@ -494,7 +490,7 @@ gimp_container_combo_box_set_view_size (GimpContainerView *view)
       GimpViewRenderer *renderer;
 
       gtk_tree_model_get (model, &iter,
-                          COLUMN_RENDERER, &renderer,
+                          GIMP_CONTAINER_COMBO_BOX_COLUMN_RENDERER, &renderer,
                           -1);
 
       gimp_view_renderer_set_size (renderer, view_size, border_width);
@@ -516,7 +512,7 @@ gimp_container_combo_box_changed (GtkComboBox       *combo_box,
       GimpViewRenderer *renderer;
 
       gtk_tree_model_get (gtk_combo_box_get_model (combo_box), &iter,
-                          COLUMN_RENDERER, &renderer,
+                          GIMP_CONTAINER_COMBO_BOX_COLUMN_RENDERER, &renderer,
                           -1);
 
       gimp_container_view_item_selected (view, renderer->viewable);

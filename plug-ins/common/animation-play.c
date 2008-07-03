@@ -343,8 +343,10 @@ repaint_da (GtkWidget      *darea,
             GdkEventExpose *event,
             gpointer        data)
 {
-  gdk_draw_rgb_image (drawing_area->window,
-                      drawing_area->style->white_gc,
+  GtkStyle *style = gtk_widget_get_style (darea);
+
+  gdk_draw_rgb_image (darea->window,
+                      style->white_gc,
                       0, 0, width, height,
                       (total_frames == 1) ? GDK_RGB_DITHER_MAX : DITHERTYPE,
                       drawing_area_data, width * 3);
@@ -357,8 +359,10 @@ repaint_sda (GtkWidget      *darea,
              GdkEventExpose *event,
              gpointer        data)
 {
-  gdk_draw_rgb_image (shape_drawing_area->window,
-                      shape_drawing_area->style->white_gc,
+  GtkStyle *style = gtk_widget_get_style (darea);
+
+  gdk_draw_rgb_image (darea->window,
+                      style->white_gc,
                       0, 0, width, height,
                       (total_frames == 1) ? GDK_RGB_DITHER_MAX : DITHERTYPE,
                       shape_drawing_area_data, width * 3);
@@ -774,6 +778,8 @@ do_playback (void)
 static void
 render_frame (gint32 whichframe)
 {
+  GtkStyle      *shape_style   = gtk_widget_get_style (shape_drawing_area);
+  GtkStyle      *drawing_style = gtk_widget_get_style (drawing_area);
   GimpPixelRgn   pixel_rgn;
   static guchar *rawframe = NULL;
   static gint    rawwidth = 0, rawheight = 0, rawbpp = 0;
@@ -918,7 +924,7 @@ render_frame (gint32 whichframe)
             {
               reshape_from_bitmap (shape_preview_mask);
               gdk_draw_rgb_image (shape_drawing_area->window,
-                                  shape_drawing_area->style->white_gc,
+                                  shape_style->white_gc,
                                   0, 0, width, height,
                                   (total_frames == 1 ?
                                    GDK_RGB_DITHER_MAX : DITHERTYPE),
@@ -928,7 +934,7 @@ render_frame (gint32 whichframe)
             {
               reshape_from_bitmap (shape_preview_mask);
               gdk_draw_rgb_image (drawing_area->window,
-                                  drawing_area->style->white_gc,
+                                  drawing_style->white_gc,
                                   0, 0, width, height,
                                   (total_frames == 1 ?
                                    GDK_RGB_DITHER_MAX : DITHERTYPE),
@@ -1019,7 +1025,7 @@ render_frame (gint32 whichframe)
 
                   reshape_from_bitmap (shape_preview_mask);
                   gdk_draw_rgb_image (shape_drawing_area->window,
-                                      shape_drawing_area->style->white_gc,
+                                      shape_style->white_gc,
                                       0, top, width, bottom - top,
                                       (total_frames == 1 ?
                                        GDK_RGB_DITHER_MAX : DITHERTYPE),
@@ -1030,7 +1036,7 @@ render_frame (gint32 whichframe)
                 {
                   reshape_from_bitmap (shape_preview_mask);
                   gdk_draw_rgb_image (shape_drawing_area->window,
-                                      shape_drawing_area->style->white_gc,
+                                      shape_style->white_gc,
                                       0, 0, width, height,
                                       (total_frames == 1 ?
                                        GDK_RGB_DITHER_MAX : DITHERTYPE),
@@ -1045,7 +1051,7 @@ render_frame (gint32 whichframe)
                   gint bottom = MIN (rawy + rawheight, height);
 
                   gdk_draw_rgb_image (drawing_area->window,
-                                      drawing_area->style->white_gc,
+                                      drawing_style->white_gc,
                                       0, top, width, bottom - top,
                                       (total_frames == 1 ?
                                        GDK_RGB_DITHER_MAX : DITHERTYPE),
@@ -1055,7 +1061,7 @@ render_frame (gint32 whichframe)
               else
                 {
                   gdk_draw_rgb_image (drawing_area->window,
-                                      drawing_area->style->white_gc,
+                                      drawing_style->white_gc,
                                       0, 0, width, height,
                                       (total_frames == 1 ?
                                        GDK_RGB_DITHER_MAX : DITHERTYPE),
@@ -1147,7 +1153,7 @@ render_frame (gint32 whichframe)
             {
               reshape_from_bitmap (shape_preview_mask);
               gdk_draw_rgb_image (shape_drawing_area->window,
-                                  shape_drawing_area->style->white_gc,
+                                  shape_style->white_gc,
                                   0, 0, width, height,
                                   (total_frames == 1 ?
                                    GDK_RGB_DITHER_MAX : DITHERTYPE),
@@ -1156,7 +1162,7 @@ render_frame (gint32 whichframe)
           else
             {
               gdk_draw_rgb_image (drawing_area->window,
-                                  drawing_area->style->white_gc,
+                                  drawing_style->white_gc,
                                   0, 0, width, height,
                                   (total_frames == 1 ?
                                    GDK_RGB_DITHER_MAX : DITHERTYPE),
@@ -1252,7 +1258,7 @@ render_frame (gint32 whichframe)
 
                   reshape_from_bitmap (shape_preview_mask);
                   gdk_draw_rgb_image (shape_drawing_area->window,
-                                      shape_drawing_area->style->white_gc,
+                                      shape_style->white_gc,
                                       0, top, width, bottom - top,
                                       (total_frames == 1 ?
                                        GDK_RGB_DITHER_MAX : DITHERTYPE),
@@ -1263,7 +1269,7 @@ render_frame (gint32 whichframe)
                 {
                   reshape_from_bitmap (shape_preview_mask);
                   gdk_draw_rgb_image (shape_drawing_area->window,
-                                      shape_drawing_area->style->white_gc,
+                                      shape_style->white_gc,
                                       0, 0, width, height,
                                       (total_frames == 1 ?
                                        GDK_RGB_DITHER_MAX : DITHERTYPE),
@@ -1278,7 +1284,7 @@ render_frame (gint32 whichframe)
                   gint bottom = MIN (rawy + rawheight, height);
 
                   gdk_draw_rgb_image (drawing_area->window,
-                                      drawing_area->style->white_gc,
+                                      drawing_style->white_gc,
                                       0, top, width, bottom - top,
                                       (total_frames == 1 ?
                                        GDK_RGB_DITHER_MAX : DITHERTYPE),
@@ -1288,7 +1294,7 @@ render_frame (gint32 whichframe)
               else
                 {
                   gdk_draw_rgb_image (drawing_area->window,
-                                      drawing_area->style->white_gc,
+                                      drawing_style->white_gc,
                                       0, 0, width, height,
                                       (total_frames == 1 ?
                                        GDK_RGB_DITHER_MAX : DITHERTYPE),

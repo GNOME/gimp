@@ -389,7 +389,8 @@ static gboolean
 gimp_offset_area_expose_event (GtkWidget      *widget,
                                GdkEventExpose *eevent)
 {
-  GimpOffsetArea *area = GIMP_OFFSET_AREA (widget);
+  GimpOffsetArea *area  = GIMP_OFFSET_AREA (widget);
+  GtkStyle       *style = gtk_widget_get_style (widget);
   GdkPixbuf      *pixbuf;
   gint            w, h;
   gint            x, y;
@@ -414,14 +415,14 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
 
   if (pixbuf)
     {
-      gdk_draw_pixbuf (widget->window, widget->style->black_gc,
+      gdk_draw_pixbuf (widget->window, style->black_gc,
                        pixbuf, 0, 0, x, y, w, h, GDK_RGB_DITHER_NORMAL, 0, 0);
-      gdk_draw_rectangle (widget->window, widget->style->black_gc, FALSE,
+      gdk_draw_rectangle (widget->window, style->black_gc, FALSE,
                           x, y, w - 1, h - 1);
     }
   else
     {
-      gtk_paint_shadow (widget->style, widget->window, GTK_STATE_NORMAL,
+      gtk_paint_shadow (style, widget->window, GTK_STATE_NORMAL,
                         GTK_SHADOW_OUT,
                         NULL, widget, NULL,
                         x, y, w, h);
@@ -474,7 +475,7 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
        }
       else
         {
-          gdk_draw_rectangle (widget->window, widget->style->black_gc, FALSE,
+          gdk_draw_rectangle (widget->window, style->black_gc, FALSE,
                               x, y, w, h);
         }
     }

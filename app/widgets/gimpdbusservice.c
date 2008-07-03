@@ -23,9 +23,10 @@
 
 #if HAVE_DBUS_GLIB
 
+#include <gtk/gtk.h>
 #include <dbus/dbus-glib.h>
 
-#include "core/core-types.h"
+#include "widgets-types.h"
 
 #include "core/gimp.h"
 
@@ -33,7 +34,7 @@
 
 #include "gimpdbusservice.h"
 #include "gimpdbusservice-glue.h"
-#include "gimpuimanager.c"
+#include "gimpuimanager.h"
 
 
 static void  gimp_dbus_service_class_init (GimpDBusServiceClass *klass);

@@ -1202,21 +1202,16 @@ pygimp_drawable_new(GimpDrawable *drawable, gint32 ID)
 {
     PyObject *self;
 
-    if (drawable == NULL && ID == -1) {
+    if (drawable != NULL)
+    ID = drawable->drawable_id;
+
+    if (!gimp_drawable_is_valid(ID)) {
 	Py_INCREF(Py_None);
 	return Py_None;
     }
 
-    if (drawable != NULL)
-	ID = drawable->drawable_id;
-
     /* create the appropriate object type */
-    
-    /* avoids calling gimp_drawable_is_layer with an invalid id
-     * pygimp_channel_new handles it cleanly 
-     */
-    if (gimp_drawable_is_valid(ID) && 
-        gimp_drawable_is_layer(ID))
+    if (gimp_drawable_is_layer(ID))
 	self = pygimp_layer_new(ID);
     else
 	self = pygimp_channel_new(ID);
@@ -1224,6 +1219,7 @@ pygimp_drawable_new(GimpDrawable *drawable, gint32 ID)
     if (self == NULL)
 	return NULL;
 
+    if (PyObject_TypeCheck(self, &PyGimpDrawable_Type))
     ((PyGimpDrawable *)self)->drawable = drawable;
 
     return self;
@@ -1692,7 +1688,7 @@ lay_repr(PyGimpLayer *self)
     gchar *name;
 
     name = gimp_drawable_get_name(self->ID);
-    s = PyString_FromFormat("<gimp.Layer '%s'>", name);
+    s = PyString_FromFormat("<gimp.Layer '%s'>", name ? name : "(null)");
     g_free(name);
 
     return s;
@@ -1778,7 +1774,7 @@ pygimp_layer_new(gint32 ID)
 {
     PyGimpLayer *self;
 
-    if (ID == -1) {
+    if (!gimp_drawable_is_valid(ID) || !gimp_drawable_is_layer(ID)) {
 	Py_INCREF(Py_None);
 	return Py_None;
     }
@@ -1971,7 +1967,7 @@ chn_repr(PyGimpChannel *self)
     gchar *name;
 
     name = gimp_drawable_get_name(self->ID);
-    s = PyString_FromFormat("<gimp.Channel '%s'>", name);
+    s = PyString_FromFormat("<gimp.Channel '%s'>", name ? name : "(null)");
     g_free(name);
 
     return s;
@@ -2066,7 +2062,7 @@ pygimp_channel_new(gint32 ID)
 {
     PyGimpChannel *self;
 
-    if (ID == -1) {
+    if (!gimp_drawable_is_valid(ID) || !gimp_drawable_is_channel(ID)) {
 	Py_INCREF(Py_None);
 	return Py_None;
     }

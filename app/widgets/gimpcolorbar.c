@@ -154,15 +154,15 @@ static gboolean
 gimp_color_bar_expose (GtkWidget      *widget,
                        GdkEventExpose *event)
 {
-  GimpColorBar *bar = GIMP_COLOR_BAR (widget);
+  GimpColorBar *bar   = GIMP_COLOR_BAR (widget);
+  GtkStyle     *style = gtk_widget_get_style (widget);
   guchar       *buf;
   guchar       *b;
   gint          x, y;
   gint          width, height;
   gint          i, j;
 
-  x = GTK_CONTAINER (bar)->border_width;
-  y = GTK_CONTAINER (bar)->border_width;
+  x = y = gtk_container_get_border_width (GTK_CONTAINER (bar));
 
   width  = widget->allocation.width  - 2 * x;
   height = widget->allocation.height - 2 * y;
@@ -205,7 +205,7 @@ gimp_color_bar_expose (GtkWidget      *widget,
       break;
     }
 
-  gdk_draw_rgb_image (widget->window, widget->style->black_gc,
+  gdk_draw_rgb_image (widget->window, style->black_gc,
                       widget->allocation.x + x, widget->allocation.y + y,
                       width, height,
                       GDK_RGB_DITHER_NORMAL,

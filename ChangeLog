@@ -1,5 +1,9 @@
 2008-06-29  Daniel Eddeland <danedde@svn.gnome.org>
 
+	Merged 25809:26050 from trunk
+
+2008-06-29  Daniel Eddeland <danedde@svn.gnome.org>
+
 	* app/text/gimptext-vectors.c: ported "text-to-path" code  to cairo
 
 2008-06-28  Daniel Eddeland <danedde@svn.gnome.org>

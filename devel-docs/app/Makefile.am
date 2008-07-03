@@ -58,7 +58,8 @@ GTKDOC_CFLAGS = \
 	-g		\
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
-	-I$(includedir)
+	-I$(includedir)	\
+	-UGTK_DISABLE_SINGLE_INCLUDES
 
 GTKDOC_LIBS = \
 	-u $(SYMPREFIX)xcf_init		   				     \

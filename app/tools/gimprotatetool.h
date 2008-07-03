@@ -39,6 +39,7 @@ struct _GimpRotateTool
   GimpTransformTool  parent_instance;
 
   GtkObject         *angle_adj;
+  GtkWidget         *angle_spin_button;
   GtkWidget         *sizeentry;
 };
 

@@ -31,10 +31,11 @@
 #include "gimpdesaturateconfig.h"
 
 
-static gboolean  gimp_operation_desaturate_process (GeglOperation *operation,
-                                                    void          *in_buf,
-                                                    void          *out_buf,
-                                                    glong          samples);
+static gboolean  gimp_operation_desaturate_process (GeglOperation       *operation,
+                                                    void                *in_buf,
+                                                    void                *out_buf,
+                                                    glong                samples,
+                                                    const GeglRectangle *roi);
 
 
 G_DEFINE_TYPE (GimpOperationDesaturate, gimp_operation_desaturate,
@@ -75,10 +76,11 @@ gimp_operation_desaturate_init (GimpOperationDesaturate *self)
 }
 
 static gboolean
-gimp_operation_desaturate_process (GeglOperation *operation,
-                                   void          *in_buf,
-                                   void          *out_buf,
-                                   glong          samples)
+gimp_operation_desaturate_process (GeglOperation       *operation,
+                                   void                *in_buf,
+                                   void                *out_buf,
+                                   glong                samples,
+                                   const GeglRectangle *roi)
 {
   GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
   GimpDesaturateConfig     *config = GIMP_DESATURATE_CONFIG (point->config);

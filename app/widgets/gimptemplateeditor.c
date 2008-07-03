@@ -572,7 +572,8 @@ static void
 gimp_template_editor_aspect_callback (GtkWidget          *widget,
                                       GimpTemplateEditor *editor)
 {
-  if (! editor->block_aspect && GTK_TOGGLE_BUTTON (widget)->active)
+  if (! editor->block_aspect &&
+      gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       GimpTemplate *template    = editor->template;
       gint          width       = template->width;

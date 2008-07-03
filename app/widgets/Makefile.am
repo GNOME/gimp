@@ -255,6 +255,10 @@ libappwidgets_a_sources = \
 	gimpsessioninfo-dock.h		\
 	gimpsessioninfo-dockable.c	\
 	gimpsessioninfo-dockable.h	\
+	gimpsettingsbox.c		\
+	gimpsettingsbox.h		\
+	gimpsettingseditor.c		\
+	gimpsettingseditor.h		\
 	gimpsizebox.c			\
 	gimpsizebox.h			\
 	gimpstringaction.c		\
@@ -337,6 +341,8 @@ libappwidgets_a_sources = \
 	gimpwidgets-utils.h		\
 	gimpwindow.c			\
 	gimpwindow.h			\
+	gtkscalebutton.c		\
+	gtkscalebutton.h		\
 	gtkwrapbox.c			\
 	gtkwrapbox.h			\
 	gtkhwrapbox.c			\

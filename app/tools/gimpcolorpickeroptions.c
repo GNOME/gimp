@@ -37,7 +37,6 @@ enum
   PROP_0,
   PROP_SAMPLE_AVERAGE, /* overrides a GimpColorOptions property */
   PROP_PICK_MODE,
-  PROP_ADD_TO_PALETTE,
   PROP_USE_INFO_WINDOW
 };
 
@@ -74,10 +73,6 @@ gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
                                  GIMP_TYPE_COLOR_PICK_MODE,
                                  GIMP_COLOR_PICK_MODE_FOREGROUND,
                                  GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ADD_TO_PALETTE,
-                                    "add-to-palette", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_INFO_WINDOW,
                                     "use-info-window", NULL,
                                     FALSE,
@@ -105,12 +100,10 @@ gimp_color_picker_options_set_property (GObject      *object,
     case PROP_PICK_MODE:
       options->pick_mode = g_value_get_enum (value);
       break;
-    case PROP_ADD_TO_PALETTE:
-      options->add_to_palette = g_value_get_boolean (value);
-      break;
     case PROP_USE_INFO_WINDOW:
       options->use_info_window = g_value_get_boolean (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -134,12 +127,10 @@ gimp_color_picker_options_get_property (GObject    *object,
     case PROP_PICK_MODE:
       g_value_set_enum (value, options->pick_mode);
       break;
-    case PROP_ADD_TO_PALETTE:
-      g_value_set_boolean (value, options->add_to_palette);
-      break;
     case PROP_USE_INFO_WINDOW:
       g_value_set_boolean (value, options->use_info_window);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

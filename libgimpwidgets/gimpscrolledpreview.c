@@ -565,6 +565,7 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
 
   if (event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
+      GtkStyle   *style = gtk_widget_get_style (widget);
       GtkWidget  *outer;
       GtkWidget  *inner;
       GtkWidget  *area;
@@ -625,8 +626,8 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
       y += event->y - v * (gdouble) GIMP_PREVIEW_AREA (area)->height;
 
       gtk_window_move (GTK_WINDOW (preview->nav_popup),
-                       x - 2 * widget->style->xthickness,
-                       y - 2 * widget->style->ythickness);
+                       x - 2 * style->xthickness,
+                       y - 2 * style->ythickness);
 
       gtk_widget_show (preview->nav_popup);
 

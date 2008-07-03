@@ -69,6 +69,15 @@ gimp_rectangle_select_options_class_init (GimpRectangleSelectOptionsClass *klass
   object_class->set_property = gimp_rectangle_select_options_set_property;
   object_class->get_property = gimp_rectangle_select_options_get_property;
 
+  /* The 'highlight' property is defined here because we want different
+   * default values for the Crop and the Rectangle Select tools.
+   */
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
+                                    "highlight", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ROUND_CORNERS,
                                     "round-corners", NULL,
                                     FALSE,
@@ -176,10 +185,6 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
     vbox_rectangle = gimp_rectangle_options_gui (tool_options);
     gtk_box_pack_start (GTK_BOX (vbox), vbox_rectangle, FALSE, FALSE, 0);
     gtk_widget_show (vbox_rectangle);
-
-    g_object_set (GIMP_RECTANGLE_OPTIONS (tool_options),
-                  "highlight", FALSE,
-                  NULL);
   }
 
   return vbox;

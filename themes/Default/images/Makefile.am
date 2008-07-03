@@ -117,6 +117,7 @@ STOCK_MENU_IMAGES = \
 	stock-tools-16.png				\
 	stock-transparency-16.png			\
 	stock-undo-history-16.png			\
+	stock-user-manual-16.png			\
 	stock-video-16.png				\
 	stock-warning-16.png				\
 	stock-wilber-16.png				\
@@ -207,11 +208,12 @@ STOCK_BUTTON_IMAGES = \
 	stock-tool-options-24.png		\
 	stock-tools-24.png			\
 	stock-transparency-24.png		\
+	stock-undo-history-24.png		\
+	stock-user-manual-24.png		\
 	stock-vcenter-24.png			\
 	stock-vchain-24.png			\
 	stock-vchain-broken-24.png		\
 	stock-video-24.png			\
-	stock-undo-history-24.png		\
 	stock-warning-24.png			\
 	stock-web-24.png			\
 	stock-wilber-22.png
@@ -228,7 +230,8 @@ STOCK_DND_IMAGES = \
 	stock-image-32.png			\
 	stock-layer-32.png			\
 	stock-layer-mask-32.png			\
-	stock-text-layer-32.png
+	stock-text-layer-32.png			\
+	stock-user-manual-32.png
 
 STOCK_DIALOG_IMAGES = \
 	stock-channel-48.png			\
@@ -248,6 +251,7 @@ STOCK_DIALOG_IMAGES = \
 	stock-question-64.png			\
 	stock-text-layer-48.png			\
 	stock-texture-64.png			\
+	stock-user-manual-64.png		\
 	stock-warning-64.png			\
 	stock-wilber-64.png			\
 	stock-wilber-eek-64.png
@@ -317,8 +321,6 @@ STOCK_TOOL_IMAGES = \
 	tools/stock-tool-perspective-22.png		\
 	tools/stock-tool-perspective-clone-16.png	\
 	tools/stock-tool-perspective-clone-22.png	\
-	tools/stock-tool-polygon-select-16.png		\
-	tools/stock-tool-polygon-select-22.png		\
 	tools/stock-tool-posterize-16.png		\
 	tools/stock-tool-posterize-22.png		\
 	tools/stock-tool-rect-select-16.png		\

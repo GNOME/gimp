@@ -1,4 +1,4 @@
-                   ------------------------------ 
+                   ------------------------------
                    GNU Image Manipulation Program
                          Development Branch
                    ------------------------------
@@ -15,13 +15,30 @@ Changes in GIMP 2.5.1
  - improved Alpha to Logo filters
  - better cursor feedback in the Intelligent Scissors tool
  - rotate JPEG thumbnails according to the EXIF orientation
- - tweaked behavior of the new Polygon Selection tool
  - improved event smoothing for paint tools
  - prepared PSP plug-in to deal with newer versions of the file format
  - allow plug-ins to work in parallel on different layers of the same image
  - pass through GEGL command-line options
  - added 22 new variations to the Flame plugin
  - only show operations from relevant categories in the GEGL tool
+ - allow to enter the zoom ratio in the status bar
+ - don't keep the file-chooser dialogs around
+ - ported scan-convert code to Cairo, removing libart dependency
+ - allow the paint velocity to affect brush size, opacity and the like
+ - allow for random variations of the brush size, opacity and the like
+ - renamed Dialogs menu to Windows
+ - keep a list of recently closed docks in the Windows menu
+ - allow to go from Brightness-Contrast to Levels to Curves
+ - improved the handling of color tool settings
+ - merged the new Polygon Selection tool with the Freehand Select tool
+ - allow to lock dockables
+ - made Desaturate into a tool with preview in the image window
+ - ported translation contexts to msgctxt
+ - added GimpRuler widgets, an improved version of GtkRuler
+ - moving the selection mask now commits a pending rectangle selection
+ - added keyboard shortcut for resetting the brush scale (Backslash)
+ - ported the Help Browser plug-in to WebKit
+ - allow to use the online user manual
  - added new translation (Icelandic)
  - bug fixes and code cleanup
 
@@ -79,7 +96,7 @@ Plug-ins:
  - randomize: added previews
  - ripple:  added a Phase Shift control
  - screenshot: optionally add the mouse cursor image on an extra layer
- - uri: use GIO/GVfs where available 
+ - uri: use GIO/GVfs where available
  - whirlpinch: allow a larger range for the whirl angle
 
 

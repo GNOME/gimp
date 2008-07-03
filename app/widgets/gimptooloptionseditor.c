@@ -410,7 +410,7 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
       options_gui = g_object_get_data (G_OBJECT (tool_info->tool_options),
                                        "gimp-tool-options-gui");
 
-      if (! options_gui->parent)
+      if (! gtk_widget_get_parent (options_gui))
         gtk_box_pack_start (GTK_BOX (editor->options_vbox), options_gui,
                             FALSE, FALSE, 0);
 

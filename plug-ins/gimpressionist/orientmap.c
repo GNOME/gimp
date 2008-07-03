@@ -83,7 +83,7 @@ double get_direction (double x, double y, int from)
       vec = vector;
       angoff = GTK_ADJUSTMENT (angle_offset_adjust)->value;
       strexp = GTK_ADJUSTMENT (orient_map_str_exp_adjust)->value;
-      voronoi = GTK_TOGGLE_BUTTON (orient_voronoi)->active;
+      voronoi = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (orient_voronoi));
     }
   else
     {
@@ -458,7 +458,7 @@ orient_map_response (GtkWidget *widget,
         pcvals.num_orient_vectors = num_vectors;
         pcvals.orient_strength_exponent  = GTK_ADJUSTMENT (orient_map_str_exp_adjust)->value;
         pcvals.orient_angle_offset  = GTK_ADJUSTMENT (angle_offset_adjust)->value;
-        pcvals.orient_voronoi = GTK_TOGGLE_BUTTON (orient_voronoi)->active;
+        pcvals.orient_voronoi = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (orient_voronoi));
       }
     };
 

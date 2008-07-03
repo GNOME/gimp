@@ -68,6 +68,15 @@ gimp_crop_options_class_init (GimpCropOptionsClass *klass)
   object_class->set_property = gimp_crop_options_set_property;
   object_class->get_property = gimp_crop_options_get_property;
 
+  /* The 'highlight' property is defined here because we want different
+   * default values for the Crop and the Rectangle Select tools.
+   */
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
+                                    "highlight", NULL,
+                                    TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_LAYER_ONLY,
                                     "layer-only", NULL,
                                     FALSE,
@@ -97,14 +106,16 @@ gimp_crop_options_set_property (GObject      *object,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
+  GimpCropOptions *options = GIMP_CROP_OPTIONS (object);
+
   switch (property_id)
     {
     case PROP_LAYER_ONLY:
-      GIMP_CROP_OPTIONS (object)->layer_only = g_value_get_boolean (value);
+      options->layer_only = g_value_get_boolean (value);
       break;
 
     case PROP_ALLOW_GROWING:
-      GIMP_CROP_OPTIONS (object)->allow_growing = g_value_get_boolean (value);
+      options->allow_growing = g_value_get_boolean (value);
       break;
 
     default:
@@ -119,14 +130,16 @@ gimp_crop_options_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
+  GimpCropOptions *options = GIMP_CROP_OPTIONS (object);
+
   switch (property_id)
     {
     case PROP_LAYER_ONLY:
-      g_value_set_boolean (value, GIMP_CROP_OPTIONS (object)->layer_only);
+      g_value_set_boolean (value, options->layer_only);
       break;
 
     case PROP_ALLOW_GROWING:
-      g_value_set_boolean (value, GIMP_CROP_OPTIONS (object)->allow_growing);
+      g_value_set_boolean (value, options->allow_growing);
       break;
 
     default:

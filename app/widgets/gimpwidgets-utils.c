@@ -277,6 +277,7 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
           gint       indicator_spacing;
           gint       focus_width;
           gint       focus_padding;
+          gint       border_width;
 
           gtk_widget_style_get (radio,
                                 "indicator-size",    &indicator_size,
@@ -284,6 +285,8 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
                                 "focus-line-width",  &focus_width,
                                 "focus-padding",     &focus_padding,
                                 NULL);
+
+          border_width = gtk_container_get_border_width (GTK_CONTAINER (radio));
 
           hbox = gtk_hbox_new (FALSE, 0);
 
@@ -293,7 +296,7 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
                                        3 * indicator_spacing +
                                        focus_width +
                                        focus_padding +
-                                       GTK_CONTAINER (radio)->border_width,
+                                       border_width,
                                        -1);
           gtk_box_pack_start (GTK_BOX (hbox), spacer, FALSE, FALSE, 0);
           gtk_widget_show (spacer);
@@ -307,7 +310,7 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
                             NULL);
 
           gtk_widget_set_sensitive (hbox,
-                                    GTK_TOGGLE_BUTTON (list->data)->active);
+                                    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (list->data)));
 
           gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
           gtk_box_reorder_child (GTK_BOX (vbox), hbox, pos);
@@ -343,7 +346,8 @@ gimp_get_icon_size (GtkWidget   *widget,
   g_return_val_if_fail (width > 0, icon_size);
   g_return_val_if_fail (height > 0, icon_size);
 
-  icon_set = gtk_style_lookup_icon_set (widget->style, stock_id);
+  icon_set = gtk_style_lookup_icon_set (gtk_widget_get_style (widget),
+                                        stock_id);
 
   if (! icon_set)
     return GTK_ICON_SIZE_INVALID;

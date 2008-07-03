@@ -238,6 +238,7 @@ gimp_dash_editor_expose (GtkWidget      *widget,
                          GdkEventExpose *event)
 {
   GimpDashEditor *editor = GIMP_DASH_EDITOR (widget);
+  GtkStyle       *style  = gtk_widget_get_style (widget);
   cairo_t        *cr     = gdk_cairo_create (widget->window);
   gint            x;
   gint            w, h;
@@ -249,7 +250,7 @@ gimp_dash_editor_expose (GtkWidget      *widget,
 
   /*  draw the background  */
 
-  gdk_cairo_set_source_color (cr, &widget->style->base[GTK_STATE_NORMAL]);
+  gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
   cairo_paint (cr);
 
   w = editor->block_width;
@@ -273,7 +274,7 @@ gimp_dash_editor_expose (GtkWidget      *widget,
         cairo_rectangle (cr, x, editor->y0, w, h);
     }
 
-  gdk_cairo_set_source_color (cr, &widget->style->text_aa[GTK_STATE_NORMAL]);
+  gdk_cairo_set_source_color (cr, &style->text_aa[GTK_STATE_NORMAL]);
   cairo_fill (cr);
 
   for (; x < editor->x0 + editor->n_segments * w; x += w)
@@ -284,7 +285,7 @@ gimp_dash_editor_expose (GtkWidget      *widget,
         cairo_rectangle (cr, x, editor->y0, w, h);
     }
 
-  gdk_cairo_set_source_color (cr, &widget->style->text[GTK_STATE_NORMAL]);
+  gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
   cairo_fill (cr);
 
   for (; x < widget->allocation.width + w; x += w)
@@ -295,7 +296,7 @@ gimp_dash_editor_expose (GtkWidget      *widget,
         cairo_rectangle (cr, x, editor->y0, w, h);
     }
 
-  gdk_cairo_set_source_color (cr, &widget->style->text_aa[GTK_STATE_NORMAL]);
+  gdk_cairo_set_source_color (cr, &style->text_aa[GTK_STATE_NORMAL]);
   cairo_fill (cr);
 
   /*  draw rulers  */
@@ -330,7 +331,7 @@ gimp_dash_editor_expose (GtkWidget      *widget,
   cairo_move_to (cr, editor->x0 - 0.5, editor->y0 - 1);
   cairo_move_to (cr, editor->x0 - 0.5, editor->y0 + h);
 
-  gdk_cairo_set_source_color (cr, &widget->style->text_aa[GTK_STATE_NORMAL]);
+  gdk_cairo_set_source_color (cr, &style->text_aa[GTK_STATE_NORMAL]);
   cairo_set_line_width (cr, 1.0);
   cairo_stroke (cr);
 

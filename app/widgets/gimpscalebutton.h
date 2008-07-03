@@ -23,6 +23,9 @@
 #define __GIMP_SCALE_BUTTON_H__
 
 
+#include "gtkscalebutton.h"
+
+
 #define GIMP_TYPE_SCALE_BUTTON            (gimp_scale_button_get_type ())
 #define GIMP_SCALE_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SCALE_BUTTON, GimpScaleButton))
 #define GIMP_SCALE_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SCALE_BUTTON, GimpScaleButtonClass))
@@ -46,7 +49,9 @@ struct _GimpScaleButtonClass
 
 GType       gimp_scale_button_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_scale_button_new      (void);
+GtkWidget * gimp_scale_button_new      (gdouble value,
+                                        gdouble min,
+                                        gdouble max);
 
 
 #endif  /* __GIMP_SCALE_BUTTON_H__ */

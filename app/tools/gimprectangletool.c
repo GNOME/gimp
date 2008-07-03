@@ -1074,8 +1074,16 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       h = pub_y2 - pub_y1;
 
       if (w > 0.0 && h > 0.0)
-        gimp_tool_push_status_coords (tool, display,
-                                      _("Rectangle: "), w, " × ", h, NULL);
+        {
+          gchar *aspect_text;
+
+          aspect_text = g_strdup_printf ("  (%.2f:1)", w / (gdouble) h);
+
+          gimp_tool_push_status_coords (tool, display,
+                                        _("Rectangle: "),
+                                        w, " × ", h, aspect_text);
+          g_free (aspect_text);
+        }
     }
 
   if (private->function == GIMP_RECTANGLE_TOOL_CREATING)
@@ -4086,8 +4094,8 @@ gimp_rectangle_tool_update_int_rect (GimpRectangleTool *rect_tool)
  * @pub_x2:
  * @pub_y2:
  *
- * Returns the rectangle as it appears to be publicly (based on
- * integer or double precision-mode.
+ * This function returns the rectangle as it appears to be publicly
+ * (based on integer or double precision-mode).
  **/
 static void
 gimp_rectangle_tool_get_public_rect (GimpRectangleTool *rect_tool,

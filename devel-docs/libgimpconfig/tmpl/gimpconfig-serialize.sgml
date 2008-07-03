@@ -49,6 +49,17 @@ Serializing interface for libgimpconfig.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_config_serialize_property_by_name ##### -->
+<para>
+
+</para>
+
+@config: 
+@prop_name: 
+@writer: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_config_serialize_value ##### -->
 <para>
 

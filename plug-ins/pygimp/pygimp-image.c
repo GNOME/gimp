@@ -1314,7 +1314,7 @@ pygimp_image_new(gint32 ID)
 {
     PyGimpImage *self;
 
-    if (ID == -1) {
+    if (!gimp_image_is_valid(ID)) {
 	Py_INCREF(Py_None);
 	return Py_None;
     }

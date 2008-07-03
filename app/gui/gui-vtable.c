@@ -86,6 +86,7 @@ static void           gui_threads_leave        (Gimp                *gimp);
 static void           gui_set_busy             (Gimp                *gimp);
 static void           gui_unset_busy           (Gimp                *gimp);
 static void           gui_help                 (Gimp                *gimp,
+                                                GimpProgress        *progress,
                                                 const gchar         *help_domain,
                                                 const gchar         *help_id);
 static const gchar  * gui_get_program_class    (Gimp                *gimp);
@@ -213,11 +214,12 @@ gui_unset_busy (Gimp *gimp)
 }
 
 static void
-gui_help (Gimp        *gimp,
-          const gchar *help_domain,
-          const gchar *help_id)
+gui_help (Gimp         *gimp,
+          GimpProgress *progress,
+          const gchar  *help_domain,
+          const gchar  *help_id)
 {
-  gimp_help_show (gimp, help_domain, help_id);
+  gimp_help_show (gimp, progress, help_domain, help_id);
 }
 
 static const gchar *

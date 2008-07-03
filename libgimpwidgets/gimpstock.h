@@ -130,7 +130,6 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOL_PENCIL              "gimp-tool-pencil"
 #define GIMP_STOCK_TOOL_PERSPECTIVE         "gimp-tool-perspective"
 #define GIMP_STOCK_TOOL_PERSPECTIVE_CLONE   "gimp-tool-perspective-clone"
-#define GIMP_STOCK_TOOL_POLYGON_SELECT      "gimp-tool-polygon-select"
 #define GIMP_STOCK_TOOL_POSTERIZE           "gimp-tool-posterize"
 #define GIMP_STOCK_TOOL_RECT_SELECT         "gimp-tool-rect-select"
 #define GIMP_STOCK_TOOL_ROTATE              "gimp-tool-rotate"
@@ -264,6 +263,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_WILBER_EEK               "gimp-wilber-eek"
 #define GIMP_STOCK_FRAME                    "gimp-frame"
 #define GIMP_STOCK_TEXTURE                  "gimp-texture"
+#define GIMP_STOCK_USER_MANUAL              "gimp-user-manual"
 
 
 /*  missing icons:  */

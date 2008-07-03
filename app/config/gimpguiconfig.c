@@ -34,15 +34,18 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_GIMP_HELP_BROWSER  GIMP_HELP_BROWSER_GIMP
-#define DEFAULT_THEME              "Default"
+#define DEFAULT_HELP_BROWSER   GIMP_HELP_BROWSER_GIMP
+#define DEFAULT_THEME          "Default"
+
+#define DEFAULT_USER_MANUAL_ONLINE_URI \
+  "http://docs.gimp.org/" GIMP_APP_VERSION_STRING
 
 #ifdef G_OS_WIN32
-#  define DEFAULT_WEB_BROWSER      "not used on Windows"
+#  define DEFAULT_WEB_BROWSER  "not used on Windows"
 #elif HAVE_CARBON
-#  define DEFAULT_WEB_BROWSER      "open %s"
+#  define DEFAULT_WEB_BROWSER  "open %s"
 #else
-#  define DEFAULT_WEB_BROWSER      "xdg-open %s"
+#  define DEFAULT_WEB_BROWSER  "firefox %s"
 #endif
 
 
@@ -74,15 +77,12 @@ enum
   PROP_HELP_LOCALES,
   PROP_HELP_BROWSER,
   PROP_WEB_BROWSER,
+  PROP_USER_MANUAL_ONLINE,
+  PROP_USER_MANUAL_ONLINE_URI,
   PROP_TOOLBOX_WINDOW_HINT,
   PROP_DOCK_WINDOW_HINT,
   PROP_TRANSIENT_DOCKS,
-  PROP_CURSOR_FORMAT,
-
-  /* ignored, only for backward compatibility: */
-  PROP_INFO_WINDOW_PER_DISPLAY,
-  PROP_SHOW_TOOL_TIPS,
-  PROP_SHOW_TIPS
+  PROP_CURSOR_FORMAT
 };
 
 
@@ -222,13 +222,23 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_HELP_BROWSER,
                                  "help-browser", HELP_BROWSER_BLURB,
                                  GIMP_TYPE_HELP_BROWSER_TYPE,
-                                 DEFAULT_GIMP_HELP_BROWSER,
+                                 DEFAULT_HELP_BROWSER,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_WEB_BROWSER,
                                  "web-browser", WEB_BROWSER_BLURB,
                                  GIMP_CONFIG_PATH_FILE,
                                  DEFAULT_WEB_BROWSER,
                                  GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USER_MANUAL_ONLINE,
+                                    "user-manual-online",
+                                    USER_MANUAL_ONLINE_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_USER_MANUAL_ONLINE_URI,
+                                   "user-manual-online-uri",
+                                   USER_MANUAL_ONLINE_URI_BLURB,
+                                   DEFAULT_USER_MANUAL_ONLINE_URI,
+                                   GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TOOLBOX_WINDOW_HINT,
                                  "toolbox-window-hint",
                                  TOOLBOX_WINDOW_HINT_BLURB,
@@ -252,24 +262,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  GIMP_TYPE_CURSOR_FORMAT,
                                  GIMP_CURSOR_FORMAT_PIXBUF,
                                  GIMP_PARAM_STATIC_STRINGS);
-
-  /*  only for backward compatibility:  */
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INFO_WINDOW_PER_DISPLAY,
-                                    "info-window-per-display",
-                                    NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_IGNORE);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TOOL_TIPS,
-                                    "show-tool-tips", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_IGNORE);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TIPS,
-                                    "show-tips", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void
@@ -286,6 +278,7 @@ gimp_gui_config_finalize (GObject *object)
   g_free (gui_config->theme);
   g_free (gui_config->help_locales);
   g_free (gui_config->web_browser);
+  g_free (gui_config->user_manual_online_uri);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -379,6 +372,13 @@ gimp_gui_config_set_property (GObject      *object,
       g_free (gui_config->web_browser);
       gui_config->web_browser = g_value_dup_string (value);
       break;
+    case PROP_USER_MANUAL_ONLINE:
+      gui_config->user_manual_online = g_value_get_boolean (value);
+      break;
+    case PROP_USER_MANUAL_ONLINE_URI:
+      g_free (gui_config->user_manual_online_uri);
+      gui_config->user_manual_online_uri = g_value_dup_string (value);
+      break;
     case PROP_TOOLBOX_WINDOW_HINT:
       gui_config->toolbox_window_hint = g_value_get_enum (value);
       break;
@@ -390,12 +390,6 @@ gimp_gui_config_set_property (GObject      *object,
       break;
     case PROP_CURSOR_FORMAT:
       gui_config->cursor_format = g_value_get_enum (value);
-      break;
-
-    case PROP_INFO_WINDOW_PER_DISPLAY:
-    case PROP_SHOW_TOOL_TIPS:
-    case PROP_SHOW_TIPS:
-      /* ignored */
       break;
 
     default:
@@ -489,6 +483,12 @@ gimp_gui_config_get_property (GObject    *object,
     case PROP_WEB_BROWSER:
       g_value_set_string (value, gui_config->web_browser);
       break;
+    case PROP_USER_MANUAL_ONLINE:
+      g_value_set_boolean (value, gui_config->user_manual_online);
+      break;
+    case PROP_USER_MANUAL_ONLINE_URI:
+      g_value_set_string (value, gui_config->user_manual_online_uri);
+      break;
     case PROP_TOOLBOX_WINDOW_HINT:
       g_value_set_enum (value, gui_config->toolbox_window_hint);
       break;
@@ -500,12 +500,6 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_CURSOR_FORMAT:
       g_value_set_enum (value, gui_config->cursor_format);
-      break;
-
-    case PROP_INFO_WINDOW_PER_DISPLAY:
-    case PROP_SHOW_TOOL_TIPS:
-    case PROP_SHOW_TIPS:
-      /* ignored */
       break;
 
     default:

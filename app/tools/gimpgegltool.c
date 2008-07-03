@@ -286,16 +286,18 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   GimpGeglTool    *tool = GIMP_GEGL_TOOL (image_map_tool);
   GtkListStore    *store;
   GtkCellRenderer *cell;
+  GtkWidget       *main_vbox;
   GtkWidget       *hbox;
   GtkWidget       *label;
   GtkWidget       *combo;
   GList           *opclasses;
   GList           *iter;
 
+  main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
+
   /*  The operation combo box  */
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,
-                      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("_Operation:"));
@@ -344,7 +346,7 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  The options vbox  */
   tool->options_frame = gimp_frame_new (_("Operation Settings"));
-  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), tool->options_frame,
+  gtk_box_pack_start (GTK_BOX (main_vbox), tool->options_frame,
                       FALSE, FALSE, 0);
   gtk_widget_show (tool->options_frame);
 

@@ -196,13 +196,16 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
       if (dockable)
         {
           GtkWidget *dockbook;
+          GtkWidget *parent;
           GList     *children;
           gint       index;
 
           g_object_set_data (G_OBJECT (dockable),
                              "gimp-dock-drag-widget", NULL);
 
-          children = gtk_container_get_children (GTK_CONTAINER (widget->parent));
+          parent = gtk_widget_get_parent (widget);
+
+          children = gtk_container_get_children (GTK_CONTAINER (parent));
           index = g_list_index (children, widget);
           g_list_free (children);
 

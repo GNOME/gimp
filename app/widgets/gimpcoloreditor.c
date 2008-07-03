@@ -582,7 +582,7 @@ static void
 gimp_color_editor_tab_toggled (GtkWidget       *widget,
                                GimpColorEditor *editor)
 {
-  if (GTK_TOGGLE_BUTTON (widget)->active)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       GtkWidget *selector;
 
